@@ -33,6 +33,10 @@ import { containerDivStyles } from '../common/ContainerRectProps';
 /* @conditional-compile-remove(control-bar-button-injection) */
 import { CustomCallWithChatControlButtonCallback } from './CustomButton';
 import { modalLayerHostStyle } from '../common/styles/ModalLocalAndRemotePIP.styles';
+/* @conditional-compile-remove(PSTN-calls) */
+import { SendDtmfDialpad } from '../common/SendDtmfDialpad';
+/* @conditional-compile-remove(PSTN-calls) */
+import { useCallWithChatCompositeStrings } from './hooks/useCallWithChatCompositeStrings';
 
 /**
  * Props required for the {@link CallWithChatComposite}
@@ -273,6 +277,32 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
     return { display: isMobileWithActivePane ? 'none' : 'flex' };
   }, [isMobileWithActivePane]);
 
+  /* @conditional-compile-remove(PSTN-calls) */
+  const [showDtmfDialpad, setShowDtmfDialpad] = useState(false);
+
+  /* @conditional-compile-remove(PSTN-calls) */
+  const onDismissDtmfDialpad = (): void => {
+    setShowDtmfDialpad(false);
+  };
+
+  /* @conditional-compile-remove(PSTN-calls) */
+  const onClickShowDialpad = (): void => {
+    setShowDtmfDialpad(true);
+  };
+
+  /* @conditional-compile-remove(PSTN-calls) */
+  const callWithChatStrings = useCallWithChatCompositeStrings();
+
+  /* @conditional-compile-remove(PSTN-calls) */
+  const dialpadStrings = useMemo(
+    () => ({
+      dialpadModalAriaLabel: callWithChatStrings.dialpadModalAriaLabel,
+      dialpadCloseModalButtonAriaLabel: callWithChatStrings.dialpadCloseModalButtonAriaLabel,
+      placeholderText: callWithChatStrings.dtmfDialpadPlaceHolderText
+    }),
+    [callWithChatStrings]
+  );
+
   return (
     <div ref={containerRef} className={mergeStyles(containerDivStyles)}>
       <Stack verticalFill grow styles={compositeOuterContainerStyles} id={compositeParentDivId}>
@@ -329,6 +359,8 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
                 callControls={props.callControls}
                 containerHeight={containerHeight}
                 containerWidth={containerWidth}
+                /* @conditional-compile-remove(PSTN-calls) */
+                onClickShowDialpad={onClickShowDialpad}
               />
             </Stack.Item>
           </ChatAdapterProvider>
@@ -341,11 +373,31 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
                   callControls={props.callControls}
                   onLightDismiss={closeDrawer}
                   onPeopleButtonClicked={onMoreDrawerPeopleClicked}
+                  /* @conditional-compile-remove(PSTN-calls) */
+                  onClickShowDialpad={onClickShowDialpad}
                 />
               </Stack>
             </CallAdapterProvider>
           </ChatAdapterProvider>
         )}
+
+        {
+          /* @conditional-compile-remove(PSTN-calls) */
+          showControlBar && showDtmfDialpad && (
+            <ChatAdapterProvider adapter={chatProps.adapter}>
+              <CallAdapterProvider adapter={callAdapter}>
+                <Stack styles={drawerContainerStyles}>
+                  <SendDtmfDialpad
+                    isMobile={mobileView}
+                    strings={dialpadStrings}
+                    showDialpad={showDtmfDialpad}
+                    onDismissDialpad={onDismissDtmfDialpad}
+                  />
+                </Stack>
+              </CallAdapterProvider>
+            </ChatAdapterProvider>
+          )
+        }
         {
           // This layer host is for ModalLocalAndRemotePIP in CallWithChatPane. This LayerHost cannot be inside the CallWithChatPane
           // because when the CallWithChatPane is hidden, ie. style property display is 'none', it takes up no space. This causes problems when dragging
