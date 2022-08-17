@@ -69,6 +69,7 @@ export type CallControlOptions = {
    * @beta
    */
   onFetchCustomButtonProps?: CustomCallControlButtonCallback[];
+  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
   holdButton?: boolean | { disabled: boolean };
 };
 

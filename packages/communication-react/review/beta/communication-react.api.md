@@ -473,10 +473,16 @@ export type CallControlDisplayType = 'default' | 'compact';
 // @public
 export type CallControlOptions = {
     displayType?: CallControlDisplayType;
-    cameraButton?: boolean;
+    cameraButton?: boolean | {
+        disabled: boolean;
+    };
     endCallButton?: boolean;
-    microphoneButton?: boolean;
-    devicesButton?: boolean;
+    microphoneButton?: boolean | {
+        disabled: boolean;
+    };
+    devicesButton?: boolean | {
+        disabled: boolean;
+    };
     participantsButton?: boolean | {
         disabled: boolean;
     };
@@ -485,6 +491,9 @@ export type CallControlOptions = {
     };
     moreButton?: boolean;
     onFetchCustomButtonProps?: CustomCallControlButtonCallback[];
+    holdButton?: boolean | {
+        disabled: boolean;
+    };
 };
 
 // @public

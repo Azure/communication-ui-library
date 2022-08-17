@@ -37,6 +37,8 @@ export const HoldPage = (props: HoldPageProps): JSX.Element => {
     'devicesButton',
     'screenShareButton',
     'participantsButton',
+    /* @conditional-compile-remove(PSTN-calls) */
+    /* @conditional-compile-remove(one-to-n-calling) */
     'holdButton'
   ]);
 

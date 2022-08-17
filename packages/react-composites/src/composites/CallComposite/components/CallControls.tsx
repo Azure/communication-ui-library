@@ -253,7 +253,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
 };
 
 const isEnabled = (option: unknown): boolean => option !== false;
-/* @conditional-compile-remove(one-to-n-calling) */
+
 const isDisabled = (option?: boolean | { disabled: boolean }): boolean => {
   if (typeof option !== 'boolean') {
     return !!option?.disabled;

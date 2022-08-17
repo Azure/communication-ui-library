@@ -43,7 +43,7 @@ export interface CallWithChatControlBarProps {
   disableButtonsForLobbyPage: boolean;
   callControls?: boolean | CallWithChatControlOptions;
   chatAdapter: ChatAdapter;
-  disableButtonsForHoldScreen: boolean;
+  disableButtonsForHoldScreen?: boolean;
   /* @conditional-compile-remove(PSTN-calls) */
   onClickShowDialpad: () => void;
 }
