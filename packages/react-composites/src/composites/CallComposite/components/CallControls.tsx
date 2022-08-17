@@ -88,7 +88,8 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
   const dialpadStrings = useMemo(
     () => ({
       dialpadModalAriaLabel: localeStrings.strings.call.dialpadModalAriaLabel,
-      dialpadCloseModalButtonAriaLabel: localeStrings.strings.call.dialpadCloseModalButtonAriaLabel
+      dialpadCloseModalButtonAriaLabel: localeStrings.strings.call.dialpadCloseModalButtonAriaLabel,
+      placeholderText: localeStrings.strings.call.dtmfDialpadPlaceHolderText
     }),
     [localeStrings]
   );
@@ -96,7 +97,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
   /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
   const holdButtonProps = usePropsFor(HoldButton);
 
-  /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(one-to-n-calling) */
+  /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */
   const moreButtonContextualMenuItems = (): IContextualMenuItem[] => {
     const items: IContextualMenuItem[] = [];
 
@@ -123,6 +124,19 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
         holdButtonProps.onToggleHold();
       },
       iconProps: { iconName: 'HoldCall', styles: { root: { lineHeight: 0 } } },
+      itemProps: {
+        styles: buttonFlyoutIncreasedSizeStyles
+      }
+    });
+
+    /* @conditional-compile-remove(PSTN-calls) */
+    items.push({
+      key: 'showDialpadKey',
+      text: localeStrings.strings.call.openDtmfDialpad,
+      onClick: () => {
+        setShowDialpad(true);
+      },
+      iconProps: { iconName: 'Dialpad', styles: { root: { lineHeight: 0 } } },
       itemProps: {
         styles: buttonFlyoutIncreasedSizeStyles
       }
