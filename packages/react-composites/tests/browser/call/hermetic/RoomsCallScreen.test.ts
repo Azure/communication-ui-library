@@ -7,7 +7,7 @@ import { dataUiId, pageClick, stableScreenshot, waitForSelector } from '../../co
 import { IDS } from '../../common/constants';
 
 test.describe('Rooms DeviceButton tests for different roles', async () => {
-  test.only('All devices are shown for Presenter', async ({ page, serverUrl }) => {
+  test('All devices are shown for Presenter', async ({ page, serverUrl }) => {
     const initialState = defaultMockCallAdapterState();
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { role: 'Presenter' }));
     await waitForSelector(page, dataUiId(IDS.videoGallery));
@@ -18,7 +18,7 @@ test.describe('Rooms DeviceButton tests for different roles', async () => {
     );
   });
 
-  test.only('All devices are shown for Attendee', async ({ page, serverUrl }) => {
+  test('All devices are shown for Attendee', async ({ page, serverUrl }) => {
     const initialState = defaultMockCallAdapterState();
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { role: 'Attendee' }));
     await waitForSelector(page, dataUiId(IDS.videoGallery));
@@ -59,7 +59,7 @@ test.describe('Rooms CallScreen tests for different roles', async () => {
     expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot('rooms-call-screen-attendee.png');
   });
 
-  test.only('Only few CallControls are enabled for Consumer with remote participants', async ({ page, serverUrl }) => {
+  test('Only few CallControls are enabled for Consumer with remote participants', async ({ page, serverUrl }) => {
     const paul = defaultMockRemoteParticipant('Paul Bridges');
     const vasily = defaultMockRemoteParticipant('Vasily Podkolzin');
     const participants = [paul, vasily];
