@@ -92,7 +92,13 @@ export type ComponentProps<Component extends (props: any) => JSX.Element> = Chat
   : ChatReturnProps<Component>;
 
 /**
- * Primary hook to get all hooks necessary for a React Component from this library..
+ * Primary hook to get all hooks necessary for a React Component from this library.
+ *
+ * To call this hook, the component requires to be wrapped under these providers:
+ *
+ * 1. For chat components: {@link ChatClientProvider} and {@link ChatThreadClientProvider}.
+ *
+ * 2. For calling components: {@link CallClientProvider}, {@link CallAgentProvider} and {@link CallAgentProvider}.
  *
  * Most straightforward usage of a components looks like:
  *
@@ -134,5 +140,9 @@ export const usePropsFor = <Component extends (props: any) => JSX.Element>(
     return { ...callProps, ...callingHandlers } as any;
   }
 
-  throw "Can't find corresponding selector for this component. Please check the supported components from Azure Communication UI Feature Component List.";
+  if (!chatSelector && !callingSelector) {
+    throw "Can't find corresponding selector for this component. Please check the supported components from Azure Communication UI Feature Component List.";
+  } else {
+    throw 'Could not find props for this component, ensure the component is wrapped by appropriate providers.';
+  }
 };
