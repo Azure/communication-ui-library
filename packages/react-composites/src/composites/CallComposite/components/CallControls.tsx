@@ -35,6 +35,7 @@ import { usePropsFor } from '../hooks/usePropsFor';
 import { buttonFlyoutIncreasedSizeStyles } from '../styles/Buttons.styles';
 /* @conditional-compile-remove(PSTN-calls) */
 import { SendDtmfDialpad } from '../../common/SendDtmfDialpad';
+/* @conditional-compile-remove(PSTN-calls) */
 import { useAdapter } from '../adapter/CallAdapterProvider';
 
 /**
