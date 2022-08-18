@@ -51,8 +51,6 @@ export type CallControlsProps = {
    */
   increaseFlyoutItemSize?: boolean;
   isMobile?: boolean;
-  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
-  disableForHoldScreen?: boolean;
 };
 
 // Enforce a background color on control bar to ensure it matches the composite background color.
@@ -116,7 +114,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
         itemProps: {
           styles: buttonFlyoutIncreasedSizeStyles
         },
-        ['data-ui-id']: 'people-button-call-composite-mobile'
+        ['data-ui-id']: 'call-composite-more-menu-people-button'
       });
     }
 
