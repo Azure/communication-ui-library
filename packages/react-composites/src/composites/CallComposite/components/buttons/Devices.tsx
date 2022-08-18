@@ -31,6 +31,7 @@ export const Devices = (props: {
       {...devicesButtonProps}
       showLabel={props.displayType !== 'compact'}
       styles={styles}
+      data-ui-id="calling-composite-devices-button"
       disabled={props.disabled}
     />
   );
