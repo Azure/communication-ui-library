@@ -253,7 +253,7 @@ test.describe('CallWithChat Composite CallWithChat Page Tests', () => {
     await pageClick(page, dataUiId('call-with-chat-composite-more-button'));
     const moreButtonHoldCallButton = await page.$('div[role="menu"] >> text="Hold call"');
     await moreButtonHoldCallButton?.click();
-    await pageClick(page, dataUiId('call-with-chat-composite-more-button'));
+
     await waitForSelector(page, dataUiId('hold-page'));
     expect(await stableScreenshot(page)).toMatchSnapshot(`call-with-chat-more-drawer-hold-call.png`);
   });
