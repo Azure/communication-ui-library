@@ -22,5 +22,6 @@ export const IDS = {
   horizontalGalleryLeftNavButton: 'horizontal-gallery-left-nav-button',
   horizontalGalleryRightNavButton: 'horizontal-gallery-right-nav-button',
   readReceiptTooltip: 'chat-composite-message-tooltip',
-  fileTypeIcon: 'filetype-icon'
+  fileTypeIcon: 'filetype-icon',
+  deviceButton: 'calling-composite-devices-button'
 };
