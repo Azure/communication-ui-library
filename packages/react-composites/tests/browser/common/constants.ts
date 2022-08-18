@@ -23,6 +23,7 @@ export const IDS = {
   horizontalGalleryRightNavButton: 'horizontal-gallery-right-nav-button',
   readReceiptTooltip: 'chat-composite-message-tooltip',
   fileTypeIcon: 'filetype-icon',
+  deviceButton: 'calling-composite-devices-button',
   resumeCallButton: 'hold-page-resume-call-button',
   holdButton: 'hold-button',
   holdPage: 'hold-page',

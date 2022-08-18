@@ -32,20 +32,20 @@ const validLocalVideoStreamMock: LocalVideoStreamState = {
 };
 
 describe('callUtils tests', () => {
-  test('isInCall should return true if state is anything other than none or disconnected', () => {
+  test('isInCall should return true if state is Conneted or InLobby', () => {
     // false conditions
     expect(_isInCall('None')).toEqual(false);
     expect(_isInCall('Disconnected')).toEqual(false);
     expect(_isInCall('Connecting')).toEqual(false);
+    expect(_isInCall('LocalHold')).toEqual(false);
+    expect(_isInCall('Ringing')).toEqual(false);
+    expect(_isInCall('EarlyMedia')).toEqual(false);
 
     // true conditions
-    expect(_isInCall('Ringing')).toEqual(true);
     expect(_isInCall('Connected')).toEqual(true);
-    expect(_isInCall('LocalHold')).toEqual(true);
-    expect(_isInCall('RemoteHold')).toEqual(true);
     expect(_isInCall('InLobby')).toEqual(true);
     expect(_isInCall('Disconnecting')).toEqual(true);
-    expect(_isInCall('EarlyMedia')).toEqual(true);
+    expect(_isInCall('RemoteHold')).toEqual(true);
   });
 
   test('_isPreviewOn should return true if detached views exist in the device manager', () => {

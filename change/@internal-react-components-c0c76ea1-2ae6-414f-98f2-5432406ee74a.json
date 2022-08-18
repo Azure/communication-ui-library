@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "set default for dialpad showdelete button",
+  "packageName": "@internal/react-components",
+  "email": "carolinecao@microsoft.com",
+  "dependentChangeType": "none"
+}

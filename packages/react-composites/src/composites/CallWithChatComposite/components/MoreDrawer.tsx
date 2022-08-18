@@ -87,7 +87,9 @@ export interface MoreDrawerProps extends MoreDrawerDevicesMenuProps {
   onLightDismiss: () => void;
   onPeopleButtonClicked: () => void;
   callControls?: boolean | CallWithChatControlOptions;
+  onClickShowDialpad?: () => void;
   strings: MoreDrawerStrings;
+  disableButtonsForHoldScreen?: boolean;
 }
 
 const inferCallWithChatControlOptions = (
@@ -129,6 +131,7 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
   if (props.speakers && props.speakers.length > 0) {
     drawerMenuItems.push({
       itemKey: 'speakers',
+      disabled: props.disableButtonsForHoldScreen,
       text: props.strings.speakerMenuTitle,
       iconProps: { iconName: 'MoreDrawerSpeakers' },
       subMenuProps: props.speakers.map((speaker) => ({
@@ -170,6 +173,7 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
 
     drawerMenuItems.push({
       itemKey: itemKey,
+      disabled: props.disableButtonsForHoldScreen,
       text: text,
       iconProps: { iconName: iconName },
       subMenuProps: props.microphones.map((mic) => ({
@@ -184,7 +188,6 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
       secondaryText: props.selectedMicrophone?.name
     });
   }
-
   if (drawerSelectionOptions !== false && isEnabled(drawerSelectionOptions?.peopleButton)) {
     drawerMenuItems.push({
       itemKey: 'people',
@@ -198,11 +201,25 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
   if (drawerSelectionOptions !== false && isEnabled(drawerSelectionOptions?.peopleButton)) {
     drawerMenuItems.push({
       itemKey: 'holdButtonKey',
+      disabled: props.disableButtonsForHoldScreen,
       text: localeStrings.component.strings.holdButton.tooltipOffContent,
       onItemClick: () => {
         holdButtonProps.onToggleHold();
       },
       iconProps: { iconName: 'HoldCall', styles: { root: { lineHeight: 0 } } }
+    });
+  }
+
+  /*@conditional-compile-remove(PSTN-calls) */
+  if (drawerSelectionOptions !== false && isEnabled(drawerSelectionOptions?.peopleButton) && props.onClickShowDialpad) {
+    drawerMenuItems.push({
+      itemKey: 'showDialpadKey',
+      disabled: props.disableButtonsForHoldScreen,
+      text: localeStrings.strings.callWithChat.openDtmfDialpad,
+      onItemClick: () => {
+        props.onClickShowDialpad && props.onClickShowDialpad();
+      },
+      iconProps: { iconName: 'Dialpad', styles: { root: { lineHeight: 0 } } }
     });
   }
 

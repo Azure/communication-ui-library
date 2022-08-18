@@ -17,6 +17,12 @@ import {
   resumeButtonStyles
 } from '../styles/HoldPane.styles';
 
+interface HoldPaneStrings {
+  holdScreenLabel: string;
+  resumeCallButtonLabel: string;
+  resumeCallButtonAriaLabel: string;
+}
+
 /**
  * Hold pane to display when the user places themselves on hold
  *
@@ -42,17 +48,17 @@ export const HoldPane = (): JSX.Element => {
     return () => {
       clearInterval(interval);
     };
-  });
+  }, [startTime]);
 
   return (
     <Stack styles={paneStyles}>
       <Stack horizontal styles={holdPaneContentStyles}>
-        <Text styles={holdPaneTimerStyles()}>{elapsedTime}</Text>
-        <Text styles={holdPaneLabelStyles()}>{strings.holdScreenLabel}</Text>
+        <Text styles={holdPaneTimerStyles}>{elapsedTime}</Text>
+        <Text styles={holdPaneLabelStyles}>{strings.holdScreenLabel}</Text>
         <PrimaryButton
           text={strings.resumeCallButtonLabel}
           ariaLabel={strings.resumeCallButtonAriaLabel}
-          styles={resumeButtonStyles()}
+          styles={resumeButtonStyles}
           onClick={() => {
             /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
             holdButtonProps.onToggleHold();
@@ -65,25 +71,28 @@ export const HoldPane = (): JSX.Element => {
 };
 
 const getMinutes = (time: number): number => {
-  return Math.floor((time / 60000) % 60);
+  return Math.floor(getSeconds(time) / 60);
 };
 
 const getSeconds = (time: number): number => {
-  return Math.floor((time / 1000) % 60);
+  return Math.floor(time / 1000);
 };
 
 const getHours = (time: number): number => {
   return Math.floor(getMinutes(time) / 60);
 };
 
-const getReadableTime = (time: number): string => {
+/**
+ * @internal
+ */
+export const getReadableTime = (time: number): string => {
   const hours = getHours(time);
-  const readableMinutes = ('0' + getMinutes(time)).slice(-2);
-  const readableSeconds = ('0' + getSeconds(time)).slice(-2);
+  const readableMinutes = ('0' + (getMinutes(time) % 60)).slice(-2);
+  const readableSeconds = ('0' + (getSeconds(time) % 60)).slice(-2);
   return `${hours > 0 ? hours + ':' : ''}${readableMinutes}:${readableSeconds}`;
 };
 
-const stringsTrampoline = (locale: CompositeLocale) => {
+const stringsTrampoline = (locale: CompositeLocale): HoldPaneStrings => {
   /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
   return {
     holdScreenLabel: locale.strings.call.holdScreenLabel,

@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 import React from 'react';
 import { useMemo } from 'react';
-import { Dialpad, DialpadStrings, DialpadStyles } from '@internal/react-components';
+import { Dialpad, DialpadStyles } from '@internal/react-components';
 import { _DrawerMenu, _DrawerMenuItemProps, _DrawerSurface } from '@internal/react-components';
 import { IModalStyles, Modal, Stack, useTheme, IconButton } from '@fluentui/react';
 
@@ -14,6 +14,7 @@ import { usePropsFor } from '../CallComposite/hooks/usePropsFor';
 export interface SendDtmfDialpadStrings {
   dialpadModalAriaLabel: string;
   dialpadCloseModalButtonAriaLabel: string;
+  placeholderText: string;
 }
 
 /** @private */
@@ -40,10 +41,6 @@ export const SendDtmfDialpad = (props: SendDtmfDialpadProps): JSX.Element => {
 
   const dialpadStyle: Partial<DialpadStyles> = useMemo(() => themedDialpadStyle(isMobile, theme), [theme, isMobile]);
 
-  const dialpadStrings: DialpadStrings = {
-    placeholderText: ''
-  };
-
   if (isMobile) {
     return (
       <Stack>
@@ -51,7 +48,7 @@ export const SendDtmfDialpad = (props: SendDtmfDialpadProps): JSX.Element => {
           <Stack styles={drawerContainerStyles}>
             <_DrawerSurface onLightDismiss={onDismissTriggered}>
               <Stack style={{ padding: '1rem' }}>
-                <Dialpad styles={dialpadStyle} {...dialpadProps} showDeleteButton={false} />
+                <Dialpad styles={dialpadStyle} {...dialpadProps} showDeleteButton={false} strings={strings} />
               </Stack>
             </_DrawerSurface>
           </Stack>
@@ -80,7 +77,7 @@ export const SendDtmfDialpad = (props: SendDtmfDialpadProps): JSX.Element => {
           </Stack>
 
           <Stack>
-            <Dialpad styles={dialpadStyle} {...dialpadProps} showDeleteButton={false} strings={dialpadStrings} />
+            <Dialpad styles={dialpadStyle} {...dialpadProps} showDeleteButton={false} strings={strings} />
           </Stack>
         </Modal>
       }

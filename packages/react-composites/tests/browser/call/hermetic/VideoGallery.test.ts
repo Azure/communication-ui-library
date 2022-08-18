@@ -51,4 +51,23 @@ test.describe('VideoGallery tests', async () => {
       'video-gallery-with-2-joining-gridview-participant.png'
     );
   });
+
+  test('VideoGallery Should show the remote participant on hold', async ({ page, serverUrl }) => {
+    test.skip(isTestProfileStableFlavor());
+
+    const paul = defaultMockRemoteParticipant('Paul Bridges');
+    paul.state = 'Hold';
+    const phoneUser = defaultMockRemotePSTNParticipant('+15555555555');
+    phoneUser.state = 'Connecting';
+
+    const participants = [paul, phoneUser];
+    const initialState = defaultMockCallAdapterState(participants);
+
+    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
+
+    await waitForSelector(page, dataUiId(IDS.videoGallery));
+    expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot(
+      'video-gallery-with-1-joining-1-hold-gridview-participant.png'
+    );
+  });
 });

@@ -21,7 +21,7 @@ export const fetchTokenResponse = async (): Promise<any> => {
       return responseAsJson;
     }
   }
-  throw 'Invalid token response';
+  throw new Error('Invalid token response');
 };
 
 /**
@@ -42,21 +42,16 @@ export const getGroupIdFromUrl = (): GroupLocator | undefined => {
 export const createGroupId = (): GroupLocator => ({ groupId: generateGUID() });
 
 /* @conditional-compile-remove(rooms) */
-export const ROOMS_API_BASE_URL = 'http://localhost:7071';
-
-/* @conditional-compile-remove(rooms) */
-export const createRoomId = async (): Promise<string> => {
+/**
+ * Create an ACS room
+ */
+export const createRoom = async (): Promise<string> => {
   const requestOptions = {
-    method: 'POST',
-    headers: {
-      Host: 'alkwa-fn-test.azurewebsites.net',
-      'Content-Type': 'application/json',
-      'Referrer-Policy': 'no-referrer'
-    }
+    method: 'POST'
   };
-  const response = await fetch(ROOMS_API_BASE_URL + '/api/Rooms-CreateRoom', requestOptions);
+  const response = await fetch(`/createRoom`, requestOptions);
   if (!response.ok) {
-    throw 'Invalid token response';
+    throw 'Unable to create room';
   }
 
   const body = await response.json();
@@ -65,19 +60,19 @@ export const createRoomId = async (): Promise<string> => {
 
 /* @conditional-compile-remove(rooms) */
 /**
- * Joins an ACS room with a given roomId and role
+ * Add user to an ACS room with a given roomId and role
  */
-export const joinRoom = async (userId: string, roomId: string, role: Role): Promise<void> => {
+export const addUserToRoom = async (userId: string, roomId: string, role: Role): Promise<void> => {
   const requestOptions = {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ acsUserId: userId, roomId: roomId, role: role })
+    body: JSON.stringify({ userId: userId, roomId: roomId, role: role })
   };
-  const response = await fetch(ROOMS_API_BASE_URL + '/api/Rooms-AddParticipants', requestOptions);
+  const response = await fetch('/addUserToRoom', requestOptions);
   if (!response.ok) {
-    throw 'Invalid token response';
+    throw 'Unable to add user to room';
   }
 };
 

@@ -1,6 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import { expect } from '@playwright/test';
+import { IDS } from '../../common/constants';
+import { dataUiId, isTestProfileStableFlavor, pageClick, stableScreenshot, waitForSelector } from '../../common/utils';
 import {
   addScreenshareStream,
   addVideoStream,
@@ -10,9 +13,6 @@ import {
   defaultMockRemotePSTNParticipant,
   test
 } from './fixture';
-import { expect } from '@playwright/test';
-import { dataUiId, pageClick, waitForSelector, stableScreenshot, isTestProfileStableFlavor } from '../../common/utils';
-import { IDS } from '../../common/constants';
 
 test.describe('HorizontalGallery tests', async () => {
   test('HorizontalGallery should have 1 audio participant', async ({ page, serverUrl }) => {
@@ -204,6 +204,25 @@ test.describe('HorizontalGallery tests', async () => {
     await waitForSelector(page, dataUiId(IDS.videoGallery));
     expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot(
       'horizontal-gallery-with-2-joining-participants.png'
+    );
+  });
+
+  test('Horizontal gallery Should have 1 PSTN and 1 On Hold participant', async ({ page, serverUrl }) => {
+    test.skip(isTestProfileStableFlavor());
+
+    const reina = defaultMockRemoteParticipant('Reina Takizawa');
+    reina.state = 'Hold';
+    const phoneUser = defaultMockRemotePSTNParticipant('+15555555555');
+    phoneUser.state = 'Connecting';
+
+    const participants = [reina, phoneUser];
+    const initialState = defaultMockCallAdapterState(participants);
+
+    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
+
+    await waitForSelector(page, dataUiId(IDS.videoGallery));
+    expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot(
+      'horizontal-gallery-with-1-joining-1-hold-participants.png'
     );
   });
 });
