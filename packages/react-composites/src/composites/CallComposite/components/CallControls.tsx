@@ -114,7 +114,8 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
         iconProps: { iconName: 'ControlButtonParticipants', styles: { root: { lineHeight: 0 } } },
         itemProps: {
           styles: buttonFlyoutIncreasedSizeStyles
-        }
+        },
+        ['data-ui-id']: 'people-button-call-composite-mobile'
       });
     }
 
@@ -127,7 +128,8 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
       iconProps: { iconName: 'HoldCall', styles: { root: { lineHeight: 0 } } },
       itemProps: {
         styles: buttonFlyoutIncreasedSizeStyles
-      }
+      },
+      ['data-ui-id']: 'hold-button'
     });
 
     return items;
