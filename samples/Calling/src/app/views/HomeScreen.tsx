@@ -190,7 +190,8 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                        * We need to pass in the formatting for the phone number string in the onChange handler
                        * to make sure the phone number is in E.164 format.
                        */
-                      const phoneNumber = '+' + newValue?.replace('[^0-9]', '');
+                      const phoneNumber = '+' + newValue?.replaceAll('(', '').replaceAll(')', '').replaceAll(' ', '');
+                      console.log(phoneNumber);
                       setDialpadParticipant(phoneNumber);
                     }}
                   />
