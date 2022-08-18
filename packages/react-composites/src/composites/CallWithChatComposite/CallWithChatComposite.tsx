@@ -330,6 +330,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
               chatAdapter={chatProps.adapter}
               callAdapter={callAdapter}
               onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
+              onFetchParticipantMenuItems={props.onFetchParticipantMenuItems}
               onChatButtonClicked={showShowChatTabHeaderButton(props.callControls) ? selectChat : undefined}
               onPeopleButtonClicked={showShowPeopleTabHeaderButton(props.callControls) ? selectPeople : undefined}
               modalLayerHostId={modalLayerHostId}
