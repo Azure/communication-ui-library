@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add open dtmf dialpad option for calling and callwithchat",
+  "packageName": "@internal/react-composites",
+  "email": "carolinecao@microsoft.com",
+  "dependentChangeType": "patch"
+}

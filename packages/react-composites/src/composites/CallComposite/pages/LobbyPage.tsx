@@ -9,8 +9,7 @@ import { CallArrangement } from '../components/CallArrangement';
 import { usePropsFor } from '../hooks/usePropsFor';
 import { LobbyOverlayProps, LobbyTile } from '../components/LobbyTile';
 import { getCallStatus } from '../selectors/baseSelectors';
-import { reduceCallControlsForMobile } from '../utils';
-import { CallControlOptions } from '../types/CallControlOptions';
+import { disableCallControls, reduceCallControlsForMobile } from '../utils';
 import { CallCompositeStrings } from '../Strings';
 import { useLocale } from '../../localization';
 import { useLocalVideoStartTrigger } from '../components/MediaGallery';
@@ -44,7 +43,7 @@ export const LobbyPage = (props: LobbyPageProps): JSX.Element => {
     ? reduceCallControlsForMobile(props.options?.callControls)
     : props.options?.callControls;
 
-  callControlOptions = disableLobbyPageControls(callControlOptions);
+  callControlOptions = disableCallControls(callControlOptions, ['screenShareButton', 'participantsButton']);
 
   return (
     <CallArrangement
@@ -61,29 +60,6 @@ export const LobbyPage = (props: LobbyPageProps): JSX.Element => {
       dataUiId={'lobby-page'}
     />
   );
-};
-
-const disableLobbyPageControls = (
-  callControlOptions: CallControlOptions | boolean | undefined
-): CallControlOptions | boolean | undefined => {
-  // Ensure we clone the prop if it is an object to ensure we do not mutate the original prop.
-  let newOptions = callControlOptions instanceof Object ? { ...callControlOptions } : callControlOptions;
-  if (newOptions !== false) {
-    if (newOptions === true || newOptions === undefined) {
-      newOptions = {
-        participantsButton: { disabled: true },
-        screenShareButton: { disabled: true }
-      };
-    } else {
-      if (newOptions.participantsButton !== false) {
-        newOptions.participantsButton = { disabled: true };
-      }
-      if (newOptions.screenShareButton !== false) {
-        newOptions.screenShareButton = { disabled: true };
-      }
-    }
-  }
-  return newOptions;
 };
 
 const overlayProps = (strings: CallCompositeStrings, inLobby: boolean): LobbyOverlayProps =>
