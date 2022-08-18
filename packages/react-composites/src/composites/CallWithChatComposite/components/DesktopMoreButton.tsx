@@ -18,6 +18,7 @@ import { useLocale } from '../../localization';
 
 /** @private */
 export interface DesktopMoreButtonProps extends ControlBarButtonProps {
+  disableButtonsForHoldScreen?: boolean;
   onClickShowDialpad?: () => void;
 }
 
@@ -53,7 +54,8 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
       iconProps: { iconName: 'HoldCall', styles: { root: { lineHeight: 0 } } },
       itemProps: {
         styles: buttonFlyoutIncreasedSizeStyles
-      }
+      },
+      disabled: props.disableButtonsForHoldScreen
     });
 
     /*@conditional-compile-remove(PSTN-calls) */
@@ -67,7 +69,8 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
         iconProps: { iconName: 'Dialpad', styles: { root: { lineHeight: 0 } } },
         itemProps: {
           styles: buttonFlyoutIncreasedSizeStyles
-        }
+        },
+        disabled: props.disableButtonsForHoldScreen
       });
     }
 

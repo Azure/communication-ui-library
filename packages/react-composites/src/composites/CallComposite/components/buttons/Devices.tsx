@@ -12,6 +12,7 @@ export const Devices = (props: {
   displayType?: CallControlDisplayType;
   increaseFlyoutItemSize?: boolean;
   styles?: ControlBarButtonStyles;
+  disabled?: boolean;
 }): JSX.Element => {
   const devicesButtonProps = usePropsFor(DevicesButton);
   const styles = useMemo(
@@ -30,6 +31,7 @@ export const Devices = (props: {
       {...devicesButtonProps}
       showLabel={props.displayType !== 'compact'}
       styles={styles}
+      disabled={props.disabled}
     />
   );
 };
