@@ -99,7 +99,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
   /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
   const holdButtonProps = usePropsFor(HoldButton);
 
-  /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(one-to-n-calling) */
+  /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */
   const moreButtonContextualMenuItems = (): IContextualMenuItem[] => {
     const items: IContextualMenuItem[] = [];
 
@@ -204,7 +204,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
             />
           )}
           {isEnabled(options?.participantsButton) &&
-            /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(one-to-n-calling) */
+            /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */
             !props.isMobile && (
               <Participants
                 option={options?.participantsButton}
@@ -216,7 +216,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
                 disabled={isDisabled(options?.participantsButton)}
               />
             ) && (
-              /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(one-to-n-calling) */
+              /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */
               <People
                 checked={props.peopleButtonChecked}
                 showLabel={options?.displayType !== 'compact'}
@@ -234,7 +234,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
             />
           )}
           {
-            /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(one-to-n-calling) */
+            /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */
             isEnabled(options?.moreButton) && (
               <MoreButton
                 strings={moreButtonStrings}
