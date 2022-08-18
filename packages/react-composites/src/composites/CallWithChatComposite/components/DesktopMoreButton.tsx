@@ -3,6 +3,8 @@
 
 import { IContextualMenuItem } from '@fluentui/react';
 import { ControlBarButtonProps } from '@internal/react-components';
+/* @conditional-compile-remove(PSTN-calls) */
+import { ParticipantList } from '@internal/react-components';
 /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
 import { HoldButton } from '@internal/react-components';
 import React from 'react';
@@ -19,6 +21,7 @@ import { useLocale } from '../../localization';
 /** @private */
 export interface DesktopMoreButtonProps extends ControlBarButtonProps {
   onClickShowDialpad?: () => void;
+  isPSTNCall: boolean;
 }
 
 /**
@@ -40,6 +43,9 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
     [localeStrings]
   );
 
+  /*@conditional-compile-remove(PSTN-calls) */
+  const participantNumber = usePropsFor(ParticipantList).participants.length;
+
   const moreButtonContextualMenuItems = (): IContextualMenuItem[] => {
     const items: IContextualMenuItem[] = [];
 
@@ -57,7 +63,8 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
     });
 
     /*@conditional-compile-remove(PSTN-calls) */
-    if (props.onClickShowDialpad) {
+    // dtmf tone sending only works for 1:1 PSTN call
+    if (props.onClickShowDialpad && props.isPSTNCall && participantNumber <= 2) {
       items.push({
         key: 'showDialpadKey',
         text: localeStrings.strings.callWithChat.openDtmfDialpad,

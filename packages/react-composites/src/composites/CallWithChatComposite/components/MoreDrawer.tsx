@@ -10,6 +10,8 @@ import {
   _DrawerMenuItemProps as DrawerMenuItemProps,
   _DrawerMenuItemProps
 } from '@internal/react-components';
+/* @conditional-compile-remove(PSTN-calls) */
+import { ParticipantList } from '@internal/react-components';
 /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
 import { HoldButton } from '@internal/react-components';
 import { AudioDeviceInfo } from '@azure/communication-calling';
@@ -127,6 +129,9 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
 
   const drawerSelectionOptions = inferCallWithChatControlOptions(props.callControls);
 
+  /*@conditional-compile-remove(PSTN-calls) */
+  const participantNumber = usePropsFor(ParticipantList).participants.length;
+
   if (props.speakers && props.speakers.length > 0) {
     drawerMenuItems.push({
       itemKey: 'speakers',
@@ -207,7 +212,13 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
   }
 
   /*@conditional-compile-remove(PSTN-calls) */
-  if (drawerSelectionOptions !== false && isEnabled(drawerSelectionOptions?.peopleButton) && props.onClickShowDialpad) {
+  // dtmf tone sending only works for 1:1 PSTN call
+  if (
+    drawerSelectionOptions !== false &&
+    isEnabled(drawerSelectionOptions?.peopleButton) &&
+    props.onClickShowDialpad &&
+    participantNumber <= 2
+  ) {
     drawerMenuItems.push({
       itemKey: 'showDialpadKey',
       text: localeStrings.strings.callWithChat.openDtmfDialpad,

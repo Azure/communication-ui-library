@@ -148,6 +148,10 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps & Cont
       newMessageLabel={callWithChatStrings.chatButtonNewMessageNotificationLabel}
     />
   );
+
+  /* @conditional-compile-remove(PSTN-calls) */
+  const alternateCallerId = props.callAdapter.getState().alternateCallerId;
+
   return (
     <Stack horizontal className={mergeStyles(callControlsContainerStyles, controlBarContainerStyles)}>
       <Stack.Item grow>
@@ -225,6 +229,7 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps & Cont
                         disabled={props.disableButtonsForLobbyPage}
                         styles={commonButtonStyles}
                         onClickShowDialpad={props.onClickShowDialpad}
+                        isPSTNCall={!!alternateCallerId}
                       />
                     )
                 }
