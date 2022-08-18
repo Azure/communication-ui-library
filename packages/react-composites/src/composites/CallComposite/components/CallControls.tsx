@@ -212,6 +212,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
                 displayType={options?.displayType}
                 increaseFlyoutItemSize={props.increaseFlyoutItemSize}
                 isMobile={props.isMobile}
+                disabled={isDisabled(options?.participantsButton)}
               />
             ) && (
               /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(one-to-n-calling) */
@@ -221,6 +222,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
                 onClick={props.onPeopleButtonClicked}
                 data-ui-id="call-composite-people-button"
                 strings={peopleButtonStrings}
+                disabled={isDisabled(options?.participantsButton)}
               />
             )}
           {isEnabled(options?.devicesButton) && (
