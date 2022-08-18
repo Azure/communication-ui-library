@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Hide dtmf dialpad when not in 1:1 pstn call",
+  "packageName": "@internal/react-composites",
+  "email": "carolinecao@microsoft.com",
+  "dependentChangeType": "patch"
+}
