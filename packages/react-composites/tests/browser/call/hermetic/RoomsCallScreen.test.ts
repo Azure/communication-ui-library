@@ -29,7 +29,7 @@ test.describe('Rooms DeviceButton tests for different roles', async () => {
     );
   });
 
-  test('Only few CallControls are enabled for Consumer with remote participants', async ({ page, serverUrl }) => {
+  test('Only speakers are shown for Consumer', async ({ page, serverUrl }) => {
     const paul = defaultMockRemoteParticipant('Paul Bridges');
     const vasily = defaultMockRemoteParticipant('Vasily Podkolzin');
     const participants = [paul, vasily];
@@ -52,14 +52,14 @@ test.describe('Rooms CallScreen tests for different roles', async () => {
     expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot('rooms-call-screen-presenter.png');
   });
 
-  test('All CallControls are enabled for Attendee', async ({ page, serverUrl }) => {
+  test('Screen Share is disabled for Attendee', async ({ page, serverUrl }) => {
     const initialState = defaultMockCallAdapterState();
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { role: 'Attendee' }));
     await waitForSelector(page, dataUiId(IDS.videoGallery));
     expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot('rooms-call-screen-attendee.png');
   });
 
-  test.only('Only speakers are shown for Consumer', async ({ page, serverUrl }) => {
+  test.only('Only few CallControls are enabled for Consumer with remote participants', async ({ page, serverUrl }) => {
     const paul = defaultMockRemoteParticipant('Paul Bridges');
     const vasily = defaultMockRemoteParticipant('Vasily Podkolzin');
     const participants = [paul, vasily];
