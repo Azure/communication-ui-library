@@ -26,5 +26,6 @@ export const IDS = {
   resumeCallButton: 'hold-page-resume-call-button',
   holdButton: 'hold-button',
   holdPage: 'hold-page',
-  moreButton: 'call-with-chat-composite-more-button'
+  moreButton: 'call-with-chat-composite-more-button',
+  callPage: 'call-page'
 };
