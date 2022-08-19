@@ -81,7 +81,7 @@ test.describe('Rooms CallScreen tests for different roles', async () => {
 });
 
 test.describe('Rooms Participant RemoveButton tests for different roles', async () => {
-  test.only('Remove button is enabled for Presenter', async ({ page, serverUrl }, testInfo) => {
+  test('Remove button is enabled for Presenter', async ({ page, serverUrl }, testInfo) => {
     test.skip(isTestProfileStableFlavor());
     const paul = defaultMockRemoteParticipant('Paul Bridges');
     const participants = [paul];
@@ -108,7 +108,7 @@ test.describe('Rooms Participant RemoveButton tests for different roles', async 
     );
   });
 
-  test.only('Remove button is disabled for Attendee', async ({ page, serverUrl }, testInfo) => {
+  test('Remove button is disabled for Attendee', async ({ page, serverUrl }, testInfo) => {
     test.skip(isTestProfileStableFlavor());
     const paul = defaultMockRemoteParticipant('Paul Bridges');
     const participants = [paul];
@@ -135,7 +135,7 @@ test.describe('Rooms Participant RemoveButton tests for different roles', async 
     );
   });
 
-  test.only('Remove button is disabled for Consumer', async ({ page, serverUrl }, testInfo) => {
+  test('Remove button is disabled for Consumer', async ({ page, serverUrl }, testInfo) => {
     test.skip(isTestProfileStableFlavor());
     const paul = defaultMockRemoteParticipant('Paul Bridges');
     const participants = [paul];
