@@ -2,13 +2,9 @@ import { Meta, Source } from '@storybook/addon-docs';
 
 import indexText from '!!raw-loader!./snippets/ReactIndex.snippet.tsx';
 
-<Meta
-  id="react-versioning"
-  title="React Versioning"
-  parameters={{ previewTabs: { canvas: { disable: true, hidden: true } } }}
-/>
+<Meta id="react-versioning" title="Setup" parameters={{ previewTabs: { canvas: { disable: true, hidden: true } } }} />
 
-# React Versioning
+# Setting up your app to use Azure Communications UI Library
 
 Currently the Azure Communications UI library supports react versions `>= 16.8.0` or ` < 18`
 
@@ -37,4 +33,6 @@ Once the create script has finished you will need to edit your `index.tsx` file 
 
 <Source code={indexText} />
 
-The newest version of react react 18 changes how your index.tsx file would look so this change is needed.
+The newest version of react react 18 changes how your index.tsx file would look so this change is needed. In our
+various tutorials we will show you how to setup your `App.tsx` file but `index.tsx` needs to be updated in
+this way due to changes to `ReactDom` in `React 18`.
