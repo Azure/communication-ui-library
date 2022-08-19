@@ -120,8 +120,8 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   };
 
   /* @conditional-compile-remove(one-to-n-calling) */
-  const callPaneContent = (): JSX.Element => {
-    if (adapter && _isInCall(callStatus)) {
+  const callPaneContent = useCallback((): JSX.Element => {
+    if (adapter && _isInCall(callStatus) && activePane === 'people') {
       return (
         <CallPane
           callAdapter={adapter}
@@ -139,7 +139,19 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
       );
     }
     return <></>;
-  };
+  }, [
+    activePane,
+    adapter,
+    callStatus,
+    closePane,
+    props.callControlProps.callInvitationURL,
+    props.callControlProps?.onFetchParticipantMenuItems,
+    props.callControlProps.options,
+    props.mobileView,
+    props.modalLayerHostId,
+    props.onFetchAvatarPersonaData,
+    selectPeople
+  ]);
 
   return (
     <div ref={containerRef} className={mergeStyles(containerDivStyles)}>
