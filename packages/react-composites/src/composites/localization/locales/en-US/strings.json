@@ -57,7 +57,7 @@
     "resumeCallButtonLabel": "Resume",
     "resumeCallButtonAriaLabel": "Resume call",
     "holdScreenLabel": "You're on hold",
-    "openDtmfDialpad": "Show Dialpad",
+    "openDtmfDialpadLabel": "Show Dialpad",
     "dtmfDialpadPlaceHolderText": "Enter number"
   },
   "chat": {
@@ -93,7 +93,7 @@
     "dialpadModalTitle": "Dial Phone Number",
     "dialpadModalAriaLabel": "Dialpad",
     "dialpadCloseModalButtonAriaLabel": "Close Dialpad",
-    "openDtmfDialpad": "Show Dialpad",
+    "openDtmfDialpadLabel": "Show Dialpad",
     "dtmfDialpadPlaceHolderText": "Enter number"
   }
 }

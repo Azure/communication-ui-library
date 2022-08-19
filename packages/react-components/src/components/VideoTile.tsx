@@ -15,7 +15,6 @@ import {
   disabledVideoHint,
   displayNameStyle,
   iconContainerStyle,
-  isSpeakingBorderDiv,
   overlayContainerStyles,
   rootStyles,
   videoContainerStyles,
@@ -240,16 +239,20 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
             background: theme.palette.neutralLighter,
             borderRadius: theme.effects.roundedCorner4
           },
+          isSpeaking && {
+            '&::before': {
+              content: `''`,
+              position: 'absolute',
+              zIndex: 1,
+              border: `0.25rem solid ${theme.palette.themePrimary}`,
+              borderRadius: theme.effects.roundedCorner4,
+              width: '100%',
+              height: '100%'
+            }
+          },
           styles?.root
         )}
       >
-        <div
-          className={mergeStyles(isSpeakingBorderDiv, {
-            borderRadius: theme.effects.roundedCorner4,
-            border: `0.25rem solid ${isSpeaking ? theme.palette.themePrimary : 'transparent'}`
-          })}
-        />
-
         {isVideoRendered ? (
           <Stack
             className={mergeStyles(

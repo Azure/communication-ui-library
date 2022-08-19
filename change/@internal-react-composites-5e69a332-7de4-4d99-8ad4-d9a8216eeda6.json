@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "change show dialpad button name",
+  "packageName": "@internal/react-composites",
+  "email": "carolinecao@microsoft.com",
+  "dependentChangeType": "patch"
+}

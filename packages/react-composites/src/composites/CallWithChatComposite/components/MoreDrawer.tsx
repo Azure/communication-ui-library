@@ -215,7 +215,7 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
     drawerMenuItems.push({
       itemKey: 'showDialpadKey',
       disabled: props.disableButtonsForHoldScreen,
-      text: localeStrings.strings.callWithChat.openDtmfDialpad,
+      text: localeStrings.strings.callWithChat.openDtmfDialpadLabel,
       onItemClick: () => {
         props.onClickShowDialpad && props.onClickShowDialpad();
       },
