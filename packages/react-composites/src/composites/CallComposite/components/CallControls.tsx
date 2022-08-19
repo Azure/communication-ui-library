@@ -113,7 +113,8 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
         iconProps: { iconName: 'ControlButtonParticipants', styles: { root: { lineHeight: 0 } } },
         itemProps: {
           styles: buttonFlyoutIncreasedSizeStyles
-        }
+        },
+        ['data-ui-id']: 'call-composite-more-menu-people-button'
       });
     }
 
@@ -126,13 +127,15 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
       iconProps: { iconName: 'HoldCall', styles: { root: { lineHeight: 0 } } },
       itemProps: {
         styles: buttonFlyoutIncreasedSizeStyles
-      }
+      },
+      disabled: isDisabled(options?.holdButton),
+      ['data-ui-id']: 'call-composite-more-menu-hold-button'
     });
 
     /* @conditional-compile-remove(PSTN-calls) */
     items.push({
       key: 'showDialpadKey',
-      text: localeStrings.strings.call.openDtmfDialpad,
+      text: localeStrings.strings.call.openDtmfDialpadLabel,
       onClick: () => {
         setShowDialpad(true);
       },
@@ -186,13 +189,22 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
             occluding some of its content.
          */}
         <ControlBar layout="horizontal" styles={controlBarStyles(theme.semanticColors.bodyBackground)}>
-          {isEnabled(options?.microphoneButton) && <Microphone displayType={options?.displayType} />}
-          {isEnabled(options?.cameraButton) && <Camera displayType={options?.displayType} />}
+          {isEnabled(options?.microphoneButton) && (
+            <Microphone displayType={options?.displayType} disabled={isDisabled(options?.microphoneButton)} />
+          )}
+          {isEnabled(options?.cameraButton) && (
+            <Camera displayType={options?.displayType} disabled={isDisabled(options?.cameraButton)} />
+          )}
           {isEnabled(options?.screenShareButton) && (
-            <ScreenShare option={options?.screenShareButton} displayType={options?.displayType} />
+            <ScreenShare
+              option={options?.screenShareButton}
+              displayType={options?.displayType}
+              disabled={isDisabled(options?.screenShareButton)}
+            />
           )}
           {isEnabled(options?.participantsButton) &&
-            /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(one-to-n-calling) */ !props.isMobile && (
+            /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(one-to-n-calling) */
+            !props.isMobile && (
               <Participants
                 option={options?.participantsButton}
                 callInvitationURL={props.callInvitationURL}
@@ -200,6 +212,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
                 displayType={options?.displayType}
                 increaseFlyoutItemSize={props.increaseFlyoutItemSize}
                 isMobile={props.isMobile}
+                disabled={isDisabled(options?.participantsButton)}
               />
             ) && (
               /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(one-to-n-calling) */
@@ -207,13 +220,17 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
                 checked={props.peopleButtonChecked}
                 showLabel={options?.displayType !== 'compact'}
                 onClick={props.onPeopleButtonClicked}
-                data-ui-id="call-with-chat-composite-people-button"
-                disabled={isDisabled(options?.participantsButton)}
+                data-ui-id="call-composite-people-button"
                 strings={peopleButtonStrings}
+                disabled={isDisabled(options?.participantsButton)}
               />
             )}
           {isEnabled(options?.devicesButton) && (
-            <Devices displayType={options?.displayType} increaseFlyoutItemSize={props.increaseFlyoutItemSize} />
+            <Devices
+              displayType={options?.displayType}
+              increaseFlyoutItemSize={props.increaseFlyoutItemSize}
+              disabled={isDisabled(options?.devicesButton)}
+            />
           )}
           {
             /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(one-to-n-calling) */
@@ -235,10 +252,10 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
 };
 
 const isEnabled = (option: unknown): boolean => option !== false;
-/* @conditional-compile-remove(one-to-n-calling) */
+
 const isDisabled = (option?: boolean | { disabled: boolean }): boolean => {
-  if (option === undefined || option === true || option === false) {
-    return false;
+  if (typeof option !== 'boolean') {
+    return !!option?.disabled;
   }
-  return option.disabled;
+  return option;
 };
