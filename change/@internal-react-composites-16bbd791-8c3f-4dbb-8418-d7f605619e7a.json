@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Added landmarks to chat sample",
-  "packageName": "@internal/react-composites",
-  "email": "carolinecao@microsoft.com",
-  "dependentChangeType": "patch"
-}
