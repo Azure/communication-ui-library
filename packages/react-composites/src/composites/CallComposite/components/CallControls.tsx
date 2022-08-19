@@ -128,6 +128,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
       itemProps: {
         styles: buttonFlyoutIncreasedSizeStyles
       },
+      disabled: isDisabled(options?.holdButton),
       ['data-ui-id']: 'hold-button'
     });
 
