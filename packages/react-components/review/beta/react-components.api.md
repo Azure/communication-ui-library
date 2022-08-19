@@ -1146,7 +1146,7 @@ export type _Permissions = {
     cameraButton: boolean;
     microphoneButton: boolean;
     screenShare: boolean;
-    participantList: boolean;
+    removeParticipantButton: boolean;
 };
 
 // @internal (undocumented)

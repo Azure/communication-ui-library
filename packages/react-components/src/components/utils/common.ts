@@ -4,6 +4,7 @@
 import { _FileUploadCardsStrings } from '../FileUploadCards';
 /* @conditional-compile-remove(file-sharing) */
 import { useLocale } from '../../localization';
+import { ParticipantState } from '../../types';
 
 /**
  * Conditionally modify locale strings passed to the file card
@@ -17,4 +18,11 @@ export const useLocaleFileCardStringsTrampoline = (): _FileUploadCardsStrings =>
     uploadCompleted: '',
     uploading: ''
   };
+};
+
+/**
+ * Identify if a participant state if part of the Calling states or Hold states.
+ */
+export const _isParticipantStateCallingOrHold = (participantState?: ParticipantState): boolean => {
+  return !!participantState && ['Idle', 'Connecting', 'EarlyMedia', 'Ringing', 'Hold'].includes(participantState);
 };

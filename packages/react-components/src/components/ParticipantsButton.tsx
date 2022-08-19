@@ -176,9 +176,7 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
     showParticipantOverflowTooltip
   } = props;
 
-  let disabled = props.disabled;
-  /* @conditional-compile-remove(rooms) */
-  disabled = disabled || !_usePermissions().participantList;
+  const disabled = props.disabled;
 
   const onRenderPeopleIcon = (): JSX.Element => (
     <HighContrastAwareIcon disabled={disabled} iconName="ControlButtonParticipants" />

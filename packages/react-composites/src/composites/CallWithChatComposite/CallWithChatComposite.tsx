@@ -33,6 +33,10 @@ import { containerDivStyles } from '../common/ContainerRectProps';
 /* @conditional-compile-remove(control-bar-button-injection) */
 import { CustomCallWithChatControlButtonCallback } from './CustomButton';
 import { modalLayerHostStyle } from '../common/styles/ModalLocalAndRemotePIP.styles';
+/* @conditional-compile-remove(PSTN-calls) */
+import { SendDtmfDialpad } from '../common/SendDtmfDialpad';
+/* @conditional-compile-remove(PSTN-calls) */
+import { useCallWithChatCompositeStrings } from './hooks/useCallWithChatCompositeStrings';
 
 /**
  * Props required for the {@link CallWithChatComposite}
@@ -141,6 +145,11 @@ export interface CallWithChatControlOptions {
    * Show or hide the more button in the call-with-chat control bar.
    */
   moreButton?: boolean;
+  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+  /**
+   * Show or hide the hold button in the bottom sheet drawer
+   */
+  holdButton?: boolean;
 }
 
 type CallWithChatScreenProps = {
@@ -201,6 +210,8 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
   const modalLayerHostId = useId('modalLayerhost');
 
   const isInLobbyOrConnecting = currentPage === 'lobby';
+  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+  const isInLocalHold = currentPage === 'hold';
   const hasJoinedCall = !!(currentPage && hasJoinedCallFn(currentPage, currentCallState ?? 'None'));
   const showControlBar = isInLobbyOrConnecting || hasJoinedCall;
   const isMobileWithActivePane = mobileView && activePane !== 'none';
@@ -266,6 +277,32 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
     return { display: isMobileWithActivePane ? 'none' : 'flex' };
   }, [isMobileWithActivePane]);
 
+  /* @conditional-compile-remove(PSTN-calls) */
+  const [showDtmfDialpad, setShowDtmfDialpad] = useState(false);
+
+  /* @conditional-compile-remove(PSTN-calls) */
+  const onDismissDtmfDialpad = (): void => {
+    setShowDtmfDialpad(false);
+  };
+
+  /* @conditional-compile-remove(PSTN-calls) */
+  const onClickShowDialpad = (): void => {
+    setShowDtmfDialpad(true);
+  };
+
+  /* @conditional-compile-remove(PSTN-calls) */
+  const callWithChatStrings = useCallWithChatCompositeStrings();
+
+  /* @conditional-compile-remove(PSTN-calls) */
+  const dialpadStrings = useMemo(
+    () => ({
+      dialpadModalAriaLabel: callWithChatStrings.dialpadModalAriaLabel,
+      dialpadCloseModalButtonAriaLabel: callWithChatStrings.dialpadCloseModalButtonAriaLabel,
+      placeholderText: callWithChatStrings.dtmfDialpadPlaceHolderText
+    }),
+    [callWithChatStrings]
+  );
+
   return (
     <div ref={containerRef} className={mergeStyles(containerDivStyles)}>
       <Stack verticalFill grow styles={compositeOuterContainerStyles} id={compositeParentDivId}>
@@ -317,9 +354,13 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
                 onMoreButtonClicked={onMoreButtonClicked}
                 mobileView={mobileView}
                 disableButtonsForLobbyPage={isInLobbyOrConnecting}
+                /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+                disableButtonsForHoldScreen={isInLocalHold}
                 callControls={props.callControls}
                 containerHeight={containerHeight}
                 containerWidth={containerWidth}
+                /* @conditional-compile-remove(PSTN-calls) */
+                onClickShowDialpad={onClickShowDialpad}
               />
             </Stack.Item>
           </ChatAdapterProvider>
@@ -332,11 +373,33 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
                   callControls={props.callControls}
                   onLightDismiss={closeDrawer}
                   onPeopleButtonClicked={onMoreDrawerPeopleClicked}
+                  /* @conditional-compile-remove(PSTN-calls) */
+                  onClickShowDialpad={onClickShowDialpad}
+                  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+                  disableButtonsForHoldScreen={isInLocalHold}
                 />
               </Stack>
             </CallAdapterProvider>
           </ChatAdapterProvider>
         )}
+
+        {
+          /* @conditional-compile-remove(PSTN-calls) */
+          showControlBar && showDtmfDialpad && (
+            <ChatAdapterProvider adapter={chatProps.adapter}>
+              <CallAdapterProvider adapter={callAdapter}>
+                <Stack styles={drawerContainerStyles}>
+                  <SendDtmfDialpad
+                    isMobile={mobileView}
+                    strings={dialpadStrings}
+                    showDialpad={showDtmfDialpad}
+                    onDismissDialpad={onDismissDtmfDialpad}
+                  />
+                </Stack>
+              </CallAdapterProvider>
+            </ChatAdapterProvider>
+          )
+        }
         {
           // This layer host is for ModalLocalAndRemotePIP in CallWithChatPane. This LayerHost cannot be inside the CallWithChatPane
           // because when the CallWithChatPane is hidden, ie. style property display is 'none', it takes up no space. This causes problems when dragging
@@ -371,8 +434,11 @@ export const CallWithChatComposite = (props: CallWithChatCompositeProps): JSX.El
   );
 };
 
-const hasJoinedCallFn = (page: CallCompositePage, callStatus: CallState): boolean =>
-  page === 'call' && callStatus === 'Connected';
+const hasJoinedCallFn = (page: CallCompositePage, callStatus: CallState): boolean => {
+  /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(one-to-n-calling) */
+  return (page === 'call' && callStatus === 'Connected') || (page === 'hold' && callStatus === 'LocalHold');
+  return page === 'call' && callStatus === 'Connected';
+};
 
 const showShowChatTabHeaderButton = (callControls?: boolean | CallWithChatControlOptions): boolean => {
   if (callControls === undefined || callControls === true) {
