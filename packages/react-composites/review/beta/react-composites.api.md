@@ -346,7 +346,7 @@ export interface CallCompositeStrings {
     networkReconnectMoreDetails: string;
     networkReconnectTitle: string;
     openDialpadButtonLabel: string;
-    openDtmfDialpad: string;
+    openDtmfDialpadLabel: string;
     peopleButtonLabel: string;
     peoplePaneAddPeopleButtonLabel: string;
     peoplePaneSubTitle: string;
@@ -672,7 +672,7 @@ export interface CallWithChatCompositeStrings {
     moreDrawerMicrophoneMenuTitle: string;
     moreDrawerSpeakerMenuTitle: string;
     openDialpadButtonLabel: string;
-    openDtmfDialpad: string;
+    openDtmfDialpadLabel: string;
     peopleButtonLabel: string;
     peopleButtonTooltipClose: string;
     peopleButtonTooltipOpen: string;
