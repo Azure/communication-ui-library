@@ -3,7 +3,15 @@
 
 import { buildUrlWithMockAdapter, defaultMockCallAdapterState, defaultMockRemoteParticipant, test } from './fixture';
 import { expect } from '@playwright/test';
-import { dataUiId, pageClick, stableScreenshot, waitForSelector } from '../../common/utils';
+import {
+  dataUiId,
+  hidePiPiP,
+  isTestProfileDesktop,
+  isTestProfileStableFlavor,
+  pageClick,
+  stableScreenshot,
+  waitForSelector
+} from '../../common/utils';
 import { IDS } from '../../common/constants';
 
 test.describe('Rooms DeviceButton tests for different roles', async () => {
@@ -68,6 +76,89 @@ test.describe('Rooms CallScreen tests for different roles', async () => {
     await waitForSelector(page, dataUiId(IDS.videoGallery));
     expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot(
       'rooms-call-screen-consumer-remote-participants.png'
+    );
+  });
+});
+
+test.describe('Rooms Participant RemoveButton tests for different roles', async () => {
+  test.only('Remove button is enabled for Presenter', async ({ page, serverUrl }, testInfo) => {
+    test.skip(isTestProfileStableFlavor());
+    const paul = defaultMockRemoteParticipant('Paul Bridges');
+    const participants = [paul];
+    const initialState = defaultMockCallAdapterState(participants);
+    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { role: 'Presenter' }));
+    await waitForSelector(page, dataUiId(IDS.videoGallery));
+
+    if (!isTestProfileDesktop(testInfo)) {
+      await pageClick(page, dataUiId('call-with-chat-composite-more-button'));
+      const drawerPeopleMenuDiv = await page.$('div[role="menu"] >> text=People');
+      await drawerPeopleMenuDiv?.click();
+      await hidePiPiP(page);
+      const participantList = await waitForSelector(page, dataUiId('participant-list'));
+      const participantItem = await participantList.$('div[role="menuitem"]');
+      await participantItem?.click();
+    } else {
+      await waitForSelector(page, dataUiId('call-composite-participants-button'));
+      await pageClick(page, dataUiId('call-composite-participants-button'));
+      await waitForSelector(page, dataUiId('participant-item-menu-button'));
+      await pageClick(page, dataUiId('participant-item-menu-button'));
+    }
+    expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot(
+      'rooms-call-remove-participant-presenter.png'
+    );
+  });
+
+  test.only('Remove button is disabled for Attendee', async ({ page, serverUrl }, testInfo) => {
+    test.skip(isTestProfileStableFlavor());
+    const paul = defaultMockRemoteParticipant('Paul Bridges');
+    const participants = [paul];
+    const initialState = defaultMockCallAdapterState(participants);
+    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { role: 'Attendee' }));
+    await waitForSelector(page, dataUiId(IDS.videoGallery));
+
+    if (!isTestProfileDesktop(testInfo)) {
+      await pageClick(page, dataUiId('call-with-chat-composite-more-button'));
+      const drawerPeopleMenuDiv = await page.$('div[role="menu"] >> text=People');
+      await drawerPeopleMenuDiv?.click();
+      await hidePiPiP(page);
+      const participantList = await waitForSelector(page, dataUiId('participant-list'));
+      const participantItem = await participantList.$('div[role="menuitem"]');
+      await participantItem?.click();
+    } else {
+      await waitForSelector(page, dataUiId('call-composite-participants-button'));
+      await pageClick(page, dataUiId('call-composite-participants-button'));
+      await waitForSelector(page, dataUiId('participant-item-menu-button'));
+      await pageClick(page, dataUiId('participant-item-menu-button'));
+    }
+    expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot(
+      'rooms-call-remove-participant-attendee.png'
+    );
+  });
+
+  test.only('Remove button is disabled for Consumer', async ({ page, serverUrl }, testInfo) => {
+    test.skip(isTestProfileStableFlavor());
+    const paul = defaultMockRemoteParticipant('Paul Bridges');
+    const participants = [paul];
+    const initialState = defaultMockCallAdapterState(participants);
+    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { role: 'Consumer' }));
+    await waitForSelector(page, dataUiId(IDS.videoGallery));
+
+    if (!isTestProfileDesktop(testInfo)) {
+      await pageClick(page, dataUiId('call-with-chat-composite-more-button'));
+      const drawerPeopleMenuDiv = await page.$('div[role="menu"] >> text=People');
+      await drawerPeopleMenuDiv?.click();
+      await hidePiPiP(page);
+      const participantList = await waitForSelector(page, dataUiId('participant-list'));
+      const participantItem = await participantList.$('div[role="menuitem"]');
+      await participantItem?.click();
+    } else {
+      await waitForSelector(page, dataUiId('call-composite-participants-button'));
+      await pageClick(page, dataUiId('call-composite-participants-button'));
+      await waitForSelector(page, dataUiId('participant-item-menu-button'));
+      await pageClick(page, dataUiId('participant-item-menu-button'));
+    }
+    expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot(
+      'rooms-call-remove-participant-consumer.png'
     );
   });
 });
