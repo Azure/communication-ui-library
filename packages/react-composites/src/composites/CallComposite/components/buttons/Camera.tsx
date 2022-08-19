@@ -14,6 +14,7 @@ export const Camera = (props: {
   displayType?: CallControlDisplayType;
   styles?: ControlBarButtonStyles;
   splitButtonsForDeviceSelection?: boolean;
+  disabled?: boolean;
 }): JSX.Element => {
   const cameraButtonProps = usePropsFor(CameraButton);
   const styles = useMemo(() => concatButtonBaseStyles(props.styles ?? {}), [props.styles]);
@@ -24,6 +25,7 @@ export const Camera = (props: {
       showLabel={props.displayType !== 'compact'}
       styles={styles}
       enableDeviceSelectionMenu={props.splitButtonsForDeviceSelection}
+      disabled={cameraButtonProps.disabled || props.disabled}
     />
   );
 };
