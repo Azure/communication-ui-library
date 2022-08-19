@@ -6,5 +6,6 @@
 
 # Exceptions in the dist folder that should still be disallowed:
 dist/**/mocks/
+dist/**/*.d.ts.map
 **/*.test.*
 **/*.spec.*
