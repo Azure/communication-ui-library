@@ -13,6 +13,7 @@ export const ScreenShare = (props: {
   option?: boolean | { disabled: boolean };
   displayType?: CallControlDisplayType;
   styles?: ControlBarButtonStyles;
+  disabled?: boolean;
 }): JSX.Element => {
   const screenShareButtonProps = usePropsFor(ScreenShareButton);
   const styles = useMemo(() => concatButtonBaseStyles(props.styles ?? {}), [props.styles]);
@@ -28,7 +29,7 @@ export const ScreenShare = (props: {
       data-ui-id="call-composite-screenshare-button"
       {...screenShareButtonProps}
       showLabel={props.displayType !== 'compact'}
-      disabled={screenShareButtonDisabled()}
+      disabled={screenShareButtonDisabled() || props.disabled}
       styles={styles}
     />
   );

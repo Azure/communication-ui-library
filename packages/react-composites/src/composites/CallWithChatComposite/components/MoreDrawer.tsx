@@ -89,6 +89,7 @@ export interface MoreDrawerProps extends MoreDrawerDevicesMenuProps {
   callControls?: boolean | CallWithChatControlOptions;
   onClickShowDialpad?: () => void;
   strings: MoreDrawerStrings;
+  disableButtonsForHoldScreen?: boolean;
 }
 
 const inferCallWithChatControlOptions = (
@@ -130,6 +131,7 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
   if (props.speakers && props.speakers.length > 0) {
     drawerMenuItems.push({
       itemKey: 'speakers',
+      disabled: props.disableButtonsForHoldScreen,
       text: props.strings.speakerMenuTitle,
       iconProps: { iconName: 'MoreDrawerSpeakers' },
       subMenuProps: props.speakers.map((speaker) => ({
@@ -171,6 +173,7 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
 
     drawerMenuItems.push({
       itemKey: itemKey,
+      disabled: props.disableButtonsForHoldScreen,
       text: text,
       iconProps: { iconName: iconName },
       subMenuProps: props.microphones.map((mic) => ({
@@ -198,6 +201,7 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
   if (drawerSelectionOptions !== false && isEnabled(drawerSelectionOptions?.peopleButton)) {
     drawerMenuItems.push({
       itemKey: 'holdButtonKey',
+      disabled: props.disableButtonsForHoldScreen,
       text: localeStrings.component.strings.holdButton.tooltipOffContent,
       onItemClick: () => {
         holdButtonProps.onToggleHold();
@@ -210,7 +214,8 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
   if (drawerSelectionOptions !== false && isEnabled(drawerSelectionOptions?.peopleButton) && props.onClickShowDialpad) {
     drawerMenuItems.push({
       itemKey: 'showDialpadKey',
-      text: localeStrings.strings.callWithChat.openDtmfDialpad,
+      disabled: props.disableButtonsForHoldScreen,
+      text: localeStrings.strings.callWithChat.openDtmfDialpadLabel,
       onItemClick: () => {
         props.onClickShowDialpad && props.onClickShowDialpad();
       },

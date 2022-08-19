@@ -146,5 +146,5 @@ export interface CallWithChatCompositeStrings {
   /**
    * Label for the button to open dtmf dialpad
    */
-  openDtmfDialpad: string;
+  openDtmfDialpadLabel: string;
 }
