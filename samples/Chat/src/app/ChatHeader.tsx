@@ -27,7 +27,13 @@ export const ChatHeader = (props: ChatHeaderProps): JSX.Element => {
 
   const leaveString = 'Leave';
   return (
-    <Stack horizontal={true} verticalAlign={'center'} horizontalAlign="end" className={chatHeaderContainerStyle}>
+    <Stack
+      horizontal={true}
+      verticalAlign={'center'}
+      horizontalAlign="end"
+      className={chatHeaderContainerStyle}
+      role="banner"
+    >
       <div className={paneButtonContainerStyle}>
         {
           /* @conditional-compile-remove(chat-composite-participant-pane) */

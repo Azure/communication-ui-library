@@ -18,6 +18,7 @@ export const Microphone = (props: {
   displayType?: CallControlDisplayType;
   styles?: ControlBarButtonStyles;
   splitButtonsForDeviceSelection?: boolean;
+  disabled?: boolean;
 }): JSX.Element => {
   const microphoneButtonProps = usePropsFor(MicrophoneButton);
   const callStatus = useSelector(getCallStatus);
@@ -54,6 +55,7 @@ export const Microphone = (props: {
       styles={styles}
       {...microphoneButtonStrings}
       enableDeviceSelectionMenu={props.splitButtonsForDeviceSelection}
+      disabled={microphoneButtonProps.disabled || props.disabled}
     />
   );
 };
