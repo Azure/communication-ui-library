@@ -68,7 +68,7 @@ test.describe('Call Composite E2E CallPage Tests', () => {
 test.describe('Call composite participant menu items injection tests', async () => {
   // TODO: Split this test into multiple tests: one for beta/desktop, beta/mobile, stable each.
   // Do this after the test has been stabilized. Keep the same name for flakiness analysis.
-  test('injected menu items appear', async ({ page, serverUrl }, testInfo) => {
+  test.only('injected menu items appear', async ({ page, serverUrl }, testInfo) => {
     const paul = defaultMockRemoteParticipant('Paul Bridges');
     addVideoStream(paul, true);
     paul.isSpeaking = true;
@@ -94,11 +94,14 @@ test.describe('Call composite participant menu items injection tests', async () 
     }
     if (flavor === 'beta') {
       if (!isTestProfileDesktop(testInfo)) {
-        await pageClick(page, '[role="menuitem"]');
+        // click the first participant
+        await pageClick(page, `${dataUiId('participant-list')} [role="menuitem"]`);
+        // wait for drawer to have opened
+        await waitForSelector(page, dataUiId('drawer-menu'));
       } else {
         await pageClick(page, dataUiId(IDS.participantItemMenuButton));
+        await waitForSelector(page, '.ms-ContextualMenu-itemText');
       }
-      await waitForSelector(page, '.ms-ContextualMenu-itemText');
     } else {
       // Open participant list flyout
       await pageClick(page, dataUiId(IDS.participantButtonPeopleMenuItem));
