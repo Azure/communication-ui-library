@@ -62,7 +62,7 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
     if (props.onClickShowDialpad) {
       items.push({
         key: 'showDialpadKey',
-        text: localeStrings.strings.callWithChat.openDtmfDialpad,
+        text: localeStrings.strings.callWithChat.openDtmfDialpadLabel,
         onClick: () => {
           props.onClickShowDialpad && props.onClickShowDialpad();
         },
