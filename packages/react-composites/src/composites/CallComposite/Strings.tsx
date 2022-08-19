@@ -268,4 +268,14 @@ export interface CallCompositeStrings {
    * Label for the hold pane
    */
   holdScreenLabel: string;
+  /* @conditional-compile-remove(PSTN-calls) */
+  /**
+   * Placeholder text for dtmf dialpad
+   */
+  dtmfDialpadPlaceHolderText: string;
+  /* @conditional-compile-remove(PSTN-calls) */
+  /**
+   * Label for the button to open dtmf dialpad
+   */
+  openDtmfDialpadLabel: string;
 }
