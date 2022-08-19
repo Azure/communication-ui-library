@@ -30,7 +30,7 @@ test.describe('Hold screen tests', async () => {
     expect(await stableScreenshot(page)).toMatchSnapshot(`Call-hold-screen.png`);
   });
 
-  test.only('Hold screen should return to call screen upon resume', async ({ page, serverUrl }) => {
+  test('Hold screen should return to call screen upon resume', async ({ page, serverUrl }) => {
     test.skip(isTestProfileStableFlavor());
 
     const paul = defaultMockRemoteParticipant('Paul Bridges');
