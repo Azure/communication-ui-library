@@ -203,7 +203,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   return (
     <Stack className={chatContainer} grow>
       {options?.topic !== false && <ChatHeader {...headerProps} />}
-      <Stack className={chatArea} tokens={participantListContainerPadding} horizontal grow role="main">
+      <Stack className={chatArea} tokens={participantListContainerPadding} horizontal grow>
         <Stack className={chatWrapper} grow>
           {options?.errorBar !== false && <ErrorBar {...errorBarProps} />}
           {
