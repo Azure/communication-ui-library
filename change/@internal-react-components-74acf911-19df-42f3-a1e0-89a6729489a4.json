@@ -1,6 +1,6 @@
 {
   "type": "patch",
-  "comment": "Replace floating div with border with outline style in video tile to show user is speaking.",
+  "comment": "Replace floating div with border with inset border of video tile to show user is speaking.",
   "packageName": "@internal/react-components",
   "email": "miguelgamis@microsoft.com",
   "dependentChangeType": "patch"
