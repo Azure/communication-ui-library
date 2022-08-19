@@ -135,7 +135,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
     /* @conditional-compile-remove(PSTN-calls) */
     items.push({
       key: 'showDialpadKey',
-      text: localeStrings.strings.call.openDtmfDialpad,
+      text: localeStrings.strings.call.openDtmfDialpadLabel,
       onClick: () => {
         setShowDialpad(true);
       },
