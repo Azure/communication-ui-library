@@ -139,7 +139,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                          *
                          * write regexp to flatten this
                          */
-                        const phoneNumber = '+' + newValue?.replace('[^0-9]', '');
+                        const phoneNumber = '+' + newValue?.replace(/\D/g, '');
                         setDialpadParticipant(phoneNumber);
                       }}
                     />
