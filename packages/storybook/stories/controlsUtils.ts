@@ -165,7 +165,7 @@ export const controlsToAdd = {
   callParticipantsLocator: {
     control: 'array',
     defaultValue: ['+###########'],
-    name: 'Call locator (Participant IDs)'
+    name: 'Call locator (participants phone numbers)'
   },
   callParticipantsLocator1toN: {
     control: 'array',
