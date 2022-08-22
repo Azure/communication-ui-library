@@ -240,12 +240,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   }).slice(0, maxRemoteVideoStreams);
 
   /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
-  visibleCallingParticipants.current = smartDominantSpeakerParticipants({
-    participants: remoteParticipants?.filter((p) => p.state === ('Connecting' || 'Ringing')) ?? [],
-    dominantSpeakers,
-    lastVisibleParticipants: visibleCallingParticipants.current,
-    maxDominantSpeakers: 0
-  });
+  visibleCallingParticipants.current = remoteParticipants?.filter((p) => p.state === ('Connecting' || 'Ringing')) ?? [];
+
   // This set will be used to filter out participants already in visibleVideoParticipants
   const visibleVideoParticipantsSet = new Set(visibleVideoParticipants.current.map((p) => p.userId));
 
