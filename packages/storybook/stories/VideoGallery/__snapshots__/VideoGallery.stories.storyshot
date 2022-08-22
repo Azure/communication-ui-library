@@ -38,9 +38,6 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
               data-ui-id="video-tile"
             >
               <div
-                className="stub-classname"
-              />
-              <div
                 className="ms-Stack stub-classname"
               >
                 <div
@@ -162,9 +159,6 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
                 data-ui-id="video-tile"
               >
                 <div
-                  className="stub-classname"
-                />
-                <div
                   className="ms-Stack stub-classname"
                 >
                   <div
@@ -245,9 +239,6 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
                 className="ms-Stack stub-classname"
                 data-ui-id="video-tile"
               >
-                <div
-                  className="stub-classname"
-                />
                 <div
                   className="ms-Stack stub-classname"
                 >
@@ -330,9 +321,6 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
                 data-ui-id="video-tile"
               >
                 <div
-                  className="stub-classname"
-                />
-                <div
                   className="ms-Stack stub-classname"
                 >
                   <div
@@ -413,9 +401,6 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Gallery Video G
                 className="ms-Stack stub-classname"
                 data-ui-id="video-tile"
               >
-                <div
-                  className="stub-classname"
-                />
                 <div
                   className="ms-Stack stub-classname"
                 >

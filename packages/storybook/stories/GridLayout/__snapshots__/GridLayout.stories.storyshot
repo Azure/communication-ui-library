@@ -36,9 +36,6 @@ exports[`storybook snapshot tests Storyshots UI Components/Grid Layout Grid Layo
             data-ui-id="video-tile"
           >
             <div
-              className="stub-classname"
-            />
-            <div
               className="ms-Stack stub-classname"
             >
               <div
@@ -110,9 +107,6 @@ exports[`storybook snapshot tests Storyshots UI Components/Grid Layout Grid Layo
             className="ms-Stack stub-classname"
             data-ui-id="video-tile"
           >
-            <div
-              className="stub-classname"
-            />
             <div
               className="ms-Stack stub-classname"
             >
@@ -186,9 +180,6 @@ exports[`storybook snapshot tests Storyshots UI Components/Grid Layout Grid Layo
             data-ui-id="video-tile"
           >
             <div
-              className="stub-classname"
-            />
-            <div
               className="ms-Stack stub-classname"
             >
               <div
@@ -260,9 +251,6 @@ exports[`storybook snapshot tests Storyshots UI Components/Grid Layout Grid Layo
             className="ms-Stack stub-classname"
             data-ui-id="video-tile"
           >
-            <div
-              className="stub-classname"
-            />
             <div
               className="ms-Stack stub-classname"
             >
