@@ -80,7 +80,7 @@ test.describe('Participant pane tests', async () => {
     expect(await stableScreenshot(page)).toMatchSnapshot(`PSTN-call-screen-with-dialpad-dropdown.png`);
   });
 
-  test('click on dial phone number will open dialpad in PTSC call', async ({ page, serverUrl }, testInfo) => {
+  test('click on dial phone number will open dialpad in PTSN call', async ({ page, serverUrl }, testInfo) => {
     test.skip(isTestProfileStableFlavor());
     const initialState = defaultMockCallAdapterState();
     //PSTN call has alternate caller id

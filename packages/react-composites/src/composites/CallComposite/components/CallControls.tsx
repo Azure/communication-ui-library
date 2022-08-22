@@ -129,13 +129,13 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
         styles: buttonFlyoutIncreasedSizeStyles
       },
       disabled: isDisabled(options?.holdButton),
-      ['data-ui-id']: 'call-composite-more-menu-hold-button'
+      ['data-ui-id']: 'hold-button'
     });
 
     /* @conditional-compile-remove(PSTN-calls) */
     items.push({
       key: 'showDialpadKey',
-      text: localeStrings.strings.call.openDtmfDialpad,
+      text: localeStrings.strings.call.openDtmfDialpadLabel,
       onClick: () => {
         setShowDialpad(true);
       },
@@ -203,7 +203,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
             />
           )}
           {isEnabled(options?.participantsButton) &&
-            /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(one-to-n-calling) */
+            /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */
             !props.isMobile && (
               <Participants
                 option={options?.participantsButton}
@@ -215,7 +215,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
                 disabled={isDisabled(options?.participantsButton)}
               />
             ) && (
-              /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(one-to-n-calling) */
+              /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */
               <People
                 checked={props.peopleButtonChecked}
                 showLabel={options?.displayType !== 'compact'}
@@ -233,7 +233,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
             />
           )}
           {
-            /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(one-to-n-calling) */
+            /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */
             isEnabled(options?.moreButton) && (
               <MoreButton
                 strings={moreButtonStrings}

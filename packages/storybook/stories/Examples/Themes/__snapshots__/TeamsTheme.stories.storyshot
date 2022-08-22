@@ -335,9 +335,6 @@ exports[`storybook snapshot tests Storyshots Examples/Themes/Teams Teams 1`] = `
                   data-ui-id="video-tile"
                 >
                   <div
-                    className="stub-classname"
-                  />
-                  <div
                     className="ms-Stack stub-classname"
                   >
                     <div

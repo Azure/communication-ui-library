@@ -25,9 +25,6 @@ exports[`storybook snapshot tests Storyshots Examples/Teams Interop/Lobby Lobby 
         data-ui-id="video-tile"
       >
         <div
-          className="stub-classname"
-        />
-        <div
           className="ms-Stack stub-classname"
         />
         <div
