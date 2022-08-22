@@ -219,7 +219,7 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
       }
 
       if (onFetchParticipantMenuItems) {
-        menuItems = [...onFetchParticipantMenuItems(participant.userId, myUserId, menuItems)];
+        menuItems = onFetchParticipantMenuItems(participant.userId, myUserId, menuItems);
       }
 
       return menuItems;
