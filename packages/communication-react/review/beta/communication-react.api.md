@@ -455,7 +455,7 @@ export interface CallCompositeStrings {
     networkReconnectMoreDetails: string;
     networkReconnectTitle: string;
     openDialpadButtonLabel: string;
-    openDtmfDialpad: string;
+    openDtmfDialpadLabel: string;
     peopleButtonLabel: string;
     peoplePaneAddPeopleButtonLabel: string;
     peoplePaneSubTitle: string;
@@ -479,10 +479,16 @@ export type CallControlDisplayType = 'default' | 'compact';
 // @public
 export type CallControlOptions = {
     displayType?: CallControlDisplayType;
-    cameraButton?: boolean;
+    cameraButton?: boolean | /* @conditional-compile-remove(PSTN-calls) */ {
+        disabled: boolean;
+    };
     endCallButton?: boolean;
-    microphoneButton?: boolean;
-    devicesButton?: boolean;
+    microphoneButton?: boolean | /* @conditional-compile-remove(PSTN-calls) */ {
+        disabled: boolean;
+    };
+    devicesButton?: boolean | /* @conditional-compile-remove(PSTN-calls) */ {
+        disabled: boolean;
+    };
     participantsButton?: boolean | {
         disabled: boolean;
     };
@@ -491,6 +497,9 @@ export type CallControlOptions = {
     };
     moreButton?: boolean;
     onFetchCustomButtonProps?: CustomCallControlButtonCallback[];
+    holdButton?: boolean | {
+        disabled: boolean;
+    };
 };
 
 // @public
@@ -877,7 +886,7 @@ export interface CallWithChatCompositeStrings {
     moreDrawerMicrophoneMenuTitle: string;
     moreDrawerSpeakerMenuTitle: string;
     openDialpadButtonLabel: string;
-    openDtmfDialpad: string;
+    openDtmfDialpadLabel: string;
     peopleButtonLabel: string;
     peopleButtonTooltipClose: string;
     peopleButtonTooltipOpen: string;

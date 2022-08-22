@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Update PSTN Gallery behavior to not use complex logic for participants being dialed into the call.",
+  "packageName": "@internal/react-components",
+  "email": "94866715+dmceachernmsft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

@@ -18,13 +18,6 @@ const icon = (): JSX.Element => <CallCompositeIcon iconName={'ControlButtonParti
 export const People = (props: ControlBarButtonProps): JSX.Element => {
   const { strings, onRenderOnIcon, onRenderOffIcon, onClick } = props;
 
-  /* @conditional-compile-remove(rooms) */
-  let disabled = props.disabled;
-  /* @conditional-compile-remove(rooms) */
-  const permissions = _usePermissions();
-  /* @conditional-compile-remove(rooms) */
-  disabled = disabled || !permissions.participantList;
-
   const theme = useTheme();
   const styles: ControlBarButtonStyles = useMemo(
     () =>
@@ -50,8 +43,6 @@ export const People = (props: ControlBarButtonProps): JSX.Element => {
       onRenderOffIcon={onRenderOffIcon ?? icon}
       onClick={onClick}
       styles={styles}
-      /* @conditional-compile-remove(rooms) */
-      disabled={disabled}
     />
   );
 };

@@ -43,6 +43,7 @@ export interface CallWithChatControlBarProps {
   disableButtonsForLobbyPage: boolean;
   callControls?: boolean | CallWithChatControlOptions;
   chatAdapter: ChatAdapter;
+  disableButtonsForHoldScreen?: boolean;
   /* @conditional-compile-remove(PSTN-calls) */
   onClickShowDialpad: () => void;
 }
@@ -167,6 +168,8 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps & Cont
                     displayType={options.displayType}
                     styles={commonButtonStyles}
                     splitButtonsForDeviceSelection={!props.mobileView}
+                    /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+                    disabled={props.disableButtonsForHoldScreen}
                   />
                 )}
                 {isEnabled(options.cameraButton) && (
@@ -174,6 +177,8 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps & Cont
                     displayType={options.displayType}
                     styles={commonButtonStyles}
                     splitButtonsForDeviceSelection={!props.mobileView}
+                    /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+                    disabled={props.disableButtonsForHoldScreen}
                   />
                 )}
                 {props.mobileView && isEnabled(options?.chatButton) && chatButton}
@@ -182,6 +187,8 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps & Cont
                     option={options.screenShareButton}
                     displayType={options.displayType}
                     styles={screenShareButtonStyles}
+                    /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+                    disabled={props.disableButtonsForHoldScreen}
                   />
                 )}
                 {
@@ -222,7 +229,7 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps & Cont
                     ) &&
                     !props.mobileView && (
                       <DesktopMoreButton
-                        disabled={props.disableButtonsForLobbyPage}
+                        disableButtonsForHoldScreen={props.disableButtonsForHoldScreen}
                         styles={commonButtonStyles}
                         onClickShowDialpad={props.onClickShowDialpad}
                       />

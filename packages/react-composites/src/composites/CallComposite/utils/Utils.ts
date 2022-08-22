@@ -155,3 +155,36 @@ export const IsCallEndedPage = (
     | 'removedFromCall'
     | /* @conditional-compile-remove(PSTN-calls) */ 'hold'
 ): boolean => END_CALL_PAGES.includes(page);
+
+/**
+ * Creates a new call control options object and sets the correct values for disabling
+ * the buttons provided in the `disabledControls` array.
+ * Returns a new object without changing the original object.
+ * @param callControlOptions options for the call control component that need to be modified.
+ * @param disabledControls An array of controls to disable.
+ * @returns a copy of callControlOptions with disabledControls disabled
+ * @private
+ */
+export const disableCallControls = (
+  callControlOptions: CallControlOptions | boolean | undefined,
+  disabledControls: (keyof CallControlOptions)[]
+): CallControlOptions | boolean | undefined => {
+  if (callControlOptions === false) {
+    return false;
+  }
+  // Ensure we clone the prop if it is an object to ensure we do not mutate the original prop.
+  let newOptions = (callControlOptions instanceof Object ? { ...callControlOptions } : callControlOptions) ?? {};
+  if (newOptions === true || newOptions === undefined) {
+    newOptions = disabledControls.reduce((acc, key) => {
+      acc[key] = { disabled: true };
+      return acc;
+    }, {});
+  } else {
+    disabledControls.forEach((key) => {
+      if (newOptions[key] !== false) {
+        newOptions[key] = { disabled: true };
+      }
+    });
+  }
+  return newOptions;
+};

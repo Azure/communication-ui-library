@@ -10,9 +10,11 @@ import {
   PersonaPresence,
   Stack
 } from '@fluentui/react';
-import React, { useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { useIdentifiers } from '../identifiers';
 import { useLocale } from '../localization';
+/* @conditional-compile-remove(rooms) */
+import { _usePermissions } from '../permissions';
 import {
   BaseCustomStyles,
   CallParticipantListParticipant,
@@ -195,29 +197,47 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
     return onRenderParticipant ? participants : getParticipantsForDefaultRender(participants, excludeMe, myUserId);
   }, [participants, excludeMe, myUserId, onRenderParticipant]);
 
-  const createParticipantMenuItems = (participant: ParticipantListParticipant): IContextualMenuItem[] => {
-    let menuItems: IContextualMenuItem[] = [];
-    if (participant.userId !== myUserId && onRemoveParticipant) {
-      menuItems.push({
-        key: 'remove',
-        text: strings.removeButtonLabel,
-        onClick: () => onRemoveParticipant(participant.userId),
-        itemProps: {
-          styles: props.styles?.participantItemStyles?.participantSubMenuItemsStyles
-        },
-        disabled: !participant.isRemovable,
-        'data-ui-id': ids.participantListRemoveParticipantButton
-      });
-    }
+  const createParticipantMenuItems = useCallback(
+    (participant: ParticipantListParticipant): IContextualMenuItem[] => {
+      let menuItems: IContextualMenuItem[] = [];
+      let disabled = !participant.isRemovable;
+      /* @conditional-compile-remove(rooms) */
+      const isRemovable = _usePermissions().removeParticipantButton;
+      /* @conditional-compile-remove(rooms) */
+      disabled = !isRemovable || disabled;
+      if (participant.userId !== myUserId && onRemoveParticipant) {
+        menuItems.push({
+          key: 'remove',
+          text: strings.removeButtonLabel,
+          onClick: () => onRemoveParticipant(participant.userId),
+          itemProps: {
+            styles: props.styles?.participantItemStyles?.participantSubMenuItemsStyles
+          },
+          disabled: disabled,
+          'data-ui-id': ids.participantListRemoveParticipantButton
+        });
+      }
 
-    if (onFetchParticipantMenuItems) {
-      menuItems = onFetchParticipantMenuItems(participant.userId, myUserId, menuItems);
-    }
+      if (onFetchParticipantMenuItems) {
+        menuItems = onFetchParticipantMenuItems(participant.userId, myUserId, menuItems);
+      }
 
-    return menuItems;
-  };
+      return menuItems;
+    },
+    [
+      ids.participantListRemoveParticipantButton,
+      myUserId,
+      onFetchParticipantMenuItems,
+      onRemoveParticipant,
+      props.styles?.participantItemStyles?.participantSubMenuItemsStyles,
+      strings.removeButtonLabel
+    ]
+  );
 
-  const participantItemStyles = merge(participantListItemStyle, props.styles?.participantItemStyles);
+  const participantItemStyles = useMemo(
+    () => merge(participantListItemStyle, props.styles?.participantItemStyles),
+    [props.styles?.participantItemStyles]
+  );
   return (
     <Stack data-ui-id={ids.participantList} className={mergeStyles(participantListStyle, props.styles?.root)}>
       {displayedParticipants.map((participant: ParticipantListParticipant) =>

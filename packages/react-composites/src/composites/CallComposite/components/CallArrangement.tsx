@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 
 import { mergeStyles, Stack } from '@fluentui/react';
+import { _isInCall } from '@internal/calling-component-bindings';
 import {
   _ComplianceBanner,
   _ComplianceBannerProps,
@@ -91,7 +92,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
 
   /* @conditional-compile-remove(one-to-n-calling) */
   const togglePeople = useCallback(() => {
-    if (activePane === 'people' || !(callStatus === 'Connected')) {
+    if (activePane === 'people' || !_isInCall(callStatus)) {
       setActivePane('none');
     } else {
       setActivePane('people');
@@ -100,7 +101,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
 
   /* @conditional-compile-remove(one-to-n-calling) */
   const selectPeople = useCallback(() => {
-    if (callStatus === 'Connected') {
+    if (_isInCall(callStatus)) {
       setActivePane('people');
     }
   }, [setActivePane, callStatus]);
@@ -119,8 +120,8 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   };
 
   /* @conditional-compile-remove(one-to-n-calling) */
-  const callPaneContent = (): JSX.Element => {
-    if (adapter && callStatus === 'Connected') {
+  const callPaneContent = useCallback((): JSX.Element => {
+    if (adapter && _isInCall(callStatus) && activePane === 'people') {
       return (
         <CallPane
           callAdapter={adapter}
@@ -138,7 +139,19 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
       );
     }
     return <></>;
-  };
+  }, [
+    activePane,
+    adapter,
+    callStatus,
+    closePane,
+    props.callControlProps.callInvitationURL,
+    props.callControlProps?.onFetchParticipantMenuItems,
+    props.callControlProps.options,
+    props.mobileView,
+    props.modalLayerHostId,
+    props.onFetchAvatarPersonaData,
+    selectPeople
+  ]);
 
   return (
     <div ref={containerRef} className={mergeStyles(containerDivStyles)}>
