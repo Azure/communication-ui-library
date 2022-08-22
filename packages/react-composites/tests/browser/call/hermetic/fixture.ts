@@ -105,7 +105,7 @@ export function defaultMockCallAdapterState(participants?: MockRemoteParticipant
  */
 export function defaultMockRemoteParticipant(displayName: string): MockRemoteParticipantState {
   return {
-    identifier: { kind: 'communicationUser', communicationUserId: `${displayName}-id` },
+    identifier: { kind: 'communicationUser', communicationUserId: `8:acs:${displayName}-id` },
     state: 'Connected',
     videoStreams: {
       1: {
