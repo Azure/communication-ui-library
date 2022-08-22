@@ -3,7 +3,7 @@
 
 import React, { useCallback, useState, useMemo, useEffect, useRef } from 'react';
 import { LayerHost, mergeStyles, PartialTheme, Stack, Theme } from '@fluentui/react';
-import { CallComposite, CallCompositePage, CallControlDisplayType } from '../CallComposite';
+import { CallCompositePage, CallControlDisplayType } from '../CallComposite';
 import { CallAdapterProvider } from '../CallComposite/adapter/CallAdapterProvider';
 import { CallWithChatControlBar } from './CallWithChatControlBar';
 import { CallState } from '@azure/communication-calling';
@@ -37,6 +37,7 @@ import { modalLayerHostStyle } from '../common/styles/ModalLocalAndRemotePIP.sty
 import { SendDtmfDialpad } from '../common/SendDtmfDialpad';
 /* @conditional-compile-remove(PSTN-calls) */
 import { useCallWithChatCompositeStrings } from './hooks/useCallWithChatCompositeStrings';
+import { CallCompositeHandle, CallCompositeInternal } from '../CallComposite/CallComposite';
 
 /**
  * Props required for the {@link CallWithChatComposite}
@@ -218,6 +219,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
 
   /** Constant setting of id for the parent stack of the composite */
   const compositeParentDivId = useId('callWithChatCompositeParentDiv-internal');
+  const callCompositeRef = useRef<CallCompositeHandle>(null);
 
   const toggleChat = useCallback(() => {
     if (activePane === 'chat' || !hasJoinedCall) {
@@ -242,11 +244,13 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
 
   const togglePeople = useCallback(() => {
     if (activePane === 'people' || !hasJoinedCall) {
+      callCompositeRef.current?.closeSidePane();
       setActivePane('none');
     } else {
+      callCompositeRef.current?.openSidePane('people');
       setActivePane('people');
     }
-  }, [activePane, setActivePane, hasJoinedCall]);
+  }, [activePane, hasJoinedCall]);
 
   const selectChat = useCallback(() => {
     if (hasJoinedCall) {
@@ -313,12 +317,13 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
             // Perf: Instead of removing the video gallery from DOM, we hide it to prevent re-renders.
             style={callCompositeContainerCSS}
           >
-            <CallComposite
+            <CallCompositeInternal
               {...props}
               formFactor={formFactor}
               options={{ callControls: false }}
               adapter={callAdapter}
               fluentTheme={fluentTheme}
+              compositeRef={callCompositeRef}
             />
           </Stack.Item>
 

@@ -9,6 +9,7 @@ import { AvatarPersonaDataCallback } from '../../common/AvatarPersona';
 import { useLocale } from '../../localization';
 import { CallCompositeOptions } from '../CallComposite';
 import { CallArrangement } from '../components/CallArrangement';
+import { CallSidePaneOption } from '../components/CallPane';
 import { MediaGallery } from '../components/MediaGallery';
 import { NetworkReconnectTile } from '../components/NetworkReconnectTile';
 import { useHandlers } from '../hooks/useHandlers';
@@ -33,6 +34,8 @@ export interface CallPageProps {
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
   options?: CallCompositeOptions;
+  activeSidePane?: CallSidePaneOption;
+  onActiveSidePaneChange?: (newOption: CallSidePaneOption) => void;
 }
 
 /**
@@ -97,6 +100,8 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
         )
       }
       dataUiId={'call-page'}
+      onActiveSidePaneChange={props.onActiveSidePaneChange}
+      activeSidePane={props.activeSidePane}
     />
   );
 };

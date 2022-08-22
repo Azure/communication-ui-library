@@ -3,7 +3,7 @@
 
 import { _isInCall } from '@internal/calling-component-bindings';
 import { OnRenderAvatarCallback, ParticipantMenuItemsCallback } from '@internal/react-components';
-import React, { useEffect, useMemo } from 'react';
+import React, { useCallback, useEffect, useImperativeHandle, useMemo, useState } from 'react';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { BaseProvider, BaseCompositeProps } from '../common/BaseComposite';
 import { CallCompositeIcons } from '../common/icons';
@@ -29,6 +29,7 @@ import { modalLayerHostStyle } from '../common/styles/ModalLocalAndRemotePIP.sty
 import { useId } from '@fluentui/react-hooks';
 /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */
 import { HoldPage } from './pages/HoldPage';
+import { CallSidePaneOption } from './components/CallPane';
 
 /**
  * Props for {@link CallComposite}.
@@ -95,6 +96,8 @@ type MainScreenProps = {
   options?: CallCompositeOptions;
   /* @conditional-compile-remove(rooms) */
   role?: Role;
+  activeSidePane?: CallSidePaneOption;
+  onActiveSidePaneChange?: (newOption: CallSidePaneOption) => void;
 };
 
 const MainScreen = (props: MainScreenProps): JSX.Element => {
@@ -177,6 +180,8 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           /* @conditional-compile-remove(one-to-n-calling) */
           modalLayerHostId={props.modalLayerHostId}
           options={props.options}
+          activeSidePane={props.activeSidePane}
+          onActiveSidePaneChange={props.onActiveSidePaneChange}
         />
       );
       break;
@@ -218,6 +223,30 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
  * @public
  */
 export const CallComposite = (props: CallCompositeProps): JSX.Element => {
+  return <CallCompositeInternal {...props} />;
+};
+
+/**
+ * Imperative methods and properties of the {@link CallComposite}.
+ * @private
+ */
+export interface CallCompositeHandle {
+  openSidePane: (pane: 'people' | 'custom') => void;
+  closeSidePane: () => void;
+}
+
+/**
+ * Used by the CallWithChatComposite to use features we cannot make public yet.
+ * @private
+ */
+export const CallCompositeInternal = (
+  props: CallCompositeProps & {
+    /** Set the pane content of the CallComposite. */
+    onRenderCustomPaneContent?: () => JSX.Element;
+    /** Use this to claim an imperative handle to the composite. Use this to access methods and properties of the composite. */
+    compositeRef?: React.RefObject<CallCompositeHandle>;
+  }
+): JSX.Element => {
   const {
     adapter,
     callInvitationUrl,
@@ -228,6 +257,27 @@ export const CallComposite = (props: CallCompositeProps): JSX.Element => {
     /* @conditional-compile-remove(rooms) */
     role
   } = props;
+
+  const [activeSidePane, setActiveSidePane] = useState<CallSidePaneOption>('none');
+
+  useImperativeHandle(props.compositeRef, () => ({
+    openSidePane: (pane: 'people' | 'custom') => {
+      setActiveSidePane(pane);
+      return;
+    },
+    closeSidePane: () => {
+      setActiveSidePane('none');
+      return;
+    }
+  }));
+
+  const onActiveSidePaneChange = useCallback(
+    (pane: CallSidePaneOption) => {
+      setActiveSidePane(pane);
+    },
+    [setActiveSidePane]
+  );
+
   useEffect(() => {
     (async () => {
       /* @conditional-compile-remove(rooms) */
@@ -268,6 +318,8 @@ export const CallComposite = (props: CallCompositeProps): JSX.Element => {
             options={options}
             /* @conditional-compile-remove(rooms) */
             role={role}
+            activeSidePane={activeSidePane}
+            onActiveSidePaneChange={onActiveSidePaneChange}
           />
           {
             // This layer host is for ModalLocalAndRemotePIP in CallPane. This LayerHost cannot be inside the CallPane

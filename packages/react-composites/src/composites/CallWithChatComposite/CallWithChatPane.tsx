@@ -6,12 +6,10 @@ import {
   _DrawerMenuItemProps,
   _useContainerHeight,
   _useContainerWidth,
-  ParticipantMenuItemsCallback,
   useTheme
 } from '@internal/react-components';
-import React, { useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 import { CallAdapter } from '../CallComposite';
-import { CallAdapterProvider } from '../CallComposite/adapter/CallAdapterProvider';
 import { ChatAdapter, ChatComposite, ChatCompositeProps } from '../ChatComposite';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import {
@@ -22,8 +20,6 @@ import {
 import { SidePaneHeader } from '../common/SidePaneHeader';
 import { useCallWithChatCompositeStrings } from './hooks/useCallWithChatCompositeStrings';
 import { ModalLocalAndRemotePIP } from '../common/ModalLocalAndRemotePIP';
-import { PeoplePaneContent } from '../common/PeoplePaneContent';
-import { drawerContainerStyles } from './styles/CallWithChatCompositeStyles';
 import { TabHeader } from '../common/TabHeader';
 /* @conditional-compile-remove(file-sharing) */
 import { FileSharingOptions } from '../ChatComposite';
@@ -32,10 +28,6 @@ import { _pxToRem } from '@internal/acs-ui-common';
 import { getPipStyles } from '../common/styles/ModalLocalAndRemotePIP.styles';
 import { useMinMaxDragPosition } from '../common/utils';
 import { availableSpaceStyles, hiddenStyles, sidePaneStyles, sidePaneTokens } from '../common/styles/Pane.styles';
-/* @conditional-compile-remove(PSTN-calls) */
-import { CommunicationIdentifier } from '@azure/communication-common';
-/* @conditional-compile-remove(PSTN-calls) */
-import { AddPhoneNumberOptions } from '@azure/communication-calling';
 
 /**
  * Pane that is used to store chat and people for CallWithChat composite
@@ -47,9 +39,7 @@ export const CallWithChatPane = (props: {
   chatAdapter: ChatAdapter;
   onClose: () => void;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
-  onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
   onChatButtonClicked?: () => void;
-  onPeopleButtonClicked?: () => void;
   modalLayerHostId: string;
   activePane: CallWithChatPaneOption;
   mobileView?: boolean;
@@ -58,16 +48,11 @@ export const CallWithChatPane = (props: {
   fileSharing?: FileSharingOptions;
   rtl?: boolean;
 }): JSX.Element => {
-  const [drawerMenuItems, setDrawerMenuItems] = useState<_DrawerMenuItemProps[]>([]);
-
   const hidden = props.activePane === 'none';
   const paneStyles = hidden ? hiddenStyles : props.mobileView ? availableSpaceStyles : sidePaneStyles;
 
   const callWithChatStrings = useCallWithChatCompositeStrings();
   const theme = useTheme();
-
-  /* @conditional-compile-remove(PSTN-calls) */
-  const alternateCallerId = props.callAdapter.getState().alternateCallerId;
 
   const header =
     props.activePane === 'none' ? null : props.mobileView ? (
@@ -102,48 +87,11 @@ export const CallWithChatPane = (props: {
     />
   );
 
-  /**
-   * In a CallWithChat when a participant is removed, we must remove them from both
-   * the call and the chat thread.
-   */
-  const removeParticipantFromCallWithChat = async (participantId: string): Promise<void> => {
-    await props.callAdapter.removeParticipant(participantId);
-    await props.chatAdapter.removeParticipant(participantId);
-  };
-
-  /* @conditional-compile-remove(PSTN-calls) */
-  const addParticipantToCall = async (
-    participant: CommunicationIdentifier,
-    options?: AddPhoneNumberOptions
-  ): Promise<void> => {
-    await props.callAdapter.addParticipant(participant, options);
-  };
-
-  const peopleContent = (
-    <CallAdapterProvider adapter={props.callAdapter}>
-      <PeoplePaneContent
-        {...props}
-        onRemoveParticipant={removeParticipantFromCallWithChat}
-        setDrawerMenuItems={setDrawerMenuItems}
-        strings={callWithChatStrings}
-        /* @conditional-compile-remove(PSTN-calls) */
-        onAddParticipant={addParticipantToCall}
-        /* @conditional-compile-remove(PSTN-calls) */
-        alternateCallerId={alternateCallerId}
-      />
-    </CallAdapterProvider>
-  );
-
   const minMaxDragPosition = useMinMaxDragPosition(props.modalLayerHostId, props.rtl);
 
   const pipStyles = useMemo(() => getPipStyles(theme), [theme]);
 
-  const dataUiId =
-    props.activePane === 'chat'
-      ? 'call-with-chat-composite-chat-pane'
-      : props.activePane === 'people'
-      ? 'call-with-chat-composite-people-pane'
-      : '';
+  const dataUiId = props.activePane === 'chat' ? 'call-with-chat-composite-chat-pane' : '';
 
   return (
     <Stack verticalFill grow styles={paneStyles} data-ui-id={dataUiId} tokens={props.mobileView ? {} : sidePaneTokens}>
@@ -152,7 +100,6 @@ export const CallWithChatPane = (props: {
         <Stack horizontal styles={scrollableContainer}>
           <Stack.Item verticalFill styles={scrollableContainerContents}>
             <Stack styles={props.activePane === 'chat' ? availableSpaceStyles : hiddenStyles}>{chatContent}</Stack>
-            <Stack styles={props.activePane === 'people' ? availableSpaceStyles : hiddenStyles}>{peopleContent}</Stack>
           </Stack.Item>
         </Stack>
       </Stack.Item>
@@ -165,11 +112,6 @@ export const CallWithChatPane = (props: {
           minDragPosition={minMaxDragPosition.minDragPosition}
           maxDragPosition={minMaxDragPosition.maxDragPosition}
         />
-      )}
-      {drawerMenuItems.length > 0 && (
-        <Stack styles={drawerContainerStyles}>
-          <_DrawerMenu onLightDismiss={() => setDrawerMenuItems([])} items={drawerMenuItems} />
-        </Stack>
       )}
     </Stack>
   );

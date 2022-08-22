@@ -152,4 +152,4 @@ export const CallPane = (props: {
  * @private
  */
 /** @beta */
-export type CallPaneOption = 'none' | 'people';
+export type CallSidePaneOption = 'none' | 'people' | 'custom';

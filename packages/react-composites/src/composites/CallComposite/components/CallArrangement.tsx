@@ -14,7 +14,7 @@ import {
 } from '@internal/react-components';
 import React, { useMemo, useRef } from 'react';
 /* @conditional-compile-remove(one-to-n-calling) */
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
 /* @conditional-compile-remove(one-to-n-calling) */
 import { AvatarPersonaDataCallback } from '../../common/AvatarPersona';
 import { containerDivStyles } from '../../common/ContainerRectProps';
@@ -37,7 +37,7 @@ import {
 /* @conditional-compile-remove(one-to-n-calling) */
 import { CallControlOptions } from '../types/CallControlOptions';
 /* @conditional-compile-remove(one-to-n-calling) */
-import { CallPane, CallPaneOption } from './CallPane';
+import { CallPane, CallSidePaneOption } from './CallPane';
 import { MutedNotification, MutedNotificationProps } from './MutedNotification';
 
 /**
@@ -55,6 +55,8 @@ export interface CallArrangementProps {
   modalLayerHostId: string;
   /* @conditional-compile-remove(one-to-n-calling) */
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
+  activeSidePane?: CallSidePaneOption;
+  onActiveSidePaneChange?: (newOption: CallSidePaneOption) => void;
 }
 
 /**
@@ -78,33 +80,30 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   /* @conditional-compile-remove(one-to-n-calling) */
   const adapter = useAdapter();
   /* @conditional-compile-remove(one-to-n-calling) */
-  const [activePane, setActivePane] = useState<CallPaneOption>('none');
-  /* @conditional-compile-remove(one-to-n-calling) */
   const { callStatus } = useSelector(callStatusSelector);
 
-  /* @conditional-compile-remove(one-to-n-calling) */
+  const { activeSidePane, onActiveSidePaneChange } = props;
   const closePane = useCallback(() => {
-    setActivePane('none');
-  }, [setActivePane]);
+    onActiveSidePaneChange?.('none');
+  }, [onActiveSidePaneChange]);
 
   /* @conditional-compile-remove(one-to-n-calling) */
-  const isMobileWithActivePane = props.mobileView && activePane !== 'none';
+  const isMobileWithActivePane = props.mobileView && activeSidePane !== 'none';
 
-  /* @conditional-compile-remove(one-to-n-calling) */
   const togglePeople = useCallback(() => {
-    if (activePane === 'people' || !_isInCall(callStatus)) {
-      setActivePane('none');
+    if (activeSidePane === 'people' || !_isInCall(callStatus)) {
+      onActiveSidePaneChange?.('none');
     } else {
-      setActivePane('people');
+      onActiveSidePaneChange?.('people');
     }
-  }, [activePane, setActivePane, callStatus]);
+  }, [activeSidePane, onActiveSidePaneChange, callStatus]);
 
   /* @conditional-compile-remove(one-to-n-calling) */
   const selectPeople = useCallback(() => {
     if (_isInCall(callStatus)) {
-      setActivePane('people');
+      onActiveSidePaneChange?.('people');
     }
-  }, [setActivePane, callStatus]);
+  }, [onActiveSidePaneChange, callStatus]);
 
   /* @conditional-compile-remove(one-to-n-calling) */
   const callCompositeContainerCSS = useMemo(() => {
@@ -132,7 +131,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
             showShowPeopleTabHeaderButton(props.callControlProps.options) ? selectPeople : undefined
           }
           modalLayerHostId={props.modalLayerHostId}
-          activePane={activePane}
+          activePane={activeSidePane}
           mobileView={props.mobileView}
           inviteLink={props.callControlProps.callInvitationURL}
         />
@@ -176,7 +175,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                 containerHeight={containerHeight}
                 isMobile={props.mobileView}
                 /* @conditional-compile-remove(one-to-n-calling) */
-                peopleButtonChecked={activePane === 'people'}
+                peopleButtonChecked={activeSidePane === 'people'}
                 /* @conditional-compile-remove(one-to-n-calling) */
                 onPeopleButtonClicked={togglePeople}
               />
