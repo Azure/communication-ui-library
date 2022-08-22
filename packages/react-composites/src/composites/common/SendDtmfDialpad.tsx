@@ -76,7 +76,7 @@ export const SendDtmfDialpad = (props: SendDtmfDialpadProps): JSX.Element => {
             />
           </Stack>
 
-          <Stack>
+          <Stack style={{ overflow: 'hidden' }}>
             <Dialpad styles={dialpadStyle} {...dialpadProps} showDeleteButton={false} strings={strings} />
           </Stack>
         </Modal>
