@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { getIdentifierKind } from '@azure/communication-common';
-import { fromFlatCommunicationIdentifier, memoizeFnAll } from '@internal/acs-ui-common';
+import { CommunicationIdentifier, getIdentifierKind } from '@azure/communication-common';
+import { toFlatCommunicationIdentifier, memoizeFnAll } from '@internal/acs-ui-common';
 import { CallParticipantListParticipant } from '@internal/react-components';
 
 /**
@@ -10,7 +10,7 @@ import { CallParticipantListParticipant } from '@internal/react-components';
  */
 export const memoizedConvertAllremoteParticipants = memoizeFnAll(
   (
-    userId: string,
+    userId: CommunicationIdentifier,
     displayName: string | undefined,
     state: 'Idle' | 'Connecting' | 'Ringing' | 'Connected' | 'Hold' | 'InLobby' | 'EarlyMedia' | 'Disconnected',
     isMuted: boolean,
@@ -29,16 +29,15 @@ export const memoizedConvertAllremoteParticipants = memoizeFnAll(
 );
 
 const convertRemoteParticipantToParticipantListParticipant = (
-  userId: string,
+  userId: CommunicationIdentifier,
   displayName: string | undefined,
   state: 'Idle' | 'Connecting' | 'Ringing' | 'Connected' | 'Hold' | 'InLobby' | 'EarlyMedia' | 'Disconnected',
   isMuted: boolean,
   isScreenSharing: boolean,
   isSpeaking: boolean
 ): CallParticipantListParticipant => {
-  const identifier = fromFlatCommunicationIdentifier(userId);
   return {
-    userId,
+    userId: toFlatCommunicationIdentifier(userId),
     displayName,
     state,
     isMuted,
@@ -47,6 +46,6 @@ const convertRemoteParticipantToParticipantListParticipant = (
     // ACS users can not remove Teams users.
     // Removing unknown types of users is undefined.
     isRemovable:
-      getIdentifierKind(identifier).kind === 'communicationUser' || getIdentifierKind(identifier).kind === 'phoneNumber'
+      getIdentifierKind(userId).kind === 'communicationUser' || getIdentifierKind(userId).kind === 'phoneNumber'
   };
 };
