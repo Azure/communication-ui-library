@@ -118,7 +118,7 @@ export const CallingDialpad = (props: CallingDialpadProps): JSX.Element => {
             />
           </Stack>
 
-          <Stack>{dialpadComponent()}</Stack>
+          <Stack style={{ overflow: 'hidden' }}>{dialpadComponent()}</Stack>
         </Modal>
       }
     </>
