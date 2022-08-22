@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "introdocues hermetic tests to the calling composite for new hold experience.",
+  "packageName": "@internal/react-composites",
+  "email": "94866715+dmceachernmsft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
