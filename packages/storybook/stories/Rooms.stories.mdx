@@ -11,16 +11,17 @@ To learn more about the Rooms, click [here](https://docs.microsoft.com/en-us/azu
 ## How does UI Library interact with Rooms
 
 The UI Library helps Contoso create an end user experiences by providing a set of UI components or UI Composite experiences
-to join a Rooms call. The UI Library is not for creating users, rooms, and adding users to rooms.
+to join a Rooms call. The UI Library is not for creating users, rooms, and adding users to rooms with roles.
 
 ## Examples
 
-Access control for an ACS call are important in many use cases. The scenarios listed below are some very common applications:
+Role based access control for an ACS call are important in many common scenarios such as:
 
 - virtual visits (1:1 interactions)
 - online class rooms (larger groups)
 - presentations
 - court trials
+- debates
 
 ## Where does does Rooms fit in your architecture
 
@@ -28,10 +29,12 @@ The following diagram illustrates where Rooms and the UI Library will in your ar
 
 <img src="images/rooms_architecture.png" alt="Rooms architecture" />
 
-To start a rooms call. users need to be created using ACS identities. Learn more about ACS identities [here](/?path=/docs/identity--page).
-A room will be created using the Rooms Client. If you are using Javascript, the Rooms Client is imported from this [repository](https://github.com/Azure/azure-sdk-for-js/tree/main/sdk/communication/communication-rooms/)
-Then users are added to a room using the Rooms Client with a role.
-Once the user is added, the user and their role (which can be retrieved from the Rooms Client) are passed to Call Composite.
+To start a rooms call. first an ACS user need to be created. Learn more about this by using ACS identities [here](/?path=/docs/identity--page).
+Next a room needs to be created using the Rooms Client. The Javascript implementation of the Rooms Client is imported from this [repository](https://github.com/Azure/azure-sdk-for-js/tree/main/sdk/communication/communication-rooms/).
+Then users are added to a room using the Rooms Client with an assigned role.
+Once the user is added to the room, the user and their role (which can be retrieved from the Rooms Client) are passed to Call Composite.
+
+Note: The role may no need to be passed to Call composite in the future and will be pulled from the Calling SDK by the Call composite
 
 ## How to incorporate Rooms in your experience.
 
@@ -45,8 +48,13 @@ Also, you can to try this [preview sample](./?path=/story/composites-call-joinex
 
 ### Can the UI Library help me create a room?
 
-No, it only allows a known user to join a room that has been previously set up.
-We have quickstarts to allow you to set up a room.
+No, the UI Library only allows a known user to join a room they have been already added too.
+The Rooms Client is responsible for creating a room. he Javascript implementation can be imported from this [repository](https://github.com/Azure/azure-sdk-for-js/tree/main/sdk/communication/communication-rooms/)
+We have quickstarts to allow you to set up a room and add that user to the room.
+
+### Can the UI Library help me update the role of a participant?
+
+No, this is the responsibility of the Rooms Client. The Javascript implementation can be imported from this [repository](https://github.com/Azure/azure-sdk-for-js/tree/main/sdk/communication/communication-rooms/)
 
 ### How do I get a known user to join a room?
 
