@@ -5,52 +5,63 @@ import RoomsCallSnippetText from '!!raw-loader!./snippets/RoomsCall.snippet.tsx'
 
 # Rooms
 
-Rooms provides a way to secure who can join an ACS call.
-Rooms provides a way to enforce role based access control (RBAC) to participants of an ACS call.
-To learn more about the Rooms, click [here](https://github.com/Azure/azure-sdk-for-js/tree/main/sdk/communication/communication-rooms/)
+Rooms provides a way to secure who can join an ACS call. Rooms also provide a way to assign roles to users to limit their access in an ACS call.
+To learn more about the Rooms, click [here](https://docs.microsoft.com/en-us/azure/communication-services/concepts/rooms/room-concept)
 
 ## How does UI Library interact with Rooms
 
-The UI Library helps Contoso create end user experiences by providing a set of UI components or UI Composite experiences
-to join a rooms call.
+The UI Library helps Contoso create an end user experiences by providing a set of UI components or UI Composite experiences
+to join a Rooms call. The UI Library is not for creating users, rooms, and adding users to rooms.
 
 ## Examples
 
-Rooms can be enhance the call experience in the following applications:
+Access control for an ACS call are important in many use cases. The scenarios listed below are some very common applications:
 
 - virtual visits (1:1 interactions)
 - online class rooms (larger groups)
 - presentations
 - court trials
 
-## Where does this fit in your architecture
+## Where does does Rooms fit in your architecture
 
-Create a User. The creation of rooms will be done by Contoso using the Rooms API. The addition of the created user to that room will also use the Rooms API with a role.
-The role can be retrieved from the Rooms API and passed to Call composite.
+The following diagram illustrates where Rooms and the UI Library will in your architecture
 
 <img src="images/rooms_architecture.png" alt="Rooms architecture" />
 
+To start a rooms call. users need to be created using ACS identities. Learn more about ACS identities [here](/?path=/docs/identity--page).
+A room will be created using the Rooms Client. If you are using Javascript, the Rooms Client is imported from this [repository](https://github.com/Azure/azure-sdk-for-js/tree/main/sdk/communication/communication-rooms/)
+Then users are added to a room using the Rooms Client with a role.
+Once the user is added, the user and their role (which can be retrieved from the Rooms Client) are passed to Call Composite.
+
 ## How to incorporate Rooms in your experience.
 
+The following is a code snippet of how to connect the Call Composite to a rooms call given a roomId.
+
 <Source code={RoomsCallSnippetText} />
-(link to joining an existing call)
+
+Also, you can to try this [preview sample](./?path=/story/composites-call-joinexistingcall--join-existing-call) to join an existing rooms call.
 
 ## FAQs
 
-Can the UI Library help me create a room?
+### Can the UI Library help me create a room?
+
 No, it only allows a known user to join a room that has been previously set up.
 We have quickstarts to allow you to set up a room.
 
-How do I get a known user to join a room?
+### How do I get a known user to join a room?
+
 That is out of scope but we do have identity quickstarts to set up new users.
 
-How come some of my buttons are greyed out when I am using the UI composite in the Room?
+### How come some of my buttons are greyed out when I am using the UI composite in the Room?
+
 Depending on your role we only support a subset of capabilities. (E.g a presenter should be able to share their screen
 but an attendee should not)
 
-Is Rooms ready for production loads?
+### Is Rooms ready for production loads?
+
 Currently Rooms and the UI Library support for rooms are both in public preview. We definitely look forward to seeing how you
 like this experience so we can create an amazing experience when the feature goes "General Available" in 2023.
 
-If I have found any issues with the CallComposite when interacting with a Room where can I go?
+### If I have found any issues with the CallComposite when interacting with a Room where can I go?
+
 Feel free to log a [Github issue](https://github.com/Azure/communication-ui-library/issues) and someone from our team can work with you on your issue.
