@@ -94,11 +94,14 @@ test.describe('Call composite participant menu items injection tests', async () 
     }
     if (flavor === 'beta') {
       if (!isTestProfileDesktop(testInfo)) {
-        await pageClick(page, '[role="menuitem"]');
+        // click the first participant
+        await pageClick(page, `${dataUiId('participant-list')} [role="menuitem"]`);
+        // wait for drawer to have opened
+        await waitForSelector(page, dataUiId('drawer-menu'));
       } else {
         await pageClick(page, dataUiId(IDS.participantItemMenuButton));
+        await waitForSelector(page, '.ms-ContextualMenu-itemText');
       }
-      await waitForSelector(page, '.ms-ContextualMenu-itemText');
     } else {
       // Open participant list flyout
       await pageClick(page, dataUiId(IDS.participantButtonPeopleMenuItem));
