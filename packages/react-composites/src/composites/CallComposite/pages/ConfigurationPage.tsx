@@ -8,7 +8,7 @@ import { LocalDeviceSettings } from '../components/LocalDeviceSettings';
 import { StartCallButton } from '../components/StartCallButton';
 import { devicePermissionSelector } from '../selectors/devicePermissionSelector';
 import { useSelector } from '../hooks/useSelector';
-import { DevicesButton, ErrorBar } from '@internal/react-components';
+import { DevicesButton, ErrorBar, _usePermissions } from '@internal/react-components';
 import { getCallingSelector } from '@internal/calling-component-bindings';
 import { Stack } from '@fluentui/react';
 import { LocalPreview } from '../components/LocalPreview';
@@ -52,6 +52,13 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
   const errorBarProps = usePropsFor(ErrorBar);
   const adapter = useAdapter();
   const deviceState = adapter.getState().devices;
+
+  let disableStartCallButton = !microphonePermissionGranted || deviceState.microphones?.length === 0;
+  /* @conditional-compile-remove(rooms) */
+  const permissions = _usePermissions();
+  /* @conditional-compile-remove(rooms) */
+  disableStartCallButton = permissions.microphoneButton && disableStartCallButton;
+
   const locale = useLocale();
   const title = (
     <Stack.Item className={mobileView ? titleContainerStyleMobile : titleContainerStyleDesktop}>
@@ -103,7 +110,7 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
             <StartCallButton
               className={mobileView ? startCallButtonStyleMobile : undefined}
               onClick={startCallHandler}
-              disabled={!microphonePermissionGranted || deviceState.microphones?.length === 0}
+              disabled={disableStartCallButton}
             />
           </Stack>
         </Stack>
