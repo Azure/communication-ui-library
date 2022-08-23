@@ -20,7 +20,9 @@ test.describe('Call Composite E2E Configuration Screen Tests', () => {
     await page.hover(dataUiId('call-composite-local-device-settings-microphone-button'));
     await waitForSelector(page, dataUiId('microphoneButtonLabel-tooltip'));
     await stubLocalCameraName(page);
-    expect(await stableScreenshot(page)).toMatchSnapshot(`call-configuration-page-unmute-tooltip.png`);
+    expect(await stableScreenshot(page, { dismissTooltips: false })).toMatchSnapshot(
+      `call-configuration-page-unmute-tooltip.png`
+    );
   });
 
   test('Configuration screen should display call details', async ({ page, serverUrl }) => {

@@ -30,7 +30,7 @@ test.describe('Chat Composite E2E Tests', () => {
 
     await page.locator(dataUiId('chat-composite-message-status-icon')).click();
     await waitForSelector(page, dataUiId('chat-composite-message-tooltip'));
-    expect(await page.screenshot()).toMatchSnapshot('read-message-tooltip-text.png');
+    expect(await stableScreenshot(page, { stubMessageTimestamps: true, dismissTooltips: false })).toMatchSnapshot('read-message-tooltip-text.png');
   });
 
   test('participant can receive read receipts and readers should show in contextual menu', async ({
