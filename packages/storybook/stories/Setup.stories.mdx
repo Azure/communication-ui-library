@@ -12,11 +12,14 @@ import indexText from '!!raw-loader!./snippets/ReactIndex.snippet.tsx';
 
 Currently the Azure Communications UI library supports react versions `>= 16.8.0` or ` < 18`
 
-Using the UI library in react developers will need to downgrade the version of react that they are currently
-getting from `create-react-app`. This page talks about packages that need downgrading and files that should be edited to
-get you up and running.
+Using the UI library in react you will need to downgrade the version of react that you are
+currently getting from `create-react-app` since it creates a project
+that runs on react 18. This page talks about packages that need downgrading and files
+that need to be edited to get you up and running.
 
 ## Prerequisites
+
+Before you get started make sure you have all of these things.
 
 - An Azure account with an active subscription. [Create an account for free](https://azure.microsoft.com/free/?WT.mc_id=A261C142F).
 - [Node.js](https://nodejs.org/) Active LTS and Maintenance LTS versions (Node 14.19.0 and above).
@@ -25,11 +28,11 @@ get you up and running.
 
 ## Setting Up
 
-UI Library requires a React environment to be setup. Next we will do that. If you already have a React App, you can skip this section.
+UI Library requires a React environment to be setup. Next we will do that.
 
 ### Set Up React App
 
-We'll use the create-react-app template for this quickstart. For more information, see: [Get Started with React](https://reactjs.org/docs/create-a-new-react-app.html)
+We'll use the create-react-app typescript template for our application. For more information, see: [Get Started with React](https://reactjs.org/docs/create-a-new-react-app.html)
 
 ```bash
 
@@ -39,22 +42,23 @@ cd your-ui-lib-application
 
 ```
 
-### Editing your files
+### Revert `index.tsx` to older version
 
-Once the create script has finished you will need to edit your `index.tsx` file to a older version.
+The latest `creat-react-app` template is incompatible with React 16/17 libraries.
+Replace the content of the generated `index.tsx` file with the following snippet
+so that it works with the target React versions:
 
 <Source code={indexText} />
 
-The newest version of react react 18 changes how your index.tsx file would look so this change is needed. In our
-various tutorials we will show you how to setup your `App.tsx` file but `index.tsx` needs to be updated in
-this way due to changes to `ReactDom` in `React 18`.
+**Note:** Various tutorials in this documentation modify the contents of the generated `App.tsx` file.
+The `index.tsx` file should look identical for all the tutorials, as shown here.
 
 ### Setting up your React app packages
 
 Since React 18 also updates all of its dependencies we will need to make sure that we downgrade the react packages present in
 react versions `16.8.0` to versions `< 18`.
 
-A recommended coniguration for the dependencies of your project can be found here:
+We recommend the following configuration of React-related dependencies:
 
 ```json
 "dependencies": {
@@ -94,18 +98,30 @@ npm install @azure/communication-calling@1.4.4
 npm install @azure/communication-chat@1.2.0
 ```
 
-Another useful library to install for working with our [composite adapters](./?path=/docs/quickstarts-composites--page) is `uuid`
+To try out our [composite adapters](./?path=/docs/quickstarts-composites--page) snippets you will need to install `uuid`
 
 ```bash
 npm install uuid
 ```
+
+### Working with our beta features
+
+If you are looking to experiment with our latest beta calling features, ensure to install the corresponding beta dependencies.
+
+```bash
+npm install @azure/communication-calling@1.6.1-beta.1
+```
+
+### Testing your app
+
+You need to downgrade or consider removing the provided `App.test.tsx` file. This is because it is
+using the new testing library `@testing-library/react` which is not compatible with other versions of
+react. If this file is left alone the app will not build correctly in the next step.
 
 ### Run Create React App
 
 Let's test the Create React App installation by running:
 
 ```bash
-
 npm run start
-
 ```
