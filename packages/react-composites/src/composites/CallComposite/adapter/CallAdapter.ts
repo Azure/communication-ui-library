@@ -11,7 +11,8 @@ import type {
   StartCallOptions,
   MediaDiagnosticChangedEventArgs,
   NetworkDiagnosticChangedEventArgs,
-  PropertyChangedEvent
+  PropertyChangedEvent,
+  CallEndReason
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions, DtmfTone } from '@azure/communication-calling';
@@ -36,6 +37,17 @@ export type CallCompositePage =
   | 'lobby'
   | 'removedFromCall'
   | /* @conditional-compile-remove(PSTN-calls) */ 'hold';
+
+/**
+ * Subset of CallCompositePages that represent an end call state.
+ * @private
+ */
+export const END_CALL_PAGES: CallCompositePage[] = [
+  'accessDeniedTeamsMeeting',
+  'joinCallFailedDueToNoNetwork',
+  'leftCall',
+  'removedFromCall'
+];
 
 /**
  * {@link CallAdapter} state for pure UI purposes.
@@ -133,11 +145,18 @@ export type DisplayNameChangedListener = (event: {
 }) => void;
 
 /**
+ * Payload for {@link CallEndedListener} containing details on the ended call.
+ *
+ * @public
+ */
+export type CallAdapterCallEndedEvent = { callId?: string; callEndReason?: CallEndReason };
+
+/**
  * Callback for {@link CallAdapterSubscribers} 'callEnded' event.
  *
  * @public
  */
-export type CallEndedListener = (event: { callId: string }) => void;
+export type CallEndedListener = (event: CallAdapterCallEndedEvent) => void;
 
 /**
  * Payload for {@link DiagnosticChangedEventListner} where there is a change in a media diagnostic.
