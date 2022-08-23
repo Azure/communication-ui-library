@@ -4,10 +4,11 @@ import React from 'react';
 import { CallingComponents } from './CallingComponents';
 import { ChatComponents } from './ChatComponents';
 
+// If you don't want to provide custom icons, you can register the default ones included with the library.
+// This will ensure that all the icons are rendered correctly.
+registerIcons({ icons: DEFAULT_COMPONENT_ICONS });
+
 function CompletedComponentsApp(): JSX.Element {
-  // If you don't want to provide custom icons, you can register the default ones included with the library.
-  // This will ensure that all the icons are rendered correctly.
-  registerIcons({ icons: DEFAULT_COMPONENT_ICONS });
   const stackStyle = {
     root: {
       width: '100%'
