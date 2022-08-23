@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { CallAdapterState, CallCompositePage } from '../adapter/CallAdapter';
+import { CallAdapterState, CallCompositePage, END_CALL_PAGES } from '../adapter/CallAdapter';
 import { _isInCall, _isPreviewOn, _isInLobbyOrConnecting } from '@internal/calling-component-bindings';
 import { CallControlOptions } from '../types/CallControlOptions';
 import { CallState } from '@internal/calling-stateful-client';
@@ -134,6 +134,27 @@ export const getCallCompositePage = (
   // No call state - show starting page (configuration)
   return 'configuration';
 };
+
+/** @private */
+export const IsCallEndedPage = (
+  /**
+   * Explicitly listing the pages of this function intentionally.
+   * This protects against adding a new composite page that should be marked as an callEndedPage.
+   * EndCallPages are used to trigger onCallEnded events so this could easily be missed.
+   * When you add a new composite page this will throw a compiler error. If this new page is an
+   * EndCallPage ensure you update the END_CALL_PAGES. Afterwards update the `page` parameter
+   * type below to allow your new page, i.e. add `| <your new page>
+   */
+  page:
+    | 'accessDeniedTeamsMeeting'
+    | 'call'
+    | 'configuration'
+    | 'joinCallFailedDueToNoNetwork'
+    | 'leftCall'
+    | 'lobby'
+    | 'removedFromCall'
+    | /* @conditional-compile-remove(PSTN-calls) */ 'hold'
+): boolean => END_CALL_PAGES.includes(page);
 
 /**
  * Creates a new call control options object and sets the correct values for disabling
