@@ -9,6 +9,7 @@
 import { AudioDeviceInfo } from '@azure/communication-calling';
 import { Call } from '@azure/communication-calling';
 import { CallAgent } from '@azure/communication-calling';
+import type { CallEndReason } from '@azure/communication-calling';
 import { CallState } from '@internal/calling-stateful-client';
 import type { ChatMessage } from '@azure/communication-chat';
 import type { ChatParticipant } from '@azure/communication-chat';
@@ -121,6 +122,12 @@ export interface BaseCompositeProps<TIcons extends Record<string, JSX.Element>> 
 // @public
 export interface CallAdapter extends AdapterState<CallAdapterState>, Disposable, CallAdapterCallManagement, CallAdapterDeviceManagement, CallAdapterSubscribers {
 }
+
+// @public
+export type CallAdapterCallEndedEvent = {
+    callId?: string;
+    callEndReason?: CallEndReason;
+};
 
 // @public
 export interface CallAdapterCallManagement {
@@ -338,9 +345,7 @@ export type CallControlOptions = {
 };
 
 // @public
-export type CallEndedListener = (event: {
-    callId: string;
-}) => void;
+export type CallEndedListener = (event: CallAdapterCallEndedEvent) => void;
 
 // @public
 export type CallIdChangedListener = (event: {
