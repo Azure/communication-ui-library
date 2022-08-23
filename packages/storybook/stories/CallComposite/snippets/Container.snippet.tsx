@@ -1,3 +1,4 @@
+import { GroupCallLocator, RoomCallLocator, TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 import {
   CallAdapter,
@@ -14,8 +15,8 @@ import { validate as validateUUID } from 'uuid';
 export type ContainerProps = {
   userId: CommunicationUserIdentifier;
   token: string;
-  locator: string;
   displayName: string;
+  locator?: CallAdapterLocator;
   formFactor?: 'desktop' | 'mobile';
   fluentTheme?: PartialTheme | Theme;
   callInvitationURL?: string;
@@ -35,17 +36,6 @@ const isRoomID = (id: string): boolean => {
   return false;
 };
 
-const createCallAdapterLocator = (locator: string): CallAdapterLocator | undefined => {
-  if (isTeamsMeetingLink(locator)) {
-    return { meetingLink: locator };
-  } else if (isGroupID(locator)) {
-    return { groupId: locator };
-  } else if (isRoomID(locator)) {
-    return { roomId: locator };
-  }
-  return undefined;
-};
-
 export const ContosoCallContainer = (props: ContainerProps): JSX.Element => {
   const credential = useMemo(() => {
     try {
@@ -56,22 +46,46 @@ export const ContosoCallContainer = (props: ContainerProps): JSX.Element => {
     }
   }, [props.token]);
 
-  const locator = useMemo(() => createCallAdapterLocator(props.locator), [props.locator]);
+  if (!props.locator) {
+    return <>Call locator is not provided.</>;
+  } else if ('meetingLink' in props.locator) {
+    const teamsLocator = props.locator as TeamsMeetingLinkLocator;
+    if (typeof teamsLocator.meetingLink !== 'string') {
+      return <>Teams meeting link should be a string.</>;
+    }
+    if (teamsLocator.meetingLink && !isTeamsMeetingLink(teamsLocator.meetingLink)) {
+      return <>Teams meeting link '{teamsLocator.meetingLink}' is not recognized.</>;
+    }
+  } else if ('groupId' in props.locator) {
+    const groupLocator = props.locator as GroupCallLocator;
+    if (typeof groupLocator.groupId !== 'string') {
+      return <>Group id should be a string.</>;
+    }
+    if (!groupLocator.groupId && !isGroupID(groupLocator.groupId)) {
+      return <>Group id '{groupLocator.groupId}' is not recognized.</>;
+    }
+  } else if ('roomId' in props.locator) {
+    const roomLocator = props.locator as RoomCallLocator;
+    if (typeof roomLocator.roomId !== 'string') {
+      return <>Room id should be a string.</>;
+    }
+    if (!isRoomID(roomLocator.roomId)) {
+      return <>Room id '{roomLocator.roomId}' is not recognized.</>;
+    }
+  } else {
+    return <>Call locator '{props.locator}' is not recognized.</>;
+  }
 
   const adapter = useAzureCommunicationCallAdapter(
     {
       userId: props.userId,
       displayName: props.displayName, // Max 256 Characters
       credential,
-      locator
+      locator: props.locator
     },
     undefined,
     leaveCall
   );
-
-  if (!locator) {
-    return <>Provided call locator '{props.locator}' is not recognized.</>;
-  }
 
   if (adapter) {
     return (

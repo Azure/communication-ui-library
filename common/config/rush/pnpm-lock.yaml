@@ -39,12 +39,12 @@ packages:
   /@azure/communication-chat/1.2.0:
     dependencies:
       '@azure/abort-controller': 1.0.4
-      '@azure/communication-common': 2.0.0
+      '@azure/communication-common': 2.1.0
       '@azure/communication-signaling': 1.0.0-beta.13
-      '@azure/core-auth': 1.3.2
-      '@azure/core-client': 1.3.0
+      '@azure/core-auth': 1.4.0
+      '@azure/core-client': 1.6.1
       '@azure/core-paging': 1.1.3
-      '@azure/core-rest-pipeline': 1.8.0
+      '@azure/core-rest-pipeline': 1.9.1
       '@azure/core-tracing': 1.0.0-preview.13
       '@azure/logger': 1.0.3
       events: 3.3.0
@@ -72,8 +72,8 @@ packages:
   /@azure/communication-common/2.0.0:
     dependencies:
       '@azure/abort-controller': 1.0.4
-      '@azure/core-auth': 1.3.2
-      '@azure/core-rest-pipeline': 1.8.0
+      '@azure/core-auth': 1.4.0
+      '@azure/core-rest-pipeline': 1.9.1
       '@azure/core-tracing': 1.0.0-preview.13
       events: 3.3.0
       jwt-decode: 3.1.2
@@ -86,8 +86,8 @@ packages:
   /@azure/communication-common/2.1.0:
     dependencies:
       '@azure/abort-controller': 1.0.4
-      '@azure/core-auth': 1.3.2
-      '@azure/core-rest-pipeline': 1.8.0
+      '@azure/core-auth': 1.4.0
+      '@azure/core-rest-pipeline': 1.9.1
       '@azure/core-tracing': 1.0.0-preview.13
       '@azure/core-util': 1.0.0
       events: 3.3.0
@@ -102,7 +102,7 @@ packages:
     dependencies:
       '@azure/abort-controller': 1.0.4
       '@azure/communication-common': 1.1.0
-      '@azure/core-auth': 1.3.2
+      '@azure/core-auth': 1.4.0
       '@azure/core-http': 1.2.4
       '@azure/core-lro': 1.0.5
       '@azure/core-paging': 1.1.3
@@ -119,9 +119,9 @@ packages:
   /@azure/communication-rooms/1.0.0-beta.1:
     dependencies:
       '@azure/communication-common': 2.1.0
-      '@azure/core-auth': 1.3.2
+      '@azure/core-auth': 1.4.0
       '@azure/core-client': 1.6.1
-      '@azure/core-rest-pipeline': 1.8.0
+      '@azure/core-rest-pipeline': 1.9.1
       '@azure/core-tracing': 1.0.1
       '@azure/logger': 1.0.3
       tslib: 1.14.1
@@ -178,19 +178,6 @@ packages:
       node: '>=12.0.0'
     resolution:
       integrity: sha512-HFrcTgmuSuukRf/EdPmqBrc5l6Q5Uu+2TbuhaKbgaCpP2TfAeiNaQPAadxO+CYBRHGUzIDteMAjFspFLDLnKVQ==
-  /@azure/core-client/1.3.0:
-    dependencies:
-      '@azure/abort-controller': 1.0.4
-      '@azure/core-asynciterator-polyfill': 1.0.0
-      '@azure/core-auth': 1.3.2
-      '@azure/core-rest-pipeline': 1.8.0
-      '@azure/core-tracing': 1.0.0-preview.13
-      tslib: 2.3.1
-    dev: false
-    engines:
-      node: '>=12.0.0'
-    resolution:
-      integrity: sha512-4ricu3aM1TQP2vglBcvFX8KgbWVe+7hl1jVAw6BzIGG4CTAvO3ygDS6th3O+zFwGN9xkgXFHa7Tp3u9za8ciIA==
   /@azure/core-client/1.6.1:
     dependencies:
       '@azure/abort-controller': 1.0.4
@@ -209,7 +196,7 @@ packages:
     dependencies:
       '@azure/abort-controller': 1.0.4
       '@azure/core-asynciterator-polyfill': 1.0.0
-      '@azure/core-auth': 1.3.2
+      '@azure/core-auth': 1.4.0
       '@azure/core-tracing': 1.0.0-preview.11
       '@azure/logger': 1.0.3
       '@types/node-fetch': 2.5.12
@@ -269,22 +256,6 @@ packages:
       node: '>=8.0.0'
     resolution:
       integrity: sha512-his7Ah40ThEYORSpIAwuh6B8wkGwO/zG7gqVtmSE4WAJ46e36zUDXTKReUCLBDc6HmjjApQQxxcRFy5FruG79A==
-  /@azure/core-rest-pipeline/1.8.0:
-    dependencies:
-      '@azure/abort-controller': 1.0.4
-      '@azure/core-auth': 1.3.2
-      '@azure/core-tracing': 1.0.0-preview.13
-      '@azure/logger': 1.0.3
-      form-data: 4.0.0
-      http-proxy-agent: 4.0.1
-      https-proxy-agent: 5.0.0
-      tslib: 2.3.1
-      uuid: 8.3.2
-    dev: false
-    engines:
-      node: '>=12.0.0'
-    resolution:
-      integrity: sha512-o8eZr96erQpiq8EZhZU/SyN6ncOfZ6bexwN2nMm9WpDmZGvaq907kopADt8XvNhbEF7kRA1l901Pg8mXjWp3UQ==
   /@azure/core-rest-pipeline/1.9.1:
     dependencies:
       '@azure/abort-controller': 1.0.4
@@ -3637,6 +3608,27 @@ packages:
         optional: true
     resolution:
       integrity: sha512-8VmSTGKY3+9kZ09THC7546OaFbjLu5kEAGU5ZFSZaNlsJwRg7bC3bScKbnyX5EhihgZ3W8oJt/eMAIqXKHxA8g==
+  /@storybook/addons/6.5.10_react-dom@16.13.1+react@16.14.0:
+    dependencies:
+      '@storybook/api': 6.5.10_react-dom@16.13.1+react@16.14.0
+      '@storybook/channels': 6.5.10
+      '@storybook/client-logger': 6.5.10
+      '@storybook/core-events': 6.5.10
+      '@storybook/csf': 0.0.2--canary.4566f4d.1
+      '@storybook/router': 6.5.10_react-dom@16.13.1+react@16.14.0
+      '@storybook/theming': 6.5.10_react-dom@16.13.1+react@16.14.0
+      '@types/webpack-env': 1.16.2
+      core-js: 3.16.2
+      global: 4.4.0
+      react: 16.14.0
+      react-dom: 16.13.1_react@16.14.0
+      regenerator-runtime: 0.13.9
+    dev: false
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
+    resolution:
+      integrity: sha512-VD4tBCQ23PkSeDoxuHcKy0RfhIs3oMYjBacOZx7d0bvOzK9WjPyvE2ysDAh7r/ceqnwmWHAScIpE+I1RU7gl+g==
   /@storybook/addons/6.5.7_react-dom@16.13.1+react@16.14.0:
     dependencies:
       '@storybook/api': 6.5.7_react-dom@16.13.1+react@16.14.0
@@ -3658,6 +3650,33 @@ packages:
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
     resolution:
       integrity: sha512-tUZ2c1uegUcwY31ztNQZGU/HUwAEEGIR8fEOvvO8S0TNQGoo6cwFtZmWBh3mTSRGcmzK2SNBjFHZua5Ee9TefA==
+  /@storybook/api/6.5.10_react-dom@16.13.1+react@16.14.0:
+    dependencies:
+      '@storybook/channels': 6.5.10
+      '@storybook/client-logger': 6.5.10
+      '@storybook/core-events': 6.5.10
+      '@storybook/csf': 0.0.2--canary.4566f4d.1
+      '@storybook/router': 6.5.10_react-dom@16.13.1+react@16.14.0
+      '@storybook/semver': 7.3.2
+      '@storybook/theming': 6.5.10_react-dom@16.13.1+react@16.14.0
+      core-js: 3.16.2
+      fast-deep-equal: 3.1.3
+      global: 4.4.0
+      lodash: 4.17.21
+      memoizerific: 1.11.3
+      react: 16.14.0
+      react-dom: 16.13.1_react@16.14.0
+      regenerator-runtime: 0.13.9
+      store2: 2.12.0
+      telejson: 6.0.8
+      ts-dedent: 2.2.0
+      util-deprecate: 1.0.2
+    dev: false
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
+    resolution:
+      integrity: sha512-AkmgSPNEGdKp4oZA4KQ+RJsacw7GwfvjsVDnCkcXqS9zmSr/RNL0fhpcd60KKkmx/hGKPTDFpK3ZayxDrJ/h4A==
   /@storybook/api/6.5.7_react-dom@16.13.1+react@16.14.0:
     dependencies:
       '@storybook/channels': 6.5.7
@@ -3751,6 +3770,18 @@ packages:
         optional: true
     resolution:
       integrity: sha512-8OB3mZ2L6kQBiAXlkhna/MHREXIPtqXi2AJLT3+bTzBlqkusH+PwMZxWHbcPl1vZrlNQBC40Elx9tdynGkVQ6g==
+  /@storybook/channel-postmessage/6.5.10:
+    dependencies:
+      '@storybook/channels': 6.5.10
+      '@storybook/client-logger': 6.5.10
+      '@storybook/core-events': 6.5.10
+      core-js: 3.16.2
+      global: 4.4.0
+      qs: 6.10.1
+      telejson: 6.0.8
+    dev: false
+    resolution:
+      integrity: sha512-t9PTA0UzFvYa3IlOfpBOolfrRMPTjUMIeCQ6FNyM0aj5GqLKSvoQzP8NeoRpIrvyf6ljFKKdaMaZ3fiCvh45ag==
   /@storybook/channel-postmessage/6.5.7:
     dependencies:
       '@storybook/channels': 6.5.7
@@ -3773,6 +3804,14 @@ packages:
     dev: false
     resolution:
       integrity: sha512-C+l6t3ZgHzU8gL8GJ8c4GMttJglGJIwq1LtJJKnGzx2kJCD0HRMMqc/qFS2K2EwP99hLwwGIlCpom3UZ1aEanA==
+  /@storybook/channels/6.5.10:
+    dependencies:
+      core-js: 3.16.2
+      ts-dedent: 2.2.0
+      util-deprecate: 1.0.2
+    dev: false
+    resolution:
+      integrity: sha512-lo26YZ6kWpHXLhuHJF4P/bICY7jD/rXEZqReKtGOSk1Lv99/xvG6pqmcy3hWLf3v3Dy/8otjRPSR7izFVIIZgQ==
   /@storybook/channels/6.5.7:
     dependencies:
       core-js: 3.16.2
@@ -3781,6 +3820,36 @@ packages:
     dev: false
     resolution:
       integrity: sha512-v880fWBpWgiWrDmZesTIstNfMZhrPfgXAtLNcL5Z89NAPahsHskOSszc0BDxKN3gb+ZeTKUqHxY57dQdp+1rhg==
+  /@storybook/client-api/6.5.10_react-dom@16.13.1+react@16.14.0:
+    dependencies:
+      '@storybook/addons': 6.5.10_react-dom@16.13.1+react@16.14.0
+      '@storybook/channel-postmessage': 6.5.10
+      '@storybook/channels': 6.5.10
+      '@storybook/client-logger': 6.5.10
+      '@storybook/core-events': 6.5.10
+      '@storybook/csf': 0.0.2--canary.4566f4d.1
+      '@storybook/store': 6.5.10_react-dom@16.13.1+react@16.14.0
+      '@types/qs': 6.9.7
+      '@types/webpack-env': 1.16.2
+      core-js: 3.16.2
+      fast-deep-equal: 3.1.3
+      global: 4.4.0
+      lodash: 4.17.21
+      memoizerific: 1.11.3
+      qs: 6.10.1
+      react: 16.14.0
+      react-dom: 16.13.1_react@16.14.0
+      regenerator-runtime: 0.13.9
+      store2: 2.12.0
+      synchronous-promise: 2.0.15
+      ts-dedent: 2.2.0
+      util-deprecate: 1.0.2
+    dev: false
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
+    resolution:
+      integrity: sha512-3wBWZl3NvMFgMovgEh+euiARAT2FXzpvTF4Q1gerGMNNDlrGxHnFvSuy4FHg/irtOGLa4yLz43ULFbYtpKw0Lg==
   /@storybook/client-api/6.5.7_react-dom@16.13.1+react@16.14.0:
     dependencies:
       '@storybook/addons': 6.5.7_react-dom@16.13.1+react@16.14.0
@@ -3811,6 +3880,13 @@ packages:
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
     resolution:
       integrity: sha512-na8NZhB6GnAGp3jRTV9wwue3WGwSZoi5jfxrKSYMPL/s/2n07/soixHggqueBDXuNBrPoJaXbY/nRHmSjLwxtQ==
+  /@storybook/client-logger/6.5.10:
+    dependencies:
+      core-js: 3.16.2
+      global: 4.4.0
+    dev: false
+    resolution:
+      integrity: sha512-/xA0MHOevXev68hyLMQw8Qo8KczSIdXOxliAgrycMTkDmw5eKeA8TP7B8zP3wGuq/e3MrdD9/8MWhb/IQBNC3w==
   /@storybook/client-logger/6.5.7:
     dependencies:
       core-js: 3.16.2
@@ -3976,6 +4052,12 @@ packages:
         optional: true
     resolution:
       integrity: sha512-/b1oQlmhek8tKDu9ky2O1oEk9g2giAPpl192yRz4lIxap5CFJ7RCfgbkq+F3JBXnH2P84BufC0x3dj4jvBhxCw==
+  /@storybook/core-events/6.5.10:
+    dependencies:
+      core-js: 3.16.2
+    dev: false
+    resolution:
+      integrity: sha512-EVb1gO1172klVIAABLOoigFMx0V88uctY0K/qVCO8n6v+wd2+0Ccn63kl+gTxsAC3WZ8XhXh9q2w5ImHklVECw==
   /@storybook/core-events/6.5.7:
     dependencies:
       core-js: 3.16.2
@@ -4316,6 +4398,21 @@ packages:
         optional: true
     resolution:
       integrity: sha512-jMY1vk1WL1otEODl5BxD1kSh5Eqg+SvZW5CJ7sS6q53i3teOhaGhugvuSTuV9lnBzLOZu8atIdFL0ewdOkpwsg==
+  /@storybook/router/6.5.10_react-dom@16.13.1+react@16.14.0:
+    dependencies:
+      '@storybook/client-logger': 6.5.10
+      core-js: 3.16.2
+      memoizerific: 1.11.3
+      qs: 6.10.1
+      react: 16.14.0
+      react-dom: 16.13.1_react@16.14.0
+      regenerator-runtime: 0.13.9
+    dev: false
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
+    resolution:
+      integrity: sha512-O+vNW/eEpYFF8eCg5jZjNQ6q2DKQVxqDRPCy9pJdEbvavMDZn6AFYgVK+VJe5F4211WW2yncOu922xObCxXJYg==
   /@storybook/router/6.5.7_react-dom@16.13.1+react@16.14.0:
     dependencies:
       '@storybook/client-logger': 6.5.7
@@ -4359,6 +4456,31 @@ packages:
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
     resolution:
       integrity: sha512-nj24TSGdF9J1gD5Fj9Z2hPRAQwqBJoBKD/fmTSFZop0qaJOOyeuxZR5022dQh8UWWoBa3WOQADMTNi5RqQZkiA==
+  /@storybook/store/6.5.10_react-dom@16.13.1+react@16.14.0:
+    dependencies:
+      '@storybook/addons': 6.5.10_react-dom@16.13.1+react@16.14.0
+      '@storybook/client-logger': 6.5.10
+      '@storybook/core-events': 6.5.10
+      '@storybook/csf': 0.0.2--canary.4566f4d.1
+      core-js: 3.16.2
+      fast-deep-equal: 3.1.3
+      global: 4.4.0
+      lodash: 4.17.21
+      memoizerific: 1.11.3
+      react: 16.14.0
+      react-dom: 16.13.1_react@16.14.0
+      regenerator-runtime: 0.13.9
+      slash: 3.0.0
+      stable: 0.1.8
+      synchronous-promise: 2.0.15
+      ts-dedent: 2.2.0
+      util-deprecate: 1.0.2
+    dev: false
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
+    resolution:
+      integrity: sha512-RswrSYh2IiKkytFPxP9AvP+hekjrvHK2ILvyDk2ZgduCN4n5ivsekOb+N3M2t+dq1eLuW9or5n2T4OWwAwjxxQ==
   /@storybook/store/6.5.7_react-dom@16.13.1+react@16.14.0:
     dependencies:
       '@storybook/addons': 6.5.7_react-dom@16.13.1+react@16.14.0
@@ -4416,6 +4538,20 @@ packages:
       typescript: '*'
     resolution:
       integrity: sha512-RHrjAConMqGIsu1TgNXztWtWOXTvvCHDWyGoLagCgZYgjGJ4sukp+ZtrbkayNDkkWWD0lpMzsdDEYCJuru/Sig==
+  /@storybook/theming/6.5.10_react-dom@16.13.1+react@16.14.0:
+    dependencies:
+      '@storybook/client-logger': 6.5.10
+      core-js: 3.16.2
+      memoizerific: 1.11.3
+      react: 16.14.0
+      react-dom: 16.13.1_react@16.14.0
+      regenerator-runtime: 0.13.9
+    dev: false
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
+    resolution:
+      integrity: sha512-BvTQBBcSEwKKcsVmF+Ol6v0RIQUr+bxP7gb10wtfBd23mZTEFA0C1N5FnZr/dDeiBKG1pvf1UKvoYA731y0BsA==
   /@storybook/theming/6.5.7_react-dom@16.13.1+react@16.14.0:
     dependencies:
       '@storybook/client-logger': 6.5.7
@@ -19029,7 +19165,7 @@ packages:
     dev: false
     name: '@rush-temp/calling-component-bindings'
     resolution:
-      integrity: sha512-bTOUzxs4WHRGmErO3d7vqCq10FRrIVUuo5h6CpKLM0GVrg/BKMgv2LpD1PUPt1GOC0wcpchJ2sus+ttyycHMOA==
+      integrity: sha512-4aCCL/3CNE2oXjocXxYB/S6GCl+0ndsj7vd/WM87nH7qmaKWwsMP8XFoILTLBf0X0Q1uOQSNjRppKSQRtXnOtg==
       tarball: file:projects/calling-component-bindings.tgz
     version: 0.0.0
   file:projects/calling-stateful-client.tgz:
@@ -19069,7 +19205,7 @@ packages:
     dev: false
     name: '@rush-temp/calling-stateful-client'
     resolution:
-      integrity: sha512-2OM8c261EgNKsRPN8LACgxo0aYOr6qpiwiM3WHtMMnkKqJjgeEah3KLJdxKhoiwFC9NSNoJ9Ao8tDsDMDP+FOQ==
+      integrity: sha512-DIWRTh1xMQ0rlq1aLNX7wmYPPbA1jFEYTaecUcThC2NkH8E+6qbfn+1TAnTckDSibsuo+YDqgenhykjPtqwUrQ==
       tarball: file:projects/calling-stateful-client.tgz
     version: 0.0.0
   file:projects/calling.tgz:
@@ -19150,7 +19286,7 @@ packages:
     dev: false
     name: '@rush-temp/calling'
     resolution:
-      integrity: sha512-uF2JJruRs8K0D8v2ZF5n7mWh2RfyfO4n5NxVds9THOwAgDh448/ZAtHqkgZw3KKWcDCtqv9mfiLEXiFv4dQvsA==
+      integrity: sha512-pQuXj7ubdmGqkio6MM2u0SDY7UDkWE47zUvX69m4t69ee8Uk8qz6BLVbRYaVVEhDe6JCV7a+vhze6n7XJWtKwQ==
       tarball: file:projects/calling.tgz
     version: 0.0.0
   file:projects/callwithchat.tgz:
@@ -19225,7 +19361,7 @@ packages:
     dev: false
     name: '@rush-temp/callwithchat'
     resolution:
-      integrity: sha512-v052L4oRdJWZ8RL4n2SDOtKauw0B8mz2pIibaUepjYEv1a7SSRQlyIiYsNnfOdzk0BJirGxRLnm6BjeBqXuj1g==
+      integrity: sha512-I1SqrHFAVdcuDObeqPR2JT0g3eqHunfQpD9G3OGAMDkxRYdTbaC3Kgub0NsIl4x5fIEBpTKZLJpTjhOmGDgwCg==
       tarball: file:projects/callwithchat.tgz
     version: 0.0.0
   file:projects/chat-component-bindings.tgz:
@@ -19264,7 +19400,7 @@ packages:
     dev: false
     name: '@rush-temp/chat-component-bindings'
     resolution:
-      integrity: sha512-9mxtVZfbvCiAbBx3vjlXS5hWoFK46Ph42zo/dEpvbpq2VhDHAiTsaFIal72yR7veWl/M1keu/KYT2f10n+9b/g==
+      integrity: sha512-iK8NdM6c2sPnRSazgZE3yC95nl54T5M1YsRkwn0a8BSwtyREJ0trrxwaA1ovafZgdID5OvUiZJ1QEd8T3ziLkQ==
       tarball: file:projects/chat-component-bindings.tgz
     version: 0.0.0
   file:projects/chat-stateful-client.tgz:
@@ -19306,7 +19442,7 @@ packages:
     dev: false
     name: '@rush-temp/chat-stateful-client'
     resolution:
-      integrity: sha512-paRlaBAv2hf/4yC1KiXHD4faJH1mGySJhHd6lgaL83kqecqKaHWpfWg9yadvnmuvJv9oU2TEF3/iD2+xG93mDA==
+      integrity: sha512-jdM/dwQJo7lBUFHXYL7Xe/5UejcyMZpevHa+QtAqrPANKxsKJFhtduzDolo8ZqdUoSE6n3tTb4UlXqLft8zsrA==
       tarball: file:projects/chat-stateful-client.tgz
     version: 0.0.0
   file:projects/chat.tgz:
@@ -19378,7 +19514,7 @@ packages:
     dev: false
     name: '@rush-temp/chat'
     resolution:
-      integrity: sha512-jrLcYvkrPZAWl3Jievp8pJz12B2CqfzpgFMCCWKHH3cD2T1dWkuJroUttkyoY7TMgUOCOuZNOoKgFfXHN1IO9A==
+      integrity: sha512-FvkDvUEHRvieL+dM9Iv8mCZEolcH08UaLWOmxFGSE4yjqh7OTC3GDWKdpNeuDERmAL9/WM7yRFD5qQZvYTfaag==
       tarball: file:projects/chat.tgz
     version: 0.0.0
   file:projects/check-treeshaking.tgz:
@@ -19396,7 +19532,7 @@ packages:
     dev: false
     name: '@rush-temp/check-treeshaking'
     resolution:
-      integrity: sha512-YTucy12zfGkX9XP3qd0G+/38O0wBaRkm1gxLUIoRI878l1ifcVnNrzlGNATxn2iG4p4ShD+9+zwmP7V1R+FYLg==
+      integrity: sha512-+DAQpXLDFx39n3LHx4XodbYiKGkCx2ATEsEGG77AHMQbo6uIKLB+OfjnvGiDm596p6P5WgrT/VMSiy0G1hxRKQ==
       tarball: file:projects/check-treeshaking.tgz
     version: 0.0.0
   file:projects/communication-react.tgz:
@@ -19486,7 +19622,7 @@ packages:
     dev: false
     name: '@rush-temp/communication-react'
     resolution:
-      integrity: sha512-evmgq00aPMsfWGNQlyQEo66lMAHh+92SIqaCr3wbdJw6OVLNLUSV1cg+F1X5wTJqXT5ReYmw6WYqvZBVZCUy7g==
+      integrity: sha512-QSeFEAn7FO9DDhmdBcPhhN/A7Bi1z/x7XrBPcNcVmGgY3mt3AQ/h3PycJnnCUe7HLASTJA8Il6f/4MdexjBJyQ==
       tarball: file:projects/communication-react.tgz
     version: 0.0.0
   file:projects/component-examples.tgz:
@@ -19556,7 +19692,7 @@ packages:
     dev: false
     name: '@rush-temp/component-examples'
     resolution:
-      integrity: sha512-nFif+4a7PCyiwMXVu/dYlvUgwqSuX9CTIdXuKI7p2u7kCXy7B1+qvtRO/ZZ6UA7LVvnsODIXNAD0Ee/rAIMO3Q==
+      integrity: sha512-0kPz9gSwLJ6me+REWCGSynk/ABOqv4YFXz4pTOs93otAVC+sYONWb49GeYN3t4rf1lhwhIKlnRGOb5mfH+LIfw==
       tarball: file:projects/component-examples.tgz
     version: 0.0.0
   file:projects/config.tgz:
@@ -19604,7 +19740,7 @@ packages:
     dev: false
     name: '@rush-temp/fake-backends'
     resolution:
-      integrity: sha512-MT/KEEgkh4asg1NMHuduXv/TU5D6KItOfASBR5P7i5Mz7Wwvsj1H2iUipKJ9F26KEMiWU4PeIlEY+aPAxuu3xA==
+      integrity: sha512-cQM5uljFxgyMth0GHO0vm5ccGNe8Mq2+84bVMLa8Td3hJnx4gVmWS3krkAEWjo9khC+5OuamCrDQRBQfgsqs1g==
       tarball: file:projects/fake-backends.tgz
     version: 0.0.0
   file:projects/react-components.tgz:
@@ -19693,7 +19829,7 @@ packages:
     dev: false
     name: '@rush-temp/react-components'
     resolution:
-      integrity: sha512-MTVdl8BQKrSfD+MbxZSMXiHwwVdLP3AwBxYsYheESLAiVkHi1X/AJAPtnjaao3sHMXykhUiTvF5E3a+D44mtaw==
+      integrity: sha512-nbrsPs0dD4L7evJGYum4zbUlSRvc3gsTH7JYklarkIoZNKqyjq2XKk14rFVLpVyVP4vr4QdSCZvhTowQF5jhzg==
       tarball: file:projects/react-components.tgz
     version: 0.0.0
   file:projects/react-composites.tgz:
@@ -19806,7 +19942,7 @@ packages:
     dev: false
     name: '@rush-temp/react-composites'
     resolution:
-      integrity: sha512-IKU3vA8rojgaqzXTJ+SLKilakn/5d18xPutQCA/NplxvlStzHe7dNOo+c3/DfGjDufLitm5P2A7pKtSn60Z0yg==
+      integrity: sha512-ujodcvvo1shNwr+NHLHpiOO5OskZysb7/a2QVSvUlGosLiOrUrcCBhjEyv8QxlzPTu6qjDEveJ/9JymOYbsLkQ==
       tarball: file:projects/react-composites.tgz
     version: 0.0.0
   file:projects/sample-automation-tests.tgz:
@@ -19871,7 +20007,7 @@ packages:
     dev: false
     name: '@rush-temp/sample-static-html-composites'
     resolution:
-      integrity: sha512-fLS88u0bTuJGS+o71/teuZriPJowDsvK5geBgnljPI4crYN0SL8iMAGhOBE/ZSgbsQFKnCoBob5cWnbueILxmA==
+      integrity: sha512-GXggI+fLThlig+bgvvHskGQ8zbAliWgqbivU9ujeu4ChWCdD0yIOKTyg3UlbzNL6dBczSgXUDy3PlMUzSJ3y9w==
       tarball: file:projects/sample-static-html-composites.tgz
     version: 0.0.0
   file:projects/server.tgz:
@@ -19959,6 +20095,7 @@ packages:
       '@storybook/addon-storyshots': 6.5.7_7f1a65420787f86d385370dae0974ced
       '@storybook/addons': 6.5.7_react-dom@16.13.1+react@16.14.0
       '@storybook/api': 6.5.7_react-dom@16.13.1+react@16.14.0
+      '@storybook/client-api': 6.5.10_react-dom@16.13.1+react@16.14.0
       '@storybook/components': 6.5.7_react-dom@16.13.1+react@16.14.0
       '@storybook/core-events': 6.5.7
       '@storybook/node-logger': 6.5.7
@@ -20037,7 +20174,7 @@ packages:
     dev: false
     name: '@rush-temp/storybook'
     resolution:
-      integrity: sha512-p5XB80bOhb2aNq9gNjmjA5uVGFM82O5/cnwZU5S0/xSp3FDd3AUwB4bL7TXk3UpYiMDjzabtIk6Lcs1r5uJhsA==
+      integrity: sha512-vlc28Mz12CFA1dCHM2aa0Emzy735HqjEZWcecsBLuhaqVkNuMu+L6r7jGxhQbS5pF1vGkTq6dZDppLvHv9XJaw==
       tarball: file:projects/storybook.tgz
     version: 0.0.0
 specifiers:

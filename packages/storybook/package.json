@@ -46,6 +46,7 @@
     "@microsoft/api-extractor": "~7.18.0",
     "@storybook/addons": "~6.5.7",
     "@storybook/api": "~6.5.7",
+    "@storybook/client-api": "~6.5.7",
     "@storybook/core-events": "~6.5.7",
     "@storybook/components": "~6.5.7",
     "@storybook/addon-actions": "~6.5.7",

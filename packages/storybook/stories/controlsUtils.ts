@@ -27,6 +27,8 @@ export const getControlledBotAvatarSymbol = (AvatarName: string): string => {
   return '🤖';
 };
 
+const callTypes = ['Group', 'Teams', 'Rooms'];
+
 const CONTROL_BAR_LAYOUTS = [
   'horizontal',
   'vertical',
@@ -156,10 +158,15 @@ export const controlsToAdd = {
     defaultValue: '',
     name: 'Optional URL to invite other participants to the call'
   },
+  callType: {
+    control: 'radio',
+    options: callTypes,
+    defaultValue: 'Group',
+    name: 'Call Type'
+  },
   callLocator: {
-    control: 'text',
-    defaultValue: '',
-    name: 'Call locator (ACS group ID, Teams meeting link, or Room ID)'
+    control: 'object',
+    name: 'Call locator'
   },
   callModalAlertText: { control: 'text', defaultValue: 'Incoming Video Call', name: 'Alert Text' },
   callToastAlertText: { control: 'text', defaultValue: 'Incoming Call', name: 'Alert Text' },
@@ -326,7 +333,8 @@ export const defaultCallCompositeHiddenControls = {
   onFetchAvatarPersonaData: hiddenControl,
   rtl: hiddenControl,
   options: hiddenControl,
-  callInvitationUrl: hiddenControl
+  callInvitationUrl: hiddenControl,
+  role: hiddenControl
 };
 
 export const defaultChatCompositeHiddenControls = {
