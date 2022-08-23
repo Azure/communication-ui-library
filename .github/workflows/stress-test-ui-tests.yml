@@ -40,7 +40,7 @@ jobs:
       - name: Run browser tests 7 times
         run: |
           cd packages/react-composites
-          rushx test:e2e -s 7
+          rushx test:e2e -s 7 -- -g 'Hold screen should return to call screen upon resume'
         env:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
       - name: Upload snapshot diff
