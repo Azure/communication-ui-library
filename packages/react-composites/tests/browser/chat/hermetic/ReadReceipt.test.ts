@@ -51,7 +51,6 @@ test.describe('Chat Composite E2E Tests', () => {
     const testMessageText = 'How the turn tables';
     await sendMessage(page, testMessageText);
     await waitForMessageDelivered(page);
-    expect(await stableScreenshot(page, { stubMessageTimestamps: true })).toMatchSnapshot('sent-messages.png');
 
     DEFAULT_FAKE_CHAT_ADAPTER_ARGS.remoteParticipants.forEach(async (participant) => {
       await setParticipantAbleToSeeMessages(page, participant, true);
