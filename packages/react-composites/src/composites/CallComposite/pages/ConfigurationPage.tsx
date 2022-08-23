@@ -8,7 +8,9 @@ import { LocalDeviceSettings } from '../components/LocalDeviceSettings';
 import { StartCallButton } from '../components/StartCallButton';
 import { devicePermissionSelector } from '../selectors/devicePermissionSelector';
 import { useSelector } from '../hooks/useSelector';
-import { DevicesButton, ErrorBar, _usePermissions } from '@internal/react-components';
+import { DevicesButton, ErrorBar } from '@internal/react-components';
+/* @conditional-compile-remove(rooms) */
+import { _usePermissions } from '@internal/react-components';
 import { getCallingSelector } from '@internal/calling-component-bindings';
 import { Stack } from '@fluentui/react';
 import { LocalPreview } from '../components/LocalPreview';
