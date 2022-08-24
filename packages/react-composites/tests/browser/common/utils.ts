@@ -437,7 +437,7 @@ export async function stableScreenshot(
   if (stubOptions?.stubMessageTimestamps) {
     await stubMessageTimestamps(page);
   }
-  if (stubOptions?.dismissTooltips) {
+  if (stubOptions?.dismissTooltips !== false) {
     await disableTooltips(page);
   }
   if (stubOptions?.dismissChatMessageActions) {
