@@ -28,6 +28,7 @@ import {
   textFieldStyles
 } from '../styles/Dialpad.styles';
 import { formatPhoneNumber } from '../utils/formatPhoneNumber';
+import useLongPress from '../utils/useLongPress';
 
 /**
  * Strings of {@link Dialpad} that can be overridden.
@@ -54,42 +55,6 @@ export interface DialpadStyles {
 }
 
 /**
- * Type for  {@link DialpadButton} input
- *
- * @beta
- */
-export interface DialpadButtonProps {
-  /** Number displayed on each dialpad button */
-  primaryContent: string;
-  /** Letters displayed on each dialpad button */
-  secondaryContent?: string;
-}
-
-/**
- * DTMF tone for PSTN calls.
- *
- * @beta
- */
-export type DtmfTone =
-  | 'A'
-  | 'B'
-  | 'C'
-  | 'D'
-  | 'Flash'
-  | 'Num0'
-  | 'Num1'
-  | 'Num2'
-  | 'Num3'
-  | 'Num4'
-  | 'Num5'
-  | 'Num6'
-  | 'Num7'
-  | 'Num8'
-  | 'Num9'
-  | 'Pound'
-  | 'Star';
-
-/**
  * Props for {@link Dialpad} component.
  *
  * @beta
@@ -112,34 +77,41 @@ export interface DialpadProps {
   styles?: DialpadStyles;
 }
 
-const DialpadButton = (props: {
+/**
+ * Type for  {@link DialpadButton} input
+ *
+ * @internal
+ */
+export interface DialpadButtonProps {
+  /** Number displayed on each dialpad button */
   primaryContent: string;
+  /** Letters displayed on each dialpad button */
   secondaryContent?: string;
-  styles?: DialpadStyles;
-  index: number;
-  onClick: (input: string, index: number) => void;
-}): JSX.Element => {
-  const theme = useTheme();
-  return (
-    <DefaultButton
-      data-test-id={`dialpad-button-${props.index}`}
-      onClick={() => {
-        props.onClick(props.primaryContent, props.index);
-      }}
-      styles={concatStyleSets(buttonStyles(theme), props.styles?.button)}
-    >
-      <Stack>
-        <Text className={mergeStyles(primaryContentStyles(theme), props.styles?.primaryContent)}>
-          {props.primaryContent}
-        </Text>
+}
 
-        <Text className={mergeStyles(secondaryContentStyles(theme), props.styles?.secondaryContent)}>
-          {props.secondaryContent ?? ' '}
-        </Text>
-      </Stack>
-    </DefaultButton>
-  );
-};
+/**
+ * DTMF tone for PSTN calls.
+ *
+ * @internal
+ */
+export type DtmfTone =
+  | 'A'
+  | 'B'
+  | 'C'
+  | 'D'
+  | 'Flash'
+  | 'Num0'
+  | 'Num1'
+  | 'Num2'
+  | 'Num3'
+  | 'Num4'
+  | 'Num5'
+  | 'Num6'
+  | 'Num7'
+  | 'Num8'
+  | 'Num9'
+  | 'Pound'
+  | 'Star';
 
 const dialPadButtonsDefault: DialpadButtonProps[][] = [
   [
@@ -175,6 +147,42 @@ const DtmfTones: DtmfTone[] = [
   'Pound'
 ];
 
+const DialpadButton = (props: {
+  primaryContent: string;
+  secondaryContent?: string;
+  styles?: DialpadStyles;
+  index: number;
+  onClick: (input: string, index: number) => void;
+  onLongPress: (input: string, index: number) => void;
+}): JSX.Element => {
+  const theme = useTheme();
+  const clickFunction = () => {
+    props.onClick(props.primaryContent, props.index);
+  };
+  const longPressFunction = () => {
+    props.onLongPress(props.primaryContent, props.index);
+  };
+
+  const { handlers } = useLongPress(clickFunction, longPressFunction);
+  return (
+    <DefaultButton
+      data-test-id={`dialpad-button-${props.index}`}
+      styles={concatStyleSets(buttonStyles(theme), props.styles?.button)}
+      {...handlers}
+    >
+      <Stack>
+        <Text className={mergeStyles(primaryContentStyles(theme), props.styles?.primaryContent)}>
+          {props.primaryContent}
+        </Text>
+
+        <Text className={mergeStyles(secondaryContentStyles(theme), props.styles?.secondaryContent)}>
+          {props.secondaryContent ?? ' '}
+        </Text>
+      </Stack>
+    </DefaultButton>
+  );
+};
+
 const DialpadContainer = (props: {
   strings: DialpadStrings;
   // dialpadButtons?: DialpadButtonProps[][];
@@ -203,6 +211,27 @@ const DialpadContainer = (props: {
     // remove non-valid characters from input: letters,special characters excluding +, *,#
     const value = sanitizeInput(textValue + input);
     setTextValue(value);
+    if (onSendDtmfTone) {
+      onSendDtmfTone(DtmfTones[index]);
+    }
+    if (onClickDialpadButton) {
+      onClickDialpadButton(input, index);
+    }
+    if (onChange) {
+      onChange(onDisplayDialpadInput ? onDisplayDialpadInput(value) : formatPhoneNumber(value));
+    }
+  };
+
+  const onLongPressDialpad = (input: string, index: number): void => {
+    let value;
+    if (input === '0' && index === 10) {
+      // remove non-valid characters from input: letters,special characters excluding +, *,#
+      value = sanitizeInput(textValue + '+');
+      setTextValue(value);
+    } else {
+      value = sanitizeInput(textValue + input);
+      setTextValue(value);
+    }
     if (onSendDtmfTone) {
       onSendDtmfTone(DtmfTones[index]);
     }
@@ -295,6 +324,7 @@ const DialpadContainer = (props: {
                   secondaryContent={button.secondaryContent}
                   styles={props.styles}
                   onClick={onClickDialpad}
+                  onLongPress={onLongPressDialpad}
                 />
               ))}
             </Stack>
