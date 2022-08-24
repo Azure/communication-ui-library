@@ -4,18 +4,12 @@
 import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 import { Stack } from '@fluentui/react';
 import { fromFlatCommunicationIdentifier } from '@internal/acs-ui-common';
-import { MessageProps, _IdentifierProvider } from '@internal/react-components';
+import { _IdentifierProvider, FileDownloadError, FileDownloadHandler, MessageProps } from '@internal/react-components';
 import React, { useMemo } from 'react';
-import {
-  ChatComposite,
-  COMPOSITE_LOCALE_FR_FR,
-  FileDownloadError,
-  FileDownloadHandler,
-  useAzureCommunicationChatAdapter
-} from '../../../../src';
+import { ChatComposite, COMPOSITE_LOCALE_FR_FR, useAzureCommunicationChatAdapter } from '../../../src';
 // eslint-disable-next-line no-restricted-imports
-import { IDS } from '../../common/constants';
-import { verifyParamExists } from '../../common/testAppUtils';
+import { IDS } from '../../browser/common/constants';
+import { verifyParamExists } from '../../browser/common/testAppUtils';
 
 const urlSearchParams = new URLSearchParams(window.location.search);
 const params = Object.fromEntries(urlSearchParams.entries());

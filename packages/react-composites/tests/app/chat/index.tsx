@@ -4,7 +4,7 @@
 import { initializeFileTypeIcons } from '@fluentui/react-file-type-icons';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { initializeIconsForUITests } from '../../common/testAppUtils';
+import { initializeIconsForUITests } from '../../browser/common/testAppUtils';
 import { FakeAdapterApp } from './FakeAdapterApp';
 import { LiveTestApp } from './LiveTestApp';
 import './index.css';

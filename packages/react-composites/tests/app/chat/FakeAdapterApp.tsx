@@ -6,19 +6,17 @@ import { CommunicationTokenCredential, CommunicationUserIdentifier } from '@azur
 import { CommunicationIdentifier } from '@azure/communication-signaling';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { _createStatefulChatClientWithDeps } from '@internal/chat-stateful-client';
-import { _IdentifierProvider } from '@internal/react-components';
+import { _IdentifierProvider, FileDownloadError, FileDownloadHandler } from '@internal/react-components';
 import React, { useEffect, useState } from 'react';
 import {
   ChatAdapter,
   ChatComposite,
   COMPOSITE_LOCALE_FR_FR,
-  createAzureCommunicationChatAdapterFromClient,
-  FileDownloadError,
-  FileDownloadHandler
-} from '../../../../src';
+  createAzureCommunicationChatAdapterFromClient
+} from '../../../src';
 // eslint-disable-next-line no-restricted-imports
-import { IDS } from '../../common/constants';
-import { verifyParamExists } from '../../common/testAppUtils';
+import { IDS } from '../../browser/common/constants';
+import { verifyParamExists } from '../../browser/common/testAppUtils';
 import {
   customOnFetchAvatarPersonaData,
   customOnRenderMessage,
