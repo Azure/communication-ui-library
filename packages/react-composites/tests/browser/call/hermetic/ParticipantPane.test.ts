@@ -31,7 +31,7 @@ test.describe('Participant pane tests', async () => {
     }
 
     await waitForSelector(page, dataUiId('call-composite-people-pane'));
-    expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot('call-screen-with-people-pane.png');
+    expect(await stableScreenshot(page)).toMatchSnapshot('call-screen-with-people-pane.png');
   });
 
   test('click on add people button will show no options for ACS group call', async ({ page, serverUrl }, testInfo) => {
