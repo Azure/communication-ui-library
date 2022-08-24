@@ -96,19 +96,20 @@ test.describe('Rooms Participant RemoveButton tests for different roles', async 
       await pageClick(page, dataUiId('participant-item-menu-button'));
     } else {
       await pageClick(page, dataUiId('call-with-chat-composite-more-button'));
-      const drawerPeopleMenuDiv = await page.$('div[role="menu"] >> text=People');
-      await drawerPeopleMenuDiv?.click();
+      await waitForSelector(page, dataUiId('call-composite-more-menu-people-button'));
+      await pageClick(page, dataUiId('call-composite-more-menu-people-button'));
       await hidePiPiP(page);
-      const participantList = await waitForSelector(page, dataUiId('participant-list'));
-      const participantItem = await participantList.$('div[role="menuitem"]');
-      await participantItem?.click();
+      await waitForSelector(page, dataUiId('participant-list'));
+      await waitForSelector(page, dataUiId('participant-item'));
+      await pageClick(page, dataUiId('participant-item'));
+      await waitForSelector(page, dataUiId('drawer-menu'));
     }
     expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot(
       'rooms-call-remove-participant-presenter.png'
     );
   });
 
-  test.only('Remove button is disabled for Attendee', async ({ page, serverUrl }, testInfo) => {
+  test('Remove button is disabled for Attendee', async ({ page, serverUrl }, testInfo) => {
     test.skip(isTestProfileStableFlavor());
     const paul = defaultMockRemoteParticipant('Paul Bridges');
     const participants = [paul];
@@ -123,18 +124,13 @@ test.describe('Rooms Participant RemoveButton tests for different roles', async 
       await pageClick(page, dataUiId('participant-item-menu-button'));
     } else {
       await pageClick(page, dataUiId('call-with-chat-composite-more-button'));
-      // const drawerPeopleMenuDiv = await page.$('div[role="menu"] >> text=People');
-      // await drawerPeopleMenuDiv?.click();
       await waitForSelector(page, dataUiId('call-composite-more-menu-people-button'));
       await pageClick(page, dataUiId('call-composite-more-menu-people-button'));
       await hidePiPiP(page);
       await waitForSelector(page, dataUiId('participant-list'));
       await waitForSelector(page, dataUiId('participant-item'));
       await pageClick(page, dataUiId('participant-item'));
-      // await waitForSelector(page, dataUiId('chat-composite-participant-custom-avatar'));
-      // const participantItem = await waitForSelector(page, 'div[role="menuitem"]');
-      // // await pageClick(page, 'div[role="menuitem"]');
-      // await participantItem?.click();
+      await waitForSelector(page, dataUiId('drawer-menu'));
     }
     expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot(
       'rooms-call-remove-participant-attendee.png'
@@ -156,12 +152,13 @@ test.describe('Rooms Participant RemoveButton tests for different roles', async 
       await pageClick(page, dataUiId('participant-item-menu-button'));
     } else {
       await pageClick(page, dataUiId('call-with-chat-composite-more-button'));
-      const drawerPeopleMenuDiv = await page.$('div[role="menu"] >> text=People');
-      await drawerPeopleMenuDiv?.click();
+      await waitForSelector(page, dataUiId('call-composite-more-menu-people-button'));
+      await pageClick(page, dataUiId('call-composite-more-menu-people-button'));
       await hidePiPiP(page);
-      const participantList = await waitForSelector(page, dataUiId('participant-list'));
-      const participantItem = await participantList.$('div[role="menuitem"]');
-      await participantItem?.click();
+      await waitForSelector(page, dataUiId('participant-list'));
+      await waitForSelector(page, dataUiId('participant-item'));
+      await pageClick(page, dataUiId('participant-item'));
+      await waitForSelector(page, dataUiId('drawer-menu'));
     }
     expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot(
       'rooms-call-remove-participant-consumer.png'

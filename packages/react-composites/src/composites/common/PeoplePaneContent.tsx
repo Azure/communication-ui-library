@@ -45,6 +45,7 @@ export const PeoplePaneContent = (props: {
 }): JSX.Element => {
   const { inviteLink, onFetchParticipantMenuItems, setDrawerMenuItems, strings, onRemoveParticipant } = props;
   const participantListDefaultProps = usePropsFor(ParticipantList);
+  const disableRemoveButton = !hasRemoveParticipantsPermissionTrampoline();
   const setDrawerMenuItemsForParticipant: (participant?: ParticipantListParticipant) => void = useMemo(() => {
     return (participant?: ParticipantListParticipant) => {
       if (participant) {
@@ -52,7 +53,8 @@ export const PeoplePaneContent = (props: {
           participant,
           strings,
           participantListDefaultProps.onRemoveParticipant,
-          participantListDefaultProps.myUserId
+          participantListDefaultProps.myUserId,
+          disableRemoveButton
         );
         if (onFetchParticipantMenuItems) {
           contextualMenuItems = onFetchParticipantMenuItems(
@@ -71,6 +73,7 @@ export const PeoplePaneContent = (props: {
     strings,
     participantListDefaultProps.onRemoveParticipant,
     participantListDefaultProps.myUserId,
+    disableRemoveButton,
     onFetchParticipantMenuItems,
     setDrawerMenuItems
   ]);
@@ -143,8 +146,13 @@ const createDefaultContextualMenuItems = (
   participant: ParticipantListParticipant,
   strings: CallWithChatCompositeStrings | /* @conditional-compile-remove(one-to-n-calling) */ CallCompositeStrings,
   onRemoveParticipant: (userId: string) => Promise<void>,
-  localParticipantUserId?: string
+  localParticipantUserId?: string,
+  disableRemoveButton?: boolean
 ): IContextualMenuItem[] => {
+  let disabled = !participant.isRemovable;
+  if (disableRemoveButton) {
+    disabled = disabled || disableRemoveButton;
+  }
   const menuItems: IContextualMenuItem[] = [];
   if (participant?.userId !== localParticipantUserId) {
     menuItems.push({
@@ -158,7 +166,7 @@ const createDefaultContextualMenuItems = (
       iconProps: {
         iconName: 'UserRemove'
       },
-      disabled: hasRemoveParticipantsPermissionTrampoline(participant)
+      disabled: disabled
     });
   }
   return menuItems;
@@ -167,9 +175,9 @@ const createDefaultContextualMenuItems = (
 /**
  * @private
  */
-const hasRemoveParticipantsPermissionTrampoline = (participant: ParticipantListParticipant): boolean => {
+const hasRemoveParticipantsPermissionTrampoline = (): boolean => {
   /* @conditional-compile-remove(rooms) */
-  return !_usePermissions().removeParticipantButton || !participant.isRemovable;
-  // Return _some_ available icon, as the real icon is beta-only.
-  return !participant.isRemovable;
+  return _usePermissions().removeParticipantButton;
+  // Return true if stable.
+  return true;
 };
