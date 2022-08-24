@@ -1001,7 +1001,8 @@ export const DEFAULT_COMPOSITE_ICONS: {
     ErrorBarCallVideoRecoveredBySystem: JSX.Element;
     ErrorBarCallVideoStoppedBySystem: JSX.Element;
     MessageResend: JSX.Element;
-    HoldCall: JSX.Element;
+    HoldCallContextMenuItem: JSX.Element;
+    HoldCallButton: JSX.Element;
     ResumeCall: JSX.Element;
     BackSpace: JSX.Element;
 };

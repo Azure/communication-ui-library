@@ -1560,7 +1560,8 @@ export const DEFAULT_COMPONENT_ICONS: {
     ParticipantItemOptions: JSX.Element;
     ParticipantItemOptionsHovered: JSX.Element;
     ParticipantItemScreenShareStart: JSX.Element;
-    HoldCall: JSX.Element;
+    HoldCallContextMenuItem: JSX.Element;
+    HoldCallButton: JSX.Element;
     ResumeCall: JSX.Element;
     SendBoxSend: JSX.Element;
     SendBoxSendHovered: JSX.Element;
@@ -1644,7 +1645,8 @@ export const DEFAULT_COMPOSITE_ICONS: {
     ErrorBarCallVideoRecoveredBySystem: JSX.Element;
     ErrorBarCallVideoStoppedBySystem: JSX.Element;
     MessageResend: JSX.Element;
-    HoldCall: JSX.Element;
+    HoldCallContextMenuItem: JSX.Element;
+    HoldCallButton: JSX.Element;
     ResumeCall: JSX.Element;
     BackSpace: JSX.Element;
 };
