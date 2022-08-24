@@ -1752,11 +1752,11 @@ export interface DialpadStyles {
     // (undocumented)
     deleteIcon?: IButtonStyles;
     // (undocumented)
-    primaryContent?: IStyle;
+    digit?: IStyle;
+    // (undocumented)
+    letter?: IStyle;
     // (undocumented)
     root?: IStyle;
-    // (undocumented)
-    secondaryContent?: IStyle;
     // (undocumented)
     textField?: Partial<ITextFieldStyles>;
 }
