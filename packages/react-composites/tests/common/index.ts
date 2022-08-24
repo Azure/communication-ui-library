@@ -6,3 +6,4 @@
 // - the browser tests in ../browser/*
 
 export * from './FakeChatAdapterArgs';
+export * from './MockCallAdapterState';

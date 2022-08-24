@@ -8,7 +8,7 @@ import {
   RemoteVideoStreamState,
   VideoStreamRendererViewState
 } from '@internal/calling-stateful-client';
-import type { CallAdapterState } from '../../../src';
+import type { CallAdapterState } from '../../src';
 
 /**
  * A slight modification of {@link CallAdapterState} for initializing the
