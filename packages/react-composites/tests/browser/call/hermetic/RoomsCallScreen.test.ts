@@ -21,9 +21,7 @@ test.describe('Rooms DeviceButton tests for different roles', async () => {
     await waitForSelector(page, dataUiId(IDS.videoGallery));
     await waitForSelector(page, dataUiId(IDS.deviceButton));
     await pageClick(page, dataUiId(IDS.deviceButton));
-    expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot(
-      'rooms-call-screen-devices-presenter.png'
-    );
+    expect(await stableScreenshot(page)).toMatchSnapshot('rooms-call-screen-devices-presenter.png');
   });
 
   test('All devices are shown for Attendee', async ({ page, serverUrl }) => {
@@ -32,9 +30,7 @@ test.describe('Rooms DeviceButton tests for different roles', async () => {
     await waitForSelector(page, dataUiId(IDS.videoGallery));
     await waitForSelector(page, dataUiId(IDS.deviceButton));
     await pageClick(page, dataUiId(IDS.deviceButton));
-    expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot(
-      'rooms-call-screen-devices-Attendee.png'
-    );
+    expect(await stableScreenshot(page)).toMatchSnapshot('rooms-call-screen-devices-Attendee.png');
   });
 
   test('Only speakers are shown for Consumer', async ({ page, serverUrl }) => {
@@ -46,9 +42,7 @@ test.describe('Rooms DeviceButton tests for different roles', async () => {
     await waitForSelector(page, dataUiId(IDS.videoGallery));
     await waitForSelector(page, dataUiId(IDS.deviceButton));
     await pageClick(page, dataUiId(IDS.deviceButton));
-    expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot(
-      'rooms-call-screen-devices-Consumer.png'
-    );
+    expect(await stableScreenshot(page)).toMatchSnapshot('rooms-call-screen-devices-Consumer.png');
   });
 });
 
@@ -57,14 +51,14 @@ test.describe('Rooms CallScreen tests for different roles', async () => {
     const initialState = defaultMockCallAdapterState();
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { role: 'Presenter' }));
     await waitForSelector(page, dataUiId(IDS.videoGallery));
-    expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot('rooms-call-screen-presenter.png');
+    expect(await stableScreenshot(page)).toMatchSnapshot('rooms-call-screen-presenter.png');
   });
 
   test('Screen Share is disabled for Attendee', async ({ page, serverUrl }) => {
     const initialState = defaultMockCallAdapterState();
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { role: 'Attendee' }));
     await waitForSelector(page, dataUiId(IDS.videoGallery));
-    expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot('rooms-call-screen-attendee.png');
+    expect(await stableScreenshot(page)).toMatchSnapshot('rooms-call-screen-attendee.png');
   });
 
   test('Only few CallControls are enabled for Consumer with remote participants', async ({ page, serverUrl }) => {
@@ -74,9 +68,7 @@ test.describe('Rooms CallScreen tests for different roles', async () => {
     const initialState = defaultMockCallAdapterState(participants);
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { role: 'Consumer' }));
     await waitForSelector(page, dataUiId(IDS.videoGallery));
-    expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot(
-      'rooms-call-screen-consumer-remote-participants.png'
-    );
+    expect(await stableScreenshot(page)).toMatchSnapshot('rooms-call-screen-consumer-remote-participants.png');
   });
 });
 
