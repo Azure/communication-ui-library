@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { CompositeLocale, COMPOSITE_LOCALE_EN_US, COMPOSITE_LOCALE_FR_FR } from '../../../../src';
+import { CompositeLocale, COMPOSITE_LOCALE_EN_US, COMPOSITE_LOCALE_FR_FR } from '../../../src';
 import { QueryArgs } from './QueryArgs';
 
 export function prepareLocale(queryArgs: QueryArgs): CompositeLocale {
