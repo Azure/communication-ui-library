@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { buildUrlWithMockAdapter, defaultMockCallAdapterState, test } from './fixture';
-import { expect } from '@playwright/test';
+import { expect, Page } from '@playwright/test';
 import { dataUiId, stableScreenshot, waitForCallCompositeToLoad, waitForSelector } from '../../common/utils';
 import type { MockCallAdapterState } from '../MockCallAdapterState';
 
