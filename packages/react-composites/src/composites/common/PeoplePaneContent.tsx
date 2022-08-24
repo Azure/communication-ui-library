@@ -91,7 +91,7 @@ export const PeoplePaneContent = (props: {
       isMobile={props.mobileView}
       participantListProps={participantListProps}
       onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
-      onFetchParticipantMenuItems={props.onFetchParticipantMenuItems}
+      onFetchParticipantMenuItems={props.mobileView ? undefined : props.onFetchParticipantMenuItems}
       title={props.strings.peoplePaneSubTitle}
     />
   );
