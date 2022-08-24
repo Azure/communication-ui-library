@@ -28,6 +28,7 @@ export const getControlledBotAvatarSymbol = (AvatarName: string): string => {
 };
 
 const callTypes = ['Group', 'Teams', 'Rooms'];
+const roles = ['Presenter', 'Attendee', 'Consumer'];
 
 const CONTROL_BAR_LAYOUTS = [
   'horizontal',
@@ -319,7 +320,8 @@ export const controlsToAdd = {
       chatButton: true
     },
     name: 'CallWithChat Composite UI Controls'
-  }
+  },
+  role: { control: 'radio', options: roles, defaultValue: 'Presenter', name: 'Role' }
 };
 
 export const hiddenControl = { control: false, table: { disable: true } };
@@ -333,8 +335,7 @@ export const defaultCallCompositeHiddenControls = {
   onFetchAvatarPersonaData: hiddenControl,
   rtl: hiddenControl,
   options: hiddenControl,
-  callInvitationUrl: hiddenControl,
-  role: hiddenControl
+  callInvitationUrl: hiddenControl
 };
 
 export const defaultChatCompositeHiddenControls = {

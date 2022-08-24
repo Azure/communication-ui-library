@@ -38,6 +38,7 @@ const JoinExistingCallStory = (args, context): JSX.Element => {
           callInvitationURL={args.callInvitationURL}
           locale={compositeLocale(locale)}
           formFactor={args.formFactor}
+          role={args.role}
         />
       ) : (
         <ConfigJoinCallHintBanner />
@@ -69,6 +70,7 @@ export default {
     displayName: controlsToAdd.displayName,
     callType: controlsToAdd.callType,
     callLocator: { ...controlsToAdd.callLocator, defaultValue: getCallLocatorDefaultValue('Group') },
+    role: controlsToAdd.role,
     formFactor: controlsToAdd.formFactor,
     callInvitationURL: controlsToAdd.callInvitationURL,
     // Hiding auto-generated controls

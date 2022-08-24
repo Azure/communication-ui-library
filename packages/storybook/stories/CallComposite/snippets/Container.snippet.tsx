@@ -6,6 +6,7 @@ import {
   CallComposite,
   CallCompositeOptions,
   CompositeLocale,
+  Role,
   useAzureCommunicationCallAdapter
 } from '@azure/communication-react';
 import { PartialTheme, Theme } from '@fluentui/react';
@@ -22,6 +23,7 @@ export type ContainerProps = {
   callInvitationURL?: string;
   locale?: CompositeLocale;
   options?: CallCompositeOptions;
+  role?: Role;
 };
 
 const isTeamsMeetingLink = (link: string): boolean => link.startsWith('https://teams.microsoft.com/l/meetup-join');
@@ -45,6 +47,17 @@ export const ContosoCallContainer = (props: ContainerProps): JSX.Element => {
       return undefined;
     }
   }, [props.token]);
+
+  const adapter = useAzureCommunicationCallAdapter(
+    {
+      userId: props.userId,
+      displayName: props.displayName, // Max 256 Characters
+      credential,
+      locator: props.locator
+    },
+    undefined,
+    leaveCall
+  );
 
   if (!props.locator) {
     return <>Call locator is not provided.</>;
@@ -75,18 +88,6 @@ export const ContosoCallContainer = (props: ContainerProps): JSX.Element => {
   } else {
     return <>Call locator '{props.locator}' is not recognized.</>;
   }
-
-  const adapter = useAzureCommunicationCallAdapter(
-    {
-      userId: props.userId,
-      displayName: props.displayName, // Max 256 Characters
-      credential,
-      locator: props.locator
-    },
-    undefined,
-    leaveCall
-  );
-
   if (adapter) {
     return (
       <div style={{ height: '90vh', width: '90vw' }}>
@@ -97,6 +98,7 @@ export const ContosoCallContainer = (props: ContainerProps): JSX.Element => {
           callInvitationUrl={props?.callInvitationURL}
           locale={props?.locale}
           options={props?.options}
+          role={props.role}
         />
       </div>
     );
