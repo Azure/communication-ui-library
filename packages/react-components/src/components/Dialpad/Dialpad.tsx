@@ -61,9 +61,6 @@ export interface DialpadStyles {
  */
 export interface DialpadProps {
   strings?: DialpadStrings;
-  // Potential Improvement:
-  // comment out the following prop for now to disable customization for dialpad content
-  // dialpadButtons?: DialpadButtonProps[][];
   /**  function to send dtmf tones on button click */
   onSendDtmfTone?: (dtmfTone: DtmfTone) => Promise<void>;
   /**  Callback for dialpad button behavior*/
@@ -78,21 +75,9 @@ export interface DialpadProps {
 }
 
 /**
- * Type for  {@link DialpadButton} input
- *
- * @internal
- */
-export interface DialpadButtonProps {
-  /** Number displayed on each dialpad button */
-  primaryContent: string;
-  /** Letters displayed on each dialpad button */
-  secondaryContent?: string;
-}
-
-/**
  * DTMF tone for PSTN calls.
  *
- * @internal
+ * @beta
  */
 export type DtmfTone =
   | 'A'
@@ -112,6 +97,13 @@ export type DtmfTone =
   | 'Num9'
   | 'Pound'
   | 'Star';
+
+type DialpadButtonProps = {
+  /** Number displayed on each dialpad button */
+  primaryContent: string;
+  /** Letters displayed on each dialpad button */
+  secondaryContent?: string;
+};
 
 const dialPadButtonsDefault: DialpadButtonProps[][] = [
   [
@@ -185,7 +177,6 @@ const DialpadButton = (props: {
 
 const DialpadContainer = (props: {
   strings: DialpadStrings;
-  // dialpadButtons?: DialpadButtonProps[][];
   onSendDtmfTone?: (dtmfTone: DtmfTone) => Promise<void>;
   /**  Callback for dialpad button behavior */
   onClickDialpadButton?: (buttonValue: string, buttonIndex: number) => void;
@@ -249,10 +240,6 @@ const DialpadContainer = (props: {
     const input = sanitizeInput(e.target.value);
     setTextValue(input);
   };
-
-  // Potential Improvement:
-  // comment out the following line for now to disable customization for dialpad content
-  // const dialpadButtonsContent = props.dialpadButtons ?? dialPadButtonsDefault;
 
   const deleteNumbers = (): void => {
     const modifiedInput = textValue.substring(0, textValue.length - 1);
