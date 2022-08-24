@@ -42,6 +42,14 @@ export const FakeAdapterApp = (): JSX.Element => {
   const [remoteAdapters, setRemoteAdapters] = useState<ChatAdapter[]>([]);
   useEffect(() => {
     const initialize = async (): Promise<void> => {
+      if (!fakeChatAdapterArgs.localParticipant.displayName) {
+        throw new Error(
+          `Local participant must have display name defined, got ${JSON.stringify(
+            fakeChatAdapterArgs.localParticipant
+          )}`
+        );
+      }
+
       const chatClientModel = new Model({ asyncDelivery: false });
       const participants = orderParticipants(
         fakeChatAdapterArgs.localParticipant,
@@ -85,7 +93,7 @@ export const FakeAdapterApp = (): JSX.Element => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const fileDownloadHandler: FileDownloadHandler = (fileData): Promise<URL | FileDownloadError> => {
+  const fileDownloadHandler: FileDownloadHandler = (_userId, fileData): Promise<URL | FileDownloadError> => {
     return new Promise((resolve) => {
       if (fakeChatAdapterArgs.failFileDownload) {
         resolve({ errorMessage: 'You don’t have permission to download this file.' });
@@ -216,8 +224,11 @@ const initializeAdapters = async (
   chatClientModel: Model,
   thread
 ): Promise<ChatAdapter[]> => {
-  const remoteAdapters = [];
+  const remoteAdapters: ChatAdapter[] = [];
   for (const participant of participants) {
+    if (!participant.displayName) {
+      throw new Error(`All participants must have displayName defined, got ${JSON.stringify(participant)}`);
+    }
     const remoteChatClient = new FakeChatClient(chatClientModel, participant.id);
     const remoteAdapter = await initializeAdapter({
       userId: participant.id,

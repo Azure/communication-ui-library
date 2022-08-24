@@ -155,7 +155,7 @@ function getMessageContentInUppercase(messageProps: MessageProps): string {
   switch (message.messageType) {
     case 'chat':
     case 'custom':
-      return message.content.toUpperCase();
+      return (message.content ?? '').toUpperCase();
     case 'system':
       switch (message.systemMessageType) {
         case 'content':
@@ -172,4 +172,5 @@ function getMessageContentInUppercase(messageProps: MessageProps): string {
     default:
       'CUSTOM MESSAGE';
   }
+  throw new Error('unreachable code');
 }

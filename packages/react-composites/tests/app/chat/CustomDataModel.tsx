@@ -1,16 +1,15 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { ChatParticipant } from '@azure/communication-signaling';
 import { Stack } from '@fluentui/react';
-import { MessageProps } from '@internal/react-components';
+import { CommunicationParticipant, MessageProps } from '@internal/react-components';
 import React from 'react';
 import { AvatarPersonaData } from '../../../src';
 
 /**
  * Custom onRenderTypingIndicator prop of {@link ChatComposite} used for UI test
  */
-export const customOnRenderTypingIndicator = (typingUsers: ChatParticipant[]): JSX.Element => (
+export const customOnRenderTypingIndicator = (typingUsers: CommunicationParticipant[]): JSX.Element => (
   <Stack style={{ width: '100%' }}>
     <text id="custom-data-model-typing-indicator">
       {typingUsers.length > 0
@@ -37,7 +36,7 @@ const getMessageContentInUppercase = (messageProps: MessageProps): string => {
   switch (message.messageType) {
     case 'chat':
     case 'custom':
-      return message.content.toUpperCase();
+      return (message.content ?? '').toUpperCase();
     case 'system':
       switch (message.systemMessageType) {
         case 'content':
@@ -54,6 +53,7 @@ const getMessageContentInUppercase = (messageProps: MessageProps): string => {
     default:
       'CUSTOM MESSAGE';
   }
+  throw new Error('unrechange code');
 };
 
 /**
