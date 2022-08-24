@@ -4,7 +4,7 @@
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { Page, test as base } from '@playwright/test';
 import path from 'path';
-import { createTestServer } from '../../../server';
+import { createTestServer } from '../../common/server';
 import { bindConsoleErrorForwarding } from '../../common/fixtureHelpers';
 import { encodeQueryData } from '../../common/utils';
 import type {
