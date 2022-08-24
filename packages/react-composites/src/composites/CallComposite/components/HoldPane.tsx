@@ -54,7 +54,7 @@ export const HoldPane = (): JSX.Element => {
   }, [startTime]);
 
   const showSpinner = (): JSX.Element => {
-    return <Spinner />;
+    return <Spinner label={strings.resumingCallButtonLabel} labelPosition={'right'} />;
   };
 
   return (
@@ -63,7 +63,7 @@ export const HoldPane = (): JSX.Element => {
         <Text styles={holdPaneTimerStyles}>{elapsedTime}</Text>
         <Text styles={holdPaneLabelStyles}>{strings.holdScreenLabel}</Text>
         <PrimaryButton
-          text={!resumingCall ? strings.resumeCallButtonLabel : strings.resumingCallButtonLabel}
+          text={!resumingCall ? strings.resumeCallButtonLabel : undefined}
           ariaLabel={!resumingCall ? strings.resumeCallButtonAriaLabel : strings.resumingCallButtonAriaLabel}
           styles={resumeButtonStyles}
           disabled={resumingCall}
