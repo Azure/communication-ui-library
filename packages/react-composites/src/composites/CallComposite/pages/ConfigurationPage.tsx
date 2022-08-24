@@ -57,9 +57,13 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
 
   let disableStartCallButton = !microphonePermissionGranted || deviceState.microphones?.length === 0;
   /* @conditional-compile-remove(rooms) */
-  const permissions = _usePermissions();
+  const rolePermissions = _usePermissions();
   /* @conditional-compile-remove(rooms) */
-  disableStartCallButton = permissions.microphoneButton && disableStartCallButton;
+  if (!rolePermissions.microphoneButton) {
+    // If user's role permissions do not allow access to the microphone button then DO NOT disable the start call button
+    // because microphone device permission is not needed for this role
+    disableStartCallButton = false;
+  }
 
   const locale = useLocale();
   const title = (
