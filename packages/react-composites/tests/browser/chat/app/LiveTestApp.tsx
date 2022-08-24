@@ -4,15 +4,9 @@
 import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 import { Stack } from '@fluentui/react';
 import { fromFlatCommunicationIdentifier } from '@internal/acs-ui-common';
-import { MessageProps, _IdentifierProvider } from '@internal/react-components';
+import { _IdentifierProvider, FileDownloadError, FileDownloadHandler, MessageProps } from '@internal/react-components';
 import React, { useMemo } from 'react';
-import {
-  ChatComposite,
-  COMPOSITE_LOCALE_FR_FR,
-  FileDownloadError,
-  FileDownloadHandler,
-  useAzureCommunicationChatAdapter
-} from '../../../../src';
+import { ChatComposite, COMPOSITE_LOCALE_FR_FR, useAzureCommunicationChatAdapter } from '../../../../src';
 // eslint-disable-next-line no-restricted-imports
 import { IDS } from '../../common/constants';
 import { verifyParamExists } from '../../common/testAppUtils';
@@ -161,7 +155,7 @@ function getMessageContentInUppercase(messageProps: MessageProps): string {
   switch (message.messageType) {
     case 'chat':
     case 'custom':
-      return message.content.toUpperCase();
+      return (message.content ?? '').toUpperCase();
     case 'system':
       switch (message.systemMessageType) {
         case 'content':
@@ -178,4 +172,5 @@ function getMessageContentInUppercase(messageProps: MessageProps): string {
     default:
       'CUSTOM MESSAGE';
   }
+  throw new Error('unreachable code');
 }
