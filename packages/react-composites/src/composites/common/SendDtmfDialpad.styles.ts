@@ -33,7 +33,8 @@ export const themedDialpadStyle = (isMobile: boolean, theme: Theme): Partial<Dia
       backgroundColor: theme.palette.white,
       fontSize: theme.fonts.large.fontSize,
       padding: '0 0.5rem ',
-      textAlign: 'center',
+      direction: 'rtl',
+      textAlign: 'left',
       ':active': {
         padding: '0 0.5rem'
       }
