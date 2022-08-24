@@ -16,7 +16,7 @@ import {
 } from '../../../src';
 // eslint-disable-next-line no-restricted-imports
 import { IDS } from '../../browser/common/constants';
-import { verifyParamExists } from '../../browser/common/testAppUtils';
+import { verifyParamExists } from '../lib/utils';
 import {
   customOnFetchAvatarPersonaData,
   customOnRenderMessage,

@@ -13,7 +13,7 @@ import {
   useAzureCommunicationCallWithChatAdapter
 } from '../../../src';
 import { IDS } from '../../browser/common/constants';
-import { initializeIconsForUITests, isMobile, verifyParamExists } from '../../browser/common/testAppUtils';
+import { initializeIconsForUITests, isMobile, verifyParamExists } from '../lib/utils';
 import memoizeOne from 'memoize-one';
 import { fromFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 

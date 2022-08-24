@@ -14,7 +14,7 @@ import {
   CustomCallControlButtonCallbackArgs
 } from '../../../src';
 import { IDS } from '../../browser/common/constants';
-import { initializeIconsForUITests, isMobile } from '../../browser/common/testAppUtils';
+import { initializeIconsForUITests, isMobile } from '../lib/utils';
 // eslint-disable-next-line no-restricted-imports
 import { IContextualMenuItem, mergeStyles } from '@fluentui/react';
 import { QueryArgs } from './QueryArgs';
