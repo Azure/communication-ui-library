@@ -98,14 +98,14 @@ export type DtmfTone =
   | 'Pound'
   | 'Star';
 
-type DialpadButtonProps = {
+type DialpadButtonContent = {
   /** Number displayed on each dialpad button */
   primaryContent: string;
   /** Letters displayed on each dialpad button */
   secondaryContent?: string;
 };
 
-const dialPadButtonsDefault: DialpadButtonProps[][] = [
+const dialPadButtonsDefault: DialpadButtonContent[][] = [
   [
     { primaryContent: '1' },
     { primaryContent: '2', secondaryContent: 'ABC' },
