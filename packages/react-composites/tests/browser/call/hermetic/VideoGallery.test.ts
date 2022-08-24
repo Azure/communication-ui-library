@@ -9,8 +9,8 @@ import {
   test
 } from './fixture';
 import { expect } from '@playwright/test';
-import { dataUiId, waitForSelector, stableScreenshot, isTestProfileStableFlavor } from '../../common/utils';
-import { IDS } from '../../common/constants';
+import { dataUiId, waitForSelector, stableScreenshot, isTestProfileStableFlavor } from '../../lib/utils';
+import { IDS } from '../../lib/constants';
 
 test.describe('VideoGallery tests', async () => {
   test('VideoGallery Should have 1 Audio participant and one PSTN participant', async ({ page, serverUrl }) => {

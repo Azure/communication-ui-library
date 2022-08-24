@@ -2,8 +2,8 @@
 // Licensed under the MIT license.
 
 import { expect } from '@playwright/test';
-import { sendMessage, waitForMessageDelivered } from '../../common/chatTestHelpers';
-import { stableScreenshot, waitForParticipants, waitForSelector } from '../../common/utils';
+import { sendMessage, waitForMessageDelivered } from '../../lib/chatTestHelpers';
+import { stableScreenshot, waitForParticipants, waitForSelector } from '../../lib/utils';
 import { buildUrlForChatAppUsingFakeAdapter, DEFAULT_FAKE_CHAT_ADAPTER_ARGS, test } from './fixture';
 
 test.describe('Chat Composite with custom data model', () => {

@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { expect } from '@playwright/test';
-import { stableScreenshot, waitForChatCompositeToLoad } from '../../common/utils';
+import { stableScreenshot, waitForChatCompositeToLoad } from '../../lib/utils';
 import { buildUrlForChatAppUsingFakeAdapter, DEFAULT_FAKE_CHAT_ADAPTER_ARGS, test } from './fixture';
 
 test.describe('Localization tests', async () => {

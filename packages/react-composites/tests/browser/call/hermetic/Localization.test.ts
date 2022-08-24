@@ -2,9 +2,9 @@
 // Licensed under the MIT license.
 
 import { buildUrlWithMockAdapter, defaultMockCallAdapterState, test } from './fixture';
-import { waitForCallCompositeToLoad, stableScreenshot, waitForSelector, dataUiId } from '../../common/utils';
+import { waitForCallCompositeToLoad, stableScreenshot, waitForSelector, dataUiId } from '../../lib/utils';
 import { expect } from '@playwright/test';
-import { IDS } from '../../common/constants';
+import { IDS } from '../../lib/constants';
 
 test.describe('Localization tests', async () => {
   // TODO(prprabhu) Rename this test once metrics show that it has been stabilized.

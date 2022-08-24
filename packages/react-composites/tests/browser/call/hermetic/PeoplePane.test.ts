@@ -19,8 +19,8 @@ import {
   stableScreenshot,
   waitForPiPiPToHaveLoaded,
   waitForSelector
-} from '../../common/utils';
-import { IDS } from '../../common/constants';
+} from '../../lib/utils';
+import { IDS } from '../../lib/constants';
 
 const flavor = process.env?.['COMMUNICATION_REACT_FLAVOR'];
 

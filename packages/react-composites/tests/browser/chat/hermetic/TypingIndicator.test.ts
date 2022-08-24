@@ -3,8 +3,8 @@
 
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { expect } from '@playwright/test';
-import { IDS } from '../../common/constants';
-import { dataUiId, stableScreenshot } from '../../common/utils';
+import { IDS } from '../../lib/constants';
+import { dataUiId, stableScreenshot } from '../../lib/utils';
 import { buildUrlForChatAppUsingFakeAdapter, DEFAULT_FAKE_CHAT_ADAPTER_ARGS, test } from './fixture';
 
 test.describe('Tests related to typing indicator', async () => {

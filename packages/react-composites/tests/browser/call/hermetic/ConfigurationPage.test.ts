@@ -3,7 +3,7 @@
 
 import { buildUrlWithMockAdapter, defaultMockCallAdapterState, test } from './fixture';
 import { expect } from '@playwright/test';
-import { dataUiId, stableScreenshot, waitForCallCompositeToLoad, waitForSelector } from '../../common/utils';
+import { dataUiId, stableScreenshot, waitForCallCompositeToLoad, waitForSelector } from '../../lib/utils';
 import type { MockCallAdapterState } from '../MockCallAdapterState';
 
 test.describe('Call Composite E2E Configuration Screen Tests', () => {

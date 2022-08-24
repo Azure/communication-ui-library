@@ -13,8 +13,8 @@ import {
   CustomCallControlButtonProps,
   CustomCallControlButtonCallbackArgs
 } from '../../../../src';
-import { IDS } from '../../common/constants';
-import { initializeIconsForUITests, isMobile } from '../../common/testAppUtils';
+import { IDS } from '../../lib/constants';
+import { initializeIconsForUITests, isMobile } from '../../lib/testAppUtils';
 // eslint-disable-next-line no-restricted-imports
 import { IContextualMenuItem, mergeStyles } from '@fluentui/react';
 import { QueryArgs } from './QueryArgs';

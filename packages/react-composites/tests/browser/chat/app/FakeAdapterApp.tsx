@@ -17,8 +17,8 @@ import {
   FileDownloadHandler
 } from '../../../../src';
 // eslint-disable-next-line no-restricted-imports
-import { IDS } from '../../common/constants';
-import { verifyParamExists } from '../../common/testAppUtils';
+import { IDS } from '../../lib/constants';
+import { verifyParamExists } from '../../lib/testAppUtils';
 import {
   customOnFetchAvatarPersonaData,
   customOnRenderMessage,

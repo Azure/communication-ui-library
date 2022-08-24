@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { expect } from '@playwright/test';
-import { IDS } from '../../common/constants';
+import { IDS } from '../../lib/constants';
 import {
   dataUiId,
   hidePiPiP,
@@ -11,7 +11,7 @@ import {
   pageClick,
   stableScreenshot,
   waitForSelector
-} from '../../common/utils';
+} from '../../lib/utils';
 import { buildUrlWithMockAdapter, defaultMockCallAdapterState, defaultMockRemoteParticipant, test } from './fixture';
 
 test.describe('Participant pane tests', async () => {

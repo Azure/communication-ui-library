@@ -3,8 +3,8 @@
 
 import { buildUrlWithMockAdapter, defaultMockCallAdapterState, test } from './fixture';
 import { expect, Page } from '@playwright/test';
-import { dataUiId, stableScreenshot, waitForSelector } from '../../common/utils';
-import { IDS } from '../../common/constants';
+import { dataUiId, stableScreenshot, waitForSelector } from '../../lib/utils';
+import { IDS } from '../../lib/constants';
 
 test.describe('Error bar tests', async () => {
   test('Failure to start video should be shown on error bar', async ({ page, serverUrl }) => {

@@ -2,8 +2,8 @@
 // Licensed under the MIT license.
 
 import { expect } from '@playwright/test';
-import { IDS } from '../../common/constants';
-import { stableScreenshot, waitForSelector, dataUiId } from '../../common/utils';
+import { IDS } from '../../lib/constants';
+import { stableScreenshot, waitForSelector, dataUiId } from '../../lib/utils';
 import {
   addScreenshareStream,
   addVideoStream,

@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IDS, TEST_PARTICIPANTS } from '../common/constants';
+import { IDS, TEST_PARTICIPANTS } from '../lib/constants';
 import {
   buildUrl,
   dataUiId,
@@ -14,7 +14,7 @@ import {
   waitForCallWithChatCompositeToLoad,
   waitForPiPiPToHaveLoaded,
   waitForSelector
-} from '../common/utils';
+} from '../lib/utils';
 import { test } from './fixture';
 import { expect, Page } from '@playwright/test';
 import {
@@ -23,9 +23,9 @@ import {
   waitForMessageSeen,
   waitForNSeenMessages,
   waitForTypingIndicatorHidden
-} from '../common/chatTestHelpers';
-import { createCallWithChatObjectsAndUsers } from '../common/fixtureHelpers';
-import { CallWithChatUserType } from '../common/fixtureTypes';
+} from '../lib/chatTestHelpers';
+import { createCallWithChatObjectsAndUsers } from '../lib/fixtureHelpers';
+import { CallWithChatUserType } from '../lib/fixtureTypes';
 
 test.describe('CallWithChat Composite Pre-Join Tests', () => {
   test.beforeEach(async ({ pages, users, serverUrl }) => {

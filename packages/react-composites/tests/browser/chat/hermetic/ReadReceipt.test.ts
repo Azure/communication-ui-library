@@ -5,8 +5,8 @@ import { ChatParticipant } from '@azure/communication-chat';
 import { CommunicationIdentifier } from '@azure/communication-common';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { ElementHandle, expect, Page } from '@playwright/test';
-import { sendMessage, waitForMessageDelivered, waitForMessageSeen } from '../../common/chatTestHelpers';
-import { dataUiId, stableScreenshot, waitForSelector } from '../../common/utils';
+import { sendMessage, waitForMessageDelivered, waitForMessageSeen } from '../../lib/chatTestHelpers';
+import { dataUiId, stableScreenshot, waitForSelector } from '../../lib/utils';
 import { buildUrlForChatAppUsingFakeAdapter, DEFAULT_FAKE_CHAT_ADAPTER_ARGS, test } from './fixture';
 
 test.describe('Chat Composite E2E Tests', () => {

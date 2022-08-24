@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { expect } from '@playwright/test';
-import { dataUiId, waitForSelector, stableScreenshot } from '../../common/utils';
+import { dataUiId, waitForSelector, stableScreenshot } from '../../lib/utils';
 import { buildUrlWithMockAdapter, defaultMockCallAdapterState, test } from './fixture';
 import type { LatestMediaDiagnostics, LatestNetworkDiagnostics } from '@azure/communication-calling';
 import type { MockCallAdapterState } from '../MockCallAdapterState';

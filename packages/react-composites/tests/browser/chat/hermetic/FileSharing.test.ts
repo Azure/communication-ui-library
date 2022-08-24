@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 import { expect } from '@playwright/test';
-import { sendMessage, waitForMessageDelivered, waitForTypingIndicatorHidden } from '../../common/chatTestHelpers';
-import { dataUiId, isTestProfileStableFlavor, stableScreenshot, waitForSelector } from '../../common/utils';
+import { sendMessage, waitForMessageDelivered, waitForTypingIndicatorHidden } from '../../lib/chatTestHelpers';
+import { dataUiId, isTestProfileStableFlavor, stableScreenshot, waitForSelector } from '../../lib/utils';
 import { buildUrlForChatAppUsingFakeAdapter, DEFAULT_FAKE_CHAT_ADAPTER_ARGS, test, TEST_PARTICIPANTS } from './fixture';
 
 test.describe('Filesharing Attach file icon', async () => {

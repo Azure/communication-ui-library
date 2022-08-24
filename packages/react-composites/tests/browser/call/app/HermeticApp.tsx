@@ -7,7 +7,7 @@ import { CallAdapter } from '../../../../src';
 import { MockCallAdapter } from './mocks/MockCallAdapter';
 import { QueryArgs } from './QueryArgs';
 import { BaseApp } from './BaseApp';
-import { initializeIconsForUITests } from '../../common/testAppUtils';
+import { initializeIconsForUITests } from '../../lib/testAppUtils';
 
 initializeIconsForUITests();
 

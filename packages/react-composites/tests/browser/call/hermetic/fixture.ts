@@ -5,8 +5,8 @@ import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { Page, test as base } from '@playwright/test';
 import path from 'path';
 import { createTestServer } from '../../../server';
-import { bindConsoleErrorForwarding } from '../../common/fixtureHelpers';
-import { encodeQueryData } from '../../common/utils';
+import { bindConsoleErrorForwarding } from '../../lib/fixtureHelpers';
+import { encodeQueryData } from '../../lib/utils';
 import type {
   MockCallAdapterState,
   MockRemoteParticipantState,

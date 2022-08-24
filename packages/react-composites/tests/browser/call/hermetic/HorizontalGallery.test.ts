@@ -2,8 +2,8 @@
 // Licensed under the MIT license.
 
 import { expect } from '@playwright/test';
-import { IDS } from '../../common/constants';
-import { dataUiId, isTestProfileStableFlavor, pageClick, stableScreenshot, waitForSelector } from '../../common/utils';
+import { IDS } from '../../lib/constants';
+import { dataUiId, isTestProfileStableFlavor, pageClick, stableScreenshot, waitForSelector } from '../../lib/utils';
 import {
   addScreenshareStream,
   addVideoStream,

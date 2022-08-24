@@ -12,8 +12,8 @@ import {
   CallWithChatComposite,
   useAzureCommunicationCallWithChatAdapter
 } from '../../../../src';
-import { IDS } from '../../common/constants';
-import { initializeIconsForUITests, isMobile, verifyParamExists } from '../../common/testAppUtils';
+import { IDS } from '../../lib/constants';
+import { initializeIconsForUITests, isMobile, verifyParamExists } from '../../lib/testAppUtils';
 import memoizeOne from 'memoize-one';
 import { fromFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 

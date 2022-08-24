@@ -2,8 +2,8 @@
 // Licensed under the MIT license.
 
 import { expect } from '@playwright/test';
-import { sendMessage, waitForMessageDelivered } from '../../common/chatTestHelpers';
-import { stableScreenshot, waitForChatCompositeToLoad } from '../../common/utils';
+import { sendMessage, waitForMessageDelivered } from '../../lib/chatTestHelpers';
+import { stableScreenshot, waitForChatCompositeToLoad } from '../../lib/utils';
 import { test } from './fixture';
 
 const TEST_MESSAGE = 'No, sir, this will not do.';

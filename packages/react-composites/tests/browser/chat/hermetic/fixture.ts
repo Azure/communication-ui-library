@@ -6,8 +6,8 @@ import { Page, test as base } from '@playwright/test';
 import { nanoid } from 'nanoid';
 import path from 'path';
 import { createTestServer } from '../../../server';
-import { TEST_PARTICIPANTS_CHAT } from '../../common/constants';
-import { bindConsoleErrorForwarding, loadNewPage } from '../../common/fixtureHelpers';
+import { TEST_PARTICIPANTS_CHAT } from '../../lib/constants';
+import { bindConsoleErrorForwarding, loadNewPage } from '../../lib/fixtureHelpers';
 import { FakeChatAdapterArgs } from '../app/FakeChatAdapterArgs';
 
 const SERVER_URL = 'http://localhost';

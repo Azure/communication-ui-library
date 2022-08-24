@@ -3,7 +3,7 @@
 
 import { buildUrlWithMockAdapter, defaultMockCallAdapterState, test } from './fixture';
 import { expect } from '@playwright/test';
-import { stableScreenshot, waitForCallCompositeToLoad } from '../../common/utils';
+import { stableScreenshot, waitForCallCompositeToLoad } from '../../lib/utils';
 import type { MockCallAdapterState } from '../MockCallAdapterState';
 
 test.describe('Rooms Call Configuration Screen Tests for different roles', () => {

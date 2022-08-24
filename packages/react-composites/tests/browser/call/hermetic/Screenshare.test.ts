@@ -10,8 +10,8 @@ import {
   test
 } from './fixture';
 import { expect } from '@playwright/test';
-import { dataUiId, pageClick, stableScreenshot, waitForSelector } from '../../common/utils';
-import { IDS } from '../../common/constants';
+import { dataUiId, pageClick, stableScreenshot, waitForSelector } from '../../lib/utils';
+import { IDS } from '../../lib/constants';
 import type { MockCallState } from '../MockCallAdapterState';
 
 test.describe('Screenshare tests', async () => {

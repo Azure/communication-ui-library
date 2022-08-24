@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { expect } from '@playwright/test';
-import { stableScreenshot, waitForPageFontsLoaded, waitForSelector, dataUiId } from '../../common/utils';
+import { stableScreenshot, waitForPageFontsLoaded, waitForSelector, dataUiId } from '../../lib/utils';
 import { buildUrlWithMockAdapter, defaultMockCallAdapterState, test } from './fixture';
 
 test.describe('Page state tests', async () => {

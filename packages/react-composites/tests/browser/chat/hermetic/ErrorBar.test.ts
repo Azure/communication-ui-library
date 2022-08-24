@@ -1,10 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { stubMessageTimestamps, waitForChatCompositeToLoad, dataUiId, pageClick } from '../../common/utils';
+import { stubMessageTimestamps, waitForChatCompositeToLoad, dataUiId, pageClick } from '../../lib/utils';
 import { buildUrlForChatAppUsingFakeAdapter, DEFAULT_FAKE_CHAT_ADAPTER_ARGS, test } from './fixture';
 import { expect } from '@playwright/test';
-import { sendMessage, waitForSendMessageFailure } from '../../common/chatTestHelpers';
+import { sendMessage, waitForSendMessageFailure } from '../../lib/chatTestHelpers';
 
 const TEST_MESSAGE = 'No, sir, this will not do.';
 

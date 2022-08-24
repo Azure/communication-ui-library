@@ -1,9 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { TEST_PARTICIPANTS_CHAT } from '../../common/constants';
-import { createChatUsers, usePagePerParticipant } from '../../common/fixtureHelpers';
-import { WorkerFixture, ChatUserType } from '../../common/fixtureTypes';
+import { TEST_PARTICIPANTS_CHAT } from '../../lib/constants';
+import { createChatUsers, usePagePerParticipant } from '../../lib/fixtureHelpers';
+import { WorkerFixture, ChatUserType } from '../../lib/fixtureTypes';
 import { createTestServer } from '../../../server';
 import { test as base } from '@playwright/test';
 import path from 'path';

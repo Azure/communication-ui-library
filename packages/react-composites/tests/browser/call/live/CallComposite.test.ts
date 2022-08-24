@@ -9,7 +9,7 @@ import {
   waitForFunction,
   stableScreenshot,
   waitForCallPageParticipantVideos
-} from '../../common/utils';
+} from '../../lib/utils';
 import { test } from './fixture';
 import { expect, Page } from '@playwright/test';
 import { v1 as generateGUID } from 'uuid';

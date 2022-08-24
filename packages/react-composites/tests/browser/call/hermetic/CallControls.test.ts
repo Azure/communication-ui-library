@@ -3,8 +3,8 @@
 
 import { buildUrlWithMockAdapter, defaultMockCallAdapterState, defaultMockRemoteParticipant, test } from './fixture';
 import { expect } from '@playwright/test';
-import { dataUiId, stableScreenshot, waitForSelector } from '../../common/utils';
-import { IDS } from '../../common/constants';
+import { dataUiId, stableScreenshot, waitForSelector } from '../../lib/utils';
+import { IDS } from '../../lib/constants';
 
 test.describe('CallControls tests', async () => {
   test('CallControls when number of mics drops to zero', async ({ page, serverUrl }) => {
