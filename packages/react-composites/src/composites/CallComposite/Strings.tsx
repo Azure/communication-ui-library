@@ -260,6 +260,11 @@ export interface CallCompositeStrings {
   resumeCallButtonLabel: string;
   /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
   /**
+   * Label for the resume call button on the hold pane
+   */
+  resumingCallButtonLabel: string;
+  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+  /**
    * Aria label for the resume call button on the hold pane
    */
   resumeCallButtonAriaLabel: string;

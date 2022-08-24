@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { PrimaryButton, Stack, Text } from '@fluentui/react';
+import { PrimaryButton, Spinner, Stack, Text } from '@fluentui/react';
 import { _pxToRem } from '@internal/acs-ui-common';
 import React, { useRef, useState } from 'react';
 import { CompositeLocale, useLocale } from '../../localization';
@@ -21,6 +21,7 @@ interface HoldPaneStrings {
   holdScreenLabel: string;
   resumeCallButtonLabel: string;
   resumeCallButtonAriaLabel: string;
+  resumingCallButtonLabel: string;
 }
 
 /**
@@ -40,6 +41,7 @@ export const HoldPane = (): JSX.Element => {
   const elapsedTime = getReadableTime(time);
 
   const startTime = useRef(performance.now());
+  const [resumingCall, setResumingCall] = useState<boolean>(false);
 
   React.useEffect(() => {
     const interval = setInterval(() => {
@@ -50,21 +52,29 @@ export const HoldPane = (): JSX.Element => {
     };
   }, [startTime]);
 
+  const showSpinner = (): JSX.Element => {
+    return <Spinner />;
+  };
+
   return (
     <Stack styles={paneStyles}>
       <Stack horizontal styles={holdPaneContentStyles}>
         <Text styles={holdPaneTimerStyles}>{elapsedTime}</Text>
         <Text styles={holdPaneLabelStyles}>{strings.holdScreenLabel}</Text>
         <PrimaryButton
-          text={strings.resumeCallButtonLabel}
+          text={!resumingCall ? strings.resumeCallButtonLabel : strings.resumingCallButtonLabel}
           ariaLabel={strings.resumeCallButtonAriaLabel}
           styles={resumeButtonStyles}
+          disabled={resumingCall}
           onClick={() => {
             /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
             holdButtonProps.onToggleHold();
+            setResumingCall(true);
           }}
           data-ui-id="hold-page-resume-call-button"
-        />
+        >
+          {resumingCall && showSpinner()}
+        </PrimaryButton>
       </Stack>
     </Stack>
   );
@@ -97,11 +107,13 @@ const stringsTrampoline = (locale: CompositeLocale): HoldPaneStrings => {
   return {
     holdScreenLabel: locale.strings.call.holdScreenLabel,
     resumeCallButtonLabel: locale.strings.call.resumeCallButtonLabel,
-    resumeCallButtonAriaLabel: locale.strings.call.resumeCallButtonAriaLabel
+    resumeCallButtonAriaLabel: locale.strings.call.resumeCallButtonAriaLabel,
+    resumingCallButtonLabel: locale.strings.call.resumingCallButtonLabel
   };
   return {
     holdScreenLabel: '',
     resumeCallButtonLabel: '',
-    resumeCallButtonAriaLabel: ''
+    resumeCallButtonAriaLabel: '',
+    resumingCallButtonLabel: ''
   };
 };
