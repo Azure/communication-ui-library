@@ -7,5 +7,5 @@
       "@internal/acs-ui-common": ["../../acs-ui-common/src"]
     }
   },
-  "include": ["/browser/**/*.ts", "server/**/*.ts"]
+  "include": ["browser/**/*.ts", "server/**/*.ts"]
 }
