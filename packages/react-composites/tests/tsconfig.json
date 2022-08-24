@@ -1,7 +1,9 @@
 {
   "extends": "../tsconfig.json",
   "compilerOptions": {
-    "baseUrl": "./"
+    "baseUrl": "./",
+    // Required for playwright to correctly interpret *test internal* imports.
+    "paths": {}
   },
   "include": ["browser/**/*.ts", "browser/**/*.tsx", "server/**/*.ts"]
 }
