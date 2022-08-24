@@ -23,7 +23,7 @@ import {
   customOnRenderTypingIndicator
 } from './CustomDataModel';
 import { FakeChatClient, IChatClient, Model } from '@internal/fake-backends';
-import { ChatThreadRestError, FakeChatAdapterArgs, FileUpload } from './FakeChatAdapterArgs';
+import { ChatThreadRestError, FakeChatAdapterArgs, FileUpload } from '../../common';
 import { RestError } from '@azure/core-http';
 
 const urlSearchParams = new URLSearchParams(window.location.search);
