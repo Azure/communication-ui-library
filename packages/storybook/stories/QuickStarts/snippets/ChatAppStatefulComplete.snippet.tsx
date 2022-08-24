@@ -11,9 +11,9 @@ import { registerIcons } from '@fluentui/react';
 import React from 'react';
 import ChatComponents from './ChatComponentsStateful';
 
-function App(): JSX.Element {
-  registerIcons({ icons: DEFAULT_COMPONENT_ICONS });
+registerIcons({ icons: DEFAULT_COMPONENT_ICONS });
 
+function App(): JSX.Element {
   const endpointUrl = '<Azure Communication Services Resource Endpoint>';
   const userAccessToken = '<Azure Communication Services Resource Access Token>';
   const userId = '<User Id associated to the token>';
