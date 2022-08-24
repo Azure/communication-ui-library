@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Changed call locator control to object type and added callType control in 'Join existing call' preview. Added Rooms conceptual doc.",
+  "packageName": "@internal/storybook",
+  "email": "miguelgamis@microsoft.com",
+  "dependentChangeType": "patch"
+}
