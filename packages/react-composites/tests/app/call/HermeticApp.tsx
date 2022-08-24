@@ -4,7 +4,7 @@
 import React, { useState, useEffect } from 'react';
 
 import { CallAdapter } from '../../../src';
-import { MockCallAdapter } from './mocks/MockCallAdapter';
+import { MockCallAdapter } from '../lib/MockCallAdapter';
 import { QueryArgs } from './QueryArgs';
 import { BaseApp } from './BaseApp';
 import { initializeIconsForUITests } from '../lib/utils';
