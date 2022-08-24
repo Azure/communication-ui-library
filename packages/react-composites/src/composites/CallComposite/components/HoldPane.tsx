@@ -22,6 +22,7 @@ interface HoldPaneStrings {
   resumeCallButtonLabel: string;
   resumeCallButtonAriaLabel: string;
   resumingCallButtonLabel: string;
+  resumingCallButtonAriaLabel: string;
 }
 
 /**
@@ -63,7 +64,7 @@ export const HoldPane = (): JSX.Element => {
         <Text styles={holdPaneLabelStyles}>{strings.holdScreenLabel}</Text>
         <PrimaryButton
           text={!resumingCall ? strings.resumeCallButtonLabel : strings.resumingCallButtonLabel}
-          ariaLabel={strings.resumeCallButtonAriaLabel}
+          ariaLabel={!resumingCall ? strings.resumeCallButtonAriaLabel : strings.resumingCallButtonAriaLabel}
           styles={resumeButtonStyles}
           disabled={resumingCall}
           onClick={() => {
@@ -108,12 +109,14 @@ const stringsTrampoline = (locale: CompositeLocale): HoldPaneStrings => {
     holdScreenLabel: locale.strings.call.holdScreenLabel,
     resumeCallButtonLabel: locale.strings.call.resumeCallButtonLabel,
     resumeCallButtonAriaLabel: locale.strings.call.resumeCallButtonAriaLabel,
-    resumingCallButtonLabel: locale.strings.call.resumingCallButtonLabel
+    resumingCallButtonLabel: locale.strings.call.resumingCallButtonLabel,
+    resumingCallButtonAriaLabel: locale.strings.call.resumingCallButtonAriaLabel
   };
   return {
     holdScreenLabel: '',
     resumeCallButtonLabel: '',
     resumeCallButtonAriaLabel: '',
-    resumingCallButtonLabel: ''
+    resumingCallButtonLabel: '',
+    resumingCallButtonAriaLabel: ''
   };
 };
