@@ -78,9 +78,6 @@ jobs:
       # Builds
       - name: Build Packages
         run: rush build -t @azure/communication-react
-      # Type check test folder, must be run after building all packlets
-      - name: Type check test folder
-        run: cd packages/react-composites && rushx tsc:e2e
       # Verify no uncommitted api extractor changes
       - name: API Extractor Check
         if: ${{ always() }}
