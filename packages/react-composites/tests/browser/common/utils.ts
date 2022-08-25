@@ -105,7 +105,11 @@ export async function waitForFunction<R>(
  */
 export const waitForPageFontsLoaded = async (page: Page): Promise<void> => {
   await waitForFunction(page, async () => {
-    await document.fonts.ready;
+    // typescript libraries in Node define the type of `document` as
+    //     interface Document {}
+    // this breaks `tsc`, even though it works correctly in the browser.
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    await (document as any).fonts.ready;
   });
 };
 
