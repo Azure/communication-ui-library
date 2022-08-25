@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Fix disabled start call button when role is Consumer",
+  "packageName": "@internal/react-composites",
+  "email": "miguelgamis@microsoft.com",
+  "dependentChangeType": "patch"
+}
