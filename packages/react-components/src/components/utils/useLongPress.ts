@@ -22,6 +22,7 @@ export default function useLongPress(
 } {
   const timerRef = useRef<NodeJS.Timeout>();
   const [isLongPress, setIsLongPress] = useState(false);
+  const [action, setAction] = useState(false);
 
   function startPressTimer(): void {
     setIsLongPress(false);
@@ -39,10 +40,14 @@ export default function useLongPress(
   }
 
   function handleOnKeyDown(): void {
-    startPressTimer();
+    if (action) {
+      setAction(false);
+      startPressTimer();
+    }
   }
 
   function handleOnKeyUp(): void {
+    setAction(true);
     timerRef.current && clearTimeout(timerRef.current);
   }
 
