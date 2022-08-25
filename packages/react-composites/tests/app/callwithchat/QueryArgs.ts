@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { verifyParamExists } from 'app/lib/utils';
+import { verifyParamExists } from '../lib/utils';
 
 export interface QueryArgs {
   displayName: string;
