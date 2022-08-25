@@ -2,10 +2,10 @@
 // Licensed under the MIT license.
 
 import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
-import React, { useState, useEffect } from 'react';
+import React, { useMemo } from 'react';
 
-import { CallAdapter, CallAdapterState, createAzureCommunicationCallAdapter } from '../../../src';
-import { verifyParamExists } from '../lib/utils';
+import { _IdentifierProvider } from '@internal/react-components';
+import { CallWithChatAdapter, CallWithChatAdapterState, useAzureCommunicationCallWithChatAdapter } from '../../../src';
 import memoizeOne from 'memoize-one';
 import { fromFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { QueryArgs } from './QueryArgs';
@@ -13,43 +13,57 @@ import { BaseApp } from './BaseApp';
 
 /** @internal */
 export function LiveApp(props: { queryArgs: QueryArgs }): JSX.Element {
-  const { queryArgs } = props;
-  const [callAdapter, setCallAdapter] = useState<CallAdapter | undefined>(undefined);
+  const { queryArgs: args } = props;
+  const missingParams = missingRequiredParams(args);
 
-  useEffect(() => {
-    (async (): Promise<void> => {
-      setCallAdapter(wrapAdapterForTests(await createCallAdapterWithCredentials(queryArgs)));
-    })();
+  const userIdArg = useMemo(() => fromFlatCommunicationIdentifier(args.userId) as CommunicationUserIdentifier, []);
+  const locator = useMemo(
+    () => ({
+      callLocator: { groupId: args.groupId },
+      chatThreadId: args.threadId
+    }),
+    []
+  );
+  const credential = useMemo(() => new AzureCommunicationTokenCredential(args.token), []);
+  const adapter = useAzureCommunicationCallWithChatAdapter(
+    {
+      userId: userIdArg,
+      displayName: args.displayName,
+      credential,
+      endpoint: args.endpoint,
+      locator
+    },
+    wrapAdapterForTests
+  );
 
-    return () => callAdapter && callAdapter.dispose();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [queryArgs]);
-
-  return <BaseApp queryArgs={queryArgs} callAdapter={callAdapter} />;
+  if (missingParams.length > 0) {
+    return <h3>ERROR: Required parameters {missingParams.join(', ')} not set.</h3>;
+  }
+  return <BaseApp queryArgs={args} adapter={adapter} />;
 }
 
-const wrapAdapterForTests = (adapter: CallAdapter): CallAdapter => {
-  return new Proxy(adapter, new ProxyCallAdapter());
+const wrapAdapterForTests = async (adapter: CallWithChatAdapter): Promise<CallWithChatAdapter> => {
+  return new Proxy(adapter, new ProxyCallWithChatAdapter());
 };
 
-class ProxyCallAdapter implements ProxyHandler<CallAdapter> {
+class ProxyCallWithChatAdapter implements ProxyHandler<CallWithChatAdapter> {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  public get<P extends keyof CallAdapter>(target: CallAdapter, prop: P): any {
+  public get<P extends keyof CallWithChatAdapter>(target: CallWithChatAdapter, prop: P): any {
     switch (prop) {
       case 'getState': {
-        return (...args: Parameters<CallAdapter['getState']>) => {
+        return (...args: Parameters<CallWithChatAdapter['getState']>) => {
           const state = target.getState(...args);
           return memoizedUnsetSpeakingWhileMicrophoneIsMuted(state);
         };
       }
       case 'onStateChange': {
-        return (...args: Parameters<CallAdapter['onStateChange']>) => {
+        return (...args: Parameters<CallWithChatAdapter['onStateChange']>) => {
           const [handler] = args;
           return target.onStateChange((state) => handler(memoizedUnsetSpeakingWhileMicrophoneIsMuted(state)));
         };
       }
       case 'offStateChange': {
-        return (...args: Parameters<CallAdapter['offStateChange']>) => {
+        return (...args: Parameters<CallWithChatAdapter['offStateChange']>) => {
           const [handler] = args;
           return target.offStateChange((state) => handler(memoizedUnsetSpeakingWhileMicrophoneIsMuted(state)));
         };
@@ -62,7 +76,7 @@ class ProxyCallAdapter implements ProxyHandler<CallAdapter> {
 
 // This diagnostic gets flakily set to true only in our test harness.
 // The suspected reason is due to flakiness in how chrome handles the `--mute-audio` CLI flag.
-const unsetSpeakingWhileMicrophoneIsMuted = (state: CallAdapterState): CallAdapterState => {
+const unsetSpeakingWhileMicrophoneIsMuted = (state: CallWithChatAdapterState): CallWithChatAdapterState => {
   if (state.call?.diagnostics.media.latest.speakingWhileMicrophoneIsMuted) {
     return {
       ...state,
@@ -87,18 +101,25 @@ const unsetSpeakingWhileMicrophoneIsMuted = (state: CallAdapterState): CallAdapt
  */
 const memoizedUnsetSpeakingWhileMicrophoneIsMuted = memoizeOne(unsetSpeakingWhileMicrophoneIsMuted);
 
-// Function to create call adapter using createAzureCommunicationCallAdapter
-const createCallAdapterWithCredentials = async (queryArgs: QueryArgs): Promise<CallAdapter> => {
-  const displayName = verifyParamExists(queryArgs.displayName, 'displayName');
-  const token = verifyParamExists(queryArgs.token, 'token');
-  const groupId = verifyParamExists(queryArgs.groupId, 'groupId');
-  const userId = verifyParamExists(queryArgs.userId, 'userId');
-
-  const callAdapter = await createAzureCommunicationCallAdapter({
-    userId: fromFlatCommunicationIdentifier(userId) as CommunicationUserIdentifier,
-    displayName,
-    credential: new AzureCommunicationTokenCredential(token),
-    locator: { groupId: groupId }
-  });
-  return callAdapter;
-};
+function missingRequiredParams(args: QueryArgs): string[] {
+  const missing: string[] = [];
+  if (!args.displayName) {
+    missing.push('displayName');
+  }
+  if (!args.endpoint) {
+    missing.push('endpoint');
+  }
+  if (!args.groupId) {
+    missing.push('groupId');
+  }
+  if (!args.threadId) {
+    missing.push('threadId');
+  }
+  if (!args.token) {
+    missing.push('token');
+  }
+  if (!args.userId) {
+    missing.push('userId');
+  }
+  return missing;
+}
