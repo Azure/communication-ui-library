@@ -1,7 +1,13 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { stubMessageTimestamps, waitForChatCompositeToLoad, dataUiId, pageClick } from '../../common/utils';
+import {
+  stubMessageTimestamps,
+  waitForChatCompositeToLoad,
+  dataUiId,
+  pageClick,
+  stableScreenshot
+} from '../../common/utils';
 import { buildUrlForChatAppUsingFakeAdapter, DEFAULT_FAKE_CHAT_ADAPTER_ARGS, test } from './fixture';
 import { expect } from '@playwright/test';
 import { sendMessage, waitForSendMessageFailure } from '../../common/chatTestHelpers';
@@ -22,18 +28,18 @@ test.describe('ErrorBar is shown correctly', async () => {
     );
     await waitForChatCompositeToLoad(page);
     await stubMessageTimestamps(page);
-    expect(await page.screenshot()).toMatchSnapshot('error-bar-wrong-thread-id.png');
+    expect(await stableScreenshot(page)).toMatchSnapshot('error-bar-wrong-thread-id.png');
 
     await sendMessage(page, TEST_MESSAGE);
     await waitForSendMessageFailure(page);
     await stubMessageTimestamps(page);
-    expect(await page.screenshot()).toMatchSnapshot('error-bar-send-message-with-wrong-thread-id.png');
+    expect(await stableScreenshot(page)).toMatchSnapshot('error-bar-send-message-with-wrong-thread-id.png');
     // test resend button in contextual menu
     await pageClick(page, dataUiId('chat-composite-message'));
     await pageClick(page, dataUiId('chat-composite-message-action-icon'));
     await page.waitForSelector('[id="chat-composite-message-contextual-menu"]');
 
-    expect(await page.screenshot()).toMatchSnapshot(
+    expect(await stableScreenshot(page)).toMatchSnapshot(
       'error-bar-send-message-with-wrong-thread-id-show-resend-button.png'
     );
   });
@@ -51,12 +57,12 @@ test.describe('ErrorBar is shown correctly', async () => {
     );
     await waitForChatCompositeToLoad(page);
     await stubMessageTimestamps(page);
-    expect(await page.screenshot()).toMatchSnapshot('error-bar-expired-token.png');
+    expect(await stableScreenshot(page)).toMatchSnapshot('error-bar-expired-token.png');
 
     await sendMessage(page, TEST_MESSAGE);
     await waitForSendMessageFailure(page);
     await stubMessageTimestamps(page);
-    expect(await page.screenshot()).toMatchSnapshot('error-bar-send-message-with-expired-token.png');
+    expect(await stableScreenshot(page)).toMatchSnapshot('error-bar-send-message-with-expired-token.png');
   });
 
   test('with wrong endpoint', async ({ page, serverUrl }) => {
@@ -72,11 +78,11 @@ test.describe('ErrorBar is shown correctly', async () => {
     );
     await waitForChatCompositeToLoad(page);
     await stubMessageTimestamps(page);
-    expect(await page.screenshot()).toMatchSnapshot('error-bar-wrong-endpoint-url.png');
+    expect(await stableScreenshot(page)).toMatchSnapshot('error-bar-wrong-endpoint-url.png');
 
     await sendMessage(page, TEST_MESSAGE);
     await waitForSendMessageFailure(page);
     await stubMessageTimestamps(page);
-    expect(await page.screenshot()).toMatchSnapshot('error-bar-send-message-with-wrong-endpoint-url.png');
+    expect(await stableScreenshot(page)).toMatchSnapshot('error-bar-send-message-with-wrong-endpoint-url.png');
   });
 });
