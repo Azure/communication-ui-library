@@ -9,7 +9,6 @@ import React, { useEffect } from 'react';
 import { ChatAdapter, ChatComposite, COMPOSITE_LOCALE_FR_FR } from '../../../src';
 // eslint-disable-next-line no-restricted-imports
 import { IDS } from '../../browser/common/constants';
-import { verifyParamExists } from '../lib/utils';
 import {
   customOnFetchAvatarPersonaData,
   customOnRenderMessage,
@@ -21,14 +20,18 @@ import { useFakeChatAdapters } from '../lib/useFakeChatAdapters';
 
 const urlSearchParams = new URLSearchParams(window.location.search);
 const params = Object.fromEntries(urlSearchParams.entries());
-const fakeChatAdapterArgs = JSON.parse(
-  verifyParamExists(params.fakeChatAdapterArgs, 'fakeChatAdapterArgs')
-) as FakeChatAdapterArgs;
+const fakeChatAdapterArgs = params.fakeChatAdapterArgs
+  ? (JSON.parse(params.fakeChatAdapterArgs) as FakeChatAdapterArgs)
+  : undefined;
 
 /**
  * App with chat composite using a fake Chat adapter
  */
 export const FakeAdapterApp = (): JSX.Element => {
+  if (!fakeChatAdapterArgs) {
+    throw new Error('fakeChatAdapterArgs not set');
+  }
+
   const fakeAdapters = useFakeChatAdapters(fakeChatAdapterArgs);
 
   useEffect(() => {
