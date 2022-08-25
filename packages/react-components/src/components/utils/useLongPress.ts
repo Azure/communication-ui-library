@@ -16,13 +16,23 @@ export default function useLongPress(onClick: () => void, onLongPress: () => voi
     }, 500);
   }
 
-  function handleOnClick(e) {
+  function handleOnClick() {
     onClick();
     if (isLongPress) {
       onLongPress();
       return;
     }
     setAction('click');
+  }
+
+  function handleOnKeyDown() {
+    startPressTimer();
+  }
+
+  function handleOnKeyUp() {
+    console.log('onkeyup');
+    if (action === 'longpress') return;
+    timerRef.current && clearTimeout(timerRef.current);
   }
 
   function handleOnMouseDown() {
@@ -49,7 +59,9 @@ export default function useLongPress(onClick: () => void, onLongPress: () => voi
       onMouseDown: handleOnMouseDown,
       onMouseUp: handleOnMouseUp,
       onTouchStart: handleOnTouchStart,
-      onTouchEnd: handleOnTouchEnd
+      onTouchEnd: handleOnTouchEnd,
+      onKeyDown: handleOnKeyDown,
+      onKeyUp: handleOnKeyUp
     }
   };
 }

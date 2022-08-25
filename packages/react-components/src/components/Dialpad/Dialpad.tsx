@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React from 'react';
+import React, { useCallback } from 'react';
 import { IStyle, IButtonStyles, ITextFieldStyles } from '@fluentui/react';
 
 import { IconButton } from '@fluentui/react';
@@ -148,12 +148,14 @@ const DialpadButton = (props: {
   onLongPress: (input: string, index: number) => void;
 }): JSX.Element => {
   const theme = useTheme();
-  const clickFunction = () => {
+
+  const clickFunction = useCallback(async () => {
     props.onClick(props.primaryContent, props.index);
-  };
-  const longPressFunction = () => {
+  }, [props.primaryContent, props.index, props.onClick]);
+
+  const longPressFunction = useCallback(async () => {
     props.onLongPress(props.primaryContent, props.index);
-  };
+  }, [props.primaryContent, props.index, props.onLongPress]);
 
   const { handlers } = useLongPress(clickFunction, longPressFunction);
   return (
