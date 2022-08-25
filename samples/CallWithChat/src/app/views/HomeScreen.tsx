@@ -3,6 +3,8 @@
 
 import React, { useState } from 'react';
 import { Stack, PrimaryButton, Image, ChoiceGroup, IChoiceGroupOption, Text, TextField } from '@fluentui/react';
+/* @conditional-compile-remove(PSTN-calls) */
+import { registerIcons } from '@fluentui/react';
 import heroSVG from '../../assets/hero.svg';
 import {
   imgStyle,
@@ -26,6 +28,8 @@ import { DisplayNameField } from './DisplayNameField';
 import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
 import { Dialpad } from '@azure/communication-react';
+/* @conditional-compile-remove(PSTN-calls) */
+import { Backspace20Regular } from '@fluentui/react-icons';
 
 export interface HomeScreenProps {
   startCallHandler(callDetails: {
@@ -81,6 +85,9 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
       (teamsCallChosen && teamsLink) ||
       /* @conditional-compile-remove(PSTN-calls) */ (pstnCallChosen && dialpadParticipant && alternateCallerId) ||
       /* @conditional-compile-remove(one-to-n-calling) */ (outboundParticipants && acsCallChosen));
+
+  /* @conditional-compile-remove(PSTN-calls) */
+  registerIcons({ icons: { BackSpace: <Backspace20Regular /> } });
   return (
     <Stack
       horizontal
