@@ -53,7 +53,7 @@ export const HoldPane = (): JSX.Element => {
     };
   }, [startTime]);
 
-  const showSpinner = (): JSX.Element => {
+  const resumeSpinner = (): JSX.Element => {
     return <Spinner label={strings.resumingCallButtonLabel} labelPosition={'right'} />;
   };
 
@@ -67,14 +67,19 @@ export const HoldPane = (): JSX.Element => {
           ariaLabel={!resumingCall ? strings.resumeCallButtonAriaLabel : strings.resumingCallButtonAriaLabel}
           styles={resumeButtonStyles}
           disabled={resumingCall}
-          onClick={() => {
-            /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
-            holdButtonProps.onToggleHold();
+          onClick={async () => {
             setResumingCall(true);
+            try {
+              /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+              await holdButtonProps.onToggleHold();
+            } catch (e) {
+              setResumingCall(false);
+              throw e;
+            }
           }}
           data-ui-id="hold-page-resume-call-button"
         >
-          {resumingCall && showSpinner()}
+          {resumingCall && resumeSpinner()}
         </PrimaryButton>
       </Stack>
     </Stack>
