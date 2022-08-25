@@ -9,7 +9,7 @@ import { test as base } from '@playwright/test';
 import path from 'path';
 
 const SERVER_URL = 'http://localhost';
-const APP_DIR = path.join(__dirname, '../../../app/call');
+const APP_DIR = path.join(__dirname, '../../../app/chat');
 
 type ChatWorkerFixture = WorkerFixture<ChatUserType>;
 
