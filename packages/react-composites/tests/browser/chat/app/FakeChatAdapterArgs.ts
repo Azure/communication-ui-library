@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { ChatParticipant, ChatThreadClient } from '@azure/communication-chat';
-import { FileMetadata } from '@internal/react-components';
+import type { FileMetadata } from '@internal/react-components';
 
 /**
  * Type to represent a file upload the local participant will perform.
