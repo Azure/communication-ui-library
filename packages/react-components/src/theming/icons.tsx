@@ -47,7 +47,7 @@ import { Backspace20Regular } from '@fluentui/react-icons';
 /* @conditional-compile-remove(file-sharing) */
 import { ArrowDownload16Regular } from '@fluentui/react-icons';
 /* @conditional-compile-remove(PSTN-calls) */
-import { Pause16Regular, Pause20Regular, Play20Regular } from '@fluentui/react-icons';
+import { CallPause20Regular, CallPause20Filled, Play20Regular, People20Regular } from '@fluentui/react-icons';
 
 import React from 'react';
 
@@ -92,6 +92,8 @@ export const DEFAULT_COMPONENT_ICONS = {
   ControlButtonMicOn: <MicOn20Filled />,
   ControlButtonOptions: <Settings20Filled />,
   ControlButtonParticipants: <People20Filled />,
+  /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
+  ControlButtonParticipantsContextualMenuItem: <People20Regular />,
   ControlButtonScreenShareStart: <ShareScreenStart20Filled />,
   ControlButtonScreenShareStop: <ShareScreenStop20Filled />,
   /* @conditional-compile-remove(file-sharing) */
@@ -131,9 +133,9 @@ export const DEFAULT_COMPONENT_ICONS = {
   ParticipantItemOptionsHovered: <MoreHorizontal20Filled />,
   ParticipantItemScreenShareStart: <ShareScreenStart20Filled />,
   /* @conditional-compile-remove(PSTN-calls) */
-  HoldCallContextMenuItem: <Pause16Regular />,
+  HoldCallContextMenuItem: <CallPause20Regular />,
   /* @conditional-compile-remove(PSTN-calls) */
-  HoldCallButton: <Pause20Regular />,
+  HoldCallButton: <CallPause20Filled />,
   /* @conditional-compile-remove(PSTN-calls) */
   ResumeCall: <Play20Regular />,
   SendBoxSend: <Send20Regular />,

@@ -206,7 +206,7 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
       onItemClick: () => {
         holdButtonProps.onToggleHold();
       },
-      iconProps: { iconName: 'HoldCall', styles: { root: { lineHeight: 0 } } }
+      iconProps: { iconName: 'HoldCallContextMenuItem', styles: { root: { lineHeight: 0 } } }
     });
   }
 
