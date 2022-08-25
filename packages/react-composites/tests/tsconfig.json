@@ -2,10 +2,8 @@
   "extends": "../tsconfig.json",
   "compilerOptions": {
     "baseUrl": "./",
-    "paths": {
-      "@internal/react-components": ["../../react-components/src/components/index.ts"],
-      "@internal/acs-ui-common": ["../../acs-ui-common/src"]
-    }
+    // Required for playwright to correctly interpret *test internal* imports.
+    "paths": {}
   },
-  "include": ["/browser/**/*.ts", "server/**/*.ts"]
+  "include": ["browser/**/*.ts", "browser/**/*.tsx", "server/**/*.ts"]
 }
