@@ -18,6 +18,11 @@ export const resumeButtonStyles: IButtonStyles = {
     fontWeight: 400,
     display: 'flex',
     fontSize: _pxToRem(14)
+  },
+  labelDisabled: {
+    fontWeight: 400,
+    display: 'flex',
+    fontSize: _pxToRem(14)
   }
 };
 
