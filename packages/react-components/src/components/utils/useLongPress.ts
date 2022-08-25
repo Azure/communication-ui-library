@@ -3,57 +3,66 @@
 
 import { useRef, useState } from 'react';
 
-export default function useLongPress(onClick: () => void, onLongPress: () => void) {
-  const [action, setAction] = useState('');
+/**
+ * @private
+ */
+export default function useLongPress(
+  onClick: () => void,
+  onLongPress: () => void
+): {
+  handlers: {
+    onClick: () => void;
+    onMouseDown: () => void;
+    onMouseUp: () => void;
+    onTouchStart: () => void;
+    onTouchEnd: () => void;
+    onKeyDown: () => void;
+    onKeyUp: () => void;
+  };
+} {
   const timerRef = useRef<NodeJS.Timeout>();
   const [isLongPress, setIsLongPress] = useState(false);
 
-  function startPressTimer() {
+  function startPressTimer(): void {
     setIsLongPress(false);
     timerRef.current = setTimeout(() => {
       setIsLongPress(true);
-      setAction('longpress');
     }, 500);
   }
 
-  function handleOnClick() {
+  function handleOnClick(): void {
     onClick();
     if (isLongPress) {
       onLongPress();
       return;
     }
-    setAction('click');
   }
 
-  function handleOnKeyDown() {
+  function handleOnKeyDown(): void {
     startPressTimer();
   }
 
-  function handleOnKeyUp() {
-    console.log('onkeyup');
-    if (action === 'longpress') return;
+  function handleOnKeyUp(): void {
     timerRef.current && clearTimeout(timerRef.current);
   }
 
-  function handleOnMouseDown() {
+  function handleOnMouseDown(): void {
     startPressTimer();
   }
 
-  function handleOnMouseUp() {
+  function handleOnMouseUp(): void {
     timerRef.current && clearTimeout(timerRef.current);
   }
 
-  function handleOnTouchStart() {
+  function handleOnTouchStart(): void {
     startPressTimer();
   }
 
-  function handleOnTouchEnd() {
-    if (action === 'longpress') return;
+  function handleOnTouchEnd(): void {
     timerRef.current && clearTimeout(timerRef.current);
   }
 
   return {
-    action,
     handlers: {
       onClick: handleOnClick,
       onMouseDown: handleOnMouseDown,

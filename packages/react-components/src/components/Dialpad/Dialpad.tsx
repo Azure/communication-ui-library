@@ -149,13 +149,15 @@ const DialpadButton = (props: {
 }): JSX.Element => {
   const theme = useTheme();
 
+  const { primaryContent, index, onClick, onLongPress } = props;
+
   const clickFunction = useCallback(async () => {
-    props.onClick(props.primaryContent, props.index);
-  }, [props.primaryContent, props.index, props.onClick]);
+    onClick(primaryContent, index);
+  }, [primaryContent, index, onClick]);
 
   const longPressFunction = useCallback(async () => {
-    props.onLongPress(props.primaryContent, props.index);
-  }, [props.primaryContent, props.index, props.onLongPress]);
+    onLongPress(primaryContent, index);
+  }, [primaryContent, index, onLongPress]);
 
   const { handlers } = useLongPress(clickFunction, longPressFunction);
   return (
