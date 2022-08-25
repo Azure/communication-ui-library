@@ -91,6 +91,9 @@ export class MockCallAdapter implements CallAdapter {
   resumeCall(): Promise<void> {
     throw Error('resumeCall not implemented');
   }
+  sendDtmfTone(): Promise<void> {
+    throw Error('sendDtmfTone not implemented');
+  }
   setCamera(): Promise<void> {
     throw Error('setCamera not implemented');
   }
