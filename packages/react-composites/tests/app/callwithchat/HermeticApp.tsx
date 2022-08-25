@@ -12,6 +12,7 @@ import { QueryArgs } from './QueryArgs';
  */
 export function HermeticApp(props: { queryArgs: QueryArgs }): JSX.Element {
   throw new Error(`Unimplemented, though you tried to render ${JSON.stringify(props.queryArgs)}`);
+  return <></>;
 }
 
 /** @internal */

@@ -16,15 +16,18 @@ export function LiveApp(props: { queryArgs: QueryArgs }): JSX.Element {
   const { queryArgs: args } = props;
   const missingParams = missingRequiredParams(args);
 
-  const userIdArg = useMemo(() => fromFlatCommunicationIdentifier(args.userId) as CommunicationUserIdentifier, []);
+  const userIdArg = useMemo(
+    () => fromFlatCommunicationIdentifier(args.userId) as CommunicationUserIdentifier,
+    [args.userId]
+  );
   const locator = useMemo(
     () => ({
       callLocator: { groupId: args.groupId },
       chatThreadId: args.threadId
     }),
-    []
+    [args.groupId, args.threadId]
   );
-  const credential = useMemo(() => new AzureCommunicationTokenCredential(args.token), []);
+  const credential = useMemo(() => new AzureCommunicationTokenCredential(args.token), [args.token]);
   const adapter = useAzureCommunicationCallWithChatAdapter(
     {
       userId: userIdArg,
