@@ -5,5 +5,5 @@
     // Required for playwright to correctly interpret *test internal* imports.
     "paths": {}
   },
-  "include": ["browser/**/*.ts", "app/**/*.ts", "app/**/*.tsx"]
+  "include": ["**/*.ts", "**/*.tsx"]
 }

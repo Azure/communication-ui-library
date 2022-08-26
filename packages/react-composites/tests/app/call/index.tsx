@@ -3,7 +3,7 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { initializeIconsForUITests } from '../../browser/common/testAppUtils';
+import { initializeIconsForUITests } from '../lib/utils';
 import { HermeticApp, shouldLoadHermeticApp } from './HermeticApp';
 import { LiveApp } from './LiveApp';
 import { parseQueryArgs } from './QueryArgs';
