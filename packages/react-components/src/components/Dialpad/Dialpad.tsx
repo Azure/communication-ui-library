@@ -55,26 +55,6 @@ export interface DialpadStyles {
 }
 
 /**
- * Props for {@link Dialpad} component.
- *
- * @beta
- */
-export interface DialpadProps {
-  strings?: DialpadStrings;
-  /**  function to send dtmf tones on button click */
-  onSendDtmfTone?: (dtmfTone: DtmfTone) => Promise<void>;
-  /**  Callback for dialpad button behavior*/
-  onClickDialpadButton?: (buttonValue: string, buttonIndex: number) => void;
-  /**  customize dialpad input formatting */
-  onDisplayDialpadInput?: (input: string) => string;
-  /**  on change function for text field */
-  onChange?: (input: string) => void;
-  /**  boolean input to determine when to show/hide delete button, default true */
-  showDeleteButton?: boolean;
-  styles?: DialpadStyles;
-}
-
-/**
  * DTMF tone for PSTN calls.
  *
  * @beta
@@ -105,14 +85,11 @@ export type DtmfTone =
  */
 export interface DialpadProps {
   strings?: DialpadStrings;
-  // Potential Improvement:
-  // comment out the following prop for now to disable customization for dialpad content
-  // dialpadButtons?: DialpadButtonProps[][];
   /**  function to send dtmf tones on button click */
   onSendDtmfTone?: (dtmfTone: DtmfTone) => Promise<void>;
   /**  Callback for dialpad button behavior*/
   onClickDialpadButton?: (buttonValue: string, buttonIndex: number) => void;
-  /** Pass in custom content to dialpad textfield */
+  /** set dialpad textfield content */
   textFieldValue?: string;
   /**  on change function for text field */
   onChange?: (input: string) => void;
