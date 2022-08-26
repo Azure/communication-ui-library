@@ -45,7 +45,7 @@ test.describe('Screenshare tests', async () => {
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
 
     await waitForSelector(page, dataUiId(IDS.videoGallery));
-    expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot('local-screenshare.png');
+    expect(await stableScreenshot(page)).toMatchSnapshot('local-screenshare.png');
   });
 
   test('Remote screen share stream should be displayed in grid area of VideoGallery.', async ({ page, serverUrl }) => {
@@ -77,9 +77,7 @@ test.describe('Screenshare tests', async () => {
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
 
     await waitForSelector(page, dataUiId(IDS.videoGallery));
-    expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot(
-      'remote-screenshare-horizontal-gallery-page-1.png'
-    );
+    expect(await stableScreenshot(page)).toMatchSnapshot('remote-screenshare-horizontal-gallery-page-1.png');
     await waitForSelector(page, dataUiId(IDS.horizontalGalleryRightNavButton));
     await pageClick(page, dataUiId(IDS.horizontalGalleryRightNavButton));
     expect(await stableScreenshot(page)).toMatchSnapshot('remote-screenshare-horizontal-gallery-page-2.png');
