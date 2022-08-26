@@ -227,6 +227,7 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
       ref={containerRef}
       role={'menuitem'}
       data-is-focusable={true}
+      data-ui-id="participant-item"
       className={mergeStyles(
         participantItemContainerStyle({ localparticipant: me, clickable: !!menuItems }),
         styles?.root
