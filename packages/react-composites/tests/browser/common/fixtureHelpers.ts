@@ -17,14 +17,7 @@ import { buildUrl } from './utils';
  */
 // eslint-disable-next-line no-empty-pattern, @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/explicit-function-return-type
 export const usePagePerParticipant = async ({ serverUrl, users, browser }, use) => {
-  const pages = await Promise.all(
-    users.map(async (user) => {
-      const page = await loadNewPage(browser, buildUrl(serverUrl, user));
-      bindConsoleErrorForwarding(page);
-      return page;
-    })
-  );
-
+  const pages = await Promise.all(users.map(async (user) => await loadNewPage(browser, buildUrl(serverUrl, user))));
   await use(pages);
 };
 
@@ -187,9 +180,12 @@ export const createCallWithChatUsers =
  * @param url URL to a running test app.
  * @returns
  */
-export const loadNewPage = async (browser: Browser, url: string): Promise<Page> => {
+export const loadNewPage = async (browser: Browser, url?: string): Promise<Page> => {
   const page = await browser.newPage();
-  await page.goto(url);
+  bindConsoleErrorForwarding(page);
+  if (url) {
+    await page.goto(url);
+  }
   return page;
 };
 
@@ -199,9 +195,12 @@ export const loadNewPage = async (browser: Browser, url: string): Promise<Page> 
  * @param url URL to a running test app.
  * @returns
  */
-export const loadNewPageWithPermissionsForCalls = async (browser: Browser, url: string): Promise<Page> => {
+export const loadNewPageWithPermissionsForCalls = async (browser: Browser, url?: string): Promise<Page> => {
   const context = await browser.newContext({ permissions: ['notifications', 'camera', 'microphone'] });
   const page = await context.newPage();
-  await page.goto(url);
+  bindConsoleErrorForwarding(page);
+  if (url) {
+    await page.goto(url);
+  }
   return page;
 };
