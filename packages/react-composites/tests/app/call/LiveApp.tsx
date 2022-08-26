@@ -4,14 +4,12 @@
 import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 import React, { useState, useEffect } from 'react';
 
-import { CallAdapter, CallAdapterState, createAzureCommunicationCallAdapter } from '../../../../src';
-import { initializeIconsForUITests, verifyParamExists } from '../../common/testAppUtils';
+import { CallAdapter, CallAdapterState, createAzureCommunicationCallAdapter } from '../../../src';
+import { verifyParamExists } from '../lib/utils';
 import memoizeOne from 'memoize-one';
 import { fromFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { QueryArgs } from './QueryArgs';
 import { BaseApp } from './BaseApp';
-
-initializeIconsForUITests();
 
 /** @internal */
 export function LiveApp(props: { queryArgs: QueryArgs }): JSX.Element {

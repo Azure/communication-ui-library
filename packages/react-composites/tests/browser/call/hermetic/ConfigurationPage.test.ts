@@ -4,7 +4,7 @@
 import { buildUrlWithMockAdapter, defaultMockCallAdapterState, test } from './fixture';
 import { expect, Page } from '@playwright/test';
 import { dataUiId, stableScreenshot, waitForCallCompositeToLoad, waitForSelector } from '../../common/utils';
-import type { MockCallAdapterState } from '../MockCallAdapterState';
+import type { MockCallAdapterState } from '../../../common';
 
 test.describe('Call Composite E2E Configuration Screen Tests', () => {
   test('composite pages load completely', async ({ page, serverUrl }) => {

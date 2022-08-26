@@ -3,86 +3,46 @@
 
 import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 import React, { useMemo } from 'react';
-import ReactDOM from 'react-dom';
 
 import { _IdentifierProvider } from '@internal/react-components';
-import {
-  CallWithChatAdapter,
-  CallWithChatAdapterState,
-  CallWithChatComposite,
-  useAzureCommunicationCallWithChatAdapter
-} from '../../../../src';
-import { IDS } from '../../common/constants';
-import { initializeIconsForUITests, isMobile, verifyParamExists } from '../../common/testAppUtils';
+import { CallWithChatAdapter, CallWithChatAdapterState, useAzureCommunicationCallWithChatAdapter } from '../../../src';
 import memoizeOne from 'memoize-one';
 import { fromFlatCommunicationIdentifier } from '@internal/acs-ui-common';
+import { QueryArgs } from './QueryArgs';
+import { BaseApp } from './BaseApp';
 
-const urlSearchParams = new URLSearchParams(window.location.search);
-const params = Object.fromEntries(urlSearchParams.entries());
+/** @internal */
+export function LiveApp(props: { queryArgs: QueryArgs }): JSX.Element {
+  const { queryArgs: args } = props;
+  const missingParams = missingRequiredParams(args);
 
-// Required params
-const displayName = verifyParamExists(params.displayName, 'displayName');
-const token = verifyParamExists(params.token, 'token');
-const groupId = verifyParamExists(params.groupId, 'groupId');
-const userId = verifyParamExists(params.userId, 'userId');
-const endpoint = verifyParamExists(params.endpointUrl, 'endpointUrl');
-const threadId = verifyParamExists(params.threadId, 'threadId');
-
-initializeIconsForUITests();
-
-function App(): JSX.Element {
-  const userIdArg = useMemo(() => fromFlatCommunicationIdentifier(userId) as CommunicationUserIdentifier, []);
+  const userIdArg = useMemo(
+    () => fromFlatCommunicationIdentifier(args.userId) as CommunicationUserIdentifier,
+    [args.userId]
+  );
   const locator = useMemo(
     () => ({
-      callLocator: { groupId: groupId },
-      chatThreadId: threadId
+      callLocator: { groupId: args.groupId },
+      chatThreadId: args.threadId
     }),
-    []
+    [args.groupId, args.threadId]
   );
-  const credential = useMemo(() => new AzureCommunicationTokenCredential(token), []);
+  const credential = useMemo(() => new AzureCommunicationTokenCredential(args.token), [args.token]);
   const adapter = useAzureCommunicationCallWithChatAdapter(
     {
       userId: userIdArg,
-      displayName,
+      displayName: args.displayName,
       credential,
-      endpoint,
+      endpoint: args.endpoint,
       locator
     },
     wrapAdapterForTests
   );
 
-  if (!token) {
-    return <h3>ERROR: No token set.</h3>;
-  } else if (!displayName) {
-    return <h3>ERROR: No Display name set.</h3>;
-  } else if (!groupId) {
-    return <h3>ERROR: No groupId set.</h3>;
-  } else if (!userId) {
-    return <h3>ERROR: No userId set.</h3>;
-  } else if (!endpoint) {
-    return <h3>ERROR: No endpoint set.</h3>;
-  } else if (!threadId) {
-    return <h3>ERROR: No threadId set.</h3>;
-  } else if (!adapter) {
-    return <h3>Initializing call and chat adapters...</h3>;
+  if (missingParams.length > 0) {
+    return <h3>ERROR: Required parameters {missingParams.join(', ')} not set.</h3>;
   }
-
-  return (
-    <>
-      {!adapter && 'Initializing call-with-chat adapter...'}
-      {adapter && (
-        <div style={{ position: 'fixed', width: '100%', height: '100%' }}>
-          <_IdentifierProvider identifiers={IDS}>
-            <CallWithChatComposite
-              adapter={adapter}
-              formFactor={isMobile() ? 'mobile' : 'desktop'}
-              joinInvitationURL={window.location.href}
-            />
-          </_IdentifierProvider>
-        </div>
-      )}
-    </>
-  );
+  return <BaseApp queryArgs={args} adapter={adapter} />;
 }
 
 const wrapAdapterForTests = async (adapter: CallWithChatAdapter): Promise<CallWithChatAdapter> => {
@@ -144,4 +104,25 @@ const unsetSpeakingWhileMicrophoneIsMuted = (state: CallWithChatAdapterState): C
  */
 const memoizedUnsetSpeakingWhileMicrophoneIsMuted = memoizeOne(unsetSpeakingWhileMicrophoneIsMuted);
 
-ReactDOM.render(<App />, document.getElementById('root'));
+function missingRequiredParams(args: QueryArgs): string[] {
+  const missing: string[] = [];
+  if (!args.displayName) {
+    missing.push('displayName');
+  }
+  if (!args.endpoint) {
+    missing.push('endpoint');
+  }
+  if (!args.groupId) {
+    missing.push('groupId');
+  }
+  if (!args.threadId) {
+    missing.push('threadId');
+  }
+  if (!args.token) {
+    missing.push('token');
+  }
+  if (!args.userId) {
+    missing.push('userId');
+  }
+  return missing;
+}

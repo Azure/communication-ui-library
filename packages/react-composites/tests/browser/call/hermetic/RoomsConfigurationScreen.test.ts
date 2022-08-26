@@ -4,7 +4,7 @@
 import { buildUrlWithMockAdapter, defaultMockCallAdapterState, test } from './fixture';
 import { expect } from '@playwright/test';
 import { stableScreenshot, waitForCallCompositeToLoad } from '../../common/utils';
-import type { MockCallAdapterState } from '../MockCallAdapterState';
+import type { MockCallAdapterState } from '../../../common';
 
 test.describe('Rooms Call Configuration Screen Tests for different roles', () => {
   test('All configurations are enabled for Presenter', async ({ page, serverUrl }) => {
