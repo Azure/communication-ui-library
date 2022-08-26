@@ -40,7 +40,7 @@ export interface TestFixture {
 }
 
 const usePage = async ({ browser }, use): Promise<void> => {
-  await use(loadNewPageWithPermissionsForCalls(browser));
+  await use(await loadNewPageWithPermissionsForCalls(browser));
 };
 
 /**
