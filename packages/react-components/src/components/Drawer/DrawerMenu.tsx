@@ -88,7 +88,7 @@ export const _DrawerMenu = (props: _DrawerMenuProps): JSX.Element => {
 
   return (
     <_DrawerSurface styles={props.styles?.drawerSurfaceStyles} onLightDismiss={props.onLightDismiss}>
-      <Stack styles={props.styles} role="menu">
+      <Stack styles={props.styles} role="menu" data-ui-id="drawer-menu">
         {menuItemsToRender?.slice(0, 1).map((item) => (
           <DrawerMenuItem
             {...item}

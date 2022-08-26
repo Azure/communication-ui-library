@@ -189,6 +189,12 @@ export interface CallAdapter extends AdapterState<CallAdapterState>, Disposable,
 }
 
 // @public
+export type CallAdapterCallEndedEvent = {
+    callId?: string;
+    callEndReason?: CallEndReason;
+};
+
+// @public
 export interface CallAdapterCallManagement {
     // @beta
     addParticipant(participant: CommunicationIdentifier, options?: AddPhoneNumberOptions): Promise<void>;
@@ -390,7 +396,7 @@ export type CallCompositeOptions = {
 };
 
 // @public
-export type CallCompositePage = 'accessDeniedTeamsMeeting' | 'call' | 'configuration' | 'joinCallFailedDueToNoNetwork' | 'leftCall' | 'lobby' | 'removedFromCall' | /* @conditional-compile-remove(PSTN-calls) */ 'hold';
+export type CallCompositePage = 'accessDeniedTeamsMeeting' | 'call' | 'configuration' | /* @conditional-compile-remove(PSTN-calls) */ 'hold' | 'joinCallFailedDueToNoNetwork' | 'leftCall' | 'lobby' | 'removedFromCall';
 
 // @public
 export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcons> {
@@ -461,6 +467,8 @@ export interface CallCompositeStrings {
     removeMenuLabel: string;
     resumeCallButtonAriaLabel: string;
     resumeCallButtonLabel: string;
+    resumingCallButtonAriaLabel: string;
+    resumingCallButtonLabel: string;
     returnToCallButtonAriaDescription?: string;
     returnToCallButtonAriaLabel?: string;
     soundLabel: string;
@@ -497,9 +505,7 @@ export type CallControlOptions = {
 };
 
 // @public
-export type CallEndedListener = (event: {
-    callId: string;
-}) => void;
+export type CallEndedListener = (event: CallAdapterCallEndedEvent) => void;
 
 // @public
 export class CallError extends Error {
@@ -1520,6 +1526,7 @@ export const DEFAULT_COMPONENT_ICONS: {
     ControlButtonMicOn: JSX.Element;
     ControlButtonOptions: JSX.Element;
     ControlButtonParticipants: JSX.Element;
+    ControlButtonParticipantsContextualMenuItem: JSX.Element;
     ControlButtonScreenShareStart: JSX.Element;
     ControlButtonScreenShareStop: JSX.Element;
     CancelFileUpload: JSX.Element;
@@ -1556,7 +1563,8 @@ export const DEFAULT_COMPONENT_ICONS: {
     ParticipantItemOptions: JSX.Element;
     ParticipantItemOptionsHovered: JSX.Element;
     ParticipantItemScreenShareStart: JSX.Element;
-    HoldCall: JSX.Element;
+    HoldCallContextualMenuItem: JSX.Element;
+    HoldCallButton: JSX.Element;
     ResumeCall: JSX.Element;
     SendBoxSend: JSX.Element;
     SendBoxSendHovered: JSX.Element;
@@ -1635,12 +1643,14 @@ export const DEFAULT_COMPOSITE_ICONS: {
     MoreDrawerSelectedSpeaker?: JSX.Element | undefined;
     MoreDrawerSpeakers?: JSX.Element | undefined;
     ChatMessageOptions: JSX.Element;
+    ControlButtonParticipantsContextualMenuItem: JSX.Element;
     CancelFileUpload: JSX.Element;
     DownloadFile: JSX.Element;
     ErrorBarCallVideoRecoveredBySystem: JSX.Element;
     ErrorBarCallVideoStoppedBySystem: JSX.Element;
     MessageResend: JSX.Element;
-    HoldCall: JSX.Element;
+    HoldCallContextualMenuItem: JSX.Element;
+    HoldCallButton: JSX.Element;
     ResumeCall: JSX.Element;
     BackSpace: JSX.Element;
 };

@@ -2,16 +2,16 @@
 // Licensed under the MIT license.
 
 import { buildUrlWithMockAdapter, defaultMockCallAdapterState, test } from './fixture';
-import { expect } from '@playwright/test';
+import { expect, Page } from '@playwright/test';
 import { dataUiId, stableScreenshot, waitForCallCompositeToLoad, waitForSelector } from '../../common/utils';
-import type { MockCallAdapterState } from '../MockCallAdapterState';
+import type { MockCallAdapterState } from '../../../common';
 
 test.describe('Call Composite E2E Configuration Screen Tests', () => {
   test('composite pages load completely', async ({ page, serverUrl }) => {
     await page.goto(buildUrlWithMockAdapter(serverUrl, defaultMockConfigurationPageState()));
     await waitForCallCompositeToLoad(page);
     await stubLocalCameraName(page);
-    expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot(`call-configuration-page.png`);
+    expect(await stableScreenshot(page)).toMatchSnapshot(`call-configuration-page.png`);
   });
 
   test('local device buttons should show tooltips on hover', async ({ page, serverUrl }) => {
@@ -20,7 +20,9 @@ test.describe('Call Composite E2E Configuration Screen Tests', () => {
     await page.hover(dataUiId('call-composite-local-device-settings-microphone-button'));
     await waitForSelector(page, dataUiId('microphoneButtonLabel-tooltip'));
     await stubLocalCameraName(page);
-    expect(await stableScreenshot(page)).toMatchSnapshot(`call-configuration-page-unmute-tooltip.png`);
+    expect(await stableScreenshot(page, { dismissTooltips: false })).toMatchSnapshot(
+      `call-configuration-page-unmute-tooltip.png`
+    );
   });
 
   test('Configuration screen should display call details', async ({ page, serverUrl }) => {
@@ -28,9 +30,7 @@ test.describe('Call Composite E2E Configuration Screen Tests', () => {
       buildUrlWithMockAdapter(serverUrl, defaultMockConfigurationPageState(), { showCallDescription: 'true' })
     );
     await waitForCallCompositeToLoad(page);
-    expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot(
-      'call-configuration-page-with-call-details.png'
-    );
+    expect(await stableScreenshot(page)).toMatchSnapshot('call-configuration-page-with-call-details.png');
   });
 });
 

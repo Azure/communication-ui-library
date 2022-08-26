@@ -11,6 +11,7 @@ import { AudioDeviceInfo } from '@azure/communication-calling';
 import { BaseCustomStyles } from '@internal/react-components';
 import { Call } from '@azure/communication-calling';
 import { CallAgent } from '@azure/communication-calling';
+import type { CallEndReason } from '@azure/communication-calling';
 import { CallState } from '@internal/calling-stateful-client';
 import type { ChatMessage } from '@azure/communication-chat';
 import type { ChatParticipant } from '@azure/communication-chat';
@@ -132,6 +133,12 @@ export interface BaseCompositeProps<TIcons extends Record<string, JSX.Element>> 
 // @public
 export interface CallAdapter extends AdapterState<CallAdapterState>, Disposable, CallAdapterCallManagement, CallAdapterDeviceManagement, CallAdapterSubscribers {
 }
+
+// @public
+export type CallAdapterCallEndedEvent = {
+    callId?: string;
+    callEndReason?: CallEndReason;
+};
 
 // @public
 export interface CallAdapterCallManagement {
@@ -287,7 +294,7 @@ export type CallCompositeOptions = {
 };
 
 // @public
-export type CallCompositePage = 'accessDeniedTeamsMeeting' | 'call' | 'configuration' | 'joinCallFailedDueToNoNetwork' | 'leftCall' | 'lobby' | 'removedFromCall' | /* @conditional-compile-remove(PSTN-calls) */ 'hold';
+export type CallCompositePage = 'accessDeniedTeamsMeeting' | 'call' | 'configuration' | /* @conditional-compile-remove(PSTN-calls) */ 'hold' | 'joinCallFailedDueToNoNetwork' | 'leftCall' | 'lobby' | 'removedFromCall';
 
 // @public
 export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcons> {
@@ -358,6 +365,8 @@ export interface CallCompositeStrings {
     removeMenuLabel: string;
     resumeCallButtonAriaLabel: string;
     resumeCallButtonLabel: string;
+    resumingCallButtonAriaLabel: string;
+    resumingCallButtonLabel: string;
     returnToCallButtonAriaDescription?: string;
     returnToCallButtonAriaLabel?: string;
     soundLabel: string;
@@ -394,9 +403,7 @@ export type CallControlOptions = {
 };
 
 // @public
-export type CallEndedListener = (event: {
-    callId: string;
-}) => void;
+export type CallEndedListener = (event: CallAdapterCallEndedEvent) => void;
 
 // @public
 export type CallIdChangedListener = (event: {
@@ -991,12 +998,14 @@ export const DEFAULT_COMPOSITE_ICONS: {
     MoreDrawerSelectedSpeaker?: JSX.Element | undefined;
     MoreDrawerSpeakers?: JSX.Element | undefined;
     ChatMessageOptions: JSX.Element;
+    ControlButtonParticipantsContextualMenuItem: JSX.Element;
     CancelFileUpload: JSX.Element;
     DownloadFile: JSX.Element;
     ErrorBarCallVideoRecoveredBySystem: JSX.Element;
     ErrorBarCallVideoStoppedBySystem: JSX.Element;
     MessageResend: JSX.Element;
-    HoldCall: JSX.Element;
+    HoldCallContextualMenuItem: JSX.Element;
+    HoldCallButton: JSX.Element;
     ResumeCall: JSX.Element;
     BackSpace: JSX.Element;
 };

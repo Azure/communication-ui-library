@@ -105,7 +105,11 @@ export async function waitForFunction<R>(
  */
 export const waitForPageFontsLoaded = async (page: Page): Promise<void> => {
   await waitForFunction(page, async () => {
-    await document.fonts.ready;
+    // typescript libraries in Node define the type of `document` as
+    //     interface Document {}
+    // this breaks `tsc`, even though it works correctly in the browser.
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    await (document as any).fonts.ready;
   });
 };
 
@@ -397,7 +401,11 @@ export const isTestProfileStableFlavor = (): boolean => {
 export interface StubOptions {
   /** Stub out all timestamps in the chat message thread. */
   stubMessageTimestamps?: boolean;
-  /** Disable tooltips on all buttons in the call control bar. */
+  /**
+   * Disable tooltips on all buttons in the call control bar.
+   *
+   * @defaultValue true.
+   */
   dismissTooltips?: boolean;
   /** Hide chat message actions icon button. */
   dismissChatMessageActions?: boolean;
@@ -433,7 +441,7 @@ export async function stableScreenshot(
   if (stubOptions?.stubMessageTimestamps) {
     await stubMessageTimestamps(page);
   }
-  if (stubOptions?.dismissTooltips) {
+  if (stubOptions?.dismissTooltips !== false) {
     await disableTooltips(page);
   }
   if (stubOptions?.dismissChatMessageActions) {
@@ -451,7 +459,7 @@ export async function stableScreenshot(
   try {
     return await page.screenshot(screenshotOptions);
   } finally {
-    if (stubOptions?.dismissTooltips) {
+    if (stubOptions?.dismissTooltips !== false) {
       await enableTooltips(page);
     }
   }
