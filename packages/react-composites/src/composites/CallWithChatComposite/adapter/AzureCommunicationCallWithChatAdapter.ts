@@ -371,8 +371,17 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     return await this.callAdapter.resumeCall();
   }
   /* @conditional-compile-remove(PSTN-calls) */
-  public async addParticipant(participant: CommunicationIdentifier, options?: AddPhoneNumberOptions): Promise<void> {
-    return await this.callAdapter.addParticipant(participant, options);
+  public async addParticipant(participant: CommunicationIdentifier, options?: AddPhoneNumberOptions): Promise<void>;
+  public async addParticipant(participant: string): Promise<void>;
+  public async addParticipant(
+    participant: CommunicationIdentifier | string,
+    options?: AddPhoneNumberOptions
+  ): Promise<void> {
+    if (typeof participant === 'string') {
+      return await this.callAdapter.addParticipant(participant);
+    } else {
+      return await this.callAdapter.addParticipant(participant, options);
+    }
   }
 
   /* @conditional-compile-remove(PSTN-calls) */

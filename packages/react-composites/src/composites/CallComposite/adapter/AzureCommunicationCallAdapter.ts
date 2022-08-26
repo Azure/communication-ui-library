@@ -505,8 +505,24 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
   }
 
   /* @conditional-compile-remove(PSTN-calls) */
-  public async addParticipant(participant: CommunicationIdentifier, options?: AddPhoneNumberOptions): Promise<void> {
-    this.handlers.onAddParticipant(participant, options);
+  public async addParticipant(participant: CommunicationIdentifier, options?: AddPhoneNumberOptions): Promise<void>;
+  public async addParticipant(participant: string): Promise<void>;
+  public async addParticipant(
+    participant: CommunicationIdentifier | string,
+    options?: AddPhoneNumberOptions
+  ): Promise<void> {
+    if (typeof participant === 'string') {
+      const participantIdentifier = fromFlatCommunicationIdentifier(participant);
+      if (isPhoneNumberIdentifier(participantIdentifier)) {
+        const alternateCallerId = this.callClient.getState().alternateCallerId;
+        const newOptions = { alternateCallerId: { phoneNumber: alternateCallerId } } as AddPhoneNumberOptions;
+        this.handlers.onAddParticipant(participantIdentifier as PhoneNumberIdentifier, newOptions);
+      } else if (isCommunicationUserIdentifier(participantIdentifier)) {
+        this.handlers.onAddParticipant(participantIdentifier as CommunicationUserIdentifier);
+      }
+    } else {
+      this.handlers.onAddParticipant(participant, options);
+    }
   }
 
   /* @conditional-compile-remove(PSTN-calls) */
