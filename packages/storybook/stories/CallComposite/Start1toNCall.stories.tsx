@@ -6,57 +6,71 @@ import { Stack } from '@fluentui/react';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 import { COMPOSITE_FOLDER_PREFIX, compositeExperienceContainerStyle } from '../constants';
-import { defaultCallCompositeHiddenControls, controlsToAdd } from '../controlsUtils';
+import { defaultCallCompositeHiddenControls, controlsToAdd, hiddenControl } from '../controlsUtils';
 import { compositeLocale } from '../localizationUtils';
-import { getDocs } from './CallCompositeDocs';
-import { ContosoCallContainer1toN } from './snippets/Container1toN.snippet';
-import { ConfigJoinCallHintBanner } from './snippets/Utils';
+import { ContosoCallContainer1toNInbound } from './snippets/Container1toNInbound.snippet';
+import { ContosoCallContainer1toN } from './snippets/Container1toNOutbound.snippet';
+import { ConfigStart1ToNHintBanner } from './snippets/Utils';
 
 const Start1toNCallStory = (args, context): JSX.Element => {
   const {
     globals: { locale }
   } = context;
-  const areAllKnobsSet = !!args.callLocator && !!args.userId && !!args.token && !!args.displayName;
+  const areAllKnobsSet = !!args.userId && !!args.token && !!args.displayName && !!args.calleeUserId;
 
   return (
     <Stack horizontalAlign="center" verticalAlign="center" styles={compositeExperienceContainerStyle}>
       {areAllKnobsSet ? (
-        <ContosoCallContainer1toN
-          fluentTheme={context.theme}
-          locator={args.callLocator}
-          userId={{ communicationUserId: args.userId }}
-          token={args.token}
-          displayName={args.displayName}
-          callInvitationURL={args.callInvitationURL}
-          locale={compositeLocale(locale)}
-          formFactor={args.formFactor}
-        />
+        <div style={{ height: '100vh', display: 'flex', width: '100%' }}>
+          <div style={!!args.calleeToken ? { width: '65%' } : { width: '100%' }}>
+            <ContosoCallContainer1toN
+              fluentTheme={context.theme}
+              locator={[args.calleeUserId]}
+              userId={{ communicationUserId: args.userId }}
+              token={args.token}
+              displayName={args.displayName}
+              locale={compositeLocale(locale)}
+              formFactor={args.formFactor}
+            />
+          </div>
+          {!!args.calleeToken && !!args.calleeUserId && (
+            <div style={{ width: '35%' }}>
+              <ContosoCallContainer1toNInbound
+                fluentTheme={context.theme}
+                userId={{ communicationUserId: args.calleeUserId }}
+                token={args.calleeToken}
+                locale={compositeLocale(locale)}
+                formFactor={args.formFactor}
+              />
+            </div>
+          )}
+        </div>
       ) : (
-        <ConfigJoinCallHintBanner />
+        <ConfigStart1ToNHintBanner />
       )}
     </Stack>
   );
 };
 
-export const Start1toNCall = Start1toNCallStory.bind({});
+export const Start1ToNCallExample = Start1toNCallStory.bind({});
 
 export default {
   id: `${COMPOSITE_FOLDER_PREFIX}-call-start1toncall`,
-  title: `${COMPOSITE_FOLDER_PREFIX}/CallComposite/Start 1 To N Call`,
+  title: `${COMPOSITE_FOLDER_PREFIX}/CallComposite/1:N Call/Start 1 To N Call Example`,
   component: CallComposite,
   argTypes: {
     userId: controlsToAdd.userId,
     token: controlsToAdd.token,
+    calleeUserId: controlsToAdd.calleeUserId,
+    calleeToken: controlsToAdd.calleeToken,
     displayName: controlsToAdd.displayName,
-    callLocator: controlsToAdd.callParticipantsLocator1toN,
     formFactor: controlsToAdd.formFactor,
-    callInvitationURL: controlsToAdd.callInvitationURL,
     // Hiding auto-generated controls
+    role: hiddenControl,
     ...defaultCallCompositeHiddenControls
   },
   parameters: {
-    docs: {
-      page: () => getDocs()
-    }
+    previewTabs: { 'storybook/docs/panel': { hidden: true } },
+    viewMode: 'story'
   }
 } as Meta;

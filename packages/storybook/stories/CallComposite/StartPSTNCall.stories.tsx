@@ -6,17 +6,17 @@ import { Stack } from '@fluentui/react';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 import { COMPOSITE_FOLDER_PREFIX, compositeExperienceContainerStyle } from '../constants';
-import { defaultCallCompositeHiddenControls, controlsToAdd } from '../controlsUtils';
+import { defaultCallCompositeHiddenControls, controlsToAdd, hiddenControl } from '../controlsUtils';
 import { compositeLocale } from '../localizationUtils';
-import { getDocs } from './CallCompositeDocs';
 import { ContosoCallContainerPSTN } from './snippets/ContainerPSTN.snippet';
-import { ConfigJoinCallHintBanner } from './snippets/Utils';
+import { ConfigStartPSTNHintBanner } from './snippets/Utils';
 
 const StartPSTNCallStory = (args, context): JSX.Element => {
   const {
     globals: { locale }
   } = context;
-  const areAllKnobsSet = !!args.callLocator && !!args.userId && !!args.token && !!args.displayName;
+  const areAllKnobsSet =
+    !!args.callLocator && !!args.userId && !!args.token && !!args.displayName && !!args.alternateCallerId;
 
   location.hash = '#pstn-and-1-n-calling';
 
@@ -30,22 +30,21 @@ const StartPSTNCallStory = (args, context): JSX.Element => {
           userId={{ communicationUserId: args.userId }}
           token={args.token}
           displayName={args.displayName}
-          callInvitationURL={args.callInvitationURL}
           locale={compositeLocale(locale)}
           formFactor={args.formFactor}
         />
       ) : (
-        <ConfigJoinCallHintBanner />
+        <ConfigStartPSTNHintBanner />
       )}
     </Stack>
   );
 };
 
-export const StartPSTNCall = StartPSTNCallStory.bind({});
+export const StartPSTNCallExample = StartPSTNCallStory.bind({});
 
 export default {
   id: `${COMPOSITE_FOLDER_PREFIX}-call-startpstncall`,
-  title: `${COMPOSITE_FOLDER_PREFIX}/CallComposite/Start PSTN Call`,
+  title: `${COMPOSITE_FOLDER_PREFIX}/CallComposite/PSTN Call/Start PSTN Call Example`,
   component: CallComposite,
   argTypes: {
     userId: controlsToAdd.userId,
@@ -54,13 +53,12 @@ export default {
     callLocator: controlsToAdd.callParticipantsLocator,
     alternateCallerId: controlsToAdd.alternateCallerId,
     formFactor: controlsToAdd.formFactor,
-    callInvitationURL: controlsToAdd.callInvitationURL,
     // Hiding auto-generated controls
+    role: hiddenControl,
     ...defaultCallCompositeHiddenControls
   },
   parameters: {
-    docs: {
-      page: () => getDocs()
-    }
+    previewTabs: { 'storybook/docs/panel': { hidden: true } },
+    viewMode: 'story'
   }
 } as Meta;

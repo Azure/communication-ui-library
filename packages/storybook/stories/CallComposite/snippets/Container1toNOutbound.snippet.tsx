@@ -24,6 +24,7 @@ export type ContainerProps = {
 
 const createCallAdapterLocator = (locator: string[]): CallParticipantsLocator | undefined => {
   if (locator && locator.length > 0) {
+    // Change to participantIds once api is updated
     return { participantIDs: locator };
   }
   return undefined;
@@ -58,22 +59,20 @@ export const ContosoCallContainer1toN = (props: ContainerProps): JSX.Element => 
 
   if (adapter) {
     return (
-      <div style={{ height: '90vh', width: '90vw' }}>
-        <CallComposite
-          adapter={adapter}
-          formFactor={props.formFactor}
-          fluentTheme={props.fluentTheme}
-          callInvitationUrl={props?.callInvitationURL}
-          locale={props?.locale}
-          options={props?.options}
-        />
-      </div>
+      <CallComposite
+        adapter={adapter}
+        formFactor={props.formFactor}
+        fluentTheme={props.fluentTheme}
+        callInvitationUrl={props?.callInvitationURL}
+        locale={props?.locale}
+        options={props?.options}
+      />
     );
   }
   if (credential === undefined) {
     return <>Failed to construct credential. Provided token is malformed.</>;
   }
-  return <>Initializing...</>;
+  return <>Initializing 1:N Preview...</>;
 };
 
 const leaveCall = async (adapter: CallAdapter): Promise<void> => {
