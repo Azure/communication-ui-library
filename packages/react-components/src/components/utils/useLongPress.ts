@@ -20,7 +20,7 @@ export default function useLongPress(
     onKeyUp: () => void;
   };
 } {
-  const timerRef = useRef<NodeJS.Timeout>();
+  const timerRef = useRef<ReturnType<typeof setTimeout>>();
   const [isLongPress, setIsLongPress] = useState(false);
   const [action, setAction] = useState(false);
 
