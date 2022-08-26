@@ -4,7 +4,7 @@
 import { TEST_PARTICIPANTS } from '../../common/constants';
 import { createCallUsers, usePagePerParticipantWithCallPermissions } from '../../common/fixtureHelpers';
 import { WorkerFixture, CallUserType } from '../../common/fixtureTypes';
-import { createTestServer } from '../../../server';
+import { createTestServer } from '../../common/server';
 import { test as base } from '@playwright/test';
 import path from 'path';
 

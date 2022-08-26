@@ -5,7 +5,7 @@ import { ChatParticipant } from '@azure/communication-chat';
 import { Page, test as base } from '@playwright/test';
 import { nanoid } from 'nanoid';
 import path from 'path';
-import { createTestServer } from '../../../server';
+import { createTestServer } from '../../common/server';
 import { TEST_PARTICIPANTS_CHAT } from '../../common/constants';
 import { bindConsoleErrorForwarding, loadNewPage } from '../../common/fixtureHelpers';
 import { FakeChatAdapterArgs } from '../app/FakeChatAdapterArgs';
