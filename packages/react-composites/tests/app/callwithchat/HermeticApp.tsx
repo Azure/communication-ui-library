@@ -42,7 +42,7 @@ export function HermeticApp(props: { queryArgs: QueryArgs }): JSX.Element {
   );
 }
 
-export function HermeticAppImpl(props: {
+function HermeticAppImpl(props: {
   queryArgs: QueryArgs;
   fakeChatAdapterArgs: FakeChatAdapterArgs;
   mockCallAdapterState: MockCallAdapterState;
@@ -71,5 +71,5 @@ export function HermeticAppImpl(props: {
 
 /** @internal */
 export function shouldLoadHermeticApp(queryArgs: QueryArgs): boolean {
-  return !!queryArgs.fakeChatAdapterArgs || !!queryArgs.mockCallAdapterState;
+  return !!queryArgs.fakeChatAdapterArgs && !!queryArgs.mockCallAdapterState;
 }

@@ -62,7 +62,7 @@ export const test = base.extend<TestFixture>({
  *   - load the hermetic CallWithChat test app on the page.
  *   - wait for the page to have completely loaded.
  */
-export async function loadCallPage(page: Page, serverUrl: string, callState: MockCallAdapterState) {
+export async function loadCallPage(page: Page, serverUrl: string, callState: MockCallAdapterState): Promise<void> {
   const chatArgs = fakeChatAdapterArgsForCallAdapterState(callState);
   await page.goto(buildUrlForApp(serverUrl, callState, chatArgs));
   await waitForPageFontsLoaded(page);
