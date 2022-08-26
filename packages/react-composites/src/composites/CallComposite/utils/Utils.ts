@@ -100,11 +100,12 @@ export const getCallCompositePage = (
     // `_isInLobbyOrConnecting` needs to be checked first because `_isInCall` also returns true when call is in lobby.
     if (_isInLobbyOrConnecting(call?.state)) {
       return 'lobby';
-    } else if (_isInCall(call?.state)) {
-      return 'call';
+      // `LocalHold` needs to be checked before `isInCall` since it is also a state that's considered in call.
     } else if (call?.state === 'LocalHold') {
       /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
       return 'hold';
+      return 'call';
+    } else if (_isInCall(call?.state)) {
       return 'call';
     } else {
       // When the call object has been constructed after clicking , but before 'connecting' has been

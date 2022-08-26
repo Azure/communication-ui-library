@@ -58,9 +58,7 @@ test.describe('Call Composite E2E Configuration Screen Tests', () => {
       return !!videoNode && videoNode.readyState === 4 && !videoNode.paused && videoNode;
     });
     await stubLocalCameraName(page);
-    expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot(
-      `call-configuration-page-camera-enabled.png`
-    );
+    expect(await stableScreenshot(page)).toMatchSnapshot(`call-configuration-page-camera-enabled.png`);
   });
 });
 
@@ -98,7 +96,7 @@ test.describe('Call Composite E2E CallPage Tests', () => {
     for (const idx in pages) {
       const page = pages[idx];
       await page.bringToFront();
-      expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot(`video-gallery-page-${idx}.png`);
+      expect(await stableScreenshot(page)).toMatchSnapshot(`video-gallery-page-${idx}.png`);
     }
 
     // Then turn off video and check again.
@@ -111,9 +109,7 @@ test.describe('Call Composite E2E CallPage Tests', () => {
     for (const idx in pages) {
       const page = pages[idx];
       await page.bringToFront();
-      expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot(
-        `video-gallery-camera-off-page-${idx}.png`
-      );
+      expect(await stableScreenshot(page)).toMatchSnapshot(`video-gallery-camera-off-page-${idx}.png`);
     }
   });
 });
