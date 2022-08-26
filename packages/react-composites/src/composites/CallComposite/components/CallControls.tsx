@@ -124,7 +124,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
       onClick: () => {
         holdButtonProps.onToggleHold();
       },
-      iconProps: { iconName: 'HoldCallContextMenuItem', styles: { root: { lineHeight: 0 } } },
+      iconProps: { iconName: 'HoldCallContextualMenuItem', styles: { root: { lineHeight: 0 } } },
       itemProps: {
         styles: buttonFlyoutIncreasedSizeStyles
       },

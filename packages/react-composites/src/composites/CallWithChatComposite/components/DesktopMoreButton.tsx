@@ -51,7 +51,7 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
       onClick: () => {
         holdButtonProps.onToggleHold();
       },
-      iconProps: { iconName: 'HoldCallContextMenuItem', styles: { root: { lineHeight: 0 } } },
+      iconProps: { iconName: 'HoldCallContextualMenuItem', styles: { root: { lineHeight: 0 } } },
       itemProps: {
         styles: buttonFlyoutIncreasedSizeStyles
       },

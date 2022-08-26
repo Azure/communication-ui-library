@@ -133,7 +133,7 @@ export const DEFAULT_COMPONENT_ICONS = {
   ParticipantItemOptionsHovered: <MoreHorizontal20Filled />,
   ParticipantItemScreenShareStart: <ShareScreenStart20Filled />,
   /* @conditional-compile-remove(PSTN-calls) */
-  HoldCallContextMenuItem: <CallPause20Regular />,
+  HoldCallContextualMenuItem: <CallPause20Regular />,
   /* @conditional-compile-remove(PSTN-calls) */
   HoldCallButton: <CallPause20Filled />,
   /* @conditional-compile-remove(PSTN-calls) */
