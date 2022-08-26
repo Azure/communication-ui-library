@@ -146,7 +146,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
         onClick: () => {
           setShowDialpad(true);
         },
-        iconProps: { iconName: 'Dialpad', styles: { root: { lineHeight: 0 } } },
+        iconProps: { iconName: 'PeoplePaneOpenDialpad', styles: { root: { lineHeight: 0 } } },
         itemProps: {
           styles: buttonFlyoutIncreasedSizeStyles
         }
