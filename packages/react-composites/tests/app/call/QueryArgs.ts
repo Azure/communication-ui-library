@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { Role } from '@internal/react-components';
-import { MockCallAdapterState } from '../MockCallAdapterState';
+import { MockCallAdapterState } from '../../browser/call/MockCallAdapterState';
 
 export interface QueryArgs {
   // Defined only for hermetic tests.

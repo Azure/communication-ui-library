@@ -4,8 +4,8 @@
 import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 import React, { useState, useEffect } from 'react';
 
-import { CallAdapter, CallAdapterState, createAzureCommunicationCallAdapter } from '../../../../src';
-import { initializeIconsForUITests, verifyParamExists } from '../../common/testAppUtils';
+import { CallAdapter, CallAdapterState, createAzureCommunicationCallAdapter } from '../../../src';
+import { initializeIconsForUITests, verifyParamExists } from '../../browser/common/testAppUtils';
 import memoizeOne from 'memoize-one';
 import { fromFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { QueryArgs } from './QueryArgs';

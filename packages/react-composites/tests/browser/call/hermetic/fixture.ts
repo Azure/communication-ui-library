@@ -14,7 +14,7 @@ import type {
 } from '../MockCallAdapterState';
 
 const SERVER_URL = 'http://localhost';
-const APP_DIR = path.join(__dirname, '../app');
+const APP_DIR = path.join(__dirname, '../../../app/call');
 
 /**
  * Create the test URL.
