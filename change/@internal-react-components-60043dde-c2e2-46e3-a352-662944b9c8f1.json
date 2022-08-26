@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "make unused exported beta interface internal, add longpress hook to detect long press and return +  ",
+  "packageName": "@internal/react-components",
+  "email": "carolinecao@microsoft.com",
+  "dependentChangeType": "patch"
+}
