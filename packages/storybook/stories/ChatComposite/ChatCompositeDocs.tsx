@@ -165,6 +165,7 @@ export const getDocs: () => JSX.Element = () => {
       <Source code={customDateTimeFormatExampleText} />
 
       <Heading>Adding file sharing</Heading>
+      <SingleLineBetaBanner />
       <Description>
         The Chat Composite supports file sharing capabilities in conjunction with your choice of a storage solution.
         Using the provided APIs, you can enable the composite to support uploading files and displaying them on the send
