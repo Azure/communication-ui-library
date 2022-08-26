@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IDS, TEST_PARTICIPANTS } from '../common/constants';
+import { IDS, TEST_PARTICIPANTS } from '../../common/constants';
 import {
   buildUrl,
   dataUiId,
@@ -14,7 +14,7 @@ import {
   waitForCallWithChatCompositeToLoad,
   waitForPiPiPToHaveLoaded,
   waitForSelector
-} from '../common/utils';
+} from '../../common/utils';
 import { test } from './fixture';
 import { expect, Page } from '@playwright/test';
 import {
@@ -23,9 +23,9 @@ import {
   waitForMessageSeen,
   waitForNSeenMessages,
   waitForTypingIndicatorHidden
-} from '../common/chatTestHelpers';
-import { createCallWithChatObjectsAndUsers } from '../common/fixtureHelpers';
-import { CallWithChatUserType } from '../common/fixtureTypes';
+} from '../../common/chatTestHelpers';
+import { createCallWithChatObjectsAndUsers } from '../../common/fixtureHelpers';
+import { CallWithChatUserType } from '../../common/fixtureTypes';
 
 test.describe('CallWithChat Composite Pre-Join Tests', () => {
   test.beforeEach(async ({ pages, users, serverUrl }) => {
@@ -34,9 +34,7 @@ test.describe('CallWithChat Composite Pre-Join Tests', () => {
 
   test('Pre-join screen loads correctly', async ({ pages }) => {
     const page = pages[0];
-    expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot(
-      `call-with-chat-pre-join-screen.png`
-    );
+    expect(await stableScreenshot(page)).toMatchSnapshot(`call-with-chat-pre-join-screen.png`);
   });
 });
 
@@ -48,9 +46,7 @@ test.describe('CallWithChat Composite CallWithChat Page Tests', () => {
 
   test('CallWithChat gallery screen loads correctly', async ({ pages }) => {
     const page = pages[0];
-    expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot(
-      `call-with-chat-gallery-screen.png`
-    );
+    expect(await stableScreenshot(page)).toMatchSnapshot(`call-with-chat-gallery-screen.png`);
   });
 
   test('Chat messages are displayed correctly', async ({ pages }, testInfo) => {
