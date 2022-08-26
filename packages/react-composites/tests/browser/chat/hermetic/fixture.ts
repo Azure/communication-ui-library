@@ -8,10 +8,10 @@ import path from 'path';
 import { createTestServer } from '../../common/server';
 import { TEST_PARTICIPANTS_CHAT } from '../../common/constants';
 import { bindConsoleErrorForwarding, loadNewPage } from '../../common/fixtureHelpers';
-import { FakeChatAdapterArgs } from '../app/FakeChatAdapterArgs';
+import { FakeChatAdapterArgs } from '../../../app/chat/FakeChatAdapterArgs';
 
 const SERVER_URL = 'http://localhost';
-const APP_DIR = path.join(__dirname, '../app');
+const APP_DIR = path.join(__dirname, '../../../app/chat');
 
 interface WorkerFixture {
   serverUrl: string;

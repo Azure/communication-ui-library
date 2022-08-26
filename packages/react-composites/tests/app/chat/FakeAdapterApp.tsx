@@ -13,10 +13,10 @@ import {
   ChatComposite,
   COMPOSITE_LOCALE_FR_FR,
   createAzureCommunicationChatAdapterFromClient
-} from '../../../../src';
+} from '../../../src';
 // eslint-disable-next-line no-restricted-imports
-import { IDS } from '../../common/constants';
-import { verifyParamExists } from '../../common/testAppUtils';
+import { IDS } from '../../browser/common/constants';
+import { verifyParamExists } from '../../browser/common/testAppUtils';
 import {
   customOnFetchAvatarPersonaData,
   customOnRenderMessage,
