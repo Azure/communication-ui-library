@@ -9,6 +9,8 @@ import { StartCallButton } from '../components/StartCallButton';
 import { devicePermissionSelector } from '../selectors/devicePermissionSelector';
 import { useSelector } from '../hooks/useSelector';
 import { DevicesButton, ErrorBar } from '@internal/react-components';
+/* @conditional-compile-remove(rooms) */
+import { _usePermissions } from '@internal/react-components';
 import { getCallingSelector } from '@internal/calling-component-bindings';
 import { Stack } from '@fluentui/react';
 import { LocalPreview } from '../components/LocalPreview';
@@ -52,6 +54,17 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
   const errorBarProps = usePropsFor(ErrorBar);
   const adapter = useAdapter();
   const deviceState = adapter.getState().devices;
+
+  let disableStartCallButton = !microphonePermissionGranted || deviceState.microphones?.length === 0;
+  /* @conditional-compile-remove(rooms) */
+  const rolePermissions = _usePermissions();
+  /* @conditional-compile-remove(rooms) */
+  if (!rolePermissions.microphoneButton) {
+    // If user's role permissions do not allow access to the microphone button then DO NOT disable the start call button
+    // because microphone device permission is not needed for the user's role
+    disableStartCallButton = false;
+  }
+
   const locale = useLocale();
   const title = (
     <Stack.Item className={mobileView ? titleContainerStyleMobile : titleContainerStyleDesktop}>
@@ -103,7 +116,7 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
             <StartCallButton
               className={mobileView ? startCallButtonStyleMobile : undefined}
               onClick={startCallHandler}
-              disabled={!microphonePermissionGranted || deviceState.microphones?.length === 0}
+              disabled={disableStartCallButton}
             />
           </Stack>
         </Stack>
