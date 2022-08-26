@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { IStyle, IButtonStyles, ITextFieldStyles } from '@fluentui/react';
 
 import { IconButton } from '@fluentui/react';
@@ -103,8 +103,8 @@ export interface DialpadProps {
   onSendDtmfTone?: (dtmfTone: DtmfTone) => Promise<void>;
   /**  Callback for dialpad button behavior*/
   onClickDialpadButton?: (buttonValue: string, buttonIndex: number) => void;
-  /**  customize dialpad input formatting */
-  onDisplayDialpadInput?: (input: string) => string;
+  /** Pass in custom content to dialpad textfield */
+  textFieldValue?: string;
   /**  on change function for text field */
   onChange?: (input: string) => void;
   /**  boolean input to determine when to show/hide delete button, default true */
@@ -181,8 +181,8 @@ const DialpadContainer = (props: {
   onSendDtmfTone?: (dtmfTone: DtmfTone) => Promise<void>;
   /**  Callback for dialpad button behavior */
   onClickDialpadButton?: (buttonValue: string, buttonIndex: number) => void;
-  /**  customize dialpad input formatting */
-  onDisplayDialpadInput?: (input: string) => string;
+  /** Pass in custom content to dialpad textfield */
+  textFieldValue?: string;
   /**  on change function for text field */
   onChange?: (input: string) => void;
   /**  boolean input to determine when to show/hide delete button, default true */
@@ -190,47 +190,41 @@ const DialpadContainer = (props: {
   styles?: DialpadStyles;
 }): JSX.Element => {
   const theme = useTheme();
-  const [textValue, setTextValue] = useState('');
 
-  const { onSendDtmfTone, onClickDialpadButton, onDisplayDialpadInput, onChange, showDeleteButton = true } = props;
+  const { onSendDtmfTone, onClickDialpadButton, textFieldValue, onChange, showDeleteButton = true } = props;
 
-  const sanitizeInput = (input: string): string => {
-    // remove non-valid characters from input: letters,special characters excluding +, *,#
-    return input.replace(/[^\d*#+]/g, '');
-  };
+  const [plainTextValue, setPlainTextValue] = useState(textFieldValue ?? '');
+
+  useEffect(() => {
+    if (onChange) {
+      onChange(plainTextValue);
+    }
+  }, [plainTextValue]);
+
+  useEffect(() => {
+    setText(textFieldValue ?? '');
+  }, [textFieldValue]);
 
   const onClickDialpad = (input: string, index: number): void => {
-    // remove non-valid characters from input: letters,special characters excluding +, *,#
-    const value = sanitizeInput(textValue + input);
-    setTextValue(value);
+    setText(plainTextValue + input);
     if (onSendDtmfTone) {
       onSendDtmfTone(DtmfTones[index]);
     }
     if (onClickDialpadButton) {
       onClickDialpadButton(input, index);
     }
-    if (onChange) {
-      onChange(onDisplayDialpadInput ? onDisplayDialpadInput(value) : formatPhoneNumber(value));
-    }
   };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const setText = (e: any): void => {
+  const setText = (input: string): void => {
     // remove non-valid characters from input: letters,special characters excluding +, *,#
-    const input = sanitizeInput(e.target.value);
-    setTextValue(input);
+    const plainInput = sanitizeInput(input);
+    setPlainTextValue(plainInput);
   };
 
-  // Potential Improvement:
-  // comment out the following line for now to disable customization for dialpad content
-  // const dialpadButtonsContent = props.dialpadButtons ?? dialPadButtonsDefault;
-
   const deleteNumbers = (): void => {
-    const modifiedInput = textValue.substring(0, textValue.length - 1);
-    setTextValue(modifiedInput);
-    if (onChange) {
-      onChange(onDisplayDialpadInput ? onDisplayDialpadInput(modifiedInput) : formatPhoneNumber(modifiedInput));
-    }
+    const modifiedInput = plainTextValue.substring(0, plainTextValue.length - 1);
+    setText(modifiedInput);
   };
 
   return (
@@ -241,21 +235,16 @@ const DialpadContainer = (props: {
     >
       <TextField
         styles={concatStyleSets(textFieldStyles(theme), props.styles?.textField)}
-        value={onDisplayDialpadInput ? onDisplayDialpadInput(textValue) : formatPhoneNumber(textValue)}
+        value={textFieldValue ? textFieldValue : formatPhoneNumber(plainTextValue)}
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         onChange={(e: any) => {
-          setText(e);
-          // remove non-valid characters from input: letters,special characters excluding +, *,#
-          const input = sanitizeInput(e.target.value);
-          if (onChange) {
-            onChange(onDisplayDialpadInput ? onDisplayDialpadInput(input) : formatPhoneNumber(input));
-          }
+          setText(e.target.value);
         }}
         placeholder={props.strings.placeholderText}
         data-test-id="dialpad-input"
         onRenderSuffix={(): JSX.Element => (
           <>
-            {showDeleteButton && textValue.length !== 0 && (
+            {showDeleteButton && plainTextValue.length !== 0 && (
               <IconButton
                 ariaLabel={props.strings.deleteButtonAriaLabel}
                 onClick={deleteNumbers}
@@ -325,4 +314,9 @@ export const Dialpad = (props: DialpadProps): JSX.Element => {
   const strings = { ...dialpadLocaleStringsTrampoline(), ...props.strings };
 
   return <DialpadContainer strings={strings} {...props} />;
+};
+
+const sanitizeInput = (input: string): string => {
+  // remove non-valid characters from input: letters,special characters excluding +, *,#
+  return input.replace(/[^\d*#+]/g, '');
 };
