@@ -1,7 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+<<<<<<< HEAD
 import React, { useEffect } from 'react';
+=======
+import React, { useCallback } from 'react';
+>>>>>>> b4ff2cfcd37a8d13143e560fae5a775760623137
 import { IStyle, IButtonStyles, ITextFieldStyles } from '@fluentui/react';
 
 import { IconButton } from '@fluentui/react';
@@ -28,6 +32,7 @@ import {
   textFieldStyles
 } from '../styles/Dialpad.styles';
 import { formatPhoneNumber } from '../utils/formatPhoneNumber';
+import useLongPress from '../utils/useLongPress';
 
 /**
  * Strings of {@link Dialpad} that can be overridden.
@@ -54,15 +59,23 @@ export interface DialpadStyles {
 }
 
 /**
- * Type for  {@link DialpadButton} input
+ * Props for {@link Dialpad} component.
  *
  * @beta
  */
-export interface DialpadButtonProps {
-  /** Number displayed on each dialpad button */
-  primaryContent: string;
-  /** Letters displayed on each dialpad button */
-  secondaryContent?: string;
+export interface DialpadProps {
+  strings?: DialpadStrings;
+  /**  function to send dtmf tones on button click */
+  onSendDtmfTone?: (dtmfTone: DtmfTone) => Promise<void>;
+  /**  Callback for dialpad button behavior*/
+  onClickDialpadButton?: (buttonValue: string, buttonIndex: number) => void;
+  /**  customize dialpad input formatting */
+  onDisplayDialpadInput?: (input: string) => string;
+  /**  on change function for text field */
+  onChange?: (input: string) => void;
+  /**  boolean input to determine when to show/hide delete button, default true */
+  showDeleteButton?: boolean;
+  styles?: DialpadStyles;
 }
 
 /**
@@ -89,6 +102,7 @@ export type DtmfTone =
   | 'Pound'
   | 'Star';
 
+<<<<<<< HEAD
 /**
  * Props for {@link Dialpad} component.
  *
@@ -113,35 +127,16 @@ export interface DialpadProps {
 }
 
 const DialpadButton = (props: {
+=======
+type DialpadButtonContent = {
+  /** Number displayed on each dialpad button */
+>>>>>>> b4ff2cfcd37a8d13143e560fae5a775760623137
   primaryContent: string;
+  /** Letters displayed on each dialpad button */
   secondaryContent?: string;
-  styles?: DialpadStyles;
-  index: number;
-  onClick: (input: string, index: number) => void;
-}): JSX.Element => {
-  const theme = useTheme();
-  return (
-    <DefaultButton
-      data-test-id={`dialpad-button-${props.index}`}
-      onClick={() => {
-        props.onClick(props.primaryContent, props.index);
-      }}
-      styles={concatStyleSets(buttonStyles(theme), props.styles?.button)}
-    >
-      <Stack>
-        <Text className={mergeStyles(primaryContentStyles(theme), props.styles?.primaryContent)}>
-          {props.primaryContent}
-        </Text>
-
-        <Text className={mergeStyles(secondaryContentStyles(theme), props.styles?.secondaryContent)}>
-          {props.secondaryContent ?? ' '}
-        </Text>
-      </Stack>
-    </DefaultButton>
-  );
 };
 
-const dialPadButtonsDefault: DialpadButtonProps[][] = [
+const dialPadButtonsDefault: DialpadButtonContent[][] = [
   [
     { primaryContent: '1' },
     { primaryContent: '2', secondaryContent: 'ABC' },
@@ -175,9 +170,48 @@ const DtmfTones: DtmfTone[] = [
   'Pound'
 ];
 
+const DialpadButton = (props: {
+  primaryContent: string;
+  secondaryContent?: string;
+  styles?: DialpadStyles;
+  index: number;
+  onClick: (input: string, index: number) => void;
+  onLongPress: (input: string, index: number) => void;
+}): JSX.Element => {
+  const theme = useTheme();
+
+  const { primaryContent, index, onClick, onLongPress } = props;
+
+  const clickFunction = useCallback(async () => {
+    onClick(primaryContent, index);
+  }, [primaryContent, index, onClick]);
+
+  const longPressFunction = useCallback(async () => {
+    onLongPress(primaryContent, index);
+  }, [primaryContent, index, onLongPress]);
+
+  const { handlers } = useLongPress(clickFunction, longPressFunction);
+  return (
+    <DefaultButton
+      data-test-id={`dialpad-button-${props.index}`}
+      styles={concatStyleSets(buttonStyles(theme), props.styles?.button)}
+      {...handlers}
+    >
+      <Stack>
+        <Text className={mergeStyles(primaryContentStyles(theme), props.styles?.primaryContent)}>
+          {props.primaryContent}
+        </Text>
+
+        <Text className={mergeStyles(secondaryContentStyles(theme), props.styles?.secondaryContent)}>
+          {props.secondaryContent ?? ' '}
+        </Text>
+      </Stack>
+    </DefaultButton>
+  );
+};
+
 const DialpadContainer = (props: {
   strings: DialpadStrings;
-  // dialpadButtons?: DialpadButtonProps[][];
   onSendDtmfTone?: (dtmfTone: DtmfTone) => Promise<void>;
   /**  Callback for dialpad button behavior */
   onClickDialpadButton?: (buttonValue: string, buttonIndex: number) => void;
@@ -212,6 +246,27 @@ const DialpadContainer = (props: {
     }
     if (onClickDialpadButton) {
       onClickDialpadButton(input, index);
+    }
+  };
+
+  const onLongPressDialpad = (input: string, index: number): void => {
+    let value;
+    if (input === '0' && index === 10) {
+      // remove non-valid characters from input: letters,special characters excluding +, *,#
+      value = sanitizeInput(textValue + '+');
+      setTextValue(value);
+    } else {
+      value = sanitizeInput(textValue + input);
+      setTextValue(value);
+    }
+    if (onSendDtmfTone) {
+      onSendDtmfTone(DtmfTones[index]);
+    }
+    if (onClickDialpadButton) {
+      onClickDialpadButton(input, index);
+    }
+    if (onChange) {
+      onChange(onDisplayDialpadInput ? onDisplayDialpadInput(value) : formatPhoneNumber(value));
     }
   };
 
@@ -284,6 +339,7 @@ const DialpadContainer = (props: {
                   secondaryContent={button.secondaryContent}
                   styles={props.styles}
                   onClick={onClickDialpad}
+                  onLongPress={onLongPressDialpad}
                 />
               ))}
             </Stack>

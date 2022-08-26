@@ -218,13 +218,7 @@ export type {
 /* @conditional-compile-remove(rooms) */
 export type { Role } from '../../react-components/src';
 /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
-export type {
-  DialpadProps,
-  DialpadStrings,
-  DialpadStyles,
-  DialpadButtonProps,
-  DtmfTone
-} from '../../react-components/src';
+export type { DialpadProps, DialpadStrings, DialpadStyles, DtmfTone } from '../../react-components/src';
 /* @conditional-compile-remove(file-sharing) */
 export type {
   ActiveFileUpload,
