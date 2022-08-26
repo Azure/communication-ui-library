@@ -5,7 +5,7 @@ import { Page, test as base } from '@playwright/test';
 import path from 'path';
 import { createTestServer } from '../../common/server';
 import { loadNewPageWithPermissionsForCalls } from '../../common/fixtureHelpers';
-import { encodeQueryData } from '../../common/utils';
+import { dataUiId, encodeQueryData, waitForPageFontsLoaded, waitForSelector } from '../../common/utils';
 import type { FakeChatAdapterArgs, MockCallAdapterState } from '../../../common';
 
 const SERVER_URL = 'http://localhost';
@@ -55,3 +55,32 @@ export const test = base.extend<TestFixture>({
   /** @returns An empty browser page. Tests should load the app via page.goto(). */
   page: [usePage, { scope: 'test' }]
 });
+
+/**
+ * Given a {@link MockCallAdapterState},
+ *   - construct the corresponding chat state.
+ *   - load the hermetic CallWithChat test app on the page.
+ *   - wait for the page to have completely loaded.
+ */
+export async function loadCallPage(page: Page, serverUrl: string, callState: MockCallAdapterState) {
+  const chatArgs = fakeChatAdapterArgsForCallAdapterState(callState);
+  await page.goto(buildUrlForApp(serverUrl, callState, chatArgs));
+  await waitForPageFontsLoaded(page);
+  await waitForSelector(page, dataUiId('call-composite-hangup-button'));
+}
+
+/**
+ * Construct {@link FakeChatAdapterArgs} from a prepopulated {@link MockCallAdapterState}.
+ */
+function fakeChatAdapterArgsForCallAdapterState(state: MockCallAdapterState): FakeChatAdapterArgs {
+  return {
+    localParticipant: {
+      id: state.userId,
+      displayName: state.displayName
+    },
+    remoteParticipants: Object.values(state.call?.remoteParticipants ?? {}).map((p) => ({
+      id: p.identifier,
+      displayName: p.displayName
+    }))
+  };
+}
