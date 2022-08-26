@@ -9,7 +9,7 @@ import React, { useMemo } from 'react';
 import { ChatComposite, COMPOSITE_LOCALE_FR_FR, useAzureCommunicationChatAdapter } from '../../../src';
 // eslint-disable-next-line no-restricted-imports
 import { IDS } from '../../browser/common/constants';
-import { verifyParamExists } from '../../browser/common/testAppUtils';
+import { verifyParamExists } from '../lib/utils';
 
 const urlSearchParams = new URLSearchParams(window.location.search);
 const params = Object.fromEntries(urlSearchParams.entries());

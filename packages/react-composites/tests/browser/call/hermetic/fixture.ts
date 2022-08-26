@@ -11,7 +11,7 @@ import type {
   MockCallAdapterState,
   MockRemoteParticipantState,
   MockVideoStreamRendererViewState
-} from '../MockCallAdapterState';
+} from '../../../common';
 
 const SERVER_URL = 'http://localhost';
 const APP_DIR = path.join(__dirname, '../../../app/call');
