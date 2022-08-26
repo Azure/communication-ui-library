@@ -12,7 +12,7 @@ import {
   defaultMockRemoteParticipant,
   test
 } from './fixture';
-import type { MockRemoteParticipantState } from '../MockCallAdapterState';
+import type { MockRemoteParticipantState } from '../../../common';
 
 test.describe('Loading Video Spinner tests', async () => {
   test('Video Gallery shows loading spinners in tiles', async ({ page, serverUrl }) => {
@@ -27,7 +27,7 @@ test.describe('Loading Video Spinner tests', async () => {
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
 
     await waitForSelector(page, dataUiId(IDS.videoGallery));
-    expect(await stableScreenshot(page, { dismissTooltips: true, hideVideoLoadingSpinner: false })).toMatchSnapshot(
+    expect(await stableScreenshot(page, { hideVideoLoadingSpinner: false })).toMatchSnapshot(
       'video-gallery-with-loading-spinners.png'
     );
   });
@@ -41,7 +41,7 @@ test.describe('Loading Video Spinner tests', async () => {
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
 
     await waitForSelector(page, dataUiId(IDS.videoGallery));
-    expect(await stableScreenshot(page, { dismissTooltips: true, hideVideoLoadingSpinner: false })).toMatchSnapshot(
+    expect(await stableScreenshot(page, { hideVideoLoadingSpinner: false })).toMatchSnapshot(
       'horizontal-gallery-with-loading-spinners.png'
     );
   });

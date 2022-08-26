@@ -75,12 +75,15 @@ jobs:
       # Perform lint check
       - name: Run linter
         run: rush lint
-      # Type check test folder
-      - name: Type check test folder
-        run: cd packages/react-composites && rushx tsc:e2e
       # Builds
       - name: Build Packages
         run: rush build -t @azure/communication-react
+      # Type check test folder
+      # - must be run after building all packlets because it depends on compiled packlet dependencies
+      # - must be run only on beta flavor build because the browser test code is not conditional compiled
+      - name: Type check test folder
+        if: ${{ matrix.flavor == 'beta' }}
+        run: cd packages/react-composites && rushx tsc:e2e
       # Verify no uncommitted api extractor changes
       - name: API Extractor Check
         if: ${{ always() }}

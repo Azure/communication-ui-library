@@ -4,12 +4,12 @@
 import { TEST_PARTICIPANTS_CHAT } from '../../common/constants';
 import { createChatUsers, usePagePerParticipant } from '../../common/fixtureHelpers';
 import { WorkerFixture, ChatUserType } from '../../common/fixtureTypes';
-import { createTestServer } from '../../../server';
+import { createTestServer } from '../../common/server';
 import { test as base } from '@playwright/test';
 import path from 'path';
 
 const SERVER_URL = 'http://localhost';
-const APP_DIR = path.join(__dirname, '../app');
+const APP_DIR = path.join(__dirname, '../../../app/chat');
 
 type ChatWorkerFixture = WorkerFixture<ChatUserType>;
 
