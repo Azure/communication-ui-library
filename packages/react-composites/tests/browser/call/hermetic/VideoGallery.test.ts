@@ -28,9 +28,7 @@ test.describe('VideoGallery tests', async () => {
 
     await waitForSelector(page, dataUiId(IDS.videoGallery));
 
-    expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot(
-      'video-gallery-with-one-joining-gridview-participant.png'
-    );
+    expect(await stableScreenshot(page)).toMatchSnapshot('video-gallery-with-one-joining-gridview-participant.png');
   });
 
   test('VideoGallery Should have 1 PSTN and 1 1-N participants', async ({ page, serverUrl }) => {
@@ -47,9 +45,7 @@ test.describe('VideoGallery tests', async () => {
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
 
     await waitForSelector(page, dataUiId(IDS.videoGallery));
-    expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot(
-      'video-gallery-with-2-joining-gridview-participant.png'
-    );
+    expect(await stableScreenshot(page)).toMatchSnapshot('video-gallery-with-2-joining-gridview-participant.png');
   });
 
   test('VideoGallery Should show the remote participant on hold', async ({ page, serverUrl }) => {
@@ -66,7 +62,7 @@ test.describe('VideoGallery tests', async () => {
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
 
     await waitForSelector(page, dataUiId(IDS.videoGallery));
-    expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot(
+    expect(await stableScreenshot(page)).toMatchSnapshot(
       'video-gallery-with-1-joining-1-hold-gridview-participant.png'
     );
   });

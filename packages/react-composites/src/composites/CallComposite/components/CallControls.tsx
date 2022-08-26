@@ -110,7 +110,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
             props.onPeopleButtonClicked();
           }
         },
-        iconProps: { iconName: 'ControlButtonParticipants', styles: { root: { lineHeight: 0 } } },
+        iconProps: { iconName: 'ControlButtonParticipantsContextualMenuItem', styles: { root: { lineHeight: 0 } } },
         itemProps: {
           styles: buttonFlyoutIncreasedSizeStyles
         },
@@ -124,7 +124,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
       onClick: () => {
         holdButtonProps.onToggleHold();
       },
-      iconProps: { iconName: 'HoldCall', styles: { root: { lineHeight: 0 } } },
+      iconProps: { iconName: 'HoldCallContextualMenuItem', styles: { root: { lineHeight: 0 } } },
       itemProps: {
         styles: buttonFlyoutIncreasedSizeStyles
       },
@@ -139,7 +139,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
       onClick: () => {
         setShowDialpad(true);
       },
-      iconProps: { iconName: 'Dialpad', styles: { root: { lineHeight: 0 } } },
+      iconProps: { iconName: 'PeoplePaneOpenDialpad', styles: { root: { lineHeight: 0 } } },
       itemProps: {
         styles: buttonFlyoutIncreasedSizeStyles
       }

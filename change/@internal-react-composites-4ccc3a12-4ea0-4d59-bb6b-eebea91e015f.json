@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Center icons and add hold button icon into Contextual Menu",
+  "packageName": "@internal/react-composites",
+  "email": "94866715+dmceachernmsft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
