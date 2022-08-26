@@ -125,7 +125,7 @@ export { _useContainerHeight, _useContainerWidth } from './utils/responsive';
 export { _ComplianceBanner } from './ComplianceBanner';
 export type { _ComplianceBannerProps, _ComplianceBannerStrings } from './ComplianceBanner';
 export { Dialpad } from './Dialpad/Dialpad';
-export type { DialpadProps, DialpadStrings, DialpadButtonProps, DialpadStyles, DtmfTone } from './Dialpad/Dialpad';
+export type { DialpadProps, DialpadStrings, DialpadStyles, DtmfTone } from './Dialpad/Dialpad';
 
 /* @conditional-compile-remove(PSTN-calls) */
 export { HoldButton } from './HoldButton';
