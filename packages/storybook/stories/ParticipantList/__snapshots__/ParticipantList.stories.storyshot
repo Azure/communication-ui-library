@@ -30,6 +30,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
           <div
             className="stub-classname"
             data-is-focusable={true}
+            data-ui-id="participant-item"
             onClick={[Function]}
             onMouseEnter={[Function]}
             onMouseLeave={[Function]}
@@ -266,6 +267,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
           <div
             className="stub-classname"
             data-is-focusable={true}
+            data-ui-id="participant-item"
             onClick={[Function]}
             onMouseEnter={[Function]}
             onMouseLeave={[Function]}
@@ -343,6 +345,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
           <div
             className="stub-classname"
             data-is-focusable={true}
+            data-ui-id="participant-item"
             onClick={[Function]}
             onMouseEnter={[Function]}
             onMouseLeave={[Function]}
@@ -424,6 +427,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Participant List Part
           <div
             className="stub-classname"
             data-is-focusable={true}
+            data-ui-id="participant-item"
             onClick={[Function]}
             onMouseEnter={[Function]}
             onMouseLeave={[Function]}
