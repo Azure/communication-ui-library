@@ -12,14 +12,12 @@ import {
   CustomCallControlButtonCallback,
   CustomCallControlButtonProps,
   CustomCallControlButtonCallbackArgs
-} from '../../../../src';
-import { IDS } from '../../common/constants';
-import { initializeIconsForUITests, isMobile } from '../../common/testAppUtils';
+} from '../../../src';
+import { IDS } from '../../browser/common/constants';
+import { isMobile } from '../lib/utils';
 // eslint-disable-next-line no-restricted-imports
 import { IContextualMenuItem, mergeStyles } from '@fluentui/react';
 import { QueryArgs } from './QueryArgs';
-
-initializeIconsForUITests();
 
 /** @internal */
 export function BaseApp(props: { queryArgs: QueryArgs; callAdapter?: CallAdapter }): JSX.Element {

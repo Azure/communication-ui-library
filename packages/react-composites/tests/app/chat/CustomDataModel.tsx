@@ -4,7 +4,7 @@
 import { Stack } from '@fluentui/react';
 import { CommunicationParticipant, MessageProps } from '@internal/react-components';
 import React from 'react';
-import { AvatarPersonaData } from '../../../../src';
+import { AvatarPersonaData } from '../../../src';
 
 /**
  * Custom onRenderTypingIndicator prop of {@link ChatComposite} used for UI test
