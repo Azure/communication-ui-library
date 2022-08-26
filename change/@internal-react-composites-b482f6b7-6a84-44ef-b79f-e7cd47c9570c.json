@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "hide dialpad when it's not PSTN",
+  "packageName": "@internal/react-composites",
+  "email": "carolinecao@microsoft.com",
+  "dependentChangeType": "patch"
+}
