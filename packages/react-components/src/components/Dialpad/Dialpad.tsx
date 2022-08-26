@@ -91,7 +91,7 @@ export interface DialpadProps {
   onClickDialpadButton?: (buttonValue: string, buttonIndex: number) => void;
   /** set dialpad textfield content */
   textFieldValue?: string;
-  /**  on change function for text field */
+  /**  on change function for text field, provides an unformatted plain text*/
   onChange?: (input: string) => void;
   /**  boolean input to determine when to show/hide delete button, default true */
   showDeleteButton?: boolean;
@@ -186,7 +186,7 @@ const DialpadContainer = (props: {
   onClickDialpadButton?: (buttonValue: string, buttonIndex: number) => void;
   /** Pass in custom content to dialpad textfield */
   textFieldValue?: string;
-  /**  on change function for text field */
+  /**  on change function for text field, provides an unformatted plain text */
   onChange?: (input: string) => void;
   /**  boolean input to determine when to show/hide delete button, default true */
   showDeleteButton?: boolean;
