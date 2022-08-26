@@ -199,7 +199,7 @@ const DialpadContainer = (props: {
     if (onChange) {
       onChange(plainTextValue);
     }
-  }, [plainTextValue]);
+  }, [plainTextValue, onChange]);
 
   useEffect(() => {
     setText(textFieldValue ?? '');
