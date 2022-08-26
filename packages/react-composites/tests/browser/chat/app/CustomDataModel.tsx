@@ -53,7 +53,7 @@ const getMessageContentInUppercase = (messageProps: MessageProps): string => {
     default:
       'CUSTOM MESSAGE';
   }
-  throw new Error('unrechange code');
+  throw new Error('unreachable code');
 };
 
 /**
