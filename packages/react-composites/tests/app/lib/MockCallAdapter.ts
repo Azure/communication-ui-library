@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 import { AudioDeviceInfo, Call, VideoDeviceInfo } from '@azure/communication-calling';
-import type { CallAdapter, CallAdapterState } from '../../../../src';
-import type { MockCallAdapterState } from '../../../browser/call/MockCallAdapterState';
+import type { CallAdapter, CallAdapterState } from '../../../src';
+import type { MockCallAdapterState } from '../../common';
 
 /**
  * Mock class that implements CallAdapter interface for UI snapshot tests. The handler implementation is currently limited so
