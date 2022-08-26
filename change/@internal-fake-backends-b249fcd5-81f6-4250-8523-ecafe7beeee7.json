@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Use conventional build setup for @internal/fake-backends",
+  "packageName": "@internal/fake-backends",
+  "email": "82062616+prprabhu-ms@users.noreply.github.com",
+  "dependentChangeType": "none"
+}

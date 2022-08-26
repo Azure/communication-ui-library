@@ -56,7 +56,7 @@ export const HoldButton = (props: HoldButtonProps): JSX.Element => {
   const { onToggleHold, strings } = props;
 
   const onRenderHoldIcon = (): JSX.Element => {
-    return <HighContrastAwareIcon disabled={props.disabled} iconName="HoldCall" />;
+    return <HighContrastAwareIcon disabled={props.disabled} iconName="HoldCallButton" />;
   };
   const onRenderResumeIcon = (): JSX.Element => {
     return <HighContrastAwareIcon disabled={props.disabled} iconName="ResumeCall" />;

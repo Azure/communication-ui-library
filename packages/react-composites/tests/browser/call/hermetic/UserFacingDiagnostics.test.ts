@@ -5,7 +5,7 @@ import { expect } from '@playwright/test';
 import { dataUiId, waitForSelector, stableScreenshot } from '../../common/utils';
 import { buildUrlWithMockAdapter, defaultMockCallAdapterState, test } from './fixture';
 import type { LatestMediaDiagnostics, LatestNetworkDiagnostics } from '@azure/communication-calling';
-import type { MockCallAdapterState } from '../MockCallAdapterState';
+import type { MockCallAdapterState } from '../../../common';
 import { DiagnosticQuality } from './constants';
 
 test.describe('User Facing Diagnostics tests', async () => {
