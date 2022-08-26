@@ -506,7 +506,9 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
 
   /* @conditional-compile-remove(PSTN-calls) */
   public async addParticipant(participant: CommunicationIdentifier, options?: AddPhoneNumberOptions): Promise<void>;
+  /* @conditional-compile-remove(PSTN-calls) */
   public async addParticipant(participant: string): Promise<void>;
+  /* @conditional-compile-remove(PSTN-calls) */
   public async addParticipant(
     participant: CommunicationIdentifier | string,
     options?: AddPhoneNumberOptions

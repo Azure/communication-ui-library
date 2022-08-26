@@ -308,7 +308,10 @@ export interface CallAdapterCallManagement {
    * @beta
    */
   addParticipant(participant: CommunicationIdentifier, options?: AddPhoneNumberOptions): Promise<void>;
+  /* @conditional-compile-remove(PSTN-calls) */
   addParticipant(participant: string): Promise<void>;
+  /* @conditional-compile-remove(PSTN-calls) */
+  addParticipant(participant: CommunicationIdentifier | string, options?: AddPhoneNumberOptions): Promise<void>;
   /* @conditional-compile-remove(PSTN-calls) */
   /**
    * send dtmf tone to another participant in a 1:1 PSTN call

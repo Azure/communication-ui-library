@@ -116,12 +116,20 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
     await this.callWithChatAdapter.resumeCall();
   };
   /* @conditional-compile-remove(PSTN-calls) */
-  public addParticipant = async (
-    participant: CommunicationIdentifier,
+  public async addParticipant(participant: CommunicationIdentifier, options?: AddPhoneNumberOptions): Promise<void>;
+  /* @conditional-compile-remove(PSTN-calls) */
+  public async addParticipant(participant: string): Promise<void>;
+  /* @conditional-compile-remove(PSTN-calls) */
+  public async addParticipant(
+    participant: CommunicationIdentifier | string,
     options?: AddPhoneNumberOptions
-  ): Promise<void> => {
-    await this.callWithChatAdapter.addParticipant(participant, options);
-  };
+  ): Promise<void> {
+    if (typeof participant === 'string') {
+      return await this.callWithChatAdapter.addParticipant(participant);
+    } else {
+      return await this.callWithChatAdapter.addParticipant(participant, options);
+    }
+  }
 
   /* @conditional-compile-remove(PSTN-calls) */
   public sendDtmfTone = async (dtmfTone: DtmfTone): Promise<void> => {
