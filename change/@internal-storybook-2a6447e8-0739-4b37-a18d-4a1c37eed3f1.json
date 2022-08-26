@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Adds beta banner to file sharing feature in CallWithChat and chat composite docs",
+  "packageName": "@internal/storybook",
+  "email": "94866715+dmceachernmsft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
