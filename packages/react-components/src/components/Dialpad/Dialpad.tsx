@@ -1,11 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-<<<<<<< HEAD
-import React, { useEffect } from 'react';
-=======
-import React, { useCallback } from 'react';
->>>>>>> b4ff2cfcd37a8d13143e560fae5a775760623137
+import React, { useEffect, useCallback } from 'react';
 import { IStyle, IButtonStyles, ITextFieldStyles } from '@fluentui/react';
 
 import { IconButton } from '@fluentui/react';
@@ -102,7 +98,6 @@ export type DtmfTone =
   | 'Pound'
   | 'Star';
 
-<<<<<<< HEAD
 /**
  * Props for {@link Dialpad} component.
  *
@@ -126,11 +121,8 @@ export interface DialpadProps {
   styles?: DialpadStyles;
 }
 
-const DialpadButton = (props: {
-=======
 type DialpadButtonContent = {
   /** Number displayed on each dialpad button */
->>>>>>> b4ff2cfcd37a8d13143e560fae5a775760623137
   primaryContent: string;
   /** Letters displayed on each dialpad button */
   secondaryContent?: string;
@@ -250,23 +242,16 @@ const DialpadContainer = (props: {
   };
 
   const onLongPressDialpad = (input: string, index: number): void => {
-    let value;
     if (input === '0' && index === 10) {
-      // remove non-valid characters from input: letters,special characters excluding +, *,#
-      value = sanitizeInput(textValue + '+');
-      setTextValue(value);
+      setText(plainTextValue + '+');
     } else {
-      value = sanitizeInput(textValue + input);
-      setTextValue(value);
+      setText(plainTextValue + input);
     }
     if (onSendDtmfTone) {
       onSendDtmfTone(DtmfTones[index]);
     }
     if (onClickDialpadButton) {
       onClickDialpadButton(input, index);
-    }
-    if (onChange) {
-      onChange(onDisplayDialpadInput ? onDisplayDialpadInput(value) : formatPhoneNumber(value));
     }
   };
 
