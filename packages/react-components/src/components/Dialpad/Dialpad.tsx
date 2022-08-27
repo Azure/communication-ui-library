@@ -100,12 +100,13 @@ export interface DialpadProps {
 
 type DialpadButtonContent = {
   /** Number displayed on each dialpad button */
-  primaryContent: string;
+  digit: string;
   /** Letters displayed on each dialpad button */
-  secondaryContent?: string;
+  letter?: string;
 };
 
 const dialPadButtonsDefault: DialpadButtonContent[][] = [
+  [{ digit: '1' }, { digit: '2', letter: 'ABC' }, { digit: '3', letter: 'DEF' }],
   [
     { digit: '4', letter: 'GHI' },
     { digit: '5', letter: 'JKL' },
@@ -135,8 +136,8 @@ const DtmfTones: DtmfTone[] = [
 ];
 
 const DialpadButton = (props: {
-  primaryContent: string;
-  secondaryContent?: string;
+  digit: string;
+  letter?: string;
   styles?: DialpadStyles;
   index: number;
   onClick: (input: string, index: number) => void;
@@ -144,15 +145,15 @@ const DialpadButton = (props: {
 }): JSX.Element => {
   const theme = useTheme();
 
-  const { primaryContent, index, onClick, onLongPress } = props;
+  const { digit, index, onClick, onLongPress } = props;
 
   const clickFunction = useCallback(async () => {
-    onClick(primaryContent, index);
-  }, [primaryContent, index, onClick]);
+    onClick(digit, index);
+  }, [digit, index, onClick]);
 
   const longPressFunction = useCallback(async () => {
-    onLongPress(primaryContent, index);
-  }, [primaryContent, index, onLongPress]);
+    onLongPress(digit, index);
+  }, [digit, index, onLongPress]);
 
   const { handlers } = useLongPress(clickFunction, longPressFunction);
   return (
@@ -162,13 +163,9 @@ const DialpadButton = (props: {
       {...handlers}
     >
       <Stack>
-        <Text className={mergeStyles(primaryContentStyles(theme), props.styles?.primaryContent)}>
-          {props.primaryContent}
-        </Text>
+        <Text className={mergeStyles(digitStyles(theme), props.styles?.digit)}>{props.digit}</Text>
 
-        <Text className={mergeStyles(secondaryContentStyles(theme), props.styles?.secondaryContent)}>
-          {props.secondaryContent ?? ' '}
-        </Text>
+        <Text className={mergeStyles(letterStyles(theme), props.styles?.letter)}>{props.letter ?? ' '}</Text>
       </Stack>
     </DefaultButton>
   );
@@ -224,27 +221,6 @@ const DialpadContainer = (props: {
     }
     if (onClickDialpadButton) {
       onClickDialpadButton(input, index);
-    }
-  };
-
-  const onLongPressDialpad = (input: string, index: number): void => {
-    let value;
-    if (input === '0' && index === 10) {
-      // remove non-valid characters from input: letters,special characters excluding +, *,#
-      value = sanitizeInput(textValue + '+');
-      setTextValue(value);
-    } else {
-      value = sanitizeInput(textValue + input);
-      setTextValue(value);
-    }
-    if (onSendDtmfTone) {
-      onSendDtmfTone(DtmfTones[index]);
-    }
-    if (onClickDialpadButton) {
-      onClickDialpadButton(input, index);
-    }
-    if (onChange) {
-      onChange(onDisplayDialpadInput ? onDisplayDialpadInput(value) : formatPhoneNumber(value));
     }
   };
 
