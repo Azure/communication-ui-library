@@ -34,6 +34,7 @@ import { getRoomIdFromUrl } from '../utils/AppUtils';
 import { Dialpad } from '@azure/communication-react';
 /* @conditional-compile-remove(PSTN-calls) */
 import { Backspace20Regular } from '@fluentui/react-icons';
+/* @conditional-compile-remove(PSTN-calls) */
 import { useIsMobile } from '../utils/useIsMobile';
 
 export interface HomeScreenProps {
