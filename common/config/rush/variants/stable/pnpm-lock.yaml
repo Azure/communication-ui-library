@@ -39,12 +39,12 @@ packages:
   /@azure/communication-chat/1.2.0:
     dependencies:
       '@azure/abort-controller': 1.0.4
-      '@azure/communication-common': 2.0.0
+      '@azure/communication-common': 2.1.0
       '@azure/communication-signaling': 1.0.0-beta.13
-      '@azure/core-auth': 1.3.2
-      '@azure/core-client': 1.5.0
+      '@azure/core-auth': 1.4.0
+      '@azure/core-client': 1.6.1
       '@azure/core-paging': 1.2.1
-      '@azure/core-rest-pipeline': 1.7.0
+      '@azure/core-rest-pipeline': 1.9.1
       '@azure/core-tracing': 1.0.0-preview.13
       '@azure/logger': 1.0.3
       events: 3.3.0
@@ -72,8 +72,8 @@ packages:
   /@azure/communication-common/2.0.0:
     dependencies:
       '@azure/abort-controller': 1.0.4
-      '@azure/core-auth': 1.3.2
-      '@azure/core-rest-pipeline': 1.7.0
+      '@azure/core-auth': 1.4.0
+      '@azure/core-rest-pipeline': 1.9.1
       '@azure/core-tracing': 1.0.0-preview.13
       events: 3.3.0
       jwt-decode: 3.1.2
@@ -86,8 +86,8 @@ packages:
   /@azure/communication-common/2.1.0:
     dependencies:
       '@azure/abort-controller': 1.0.4
-      '@azure/core-auth': 1.3.2
-      '@azure/core-rest-pipeline': 1.7.0
+      '@azure/core-auth': 1.4.0
+      '@azure/core-rest-pipeline': 1.9.1
       '@azure/core-tracing': 1.0.0-preview.13
       '@azure/core-util': 1.0.0
       events: 3.3.0
@@ -102,7 +102,7 @@ packages:
     dependencies:
       '@azure/abort-controller': 1.0.4
       '@azure/communication-common': 1.1.0
-      '@azure/core-auth': 1.3.2
+      '@azure/core-auth': 1.4.0
       '@azure/core-http': 1.2.4
       '@azure/core-lro': 1.0.5
       '@azure/core-paging': 1.2.1
@@ -119,9 +119,9 @@ packages:
   /@azure/communication-rooms/1.0.0-beta.1:
     dependencies:
       '@azure/communication-common': 2.1.0
-      '@azure/core-auth': 1.3.2
+      '@azure/core-auth': 1.4.0
       '@azure/core-client': 1.6.1
-      '@azure/core-rest-pipeline': 1.7.0
+      '@azure/core-rest-pipeline': 1.9.1
       '@azure/core-tracing': 1.0.1
       '@azure/logger': 1.0.3
       tslib: 1.14.1
@@ -167,20 +167,6 @@ packages:
       node: '>=12.0.0'
     resolution:
       integrity: sha512-HFrcTgmuSuukRf/EdPmqBrc5l6Q5Uu+2TbuhaKbgaCpP2TfAeiNaQPAadxO+CYBRHGUzIDteMAjFspFLDLnKVQ==
-  /@azure/core-client/1.5.0:
-    dependencies:
-      '@azure/abort-controller': 1.0.4
-      '@azure/core-asynciterator-polyfill': 1.0.2
-      '@azure/core-auth': 1.3.2
-      '@azure/core-rest-pipeline': 1.7.0
-      '@azure/core-tracing': 1.0.0-preview.13
-      '@azure/logger': 1.0.3
-      tslib: 2.3.1
-    dev: false
-    engines:
-      node: '>=12.0.0'
-    resolution:
-      integrity: sha512-YNk8i9LT6YcFdFO+RRU0E4Ef+A8Y5lhXo6lz61rwbG8Uo7kSqh0YqK04OexiilM43xd6n3Y9yBhLnb1NFNI9dA==
   /@azure/core-client/1.6.1:
     dependencies:
       '@azure/abort-controller': 1.0.4
@@ -199,7 +185,7 @@ packages:
     dependencies:
       '@azure/abort-controller': 1.0.4
       '@azure/core-asynciterator-polyfill': 1.0.2
-      '@azure/core-auth': 1.3.2
+      '@azure/core-auth': 1.4.0
       '@azure/core-tracing': 1.0.0-preview.11
       '@azure/logger': 1.0.3
       '@types/node-fetch': 2.6.1
@@ -268,22 +254,6 @@ packages:
       node: '>=12.0.0'
     resolution:
       integrity: sha512-UtH5iMlYsvg+nQYIl4UHlvvSrsBjOlRF4fs0j7mxd3rWdAStrKYrh2durOpHs5C9yZbVhsVDaisoyaf/lL1EVA==
-  /@azure/core-rest-pipeline/1.7.0:
-    dependencies:
-      '@azure/abort-controller': 1.0.4
-      '@azure/core-auth': 1.3.2
-      '@azure/core-tracing': 1.0.0-preview.13
-      '@azure/logger': 1.0.3
-      form-data: 4.0.0
-      http-proxy-agent: 4.0.1
-      https-proxy-agent: 5.0.0
-      tslib: 2.3.1
-      uuid: 8.3.2
-    dev: false
-    engines:
-      node: '>=12.0.0'
-    resolution:
-      integrity: sha512-e2awPzwMKHrmvYgZ0qIKNkqnCM1QoDs7A0rOiS3OSAlOQOz/kL7PPKHXwFMuBeaRvS8i7fgobJn79q2Cji5f+Q==
   /@azure/core-rest-pipeline/1.9.1:
     dependencies:
       '@azure/abort-controller': 1.0.4
@@ -19305,10 +19275,19 @@ packages:
       '@azure/communication-common': 2.0.0
       '@azure/communication-signaling': 1.0.0-beta.13
       '@azure/core-paging': 1.1.3
+      '@babel/cli': 7.16.8_@babel+core@7.16.12
+      '@babel/core': 7.16.12
+      '@babel/preset-env': 7.13.10_@babel+core@7.16.12
+      '@microsoft/api-extractor': 7.18.21
       '@types/jest': 26.0.24
       '@typescript-eslint/eslint-plugin': 4.33.0_d212f40a84a592446cd1718bfda08a13
       '@typescript-eslint/parser': 4.33.0_eslint@7.32.0+typescript@4.3.5
+      babel-jest: 26.6.3_@babel+core@7.16.12
+      babel-loader: 8.1.0_aa6d88355c68f323db0a612de3ad0c55
       copyfiles: 2.4.1
+      cpx: 1.5.0
+      cross-env: 7.0.3
+      env-cmd: 10.1.0
       eslint: 7.32.0
       eslint-config-prettier: 6.15.0_eslint@7.32.0
       eslint-plugin-header: 3.1.1_eslint@7.32.0
@@ -19316,17 +19295,20 @@ packages:
       eslint-plugin-jsdoc: 36.1.1_eslint@7.32.0
       eslint-plugin-prettier: 3.4.1_8142a4287e8e8e0691574dfac8adcedb
       events: 3.3.0
+      if-env: 1.0.4
       immer: 9.0.6
       jest: 26.6.0
       nanoid: 3.1.32
       prettier: 2.3.1
       rimraf: 2.7.1
+      rollup: 2.42.4
       ts-jest: 26.5.6_jest@26.6.0+typescript@4.3.5
       typescript: 4.3.5
+      webpack: 5.38.1
     dev: false
     name: '@rush-temp/fake-backends'
     resolution:
-      integrity: sha512-cQM5uljFxgyMth0GHO0vm5ccGNe8Mq2+84bVMLa8Td3hJnx4gVmWS3krkAEWjo9khC+5OuamCrDQRBQfgsqs1g==
+      integrity: sha512-VDHSQVgGMwvAkgIRRn9TJDrVX2N4iaqwGTBZx9THnEqiwv+KqiR3UcvluWMkr4hSNj2jOmcE5uGwjYBgT/W2Kw==
       tarball: file:projects/fake-backends.tgz
     version: 0.0.0
   file:projects/react-components.tgz:

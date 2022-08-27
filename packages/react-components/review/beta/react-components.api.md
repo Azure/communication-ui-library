@@ -358,6 +358,7 @@ export const DEFAULT_COMPONENT_ICONS: {
     ControlButtonMicOn: JSX.Element;
     ControlButtonOptions: JSX.Element;
     ControlButtonParticipants: JSX.Element;
+    ControlButtonParticipantsContextualMenuItem: JSX.Element;
     ControlButtonScreenShareStart: JSX.Element;
     ControlButtonScreenShareStop: JSX.Element;
     CancelFileUpload: JSX.Element;
@@ -394,7 +395,8 @@ export const DEFAULT_COMPONENT_ICONS: {
     ParticipantItemOptions: JSX.Element;
     ParticipantItemOptionsHovered: JSX.Element;
     ParticipantItemScreenShareStart: JSX.Element;
-    HoldCall: JSX.Element;
+    HoldCallContextualMenuItem: JSX.Element;
+    HoldCallButton: JSX.Element;
     ResumeCall: JSX.Element;
     SendBoxSend: JSX.Element;
     SendBoxSendHovered: JSX.Element;
@@ -449,13 +451,13 @@ export const Dialpad: (props: DialpadProps) => JSX.Element;
 export interface DialpadProps {
     onChange?: (input: string) => void;
     onClickDialpadButton?: (buttonValue: string, buttonIndex: number) => void;
-    onDisplayDialpadInput?: (input: string) => string;
     onSendDtmfTone?: (dtmfTone: DtmfTone) => Promise<void>;
     showDeleteButton?: boolean;
     // (undocumented)
     strings?: DialpadStrings;
     // (undocumented)
     styles?: DialpadStyles;
+    textFieldValue?: string;
 }
 
 // @beta
