@@ -148,7 +148,7 @@ const DialpadButton = (props: {
 }): JSX.Element => {
   const theme = useTheme();
 
-  const { primaryContent, index, onClick, onLongPress, isMobile = false } = props;
+  const { digit, index, onClick, onLongPress, isMobile = false } = props;
 
   const clickFunction = useCallback(async () => {
     onClick(digit, index);
