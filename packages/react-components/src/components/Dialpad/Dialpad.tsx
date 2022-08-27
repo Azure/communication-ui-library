@@ -23,8 +23,8 @@ import {
   buttonStyles,
   containerStyles,
   iconButtonStyles,
-  primaryContentStyles,
-  secondaryContentStyles,
+  digitStyles,
+  letterStyles,
   textFieldStyles
 } from '../styles/Dialpad.styles';
 import { formatPhoneNumber } from '../utils/formatPhoneNumber';
@@ -49,8 +49,8 @@ export interface DialpadStyles {
   root?: IStyle;
   button?: IButtonStyles;
   textField?: Partial<ITextFieldStyles>;
-  primaryContent?: IStyle;
-  secondaryContent?: IStyle;
+  digit?: IStyle;
+  letter?: IStyle;
   deleteIcon?: IButtonStyles;
 }
 
@@ -102,28 +102,24 @@ export interface DialpadProps {
 
 type DialpadButtonContent = {
   /** Number displayed on each dialpad button */
-  primaryContent: string;
+  digit: string;
   /** Letters displayed on each dialpad button */
-  secondaryContent?: string;
+  letter?: string;
 };
 
 const dialPadButtonsDefault: DialpadButtonContent[][] = [
+  [{ digit: '1' }, { digit: '2', letter: 'ABC' }, { digit: '3', letter: 'DEF' }],
   [
-    { primaryContent: '1' },
-    { primaryContent: '2', secondaryContent: 'ABC' },
-    { primaryContent: '3', secondaryContent: 'DEF' }
+    { digit: '4', letter: 'GHI' },
+    { digit: '5', letter: 'JKL' },
+    { digit: '6', letter: 'MNO' }
   ],
   [
-    { primaryContent: '4', secondaryContent: 'GHI' },
-    { primaryContent: '5', secondaryContent: 'JKL' },
-    { primaryContent: '6', secondaryContent: 'MNO' }
+    { digit: '7', letter: 'PQRS' },
+    { digit: '8', letter: 'TUV' },
+    { digit: '9', letter: 'WXYZ' }
   ],
-  [
-    { primaryContent: '7', secondaryContent: 'PQRS' },
-    { primaryContent: '8', secondaryContent: 'TUV' },
-    { primaryContent: '9', secondaryContent: 'WXYZ' }
-  ],
-  [{ primaryContent: '*' }, { primaryContent: '0', secondaryContent: '+' }, { primaryContent: '#' }]
+  [{ digit: '*' }, { digit: '0', letter: '+' }, { digit: '#' }]
 ];
 
 const DtmfTones: DtmfTone[] = [
@@ -142,8 +138,8 @@ const DtmfTones: DtmfTone[] = [
 ];
 
 const DialpadButton = (props: {
-  primaryContent: string;
-  secondaryContent?: string;
+  digit: string;
+  letter?: string;
   styles?: DialpadStyles;
   index: number;
   onClick: (input: string, index: number) => void;
@@ -155,12 +151,12 @@ const DialpadButton = (props: {
   const { primaryContent, index, onClick, onLongPress, isMobile = false } = props;
 
   const clickFunction = useCallback(async () => {
-    onClick(primaryContent, index);
-  }, [primaryContent, index, onClick]);
+    onClick(digit, index);
+  }, [digit, index, onClick]);
 
   const longPressFunction = useCallback(async () => {
-    onLongPress(primaryContent, index);
-  }, [primaryContent, index, onLongPress]);
+    onLongPress(digit, index);
+  }, [digit, index, onLongPress]);
 
   const { handlers } = useLongPress(clickFunction, longPressFunction, isMobile);
   return (
@@ -170,13 +166,9 @@ const DialpadButton = (props: {
       {...handlers}
     >
       <Stack>
-        <Text className={mergeStyles(primaryContentStyles(theme), props.styles?.primaryContent)}>
-          {props.primaryContent}
-        </Text>
+        <Text className={mergeStyles(digitStyles(theme), props.styles?.digit)}>{props.digit}</Text>
 
-        <Text className={mergeStyles(secondaryContentStyles(theme), props.styles?.secondaryContent)}>
-          {props.secondaryContent ?? ' '}
-        </Text>
+        <Text className={mergeStyles(letterStyles(theme), props.styles?.letter)}>{props.letter ?? ' '}</Text>
       </Stack>
     </DefaultButton>
   );
@@ -309,8 +301,8 @@ const DialpadContainer = (props: {
                   DtmfTones[index]
                   */
                   index={columnIndex + rowIndex * rows.length}
-                  primaryContent={button.primaryContent}
-                  secondaryContent={button.secondaryContent}
+                  digit={button.digit}
+                  letter={button.letter}
                   styles={props.styles}
                   onClick={onClickDialpad}
                   onLongPress={onLongPressDialpad}
