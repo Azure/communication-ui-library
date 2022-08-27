@@ -21,6 +21,8 @@ import {
 } from '@fluentui/react-icons';
 /* @conditional-compile-remove(PSTN-calls) */
 import { PersonAdd20Regular, Dialpad20Regular, Call20Regular } from '@fluentui/react-icons';
+/* @conditional-compile-remove(rooms) */
+import { ErrorCircle20Filled } from '@fluentui/react-icons';
 import { DEFAULT_COMPONENT_ICONS } from '@internal/react-components';
 import React from 'react';
 // eslint-disable-next-line no-restricted-imports
@@ -77,7 +79,9 @@ export const COMPOSITE_ONLY_ICONS: CompositeIcons = {
   /* @conditional-compile-remove(PSTN-calls) */
   PeoplePaneOpenDialpad: <Dialpad20Regular />,
   /* @conditional-compile-remove(PSTN-calls) */
-  DialpadStartCall: <Call20Regular />
+  DialpadStartCall: <Call20Regular />,
+  /* @conditional-compile-remove(rooms) */
+  InvalidRoom: <ErrorCircle20Filled />
 };
 
 /**
@@ -182,6 +186,8 @@ export type CallCompositeIcons = {
   PeoplePaneOpenDialpad?: JSX.Element;
   /* @conditional-compile-remove(PSTN-calls) */
   DialpadStartCall?: JSX.Element;
+  /* @conditional-compile-remove(rooms) */
+  InvalidRoom?: JSX.Element;
 };
 
 /**

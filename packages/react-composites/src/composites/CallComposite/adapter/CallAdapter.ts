@@ -36,7 +36,9 @@ export type CallCompositePage =
   | 'joinCallFailedDueToNoNetwork'
   | 'leftCall'
   | 'lobby'
-  | 'removedFromCall';
+  | /* @conditional-compile-remove(rooms) */ 'notInvitedToRoom'
+  | 'removedFromCall'
+  | /* @conditional-compile-remove(rooms) */ 'roomNotFound';
 
 /**
  * Subset of CallCompositePages that represent an end call state.
@@ -46,7 +48,9 @@ export const END_CALL_PAGES: CallCompositePage[] = [
   'accessDeniedTeamsMeeting',
   'joinCallFailedDueToNoNetwork',
   'leftCall',
-  'removedFromCall'
+    /* @conditional-compile-remove(rooms) */ 'notInvitedToRoom',
+  'removedFromCall',
+  /* @conditional-compile-remove(rooms) */ 'roomNotFound'
 ];
 
 /**

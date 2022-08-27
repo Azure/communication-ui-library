@@ -194,6 +194,28 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
         </>
       );
       break;
+    /* @conditional-compile-remove(rooms) */
+    case 'roomNotFound':
+      pageElement = (
+        <NoticePage
+          iconName="InvalidRoom"
+          title={locale.strings.call.roomNotFoundTitle}
+          moreDetails={locale.strings.call.roomNotFoundDetails}
+          dataUiId={'room-not-found-page'}
+        />
+      );
+      break;
+    /* @conditional-compile-remove(rooms) */
+    case 'notInvitedToRoom':
+      pageElement = (
+        <NoticePage
+          iconName="InvalidRoom"
+          title={locale.strings.call.notInvitedToRoomTitle}
+          moreDetails={locale.strings.call.notInvitedToRoomDetails}
+          dataUiId={'not-invited-to-room-page'}
+        />
+      );
+      break;
     default:
       throw new Error('Invalid call composite page');
   }

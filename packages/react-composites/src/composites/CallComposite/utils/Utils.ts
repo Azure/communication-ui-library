@@ -8,6 +8,10 @@ import { CallState } from '@internal/calling-stateful-client';
 
 const ACCESS_DENIED_TEAMS_MEETING_SUB_CODE = 5854;
 const REMOVED_FROM_CALL_SUB_CODES = [5000, 5300];
+/* @conditional-compile-remove(rooms) */
+const ROOM_NOT_FOUND_SUB_CODE = 5751;
+/* @conditional-compile-remove(rooms) */
+const NOT_INVITED_TO_ROOM_SUB_CODE = 5828;
 
 /**
  * @private
@@ -56,7 +60,9 @@ export const reduceCallControlsForMobile = (
 enum CallEndReasons {
   LEFT_CALL,
   ACCESS_DENIED,
-  REMOVED_FROM_CALL
+  REMOVED_FROM_CALL,
+  ROOM_NOT_FOUND,
+  NOT_INVITED_TO_ROOM
 }
 
 const getCallEndReason = (call: CallState): CallEndReasons => {
@@ -66,6 +72,16 @@ const getCallEndReason = (call: CallState): CallEndReasons => {
 
   if (call.callEndReason?.subCode && REMOVED_FROM_CALL_SUB_CODES.includes(call.callEndReason.subCode)) {
     return CallEndReasons.REMOVED_FROM_CALL;
+  }
+
+  /* @conditional-compile-remove(rooms) */
+  if (call.callEndReason?.subCode && call.callEndReason.subCode === ROOM_NOT_FOUND_SUB_CODE) {
+    return CallEndReasons.ROOM_NOT_FOUND;
+  }
+
+  /* @conditional-compile-remove(rooms) */
+  if (call.callEndReason?.subCode && call.callEndReason.subCode === NOT_INVITED_TO_ROOM_SUB_CODE) {
+    return CallEndReasons.NOT_INVITED_TO_ROOM;
   }
 
   if (call.callEndReason) {
@@ -124,6 +140,10 @@ export const getCallCompositePage = (
         return 'accessDeniedTeamsMeeting';
       case CallEndReasons.REMOVED_FROM_CALL:
         return 'removedFromCall';
+      case CallEndReasons.ROOM_NOT_FOUND:
+        return 'roomNotFound';
+      case CallEndReasons.NOT_INVITED_TO_ROOM:
+        return 'notInvitedToRoom';
       case CallEndReasons.LEFT_CALL:
         if (previousCall.diagnostics.network.latest.noNetwork) {
           return 'joinCallFailedDueToNoNetwork';
@@ -155,6 +175,8 @@ export const IsCallEndedPage = (
     | 'lobby'
     | 'removedFromCall'
     | /* @conditional-compile-remove(PSTN-calls) */ 'hold'
+    | /* @conditional-compile-remove(rooms) */ 'roomNotFound'
+    | /* @conditional-compile-remove(rooms) */ 'notInvitedToRoom'
 ): boolean => END_CALL_PAGES.includes(page);
 
 /**
