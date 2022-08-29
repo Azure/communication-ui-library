@@ -303,6 +303,9 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
     [callWithChatStrings]
   );
 
+  /* @conditional-compile-remove(PSTN-calls) */
+  const alternateCallerId = callAdapter.getState().alternateCallerId;
+
   return (
     <div ref={containerRef} className={mergeStyles(containerDivStyles)}>
       <Stack verticalFill grow styles={compositeOuterContainerStyles} id={compositeParentDivId}>
@@ -361,7 +364,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
                 containerHeight={containerHeight}
                 containerWidth={containerWidth}
                 /* @conditional-compile-remove(PSTN-calls) */
-                onClickShowDialpad={onClickShowDialpad}
+                onClickShowDialpad={alternateCallerId ? onClickShowDialpad : undefined}
               />
             </Stack.Item>
           </ChatAdapterProvider>
@@ -375,7 +378,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
                   onLightDismiss={closeDrawer}
                   onPeopleButtonClicked={onMoreDrawerPeopleClicked}
                   /* @conditional-compile-remove(PSTN-calls) */
-                  onClickShowDialpad={onClickShowDialpad}
+                  onClickShowDialpad={alternateCallerId ? onClickShowDialpad : undefined}
                   /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
                   disableButtonsForHoldScreen={isInLocalHold}
                 />
