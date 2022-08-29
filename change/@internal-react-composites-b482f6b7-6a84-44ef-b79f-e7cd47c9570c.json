@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "hide dialpad when it's not PSTN",
+  "comment": "Dialpad hidden in non PSTN 1:1 Calls.",
   "packageName": "@internal/react-composites",
   "email": "carolinecao@microsoft.com",
   "dependentChangeType": "patch"
