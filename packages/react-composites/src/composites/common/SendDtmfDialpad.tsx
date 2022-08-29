@@ -48,7 +48,13 @@ export const SendDtmfDialpad = (props: SendDtmfDialpadProps): JSX.Element => {
           <Stack styles={drawerContainerStyles}>
             <_DrawerSurface onLightDismiss={onDismissTriggered}>
               <Stack style={{ padding: '1rem' }}>
-                <Dialpad styles={dialpadStyle} {...dialpadProps} showDeleteButton={false} strings={strings} />
+                <Dialpad
+                  styles={dialpadStyle}
+                  {...dialpadProps}
+                  showDeleteButton={false}
+                  showFormatting={false}
+                  strings={strings}
+                />
               </Stack>
             </_DrawerSurface>
           </Stack>
@@ -77,7 +83,13 @@ export const SendDtmfDialpad = (props: SendDtmfDialpadProps): JSX.Element => {
           </Stack>
 
           <Stack style={{ overflow: 'hidden' }}>
-            <Dialpad styles={dialpadStyle} {...dialpadProps} showDeleteButton={false} strings={strings} />
+            <Dialpad
+              styles={dialpadStyle}
+              {...dialpadProps}
+              showFormatting={false}
+              showDeleteButton={false}
+              strings={strings}
+            />
           </Stack>
         </Modal>
       }

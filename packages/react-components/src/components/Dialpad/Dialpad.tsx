@@ -95,6 +95,8 @@ export interface DialpadProps {
   onChange?: (input: string) => void;
   /**  boolean input to determine when to show/hide delete button, default true */
   showDeleteButton?: boolean;
+  /** Determine whether or not to use the internal formatting of the dialpad string */
+  showFormatting?: boolean;
   styles?: DialpadStyles;
 }
 
@@ -182,11 +184,20 @@ const DialpadContainer = (props: {
   onChange?: (input: string) => void;
   /**  boolean input to determine when to show/hide delete button, default true */
   showDeleteButton?: boolean;
+  /** Determine whether or not to use the internal formatting of the dialpad string. Default is true */
+  showFormatting?: boolean;
   styles?: DialpadStyles;
 }): JSX.Element => {
   const theme = useTheme();
 
-  const { onSendDtmfTone, onClickDialpadButton, textFieldValue, onChange, showDeleteButton = true } = props;
+  const {
+    onSendDtmfTone,
+    onClickDialpadButton,
+    textFieldValue,
+    onChange,
+    showDeleteButton = true,
+    showFormatting = true
+  } = props;
 
   const [plainTextValue, setPlainTextValue] = useState(textFieldValue ?? '');
 
@@ -244,7 +255,7 @@ const DialpadContainer = (props: {
     >
       <TextField
         styles={concatStyleSets(textFieldStyles(theme), props.styles?.textField)}
-        value={textFieldValue ? textFieldValue : formatPhoneNumber(plainTextValue)}
+        value={textFieldValue ? textFieldValue : showFormatting ? formatPhoneNumber(plainTextValue) : plainTextValue}
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         onChange={(e: any) => {
           setText(e.target.value);
@@ -322,7 +333,6 @@ export const Dialpad = (props: DialpadProps): JSX.Element => {
     return '' as unknown as DialpadStrings;
   };
   const strings = { ...dialpadLocaleStringsTrampoline(), ...props.strings };
-
   return <DialpadContainer strings={strings} {...props} />;
 };
 
