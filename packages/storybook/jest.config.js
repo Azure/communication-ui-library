@@ -8,7 +8,12 @@ module.exports = {
   ...commonConfig,
 
   // An array of glob patterns indicating a set of files for which coverage information should be collected
-  collectCoverageFrom: ['stories/**/*.{js,jsx,ts,tsx}', '!/node_modules/', '!stories/mocks/**/*'],
+  collectCoverageFrom: [
+    'stories/**/*.{js,jsx,ts,tsx}',
+    '!/node_modules/',
+    '!stories/mocks/**/*',
+    'stories/**/**/*.{js,jsx,ts,tsx}'
+  ],
 
   // An array of directory names to be searched recursively up from the requiring module's location
   moduleDirectories: ['node_modules', 'stories'],
