@@ -1734,13 +1734,13 @@ export const Dialpad: (props: DialpadProps) => JSX.Element;
 export interface DialpadProps {
     onChange?: (input: string) => void;
     onClickDialpadButton?: (buttonValue: string, buttonIndex: number) => void;
-    onDisplayDialpadInput?: (input: string) => string;
     onSendDtmfTone?: (dtmfTone: DtmfTone) => Promise<void>;
     showDeleteButton?: boolean;
     // (undocumented)
     strings?: DialpadStrings;
     // (undocumented)
     styles?: DialpadStyles;
+    textFieldValue?: string;
 }
 
 // @beta
@@ -1758,11 +1758,11 @@ export interface DialpadStyles {
     // (undocumented)
     deleteIcon?: IButtonStyles;
     // (undocumented)
-    primaryContent?: IStyle;
+    digit?: IStyle;
+    // (undocumented)
+    letter?: IStyle;
     // (undocumented)
     root?: IStyle;
-    // (undocumented)
-    secondaryContent?: IStyle;
     // (undocumented)
     textField?: Partial<ITextFieldStyles>;
 }
