@@ -142,15 +142,17 @@ export const getCallCompositePage = (
         return 'accessDeniedTeamsMeeting';
       case CallEndReasons.REMOVED_FROM_CALL:
         return 'removedFromCall';
-      case CallEndReasons.ROOM_NOT_FOUND:
-        return 'roomNotFound';
-      case CallEndReasons.NOT_INVITED_TO_ROOM:
-        return 'notInvitedToRoom';
       case CallEndReasons.LEFT_CALL:
         if (previousCall.diagnostics.network.latest.noNetwork) {
           return 'joinCallFailedDueToNoNetwork';
         }
         return 'leftCall';
+      /* @conditional-compile-remove(rooms) */
+      case CallEndReasons.ROOM_NOT_FOUND:
+        return 'roomNotFound';
+      /* @conditional-compile-remove(rooms) */
+      case CallEndReasons.NOT_INVITED_TO_ROOM:
+        return 'notInvitedToRoom';
     }
   }
 
