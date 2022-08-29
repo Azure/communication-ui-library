@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`storybook snapshot tests Storyshots Composites/CallComposite/Start PSTN Call Start PSTN Call 1`] = `
+exports[`storybook snapshot tests Storyshots Composites/CallComposite/PSTN Call/Start PSTN Call Example Start PSTN Call Example 1`] = `
 <div
   className="stub-classname stub-classname"
   dir="ltr"
@@ -34,7 +34,7 @@ exports[`storybook snapshot tests Storyshots Composites/CallComposite/Start PSTN
             >
               access token, userId
             </a>
-            , display name, and a call locator.
+            , display name, alternate caller id, and a call locator.
           </p>
         </span>
       </div>

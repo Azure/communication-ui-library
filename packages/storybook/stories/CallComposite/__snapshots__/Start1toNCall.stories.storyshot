@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`storybook snapshot tests Storyshots Composites/CallComposite/Start 1 To N Call Start 1 To N Call 1`] = `
+exports[`storybook snapshot tests Storyshots Composites/CallComposite/1:N Call/Start 1 To N Call Example Start 1 To N Call Example 1`] = `
 <div
   className="stub-classname stub-classname"
   dir="ltr"
@@ -34,7 +34,16 @@ exports[`storybook snapshot tests Storyshots Composites/CallComposite/Start 1 To
             >
               access token, userId
             </a>
-            , display name, and a call locator.
+            , and display name. 
+            <br />
+            If you would like to experience an incoming call, replace the default value for 
+            <br />
+            Callee's User identifier with a userId with an associated access token. 
+            <br />
+            <br />
+            This preview only samples a 1:1 calling scenario. However, to initiate a call 
+            <br />
+            with multiple users in an app, a string of user Ids is required by the Call Locator.
           </p>
         </span>
       </div>
