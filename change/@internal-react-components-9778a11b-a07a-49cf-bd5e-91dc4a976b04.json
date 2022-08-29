@@ -1,6 +1,6 @@
 {
   "type": "patch",
-  "comment": "Add announcer to copy invite link button to announce action on button.",
+  "comment": "Export Announcer component to be used internally.",
   "packageName": "@internal/react-components",
   "email": "94866715+dmceachernmsft@users.noreply.github.com",
   "dependentChangeType": "patch"
