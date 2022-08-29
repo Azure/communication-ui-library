@@ -97,6 +97,8 @@ export interface DialpadProps {
   showDeleteButton?: boolean;
   /** Determine whether or not to use the internal formatting of the dialpad string */
   showFormatting?: boolean;
+  /**  boolean input to determine if dialpad is in mobile view, default false */
+  isMobile?: boolean;
   styles?: DialpadStyles;
 }
 
@@ -144,10 +146,11 @@ const DialpadButton = (props: {
   index: number;
   onClick: (input: string, index: number) => void;
   onLongPress: (input: string, index: number) => void;
+  isMobile?: boolean;
 }): JSX.Element => {
   const theme = useTheme();
 
-  const { digit, index, onClick, onLongPress } = props;
+  const { digit, index, onClick, onLongPress, isMobile = false } = props;
 
   const clickFunction = useCallback(async () => {
     onClick(digit, index);
@@ -157,7 +160,7 @@ const DialpadButton = (props: {
     onLongPress(digit, index);
   }, [digit, index, onLongPress]);
 
-  const { handlers } = useLongPress(clickFunction, longPressFunction);
+  const { handlers } = useLongPress(clickFunction, longPressFunction, isMobile);
   return (
     <DefaultButton
       data-test-id={`dialpad-button-${props.index}`}
@@ -186,6 +189,8 @@ const DialpadContainer = (props: {
   showDeleteButton?: boolean;
   /** Determine whether or not to use the internal formatting of the dialpad string. Default is true */
   showFormatting?: boolean;
+  /**  boolean input to determine if dialpad is in mobile view, default false */
+  isMobile?: boolean;
   styles?: DialpadStyles;
 }): JSX.Element => {
   const theme = useTheme();
@@ -197,6 +202,7 @@ const DialpadContainer = (props: {
     onChange,
     showDeleteButton = true,
     showFormatting = true
+    isMobile = false
   } = props;
 
   const [plainTextValue, setPlainTextValue] = useState(textFieldValue ?? '');
@@ -305,6 +311,7 @@ const DialpadContainer = (props: {
                   styles={props.styles}
                   onClick={onClickDialpad}
                   onLongPress={onLongPressDialpad}
+                  isMobile={isMobile}
                 />
               ))}
             </Stack>
