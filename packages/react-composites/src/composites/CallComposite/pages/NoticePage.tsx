@@ -3,15 +3,7 @@
 
 import React from 'react';
 import { mergeStyles, Stack, Text } from '@fluentui/react';
-import {
-  containerStyle,
-  moreDetailsStyles,
-  containerItemGap,
-  titleStyles,
-  rejoinCallButtonContainerStyles
-} from '../styles/NoticePage.styles';
-import { useAdapter } from '../adapter/CallAdapterProvider';
-import { StartCallButton } from '../components/StartCallButton';
+import { containerStyle, moreDetailsStyles, containerItemGap, titleStyles } from '../styles/NoticePage.styles';
 import { CallCompositeIcon, CallCompositeIcons } from '../../common/icons';
 
 /**
@@ -30,7 +22,6 @@ export interface NoticePageProps {
  * @private
  */
 export function NoticePage(props: NoticePageProps): JSX.Element {
-  const adapter = useAdapter();
   return (
     <Stack verticalFill verticalAlign="center" horizontalAlign="center" data-ui-id={props.dataUiId} aria-atomic>
       <Stack className={mergeStyles(containerStyle)} tokens={containerItemGap}>
@@ -41,9 +32,6 @@ export function NoticePage(props: NoticePageProps): JSX.Element {
         <Text className={mergeStyles(moreDetailsStyles)} aria-live="assertive">
           {props.moreDetails}
         </Text>
-        <Stack styles={rejoinCallButtonContainerStyles}>
-          <StartCallButton onClick={() => adapter.joinCall()} disabled={false} rejoinCall={true} autoFocus />
-        </Stack>
       </Stack>
     </Stack>
   );
