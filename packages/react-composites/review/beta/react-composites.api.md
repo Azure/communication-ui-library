@@ -285,6 +285,7 @@ export type CallCompositeIcons = {
     PeoplePaneAddPerson?: JSX.Element;
     PeoplePaneOpenDialpad?: JSX.Element;
     DialpadStartCall?: JSX.Element;
+    InvalidRoom?: JSX.Element;
 };
 
 // @public
@@ -294,7 +295,7 @@ export type CallCompositeOptions = {
 };
 
 // @public
-export type CallCompositePage = 'accessDeniedTeamsMeeting' | 'call' | 'configuration' | /* @conditional-compile-remove(PSTN-calls) */ 'hold' | 'joinCallFailedDueToNoNetwork' | 'leftCall' | 'lobby' | 'removedFromCall';
+export type CallCompositePage = 'accessDeniedTeamsMeeting' | 'call' | 'configuration' | /* @conditional-compile-remove(PSTN-calls) */ 'hold' | 'joinCallFailedDueToNoNetwork' | 'leftCall' | 'lobby' | /* @conditional-compile-remove(rooms) */ 'notInvitedToRoom' | 'removedFromCall' | /* @conditional-compile-remove(rooms) */ 'roomNotFound';
 
 // @public
 export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcons> {
@@ -352,6 +353,8 @@ export interface CallCompositeStrings {
     mutedMessage: string;
     networkReconnectMoreDetails: string;
     networkReconnectTitle: string;
+    notInvitedToRoomDetails?: string;
+    notInvitedToRoomTitle: string;
     openDialpadButtonLabel: string;
     openDtmfDialpadLabel: string;
     peopleButtonLabel: string;
@@ -369,6 +372,8 @@ export interface CallCompositeStrings {
     resumingCallButtonLabel: string;
     returnToCallButtonAriaDescription?: string;
     returnToCallButtonAriaLabel?: string;
+    roomNotFoundDetails?: string;
+    roomNotFoundTitle: string;
     soundLabel: string;
     startCallButtonLabel: string;
 }
@@ -987,6 +992,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     PeoplePaneAddPerson?: JSX.Element | undefined;
     PeoplePaneOpenDialpad?: JSX.Element | undefined;
     DialpadStartCall?: JSX.Element | undefined;
+    InvalidRoom?: JSX.Element | undefined;
     ChevronLeft?: JSX.Element | undefined;
     ControlBarChatButtonActive?: JSX.Element | undefined;
     ControlBarChatButtonInactive?: JSX.Element | undefined;
