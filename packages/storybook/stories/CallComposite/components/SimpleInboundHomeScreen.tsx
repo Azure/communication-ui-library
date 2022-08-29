@@ -52,10 +52,14 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
         audio.play();
       }, 3000);
     } else {
-      clearInterval(interval.current);
+      if (interval.current) {
+        clearInterval(interval.current);
+      }
     }
     return () => {
-      clearInterval(interval.current);
+      if (interval.current) {
+        clearInterval(interval.current);
+      }
     };
   }, [incomingCall]);
 

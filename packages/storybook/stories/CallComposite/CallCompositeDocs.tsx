@@ -25,6 +25,14 @@ body,
 }
 `;
 
+const callParticipantsLocatorSnippet = `
+// CallParticipantsLocator
+{ participantIDs: string[] }
+
+// Example
+{ participantsIDs: ["<phone #>", "<phone #>", "<ACS userId>", ...] }
+`;
+
 export const getDocs: () => JSX.Element = () => {
   return (
     <>
@@ -190,6 +198,7 @@ export const getDocs: () => JSX.Element = () => {
         [CallAdapter](./?path=/docs/composite-adapters--page). For PSTN these IDs are the phone numbers that you are
         looking to call. For Azure Communication Users you will need to provide their unique ACS aquired `userId`.
       </Description>
+      <Source code={callParticipantsLocatorSnippet} />
       <Description>
         As well as these participantIds you are required to provide a [phone
         number](https://docs.microsoft.com/en-us/azure/communication-services/quickstarts/telephony/get-phone-number?tabs=windows&pivots=platform-azcli)
