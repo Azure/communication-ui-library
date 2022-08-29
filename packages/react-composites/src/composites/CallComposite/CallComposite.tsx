@@ -196,6 +196,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
       break;
     /* @conditional-compile-remove(rooms) */
     case 'roomNotFound':
+      /* @conditional-compile-remove(rooms) */
       pageElement = (
         <NoticePage
           iconName="InvalidRoom"
@@ -207,6 +208,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
       break;
     /* @conditional-compile-remove(rooms) */
     case 'notInvitedToRoom':
+      /* @conditional-compile-remove(rooms) */
       pageElement = (
         <NoticePage
           iconName="InvalidRoom"
