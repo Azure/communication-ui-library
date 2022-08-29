@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Remvoe the rejoin button from the Calling and CallWithChat to support new locator types for PSTN and 1:N calling.",
+  "packageName": "@internal/react-composites",
+  "email": "94866715+dmceachernmsft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
