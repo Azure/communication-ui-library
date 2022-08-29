@@ -34,6 +34,8 @@ import { getRoomIdFromUrl } from '../utils/AppUtils';
 import { Dialpad } from '@azure/communication-react';
 /* @conditional-compile-remove(PSTN-calls) */
 import { Backspace20Regular } from '@fluentui/react-icons';
+/* @conditional-compile-remove(PSTN-calls) */
+import { useIsMobile } from '../utils/useIsMobile';
 
 export interface HomeScreenProps {
   startCallHandler(callDetails: {
@@ -117,6 +119,9 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   /* @conditional-compile-remove(PSTN-calls) */
   registerIcons({ icons: { BackSpace: <Backspace20Regular /> } });
 
+  /* @conditional-compile-remove(PSTN-calls) */
+  const isMobileSession = useIsMobile();
+
   return (
     <Stack
       horizontal
@@ -192,6 +197,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
               /* @conditional-compile-remove(PSTN-calls) */ pstnCallChosen && (
                 <Stack>
                   <Dialpad
+                    isMobile={isMobileSession}
                     onChange={(newValue) => {
                       /**
                        * We need to pass in the formatting for the phone number string in the onChange handler
