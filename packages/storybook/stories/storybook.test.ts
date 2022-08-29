@@ -57,4 +57,7 @@ describe('storybook snapshot tests', () => {
       });
     }
   });
+  test('fake test to prevent "no tests found error"', () => {
+    expect(true).toBeTruthy();
+  });
 });
