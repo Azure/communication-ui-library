@@ -10,7 +10,7 @@ import {
   useTheme
 } from '@fluentui/react';
 
-import { _DrawerMenu, _DrawerMenuItemProps } from '@internal/react-components';
+import { _DrawerMenu, _DrawerMenuItemProps, Announcer } from '@internal/react-components';
 import copy from 'copy-to-clipboard';
 import { useMemo, useState } from 'react';
 /* @conditional-compile-remove(PSTN-calls) */
@@ -30,6 +30,7 @@ export interface AddPeopleDropdownStrings extends CallingDialpadStrings {
   copyInviteLinkButtonLabel: string;
   openDialpadButtonLabel: string;
   peoplePaneAddPeopleButtonLabel: string;
+  copyInviteLinkActionedAriaLabel: string;
 }
 
 /** @private */
@@ -46,8 +47,10 @@ export const AddPeopleDropdown = (props: AddPeopleDropdownProps): JSX.Element =>
   const theme = useTheme();
 
   const { inviteLink, strings, mobileView, onAddParticipant, alternateCallerId } = props;
-
+  console.log(strings);
   const [showDialpad, setShowDialpad] = useState(false);
+
+  const [announcerStrings, setAnnouncerStrings] = useState<string>();
 
   const menuStyleThemed = useMemo(() => themedMenuStyle(theme), [theme]);
 
@@ -69,7 +72,10 @@ export const AddPeopleDropdown = (props: AddPeopleDropdownProps): JSX.Element =>
         text: strings.copyInviteLinkButtonLabel,
         itemProps: { styles: copyLinkButtonStylesThemed },
         iconProps: { iconName: 'Link', style: iconStyles },
-        onClick: () => copy(inviteLink)
+        onClick: () => {
+          setAnnouncerStrings(strings.copyInviteLinkActionedAriaLabel);
+          copy(inviteLink);
+        }
       });
     }
 
@@ -87,12 +93,13 @@ export const AddPeopleDropdown = (props: AddPeopleDropdownProps): JSX.Element =>
 
     return menuProps;
   }, [
-    strings.copyInviteLinkButtonLabel,
-    strings.openDialpadButtonLabel,
-    copyLinkButtonStylesThemed,
-    inviteLink,
     menuStyleThemed,
-    alternateCallerId
+    inviteLink,
+    alternateCallerId,
+    strings.copyInviteLinkButtonLabel,
+    strings.copyInviteLinkActionedAriaLabel,
+    strings.openDialpadButtonLabel,
+    copyLinkButtonStylesThemed
   ]);
 
   const onDismissDialpad = (): void => {
@@ -113,6 +120,7 @@ export const AddPeopleDropdown = (props: AddPeopleDropdownProps): JSX.Element =>
   if (mobileView) {
     return (
       <Stack>
+        <Announcer ariaLive={'assertive'} announcementString={announcerStrings} />
         <Stack.Item styles={copyLinkButtonContainerStyles}>
           <PrimaryButton
             onClick={setDrawerMenuItemsForAddPeople}
@@ -146,6 +154,7 @@ export const AddPeopleDropdown = (props: AddPeopleDropdownProps): JSX.Element =>
     <>
       {
         <Stack>
+          <Announcer ariaLive={'assertive'} announcementString={announcerStrings} />
           {alternateCallerId && (
             <CallingDialpad
               isMobile={false}
