@@ -61,7 +61,9 @@ enum CallEndReasons {
   LEFT_CALL,
   ACCESS_DENIED,
   REMOVED_FROM_CALL,
+  /* @conditional-compile-remove(rooms) */
   ROOM_NOT_FOUND,
+  /* @conditional-compile-remove(rooms) */
   NOT_INVITED_TO_ROOM
 }
 
