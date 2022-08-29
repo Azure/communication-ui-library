@@ -95,6 +95,8 @@ export interface DialpadProps {
   onChange?: (input: string) => void;
   /**  boolean input to determine when to show/hide delete button, default true */
   showDeleteButton?: boolean;
+  /**  boolean input to determine if dialpad is in mobile view, default false */
+  isMobile?: boolean;
   styles?: DialpadStyles;
 }
 
@@ -142,10 +144,11 @@ const DialpadButton = (props: {
   index: number;
   onClick: (input: string, index: number) => void;
   onLongPress: (input: string, index: number) => void;
+  isMobile?: boolean;
 }): JSX.Element => {
   const theme = useTheme();
 
-  const { digit, index, onClick, onLongPress } = props;
+  const { digit, index, onClick, onLongPress, isMobile = false } = props;
 
   const clickFunction = useCallback(async () => {
     onClick(digit, index);
@@ -155,7 +158,7 @@ const DialpadButton = (props: {
     onLongPress(digit, index);
   }, [digit, index, onLongPress]);
 
-  const { handlers } = useLongPress(clickFunction, longPressFunction);
+  const { handlers } = useLongPress(clickFunction, longPressFunction, isMobile);
   return (
     <DefaultButton
       data-test-id={`dialpad-button-${props.index}`}
@@ -182,11 +185,20 @@ const DialpadContainer = (props: {
   onChange?: (input: string) => void;
   /**  boolean input to determine when to show/hide delete button, default true */
   showDeleteButton?: boolean;
+  /**  boolean input to determine if dialpad is in mobile view, default false */
+  isMobile?: boolean;
   styles?: DialpadStyles;
 }): JSX.Element => {
   const theme = useTheme();
 
-  const { onSendDtmfTone, onClickDialpadButton, textFieldValue, onChange, showDeleteButton = true } = props;
+  const {
+    onSendDtmfTone,
+    onClickDialpadButton,
+    textFieldValue,
+    onChange,
+    showDeleteButton = true,
+    isMobile = false
+  } = props;
 
   const [plainTextValue, setPlainTextValue] = useState(textFieldValue ?? '');
 
@@ -294,6 +306,7 @@ const DialpadContainer = (props: {
                   styles={props.styles}
                   onClick={onClickDialpad}
                   onLongPress={onLongPressDialpad}
+                  isMobile={isMobile}
                 />
               ))}
             </Stack>
