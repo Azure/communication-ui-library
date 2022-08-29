@@ -34,7 +34,9 @@ export function LiveApp(props: { queryArgs: QueryArgs }): JSX.Element {
       displayName: args.displayName,
       credential,
       endpoint: args.endpoint,
-      locator
+      locator,
+      /* @conditional-compile-remove(PSTN-calls) */
+      alternateCallerId: '+182927203720'
     },
     wrapAdapterForTests
   );
