@@ -48,7 +48,7 @@ export const END_CALL_PAGES: CallCompositePage[] = [
   'accessDeniedTeamsMeeting',
   'joinCallFailedDueToNoNetwork',
   'leftCall',
-    /* @conditional-compile-remove(rooms) */ 'notInvitedToRoom',
+  /* @conditional-compile-remove(rooms) */ 'notInvitedToRoom',
   'removedFromCall',
   /* @conditional-compile-remove(rooms) */ 'roomNotFound'
 ];
