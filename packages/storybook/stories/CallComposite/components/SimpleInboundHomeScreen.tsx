@@ -4,11 +4,10 @@
 import { Call, CallAgent, IncomingCall, IncomingCallEvent } from '@azure/communication-calling';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 import { CallClientState } from '@azure/communication-react';
-import { Stack, Text, TextField } from '@fluentui/react';
-import React from 'react';
-import { useEffect, useRef, useState } from 'react';
+import { Stack, Text, TextField, IStackTokens, mergeStyles } from '@fluentui/react';
+import React, { useEffect, useRef, useState } from 'react';
+
 import { IncomingCallToast } from './IncomingCallAlert';
-import { IStackTokens, mergeStyles } from '@fluentui/react';
 
 export interface HomeScreenProps {
   callState: CallClientState;

@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
 import { Call } from '@azure/communication-calling';
 import {
   CameraButton,

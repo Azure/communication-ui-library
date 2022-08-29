@@ -63,7 +63,7 @@ function App(): JSX.Element {
   );
   const callAdapter = useAzureCommunicationCallAdapter(callAdapterArgs);
 
-  if (!!callAdapter) {
+  if (callAdapter) {
     return (
       <div style={{ height: '100vh', display: 'flex' }}>
         <CallComposite adapter={callAdapter} />

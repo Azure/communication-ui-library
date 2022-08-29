@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
 import { DefaultButton, DefaultPalette, mergeStyles, Persona, PersonaSize, Stack, useTheme } from '@fluentui/react';
 import { Call20Filled, CallEnd20Filled } from '@fluentui/react-icons';
 import React from 'react';

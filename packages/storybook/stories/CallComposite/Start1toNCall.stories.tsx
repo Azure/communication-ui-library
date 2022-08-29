@@ -22,7 +22,7 @@ const Start1toNCallStory = (args, context): JSX.Element => {
     <Stack horizontalAlign="center" verticalAlign="center" styles={compositeExperienceContainerStyle}>
       {areAllKnobsSet ? (
         <div style={{ height: '100vh', display: 'flex', width: '100%' }}>
-          <div style={!!args.calleeToken ? { width: '65%' } : { width: '100%' }}>
+          <div style={args.calleeToken ? { width: '65%' } : { width: '100%' }}>
             <ContosoCallContainer1toN
               fluentTheme={context.theme}
               locator={[args.calleeUserId]}

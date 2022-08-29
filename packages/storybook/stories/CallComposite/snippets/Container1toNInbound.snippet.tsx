@@ -13,8 +13,8 @@ import {
 } from '@azure/communication-react';
 import { PartialTheme, PrimaryButton, Spinner, Stack, Theme } from '@fluentui/react';
 import React, { useEffect, useState } from 'react';
-import { HomeScreen } from '../components/SimpleInboundHomeScreen';
 import { CallScreen } from '../components/SimpleCallScreen';
+import { HomeScreen } from '../components/SimpleInboundHomeScreen';
 
 type AppPages = 'initClient' | 'home' | 'call';
 
@@ -36,8 +36,10 @@ export const ContosoCallContainer1toNInbound = (props: ContainerProps): JSX.Elem
   const [callState, setCallState] = useState<CallClientState | undefined>(statefulCallClient?.getState());
 
   useEffect(() => {
-    if (!statefulCallClient) return;
-    const stateChangeListener = (state: CallClientState) => setCallState(state);
+    if (!statefulCallClient) {
+      return;
+    }
+    const stateChangeListener = (state: CallClientState): void => setCallState(state);
     statefulCallClient.onStateChange(stateChangeListener);
     return () => {
       statefulCallClient.offStateChange(stateChangeListener);
@@ -48,7 +50,9 @@ export const ContosoCallContainer1toNInbound = (props: ContainerProps): JSX.Elem
    * Initialize the stateful call client
    */
   useEffect(() => {
-    if (!userId) return;
+    if (!userId) {
+      return;
+    }
     console.log('Creating stateful call client');
     setStatefulCallClient(
       createStatefulCallClient({
@@ -63,7 +67,7 @@ export const ContosoCallContainer1toNInbound = (props: ContainerProps): JSX.Elem
   useEffect(() => {
     if (callAgent === undefined && statefulCallClient) {
       const tokenCredential = new AzureCommunicationTokenCredential(token);
-      const createCallAgent = async () => {
+      const createCallAgent = async (): Promise<void> => {
         console.log('Creating call agent');
         setCallAgent(await statefulCallClient.createCallAgent(tokenCredential, { displayName: ' ' }));
       };
