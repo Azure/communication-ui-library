@@ -7,9 +7,8 @@ import { Page } from '@playwright/test';
 import { perStepLocalTimeout, screenshotOnFailure } from './utils';
 
 /**
- * When using <HiddenChatComposites />, set the visibility of a hidden chat composite.
- *
- * Useful to temporarily make the hidden composite visible.
+ * <HiddenChatComposites /> are, well, hidden.
+ * This function temporarily brings them to foreground, primarily to send read receipts.
  *
  * @private
  */
