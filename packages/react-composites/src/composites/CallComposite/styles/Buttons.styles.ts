@@ -63,7 +63,8 @@ export const buttonFlyoutIncreasedSizeStyles: IContextualMenuItemStyles = {
     maxHeight: 'unset'
   },
   icon: {
-    maxHeight: 'unset'
+    maxHeight: 'unset',
+    textAlign: 'center'
   }
 };
 

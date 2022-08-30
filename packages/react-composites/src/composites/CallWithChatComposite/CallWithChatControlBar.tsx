@@ -45,7 +45,7 @@ export interface CallWithChatControlBarProps {
   chatAdapter: ChatAdapter;
   disableButtonsForHoldScreen?: boolean;
   /* @conditional-compile-remove(PSTN-calls) */
-  onClickShowDialpad: () => void;
+  onClickShowDialpad?: () => void;
 }
 
 const inferCallWithChatControlOptions = (
@@ -149,6 +149,7 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps & Cont
       newMessageLabel={callWithChatStrings.chatButtonNewMessageNotificationLabel}
     />
   );
+
   return (
     <Stack horizontal className={mergeStyles(callControlsContainerStyles, controlBarContainerStyles)}>
       <Stack.Item grow>
