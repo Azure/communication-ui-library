@@ -40,7 +40,7 @@ jobs:
       - name: Run browser tests 7 times
         run: |
           cd packages/react-composites
-          rushx test:e2e -s 10 -c chat -l
+          rushx test:e2e -s 7
         env:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
       - name: Upload snapshot diff
