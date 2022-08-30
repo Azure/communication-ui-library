@@ -30,9 +30,11 @@ export interface HermeticQueryArgs {
 /**
  * Common arguments (e.g. to control composite behavior).
  *
+ * Empty for now.
+ *
  * @private
  */
-export type CommonQueryArgs = {};
+export type CommonQueryArgs = Record<string, never>;
 
 /**
  * All query arguments accepted by the test app.

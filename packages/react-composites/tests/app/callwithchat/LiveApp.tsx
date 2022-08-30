@@ -11,7 +11,7 @@ import { fromFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { CommonQueryArgs, LiveQueryArgs, QueryArgs } from './QueryArgs';
 import { BaseApp } from './BaseApp';
 
-/** @internal */
+/** @private */
 export function LiveApp(props: { queryArgs: QueryArgs }): JSX.Element {
   const { queryArgs: args } = props;
   if (hasRequiredParams(args)) {
@@ -21,7 +21,7 @@ export function LiveApp(props: { queryArgs: QueryArgs }): JSX.Element {
   return <h3>ERROR: Required parameters {missingParams.join(', ')} not set.</h3>;
 }
 
-export function LiveAppImpl(props: { queryArgs: CommonQueryArgs & LiveQueryArgs }): JSX.Element {
+function LiveAppImpl(props: { queryArgs: CommonQueryArgs & LiveQueryArgs }): JSX.Element {
   const { queryArgs: args } = props;
   const userIdArg = useMemo(
     () => fromFlatCommunicationIdentifier(args.userId) as CommunicationUserIdentifier,
