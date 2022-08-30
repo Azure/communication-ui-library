@@ -16,7 +16,6 @@ export type {
   CallAndChatLocator
 } from './adapter/AzureCommunicationCallWithChatAdapter';
 export {
-  _createAzureCommunicationCallWithChatAdapterFromAdapters,
   createAzureCommunicationCallWithChatAdapter,
   createAzureCommunicationCallWithChatAdapterFromClients,
   useAzureCommunicationCallWithChatAdapter
