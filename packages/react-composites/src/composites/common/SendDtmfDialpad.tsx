@@ -54,7 +54,6 @@ export const SendDtmfDialpad = (props: SendDtmfDialpadProps): JSX.Element => {
                   showDeleteButton={false}
                   showFormatting={false}
                   strings={strings}
-                  strings={strings}
                   isMobile={isMobile}
                 />
               </Stack>
@@ -89,8 +88,6 @@ export const SendDtmfDialpad = (props: SendDtmfDialpadProps): JSX.Element => {
               styles={dialpadStyle}
               {...dialpadProps}
               showFormatting={false}
-              showDeleteButton={false}
-              strings={strings}
               showDeleteButton={false}
               strings={strings}
               isMobile={isMobile}

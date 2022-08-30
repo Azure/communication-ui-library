@@ -201,7 +201,7 @@ const DialpadContainer = (props: {
     textFieldValue,
     onChange,
     showDeleteButton = true,
-    showFormatting = true
+    showFormatting = true,
     isMobile = false
   } = props;
 
