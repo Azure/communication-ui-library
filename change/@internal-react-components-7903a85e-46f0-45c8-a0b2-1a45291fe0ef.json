@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Introduces showFormatting prop to dialpad component to disable our provided formatting.",
+  "packageName": "@internal/react-components",
+  "email": "94866715+dmceachernmsft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
