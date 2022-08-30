@@ -103,8 +103,7 @@ export const AddPeopleDropdown = (props: AddPeopleDropdownProps): JSX.Element =>
     strings.copyInviteLinkButtonLabel,
     strings.copyInviteLinkActionedAriaLabel,
     strings.openDialpadButtonLabel,
-    copyLinkButtonStylesThemed,
-    announcerStrings
+    copyLinkButtonStylesThemed
   ]);
 
   const onDismissDialpad = (): void => {
