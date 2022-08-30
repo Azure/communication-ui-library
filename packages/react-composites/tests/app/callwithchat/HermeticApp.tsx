@@ -9,6 +9,7 @@ import { useFakeChatAdapters } from '../lib/useFakeChatAdapters';
 import type { CallAdapter } from '../../../src';
 import { _createAzureCommunicationCallWithChatAdapterFromAdapters } from '../../../src';
 import { BaseApp } from './BaseApp';
+import { HiddenChatComposites } from 'app/lib/HiddenChatComposites';
 
 /**
  * A hermetic test application
@@ -55,7 +56,12 @@ function HermeticAppImpl(props: { queryArgs: HermeticQueryArgs & CommonQueryArgs
     [callAdapter, chatAdapters]
   );
 
-  return <BaseApp queryArgs={args} adapter={callWithChatAdapter} />;
+  return (
+    <>
+      <BaseApp queryArgs={args} adapter={callWithChatAdapter} />
+      <HiddenChatComposites adapters={chatAdapters?.remotes ?? []} />
+    </>
+  );
 }
 
 /** @internal */
