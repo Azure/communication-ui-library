@@ -206,11 +206,12 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
       onItemClick: () => {
         holdButtonProps.onToggleHold();
       },
-      iconProps: { iconName: 'HoldCall', styles: { root: { lineHeight: 0 } } }
+      iconProps: { iconName: 'HoldCallContextualMenuItem', styles: { root: { lineHeight: 0 } } }
     });
   }
 
   /*@conditional-compile-remove(PSTN-calls) */
+  // dtmf tone sending only works for 1:1 PSTN call
   if (drawerSelectionOptions !== false && isEnabled(drawerSelectionOptions?.peopleButton) && props.onClickShowDialpad) {
     drawerMenuItems.push({
       itemKey: 'showDialpadKey',

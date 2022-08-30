@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Update hold Icon size in more button in controlBars",
+  "packageName": "@internal/react-components",
+  "email": "94866715+dmceachernmsft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

@@ -6,24 +6,11 @@ import { Dialpad, FluentThemeProvider } from '@azure/communication-react';
 import { Stack } from '@fluentui/react';
 import React, { useState } from 'react';
 
-const onDisplayDialpadInput = (phoneNumber: string): string => {
-  // if input value is falsy eg if the user deletes the input, then just return
-  if (!phoneNumber) {
-    return phoneNumber;
-  }
-
-  if (phoneNumber.length <= 4) {
-    return phoneNumber;
-  } else {
-    return `(${phoneNumber.slice(0, 4)}) ${phoneNumber.slice(4, phoneNumber.length)}`;
-  }
-};
-
 export const CustomDialpadExample: () => JSX.Element = () => {
   const [dtmftone, setDtmftone] = useState('');
   const [buttonValue, setButtonValue] = useState('');
   const [buttonIndex, setButtonIndex] = useState('');
-  const [textfieldInput, setTextfieldInput] = useState('');
+  const [textFieldValue, setTextFieldValue] = useState('');
 
   const onSendDtmfTone = (dtmfTone: DtmfTone): Promise<void> => {
     setDtmftone(dtmfTone);
@@ -36,7 +23,21 @@ export const CustomDialpadExample: () => JSX.Element = () => {
   };
 
   const onChange = (input: string): void => {
-    setTextfieldInput(input);
+    // if there is already a plus sign at the front remove it
+    if (input[0] === '+') {
+      input = input.slice(1, input.length);
+    }
+    // add + sign and brackets to format phone number
+    if (input.length < 4 && input.length > 0) {
+      // store the new value in textFieldValue and pass it back to dialpad textfield
+      setTextFieldValue(`+ ${input}`);
+    } else if (input.length >= 4) {
+      // store the new value in textFieldValue and pass it back to dialpad textfield
+      setTextFieldValue(`+ (${input.slice(0, 3)}) ${input.slice(3, input.length)}`);
+    } else {
+      // store the new value in textFieldValue and pass it back to dialpad textfield
+      setTextFieldValue(input);
+    }
   };
 
   return (
@@ -46,13 +47,10 @@ export const CustomDialpadExample: () => JSX.Element = () => {
         <div style={{ fontSize: '1.5rem', marginBottom: '1rem', fontFamily: 'Segoe UI' }}>
           Button Clicked: {buttonValue} index at {buttonIndex}
         </div>
-        <div style={{ fontSize: '1.5rem', marginBottom: '1rem', fontFamily: 'Segoe UI' }}>
-          Textfield Input from keyboard: {textfieldInput}
-        </div>
 
         <Dialpad
           onSendDtmfTone={onSendDtmfTone}
-          onDisplayDialpadInput={onDisplayDialpadInput}
+          textFieldValue={textFieldValue}
           onClickDialpadButton={onClickDialpadButton}
           onChange={onChange}
         />

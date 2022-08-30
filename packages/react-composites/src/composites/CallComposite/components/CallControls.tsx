@@ -33,6 +33,8 @@ import { usePropsFor } from '../hooks/usePropsFor';
 import { buttonFlyoutIncreasedSizeStyles } from '../styles/Buttons.styles';
 /* @conditional-compile-remove(PSTN-calls) */
 import { SendDtmfDialpad } from '../../common/SendDtmfDialpad';
+/* @conditional-compile-remove(PSTN-calls) */
+import { useAdapter } from '../adapter/CallAdapterProvider';
 
 /**
  * @private
@@ -97,6 +99,9 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
   /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
   const holdButtonProps = usePropsFor(HoldButton);
 
+  /* @conditional-compile-remove(PSTN-calls) */
+  const alternateCallerId = useAdapter().getState().alternateCallerId;
+
   /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */
   const moreButtonContextualMenuItems = (): IContextualMenuItem[] => {
     const items: IContextualMenuItem[] = [];
@@ -110,7 +115,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
             props.onPeopleButtonClicked();
           }
         },
-        iconProps: { iconName: 'ControlButtonParticipants', styles: { root: { lineHeight: 0 } } },
+        iconProps: { iconName: 'ControlButtonParticipantsContextualMenuItem', styles: { root: { lineHeight: 0 } } },
         itemProps: {
           styles: buttonFlyoutIncreasedSizeStyles
         },
@@ -124,7 +129,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
       onClick: () => {
         holdButtonProps.onToggleHold();
       },
-      iconProps: { iconName: 'HoldCall', styles: { root: { lineHeight: 0 } } },
+      iconProps: { iconName: 'HoldCallContextualMenuItem', styles: { root: { lineHeight: 0 } } },
       itemProps: {
         styles: buttonFlyoutIncreasedSizeStyles
       },
@@ -133,17 +138,20 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
     });
 
     /* @conditional-compile-remove(PSTN-calls) */
-    items.push({
-      key: 'showDialpadKey',
-      text: localeStrings.strings.call.openDtmfDialpadLabel,
-      onClick: () => {
-        setShowDialpad(true);
-      },
-      iconProps: { iconName: 'Dialpad', styles: { root: { lineHeight: 0 } } },
-      itemProps: {
-        styles: buttonFlyoutIncreasedSizeStyles
-      }
-    });
+    // dtmf tone sending only works for 1:1 PSTN call
+    if (alternateCallerId) {
+      items.push({
+        key: 'showDialpadKey',
+        text: localeStrings.strings.call.openDtmfDialpadLabel,
+        onClick: () => {
+          setShowDialpad(true);
+        },
+        iconProps: { iconName: 'PeoplePaneOpenDialpad', styles: { root: { lineHeight: 0 } } },
+        itemProps: {
+          styles: buttonFlyoutIncreasedSizeStyles
+        }
+      });
+    }
 
     return items;
   };
