@@ -42,7 +42,7 @@ export interface TestFixture {
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 const usePage = async ({ browser }, use) => {
-  await use(loadNewPageWithPermissionsForCalls(browser));
+  await use(await loadNewPageWithPermissionsForCalls(browser));
 };
 
 /**
