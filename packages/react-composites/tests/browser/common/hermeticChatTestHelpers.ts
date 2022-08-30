@@ -2,9 +2,8 @@
 // Licensed under the MIT license.
 
 import { ChatParticipant } from '@azure/communication-chat';
-import { CommunicationIdentifier } from '@azure/communication-common';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
-import { ElementHandle, Page } from '@playwright/test';
+import { Page } from '@playwright/test';
 import { waitForSelector } from './utils';
 
 /**
@@ -19,25 +18,17 @@ export async function setHiddenChatCompositeVisibility(
   participant: ChatParticipant,
   visibile: boolean
 ): Promise<void> {
-  const messageReaderCompositeHandle = await getHiddenCompositeHandleOfParticipant(page, participant.id);
+  const handle = await page.locator(hiddenCompositeSelector(participant));
   if (visibile) {
     // Display the hidden composite so that sent messages will be seen
-    await messageReaderCompositeHandle.evaluate((node) => (node.style.display = 'block'));
+    await handle.evaluate((node) => (node.style.display = 'block'));
+    await waitForSelector(page, hiddenCompositeSelector(participant) + ' >> visible=true');
   } else {
     // Do not display the hidden composite so that messages sent will not be seen
-    await messageReaderCompositeHandle.evaluate((node) => (node.style.display = 'none'));
+    await handle.evaluate((node) => (node.style.display = 'none'));
+    await waitForSelector(page, hiddenCompositeSelector(participant) + ' >> visible=false');
   }
 }
 
-async function getHiddenCompositeHandleOfParticipant(
-  page: Page,
-  participantIdentifier: CommunicationIdentifier
-): Promise<ElementHandle<SVGElement | HTMLElement>> {
-  return await waitForSelector(
-    page,
-    `[id="hidden-composite-${toFlatCommunicationIdentifier(participantIdentifier)}"]`,
-    {
-      state: 'attached'
-    }
-  );
-}
+const hiddenCompositeSelector = (participant: ChatParticipant): string =>
+  `[id="hidden-composite-${toFlatCommunicationIdentifier(participant.id)}"]`;
