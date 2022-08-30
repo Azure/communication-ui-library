@@ -2,7 +2,6 @@
 // Licensed under the MIT license.
 
 import { ChatParticipant } from '@azure/communication-chat';
-import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { _createStatefulChatClientWithDeps } from '@internal/chat-stateful-client';
 import { _IdentifierProvider, FileDownloadError, FileDownloadHandler } from '@internal/react-components';
 import React, { useEffect } from 'react';
