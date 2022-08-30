@@ -4,7 +4,7 @@
 import { expect } from '@playwright/test';
 import { setHiddenChatCompositeVisibility } from '../../common/hermeticChatTestHelpers';
 import { sendMessage, waitForMessageDelivered, waitForMessageSeen } from '../../common/chatTestHelpers';
-import { dataUiId, pageClick, stableScreenshot, waitForSelector } from '../../common/utils';
+import { dataUiId, pageClick, screenshotOnFailure, stableScreenshot, waitForSelector } from '../../common/utils';
 import { buildUrlForChatAppUsingFakeAdapter, DEFAULT_FAKE_CHAT_ADAPTER_ARGS, test } from './fixture';
 
 test.describe('Chat Composite E2E Tests', () => {
@@ -55,11 +55,14 @@ test.describe('Chat Composite E2E Tests', () => {
     });
     await waitForMessageSeen(page);
 
-    await page.locator(dataUiId('chat-composite-message')).first().click();
-    await page.locator(dataUiId('chat-composite-message-action-icon')).first().click();
-    await waitForSelector(page, '[id="chat-composite-message-contextual-menu"]');
-    await page.locator(dataUiId('chat-composite-message-contextual-menu-read-info')).click();
-    await waitForSelector(page, '[id="chat-composite-message-contextual-menu-read-name-list"]');
+    await screenshotOnFailure(page, async () => {
+      await page.locator(dataUiId('chat-composite-message')).first().click();
+      await page.locator(dataUiId('chat-composite-message-action-icon')).first().click();
+      await waitForSelector(page, '[id="chat-composite-message-contextual-menu"]');
+      await page.locator(dataUiId('chat-composite-message-contextual-menu-read-info')).click();
+      await waitForSelector(page, '[id="chat-composite-message-contextual-menu-read-name-list"]');
+    });
+
     expect(await stableScreenshot(page)).toMatchSnapshot('read-message-contextualMenu.png');
   });
 });
