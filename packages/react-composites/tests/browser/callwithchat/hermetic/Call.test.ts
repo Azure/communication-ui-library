@@ -7,7 +7,7 @@ import { stableScreenshot } from '../../common/utils';
 import { loadCallPage, test } from './fixture';
 
 test.describe('CallWithChat Composite CallWithChat Page Tests', () => {
-  test.only('CallWithChat gallery screen loads correctly', async ({ page, serverUrl }) => {
+  test('CallWithChat gallery screen loads correctly', async ({ page, serverUrl }) => {
     const paul = defaultMockRemoteParticipant('Paul Bridges');
     addVideoStream(paul, true);
     paul.isSpeaking = true;
