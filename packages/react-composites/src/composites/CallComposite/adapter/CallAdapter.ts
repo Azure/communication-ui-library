@@ -32,11 +32,11 @@ export type CallCompositePage =
   | 'accessDeniedTeamsMeeting'
   | 'call'
   | 'configuration'
+  | /* @conditional-compile-remove(PSTN-calls) */ 'hold'
   | 'joinCallFailedDueToNoNetwork'
   | 'leftCall'
   | 'lobby'
-  | 'removedFromCall'
-  | /* @conditional-compile-remove(PSTN-calls) */ 'hold';
+  | 'removedFromCall';
 
 /**
  * Subset of CallCompositePages that represent an end call state.
