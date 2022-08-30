@@ -95,8 +95,6 @@ export interface DialpadProps {
   onChange?: (input: string) => void;
   /**  boolean input to determine when to show/hide delete button, default true */
   showDeleteButton?: boolean;
-  /** Determine whether or not to use the internal formatting of the dialpad string */
-  showFormatting?: boolean;
   /**  boolean input to determine if dialpad is in mobile view, default false */
   isMobile?: boolean;
   styles?: DialpadStyles;
@@ -187,8 +185,6 @@ const DialpadContainer = (props: {
   onChange?: (input: string) => void;
   /**  boolean input to determine when to show/hide delete button, default true */
   showDeleteButton?: boolean;
-  /** Determine whether or not to use the internal formatting of the dialpad string. Default is true */
-  showFormatting?: boolean;
   /**  boolean input to determine if dialpad is in mobile view, default false */
   isMobile?: boolean;
   styles?: DialpadStyles;
@@ -201,7 +197,6 @@ const DialpadContainer = (props: {
     textFieldValue,
     onChange,
     showDeleteButton = true,
-    showFormatting = true,
     isMobile = false
   } = props;
 
@@ -261,7 +256,7 @@ const DialpadContainer = (props: {
     >
       <TextField
         styles={concatStyleSets(textFieldStyles(theme), props.styles?.textField)}
-        value={textFieldValue ? textFieldValue : showFormatting ? formatPhoneNumber(plainTextValue) : plainTextValue}
+        value={textFieldValue ? textFieldValue : formatPhoneNumber(plainTextValue)}
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         onChange={(e: any) => {
           setText(e.target.value);

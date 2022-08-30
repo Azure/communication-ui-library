@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import React from 'react';
+import React, { useState } from 'react';
 import { useMemo } from 'react';
 import { Dialpad, DialpadStyles } from '@internal/react-components';
 import { _DrawerMenu, _DrawerMenuItemProps, _DrawerSurface } from '@internal/react-components';
@@ -37,6 +37,12 @@ export const SendDtmfDialpad = (props: SendDtmfDialpadProps): JSX.Element => {
     onDismissDialpad();
   };
 
+  const [textFieldValue, setTextFieldValue] = useState<string>();
+
+  const onChange = (input: string) => {
+    setTextFieldValue(input);
+  };
+
   const dialpadModalStyle: Partial<IModalStyles> = useMemo(() => themeddialpadModalStyle(theme), [theme]);
 
   const dialpadStyle: Partial<DialpadStyles> = useMemo(() => themedDialpadStyle(isMobile, theme), [theme, isMobile]);
@@ -52,7 +58,8 @@ export const SendDtmfDialpad = (props: SendDtmfDialpadProps): JSX.Element => {
                   styles={dialpadStyle}
                   {...dialpadProps}
                   showDeleteButton={false}
-                  showFormatting={false}
+                  textFieldValue={textFieldValue}
+                  onChange={onChange}
                   strings={strings}
                   isMobile={isMobile}
                 />
