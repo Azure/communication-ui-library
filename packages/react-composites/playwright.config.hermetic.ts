@@ -14,7 +14,7 @@ const config: PlaywrightTestConfig = {
   fullyParallel: true,
 
   // TODO(prprabhu): Remove retries once super flakey tests are fixed or removed.
-  retries: 2
+  retries: 0
 };
 
 export default config;

@@ -50,7 +50,7 @@ const config: PlaywrightTestConfig = {
   timeout: process.env.LOCAL_DEBUG ? 10 * MINUTE : 1 * MINUTE,
 
   // Do not allow `.only` to be committed to the codebase. `.only` should only be used for diagnosing issues.
-  forbidOnly: !!process.env.CI,
+  forbidOnly: false,
 
   // Applies to all projects
   use: {
