@@ -160,31 +160,24 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
     case roomNotFoundPageTrampoline():
       /* @conditional-compile-remove(rooms) */
       pageElement = (
-        <>
-          {
-            /* @conditional-compile-remove(rooms) */ <NoticePage
-              iconName="InvalidRoom"
-              title={locale.strings.call.roomNotFoundTitle}
-              moreDetails={locale.strings.call.roomNotFoundDetails}
-              dataUiId={'room-not-found-page'}
-            />
-          }
-        </>
+        <NoticePage
+          iconName="InvalidRoom"
+          title={locale.strings.call.roomNotFoundTitle}
+          moreDetails={locale.strings.call.roomNotFoundDetails}
+          dataUiId={'room-not-found-page'}
+        />
       );
       break;
     /* @conditional-compile-remove(rooms) */
     case notInvitedToRoomPageTrampoline(): {
+      /* @conditional-compile-remove(rooms) */
       pageElement = (
-        <>
-          {
-            /* @conditional-compile-remove(rooms) */ <NoticePage
-              iconName="InvalidRoom"
-              title={locale.strings.call.notInvitedToRoomTitle}
-              moreDetails={locale.strings.call.notInvitedToRoomDetails}
-              dataUiId={'not-invited-to-room-page'}
-            />
-          }
-        </>
+        <NoticePage
+          iconName="InvalidRoom"
+          title={locale.strings.call.notInvitedToRoomTitle}
+          moreDetails={locale.strings.call.notInvitedToRoomDetails}
+          dataUiId={'not-invited-to-room-page'}
+        />
       );
       break;
     }
