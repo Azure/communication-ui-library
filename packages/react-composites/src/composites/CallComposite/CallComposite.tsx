@@ -157,8 +157,8 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
       );
       break;
     /* @conditional-compile-remove(rooms) */
-    case roomNotFoundPageTrampoline():
-      /* @conditional-compile-remove(rooms) */
+    case roomNotFoundPageTrampoline(): /* @conditional-compile-remove(rooms) */
+    {
       pageElement = (
         <NoticePage
           iconName="InvalidRoom"
@@ -168,9 +168,10 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
         />
       );
       break;
+    }
     /* @conditional-compile-remove(rooms) */
-    case notInvitedToRoomPageTrampoline():
-      /* @conditional-compile-remove(rooms) */
+    case notInvitedToRoomPageTrampoline(): /* @conditional-compile-remove(rooms) */
+    {
       pageElement = (
         <NoticePage
           iconName="InvalidRoom"
@@ -180,6 +181,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
         />
       );
       break;
+    }
     case 'lobby':
       pageElement = (
         <LobbyPage

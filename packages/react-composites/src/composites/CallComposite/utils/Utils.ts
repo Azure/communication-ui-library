@@ -149,10 +149,10 @@ export const getCallCompositePage = (
         return 'leftCall';
       /* @conditional-compile-remove(rooms) */
       case CallEndReasons.ROOM_NOT_FOUND:
-        return 'roomNotFound';
+        return roomNotFoundPageTrampoline();
       /* @conditional-compile-remove(rooms) */
       case CallEndReasons.NOT_INVITED_TO_ROOM:
-        return 'notInvitedToRoom';
+        return notInvitedToRoomPageTrampoline();
     }
   }
 
@@ -214,4 +214,16 @@ export const disableCallControls = (
     });
   }
   return newOptions;
+};
+
+const roomNotFoundPageTrampoline = (): CallCompositePage => {
+  /* @conditional-compile-remove(rooms) */
+  return 'roomNotFound';
+  return 'leftCall';
+};
+
+const notInvitedToRoomPageTrampoline = (): CallCompositePage => {
+  /* @conditional-compile-remove(rooms) */
+  return 'notInvitedToRoom';
+  return 'leftCall';
 };
