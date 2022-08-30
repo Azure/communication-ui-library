@@ -425,7 +425,6 @@ export interface DialpadProps {
     onClickDialpadButton?: (buttonValue: string, buttonIndex: number) => void;
     onSendDtmfTone?: (dtmfTone: DtmfTone) => Promise<void>;
     showDeleteButton?: boolean;
-    showFormatting?: boolean;
     // (undocumented)
     strings?: DialpadStrings;
     // (undocumented)

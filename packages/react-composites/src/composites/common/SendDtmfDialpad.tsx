@@ -94,7 +94,8 @@ export const SendDtmfDialpad = (props: SendDtmfDialpadProps): JSX.Element => {
             <Dialpad
               styles={dialpadStyle}
               {...dialpadProps}
-              showFormatting={false}
+              textFieldValue={textFieldValue}
+              onChange={onChange}
               showDeleteButton={false}
               strings={strings}
               isMobile={isMobile}
