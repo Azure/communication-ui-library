@@ -156,31 +156,34 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
         />
       );
       break;
-    /* @conditional-compile-remove(rooms) */
     case roomNotFoundPageTrampoline():
-      /* @conditional-compile-remove(rooms) */
       pageElement = (
-        <NoticePage
-          iconName="InvalidRoom"
-          title={locale.strings.call.roomNotFoundTitle}
-          moreDetails={locale.strings.call.roomNotFoundDetails}
-          dataUiId={'room-not-found-page'}
-        />
+        <>
+          {
+            /* @conditional-compile-remove(rooms) */ <NoticePage
+              iconName="InvalidRoom"
+              title={locale.strings.call.roomNotFoundTitle}
+              moreDetails={locale.strings.call.roomNotFoundDetails}
+              dataUiId={'room-not-found-page'}
+            />
+          }
+        </>
       );
       break;
-    /* @conditional-compile-remove(rooms) */
-    case notInvitedToRoomPageTrampoline(): {
-      /* @conditional-compile-remove(rooms) */
+    case notInvitedToRoomPageTrampoline():
       pageElement = (
-        <NoticePage
-          iconName="InvalidRoom"
-          title={locale.strings.call.notInvitedToRoomTitle}
-          moreDetails={locale.strings.call.notInvitedToRoomDetails}
-          dataUiId={'not-invited-to-room-page'}
-        />
+        <>
+          {
+            /* @conditional-compile-remove(rooms) */ <NoticePage
+              iconName="InvalidRoom"
+              title={locale.strings.call.notInvitedToRoomTitle}
+              moreDetails={locale.strings.call.notInvitedToRoomDetails}
+              dataUiId={'not-invited-to-room-page'}
+            />
+          }
+        </>
       );
       break;
-    }
     case 'lobby':
       pageElement = (
         <LobbyPage
