@@ -32,7 +32,7 @@ test.describe('Chat Composite E2E Tests', () => {
     );
   });
 
-  test('participant can receive read receipts and readers should show in contextual menu', async ({
+  test.only('participant can receive read receipts and readers should show in contextual menu', async ({
     serverUrl,
     page
   }) => {
