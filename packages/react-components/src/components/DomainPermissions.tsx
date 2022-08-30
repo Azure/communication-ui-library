@@ -2,16 +2,27 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import { Stack, Text } from '@fluentui/react';
+import { Stack, Text, Link, Icon } from '@fluentui/react';
 
 /**
  * @internal
- * props for the Domain Permissions UI.
+ * Props for DomainPermissions component.
  */
 export interface DomainPermissionsProps {
   appName: string;
   onGetTroubleShooting: () => void;
 }
+
+/**
+ * @internal
+ * Strings for DomainPermissions component
+ */
+export interface DomainPermissionsStrings {
+  mainText: string;
+  secondaryText: string;
+  linkText: string;
+}
+
 /**
  * @internal
  */
@@ -20,7 +31,13 @@ export const DomainPermissions = (props: DomainPermissionsProps): JSX.Element =>
 
   return (
     <Stack>
+      <Stack>
+        <Icon iconName={''}></Icon>
+        <Icon iconName={'sparkle'}></Icon>
+        <Icon></Icon>
+      </Stack>
       <Text>{appName}</Text>
+      <Link onClick={onGetTroubleShooting}></Link>
     </Stack>
   );
 };
