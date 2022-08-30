@@ -55,7 +55,7 @@
     "dialpadCloseModalButtonAriaLabel": "Close Dialpad",
     "moreButtonCallingLabel": "More",
     "resumeCallButtonLabel": "Resume",
-    "resumingCallButtonLabel": "Resuming",
+    "resumingCallButtonLabel": "Resuming...",
     "resumeCallButtonAriaLabel": "Resume call",
     "resumingCallButtonAriaLabel": "Resume call",
     "holdScreenLabel": "You're on hold",
