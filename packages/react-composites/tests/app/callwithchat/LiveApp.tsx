@@ -8,14 +8,21 @@ import { _IdentifierProvider } from '@internal/react-components';
 import { CallWithChatAdapter, CallWithChatAdapterState, useAzureCommunicationCallWithChatAdapter } from '../../../src';
 import memoizeOne from 'memoize-one';
 import { fromFlatCommunicationIdentifier } from '@internal/acs-ui-common';
-import { QueryArgs } from './QueryArgs';
+import { CommonQueryArgs, LiveQueryArgs, QueryArgs } from './QueryArgs';
 import { BaseApp } from './BaseApp';
 
 /** @internal */
 export function LiveApp(props: { queryArgs: QueryArgs }): JSX.Element {
   const { queryArgs: args } = props;
+  if (hasRequiredParams(args)) {
+    return <LiveAppImpl queryArgs={args} />;
+  }
   const missingParams = missingRequiredParams(args);
+  return <h3>ERROR: Required parameters {missingParams.join(', ')} not set.</h3>;
+}
 
+export function LiveAppImpl(props: { queryArgs: CommonQueryArgs & LiveQueryArgs }): JSX.Element {
+  const { queryArgs: args } = props;
   const userIdArg = useMemo(
     () => fromFlatCommunicationIdentifier(args.userId) as CommunicationUserIdentifier,
     [args.userId]
@@ -40,11 +47,11 @@ export function LiveApp(props: { queryArgs: QueryArgs }): JSX.Element {
     },
     wrapAdapterForTests
   );
-
-  if (missingParams.length > 0) {
-    return <h3>ERROR: Required parameters {missingParams.join(', ')} not set.</h3>;
-  }
   return <BaseApp queryArgs={args} adapter={adapter} />;
+}
+
+function hasRequiredParams(args: QueryArgs): args is LiveQueryArgs & CommonQueryArgs {
+  return missingRequiredParams(args).length === 0;
 }
 
 const wrapAdapterForTests = async (adapter: CallWithChatAdapter): Promise<CallWithChatAdapter> => {

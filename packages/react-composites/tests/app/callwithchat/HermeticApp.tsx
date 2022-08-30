@@ -3,12 +3,11 @@
 
 import React, { useEffect, useMemo, useState } from 'react';
 
-import { QueryArgs } from './QueryArgs';
+import { CommonQueryArgs, HermeticQueryArgs, QueryArgs } from './QueryArgs';
 import { MockCallAdapter } from '../lib/MockCallAdapter';
 import { useFakeChatAdapters } from '../lib/useFakeChatAdapters';
 import type { CallAdapter } from '../../../src';
 import { _createAzureCommunicationCallWithChatAdapterFromAdapters } from '../../../src';
-import { FakeChatAdapterArgs, MockCallAdapterState } from '../../common';
 import { BaseApp } from './BaseApp';
 
 /**
@@ -33,31 +32,21 @@ export function HermeticApp(props: { queryArgs: QueryArgs }): JSX.Element {
       </h3>
     );
   }
-  return (
-    <HermeticAppImpl
-      queryArgs={queryArgs}
-      fakeChatAdapterArgs={queryArgs.fakeChatAdapterArgs}
-      mockCallAdapterState={queryArgs.mockCallAdapterState}
-    />
-  );
+  return <HermeticAppImpl queryArgs={queryArgs as HermeticQueryArgs & CommonQueryArgs} />;
 }
 
-function HermeticAppImpl(props: {
-  queryArgs: QueryArgs;
-  fakeChatAdapterArgs: FakeChatAdapterArgs;
-  mockCallAdapterState: MockCallAdapterState;
-}): JSX.Element {
-  const { queryArgs, fakeChatAdapterArgs, mockCallAdapterState } = props;
+function HermeticAppImpl(props: { queryArgs: HermeticQueryArgs & CommonQueryArgs }): JSX.Element {
+  const { queryArgs: args } = props;
 
   const [callAdapter, setCallAdapter] = useState<CallAdapter | undefined>(undefined);
   useEffect(() => {
     (async (): Promise<void> => {
-      console.log('Creating mock adapter with args', mockCallAdapterState);
-      setCallAdapter(new MockCallAdapter(mockCallAdapterState));
+      console.log('Creating mock adapter with args', args.mockCallAdapterState);
+      setCallAdapter(new MockCallAdapter(args.mockCallAdapterState));
     })();
-  }, [mockCallAdapterState]);
+  }, [args.mockCallAdapterState]);
 
-  const chatAdapters = useFakeChatAdapters(fakeChatAdapterArgs);
+  const chatAdapters = useFakeChatAdapters(args.fakeChatAdapterArgs);
   const callWithChatAdapter = useMemo(
     () =>
       !!callAdapter && !!chatAdapters?.local
@@ -66,7 +55,7 @@ function HermeticAppImpl(props: {
     [callAdapter, chatAdapters]
   );
 
-  return <BaseApp queryArgs={queryArgs} adapter={callWithChatAdapter} />;
+  return <BaseApp queryArgs={args} adapter={callWithChatAdapter} />;
 }
 
 /** @internal */

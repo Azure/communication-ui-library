@@ -3,17 +3,43 @@
 
 import type { FakeChatAdapterArgs, MockCallAdapterState } from '../../common';
 
-export interface QueryArgs {
-  displayName?: string;
-  endpoint?: string;
-  groupId?: string;
-  threadId?: string;
-  token?: string;
-  userId?: string;
-
-  fakeChatAdapterArgs?: FakeChatAdapterArgs;
-  mockCallAdapterState?: MockCallAdapterState;
+/**
+ * Arguments specific to the <LiveApp />
+ *
+ * @private
+ */
+export interface LiveQueryArgs {
+  displayName: string;
+  endpoint: string;
+  groupId: string;
+  threadId: string;
+  token: string;
+  userId: string;
 }
+
+/**
+ * Arguments specific to the <HermeticApp />
+ *
+ * @private
+ */
+export interface HermeticQueryArgs {
+  fakeChatAdapterArgs: FakeChatAdapterArgs;
+  mockCallAdapterState: MockCallAdapterState;
+}
+
+/**
+ * Common arguments (e.g. to control composite behavior).
+ *
+ * @private
+ */
+export type CommonQueryArgs = {};
+
+/**
+ * All query arguments accepted by the test app.
+ *
+ * @private
+ */
+export type QueryArgs = Partial<LiveQueryArgs> & Partial<HermeticQueryArgs> & CommonQueryArgs;
 
 export function parseQueryArgs(): QueryArgs {
   const urlSearchParams = new URLSearchParams(window.location.search);
