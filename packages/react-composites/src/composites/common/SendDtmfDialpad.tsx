@@ -39,7 +39,7 @@ export const SendDtmfDialpad = (props: SendDtmfDialpadProps): JSX.Element => {
 
   const [textFieldValue, setTextFieldValue] = useState<string>();
 
-  const onChange = (input: string) => {
+  const onChange = (input: string): void => {
     setTextFieldValue(input);
   };
 
