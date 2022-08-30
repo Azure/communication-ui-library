@@ -65,7 +65,6 @@ export const AddPeopleDropdown = (props: AddPeopleDropdownProps): JSX.Element =>
         preventDismissOnEvent
       },
       onMenuOpened(contextualMenu?) {
-        console.log('actioned' + announcerStrings);
         if (announcerStrings !== undefined) {
           setAnnouncerStrings(undefined);
         }
