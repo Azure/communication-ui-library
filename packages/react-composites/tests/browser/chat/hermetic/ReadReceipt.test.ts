@@ -1,12 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { ChatParticipant } from '@azure/communication-chat';
-import { CommunicationIdentifier } from '@azure/communication-common';
-import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
-import { ElementHandle, expect, Page } from '@playwright/test';
+import { expect } from '@playwright/test';
+import { setHiddenChatCompositeVisibility } from '../../common/hermeticChatTestHelpers';
 import { sendMessage, waitForMessageDelivered, waitForMessageSeen } from '../../common/chatTestHelpers';
-import { dataUiId, stableScreenshot, waitForSelector } from '../../common/utils';
+import { dataUiId, pageClick, stableScreenshot, waitForSelector } from '../../common/utils';
 import { buildUrlForChatAppUsingFakeAdapter, DEFAULT_FAKE_CHAT_ADAPTER_ARGS, test } from './fixture';
 
 test.describe('Chat Composite E2E Tests', () => {
@@ -18,17 +16,16 @@ test.describe('Chat Composite E2E Tests', () => {
         participantsWithHiddenComposites: [messageReader]
       })
     );
-    await setParticipantAbleToSeeMessages(page, messageReader, false);
+    await setHiddenChatCompositeVisibility(page, messageReader, false);
 
-    const testMessageText = 'How the turn tables';
-    await sendMessage(page, testMessageText);
+    await sendMessage(page, 'How the turn tables');
     await waitForMessageDelivered(page);
     expect(await stableScreenshot(page, { stubMessageTimestamps: true })).toMatchSnapshot('sent-messages.png');
 
-    await setParticipantAbleToSeeMessages(page, messageReader, true);
+    await setHiddenChatCompositeVisibility(page, messageReader, true);
     await waitForMessageSeen(page);
 
-    await page.locator(dataUiId('chat-composite-message-status-icon')).click();
+    await pageClick(page, dataUiId('chat-composite-message-status-icon'));
     await waitForSelector(page, dataUiId('chat-composite-message-tooltip'));
     expect(await stableScreenshot(page, { stubMessageTimestamps: true, dismissTooltips: false })).toMatchSnapshot(
       'read-message-tooltip-text.png'
@@ -47,15 +44,14 @@ test.describe('Chat Composite E2E Tests', () => {
     );
 
     DEFAULT_FAKE_CHAT_ADAPTER_ARGS.remoteParticipants.forEach(async (participant) => {
-      await setParticipantAbleToSeeMessages(page, participant, false);
+      await setHiddenChatCompositeVisibility(page, participant, false);
     });
 
-    const testMessageText = 'How the turn tables';
-    await sendMessage(page, testMessageText);
+    await sendMessage(page, 'How the turn tables');
     await waitForMessageDelivered(page);
 
     DEFAULT_FAKE_CHAT_ADAPTER_ARGS.remoteParticipants.forEach(async (participant) => {
-      await setParticipantAbleToSeeMessages(page, participant, true);
+      await setHiddenChatCompositeVisibility(page, participant, true);
     });
     await waitForMessageSeen(page);
 
@@ -67,31 +63,3 @@ test.describe('Chat Composite E2E Tests', () => {
     expect(await stableScreenshot(page)).toMatchSnapshot('read-message-contextualMenu.png');
   });
 });
-
-async function getHiddenCompositeHandleOfParticipant(
-  page: Page,
-  participantIdentifier: CommunicationIdentifier
-): Promise<ElementHandle<SVGElement | HTMLElement>> {
-  return await waitForSelector(
-    page,
-    `[id="hidden-composite-${toFlatCommunicationIdentifier(participantIdentifier)}"]`,
-    {
-      state: 'attached'
-    }
-  );
-}
-
-async function setParticipantAbleToSeeMessages(
-  page: Page,
-  participant: ChatParticipant,
-  isAble: boolean
-): Promise<void> {
-  const messageReaderCompositeHandle = await getHiddenCompositeHandleOfParticipant(page, participant.id);
-  if (isAble) {
-    // Display the hidden composite so that sent messages will be seen
-    await messageReaderCompositeHandle.evaluate((node) => (node.style.display = 'block'));
-  } else {
-    // Do not display the hidden composite so that messages sent will not be seen
-    await messageReaderCompositeHandle.evaluate((node) => (node.style.display = 'none'));
-  }
-}
