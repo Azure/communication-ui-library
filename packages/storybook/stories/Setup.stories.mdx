@@ -10,16 +10,15 @@ import indexText from '!!raw-loader!./snippets/ReactIndex.snippet.tsx';
 
 # Setting up your app to use Azure Communications UI Library
 
-Currently the Azure Communications UI library supports react versions `>= 16.8.0` or ` < 18`
+Currently the Azure Communications UI library supports react versions `>=16.8.0` and `< 18`
 
-Using the UI library in react you will need to downgrade the version of react that you are
-currently getting from `create-react-app` since it creates a project
-that runs on react 18. This page talks about packages that need downgrading and files
+When following this setup guide, the react version bundled with the `create-react-app` will need
+to be downgraded from react 18 to a supported react version. This page will cover which packages that need downgrading and files
 that need to be edited to get you up and running.
 
 ## Prerequisites
 
-Before you get started make sure you have all of these things setup and ready to go.
+Before you get started make sure you have all following prerequisites set up and ready to go.
 
 - An Azure account with an active subscription. [Create an account for free](https://azure.microsoft.com/free/?WT.mc_id=A261C142F).
 - [Node.js](https://nodejs.org/) Active LTS and Maintenance LTS versions (Node 14.19.0 and above).
@@ -115,12 +114,11 @@ npm install @azure/communication-calling@1.6.1-beta.1
 ### Testing your app
 
 You need to downgrade or consider removing the provided `App.test.tsx` file. This is because it is
-using the new testing library `@testing-library/react` which is not compatible with other versions of
-react. If this file is left alone the app will not build correctly in the next step.
+using the new testing library `@testing-library/react` which is not compatible with versions of react `< 18`. If this file is left alone the app will not build correctly in the next step.
 
 ### Run Create React App
 
-Finally once all of these things have been done you should run:
+Finally, you can now run the app using the command below:
 
 ```bash
 npm run start
