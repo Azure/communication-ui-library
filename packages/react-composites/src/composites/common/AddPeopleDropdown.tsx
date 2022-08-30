@@ -64,6 +64,7 @@ export const AddPeopleDropdown = (props: AddPeopleDropdownProps): JSX.Element =>
       calloutProps: {
         preventDismissOnEvent
       },
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       onMenuOpened(contextualMenu?) {
         if (announcerStrings !== undefined) {
           setAnnouncerStrings(undefined);
