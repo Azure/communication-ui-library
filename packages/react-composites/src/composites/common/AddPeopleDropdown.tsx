@@ -47,7 +47,7 @@ export const AddPeopleDropdown = (props: AddPeopleDropdownProps): JSX.Element =>
   const theme = useTheme();
 
   const { inviteLink, strings, mobileView, onAddParticipant, alternateCallerId } = props;
-  console.log(strings);
+
   const [showDialpad, setShowDialpad] = useState(false);
 
   const [announcerStrings, setAnnouncerStrings] = useState<string>();
@@ -63,6 +63,12 @@ export const AddPeopleDropdown = (props: AddPeopleDropdownProps): JSX.Element =>
       useTargetWidth: true,
       calloutProps: {
         preventDismissOnEvent
+      },
+      onMenuOpened(contextualMenu?) {
+        console.log('actioned' + announcerStrings);
+        if (announcerStrings !== undefined) {
+          setAnnouncerStrings(undefined);
+        }
       }
     };
 
@@ -99,7 +105,8 @@ export const AddPeopleDropdown = (props: AddPeopleDropdownProps): JSX.Element =>
     strings.copyInviteLinkButtonLabel,
     strings.copyInviteLinkActionedAriaLabel,
     strings.openDialpadButtonLabel,
-    copyLinkButtonStylesThemed
+    copyLinkButtonStylesThemed,
+    announcerStrings
   ]);
 
   const onDismissDialpad = (): void => {
