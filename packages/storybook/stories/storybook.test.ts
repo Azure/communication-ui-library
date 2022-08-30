@@ -57,4 +57,9 @@ describe('storybook snapshot tests', () => {
       });
     }
   });
+  // The test below is required to avoid an intermittent error when generating new storybook pages
+  // Particularly, npx jest outputs error "Your test suite must contain at least one test."
+  test('fake test to prevent "no tests found error"', () => {
+    expect(true).toBeTruthy();
+  });
 });

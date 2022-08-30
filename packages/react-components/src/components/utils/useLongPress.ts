@@ -8,7 +8,8 @@ import { useRef, useState } from 'react';
  */
 export default function useLongPress(
   onClick: () => void,
-  onLongPress: () => void
+  onLongPress: () => void,
+  isMobile: boolean
 ): {
   handlers: {
     onClick: () => void;
@@ -32,6 +33,10 @@ export default function useLongPress(
   }
 
   function handleOnClick(): void {
+    // when it's mobile use ontouchstart and ontouchend to fire onclick and onlongpress event
+    if (isMobile) {
+      return;
+    }
     onClick();
     if (isLongPress) {
       onLongPress();
@@ -64,6 +69,10 @@ export default function useLongPress(
   }
 
   function handleOnTouchEnd(): void {
+    if (isMobile) {
+      isLongPress ? onLongPress() : onClick();
+    }
+
     timerRef.current && clearTimeout(timerRef.current);
   }
 

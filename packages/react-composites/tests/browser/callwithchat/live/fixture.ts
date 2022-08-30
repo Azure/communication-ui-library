@@ -1,15 +1,15 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { TEST_PARTICIPANTS } from '../common/constants';
-import { createCallWithChatUsers, usePagePerParticipantWithCallPermissions } from '../common/fixtureHelpers';
-import { WorkerFixture, CallWithChatUserType } from '../common/fixtureTypes';
-import { createTestServer } from '../common/server';
+import { TEST_PARTICIPANTS } from '../../common/constants';
+import { createCallWithChatUsers, usePagePerParticipantWithCallPermissions } from '../../common/fixtureHelpers';
+import { WorkerFixture, CallWithChatUserType } from '../../common/fixtureTypes';
+import { createTestServer } from '../../common/server';
 import { test as base } from '@playwright/test';
 import path from 'path';
 
 const SERVER_URL = 'http://localhost';
-const APP_DIR = path.join(__dirname, '../../app/callwithchat');
+const APP_DIR = path.join(__dirname, '../../../app/callwithchat');
 
 type CallWithChatWorkerFixture = WorkerFixture<CallWithChatUserType>;
 
