@@ -66,9 +66,7 @@ export const AddPeopleDropdown = (props: AddPeopleDropdownProps): JSX.Element =>
       },
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       onMenuOpened(contextualMenu?) {
-        if (announcerStrings !== undefined) {
-          setAnnouncerStrings(undefined);
-        }
+        setAnnouncerStrings(undefined);
       }
     };
 
