@@ -17,6 +17,7 @@ import {
 import { FakeChatClient, Model } from '@internal/fake-backends';
 import { FakeChatAdapterArgs, FileUpload } from '../../common';
 import { useFakeChatAdapters } from '../lib/useFakeChatAdapters';
+import { HiddenChatComposites } from '../lib/HiddenChatComposites';
 
 const urlSearchParams = new URLSearchParams(window.location.search);
 const params = Object.fromEntries(urlSearchParams.entries());
@@ -97,7 +98,7 @@ export const FakeAdapterApp = (): JSX.Element => {
           />
         </_IdentifierProvider>
       )}
-      {fakeAdapters.remotes && createHiddenComposites(fakeAdapters.remotes)}
+      <HiddenChatComposites adapters={fakeAdapters.remotes} />
     </>
   );
 };
@@ -139,16 +140,4 @@ const sendRemoteFileSharingMessage = (
       }
     }
   );
-};
-
-const createHiddenComposites = (remoteAdapters: ChatAdapter[]): JSX.Element[] => {
-  return remoteAdapters.map((remoteAdapter) => {
-    const userId = toFlatCommunicationIdentifier(remoteAdapter.getState().userId);
-    const compositeID = `hidden-composite-${userId}`;
-    return (
-      <div id={compositeID} key={compositeID} style={{ height: 0, overflow: 'hidden' }}>
-        <ChatComposite adapter={remoteAdapter} options={{ participantPane: true }} />
-      </div>
-    );
-  });
 };
