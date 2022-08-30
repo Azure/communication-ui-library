@@ -4,7 +4,7 @@
 import { ChatParticipant } from '@azure/communication-chat';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { Page } from '@playwright/test';
-import { waitForSelector } from './utils';
+import { perStepLocalTimeout, screenshotOnFailure } from './utils';
 
 /**
  * When using <HiddenChatComposites />, set the visibility of a hidden chat composite.
@@ -13,21 +13,16 @@ import { waitForSelector } from './utils';
  *
  * @private
  */
-export async function setHiddenChatCompositeVisibility(
-  page: Page,
-  participant: ChatParticipant,
-  visibile: boolean
-): Promise<void> {
-  const handle = await page.locator(hiddenCompositeSelector(participant));
-  if (visibile) {
-    // Display the hidden composite so that sent messages will be seen
+export async function temporarilyShowHiddenChatComposite(page: Page, participant: ChatParticipant): Promise<void> {
+  await screenshotOnFailure(page, async () => {
+    const handle = await page.locator(hiddenCompositeSelector(participant));
+    // Temporarily bring chat composite to foreground.
     await handle.evaluate((node) => (node.style.display = 'block'));
-    await waitForSelector(page, hiddenCompositeSelector(participant) + ' >> visible=true');
-  } else {
-    // Do not display the hidden composite so that messages sent will not be seen
+    await handle.waitFor({ state: 'visible', timeout: perStepLocalTimeout() });
+    // Hide it again.
     await handle.evaluate((node) => (node.style.display = 'none'));
-    await waitForSelector(page, hiddenCompositeSelector(participant) + ' >> visible=false');
-  }
+    await handle.waitFor({ state: 'hidden', timeout: perStepLocalTimeout() });
+  });
 }
 
 const hiddenCompositeSelector = (participant: ChatParticipant): string =>

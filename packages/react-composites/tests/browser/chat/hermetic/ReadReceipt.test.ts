@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { expect } from '@playwright/test';
-import { setHiddenChatCompositeVisibility } from '../../common/hermeticChatTestHelpers';
+import { temporarilyShowHiddenChatComposite } from '../../common/hermeticChatTestHelpers';
 import { sendMessage, waitForMessageDelivered, waitForMessageSeen } from '../../common/chatTestHelpers';
 import { dataUiId, pageClick, screenshotOnFailure, stableScreenshot, waitForSelector } from '../../common/utils';
 import { buildUrlForChatAppUsingFakeAdapter, DEFAULT_FAKE_CHAT_ADAPTER_ARGS, test } from './fixture';
@@ -16,13 +16,12 @@ test.describe('Chat Composite E2E Tests', () => {
         participantsWithHiddenComposites: [messageReader]
       })
     );
-    await setHiddenChatCompositeVisibility(page, messageReader, false);
 
     await sendMessage(page, 'How the turn tables');
     await waitForMessageDelivered(page);
     expect(await stableScreenshot(page, { stubMessageTimestamps: true })).toMatchSnapshot('sent-messages.png');
 
-    await setHiddenChatCompositeVisibility(page, messageReader, true);
+    await temporarilyShowHiddenChatComposite(page, messageReader);
     await waitForMessageSeen(page);
 
     await pageClick(page, dataUiId('chat-composite-message-status-icon'));
@@ -43,16 +42,12 @@ test.describe('Chat Composite E2E Tests', () => {
       })
     );
 
-    DEFAULT_FAKE_CHAT_ADAPTER_ARGS.remoteParticipants.forEach(async (participant) => {
-      await setHiddenChatCompositeVisibility(page, participant, false);
-    });
-
     await sendMessage(page, 'How the turn tables');
     await waitForMessageDelivered(page);
 
-    DEFAULT_FAKE_CHAT_ADAPTER_ARGS.remoteParticipants.forEach(async (participant) => {
-      await setHiddenChatCompositeVisibility(page, participant, true);
-    });
+    for (const participant of DEFAULT_FAKE_CHAT_ADAPTER_ARGS.remoteParticipants) {
+      await temporarilyShowHiddenChatComposite(page, participant);
+    }
     await waitForMessageSeen(page);
 
     await screenshotOnFailure(page, async () => {
