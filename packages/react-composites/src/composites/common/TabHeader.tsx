@@ -25,6 +25,8 @@ type TabHeaderProps = {
   onPeopleButtonClicked?: () => void;
   activeTab: TabHeaderTab;
   strings: CallWithChatCompositeStrings | /* @conditional-compile-remove(one-to-n-calling) */ CallCompositeStrings;
+  disableChatButton?: boolean;
+  disablePeopleButton?: boolean;
 };
 
 /**
@@ -73,6 +75,7 @@ export const TabHeader = (props: TabHeaderProps): JSX.Element => {
             styles={mobilePaneButtonStylesThemed}
             checked={activeTab === 'chat'}
             role={'tab'}
+            disabled={props.disableChatButton}
           >
             {strings.chatButtonLabel}
           </DefaultButton>
@@ -85,6 +88,7 @@ export const TabHeader = (props: TabHeaderProps): JSX.Element => {
             styles={mobilePaneButtonStylesThemed}
             checked={activeTab === 'people'}
             role={'tab'}
+            disabled={props.disablePeopleButton}
           >
             {strings.peopleButtonLabel}
           </DefaultButton>
