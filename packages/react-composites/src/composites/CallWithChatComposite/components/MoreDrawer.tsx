@@ -24,6 +24,7 @@ import {
 import { usePropsFor } from '../../CallComposite/hooks/usePropsFor';
 /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
 import { useLocale } from '../../localization';
+import { isDisabled } from '../../CallComposite/utils';
 
 /** @private */
 export interface MoreDrawerStrings {
@@ -183,7 +184,8 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
         },
         text: mic.name,
         onItemClick: onMicrophoneItemClick,
-        secondaryIconProps: isDeviceSelected(mic, props.selectedMicrophone) ? { iconName: 'Accept' } : undefined
+        secondaryIconProps: isDeviceSelected(mic, props.selectedMicrophone) ? { iconName: 'Accept' } : undefined,
+        disabled: drawerSelectionOptions !== false ? isDisabled(drawerSelectionOptions.microphoneButton) : undefined
       })),
       secondaryText: props.selectedMicrophone?.name
     });
@@ -193,15 +195,18 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
       itemKey: 'people',
       text: props.strings.peopleButtonLabel,
       iconProps: { iconName: 'MoreDrawerPeople' },
-      onItemClick: props.onPeopleButtonClicked
+      onItemClick: props.onPeopleButtonClicked,
+      disabled: drawerSelectionOptions !== false ? isDisabled(drawerSelectionOptions.peopleButton) : undefined
     });
   }
 
   /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
-  if (drawerSelectionOptions !== false && isEnabled(drawerSelectionOptions?.peopleButton)) {
+  if (drawerSelectionOptions !== false && isEnabled(drawerSelectionOptions?.holdButton)) {
     drawerMenuItems.push({
       itemKey: 'holdButtonKey',
-      disabled: props.disableButtonsForHoldScreen,
+      disabled:
+        props.disableButtonsForHoldScreen ||
+        (drawerSelectionOptions !== false ? isDisabled(drawerSelectionOptions.holdButton) : undefined),
       text: localeStrings.component.strings.holdButton.tooltipOffContent,
       onItemClick: () => {
         holdButtonProps.onToggleHold();
@@ -212,7 +217,7 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
 
   /*@conditional-compile-remove(PSTN-calls) */
   // dtmf tone sending only works for 1:1 PSTN call
-  if (drawerSelectionOptions !== false && isEnabled(drawerSelectionOptions?.peopleButton) && props.onClickShowDialpad) {
+  if (drawerSelectionOptions !== false && props.onClickShowDialpad) {
     drawerMenuItems.push({
       itemKey: 'showDialpadKey',
       disabled: props.disableButtonsForHoldScreen,

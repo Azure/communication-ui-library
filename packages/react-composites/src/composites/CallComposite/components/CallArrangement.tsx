@@ -131,6 +131,9 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
           onPeopleButtonClicked={
             showShowPeopleTabHeaderButton(props.callControlProps.options) ? selectPeople : undefined
           }
+          callControls={
+            typeof props.callControlProps.options !== 'boolean' ? props.callControlProps.options : undefined
+          }
           modalLayerHostId={props.modalLayerHostId}
           activePane={activePane}
           mobileView={props.mobileView}
