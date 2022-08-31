@@ -33,6 +33,9 @@ import { usePropsFor } from '../hooks/usePropsFor';
 import { buttonFlyoutIncreasedSizeStyles } from '../styles/Buttons.styles';
 /* @conditional-compile-remove(PSTN-calls) */
 import { SendDtmfDialpad } from '../../common/SendDtmfDialpad';
+/* @conditional-compile-remove(PSTN-calls) */
+import { useAdapter } from '../adapter/CallAdapterProvider';
+import { isDisabled } from '../utils';
 
 /**
  * @private
@@ -97,11 +100,14 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
   /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
   const holdButtonProps = usePropsFor(HoldButton);
 
+  /* @conditional-compile-remove(PSTN-calls) */
+  const alternateCallerId = useAdapter().getState().alternateCallerId;
+
   /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */
   const moreButtonContextualMenuItems = (): IContextualMenuItem[] => {
     const items: IContextualMenuItem[] = [];
 
-    if (props.isMobile && props.onPeopleButtonClicked) {
+    if (props.isMobile && props.onPeopleButtonClicked && isEnabled(options?.participantsButton)) {
       items.push({
         key: 'peopleButtonKey',
         text: localeStrings.component.strings.participantsButton.label,
@@ -110,10 +116,11 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
             props.onPeopleButtonClicked();
           }
         },
-        iconProps: { iconName: 'ControlButtonParticipants', styles: { root: { lineHeight: 0 } } },
+        iconProps: { iconName: 'ControlButtonParticipantsContextualMenuItem', styles: { root: { lineHeight: 0 } } },
         itemProps: {
           styles: buttonFlyoutIncreasedSizeStyles
         },
+        disabled: isDisabled(options?.participantsButton),
         ['data-ui-id']: 'call-composite-more-menu-people-button'
       });
     }
@@ -124,7 +131,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
       onClick: () => {
         holdButtonProps.onToggleHold();
       },
-      iconProps: { iconName: 'HoldCall', styles: { root: { lineHeight: 0 } } },
+      iconProps: { iconName: 'HoldCallContextualMenuItem', styles: { root: { lineHeight: 0 } } },
       itemProps: {
         styles: buttonFlyoutIncreasedSizeStyles
       },
@@ -133,17 +140,20 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
     });
 
     /* @conditional-compile-remove(PSTN-calls) */
-    items.push({
-      key: 'showDialpadKey',
-      text: localeStrings.strings.call.openDtmfDialpadLabel,
-      onClick: () => {
-        setShowDialpad(true);
-      },
-      iconProps: { iconName: 'Dialpad', styles: { root: { lineHeight: 0 } } },
-      itemProps: {
-        styles: buttonFlyoutIncreasedSizeStyles
-      }
-    });
+    // dtmf tone sending only works for 1:1 PSTN call
+    if (alternateCallerId) {
+      items.push({
+        key: 'showDialpadKey',
+        text: localeStrings.strings.call.openDtmfDialpadLabel,
+        onClick: () => {
+          setShowDialpad(true);
+        },
+        iconProps: { iconName: 'PeoplePaneOpenDialpad', styles: { root: { lineHeight: 0 } } },
+        itemProps: {
+          styles: buttonFlyoutIncreasedSizeStyles
+        }
+      });
+    }
 
     return items;
   };
@@ -252,10 +262,3 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
 };
 
 const isEnabled = (option: unknown): boolean => option !== false;
-
-const isDisabled = (option?: boolean | { disabled: boolean }): boolean => {
-  if (typeof option !== 'boolean') {
-    return !!option?.disabled;
-  }
-  return option;
-};

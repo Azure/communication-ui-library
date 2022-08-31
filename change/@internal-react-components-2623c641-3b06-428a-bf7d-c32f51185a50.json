@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Changes to add remove button permissions for mobile view & hermetic tests for remove button",
+  "packageName": "@internal/react-components",
+  "email": "97124699+prabhjot-msft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

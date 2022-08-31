@@ -21,6 +21,8 @@ interface HoldPaneStrings {
   holdScreenLabel: string;
   resumeCallButtonLabel: string;
   resumeCallButtonAriaLabel: string;
+  resumingCallButtonLabel: string;
+  resumingCallButtonAriaLabel: string;
 }
 
 /**
@@ -40,6 +42,7 @@ export const HoldPane = (): JSX.Element => {
   const elapsedTime = getReadableTime(time);
 
   const startTime = useRef(performance.now());
+  const [resumingCall, setResumingCall] = useState<boolean>(false);
 
   React.useEffect(() => {
     const interval = setInterval(() => {
@@ -56,15 +59,22 @@ export const HoldPane = (): JSX.Element => {
         <Text styles={holdPaneTimerStyles}>{elapsedTime}</Text>
         <Text styles={holdPaneLabelStyles}>{strings.holdScreenLabel}</Text>
         <PrimaryButton
-          text={strings.resumeCallButtonLabel}
-          ariaLabel={strings.resumeCallButtonAriaLabel}
+          text={!resumingCall ? strings.resumeCallButtonLabel : strings.resumingCallButtonLabel}
+          ariaLabel={!resumingCall ? strings.resumeCallButtonAriaLabel : strings.resumingCallButtonAriaLabel}
           styles={resumeButtonStyles}
-          onClick={() => {
-            /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
-            holdButtonProps.onToggleHold();
+          disabled={resumingCall}
+          onClick={async () => {
+            setResumingCall(true);
+            try {
+              /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+              await holdButtonProps.onToggleHold();
+            } catch (e) {
+              setResumingCall(false);
+              throw e;
+            }
           }}
           data-ui-id="hold-page-resume-call-button"
-        />
+        ></PrimaryButton>
       </Stack>
     </Stack>
   );
@@ -97,11 +107,15 @@ const stringsTrampoline = (locale: CompositeLocale): HoldPaneStrings => {
   return {
     holdScreenLabel: locale.strings.call.holdScreenLabel,
     resumeCallButtonLabel: locale.strings.call.resumeCallButtonLabel,
-    resumeCallButtonAriaLabel: locale.strings.call.resumeCallButtonAriaLabel
+    resumeCallButtonAriaLabel: locale.strings.call.resumeCallButtonAriaLabel,
+    resumingCallButtonLabel: locale.strings.call.resumingCallButtonLabel,
+    resumingCallButtonAriaLabel: locale.strings.call.resumingCallButtonAriaLabel
   };
   return {
     holdScreenLabel: '',
     resumeCallButtonLabel: '',
-    resumeCallButtonAriaLabel: ''
+    resumeCallButtonAriaLabel: '',
+    resumingCallButtonLabel: '',
+    resumingCallButtonAriaLabel: ''
   };
 };

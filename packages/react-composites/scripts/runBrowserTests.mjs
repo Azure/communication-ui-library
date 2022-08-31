@@ -23,7 +23,7 @@ const TESTS = {
   live: {
     call: path.join(TEST_ROOT, 'call', 'live'),
     chat: path.join(TEST_ROOT, 'chat', 'live'),
-    callWithChat: path.join(TEST_ROOT, 'callWithChat')
+    callWithChat: path.join(TEST_ROOT, 'callwithchat', 'live')
   }
 };
 const PLAYWRIGHT_CONFIG = {
