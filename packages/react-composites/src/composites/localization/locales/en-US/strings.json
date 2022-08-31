@@ -52,14 +52,14 @@
     "dialpadStartCallButtonLabel": "Call",
     "dialpadModalTitle": "Dial Phone Number",
     "dialpadModalAriaLabel": "Dialpad",
-    "dialpadCloseModalButtonAriaLabel": "Close Dialpad",
+    "dialpadCloseModalButtonAriaLabel": "Close dialpad",
     "moreButtonCallingLabel": "More",
     "resumeCallButtonLabel": "Resume",
-    "resumingCallButtonLabel": "Resuming",
+    "resumingCallButtonLabel": "Resuming...",
     "resumeCallButtonAriaLabel": "Resume call",
     "resumingCallButtonAriaLabel": "Resume call",
     "holdScreenLabel": "You're on hold",
-    "openDtmfDialpadLabel": "Show Dialpad",
+    "openDtmfDialpadLabel": "Show dialpad",
     "dtmfDialpadPlaceHolderText": "Enter number"
   },
   "chat": {
@@ -94,8 +94,8 @@
     "dialpadStartCallButtonLabel": "Call",
     "dialpadModalTitle": "Dial Phone Number",
     "dialpadModalAriaLabel": "Dialpad",
-    "dialpadCloseModalButtonAriaLabel": "Close Dialpad",
-    "openDtmfDialpadLabel": "Show Dialpad",
+    "dialpadCloseModalButtonAriaLabel": "Close dialpad",
+    "openDtmfDialpadLabel": "Show dialpad",
     "dtmfDialpadPlaceHolderText": "Enter number"
   }
 }
