@@ -63,7 +63,6 @@ enum CallEndReasons {
 
 const getCallEndReason = (call: CallState): CallEndReasons => {
   const remoteParticipantsEndedArray = Array.from(Object.values(call.remoteParticipantsEnded));
-  console.log('Call END Reason', call.callEndReason);
   /**
    * Handle the special case in a PSTN call where removing the last user kicks the caller out of the call.
    * The code and subcode is the same as when a user is removed from a teams interop call.
