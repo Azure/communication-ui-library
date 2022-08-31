@@ -20,7 +20,7 @@ test.describe('Dtmf dialpad tests', async () => {
 
     await waitForSelector(page, dataUiId('call-with-chat-composite-more-button'));
     await pageClick(page, dataUiId('call-with-chat-composite-more-button'));
-    const moreButtonShowDialpadButton = await page.$('div[role="menu"] >> text="Show Dialpad"');
+    const moreButtonShowDialpadButton = await page.$('div[role="menu"] >> text="Show dialpad"');
     await moreButtonShowDialpadButton?.click();
     expect(await stableScreenshot(page)).toMatchSnapshot(`Call-Dtmf-Dialpad.png`);
   });

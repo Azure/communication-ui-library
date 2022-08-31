@@ -35,6 +35,7 @@ import { buttonFlyoutIncreasedSizeStyles } from '../styles/Buttons.styles';
 import { SendDtmfDialpad } from '../../common/SendDtmfDialpad';
 /* @conditional-compile-remove(PSTN-calls) */
 import { useAdapter } from '../adapter/CallAdapterProvider';
+import { isDisabled } from '../utils';
 
 /**
  * @private
@@ -106,7 +107,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
   const moreButtonContextualMenuItems = (): IContextualMenuItem[] => {
     const items: IContextualMenuItem[] = [];
 
-    if (props.isMobile && props.onPeopleButtonClicked) {
+    if (props.isMobile && props.onPeopleButtonClicked && isEnabled(options?.participantsButton)) {
       items.push({
         key: 'peopleButtonKey',
         text: localeStrings.component.strings.participantsButton.label,
@@ -119,6 +120,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
         itemProps: {
           styles: buttonFlyoutIncreasedSizeStyles
         },
+        disabled: isDisabled(options?.participantsButton),
         ['data-ui-id']: 'call-composite-more-menu-people-button'
       });
     }
@@ -260,10 +262,3 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
 };
 
 const isEnabled = (option: unknown): boolean => option !== false;
-
-const isDisabled = (option?: boolean | { disabled: boolean }): boolean => {
-  if (typeof option !== 'boolean') {
-    return !!option?.disabled;
-  }
-  return option;
-};

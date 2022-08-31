@@ -335,7 +335,6 @@ export const Dialpad = (props: DialpadProps): JSX.Element => {
     return '' as unknown as DialpadStrings;
   };
   const strings = { ...dialpadLocaleStringsTrampoline(), ...props.strings };
-
   return <DialpadContainer strings={strings} {...props} />;
 };
 
