@@ -51,18 +51,16 @@ export const tileInfoContainerStyle = mergeStyles({
 /**
  * @private
  */
-export const disabledVideoHint = (showLabel: boolean): IStyle =>
-  mergeStyles({
-    flexGrow: showLabel ? 0 : 1,
-    backgroundColor: 'inherit',
-    boxShadow: 'none',
-    textAlign: 'left',
-    overflow: 'hidden',
-    whiteSpace: 'nowrap',
-    alignItems: 'center',
-    padding: '0.15rem',
-    maxWidth: '100%'
-  });
+export const disabledVideoHint = mergeStyles({
+  backgroundColor: 'inherit',
+  boxShadow: 'none',
+  textAlign: 'left',
+  overflow: 'hidden',
+  whiteSpace: 'nowrap',
+  alignItems: 'center',
+  padding: '0.15rem',
+  maxWidth: '100%'
+});
 
 /**
  * @private
