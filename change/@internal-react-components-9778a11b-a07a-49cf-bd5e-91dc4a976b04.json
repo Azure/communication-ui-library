@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Export Announcer component to be used internally.",
+  "packageName": "@internal/react-components",
+  "email": "94866715+dmceachernmsft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

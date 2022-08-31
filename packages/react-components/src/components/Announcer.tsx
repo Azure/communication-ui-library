@@ -5,7 +5,7 @@ import { IStackStyles, Stack } from '@fluentui/react';
 import React from 'react';
 
 /**
- * @private
+ * @internal
  *  aria props for this hidden component.
  */
 export type AnnouncerProps = {
@@ -14,7 +14,7 @@ export type AnnouncerProps = {
 };
 
 /**
- * @private
+ * @internal
  * Announcer component to maker aria announcements on actions
  */
 export const Announcer = (props: AnnouncerProps): JSX.Element => {
