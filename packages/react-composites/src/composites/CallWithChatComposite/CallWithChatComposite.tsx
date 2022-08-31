@@ -440,7 +440,10 @@ export const CallWithChatComposite = (props: CallWithChatCompositeProps): JSX.El
 
 const hasJoinedCallFn = (page: CallCompositePage, callStatus: CallState): boolean => {
   /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(one-to-n-calling) */
-  return (page === 'call' && callStatus === 'Connected') || (page === 'hold' && callStatus === 'LocalHold');
+  return (
+    (page === 'call' && (callStatus === 'Connected' || callStatus === 'RemoteHold')) ||
+    (page === 'hold' && callStatus === 'LocalHold')
+  );
   return page === 'call' && callStatus === 'Connected';
 };
 
