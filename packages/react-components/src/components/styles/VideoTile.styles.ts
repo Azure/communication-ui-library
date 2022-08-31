@@ -87,7 +87,7 @@ export const displayNameStyle: IStyle = {
  * @private
  */
 export const iconContainerStyle: IStyle = {
-  height: 'auto',
+  height: '100%',
   alignItems: 'center',
   '& svg': {
     display: 'block'
@@ -108,6 +108,6 @@ export const participantStateStringStyles = (showLabel: boolean): IStyle => {
     overflow: 'hidden',
     textOverflow: 'ellipsis',
     whiteSpace: 'nowrap',
-    padding: '0.2rem'
+    padding: '0.15rem'
   };
 };
