@@ -68,6 +68,7 @@ const getCallEndReason = (call: CallState): CallEndReasons => {
    * The code and subcode is the same as when a user is removed from a teams interop call.
    * Hence, we look at the last remote participant removed to determine if the last participant removed was a phone number.
    * If yes, the caller was kicked out of the call, but we need to show them that they left the call.
+   * Note: This check will only work for 1:1 PSTN Calls. The subcode is different for 1:N PSTN calls, and we do not need to handle that case.
    */
   if (
     remoteParticipantsEndedArray.length === 1 &&
