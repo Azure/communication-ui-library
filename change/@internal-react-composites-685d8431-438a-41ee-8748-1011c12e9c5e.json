@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Sow \"You Left the Call\" screen when you remove the last PSTN userShow \"You were removed\" screen when a PSTN user ha",
+  "packageName": "@internal/react-composites",
+  "email": "anjulgarg@live.com",
+  "dependentChangeType": "patch"
+}
