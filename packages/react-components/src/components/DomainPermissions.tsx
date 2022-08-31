@@ -4,7 +4,16 @@
 import React from 'react';
 import { Stack, Text, Link, Icon } from '@fluentui/react';
 import { useLocale } from '../localization';
-import { _formatString } from '@internal/acs-ui-common';
+import { _formatString, _pxToRem } from '@internal/acs-ui-common';
+import {
+  iconBackDropStyles,
+  iconContainerStyles,
+  iconPrimaryStyles,
+  linkTextStyles,
+  primaryTextStyles,
+  secondaryTextStyles,
+  textContainerStyles
+} from './styles/DomainPermissions.styles';
 
 /**
  * @internal
@@ -27,8 +36,11 @@ export interface DomainPermissionsStrings {
 
 /**
  * @internal
+ *
+ * Component to allow Contoso to help their end user with their devices should their permissions be blocked
+ * by their browsers settings.
  */
-export const DomainPermissions = (props: DomainPermissionsProps): JSX.Element => {
+export const _DomainPermissions = (props: DomainPermissionsProps): JSX.Element => {
   const { appName, onGetTroubleShooting } = props;
 
   const locale = useLocale();
@@ -36,15 +48,25 @@ export const DomainPermissions = (props: DomainPermissionsProps): JSX.Element =>
   const strings = locale.strings.DomainPermissions;
 
   return (
-    <Stack>
-      <Stack>
-        <Icon iconName={'ControlButtonCameraOn'}></Icon>
-        <Icon iconName={'sparkle'}></Icon>
-        <Icon iconName={'ControlButtonMicOn'}></Icon>
+    <Stack style={{ padding: '2rem', maxWidth: `${_pxToRem(406)}` }}>
+      <Stack horizontal style={{ padding: '2rem 0' }} horizontalAlign={'space-between'}>
+        <Stack styles={iconContainerStyles} horizontalAlign={'center'}>
+          <Icon styles={iconPrimaryStyles} iconName={'ControlButtonCameraOn'}></Icon>
+          <Icon styles={iconBackDropStyles} iconName={'iconBackdrop'}></Icon>
+        </Stack>
+        <Icon styles={iconPrimaryStyles} iconName={'Sparkle'}></Icon>
+        <Stack styles={iconContainerStyles} horizontalAlign={'center'}>
+          <Icon styles={iconPrimaryStyles} iconName={'ControlButtonMicOn'}></Icon>
+          <Icon styles={iconBackDropStyles} iconName={'iconBackdrop'}></Icon>
+        </Stack>
       </Stack>
-      <Text>{_formatString(strings.mainText, { appName: appName })}</Text>
-      <Text>{strings.secondaryText}</Text>
-      <Link onClick={onGetTroubleShooting}>{strings.linkText}</Link>
+      <Stack styles={textContainerStyles}>
+        <Text styles={primaryTextStyles}>{_formatString(strings.mainText, { appName: appName })}</Text>
+        <Text styles={secondaryTextStyles}>{strings.secondaryText}</Text>
+        <Link styles={linkTextStyles} onClick={onGetTroubleShooting}>
+          {strings.linkText}
+        </Link>
+      </Stack>
     </Stack>
   );
 };
