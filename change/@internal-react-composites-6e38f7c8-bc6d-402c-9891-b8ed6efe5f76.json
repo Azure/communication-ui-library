@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add isMobile to dialpad so dialpad can handle mobile and web clicks differently",
+  "packageName": "@internal/react-composites",
+  "email": "carolinecao@microsoft.com",
+  "dependentChangeType": "patch"
+}
