@@ -288,7 +288,9 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
               </Stack>
             )}
             {participantStateString && (
-              <Text className={mergeStyles(participantStateStringStyles(showLabel))}>{participantStateString}</Text>
+              <Text
+                className={mergeStyles(participantStateStringStyles(showLabel))}
+              >{`(${participantStateString})`}</Text>
             )}
           </Stack>
         )}

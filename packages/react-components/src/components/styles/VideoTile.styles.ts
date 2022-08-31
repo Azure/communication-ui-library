@@ -87,7 +87,7 @@ export const displayNameStyle: IStyle = {
  * @private
  */
 export const iconContainerStyle: IStyle = {
-  height: '100%',
+  height: 'auto',
   alignItems: 'center',
   '& svg': {
     display: 'block'
@@ -99,17 +99,15 @@ export const iconContainerStyle: IStyle = {
  */
 export const participantStateStringStyles = (showLabel: boolean): IStyle => {
   return {
-    textAlign: 'center',
-    minWidth: '3rem',
+    textAlign: showLabel ? 'left' : 'center',
+    minWidth: 'max-content',
     color: 'inherit',
     width: showLabel ? 'auto' : '100%',
-    marginRight: showLabel ? 0 : 'none',
-    marginLeft: showLabel ? 'auto' : 'none',
     fontSize: '0.75rem',
     lineHeight: 'normal',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
     whiteSpace: 'nowrap',
-    padding: '0.25rem'
+    padding: '0.2rem'
   };
 };
