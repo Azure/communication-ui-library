@@ -214,10 +214,10 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
 
   const videoHintWithBorderRadius = mergeStyles(videoHint, { borderRadius: theme.effects.roundedCorner4 });
 
-  const tileInfoStyle = useMemo(
-    () =>
+  const tileInfoStyle = React.useCallback(
+    (canShowLabel: boolean) =>
       mergeStyles(
-        isVideoRendered ? videoHintWithBorderRadius : disabledVideoHint,
+        isVideoRendered ? videoHintWithBorderRadius : disabledVideoHint(canShowLabel),
         getVideoTileOverrideColor(isVideoRendered, theme, 'neutralPrimary'),
         styles?.displayNameContainer
       ),
@@ -275,23 +275,23 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
 
         {(canShowLabel || participantStateString) && (
           <Stack horizontal className={tileInfoContainerStyle} tokens={tileInfoContainerTokens}>
-            {canShowLabel && (
-              <Stack horizontal className={tileInfoStyle}>
+            <Stack horizontal className={tileInfoStyle(!!canShowLabel)}>
+              {canShowLabel && (
                 <Text className={mergeStyles(displayNameStyle)} title={displayName}>
                   {displayName}
                 </Text>
-                {showMuteIndicator && isMuted && (
-                  <Stack className={mergeStyles(iconContainerStyle)}>
-                    <Icon iconName="VideoTileMicOff" />
-                  </Stack>
-                )}
-              </Stack>
-            )}
-            {participantStateString && (
-              <Text
-                className={mergeStyles(participantStateStringStyles(showLabel))}
-              >{`(${participantStateString})`}</Text>
-            )}
+              )}
+              {participantStateString && (
+                <Text
+                  className={mergeStyles(participantStateStringStyles(!!canShowLabel))}
+                >{`(${participantStateString})`}</Text>
+              )}
+              {showMuteIndicator && isMuted && (
+                <Stack className={mergeStyles(iconContainerStyle)}>
+                  <Icon iconName="VideoTileMicOff" />
+                </Stack>
+              )}
+            </Stack>
           </Stack>
         )}
 

@@ -42,24 +42,27 @@ export const overlayContainerStyles: IStyle = {
  */
 export const tileInfoContainerStyle = mergeStyles({
   position: 'absolute',
-  bottom: '0.5rem',
-  left: '0.5rem',
-  width: 'calc(100% - 1rem)'
+  bottom: '0',
+  left: '0',
+  padding: '0.25rem',
+  width: '100%'
 });
 
 /**
  * @private
  */
-export const disabledVideoHint = mergeStyles({
-  backgroundColor: 'inherit',
-  boxShadow: 'none',
-  textAlign: 'left',
-  overflow: 'hidden',
-  whiteSpace: 'nowrap',
-  alignItems: 'center',
-  padding: '0.15rem',
-  maxWidth: '100%'
-});
+export const disabledVideoHint = (showLabel: boolean): IStyle =>
+  mergeStyles({
+    flexGrow: showLabel ? 0 : 1,
+    backgroundColor: 'inherit',
+    boxShadow: 'none',
+    textAlign: 'left',
+    overflow: 'hidden',
+    whiteSpace: 'nowrap',
+    alignItems: 'center',
+    padding: '0.15rem',
+    maxWidth: '100%'
+  });
 
 /**
  * @private
@@ -87,7 +90,7 @@ export const displayNameStyle: IStyle = {
  * @private
  */
 export const iconContainerStyle: IStyle = {
-  height: '100%',
+  margin: 'auto',
   alignItems: 'center',
   '& svg': {
     display: 'block'
