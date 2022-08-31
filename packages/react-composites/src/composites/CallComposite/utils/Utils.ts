@@ -206,3 +206,17 @@ export const disableCallControls = (
   }
   return newOptions;
 };
+
+/**
+ * Check if a disabled object is provided for a button and returns if the button is disabled.
+ *
+ * @param option
+ * @returns whether a button is disabled
+ * @private
+ */
+export const isDisabled = (option?: boolean | { disabled: boolean }): boolean => {
+  if (typeof option !== 'boolean') {
+    return !!option?.disabled;
+  }
+  return option;
+};
