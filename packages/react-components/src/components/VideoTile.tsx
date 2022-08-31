@@ -214,10 +214,10 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
 
   const videoHintWithBorderRadius = mergeStyles(videoHint, { borderRadius: theme.effects.roundedCorner4 });
 
-  const tileInfoStyle = React.useCallback(
-    (canShowLabel: boolean) =>
+  const tileInfoStyle = useMemo(
+    () =>
       mergeStyles(
-        isVideoRendered ? videoHintWithBorderRadius : disabledVideoHint(canShowLabel),
+        isVideoRendered ? videoHintWithBorderRadius : disabledVideoHint,
         getVideoTileOverrideColor(isVideoRendered, theme, 'neutralPrimary'),
         styles?.displayNameContainer
       ),
@@ -275,16 +275,16 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
 
         {(canShowLabel || participantStateString) && (
           <Stack horizontal className={tileInfoContainerStyle} tokens={tileInfoContainerTokens}>
-            <Stack horizontal className={tileInfoStyle(!!canShowLabel)}>
+            <Stack horizontal className={tileInfoStyle}>
               {canShowLabel && (
                 <Text className={mergeStyles(displayNameStyle)} title={displayName}>
                   {displayName}
                 </Text>
               )}
               {participantStateString && (
-                <Text
-                  className={mergeStyles(participantStateStringStyles(!!canShowLabel))}
-                >{`(${participantStateString})`}</Text>
+                <Text className={mergeStyles(participantStateStringStyles(!!canShowLabel))}>
+                  {bracketedParticipantString(participantStateString, !!canShowLabel)}
+                </Text>
               )}
               {showMuteIndicator && isMuted && (
                 <Stack className={mergeStyles(iconContainerStyle)}>
@@ -324,4 +324,8 @@ const tileInfoContainerTokens = {
   // A horizontal Stack sets the left margin to 0 for all it's children.
   // We need to allow the children to set their own margins
   childrenGap: 'none'
+};
+
+const bracketedParticipantString = (participantString: string, withBrackets: boolean): string => {
+  return withBrackets ? `(${participantString})` : participantString;
 };
