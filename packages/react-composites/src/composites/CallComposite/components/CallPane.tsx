@@ -10,7 +10,7 @@ import {
   useTheme
 } from '@internal/react-components';
 import React, { useMemo, useState } from 'react';
-import { CallAdapter } from '../';
+import { CallAdapter, CallControlOptions } from '../';
 import { CallAdapterProvider } from '../adapter/CallAdapterProvider';
 import { AvatarPersonaDataCallback } from '../../common/AvatarPersona';
 import {
@@ -35,6 +35,7 @@ import { CommunicationIdentifier } from '@azure/communication-common';
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
 import { useAdapter } from '../adapter/CallAdapterProvider';
+import { isDisabled } from '../utils';
 
 /**
  * Pane that is used to store participants for Call composite
@@ -52,6 +53,7 @@ export const CallPane = (props: {
   mobileView?: boolean;
   inviteLink?: string;
   rtl?: boolean;
+  callControls?: CallControlOptions;
 }): JSX.Element => {
   const [drawerMenuItems, setDrawerMenuItems] = useState<_DrawerMenuItemProps[]>([]);
 
@@ -72,7 +74,12 @@ export const CallPane = (props: {
 
   const header =
     props.activePane === 'none' ? null : props.mobileView ? (
-      <TabHeader {...props} strings={strings} activeTab={props.activePane} />
+      <TabHeader
+        {...props}
+        strings={strings}
+        activeTab={props.activePane}
+        disablePeopleButton={isDisabled(props.callControls?.participantsButton)}
+      />
     ) : (
       <SidePaneHeader
         {...props}

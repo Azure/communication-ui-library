@@ -93,6 +93,9 @@ export const iconButtonStyles = (theme: Theme): IButtonStyles => {
   return {
     root: {
       color: `${theme.palette.black}`
+    },
+    icon: {
+      height: 'auto'
     }
   };
 };
