@@ -288,4 +288,8 @@ export interface CallCompositeStrings {
    * Label for the button to open dtmf dialpad
    */
   openDtmfDialpadLabel: string;
+  /**
+   * aria label for when the invite link has been actioned
+   */
+  copyInviteLinkActionedAriaLabel: string;
 }
