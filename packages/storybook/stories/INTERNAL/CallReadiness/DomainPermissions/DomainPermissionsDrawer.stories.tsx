@@ -5,12 +5,14 @@ import { Stack } from '@fluentui/react';
 import { _DomainPermissions, _DrawerSurface } from '@internal/react-components';
 import { Meta } from '@storybook/react/types-6-0';
 import React, { useState } from 'react';
+import { useLocale } from '../../../../../react-components/src/localization';
 import { COMPONENT_FOLDER_PREFIX } from '../../../constants';
 import { MobilePreviewContainer } from '../../../MobileContainer';
 
 export const DomainPermissionsDrawerStory = (): JSX.Element => {
   const [isDrawerShowing, setIsDrawerShowing] = useState(true);
   const onLightDismissTriggered = (): void => setIsDrawerShowing(false);
+  const locale = useLocale().strings.DomainPermissions;
   return (
     <MobilePreviewContainer>
       {!isDrawerShowing && (
@@ -29,6 +31,7 @@ export const DomainPermissionsDrawerStory = (): JSX.Element => {
           <_DomainPermissions
             appName={'Contoso app'}
             onGetTroubleShooting={() => alert('clicked trouble shooting link')}
+            strings={locale}
           />
         </_DrawerSurface>
       )}

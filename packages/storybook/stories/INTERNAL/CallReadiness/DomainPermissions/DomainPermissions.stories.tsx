@@ -6,11 +6,13 @@ import { _DomainPermissions } from '@internal/react-components';
 import { Canvas, Description, Heading, Props, Title } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React, { useState } from 'react';
+import { useLocale } from '../../../../../react-components/src/localization';
 import { SingleLineBetaBanner } from '../../../BetaBanners/SingleLineBetaBanner';
 import { COMPONENT_FOLDER_PREFIX } from '../../../constants';
 
 const DomainPermissionsStory = (): JSX.Element => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const locale = useLocale().strings.DomainPermissions;
   return (
     <Stack>
       <Stack>
@@ -31,6 +33,7 @@ const DomainPermissionsStory = (): JSX.Element => {
             onGetTroubleShooting={() => {
               alert('clicked trouble shooting');
             }}
+            strings={locale}
           />
         </Modal>
       </Canvas>
