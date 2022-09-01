@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { PrimaryButton, Spinner, Stack, Text } from '@fluentui/react';
+import { PrimaryButton, Stack, Text } from '@fluentui/react';
 import { _pxToRem } from '@internal/acs-ui-common';
 import React, { useRef, useState } from 'react';
 import { CompositeLocale, useLocale } from '../../localization';
@@ -53,17 +53,13 @@ export const HoldPane = (): JSX.Element => {
     };
   }, [startTime]);
 
-  const resumeSpinner = (): JSX.Element => {
-    return <Spinner label={strings.resumingCallButtonLabel} labelPosition={'right'} />;
-  };
-
   return (
     <Stack styles={paneStyles}>
       <Stack horizontal styles={holdPaneContentStyles}>
         <Text styles={holdPaneTimerStyles}>{elapsedTime}</Text>
         <Text styles={holdPaneLabelStyles}>{strings.holdScreenLabel}</Text>
         <PrimaryButton
-          text={!resumingCall ? strings.resumeCallButtonLabel : undefined}
+          text={!resumingCall ? strings.resumeCallButtonLabel : strings.resumingCallButtonLabel}
           ariaLabel={!resumingCall ? strings.resumeCallButtonAriaLabel : strings.resumingCallButtonAriaLabel}
           styles={resumeButtonStyles}
           disabled={resumingCall}
@@ -78,9 +74,7 @@ export const HoldPane = (): JSX.Element => {
             }
           }}
           data-ui-id="hold-page-resume-call-button"
-        >
-          {resumingCall && resumeSpinner()}
-        </PrimaryButton>
+        ></PrimaryButton>
       </Stack>
     </Stack>
   );
