@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Introduces setup page for repo discussing manual changes that need to be made to use acs ui library",
+  "packageName": "@internal/storybook",
+  "email": "94866715+dmceachernmsft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
