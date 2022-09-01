@@ -330,6 +330,7 @@ export interface CallCompositeStrings {
     complianceBannerTranscriptionStopped: string;
     configurationPageCallDetails?: string;
     configurationPageTitle: string;
+    copyInviteLinkActionedAriaLabel: string;
     copyInviteLinkButtonLabel: string;
     defaultPlaceHolder: string;
     dialpadCloseModalButtonAriaLabel: string;
@@ -674,6 +675,7 @@ export interface CallWithChatCompositeStrings {
     chatButtonTooltipClosedWithMessageCount: string;
     chatButtonTooltipOpen: string;
     chatPaneTitle: string;
+    copyInviteLinkActionedAriaLabel: string;
     copyInviteLinkButtonLabel: string;
     dialpadCloseModalButtonAriaLabel: string;
     dialpadModalAriaLabel: string;
@@ -702,16 +704,26 @@ export interface CallWithChatCompositeStrings {
 
 // @public
 export interface CallWithChatControlOptions {
-    cameraButton?: boolean;
-    chatButton?: boolean;
+    cameraButton?: boolean | /* @conditional-compile-remove(PSTN-calls) */ {
+        disabled: boolean;
+    };
+    chatButton?: boolean | /* @conditional-compile-remove(PSTN-calls) */ {
+        disabled: boolean;
+    };
     displayType?: CallControlDisplayType;
     endCallButton?: boolean;
-    holdButton?: boolean;
-    microphoneButton?: boolean;
+    holdButton?: boolean | {
+        disabled: boolean;
+    };
+    microphoneButton?: boolean | /* @conditional-compile-remove(PSTN-calls) */ {
+        disabled: boolean;
+    };
     moreButton?: boolean;
     // @beta
     onFetchCustomButtonProps?: CustomCallWithChatControlButtonCallback[];
-    peopleButton?: boolean;
+    peopleButton?: boolean | /* @conditional-compile-remove(PSTN-calls) */ {
+        disabled: boolean;
+    };
     screenShareButton?: boolean | {
         disabled: boolean;
     };
@@ -1006,12 +1018,14 @@ export const DEFAULT_COMPOSITE_ICONS: {
     MoreDrawerSelectedSpeaker?: JSX.Element | undefined;
     MoreDrawerSpeakers?: JSX.Element | undefined;
     ChatMessageOptions: JSX.Element;
+    ControlButtonParticipantsContextualMenuItem: JSX.Element;
     CancelFileUpload: JSX.Element;
     DownloadFile: JSX.Element;
     ErrorBarCallVideoRecoveredBySystem: JSX.Element;
     ErrorBarCallVideoStoppedBySystem: JSX.Element;
     MessageResend: JSX.Element;
-    HoldCall: JSX.Element;
+    HoldCallContextualMenuItem: JSX.Element;
+    HoldCallButton: JSX.Element;
     ResumeCall: JSX.Element;
     BackSpace: JSX.Element;
 };

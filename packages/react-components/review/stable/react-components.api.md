@@ -37,6 +37,19 @@ export interface ActiveErrorMessage {
     type: ErrorType;
 }
 
+// Warning: (ae-internal-missing-underscore) The name "Announcer" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal
+export const Announcer: (props: AnnouncerProps) => JSX.Element;
+
+// Warning: (ae-internal-missing-underscore) The name "AnnouncerProps" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal
+export type AnnouncerProps = {
+    announcementString?: string;
+    ariaLive: 'off' | 'polite' | 'assertive' | undefined;
+};
+
 // @public
 export interface BaseCustomStyles {
     root?: IStyle;
@@ -419,22 +432,17 @@ export interface DevicesButtonStyles extends ControlBarButtonStyles {
 export const Dialpad: (props: DialpadProps) => JSX.Element;
 
 // @beta
-export interface DialpadButtonProps {
-    primaryContent: string;
-    secondaryContent?: string;
-}
-
-// @beta
 export interface DialpadProps {
+    isMobile?: boolean;
     onChange?: (input: string) => void;
     onClickDialpadButton?: (buttonValue: string, buttonIndex: number) => void;
-    onDisplayDialpadInput?: (input: string) => string;
     onSendDtmfTone?: (dtmfTone: DtmfTone) => Promise<void>;
     showDeleteButton?: boolean;
     // (undocumented)
     strings?: DialpadStrings;
     // (undocumented)
     styles?: DialpadStyles;
+    textFieldValue?: string;
 }
 
 // @beta
@@ -452,11 +460,11 @@ export interface DialpadStyles {
     // (undocumented)
     deleteIcon?: IButtonStyles;
     // (undocumented)
-    primaryContent?: IStyle;
+    digit?: IStyle;
+    // (undocumented)
+    letter?: IStyle;
     // (undocumented)
     root?: IStyle;
-    // (undocumented)
-    secondaryContent?: IStyle;
     // (undocumented)
     textField?: Partial<ITextFieldStyles>;
 }

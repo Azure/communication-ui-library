@@ -11,6 +11,7 @@ export interface QueryArgs {
   showCallDescription: boolean;
   injectParticipantMenuItems: boolean;
   injectCustomButtons: boolean;
+  role?: Role;
 
   // These are only set for live tests.
   // TODO: Separate the args out better.
@@ -18,7 +19,6 @@ export interface QueryArgs {
   groupId: string;
   token: string;
   displayName: string;
-  role?: Role;
 }
 
 export function parseQueryArgs(): QueryArgs {
