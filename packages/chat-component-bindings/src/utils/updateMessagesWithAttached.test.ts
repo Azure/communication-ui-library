@@ -11,11 +11,11 @@ const cannedChatMessage = (senderId: string): ChatMessage => ({
   messageId: ''
 });
 
-const cannedCustomDateTimeChatMessage = (senderId: string, createdOnDateTime: Date): ChatMessage => ({
+const cannedCustomDateTimeChatMessage = (senderId: string, createdOnDateTime?: Date): ChatMessage => ({
   messageType: 'chat',
   senderId,
   contentType: 'text',
-  createdOn: createdOnDateTime,
+  createdOn: createdOnDateTime ?? new Date(''),
   messageId: ''
 });
 
@@ -74,5 +74,15 @@ describe('update message with attached status', () => {
     ];
     updateMessagesWithAttached(messagesArrayWithOtherMessage);
     expect(getAttachedStatusArray(messagesArrayWithOtherMessage)).toEqual(['top', false, false]);
+  });
+
+  test('Set right status for attached property for messages without createOn date', () => {
+    const messagesArrayWithOtherMessage = [
+      cannedCustomDateTimeChatMessage('1'),
+      cannedCustomDateTimeChatMessage('1'),
+      cannedCustomDateTimeChatMessage('1')
+    ];
+    updateMessagesWithAttached(messagesArrayWithOtherMessage);
+    expect(getAttachedStatusArray(messagesArrayWithOtherMessage)).toEqual(['top', true, 'bottom']);
   });
 });
