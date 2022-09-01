@@ -109,6 +109,6 @@ export const participantStateStringStyles = (showLabel: boolean): IStyle => {
     overflow: 'hidden',
     textOverflow: 'ellipsis',
     whiteSpace: 'nowrap',
-    padding: '0.25rem'
+    padding: '0 0.15rem'
   };
 };
