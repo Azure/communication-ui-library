@@ -44,7 +44,7 @@ export const tileInfoContainerStyle = mergeStyles({
   position: 'absolute',
   bottom: '0',
   left: '0',
-  padding: '0.25rem',
+  padding: '0.5rem',
   width: '100%'
 });
 
