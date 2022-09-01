@@ -277,17 +277,21 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
           <Stack horizontal className={tileInfoContainerStyle} tokens={tileInfoContainerTokens}>
             <Stack horizontal className={tileInfoStyle}>
               {canShowLabel && (
-                <Text className={mergeStyles(displayNameStyle)} title={displayName}>
+                <Text
+                  className={mergeStyles(displayNameStyle)}
+                  title={displayName}
+                  style={{ color: participantStateString ? theme.palette.neutralSecondary : 'inherit' }}
+                >
                   {displayName}
                 </Text>
               )}
               {participantStateString && (
-                <Text className={mergeStyles(participantStateStringStyles(!!canShowLabel))}>
+                <Text className={mergeStyles(participantStateStringStyles(theme))}>
                   {bracketedParticipantString(participantStateString, !!canShowLabel)}
                 </Text>
               )}
               {showMuteIndicator && isMuted && (
-                <Stack className={mergeStyles(iconContainerStyle)}>
+                <Stack className={mergeStyles(iconContainerStyle(theme))}>
                   <Icon iconName="VideoTileMicOff" />
                 </Stack>
               )}

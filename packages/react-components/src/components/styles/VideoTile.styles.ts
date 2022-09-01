@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IStyle, mergeStyles } from '@fluentui/react';
+import { IStyle, mergeStyles, Theme } from '@fluentui/react';
 
 /**
  * @private
@@ -87,23 +87,22 @@ export const displayNameStyle: IStyle = {
 /**
  * @private
  */
-export const iconContainerStyle: IStyle = {
+export const iconContainerStyle = (theme: Theme): IStyle => ({
   margin: 'auto',
   alignItems: 'center',
   '& svg': {
-    display: 'block'
+    display: 'block',
+    color: theme.palette.neutralPrimary
   }
-};
+});
 
 /**
  * @private
  */
-export const participantStateStringStyles = (showLabel: boolean): IStyle => {
+export const participantStateStringStyles = (theme: Theme): IStyle => {
   return {
-    textAlign: showLabel ? 'left' : 'center',
     minWidth: 'max-content',
-    color: 'inherit',
-    width: showLabel ? 'auto' : '100%',
+    color: theme.palette.black,
     fontSize: '0.75rem',
     lineHeight: 'normal',
     overflow: 'hidden',
