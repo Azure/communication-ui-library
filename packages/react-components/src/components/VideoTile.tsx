@@ -264,7 +264,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
             {renderElement}
           </Stack>
         ) : (
-          <Stack className={mergeStyles(videoContainerStyles)} style={{ opacity: participantStateString ? 0.6 : 1 }}>
+          <Stack className={mergeStyles(videoContainerStyles)} style={{ opacity: participantStateString ? 0.4 : 1 }}>
             {onRenderPlaceholder ? (
               onRenderPlaceholder(userId ?? '', placeholderOptions, DefaultPlaceholder)
             ) : (
