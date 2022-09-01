@@ -21,6 +21,7 @@ import {
 import { HoldButtonStrings } from '../components';
 /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
 import { DialpadStrings } from '../components';
+/* @conditional-compile-remove(call-readiness) */
 import { DomainPermissionsStrings } from '../components/DomainPermissions';
 /* @conditional-compile-remove(one-to-n-calling) */
 // @conditional-compile-remove(PSTN-calls)

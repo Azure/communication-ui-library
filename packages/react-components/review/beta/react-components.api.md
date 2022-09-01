@@ -261,6 +261,7 @@ export interface ComponentStrings {
     cameraButton: CameraButtonStrings;
     devicesButton: DevicesButtonStrings;
     dialpad: DialpadStrings;
+    DomainPermissions: DomainPermissionsStrings;
     endCallButton: EndCallButtonStrings;
     errorBar: ErrorBarStrings;
     holdButton: HoldButtonStrings;
@@ -415,6 +416,7 @@ export const DEFAULT_COMPONENT_ICONS: {
     SendBoxSendHovered: JSX.Element;
     VideoTileMicOff: JSX.Element;
     BackSpace: JSX.Element;
+    iconBackdrop: JSX.Element;
 };
 
 // @public
@@ -496,6 +498,29 @@ export interface DialpadStyles {
     root?: IStyle;
     // (undocumented)
     textField?: Partial<ITextFieldStyles>;
+}
+
+// @internal
+export const _DomainPermissions: (props: DomainPermissionsProps) => JSX.Element;
+
+// Warning: (ae-internal-missing-underscore) The name "DomainPermissionsProps" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal
+export interface DomainPermissionsProps {
+    // (undocumented)
+    appName: string;
+    // (undocumented)
+    onGetTroubleShooting: () => void;
+}
+
+// @beta
+export interface DomainPermissionsStrings {
+    // (undocumented)
+    linkText: string;
+    // (undocumented)
+    mainText: string;
+    // (undocumented)
+    secondaryText: string;
 }
 
 // @internal

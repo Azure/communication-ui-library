@@ -25,7 +25,7 @@ export interface DomainPermissionsProps {
 }
 
 /**
- * @internal
+ * @beta
  * Strings for DomainPermissions component
  */
 export interface DomainPermissionsStrings {
@@ -43,8 +43,10 @@ export interface DomainPermissionsStrings {
 export const _DomainPermissions = (props: DomainPermissionsProps): JSX.Element => {
   const { appName, onGetTroubleShooting } = props;
 
+  /* @conditional-compile-remove(call-readiness) */
   const locale = useLocale();
 
+  /* @conditional-compile-remove(call-readiness) */
   const strings = locale.strings.DomainPermissions;
 
   return (
@@ -70,3 +72,5 @@ export const _DomainPermissions = (props: DomainPermissionsProps): JSX.Element =
     </Stack>
   );
 };
+
+// do what the dialpad did with a wrapper component.
