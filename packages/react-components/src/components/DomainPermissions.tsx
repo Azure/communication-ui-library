@@ -3,7 +3,9 @@
 
 import React from 'react';
 import { Stack, Text, Link, Icon } from '@fluentui/react';
+/* @conditional-compile-remove(call-readiness) */
 import { useLocale } from '../localization';
+/* @conditional-compile-remove(call-readiness) */
 import { _formatString, _pxToRem } from '@internal/acs-ui-common';
 import {
   iconBackDropStyles,
@@ -22,6 +24,7 @@ import {
 export interface DomainPermissionsProps {
   appName: string;
   onGetTroubleShooting: () => void;
+  strings: DomainPermissionsStrings;
 }
 
 /**
@@ -34,23 +37,22 @@ export interface DomainPermissionsStrings {
   linkText: string;
 }
 
-/**
- * @internal
- *
- * Component to allow Contoso to help their end user with their devices should their permissions be blocked
- * by their browsers settings.
- */
-export const _DomainPermissions = (props: DomainPermissionsProps): JSX.Element => {
-  const { appName, onGetTroubleShooting } = props;
+const _DomainPermissionsContainer = (props: DomainPermissionsProps): JSX.Element => {
+  const { appName, onGetTroubleShooting, strings } = props;
 
-  /* @conditional-compile-remove(call-readiness) */
-  const locale = useLocale();
-
-  /* @conditional-compile-remove(call-readiness) */
-  const strings = locale.strings.DomainPermissions;
-
+  const appNameTrampoline = (): string => {
+    /* @conditional-compile-remove(call-readiness) */
+    return _formatString(strings.mainText, { appName: appName });
+    // For Conditonal compilation will be undone when stable.
+    return appName;
+  };
+  const containerWitdthTrampoline = (): string => {
+    /* @conditional-compile-remove(call-readiness) */
+    return `${_pxToRem(406)}`;
+    return '406px';
+  };
   return (
-    <Stack style={{ padding: '2rem', maxWidth: `${_pxToRem(406)}` }}>
+    <Stack style={{ padding: '2rem', maxWidth: containerWitdthTrampoline() }}>
       <Stack horizontal style={{ padding: '2rem 0' }} horizontalAlign={'space-between'}>
         <Stack styles={iconContainerStyles} horizontalAlign={'center'}>
           <Icon styles={iconPrimaryStyles} iconName={'ControlButtonCameraOn'}></Icon>
@@ -63,7 +65,7 @@ export const _DomainPermissions = (props: DomainPermissionsProps): JSX.Element =
         </Stack>
       </Stack>
       <Stack styles={textContainerStyles}>
-        <Text styles={primaryTextStyles}>{_formatString(strings.mainText, { appName: appName })}</Text>
+        <Text styles={primaryTextStyles}>{appNameTrampoline()}</Text>
         <Text styles={secondaryTextStyles}>{strings.secondaryText}</Text>
         <Link styles={linkTextStyles} onClick={onGetTroubleShooting}>
           {strings.linkText}
@@ -73,4 +75,22 @@ export const _DomainPermissions = (props: DomainPermissionsProps): JSX.Element =
   );
 };
 
-// do what the dialpad did with a wrapper component.
+/**
+ * @internal
+ *
+ * Component to allow Contoso to help their end user with their devices should their permissions be blocked
+ * by their browsers settings.
+ */
+export const _DomainPermissions = (props: DomainPermissionsProps): JSX.Element => {
+  /* @conditional-compile-remove(call-readiness) */
+  const locale = useLocale().strings.DomainPermissions;
+
+  const domainPermissionsStringsTrampoiline = (): DomainPermissionsStrings => {
+    /* @conditional-compile-remove(call-readiness) */
+    return locale;
+    // Done for conditional compilation will be undone in stable.
+    return '' as unknown as DomainPermissionsStrings;
+  };
+
+  return <_DomainPermissionsContainer {...props} strings={domainPermissionsStringsTrampoiline()} />;
+};

@@ -511,6 +511,8 @@ export interface DomainPermissionsProps {
     appName: string;
     // (undocumented)
     onGetTroubleShooting: () => void;
+    // (undocumented)
+    strings: DomainPermissionsStrings;
 }
 
 // @beta
