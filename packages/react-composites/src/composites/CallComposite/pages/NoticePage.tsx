@@ -31,6 +31,7 @@ export interface NoticePageProps {
  */
 export function NoticePage(props: NoticePageProps): JSX.Element {
   const adapter = useAdapter();
+  const isPSTNorACSCall = adapter.getState().isPSTNorACSCall;
   return (
     <Stack verticalFill verticalAlign="center" horizontalAlign="center" data-ui-id={props.dataUiId} aria-atomic>
       <Stack className={mergeStyles(containerStyle)} tokens={containerItemGap}>
@@ -41,9 +42,11 @@ export function NoticePage(props: NoticePageProps): JSX.Element {
         <Text className={mergeStyles(moreDetailsStyles)} aria-live="assertive">
           {props.moreDetails}
         </Text>
-        <Stack styles={rejoinCallButtonContainerStyles}>
-          <StartCallButton onClick={() => adapter.joinCall()} disabled={false} rejoinCall={true} autoFocus />
-        </Stack>
+        {!isPSTNorACSCall && (
+          <Stack styles={rejoinCallButtonContainerStyles}>
+            <StartCallButton onClick={() => adapter.joinCall()} disabled={false} rejoinCall={true} autoFocus />
+          </Stack>
+        )}
       </Stack>
     </Stack>
   );

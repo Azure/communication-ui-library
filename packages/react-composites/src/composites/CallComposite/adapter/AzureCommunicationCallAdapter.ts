@@ -481,6 +481,11 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
       return backendId as UnknownIdentifier;
     });
 
+    if (idsToAdd !== []) {
+      // if we have id's to call then we want to set this state in the adapter to true.
+      this.getState().isPSTNorACSCall = true;
+    }
+
     const call = this.handlers.onStartCall(idsToAdd, options);
     if (!call) {
       throw new Error('Unable to start call.');

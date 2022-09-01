@@ -71,6 +71,7 @@ export type CallAdapterClientState = {
   devices: DeviceManagerState;
   endedCall?: CallState;
   isTeamsCall: boolean;
+  isPSTNorACSCall?: boolean;
   /**
    * Latest error encountered for each operation performed via the adapter.
    */
