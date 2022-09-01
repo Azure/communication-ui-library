@@ -108,6 +108,6 @@ export const participantStateStringStyles = (theme: Theme): IStyle => {
     overflow: 'hidden',
     textOverflow: 'ellipsis',
     whiteSpace: 'nowrap',
-    padding: '0 0.15rem'
+    padding: '0.1rem'
   };
 };
