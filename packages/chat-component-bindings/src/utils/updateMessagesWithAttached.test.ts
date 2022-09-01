@@ -11,6 +11,14 @@ const cannedChatMessage = (senderId: string): ChatMessage => ({
   messageId: ''
 });
 
+const cannedCustomDateTimeChatMessage = (senderId: string, createdOnDateTime: Date): ChatMessage => ({
+  messageType: 'chat',
+  senderId,
+  contentType: 'text',
+  createdOn: createdOnDateTime,
+  messageId: ''
+});
+
 const cannedCustomMessage = (): CustomMessage => ({
   messageType: 'custom',
   content: '',
@@ -55,5 +63,16 @@ describe('update message with attached status', () => {
 
     updateMessagesWithAttached(messagesArrayWithOtherMessage);
     expect(getAttachedStatusArray(messagesArrayWithOtherMessage)).toEqual([false, undefined, false]);
+  });
+
+  test('Set right status for attached property for messages with more than or equal to 5 mins time gap', () => {
+    const currentDateTime = new Date();
+    const messagesArrayWithOtherMessage = [
+      cannedCustomDateTimeChatMessage('1', currentDateTime),
+      cannedCustomDateTimeChatMessage('1', new Date(currentDateTime.getDate() + 5 * 60000)),
+      cannedCustomDateTimeChatMessage('1', new Date(currentDateTime.getDate() + 10 * 60000))
+    ];
+    updateMessagesWithAttached(messagesArrayWithOtherMessage);
+    expect(getAttachedStatusArray(messagesArrayWithOtherMessage)).toEqual(['top', false, false]);
   });
 });

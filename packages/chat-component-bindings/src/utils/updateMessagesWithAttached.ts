@@ -26,8 +26,16 @@ export const updateMessagesWithAttached = (chatMessagesWithStatus: Message[]): v
     const previousSenderId = previousMessage?.messageType === 'chat' ? previousMessage.senderId : undefined;
     const nextSenderId = nextMessage?.messageType === 'chat' ? nextMessage.senderId : undefined;
 
+    const timediff =
+      new Date(message?.createdOn ?? '').getTime() - new Date(previousMessage?.createdOn ?? '').getTime();
+
+    const diffMins = Math.round(timediff / 1000 / 60); // minutes
+
     if (previousSenderId !== message.senderId) {
       attached = message.senderId === nextSenderId ? 'top' : false;
+    } // if there are more than or equal to 5 mins time gap between messages do not attach and show time stamp
+    else if (diffMins && diffMins >= 5) {
+      attached = false;
     } else {
       attached = message.senderId === nextSenderId ? true : 'bottom';
     }
