@@ -775,6 +775,18 @@ export const createAzureCommunicationCallWithChatAdapterFromClients = async ({
   return new AzureCommunicationCallWithChatAdapter(callAdapter, chatAdapter);
 };
 
+/**
+ * Create a {@link CallWithChatAdapter} from the underlying adapters.
+ *
+ * This is an internal factory function used by browser tests to inject fake adapters for call and chat.
+ *
+ * @internal
+ */
+export const _createAzureCommunicationCallWithChatAdapterFromAdapters = (
+  callAdapter: CallAdapter,
+  chatAdapter: ChatAdapter
+): CallWithChatAdapter => new AzureCommunicationCallWithChatAdapter(callAdapter, chatAdapter);
+
 const isTeamsMeetingLinkLocator = (
   locator: CallAndChatLocator | TeamsMeetingLinkLocator
 ): locator is TeamsMeetingLinkLocator => {

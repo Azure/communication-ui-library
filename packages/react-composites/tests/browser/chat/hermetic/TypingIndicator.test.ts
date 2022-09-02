@@ -3,6 +3,7 @@
 
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { expect } from '@playwright/test';
+import { withHiddenChatCompositeInForeground } from '../../common/hermeticChatTestHelpers';
 import { IDS } from '../../common/constants';
 import { dataUiId, stableScreenshot } from '../../common/utils';
 import { buildUrlForChatAppUsingFakeAdapter, DEFAULT_FAKE_CHAT_ADAPTER_ARGS, test } from './fixture';
@@ -17,11 +18,13 @@ test.describe('Tests related to typing indicator', async () => {
       })
     );
 
-    // Type on typing participant's send box to trigger typing indicator
-    await page.type(
-      `#hidden-composite-${toFlatCommunicationIdentifier(typingParticipant.id)} ${dataUiId(IDS.sendboxTextField)}`,
-      'How the turn tables'
-    );
+    await withHiddenChatCompositeInForeground(page, typingParticipant, async () => {
+      // Type on typing participant's send box to trigger typing indicator
+      await page.type(
+        `#hidden-composite-${toFlatCommunicationIdentifier(typingParticipant.id)} ${dataUiId(IDS.sendboxTextField)}`,
+        'How the turn tables'
+      );
+    });
 
     const indicator = await page.$(dataUiId(IDS.typingIndicator));
 

@@ -22,7 +22,10 @@ export function perStepLocalTimeout(): number {
 /** Selector string to get element by data-ui-id property */
 export const dataUiId = (id: string): string => `[data-ui-id="${id}"]`;
 
-async function screenshotOnFailure<T>(page: Page, fn: () => Promise<T>): Promise<T> {
+/**
+ * Wrapper function to take a screenshot if the provided callback fails.
+ */
+export async function screenshotOnFailure<T>(page: Page, fn: () => Promise<T>): Promise<T> {
   try {
     return await fn();
   } catch (e) {
