@@ -2,7 +2,6 @@
 // Licensed under the MIT license.
 
 import {
-  AddPhoneNumberOptions,
   AudioDeviceInfo,
   Call,
   CallAgent,
@@ -11,7 +10,7 @@ import {
   VideoDeviceInfo
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
-import { DtmfTone } from '@azure/communication-calling';
+import { DtmfTone, AddPhoneNumberOptions } from '@azure/communication-calling';
 import {
   CommunicationIdentifier,
   CommunicationUserIdentifier,
@@ -418,6 +417,7 @@ export const createDefaultCallingHandlersForComponent = <Props>(
   return createDefaultCallingHandlers(callClient, callAgent, deviceManager, call);
 };
 
+/* @conditional-compile-remove(PSTN-calls) */
 /**
  * Helper function for determining participant type.
  */
