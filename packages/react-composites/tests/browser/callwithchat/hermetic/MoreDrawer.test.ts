@@ -44,10 +44,7 @@ test.describe('CallWithChat Composite CallWithChat Page Tests', () => {
     expect(await stableScreenshot(page)).toMatchSnapshot(`call-with-chat-more-drawer-submenu-speaker-select.png`);
   });
 
-  test.only('Microphone Submenu click on a new audio device displays correctly on mobile', async ({
-    page,
-    serverUrl
-  }) => {
+  test('Microphone Submenu click on a new audio device displays correctly on mobile', async ({ page, serverUrl }) => {
     const callState = defaultMockCallAdapterState([defaultMockRemoteParticipant('Paul Bridges')]);
     callState.devices = {
       ...callState.devices,
