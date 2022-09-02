@@ -1,10 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { ChatParticipant } from '@azure/communication-chat';
+import type { ChatParticipant } from '@azure/communication-chat';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { Page } from '@playwright/test';
-import { perStepLocalTimeout, screenshotOnFailure } from './utils';
+import { IDS } from './constants';
+import { dataUiId, perStepLocalTimeout, screenshotOnFailure } from './utils';
 
 /**
  * <HiddenChatComposites /> are, well, hidden.
@@ -40,6 +41,24 @@ export async function withHiddenChatCompositeInForeground(
     // Hide it again.
     await handle.evaluate((node) => (node.style.display = 'none'));
     await handle.waitFor({ state: 'hidden', timeout: perStepLocalTimeout() });
+  });
+}
+
+/**
+ * Send a message from one of the hidden chat composites.
+ *
+ * @private
+ */
+export async function sendMessageFromHiddenChatComposite(
+  page: Page,
+  participant: ChatParticipant,
+  message: string
+): Promise<void> {
+  await withHiddenChatCompositeInForeground(page, participant, async () => {
+    await page.type(`${hiddenCompositeSelector(participant)} ${dataUiId(IDS.sendboxTextField)}`, message, {
+      timeout: perStepLocalTimeout()
+    });
+    await page.keyboard.press('Enter');
   });
 }
 

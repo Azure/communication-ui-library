@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 
 import {
+  sendMessageFromHiddenChatComposite,
   temporarilyShowHiddenChatComposite,
   withHiddenChatCompositeInForeground
 } from '../../common/hermeticChatTestHelpers';
@@ -16,14 +17,11 @@ import {
   dataUiId,
   isTestProfileMobile,
   pageClick,
-  perStepLocalTimeout,
   stableScreenshot,
   waitForPiPiPToHaveLoaded,
   waitForSelector
 } from '../../common/utils';
 import { chatParticipantFor, loadCallPage, test } from './fixture';
-import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
-import { IDS } from '../../common/constants';
 import { expect } from '@playwright/test';
 
 test.describe('CallWithChat Composite CallWithChat Page Tests', () => {
@@ -41,17 +39,7 @@ test.describe('CallWithChat Composite CallWithChat Page Tests', () => {
     await temporarilyShowHiddenChatComposite(page, chatRemoteParticipant);
     await waitForMessageSeen(page);
 
-    // Send a message from remote participant.
-    await withHiddenChatCompositeInForeground(page, chatRemoteParticipant, async () => {
-      await page.type(
-        `[id="hidden-composite-${toFlatCommunicationIdentifier(chatRemoteParticipant.id)}"] ${dataUiId(
-          IDS.sendboxTextField
-        )}`,
-        'I agree!',
-        { timeout: perStepLocalTimeout() }
-      );
-      await page.keyboard.press('Enter');
-    });
+    await sendMessageFromHiddenChatComposite(page, chatRemoteParticipant, 'I agree!');
 
     // Local participant has both a sent message and a received message.
     await waitForNMessages(page, 2, '#test-app-root');
@@ -63,5 +51,16 @@ test.describe('CallWithChat Composite CallWithChat Page Tests', () => {
     expect(await stableScreenshot(page, { stubMessageTimestamps: true })).toMatchSnapshot(
       `call-with-chat-gallery-screen-with-chat-pane.png`
     );
+  });
+
+  test.only('Unread chat message button badge are displayed correctly for <9 messages', async ({ page, serverUrl }) => {
+    const remoteParticipant = defaultMockRemoteParticipant('Paul Bridges');
+    const chatRemoteParticipant = chatParticipantFor(remoteParticipant);
+    const callState = defaultMockCallAdapterState([remoteParticipant]);
+    await loadCallPage(page, serverUrl, callState);
+
+    await sendMessageFromHiddenChatComposite(page, chatRemoteParticipant, 'I agree!');
+    await waitForSelector(page, dataUiId('call-with-chat-composite-chat-button-unread-icon'));
+    expect(await stableScreenshot(page)).toMatchSnapshot(`call-with-chat-gallery-screen-with-one-unread-messages.png`);
   });
 });

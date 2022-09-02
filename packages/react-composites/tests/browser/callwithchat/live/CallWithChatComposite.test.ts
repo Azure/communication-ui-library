@@ -42,22 +42,6 @@ test.describe('CallWithChat Composite CallWithChat Page Tests', () => {
     await loadCallPageWithParticipantVideos(pages);
   });
 
-  test('Unread chat message button badge are displayed correctly for <9 messages', async ({ pages }) => {
-    // Open chat pane on page 0 and send a message
-    await pageClick(pages[0], dataUiId('call-with-chat-composite-chat-button'));
-    await waitForSelector(pages[0], dataUiId('call-with-chat-composite-chat-pane'));
-    await sendMessage(pages[0], 'Call with Chat composite is awesome!');
-    await waitForMessageDelivered(pages[0]);
-
-    // Ensure typing indicator has disappeared to prevent flakey test
-    await waitForAndHideTypingIndicator(pages[1]);
-
-    await waitForSelector(pages[1], dataUiId('call-with-chat-composite-chat-button-unread-icon'));
-    expect(await stableScreenshot(pages[1])).toMatchSnapshot(
-      `call-with-chat-gallery-screen-with-one-unread-messages.png`
-    );
-  });
-
   test('Unread chat message button badge are displayed correctly for >9 messages', async ({ pages }) => {
     // Open chat pane on page 0 and send 10 messages
     await pageClick(pages[0], dataUiId('call-with-chat-composite-chat-button'));
