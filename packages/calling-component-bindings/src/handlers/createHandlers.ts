@@ -11,15 +11,14 @@ import {
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
 import { DtmfTone, AddPhoneNumberOptions } from '@azure/communication-calling';
+import { CommunicationIdentifier, PhoneNumberIdentifier, UnknownIdentifier } from '@azure/communication-common';
+/* @conditional-compile-remove(PSTN-calls) */
 import {
-  CommunicationIdentifier,
+  isCommunicationUserIdentifier,
   CommunicationUserIdentifier,
   isMicrosoftTeamsUserIdentifier,
-  PhoneNumberIdentifier,
-  UnknownIdentifier
+  isPhoneNumberIdentifier
 } from '@azure/communication-common';
-/* @conditional-compile-remove(PSTN-calls) */
-import { isCommunicationUserIdentifier, isPhoneNumberIdentifier } from '@azure/communication-common';
 import { Common, fromFlatCommunicationIdentifier, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { CreateViewResult, StatefulCallClient, StatefulDeviceManager } from '@internal/calling-stateful-client';
 import memoizeOne from 'memoize-one';
