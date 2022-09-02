@@ -9,7 +9,7 @@ import { dataUiId, stableScreenshot } from '../../common/utils';
 import { buildUrlForChatAppUsingFakeAdapter, DEFAULT_FAKE_CHAT_ADAPTER_ARGS, test } from './fixture';
 
 test.describe('Tests related to typing indicator', async () => {
-  test.only('page can view typing indicator within 10s', async ({ serverUrl, page }) => {
+  test('page can view typing indicator within 10s', async ({ serverUrl, page }) => {
     const typingParticipant = DEFAULT_FAKE_CHAT_ADAPTER_ARGS.remoteParticipants[0];
     page.goto(
       buildUrlForChatAppUsingFakeAdapter(serverUrl, {
