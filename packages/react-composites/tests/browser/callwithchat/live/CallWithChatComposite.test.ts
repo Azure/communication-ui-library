@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IDS, TEST_PARTICIPANTS } from '../../common/constants';
+import { TEST_PARTICIPANTS } from '../../common/constants';
 import {
   buildUrl,
   dataUiId,
@@ -10,7 +10,6 @@ import {
   loadCallPageWithParticipantVideos,
   pageClick,
   stableScreenshot,
-  stubMessageTimestamps,
   waitForCallWithChatCompositeToLoad,
   waitForPiPiPToHaveLoaded,
   waitForSelector
@@ -20,7 +19,6 @@ import { expect, Page } from '@playwright/test';
 import {
   sendMessage,
   waitForMessageDelivered,
-  waitForMessageSeen,
   waitForNSeenMessages,
   waitForTypingIndicatorHidden
 } from '../../common/chatTestHelpers';

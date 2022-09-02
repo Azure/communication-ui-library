@@ -16,6 +16,7 @@ import {
   dataUiId,
   isTestProfileMobile,
   pageClick,
+  perStepLocalTimeout,
   stableScreenshot,
   waitForPiPiPToHaveLoaded,
   waitForSelector
@@ -23,9 +24,10 @@ import {
 import { chatParticipantFor, loadCallPage, test } from './fixture';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { IDS } from '../../common/constants';
+import { expect } from '@playwright/test';
 
 test.describe('CallWithChat Composite CallWithChat Page Tests', () => {
-  test('Chat messages are displayed correctly', async ({ page, serverUrl }, testInfo) => {
+  test.only('Chat messages are displayed correctly', async ({ page, serverUrl }, testInfo) => {
     const remoteParticipant = defaultMockRemoteParticipant('Paul Bridges');
     const chatRemoteParticipant = chatParticipantFor(remoteParticipant);
     const callState = defaultMockCallAdapterState([remoteParticipant]);
@@ -42,16 +44,19 @@ test.describe('CallWithChat Composite CallWithChat Page Tests', () => {
     // Send a message from remote participant.
     await withHiddenChatCompositeInForeground(page, chatRemoteParticipant, async () => {
       await page.type(
-        `#hidden-composite-${toFlatCommunicationIdentifier(chatRemoteParticipant.id)} ${dataUiId(
+        `[id="hidden-composite-${toFlatCommunicationIdentifier(chatRemoteParticipant.id)}"] ${dataUiId(
           IDS.sendboxTextField
         )}`,
-        'I agree!'
+        'I agree!',
+        { timeout: perStepLocalTimeout() }
       );
+      await page.keyboard.press('Enter');
     });
 
     // Local participant has both a sent message and a received message.
-    await waitForNMessages(page, 2);
-    await waitForTypingIndicatorHidden(page);
+    await waitForNMessages(page, 2, '#test-app-root');
+    await waitForTypingIndicatorHidden(page, '#test-app-root');
+    await page.pause();
 
     if (isTestProfileMobile(testInfo)) {
       await waitForPiPiPToHaveLoaded(page, { skipVideoCheck: true });

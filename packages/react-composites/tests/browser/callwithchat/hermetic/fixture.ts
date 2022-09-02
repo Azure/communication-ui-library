@@ -74,12 +74,14 @@ export async function loadCallPage(page: Page, serverUrl: string, callState: Moc
  * Construct {@link FakeChatAdapterArgs} from a prepopulated {@link MockCallAdapterState}.
  */
 function fakeChatAdapterArgsForCallAdapterState(state: MockCallAdapterState): FakeChatAdapterArgs {
+  const remoteParticipants = Object.values(state.call?.remoteParticipants ?? {}).map(chatParticipantFor);
   return {
     localParticipant: {
       id: state.userId,
       displayName: state.displayName
     },
-    remoteParticipants: Object.values(state.call?.remoteParticipants ?? {}).map(chatParticipantFor)
+    remoteParticipants,
+    participantsWithHiddenComposites: remoteParticipants
   };
 }
 

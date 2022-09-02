@@ -17,7 +17,7 @@ export function BaseApp(props: { queryArgs: CommonQueryArgs; adapter?: CallWithC
     return <h3>Initializing call-with-chat adapter...</h3>;
   }
   return (
-    <div style={{ position: 'fixed', width: '100%', height: '100%' }}>
+    <div id="test-app-root" style={{ position: 'fixed', width: '100%', height: '100%' }}>
       <_IdentifierProvider identifiers={IDS}>
         <CallWithChatComposite
           adapter={adapter}
