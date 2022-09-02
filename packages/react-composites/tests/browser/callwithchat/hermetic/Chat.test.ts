@@ -27,7 +27,7 @@ import { IDS } from '../../common/constants';
 import { expect } from '@playwright/test';
 
 test.describe('CallWithChat Composite CallWithChat Page Tests', () => {
-  test.only('Chat messages are displayed correctly', async ({ page, serverUrl }, testInfo) => {
+  test('Chat messages are displayed correctly', async ({ page, serverUrl }, testInfo) => {
     const remoteParticipant = defaultMockRemoteParticipant('Paul Bridges');
     const chatRemoteParticipant = chatParticipantFor(remoteParticipant);
     const callState = defaultMockCallAdapterState([remoteParticipant]);
@@ -56,7 +56,6 @@ test.describe('CallWithChat Composite CallWithChat Page Tests', () => {
     // Local participant has both a sent message and a received message.
     await waitForNMessages(page, 2, '#test-app-root');
     await waitForAndHideTypingIndicator(page, '#test-app-root');
-    await page.pause();
 
     if (isTestProfileMobile(testInfo)) {
       await waitForPiPiPToHaveLoaded(page, { skipVideoCheck: true });
