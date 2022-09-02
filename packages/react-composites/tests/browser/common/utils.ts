@@ -112,7 +112,7 @@ export const waitForPageFontsLoaded = async (page: Page): Promise<void> => {
     //     interface Document {}
     // this breaks `tsc`, even though it works correctly in the browser.
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    await (document as any).fonts.ready;
+    return await (document as any).fonts.ready;
   });
 };
 
