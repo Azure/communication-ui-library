@@ -115,29 +115,25 @@ export const waitForAndHideTypingIndicator = async (page: Page, rootSelector = '
   });
 };
 
-export const waitForNSeenMessages = async (page: Page, n: number): Promise<void> => {
-  return waitForNOf(page, n, '[data-ui-status="seen"]', 'body');
-};
-
 /**
  * Wait for N messages to appear in the message thread.
  *
  * Only select messages under the targeted root node. By default, this means anywhere in the <body>.
  */
 export const waitForNMessages = async (page: Page, n: number, rootSelector = 'body'): Promise<void> => {
-  return waitForNOf(page, n, dataUiId(IDS.messageTimestamp), rootSelector);
+  return waitForNOf(page, n, rootSelector, dataUiId(IDS.messageTimestamp));
 };
 
-const waitForNOf = async (page: Page, n: number, selector: string, rootSelector: string): Promise<void> => {
+const waitForNOf = async (page: Page, n: number, rootSelector: string, selector: string): Promise<void> => {
   await waitForFunction(
     page,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (args: any) => {
-      const { selector, n, rootSelector } = args;
+      const { n, rootSelector, selector } = args;
       const root = document.querySelector(rootSelector);
       const items = root.querySelectorAll(selector);
       return items.length === n;
     },
-    { selector, n, rootSelector }
+    { n, rootSelector, selector }
   );
 };

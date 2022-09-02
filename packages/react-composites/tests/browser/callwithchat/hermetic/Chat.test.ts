@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 
 import {
+  hiddenCompositeSelector,
   sendMessageFromHiddenChatComposite,
   temporarilyShowHiddenChatComposite,
   withHiddenChatCompositeInForeground
@@ -17,7 +18,9 @@ import {
   dataUiId,
   isTestProfileMobile,
   pageClick,
+  screenshotOnFailure,
   stableScreenshot,
+  waitForFunction,
   waitForPiPiPToHaveLoaded,
   waitForSelector
 } from '../../common/utils';
@@ -53,7 +56,7 @@ test.describe('CallWithChat Composite CallWithChat Page Tests', () => {
     );
   });
 
-  test.only('Unread chat message button badge are displayed correctly for <9 messages', async ({ page, serverUrl }) => {
+  test('Unread chat message button badge are displayed correctly for <9 messages', async ({ page, serverUrl }) => {
     const remoteParticipant = defaultMockRemoteParticipant('Paul Bridges');
     const chatRemoteParticipant = chatParticipantFor(remoteParticipant);
     const callState = defaultMockCallAdapterState([remoteParticipant]);
@@ -62,5 +65,32 @@ test.describe('CallWithChat Composite CallWithChat Page Tests', () => {
     await sendMessageFromHiddenChatComposite(page, chatRemoteParticipant, 'I agree!');
     await waitForSelector(page, dataUiId('call-with-chat-composite-chat-button-unread-icon'));
     expect(await stableScreenshot(page)).toMatchSnapshot(`call-with-chat-gallery-screen-with-one-unread-messages.png`);
+  });
+
+  test('Unread chat message button badge are displayed correctly for >9 messages', async ({ page, serverUrl }) => {
+    const remoteParticipant = defaultMockRemoteParticipant('Paul Bridges');
+    const chatRemoteParticipant = chatParticipantFor(remoteParticipant);
+    const callState = defaultMockCallAdapterState([remoteParticipant]);
+    await loadCallPage(page, serverUrl, callState);
+
+    for (let i = 0; i < 10; i++) {
+      await sendMessageFromHiddenChatComposite(page, chatRemoteParticipant, `Message # ${i}`);
+    }
+
+    await waitForFunction(
+      page,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (args: any) => {
+        const { rootSelector, selector } = args;
+        const root = document.querySelector(rootSelector);
+        const badge = root.querySelector(selector);
+        return badge && badge.innerText.includes('9+');
+      },
+      {
+        rootSelector: '#test-app-root',
+        selector: dataUiId('call-with-chat-composite-chat-button-unread-icon')
+      }
+    );
+    expect(await stableScreenshot(page)).toMatchSnapshot(`call-with-chat-gallery-screen-with-10-unread-messages.png`);
   });
 });

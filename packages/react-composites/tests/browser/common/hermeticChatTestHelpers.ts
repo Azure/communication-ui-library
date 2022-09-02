@@ -62,5 +62,10 @@ export async function sendMessageFromHiddenChatComposite(
   });
 }
 
-const hiddenCompositeSelector = (participant: ChatParticipant): string =>
+/**
+ * Selects the root node of the hidden chat composite for a participant.
+ *
+ * @private
+ */
+export const hiddenCompositeSelector = (participant: ChatParticipant): string =>
   `[id="hidden-composite-${toFlatCommunicationIdentifier(participant.id)}"]`;

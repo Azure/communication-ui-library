@@ -16,12 +16,6 @@ import {
 } from '../../common/utils';
 import { test } from './fixture';
 import { expect, Page } from '@playwright/test';
-import {
-  sendMessage,
-  waitForMessageDelivered,
-  waitForNSeenMessages,
-  waitForAndHideTypingIndicator
-} from '../../common/chatTestHelpers';
 import { createCallWithChatObjectsAndUsers } from '../../common/fixtureHelpers';
 import { CallWithChatUserType } from '../../common/fixtureTypes';
 
@@ -40,25 +34,6 @@ test.describe('CallWithChat Composite CallWithChat Page Tests', () => {
   test.beforeEach(async ({ pages, users, serverUrl }) => {
     await callWithChatTestSetup({ pages, users, serverUrl });
     await loadCallPageWithParticipantVideos(pages);
-  });
-
-  test('Unread chat message button badge are displayed correctly for >9 messages', async ({ pages }) => {
-    // Open chat pane on page 0 and send 10 messages
-    await pageClick(pages[0], dataUiId('call-with-chat-composite-chat-button'));
-    await waitForSelector(pages[0], dataUiId('call-with-chat-composite-chat-pane'));
-
-    for (let i = 0; i < 10; i++) {
-      await sendMessage(pages[0], 'Call with Chat composite is awesome!');
-      // timeout between each messages to prevent chat throttling
-      await waitForNSeenMessages(pages[0], i + 1);
-    }
-
-    // Ensure typing indicator has disappeared to prevent flakey test
-    await waitForAndHideTypingIndicator(pages[1]);
-    await waitForSelector(pages[1], dataUiId('call-with-chat-composite-chat-button-unread-icon')); // ensure badge appears
-    expect(await stableScreenshot(pages[1])).toMatchSnapshot(
-      `call-with-chat-gallery-screen-with-10-unread-messages.png`
-    );
   });
 
   test('People pane opens and displays correctly', async ({ pages }, testInfo) => {
