@@ -33,11 +33,12 @@ export const resumeButtonStyles: IButtonStyles = {
  */
 export const holdPaneLabelStyles: ITextStyles = {
   root: {
-    color: '#FFFFFF',
+    color: 'inherit',
     fontWeight: 600,
     fontHeight: _pxToRem(22),
     fontSize: _pxToRem(16),
-    margin: '1rem auto 0.5rem'
+    marginTop: '0.5rem',
+    marginBottom: '1.5rem'
   }
 };
 
@@ -48,7 +49,7 @@ export const holdPaneLabelStyles: ITextStyles = {
  */
 export const holdPaneTimerStyles: ITextStyles = {
   root: {
-    color: '#FFFFFF',
+    color: 'inherit',
     fontWeight: 600,
     fontSize: _pxToRem(20),
     lineHeight: _pxToRem(28),
@@ -65,7 +66,7 @@ export const paneStyles: IStackStyles = {
   root: {
     width: '100%',
     height: '100%',
-    background: 'rgba(0, 0, 0, 0.5)'
+    background: 'inherit'
   }
 };
 
@@ -79,6 +80,8 @@ export const holdPaneContentStyles: IStackStyles = {
     display: 'flex',
     margin: 'auto',
     flexDirection: 'column',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    alignContent: 'center',
+    alignItems: 'center'
   }
 };
