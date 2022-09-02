@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Show datetime when there are more than 5 mins between each message",
+  "packageName": "@internal/chat-component-bindings",
+  "email": "carolinecao@microsoft.com",
+  "dependentChangeType": "patch"
+}
