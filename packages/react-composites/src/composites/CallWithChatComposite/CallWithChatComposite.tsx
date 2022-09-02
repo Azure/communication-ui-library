@@ -191,6 +191,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
       setCurrentPage(newState.page);
       setCurrentCallState(newState.call?.state);
     };
+    updateCallWithChatPage(callWithChatAdapter.getState());
     callWithChatAdapter.onStateChange(updateCallWithChatPage);
     return () => {
       callWithChatAdapter.offStateChange(updateCallWithChatPage);
