@@ -17,6 +17,7 @@ Tests for each composite are contained in their own folder. Further, hermetic an
 * [./browser/callwithchat](./browser/callwithchat) - Tests for `CallWithChatComposite`
   * [./browser/callwithchat/app](./browser/callwithchat/app) - Test application used for all `CallWithChatComposite` tests
   * [./browser/callwithchat/live](./browser/callwithchat/live) - Live tests for `CallWithChatComposite`
+  * [./browser/callwithchat/hermetic](./browser/callwithchat/hermetic) - Hermetic tests for `CallWithChatComposite`
 
 Both hermetic and live tests use [playwright](https://playwright.dev/) test framework. Playwright is configered via
 

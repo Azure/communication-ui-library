@@ -288,6 +288,10 @@ export interface CallCompositeStrings {
    * Label for the button to open dtmf dialpad
    */
   openDtmfDialpadLabel: string;
+  /**
+   * aria label for when the invite link has been actioned
+   */
+  copyInviteLinkActionedAriaLabel: string;
   /* @conditional-compile-remove(rooms) */
   /**
    * Title text of the page shown to the user when the user attempts to join a room that cannot be found.
