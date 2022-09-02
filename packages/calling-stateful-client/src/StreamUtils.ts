@@ -402,6 +402,7 @@ function disposeViewRemoteVideo(
   context.setRemoteVideoStreamRendererView(callId, participantKey, streamId, undefined);
 
   const renderInfo = internalContext.getRemoteRenderInfoForParticipant(callId, participantKey, streamId);
+  console.log('renderInfo: ', renderInfo);
   if (!renderInfo) {
     _logEvent(callingStatefulLogger, {
       name: EventNames.REMOTE_DISPOSE_INFO_NOT_FOUND,
@@ -436,6 +437,7 @@ function disposeViewRemoteVideo(
     });
     renderInfo.renderer.dispose();
   } else {
+    console.log('internalContext.getCallIds(): ', internalContext.getCallIds());
     _logEvent(callingStatefulLogger, {
       name: EventNames.REMOTE_RENDERER_NOT_FOUND,
       level: 'error',

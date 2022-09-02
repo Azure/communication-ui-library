@@ -56,7 +56,6 @@ export const _RemoteVideoTile = React.memo(
       remoteVideoViewOptions,
       renderElement,
       userId,
-      displayName,
       onRenderAvatar,
       showMuteIndicator
     } = props;
@@ -124,7 +123,7 @@ export const _RemoteVideoTile = React.memo(
           key={userId}
           userId={userId}
           renderElement={renderVideoStreamElement}
-          displayName={displayName}
+          displayName={userId}
           onRenderPlaceholder={onRenderAvatar}
           isMuted={isMuted}
           isSpeaking={isSpeaking}

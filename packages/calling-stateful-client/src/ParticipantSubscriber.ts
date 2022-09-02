@@ -57,12 +57,14 @@ export class ParticipantSubscriber {
         );
         this.addRemoteVideoStreamSubscriber(stream);
       }
+      console.log('before setRemoteRenderInfo');
       this._context.setRemoteVideoStreams(
         this._callIdRef.callId,
         this._participantKey,
         this._participant.videoStreams.map(convertSdkRemoteStreamToDeclarativeRemoteStream),
         []
       );
+      console.log('after setRemoteRenderInfo');
     }
   };
 
@@ -118,6 +120,7 @@ export class ParticipantSubscriber {
   };
 
   private videoStreamsUpdated = (event: { added: RemoteVideoStream[]; removed: RemoteVideoStream[] }): void => {
+    console.log('event: ', event);
     for (const stream of event.removed) {
       this._remoteVideoStreamSubscribers.get(stream.id)?.unsubscribe();
       disposeView(
