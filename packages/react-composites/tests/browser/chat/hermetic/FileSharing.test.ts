@@ -265,7 +265,7 @@ test.describe('Filesharing Message Thread', async () => {
     ).toMatchSnapshot('filesharing-file-download-card-in-sent-messages.png');
   });
 
-  test.only('contains File Download Card in remote message', async ({ serverUrl, page }) => {
+  test('contains File Download Card in remote message', async ({ serverUrl, page }) => {
     await page.goto(
       buildUrlForChatAppUsingFakeAdapter(serverUrl, {
         localParticipant: TEST_PARTICIPANTS[1],
