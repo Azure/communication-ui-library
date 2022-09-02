@@ -44,35 +44,6 @@ test.describe('CallWithChat Composite CallWithChat Page Tests', () => {
     await loadCallPageWithParticipantVideos(pages);
   });
 
-  test('Chat messages are displayed correctly', async ({ pages }, testInfo) => {
-    // Open chat pane on page 0 and send a message
-    await pageClick(pages[0], dataUiId('call-with-chat-composite-chat-button'));
-    await waitForSelector(pages[0], dataUiId('call-with-chat-composite-chat-pane'));
-    await sendMessage(pages[0], 'Call with Chat composite is awesome!');
-
-    // Open chat pane on page 1 and send a response
-    await pageClick(pages[1], dataUiId('call-with-chat-composite-chat-button'));
-    await waitForSelector(pages[1], dataUiId('call-with-chat-composite-chat-pane'));
-    await sendMessage(pages[1], 'I agree!');
-    await waitForMessageDelivered(pages[1]);
-
-    // Test page 0 has both sent message and received message
-    await waitForMessageSeen(pages[0]);
-    await waitForMessageSeen(pages[1]);
-
-    // Ensure typing indicator has disappeared to prevent flakey test
-    await pages[0].bringToFront();
-    const typingIndicator = await pages[0].$(dataUiId(IDS.typingIndicator));
-    typingIndicator && (await typingIndicator.waitForElementState('hidden'));
-
-    if (!isTestProfileDesktop(testInfo)) {
-      await waitForPiPiPToHaveLoaded(pages[0]);
-    }
-
-    await stubMessageTimestamps(pages[0]);
-    expect(await stableScreenshot(pages[0])).toMatchSnapshot(`call-with-chat-gallery-screen-with-chat-pane.png`);
-  });
-
   test('Unread chat message button badge are displayed correctly for <9 messages', async ({ pages }) => {
     // Open chat pane on page 0 and send a message
     await pageClick(pages[0], dataUiId('call-with-chat-composite-chat-button'));

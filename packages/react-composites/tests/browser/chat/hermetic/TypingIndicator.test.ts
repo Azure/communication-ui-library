@@ -31,6 +31,7 @@ test.describe('Tests related to typing indicator', async () => {
     expect(await indicator?.innerHTML()).toContain(typingParticipant.displayName);
     expect(await stableScreenshot(page)).toMatchSnapshot('typing-indicator.png');
 
+    // TODO: Use waitForTypingIndicatorHidden
     // Advance time by 10 seconds to make typing indicator go away
     await page.evaluate(() => {
       const currentDate = new Date();
