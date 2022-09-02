@@ -54,14 +54,6 @@ test.describe('CallWithChat Composite CallWithChat Page Tests', () => {
     expect(await stableScreenshot(page)).toMatchSnapshot(`call-with-chat-gallery-screen-with-people-pane.png`);
   });
 
-  test('More Drawer menu opens and displays correctly on mobile', async ({ pages }, testInfo) => {
-    const page = pages[1];
-    if (!isTestProfileDesktop(testInfo)) {
-      await pageClick(page, dataUiId('call-with-chat-composite-more-button'));
-      expect(await stableScreenshot(page)).toMatchSnapshot(`call-with-chat-more-drawer-screen.png`);
-    }
-  });
-
   test('More Drawer Speaker submenu opens and displays correctly on mobile', async ({ pages }, testInfo) => {
     const page = pages[1];
     if (!isTestProfileDesktop(testInfo)) {
