@@ -116,7 +116,7 @@ const initializeAdapter = async (
   const chatThreadClient: ChatThreadClient = await statefulChatClient.getChatThreadClient(
     adapterInfo.chatThreadClient.threadId
   );
-  registerchatThreadClientMethodErrors(chatThreadClient, chatThreadClientMethodErrors);
+  registerChatThreadClientMethodErrors(chatThreadClient, chatThreadClientMethodErrors);
   return await createAzureCommunicationChatAdapterFromClient(statefulChatClient, chatThreadClient);
 };
 
@@ -145,7 +145,7 @@ const orderParticipants = (
   return participants;
 };
 
-const registerchatThreadClientMethodErrors = (
+const registerChatThreadClientMethodErrors = (
   chatThreadClient: ChatThreadClient,
   chatThreadClientMethodErrors?: Partial<Record<keyof ChatThreadClient, ChatThreadRestError>>
 ): void => {

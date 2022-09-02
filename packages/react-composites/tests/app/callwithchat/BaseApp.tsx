@@ -7,10 +7,10 @@ import { _IdentifierProvider } from '@internal/react-components';
 import { CallWithChatAdapter, CallWithChatComposite } from '../../../src';
 import { IDS } from '../../browser/common/constants';
 import { isMobile } from '../lib/utils';
-import { QueryArgs } from './QueryArgs';
+import { CommonQueryArgs } from './QueryArgs';
 
 /** @internal */
-export function BaseApp(props: { queryArgs: QueryArgs; adapter?: CallWithChatAdapter }): JSX.Element {
+export function BaseApp(props: { queryArgs: CommonQueryArgs; adapter?: CallWithChatAdapter }): JSX.Element {
   const { adapter } = props;
 
   if (!adapter) {
