@@ -4,7 +4,13 @@
 import { expect } from '@playwright/test';
 import { temporarilyShowHiddenChatComposite } from '../../common/hermeticChatTestHelpers';
 import { sendMessage, waitForMessageDelivered, waitForMessageSeen } from '../../common/chatTestHelpers';
-import { dataUiId, pageClick, screenshotOnFailure, stableScreenshot, waitForSelector } from '../../common/utils';
+import {
+  dataUiId,
+  perStepLocalTimeout,
+  screenshotOnFailure,
+  stableScreenshot,
+  waitForSelector
+} from '../../common/utils';
 import { buildUrlForChatAppUsingFakeAdapter, DEFAULT_FAKE_CHAT_ADAPTER_ARGS, test } from './fixture';
 
 test.describe('Chat Composite E2E Tests', () => {
@@ -24,7 +30,12 @@ test.describe('Chat Composite E2E Tests', () => {
     await temporarilyShowHiddenChatComposite(page, messageReader);
     await waitForMessageSeen(page);
 
-    await pageClick(page, dataUiId('chat-composite-message-status-icon'));
+    // Can't use `pageClick()` here because we want the tooltips to be shown.
+    // `pageClick()` moves the mouse away explicitly to dismiss the tooltips.
+    await screenshotOnFailure(
+      page,
+      async () => await page.click(dataUiId('chat-composite-message-status-icon'), { timeout: perStepLocalTimeout() })
+    );
     await waitForSelector(page, dataUiId('chat-composite-message-tooltip'));
     expect(await stableScreenshot(page, { stubMessageTimestamps: true, dismissTooltips: false })).toMatchSnapshot(
       'read-message-tooltip-text.png'
