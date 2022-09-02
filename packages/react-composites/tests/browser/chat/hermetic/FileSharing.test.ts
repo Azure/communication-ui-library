@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 import { expect } from '@playwright/test';
-import { sendMessage, waitForMessageDelivered, waitForTypingIndicatorHidden } from '../../common/chatTestHelpers';
+import { sendMessage, waitForMessageDelivered, waitForAndHideTypingIndicator } from '../../common/chatTestHelpers';
 import { dataUiId, isTestProfileStableFlavor, stableScreenshot, waitForSelector } from '../../common/utils';
 import { buildUrlForChatAppUsingFakeAdapter, DEFAULT_FAKE_CHAT_ADAPTER_ARGS, test, TEST_PARTICIPANTS } from './fixture';
 
@@ -275,7 +275,7 @@ test.describe('Filesharing Message Thread', async () => {
         sendRemoteFileSharingMessage: true
       })
     );
-    await waitForTypingIndicatorHidden(page);
+    await waitForAndHideTypingIndicator(page);
 
     expect(
       await stableScreenshot(page, {

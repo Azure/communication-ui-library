@@ -10,7 +10,7 @@ import {
   sendMessage,
   waitForMessageSeen,
   waitForNMessages,
-  waitForTypingIndicatorHidden
+  waitForAndHideTypingIndicator
 } from '../../common/chatTestHelpers';
 import {
   dataUiId,
@@ -55,7 +55,7 @@ test.describe('CallWithChat Composite CallWithChat Page Tests', () => {
 
     // Local participant has both a sent message and a received message.
     await waitForNMessages(page, 2, '#test-app-root');
-    await waitForTypingIndicatorHidden(page, '#test-app-root');
+    await waitForAndHideTypingIndicator(page, '#test-app-root');
     await page.pause();
 
     if (isTestProfileMobile(testInfo)) {

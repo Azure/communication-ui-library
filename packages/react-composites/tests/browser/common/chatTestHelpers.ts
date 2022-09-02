@@ -87,13 +87,12 @@ export const waitForMessageWithContent = async (page: Page, messageContent: stri
   await waitForSelector(page, `.ui-chat__message__content :text("${messageContent}")`);
 };
 
-// TODO: Rename function to better reflect what it does: waitForAndHideTypingIndicator()
 /**
  * Wait for typing indicators to appear and then dismiss them before continuing.
  *
  * Only select typing indicators under the targeted root node. By default, this means anywhere in the <body>.
  */
-export const waitForTypingIndicatorHidden = async (page: Page, rootSelector = 'body'): Promise<void> => {
+export const waitForAndHideTypingIndicator = async (page: Page, rootSelector = 'body'): Promise<void> => {
   await page.bringToFront();
   const indicator = await (await page.locator(rootSelector)).locator(dataUiId(IDS.typingIndicator));
   // First make sure that the typing indicator appears.

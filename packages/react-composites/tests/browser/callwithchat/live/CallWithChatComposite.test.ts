@@ -20,7 +20,7 @@ import {
   sendMessage,
   waitForMessageDelivered,
   waitForNSeenMessages,
-  waitForTypingIndicatorHidden
+  waitForAndHideTypingIndicator
 } from '../../common/chatTestHelpers';
 import { createCallWithChatObjectsAndUsers } from '../../common/fixtureHelpers';
 import { CallWithChatUserType } from '../../common/fixtureTypes';
@@ -50,7 +50,7 @@ test.describe('CallWithChat Composite CallWithChat Page Tests', () => {
     await waitForMessageDelivered(pages[0]);
 
     // Ensure typing indicator has disappeared to prevent flakey test
-    await waitForTypingIndicatorHidden(pages[1]);
+    await waitForAndHideTypingIndicator(pages[1]);
 
     await waitForSelector(pages[1], dataUiId('call-with-chat-composite-chat-button-unread-icon'));
     expect(await stableScreenshot(pages[1])).toMatchSnapshot(
@@ -70,7 +70,7 @@ test.describe('CallWithChat Composite CallWithChat Page Tests', () => {
     }
 
     // Ensure typing indicator has disappeared to prevent flakey test
-    await waitForTypingIndicatorHidden(pages[1]);
+    await waitForAndHideTypingIndicator(pages[1]);
     await waitForSelector(pages[1], dataUiId('call-with-chat-composite-chat-button-unread-icon')); // ensure badge appears
     expect(await stableScreenshot(pages[1])).toMatchSnapshot(
       `call-with-chat-gallery-screen-with-10-unread-messages.png`
