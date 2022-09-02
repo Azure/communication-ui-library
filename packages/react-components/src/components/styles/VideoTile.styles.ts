@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IStyle, mergeStyles } from '@fluentui/react';
+import { IStyle, mergeStyles, Theme } from '@fluentui/react';
 
 /**
  * @private
@@ -42,9 +42,10 @@ export const overlayContainerStyles: IStyle = {
  */
 export const tileInfoContainerStyle = mergeStyles({
   position: 'absolute',
-  bottom: '0.5rem',
-  left: '0.5rem',
-  width: 'calc(100% - 1rem)'
+  bottom: '0',
+  left: '0',
+  padding: '0.5rem',
+  width: '100%'
 });
 
 /**
@@ -86,30 +87,27 @@ export const displayNameStyle: IStyle = {
 /**
  * @private
  */
-export const iconContainerStyle: IStyle = {
-  height: '100%',
+export const iconContainerStyle = (theme: Theme): IStyle => ({
+  margin: 'auto',
   alignItems: 'center',
   '& svg': {
-    display: 'block'
+    display: 'block',
+    color: theme.palette.neutralPrimary
   }
-};
+});
 
 /**
  * @private
  */
-export const participantStateStringStyles = (showLabel: boolean): IStyle => {
+export const participantStateStringStyles = (theme: Theme): IStyle => {
   return {
-    textAlign: 'center',
-    minWidth: '3rem',
-    color: 'inherit',
-    width: showLabel ? 'auto' : '100%',
-    marginRight: showLabel ? 0 : 'none',
-    marginLeft: showLabel ? 'auto' : 'none',
+    minWidth: 'max-content',
+    color: theme.palette.black,
     fontSize: '0.75rem',
     lineHeight: 'normal',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
     whiteSpace: 'nowrap',
-    padding: '0.25rem'
+    padding: '0.1rem'
   };
 };

@@ -191,6 +191,7 @@ test.describe('HorizontalGallery tests', async () => {
     paul.state = 'Ringing';
     const phoneUser = defaultMockRemotePSTNParticipant('+15555555555');
     phoneUser.state = 'Connecting';
+    phoneUser.isMuted = false;
 
     const participants = [reina, paul, phoneUser];
     const initialState = defaultMockCallAdapterState(participants);
