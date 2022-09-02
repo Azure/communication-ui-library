@@ -2,10 +2,8 @@
 // Licensed under the MIT license.
 
 import {
-  hiddenCompositeSelector,
   sendMessageFromHiddenChatComposite,
-  temporarilyShowHiddenChatComposite,
-  withHiddenChatCompositeInForeground
+  temporarilyShowHiddenChatComposite
 } from '../../common/hermeticChatTestHelpers';
 import { defaultMockCallAdapterState, defaultMockRemoteParticipant } from '../../call/hermetic/fixture';
 import {
@@ -18,7 +16,6 @@ import {
   dataUiId,
   isTestProfileMobile,
   pageClick,
-  screenshotOnFailure,
   stableScreenshot,
   waitForFunction,
   waitForPiPiPToHaveLoaded,
