@@ -60,8 +60,6 @@ import {
   UnknownIdentifier,
   PhoneNumberIdentifier
 } from '@azure/communication-common';
-/* @conditional-compile-remove(PSTN-calls) */
-import { CommunicationIdentifier } from '@azure/communication-common';
 import { ParticipantSubscriber } from './ParticipantSubcriber';
 import { AdapterError } from '../../common/adapters';
 import { DiagnosticsForwarder } from './DiagnosticsForwarder';
@@ -505,25 +503,18 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
   }
 
   /* @conditional-compile-remove(PSTN-calls) */
-  public async addParticipant(participant: CommunicationIdentifier, options?: AddPhoneNumberOptions): Promise<void>;
+  public async addParticipant(participant: PhoneNumberIdentifier, options?: AddPhoneNumberOptions): Promise<void>;
   /* @conditional-compile-remove(PSTN-calls) */
-  public async addParticipant(participant: string): Promise<void>;
+  public async addParticipant(participant: CommunicationUserIdentifier): Promise<void>;
   /* @conditional-compile-remove(PSTN-calls) */
   public async addParticipant(
-    participant: CommunicationIdentifier | string,
+    participant: PhoneNumberIdentifier | CommunicationUserIdentifier,
     options?: AddPhoneNumberOptions
   ): Promise<void> {
-    if (typeof participant === 'string') {
-      const participantIdentifier = fromFlatCommunicationIdentifier(participant);
-      if (isPhoneNumberIdentifier(participantIdentifier)) {
-        const alternateCallerId = this.callClient.getState().alternateCallerId;
-        const newOptions = { alternateCallerId: { phoneNumber: alternateCallerId } } as AddPhoneNumberOptions;
-        this.handlers.onAddParticipant(participantIdentifier as PhoneNumberIdentifier, newOptions);
-      } else if (isCommunicationUserIdentifier(participantIdentifier)) {
-        this.handlers.onAddParticipant(participantIdentifier as CommunicationUserIdentifier);
-      }
-    } else {
-      this.handlers.onAddParticipant(participant, options);
+    if (isPhoneNumberIdentifier(participant) && options) {
+      this.handlers.onAddParticipant(participant as PhoneNumberIdentifier, options);
+    } else if (isCommunicationUserIdentifier(participant)) {
+      this.handlers.onAddParticipant(participant);
     }
   }
 

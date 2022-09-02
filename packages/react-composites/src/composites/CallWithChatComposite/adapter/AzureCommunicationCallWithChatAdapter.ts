@@ -55,9 +55,12 @@ import {
   createAzureCommunicationChatAdapterFromClient
 } from '../../ChatComposite/adapter/AzureCommunicationChatAdapter';
 import { EventEmitter } from 'events';
-import { CommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
-/* @conditional-compile-remove(PSTN-calls) */
-import { CommunicationIdentifier } from '@azure/communication-common';
+import {
+  CommunicationTokenCredential,
+  CommunicationUserIdentifier,
+  isCommunicationUserIdentifier,
+  PhoneNumberIdentifier
+} from '@azure/communication-common';
 import { getChatThreadFromTeamsLink } from './parseTeamsUrl';
 import { AdapterError } from '../../common/adapters';
 
@@ -371,15 +374,15 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     return await this.callAdapter.resumeCall();
   }
   /* @conditional-compile-remove(PSTN-calls) */
-  public async addParticipant(participant: CommunicationIdentifier, options?: AddPhoneNumberOptions): Promise<void>;
+  public async addParticipant(participant: PhoneNumberIdentifier, options?: AddPhoneNumberOptions): Promise<void>;
   /* @conditional-compile-remove(PSTN-calls) */
-  public async addParticipant(participant: string): Promise<void>;
+  public async addParticipant(participant: CommunicationUserIdentifier): Promise<void>;
   /* @conditional-compile-remove(PSTN-calls) */
   public async addParticipant(
-    participant: CommunicationIdentifier | string,
+    participant: PhoneNumberIdentifier | CommunicationUserIdentifier,
     options?: AddPhoneNumberOptions
   ): Promise<void> {
-    if (typeof participant === 'string') {
+    if (isCommunicationUserIdentifier(participant)) {
       return await this.callAdapter.addParticipant(participant);
     } else {
       return await this.callAdapter.addParticipant(participant, options);

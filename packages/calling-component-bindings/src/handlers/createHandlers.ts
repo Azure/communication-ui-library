@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 
 import {
+  AddPhoneNumberOptions,
   AudioDeviceInfo,
   Call,
   CallAgent,
@@ -11,22 +12,30 @@ import {
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
 import { DtmfTone } from '@azure/communication-calling';
-/* @conditional-compile-remove(PSTN-calls) */
-import { AddPhoneNumberOptions } from '@azure/communication-calling';
-import { CommunicationUserIdentifier, PhoneNumberIdentifier, UnknownIdentifier } from '@azure/communication-common';
-/* @conditional-compile-remove(PSTN-calls) */
 import {
   CommunicationIdentifier,
-  isCommunicationUserIdentifier,
+  CommunicationUserIdentifier,
   isMicrosoftTeamsUserIdentifier,
-  isPhoneNumberIdentifier
+  PhoneNumberIdentifier,
+  UnknownIdentifier
 } from '@azure/communication-common';
+/* @conditional-compile-remove(PSTN-calls) */
+import { isCommunicationUserIdentifier, isPhoneNumberIdentifier } from '@azure/communication-common';
 import { Common, fromFlatCommunicationIdentifier, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { CreateViewResult, StatefulCallClient, StatefulDeviceManager } from '@internal/calling-stateful-client';
 import memoizeOne from 'memoize-one';
 import { ReactElement } from 'react';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 import { disposeAllLocalPreviewViews, _isInCall, _isPreviewOn } from '../utils/callUtils';
+
+/* @conditional-compile-remove(PSTN-calls) */
+/**
+ * handler type for addParticipant
+ *
+ * @beta
+ */
+export type AddParticipantHandler = ((participant: CommunicationUserIdentifier) => Promise<void>) &
+  ((participant: PhoneNumberIdentifier, options: AddPhoneNumberOptions) => Promise<void>);
 
 /**
  * Object containing all the handlers required for calling components.
@@ -54,7 +63,7 @@ export type CallingHandlers = {
   /* @conditional-compile-remove(PSTN-calls) */
   onToggleHold: () => Promise<void>;
   /* @conditional-compile-remove(PSTN-calls) */
-  onAddParticipant: (participant: CommunicationIdentifier, options?: AddPhoneNumberOptions) => Promise<void>;
+  onAddParticipant: AddParticipantHandler;
   onCreateLocalStreamView: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
   onCreateRemoteStreamView: (
     userId: string,
@@ -340,14 +349,19 @@ export const createDefaultCallingHandlers = memoizeOne(
     };
 
     /* @conditional-compile-remove(PSTN-calls) */
-    const onAddParticipant = async (
-      participant: CommunicationIdentifier,
-      options?: AddPhoneNumberOptions
-    ): Promise<void> => {
-      if (isPhoneNumberIdentifier(participant)) {
-        await call?.addParticipant(participant, options);
-      } else if (isCommunicationUserIdentifier(participant) || isMicrosoftTeamsUserIdentifier(participant)) {
-        await call?.addParticipant(participant);
+    const onAddParticipant: AddParticipantHandler = async (participant, options?) => {
+      const participantType = participantTypeHelper(participant);
+      switch (participantType) {
+        case 'PSTN':
+          if (options) {
+            await call?.addParticipant(participant as PhoneNumberIdentifier, options);
+          } else {
+            throw new Error('No addPhoneNumber options provided.');
+          }
+          break;
+        case 'ACS':
+          await call?.addParticipant(participant as CommunicationUserIdentifier);
+          break;
       }
     };
 
@@ -402,4 +416,19 @@ export const createDefaultCallingHandlersForComponent = <Props>(
   _Component: (props: Props) => ReactElement | null
 ): Common<CallingHandlers, Props> => {
   return createDefaultCallingHandlers(callClient, callAgent, deviceManager, call);
+};
+
+/**
+ * Helper function for determining participant type.
+ */
+const participantTypeHelper = (p: CommunicationIdentifier): string => {
+  if (isPhoneNumberIdentifier(p)) {
+    return 'PSTN';
+  } else if (isCommunicationUserIdentifier(p)) {
+    return 'ACS';
+  } else if (isMicrosoftTeamsUserIdentifier(p)) {
+    return 'Teams';
+  } else {
+    return 'unknown';
+  }
 };

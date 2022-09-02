@@ -39,6 +39,7 @@ import { PartialTheme } from '@fluentui/react';
 import { ParticipantMenuItemsCallback } from '@internal/react-components';
 import { PermissionConstraints } from '@azure/communication-calling';
 import { PersonaInitialsColor } from '@fluentui/react';
+import type { PhoneNumberIdentifier } from '@azure/communication-common';
 import { PropertyChangedEvent } from '@azure/communication-calling';
 import type { RemoteParticipant } from '@azure/communication-calling';
 import { Role } from '@internal/react-components';
@@ -143,11 +144,9 @@ export type CallAdapterCallEndedEvent = {
 // @public
 export interface CallAdapterCallManagement {
     // @beta
-    addParticipant(participant: CommunicationIdentifier, options?: AddPhoneNumberOptions): Promise<void>;
+    addParticipant(participant: PhoneNumberIdentifier, options?: AddPhoneNumberOptions): Promise<void>;
     // (undocumented)
-    addParticipant(participant: string): Promise<void>;
-    // (undocumented)
-    addParticipant(participant: CommunicationIdentifier | string, options?: AddPhoneNumberOptions): Promise<void>;
+    addParticipant(participant: CommunicationUserIdentifier): Promise<void>;
     createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void | CreateVideoStreamViewResult>;
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
     // @beta
@@ -429,9 +428,7 @@ export interface CallWithChatAdapterManagement {
     // @beta
     addParticipant(participant: CommunicationIdentifier, options?: AddPhoneNumberOptions): Promise<void>;
     // (undocumented)
-    addParticipant(participant: string): Promise<void>;
-    // (undocumented)
-    addParticipant(participant: CommunicationIdentifier | string, options?: AddPhoneNumberOptions): Promise<void>;
+    addParticipant(participant: CommunicationUserIdentifier): Promise<void>;
     askDevicePermission(constrain: PermissionConstraints): Promise<void>;
     // @beta (undocumented)
     cancelFileUpload: (id: string) => void;
