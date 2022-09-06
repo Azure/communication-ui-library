@@ -16,7 +16,8 @@ import { CommunicationUserIdentifier, PhoneNumberIdentifier, UnknownIdentifier }
 import {
   isCommunicationUserIdentifier,
   isMicrosoftTeamsUserIdentifier,
-  isPhoneNumberIdentifier
+  isPhoneNumberIdentifier,
+  CommunicationIdentifier
 } from '@azure/communication-common';
 import { Common, fromFlatCommunicationIdentifier, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { CreateViewResult, StatefulCallClient, StatefulDeviceManager } from '@internal/calling-stateful-client';
