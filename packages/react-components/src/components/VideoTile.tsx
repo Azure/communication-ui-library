@@ -264,7 +264,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
             {renderElement}
           </Stack>
         ) : (
-          <Stack className={mergeStyles(videoContainerStyles)}>
+          <Stack className={mergeStyles(videoContainerStyles)} style={{ opacity: participantStateString ? 0.4 : 1 }}>
             {onRenderPlaceholder ? (
               onRenderPlaceholder(userId ?? '', placeholderOptions, DefaultPlaceholder)
             ) : (
@@ -275,21 +275,27 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
 
         {(canShowLabel || participantStateString) && (
           <Stack horizontal className={tileInfoContainerStyle} tokens={tileInfoContainerTokens}>
-            {canShowLabel && (
-              <Stack horizontal className={tileInfoStyle}>
-                <Text className={mergeStyles(displayNameStyle)} title={displayName}>
+            <Stack horizontal className={tileInfoStyle}>
+              {canShowLabel && (
+                <Text
+                  className={mergeStyles(displayNameStyle)}
+                  title={displayName}
+                  style={{ color: participantStateString ? theme.palette.neutralSecondary : 'inherit' }}
+                >
                   {displayName}
                 </Text>
-                {showMuteIndicator && isMuted && (
-                  <Stack className={mergeStyles(iconContainerStyle)}>
-                    <Icon iconName="VideoTileMicOff" />
-                  </Stack>
-                )}
-              </Stack>
-            )}
-            {participantStateString && (
-              <Text className={mergeStyles(participantStateStringStyles(showLabel))}>{participantStateString}</Text>
-            )}
+              )}
+              {participantStateString && (
+                <Text className={mergeStyles(participantStateStringStyles(theme))}>
+                  {bracketedParticipantString(participantStateString, !!canShowLabel)}
+                </Text>
+              )}
+              {showMuteIndicator && isMuted && (
+                <Stack className={mergeStyles(iconContainerStyle(theme))}>
+                  <Icon iconName="VideoTileMicOff" />
+                </Stack>
+              )}
+            </Stack>
           </Stack>
         )}
 
@@ -322,4 +328,8 @@ const tileInfoContainerTokens = {
   // A horizontal Stack sets the left margin to 0 for all it's children.
   // We need to allow the children to set their own margins
   childrenGap: 'none'
+};
+
+const bracketedParticipantString = (participantString: string, withBrackets: boolean): string => {
+  return withBrackets ? `(${participantString})` : participantString;
 };

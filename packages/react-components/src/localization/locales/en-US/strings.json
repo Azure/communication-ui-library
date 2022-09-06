@@ -8,7 +8,7 @@
     "displayNamePlaceholder": "Unnamed Participant",
     "participantStateConnecting": "Calling...",
     "participantStateRinging": "Calling...",
-    "participantStateHold": "On Hold"
+    "participantStateHold": "On hold"
   },
   "typingIndicator": {
     "singleUser": "{user} is typing ...",
@@ -182,7 +182,7 @@
   "videoTile": {
     "participantStateConnecting": "Calling...",
     "participantStateRinging": "Calling...",
-    "participantStateHold": "On Hold"
+    "participantStateHold": "On hold"
   },
   "DomainPermissions": {
     "mainText": "Allow {appName} to use your camera and microphone",
