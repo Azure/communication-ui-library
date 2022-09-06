@@ -42,7 +42,6 @@
     "@internal/calling-stateful-client": "1.3.2-beta.0",
     "@internal/react-components": "1.3.2-beta.0",
     "@internal/react-composites": "1.3.2-beta.0",
-    "jquery": "^3.5.1",
     "merge": "^2.1.1",
     "mobile-detect": "~1.4.5",
     "react": "~16.14.0",
