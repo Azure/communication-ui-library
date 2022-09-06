@@ -5,7 +5,7 @@ import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { Page, test as base } from '@playwright/test';
 import path from 'path';
 import { createTestServer } from '../../common/server';
-import { bindConsoleErrorForwarding } from '../../common/fixtureHelpers';
+import { loadNewPageWithPermissionsForCalls } from '../../common/fixtureHelpers';
 import { encodeQueryData } from '../../common/utils';
 import type {
   MockCallAdapterState,
@@ -42,10 +42,7 @@ export interface TestFixture {
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 const usePage = async ({ browser }, use) => {
-  const context = await browser.newContext({ permissions: ['notifications', 'camera', 'microphone'] });
-  const page = await context.newPage();
-  bindConsoleErrorForwarding(page);
-  await use(page);
+  await use(await loadNewPageWithPermissionsForCalls(browser));
 };
 
 /**
