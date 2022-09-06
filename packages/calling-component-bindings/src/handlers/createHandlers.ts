@@ -11,11 +11,10 @@ import {
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
 import { DtmfTone, AddPhoneNumberOptions } from '@azure/communication-calling';
-import { CommunicationIdentifier, PhoneNumberIdentifier, UnknownIdentifier } from '@azure/communication-common';
+import { CommunicationUserIdentifier, PhoneNumberIdentifier, UnknownIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(PSTN-calls) */
 import {
   isCommunicationUserIdentifier,
-  CommunicationUserIdentifier,
   isMicrosoftTeamsUserIdentifier,
   isPhoneNumberIdentifier
 } from '@azure/communication-common';
