@@ -192,6 +192,10 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
   /* @conditional-compile-remove(rooms) */
   microphoneButtonIsEnabled = rolePermissions.microphoneButton && microphoneButtonIsEnabled;
 
+  let cameraButtonIsEnabled = isEnabled(options?.cameraButton);
+  /* @conditional-compile-remove(rooms) */
+  cameraButtonIsEnabled = rolePermissions.cameraButton && cameraButtonIsEnabled;
+
   return (
     <Stack horizontalAlign="center">
       {
@@ -215,7 +219,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
           {microphoneButtonIsEnabled && (
             <Microphone displayType={options?.displayType} disabled={isDisabled(options?.microphoneButton)} />
           )}
-          {isEnabled(options?.cameraButton) && (
+          {cameraButtonIsEnabled && (
             <Camera displayType={options?.displayType} disabled={isDisabled(options?.cameraButton)} />
           )}
           {screenShareButtonIsEnabled && (
