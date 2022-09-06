@@ -10,8 +10,6 @@ import { IContextualMenuItemStyles, IContextualMenuStyles } from '@fluentui/reac
 import { ControlBarButtonStyles } from './ControlBarButton';
 import { OptionsDevice, generateDefaultDeviceMenuProps } from './DevicesButton';
 import { Announcer } from './Announcer';
-/* @conditional-compile-remove(rooms) */
-import { _usePermissions } from '../permissions/PermissionsProvider';
 
 /**
  * Strings of {@link MicrophoneButton} that can be overridden.
@@ -165,9 +163,6 @@ export const MicrophoneButton = (props: MicrophoneButtonProps): JSX.Element => {
     props.disabled ||
     (isSplit && !props.microphones?.length && !props.speakers?.length) ||
     (!isSplit && props.microphones && props.microphones?.length === 0);
-
-  /* @conditional-compile-remove(rooms) */
-  disabled = !_usePermissions().microphoneButton || disabled;
 
   const onRenderMicOnIcon = (): JSX.Element => {
     return <HighContrastAwareIcon disabled={disabled} iconName="ControlButtonMicOn" />;

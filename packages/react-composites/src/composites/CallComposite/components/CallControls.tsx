@@ -188,6 +188,10 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
   /* @conditional-compile-remove(rooms) */
   screenShareButtonIsEnabled = rolePermissions.screenShare && screenShareButtonIsEnabled;
 
+  let microphoneButtonIsEnabled = isEnabled(options?.microphoneButton);
+  /* @conditional-compile-remove(rooms) */
+  microphoneButtonIsEnabled = rolePermissions.microphoneButton && microphoneButtonIsEnabled;
+
   return (
     <Stack horizontalAlign="center">
       {
@@ -208,7 +212,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
             occluding some of its content.
          */}
         <ControlBar layout="horizontal" styles={controlBarStyles(theme.semanticColors.bodyBackground)}>
-          {isEnabled(options?.microphoneButton) && (
+          {microphoneButtonIsEnabled && (
             <Microphone displayType={options?.displayType} disabled={isDisabled(options?.microphoneButton)} />
           )}
           {isEnabled(options?.cameraButton) && (
