@@ -44,11 +44,6 @@ test.describe('CallWithChat Composite CallWithChat Page Tests', () => {
     await loadCallPageWithParticipantVideos(pages);
   });
 
-  test('CallWithChat gallery screen loads correctly', async ({ pages }) => {
-    const page = pages[0];
-    expect(await stableScreenshot(page)).toMatchSnapshot(`call-with-chat-gallery-screen.png`);
-  });
-
   test('Chat messages are displayed correctly', async ({ pages }, testInfo) => {
     // Open chat pane on page 0 and send a message
     await pageClick(pages[0], dataUiId('call-with-chat-composite-chat-button'));
@@ -238,7 +233,7 @@ test.describe('CallWithChat Composite CallWithChat Page Tests', () => {
     test.skip(isTestProfileStableFlavor());
     const page = pages[1];
     await pageClick(page, dataUiId('call-with-chat-composite-more-button'));
-    const moreButtonShowDialpadButton = await page.$('div[role="menu"] >> text="Show Dialpad"');
+    const moreButtonShowDialpadButton = await page.$('div[role="menu"] >> text="Show dialpad"');
     await moreButtonShowDialpadButton?.click();
     expect(await stableScreenshot(page)).toMatchSnapshot(`call-with-chat-more-drawer-dtmf-dialpad.png`);
   });

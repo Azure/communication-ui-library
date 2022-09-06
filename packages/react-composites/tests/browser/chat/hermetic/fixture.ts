@@ -7,7 +7,7 @@ import { nanoid } from 'nanoid';
 import path from 'path';
 import { createTestServer } from '../../common/server';
 import { TEST_PARTICIPANTS_CHAT } from '../../common/constants';
-import { bindConsoleErrorForwarding, loadNewPage } from '../../common/fixtureHelpers';
+import { loadNewPage } from '../../common/fixtureHelpers';
 import type { FakeChatAdapterArgs } from '../../../common';
 
 const SERVER_URL = 'http://localhost';
@@ -52,7 +52,6 @@ const usePage = async ({ serverUrl, browser }, use) => {
     browser,
     buildUrlForChatAppUsingFakeAdapter(serverUrl, DEFAULT_FAKE_CHAT_ADAPTER_ARGS)
   );
-  bindConsoleErrorForwarding(page);
   await use(page);
 };
 

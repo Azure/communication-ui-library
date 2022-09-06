@@ -18,7 +18,8 @@ const TEST_ROOT = path.join(PACKLET_ROOT, 'tests', 'browser');
 const TESTS = {
   hermetic: {
     call: path.join(TEST_ROOT, 'call', 'hermetic'),
-    chat: path.join(TEST_ROOT, 'chat', 'hermetic')
+    chat: path.join(TEST_ROOT, 'chat', 'hermetic'),
+    callWithChat: path.join(TEST_ROOT, 'callwithchat', 'hermetic')
   },
   live: {
     call: path.join(TEST_ROOT, 'call', 'live'),
