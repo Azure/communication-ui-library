@@ -10,6 +10,8 @@ import { _isInLobbyOrConnecting } from '@internal/calling-component-bindings';
 import { ControlBar, ParticipantMenuItemsCallback } from '@internal/react-components';
 /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
 import { HoldButton } from '@internal/react-components';
+/* @conditional-compile-remove(rooms) */
+import { _usePermissions } from '@internal/react-components';
 import React, { useMemo } from 'react';
 import { CallControlOptions } from '../types/CallControlOptions';
 import { Camera } from './buttons/Camera';
@@ -38,7 +40,7 @@ import { useAdapter } from '../adapter/CallAdapterProvider';
 import { isDisabled } from '../utils';
 
 /**
- * @private
+ * @public
  */
 export type CallControlsProps = {
   /* @conditional-compile-remove(one-to-n-calling) */
@@ -60,7 +62,7 @@ export type CallControlsProps = {
 const controlBarStyles = memoizeFunction((background: string) => ({ root: { background: background } }));
 
 /**
- * @private
+ * @public
  */
 export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX.Element => {
   const options = useMemo(() => (typeof props.options === 'boolean' ? {} : props.options), [props.options]);
@@ -179,6 +181,13 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
     setShowDialpad(false);
   };
 
+  /* @conditional-compile-remove(rooms) */
+  const rolePermissions = _usePermissions();
+
+  let screenShareButtonIsEnabled = isEnabled(options?.screenShareButton);
+  /* @conditional-compile-remove(rooms) */
+  screenShareButtonIsEnabled = rolePermissions.screenShare && screenShareButtonIsEnabled;
+
   return (
     <Stack horizontalAlign="center">
       {
@@ -205,7 +214,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
           {isEnabled(options?.cameraButton) && (
             <Camera displayType={options?.displayType} disabled={isDisabled(options?.cameraButton)} />
           )}
-          {isEnabled(options?.screenShareButton) && (
+          {screenShareButtonIsEnabled && (
             <ScreenShare
               option={options?.screenShareButton}
               displayType={options?.displayType}
