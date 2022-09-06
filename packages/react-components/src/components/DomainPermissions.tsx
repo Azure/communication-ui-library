@@ -14,6 +14,7 @@ import {
   linkTextStyles,
   primaryTextStyles,
   secondaryTextStyles,
+  sparkleIconBackdropStyles,
   textContainerStyles
 } from './styles/DomainPermissions.styles';
 
@@ -58,7 +59,9 @@ const _DomainPermissionsContainer = (props: DomainPermissionsProps): JSX.Element
           <Icon styles={iconPrimaryStyles} iconName={'ControlButtonCameraOn'}></Icon>
           <Icon styles={iconBackDropStyles} iconName={'iconBackdrop'}></Icon>
         </Stack>
-        <Icon styles={iconPrimaryStyles} iconName={'Sparkle'}></Icon>
+        <Stack styles={iconContainerStyles} horizontalAlign={'center'}>
+          <Icon styles={sparkleIconBackdropStyles} iconName={'sparkle'}></Icon>
+        </Stack>
         <Stack styles={iconContainerStyles} horizontalAlign={'center'}>
           <Icon styles={iconPrimaryStyles} iconName={'ControlButtonMicOn'}></Icon>
           <Icon styles={iconBackDropStyles} iconName={'iconBackdrop'}></Icon>
