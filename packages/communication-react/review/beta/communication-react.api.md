@@ -1594,6 +1594,7 @@ export const DEFAULT_COMPONENT_ICONS: {
     VideoTileMicOff: JSX.Element;
     BackSpace: JSX.Element;
     iconBackdrop: JSX.Element;
+    sparkle: JSX.Element;
 };
 
 // @public
@@ -1678,6 +1679,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     ResumeCall: JSX.Element;
     BackSpace: JSX.Element;
     iconBackdrop: JSX.Element;
+    sparkle: JSX.Element;
 };
 
 // @public
