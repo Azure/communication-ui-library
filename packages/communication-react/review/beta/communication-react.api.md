@@ -393,6 +393,7 @@ export type CallCompositeIcons = {
 export type CallCompositeOptions = {
     errorBar?: boolean;
     callControls?: boolean | CallControlOptions;
+    permissions?: CallPermissionOptions;
 };
 
 // @public
@@ -587,6 +588,12 @@ export type CallParticipantListParticipant = ParticipantListParticipant & {
 // @beta
 export type CallParticipantsLocator = {
     participantIDs: string[];
+};
+
+// @beta
+export type CallPermissionOptions = {
+    camera: 'required' | 'optional' | 'doNotPrompt';
+    microphone: 'required' | 'optional' | 'doNotPrompt';
 };
 
 // @public
@@ -856,6 +863,7 @@ export type CallWithChatCompositeIcons = {
 export type CallWithChatCompositeOptions = {
     callControls?: boolean | CallWithChatControlOptions;
     fileSharing?: FileSharingOptions;
+    permissions?: CallPermissionOptions;
 };
 
 // @public

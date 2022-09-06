@@ -37,6 +37,8 @@ import { modalLayerHostStyle } from '../common/styles/ModalLocalAndRemotePIP.sty
 import { SendDtmfDialpad } from '../common/SendDtmfDialpad';
 /* @conditional-compile-remove(PSTN-calls) */
 import { useCallWithChatCompositeStrings } from './hooks/useCallWithChatCompositeStrings';
+/* @conditional-compile-remove(call-readiness) */
+import { CallPermissionOptions } from '../CallComposite/CallComposite';
 
 /**
  * Props required for the {@link CallWithChatComposite}
@@ -85,6 +87,11 @@ export type CallWithChatCompositeOptions = {
    * @beta
    */
   fileSharing?: FileSharingOptions;
+  /* @conditional-compile-remove(call-readiness) */
+  /**
+   * Permission options for your call.
+   */
+  permissions?: CallPermissionOptions;
 };
 
 /**
@@ -163,6 +170,8 @@ type CallWithChatScreenProps = {
   /* @conditional-compile-remove(file-sharing) */
   fileSharing?: FileSharingOptions;
   rtl?: boolean;
+  /* @conditional-compile-remove(call-readiness) */
+  permissions?: CallPermissionOptions;
 };
 
 const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
@@ -319,7 +328,11 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
             <CallComposite
               {...props}
               formFactor={formFactor}
-              options={{ callControls: false }}
+              options={{
+                callControls: false,
+                /* @conditional-compile-remove(call-readiness) */
+                permissions: props.permissions
+              }}
               adapter={callAdapter}
               fluentTheme={fluentTheme}
             />
@@ -427,6 +440,8 @@ export const CallWithChatComposite = (props: CallWithChatCompositeProps): JSX.El
     <BaseProvider fluentTheme={fluentTheme} rtl={rtl} locale={props.locale} icons={props.icons}>
       <CallWithChatScreen
         {...props}
+        /* @conditional-compile-remove(call-readiness) */
+        permissions={options?.permissions}
         callWithChatAdapter={adapter}
         formFactor={formFactor}
         callControls={options?.callControls}

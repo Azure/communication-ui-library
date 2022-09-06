@@ -64,6 +64,29 @@ export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcon
   role?: Role;
 }
 
+/* @conditional-compile-remove(call-readiness) */
+/**
+ * Permission options
+ *
+ * @beta
+ */
+export type CallPermissionOptions = {
+  /**
+   * Camera permission options for your call.
+   * 'required' - requires the permission to be allowed before permitting the user join the call.
+   * 'optional' - permission can be disallowed and the user is still permitted to join the call.
+   * 'doNotPrompt' - permission is not required and the user is not prompted to allow the permission.
+   */
+  camera: 'required' | 'optional' | 'doNotPrompt';
+  /**
+   * Microphone permission options for your call.
+   * 'required' - requires the permission to be allowed before permitting the user join the call.
+   * 'optional' - permission can be disallowed and the user is still permitted to join the call.
+   * 'doNotPrompt' - permission is not required and the user is not prompted to allow the permission.
+   */
+  microphone: 'required' | 'optional' | 'doNotPrompt';
+};
+
 /**
  * Optional features of the {@link CallComposite}.
  *
@@ -82,6 +105,11 @@ export type CallCompositeOptions = {
    * @defaultValue true
    */
   callControls?: boolean | CallControlOptions;
+  /* @conditional-compile-remove(call-readiness) */
+  /**
+   * Permission options for your call.
+   */
+  permissions?: CallPermissionOptions;
 };
 
 type MainScreenProps = {
@@ -113,6 +141,8 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           startCallHandler={(): void => {
             adapter.joinCall();
           }}
+          /* @conditional-compile-remove(call-readiness) */
+          permissions={props.options?.permissions}
         />
       );
       break;
@@ -238,6 +268,24 @@ export const CallComposite = (props: CallCompositeProps): JSX.Element => {
         adapter.querySpeakers();
         return;
       }
+      /* @conditional-compile-remove(call-readiness) */
+      if (options?.permissions) {
+        const videoPermission = options?.permissions.camera !== 'doNotPrompt';
+        const audioPermission = options?.permissions.microphone !== 'doNotPrompt';
+        await adapter.askDevicePermission({
+          video: videoPermission,
+          audio: audioPermission
+        });
+        if (videoPermission) {
+          adapter.queryCameras();
+        }
+        if (audioPermission) {
+          adapter.queryMicrophones();
+        }
+        adapter.querySpeakers();
+        return;
+      }
+
       await adapter.askDevicePermission({ video: true, audio: true });
       adapter.queryCameras();
       adapter.queryMicrophones();
@@ -275,7 +323,9 @@ export const CallComposite = (props: CallCompositeProps): JSX.Element => {
             // the Modal because the draggable bounds thinks it has no space and will always return to its initial position after dragging.
             // Additionally, this layer host cannot be in the Call Arrangement as it needs to be rendered before useMinMaxDragPosition() in
             // common/utils useRef is called.
-            // Warning: this is fragile and works because the call arrangement page is only rendered after the call has connected and thus this LayerHost will be guaranteed to have rendered (and subsequently mounted in the DOM). This ensures the DOM element will be available before the call to `document.getElementById(modalLayerHostId)` is made.
+            // Warning: this is fragile and works because the call arrangement page is only rendered after the call has connected and thus this
+            // LayerHost will be guaranteed to have rendered (and subsequently mounted in the DOM). This ensures the DOM element will be available
+            // before the call to `document.getElementById(modalLayerHostId)` is made.
             /* @conditional-compile-remove(one-to-n-calling) */
             mobileView && <LayerHost id={modalLayerHostId} className={mergeStyles(modalLayerHostStyle)} />
           }
