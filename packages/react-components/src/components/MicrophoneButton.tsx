@@ -159,7 +159,7 @@ export const MicrophoneButton = (props: MicrophoneButtonProps): JSX.Element => {
   // no mics but there are speakers, then only the primary part of the button should be disabled to allow for
   // speaker change.
   const primaryDisabled = props.primaryDisabled || (isSplit && !props.microphones?.length ? true : undefined);
-  let disabled =
+  const disabled =
     props.disabled ||
     (isSplit && !props.microphones?.length && !props.speakers?.length) ||
     (!isSplit && props.microphones && props.microphones?.length === 0);
