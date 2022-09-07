@@ -6,10 +6,19 @@ import path from 'path';
 import { createTestServer } from '../../common/server';
 import { loadNewPageWithPermissionsForCalls } from '../../common/fixtureHelpers';
 import { dataUiId, encodeQueryData, waitForPageFontsLoaded, waitForSelector } from '../../common/utils';
-import type { FakeChatAdapterArgs, MockCallAdapterState } from '../../../common';
+import type { FakeChatAdapterArgs, MockCallAdapterState, MockRemoteParticipantState } from '../../../common';
+import type { ChatParticipant } from '@azure/communication-chat';
 
 const SERVER_URL = 'http://localhost';
 const APP_DIR = path.join(__dirname, '../../../app/callwithchat');
+
+/**
+ * Selector for the root <div> that contains the app under test.
+ *
+ * Useful to better target selectors to be within the test app,
+ * exlucding the hidden chat composites etc.
+ */
+export const APP_UNDER_TEST_ROOT_SELECTOR = '#app-under-test-root';
 
 /**
  * Create the test URL.
@@ -73,14 +82,23 @@ export async function loadCallPage(page: Page, serverUrl: string, callState: Moc
  * Construct {@link FakeChatAdapterArgs} from a prepopulated {@link MockCallAdapterState}.
  */
 function fakeChatAdapterArgsForCallAdapterState(state: MockCallAdapterState): FakeChatAdapterArgs {
+  const remoteParticipants = Object.values(state.call?.remoteParticipants ?? {}).map(chatParticipantFor);
   return {
     localParticipant: {
       id: state.userId,
       displayName: state.displayName
     },
-    remoteParticipants: Object.values(state.call?.remoteParticipants ?? {}).map((p) => ({
-      id: p.identifier,
-      displayName: p.displayName
-    }))
+    remoteParticipants,
+    participantsWithHiddenComposites: remoteParticipants
   };
 }
+
+/**
+ * Get a {@link ChatParticipant} for a {@link MockRemoteParticipantState}.
+ *
+ * Useful in interacting with the {@link HiddenChatComposite} in a callwithchat {@link HermeticApp}.
+ */
+export const chatParticipantFor = (p: MockRemoteParticipantState): ChatParticipant => ({
+  id: p.identifier,
+  displayName: p.displayName
+});

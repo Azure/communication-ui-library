@@ -112,7 +112,7 @@ export const waitForPageFontsLoaded = async (page: Page): Promise<void> => {
     //     interface Document {}
     // this breaks `tsc`, even though it works correctly in the browser.
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    await (document as any).fonts.ready;
+    return await (document as any).fonts.ready;
   });
 };
 
@@ -376,6 +376,13 @@ export const buildUrl = (
 // Unexported types from @playwright/tests package we need
 type PageFunction<R> = string | ((arg: unknown) => R | Promise<R>);
 type SmartHandle<T> = T extends Node ? ElementHandle<T> : JSHandle<T>;
+
+/**
+ *  Helper function to detect whether a test is for a mobile broswer or not.
+ *  TestInfo comes from the playwright config which gives different information about what platform the
+ *  test is being run on.
+ * */
+export const isTestProfileMobile = (testInfo: TestInfo): boolean => !isTestProfileDesktop(testInfo);
 
 /**
  *  Helper function to detect whether a test is for a mobile broswer or not.
