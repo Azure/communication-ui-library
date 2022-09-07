@@ -13,6 +13,14 @@ const SERVER_URL = 'http://localhost';
 const APP_DIR = path.join(__dirname, '../../../app/callwithchat');
 
 /**
+ * Selector for the root <div> that contains the app under test.
+ *
+ * Useful to better target selectors to be within the test app,
+ * exlucding the hidden chat composites etc.
+ */
+export const APP_UNDER_TEST_ROOT_SELECTOR = '#app-under-test-root';
+
+/**
  * Create the test URL.
  *
  * @param serverUrl - URL of webpage to test, this is typically https://localhost:3000
