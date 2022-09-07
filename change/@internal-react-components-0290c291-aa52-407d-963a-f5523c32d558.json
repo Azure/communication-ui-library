@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "Add id attribute to custom buttons injected as drawer menu items",
+  "comment": "Add id attribute to drawer menu items",
   "packageName": "@internal/react-components",
   "email": "edwardlee@microsoft.com",
   "dependentChangeType": "patch"
