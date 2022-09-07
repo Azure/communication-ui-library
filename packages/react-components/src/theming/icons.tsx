@@ -79,6 +79,34 @@ const MoreHorizontal18Regular = (): JSX.Element => (
   </div>
 );
 
+/* @conditional-compile-remove(call-readiness) */
+const DomainPermissionMic20Filled = (): JSX.Element => (
+  <div className={mergeStyles({ transform: 'scale(2)' })}>
+    <Mic20Filled />
+  </div>
+);
+
+/* @conditional-compile-remove(call-readiness) */
+const DomainPermissionCamera20Filled = (): JSX.Element => (
+  <div className={mergeStyles({ transform: 'scale(2)' })}>
+    <Video20Filled />
+  </div>
+);
+
+/* @conditional-compile-remove(call-readiness) */
+const DomainPermissionSparkle20Filled = (): JSX.Element => (
+  <div className={mergeStyles({ transform: 'scale(2)' })}>
+    <Sparkle20Filled />
+  </div>
+);
+
+/* @conditional-compile-remove(call-readiness) */
+const DomainPermissionsBackdrop20Filled = (): JSX.Element => (
+  <div className={mergeStyles({ transform: 'scale(4)' })}>
+    <Circle24Filled />
+  </div>
+);
+
 /**
  * The default set of icons that are available to use in the UI components.
  *
@@ -147,7 +175,11 @@ export const DEFAULT_COMPONENT_ICONS = {
   /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
   BackSpace: <Backspace20Regular />,
   /* @conditional-compile-remove(call-readiness) */
-  iconBackdrop: <Circle24Filled />,
+  DomainPermissionsIconBackdrop: <DomainPermissionsBackdrop20Filled />,
   /* @conditional-compile-remove(call-readiness) */
-  sparkle: <Sparkle20Filled />
+  DomainPermissionsSparkle: <DomainPermissionSparkle20Filled />,
+  /* @conditional-compile-remove(call-readiness) */
+  DomainPermissionCamera: <DomainPermissionCamera20Filled />,
+  /* @conditional-compile-remove(call-readiness) */
+  DomainPermissionMic: <DomainPermissionMic20Filled />
 };

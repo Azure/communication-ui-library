@@ -44,18 +44,9 @@ export const iconPrimaryStyles = (theme: Theme): IIconStyles => {
 export const iconBackDropStyles = (theme: Theme): IIconStyles => {
   return {
     root: {
-      color: theme.palette.blueLight
+      color: theme.palette.themeLighterAlt
     }
   };
-};
-
-/**
- * @internal
- */
-export const iconScalerStyles: IStackStyles = {
-  root: {
-    transform: 'scale(2)'
-  }
 };
 
 /**
@@ -64,7 +55,7 @@ export const iconScalerStyles: IStackStyles = {
 export const sparkleIconBackdropStyles = (theme: Theme): IIconStyles => {
   return {
     root: {
-      color: theme.palette.blackTranslucent40
+      color: theme.palette.themeLighterAlt
     }
   };
 };

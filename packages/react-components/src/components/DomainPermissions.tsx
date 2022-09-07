@@ -58,15 +58,15 @@ const _DomainPermissionsContainer = (props: DomainPermissionsProps): JSX.Element
     <Stack style={{ padding: '2rem', maxWidth: containerWitdthTrampoline() }}>
       <Stack horizontal style={{ padding: '2rem 0' }} horizontalAlign={'space-between'}>
         <Stack styles={iconContainerStyles} horizontalAlign={'center'}>
-          <Icon styles={iconPrimaryStyles(theme)} iconName={'ControlButtonCameraOn'}></Icon>
-          <Icon styles={iconBackDropStyles(theme)} iconName={'iconBackdrop'}></Icon>
+          <Icon styles={iconPrimaryStyles(theme)} iconName={'DomainPermissionCamera'}></Icon>
+          <Icon styles={iconBackDropStyles(theme)} iconName={'DomainPermissionsIconBackdrop'}></Icon>
         </Stack>
         <Stack styles={iconContainerStyles} horizontalAlign={'center'}>
-          <Icon styles={sparkleIconBackdropStyles(theme)} iconName={'sparkle'}></Icon>
+          <Icon styles={sparkleIconBackdropStyles(theme)} iconName={'DomainPermissionsSparkle'}></Icon>
         </Stack>
         <Stack styles={iconContainerStyles} horizontalAlign={'center'}>
-          <Icon styles={iconPrimaryStyles(theme)} iconName={'ControlButtonMicOn'}></Icon>
-          <Icon styles={iconBackDropStyles(theme)} iconName={'iconBackdrop'}></Icon>
+          <Icon styles={iconPrimaryStyles(theme)} iconName={'DomainPermissionMic'}></Icon>
+          <Icon styles={iconBackDropStyles(theme)} iconName={'DomainPermissionsIconBackdrop'}></Icon>
         </Stack>
       </Stack>
       <Stack styles={textContainerStyles}>
