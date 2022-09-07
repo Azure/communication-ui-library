@@ -62,6 +62,7 @@ export const generateCustomCallWithChatControlBarButton = (
               disabled={buttonProps.disabled}
               ariaLabel={buttonProps.ariaLabel}
               ariaDescription={buttonProps.ariaDescription}
+              id={buttonProps.id}
             />
           ))}
       </>

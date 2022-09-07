@@ -53,6 +53,7 @@ export const generateCustomControlBarButtons = (
               disabled={buttonProps.disabled}
               ariaLabel={buttonProps.ariaLabel}
               ariaDescription={buttonProps.ariaDescription}
+              id={buttonProps.id}
             />
           ))}
       </>

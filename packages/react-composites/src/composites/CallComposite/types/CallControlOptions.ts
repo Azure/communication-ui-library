@@ -166,6 +166,10 @@ export interface CustomControlButtonProps {
    * Detailed description of the button for the benefit of screen readers.
    */
   ariaDescription?: string;
+  /**
+   * A unique id set for the standard HTML id attibute
+   */
+  id?: string;
 }
 
 /**

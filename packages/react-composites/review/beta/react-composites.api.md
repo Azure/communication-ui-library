@@ -937,6 +937,7 @@ export interface CustomControlButtonProps {
     ariaDescription?: string;
     ariaLabel?: string;
     disabled?: boolean;
+    id?: string;
     key?: string | number;
     onItemClick?: () => void;
     showLabel?: boolean;
