@@ -124,11 +124,7 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
     participant: PhoneNumberIdentifier | CommunicationUserIdentifier,
     options?: AddPhoneNumberOptions
   ): Promise<void> {
-    if (typeof participant === 'string') {
-      return await this.callWithChatAdapter.addParticipant(participant);
-    } else {
-      return await this.callWithChatAdapter.addParticipant(participant, options);
-    }
+    return await this.callWithChatAdapter.addParticipant(participant, options);
   }
 
   /* @conditional-compile-remove(PSTN-calls) */
