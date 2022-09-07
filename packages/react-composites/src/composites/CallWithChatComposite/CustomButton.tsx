@@ -57,7 +57,7 @@ export const generateCustomCallWithChatControlBarButton = (
               showLabel={buttonProps.showLabel}
               strings={generateCustomControlBarButtonStrings(buttonProps.text)}
               styles={buttonProps.styles}
-              key={buttonProps.key ?? `${buttonProps.placement}_${i}`}
+              uniqueId={buttonProps.key ?? `${buttonProps.placement}_${i}`}
               onRenderIcon={() => <Icon iconName={buttonProps.iconName ?? 'ControlButtonOptions'} />}
               disabled={buttonProps.disabled}
               ariaLabel={buttonProps.ariaLabel}
@@ -98,7 +98,8 @@ export const generateCustomCallWithChatDrawerButtons = (
             text: buttonProps.text,
             onItemClick: buttonProps.onItemClick,
             iconProps: { iconName: buttonProps.iconName },
-            disabled: buttonProps.disabled
+            disabled: buttonProps.disabled,
+            id: buttonProps.id
           }))}
       </>
     );
