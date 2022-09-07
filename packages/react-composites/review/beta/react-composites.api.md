@@ -291,7 +291,7 @@ export type CallCompositeIcons = {
 export type CallCompositeOptions = {
     errorBar?: boolean;
     callControls?: boolean | CallControlOptions;
-    permissions?: CallPermissionOptions;
+    devicePermissions?: DevicePermissionPrompts;
 };
 
 // @public
@@ -415,12 +415,6 @@ export type CallIdChangedListener = (event: {
 // @beta
 export type CallParticipantsLocator = {
     participantIDs: string[];
-};
-
-// @beta
-export type CallPermissionOptions = {
-    camera: 'required' | 'optional' | 'doNotPrompt';
-    microphone: 'required' | 'optional' | 'doNotPrompt';
 };
 
 // @public
@@ -654,7 +648,7 @@ export type CallWithChatCompositeIcons = {
 export type CallWithChatCompositeOptions = {
     callControls?: boolean | CallWithChatControlOptions;
     fileSharing?: FileSharingOptions;
-    permissions?: CallPermissionOptions;
+    devicePermissions?: DevicePermissionPrompts;
 };
 
 // @public
@@ -1032,6 +1026,12 @@ export const DEFAULT_COMPOSITE_ICONS: {
     ResumeCall: JSX.Element;
     BackSpace: JSX.Element;
 };
+
+// @beta
+export interface DevicePermissionPrompts {
+    camera: 'required' | 'optional' | 'doNotPrompt';
+    microphone: 'required' | 'optional' | 'doNotPrompt';
+}
 
 // @public
 export type DiagnosticChangedEventListner = (event: MediaDiagnosticChangedEvent | NetworkDiagnosticChangedEvent) => void;

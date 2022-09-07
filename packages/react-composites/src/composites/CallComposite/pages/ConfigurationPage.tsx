@@ -34,7 +34,7 @@ import { bannerNotificationStyles } from '../styles/CallPage.styles';
 import { usePropsFor } from '../hooks/usePropsFor';
 import { useAdapter } from '../adapter/CallAdapterProvider';
 /* @conditional-compile-remove(call-readiness) */
-import { CallPermissionOptions } from '../CallComposite';
+import { DevicePermissionPrompts } from '../CallComposite';
 
 /**
  * @private
@@ -43,14 +43,14 @@ export interface ConfigurationPageProps {
   mobileView: boolean;
   startCallHandler(): void;
   /* @conditional-compile-remove(call-readiness) */
-  permissions?: CallPermissionOptions;
+  devicePermissions?: DevicePermissionPrompts;
 }
 
 /**
  * @private
  */
 export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element => {
-  const { startCallHandler, mobileView, /* @conditional-compile-remove(call-readiness) */ permissions } = props;
+  const { startCallHandler, mobileView, /* @conditional-compile-remove(call-readiness) */ devicePermissions } = props;
 
   const options = useAdaptedSelector(getCallingSelector(DevicesButton));
   const localDeviceSettingsHandlers = useHandlers(LocalDeviceSettings);
@@ -70,14 +70,14 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
   }
 
   /* @conditional-compile-remove(call-readiness) */
-  // Overrides role permissions if CallCompositeOptions permissions are set
-  if (permissions) {
+  // Overrides role permissions if CallCompositeOptions devicePermissions are set
+  if (devicePermissions) {
     if (
-      ['doNotPrompt', 'optional'].includes(permissions.camera) &&
-      ['doNotPrompt', 'optional'].includes(permissions.microphone)
+      ['doNotPrompt', 'optional'].includes(devicePermissions.camera) &&
+      ['doNotPrompt', 'optional'].includes(devicePermissions.microphone)
     ) {
       disableStartCallButton = false;
-    } else if (permissions.camera === 'required') {
+    } else if (devicePermissions.camera === 'required') {
       disableStartCallButton = !cameraPermissionGranted || deviceState.cameras?.length === 0;
     }
   }

@@ -393,7 +393,7 @@ export type CallCompositeIcons = {
 export type CallCompositeOptions = {
     errorBar?: boolean;
     callControls?: boolean | CallControlOptions;
-    permissions?: CallPermissionOptions;
+    devicePermissions?: DevicePermissionPrompts;
 };
 
 // @public
@@ -588,12 +588,6 @@ export type CallParticipantListParticipant = ParticipantListParticipant & {
 // @beta
 export type CallParticipantsLocator = {
     participantIDs: string[];
-};
-
-// @beta
-export type CallPermissionOptions = {
-    camera: 'required' | 'optional' | 'doNotPrompt';
-    microphone: 'required' | 'optional' | 'doNotPrompt';
 };
 
 // @public
@@ -863,7 +857,7 @@ export type CallWithChatCompositeIcons = {
 export type CallWithChatCompositeOptions = {
     callControls?: boolean | CallWithChatControlOptions;
     fileSharing?: FileSharingOptions;
-    permissions?: CallPermissionOptions;
+    devicePermissions?: DevicePermissionPrompts;
 };
 
 // @public
@@ -1687,6 +1681,12 @@ export type DeviceManagerState = {
     deviceAccess?: DeviceAccess;
     unparentedViews: LocalVideoStreamState[];
 };
+
+// @beta
+export interface DevicePermissionPrompts {
+    camera: 'required' | 'optional' | 'doNotPrompt';
+    microphone: 'required' | 'optional' | 'doNotPrompt';
+}
 
 // @public
 export const DevicesButton: (props: DevicesButtonProps) => JSX.Element;

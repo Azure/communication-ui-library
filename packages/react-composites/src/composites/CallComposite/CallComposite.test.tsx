@@ -8,7 +8,7 @@ import React from 'react';
 import { MockCallAdapter } from './MockCallAdapter';
 import { CallComposite } from './CallComposite';
 /* @conditional-compile-remove(call-readiness) */
-import { CallPermissionOptions } from './CallComposite';
+import { DevicePermissionPrompts } from './CallComposite';
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -67,7 +67,7 @@ describe('CallComposite device permission test for different roles', () => {
   });
 });
 
-describe('CallComposite device permission test for different call permission options', () => {
+describe('CallComposite device permission test for different device permission options', () => {
   let audioDevicePermissionRequests = 0;
   let videoDevicePermissionRequests = 0;
 
@@ -85,7 +85,7 @@ describe('CallComposite device permission test for different call permission opt
   const permissionSettings = (
     camera: 'required' | 'optional' | 'doNotPrompt',
     microphone: 'required' | 'optional' | 'doNotPrompt'
-  ): CallPermissionOptions => {
+  ): DevicePermissionPrompts => {
     return { camera: camera, microphone: microphone };
   };
 
@@ -102,45 +102,56 @@ describe('CallComposite device permission test for different call permission opt
     videoDevicePermissionRequests = 0;
   });
 
-  test('Audio and video device permission should be requested when no role is assigned', async () => {
+  test('Audio and video device permission should be requested when no devicePermission prompt is set', async () => {
     mount(<CallComposite adapter={adapter} />);
     expect(audioDevicePermissionRequests).toBe(1);
     expect(videoDevicePermissionRequests).toBe(1);
   });
 
   /* @conditional-compile-remove(call-readiness) */
-  test('Audio and video device permission should be requested for Presenter role', async () => {
-    mount(<CallComposite adapter={adapter} options={{ permissions: permissionSettings('required', 'required') }} />);
-    expect(audioDevicePermissionRequests).toBe(1);
-    expect(videoDevicePermissionRequests).toBe(1);
-  });
-
-  /* @conditional-compile-remove(call-readiness) */
-  test('Audio and video device permission should be requested for Attendee role', async () => {
-    mount(<CallComposite adapter={adapter} options={{ permissions: permissionSettings('optional', 'optional') }} />);
-    expect(audioDevicePermissionRequests).toBe(1);
-    expect(videoDevicePermissionRequests).toBe(1);
-  });
-
-  /* @conditional-compile-remove(call-readiness) */
-  test('Audio and video device permission should be requested for Attendee role', async () => {
+  test('Audio and video device permission should be requested for devicePermission set to required', async () => {
     mount(
-      <CallComposite adapter={adapter} options={{ permissions: permissionSettings('doNotPrompt', 'doNotPrompt') }} />
+      <CallComposite adapter={adapter} options={{ devicePermissions: permissionSettings('required', 'required') }} />
+    );
+    expect(audioDevicePermissionRequests).toBe(1);
+    expect(videoDevicePermissionRequests).toBe(1);
+  });
+
+  /* @conditional-compile-remove(call-readiness) */
+  test('Audio and video device permission should be requested for devicePermission set to optional', async () => {
+    mount(
+      <CallComposite adapter={adapter} options={{ devicePermissions: permissionSettings('optional', 'optional') }} />
+    );
+    expect(audioDevicePermissionRequests).toBe(1);
+    expect(videoDevicePermissionRequests).toBe(1);
+  });
+
+  /* @conditional-compile-remove(call-readiness) */
+  test('Audio and video device permission should be requested for devicePermission set to doNotPrompt', async () => {
+    mount(
+      <CallComposite
+        adapter={adapter}
+        options={{ devicePermissions: permissionSettings('doNotPrompt', 'doNotPrompt') }}
+      />
     );
     expect(audioDevicePermissionRequests).toBe(0);
     expect(videoDevicePermissionRequests).toBe(0);
   });
 
   /* @conditional-compile-remove(call-readiness) */
-  test('Audio and video device permission should be requested for Attendee role', async () => {
-    mount(<CallComposite adapter={adapter} options={{ permissions: permissionSettings('optional', 'doNotPrompt') }} />);
+  test('Video device permission should be requested for Camera devicePermission set to required', async () => {
+    mount(
+      <CallComposite adapter={adapter} options={{ devicePermissions: permissionSettings('required', 'doNotPrompt') }} />
+    );
     expect(audioDevicePermissionRequests).toBe(0);
     expect(videoDevicePermissionRequests).toBe(1);
   });
 
   /* @conditional-compile-remove(call-readiness) */
-  test('Audio and video device permission should be requested for Attendee role', async () => {
-    mount(<CallComposite adapter={adapter} options={{ permissions: permissionSettings('doNotPrompt', 'optional') }} />);
+  test('Audio device permission should be requested for Microphone devicePermission set to required', async () => {
+    mount(
+      <CallComposite adapter={adapter} options={{ devicePermissions: permissionSettings('doNotPrompt', 'required') }} />
+    );
     expect(audioDevicePermissionRequests).toBe(1);
     expect(videoDevicePermissionRequests).toBe(0);
   });

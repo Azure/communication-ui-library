@@ -70,22 +70,22 @@ export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcon
  *
  * @beta
  */
-export type CallPermissionOptions = {
+export interface DevicePermissionPrompts {
   /**
-   * Camera permission options for your call.
+   * Camera Permission prompts for your call.
    * 'required' - requires the permission to be allowed before permitting the user join the call.
    * 'optional' - permission can be disallowed and the user is still permitted to join the call.
    * 'doNotPrompt' - permission is not required and the user is not prompted to allow the permission.
    */
   camera: 'required' | 'optional' | 'doNotPrompt';
   /**
-   * Microphone permission options for your call.
+   * Microphone permission prompts for your call.
    * 'required' - requires the permission to be allowed before permitting the user join the call.
    * 'optional' - permission can be disallowed and the user is still permitted to join the call.
    * 'doNotPrompt' - permission is not required and the user is not prompted to allow the permission.
    */
   microphone: 'required' | 'optional' | 'doNotPrompt';
-};
+}
 
 /**
  * Optional features of the {@link CallComposite}.
@@ -107,9 +107,9 @@ export type CallCompositeOptions = {
   callControls?: boolean | CallControlOptions;
   /* @conditional-compile-remove(call-readiness) */
   /**
-   * Permission options for your call.
+   * Device permission prompts for your call.
    */
-  permissions?: CallPermissionOptions;
+  devicePermissions?: DevicePermissionPrompts;
 };
 
 type MainScreenProps = {
@@ -142,7 +142,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
             adapter.joinCall();
           }}
           /* @conditional-compile-remove(call-readiness) */
-          permissions={props.options?.permissions}
+          devicePermissions={props.options?.devicePermissions}
         />
       );
       break;
@@ -269,9 +269,9 @@ export const CallComposite = (props: CallCompositeProps): JSX.Element => {
         return;
       }
       /* @conditional-compile-remove(call-readiness) */
-      if (options?.permissions) {
-        const videoPermission = options?.permissions.camera !== 'doNotPrompt';
-        const audioPermission = options?.permissions.microphone !== 'doNotPrompt';
+      if (options?.devicePermissions) {
+        const videoPermission = options?.devicePermissions.camera !== 'doNotPrompt';
+        const audioPermission = options?.devicePermissions.microphone !== 'doNotPrompt';
         await adapter.askDevicePermission({
           video: videoPermission,
           audio: audioPermission

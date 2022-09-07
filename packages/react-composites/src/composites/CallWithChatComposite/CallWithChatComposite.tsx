@@ -38,7 +38,7 @@ import { SendDtmfDialpad } from '../common/SendDtmfDialpad';
 /* @conditional-compile-remove(PSTN-calls) */
 import { useCallWithChatCompositeStrings } from './hooks/useCallWithChatCompositeStrings';
 /* @conditional-compile-remove(call-readiness) */
-import { CallPermissionOptions } from '../CallComposite/CallComposite';
+import { DevicePermissionPrompts } from '../CallComposite/CallComposite';
 
 /**
  * Props required for the {@link CallWithChatComposite}
@@ -89,9 +89,9 @@ export type CallWithChatCompositeOptions = {
   fileSharing?: FileSharingOptions;
   /* @conditional-compile-remove(call-readiness) */
   /**
-   * Permission options for your call.
+   * Device permission prompts for your call.
    */
-  permissions?: CallPermissionOptions;
+  devicePermissions?: DevicePermissionPrompts;
 };
 
 /**
@@ -171,7 +171,7 @@ type CallWithChatScreenProps = {
   fileSharing?: FileSharingOptions;
   rtl?: boolean;
   /* @conditional-compile-remove(call-readiness) */
-  permissions?: CallPermissionOptions;
+  devicePermissions?: DevicePermissionPrompts;
 };
 
 const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
@@ -332,7 +332,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
               options={{
                 callControls: false,
                 /* @conditional-compile-remove(call-readiness) */
-                permissions: props.permissions
+                devicePermissions: props.devicePermissions
               }}
               adapter={callAdapter}
               fluentTheme={fluentTheme}
@@ -442,7 +442,7 @@ export const CallWithChatComposite = (props: CallWithChatCompositeProps): JSX.El
       <CallWithChatScreen
         {...props}
         /* @conditional-compile-remove(call-readiness) */
-        permissions={options?.permissions}
+        devicePermissions={options?.devicePermissions}
         callWithChatAdapter={adapter}
         formFactor={formFactor}
         callControls={options?.callControls}
