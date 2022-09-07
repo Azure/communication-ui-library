@@ -45,7 +45,7 @@ import {
 import { Backspace20Regular } from '@fluentui/react-icons';
 
 /* @conditional-compile-remove(call-readiness) */
-import { Circle24Filled, Sparkle20Filled } from '@fluentui/react-icons';
+import { Circle24Filled } from '@fluentui/react-icons';
 
 /* @conditional-compile-remove(file-sharing) */
 import { ArrowDownload16Regular } from '@fluentui/react-icons';
