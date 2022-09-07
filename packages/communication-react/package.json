@@ -42,7 +42,8 @@
     "react-aria-live": "^2.0.5",
     "react-linkify": "^1.0.0-alpha",
     "reselect": "~4.0.0",
-    "uuid": "^8.1.0"
+    "uuid": "^8.1.0",
+    "@azure/core-rest-pipeline": "~1.9.2"
   },
   "peerDependencies": {
     "@azure/communication-calling": "1.6.1-beta.1 || 1.4.4",
