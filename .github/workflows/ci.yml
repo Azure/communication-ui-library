@@ -640,7 +640,9 @@ jobs:
 
   check_failure:
     runs-on: ubuntu-latest
-    if: always()
+    needs:
+      [build_packages, build_calling_sample, build_chat_sample, build_static_html_composites_sample, build_storybook]
+    if: failure() && github.ref == 'refs/heads/main'
     name: File issue if main CI failed
     steps:
       # Create a GitHub issue if the CI failed when running on the `main` branch
@@ -651,9 +653,9 @@ jobs:
           curl -H "Accept: application/vnd.github.v3+json" https://api.github.com/search/issues?q=org:Azure+repo:communication-ui-library+label:CI_FAILURE+state:open > $HOME/ci_issues.json
           issue_count=$(jq -r '.total_count' $HOME/ci_issues.json)
           if [ $issue_count -gt 0 ]; then
-            curl -X POST -H 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' https://api.github.com/repos/Azure/communication-ui-library/issues -d '{"title":"This is a test - ignore", "body": "Main CI Pipeline has failed. Please investigate: https://github.com/Azure/communication-ui-library/runs/${{ github.run_id }}.", "labels":["CI_FAILURE"]}'
+            echo "No need to create new issue, one already exists"
           else
-            curl -X POST -H 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' https://api.github.com/repos/Azure/communication-ui-library/issues -d '{"title":"This is a test - ignore", "body": "Main CI Pipeline has failed. Please investigate: https://github.com/Azure/communication-ui-library/runs/${{ github.run_id }}.", "labels":["CI_FAILURE"]}'
+            curl -X POST -H 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' https://api.github.com/repos/Azure/communication-ui-library/issues -d '{"title":"Main branch CI Failed", "body": "Main CI Pipeline has failed. Please investigate: https://github.com/Azure/communication-ui-library/actions/runs/${{ github.run_id }}", "labels":["CI_FAILURE"]}'
           fi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
