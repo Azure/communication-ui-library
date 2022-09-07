@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "update dtmf dialpad styles and behavior to overflow left side and not format number generated from dtmf tones.",
+  "packageName": "@internal/react-composites",
+  "email": "94866715+dmceachernmsft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

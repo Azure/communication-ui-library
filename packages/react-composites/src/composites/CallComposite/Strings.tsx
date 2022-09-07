@@ -260,9 +260,19 @@ export interface CallCompositeStrings {
   resumeCallButtonLabel: string;
   /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
   /**
+   * Label for the resume call button on the hold pane when call is resuming
+   */
+  resumingCallButtonLabel: string;
+  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+  /**
    * Aria label for the resume call button on the hold pane
    */
   resumeCallButtonAriaLabel: string;
+  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+  /**
+   * Aria label for the resume call button on the hold pane when call is resuming
+   */
+  resumingCallButtonAriaLabel: string;
   /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
   /**
    * Label for the hold pane
@@ -278,4 +288,8 @@ export interface CallCompositeStrings {
    * Label for the button to open dtmf dialpad
    */
   openDtmfDialpadLabel: string;
+  /**
+   * aria label for when the invite link has been actioned
+   */
+  copyInviteLinkActionedAriaLabel: string;
 }

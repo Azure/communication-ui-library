@@ -18,12 +18,13 @@ const TEST_ROOT = path.join(PACKLET_ROOT, 'tests', 'browser');
 const TESTS = {
   hermetic: {
     call: path.join(TEST_ROOT, 'call', 'hermetic'),
-    chat: path.join(TEST_ROOT, 'chat', 'hermetic')
+    chat: path.join(TEST_ROOT, 'chat', 'hermetic'),
+    callWithChat: path.join(TEST_ROOT, 'callwithchat', 'hermetic')
   },
   live: {
     call: path.join(TEST_ROOT, 'call', 'live'),
     chat: path.join(TEST_ROOT, 'chat', 'live'),
-    callWithChat: path.join(TEST_ROOT, 'callWithChat')
+    callWithChat: path.join(TEST_ROOT, 'callwithchat', 'live')
   }
 };
 const PLAYWRIGHT_CONFIG = {

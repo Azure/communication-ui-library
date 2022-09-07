@@ -301,6 +301,7 @@ export interface CallCompositeStrings {
     complianceBannerTranscriptionStopped: string;
     configurationPageCallDetails?: string;
     configurationPageTitle: string;
+    copyInviteLinkActionedAriaLabel: string;
     defaultPlaceHolder: string;
     failedToJoinCallDueToNoNetworkMoreDetails?: string;
     failedToJoinCallDueToNoNetworkTitle: string;
@@ -574,6 +575,7 @@ export interface CallWithChatCompositeStrings {
     chatButtonTooltipClosedWithMessageCount: string;
     chatButtonTooltipOpen: string;
     chatPaneTitle: string;
+    copyInviteLinkActionedAriaLabel: string;
     copyInviteLinkButtonLabel: string;
     dismissSidePaneButtonLabel?: string;
     dtmfDialpadPlaceHolderText: string;
@@ -767,6 +769,9 @@ export const createAzureCommunicationCallAdapterFromClient: (callClient: Statefu
 
 // @public
 export const createAzureCommunicationCallWithChatAdapter: ({ userId, displayName, credential, endpoint, locator }: AzureCommunicationCallWithChatAdapterArgs) => Promise<CallWithChatAdapter>;
+
+// @internal
+export const _createAzureCommunicationCallWithChatAdapterFromAdapters: (callAdapter: CallAdapter, chatAdapter: ChatAdapter) => CallWithChatAdapter;
 
 // @public
 export const createAzureCommunicationCallWithChatAdapterFromClients: ({ callClient, callAgent, callLocator, chatClient, chatThreadClient }: AzureCommunicationCallWithChatAdapterFromClientArgs) => Promise<CallWithChatAdapter>;

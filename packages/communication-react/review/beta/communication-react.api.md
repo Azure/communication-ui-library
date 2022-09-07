@@ -396,7 +396,7 @@ export type CallCompositeOptions = {
 };
 
 // @public
-export type CallCompositePage = 'accessDeniedTeamsMeeting' | 'call' | 'configuration' | 'joinCallFailedDueToNoNetwork' | 'leftCall' | 'lobby' | 'removedFromCall' | /* @conditional-compile-remove(PSTN-calls) */ 'hold';
+export type CallCompositePage = 'accessDeniedTeamsMeeting' | 'call' | 'configuration' | /* @conditional-compile-remove(PSTN-calls) */ 'hold' | 'joinCallFailedDueToNoNetwork' | 'leftCall' | 'lobby' | 'removedFromCall';
 
 // @public
 export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcons> {
@@ -428,6 +428,7 @@ export interface CallCompositeStrings {
     complianceBannerTranscriptionStopped: string;
     configurationPageCallDetails?: string;
     configurationPageTitle: string;
+    copyInviteLinkActionedAriaLabel: string;
     copyInviteLinkButtonLabel: string;
     defaultPlaceHolder: string;
     dialpadCloseModalButtonAriaLabel: string;
@@ -467,6 +468,8 @@ export interface CallCompositeStrings {
     removeMenuLabel: string;
     resumeCallButtonAriaLabel: string;
     resumeCallButtonLabel: string;
+    resumingCallButtonAriaLabel: string;
+    resumingCallButtonLabel: string;
     returnToCallButtonAriaDescription?: string;
     returnToCallButtonAriaLabel?: string;
     soundLabel: string;
@@ -873,6 +876,7 @@ export interface CallWithChatCompositeStrings {
     chatButtonTooltipClosedWithMessageCount: string;
     chatButtonTooltipOpen: string;
     chatPaneTitle: string;
+    copyInviteLinkActionedAriaLabel: string;
     copyInviteLinkButtonLabel: string;
     dialpadCloseModalButtonAriaLabel: string;
     dialpadModalAriaLabel: string;
@@ -901,16 +905,26 @@ export interface CallWithChatCompositeStrings {
 
 // @public
 export interface CallWithChatControlOptions {
-    cameraButton?: boolean;
-    chatButton?: boolean;
+    cameraButton?: boolean | /* @conditional-compile-remove(PSTN-calls) */ {
+        disabled: boolean;
+    };
+    chatButton?: boolean | /* @conditional-compile-remove(PSTN-calls) */ {
+        disabled: boolean;
+    };
     displayType?: CallControlDisplayType;
     endCallButton?: boolean;
-    holdButton?: boolean;
-    microphoneButton?: boolean;
+    holdButton?: boolean | {
+        disabled: boolean;
+    };
+    microphoneButton?: boolean | /* @conditional-compile-remove(PSTN-calls) */ {
+        disabled: boolean;
+    };
     moreButton?: boolean;
     // @beta
     onFetchCustomButtonProps?: CustomCallWithChatControlButtonCallback[];
-    peopleButton?: boolean;
+    peopleButton?: boolean | /* @conditional-compile-remove(PSTN-calls) */ {
+        disabled: boolean;
+    };
     screenShareButton?: boolean | {
         disabled: boolean;
     };
@@ -1524,6 +1538,7 @@ export const DEFAULT_COMPONENT_ICONS: {
     ControlButtonMicOn: JSX.Element;
     ControlButtonOptions: JSX.Element;
     ControlButtonParticipants: JSX.Element;
+    ControlButtonParticipantsContextualMenuItem: JSX.Element;
     ControlButtonScreenShareStart: JSX.Element;
     ControlButtonScreenShareStop: JSX.Element;
     CancelFileUpload: JSX.Element;
@@ -1560,7 +1575,8 @@ export const DEFAULT_COMPONENT_ICONS: {
     ParticipantItemOptions: JSX.Element;
     ParticipantItemOptionsHovered: JSX.Element;
     ParticipantItemScreenShareStart: JSX.Element;
-    HoldCall: JSX.Element;
+    HoldCallContextualMenuItem: JSX.Element;
+    HoldCallButton: JSX.Element;
     ResumeCall: JSX.Element;
     SendBoxSend: JSX.Element;
     SendBoxSendHovered: JSX.Element;
@@ -1639,12 +1655,14 @@ export const DEFAULT_COMPOSITE_ICONS: {
     MoreDrawerSelectedSpeaker?: JSX.Element | undefined;
     MoreDrawerSpeakers?: JSX.Element | undefined;
     ChatMessageOptions: JSX.Element;
+    ControlButtonParticipantsContextualMenuItem: JSX.Element;
     CancelFileUpload: JSX.Element;
     DownloadFile: JSX.Element;
     ErrorBarCallVideoRecoveredBySystem: JSX.Element;
     ErrorBarCallVideoStoppedBySystem: JSX.Element;
     MessageResend: JSX.Element;
-    HoldCall: JSX.Element;
+    HoldCallContextualMenuItem: JSX.Element;
+    HoldCallButton: JSX.Element;
     ResumeCall: JSX.Element;
     BackSpace: JSX.Element;
 };
@@ -1725,22 +1743,17 @@ export interface DiagnosticsCallFeatureState {
 export const Dialpad: (props: DialpadProps) => JSX.Element;
 
 // @beta
-export interface DialpadButtonProps {
-    primaryContent: string;
-    secondaryContent?: string;
-}
-
-// @beta
 export interface DialpadProps {
+    isMobile?: boolean;
     onChange?: (input: string) => void;
     onClickDialpadButton?: (buttonValue: string, buttonIndex: number) => void;
-    onDisplayDialpadInput?: (input: string) => string;
     onSendDtmfTone?: (dtmfTone: DtmfTone) => Promise<void>;
     showDeleteButton?: boolean;
     // (undocumented)
     strings?: DialpadStrings;
     // (undocumented)
     styles?: DialpadStyles;
+    textFieldValue?: string;
 }
 
 // @beta
@@ -1758,11 +1771,11 @@ export interface DialpadStyles {
     // (undocumented)
     deleteIcon?: IButtonStyles;
     // (undocumented)
-    primaryContent?: IStyle;
+    digit?: IStyle;
+    // (undocumented)
+    letter?: IStyle;
     // (undocumented)
     root?: IStyle;
-    // (undocumented)
-    secondaryContent?: IStyle;
     // (undocumented)
     textField?: Partial<ITextFieldStyles>;
 }

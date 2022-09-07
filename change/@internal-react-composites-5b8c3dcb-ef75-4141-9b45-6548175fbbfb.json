@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Add Announcer to copy invite link button to announce action on button.",
+  "packageName": "@internal/react-composites",
+  "email": "94866715+dmceachernmsft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

@@ -13,6 +13,11 @@ export const PARTICIPANTS_THRESHOLD = 20;
 
 /**
  * @private
+ */
+export const MINUTE_IN_MS = 1000 * 60;
+
+/**
+ * @private
  *
  * TODO: Import enum from @azure/communication-chat when ChatMessageType shows up in new release version
  * (or define our type to decouple)
