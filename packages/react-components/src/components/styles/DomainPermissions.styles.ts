@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IIconStyles, ILinkStyles, IStackStyles, ITextStyles } from '@fluentui/react';
+import { IIconStyles, ILinkStyles, IStackStyles, ITextStyles, Theme } from '@fluentui/react';
 import { _pxToRem } from '@internal/acs-ui-common';
 
 /**
@@ -27,24 +27,46 @@ export const textContainerStyles: IStackStyles = {
 /**
  * @internal
  */
-export const iconPrimaryStyles: IIconStyles = {
+export const iconPrimaryStyles = (theme: Theme): IIconStyles => {
+  return {
+    root: {
+      position: 'absolute',
+      color: theme.palette.blue,
+      zIndex: 1,
+      margin: 'auto'
+    }
+  };
+};
+
+/**
+ * @internal
+ */
+export const iconBackDropStyles = (theme: Theme): IIconStyles => {
+  return {
+    root: {
+      color: theme.palette.blueLight
+    }
+  };
+};
+
+/**
+ * @internal
+ */
+export const iconScalerStyles: IStackStyles = {
   root: {
-    position: 'absolute',
-    color: '#2B88D8',
-    transform: 'scale(2)',
-    zIndex: 1,
-    margin: 'auto'
+    transform: 'scale(2)'
   }
 };
 
 /**
  * @internal
  */
-export const iconBackDropStyles: IIconStyles = {
-  root: {
-    color: '#EFF6FC',
-    transform: 'scale(4)'
-  }
+export const sparkleIconBackdropStyles = (theme: Theme): IIconStyles => {
+  return {
+    root: {
+      color: theme.palette.blackTranslucent40
+    }
+  };
 };
 
 /**

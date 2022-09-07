@@ -45,7 +45,7 @@ import {
 import { Backspace20Regular } from '@fluentui/react-icons';
 
 /* @conditional-compile-remove(call-readiness) */
-import { Circle24Filled } from '@fluentui/react-icons';
+import { Circle24Filled, Sparkle20Filled } from '@fluentui/react-icons';
 
 /* @conditional-compile-remove(file-sharing) */
 import { ArrowDownload16Regular } from '@fluentui/react-icons';
@@ -147,5 +147,7 @@ export const DEFAULT_COMPONENT_ICONS = {
   /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
   BackSpace: <Backspace20Regular />,
   /* @conditional-compile-remove(call-readiness) */
-  iconBackdrop: <Circle24Filled />
+  iconBackdrop: <Circle24Filled />,
+  /* @conditional-compile-remove(call-readiness) */
+  sparkle: <Sparkle20Filled />
 };

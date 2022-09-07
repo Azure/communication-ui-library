@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import { Stack, Text, Link, Icon } from '@fluentui/react';
+import { Stack, Text, Link, Icon, useTheme } from '@fluentui/react';
 /* @conditional-compile-remove(call-readiness) */
 import { useLocale } from '../localization';
 /* @conditional-compile-remove(call-readiness) */
@@ -14,6 +14,7 @@ import {
   linkTextStyles,
   primaryTextStyles,
   secondaryTextStyles,
+  sparkleIconBackdropStyles,
   textContainerStyles
 } from './styles/DomainPermissions.styles';
 
@@ -40,6 +41,8 @@ export interface DomainPermissionsStrings {
 const _DomainPermissionsContainer = (props: DomainPermissionsProps): JSX.Element => {
   const { appName, onGetTroubleShooting, strings } = props;
 
+  const theme = useTheme();
+
   const appNameTrampoline = (): string => {
     /* @conditional-compile-remove(call-readiness) */
     return _formatString(strings.mainText, { appName: appName });
@@ -55,12 +58,15 @@ const _DomainPermissionsContainer = (props: DomainPermissionsProps): JSX.Element
     <Stack style={{ padding: '2rem', maxWidth: containerWitdthTrampoline() }}>
       <Stack horizontal style={{ padding: '2rem 0' }} horizontalAlign={'space-between'}>
         <Stack styles={iconContainerStyles} horizontalAlign={'center'}>
-          <Icon styles={iconPrimaryStyles} iconName={'ControlButtonCameraOn'}></Icon>
-          <Icon styles={iconBackDropStyles} iconName={'iconBackdrop'}></Icon>
+          <Icon styles={iconPrimaryStyles(theme)} iconName={'ControlButtonCameraOn'}></Icon>
+          <Icon styles={iconBackDropStyles(theme)} iconName={'iconBackdrop'}></Icon>
         </Stack>
         <Stack styles={iconContainerStyles} horizontalAlign={'center'}>
-          <Icon styles={iconPrimaryStyles} iconName={'ControlButtonMicOn'}></Icon>
-          <Icon styles={iconBackDropStyles} iconName={'iconBackdrop'}></Icon>
+          <Icon styles={sparkleIconBackdropStyles(theme)} iconName={'sparkle'}></Icon>
+        </Stack>
+        <Stack styles={iconContainerStyles} horizontalAlign={'center'}>
+          <Icon styles={iconPrimaryStyles(theme)} iconName={'ControlButtonMicOn'}></Icon>
+          <Icon styles={iconBackDropStyles(theme)} iconName={'iconBackdrop'}></Icon>
         </Stack>
       </Stack>
       <Stack styles={textContainerStyles}>
