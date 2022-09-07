@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add key and aria props to custom buttons",
+  "packageName": "@internal/react-composites",
+  "email": "edwardlee@microsoft.com",
+  "dependentChangeType": "patch"
+}
