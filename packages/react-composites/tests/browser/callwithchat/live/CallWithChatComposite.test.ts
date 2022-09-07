@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IDS, TEST_PARTICIPANTS } from '../../common/constants';
+import { TEST_PARTICIPANTS } from '../../common/constants';
 import {
   buildUrl,
   dataUiId,
@@ -10,20 +10,12 @@ import {
   loadCallPageWithParticipantVideos,
   pageClick,
   stableScreenshot,
-  stubMessageTimestamps,
   waitForCallWithChatCompositeToLoad,
   waitForPiPiPToHaveLoaded,
   waitForSelector
 } from '../../common/utils';
 import { test } from './fixture';
 import { expect, Page } from '@playwright/test';
-import {
-  sendMessage,
-  waitForMessageDelivered,
-  waitForMessageSeen,
-  waitForNSeenMessages,
-  waitForTypingIndicatorHidden
-} from '../../common/chatTestHelpers';
 import { createCallWithChatObjectsAndUsers } from '../../common/fixtureHelpers';
 import { CallWithChatUserType } from '../../common/fixtureTypes';
 
@@ -42,70 +34,6 @@ test.describe('CallWithChat Composite CallWithChat Page Tests', () => {
   test.beforeEach(async ({ pages, users, serverUrl }) => {
     await callWithChatTestSetup({ pages, users, serverUrl });
     await loadCallPageWithParticipantVideos(pages);
-  });
-
-  test('Chat messages are displayed correctly', async ({ pages }, testInfo) => {
-    // Open chat pane on page 0 and send a message
-    await pageClick(pages[0], dataUiId('call-with-chat-composite-chat-button'));
-    await waitForSelector(pages[0], dataUiId('call-with-chat-composite-chat-pane'));
-    await sendMessage(pages[0], 'Call with Chat composite is awesome!');
-
-    // Open chat pane on page 1 and send a response
-    await pageClick(pages[1], dataUiId('call-with-chat-composite-chat-button'));
-    await waitForSelector(pages[1], dataUiId('call-with-chat-composite-chat-pane'));
-    await sendMessage(pages[1], 'I agree!');
-    await waitForMessageDelivered(pages[1]);
-
-    // Test page 0 has both sent message and received message
-    await waitForMessageSeen(pages[0]);
-    await waitForMessageSeen(pages[1]);
-
-    // Ensure typing indicator has disappeared to prevent flakey test
-    await pages[0].bringToFront();
-    const typingIndicator = await pages[0].$(dataUiId(IDS.typingIndicator));
-    typingIndicator && (await typingIndicator.waitForElementState('hidden'));
-
-    if (!isTestProfileDesktop(testInfo)) {
-      await waitForPiPiPToHaveLoaded(pages[0]);
-    }
-
-    await stubMessageTimestamps(pages[0]);
-    expect(await stableScreenshot(pages[0])).toMatchSnapshot(`call-with-chat-gallery-screen-with-chat-pane.png`);
-  });
-
-  test('Unread chat message button badge are displayed correctly for <9 messages', async ({ pages }) => {
-    // Open chat pane on page 0 and send a message
-    await pageClick(pages[0], dataUiId('call-with-chat-composite-chat-button'));
-    await waitForSelector(pages[0], dataUiId('call-with-chat-composite-chat-pane'));
-    await sendMessage(pages[0], 'Call with Chat composite is awesome!');
-    await waitForMessageDelivered(pages[0]);
-
-    // Ensure typing indicator has disappeared to prevent flakey test
-    await waitForTypingIndicatorHidden(pages[1]);
-
-    await waitForSelector(pages[1], dataUiId('call-with-chat-composite-chat-button-unread-icon'));
-    expect(await stableScreenshot(pages[1])).toMatchSnapshot(
-      `call-with-chat-gallery-screen-with-one-unread-messages.png`
-    );
-  });
-
-  test('Unread chat message button badge are displayed correctly for >9 messages', async ({ pages }) => {
-    // Open chat pane on page 0 and send 10 messages
-    await pageClick(pages[0], dataUiId('call-with-chat-composite-chat-button'));
-    await waitForSelector(pages[0], dataUiId('call-with-chat-composite-chat-pane'));
-
-    for (let i = 0; i < 10; i++) {
-      await sendMessage(pages[0], 'Call with Chat composite is awesome!');
-      // timeout between each messages to prevent chat throttling
-      await waitForNSeenMessages(pages[0], i + 1);
-    }
-
-    // Ensure typing indicator has disappeared to prevent flakey test
-    await waitForTypingIndicatorHidden(pages[1]);
-    await waitForSelector(pages[1], dataUiId('call-with-chat-composite-chat-button-unread-icon')); // ensure badge appears
-    expect(await stableScreenshot(pages[1])).toMatchSnapshot(
-      `call-with-chat-gallery-screen-with-10-unread-messages.png`
-    );
   });
 
   test('People pane opens and displays correctly', async ({ pages }, testInfo) => {

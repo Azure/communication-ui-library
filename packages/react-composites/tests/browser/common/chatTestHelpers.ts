@@ -8,7 +8,8 @@ import {
   waitForChatCompositeToLoad,
   buildUrl,
   waitForSelector,
-  waitForFunction
+  waitForFunction,
+  perStepLocalTimeout
 } from './utils';
 import { Page } from '@playwright/test';
 import { ChatUserType } from './fixtureTypes';
@@ -86,25 +87,53 @@ export const waitForMessageWithContent = async (page: Page, messageContent: stri
   await waitForSelector(page, `.ui-chat__message__content :text("${messageContent}")`);
 };
 
-export const waitForTypingIndicatorHidden = async (page: Page): Promise<void> => {
+/**
+ * Wait for typing indicators to appear and then dismiss them before continuing.
+ *
+ * Only select typing indicators under the targeted root node. By default, this means anywhere in the <body>.
+ */
+export const waitForAndHideTypingIndicator = async (page: Page, rootSelector = 'body'): Promise<void> => {
   await page.bringToFront();
-  await page.waitForTimeout(1000); // ensure typing indicator has had time to appear
-  const typingIndicator = await page.$(dataUiId(IDS.typingIndicator));
-  typingIndicator && (await typingIndicator.waitForElementState('hidden')); // ensure typing indicator has now disappeared
+  const indicator = await (await page.locator(rootSelector)).locator(dataUiId(IDS.typingIndicator));
+  // First make sure that the typing indicator appears.
+  await indicator.waitFor({
+    state: 'visible',
+    timeout: perStepLocalTimeout()
+  });
+  // Advance time to make the typing indicator disappear.
+  await page.evaluate(() => {
+    const currentDate = new Date();
+    // Typing indicator internal timeout is 10 seconds, so advance by
+    // a larger number.
+    currentDate.setSeconds(currentDate.getSeconds() + 11);
+    Date.now = () => currentDate.getTime();
+  });
+  // Now wait for the indicator to disappear.
+  await indicator.waitFor({
+    state: 'hidden',
+    timeout: perStepLocalTimeout()
+  });
 };
 
-export const waitForNSeenMessages = async (page: Page, n: number): Promise<void> => {
+/**
+ * Wait for N messages to appear in the message thread.
+ *
+ * Only select messages under the targeted root node. By default, this means anywhere in the <body>.
+ */
+export const waitForNMessages = async (page: Page, n: number, rootSelector = 'body'): Promise<void> => {
+  return waitForNOf(page, n, rootSelector, dataUiId(IDS.messageTimestamp));
+};
+
+const waitForNOf = async (page: Page, n: number, rootSelector: string, selector: string): Promise<void> => {
   await waitForFunction(
     page,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    async (args: any) => {
-      // fun fact: everything inside this function body is executed by the headless browser page and not the playwright node process
-      const seenMessages = document.querySelectorAll(`[data-ui-status="seen"]`);
-      return seenMessages.length === args.expectedSeenMessageCount;
+    (args: any) => {
+      const { n, rootSelector, selector } = args;
+      const root = document.querySelector(rootSelector);
+      const items = root.querySelectorAll(selector);
+      return items.length === n;
     },
-    // args parameter to pass from the node process to the headless browser page
-    {
-      expectedSeenMessageCount: n
-    }
+    { n, rootSelector, selector }
   );
 };
