@@ -196,7 +196,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
   /* @conditional-compile-remove(rooms) */
   cameraButtonIsEnabled = rolePermissions.cameraButton && cameraButtonIsEnabled;
 
-  let devicesButtonIsEnabled = isEnabled(options?.cameraButton);
+  let devicesButtonIsEnabled = isEnabled(options?.devicesButton);
   /* @conditional-compile-remove(rooms) */
   devicesButtonIsEnabled = (rolePermissions.cameraButton || rolePermissions.microphoneButton) && devicesButtonIsEnabled;
 
