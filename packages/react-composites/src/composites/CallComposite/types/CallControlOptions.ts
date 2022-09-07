@@ -132,6 +132,9 @@ export interface CustomCallControlButtonCallbackArgs {
  * @beta
  */
 export interface CustomControlButtonProps {
+  /**
+   * Calback for when button is clicked
+   */
   onItemClick?: () => void;
   /**
    * Whether the buttons is disabled
@@ -151,6 +154,18 @@ export interface CustomControlButtonProps {
    * Optional label for the button
    */
   text?: string;
+  /**
+   * A unique key for the button
+   */
+  key?: string | number;
+  /**
+   * The aria label of the button for the benefit of screen readers.
+   */
+  ariaLabel?: string;
+  /**
+   * Detailed description of the button for the benefit of screen readers.
+   */
+  ariaDescription?: string;
 }
 
 /**

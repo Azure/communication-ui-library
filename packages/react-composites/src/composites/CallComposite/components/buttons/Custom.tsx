@@ -47,10 +47,12 @@ export const generateCustomControlBarButtons = (
               showLabel={buttonProps.showLabel}
               strings={generateCustomControlBarButtonStrings(buttonProps.text)}
               styles={buttonProps.styles}
-              key={`${buttonProps.placement}_${i}`}
+              key={buttonProps.key ?? `${buttonProps.placement}_${i}`}
               // set default icon if not provided
               onRenderIcon={() => <Icon iconName={buttonProps.iconName ?? 'ControlButtonOptions'} />}
               disabled={buttonProps.disabled}
+              ariaLabel={buttonProps.ariaLabel}
+              ariaDescription={buttonProps.ariaDescription}
             />
           ))}
       </>
@@ -79,7 +81,7 @@ export const generateCustomDrawerButtons = (
         {allButtonProps
           .filter((buttonProps) => buttonProps.placement === key)
           .map((buttonProps, i) => ({
-            itemKey: `${buttonProps.placement}_${i}`,
+            itemKey: buttonProps.key ?? `${buttonProps.placement}_${i}`,
             text: buttonProps.text,
             onItemClick: buttonProps.onItemClick,
             iconProps: { iconName: buttonProps.iconName },
