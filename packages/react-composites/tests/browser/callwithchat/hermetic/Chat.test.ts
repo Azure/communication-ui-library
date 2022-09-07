@@ -21,7 +21,7 @@ import {
   waitForPiPiPToHaveLoaded,
   waitForSelector
 } from '../../common/utils';
-import { chatParticipantFor, loadCallPage, test } from './fixture';
+import { APP_UNDER_TEST_ROOT_SELECTOR, chatParticipantFor, loadCallPage, test } from './fixture';
 import { expect } from '@playwright/test';
 
 test.describe('CallWithChat Composite CallWithChat Page Tests', () => {
@@ -42,8 +42,8 @@ test.describe('CallWithChat Composite CallWithChat Page Tests', () => {
     await sendMessageFromHiddenChatComposite(page, chatRemoteParticipant, 'I agree!');
 
     // Local participant has both a sent message and a received message.
-    await waitForNMessages(page, 2, '#test-app-root');
-    await waitForAndHideTypingIndicator(page, '#test-app-root');
+    await waitForNMessages(page, 2, APP_UNDER_TEST_ROOT_SELECTOR);
+    await waitForAndHideTypingIndicator(page, APP_UNDER_TEST_ROOT_SELECTOR);
 
     if (isTestProfileMobile(testInfo)) {
       await waitForPiPiPToHaveLoaded(page, { skipVideoCheck: true });
@@ -84,7 +84,7 @@ test.describe('CallWithChat Composite CallWithChat Page Tests', () => {
         return badge && badge.innerText.includes('9+');
       },
       {
-        rootSelector: '#test-app-root',
+        rootSelector: APP_UNDER_TEST_ROOT_SELECTOR,
         selector: dataUiId('call-with-chat-composite-chat-button-unread-icon')
       }
     );
