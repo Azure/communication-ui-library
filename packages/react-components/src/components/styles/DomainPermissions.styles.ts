@@ -50,16 +50,6 @@ export const iconBackDropStyles: IIconStyles = {
 /**
  * @internal
  */
-export const sparkleIconBackdropStyles: IIconStyles = {
-  root: {
-    color: '#EFF6FC',
-    transform: 'scale(2)'
-  }
-};
-
-/**
- * @internal
- */
 export const primaryTextStyles: ITextStyles = {
   root: {
     fontWeight: 600,

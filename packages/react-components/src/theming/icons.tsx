@@ -147,7 +147,5 @@ export const DEFAULT_COMPONENT_ICONS = {
   /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
   BackSpace: <Backspace20Regular />,
   /* @conditional-compile-remove(call-readiness) */
-  iconBackdrop: <Circle24Filled />,
-  /* @conditional-compile-remove(call-readiness) */
-  sparkle: <Sparkle20Filled />
+  iconBackdrop: <Circle24Filled />
 };
