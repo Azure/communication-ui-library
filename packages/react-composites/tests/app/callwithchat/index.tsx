@@ -8,8 +8,8 @@ import { HermeticApp, shouldLoadHermeticApp } from './HermeticApp';
 import { LiveApp } from './LiveApp';
 import { parseQueryArgs } from './QueryArgs';
 
-const queryArgs = parseQueryArgs();
 initializeIconsForUITests();
+const queryArgs = parseQueryArgs();
 
 ReactDOM.render(
   shouldLoadHermeticApp(queryArgs) ? <HermeticApp queryArgs={queryArgs} /> : <LiveApp queryArgs={queryArgs} />,
