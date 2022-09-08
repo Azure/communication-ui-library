@@ -21,8 +21,7 @@
   "dependencies": {
     "@azure/communication-chat": "1.2.0",
     "@azure/communication-common": "2.0.0",
-    "@azure/communication-identity": "1.0.0",
-    "@azure/core-http": "1.2.4",
+    "@azure/communication-identity": "~1.1.0",
     "@types/cors": "^2.8.8",
     "cookie-parser": "~1.4.4",
     "cors": "^2.8.5",

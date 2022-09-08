@@ -12,7 +12,7 @@ import { ChatClient, ChatParticipant, ChatThreadClient } from '@azure/communicat
 import { CommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 import { CommunicationIdentifier } from '@azure/communication-signaling';
 import { _createStatefulChatClientWithDeps } from '@internal/chat-stateful-client';
-import { RestError } from '@azure/core-http';
+import { RestError } from '@azure/core-rest-pipeline';
 
 /**
  * Fake adapters and data structures for in-memory fake-backend for chat.
@@ -151,11 +151,10 @@ const registerChatThreadClientMethodErrors = (
 ): void => {
   for (const k in chatThreadClientMethodErrors) {
     chatThreadClient[k] = () => {
-      throw new RestError(
-        chatThreadClientMethodErrors[k].message ?? '',
-        chatThreadClientMethodErrors[k].code,
-        chatThreadClientMethodErrors[k].statusCode
-      );
+      throw new RestError(chatThreadClientMethodErrors[k].message ?? '', {
+        code: chatThreadClientMethodErrors[k].code,
+        statusCode: chatThreadClientMethodErrors[k].statusCode
+      });
     };
   }
 };
