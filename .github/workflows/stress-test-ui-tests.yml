@@ -37,14 +37,14 @@ jobs:
         run: |
           cd packages/react-composites
           rush build -t .
-      - name: Run browser tests 7 times
+      - name: Run browser tests 20 times
         run: |
           cd packages/react-composites
-          rushx test:e2e -s 7 -- -g 'Hold screen should return to call screen upon resume'
+          rushx test:e2e -s 20 -l
         env:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
       - name: Upload snapshot diff
-        if: ${{ failure() }}
+        if: ${{ always() }}
         uses: actions/upload-artifact@v2
         with:
           name: snapshots
