@@ -49,7 +49,7 @@ import {
   DiagnosticChangedEventListner,
   CallAdapterCallEndedEvent
 } from './CallAdapter';
-import { getCallCompositePage, IsCallEndedPage, isCameraOn } from '../utils';
+import { getCallCompositePage, IsCallEndedPage, isCameraOn, isValidIdentifier } from '../utils';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 import { fromFlatCommunicationIdentifier, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import {
@@ -731,6 +731,10 @@ export const createAzureCommunicationCallAdapter = async ({
   locator,
   /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId
 }: AzureCommunicationCallAdapterArgs): Promise<CallAdapter> => {
+  if (!isValidIdentifier(userId)) {
+    throw new Error('Invalid identifier. Please provide valid identifier object.');
+  }
+
   const callClient = createStatefulCallClient({
     userId,
     /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId

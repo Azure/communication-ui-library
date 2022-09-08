@@ -5,7 +5,13 @@ import { CallAdapterState, CallCompositePage, END_CALL_PAGES } from '../adapter/
 import { _isInCall, _isPreviewOn, _isInLobbyOrConnecting } from '@internal/calling-component-bindings';
 import { CallControlOptions } from '../types/CallControlOptions';
 import { CallState } from '@internal/calling-stateful-client';
-import { isPhoneNumberIdentifier } from '@azure/communication-common';
+import {
+  CommunicationIdentifier,
+  isCommunicationUserIdentifier,
+  isMicrosoftTeamsUserIdentifier,
+  isPhoneNumberIdentifier,
+  isUnknownIdentifier
+} from '@azure/communication-common';
 
 const ACCESS_DENIED_TEAMS_MEETING_SUB_CODE = 5854;
 const REMOTE_PSTN_USER_HUNG_UP = 560000;
@@ -220,4 +226,20 @@ export const isDisabled = (option?: boolean | { disabled: boolean }): boolean =>
     return !!option?.disabled;
   }
   return option;
+};
+
+/**
+ * Check if an object is identifier.
+ *
+ * @param identifier
+ * @returns whether an identifier is one of identifier types (for runtime validation)
+ * @private
+ */
+export const isValidIdentifier = (identifier: CommunicationIdentifier): boolean => {
+  return (
+    isCommunicationUserIdentifier(identifier) ||
+    isPhoneNumberIdentifier(identifier) ||
+    isMicrosoftTeamsUserIdentifier(identifier) ||
+    isUnknownIdentifier(identifier)
+  );
 };
