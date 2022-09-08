@@ -13,8 +13,6 @@ jobs:
     name: Stress test UI tests
     runs-on: ubuntu-latest
     steps:
-      - name: Show me what you will do
-        run: echo rushx test:e2e -s 7 ${{ (github.event.inputs.grep != '' && format('-g {0}', github.event.inputs.grep)) || '' }}
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
