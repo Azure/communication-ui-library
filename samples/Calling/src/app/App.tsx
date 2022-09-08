@@ -203,7 +203,7 @@ const getJoinParams = (locator: CallAdapterLocator): string => {
     return '?roomId=' + encodeURIComponent(locator.roomId);
   }
   /* @conditional-compile-remove(PSTN-calls) */
-  if ('participantIDs' in locator) {
+  if ('participantIds' in locator) {
     return '';
   }
   return '?groupId=' + encodeURIComponent(locator.groupId);
