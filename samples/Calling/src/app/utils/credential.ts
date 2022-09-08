@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { AzureCommunicationTokenCredential, CommunicationTokenRefreshOptions } from '@azure/communication-common';
-import { AbortSignalLike } from '@azure/core-http';
+import { AbortSignalLike } from '@azure/abort-controller';
 
 const postRefreshTokenParameters = {
   method: 'POST'
