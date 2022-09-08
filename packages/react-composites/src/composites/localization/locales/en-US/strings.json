@@ -48,7 +48,7 @@
     "removeMenuLabel": "Remove",
     "returnToCallButtonAriaDescription": "Return to Call",
     "returnToCallButtonAriaLabel": "Back",
-    "roomNotFoundDetails": "Room ID provided in call locator is not valid.",
+    "roomNotFoundDetails": "Room ID provided is not valid.",
     "roomNotFoundTitle": "Room not found",
     "soundLabel": "Sound",
     "startCallButtonLabel": "Start call",
