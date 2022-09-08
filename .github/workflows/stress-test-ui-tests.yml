@@ -2,17 +2,19 @@ name: Stress test UI tests
 
 on:
   workflow_dispatch:
-
-# cancel workflow when a newer version of the workflow is triggered on the same github ref
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+    inputs:
+      grep:
+        description: 'Regex to constrain tests to run. Forwarded to `playwright --grep`'
+        type: string
+        required: false
 
 jobs:
   stress_test_ui_tests:
     name: Stress test UI tests
     runs-on: ubuntu-latest
     steps:
+      - name: Show me what you will do
+        run: echo rushx test:e2e -s 7 ${{ (grep != '' && format('-g {}', grep)) || '' }}
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
@@ -40,11 +42,13 @@ jobs:
       - name: Run browser tests 7 times
         run: |
           cd packages/react-composites
-          rushx test:e2e -s 7
+          rushx test:e2e -s 7 ${{ (grep != '' && format('-g {}', grep)) || '' }}
         env:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
       - name: Upload snapshot diff
-        if: ${{ failure() }}
+        # We use stress tests to ferret out flaky test failures.
+        # Always upload artifacts so that we get results from tests that succeed on retry.
+        if: ${{ always() }}
         uses: actions/upload-artifact@v2
         with:
           name: snapshots
