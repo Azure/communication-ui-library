@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Show me what you will do
-        run: echo rushx test:e2e -s 7 ${{ (grep != '' && format('-g {}', grep)) || '' }}
+        run: echo rushx test:e2e -s 7 ${{ (github.event.inputs.grep != '' && format('-g {}', github.event.inputs.grep)) || '' }}
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
@@ -42,7 +42,7 @@ jobs:
       - name: Run browser tests 7 times
         run: |
           cd packages/react-composites
-          rushx test:e2e -s 7 ${{ (grep != '' && format('-g {}', grep)) || '' }}
+          rushx test:e2e -s 7 ${{ (github.event.inputs.grep != '' && format('-g {}', github.event.inputs.grep)) || '' }}
         env:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
       - name: Upload snapshot diff
