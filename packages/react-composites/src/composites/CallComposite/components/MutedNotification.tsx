@@ -25,7 +25,7 @@ export function MutedNotification(props: MutedNotificationProps): JSX.Element {
       horizontal
       horizontalAlign="center"
       className={mergeStyles(
-        props.speakingWhileMuted ? isSpeakingAndMutedAnimationStyles : isNotSpeakingAndMutedAnimationStyles
+        props.speakingWhileMuted === true ? isSpeakingAndMutedAnimationStyles : isNotSpeakingAndMutedAnimationStyles
       )}
     >
       <Stack horizontal className={mergeStyles(stackStyle(theme))}>
@@ -68,5 +68,6 @@ const isSpeakingAndMutedAnimationStyles: IStyle = {
 };
 
 const isNotSpeakingAndMutedAnimationStyles: IStyle = {
-  ...AnimationStyles.fadeOut200
+  ...AnimationStyles.fadeOut200,
+  display: 'none'
 };
