@@ -105,6 +105,27 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
   const locale = useLocale();
 
   let pageElement: JSX.Element;
+  /* @conditional-compile-remove(rooms) */
+  switch (page) {
+    case 'roomNotFound':
+      pageElement = (
+        <NoticePage
+          iconName="InvalidRoom"
+          title={locale.strings.call.roomNotFoundTitle}
+          moreDetails={locale.strings.call.roomNotFoundDetails}
+          dataUiId={'room-not-found-page'}
+        />
+      );
+    case 'notInvitedToRoom':
+      pageElement = (
+        <NoticePage
+          iconName="InvalidRoom"
+          title={locale.strings.call.notInvitedToRoomTitle}
+          moreDetails={locale.strings.call.notInvitedToRoomDetails}
+          dataUiId={'not-invited-to-room-page'}
+        />
+      );
+  }
   switch (page) {
     case 'configuration':
       pageElement = (
@@ -153,26 +174,6 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           title={locale.strings.call.leftCallTitle}
           moreDetails={locale.strings.call.leftCallMoreDetails}
           dataUiId={'left-call-page'}
-        />
-      );
-      break;
-    case 'roomNotFound':
-      pageElement = (
-        <NoticePage
-          iconName="InvalidRoom"
-          title={locale.strings.call.roomNotFoundTitle}
-          moreDetails={locale.strings.call.roomNotFoundDetails}
-          dataUiId={'room-not-found-page'}
-        />
-      );
-      break;
-    case 'notInvitedToRoom':
-      pageElement = (
-        <NoticePage
-          iconName="InvalidRoom"
-          title={locale.strings.call.notInvitedToRoomTitle}
-          moreDetails={locale.strings.call.notInvitedToRoomDetails}
-          dataUiId={'not-invited-to-room-page'}
         />
       );
       break;

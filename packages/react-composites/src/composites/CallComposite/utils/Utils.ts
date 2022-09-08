@@ -149,6 +149,13 @@ export const getCallCompositePage = (
 
   if (previousCall) {
     const reason = getCallEndReason(previousCall);
+    /* @conditional-compile-remove(rooms) */
+    switch (reason) {
+      case CallEndReasons.ROOM_NOT_FOUND:
+        return 'roomNotFound';
+      case CallEndReasons.NOT_INVITED_TO_ROOM:
+        return 'notInvitedToRoom';
+    }
     switch (reason) {
       case CallEndReasons.ACCESS_DENIED:
         return 'accessDeniedTeamsMeeting';
@@ -159,10 +166,6 @@ export const getCallCompositePage = (
           return 'joinCallFailedDueToNoNetwork';
         }
         return 'leftCall';
-      case CallEndReasons.ROOM_NOT_FOUND:
-        return 'roomNotFound';
-      case CallEndReasons.NOT_INVITED_TO_ROOM:
-        return 'notInvitedToRoom';
     }
   }
 
@@ -189,8 +192,8 @@ export const IsCallEndedPage = (
     | 'lobby'
     | 'removedFromCall'
     | /* @conditional-compile-remove(PSTN-calls) */ 'hold'
-    | 'roomNotFound'
-    | 'notInvitedToRoom'
+    | /* @conditional-compile-remove(rooms) */ 'roomNotFound'
+    | /* @conditional-compile-remove(rooms) */ 'notInvitedToRoom'
 ): boolean => END_CALL_PAGES.includes(page);
 
 /**
