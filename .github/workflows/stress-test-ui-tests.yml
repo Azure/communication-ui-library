@@ -8,13 +8,16 @@ on:
         type: string
         required: false
 
+# cancel workflow when a newer version of the workflow is triggered on the same github ref and test expression
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}-${{ github.event.inputs.grep }}
+  cancel-in-progress: true
+
 jobs:
   stress_test_ui_tests:
     name: Stress test UI tests
     runs-on: ubuntu-latest
     steps:
-      - name: Show me what you will run
-        run: echo rushx test:e2e -s 7 ${{ (github.event.inputs.grep != '' && format('-g "{0}"', github.event.inputs.grep)) || '' }}
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
@@ -42,7 +45,7 @@ jobs:
       - name: Run browser tests 7 times
         run: |
           cd packages/react-composites
-          rushx test:e2e -s 7 ${{ (github.event.inputs.grep != '' && format('-g "{0}"', github.event.inputs.grep)) || '' }}
+          rushx test:e2e -s 7 ${{ (github.event.inputs.grep != '' && format('-- -g "{0}"', github.event.inputs.grep)) || '' }}
         env:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
       - name: Upload snapshot diff
