@@ -2,11 +2,8 @@ name: Update snapshots
 
 on:
   workflow_dispatch:
-    inputs:
-      branch:
-        description: 'Branch to update snapshots on'
-        type: string
-        required: true
+  pull_request:
+    types: [labeled]
 
 # cancel workflow when a newer version of the workflow is triggered on the same github ref
 concurrency:
@@ -14,8 +11,25 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  get_target_branch:
+    name: Get the target branch to update snapshots on
+    runs-on: ubuntu-latest
+    outputs:
+      target: $ {{ steps.workflow_dispatch_branch.target || steps.label.target || '' }}
+    steps:
+      - name: Infer target for a manually dispatched workflow
+        if: ${{ github.event_name == 'workflow_dispatch' }}
+        run: echo "::set-output name=target::${{ github.event.ref }}"
+      - name: Infer target for a label triggered workflow
+        if: ${{ github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'update_snapshots') }}
+        run: |
+          echo "::set-output name=target::${{ github.event.pull_request.head.ref }}"
+          gh pr edit ${{ github.event.number }} --remove-label update_snapshots
+
   get_matrix:
     name: Set CI flavors
+    needs: get_target_branch
+    if: needs.get_target_branch.outputs.target != ''
     runs-on: ubuntu-latest
     outputs:
       matrix: ${{ steps.get-matrix.outputs.matrix }}
@@ -31,7 +45,8 @@ jobs:
         run: echo "::set-output name=matrix::$(node ./common/scripts/workflow-read-matrix.mjs)"
 
   update_examples_snapshot:
-    needs: get_matrix
+    needs: [get_matrix, get_target_branch]
+    if: needs.get_target_branch.outputs.target != ''
     name: Update component examples snapshots
     runs-on: ubuntu-latest
     strategy:
@@ -51,7 +66,7 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config user.name "github-actions[bot]"
       - name: Checkout target branch
-        run: git checkout ${{ github.event.inputs.branch }}
+        run: git checkout ${{ needs.get_target_branch.outputs.target }}
       - name: Use Node.js v14.x
         uses: actions/setup-node@v1
         with:
@@ -112,11 +127,12 @@ jobs:
         run: |
           git add samples/tests/*.png
           git commit -m 'Update component examples snapshots'
-          git pull origin ${{ github.event.inputs.branch }} --no-rebase --no-edit
+          git pull origin ${{ needs.get_target_branch.outputs.target }} --no-rebase --no-edit
           git push
 
   update_bundle_snapshot:
-    needs: get_matrix
+    needs: [get_matrix, get_target_branch]
+    if: needs.get_target_branch.outputs.target != ''
     name: Update embed html bundle snapshots
     runs-on: ubuntu-latest
     strategy:
@@ -136,7 +152,7 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config user.name "github-actions[bot]"
       - name: Checkout target branch
-        run: git checkout ${{ github.event.inputs.branch }}
+        run: git checkout ${{ needs.get_target_branch.outputs.target }}
       - name: Use Node.js v14.x
         uses: actions/setup-node@v1
         with:
@@ -197,11 +213,12 @@ jobs:
         run: |
           git add samples/tests/*.png
           git commit -m 'Update embed html bundle snapshots'
-          git pull origin ${{ github.event.inputs.branch }} --no-rebase --no-edit
+          git pull origin ${{ needs.get_target_branch.outputs.target }} --no-rebase --no-edit
           git push
 
   update_composite_snapshot_call:
-    needs: get_matrix
+    needs: [get_matrix, get_target_branch]
+    if: needs.get_target_branch.outputs.target != ''
     name: Update packages/react-composites CallComposite browser test snapshots
     runs-on: ubuntu-latest
     strategy:
@@ -221,7 +238,7 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config user.name "github-actions[bot]"
       - name: Checkout target branch
-        run: git checkout ${{ github.event.inputs.branch }}
+        run: git checkout ${{ needs.get_target_branch.outputs.target }}
       - name: Use Node.js v14.x
         uses: actions/setup-node@v1
         with:
@@ -283,11 +300,12 @@ jobs:
         run: |
           git add packages/react-composites/*.png
           git commit -m 'Update packages/react-composites CallComposite browser test snapshots'
-          git pull origin ${{ github.event.inputs.branch }} --no-rebase --no-edit
+          git pull origin ${{ needs.get_target_branch.outputs.target }} --no-rebase --no-edit
           git push
 
   update_composite_snapshot_chat:
-    needs: get_matrix
+    needs: [get_matrix, get_target_branch]
+    if: needs.get_target_branch.outputs.target != ''
     name: Update packages/react-composites ChatComposite browser test snapshots
     runs-on: ubuntu-latest
     strategy:
@@ -307,7 +325,7 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config user.name "github-actions[bot]"
       - name: Checkout target branch
-        run: git checkout ${{ github.event.inputs.branch }}
+        run: git checkout ${{ needs.get_target_branch.outputs.target }}
       - name: Use Node.js v14.x
         uses: actions/setup-node@v1
         with:
@@ -369,11 +387,12 @@ jobs:
         run: |
           git add packages/react-composites/*.png
           git commit -m 'Update packages/react-composites ChatComposite browser test snapshots'
-          git pull origin ${{ github.event.inputs.branch }} --no-rebase --no-edit
+          git pull origin ${{ needs.get_target_branch.outputs.target }} --no-rebase --no-edit
           git push
 
   update_composite_snapshot_call_with_chat:
-    needs: get_matrix
+    needs: [get_matrix, get_target_branch]
+    if: needs.get_target_branch.outputs.target != ''
     name: Update packages/react-composites CallWithChatComposite browser test snapshots
     runs-on: ubuntu-latest
     strategy:
@@ -393,7 +412,7 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config user.name "github-actions[bot]"
       - name: Checkout target branch
-        run: git checkout ${{ github.event.inputs.branch }}
+        run: git checkout ${{ needs.get_target_branch.outputs.target }}
       - name: Use Node.js v14.x
         uses: actions/setup-node@v1
         with:
@@ -455,5 +474,5 @@ jobs:
         run: |
           git add packages/react-composites/*.png
           git commit -m 'Update packages/react-composites CallWithChatComposite browser test snapshots'
-          git pull origin ${{ github.event.inputs.branch }} --no-rebase --no-edit
+          git pull origin ${{ needs.get_target_branch.outputs.target }} --no-rebase --no-edit
           git push
