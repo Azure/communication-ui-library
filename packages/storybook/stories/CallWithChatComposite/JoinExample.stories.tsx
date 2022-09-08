@@ -16,7 +16,7 @@ const storyControls = {
   userId: controlsToAdd.userId,
   token: controlsToAdd.token,
   endpointUrl: controlsToAdd.endpointUrl,
-  displayName: controlsToAdd.displayName,
+  displayName: controlsToAdd.requiredDisplayName,
   teamsMeetingLink: controlsToAdd.teamsMeetingLink,
   formFactor: controlsToAdd.formFactor
 };
