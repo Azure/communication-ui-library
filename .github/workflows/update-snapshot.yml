@@ -112,7 +112,7 @@ jobs:
         run: |
           git add samples/tests/*.png
           git commit -m 'Update component examples snapshots'
-          git pull origin/${{ github.event.inputs.branch }} --no-rebase --no-edit
+          git pull origin ${{ github.event.inputs.branch }} --no-rebase --no-edit
           git push
 
   update_bundle_snapshot:
@@ -197,7 +197,7 @@ jobs:
         run: |
           git add samples/tests/*.png
           git commit -m 'Update embed html bundle snapshots'
-          git pull origin/${{ github.event.inputs.branch }} --no-rebase --no-edit
+          git pull origin ${{ github.event.inputs.branch }} --no-rebase --no-edit
           git push
 
   update_composite_snapshot_call:
@@ -283,7 +283,7 @@ jobs:
         run: |
           git add samples/tests/*.png
           git commit -m 'Update packages/react-composites CallComposite browser test snapshots'
-          git pull origin/${{ github.event.inputs.branch }} --no-rebase --no-edit
+          git pull origin ${{ github.event.inputs.branch }} --no-rebase --no-edit
           git push
 
   update_composite_snapshot_chat:
@@ -369,7 +369,7 @@ jobs:
         run: |
           git add samples/tests/*.png
           git commit -m 'Update packages/react-composites ChatComposite browser test snapshots'
-          git pull origin/${{ github.event.inputs.branch }} --no-rebase --no-edit
+          git pull origin ${{ github.event.inputs.branch }} --no-rebase --no-edit
           git push
 
   update_composite_snapshot_call_with_chat:
@@ -455,5 +455,5 @@ jobs:
         run: |
           git add samples/tests/*.png
           git commit -m 'Update packages/react-composites CallWithChatComposite browser test snapshots'
-          git pull origin/${{ github.event.inputs.branch }} --no-rebase --no-edit
+          git pull origin ${{ github.event.inputs.branch }} --no-rebase --no-edit
           git push
