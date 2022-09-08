@@ -43,17 +43,16 @@ export const generateCustomControlBarButtons = (
           .filter((buttonProps) => buttonProps.placement === key)
           .map((buttonProps, i) => (
             <ControlBarButton
+              ariaDescription={buttonProps.ariaDescription}
+              ariaLabel={buttonProps.ariaLabel}
+              disabled={buttonProps.disabled}
+              id={buttonProps.id}
+              key={buttonProps.key ?? `${buttonProps.placement}_${i}`}
               onClick={buttonProps.onItemClick}
+              onRenderIcon={() => <Icon iconName={buttonProps.iconName ?? 'ControlButtonOptions'} />}
               showLabel={buttonProps.showLabel}
               strings={generateCustomControlBarButtonStrings(buttonProps.text)}
               styles={buttonProps.styles}
-              uniqueId={buttonProps.key ?? `${buttonProps.placement}_${i}`}
-              // set default icon if not provided
-              onRenderIcon={() => <Icon iconName={buttonProps.iconName ?? 'ControlButtonOptions'} />}
-              disabled={buttonProps.disabled}
-              ariaLabel={buttonProps.ariaLabel}
-              ariaDescription={buttonProps.ariaDescription}
-              id={buttonProps.id}
             />
           ))}
       </>
@@ -82,12 +81,12 @@ export const generateCustomDrawerButtons = (
         {allButtonProps
           .filter((buttonProps) => buttonProps.placement === key)
           .map((buttonProps, i) => ({
-            itemKey: buttonProps.key ?? `${buttonProps.placement}_${i}`,
-            text: buttonProps.text,
-            onItemClick: buttonProps.onItemClick,
-            iconProps: { iconName: buttonProps.iconName },
             disabled: buttonProps.disabled,
-            id: buttonProps.id
+            iconProps: { iconName: buttonProps.iconName },
+            id: buttonProps.id,
+            itemKey: buttonProps.key ?? `${buttonProps.placement}_${i}`,
+            onItemClick: buttonProps.onItemClick,
+            text: buttonProps.text
           }))}
       </>
     );
