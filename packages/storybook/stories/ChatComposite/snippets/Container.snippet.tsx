@@ -53,7 +53,6 @@ export const ContosoChatContainer = (props: ContainerProps): JSX.Element => {
           fluentTheme={props.fluentTheme}
           options={{
             errorBar: props.errorBar,
-            participantPane: props.participants,
             topic: props.topic
           }}
           locale={props.locale}

@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 import { ChatMessage, CustomMessage, Message, MessageAttachedStatus } from '@internal/react-components';
+import { MINUTE_IN_MS } from './constants';
 import { updateMessagesWithAttached } from './updateMessagesWithAttached';
 
 const cannedChatMessage = (senderId: string): ChatMessage => ({
@@ -8,6 +9,14 @@ const cannedChatMessage = (senderId: string): ChatMessage => ({
   senderId,
   contentType: 'text',
   createdOn: new Date(),
+  messageId: ''
+});
+
+const cannedCustomDateTimeChatMessage = (senderId: string, createdOnDateTime?: Date): ChatMessage => ({
+  messageType: 'chat',
+  senderId,
+  contentType: 'text',
+  createdOn: createdOnDateTime ?? new Date(''),
   messageId: ''
 });
 
@@ -55,5 +64,38 @@ describe('update message with attached status', () => {
 
     updateMessagesWithAttached(messagesArrayWithOtherMessage);
     expect(getAttachedStatusArray(messagesArrayWithOtherMessage)).toEqual([false, undefined, false]);
+  });
+
+  test('Set right status for attached property for messages with more than or equal to 5 mins time gap', () => {
+    const currentDateTime = new Date();
+    const messagesArrayWithOtherMessage = [
+      cannedCustomDateTimeChatMessage('1', currentDateTime),
+      cannedCustomDateTimeChatMessage('1', new Date(currentDateTime.getTime() + 5 * MINUTE_IN_MS)),
+      cannedCustomDateTimeChatMessage('1', new Date(currentDateTime.getTime() + 10 * MINUTE_IN_MS))
+    ];
+    updateMessagesWithAttached(messagesArrayWithOtherMessage);
+    expect(getAttachedStatusArray(messagesArrayWithOtherMessage)).toEqual(['top', false, false]);
+  });
+
+  test('Set right status for attached property for messages with less than 5 mins time gap', () => {
+    const currentDateTime = new Date();
+
+    const messagesArrayWithOtherMessage = [
+      cannedCustomDateTimeChatMessage('1', currentDateTime),
+      cannedCustomDateTimeChatMessage('1', new Date(currentDateTime.getTime() + 2 * MINUTE_IN_MS)),
+      cannedCustomDateTimeChatMessage('1', new Date(currentDateTime.getTime() + 4 * MINUTE_IN_MS))
+    ];
+    updateMessagesWithAttached(messagesArrayWithOtherMessage);
+    expect(getAttachedStatusArray(messagesArrayWithOtherMessage)).toEqual(['top', true, 'bottom']);
+  });
+
+  test('Set right status for attached property for messages without createOn date', () => {
+    const messagesArrayWithOtherMessage = [
+      cannedCustomDateTimeChatMessage('1'),
+      cannedCustomDateTimeChatMessage('1'),
+      cannedCustomDateTimeChatMessage('1')
+    ];
+    updateMessagesWithAttached(messagesArrayWithOtherMessage);
+    expect(getAttachedStatusArray(messagesArrayWithOtherMessage)).toEqual(['top', true, 'bottom']);
   });
 });
