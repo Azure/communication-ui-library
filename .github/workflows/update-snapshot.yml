@@ -281,7 +281,7 @@ jobs:
         # workflow will have to be triggered again. This is the desired behavior because the workflow
         # should not silently overwrite updates to the target branch.
         run: |
-          git add samples/tests/*.png
+          git add packages/react-composites/*.png
           git commit -m 'Update packages/react-composites CallComposite browser test snapshots'
           git pull origin ${{ github.event.inputs.branch }} --no-rebase --no-edit
           git push
@@ -367,7 +367,7 @@ jobs:
         # workflow will have to be triggered again. This is the desired behavior because the workflow
         # should not silently overwrite updates to the target branch.
         run: |
-          git add samples/tests/*.png
+          git add packages/react-composites/*.png
           git commit -m 'Update packages/react-composites ChatComposite browser test snapshots'
           git pull origin ${{ github.event.inputs.branch }} --no-rebase --no-edit
           git push
@@ -453,7 +453,7 @@ jobs:
         # workflow will have to be triggered again. This is the desired behavior because the workflow
         # should not silently overwrite updates to the target branch.
         run: |
-          git add samples/tests/*.png
+          git add packages/react-composites/*.png
           git commit -m 'Update packages/react-composites CallWithChatComposite browser test snapshots'
           git pull origin ${{ github.event.inputs.branch }} --no-rebase --no-edit
           git push
