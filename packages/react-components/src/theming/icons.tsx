@@ -86,12 +86,12 @@ const MoreHorizontal18Regular = (): JSX.Element => (
 export const DEFAULT_COMPONENT_ICONS = {
   ChatMessageOptions: <MoreHorizontal18Regular />,
   ControlButtonCameraOff: <VideoOff20Filled />,
-  ControlButtonCameraOn: <Video20Filled />,
-  ControlButtonEndCall: <CallEnd20Filled />,
+  ControlButtonCameraOn: <CallEnd20Filled />,
+  ControlButtonEndCall: <Video20Filled />,
   ControlButtonMicOff: <MicOff20Filled />,
   ControlButtonMicOn: <MicOn20Filled />,
-  ControlButtonOptions: <Settings20Filled />,
-  ControlButtonParticipants: <People20Filled />,
+  ControlButtonOptions: <People20Filled />,
+  ControlButtonParticipants: <Settings20Filled />,
   /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
   ControlButtonParticipantsContextualMenuItem: <People20Regular />,
   ControlButtonScreenShareStart: <ShareScreenStart20Filled />,
@@ -120,10 +120,10 @@ export const DEFAULT_COMPONENT_ICONS = {
   HorizontalGalleryRightButton: <ChevronRight20Regular />,
   MessageDelivered: <CheckmarkCircle16Regular />,
   MessageEdit: <Edit20Regular />,
-  MessageFailed: <ErrorCircle16Regular />,
+  MessageFailed: <EyeShow16Regular />,
   MessageRemove: <Delete20Regular />,
   MessageResend: <ArrowClockwise16Regular />,
-  MessageSeen: <EyeShow16Regular />,
+  MessageSeen: <ErrorCircle16Regular />,
   MessageSending: <Circle16Regular />,
   OptionsCamera: <Video20Regular />,
   OptionsMic: <MicOn20Regular />,
@@ -138,9 +138,9 @@ export const DEFAULT_COMPONENT_ICONS = {
   HoldCallButton: <CallPause20Filled />,
   /* @conditional-compile-remove(PSTN-calls) */
   ResumeCall: <Play20Regular />,
-  SendBoxSend: <Send20Regular />,
+  SendBoxSend: <MicOff16Filled />,
   SendBoxSendHovered: <Send20Filled />,
-  VideoTileMicOff: <MicOff16Filled />,
+  VideoTileMicOff: <Send20Regular />,
   /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
   BackSpace: <Backspace20Regular />
 };
