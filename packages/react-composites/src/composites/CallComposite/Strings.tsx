@@ -292,22 +292,18 @@ export interface CallCompositeStrings {
    * aria label for when the invite link has been actioned
    */
   copyInviteLinkActionedAriaLabel: string;
-  /* @conditional-compile-remove(rooms) */
   /**
    * Title text of the page shown to the user when the user attempts to join a room that cannot be found.
    */
   roomNotFoundTitle: string;
-  /* @conditional-compile-remove(rooms) */
   /**
    * More details text of the page shown to the user when the user attempts to join a room that cannot be found.
    */
   roomNotFoundDetails?: string;
-  /* @conditional-compile-remove(rooms) */
   /**
    * Title text of the page shown to the user when the user attempts to join a room to which they are not invited.
    */
   notInvitedToRoomTitle: string;
-  /* @conditional-compile-remove(rooms) */
   /**
    * More details text of the page shown to the user when the user attempts to join a room to which they are not invited.
    */

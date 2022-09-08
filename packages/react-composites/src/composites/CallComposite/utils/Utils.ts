@@ -10,9 +10,7 @@ import { isPhoneNumberIdentifier } from '@azure/communication-common';
 const ACCESS_DENIED_TEAMS_MEETING_SUB_CODE = 5854;
 const REMOTE_PSTN_USER_HUNG_UP = 560000;
 const REMOVED_FROM_CALL_SUB_CODES = [5000, 5300, REMOTE_PSTN_USER_HUNG_UP];
-/* @conditional-compile-remove(rooms) */
 const ROOM_NOT_FOUND_SUB_CODE = 5751;
-/* @conditional-compile-remove(rooms) */
 const NOT_INVITED_TO_ROOM_SUB_CODE = 5828;
 
 /**
@@ -63,9 +61,7 @@ enum CallEndReasons {
   LEFT_CALL,
   ACCESS_DENIED,
   REMOVED_FROM_CALL,
-  /* @conditional-compile-remove(rooms) */
   ROOM_NOT_FOUND,
-  /* @conditional-compile-remove(rooms) */
   NOT_INVITED_TO_ROOM
 }
 
@@ -94,12 +90,10 @@ const getCallEndReason = (call: CallState): CallEndReasons => {
     return CallEndReasons.REMOVED_FROM_CALL;
   }
 
-  /* @conditional-compile-remove(rooms) */
   if (call.callEndReason?.subCode && call.callEndReason.subCode === ROOM_NOT_FOUND_SUB_CODE) {
     return CallEndReasons.ROOM_NOT_FOUND;
   }
 
-  /* @conditional-compile-remove(rooms) */
   if (call.callEndReason?.subCode && call.callEndReason.subCode === NOT_INVITED_TO_ROOM_SUB_CODE) {
     return CallEndReasons.NOT_INVITED_TO_ROOM;
   }
@@ -165,12 +159,10 @@ export const getCallCompositePage = (
           return 'joinCallFailedDueToNoNetwork';
         }
         return 'leftCall';
-      /* @conditional-compile-remove(rooms) */
       case CallEndReasons.ROOM_NOT_FOUND:
-        return roomNotFoundPageTrampoline();
-      /* @conditional-compile-remove(rooms) */
+        return 'roomNotFound';
       case CallEndReasons.NOT_INVITED_TO_ROOM:
-        return notInvitedToRoomPageTrampoline();
+        return 'notInvitedToRoom';
     }
   }
 
@@ -197,8 +189,8 @@ export const IsCallEndedPage = (
     | 'lobby'
     | 'removedFromCall'
     | /* @conditional-compile-remove(PSTN-calls) */ 'hold'
-    | /* @conditional-compile-remove(rooms) */ 'roomNotFound'
-    | /* @conditional-compile-remove(rooms) */ 'notInvitedToRoom'
+    | 'roomNotFound'
+    | 'notInvitedToRoom'
 ): boolean => END_CALL_PAGES.includes(page);
 
 /**
@@ -246,16 +238,4 @@ export const isDisabled = (option?: boolean | { disabled: boolean }): boolean =>
     return !!option?.disabled;
   }
   return option;
-};
-
-const roomNotFoundPageTrampoline = (): CallCompositePage => {
-  /* @conditional-compile-remove(rooms) */
-  return 'roomNotFound';
-  return 'leftCall';
-};
-
-const notInvitedToRoomPageTrampoline = (): CallCompositePage => {
-  /* @conditional-compile-remove(rooms) */
-  return 'notInvitedToRoom';
-  return 'leftCall';
 };

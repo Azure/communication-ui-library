@@ -78,7 +78,6 @@ export const COMPOSITE_ONLY_ICONS: CompositeIcons = {
   PeoplePaneOpenDialpad: <Dialpad20Regular />,
   /* @conditional-compile-remove(PSTN-calls) */
   DialpadStartCall: <Call20Regular />,
-  /* @conditional-compile-remove(rooms) */
   InvalidRoom: <Info20Filled />
 };
 
@@ -184,7 +183,6 @@ export type CallCompositeIcons = {
   PeoplePaneOpenDialpad?: JSX.Element;
   /* @conditional-compile-remove(PSTN-calls) */
   DialpadStartCall?: JSX.Element;
-  /* @conditional-compile-remove(rooms) */
   InvalidRoom?: JSX.Element;
 };
 

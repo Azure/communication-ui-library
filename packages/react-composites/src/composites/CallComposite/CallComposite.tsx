@@ -156,32 +156,24 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
         />
       );
       break;
-    case roomNotFoundPageTrampoline():
+    case 'roomNotFound':
       pageElement = (
-        <>
-          {
-            /* @conditional-compile-remove(rooms) */ <NoticePage
-              iconName="InvalidRoom"
-              title={locale.strings.call.roomNotFoundTitle}
-              moreDetails={locale.strings.call.roomNotFoundDetails}
-              dataUiId={'room-not-found-page'}
-            />
-          }
-        </>
+        <NoticePage
+          iconName="InvalidRoom"
+          title={locale.strings.call.roomNotFoundTitle}
+          moreDetails={locale.strings.call.roomNotFoundDetails}
+          dataUiId={'room-not-found-page'}
+        />
       );
       break;
-    case notInvitedToRoomPageTrampoline():
+    case 'notInvitedToRoom':
       pageElement = (
-        <>
-          {
-            /* @conditional-compile-remove(rooms) */ <NoticePage
-              iconName="InvalidRoom"
-              title={locale.strings.call.notInvitedToRoomTitle}
-              moreDetails={locale.strings.call.notInvitedToRoomDetails}
-              dataUiId={'not-invited-to-room-page'}
-            />
-          }
-        </>
+        <NoticePage
+          iconName="InvalidRoom"
+          title={locale.strings.call.notInvitedToRoomTitle}
+          moreDetails={locale.strings.call.notInvitedToRoomDetails}
+          dataUiId={'not-invited-to-room-page'}
+        />
       );
       break;
     case 'lobby':
@@ -318,16 +310,4 @@ const holdPageTrampoline = (): string => {
   /* @conditional-compile-remove(PSTN-calls) */
   return 'hold';
   return 'call';
-};
-
-const roomNotFoundPageTrampoline = (): string => {
-  /* @conditional-compile-remove(rooms) */
-  return 'roomNotFound';
-  return 'endCall';
-};
-
-const notInvitedToRoomPageTrampoline = (): string => {
-  /* @conditional-compile-remove(rooms) */
-  return 'notInvitedToRoom';
-  return 'endCall';
 };
