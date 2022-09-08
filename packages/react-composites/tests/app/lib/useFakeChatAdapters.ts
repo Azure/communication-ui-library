@@ -151,11 +151,10 @@ const registerChatThreadClientMethodErrors = (
 ): void => {
   for (const k in chatThreadClientMethodErrors) {
     chatThreadClient[k] = () => {
-      throw new RestError(
-        chatThreadClientMethodErrors[k].message ?? '',
-        chatThreadClientMethodErrors[k].code,
-        chatThreadClientMethodErrors[k].statusCode
-      );
+      throw new RestError(chatThreadClientMethodErrors[k].message ?? '', {
+        code: chatThreadClientMethodErrors[k].code,
+        statusCode: chatThreadClientMethodErrors[k].statusCode
+      });
     };
   }
 };
