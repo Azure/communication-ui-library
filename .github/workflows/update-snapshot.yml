@@ -1,10 +1,12 @@
 name: Update snapshots
 
 on:
-  # Run any time when a new label added to the PR
-  pull_request:
-    types: [opened, synchronize, reopened, labeled]
   workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Branch to update snapshots on'
+        type: string
+        required: true
 
 # cancel workflow when a newer version of the workflow is triggered on the same github ref
 concurrency:
@@ -12,36 +14,29 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  # get matrix for ci-jobs
   get_matrix:
     name: Set CI flavors
     runs-on: ubuntu-latest
     outputs:
       matrix: ${{ steps.get-matrix.outputs.matrix }}
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      # Ensure node version is great enough
       - name: Use Node.js v14.x
         uses: actions/setup-node@v1
         with:
           node-version: '14.x'
-      # gets the matrix for ci run from the config file
       - id: get-matrix
         run: echo "::set-output name=matrix::$(node ./common/scripts/workflow-read-matrix.mjs)"
 
   update_examples_snapshot:
     needs: get_matrix
-    name: Update component examples snapshot by label
-    # This job will only run if the comment was on a pull requests and matches the label
-    if: ${{ github.event.label.name == 'ui change' || contains( github.event.pull_request.labels.*.name, 'ui change') || github.event_name == 'workflow_dispatch' }}
+    name: Update component examples snapshots
     runs-on: ubuntu-latest
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
-      # Checkout repo
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
@@ -50,51 +45,41 @@ jobs:
           # This machine account is only for this PAT, pwd was created and thrown away
           # If any update needed, create a new account, add access to the repo and generate a new PAT
           token: ${{ secrets.MACHINE_ACCOUNT_PAT }}
-      # Setup bot information for pushing new changes
-      # Here we use the id from the github actions bot: https://api.github.com/users/better-informatics%5Bbot%5D
       - name: Setup bot git information
+        # User id of github actions bot. See https://api.github.com/users/better-informatics%5Bbot%5D
         run: |
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config user.name "github-actions[bot]"
-
-      - name: If run on a PR, merge base branch to get existing snapshot updates
-        if: ${{ github.event_name != 'workflow_dispatch' }}
-        run: |
-          git checkout ${{ github.event.pull_request.head.ref }}
-          git merge ${{ env.GITHUB_BASE_REF }}
-
-      # Ensure node version is great enough
+      - name: Checkout target branch
+        run: git checkout ${{ github.event.inputs.branch }}
       - name: Use Node.js v14.x
         uses: actions/setup-node@v1
         with:
           node-version: '14.x'
-      # Try get node_modules from cache
       - name: Restore node_modules from cache
         uses: actions/cache@v2
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
-      # Install dependencies
       - name: Install rush
         run: npm install -g @microsoft/rush@5.47.0
       - name: Install dependencies
         run: rush install
-      # Switch flavor when necessary
       - name: Switch flavor for stable build
         if: ${{ matrix.flavor == 'stable' }}
         run: rush switch-flavor:stable
       - name: Build Packages
         run: rush build -t @azure/communication-react
-      - name: Build
+      - name: Build component examples sample application
         run: rush build -t component-examples
-      - name: Update snapshot
+      - name: Update snapshots
         id: updatesnapshots
         run: |
           cd samples/tests
           rushx update:snapshot:examples
         env:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
-      - name: Upload snapshot diff
+      - name: Upload test results on failure
         if: ${{ always() && steps.updatesnapshots.outcome == 'failure' }}
         uses: actions/upload-artifact@v2
         with:
@@ -112,23 +97,31 @@ jobs:
             echo "::set-output name=hasChanged::true"
             exit
           fi
-      - name: Commit new snapshots
+      - name: Push new snapshots, if any
         if: ${{ steps.changescheck.outputs.hasChanged == 'true' }}
+        # Before pushing changes to origin, merge any intervening changes on the upstream branch.
+        # This allows multiple snapshot update jobs in this action to run concurrently.
+        # - The only files updated locally are UI snapshots
+        # - Each job is responsible for a unique set of UI snapshots
+        # Thus we do not expect any merge conflicts due to the concurrent jobs from this workflows.
+        #
+        # If the UI snapshots are updated in the upstream branch while this job was running
+        # (e.g., due to a merge from the base_ref for a PR), this merge will fail, and the
+        # workflow will have to be triggered again. This is the desired behavior because the workflow
+        # should not silently overwrite updates to the target branch.
         run: |
           git add samples/tests/*.png
-          git commit -m 'Update js bundle automation snapshots'
+          git commit -m 'Update component examples snapshots'
+          git pull origin/${{ github.event.inputs.branch }} --no-rebase --no-edit
           git push
 
   update_bundle_snapshot:
     needs: get_matrix
-    name: Update embed html bundle snapshot by label
-    # This job will only run if the comment was on a pull requests and matches the label
-    if: ${{ github.event.label.name == 'ui change' || contains( github.event.pull_request.labels.*.name, 'ui change') || github.event_name == 'workflow_dispatch' }}
+    name: Update embed html bundle snapshots
     runs-on: ubuntu-latest
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
-      # Checkout repo
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
@@ -137,42 +130,32 @@ jobs:
           # This machine account is only for this PAT, pwd was created and thrown away
           # If any update needed, create a new account, add access to the repo and generate a new PAT
           token: ${{ secrets.MACHINE_ACCOUNT_PAT }}
-      # Setup bot information for pushing new changes
-      # Here we use the id from the github actions bot: https://api.github.com/users/better-informatics%5Bbot%5D
       - name: Setup bot git information
+        # User id of github actions bot. See https://api.github.com/users/better-informatics%5Bbot%5D
         run: |
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config user.name "github-actions[bot]"
-
-      - name: If run on a PR, merge base branch to get existing snapshot updates
-        if: ${{ github.event_name != 'workflow_dispatch' }}
-        run: |
-          git checkout ${{ github.event.pull_request.head.ref }}
-          git merge ${{ env.GITHUB_BASE_REF }}
-
-      # Ensure node version is great enough
+      - name: Checkout target branch
+        run: git checkout ${{ github.event.inputs.branch }}
       - name: Use Node.js v14.x
         uses: actions/setup-node@v1
         with:
           node-version: '14.x'
-      # Try get node_modules from cache
       - name: Restore node_modules from cache
         uses: actions/cache@v2
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
-      # Install dependencies
       - name: Install rush
         run: npm install -g @microsoft/rush@5.47.0
       - name: Install dependencies
         run: rush install
-      # Switch flavor when necessary
       - name: Switch flavor for stable build
         if: ${{ matrix.flavor == 'stable' }}
         run: rush switch-flavor:stable
       - name: Build Packages
         run: rush build -t @azure/communication-react
-      - name: Build
+      - name: Build static HTML composite sample application
         run: rush build -t sample-static-html-composites
       - name: Update snapshot
         id: updatesnapshots
@@ -199,23 +182,31 @@ jobs:
             echo "::set-output name=hasChanged::true"
             exit
           fi
-      - name: Commit new snapshots
+      - name: Push new snapshots, if any
         if: ${{ steps.changescheck.outputs.hasChanged == 'true' }}
+        # Before pushing changes to origin, merge any intervening changes on the upstream branch.
+        # This allows multiple snapshot update jobs in this action to run concurrently.
+        # - The only files updated locally are UI snapshots
+        # - Each job is responsible for a unique set of UI snapshots
+        # Thus we do not expect any merge conflicts due to the concurrent jobs from this workflows.
+        #
+        # If the UI snapshots are updated in the upstream branch while this job was running
+        # (e.g., due to a merge from the base_ref for a PR), this merge will fail, and the
+        # workflow will have to be triggered again. This is the desired behavior because the workflow
+        # should not silently overwrite updates to the target branch.
         run: |
           git add samples/tests/*.png
-          git commit -m 'Update js bundle automation snapshots'
+          git commit -m 'Update embed html bundle snapshots'
+          git pull origin/${{ github.event.inputs.branch }} --no-rebase --no-edit
           git push
 
-  update_composite_snapshot:
+  update_composite_snapshot_call:
     needs: get_matrix
-    name: Update composite snapshot by label
-    # This job will only run if the comment was on a pull requests and matches the label
-    if: ${{ github.event.label.name == 'ui change' || contains( github.event.pull_request.labels.*.name, 'ui change') || github.event_name == 'workflow_dispatch' }}
+    name: Update packages/react-composites CallComposite browser test snapshots
     runs-on: ubuntu-latest
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
-      # Checkout repo
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
@@ -224,20 +215,13 @@ jobs:
           # This machine account is only for this PAT, pwd was created and thrown away
           # If any update needed, create a new account, add access to the repo and generate a new PAT
           token: ${{ secrets.MACHINE_ACCOUNT_PAT }}
-      # Setup bot information for pushing new changes
-      # Here we use the id from the github actions bot: https://api.github.com/users/better-informatics%5Bbot%5D
       - name: Setup bot git information
+        # User id of github actions bot. See https://api.github.com/users/better-informatics%5Bbot%5D
         run: |
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config user.name "github-actions[bot]"
-
-      - name: If run on a PR, merge base branch to get existing snapshot updates
-        if: ${{ github.event_name != 'workflow_dispatch' }}
-        run: |
-          git checkout ${{ github.event.pull_request.head.ref }}
-          git merge ${{ env.GITHUB_BASE_REF }}
-
-      # Ensure node version is great enough
+      - name: Checkout target branch
+        run: git checkout ${{ github.event.inputs.branch }}
       - name: Use Node.js v14.x
         uses: actions/setup-node@v1
         with:
@@ -254,33 +238,21 @@ jobs:
       - name: Switch flavor for stable build
         if: ${{ matrix.flavor == 'stable' }}
         run: rush switch-flavor:stable
-      - name: Build Test
+      - name: Build packages/react-composites browser tests
         working-directory: ./packages/react-composites
-        run: rushx build:e2e
+        run: rushx build:e2e:call
       - name: Install packlets used by browser tests
         run: |
           cd packages/react-composites
           rush build -t .
-      - name: Update chat snapshot
-        id: update-chat-snapshots
-        run: rushx test:e2e:chat:update
-        working-directory: ./packages/react-composites
-        env:
-          CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
-      - name: Update calling snapshot
-        id: update-calling-snapshots
+      - name: Update CallComposite snapshot
+        id: update-call-snapshots
         run: rushx test:e2e:call:update
         working-directory: ./packages/react-composites
         env:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
-      - name: Update call with chat snapshot
-        id: update-call-with-chat-snapshots
-        run: rushx test:e2e:callwithchat:update
-        working-directory: ./packages/react-composites
-        env:
-          CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
       - name: Upload snapshot diff
-        if: ${{ always() && steps.updatesnapshots.outcome == 'failure' }}
+        if: ${{ always() && steps.update-call-snapshots.outcome == 'failure' }}
         uses: actions/upload-artifact@v2
         with:
           name: snapshots
@@ -296,9 +268,192 @@ jobs:
           else
             echo "::set-output name=hasChanged::true"
           fi
-      - name: Commit new snapshots
+      - name: Push new snapshots, if any
         if: ${{ steps.changescheck.outputs.hasChanged == 'true' }}
+        # Before pushing changes to origin, merge any intervening changes on the upstream branch.
+        # This allows multiple snapshot update jobs in this action to run concurrently.
+        # - The only files updated locally are UI snapshots
+        # - Each job is responsible for a unique set of UI snapshots
+        # Thus we do not expect any merge conflicts due to the concurrent jobs from this workflows.
+        #
+        # If the UI snapshots are updated in the upstream branch while this job was running
+        # (e.g., due to a merge from the base_ref for a PR), this merge will fail, and the
+        # workflow will have to be triggered again. This is the desired behavior because the workflow
+        # should not silently overwrite updates to the target branch.
         run: |
-          git add packages/react-composites/*.png
-          git commit -m 'Update composite automation snapshots'
+          git add samples/tests/*.png
+          git commit -m 'Update packages/react-composites CallComposite browser test snapshots'
+          git pull origin/${{ github.event.inputs.branch }} --no-rebase --no-edit
+          git push
+
+  update_composite_snapshot_chat:
+    needs: get_matrix
+    name: Update packages/react-composites ChatComposite browser test snapshots
+    runs-on: ubuntu-latest
+    strategy:
+      matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          # Use a machine account when checking out. This is to workaround the issue were GitHub
+          # actions, when using the default account, cannot trigger other actions.
+          # This machine account is only for this PAT, pwd was created and thrown away
+          # If any update needed, create a new account, add access to the repo and generate a new PAT
+          token: ${{ secrets.MACHINE_ACCOUNT_PAT }}
+      - name: Setup bot git information
+        # User id of github actions bot. See https://api.github.com/users/better-informatics%5Bbot%5D
+        run: |
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+      - name: Checkout target branch
+        run: git checkout ${{ github.event.inputs.branch }}
+      - name: Use Node.js v14.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: '14.x'
+      - name: Restore node_modules from cache
+        uses: actions/cache@v2
+        with:
+          path: common/temp/pnpm-store
+          key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
+      - name: Install rush
+        run: npm install -g @microsoft/rush@5.47.0
+      - name: Install dependencies
+        run: rush install
+      - name: Switch flavor for stable build
+        if: ${{ matrix.flavor == 'stable' }}
+        run: rush switch-flavor:stable
+      - name: Build packages/react-composites browser tests
+        working-directory: ./packages/react-composites
+        run: rushx build:e2e:chat
+      - name: Install packlets used by browser tests
+        run: |
+          cd packages/react-composites
+          rush build -t .
+      - name: Update chat snapshot
+        id: update-chat-snapshots
+        run: rushx test:e2e:chat:update
+        working-directory: ./packages/react-composites
+        env:
+          CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
+      - name: Upload snapshot diff
+        if: ${{ always() && steps.update-chat-snapshots.outcome == 'failure' }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: snapshots
+          path: packages/react-composites/test-results
+      # Check if files have changed
+      # More information see: https://stackoverflow.com/questions/3878624/how-do-i-programmatically-determine-if-there-are-uncommitted-changes
+      - name: Check for snapshot changes
+        id: changescheck
+        run: |
+          if [[ -z $(git status packages -s) ]]
+          then
+            echo "::set-output name=hasChanged::false"
+          else
+            echo "::set-output name=hasChanged::true"
+          fi
+      - name: Push new snapshots, if any
+        if: ${{ steps.changescheck.outputs.hasChanged == 'true' }}
+        # Before pushing changes to origin, merge any intervening changes on the upstream branch.
+        # This allows multiple snapshot update jobs in this action to run concurrently.
+        # - The only files updated locally are UI snapshots
+        # - Each job is responsible for a unique set of UI snapshots
+        # Thus we do not expect any merge conflicts due to the concurrent jobs from this workflows.
+        #
+        # If the UI snapshots are updated in the upstream branch while this job was running
+        # (e.g., due to a merge from the base_ref for a PR), this merge will fail, and the
+        # workflow will have to be triggered again. This is the desired behavior because the workflow
+        # should not silently overwrite updates to the target branch.
+        run: |
+          git add samples/tests/*.png
+          git commit -m 'Update packages/react-composites ChatComposite browser test snapshots'
+          git pull origin/${{ github.event.inputs.branch }} --no-rebase --no-edit
+          git push
+
+  update_composite_snapshot_call_with_chat:
+    needs: get_matrix
+    name: Update packages/react-composites CallWithChatComposite browser test snapshots
+    runs-on: ubuntu-latest
+    strategy:
+      matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          # Use a machine account when checking out. This is to workaround the issue were GitHub
+          # actions, when using the default account, cannot trigger other actions.
+          # This machine account is only for this PAT, pwd was created and thrown away
+          # If any update needed, create a new account, add access to the repo and generate a new PAT
+          token: ${{ secrets.MACHINE_ACCOUNT_PAT }}
+      - name: Setup bot git information
+        # User id of github actions bot. See https://api.github.com/users/better-informatics%5Bbot%5D
+        run: |
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+      - name: Checkout target branch
+        run: git checkout ${{ github.event.inputs.branch }}
+      - name: Use Node.js v14.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: '14.x'
+      - name: Restore node_modules from cache
+        uses: actions/cache@v2
+        with:
+          path: common/temp/pnpm-store
+          key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
+      - name: Install rush
+        run: npm install -g @microsoft/rush@5.47.0
+      - name: Install dependencies
+        run: rush install
+      - name: Switch flavor for stable build
+        if: ${{ matrix.flavor == 'stable' }}
+        run: rush switch-flavor:stable
+      - name: Build packages/react-composites browser tests
+        working-directory: ./packages/react-composites
+        run: rushx build:e2e:callwithchat
+      - name: Install packlets used by browser tests
+        run: |
+          cd packages/react-composites
+          rush build -t .
+      - name: Update call with chat snapshot
+        id: update-call-with-chat-snapshots
+        run: rushx test:e2e:callwithchat:update
+        working-directory: ./packages/react-composites
+        env:
+          CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
+      - name: Upload snapshot diff
+        if: ${{ always() && steps.update-call-with-chat-snapshots.outcome == 'failure' }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: snapshots
+          path: packages/react-composites/test-results
+      # Check if files have changed
+      # More information see: https://stackoverflow.com/questions/3878624/how-do-i-programmatically-determine-if-there-are-uncommitted-changes
+      - name: Check for snapshot changes
+        id: changescheck
+        run: |
+          if [[ -z $(git status packages -s) ]]
+          then
+            echo "::set-output name=hasChanged::false"
+          else
+            echo "::set-output name=hasChanged::true"
+          fi
+      - name: Push new snapshots, if any
+        if: ${{ steps.changescheck.outputs.hasChanged == 'true' }}
+        # Before pushing changes to origin, merge any intervening changes on the upstream branch.
+        # This allows multiple snapshot update jobs in this action to run concurrently.
+        # - The only files updated locally are UI snapshots
+        # - Each job is responsible for a unique set of UI snapshots
+        # Thus we do not expect any merge conflicts due to the concurrent jobs from this workflows.
+        #
+        # If the UI snapshots are updated in the upstream branch while this job was running
+        # (e.g., due to a merge from the base_ref for a PR), this merge will fail, and the
+        # workflow will have to be triggered again. This is the desired behavior because the workflow
+        # should not silently overwrite updates to the target branch.
+        run: |
+          git add samples/tests/*.png
+          git commit -m 'Update packages/react-composites CallWithChatComposite browser test snapshots'
+          git pull origin/${{ github.event.inputs.branch }} --no-rebase --no-edit
           git push
