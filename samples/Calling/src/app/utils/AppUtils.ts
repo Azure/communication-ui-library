@@ -99,7 +99,7 @@ export const getRoomIdFromUrl = (): RoomLocator | undefined => {
 export const getOutboundParticipants = (outboundParticipants?: string[]): CallParticipantsLocator | undefined => {
   if (outboundParticipants && outboundParticipants.length > 0) {
     // set call participants and do not update the window URL since there is not a joinable link
-    return { participantIDs: outboundParticipants };
+    return { participantIds: outboundParticipants };
   }
   return undefined;
 };
