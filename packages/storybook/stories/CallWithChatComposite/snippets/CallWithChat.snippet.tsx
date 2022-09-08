@@ -15,6 +15,17 @@ export type CallWithChatExampleProps = {
   token: string;
   displayName: string;
   endpointUrl: string;
+  /**
+   * For CallWithChat you need to provide either a teams meeting locator or a CallAndChat locator
+   * for the composite
+   *
+   * CallAndChatLocator: This locator is comprised of a groupId call locator and a chat thread
+   * threadId for the session. See documentation on the {@link CallAndChatLocator} to see types of calls supported.
+   * {callLocator: ..., threadId: ...}
+   *
+   * TeamsMeetingLinkLocator: this is a special locator comprised of a Teams meeting link
+   * {meetingLink: ...}
+   */
   locator: TeamsMeetingLinkLocator | CallAndChatLocator;
 
   // Props to customize the CallWithChatComposite experience

@@ -9,6 +9,8 @@ import {
   ParticipantMenuItemsCallback,
   _DrawerMenuItemProps
 } from '@internal/react-components';
+/* @conditional-compile-remove(rooms) */
+import { _usePermissions } from '@internal/react-components';
 import React, { useMemo } from 'react';
 import { CallWithChatCompositeStrings } from '../CallWithChatComposite';
 import { usePropsFor } from '../CallComposite/hooks/usePropsFor';
@@ -42,9 +44,8 @@ export const PeoplePaneContent = (props: {
   alternateCallerId?: string;
 }): JSX.Element => {
   const { inviteLink, onFetchParticipantMenuItems, setDrawerMenuItems, strings, onRemoveParticipant } = props;
-
   const participantListDefaultProps = usePropsFor(ParticipantList);
-
+  const disableRemoveButton = !hasRemoveParticipantsPermissionTrampoline();
   const setDrawerMenuItemsForParticipant: (participant?: ParticipantListParticipant) => void = useMemo(() => {
     return (participant?: ParticipantListParticipant) => {
       if (participant) {
@@ -52,7 +53,8 @@ export const PeoplePaneContent = (props: {
           participant,
           strings,
           participantListDefaultProps.onRemoveParticipant,
-          participantListDefaultProps.myUserId
+          participantListDefaultProps.myUserId,
+          disableRemoveButton
         );
         if (onFetchParticipantMenuItems) {
           contextualMenuItems = onFetchParticipantMenuItems(
@@ -71,6 +73,7 @@ export const PeoplePaneContent = (props: {
     strings,
     participantListDefaultProps.onRemoveParticipant,
     participantListDefaultProps.myUserId,
+    disableRemoveButton,
     onFetchParticipantMenuItems,
     setDrawerMenuItems
   ]);
@@ -91,7 +94,7 @@ export const PeoplePaneContent = (props: {
       isMobile={props.mobileView}
       participantListProps={participantListProps}
       onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
-      onFetchParticipantMenuItems={props.onFetchParticipantMenuItems}
+      onFetchParticipantMenuItems={props.mobileView ? undefined : props.onFetchParticipantMenuItems}
       title={props.strings.peoplePaneSubTitle}
     />
   );
@@ -143,8 +146,13 @@ const createDefaultContextualMenuItems = (
   participant: ParticipantListParticipant,
   strings: CallWithChatCompositeStrings | /* @conditional-compile-remove(one-to-n-calling) */ CallCompositeStrings,
   onRemoveParticipant: (userId: string) => Promise<void>,
-  localParticipantUserId?: string
+  localParticipantUserId?: string,
+  disableRemoveButton?: boolean
 ): IContextualMenuItem[] => {
+  let disabled = !participant.isRemovable;
+  if (disableRemoveButton) {
+    disabled = disabled || disableRemoveButton;
+  }
   const menuItems: IContextualMenuItem[] = [];
   if (participant?.userId !== localParticipantUserId) {
     menuItems.push({
@@ -158,8 +166,18 @@ const createDefaultContextualMenuItems = (
       iconProps: {
         iconName: 'UserRemove'
       },
-      disabled: !participant.isRemovable
+      disabled: disabled
     });
   }
   return menuItems;
+};
+
+/**
+ * @private
+ */
+const hasRemoveParticipantsPermissionTrampoline = (): boolean => {
+  /* @conditional-compile-remove(rooms) */
+  return _usePermissions().removeParticipantButton;
+  // Return true if stable.
+  return true;
 };

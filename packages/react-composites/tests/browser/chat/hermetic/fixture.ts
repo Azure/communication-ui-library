@@ -5,13 +5,13 @@ import { ChatParticipant } from '@azure/communication-chat';
 import { Page, test as base } from '@playwright/test';
 import { nanoid } from 'nanoid';
 import path from 'path';
-import { createTestServer } from '../../../server';
+import { createTestServer } from '../../common/server';
 import { TEST_PARTICIPANTS_CHAT } from '../../common/constants';
-import { bindConsoleErrorForwarding, loadNewPage } from '../../common/fixtureHelpers';
-import { FakeChatAdapterArgs } from '../app/FakeChatAdapterArgs';
+import { loadNewPage } from '../../common/fixtureHelpers';
+import type { FakeChatAdapterArgs } from '../../../common';
 
 const SERVER_URL = 'http://localhost';
-const APP_DIR = path.join(__dirname, '../app');
+const APP_DIR = path.join(__dirname, '../../../app/chat');
 
 interface WorkerFixture {
   serverUrl: string;
@@ -52,7 +52,6 @@ const usePage = async ({ serverUrl, browser }, use) => {
     browser,
     buildUrlForChatAppUsingFakeAdapter(serverUrl, DEFAULT_FAKE_CHAT_ADAPTER_ARGS)
   );
-  bindConsoleErrorForwarding(page);
   await use(page);
 };
 

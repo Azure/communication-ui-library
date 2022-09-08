@@ -22,7 +22,10 @@ export function perStepLocalTimeout(): number {
 /** Selector string to get element by data-ui-id property */
 export const dataUiId = (id: string): string => `[data-ui-id="${id}"]`;
 
-async function screenshotOnFailure<T>(page: Page, fn: () => Promise<T>): Promise<T> {
+/**
+ * Wrapper function to take a screenshot if the provided callback fails.
+ */
+export async function screenshotOnFailure<T>(page: Page, fn: () => Promise<T>): Promise<T> {
   try {
     return await fn();
   } catch (e) {
@@ -105,7 +108,11 @@ export async function waitForFunction<R>(
  */
 export const waitForPageFontsLoaded = async (page: Page): Promise<void> => {
   await waitForFunction(page, async () => {
-    await document.fonts.ready;
+    // typescript libraries in Node define the type of `document` as
+    //     interface Document {}
+    // this breaks `tsc`, even though it works correctly in the browser.
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return await (document as any).fonts.ready;
   });
 };
 
@@ -375,6 +382,13 @@ type SmartHandle<T> = T extends Node ? ElementHandle<T> : JSHandle<T>;
  *  TestInfo comes from the playwright config which gives different information about what platform the
  *  test is being run on.
  * */
+export const isTestProfileMobile = (testInfo: TestInfo): boolean => !isTestProfileDesktop(testInfo);
+
+/**
+ *  Helper function to detect whether a test is for a mobile broswer or not.
+ *  TestInfo comes from the playwright config which gives different information about what platform the
+ *  test is being run on.
+ * */
 export const isTestProfileDesktop = (testInfo: TestInfo): boolean => {
   const testName = testInfo.project.name.toLowerCase();
   return testName.includes('desktop') ? true : false;
@@ -397,7 +411,11 @@ export const isTestProfileStableFlavor = (): boolean => {
 export interface StubOptions {
   /** Stub out all timestamps in the chat message thread. */
   stubMessageTimestamps?: boolean;
-  /** Disable tooltips on all buttons in the call control bar. */
+  /**
+   * Disable tooltips on all buttons in the call control bar.
+   *
+   * @defaultValue true.
+   */
   dismissTooltips?: boolean;
   /** Hide chat message actions icon button. */
   dismissChatMessageActions?: boolean;
@@ -433,7 +451,7 @@ export async function stableScreenshot(
   if (stubOptions?.stubMessageTimestamps) {
     await stubMessageTimestamps(page);
   }
-  if (stubOptions?.dismissTooltips) {
+  if (stubOptions?.dismissTooltips !== false) {
     await disableTooltips(page);
   }
   if (stubOptions?.dismissChatMessageActions) {
@@ -451,7 +469,7 @@ export async function stableScreenshot(
   try {
     return await page.screenshot(screenshotOptions);
   } finally {
-    if (stubOptions?.dismissTooltips) {
+    if (stubOptions?.dismissTooltips !== false) {
       await enableTooltips(page);
     }
   }

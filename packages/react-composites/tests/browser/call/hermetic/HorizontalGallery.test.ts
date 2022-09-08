@@ -27,9 +27,7 @@ test.describe('HorizontalGallery tests', async () => {
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
 
     await waitForSelector(page, dataUiId(IDS.videoGallery));
-    expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot(
-      'horizontal-gallery-with-1-audio-participant.png'
-    );
+    expect(await stableScreenshot(page)).toMatchSnapshot('horizontal-gallery-with-1-audio-participant.png');
   });
 
   test('HorizontalGallery should have multiple audio participants spanning multiple pages. Navigation buttons should work.', async ({
@@ -61,7 +59,7 @@ test.describe('HorizontalGallery tests', async () => {
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
 
     await waitForSelector(page, dataUiId(IDS.videoGallery));
-    expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot(
+    expect(await stableScreenshot(page)).toMatchSnapshot(
       'horizontal-gallery-with-many-audio-participants-on-page-1.png'
     );
     await waitForSelector(page, dataUiId(IDS.horizontalGalleryRightNavButton));
@@ -90,9 +88,7 @@ test.describe('HorizontalGallery tests', async () => {
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
 
     await waitForSelector(page, dataUiId(IDS.videoGallery));
-    expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot(
-      'horizontal-gallery-with-joining-participant.png'
-    );
+    expect(await stableScreenshot(page)).toMatchSnapshot('horizontal-gallery-with-joining-participant.png');
   });
 
   test('HorizontalGallery should have multiple audio participants and 1 PSTN participant', async ({
@@ -116,7 +112,7 @@ test.describe('HorizontalGallery tests', async () => {
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
 
     await waitForSelector(page, dataUiId(IDS.videoGallery));
-    expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot(
+    expect(await stableScreenshot(page)).toMatchSnapshot(
       'horizontal-gallery-with-joining-participant-with-audio-participants.png'
     );
   });
@@ -153,7 +149,7 @@ test.describe('HorizontalGallery tests', async () => {
     await waitForSelector(page, dataUiId(IDS.videoGallery));
     await waitForSelector(page, dataUiId(IDS.horizontalGalleryRightNavButton));
     await pageClick(page, dataUiId(IDS.horizontalGalleryRightNavButton));
-    expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot(
+    expect(await stableScreenshot(page)).toMatchSnapshot(
       'horizontal-gallery-with-joining-participant-with-multi-page.png'
     );
   });
@@ -181,7 +177,7 @@ test.describe('HorizontalGallery tests', async () => {
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
 
     await waitForSelector(page, dataUiId(IDS.videoGallery));
-    expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot(
+    expect(await stableScreenshot(page)).toMatchSnapshot(
       'horizontal-gallery-with-joining-participant-with-screen-share-and-video.png'
     );
   });
@@ -195,6 +191,7 @@ test.describe('HorizontalGallery tests', async () => {
     paul.state = 'Ringing';
     const phoneUser = defaultMockRemotePSTNParticipant('+15555555555');
     phoneUser.state = 'Connecting';
+    phoneUser.isMuted = false;
 
     const participants = [reina, paul, phoneUser];
     const initialState = defaultMockCallAdapterState(participants);
@@ -202,9 +199,7 @@ test.describe('HorizontalGallery tests', async () => {
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
 
     await waitForSelector(page, dataUiId(IDS.videoGallery));
-    expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot(
-      'horizontal-gallery-with-2-joining-participants.png'
-    );
+    expect(await stableScreenshot(page)).toMatchSnapshot('horizontal-gallery-with-2-joining-participants.png');
   });
 
   test('Horizontal gallery Should have 1 PSTN and 1 On Hold participant', async ({ page, serverUrl }) => {
@@ -221,8 +216,6 @@ test.describe('HorizontalGallery tests', async () => {
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
 
     await waitForSelector(page, dataUiId(IDS.videoGallery));
-    expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot(
-      'horizontal-gallery-with-1-joining-1-hold-participants.png'
-    );
+    expect(await stableScreenshot(page)).toMatchSnapshot('horizontal-gallery-with-1-joining-1-hold-participants.png');
   });
 });

@@ -25,6 +25,14 @@ body,
 }
 `;
 
+const callParticipantsLocatorSnippet = `
+// CallParticipantsLocator
+{ participantIds: string[] }
+
+// Example
+{ participantsIDs: ["<phone #>", "<phone #>", "<ACS userId>", ...] }
+`;
+
 export const getDocs: () => JSX.Element = () => {
   return (
     <>
@@ -186,16 +194,18 @@ export const getDocs: () => JSX.Element = () => {
       <Description>
         The CallComposite supports making outbound PSTN and 1:N calls. 1:N is a call either between just Azure
         Communication Users or, a mix between ACS and PSTN users. To make these outbound calls you need to provide a
-        `locator` that contains participantIDs that you are looking to call to the
+        `locator` that contains participantIds that you are looking to call to the
         [CallAdapter](./?path=/docs/composite-adapters--page). For PSTN these IDs are the phone numbers that you are
         looking to call. For Azure Communication Users you will need to provide their unique ACS aquired `userId`.
       </Description>
+      <Source code={callParticipantsLocatorSnippet} />
       <Description>
-        As well as these participantIDs you are required to provide a [phone
+        As well as these participantIds you are required to provide a [phone
         number](https://docs.microsoft.com/en-us/azure/communication-services/quickstarts/telephony/get-phone-number?tabs=windows&pivots=platform-azcli)
-        from a Azure Communications resource to the composite's adapter for PSTN. This phone number serves as your
-        caller ID when calling PSTN. This phone number is not required for calling other Azure Communications users,
-        however, will be required if you are looking to call a ACS user and a PSTN user in the same call.
+        known as an alternate caller ID from an Azure Communications resource to the composite's adapter for PSTN. This
+        phone number serves as your caller ID when calling PSTN. This phone number is not required for calling other
+        Azure Communications users, however, will be required if you are looking to call a ACS user and a PSTN user in
+        the same call.
       </Description>
 
       <Heading>Call Composite Props</Heading>

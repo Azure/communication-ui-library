@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Remove participant pane option from storybook as it's not part of the stable api",
+  "packageName": "@internal/storybook",
+  "email": "anjulgarg@live.com",
+  "dependentChangeType": "none"
+}

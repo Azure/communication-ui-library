@@ -39,7 +39,7 @@ export const themedDialpadStyle = (isMobile: boolean, theme: Theme): Partial<Dia
       }
     }
   },
-  primaryContent: {
+  digit: {
     color: theme.palette.themeDarkAlt
   }
 });

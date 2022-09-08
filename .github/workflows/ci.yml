@@ -75,12 +75,15 @@ jobs:
       # Perform lint check
       - name: Run linter
         run: rush lint
-      # Type check test folder
-      - name: Type check test folder
-        run: cd packages/react-composites && rushx tsc:e2e
       # Builds
       - name: Build Packages
         run: rush build -t @azure/communication-react
+      # Type check test folder
+      # - must be run after building all packlets because it depends on compiled packlet dependencies
+      # - must be run only on beta flavor build because the browser test code is not conditional compiled
+      - name: Type check test folder
+        if: ${{ matrix.flavor == 'beta' }}
+        run: cd packages/react-composites && rushx tsc:e2e
       # Verify no uncommitted api extractor changes
       - name: API Extractor Check
         if: ${{ always() }}
@@ -652,7 +655,7 @@ jobs:
           if [ $issue_count -gt 0 ]; then
             echo "No need to create new issue, one already exists"
           else
-            curl -X POST -H 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' https://api.github.com/repos/Azure/communication-ui-library/issues -d '{"title":"Main branch CI Failed", "body": "Main CI Pipeline has failed. Please investigate.", "labels":["CI_FAILURE"]}'
+            curl -X POST -H 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' https://api.github.com/repos/Azure/communication-ui-library/issues -d '{"title":"Main branch CI Failed", "body": "Main CI Pipeline has failed. Please investigate: https://github.com/Azure/communication-ui-library/actions/runs/${{ github.run_id }}", "labels":["CI_FAILURE"]}'
           fi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
