@@ -333,7 +333,8 @@ export const controlsToAdd = {
       screenShareButton: true,
       devicesButton: true,
       peopleButton: true,
-      chatButton: true
+      chatButton: true,
+      displayType: 'default'
     },
     name: 'Control Bar Customizations'
   }
