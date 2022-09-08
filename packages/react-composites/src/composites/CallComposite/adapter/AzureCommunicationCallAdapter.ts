@@ -321,7 +321,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     /* @conditional-compile-remove(PSTN-calls) */
     if (isOutboundCall(this.locator)) {
       const phoneNumber = this.getState().alternateCallerId;
-      return this.startCall(this.locator.participantIDs, {
+      return this.startCall(this.locator.participantIds, {
         alternateCallerId: phoneNumber ? { phoneNumber: phoneNumber } : undefined
       });
     }
@@ -685,7 +685,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
  * @beta
  */
 export type CallParticipantsLocator = {
-  participantIDs: string[];
+  participantIds: string[];
 };
 
 /**
@@ -882,5 +882,5 @@ const isCallError = (e: Error): e is CallError => {
 /* @conditional-compile-remove(teams-adhoc-call) */
 /* @conditional-compile-remove(PSTN-calls) */
 const isOutboundCall = (callLocator: CallAdapterLocator): callLocator is CallParticipantsLocator => {
-  return 'participantIDs' in callLocator;
+  return 'participantIds' in callLocator;
 };
