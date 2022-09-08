@@ -40,7 +40,7 @@ jobs:
       - name: Run browser tests 7 times
         run: |
           cd packages/react-composites
-          rushx test:e2e -s 7 ${{ (github.event.inputs.grep != '' && format('-g {0}', github.event.inputs.grep)) || '' }}
+          rushx test:e2e -s 7 ${{ (github.event.inputs.grep != '' && format('-g \'{0}\'', github.event.inputs.grep)) || '' }}
         env:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
       - name: Upload snapshot diff
