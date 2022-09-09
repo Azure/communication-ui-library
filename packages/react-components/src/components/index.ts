@@ -91,7 +91,7 @@ export type {
 /* @conditional-compile-remove(call-readiness) */
 export { _DomainPermissions } from './DomainPermissions';
 /* @conditional-compile-remove(call-readiness) */
-export type { DomainPermissionsStrings, DomainPermissionsProps } from './DomainPermissions';
+export type { DomainPermissionsStrings, _DomainPermissionsProps } from './DomainPermissions';
 
 export { ParticipantsButton } from './ParticipantsButton';
 export type {

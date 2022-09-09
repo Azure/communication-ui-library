@@ -21,9 +21,9 @@ import {
  * @internal
  * Props for DomainPermissions component.
  */
-export interface DomainPermissionsProps {
+export interface _DomainPermissionsProps {
   appName: string;
-  onGetTroubleShooting: () => void;
+  onTroubleshootingClick: () => void;
   strings: DomainPermissionsStrings;
 }
 
@@ -37,8 +37,8 @@ export interface DomainPermissionsStrings {
   linkText: string;
 }
 
-const _DomainPermissionsContainer = (props: DomainPermissionsProps): JSX.Element => {
-  const { appName, onGetTroubleShooting, strings } = props;
+const _DomainPermissionsContainer = (props: _DomainPermissionsProps): JSX.Element => {
+  const { appName, onTroubleshootingClick, strings } = props;
 
   const appNameTrampoline = (): string => {
     /* @conditional-compile-remove(call-readiness) */
@@ -46,13 +46,13 @@ const _DomainPermissionsContainer = (props: DomainPermissionsProps): JSX.Element
     // For Conditonal compilation will be undone when stable.
     return appName;
   };
-  const containerWitdthTrampoline = (): string => {
+  const containerWidthTrampoline = (): string => {
     /* @conditional-compile-remove(call-readiness) */
     return `${_pxToRem(406)}`;
     return '406px';
   };
   return (
-    <Stack style={{ padding: '2rem', maxWidth: containerWitdthTrampoline() }}>
+    <Stack style={{ padding: '2rem', maxWidth: containerWidthTrampoline() }}>
       <Stack horizontal style={{ padding: '2rem 0' }} horizontalAlign={'space-between'}>
         <Stack styles={iconContainerStyles} horizontalAlign={'center'}>
           <Icon styles={iconPrimaryStyles} iconName={'ControlButtonCameraOn'}></Icon>
@@ -67,7 +67,7 @@ const _DomainPermissionsContainer = (props: DomainPermissionsProps): JSX.Element
       <Stack styles={textContainerStyles}>
         <Text styles={primaryTextStyles}>{appNameTrampoline()}</Text>
         <Text styles={secondaryTextStyles}>{strings.secondaryText}</Text>
-        <Link styles={linkTextStyles} onClick={onGetTroubleShooting}>
+        <Link styles={linkTextStyles} onClick={onTroubleshootingClick}>
           {strings.linkText}
         </Link>
       </Stack>
@@ -81,16 +81,16 @@ const _DomainPermissionsContainer = (props: DomainPermissionsProps): JSX.Element
  * Component to allow Contoso to help their end user with their devices should their permissions be blocked
  * by their browsers settings.
  */
-export const _DomainPermissions = (props: DomainPermissionsProps): JSX.Element => {
+export const _DomainPermissions = (props: _DomainPermissionsProps): JSX.Element => {
   /* @conditional-compile-remove(call-readiness) */
   const locale = useLocale().strings.DomainPermissions;
 
-  const domainPermissionsStringsTrampoiline = (): DomainPermissionsStrings => {
+  const domainPermissionsStringsTrampoline = (): DomainPermissionsStrings => {
     /* @conditional-compile-remove(call-readiness) */
     return locale;
     // Done for conditional compilation will be undone in stable.
     return '' as unknown as DomainPermissionsStrings;
   };
 
-  return <_DomainPermissionsContainer {...props} strings={domainPermissionsStringsTrampoiline()} />;
+  return <_DomainPermissionsContainer {...props} strings={domainPermissionsStringsTrampoline()} />;
 };
