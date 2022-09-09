@@ -32,6 +32,9 @@ jobs:
       - name: Found required label
         id: label
         if: ${{ github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'update_snapshots') }}
+        env:
+          # Required for running `gh`.
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           run: echo "::set-output name=found::true"
           gh pr edit ${{ github.event.number }} --remove-label update_snapshots
