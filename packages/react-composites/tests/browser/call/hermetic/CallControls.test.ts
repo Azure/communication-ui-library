@@ -34,7 +34,7 @@ test.describe('Call composite custom button injection tests', () => {
 });
 
 test.describe('Call composite custom call control options tests', () => {
-  test('Control bar buttons correctly show as compact with camera disabled and mic hidden', async ({
+  test('Control bar buttons correctly show as compact with camera disabled and end call button hidden', async ({
     page,
     serverUrl
   }) => {
@@ -45,8 +45,8 @@ test.describe('Call composite custom call control options tests', () => {
         cameraButton: {
           disabled: true
         },
-        microphoneButton: false,
-        endCallButton: true,
+        microphoneButton: true,
+        endCallButton: false,
         devicesButton: undefined
       }
     };

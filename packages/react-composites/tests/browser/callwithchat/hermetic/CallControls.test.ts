@@ -8,7 +8,7 @@ import type { CallWithChatCompositeOptions } from '../../../../src';
 import { defaultMockCallAdapterState, defaultMockRemoteParticipant } from '../../call/hermetic/fixture';
 
 test.describe('Custom call control options tests', () => {
-  test.only('Control bar buttons correctly show as compact with camera disabled and mic hidden', async ({
+  test.only('Control bar buttons correctly show as compact with camera disabled and end call button hidden', async ({
     page,
     serverUrl
   }) => {
@@ -19,8 +19,8 @@ test.describe('Custom call control options tests', () => {
         cameraButton: {
           disabled: true
         },
-        microphoneButton: false,
-        endCallButton: true,
+        endCallButton: false,
+        microphoneButton: true,
         moreButton: undefined
       }
     };
