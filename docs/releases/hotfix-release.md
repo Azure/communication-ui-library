@@ -72,7 +72,7 @@ The [bugfix pull request](https://github.com/Azure/communication-ui-library/pull
 
 In this case, the bugfix pull request was a cherry-pick of a [pull request from `main`](https://github.com/Azure/communication-ui-library/pull/2191) because the base ref was the most recent release on NPM and skew from `main` was small.
 
-### Releasing the package.
+### Releasing the package
 
 - The release branch created above was identical in all respects to a usual release branch. Thus, [the NPM release workflow](./creating-a-release.md#step-3-publish-to-npm) worked as expected.
   - We were extra careful in going through the [release checklist](./release-checklist.md) because of the manual steps in the release branch creation.
