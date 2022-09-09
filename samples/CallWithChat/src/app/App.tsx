@@ -173,7 +173,7 @@ const callLocatorGen = (
 ): GroupCallLocator | /* @conditional-compilation-remove(PSTN-calls) */ CallParticipantsLocator => {
   /* @conditional-compile-remove(PSTN-calls) */
   if (outBoundParticipants) {
-    return { participantIDs: outBoundParticipants };
+    return { participantIds: outBoundParticipants };
   }
   const callLocator = getGroupIdFromUrl() || createGroupId();
   ensureJoinableCallLocatorPushedToUrl(callLocator);

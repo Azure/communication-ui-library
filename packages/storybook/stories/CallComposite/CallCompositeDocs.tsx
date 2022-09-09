@@ -27,7 +27,7 @@ body,
 
 const callParticipantsLocatorSnippet = `
 // CallParticipantsLocator
-{ participantIDs: string[] }
+{ participantIds: string[] }
 
 // Example
 { participantsIDs: ["<phone #>", "<phone #>", "<ACS userId>", ...] }
@@ -194,7 +194,7 @@ export const getDocs: () => JSX.Element = () => {
       <Description>
         The CallComposite supports making outbound PSTN and 1:N calls. 1:N is a call either between just Azure
         Communication Users or, a mix between ACS and PSTN users. To make these outbound calls you need to provide a
-        `locator` that contains participantIDs that you are looking to call to the
+        `locator` that contains participantIds that you are looking to call to the
         [CallAdapter](./?path=/docs/composite-adapters--page). For PSTN these IDs are the phone numbers that you are
         looking to call. For Azure Communication Users you will need to provide their unique ACS acquired `userId`.
       </Description>

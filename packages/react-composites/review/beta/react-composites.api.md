@@ -413,7 +413,7 @@ export type CallIdChangedListener = (event: {
 
 // @beta
 export type CallParticipantsLocator = {
-    participantIDs: string[];
+    participantIds: string[];
 };
 
 // @public
@@ -891,6 +891,9 @@ export const createAzureCommunicationCallAdapterFromClient: (callClient: Statefu
 // @public
 export const createAzureCommunicationCallWithChatAdapter: ({ userId, displayName, credential, endpoint, locator, alternateCallerId }: AzureCommunicationCallWithChatAdapterArgs) => Promise<CallWithChatAdapter>;
 
+// @internal
+export const _createAzureCommunicationCallWithChatAdapterFromAdapters: (callAdapter: CallAdapter, chatAdapter: ChatAdapter) => CallWithChatAdapter;
+
 // @public
 export const createAzureCommunicationCallWithChatAdapterFromClients: ({ callClient, callAgent, callLocator, chatClient, chatThreadClient }: AzureCommunicationCallWithChatAdapterFromClientArgs) => Promise<CallWithChatAdapter>;
 
@@ -931,8 +934,11 @@ export interface CustomCallWithChatControlButtonProps extends CustomControlButto
 
 // @beta
 export interface CustomControlButtonProps {
+    ariaDescription?: string;
+    ariaLabel?: string;
     disabled?: boolean;
-    // (undocumented)
+    id?: string;
+    key?: string | number;
     onItemClick?: () => void;
     showLabel?: boolean;
     styles?: ControlBarButtonStyles | BaseCustomStyles;

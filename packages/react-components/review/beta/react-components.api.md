@@ -505,6 +505,7 @@ export const _DrawerMenu: (props: _DrawerMenuProps) => JSX.Element;
 export interface _DrawerMenuItemProps {
     disabled?: boolean;
     iconProps?: IIconProps;
+    id?: string;
     // (undocumented)
     itemKey: string;
     // (undocumented)
