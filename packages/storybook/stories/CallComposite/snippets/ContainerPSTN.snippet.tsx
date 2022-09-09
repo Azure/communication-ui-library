@@ -25,7 +25,7 @@ export type ContainerProps = {
 
 const createCallAdapterLocator = (locator: string[]): CallParticipantsLocator | undefined => {
   if (locator && locator.length > 0) {
-    return { participantIDs: locator };
+    return { participantIds: locator };
   }
   return undefined;
 };

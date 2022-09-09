@@ -586,7 +586,7 @@ export type CallParticipantListParticipant = ParticipantListParticipant & {
 
 // @beta
 export type CallParticipantsLocator = {
-    participantIDs: string[];
+    participantIds: string[];
 };
 
 // @public
@@ -1501,8 +1501,11 @@ export interface CustomCallWithChatControlButtonProps extends CustomControlButto
 
 // @beta
 export interface CustomControlButtonProps {
+    ariaDescription?: string;
+    ariaLabel?: string;
     disabled?: boolean;
-    // (undocumented)
+    id?: string;
+    key?: string | number;
     onItemClick?: () => void;
     showLabel?: boolean;
     styles?: ControlBarButtonStyles | BaseCustomStyles;

@@ -47,7 +47,7 @@ const PHONE_NUMBERS = ['<Phone Number>'];
 function App(): JSX.Element {
   // Arguments that would usually be provided by your backend service or
   // (indirectly) by the user.
-  const { userId, token, displayName, participantIDs, alternateCallerId } = useAzureCommunicationServiceArgs();
+  const { userId, token, displayName, participantIds, alternateCallerId } = useAzureCommunicationServiceArgs();
 
   // A well-formed token is required to initialize the chat and calling adapters.
   const credential = useMemo(() => {
@@ -67,9 +67,9 @@ function App(): JSX.Element {
       displayName,
       credential,
       alternateCallerId,
-      locator: { participantIDs }
+      locator: { participantIds }
     }),
-    [userId, credential, displayName, alternateCallerId, participantIDs]
+    [userId, credential, displayName, alternateCallerId, participantIds]
   );
   const callAdapter = useAzureCommunicationCallAdapter(callAdapterArgs);
 
@@ -94,14 +94,14 @@ function useAzureCommunicationServiceArgs(): {
   userId: string;
   token: string;
   displayName: string;
-  participantIDs: string[];
+  participantIds: string[];
   alternateCallerId: string;
 } {
   return {
     userId: USER_ID,
     token: TOKEN,
     displayName: DISPLAY_NAME,
-    participantIDs: PHONE_NUMBERS,
+    participantIds: PHONE_NUMBERS,
     alternateCallerId: ALTERNATE_CALLER_ID
   };
 }
