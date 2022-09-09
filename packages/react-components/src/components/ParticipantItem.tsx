@@ -209,7 +209,7 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
         <Icon iconName={'ParticipantItemOptionsHovered'} className={iconStyles} />
       </Stack>
     ),
-    [itemHovered, strings.menuTitle, ids.participantItemMenuButton]
+    [strings.menuTitle, ids.participantItemMenuButton]
   );
 
   const onDismissMenu = (): void => {
