@@ -4,7 +4,6 @@
 import { ErrorType } from '@azure/communication-react';
 import { PartialTheme } from '@fluentui/react';
 import { DefaultTheme, DarkTheme, TeamsTheme, WordTheme } from '@fluentui/theme-samples';
-import { COMPOSITE_STRING_CONNECTIONSTRING } from './CompositeStringUtils';
 import {
   mediaGalleryWidthDefault,
   mediaGalleryWidthOptions,
