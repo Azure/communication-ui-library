@@ -11,27 +11,35 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  get_target_branch:
-    name: Get the target branch to update snapshots on
+  precondition:
+    name: Determine if this workflow is applicable
     runs-on: ubuntu-latest
     outputs:
-      target: ${{ steps.workflow_dispatch_branch.outputs.target || steps.label.outputs.target || '' }}
+      met: ${{ steps.label.outputs.found || steps.workflow_dispatch.outputs.found }}
     steps:
-      - name: Infer target for a manually dispatched workflow
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          # Use a machine account when checking out. This is to workaround the issue were GitHub
+          # actions, when using the default account, cannot trigger other actions.
+          # This machine account is only for this PAT, pwd was created and thrown away
+          # If any update needed, create a new account, add access to the repo and generate a new PAT
+          token: ${{ secrets.MACHINE_ACCOUNT_PAT }}
+      - name: Found workflow disptach
         id: workflow_dispatch_branch
         if: ${{ github.event_name == 'workflow_dispatch' }}
-        run: echo "::set-output name=target::${{ github.event.ref }}"
-      - name: Infer target for a label triggered workflow
+        run: echo "::set-output name=found::true"
+      - name: Found required label
         id: label
         if: ${{ github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'update_snapshots') }}
         run: |
-          echo "::set-output name=target::${{ github.event.pull_request.head.ref }}"
+          run: echo "::set-output name=found::true"
           gh pr edit ${{ github.event.number }} --remove-label update_snapshots
 
   get_matrix:
     name: Set CI flavors
-    needs: get_target_branch
-    if: needs.get_target_branch.outputs.target != ''
+    needs: precondition
+    if: needs.precondition.outputs.met
     runs-on: ubuntu-latest
     outputs:
       matrix: ${{ steps.get-matrix.outputs.matrix }}
@@ -47,8 +55,8 @@ jobs:
         run: echo "::set-output name=matrix::$(node ./common/scripts/workflow-read-matrix.mjs)"
 
   update_examples_snapshot:
-    needs: [get_matrix, get_target_branch]
-    if: needs.get_target_branch.outputs.target != ''
+    needs: [precondition, get_matrix]
+    if: needs.precondition.outputs.met
     name: Update component examples snapshots
     runs-on: ubuntu-latest
     strategy:
@@ -62,13 +70,16 @@ jobs:
           # This machine account is only for this PAT, pwd was created and thrown away
           # If any update needed, create a new account, add access to the repo and generate a new PAT
           token: ${{ secrets.MACHINE_ACCOUNT_PAT }}
+      - name: Checkout branch if on a PR
+        if: ${{ github.event_name != 'workflow_dispatch' }}
+        # On the `pull_request` event, actions/checkout@v2 leaves the local checkout in a detached head state.
+        # Explicitly checkout the target branch so we can push later.
+        run: git checkout ${{ github.event.pull_request.head.ref }}
       - name: Setup bot git information
         # User id of github actions bot. See https://api.github.com/users/better-informatics%5Bbot%5D
         run: |
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config user.name "github-actions[bot]"
-      - name: Checkout target branch
-        run: git checkout ${{ needs.get_target_branch.outputs.target }}
       - name: Use Node.js v14.x
         uses: actions/setup-node@v1
         with:
@@ -133,8 +144,8 @@ jobs:
           git push
 
   update_bundle_snapshot:
-    needs: [get_matrix, get_target_branch]
-    if: needs.get_target_branch.outputs.target != ''
+    needs: [precondition, get_matrix]
+    if: needs.precondition.outputs.met
     name: Update embed html bundle snapshots
     runs-on: ubuntu-latest
     strategy:
@@ -148,13 +159,16 @@ jobs:
           # This machine account is only for this PAT, pwd was created and thrown away
           # If any update needed, create a new account, add access to the repo and generate a new PAT
           token: ${{ secrets.MACHINE_ACCOUNT_PAT }}
+      - name: Checkout branch if on a PR
+        if: ${{ github.event_name != 'workflow_dispatch' }}
+        # On the `pull_request` event, actions/checkout@v2 leaves the local checkout in a detached head state.
+        # Explicitly checkout the target branch so we can push later.
+        run: git checkout ${{ github.event.pull_request.head.ref }}
       - name: Setup bot git information
         # User id of github actions bot. See https://api.github.com/users/better-informatics%5Bbot%5D
         run: |
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config user.name "github-actions[bot]"
-      - name: Checkout target branch
-        run: git checkout ${{ needs.get_target_branch.outputs.target }}
       - name: Use Node.js v14.x
         uses: actions/setup-node@v1
         with:
@@ -219,8 +233,8 @@ jobs:
           git push
 
   update_composite_snapshot_call:
-    needs: [get_matrix, get_target_branch]
-    if: needs.get_target_branch.outputs.target != ''
+    needs: [precondition, get_matrix]
+    if: needs.precondition.outputs.met
     name: Update packages/react-composites CallComposite browser test snapshots
     runs-on: ubuntu-latest
     strategy:
@@ -234,13 +248,16 @@ jobs:
           # This machine account is only for this PAT, pwd was created and thrown away
           # If any update needed, create a new account, add access to the repo and generate a new PAT
           token: ${{ secrets.MACHINE_ACCOUNT_PAT }}
+      - name: Checkout branch if on a PR
+        if: ${{ github.event_name != 'workflow_dispatch' }}
+        # On the `pull_request` event, actions/checkout@v2 leaves the local checkout in a detached head state.
+        # Explicitly checkout the target branch so we can push later.
+        run: git checkout ${{ github.event.pull_request.head.ref }}
       - name: Setup bot git information
         # User id of github actions bot. See https://api.github.com/users/better-informatics%5Bbot%5D
         run: |
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config user.name "github-actions[bot]"
-      - name: Checkout target branch
-        run: git checkout ${{ needs.get_target_branch.outputs.target }}
       - name: Use Node.js v14.x
         uses: actions/setup-node@v1
         with:
@@ -306,8 +323,8 @@ jobs:
           git push
 
   update_composite_snapshot_chat:
-    needs: [get_matrix, get_target_branch]
-    if: needs.get_target_branch.outputs.target != ''
+    needs: [precondition, get_matrix]
+    if: needs.precondition.outputs.met
     name: Update packages/react-composites ChatComposite browser test snapshots
     runs-on: ubuntu-latest
     strategy:
@@ -321,13 +338,16 @@ jobs:
           # This machine account is only for this PAT, pwd was created and thrown away
           # If any update needed, create a new account, add access to the repo and generate a new PAT
           token: ${{ secrets.MACHINE_ACCOUNT_PAT }}
+      - name: Checkout branch if on a PR
+        if: ${{ github.event_name != 'workflow_dispatch' }}
+        # On the `pull_request` event, actions/checkout@v2 leaves the local checkout in a detached head state.
+        # Explicitly checkout the target branch so we can push later.
+        run: git checkout ${{ github.event.pull_request.head.ref }}
       - name: Setup bot git information
         # User id of github actions bot. See https://api.github.com/users/better-informatics%5Bbot%5D
         run: |
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config user.name "github-actions[bot]"
-      - name: Checkout target branch
-        run: git checkout ${{ needs.get_target_branch.outputs.target }}
       - name: Use Node.js v14.x
         uses: actions/setup-node@v1
         with:
@@ -393,8 +413,8 @@ jobs:
           git push
 
   update_composite_snapshot_call_with_chat:
-    needs: [get_matrix, get_target_branch]
-    if: needs.get_target_branch.outputs.target != ''
+    needs: [precondition, get_matrix]
+    if: needs.precondition.outputs.met
     name: Update packages/react-composites CallWithChatComposite browser test snapshots
     runs-on: ubuntu-latest
     strategy:
@@ -408,13 +428,16 @@ jobs:
           # This machine account is only for this PAT, pwd was created and thrown away
           # If any update needed, create a new account, add access to the repo and generate a new PAT
           token: ${{ secrets.MACHINE_ACCOUNT_PAT }}
+      - name: Checkout branch if on a PR
+        if: ${{ github.event_name != 'workflow_dispatch' }}
+        # On the `pull_request` event, actions/checkout@v2 leaves the local checkout in a detached head state.
+        # Explicitly checkout the target branch so we can push later.
+        run: git checkout ${{ github.event.pull_request.head.ref }}
       - name: Setup bot git information
         # User id of github actions bot. See https://api.github.com/users/better-informatics%5Bbot%5D
         run: |
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config user.name "github-actions[bot]"
-      - name: Checkout target branch
-        run: git checkout ${{ needs.get_target_branch.outputs.target }}
       - name: Use Node.js v14.x
         uses: actions/setup-node@v1
         with:
