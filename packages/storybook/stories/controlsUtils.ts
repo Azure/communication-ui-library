@@ -152,8 +152,18 @@ export const controlsToAdd = {
   },
   avatarInitials: { control: 'text', defaultValue: 'A B', name: 'Avatar initials' },
   botAvatar: { control: 'radio', options: botAvatars, defaultValue: 'Default', name: 'Bot Avatar' },
-  botToken: { control: 'text', defaultValue: '', name: 'Valid token for bot' },
-  botUserId: { control: 'text', defaultValue: '', name: 'User identifier for bot' },
+  botToken: {
+    control: 'text',
+    defaultValue: '',
+    name: 'Valid token for bot',
+    type: { name: 'string', required: true }
+  },
+  botUserId: {
+    control: 'text',
+    defaultValue: '',
+    name: 'User identifier for bot',
+    type: { name: 'string', required: true }
+  },
   calleeUserId: {
     control: 'text',
     defaultValue: '8:echo123',
@@ -186,9 +196,13 @@ export const controlsToAdd = {
   callStateText: { control: 'text', defaultValue: "You're in the lobby", name: 'Call State Text' },
   callStateSubText: { control: 'text', defaultValue: 'You should be admitted shortly', name: 'Call State Subtext' },
   cameras: { control: 'object', defaultValue: defaultControlsCameras, name: 'Cameras' },
-  chatThreadId: { control: 'text', defaultValue: '', name: 'Existing thread' },
+  chatThreadId: {
+    control: 'text',
+    defaultValue: '',
+    name: 'Existing thread',
+    type: { name: 'string', required: true }
+  },
   checked: { control: 'boolean', defaultValue: false, name: 'Is checked' },
-  connectionString: { control: 'text', defaultValue: '', name: COMPOSITE_STRING_CONNECTIONSTRING },
   controlBarDefaultIcons: {
     control: 'radio',
     options: ['airplane', 'bus', 'ship'],
@@ -364,8 +378,8 @@ export const defaultCallCompositeHiddenControls = {
   rtl: hiddenControl,
   options: hiddenControl,
   callInvitationUrl: hiddenControl,
-  formFactor: hiddenControl,
-  role: hiddenControl
+  formFactor: hiddenControl, // formFactor is hidden by default and compositeFormFactor is used as a prop instead to workaround a bug where formFactor is not put in the correct order when the controls are generated
+  role: hiddenControl // TODO: once role work is complete this should be added as a drop down control
 };
 
 export const defaultChatCompositeHiddenControls = {
@@ -378,7 +392,8 @@ export const defaultChatCompositeHiddenControls = {
   identifiers: hiddenControl,
   locale: hiddenControl,
   onFetchAvatarPersonaData: hiddenControl,
-  rtl: hiddenControl
+  rtl: hiddenControl,
+  formFactor: hiddenControl // formFactor is hidden by default and compositeFormFactor is used as a prop instead to workaround a bug where formFactor is not put in the correct order when the controls are generated
 };
 
 export const defaultCallWithChatCompositeHiddenControls = {
@@ -387,7 +402,7 @@ export const defaultCallWithChatCompositeHiddenControls = {
   joinInvitationURL: hiddenControl,
   rtl: hiddenControl,
   options: hiddenControl,
-  formFactor: hiddenControl
+  formFactor: hiddenControl // formFactor is hidden by default and compositeFormFactor is used as a prop instead to workaround a bug where formFactor is not put in the correct order when the controls are generated
 };
 
 /**
