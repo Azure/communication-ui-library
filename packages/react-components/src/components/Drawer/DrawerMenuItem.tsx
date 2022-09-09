@@ -43,6 +43,10 @@ export interface _DrawerMenuItemProps {
    * @defaultvalue false
    */
   disabled?: boolean;
+  /**
+   * A unique id set for the standard HTML id attibute
+   */
+  id?: string;
 }
 
 /**
@@ -75,6 +79,7 @@ export const DrawerMenuItem = (props: _DrawerMenuItemProps): JSX.Element => {
       onKeyPress={props.disabled ? undefined : onKeyPress}
       onClick={props.disabled ? undefined : onClick}
       tokens={menuItemChildrenGap}
+      id={props.id}
     >
       {props.iconProps && (
         <Stack.Item
