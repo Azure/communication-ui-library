@@ -104,7 +104,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
   const adapter = useAdapter();
   const locale = useLocale();
 
-  let pageElement: JSX.Element;
+  let pageElement: JSX.Element | undefined;
   /* @conditional-compile-remove(rooms) */
   switch (page) {
     case 'roomNotFound':
@@ -217,9 +217,12 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
         </>
       );
       break;
-    default:
-      throw new Error('Invalid call composite page');
   }
+
+  if (!pageElement) {
+    throw new Error('Invalid call composite page');
+  }
+
   /* @conditional-compile-remove(rooms) */
   const permissions = _getPermissions(props.role);
 
