@@ -15,7 +15,7 @@ jobs:
     name: Get the target branch to update snapshots on
     runs-on: ubuntu-latest
     outputs:
-      target: ${{ steps.workflow_dispatch_branch.target || steps.label.target || '' }}
+      target: ${{ steps.workflow_dispatch_branch.outputs.target || steps.label.outputs.target || '' }}
     steps:
       - name: Infer target for a manually dispatched workflow
         id: workflow_dispatch_branch
