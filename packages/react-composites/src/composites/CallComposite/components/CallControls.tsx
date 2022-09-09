@@ -40,7 +40,7 @@ import { useAdapter } from '../adapter/CallAdapterProvider';
 import { isDisabled } from '../utils';
 
 /**
- * @public
+ * @private
  */
 export type CallControlsProps = {
   /* @conditional-compile-remove(one-to-n-calling) */
@@ -62,7 +62,7 @@ export type CallControlsProps = {
 const controlBarStyles = memoizeFunction((background: string) => ({ root: { background: background } }));
 
 /**
- * @public
+ * @private
  */
 export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX.Element => {
   const options = useMemo(() => (typeof props.options === 'boolean' ? {} : props.options), [props.options]);
