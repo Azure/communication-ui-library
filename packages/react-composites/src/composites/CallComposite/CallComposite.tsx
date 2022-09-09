@@ -116,6 +116,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           dataUiId={'room-not-found-page'}
         />
       );
+      break;
     case 'notInvitedToRoom':
       pageElement = (
         <NoticePage
@@ -125,6 +126,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           dataUiId={'not-invited-to-room-page'}
         />
       );
+      break;
   }
   switch (page) {
     case 'configuration':
