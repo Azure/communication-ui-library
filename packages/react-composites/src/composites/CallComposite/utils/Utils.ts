@@ -221,5 +221,5 @@ export const isDisabled = (option: boolean | { disabled: boolean } | undefined):
     return false;
   }
 
-  return !!option.disabled;
+  return option.disabled;
 };
