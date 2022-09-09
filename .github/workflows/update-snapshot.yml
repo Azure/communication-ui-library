@@ -18,9 +18,11 @@ jobs:
       target: ${{ steps.workflow_dispatch_branch.target || steps.label.target || '' }}
     steps:
       - name: Infer target for a manually dispatched workflow
+        id: workflow_dispatch_branch
         if: ${{ github.event_name == 'workflow_dispatch' }}
         run: echo "::set-output name=target::${{ github.event.ref }}"
       - name: Infer target for a label triggered workflow
+        id: label
         if: ${{ github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'update_snapshots') }}
         run: |
           echo "::set-output name=target::${{ github.event.pull_request.head.ref }}"
