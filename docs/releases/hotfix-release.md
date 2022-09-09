@@ -77,7 +77,7 @@ In this case, the bugfix pull request was a cherry-pick of a [pull request from 
 - The release branch created above was identical in all respects to a usual release branch. Thus, [the NPM release workflow](./creating-a-release.md#step-3-publish-to-npm) worked as expected.
   - We were extra careful in going through the [release checklist](./release-checklist.md) because of the manual steps in the release branch creation.
 
-### Cleaining up
+### Cleaning up
 
 - The pull request created for merging prerelease branch back into `main` by the automation was [wrong](https://github.com/Azure/communication-ui-library/pull/2194).
   - I created a [manual merge back pull request](https://github.com/Azure/communication-ui-library/pull/2203). This pull request was required so that the package version on `main` was bumped from `1.3.1` to `1.3.2-beta.0`, in preparation for the next potential release from `main`.
