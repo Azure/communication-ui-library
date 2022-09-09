@@ -196,10 +196,6 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
   /* @conditional-compile-remove(rooms) */
   cameraButtonIsEnabled = rolePermissions.cameraButton && cameraButtonIsEnabled;
 
-  let devicesButtonIsEnabled = isEnabled(options?.devicesButton);
-  /* @conditional-compile-remove(rooms) */
-  devicesButtonIsEnabled = (rolePermissions.cameraButton || rolePermissions.microphoneButton) && devicesButtonIsEnabled;
-
   return (
     <Stack horizontalAlign="center">
       {
@@ -256,7 +252,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
                 disabled={isDisabled(options?.participantsButton)}
               />
             )}
-          {devicesButtonIsEnabled && (
+          {isEnabled(options?.devicesButton) && (
             <Devices
               displayType={options?.displayType}
               increaseFlyoutItemSize={props.increaseFlyoutItemSize}
