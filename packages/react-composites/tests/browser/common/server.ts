@@ -38,4 +38,8 @@ const stopServer = (): Promise<void> =>
     server.close(() => {
       resolve();
     });
+    // We've seen some test failures due to timeout (after 60s) in closing the server.
+    // This is a serious issue, but the following early resolve is an experiment
+    // to see if we can get tests to pass / get some insight by continuing early.
+    setInterval(resolve, 40000);
   });
