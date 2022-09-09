@@ -41,22 +41,37 @@ This skew increases with the age of the base ref - the older the version being h
 
 As noted above, the challenges in creating a hotfix are unique to each attempt. This section describes the steps that were needed to create the hotfix release branch `1.3.1`. This section can serve as a reference for future hotfixes.
 
-- Kick off the prerelease branch creation [off of the tag to hotfix](https://github.com/Azure/communication-ui-library/actions/runs/2834847602).
+### Creating the release branch
+
+- Like a normal release, I first kicked off the prerelease branch creation, [but off of the tag to hotfix: `1.3.0`](https://github.com/Azure/communication-ui-library/actions/runs/2834847602).
   ![image](https://user-images.githubusercontent.com/82062616/183989231-85067723-984a-44ca-b51a-0bc369860d24.png)
-- Double check [trivial diff](https://github.com/Azure/communication-ui-library/compare/1.3.0...prerelease-stable-patch/1.3.1)
-  - rush changelog seems a [little confused](https://github.com/Azure/communication-ui-library/commit/3f3c98c216720abb8ed27e69de0f428cf85fc778#diff-d23d8aa2ae11085c982faf3dfa010b91f317285f1ff1a3e163aea9ee00e1f6a0)?
-- Normal: [Groom changelog](https://github.com/Azure/communication-ui-library/pull/2190)
-- Kick off the release branch creation [off of the prerelease branch](https://github.com/Azure/communication-ui-library/actions/runs/2835034894).
+- I double checked that there was [trivial diff](https://github.com/Azure/communication-ui-library/compare/1.3.0...prerelease-stable-patch/1.3.1) between the newly created prerelease branch and the base tag `1.3.0`.
+  - `rush changelog` was [a little confused](https://github.com/Azure/communication-ui-library/commit/3f3c98c216720abb8ed27e69de0f428cf85fc778#diff-d23d8aa2ae11085c982faf3dfa010b91f317285f1ff1a3e163aea9ee00e1f6a0) and the generated `CHANGELOG.md` did not fully correspond to the trivial diff in the hotfix.
+- Like a normal release, I [groomed the changelog](https://github.com/Azure/communication-ui-library/pull/2190), fixing the `CHANGELOG.md` and noting that this is a hotfix.
+- I kicked off the release branch creation [off of the prerelease branch](https://github.com/Azure/communication-ui-library/actions/runs/2835034894).
   - Failure: The workflow can't find some required scripts.
     ![image](https://user-images.githubusercontent.com/82062616/184000212-7561d93e-0d87-4f32-8d86-714796aa59f2.png)
   - This is the classic case of evergreen workflow automation missing branch-pinned tooling support.
-  - [Backport required tooling](https://github.com/Azure/communication-ui-library/pull/2192).
-  - I got lucky that the backport in this case was very clean.
-- Retry: Kick off release branch creation [again](https://github.com/Azure/communication-ui-library/runs/7774172170)
+  - I [backported required tooling](https://github.com/Azure/communication-ui-library/pull/2192).
+    - I got lucky that the backport in this case was very clean.
+- Retry: I kicked off release branch creation [again](https://github.com/Azure/communication-ui-library/runs/7774172170)
   - Failure: The workflow can't find some workflow config.
     ![image](https://user-images.githubusercontent.com/82062616/184002131-5936eba2-16dd-4fb6-aa5d-a482e24c799b.png)
-  - [Backport](https://github.com/Azure/communication-ui-library/pull/2193) the config as well.
-- Retry: Kick off release branch creation [again](https://github.com/Azure/communication-ui-library/runs/7774287156)
-  - Succeeded.
-  - The PR created for merging prerelease branch back is [wrong](https://github.com/Azure/communication-ui-library/pull/2194)
-- Created a [manual merge back PR](https://github.com/Azure/communication-ui-library/pull/2203)
+  - I [backported ported the config](https://github.com/Azure/communication-ui-library/pull/2193) as well.
+- Retry: I kicked off release branch creation [again](https://github.com/Azure/communication-ui-library/runs/7774287156)
+  - 3 times is lucky! It succeeded.
+
+
+### Fixing the bug
+
+The [bugfix PR](https://github.com/Azure/communication-ui-library/pull/2207) into the release branch was very targeted. It deployed a point solution to the observed bug. A larger, more complete fix will be merged in `main` later and released via the usual release process.
+
+In this case, the bugfix PR was a cherry-pick of a [PR from `main`](https://github.com/Azure/communication-ui-library/pull/2191) because the base ref was the most recent release on NPM and skew from `main` was small.
+
+### Releasing the package.
+
+- The release branch created above was identical in all respects to a usual release branch. Thus, [the NPM release workflow](./creating-a-release.md#step-3-publish-to-npm) worked as expected.
+  - We were extra careful in going through the [release checklist](./release-checklist.md) because of the manual steps in the release branch creation.
+- The PR created for merging prerelease branch back into `main` by the automation was [wrong](https://github.com/Azure/communication-ui-library/pull/2194)
+  - I created a [manual merge back PR](https://github.com/Azure/communication-ui-library/pull/2203). This PR was required so that the package version on `main` was bumped from `1.3.1` to `1.3.2-beta.0`, in preparation for the next potential release from `main`.
+  - If the base ref had been from an older release (say `1.0.0`), we would not have merged the prerelease branch back into `main` at all.
