@@ -34,7 +34,8 @@ process.env['COMMUNICATION_REACT_FLAVOR'] === 'stable' &&
         // dialpad
         'dialpad',
         // rooms
-        'rooms'
+        'rooms',
+        'call-readiness'
       ],
       // A list of stabilized features.
       // These features can be listed in the conditional compilation directives without
