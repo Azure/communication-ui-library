@@ -501,16 +501,14 @@ export interface DialpadStyles {
 }
 
 // @internal
-export const _DomainPermissions: (props: DomainPermissionsProps) => JSX.Element;
+export const _DomainPermissions: (props: _DomainPermissionsProps) => JSX.Element;
 
-// Warning: (ae-internal-missing-underscore) The name "DomainPermissionsProps" should be prefixed with an underscore because the declaration is marked as @internal
-//
 // @internal
-export interface DomainPermissionsProps {
+export interface _DomainPermissionsProps {
     // (undocumented)
     appName: string;
     // (undocumented)
-    onGetTroubleShooting: () => void;
+    onTroubleshootingClick: () => void;
     // (undocumented)
     strings: DomainPermissionsStrings;
 }

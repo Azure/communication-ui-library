@@ -1807,14 +1807,12 @@ export interface Disposable {
     dispose(): void;
 }
 
-// Warning: (ae-internal-missing-underscore) The name "DomainPermissionsProps" should be prefixed with an underscore because the declaration is marked as @internal
-//
 // @internal
-export interface DomainPermissionsProps {
+export interface _DomainPermissionsProps {
     // (undocumented)
     appName: string;
     // (undocumented)
-    onGetTroubleShooting: () => void;
+    onTroubleshootingClick: () => void;
     // (undocumented)
     strings: DomainPermissionsStrings;
 }
