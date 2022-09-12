@@ -35,7 +35,6 @@ process.env['COMMUNICATION_REACT_FLAVOR'] === 'stable' &&
         'dialpad',
         // rooms
         'rooms',
-        // Call Readiness
         'call-readiness'
       ],
       // A list of stabilized features.
