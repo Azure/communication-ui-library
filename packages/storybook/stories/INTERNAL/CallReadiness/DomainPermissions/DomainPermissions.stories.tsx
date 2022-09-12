@@ -2,17 +2,20 @@
 // Licensed under the MIT license.
 
 import { Modal, PrimaryButton, Stack } from '@fluentui/react';
-import { _DomainPermissions } from '@internal/react-components';
+import { _DomainPermissions, _DrawerSurface } from '@internal/react-components';
 import { Canvas, Description, Heading, Props, Title } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React, { useState } from 'react';
 import { useLocale } from '../../../../../react-components/src/localization';
 import { SingleLineBetaBanner } from '../../../BetaBanners/SingleLineBetaBanner';
 import { COMPONENT_FOLDER_PREFIX } from '../../../constants';
+import { MobilePreviewContainer } from '../../../MobileContainer';
 
 const DomainPermissionsStory = (): JSX.Element => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const locale = useLocale().strings.DomainPermissions;
+  const [isDrawerShowing, setIsDrawerShowing] = useState(true);
+  const onLightDismissTriggered = (): void => setIsDrawerShowing(false);
   return (
     <Stack>
       <Stack>
@@ -22,11 +25,9 @@ const DomainPermissionsStory = (): JSX.Element => {
           Component to display information to the end user when their device permissions are not set appropriately
         </Description>
         <Heading>Example DevicePermissions</Heading>
-        <Heading>DomainPermissions Props</Heading>
-        <Props of={_DomainPermissions} />
       </Stack>
       <Canvas>
-        <PrimaryButton onClick={() => setModalOpen(true)}>Open Domain Permissions</PrimaryButton>
+        <PrimaryButton onClick={() => setModalOpen(true)}>Open Domain Permissions Modal</PrimaryButton>
         <Modal isOpen={modalOpen} onDismiss={() => setModalOpen(false)}>
           <_DomainPermissions
             appName={'Contoso app'}
@@ -37,6 +38,28 @@ const DomainPermissionsStory = (): JSX.Element => {
           />
         </Modal>
       </Canvas>
+      <MobilePreviewContainer>
+        {!isDrawerShowing && (
+          <Stack
+            styles={{ root: { cursor: 'pointer' } }}
+            verticalFill
+            verticalAlign="center"
+            horizontalAlign="center"
+            onClick={() => setIsDrawerShowing(true)}
+          >
+            Click to show drawer
+          </Stack>
+        )}
+        {isDrawerShowing && (
+          <_DrawerSurface onLightDismiss={onLightDismissTriggered}>
+            <_DomainPermissions
+              appName={'Contoso app'}
+              onTroubleshootingClick={() => alert('clicked trouble shooting link')}
+              strings={locale}
+            />
+          </_DrawerSurface>
+        )}
+      </MobilePreviewContainer>
     </Stack>
   );
 };
