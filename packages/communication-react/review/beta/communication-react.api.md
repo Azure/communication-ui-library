@@ -1809,21 +1809,15 @@ export interface Disposable {
 
 // @internal
 export interface _DomainPermissionsProps {
-    // (undocumented)
     appName: string;
-    // (undocumented)
     onTroubleshootingClick: () => void;
-    // (undocumented)
     strings: DomainPermissionsStrings;
 }
 
 // @beta
 export interface DomainPermissionsStrings {
-    // (undocumented)
     linkText: string;
-    // (undocumented)
     mainText: string;
-    // (undocumented)
     secondaryText: string;
 }
 

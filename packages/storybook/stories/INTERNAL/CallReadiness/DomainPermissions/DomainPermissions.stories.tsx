@@ -3,7 +3,7 @@
 
 import { Stack } from '@fluentui/react';
 import { _DomainPermissions, _DrawerSurface } from '@internal/react-components';
-import { Canvas, Description, Heading, Title } from '@storybook/addon-docs';
+import { Canvas, Description, Heading, Props, Title } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 import { useLocale } from '../../../../../react-components/src/localization';
@@ -51,6 +51,7 @@ const getDocs: () => JSX.Element = () => {
       <Canvas mdxSource={DomainPermissionsDrawerExample}>
         <DomainPermissionsDrawer />
       </Canvas>
+      <Props of={_DomainPermissions} />
     </Stack>
   );
 };
