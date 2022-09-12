@@ -30,7 +30,7 @@ const DomainPermissionsStory = (): JSX.Element => {
         <Modal isOpen={modalOpen} onDismiss={() => setModalOpen(false)}>
           <_DomainPermissions
             appName={'Contoso app'}
-            onGetTroubleShooting={() => {
+            onTroubleshootingClick={() => {
               alert('clicked trouble shooting');
             }}
             strings={locale}
@@ -47,6 +47,6 @@ export const DomainPermissions = DomainPermissionsStory.bind({});
 
 export default {
   id: `${COMPONENT_FOLDER_PREFIX}-internal-domain-permissions`,
-  title: `${COMPONENT_FOLDER_PREFIX}/Internal/CallReadiness/DomainPermissions/Domain Permissions`,
+  title: `${COMPONENT_FOLDER_PREFIX}/Internal/CallReadiness/Domain Permissions`,
   component: _DomainPermissions
 } as Meta;
