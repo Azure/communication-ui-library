@@ -1,65 +1,56 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Modal, PrimaryButton, Stack } from '@fluentui/react';
+import { Stack } from '@fluentui/react';
 import { _DomainPermissions, _DrawerSurface } from '@internal/react-components';
-import { Canvas, Description, Heading, Props, Title } from '@storybook/addon-docs';
+import { Canvas, Description, Heading, Title } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
-import React, { useState } from 'react';
+import React from 'react';
 import { useLocale } from '../../../../../react-components/src/localization';
 import { SingleLineBetaBanner } from '../../../BetaBanners/SingleLineBetaBanner';
 import { COMPONENT_FOLDER_PREFIX } from '../../../constants';
-import { MobilePreviewContainer } from '../../../MobileContainer';
+import { DomainPermissionsDrawer } from './snippets/DomainPermissionsDrawer.snippet';
+import { DomainPermissionsModal } from './snippets/DomainPermissionsModal.snippet';
+
+const DomainPermissionsDrawerExample = require('!!raw-loader!./snippets/DomainPermissionsDrawer.snippet.tsx').default;
+const DomainPermissionsModalExample = require('!!raw-loader!./snippets/DomainPermissionsModal.snippet.tsx').default;
 
 const DomainPermissionsStory = (): JSX.Element => {
-  const [modalOpen, setModalOpen] = useState<boolean>(false);
   const locale = useLocale().strings.DomainPermissions;
-  const [isDrawerShowing, setIsDrawerShowing] = useState(true);
-  const onLightDismissTriggered = (): void => setIsDrawerShowing(false);
   return (
     <Stack>
-      <Stack>
-        <Title>DomainPermissions Component</Title>
-        <SingleLineBetaBanner />
-        <Description>
-          Component to display information to the end user when their device permissions are not set appropriately
-        </Description>
-        <Heading>Example DevicePermissions</Heading>
-      </Stack>
-      <Canvas>
-        <PrimaryButton onClick={() => setModalOpen(true)}>Open Domain Permissions Modal</PrimaryButton>
-        <Modal isOpen={modalOpen} onDismiss={() => setModalOpen(false)}>
-          <_DomainPermissions
-            appName={'Contoso app'}
-            onTroubleshootingClick={() => {
-              alert('clicked trouble shooting');
-            }}
-            strings={locale}
-          />
-        </Modal>
+      <_DomainPermissions
+        appName={'Contoso App'}
+        onTroubleshootingClick={function (): void {
+          alert('you clicked the help text');
+        }}
+        strings={locale}
+      />
+    </Stack>
+  );
+};
+
+const getDocs: () => JSX.Element = () => {
+  /* eslint-disable react/no-unescaped-entities */
+  return (
+    <Stack>
+      <SingleLineBetaBanner />
+      <Title>Domain Permissions</Title>
+      <Description>
+        Component to display information to the end user when their device permissions are not set appropriately
+      </Description>
+      <Heading>Using in a modal</Heading>
+      <Description>
+        you are able to hide the DomainPermissions component in a Modal to show the help tile over your applications
+        user interface.
+      </Description>
+      <Canvas mdxSource={DomainPermissionsModalExample}>
+        <DomainPermissionsModal />
       </Canvas>
-      <MobilePreviewContainer>
-        {!isDrawerShowing && (
-          <Stack
-            styles={{ root: { cursor: 'pointer' } }}
-            verticalFill
-            verticalAlign="center"
-            horizontalAlign="center"
-            onClick={() => setIsDrawerShowing(true)}
-          >
-            Click to show drawer
-          </Stack>
-        )}
-        {isDrawerShowing && (
-          <_DrawerSurface onLightDismiss={onLightDismissTriggered}>
-            <_DomainPermissions
-              appName={'Contoso app'}
-              onTroubleshootingClick={() => alert('clicked trouble shooting link')}
-              strings={locale}
-            />
-          </_DrawerSurface>
-        )}
-      </MobilePreviewContainer>
+      <Heading>Using on mobile</Heading>
+      <Canvas mdxSource={DomainPermissionsDrawerExample}>
+        <DomainPermissionsDrawer />
+      </Canvas>
     </Stack>
   );
 };
@@ -71,5 +62,10 @@ export const DomainPermissions = DomainPermissionsStory.bind({});
 export default {
   id: `${COMPONENT_FOLDER_PREFIX}-internal-domain-permissions`,
   title: `${COMPONENT_FOLDER_PREFIX}/Internal/CallReadiness/Domain Permissions`,
-  component: _DomainPermissions
+  component: _DomainPermissions,
+  parameters: {
+    docs: {
+      page: () => getDocs()
+    }
+  }
 } as Meta;
