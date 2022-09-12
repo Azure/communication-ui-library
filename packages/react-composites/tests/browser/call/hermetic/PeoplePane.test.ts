@@ -99,17 +99,23 @@ test.describe('Call composite participant menu items injection tests', async () 
         // wait for drawer to have opened
         await waitForSelector(page, dataUiId('drawer-menu'));
       } else {
+        await page.hover(dataUiId('participant-item'));
         await pageClick(page, dataUiId(IDS.participantItemMenuButton));
         await waitForSelector(page, '.ms-ContextualMenu-itemText');
+        // hover participant item again to show elipses to avoid test flakiness
+        await page.hover(dataUiId('participant-item'));
       }
     } else {
       // Open participant list flyout
       await pageClick(page, dataUiId(IDS.participantButtonPeopleMenuItem));
+      await page.hover(dataUiId('participant-item') + ' >> nth=0');
       // There should be at least one participant. Just click on the first.
       await pageClick(page, dataUiId(IDS.participantItemMenuButton) + ' >> nth=0');
 
       const injectedMenuItem = await waitForSelector(page, dataUiId('test-app-participant-menu-item'));
       await injectedMenuItem.waitForElementState('stable', { timeout: perStepLocalTimeout() });
+      // hover participant item again to show elipses to avoid test flakiness
+      await page.hover(dataUiId('participant-item') + ' >> nth=0');
     }
     expect(await stableScreenshot(page)).toMatchSnapshot(`participant-menu-item-flyout.png`);
   });

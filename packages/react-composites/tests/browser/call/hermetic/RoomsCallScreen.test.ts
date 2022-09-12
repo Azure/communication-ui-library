@@ -116,9 +116,12 @@ const openRemoveParticipantMenu = async (page: Page, testInfo: TestInfo): Promis
   if (isTestProfileDesktop(testInfo)) {
     await waitForSelector(page, dataUiId('call-composite-participants-button'));
     await pageClick(page, dataUiId('call-composite-participants-button'));
+    await page.hover(dataUiId('participant-item'));
     await waitForSelector(page, dataUiId('participant-item-menu-button'));
     await pageClick(page, dataUiId('participant-item-menu-button'));
     await waitForSelector(page, dataUiId('participant-list-remove-participant-button'));
+    // hover participant item again to show elipses to avoid test flakiness
+    await page.hover(dataUiId('participant-item'));
   } else {
     await pageClick(page, dataUiId('call-with-chat-composite-more-button'));
     await waitForSelector(page, dataUiId('call-composite-more-menu-people-button'));
