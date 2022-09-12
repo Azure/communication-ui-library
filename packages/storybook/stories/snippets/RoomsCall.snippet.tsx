@@ -3,7 +3,6 @@ import {
   CallAdapter,
   CallComposite,
   CallCompositeOptions,
-  CallParticipantsLocator,
   CompositeLocale,
   useAzureCommunicationCallAdapter
 } from '@azure/communication-react';
@@ -13,24 +12,17 @@ import React, { useMemo } from 'react';
 export type ContainerProps = {
   userId: CommunicationUserIdentifier;
   token: string;
-  locator: string[];
+  locator: string;
   displayName: string;
   formFactor?: 'desktop' | 'mobile';
   fluentTheme?: PartialTheme | Theme;
   callInvitationURL?: string;
   locale?: CompositeLocale;
   options?: CallCompositeOptions;
+  roomId?: string;
 };
 
-const createCallAdapterLocator = (locator: string[]): CallParticipantsLocator | undefined => {
-  if (locator && locator.length > 0) {
-    // Change to participantIds once api is updated
-    return { participantIds: locator };
-  }
-  return undefined;
-};
-
-export const ContosoCallContainer1toN = (props: ContainerProps): JSX.Element => {
+export const ContosoCallContainer = (props: ContainerProps): JSX.Element => {
   const credential = useMemo(() => {
     try {
       return new AzureCommunicationTokenCredential(props.token);
@@ -40,39 +32,43 @@ export const ContosoCallContainer1toN = (props: ContainerProps): JSX.Element => 
     }
   }, [props.token]);
 
-  const locator = useMemo(() => createCallAdapterLocator(props.locator), [props.locator]);
-
   const adapter = useAzureCommunicationCallAdapter(
     {
       userId: props.userId,
       displayName: props.displayName, // Max 256 Characters
       credential,
-      locator
+      locator: props.roomId
+        ? {
+            roomId: props.roomId
+          }
+        : undefined
     },
     undefined,
     leaveCall
   );
 
-  if (!locator) {
-    return <>Provided call locator '{props.locator}' is not recognized.</>;
+  if (!props.roomId) {
+    return <>Room id is not provided.</>;
   }
 
   if (adapter) {
     return (
-      <CallComposite
-        adapter={adapter}
-        formFactor={props.formFactor}
-        fluentTheme={props.fluentTheme}
-        callInvitationUrl={props?.callInvitationURL}
-        locale={props?.locale}
-        options={props?.options}
-      />
+      <div style={{ height: '90vh', width: '90vw' }}>
+        <CallComposite
+          adapter={adapter}
+          formFactor={props.formFactor}
+          fluentTheme={props.fluentTheme}
+          callInvitationUrl={props?.callInvitationURL}
+          locale={props?.locale}
+          options={props?.options}
+        />
+      </div>
     );
   }
   if (credential === undefined) {
     return <>Failed to construct credential. Provided token is malformed.</>;
   }
-  return <>Initializing 1:N Preview...</>;
+  return <>Initializing...</>;
 };
 
 const leaveCall = async (adapter: CallAdapter): Promise<void> => {
