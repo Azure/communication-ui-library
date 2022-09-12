@@ -104,7 +104,7 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
           mobileWithPreview,
           /* @conditional-compile-remove(rooms) */ !rolePermissions.cameraButton
         )}
-        <Stack className={mobileWithPreview ? undefined : selectionContainerStyle}>
+        <Stack className={mobileView ? undefined : selectionContainerStyle}>
           {!mobileWithPreview && (
             <>
               <Stack.Item styles={callDetailsContainerStylesDesktop}>
