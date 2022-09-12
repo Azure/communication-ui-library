@@ -78,30 +78,34 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
     </Stack.Item>
   );
 
+  let mobileWithPreview = mobileView;
+  /* @conditional-compile-remove(rooms) */
+  mobileWithPreview = mobileWithPreview && rolePermissions.cameraButton;
+
   return (
-    <Stack className={mobileView ? configurationContainerStyleMobile : configurationContainerStyleDesktop}>
+    <Stack className={mobileWithPreview ? configurationContainerStyleMobile : configurationContainerStyleDesktop}>
       <Stack styles={bannerNotificationStyles}>
         <ErrorBar {...errorBarProps} />
       </Stack>
       <Stack
         grow
-        horizontal={!mobileView}
-        horizontalAlign={mobileView ? 'stretch' : 'center'}
+        horizontal={!mobileWithPreview}
+        horizontalAlign={mobileWithPreview ? 'stretch' : 'center'}
         verticalAlign="center"
-        tokens={mobileView ? configurationStackTokensMobile : configurationStackTokensDesktop}
+        tokens={mobileWithPreview ? configurationStackTokensMobile : configurationStackTokensDesktop}
       >
-        {mobileView && (
+        {mobileWithPreview && (
           <Stack.Item>
             {title}
             {callDescription}
           </Stack.Item>
         )}
         {localPreviewTrampoline(
-          mobileView,
-          /* @conditional-compile-remove(rooms) */ !rolePermissions.microphoneButton && !rolePermissions.cameraButton
+          mobileWithPreview,
+          /* @conditional-compile-remove(rooms) */ !rolePermissions.cameraButton
         )}
-        <Stack className={mobileView ? undefined : selectionContainerStyle}>
-          {!mobileView && (
+        <Stack className={mobileWithPreview ? undefined : selectionContainerStyle}>
+          {!mobileWithPreview && (
             <>
               <Stack.Item styles={callDetailsContainerStylesDesktop}>
                 {title}
@@ -115,9 +119,11 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
               />
             </>
           )}
-          <Stack styles={mobileView ? startCallButtonContainerStyleMobile : startCallButtonContainerStyleDesktop}>
+          <Stack
+            styles={mobileWithPreview ? startCallButtonContainerStyleMobile : startCallButtonContainerStyleDesktop}
+          >
             <StartCallButton
-              className={mobileView ? startCallButtonStyleMobile : undefined}
+              className={mobileWithPreview ? startCallButtonStyleMobile : undefined}
               onClick={startCallHandler}
               disabled={disableStartCallButton}
             />
