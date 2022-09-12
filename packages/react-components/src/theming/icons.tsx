@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { mergeStyles } from '@fluentui/react';
+import { IStyle, mergeStyles, Stack, Theme } from '@fluentui/react';
 import {
   ArrowClockwise16Regular,
   CallEnd20Filled,
@@ -45,7 +45,7 @@ import {
 import { Backspace20Regular } from '@fluentui/react-icons';
 
 /* @conditional-compile-remove(call-readiness) */
-import { Circle24Filled, Sparkle20Filled } from '@fluentui/react-icons';
+import { Sparkle20Filled } from '@fluentui/react-icons';
 
 /* @conditional-compile-remove(file-sharing) */
 import { ArrowDownload16Regular } from '@fluentui/react-icons';
@@ -53,6 +53,7 @@ import { ArrowDownload16Regular } from '@fluentui/react-icons';
 import { CallPause20Regular, CallPause20Filled, Play20Regular, People20Regular } from '@fluentui/react-icons';
 
 import React from 'react';
+import { useTheme } from './FluentThemeProvider';
 
 /**
  * Icons used by the React components exported from this library.
@@ -80,30 +81,39 @@ const MoreHorizontal18Regular = (): JSX.Element => (
 );
 
 /* @conditional-compile-remove(call-readiness) */
-const DomainPermissionMic20Filled = (): JSX.Element => (
-  <div className={mergeStyles({ transform: 'scale(2)' })}>
-    <Mic20Filled />
-  </div>
-);
+const DomainPermissionMic20Filled = (): JSX.Element => {
+  const theme = useTheme();
+  return (
+    <Stack
+      horizontalAlign={'center'}
+      styles={{ root: { borderRadius: '100%', background: theme.palette.themeLighterAlt, padding: '2rem' } }}
+    >
+      <div className={mergeStyles(domainPermissionIconStyles(theme))}>
+        <Mic20Filled />
+      </div>
+    </Stack>
+  );
+};
 
 /* @conditional-compile-remove(call-readiness) */
-const DomainPermissionCamera20Filled = (): JSX.Element => (
-  <div className={mergeStyles({ transform: 'scale(2)' })}>
-    <Video20Filled />
-  </div>
-);
+const DomainPermissionCamera20Filled = (): JSX.Element => {
+  const theme = useTheme();
+  return (
+    <Stack
+      horizontalAlign={'center'}
+      styles={{ root: { borderRadius: '100%', background: theme.palette.themeLighterAlt, padding: '2rem' } }}
+    >
+      <div className={mergeStyles(domainPermissionIconStyles(theme))}>
+        <Video20Filled />
+      </div>
+    </Stack>
+  );
+};
 
 /* @conditional-compile-remove(call-readiness) */
 const DomainPermissionSparkle20Filled = (): JSX.Element => (
   <div className={mergeStyles({ transform: 'scale(2)' })}>
     <Sparkle20Filled />
-  </div>
-);
-
-/* @conditional-compile-remove(call-readiness) */
-const DomainPermissionsBackdrop20Filled = (): JSX.Element => (
-  <div className={mergeStyles({ transform: 'scale(4)' })}>
-    <Circle24Filled />
   </div>
 );
 
@@ -175,11 +185,20 @@ export const DEFAULT_COMPONENT_ICONS = {
   /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
   BackSpace: <Backspace20Regular />,
   /* @conditional-compile-remove(call-readiness) */
-  DomainPermissionsIconBackdrop: <DomainPermissionsBackdrop20Filled />,
-  /* @conditional-compile-remove(call-readiness) */
   DomainPermissionsSparkle: <DomainPermissionSparkle20Filled />,
   /* @conditional-compile-remove(call-readiness) */
   DomainPermissionCamera: <DomainPermissionCamera20Filled />,
   /* @conditional-compile-remove(call-readiness) */
   DomainPermissionMic: <DomainPermissionMic20Filled />
+};
+
+const domainPermissionIconStyles = (theme: Theme): IStyle => {
+  return {
+    transform: 'scale(2)',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    color: theme.palette.themePrimary,
+    zIndex: 1
+  };
 };

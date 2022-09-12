@@ -8,7 +8,6 @@ import { useLocale } from '../localization';
 /* @conditional-compile-remove(call-readiness) */
 import { _formatString, _pxToRem } from '@internal/acs-ui-common';
 import {
-  iconBackDropStyles,
   iconContainerStyles,
   iconPrimaryStyles,
   linkTextStyles,
@@ -56,17 +55,15 @@ const _DomainPermissionsContainer = (props: DomainPermissionsProps): JSX.Element
   };
   return (
     <Stack style={{ padding: '2rem', maxWidth: containerWitdthTrampoline() }}>
-      <Stack horizontal style={{ padding: '2rem 0' }} horizontalAlign={'space-between'}>
+      <Stack horizontal style={{ paddingBottom: '1rem' }} horizontalAlign={'space-between'}>
         <Stack styles={iconContainerStyles} horizontalAlign={'center'}>
           <Icon styles={iconPrimaryStyles(theme)} iconName={'DomainPermissionCamera'}></Icon>
-          <Icon styles={iconBackDropStyles(theme)} iconName={'DomainPermissionsIconBackdrop'}></Icon>
         </Stack>
         <Stack styles={iconContainerStyles} horizontalAlign={'center'}>
           <Icon styles={sparkleIconBackdropStyles(theme)} iconName={'DomainPermissionsSparkle'}></Icon>
         </Stack>
         <Stack styles={iconContainerStyles} horizontalAlign={'center'}>
           <Icon styles={iconPrimaryStyles(theme)} iconName={'DomainPermissionMic'}></Icon>
-          <Icon styles={iconBackDropStyles(theme)} iconName={'DomainPermissionsIconBackdrop'}></Icon>
         </Stack>
       </Stack>
       <Stack styles={textContainerStyles}>

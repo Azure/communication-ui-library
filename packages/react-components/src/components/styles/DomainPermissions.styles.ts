@@ -30,21 +30,8 @@ export const textContainerStyles: IStackStyles = {
 export const iconPrimaryStyles = (theme: Theme): IIconStyles => {
   return {
     root: {
-      position: 'absolute',
-      color: theme.palette.blue,
       zIndex: 1,
       margin: 'auto'
-    }
-  };
-};
-
-/**
- * @internal
- */
-export const iconBackDropStyles = (theme: Theme): IIconStyles => {
-  return {
-    root: {
-      color: theme.palette.themeLighterAlt
     }
   };
 };
