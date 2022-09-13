@@ -32,18 +32,6 @@ test.describe('Rooms DeviceButton tests for different roles', async () => {
     await pageClick(page, dataUiId(IDS.deviceButton));
     expect(await stableScreenshot(page)).toMatchSnapshot('rooms-call-screen-devices-Attendee.png');
   });
-
-  test('Only speakers are shown for Consumer', async ({ page, serverUrl }) => {
-    const paul = defaultMockRemoteParticipant('Paul Bridges');
-    const vasily = defaultMockRemoteParticipant('Vasily Podkolzin');
-    const participants = [paul, vasily];
-    const initialState = defaultMockCallAdapterState(participants);
-    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { role: 'Consumer' }));
-    await waitForSelector(page, dataUiId(IDS.videoGallery));
-    await waitForSelector(page, dataUiId(IDS.deviceButton));
-    await pageClick(page, dataUiId(IDS.deviceButton));
-    expect(await stableScreenshot(page)).toMatchSnapshot('rooms-call-screen-devices-Consumer.png');
-  });
 });
 
 test.describe('Rooms CallScreen tests for different roles', async () => {
