@@ -1,8 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Icon, Link, PrimaryButton, Stack, Text } from '@fluentui/react';
+import { Icon, Link, Stack, Text } from '@fluentui/react';
 import React from 'react';
+/* @conditional-compile-remove(call-readiness) */
 import { useLocale } from '../localization';
 
 /**
@@ -26,7 +27,7 @@ export type _UnsupportedBrowserProps = {
 /**
  * @internal
  */
-export const _UnsupportedBrowser = (props: _UnsupportedBrowserProps): JSX.Element => {
+export const _UnsupportedBrowserContainer = (props: _UnsupportedBrowserProps): JSX.Element => {
   const { onTroubleShootingClick, strings } = props;
   return (
     <Stack>
@@ -48,7 +49,7 @@ export const _UnsupportedBrowser = (props: _UnsupportedBrowserProps): JSX.Elemen
  *
  * @internal
  */
-export const _UnsupportedBrowserWrapper = (props: _UnsupportedBrowserProps): JSX.Element => {
+export const _UnsupportedBrowser = (props: _UnsupportedBrowserProps): JSX.Element => {
   /* @conditional-compile-remove(call-readiness) */
   const strings = useLocale().strings.UnsupportedBrowser;
   return <_UnsupportedBrowser {...props} strings={strings} />;
