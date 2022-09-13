@@ -10,6 +10,8 @@ import { _isInLobbyOrConnecting } from '@internal/calling-component-bindings';
 import { ControlBar, ParticipantMenuItemsCallback } from '@internal/react-components';
 /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
 import { HoldButton } from '@internal/react-components';
+/* @conditional-compile-remove(rooms) */
+import { _usePermissions } from '@internal/react-components';
 import React, { useMemo } from 'react';
 import { CallControlOptions } from '../types/CallControlOptions';
 import { Camera } from './buttons/Camera';
@@ -179,6 +181,21 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
     setShowDialpad(false);
   };
 
+  /* @conditional-compile-remove(rooms) */
+  const rolePermissions = _usePermissions();
+
+  let screenShareButtonIsEnabled = isEnabled(options?.screenShareButton);
+  /* @conditional-compile-remove(rooms) */
+  screenShareButtonIsEnabled = rolePermissions.screenShare && screenShareButtonIsEnabled;
+
+  let microphoneButtonIsEnabled = isEnabled(options?.microphoneButton);
+  /* @conditional-compile-remove(rooms) */
+  microphoneButtonIsEnabled = rolePermissions.microphoneButton && microphoneButtonIsEnabled;
+
+  let cameraButtonIsEnabled = isEnabled(options?.cameraButton);
+  /* @conditional-compile-remove(rooms) */
+  cameraButtonIsEnabled = rolePermissions.cameraButton && cameraButtonIsEnabled;
+
   return (
     <Stack horizontalAlign="center">
       {
@@ -199,13 +216,13 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
             occluding some of its content.
          */}
         <ControlBar layout="horizontal" styles={controlBarStyles(theme.semanticColors.bodyBackground)}>
-          {isEnabled(options?.microphoneButton) && (
+          {microphoneButtonIsEnabled && (
             <Microphone displayType={options?.displayType} disabled={isDisabled(options?.microphoneButton)} />
           )}
-          {isEnabled(options?.cameraButton) && (
+          {cameraButtonIsEnabled && (
             <Camera displayType={options?.displayType} disabled={isDisabled(options?.cameraButton)} />
           )}
-          {isEnabled(options?.screenShareButton) && (
+          {screenShareButtonIsEnabled && (
             <ScreenShare
               option={options?.screenShareButton}
               displayType={options?.displayType}
