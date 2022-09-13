@@ -206,7 +206,7 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
         title={strings.menuTitle}
         data-ui-id={ids.participantItemMenuButton}
       >
-        <Icon iconName={'ParticipantItemOptionsHovered'} className={iconStyles} />
+        <Icon iconName={'ParticipantItemOptionsHovered'} className={iconStyles} id="menuButtonIcon" />
       </Stack>
     ),
     [strings.menuTitle, ids.participantItemMenuButton]
@@ -226,7 +226,11 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
       data-is-focusable={true}
       data-ui-id="participant-item"
       className={mergeStyles(
-        participantItemContainerStyle({ localparticipant: me, clickable: !!menuItems, showMenuButton: itemHovered }),
+        participantItemContainerStyle({
+          localparticipant: me,
+          clickable: !!menuItems,
+          showMenuButton: itemHovered || !menuHidden
+        }),
         styles?.root
       )}
       onMouseEnter={() => setItemHovered(true)}
