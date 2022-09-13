@@ -5,15 +5,17 @@ import { Stack } from '@fluentui/react';
 import React, { useEffect } from 'react';
 import { EnablePermissionsPlease } from './Components/EnablePermissionsOverlay';
 import { PermissionsDenied } from './Components/PermissionsDeniedOverlay';
+import { AudioTestScreen } from './Screens/AudioTestScreen';
 import { InterstitialScreen } from './Screens/InterstitialScreen';
 import { LandingScreen } from './Screens/LandingScreen';
-import { SuccessScreen } from './Screens/SuccessScreen';
+import { CompositeNextSuccessScreen, PermissionSuccessScreen } from './Screens/SuccessScreen';
+import { VideoTestScreen } from './Screens/VideoTestScreen';
 import { requestPermissionsNativeAPI } from './utils';
 
 /** internal */
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 
-type PreCallCompositeState = 'Landing' | 'Interstitial' | 'Success';
+type PreCallCompositeState = 'Landing' | 'Interstitial' | 'PermissionSuccess' | 'VideoTest' | 'AudioTest' | 'Final';
 
 /** @internal */
 export interface _PreCallCompositeProps {
@@ -38,7 +40,7 @@ export const _PreCallComposite = (props: _PreCallCompositeProps): JSX.Element =>
         const permissionState = await requestPermissionsNativeAPI();
         setPermission(permissionState);
         if (permissionState === 'granted') {
-          setState('Success');
+          setState('PermissionSuccess');
         }
       }, props.delayMs);
     }
@@ -52,8 +54,17 @@ export const _PreCallComposite = (props: _PreCallCompositeProps): JSX.Element =>
     case 'Interstitial':
       pageContent = <InterstitialScreen />;
       break;
-    case 'Success':
-      pageContent = <SuccessScreen />;
+    case 'PermissionSuccess':
+      pageContent = <PermissionSuccessScreen onNextClick={() => setState('AudioTest')} />;
+      break;
+    case 'AudioTest':
+      pageContent = <AudioTestScreen onNextClick={() => setState('VideoTest')} />;
+      break;
+    case 'VideoTest':
+      pageContent = <VideoTestScreen onNextClick={() => setState('Final')} />;
+      break;
+    case 'Final':
+      pageContent = <CompositeNextSuccessScreen />;
       break;
   }
 
