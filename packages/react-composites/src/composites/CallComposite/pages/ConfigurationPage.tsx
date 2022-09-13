@@ -83,7 +83,7 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
   mobileWithPreview = mobileWithPreview && rolePermissions.cameraButton;
 
   return (
-    <Stack className={mobileWithPreview ? configurationContainerStyleMobile : configurationContainerStyleDesktop}>
+    <Stack className={mobileView ? configurationContainerStyleMobile : configurationContainerStyleDesktop}>
       <Stack styles={bannerNotificationStyles}>
         <ErrorBar {...errorBarProps} />
       </Stack>

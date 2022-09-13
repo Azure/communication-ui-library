@@ -45,7 +45,6 @@ export const configurationContainerStyleMobile = mergeStyles({
  * @private
  */
 export const selectionContainerStyle = mergeStyles({
-  width: '50%',
   minWidth: '11rem',
   maxWidth: '18.75rem',
   padding: '0.5rem'
