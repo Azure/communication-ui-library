@@ -36,7 +36,7 @@ jobs:
           # Required for running `gh`.
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          run: echo "::set-output name=found::true"
+          echo "::set-output name=found::true"
           gh pr edit ${{ github.event.number }} --remove-label update_snapshots
 
   get_matrix:
