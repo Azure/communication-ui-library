@@ -72,6 +72,7 @@ export const PeoplePaneContent = (props: {
     strings,
     participantListDefaultProps.onRemoveParticipant,
     participantListDefaultProps.myUserId,
+    removeButtonAllowed,
     onFetchParticipantMenuItems,
     setDrawerMenuItems
   ]);
