@@ -15,5 +15,5 @@ As a reviewer:
     - Is it because the Pull Request introduces some unintended CSS artifacts? Are those artifacts worth fixing?
     - Is this a flaky browser test which causes spurious snapshot differences? Flaky tests are almost always worth fixing because they reduce our confidence in Continuous Integration tests and lead to bugs slipping through the cracks.
   - It can be hard to review snapshot differences if there are many changed snapshots.
-    - Are the differences are functionally small, i.e., same / similar difference in many files? If not, consider requesting the author to break up their Pull Request into smaller chunks.
+    - Are the differences functionally small, i.e., same / similar difference in many files? If not, consider requesting the author to break up their Pull Request into smaller chunks.
     - For functionally small differences that touch many files, spot check a large enough sample of the files.
