@@ -117,12 +117,12 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
         />
       );
       break;
-    case 'notInvitedToRoom':
+    case 'deniedPermissionToRoom':
       pageElement = (
         <NoticePage
           iconName="InvalidRoom"
-          title={locale.strings.call.notInvitedToRoomTitle}
-          moreDetails={locale.strings.call.notInvitedToRoomDetails}
+          title={locale.strings.call.deniedPermissionToRoomTitle}
+          moreDetails={locale.strings.call.deniedPermissionToRoomDetails}
           dataUiId={'not-invited-to-room-page'}
         />
       );

@@ -306,10 +306,10 @@ export interface CallCompositeStrings {
   /**
    * Title text of the page shown to the user when the user attempts to join a room to which they are not invited.
    */
-  notInvitedToRoomTitle: string;
+  deniedPermissionToRoomTitle: string;
   /* @conditional-compile-remove(rooms) */
   /**
    * More details text of the page shown to the user when the user attempts to join a room to which they are not invited.
    */
-  notInvitedToRoomDetails?: string;
+  deniedPermissionToRoomDetails?: string;
 }

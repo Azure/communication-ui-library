@@ -60,7 +60,7 @@ test.describe('Page state tests', async () => {
   test('Page when local participant tries to join a room that they are not invited to', async ({ page, serverUrl }) => {
     test.skip(isTestProfileStableFlavor());
     const initialState = defaultMockCallAdapterState();
-    initialState.page = 'notInvitedToRoom';
+    initialState.page = 'deniedPermissionToRoom';
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
     await waitForPageFontsLoaded(page);
     await waitForSelector(page, dataUiId('call-composite-start-call-button'));

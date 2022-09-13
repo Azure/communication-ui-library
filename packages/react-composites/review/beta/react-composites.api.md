@@ -295,7 +295,7 @@ export type CallCompositeOptions = {
 };
 
 // @public
-export type CallCompositePage = 'accessDeniedTeamsMeeting' | 'call' | 'configuration' | /* @conditional-compile-remove(PSTN-calls) */ 'hold' | 'joinCallFailedDueToNoNetwork' | 'leftCall' | 'lobby' | /* @conditional-compile-remove(rooms) */ 'notInvitedToRoom' | 'removedFromCall' | /* @conditional-compile-remove(rooms) */ 'roomNotFound';
+export type CallCompositePage = 'accessDeniedTeamsMeeting' | 'call' | 'configuration' | /* @conditional-compile-remove(PSTN-calls) */ 'hold' | 'joinCallFailedDueToNoNetwork' | 'leftCall' | 'lobby' | /* @conditional-compile-remove(rooms) */ 'deniedPermissionToRoom' | 'removedFromCall' | /* @conditional-compile-remove(rooms) */ 'roomNotFound';
 
 // @public
 export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcons> {
@@ -330,6 +330,8 @@ export interface CallCompositeStrings {
     copyInviteLinkActionedAriaLabel: string;
     copyInviteLinkButtonLabel: string;
     defaultPlaceHolder: string;
+    deniedPermissionToRoomDetails?: string;
+    deniedPermissionToRoomTitle: string;
     dialpadCloseModalButtonAriaLabel: string;
     dialpadModalAriaLabel: string;
     dialpadModalTitle: string;
@@ -354,8 +356,6 @@ export interface CallCompositeStrings {
     mutedMessage: string;
     networkReconnectMoreDetails: string;
     networkReconnectTitle: string;
-    notInvitedToRoomDetails?: string;
-    notInvitedToRoomTitle: string;
     openDialpadButtonLabel: string;
     openDtmfDialpadLabel: string;
     peopleButtonLabel: string;
