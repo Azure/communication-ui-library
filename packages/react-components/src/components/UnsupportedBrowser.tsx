@@ -20,7 +20,6 @@ export type _UnsupportedBrowserStrings = {
  */
 export type _UnsupportedBrowserProps = {
   onTroubleShootingClick: () => void;
-  onCompatibleBrowsersClick: () => void;
   strings: _UnsupportedBrowserStrings;
 };
 
@@ -28,19 +27,12 @@ export type _UnsupportedBrowserProps = {
  * @internal
  */
 export const _UnsupportedBrowser = (props: _UnsupportedBrowserProps): JSX.Element => {
-  const { onTroubleShootingClick, onCompatibleBrowsersClick, strings } = props;
+  const { onTroubleShootingClick, strings } = props;
   return (
     <Stack>
       <Icon iconName="UnsupportedBorwserWarning"></Icon>
       <Text>{strings.primaryText}</Text>
       <Text>{strings.secondaryText}</Text>
-      <PrimaryButton
-        onClick={() => {
-          onCompatibleBrowsersClick();
-        }}
-      >
-        {strings.CompatibleBrowsersLinkButtonLabel}
-      </PrimaryButton>
       <Link
         onClick={() => {
           onTroubleShootingClick();
