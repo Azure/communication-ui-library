@@ -66,11 +66,12 @@ export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcon
 
 /* @conditional-compile-remove(call-readiness) */
 /**
- * Permission options
+ * Device Permission restrictions.
+ * Be able to start a call depending on camera and microphone permission options.
  *
  * @beta
  */
-export interface DevicePermissionPrompts {
+export interface DevicePermissionRestrictions {
   /**
    * Camera Permission prompts for your call.
    * 'required' - requires the permission to be allowed before permitting the user join the call.
@@ -107,9 +108,10 @@ export type CallCompositeOptions = {
   callControls?: boolean | CallControlOptions;
   /* @conditional-compile-remove(call-readiness) */
   /**
-   * Device permission prompts for your call.
+   * Device permission restrictions for your call.
+   * Require device permissions to be set or have them as optional or not required to start a call
    */
-  devicePermissions?: DevicePermissionPrompts;
+  devicePermissions?: DevicePermissionRestrictions;
 };
 
 type MainScreenProps = {

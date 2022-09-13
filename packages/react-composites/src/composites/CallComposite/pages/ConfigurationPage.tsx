@@ -34,7 +34,7 @@ import { bannerNotificationStyles } from '../styles/CallPage.styles';
 import { usePropsFor } from '../hooks/usePropsFor';
 import { useAdapter } from '../adapter/CallAdapterProvider';
 /* @conditional-compile-remove(call-readiness) */
-import { DevicePermissionPrompts } from '../CallComposite';
+import { DevicePermissionRestrictions } from '../CallComposite';
 
 /**
  * @private
@@ -43,7 +43,7 @@ export interface ConfigurationPageProps {
   mobileView: boolean;
   startCallHandler(): void;
   /* @conditional-compile-remove(call-readiness) */
-  devicePermissions?: DevicePermissionPrompts;
+  devicePermissions?: DevicePermissionRestrictions;
 }
 
 /**

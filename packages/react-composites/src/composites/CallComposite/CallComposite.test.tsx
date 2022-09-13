@@ -8,7 +8,7 @@ import React from 'react';
 import { MockCallAdapter } from './MockCallAdapter';
 import { CallComposite } from './CallComposite';
 /* @conditional-compile-remove(call-readiness) */
-import { DevicePermissionPrompts } from './CallComposite';
+import { DevicePermissionRestrictions } from './CallComposite';
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -85,7 +85,7 @@ describe('CallComposite device permission test for different device permission o
   const permissionSettings = (
     camera: 'required' | 'optional' | 'doNotPrompt',
     microphone: 'required' | 'optional' | 'doNotPrompt'
-  ): DevicePermissionPrompts => {
+  ): DevicePermissionRestrictions => {
     return { camera: camera, microphone: microphone };
   };
 
