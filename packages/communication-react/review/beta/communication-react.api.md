@@ -1310,6 +1310,7 @@ export interface ComponentStrings {
     screenShareButton: ScreenShareButtonStrings;
     sendBox: SendBoxStrings;
     typingIndicator: TypingIndicatorStrings;
+    UnsupportedBrowser: UnsupportedBrowserStrings;
     videoGallery: VideoGalleryStrings;
     videoTile: VideoTileStrings;
 }
@@ -1595,6 +1596,7 @@ export const DEFAULT_COMPONENT_ICONS: {
     SendBoxSendHovered: JSX.Element;
     VideoTileMicOff: JSX.Element;
     BackSpace: JSX.Element;
+    UnsupportedBrowserWarning: JSX.Element;
 };
 
 // @public
@@ -1678,6 +1680,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     HoldCallButton: JSX.Element;
     ResumeCall: JSX.Element;
     BackSpace: JSX.Element;
+    UnsupportedBrowserWarning: JSX.Element;
 };
 
 // @public
@@ -2757,6 +2760,22 @@ export interface TypingIndicatorStylesProps extends BaseCustomStyles {
     typingString?: IStyle;
     typingUserDisplayName?: IStyle;
 }
+
+// @internal (undocumented)
+export const _UnsupportedBrowser: (props: _UnsupportedBrowserProps) => JSX.Element;
+
+// @internal (undocumented)
+export type _UnsupportedBrowserProps = {
+    onTroubleShootingClick: () => void;
+    strings: UnsupportedBrowserStrings;
+};
+
+// @beta (undocumented)
+export type UnsupportedBrowserStrings = {
+    primaryText: string;
+    secondaryText: string;
+    moreHelpLink: string;
+};
 
 // @public
 export type UpdateMessageCallback = (messageId: string, content: string, metadata?: Record<string, string>, options?: {

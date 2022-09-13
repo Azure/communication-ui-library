@@ -141,4 +141,4 @@ export { _RemoteVideoTile } from './RemoteVideoTile';
 /* @conditional-compile-remove(call-readiness) */
 export { _UnsupportedBrowser } from './UnsupportedBrowser';
 /* @conditional-compile-remove(call-readiness) */
-export type { _UnsupportedBrowserStrings, _UnsupportedBrowserProps } from './UnsupportedBrowser';
+export type { UnsupportedBrowserStrings, _UnsupportedBrowserProps } from './UnsupportedBrowser';

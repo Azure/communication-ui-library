@@ -1036,6 +1036,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     HoldCallButton: JSX.Element;
     ResumeCall: JSX.Element;
     BackSpace: JSX.Element;
+    UnsupportedBrowserWarning: JSX.Element;
 };
 
 // @public

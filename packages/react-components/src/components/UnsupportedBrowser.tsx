@@ -7,12 +7,11 @@ import React from 'react';
 import { useLocale } from '../localization';
 
 /**
- * @internal
+ * @beta
  */
-export type _UnsupportedBrowserStrings = {
+export type UnsupportedBrowserStrings = {
   primaryText: string;
   secondaryText: string;
-  CompatibleBrowsersLinkButtonLabel: string;
   moreHelpLink: string;
 };
 
@@ -21,7 +20,7 @@ export type _UnsupportedBrowserStrings = {
  */
 export type _UnsupportedBrowserProps = {
   onTroubleShootingClick: () => void;
-  strings: _UnsupportedBrowserStrings;
+  strings: UnsupportedBrowserStrings;
 };
 
 /**
@@ -31,7 +30,7 @@ export const _UnsupportedBrowserContainer = (props: _UnsupportedBrowserProps): J
   const { onTroubleShootingClick, strings } = props;
   return (
     <Stack>
-      <Icon iconName="UnsupportedBorwserWarning"></Icon>
+      <Icon iconName="UnsupportedBrowserWarning"></Icon>
       <Text>{strings.primaryText}</Text>
       <Text>{strings.secondaryText}</Text>
       <Link
