@@ -1,4 +1,7 @@
-name: Update snapshots
+# This workflow is deprecated. Use ./update-snapshots.yml instead.
+#
+# This workflow will be deleted once the replacement has been stabilized.
+name: Old update snapshots
 
 on:
   # Run any time when a new label added to the PR
