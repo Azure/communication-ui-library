@@ -5,7 +5,6 @@ import React from 'react';
 import { Stack, Text, Link, Icon } from '@fluentui/react';
 /* @conditional-compile-remove(call-readiness) */
 import { useLocale } from '../localization';
-/* @conditional-compile-remove(call-readiness) */
 import { _formatString, _pxToRem } from '@internal/acs-ui-common';
 import {
   iconBackDropStyles,
@@ -57,20 +56,8 @@ export interface DomainPermissionsStrings {
 
 const _DomainPermissionsContainer = (props: _DomainPermissionsProps): JSX.Element => {
   const { appName, onTroubleshootingClick, strings } = props;
-
-  const appNameTrampoline = (): string => {
-    /* @conditional-compile-remove(call-readiness) */
-    return _formatString(strings.mainText, { appName: appName });
-    // For Conditonal compilation will be undone when stable.
-    return appName;
-  };
-  const containerWidthTrampoline = (): string => {
-    /* @conditional-compile-remove(call-readiness) */
-    return `${_pxToRem(406)}`;
-    return '406px';
-  };
   return (
-    <Stack style={{ padding: '2rem', maxWidth: containerWidthTrampoline() }}>
+    <Stack style={{ padding: '2rem', maxWidth: '25.375rem' }}>
       <Stack horizontal style={{ padding: '2rem 0' }} horizontalAlign={'space-between'}>
         <Stack styles={iconContainerStyles} horizontalAlign={'center'}>
           <Icon styles={iconPrimaryStyles} iconName={'ControlButtonCameraOn'}></Icon>
@@ -83,7 +70,7 @@ const _DomainPermissionsContainer = (props: _DomainPermissionsProps): JSX.Elemen
         </Stack>
       </Stack>
       <Stack styles={textContainerStyles}>
-        <Text styles={primaryTextStyles}>{appNameTrampoline()}</Text>
+        <Text styles={primaryTextStyles}>{_formatString(strings.mainText, { appName: appName })}</Text>
         <Text styles={secondaryTextStyles}>{strings.secondaryText}</Text>
         <Link styles={linkTextStyles} onClick={onTroubleshootingClick}>
           {strings.linkText}
