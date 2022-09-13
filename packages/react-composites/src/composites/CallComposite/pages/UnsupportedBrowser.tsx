@@ -8,6 +8,7 @@ import React from 'react';
  */
 export type UnsupportedBrowserProps = {
   onTroubleshootingClick: () => void;
+  // strings type from new component...
 };
 
 /**

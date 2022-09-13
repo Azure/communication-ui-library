@@ -183,5 +183,11 @@
     "participantStateConnecting": "Calling...",
     "participantStateRinging": "Calling...",
     "participantStateHold": "On hold"
+  },
+  "UnsupportedBrowser": {
+    "primaryText": "Browser not supported",
+    "secondaryText": "PleaseJoin this call using a compatible browser.",
+    "compatibleBrowsersLinkButtonLabel": "See compatible browsers",
+    "moreHelpLink": "More help?"
   }
 }
