@@ -206,7 +206,7 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
         title={strings.menuTitle}
         data-ui-id={ids.participantItemMenuButton}
       >
-        <Icon iconName={'ParticipantItemOptionsHovered'} className={iconStyles} id="menuButtonIcon" />
+        <Icon iconName={'ParticipantItemOptionsHovered'} className={`${iconStyles} menuButtonIcon`} />
       </Stack>
     ),
     [strings.menuTitle, ids.participantItemMenuButton]
