@@ -9,9 +9,10 @@ import {
   _useContainerHeight,
   _useContainerWidth,
   ErrorBar,
-  ErrorBarProps,
-  useTheme
+  ErrorBarProps
 } from '@internal/react-components';
+/* @conditional-compile-remove(rooms) */
+import { useTheme, _usePermissions } from '@internal/react-components';
 import React, { useMemo, useRef } from 'react';
 /* @conditional-compile-remove(one-to-n-calling) */
 import { useCallback, useState } from 'react';
@@ -156,6 +157,13 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     selectPeople
   ]);
 
+  /* @conditional-compile-remove(rooms) */
+  const rolePermissions = _usePermissions();
+
+  let canUnmute = true;
+  /* @conditional-compile-remove(rooms) */
+  canUnmute = canUnmute && rolePermissions.microphoneButton;
+
   return (
     <div ref={containerRef} className={mergeStyles(containerDivStyles)}>
       <Stack verticalFill horizontalAlign="stretch" className={containerClassName} data-ui-id={props.dataUiId}>
@@ -169,7 +177,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                 <ErrorBar {...props.errorBarProps} />
               </Stack>
             )}
-            {!!props.mutedNotificationProps && <MutedNotification {...props.mutedNotificationProps} />}
+            {canUnmute && !!props.mutedNotificationProps && <MutedNotification {...props.mutedNotificationProps} />}
           </Stack.Item>
           <Stack.Item grow style={callCompositeContainerFlex()}>
             <Stack.Item styles={callGalleryStyles} grow>
