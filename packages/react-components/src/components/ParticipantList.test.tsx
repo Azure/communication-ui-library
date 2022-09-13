@@ -49,7 +49,7 @@ describe('ParticipantList tests for different roles', () => {
     );
     const menuItems = wrapper.find(ParticipantItem).first().prop('menuItems');
     const removeMenuItem = getRemoveMenuItem(menuItems);
-    expect(removeMenuItem.disabled).toBe(false);
+    expect(removeMenuItem.disabled).toBeUndefined();
   });
 
   /* @conditional-compile-remove(rooms) */
