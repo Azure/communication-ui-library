@@ -1,11 +1,17 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Icon, ILinkStyles, IStackStyles, ITextStyles, Link, Stack, Text } from '@fluentui/react';
+import { Icon, Link, Stack, Text } from '@fluentui/react';
 import { _pxToRem } from '@internal/acs-ui-common';
 import React from 'react';
 /* @conditional-compile-remove(call-readiness) */
 import { useLocale } from '../localization';
+import {
+  containerStyles,
+  linkTextStyles,
+  mainTextStyles,
+  secondaryTextStyles
+} from './styles/UnsupportedBrowser.styles';
 
 /**
  * @beta
@@ -56,37 +62,4 @@ export const _UnsupportedBrowser = (props: _UnsupportedBrowserProps): JSX.Elemen
   /* @conditional-compile-remove(call-readiness) */
   const strings = useLocale().strings.UnsupportedBrowser;
   return <_UnsupportedBrowserContainer {...props} strings={strings} />;
-};
-
-const mainTextStyles: ITextStyles = {
-  root: {
-    fontWeight: 600,
-    fontSize: _pxToRem(20),
-    lineHeight: _pxToRem(28),
-    paddingBottom: '1rem',
-    margin: 'auto'
-  }
-};
-
-const secondaryTextStyles: ITextStyles = {
-  root: {
-    margin: 'auto',
-    fontWeight: 400,
-    paddingBottom: '0.5rem'
-  }
-};
-
-const linkTextStyles: ILinkStyles = {
-  root: {
-    margin: 'auto',
-    fontWeight: 600,
-    textAlign: 'inherit'
-  }
-};
-
-const containerStyles: IStackStyles = {
-  root: {
-    padding: '2rem',
-    maxWidth: '25.374rem'
-  }
 };
