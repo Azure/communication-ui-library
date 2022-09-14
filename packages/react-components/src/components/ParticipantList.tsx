@@ -200,12 +200,10 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
   const createParticipantMenuItems = useCallback(
     (participant: ParticipantListParticipant): IContextualMenuItem[] => {
       let menuItems: IContextualMenuItem[] = [];
-      let disabled = !participant.isRemovable;
+      let participantIsRemovable = participant.isRemovable;
       /* @conditional-compile-remove(rooms) */
-      const isRemovable = _usePermissions().removeParticipantButton;
-      /* @conditional-compile-remove(rooms) */
-      disabled = !isRemovable || disabled;
-      if (participant.userId !== myUserId && onRemoveParticipant) {
+      participantIsRemovable = _usePermissions().removeParticipantButton && participantIsRemovable;
+      if (participant.userId !== myUserId && onRemoveParticipant && participantIsRemovable) {
         menuItems.push({
           key: 'remove',
           text: strings.removeButtonLabel,
@@ -213,7 +211,6 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
           itemProps: {
             styles: props.styles?.participantItemStyles?.participantSubMenuItemsStyles
           },
-          disabled: disabled,
           'data-ui-id': ids.participantListRemoveParticipantButton
         });
       }

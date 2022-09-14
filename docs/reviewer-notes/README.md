@@ -4,6 +4,10 @@ A repository of small API / design / code quality notes that come up repeatedly 
 
 The notes here are often in addition to some external guideline. In such cases, the external guideline is linked from the note.
 
+## Reviewer responsibilities
+
+1. [Verifying UI snapshots](./verifying-ui-snapshots.md)
+
 ## CSS tips
 
 1. [Avoid `vh` and `vw`](./avoid-vh-vw.md)
