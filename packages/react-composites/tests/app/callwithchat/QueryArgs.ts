@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import type { CallWithChatCompositeOptions } from '../../../src';
 import type { FakeChatAdapterArgs, MockCallAdapterState } from '../../common';
 
 /**
@@ -28,20 +29,20 @@ export interface HermeticQueryArgs {
 }
 
 /**
- * Common arguments (e.g. to control composite behavior).
- *
- * Unknown for now.
+ * Common arguments (e.g. to control composite behavior) for both live and hermetic tests.
  *
  * @private
  */
-export type CommonQueryArgs = unknown;
+export interface CommonQueryArgs {
+  customCompositeOptions?: CallWithChatCompositeOptions;
+}
 
 /**
  * All query arguments accepted by the test app.
  *
  * @private
  */
-export type QueryArgs = Partial<LiveQueryArgs> & Partial<HermeticQueryArgs> & CommonQueryArgs;
+export type QueryArgs = Partial<LiveQueryArgs> & Partial<HermeticQueryArgs> & Partial<CommonQueryArgs>;
 
 export function parseQueryArgs(): QueryArgs {
   const urlSearchParams = new URLSearchParams(window.location.search);
@@ -55,6 +56,8 @@ export function parseQueryArgs(): QueryArgs {
     userId: params.userId ?? '',
 
     fakeChatAdapterArgs: params.fakeChatAdapterArgs ? JSON.parse(params.fakeChatAdapterArgs) : undefined,
-    mockCallAdapterState: params.mockCallAdapterState ? JSON.parse(params.mockCallAdapterState) : undefined
+    mockCallAdapterState: params.mockCallAdapterState ? JSON.parse(params.mockCallAdapterState) : undefined,
+
+    customCompositeOptions: params.customCompositeOptions ? JSON.parse(params.customCompositeOptions) : undefined
   };
 }
