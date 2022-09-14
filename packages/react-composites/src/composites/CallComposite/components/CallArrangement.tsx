@@ -162,7 +162,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
 
   let canUnmute = true;
   /* @conditional-compile-remove(rooms) */
-  canUnmute = canUnmute && rolePermissions.microphoneButton;
+  canUnmute = rolePermissions.microphoneButton;
 
   return (
     <div ref={containerRef} className={mergeStyles(containerDivStyles)}>
