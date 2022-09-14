@@ -85,7 +85,8 @@ export const parameters = {
           'Error Handling',
           'Best Practices',
           'Troubleshooting',
-          'Identity'
+          'Identity',
+          'Rooms'
         ],
         EXAMPLES_FOLDER_PREFIX,
         STATEFUL_CLIENT_PREFIX,

@@ -6,13 +6,22 @@ import { Stack } from '@fluentui/react';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 import { COMPOSITE_FOLDER_PREFIX, compositeExperienceContainerStyle } from '../constants';
-import { defaultCallCompositeHiddenControls, controlsToAdd } from '../controlsUtils';
+import { defaultCallCompositeHiddenControls, controlsToAdd, ArgsFrom } from '../controlsUtils';
 import { compositeLocale } from '../localizationUtils';
 import { getDocs } from './CallCompositeDocs';
 import { ContosoCallContainer } from './snippets/Container.snippet';
 import { ConfigJoinCallHintBanner } from './snippets/Utils';
 
-const JoinExistingCallStory = (args, context): JSX.Element => {
+const storyControls = {
+  userId: controlsToAdd.userId,
+  token: controlsToAdd.token,
+  displayName: controlsToAdd.requiredDisplayName,
+  callLocator: controlsToAdd.callLocator,
+  compositeFormFactor: controlsToAdd.formFactor,
+  callInvitationURL: controlsToAdd.callInvitationURL
+};
+
+const JoinExistingCallStory = (args: ArgsFrom<typeof storyControls>, context): JSX.Element => {
   const {
     globals: { locale }
   } = context;
@@ -29,7 +38,7 @@ const JoinExistingCallStory = (args, context): JSX.Element => {
           displayName={args.displayName}
           callInvitationURL={args.callInvitationURL}
           locale={compositeLocale(locale)}
-          formFactor={args.formFactor}
+          formFactor={args.compositeFormFactor}
         />
       ) : (
         <ConfigJoinCallHintBanner />
@@ -45,12 +54,7 @@ export default {
   title: `${COMPOSITE_FOLDER_PREFIX}/CallComposite/Join Existing Call`,
   component: CallComposite,
   argTypes: {
-    userId: controlsToAdd.userId,
-    token: controlsToAdd.token,
-    displayName: controlsToAdd.displayName,
-    callLocator: controlsToAdd.callLocator,
-    formFactor: controlsToAdd.formFactor,
-    callInvitationURL: controlsToAdd.callInvitationURL,
+    ...storyControls,
     // Hiding auto-generated controls
     ...defaultCallCompositeHiddenControls
   },

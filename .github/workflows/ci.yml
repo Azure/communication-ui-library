@@ -168,7 +168,7 @@ jobs:
           name: snapshots
           path: packages/react-composites/test-results
       - name: Comment on PR
-        if: ${{ github.event_name == 'pull_request' && always() && steps.visualregressiontests.outcome == 'failure' && !contains( github.event.pull_request.labels.*.name, 'ui change') }}
+        if: ${{ github.event_name == 'pull_request' && always() && steps.visualregressiontests.outcome == 'failure' && !contains( github.event.pull_request.labels.*.name, 'update_snapshots') }}
         uses: actions/github-script@v3
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
@@ -177,7 +177,7 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: 'Failed to pass the UI Test. If this PR is for UI change and the error is snapshot mismatch, please add "ui change" label to the PR for updating the snapshot.'
+              body: 'Failed to pass the UI Test. If this PR is for UI change and the error is snapshot mismatch, please add "update_snapshots" label to the PR for updating the snapshot.'
             })
 
   chat_composite_automation_test:
@@ -235,7 +235,7 @@ jobs:
           name: snapshots
           path: packages/react-composites/test-results
       - name: Comment on PR
-        if: ${{ github.event_name == 'pull_request' && always() && steps.visualregressiontests.outcome == 'failure' && !contains( github.event.pull_request.labels.*.name, 'ui change') }}
+        if: ${{ github.event_name == 'pull_request' && always() && steps.visualregressiontests.outcome == 'failure' && !contains( github.event.pull_request.labels.*.name, 'update_snapshots') }}
         uses: actions/github-script@v3
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
@@ -244,7 +244,7 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: 'Failed to pass the UI Test. If this PR is for UI change and the error is snapshot mismatch, please add "ui change" label to the PR for updating the snapshot.'
+              body: 'Failed to pass the UI Test. If this PR is for UI change and the error is snapshot mismatch, please add "update_snapshots" label to the PR for updating the snapshot.'
             })
 
   call_with_chat_composite_automation_test:
@@ -302,7 +302,7 @@ jobs:
           name: snapshots
           path: packages/react-composites/test-results
       - name: Comment on PR
-        if: ${{ github.event_name == 'pull_request' && always() && steps.visualregressiontests.outcome == 'failure' && !contains( github.event.pull_request.labels.*.name, 'ui change') }}
+        if: ${{ github.event_name == 'pull_request' && always() && steps.visualregressiontests.outcome == 'failure' && !contains( github.event.pull_request.labels.*.name, 'update_snapshots') }}
         uses: actions/github-script@v3
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
@@ -311,7 +311,7 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: 'Failed to pass the composite UI Test. If this PR is for UI change and the error is snapshot mismatch, please add "ui change" label to the PR for updating the snapshot.'
+              body: 'Failed to pass the composite UI Test. If this PR is for UI change and the error is snapshot mismatch, please add "update_snapshots" label to the PR for updating the snapshot.'
             })
 
   build_storybook:
@@ -492,7 +492,7 @@ jobs:
           name: snapshots
           path: samples/tests/test-results/ # or path/to/artifact
       - name: Comment on PR
-        if: ${{ github.event_name == 'pull_request' && always() && steps.visualregressiontests.outcome == 'failure' && !contains( github.event.pull_request.labels.*.name, 'ui change') }}
+        if: ${{ github.event_name == 'pull_request' && always() && steps.visualregressiontests.outcome == 'failure' && !contains( github.event.pull_request.labels.*.name, 'update_snapshots') }}
         uses: actions/github-script@v3
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
@@ -501,7 +501,7 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: 'Failed to pass the Static HTML UI Test. If this PR is for UI change and the error is snapshot mismatch, please add "ui change" label to the PR for updating the snapshot.'
+              body: 'Failed to pass the Static HTML UI Test. If this PR is for UI change and the error is snapshot mismatch, please add "update_snapshots" label to the PR for updating the snapshot.'
             })
 
   build_component_examples:
@@ -542,7 +542,7 @@ jobs:
           name: snapshots
           path: samples/tests/test-results/ # or path/to/artifact
       - name: Comment on PR
-        if: ${{ github.event_name == 'pull_request' && always() && steps.visualregressiontests.outcome == 'failure' && !contains( github.event.pull_request.labels.*.name, 'ui change') }}
+        if: ${{ github.event_name == 'pull_request' && always() && steps.visualregressiontests.outcome == 'failure' && !contains( github.event.pull_request.labels.*.name, 'update_snapshots') }}
         uses: actions/github-script@v3
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
@@ -551,7 +551,7 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: 'Failed to pass the component examples UI Test. If this PR is for UI change and the error is snapshot mismatch, please add "ui change" label to the PR for updating the snapshot.'
+              body: 'Failed to pass the component examples UI Test. If this PR is for UI change and the error is snapshot mismatch, please add "update_snapshots" label to the PR for updating the snapshot.'
             })
 
   compare_base_bundle_stats:
@@ -655,7 +655,7 @@ jobs:
           if [ $issue_count -gt 0 ]; then
             echo "No need to create new issue, one already exists"
           else
-            curl -X POST -H 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' https://api.github.com/repos/Azure/communication-ui-library/issues -d '{"title":"Main branch CI Failed", "body": "Main CI Pipeline has failed. Please investigate.", "labels":["CI_FAILURE"]}'
+            curl -X POST -H 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' https://api.github.com/repos/Azure/communication-ui-library/issues -d '{"title":"Main branch CI Failed", "body": "Main CI Pipeline has failed. Please investigate: https://github.com/Azure/communication-ui-library/actions/runs/${{ github.run_id }}", "labels":["CI_FAILURE"]}'
           fi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

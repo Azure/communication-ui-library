@@ -60,8 +60,6 @@ import {
   UnknownIdentifier,
   PhoneNumberIdentifier
 } from '@azure/communication-common';
-/* @conditional-compile-remove(PSTN-calls) */
-import { CommunicationIdentifier } from '@azure/communication-common';
 import { ParticipantSubscriber } from './ParticipantSubcriber';
 import { AdapterError } from '../../common/adapters';
 import { DiagnosticsForwarder } from './DiagnosticsForwarder';
@@ -317,20 +315,20 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
       throw new Error('You are already in the call!');
     }
 
-    /* @conditional-compile-remove(teams-adhoc-call) */
-    /* @conditional-compile-remove(PSTN-calls) */
-    if (isOutboundCall(this.locator)) {
-      const phoneNumber = this.getState().alternateCallerId;
-      return this.startCall(this.locator.participantIDs, {
-        alternateCallerId: phoneNumber ? { phoneNumber: phoneNumber } : undefined
-      });
-    }
-
     return this.teeErrorToEventEmitter(() => {
       const audioOptions: AudioOptions = { muted: !(microphoneOn ?? this.getState().isLocalPreviewMicrophoneEnabled) };
       // TODO: find a way to expose stream to here
       const videoOptions = { localVideoStreams: this.localStream ? [this.localStream] : undefined };
-
+      /* @conditional-compile-remove(teams-adhoc-call) */
+      /* @conditional-compile-remove(PSTN-calls) */
+      if (isOutboundCall(this.locator)) {
+        const phoneNumber = this.getState().alternateCallerId;
+        return this.startCall(this.locator.participantIds, {
+          alternateCallerId: phoneNumber ? { phoneNumber: phoneNumber } : undefined,
+          audioOptions,
+          videoOptions
+        });
+      }
       const call = this._joinCall(audioOptions, videoOptions);
 
       this.processNewCall(call);
@@ -505,8 +503,19 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
   }
 
   /* @conditional-compile-remove(PSTN-calls) */
-  public async addParticipant(participant: CommunicationIdentifier, options?: AddPhoneNumberOptions): Promise<void> {
-    this.handlers.onAddParticipant(participant, options);
+  public async addParticipant(participant: PhoneNumberIdentifier, options?: AddPhoneNumberOptions): Promise<void>;
+  /* @conditional-compile-remove(PSTN-calls) */
+  public async addParticipant(participant: CommunicationUserIdentifier): Promise<void>;
+  /* @conditional-compile-remove(PSTN-calls) */
+  public async addParticipant(
+    participant: PhoneNumberIdentifier | CommunicationUserIdentifier,
+    options?: AddPhoneNumberOptions
+  ): Promise<void> {
+    if (isPhoneNumberIdentifier(participant) && options) {
+      this.handlers.onAddParticipant(participant, options);
+    } else if (isCommunicationUserIdentifier(participant)) {
+      this.handlers.onAddParticipant(participant);
+    }
   }
 
   /* @conditional-compile-remove(PSTN-calls) */
@@ -685,7 +694,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
  * @beta
  */
 export type CallParticipantsLocator = {
-  participantIDs: string[];
+  participantIds: string[];
 };
 
 /**
@@ -882,5 +891,5 @@ const isCallError = (e: Error): e is CallError => {
 /* @conditional-compile-remove(teams-adhoc-call) */
 /* @conditional-compile-remove(PSTN-calls) */
 const isOutboundCall = (callLocator: CallAdapterLocator): callLocator is CallParticipantsLocator => {
-  return 'participantIDs' in callLocator;
+  return 'participantIds' in callLocator;
 };

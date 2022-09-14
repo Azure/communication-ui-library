@@ -111,6 +111,9 @@ export interface AdapterState<TState> {
     onStateChange(handler: (state: TState) => void): void;
 }
 
+// @beta
+export type AddParticipantHandler = ((participant: CommunicationUserIdentifier) => Promise<void>) & ((participant: PhoneNumberIdentifier, options: AddPhoneNumberOptions) => Promise<void>);
+
 // @public
 export type AreEqual<A extends (props: any) => JSX.Element | undefined, B extends (props: any) => JSX.Element | undefined> = true extends AreTypeEqual<A, B> & AreParamEqual<A, B> ? true : false;
 
@@ -197,7 +200,9 @@ export type CallAdapterCallEndedEvent = {
 // @public
 export interface CallAdapterCallManagement {
     // @beta
-    addParticipant(participant: CommunicationIdentifier, options?: AddPhoneNumberOptions): Promise<void>;
+    addParticipant(participant: PhoneNumberIdentifier, options?: AddPhoneNumberOptions): Promise<void>;
+    // (undocumented)
+    addParticipant(participant: CommunicationUserIdentifier): Promise<void>;
     createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void | CreateVideoStreamViewResult>;
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
     // @beta
@@ -558,7 +563,7 @@ export type CallingHandlers = {
     onToggleScreenShare: () => Promise<void>;
     onHangUp: () => Promise<void>;
     onToggleHold: () => Promise<void>;
-    onAddParticipant: (participant: CommunicationIdentifier, options?: AddPhoneNumberOptions) => Promise<void>;
+    onAddParticipant: AddParticipantHandler;
     onCreateLocalStreamView: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
     onCreateRemoteStreamView: (userId: string, options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
     onRemoveParticipant: (userId: string) => Promise<void>;
@@ -591,7 +596,7 @@ export type CallParticipantListParticipant = ParticipantListParticipant & {
 
 // @beta
 export type CallParticipantsLocator = {
-    participantIDs: string[];
+    participantIds: string[];
 };
 
 // @public
@@ -637,7 +642,9 @@ export interface CallWithChatAdapter extends CallWithChatAdapterManagement, Adap
 // @public
 export interface CallWithChatAdapterManagement {
     // @beta
-    addParticipant: (participant: CommunicationIdentifier, options?: AddPhoneNumberOptions) => Promise<void>;
+    addParticipant(participant: PhoneNumberIdentifier, options?: AddPhoneNumberOptions): Promise<void>;
+    // (undocumented)
+    addParticipant(participant: CommunicationUserIdentifier): Promise<void>;
     askDevicePermission(constrain: PermissionConstraints): Promise<void>;
     // @beta (undocumented)
     cancelFileUpload: (id: string) => void;
@@ -1512,8 +1519,11 @@ export interface CustomCallWithChatControlButtonProps extends CustomControlButto
 
 // @beta
 export interface CustomControlButtonProps {
+    ariaDescription?: string;
+    ariaLabel?: string;
     disabled?: boolean;
-    // (undocumented)
+    id?: string;
+    key?: string | number;
     onItemClick?: () => void;
     showLabel?: boolean;
     styles?: ControlBarButtonStyles | BaseCustomStyles;
@@ -1804,25 +1814,20 @@ export interface Disposable {
     dispose(): void;
 }
 
-// Warning: (ae-internal-missing-underscore) The name "DomainPermissionsProps" should be prefixed with an underscore because the declaration is marked as @internal
-//
-// @internal
+// @beta
+export const DomainPermissions: (props: DomainPermissionsProps) => JSX.Element;
+
+// @beta
 export interface DomainPermissionsProps {
-    // (undocumented)
     appName: string;
-    // (undocumented)
-    onGetTroubleShooting: () => void;
-    // (undocumented)
+    onTroubleshootingClick: () => void;
     strings: DomainPermissionsStrings;
 }
 
 // @beta
 export interface DomainPermissionsStrings {
-    // (undocumented)
     linkText: string;
-    // (undocumented)
-    mainText: string;
-    // (undocumented)
+    primaryText: string;
     secondaryText: string;
 }
 

@@ -102,7 +102,7 @@ export type CallCompositeOptions = {
   }) => void;
   /* @conditional-compile-remove(call-readiness) */
   /**
-   * Callback you may provide to supplu users with further steps to troubleshoot why they have been
+   * Callback you may provide to supply users with further steps to troubleshoot why they have been
    * having network issues when connecting to the call.
    *
    * @example

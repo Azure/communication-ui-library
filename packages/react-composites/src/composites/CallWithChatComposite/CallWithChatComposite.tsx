@@ -105,8 +105,8 @@ export type CallWithChatCompositeOptions = {
   }) => void;
   /* @conditional-compile-remove(call-readiness) */
   /**
-   * Callback you may provide to supplu users with further steps to troubleshoot why they have been
-   * having network issues when connecting to the call.
+   * Optional callback to supply users with further troubleshooting steps for network issues
+   * experienced when connecting to a call.
    *
    * @example
    * ```ts
