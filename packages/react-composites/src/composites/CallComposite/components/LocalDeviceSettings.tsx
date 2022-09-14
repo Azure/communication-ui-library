@@ -105,41 +105,42 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
 
   return (
     <Stack data-ui-id="call-composite-device-settings" tokens={mainStackTokens}>
-      <Stack>
-        <Label
-          id={'call-composite-local-camera-settings-label'}
-          className={mergeStyles(dropDownStyles(theme).label)}
-          disabled={!isSelectCamEnabled} // follows dropdown disabled state
-        >
-          {cameraLabel}
-        </Label>
-        <Dropdown
-          data-ui-id="call-composite-local-camera-settings"
-          aria-labelledby={'call-composite-local-camera-settings-label'}
-          placeholder={defaultPlaceHolder}
-          options={isSelectCamEnabled ? getDropDownList(props.cameras) : [{ key: 'deniedOrUnknown', text: '' }]}
-          styles={dropDownStyles(theme)}
-          disabled={!isSelectCamEnabled}
-          errorMessage={
-            props.cameraPermissionGranted === undefined || props.cameraPermissionGranted
-              ? undefined
-              : locale.strings.call.cameraPermissionDenied
-          }
-          defaultSelectedKey={
-            isSelectMicEnabled
-              ? props.selectedCamera
-                ? props.selectedCamera.id
-                : props.cameras
-                ? props.cameras[0]?.id
-                : ''
-              : 'deniedOrUnknown'
-          }
-          onChange={(event, option, index) => {
-            props.onSelectCamera(props.cameras[index ?? 0], localVideoViewOptions);
-          }}
-          onRenderTitle={(props?: IDropdownOption[]) => onRenderTitle('Camera', props)}
-        />
-      </Stack>
+      {isSelectCamEnabled && (
+        <Stack>
+          <Label
+            id={'call-composite-local-camera-settings-label'}
+            className={mergeStyles(dropDownStyles(theme).label)}
+            disabled={!isSelectCamEnabled} // follows dropdown disabled state
+          >
+            {cameraLabel}
+          </Label>
+          <Dropdown
+            data-ui-id="call-composite-local-camera-settings"
+            aria-labelledby={'call-composite-local-camera-settings-label'}
+            placeholder={defaultPlaceHolder}
+            options={isSelectCamEnabled ? getDropDownList(props.cameras) : [{ key: 'deniedOrUnknown', text: '' }]}
+            styles={dropDownStyles(theme)}
+            errorMessage={
+              props.cameraPermissionGranted === undefined || props.cameraPermissionGranted
+                ? undefined
+                : locale.strings.call.cameraPermissionDenied
+            }
+            defaultSelectedKey={
+              isSelectMicEnabled
+                ? props.selectedCamera
+                  ? props.selectedCamera.id
+                  : props.cameras
+                  ? props.cameras[0]?.id
+                  : ''
+                : 'deniedOrUnknown'
+            }
+            onChange={(event, option, index) => {
+              props.onSelectCamera(props.cameras[index ?? 0], localVideoViewOptions);
+            }}
+            onRenderTitle={(props?: IDropdownOption[]) => onRenderTitle('Camera', props)}
+          />
+        </Stack>
+      )}
       <Stack>
         <Label
           id={'call-composite-local-sound-settings-label'}
@@ -149,33 +150,34 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
           {soundLabel}
         </Label>
         <Stack data-ui-id="call-composite-sound-settings" tokens={mainStackTokens}>
-          <Dropdown
-            aria-labelledby={'call-composite-local-sound-settings-label'}
-            placeholder={defaultPlaceHolder}
-            styles={dropDownStyles(theme)}
-            disabled={!isSelectMicEnabled}
-            errorMessage={
-              props.microphonePermissionGranted === undefined || props.microphonePermissionGranted
-                ? undefined
-                : locale.strings.call.microphonePermissionDenied
-            }
-            options={isSelectMicEnabled ? getDropDownList(props.microphones) : [{ key: 'deniedOrUnknown', text: '' }]}
-            defaultSelectedKey={
-              isSelectMicEnabled
-                ? props.selectedMicrophone
-                  ? props.selectedMicrophone.id
-                  : defaultDeviceId(props.microphones)
-                : 'deniedOrUnknown'
-            }
-            onChange={(
-              event: React.FormEvent<HTMLDivElement>,
-              option?: IDropdownOption | undefined,
-              index?: number | undefined
-            ) => {
-              props.onSelectMicrophone(props.microphones[index ?? 0]);
-            }}
-            onRenderTitle={(props?: IDropdownOption[]) => onRenderTitle('Microphone', props)}
-          />
+          {isSelectMicEnabled && (
+            <Dropdown
+              aria-labelledby={'call-composite-local-sound-settings-label'}
+              placeholder={defaultPlaceHolder}
+              styles={dropDownStyles(theme)}
+              errorMessage={
+                props.microphonePermissionGranted === undefined || props.microphonePermissionGranted
+                  ? undefined
+                  : locale.strings.call.microphonePermissionDenied
+              }
+              options={isSelectMicEnabled ? getDropDownList(props.microphones) : [{ key: 'deniedOrUnknown', text: '' }]}
+              defaultSelectedKey={
+                isSelectMicEnabled
+                  ? props.selectedMicrophone
+                    ? props.selectedMicrophone.id
+                    : defaultDeviceId(props.microphones)
+                  : 'deniedOrUnknown'
+              }
+              onChange={(
+                event: React.FormEvent<HTMLDivElement>,
+                option?: IDropdownOption | undefined,
+                index?: number | undefined
+              ) => {
+                props.onSelectMicrophone(props.microphones[index ?? 0]);
+              }}
+              onRenderTitle={(props?: IDropdownOption[]) => onRenderTitle('Microphone', props)}
+            />
+          )}
           <Dropdown
             aria-labelledby={'call-composite-local-sound-settings-label'}
             placeholder={defaultPlaceHolder}
