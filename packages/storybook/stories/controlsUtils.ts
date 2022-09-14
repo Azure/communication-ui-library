@@ -192,7 +192,12 @@ export const controlsToAdd = {
   disabled: { control: 'boolean', defaultValue: false, name: 'Disable component' },
   displayName: { control: 'text', defaultValue: 'John Smith', name: 'Display Name' },
   enableJumpToNewMessageButton: { control: 'boolean', defaultValue: true, name: 'Enable Jump To New Message' },
-  endpointUrl: { control: 'text', defaultValue: '', name: 'Azure Communication Services endpoint URL' },
+  endpointUrl: {
+    control: 'text',
+    defaultValue: '',
+    name: 'Azure Communication Services endpoint',
+    type: { name: 'string', required: true }
+  },
   errorTypes: {
     control: 'check',
     options: errorOptions,
@@ -276,6 +281,12 @@ export const controlsToAdd = {
     name: 'Remote participants (comma separated)'
   },
   remoteParticipants: { control: 'object', defaultValue: defaultRemoteParticipants, name: 'Remote participants' },
+  requiredDisplayName: {
+    control: 'text',
+    defaultValue: 'John Smith',
+    name: 'Display Name',
+    type: { required: true, name: 'string' }
+  },
   screenShareExperience: {
     control: 'select',
     options: ['none', 'presenter', 'viewer'],
@@ -298,9 +309,14 @@ export const controlsToAdd = {
   speakers: { control: 'object', defaultValue: defaultControlsSpeakers, name: 'Speakers' },
   teamsMeetingLink: { control: 'text', defaultValue: '', name: 'Teams meeting link' },
   theme: { control: 'radio', options: themeChoices, defaultValue: 'Default', name: 'Theme' },
-  token: { control: 'text', defaultValue: '', name: 'Valid token for user' },
+  token: { control: 'text', defaultValue: '', name: 'Valid token for user', type: { name: 'string', required: true } },
   typingUsers: { control: 'object', defaultValue: defaultTypingUsers, name: 'Typing users' },
-  userId: { control: 'text', defaultValue: '', name: 'User identifier for user' },
+  userId: {
+    control: 'text',
+    defaultValue: '',
+    name: 'User identifier for user',
+    type: { name: 'string', required: true }
+  },
   videoGallerylayout: {
     control: 'select',
     options: VIDEO_GALLERY_LAYOUTS,
@@ -317,9 +333,10 @@ export const controlsToAdd = {
       screenShareButton: true,
       devicesButton: true,
       peopleButton: true,
-      chatButton: true
+      chatButton: true,
+      displayType: 'default'
     },
-    name: 'CallWithChat Composite UI Controls'
+    name: 'Control Bar Customizations'
   }
 };
 
@@ -358,3 +375,13 @@ export const defaultCallWithChatCompositeHiddenControls = {
   options: hiddenControl,
   formFactor: hiddenControl
 };
+
+/**
+ * Helper function to get strongly typed storybook args.
+ *
+ * @remarks
+ * This only extracts the keys of the storybook control args and not the type of each control.
+ * This is because we cannot type infer between the storybook control and its output.
+ * Instead, for ease of use, we use `any`.
+ */
+export type ArgsFrom<TControlArgs> = Record<keyof TControlArgs, any>;
