@@ -7,13 +7,22 @@ import { Meta } from '@storybook/react/types-6-0';
 import React, { useMemo } from 'react';
 import { v1 as createGUID } from 'uuid';
 import { COMPOSITE_FOLDER_PREFIX, compositeExperienceContainerStyle } from '../constants';
-import { defaultCallCompositeHiddenControls, controlsToAdd } from '../controlsUtils';
+import { defaultCallCompositeHiddenControls, controlsToAdd, ArgsFrom } from '../controlsUtils';
 import { compositeLocale } from '../localizationUtils';
 import { getDocs } from './CallCompositeDocs';
 import { CustomDataModelExampleContainer } from './snippets/CustomDataModelExampleContainer.snippet';
 import { ConfigHintBanner } from './snippets/Utils';
 
-const CustomDataModelStory = (args, context): JSX.Element => {
+const storyControls = {
+  userId: controlsToAdd.userId,
+  token: controlsToAdd.token,
+  displayName: controlsToAdd.requiredDisplayName,
+  avatarInitials: controlsToAdd.avatarInitials,
+  compositeFormFactor: controlsToAdd.formFactor,
+  callInvitationURL: controlsToAdd.callInvitationURL
+};
+
+const CustomDataModelStory = (args: ArgsFrom<typeof storyControls>, context): JSX.Element => {
   const {
     globals: { locale }
   } = context;
@@ -40,7 +49,7 @@ const CustomDataModelStory = (args, context): JSX.Element => {
           {...containerProps}
           callInvitationURL={args.callInvitationURL}
           locale={compositeLocale(locale)}
-          formFactor={args.formFactor}
+          formFactor={args.compositeFormFactor}
         />
       ) : (
         <ConfigHintBanner />
@@ -56,12 +65,7 @@ export default {
   title: `${COMPOSITE_FOLDER_PREFIX}/CallComposite/Custom Data Model Example`,
   component: CallComposite,
   argTypes: {
-    userId: controlsToAdd.userId,
-    token: controlsToAdd.token,
-    displayName: controlsToAdd.displayName,
-    avatarInitials: controlsToAdd.avatarInitials,
-    formFactor: controlsToAdd.formFactor,
-    callInvitationURL: controlsToAdd.callInvitationURL,
+    ...storyControls,
     // Hiding auto-generated controls
     ...defaultCallCompositeHiddenControls
   },

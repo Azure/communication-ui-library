@@ -13,7 +13,7 @@ import { themedCallButtonStyle, themedDialpadStyle } from './CallingDialpad.styl
 /* @conditional-compile-remove(PSTN-calls) */
 import { CallWithChatCompositeIcon } from './icons';
 import { drawerContainerStyles } from '../CallWithChatComposite/styles/CallWithChatCompositeStyles';
-import { CommunicationIdentifier } from '@azure/communication-common';
+import { PhoneNumberIdentifier } from '@azure/communication-common';
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 
 /** @private */
@@ -30,7 +30,7 @@ export interface CallingDialpadProps {
   showDialpad: boolean;
   strings: CallingDialpadStrings;
   onDismissDialpad: () => void;
-  onAddParticipant: (participant: CommunicationIdentifier, options?: AddPhoneNumberOptions) => void;
+  onAddParticipant: (participant: PhoneNumberIdentifier, options?: AddPhoneNumberOptions) => void;
   alternateCallerId: string;
 }
 
