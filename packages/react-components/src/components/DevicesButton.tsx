@@ -15,6 +15,8 @@ import { ControlBarButton, ControlBarButtonProps, ControlBarButtonStyles } from 
 import { HighContrastAwareIcon } from './HighContrastAwareIcon';
 import { buttonFlyoutItemStyles } from './styles/ControlBar.styles';
 import { _preventDismissOnEvent as preventDismissOnEvent } from '@internal/acs-ui-common';
+/* @conditional-compile-remove(rooms) */
+import { _Permissions, _usePermissions } from '../permissions';
 
 /**
  * Styles for the {@link DevicesButton} menu.
@@ -371,15 +373,22 @@ export const generateDefaultDeviceMenuProps = (
 export const DevicesButton = (props: DevicesButtonProps): JSX.Element => {
   const { onRenderIcon } = props;
 
+  /* @conditional-compile-remove(rooms) */
+  const rolePermissions = _usePermissions();
+
   const localeStrings = useLocale().strings.devicesButton;
   const strings = { ...localeStrings, ...props.strings };
 
   const devicesButtonMenu =
     props.menuProps ?? generateDefaultDeviceMenuProps({ ...props, styles: props.styles?.menuStyles }, strings);
 
-  const onRenderOptionsIcon = (): JSX.Element => (
-    <HighContrastAwareIcon disabled={props.disabled} iconName="ControlButtonOptions" />
-  );
+  const onRenderOptionsIcon = (): JSX.Element => {
+    /* @conditional-compile-remove(rooms) */
+    if (!rolePermissions.microphoneButton && !rolePermissions.cameraButton) {
+      return <HighContrastAwareIcon disabled={props.disabled} iconName="OptionsSpeaker" />;
+    }
+    return <HighContrastAwareIcon disabled={props.disabled} iconName="ControlButtonOptions" />;
+  };
 
   return (
     <ControlBarButton
