@@ -88,7 +88,7 @@ export interface ComponentStrings {
   holdButton: HoldButtonStrings;
   /* @conditional-compile-remove(unsupported-browser) */
   /** Strings for unsupported browser UI */
-  UnsupportedBrowser: UnsupportedBrowserStrings;
+  unsupportedBrowser: UnsupportedBrowserStrings;
 }
 
 /**

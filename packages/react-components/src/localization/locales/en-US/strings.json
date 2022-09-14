@@ -184,7 +184,7 @@
     "participantStateRinging": "Calling...",
     "participantStateHold": "On hold"
   },
-  "UnsupportedBrowser": {
+  "unsupportedBrowser": {
     "primaryText": "Browser not supported",
     "secondaryText": "Please join this call using a compatible browser.",
     "moreHelpLink": "More help?"

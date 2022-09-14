@@ -115,6 +115,20 @@ export type CallCompositeOptions = {
    * if this is not supplied, the composite will not show a 'network troubleshooting' link.
    */
   onNetworkingTroubleShootingClick?: () => void;
+  /* @conditional-compile-remove(unsupported-browser) */
+  /**
+   * Callback you may provide to supply users with a provided page to showcase supported browsers by ACS.
+   *
+   * @example
+   * ```ts
+   * onBrowserTroubleShootingClick?: () =>
+   *  window.open('https://contoso.com/browser-troubleshooting', '_blank');
+   * ```
+   *
+   * @remarks
+   * if this is not supplied, the composite will not show a unsupported browser page.
+   */
+  onBrowserTroubleShootingClick?: () => void;
 };
 
 type MainScreenProps = {
