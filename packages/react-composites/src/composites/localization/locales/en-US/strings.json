@@ -61,7 +61,9 @@
     "resumingCallButtonAriaLabel": "Resume call",
     "holdScreenLabel": "You're on hold",
     "openDtmfDialpadLabel": "Show dialpad",
-    "dtmfDialpadPlaceHolderText": "Enter number"
+    "dtmfDialpadPlaceHolderText": "Enter number",
+    "roomsConfigurationPageTitle": "Join a call",
+    "startRoomCallButtonLabel": "Join call"
   },
   "chat": {
     "chatListHeader": "In this chat",

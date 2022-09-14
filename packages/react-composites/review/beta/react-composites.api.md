@@ -375,8 +375,10 @@ export interface CallCompositeStrings {
     resumingCallButtonLabel: string;
     returnToCallButtonAriaDescription?: string;
     returnToCallButtonAriaLabel?: string;
+    roomsConfigurationPageTitle: string;
     soundLabel: string;
     startCallButtonLabel: string;
+    startRoomCallButtonLabel: string;
 }
 
 // @public

@@ -70,10 +70,10 @@ import { useEffect, useRef, useState } from 'react';
 /** Context of call, which is a centralized context for all state updates */
 class CallContext {
   private emitter: EventEmitter = new EventEmitter();
-  private state: CallAdapterState;
+  private state: CallAdapterState /* @conditional-compile-remove(rooms) */ & { locator: CallAdapterLocator };
   private callId: string | undefined;
 
-  constructor(clientState: CallClientState, isTeamsCall: boolean, isRoomsCall: boolean) {
+  constructor(clientState: CallClientState, isTeamsCall: boolean, locator: CallAdapterLocator) {
     this.state = {
       isLocalPreviewMicrophoneEnabled: false,
       userId: clientState.userId,
@@ -83,8 +83,8 @@ class CallContext {
       page: 'configuration',
       latestErrors: clientState.latestErrors,
       isTeamsCall,
-      isRoomsCall,
-      /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId: clientState.alternateCallerId
+      /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId: clientState.alternateCallerId,
+      /* @conditional-compile-remove(rooms) */ locator
     };
   }
 
@@ -97,11 +97,11 @@ class CallContext {
   }
 
   public setState(state: CallAdapterState): void {
-    this.state = state;
+    this.state = { ...state, /* @conditional-compile-remove(rooms) */ locator: this.state.locator };
     this.emitter.emit('stateChanged', this.state);
   }
 
-  public getState(): CallAdapterState {
+  public getState(): CallAdapterState /* @conditional-compile-remove(rooms) */ & { locator: CallAdapterLocator } {
     return this.state;
   }
 
@@ -205,8 +205,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     this.locator = locator;
     this.deviceManager = deviceManager;
     const isTeamsMeeting = 'meetingLink' in this.locator;
-    const isRoomsCall = 'roomId' in this.locator;
-    this.context = new CallContext(callClient.getState(), isTeamsMeeting, isRoomsCall);
+    this.context = new CallContext(callClient.getState(), isTeamsMeeting, locator);
 
     this.context.onCallEnded((endCallData) => this.emitter.emit('callEnded', endCallData));
 
