@@ -21,6 +21,7 @@ export interface QueryArgs {
   customCallCompositeOptions?: CallCompositeOptions;
   showParticipantItemIcon: boolean;
   showParticipantItemIcon: boolean;
+  showParticipantItemIcon: boolean;
 
   // These are only set for live tests.
   // TODO: Separate the args out better.
