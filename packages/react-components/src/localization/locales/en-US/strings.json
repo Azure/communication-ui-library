@@ -185,7 +185,7 @@
     "participantStateHold": "On hold"
   },
   "DomainPermissions": {
-    "mainText": "Allow {appName} to use your camera and microphone",
+    "primaryText": "Allow {appName} to use your camera and microphone",
     "secondaryText": "This is so participants can see and hear you.",
     "linkText": "More help"
   }

@@ -513,7 +513,7 @@ export interface DomainPermissionsProps {
 // @beta
 export interface DomainPermissionsStrings {
     linkText: string;
-    mainText: string;
+    primaryText: string;
     secondaryText: string;
 }
 

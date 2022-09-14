@@ -46,7 +46,7 @@ export interface DomainPermissionsStrings {
   /**
    * Main text string.
    */
-  mainText: string;
+  primaryText: string;
   /**
    * Subtext string.
    */
@@ -74,7 +74,7 @@ const DomainPermissionsContainer = (props: DomainPermissionsProps): JSX.Element 
         </Stack>
       </Stack>
       <Stack styles={textContainerStyles}>
-        <Text styles={primaryTextStyles}>{_formatString(strings.mainText, { appName: appName })}</Text>
+        <Text styles={primaryTextStyles}>{_formatString(strings.primaryText, { appName: appName })}</Text>
         <Text styles={secondaryTextStyles}>{strings.secondaryText}</Text>
         <Link styles={linkTextStyles} onClick={onTroubleshootingClick}>
           {strings.linkText}
