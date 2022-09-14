@@ -4,7 +4,7 @@
 import { Icon, Link, Stack, Text } from '@fluentui/react';
 import { _pxToRem } from '@internal/acs-ui-common';
 import React from 'react';
-/* @conditional-compile-remove(call-readiness) */
+/* @conditional-compile-remove(call-readiness) */ /* @conditional-compile-remove(unsupported-browser) */
 import { useLocale } from '../localization';
 import {
   containerStyles,
@@ -59,7 +59,7 @@ export const _UnsupportedBrowserContainer = (props: _UnsupportedBrowserProps): J
  */
 export const _UnsupportedBrowser = (props: _UnsupportedBrowserProps): JSX.Element => {
   console.log('test1');
-  /* @conditional-compile-remove(call-readiness) */
+  /* @conditional-compile-remove(call-readiness) */ /* @conditional-compile-remove(unsupported-browser) */
   const strings = useLocale().strings.UnsupportedBrowser;
   return <_UnsupportedBrowserContainer {...props} strings={strings} />;
 };

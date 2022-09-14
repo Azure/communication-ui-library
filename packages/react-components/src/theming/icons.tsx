@@ -171,7 +171,7 @@ export const DEFAULT_COMPONENT_ICONS = {
   VideoTileMicOff: <MicOff16Filled />,
   /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
   BackSpace: <Backspace20Regular />,
-  /* @conditional-compile-remove(call-readiness) */
+  /* @conditional-compile-remove(call-readiness) */ /* @conditional-compile-remove(unsupported-browser) */
   UnsupportedBrowserWarning: <UnsupportedBrowserWarning />
 };
 

@@ -21,7 +21,7 @@ import {
 import { HoldButtonStrings } from '../components';
 /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
 import { DialpadStrings } from '../components';
-/* @conditional-compile-remove(call-readiness) */
+/* @conditional-compile-remove(call-readiness) */ /* @conditional-compile-remove(unsupported-browser) */
 import { UnsupportedBrowserStrings } from '../components/UnsupportedBrowser';
 /* @conditional-compile-remove(one-to-n-calling) */
 // @conditional-compile-remove(PSTN-calls)
@@ -86,7 +86,7 @@ export interface ComponentStrings {
   /* @conditional-compile-remove(one-to-n-calling) */ /* @condtional-compile-remove(one-to-n-calling) */
   /** Strings for HoldButton */
   holdButton: HoldButtonStrings;
-  /* @conditional-compile-remove(call-readiness) */
+  /* @conditional-compile-remove(call-readiness) */ /* @conditional-compile-remove(unsupported-browser) */
   /** Strings for unsupported browser UI */
   UnsupportedBrowser: UnsupportedBrowserStrings;
 }

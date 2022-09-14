@@ -138,7 +138,7 @@ export type { HoldButtonProps, HoldButtonStrings } from './HoldButton';
 export { _LocalVideoTile } from './LocalVideoTile';
 export { _RemoteVideoTile } from './RemoteVideoTile';
 
-/* @conditional-compile-remove(call-readiness) */
+/* @conditional-compile-remove(call-readiness) */ /* @conditional-compile-remove(unsupported-browser) */
 export { _UnsupportedBrowser } from './UnsupportedBrowser';
-/* @conditional-compile-remove(call-readiness) */
+/* @conditional-compile-remove(call-readiness) */ /* @conditional-compile-remove(unsupported-browser) */
 export type { UnsupportedBrowserStrings, _UnsupportedBrowserProps } from './UnsupportedBrowser';
