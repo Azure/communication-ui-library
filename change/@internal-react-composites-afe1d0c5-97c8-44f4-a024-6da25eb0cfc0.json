@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Remove 'Add people' from all roles in Rooms call",
+  "packageName": "@internal/react-composites",
+  "email": "97124699+prabhjot-msft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
