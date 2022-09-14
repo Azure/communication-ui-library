@@ -153,6 +153,7 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
     /* @conditional-compile-remove(PSTN-calls) */
   } = props;
   const [itemHovered, setItemHovered] = useState<boolean>(false);
+  const [itemFocused, setItemFocused] = useState<boolean>(false);
   const [menuHidden, setMenuHidden] = useState<boolean>(true);
   const containerRef = useRef<HTMLDivElement>(null);
   const theme = useTheme();
@@ -206,19 +207,24 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
         title={strings.menuTitle}
         data-ui-id={ids.participantItemMenuButton}
       >
-        <Icon iconName={'ParticipantItemOptionsHovered'} className={`${iconStyles} menuButtonIcon`} />
+        <Icon
+          iconName={
+            itemHovered || itemFocused || !menuHidden ? 'ParticipantItemOptionsHovered' : 'ParticipantItemOptions'
+          }
+          className={iconStyles}
+        />
       </Stack>
     ),
-    [strings.menuTitle, ids.participantItemMenuButton]
+    [strings.menuTitle, ids.participantItemMenuButton, itemHovered, itemFocused, menuHidden]
   );
 
   const onDismissMenu = (): void => {
     setItemHovered(false);
+    setItemFocused(false);
     setMenuHidden(true);
   };
 
   const participantStateString = participantStateStringTrampoline(props, strings);
-
   return (
     <div
       ref={containerRef}
@@ -228,13 +234,14 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
       className={mergeStyles(
         participantItemContainerStyle({
           localparticipant: me,
-          clickable: !!menuItems,
-          showMenuButton: itemHovered || !menuHidden
+          clickable: !!menuItems
         }),
         styles?.root
       )}
       onMouseEnter={() => setItemHovered(true)}
       onMouseLeave={() => setItemHovered(false)}
+      onFocus={() => setItemFocused(true)}
+      onBlur={() => setItemFocused(false)}
       onClick={() => {
         if (!participantStateString) {
           setItemHovered(true);

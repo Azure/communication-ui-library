@@ -9,7 +9,6 @@ import { IStyle, mergeStyles } from '@fluentui/react';
 export const participantItemContainerStyle = (options: {
   localparticipant: boolean | undefined;
   clickable: boolean;
-  showMenuButton: boolean;
 }): IStyle => {
   return {
     paddingTop: '0.25rem',
@@ -18,17 +17,7 @@ export const participantItemContainerStyle = (options: {
     maxWidth: '100%',
     minWidth: '8rem',
     cursor: options.localparticipant || !options.clickable ? 'default' : 'pointer',
-    alignItems: 'center',
-    // on hover/ on click show menu button , not using :hover here because we want the menu button to remain visible when mouse move over to menu options
-    '.menuButtonIcon': {
-      display: options.showMenuButton ? 'flex' : 'none'
-    },
-    // on keyboard focus show menu button
-    ':focus': {
-      '.menuButtonIcon': {
-        display: 'flex'
-      }
-    }
+    alignItems: 'center'
   };
 };
 
@@ -73,10 +62,7 @@ export const iconContainerStyle = {
 export const iconStyles = mergeStyles({
   display: 'flex',
   lineHeight: 0, // ensure the icon center is on the center line and not slightly above it
-  alignItems: 'center',
-  '.menuButtonIcon': {
-    display: 'none'
-  }
+  alignItems: 'center'
 });
 
 /**

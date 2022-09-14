@@ -129,7 +129,7 @@ export const DEFAULT_COMPONENT_ICONS = {
   OptionsMic: <MicOn20Regular />,
   OptionsSpeaker: <Speaker220Regular />,
   ParticipantItemMicOff: <MicOff16Regular />,
-  ParticipantItemOptions: <MoreHorizontal20Regular />,
+  ParticipantItemOptions: <></>,
   ParticipantItemOptionsHovered: <MoreHorizontal20Filled />,
   ParticipantItemScreenShareStart: <ShareScreenStart20Filled />,
   /* @conditional-compile-remove(PSTN-calls) */
