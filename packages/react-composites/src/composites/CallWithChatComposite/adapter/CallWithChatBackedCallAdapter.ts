@@ -15,7 +15,11 @@ import {
 import { AddPhoneNumberOptions, DtmfTone } from '@azure/communication-calling';
 import { CallWithChatAdapterState } from '../state/CallWithChatAdapterState';
 /* @conditional-compile-remove(PSTN-calls) */
-import { CommunicationUserIdentifier, PhoneNumberIdentifier } from '@azure/communication-common';
+import {
+  CommunicationUserIdentifier,
+  isPhoneNumberIdentifier,
+  PhoneNumberIdentifier
+} from '@azure/communication-common';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
@@ -124,7 +128,11 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
     participant: PhoneNumberIdentifier | CommunicationUserIdentifier,
     options?: AddPhoneNumberOptions
   ): Promise<void> {
-    return await this.callWithChatAdapter.addParticipant(participant, options);
+    if (isPhoneNumberIdentifier(participant) && options) {
+      return this.callWithChatAdapter.addParticipant(participant as PhoneNumberIdentifier, options);
+    } else {
+      return this.callWithChatAdapter.addParticipant(participant as CommunicationUserIdentifier);
+    }
   }
 
   /* @conditional-compile-remove(PSTN-calls) */

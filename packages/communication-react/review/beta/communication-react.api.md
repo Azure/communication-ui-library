@@ -642,7 +642,7 @@ export interface CallWithChatAdapter extends CallWithChatAdapterManagement, Adap
 // @public
 export interface CallWithChatAdapterManagement {
     // @beta
-    addParticipant(participant: CommunicationIdentifier, options?: AddPhoneNumberOptions): Promise<void>;
+    addParticipant(participant: PhoneNumberIdentifier, options?: AddPhoneNumberOptions): Promise<void>;
     // (undocumented)
     addParticipant(participant: CommunicationUserIdentifier): Promise<void>;
     askDevicePermission(constrain: PermissionConstraints): Promise<void>;

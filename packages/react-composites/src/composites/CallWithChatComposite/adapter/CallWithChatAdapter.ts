@@ -40,7 +40,7 @@ import { FileMetadata } from '@internal/react-components';
 /* @conditional-compile-remove(file-sharing) */
 import { FileUploadManager } from '../../ChatComposite';
 /* @conditional-compile-remove(PSTN-calls) */
-import { CommunicationIdentifier, CommunicationUserIdentifier } from '@azure/communication-common';
+import { CommunicationUserIdentifier, PhoneNumberIdentifier } from '@azure/communication-common';
 
 /**
  * Functionality for managing the current call with chat.
@@ -307,7 +307,7 @@ export interface CallWithChatAdapterManagement {
    *
    * @beta
    */
-  addParticipant(participant: CommunicationIdentifier, options?: AddPhoneNumberOptions): Promise<void>;
+  addParticipant(participant: PhoneNumberIdentifier, options?: AddPhoneNumberOptions): Promise<void>;
   /* @conditional-compile-remove(PSTN-calls) */
   addParticipant(participant: CommunicationUserIdentifier): Promise<void>;
   /* @conditional-compile-remove(PSTN-calls) */

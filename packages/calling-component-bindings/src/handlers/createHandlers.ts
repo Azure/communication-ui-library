@@ -351,11 +351,7 @@ export const createDefaultCallingHandlers = memoizeOne(
       const participantType = participantTypeHelper(participant);
       switch (participantType) {
         case 'PSTN':
-          if (options) {
-            await call?.addParticipant(participant as PhoneNumberIdentifier, options);
-          } else {
-            throw new Error('No addPhoneNumber options provided.');
-          }
+          await call?.addParticipant(participant as PhoneNumberIdentifier, options);
           break;
         case 'ACS':
           await call?.addParticipant(participant as CommunicationUserIdentifier);
