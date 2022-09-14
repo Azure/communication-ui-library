@@ -66,9 +66,15 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
   }
 
   const locale = useLocale();
+  let configurationPageTitle = locale.strings.call.configurationPageCallDetails;
+  /* @conditional-compile-remove(rooms) */
+  if ('roomId' in adapter.getState()['locator']) {
+    configurationPageTitle = locale.strings.call.configurationPageCallDetails;
+  }
+
   const title = (
     <Stack.Item className={mobileView ? titleContainerStyleMobile : titleContainerStyleDesktop}>
-      {locale.strings.call.configurationPageTitle}
+      {configurationPageTitle}
     </Stack.Item>
   );
 
