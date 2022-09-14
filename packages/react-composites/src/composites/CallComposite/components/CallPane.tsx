@@ -36,6 +36,7 @@ import { AddPhoneNumberOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
 import { useAdapter } from '../adapter/CallAdapterProvider';
 import { isDisabled } from '../utils';
+import { CallSidePaneOption } from '../hooks/useSidePaneState';
 
 /**
  * Pane that is used to store participants for Call composite
@@ -49,7 +50,7 @@ export const CallPane = (props: {
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
   onPeopleButtonClicked?: () => void;
   modalLayerHostId: string;
-  activePane: CallPaneOption;
+  activePane: CallSidePaneOption;
   mobileView?: boolean;
   inviteLink?: string;
   rtl?: boolean;
@@ -153,10 +154,3 @@ export const CallPane = (props: {
     </Stack>
   );
 };
-
-/**
- * Active tab option type for {@link CallPane} component
- * @private
- */
-/** @beta */
-export type CallPaneOption = 'none' | 'people';
