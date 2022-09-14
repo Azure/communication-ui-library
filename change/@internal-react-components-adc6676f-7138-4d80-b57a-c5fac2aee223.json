@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add remove participant menu item for participant item if role allows.",
+  "packageName": "@internal/react-components",
+  "email": "miguelgamis@microsoft.com",
+  "dependentChangeType": "patch"
+}
