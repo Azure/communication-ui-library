@@ -60,8 +60,6 @@ import {
   UnknownIdentifier,
   PhoneNumberIdentifier
 } from '@azure/communication-common';
-/* @conditional-compile-remove(PSTN-calls) */
-import { CommunicationIdentifier } from '@azure/communication-common';
 import { ParticipantSubscriber } from './ParticipantSubcriber';
 import { AdapterError } from '../../common/adapters';
 import { DiagnosticsForwarder } from './DiagnosticsForwarder';
@@ -505,8 +503,19 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
   }
 
   /* @conditional-compile-remove(PSTN-calls) */
-  public async addParticipant(participant: CommunicationIdentifier, options?: AddPhoneNumberOptions): Promise<void> {
-    this.handlers.onAddParticipant(participant, options);
+  public async addParticipant(participant: PhoneNumberIdentifier, options?: AddPhoneNumberOptions): Promise<void>;
+  /* @conditional-compile-remove(PSTN-calls) */
+  public async addParticipant(participant: CommunicationUserIdentifier): Promise<void>;
+  /* @conditional-compile-remove(PSTN-calls) */
+  public async addParticipant(
+    participant: PhoneNumberIdentifier | CommunicationUserIdentifier,
+    options?: AddPhoneNumberOptions
+  ): Promise<void> {
+    if (isPhoneNumberIdentifier(participant) && options) {
+      this.handlers.onAddParticipant(participant, options);
+    } else if (isCommunicationUserIdentifier(participant)) {
+      this.handlers.onAddParticipant(participant);
+    }
   }
 
   /* @conditional-compile-remove(PSTN-calls) */
