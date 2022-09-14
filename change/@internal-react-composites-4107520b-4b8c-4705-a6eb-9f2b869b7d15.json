@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Introduce blank page to Calling composite for unsupported browser UI",
+  "packageName": "@internal/react-composites",
+  "email": "94866715+dmceachernmsft@users.noreply.github.com",
+  "dependentChangeType": "none"
+}
