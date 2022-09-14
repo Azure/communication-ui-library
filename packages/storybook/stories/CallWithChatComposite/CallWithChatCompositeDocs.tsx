@@ -105,6 +105,13 @@ export const getDocs: () => JSX.Element = () => {
         Teams interop scenario.
       </Description>
 
+      <Heading>Customize Call Controls</Heading>
+      <Description>
+        CallWithChatComposite provides a set of default controls for the call that can be customized similar to
+        CallComposite. Check out [Customize Call
+        Controls](./?path=/docs/composites-call-basicexample--basic-example#customize-call-controls) to learn more.
+      </Description>
+
       <Heading>Adding file sharing</Heading>
       <SingleLineBetaBanner />
       <Description>
