@@ -21,11 +21,7 @@ import { containerDivStyles } from '../../common/ContainerRectProps';
 /* @conditional-compile-remove(one-to-n-calling) */
 import { useAdapter } from '../adapter/CallAdapterProvider';
 import { CallControls, CallControlsProps } from '../components/CallControls';
-/* @conditional-compile-remove(one-to-n-calling) */
-import { useSelector } from '../hooks/useSelector';
 import { useSidePaneState } from '../hooks/useSidePaneState';
-/* @conditional-compile-remove(one-to-n-calling) */
-import { callStatusSelector } from '../selectors/callStatusSelector';
 import {
   callControlsContainerStyles,
   notificationsContainerStyles,
@@ -80,8 +76,6 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   const adapter = useAdapter();
   /* @conditional-compile-remove(one-to-n-calling) */
   const { activePane, closePane, openPeoplePane, togglePeoplePane } = useSidePaneState();
-  /* @conditional-compile-remove(one-to-n-calling) */
-  const { callStatus } = useSelector(callStatusSelector);
 
   /* @conditional-compile-remove(one-to-n-calling) */
   const isMobileWithActivePane = props.mobileView && activePane;
@@ -101,7 +95,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
 
   /* @conditional-compile-remove(one-to-n-calling) */
   const callPaneContent = useCallback((): JSX.Element => {
-    if (adapter && _isInCall(callStatus) && activePane === 'people') {
+    if (adapter && activePane === 'people') {
       return (
         <CallPane
           callAdapter={adapter}
@@ -125,7 +119,6 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   }, [
     activePane,
     adapter,
-    callStatus,
     closePane,
     props.callControlProps.callInvitationURL,
     props.callControlProps?.onFetchParticipantMenuItems,
