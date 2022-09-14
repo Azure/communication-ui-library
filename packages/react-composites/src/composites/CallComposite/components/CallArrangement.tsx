@@ -9,10 +9,11 @@ import {
   _useContainerHeight,
   _useContainerWidth,
   ErrorBar,
-  ErrorBarProps
+  ErrorBarProps,
+  useTheme
 } from '@internal/react-components';
 /* @conditional-compile-remove(rooms) */
-import { useTheme, _usePermissions } from '@internal/react-components';
+import { _usePermissions } from '@internal/react-components';
 import React, { useMemo, useRef } from 'react';
 /* @conditional-compile-remove(one-to-n-calling) */
 import { useCallback, useState } from 'react';
