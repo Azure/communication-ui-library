@@ -73,28 +73,22 @@ test.describe('Rooms Participant RemoveButton tests for different roles', async 
     );
   });
 
-  test('Remove button is disabled for Attendee', async ({ page, serverUrl }, testInfo) => {
+  test('No ellipses button for remote participant items for Attendee', async ({ page, serverUrl }, testInfo) => {
     test.skip(isTestProfileStableFlavor());
     const paul = defaultMockRemoteParticipant('Paul Bridges');
     const participants = [paul];
     const initialState = defaultMockCallAdapterState(participants);
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { role: 'Attendee' }));
-    await openRemoveParticipantMenu(page, testInfo);
-    expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot(
-      'rooms-call-remove-participant-attendee.png'
-    );
+    await expectNoRemoveParticipantMenuItem(page, testInfo);
   });
 
-  test('Remove button is disabled for Consumer', async ({ page, serverUrl }, testInfo) => {
+  test('No ellipses button for remote participant items for Consumer', async ({ page, serverUrl }, testInfo) => {
     test.skip(isTestProfileStableFlavor());
     const paul = defaultMockRemoteParticipant('Paul Bridges');
     const participants = [paul];
     const initialState = defaultMockCallAdapterState(participants);
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { role: 'Consumer' }));
-    await openRemoveParticipantMenu(page, testInfo);
-    expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot(
-      'rooms-call-remove-participant-consumer.png'
-    );
+    await expectNoRemoveParticipantMenuItem(page, testInfo);
   });
 });
 
@@ -116,5 +110,24 @@ const openRemoveParticipantMenu = async (page: Page, testInfo: TestInfo): Promis
     await waitForSelector(page, dataUiId('participant-item'));
     await pageClick(page, dataUiId('participant-item'));
     await waitForSelector(page, dataUiId('drawer-menu'));
+  }
+};
+
+const expectNoRemoveParticipantMenuItem = async (page: Page, testInfo: TestInfo): Promise<void> => {
+  await waitForSelector(page, dataUiId(IDS.videoGallery));
+
+  if (isTestProfileDesktop(testInfo)) {
+    const menuButton = await page.$$(dataUiId('participant-item-menu-button'));
+    expect(menuButton.length).toBe(0);
+  } else {
+    await pageClick(page, dataUiId('call-with-chat-composite-more-button'));
+    await waitForSelector(page, dataUiId('call-composite-more-menu-people-button'));
+    await pageClick(page, dataUiId('call-composite-more-menu-people-button'));
+    await hidePiPiP(page);
+    await waitForSelector(page, dataUiId('participant-list'));
+    await waitForSelector(page, dataUiId('participant-item'));
+    await pageClick(page, dataUiId('participant-item'));
+    const drawerMenu = await page.$$(dataUiId('drawer-menu'));
+    expect(drawerMenu.length).toBe(0);
   }
 };
