@@ -18,26 +18,26 @@ import {
  *
  * @beta
  */
-export type UnsupportedBrowserStrings = {
+export interface UnsupportedBrowserStrings {
   /** String for the primary text */
   primaryText: string;
   /** String for the secondary text */
   secondaryText: string;
   /** String for the help link */
   moreHelpLink: string;
-};
+}
 
 /**
  * props for UnsupportedBrowser UI
  *
  * @beta
  */
-export type UnsupportedBrowserProps = {
+export interface UnsupportedBrowserProps {
   /** Handler to perform a action when the help link is actioned */
   onTroubleShootingClick: () => void;
   /** String overrides for the component */
   strings: UnsupportedBrowserStrings;
-};
+}
 
 /* @conditional-compile-remove(unsupported-browser) */
 const UnsupportedBrowserContainer = (props: UnsupportedBrowserProps): JSX.Element => {
