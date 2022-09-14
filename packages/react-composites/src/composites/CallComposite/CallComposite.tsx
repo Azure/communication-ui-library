@@ -143,7 +143,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
     case 'roomNotFound':
       pageElement = (
         <NoticePage
-          iconName="InvalidRoom"
+          iconName="NoticePageInvalidRoom"
           title={locale.strings.call.roomNotFoundTitle}
           moreDetails={locale.strings.call.roomNotFoundDetails}
           dataUiId={'room-not-found-page'}
@@ -153,7 +153,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
     case 'deniedPermissionToRoom':
       pageElement = (
         <NoticePage
-          iconName="InvalidRoom"
+          iconName="NoticePageInvalidRoom"
           title={locale.strings.call.deniedPermissionToRoomTitle}
           moreDetails={locale.strings.call.deniedPermissionToRoomDetails}
           dataUiId={'not-invited-to-room-page'}
