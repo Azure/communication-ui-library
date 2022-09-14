@@ -1,11 +1,14 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+/* @conditional-compile-remove(unsupported-browser) */
 import { Icon, Link, Stack, Text } from '@fluentui/react';
+/* @conditional-compile-remove(unsupported-browser) */
 import { _pxToRem } from '@internal/acs-ui-common';
 import React from 'react';
 /* @conditional-compile-remove(unsupported-browser) */
 import { useLocale } from '../localization';
+/* @conditional-compile-remove(unsupported-browser) */
 import {
   containerStyles,
   linkTextStyles,
