@@ -51,12 +51,12 @@ import { ArrowDownload16Regular } from '@fluentui/react-icons';
 /* @conditional-compile-remove(PSTN-calls) */
 import { CallPause20Regular, CallPause20Filled, Play20Regular, People20Regular } from '@fluentui/react-icons';
 
-/* @conditional-compile-remove(call-readiness) */ /* @conditional-compile-remove(unsupported-browser) */
+/* @conditional-compile-remove(unsupported-browser) */
 import { Warning20Filled } from '@fluentui/react-icons';
 import { _pxToRem } from '@internal/acs-ui-common';
 
 import React from 'react';
-/* @conditional-compile-remove(call-readiness) */ /* @conditional-compile-remove(unsupported-browser) */
+/* @conditional-compile-remove(unsupported-browser) */
 import { useTheme } from './FluentThemeProvider';
 
 /**
@@ -84,7 +84,7 @@ const MoreHorizontal18Regular = (): JSX.Element => (
   </div>
 );
 
-/* @conditional-compile-remove(call-readiness) */ /* @conditional-compile-remove(unsupported-browser) */
+/* @conditional-compile-remove(unsupported-browser) */
 const UnsupportedBrowserWarning = (): JSX.Element => {
   const theme = useTheme();
   return (
@@ -174,11 +174,11 @@ export const DEFAULT_COMPONENT_ICONS = {
   VideoTileMicOff: <MicOff16Filled />,
   /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
   BackSpace: <Backspace20Regular />,
-  /* @conditional-compile-remove(call-readiness) */ /* @conditional-compile-remove(unsupported-browser) */
+  /* @conditional-compile-remove(unsupported-browser) */
   UnsupportedBrowserWarning: <UnsupportedBrowserWarning />
 };
 
-/* @conditional-compile-remove(call-readiness) */ /* @conditional-compile-remove(unsupported-browser) */
+/* @conditional-compile-remove(unsupported-browser) */
 const scaledIconStyles = (theme: Theme): IStyle => {
   return {
     transform: 'scale(2)',

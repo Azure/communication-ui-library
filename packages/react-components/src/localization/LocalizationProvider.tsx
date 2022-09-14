@@ -86,7 +86,7 @@ export interface ComponentStrings {
   /* @conditional-compile-remove(one-to-n-calling) */ /* @condtional-compile-remove(one-to-n-calling) */
   /** Strings for HoldButton */
   holdButton: HoldButtonStrings;
-  /* @conditional-compile-remove(call-readiness) */ /* @conditional-compile-remove(unsupported-browser) */
+  /* @conditional-compile-remove(unsupported-browser) */
   /** Strings for unsupported browser UI */
   UnsupportedBrowser: UnsupportedBrowserStrings;
 }

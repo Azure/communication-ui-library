@@ -252,7 +252,7 @@ export type {
 export * from '../../react-composites/src/index-public';
 export * from './mergedHooks';
 
-/* @conditional-compile-remove(call-readiness) */
-export { _UnsupportedBrowser } from '../../react-components/src';
-/* @conditional-compile-remove(call-readiness) */ /* @conditional-compile-remove(unsupported-browser) */
-export type { UnsupportedBrowserStrings, _UnsupportedBrowserProps } from '../../react-components/src';
+/* @conditional-compile-remove(unsupported-browser) */
+export { UnsupportedBrowser } from '../../react-components/src';
+/* @conditional-compile-remove(unsupported-browser) */
+export type { UnsupportedBrowserStrings, UnsupportedBrowserProps } from '../../react-components/src';

@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { Stack } from '@fluentui/react';
-import { _UnsupportedBrowser } from '@internal/react-components';
+import { UnsupportedBrowser as UnsupportedBrowserComponent } from '@internal/react-components';
 import { Canvas, Description, Heading, Props, Title } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
@@ -19,7 +19,7 @@ const UnsupportedBrowserStory = (): JSX.Element => {
   const locale = useLocale().strings.UnsupportedBrowser;
   return (
     <Stack>
-      <_UnsupportedBrowser
+      <UnsupportedBrowserComponent
         strings={locale}
         onTroubleShootingClick={() => {
           alert('Clicked help link');
@@ -44,7 +44,7 @@ const getDocs: () => JSX.Element = () => {
       <Canvas mdxSource={UnsupportedBrowserDrawerExample}>
         <UnsupportedBrowserDrawer />
       </Canvas>
-      <Props of={_UnsupportedBrowser} />
+      <Props of={UnsupportedBrowserComponent} />
     </Stack>
   );
 };
@@ -54,7 +54,7 @@ export const UnsupportedBrowser = UnsupportedBrowserStory.bind({});
 export default {
   id: `${COMPONENT_FOLDER_PREFIX}-internal-unsupported-browser`,
   title: `${COMPONENT_FOLDER_PREFIX}/Internal/CallReadiness/Unsupported Browser`,
-  component: _UnsupportedBrowser,
+  component: UnsupportedBrowserComponent,
   parameters: {
     docs: {
       page: () => getDocs()

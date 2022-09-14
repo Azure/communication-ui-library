@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { Stack } from '@fluentui/react';
-import { _DrawerSurface, _UnsupportedBrowser } from '@internal/react-components';
+import { _DrawerSurface, UnsupportedBrowser } from '@internal/react-components';
 import React, { useState } from 'react';
 import { useLocale } from '../../../../../react-components/src/localization';
 import { MobilePreviewContainer } from '../../../MobileContainer';
@@ -27,7 +27,7 @@ export const UnsupportedBrowserDrawer: () => JSX.Element = () => {
         )}
         {isDrawerShowing && (
           <_DrawerSurface onLightDismiss={onLightDismissTriggered}>
-            <_UnsupportedBrowser
+            <UnsupportedBrowser
               onTroubleShootingClick={() => alert('clicked trouble shooting link')}
               strings={locale}
             />

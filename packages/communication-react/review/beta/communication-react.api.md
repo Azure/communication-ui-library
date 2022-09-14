@@ -2768,16 +2768,16 @@ export interface TypingIndicatorStylesProps extends BaseCustomStyles {
     typingUserDisplayName?: IStyle;
 }
 
-// @internal (undocumented)
-export const _UnsupportedBrowser: (props: _UnsupportedBrowserProps) => JSX.Element;
+// @beta
+export const UnsupportedBrowser: (props: UnsupportedBrowserProps) => JSX.Element;
 
-// @internal (undocumented)
-export type _UnsupportedBrowserProps = {
+// @beta
+export type UnsupportedBrowserProps = {
     onTroubleShootingClick: () => void;
     strings: UnsupportedBrowserStrings;
 };
 
-// @beta (undocumented)
+// @beta
 export type UnsupportedBrowserStrings = {
     primaryText: string;
     secondaryText: string;

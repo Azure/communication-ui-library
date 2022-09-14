@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { Modal, PrimaryButton } from '@fluentui/react';
-import { _UnsupportedBrowser } from '@internal/react-components';
+import { UnsupportedBrowser } from '@internal/react-components';
 import React, { useState } from 'react';
 
 import { useLocale } from '../../../../../react-components/src/localization';
@@ -20,7 +20,7 @@ export const UnsupportedBrowserModal: () => JSX.Element = () => {
         Open Unsupported Browser Modal
       </PrimaryButton>
       <Modal isOpen={modalOpen} onDismiss={() => setModalOpen(false)}>
-        <_UnsupportedBrowser
+        <UnsupportedBrowser
           strings={locale}
           onTroubleShootingClick={() => {
             alert('clicked help link');
