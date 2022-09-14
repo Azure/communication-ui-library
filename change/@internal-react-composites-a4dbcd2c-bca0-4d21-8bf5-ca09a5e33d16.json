@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "People pane context menu to remove participant will be present only if role has permissions.",
+  "packageName": "@internal/react-composites",
+  "email": "miguelgamis@microsoft.com",
+  "dependentChangeType": "patch"
+}
