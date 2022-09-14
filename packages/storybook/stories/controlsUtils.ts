@@ -143,12 +143,23 @@ export const orientationArg = {
 };
 
 export const controlsToAdd = {
-  alternateCallerId: { control: 'text', description: 'added', defaultValue: '', name: 'Alternate CallerID' },
+  alternateCallerId: {
+    control: 'text',
+    description: 'added',
+    defaultValue: '',
+    name: 'Alternate CallerID',
+    type: { name: 'string', required: true }
+  },
   avatarInitials: { control: 'text', defaultValue: 'A B', name: 'Avatar initials' },
   botAvatar: { control: 'radio', options: botAvatars, defaultValue: 'Default', name: 'Bot Avatar' },
   botToken: { control: 'text', defaultValue: '', name: 'Valid token for bot' },
   botUserId: { control: 'text', defaultValue: '', name: 'User identifier for bot' },
-  calleeUserId: { control: 'text', defaultValue: '8:echo123', name: "Callee's User identifier" },
+  calleeUserId: {
+    control: 'text',
+    defaultValue: '8:echo123',
+    name: "Callee's User identifier",
+    type: { name: 'string', required: true }
+  },
   calleeToken: { control: 'text', defaultValue: '', name: "Callee's Valid token" },
   callerImages: { control: 'file', accept: '.jpeg, .jpg, .png', defaultValue: [], name: 'Avatar' },
   callerName: { control: 'text', defaultValue: 'Maximus Aurelius', name: 'Caller Name' },
@@ -157,7 +168,7 @@ export const controlsToAdd = {
   callInvitationURL: {
     control: 'text',
     defaultValue: '',
-    name: 'Optional URL to invite other participants to the call'
+    name: 'URL to invite other participants to the call'
   },
   callLocator: {
     control: 'text',
@@ -167,7 +178,8 @@ export const controlsToAdd = {
   callParticipantsLocator: {
     control: 'array',
     defaultValue: ['+###########'],
-    name: 'Call locator (participants phone numbers)'
+    name: 'Call locator (participants phone numbers)',
+    type: { name: 'string', required: true }
   },
   callModalAlertText: { control: 'text', defaultValue: 'Incoming Video Call', name: 'Alert Text' },
   callToastAlertText: { control: 'text', defaultValue: 'Incoming Call', name: 'Alert Text' },
@@ -266,7 +278,7 @@ export const controlsToAdd = {
     control: 'select',
     options: ['desktop', 'mobile'],
     defaultValue: 'desktop',
-    name: 'Form Factor'
+    name: 'Form factor'
   },
   participantItemMenuItemsStr: { control: 'text', defaultValue: 'Mute, Remove', name: 'Menu items (comma separated)' },
   participantNames: {
@@ -284,7 +296,7 @@ export const controlsToAdd = {
   requiredDisplayName: {
     control: 'text',
     defaultValue: 'John Smith',
-    name: 'Display Name',
+    name: 'Display name',
     type: { required: true, name: 'string' }
   },
   screenShareExperience: {
@@ -351,7 +363,9 @@ export const defaultCallCompositeHiddenControls = {
   onFetchAvatarPersonaData: hiddenControl,
   rtl: hiddenControl,
   options: hiddenControl,
-  callInvitationUrl: hiddenControl
+  callInvitationUrl: hiddenControl,
+  formFactor: hiddenControl,
+  role: hiddenControl
 };
 
 export const defaultChatCompositeHiddenControls = {
