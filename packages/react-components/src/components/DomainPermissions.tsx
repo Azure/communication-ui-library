@@ -2,10 +2,13 @@
 // Licensed under the MIT license.
 
 import React from 'react';
+/* @conditional-compile-remove(call-readiness) */
 import { Stack, Text, Link, Icon } from '@fluentui/react';
 /* @conditional-compile-remove(call-readiness) */
 import { useLocale } from '../localization';
+/* @conditional-compile-remove(call-readiness) */
 import { _formatString, _pxToRem } from '@internal/acs-ui-common';
+/* @conditional-compile-remove(call-readiness) */
 import {
   iconBackDropStyles,
   iconContainerStyles,
@@ -54,6 +57,7 @@ export interface DomainPermissionsStrings {
   linkText: string;
 }
 
+/* @conditional-compile-remove(call-readiness) */
 const _DomainPermissionsContainer = (props: _DomainPermissionsProps): JSX.Element => {
   const { appName, onTroubleshootingClick, strings } = props;
   return (
@@ -89,13 +93,7 @@ const _DomainPermissionsContainer = (props: _DomainPermissionsProps): JSX.Elemen
 export const _DomainPermissions = (props: _DomainPermissionsProps): JSX.Element => {
   /* @conditional-compile-remove(call-readiness) */
   const locale = useLocale().strings.DomainPermissions;
-
-  const domainPermissionsStringsTrampoline = (): DomainPermissionsStrings => {
-    /* @conditional-compile-remove(call-readiness) */
-    return locale;
-    // Done for conditional compilation will be undone in stable.
-    return '' as unknown as DomainPermissionsStrings;
-  };
-
-  return <_DomainPermissionsContainer {...props} strings={domainPermissionsStringsTrampoline()} />;
+  /* @conditional-compile-remove(call-readiness) */
+  return <_DomainPermissionsContainer {...props} strings={locale} />;
+  return <></>;
 };
