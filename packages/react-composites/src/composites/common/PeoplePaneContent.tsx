@@ -46,7 +46,7 @@ export const PeoplePaneContent = (props: {
 }): JSX.Element => {
   const { inviteLink, onFetchParticipantMenuItems, setDrawerMenuItems, strings, onRemoveParticipant } = props;
   const participantListDefaultProps = usePropsFor(ParticipantList);
-  const isRoomsCall = useAdapter().getState().isRoomsCall;
+  const isRoomsCall = 'roomId' in useAdapter().getState()['locator'];
   const removeButtonAllowed = hasRemoveParticipantsPermissionTrampoline();
   const setDrawerMenuItemsForParticipant: (participant?: ParticipantListParticipant) => void = useMemo(() => {
     return (participant?: ParticipantListParticipant) => {

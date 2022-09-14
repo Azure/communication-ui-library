@@ -47,7 +47,7 @@ export const AddPeopleButton = (props: AddPeopleButtonProps): JSX.Element => {
     [mobileView, theme]
   );
 
-  const isRoomsCall = useAdapter().getState().isRoomsCall;
+  const isRoomsCall = 'roomId' in useAdapter().getState()['locator'];
 
   /* @conditional-compile-remove(PSTN-calls) */
   if (mobileView) {
