@@ -65,7 +65,6 @@ const UnsupportedBrowserContainer = (props: UnsupportedBrowserProps): JSX.Elemen
  * @beta
  */
 export const UnsupportedBrowser = (props: UnsupportedBrowserProps): JSX.Element => {
-  console.log('test1');
   /* @conditional-compile-remove(unsupported-browser) */
   const strings = useLocale().strings.UnsupportedBrowser;
   /* @conditional-compile-remove(unsupported-browser) */
