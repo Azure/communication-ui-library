@@ -1361,17 +1361,17 @@ export interface TypingIndicatorStylesProps extends BaseCustomStyles {
 export const UnsupportedBrowser: (props: UnsupportedBrowserProps) => JSX.Element;
 
 // @beta
-export type UnsupportedBrowserProps = {
+export interface UnsupportedBrowserProps {
     onTroubleShootingClick: () => void;
     strings: UnsupportedBrowserStrings;
-};
+}
 
 // @beta
-export type UnsupportedBrowserStrings = {
+export interface UnsupportedBrowserStrings {
+    moreHelpLink: string;
     primaryText: string;
     secondaryText: string;
-    moreHelpLink: string;
-};
+}
 
 // @public
 export type UpdateMessageCallback = (messageId: string, content: string, metadata?: Record<string, string>, options?: {
