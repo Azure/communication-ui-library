@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Check if call locator is a valid UUID before joining a group call in CallComposite storybook preview.",
-  "packageName": "@internal/storybook",
-  "email": "miguelgamis@microsoft.com",
-  "dependentChangeType": "none"
-}

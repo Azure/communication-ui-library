@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Fix React hook order console errors for CameraButton.",
-  "packageName": "@internal/react-components",
-  "email": "miguelgamis@microsoft.com",
-  "dependentChangeType": "patch"
-}

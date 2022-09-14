@@ -1,8 +1,20 @@
 # Change Log - @internal/chat-component-bindings
 
-This log was last generated on Wed, 29 Jun 2022 17:31:08 GMT and should not be manually modified.
+This log was last generated on Wed, 14 Sep 2022 08:51:44 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.3.2-beta.1](https://github.com/azure/communication-ui-library/tree/@internal/chat-component-bindings_v1.3.2-beta.1)
+
+Wed, 14 Sep 2022 08:51:44 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@internal/chat-component-bindings_v1.3.1-beta.1...@internal/chat-component-bindings_v1.3.2-beta.1)
+
+### Patches
+
+- Show datetime when there are more than 5 mins between each message ([PR #2299](https://github.com/azure/communication-ui-library/pull/2299) by carolinecao@microsoft.com)
+- Bump @internal/acs-ui-common to v1.3.2-beta.1 ([PR #2332](https://github.com/azure/communication-ui-library/pull/2332) by beachball)
+- Bump @internal/chat-stateful-client to v1.3.2-beta.1 ([PR #2332](https://github.com/azure/communication-ui-library/pull/2332) by beachball)
+- Bump @internal/react-components to v1.3.2-beta.1 ([PR #2332](https://github.com/azure/communication-ui-library/pull/2332) by beachball)
 
 ## [1.3.1-beta.1](https://github.com/azure/communication-ui-library/tree/@internal/chat-component-bindings_v1.3.1-beta.1)
 

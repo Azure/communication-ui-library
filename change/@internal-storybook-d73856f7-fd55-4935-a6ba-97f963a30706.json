@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add PSTN and 1:N storybook examples",
-  "packageName": "@internal/storybook",
-  "email": "edwardlee@microsoft.com",
-  "dependentChangeType": "patch"
-}

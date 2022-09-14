@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add component behaviors according to permissions",
-  "packageName": "@internal/react-composites",
-  "email": "jiangnanhello@live.com",
-  "dependentChangeType": "patch"
-}
