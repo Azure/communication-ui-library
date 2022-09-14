@@ -49,7 +49,7 @@ describe('ParticipantList tests for different roles', () => {
     );
     const menuItems = wrapper.find(ParticipantItem).first().prop('menuItems');
     const removeMenuItem = getRemoveMenuItem(menuItems);
-    expect(removeMenuItem.disabled).toBe(false);
+    expect(removeMenuItem.disabled).toBeUndefined();
   });
 
   /* @conditional-compile-remove(rooms) */
@@ -62,8 +62,7 @@ describe('ParticipantList tests for different roles', () => {
       _getPermissions('Attendee')
     );
     const menuItems = wrapper.find(ParticipantItem).first().prop('menuItems');
-    const removeMenuItem = getRemoveMenuItem(menuItems);
-    expect(removeMenuItem.disabled).toBe(true);
+    expect(menuItems?.length).toBe(0);
   });
 
   /* @conditional-compile-remove(rooms) */
@@ -76,8 +75,7 @@ describe('ParticipantList tests for different roles', () => {
       _getPermissions('Consumer')
     );
     const menuItems = wrapper.find(ParticipantItem).first().prop('menuItems');
-    const removeMenuItem = getRemoveMenuItem(menuItems);
-    expect(removeMenuItem.disabled).toBe(true);
+    expect(menuItems?.length).toBe(0);
   });
 });
 
