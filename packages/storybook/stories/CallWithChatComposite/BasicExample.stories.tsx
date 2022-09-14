@@ -6,14 +6,23 @@ import { Stack } from '@fluentui/react';
 import { Meta } from '@storybook/react/types-6-0';
 import React, { useState, useEffect } from 'react';
 import { COMPOSITE_FOLDER_PREFIX, compositeExperienceContainerStyle } from '../constants';
-import { controlsToAdd, defaultCallWithChatCompositeHiddenControls } from '../controlsUtils';
+import { ArgsFrom, controlsToAdd, defaultCallWithChatCompositeHiddenControls } from '../controlsUtils';
 import { getDocs } from './CallWithChatCompositeDocs';
 import { CallWithChatExampleProps } from './snippets/CallWithChat.snippet';
 import { CallWithChatExperienceWithErrorChecks } from './snippets/CallWithChatWithErrorChecks.snippet';
 import { createCallWithChat } from './snippets/Server.snippet';
 import { ConfigHintBanner } from './Utils';
 
-const BasicStory = (args, context): JSX.Element => {
+const storyControls = {
+  userId: controlsToAdd.userId,
+  token: controlsToAdd.token,
+  endpointUrl: controlsToAdd.endpointUrl,
+  displayName: controlsToAdd.requiredDisplayName,
+  compositeFormFactor: controlsToAdd.formFactor,
+  callWithChatControlOptions: controlsToAdd.callWithChatControlOptions
+};
+
+const BasicStory = (args: ArgsFrom<typeof storyControls>, context): JSX.Element => {
   const [callWithChatProps, setCallWithChatProps] = useState<CallWithChatExampleProps>();
 
   useEffect(() => {
@@ -34,14 +43,22 @@ const BasicStory = (args, context): JSX.Element => {
             callLocator,
             chatThreadId
           },
-          compositeOptions: { callControls: args.callWithChatControlOptions }
+          compositeOptions: { callControls: args.callWithChatControlOptions },
+          formFactor: args.compositeFormFactor
         });
       } else {
         setCallWithChatProps(undefined);
       }
     };
     fetchToken();
-  }, [args.token, args.userId, args.endpointUrl, args.displayName, args.callWithChatControlOptions]);
+  }, [
+    args.token,
+    args.userId,
+    args.endpointUrl,
+    args.displayName,
+    args.callWithChatControlOptions,
+    args.compositeFormFactor
+  ]);
 
   return (
     <>
@@ -63,11 +80,7 @@ export default {
   title: `${COMPOSITE_FOLDER_PREFIX}/CallWithChatComposite/Basic Example`,
   component: CallWithChatComposite,
   argTypes: {
-    token: controlsToAdd.token,
-    userId: controlsToAdd.userId,
-    endpointUrl: controlsToAdd.endpointUrl,
-    displayName: controlsToAdd.displayName,
-    callWithChatControlOptions: controlsToAdd.callWithChatControlOptions,
+    ...storyControls,
     // Hiding auto-generated controls
     ...defaultCallWithChatCompositeHiddenControls
   },
