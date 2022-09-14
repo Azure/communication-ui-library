@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 
 import { Role } from '@internal/react-components';
+import { CallCompositeOptions } from '../../../src';
 import { MockCallAdapterState } from '../../common';
 
 export interface QueryArgs {
@@ -13,6 +14,7 @@ export interface QueryArgs {
   injectCustomButtons: boolean;
   role?: Role;
   showParticipantItemIcon: boolean;
+  customCallCompositeOptions?: CallCompositeOptions;
 
   // These are only set for live tests.
   // TODO: Separate the args out better.
@@ -36,6 +38,9 @@ export function parseQueryArgs(): QueryArgs {
     groupId: params.groupId ?? '',
     token: params.token ?? '',
     displayName: params.displayName ?? '',
-    role: (params.role as Role) ?? undefined
+    role: (params.role as Role) ?? undefined,
+    customCallCompositeOptions: params.customCallCompositeOptions
+      ? JSON.parse(params.customCallCompositeOptions)
+      : undefined
   };
 }

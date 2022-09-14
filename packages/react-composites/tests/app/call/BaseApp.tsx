@@ -50,7 +50,9 @@ export function BaseApp(props: { queryArgs: QueryArgs; callAdapter?: CallAdapter
                 queryArgs.injectParticipantMenuItems ? onFetchParticipantMenuItems : undefined
               }
               options={
-                queryArgs.injectCustomButtons
+                queryArgs.customCallCompositeOptions
+                  ? queryArgs.customCallCompositeOptions
+                  : queryArgs.injectCustomButtons
                   ? {
                       callControls: {
                         onFetchCustomButtonProps,
