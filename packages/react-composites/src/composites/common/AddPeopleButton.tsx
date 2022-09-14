@@ -6,6 +6,8 @@ import React, { useMemo } from 'react';
 import { CallWithChatCompositeStrings } from '../../index-public';
 /* @conditional-compile-remove(one-to-n-calling) */
 import { CallCompositeStrings } from '../../index-public';
+/* @conditional-compile-remove(rooms) */
+import { _usePermissions } from '@internal/react-components';
 import { CallWithChatCompositeIcon } from './icons';
 import { peoplePaneContainerTokens } from './styles/ParticipantContainer.styles';
 import {
@@ -21,6 +23,7 @@ import { AddPeopleDropdown } from './AddPeopleDropdown';
 import { CommunicationIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
+import { useAdapter } from '../CallComposite/adapter/CallAdapterProvider';
 
 /** @private */
 export interface AddPeopleButtonProps {
@@ -44,6 +47,8 @@ export const AddPeopleButton = (props: AddPeopleButtonProps): JSX.Element => {
     [mobileView, theme]
   );
 
+  const isRoomsCall = useAdapter().getState().isRoomsCall;
+
   /* @conditional-compile-remove(PSTN-calls) */
   if (mobileView) {
     return (
@@ -58,13 +63,15 @@ export const AddPeopleButton = (props: AddPeopleButtonProps): JSX.Element => {
   } else {
     return (
       <Stack tokens={peoplePaneContainerTokens}>
-        <AddPeopleDropdown
-          strings={strings}
-          mobileView={mobileView}
-          inviteLink={inviteLink}
-          onAddParticipant={props.onAddParticipant}
-          alternateCallerId={props.alternateCallerId}
-        />
+        {!isRoomsCall && (
+          <AddPeopleDropdown
+            strings={strings}
+            mobileView={mobileView}
+            inviteLink={inviteLink}
+            onAddParticipant={props.onAddParticipant}
+            alternateCallerId={props.alternateCallerId}
+          />
+        )}
         {participantList}
       </Stack>
     );

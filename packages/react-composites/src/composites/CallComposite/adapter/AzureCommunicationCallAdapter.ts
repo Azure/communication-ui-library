@@ -73,7 +73,7 @@ class CallContext {
   private state: CallAdapterState;
   private callId: string | undefined;
 
-  constructor(clientState: CallClientState, isTeamsCall: boolean) {
+  constructor(clientState: CallClientState, isTeamsCall: boolean, isRoomsCall: boolean) {
     this.state = {
       isLocalPreviewMicrophoneEnabled: false,
       userId: clientState.userId,
@@ -83,6 +83,7 @@ class CallContext {
       page: 'configuration',
       latestErrors: clientState.latestErrors,
       isTeamsCall,
+      isRoomsCall,
       /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId: clientState.alternateCallerId
     };
   }
@@ -204,7 +205,8 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     this.locator = locator;
     this.deviceManager = deviceManager;
     const isTeamsMeeting = 'meetingLink' in this.locator;
-    this.context = new CallContext(callClient.getState(), isTeamsMeeting);
+    const isRoomsCall = 'roomId' in this.locator;
+    this.context = new CallContext(callClient.getState(), isTeamsMeeting, isRoomsCall);
 
     this.context.onCallEnded((endCallData) => this.emitter.emit('callEnded', endCallData));
 

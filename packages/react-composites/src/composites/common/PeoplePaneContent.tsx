@@ -26,6 +26,7 @@ import { AddPeopleButton } from './AddPeopleButton';
 import { CommunicationIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
+import { useAdapter } from '../CallComposite/adapter/CallAdapterProvider';
 
 /**
  * @private
@@ -46,6 +47,7 @@ export const PeoplePaneContent = (props: {
   const { inviteLink, onFetchParticipantMenuItems, setDrawerMenuItems, strings, onRemoveParticipant } = props;
   const participantListDefaultProps = usePropsFor(ParticipantList);
   const disableRemoveButton = !hasRemoveParticipantsPermissionTrampoline();
+  const isRoomsCall = useAdapter().getState().isRoomsCall;
   const setDrawerMenuItemsForParticipant: (participant?: ParticipantListParticipant) => void = useMemo(() => {
     return (participant?: ParticipantListParticipant) => {
       if (participant) {
@@ -106,16 +108,18 @@ export const PeoplePaneContent = (props: {
           {participantList}
         </Stack.Item>
 
-        <AddPeopleButton
-          inviteLink={inviteLink}
-          mobileView={props.mobileView}
-          participantList={participantList}
-          strings={strings}
-          /* @conditional-compile-remove(PSTN-calls) */
-          onAddParticipant={props.onAddParticipant}
-          /* @conditional-compile-remove(PSTN-calls) */
-          alternateCallerId={props.alternateCallerId}
-        />
+        {!isRoomsCall && (
+          <AddPeopleButton
+            inviteLink={inviteLink}
+            mobileView={props.mobileView}
+            participantList={participantList}
+            strings={strings}
+            /* @conditional-compile-remove(PSTN-calls) */
+            onAddParticipant={props.onAddParticipant}
+            /* @conditional-compile-remove(PSTN-calls) */
+            alternateCallerId={props.alternateCallerId}
+          />
+        )}
       </Stack>
     );
   }
