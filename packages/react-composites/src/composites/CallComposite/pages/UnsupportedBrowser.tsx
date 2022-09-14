@@ -15,6 +15,6 @@ export type UnsupportedBrowserProps = {
  *
  * @internal
  */
-export const UnsupportedBrowser = (props: UnsupportedBrowserProps): JSX.Element => {
+export const UnsupportedBrowser = (): JSX.Element => {
   return <></>;
 };

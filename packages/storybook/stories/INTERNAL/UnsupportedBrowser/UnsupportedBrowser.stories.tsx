@@ -12,8 +12,8 @@ import { COMPONENT_FOLDER_PREFIX } from '../../constants';
 import { UnsupportedBrowserDrawer } from './snippets/UnsupportedBrowserDrawer.snippet';
 import { UnsupportedBrowserModal } from './snippets/UnsupportedBrowserModal.snippet';
 
-const UnsupportedBrowserModalExample = require('!!raw-loader!./snippets/UnsupportedBrowserModal.snippet.tsx').default;
 const UnsupportedBrowserDrawerExample = require('!!raw-loader!./snippets/UnsupportedBrowserDrawer.snippet.tsx').default;
+const UnsupportedBrowserModalExample = require('!!raw-loader!./snippets/UnsupportedBrowserModal.snippet.tsx').default;
 
 const UnsupportedBrowserStory = (): JSX.Element => {
   const locale = useLocale().strings.UnsupportedBrowser;
