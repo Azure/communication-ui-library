@@ -186,7 +186,7 @@
   },
   "UnsupportedBrowser": {
     "primaryText": "Browser not supported",
-    "secondaryText": "PleaseJoin this call using a compatible browser.",
+    "secondaryText": "Please join this call using a compatible browser.",
     "moreHelpLink": "More help?"
   }
 }

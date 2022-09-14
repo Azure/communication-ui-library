@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IStackStyles, mergeStyles, Stack, Theme } from '@fluentui/react';
+import { IStyle, mergeStyles, Stack, Theme } from '@fluentui/react';
 import {
   ArrowClockwise16Regular,
   CallEnd20Filled,
@@ -50,7 +50,8 @@ import { ArrowDownload16Regular } from '@fluentui/react-icons';
 import { CallPause20Regular, CallPause20Filled, Play20Regular, People20Regular } from '@fluentui/react-icons';
 
 /* @conditional-compile-remove(call-readiness) */
-import { Warning20Regular } from '@fluentui/react-icons';
+import { Warning20Filled } from '@fluentui/react-icons';
+import { _pxToRem } from '@internal/acs-ui-common';
 
 import React from 'react';
 /* @conditional-compile-remove(call-readiness) */
@@ -84,9 +85,20 @@ const MoreHorizontal18Regular = (): JSX.Element => (
 const UnsupportedBrowserWarning = (): JSX.Element => {
   const theme = useTheme();
   return (
-    <Stack styles={iconBackdropStyles(theme)}>
-      <div style={{ transform: 'scale(2)', color: theme.palette.themePrimary }}>
-        <Warning20Regular />
+    <Stack
+      horizontalAlign={'center'}
+      styles={{
+        root: {
+          width: _pxToRem(92),
+          borderRadius: '100%',
+          background: theme.palette.themeLighterAlt,
+          padding: '2rem',
+          margin: 'auto'
+        }
+      }}
+    >
+      <div className={mergeStyles(scaledIconStyles(theme))}>
+        <Warning20Filled />
       </div>
     </Stack>
   );
@@ -163,18 +175,13 @@ export const DEFAULT_COMPONENT_ICONS = {
   UnsupportedBrowserWarning: <UnsupportedBrowserWarning />
 };
 
-/**
- * Backdrop style to be used by new scaled components
- */
-const iconBackdropStyles = (theme: Theme): IStackStyles => {
+const scaledIconStyles = (theme: Theme): IStyle => {
   return {
-    root: {
-      borderRadius: '100%',
-      backgroundColor: theme.palette.themeLighterAlt,
-      padding: '2rem',
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center'
-    }
+    transform: 'scale(2)',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    color: theme.palette.themePrimary,
+    zIndex: 1
   };
 };

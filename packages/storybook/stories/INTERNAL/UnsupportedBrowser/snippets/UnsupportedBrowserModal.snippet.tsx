@@ -19,7 +19,7 @@ export const UnsupportedBrowserModal: () => JSX.Element = () => {
       >
         Open Unsupported Browser Modal
       </PrimaryButton>
-      <Modal isOpen={modalOpen}>
+      <Modal isOpen={modalOpen} onDismiss={() => setModalOpen(false)}>
         <_UnsupportedBrowser
           strings={locale}
           onTroubleShootingClick={() => {
