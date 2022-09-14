@@ -61,5 +61,7 @@ export const _UnsupportedBrowser = (props: _UnsupportedBrowserProps): JSX.Elemen
   console.log('test1');
   /* @conditional-compile-remove(call-readiness) */ /* @conditional-compile-remove(unsupported-browser) */
   const strings = useLocale().strings.UnsupportedBrowser;
+  /* @conditional-compile-remove(call-readiness) */ /* @conditional-compile-remove(unsupported-browser) */
   return <_UnsupportedBrowserContainer {...props} strings={strings} />;
+  return <></>;
 };
