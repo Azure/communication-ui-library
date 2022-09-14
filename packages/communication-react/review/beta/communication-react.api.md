@@ -1807,8 +1807,11 @@ export interface Disposable {
     dispose(): void;
 }
 
-// @internal
-export interface _DomainPermissionsProps {
+// @beta
+export const DomainPermissions: (props: DomainPermissionsProps) => JSX.Element;
+
+// @beta
+export interface DomainPermissionsProps {
     appName: string;
     onTroubleshootingClick: () => void;
     strings: DomainPermissionsStrings;

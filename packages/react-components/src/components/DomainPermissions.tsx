@@ -20,10 +20,10 @@ import {
 } from './styles/DomainPermissions.styles';
 
 /**
- * @internal
+ * @beta
  * Props for DomainPermissions component.
  */
-export interface _DomainPermissionsProps {
+export interface DomainPermissionsProps {
   /**
    * Name of application calling experience is in.
    */
@@ -58,7 +58,7 @@ export interface DomainPermissionsStrings {
 }
 
 /* @conditional-compile-remove(call-readiness) */
-const _DomainPermissionsContainer = (props: _DomainPermissionsProps): JSX.Element => {
+const DomainPermissionsContainer = (props: DomainPermissionsProps): JSX.Element => {
   const { appName, onTroubleshootingClick, strings } = props;
   return (
     <Stack style={{ padding: '2rem', maxWidth: '25.375rem' }}>
@@ -85,15 +85,15 @@ const _DomainPermissionsContainer = (props: _DomainPermissionsProps): JSX.Elemen
 };
 
 /**
- * @internal
+ * @beta
  *
  * Component to allow Contoso to help their end user with their devices should their permissions be blocked
  * by their browsers settings.
  */
-export const _DomainPermissions = (props: _DomainPermissionsProps): JSX.Element => {
+export const DomainPermissions = (props: DomainPermissionsProps): JSX.Element => {
   /* @conditional-compile-remove(call-readiness) */
   const locale = useLocale().strings.DomainPermissions;
   /* @conditional-compile-remove(call-readiness) */
-  return <_DomainPermissionsContainer {...props} strings={locale} />;
+  return <DomainPermissionsContainer {...props} strings={locale} />;
   return <></>;
 };

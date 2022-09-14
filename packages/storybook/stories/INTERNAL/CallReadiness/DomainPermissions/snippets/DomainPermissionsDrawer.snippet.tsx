@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { Stack } from '@fluentui/react';
-import { _DrawerSurface, _DomainPermissions } from '@internal/react-components';
+import { _DrawerSurface, DomainPermissions } from '@internal/react-components';
 import React, { useState } from 'react';
 import { useLocale } from '../../../../../../react-components/src/localization';
 import { MobilePreviewContainer } from '../../../../MobileContainer';
@@ -27,7 +27,7 @@ export const DomainPermissionsDrawer: () => JSX.Element = () => {
         )}
         {isDrawerShowing && (
           <_DrawerSurface onLightDismiss={onLightDismissTriggered}>
-            <_DomainPermissions
+            <DomainPermissions
               appName={'Contoso app'}
               onTroubleshootingClick={() => alert('clicked trouble shooting link')}
               strings={locale}

@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { Stack } from '@fluentui/react';
-import { _DomainPermissions, _DrawerSurface } from '@internal/react-components';
+import { DomainPermissions as DomainPermissionsComponent, _DrawerSurface } from '@internal/react-components';
 import { Canvas, Description, Heading, Props, Title } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
@@ -19,7 +19,7 @@ const DomainPermissionsStory = (): JSX.Element => {
   const locale = useLocale().strings.DomainPermissions;
   return (
     <Stack>
-      <_DomainPermissions
+      <DomainPermissionsComponent
         appName={'Contoso App'}
         onTroubleshootingClick={function (): void {
           alert('you clicked the help text');
@@ -51,7 +51,7 @@ const getDocs: () => JSX.Element = () => {
       <Canvas mdxSource={DomainPermissionsDrawerExample}>
         <DomainPermissionsDrawer />
       </Canvas>
-      <Props of={_DomainPermissions} />
+      <Props of={DomainPermissionsComponent} />
     </Stack>
   );
 };
@@ -63,7 +63,7 @@ export const DomainPermissions = DomainPermissionsStory.bind({});
 export default {
   id: `${COMPONENT_FOLDER_PREFIX}-internal-domain-permissions`,
   title: `${COMPONENT_FOLDER_PREFIX}/Internal/CallReadiness/Domain Permissions`,
-  component: _DomainPermissions,
+  component: DomainPermissionsComponent,
   parameters: {
     docs: {
       page: () => getDocs()

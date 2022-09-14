@@ -500,11 +500,11 @@ export interface DialpadStyles {
     textField?: Partial<ITextFieldStyles>;
 }
 
-// @internal
-export const _DomainPermissions: (props: _DomainPermissionsProps) => JSX.Element;
+// @beta
+export const DomainPermissions: (props: DomainPermissionsProps) => JSX.Element;
 
-// @internal
-export interface _DomainPermissionsProps {
+// @beta
+export interface DomainPermissionsProps {
     appName: string;
     onTroubleshootingClick: () => void;
     strings: DomainPermissionsStrings;

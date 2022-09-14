@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { Modal, PrimaryButton } from '@fluentui/react';
-import { _DomainPermissions } from '@internal/react-components';
+import { DomainPermissions } from '@internal/react-components';
 import React, { useState } from 'react';
 import { useLocale } from '../../../../../../react-components/src/localization';
 
@@ -13,7 +13,7 @@ export const DomainPermissionsModal: () => JSX.Element = () => {
     <>
       <PrimaryButton onClick={() => setModalOpen(true)}>Open Domain Permissions Modal</PrimaryButton>
       <Modal isOpen={modalOpen} onDismiss={() => setModalOpen(false)}>
-        <_DomainPermissions
+        <DomainPermissions
           appName={'Contoso app'}
           onTroubleshootingClick={() => {
             alert('clicked trouble shooting');
