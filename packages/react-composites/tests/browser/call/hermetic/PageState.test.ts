@@ -64,6 +64,6 @@ test.describe('Page state tests', async () => {
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
     await waitForPageFontsLoaded(page);
     await waitForSelector(page, dataUiId('call-composite-start-call-button'));
-    expect(await stableScreenshot(page)).toMatchSnapshot('not-invited-to-room-page.png');
+    expect(await stableScreenshot(page)).toMatchSnapshot('permission-denied-to-room-page.png');
   });
 });
