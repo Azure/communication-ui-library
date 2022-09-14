@@ -46,17 +46,16 @@ export const PeoplePaneContent = (props: {
 }): JSX.Element => {
   const { inviteLink, onFetchParticipantMenuItems, setDrawerMenuItems, strings, onRemoveParticipant } = props;
   const participantListDefaultProps = usePropsFor(ParticipantList);
-  const disableRemoveButton = !hasRemoveParticipantsPermissionTrampoline();
   const isRoomsCall = useAdapter().getState().isRoomsCall;
+  const removeButtonAllowed = hasRemoveParticipantsPermissionTrampoline();
   const setDrawerMenuItemsForParticipant: (participant?: ParticipantListParticipant) => void = useMemo(() => {
     return (participant?: ParticipantListParticipant) => {
       if (participant) {
         let contextualMenuItems: IContextualMenuItem[] = createDefaultContextualMenuItems(
           participant,
           strings,
-          participantListDefaultProps.onRemoveParticipant,
-          participantListDefaultProps.myUserId,
-          disableRemoveButton
+          removeButtonAllowed ? participantListDefaultProps.onRemoveParticipant : undefined,
+          participantListDefaultProps.myUserId
         );
         if (onFetchParticipantMenuItems) {
           contextualMenuItems = onFetchParticipantMenuItems(
@@ -75,7 +74,7 @@ export const PeoplePaneContent = (props: {
     strings,
     participantListDefaultProps.onRemoveParticipant,
     participantListDefaultProps.myUserId,
-    disableRemoveButton,
+    removeButtonAllowed,
     onFetchParticipantMenuItems,
     setDrawerMenuItems
   ]);
@@ -149,16 +148,11 @@ export const PeoplePaneContent = (props: {
 const createDefaultContextualMenuItems = (
   participant: ParticipantListParticipant,
   strings: CallWithChatCompositeStrings | /* @conditional-compile-remove(one-to-n-calling) */ CallCompositeStrings,
-  onRemoveParticipant: (userId: string) => Promise<void>,
-  localParticipantUserId?: string,
-  disableRemoveButton?: boolean
+  onRemoveParticipant?: (userId: string) => Promise<void>,
+  localParticipantUserId?: string
 ): IContextualMenuItem[] => {
-  let disabled = !participant.isRemovable;
-  if (disableRemoveButton) {
-    disabled = disabled || disableRemoveButton;
-  }
   const menuItems: IContextualMenuItem[] = [];
-  if (participant?.userId !== localParticipantUserId) {
+  if (onRemoveParticipant && participant?.userId !== localParticipantUserId) {
     menuItems.push({
       key: 'remove',
       text: strings.removeMenuLabel,
@@ -169,8 +163,7 @@ const createDefaultContextualMenuItems = (
       },
       iconProps: {
         iconName: 'UserRemove'
-      },
-      disabled: disabled
+      }
     });
   }
   return menuItems;
