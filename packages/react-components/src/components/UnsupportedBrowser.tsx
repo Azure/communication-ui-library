@@ -39,6 +39,7 @@ export type UnsupportedBrowserProps = {
   strings: UnsupportedBrowserStrings;
 };
 
+/* @conditional-compile-remove(unsupported-browser) */
 const UnsupportedBrowserContainer = (props: UnsupportedBrowserProps): JSX.Element => {
   const { onTroubleShootingClick, strings } = props;
   console.log('test2');
