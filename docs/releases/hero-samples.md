@@ -100,3 +100,7 @@ This section uses [an update to the chat hero sample](https://github.com/Azure-S
 #### Call hero sample
 
 - Remove webpack injected globals and their use. [Example commit](https://github.com/Azure-Samples/communication-services-web-calling-hero/pull/154/commits/6d3a2854bdef06bc8304d6c11ad086facb8c4286)
+
+#### CallWithChat hero sample
+
+- Remove webpack injected globals and their use. [Example commit](https://github.com/Azure-Samples/communication-services-web-callwithchat-hero/commit/96dc314d7636a4467ba9df2f2194508186c4f64e)
