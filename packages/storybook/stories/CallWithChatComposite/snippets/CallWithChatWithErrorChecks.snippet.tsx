@@ -18,6 +18,7 @@ export type CallWithChatExampleProps = {
   fluentTheme?: PartialTheme | Theme;
   compositeOptions?: CallWithChatCompositeOptions;
   callInvitationURL?: string;
+  formFactor?: 'desktop' | 'mobile';
 };
 
 export const CallWithChatExperienceWithErrorChecks = (props: CallWithChatExampleProps): JSX.Element => {
@@ -45,5 +46,13 @@ export const CallWithChatExperienceWithErrorChecks = (props: CallWithChatExample
     return <Spinner label="Initializing..." />;
   }
 
-  return <CallWithChatComposite adapter={adapter} fluentTheme={props.fluentTheme} options={props.compositeOptions} />;
+  return (
+    <CallWithChatComposite
+      adapter={adapter}
+      fluentTheme={props.fluentTheme}
+      formFactor={props.formFactor}
+      joinInvitationURL={props.callInvitationURL}
+      options={props.compositeOptions}
+    />
+  );
 };
