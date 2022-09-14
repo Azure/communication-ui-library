@@ -512,7 +512,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     options?: AddPhoneNumberOptions
   ): Promise<void> {
     if (isPhoneNumberIdentifier(participant) && options) {
-      this.handlers.onAddParticipant(participant as PhoneNumberIdentifier, options);
+      this.handlers.onAddParticipant(participant, options);
     } else if (isCommunicationUserIdentifier(participant)) {
       this.handlers.onAddParticipant(participant);
     }
