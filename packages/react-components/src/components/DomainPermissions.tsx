@@ -95,6 +95,6 @@ export const DomainPermissions = (props: DomainPermissionsProps): JSX.Element =>
   /* @conditional-compile-remove(call-readiness) */
   const locale = useLocale().strings.DomainPermissions;
   /* @conditional-compile-remove(call-readiness) */
-  return <DomainPermissionsContainer {...props} strings={locale} />;
+  return <DomainPermissionsContainer {...props} strings={props.strings ? props.strings : locale} />;
   return <></>;
 };
