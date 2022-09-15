@@ -70,10 +70,14 @@ import { useEffect, useRef, useState } from 'react';
 /** Context of call, which is a centralized context for all state updates */
 class CallContext {
   private emitter: EventEmitter = new EventEmitter();
-  private state: CallAdapterState /* @conditional-compile-remove(rooms) */ & { locator: CallAdapterLocator };
+  private state: CallAdapterState & { /* @conditional-compile-remove(rooms) */ locator: CallAdapterLocator };
   private callId: string | undefined;
 
-  constructor(clientState: CallClientState, isTeamsCall: boolean, locator: CallAdapterLocator) {
+  constructor(
+    clientState: CallClientState,
+    isTeamsCall: boolean /* @conditional-compile-remove(rooms) */,
+    locator: CallAdapterLocator
+  ) {
     this.state = {
       isLocalPreviewMicrophoneEnabled: false,
       userId: clientState.userId,
@@ -101,7 +105,7 @@ class CallContext {
     this.emitter.emit('stateChanged', this.state);
   }
 
-  public getState(): CallAdapterState /* @conditional-compile-remove(rooms) */ & { locator: CallAdapterLocator } {
+  public getState(): CallAdapterState & { /* @conditional-compile-remove(rooms) */ locator: CallAdapterLocator } {
     return this.state;
   }
 
