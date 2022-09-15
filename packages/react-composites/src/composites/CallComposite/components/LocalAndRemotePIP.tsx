@@ -11,6 +11,8 @@ import {
   _PictureInPictureInPicture,
   _PictureInPictureInPictureTileProps
 } from '@internal/react-components';
+/* @conditional-compile-remove(rooms) */
+import { _usePermissions } from '@internal/react-components';
 
 import { useLocale } from '../../localization';
 
@@ -102,13 +104,19 @@ export const LocalAndRemotePIP = (props: LocalAndRemotePIPProps): JSX.Element =>
     [ariaLabel]
   );
 
+  /* @conditional-compile-remove(rooms) */
+  const permissions = _usePermissions();
+  let canTurnCameraOn = true;
+  /* @conditional-compile-remove(rooms) */
+  canTurnCameraOn = permissions.cameraButton;
+
   // If there are no remote participants, show the local participant as the primary tile
   const primaryTileProps: _PictureInPictureInPictureTileProps = useMemo(
     () => ({
       children: remoteVideoTileProps ? (
         <_RemoteVideoTile {...remoteVideoTileProps} />
       ) : (
-        <_LocalVideoTile {...localVideoTileProps} />
+        canTurnCameraOn && <_LocalVideoTile {...localVideoTileProps} />
       ),
       // TODO: when the calling SDK provides height/width stream information - update this to reflect the stream orientation.
       orientation: 'portrait'
@@ -119,7 +127,7 @@ export const LocalAndRemotePIP = (props: LocalAndRemotePIPProps): JSX.Element =>
   // If we are showing the local participant as the primary tile, show nothing for the secondary tile
   const secondaryTileProps: _PictureInPictureInPictureTileProps | undefined = useMemo(
     () =>
-      remoteVideoTileProps
+      remoteVideoTileProps && canTurnCameraOn
         ? {
             children: <_LocalVideoTile {...localVideoTileProps} personaMinSize={20} />,
             // TODO: when the calling SDK provides height/width stream information - update this to reflect the stream orientation.
