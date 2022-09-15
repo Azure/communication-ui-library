@@ -1046,11 +1046,8 @@ export const DEFAULT_COMPOSITE_ICONS: {
     HoldCallButton: JSX.Element;
     ResumeCall: JSX.Element;
     BackSpace: JSX.Element;
-<<<<<<< HEAD
-    UnsupportedBrowserWarning: JSX.Element;
-=======
     iconBackdrop: JSX.Element;
->>>>>>> d516675ec76f5f83ec757316ce1c30dcf9941d10
+    UnsupportedBrowserWarning: JSX.Element;
 };
 
 // @public

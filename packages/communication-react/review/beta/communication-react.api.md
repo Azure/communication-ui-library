@@ -1609,11 +1609,8 @@ export const DEFAULT_COMPONENT_ICONS: {
     SendBoxSendHovered: JSX.Element;
     VideoTileMicOff: JSX.Element;
     BackSpace: JSX.Element;
-<<<<<<< HEAD
-    UnsupportedBrowserWarning: JSX.Element;
-=======
     iconBackdrop: JSX.Element;
->>>>>>> d516675ec76f5f83ec757316ce1c30dcf9941d10
+    UnsupportedBrowserWarning: JSX.Element;
 };
 
 // @public
@@ -1698,11 +1695,8 @@ export const DEFAULT_COMPOSITE_ICONS: {
     HoldCallButton: JSX.Element;
     ResumeCall: JSX.Element;
     BackSpace: JSX.Element;
-<<<<<<< HEAD
-    UnsupportedBrowserWarning: JSX.Element;
-=======
     iconBackdrop: JSX.Element;
->>>>>>> d516675ec76f5f83ec757316ce1c30dcf9941d10
+    UnsupportedBrowserWarning: JSX.Element;
 };
 
 // @public
