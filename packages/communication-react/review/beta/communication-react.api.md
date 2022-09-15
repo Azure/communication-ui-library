@@ -393,7 +393,7 @@ export type CallCompositeIcons = {
 export type CallCompositeOptions = {
     errorBar?: boolean;
     callControls?: boolean | CallControlOptions;
-    devicePermissions?: DevicePermissionPrompts;
+    devicePermissions?: DevicePermissionRestrictions;
 };
 
 // @public
@@ -857,7 +857,7 @@ export type CallWithChatCompositeIcons = {
 export type CallWithChatCompositeOptions = {
     callControls?: boolean | CallWithChatControlOptions;
     fileSharing?: FileSharingOptions;
-    devicePermissions?: DevicePermissionPrompts;
+    devicePermissions?: DevicePermissionRestrictions;
 };
 
 // @public
@@ -1683,7 +1683,7 @@ export type DeviceManagerState = {
 };
 
 // @beta
-export interface DevicePermissionPrompts {
+export interface DevicePermissionRestrictions {
     camera: 'required' | 'optional' | 'doNotPrompt';
     microphone: 'required' | 'optional' | 'doNotPrompt';
 }
