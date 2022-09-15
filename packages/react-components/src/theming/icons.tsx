@@ -44,6 +44,9 @@ import {
 /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
 import { Backspace20Regular } from '@fluentui/react-icons';
 
+/* @conditional-compile-remove(call-readiness) */
+import { Circle24Filled } from '@fluentui/react-icons';
+
 /* @conditional-compile-remove(file-sharing) */
 import { ArrowDownload16Regular } from '@fluentui/react-icons';
 /* @conditional-compile-remove(PSTN-calls) */
@@ -142,5 +145,7 @@ export const DEFAULT_COMPONENT_ICONS = {
   SendBoxSendHovered: <Send20Filled />,
   VideoTileMicOff: <MicOff16Filled />,
   /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
-  BackSpace: <Backspace20Regular />
+  BackSpace: <Backspace20Regular />,
+  /* @conditional-compile-remove(call-readiness) */
+  iconBackdrop: <Circle24Filled />
 };
