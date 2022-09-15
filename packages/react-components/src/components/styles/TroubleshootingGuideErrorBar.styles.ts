@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IButtonStyles, ILinkStyles, IMessageBarStyles, ITheme } from '@fluentui/react';
+import { IButtonStyles, ILinkStyles, IMessageBarStyles, ITheme, MessageBarType } from '@fluentui/react';
 
 /**
  * @private
@@ -22,9 +22,9 @@ export const confirmButtonStyle = (theme: ITheme): IButtonStyles => ({
 /**
  * @private
  */
-export const messageBarStyle = (theme: ITheme, errorType: number): IMessageBarStyles => ({
+export const messageBarStyle = (theme: ITheme, errorType: MessageBarType): IMessageBarStyles => ({
   innerText: {
-    paddingTop: errorType === 5 ? '0.15rem' : '0.1rem', // to move the inner text of the message bar down to be centered
+    paddingTop: errorType === MessageBarType.warning ? '0.15rem' : '0.1rem', // to move the inner text of the message bar down to be centered
     lineHeight: 'none',
     width: '100%',
     color: theme.palette.black
