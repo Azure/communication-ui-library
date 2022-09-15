@@ -3,7 +3,7 @@
 
 import React from 'react';
 /* @conditional-compile-remove(call-readiness) */
-import { Stack, Text, Link, Icon } from '@fluentui/react';
+import { Stack, Text, Link, Icon, useTheme } from '@fluentui/react';
 /* @conditional-compile-remove(call-readiness) */
 import { useLocale } from '../localization';
 /* @conditional-compile-remove(call-readiness) */
@@ -62,7 +62,7 @@ const DomainPermissionsContainer = (props: DomainPermissionsProps): JSX.Element 
   const { appName, onTroubleshootingClick, strings } = props;
   const theme = useTheme();
   return (
-    <Stack style={{ padding: '2rem', maxWidth: containerWitdthTrampoline() }}>
+    <Stack style={{ padding: '2rem', maxWidth: '25.375rem' }}>
       <Stack horizontal style={{ paddingBottom: '1rem' }} horizontalAlign={'space-between'}>
         <Stack styles={iconContainerStyles} horizontalAlign={'center'}>
           <Icon styles={iconPrimaryStyles(theme)} iconName={'DomainPermissionCamera'}></Icon>
