@@ -64,10 +64,48 @@ test.describe('Call Composite E2E CallPage Tests', () => {
     expect(await stableScreenshot(page)).toMatchSnapshot(`video-gallery-page-participants-flyout.png`);
   });
 
-  test('participant list opens and displays ellipses if passing in custom icon', async ({
+  test('participant list opens and displays ellipses if passing in custom icon for desktop', async ({
     page,
     serverUrl
   }, testInfo) => {
+    //only run this test on desktop
+    test.skip(!isTestProfileDesktop(testInfo));
+    const paul = defaultMockRemoteParticipant('Paul Bridges');
+    addVideoStream(paul, true);
+    paul.isSpeaking = true;
+    const fiona = defaultMockRemoteParticipant('Fiona Harper');
+    addVideoStream(fiona, true);
+    const participants = [paul, defaultMockRemoteParticipant('Eryka Klein'), fiona];
+    const initialState = defaultMockCallAdapterState(participants);
+
+    await page.goto(
+      buildUrlWithMockAdapter(serverUrl, initialState, {
+        showParticipantItemIcon: 'true'
+      })
+    );
+    await pageClick(page, dataUiId('call-composite-participants-button'));
+
+    if (flavor === 'stable') {
+      const buttonCallOut = await waitForSelector(page, '.ms-Callout');
+      // This will ensure no animation is happening for the callout
+      await buttonCallOut.waitForElementState('stable');
+    } else {
+      await waitForSelector(page, dataUiId('call-composite-people-pane'));
+      if (!isTestProfileDesktop(testInfo)) {
+        await waitForPiPiPToHaveLoaded(page, { skipVideoCheck: true });
+      }
+    }
+    expect(await stableScreenshot(page)).toMatchSnapshot(
+      `video-gallery-page-participants-flyout-custom-ellipses-desktop.png`
+    );
+  });
+
+  test('participant list should not contain ellipses on mobile even if passing in custom icon', async ({
+    page,
+    serverUrl
+  }, testInfo) => {
+    //only run this test on mobile
+    test.skip(isTestProfileDesktop(testInfo));
     const paul = defaultMockRemoteParticipant('Paul Bridges');
     addVideoStream(paul, true);
     paul.isSpeaking = true;
@@ -82,13 +120,14 @@ test.describe('Call Composite E2E CallPage Tests', () => {
       })
     );
 
-    if (!isTestProfileDesktop(testInfo) && !isTestProfileStableFlavor()) {
+    if (!isTestProfileStableFlavor()) {
       await pageClick(page, dataUiId('call-with-chat-composite-more-button'));
       const drawerPeopleMenuDiv = await page.$('div[role="menu"] >> text=People');
       await drawerPeopleMenuDiv?.click();
     } else {
       await pageClick(page, dataUiId('call-composite-participants-button'));
     }
+
     if (flavor === 'stable') {
       const buttonCallOut = await waitForSelector(page, '.ms-Callout');
       // This will ensure no animation is happening for the callout
@@ -99,7 +138,9 @@ test.describe('Call Composite E2E CallPage Tests', () => {
         await waitForPiPiPToHaveLoaded(page, { skipVideoCheck: true });
       }
     }
-    expect(await stableScreenshot(page)).toMatchSnapshot(`video-gallery-page-participants-flyout-custom-ellipses.png`);
+    expect(await stableScreenshot(page)).toMatchSnapshot(
+      `video-gallery-page-participants-flyout-no-ellipses-mobile.png`
+    );
   });
 });
 
