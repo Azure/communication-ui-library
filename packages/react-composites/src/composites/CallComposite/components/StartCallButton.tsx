@@ -29,7 +29,7 @@ export const StartCallButton = (props: StartCallButtonProps): JSX.Element => {
 
   let startCallButtonLabel = locale.strings.call.startCallButtonLabel;
   /* @conditional-compile-remove(rooms) */
-  if ('roomId' in adapter.getState()['locator']) {
+  if (adapter.getState()['locator'] && 'roomId' in adapter.getState()['locator']) {
     startCallButtonLabel = locale.strings.call.startRoomCallButtonLabel;
   }
 
