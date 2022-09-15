@@ -71,9 +71,14 @@ export const test = base.extend<TestFixture>({
  *   - load the hermetic CallWithChat test app on the page.
  *   - wait for the page to have completely loaded.
  */
-export async function loadCallPage(page: Page, serverUrl: string, callState: MockCallAdapterState): Promise<void> {
+export async function loadCallPage(
+  page: Page,
+  serverUrl: string,
+  callState: MockCallAdapterState,
+  qArgs?: { [key: string]: string } // TODO: more strongly type this with a type like: `Partial<Record<keyof QueryArgs, string>>`
+): Promise<void> {
   const chatArgs = fakeChatAdapterArgsForCallAdapterState(callState);
-  await page.goto(buildUrlForApp(serverUrl, callState, chatArgs));
+  await page.goto(buildUrlForApp(serverUrl, callState, chatArgs, qArgs));
   await waitForPageFontsLoaded(page);
   await waitForSelector(page, dataUiId('call-composite-hangup-button'));
 }

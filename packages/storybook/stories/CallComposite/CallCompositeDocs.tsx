@@ -182,6 +182,26 @@ export const getDocs: () => JSX.Element = () => {
         accepts an object where you can provide a custom JSX element against an icon name key.
       </Description>
 
+      <Heading>Customize Call Controls</Heading>
+      <Description>
+        The `options` prop allows you to customize some parts of the Call Composite. This prop is of type
+        [CallCompositeOptions](https://docs.microsoft.com/en-us/javascript/api/@azure/communication-react/callcompositeoptions?view=azure-node-latest).
+        The `callControls` property can be used to customize the call controls. This property is of type
+        [CallControlOptions](https://docs.microsoft.com/en-us/javascript/api/@azure/communication-react/callcontroloptions?view=azure-node-latest).
+      </Description>
+      <Description>For example, you can hide the camera button by using `callControls` as shown below:</Description>
+      <Source code="<CallComposite options={{ callControls: { cameraButton: false } }} />" />
+      <Description>
+        You can display the call controls in a compact mode using `callControls` as shown below:
+      </Description>
+      <Source code="<CallComposite options={{ callControls: { displayType: 'compact' } }} />" />
+      <Description>
+        You can disable some call controls (refer to
+        [CallControlOptions](https://docs.microsoft.com/en-us/javascript/api/@azure/communication-react/callcontroloptions?view=azure-node-latest))
+        using `callControls` as shown below:
+      </Description>
+      <Source code="<CallComposite options={{ callControls: { screenShareButton: { disabled: true } } }} />" />
+
       <Heading>Joining an existing Call</Heading>
       <Description>
         The [join existing call](./?path=/story/composites-call-joinexistingcall--join-existing-call) provides an easy
