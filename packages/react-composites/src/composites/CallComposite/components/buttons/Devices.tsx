@@ -34,7 +34,7 @@ export const Devices = (props: {
   /* @conditional-compile-remove(rooms) */
   const locale = useLocale();
   /* @conditional-compile-remove(rooms) */
-  const OnlyManageSpeakers = !permissions.microphoneButton && !permissions.cameraButton;
+  const onlyManageSpeakers = !permissions.microphoneButton && !permissions.cameraButton;
 
   /* @conditional-compile-remove(rooms) */
   const onRenderDevicesIcon = (): JSX.Element => {
@@ -53,7 +53,7 @@ export const Devices = (props: {
       /* @conditional-compile-remove(rooms) */
       strings={getLabelFromPermissions(permissions, locale)}
       /* @conditional-compile-remove(rooms) */
-      onRenderIcon={OnlyManageSpeakers ? onRenderDevicesIcon : undefined}
+      onRenderIcon={onlyManageSpeakers ? onRenderDevicesIcon : undefined}
     />
   );
 };
