@@ -88,6 +88,11 @@ export type {
   DevicesButtonContextualMenuStyles
 } from './DevicesButton';
 
+/* @conditional-compile-remove(call-readiness) */
+export { DomainPermissions } from './DomainPermissions';
+/* @conditional-compile-remove(call-readiness) */
+export type { DomainPermissionsStrings, DomainPermissionsProps } from './DomainPermissions';
+
 export { ParticipantsButton } from './ParticipantsButton';
 export type {
   ParticipantsButtonContextualMenuStyles,
