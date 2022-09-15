@@ -1040,6 +1040,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     HoldCallButton: JSX.Element;
     ResumeCall: JSX.Element;
     BackSpace: JSX.Element;
+    iconBackdrop: JSX.Element;
 };
 
 // @public
