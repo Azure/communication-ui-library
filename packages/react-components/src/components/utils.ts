@@ -63,7 +63,7 @@ export const dismissError = (dismissedErrors: DismissedError[], toDismiss: Activ
 
 /**
  * @private
- * @param ctiveErrorMessages
+ * @param activeErrorMessages
  * @param dismissedErrors
  * @returns DismissedError[]
  *  Returns a new Array if and only if contents change, to avoid re-rendering when nothing was dropped.

@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, MessageBar, PrimaryButton, Stack, useTheme } from '@fluentui/react';
 import { useLocale } from '../localization';
 import { ErrorBarProps } from './ErrorBar';
-import { confirmButtonStyle, linkStyle, messageBarStyle } from './styles/TroubleShootingGuideErrorBar.styles';
+import { confirmButtonStyle, linkStyle, messageBarStyle } from './styles/TroubleshootingGuideErrorBar.styles';
 import {
   DismissedError,
   dismissError,
@@ -16,21 +16,21 @@ import {
 } from './utils';
 
 /**
- * Strings for {@link _TroubleShootingGuideErrorBar}.
+ * Strings for {@link _TroubleshootingGuideErrorBar}.
  *
  * @internal
  */
-export interface _TroubleShootingGuideErrorBarStrings {
+export interface _TroubleshootingGuideErrorBarStrings {
   linkText?: string;
   buttonText?: string;
 }
 
 /**
- * Props for {@link _TroubleShootingGuideErrorBar}.
+ * Props for {@link _TroubleshootingGuideErrorBar}.
  *
  * @internal
  */
-export interface _TroubleShootingGuideErrorBarProps extends ErrorBarProps {
+export interface _TroubleshootingGuideErrorBarProps extends ErrorBarProps {
   /**
    * permissions state for camera/microphone
    */
@@ -61,25 +61,25 @@ export interface _TroubleShootingGuideErrorBarProps extends ErrorBarProps {
    *
    * @example
    * ```ts
-   * onNetworkingTroubleShootingClick?: () =>
+   * onNetworkingTroubleshootingClick?: () =>
    *  window.open('https://contoso.com/network-troubleshooting', '_blank');
    * ```
    *
    * @remarks
    * if this is not supplied, the composite will not show a 'network troubleshooting' link.
    */
-  onNetworkingTroubleShootingClick?: () => void;
+  onNetworkingTroubleshootingClick?: () => void;
   /**
    * strings related to trouble shooting guidance link and dismiss button
    */
-  troubleShootingGuideStrings: _TroubleShootingGuideErrorBarStrings;
+  troubleshootingGuideStrings: _TroubleshootingGuideErrorBarStrings;
 }
 
 /**
  * @internal
  * A component to show device Permission/network connection related errors, contains link that leads to further trouble shooting guide
  */
-export const _TroubleShootingGuideErrorBar = (props: _TroubleShootingGuideErrorBarProps): JSX.Element => {
+export const _TroubleshootingGuideErrorBar = (props: _TroubleshootingGuideErrorBarProps): JSX.Element => {
   const theme = useTheme();
   // error bar strings
   const localeStrings = useLocale().strings.errorBar;
@@ -89,9 +89,9 @@ export const _TroubleShootingGuideErrorBar = (props: _TroubleShootingGuideErrorB
 
   const {
     onPermissionsTroubleshootingClick,
-    onNetworkingTroubleShootingClick,
+    onNetworkingTroubleshootingClick,
     permissionsState,
-    troubleShootingGuideStrings
+    troubleshootingGuideStrings
   } = props;
 
   // dropDismissalsForInactiveErrors only returns a new object if `dismissedErrors` actually changes.
@@ -114,7 +114,7 @@ export const _TroubleShootingGuideErrorBar = (props: _TroubleShootingGuideErrorB
           messageBarIconProps={messageBarIconProps(error.type)}
         >
           <Stack horizontal horizontalAlign="space-between" verticalAlign="center">
-            {onPermissionsTroubleshootingClick || onNetworkingTroubleShootingClick ? (
+            {onPermissionsTroubleshootingClick || onNetworkingTroubleshootingClick ? (
               <div>
                 {strings[error.type]}
                 <Link
@@ -122,20 +122,20 @@ export const _TroubleShootingGuideErrorBar = (props: _TroubleShootingGuideErrorB
                   onClick={() => {
                     if (onPermissionsTroubleshootingClick) {
                       onPermissionsTroubleshootingClick(permissionsState);
-                    } else if (onNetworkingTroubleShootingClick) {
-                      onNetworkingTroubleShootingClick();
+                    } else if (onNetworkingTroubleshootingClick) {
+                      onNetworkingTroubleshootingClick();
                     }
                   }}
                   underline
                 >
-                  <span>{troubleShootingGuideStrings.linkText}</span>
+                  <span>{troubleshootingGuideStrings.linkText}</span>
                 </Link>
               </div>
             ) : (
               <div>{strings[error.type]} </div>
             )}
             <PrimaryButton
-              text={troubleShootingGuideStrings.buttonText}
+              text={troubleshootingGuideStrings.buttonText}
               styles={confirmButtonStyle(theme)}
               onClick={() => {
                 setDismissedErrors(dismissError(dismissedErrors, error));
