@@ -16,7 +16,7 @@ import {
 import { _usePermissions } from '@internal/react-components';
 import React, { useMemo, useRef } from 'react';
 /* @conditional-compile-remove(one-to-n-calling) */
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
 /* @conditional-compile-remove(one-to-n-calling) */
 import { AvatarPersonaDataCallback } from '../../common/AvatarPersona';
 import { containerDivStyles } from '../../common/ContainerRectProps';
@@ -24,9 +24,7 @@ import { containerDivStyles } from '../../common/ContainerRectProps';
 import { useAdapter } from '../adapter/CallAdapterProvider';
 import { CallControls, CallControlsProps } from '../components/CallControls';
 /* @conditional-compile-remove(one-to-n-calling) */
-import { useSelector } from '../hooks/useSelector';
-/* @conditional-compile-remove(one-to-n-calling) */
-import { callStatusSelector } from '../selectors/callStatusSelector';
+import { useSidePaneState } from '../hooks/useSidePaneState';
 import {
   callControlsContainerStyles,
   notificationsContainerStyles,
@@ -39,7 +37,7 @@ import {
 /* @conditional-compile-remove(one-to-n-calling) */
 import { CallControlOptions } from '../types/CallControlOptions';
 /* @conditional-compile-remove(one-to-n-calling) */
-import { CallPane, CallPaneOption } from './CallPane';
+import { CallPane } from './CallPane';
 import { MutedNotification, MutedNotificationProps } from './MutedNotification';
 
 /**
@@ -80,33 +78,10 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   /* @conditional-compile-remove(one-to-n-calling) */
   const adapter = useAdapter();
   /* @conditional-compile-remove(one-to-n-calling) */
-  const [activePane, setActivePane] = useState<CallPaneOption>('none');
-  /* @conditional-compile-remove(one-to-n-calling) */
-  const { callStatus } = useSelector(callStatusSelector);
+  const { activePane, closePane, openPeoplePane, togglePeoplePane } = useSidePaneState();
 
   /* @conditional-compile-remove(one-to-n-calling) */
-  const closePane = useCallback(() => {
-    setActivePane('none');
-  }, [setActivePane]);
-
-  /* @conditional-compile-remove(one-to-n-calling) */
-  const isMobileWithActivePane = props.mobileView && activePane !== 'none';
-
-  /* @conditional-compile-remove(one-to-n-calling) */
-  const togglePeople = useCallback(() => {
-    if (activePane === 'people' || !_isInCall(callStatus)) {
-      setActivePane('none');
-    } else {
-      setActivePane('people');
-    }
-  }, [activePane, setActivePane, callStatus]);
-
-  /* @conditional-compile-remove(one-to-n-calling) */
-  const selectPeople = useCallback(() => {
-    if (_isInCall(callStatus)) {
-      setActivePane('people');
-    }
-  }, [setActivePane, callStatus]);
+  const isMobileWithActivePane = props.mobileView && activePane;
 
   /* @conditional-compile-remove(one-to-n-calling) */
   const callCompositeContainerCSS = useMemo(() => {
@@ -123,7 +98,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
 
   /* @conditional-compile-remove(one-to-n-calling) */
   const callPaneContent = useCallback((): JSX.Element => {
-    if (adapter && _isInCall(callStatus) && activePane === 'people') {
+    if (adapter && activePane === 'people') {
       return (
         <CallPane
           callAdapter={adapter}
@@ -131,7 +106,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
           onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
           onFetchParticipantMenuItems={props.callControlProps?.onFetchParticipantMenuItems}
           onPeopleButtonClicked={
-            showShowPeopleTabHeaderButton(props.callControlProps.options) ? selectPeople : undefined
+            showShowPeopleTabHeaderButton(props.callControlProps.options) ? openPeoplePane : undefined
           }
           callControls={
             typeof props.callControlProps.options !== 'boolean' ? props.callControlProps.options : undefined
@@ -147,7 +122,6 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   }, [
     activePane,
     adapter,
-    callStatus,
     closePane,
     props.callControlProps.callInvitationURL,
     props.callControlProps?.onFetchParticipantMenuItems,
@@ -155,7 +129,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     props.mobileView,
     props.modalLayerHostId,
     props.onFetchAvatarPersonaData,
-    selectPeople
+    openPeoplePane
   ]);
 
   /* @conditional-compile-remove(rooms) */
@@ -202,7 +176,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                 /* @conditional-compile-remove(one-to-n-calling) */
                 peopleButtonChecked={activePane === 'people'}
                 /* @conditional-compile-remove(one-to-n-calling) */
-                onPeopleButtonClicked={togglePeople}
+                onPeopleButtonClicked={togglePeoplePane}
               />
             </Stack.Item>
           )}
