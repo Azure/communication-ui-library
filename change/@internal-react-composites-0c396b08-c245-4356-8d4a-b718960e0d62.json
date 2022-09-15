@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Added locator property to CallContext state. Added new strings for configuration page when call is rooms.",
+  "packageName": "@internal/react-composites",
+  "email": "miguelgamis@microsoft.com",
+  "dependentChangeType": "patch"
+}
