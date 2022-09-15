@@ -58,7 +58,7 @@ export const CallPane = (props: {
 }): JSX.Element => {
   const [drawerMenuItems, setDrawerMenuItems] = useState<_DrawerMenuItemProps[]>([]);
 
-  const hidden = props.activePane === 'none';
+  const hidden = !!props.activePane;
   const paneStyles = hidden ? hiddenStyles : props.mobileView ? availableSpaceStyles : sidePaneStyles;
   const localeStrings = useLocale();
 
@@ -73,21 +73,20 @@ export const CallPane = (props: {
   const strings = getStrings();
   const theme = useTheme();
 
-  const header =
-    props.activePane === 'none' ? null : props.mobileView ? (
-      <TabHeader
-        {...props}
-        strings={strings}
-        activeTab={props.activePane}
-        disablePeopleButton={isDisabled(props.callControls?.participantsButton)}
-      />
-    ) : (
-      <SidePaneHeader
-        {...props}
-        strings={strings}
-        headingText={props.activePane === 'people' ? strings.peoplePaneTitle : ''}
-      />
-    );
+  const header = !props.activePane ? null : props.mobileView ? (
+    <TabHeader
+      {...props}
+      strings={strings}
+      activeTab={props.activePane}
+      disablePeopleButton={isDisabled(props.callControls?.participantsButton)}
+    />
+  ) : (
+    <SidePaneHeader
+      {...props}
+      strings={strings}
+      headingText={props.activePane === 'people' ? strings.peoplePaneTitle : ''}
+    />
+  );
 
   /**
    * In a Call Composite when a participant is removed, we must remove them from the call.
