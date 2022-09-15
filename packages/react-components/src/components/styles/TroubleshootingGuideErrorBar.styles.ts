@@ -26,7 +26,8 @@ export const messageBarStyle = (theme: ITheme, errorType: MessageBarType): IMess
     paddingTop: errorType === MessageBarType.warning ? '0.15rem' : '0.1rem', // to move the inner text of the message bar down to be centered
     lineHeight: 'none',
     color: theme.palette.black,
-    alignSelf: 'center'
+    alignSelf: 'center',
+    whiteSpace: 'normal'
   },
   icon: {
     marginTop: '0.375rem',
