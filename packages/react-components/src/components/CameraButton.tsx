@@ -5,7 +5,7 @@ import React, { useCallback, useState } from 'react';
 import { useLocale } from '../localization';
 import { VideoStreamOptions } from '../types';
 import { ControlBarButton, ControlBarButtonProps } from './ControlBarButton';
-import { HighContrastAwareIcon } from './HighContrastAwareIcon';
+import { _HighContrastAwareIcon } from './HighContrastAwareIcon';
 
 import { IContextualMenuItemStyles, IContextualMenuStyles } from '@fluentui/react';
 import { ControlBarButtonStyles } from './ControlBarButton';
@@ -149,10 +149,10 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
   const disabled = props.disabled || waitForCamera;
 
   const onRenderCameraOnIcon = (): JSX.Element => (
-    <HighContrastAwareIcon disabled={disabled} iconName="ControlButtonCameraOn" />
+    <_HighContrastAwareIcon disabled={disabled} iconName="ControlButtonCameraOn" />
   );
   const onRenderCameraOffIcon = (): JSX.Element => (
-    <HighContrastAwareIcon disabled={disabled} iconName="ControlButtonCameraOff" />
+    <_HighContrastAwareIcon disabled={disabled} iconName="ControlButtonCameraOff" />
   );
   if (waitForCamera && strings.tooltipVideoLoadingContent) {
     strings.tooltipDisabledContent = strings.tooltipVideoLoadingContent;

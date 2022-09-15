@@ -12,11 +12,9 @@ import {
 import React from 'react';
 import { useLocale } from '../localization';
 import { ControlBarButton, ControlBarButtonProps, ControlBarButtonStyles } from './ControlBarButton';
-import { HighContrastAwareIcon } from './HighContrastAwareIcon';
+import { _HighContrastAwareIcon } from './HighContrastAwareIcon';
 import { buttonFlyoutItemStyles } from './styles/ControlBar.styles';
 import { _preventDismissOnEvent as preventDismissOnEvent } from '@internal/acs-ui-common';
-/* @conditional-compile-remove(rooms) */
-import { _Permissions, _usePermissions } from '../permissions';
 
 /**
  * Styles for the {@link DevicesButton} menu.
@@ -373,9 +371,6 @@ export const generateDefaultDeviceMenuProps = (
 export const DevicesButton = (props: DevicesButtonProps): JSX.Element => {
   const { onRenderIcon } = props;
 
-  /* @conditional-compile-remove(rooms) */
-  const rolePermissions = _usePermissions();
-
   const localeStrings = useLocale().strings.devicesButton;
   const strings = { ...localeStrings, ...props.strings };
 
@@ -383,11 +378,7 @@ export const DevicesButton = (props: DevicesButtonProps): JSX.Element => {
     props.menuProps ?? generateDefaultDeviceMenuProps({ ...props, styles: props.styles?.menuStyles }, strings);
 
   const onRenderOptionsIcon = (): JSX.Element => {
-    /* @conditional-compile-remove(rooms) */
-    if (!rolePermissions.microphoneButton && !rolePermissions.cameraButton) {
-      return <HighContrastAwareIcon disabled={props.disabled} iconName="OptionsSpeaker" />;
-    }
-    return <HighContrastAwareIcon disabled={props.disabled} iconName="ControlButtonOptions" />;
+    return <_HighContrastAwareIcon disabled={props.disabled} iconName="ControlButtonOptions" />;
   };
 
   return (

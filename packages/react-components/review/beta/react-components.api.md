@@ -709,6 +709,15 @@ export interface GridLayoutStyles extends BaseCustomStyles {
     children?: IStyle;
 }
 
+// @internal
+export const _HighContrastAwareIcon: (props: _HighContrastAwareIconProps) => JSX.Element;
+
+// @internal (undocumented)
+export interface _HighContrastAwareIconProps {
+    disabled?: boolean | undefined;
+    iconName: string;
+}
+
 // @beta
 export const HoldButton: (props: HoldButtonProps) => JSX.Element;
 

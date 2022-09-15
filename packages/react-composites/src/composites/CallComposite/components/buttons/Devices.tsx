@@ -10,6 +10,7 @@ import { CallControlDisplayType } from '../../types/CallControlOptions';
 import { concatButtonBaseStyles, devicesButtonWithIncreasedTouchTargets } from '../../styles/Buttons.styles';
 /* @conditional-compile-remove(rooms) */
 import { CompositeLocale, useLocale } from '../../../localization';
+import { _HighContrastAwareIcon } from '@internal/react-components';
 
 /** @private */
 export const Devices = (props: {
@@ -32,6 +33,13 @@ export const Devices = (props: {
   const permissions = _usePermissions();
   /* @conditional-compile-remove(rooms) */
   const locale = useLocale();
+  /* @conditional-compile-remove(rooms) */
+  const OnlyManageSpeakers = !permissions.microphoneButton && !permissions.cameraButton;
+
+  /* @conditional-compile-remove(rooms) */
+  const onRenderDevicesIcon = (): JSX.Element => {
+    return <_HighContrastAwareIcon disabled={props.disabled} iconName="OptionsSpeaker" />;
+  };
 
   return (
     <DevicesButton
@@ -44,6 +52,8 @@ export const Devices = (props: {
       disabled={props.disabled}
       /* @conditional-compile-remove(rooms) */
       strings={getLabelFromPermissions(permissions, locale)}
+      /* @conditional-compile-remove(rooms) */
+      onRenderIcon={OnlyManageSpeakers ? onRenderDevicesIcon : undefined}
     />
   );
 };

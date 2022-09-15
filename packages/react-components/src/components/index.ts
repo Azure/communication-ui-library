@@ -137,3 +137,5 @@ export type { HoldButtonProps, HoldButtonStrings } from './HoldButton';
 
 export { _LocalVideoTile } from './LocalVideoTile';
 export { _RemoteVideoTile } from './RemoteVideoTile';
+export { _HighContrastAwareIcon } from './HighContrastAwareIcon';
+export type { _HighContrastAwareIconProps } from './HighContrastAwareIcon';
