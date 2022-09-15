@@ -71,7 +71,6 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
   if (adapter.getState()['locator'] && 'roomId' in adapter.getState()['locator']) {
     configurationPageTitle = locale.strings.call.roomsConfigurationPageTitle;
   }
-  console.log('configurationPageTitle: ', configurationPageTitle);
 
   const title = (
     <Stack.Item className={mobileView ? titleContainerStyleMobile : titleContainerStyleDesktop}>
