@@ -8,7 +8,6 @@ import { IButtonStyles, ILinkStyles, IMessageBarStyles, ITheme, MessageBarType }
  */
 export const confirmButtonStyle = (theme: ITheme): IButtonStyles => ({
   root: {
-    float: 'right',
     padding: '0.375rem 1.25rem',
     width: '3.75rem',
     height: '2rem',
@@ -26,8 +25,8 @@ export const messageBarStyle = (theme: ITheme, errorType: MessageBarType): IMess
   innerText: {
     paddingTop: errorType === MessageBarType.warning ? '0.15rem' : '0.1rem', // to move the inner text of the message bar down to be centered
     lineHeight: 'none',
-    width: '100%',
-    color: theme.palette.black
+    color: theme.palette.black,
+    alignSelf: 'center'
   },
   icon: {
     marginTop: '0.375rem',

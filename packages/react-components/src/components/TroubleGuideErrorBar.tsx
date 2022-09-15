@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import React, { useEffect, useState } from 'react';
-import { Link, MessageBar, PrimaryButton, Stack, useTheme } from '@fluentui/react';
+import { Link, MessageBar, MessageBarButton, Stack, useTheme } from '@fluentui/react';
 import { useLocale } from '../localization';
 import { ErrorBarProps } from './ErrorBar';
 import { confirmButtonStyle, linkStyle, messageBarStyle } from './styles/TroubleshootingGuideErrorBar.styles';
@@ -112,29 +112,8 @@ export const _TroubleshootingGuideErrorBar = (props: _TroubleshootingGuideErrorB
           key={error.type}
           messageBarType={messageBarType(error.type)}
           messageBarIconProps={messageBarIconProps(error.type)}
-        >
-          <Stack horizontal horizontalAlign="space-between" verticalAlign="center">
-            {onPermissionsTroubleshootingClick || onNetworkingTroubleshootingClick ? (
-              <div>
-                {strings[error.type]}
-                <Link
-                  styles={linkStyle(theme)}
-                  onClick={() => {
-                    if (onPermissionsTroubleshootingClick) {
-                      onPermissionsTroubleshootingClick(permissionsState);
-                    } else if (onNetworkingTroubleshootingClick) {
-                      onNetworkingTroubleshootingClick();
-                    }
-                  }}
-                  underline
-                >
-                  <span>{troubleshootingGuideStrings.linkText}</span>
-                </Link>
-              </div>
-            ) : (
-              <div>{strings[error.type]} </div>
-            )}
-            <PrimaryButton
+          actions={
+            <MessageBarButton
               text={troubleshootingGuideStrings.buttonText}
               styles={confirmButtonStyle(theme)}
               onClick={() => {
@@ -142,7 +121,29 @@ export const _TroubleshootingGuideErrorBar = (props: _TroubleshootingGuideErrorB
               }}
               ariaLabel={strings.dismissButtonAriaLabel}
             />
-          </Stack>
+          }
+          isMultiline={false}
+        >
+          {onPermissionsTroubleshootingClick || onNetworkingTroubleshootingClick ? (
+            <div>
+              {strings[error.type]}
+              <Link
+                styles={linkStyle(theme)}
+                onClick={() => {
+                  if (onPermissionsTroubleshootingClick) {
+                    onPermissionsTroubleshootingClick(permissionsState);
+                  } else if (onNetworkingTroubleshootingClick) {
+                    onNetworkingTroubleshootingClick();
+                  }
+                }}
+                underline
+              >
+                <span>{troubleshootingGuideStrings.linkText}</span>
+              </Link>
+            </div>
+          ) : (
+            <div>{strings[error.type]} </div>
+          )}
         </MessageBar>
       ))}
     </Stack>
