@@ -4,7 +4,6 @@
 import { ErrorType } from '@azure/communication-react';
 import { PartialTheme } from '@fluentui/react';
 import { DefaultTheme, DarkTheme, TeamsTheme, WordTheme } from '@fluentui/theme-samples';
-import { COMPOSITE_STRING_CONNECTIONSTRING } from './CompositeStringUtils';
 import {
   mediaGalleryWidthDefault,
   mediaGalleryWidthOptions,
@@ -143,12 +142,33 @@ export const orientationArg = {
 };
 
 export const controlsToAdd = {
-  alternateCallerId: { control: 'text', description: 'added', defaultValue: '', name: 'Alternate CallerID' },
+  alternateCallerId: {
+    control: 'text',
+    description: 'added',
+    defaultValue: '',
+    name: 'Alternate CallerID',
+    type: { name: 'string', required: true }
+  },
   avatarInitials: { control: 'text', defaultValue: 'A B', name: 'Avatar initials' },
   botAvatar: { control: 'radio', options: botAvatars, defaultValue: 'Default', name: 'Bot Avatar' },
-  botToken: { control: 'text', defaultValue: '', name: 'Valid token for bot' },
-  botUserId: { control: 'text', defaultValue: '', name: 'User identifier for bot' },
-  calleeUserId: { control: 'text', defaultValue: '8:echo123', name: "Callee's User identifier" },
+  botToken: {
+    control: 'text',
+    defaultValue: '',
+    name: 'Valid token for bot',
+    type: { name: 'string', required: true }
+  },
+  botUserId: {
+    control: 'text',
+    defaultValue: '',
+    name: 'User identifier for bot',
+    type: { name: 'string', required: true }
+  },
+  calleeUserId: {
+    control: 'text',
+    defaultValue: '8:echo123',
+    name: "Callee's User identifier",
+    type: { name: 'string', required: true }
+  },
   calleeToken: { control: 'text', defaultValue: '', name: "Callee's Valid token" },
   callerImages: { control: 'file', accept: '.jpeg, .jpg, .png', defaultValue: [], name: 'Avatar' },
   callerName: { control: 'text', defaultValue: 'Maximus Aurelius', name: 'Caller Name' },
@@ -157,7 +177,7 @@ export const controlsToAdd = {
   callInvitationURL: {
     control: 'text',
     defaultValue: '',
-    name: 'Optional URL to invite other participants to the call'
+    name: 'URL to invite other participants to the call'
   },
   callLocator: {
     control: 'text',
@@ -167,16 +187,21 @@ export const controlsToAdd = {
   callParticipantsLocator: {
     control: 'array',
     defaultValue: ['+###########'],
-    name: 'Call locator (participants phone numbers)'
+    name: 'Call locator (participants phone numbers)',
+    type: { name: 'string', required: true }
   },
   callModalAlertText: { control: 'text', defaultValue: 'Incoming Video Call', name: 'Alert Text' },
   callToastAlertText: { control: 'text', defaultValue: 'Incoming Call', name: 'Alert Text' },
   callStateText: { control: 'text', defaultValue: "You're in the lobby", name: 'Call State Text' },
   callStateSubText: { control: 'text', defaultValue: 'You should be admitted shortly', name: 'Call State Subtext' },
   cameras: { control: 'object', defaultValue: defaultControlsCameras, name: 'Cameras' },
-  chatThreadId: { control: 'text', defaultValue: '', name: 'Existing thread' },
+  chatThreadId: {
+    control: 'text',
+    defaultValue: '',
+    name: 'Existing thread',
+    type: { name: 'string', required: true }
+  },
   checked: { control: 'boolean', defaultValue: false, name: 'Is checked' },
-  connectionString: { control: 'text', defaultValue: '', name: COMPOSITE_STRING_CONNECTIONSTRING },
   controlBarDefaultIcons: {
     control: 'radio',
     options: ['airplane', 'bus', 'ship'],
@@ -266,7 +291,7 @@ export const controlsToAdd = {
     control: 'select',
     options: ['desktop', 'mobile'],
     defaultValue: 'desktop',
-    name: 'Form Factor'
+    name: 'Form factor'
   },
   participantItemMenuItemsStr: { control: 'text', defaultValue: 'Mute, Remove', name: 'Menu items (comma separated)' },
   participantNames: {
@@ -284,7 +309,7 @@ export const controlsToAdd = {
   requiredDisplayName: {
     control: 'text',
     defaultValue: 'John Smith',
-    name: 'Display Name',
+    name: 'Display name',
     type: { required: true, name: 'string' }
   },
   screenShareExperience: {
@@ -351,7 +376,9 @@ export const defaultCallCompositeHiddenControls = {
   onFetchAvatarPersonaData: hiddenControl,
   rtl: hiddenControl,
   options: hiddenControl,
-  callInvitationUrl: hiddenControl
+  callInvitationUrl: hiddenControl,
+  formFactor: hiddenControl, // formFactor is hidden by default and compositeFormFactor is used as a prop instead to workaround a bug where formFactor is not put in the correct order when the controls are generated
+  role: hiddenControl // TODO: once role work is complete this should be added as a drop down control
 };
 
 export const defaultChatCompositeHiddenControls = {
@@ -364,7 +391,8 @@ export const defaultChatCompositeHiddenControls = {
   identifiers: hiddenControl,
   locale: hiddenControl,
   onFetchAvatarPersonaData: hiddenControl,
-  rtl: hiddenControl
+  rtl: hiddenControl,
+  formFactor: hiddenControl // formFactor is hidden by default and compositeFormFactor is used as a prop instead to workaround a bug where formFactor is not put in the correct order when the controls are generated
 };
 
 export const defaultCallWithChatCompositeHiddenControls = {
@@ -373,7 +401,7 @@ export const defaultCallWithChatCompositeHiddenControls = {
   joinInvitationURL: hiddenControl,
   rtl: hiddenControl,
   options: hiddenControl,
-  formFactor: hiddenControl
+  formFactor: hiddenControl // formFactor is hidden by default and compositeFormFactor is used as a prop instead to workaround a bug where formFactor is not put in the correct order when the controls are generated
 };
 
 /**
