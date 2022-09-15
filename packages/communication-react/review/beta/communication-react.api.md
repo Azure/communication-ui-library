@@ -1311,6 +1311,7 @@ export interface ComponentStrings {
     cameraButton: CameraButtonStrings;
     devicesButton: DevicesButtonStrings;
     dialpad: DialpadStrings;
+    DomainPermissions: DomainPermissionsStrings;
     endCallButton: EndCallButtonStrings;
     errorBar: ErrorBarStrings;
     holdButton: HoldButtonStrings;
@@ -1607,6 +1608,7 @@ export const DEFAULT_COMPONENT_ICONS: {
     SendBoxSendHovered: JSX.Element;
     VideoTileMicOff: JSX.Element;
     BackSpace: JSX.Element;
+    iconBackdrop: JSX.Element;
 };
 
 // @public
@@ -1691,6 +1693,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     HoldCallButton: JSX.Element;
     ResumeCall: JSX.Element;
     BackSpace: JSX.Element;
+    iconBackdrop: JSX.Element;
 };
 
 // @public
@@ -1815,6 +1818,23 @@ export type DisplayNameChangedListener = (event: {
 // @public
 export interface Disposable {
     dispose(): void;
+}
+
+// @beta
+export const DomainPermissions: (props: DomainPermissionsProps) => JSX.Element;
+
+// @beta
+export interface DomainPermissionsProps {
+    appName: string;
+    onTroubleshootingClick: () => void;
+    strings: DomainPermissionsStrings;
+}
+
+// @beta
+export interface DomainPermissionsStrings {
+    linkText: string;
+    primaryText: string;
+    secondaryText: string;
 }
 
 // @beta
