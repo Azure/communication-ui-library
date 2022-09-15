@@ -95,9 +95,7 @@ test.describe('Call Composite E2E CallPage Tests', () => {
         await waitForPiPiPToHaveLoaded(page, { skipVideoCheck: true });
       }
     }
-    expect(await stableScreenshot(page)).toMatchSnapshot(
-      `video-gallery-page-participants-flyout-custom-ellipses-desktop.png`
-    );
+    expect(await stableScreenshot(page)).toMatchSnapshot(`video-gallery-page-participants-flyout-custom-ellipses.png`);
   });
 
   test('participant list should not contain ellipses on mobile even if passing in custom icon', async ({
@@ -138,9 +136,7 @@ test.describe('Call Composite E2E CallPage Tests', () => {
         await waitForPiPiPToHaveLoaded(page, { skipVideoCheck: true });
       }
     }
-    expect(await stableScreenshot(page)).toMatchSnapshot(
-      `video-gallery-page-participants-flyout-no-ellipses-mobile.png`
-    );
+    expect(await stableScreenshot(page)).toMatchSnapshot(`video-gallery-page-participants-flyout-no-ellipses.png`);
   });
 });
 
