@@ -137,7 +137,30 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
   const adapter = useAdapter();
   const locale = useLocale();
 
-  let pageElement: JSX.Element;
+  let pageElement: JSX.Element | undefined;
+  /* @conditional-compile-remove(rooms) */
+  switch (page) {
+    case 'roomNotFound':
+      pageElement = (
+        <NoticePage
+          iconName="NoticePageInvalidRoom"
+          title={locale.strings.call.roomNotFoundTitle}
+          moreDetails={locale.strings.call.roomNotFoundDetails}
+          dataUiId={'room-not-found-page'}
+        />
+      );
+      break;
+    case 'deniedPermissionToRoom':
+      pageElement = (
+        <NoticePage
+          iconName="NoticePageInvalidRoom"
+          title={locale.strings.call.deniedPermissionToRoomTitle}
+          moreDetails={locale.strings.call.deniedPermissionToRoomDetails}
+          dataUiId={'not-invited-to-room-page'}
+        />
+      );
+      break;
+  }
   switch (page) {
     case 'configuration':
       pageElement = (
@@ -227,9 +250,12 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
         </>
       );
       break;
-    default:
-      throw new Error('Invalid call composite page');
   }
+
+  if (!pageElement) {
+    throw new Error('Invalid call composite page');
+  }
+
   /* @conditional-compile-remove(rooms) */
   const permissions = _getPermissions(props.role);
 
