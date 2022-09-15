@@ -23,6 +23,7 @@ import { containerDivStyles } from '../../common/ContainerRectProps';
 /* @conditional-compile-remove(one-to-n-calling) */
 import { useAdapter } from '../adapter/CallAdapterProvider';
 import { CallControls, CallControlsProps } from '../components/CallControls';
+/* @conditional-compile-remove(rooms) */
 import { useSidePaneState } from '../hooks/useSidePaneState';
 import {
   callControlsContainerStyles,
