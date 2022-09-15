@@ -45,6 +45,8 @@ import { localVideoTileWithControlsContainerStyle, LOCAL_VIDEO_TILE_ZINDEX } fro
 import { _ICoordinates, _ModalClone } from './ModalClone/ModalClone';
 import { _formatString } from '@internal/acs-ui-common';
 import { _LocalVideoTile } from './LocalVideoTile';
+/* @conditional-compile-remove(rooms) */
+import { _usePermissions } from '../permissions';
 
 // Currently the Calling JS SDK supports up to 4 remote video streams
 const DEFAULT_MAX_REMOTE_VIDEO_STREAMS = 4;
@@ -262,10 +264,17 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     maxDominantSpeakers: MAX_AUDIO_DOMINANT_SPEAKERS
   });
 
+  /* @conditional-compile-remove(rooms) */
+  const permissions = _usePermissions();
+
   /**
    * Utility function for memoized rendering of LocalParticipant.
    */
-  const localVideoTile = useMemo((): JSX.Element => {
+  const localVideoTile = useMemo((): JSX.Element | undefined => {
+    /* @conditional-compile-remove(rooms) */
+    if (!permissions.cameraButton) {
+      return undefined;
+    }
     if (onRenderLocalVideoTile) {
       return onRenderLocalVideoTile(localParticipant);
     }
@@ -391,7 +400,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   };
   const horizontalGalleryTiles = createHorizontalGalleryTiles();
 
-  if (!shouldFloatLocalVideo && localParticipant) {
+  if (!shouldFloatLocalVideo && localVideoTile) {
     gridTiles.push(localVideoTile);
   }
 
@@ -418,7 +427,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     >
       {shouldFloatLocalVideo &&
         !shouldFloatNonDraggableLocalVideo &&
-        localParticipant &&
+        localVideoTile &&
         (horizontalGalleryPresent ? (
           <Stack className={mergeStyles(localVideoTileContainerStyle(theme, isNarrow))}>{localVideoTile}</Stack>
         ) : (
@@ -436,7 +445,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
         ))}
       {
         // When we use showCameraSwitcherInLocalPreview it disables dragging to allow keyboard navigation.
-        shouldFloatNonDraggableLocalVideo && localParticipant && remoteParticipants.length > 0 && (
+        shouldFloatNonDraggableLocalVideo && localVideoTile && remoteParticipants.length > 0 && (
           <Stack
             className={mergeStyles(localVideoTileWithControlsContainerStyle(theme, isNarrow), {
               boxShadow: theme.effects.elevation8,
