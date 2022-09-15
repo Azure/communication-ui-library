@@ -95,7 +95,7 @@ const UnsupportedBrowserWarning = (): JSX.Element => {
       horizontalAlign={'center'}
       styles={{
         root: {
-          width: _pxToRem(92),
+          width: _pxToRem(84),
           borderRadius: '100%',
           background: theme.palette.themeLighterAlt,
           padding: '2rem',

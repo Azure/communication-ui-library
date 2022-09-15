@@ -11,6 +11,7 @@ import { useLocale } from '../localization';
 /* @conditional-compile-remove(unsupported-browser) */
 import {
   containerStyles,
+  iconStyles,
   linkTextStyles,
   mainTextStyles,
   secondaryTextStyles
@@ -45,10 +46,9 @@ export interface UnsupportedBrowserProps {
 /* @conditional-compile-remove(unsupported-browser) */
 const UnsupportedBrowserContainer = (props: UnsupportedBrowserProps): JSX.Element => {
   const { onTroubleShootingClick, strings } = props;
-  console.log('test2');
   return (
     <Stack styles={containerStyles}>
-      <Icon iconName="UnsupportedBrowserWarning"></Icon>
+      <Icon styles={iconStyles} iconName="UnsupportedBrowserWarning"></Icon>
       <Text styles={mainTextStyles}>{strings.primaryText}</Text>
       <Text styles={secondaryTextStyles}>{strings.secondaryText}</Text>
       <Link
