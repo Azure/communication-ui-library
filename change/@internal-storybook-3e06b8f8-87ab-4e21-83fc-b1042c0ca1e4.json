@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Adds internal storybook page for new DomainPermissions Component",
+  "packageName": "@internal/storybook",
+  "email": "94866715+dmceachernmsft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
