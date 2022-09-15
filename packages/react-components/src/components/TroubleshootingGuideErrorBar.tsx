@@ -2,10 +2,10 @@
 // Licensed under the MIT license.
 
 import React, { useEffect, useState } from 'react';
-import { Link, MessageBar, MessageBarButton, Stack, useTheme } from '@fluentui/react';
+import { Link, MessageBar, PrimaryButton, Stack, useTheme } from '@fluentui/react';
 import { useLocale } from '../localization';
 import { ErrorBarProps } from './ErrorBar';
-import { dismissButtonStyle, linkStyle, messageBarStyle } from './styles/TroubleshootingGuideErrorBar.styles';
+import { confirmButtonStyle, linkStyle, messageBarStyle } from './styles/TroubleShootingGuideErrorBar.styles';
 import {
   DismissedError,
   dismissError,
@@ -16,25 +16,25 @@ import {
 } from './utils';
 
 /**
- * Strings for {@link _TroubleshootingGuideErrorBar}.
+ * Strings for {@link _TroubleShootingGuideErrorBar}.
  *
  * @internal
  */
-export interface _TroubleshootingGuideErrorBarStrings {
+export interface _TroubleShootingGuideErrorBarStrings {
   linkText?: string;
-  dismissButtonText?: string;
+  buttonText?: string;
 }
 
 /**
- * Props for {@link _TroubleshootingGuideErrorBar}.
+ * Props for {@link _TroubleShootingGuideErrorBar}.
  *
  * @internal
  */
-export interface _TroubleshootingGuideErrorBarProps extends ErrorBarProps {
+export interface _TroubleShootingGuideErrorBarProps extends ErrorBarProps {
   /**
    * permissions state for camera/microphone
    */
-  permissionsState?: {
+  permissionsState: {
     camera: PermissionState;
     microphone: PermissionState;
   };
@@ -61,25 +61,25 @@ export interface _TroubleshootingGuideErrorBarProps extends ErrorBarProps {
    *
    * @example
    * ```ts
-   * onNetworkingTroubleshootingClick?: () =>
+   * onNetworkingTroubleShootingClick?: () =>
    *  window.open('https://contoso.com/network-troubleshooting', '_blank');
    * ```
    *
    * @remarks
    * if this is not supplied, the composite will not show a 'network troubleshooting' link.
    */
-  onNetworkingTroubleshootingClick?: () => void;
+  onNetworkingTroubleShootingClick?: () => void;
   /**
    * strings related to trouble shooting guidance link and dismiss button
    */
-  troubleshootingGuideStrings: _TroubleshootingGuideErrorBarStrings;
+  troubleShootingGuideStrings: _TroubleShootingGuideErrorBarStrings;
 }
 
 /**
  * @internal
  * A component to show device Permission/network connection related errors, contains link that leads to further trouble shooting guide
  */
-export const _TroubleshootingGuideErrorBar = (props: _TroubleshootingGuideErrorBarProps): JSX.Element => {
+export const _TroubleShootingGuideErrorBar = (props: _TroubleShootingGuideErrorBarProps): JSX.Element => {
   const theme = useTheme();
   // error bar strings
   const localeStrings = useLocale().strings.errorBar;
@@ -89,12 +89,9 @@ export const _TroubleshootingGuideErrorBar = (props: _TroubleshootingGuideErrorB
 
   const {
     onPermissionsTroubleshootingClick,
-    onNetworkingTroubleshootingClick,
-    permissionsState = {
-      camera: 'denied',
-      microphone: 'denied'
-    },
-    troubleshootingGuideStrings
+    onNetworkingTroubleShootingClick,
+    permissionsState,
+    troubleShootingGuideStrings
   } = props;
 
   // dropDismissalsForInactiveErrors only returns a new object if `dismissedErrors` actually changes.
@@ -115,38 +112,37 @@ export const _TroubleshootingGuideErrorBar = (props: _TroubleshootingGuideErrorB
           key={error.type}
           messageBarType={messageBarType(error.type)}
           messageBarIconProps={messageBarIconProps(error.type)}
-          actions={
-            <MessageBarButton
-              text={troubleshootingGuideStrings.dismissButtonText}
-              styles={dismissButtonStyle(theme)}
+        >
+          <Stack horizontal horizontalAlign="space-between" verticalAlign="center">
+            {onPermissionsTroubleshootingClick || onNetworkingTroubleShootingClick ? (
+              <div>
+                {strings[error.type]}
+                <Link
+                  styles={linkStyle(theme)}
+                  onClick={() => {
+                    if (onPermissionsTroubleshootingClick) {
+                      onPermissionsTroubleshootingClick(permissionsState);
+                    } else if (onNetworkingTroubleShootingClick) {
+                      onNetworkingTroubleShootingClick();
+                    }
+                  }}
+                  underline
+                >
+                  <span>{troubleShootingGuideStrings.linkText}</span>
+                </Link>
+              </div>
+            ) : (
+              <div>{strings[error.type]} </div>
+            )}
+            <PrimaryButton
+              text={troubleShootingGuideStrings.buttonText}
+              styles={confirmButtonStyle(theme)}
               onClick={() => {
                 setDismissedErrors(dismissError(dismissedErrors, error));
               }}
               ariaLabel={strings.dismissButtonAriaLabel}
             />
-          }
-          isMultiline={false}
-        >
-          {onPermissionsTroubleshootingClick || onNetworkingTroubleshootingClick ? (
-            <div>
-              {strings[error.type]}
-              <Link
-                styles={linkStyle(theme)}
-                onClick={() => {
-                  if (onPermissionsTroubleshootingClick) {
-                    onPermissionsTroubleshootingClick(permissionsState);
-                  } else if (onNetworkingTroubleshootingClick) {
-                    onNetworkingTroubleshootingClick();
-                  }
-                }}
-                underline
-              >
-                <span>{troubleshootingGuideStrings.linkText}</span>
-              </Link>
-            </div>
-          ) : (
-            <div>{strings[error.type]} </div>
-          )}
+          </Stack>
         </MessageBar>
       ))}
     </Stack>

@@ -1,13 +1,14 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IButtonStyles, ILinkStyles, IMessageBarStyles, ITheme, MessageBarType } from '@fluentui/react';
+import { IButtonStyles, ILinkStyles, IMessageBarStyles, ITheme } from '@fluentui/react';
 
 /**
  * @private
  */
-export const dismissButtonStyle = (theme: ITheme): IButtonStyles => ({
+export const confirmButtonStyle = (theme: ITheme): IButtonStyles => ({
   root: {
+    float: 'right',
     padding: '0.375rem 1.25rem',
     width: '3.75rem',
     height: '2rem',
@@ -21,13 +22,12 @@ export const dismissButtonStyle = (theme: ITheme): IButtonStyles => ({
 /**
  * @private
  */
-export const messageBarStyle = (theme: ITheme, errorType: MessageBarType): IMessageBarStyles => ({
+export const messageBarStyle = (theme: ITheme, errorType: number): IMessageBarStyles => ({
   innerText: {
-    paddingTop: errorType === MessageBarType.warning ? '0.15rem' : '0.1rem', // to move the inner text of the message bar down to be centered
+    paddingTop: errorType === 5 ? '0.15rem' : '0.1rem', // to move the inner text of the message bar down to be centered
     lineHeight: 'none',
-    color: theme.palette.black,
-    alignSelf: 'center',
-    whiteSpace: 'normal'
+    width: '100%',
+    color: theme.palette.black
   },
   icon: {
     marginTop: '0.375rem',
