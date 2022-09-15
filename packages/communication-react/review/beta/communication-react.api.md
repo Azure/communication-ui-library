@@ -1323,6 +1323,7 @@ export interface ComponentStrings {
     screenShareButton: ScreenShareButtonStrings;
     sendBox: SendBoxStrings;
     typingIndicator: TypingIndicatorStrings;
+    UnsupportedBrowser: UnsupportedBrowserStrings;
     videoGallery: VideoGalleryStrings;
     videoTile: VideoTileStrings;
 }
@@ -1609,6 +1610,7 @@ export const DEFAULT_COMPONENT_ICONS: {
     VideoTileMicOff: JSX.Element;
     BackSpace: JSX.Element;
     iconBackdrop: JSX.Element;
+    UnsupportedBrowserWarning: JSX.Element;
 };
 
 // @public
@@ -1694,6 +1696,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     ResumeCall: JSX.Element;
     BackSpace: JSX.Element;
     iconBackdrop: JSX.Element;
+    UnsupportedBrowserWarning: JSX.Element;
 };
 
 // @public
@@ -2789,6 +2792,22 @@ export interface TypingIndicatorStrings {
 export interface TypingIndicatorStylesProps extends BaseCustomStyles {
     typingString?: IStyle;
     typingUserDisplayName?: IStyle;
+}
+
+// @beta
+export const UnsupportedBrowser: (props: UnsupportedBrowserProps) => JSX.Element;
+
+// @beta
+export interface UnsupportedBrowserProps {
+    onTroubleShootingClick: () => void;
+    strings: UnsupportedBrowserStrings;
+}
+
+// @beta
+export interface UnsupportedBrowserStrings {
+    moreHelpLink: string;
+    primaryText: string;
+    secondaryText: string;
 }
 
 // @public
