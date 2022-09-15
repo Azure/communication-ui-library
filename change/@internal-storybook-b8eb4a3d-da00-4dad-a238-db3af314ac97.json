@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "created internal story for error bar to display trouble shooting links for network/device permission errors",
+  "packageName": "@internal/storybook",
+  "email": "carolinecao@microsoft.com",
+  "dependentChangeType": "patch"
+}
