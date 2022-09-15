@@ -17,11 +17,11 @@ const TroubleShootingGuideErrorBarStory = (args): JSX.Element => {
   const onPermissionsTroubleshootingClick = (permissionState: {
     camera: PermissionState;
     microphone: PermissionState;
-  }) => {
+  }): void => {
     console.log(permissionState);
   };
 
-  const onNetworkingTroubleShootingClick = () => {
+  const onNetworkingTroubleShootingClick = (): void => {
     console.log('network trouble shoot');
   };
   const permissionsState: {
