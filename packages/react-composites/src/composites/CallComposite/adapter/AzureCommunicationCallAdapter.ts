@@ -73,8 +73,8 @@ class CallContext {
 
   constructor(
     clientState: CallClientState,
-    isTeamsCall: boolean /* @conditional-compile-remove(rooms) */,
-    locator: CallAdapterLocator
+    isTeamsCall: boolean,
+    /* @conditional-compile-remove(rooms) */ locator: CallAdapterLocator
   ) {
     this.state = {
       isLocalPreviewMicrophoneEnabled: false,
