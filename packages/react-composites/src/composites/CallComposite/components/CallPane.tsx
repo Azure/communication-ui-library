@@ -58,8 +58,7 @@ export const CallPane = (props: {
 }): JSX.Element => {
   const [drawerMenuItems, setDrawerMenuItems] = useState<_DrawerMenuItemProps[]>([]);
 
-  const hidden = !!props.activePane;
-  const paneStyles = hidden ? hiddenStyles : props.mobileView ? availableSpaceStyles : sidePaneStyles;
+  const paneStyles = !props.activePane ? hiddenStyles : props.mobileView ? availableSpaceStyles : sidePaneStyles;
   const localeStrings = useLocale();
 
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
@@ -139,7 +138,7 @@ export const CallPane = (props: {
         <ModalLocalAndRemotePIP
           callAdapter={props.callAdapter}
           modalLayerHostId={props.modalLayerHostId}
-          hidden={hidden}
+          hidden={!props.activePane}
           styles={pipStyles}
           minDragPosition={minMaxDragPosition.minDragPosition}
           maxDragPosition={minMaxDragPosition.maxDragPosition}
