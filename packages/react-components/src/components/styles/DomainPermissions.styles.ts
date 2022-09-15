@@ -27,13 +27,11 @@ export const textContainerStyles: IStackStyles = {
 /**
  * @internal
  */
-export const iconPrimaryStyles = (theme: Theme): IIconStyles => {
-  return {
-    root: {
-      zIndex: 1,
-      margin: 'auto'
-    }
-  };
+export const iconPrimaryStyles: IIconStyles = {
+  root: {
+    zIndex: 1,
+    margin: 'auto'
+  }
 };
 
 /**
