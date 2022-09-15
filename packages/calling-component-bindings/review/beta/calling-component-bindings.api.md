@@ -17,7 +17,6 @@ import { CallParticipantListParticipant } from '@internal/react-components';
 import { CallState } from '@azure/communication-calling';
 import { CameraButton } from '@internal/react-components';
 import { Common } from '@internal/acs-ui-common';
-import { CommunicationIdentifier } from '@azure/communication-common';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 import { CreateVideoStreamViewResult } from '@internal/react-components';
 import { DeviceManagerState } from '@internal/calling-stateful-client';
@@ -45,6 +44,9 @@ import { VideoGallery } from '@internal/react-components';
 import { VideoGalleryLocalParticipant } from '@internal/react-components';
 import { VideoGalleryRemoteParticipant } from '@internal/react-components';
 import { VideoStreamOptions } from '@internal/react-components';
+
+// @beta
+export type AddParticipantHandler = ((participant: CommunicationUserIdentifier) => Promise<void>) & ((participant: PhoneNumberIdentifier, options: AddPhoneNumberOptions) => Promise<void>);
 
 // @public
 export const CallAgentProvider: (props: CallAgentProviderProps) => JSX.Element;
@@ -87,7 +89,7 @@ export type CallingHandlers = {
     onToggleScreenShare: () => Promise<void>;
     onHangUp: () => Promise<void>;
     onToggleHold: () => Promise<void>;
-    onAddParticipant: (participant: CommunicationIdentifier, options?: AddPhoneNumberOptions) => Promise<void>;
+    onAddParticipant: AddParticipantHandler;
     onCreateLocalStreamView: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
     onCreateRemoteStreamView: (userId: string, options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
     onRemoveParticipant: (userId: string) => Promise<void>;

@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Introduces new component to contoso to provide help to end users struggling with device permissions in the browser.",
+  "packageName": "@internal/react-components",
+  "email": "94866715+dmceachernmsft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
