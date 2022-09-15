@@ -1,42 +1,57 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Modal, PrimaryButton, Stack } from '@fluentui/react';
-import { _DomainPermissions } from '@internal/react-components';
+import { Stack } from '@fluentui/react';
+import { DomainPermissions as DomainPermissionsComponent, _DrawerSurface } from '@internal/react-components';
 import { Canvas, Description, Heading, Props, Title } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
-import React, { useState } from 'react';
+import React from 'react';
 import { useLocale } from '../../../../../react-components/src/localization';
 import { SingleLineBetaBanner } from '../../../BetaBanners/SingleLineBetaBanner';
 import { COMPONENT_FOLDER_PREFIX } from '../../../constants';
+import { DomainPermissionsDrawer } from './snippets/DomainPermissionsDrawer.snippet';
+import { DomainPermissionsModal } from './snippets/DomainPermissionsModal.snippet';
+
+const DomainPermissionsDrawerExample = require('!!raw-loader!./snippets/DomainPermissionsDrawer.snippet.tsx').default;
+const DomainPermissionsModalExample = require('!!raw-loader!./snippets/DomainPermissionsModal.snippet.tsx').default;
 
 const DomainPermissionsStory = (): JSX.Element => {
-  const [modalOpen, setModalOpen] = useState<boolean>(false);
   const locale = useLocale().strings.DomainPermissions;
   return (
     <Stack>
-      <Stack>
-        <Title>DomainPermissions Component</Title>
-        <SingleLineBetaBanner />
-        <Description>
-          Component to display information to the end user when their device permissions are not set appropriately
-        </Description>
-        <Heading>Example DevicePermissions</Heading>
-        <Heading>DomainPermissions Props</Heading>
-        <Props of={_DomainPermissions} />
-      </Stack>
-      <Canvas>
-        <PrimaryButton onClick={() => setModalOpen(true)}>Open Domain Permissions</PrimaryButton>
-        <Modal isOpen={modalOpen} onDismiss={() => setModalOpen(false)}>
-          <_DomainPermissions
-            appName={'Contoso app'}
-            onGetTroubleShooting={() => {
-              alert('clicked trouble shooting');
-            }}
-            strings={locale}
-          />
-        </Modal>
+      <DomainPermissionsComponent
+        appName={'Contoso App'}
+        onTroubleshootingClick={function (): void {
+          alert('you clicked the help text');
+        }}
+        strings={locale}
+      />
+    </Stack>
+  );
+};
+
+const getDocs: () => JSX.Element = () => {
+  /* eslint-disable react/no-unescaped-entities */
+  return (
+    <Stack>
+      <SingleLineBetaBanner />
+      <Title>Domain Permissions</Title>
+      <Description>
+        Component to display information to the end user when their device permissions are not set appropriately
+      </Description>
+      <Heading>Using in a modal</Heading>
+      <Description>
+        you are able to hide the DomainPermissions component in a Modal to show the help tile over your applications
+        user interface.
+      </Description>
+      <Canvas mdxSource={DomainPermissionsModalExample}>
+        <DomainPermissionsModal />
       </Canvas>
+      <Heading>Using on mobile</Heading>
+      <Canvas mdxSource={DomainPermissionsDrawerExample}>
+        <DomainPermissionsDrawer />
+      </Canvas>
+      <Props of={DomainPermissionsComponent} />
     </Stack>
   );
 };
@@ -47,6 +62,11 @@ export const DomainPermissions = DomainPermissionsStory.bind({});
 
 export default {
   id: `${COMPONENT_FOLDER_PREFIX}-internal-domain-permissions`,
-  title: `${COMPONENT_FOLDER_PREFIX}/Internal/CallReadiness/DomainPermissions/Domain Permissions`,
-  component: _DomainPermissions
+  title: `${COMPONENT_FOLDER_PREFIX}/Internal/CallReadiness/Domain Permissions`,
+  component: DomainPermissionsComponent,
+  parameters: {
+    docs: {
+      page: () => getDocs()
+    }
+  }
 } as Meta;

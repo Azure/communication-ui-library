@@ -502,28 +502,20 @@ export interface DialpadStyles {
     textField?: Partial<ITextFieldStyles>;
 }
 
-// @internal
-export const _DomainPermissions: (props: DomainPermissionsProps) => JSX.Element;
+// @beta
+export const DomainPermissions: (props: DomainPermissionsProps) => JSX.Element;
 
-// Warning: (ae-internal-missing-underscore) The name "DomainPermissionsProps" should be prefixed with an underscore because the declaration is marked as @internal
-//
-// @internal
+// @beta
 export interface DomainPermissionsProps {
-    // (undocumented)
     appName: string;
-    // (undocumented)
-    onGetTroubleShooting: () => void;
-    // (undocumented)
+    onTroubleshootingClick: () => void;
     strings: DomainPermissionsStrings;
 }
 
 // @beta
 export interface DomainPermissionsStrings {
-    // (undocumented)
     linkText: string;
-    // (undocumented)
-    mainText: string;
-    // (undocumented)
+    primaryText: string;
     secondaryText: string;
 }
 
@@ -534,6 +526,7 @@ export const _DrawerMenu: (props: _DrawerMenuProps) => JSX.Element;
 export interface _DrawerMenuItemProps {
     disabled?: boolean;
     iconProps?: IIconProps;
+    id?: string;
     // (undocumented)
     itemKey: string;
     // (undocumented)

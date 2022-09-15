@@ -2,11 +2,13 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import { Stack, Text, Link, Icon, useTheme } from '@fluentui/react';
+/* @conditional-compile-remove(call-readiness) */
+import { Stack, Text, Link, Icon } from '@fluentui/react';
 /* @conditional-compile-remove(call-readiness) */
 import { useLocale } from '../localization';
 /* @conditional-compile-remove(call-readiness) */
 import { _formatString, _pxToRem } from '@internal/acs-ui-common';
+/* @conditional-compile-remove(call-readiness) */
 import {
   iconContainerStyles,
   iconPrimaryStyles,
@@ -18,12 +20,21 @@ import {
 } from './styles/DomainPermissions.styles';
 
 /**
- * @internal
+ * @beta
  * Props for DomainPermissions component.
  */
 export interface DomainPermissionsProps {
+  /**
+   * Name of application calling experience is in.
+   */
   appName: string;
-  onGetTroubleShooting: () => void;
+  /**
+   * Action to be taken by the more help link. Possible to send to external page or show other modal.
+   */
+  onTroubleshootingClick: () => void;
+  /**
+   * Localization strings for DomainPermissions component.
+   */
   strings: DomainPermissionsStrings;
 }
 
@@ -32,27 +43,24 @@ export interface DomainPermissionsProps {
  * Strings for DomainPermissions component
  */
 export interface DomainPermissionsStrings {
-  mainText: string;
+  /**
+   * Main text string.
+   */
+  primaryText: string;
+  /**
+   * Subtext string.
+   */
   secondaryText: string;
+  /**
+   * More help link string.
+   */
   linkText: string;
 }
 
-const _DomainPermissionsContainer = (props: DomainPermissionsProps): JSX.Element => {
-  const { appName, onGetTroubleShooting, strings } = props;
-
+/* @conditional-compile-remove(call-readiness) */
+const DomainPermissionsContainer = (props: DomainPermissionsProps): JSX.Element => {
+  const { appName, onTroubleshootingClick, strings } = props;
   const theme = useTheme();
-
-  const appNameTrampoline = (): string => {
-    /* @conditional-compile-remove(call-readiness) */
-    return _formatString(strings.mainText, { appName: appName });
-    // For Conditonal compilation will be undone when stable.
-    return appName;
-  };
-  const containerWitdthTrampoline = (): string => {
-    /* @conditional-compile-remove(call-readiness) */
-    return `${_pxToRem(406)}`;
-    return '406px';
-  };
   return (
     <Stack style={{ padding: '2rem', maxWidth: containerWitdthTrampoline() }}>
       <Stack horizontal style={{ paddingBottom: '1rem' }} horizontalAlign={'space-between'}>
@@ -67,9 +75,9 @@ const _DomainPermissionsContainer = (props: DomainPermissionsProps): JSX.Element
         </Stack>
       </Stack>
       <Stack styles={textContainerStyles}>
-        <Text styles={primaryTextStyles}>{appNameTrampoline()}</Text>
+        <Text styles={primaryTextStyles}>{_formatString(strings.primaryText, { appName: appName })}</Text>
         <Text styles={secondaryTextStyles}>{strings.secondaryText}</Text>
-        <Link styles={linkTextStyles} onClick={onGetTroubleShooting}>
+        <Link styles={linkTextStyles} onClick={onTroubleshootingClick}>
           {strings.linkText}
         </Link>
       </Stack>
@@ -78,21 +86,15 @@ const _DomainPermissionsContainer = (props: DomainPermissionsProps): JSX.Element
 };
 
 /**
- * @internal
+ * @beta
  *
  * Component to allow Contoso to help their end user with their devices should their permissions be blocked
  * by their browsers settings.
  */
-export const _DomainPermissions = (props: DomainPermissionsProps): JSX.Element => {
+export const DomainPermissions = (props: DomainPermissionsProps): JSX.Element => {
   /* @conditional-compile-remove(call-readiness) */
   const locale = useLocale().strings.DomainPermissions;
-
-  const domainPermissionsStringsTrampoiline = (): DomainPermissionsStrings => {
-    /* @conditional-compile-remove(call-readiness) */
-    return locale;
-    // Done for conditional compilation will be undone in stable.
-    return '' as unknown as DomainPermissionsStrings;
-  };
-
-  return <_DomainPermissionsContainer {...props} strings={domainPermissionsStringsTrampoiline()} />;
+  /* @conditional-compile-remove(call-readiness) */
+  return <DomainPermissionsContainer {...props} strings={locale} />;
+  return <></>;
 };

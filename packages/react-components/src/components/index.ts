@@ -89,7 +89,7 @@ export type {
 } from './DevicesButton';
 
 /* @conditional-compile-remove(call-readiness) */
-export { _DomainPermissions } from './DomainPermissions';
+export { DomainPermissions } from './DomainPermissions';
 /* @conditional-compile-remove(call-readiness) */
 export type { DomainPermissionsStrings, DomainPermissionsProps } from './DomainPermissions';
 
