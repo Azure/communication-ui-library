@@ -121,7 +121,7 @@ export const LocalAndRemotePIP = (props: LocalAndRemotePIPProps): JSX.Element =>
       // TODO: when the calling SDK provides height/width stream information - update this to reflect the stream orientation.
       orientation: 'portrait'
     }),
-    [localVideoTileProps, remoteVideoTileProps]
+    [localVideoTileProps, remoteVideoTileProps, canTurnCameraOn]
   );
 
   // If we are showing the local participant as the primary tile, show nothing for the secondary tile
@@ -134,7 +134,7 @@ export const LocalAndRemotePIP = (props: LocalAndRemotePIPProps): JSX.Element =>
             orientation: 'portrait'
           }
         : undefined,
-    [localVideoTileProps, remoteVideoTileProps]
+    [localVideoTileProps, remoteVideoTileProps, canTurnCameraOn]
   );
 
   return (
