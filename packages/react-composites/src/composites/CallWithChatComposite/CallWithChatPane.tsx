@@ -33,9 +33,11 @@ import { getPipStyles } from '../common/styles/ModalLocalAndRemotePIP.styles';
 import { useMinMaxDragPosition } from '../common/utils';
 import { availableSpaceStyles, hiddenStyles, sidePaneStyles, sidePaneTokens } from '../common/styles/Pane.styles';
 /* @conditional-compile-remove(PSTN-calls) */
-import { CommunicationIdentifier } from '@azure/communication-common';
+import { PhoneNumberIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
+import { CallWithChatControlOptions } from './CallWithChatComposite';
+import { isDisabled } from '../CallComposite/utils';
 
 /**
  * Pane that is used to store chat and people for CallWithChat composite
@@ -57,6 +59,7 @@ export const CallWithChatPane = (props: {
   /* @conditional-compile-remove(file-sharing) */
   fileSharing?: FileSharingOptions;
   rtl?: boolean;
+  callControls?: CallWithChatControlOptions;
 }): JSX.Element => {
   const [drawerMenuItems, setDrawerMenuItems] = useState<_DrawerMenuItemProps[]>([]);
 
@@ -71,7 +74,13 @@ export const CallWithChatPane = (props: {
 
   const header =
     props.activePane === 'none' ? null : props.mobileView ? (
-      <TabHeader {...props} strings={callWithChatStrings} activeTab={props.activePane} />
+      <TabHeader
+        {...props}
+        strings={callWithChatStrings}
+        activeTab={props.activePane}
+        disableChatButton={isDisabled(props.callControls?.chatButton)}
+        disablePeopleButton={isDisabled(props.callControls?.peopleButton)}
+      />
     ) : (
       <SidePaneHeader
         {...props}
@@ -113,7 +122,7 @@ export const CallWithChatPane = (props: {
 
   /* @conditional-compile-remove(PSTN-calls) */
   const addParticipantToCall = async (
-    participant: CommunicationIdentifier,
+    participant: PhoneNumberIdentifier,
     options?: AddPhoneNumberOptions
   ): Promise<void> => {
     await props.callAdapter.addParticipant(participant, options);

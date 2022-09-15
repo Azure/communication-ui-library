@@ -17,7 +17,6 @@ import type { ChatMessage } from '@azure/communication-chat';
 import type { ChatParticipant } from '@azure/communication-chat';
 import { ChatThreadClient } from '@azure/communication-chat';
 import { ChatThreadClientState } from '@internal/chat-stateful-client';
-import { CommunicationIdentifier } from '@azure/communication-common';
 import { CommunicationIdentifierKind } from '@azure/communication-common';
 import { CommunicationParticipant } from '@internal/react-components';
 import { CommunicationTokenCredential } from '@azure/communication-common';
@@ -39,6 +38,7 @@ import { PartialTheme } from '@fluentui/react';
 import { ParticipantMenuItemsCallback } from '@internal/react-components';
 import { PermissionConstraints } from '@azure/communication-calling';
 import { PersonaInitialsColor } from '@fluentui/react';
+import { PhoneNumberIdentifier } from '@azure/communication-common';
 import { PropertyChangedEvent } from '@azure/communication-calling';
 import type { RemoteParticipant } from '@azure/communication-calling';
 import { Role } from '@internal/react-components';
@@ -143,7 +143,9 @@ export type CallAdapterCallEndedEvent = {
 // @public
 export interface CallAdapterCallManagement {
     // @beta
-    addParticipant(participant: CommunicationIdentifier, options?: AddPhoneNumberOptions): Promise<void>;
+    addParticipant(participant: PhoneNumberIdentifier, options?: AddPhoneNumberOptions): Promise<void>;
+    // (undocumented)
+    addParticipant(participant: CommunicationUserIdentifier): Promise<void>;
     createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void | CreateVideoStreamViewResult>;
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
     // @beta
@@ -285,16 +287,22 @@ export type CallCompositeIcons = {
     PeoplePaneAddPerson?: JSX.Element;
     PeoplePaneOpenDialpad?: JSX.Element;
     DialpadStartCall?: JSX.Element;
+    NoticePageInvalidRoom?: JSX.Element;
 };
 
 // @public
 export type CallCompositeOptions = {
     errorBar?: boolean;
     callControls?: boolean | CallControlOptions;
+    onPermissionsTroubleshootingClick?: (permissionsState: {
+        camera: PermissionState;
+        microphone: PermissionState;
+    }) => void;
+    onNetworkingTroubleShootingClick?: () => void;
 };
 
 // @public
-export type CallCompositePage = 'accessDeniedTeamsMeeting' | 'call' | 'configuration' | /* @conditional-compile-remove(PSTN-calls) */ 'hold' | 'joinCallFailedDueToNoNetwork' | 'leftCall' | 'lobby' | 'removedFromCall';
+export type CallCompositePage = 'accessDeniedTeamsMeeting' | 'call' | 'configuration' | /* @conditional-compile-remove(PSTN-calls) */ 'hold' | 'joinCallFailedDueToNoNetwork' | 'leftCall' | 'lobby' | /* @conditional-compile-remove(rooms) */ 'deniedPermissionToRoom' | 'removedFromCall' | /* @conditional-compile-remove(rooms) */ 'roomNotFound';
 
 // @public
 export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcons> {
@@ -326,8 +334,11 @@ export interface CallCompositeStrings {
     complianceBannerTranscriptionStopped: string;
     configurationPageCallDetails?: string;
     configurationPageTitle: string;
+    copyInviteLinkActionedAriaLabel: string;
     copyInviteLinkButtonLabel: string;
     defaultPlaceHolder: string;
+    deniedPermissionToRoomDetails?: string;
+    deniedPermissionToRoomTitle: string;
     dialpadCloseModalButtonAriaLabel: string;
     dialpadModalAriaLabel: string;
     dialpadModalTitle: string;
@@ -369,6 +380,8 @@ export interface CallCompositeStrings {
     resumingCallButtonLabel: string;
     returnToCallButtonAriaDescription?: string;
     returnToCallButtonAriaLabel?: string;
+    roomNotFoundDetails?: string;
+    roomNotFoundTitle: string;
     soundLabel: string;
     startCallButtonLabel: string;
 }
@@ -412,7 +425,7 @@ export type CallIdChangedListener = (event: {
 
 // @beta
 export type CallParticipantsLocator = {
-    participantIDs: string[];
+    participantIds: string[];
 };
 
 // @public
@@ -422,7 +435,9 @@ export interface CallWithChatAdapter extends CallWithChatAdapterManagement, Adap
 // @public
 export interface CallWithChatAdapterManagement {
     // @beta
-    addParticipant: (participant: CommunicationIdentifier, options?: AddPhoneNumberOptions) => Promise<void>;
+    addParticipant(participant: PhoneNumberIdentifier, options?: AddPhoneNumberOptions): Promise<void>;
+    // (undocumented)
+    addParticipant(participant: CommunicationUserIdentifier): Promise<void>;
     askDevicePermission(constrain: PermissionConstraints): Promise<void>;
     // @beta (undocumented)
     cancelFileUpload: (id: string) => void;
@@ -646,6 +661,11 @@ export type CallWithChatCompositeIcons = {
 export type CallWithChatCompositeOptions = {
     callControls?: boolean | CallWithChatControlOptions;
     fileSharing?: FileSharingOptions;
+    onPermissionsTroubleshootingClick?: (permissionsState: {
+        camera: PermissionState;
+        microphone: PermissionState;
+    }) => void;
+    onNetworkingTroubleShootingClick?: () => void;
 };
 
 // @public
@@ -666,6 +686,7 @@ export interface CallWithChatCompositeStrings {
     chatButtonTooltipClosedWithMessageCount: string;
     chatButtonTooltipOpen: string;
     chatPaneTitle: string;
+    copyInviteLinkActionedAriaLabel: string;
     copyInviteLinkButtonLabel: string;
     dialpadCloseModalButtonAriaLabel: string;
     dialpadModalAriaLabel: string;
@@ -694,16 +715,26 @@ export interface CallWithChatCompositeStrings {
 
 // @public
 export interface CallWithChatControlOptions {
-    cameraButton?: boolean;
-    chatButton?: boolean;
+    cameraButton?: boolean | /* @conditional-compile-remove(PSTN-calls) */ {
+        disabled: boolean;
+    };
+    chatButton?: boolean | /* @conditional-compile-remove(PSTN-calls) */ {
+        disabled: boolean;
+    };
     displayType?: CallControlDisplayType;
     endCallButton?: boolean;
-    holdButton?: boolean;
-    microphoneButton?: boolean;
+    holdButton?: boolean | {
+        disabled: boolean;
+    };
+    microphoneButton?: boolean | /* @conditional-compile-remove(PSTN-calls) */ {
+        disabled: boolean;
+    };
     moreButton?: boolean;
     // @beta
     onFetchCustomButtonProps?: CustomCallWithChatControlButtonCallback[];
-    peopleButton?: boolean;
+    peopleButton?: boolean | /* @conditional-compile-remove(PSTN-calls) */ {
+        disabled: boolean;
+    };
     screenShareButton?: boolean | {
         disabled: boolean;
     };
@@ -879,6 +910,9 @@ export const createAzureCommunicationCallAdapterFromClient: (callClient: Statefu
 // @public
 export const createAzureCommunicationCallWithChatAdapter: ({ userId, displayName, credential, endpoint, locator, alternateCallerId }: AzureCommunicationCallWithChatAdapterArgs) => Promise<CallWithChatAdapter>;
 
+// @internal
+export const _createAzureCommunicationCallWithChatAdapterFromAdapters: (callAdapter: CallAdapter, chatAdapter: ChatAdapter) => CallWithChatAdapter;
+
 // @public
 export const createAzureCommunicationCallWithChatAdapterFromClients: ({ callClient, callAgent, callLocator, chatClient, chatThreadClient }: AzureCommunicationCallWithChatAdapterFromClientArgs) => Promise<CallWithChatAdapter>;
 
@@ -919,8 +953,11 @@ export interface CustomCallWithChatControlButtonProps extends CustomControlButto
 
 // @beta
 export interface CustomControlButtonProps {
+    ariaDescription?: string;
+    ariaLabel?: string;
     disabled?: boolean;
-    // (undocumented)
+    id?: string;
+    key?: string | number;
     onItemClick?: () => void;
     showLabel?: boolean;
     styles?: ControlBarButtonStyles | BaseCustomStyles;
@@ -987,6 +1024,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     PeoplePaneAddPerson?: JSX.Element | undefined;
     PeoplePaneOpenDialpad?: JSX.Element | undefined;
     DialpadStartCall?: JSX.Element | undefined;
+    NoticePageInvalidRoom?: JSX.Element | undefined;
     ChevronLeft?: JSX.Element | undefined;
     ControlBarChatButtonActive?: JSX.Element | undefined;
     ControlBarChatButtonInactive?: JSX.Element | undefined;
@@ -1008,6 +1046,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     HoldCallButton: JSX.Element;
     ResumeCall: JSX.Element;
     BackSpace: JSX.Element;
+    iconBackdrop: JSX.Element;
 };
 
 // @public

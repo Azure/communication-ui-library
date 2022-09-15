@@ -37,6 +37,19 @@ export interface ActiveErrorMessage {
     type: ErrorType;
 }
 
+// Warning: (ae-internal-missing-underscore) The name "Announcer" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal
+export const Announcer: (props: AnnouncerProps) => JSX.Element;
+
+// Warning: (ae-internal-missing-underscore) The name "AnnouncerProps" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal
+export type AnnouncerProps = {
+    announcementString?: string;
+    ariaLive: 'off' | 'polite' | 'assertive' | undefined;
+};
+
 // @public
 export interface BaseCustomStyles {
     root?: IStyle;
@@ -420,6 +433,7 @@ export const Dialpad: (props: DialpadProps) => JSX.Element;
 
 // @beta
 export interface DialpadProps {
+    isMobile?: boolean;
     onChange?: (input: string) => void;
     onClickDialpadButton?: (buttonValue: string, buttonIndex: number) => void;
     onSendDtmfTone?: (dtmfTone: DtmfTone) => Promise<void>;
@@ -462,6 +476,7 @@ export const _DrawerMenu: (props: _DrawerMenuProps) => JSX.Element;
 export interface _DrawerMenuItemProps {
     disabled?: boolean;
     iconProps?: IIconProps;
+    id?: string;
     // (undocumented)
     itemKey: string;
     // (undocumented)

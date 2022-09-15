@@ -44,6 +44,9 @@ export type {
   ParticipantMenuItemsCallback
 } from './ParticipantList';
 
+export { Announcer } from './Announcer';
+export type { AnnouncerProps } from './Announcer';
+
 export { VideoGallery } from './VideoGallery';
 export type { VideoGalleryProps, VideoGalleryStrings, VideoGalleryStyles, VideoGalleryLayout } from './VideoGallery';
 export type { HorizontalGalleryStyles } from './HorizontalGallery';
@@ -84,6 +87,11 @@ export type {
   DevicesButtonStyles,
   DevicesButtonContextualMenuStyles
 } from './DevicesButton';
+
+/* @conditional-compile-remove(call-readiness) */
+export { DomainPermissions } from './DomainPermissions';
+/* @conditional-compile-remove(call-readiness) */
+export type { DomainPermissionsStrings, DomainPermissionsProps } from './DomainPermissions';
 
 export { ParticipantsButton } from './ParticipantsButton';
 export type {

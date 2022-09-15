@@ -46,6 +46,19 @@ export interface ActiveFileUpload {
     uploadComplete?: boolean;
 }
 
+// Warning: (ae-internal-missing-underscore) The name "Announcer" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal
+export const Announcer: (props: AnnouncerProps) => JSX.Element;
+
+// Warning: (ae-internal-missing-underscore) The name "AnnouncerProps" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal
+export type AnnouncerProps = {
+    announcementString?: string;
+    ariaLive: 'off' | 'polite' | 'assertive' | undefined;
+};
+
 // @public
 export interface BaseCustomStyles {
     root?: IStyle;
@@ -248,6 +261,7 @@ export interface ComponentStrings {
     cameraButton: CameraButtonStrings;
     devicesButton: DevicesButtonStrings;
     dialpad: DialpadStrings;
+    DomainPermissions: DomainPermissionsStrings;
     endCallButton: EndCallButtonStrings;
     errorBar: ErrorBarStrings;
     holdButton: HoldButtonStrings;
@@ -402,6 +416,7 @@ export const DEFAULT_COMPONENT_ICONS: {
     SendBoxSendHovered: JSX.Element;
     VideoTileMicOff: JSX.Element;
     BackSpace: JSX.Element;
+    iconBackdrop: JSX.Element;
 };
 
 // @public
@@ -449,6 +464,7 @@ export const Dialpad: (props: DialpadProps) => JSX.Element;
 
 // @beta
 export interface DialpadProps {
+    isMobile?: boolean;
     onChange?: (input: string) => void;
     onClickDialpadButton?: (buttonValue: string, buttonIndex: number) => void;
     onSendDtmfTone?: (dtmfTone: DtmfTone) => Promise<void>;
@@ -484,6 +500,23 @@ export interface DialpadStyles {
     textField?: Partial<ITextFieldStyles>;
 }
 
+// @beta
+export const DomainPermissions: (props: DomainPermissionsProps) => JSX.Element;
+
+// @beta
+export interface DomainPermissionsProps {
+    appName: string;
+    onTroubleshootingClick: () => void;
+    strings: DomainPermissionsStrings;
+}
+
+// @beta
+export interface DomainPermissionsStrings {
+    linkText: string;
+    primaryText: string;
+    secondaryText: string;
+}
+
 // @internal
 export const _DrawerMenu: (props: _DrawerMenuProps) => JSX.Element;
 
@@ -491,6 +524,7 @@ export const _DrawerMenu: (props: _DrawerMenuProps) => JSX.Element;
 export interface _DrawerMenuItemProps {
     disabled?: boolean;
     iconProps?: IIconProps;
+    id?: string;
     // (undocumented)
     itemKey: string;
     // (undocumented)

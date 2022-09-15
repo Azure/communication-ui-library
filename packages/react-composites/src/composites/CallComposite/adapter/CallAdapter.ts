@@ -20,7 +20,7 @@ import { AddPhoneNumberOptions, DtmfTone } from '@azure/communication-calling';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 import type { CommunicationIdentifierKind } from '@azure/communication-common';
 /* @conditional-compile-remove(PSTN-calls) */
-import { CommunicationIdentifier } from '@azure/communication-common';
+import type { CommunicationUserIdentifier, PhoneNumberIdentifier } from '@azure/communication-common';
 import type { AdapterState, Disposable, AdapterError, AdapterErrors } from '../../common/adapters';
 
 /**
@@ -36,7 +36,9 @@ export type CallCompositePage =
   | 'joinCallFailedDueToNoNetwork'
   | 'leftCall'
   | 'lobby'
-  | 'removedFromCall';
+  | /* @conditional-compile-remove(rooms) */ 'deniedPermissionToRoom'
+  | 'removedFromCall'
+  | /* @conditional-compile-remove(rooms) */ 'roomNotFound';
 
 /**
  * Subset of CallCompositePages that represent an end call state.
@@ -46,7 +48,9 @@ export const END_CALL_PAGES: CallCompositePage[] = [
   'accessDeniedTeamsMeeting',
   'joinCallFailedDueToNoNetwork',
   'leftCall',
-  'removedFromCall'
+  /* @conditional-compile-remove(rooms) */ 'deniedPermissionToRoom',
+  'removedFromCall',
+  /* @conditional-compile-remove(rooms) */ 'roomNotFound'
 ];
 
 /**
@@ -307,7 +311,9 @@ export interface CallAdapterCallManagement {
    *
    * @beta
    */
-  addParticipant(participant: CommunicationIdentifier, options?: AddPhoneNumberOptions): Promise<void>;
+  addParticipant(participant: PhoneNumberIdentifier, options?: AddPhoneNumberOptions): Promise<void>;
+  /* @conditional-compile-remove(PSTN-calls) */
+  addParticipant(participant: CommunicationUserIdentifier): Promise<void>;
   /* @conditional-compile-remove(PSTN-calls) */
   /**
    * send dtmf tone to another participant in a 1:1 PSTN call

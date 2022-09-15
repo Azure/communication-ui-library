@@ -85,6 +85,39 @@ export type CallWithChatCompositeOptions = {
    * @beta
    */
   fileSharing?: FileSharingOptions;
+  /* @conditional-compile-remove(call-readiness) */
+  /**
+   * Callback you may provide to supply users with further steps to troubleshoot why they have been
+   * unable to grant your site the required permissions for the call.
+   *
+   * @example
+   * ```ts
+   * onPermissionsTroubleshootingClick: () =>
+   *  window.open('https://contoso.com/permissions-troubleshooting', '_blank');
+   * ```
+   *
+   * @remarks
+   * if this is not supplied, the composite will not show a 'further troubleshooting' link.
+   */
+  onPermissionsTroubleshootingClick?: (permissionsState: {
+    camera: PermissionState;
+    microphone: PermissionState;
+  }) => void;
+  /* @conditional-compile-remove(call-readiness) */
+  /**
+   * Optional callback to supply users with further troubleshooting steps for network issues
+   * experienced when connecting to a call.
+   *
+   * @example
+   * ```ts
+   * onNetworkingTroubleShootingClick?: () =>
+   *  window.open('https://contoso.com/network-troubleshooting', '_blank');
+   * ```
+   *
+   * @remarks
+   * if this is not supplied, the composite will not show a 'network troubleshooting' link.
+   */
+  onNetworkingTroubleShootingClick?: () => void;
 };
 
 /**
@@ -107,12 +140,12 @@ export interface CallWithChatControlOptions {
    * Show or Hide Microphone button during a call.
    * @defaultValue true
    */
-  microphoneButton?: boolean;
+  microphoneButton?: boolean | /* @conditional-compile-remove(PSTN-calls) */ { disabled: boolean };
   /**
    * Show or Hide Camera Button during a call
    * @defaultValue true
    */
-  cameraButton?: boolean;
+  cameraButton?: boolean | /* @conditional-compile-remove(PSTN-calls) */ { disabled: boolean };
   /**
    * Show, Hide or Disable the screen share button during a call.
    * @defaultValue true
@@ -127,12 +160,12 @@ export interface CallWithChatControlOptions {
    * Show or hide the chat button in the call-with-chat composite control bar.
    * @defaultValue true
    */
-  chatButton?: boolean;
+  chatButton?: boolean | /* @conditional-compile-remove(PSTN-calls) */ { disabled: boolean };
   /**
    * Show or hide the people button in the call-with-chat composite control bar.
    * @defaultValue true
    */
-  peopleButton?: boolean;
+  peopleButton?: boolean | /* @conditional-compile-remove(PSTN-calls) */ { disabled: boolean };
   /* @conditional-compile-remove(control-bar-button-injection) */
   /**
    * Inject custom buttons in the call controls.
@@ -149,7 +182,7 @@ export interface CallWithChatControlOptions {
   /**
    * Show or hide the hold button in the bottom sheet drawer
    */
-  holdButton?: boolean;
+  holdButton?: boolean | { disabled: boolean };
 }
 
 type CallWithChatScreenProps = {
@@ -191,6 +224,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
       setCurrentPage(newState.page);
       setCurrentCallState(newState.call?.state);
     };
+    updateCallWithChatPage(callWithChatAdapter.getState());
     callWithChatAdapter.onStateChange(updateCallWithChatPage);
     return () => {
       callWithChatAdapter.offStateChange(updateCallWithChatPage);
@@ -303,6 +337,9 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
     [callWithChatStrings]
   );
 
+  /* @conditional-compile-remove(PSTN-calls) */
+  const alternateCallerId = callAdapter.getState().alternateCallerId;
+
   return (
     <div ref={containerRef} className={mergeStyles(containerDivStyles)}>
       <Stack verticalFill grow styles={compositeOuterContainerStyles} id={compositeParentDivId}>
@@ -339,6 +376,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
               /* @conditional-compile-remove(file-sharing) */
               fileSharing={props.fileSharing}
               rtl={props.rtl}
+              callControls={typeof props.callControls !== 'boolean' ? props.callControls : undefined}
             />
           )}
         </Stack>
@@ -361,7 +399,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
                 containerHeight={containerHeight}
                 containerWidth={containerWidth}
                 /* @conditional-compile-remove(PSTN-calls) */
-                onClickShowDialpad={onClickShowDialpad}
+                onClickShowDialpad={alternateCallerId ? onClickShowDialpad : undefined}
               />
             </Stack.Item>
           </ChatAdapterProvider>
@@ -375,7 +413,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
                   onLightDismiss={closeDrawer}
                   onPeopleButtonClicked={onMoreDrawerPeopleClicked}
                   /* @conditional-compile-remove(PSTN-calls) */
-                  onClickShowDialpad={onClickShowDialpad}
+                  onClickShowDialpad={alternateCallerId ? onClickShowDialpad : undefined}
                   /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
                   disableButtonsForHoldScreen={isInLocalHold}
                 />
@@ -437,7 +475,10 @@ export const CallWithChatComposite = (props: CallWithChatCompositeProps): JSX.El
 
 const hasJoinedCallFn = (page: CallCompositePage, callStatus: CallState): boolean => {
   /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(one-to-n-calling) */
-  return (page === 'call' && callStatus === 'Connected') || (page === 'hold' && callStatus === 'LocalHold');
+  return (
+    (page === 'call' && (callStatus === 'Connected' || callStatus === 'RemoteHold')) ||
+    (page === 'hold' && callStatus === 'LocalHold')
+  );
   return page === 'call' && callStatus === 'Connected';
 };
 

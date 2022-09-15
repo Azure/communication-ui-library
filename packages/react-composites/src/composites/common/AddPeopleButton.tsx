@@ -18,7 +18,7 @@ import {
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPeopleDropdown } from './AddPeopleDropdown';
 /* @conditional-compile-remove(PSTN-calls) */
-import { CommunicationIdentifier } from '@azure/communication-common';
+import { PhoneNumberIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 
@@ -29,7 +29,7 @@ export interface AddPeopleButtonProps {
   participantList?: JSX.Element;
   strings: CallWithChatCompositeStrings | /* @conditional-compile-remove(one-to-n-calling) */ CallCompositeStrings;
   /* @conditional-compile-remove(PSTN-calls) */
-  onAddParticipant: (participant: CommunicationIdentifier, options?: AddPhoneNumberOptions) => void;
+  onAddParticipant: (participant: PhoneNumberIdentifier, options?: AddPhoneNumberOptions) => void;
   alternateCallerId?: string;
 }
 

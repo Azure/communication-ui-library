@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { AbortSignalLike } from '@azure/core-http';
+import { AbortSignalLike } from '@azure/abort-controller';
 
 const postRefreshTokenParameters = {
   method: 'POST'

@@ -3,6 +3,8 @@
 import { AudioDeviceInfo, Call, VideoDeviceInfo } from '@azure/communication-calling';
 import type { CallAdapter, CallAdapterState } from '../../../src';
 import type { MockCallAdapterState } from '../../common';
+import { produce } from 'immer';
+import EventEmitter from 'events';
 
 /**
  * Mock class that implements CallAdapter interface for UI snapshot tests. The handler implementation is currently limited so
@@ -10,6 +12,9 @@ import type { MockCallAdapterState } from '../../common';
  * MockCallAdapter is intended to take snapshot based only on the state of a CallAdapter.
  */
 export class MockCallAdapter implements CallAdapter {
+  private _emitter: EventEmitter;
+  private _state: CallAdapterState;
+
   /**
    * `testState` is deprecated. Use `initialState` instead.
    */
@@ -17,22 +22,21 @@ export class MockCallAdapter implements CallAdapter {
     if (!initialState) {
       throw new Error('`initialState` must be set');
     }
-    this.state = populateViewTargets(initialState);
+    this._state = populateViewTargets(initialState);
+    this._emitter = new EventEmitter();
   }
-
-  state: CallAdapterState;
 
   addParticipant(): Promise<void> {
     throw Error('addParticipant not implemented');
   }
-  onStateChange(): void {
-    return;
+  onStateChange(handler: (state: CallAdapterState) => void): void {
+    this._emitter.on('stateChanged', handler);
   }
-  offStateChange(): void {
-    return;
+  offStateChange(handler: (state: CallAdapterState) => void): void {
+    this._emitter.off('stateChanged', handler);
   }
   getState(): CallAdapterState {
-    return this.state;
+    return this._state;
   }
   dispose(): void {
     throw Error('dispose not implemented');
@@ -94,20 +98,34 @@ export class MockCallAdapter implements CallAdapter {
   sendDtmfTone(): Promise<void> {
     throw Error('sendDtmfTone not implemented');
   }
-  setCamera(): Promise<void> {
-    throw Error('setCamera not implemented');
+  async setCamera(sourceInfo: VideoDeviceInfo): Promise<void> {
+    this.modifyState((draft: CallAdapterState) => {
+      draft.devices.selectedCamera = findDevice(this._state.devices.cameras, sourceInfo);
+    });
   }
-  setMicrophone(): Promise<void> {
-    throw Error('setMicrophone not implemented');
+  async setMicrophone(sourceInfo: AudioDeviceInfo): Promise<void> {
+    this.modifyState((draft: CallAdapterState) => {
+      draft.devices.selectedMicrophone = findDevice(this._state.devices.microphones, sourceInfo);
+    });
   }
-  setSpeaker(): Promise<void> {
-    throw Error('setSpeaker not implemented');
+  async setSpeaker(sourceInfo: AudioDeviceInfo): Promise<void> {
+    this.modifyState((draft: CallAdapterState) => {
+      draft.devices.selectedSpeaker = findDevice(this._state.devices.speakers, sourceInfo);
+    });
   }
   on(): void {
     throw Error('on not implemented');
   }
   off(): void {
     throw Error('off not implemented');
+  }
+
+  private modifyState(modifier: (draft: CallAdapterState) => void): void {
+    const prior = this._state;
+    this._state = produce(this._state, modifier);
+    if (this._state !== prior) {
+      this._emitter.emit('stateChanged', this._state);
+    }
   }
 }
 
@@ -182,3 +200,11 @@ const stringToHexColor = (str: string): string => {
   }
   return colour;
 };
+
+function findDevice<T extends { id: string }>(devices: T[], source: T): T {
+  const device = devices.find((d) => d.id === source.id);
+  if (!device) {
+    throw Error(`Unknown device ${JSON.stringify(source)}. Options are: ${JSON.stringify(devices)}`);
+  }
+  return device;
+}

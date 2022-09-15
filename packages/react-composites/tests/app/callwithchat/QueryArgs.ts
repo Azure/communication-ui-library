@@ -1,9 +1,15 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { verifyParamExists } from '../lib/utils';
+import type { CallWithChatCompositeOptions } from '../../../src';
+import type { FakeChatAdapterArgs, MockCallAdapterState } from '../../common';
 
-export interface QueryArgs {
+/**
+ * Arguments specific to the <LiveApp />
+ *
+ * @private
+ */
+export interface LiveQueryArgs {
   displayName: string;
   endpoint: string;
   groupId: string;
@@ -12,15 +18,46 @@ export interface QueryArgs {
   userId: string;
 }
 
+/**
+ * Arguments specific to the <HermeticApp />
+ *
+ * @private
+ */
+export interface HermeticQueryArgs {
+  fakeChatAdapterArgs: FakeChatAdapterArgs;
+  mockCallAdapterState: MockCallAdapterState;
+}
+
+/**
+ * Common arguments (e.g. to control composite behavior) for both live and hermetic tests.
+ *
+ * @private
+ */
+export interface CommonQueryArgs {
+  customCompositeOptions?: CallWithChatCompositeOptions;
+}
+
+/**
+ * All query arguments accepted by the test app.
+ *
+ * @private
+ */
+export type QueryArgs = Partial<LiveQueryArgs> & Partial<HermeticQueryArgs> & Partial<CommonQueryArgs>;
+
 export function parseQueryArgs(): QueryArgs {
   const urlSearchParams = new URLSearchParams(window.location.search);
   const params = Object.fromEntries(urlSearchParams.entries());
   return {
-    displayName: verifyParamExists(params.displayName, 'displayName'),
-    endpoint: verifyParamExists(params.endpointUrl, 'endpointUrl'),
-    groupId: verifyParamExists(params.groupId, 'groupId'),
-    threadId: verifyParamExists(params.threadId, 'threadId'),
-    token: verifyParamExists(params.token, 'token'),
-    userId: verifyParamExists(params.userId, 'userId')
+    displayName: params.displayName ?? '',
+    endpoint: params.endpointUrl ?? '',
+    groupId: params.groupId ?? '',
+    threadId: params.threadId ?? '',
+    token: params.token ?? '',
+    userId: params.userId ?? '',
+
+    fakeChatAdapterArgs: params.fakeChatAdapterArgs ? JSON.parse(params.fakeChatAdapterArgs) : undefined,
+    mockCallAdapterState: params.mockCallAdapterState ? JSON.parse(params.mockCallAdapterState) : undefined,
+
+    customCompositeOptions: params.customCompositeOptions ? JSON.parse(params.customCompositeOptions) : undefined
   };
 }

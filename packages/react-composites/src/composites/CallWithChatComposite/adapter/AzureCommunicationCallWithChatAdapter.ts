@@ -57,7 +57,7 @@ import {
 import { EventEmitter } from 'events';
 import { CommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(PSTN-calls) */
-import { CommunicationIdentifier } from '@azure/communication-common';
+import { isCommunicationUserIdentifier, PhoneNumberIdentifier } from '@azure/communication-common';
 import { getChatThreadFromTeamsLink } from './parseTeamsUrl';
 import { AdapterError } from '../../common/adapters';
 
@@ -371,8 +371,19 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     return await this.callAdapter.resumeCall();
   }
   /* @conditional-compile-remove(PSTN-calls) */
-  public async addParticipant(participant: CommunicationIdentifier, options?: AddPhoneNumberOptions): Promise<void> {
-    return await this.callAdapter.addParticipant(participant, options);
+  public async addParticipant(participant: PhoneNumberIdentifier, options?: AddPhoneNumberOptions): Promise<void>;
+  /* @conditional-compile-remove(PSTN-calls) */
+  public async addParticipant(participant: CommunicationUserIdentifier): Promise<void>;
+  /* @conditional-compile-remove(PSTN-calls) */
+  public async addParticipant(
+    participant: PhoneNumberIdentifier | CommunicationUserIdentifier,
+    options?: AddPhoneNumberOptions
+  ): Promise<void> {
+    if (isCommunicationUserIdentifier(participant)) {
+      return await this.callAdapter.addParticipant(participant);
+    } else {
+      return await this.callAdapter.addParticipant(participant, options);
+    }
   }
 
   /* @conditional-compile-remove(PSTN-calls) */
@@ -760,6 +771,18 @@ export const createAzureCommunicationCallWithChatAdapterFromClients = async ({
   const [callAdapter, chatAdapter] = await Promise.all([createCallAdapterPromise, createChatAdapterPromise]);
   return new AzureCommunicationCallWithChatAdapter(callAdapter, chatAdapter);
 };
+
+/**
+ * Create a {@link CallWithChatAdapter} from the underlying adapters.
+ *
+ * This is an internal factory function used by browser tests to inject fake adapters for call and chat.
+ *
+ * @internal
+ */
+export const _createAzureCommunicationCallWithChatAdapterFromAdapters = (
+  callAdapter: CallAdapter,
+  chatAdapter: ChatAdapter
+): CallWithChatAdapter => new AzureCommunicationCallWithChatAdapter(callAdapter, chatAdapter);
 
 const isTeamsMeetingLinkLocator = (
   locator: CallAndChatLocator | TeamsMeetingLinkLocator

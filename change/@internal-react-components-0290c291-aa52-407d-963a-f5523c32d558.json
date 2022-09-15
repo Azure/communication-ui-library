@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Add id attribute to drawer menu items",
+  "packageName": "@internal/react-components",
+  "email": "edwardlee@microsoft.com",
+  "dependentChangeType": "patch"
+}
