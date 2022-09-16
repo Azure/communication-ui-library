@@ -26,7 +26,7 @@ export type {
   TopicChangedListener
 } from './adapter/ChatAdapter';
 
-export * from './Strings';
+export type { ChatCompositeStrings } from './Strings';
 
 /* @conditional-compile-remove(file-sharing) */
 export type { FileUploadHandler, FileUploadManager, FileUploadState, FileUploadError } from './file-sharing';

@@ -3,8 +3,6 @@
 import { IconButton, mergeStyles, Stack, useTheme } from '@fluentui/react';
 import React from 'react';
 import { ChatCompositeIcon } from '../../common/icons';
-/* @conditional-compile-remove(file-sharing) */
-import { useLocale } from '../../localization';
 import { useBuildFlavorAgnosticLocale } from '../../localization/BuildFlavorAgnosticLocale';
 
 /**

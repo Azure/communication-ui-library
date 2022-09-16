@@ -13,4 +13,4 @@ export type {
   CustomControlButtonProps
 } from './types/CallControlOptions';
 export * from './adapter';
-export * from './Strings';
+export type { CallCompositeStrings } from './Strings';

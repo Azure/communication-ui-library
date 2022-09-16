@@ -35,8 +35,7 @@ import { CustomCallWithChatControlButtonCallback } from './CustomButton';
 import { modalLayerHostStyle } from '../common/styles/ModalLocalAndRemotePIP.styles';
 /* @conditional-compile-remove(PSTN-calls) */
 import { SendDtmfDialpad } from '../common/SendDtmfDialpad';
-/* @conditional-compile-remove(PSTN-calls) */
-import { useCallWithChatCompositeStrings } from './hooks/useCallWithChatCompositeStrings';
+import { useBuildFlavorAgnosticLocale } from '../localization/BuildFlavorAgnosticLocale';
 
 /**
  * Props required for the {@link CallWithChatComposite}
@@ -325,7 +324,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
   };
 
   /* @conditional-compile-remove(PSTN-calls) */
-  const callWithChatStrings = useCallWithChatCompositeStrings();
+  const callWithChatStrings = useBuildFlavorAgnosticLocale().strings.callWithChat;
 
   /* @conditional-compile-remove(PSTN-calls) */
   const dialpadStrings = useMemo(

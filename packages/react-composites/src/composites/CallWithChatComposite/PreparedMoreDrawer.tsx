@@ -2,12 +2,12 @@
 // Licensed under the MIT license.
 
 import React, { useMemo } from 'react';
-import { useCallWithChatCompositeStrings } from './hooks/useCallWithChatCompositeStrings';
 import { MoreDrawer, MoreDrawerStrings } from './components/MoreDrawer';
 import { moreDrawerSelector } from './selectors/moreDrawerSelector';
 import { useSelector } from '../CallComposite/hooks/useSelector';
 import { useHandlers } from '../CallComposite/hooks/useHandlers';
 import { CallWithChatControlOptions } from './CallWithChatComposite';
+import { useBuildFlavorAgnosticLocale } from '../localization/BuildFlavorAgnosticLocale';
 
 /** @private */
 export interface PreparedMoreDrawerProps {
@@ -21,7 +21,7 @@ export interface PreparedMoreDrawerProps {
 
 /** @private */
 export const PreparedMoreDrawer = (props: PreparedMoreDrawerProps): JSX.Element => {
-  const strings = useCallWithChatCompositeStrings();
+  const strings = useBuildFlavorAgnosticLocale().strings.callWithChat;
   const moreDrawerStrings: MoreDrawerStrings = useMemo(
     () => ({
       peopleButtonLabel: strings.peopleButtonLabel,

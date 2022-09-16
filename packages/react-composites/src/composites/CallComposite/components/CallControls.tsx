@@ -33,6 +33,7 @@ import { SendDtmfDialpad, SendDtmfDialpadStrings } from '../../common/SendDtmfDi
 import { useAdapter } from '../adapter/CallAdapterProvider';
 import { isDisabled } from '../utils';
 import { ControlBarButtonStrings } from '@internal/react-components';
+import { useBuildFlavorAgnosticLocale } from '../../localization/BuildFlavorAgnosticLocale';
 
 /**
  * @private
@@ -180,17 +181,16 @@ const isSendDtmpfDiapladEnabledTrampoline = (): boolean => {
   return false;
 };
 
-const useDialpadStringsTrampoline = (): SendDtmfDialpadStrings => {
-  const locale = useLocale();
-  return useMemo(() => {
-    /* @conditional-compile-remove(PSTN-calls) */
-    return {
+const useDialpadStrings = (): SendDtmfDialpadStrings => {
+  const locale = useBuildFlavorAgnosticLocale();
+  return useMemo(
+    () => ({
       dialpadModalAriaLabel: locale.strings.call.dialpadModalAriaLabel,
       dialpadCloseModalButtonAriaLabel: locale.strings.call.dialpadCloseModalButtonAriaLabel,
       placeholderText: locale.strings.call.dtmfDialpadPlaceHolderText
-    };
-    return { dialpadModalAriaLabel: '', dialpadCloseModalButtonAriaLabel: '', placeholderText: '' };
-  }, [locale]);
+    }),
+    [locale]
+  );
 };
 
 const CallControlsPeopleButton = (props: {
@@ -226,7 +226,7 @@ const CallControlsSendDtmfDialpad = (props: {
   setShowDialpad: (value: boolean) => void;
 }): JSX.Element => {
   const { isMobile, showDialpad, setShowDialpad } = props;
-  const dialpadStrings = useDialpadStringsTrampoline();
+  const dialpadStrings = useDialpadStrings();
   // FIXME: useMemo
   const onDismissDialpad = (): void => {
     setShowDialpad(false);
@@ -256,9 +256,9 @@ const CallControlsMoreButton = (props: {
     ...useCallingHandlers(HoldButton)
   };
   const alternateCallerId = useAlternateCallerIdTrampoline();
-  const moreButtonStrings = useMoreButtonStringsTrampoline();
-  const holdButtonStrings = useHoldButtonStringsTrampoline();
-  const dialpadKeyStrings = useDialpadKeyStringsTrampoline();
+  const moreButtonStrings = useMoreButtonStrings();
+  const holdButtonStrings = useHoldButtonStrings();
+  const dialpadKeyStrings = useDialpadKeyStrings();
 
   // FIXME: Memoize!
   const moreButtonContextualMenuItems = (): IContextualMenuItem[] => {
@@ -324,36 +324,25 @@ const CallControlsMoreButton = (props: {
 
 const isEnabled = (option: unknown): boolean => option !== false;
 
-const useMoreButtonStringsTrampoline = (): ControlBarButtonStrings => {
-  const locale = useLocale();
-  return useMemo(() => {
-    // @conditional-compile-remove(PSTN-calls)
-    // @conditional-compile-remove(one-to-n-calling)
-    return {
+const useMoreButtonStrings = (): ControlBarButtonStrings => {
+  const locale = useBuildFlavorAgnosticLocale();
+  return useMemo(
+    () => ({
       label: locale.strings.call.moreButtonCallingLabel,
       tooltipOffContent: locale.strings.callWithChat.moreDrawerButtonTooltip
-    };
-    return { label: '', tooltipOffContent: '' };
-  }, [locale]);
+    }),
+    [locale]
+  );
 };
 
-const useDialpadKeyStringsTrampoline = (): { text: string } => {
-  const locale = useLocale();
-  return useMemo(() => {
-    // @conditional-compile-remove(PSTN-calls)
-    return { text: locale.strings.call.openDtmfDialpadLabel };
-    return { text: '' };
-  }, [locale]);
+const useDialpadKeyStrings = (): { text: string } => {
+  const locale = useBuildFlavorAgnosticLocale();
+  return useMemo(() => ({ text: locale.strings.call.openDtmfDialpadLabel }), [locale]);
 };
 
-const useHoldButtonStringsTrampoline = (): { text: string } => {
-  const locale = useLocale();
-  return useMemo(() => {
-    // @conditional-compile-remove(PSTN-calls)
-    // @conditional-compile-remove(one-to-n-calling)
-    return { text: locale.component.strings.holdButton.tooltipOffContent };
-    return { text: '' };
-  }, [locale]);
+const useHoldButtonStrings = (): { text: string } => {
+  const locale = useBuildFlavorAgnosticLocale();
+  return useMemo(() => ({ text: locale.component.strings.holdButton.tooltipOffContent }), [locale]);
 };
 
 const useAlternateCallerIdTrampoline = (): string | undefined => {

@@ -25,7 +25,6 @@ import { drawerContainerStyles } from '../styles/CallComposite.styles';
 import { TabHeader } from '../../common/TabHeader';
 import { _ICoordinates } from '@internal/react-components';
 import { _pxToRem } from '@internal/acs-ui-common';
-import { useLocale } from '../../localization';
 import { getPipStyles } from '../../common/styles/ModalLocalAndRemotePIP.styles';
 import { useMinMaxDragPosition } from '../../common/utils';
 import { availableSpaceStyles, hiddenStyles, sidePaneStyles, sidePaneTokens } from '../../common/styles/Pane.styles';

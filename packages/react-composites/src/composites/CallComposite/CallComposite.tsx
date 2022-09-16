@@ -7,7 +7,6 @@ import React, { useEffect, useMemo } from 'react';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { BaseProvider, BaseCompositeProps } from '../common/BaseComposite';
 import { CallCompositeIcons } from '../common/icons';
-import { useLocale } from '../localization';
 import { CallAdapter } from './adapter/CallAdapter';
 import { CallAdapterProvider, useAdapter } from './adapter/CallAdapterProvider';
 import { CallPage } from './pages/CallPage';
@@ -29,6 +28,7 @@ import { modalLayerHostStyle } from '../common/styles/ModalLocalAndRemotePIP.sty
 import { useId } from '@fluentui/react-hooks';
 /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */
 import { HoldPage } from './pages/HoldPage';
+import { useBuildFlavorAgnosticLocale } from '../localization/BuildFlavorAgnosticLocale';
 
 /**
  * Props for {@link CallComposite}.
@@ -135,7 +135,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
   const page = useSelector(getPage);
 
   const adapter = useAdapter();
-  const locale = useLocale();
+  const locale = useBuildFlavorAgnosticLocale();
 
   let pageElement: JSX.Element | undefined;
   /* @conditional-compile-remove(rooms) */

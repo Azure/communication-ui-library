@@ -8,7 +8,6 @@ import { PeopleButton } from './PeopleButton';
 import { concatStyleSets, IStyle, ITheme, mergeStyles, mergeStyleSets, Stack, useTheme } from '@fluentui/react';
 import { controlBarContainerStyles } from '../CallComposite/styles/CallControls.styles';
 import { callControlsContainerStyles } from '../CallComposite/styles/CallPage.styles';
-import { useCallWithChatCompositeStrings } from './hooks/useCallWithChatCompositeStrings';
 import { ChatAdapter } from '../ChatComposite';
 import { ChatButtonWithUnreadMessagesBadge } from './ChatButtonWithUnreadMessagesBadge';
 import { BaseCustomStyles, ControlBarButtonStyles } from '@internal/react-components';
@@ -29,6 +28,7 @@ import {
 /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
 import { DesktopMoreButton } from './components/DesktopMoreButton';
 import { isDisabled } from '../CallComposite/utils';
+import { useBuildFlavorAgnosticLocale } from '../localization/BuildFlavorAgnosticLocale';
 
 /**
  * @private
@@ -75,7 +75,7 @@ const inferCallWithChatControlOptions = (
  */
 export const CallWithChatControlBar = (props: CallWithChatControlBarProps & ContainerRectProps): JSX.Element => {
   const theme = useTheme();
-  const callWithChatStrings = useCallWithChatCompositeStrings();
+  const callWithChatStrings = useBuildFlavorAgnosticLocale().strings.callWithChat;
   const options = inferCallWithChatControlOptions(props.mobileView, props.callControls);
   const chatButtonStrings = useMemo(
     () => ({
