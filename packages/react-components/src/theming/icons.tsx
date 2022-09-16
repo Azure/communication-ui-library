@@ -231,13 +231,8 @@ const scaledIconStyles = (theme: Theme): IStyle => {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+    lineHeight: '0.2rem',
     color: theme.palette.themePrimary,
     zIndex: 1
   };
 };
-
-// const iconContainerStyles: IStyle = {
-//   root: {
-
-//   }
-// }
