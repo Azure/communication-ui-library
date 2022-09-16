@@ -10,8 +10,6 @@ import {
   CustomCallControlButtonCallback,
   CustomCallControlButtonPlacement
 } from '../../types/CallControlOptions';
-/* @conditional-compile-remove(control-bar-button-injection) */
-import { CallControlOptions } from '../../types/CallControlOptions';
 
 /** @private */
 export type CustomButtons = { [key in CustomCallControlButtonPlacement]: JSX.Element | undefined };
