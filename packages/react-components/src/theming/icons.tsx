@@ -219,11 +219,7 @@ export const DEFAULT_COMPONENT_ICONS = {
   /* @conditional-compile-remove(call-readiness) */
   DomainPermissionCamera: <DomainPermissionCamera20Filled />,
   /* @conditional-compile-remove(call-readiness) */
-  DomainPermissionMic: <DomainPermissionMic20Filled />
-};
-
-const domainPermissionIconStyles = (theme: Theme): IStyle => {
-  iconBackdrop: <Circle24Filled />,
+  DomainPermissionMic: <DomainPermissionMic20Filled />,
   /* @conditional-compile-remove(unsupported-browser) */
   UnsupportedBrowserWarning: <UnsupportedBrowserWarning />
 };
