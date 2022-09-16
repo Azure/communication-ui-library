@@ -25,13 +25,11 @@ import { Microphone } from './buttons/Microphone';
 import { Participants } from './buttons/Participants';
 import { ScreenShare } from './buttons/ScreenShare';
 import { ContainerRectProps } from '../../common/ContainerRectProps';
-/* @conditional-compile-remove(one-to-n-calling) */
 import { People } from './buttons/People';
 import { useLocale } from '../../localization';
 import { MoreButton } from '../../common/MoreButton';
 import { buttonFlyoutIncreasedSizeStyles } from '../styles/Buttons.styles';
-/* @conditional-compile-remove(PSTN-calls) */
-import { SendDtmfDialpad } from '../../common/SendDtmfDialpad';
+import { SendDtmfDialpad, SendDtmfDialpadStrings } from '../../common/SendDtmfDialpad';
 /* @conditional-compile-remove(PSTN-calls) */
 import { useAdapter } from '../adapter/CallAdapterProvider';
 import { isDisabled } from '../utils';
@@ -41,7 +39,6 @@ import { ControlBarButtonStrings } from '@internal/react-components';
  * @private
  */
 export type CallControlsProps = {
-  /* @conditional-compile-remove(one-to-n-calling) */
   peopleButtonChecked?: boolean;
   onPeopleButtonClicked?: () => void;
   callInvitationURL?: string;
@@ -64,32 +61,24 @@ const controlBarStyles = memoizeFunction((background: string) => ({ root: { back
 export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX.Element => {
   const options = useMemo(() => (typeof props.options === 'boolean' ? {} : props.options), [props.options]);
 
-  /* @conditional-compile-remove(one-to-n-calling) */
-  const localeStrings = useLocale();
-
-  /* @conditional-compile-remove(one-to-n-calling) */
+  const theme = useTheme();
+  const locale = useLocale();
+  // FIXME (?): Why is this using callWithChat strings?
   const peopleButtonStrings = useMemo(
     () => ({
-      label: localeStrings.strings.callWithChat.peopleButtonLabel,
-      tooltipOffContent: localeStrings.strings.callWithChat.peopleButtonTooltipOpen,
-      tooltipOnContent: localeStrings.strings.callWithChat.peopleButtonTooltipClose
+      label: locale.strings.callWithChat.peopleButtonLabel,
+      tooltipOffContent: locale.strings.callWithChat.peopleButtonTooltipOpen,
+      tooltipOnContent: locale.strings.callWithChat.peopleButtonTooltipClose
     }),
-    [localeStrings]
+    [locale]
   );
-
-  /* @conditional-compile-remove(PSTN-calls) */
-  const dialpadStrings = useMemo(
-    () => ({
-      dialpadModalAriaLabel: localeStrings.strings.call.dialpadModalAriaLabel,
-      dialpadCloseModalButtonAriaLabel: localeStrings.strings.call.dialpadCloseModalButtonAriaLabel,
-      placeholderText: localeStrings.strings.call.dtmfDialpadPlaceHolderText
-    }),
-    [localeStrings]
-  );
+  const dialpadStrings = useDialpadStringsTrampoline();
 
   const [showDialpad, setShowDialpad] = useState(false);
-  deleteMe(showDialpad);
-  const theme = useTheme();
+  // FIXME: useMemo
+  const onDismissDialpad = (): void => {
+    setShowDialpad(false);
+  };
 
   /* @conditional-compile-remove(control-bar-button-injection) */
   const customButtons = useMemo(
@@ -97,33 +86,32 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
     [options]
   );
 
+  const rolePermissions = usePermissionsTrampoline();
+
+  const screenShareButtonIsEnabled = rolePermissions.screenShare && isEnabled(options?.screenShareButton);
+  const microphoneButtonIsEnabled = rolePermissions.microphoneButton && isEnabled(options?.microphoneButton);
+  const cameraButtonIsEnabled = rolePermissions.cameraButton && isEnabled(options?.cameraButton);
+  const moreButtonIsEnabled = isEnabled(moreButtonOptionsTrampoline(options));
+  const devicesButtonIsEnabled = isEnabled(options?.devicesButton);
+  const participantButtonIsEnabled = isParticipantButtonEnabledTrampoline(options);
+  const peopleButtonIsEnabled = isPeopleButtonEnabledTrampoline(options, props.isMobile);
+  const sendDtmfDialpadIsEnabled = isSendDtmpfDiapladEnabledTrampoline();
+
   // when props.options is false then we want to hide the whole control bar.
   if (props.options === false) {
     return <></>;
   }
 
-  /* @conditional-compile-remove(PSTN-calls) */
-  const onDismissDialpad = (): void => {
-    setShowDialpad(false);
-  };
-
-  const rolePermissions = usePermissionsTrampoline();
-
-  let screenShareButtonIsEnabled = rolePermissions.screenShare && isEnabled(options?.screenShareButton);
-  let microphoneButtonIsEnabled = rolePermissions.microphoneButton && isEnabled(options?.microphoneButton);
-  let cameraButtonIsEnabled = rolePermissions.cameraButton && isEnabled(options?.cameraButton);
-
   return (
     <Stack horizontalAlign="center">
-      {
-        /* @conditional-compile-remove(PSTN-calls) */
+      {sendDtmfDialpadIsEnabled && (
         <SendDtmfDialpad
           isMobile={!!props.isMobile}
           strings={dialpadStrings}
           showDialpad={showDialpad}
           onDismissDialpad={onDismissDialpad}
         />
-      }
+      )}
       <Stack.Item>
         {/*
             Note: We use the layout="horizontal" instead of dockedBottom because of how we position the
@@ -146,42 +134,42 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
               disabled={isDisabled(options?.screenShareButton)}
             />
           )}
-          {isEnabled(options?.participantsButton) &&
-            /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */
-            !props.isMobile && (
-              <Participants
-                option={options?.participantsButton}
-                callInvitationURL={props.callInvitationURL}
-                onFetchParticipantMenuItems={props.onFetchParticipantMenuItems}
-                displayType={options?.displayType}
-                increaseFlyoutItemSize={props.increaseFlyoutItemSize}
-                isMobile={props.isMobile}
-                disabled={isDisabled(options?.participantsButton)}
-              />
-            ) && (
-              /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */
-              <People
-                checked={props.peopleButtonChecked}
-                showLabel={options?.displayType !== 'compact'}
-                onClick={props.onPeopleButtonClicked}
-                data-ui-id="call-composite-people-button"
-                strings={peopleButtonStrings}
-                disabled={isDisabled(options?.participantsButton)}
-              />
-            )}
-          {isEnabled(options?.devicesButton) && (
+          {participantButtonIsEnabled && (
+            <Participants
+              option={options?.participantsButton}
+              callInvitationURL={props.callInvitationURL}
+              onFetchParticipantMenuItems={props.onFetchParticipantMenuItems}
+              displayType={options?.displayType}
+              increaseFlyoutItemSize={props.increaseFlyoutItemSize}
+              isMobile={props.isMobile}
+              disabled={isDisabled(options?.participantsButton)}
+            />
+          )}
+          {peopleButtonIsEnabled && (
+            <People
+              checked={props.peopleButtonChecked}
+              showLabel={options?.displayType !== 'compact'}
+              onClick={props.onPeopleButtonClicked}
+              data-ui-id="call-composite-people-button"
+              strings={peopleButtonStrings}
+              disabled={isDisabled(options?.participantsButton)}
+            />
+          )}
+          {devicesButtonIsEnabled && (
             <Devices
               displayType={options?.displayType}
               increaseFlyoutItemSize={props.increaseFlyoutItemSize}
               disabled={isDisabled(options?.devicesButton)}
             />
           )}
-          <CallControlsMoreButton
-            options={options}
-            onPeopleButtonClicked={props.onPeopleButtonClicked}
-            isMobile={props.isMobile}
-            setShowDialpad={setShowDialpad}
-          />
+          {moreButtonIsEnabled && (
+            <CallControlsMoreButton
+              options={options}
+              onPeopleButtonClicked={props.onPeopleButtonClicked}
+              isMobile={props.isMobile}
+              setShowDialpad={setShowDialpad}
+            />
+          )}
           {/* @conditional-compile-remove(control-bar-button-injection) */ customButtons['primary']}
           {isEnabled(options?.endCallButton) && <EndCall displayType={options?.displayType} />}
         </ControlBar>
@@ -190,8 +178,35 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
   );
 };
 
-const deleteMe = (showDialpad: boolean): void => {
-  /* nothing */
+const isParticipantButtonEnabledTrampoline = (options?: CallControlOptions): boolean => {
+  /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */
+  return false;
+  return isEnabled(options?.participantsButton);
+};
+
+const isPeopleButtonEnabledTrampoline = (options?: CallControlOptions, isMobile?: boolean): boolean => {
+  /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */
+  return isEnabled(options?.participantsButton) && !isMobile;
+  return false;
+};
+
+const isSendDtmpfDiapladEnabledTrampoline = (): boolean => {
+  /* @conditional-compile-remove(PSTN-calls) */
+  return true;
+  return false;
+};
+
+const useDialpadStringsTrampoline = (): SendDtmfDialpadStrings => {
+  const locale = useLocale();
+  return useMemo(() => {
+    /* @conditional-compile-remove(PSTN-calls) */
+    return {
+      dialpadModalAriaLabel: locale.strings.call.dialpadModalAriaLabel,
+      dialpadCloseModalButtonAriaLabel: locale.strings.call.dialpadCloseModalButtonAriaLabel,
+      placeholderText: locale.strings.call.dtmfDialpadPlaceHolderText
+    };
+    return { dialpadModalAriaLabel: '', dialpadCloseModalButtonAriaLabel: '', placeholderText: '' };
+  }, [locale]);
 };
 
 const CallControlsMoreButton = (props: {
@@ -328,7 +343,8 @@ const holdButtonOptionsTrampoline = (options?: CallControlOptions): boolean | { 
 const moreButtonOptionsTrampoline = (options?: CallControlOptions): boolean | undefined => {
   /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
   return options?.moreButton;
-  return undefined;
+  // More button is never enabled in stable build.
+  return false;
 };
 
 const usePermissionsTrampoline = (): _Permissions => {
