@@ -7,7 +7,7 @@ import { IContextualMenuItem } from '@fluentui/react';
 /* @conditional-compile-remove(PSTN-calls) */
 import { useState } from 'react';
 import { _isInLobbyOrConnecting } from '@internal/calling-component-bindings';
-import { ControlBar, ParticipantMenuItemsCallback } from '@internal/react-components';
+import { ControlBar, ParticipantMenuItemsCallback, _Permissions } from '@internal/react-components';
 /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
 import { HoldButton } from '@internal/react-components';
 /* @conditional-compile-remove(rooms) */
@@ -181,20 +181,11 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
     setShowDialpad(false);
   };
 
-  /* @conditional-compile-remove(rooms) */
-  const rolePermissions = _usePermissions();
+  const rolePermissions = usePermissionsTrampoline();
 
-  let screenShareButtonIsEnabled = isEnabled(options?.screenShareButton);
-  /* @conditional-compile-remove(rooms) */
-  screenShareButtonIsEnabled = rolePermissions.screenShare && screenShareButtonIsEnabled;
-
-  let microphoneButtonIsEnabled = isEnabled(options?.microphoneButton);
-  /* @conditional-compile-remove(rooms) */
-  microphoneButtonIsEnabled = rolePermissions.microphoneButton && microphoneButtonIsEnabled;
-
-  let cameraButtonIsEnabled = isEnabled(options?.cameraButton);
-  /* @conditional-compile-remove(rooms) */
-  cameraButtonIsEnabled = rolePermissions.cameraButton && cameraButtonIsEnabled;
+  let screenShareButtonIsEnabled = rolePermissions.screenShare && isEnabled(options?.screenShareButton);
+  let microphoneButtonIsEnabled = rolePermissions.microphoneButton && isEnabled(options?.microphoneButton);
+  let cameraButtonIsEnabled = rolePermissions.cameraButton && isEnabled(options?.cameraButton);
 
   return (
     <Stack horizontalAlign="center">
@@ -279,3 +270,15 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
 };
 
 const isEnabled = (option: unknown): boolean => option !== false;
+
+const usePermissionsTrampoline = (): _Permissions => {
+  /* @conditional-compile-remove(rooms) */
+  return _usePermissions();
+  // On stable build, all users have all permissions
+  return {
+    cameraButton: true,
+    microphoneButton: true,
+    screenShare: true,
+    removeParticipantButton: true
+  };
+};

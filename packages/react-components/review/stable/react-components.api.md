@@ -260,6 +260,11 @@ export interface ComponentStrings {
     videoGallery: VideoGalleryStrings;
 }
 
+// Warning: (ae-internal-missing-underscore) The name "consumerPermissions" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
+export const consumerPermissions: _Permissions;
+
 // @public
 export interface ContentSystemMessage extends SystemMessageCommon {
     // (undocumented)
@@ -661,6 +666,9 @@ export interface FluentThemeProviderProps {
     fluentTheme?: PartialTheme | Theme;
     rtl?: boolean;
 }
+
+// @internal (undocumented)
+export const _getPermissions: (role?: Role | undefined) => _Permissions;
 
 // @public
 export const GridLayout: (props: GridLayoutProps) => JSX.Element;
@@ -1095,6 +1103,23 @@ export interface ParticipantsButtonStyles extends ControlBarButtonStyles {
 // @public
 export type ParticipantState = 'Idle' | 'Connecting' | 'Ringing' | 'Connected' | 'Hold' | 'InLobby' | 'EarlyMedia' | 'Disconnected';
 
+// @internal (undocumented)
+export type _Permissions = {
+    cameraButton: boolean;
+    microphoneButton: boolean;
+    screenShare: boolean;
+    removeParticipantButton: boolean;
+};
+
+// @internal (undocumented)
+export const _PermissionsProvider: (props: _PermissionsProviderProps) => JSX.Element;
+
+// @internal
+export type _PermissionsProviderProps = {
+    permissions: _Permissions;
+    children: React_2.ReactNode;
+};
+
 // @internal
 export const _PictureInPictureInPicture: (props: _PictureInPictureInPictureProps) => JSX.Element;
 
@@ -1118,6 +1143,11 @@ export interface _PictureInPictureInPictureStrings {
 export type _PictureInPictureInPictureTileProps = PropsWithChildren<{
     orientation: _TileOrientation;
 }>;
+
+// Warning: (ae-internal-missing-underscore) The name "presenterPermissions" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
+export const presenterPermissions: _Permissions;
 
 // @public
 export type ReadReceiptsBySenderId = {
@@ -1146,6 +1176,9 @@ export const _RemoteVideoTile: React_2.MemoExoticComponent<(props: {
     personaMinSize?: number | undefined;
     participantState?: ParticipantState | undefined;
 }) => JSX.Element>;
+
+// @beta (undocumented)
+export type Role = 'Presenter' | 'Attendee' | 'Consumer';
 
 // @public
 export const ScreenShareButton: (props: ScreenShareButtonProps) => JSX.Element;
@@ -1265,6 +1298,9 @@ export const _useContainerHeight: (containerRef: RefObject<HTMLElement>) => numb
 
 // @internal
 export const _useContainerWidth: (containerRef: RefObject<HTMLElement>) => number | undefined;
+
+// @internal
+export const _usePermissions: () => _Permissions;
 
 // @public
 export const useTheme: () => Theme;
