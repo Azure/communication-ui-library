@@ -99,7 +99,7 @@ const onFetchCustomButtonProps: CustomCallControlButtonCallback[] = [
     return {
       showLabel: args.displayType !== 'compact',
       // Some non-default icon that is already registered by the composites.
-      iconName: 'ParticipantItemOptions',
+      iconName: 'ParticipantItemOptionsHovered',
       text: 'custom #1',
       placement: 'primary'
     };
