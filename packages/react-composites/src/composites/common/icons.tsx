@@ -9,8 +9,8 @@ import {
   Chat20Regular,
   Info20Filled,
   MicOff20Filled,
-  Mic20Filled,
-  Mic20Regular,
+  MicOn20Filled,
+  MicOn20Regular,
   People20Regular,
   PersonDelete20Filled,
   Speaker220Filled,
@@ -52,17 +52,17 @@ export const COMPOSITE_ONLY_ICONS: CompositeIcons = {
   LobbyScreenConnectingToCall: <CoffeeIcon />,
   LobbyScreenWaitingToBeAdmitted: <CoffeeIcon />,
   LocalDeviceSettingsCamera: <Video20Filled />,
-  LocalDeviceSettingsMic: <Mic20Filled />,
+  LocalDeviceSettingsMic: <MicOn20Filled />,
   LocalDeviceSettingsSpeaker: <Speaker220Filled />,
   LocalPreviewPlaceholder: <VideoOff20Filled />,
   LocalCameraSwitch: <CameraSwitch24Regular />,
   ControlBarChatButtonActive: <Chat20Filled />,
   ControlBarChatButtonInactive: <Chat20Regular />,
   ControlBarPeopleButton: <People20Regular />,
-  MoreDrawerMicrophones: <Mic20Regular />,
+  MoreDrawerMicrophones: <MicOn20Regular />,
   MoreDrawerPeople: <People20Regular />,
   MoreDrawerSpeakers: <Speaker220Regular />,
-  MoreDrawerSelectedMicrophone: <Mic20Filled />,
+  MoreDrawerSelectedMicrophone: <MicOn20Filled />,
   MoreDrawerSelectedSpeaker: <Speaker220Filled />,
   Muted: <MicOff20Filled />,
   NetworkReconnectIcon: <CallMissed20Filled />,
@@ -77,7 +77,9 @@ export const COMPOSITE_ONLY_ICONS: CompositeIcons = {
   /* @conditional-compile-remove(PSTN-calls) */
   PeoplePaneOpenDialpad: <Dialpad20Regular />,
   /* @conditional-compile-remove(PSTN-calls) */
-  DialpadStartCall: <Call20Regular />
+  DialpadStartCall: <Call20Regular />,
+  /* @conditional-compile-remove(rooms) */
+  NoticePageInvalidRoom: <Info20Filled />
 };
 
 /**
@@ -182,6 +184,8 @@ export type CallCompositeIcons = {
   PeoplePaneOpenDialpad?: JSX.Element;
   /* @conditional-compile-remove(PSTN-calls) */
   DialpadStartCall?: JSX.Element;
+  /* @conditional-compile-remove(rooms) */
+  NoticePageInvalidRoom?: JSX.Element;
 };
 
 /**
