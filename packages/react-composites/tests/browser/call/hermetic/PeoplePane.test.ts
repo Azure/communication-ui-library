@@ -85,15 +85,12 @@ test.describe('Call Composite E2E CallPage Tests', () => {
     );
     await pageClick(page, dataUiId('call-composite-participants-button'));
 
-    if (flavor === 'stable') {
-      const buttonCallOut = await waitForSelector(page, '.ms-Callout');
-      // This will ensure no animation is happening for the callout
-      await buttonCallOut.waitForElementState('stable');
-    } else {
+    if (flavor === 'beta') {
       await waitForSelector(page, dataUiId('call-composite-people-pane'));
-      if (!isTestProfileDesktop(testInfo)) {
-        await waitForPiPiPToHaveLoaded(page, { skipVideoCheck: true });
-      }
+    } else {
+      await pageClick(page, dataUiId(IDS.participantButtonPeopleMenuItem));
+      // click on last person (myself) to remove any hover effect on participant items
+      await pageClick(page, dataUiId('participant-item') + ' >> nth=3');
     }
     expect(await stableScreenshot(page)).toMatchSnapshot(`video-gallery-page-participants-flyout-custom-ellipses.png`);
   });
@@ -127,14 +124,12 @@ test.describe('Call Composite E2E CallPage Tests', () => {
     }
 
     if (flavor === 'stable') {
-      const buttonCallOut = await waitForSelector(page, '.ms-Callout');
-      // This will ensure no animation is happening for the callout
-      await buttonCallOut.waitForElementState('stable');
+      await pageClick(page, dataUiId(IDS.participantButtonPeopleMenuItem));
+      // click on last person (myself) to remove any hover effect on participant items
+      await pageClick(page, dataUiId('participant-item') + ' >> nth=3');
     } else {
       await waitForSelector(page, dataUiId('call-composite-people-pane'));
-      if (!isTestProfileDesktop(testInfo)) {
-        await waitForPiPiPToHaveLoaded(page, { skipVideoCheck: true });
-      }
+      await waitForPiPiPToHaveLoaded(page, { skipVideoCheck: true });
     }
     expect(await stableScreenshot(page)).toMatchSnapshot(`video-gallery-page-participants-flyout-no-ellipses.png`);
   });
