@@ -417,14 +417,10 @@ export const DEFAULT_COMPONENT_ICONS: {
     SendBoxSendHovered: JSX.Element;
     VideoTileMicOff: JSX.Element;
     BackSpace: JSX.Element;
-<<<<<<< HEAD
     DomainPermissionsSparkle: JSX.Element;
     DomainPermissionCamera: JSX.Element;
     DomainPermissionMic: JSX.Element;
-=======
-    iconBackdrop: JSX.Element;
     UnsupportedBrowserWarning: JSX.Element;
->>>>>>> 1f13729e78640aa5b7cf4d5daece9f2b4f55a2eb
 };
 
 // @public

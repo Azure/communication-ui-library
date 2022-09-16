@@ -95,8 +95,8 @@ const DomainPermissionMic20Filled = (): JSX.Element => {
       horizontalAlign={'center'}
       styles={{ root: { borderRadius: '100%', background: theme.palette.themeLighterAlt, padding: '2rem' } }}
     >
-      <div className={mergeStyles(domainPermissionIconStyles(theme))}>
-        <Mic20Filled />
+      <div className={mergeStyles(scaledIconStyles(theme))}>
+        <MicOn20Filled />
       </div>
     </Stack>
   );
@@ -110,7 +110,7 @@ const DomainPermissionCamera20Filled = (): JSX.Element => {
       horizontalAlign={'center'}
       styles={{ root: { borderRadius: '100%', background: theme.palette.themeLighterAlt, padding: '2rem' } }}
     >
-      <div className={mergeStyles(domainPermissionIconStyles(theme))}>
+      <div className={mergeStyles(scaledIconStyles(theme))}>
         <Video20Filled />
       </div>
     </Stack>
@@ -235,3 +235,9 @@ const scaledIconStyles = (theme: Theme): IStyle => {
     zIndex: 1
   };
 };
+
+// const iconContainerStyles: IStyle = {
+//   root: {
+
+//   }
+// }
