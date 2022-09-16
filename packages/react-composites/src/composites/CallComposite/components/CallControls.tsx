@@ -15,10 +15,9 @@ import { HoldButton } from '@internal/react-components';
 /* @conditional-compile-remove(rooms) */
 import { _usePermissions } from '@internal/react-components';
 import React, { useMemo } from 'react';
-import { CallControlOptions } from '../types/CallControlOptions';
+import { CallControlOptions, CustomCallControlButtonCallback } from '../types/CallControlOptions';
 import { Camera } from './buttons/Camera';
-/* @conditional-compile-remove(control-bar-button-injection) */
-import { generateCustomControlBarButtons, onFetchCustomButtonPropsTrampoline } from './buttons/Custom';
+import { generateCustomControlBarButtons } from './buttons/Custom';
 import { Devices } from './buttons/Devices';
 import { EndCall } from './buttons/EndCall';
 import { Microphone } from './buttons/Microphone';
@@ -80,7 +79,6 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
     setShowDialpad(false);
   };
 
-  /* @conditional-compile-remove(control-bar-button-injection) */
   const customButtons = useMemo(
     () => generateCustomControlBarButtons(onFetchCustomButtonPropsTrampoline(options), options?.displayType),
     [options]
@@ -170,12 +168,20 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
               setShowDialpad={setShowDialpad}
             />
           )}
-          {/* @conditional-compile-remove(control-bar-button-injection) */ customButtons['primary']}
+          {customButtons['primary']}
           {isEnabled(options?.endCallButton) && <EndCall displayType={options?.displayType} />}
         </ControlBar>
       </Stack.Item>
     </Stack>
   );
+};
+
+const onFetchCustomButtonPropsTrampoline = (
+  options?: CallControlOptions
+): CustomCallControlButtonCallback[] | undefined => {
+  /* @conditional-compile-remove(control-bar-button-injection) */
+  return options?.onFetchCustomButtonProps;
+  return undefined;
 };
 
 const isParticipantButtonEnabledTrampoline = (options?: CallControlOptions): boolean => {

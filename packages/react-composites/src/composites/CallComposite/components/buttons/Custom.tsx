@@ -93,13 +93,3 @@ export const generateCustomDrawerButtons = (
   }
   return response;
 };
-
-/* @conditional-compile-remove(control-bar-button-injection) */
-/** @private */
-export const onFetchCustomButtonPropsTrampoline = (
-  options?: CallControlOptions
-): CustomCallControlButtonCallback[] | undefined => {
-  let response: CustomCallControlButtonCallback[] | undefined = undefined;
-  response = options?.onFetchCustomButtonProps;
-  return response;
-};
