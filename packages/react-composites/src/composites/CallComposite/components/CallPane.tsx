@@ -37,6 +37,7 @@ import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { useAdapter } from '../adapter/CallAdapterProvider';
 import { isDisabled } from '../utils';
 import { CallSidePaneOption } from '../hooks/useSidePaneState';
+import { useBuildFlavorAgnosticLocale } from '../../localization/BuildFlavorAgnosticLocale';
 
 /**
  * Pane that is used to store participants for Call composite
@@ -57,19 +58,8 @@ export const CallPane = (props: {
   callControls?: CallControlOptions;
 }): JSX.Element => {
   const [drawerMenuItems, setDrawerMenuItems] = useState<_DrawerMenuItemProps[]>([]);
-
   const paneStyles = !props.activePane ? hiddenStyles : props.mobileView ? availableSpaceStyles : sidePaneStyles;
-  const localeStrings = useLocale();
-
-  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-  const getStrings = () => {
-    /* @conditional-compile-remove(one-to-n-calling) */
-    return localeStrings.strings.call;
-
-    return localeStrings.strings.callWithChat;
-  };
-
-  const strings = getStrings();
+  const strings = useBuildFlavorAgnosticLocale().strings.call;
   const theme = useTheme();
 
   const header = !props.activePane ? null : props.mobileView ? (

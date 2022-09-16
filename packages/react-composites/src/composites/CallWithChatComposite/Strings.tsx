@@ -152,3 +152,37 @@ export interface CallWithChatCompositeStrings {
    */
   copyInviteLinkActionedAriaLabel: string;
 }
+
+const defaultBetaOnlyStrings = {
+  /**
+   * Delete after stabilization of: PSTN-calls
+   */
+  openDialpadButtonLabel: '',
+  peoplePaneAddPeopleButtonLabel: '',
+  dialpadStartCallButtonLabel: '',
+  dialpadModalTitle: '',
+  dialpadModalAriaLabel: '',
+  dialpadCloseModalButtonAriaLabel: '',
+  dtmfDialpadPlaceHolderText: '',
+  openDtmfDialpadLabel: ''
+};
+
+/**
+ * @private
+ */
+export type BuildFlavorAgnosticCallWithChatCompositeStrings = CallWithChatCompositeStrings &
+  Record<keyof typeof defaultBetaOnlyStrings, string>;
+
+/**
+ * @private
+ */
+export function buildFlavorAgnosticCallWithChatCompositeStrings(
+  strings: CallWithChatCompositeStrings
+): BuildFlavorAgnosticCallWithChatCompositeStrings {
+  // First provide defaults, and then override with incoming strings.
+  // This ensurs that for beta builds, the incoming strings are respected.
+  return {
+    ...defaultBetaOnlyStrings,
+    ...strings
+  };
+}

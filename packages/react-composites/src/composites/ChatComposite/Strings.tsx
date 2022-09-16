@@ -20,3 +20,30 @@ export interface ChatCompositeStrings {
    */
   uploadFile: string;
 }
+
+const defaultBetaOnlyStrings = {
+  /**
+   * Delete after stabilization of: file-sharing
+   */
+  uploadFile: ''
+};
+
+/**
+ * @private
+ */
+export type BuildFlavorAgnosticChatCompositeStrings = ChatCompositeStrings &
+  Record<keyof typeof defaultBetaOnlyStrings, string>;
+
+/**
+ * @private
+ */
+export function buildFlavorAgnosticChatCompositeStrings(
+  strings: ChatCompositeStrings
+): BuildFlavorAgnosticChatCompositeStrings {
+  // First provide defaults, and then override with incoming strings.
+  // This ensurs that for beta builds, the incoming strings are respected.
+  return {
+    ...defaultBetaOnlyStrings,
+    ...strings
+  };
+}

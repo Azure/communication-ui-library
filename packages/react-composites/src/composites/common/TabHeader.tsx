@@ -3,9 +3,8 @@
 import { concatStyleSets, DefaultButton, Stack } from '@fluentui/react';
 import { useTheme } from '@internal/react-components';
 import React, { useMemo } from 'react';
-/* @conditional-compile-remove(one-to-n-calling) */
-import { CallCompositeStrings } from '../CallComposite';
-import { CallWithChatCompositeStrings } from '../CallWithChatComposite';
+import { BuildFlavorAgnosticCallCompositeStrings } from '../CallComposite/Strings';
+import { BuildFlavorAgnosticCallWithChatCompositeStrings } from '../CallWithChatComposite/Strings';
 import { CallWithChatCompositeIcon } from '../common/icons';
 import {
   mobilePaneBackButtonStyles,
@@ -24,7 +23,7 @@ type TabHeaderProps = {
   // If set, show a button to open people tab.
   onPeopleButtonClicked?: () => void;
   activeTab: TabHeaderTab;
-  strings: CallWithChatCompositeStrings | /* @conditional-compile-remove(one-to-n-calling) */ CallCompositeStrings;
+  strings: BuildFlavorAgnosticCallWithChatCompositeStrings | BuildFlavorAgnosticCallCompositeStrings;
   disableChatButton?: boolean;
   disablePeopleButton?: boolean;
 };

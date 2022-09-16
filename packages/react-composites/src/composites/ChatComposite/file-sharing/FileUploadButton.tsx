@@ -5,6 +5,7 @@ import React from 'react';
 import { ChatCompositeIcon } from '../../common/icons';
 /* @conditional-compile-remove(file-sharing) */
 import { useLocale } from '../../localization';
+import { useBuildFlavorAgnosticLocale } from '../../localization/BuildFlavorAgnosticLocale';
 
 /**
  * Props for {@link FileUploadButton} component.
@@ -39,6 +40,8 @@ export const FileUploadButton = (props: FileUploadButtonProps): JSX.Element => {
   const theme = useTheme();
   const { accept, multiple = false, onChange } = props;
 
+  const strings = useBuildFlavorAgnosticLocale().strings.chat;
+
   const fileUploadButtonClassName = mergeStyles({
     width: '1.5rem',
     height: '1.5rem',
@@ -69,7 +72,7 @@ export const FileUploadButton = (props: FileUploadButtonProps): JSX.Element => {
           inputRef.current?.click();
         }}
       >
-        <IconButton className={iconButtonClassName} ariaLabel={uploadFileButtonStringTrampoline()}>
+        <IconButton className={iconButtonClassName} ariaLabel={strings.uploadFile}>
           <SendBoxAttachFileIconTrampoline />
         </IconButton>
       </Stack>
@@ -116,11 +119,4 @@ export const FileUploadButtonWrapper = (
       }
     </>
   );
-};
-
-const uploadFileButtonStringTrampoline = (): string => {
-  //@conditional-compile-remove(file-sharing)
-  //eslint-disable-next-line react-hooks/rules-of-hooks
-  return useLocale().strings.chat.uploadFile;
-  return '';
 };

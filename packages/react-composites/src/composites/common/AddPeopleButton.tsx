@@ -3,9 +3,6 @@
 import { concatStyleSets, DefaultButton, IButtonStyles, PrimaryButton, Stack, useTheme } from '@fluentui/react';
 import copy from 'copy-to-clipboard';
 import React, { useMemo } from 'react';
-import { CallWithChatCompositeStrings } from '../../index-public';
-/* @conditional-compile-remove(one-to-n-calling) */
-import { CallCompositeStrings } from '../../index-public';
 import { CallWithChatCompositeIcon } from './icons';
 import { peoplePaneContainerTokens } from './styles/ParticipantContainer.styles';
 import {
@@ -21,13 +18,15 @@ import { AddPeopleDropdown } from './AddPeopleDropdown';
 import { PhoneNumberIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
+import { BuildFlavorAgnosticCallCompositeStrings } from '../CallComposite/Strings';
+import { BuildFlavorAgnosticCallWithChatCompositeStrings } from '../CallWithChatComposite/Strings';
 
 /** @private */
 export interface AddPeopleButtonProps {
   inviteLink?: string;
   mobileView?: boolean;
   participantList?: JSX.Element;
-  strings: CallWithChatCompositeStrings | /* @conditional-compile-remove(one-to-n-calling) */ CallCompositeStrings;
+  strings: BuildFlavorAgnosticCallWithChatCompositeStrings | BuildFlavorAgnosticCallCompositeStrings;
   /* @conditional-compile-remove(PSTN-calls) */
   onAddParticipant: (participant: PhoneNumberIdentifier, options?: AddPhoneNumberOptions) => void;
   alternateCallerId?: string;

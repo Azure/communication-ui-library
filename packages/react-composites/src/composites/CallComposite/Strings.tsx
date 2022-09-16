@@ -313,3 +313,68 @@ export interface CallCompositeStrings {
    */
   deniedPermissionToRoomDetails?: string;
 }
+
+const defaultBetaOnlyStrings = {
+  /**
+   * Delete after stabilization of: one-to-n-calling
+   */
+  peoplePaneTitle: '',
+  returnToCallButtonAriaLabel: '',
+  returnToCallButtonAriaDescription: '',
+  peopleButtonLabel: '',
+  chatButtonLabel: '',
+  dismissSidePaneButtonLabel: '',
+  peoplePaneSubTitle: '',
+  copyInviteLinkButtonLabel: '',
+  openDialpadButtonLabel: '',
+  removeMenuLabel: '',
+
+  /**
+   * Delete after stabilization of: PSTN-calls
+   */
+  peoplePaneAddPeopleButtonLabel: '',
+  dialpadStartCallButtonLabel: '',
+  dialpadModalTitle: '',
+  dialpadModalAriaLabel: '',
+  dialpadCloseModalButtonAriaLabel: '',
+  dtmfDialpadPlaceHolderText: '',
+  openDtmfDialpadLabel: '',
+
+  /**
+   * Delete after stabilization of: one-to-n-calling or PSTN-calls
+   */
+  moreButtonCallingLabel: '',
+  resumeCallButtonLabel: '',
+  resumingCallButtonLabel: '',
+  resumeCallButtonAriaLabel: '',
+  resumingCallButtonAriaLabel: '',
+  holdScreenLabel: '',
+
+  /**
+   * Delete after stabilization of: rooms
+   */
+  roomNotFoundTitle: '',
+  roomNotFoundDetails: '',
+  deniedPermissionToRoomTitle: '',
+  deniedPermissionToRoomDetails: ''
+} as const;
+
+/**
+ * @private
+ */
+export type BuildFlavorAgnosticCallCompositeStrings = CallCompositeStrings &
+  Record<keyof typeof defaultBetaOnlyStrings, string>;
+
+/**
+ * @private
+ */
+export function buildFlavorAgnosticCallCompositeStrings(
+  strings: CallCompositeStrings
+): BuildFlavorAgnosticCallCompositeStrings {
+  // First provide defaults, and then override with incoming strings.
+  // This ensurs that for beta builds, the incoming strings are respected.
+  return {
+    ...defaultBetaOnlyStrings,
+    ...strings
+  };
+}

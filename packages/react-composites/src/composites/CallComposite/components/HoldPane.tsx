@@ -4,7 +4,6 @@
 import { PrimaryButton, Stack, Text } from '@fluentui/react';
 import { _pxToRem } from '@internal/acs-ui-common';
 import React, { useRef, useState } from 'react';
-import { CompositeLocale, useLocale } from '../../localization';
 /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
 import { HoldButton } from '@internal/react-components';
 /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
@@ -16,14 +15,7 @@ import {
   paneStyles,
   resumeButtonStyles
 } from '../styles/HoldPane.styles';
-
-interface HoldPaneStrings {
-  holdScreenLabel: string;
-  resumeCallButtonLabel: string;
-  resumeCallButtonAriaLabel: string;
-  resumingCallButtonLabel: string;
-  resumingCallButtonAriaLabel: string;
-}
+import { useBuildFlavorAgnosticLocale } from '../../localization/BuildFlavorAgnosticLocale';
 
 /**
  * Hold pane to display when the user places themselves on hold
@@ -33,9 +25,7 @@ interface HoldPaneStrings {
 export const HoldPane = (): JSX.Element => {
   /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
   const holdButtonProps = usePropsFor(HoldButton);
-  const locale = useLocale();
-
-  const strings = stringsTrampoline(locale);
+  const strings = useBuildFlavorAgnosticLocale().strings.call;
 
   const [time, setTime] = useState<number>(0);
 
@@ -100,22 +90,4 @@ export const getReadableTime = (time: number): string => {
   const readableMinutes = ('0' + (getMinutes(time) % 60)).slice(-2);
   const readableSeconds = ('0' + (getSeconds(time) % 60)).slice(-2);
   return `${hours > 0 ? hours + ':' : ''}${readableMinutes}:${readableSeconds}`;
-};
-
-const stringsTrampoline = (locale: CompositeLocale): HoldPaneStrings => {
-  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
-  return {
-    holdScreenLabel: locale.strings.call.holdScreenLabel,
-    resumeCallButtonLabel: locale.strings.call.resumeCallButtonLabel,
-    resumeCallButtonAriaLabel: locale.strings.call.resumeCallButtonAriaLabel,
-    resumingCallButtonLabel: locale.strings.call.resumingCallButtonLabel,
-    resumingCallButtonAriaLabel: locale.strings.call.resumingCallButtonAriaLabel
-  };
-  return {
-    holdScreenLabel: '',
-    resumeCallButtonLabel: '',
-    resumeCallButtonAriaLabel: '',
-    resumingCallButtonLabel: '',
-    resumingCallButtonAriaLabel: ''
-  };
 };

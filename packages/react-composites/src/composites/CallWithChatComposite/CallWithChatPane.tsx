@@ -20,7 +20,6 @@ import {
   scrollableContainerContents
 } from '../common/styles/ParticipantContainer.styles';
 import { SidePaneHeader } from '../common/SidePaneHeader';
-import { useCallWithChatCompositeStrings } from './hooks/useCallWithChatCompositeStrings';
 import { ModalLocalAndRemotePIP } from '../common/ModalLocalAndRemotePIP';
 import { PeoplePaneContent } from '../common/PeoplePaneContent';
 import { drawerContainerStyles } from './styles/CallWithChatCompositeStyles';
@@ -38,6 +37,7 @@ import { PhoneNumberIdentifier } from '@azure/communication-common';
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { CallWithChatControlOptions } from './CallWithChatComposite';
 import { isDisabled } from '../CallComposite/utils';
+import { useBuildFlavorAgnosticLocale } from '../localization/BuildFlavorAgnosticLocale';
 
 /**
  * Pane that is used to store chat and people for CallWithChat composite
@@ -66,7 +66,7 @@ export const CallWithChatPane = (props: {
   const hidden = props.activePane === 'none';
   const paneStyles = hidden ? hiddenStyles : props.mobileView ? availableSpaceStyles : sidePaneStyles;
 
-  const callWithChatStrings = useCallWithChatCompositeStrings();
+  const strings = useBuildFlavorAgnosticLocale().strings.callWithChat;
   const theme = useTheme();
 
   /* @conditional-compile-remove(PSTN-calls) */
@@ -76,7 +76,7 @@ export const CallWithChatPane = (props: {
     props.activePane === 'none' ? null : props.mobileView ? (
       <TabHeader
         {...props}
-        strings={callWithChatStrings}
+        strings={strings}
         activeTab={props.activePane}
         disableChatButton={isDisabled(props.callControls?.chatButton)}
         disablePeopleButton={isDisabled(props.callControls?.peopleButton)}
@@ -84,12 +84,12 @@ export const CallWithChatPane = (props: {
     ) : (
       <SidePaneHeader
         {...props}
-        strings={callWithChatStrings}
+        strings={strings}
         headingText={
           props.activePane === 'chat'
-            ? callWithChatStrings.chatPaneTitle
+            ? strings.chatPaneTitle
             : props.activePane === 'people'
-            ? callWithChatStrings.peoplePaneTitle
+            ? strings.peoplePaneTitle
             : ''
         }
       />
@@ -134,7 +134,7 @@ export const CallWithChatPane = (props: {
         {...props}
         onRemoveParticipant={removeParticipantFromCallWithChat}
         setDrawerMenuItems={setDrawerMenuItems}
-        strings={callWithChatStrings}
+        strings={strings}
         /* @conditional-compile-remove(PSTN-calls) */
         onAddParticipant={addParticipantToCall}
         /* @conditional-compile-remove(PSTN-calls) */
