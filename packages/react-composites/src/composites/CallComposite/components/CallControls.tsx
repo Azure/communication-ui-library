@@ -61,29 +61,11 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
   const options = useMemo(() => (typeof props.options === 'boolean' ? {} : props.options), [props.options]);
 
   const theme = useTheme();
-  const locale = useLocale();
-  // FIXME (?): Why is this using callWithChat strings?
-  const peopleButtonStrings = useMemo(
-    () => ({
-      label: locale.strings.callWithChat.peopleButtonLabel,
-      tooltipOffContent: locale.strings.callWithChat.peopleButtonTooltipOpen,
-      tooltipOnContent: locale.strings.callWithChat.peopleButtonTooltipClose
-    }),
-    [locale]
-  );
-  const dialpadStrings = useDialpadStringsTrampoline();
-
   const [showDialpad, setShowDialpad] = useState(false);
-  // FIXME: useMemo
-  const onDismissDialpad = (): void => {
-    setShowDialpad(false);
-  };
-
   const customButtons = useMemo(
     () => generateCustomControlBarButtons(onFetchCustomButtonPropsTrampoline(options), options?.displayType),
     [options]
   );
-
   const rolePermissions = usePermissionsTrampoline();
 
   const screenShareButtonIsEnabled = rolePermissions.screenShare && isEnabled(options?.screenShareButton);
@@ -103,11 +85,10 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
   return (
     <Stack horizontalAlign="center">
       {sendDtmfDialpadIsEnabled && (
-        <SendDtmfDialpad
+        <CallControlsSendDtmfDialpad
           isMobile={!!props.isMobile}
-          strings={dialpadStrings}
           showDialpad={showDialpad}
-          onDismissDialpad={onDismissDialpad}
+          setShowDialpad={setShowDialpad}
         />
       )}
       <Stack.Item>
@@ -144,13 +125,10 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
             />
           )}
           {peopleButtonIsEnabled && (
-            <People
-              checked={props.peopleButtonChecked}
-              showLabel={options?.displayType !== 'compact'}
-              onClick={props.onPeopleButtonClicked}
-              data-ui-id="call-composite-people-button"
-              strings={peopleButtonStrings}
-              disabled={isDisabled(options?.participantsButton)}
+            <CallControlsPeopleButton
+              peopleButtonChecked={props.peopleButtonChecked}
+              onPeopleButtonClicked={props.onPeopleButtonClicked}
+              options={options}
             />
           )}
           {devicesButtonIsEnabled && (
@@ -213,6 +191,54 @@ const useDialpadStringsTrampoline = (): SendDtmfDialpadStrings => {
     };
     return { dialpadModalAriaLabel: '', dialpadCloseModalButtonAriaLabel: '', placeholderText: '' };
   }, [locale]);
+};
+
+const CallControlsPeopleButton = (props: {
+  peopleButtonChecked?: boolean;
+  onPeopleButtonClicked?: () => void;
+  options?: CallControlOptions;
+}): JSX.Element => {
+  const locale = useLocale();
+  // FIXME (?): Why is this using callWithChat strings?
+  const peopleButtonStrings = useMemo(
+    () => ({
+      label: locale.strings.callWithChat.peopleButtonLabel,
+      tooltipOffContent: locale.strings.callWithChat.peopleButtonTooltipOpen,
+      tooltipOnContent: locale.strings.callWithChat.peopleButtonTooltipClose
+    }),
+    [locale]
+  );
+  return (
+    <People
+      checked={props.peopleButtonChecked}
+      showLabel={props.options?.displayType !== 'compact'}
+      onClick={props.onPeopleButtonClicked}
+      data-ui-id="call-composite-people-button"
+      strings={peopleButtonStrings}
+      disabled={isDisabled(props.options?.participantsButton)}
+    />
+  );
+};
+
+const CallControlsSendDtmfDialpad = (props: {
+  isMobile?: boolean;
+  showDialpad: boolean;
+  setShowDialpad: (value: boolean) => void;
+}): JSX.Element => {
+  const { isMobile, showDialpad, setShowDialpad } = props;
+  const dialpadStrings = useDialpadStringsTrampoline();
+  // FIXME: useMemo
+  const onDismissDialpad = (): void => {
+    setShowDialpad(false);
+  };
+  return (
+    <SendDtmfDialpad
+      isMobile={!!isMobile}
+      strings={dialpadStrings}
+      showDialpad={showDialpad}
+      onDismissDialpad={onDismissDialpad}
+    />
+  );
 };
 
 const CallControlsMoreButton = (props: {
@@ -286,9 +312,6 @@ const CallControlsMoreButton = (props: {
     return items;
   };
 
-  if (!isEnabled(moreButtonOptionsTrampoline(options))) {
-    return <></>;
-  }
   return (
     <MoreButton
       strings={moreButtonStrings}
