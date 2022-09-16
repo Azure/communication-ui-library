@@ -685,6 +685,23 @@ export interface GridLayoutStyles extends BaseCustomStyles {
     children?: IStyle;
 }
 
+// @beta
+export const HoldButton: (props: HoldButtonProps) => JSX.Element;
+
+// @beta (undocumented)
+export interface HoldButtonProps extends ControlBarButtonProps {
+    onToggleHold: () => Promise<void>;
+    strings?: HoldButtonStrings;
+}
+
+// @beta
+export interface HoldButtonStrings {
+    offLabel: string;
+    onLabel: string;
+    tooltipOffContent: string;
+    tooltipOnContent: string;
+}
+
 // @public
 export interface HorizontalGalleryStyles extends BaseCustomStyles {
     children?: IStyle;

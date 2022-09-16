@@ -104,7 +104,6 @@ export const getDiagnostics = (
   props: CallingBaseSelectorProps
 ): DiagnosticsCallFeatureState | undefined => state.calls[props.callId]?.diagnostics;
 
-/* @conditional-compile-remove(PSTN-calls) */
 /**
  * @private
  */
