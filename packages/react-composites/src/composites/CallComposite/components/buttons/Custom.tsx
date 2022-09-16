@@ -10,8 +10,6 @@ import {
   CustomCallControlButtonCallback,
   CustomCallControlButtonPlacement
 } from '../../types/CallControlOptions';
-/* @conditional-compile-remove(control-bar-button-injection) */
-import { CallControlOptions } from '../../types/CallControlOptions';
 
 /** @private */
 export type CustomButtons = { [key in CustomCallControlButtonPlacement]: JSX.Element | undefined };
@@ -91,15 +89,5 @@ export const generateCustomDrawerButtons = (
       </>
     );
   }
-  return response;
-};
-
-/* @conditional-compile-remove(control-bar-button-injection) */
-/** @private */
-export const onFetchCustomButtonPropsTrampoline = (
-  options?: CallControlOptions
-): CustomCallControlButtonCallback[] | undefined => {
-  let response: CustomCallControlButtonCallback[] | undefined = undefined;
-  response = options?.onFetchCustomButtonProps;
   return response;
 };

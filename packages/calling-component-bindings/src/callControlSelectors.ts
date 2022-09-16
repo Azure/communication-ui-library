@@ -12,7 +12,6 @@ import {
   getIsScreenSharingOn,
   getLocalVideoStreams
 } from './baseSelectors';
-/* @conditional-compile-remove(PSTN-calls) */
 import { getCallState } from './baseSelectors';
 import { _isPreviewOn } from './utils/callUtils';
 
@@ -155,7 +154,6 @@ export const devicesButtonSelector: DevicesButtonSelector = reselect.createSelec
   }
 );
 
-/* @conditional-compile-remove(PSTN-calls) */
 /**
  * Selector type for the {@link HoldButton} component.
  * @public
@@ -167,7 +165,6 @@ export type HoldButtonSelector = (
   checked: boolean;
 };
 
-/* @conditional-compile-remove(PSTN-calls) */
 /**
  * Selector for the {@link HoldButton} component.
  * @public

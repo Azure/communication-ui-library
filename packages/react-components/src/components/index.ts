@@ -135,9 +135,7 @@ export type { _ComplianceBannerProps, _ComplianceBannerStrings } from './Complia
 export { Dialpad } from './Dialpad/Dialpad';
 export type { DialpadProps, DialpadStrings, DialpadStyles, DtmfTone } from './Dialpad/Dialpad';
 
-/* @conditional-compile-remove(PSTN-calls) */
 export { HoldButton } from './HoldButton';
-/* @conditional-compile-remove(PSTN-calls) */
 export type { HoldButtonProps, HoldButtonStrings } from './HoldButton';
 
 export { _LocalVideoTile } from './LocalVideoTile';
