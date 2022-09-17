@@ -248,3 +248,12 @@ export const isDisabled = (option: boolean | { disabled: boolean } | undefined):
 
   return option.disabled;
 };
+
+/**
+ *  Check if an option is enabled.
+ *
+ *  Options are by default enabled. Thus, they are only disabled if explicitly stated so.
+ *
+ *  @private
+ */
+export const isEnabled = (option: unknown): boolean => option !== false;

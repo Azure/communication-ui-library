@@ -2,16 +2,9 @@
 // Licensed under the MIT license.
 
 import { memoizeFunction, Stack, useTheme } from '@fluentui/react';
-import { IContextualMenuItem } from '@fluentui/react';
 import { useState } from 'react';
-import {
-  _isInLobbyOrConnecting,
-  useCallingSelector,
-  useCallingHandlers,
-  holdButtonSelector
-} from '@internal/calling-component-bindings';
+import { _isInLobbyOrConnecting } from '@internal/calling-component-bindings';
 import { ControlBar, ParticipantMenuItemsCallback, _Permissions } from '@internal/react-components';
-import { HoldButton } from '@internal/react-components';
 /* @conditional-compile-remove(rooms) */
 import { _usePermissions } from '@internal/react-components';
 import React, { useMemo } from 'react';
@@ -25,14 +18,9 @@ import { Participants } from './buttons/Participants';
 import { ScreenShare } from './buttons/ScreenShare';
 import { ContainerRectProps } from '../../common/ContainerRectProps';
 import { People } from './buttons/People';
-import { useLocale } from '../../localization';
-import { MoreButton } from '../../common/MoreButton';
-import { buttonFlyoutIncreasedSizeStyles } from '../styles/Buttons.styles';
-import { SendDtmfDialpad, SendDtmfDialpadStrings } from '../../common/SendDtmfDialpad';
-/* @conditional-compile-remove(PSTN-calls) */
-import { useAdapter } from '../adapter/CallAdapterProvider';
-import { isDisabled } from '../utils';
-import { ControlBarButtonStrings } from '@internal/react-components';
+import { isDisabled, isEnabled } from '../utils';
+import { More } from './buttons/More';
+import { DtmfDialpad } from './buttons/DtmfDialpad';
 
 /**
  * @private
@@ -50,9 +38,6 @@ export type CallControlsProps = {
   increaseFlyoutItemSize?: boolean;
   isMobile?: boolean;
 };
-
-// Enforce a background color on control bar to ensure it matches the composite background color.
-const controlBarStyles = memoizeFunction((background: string) => ({ root: { background: background } }));
 
 /**
  * @private
@@ -85,11 +70,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
   return (
     <Stack horizontalAlign="center">
       {sendDtmfDialpadIsEnabled && (
-        <CallControlsSendDtmfDialpad
-          isMobile={!!props.isMobile}
-          showDialpad={showDialpad}
-          setShowDialpad={setShowDialpad}
-        />
+        <DtmfDialpad isMobile={!!props.isMobile} showDialpad={showDialpad} setShowDialpad={setShowDialpad} />
       )}
       <Stack.Item>
         {/*
@@ -125,7 +106,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
             />
           )}
           {peopleButtonIsEnabled && (
-            <CallControlsPeopleButton
+            <People
               peopleButtonChecked={props.peopleButtonChecked}
               onPeopleButtonClicked={props.onPeopleButtonClicked}
               options={options}
@@ -139,7 +120,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
             />
           )}
           {moreButtonIsEnabled && (
-            <CallControlsMoreButton
+            <More
               options={options}
               onPeopleButtonClicked={props.onPeopleButtonClicked}
               isMobile={props.isMobile}
@@ -180,195 +161,6 @@ const isSendDtmpfDiapladEnabledTrampoline = (): boolean => {
   return false;
 };
 
-const useDialpadStringsTrampoline = (): SendDtmfDialpadStrings => {
-  const locale = useLocale();
-  return useMemo(() => {
-    /* @conditional-compile-remove(PSTN-calls) */
-    return {
-      dialpadModalAriaLabel: locale.strings.call.dialpadModalAriaLabel,
-      dialpadCloseModalButtonAriaLabel: locale.strings.call.dialpadCloseModalButtonAriaLabel,
-      placeholderText: locale.strings.call.dtmfDialpadPlaceHolderText
-    };
-    return { dialpadModalAriaLabel: '', dialpadCloseModalButtonAriaLabel: '', placeholderText: '' };
-  }, [locale]);
-};
-
-const CallControlsPeopleButton = (props: {
-  peopleButtonChecked?: boolean;
-  onPeopleButtonClicked?: () => void;
-  options?: CallControlOptions;
-}): JSX.Element => {
-  const locale = useLocale();
-  // FIXME (?): Why is this using callWithChat strings?
-  const peopleButtonStrings = useMemo(
-    () => ({
-      label: locale.strings.callWithChat.peopleButtonLabel,
-      tooltipOffContent: locale.strings.callWithChat.peopleButtonTooltipOpen,
-      tooltipOnContent: locale.strings.callWithChat.peopleButtonTooltipClose
-    }),
-    [locale]
-  );
-  return (
-    <People
-      checked={props.peopleButtonChecked}
-      showLabel={props.options?.displayType !== 'compact'}
-      onClick={props.onPeopleButtonClicked}
-      data-ui-id="call-composite-people-button"
-      strings={peopleButtonStrings}
-      disabled={isDisabled(props.options?.participantsButton)}
-    />
-  );
-};
-
-const CallControlsSendDtmfDialpad = (props: {
-  isMobile?: boolean;
-  showDialpad: boolean;
-  setShowDialpad: (value: boolean) => void;
-}): JSX.Element => {
-  const { isMobile, showDialpad, setShowDialpad } = props;
-  const dialpadStrings = useDialpadStringsTrampoline();
-  // FIXME: useMemo
-  const onDismissDialpad = (): void => {
-    setShowDialpad(false);
-  };
-  return (
-    <SendDtmfDialpad
-      isMobile={!!isMobile}
-      strings={dialpadStrings}
-      showDialpad={showDialpad}
-      onDismissDialpad={onDismissDialpad}
-    />
-  );
-};
-
-const CallControlsMoreButton = (props: {
-  options?: CallControlOptions;
-  onPeopleButtonClicked?: () => void;
-  isMobile?: boolean;
-  setShowDialpad: (value: boolean) => void;
-}): JSX.Element => {
-  const { options, onPeopleButtonClicked, isMobile, setShowDialpad } = props;
-  const locale = useLocale();
-  // Unfortunately can't use `usePropsFor`for conditionally exported components.
-  // TODO: Use `usePropsFor` once `MoreButton` is stabilized.
-  const holdButtonProps = {
-    ...useCallingSelector(holdButtonSelector),
-    ...useCallingHandlers(HoldButton)
-  };
-  const alternateCallerId = useAlternateCallerIdTrampoline();
-  const moreButtonStrings = useMoreButtonStringsTrampoline();
-  const holdButtonStrings = useHoldButtonStringsTrampoline();
-  const dialpadKeyStrings = useDialpadKeyStringsTrampoline();
-
-  // FIXME: Memoize!
-  const moreButtonContextualMenuItems = (): IContextualMenuItem[] => {
-    const items: IContextualMenuItem[] = [];
-
-    if (isMobile && onPeopleButtonClicked && isEnabled(options?.participantsButton)) {
-      items.push({
-        key: 'peopleButtonKey',
-        text: locale.component.strings.participantsButton.label,
-        onClick: () => {
-          if (onPeopleButtonClicked) {
-            onPeopleButtonClicked();
-          }
-        },
-        iconProps: { iconName: 'ControlButtonParticipantsContextualMenuItem', styles: { root: { lineHeight: 0 } } },
-        itemProps: {
-          styles: buttonFlyoutIncreasedSizeStyles
-        },
-        disabled: isDisabled(options?.participantsButton),
-        ['data-ui-id']: 'call-composite-more-menu-people-button'
-      });
-    }
-
-    items.push({
-      key: 'holdButtonKey',
-      text: holdButtonStrings.text,
-      onClick: () => {
-        holdButtonProps.onToggleHold();
-      },
-      iconProps: { iconName: 'HoldCallContextualMenuItem', styles: { root: { lineHeight: 0 } } },
-      itemProps: {
-        styles: buttonFlyoutIncreasedSizeStyles
-      },
-      disabled: isDisabled(holdButtonOptionsTrampoline(options)),
-      ['data-ui-id']: 'hold-button'
-    });
-
-    if (alternateCallerId) {
-      items.push({
-        key: 'showDialpadKey',
-        text: dialpadKeyStrings.text,
-        onClick: () => {
-          setShowDialpad(true);
-        },
-        iconProps: { iconName: 'PeoplePaneOpenDialpad', styles: { root: { lineHeight: 0 } } },
-        itemProps: {
-          styles: buttonFlyoutIncreasedSizeStyles
-        }
-      });
-    }
-    return items;
-  };
-
-  return (
-    <MoreButton
-      strings={moreButtonStrings}
-      menuIconProps={{ hidden: true }}
-      menuProps={{ items: moreButtonContextualMenuItems() }}
-      showLabel={!props.isMobile}
-    />
-  );
-};
-
-const isEnabled = (option: unknown): boolean => option !== false;
-
-const useMoreButtonStringsTrampoline = (): ControlBarButtonStrings => {
-  const locale = useLocale();
-  return useMemo(() => {
-    // @conditional-compile-remove(PSTN-calls)
-    // @conditional-compile-remove(one-to-n-calling)
-    return {
-      label: locale.strings.call.moreButtonCallingLabel,
-      tooltipOffContent: locale.strings.callWithChat.moreDrawerButtonTooltip
-    };
-    return { label: '', tooltipOffContent: '' };
-  }, [locale]);
-};
-
-const useDialpadKeyStringsTrampoline = (): { text: string } => {
-  const locale = useLocale();
-  return useMemo(() => {
-    // @conditional-compile-remove(PSTN-calls)
-    return { text: locale.strings.call.openDtmfDialpadLabel };
-    return { text: '' };
-  }, [locale]);
-};
-
-const useHoldButtonStringsTrampoline = (): { text: string } => {
-  const locale = useLocale();
-  return useMemo(() => {
-    // @conditional-compile-remove(PSTN-calls)
-    // @conditional-compile-remove(one-to-n-calling)
-    return { text: locale.component.strings.holdButton.tooltipOffContent };
-    return { text: '' };
-  }, [locale]);
-};
-
-const useAlternateCallerIdTrampoline = (): string | undefined => {
-  // FIXME: This should use a selector so that any update to `alternateCallerId` triggers a UI update.
-  /* @conditional-compile-remove(PSTN-calls) */
-  return useAdapter().getState().alternateCallerId;
-  return undefined;
-};
-
-const holdButtonOptionsTrampoline = (options?: CallControlOptions): boolean | { disabled: boolean } | undefined => {
-  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
-  return options?.holdButton;
-  return undefined;
-};
-
 const moreButtonOptionsTrampoline = (options?: CallControlOptions): boolean | undefined => {
   /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
   return options?.moreButton;
@@ -387,3 +179,6 @@ const usePermissionsTrampoline = (): _Permissions => {
     removeParticipantButton: true
   };
 };
+
+// Enforce a background color on control bar to ensure it matches the composite background color.
+const controlBarStyles = memoizeFunction((background: string) => ({ root: { background: background } }));
