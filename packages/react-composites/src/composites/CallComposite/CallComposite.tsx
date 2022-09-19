@@ -352,7 +352,11 @@ export const CallComposite = (props: CallCompositeProps): JSX.Element => {
       adapter.queryMicrophones();
       adapter.querySpeakers();
     })();
-  }, [adapter, /* @conditional-compile-remove(rooms) */ role]);
+  }, [
+    adapter,
+    /* @conditional-compile-remove(rooms) */ role,
+    /* @conditional-compile-remove(call-readiness) */ options?.devicePermissions
+  ]);
 
   const mobileView = formFactor === 'mobile';
 
