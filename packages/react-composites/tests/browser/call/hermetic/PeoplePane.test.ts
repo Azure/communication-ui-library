@@ -95,7 +95,7 @@ test.describe('Call Composite E2E CallPage Tests', () => {
     expect(await stableScreenshot(page)).toMatchSnapshot(`video-gallery-page-participants-flyout-custom-ellipses.png`);
   });
 
-  test('participant list should not contain ellipses on mobile even if passing in custom icon', async ({
+  test('participant list wiht custom ellipses on mobile, should not show ellipses for beta version people pane', async ({
     page,
     serverUrl
   }, testInfo) => {
@@ -131,7 +131,9 @@ test.describe('Call Composite E2E CallPage Tests', () => {
       await waitForSelector(page, dataUiId('call-composite-people-pane'));
       await waitForPiPiPToHaveLoaded(page, { skipVideoCheck: true });
     }
-    expect(await stableScreenshot(page)).toMatchSnapshot(`video-gallery-page-participants-flyout-no-ellipses.png`);
+    expect(await stableScreenshot(page)).toMatchSnapshot(
+      `video-gallery-page-participants-flyout-no-ellipses-beta-people-pane.png`
+    );
   });
 });
 
