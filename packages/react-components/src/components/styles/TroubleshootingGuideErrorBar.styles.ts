@@ -6,7 +6,7 @@ import { IButtonStyles, ILinkStyles, IMessageBarStyles, ITheme, MessageBarType }
 /**
  * @private
  */
-export const confirmButtonStyle = (theme: ITheme): IButtonStyles => ({
+export const dismissButtonStyle = (theme: ITheme): IButtonStyles => ({
   root: {
     padding: '0.375rem 1.25rem',
     width: '3.75rem',

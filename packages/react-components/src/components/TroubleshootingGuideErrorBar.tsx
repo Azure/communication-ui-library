@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, MessageBar, MessageBarButton, Stack, useTheme } from '@fluentui/react';
 import { useLocale } from '../localization';
 import { ErrorBarProps } from './ErrorBar';
-import { confirmButtonStyle, linkStyle, messageBarStyle } from './styles/TroubleshootingGuideErrorBar.styles';
+import { dismissButtonStyle, linkStyle, messageBarStyle } from './styles/TroubleshootingGuideErrorBar.styles';
 import {
   DismissedError,
   dismissError,
@@ -22,7 +22,7 @@ import {
  */
 export interface _TroubleshootingGuideErrorBarStrings {
   linkText?: string;
-  buttonText?: string;
+  dismissButtonText?: string;
 }
 
 /**
@@ -34,7 +34,7 @@ export interface _TroubleshootingGuideErrorBarProps extends ErrorBarProps {
   /**
    * permissions state for camera/microphone
    */
-  permissionsState: {
+  permissionsState?: {
     camera: PermissionState;
     microphone: PermissionState;
   };
@@ -90,7 +90,10 @@ export const _TroubleshootingGuideErrorBar = (props: _TroubleshootingGuideErrorB
   const {
     onPermissionsTroubleshootingClick,
     onNetworkingTroubleshootingClick,
-    permissionsState,
+    permissionsState = {
+      camera: 'denied',
+      microphone: 'denied'
+    },
     troubleshootingGuideStrings
   } = props;
 
@@ -114,8 +117,8 @@ export const _TroubleshootingGuideErrorBar = (props: _TroubleshootingGuideErrorB
           messageBarIconProps={messageBarIconProps(error.type)}
           actions={
             <MessageBarButton
-              text={troubleshootingGuideStrings.buttonText}
-              styles={confirmButtonStyle(theme)}
+              text={troubleshootingGuideStrings.dismissButtonText}
+              styles={dismissButtonStyle(theme)}
               onClick={() => {
                 setDismissedErrors(dismissError(dismissedErrors, error));
               }}

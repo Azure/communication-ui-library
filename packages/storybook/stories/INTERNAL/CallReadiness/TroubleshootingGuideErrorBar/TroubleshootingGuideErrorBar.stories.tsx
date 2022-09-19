@@ -29,17 +29,17 @@ const TroubleshootingGuideErrorBarStory = (args): JSX.Element => {
     microphone: PermissionState;
   } = {
     camera: 'denied',
-    microphone: 'denied'
+    microphone: 'granted'
   };
 
   const permissionTroubleshootingGuideStrings: _TroubleshootingGuideErrorBarStrings = {
     linkText: 'Troubleshooting Camera and Microphone Permissions',
-    buttonText: 'OK'
+    dismissButtonText: 'OK'
   };
 
   const networkTroubleshootingGuideStrings: _TroubleshootingGuideErrorBarStrings = {
     linkText: 'Troubleshooting Network Connection',
-    buttonText: 'OK'
+    dismissButtonText: 'OK'
   };
 
   return (
