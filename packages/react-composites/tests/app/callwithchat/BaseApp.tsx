@@ -23,6 +23,7 @@ export function BaseApp(props: { queryArgs: CommonQueryArgs; adapter?: CallWithC
           adapter={adapter}
           formFactor={isMobile() ? 'mobile' : 'desktop'}
           joinInvitationURL={window.location.href}
+          options={props.queryArgs.customCompositeOptions}
         />
       </_IdentifierProvider>
     </div>

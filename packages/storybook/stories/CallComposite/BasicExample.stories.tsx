@@ -7,13 +7,22 @@ import { Meta } from '@storybook/react/types-6-0';
 import React, { useMemo } from 'react';
 import { v1 as createGUID } from 'uuid';
 import { COMPOSITE_FOLDER_PREFIX, compositeExperienceContainerStyle } from '../constants';
-import { defaultCallCompositeHiddenControls, controlsToAdd } from '../controlsUtils';
+import { defaultCallCompositeHiddenControls, controlsToAdd, ArgsFrom } from '../controlsUtils';
 import { compositeLocale } from '../localizationUtils';
 import { getDocs } from './CallCompositeDocs';
 import { ContosoCallContainer } from './snippets/Container.snippet';
 import { ConfigHintBanner } from './snippets/Utils';
 
-const BasicStory = (args, context): JSX.Element => {
+const storyControls = {
+  userId: controlsToAdd.userId,
+  token: controlsToAdd.token,
+  displayName: controlsToAdd.requiredDisplayName,
+  compositeFormFactor: controlsToAdd.formFactor,
+  callInvitationURL: controlsToAdd.callInvitationURL,
+  errorBar: controlsToAdd.showErrorBar
+};
+
+const BasicStory = (args: ArgsFrom<typeof storyControls>, context): JSX.Element => {
   const {
     globals: { locale }
   } = context;
@@ -39,7 +48,7 @@ const BasicStory = (args, context): JSX.Element => {
           {...containerProps}
           callInvitationURL={args.callInvitationURL}
           locale={compositeLocale(locale)}
-          formFactor={args.formFactor}
+          formFactor={args.compositeFormFactor}
           options={{ errorBar: args.errorBar }}
         />
       ) : (
@@ -56,12 +65,7 @@ export default {
   title: `${COMPOSITE_FOLDER_PREFIX}/CallComposite/Basic Example`,
   component: CallComposite,
   argTypes: {
-    userId: controlsToAdd.userId,
-    token: controlsToAdd.token,
-    displayName: controlsToAdd.displayName,
-    formFactor: controlsToAdd.formFactor,
-    callInvitationURL: controlsToAdd.callInvitationURL,
-    errorBar: controlsToAdd.showErrorBar,
+    ...storyControls,
     // Hiding auto-generated controls
     ...defaultCallCompositeHiddenControls
   },

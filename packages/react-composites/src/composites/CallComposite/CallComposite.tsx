@@ -112,6 +112,39 @@ export type CallCompositeOptions = {
    * Require device permissions to be set or have them as optional or not required to start a call
    */
   devicePermissions?: DevicePermissionRestrictions;
+  /* @conditional-compile-remove(call-readiness) */
+  /**
+   * Callback you may provide to supply users with further steps to troubleshoot why they have been
+   * unable to grant your site the required permissions for the call.
+   *
+   * @example
+   * ```ts
+   * onPermissionsTroubleshootingClick: () =>
+   *  window.open('https://contoso.com/permissions-troubleshooting', '_blank');
+   * ```
+   *
+   * @remarks
+   * if this is not supplied, the composite will not show a 'further troubleshooting' link.
+   */
+  onPermissionsTroubleshootingClick?: (permissionsState: {
+    camera: PermissionState;
+    microphone: PermissionState;
+  }) => void;
+  /* @conditional-compile-remove(call-readiness) */
+  /**
+   * Callback you may provide to supply users with further steps to troubleshoot why they have been
+   * having network issues when connecting to the call.
+   *
+   * @example
+   * ```ts
+   * onNetworkingTroubleShootingClick?: () =>
+   *  window.open('https://contoso.com/network-troubleshooting', '_blank');
+   * ```
+   *
+   * @remarks
+   * if this is not supplied, the composite will not show a 'network troubleshooting' link.
+   */
+  onNetworkingTroubleShootingClick?: () => void;
 };
 
 type MainScreenProps = {
@@ -134,7 +167,30 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
   const adapter = useAdapter();
   const locale = useLocale();
 
-  let pageElement: JSX.Element;
+  let pageElement: JSX.Element | undefined;
+  /* @conditional-compile-remove(rooms) */
+  switch (page) {
+    case 'roomNotFound':
+      pageElement = (
+        <NoticePage
+          iconName="NoticePageInvalidRoom"
+          title={locale.strings.call.roomNotFoundTitle}
+          moreDetails={locale.strings.call.roomNotFoundDetails}
+          dataUiId={'room-not-found-page'}
+        />
+      );
+      break;
+    case 'deniedPermissionToRoom':
+      pageElement = (
+        <NoticePage
+          iconName="NoticePageInvalidRoom"
+          title={locale.strings.call.deniedPermissionToRoomTitle}
+          moreDetails={locale.strings.call.deniedPermissionToRoomDetails}
+          dataUiId={'not-invited-to-room-page'}
+        />
+      );
+      break;
+  }
   switch (page) {
     case 'configuration':
       pageElement = (
@@ -226,9 +282,12 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
         </>
       );
       break;
-    default:
-      throw new Error('Invalid call composite page');
   }
+
+  if (!pageElement) {
+    throw new Error('Invalid call composite page');
+  }
+
   /* @conditional-compile-remove(rooms) */
   const permissions = _getPermissions(props.role);
 

@@ -88,6 +88,11 @@ export type {
   DevicesButtonContextualMenuStyles
 } from './DevicesButton';
 
+/* @conditional-compile-remove(call-readiness) */
+export { DomainPermissions } from './DomainPermissions';
+/* @conditional-compile-remove(call-readiness) */
+export type { DomainPermissionsStrings, DomainPermissionsProps } from './DomainPermissions';
+
 export { ParticipantsButton } from './ParticipantsButton';
 export type {
   ParticipantsButtonContextualMenuStyles,
@@ -137,3 +142,8 @@ export type { HoldButtonProps, HoldButtonStrings } from './HoldButton';
 
 export { _LocalVideoTile } from './LocalVideoTile';
 export { _RemoteVideoTile } from './RemoteVideoTile';
+
+/* @conditional-compile-remove(unsupported-browser) */
+export { UnsupportedBrowser } from './UnsupportedBrowser';
+/* @conditional-compile-remove(unsupported-browser) */
+export type { UnsupportedBrowserStrings, UnsupportedBrowserProps } from './UnsupportedBrowser';

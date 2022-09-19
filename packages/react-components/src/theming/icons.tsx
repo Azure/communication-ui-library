@@ -2,6 +2,8 @@
 // Licensed under the MIT license.
 
 import { mergeStyles } from '@fluentui/react';
+/* @conditional-compile-remove(call-readiness) */ /* @conditional-compile-remove(unsupported-browser) */
+import { IStyle, Stack, Theme } from '@fluentui/react';
 import {
   ArrowClockwise16Regular,
   CallEnd20Filled,
@@ -44,12 +46,21 @@ import {
 /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
 import { Backspace20Regular } from '@fluentui/react-icons';
 
+/* @conditional-compile-remove(call-readiness) */
+import { Circle24Filled } from '@fluentui/react-icons';
+
 /* @conditional-compile-remove(file-sharing) */
 import { ArrowDownload16Regular } from '@fluentui/react-icons';
 /* @conditional-compile-remove(PSTN-calls) */
 import { CallPause20Regular, CallPause20Filled, Play20Regular, People20Regular } from '@fluentui/react-icons';
 
+/* @conditional-compile-remove(unsupported-browser) */
+import { Warning20Filled } from '@fluentui/react-icons';
+import { _pxToRem } from '@internal/acs-ui-common';
+
 import React from 'react';
+/* @conditional-compile-remove(unsupported-browser) */
+import { useTheme } from './FluentThemeProvider';
 
 /**
  * Icons used by the React components exported from this library.
@@ -75,6 +86,29 @@ const MoreHorizontal18Regular = (): JSX.Element => (
     <MoreHorizontal20Regular />
   </div>
 );
+
+/* @conditional-compile-remove(unsupported-browser) */
+const UnsupportedBrowserWarning = (): JSX.Element => {
+  const theme = useTheme();
+  return (
+    <Stack
+      horizontalAlign={'center'}
+      styles={{
+        root: {
+          width: _pxToRem(84),
+          borderRadius: '100%',
+          background: theme.palette.themeLighterAlt,
+          padding: '2rem',
+          margin: 'auto'
+        }
+      }}
+    >
+      <div className={mergeStyles(scaledIconStyles(theme))}>
+        <Warning20Filled />
+      </div>
+    </Stack>
+  );
+};
 
 /**
  * The default set of icons that are available to use in the UI components.
@@ -129,7 +163,7 @@ export const DEFAULT_COMPONENT_ICONS = {
   OptionsMic: <MicOn20Regular />,
   OptionsSpeaker: <Speaker220Regular />,
   ParticipantItemMicOff: <MicOff16Regular />,
-  ParticipantItemOptions: <MoreHorizontal20Regular />,
+  ParticipantItemOptions: <></>,
   ParticipantItemOptionsHovered: <MoreHorizontal20Filled />,
   ParticipantItemScreenShareStart: <ShareScreenStart20Filled />,
   /* @conditional-compile-remove(PSTN-calls) */
@@ -142,5 +176,21 @@ export const DEFAULT_COMPONENT_ICONS = {
   SendBoxSendHovered: <Send20Filled />,
   VideoTileMicOff: <MicOff16Filled />,
   /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
-  BackSpace: <Backspace20Regular />
+  BackSpace: <Backspace20Regular />,
+  /* @conditional-compile-remove(call-readiness) */
+  iconBackdrop: <Circle24Filled />,
+  /* @conditional-compile-remove(unsupported-browser) */
+  UnsupportedBrowserWarning: <UnsupportedBrowserWarning />
+};
+
+/* @conditional-compile-remove(unsupported-browser) */
+const scaledIconStyles = (theme: Theme): IStyle => {
+  return {
+    transform: 'scale(2)',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    color: theme.palette.themePrimary,
+    zIndex: 1
+  };
 };

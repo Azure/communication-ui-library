@@ -10,7 +10,7 @@ import { devicePermissionSelector } from '../selectors/devicePermissionSelector'
 import { useSelector } from '../hooks/useSelector';
 import { DevicesButton, ErrorBar } from '@internal/react-components';
 /* @conditional-compile-remove(rooms) */
-import { _usePermissions } from '@internal/react-components';
+import { _usePermissions, _Permissions } from '@internal/react-components';
 import { getCallingSelector } from '@internal/calling-component-bindings';
 import { Stack } from '@fluentui/react';
 import { LocalPreview } from '../components/LocalPreview';
@@ -95,6 +95,10 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
     </Stack.Item>
   );
 
+  let mobileWithPreview = mobileView;
+  /* @conditional-compile-remove(rooms) */
+  mobileWithPreview = mobileWithPreview && rolePermissions.cameraButton;
+
   return (
     <Stack className={mobileView ? configurationContainerStyleMobile : configurationContainerStyleDesktop}>
       <Stack styles={bannerNotificationStyles}>
@@ -102,20 +106,23 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
       </Stack>
       <Stack
         grow
-        horizontal={!mobileView}
-        horizontalAlign={mobileView ? 'stretch' : 'center'}
+        horizontal={!mobileWithPreview}
+        horizontalAlign={mobileWithPreview ? 'stretch' : 'center'}
         verticalAlign="center"
-        tokens={mobileView ? configurationStackTokensMobile : configurationStackTokensDesktop}
+        tokens={mobileWithPreview ? configurationStackTokensMobile : configurationStackTokensDesktop}
       >
-        {mobileView && (
+        {mobileWithPreview && (
           <Stack.Item>
             {title}
             {callDescription}
           </Stack.Item>
         )}
-        <LocalPreview mobileView={mobileView} showDevicesButton={mobileView} />
+        {localPreviewTrampoline(
+          mobileWithPreview,
+          /* @conditional-compile-remove(rooms) */ !rolePermissions.cameraButton
+        )}
         <Stack className={mobileView ? undefined : selectionContainerStyle}>
-          {!mobileView && (
+          {!mobileWithPreview && (
             <>
               <Stack.Item styles={callDetailsContainerStylesDesktop}>
                 {title}
@@ -129,9 +136,11 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
               />
             </>
           )}
-          <Stack styles={mobileView ? startCallButtonContainerStyleMobile : startCallButtonContainerStyleDesktop}>
+          <Stack
+            styles={mobileWithPreview ? startCallButtonContainerStyleMobile : startCallButtonContainerStyleDesktop}
+          >
             <StartCallButton
-              className={mobileView ? startCallButtonStyleMobile : undefined}
+              className={mobileWithPreview ? startCallButtonStyleMobile : undefined}
               onClick={startCallHandler}
               disabled={disableStartCallButton}
             />
@@ -140,4 +149,12 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
       </Stack>
     </Stack>
   );
+};
+
+const localPreviewTrampoline = (mobileView: boolean, doNotShow?: boolean): JSX.Element | undefined => {
+  /* @conditional-compile-remove(rooms) */
+  if (doNotShow) {
+    return undefined;
+  }
+  return <LocalPreview mobileView={mobileView} showDevicesButton={mobileView} />;
 };

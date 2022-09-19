@@ -6,12 +6,21 @@ import { Stack } from '@fluentui/react';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 import { COMPOSITE_FOLDER_PREFIX, compositeExperienceContainerStyle } from '../constants';
-import { defaultCallCompositeHiddenControls, controlsToAdd, hiddenControl } from '../controlsUtils';
+import { defaultCallCompositeHiddenControls, controlsToAdd, ArgsFrom } from '../controlsUtils';
 import { compositeLocale } from '../localizationUtils';
 import { ContosoCallContainerPSTN } from './snippets/ContainerPSTN.snippet';
 import { ConfigStartPSTNHintBanner } from './snippets/Utils';
 
-const StartPSTNCallStory = (args, context): JSX.Element => {
+const storyControls = {
+  userId: controlsToAdd.userId,
+  token: controlsToAdd.token,
+  displayName: controlsToAdd.requiredDisplayName,
+  callLocator: controlsToAdd.callParticipantsLocator,
+  alternateCallerId: controlsToAdd.alternateCallerId,
+  compositeFormFactor: controlsToAdd.formFactor
+};
+
+const StartPSTNCallStory = (args: ArgsFrom<typeof storyControls>, context): JSX.Element => {
   const {
     globals: { locale }
   } = context;
@@ -31,7 +40,7 @@ const StartPSTNCallStory = (args, context): JSX.Element => {
           token={args.token}
           displayName={args.displayName}
           locale={compositeLocale(locale)}
-          formFactor={args.formFactor}
+          formFactor={args.compositeFormFactor}
         />
       ) : (
         <ConfigStartPSTNHintBanner />
@@ -47,14 +56,8 @@ export default {
   title: `${COMPOSITE_FOLDER_PREFIX}/CallComposite/PSTN Call/Start PSTN Call Example`,
   component: CallComposite,
   argTypes: {
-    userId: controlsToAdd.userId,
-    token: controlsToAdd.token,
-    displayName: controlsToAdd.displayName,
-    callLocator: controlsToAdd.callParticipantsLocator,
-    alternateCallerId: controlsToAdd.alternateCallerId,
-    formFactor: controlsToAdd.formFactor,
+    ...storyControls,
     // Hiding auto-generated controls
-    role: hiddenControl,
     ...defaultCallCompositeHiddenControls
   },
   parameters: {
