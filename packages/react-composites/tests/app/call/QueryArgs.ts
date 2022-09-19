@@ -13,6 +13,7 @@ export interface QueryArgs {
   injectParticipantMenuItems: boolean;
   injectCustomButtons: boolean;
   role?: Role;
+  showParticipantItemIcon: boolean;
   customCallCompositeOptions?: CallCompositeOptions;
 
   // These are only set for live tests.
@@ -32,6 +33,7 @@ export function parseQueryArgs(): QueryArgs {
     showCallDescription: Boolean(params.showCallDescription),
     injectParticipantMenuItems: Boolean(params.injectParticipantMenuItems),
     injectCustomButtons: Boolean(params.injectCustomButtons),
+    showParticipantItemIcon: Boolean(params.showParticipantItemIcon),
     userId: params.userId ?? '',
     groupId: params.groupId ?? '',
     token: params.token ?? '',
