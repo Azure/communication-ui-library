@@ -849,7 +849,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
       if (onLoadPreviousChatMessages) {
         isLoadingChatMessagesRef.current = true;
         // Fetch message until scrollTop reach the threshold for fetching new message
-        while (!isAllChatMessagesLoadedRef.current && chatScrollDivRef.current.scrollTop <= 500) {
+        while (!isAllChatMessagesLoadedRef.current && chatScrollDivRef.current.scrollTop <= 0) {
           isAllChatMessagesLoadedRef.current = await onLoadPreviousChatMessages(numberOfChatMessagesToReload);
           // Release CPU resources for 200 milliseconds between each loop.
           await delay(200);
