@@ -2,10 +2,10 @@
 // Licensed under the MIT license.
 
 import React, { useEffect, useState } from 'react';
-import { Link, MessageBar, PrimaryButton, Stack, useTheme } from '@fluentui/react';
+import { Link, MessageBar, MessageBarButton, Stack, useTheme } from '@fluentui/react';
 import { useLocale } from '../localization';
 import { ErrorBarProps } from './ErrorBar';
-import { confirmButtonStyle, linkStyle, messageBarStyle } from './styles/TroubleshootingGuideErrorBar.styles';
+import { dismissButtonStyle, linkStyle, messageBarStyle } from './styles/TroubleshootingGuideErrorBar.styles';
 import {
   DismissedError,
   dismissError,
@@ -22,7 +22,7 @@ import {
  */
 export interface _TroubleshootingGuideErrorBarStrings {
   linkText?: string;
-  buttonText?: string;
+  dismissButtonText?: string;
 }
 
 /**
@@ -34,7 +34,7 @@ export interface _TroubleshootingGuideErrorBarProps extends ErrorBarProps {
   /**
    * permissions state for camera/microphone
    */
-  permissionsState: {
+  permissionsState?: {
     camera: PermissionState;
     microphone: PermissionState;
   };
@@ -90,7 +90,10 @@ export const _TroubleshootingGuideErrorBar = (props: _TroubleshootingGuideErrorB
   const {
     onPermissionsTroubleshootingClick,
     onNetworkingTroubleshootingClick,
-    permissionsState,
+    permissionsState = {
+      camera: 'denied',
+      microphone: 'denied'
+    },
     troubleshootingGuideStrings
   } = props;
 
@@ -112,37 +115,38 @@ export const _TroubleshootingGuideErrorBar = (props: _TroubleshootingGuideErrorB
           key={error.type}
           messageBarType={messageBarType(error.type)}
           messageBarIconProps={messageBarIconProps(error.type)}
-        >
-          <Stack horizontal horizontalAlign="space-between" verticalAlign="center">
-            {onPermissionsTroubleshootingClick || onNetworkingTroubleshootingClick ? (
-              <div>
-                {strings[error.type]}
-                <Link
-                  styles={linkStyle(theme)}
-                  onClick={() => {
-                    if (onPermissionsTroubleshootingClick) {
-                      onPermissionsTroubleshootingClick(permissionsState);
-                    } else if (onNetworkingTroubleshootingClick) {
-                      onNetworkingTroubleshootingClick();
-                    }
-                  }}
-                  underline
-                >
-                  <span>{troubleshootingGuideStrings.linkText}</span>
-                </Link>
-              </div>
-            ) : (
-              <div>{strings[error.type]} </div>
-            )}
-            <PrimaryButton
-              text={troubleshootingGuideStrings.buttonText}
-              styles={confirmButtonStyle(theme)}
+          actions={
+            <MessageBarButton
+              text={troubleshootingGuideStrings.dismissButtonText}
+              styles={dismissButtonStyle(theme)}
               onClick={() => {
                 setDismissedErrors(dismissError(dismissedErrors, error));
               }}
               ariaLabel={strings.dismissButtonAriaLabel}
             />
-          </Stack>
+          }
+          isMultiline={false}
+        >
+          {onPermissionsTroubleshootingClick || onNetworkingTroubleshootingClick ? (
+            <div>
+              {strings[error.type]}
+              <Link
+                styles={linkStyle(theme)}
+                onClick={() => {
+                  if (onPermissionsTroubleshootingClick) {
+                    onPermissionsTroubleshootingClick(permissionsState);
+                  } else if (onNetworkingTroubleshootingClick) {
+                    onNetworkingTroubleshootingClick();
+                  }
+                }}
+                underline
+              >
+                <span>{troubleshootingGuideStrings.linkText}</span>
+              </Link>
+            </div>
+          ) : (
+            <div>{strings[error.type]} </div>
+          )}
         </MessageBar>
       ))}
     </Stack>
