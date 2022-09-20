@@ -1047,6 +1047,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     ResumeCall: JSX.Element;
     BackSpace: JSX.Element;
     iconBackdrop: JSX.Element;
+    UnsupportedBrowserWarning: JSX.Element;
 };
 
 // @public

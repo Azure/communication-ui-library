@@ -142,3 +142,13 @@ export type { HoldButtonProps, HoldButtonStrings } from './HoldButton';
 
 export { _LocalVideoTile } from './LocalVideoTile';
 export { _RemoteVideoTile } from './RemoteVideoTile';
+
+/* @conditional-compile-remove(unsupported-browser) */
+export { UnsupportedBrowser } from './UnsupportedBrowser';
+/* @conditional-compile-remove(unsupported-browser) */
+export type { UnsupportedBrowserStrings, UnsupportedBrowserProps } from './UnsupportedBrowser';
+export { _TroubleshootingGuideErrorBar } from './TroubleshootingGuideErrorBar';
+export type {
+  _TroubleshootingGuideErrorBarStrings,
+  _TroubleshootingGuideErrorBarProps
+} from './TroubleshootingGuideErrorBar';

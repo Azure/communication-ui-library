@@ -18,6 +18,7 @@ import { isMobile } from '../lib/utils';
 // eslint-disable-next-line no-restricted-imports
 import { IContextualMenuItem, mergeStyles } from '@fluentui/react';
 import { QueryArgs } from './QueryArgs';
+import { MoreHorizontal20Regular } from '@fluentui/react-icons';
 
 /** @internal */
 export function BaseApp(props: { queryArgs: QueryArgs; callAdapter?: CallAdapter }): JSX.Element {
@@ -31,6 +32,8 @@ export function BaseApp(props: { queryArgs: QueryArgs; callAdapter?: CallAdapter
       'Some details about the call that span more than one line - many, many lines in fact. Who would want fewer lines than many, many lines? Could you even imagine?! 😲';
   }
 
+  const ParticipantItemOptions = queryArgs.showParticipantItemIcon ? <MoreHorizontal20Regular /> : <></>;
+
   return (
     <>
       {!callAdapter && 'Initializing call adapter...'}
@@ -38,6 +41,7 @@ export function BaseApp(props: { queryArgs: QueryArgs; callAdapter?: CallAdapter
         <div style={{ position: 'fixed', width: '100%', height: '100%' }}>
           <_IdentifierProvider identifiers={IDS}>
             <CallComposite
+              icons={{ ParticipantItemOptions: ParticipantItemOptions }}
               adapter={callAdapter}
               locale={locale}
               role={queryArgs.role}
@@ -95,7 +99,7 @@ const onFetchCustomButtonProps: CustomCallControlButtonCallback[] = [
     return {
       showLabel: args.displayType !== 'compact',
       // Some non-default icon that is already registered by the composites.
-      iconName: 'ParticipantItemOptions',
+      iconName: 'ParticipantItemOptionsHovered',
       text: 'custom #1',
       placement: 'primary'
     };

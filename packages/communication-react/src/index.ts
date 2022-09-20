@@ -255,3 +255,8 @@ export type {
 } from '../../chat-stateful-client/src';
 export * from '../../react-composites/src/index-public';
 export * from './mergedHooks';
+
+/* @conditional-compile-remove(unsupported-browser) */
+export { UnsupportedBrowser } from '../../react-components/src';
+/* @conditional-compile-remove(unsupported-browser) */
+export type { UnsupportedBrowserStrings, UnsupportedBrowserProps } from '../../react-components/src';
