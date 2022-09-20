@@ -2,8 +2,16 @@
 // Licensed under the MIT license.
 
 import React, { useEffect, useState } from 'react';
-import { IIconProps, IMessageBarProps, MessageBar, MessageBarType, Stack } from '@fluentui/react';
+import { IMessageBarProps, MessageBar, Stack } from '@fluentui/react';
 import { useLocale } from '../localization';
+import {
+  DismissedError,
+  dismissError,
+  dropDismissalsForInactiveErrors,
+  errorsToShow,
+  messageBarIconProps,
+  messageBarType
+} from './utils';
 
 /**
  * Props for {@link ErrorBar}.
@@ -270,125 +278,4 @@ export const ErrorBar = (props: ErrorBarProps): JSX.Element => {
       ))}
     </Stack>
   );
-};
-
-interface DismissedError {
-  type: ErrorType;
-  dismissedAt: Date;
-  activeSince?: Date;
-}
-
-// Always returns a new Array so that the state variable is updated, trigerring a render.
-const dismissError = (dismissedErrors: DismissedError[], toDismiss: ActiveErrorMessage): DismissedError[] => {
-  const now = new Date(Date.now());
-  for (const error of dismissedErrors) {
-    if (error.type === toDismiss.type) {
-      // Bump the timestamp for latest dismissal of this error to now.
-      error.dismissedAt = now;
-      error.activeSince = toDismiss.timestamp;
-      return Array.from(dismissedErrors);
-    }
-  }
-
-  // Record that this error was dismissed for the first time right now.
-  return [
-    ...dismissedErrors,
-    {
-      type: toDismiss.type,
-      dismissedAt: now,
-      activeSince: toDismiss.timestamp
-    }
-  ];
-};
-
-// Returns a new Array if and only if contents change, to avoid re-rendering when nothing was dropped.
-const dropDismissalsForInactiveErrors = (
-  activeErrorMessages: ActiveErrorMessage[],
-  dismissedErrors: DismissedError[]
-): DismissedError[] => {
-  const active = new Map();
-  for (const message of activeErrorMessages) {
-    active.set(message.type, message);
-  }
-
-  // For an error such that:
-  // * It was previously active, and dismissed.
-  // * It did not have a timestamp associated with it.
-  // * It is no longer active.
-  //
-  // We remove it from dismissals. When it becomes active again next time, it will be shown again on the UI.
-  const shouldDeleteDismissal = (dismissed: DismissedError): boolean =>
-    dismissed.activeSince === undefined && active.get(dismissed.type) === undefined;
-
-  if (dismissedErrors.some((dismissed) => shouldDeleteDismissal(dismissed))) {
-    return dismissedErrors.filter((dismissed) => !shouldDeleteDismissal(dismissed));
-  }
-  return dismissedErrors;
-};
-
-const errorsToShow = (
-  activeErrorMessages: ActiveErrorMessage[],
-  dismissedErrors: DismissedError[]
-): ActiveErrorMessage[] => {
-  const dismissed: Map<ErrorType, DismissedError> = new Map();
-  for (const error of dismissedErrors) {
-    dismissed.set(error.type, error);
-  }
-
-  return activeErrorMessages.filter((error) => {
-    const dismissal = dismissed.get(error.type);
-    if (!dismissal) {
-      // This error was never dismissed.
-      return true;
-    }
-    if (!error.timestamp) {
-      // No timestamp associated with the error. In this case, the existence of a dismissal is enough to suppress the error.
-      return false;
-    }
-    // Error has an associated timestamp, so compare with last dismissal.
-    return error.timestamp > dismissal.dismissedAt;
-  });
-};
-
-const messageBarType = (errorType: ErrorType): MessageBarType => {
-  switch (errorType) {
-    case 'callNetworkQualityLow':
-    case 'callNoSpeakerFound':
-    case 'callNoMicrophoneFound':
-    case 'callMicrophoneAccessDenied':
-    case 'callMicrophoneMutedBySystem':
-    case 'callMicrophoneUnmutedBySystem':
-    case 'callMacOsMicrophoneAccessDenied':
-    case 'callLocalVideoFreeze':
-    case 'callCameraAccessDenied':
-    case 'callCameraAlreadyInUse':
-    case 'callVideoStoppedBySystem':
-    case 'callVideoRecoveredBySystem':
-    case 'callMacOsCameraAccessDenied':
-    case 'callMacOsScreenShareAccessDenied':
-      return MessageBarType.warning;
-    default:
-      return MessageBarType.error;
-  }
-};
-
-const messageBarIconProps = (errorType: ErrorType): IIconProps | undefined => {
-  const iconName = customIconName[errorType];
-  return iconName ? { iconName } : undefined;
-};
-
-const customIconName: Partial<{ [key in ErrorType]: string }> = {
-  callNetworkQualityLow: 'ErrorBarCallNetworkQualityLow',
-  callNoSpeakerFound: 'ErrorBarCallNoSpeakerFound',
-  callNoMicrophoneFound: 'ErrorBarCallNoMicrophoneFound',
-  callMicrophoneAccessDenied: 'ErrorBarCallMicrophoneAccessDenied',
-  callMicrophoneMutedBySystem: 'ErrorBarCallMicrophoneMutedBySystem',
-  callMicrophoneUnmutedBySystem: 'ErrorBarCallMicrophoneUnmutedBySystem',
-  callMacOsMicrophoneAccessDenied: 'ErrorBarCallMacOsMicrophoneAccessDenied',
-  callLocalVideoFreeze: 'ErrorBarCallLocalVideoFreeze',
-  callCameraAccessDenied: 'ErrorBarCallCameraAccessDenied',
-  callCameraAlreadyInUse: 'ErrorBarCallCameraAlreadyInUse',
-  callVideoStoppedBySystem: 'ErrorBarCallVideoStoppedBySystem',
-  callVideoRecoveredBySystem: 'ErrorBarCallVideoRecoveredBySystem',
-  callMacOsCameraAccessDenied: 'ErrorBarCallMacOsCameraAccessDenied'
 };
