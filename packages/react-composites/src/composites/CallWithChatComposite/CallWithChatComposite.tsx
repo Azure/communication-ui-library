@@ -93,6 +93,7 @@ export type CallWithChatCompositeOptions = {
    * Require device permissions to be set or have them as optional or not required to start a call
    */
   devicePermissions?: DevicePermissionRestrictions;
+  /* @conditional-compile-remove(call-readiness) */
   /**
    * Callback you may provide to supply users with further steps to troubleshoot why they have been
    * unable to grant your site the required permissions for the call.
@@ -125,7 +126,6 @@ export type CallWithChatCompositeOptions = {
    * if this is not supplied, the composite will not show a 'network troubleshooting' link.
    */
   onNetworkingTroubleShootingClick?: () => void;
-  /* @conditional-compile-remove(call-readiness) */
 };
 
 /**
