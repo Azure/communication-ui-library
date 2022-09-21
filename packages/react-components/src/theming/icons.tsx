@@ -47,7 +47,7 @@ import {
 import { Backspace20Regular } from '@fluentui/react-icons';
 
 /* @conditional-compile-remove(call-readiness) */
-import { Circle24Filled } from '@fluentui/react-icons';
+import { Sparkle20Filled } from '@fluentui/react-icons';
 
 /* @conditional-compile-remove(file-sharing) */
 import { ArrowDownload16Regular } from '@fluentui/react-icons';
@@ -84,6 +84,43 @@ const MoreHorizontal18Regular = (): JSX.Element => (
   // MoreHorizontal icons are 16px x 16px or 20px x 20px so scaling to get desired size
   <div className={mergeStyles({ transform: 'scale(0.9)' })}>
     <MoreHorizontal20Regular />
+  </div>
+);
+
+/* @conditional-compile-remove(call-readiness) */
+const DomainPermissionMic20Filled = (): JSX.Element => {
+  const theme = useTheme();
+  return (
+    <Stack
+      horizontalAlign={'center'}
+      styles={{ root: { borderRadius: '100%', background: theme.palette.themeLighterAlt, padding: '2rem' } }}
+    >
+      <div className={mergeStyles(scaledIconStyles(theme))}>
+        <MicOn20Filled />
+      </div>
+    </Stack>
+  );
+};
+
+/* @conditional-compile-remove(call-readiness) */
+const DomainPermissionCamera20Filled = (): JSX.Element => {
+  const theme = useTheme();
+  return (
+    <Stack
+      horizontalAlign={'center'}
+      styles={{ root: { borderRadius: '100%', background: theme.palette.themeLighterAlt, padding: '2rem' } }}
+    >
+      <div className={mergeStyles(scaledIconStyles(theme))}>
+        <Video20Filled />
+      </div>
+    </Stack>
+  );
+};
+
+/* @conditional-compile-remove(call-readiness) */
+const DomainPermissionSparkle20Filled = (): JSX.Element => (
+  <div className={mergeStyles({ transform: 'scale(2)' })}>
+    <Sparkle20Filled />
   </div>
 );
 
@@ -178,7 +215,11 @@ export const DEFAULT_COMPONENT_ICONS = {
   /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
   BackSpace: <Backspace20Regular />,
   /* @conditional-compile-remove(call-readiness) */
-  iconBackdrop: <Circle24Filled />,
+  DomainPermissionsSparkle: <DomainPermissionSparkle20Filled />,
+  /* @conditional-compile-remove(call-readiness) */
+  DomainPermissionCamera: <DomainPermissionCamera20Filled />,
+  /* @conditional-compile-remove(call-readiness) */
+  DomainPermissionMic: <DomainPermissionMic20Filled />,
   /* @conditional-compile-remove(unsupported-browser) */
   UnsupportedBrowserWarning: <UnsupportedBrowserWarning />
 };
@@ -190,6 +231,7 @@ const scaledIconStyles = (theme: Theme): IStyle => {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+    lineHeight: '0.2rem',
     color: theme.palette.themePrimary,
     zIndex: 1
   };

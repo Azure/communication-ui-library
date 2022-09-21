@@ -3,19 +3,19 @@
 
 import React from 'react';
 /* @conditional-compile-remove(call-readiness) */
-import { Stack, Text, Link, Icon } from '@fluentui/react';
+import { Stack, Text, Link, Icon, useTheme } from '@fluentui/react';
 /* @conditional-compile-remove(call-readiness) */
 import { useLocale } from '../localization';
 /* @conditional-compile-remove(call-readiness) */
 import { _formatString, _pxToRem } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(call-readiness) */
 import {
-  iconBackDropStyles,
   iconContainerStyles,
   iconPrimaryStyles,
   linkTextStyles,
   primaryTextStyles,
   secondaryTextStyles,
+  sparkleIconBackdropStyles,
   textContainerStyles
 } from './styles/DomainPermissions.styles';
 
@@ -60,16 +60,18 @@ export interface DomainPermissionsStrings {
 /* @conditional-compile-remove(call-readiness) */
 const DomainPermissionsContainer = (props: DomainPermissionsProps): JSX.Element => {
   const { appName, onTroubleshootingClick, strings } = props;
+  const theme = useTheme();
   return (
     <Stack style={{ padding: '2rem', maxWidth: '25.375rem' }}>
-      <Stack horizontal style={{ padding: '2rem 0' }} horizontalAlign={'space-between'}>
+      <Stack horizontal style={{ paddingBottom: '1rem' }} horizontalAlign={'space-between'}>
         <Stack styles={iconContainerStyles} horizontalAlign={'center'}>
-          <Icon styles={iconPrimaryStyles} iconName={'ControlButtonCameraOn'}></Icon>
-          <Icon styles={iconBackDropStyles} iconName={'iconBackdrop'}></Icon>
+          <Icon styles={iconPrimaryStyles} iconName={'DomainPermissionCamera'}></Icon>
         </Stack>
         <Stack styles={iconContainerStyles} horizontalAlign={'center'}>
-          <Icon styles={iconPrimaryStyles} iconName={'ControlButtonMicOn'}></Icon>
-          <Icon styles={iconBackDropStyles} iconName={'iconBackdrop'}></Icon>
+          <Icon styles={sparkleIconBackdropStyles(theme)} iconName={'DomainPermissionsSparkle'}></Icon>
+        </Stack>
+        <Stack styles={iconContainerStyles} horizontalAlign={'center'}>
+          <Icon styles={iconPrimaryStyles} iconName={'DomainPermissionMic'}></Icon>
         </Stack>
       </Stack>
       <Stack styles={textContainerStyles}>
@@ -93,6 +95,6 @@ export const DomainPermissions = (props: DomainPermissionsProps): JSX.Element =>
   /* @conditional-compile-remove(call-readiness) */
   const locale = useLocale().strings.DomainPermissions;
   /* @conditional-compile-remove(call-readiness) */
-  return <DomainPermissionsContainer {...props} strings={locale} />;
+  return <DomainPermissionsContainer {...props} strings={props.strings ? props.strings : locale} />;
   return <></>;
 };
