@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Create error bar to display troubleshooting links for network/device permission errors",
+  "packageName": "@internal/react-components",
+  "email": "carolinecao@microsoft.com",
+  "dependentChangeType": "patch"
+}
