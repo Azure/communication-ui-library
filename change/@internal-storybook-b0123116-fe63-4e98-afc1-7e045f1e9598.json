@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Update Fluent-ui/icons package",
+  "packageName": "@internal/storybook",
+  "email": "94866715+dmceachernmsft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
