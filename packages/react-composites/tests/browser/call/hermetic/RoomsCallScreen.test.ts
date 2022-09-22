@@ -98,6 +98,7 @@ const openRemoveParticipantMenu = async (page: Page, testInfo: TestInfo): Promis
   if (isTestProfileDesktop(testInfo)) {
     await waitForSelector(page, dataUiId('call-composite-participants-button'));
     await pageClick(page, dataUiId('call-composite-participants-button'));
+    await page.hover(dataUiId('participant-item'));
     await waitForSelector(page, dataUiId('participant-item-menu-button'));
     await pageClick(page, dataUiId('participant-item-menu-button'));
     await waitForSelector(page, dataUiId('participant-list-remove-participant-button'));

@@ -64,6 +64,30 @@ export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcon
   role?: Role;
 }
 
+/* @conditional-compile-remove(call-readiness) */
+/**
+ * Device Permission restrictions.
+ * Be able to start a call depending on camera and microphone permission options.
+ *
+ * @beta
+ */
+export interface DevicePermissionRestrictions {
+  /**
+   * Camera Permission prompts for your call.
+   * 'required' - requires the permission to be allowed before permitting the user join the call.
+   * 'optional' - permission can be disallowed and the user is still permitted to join the call.
+   * 'doNotPrompt' - permission is not required and the user is not prompted to allow the permission.
+   */
+  camera: 'required' | 'optional' | 'doNotPrompt';
+  /**
+   * Microphone permission prompts for your call.
+   * 'required' - requires the permission to be allowed before permitting the user join the call.
+   * 'optional' - permission can be disallowed and the user is still permitted to join the call.
+   * 'doNotPrompt' - permission is not required and the user is not prompted to allow the permission.
+   */
+  microphone: 'required' | 'optional' | 'doNotPrompt';
+}
+
 /**
  * Optional features of the {@link CallComposite}.
  *
@@ -82,6 +106,12 @@ export type CallCompositeOptions = {
    * @defaultValue true
    */
   callControls?: boolean | CallControlOptions;
+  /* @conditional-compile-remove(call-readiness) */
+  /**
+   * Device permission restrictions for your call.
+   * Require device permissions to be set or have them as optional or not required to start a call
+   */
+  devicePermissions?: DevicePermissionRestrictions;
   /* @conditional-compile-remove(call-readiness) */
   /**
    * Callback you may provide to supply users with further steps to troubleshoot why they have been
@@ -137,7 +167,30 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
   const adapter = useAdapter();
   const locale = useLocale();
 
-  let pageElement: JSX.Element;
+  let pageElement: JSX.Element | undefined;
+  /* @conditional-compile-remove(rooms) */
+  switch (page) {
+    case 'roomNotFound':
+      pageElement = (
+        <NoticePage
+          iconName="NoticePageInvalidRoom"
+          title={locale.strings.call.roomNotFoundTitle}
+          moreDetails={locale.strings.call.roomNotFoundDetails}
+          dataUiId={'room-not-found-page'}
+        />
+      );
+      break;
+    case 'deniedPermissionToRoom':
+      pageElement = (
+        <NoticePage
+          iconName="NoticePageInvalidRoom"
+          title={locale.strings.call.deniedPermissionToRoomTitle}
+          moreDetails={locale.strings.call.deniedPermissionToRoomDetails}
+          dataUiId={'not-invited-to-room-page'}
+        />
+      );
+      break;
+  }
   switch (page) {
     case 'configuration':
       pageElement = (
@@ -146,6 +199,8 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           startCallHandler={(): void => {
             adapter.joinCall();
           }}
+          /* @conditional-compile-remove(call-readiness) */
+          devicePermissions={props.options?.devicePermissions}
         />
       );
       break;
@@ -227,9 +282,12 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
         </>
       );
       break;
-    default:
-      throw new Error('Invalid call composite page');
   }
+
+  if (!pageElement) {
+    throw new Error('Invalid call composite page');
+  }
+
   /* @conditional-compile-remove(rooms) */
   const permissions = _getPermissions(props.role);
 
@@ -271,12 +329,34 @@ export const CallComposite = (props: CallCompositeProps): JSX.Element => {
         adapter.querySpeakers();
         return;
       }
+      /* @conditional-compile-remove(call-readiness) */
+      if (options?.devicePermissions) {
+        const videoPermission = options?.devicePermissions.camera !== 'doNotPrompt';
+        const audioPermission = options?.devicePermissions.microphone !== 'doNotPrompt';
+        await adapter.askDevicePermission({
+          video: videoPermission,
+          audio: audioPermission
+        });
+        if (videoPermission) {
+          adapter.queryCameras();
+        }
+        if (audioPermission) {
+          adapter.queryMicrophones();
+        }
+        adapter.querySpeakers();
+        return;
+      }
+
       await adapter.askDevicePermission({ video: true, audio: true });
       adapter.queryCameras();
       adapter.queryMicrophones();
       adapter.querySpeakers();
     })();
-  }, [adapter, /* @conditional-compile-remove(rooms) */ role]);
+  }, [
+    adapter,
+    /* @conditional-compile-remove(rooms) */ role,
+    /* @conditional-compile-remove(call-readiness) */ options?.devicePermissions
+  ]);
 
   const mobileView = formFactor === 'mobile';
 
@@ -308,7 +388,9 @@ export const CallComposite = (props: CallCompositeProps): JSX.Element => {
             // the Modal because the draggable bounds thinks it has no space and will always return to its initial position after dragging.
             // Additionally, this layer host cannot be in the Call Arrangement as it needs to be rendered before useMinMaxDragPosition() in
             // common/utils useRef is called.
-            // Warning: this is fragile and works because the call arrangement page is only rendered after the call has connected and thus this LayerHost will be guaranteed to have rendered (and subsequently mounted in the DOM). This ensures the DOM element will be available before the call to `document.getElementById(modalLayerHostId)` is made.
+            // Warning: this is fragile and works because the call arrangement page is only rendered after the call has connected and thus this
+            // LayerHost will be guaranteed to have rendered (and subsequently mounted in the DOM). This ensures the DOM element will be available
+            // before the call to `document.getElementById(modalLayerHostId)` is made.
             /* @conditional-compile-remove(one-to-n-calling) */
             mobileView && <LayerHost id={modalLayerHostId} className={mergeStyles(modalLayerHostStyle)} />
           }

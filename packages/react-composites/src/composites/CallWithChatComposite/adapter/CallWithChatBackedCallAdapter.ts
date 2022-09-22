@@ -15,7 +15,11 @@ import {
 import { AddPhoneNumberOptions, DtmfTone } from '@azure/communication-calling';
 import { CallWithChatAdapterState } from '../state/CallWithChatAdapterState';
 /* @conditional-compile-remove(PSTN-calls) */
-import { CommunicationIdentifier } from '@azure/communication-common';
+import {
+  CommunicationUserIdentifier,
+  isPhoneNumberIdentifier,
+  PhoneNumberIdentifier
+} from '@azure/communication-common';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
@@ -116,12 +120,20 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
     await this.callWithChatAdapter.resumeCall();
   };
   /* @conditional-compile-remove(PSTN-calls) */
-  public addParticipant = async (
-    participant: CommunicationIdentifier,
+  public async addParticipant(participant: PhoneNumberIdentifier, options?: AddPhoneNumberOptions): Promise<void>;
+  /* @conditional-compile-remove(PSTN-calls) */
+  public async addParticipant(participant: CommunicationUserIdentifier): Promise<void>;
+  /* @conditional-compile-remove(PSTN-calls) */
+  public async addParticipant(
+    participant: PhoneNumberIdentifier | CommunicationUserIdentifier,
     options?: AddPhoneNumberOptions
-  ): Promise<void> => {
-    await this.callWithChatAdapter.addParticipant(participant, options);
-  };
+  ): Promise<void> {
+    if (isPhoneNumberIdentifier(participant) && options) {
+      return this.callWithChatAdapter.addParticipant(participant as PhoneNumberIdentifier, options);
+    } else {
+      return this.callWithChatAdapter.addParticipant(participant as CommunicationUserIdentifier);
+    }
+  }
 
   /* @conditional-compile-remove(PSTN-calls) */
   public sendDtmfTone = async (dtmfTone: DtmfTone): Promise<void> => {

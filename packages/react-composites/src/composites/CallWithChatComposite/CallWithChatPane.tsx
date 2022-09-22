@@ -33,7 +33,7 @@ import { getPipStyles } from '../common/styles/ModalLocalAndRemotePIP.styles';
 import { useMinMaxDragPosition } from '../common/utils';
 import { availableSpaceStyles, hiddenStyles, sidePaneStyles, sidePaneTokens } from '../common/styles/Pane.styles';
 /* @conditional-compile-remove(PSTN-calls) */
-import { CommunicationIdentifier } from '@azure/communication-common';
+import { PhoneNumberIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { CallWithChatControlOptions } from './CallWithChatComposite';
@@ -122,7 +122,7 @@ export const CallWithChatPane = (props: {
 
   /* @conditional-compile-remove(PSTN-calls) */
   const addParticipantToCall = async (
-    participant: CommunicationIdentifier,
+    participant: PhoneNumberIdentifier,
     options?: AddPhoneNumberOptions
   ): Promise<void> => {
     await props.callAdapter.addParticipant(participant, options);

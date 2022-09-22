@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Introduces overload for addParticipant to accept a flat identifier of the participant to add",
+  "packageName": "@internal/react-composites",
+  "email": "94866715+dmceachernmsft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
