@@ -138,7 +138,7 @@ export const CallPane = (props: {
         <CallAdapterProvider adapter={props.callAdapter}>
           <ModalLocalAndRemotePIP
             modalLayerHostId={props.modalLayerHostId}
-            hidden={hidden}
+            hidden={!props.activePane}
             styles={pipStyles}
             minDragPosition={minMaxDragPosition.minDragPosition}
             maxDragPosition={minMaxDragPosition.maxDragPosition}
