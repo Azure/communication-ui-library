@@ -36,18 +36,18 @@ export const updateMessagesWithAttached = (chatMessagesWithStatus: Message[]): v
 
     const diffMins = Math.round(timediff / MINUTE_IN_MS); // minutes
 
-    if (message.senderDisplayName !== previousSenderDisplayName) {
-      attached = message.senderId === nextSenderId && message.senderId === nextSenderDisplayName ? 'top' : false;
-    } else if (previousSenderId !== message.senderId) {
-      attached = message.senderId === nextSenderId && message.senderId === nextSenderDisplayName ? 'top' : false;
+    if (previousSenderId !== message.senderId) {
+      attached =
+        message.senderId === nextSenderId && message.senderDisplayName === nextSenderDisplayName ? 'top' : false;
     } else if (diffMins && diffMins >= 5) {
       // if there are more than or equal to 5 mins time gap between messages do not attach and show time stamp
       attached = false;
+    } else if (message.senderDisplayName !== previousSenderDisplayName) {
+      attached =
+        message.senderId === nextSenderId && message.senderDisplayName === nextSenderDisplayName ? 'top' : false;
     } else {
       attached = message.senderId === nextSenderId ? true : 'bottom';
     }
-
-    console.log(message.content + ' > ' + message.senderId + ' > ' + message.senderDisplayName + ' > ' + attached);
 
     message.attached = attached;
   });
