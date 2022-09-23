@@ -31,22 +31,23 @@ export const updateMessagesWithAttached = (chatMessagesWithStatus: Message[]): v
       previousMessage?.messageType === 'chat' ? previousMessage.senderDisplayName : undefined;
     const nextSenderDisplayName = nextMessage?.messageType === 'chat' ? nextMessage.senderDisplayName : undefined;
 
-    const timediff =
+    const timeDiffWithPreviousMessage =
       new Date(message?.createdOn ?? '').getTime() - new Date(previousMessage?.createdOn ?? '').getTime();
 
-    const diffMins = Math.round(timediff / MINUTE_IN_MS); // minutes
+    const diffMinsWithPreviousMessage = Math.round(timeDiffWithPreviousMessage / MINUTE_IN_MS); // minutes
 
     if (previousSenderId !== message.senderId) {
       attached =
         message.senderId === nextSenderId && message.senderDisplayName === nextSenderDisplayName ? 'top' : false;
-    } else if (diffMins && diffMins >= 5) {
+    } else if (diffMinsWithPreviousMessage && diffMinsWithPreviousMessage >= 5) {
       // if there are more than or equal to 5 mins time gap between messages do not attach and show time stamp
       attached = false;
-    } else if (message.senderDisplayName !== previousSenderDisplayName) {
+    } else if (previousSenderDisplayName !== message.senderDisplayName) {
       attached =
         message.senderId === nextSenderId && message.senderDisplayName === nextSenderDisplayName ? 'top' : false;
     } else {
-      attached = message.senderId === nextSenderId ? true : 'bottom';
+      attached =
+        message.senderId === nextSenderId && message.senderDisplayName === nextSenderDisplayName ? true : 'bottom';
     }
 
     message.attached = attached;
