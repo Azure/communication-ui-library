@@ -270,7 +270,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   /**
    * Utility function for memoized rendering of LocalParticipant.
    */
-  const localVideoTile = useMemo((): JSX.Element | undefined => {
+  const localVideoTile = useMemo((): JSX.Element /* @conditional-compile-remove(rooms) */ | undefined => {
     /* @conditional-compile-remove(rooms) */
     if (!permissions.cameraButton) {
       return undefined;
