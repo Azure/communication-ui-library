@@ -13,7 +13,8 @@ import {
   RecordingCallFeature,
   StartCallOptions,
   TranscriptionCallFeature,
-  CallFeatureFactory
+  CallFeatureFactory,
+  CallAgentKind
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(calling-beta-sdk) */
 import { GroupChatCallLocator, MeetingLocator, RoomLocator } from '@azure/communication-calling';
@@ -67,6 +68,8 @@ class MockCallAgent implements CallAgent {
   displayName = undefined;
   emitter = new EventEmitter();
   feature;
+  /* @conditional-compile-remove(calling-beta-sdk) */
+  kind: CallAgentKind = CallAgentKind.CallAgent;
   startCall(
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[],

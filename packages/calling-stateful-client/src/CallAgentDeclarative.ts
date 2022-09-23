@@ -210,9 +210,9 @@ class ProxyCallAgent implements ProxyHandler<DeclarativeCallAgent> {
       }
       case 'dispose': {
         return (): Promise<void> => {
-          return target.dispose().then(() => {
-            this.unsubscribe();
-          });
+          target.dispose();
+          this.unsubscribe();
+          return Promise.resolve();
         };
       }
       /**
