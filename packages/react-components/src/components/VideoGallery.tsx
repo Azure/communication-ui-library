@@ -330,7 +330,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     strings.localVideoSelectedDescription,
     strings.displayNamePlaceholder,
     styles?.localVideo,
-    theme.effects.roundedCorner4
+    theme.effects.roundedCorner4,
+    /* @conditional-compile-remove(rooms) */ permissions.cameraButton
   ]);
 
   const defaultOnRenderVideoTile = useCallback(
