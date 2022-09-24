@@ -362,9 +362,9 @@ const memoizeAllMessages = memoizeFnAll(
       case 'chat': {
         const myChatMessageStyle =
           message.status === 'failed'
-            ? styles?.failedMyChatMessageContainer || FailedMyChatMessageContainer
-            : styles?.myChatMessageContainer || defaultMyChatMessageContainer;
-        const chatMessageStyle = styles?.chatMessageContainer || defaultChatMessageContainer;
+            ? styles?.failedMyChatMessageContainer ?? styles?.myChatMessageContainer ?? FailedMyChatMessageContainer
+            : styles?.myChatMessageContainer ?? defaultMyChatMessageContainer;
+        const chatMessageStyle = styles?.chatMessageContainer ?? defaultChatMessageContainer;
         messageProps.messageContainerStyle = message.mine ? myChatMessageStyle : chatMessageStyle;
 
         const chatMessageComponent =
