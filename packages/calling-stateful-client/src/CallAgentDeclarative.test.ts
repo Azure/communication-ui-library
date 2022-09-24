@@ -16,7 +16,7 @@ import {
   CallFeatureFactory
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(calling-beta-sdk) */
-import { CallAgentKind, GroupChatCallLocator, MeetingLocator, RoomLocator } from '@azure/communication-calling';
+import { GroupChatCallLocator, MeetingLocator, RoomLocator } from '@azure/communication-calling';
 import { CommunicationUserIdentifier, PhoneNumberIdentifier, UnknownIdentifier } from '@azure/communication-common';
 import EventEmitter from 'events';
 import { callAgentDeclaratify } from './CallAgentDeclarative';
@@ -68,7 +68,7 @@ class MockCallAgent implements CallAgent {
   emitter = new EventEmitter();
   feature;
   /* @conditional-compile-remove(calling-beta-sdk) */
-  kind: CallAgentKind = CallAgentKind.CallAgent;
+  kind;
   startCall(
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[],
