@@ -294,6 +294,7 @@ export type CallCompositeIcons = {
 export type CallCompositeOptions = {
     errorBar?: boolean;
     callControls?: boolean | CallControlOptions;
+    devicePermissions?: DevicePermissionRestrictions;
     onPermissionsTroubleshootingClick?: (permissionsState: {
         camera: PermissionState;
         microphone: PermissionState;
@@ -661,6 +662,7 @@ export type CallWithChatCompositeIcons = {
 export type CallWithChatCompositeOptions = {
     callControls?: boolean | CallWithChatControlOptions;
     fileSharing?: FileSharingOptions;
+    devicePermissions?: DevicePermissionRestrictions;
     onPermissionsTroubleshootingClick?: (permissionsState: {
         camera: PermissionState;
         microphone: PermissionState;
@@ -1046,8 +1048,17 @@ export const DEFAULT_COMPOSITE_ICONS: {
     HoldCallButton: JSX.Element;
     ResumeCall: JSX.Element;
     BackSpace: JSX.Element;
-    iconBackdrop: JSX.Element;
+    DomainPermissionsSparkle: JSX.Element;
+    DomainPermissionCamera: JSX.Element;
+    DomainPermissionMic: JSX.Element;
+    UnsupportedBrowserWarning: JSX.Element;
 };
+
+// @beta
+export interface DevicePermissionRestrictions {
+    camera: 'required' | 'optional' | 'doNotPrompt';
+    microphone: 'required' | 'optional' | 'doNotPrompt';
+}
 
 // @public
 export type DiagnosticChangedEventListner = (event: MediaDiagnosticChangedEvent | NetworkDiagnosticChangedEvent) => void;

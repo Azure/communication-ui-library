@@ -4,10 +4,11 @@ We maintain several hero sample GitHub repositories. These samples serve both as
 
 The hero samples are closely based on the sample applications in this repository:
 
-| Hero sample               | monorepo sample                    |
-| --                        | --                                 |
-| [Chat][hero-chat]         | [samples/Chat][samples-chat]       |
-| [Callling][hero-calling]  | [samples/Calling][samples-calling] |
+| Hero sample                        | monorepo sample                         |
+| --                                 | --                                      |
+| [Chat][hero-chat]                  | [samples/Chat][samples-chat]            |
+| [Callling][hero-calling]           | [samples/Calling][samples-calling]      |
+| [CallWithChat][hero-callwithchat]  | [samples/Calling][samples-callwithchat] |
 
 We refer to the samples in this monorepository as _upstream_ of the hero samples.
 
@@ -19,9 +20,10 @@ While the hero samples are based on the samples in this repository, there are so
 
 [hero-chat]: https://github.com/Azure-Samples/communication-services-web-chat-hero
 [hero-calling]: https://github.com/Azure-Samples/communication-services-web-calling-hero
+[hero-callwithchat]: https://github.com/Azure-Samples/communication-services-web-callwithchat-hero
 [samples-chat]: ../../samples/Chat/
 [samples-calling]: ../../samples/Calling/
-
+[samples-callwithchat]: ../../samples/CallWithChat/
 
 ## When to update the hero samples
 
@@ -98,3 +100,7 @@ This section uses [an update to the chat hero sample](https://github.com/Azure-S
 #### Call hero sample
 
 - Remove webpack injected globals and their use. [Example commit](https://github.com/Azure-Samples/communication-services-web-calling-hero/pull/154/commits/6d3a2854bdef06bc8304d6c11ad086facb8c4286)
+
+#### CallWithChat hero sample
+
+- Remove webpack injected globals and their use. [Example commit](https://github.com/Azure-Samples/communication-services-web-callwithchat-hero/commit/96dc314d7636a4467ba9df2f2194508186c4f64e)

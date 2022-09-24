@@ -56,6 +56,7 @@ const DisplayNameFieldComponent = (props: DisplayNameFieldProps): JSX.Element =>
       }}
       styles={TextFieldStyleProps}
       errorMessage={isEmpty ? TEXTFIELD_EMPTY_ERROR_MSG : undefined}
+      required={true}
     />
   );
 };
