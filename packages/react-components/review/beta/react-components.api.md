@@ -417,7 +417,9 @@ export const DEFAULT_COMPONENT_ICONS: {
     SendBoxSendHovered: JSX.Element;
     VideoTileMicOff: JSX.Element;
     BackSpace: JSX.Element;
-    iconBackdrop: JSX.Element;
+    DomainPermissionsSparkle: JSX.Element;
+    DomainPermissionCamera: JSX.Element;
+    DomainPermissionMic: JSX.Element;
     UnsupportedBrowserWarning: JSX.Element;
 };
 
@@ -1348,6 +1350,31 @@ export interface TopicUpdatedSystemMessage extends SystemMessageCommon {
     systemMessageType: 'topicUpdated';
     // (undocumented)
     topic: string;
+}
+
+// @internal
+export const _TroubleshootingGuideErrorBar: (props: _TroubleshootingGuideErrorBarProps) => JSX.Element;
+
+// @internal
+export interface _TroubleshootingGuideErrorBarProps extends ErrorBarProps {
+    onNetworkingTroubleshootingClick?: () => void;
+    onPermissionsTroubleshootingClick?: (permissionsState: {
+        camera: PermissionState;
+        microphone: PermissionState;
+    }) => void;
+    permissionsState?: {
+        camera: PermissionState;
+        microphone: PermissionState;
+    };
+    troubleshootingGuideStrings: _TroubleshootingGuideErrorBarStrings;
+}
+
+// @internal
+export interface _TroubleshootingGuideErrorBarStrings {
+    // (undocumented)
+    dismissButtonText?: string;
+    // (undocumented)
+    linkText?: string;
 }
 
 // @public

@@ -33,6 +33,8 @@ import { useLocale } from '../../localization';
 import { bannerNotificationStyles } from '../styles/CallPage.styles';
 import { usePropsFor } from '../hooks/usePropsFor';
 import { useAdapter } from '../adapter/CallAdapterProvider';
+/* @conditional-compile-remove(call-readiness) */
+import { DevicePermissionRestrictions } from '../CallComposite';
 
 /**
  * @private
@@ -40,13 +42,15 @@ import { useAdapter } from '../adapter/CallAdapterProvider';
 export interface ConfigurationPageProps {
   mobileView: boolean;
   startCallHandler(): void;
+  /* @conditional-compile-remove(call-readiness) */
+  devicePermissions?: DevicePermissionRestrictions;
 }
 
 /**
  * @private
  */
 export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element => {
-  const { startCallHandler, mobileView } = props;
+  const { startCallHandler, mobileView, /* @conditional-compile-remove(call-readiness) */ devicePermissions } = props;
 
   const options = useAdaptedSelector(getCallingSelector(DevicesButton));
   const localDeviceSettingsHandlers = useHandlers(LocalDeviceSettings);
@@ -63,6 +67,19 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
     // If user's role permissions do not allow access to the microphone button then DO NOT disable the start call button
     // because microphone device permission is not needed for the user's role
     disableStartCallButton = false;
+  }
+
+  /* @conditional-compile-remove(call-readiness) */
+  // Overrides role permissions if CallCompositeOptions devicePermissions are set
+  if (devicePermissions) {
+    if (
+      ['doNotPrompt', 'optional'].includes(devicePermissions.camera) &&
+      ['doNotPrompt', 'optional'].includes(devicePermissions.microphone)
+    ) {
+      disableStartCallButton = false;
+    } else if (devicePermissions.camera === 'required') {
+      disableStartCallButton = !cameraPermissionGranted || deviceState.cameras?.length === 0;
+    }
   }
 
   const locale = useLocale();
