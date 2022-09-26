@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add devicePermissions api for Call Readiness",
+  "packageName": "@internal/react-composites",
+  "email": "edwardlee@microsoft.com",
+  "dependentChangeType": "patch"
+}
