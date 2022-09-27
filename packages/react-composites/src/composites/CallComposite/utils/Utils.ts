@@ -248,3 +248,11 @@ export const isDisabled = (option: boolean | { disabled: boolean } | undefined):
 
   return option.disabled;
 };
+
+/* @conditional-compile-remove(rooms) */
+/**
+ * @private
+ */
+export const isRoomsCall = (state: CallAdapterState): boolean => {
+  return state['locator'] && 'roomId' in state['locator'];
+};

@@ -33,6 +33,8 @@ import { useLocale } from '../../localization';
 import { bannerNotificationStyles } from '../styles/CallPage.styles';
 import { usePropsFor } from '../hooks/usePropsFor';
 import { useAdapter } from '../adapter/CallAdapterProvider';
+/* @conditional-compile-remove(rooms) */
+import { isRoomsCall } from '../utils';
 
 /**
  * @private
@@ -68,7 +70,7 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
   const locale = useLocale();
   let configurationPageTitle = locale.strings.call.configurationPageTitle;
   /* @conditional-compile-remove(rooms) */
-  if (adapter.getState()['locator'] && 'roomId' in adapter.getState()['locator']) {
+  if (isRoomsCall(adapter.getState())) {
     configurationPageTitle = locale.strings.call.roomsConfigurationPageTitle;
   }
 

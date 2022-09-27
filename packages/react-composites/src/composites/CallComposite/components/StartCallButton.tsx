@@ -8,6 +8,8 @@ import { Video20Filled } from '@fluentui/react-icons';
 import { useLocale } from '../../localization';
 /* @conditional-compile-remove(rooms) */
 import { useAdapter } from '../adapter/CallAdapterProvider';
+/* @conditional-compile-remove(rooms) */
+import { isRoomsCall } from '../utils';
 
 /**
  * @private
@@ -29,7 +31,7 @@ export const StartCallButton = (props: StartCallButtonProps): JSX.Element => {
 
   let startCallButtonLabel = locale.strings.call.startCallButtonLabel;
   /* @conditional-compile-remove(rooms) */
-  if (adapter.getState()['locator'] && 'roomId' in adapter.getState()['locator']) {
+  if (isRoomsCall(adapter.getState())) {
     startCallButtonLabel = locale.strings.call.startRoomCallButtonLabel;
   }
 
