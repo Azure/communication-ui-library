@@ -195,7 +195,13 @@ export type DiagnosticChangedEventListner = (
  * @beta
  * Callback for listening to `participantPinned` event.
  */
-export type ParticipantPinnedListener = (userId: string) => void;
+
+export type ParticipantPinnedListener = (event: { userId: string }) => void;
+/**
+ * @beta
+ * Callback for listening to `participantPinned` event.
+ */
+export type ParticipantUnpinnedListener = (event: { userId: string }) => void;
 
 /**
  * Functionality for managing the current call.
@@ -492,6 +498,11 @@ export interface CallAdapterSubscribers {
    * Subscriber for listening to events when a participant is pinned.
    */
   on(event: 'participantPinned', listener: ParticipantPinnedListener): void;
+  /* @conditional-compile-remove(pinned-participants) */
+  /**
+   * Subscriber for listening to events when a participant is pinned.
+   */
+  on(event: 'participantUnpinned', listener: ParticipantUnpinnedListener): void;
   /**
    * Unsubscribe function for 'participantsJoined' event.
    */
@@ -545,6 +556,11 @@ export interface CallAdapterSubscribers {
    * Unsubscribe from listening to events when a participant is pinned.
    */
   off(event: 'participantPinned', listener: ParticipantPinnedListener): void;
+  /* @conditional-compile-remove(pinned-participants) */
+  /**
+   * Subscriber for listening to events when a participant is pinned.
+   */
+  off(event: 'participantUnpinned', listener: ParticipantUnpinnedListener): void;
 }
 
 /**

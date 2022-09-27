@@ -47,7 +47,8 @@ import {
   ParticipantsJoinedListener,
   ParticipantsLeftListener,
   DiagnosticChangedEventListner,
-  CallAdapterCallEndedEvent
+  CallAdapterCallEndedEvent,
+  ParticipantUnpinnedListener
 } from './CallAdapter';
 import { getCallCompositePage, IsCallEndedPage, isCameraOn } from '../utils';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
@@ -560,11 +561,13 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
   /* @conditional-compile-remove(pinned-participants) */
   public pinParticipant(userId: string): void {
     this.context.pinParticipant(userId);
+    this.emitter.emit('participantPinned', { userId });
   }
 
   /* @conditional-compile-remove(pinned-participants) */
   public unpinParticipant(userId: string): void {
     this.context.unpinParticipant(userId);
+    this.emitter.emit('participantUnpinned', { userId });
   }
 
   public getState(): CallAdapterState {
@@ -593,6 +596,8 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
   on(event: 'error', errorHandler: (e: AdapterError) => void): void;
   /* @conditional-compile-remove(pinned-participants) */
   on(event: 'participantPinned', listener: ParticipantPinnedListener): void;
+  /* @conditional-compile-remove(pinned-participants) */
+  on(event: 'participantUnpinned', listener: ParticipantUnpinnedListener): void;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public on(event: string, listener: (e: any) => void): void {
@@ -683,6 +688,8 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
   off(event: 'error', errorHandler: (e: AdapterError) => void): void;
   /* @conditional-compile-remove(pinned-participants) */
   off(event: 'participantPinned', listener: ParticipantPinnedListener): void;
+  /* @conditional-compile-remove(pinned-participants) */
+  off(event: 'participantUnpinned', listener: ParticipantUnpinnedListener): void;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public off(event: string, listener: (e: any) => void): void {
