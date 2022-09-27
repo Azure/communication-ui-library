@@ -12,7 +12,7 @@ import {
 import React from 'react';
 import { useLocale } from '../localization';
 import { ControlBarButton, ControlBarButtonProps, ControlBarButtonStyles } from './ControlBarButton';
-import { HighContrastAwareIcon } from './HighContrastAwareIcon';
+import { _HighContrastAwareIcon } from './HighContrastAwareIcon';
 import { buttonFlyoutItemStyles } from './styles/ControlBar.styles';
 import { _preventDismissOnEvent as preventDismissOnEvent } from '@internal/acs-ui-common';
 
@@ -377,9 +377,9 @@ export const DevicesButton = (props: DevicesButtonProps): JSX.Element => {
   const devicesButtonMenu =
     props.menuProps ?? generateDefaultDeviceMenuProps({ ...props, styles: props.styles?.menuStyles }, strings);
 
-  const onRenderOptionsIcon = (): JSX.Element => (
-    <HighContrastAwareIcon disabled={props.disabled} iconName="ControlButtonOptions" />
-  );
+  const onRenderOptionsIcon = (): JSX.Element => {
+    return <_HighContrastAwareIcon disabled={props.disabled} iconName="ControlButtonOptions" />;
+  };
 
   return (
     <ControlBarButton
