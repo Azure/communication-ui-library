@@ -417,7 +417,9 @@ export const DEFAULT_COMPONENT_ICONS: {
     SendBoxSendHovered: JSX.Element;
     VideoTileMicOff: JSX.Element;
     BackSpace: JSX.Element;
-    iconBackdrop: JSX.Element;
+    DomainPermissionsSparkle: JSX.Element;
+    DomainPermissionCamera: JSX.Element;
+    DomainPermissionMic: JSX.Element;
     UnsupportedBrowserWarning: JSX.Element;
 };
 
@@ -728,6 +730,15 @@ export interface GridLayoutProps {
 // @public
 export interface GridLayoutStyles extends BaseCustomStyles {
     children?: IStyle;
+}
+
+// @internal
+export const _HighContrastAwareIcon: (props: _HighContrastAwareIconProps) => JSX.Element;
+
+// @internal (undocumented)
+export interface _HighContrastAwareIconProps {
+    disabled?: boolean | undefined;
+    iconName: string;
 }
 
 // @beta
