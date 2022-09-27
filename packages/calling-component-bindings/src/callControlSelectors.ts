@@ -145,15 +145,19 @@ export const devicesButtonSelector: DevicesButtonSelector = reselect.createSelec
   [getDeviceManager],
   (deviceManager) => {
     return {
-      microphones: deviceManager.microphones,
-      speakers: deviceManager.speakers,
-      cameras: deviceManager.cameras.filter((camera) => camera.name !== ''),
+      microphones: filterBlankNames(deviceManager.microphones),
+      speakers: filterBlankNames(deviceManager.speakers),
+      cameras: filterBlankNames(deviceManager.cameras),
       selectedMicrophone: deviceManager.selectedMicrophone,
       selectedSpeaker: deviceManager.selectedSpeaker,
       selectedCamera: deviceManager.selectedCamera
     };
   }
 );
+
+function filterBlankNames<T extends { name: string }>(devices: T[]): T[] {
+  return devices.filter((device) => device.name !== '');
+}
 
 /* @conditional-compile-remove(PSTN-calls) */
 /**
