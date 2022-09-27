@@ -64,6 +64,8 @@ import { ParticipantSubscriber } from './ParticipantSubcriber';
 import { AdapterError } from '../../common/adapters';
 import { DiagnosticsForwarder } from './DiagnosticsForwarder';
 import { useEffect, useRef, useState } from 'react';
+/* @conditional-compile-remove(pinned-participants) */
+import { ParticipantPinnedListener } from './CallAdapter';
 
 /** Context of call, which is a centralized context for all state updates */
 class CallContext {
@@ -81,7 +83,9 @@ class CallContext {
       page: 'configuration',
       latestErrors: clientState.latestErrors,
       isTeamsCall,
-      /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId: clientState.alternateCallerId
+      /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId: clientState.alternateCallerId,
+      /* @conditional-compile-remove(pinned-participants) */
+      pinnedParticipants: []
     };
   }
 
@@ -109,6 +113,22 @@ class CallContext {
   // This is the key to find current call object in client state
   public setCurrentCallId(callId: string | undefined): void {
     this.callId = callId;
+  }
+
+  /* @conditional-compile-remove(pinned-participants) */
+  public pinParticipant(userId: string): void {
+    this.setState({
+      ...this.state,
+      pinnedParticipants: [...this.state.pinnedParticipants, userId]
+    });
+  }
+
+  /* @conditional-compile-remove(pinned-participants) */
+  public unpinParticipant(userId: string): void {
+    this.setState({
+      ...this.state,
+      pinnedParticipants: this.state.pinnedParticipants.filter((id) => id !== userId)
+    });
   }
 
   public onCallEnded(handler: (callEndedData: CallAdapterCallEndedEvent) => void): void {
@@ -537,6 +557,16 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     this.handlers.onSendDtmfTone(dtmfTone);
   }
 
+  /* @conditional-compile-remove(pinned-participants) */
+  public pinParticipant(userId: string): void {
+    this.context.pinParticipant(userId);
+  }
+
+  /* @conditional-compile-remove(pinned-participants) */
+  public unpinParticipant(userId: string): void {
+    this.context.unpinParticipant(userId);
+  }
+
   public getState(): CallAdapterState {
     return this.context.getState();
   }
@@ -561,6 +591,8 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
   on(event: 'selectedMicrophoneChanged', listener: PropertyChangedEvent): void;
   on(event: 'selectedSpeakerChanged', listener: PropertyChangedEvent): void;
   on(event: 'error', errorHandler: (e: AdapterError) => void): void;
+  /* @conditional-compile-remove(pinned-participants) */
+  on(event: 'participantPinned', listener: ParticipantPinnedListener): void;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public on(event: string, listener: (e: any) => void): void {
@@ -649,6 +681,8 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
   off(event: 'selectedMicrophoneChanged', listener: PropertyChangedEvent): void;
   off(event: 'selectedSpeakerChanged', listener: PropertyChangedEvent): void;
   off(event: 'error', errorHandler: (e: AdapterError) => void): void;
+  /* @conditional-compile-remove(pinned-participants) */
+  off(event: 'participantPinned', listener: ParticipantPinnedListener): void;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public off(event: string, listener: (e: any) => void): void {

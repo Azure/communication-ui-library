@@ -61,6 +61,8 @@ export const END_CALL_PAGES: CallCompositePage[] = [
 export type CallAdapterUiState = {
   isLocalPreviewMicrophoneEnabled: boolean;
   page: CallCompositePage;
+  /* @conditional-compile-remove(pinned-participants) */
+  pinnedParticipants: string[];
 };
 
 /**
@@ -188,6 +190,12 @@ export type NetworkDiagnosticChangedEvent = NetworkDiagnosticChangedEventArgs & 
 export type DiagnosticChangedEventListner = (
   event: MediaDiagnosticChangedEvent | NetworkDiagnosticChangedEvent
 ) => void;
+
+/**
+ * @beta
+ * Callback for listening to `participantPinned` event.
+ */
+export type ParticipantPinnedListener = (userId: string) => void;
 
 /**
  * Functionality for managing the current call.
@@ -398,6 +406,17 @@ export interface CallAdapterDeviceManagement {
    * @public
    */
   setSpeaker(sourceInfo: AudioDeviceInfo): Promise<void>;
+
+  /* @conditional-compile-remove(pinned-participants) */
+  /**
+   * @beta
+   */
+  pinParticipant(userId: string): void;
+  /* @conditional-compile-remove(pinned-participants) */
+  /**
+   * @beta
+   */
+  unpinParticipant(userId: string): void;
 }
 
 /**
@@ -468,7 +487,11 @@ export interface CallAdapterSubscribers {
    * Subscribe function for 'error' event.
    */
   on(event: 'error', listener: (e: AdapterError) => void): void;
-
+  /* @conditional-compile-remove(pinned-participants) */
+  /**
+   * Subscriber for listening to events when a participant is pinned.
+   */
+  on(event: 'participantPinned', listener: ParticipantPinnedListener): void;
   /**
    * Unsubscribe function for 'participantsJoined' event.
    */
@@ -517,6 +540,11 @@ export interface CallAdapterSubscribers {
    * Unsubscribe function for 'error' event.
    */
   off(event: 'error', listener: (e: AdapterError) => void): void;
+  /* @conditional-compile-remove(pinned-participants) */
+  /**
+   * Unsubscribe from listening to events when a participant is pinned.
+   */
+  off(event: 'participantPinned', listener: ParticipantPinnedListener): void;
 }
 
 /**

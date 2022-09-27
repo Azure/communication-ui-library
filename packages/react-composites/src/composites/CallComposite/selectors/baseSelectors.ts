@@ -96,3 +96,9 @@ export const getRemoteParticipants = (
   | {
       [keys: string]: RemoteParticipantState;
     } => state.call?.remoteParticipants;
+
+/* @conditional-compile-remove(pinned-participants) */
+/**
+ * @private
+ */
+export const getPinnedParticipants = (state: CallAdapterState): string[] => state.pinnedParticipants;
