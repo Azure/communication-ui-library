@@ -273,6 +273,7 @@ export interface ComponentStrings {
     screenShareButton: ScreenShareButtonStrings;
     sendBox: SendBoxStrings;
     typingIndicator: TypingIndicatorStrings;
+    UnsupportedBrowser: UnsupportedBrowserStrings;
     videoGallery: VideoGalleryStrings;
     videoTile: VideoTileStrings;
 }
@@ -416,7 +417,10 @@ export const DEFAULT_COMPONENT_ICONS: {
     SendBoxSendHovered: JSX.Element;
     VideoTileMicOff: JSX.Element;
     BackSpace: JSX.Element;
-    iconBackdrop: JSX.Element;
+    DomainPermissionsSparkle: JSX.Element;
+    DomainPermissionCamera: JSX.Element;
+    DomainPermissionMic: JSX.Element;
+    UnsupportedBrowserWarning: JSX.Element;
 };
 
 // @public
@@ -726,6 +730,15 @@ export interface GridLayoutProps {
 // @public
 export interface GridLayoutStyles extends BaseCustomStyles {
     children?: IStyle;
+}
+
+// @internal
+export const _HighContrastAwareIcon: (props: _HighContrastAwareIconProps) => JSX.Element;
+
+// @internal (undocumented)
+export interface _HighContrastAwareIconProps {
+    disabled?: boolean | undefined;
+    iconName: string;
 }
 
 // @beta
@@ -1348,6 +1361,31 @@ export interface TopicUpdatedSystemMessage extends SystemMessageCommon {
     topic: string;
 }
 
+// @internal
+export const _TroubleshootingGuideErrorBar: (props: _TroubleshootingGuideErrorBarProps) => JSX.Element;
+
+// @internal
+export interface _TroubleshootingGuideErrorBarProps extends ErrorBarProps {
+    onNetworkingTroubleshootingClick?: () => void;
+    onPermissionsTroubleshootingClick?: (permissionsState: {
+        camera: PermissionState;
+        microphone: PermissionState;
+    }) => void;
+    permissionsState?: {
+        camera: PermissionState;
+        microphone: PermissionState;
+    };
+    troubleshootingGuideStrings: _TroubleshootingGuideErrorBarStrings;
+}
+
+// @internal
+export interface _TroubleshootingGuideErrorBarStrings {
+    // (undocumented)
+    dismissButtonText?: string;
+    // (undocumented)
+    linkText?: string;
+}
+
 // @public
 export const TypingIndicator: (props: TypingIndicatorProps) => JSX.Element;
 
@@ -1372,6 +1410,22 @@ export interface TypingIndicatorStrings {
 export interface TypingIndicatorStylesProps extends BaseCustomStyles {
     typingString?: IStyle;
     typingUserDisplayName?: IStyle;
+}
+
+// @beta
+export const UnsupportedBrowser: (props: UnsupportedBrowserProps) => JSX.Element;
+
+// @beta
+export interface UnsupportedBrowserProps {
+    onTroubleShootingClick: () => void;
+    strings: UnsupportedBrowserStrings;
+}
+
+// @beta
+export interface UnsupportedBrowserStrings {
+    moreHelpLink: string;
+    primaryText: string;
+    secondaryText: string;
 }
 
 // @public

@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Add CSS to show/hide menu button on hover/focus ",
+  "packageName": "@internal/react-components",
+  "email": "carolinecao@microsoft.com",
+  "dependentChangeType": "patch"
+}
