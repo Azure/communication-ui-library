@@ -147,7 +147,7 @@ export const devicesButtonSelector: DevicesButtonSelector = reselect.createSelec
     return {
       microphones: deviceManager.microphones,
       speakers: deviceManager.speakers,
-      cameras: deviceManager.cameras,
+      cameras: deviceManager.cameras.filter((camera) => camera.name !== ''),
       selectedMicrophone: deviceManager.selectedMicrophone,
       selectedSpeaker: deviceManager.selectedSpeaker,
       selectedCamera: deviceManager.selectedCamera
