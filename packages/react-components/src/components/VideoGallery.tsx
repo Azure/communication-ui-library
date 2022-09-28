@@ -354,6 +354,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           showMuteIndicator={showMuteIndicator}
           /* @conditional-compile-remove(PSTN-calls) */
           participantState={participant.state}
+          isPinned={pinnedParticipants.has(participant.userId)}
           onPinParticipant={() => {
             setPinnedParticipants((prev) => new Set([...prev, participant.userId]));
             props.onPinParticipant?.(participant.userId);
