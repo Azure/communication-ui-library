@@ -51,7 +51,7 @@ export const DevicePermissionDropdown = DevicePermissionDropdownStory.bind({});
 
 export default {
   id: `${COMPONENT_FOLDER_PREFIX}-internal-DevicePermissionDropdown`,
-  title: `${COMPONENT_FOLDER_PREFIX}/Internal/DevicePermissionDropdown`,
+  title: `${COMPONENT_FOLDER_PREFIX}/Internal/CallReadiness/DevicePermissionDropdown`,
   component: _DevicePermissionDropdown,
   argTypes: {
     strings: hiddenControl,
