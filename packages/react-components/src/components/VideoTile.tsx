@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Icon, IStyle, mergeStyles, Persona, Stack, Text } from '@fluentui/react';
+import { Icon, IContextualMenuItem, IStyle, mergeStyles, Persona, Stack, Text } from '@fluentui/react';
 import { Ref } from '@fluentui/react-northstar';
 import React, { useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { useIdentifiers } from '../identifiers';
@@ -125,6 +125,25 @@ export interface VideoTileProps {
   /* @conditional-compile-remove(one-to-n-calling) */
   /* @conditional-compile-remove(PSTN-calls) */
   strings?: VideoTileStrings;
+
+  /* @conditional-compile-remove(pinned-participants) */
+  /**
+   * If true, the video tile will be rendered with a pin icon.
+   */
+  isPinned?: boolean;
+  /* @conditional-compile-remove(pinned-participants) */
+  /**
+   * This callback gets triggered when the pin icon is clicked.
+   * The pin icon is only visible when `isPinned` is true.
+   */
+  onClickPinIcon?: () => void;
+  /* @conditional-compile-remove(pinned-participants) */
+  /**
+   * Display custom menu items in the VideoTile's contextual menu.
+   * It uses Fluent UI's ContextualMenu component. Thus the menu items should be of type `IContextualMenuItem`.
+   * For more information see https://developer.microsoft.com/en-us/fluentui#/controls/web/contextualmenu
+   */
+  menuItems?: IContextualMenuItem[];
 }
 
 // Coin max size is set to PersonaSize.size100

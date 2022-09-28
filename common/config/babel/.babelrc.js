@@ -36,7 +36,8 @@ process.env['COMMUNICATION_REACT_FLAVOR'] === 'stable' &&
         // rooms
         'rooms',
         'call-readiness',
-        'unsupported-browser'
+        'unsupported-browser',
+        'pinned-participants',
       ],
       // A list of stabilized features.
       // These features can be listed in the conditional compilation directives without

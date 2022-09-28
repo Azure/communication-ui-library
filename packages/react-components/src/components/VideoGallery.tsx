@@ -155,6 +155,16 @@ export interface VideoGalleryProps {
    * Camera control information for button to switch cameras.
    */
   localVideoCameraCycleButtonProps?: LocalVideoCameraCycleButtonProps;
+  /* @conditional-compile-remove(pinned-participants) */
+  /**
+   * This callback will be called when a participant video tile is pinned.
+   */
+  onPinParticipant?: (userId: string) => void;
+  /* @conditional-compile-remove(pinned-participants) */
+  /**
+   * This callback will be called when a participant video tile is un-pinned.
+   */
+  onUnpinParticipant?: (userId: string) => void;
 }
 
 const DRAG_OPTIONS: IDragOptions = {
@@ -202,6 +212,9 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   const theme = useTheme();
   const localeStrings = useLocale().strings.videoGallery;
   const strings = { ...localeStrings, ...props.strings };
+
+  // We keep track of the pinned participants in the video gallery instead of relying on the stateful client.
+  const [pinnedParticipants, setPinnedParticipants] = React.useState<Set<string>>(new Set());
 
   const shouldFloatLocalVideo = !!(layout === 'floatingLocalVideo' && remoteParticipants.length > 0);
   const shouldFloatNonDraggableLocalVideo = !!(showCameraSwitcherInLocalPreview && shouldFloatLocalVideo);
@@ -341,6 +354,14 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           showMuteIndicator={showMuteIndicator}
           /* @conditional-compile-remove(PSTN-calls) */
           participantState={participant.state}
+          onPinParticipant={() => {
+            setPinnedParticipants((prev) => new Set([...prev, participant.userId]));
+            props.onPinParticipant?.(participant.userId);
+          }}
+          onUnpinParticipant={() => {
+            setPinnedParticipants((prev) => new Set(Array.from(prev).filter((id) => id !== participant.userId)));
+            props.onUnpinParticipant?.(participant.userId);
+          }}
         />
       );
     },

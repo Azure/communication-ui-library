@@ -38,6 +38,8 @@ export const _RemoteVideoTile = React.memo(
     showLabel?: boolean;
     personaMinSize?: number;
     participantState?: ParticipantState;
+    onPinParticipant?: () => void;
+    onUnpinParticipant?: () => void;
   }) => {
     const {
       isAvailable,
@@ -111,6 +113,19 @@ export const _RemoteVideoTile = React.memo(
         /* @conditional-compile-remove(one-to-n-calling) */
         /* @conditional-compile-remove(PSTN-calls) */
         participantState={props.participantState}
+        onClickPinIcon={() => {
+          props.onUnpinParticipant?.();
+        }}
+        menuItems={[
+          {
+            key: 'pin',
+            iconProps: { iconName: 'Pinned' },
+            text: 'Pin',
+            onClick: () => {
+              props.onPinParticipant?.();
+            }
+          }
+        ]}
       />
     );
   }
