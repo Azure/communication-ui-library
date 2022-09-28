@@ -6,9 +6,9 @@ import React from 'react';
 import { useTheme } from '../theming';
 
 /**
- * @private
+ * @internal
  */
-export interface HighContrastAwareIconProps {
+export interface _HighContrastAwareIconProps {
   /** Icon name */
   iconName: string;
   /** Whether button is disabled */
@@ -18,9 +18,9 @@ export interface HighContrastAwareIconProps {
 /**
  * This is a helper component to define and unify icon colors
  *
- * @private
+ * @internal
  */
-export const HighContrastAwareIcon = (props: HighContrastAwareIconProps): JSX.Element => {
+export const _HighContrastAwareIcon = (props: _HighContrastAwareIconProps): JSX.Element => {
   const { iconName, disabled } = props;
   const theme = useTheme();
   // setting colors for the icons using color from theme, so in dark mode or other accessibility modes, they have pre-defined contrast colors
