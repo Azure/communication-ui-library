@@ -29,7 +29,7 @@ export const StartCallButton = (props: StartCallButtonProps): JSX.Element => {
 
   let startCallButtonLabel = locale.strings.call.startCallButtonLabel;
   /* @conditional-compile-remove(rooms) */
-  if (rolePermissions) {
+  if (rolePermissions.role) {
     startCallButtonLabel = locale.strings.call.startRoomCallButtonLabel;
   }
 
