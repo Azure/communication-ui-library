@@ -99,6 +99,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
   }
 
   const locale = COMPOSITE_LOCALE_EN_US;
+  // Change configuration page strings when a role exists because that means this is a Rooms call
   if (role) {
     locale.strings.call.startCallButtonLabel = 'Join call';
     locale.strings.call.configurationPageTitle = 'Join a call';
