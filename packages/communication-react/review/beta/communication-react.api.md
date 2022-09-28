@@ -488,10 +488,8 @@ export interface CallCompositeStrings {
     returnToCallButtonAriaLabel?: string;
     roomNotFoundDetails?: string;
     roomNotFoundTitle: string;
-    roomsConfigurationPageTitle: string;
     soundLabel: string;
     startCallButtonLabel: string;
-    startRoomCallButtonLabel: string;
 }
 
 // @public

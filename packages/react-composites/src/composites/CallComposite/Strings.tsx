@@ -13,11 +13,6 @@ export interface CallCompositeStrings {
    * Title of configuration page.
    */
   configurationPageTitle: string;
-  /* @conditional-compile-remove(rooms) */
-  /**
-   * Title of rooms configuration page.
-   */
-  roomsConfigurationPageTitle: string;
   /**
    * Optional 1-2 lines on the call details used on the configuration page.
    */
@@ -26,11 +21,6 @@ export interface CallCompositeStrings {
    * Text in button to start call in configuration page.
    */
   startCallButtonLabel: string;
-  /* @conditional-compile-remove(rooms) */
-  /**
-   * Text in button to start room call in configuration page.
-   */
-  startRoomCallButtonLabel: string;
   /**
    * Text in button to rejoin an ended call.
    */

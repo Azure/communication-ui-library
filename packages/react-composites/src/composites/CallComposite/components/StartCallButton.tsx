@@ -6,8 +6,6 @@ import React from 'react';
 import { buttonStyle, buttonWithIconStyles, videoCameraIconStyle } from '../styles/StartCallButton.styles';
 import { Video20Filled } from '@fluentui/react-icons';
 import { useLocale } from '../../localization';
-/* @conditional-compile-remove(rooms) */
-import { _usePermissions } from '@internal/react-components';
 
 /**
  * @private
@@ -24,14 +22,6 @@ export interface StartCallButtonProps extends IButtonProps {
 export const StartCallButton = (props: StartCallButtonProps): JSX.Element => {
   const { rejoinCall } = props;
   const locale = useLocale();
-  /* @conditional-compile-remove(rooms) */
-  const rolePermissions = _usePermissions();
-
-  let startCallButtonLabel = locale.strings.call.startCallButtonLabel;
-  /* @conditional-compile-remove(rooms) */
-  if (rolePermissions) {
-    startCallButtonLabel = locale.strings.call.startRoomCallButtonLabel;
-  }
 
   return (
     <PrimaryButton
@@ -39,7 +29,7 @@ export const StartCallButton = (props: StartCallButtonProps): JSX.Element => {
       data-ui-id="call-composite-start-call-button"
       className={mergeStyles(buttonStyle, props.className)}
       styles={buttonWithIconStyles}
-      text={rejoinCall ? locale.strings.call.rejoinCallButtonLabel : startCallButtonLabel}
+      text={rejoinCall ? locale.strings.call.rejoinCallButtonLabel : locale.strings.call.startCallButtonLabel}
       onRenderIcon={() => <Video20Filled className={videoCameraIconStyle} />}
     />
   );

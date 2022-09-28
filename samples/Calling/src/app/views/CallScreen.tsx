@@ -8,7 +8,8 @@ import {
   CallAdapterState,
   CallComposite,
   toFlatCommunicationIdentifier,
-  useAzureCommunicationCallAdapter
+  useAzureCommunicationCallAdapter,
+  COMPOSITE_LOCALE_EN_US
 } from '@azure/communication-react';
 /* @conditional-compile-remove(rooms) */
 import { Role } from '@azure/communication-react';
@@ -97,6 +98,12 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     return <Spinner label={'Creating adapter'} ariaLive="assertive" labelPosition="top" />;
   }
 
+  const locale = COMPOSITE_LOCALE_EN_US;
+  if (role) {
+    locale.strings.call.startCallButtonLabel = 'Join call';
+    locale.strings.call.configurationPageTitle = 'Join a call';
+  }
+
   return (
     <CallComposite
       adapter={adapter}
@@ -106,6 +113,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
       formFactor={isMobileSession ? 'mobile' : 'desktop'}
       /* @conditional-compile-remove(rooms) */
       role={role}
+      locale={locale}
     />
   );
 };
