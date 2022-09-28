@@ -83,7 +83,6 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
   }
 
   const locale = useLocale();
-
   const title = (
     <Stack.Item className={mobileView ? titleContainerStyleMobile : titleContainerStyleDesktop}>
       {locale.strings.call.configurationPageTitle}
