@@ -157,6 +157,11 @@ export interface VideoGalleryProps {
   localVideoCameraCycleButtonProps?: LocalVideoCameraCycleButtonProps;
   /* @conditional-compile-remove(pinned-participants) */
   /**
+   * List of pinned participant userIds.
+   */
+  pinnedParticipants?: string[];
+  /* @conditional-compile-remove(pinned-participants) */
+  /**
    * This callback will be called when a participant video tile is pinned.
    */
   onPinParticipant?: (userId: string) => void;
@@ -214,6 +219,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   const strings = { ...localeStrings, ...props.strings };
 
   // We keep track of the pinned participants in the video gallery instead of relying on the stateful client.
+  // Another option is to make this array a prop as well and leave it to users to manage the array of pinned user IDs.
+  // This provides more flexibility and the ability to pin users across multiple video galleries over the network.
   const [pinnedParticipants, setPinnedParticipants] = React.useState<Set<string>>(new Set());
 
   const shouldFloatLocalVideo = !!(layout === 'floatingLocalVideo' && remoteParticipants.length > 0);
