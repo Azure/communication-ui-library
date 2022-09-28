@@ -12,7 +12,7 @@ import {
 import { COMPONENT_FOLDER_PREFIX } from '../../../constants';
 import { hiddenControl } from '../../../controlsUtils';
 
-const DevicePermissionDropdownStory = (args): JSX.Element => {
+const DevicePermissionDropdownStory = (): JSX.Element => {
   const theme = useTheme();
 
   const devicePermissionDropdownStrings: _DevicePermissionDropdownStrings = {
