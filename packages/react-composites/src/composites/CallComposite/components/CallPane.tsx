@@ -135,14 +135,15 @@ export const CallPane = (props: {
         </Stack>
       </Stack.Item>
       {props.mobileView && (
-        <ModalLocalAndRemotePIP
-          callAdapter={props.callAdapter}
-          modalLayerHostId={props.modalLayerHostId}
-          hidden={!props.activePane}
-          styles={pipStyles}
-          minDragPosition={minMaxDragPosition.minDragPosition}
-          maxDragPosition={minMaxDragPosition.maxDragPosition}
-        />
+        <CallAdapterProvider adapter={props.callAdapter}>
+          <ModalLocalAndRemotePIP
+            modalLayerHostId={props.modalLayerHostId}
+            hidden={!props.activePane}
+            styles={pipStyles}
+            minDragPosition={minMaxDragPosition.minDragPosition}
+            maxDragPosition={minMaxDragPosition.maxDragPosition}
+          />
+        </CallAdapterProvider>
       )}
       {drawerMenuItems.length > 0 && (
         <Stack styles={drawerContainerStyles}>
