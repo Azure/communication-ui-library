@@ -7,9 +7,7 @@ import { buttonStyle, buttonWithIconStyles, videoCameraIconStyle } from '../styl
 import { Video20Filled } from '@fluentui/react-icons';
 import { useLocale } from '../../localization';
 /* @conditional-compile-remove(rooms) */
-import { useAdapter } from '../adapter/CallAdapterProvider';
-/* @conditional-compile-remove(rooms) */
-import { isRoomsCall } from '../utils';
+import { _usePermissions } from '@internal/react-components';
 
 /**
  * @private
@@ -27,11 +25,11 @@ export const StartCallButton = (props: StartCallButtonProps): JSX.Element => {
   const { rejoinCall } = props;
   const locale = useLocale();
   /* @conditional-compile-remove(rooms) */
-  const adapter = useAdapter();
+  const rolePermissions = _usePermissions();
 
   let startCallButtonLabel = locale.strings.call.startCallButtonLabel;
   /* @conditional-compile-remove(rooms) */
-  if (isRoomsCall(adapter.getState())) {
+  if (rolePermissions) {
     startCallButtonLabel = locale.strings.call.startRoomCallButtonLabel;
   }
 

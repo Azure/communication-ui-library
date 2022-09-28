@@ -35,8 +35,6 @@ import { usePropsFor } from '../hooks/usePropsFor';
 import { useAdapter } from '../adapter/CallAdapterProvider';
 /* @conditional-compile-remove(call-readiness) */
 import { DevicePermissionRestrictions } from '../CallComposite';
-/* @conditional-compile-remove(rooms) */
-import { isRoomsCall } from '../utils';
 
 /**
  * @private
@@ -87,7 +85,7 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
   const locale = useLocale();
   let configurationPageTitle = locale.strings.call.configurationPageTitle;
   /* @conditional-compile-remove(rooms) */
-  if (isRoomsCall(adapter.getState())) {
+  if (rolePermissions.role) {
     configurationPageTitle = locale.strings.call.roomsConfigurationPageTitle;
   }
 

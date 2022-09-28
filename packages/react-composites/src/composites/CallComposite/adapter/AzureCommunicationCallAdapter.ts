@@ -68,14 +68,10 @@ import { useEffect, useRef, useState } from 'react';
 /** Context of call, which is a centralized context for all state updates */
 class CallContext {
   private emitter: EventEmitter = new EventEmitter();
-  private state: CallAdapterState & { /* @conditional-compile-remove(rooms) */ locator: CallAdapterLocator };
+  private state: CallAdapterState;
   private callId: string | undefined;
 
-  constructor(
-    clientState: CallClientState,
-    isTeamsCall: boolean,
-    /* @conditional-compile-remove(rooms) */ locator: CallAdapterLocator
-  ) {
+  constructor(clientState: CallClientState, isTeamsCall: boolean) {
     this.state = {
       isLocalPreviewMicrophoneEnabled: false,
       userId: clientState.userId,
@@ -85,8 +81,7 @@ class CallContext {
       page: 'configuration',
       latestErrors: clientState.latestErrors,
       isTeamsCall,
-      /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId: clientState.alternateCallerId,
-      /* @conditional-compile-remove(rooms) */ locator
+      /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId: clientState.alternateCallerId
     };
   }
 
@@ -99,11 +94,11 @@ class CallContext {
   }
 
   public setState(state: CallAdapterState): void {
-    this.state = { ...state, /* @conditional-compile-remove(rooms) */ locator: this.state.locator };
+    this.state = state;
     this.emitter.emit('stateChanged', this.state);
   }
 
-  public getState(): CallAdapterState & { /* @conditional-compile-remove(rooms) */ locator: CallAdapterLocator } {
+  public getState(): CallAdapterState {
     return this.state;
   }
 
@@ -207,7 +202,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     this.locator = locator;
     this.deviceManager = deviceManager;
     const isTeamsMeeting = 'meetingLink' in this.locator;
-    this.context = new CallContext(callClient.getState(), isTeamsMeeting, locator);
+    this.context = new CallContext(callClient.getState(), isTeamsMeeting);
 
     this.context.onCallEnded((endCallData) => this.emitter.emit('callEnded', endCallData));
 
