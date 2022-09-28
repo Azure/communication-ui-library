@@ -41,25 +41,25 @@ export const ModalLocalAndRemotePIP = (props: {
   const rootStyles = props.hidden ? hiddenStyle : PIPContainerStyle;
 
   /* @conditional-compile-remove(rooms) */
-  const permissions = _usePermissions();
+  const rolePermissions = _usePermissions();
 
   const pictureInPictureProps = useSelector(localAndRemotePIPSelector);
 
   const pictureInPictureHandlers = useHandlers(LocalAndRemotePIP);
   const localAndRemotePIP = useMemo(() => {
     /* @conditional-compile-remove(rooms) */
-    if (!permissions.cameraButton && pictureInPictureProps.dominantRemoteParticipant?.userId) {
+    if (!rolePermissions.cameraButton && pictureInPictureProps.dominantRemoteParticipant?.userId) {
       return <_RemoteVideoTile {...pictureInPictureProps.dominantRemoteParticipant} />;
     }
     return <LocalAndRemotePIP {...pictureInPictureProps} {...pictureInPictureHandlers} />;
   }, [
     pictureInPictureProps,
     pictureInPictureHandlers,
-    /* @conditional-compile-remove(rooms) */ permissions.cameraButton
+    /* @conditional-compile-remove(rooms) */ rolePermissions.cameraButton
   ]);
 
   /* @conditional-compile-remove(rooms) */
-  if (!permissions.cameraButton && !pictureInPictureProps.dominantRemoteParticipant) {
+  if (!rolePermissions.cameraButton && !pictureInPictureProps.dominantRemoteParticipant) {
     return null;
   }
 
