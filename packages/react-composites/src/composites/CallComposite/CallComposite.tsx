@@ -378,7 +378,7 @@ export const CallComposite = (props: CallCompositeProps): JSX.Element => {
       <BaseProvider {...props}>
         <CallAdapterProvider adapter={adapter}>
           <MainScreen
-            callInvitationUrl={role}
+            callInvitationUrl={callInvitationUrl}
             onFetchAvatarPersonaData={onFetchAvatarPersonaData}
             onFetchParticipantMenuItems={onFetchParticipantMenuItems}
             mobileView={mobileView}
