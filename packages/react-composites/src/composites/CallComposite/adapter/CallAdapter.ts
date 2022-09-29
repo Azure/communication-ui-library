@@ -11,8 +11,7 @@ import type {
   StartCallOptions,
   MediaDiagnosticChangedEventArgs,
   NetworkDiagnosticChangedEventArgs,
-  PropertyChangedEvent,
-  CallEndReason
+  PropertyChangedEvent
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions, DtmfTone } from '@azure/communication-calling';
@@ -153,7 +152,7 @@ export type DisplayNameChangedListener = (event: {
  *
  * @public
  */
-export type CallAdapterCallEndedEvent = { callId?: string; callEndReason?: CallEndReason };
+export type CallAdapterCallEndedEvent = { callId?: string };
 
 /**
  * Callback for {@link CallAdapterSubscribers} 'callEnded' event.
