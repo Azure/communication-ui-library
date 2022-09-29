@@ -28,12 +28,19 @@ import { disposeAllLocalPreviewViews, _isInCall, _isPreviewOn } from '../utils/c
 
 /* @conditional-compile-remove(PSTN-calls) */
 /**
- * handler type for addParticipant
- *
+ * Handler type for addParticipant
  * @beta
  */
 export type AddParticipantHandler = ((participant: CommunicationUserIdentifier) => Promise<void>) &
   ((participant: PhoneNumberIdentifier, options: AddPhoneNumberOptions) => Promise<void>);
+
+/* @conditional-compile-remove(PSTN-calls) */
+/**
+ * Handler for removeing a participant from a call.
+ * @beta
+ */
+export type RemoveParticipantHandler = ((userId: string) => Promise<void>) &
+  ((userId: CommunicationIdentifier) => Promise<void>);
 
 /**
  * Object containing all the handlers required for calling components.
@@ -67,7 +74,7 @@ export type CallingHandlers = {
     userId: string,
     options?: VideoStreamOptions
   ) => Promise<void | CreateVideoStreamViewResult>;
-  onRemoveParticipant: (userId: string) => Promise<void>;
+  onRemoveParticipant: RemoveParticipantHandler;
   onDisposeRemoteStreamView: (userId: string) => Promise<void>;
   onDisposeLocalStreamView: () => Promise<void>;
   /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
@@ -161,7 +168,6 @@ export const createDefaultCallingHandlers = memoizeOne(
       }
     };
 
-    // FIXME: onStartCall API should use string, not the underlying SDK types.
     const onStartCall = (
       participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[],
       options?: StartCallOptions
@@ -342,8 +348,11 @@ export const createDefaultCallingHandlers = memoizeOne(
       await disposeAllLocalPreviewViews(callClient);
     };
 
-    const onRemoveParticipant = async (userId: string): Promise<void> => {
-      await call?.removeParticipant(fromFlatCommunicationIdentifier(userId));
+    const onRemoveParticipant = async (userId: string | CommunicationIdentifier): Promise<void> => {
+      if (typeof userId === 'string') {
+        userId = fromFlatCommunicationIdentifier(userId);
+      }
+      await call?.removeParticipant(userId);
     };
 
     /* @conditional-compile-remove(PSTN-calls) */

@@ -55,7 +55,11 @@ import {
   createAzureCommunicationChatAdapterFromClient
 } from '../../ChatComposite/adapter/AzureCommunicationChatAdapter';
 import { EventEmitter } from 'events';
-import { CommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
+import {
+  CommunicationIdentifier,
+  CommunicationTokenCredential,
+  CommunicationUserIdentifier
+} from '@azure/communication-common';
 /* @conditional-compile-remove(PSTN-calls) */
 import { isCommunicationUserIdentifier, PhoneNumberIdentifier } from '@azure/communication-common';
 import { getChatThreadFromTeamsLink } from './parseTeamsUrl';
@@ -72,6 +76,7 @@ import { StatefulCallClient } from '@internal/calling-stateful-client';
 import { StatefulChatClient } from '@internal/chat-stateful-client';
 import { ChatThreadClient } from '@azure/communication-chat';
 import { useEffect, useRef, useState } from 'react';
+import { fromFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 
 type CallWithChatAdapterStateChangedHandler = (newState: CallWithChatAdapterState) => void;
 
@@ -211,8 +216,15 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     await this.callAdapter.leaveCall();
   }
   /** Start a new Call. */
-  public startCall(participants: string[], options?: StartCallOptions): Call | undefined {
-    return this.callAdapter.startCall(participants, options);
+  public startCall(participants: string[] | CommunicationIdentifier[], options?: StartCallOptions): Call | undefined {
+    const communicationParticipants = participants.map((participant) => {
+      if (typeof participant === 'string') {
+        return fromFlatCommunicationIdentifier(participant);
+      } else {
+        return participant;
+      }
+    });
+    return this.callAdapter.startCall(communicationParticipants, options);
   }
   /**
    * Subscribe to state change events.
@@ -241,8 +253,11 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     this.callAdapter.dispose();
   }
   /** Remove a participant from the Call only. */
-  public async removeParticipant(userId: string): Promise<void> {
+  public async removeParticipant(userId: string | CommunicationIdentifier): Promise<void> {
     // Only remove the participant from the GroupCall. Contoso must manage access to Chat.
+    if (typeof userId === 'string') {
+      userId = fromFlatCommunicationIdentifier(userId);
+    }
     await this.callAdapter.removeParticipant(userId);
   }
   public async setCamera(device: VideoDeviceInfo, options?: VideoStreamOptions): Promise<void> {

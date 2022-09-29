@@ -58,7 +58,8 @@ import {
   isCommunicationUserIdentifier,
   isPhoneNumberIdentifier,
   UnknownIdentifier,
-  PhoneNumberIdentifier
+  PhoneNumberIdentifier,
+  CommunicationIdentifier
 } from '@azure/communication-common';
 import { ParticipantSubscriber } from './ParticipantSubcriber';
 import { AdapterError } from '../../common/adapters';
@@ -459,18 +460,23 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     });
   }
 
-  public startCall(participants: string[], options?: StartCallOptions): Call | undefined {
+  public startCall(participants: string[] | CommunicationIdentifier[], options?: StartCallOptions): Call | undefined {
     if (_isInCall(this.getState().call?.state ?? 'None')) {
       throw new Error('You are already in the call.');
     }
 
-    const idsToAdd = participants.map((participant) => {
+    const idsToAdd = participants.map((participant: string | CommunicationIdentifier) => {
       // FIXME: `onStartCall` does not allow a Teams user.
       // Need some way to return an error if a Teams user is provided.
-      const backendId = fromFlatCommunicationIdentifier(participant);
+      let backendId: CommunicationIdentifier;
+      if (typeof participant === 'string') {
+        backendId = fromFlatCommunicationIdentifier(participant);
+      } else {
+        backendId = participant;
+      }
       if (isPhoneNumberIdentifier(backendId)) {
         if (options?.alternateCallerId === undefined) {
-          throw new Error('unable to start call, PSTN user present with no alternateCallerId.');
+          throw new Error('Unable to start call, PSTN user present with no alternateCallerId.');
         }
         return backendId as PhoneNumberIdentifier;
       } else if (isCommunicationUserIdentifier(backendId)) {
@@ -498,7 +504,10 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     this.subscribeCallEvents();
   }
 
-  public async removeParticipant(userId: string): Promise<void> {
+  public async removeParticipant(userId: string | CommunicationIdentifier): Promise<void> {
+    if (typeof userId === 'string') {
+      userId = fromFlatCommunicationIdentifier(userId);
+    }
     this.handlers.onRemoveParticipant(userId);
   }
 

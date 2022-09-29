@@ -16,10 +16,12 @@ import { AddPhoneNumberOptions, DtmfTone } from '@azure/communication-calling';
 import { CallWithChatAdapterState } from '../state/CallWithChatAdapterState';
 /* @conditional-compile-remove(PSTN-calls) */
 import {
+  CommunicationIdentifier,
   CommunicationUserIdentifier,
   isPhoneNumberIdentifier,
   PhoneNumberIdentifier
 } from '@azure/communication-common';
+import { fromFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
@@ -81,8 +83,18 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
     return this.callWithChatAdapter.joinCall(microphoneOn);
   };
   public leaveCall = async (): Promise<void> => await this.callWithChatAdapter.leaveCall();
-  public startCall = (participants: string[], options: StartCallOptions): Call | undefined => {
-    return this.callWithChatAdapter.startCall(participants, options);
+  public startCall = (
+    participants: string[] | CommunicationIdentifier[],
+    options: StartCallOptions
+  ): Call | undefined => {
+    const communicationParticipants = participants.map((participant) => {
+      if (typeof participant === 'string') {
+        return fromFlatCommunicationIdentifier(participant);
+      } else {
+        return participant;
+      }
+    });
+    return this.callWithChatAdapter.startCall(communicationParticipants, options);
   };
   public setCamera = async (sourceId: VideoDeviceInfo, options?: VideoStreamOptions): Promise<void> =>
     await this.callWithChatAdapter.setCamera(sourceId, options);
@@ -102,8 +114,12 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
   public unmute = async (): Promise<void> => await this.callWithChatAdapter.unmute();
   public startScreenShare = async (): Promise<void> => await this.callWithChatAdapter.startScreenShare();
   public stopScreenShare = async (): Promise<void> => await this.callWithChatAdapter.stopScreenShare();
-  public removeParticipant = async (userId: string): Promise<void> =>
+  public removeParticipant = async (userId: string | CommunicationIdentifier): Promise<void> => {
+    if (typeof userId === 'string') {
+      userId = fromFlatCommunicationIdentifier(userId);
+    }
     await this.callWithChatAdapter.removeParticipant(userId);
+  };
   public createStreamView = async (
     remoteUserId?: string,
     options?: VideoStreamOptions
