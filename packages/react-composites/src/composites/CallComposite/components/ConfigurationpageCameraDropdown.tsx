@@ -3,13 +3,13 @@
 /* @conditional-compile-remove(call-readiness) */
 import React from 'react';
 /* @conditional-compile-remove(call-readiness) */
-import { Icon } from '@fluentui/react';
-/* @conditional-compile-remove(call-readiness) */
 import { useTheme, _DevicePermissionDropdownStrings, _DevicePermissionDropdown } from '@internal/react-components';
 /* @conditional-compile-remove(call-readiness) */
 import { dropDownStyles } from '../styles/LocalDeviceSettings.styles';
 /* @conditional-compile-remove(call-readiness) */
 import { useAdapter } from '../adapter/CallAdapterProvider';
+/* @conditional-compile-remove(call-readiness) */
+import { CallCompositeIcon } from '../../common/icons';
 
 /**
  * @private
@@ -44,7 +44,9 @@ export const ConfigurationpageCameraDropdown = (props: ConfigurationpageCameraDr
         }
       }}
       strings={devicePermissionDropdownStringsCamera}
-      icon={<Icon iconName="ControlButtonCameraOn" style={{ height: '1.25rem', marginRight: '0.625rem' }} />}
+      icon={
+        <CallCompositeIcon iconName="ControlButtonCameraOn" style={{ height: '1.25rem', marginRight: '0.625rem' }} />
+      }
     />
   );
 
