@@ -119,9 +119,9 @@ test.describe('Participant pane tests', async () => {
     const paul = defaultMockRemoteParticipant('Paul Bridges');
     paul.state = 'Connecting';
     const participants = [paul];
+    const initialState = defaultMockCallAdapterState(participants);
     //PSTN call has alternate caller id
     initialState.alternateCallerId = '+1676568678999';
-    const initialState = defaultMockCallAdapterState(participants);
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
     await waitForSelector(page, dataUiId(IDS.videoGallery));
     if (!isTestProfileDesktop(testInfo)) {
