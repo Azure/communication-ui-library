@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Dropdown, IDropdownOption, IDropdownStyles, Stack } from '@fluentui/react';
+import { Dropdown, IDropdownOption, IDropdownStyles, Stack, Text } from '@fluentui/react';
 import React from 'react';
 
 /**
@@ -62,13 +62,13 @@ export const _DevicePermissionDropdown = (props: _DevicePermissionDropdownProps)
     return (
       <Stack horizontal verticalAlign="center">
         {icon}
-        <span>{strings?.placeHolderText}</span>
+        <Text>{strings?.placeHolderText}</Text>
       </Stack>
     );
   };
 
   const onRenderCaretDown = (): JSX.Element => {
-    return <span>{strings?.actionButtonContent}</span>;
+    return <Text>{strings?.actionButtonContent}</Text>;
   };
 
   return (
