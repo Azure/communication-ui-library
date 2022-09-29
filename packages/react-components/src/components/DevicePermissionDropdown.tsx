@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+
 import { Dropdown, IDropdownOption, IDropdownStyles, Stack, Text } from '@fluentui/react';
 import React from 'react';
 
@@ -13,6 +14,7 @@ export interface _DevicePermissionDropdownStrings {
   /**
    * dropdown label
    */
+
   label?: string;
   /**
    * dropdown placeholder
