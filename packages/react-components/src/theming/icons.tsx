@@ -40,8 +40,7 @@ import {
   WifiWarning20Filled,
   SpeakerMute16Filled,
   MicProhibited16Filled,
-  VideoProhibited16Filled,
-  ChevronDown20Regular
+  VideoProhibited16Filled
 } from '@fluentui/react-icons';
 
 /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
