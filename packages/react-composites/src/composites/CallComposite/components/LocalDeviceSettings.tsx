@@ -4,10 +4,6 @@
 import { AudioDeviceInfo, VideoDeviceInfo } from '@azure/communication-calling';
 import { Dropdown, IDropdownOption, Label, mergeStyles, Stack } from '@fluentui/react';
 /* @conditional-compile-remove(call-readiness) */
-import { Icon } from '@fluentui/react';
-/* @conditional-compile-remove(call-readiness) */
-import { _DevicePermissionDropdown, _DevicePermissionDropdownStrings } from '@internal/react-components';
-/* @conditional-compile-remove(call-readiness) */
 import { useEffect } from 'react';
 import { useTheme, VideoStreamOptions } from '@internal/react-components';
 import React from 'react';
@@ -23,6 +19,8 @@ import {
 import { _usePermissions } from '@internal/react-components';
 /* @conditional-compile-remove(call-readiness) */
 import { useAdapter } from '../adapter/CallAdapterProvider';
+import { ConfigurationpageCameraDropdown } from './ConfigurationpageCameraDropdown';
+import { ConfigurationpageMicDropdown } from './ConfigurationpageMicDropdown';
 
 type iconType = 'Camera' | 'Microphone' | 'Speaker';
 
@@ -124,16 +122,6 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
     }
     adapter.querySpeakers();
   }, [adapter, cameraPermissionGranted, micPermissionGranted]);
-  /* @conditional-compile-remove(call-readiness) */
-  const devicePermissionDropdownStringsCamera: _DevicePermissionDropdownStrings = {
-    placeHolderText: 'Enable Camera (optional)',
-    actionButtonContent: 'Allow'
-  };
-  /* @conditional-compile-remove(call-readiness) */
-  const devicePermissionDropdownStringsMicrophone: _DevicePermissionDropdownStrings = {
-    placeHolderText: 'Enable Microphone (required)',
-    actionButtonContent: 'Allow'
-  };
 
   const cameraGrantedDropdown = (
     <Dropdown
@@ -163,22 +151,8 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
       onRenderTitle={(props?: IDropdownOption[]) => onRenderTitle('Camera', props)}
     />
   );
-  /* @conditional-compile-remove(call-readiness) */
-  const cameraBlockedDropdown = (
-    <_DevicePermissionDropdown
-      styles={dropDownStyles(theme)}
-      onClickActionButton={async () => {
-        await adapter.askDevicePermission({ video: true, audio: false });
-        if (cameraPermissionGranted) {
-          adapter.queryCameras();
-        }
-      }}
-      strings={devicePermissionDropdownStringsCamera}
-      icon={<Icon iconName="ControlButtonCameraOn" style={{ height: '1.25rem', marginRight: '0.625rem' }} />}
-    />
-  );
 
-  const microphoneGrantedDropdown = (
+  const micGrantedDropdown = (
     <>
       {roleCanUseMic && (
         <Dropdown
@@ -209,51 +183,9 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
           onRenderTitle={(props?: IDropdownOption[]) => onRenderTitle('Microphone', props)}
         />
       )}
-      <Dropdown
-        aria-labelledby={'call-composite-local-sound-settings-label'}
-        placeholder={defaultPlaceHolder}
-        styles={dropDownStyles(theme)}
-        disabled={props.speakers.length === 0}
-        options={getDropDownList(props.speakers)}
-        defaultSelectedKey={props.selectedSpeaker ? props.selectedSpeaker.id : defaultDeviceId(props.speakers)}
-        onChange={(
-          event: React.FormEvent<HTMLDivElement>,
-          option?: IDropdownOption | undefined,
-          index?: number | undefined
-        ) => {
-          props.onSelectSpeaker(props.speakers[index ?? 0]);
-        }}
-        onRenderTitle={(props?: IDropdownOption[]) => onRenderTitle('Speaker', props)}
-      />
     </>
   );
-  /* @conditional-compile-remove(call-readiness) */
-  const microphoneBlockedDropdown = (
-    <_DevicePermissionDropdown
-      styles={dropDownStyles(theme)}
-      onClickActionButton={async () => {
-        await adapter.askDevicePermission({ video: false, audio: true });
-        if (micPermissionGranted) {
-          adapter.queryMicrophones();
-          adapter.querySpeakers();
-        }
-      }}
-      strings={devicePermissionDropdownStringsMicrophone}
-      icon={<Icon iconName="ControlButtonMicOn" style={{ height: '1.25rem', marginRight: '0.625rem' }} />}
-    />
-  );
 
-  const conditionalCompileCameraDropdown = (): JSX.Element => {
-    /* @conditional-compile-remove(call-readiness) */
-    return <>{cameraPermissionGranted ? cameraGrantedDropdown : cameraBlockedDropdown}</>;
-    return cameraGrantedDropdown;
-  };
-
-  const conditionalCompileMicDropdown = (): JSX.Element => {
-    /* @conditional-compile-remove(call-readiness) */
-    return <> {micPermissionGranted ? microphoneGrantedDropdown : microphoneBlockedDropdown}</>;
-    return microphoneGrantedDropdown;
-  };
   return (
     <Stack data-ui-id="call-composite-device-settings" tokens={mainStackTokens}>
       {roleCanUseCamera && (
@@ -265,7 +197,10 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
           >
             {cameraLabel}
           </Label>
-          {conditionalCompileCameraDropdown}
+          <ConfigurationpageCameraDropdown
+            cameraGrantedDropdown={cameraGrantedDropdown}
+            cameraPermissionGranted={cameraPermissionGranted ?? false}
+          />
         </Stack>
       )}
       <Stack>
@@ -277,7 +212,26 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
           {soundLabel}
         </Label>
         <Stack data-ui-id="call-composite-sound-settings" tokens={mainStackTokens}>
-          {conditionalCompileMicDropdown}
+          <ConfigurationpageMicDropdown
+            micGrantedDropdown={micGrantedDropdown}
+            micPermissionGranted={micPermissionGranted ?? false}
+          />
+          <Dropdown
+            aria-labelledby={'call-composite-local-sound-settings-label'}
+            placeholder={defaultPlaceHolder}
+            styles={dropDownStyles(theme)}
+            disabled={props.speakers.length === 0}
+            options={getDropDownList(props.speakers)}
+            defaultSelectedKey={props.selectedSpeaker ? props.selectedSpeaker.id : defaultDeviceId(props.speakers)}
+            onChange={(
+              event: React.FormEvent<HTMLDivElement>,
+              option?: IDropdownOption | undefined,
+              index?: number | undefined
+            ) => {
+              props.onSelectSpeaker(props.speakers[index ?? 0]);
+            }}
+            onRenderTitle={(props?: IDropdownOption[]) => onRenderTitle('Speaker', props)}
+          />
         </Stack>
       </Stack>
     </Stack>
