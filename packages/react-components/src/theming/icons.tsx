@@ -190,7 +190,6 @@ export const DEFAULT_COMPONENT_ICONS = {
   ErrorBarCallVideoStoppedBySystem: <VideoProhibited16Filled />,
   HorizontalGalleryLeftButton: <ChevronLeft20Regular />,
   HorizontalGalleryRightButton: <ChevronRight20Regular />,
-  ChevronDown: <ChevronDown20Regular />,
   MessageDelivered: <CheckmarkCircle16Regular />,
   MessageEdit: <Edit20Regular />,
   MessageFailed: <ErrorCircle16Regular />,
