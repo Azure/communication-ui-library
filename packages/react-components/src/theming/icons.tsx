@@ -40,7 +40,8 @@ import {
   WifiWarning20Filled,
   SpeakerMute16Filled,
   MicProhibited16Filled,
-  VideoProhibited16Filled
+  VideoProhibited16Filled,
+  ChevronDown20Regular
 } from '@fluentui/react-icons';
 
 /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
@@ -189,6 +190,7 @@ export const DEFAULT_COMPONENT_ICONS = {
   ErrorBarCallVideoStoppedBySystem: <VideoProhibited16Filled />,
   HorizontalGalleryLeftButton: <ChevronLeft20Regular />,
   HorizontalGalleryRightButton: <ChevronRight20Regular />,
+  ChevronDown: <ChevronDown20Regular />,
   MessageDelivered: <CheckmarkCircle16Regular />,
   MessageEdit: <Edit20Regular />,
   MessageFailed: <ErrorCircle16Regular />,
