@@ -13,7 +13,7 @@ export interface _DevicePermissionDropdownStrings {
   /**
    * dropdown label
    */
-  label: string;
+  label?: string;
   /**
    * dropdown placeholder
    */
