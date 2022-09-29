@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "add device button to composite",
+  "packageName": "@internal/react-composites",
+  "email": "carolinecao@microsoft.com",
+  "dependentChangeType": "patch"
+}
