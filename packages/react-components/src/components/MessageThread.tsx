@@ -849,8 +849,12 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
       if (onLoadPreviousChatMessages) {
         isLoadingChatMessagesRef.current = true;
         // Fetch message until scrollTop reach the threshold for fetching new message
-        while (!isAllChatMessagesLoadedRef.current && chatScrollDivRef.current.scrollTop <= 0) {
+        previousTopRef.current = chatScrollDivRef.current.scrollTop;
+        previousHeightRef.current = chatScrollDivRef.current.scrollHeight;
+        while (!isAllChatMessagesLoadedRef.current && chatScrollDivRef.current.scrollTop <= 500) {
           isAllChatMessagesLoadedRef.current = await onLoadPreviousChatMessages(numberOfChatMessagesToReload);
+          chatScrollDivRef.current.scrollTop =
+            chatScrollDivRef.current.scrollHeight - (previousHeightRef.current - previousTopRef.current);
           // Release CPU resources for 200 milliseconds between each loop.
           await delay(200);
         }
@@ -884,9 +888,8 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
       return;
     }
     if (previousTopRef.current === 0) {
-      const currentHeight = chatScrollDivRef.current.scrollHeight;
       chatScrollDivRef.current.scrollTop =
-        chatScrollDivRef.current.scrollTop + currentHeight - previousHeightRef.current;
+        chatScrollDivRef.current.scrollHeight - (previousHeightRef.current - previousTopRef.current);
     }
   }, [messages]);
 
