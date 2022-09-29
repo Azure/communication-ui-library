@@ -209,20 +209,19 @@ class ProxyCallAgent implements ProxyHandler<DeclarativeCallAgent> {
         };
       }
       case 'dispose': {
-        // Wrapping CallAgent.dispose in a callback type (): Promise<void> to accomodate the change of CallAgent.dispose
-        // in calling beta version 1.8.0-beta.1 from callback type (): Promise<void> to (): void
-        const disposeCallbackWrapper = (): Promise<void> => {
-          target.dispose();
-          return Promise.resolve();
-        };
         /* @conditional-compile-remove(calling-beta-sdk) */
         return (): void => {
-          disposeCallbackWrapper().then(() => {
-            this.unsubscribe();
-          });
+          target.dispose();
+          this.unsubscribe();
+        };
+        // Wrapping CallAgent.dispose in a callback type (): Promise<void> to accomodate the change of CallAgent.dispose
+        // in calling beta version 1.8.0-beta.1 from callback type (): Promise<void> to (): void
+        const callAgentDisposeAsyncCallbackWrapper = async (): Promise<void> => {
+          await target.dispose();
+          return Promise.resolve();
         };
         return (): Promise<void> => {
-          return disposeCallbackWrapper().then(() => {
+          return callAgentDisposeAsyncCallbackWrapper().then(() => {
             this.unsubscribe();
           });
         };
