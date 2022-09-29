@@ -34,7 +34,10 @@ test.describe('Participant pane tests', async () => {
     expect(await stableScreenshot(page)).toMatchSnapshot('call-screen-with-people-pane.png');
   });
 
-  test('click on add people button will show no options for ACS group call', async ({ page, serverUrl }, testInfo) => {
+  test('Add people button should be hidden for ACS group call when there is no alternate call id and callInvitationUrl', async ({
+    page,
+    serverUrl
+  }, testInfo) => {
     test.skip(isTestProfileStableFlavor());
     const initialState = defaultMockCallAdapterState();
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
@@ -51,9 +54,7 @@ test.describe('Participant pane tests', async () => {
 
     await waitForSelector(page, dataUiId('call-composite-people-pane'));
 
-    await pageClick(page, dataUiId('call-add-people-button'));
-
-    expect(await stableScreenshot(page)).toMatchSnapshot(`ACS-group-call-screen-with-empty-dropdown.png`);
+    expect(await stableScreenshot(page)).toMatchSnapshot(`ACS-group-call-screen-with-no-add-people-button.png`);
   });
 
   test('click on add people button will show dialpad option for PSTN call', async ({ page, serverUrl }, testInfo) => {
