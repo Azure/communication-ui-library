@@ -311,6 +311,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
 export const CallComposite = (props: CallCompositeProps): JSX.Element => {
   const {
     adapter,
+    callInvitationUrl,
     onFetchAvatarPersonaData,
     onFetchParticipantMenuItems,
     options,
@@ -365,13 +366,6 @@ export const CallComposite = (props: CallCompositeProps): JSX.Element => {
   const mainScreenContainerClassName = useMemo(() => {
     return mobileView ? mainScreenContainerStyleMobile : mainScreenContainerStyleDesktop;
   }, [mobileView]);
-
-  let callInvitationUrl = props.callInvitationUrl;
-  /* @conditional-compile-remove(rooms) */
-  // If role is defined then the call is a Rooms call so we should not make call invitation link available
-  if (role) {
-    callInvitationUrl = undefined;
-  }
 
   return (
     <div className={mainScreenContainerClassName}>
