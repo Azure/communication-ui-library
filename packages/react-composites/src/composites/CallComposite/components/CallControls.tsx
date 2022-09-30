@@ -287,7 +287,7 @@ export const isRoomsCallTrampoline = (): boolean => {
   /* @conditional-compile-remove(rooms) */
   const rolePermissions = _usePermissions();
   /* @conditional-compile-remove(rooms) */
-  return rolePermissions.role ? true : false;
+  return !!rolePermissions.role;
 
   return false;
 };
