@@ -42,7 +42,7 @@ test.describe('Call Composite E2E CallPage Tests', () => {
     const initialState = defaultMockCallAdapterState(participants);
     addDefaultMockLocalVideoStreamState(initialState);
 
-    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
+    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { callInvitationUrl: 'testUrl' }));
 
     if (!isTestProfileDesktop(testInfo) && !isTestProfileStableFlavor()) {
       await pageClick(page, dataUiId('call-with-chat-composite-more-button'));
@@ -80,7 +80,8 @@ test.describe('Call Composite E2E CallPage Tests', () => {
 
     await page.goto(
       buildUrlWithMockAdapter(serverUrl, initialState, {
-        showParticipantItemIcon: 'true'
+        showParticipantItemIcon: 'true',
+        callInvitationUrl: 'testUrl'
       })
     );
     await pageClick(page, dataUiId('call-composite-participants-button'));
@@ -95,7 +96,7 @@ test.describe('Call Composite E2E CallPage Tests', () => {
     expect(await stableScreenshot(page)).toMatchSnapshot(`video-gallery-page-participants-flyout-custom-ellipses.png`);
   });
 
-  test('participant list wiht custom ellipses on mobile, should not show ellipses for beta version people pane', async ({
+  test('participant list with custom ellipses on mobile, should not show ellipses for beta version people pane', async ({
     page,
     serverUrl
   }, testInfo) => {
@@ -111,7 +112,8 @@ test.describe('Call Composite E2E CallPage Tests', () => {
 
     await page.goto(
       buildUrlWithMockAdapter(serverUrl, initialState, {
-        showParticipantItemIcon: 'true'
+        showParticipantItemIcon: 'true',
+        callInvitationUrl: 'testUrl'
       })
     );
 
@@ -151,7 +153,8 @@ test.describe('Call composite participant menu items injection tests', async () 
 
     await page.goto(
       buildUrlWithMockAdapter(serverUrl, initialState, {
-        injectParticipantMenuItems: 'true'
+        injectParticipantMenuItems: 'true',
+        callInvitationUrl: 'testUrl'
       })
     );
     await waitForSelector(page, dataUiId(IDS.videoGallery));
