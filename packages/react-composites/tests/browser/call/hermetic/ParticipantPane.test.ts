@@ -18,7 +18,7 @@ test.describe('Participant pane tests', async () => {
   test('People pane opens and displays correctly', async ({ page, serverUrl }, testInfo) => {
     test.skip(isTestProfileStableFlavor());
     const initialState = defaultMockCallAdapterState();
-    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
+    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { callInvitationUrl: 'testUrl' }));
 
     await waitForSelector(page, dataUiId(IDS.videoGallery));
 
