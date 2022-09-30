@@ -4,7 +4,7 @@
 import React, { useState, useCallback } from 'react';
 import { useLocale } from '../localization';
 import { ControlBarButton, ControlBarButtonProps } from './ControlBarButton';
-import { HighContrastAwareIcon } from './HighContrastAwareIcon';
+import { _HighContrastAwareIcon } from './HighContrastAwareIcon';
 
 import { IContextualMenuItemStyles, IContextualMenuStyles } from '@fluentui/react';
 import { ControlBarButtonStyles } from './ControlBarButton';
@@ -165,10 +165,10 @@ export const MicrophoneButton = (props: MicrophoneButtonProps): JSX.Element => {
     (!isSplit && props.microphones && props.microphones?.length === 0);
 
   const onRenderMicOnIcon = (): JSX.Element => {
-    return <HighContrastAwareIcon disabled={disabled} iconName="ControlButtonMicOn" />;
+    return <_HighContrastAwareIcon disabled={disabled} iconName="ControlButtonMicOn" />;
   };
   const onRenderMicOffIcon = (): JSX.Element => {
-    return <HighContrastAwareIcon disabled={disabled} iconName="ControlButtonMicOff" />;
+    return <_HighContrastAwareIcon disabled={disabled} iconName="ControlButtonMicOff" />;
   };
 
   const isMicOn = props.checked;

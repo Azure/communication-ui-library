@@ -150,6 +150,8 @@ export type { HoldButtonProps, HoldButtonStrings } from './HoldButton';
 
 export { _LocalVideoTile } from './LocalVideoTile';
 export { _RemoteVideoTile } from './RemoteVideoTile';
+export { _HighContrastAwareIcon } from './HighContrastAwareIcon';
+export type { _HighContrastAwareIconProps } from './HighContrastAwareIcon';
 
 /* @conditional-compile-remove(unsupported-browser) */
 export { UnsupportedBrowser } from './UnsupportedBrowser';
@@ -160,3 +162,6 @@ export type {
   _TroubleshootingGuideErrorBarStrings,
   _TroubleshootingGuideErrorBarProps
 } from './TroubleshootingGuideErrorBar';
+
+export { _DevicePermissionDropdown } from './DevicePermissionDropdown';
+export type { _DevicePermissionDropdownStrings, _DevicePermissionDropdownProps } from './DevicePermissionDropdown';
