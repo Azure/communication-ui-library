@@ -19,14 +19,14 @@ import { BrowserPermissionDeniedDrawer } from './snippets/BrowserPermissionDenie
 import { BrowserPermissionDeniedIOSDrawer } from './snippets/BrowserPermissionDeniedIOSDrawer.snippet';
 import { BrowserPermissionDeniedModal } from './snippets/BrowserPermissionDeniedModal.snippet';
 
+const BrowserPermissionDeniedAndroidDrawerExample =
+  require('!!raw-loader!./snippets/BrowserPermissionDeniedAndroidDrawer.snippet.tsx').default;
 const BrowserPermissionDeniedDrawerExample =
   require('!!raw-loader!./snippets/BrowserPermissionDeniedDrawer.snippet.tsx').default;
 const BrowserPermissionDeniedIOSDrawerExample =
   require('!!raw-loader!./snippets/BrowserPermissionDeniedIOSDrawer.snippet.tsx').default;
 const BrowserPermissionDeniedModalExample =
   require('!!raw-loader!./snippets/BrowserPermissionDeniedModal.snippet.tsx').default;
-const BrowserPermissionDeniedAndroidDrawerExample =
-  require('!!raw-loader!./snippets/BrowserPermissionDeniedAndroidDrawer.snippet.tsx').default;
 
 const BrowserPermissionDeniedStory = (): JSX.Element => {
   const locale = useLocale().strings.BrowserPermissionDenied;
