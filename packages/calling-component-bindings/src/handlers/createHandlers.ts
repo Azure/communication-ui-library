@@ -349,7 +349,7 @@ export const createDefaultCallingHandlers = memoizeOne(
     };
 
     const onRemoveParticipant = async (userId: string | CommunicationIdentifier): Promise<void> => {
-      let participant = _toCommunicationIdentifier(userId);
+      const participant = _toCommunicationIdentifier(userId);
       await call?.removeParticipant(participant);
     };
 
