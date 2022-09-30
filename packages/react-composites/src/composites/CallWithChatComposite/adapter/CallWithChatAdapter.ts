@@ -40,11 +40,8 @@ import { FileMetadata } from '@internal/react-components';
 /* @conditional-compile-remove(file-sharing) */
 import { FileUploadManager } from '../../ChatComposite';
 /* @conditional-compile-remove(PSTN-calls) */
-import {
-  CommunicationIdentifier,
-  CommunicationUserIdentifier,
-  PhoneNumberIdentifier
-} from '@azure/communication-common';
+import { CommunicationUserIdentifier, PhoneNumberIdentifier } from '@azure/communication-common';
+import { CommunicationIdentifier } from '@azure/communication-common';
 
 /**
  * Functionality for managing the current call with chat.
@@ -60,7 +57,6 @@ export interface CallWithChatAdapterManagement {
    * @public
    */
   removeParticipant(userId: string): Promise<void>;
-  /* @conditional-compile-remove(PSTN-calls) */
   /**
    * Remove a participant from the call.
    * @param participant - {@link @azure/communication-common#CommunicationIdentifier} of the participant to be removed
@@ -123,7 +119,6 @@ export interface CallWithChatAdapterManagement {
    * @public
    */
   startCall(participants: string[], options?: StartCallOptions): Call | undefined;
-  /* @conditional-compile-remove(PSTN-calls) */
   /**
    * Start the call.
    * @param participants - An array of {@link @azure/communication-common#CommunicationIdentifier} to be called
