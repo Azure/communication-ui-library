@@ -197,7 +197,7 @@ export type ParticipantsButtonSelector = (state: CallClientState, props: Calling
 };
 
 // @beta
-export type RemoveParticipantHandler = ((userId: string) => Promise<void>) & ((userId: CommunicationIdentifier) => Promise<void>);
+export type RemoveParticipantHandler = ((userId: string) => Promise<void>) & ((participant: CommunicationIdentifier) => Promise<void>);
 
 // @public
 export type ScreenShareButtonSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {

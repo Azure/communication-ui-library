@@ -19,7 +19,7 @@ import {
   isPhoneNumberIdentifier,
   CommunicationIdentifier
 } from '@azure/communication-common';
-import { Common, fromFlatCommunicationIdentifier, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
+import { Common, toFlatCommunicationIdentifier, _toCommunicationIdentifier } from '@internal/acs-ui-common';
 import { CreateViewResult, StatefulCallClient, StatefulDeviceManager } from '@internal/calling-stateful-client';
 import memoizeOne from 'memoize-one';
 import { ReactElement } from 'react';
@@ -36,11 +36,11 @@ export type AddParticipantHandler = ((participant: CommunicationUserIdentifier) 
 
 /* @conditional-compile-remove(PSTN-calls) */
 /**
- * Handler for removeing a participant from a call.
+ * Handler for removing a participant from a call.
  * @beta
  */
 export type RemoveParticipantHandler = ((userId: string) => Promise<void>) &
-  ((userId: CommunicationIdentifier) => Promise<void>);
+  ((participant: CommunicationIdentifier) => Promise<void>);
 
 /**
  * Object containing all the handlers required for calling components.
@@ -349,10 +349,8 @@ export const createDefaultCallingHandlers = memoizeOne(
     };
 
     const onRemoveParticipant = async (userId: string | CommunicationIdentifier): Promise<void> => {
-      if (typeof userId === 'string') {
-        userId = fromFlatCommunicationIdentifier(userId);
-      }
-      await call?.removeParticipant(userId);
+      let participant = _toCommunicationIdentifier(userId);
+      await call?.removeParticipant(participant);
     };
 
     /* @conditional-compile-remove(PSTN-calls) */

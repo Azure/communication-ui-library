@@ -63,10 +63,10 @@ export interface CallWithChatAdapterManagement {
   /* @conditional-compile-remove(PSTN-calls) */
   /**
    * Remove a participant from the call.
-   * @param userId - {@link @azure/communication-common#CommunicationIdentifier} of the participant to be removed
+   * @param participant - {@link @azure/communication-common#CommunicationIdentifier} of the participant to be removed
    * @beta
    */
-  removeParticipant(userId: CommunicationIdentifier): Promise<void>;
+  removeParticipant(participant: CommunicationIdentifier): Promise<void>;
 
   // Call Interface Methods
   /**
@@ -126,7 +126,7 @@ export interface CallWithChatAdapterManagement {
   /* @conditional-compile-remove(PSTN-calls) */
   /**
    * Start the call.
-   * @param participants - An array of {@link @azure/communication-common#CommunicationIdentifier} to join
+   * @param participants - An array of {@link @azure/communication-common#CommunicationIdentifier} to be called
    * @beta
    */
   startCall(participants: CommunicationIdentifier[], options?: StartCallOptions): Call | undefined;

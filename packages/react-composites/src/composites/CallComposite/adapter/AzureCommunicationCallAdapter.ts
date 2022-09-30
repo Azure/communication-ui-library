@@ -51,7 +51,7 @@ import {
 } from './CallAdapter';
 import { getCallCompositePage, IsCallEndedPage, isCameraOn } from '../utils';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
-import { fromFlatCommunicationIdentifier, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
+import { toFlatCommunicationIdentifier, _toCommunicationIdentifier } from '@internal/acs-ui-common';
 import {
   CommunicationTokenCredential,
   CommunicationUserIdentifier,
@@ -468,12 +468,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     const idsToAdd = participants.map((participant: string | CommunicationIdentifier) => {
       // FIXME: `onStartCall` does not allow a Teams user.
       // Need some way to return an error if a Teams user is provided.
-      let backendId: CommunicationIdentifier;
-      if (typeof participant === 'string') {
-        backendId = fromFlatCommunicationIdentifier(participant);
-      } else {
-        backendId = participant;
-      }
+      let backendId: CommunicationIdentifier = _toCommunicationIdentifier(participant);
       if (isPhoneNumberIdentifier(backendId)) {
         if (options?.alternateCallerId === undefined) {
           throw new Error('Unable to start call, PSTN user present with no alternateCallerId.');
@@ -505,10 +500,8 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
   }
 
   public async removeParticipant(userId: string | CommunicationIdentifier): Promise<void> {
-    if (typeof userId === 'string') {
-      userId = fromFlatCommunicationIdentifier(userId);
-    }
-    this.handlers.onRemoveParticipant(userId);
+    const participant: CommunicationIdentifier = _toCommunicationIdentifier(userId);
+    this.handlers.onRemoveParticipant(participant);
   }
 
   /* @conditional-compile-remove(PSTN-calls) */

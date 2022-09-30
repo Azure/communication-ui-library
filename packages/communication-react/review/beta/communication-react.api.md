@@ -214,7 +214,7 @@ export interface CallAdapterCallManagement {
     mute(): Promise<void>;
     removeParticipant(userId: string): Promise<void>;
     // @beta
-    removeParticipant(userId: CommunicationIdentifier): Promise<void>;
+    removeParticipant(participant: CommunicationIdentifier): Promise<void>;
     // @beta
     resumeCall(): Promise<void>;
     // @beta
@@ -681,7 +681,7 @@ export interface CallWithChatAdapterManagement {
     registerCompletedFileUploads: (metadata: FileMetadata[]) => FileUploadManager[];
     removeParticipant(userId: string): Promise<void>;
     // @beta
-    removeParticipant(userId: CommunicationIdentifier): Promise<void>;
+    removeParticipant(participant: CommunicationIdentifier): Promise<void>;
     // @beta
     resumeCall: () => Promise<void>;
     // @beta

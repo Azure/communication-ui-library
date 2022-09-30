@@ -2,7 +2,11 @@
 // Licensed under the MIT license.
 
 export { memoizeFnAll } from './memoizeFnAll';
-export { fromFlatCommunicationIdentifier, toFlatCommunicationIdentifier } from './identifier';
+export {
+  fromFlatCommunicationIdentifier,
+  toFlatCommunicationIdentifier,
+  _toCommunicationIdentifier
+} from './identifier';
 export { _getApplicationId } from './telemetry';
 export { _formatString } from './localizationUtils';
 export { _safeJSONStringify } from './safeStringify';

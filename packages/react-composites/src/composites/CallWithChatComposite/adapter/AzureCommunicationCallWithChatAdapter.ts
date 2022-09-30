@@ -76,7 +76,7 @@ import { StatefulCallClient } from '@internal/calling-stateful-client';
 import { StatefulChatClient } from '@internal/chat-stateful-client';
 import { ChatThreadClient } from '@azure/communication-chat';
 import { useEffect, useRef, useState } from 'react';
-import { fromFlatCommunicationIdentifier } from '@internal/acs-ui-common';
+import { _toCommunicationIdentifier } from '@internal/acs-ui-common';
 
 type CallWithChatAdapterStateChangedHandler = (newState: CallWithChatAdapterState) => void;
 
@@ -217,13 +217,7 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   }
   /** Start a new Call. */
   public startCall(participants: string[] | CommunicationIdentifier[], options?: StartCallOptions): Call | undefined {
-    const communicationParticipants = participants.map((participant) => {
-      if (typeof participant === 'string') {
-        return fromFlatCommunicationIdentifier(participant);
-      } else {
-        return participant;
-      }
-    });
+    const communicationParticipants: CommunicationIdentifier[] = participants.map(_toCommunicationIdentifier);
     return this.callAdapter.startCall(communicationParticipants, options);
   }
   /**
@@ -255,10 +249,8 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   /** Remove a participant from the Call only. */
   public async removeParticipant(userId: string | CommunicationIdentifier): Promise<void> {
     // Only remove the participant from the GroupCall. Contoso must manage access to Chat.
-    if (typeof userId === 'string') {
-      userId = fromFlatCommunicationIdentifier(userId);
-    }
-    await this.callAdapter.removeParticipant(userId);
+    const participant: CommunicationIdentifier = _toCommunicationIdentifier(userId);
+    await this.callAdapter.removeParticipant(participant);
   }
   public async setCamera(device: VideoDeviceInfo, options?: VideoStreamOptions): Promise<void> {
     await this.callAdapter.setCamera(device, options);
