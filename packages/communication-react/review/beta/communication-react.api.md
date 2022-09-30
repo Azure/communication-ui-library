@@ -187,6 +187,43 @@ export interface BaseCustomStyles {
     root?: IStyle;
 }
 
+// @beta
+export interface BrowserPermissionDeniedIOSProps extends BrowserPermissionDeniedProps {
+    imageSource?: string;
+    strings: BrowserPermissionDeniedIOSStrings;
+}
+
+// @beta
+export interface BrowserPermissionDeniedIOSStrings extends BrowserPermissionDeniedStrings {
+    imageAltText: string;
+    primaryText: string;
+    secondaryText: string;
+    step1DigitText: string;
+    step1Text: string;
+    step2DigitText: string;
+    step2Text: string;
+    step3DigitText: string;
+    step3Text: string;
+    step4DigitText: string;
+    step4Text: string;
+}
+
+// @beta
+export interface BrowserPermissionDeniedProps {
+    appName: string;
+    onTroubleshootingClick: () => void;
+    onTryAgainClick: () => void;
+    strings: BrowserPermissionDeniedStrings;
+}
+
+// @beta
+export interface BrowserPermissionDeniedStrings {
+    linkText: string;
+    primaryButtonText: string;
+    primaryText: string;
+    secondaryText: string;
+}
+
 // @public
 export interface CallAdapter extends AdapterState<CallAdapterState>, Disposable, CallAdapterCallManagement, CallAdapterDeviceManagement, CallAdapterSubscribers {
 }
@@ -1310,6 +1347,8 @@ export type ComponentProps<Component extends (props: any) => JSX.Element> = Chat
 
 // @public
 export interface ComponentStrings {
+    BrowserPermissionDenied: BrowserPermissionDeniedStrings;
+    BrowserPermissionDeniedIOS: BrowserPermissionDeniedIOSStrings;
     cameraButton: CameraButtonStrings;
     devicesButton: DevicesButtonStrings;
     dialpad: DialpadStrings;
@@ -1615,6 +1654,7 @@ export const DEFAULT_COMPONENT_ICONS: {
     DomainPermissionCamera: JSX.Element;
     DomainPermissionMic: JSX.Element;
     UnsupportedBrowserWarning: JSX.Element;
+    BrowserPermissionDeniedError: JSX.Element;
 };
 
 // @public
@@ -1703,6 +1743,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     DomainPermissionCamera: JSX.Element;
     DomainPermissionMic: JSX.Element;
     UnsupportedBrowserWarning: JSX.Element;
+    BrowserPermissionDeniedError: JSX.Element;
 };
 
 // @public
@@ -1841,6 +1882,7 @@ export const DomainPermissions: (props: DomainPermissionsProps) => JSX.Element;
 // @beta
 export interface DomainPermissionsProps {
     appName: string;
+    onAllowAccessClick?: () => void;
     onTroubleshootingClick: () => void;
     strings: DomainPermissionsStrings;
 }
@@ -1848,6 +1890,7 @@ export interface DomainPermissionsProps {
 // @beta
 export interface DomainPermissionsStrings {
     linkText: string;
+    primaryButtonText: string;
     primaryText: string;
     secondaryText: string;
 }

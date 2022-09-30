@@ -1052,6 +1052,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     DomainPermissionCamera: JSX.Element;
     DomainPermissionMic: JSX.Element;
     UnsupportedBrowserWarning: JSX.Element;
+    BrowserPermissionDeniedError: JSX.Element;
 };
 
 // @beta
