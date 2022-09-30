@@ -95,7 +95,6 @@ export interface BrowserPermissionDeniedIOSStrings extends BrowserPermissionDeni
 
 // @beta
 export interface BrowserPermissionDeniedProps {
-    appName: string;
     onTroubleshootingClick: () => void;
     onTryAgainClick: () => void;
     strings: BrowserPermissionDeniedStrings;
