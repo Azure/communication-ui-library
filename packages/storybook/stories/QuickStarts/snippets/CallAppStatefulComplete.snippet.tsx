@@ -9,10 +9,11 @@ import {
   createStatefulCallClient,
   StatefulCallClient
 } from '@azure/communication-react';
-import { registerIcons } from '@fluentui/react';
+import { initializeIcons, registerIcons } from '@fluentui/react';
 import React, { useEffect, useMemo, useState } from 'react';
 import CallingComponents from './CallComponentsStateful';
 
+initializeIcons();
 registerIcons({ icons: DEFAULT_COMPONENT_ICONS });
 
 function App(): JSX.Element {
