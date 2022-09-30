@@ -468,7 +468,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     const idsToAdd = participants.map((participant: string | CommunicationIdentifier) => {
       // FIXME: `onStartCall` does not allow a Teams user.
       // Need some way to return an error if a Teams user is provided.
-      let backendId: CommunicationIdentifier = _toCommunicationIdentifier(participant);
+      const backendId: CommunicationIdentifier = _toCommunicationIdentifier(participant);
       if (isPhoneNumberIdentifier(backendId)) {
         if (options?.alternateCallerId === undefined) {
           throw new Error('Unable to start call, PSTN user present with no alternateCallerId.');

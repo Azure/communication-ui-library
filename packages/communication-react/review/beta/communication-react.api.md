@@ -2628,6 +2628,9 @@ export interface RemoteVideoStreamState {
     view?: VideoStreamRendererViewState;
 }
 
+// @beta
+export type RemoveParticipantHandler = ((userId: string) => Promise<void>) & ((participant: CommunicationIdentifier) => Promise<void>);
+
 // @beta (undocumented)
 export type Role = 'Presenter' | 'Attendee' | 'Consumer';
 
