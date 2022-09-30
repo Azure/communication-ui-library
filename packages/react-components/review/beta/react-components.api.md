@@ -440,7 +440,7 @@ export interface _DevicePermissionDropdownProps {
 // @internal
 export interface _DevicePermissionDropdownStrings {
     actionButtonContent?: string;
-    label: string;
+    label?: string;
     placeHolderText: string;
 }
 
