@@ -3,6 +3,8 @@
 
 import { AudioDeviceInfo, VideoDeviceInfo } from '@azure/communication-calling';
 import { Dropdown, IDropdownOption, Label, mergeStyles, Stack } from '@fluentui/react';
+/* @conditional-compile-remove(call-readiness) */
+import { useEffect } from 'react';
 import { useTheme, VideoStreamOptions } from '@internal/react-components';
 import React from 'react';
 import { CallCompositeIcon } from '../../common/icons';
@@ -15,6 +17,10 @@ import {
 } from '../styles/LocalDeviceSettings.styles';
 /* @conditional-compile-remove(rooms) */
 import { _usePermissions } from '@internal/react-components';
+/* @conditional-compile-remove(call-readiness) */
+import { useAdapter } from '../adapter/CallAdapterProvider';
+import { ConfigurationpageCameraDropdown } from './ConfigurationpageCameraDropdown';
+import { ConfigurationpageMicDropdown } from './ConfigurationpageMicDropdown';
 
 type iconType = 'Camera' | 'Microphone' | 'Speaker';
 
@@ -86,6 +92,8 @@ export interface LocalDeviceSettingsType {
 export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element => {
   const theme = useTheme();
   const locale = useLocale();
+  /* @conditional-compile-remove(call-readiness) */
+  const adapter = useAdapter();
   const defaultPlaceHolder = locale.strings.call.defaultPlaceHolder;
   const cameraLabel = locale.strings.call.cameraLabel;
   const soundLabel = locale.strings.call.soundLabel;
@@ -104,6 +112,79 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
   // TODO: speaker permission is tied to microphone permission (when you request 'audio' permission using the SDK) its
   // actually granting access to query both microphone and speaker. However the browser popup asks you explicity for
   // 'microphone'. This needs investigation on how we want to handle this and maybe needs follow up with SDK team.
+  /* @conditional-compile-remove(call-readiness) */
+  useEffect(() => {
+    if (cameraPermissionGranted) {
+      adapter.queryCameras();
+    }
+    if (micPermissionGranted) {
+      adapter.queryMicrophones();
+    }
+    adapter.querySpeakers();
+  }, [adapter, cameraPermissionGranted, micPermissionGranted]);
+
+  const cameraGrantedDropdown = (
+    <Dropdown
+      data-ui-id="call-composite-local-camera-settings"
+      aria-labelledby={'call-composite-local-camera-settings-label'}
+      placeholder={defaultPlaceHolder}
+      options={cameraPermissionGranted ? getDropDownList(props.cameras) : [{ key: 'deniedOrUnknown', text: '' }]}
+      styles={dropDownStyles(theme)}
+      disabled={!cameraPermissionGranted}
+      errorMessage={
+        props.cameraPermissionGranted === undefined || props.cameraPermissionGranted
+          ? undefined
+          : locale.strings.call.cameraPermissionDenied
+      }
+      defaultSelectedKey={
+        micPermissionGranted
+          ? props.selectedCamera
+            ? props.selectedCamera.id
+            : props.cameras
+            ? props.cameras[0]?.id
+            : ''
+          : 'deniedOrUnknown'
+      }
+      onChange={(event, option, index) => {
+        props.onSelectCamera(props.cameras[index ?? 0], localVideoViewOptions);
+      }}
+      onRenderTitle={(props?: IDropdownOption[]) => onRenderTitle('Camera', props)}
+    />
+  );
+
+  const micGrantedDropdown = (
+    <>
+      {roleCanUseMic && (
+        <Dropdown
+          aria-labelledby={'call-composite-local-sound-settings-label'}
+          placeholder={defaultPlaceHolder}
+          styles={dropDownStyles(theme)}
+          disabled={!micPermissionGranted}
+          errorMessage={
+            props.microphonePermissionGranted === undefined || props.microphonePermissionGranted
+              ? undefined
+              : locale.strings.call.microphonePermissionDenied
+          }
+          options={micPermissionGranted ? getDropDownList(props.microphones) : [{ key: 'deniedOrUnknown', text: '' }]}
+          defaultSelectedKey={
+            micPermissionGranted
+              ? props.selectedMicrophone
+                ? props.selectedMicrophone.id
+                : defaultDeviceId(props.microphones)
+              : 'deniedOrUnknown'
+          }
+          onChange={(
+            event: React.FormEvent<HTMLDivElement>,
+            option?: IDropdownOption | undefined,
+            index?: number | undefined
+          ) => {
+            props.onSelectMicrophone(props.microphones[index ?? 0]);
+          }}
+          onRenderTitle={(props?: IDropdownOption[]) => onRenderTitle('Microphone', props)}
+        />
+      )}
+    </>
+  );
 
   return (
     <Stack data-ui-id="call-composite-device-settings" tokens={mainStackTokens}>
@@ -116,31 +197,9 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
           >
             {cameraLabel}
           </Label>
-          <Dropdown
-            data-ui-id="call-composite-local-camera-settings"
-            aria-labelledby={'call-composite-local-camera-settings-label'}
-            placeholder={defaultPlaceHolder}
-            options={cameraPermissionGranted ? getDropDownList(props.cameras) : [{ key: 'deniedOrUnknown', text: '' }]}
-            styles={dropDownStyles(theme)}
-            disabled={!cameraPermissionGranted}
-            errorMessage={
-              props.cameraPermissionGranted === undefined || props.cameraPermissionGranted
-                ? undefined
-                : locale.strings.call.cameraPermissionDenied
-            }
-            defaultSelectedKey={
-              micPermissionGranted
-                ? props.selectedCamera
-                  ? props.selectedCamera.id
-                  : props.cameras
-                  ? props.cameras[0]?.id
-                  : ''
-                : 'deniedOrUnknown'
-            }
-            onChange={(event, option, index) => {
-              props.onSelectCamera(props.cameras[index ?? 0], localVideoViewOptions);
-            }}
-            onRenderTitle={(props?: IDropdownOption[]) => onRenderTitle('Camera', props)}
+          <ConfigurationpageCameraDropdown
+            cameraGrantedDropdown={cameraGrantedDropdown}
+            cameraPermissionGranted={cameraPermissionGranted ?? false}
           />
         </Stack>
       )}
@@ -153,37 +212,10 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
           {soundLabel}
         </Label>
         <Stack data-ui-id="call-composite-sound-settings" tokens={mainStackTokens}>
-          {roleCanUseMic && (
-            <Dropdown
-              aria-labelledby={'call-composite-local-sound-settings-label'}
-              placeholder={defaultPlaceHolder}
-              styles={dropDownStyles(theme)}
-              disabled={!micPermissionGranted}
-              errorMessage={
-                props.microphonePermissionGranted === undefined || props.microphonePermissionGranted
-                  ? undefined
-                  : locale.strings.call.microphonePermissionDenied
-              }
-              options={
-                micPermissionGranted ? getDropDownList(props.microphones) : [{ key: 'deniedOrUnknown', text: '' }]
-              }
-              defaultSelectedKey={
-                micPermissionGranted
-                  ? props.selectedMicrophone
-                    ? props.selectedMicrophone.id
-                    : defaultDeviceId(props.microphones)
-                  : 'deniedOrUnknown'
-              }
-              onChange={(
-                event: React.FormEvent<HTMLDivElement>,
-                option?: IDropdownOption | undefined,
-                index?: number | undefined
-              ) => {
-                props.onSelectMicrophone(props.microphones[index ?? 0]);
-              }}
-              onRenderTitle={(props?: IDropdownOption[]) => onRenderTitle('Microphone', props)}
-            />
-          )}
+          <ConfigurationpageMicDropdown
+            micGrantedDropdown={micGrantedDropdown}
+            micPermissionGranted={micPermissionGranted ?? false}
+          />
           <Dropdown
             aria-labelledby={'call-composite-local-sound-settings-label'}
             placeholder={defaultPlaceHolder}

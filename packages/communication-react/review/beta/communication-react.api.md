@@ -39,6 +39,8 @@ import { IButtonStyles } from '@fluentui/react';
 import { IContextualMenuItem } from '@fluentui/react';
 import { IContextualMenuItemStyles } from '@fluentui/react';
 import { IContextualMenuStyles } from '@fluentui/react';
+import { IDropdownOption } from '@fluentui/react';
+import { IDropdownStyles } from '@fluentui/react';
 import { IMessageBarProps } from '@fluentui/react';
 import { IncomingCall } from '@azure/communication-calling';
 import { IPersonaStyleProps } from '@fluentui/react';
@@ -1717,6 +1719,25 @@ export type DeviceManagerState = {
     deviceAccess?: DeviceAccess;
     unparentedViews: LocalVideoStreamState[];
 };
+
+// @internal
+export const _DevicePermissionDropdown: (props: _DevicePermissionDropdownProps) => JSX.Element;
+
+// @internal
+export interface _DevicePermissionDropdownProps {
+    icon?: JSX.Element;
+    onClickActionButton?: () => Promise<void>;
+    options?: IDropdownOption[];
+    strings?: _DevicePermissionDropdownStrings;
+    styles?: Partial<IDropdownStyles>;
+}
+
+// @internal
+export interface _DevicePermissionDropdownStrings {
+    actionButtonContent?: string;
+    label?: string;
+    placeHolderText: string;
+}
 
 // @beta
 export interface DevicePermissionRestrictions {

@@ -154,3 +154,6 @@ export type {
   _TroubleshootingGuideErrorBarStrings,
   _TroubleshootingGuideErrorBarProps
 } from './TroubleshootingGuideErrorBar';
+
+export { _DevicePermissionDropdown } from './DevicePermissionDropdown';
+export type { _DevicePermissionDropdownStrings, _DevicePermissionDropdownProps } from './DevicePermissionDropdown';
