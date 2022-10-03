@@ -196,7 +196,7 @@ export type ParticipantsButtonSelector = (state: CallClientState, props: Calling
     myUserId: string;
 };
 
-// @beta
+// @public
 export type RemoveParticipantHandler = ((userId: string) => Promise<void>) & ((participant: CommunicationIdentifier) => Promise<void>);
 
 // @public
