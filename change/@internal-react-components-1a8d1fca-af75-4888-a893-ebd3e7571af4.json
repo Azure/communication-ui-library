@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "Bugfix - Unable to update myChatMessageContainer style in MessageThread (#2257)",
+  "packageName": "@internal/react-components",
+  "email": "jboinembalome@gmail.com",
+  "dependentChangeType": "patch"
+}
