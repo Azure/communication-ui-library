@@ -275,11 +275,7 @@ export interface ComponentStrings {
     screenShareButton: ScreenShareButtonStrings;
     sendBox: SendBoxStrings;
     typingIndicator: TypingIndicatorStrings;
-<<<<<<< HEAD
-    unsupportedBrowser: UnsupportedBrowserStrings;
-=======
     UnsupportedBrowser: UnsupportedBrowserStrings;
->>>>>>> 12b862aba3e5fc1481d2c58df71572710ff336b2
     videoGallery: VideoGalleryStrings;
     videoTile: VideoTileStrings;
 }
@@ -423,12 +419,9 @@ export const DEFAULT_COMPONENT_ICONS: {
     SendBoxSendHovered: JSX.Element;
     VideoTileMicOff: JSX.Element;
     BackSpace: JSX.Element;
-<<<<<<< HEAD
-=======
     DomainPermissionsSparkle: JSX.Element;
     DomainPermissionCamera: JSX.Element;
     DomainPermissionMic: JSX.Element;
->>>>>>> 12b862aba3e5fc1481d2c58df71572710ff336b2
     UnsupportedBrowserWarning: JSX.Element;
 };
 

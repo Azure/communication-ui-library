@@ -300,6 +300,7 @@ export type CallCompositeOptions = {
         microphone: PermissionState;
     }) => void;
     onNetworkingTroubleShootingClick?: () => void;
+    onBrowserTroubleShootingClick?: () => void;
 };
 
 // @public
@@ -1048,12 +1049,9 @@ export const DEFAULT_COMPOSITE_ICONS: {
     HoldCallButton: JSX.Element;
     ResumeCall: JSX.Element;
     BackSpace: JSX.Element;
-<<<<<<< HEAD
-=======
     DomainPermissionsSparkle: JSX.Element;
     DomainPermissionCamera: JSX.Element;
     DomainPermissionMic: JSX.Element;
->>>>>>> 12b862aba3e5fc1481d2c58df71572710ff336b2
     UnsupportedBrowserWarning: JSX.Element;
 };
 
