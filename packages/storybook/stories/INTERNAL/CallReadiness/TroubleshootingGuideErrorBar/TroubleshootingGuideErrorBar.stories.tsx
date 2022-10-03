@@ -74,7 +74,7 @@ export const TroubleshootingGuideErrorBar = TroubleshootingGuideErrorBarStory.bi
 
 export default {
   id: `${COMPONENT_FOLDER_PREFIX}-internal-TroubleshootingGuideErrorBar`,
-  title: `${COMPONENT_FOLDER_PREFIX}/Internal/TroubleshootingGuideErrorBar`,
+  title: `${COMPONENT_FOLDER_PREFIX}/Internal/CallReadiness/TroubleshootingGuideErrorBar`,
   component: _TroubleshootingGuideErrorBar,
   argTypes: {
     errorTypes: controlsToAdd.errorTypes,

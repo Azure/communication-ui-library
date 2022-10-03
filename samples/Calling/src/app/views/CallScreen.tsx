@@ -97,12 +97,19 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     return <Spinner label={'Creating adapter'} ariaLive="assertive" labelPosition="top" />;
   }
 
+  let callInvitationUrl: string | undefined = window.location.href;
+  /* @conditional-compile-remove(rooms) */
+  // If role is defined then the call is a Rooms call so we should not make call invitation link available
+  if (role) {
+    callInvitationUrl = undefined;
+  }
+
   return (
     <CallComposite
       adapter={adapter}
       fluentTheme={currentTheme.theme}
       rtl={currentRtl}
-      callInvitationUrl={window.location.href}
+      callInvitationUrl={callInvitationUrl}
       formFactor={isMobileSession ? 'mobile' : 'desktop'}
       /* @conditional-compile-remove(rooms) */
       role={role}
