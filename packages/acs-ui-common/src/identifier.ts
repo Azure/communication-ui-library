@@ -80,7 +80,7 @@ export const fromFlatCommunicationIdentifier = (id: string): CommunicationIdenti
  * Returns a CommunicationIdentifier.
  * @internal
  */
-export const _toCommunicationIdentifier = (id: string | CommunicationIdentifier): CommunicationIdentifier => {
+export const _toCommunicationIdentifier = (id: string | CommunicationIdentifier) => {
   if (typeof id === 'string') {
     return fromFlatCommunicationIdentifier(id);
   }

@@ -16,7 +16,6 @@ import { CallParticipantListParticipant } from '@internal/react-components';
 import { CallState } from '@azure/communication-calling';
 import { CameraButton } from '@internal/react-components';
 import { Common } from '@internal/acs-ui-common';
-import { CommunicationIdentifier } from '@azure/communication-common';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 import { CreateVideoStreamViewResult } from '@internal/react-components';
 import { DeviceManagerState } from '@internal/calling-stateful-client';
@@ -179,7 +178,7 @@ export type ParticipantsButtonSelector = (state: CallClientState, props: Calling
 };
 
 // @public
-export type RemoveParticipantHandler = ((userId: string) => Promise<void>) & ((participant: CommunicationIdentifier) => Promise<void>);
+export type RemoveParticipantHandler = ((userId: string) => Promise<void>);
 
 // @public
 export type ScreenShareButtonSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {

@@ -460,12 +460,18 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     });
   }
 
-  public startCall(participants: string[] | CommunicationIdentifier[], options?: StartCallOptions): Call | undefined {
+  public startCall(
+    participants:
+      | string[]
+      /* @conditional-compile-remove(PSTN-calls) */
+      | CommunicationIdentifier[],
+    options?: StartCallOptions
+  ): Call | undefined {
     if (_isInCall(this.getState().call?.state ?? 'None')) {
       throw new Error('You are already in the call.');
     }
 
-    const idsToAdd = participants.map((participant: string | CommunicationIdentifier) => {
+    const idsToAdd = participants.map((participant) => {
       // FIXME: `onStartCall` does not allow a Teams user.
       // Need some way to return an error if a Teams user is provided.
       const backendId: CommunicationIdentifier = _toCommunicationIdentifier(participant);
@@ -499,8 +505,12 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     this.subscribeCallEvents();
   }
 
-  public async removeParticipant(userId: string | CommunicationIdentifier): Promise<void> {
-    const participant: CommunicationIdentifier = _toCommunicationIdentifier(userId);
+  public async removeParticipant(
+    userId: string | /* @conditional-compile-remove(PSTN-calls) */ CommunicationIdentifier
+  ): Promise<void> {
+    let participant = userId;
+    /* @conditional-compile-remove(PSTN-calls) */
+    participant = _toCommunicationIdentifier(userId);
     this.handlers.onRemoveParticipant(participant);
   }
 

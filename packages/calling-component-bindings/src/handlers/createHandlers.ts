@@ -18,6 +18,7 @@ import {
   isMicrosoftTeamsUserIdentifier,
   isPhoneNumberIdentifier
 } from '@azure/communication-common';
+/* @conditional-compile-remove(PSTN-calls) */
 import { CommunicationIdentifier } from '@azure/communication-common';
 import { Common, toFlatCommunicationIdentifier, _toCommunicationIdentifier } from '@internal/acs-ui-common';
 import { CreateViewResult, StatefulCallClient, StatefulDeviceManager } from '@internal/calling-stateful-client';
@@ -39,6 +40,7 @@ export type AddParticipantHandler = ((participant: CommunicationUserIdentifier) 
  * @public
  */
 export type RemoveParticipantHandler = ((userId: string) => Promise<void>) &
+  /* @conditional-compile-remove(PSTN-calls) */
   ((participant: CommunicationIdentifier) => Promise<void>);
 
 /**
@@ -347,7 +349,9 @@ export const createDefaultCallingHandlers = memoizeOne(
       await disposeAllLocalPreviewViews(callClient);
     };
 
-    const onRemoveParticipant = async (userId: string | CommunicationIdentifier): Promise<void> => {
+    const onRemoveParticipant = async (
+      userId: string | /* @conditional-compile-remove(PSTN-calls) */ CommunicationIdentifier
+    ): Promise<void> => {
       const participant = _toCommunicationIdentifier(userId);
       await call?.removeParticipant(participant);
     };

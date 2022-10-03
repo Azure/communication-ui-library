@@ -14,13 +14,16 @@ import type {
   PropertyChangedEvent,
   CallEndReason
 } from '@azure/communication-calling';
+import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
+import type { CommunicationIdentifierKind } from '@azure/communication-common';
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions, DtmfTone } from '@azure/communication-calling';
-
-import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
-import type { CommunicationIdentifier, CommunicationIdentifierKind } from '@azure/communication-common';
 /* @conditional-compile-remove(PSTN-calls) */
-import type { CommunicationUserIdentifier, PhoneNumberIdentifier } from '@azure/communication-common';
+import type {
+  CommunicationIdentifier,
+  CommunicationUserIdentifier,
+  PhoneNumberIdentifier
+} from '@azure/communication-common';
 import type { AdapterState, Disposable, AdapterError, AdapterErrors } from '../../common/adapters';
 
 /**
@@ -247,6 +250,7 @@ export interface CallAdapterCallManagement {
    * @public
    */
   startCall(participants: string[], options?: StartCallOptions): Call | undefined;
+  /* @conditional-compile-remove(PSTN-calls) */
   /**
    * Start the call.
    * @param participants - An array of {@link @azure/communication-common#CommunicationIdentifier} to be called
@@ -273,6 +277,7 @@ export interface CallAdapterCallManagement {
    * @public
    */
   removeParticipant(userId: string): Promise<void>;
+  /* @conditional-compile-remove(PSTN-calls) */
   /**
    * Remove a participant from the call.
    * @param participant - {@link @azure/communication-common#CommunicationIdentifier} of the participant to be removed

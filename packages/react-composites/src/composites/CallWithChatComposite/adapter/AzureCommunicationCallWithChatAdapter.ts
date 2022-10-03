@@ -55,13 +55,13 @@ import {
   createAzureCommunicationChatAdapterFromClient
 } from '../../ChatComposite/adapter/AzureCommunicationChatAdapter';
 import { EventEmitter } from 'events';
+import { CommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
+/* @conditional-compile-remove(PSTN-calls) */
 import {
   CommunicationIdentifier,
-  CommunicationTokenCredential,
-  CommunicationUserIdentifier
+  isCommunicationUserIdentifier,
+  PhoneNumberIdentifier
 } from '@azure/communication-common';
-/* @conditional-compile-remove(PSTN-calls) */
-import { isCommunicationUserIdentifier, PhoneNumberIdentifier } from '@azure/communication-common';
 import { getChatThreadFromTeamsLink } from './parseTeamsUrl';
 import { AdapterError } from '../../common/adapters';
 
@@ -216,8 +216,13 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     await this.callAdapter.leaveCall();
   }
   /** Start a new Call. */
-  public startCall(participants: string[] | CommunicationIdentifier[], options?: StartCallOptions): Call | undefined {
-    const communicationParticipants: CommunicationIdentifier[] = participants.map(_toCommunicationIdentifier);
+  public startCall(
+    participants: string[] | /* @conditional-compile-remove(PSTN-calls) */ CommunicationIdentifier[],
+    options?: StartCallOptions
+  ): Call | undefined {
+    let communicationParticipants = participants;
+    /* @conditional-compile-remove(PSTN-calls) */
+    communicationParticipants = participants.map(_toCommunicationIdentifier);
     return this.callAdapter.startCall(communicationParticipants, options);
   }
   /**
@@ -247,9 +252,12 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     this.callAdapter.dispose();
   }
   /** Remove a participant from the Call only. */
-  public async removeParticipant(userId: string | CommunicationIdentifier): Promise<void> {
-    // Only remove the participant from the GroupCall. Contoso must manage access to Chat.
-    const participant: CommunicationIdentifier = _toCommunicationIdentifier(userId);
+  public async removeParticipant(
+    userId: string | /* @conditional-compile-remove(PSTN-calls) */ CommunicationIdentifier
+  ): Promise<void> {
+    let participant = userId;
+    /* @conditional-compile-remove(PSTN-calls) */
+    participant = _toCommunicationIdentifier(userId);
     await this.callAdapter.removeParticipant(participant);
   }
   public async setCamera(device: VideoDeviceInfo, options?: VideoStreamOptions): Promise<void> {
