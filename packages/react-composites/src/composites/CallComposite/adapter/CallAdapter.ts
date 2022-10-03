@@ -38,7 +38,8 @@ export type CallCompositePage =
   | 'lobby'
   | /* @conditional-compile-remove(rooms) */ 'deniedPermissionToRoom'
   | 'removedFromCall'
-  | /* @conditional-compile-remove(rooms) */ 'roomNotFound';
+  | /* @conditional-compile-remove(rooms) */ 'roomNotFound'
+  | /* @conditional-compile-remove(unsupported-browser) */ 'unsupportedBrowser';
 
 /**
  * Subset of CallCompositePages that represent an end call state.

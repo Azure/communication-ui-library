@@ -29,6 +29,7 @@ import { modalLayerHostStyle } from '../common/styles/ModalLocalAndRemotePIP.sty
 import { useId } from '@fluentui/react-hooks';
 /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */
 import { HoldPage } from './pages/HoldPage';
+import { UnsupportedBrowserPage } from './pages/UnsupportedBrowser';
 
 /**
  * Props for {@link CallComposite}.
@@ -296,6 +297,16 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
         </>
       );
       break;
+    case unsupportedBrowserPageTrampoline():
+      pageElement = (
+        <>
+          {props.options?.onBrowserTroubleShootingClick && (
+            /* @conditional-compile-remove(unsupported-browser) */ <UnsupportedBrowserPage
+              onTroubleShootingClick={props.options?.onBrowserTroubleShootingClick}
+            />
+          )}
+        </>
+      );
   }
 
   if (!pageElement) {
@@ -418,5 +429,11 @@ const holdPageTrampoline = (): string => {
   /* @conditional-compile-remove(one-to-n-calling) */
   /* @conditional-compile-remove(PSTN-calls) */
   return 'hold';
+  return 'call';
+};
+
+const unsupportedBrowserPageTrampoline = (): string => {
+  /* @conditional-compile-remove(unsupported-browser) */
+  return 'unsupportedBrowser';
   return 'call';
 };
