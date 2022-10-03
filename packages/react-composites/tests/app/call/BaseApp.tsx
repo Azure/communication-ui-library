@@ -63,6 +63,7 @@ export function BaseApp(props: { queryArgs: QueryArgs; callAdapter?: CallAdapter
                     }
                   : undefined
               }
+              callInvitationUrl={queryArgs.callInvitationUrl}
             />
           </_IdentifierProvider>
         </div>

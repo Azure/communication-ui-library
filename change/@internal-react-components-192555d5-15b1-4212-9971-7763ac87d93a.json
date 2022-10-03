@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Load new messages only when scroll bar is at the top",
+  "packageName": "@internal/react-components",
+  "email": "edwardlee@microsoft.com",
+  "dependentChangeType": "patch"
+}
