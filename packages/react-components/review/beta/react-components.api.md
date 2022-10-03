@@ -15,6 +15,7 @@ import { IContextualMenuStyles } from '@fluentui/react';
 import { IDropdownOption } from '@fluentui/react';
 import { IDropdownStyles } from '@fluentui/react';
 import { IIconProps } from '@fluentui/react';
+import { ILinkStyles } from '@fluentui/react';
 import { IMessageBarProps } from '@fluentui/react';
 import { IModalProps } from '@fluentui/react';
 import { IPersonaStyleProps } from '@fluentui/react';
@@ -98,6 +99,7 @@ export interface BrowserPermissionDeniedProps {
     onTroubleshootingClick: () => void;
     onTryAgainClick: () => void;
     strings: BrowserPermissionDeniedStrings;
+    styles?: BrowserPermissionDeniedStyles;
 }
 
 // @beta
@@ -106,6 +108,12 @@ export interface BrowserPermissionDeniedStrings {
     primaryButtonText: string;
     primaryText: string;
     secondaryText: string;
+}
+
+// @beta
+export interface BrowserPermissionDeniedStyles extends BaseCustomStyles {
+    primaryButton?: IButtonStyles;
+    troubleshootingLink?: ILinkStyles;
 }
 
 // @public

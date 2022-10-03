@@ -31,6 +31,9 @@ export const BrowserPermissionDeniedIOSDrawer: () => JSX.Element = () => {
               onTroubleshootingClick={() => alert('clicked trouble shooting link')}
               onTryAgainClick={() => alert('clicked on try again button')}
               strings={locale}
+              styles={{
+                primaryButton: { root: { backgroundColor: 'black' }, rootHovered: { backgroundColor: 'pink' } }
+              }}
             />
           </_DrawerSurface>
         )}

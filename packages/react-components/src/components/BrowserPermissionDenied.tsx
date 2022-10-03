@@ -2,8 +2,9 @@
 // Licensed under the MIT license.
 
 import React from 'react';
+import { IButtonStyles, ILinkStyles } from '@fluentui/react';
 /* @conditional-compile-remove(call-readiness) */
-import { Stack, Text, Link, Icon, PrimaryButton } from '@fluentui/react';
+import { Stack, Text, Link, Icon, PrimaryButton, mergeStyleSets } from '@fluentui/react';
 /* @conditional-compile-remove(call-readiness) */
 import { useLocale } from '../localization';
 /* @conditional-compile-remove(call-readiness) */
@@ -18,6 +19,7 @@ import {
   secondaryTextStyles,
   textContainerStyles
 } from './styles/BrowserPermissionDenied.styles';
+import { BaseCustomStyles } from '../types';
 
 /**
  * @beta
@@ -36,6 +38,14 @@ export interface BrowserPermissionDeniedProps {
    * Localization strings for BrowserPermissionDenied component.
    */
   strings: BrowserPermissionDeniedStrings;
+  /**
+   * Allows users to pass in an object contains custom CSS styles.
+   * @Example
+   * ```
+   * <BrowserPermissionDenied styles={{ primaryButton: { root: {backgroundColor: 'blue' }}}} />
+   * ```
+   */
+  styles?: BrowserPermissionDeniedStyles;
 }
 
 /**
@@ -61,9 +71,21 @@ export interface BrowserPermissionDeniedStrings {
   linkText: string;
 }
 
+/**
+ * Fluent styles for {@link BrowserPermissionDenied}.
+ *
+ * @beta
+ */
+export interface BrowserPermissionDeniedStyles extends BaseCustomStyles {
+  /** Styles for the primary button. */
+  primaryButton?: IButtonStyles;
+  /** Styles for the help troubleshooting link text. */
+  troubleshootingLink?: ILinkStyles;
+}
+
 /* @conditional-compile-remove(call-readiness) */
 const BrowserPermissionDeniedContainer = (props: BrowserPermissionDeniedProps): JSX.Element => {
-  const { onTroubleshootingClick, onTryAgainClick, strings } = props;
+  const { onTroubleshootingClick, onTryAgainClick, strings, styles } = props;
   return (
     <Stack style={{ padding: '2rem', paddingTop: '2.5rem', maxWidth: '25.375rem' }}>
       <Stack horizontal style={{ paddingBottom: '1.5rem' }} horizontalAlign={'space-between'}>
@@ -74,8 +96,12 @@ const BrowserPermissionDeniedContainer = (props: BrowserPermissionDeniedProps): 
       <Stack styles={textContainerStyles}>
         <Text styles={primaryTextStyles}>{strings.primaryText}</Text>
         <Text styles={secondaryTextStyles}>{strings.secondaryText}</Text>
-        <PrimaryButton styles={primaryButtonStyles} text={strings.primaryButtonText} onClick={onTryAgainClick} />
-        <Link styles={linkTextStyles} onClick={onTroubleshootingClick}>
+        <PrimaryButton
+          styles={mergeStyleSets(primaryButtonStyles, styles?.primaryButton)}
+          text={strings.primaryButtonText}
+          onClick={onTryAgainClick}
+        />
+        <Link styles={mergeStyleSets(linkTextStyles, styles?.troubleshootingLink)} onClick={onTroubleshootingClick}>
           {strings.linkText}
         </Link>
       </Stack>

@@ -94,7 +94,7 @@ export interface BrowserPermissionDeniedIOSStrings extends BrowserPermissionDeni
 
 /* @conditional-compile-remove(call-readiness) */
 const BrowserPermissionDeniedIOSContainer = (props: BrowserPermissionDeniedIOSProps): JSX.Element => {
-  const { imageSource, onTroubleshootingClick, onTryAgainClick, strings } = props;
+  const { imageSource, onTroubleshootingClick, onTryAgainClick, strings, styles } = props;
   const theme = useTheme();
 
   const stepsCircleStyle = useMemo(() => {
@@ -103,14 +103,16 @@ const BrowserPermissionDeniedIOSContainer = (props: BrowserPermissionDeniedIOSPr
 
   return (
     <Stack styles={browserPermissionContainerStyles}>
-      <Stack styles={mergeStyleSets(iOSImageContainer, { root: { background: theme.palette.neutralLighter } })}>
-        <Image
-          src={imageSource ?? ''}
-          alt={strings.imageAltText}
-          imageFit={ImageFit.centerContain}
-          style={{ padding: '1.5rem' }}
-        />
-      </Stack>
+      {imageSource && (
+        <Stack styles={mergeStyleSets(iOSImageContainer, { root: { background: theme.palette.neutralLighter } })}>
+          <Image
+            src={imageSource ?? ''}
+            alt={strings.imageAltText}
+            imageFit={ImageFit.centerContain}
+            style={{ padding: '1.5rem' }}
+          />
+        </Stack>
+      )}
       <Stack style={{ padding: '1rem', paddingBottom: '1.25rem' }}>
         <Stack styles={textContainerStyles}>
           <Text styles={primaryTextStyles}>{strings.primaryText}</Text>
@@ -147,8 +149,12 @@ const BrowserPermissionDeniedIOSContainer = (props: BrowserPermissionDeniedIOSPr
               <Text styles={iOSStepsTextStyles}>{strings.step4Text}</Text>
             </Stack>
           )}
-          <PrimaryButton styles={primaryButtonStyles} text={strings.primaryButtonText} onClick={onTryAgainClick} />
-          <Link styles={linkTextStyles} onClick={onTroubleshootingClick}>
+          <PrimaryButton
+            styles={mergeStyleSets(primaryButtonStyles, styles?.primaryButton)}
+            text={strings.primaryButtonText}
+            onClick={onTryAgainClick}
+          />
+          <Link styles={mergeStyleSets(linkTextStyles, styles?.troubleshootingLink)} onClick={onTroubleshootingClick}>
             {strings.linkText}
           </Link>
         </Stack>

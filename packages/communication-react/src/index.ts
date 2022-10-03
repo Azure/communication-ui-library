@@ -237,7 +237,11 @@ export type { DomainPermissionsStrings, DomainPermissionsProps } from '../../rea
 /* @conditional-compile-remove(call-readiness) */
 export type { BrowserPermissionDeniedStrings, BrowserPermissionDeniedProps } from '../../react-components/src';
 /* @conditional-compile-remove(call-readiness) */
-export type { BrowserPermissionDeniedIOSStrings, BrowserPermissionDeniedIOSProps } from '../../react-components/src';
+export type {
+  BrowserPermissionDeniedIOSStrings,
+  BrowserPermissionDeniedStyles,
+  BrowserPermissionDeniedIOSProps
+} from '../../react-components/src';
 export * from '../../react-components/src/localization/locales';
 export * from '../../react-components/src/theming';
 /* @conditional-compile-remove(PSTN-calls) */
