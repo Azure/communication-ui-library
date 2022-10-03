@@ -1212,6 +1212,7 @@ export type _Permissions = {
     microphoneButton: boolean;
     screenShare: boolean;
     removeParticipantButton: boolean;
+    role?: Role;
 };
 
 // @internal (undocumented)
