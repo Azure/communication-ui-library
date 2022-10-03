@@ -849,13 +849,8 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
       if (onLoadPreviousChatMessages) {
         isLoadingChatMessagesRef.current = true;
         // Fetch message until scrollTop reach the threshold for fetching new message
-        previousTopRef.current = chatScrollDivRef.current.scrollTop;
-        previousHeightRef.current = chatScrollDivRef.current.scrollHeight;
         while (!isAllChatMessagesLoadedRef.current && chatScrollDivRef.current.scrollTop <= 500) {
           isAllChatMessagesLoadedRef.current = await onLoadPreviousChatMessages(numberOfChatMessagesToReload);
-          chatScrollDivRef.current.scrollTop =
-            chatScrollDivRef.current.scrollHeight - (previousHeightRef.current - previousTopRef.current);
-          // Release CPU resources for 200 milliseconds between each loop.
           await delay(200);
         }
         isLoadingChatMessagesRef.current = false;
@@ -887,10 +882,8 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     if (!chatScrollDivRef.current) {
       return;
     }
-    if (previousTopRef.current === 0) {
-      chatScrollDivRef.current.scrollTop =
-        chatScrollDivRef.current.scrollHeight - (previousHeightRef.current - previousTopRef.current);
-    }
+    chatScrollDivRef.current.scrollTop =
+      chatScrollDivRef.current.scrollHeight - (previousHeightRef.current - previousTopRef.current);
   }, [messages]);
 
   // Fetch more messages to make the scroll bar appear, infinity scroll is then handled in the handleScroll function.
