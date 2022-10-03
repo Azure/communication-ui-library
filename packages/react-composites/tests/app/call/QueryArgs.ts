@@ -13,6 +13,7 @@ export interface QueryArgs {
   injectParticipantMenuItems: boolean;
   injectCustomButtons: boolean;
   role?: Role;
+  callInvitationUrl?: string;
   showParticipantItemIcon: boolean;
   customCallCompositeOptions?: CallCompositeOptions;
 
@@ -39,6 +40,7 @@ export function parseQueryArgs(): QueryArgs {
     token: params.token ?? '',
     displayName: params.displayName ?? '',
     role: (params.role as Role) ?? undefined,
+    callInvitationUrl: params.callInvitationUrl,
     customCallCompositeOptions: params.customCallCompositeOptions
       ? JSON.parse(params.customCallCompositeOptions)
       : undefined
