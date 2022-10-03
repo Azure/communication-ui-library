@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { ILinkStyles, IStackStyles, ITextStyles } from '@fluentui/react';
+import { IIconStyles, ILinkStyles, IStackStyles, ITextStyles } from '@fluentui/react';
 import { _pxToRem } from '@internal/acs-ui-common';
 
 /**
@@ -46,5 +46,14 @@ export const containerStyles: IStackStyles = {
   root: {
     padding: '2rem',
     maxWidth: '25.374rem'
+  }
+};
+
+/**
+ * @interal
+ */
+export const iconStyles: IIconStyles = {
+  root: {
+    paddingBottom: '1rem'
   }
 };

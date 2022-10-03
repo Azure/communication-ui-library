@@ -1,13 +1,17 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+/* @conditional-compile-remove(unsupported-browser) */
 import { Icon, Link, Stack, Text } from '@fluentui/react';
+/* @conditional-compile-remove(unsupported-browser) */
 import { _pxToRem } from '@internal/acs-ui-common';
 import React from 'react';
 /* @conditional-compile-remove(unsupported-browser) */
 import { useLocale } from '../localization';
+/* @conditional-compile-remove(unsupported-browser) */
 import {
   containerStyles,
+  iconStyles,
   linkTextStyles,
   mainTextStyles,
   secondaryTextStyles
@@ -42,10 +46,9 @@ export interface UnsupportedBrowserProps {
 /* @conditional-compile-remove(unsupported-browser) */
 const UnsupportedBrowserContainer = (props: UnsupportedBrowserProps): JSX.Element => {
   const { onTroubleShootingClick, strings } = props;
-  console.log('test2');
   return (
     <Stack styles={containerStyles}>
-      <Icon iconName="UnsupportedBrowserWarning"></Icon>
+      <Icon styles={iconStyles} iconName="UnsupportedBrowserWarning"></Icon>
       <Text styles={mainTextStyles}>{strings.primaryText}</Text>
       <Text styles={secondaryTextStyles}>{strings.secondaryText}</Text>
       <Link
@@ -67,8 +70,8 @@ const UnsupportedBrowserContainer = (props: UnsupportedBrowserProps): JSX.Elemen
  */
 export const UnsupportedBrowser = (props: UnsupportedBrowserProps): JSX.Element => {
   /* @conditional-compile-remove(unsupported-browser) */
-  const strings = useLocale().strings.unsupportedBrowser;
+  const strings = useLocale().strings.UnsupportedBrowser;
   /* @conditional-compile-remove(unsupported-browser) */
-  return <UnsupportedBrowserContainer {...props} strings={props.strings ? props.strings : strings} />;
+  return <UnsupportedBrowserContainer {...props} strings={strings} />;
   return <></>;
 };

@@ -37,6 +37,8 @@ import { modalLayerHostStyle } from '../common/styles/ModalLocalAndRemotePIP.sty
 import { SendDtmfDialpad } from '../common/SendDtmfDialpad';
 /* @conditional-compile-remove(PSTN-calls) */
 import { useCallWithChatCompositeStrings } from './hooks/useCallWithChatCompositeStrings';
+/* @conditional-compile-remove(call-readiness) */
+import { DevicePermissionRestrictions } from '../CallComposite/CallComposite';
 
 /**
  * Props required for the {@link CallWithChatComposite}
@@ -85,6 +87,12 @@ export type CallWithChatCompositeOptions = {
    * @beta
    */
   fileSharing?: FileSharingOptions;
+  /* @conditional-compile-remove(call-readiness) */
+  /**
+   * Device permission restrictions for your call.
+   * Require device permissions to be set or have them as optional or not required to start a call
+   */
+  devicePermissions?: DevicePermissionRestrictions;
   /* @conditional-compile-remove(call-readiness) */
   /**
    * Callback you may provide to supply users with further steps to troubleshoot why they have been
@@ -196,6 +204,8 @@ type CallWithChatScreenProps = {
   /* @conditional-compile-remove(file-sharing) */
   fileSharing?: FileSharingOptions;
   rtl?: boolean;
+  /* @conditional-compile-remove(call-readiness) */
+  devicePermissions?: DevicePermissionRestrictions;
 };
 
 const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
@@ -353,7 +363,11 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
             <CallComposite
               {...props}
               formFactor={formFactor}
-              options={{ callControls: false }}
+              options={{
+                callControls: false,
+                /* @conditional-compile-remove(call-readiness) */
+                devicePermissions: props.devicePermissions
+              }}
               adapter={callAdapter}
               fluentTheme={fluentTheme}
             />
@@ -461,6 +475,8 @@ export const CallWithChatComposite = (props: CallWithChatCompositeProps): JSX.El
     <BaseProvider fluentTheme={fluentTheme} rtl={rtl} locale={props.locale} icons={props.icons}>
       <CallWithChatScreen
         {...props}
+        /* @conditional-compile-remove(call-readiness) */
+        devicePermissions={options?.devicePermissions}
         callWithChatAdapter={adapter}
         formFactor={formFactor}
         callControls={options?.callControls}

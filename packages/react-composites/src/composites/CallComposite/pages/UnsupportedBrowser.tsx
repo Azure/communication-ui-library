@@ -20,7 +20,7 @@ export type UnsupportedBrowserPageProps = {
 export const UnsupportedBrowserPage = (props: UnsupportedBrowserPageProps): JSX.Element => {
   const { onTroubleShootingClick } = props;
   const locale = useLocale();
-  const unsupportedBrowserStrings = locale.component.strings.unsupportedBrowser;
+  const unsupportedBrowserStrings = locale.component.strings.UnsupportedBrowser;
 
   return (
     <Stack styles={{ root: { margin: 'auto', paddingTop: '3rem' } }}>

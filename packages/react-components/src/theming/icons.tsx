@@ -46,6 +46,9 @@ import {
 /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
 import { Backspace20Regular } from '@fluentui/react-icons';
 
+/* @conditional-compile-remove(call-readiness) */
+import { Sparkle20Filled } from '@fluentui/react-icons';
+
 /* @conditional-compile-remove(file-sharing) */
 import { ArrowDownload16Regular } from '@fluentui/react-icons';
 /* @conditional-compile-remove(PSTN-calls) */
@@ -84,6 +87,43 @@ const MoreHorizontal18Regular = (): JSX.Element => (
   </div>
 );
 
+/* @conditional-compile-remove(call-readiness) */
+const DomainPermissionMic20Filled = (): JSX.Element => {
+  const theme = useTheme();
+  return (
+    <Stack
+      horizontalAlign={'center'}
+      styles={{ root: { borderRadius: '100%', background: theme.palette.themeLighterAlt, padding: '2rem' } }}
+    >
+      <div className={mergeStyles(scaledIconStyles(theme))}>
+        <MicOn20Filled />
+      </div>
+    </Stack>
+  );
+};
+
+/* @conditional-compile-remove(call-readiness) */
+const DomainPermissionCamera20Filled = (): JSX.Element => {
+  const theme = useTheme();
+  return (
+    <Stack
+      horizontalAlign={'center'}
+      styles={{ root: { borderRadius: '100%', background: theme.palette.themeLighterAlt, padding: '2rem' } }}
+    >
+      <div className={mergeStyles(scaledIconStyles(theme))}>
+        <Video20Filled />
+      </div>
+    </Stack>
+  );
+};
+
+/* @conditional-compile-remove(call-readiness) */
+const DomainPermissionSparkle20Filled = (): JSX.Element => (
+  <div className={mergeStyles({ transform: 'scale(2)' })}>
+    <Sparkle20Filled />
+  </div>
+);
+
 /* @conditional-compile-remove(unsupported-browser) */
 const UnsupportedBrowserWarning = (): JSX.Element => {
   const theme = useTheme();
@@ -92,7 +132,7 @@ const UnsupportedBrowserWarning = (): JSX.Element => {
       horizontalAlign={'center'}
       styles={{
         root: {
-          width: _pxToRem(92),
+          width: _pxToRem(84),
           borderRadius: '100%',
           background: theme.palette.themeLighterAlt,
           padding: '2rem',
@@ -160,7 +200,7 @@ export const DEFAULT_COMPONENT_ICONS = {
   OptionsMic: <MicOn20Regular />,
   OptionsSpeaker: <Speaker220Regular />,
   ParticipantItemMicOff: <MicOff16Regular />,
-  ParticipantItemOptions: <MoreHorizontal20Regular />,
+  ParticipantItemOptions: <></>,
   ParticipantItemOptionsHovered: <MoreHorizontal20Filled />,
   ParticipantItemScreenShareStart: <ShareScreenStart20Filled />,
   /* @conditional-compile-remove(PSTN-calls) */
@@ -174,6 +214,12 @@ export const DEFAULT_COMPONENT_ICONS = {
   VideoTileMicOff: <MicOff16Filled />,
   /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
   BackSpace: <Backspace20Regular />,
+  /* @conditional-compile-remove(call-readiness) */
+  DomainPermissionsSparkle: <DomainPermissionSparkle20Filled />,
+  /* @conditional-compile-remove(call-readiness) */
+  DomainPermissionCamera: <DomainPermissionCamera20Filled />,
+  /* @conditional-compile-remove(call-readiness) */
+  DomainPermissionMic: <DomainPermissionMic20Filled />,
   /* @conditional-compile-remove(unsupported-browser) */
   UnsupportedBrowserWarning: <UnsupportedBrowserWarning />
 };
@@ -185,6 +231,7 @@ const scaledIconStyles = (theme: Theme): IStyle => {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+    lineHeight: '0.2rem',
     color: theme.palette.themePrimary,
     zIndex: 1
   };
