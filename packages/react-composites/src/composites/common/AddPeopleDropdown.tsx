@@ -125,15 +125,17 @@ export const AddPeopleDropdown = (props: AddPeopleDropdownProps): JSX.Element =>
     return (
       <Stack>
         <Announcer ariaLive={'assertive'} announcementString={announcerStrings} />
-        <Stack.Item styles={copyLinkButtonContainerStyles}>
-          <PrimaryButton
-            onClick={setDrawerMenuItemsForAddPeople}
-            styles={copyLinkButtonStylesThemed}
-            onRenderIcon={() => PeoplePaneAddPersonIconTrampoline()}
-            text={strings.peoplePaneAddPeopleButtonLabel}
-            data-ui-id="call-add-people-button"
-          />
-        </Stack.Item>
+        {defaultMenuProps.items.length > 0 && (
+          <Stack.Item styles={copyLinkButtonContainerStyles}>
+            <PrimaryButton
+              onClick={setDrawerMenuItemsForAddPeople}
+              styles={copyLinkButtonStylesThemed}
+              onRenderIcon={() => PeoplePaneAddPersonIconTrampoline()}
+              text={strings.peoplePaneAddPeopleButtonLabel}
+              data-ui-id="call-add-people-button"
+            />
+          </Stack.Item>
+        )}
 
         {addPeopleDrawerMenuItems.length > 0 && (
           <Stack styles={drawerContainerStyles} data-ui-id="call-add-people-dropdown">
@@ -170,15 +172,17 @@ export const AddPeopleDropdown = (props: AddPeopleDropdownProps): JSX.Element =>
             />
           )}
 
-          <Stack styles={copyLinkButtonStackStyles}>
-            <DefaultButton
-              onRenderIcon={() => PeoplePaneAddPersonIconTrampoline()}
-              text={strings.peoplePaneAddPeopleButtonLabel}
-              menuProps={defaultMenuProps}
-              styles={copyLinkButtonStylesThemed}
-              data-ui-id="call-add-people-button"
-            />
-          </Stack>
+          {defaultMenuProps.items.length > 0 && (
+            <Stack styles={copyLinkButtonStackStyles}>
+              <DefaultButton
+                onRenderIcon={() => PeoplePaneAddPersonIconTrampoline()}
+                text={strings.peoplePaneAddPeopleButtonLabel}
+                menuProps={defaultMenuProps}
+                styles={copyLinkButtonStylesThemed}
+                data-ui-id="call-add-people-button"
+              />
+            </Stack>
+          )}
         </Stack>
       }
     </>
