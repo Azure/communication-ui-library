@@ -27,22 +27,6 @@ import { ReactElement } from 'react';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 import { disposeAllLocalPreviewViews, _isInCall, _isPreviewOn } from '../utils/callUtils';
 
-/* @conditional-compile-remove(PSTN-calls) */
-/**
- * Handler type for addParticipant
- * @beta
- */
-export type AddParticipantHandler = ((participant: CommunicationUserIdentifier) => Promise<void>) &
-  ((participant: PhoneNumberIdentifier, options: AddPhoneNumberOptions) => Promise<void>);
-
-/**
- * Handler for removing a participant from a call.
- * @public
- */
-export type RemoveParticipantHandler = ((userId: string) => Promise<void>) &
-  /* @conditional-compile-remove(PSTN-calls) */
-  ((participant: CommunicationIdentifier) => Promise<void>);
-
 /**
  * Object containing all the handlers required for calling components.
  *
@@ -51,7 +35,7 @@ export type RemoveParticipantHandler = ((userId: string) => Promise<void>) &
  *
  * @public
  */
-export type CallingHandlers = {
+export interface CallingHandlers {
   onStartLocalVideo: () => Promise<void>;
   onToggleCamera: (options?: VideoStreamOptions) => Promise<void>;
   onStartCall: (
@@ -69,18 +53,22 @@ export type CallingHandlers = {
   /* @conditional-compile-remove(PSTN-calls) */
   onToggleHold: () => Promise<void>;
   /* @conditional-compile-remove(PSTN-calls) */
-  onAddParticipant: AddParticipantHandler;
+  onAddParticipant(participant: CommunicationUserIdentifier): Promise<void>;
+  /* @conditional-compile-remove(PSTN-calls) */
+  onAddParticipant(participant: PhoneNumberIdentifier, options: AddPhoneNumberOptions): Promise<void>;
   onCreateLocalStreamView: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
   onCreateRemoteStreamView: (
     userId: string,
     options?: VideoStreamOptions
   ) => Promise<void | CreateVideoStreamViewResult>;
-  onRemoveParticipant: RemoveParticipantHandler;
+  onRemoveParticipant(userId: string): Promise<void>;
+  /* @conditional-compile-remove(PSTN-calls) */
+  onRemoveParticipant(participant: CommunicationIdentifier): Promise<void>;
   onDisposeRemoteStreamView: (userId: string) => Promise<void>;
   onDisposeLocalStreamView: () => Promise<void>;
   /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
   onSendDtmfTone: (dtmfTone: DtmfTone) => Promise<void>;
-};
+}
 
 /**
  * @private
@@ -357,7 +345,7 @@ export const createDefaultCallingHandlers = memoizeOne(
     };
 
     /* @conditional-compile-remove(PSTN-calls) */
-    const onAddParticipant: AddParticipantHandler = async (participant, options?) => {
+    const onAddParticipant = async (participant, options?) => {
       const participantType = participantTypeHelper(participant);
       switch (participantType) {
         case 'PSTN':
