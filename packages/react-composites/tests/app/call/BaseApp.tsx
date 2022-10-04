@@ -32,6 +32,8 @@ export function BaseApp(props: { queryArgs: QueryArgs; callAdapter?: CallAdapter
       'Some details about the call that span more than one line - many, many lines in fact. Who would want fewer lines than many, many lines? Could you even imagine?! 😲';
   }
 
+  const useOnBrowserTroubleShootingClick = queryArgs.useTroubleShootingActions;
+
   const ParticipantItemOptions = queryArgs.showParticipantItemIcon ? <MoreHorizontal20Regular /> : <></>;
 
   return (
@@ -59,7 +61,10 @@ export function BaseApp(props: { queryArgs: QueryArgs; callAdapter?: CallAdapter
                         // Hide some buttons to keep the mobile-view control bar narrow
                         devicesButton: false,
                         endCallButton: false
-                      }
+                      },
+                      onBrowserTroubleShootingClick: useOnBrowserTroubleShootingClick
+                        ? () => alert('you are using the wrong browser')
+                        : undefined
                     }
                   : undefined
               }

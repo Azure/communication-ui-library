@@ -48,7 +48,7 @@ const UnsupportedBrowserContainer = (props: UnsupportedBrowserProps): JSX.Elemen
   const { onTroubleShootingClick, strings } = props;
   return (
     <Stack styles={containerStyles}>
-      <Icon styles={iconStyles} iconName="UnsupportedBrowserWarning"></Icon>
+      <Icon styles={iconStyles} iconName="UnsupportedBrowserWarning" data-ui-id="unsupportedBrowserIcon"></Icon>
       <Text styles={mainTextStyles}>{strings.primaryText}</Text>
       <Text styles={secondaryTextStyles}>{strings.secondaryText}</Text>
       <Link
