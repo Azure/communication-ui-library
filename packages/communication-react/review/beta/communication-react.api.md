@@ -113,9 +113,6 @@ export interface AdapterState<TState> {
     onStateChange(handler: (state: TState) => void): void;
 }
 
-// @beta
-export type AddParticipantHandler = ((participant: CommunicationUserIdentifier) => Promise<void>) & ((participant: PhoneNumberIdentifier, options: AddPhoneNumberOptions) => Promise<void>);
-
 // @public
 export type AreEqual<A extends (props: any) => JSX.Element | undefined, B extends (props: any) => JSX.Element | undefined> = true extends AreTypeEqual<A, B> & AreParamEqual<A, B> ? true : false;
 
@@ -214,10 +211,14 @@ export interface CallAdapterCallManagement {
     mute(): Promise<void>;
     removeParticipant(userId: string): Promise<void>;
     // @beta
+    removeParticipant(participant: CommunicationIdentifier): Promise<void>;
+    // @beta
     resumeCall(): Promise<void>;
     // @beta
     sendDtmfTone(dtmfTone: DtmfTone_2): Promise<void>;
     startCall(participants: string[], options?: StartCallOptions): Call | undefined;
+    // @beta
+    startCall(participants: CommunicationIdentifier[], options?: StartCallOptions): Call | undefined;
     startCamera(options?: VideoStreamOptions): Promise<void>;
     startScreenShare(): Promise<void>;
     stopCamera(): Promise<void>;
@@ -573,10 +574,12 @@ export type CallingHandlers = {
     onToggleScreenShare: () => Promise<void>;
     onHangUp: () => Promise<void>;
     onToggleHold: () => Promise<void>;
-    onAddParticipant: AddParticipantHandler;
+    onAddParticipant(participant: CommunicationUserIdentifier): Promise<void>;
+    onAddParticipant(participant: PhoneNumberIdentifier, options: AddPhoneNumberOptions): Promise<void>;
     onCreateLocalStreamView: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
     onCreateRemoteStreamView: (userId: string, options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
-    onRemoveParticipant: (userId: string) => Promise<void>;
+    onRemoveParticipant(userId: string): Promise<void>;
+    onRemoveParticipant(participant: CommunicationIdentifier): Promise<void>;
     onDisposeRemoteStreamView: (userId: string) => Promise<void>;
     onDisposeLocalStreamView: () => Promise<void>;
     onSendDtmfTone: (dtmfTone: DtmfTone_2) => Promise<void>;
@@ -679,6 +682,8 @@ export interface CallWithChatAdapterManagement {
     registerCompletedFileUploads: (metadata: FileMetadata[]) => FileUploadManager[];
     removeParticipant(userId: string): Promise<void>;
     // @beta
+    removeParticipant(participant: CommunicationIdentifier): Promise<void>;
+    // @beta
     resumeCall: () => Promise<void>;
     // @beta
     sendDtmfTone: (dtmfTone: DtmfTone_2) => Promise<void>;
@@ -689,6 +694,8 @@ export interface CallWithChatAdapterManagement {
     setMicrophone(sourceInfo: AudioDeviceInfo): Promise<void>;
     setSpeaker(sourceInfo: AudioDeviceInfo): Promise<void>;
     startCall(participants: string[], options?: StartCallOptions): Call | undefined;
+    // @beta
+    startCall(participants: CommunicationIdentifier[], options?: StartCallOptions): Call | undefined;
     startCamera(options?: VideoStreamOptions): Promise<void>;
     startScreenShare(): Promise<void>;
     stopCamera(): Promise<void>;

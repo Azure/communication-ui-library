@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Add an internal function for returning a CommunicationIdentifier",
+  "packageName": "@internal/acs-ui-common",
+  "email": "anjulgarg@live.com",
+  "dependentChangeType": "none"
+}
