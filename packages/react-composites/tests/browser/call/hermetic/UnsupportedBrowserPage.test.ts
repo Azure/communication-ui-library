@@ -8,15 +8,29 @@ import { dataUiId, isTestProfileStableFlavor, stableScreenshot, waitForSelector 
 import { buildUrlWithMockAdapter, defaultMockCallAdapterState, test } from './fixture';
 
 test.describe('unsupportedBrowser page tests', async () => {
-  test.only('unsupportedBrwoser displays correctly', async ({ page, serverUrl }) => {
+  test('unsupportedBrwoser displays correctly without a help link', async ({ page, serverUrl }) => {
     test.skip(isTestProfileStableFlavor());
 
-    const initialState = defaultMockUnsupportedBrowserPageState();
-    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { useTroubleShootingActions: 'true' }));
+    await page.goto(buildUrlWithMockAdapter(serverUrl, defaultMockUnsupportedBrowserPageState()));
 
     await waitForSelector(page, dataUiId(IDS.unsupportedBrowserIcon));
 
-    expect(await stableScreenshot(page)).toMatchSnapshot(`unsupportedBrowserPage.png`);
+    expect(await stableScreenshot(page)).toMatchSnapshot(`unsupportedBrowserPage-no-link.png`);
+  });
+
+  test.only('unsupportedBrwoser displays correctly with a help link', async ({ page, serverUrl }) => {
+    test.skip(isTestProfileStableFlavor());
+
+    await page.goto(
+      buildUrlWithMockAdapter(serverUrl, defaultMockUnsupportedBrowserPageState(), {
+        useTroubleShootingActions: 'true'
+      })
+    );
+
+    await waitForSelector(page, dataUiId(IDS.unsupportedBrowserIcon));
+    await waitForSelector(page, dataUiId(IDS.unsupportedBrowserLink));
+
+    expect(await stableScreenshot(page)).toMatchSnapshot(`unsupportedBrowserPage-with-link.png`);
   });
 });
 

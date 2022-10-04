@@ -29,7 +29,6 @@ export interface QueryArgs {
 export function parseQueryArgs(): QueryArgs {
   const urlSearchParams = new URLSearchParams(window.location.search);
   const params = Object.fromEntries(urlSearchParams.entries());
-  console.log(params);
   return {
     mockCallAdapterState: params.mockCallAdapterState ? JSON.parse(params.mockCallAdapterState) : undefined,
     useFrLocale: Boolean(params.useFrLocale),

@@ -29,5 +29,6 @@ export const IDS = {
   holdPage: 'hold-page',
   moreButton: 'call-with-chat-composite-more-button',
   callPage: 'call-page',
-  unsupportedBrowserIcon: 'unsupportedBrowserIcon'
+  unsupportedBrowserIcon: 'unsupportedBrowserIcon',
+  unsupportedBrowserLink: 'unsupportedBrowserLink'
 };

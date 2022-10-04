@@ -13,7 +13,7 @@ import { useLocale } from '../../localization';
  * @internal
  */
 export type UnsupportedBrowserPageProps = {
-  onTroubleShootingClick: () => void;
+  onTroubleShootingClick?: () => void;
 };
 
 /**
@@ -30,7 +30,7 @@ export const UnsupportedBrowserPage = (props: UnsupportedBrowserPageProps): JSX.
 
   /* @conditional-compile-remove(unsupported-browser) */
   return (
-    <Stack styles={{ root: { margin: 'auto', paddingTop: '3rem' } }}>
+    <Stack styles={{ root: { margin: 'auto', paddingTop: '3rem', height: '100%' } }}>
       <UnsupportedBrowser onTroubleShootingClick={onTroubleShootingClick} strings={unsupportedBrowserStrings} />
     </Stack>
   );

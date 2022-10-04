@@ -300,11 +300,11 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
     case unsupportedBrowserPageTrampoline():
       pageElement = (
         <>
-          {props.options?.onBrowserTroubleShootingClick && (
+          {
             /* @conditional-compile-remove(unsupported-browser) */ <UnsupportedBrowserPage
               onTroubleShootingClick={props.options?.onBrowserTroubleShootingClick}
             />
-          )}
+          }
         </>
       );
   }
