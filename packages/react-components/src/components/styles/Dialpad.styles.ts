@@ -95,7 +95,11 @@ export const iconButtonStyles = (theme: Theme): IButtonStyles => {
       color: `${theme.palette.black}`
     },
     icon: {
-      height: 'auto'
+      height: 'auto',
+      // Needed to keep the icon vertically centered.
+      '> span': {
+        display: 'flex'
+      }
     }
   };
 };
