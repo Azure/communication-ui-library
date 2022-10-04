@@ -40,6 +40,8 @@
     "deniedPermissionToRoomTitle": "Permission denied to room",
     "peopleButtonLabel": "People",
     "peoplePaneTitle": "People",
+    "peopleButtonTooltipOpen": "Show participants",
+    "peopleButtonTooltipClose": "Hide participants",
     "peoplePaneSubTitle": "In this call",
     "privacyPolicy": "Privacy policy",
     "rejoinCallButtonLabel": "Re-join call",

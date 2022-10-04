@@ -475,6 +475,8 @@ export interface CallCompositeStrings {
     openDialpadButtonLabel: string;
     openDtmfDialpadLabel: string;
     peopleButtonLabel: string;
+    peopleButtonTooltipClose: string;
+    peopleButtonTooltipOpen: string;
     peoplePaneAddPeopleButtonLabel: string;
     peoplePaneSubTitle: string;
     peoplePaneTitle: string;
