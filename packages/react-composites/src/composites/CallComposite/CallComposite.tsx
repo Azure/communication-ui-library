@@ -29,6 +29,7 @@ import { modalLayerHostStyle } from '../common/styles/ModalLocalAndRemotePIP.sty
 import { useId } from '@fluentui/react-hooks';
 /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */
 import { HoldPage } from './pages/HoldPage';
+/* @conditional-compile-remove(unsupported-browser) */
 import { UnsupportedBrowserPage } from './pages/UnsupportedBrowser';
 
 /**
@@ -301,9 +302,9 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
       pageElement = (
         <>
           {
-            /* @conditional-compile-remove(unsupported-browser) */ <UnsupportedBrowserPage
-              onTroubleShootingClick={props.options?.onBrowserTroubleShootingClick}
-            />
+            /* @conditional-compile-remove(unsupported-browser) */ props.options?.onBrowserTroubleShootingClick && (
+              <UnsupportedBrowserPage onTroubleShootingClick={props.options?.onBrowserTroubleShootingClick} />
+            )
           }
         </>
       );
