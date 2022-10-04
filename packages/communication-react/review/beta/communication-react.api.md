@@ -559,50 +559,29 @@ export type CallingBaseSelectorProps = {
 };
 
 // @public
-export interface CallingHandlers {
-    // (undocumented)
-    onAddParticipant(participant: CommunicationUserIdentifier): Promise<void>;
-    // (undocumented)
-    onAddParticipant(participant: PhoneNumberIdentifier, options: AddPhoneNumberOptions): Promise<void>;
-    // (undocumented)
-    onCreateLocalStreamView: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
-    // (undocumented)
-    onCreateRemoteStreamView: (userId: string, options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
-    // (undocumented)
-    onDisposeLocalStreamView: () => Promise<void>;
-    // (undocumented)
-    onDisposeRemoteStreamView: (userId: string) => Promise<void>;
-    // (undocumented)
-    onHangUp: () => Promise<void>;
-    // (undocumented)
-    onRemoveParticipant(userId: string): Promise<void>;
-    // (undocumented)
-    onRemoveParticipant(participant: CommunicationIdentifier): Promise<void>;
-    // (undocumented)
-    onSelectCamera: (device: VideoDeviceInfo, options?: VideoStreamOptions) => Promise<void>;
-    // (undocumented)
-    onSelectMicrophone: (device: AudioDeviceInfo) => Promise<void>;
-    // (undocumented)
-    onSelectSpeaker: (device: AudioDeviceInfo) => Promise<void>;
-    // (undocumented)
-    onSendDtmfTone: (dtmfTone: DtmfTone_2) => Promise<void>;
-    // (undocumented)
-    onStartCall: (participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[], options?: StartCallOptions) => Call | undefined;
-    // (undocumented)
+export type CallingHandlers = {
     onStartLocalVideo: () => Promise<void>;
-    // (undocumented)
-    onStartScreenShare: () => Promise<void>;
-    // (undocumented)
-    onStopScreenShare: () => Promise<void>;
-    // (undocumented)
     onToggleCamera: (options?: VideoStreamOptions) => Promise<void>;
-    // (undocumented)
-    onToggleHold: () => Promise<void>;
-    // (undocumented)
+    onStartCall: (participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[], options?: StartCallOptions) => Call | undefined;
+    onSelectMicrophone: (device: AudioDeviceInfo) => Promise<void>;
+    onSelectSpeaker: (device: AudioDeviceInfo) => Promise<void>;
+    onSelectCamera: (device: VideoDeviceInfo, options?: VideoStreamOptions) => Promise<void>;
     onToggleMicrophone: () => Promise<void>;
-    // (undocumented)
+    onStartScreenShare: () => Promise<void>;
+    onStopScreenShare: () => Promise<void>;
     onToggleScreenShare: () => Promise<void>;
-}
+    onHangUp: () => Promise<void>;
+    onToggleHold: () => Promise<void>;
+    onAddParticipant(participant: CommunicationUserIdentifier): Promise<void>;
+    onAddParticipant(participant: PhoneNumberIdentifier, options: AddPhoneNumberOptions): Promise<void>;
+    onCreateLocalStreamView: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
+    onCreateRemoteStreamView: (userId: string, options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
+    onRemoveParticipant(userId: string): Promise<void>;
+    onRemoveParticipant(participant: CommunicationIdentifier): Promise<void>;
+    onDisposeRemoteStreamView: (userId: string) => Promise<void>;
+    onDisposeLocalStreamView: () => Promise<void>;
+    onSendDtmfTone: (dtmfTone: DtmfTone_2) => Promise<void>;
+};
 
 // @public
 export type CallingReturnProps<Component extends (props: any) => JSX.Element> = GetCallingSelector<Component> extends (state: CallClientState, props: any) => any ? ReturnType<GetCallingSelector<Component>> & Common<CallingHandlers, Parameters<Component>[0]> : never;
