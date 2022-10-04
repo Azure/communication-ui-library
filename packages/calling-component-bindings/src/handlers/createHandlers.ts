@@ -345,7 +345,7 @@ export const createDefaultCallingHandlers = memoizeOne(
     };
 
     /* @conditional-compile-remove(PSTN-calls) */
-    const onAddParticipant = async (participant, options?) => {
+    const onAddParticipant = async (participant, options?): Promise<void> => {
       const participantType = participantTypeHelper(participant);
       switch (participantType) {
         case 'PSTN':
