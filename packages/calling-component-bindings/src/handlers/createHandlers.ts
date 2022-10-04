@@ -35,7 +35,7 @@ import { disposeAllLocalPreviewViews, _isInCall, _isPreviewOn } from '../utils/c
  *
  * @public
  */
-export interface CallingHandlers {
+export type CallingHandlers = {
   onStartLocalVideo: () => Promise<void>;
   onToggleCamera: (options?: VideoStreamOptions) => Promise<void>;
   onStartCall: (
@@ -68,7 +68,7 @@ export interface CallingHandlers {
   onDisposeLocalStreamView: () => Promise<void>;
   /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
   onSendDtmfTone: (dtmfTone: DtmfTone) => Promise<void>;
-}
+};
 
 /**
  * @private
