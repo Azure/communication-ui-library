@@ -39,13 +39,15 @@ export function BaseApp(props: { queryArgs: QueryArgs; callAdapter?: CallAdapter
     ? () => alert('you are using a unsupported browser')
     : undefined;
 
-  let customCallCompositeOptions: CallCompositeOptions = {};
+  let customCallCompositeOptions: CallCompositeOptions | undefined = undefined;
 
   if (onBrowserTroubleshootingClick) {
     customCallCompositeOptions = {
       ...queryArgs.customCallCompositeOptions,
       onBrowserTroubleShootingClick: onBrowserTroubleshootingClick
     };
+  } else {
+    customCallCompositeOptions = queryArgs.customCallCompositeOptions;
   }
 
   return (
@@ -64,7 +66,7 @@ export function BaseApp(props: { queryArgs: QueryArgs; callAdapter?: CallAdapter
                 queryArgs.injectParticipantMenuItems ? onFetchParticipantMenuItems : undefined
               }
               options={
-                customCallCompositeOptions
+                customCallCompositeOptions !== undefined
                   ? customCallCompositeOptions
                   : queryArgs.injectCustomButtons
                   ? {
