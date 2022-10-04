@@ -11,7 +11,8 @@ import {
   COMPOSITE_LOCALE_EN_US,
   CustomCallControlButtonCallback,
   CustomCallControlButtonProps,
-  CustomCallControlButtonCallbackArgs
+  CustomCallControlButtonCallbackArgs,
+  CallCompositeOptions
 } from '../../../src';
 import { IDS } from '../../browser/common/constants';
 import { isMobile } from '../lib/utils';
@@ -32,9 +33,20 @@ export function BaseApp(props: { queryArgs: QueryArgs; callAdapter?: CallAdapter
       'Some details about the call that span more than one line - many, many lines in fact. Who would want fewer lines than many, many lines? Could you even imagine?! 😲';
   }
 
-  const useOnBrowserTroubleShootingClick = queryArgs.useTroubleShootingActions;
-
   const ParticipantItemOptions = queryArgs.showParticipantItemIcon ? <MoreHorizontal20Regular /> : <></>;
+
+  const onBrowserTroubleshootingClick = queryArgs.useTroubleShootingActions
+    ? () => alert('you are using a unsupported browser')
+    : undefined;
+
+  let customCallCompositeOptions: CallCompositeOptions = {};
+
+  if (onBrowserTroubleshootingClick) {
+    customCallCompositeOptions = {
+      ...queryArgs.customCallCompositeOptions,
+      onBrowserTroubleShootingClick: onBrowserTroubleshootingClick
+    };
+  }
 
   return (
     <>
@@ -52,8 +64,8 @@ export function BaseApp(props: { queryArgs: QueryArgs; callAdapter?: CallAdapter
                 queryArgs.injectParticipantMenuItems ? onFetchParticipantMenuItems : undefined
               }
               options={
-                queryArgs.customCallCompositeOptions
-                  ? queryArgs.customCallCompositeOptions
+                customCallCompositeOptions
+                  ? customCallCompositeOptions
                   : queryArgs.injectCustomButtons
                   ? {
                       callControls: {
@@ -61,10 +73,7 @@ export function BaseApp(props: { queryArgs: QueryArgs; callAdapter?: CallAdapter
                         // Hide some buttons to keep the mobile-view control bar narrow
                         devicesButton: false,
                         endCallButton: false
-                      },
-                      onBrowserTroubleShootingClick: useOnBrowserTroubleShootingClick
-                        ? () => alert('you are using the wrong browser')
-                        : undefined
+                      }
                     }
                   : undefined
               }

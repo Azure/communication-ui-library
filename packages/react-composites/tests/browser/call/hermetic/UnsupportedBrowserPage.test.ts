@@ -18,7 +18,7 @@ test.describe('unsupportedBrowser page tests', async () => {
     expect(await stableScreenshot(page)).toMatchSnapshot(`unsupportedBrowserPage-no-link.png`);
   });
 
-  test.only('unsupportedBrwoser displays correctly with a help link', async ({ page, serverUrl }) => {
+  test('unsupportedBrowser displays correctly with a help link', async ({ page, serverUrl }) => {
     test.skip(isTestProfileStableFlavor());
 
     await page.goto(
