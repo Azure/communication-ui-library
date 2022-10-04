@@ -36,7 +36,9 @@ export interface BrowserPermissionDeniedIOSProps extends BrowserPermissionDenied
    */
   strings: BrowserPermissionDeniedIOSStrings;
   /**
-   * Link to image source
+   * Link to image source.
+   *
+   * Image is inserted into the top of the component.
    */
   imageSource?: string;
 }
