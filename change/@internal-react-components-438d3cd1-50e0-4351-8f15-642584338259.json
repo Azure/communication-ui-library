@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Add an tag to a DOM element for browser tests",
-  "packageName": "@internal/react-components",
-  "email": "prprabhu@microsoft.com",
-  "dependentChangeType": "none"
-}

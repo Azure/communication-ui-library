@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "ScreenShareButton, MicrophoneButton, CameraButton, and DevicesButton no longer hooked to role permissions context.",
-  "packageName": "@internal/react-components",
-  "email": "miguelgamis@microsoft.com",
-  "dependentChangeType": "patch"
-}

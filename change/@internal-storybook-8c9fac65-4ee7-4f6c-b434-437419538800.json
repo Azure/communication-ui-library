@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Update storybook to include documentation on Call Composite options prop",
-  "packageName": "@internal/storybook",
-  "email": "anjulgarg@live.com",
-  "dependentChangeType": "none"
-}

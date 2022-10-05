@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Fix Participants and ScreenShare buttons being disabled when unrelated options are passed into the call composite",
-  "packageName": "@internal/react-composites",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "moved common.ts file from react components to acs-ui-common to be reused by other packages",
-  "packageName": "@internal/acs-ui-common",
-  "email": "carolinecao@microsoft.com",
-  "dependentChangeType": "none"
-}
