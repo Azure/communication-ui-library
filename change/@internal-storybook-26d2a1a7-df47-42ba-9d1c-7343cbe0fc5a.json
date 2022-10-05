@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Use sparkle icon for DomainPermissions component in storybook",
+  "packageName": "@internal/storybook",
+  "email": "94866715+dmceachernmsft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

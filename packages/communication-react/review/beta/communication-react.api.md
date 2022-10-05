@@ -39,6 +39,8 @@ import { IButtonStyles } from '@fluentui/react';
 import { IContextualMenuItem } from '@fluentui/react';
 import { IContextualMenuItemStyles } from '@fluentui/react';
 import { IContextualMenuStyles } from '@fluentui/react';
+import { IDropdownOption } from '@fluentui/react';
+import { IDropdownStyles } from '@fluentui/react';
 import { IMessageBarProps } from '@fluentui/react';
 import { IncomingCall } from '@azure/communication-calling';
 import { IPersonaStyleProps } from '@fluentui/react';
@@ -110,9 +112,6 @@ export interface AdapterState<TState> {
     offStateChange(handler: (state: TState) => void): void;
     onStateChange(handler: (state: TState) => void): void;
 }
-
-// @beta
-export type AddParticipantHandler = ((participant: CommunicationUserIdentifier) => Promise<void>) & ((participant: PhoneNumberIdentifier, options: AddPhoneNumberOptions) => Promise<void>);
 
 // @public
 export type AreEqual<A extends (props: any) => JSX.Element | undefined, B extends (props: any) => JSX.Element | undefined> = true extends AreTypeEqual<A, B> & AreParamEqual<A, B> ? true : false;
@@ -211,10 +210,14 @@ export interface CallAdapterCallManagement {
     mute(): Promise<void>;
     removeParticipant(userId: string): Promise<void>;
     // @beta
+    removeParticipant(participant: CommunicationIdentifier): Promise<void>;
+    // @beta
     resumeCall(): Promise<void>;
     // @beta
     sendDtmfTone(dtmfTone: DtmfTone_2): Promise<void>;
     startCall(participants: string[], options?: StartCallOptions): Call | undefined;
+    // @beta
+    startCall(participants: CommunicationIdentifier[], options?: StartCallOptions): Call | undefined;
     startCamera(options?: VideoStreamOptions): Promise<void>;
     startScreenShare(): Promise<void>;
     stopCamera(): Promise<void>;
@@ -398,6 +401,7 @@ export type CallCompositeIcons = {
 export type CallCompositeOptions = {
     errorBar?: boolean;
     callControls?: boolean | CallControlOptions;
+    devicePermissions?: DevicePermissionRestrictions;
     onPermissionsTroubleshootingClick?: (permissionsState: {
         camera: PermissionState;
         microphone: PermissionState;
@@ -470,6 +474,8 @@ export interface CallCompositeStrings {
     openDialpadButtonLabel: string;
     openDtmfDialpadLabel: string;
     peopleButtonLabel: string;
+    peopleButtonTooltipClose: string;
+    peopleButtonTooltipOpen: string;
     peoplePaneAddPeopleButtonLabel: string;
     peoplePaneSubTitle: string;
     peoplePaneTitle: string;
@@ -541,7 +547,7 @@ export type CallErrors = {
 };
 
 // @public
-export type CallErrorTarget = 'Call.addParticipant' | 'Call.feature' | 'Call.hangUp' | 'Call.hold' | 'Call.mute' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.muteIncomingAudio' | 'Call.off' | 'Call.on' | 'Call.removeParticipant' | 'Call.resume' | 'Call.sendDtmf' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.startAudio' | 'Call.startScreenSharing' | 'Call.startVideo' | 'Call.stopScreenSharing' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.stopAudio' | 'Call.stopVideo' | 'Call.unmute' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.unmuteIncomingAudio' | 'CallAgent.dispose' | 'CallAgent.feature' | 'CallAgent.join' | 'CallAgent.off' | 'CallAgent.on' | 'CallAgent.startCall' | 'CallClient.createCallAgent' | 'CallClient.feature' | 'CallClient.getDeviceManager' | /* @conditional-compile-remove(calling-beta-sdk) */ 'CallClient.getEnvironmentInfo' | 'DeviceManager.askDevicePermission' | 'DeviceManager.getCameras' | 'DeviceManager.getMicrophones' | 'DeviceManager.getSpeakers' | 'DeviceManager.off' | 'DeviceManager.on' | 'DeviceManager.selectMicrophone' | 'DeviceManager.selectSpeaker' | 'IncomingCall.accept' | 'IncomingCall.reject';
+export type CallErrorTarget = 'Call.addParticipant' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.dispose' | 'Call.feature' | 'Call.hangUp' | 'Call.hold' | 'Call.mute' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.muteIncomingAudio' | 'Call.off' | 'Call.on' | 'Call.removeParticipant' | 'Call.resume' | 'Call.sendDtmf' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.startAudio' | 'Call.startScreenSharing' | 'Call.startVideo' | 'Call.stopScreenSharing' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.stopAudio' | 'Call.stopVideo' | 'Call.unmute' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.unmuteIncomingAudio' | 'CallAgent.dispose' | 'CallAgent.feature' | 'CallAgent.join' | 'CallAgent.off' | 'CallAgent.on' | 'CallAgent.startCall' | 'CallClient.createCallAgent' | /* @conditional-compile-remove(calling-beta-sdk) */ 'CallClient.createTeamsCallAgent' | 'CallClient.feature' | 'CallClient.getDeviceManager' | /* @conditional-compile-remove(calling-beta-sdk) */ 'CallClient.getEnvironmentInfo' | 'DeviceManager.askDevicePermission' | 'DeviceManager.getCameras' | 'DeviceManager.getMicrophones' | 'DeviceManager.getSpeakers' | 'DeviceManager.off' | 'DeviceManager.on' | 'DeviceManager.selectMicrophone' | 'DeviceManager.selectSpeaker' | 'IncomingCall.accept' | 'IncomingCall.reject';
 
 // @public
 export type CallIdChangedListener = (event: {
@@ -567,10 +573,12 @@ export type CallingHandlers = {
     onToggleScreenShare: () => Promise<void>;
     onHangUp: () => Promise<void>;
     onToggleHold: () => Promise<void>;
-    onAddParticipant: AddParticipantHandler;
+    onAddParticipant(participant: CommunicationUserIdentifier): Promise<void>;
+    onAddParticipant(participant: PhoneNumberIdentifier, options: AddPhoneNumberOptions): Promise<void>;
     onCreateLocalStreamView: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
     onCreateRemoteStreamView: (userId: string, options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
-    onRemoveParticipant: (userId: string) => Promise<void>;
+    onRemoveParticipant(userId: string): Promise<void>;
+    onRemoveParticipant(participant: CommunicationIdentifier): Promise<void>;
     onDisposeRemoteStreamView: (userId: string) => Promise<void>;
     onDisposeLocalStreamView: () => Promise<void>;
     onSendDtmfTone: (dtmfTone: DtmfTone_2) => Promise<void>;
@@ -673,6 +681,8 @@ export interface CallWithChatAdapterManagement {
     registerCompletedFileUploads: (metadata: FileMetadata[]) => FileUploadManager[];
     removeParticipant(userId: string): Promise<void>;
     // @beta
+    removeParticipant(participant: CommunicationIdentifier): Promise<void>;
+    // @beta
     resumeCall: () => Promise<void>;
     // @beta
     sendDtmfTone: (dtmfTone: DtmfTone_2) => Promise<void>;
@@ -683,6 +693,8 @@ export interface CallWithChatAdapterManagement {
     setMicrophone(sourceInfo: AudioDeviceInfo): Promise<void>;
     setSpeaker(sourceInfo: AudioDeviceInfo): Promise<void>;
     startCall(participants: string[], options?: StartCallOptions): Call | undefined;
+    // @beta
+    startCall(participants: CommunicationIdentifier[], options?: StartCallOptions): Call | undefined;
     startCamera(options?: VideoStreamOptions): Promise<void>;
     startScreenShare(): Promise<void>;
     stopCamera(): Promise<void>;
@@ -872,6 +884,7 @@ export type CallWithChatCompositeIcons = {
 export type CallWithChatCompositeOptions = {
     callControls?: boolean | CallWithChatControlOptions;
     fileSharing?: FileSharingOptions;
+    devicePermissions?: DevicePermissionRestrictions;
     onPermissionsTroubleshootingClick?: (permissionsState: {
         camera: PermissionState;
         microphone: PermissionState;
@@ -1608,7 +1621,9 @@ export const DEFAULT_COMPONENT_ICONS: {
     SendBoxSendHovered: JSX.Element;
     VideoTileMicOff: JSX.Element;
     BackSpace: JSX.Element;
-    iconBackdrop: JSX.Element;
+    DomainPermissionsSparkle: JSX.Element;
+    DomainPermissionCamera: JSX.Element;
+    DomainPermissionMic: JSX.Element;
     UnsupportedBrowserWarning: JSX.Element;
 };
 
@@ -1694,7 +1709,9 @@ export const DEFAULT_COMPOSITE_ICONS: {
     HoldCallButton: JSX.Element;
     ResumeCall: JSX.Element;
     BackSpace: JSX.Element;
-    iconBackdrop: JSX.Element;
+    DomainPermissionsSparkle: JSX.Element;
+    DomainPermissionCamera: JSX.Element;
+    DomainPermissionMic: JSX.Element;
     UnsupportedBrowserWarning: JSX.Element;
 };
 
@@ -1710,6 +1727,31 @@ export type DeviceManagerState = {
     deviceAccess?: DeviceAccess;
     unparentedViews: LocalVideoStreamState[];
 };
+
+// @internal
+export const _DevicePermissionDropdown: (props: _DevicePermissionDropdownProps) => JSX.Element;
+
+// @internal
+export interface _DevicePermissionDropdownProps {
+    icon?: JSX.Element;
+    onClickActionButton?: () => Promise<void>;
+    options?: IDropdownOption[];
+    strings?: _DevicePermissionDropdownStrings;
+    styles?: Partial<IDropdownStyles>;
+}
+
+// @internal
+export interface _DevicePermissionDropdownStrings {
+    actionButtonContent?: string;
+    label?: string;
+    placeHolderText: string;
+}
+
+// @beta
+export interface DevicePermissionRestrictions {
+    camera: 'required' | 'optional' | 'doNotPrompt';
+    microphone: 'required' | 'optional' | 'doNotPrompt';
+}
 
 // @public
 export const DevicesButton: (props: DevicesButtonProps) => JSX.Element;

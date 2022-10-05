@@ -490,7 +490,7 @@ export type CallingHandlers = {
     onHangUp: () => Promise<void>;
     onCreateLocalStreamView: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
     onCreateRemoteStreamView: (userId: string, options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
-    onRemoveParticipant: (userId: string) => Promise<void>;
+    onRemoveParticipant(userId: string): Promise<void>;
     onDisposeRemoteStreamView: (userId: string) => Promise<void>;
     onDisposeLocalStreamView: () => Promise<void>;
 };

@@ -73,9 +73,9 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
   /* @conditional-compile-remove(one-to-n-calling) */
   const peopleButtonStrings = useMemo(
     () => ({
-      label: localeStrings.strings.callWithChat.peopleButtonLabel,
-      tooltipOffContent: localeStrings.strings.callWithChat.peopleButtonTooltipOpen,
-      tooltipOnContent: localeStrings.strings.callWithChat.peopleButtonTooltipClose
+      label: localeStrings.strings.call.peopleButtonLabel,
+      tooltipOffContent: localeStrings.strings.call.peopleButtonTooltipOpen,
+      tooltipOnContent: localeStrings.strings.call.peopleButtonTooltipClose
     }),
     [localeStrings]
   );
@@ -127,19 +127,21 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
       });
     }
 
-    items.push({
-      key: 'holdButtonKey',
-      text: localeStrings.component.strings.holdButton.tooltipOffContent,
-      onClick: () => {
-        holdButtonProps.onToggleHold();
-      },
-      iconProps: { iconName: 'HoldCallContextualMenuItem', styles: { root: { lineHeight: 0 } } },
-      itemProps: {
-        styles: buttonFlyoutIncreasedSizeStyles
-      },
-      disabled: isDisabled(options?.holdButton),
-      ['data-ui-id']: 'hold-button'
-    });
+    if (!isRoomsCallTrampoline()) {
+      items.push({
+        key: 'holdButtonKey',
+        text: localeStrings.component.strings.holdButton.tooltipOffContent,
+        onClick: () => {
+          holdButtonProps.onToggleHold();
+        },
+        iconProps: { iconName: 'HoldCallContextualMenuItem', styles: { root: { lineHeight: 0 } } },
+        itemProps: {
+          styles: buttonFlyoutIncreasedSizeStyles
+        },
+        disabled: isDisabled(options?.holdButton),
+        ['data-ui-id']: 'hold-button'
+      });
+    }
 
     /* @conditional-compile-remove(PSTN-calls) */
     // dtmf tone sending only works for 1:1 PSTN call
@@ -261,7 +263,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
           )}
           {
             /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */
-            isEnabled(options?.moreButton) && (
+            isEnabled(options?.moreButton) && moreButtonContextualMenuItems().length > 0 && (
               <MoreButton
                 strings={moreButtonStrings}
                 menuIconProps={{ hidden: true }}
@@ -279,3 +281,13 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
 };
 
 const isEnabled = (option: unknown): boolean => option !== false;
+
+/** @private */
+export const isRoomsCallTrampoline = (): boolean => {
+  /* @conditional-compile-remove(rooms) */
+  const rolePermissions = _usePermissions();
+  /* @conditional-compile-remove(rooms) */
+  return !!rolePermissions.role;
+
+  return false;
+};

@@ -12,6 +12,8 @@ import { IButtonStyles } from '@fluentui/react';
 import { IContextualMenuItem } from '@fluentui/react';
 import { IContextualMenuItemStyles } from '@fluentui/react';
 import { IContextualMenuStyles } from '@fluentui/react';
+import { IDropdownOption } from '@fluentui/react';
+import { IDropdownStyles } from '@fluentui/react';
 import { IIconProps } from '@fluentui/react';
 import { IMessageBarProps } from '@fluentui/react';
 import { IModalProps } from '@fluentui/react';
@@ -417,9 +419,30 @@ export const DEFAULT_COMPONENT_ICONS: {
     SendBoxSendHovered: JSX.Element;
     VideoTileMicOff: JSX.Element;
     BackSpace: JSX.Element;
-    iconBackdrop: JSX.Element;
+    DomainPermissionsSparkle: JSX.Element;
+    DomainPermissionCamera: JSX.Element;
+    DomainPermissionMic: JSX.Element;
     UnsupportedBrowserWarning: JSX.Element;
 };
+
+// @internal
+export const _DevicePermissionDropdown: (props: _DevicePermissionDropdownProps) => JSX.Element;
+
+// @internal
+export interface _DevicePermissionDropdownProps {
+    icon?: JSX.Element;
+    onClickActionButton?: () => Promise<void>;
+    options?: IDropdownOption[];
+    strings?: _DevicePermissionDropdownStrings;
+    styles?: Partial<IDropdownStyles>;
+}
+
+// @internal
+export interface _DevicePermissionDropdownStrings {
+    actionButtonContent?: string;
+    label?: string;
+    placeHolderText: string;
+}
 
 // @public
 export const DevicesButton: (props: DevicesButtonProps) => JSX.Element;
@@ -728,6 +751,15 @@ export interface GridLayoutProps {
 // @public
 export interface GridLayoutStyles extends BaseCustomStyles {
     children?: IStyle;
+}
+
+// @internal
+export const _HighContrastAwareIcon: (props: _HighContrastAwareIconProps) => JSX.Element;
+
+// @internal (undocumented)
+export interface _HighContrastAwareIconProps {
+    disabled?: boolean | undefined;
+    iconName: string;
 }
 
 // @beta
@@ -1179,6 +1211,7 @@ export type _Permissions = {
     microphoneButton: boolean;
     screenShare: boolean;
     removeParticipantButton: boolean;
+    role?: Role;
 };
 
 // @internal (undocumented)
@@ -1348,6 +1381,31 @@ export interface TopicUpdatedSystemMessage extends SystemMessageCommon {
     systemMessageType: 'topicUpdated';
     // (undocumented)
     topic: string;
+}
+
+// @internal
+export const _TroubleshootingGuideErrorBar: (props: _TroubleshootingGuideErrorBarProps) => JSX.Element;
+
+// @internal
+export interface _TroubleshootingGuideErrorBarProps extends ErrorBarProps {
+    onNetworkingTroubleshootingClick?: () => void;
+    onPermissionsTroubleshootingClick?: (permissionsState: {
+        camera: PermissionState;
+        microphone: PermissionState;
+    }) => void;
+    permissionsState?: {
+        camera: PermissionState;
+        microphone: PermissionState;
+    };
+    troubleshootingGuideStrings: _TroubleshootingGuideErrorBarStrings;
+}
+
+// @internal
+export interface _TroubleshootingGuideErrorBarStrings {
+    // (undocumented)
+    dismissButtonText?: string;
+    // (undocumented)
+    linkText?: string;
 }
 
 // @public

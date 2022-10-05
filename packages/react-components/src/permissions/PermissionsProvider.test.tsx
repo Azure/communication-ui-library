@@ -9,6 +9,7 @@ import { _PermissionsProvider, _getPermissions, _Permissions, _usePermissions } 
 Enzyme.configure({ adapter: new Adapter() });
 
 const mockPresenterPermissions: _Permissions = {
+  role: 'Presenter',
   cameraButton: true,
   microphoneButton: true,
   screenShare: true,
@@ -16,6 +17,7 @@ const mockPresenterPermissions: _Permissions = {
 };
 
 const mockConsumerPermissions: _Permissions = {
+  role: 'Consumer',
   cameraButton: false,
   microphoneButton: false,
   screenShare: false,
@@ -23,6 +25,7 @@ const mockConsumerPermissions: _Permissions = {
 };
 
 const mockAttendeePermissions: _Permissions = {
+  role: 'Attendee',
   cameraButton: true,
   microphoneButton: true,
   screenShare: false,
