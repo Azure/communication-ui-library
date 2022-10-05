@@ -32,7 +32,7 @@ import { HoldButton } from '@internal/react-components';
 import { MicrophoneButton } from '@internal/react-components';
 import { ParticipantList } from '@internal/react-components';
 import { ParticipantsButton } from '@internal/react-components';
-import { PermissionConstraints } from '@azure/communication-calling';
+import { PermissionConstraints } from '@internal/react-components';
 import { PhoneNumberIdentifier } from '@azure/communication-common';
 import { default as React_2 } from 'react';
 import { ReactElement } from 'react';

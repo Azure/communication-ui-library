@@ -583,7 +583,7 @@ export type CallingHandlers = {
     onDisposeRemoteStreamView: (userId: string) => Promise<void>;
     onDisposeLocalStreamView: () => Promise<void>;
     onSendDtmfTone: (dtmfTone: DtmfTone_2) => Promise<void>;
-    askDevicePermission: (constrain: PermissionConstraints_2) => Promise<void>;
+    askDevicePermission: (constrain: PermissionConstraints) => Promise<void>;
 };
 
 // @public
