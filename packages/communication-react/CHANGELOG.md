@@ -9,8 +9,21 @@ This log was last generated on Wed, 05 Oct 2022 18:13:37 GMT and should not be m
 Wed, 05 Oct 2022 18:13:37 GMT 
 [Compare changes](https://github.com/azure/communication-ui-library/compare/@azure/communication-react_v1.3.1-beta.1...@azure/communication-react_v1.3.2-beta.1)
 
+### PSTN and 1:N Calling
+ACS UI Library Call and CallWithChat composites are introducing two new capabilities (beta):
+1. PSTN Outbound Calling
+2. ACS 1:N Outbound Calling
+
+Users will now be able to:
+- Call a phone number through the existing Call and CallWithChat composites
+- Call a phone number and add it to an ongoing call
+- Put the call on hold during a phone or ACS call
+- Send DTMF tones during a 1:1 phone call
+
+Read more about getting a phone number through Azure Communication Services
+https://docs.microsoft.com/en-us/azure/communication-services/quickstarts/telephony/get-phone-number?tabs=windows&pivots=platform-azp
+
 ### Features
-- Call and CallWithChat Composites can be used to dial a PSTN number or start a call with an Communication user.
 - Call adapter can join a room ([PR #2063](https://github.com/azure/communication-ui-library/pull/2063) by miguelgamis@microsoft.com)
 - CallComposite will not request for camera permissions when the role prop is Consumer during a Rooms call. ([PR #2218](https://github.com/azure/communication-ui-library/pull/2218) by miguelgamis@microsoft.com)
 - VideoGallery displays participants connection states such as Connecting, Hold etc. during PSTN and 1:N Calls ([PR #2210](https://github.com/azure/communication-ui-library/pull/2210) by anjulgarg@live.com)
