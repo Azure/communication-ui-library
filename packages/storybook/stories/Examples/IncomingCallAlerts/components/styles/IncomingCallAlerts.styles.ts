@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { getTheme, mergeStyles } from '@fluentui/react';
+import { getTheme, IDialogFooterStyles, mergeStyles } from '@fluentui/react';
 const theme = getTheme();
 const palette = theme.palette;
 
@@ -61,3 +61,11 @@ export const incomingCallModalLocalPreviewStyle = mergeStyles({
     borderRadius: '0.25rem'
   }
 });
+
+export const incomingCallModalDialogFooterStyle: IDialogFooterStyles = {
+  action: {},
+  actions: {},
+  actionsRight: {
+    display: 'flex'
+  }
+};
