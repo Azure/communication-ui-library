@@ -257,7 +257,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
   /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
   const isInLocalHold = currentPage === 'hold';
   const hasJoinedCall = !!(currentPage && hasJoinedCallFn(currentPage, currentCallState ?? 'None'));
-  const showControlBar = isInLobbyOrConnecting || hasJoinedCall;
+  const showControlBar = isInLobbyOrConnecting || hasJoinedCall || currentCallState === 'Disconnecting';
   const isMobileWithActivePane = mobileView && activePane !== 'none';
 
   /** Constant setting of id for the parent stack of the composite */
