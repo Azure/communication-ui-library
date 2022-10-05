@@ -125,8 +125,10 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
     adapter.querySpeakers();
   }, [adapter, cameraPermissionGranted, micPermissionGranted]);
 
+  let dropdownProps;
+
   /* @conditional-compile-remove(call-readiness) */
-  const dropdownProps = usePropsFor(_DevicePermissionDropdown);
+  dropdownProps = usePropsFor(_DevicePermissionDropdown);
 
   const cameraGrantedDropdown = (
     <Dropdown
