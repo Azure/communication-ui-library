@@ -57,12 +57,12 @@ export const IncomingCallToast = (props: IncomingCallToastProps): JSX.Element =>
         <DefaultButton
           className={incomingCallRejectButtonStyle}
           onClick={() => onClickReject()}
-          onRenderIcon={() => <CallEnd20Filled style={{ height: '1.25rem' }} />}
+          onRenderIcon={() => <CallEnd20Filled style={{ display: 'flex' }} />}
         />
         <DefaultButton
           className={incomingCallAcceptButtonStyle}
           onClick={() => onClickAccept()}
-          onRenderIcon={() => <Call20Filled style={{ height: '1.25rem' }} />}
+          onRenderIcon={() => <Call20Filled style={{ display: 'flex' }} />}
         />
       </Stack>
     </Stack>
