@@ -329,34 +329,12 @@ export const CallComposite = (props: CallCompositeProps): JSX.Element => {
         adapter.querySpeakers();
         return;
       }
-      /* @conditional-compile-remove(call-readiness) */
-      if (options?.devicePermissions) {
-        const videoPermission = options?.devicePermissions.camera !== 'doNotPrompt';
-        const audioPermission = options?.devicePermissions.microphone !== 'doNotPrompt';
-        await adapter.askDevicePermission({
-          video: videoPermission,
-          audio: audioPermission
-        });
-        if (videoPermission) {
-          adapter.queryCameras();
-        }
-        if (audioPermission) {
-          adapter.queryMicrophones();
-        }
-        adapter.querySpeakers();
-        return;
-      }
-
       await adapter.askDevicePermission({ video: true, audio: true });
       adapter.queryCameras();
       adapter.queryMicrophones();
       adapter.querySpeakers();
     })();
-  }, [
-    adapter,
-    /* @conditional-compile-remove(rooms) */ role,
-    /* @conditional-compile-remove(call-readiness) */ options?.devicePermissions
-  ]);
+  }, [adapter, /* @conditional-compile-remove(rooms) */ role]);
 
   const mobileView = formFactor === 'mobile';
 

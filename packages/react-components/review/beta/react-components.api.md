@@ -430,8 +430,9 @@ export const _DevicePermissionDropdown: (props: _DevicePermissionDropdownProps) 
 
 // @internal
 export interface _DevicePermissionDropdownProps {
+    askDevicePermission?(constrain: PermissionConstraints): Promise<void>;
+    constrain?: PermissionConstraints;
     icon?: JSX.Element;
-    onClickActionButton?: () => Promise<void>;
     options?: IDropdownOption[];
     strings?: _DevicePermissionDropdownStrings;
     styles?: Partial<IDropdownStyles>;
@@ -1204,6 +1205,14 @@ export interface ParticipantsButtonStyles extends ControlBarButtonStyles {
 
 // @public
 export type ParticipantState = 'Idle' | 'Connecting' | 'Ringing' | 'Connected' | 'Hold' | 'InLobby' | 'EarlyMedia' | 'Disconnected';
+
+// Warning: (ae-internal-missing-underscore) The name "PermissionConstraints" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal
+export type PermissionConstraints = {
+    audio: boolean;
+    video: boolean;
+};
 
 // @internal (undocumented)
 export type _Permissions = {

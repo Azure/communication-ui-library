@@ -3,13 +3,17 @@
 /* @conditional-compile-remove(call-readiness) */
 import React from 'react';
 /* @conditional-compile-remove(call-readiness) */
-import { useTheme, _DevicePermissionDropdownStrings, _DevicePermissionDropdown } from '@internal/react-components';
+import {
+  useTheme,
+  _DevicePermissionDropdownStrings,
+  _DevicePermissionDropdown,
+  _DevicePermissionDropdownProps
+} from '@internal/react-components';
 /* @conditional-compile-remove(call-readiness) */
 import { dropDownStyles } from '../styles/LocalDeviceSettings.styles';
 /* @conditional-compile-remove(call-readiness) */
-import { useAdapter } from '../adapter/CallAdapterProvider';
-/* @conditional-compile-remove(call-readiness) */
 import { CallCompositeIcon } from '../../common/icons';
+import { CallingHandlers } from '@internal/calling-component-bindings';
 
 /**
  * @private
@@ -17,6 +21,7 @@ import { CallCompositeIcon } from '../../common/icons';
 export interface ConfigurationpageCameraDropdownProps {
   cameraGrantedDropdown: JSX.Element;
   cameraPermissionGranted: boolean;
+  dropdownProps?: Record<string, never> & Partial<CallingHandlers>;
 }
 
 /**
@@ -25,8 +30,6 @@ export interface ConfigurationpageCameraDropdownProps {
 export const ConfigurationpageCameraDropdown = (props: ConfigurationpageCameraDropdownProps): JSX.Element => {
   /* @conditional-compile-remove(call-readiness) */
   const theme = useTheme();
-  /* @conditional-compile-remove(call-readiness) */
-  const adapter = useAdapter();
 
   /* @conditional-compile-remove(call-readiness) */
   const devicePermissionDropdownStringsCamera: _DevicePermissionDropdownStrings = {
@@ -37,16 +40,12 @@ export const ConfigurationpageCameraDropdown = (props: ConfigurationpageCameraDr
   const cameraBlockedDropdown = (
     <_DevicePermissionDropdown
       styles={dropDownStyles(theme)}
-      onClickActionButton={async () => {
-        await adapter.askDevicePermission({ video: true, audio: false });
-        if (props.cameraPermissionGranted) {
-          adapter.queryCameras();
-        }
-      }}
+      constrain={{ video: true, audio: false }}
       strings={devicePermissionDropdownStringsCamera}
       icon={
         <CallCompositeIcon iconName="ControlButtonCameraOn" style={{ height: '1.25rem', marginRight: '0.625rem' }} />
       }
+      {...props.dropdownProps}
     />
   );
 

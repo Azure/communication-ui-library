@@ -5,7 +5,7 @@ import { AudioDeviceInfo, VideoDeviceInfo } from '@azure/communication-calling';
 import { Dropdown, IDropdownOption, Label, mergeStyles, Stack } from '@fluentui/react';
 /* @conditional-compile-remove(call-readiness) */
 import { useEffect } from 'react';
-import { useTheme, VideoStreamOptions } from '@internal/react-components';
+import { useTheme, VideoStreamOptions, _DevicePermissionDropdown } from '@internal/react-components';
 import React from 'react';
 import { CallCompositeIcon } from '../../common/icons';
 import { useLocale } from '../../localization';
@@ -21,6 +21,8 @@ import { _usePermissions } from '@internal/react-components';
 import { useAdapter } from '../adapter/CallAdapterProvider';
 import { ConfigurationpageCameraDropdown } from './ConfigurationpageCameraDropdown';
 import { ConfigurationpageMicDropdown } from './ConfigurationpageMicDropdown';
+/* @conditional-compile-remove(call-readiness) */
+import { usePropsFor } from '../hooks/usePropsFor';
 
 type iconType = 'Camera' | 'Microphone' | 'Speaker';
 
@@ -123,6 +125,8 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
     adapter.querySpeakers();
   }, [adapter, cameraPermissionGranted, micPermissionGranted]);
 
+  const dropdownProps = getDropdownPropsTrampoline();
+
   const cameraGrantedDropdown = (
     <Dropdown
       data-ui-id="call-composite-local-camera-settings"
@@ -200,6 +204,7 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
           <ConfigurationpageCameraDropdown
             cameraGrantedDropdown={cameraGrantedDropdown}
             cameraPermissionGranted={cameraPermissionGranted ?? false}
+            dropdownProps={dropdownProps}
           />
         </Stack>
       )}
@@ -215,6 +220,7 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
           <ConfigurationpageMicDropdown
             micGrantedDropdown={micGrantedDropdown}
             micPermissionGranted={micPermissionGranted ?? false}
+            dropdownProps={dropdownProps}
           />
           <Dropdown
             aria-labelledby={'call-composite-local-sound-settings-label'}
@@ -247,4 +253,11 @@ const defaultDeviceId = (devices: AudioDeviceInfo[]): string => {
     return defaultDevice.id;
   }
   return devices[0].id;
+};
+
+const getDropdownPropsTrampoline = () => {
+  /* @conditional-compile-remove(call-readiness) */
+  return usePropsFor(_DevicePermissionDropdown);
+
+  return undefined;
 };

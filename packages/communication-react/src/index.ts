@@ -261,4 +261,8 @@ export type { UnsupportedBrowserStrings, UnsupportedBrowserProps } from '../../r
 /* @conditional-compile-remove(call-readiness) */
 export { _DevicePermissionDropdown } from '../../react-components/src';
 /* @conditional-compile-remove(call-readiness) */
-export type { _DevicePermissionDropdownStrings, _DevicePermissionDropdownProps } from '../../react-components/src';
+export type {
+  _DevicePermissionDropdownStrings,
+  _DevicePermissionDropdownProps,
+  PermissionConstraints
+} from '../../react-components/src';

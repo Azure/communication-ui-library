@@ -9,6 +9,8 @@ import {
   StartCallOptions,
   VideoDeviceInfo
 } from '@azure/communication-calling';
+/* @conditional-compile-remove(call-readiness) */
+import { PermissionConstraints } from '@internal/react-components';
 /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
 import { DtmfTone, AddPhoneNumberOptions } from '@azure/communication-calling';
 import { CommunicationUserIdentifier, PhoneNumberIdentifier, UnknownIdentifier } from '@azure/communication-common';
@@ -68,6 +70,8 @@ export type CallingHandlers = {
   onDisposeLocalStreamView: () => Promise<void>;
   /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
   onSendDtmfTone: (dtmfTone: DtmfTone) => Promise<void>;
+  /* @conditional-compile-remove(call-readiness) */
+  askDevicePermission: (constrain: PermissionConstraints) => Promise<void>;
 };
 
 /**
@@ -360,6 +364,13 @@ export const createDefaultCallingHandlers = memoizeOne(
     /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
     const onSendDtmfTone = async (dtmfTone: DtmfTone): Promise<void> => await call?.sendDtmf(dtmfTone);
 
+    /* @conditional-compile-remove(call-readiness) */
+    const askDevicePermission = async (constrain: PermissionConstraints): Promise<void> => {
+      if (deviceManager) {
+        await deviceManager?.askDevicePermission(constrain);
+      }
+    };
+
     return {
       onHangUp,
       /* @conditional-compile-remove(PSTN-calls) */
@@ -381,7 +392,9 @@ export const createDefaultCallingHandlers = memoizeOne(
       onStartLocalVideo,
       onDisposeRemoteStreamView,
       onDisposeLocalStreamView,
-      /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */ onSendDtmfTone
+      /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */ onSendDtmfTone,
+      /* @conditional-compile-remove(call-readiness) */
+      askDevicePermission
     };
   }
 );
