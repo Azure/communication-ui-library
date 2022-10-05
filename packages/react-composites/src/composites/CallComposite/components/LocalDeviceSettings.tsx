@@ -125,7 +125,8 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
     adapter.querySpeakers();
   }, [adapter, cameraPermissionGranted, micPermissionGranted]);
 
-  const dropdownProps = getDropdownPropsTrampoline();
+  /* @conditional-compile-remove(call-readiness) */
+  const dropdownProps = usePropsFor(_DevicePermissionDropdown);
 
   const cameraGrantedDropdown = (
     <Dropdown
@@ -204,7 +205,7 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
           <ConfigurationpageCameraDropdown
             cameraGrantedDropdown={cameraGrantedDropdown}
             cameraPermissionGranted={cameraPermissionGranted ?? false}
-            dropdownProps={dropdownProps}
+            dropdownProps={dropdownProps ?? undefined}
           />
         </Stack>
       )}
@@ -220,7 +221,7 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
           <ConfigurationpageMicDropdown
             micGrantedDropdown={micGrantedDropdown}
             micPermissionGranted={micPermissionGranted ?? false}
-            dropdownProps={dropdownProps}
+            dropdownProps={dropdownProps ?? undefined}
           />
           <Dropdown
             aria-labelledby={'call-composite-local-sound-settings-label'}
@@ -253,11 +254,4 @@ const defaultDeviceId = (devices: AudioDeviceInfo[]): string => {
     return defaultDevice.id;
   }
   return devices[0].id;
-};
-
-const getDropdownPropsTrampoline = () => {
-  /* @conditional-compile-remove(call-readiness) */
-  return usePropsFor(_DevicePermissionDropdown);
-
-  return undefined;
 };
