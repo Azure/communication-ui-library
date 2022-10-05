@@ -145,9 +145,9 @@ export const devicesButtonSelector: DevicesButtonSelector = reselect.createSelec
   [getDeviceManager],
   (deviceManager) => {
     return {
-      microphones: filterBlankNames(deviceManager.microphones),
-      speakers: filterBlankNames(deviceManager.speakers),
-      cameras: filterBlankNames(deviceManager.cameras),
+      microphones: removeBlankNameDevices(deviceManager.microphones),
+      speakers: removeBlankNameDevices(deviceManager.speakers),
+      cameras: removeBlankNameDevices(deviceManager.cameras),
       selectedMicrophone: deviceManager.selectedMicrophone,
       selectedSpeaker: deviceManager.selectedSpeaker,
       selectedCamera: deviceManager.selectedCamera
@@ -155,7 +155,7 @@ export const devicesButtonSelector: DevicesButtonSelector = reselect.createSelec
   }
 );
 
-function filterBlankNames<T extends { name: string }>(devices: T[]): T[] {
+function removeBlankNameDevices<T extends { name: string }>(devices: T[]): T[] {
   return devices.filter((device) => device.name !== '');
 }
 
