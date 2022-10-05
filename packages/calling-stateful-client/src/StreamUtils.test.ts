@@ -71,6 +71,7 @@ interface TestData {
 
 function createMockCall(mockCallId: string): CallState {
   const call: CallState = {
+    type: 'ACS',
     id: mockCallId,
     callerInfo: {} as CallerInfo,
     state: 'None',

@@ -45,12 +45,19 @@ import { Role } from '@internal/react-components';
 import { RoomCallLocator } from '@azure/communication-calling';
 import { SendMessageOptions } from '@azure/communication-chat';
 import { StartCallOptions } from '@azure/communication-calling';
+import type { StartTeamsCallOptions } from '@azure/communication-calling';
 import { StatefulCallClient } from '@internal/calling-stateful-client';
 import { StatefulChatClient } from '@internal/chat-stateful-client';
+import { TeamsCall } from '@azure/communication-calling';
 import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { Theme } from '@fluentui/react';
 import { VideoDeviceInfo } from '@azure/communication-calling';
 import { VideoStreamOptions } from '@internal/react-components';
+
+// @public (undocumented)
+export type ACSCallManagement = {
+    joinCall(microphoneOn?: boolean): Call | undefined;
+};
 
 // @public
 export interface AdapterError extends Error {
@@ -130,9 +137,8 @@ export interface BaseCompositeProps<TIcons extends Record<string, JSX.Element>> 
     rtl?: boolean;
 }
 
-// @public
-export interface CallAdapter extends AdapterState<CallAdapterState>, Disposable, CallAdapterCallManagement, CallAdapterDeviceManagement, CallAdapterSubscribers {
-}
+// @public (undocumented)
+export type CallAdapter = Omit<CallAdapterCommon, keyof ACSCallManagement> & ACSCallManagement;
 
 // @public
 export type CallAdapterCallEndedEvent = {
@@ -141,14 +147,14 @@ export type CallAdapterCallEndedEvent = {
 };
 
 // @public
-export interface CallAdapterCallManagement {
+export interface CallAdapterCallManagement<CallType extends Call | TeamsCall = Call> {
     // @beta
     addParticipant(participant: CommunicationIdentifier, options?: AddPhoneNumberOptions): Promise<void>;
     createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void | CreateVideoStreamViewResult>;
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
     // @beta
     holdCall(): Promise<void>;
-    joinCall(microphoneOn?: boolean): Call | undefined;
+    joinCall(microphoneOn?: boolean): void;
     leaveCall(forEveryone?: boolean): Promise<void>;
     mute(): Promise<void>;
     removeParticipant(userId: string): Promise<void>;
@@ -156,7 +162,7 @@ export interface CallAdapterCallManagement {
     resumeCall(): Promise<void>;
     // @beta
     sendDtmfTone(dtmfTone: DtmfTone): Promise<void>;
-    startCall(participants: string[], options?: StartCallOptions): Call | undefined;
+    startCall(participants: string[], options?: CallType extends Call ? StartCallOptions : StartTeamsCallOptions): CallType | undefined;
     startCamera(options?: VideoStreamOptions): Promise<void>;
     startScreenShare(): Promise<void>;
     stopCamera(): Promise<void>;
@@ -175,6 +181,10 @@ export type CallAdapterClientState = {
     latestErrors: AdapterErrors;
     alternateCallerId?: string;
 };
+
+// @public
+export interface CallAdapterCommon<CallType extends Call | TeamsCall = Call> extends AdapterState<CallAdapterState>, Disposable, CallAdapterCallManagement<CallType>, CallAdapterDeviceManagement, CallAdapterSubscribers {
+}
 
 // @public
 export interface CallAdapterDeviceManagement {
@@ -298,7 +308,7 @@ export type CallCompositePage = 'accessDeniedTeamsMeeting' | 'call' | 'configura
 
 // @public
 export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcons> {
-    adapter: CallAdapter;
+    adapter: CallAdapterCommon;
     callInvitationUrl?: string;
     formFactor?: 'desktop' | 'mobile';
     options?: CallCompositeOptions;
@@ -416,8 +426,11 @@ export type CallParticipantsLocator = {
     participantIds: string[];
 };
 
+// @public (undocumented)
+export type CallWithChatAdapter = Omit<CallWithChatAdapterCommon, keyof ACSCallManagement> & ACSCallManagement;
+
 // @public
-export interface CallWithChatAdapter extends CallWithChatAdapterManagement, AdapterState<CallWithChatAdapterState>, Disposable, CallWithChatAdapterSubscriptions {
+export interface CallWithChatAdapterCommon extends CallWithChatAdapterManagement, AdapterState<CallWithChatAdapterState>, Disposable, CallWithChatAdapterSubscriptions {
 }
 
 // @public
@@ -435,7 +448,7 @@ export interface CallWithChatAdapterManagement {
     fetchInitialData(): Promise<void>;
     // @beta
     holdCall: () => Promise<void>;
-    joinCall(microphoneOn?: boolean): Call | undefined;
+    joinCall(microphoneOn?: boolean): void;
     leaveCall(forEveryone?: boolean): Promise<void>;
     loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
     mute(): Promise<void>;
@@ -1161,13 +1174,22 @@ export type ParticipantsRemovedListener = (event: {
     removedBy: ChatParticipant;
 }) => void;
 
+// @beta (undocumented)
+export type TeamsCallAdapter = Omit<CallAdapterCommon, keyof TeamsCallManagement> & TeamsCallManagement;
+
+// @beta (undocumented)
+export type TeamsCallManagement = {
+    joinCall(microphoneOn?: boolean): TeamsCall | undefined;
+    startCall(participants: string[], options?: StartTeamsCallOptions): TeamsCall | undefined;
+};
+
 // @public
 export type TopicChangedListener = (event: {
     topic: string;
 }) => void;
 
 // @public
-export const useAzureCommunicationCallAdapter: (args: Partial<AzureCommunicationCallAdapterArgs>, afterCreate?: ((adapter: CallAdapter) => Promise<CallAdapter>) | undefined, beforeDispose?: ((adapter: CallAdapter) => Promise<void>) | undefined) => CallAdapter | undefined;
+export const useAzureCommunicationCallAdapter: <Type extends "ACS" | "Teams" = "ACS">(args: Partial<AzureCommunicationCallAdapterArgs>, afterCreate?: ((adapter: CallAdapterCommon<Type extends "ACS" ? Call : TeamsCall>) => Promise<CallAdapterCommon<Type extends "ACS" ? Call : TeamsCall>>) | undefined, beforeDispose?: ((adapter: CallAdapterCommon<Type extends "ACS" ? Call : TeamsCall>) => Promise<void>) | undefined, type?: Type) => CallAdapterCommon<Type extends "ACS" ? Call : TeamsCall> | undefined;
 
 // @public
 export const useAzureCommunicationCallWithChatAdapter: (args: Partial<AzureCommunicationCallWithChatAdapterArgs>, afterCreate?: ((adapter: CallWithChatAdapter) => Promise<CallWithChatAdapter>) | undefined, beforeDispose?: ((adapter: CallWithChatAdapter) => Promise<void>) | undefined) => CallWithChatAdapter | undefined;

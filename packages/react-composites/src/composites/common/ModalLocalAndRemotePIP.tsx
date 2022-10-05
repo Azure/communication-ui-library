@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 import { concatStyleSets, ContextualMenu, IDragOptions, Stack } from '@fluentui/react';
 import React, { useMemo } from 'react';
-import { CallAdapter } from '../CallComposite';
+import { CallAdapterCommon } from '../CallComposite';
 import { CallAdapterProvider } from '../CallComposite/adapter/CallAdapterProvider';
 import { LocalAndRemotePIP } from '../CallComposite/components/LocalAndRemotePIP';
 import { useHandlers } from '../CallComposite/hooks/useHandlers';
@@ -70,7 +70,7 @@ const _ModalLocalAndRemotePIP = (props: {
  * @private
  */
 export const ModalLocalAndRemotePIP = (props: {
-  callAdapter: CallAdapter;
+  callAdapter: CallAdapterCommon;
   hidden: boolean;
   modalLayerHostId: string;
   children?: React.ReactNode;

@@ -12,7 +12,9 @@ import type {
   MediaDiagnosticChangedEventArgs,
   NetworkDiagnosticChangedEventArgs,
   PropertyChangedEvent,
-  CallEndReason
+  CallEndReason,
+  TeamsCall,
+  StartTeamsCallOptions
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions, DtmfTone } from '@azure/communication-calling';
@@ -50,7 +52,13 @@ export const END_CALL_PAGES: CallCompositePage[] = [
 ];
 
 /**
- * {@link CallAdapter} state for pure UI purposes.
+ *
+ * @public
+ */
+export type CallType = 'ACS' | 'Teams';
+
+/**
+ * {@link CallAdapterCommon} state for pure UI purposes.
  *
  * @public
  */
@@ -60,7 +68,7 @@ export type CallAdapterUiState = {
 };
 
 /**
- * {@link CallAdapter} state inferred from Azure Communication Services backend.
+ * {@link CallAdapterCommon} state inferred from Azure Communication Services backend.
  *
  * @public
  */
@@ -83,7 +91,7 @@ export type CallAdapterClientState = {
 };
 
 /**
- * {@link CallAdapter} state.
+ * {@link CallAdapterCommon} state.
  *
  * @public
  */
@@ -190,7 +198,7 @@ export type DiagnosticChangedEventListner = (
  *
  * @public
  */
-export interface CallAdapterCallManagement {
+export interface CallAdapterCallManagement<CallType extends Call | TeamsCall = Call> {
   /**
    * Join the call with microphone initially on/off.
    *
@@ -198,7 +206,7 @@ export interface CallAdapterCallManagement {
    *
    * @public
    */
-  joinCall(microphoneOn?: boolean): Call | undefined;
+  joinCall(microphoneOn?: boolean): void;
   /**
    * Leave the call
    *
@@ -242,7 +250,10 @@ export interface CallAdapterCallManagement {
    *
    * @public
    */
-  startCall(participants: string[], options?: StartCallOptions): Call | undefined;
+  startCall(
+    participants: string[],
+    options?: CallType extends Call ? StartCallOptions : StartTeamsCallOptions
+  ): CallType | undefined;
   /**
    * Start sharing the screen during a call.
    *
@@ -518,9 +529,34 @@ export interface CallAdapterSubscribers {
  *
  * @public
  */
-export interface CallAdapter
+export interface CallAdapterCommon<CallType extends Call | TeamsCall = Call>
   extends AdapterState<CallAdapterState>,
     Disposable,
-    CallAdapterCallManagement,
+    CallAdapterCallManagement<CallType>,
     CallAdapterDeviceManagement,
     CallAdapterSubscribers {}
+
+/**
+ * @public
+ */
+export type CallAdapter = Omit<CallAdapterCommon, keyof ACSCallManagement> & ACSCallManagement;
+
+/**
+ * @public
+ */
+export type ACSCallManagement = {
+  joinCall(microphoneOn?: boolean): Call | undefined;
+};
+
+/**
+ * @beta
+ */
+export type TeamsCallAdapter = Omit<CallAdapterCommon, keyof TeamsCallManagement> & TeamsCallManagement;
+
+/**
+ * @beta
+ */
+export type TeamsCallManagement = {
+  joinCall(microphoneOn?: boolean): TeamsCall | undefined;
+  startCall(participants: string[], options?: StartTeamsCallOptions): TeamsCall | undefined;
+};

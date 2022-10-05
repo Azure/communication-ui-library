@@ -13,6 +13,10 @@ export type { CallParticipantsLocator } from './AzureCommunicationCallAdapter';
 
 export type {
   CallAdapter,
+  ACSCallManagement,
+  TeamsCallAdapter,
+  TeamsCallManagement,
+  CallAdapterCommon,
   CallAdapterCallEndedEvent,
   CallAdapterCallManagement,
   CallAdapterClientState,

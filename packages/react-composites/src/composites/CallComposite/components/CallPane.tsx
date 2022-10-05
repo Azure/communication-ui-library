@@ -10,7 +10,7 @@ import {
   useTheme
 } from '@internal/react-components';
 import React, { useMemo, useState } from 'react';
-import { CallAdapter, CallControlOptions } from '../';
+import { CallAdapterCommon, CallControlOptions } from '../';
 import { CallAdapterProvider } from '../adapter/CallAdapterProvider';
 import { AvatarPersonaDataCallback } from '../../common/AvatarPersona';
 import {
@@ -43,7 +43,7 @@ import { isDisabled } from '../utils';
  */
 /** @beta */
 export const CallPane = (props: {
-  callAdapter: CallAdapter;
+  callAdapter: CallAdapterCommon;
   onClose: () => void;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;

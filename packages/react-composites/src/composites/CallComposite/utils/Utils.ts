@@ -6,6 +6,7 @@ import { _isInCall, _isPreviewOn, _isInLobbyOrConnecting } from '@internal/calli
 import { CallControlOptions } from '../types/CallControlOptions';
 import { CallState } from '@internal/calling-stateful-client';
 import { isPhoneNumberIdentifier } from '@azure/communication-common';
+import { Call, CallAgent, TeamsCall, TeamsCallAgent } from '@azure/communication-calling';
 
 const ACCESS_DENIED_TEAMS_MEETING_SUB_CODE = 5854;
 const REMOTE_PSTN_USER_HUNG_UP = 560000;
@@ -220,4 +221,18 @@ export const isDisabled = (option?: boolean | { disabled: boolean }): boolean =>
     return !!option?.disabled;
   }
   return option;
+};
+
+/**
+ * @private
+ */
+export const isTeamsCallAgent = (callAgent: CallAgent | TeamsCallAgent): callAgent is TeamsCallAgent => {
+  return callAgent.kind === 'TeamsCallAgent';
+};
+
+/**
+ * @private
+ */
+export const isTeamsCall = (call: Call | TeamsCall): call is TeamsCall => {
+  return call.kind === 'TeamsCall';
 };
