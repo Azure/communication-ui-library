@@ -9,7 +9,25 @@ This log was last generated on Wed, 05 Oct 2022 18:13:37 GMT and should not be m
 Wed, 05 Oct 2022 18:13:37 GMT 
 [Compare changes](https://github.com/azure/communication-ui-library/compare/@azure/communication-react_v1.3.1-beta.1...@azure/communication-react_v1.3.2-beta.1)
 
-### PSTN and 1:N Calling
+### Rooms - Public Preview
+Azure Communication Services now supports Rooms in public preview. You can use our CallComposite experience for your users to interact with your Rooms-based calls. Rooms allows our customers to create calls with specific users and the ability to
+modify their users' calling experience with a variety of role based access control.
+
+You can read more about [rooms concept here](https://learn.microsoft.com/en-us/azure/communication-services/concepts/rooms/room-concept).
+
+You can apply a Rooms locator in the adapter similar to how you
+can join a group call using a locator in the adapter + composite.
+
+`roomId = 99466313975086563 // example roomId`
+
+`locator: { 'roomId': roomId }`
+
+Checkout our [storybook](https://azure.github.io/communication-ui-library) to read more about what the UI Library offers into your Rooms experience.
+
+If you would like to clone a repo and get started immediately.
+Check out our quickstarts repo in Github [JS Quickstarts](https://github.com/Azure-Samples/communication-services-javascript-quickstarts/tree/main/ui-library-quickstart-rooms "JS Quickstarts")
+
+### PSTN and 1:N Calling - Public Preview
 ACS UI Library Call and CallWithChat composites are introducing two new capabilities (beta):
 1. PSTN Outbound Calling
 2. ACS 1:N Outbound Calling
@@ -20,8 +38,10 @@ Users will now be able to:
 - Put the call on hold during a phone or ACS call
 - Send DTMF tones during a 1:1 phone call
 
-Read more about getting a phone number through Azure Communication Services
-https://docs.microsoft.com/en-us/azure/communication-services/quickstarts/telephony/get-phone-number?tabs=windows&pivots=platform-azp
+Read more about [getting a phone number](https://docs.microsoft.com/en-us/azure/communication-services/quickstarts/telephony/get-phone-number?tabs=windows&pivots=platform-azp) through Azure Communication Services.
+
+If you would like to clone a repo and get started immediately.
+Check out our quickstarts repo in Github [JS Quickstarts](https://github.com/Azure-Samples/communication-services-javascript-quickstarts/tree/main/ui-library-pstn-1-n-calling "JS Quickstarts")
 
 ### Features
 - Call adapter can join a room ([PR #2063](https://github.com/azure/communication-ui-library/pull/2063) by miguelgamis@microsoft.com)
