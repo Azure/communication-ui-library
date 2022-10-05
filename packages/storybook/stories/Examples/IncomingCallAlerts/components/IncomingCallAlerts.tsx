@@ -12,7 +12,8 @@ import {
   incomingCallToastAvatarContainerStyle,
   incomingCallToastStyle,
   incomingCallModalLocalPreviewStyle,
-  incomingCallModalContainerStyle
+  incomingCallModalContainerStyle,
+  incomingCallModalDialogFooterStyle
 } from './styles/IncomingCallAlerts.styles';
 
 export type IncomingCallToastProps = {
@@ -57,12 +58,12 @@ export const IncomingCallToast = (props: IncomingCallToastProps): JSX.Element =>
         <DefaultButton
           className={incomingCallRejectButtonStyle}
           onClick={() => onClickReject()}
-          onRenderIcon={() => <CallEnd20Filled />}
+          onRenderIcon={() => <CallEnd20Filled style={{ display: 'flex' }} />}
         />
         <DefaultButton
           className={incomingCallAcceptButtonStyle}
           onClick={() => onClickAccept()}
-          onRenderIcon={() => <Call20Filled />}
+          onRenderIcon={() => <Call20Filled style={{ display: 'flex' }} />}
         />
       </Stack>
     </Stack>
@@ -153,15 +154,15 @@ export const IncomingCallModal = (props: IncomingCallModalProps): JSX.Element =>
           <Stack className={incomingCallModalLocalPreviewStyle}>{mediaGalleryLocalParticipant}</Stack>
         ) : null}
 
-        <DialogFooter>
+        <DialogFooter styles={incomingCallModalDialogFooterStyle}>
           <DefaultButton
             style={{ background: palette.neutralLighterAlt, border: 'none' }}
             onClick={() => onClickVideoToggle()}
             onRenderIcon={() =>
               showLocalVideo ? (
-                <Video20Filled primaryFill="currentColor" />
+                <Video20Filled primaryFill="currentColor" style={{ display: 'flex' }} />
               ) : (
-                <VideoOff20Filled primaryFill="currentColor" />
+                <VideoOff20Filled primaryFill="currentColor" style={{ display: 'flex' }} />
               )
             }
           />
