@@ -45,11 +45,11 @@ export interface _DevicePermissionDropdownProps {
    *
    * @param constrain - Define constraints for accessing local devices {@link @azure/communication-calling#PermissionConstraints }
    */
-  askDevicePermission?(constrain: PermissionConstraints): Promise<void>;
+  askDevicePermission?(constrain: _PermissionConstraints): Promise<void>;
   /**
    * Define constraints for accessing local devices  {@link @azure/communication-calling#PermissionConstraints }
    */
-  constrain?: PermissionConstraints;
+  constrain?: _PermissionConstraints;
   /**
    * Strings for devicepermissiondropdown
    */
@@ -103,7 +103,7 @@ export const _DevicePermissionDropdown = (props: _DevicePermissionDropdownProps)
  *
  * @internal
  */
-export type PermissionConstraints = {
+export type _PermissionConstraints = {
   audio: boolean;
   video: boolean;
 };

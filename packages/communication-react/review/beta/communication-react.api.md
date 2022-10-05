@@ -56,7 +56,7 @@ import { MediaStreamType } from '@azure/communication-calling';
 import { MicrosoftTeamsUserKind } from '@azure/communication-common';
 import type { NetworkDiagnosticChangedEventArgs } from '@azure/communication-calling';
 import { PartialTheme } from '@fluentui/react';
-import { PermissionConstraints as PermissionConstraints_2 } from '@azure/communication-calling';
+import { PermissionConstraints } from '@azure/communication-calling';
 import { PersonaInitialsColor } from '@fluentui/react';
 import { PersonaPresence } from '@fluentui/react';
 import { PersonaSize } from '@fluentui/react';
@@ -240,7 +240,7 @@ export type CallAdapterClientState = {
 
 // @public
 export interface CallAdapterDeviceManagement {
-    askDevicePermission(constrain: PermissionConstraints_2): Promise<void>;
+    askDevicePermission(constrain: PermissionConstraints): Promise<void>;
     queryCameras(): Promise<VideoDeviceInfo[]>;
     queryMicrophones(): Promise<AudioDeviceInfo[]>;
     querySpeakers(): Promise<AudioDeviceInfo[]>;
@@ -659,7 +659,7 @@ export interface CallWithChatAdapterManagement {
     addParticipant(participant: PhoneNumberIdentifier, options?: AddPhoneNumberOptions): Promise<void>;
     // (undocumented)
     addParticipant(participant: CommunicationUserIdentifier): Promise<void>;
-    askDevicePermission(constrain: PermissionConstraints_2): Promise<void>;
+    askDevicePermission(constrain: PermissionConstraints): Promise<void>;
     // @beta (undocumented)
     cancelFileUpload: (id: string) => void;
     // @beta (undocumented)
@@ -1735,8 +1735,8 @@ export const _DevicePermissionDropdown: (props: _DevicePermissionDropdownProps) 
 
 // @internal
 export interface _DevicePermissionDropdownProps {
-    askDevicePermission?(constrain: PermissionConstraints): Promise<void>;
-    constrain?: PermissionConstraints;
+    askDevicePermission?(constrain: _PermissionConstraints): Promise<void>;
+    constrain?: _PermissionConstraints;
     icon?: JSX.Element;
     options?: IDropdownOption[];
     strings?: _DevicePermissionDropdownStrings;
@@ -2595,10 +2595,8 @@ export type ParticipantsRemovedListener = (event: {
 // @public
 export type ParticipantState = 'Idle' | 'Connecting' | 'Ringing' | 'Connected' | 'Hold' | 'InLobby' | 'EarlyMedia' | 'Disconnected';
 
-// Warning: (ae-internal-missing-underscore) The name "PermissionConstraints" should be prefixed with an underscore because the declaration is marked as @internal
-//
 // @internal
-export type PermissionConstraints = {
+export type _PermissionConstraints = {
     audio: boolean;
     video: boolean;
 };

@@ -10,7 +10,7 @@ import {
   VideoDeviceInfo
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(call-readiness) */
-import { PermissionConstraints } from '@internal/react-components';
+import { PermissionConstraints } from '@azure/communication-calling';
 /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
 import { DtmfTone, AddPhoneNumberOptions } from '@azure/communication-calling';
 import { CommunicationUserIdentifier, PhoneNumberIdentifier, UnknownIdentifier } from '@azure/communication-common';

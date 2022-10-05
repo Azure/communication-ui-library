@@ -264,5 +264,5 @@ export { _DevicePermissionDropdown } from '../../react-components/src';
 export type {
   _DevicePermissionDropdownStrings,
   _DevicePermissionDropdownProps,
-  PermissionConstraints
+  _PermissionConstraints
 } from '../../react-components/src';

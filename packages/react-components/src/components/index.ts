@@ -159,5 +159,5 @@ export { _DevicePermissionDropdown } from './DevicePermissionDropdown';
 export type {
   _DevicePermissionDropdownStrings,
   _DevicePermissionDropdownProps,
-  PermissionConstraints
+  _PermissionConstraints
 } from './DevicePermissionDropdown';
