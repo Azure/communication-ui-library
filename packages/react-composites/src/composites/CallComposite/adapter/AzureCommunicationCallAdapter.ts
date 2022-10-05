@@ -34,6 +34,8 @@ import {
 import { RoomCallLocator } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions, DtmfTone } from '@azure/communication-calling';
+/* @conditional-compile-remove(unsupported-browser) */
+import { EnvironmentInfo } from '@azure/communication-calling';
 import { EventEmitter } from 'events';
 import {
   CallAdapter,
@@ -278,6 +280,8 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     this.resumeCall.bind(this);
     /* @conditional-compile-remove(PSTN-calls) */
     this.sendDtmfTone.bind(this);
+    /* @conditional-compile-remove(unsupported-browser) */
+    this.getEnvironmentInfo.bind(this);
   }
 
   public dispose(): void {
@@ -289,6 +293,13 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
   public async queryCameras(): Promise<VideoDeviceInfo[]> {
     return await this.asyncTeeErrorToEventEmitter(async () => {
       return this.deviceManager.getCameras();
+    });
+  }
+
+  /* @conditional-compile-remove(unsupported-browser) */
+  public async getEnvironmentInfo(): Promise<EnvironmentInfo> {
+    return await this.asyncTeeErrorToEventEmitter(async () => {
+      return await this.callClient.getEnvironmentInfo();
     });
   }
 
@@ -748,6 +759,7 @@ export const createAzureCommunicationCallAdapter = async ({
     displayName
   });
   const adapter = createAzureCommunicationCallAdapterFromClient(callClient, callAgent, locator);
+
   return adapter;
 };
 

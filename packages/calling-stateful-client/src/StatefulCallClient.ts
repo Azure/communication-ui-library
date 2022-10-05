@@ -211,6 +211,12 @@ class ProxyCallClient implements ProxyHandler<CallClient> {
           return this._deviceManager;
         }, 'CallClient.getDeviceManager');
       }
+      case 'getEnvironmentInfo': {
+        return this._context.withAsyncErrorTeedToState(async () => {
+          const environmentInfo = await target.getEnvironmentInfo();
+          return environmentInfo;
+        }, 'CallClient.getEnvironmentInfo');
+      }
       default:
         return Reflect.get(target, prop);
     }

@@ -27,6 +27,7 @@ import { ControlBarButtonStyles } from '@internal/react-components';
 import { CreateVideoStreamViewResult } from '@internal/react-components';
 import { DeviceManagerState } from '@internal/calling-stateful-client';
 import { DtmfTone } from '@azure/communication-calling';
+import { EnvironmentInfo } from '@azure/communication-calling';
 import { FileDownloadHandler } from '@internal/react-components';
 import { FileMetadata } from '@internal/react-components';
 import { GroupCallLocator } from '@azure/communication-calling';
@@ -181,6 +182,8 @@ export type CallAdapterClientState = {
 // @public
 export interface CallAdapterDeviceManagement {
     askDevicePermission(constrain: PermissionConstraints): Promise<void>;
+    // @beta
+    getEnvironmentInfo(): Promise<EnvironmentInfo>;
     queryCameras(): Promise<VideoDeviceInfo[]>;
     queryMicrophones(): Promise<AudioDeviceInfo[]>;
     querySpeakers(): Promise<AudioDeviceInfo[]>;
@@ -449,6 +452,8 @@ export interface CallWithChatAdapterManagement {
     deleteMessage(messageId: string): Promise<void>;
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
     fetchInitialData(): Promise<void>;
+    // @beta
+    getEnvironmentInfo: () => Promise<EnvironmentInfo>;
     // @beta
     holdCall: () => Promise<void>;
     joinCall(microphoneOn?: boolean): Call | undefined;

@@ -1,7 +1,14 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { AudioDeviceInfo, Call, DtmfTone, PermissionConstraints, VideoDeviceInfo } from '@azure/communication-calling';
+import {
+  AudioDeviceInfo,
+  Call,
+  DtmfTone,
+  EnvironmentInfo,
+  PermissionConstraints,
+  VideoDeviceInfo
+} from '@azure/communication-calling';
 import { CallAdapter, CallAdapterState } from './adapter';
 
 /**
@@ -79,6 +86,9 @@ export class MockCallAdapter implements CallAdapter {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   askDevicePermission(constrain: PermissionConstraints): Promise<void> {
     throw Error('askDevicePermission not implemented');
+  }
+  getEnvironmentInfo(): Promise<EnvironmentInfo> {
+    throw Error('getEnvironmentInfo not implemented');
   }
   async queryCameras(): Promise<VideoDeviceInfo[]> {
     return [];

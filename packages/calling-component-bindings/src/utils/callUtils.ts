@@ -47,6 +47,17 @@ export const disposeAllLocalPreviewViews = async (callClient: StatefulCallClient
   }
 };
 
+/* @conditional-compile-remove(unsupported-browser) */
+/**
+ * Check whether the call is in a supported browser
+ *
+ * @internal
+ */
+export const _checkBrowserSupported = async (callClient: StatefulCallClient): Promise<boolean> => {
+  const environmentInfo = await callClient.getEnvironmentInfo();
+  return environmentInfo.isSupportedBrowser;
+};
+
 /**
  * Update the users displayNames based on the type of user they are
  *

@@ -16,6 +16,8 @@ import type {
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions, DtmfTone } from '@azure/communication-calling';
+/* @conditional-compile-remove(unsupported-browser) */
+import { EnvironmentInfo } from '@azure/communication-calling';
 
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 import type { CommunicationIdentifierKind } from '@azure/communication-common';
@@ -399,6 +401,13 @@ export interface CallAdapterDeviceManagement {
    * @public
    */
   setSpeaker(sourceInfo: AudioDeviceInfo): Promise<void>;
+  /* @conditional-compile-remove(unsupported-browser) */
+  /**
+   * get the environment information from the {@link CallClient}
+   *
+   * @beta
+   */
+  getEnvironmentInfo(): Promise<EnvironmentInfo>;
 }
 
 /**
