@@ -51,14 +51,15 @@ import {
 } from './CallAdapter';
 import { getCallCompositePage, IsCallEndedPage, isCameraOn } from '../utils';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
-import { fromFlatCommunicationIdentifier, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
+import { toFlatCommunicationIdentifier, _toCommunicationIdentifier } from '@internal/acs-ui-common';
 import {
   CommunicationTokenCredential,
   CommunicationUserIdentifier,
   isCommunicationUserIdentifier,
   isPhoneNumberIdentifier,
   UnknownIdentifier,
-  PhoneNumberIdentifier
+  PhoneNumberIdentifier,
+  CommunicationIdentifier
 } from '@azure/communication-common';
 import { ParticipantSubscriber } from './ParticipantSubcriber';
 import { AdapterError } from '../../common/adapters';
@@ -459,7 +460,13 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     });
   }
 
-  public startCall(participants: string[], options?: StartCallOptions): Call | undefined {
+  public startCall(
+    participants:
+      | string[]
+      /* @conditional-compile-remove(PSTN-calls) */
+      | CommunicationIdentifier[],
+    options?: StartCallOptions
+  ): Call | undefined {
     if (_isInCall(this.getState().call?.state ?? 'None')) {
       throw new Error('You are already in the call.');
     }
@@ -467,10 +474,10 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     const idsToAdd = participants.map((participant) => {
       // FIXME: `onStartCall` does not allow a Teams user.
       // Need some way to return an error if a Teams user is provided.
-      const backendId = fromFlatCommunicationIdentifier(participant);
+      const backendId: CommunicationIdentifier = _toCommunicationIdentifier(participant);
       if (isPhoneNumberIdentifier(backendId)) {
         if (options?.alternateCallerId === undefined) {
-          throw new Error('unable to start call, PSTN user present with no alternateCallerId.');
+          throw new Error('Unable to start call, PSTN user present with no alternateCallerId.');
         }
         return backendId as PhoneNumberIdentifier;
       } else if (isCommunicationUserIdentifier(backendId)) {
@@ -498,8 +505,13 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     this.subscribeCallEvents();
   }
 
-  public async removeParticipant(userId: string): Promise<void> {
-    this.handlers.onRemoveParticipant(userId);
+  public async removeParticipant(
+    userId: string | /* @conditional-compile-remove(PSTN-calls) */ CommunicationIdentifier
+  ): Promise<void> {
+    let participant = userId;
+    /* @conditional-compile-remove(PSTN-calls) */
+    participant = _toCommunicationIdentifier(userId);
+    this.handlers.onRemoveParticipant(participant);
   }
 
   /* @conditional-compile-remove(PSTN-calls) */

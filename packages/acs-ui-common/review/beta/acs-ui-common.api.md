@@ -82,6 +82,9 @@ export type TelemetryEvent = {
     data?: Record<string, unknown>;
 };
 
+// @internal
+export const _toCommunicationIdentifier: (id: string | CommunicationIdentifier) => CommunicationIdentifier;
+
 // @public
 export const toFlatCommunicationIdentifier: (identifier: CommunicationIdentifier) => string;
 

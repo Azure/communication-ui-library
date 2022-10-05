@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Update onStartCall and onRemoveParticipant Calling Handler functions to use CommunicationIdentifier as userId instead of string",
+  "packageName": "@internal/calling-component-bindings",
+  "email": "anjulgarg@live.com",
+  "dependentChangeType": "patch"
+}
