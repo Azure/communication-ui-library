@@ -266,7 +266,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
                 strings={moreButtonStrings}
                 menuIconProps={{ hidden: true }}
                 menuProps={{ items: moreButtonContextualMenuItems() }}
-                showLabel={!props.isMobile}
+                showLabel={options?.displayType !== 'compact'}
               />
             )
           }
