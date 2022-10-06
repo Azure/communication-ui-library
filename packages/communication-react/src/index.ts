@@ -234,6 +234,14 @@ export type {
 export type { HoldButtonProps, HoldButtonStrings, VideoTileStrings } from '../../react-components/src';
 /* @conditional-compile-remove(call-readiness) */
 export type { DomainPermissionsStrings, DomainPermissionsProps } from '../../react-components/src';
+/* @conditional-compile-remove(call-readiness) */
+export type { BrowserPermissionDeniedStrings, BrowserPermissionDeniedProps } from '../../react-components/src';
+/* @conditional-compile-remove(call-readiness) */
+export type {
+  BrowserPermissionDeniedIOSStrings,
+  BrowserPermissionDeniedStyles,
+  BrowserPermissionDeniedIOSProps
+} from '../../react-components/src';
 export * from '../../react-components/src/localization/locales';
 export * from '../../react-components/src/theming';
 export * from '../../calling-stateful-client/src';
