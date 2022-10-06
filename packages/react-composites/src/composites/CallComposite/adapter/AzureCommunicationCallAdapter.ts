@@ -129,9 +129,7 @@ class CallContext {
     const newPage = getCallCompositePage(call, latestEndedCall);
     if (!IsCallEndedPage(oldPage) && IsCallEndedPage(newPage)) {
       this.emitter.emit('callEnded', {
-        callId: this.callId,
-        callEndedCode: latestEndedCall?.callEndReason?.code,
-        callEndedSubCode: latestEndedCall?.callEndReason?.subCode
+        callId: this.callId
       });
     }
 

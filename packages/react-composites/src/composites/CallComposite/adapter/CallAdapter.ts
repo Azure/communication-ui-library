@@ -11,8 +11,7 @@ import type {
   StartCallOptions,
   MediaDiagnosticChangedEventArgs,
   NetworkDiagnosticChangedEventArgs,
-  PropertyChangedEvent,
-  CallEndReason
+  PropertyChangedEvent
 } from '@azure/communication-calling';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 import type { CommunicationIdentifierKind } from '@azure/communication-common';
@@ -157,7 +156,7 @@ export type DisplayNameChangedListener = (event: {
  *
  * @public
  */
-export type CallAdapterCallEndedEvent = { callId?: string; callEndReason?: CallEndReason };
+export type CallAdapterCallEndedEvent = { callId?: string };
 
 /**
  * Callback for {@link CallAdapterSubscribers} 'callEnded' event.
