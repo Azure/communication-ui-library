@@ -177,13 +177,12 @@ export type CallAdapterClientState = {
     isTeamsCall: boolean;
     latestErrors: AdapterErrors;
     alternateCallerId?: string;
+    environmentInfo?: EnvironmentInfo;
 };
 
 // @public
 export interface CallAdapterDeviceManagement {
     askDevicePermission(constrain: PermissionConstraints): Promise<void>;
-    // @beta
-    getEnvironmentInfo(): Promise<EnvironmentInfo>;
     queryCameras(): Promise<VideoDeviceInfo[]>;
     queryMicrophones(): Promise<AudioDeviceInfo[]>;
     querySpeakers(): Promise<AudioDeviceInfo[]>;
@@ -452,8 +451,6 @@ export interface CallWithChatAdapterManagement {
     deleteMessage(messageId: string): Promise<void>;
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
     fetchInitialData(): Promise<void>;
-    // @beta
-    getEnvironmentInfo: () => Promise<EnvironmentInfo>;
     // @beta
     holdCall: () => Promise<void>;
     joinCall(microphoneOn?: boolean): Call | undefined;

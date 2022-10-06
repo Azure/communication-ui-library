@@ -6,6 +6,7 @@ import { _isInCall, _isPreviewOn, _isInLobbyOrConnecting } from '@internal/calli
 import { CallControlOptions } from '../types/CallControlOptions';
 import { CallState } from '@internal/calling-stateful-client';
 import { isPhoneNumberIdentifier } from '@azure/communication-common';
+import { EnvironmentInfo } from '@azure/communication-calling';
 
 const ACCESS_DENIED_TEAMS_MEETING_SUB_CODE = 5854;
 const REMOTE_PSTN_USER_HUNG_UP = 560000;
@@ -125,8 +126,12 @@ const getCallEndReason = (call: CallState): CallEndReasons => {
  */
 export const getCallCompositePage = (
   call: CallState | undefined,
-  previousCall: CallState | undefined
+  previousCall: CallState | undefined,
+  environmentInfo?: EnvironmentInfo
 ): CallCompositePage => {
+  if (environmentInfo && !environmentInfo.isSupportedEnvironment) {
+    return 'unsupportedBrowser';
+  }
   // Must check for ongoing call *before* looking at any previous calls.
   // If the composite completes one call and joins another, the previous calls
   // will be populated, but not relevant for determining the page.

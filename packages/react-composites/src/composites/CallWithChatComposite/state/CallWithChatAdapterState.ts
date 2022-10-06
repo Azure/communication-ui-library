@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+/* @conditional-compile-remove(unsupported-browser) */
+import { EnvironmentInfo } from '@azure/communication-calling';
 import { CommunicationIdentifierKind } from '@azure/communication-common';
 import { CallState, DeviceManagerState } from '@internal/calling-stateful-client';
 import { ChatThreadClientState } from '@internal/chat-stateful-client';
@@ -64,6 +66,9 @@ export interface CallWithChatClientState {
   /* @conditional-compile-remove(PSTN-calls) */
   /** alternateCallerId for PSTN call */
   alternateCallerId?: string | undefined;
+  /* @conditional-compile-remove(unsupported-browser) */
+  /** environment information for the client */
+  environmentInfo?: EnvironmentInfo;
 }
 
 /**
@@ -98,7 +103,9 @@ export function callWithChatAdapterStateFromBackingStates(
     /* @conditional-compile-remove(file-sharing) */
     fileUploads: chatAdapterState.fileUploads,
     /* @conditional-compile-remove(PSTN-calls) */
-    alternateCallerId: callAdapterState.alternateCallerId
+    alternateCallerId: callAdapterState.alternateCallerId,
+    /* @condtional-compile-remove(unsupported-browser) */
+    environmentInfo: callAdapterState.environmentInfo
   };
 }
 

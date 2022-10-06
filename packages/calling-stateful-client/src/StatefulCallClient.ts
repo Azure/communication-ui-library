@@ -214,7 +214,7 @@ class ProxyCallClient implements ProxyHandler<CallClient> {
       case 'getEnvironmentInfo': {
         return this._context.withAsyncErrorTeedToState(async () => {
           const environmentInfo = await target.getEnvironmentInfo();
-          return environmentInfo;
+          this._context.setEnvironmentInfo(environmentInfo);
         }, 'CallClient.getEnvironmentInfo');
       }
       default:

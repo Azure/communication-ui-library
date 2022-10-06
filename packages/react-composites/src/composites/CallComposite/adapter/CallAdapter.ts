@@ -53,7 +53,8 @@ export const END_CALL_PAGES: CallCompositePage[] = [
   'leftCall',
   /* @conditional-compile-remove(rooms) */ 'deniedPermissionToRoom',
   'removedFromCall',
-  /* @conditional-compile-remove(rooms) */ 'roomNotFound'
+  /* @conditional-compile-remove(rooms) */ 'roomNotFound',
+  /* @conditional-compile-remove(unsupported-browser) */ 'unsupportedBrowser'
 ];
 
 /**
@@ -87,6 +88,8 @@ export type CallAdapterClientState = {
    * Azure communications Phone number to make PSTN calls with.
    */
   alternateCallerId?: string;
+  /* @conditional-compile-remove(unsupported-browser) */
+  environmentInfo?: EnvironmentInfo;
 };
 
 /**
@@ -401,13 +404,6 @@ export interface CallAdapterDeviceManagement {
    * @public
    */
   setSpeaker(sourceInfo: AudioDeviceInfo): Promise<void>;
-  /* @conditional-compile-remove(unsupported-browser) */
-  /**
-   * get the environment information from the {@link CallClient}
-   *
-   * @beta
-   */
-  getEnvironmentInfo(): Promise<EnvironmentInfo>;
 }
 
 /**

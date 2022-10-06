@@ -34,8 +34,6 @@ import {
 import { RoomCallLocator } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions, DtmfTone } from '@azure/communication-calling';
-/* @conditional-compile-remove(unsupported-browser) */
-import { EnvironmentInfo } from '@azure/communication-calling';
 import { EventEmitter } from 'events';
 import {
   CallAdapter,
@@ -83,7 +81,8 @@ class CallContext {
       page: 'configuration',
       latestErrors: clientState.latestErrors,
       isTeamsCall,
-      /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId: clientState.alternateCallerId
+      /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId: clientState.alternateCallerId,
+      environmentInfo: clientState.environmentInfo
     };
   }
 
@@ -127,7 +126,7 @@ class CallContext {
 
     // As the state is transitioning to a new state, trigger appropriate callback events.
     const oldPage = this.state.page;
-    const newPage = getCallCompositePage(call, latestEndedCall);
+    const newPage = getCallCompositePage(call, latestEndedCall, clientState.environmentInfo);
     if (!IsCallEndedPage(oldPage) && IsCallEndedPage(newPage)) {
       this.emitter.emit('callEnded', {
         callId: this.callId,
@@ -145,7 +144,8 @@ class CallContext {
         page: newPage,
         endedCall: latestEndedCall,
         devices: clientState.deviceManager,
-        latestErrors: clientState.latestErrors
+        latestErrors: clientState.latestErrors,
+        environmentInfo: clientState.environmentInfo
       });
     }
   }
@@ -280,8 +280,6 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     this.resumeCall.bind(this);
     /* @conditional-compile-remove(PSTN-calls) */
     this.sendDtmfTone.bind(this);
-    /* @conditional-compile-remove(unsupported-browser) */
-    this.getEnvironmentInfo.bind(this);
   }
 
   public dispose(): void {
@@ -293,13 +291,6 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
   public async queryCameras(): Promise<VideoDeviceInfo[]> {
     return await this.asyncTeeErrorToEventEmitter(async () => {
       return this.deviceManager.getCameras();
-    });
-  }
-
-  /* @conditional-compile-remove(unsupported-browser) */
-  public async getEnvironmentInfo(): Promise<EnvironmentInfo> {
-    return await this.asyncTeeErrorToEventEmitter(async () => {
-      return await this.callClient.getEnvironmentInfo();
     });
   }
 
@@ -758,6 +749,7 @@ export const createAzureCommunicationCallAdapter = async ({
   const callAgent = await callClient.createCallAgent(credential, {
     displayName
   });
+
   const adapter = createAzureCommunicationCallAdapterFromClient(callClient, callAgent, locator);
 
   return adapter;
@@ -893,6 +885,8 @@ export const createAzureCommunicationCallAdapterFromClient = async (
   locator: CallAdapterLocator
 ): Promise<CallAdapter> => {
   const deviceManager = (await callClient.getDeviceManager()) as StatefulDeviceManager;
+
+  await callClient.getEnvironmentInfo();
   return new AzureCommunicationCallAdapter(callClient, locator, callAgent, deviceManager);
 };
 

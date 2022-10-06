@@ -9,8 +9,7 @@ import {
   VideoDeviceInfo,
   Call,
   PermissionConstraints,
-  StartCallOptions,
-  EnvironmentInfo
+  StartCallOptions
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions, DtmfTone } from '@azure/communication-calling';
@@ -139,11 +138,6 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
   /* @conditional-compile-remove(PSTN-calls) */
   public sendDtmfTone = async (dtmfTone: DtmfTone): Promise<void> => {
     await this.callWithChatAdapter.sendDtmfTone(dtmfTone);
-  };
-
-  /* @conditional-compile-remove(unsupported-browser) */
-  public getEnvironmentInfo = async (): Promise<EnvironmentInfo> => {
-    return await this.callWithChatAdapter.getEnvironmentInfo();
   };
 }
 

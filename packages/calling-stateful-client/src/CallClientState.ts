@@ -9,6 +9,7 @@ import {
   CallState as CallStatus,
   DeviceAccess,
   DominantSpeakersInfo,
+  EnvironmentInfo,
   LatestMediaDiagnostics,
   LatestNetworkDiagnostics,
   MediaStreamType,
@@ -418,6 +419,11 @@ export interface CallClientState {
    * be used as the caller id in the PSTN call.
    */
   alternateCallerId?: string;
+  /* @conditional-compile-remove(unsupported-browser) */
+  /**
+   * stores environment information for the client
+   */
+  environmentInfo?: EnvironmentInfo;
 }
 
 /**

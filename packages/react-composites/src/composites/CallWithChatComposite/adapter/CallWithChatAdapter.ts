@@ -31,8 +31,6 @@ import {
   StartCallOptions,
   VideoDeviceInfo
 } from '@azure/communication-calling';
-/* @conditional-compile-remove(unsupported-browser) */
-import { EnvironmentInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions, DtmfTone } from '@azure/communication-calling';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
@@ -319,13 +317,6 @@ export interface CallWithChatAdapterManagement {
    * @beta
    */
   sendDtmfTone: (dtmfTone: DtmfTone) => Promise<void>;
-  /* @conditional-compile-remove(unsupported-browser) */
-  /**
-   * gets the environment information from the calling SDK
-   *
-   * @beta
-   */
-  getEnvironmentInfo: () => Promise<EnvironmentInfo>;
 }
 
 /**

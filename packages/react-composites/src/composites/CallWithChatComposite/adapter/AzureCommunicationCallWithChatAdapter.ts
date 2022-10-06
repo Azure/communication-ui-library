@@ -13,8 +13,7 @@ import {
   PropertyChangedEvent,
   TeamsMeetingLinkLocator,
   StartCallOptions,
-  VideoDeviceInfo,
-  EnvironmentInfo
+  VideoDeviceInfo
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions, DtmfTone } from '@azure/communication-calling';
@@ -390,11 +389,6 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   /* @conditional-compile-remove(PSTN-calls) */
   public async sendDtmfTone(dtmfTone: DtmfTone): Promise<void> {
     return await this.callAdapter.sendDtmfTone(dtmfTone);
-  }
-
-  /* @conditional-compile-remove(unsupported-browser) */
-  public async getEnvironmentInfo(): Promise<EnvironmentInfo> {
-    return await this.callAdapter.getEnvironmentInfo();
   }
 
   on(event: 'callParticipantsJoined', listener: ParticipantsJoinedListener): void;
