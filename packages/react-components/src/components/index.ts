@@ -168,4 +168,8 @@ export type {
 } from './TroubleshootingGuideErrorBar';
 
 export { _DevicePermissionDropdown } from './DevicePermissionDropdown';
-export type { _DevicePermissionDropdownStrings, _DevicePermissionDropdownProps } from './DevicePermissionDropdown';
+export type {
+  _DevicePermissionDropdownStrings,
+  _DevicePermissionDropdownProps,
+  _PermissionConstraints
+} from './DevicePermissionDropdown';

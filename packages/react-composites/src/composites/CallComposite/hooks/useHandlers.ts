@@ -88,6 +88,10 @@ const createCompositeHandlers = memoizeOne(
     },
     onDisposeRemoteStreamView: async (userId) => {
       return adapter.disposeStreamView(userId);
+    },
+    /* @conditional-compile-remove(call-readiness) */
+    askDevicePermission: async (constrain) => {
+      return adapter.askDevicePermission(constrain);
     }
   })
 );
