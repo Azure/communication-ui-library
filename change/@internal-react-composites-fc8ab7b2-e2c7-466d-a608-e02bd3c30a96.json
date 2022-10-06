@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Remove end call reason from adapter.onCallEnded",
+  "packageName": "@internal/react-composites",
+  "email": "2684369+JamesBurnside@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
