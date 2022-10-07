@@ -8,7 +8,7 @@ import { dataUiId, isTestProfileStableFlavor, stableScreenshot, waitForSelector 
 import { buildUrlWithMockAdapter, defaultMockCallAdapterState, test } from './fixture';
 
 test.describe('unsupportedBrowser page tests', async () => {
-  test('unsupportedBrwoser displays correctly without a help link', async ({ page, serverUrl }) => {
+  test.only('unsupportedBrwoser displays correctly without a help link', async ({ page, serverUrl }) => {
     test.skip(isTestProfileStableFlavor());
 
     await page.goto(buildUrlWithMockAdapter(serverUrl, defaultMockUnsupportedBrowserPageState()));
@@ -36,6 +36,6 @@ test.describe('unsupportedBrowser page tests', async () => {
 
 const defaultMockUnsupportedBrowserPageState = (): MockCallAdapterState => {
   const state = defaultMockCallAdapterState();
-  state.page = 'unsupportedBrowser';
+  state.page = 'unsupportedEnvironment';
   return state;
 };
