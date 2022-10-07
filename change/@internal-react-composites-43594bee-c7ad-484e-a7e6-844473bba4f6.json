@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "addd callreadiness opt in option for call composite",
+  "packageName": "@internal/react-composites",
+  "email": "carolinecao@microsoft.com",
+  "dependentChangeType": "patch"
+}
