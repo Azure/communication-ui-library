@@ -13,7 +13,7 @@ import { useLocale } from '../../localization';
  * @internal
  */
 export type UnsupportedBrowserPageProps = {
-  onTroubleShootingClick: () => void;
+  onTroubleshootingClick: () => void;
 };
 
 /**
@@ -22,7 +22,7 @@ export type UnsupportedBrowserPageProps = {
  */
 export const UnsupportedBrowserPage = (props: UnsupportedBrowserPageProps): JSX.Element => {
   /* @conditional-compile-remove(unsupported-browser) */
-  const { onTroubleShootingClick } = props;
+  const { onTroubleshootingClick } = props;
   /* @conditional-compile-remove(unsupported-browser) */
   const locale = useLocale();
   /* @conditional-compile-remove(unsupported-browser) */
@@ -31,7 +31,7 @@ export const UnsupportedBrowserPage = (props: UnsupportedBrowserPageProps): JSX.
   /* @conditional-compile-remove(unsupported-browser) */
   return (
     <Stack styles={{ root: { margin: 'auto', paddingTop: '3rem' } }}>
-      <UnsupportedBrowser onTroubleShootingClick={onTroubleShootingClick} strings={unsupportedBrowserStrings} />
+      <UnsupportedBrowser onTroubleShootingClick={onTroubleshootingClick} strings={unsupportedBrowserStrings} />
     </Stack>
   );
   return <></>;

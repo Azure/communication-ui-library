@@ -160,7 +160,7 @@ export type CallCompositeOptions = {
    * @remarks
    * if this is not supplied, the composite will not show a unsupported browser page.
    */
-  onBrowserTroubleShootingClick?: () => void;
+  onBrowserTroubleshootingClick?: () => void;
 };
 
 type MainScreenProps = {
@@ -302,8 +302,8 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
       pageElement = (
         <>
           {
-            /* @conditional-compile-remove(unsupported-browser) */ props.options?.onBrowserTroubleShootingClick && (
-              <UnsupportedBrowserPage onTroubleShootingClick={props.options?.onBrowserTroubleShootingClick} />
+            /* @conditional-compile-remove(unsupported-browser) */ props.options?.onBrowserTroubleshootingClick && (
+              <UnsupportedBrowserPage onTroubleShootingClick={props.options?.onBrowserTroubleshootingClick} />
             )
           }
         </>
