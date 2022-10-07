@@ -31,6 +31,7 @@ import { useId } from '@fluentui/react-hooks';
 import { HoldPage } from './pages/HoldPage';
 /* @conditional-compile-remove(unsupported-browser) */
 import { UnsupportedBrowserPage } from './pages/UnsupportedBrowser';
+import { PermissionConstraints } from '@azure/communication-calling';
 
 /**
  * Props for {@link CallComposite}.
@@ -356,7 +357,7 @@ export const CallComposite = (props: CallCompositeProps): JSX.Element => {
   const getQueryOptions = (options: {
     /* @conditional-compile-remove(rooms) */ role?: Role;
     /* @conditional-compile-remove(call-readiness) */ callReadinessOptedIn?: boolean;
-  }) => {
+  }): PermissionConstraints => {
     /* @conditional-compile-remove(call-readiness) */
     if (options.callReadinessOptedIn) {
       return {

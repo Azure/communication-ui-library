@@ -29,6 +29,8 @@ export interface CallScreenProps {
   onCallEnded: () => void;
   /* @conditional-compile-remove(rooms) */
   role?: Role;
+  /* @conditional-compile-remove(call-readiness) */
+  callReadinessOptedIn?: boolean;
 }
 
 export const CallScreen = (props: CallScreenProps): JSX.Element => {
@@ -39,7 +41,8 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     displayName,
     onCallEnded,
     /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
-    /* @conditional-compile-remove(rooms) */ role
+    /* @conditional-compile-remove(rooms) */ role,
+    /* @conditional-compile-remove(call-readiness) */ callReadinessOptedIn
   } = props;
   const callIdRef = useRef<string>();
   const { currentTheme, currentRtl } = useSwitchableFluentTheme();
@@ -112,7 +115,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
       callInvitationUrl={callInvitationUrl}
       formFactor={isMobileSession ? 'mobile' : 'desktop'}
       /* @conditional-compile-remove(call-readiness) */
-      options={{ callReadinessOptedIn: true }}
+      options={{ callReadinessOptedIn: callReadinessOptedIn }}
       /* @conditional-compile-remove(rooms) */
       role={role}
     />

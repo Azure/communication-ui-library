@@ -25,6 +25,8 @@ export interface CallScreenProps {
   endpoint: string;
   locator: CallAndChatLocator | TeamsMeetingLinkLocator;
   /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId?: string;
+  /* @conditional-compile-remove(call-readiness) */
+  callReadinessOptedIn?: boolean;
 }
 
 export const CallScreen = (props: CallScreenProps): JSX.Element => {
@@ -34,7 +36,8 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     displayName,
     endpoint,
     locator,
-    /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId
+    /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
+    /* @conditional-compile-remove(call-readiness) */ callReadinessOptedIn
   } = props;
   const callIdRef = useRef<string>();
   const { currentTheme, currentRtl } = useSwitchableFluentTheme();
@@ -103,6 +106,8 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
       rtl={currentRtl}
       joinInvitationURL={window.location.href}
       formFactor={isMobileSession ? 'mobile' : 'desktop'}
+      /* @conditional-compile-remove(call-readiness) */
+      options={{ callReadinessOptedIn: callReadinessOptedIn }}
     />
   );
 };
