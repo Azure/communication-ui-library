@@ -187,11 +187,33 @@
   "DomainPermissions": {
     "primaryText": "Allow {appName} to use your camera and microphone",
     "secondaryText": "This is so participants can see and hear you.",
-    "linkText": "More help"
+    "linkText": "Need help? Get troubleshooting help",
+    "primaryButtonText": "Allow Access"
   },
   "UnsupportedBrowser": {
     "primaryText": "Browser not supported",
     "secondaryText": "Please join this call using a compatible browser.",
-    "moreHelpLink": "More help"
+    "moreHelpLink": "Need help? Get troubleshooting help"
+  },
+  "BrowserPermissionDenied": {
+    "primaryText": "Can't use your camera or microphone",
+    "secondaryText": "Your browser might not have access to your camera or microphone. To fix this, open System Preferences.",
+    "primaryButtonText": "Try again",
+    "linkText": "Need help? Get troubleshooting help"
+  },
+  "BrowserPermissionDeniedIOS": {
+    "primaryText": "Allow microphone access to continue",
+    "secondaryText": "So other participants can hear you.",
+    "primaryButtonText": "Try again",
+    "imageAltText": "Microphone and camera device permission location for iOS",
+    "linkText": "Need help? Get troubleshooting help",
+    "step1Text": "Go to the Settings app",
+    "step2Text": "Scroll down to settings for this browser",
+    "step3Text": "Turn on Microphone (Camera optional)",
+    "step4Text": "Try joining the call again",
+    "step1DigitText": "1",
+    "step2DigitText": "2",
+    "step3DigitText": "3",
+    "step4DigitText": "4"
   }
 }
