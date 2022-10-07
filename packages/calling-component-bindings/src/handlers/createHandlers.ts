@@ -9,6 +9,8 @@ import {
   StartCallOptions,
   VideoDeviceInfo
 } from '@azure/communication-calling';
+/* @conditional-compile-remove(call-readiness) */
+import { PermissionConstraints } from '@azure/communication-calling';
 /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
 import { DtmfTone, AddPhoneNumberOptions } from '@azure/communication-calling';
 import { CommunicationUserIdentifier, PhoneNumberIdentifier, UnknownIdentifier } from '@azure/communication-common';
@@ -16,24 +18,16 @@ import { CommunicationUserIdentifier, PhoneNumberIdentifier, UnknownIdentifier }
 import {
   isCommunicationUserIdentifier,
   isMicrosoftTeamsUserIdentifier,
-  isPhoneNumberIdentifier,
-  CommunicationIdentifier
+  isPhoneNumberIdentifier
 } from '@azure/communication-common';
-import { Common, fromFlatCommunicationIdentifier, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
+/* @conditional-compile-remove(PSTN-calls) */
+import { CommunicationIdentifier } from '@azure/communication-common';
+import { Common, toFlatCommunicationIdentifier, _toCommunicationIdentifier } from '@internal/acs-ui-common';
 import { CreateViewResult, StatefulCallClient, StatefulDeviceManager } from '@internal/calling-stateful-client';
 import memoizeOne from 'memoize-one';
 import { ReactElement } from 'react';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 import { disposeAllLocalPreviewViews, _isInCall, _isPreviewOn } from '../utils/callUtils';
-
-/* @conditional-compile-remove(PSTN-calls) */
-/**
- * handler type for addParticipant
- *
- * @beta
- */
-export type AddParticipantHandler = ((participant: CommunicationUserIdentifier) => Promise<void>) &
-  ((participant: PhoneNumberIdentifier, options: AddPhoneNumberOptions) => Promise<void>);
 
 /**
  * Object containing all the handlers required for calling components.
@@ -61,17 +55,23 @@ export type CallingHandlers = {
   /* @conditional-compile-remove(PSTN-calls) */
   onToggleHold: () => Promise<void>;
   /* @conditional-compile-remove(PSTN-calls) */
-  onAddParticipant: AddParticipantHandler;
+  onAddParticipant(participant: CommunicationUserIdentifier): Promise<void>;
+  /* @conditional-compile-remove(PSTN-calls) */
+  onAddParticipant(participant: PhoneNumberIdentifier, options: AddPhoneNumberOptions): Promise<void>;
   onCreateLocalStreamView: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
   onCreateRemoteStreamView: (
     userId: string,
     options?: VideoStreamOptions
   ) => Promise<void | CreateVideoStreamViewResult>;
-  onRemoveParticipant: (userId: string) => Promise<void>;
+  onRemoveParticipant(userId: string): Promise<void>;
+  /* @conditional-compile-remove(PSTN-calls) */
+  onRemoveParticipant(participant: CommunicationIdentifier): Promise<void>;
   onDisposeRemoteStreamView: (userId: string) => Promise<void>;
   onDisposeLocalStreamView: () => Promise<void>;
   /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
   onSendDtmfTone: (dtmfTone: DtmfTone) => Promise<void>;
+  /* @conditional-compile-remove(call-readiness) */
+  askDevicePermission: (constrain: PermissionConstraints) => Promise<void>;
 };
 
 /**
@@ -161,7 +161,6 @@ export const createDefaultCallingHandlers = memoizeOne(
       }
     };
 
-    // FIXME: onStartCall API should use string, not the underlying SDK types.
     const onStartCall = (
       participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[],
       options?: StartCallOptions
@@ -342,12 +341,15 @@ export const createDefaultCallingHandlers = memoizeOne(
       await disposeAllLocalPreviewViews(callClient);
     };
 
-    const onRemoveParticipant = async (userId: string): Promise<void> => {
-      await call?.removeParticipant(fromFlatCommunicationIdentifier(userId));
+    const onRemoveParticipant = async (
+      userId: string | /* @conditional-compile-remove(PSTN-calls) */ CommunicationIdentifier
+    ): Promise<void> => {
+      const participant = _toCommunicationIdentifier(userId);
+      await call?.removeParticipant(participant);
     };
 
     /* @conditional-compile-remove(PSTN-calls) */
-    const onAddParticipant: AddParticipantHandler = async (participant, options?) => {
+    const onAddParticipant = async (participant, options?): Promise<void> => {
       const participantType = participantTypeHelper(participant);
       switch (participantType) {
         case 'PSTN':
@@ -361,6 +363,13 @@ export const createDefaultCallingHandlers = memoizeOne(
 
     /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
     const onSendDtmfTone = async (dtmfTone: DtmfTone): Promise<void> => await call?.sendDtmf(dtmfTone);
+
+    /* @conditional-compile-remove(call-readiness) */
+    const askDevicePermission = async (constrain: PermissionConstraints): Promise<void> => {
+      if (deviceManager) {
+        await deviceManager?.askDevicePermission(constrain);
+      }
+    };
 
     return {
       onHangUp,
@@ -383,7 +392,9 @@ export const createDefaultCallingHandlers = memoizeOne(
       onStartLocalVideo,
       onDisposeRemoteStreamView,
       onDisposeLocalStreamView,
-      /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */ onSendDtmfTone
+      /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */ onSendDtmfTone,
+      /* @conditional-compile-remove(call-readiness) */
+      askDevicePermission
     };
   }
 );

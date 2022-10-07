@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add Call composite strings for people button",
+  "packageName": "@internal/react-composites",
+  "email": "edwardlee@microsoft.com",
+  "dependentChangeType": "patch"
+}

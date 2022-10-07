@@ -160,7 +160,7 @@ export type CallCompositeOptions = {
    * @remarks
    * if this is not supplied, the composite will not show a unsupported browser page.
    */
-  onBrowserTroubleShootingClick?: () => void;
+  onEnvironmentInfoTroubleshootingClick?: () => void;
 };
 
 type MainScreenProps = {
@@ -298,12 +298,13 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
         </>
       );
       break;
-    case unsupportedBrowserPageTrampoline():
+    case unsupportedEnvironmentPageTrampoline():
       pageElement = (
         <>
           {
-            /* @conditional-compile-remove(unsupported-browser) */ props.options?.onBrowserTroubleShootingClick && (
-              <UnsupportedBrowserPage onTroubleShootingClick={props.options?.onBrowserTroubleShootingClick} />
+            /* @conditional-compile-remove(unsupported-browser) */ props.options
+              ?.onEnvironmentInfoTroubleshootingClick && (
+              <UnsupportedBrowserPage onTroubleshootingClick={props.options?.onEnvironmentInfoTroubleshootingClick} />
             )
           }
         </>
@@ -433,8 +434,8 @@ const holdPageTrampoline = (): string => {
   return 'call';
 };
 
-const unsupportedBrowserPageTrampoline = (): string => {
+const unsupportedEnvironmentPageTrampoline = (): string => {
   /* @conditional-compile-remove(unsupported-browser) */
-  return 'unsupportedBrowser';
+  return 'unsupportedEnvironment';
   return 'call';
 };

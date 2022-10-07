@@ -11,16 +11,18 @@ import type {
   StartCallOptions,
   MediaDiagnosticChangedEventArgs,
   NetworkDiagnosticChangedEventArgs,
-  PropertyChangedEvent,
-  CallEndReason
+  PropertyChangedEvent
 } from '@azure/communication-calling';
-/* @conditional-compile-remove(PSTN-calls) */
-import { AddPhoneNumberOptions, DtmfTone } from '@azure/communication-calling';
-
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 import type { CommunicationIdentifierKind } from '@azure/communication-common';
 /* @conditional-compile-remove(PSTN-calls) */
-import type { CommunicationUserIdentifier, PhoneNumberIdentifier } from '@azure/communication-common';
+import { AddPhoneNumberOptions, DtmfTone } from '@azure/communication-calling';
+/* @conditional-compile-remove(PSTN-calls) */
+import type {
+  CommunicationIdentifier,
+  CommunicationUserIdentifier,
+  PhoneNumberIdentifier
+} from '@azure/communication-common';
 import type { AdapterState, Disposable, AdapterError, AdapterErrors } from '../../common/adapters';
 
 /**
@@ -39,7 +41,7 @@ export type CallCompositePage =
   | /* @conditional-compile-remove(rooms) */ 'deniedPermissionToRoom'
   | 'removedFromCall'
   | /* @conditional-compile-remove(rooms) */ 'roomNotFound'
-  | /* @conditional-compile-remove(unsupported-browser) */ 'unsupportedBrowser';
+  | /* @conditional-compile-remove(unsupported-browser) */ 'unsupportedEnvironment';
 
 /**
  * Subset of CallCompositePages that represent an end call state.
@@ -51,7 +53,8 @@ export const END_CALL_PAGES: CallCompositePage[] = [
   'leftCall',
   /* @conditional-compile-remove(rooms) */ 'deniedPermissionToRoom',
   'removedFromCall',
-  /* @conditional-compile-remove(rooms) */ 'roomNotFound'
+  /* @conditional-compile-remove(rooms) */ 'roomNotFound',
+  /* @conditional-compile-remove(unsupported-browser) */ 'unsupportedEnvironment'
 ];
 
 /**
@@ -154,7 +157,7 @@ export type DisplayNameChangedListener = (event: {
  *
  * @public
  */
-export type CallAdapterCallEndedEvent = { callId?: string; callEndReason?: CallEndReason };
+export type CallAdapterCallEndedEvent = { callId?: string };
 
 /**
  * Callback for {@link CallAdapterSubscribers} 'callEnded' event.
@@ -248,6 +251,13 @@ export interface CallAdapterCallManagement {
    * @public
    */
   startCall(participants: string[], options?: StartCallOptions): Call | undefined;
+  /* @conditional-compile-remove(PSTN-calls) */
+  /**
+   * Start the call.
+   * @param participants - An array of {@link @azure/communication-common#CommunicationIdentifier} to be called
+   * @beta
+   */
+  startCall(participants: CommunicationIdentifier[], options?: StartCallOptions): Call | undefined;
   /**
    * Start sharing the screen during a call.
    *
@@ -268,6 +278,13 @@ export interface CallAdapterCallManagement {
    * @public
    */
   removeParticipant(userId: string): Promise<void>;
+  /* @conditional-compile-remove(PSTN-calls) */
+  /**
+   * Remove a participant from the call.
+   * @param participant - {@link @azure/communication-common#CommunicationIdentifier} of the participant to be removed
+   * @beta
+   */
+  removeParticipant(participant: CommunicationIdentifier): Promise<void>;
   /**
    * Create the html view for a stream.
    *

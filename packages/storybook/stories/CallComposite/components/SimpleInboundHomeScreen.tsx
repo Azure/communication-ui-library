@@ -6,8 +6,7 @@ import { CommunicationUserIdentifier } from '@azure/communication-common';
 import { CallClientState } from '@azure/communication-react';
 import { Stack, Text, TextField, IStackTokens, mergeStyles } from '@fluentui/react';
 import React, { useEffect, useRef, useState } from 'react';
-
-import { IncomingCallToast } from './IncomingCallAlert';
+import { IncomingCallToast } from '../../Examples/IncomingCallAlerts/components';
 
 export interface HomeScreenProps {
   callState: CallClientState;

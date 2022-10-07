@@ -3,13 +3,17 @@
 /* @conditional-compile-remove(call-readiness) */
 import React from 'react';
 /* @conditional-compile-remove(call-readiness) */
-import { useTheme, _DevicePermissionDropdownStrings, _DevicePermissionDropdown } from '@internal/react-components';
-/* @conditional-compile-remove(call-readiness) */
-import { useAdapter } from '../adapter/CallAdapterProvider';
+import {
+  useTheme,
+  _DevicePermissionDropdownStrings,
+  _DevicePermissionDropdown,
+  _DevicePermissionDropdownProps
+} from '@internal/react-components';
 /* @conditional-compile-remove(call-readiness) */
 import { dropDownStyles } from '../styles/LocalDeviceSettings.styles';
 /* @conditional-compile-remove(call-readiness) */
 import { CallCompositeIcon } from '../../common/icons';
+import { CallingHandlers } from '@internal/calling-component-bindings';
 
 /**
  * @private
@@ -17,6 +21,7 @@ import { CallCompositeIcon } from '../../common/icons';
 export interface ConfigurationpageMicDropdownProps {
   micGrantedDropdown: JSX.Element;
   micPermissionGranted: boolean;
+  dropdownProps?: Record<string, never> & Partial<CallingHandlers>;
 }
 
 /**
@@ -25,8 +30,6 @@ export interface ConfigurationpageMicDropdownProps {
 export const ConfigurationpageMicDropdown = (props: ConfigurationpageMicDropdownProps): JSX.Element => {
   /* @conditional-compile-remove(call-readiness) */
   const theme = useTheme();
-  /* @conditional-compile-remove(call-readiness) */
-  const adapter = useAdapter();
   /* @conditional-compile-remove(call-readiness) */
   const devicePermissionDropdownStringsMicrophone: _DevicePermissionDropdownStrings = {
     placeHolderText: 'Enable Microphone (required)',
@@ -37,15 +40,10 @@ export const ConfigurationpageMicDropdown = (props: ConfigurationpageMicDropdown
   const microphoneBlockedDropdown = (
     <_DevicePermissionDropdown
       styles={dropDownStyles(theme)}
-      onClickActionButton={async () => {
-        await adapter.askDevicePermission({ video: false, audio: true });
-        if (props.micPermissionGranted) {
-          adapter.queryMicrophones();
-          adapter.querySpeakers();
-        }
-      }}
+      constrain={{ video: false, audio: true }}
       strings={devicePermissionDropdownStringsMicrophone}
       icon={<CallCompositeIcon iconName="ControlButtonMicOn" style={{ height: '1.25rem', marginRight: '0.625rem' }} />}
+      {...props.dropdownProps}
     />
   );
 
