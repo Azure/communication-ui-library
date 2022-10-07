@@ -116,6 +116,12 @@ export type CallCompositeOptions = {
   devicePermissions?: DevicePermissionRestrictions;
   /* @conditional-compile-remove(call-readiness) */
   /**
+   * Opt in call readiness feature for your call
+   * setting this to True will add call readiness feature in call experience
+   */
+  callReadinessOptedIn?: boolean;
+  /* @conditional-compile-remove(call-readiness) */
+  /**
    * Callback you may provide to supply users with further steps to troubleshoot why they have been
    * unable to grant your site the required permissions for the call.
    *
@@ -346,35 +352,35 @@ export const CallComposite = (props: CallCompositeProps): JSX.Element => {
     /* @conditional-compile-remove(rooms) */
     role
   } = props;
+
+  const getQueryOptions = (options: {
+    /* @conditional-compile-remove(rooms) */ role?: Role;
+    /* @conditional-compile-remove(call-readiness) */ callReadinessOptedIn?: boolean;
+  }) => {
+    /* @conditional-compile-remove(call-readiness) */
+    if (options.callReadinessOptedIn) {
+      return {
+        video: false,
+        audio: false
+      };
+    }
+    /* @conditional-compile-remove(rooms) */
+    if (options.role === 'Consumer') {
+      return {
+        video: false,
+        audio: true
+      };
+    }
+    return { video: true, audio: true };
+  };
+
   useEffect(() => {
     (async () => {
-      /* @conditional-compile-remove(rooms) */
-      if (role === 'Consumer') {
-        // Need to ask for audio devices to get access to speakers. Speaker permission is tied to microphone permission (when you request 'audio' permission using the SDK) its
-        // actually granting access to query both microphone and speaker. TODO: Need some investigation to see if we can get access to speakers without SDK.
-        await adapter.askDevicePermission({ video: false, audio: true });
-        adapter.querySpeakers();
-        return;
-      }
-      /* @conditional-compile-remove(call-readiness) */
-      if (options?.devicePermissions) {
-        const videoPermission = options?.devicePermissions.camera !== 'doNotPrompt';
-        const audioPermission = options?.devicePermissions.microphone !== 'doNotPrompt';
-        await adapter.askDevicePermission({
-          video: videoPermission,
-          audio: audioPermission
-        });
-        if (videoPermission) {
-          adapter.queryCameras();
-        }
-        if (audioPermission) {
-          adapter.queryMicrophones();
-        }
-        adapter.querySpeakers();
-        return;
-      }
-
-      await adapter.askDevicePermission({ video: true, audio: true });
+      const constrain = getQueryOptions({
+        /* @conditional-compile-remove(rooms) */ role: role,
+        /* @conditional-compile-remove(call-readiness) */ callReadinessOptedIn: options?.callReadinessOptedIn ?? false
+      });
+      await adapter.askDevicePermission(constrain);
       adapter.queryCameras();
       adapter.queryMicrophones();
       adapter.querySpeakers();
@@ -382,7 +388,7 @@ export const CallComposite = (props: CallCompositeProps): JSX.Element => {
   }, [
     adapter,
     /* @conditional-compile-remove(rooms) */ role,
-    /* @conditional-compile-remove(call-readiness) */ options?.devicePermissions
+    /* @conditional-compile-remove(call-readiness) */ options?.callReadinessOptedIn
   ]);
 
   const mobileView = formFactor === 'mobile';

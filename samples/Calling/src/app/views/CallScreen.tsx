@@ -111,6 +111,8 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
       rtl={currentRtl}
       callInvitationUrl={callInvitationUrl}
       formFactor={isMobileSession ? 'mobile' : 'desktop'}
+      /* @conditional-compile-remove(call-readiness) */
+      options={{ callReadinessOptedIn: true }}
       /* @conditional-compile-remove(rooms) */
       role={role}
     />

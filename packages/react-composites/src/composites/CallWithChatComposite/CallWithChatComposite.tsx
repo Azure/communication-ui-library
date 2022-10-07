@@ -366,7 +366,9 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
               options={{
                 callControls: false,
                 /* @conditional-compile-remove(call-readiness) */
-                devicePermissions: props.devicePermissions
+                devicePermissions: props.devicePermissions,
+                /* @conditional-compile-remove(call-readiness) */
+                callReadinessOptedIn: true
               }}
               adapter={callAdapter}
               fluentTheme={fluentTheme}
