@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "introduces unsupported browser page for the calling composites using new component.",
+  "comment": "introduce unsupported browser page for the calling composites using new component.",
   "packageName": "@internal/react-composites",
   "email": "94866715+dmceachernmsft@users.noreply.github.com",
   "dependentChangeType": "patch"
