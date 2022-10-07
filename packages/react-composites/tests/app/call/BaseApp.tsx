@@ -35,16 +35,16 @@ export function BaseApp(props: { queryArgs: QueryArgs; callAdapter?: CallAdapter
 
   const ParticipantItemOptions = queryArgs.showParticipantItemIcon ? <MoreHorizontal20Regular /> : <></>;
 
-  const onBrowserTroubleshootingClick = queryArgs.useTroubleShootingActions // useTroubleShootingActions is for all CallReadiness Callbacks
+  const onEnvironmentInfoTroubleshootingClick = queryArgs.useTroubleShootingActions // useTroubleShootingActions is for all CallReadiness Callbacks
     ? () => alert('you are using a unsupported browser')
     : undefined;
 
   let customCallCompositeOptions: CallCompositeOptions | undefined = undefined;
 
-  if (onBrowserTroubleshootingClick) {
+  if (onEnvironmentInfoTroubleshootingClick) {
     customCallCompositeOptions = {
       ...queryArgs.customCallCompositeOptions,
-      onBrowserTroubleShootingClick: onBrowserTroubleshootingClick
+      onEnvironmentInfoTroubleshootingClick: onEnvironmentInfoTroubleshootingClick
     };
   } else {
     customCallCompositeOptions = queryArgs.customCallCompositeOptions;
