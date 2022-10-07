@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "addd callreadiness opt in option for call composite",
+  "comment": "Add enable call readiness option for Call and CallWithChat composite",
   "packageName": "@internal/react-composites",
   "email": "carolinecao@microsoft.com",
   "dependentChangeType": "patch"
