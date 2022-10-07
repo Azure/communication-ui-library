@@ -451,11 +451,11 @@ export type CallCompositeOptions = {
         microphone: PermissionState;
     }) => void;
     onNetworkingTroubleShootingClick?: () => void;
-    onBrowserTroubleShootingClick?: () => void;
+    onEnvironmentInfoTroubleshootingClick?: () => void;
 };
 
 // @public
-export type CallCompositePage = 'accessDeniedTeamsMeeting' | 'call' | 'configuration' | /* @conditional-compile-remove(PSTN-calls) */ 'hold' | 'joinCallFailedDueToNoNetwork' | 'leftCall' | 'lobby' | /* @conditional-compile-remove(rooms) */ 'deniedPermissionToRoom' | 'removedFromCall' | /* @conditional-compile-remove(rooms) */ 'roomNotFound' | /* @conditional-compile-remove(unsupported-browser) */ 'unsupportedBrowser';
+export type CallCompositePage = 'accessDeniedTeamsMeeting' | 'call' | 'configuration' | /* @conditional-compile-remove(PSTN-calls) */ 'hold' | 'joinCallFailedDueToNoNetwork' | 'leftCall' | 'lobby' | /* @conditional-compile-remove(rooms) */ 'deniedPermissionToRoom' | 'removedFromCall' | /* @conditional-compile-remove(rooms) */ 'roomNotFound' | /* @conditional-compile-remove(unsupported-browser) */ 'unsupportedEnvironment';
 
 // @public
 export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcons> {
