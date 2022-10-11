@@ -140,10 +140,13 @@ export interface VideoTileProps {
   /* @conditional-compile-remove(pinned-participants) */
   /**
    * Display custom menu items in the VideoTile's contextual menu.
-   * It uses Fluent UI's ContextualMenu component. Thus the menu items should be of type `IContextualMenuItem`.
-   * For more information see https://developer.microsoft.com/en-us/fluentui#/controls/web/contextualmenu
    */
-  menuItems?: IContextualMenuItem[];
+  menuItems?: Array<{
+    key: string;
+    text: string;
+    onClick: () => void;
+    icon: JSX.Element;
+  }>;
 }
 
 // Coin max size is set to PersonaSize.size100
