@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { CallAgent } from '@azure/communication-calling';
+import { TeamsCallAgent } from '@azure/communication-calling';
 import { ProxyCallAgentCommon } from './CallAgentDeclarativeCommon';
 import { CallContext } from './CallContext';
 import { DeclarativeIncomingCall } from './IncomingCallDeclarative';
@@ -12,7 +12,7 @@ import { disposeAllViews } from './StreamUtils';
  * @public
  * `DeclarativeCallAgent` extends and proxies the {@link @azure/communication-calling#CallAgent}
  */
-export type DeclarativeCallAgent = CallAgent & /* @conditional-compile-remove(one-to-n-calling) */ {
+export type DeclarativeTeamsCallAgent = TeamsCallAgent & /* @conditional-compile-remove(one-to-n-calling) */ {
   /**
    * @beta
    * A readonly array that returns all the active `incomingCalls`.
@@ -29,10 +29,10 @@ export type DeclarativeCallAgent = CallAgent & /* @conditional-compile-remove(on
  * updates in the CallAgent and in the contained Calls and RemoteParticipants. When dispose is called it will
  * unsubscribe from all state updates.
  */
-class ProxyCallAgent extends ProxyCallAgentCommon implements ProxyHandler<DeclarativeCallAgent> {
-  private _callAgent: CallAgent;
+class ProxyTeamsCallAgent extends ProxyCallAgentCommon implements ProxyHandler<DeclarativeTeamsCallAgent> {
+  private _callAgent: TeamsCallAgent;
 
-  constructor(callAgent: CallAgent, context: CallContext, internalContext: InternalCallContext) {
+  constructor(callAgent: TeamsCallAgent, context: CallContext, internalContext: InternalCallContext) {
     super(context, internalContext);
     this._callAgent = callAgent;
     this.subscribe();
@@ -56,7 +56,7 @@ class ProxyCallAgent extends ProxyCallAgentCommon implements ProxyHandler<Declar
     this.unregisterSubscriber();
   };
 
-  public get<P extends keyof CallAgent>(target: CallAgent, prop: P): any {
+  public get<P extends keyof TeamsCallAgent>(target: TeamsCallAgent, prop: P): any {
     return super.getCommon(target, prop);
   }
 }
@@ -69,11 +69,11 @@ class ProxyCallAgent extends ProxyCallAgentCommon implements ProxyHandler<Declar
  * @param context - CallContext from StatefulCallClient
  * @param internalContext- InternalCallContext from StatefulCallClient
  */
-export const callAgentDeclaratify = (
-  callAgent: CallAgent,
+export const teamsCallAgentDeclaratify = (
+  callAgent: TeamsCallAgent,
   context: CallContext,
   internalContext: InternalCallContext
-): DeclarativeCallAgent => {
+): DeclarativeTeamsCallAgent => {
   // Make sure there are no existing call data if creating a new CallAgentDeclarative (if creating a new
   // CallAgentDeclarative after disposing of the hold one will mean context have old call state). TODO: should we stop
   // rendering when the previous callAgent is disposed?
@@ -81,5 +81,8 @@ export const callAgentDeclaratify = (
 
   context.clearCallRelatedState();
   internalContext.clearCallRelatedState();
-  return new Proxy(callAgent, new ProxyCallAgent(callAgent, context, internalContext)) as DeclarativeCallAgent;
+  return new Proxy(
+    callAgent,
+    new ProxyTeamsCallAgent(callAgent, context, internalContext)
+  ) as DeclarativeTeamsCallAgent;
 };

@@ -7,7 +7,12 @@ import {
   RemoteVideoStream as SdkRemoteVideoStream,
   LocalVideoStream as SdkLocalVideoStream,
   IncomingCall as SdkIncomingCall,
-  VideoStreamRendererView
+  VideoStreamRendererView,
+  TeamsCall,
+  TeamsIncomingCall,
+  Call,
+  CallAgent,
+  TeamsCallAgent
 } from '@azure/communication-calling';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import {
@@ -74,7 +79,7 @@ export function convertSdkParticipantToDeclarativeParticipant(
  *
  * Note at the time of writing only one LocalVideoStream is supported by the SDK.
  */
-export function convertSdkCallToDeclarativeCall(call: SdkCall): CallState {
+export function convertSdkCallToDeclarativeCall(call: TeamsCall | SdkCall): CallState {
   const declarativeRemoteParticipants = {};
   call.remoteParticipants.forEach((participant: SdkRemoteParticipant) => {
     declarativeRemoteParticipants[toFlatCommunicationIdentifier(participant.identifier)] =
@@ -82,6 +87,7 @@ export function convertSdkCallToDeclarativeCall(call: SdkCall): CallState {
   });
   return {
     id: call.id,
+    type: isTeamsCall(call) ? 'Teams' : 'ACS',
     callerInfo: call.callerInfo,
     state: call.state,
     callEndReason: call.callEndReason,
@@ -110,7 +116,9 @@ export function convertSdkCallToDeclarativeCall(call: SdkCall): CallState {
 /**
  * @private
  */
-export function convertSdkIncomingCallToDeclarativeIncomingCall(call: SdkIncomingCall): DeclarativeIncomingCall {
+export function convertSdkIncomingCallToDeclarativeIncomingCall(
+  call: SdkIncomingCall | TeamsIncomingCall
+): DeclarativeIncomingCall {
   return {
     id: call.id,
     callerInfo: call.callerInfo,
@@ -131,3 +139,17 @@ export function convertFromSDKToDeclarativeVideoStreamRendererView(
     target: view.target
   };
 }
+
+/**
+ * @private
+ */
+export const isTeamsCall = (call: TeamsCall | Call): call is TeamsCall => {
+  return call.kind === 'TeamsCall';
+};
+
+/**
+ * @private
+ */
+export const isTeamsCallAgent = (callAgent: TeamsCallAgent | CallAgent): callAgent is TeamsCallAgent => {
+  return callAgent.kind === 'TeamsCallAgent';
+};
