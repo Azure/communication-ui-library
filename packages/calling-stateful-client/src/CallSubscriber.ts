@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Call, Features, LocalVideoStream, RemoteParticipant } from '@azure/communication-calling';
+import { CallCommon, Features, LocalVideoStream, RemoteParticipant } from '@azure/communication-calling';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { CallContext } from './CallContext';
 import { CallIdRef } from './CallIdRef';
@@ -22,7 +22,7 @@ import { UserFacingDiagnosticsSubscriber } from './UserFacingDiagnosticsSubscrib
  * which property of that call. Also we can use this when unregistering to a call.
  */
 export class CallSubscriber {
-  private _call: Call;
+  private _call: CallCommon;
   private _callIdRef: CallIdRef;
   private _context: CallContext;
   private _internalContext: InternalCallContext;
@@ -32,7 +32,7 @@ export class CallSubscriber {
   private _recordingSubscriber: RecordingSubscriber;
   private _transcriptionSubscriber: TranscriptionSubscriber;
 
-  constructor(call: Call, context: CallContext, internalContext: InternalCallContext) {
+  constructor(call: CallCommon, context: CallContext, internalContext: InternalCallContext) {
     this._call = call;
     this._callIdRef = { callId: call.id };
     this._context = context;

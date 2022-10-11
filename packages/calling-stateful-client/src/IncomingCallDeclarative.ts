@@ -1,7 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IncomingCall } from '@azure/communication-calling';
+import {
+  IncomingCall,
+  /* @conditional-compile-remove(teams-call) */ TeamsIncomingCall
+} from '@azure/communication-calling';
 import { CallContext } from './CallContext';
 
 /**
@@ -43,7 +46,10 @@ export class ProxyIncomingCall implements ProxyHandler<DeclarativeIncomingCall> 
  * @param incomingCall - IncomingCall from SDK
  * @returns proxied IncomingCall
  */
-export const incomingCallDeclaratify = (incomingCall: IncomingCall, context: CallContext): DeclarativeIncomingCall => {
+export const incomingCallDeclaratify = (
+  incomingCall: IncomingCall | /* @conditional-compile-remove(teams-call) */ TeamsIncomingCall,
+  context: CallContext
+): DeclarativeIncomingCall => {
   const proxyIncomingCall = new ProxyIncomingCall(context);
   return new Proxy(incomingCall, proxyIncomingCall) as DeclarativeIncomingCall;
 };

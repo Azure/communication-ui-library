@@ -13,7 +13,9 @@ import {
   RecordingCallFeature,
   StartCallOptions,
   TranscriptionCallFeature,
-  CallFeatureFactory
+  CallFeatureFactory,
+  /* @conditional-compile-remove(teams-call) */
+  CallAgentKind
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(calling-beta-sdk) */
 import { GroupChatCallLocator, MeetingLocator, RoomLocator } from '@azure/communication-calling';
@@ -65,6 +67,8 @@ const mockCallId = 'b';
 class MockCallAgent implements CallAgent {
   calls: MockCall[] = [];
   displayName = undefined;
+  /* @conditional-compile-remove(teams-call) */
+  kind = 'CallAgent' as CallAgentKind;
   emitter = new EventEmitter();
   feature;
   startCall(

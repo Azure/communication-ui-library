@@ -188,6 +188,11 @@ export interface CallState {
    * Proxy of {@link @azure/communication-calling#Call.id}.
    */
   id: string;
+  /* @conditional-compile-remove(teams-call) */
+  /**
+   * Type of the call.
+   */
+  type: 'Teams' | 'ACS';
   /**
    * Proxy of {@link @azure/communication-calling#Call.callerInfo}.
    */
@@ -491,6 +496,7 @@ export type CallErrorTarget =
   | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.stopAudio'
   | 'Call.stopVideo'
   | 'Call.unmute'
+  | 'Call.dispose'
   | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.unmuteIncomingAudio'
   | 'CallAgent.dispose'
   | 'CallAgent.feature'
@@ -499,9 +505,10 @@ export type CallErrorTarget =
   | 'CallAgent.on'
   | 'CallAgent.startCall'
   | 'CallClient.createCallAgent'
+  | /* @conditional-compile-remove(teams-call) */ 'CallClient.createTeamsCallAgent'
   | 'CallClient.feature'
   | 'CallClient.getDeviceManager'
-  | /* @conditional-compile-remove(calling-beta-sdk) */ 'CallClient.getEnvironmentInfo'
+  | /* @conditional-compile-remove(teams-call) */ 'CallClient.getEnvironmentInfo'
   | 'DeviceManager.askDevicePermission'
   | 'DeviceManager.getCameras'
   | 'DeviceManager.getMicrophones'
@@ -511,7 +518,8 @@ export type CallErrorTarget =
   | 'DeviceManager.selectMicrophone'
   | 'DeviceManager.selectSpeaker'
   | 'IncomingCall.accept'
-  | 'IncomingCall.reject';
+  | 'IncomingCall.reject'
+  | /* @conditional-compile-remove(teams-call) */ 'TeamsCall.addParticipant';
 
 /**
  * State only proxy for {@link @azure/communication-calling#DiagnosticsCallFeature}.
