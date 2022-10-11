@@ -35,7 +35,11 @@ export type {
   CallProviderProps,
   GetCallingSelector,
   CallingHandlers,
-  CallingBaseSelectorProps
+  CallingBaseSelectorProps,
+  CallingHandlersCommon,
+  CallTypeOf,
+  CallHandlersOf,
+  TeamsCallingHandlers
 } from '../../calling-component-bindings/src';
 export type {
   ChatClientProviderProps,
@@ -51,6 +55,8 @@ export {
   CallProvider,
   useCallClient,
   useCallAgent,
+  useTeamsCallAgent,
+  useTeamsCall,
   useCall,
   useDeviceManager,
   getCallingSelector,

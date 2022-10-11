@@ -5,7 +5,7 @@ import { CallingHandlers } from '@internal/calling-component-bindings';
 import { CommonProperties, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { ReactElement } from 'react';
 import memoizeOne from 'memoize-one';
-import { CallAdapter } from '..';
+import { CallAdapterCommon } from '..';
 import { useAdapter } from '../adapter/CallAdapterProvider';
 import { isCameraOn } from '../utils';
 /* @conditional-compile-remove(PSTN-calls) */
@@ -23,7 +23,7 @@ export const useHandlers = <PropsT>(
 };
 
 const createCompositeHandlers = memoizeOne(
-  (adapter: CallAdapter): CallingHandlers => ({
+  (adapter: CallAdapterCommon): CallingHandlers => ({
     onCreateLocalStreamView: async (options) => {
       return await adapter.createStreamView(undefined, options);
     },

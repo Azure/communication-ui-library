@@ -4,6 +4,8 @@
 export type { CallingBaseSelectorProps } from './baseSelectors';
 export * from './callControlSelectors';
 export { createDefaultCallingHandlers } from './handlers/createHandlers';
+export { createDefaultCallingHandlersCommon } from './handlers/createHandlersCommon';
+export { createDefaultTeamsCallingHandlers } from './handlers/createTeamsCallHandlers';
 export type { ParticipantListSelector } from './participantListSelector';
 export type { ParticipantsButtonSelector } from './participantsButtonSelector';
 export type { VideoGallerySelector } from './videoGallerySelector';
@@ -11,7 +13,9 @@ export type { ErrorBarSelector } from './errorBarSelector';
 /* @conditional-compile-remove(PSTN-calls) */
 export type { HoldButtonSelector } from './callControlSelectors';
 
-export type { CallingHandlers } from './handlers/createHandlers';
+export type { CallingHandlers, CallHandlersOf, CallTypeOf } from './handlers/createHandlers';
+export type { TeamsCallingHandlers } from './handlers/createTeamsCallHandlers';
+export type { CallingHandlersCommon } from './handlers/createHandlersCommon';
 
 export {
   CallAgentProvider,
@@ -20,7 +24,9 @@ export {
   useCall,
   useCallAgent,
   useCallClient,
-  useDeviceManager
+  useDeviceManager,
+  useTeamsCall,
+  useTeamsCallAgent
 } from './providers';
 export type { CallAgentProviderProps, CallClientProviderProps, CallProviderProps } from './providers';
 

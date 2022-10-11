@@ -5,7 +5,8 @@ import {
   CameraButton,
   LocalVideoStreamState,
   useCallClient,
-  usePropsFor
+  usePropsFor,
+  useTeamsCall
 } from '@azure/communication-react';
 import { CallState as CallStatus, LocalVideoStream } from '@azure/communication-calling';
 import { useSelector } from '@azure/communication-react';
@@ -41,7 +42,7 @@ export const RenderVideoTileExample = (): JSX.Element => {
   const cameraButtonProps = usePropsFor(CameraButton);
 
   const callClient = useCallClient();
-  const call = useCall();
+  const call = useTeamsCall();
 
   // This function will start the local camera
   const onStartLocalVideo = useCallback(async () => {

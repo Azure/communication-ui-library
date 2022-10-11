@@ -1,3 +1,4 @@
+import { TeamsCall } from '@azure/communication-calling';
 import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 import {
   CallAdapter,
@@ -49,12 +50,14 @@ const createCallAdapterLocator = (locator: string): CallAdapterLocator | undefin
 export const ContosoCallContainer = (props: ContainerProps): JSX.Element => {
   const credential = useMemo(() => {
     try {
-      return new AzureCommunicationTokenCredential(props.token);
+      return new AzureCommunicationTokenCredential(
+        'eyJhbGciOiJSUzI1NiIsImtpZCI6IjEwNiIsIng1dCI6Im9QMWFxQnlfR3hZU3pSaXhuQ25zdE5PU2p2cyIsInR5cCI6IkpXVCJ9.eyJza3lwZWlkIjoib3JnaWQ6YTI3NDVkZDUtMDM3Ni00Njk4LWJkN2YtZWZmNmZjYzZlMjllIiwic2NwIjoxMDI0LCJjc2kiOiIxNjY0NDg5ODE5IiwiZXhwIjoxNjY0NDk0MDc5LCJ0aWQiOiI3MmY5ODhiZi04NmYxLTQxYWYtOTFhYi0yZDdjZDAxMWRiNDciLCJhY3NTY29wZSI6InZvaXAsY2hhdCIsInJlc291cmNlSWQiOiJiNmFhZGExZi0wYjFkLTQ3YWMtODY2Zi05MWFhZTAwYTFkMDEiLCJpYXQiOjE2NjQ0OTAxMjB9.jGsZs9KP1s5pOQPDgfOQw2Mgw7Gtn6S5qqq2bGAC2x_oH3QOiqOS0SPlg_rWWbOesCl0u7N1wLPwzmj_Fv1DMc1N3WxbyHnmxHyO3CUtLTEAvZtGnp7Q4H9A8dPHsn4sD0ghWivXfeRTZBXzvD_dQDSwD1O7B47W9dIHwr5nN3zh4ROO3NjQGEMaKmG6kPlfi7ZYtO7wredim-rvRhtkxy2vQLKJCQKkzKq1X7yv9bJ2zvZeXaX96Xn22y5SU0vQiAs29Ft867Q-5HlzMcXayJroY5AGEHNEF-fF46Z6HpPDGSm7jrBXb4-arvCqTE_qQQHuAen-PAu1uZj28Viq8A'
+      );
     } catch {
       console.error('Failed to construct token credential');
       return undefined;
     }
-  }, [props.token]);
+  }, []);
 
   const locator = useMemo(() => createCallAdapterLocator(props.locator), [props.locator]);
 
@@ -66,7 +69,8 @@ export const ContosoCallContainer = (props: ContainerProps): JSX.Element => {
       locator
     },
     undefined,
-    leaveCall
+    leaveCall,
+    'Teams'
   );
 
   if (!locator) {
@@ -93,7 +97,7 @@ export const ContosoCallContainer = (props: ContainerProps): JSX.Element => {
   return <>Initializing...</>;
 };
 
-const leaveCall = async (adapter: CallAdapter): Promise<void> => {
+const leaveCall = async (adapter: CallAdapter<TeamsCall>): Promise<void> => {
   await adapter.leaveCall().catch((e) => {
     console.error('Failed to leave call', e);
   });

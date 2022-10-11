@@ -2,13 +2,14 @@
 // Licensed under the MIT license.
 
 import React, { useContext, createContext } from 'react';
-import { Call } from '@azure/communication-calling';
+import { Call, TeamsCall } from '@azure/communication-calling';
+import { isTeamsCall } from '../handlers/createHandlers';
 
 /**
  * @private
  */
 export type CallContextType = {
-  call: Call | undefined;
+  call: Call | TeamsCall | undefined;
 };
 
 /**
@@ -18,7 +19,7 @@ export type CallContextType = {
  */
 export interface CallProviderProps {
   children: React.ReactNode;
-  call?: Call;
+  call?: Call | TeamsCall;
 }
 
 /**
@@ -57,5 +58,25 @@ export const CallProvider = (props: CallProviderProps): JSX.Element => <CallProv
  * @public
  */
 export const useCall = (): Call | undefined => {
-  return useContext(CallContext)?.call;
+  const call = useContext(CallContext)?.call;
+  if (call && isTeamsCall(call)) {
+    throw new Error('TeamsCall object was provided, try useTeamsCall() instead');
+  }
+  return call;
+};
+
+/**
+ * Hook to obtain {@link @azure/communication-calling#Call} from the provider.
+ *
+ * Useful when implementing a custom component that utilizes the providers
+ * exported from this library.
+ *
+ * @public
+ */
+export const useTeamsCall = (): TeamsCall | undefined => {
+  const call = useContext(CallContext)?.call;
+  if (call && !isTeamsCall(call)) {
+    throw new Error('Regular ACS Call object was provided, try useCall() instead');
+  }
+  return call;
 };
