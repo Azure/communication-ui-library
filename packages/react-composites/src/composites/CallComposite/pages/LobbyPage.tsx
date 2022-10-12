@@ -8,14 +8,12 @@ import { CallCompositeOptions } from '../CallComposite';
 import { CallArrangement } from '../components/CallArrangement';
 import { usePropsFor } from '../hooks/usePropsFor';
 import { LobbyOverlayProps, LobbyTile } from '../components/LobbyTile';
-import { getCallStatus } from '../selectors/baseSelectors';
+import { getCallStatus, getRemoteParticipants } from '../selectors/baseSelectors';
 import { disableCallControls, reduceCallControlsForMobile } from '../utils';
 import { CallCompositeStrings } from '../Strings';
 import { useLocale } from '../../localization';
 import { useLocalVideoStartTrigger } from '../components/MediaGallery';
 import { CallCompositeIcon } from '../../common/icons';
-/* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
-import { useAdapter } from '../adapter/CallAdapterProvider';
 /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
 import { isPhoneNumberIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
@@ -41,6 +39,7 @@ export const LobbyPage = (props: LobbyPageProps): JSX.Element => {
 
   const callState = useSelector(getCallStatus);
   const inLobby = callState === 'InLobby';
+  const remoteParticipants = useSelector(getRemoteParticipants) ?? {};
 
   useLocalVideoStartTrigger(lobbyProps.localParticipantVideoStream.isAvailable, inLobby);
 
@@ -62,17 +61,23 @@ export const LobbyPage = (props: LobbyPageProps): JSX.Element => {
       mobileView={props.mobileView}
       /* @conditional-compile-remove(one-to-n-calling) */
       modalLayerHostId={props.modalLayerHostId}
-      onRenderGalleryContent={() => <LobbyTile {...lobbyProps} overlayProps={overlayProps(strings, inLobby)} />}
+      onRenderGalleryContent={() => (
+        <LobbyTile {...lobbyProps} overlayProps={overlayProps(strings, inLobby, Object.values(remoteParticipants))} />
+      )}
       dataUiId={'lobby-page'}
     />
   );
 };
 
-const overlayProps = (strings: CallCompositeStrings, inLobby: boolean): LobbyOverlayProps => {
+const overlayProps = (
+  strings: CallCompositeStrings,
+  inLobby: boolean,
+  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ remoteParticipants:
+    | RemoteParticipantState[]
+    | undefined
+): LobbyOverlayProps => {
   /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
-  const remoteParticipants = useAdapter().getState().call?.remoteParticipants;
-  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
-  const outboundCallParticipant = remoteParticipants !== undefined ? Object.values(remoteParticipants)[0] : undefined;
+  const outboundCallParticipant = remoteParticipants !== undefined ? remoteParticipants[0] : undefined;
 
   /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
   return inLobby
