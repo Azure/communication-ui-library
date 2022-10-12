@@ -257,7 +257,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
   /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
   const isInLocalHold = currentPage === 'hold';
   const hasJoinedCall = !!(currentPage && hasJoinedCallFn(currentPage, currentCallState ?? 'None'));
-  const showControlBar = isInLobbyOrConnecting || hasJoinedCall || currentCallState === 'Disconnecting';
+  const showControlBar = isInLobbyOrConnecting || hasJoinedCall;
   const isMobileWithActivePane = mobileView && activePane !== 'none';
 
   /** Constant setting of id for the parent stack of the composite */
@@ -492,10 +492,11 @@ export const CallWithChatComposite = (props: CallWithChatCompositeProps): JSX.El
 const hasJoinedCallFn = (page: CallCompositePage, callStatus: CallState): boolean => {
   /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(one-to-n-calling) */
   return (
-    (page === 'call' && (callStatus === 'Connected' || callStatus === 'RemoteHold')) ||
-    (page === 'hold' && callStatus === 'LocalHold')
+    (page === 'call' &&
+      (callStatus === 'Connected' || callStatus === 'RemoteHold' || callStatus === 'Disconnecting')) ||
+    (page === 'hold' && (callStatus === 'LocalHold' || callStatus === 'Disconnecting'))
   );
-  return page === 'call' && callStatus === 'Connected';
+  return page === 'call' && (callStatus === 'Connected' || callStatus === 'Disconnecting');
 };
 
 const showShowChatTabHeaderButton = (callControls?: boolean | CallWithChatControlOptions): boolean => {
