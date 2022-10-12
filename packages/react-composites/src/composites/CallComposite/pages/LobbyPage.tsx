@@ -14,6 +14,12 @@ import { CallCompositeStrings } from '../Strings';
 import { useLocale } from '../../localization';
 import { useLocalVideoStartTrigger } from '../components/MediaGallery';
 import { CallCompositeIcon } from '../../common/icons';
+/* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(1-to-n-calling) */
+import { useAdapter } from '../adapter/CallAdapterProvider';
+/* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(1-to-n-calling) */
+import { isPhoneNumberIdentifier } from '@azure/communication-common';
+/* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(1-to-n-calling) */
+import { RemoteParticipantState } from '@internal/calling-stateful-client';
 
 /**
  * @private
@@ -62,8 +68,16 @@ export const LobbyPage = (props: LobbyPageProps): JSX.Element => {
   );
 };
 
-const overlayProps = (strings: CallCompositeStrings, inLobby: boolean): LobbyOverlayProps =>
-  inLobby ? overlayPropsWaitingToBeAdmitted(strings) : overlayPropsConnectingToCall(strings);
+const overlayProps = (strings: CallCompositeStrings, inLobby: boolean): LobbyOverlayProps => {
+  const remoteParticipants = useAdapter().getState().call?.remoteParticipants;
+  const outboundCallParticipant = remoteParticipants !== undefined ? Object.values(remoteParticipants)[0] : undefined;
+
+  return inLobby
+    ? overlayPropsWaitingToBeAdmitted(strings)
+    : outboundCallParticipant
+    ? overlayPropsOutboundCall(strings, outboundCallParticipant)
+    : overlayPropsConnectingToCall(strings);
+};
 
 const overlayPropsConnectingToCall = (strings: CallCompositeStrings): LobbyOverlayProps => ({
   title: strings.lobbyScreenConnectingToCallTitle,
@@ -76,3 +90,17 @@ const overlayPropsWaitingToBeAdmitted = (strings: CallCompositeStrings): LobbyOv
   moreDetails: strings.lobbyScreenWaitingToBeAdmittedMoreDetails,
   overlayIcon: <CallCompositeIcon iconName="LobbyScreenWaitingToBeAdmitted" />
 });
+
+/* @conditional-compile-remove(PSTN-calls) */
+const overlayPropsOutboundCall = (
+  strings: CallCompositeStrings,
+  participant: RemoteParticipantState
+): LobbyOverlayProps => {
+  const title = isPhoneNumberIdentifier(participant.identifier)
+    ? participant.identifier.phoneNumber
+    : strings.outboundCallingNoticeString;
+  return {
+    title,
+    moreDetails: title !== strings.outboundCallingNoticeString ? strings.outboundCallingNoticeString : undefined
+  };
+};
