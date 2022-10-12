@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Icon, IContextualMenuItem, IStyle, mergeStyles, Persona, Stack, Text } from '@fluentui/react';
+import { Icon, IIconProps, IStyle, mergeStyles, Persona, Stack, Text } from '@fluentui/react';
 import { Ref } from '@fluentui/react-northstar';
 import React, { useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { useIdentifiers } from '../identifiers';
@@ -145,7 +145,10 @@ export interface VideoTileProps {
     key: string;
     text: string;
     onClick: () => void;
-    icon: JSX.Element;
+    // Checkout https://developer.microsoft.com/en-us/fluentui#/controls/web/contextualmenu
+    // And https://developer.microsoft.com/en-us/fluentui#/controls/web/icon#IIconProps
+    // Note: DrawerMenu needs to be upgraded to use the same IIConProps
+    icon: IIconProps;
   }>;
 }
 
