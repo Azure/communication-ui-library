@@ -322,8 +322,7 @@ export interface CallCompositeStrings {
    * Control bar People button ToolTipContent
    */
   peopleButtonTooltipClose: string;
-  /* @conditional-compile-remove(PSTN-calls) */
-  /* @conditional-compile-remove(1-to-n-calling) */
+  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
   /**
    * label for when making a outbound call
    *

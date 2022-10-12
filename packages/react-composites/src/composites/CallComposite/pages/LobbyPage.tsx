@@ -14,11 +14,11 @@ import { CallCompositeStrings } from '../Strings';
 import { useLocale } from '../../localization';
 import { useLocalVideoStartTrigger } from '../components/MediaGallery';
 import { CallCompositeIcon } from '../../common/icons';
-/* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(1-to-n-calling) */
+/* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
 import { useAdapter } from '../adapter/CallAdapterProvider';
-/* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(1-to-n-calling) */
+/* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
 import { isPhoneNumberIdentifier } from '@azure/communication-common';
-/* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(1-to-n-calling) */
+/* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
 import { RemoteParticipantState } from '@internal/calling-stateful-client';
 
 /**
@@ -69,14 +69,19 @@ export const LobbyPage = (props: LobbyPageProps): JSX.Element => {
 };
 
 const overlayProps = (strings: CallCompositeStrings, inLobby: boolean): LobbyOverlayProps => {
+  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
   const remoteParticipants = useAdapter().getState().call?.remoteParticipants;
+  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
   const outboundCallParticipant = remoteParticipants !== undefined ? Object.values(remoteParticipants)[0] : undefined;
 
+  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
   return inLobby
     ? overlayPropsWaitingToBeAdmitted(strings)
     : outboundCallParticipant
     ? overlayPropsOutboundCall(strings, outboundCallParticipant)
     : overlayPropsConnectingToCall(strings);
+
+  return inLobby ? overlayPropsWaitingToBeAdmitted(strings) : overlayPropsConnectingToCall(strings);
 };
 
 const overlayPropsConnectingToCall = (strings: CallCompositeStrings): LobbyOverlayProps => ({
@@ -91,7 +96,7 @@ const overlayPropsWaitingToBeAdmitted = (strings: CallCompositeStrings): LobbyOv
   overlayIcon: <CallCompositeIcon iconName="LobbyScreenWaitingToBeAdmitted" />
 });
 
-/* @conditional-compile-remove(PSTN-calls) */
+/* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
 const overlayPropsOutboundCall = (
   strings: CallCompositeStrings,
   participant: RemoteParticipantState

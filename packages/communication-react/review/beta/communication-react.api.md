@@ -518,6 +518,7 @@ export interface CallCompositeStrings {
     networkReconnectTitle: string;
     openDialpadButtonLabel: string;
     openDtmfDialpadLabel: string;
+    outboundCallingNoticeString: string;
     peopleButtonLabel: string;
     peopleButtonTooltipClose: string;
     peopleButtonTooltipOpen: string;
