@@ -20,6 +20,16 @@ export const Devices = (props: {
   disabled?: boolean;
 }): JSX.Element => {
   const devicesButtonProps = usePropsFor(DevicesButton);
+  /* @conditional-compile-remove(rooms) */
+  const permissions = _usePermissions();
+  /* @conditional-compile-remove(rooms) */
+  if (!permissions.microphoneButton) {
+    devicesButtonProps.microphones = [];
+  }
+  /* @conditional-compile-remove(rooms) */
+  if (!permissions.cameraButton) {
+    devicesButtonProps.cameras = [];
+  }
   const styles = useMemo(
     () =>
       concatButtonBaseStyles(
@@ -28,9 +38,6 @@ export const Devices = (props: {
       ),
     [props.increaseFlyoutItemSize, props.styles]
   );
-
-  /* @conditional-compile-remove(rooms) */
-  const permissions = _usePermissions();
   /* @conditional-compile-remove(rooms) */
   const locale = useLocale();
   /* @conditional-compile-remove(rooms) */
