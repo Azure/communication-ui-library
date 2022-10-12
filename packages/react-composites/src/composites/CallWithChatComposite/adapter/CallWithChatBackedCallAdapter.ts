@@ -82,7 +82,8 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
   public joinCall = (microphoneOn?: boolean): Call | undefined => {
     return this.callWithChatAdapter.joinCall(microphoneOn);
   };
-  public leaveCall = async (): Promise<void> => await this.callWithChatAdapter.leaveCall();
+  public leaveCall = async (forEveryone?: boolean): Promise<void> =>
+    await this.callWithChatAdapter.leaveCall(forEveryone);
   public startCall = (
     participants: string[] | /* @conditional-compile-remove(PSTN-calls) */ CommunicationIdentifier[],
     options: StartCallOptions

@@ -51,7 +51,7 @@ export type CallingHandlers = {
   onStartScreenShare: () => Promise<void>;
   onStopScreenShare: () => Promise<void>;
   onToggleScreenShare: () => Promise<void>;
-  onHangUp: () => Promise<void>;
+  onHangUp: (forEveryone?: boolean) => Promise<void>;
   /* @conditional-compile-remove(PSTN-calls) */
   onToggleHold: () => Promise<void>;
   /* @conditional-compile-remove(PSTN-calls) */
@@ -227,7 +227,8 @@ export const createDefaultCallingHandlers = memoizeOne(
     const onToggleScreenShare = async (): Promise<void> =>
       call?.isScreenSharingOn ? await onStopScreenShare() : await onStartScreenShare();
 
-    const onHangUp = async (): Promise<void> => await call?.hangUp();
+    const onHangUp = async (forEveryone?: boolean): Promise<void> =>
+      await call?.hangUp({ forEveryone: forEveryone ?? false });
 
     /* @conditional-compile-remove(PSTN-calls) */
     const onToggleHold = async (): Promise<void> =>

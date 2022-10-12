@@ -33,8 +33,7 @@ export interface EndCallButtonProps extends ControlBarButtonProps {
    * Utility property for using this component with `communication react eventHandlers`.
    * Maps directly to the `onClick` property.
    */
-  onHangUp?: () => Promise<void>;
-
+  onHangUp?: (forEveryone?: boolean) => Promise<void>;
   /**
    * Optional strings to override in component
    */
@@ -63,10 +62,16 @@ export const EndCallButton = (props: EndCallButtonProps): JSX.Element => {
     styles ?? {}
   );
 
+  const onHangUp = (): void => {
+    if (props.onHangUp) {
+      props.onHangUp();
+    }
+  };
+
   return (
     <ControlBarButton
       {...props}
-      onClick={props.onHangUp ?? props.onClick}
+      onClick={props.onHangUp ? onHangUp : props.onClick}
       styles={componentStyles}
       onRenderIcon={props.onRenderIcon ?? onRenderEndCallIcon}
       strings={strings}
