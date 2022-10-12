@@ -39,6 +39,11 @@ export const themedDialpadStyle = (isMobile: boolean, theme: Theme): Partial<Dia
       }
     }
   },
+  deleteIcon: {
+    root: {
+      backgroundColor: theme.palette.white
+    }
+  },
   digit: {
     color: theme.palette.themeDarkAlt
   }
