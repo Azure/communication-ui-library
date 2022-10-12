@@ -11,7 +11,6 @@ import { AudioDeviceInfo } from '@azure/communication-calling';
 import { BaseCustomStyles } from '@internal/react-components';
 import { Call } from '@azure/communication-calling';
 import { CallAgent } from '@azure/communication-calling';
-import type { CallEndReason } from '@azure/communication-calling';
 import { CallState } from '@internal/calling-stateful-client';
 import type { ChatMessage } from '@azure/communication-chat';
 import type { ChatParticipant } from '@azure/communication-chat';
@@ -138,7 +137,6 @@ export interface CallAdapter extends AdapterState<CallAdapterState>, Disposable,
 // @public
 export type CallAdapterCallEndedEvent = {
     callId?: string;
-    callEndReason?: CallEndReason;
 };
 
 // @public
@@ -305,10 +303,11 @@ export type CallCompositeOptions = {
         microphone: PermissionState;
     }) => void;
     onNetworkingTroubleShootingClick?: () => void;
+    onEnvironmentInfoTroubleshootingClick?: () => void;
 };
 
 // @public
-export type CallCompositePage = 'accessDeniedTeamsMeeting' | 'call' | 'configuration' | /* @conditional-compile-remove(PSTN-calls) */ 'hold' | 'joinCallFailedDueToNoNetwork' | 'leftCall' | 'lobby' | /* @conditional-compile-remove(rooms) */ 'deniedPermissionToRoom' | 'removedFromCall' | /* @conditional-compile-remove(rooms) */ 'roomNotFound';
+export type CallCompositePage = 'accessDeniedTeamsMeeting' | 'call' | 'configuration' | /* @conditional-compile-remove(PSTN-calls) */ 'hold' | 'joinCallFailedDueToNoNetwork' | 'leftCall' | 'lobby' | /* @conditional-compile-remove(rooms) */ 'deniedPermissionToRoom' | 'removedFromCall' | /* @conditional-compile-remove(rooms) */ 'roomNotFound' | /* @conditional-compile-remove(unsupported-browser) */ 'unsupportedEnvironment';
 
 // @public
 export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcons> {
@@ -1063,6 +1062,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     DomainPermissionCamera: JSX.Element;
     DomainPermissionMic: JSX.Element;
     UnsupportedBrowserWarning: JSX.Element;
+    BrowserPermissionDeniedError: JSX.Element;
 };
 
 // @beta

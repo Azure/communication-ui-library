@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Use usepropsfor to grab props for dropdown",
+  "packageName": "@internal/react-composites",
+  "email": "carolinecao@microsoft.com",
+  "dependentChangeType": "patch"
+}

@@ -92,6 +92,18 @@ export type {
 export { DomainPermissions } from './DomainPermissions';
 /* @conditional-compile-remove(call-readiness) */
 export type { DomainPermissionsStrings, DomainPermissionsProps } from './DomainPermissions';
+/* @conditional-compile-remove(call-readiness) */
+export { BrowserPermissionDenied } from './BrowserPermissionDenied';
+/* @conditional-compile-remove(call-readiness) */
+export type {
+  BrowserPermissionDeniedStrings,
+  BrowserPermissionDeniedStyles,
+  BrowserPermissionDeniedProps
+} from './BrowserPermissionDenied';
+/* @conditional-compile-remove(call-readiness) */
+export { BrowserPermissionDeniedIOS } from './BrowserPermissionDeniedIOS';
+/* @conditional-compile-remove(call-readiness) */
+export type { BrowserPermissionDeniedIOSStrings, BrowserPermissionDeniedIOSProps } from './BrowserPermissionDeniedIOS';
 
 export { ParticipantsButton } from './ParticipantsButton';
 export type {
@@ -156,4 +168,8 @@ export type {
 } from './TroubleshootingGuideErrorBar';
 
 export { _DevicePermissionDropdown } from './DevicePermissionDropdown';
-export type { _DevicePermissionDropdownStrings, _DevicePermissionDropdownProps } from './DevicePermissionDropdown';
+export type {
+  _DevicePermissionDropdownStrings,
+  _DevicePermissionDropdownProps,
+  _PermissionConstraints
+} from './DevicePermissionDropdown';
