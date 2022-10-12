@@ -39,8 +39,6 @@ import { IButtonStyles } from '@fluentui/react';
 import { IContextualMenuItem } from '@fluentui/react';
 import { IContextualMenuItemStyles } from '@fluentui/react';
 import { IContextualMenuStyles } from '@fluentui/react';
-import { IDropdownOption } from '@fluentui/react';
-import { IDropdownStyles } from '@fluentui/react';
 import { IMessageBarProps } from '@fluentui/react';
 import { IncomingCall } from '@azure/communication-calling';
 import { IPersonaStyleProps } from '@fluentui/react';
@@ -402,12 +400,6 @@ export type CallCompositeIcons = {
 export type CallCompositeOptions = {
     errorBar?: boolean;
     callControls?: boolean | CallControlOptions;
-    devicePermissions?: DevicePermissionRestrictions;
-    onPermissionsTroubleshootingClick?: (permissionsState: {
-        camera: PermissionState;
-        microphone: PermissionState;
-    }) => void;
-    onNetworkingTroubleShootingClick?: () => void;
 };
 
 // @public
@@ -885,12 +877,6 @@ export type CallWithChatCompositeIcons = {
 export type CallWithChatCompositeOptions = {
     callControls?: boolean | CallWithChatControlOptions;
     fileSharing?: FileSharingOptions;
-    devicePermissions?: DevicePermissionRestrictions;
-    onPermissionsTroubleshootingClick?: (permissionsState: {
-        camera: PermissionState;
-        microphone: PermissionState;
-    }) => void;
-    onNetworkingTroubleShootingClick?: () => void;
 };
 
 // @public
@@ -1324,7 +1310,6 @@ export interface ComponentStrings {
     cameraButton: CameraButtonStrings;
     devicesButton: DevicesButtonStrings;
     dialpad: DialpadStrings;
-    DomainPermissions: DomainPermissionsStrings;
     endCallButton: EndCallButtonStrings;
     errorBar: ErrorBarStrings;
     holdButton: HoldButtonStrings;
@@ -1336,7 +1321,6 @@ export interface ComponentStrings {
     screenShareButton: ScreenShareButtonStrings;
     sendBox: SendBoxStrings;
     typingIndicator: TypingIndicatorStrings;
-    UnsupportedBrowser: UnsupportedBrowserStrings;
     videoGallery: VideoGalleryStrings;
     videoTile: VideoTileStrings;
 }
@@ -1622,10 +1606,6 @@ export const DEFAULT_COMPONENT_ICONS: {
     SendBoxSendHovered: JSX.Element;
     VideoTileMicOff: JSX.Element;
     BackSpace: JSX.Element;
-    DomainPermissionsSparkle: JSX.Element;
-    DomainPermissionCamera: JSX.Element;
-    DomainPermissionMic: JSX.Element;
-    UnsupportedBrowserWarning: JSX.Element;
 };
 
 // @public
@@ -1710,10 +1690,6 @@ export const DEFAULT_COMPOSITE_ICONS: {
     HoldCallButton: JSX.Element;
     ResumeCall: JSX.Element;
     BackSpace: JSX.Element;
-    DomainPermissionsSparkle: JSX.Element;
-    DomainPermissionCamera: JSX.Element;
-    DomainPermissionMic: JSX.Element;
-    UnsupportedBrowserWarning: JSX.Element;
 };
 
 // @public
@@ -1728,31 +1704,6 @@ export type DeviceManagerState = {
     deviceAccess?: DeviceAccess;
     unparentedViews: LocalVideoStreamState[];
 };
-
-// @internal
-export const _DevicePermissionDropdown: (props: _DevicePermissionDropdownProps) => JSX.Element;
-
-// @internal
-export interface _DevicePermissionDropdownProps {
-    icon?: JSX.Element;
-    onClickActionButton?: () => Promise<void>;
-    options?: IDropdownOption[];
-    strings?: _DevicePermissionDropdownStrings;
-    styles?: Partial<IDropdownStyles>;
-}
-
-// @internal
-export interface _DevicePermissionDropdownStrings {
-    actionButtonContent?: string;
-    label?: string;
-    placeHolderText: string;
-}
-
-// @beta
-export interface DevicePermissionRestrictions {
-    camera: 'required' | 'optional' | 'doNotPrompt';
-    microphone: 'required' | 'optional' | 'doNotPrompt';
-}
 
 // @public
 export const DevicesButton: (props: DevicesButtonProps) => JSX.Element;
@@ -1863,23 +1814,6 @@ export type DisplayNameChangedListener = (event: {
 // @public
 export interface Disposable {
     dispose(): void;
-}
-
-// @beta
-export const DomainPermissions: (props: DomainPermissionsProps) => JSX.Element;
-
-// @beta
-export interface DomainPermissionsProps {
-    appName: string;
-    onTroubleshootingClick: () => void;
-    strings: DomainPermissionsStrings;
-}
-
-// @beta
-export interface DomainPermissionsStrings {
-    linkText: string;
-    primaryText: string;
-    secondaryText: string;
 }
 
 // @beta
@@ -2834,22 +2768,6 @@ export interface TypingIndicatorStrings {
 export interface TypingIndicatorStylesProps extends BaseCustomStyles {
     typingString?: IStyle;
     typingUserDisplayName?: IStyle;
-}
-
-// @beta
-export const UnsupportedBrowser: (props: UnsupportedBrowserProps) => JSX.Element;
-
-// @beta
-export interface UnsupportedBrowserProps {
-    onTroubleShootingClick: () => void;
-    strings: UnsupportedBrowserStrings;
-}
-
-// @beta
-export interface UnsupportedBrowserStrings {
-    moreHelpLink: string;
-    primaryText: string;
-    secondaryText: string;
 }
 
 // @public
