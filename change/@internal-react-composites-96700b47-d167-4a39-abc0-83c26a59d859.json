@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Add missing foreveryone logic for leaveCall",
+  "packageName": "@internal/react-composites",
+  "email": "carolinecao@microsoft.com",
+  "dependentChangeType": "patch"
+}

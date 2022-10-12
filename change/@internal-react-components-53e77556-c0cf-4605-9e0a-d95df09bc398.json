@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "EndCall button calls hangup with foreveryone false ",
+  "packageName": "@internal/react-components",
+  "email": "carolinecao@microsoft.com",
+  "dependentChangeType": "patch"
+}
