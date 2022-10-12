@@ -492,10 +492,11 @@ export const CallWithChatComposite = (props: CallWithChatCompositeProps): JSX.El
 const hasJoinedCallFn = (page: CallCompositePage, callStatus: CallState): boolean => {
   /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(one-to-n-calling) */
   return (
-    (page === 'call' && (callStatus === 'Connected' || callStatus === 'RemoteHold')) ||
-    (page === 'hold' && callStatus === 'LocalHold')
+    (page === 'call' &&
+      (callStatus === 'Connected' || callStatus === 'RemoteHold' || callStatus === 'Disconnecting')) ||
+    (page === 'hold' && (callStatus === 'LocalHold' || callStatus === 'Disconnecting'))
   );
-  return page === 'call' && callStatus === 'Connected';
+  return page === 'call' && (callStatus === 'Connected' || callStatus === 'Disconnecting');
 };
 
 const showShowChatTabHeaderButton = (callControls?: boolean | CallWithChatControlOptions): boolean => {
