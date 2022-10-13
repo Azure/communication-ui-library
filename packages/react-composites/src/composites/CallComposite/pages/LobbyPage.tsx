@@ -8,7 +8,9 @@ import { CallCompositeOptions } from '../CallComposite';
 import { CallArrangement } from '../components/CallArrangement';
 import { usePropsFor } from '../hooks/usePropsFor';
 import { LobbyOverlayProps, LobbyTile } from '../components/LobbyTile';
-import { getCallStatus, getRemoteParticipants } from '../selectors/baseSelectors';
+import { getCallStatus } from '../selectors/baseSelectors';
+/* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+import { getRemoteParticipants } from '../selectors/baseSelectors';
 import { disableCallControls, reduceCallControlsForMobile } from '../utils';
 import { CallCompositeStrings } from '../Strings';
 import { useLocale } from '../../localization';
@@ -16,7 +18,6 @@ import { useLocalVideoStartTrigger } from '../components/MediaGallery';
 import { CallCompositeIcon } from '../../common/icons';
 /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
 import { isPhoneNumberIdentifier } from '@azure/communication-common';
-/* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
 import { RemoteParticipantState } from '@internal/calling-stateful-client';
 
 /**
@@ -39,7 +40,16 @@ export const LobbyPage = (props: LobbyPageProps): JSX.Element => {
 
   const callState = useSelector(getCallStatus);
   const inLobby = callState === 'InLobby';
-  const remoteParticipants = useSelector(getRemoteParticipants) ?? {};
+
+  const remoteParticipantsTrampoline = (): RemoteParticipantState[] | undefined => {
+    /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+    const participants = useSelector(getRemoteParticipants) ?? {};
+    /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+    return Object.values(participants);
+    return undefined;
+  };
+
+  const remoteParticipants = remoteParticipantsTrampoline();
 
   useLocalVideoStartTrigger(lobbyProps.localParticipantVideoStream.isAvailable, inLobby);
 
@@ -62,7 +72,7 @@ export const LobbyPage = (props: LobbyPageProps): JSX.Element => {
       /* @conditional-compile-remove(one-to-n-calling) */
       modalLayerHostId={props.modalLayerHostId}
       onRenderGalleryContent={() => (
-        <LobbyTile {...lobbyProps} overlayProps={overlayProps(strings, inLobby, Object.values(remoteParticipants))} />
+        <LobbyTile {...lobbyProps} overlayProps={overlayProps(strings, inLobby, remoteParticipants)} />
       )}
       dataUiId={'lobby-page'}
     />
@@ -72,9 +82,7 @@ export const LobbyPage = (props: LobbyPageProps): JSX.Element => {
 const overlayProps = (
   strings: CallCompositeStrings,
   inLobby: boolean,
-  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ remoteParticipants:
-    | RemoteParticipantState[]
-    | undefined
+  remoteParticipants: RemoteParticipantState[] | undefined
 ): LobbyOverlayProps => {
   /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
   const outboundCallParticipant = remoteParticipants !== undefined ? remoteParticipants[0] : undefined;
