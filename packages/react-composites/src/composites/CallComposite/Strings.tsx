@@ -324,9 +324,7 @@ export interface CallCompositeStrings {
   peopleButtonTooltipClose: string;
   /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
   /**
-   * label for when making a outbound call
-   *
-   * Will either be the title or the description based on the type of call you are making.
+   * Label disaplayed on the lobby screen during a 1:1 outbound call.
    */
   outboundCallingNoticeString: string;
 }
