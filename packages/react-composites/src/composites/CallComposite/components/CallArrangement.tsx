@@ -142,6 +142,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   let errorBarProps = props.errorBarProps;
 
   /* @conditional-compile-remove(rooms) */
+  // TODO: move this logic to the error bar selector once role is plumbed from the headless SDK
   if (!rolePermissions.cameraButton && props.errorBarProps) {
     errorBarProps = {
       ...props.errorBarProps,

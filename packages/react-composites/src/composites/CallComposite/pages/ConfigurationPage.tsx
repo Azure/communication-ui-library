@@ -64,6 +64,7 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
   const rolePermissions = _usePermissions();
 
   /* @conditional-compile-remove(rooms) */
+  // TODO: move this logic to the error bar selector once role is plumbed from the headless SDK
   if (!rolePermissions.cameraButton) {
     errorBarProps = {
       ...errorBarProps,
