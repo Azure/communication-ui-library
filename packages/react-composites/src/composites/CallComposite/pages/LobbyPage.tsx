@@ -41,9 +41,10 @@ export const LobbyPage = (props: LobbyPageProps): JSX.Element => {
   const callState = useSelector(getCallStatus);
   const inLobby = callState === 'InLobby';
 
+  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+  const participants = useSelector(getRemoteParticipants) ?? {};
+
   const remoteParticipantsTrampoline = (): RemoteParticipantState[] | undefined => {
-    /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
-    const participants = useSelector(getRemoteParticipants) ?? {};
     /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
     return Object.values(participants);
     return undefined;
