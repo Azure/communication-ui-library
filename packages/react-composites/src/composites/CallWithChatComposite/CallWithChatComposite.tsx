@@ -258,7 +258,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
   const isInLocalHold = currentPage === 'hold';
   const hasJoinedCall = !!(currentPage && hasJoinedCallFn(currentPage, currentCallState ?? 'None'));
   const showControlBar = isInLobbyOrConnecting || hasJoinedCall;
-  const isMobileWithActivePane = mobileView && activePane !== 'none';
+  const isMobileWithActivePane = mobileView && hasJoinedCall && activePane !== 'none';
 
   /** Constant setting of id for the parent stack of the composite */
   const compositeParentDivId = useId('callWithChatCompositeParentDiv-internal');
@@ -317,6 +317,10 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
     togglePeople();
   }, [togglePeople]);
 
+  // On mobile, when there is an active call and some side pane is active,
+  // we hide the call composite via CSS to show only the pane.
+  // We only set `display` to `none` instead of unmounting the call composite component tree
+  // to avoid the performance cost of rerendering video streams when we later show the composite again.
   const callCompositeContainerCSS = useMemo(() => {
     return { display: isMobileWithActivePane ? 'none' : 'flex' };
   }, [isMobileWithActivePane]);
