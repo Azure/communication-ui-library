@@ -88,11 +88,6 @@ export type {
   DevicesButtonContextualMenuStyles
 } from './DevicesButton';
 
-/* @conditional-compile-remove(call-readiness) */
-export { DomainPermissions } from './DomainPermissions';
-/* @conditional-compile-remove(call-readiness) */
-export type { DomainPermissionsStrings, DomainPermissionsProps } from './DomainPermissions';
-
 export { ParticipantsButton } from './ParticipantsButton';
 export type {
   ParticipantsButtonContextualMenuStyles,
@@ -145,10 +140,6 @@ export { _RemoteVideoTile } from './RemoteVideoTile';
 export { _HighContrastAwareIcon } from './HighContrastAwareIcon';
 export type { _HighContrastAwareIconProps } from './HighContrastAwareIcon';
 
-/* @conditional-compile-remove(unsupported-browser) */
-export { UnsupportedBrowser } from './UnsupportedBrowser';
-/* @conditional-compile-remove(unsupported-browser) */
-export type { UnsupportedBrowserStrings, UnsupportedBrowserProps } from './UnsupportedBrowser';
 export { _TroubleshootingGuideErrorBar } from './TroubleshootingGuideErrorBar';
 export type {
   _TroubleshootingGuideErrorBarStrings,

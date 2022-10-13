@@ -63,31 +63,6 @@ export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcon
    */
   role?: Role;
 }
-
-/* @conditional-compile-remove(call-readiness) */
-/**
- * Device Permission restrictions.
- * Be able to start a call depending on camera and microphone permission options.
- *
- * @beta
- */
-export interface DevicePermissionRestrictions {
-  /**
-   * Camera Permission prompts for your call.
-   * 'required' - requires the permission to be allowed before permitting the user join the call.
-   * 'optional' - permission can be disallowed and the user is still permitted to join the call.
-   * 'doNotPrompt' - permission is not required and the user is not prompted to allow the permission.
-   */
-  camera: 'required' | 'optional' | 'doNotPrompt';
-  /**
-   * Microphone permission prompts for your call.
-   * 'required' - requires the permission to be allowed before permitting the user join the call.
-   * 'optional' - permission can be disallowed and the user is still permitted to join the call.
-   * 'doNotPrompt' - permission is not required and the user is not prompted to allow the permission.
-   */
-  microphone: 'required' | 'optional' | 'doNotPrompt';
-}
-
 /**
  * Optional features of the {@link CallComposite}.
  *
@@ -106,45 +81,6 @@ export type CallCompositeOptions = {
    * @defaultValue true
    */
   callControls?: boolean | CallControlOptions;
-  /* @conditional-compile-remove(call-readiness) */
-  /**
-   * Device permission restrictions for your call.
-   * Require device permissions to be set or have them as optional or not required to start a call
-   */
-  devicePermissions?: DevicePermissionRestrictions;
-  /* @conditional-compile-remove(call-readiness) */
-  /**
-   * Callback you may provide to supply users with further steps to troubleshoot why they have been
-   * unable to grant your site the required permissions for the call.
-   *
-   * @example
-   * ```ts
-   * onPermissionsTroubleshootingClick: () =>
-   *  window.open('https://contoso.com/permissions-troubleshooting', '_blank');
-   * ```
-   *
-   * @remarks
-   * if this is not supplied, the composite will not show a 'further troubleshooting' link.
-   */
-  onPermissionsTroubleshootingClick?: (permissionsState: {
-    camera: PermissionState;
-    microphone: PermissionState;
-  }) => void;
-  /* @conditional-compile-remove(call-readiness) */
-  /**
-   * Callback you may provide to supply users with further steps to troubleshoot why they have been
-   * having network issues when connecting to the call.
-   *
-   * @example
-   * ```ts
-   * onNetworkingTroubleShootingClick?: () =>
-   *  window.open('https://contoso.com/network-troubleshooting', '_blank');
-   * ```
-   *
-   * @remarks
-   * if this is not supplied, the composite will not show a 'network troubleshooting' link.
-   */
-  onNetworkingTroubleShootingClick?: () => void;
 };
 
 type MainScreenProps = {
@@ -199,8 +135,6 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           startCallHandler={(): void => {
             adapter.joinCall();
           }}
-          /* @conditional-compile-remove(call-readiness) */
-          devicePermissions={props.options?.devicePermissions}
         />
       );
       break;
@@ -329,34 +263,13 @@ export const CallComposite = (props: CallCompositeProps): JSX.Element => {
         adapter.querySpeakers();
         return;
       }
-      /* @conditional-compile-remove(call-readiness) */
-      if (options?.devicePermissions) {
-        const videoPermission = options?.devicePermissions.camera !== 'doNotPrompt';
-        const audioPermission = options?.devicePermissions.microphone !== 'doNotPrompt';
-        await adapter.askDevicePermission({
-          video: videoPermission,
-          audio: audioPermission
-        });
-        if (videoPermission) {
-          adapter.queryCameras();
-        }
-        if (audioPermission) {
-          adapter.queryMicrophones();
-        }
-        adapter.querySpeakers();
-        return;
-      }
 
       await adapter.askDevicePermission({ video: true, audio: true });
       adapter.queryCameras();
       adapter.queryMicrophones();
       adapter.querySpeakers();
     })();
-  }, [
-    adapter,
-    /* @conditional-compile-remove(rooms) */ role,
-    /* @conditional-compile-remove(call-readiness) */ options?.devicePermissions
-  ]);
+  }, [adapter, /* @conditional-compile-remove(rooms) */ role]);
 
   const mobileView = formFactor === 'mobile';
 

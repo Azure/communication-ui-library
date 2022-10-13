@@ -117,9 +117,6 @@ export { HoldButton } from '../../react-components/src';
 /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
 export { Dialpad } from '../../react-components/src';
 
-/* @conditional-compile-remove(call-readiness) */
-export { DomainPermissions } from '../../react-components/src';
-
 export type {
   _IdentifierProviderProps,
   _Identifiers,
@@ -232,8 +229,6 @@ export type {
 } from '../../react-components/src';
 /* @conditional-compile-remove(PSTN-calls) */
 export type { HoldButtonProps, HoldButtonStrings, VideoTileStrings } from '../../react-components/src';
-/* @conditional-compile-remove(call-readiness) */
-export type { DomainPermissionsStrings, DomainPermissionsProps } from '../../react-components/src';
 export * from '../../react-components/src/localization/locales';
 export * from '../../react-components/src/theming';
 export * from '../../calling-stateful-client/src';
@@ -253,12 +248,3 @@ export type {
 } from '../../chat-stateful-client/src';
 export * from '../../react-composites/src/index-public';
 export * from './mergedHooks';
-
-/* @conditional-compile-remove(unsupported-browser) */
-export { UnsupportedBrowser } from '../../react-components/src';
-/* @conditional-compile-remove(unsupported-browser) */
-export type { UnsupportedBrowserStrings, UnsupportedBrowserProps } from '../../react-components/src';
-/* @conditional-compile-remove(call-readiness) */
-export { _DevicePermissionDropdown } from '../../react-components/src';
-/* @conditional-compile-remove(call-readiness) */
-export type { _DevicePermissionDropdownStrings, _DevicePermissionDropdownProps } from '../../react-components/src';

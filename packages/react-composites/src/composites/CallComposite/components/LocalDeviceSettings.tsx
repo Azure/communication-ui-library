@@ -3,8 +3,6 @@
 
 import { AudioDeviceInfo, VideoDeviceInfo } from '@azure/communication-calling';
 import { Dropdown, IDropdownOption, Label, mergeStyles, Stack } from '@fluentui/react';
-/* @conditional-compile-remove(call-readiness) */
-import { useEffect } from 'react';
 import { useTheme, VideoStreamOptions } from '@internal/react-components';
 import React from 'react';
 import { CallCompositeIcon } from '../../common/icons';
@@ -17,8 +15,6 @@ import {
 } from '../styles/LocalDeviceSettings.styles';
 /* @conditional-compile-remove(rooms) */
 import { _usePermissions } from '@internal/react-components';
-/* @conditional-compile-remove(call-readiness) */
-import { useAdapter } from '../adapter/CallAdapterProvider';
 import { ConfigurationpageCameraDropdown } from './ConfigurationpageCameraDropdown';
 import { ConfigurationpageMicDropdown } from './ConfigurationpageMicDropdown';
 
@@ -92,8 +88,6 @@ export interface LocalDeviceSettingsType {
 export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element => {
   const theme = useTheme();
   const locale = useLocale();
-  /* @conditional-compile-remove(call-readiness) */
-  const adapter = useAdapter();
   const defaultPlaceHolder = locale.strings.call.defaultPlaceHolder;
   const cameraLabel = locale.strings.call.cameraLabel;
   const soundLabel = locale.strings.call.soundLabel;
@@ -112,16 +106,6 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
   // TODO: speaker permission is tied to microphone permission (when you request 'audio' permission using the SDK) its
   // actually granting access to query both microphone and speaker. However the browser popup asks you explicity for
   // 'microphone'. This needs investigation on how we want to handle this and maybe needs follow up with SDK team.
-  /* @conditional-compile-remove(call-readiness) */
-  useEffect(() => {
-    if (cameraPermissionGranted) {
-      adapter.queryCameras();
-    }
-    if (micPermissionGranted) {
-      adapter.queryMicrophones();
-    }
-    adapter.querySpeakers();
-  }, [adapter, cameraPermissionGranted, micPermissionGranted]);
 
   const cameraGrantedDropdown = (
     <Dropdown
