@@ -22,14 +22,21 @@ export const Devices = (props: {
   const devicesButtonProps = usePropsFor(DevicesButton);
   /* @conditional-compile-remove(rooms) */
   const permissions = _usePermissions();
-  /* @conditional-compile-remove(rooms) */
-  if (!permissions.microphoneButton) {
-    devicesButtonProps.microphones = [];
-  }
-  /* @conditional-compile-remove(rooms) */
-  if (!permissions.cameraButton) {
-    devicesButtonProps.cameras = [];
-  }
+
+  const augmentedDeviceButtonProps = useMemo(
+    () => ({
+      ...devicesButtonProps,
+      /* @conditional-compile-remove(rooms) */
+      microphones: !permissions.microphoneButton ? [] : devicesButtonProps.microphones,
+      /* @conditional-compile-remove(rooms) */
+      cameras: !permissions.cameraButton ? [] : devicesButtonProps.cameras
+    }),
+    [
+      devicesButtonProps,
+      /* @conditional-compile-remove(rooms) */
+      permissions
+    ]
+  );
   const styles = useMemo(
     () =>
       concatButtonBaseStyles(
@@ -52,7 +59,7 @@ export const Devices = (props: {
     <DevicesButton
       /* By setting `persistMenu?` to true, we prevent options menu from getting hidden every time a participant joins or leaves. */
       persistMenu={true}
-      {...devicesButtonProps}
+      {...augmentedDeviceButtonProps}
       showLabel={props.displayType !== 'compact'}
       styles={styles}
       data-ui-id="calling-composite-devices-button"
