@@ -551,7 +551,7 @@ export const EndCallButton: (props: EndCallButtonProps) => JSX.Element;
 
 // @public
 export interface EndCallButtonProps extends ControlBarButtonProps {
-    onHangUp?: (forEveryone?: boolean) => Promise<void>;
+    onHangUp?: () => Promise<void>;
     strings?: EndCallButtonStrings;
 }
 

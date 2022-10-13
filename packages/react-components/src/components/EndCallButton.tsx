@@ -33,7 +33,7 @@ export interface EndCallButtonProps extends ControlBarButtonProps {
    * Utility property for using this component with `communication react eventHandlers`.
    * Maps directly to the `onClick` property.
    */
-  onHangUp?: (forEveryone?: boolean) => Promise<void>;
+  onHangUp?: () => Promise<void>;
   /**
    * Optional strings to override in component
    */
