@@ -51,18 +51,20 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
   const options = useAdaptedSelector(getCallingSelector(DevicesButton));
   const localDeviceSettingsHandlers = useHandlers(LocalDeviceSettings);
   const { video: cameraPermissionGranted, audio: microphonePermissionGranted } = useSelector(devicePermissionSelector);
-  const errorBarProps = usePropsFor(ErrorBar);
+  let errorBarProps = usePropsFor(ErrorBar);
   const adapter = useAdapter();
   const deviceState = adapter.getState().devices;
 
   let disableStartCallButton = !microphonePermissionGranted || deviceState.microphones?.length === 0;
   /* @conditional-compile-remove(rooms) */
   const rolePermissions = _usePermissions();
+
   /* @conditional-compile-remove(rooms) */
   if (!rolePermissions.cameraButton) {
-    errorBarProps.activeErrorMessages = errorBarProps.activeErrorMessages.filter(
-      (e) => e.type !== 'callCameraAccessDenied'
-    );
+    errorBarProps = {
+      ...errorBarProps,
+      activeErrorMessages: errorBarProps.activeErrorMessages.filter((e) => e.type !== 'callCameraAccessDenied')
+    };
   }
   /* @conditional-compile-remove(rooms) */
   if (!rolePermissions.microphoneButton) {
