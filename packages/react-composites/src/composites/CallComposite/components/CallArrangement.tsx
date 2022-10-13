@@ -139,13 +139,14 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   /* @conditional-compile-remove(rooms) */
   canUnmute = rolePermissions.microphoneButton;
 
-  const errorBarProps = props.errorBarProps;
+  let errorBarProps = props.errorBarProps;
 
   /* @conditional-compile-remove(rooms) */
-  if (!rolePermissions.cameraButton && errorBarProps) {
-    errorBarProps.activeErrorMessages = errorBarProps.activeErrorMessages.filter(
-      (e) => e.type !== 'callCameraAccessDenied'
-    );
+  if (!rolePermissions.cameraButton && props.errorBarProps) {
+    errorBarProps = {
+      ...props.errorBarProps,
+      activeErrorMessages: props.errorBarProps.activeErrorMessages.filter((e) => e.type !== 'callCameraAccessDenied')
+    };
   }
 
   return (
