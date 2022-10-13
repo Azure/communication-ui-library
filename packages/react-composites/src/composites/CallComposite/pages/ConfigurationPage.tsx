@@ -63,6 +63,12 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
   /* @conditional-compile-remove(rooms) */
   const rolePermissions = _usePermissions();
   /* @conditional-compile-remove(rooms) */
+  if (!rolePermissions.cameraButton) {
+    errorBarProps.activeErrorMessages = errorBarProps.activeErrorMessages.filter(
+      (e) => e.type !== 'callCameraAccessDenied'
+    );
+  }
+  /* @conditional-compile-remove(rooms) */
   if (!rolePermissions.microphoneButton) {
     // If user's role permissions do not allow access to the microphone button then DO NOT disable the start call button
     // because microphone device permission is not needed for the user's role
