@@ -34,6 +34,7 @@ export interface EndCallButtonProps extends ControlBarButtonProps {
    * Maps directly to the `onClick` property.
    */
   onHangUp?: () => Promise<void>;
+
   /**
    * Optional strings to override in component
    */
