@@ -62,16 +62,10 @@ export const EndCallButton = (props: EndCallButtonProps): JSX.Element => {
     styles ?? {}
   );
 
-  const onHangUp = (): void => {
-    if (props.onHangUp) {
-      props.onHangUp();
-    }
-  };
-
   return (
     <ControlBarButton
       {...props}
-      onClick={props.onHangUp ? onHangUp : props.onClick}
+      onClick={props.onHangUp ?? props.onClick}
       styles={componentStyles}
       onRenderIcon={props.onRenderIcon ?? onRenderEndCallIcon}
       strings={strings}

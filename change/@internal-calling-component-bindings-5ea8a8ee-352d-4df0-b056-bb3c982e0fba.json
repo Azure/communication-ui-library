@@ -1,6 +1,6 @@
 {
   "type": "patch",
-  "comment": "Add missing foreveryone logic for leaveCall",
+  "comment": "BugFix: Add missing foreveryone logic for leaveCall",
   "packageName": "@internal/calling-component-bindings",
   "email": "carolinecao@microsoft.com",
   "dependentChangeType": "patch"

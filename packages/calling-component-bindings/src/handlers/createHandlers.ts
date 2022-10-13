@@ -228,7 +228,7 @@ export const createDefaultCallingHandlers = memoizeOne(
       call?.isScreenSharingOn ? await onStopScreenShare() : await onStartScreenShare();
 
     const onHangUp = async (forEveryone?: boolean): Promise<void> =>
-      await call?.hangUp({ forEveryone: forEveryone ?? false });
+      await call?.hangUp({ forEveryone: forEveryone === true ? true : false });
 
     /* @conditional-compile-remove(PSTN-calls) */
     const onToggleHold = async (): Promise<void> =>
