@@ -71,14 +71,23 @@ export const LobbyPage = (props: LobbyPageProps): JSX.Element => {
 const overlayProps = (
   strings: CallCompositeStrings,
   inLobby: boolean,
-  remoteParticipants?: RemoteParticipantState[]
+  remoteParticipants: RemoteParticipantState[]
 ): LobbyOverlayProps => {
   /**
    * Only grab the first participant because there will only be one in this situation.
    * when starting a call with multiple people the call goes to the connected state and composite goes directly to
    * videoGallery.
+   *
+   * We also need to check the participant state since in a group call the remote participants array will populate just before
+   * the user joins.
    */
-  const outboundCallParticipant = remoteParticipants ? remoteParticipants[0] : undefined;
+  const outboundCallParticipant: RemoteParticipantState =
+    remoteParticipants[0] && remoteParticipants[0].state === ('Ringing' || 'Connecting')
+      ? remoteParticipants[0]
+      : undefined;
+  if (outboundCallParticipant) {
+    console.log('Participant state: ' + outboundCallParticipant.state);
+  }
 
   return inLobby
     ? overlayPropsWaitingToBeAdmitted(strings)
