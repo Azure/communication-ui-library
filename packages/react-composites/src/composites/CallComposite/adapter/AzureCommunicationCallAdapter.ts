@@ -378,8 +378,8 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     }
   }
 
-  public async leaveCall(): Promise<void> {
-    await this.handlers.onHangUp();
+  public async leaveCall(forEveryone?: boolean): Promise<void> {
+    await this.handlers.onHangUp(forEveryone);
     this.unsubscribeCallEvents();
     this.call = undefined;
     this.handlers = createDefaultCallingHandlers(this.callClient, this.callAgent, this.deviceManager, undefined);
