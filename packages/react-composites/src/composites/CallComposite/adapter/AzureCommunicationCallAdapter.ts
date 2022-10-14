@@ -205,6 +205,17 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
 
     this.context.onCallEnded((endCallData) => this.emitter.emit('callEnded', endCallData));
 
+    console.log('inside main constructor callAgent calls');
+    console.log(callAgent.calls);
+
+    console.log('adapter context');
+    console.log(this.context);
+    const call = callAgent.calls.find((call) => call.state === 'Connected');
+    console.log('main constructor calls with connected state');
+    console.log(call);
+
+    call && this.processNewCall(call);
+
     const onStateChange = (clientState: CallClientState): void => {
       // unsubscribe when the instance gets disposed
       if (!this) {
@@ -230,6 +241,9 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     this.subscribeDeviceManagerEvents();
 
     this.callClient.onStateChange(onStateChange);
+
+    console.log('current call');
+    console.log(this.call);
   }
 
   // TODO: update this to include the 'selectedCameraChanged' when calling adds it to the device manager
@@ -891,6 +905,8 @@ export const createAzureCommunicationCallAdapterFromClient = async (
   locator: CallAdapterLocator
 ): Promise<CallAdapter> => {
   const deviceManager = (await callClient.getDeviceManager()) as StatefulDeviceManager;
+  console.log('create from client callAgent calls');
+  console.log(callAgent.calls);
   return new AzureCommunicationCallAdapter(callClient, locator, callAgent, deviceManager);
 };
 
