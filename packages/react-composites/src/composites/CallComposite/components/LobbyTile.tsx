@@ -12,7 +12,7 @@ import { useHandlers } from '../hooks/useHandlers';
  * @private
  */
 export interface LobbyOverlayProps {
-  overlayIcon: JSX.Element;
+  overlayIcon?: JSX.Element;
   title: string;
   moreDetails?: string;
 }
