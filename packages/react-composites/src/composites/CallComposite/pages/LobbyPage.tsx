@@ -82,12 +82,9 @@ const overlayProps = (
    * the user joins.
    */
   const outboundCallParticipant: RemoteParticipantState =
-    remoteParticipants[0] && remoteParticipants[0].state === ('Ringing' || 'Connecting')
+    (remoteParticipants[0] && remoteParticipants[0].state === 'Ringing') || 'Connecting'
       ? remoteParticipants[0]
       : undefined;
-  if (outboundCallParticipant) {
-    console.log('Participant state: ' + outboundCallParticipant.state);
-  }
 
   return inLobby
     ? overlayPropsWaitingToBeAdmitted(strings)
