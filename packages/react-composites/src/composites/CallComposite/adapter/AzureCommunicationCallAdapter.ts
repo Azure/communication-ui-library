@@ -128,9 +128,9 @@ class CallContext {
     const oldPage = this.state.page;
     const newPage = getCallCompositePage(call, latestEndedCall);
     if (!IsCallEndedPage(oldPage) && IsCallEndedPage(newPage)) {
-      this.emitter.emit('callEnded', {
-        callId: this.callId
-      });
+      this.emitter.emit('callEnded', { callId: this.callId });
+      // Reset the callId to undefined as the call has ended.
+      this.setCurrentCallId(undefined);
     }
 
     if (this.state.page) {
@@ -381,11 +381,8 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
   public async leaveCall(forEveryone?: boolean): Promise<void> {
     await this.handlers.onHangUp(forEveryone);
     this.unsubscribeCallEvents();
-    this.call = undefined;
     this.handlers = createDefaultCallingHandlers(this.callClient, this.callAgent, this.deviceManager, undefined);
-    this.context.setCurrentCallId(undefined);
-    // Resync state after callId is set
-    this.context.updateClientState(this.callClient.getState());
+    this.call = undefined;
     this.stopCamera();
     this.mute();
   }
