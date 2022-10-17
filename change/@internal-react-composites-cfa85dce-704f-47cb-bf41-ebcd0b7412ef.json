@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fix bug where Calling... string would flash when joining a group call.",
+  "packageName": "@internal/react-composites",
+  "email": "94866715+dmceachernmsft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
