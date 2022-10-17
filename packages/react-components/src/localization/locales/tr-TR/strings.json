@@ -5,7 +5,10 @@
     "removeButtonLabel": "Kaldır",
     "sharingIconLabel": "Paylaşım",
     "mutedIconLabel": "Ses kapatıldı",
-    "displayNamePlaceholder": "Adsız Katılımcı"
+    "displayNamePlaceholder": "Adsız Katılımcı",
+    "participantStateConnecting": "Aranıyor...",
+    "participantStateRinging": "Arıyor...",
+    "participantStateHold": "Beklemede"
   },
   "typingIndicator": {
     "singleUser": "{user} yazıyor...",
@@ -18,7 +21,10 @@
     "placeholderText": "Bir mesaj girin",
     "textTooLong": "İletinizin uzunluğu üst sınırı aşıyor.",
     "sendButtonAriaLabel": "İleti gönder",
-    "fileUploadsPendingError": "Karşıya yükleniyor... Lütfen bekleyin."
+    "fileUploadsPendingError": "Karşıya yükleniyor... Lütfen bekleyin.",
+    "removeFile": "Dosyayı kaldır",
+    "uploading": "Karşıya yükleniyor",
+    "uploadCompleted": "Karşıya yükleme tamamlandı"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "İleti gönderildi",
@@ -33,7 +39,7 @@
   },
   "endCallButton": {
     "label": "Ayrıl",
-    "tooltipContent": "Aramadan Ayrıl"
+    "tooltipContent": "Aramadan ayrıl"
   },
   "cameraButton": {
     "onLabel": "Kapat",
@@ -43,7 +49,7 @@
     "tooltipOffContent": "Kamerayı aç",
     "tooltipVideoLoadingContent": "Video yükleniyor",
     "cameraMenuTitle": "Kamera",
-    "cameraMenuTooltip": "Kamera Seç",
+    "cameraMenuTooltip": "Kamera seç",
     "cameraButtonSplitRoleDescription": "Bölünmüş düğme",
     "onSplitButtonAriaLabel": "Kamerayı ve kamera seçeneklerini devre dışı bırak",
     "offSplitButtonAriaLabel": "Kamerayı ve kamera seçeneklerini etkinleştir",
@@ -57,9 +63,9 @@
     "tooltipOnContent": "Mikrofonun sesini kapat",
     "tooltipOffContent": "Mikrofonun sesini aç",
     "microphoneMenuTitle": "Mikrofon",
-    "microphoneMenuTooltip": "Mikrofon Seç",
+    "microphoneMenuTooltip": "Mikrofon seç",
     "speakerMenuTitle": "Hoparlör",
-    "speakerMenuTooltip": "Hoparlör Seç",
+    "speakerMenuTooltip": "Hoparlör seç",
     "microphoneButtonSplitRoleDescription": "Bölünmüş düğme",
     "onSplitButtonAriaLabel": "Mikrofonun ve ses seçeneklerinin sesini kapat",
     "offSplitButtonAriaLabel": "Mikrofonun ve ses seçeneklerinin sesini aç",
@@ -70,17 +76,17 @@
     "label": "Cihazlar",
     "tooltipContent": "Cihazları yönet",
     "cameraMenuTitle": "Kamera",
-    "cameraMenuTooltip": "Kamera Seç",
+    "cameraMenuTooltip": "Kamera seç",
     "audioDeviceMenuTitle": "Ses Cihazı",
-    "audioDeviceMenuTooltip": "Ses Cihazı Seç",
+    "audioDeviceMenuTooltip": "Ses cihazı seç",
     "microphoneMenuTitle": "Mikrofon",
-    "microphoneMenuTooltip": "Mikrofon Seç",
+    "microphoneMenuTooltip": "Mikrofon seç",
     "speakerMenuTitle": "Hoparlör",
-    "speakerMenuTooltip": "Hoparlör Seç"
+    "speakerMenuTooltip": "Hoparlör seç"
   },
   "participantsButton": {
     "label": "Kişiler",
-    "tooltipContent": "Katılımcıları Göster",
+    "tooltipContent": "Katılımcıları göster",
     "menuHeader": "Bu aramada",
     "participantsListButtonLabel": "{numParticipants} kişiler",
     "muteAllButtonLabel": "Tümünün sesini kapat",
@@ -110,6 +116,8 @@
     "failToSendTag": "Gönderilemedi",
     "editedTag": "Düzenlendi",
     "liveAuthorIntro": "{author} şöyle diyor:",
+    "messageContentAriaText": "{author} iletisinde şunu yazdı: {message}",
+    "messageContentMineAriaText": "{message}dediniz",
     "editBoxTextLimit": "İletiniz en fazla {limitNumber} aşıyor",
     "editBoxPlaceholderText": "İletinizi düzenleyin",
     "newMessagesIndicator": "Yeni iletiler",
@@ -117,7 +125,8 @@
     "editBoxCancelButton": "İptal",
     "editBoxSubmitButton": "Gönder",
     "messageReadCount": "{messageReadByCount} / {remoteParticipantsCount} katılımcı tarafından okundu",
-    "actionMenuMoreOptions": "Diğer Seçenekler"
+    "actionMenuMoreOptions": "Diğer Seçenekler",
+    "downloadFile": "Dosyayı indir"
   },
   "errorBar": {
     "unableToReachChatService": "Çevrimdışısınız",
@@ -138,10 +147,13 @@
     "callNoMicrophoneFound": "Mikrofon bulunamadı. Ses giriş cihazı bağlan.",
     "callMicrophoneAccessDenied": "Mikrofona erişemiyor. Bu web sayfası için izin vermek için adres çubuğundaki kilidi tıklatın.",
     "callMicrophoneMutedBySystem": "Sisteminiz tarafından sessize alındınız.",
+    "callMicrophoneUnmutedBySystem": "Mikrofonunuz kurtarıldı ve sisteminiz tarafından sesiniz açıldı.",
     "callMacOsMicrophoneAccessDenied": "Mikrofona erişilemiyor. macOS gizlilik ayarlarınızda mikrofon izni verin.",
     "callLocalVideoFreeze": "Ağ bant genişliği düşük. Görüntülü aramada başkaları için duraklatılmış görünüyor olabilir.",
     "callCameraAccessDenied": "Kameraya erişemiyor. Bu web sayfası için izin vermek için adres çubuğundaki kilidi tıklatın.",
     "callCameraAlreadyInUse": "Kameraya erişemiyor. Başka bir uygulama tarafından zaten kullanılıyor olabilir.",
+    "callVideoStoppedBySystem": "Videonuz sisteminiz tarafından durduruldu.",
+    "callVideoRecoveredBySystem": "Videonuz devam ediyor.",
     "callMacOsCameraAccessDenied": "MacOS kameranıza erişimi engelliyor. Bu tarayıcının kameranıza erişmesine izin vermek için gizlilik ayarlarınızı güncelleştirin.",
     "callMacOsScreenShareAccessDenied": "MacOS ekran paylaşımını engelliyor. Bu tarayıcının ekranınızı kaydetmesini izin vermek için gizlilik ayarlarınızı güncelleştirin.",
     "dismissButtonAriaLabel": "Kapat",
@@ -158,12 +170,28 @@
     "displayNamePlaceholder": "Adsız Katılımcı"
   },
   "dialpad": {
-    "placeholderText": "Numara Girin"
+    "placeholderText": "Telefon numarası gir",
+    "deleteButtonAriaLabel": "Sil"
   },
-  "HoldButton": {
+  "holdButton": {
     "onLabel": "Devam et",
     "offLabel": "Beklet",
-    "toolTipOnContent": "Görüşmeye devam etme",
-    "toolTipOffContent": "Aramayı bekletme"
+    "tooltipOnContent": "Görüşmeye devam etme",
+    "tooltipOffContent": "Aramayı bekletme"
+  },
+  "videoTile": {
+    "participantStateConnecting": "Aranıyor...",
+    "participantStateRinging": "Aranıyor...",
+    "participantStateHold": "Beklemede"
+  },
+  "DomainPermissions": {
+    "primaryText": "{appName} uygulamasının kameranızı ve mikrofonunuzu kullanmasına izin verin",
+    "secondaryText": "Bu, katılımcıların sizi görebilmesi ve duyabilmesi içindir.",
+    "linkText": "Daha fazla yardım"
+  },
+  "UnsupportedBrowser": {
+    "primaryText": "Tarayıcı desteklenmiyor",
+    "secondaryText": "Lütfen uyumlu bir tarayıcı kullanarak bu aramaya katılın.",
+    "moreHelpLink": "Daha fazla yardım"
   }
 }
