@@ -382,6 +382,8 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     await this.handlers.onHangUp(forEveryone);
     this.unsubscribeCallEvents();
     this.handlers = createDefaultCallingHandlers(this.callClient, this.callAgent, this.deviceManager, undefined);
+    // We set the adapter.call object to undefined immediately when a call is ended.
+    // We do not set the context.callId to undefined because it is a part of the immutable data flow loop.
     this.call = undefined;
     this.stopCamera();
     this.mute();
