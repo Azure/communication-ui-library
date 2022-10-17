@@ -81,11 +81,10 @@ const overlayProps = (
    * We also need to check the participant state since in a group call the remote participants array will populate just before
    * the user joins.
    */
-  const outboundCallParticipant: RemoteParticipantState =
+  const outboundCallParticipant: RemoteParticipantState | undefined =
     remoteParticipants[0] && ['Ringing', 'Connecting'].includes(remoteParticipants[0].state)
       ? remoteParticipants[0]
       : undefined;
-  outboundCallParticipant && console.log(outboundCallParticipant.state);
 
   return inLobby
     ? overlayPropsWaitingToBeAdmitted(strings)
