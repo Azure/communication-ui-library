@@ -121,7 +121,7 @@ class CallContext {
   }
 
   public updateClientState(clientState: CallClientState): void {
-    const call = this.callId ? clientState.calls[this.callId] : undefined;
+    let call = this.callId ? clientState.calls[this.callId] : undefined;
     const latestEndedCall = findLatestEndedCall(clientState.callsEnded);
 
     // As the state is transitioning to a new state, trigger appropriate callback events.
@@ -131,6 +131,8 @@ class CallContext {
       this.emitter.emit('callEnded', { callId: this.callId });
       // Reset the callId to undefined as the call has ended.
       this.setCurrentCallId(undefined);
+      // Make sure that the call is set to undefined in the state.
+      call = undefined;
     }
 
     if (this.state.page) {
