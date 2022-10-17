@@ -121,7 +121,7 @@ class CallContext {
   }
 
   public updateClientState(clientState: CallClientState): void {
-    const call = this.callId ? clientState.calls[this.callId] : undefined;
+    let call = this.callId ? clientState.calls[this.callId] : undefined;
     const latestEndedCall = findLatestEndedCall(clientState.callsEnded);
 
     // As the state is transitioning to a new state, trigger appropriate callback events.
@@ -133,6 +133,10 @@ class CallContext {
         callEndedCode: latestEndedCall?.callEndReason?.code,
         callEndedSubCode: latestEndedCall?.callEndReason?.subCode
       });
+      // Reset the callId to undefined as the call has ended.
+      this.setCurrentCallId(undefined);
+      // Make sure that the call is set to undefined in the state.
+      call = undefined;
     }
 
     if (this.state.page) {
@@ -383,11 +387,10 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
   public async leaveCall(): Promise<void> {
     await this.handlers.onHangUp();
     this.unsubscribeCallEvents();
-    this.call = undefined;
     this.handlers = createDefaultCallingHandlers(this.callClient, this.callAgent, this.deviceManager, undefined);
-    this.context.setCurrentCallId(undefined);
-    // Resync state after callId is set
-    this.context.updateClientState(this.callClient.getState());
+    // We set the adapter.call object to undefined immediately when a call is ended.
+    // We do not set the context.callId to undefined because it is a part of the immutable data flow loop.
+    this.call = undefined;
     this.stopCamera();
     this.mute();
   }
