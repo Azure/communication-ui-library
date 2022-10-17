@@ -79,7 +79,8 @@ const overlayProps = (
    * videoGallery.
    *
    * We also need to check the participant state since in a group call the remote participants array will populate just before
-   * the user joins.
+   * the user joins. In this situation we also check the participant states. in a groupCall the state of the participants
+   * will be 'Idle'.
    */
   const outboundCallParticipant: RemoteParticipantState | undefined =
     remoteParticipants[0] &&
