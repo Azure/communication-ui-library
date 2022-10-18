@@ -55,13 +55,22 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
   const options = useAdaptedSelector(getCallingSelector(DevicesButton));
   const localDeviceSettingsHandlers = useHandlers(LocalDeviceSettings);
   const { video: cameraPermissionGranted, audio: microphonePermissionGranted } = useSelector(devicePermissionSelector);
-  const errorBarProps = usePropsFor(ErrorBar);
+  let errorBarProps = usePropsFor(ErrorBar);
   const adapter = useAdapter();
   const deviceState = adapter.getState().devices;
 
   let disableStartCallButton = !microphonePermissionGranted || deviceState.microphones?.length === 0;
   /* @conditional-compile-remove(rooms) */
   const rolePermissions = _usePermissions();
+
+  /* @conditional-compile-remove(rooms) */
+  // TODO: move this logic to the error bar selector once role is plumbed from the headless SDK
+  if (!rolePermissions.cameraButton) {
+    errorBarProps = {
+      ...errorBarProps,
+      activeErrorMessages: errorBarProps.activeErrorMessages.filter((e) => e.type !== 'callCameraAccessDenied')
+    };
+  }
   /* @conditional-compile-remove(rooms) */
   if (!rolePermissions.microphoneButton) {
     // If user's role permissions do not allow access to the microphone button then DO NOT disable the start call button
