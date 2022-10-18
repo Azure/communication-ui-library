@@ -302,10 +302,8 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
       pageElement = (
         <>
           {
-            /* @conditional-compile-remove(unsupported-browser) */ props.options
-              ?.onEnvironmentInfoTroubleshootingClick && (
-              <UnsupportedBrowserPage onTroubleshootingClick={props.options?.onEnvironmentInfoTroubleshootingClick} />
-            )
+            /* @conditional-compile-remove(unsupported-browser) */
+            <UnsupportedBrowserPage onTroubleshootingClick={props.options?.onEnvironmentInfoTroubleshootingClick} />
           }
         </>
       );
