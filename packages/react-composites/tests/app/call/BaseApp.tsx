@@ -11,8 +11,7 @@ import {
   COMPOSITE_LOCALE_EN_US,
   CustomCallControlButtonCallback,
   CustomCallControlButtonProps,
-  CustomCallControlButtonCallbackArgs,
-  CallCompositeOptions
+  CustomCallControlButtonCallbackArgs
 } from '../../../src';
 import { IDS } from '../../browser/common/constants';
 import { isMobile } from '../lib/utils';
@@ -39,7 +38,7 @@ export function BaseApp(props: { queryArgs: QueryArgs; callAdapter?: CallAdapter
     ? () => alert('you are using a unsupported browser')
     : undefined;
 
-  let customCallCompositeOptions: CallCompositeOptions | undefined = undefined;
+  let customCallCompositeOptions;
 
   if (onEnvironmentInfoTroubleshootingClick) {
     customCallCompositeOptions = {

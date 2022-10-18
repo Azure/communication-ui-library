@@ -13,7 +13,7 @@ import { useLocale } from '../../localization';
  * @internal
  */
 export type UnsupportedBrowserPageProps = {
-  onTroubleshootingClick: () => void;
+  onTroubleshootingClick?: () => void;
 };
 
 /**
