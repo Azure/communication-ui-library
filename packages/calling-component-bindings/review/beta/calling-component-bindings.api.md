@@ -39,6 +39,8 @@ import { ScreenShareButton } from '@internal/react-components';
 import { StartCallOptions } from '@azure/communication-calling';
 import { StatefulCallClient } from '@internal/calling-stateful-client';
 import { StatefulDeviceManager } from '@internal/calling-stateful-client';
+import { TeamsCall } from '@azure/communication-calling';
+import { TeamsCallAgent } from '@azure/communication-calling';
 import { UnknownIdentifier } from '@azure/communication-common';
 import { VideoDeviceInfo } from '@azure/communication-calling';
 import { VideoGallery } from '@internal/react-components';
@@ -52,7 +54,7 @@ export const CallAgentProvider: (props: CallAgentProviderProps) => JSX.Element;
 // @public
 export interface CallAgentProviderProps {
     // (undocumented)
-    callAgent?: CallAgent;
+    callAgent?: CallAgent | /* @conditional-compile-remove(teams-call) */ TeamsCallAgent;
     // (undocumented)
     children: React_2.ReactNode;
 }
@@ -68,16 +70,25 @@ export interface CallClientProviderProps {
     children: React_2.ReactNode;
 }
 
+// Warning: (ae-internal-missing-underscore) The name "CallHandlersOf" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
+export type CallHandlersOf<AgentType extends TeamsCallAgent | CallAgent> = AgentType extends CallAgent ? CallingHandlers : never | /* @conditional-compile-remove(teams-call) */ TeamsCallingHandlers;
+
 // @public
 export type CallingBaseSelectorProps = {
     callId: string;
 };
 
 // @public
-export type CallingHandlers = {
+export type CallingHandlers = Omit<CallingHandlersCommon, 'onStartCall'> & {
+    onStartCall: (participants: CommunicationIdentifier[], options?: StartCallOptions) => Call | undefined;
+};
+
+// @public
+export type CallingHandlersCommon = {
     onStartLocalVideo: () => Promise<void>;
     onToggleCamera: (options?: VideoStreamOptions) => Promise<void>;
-    onStartCall: (participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[], options?: StartCallOptions) => Call | undefined;
     onSelectMicrophone: (device: AudioDeviceInfo) => Promise<void>;
     onSelectSpeaker: (device: AudioDeviceInfo) => Promise<void>;
     onSelectCamera: (device: VideoDeviceInfo, options?: VideoStreamOptions) => Promise<void>;
@@ -87,13 +98,14 @@ export type CallingHandlers = {
     onToggleScreenShare: () => Promise<void>;
     onHangUp: () => Promise<void>;
     onToggleHold: () => Promise<void>;
-    onAddParticipant: (participant: CommunicationIdentifier, options?: AddPhoneNumberOptions) => Promise<void>;
     onCreateLocalStreamView: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
     onCreateRemoteStreamView: (userId: string, options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
-    onRemoveParticipant: (userId: string) => Promise<void>;
     onDisposeRemoteStreamView: (userId: string) => Promise<void>;
     onDisposeLocalStreamView: () => Promise<void>;
     onSendDtmfTone: (dtmfTone: DtmfTone) => Promise<void>;
+    onStartCall: (participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[], options?: StartCallOptions) => void;
+    onAddParticipant: (participant: CommunicationIdentifier, options?: AddPhoneNumberOptions) => Promise<void>;
+    onRemoveParticipant: (userId: string) => Promise<void>;
 };
 
 // @public
@@ -102,10 +114,15 @@ export const CallProvider: (props: CallProviderProps) => JSX.Element;
 // @public
 export interface CallProviderProps {
     // (undocumented)
-    call?: Call;
+    call?: Call | /* @conditional-compile-remove(teams-call) */ TeamsCall;
     // (undocumented)
     children: React_2.ReactNode;
 }
+
+// Warning: (ae-internal-missing-underscore) The name "CallTypeOf" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
+export type CallTypeOf<AgentType extends TeamsCallAgent | CallAgent> = AgentType extends CallAgent ? Call : never | /* @conditional-compile-remove(teams-call) */ TeamsCall;
 
 // @public
 export type CameraButtonSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
@@ -118,8 +135,11 @@ export type CameraButtonSelector = (state: CallClientState, props: CallingBaseSe
 // @public
 export const cameraButtonSelector: CameraButtonSelector;
 
-// @public
-export const createDefaultCallingHandlers: (callClient: StatefulCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined) => CallingHandlers;
+// @public (undocumented)
+export const createDefaultCallingHandlers: <AgentType extends CallAgent | TeamsCallAgent = CallAgent>(callClient: StatefulCallClient, callAgent: AgentType | undefined, deviceManager: StatefulDeviceManager | undefined, call: CallTypeOf<AgentType> | undefined) => CallHandlersOf<AgentType>;
+
+// @beta
+export const createDefaultTeamsCallingHandlers: (callClient: StatefulCallClient, callAgent: /* @conditional-compile-remove(teams-call) */ TeamsCallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: /* @conditional-compile-remove(teams-call) */ TeamsCall | undefined) => never | /* @conditional-compile-remove(teams-call) */ TeamsCallingHandlers;
 
 // @public
 export type DevicesButtonSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
@@ -202,6 +222,11 @@ export type ScreenShareButtonSelector = (state: CallClientState, props: CallingB
 // @public
 export const screenShareButtonSelector: ScreenShareButtonSelector;
 
+// @beta
+export type TeamsCallingHandlers = Omit<CallingHandlersCommon, 'onStartCall'> & {
+    onStartCall: (participants: CommunicationIdentifier[], options?: StartCallOptions) => /* @conditional-compile-remove(teams-call) */ TeamsCall | undefined;
+};
+
 // @internal
 export const _updateUserDisplayNames: (participants: RemoteParticipantState[]) => RemoteParticipantState[];
 
@@ -215,16 +240,22 @@ export const useCallAgent: () => CallAgent | undefined;
 export const useCallClient: () => StatefulCallClient;
 
 // @public
-export const useCallingHandlers: <PropsT>(component: (props: PropsT) => ReactElement | null) => Common<CallingHandlers, PropsT> | undefined;
+export const useCallingHandlers: <PropsT>(component: (props: PropsT) => ReactElement | null) => Common<TeamsCallingHandlers | CallingHandlers, PropsT> | undefined;
 
 // @public
-export const useCallingPropsFor: <Component extends (props: any) => JSX.Element>(component: Component) => GetCallingSelector<Component> extends (props: any) => any ? ReturnType<GetCallingSelector<Component>> & Common<CallingHandlers, Parameters<Component>[0]> : undefined;
+export const useCallingPropsFor: <Component extends (props: any) => JSX.Element>(component: Component) => GetCallingSelector<Component> extends (props: any) => any ? ReturnType<GetCallingSelector<Component>> & Common<CallingHandlersCommon, Parameters<Component>[0]> : undefined;
 
 // @public
 export const useCallingSelector: <SelectorT extends (state: CallClientState, props: any) => any, ParamT extends SelectorT | undefined>(selector: ParamT, selectorProps?: Parameters<SelectorT>[1] | undefined) => ParamT extends SelectorT ? ReturnType<SelectorT> : undefined;
 
 // @public
 export const useDeviceManager: () => StatefulDeviceManager | undefined;
+
+// @public
+export const useTeamsCall: () => /* @conditional-compile-remove(teams-call) */ TeamsCall | undefined;
+
+// @beta
+export const useTeamsCallAgent: () => /* @conditional-compile-remove(teams-call) */ TeamsCallAgent | undefined;
 
 // @internal (undocumented)
 export const _videoGalleryRemoteParticipantsMemo: (remoteParticipants: RemoteParticipantState[] | undefined) => VideoGalleryRemoteParticipant[];

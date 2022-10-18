@@ -3,7 +3,14 @@
 
 import { DeviceManagerState, RemoteParticipantState, StatefulCallClient } from '@internal/calling-stateful-client';
 import { CallState as CallStatus } from '@azure/communication-calling';
-import { isPhoneNumberIdentifier } from '@azure/communication-common';
+import {
+  CommunicationIdentifier,
+  isCommunicationUserIdentifier,
+  isPhoneNumberIdentifier,
+  MicrosoftTeamsUserIdentifier,
+  PhoneNumberIdentifier,
+  UnknownIdentifier
+} from '@azure/communication-common';
 import { memoizeFnAll, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 
 /**
@@ -75,3 +82,17 @@ const memoizedUpdateDisplayName = memoizeFnAll((participantId: string, participa
     return participant;
   }
 });
+
+/**
+ * @private
+ */
+export const isTeamsCallParticipants = (
+  participants: CommunicationIdentifier[]
+): participants is (PhoneNumberIdentifier | MicrosoftTeamsUserIdentifier | UnknownIdentifier)[] => {
+  for (const p of participants) {
+    if (isCommunicationUserIdentifier(p)) {
+      return false;
+    }
+  }
+  return true;
+};
