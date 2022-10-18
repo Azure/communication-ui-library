@@ -24,7 +24,7 @@ export const SidePaneHeader = (props: {
       iconHovered: { color: theme.palette.neutralSecondary },
       iconPressed: { color: theme.palette.neutralSecondary }
     }),
-    [theme.palette.neutralSecondary]
+    [theme.palette.neutralSecondary, theme.semanticColors.bodyBackground]
   );
 
   return (
