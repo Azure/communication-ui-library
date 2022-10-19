@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Fix CallWithChat control bar disappearing while the call is in the disconnecting state",
+  "packageName": "@internal/react-composites",
+  "email": "2684369+JamesBurnside@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

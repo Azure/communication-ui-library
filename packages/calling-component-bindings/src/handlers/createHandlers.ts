@@ -27,7 +27,7 @@ import { CreateViewResult, StatefulCallClient, StatefulDeviceManager } from '@in
 import memoizeOne from 'memoize-one';
 import { ReactElement } from 'react';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
-import { disposeAllLocalPreviewViews, _isInCall, _isPreviewOn } from '../utils/callUtils';
+import { disposeAllLocalPreviewViews, _isInCall, _isInLobbyOrConnecting, _isPreviewOn } from '../utils/callUtils';
 
 /**
  * Object containing all the handlers required for calling components.
@@ -51,7 +51,7 @@ export type CallingHandlers = {
   onStartScreenShare: () => Promise<void>;
   onStopScreenShare: () => Promise<void>;
   onToggleScreenShare: () => Promise<void>;
-  onHangUp: () => Promise<void>;
+  onHangUp: (forEveryone?: boolean) => Promise<void>;
   /* @conditional-compile-remove(PSTN-calls) */
   onToggleHold: () => Promise<void>;
   /* @conditional-compile-remove(PSTN-calls) */
@@ -133,7 +133,7 @@ export const createDefaultCallingHandlers = memoizeOne(
     };
 
     const onToggleCamera = async (options?: VideoStreamOptions): Promise<void> => {
-      if (call && _isInCall(call.state)) {
+      if (call && (_isInCall(call.state) || _isInLobbyOrConnecting(call.state))) {
         const stream = call.localVideoStreams.find((stream) => stream.mediaStreamType === 'Video');
         if (stream) {
           await onStopLocalVideo(stream);
@@ -227,7 +227,8 @@ export const createDefaultCallingHandlers = memoizeOne(
     const onToggleScreenShare = async (): Promise<void> =>
       call?.isScreenSharingOn ? await onStopScreenShare() : await onStartScreenShare();
 
-    const onHangUp = async (): Promise<void> => await call?.hangUp();
+    const onHangUp = async (forEveryone?: boolean): Promise<void> =>
+      await call?.hangUp({ forEveryone: forEveryone === true ? true : false });
 
     /* @conditional-compile-remove(PSTN-calls) */
     const onToggleHold = async (): Promise<void> =>

@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "BugFix: Fix local camera getting into a bad state when the camera takes longer to turn on than the call took to connect",
+  "packageName": "@internal/calling-component-bindings",
+  "email": "2684369+JamesBurnside@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

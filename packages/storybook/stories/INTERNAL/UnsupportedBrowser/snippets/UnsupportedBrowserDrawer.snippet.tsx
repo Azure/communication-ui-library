@@ -28,7 +28,7 @@ export const UnsupportedBrowserDrawer: () => JSX.Element = () => {
         {isDrawerShowing && (
           <_DrawerSurface onLightDismiss={onLightDismissTriggered}>
             <UnsupportedBrowser
-              onTroubleShootingClick={() => alert('clicked trouble shooting link')}
+              onTroubleshootingClick={() => alert('clicked trouble shooting link')}
               strings={locale}
             />
           </_DrawerSurface>

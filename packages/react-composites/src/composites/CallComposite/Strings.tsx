@@ -322,4 +322,9 @@ export interface CallCompositeStrings {
    * Control bar People button ToolTipContent
    */
   peopleButtonTooltipClose: string;
+  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+  /**
+   * Label disaplayed on the lobby screen during a 1:1 outbound call.
+   */
+  outboundCallingNoticeString: string;
 }

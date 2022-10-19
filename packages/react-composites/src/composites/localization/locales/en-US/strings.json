@@ -67,7 +67,8 @@
     "resumingCallButtonAriaLabel": "Resume call",
     "holdScreenLabel": "You're on hold",
     "openDtmfDialpadLabel": "Show dialpad",
-    "dtmfDialpadPlaceHolderText": "Enter number"
+    "dtmfDialpadPlaceHolderText": "Enter number",
+    "outboundCallingNoticeString": "Calling..."
   },
   "chat": {
     "chatListHeader": "In this chat",
