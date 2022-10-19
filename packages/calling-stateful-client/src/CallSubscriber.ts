@@ -99,6 +99,8 @@ export class CallSubscriber {
     this._call.off('remoteParticipantsUpdated', this.remoteParticipantsUpdated);
     this._call.off('localVideoStreamsUpdated', this.localVideoStreamsUpdated);
     this._call.off('isMutedChanged', this.isMuteChanged);
+    /* @conditional-compile-remove(rooms) */
+    this._call.off('roleChanged', this.callRoleChangedHandler);
 
     this._participantSubscribers.forEach((participantSubscriber: ParticipantSubscriber) => {
       participantSubscriber.unsubscribe();

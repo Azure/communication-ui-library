@@ -74,6 +74,8 @@ export class ParticipantSubscriber {
     this._participant.off('displayNameChanged', this.displayNameChanged);
     this._participant.off('isSpeakingChanged', this.isSpeakingChanged);
     this._participant.off('videoStreamsUpdated', this.videoStreamsUpdated);
+    /* @conditional-compile-remove(rooms) */
+    this._participant.off('roleChanged', this.roleChanged);
 
     // If unsubscribing it means the participant left the call. If they have any rendering streams we should stop them
     // as it doesn't make sense to render for an ended participant.
