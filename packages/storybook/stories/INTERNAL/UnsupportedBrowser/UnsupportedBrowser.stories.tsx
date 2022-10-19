@@ -21,7 +21,7 @@ const UnsupportedBrowserStory = (): JSX.Element => {
     <Stack>
       <UnsupportedBrowserComponent
         strings={locale}
-        onTroubleShootingClick={() => {
+        onTroubleshootingClick={() => {
           alert('Clicked help link');
         }}
       />
