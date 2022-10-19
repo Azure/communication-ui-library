@@ -7,6 +7,7 @@ const config = {
   entry: {
     chatComposite: './src/chatComposite.js',
     callComposite: './src/callComposite.js',
+    callWithChatComposite: './src/callWithChatComposite.js',
     service: './src/service.js'
   },
   mode: 'development', // change to 'production' for optimization
