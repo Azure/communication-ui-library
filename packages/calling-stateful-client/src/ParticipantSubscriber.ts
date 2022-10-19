@@ -44,6 +44,8 @@ export class ParticipantSubscriber {
     this._participant.on('displayNameChanged', this.displayNameChanged);
     this._participant.on('isSpeakingChanged', this.isSpeakingChanged);
     this._participant.on('videoStreamsUpdated', this.videoStreamsUpdated);
+    /* @conditional-compile-remove(rooms) */
+    this._participant.on('roleChanged', this.roleChanged);
 
     if (this._participant.videoStreams.length > 0) {
       for (const stream of this._participant.videoStreams) {
@@ -103,6 +105,11 @@ export class ParticipantSubscriber {
 
   private isMutedChanged = (): void => {
     this._context.setParticipantIsMuted(this._callIdRef.callId, this._participantKey, this._participant.isMuted);
+  };
+
+  /* @conditional-compile-remove(rooms) */
+  private roleChanged = (): void => {
+    this._context.setParticipantRole(this._callIdRef.callId, this._participantKey, this._participant.role);
   };
 
   private displayNameChanged = (): void => {

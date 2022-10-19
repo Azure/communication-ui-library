@@ -3,6 +3,8 @@
 
 import { CommunicationIdentifierKind } from '@azure/communication-common';
 import { AudioDeviceInfo, DeviceAccess, DominantSpeakersInfo, VideoDeviceInfo } from '@azure/communication-calling';
+/* @conditional-compile-remove(rooms) */
+import { ParticipantRole } from '@azure/communication-calling';
 import { AzureLogger, createClientLogger, getLogLevel } from '@azure/logger';
 import EventEmitter from 'events';
 import { enableMapSet, enablePatches, Patch, produce } from 'immer';
@@ -134,6 +136,8 @@ export class CallContext {
         existingCall.remoteParticipants = call.remoteParticipants;
         existingCall.transcription.isTranscriptionActive = call.transcription.isTranscriptionActive;
         existingCall.recording.isRecordingActive = call.recording.isRecordingActive;
+        /* @conditional-compile-remove(rooms) */
+        existingCall.role = call.role;
         // We don't update the startTime and endTime if we are updating an existing active call
       } else {
         draft.calls[latestCallId] = call;
@@ -249,6 +253,16 @@ export class CallContext {
     });
   }
 
+  /* @conditional-compile-remove(rooms) */
+  public setRoleChanged(callId: string, role: ParticipantRole): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        call.role = role;
+      }
+    });
+  }
+
   public setCallDominantSpeakers(callId: string, dominantSpeakers: DominantSpeakersInfo): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
@@ -315,6 +329,19 @@ export class CallContext {
         const participant = call.remoteParticipants[participantKey];
         if (participant) {
           participant.isMuted = muted;
+        }
+      }
+    });
+  }
+
+  /* @conditional-compile-remove(rooms) */
+  public setParticipantRole(callId: string, participantKey: string, role: ParticipantRole): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        const participant = call.remoteParticipants[participantKey];
+        if (participant) {
+          participant.role = role;
         }
       }
     });

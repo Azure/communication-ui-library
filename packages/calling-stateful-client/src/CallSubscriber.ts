@@ -65,6 +65,8 @@ export class CallSubscriber {
     this._call.on('remoteParticipantsUpdated', this.remoteParticipantsUpdated);
     this._call.on('localVideoStreamsUpdated', this.localVideoStreamsUpdated);
     this._call.on('isMutedChanged', this.isMuteChanged);
+    /* @conditional-compile-remove(rooms) */
+    this._call.on('roleChanged', this.callRoleChangedHandler);
     this._call.feature(Features.DominantSpeakers).on('dominantSpeakersChanged', this.dominantSpeakersChanged);
 
     // At time of writing only one LocalVideoStream is supported by SDK.
@@ -156,6 +158,11 @@ export class CallSubscriber {
 
   private isMuteChanged = (): void => {
     this._context.setCallIsMicrophoneMuted(this._callIdRef.callId, this._call.isMuted);
+  };
+
+  /* @conditional-compile-remove(rooms) */
+  private callRoleChangedHandler = (): void => {
+    this._context.setRoleChanged(this._callIdRef.callId, this._call.role);
   };
 
   private remoteParticipantsUpdated = (event: { added: RemoteParticipant[]; removed: RemoteParticipant[] }): void => {
