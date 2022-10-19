@@ -22,7 +22,7 @@ export const UnsupportedBrowserModal: () => JSX.Element = () => {
       <Modal isOpen={modalOpen} onDismiss={() => setModalOpen(false)}>
         <UnsupportedBrowser
           strings={locale}
-          onTroubleShootingClick={() => {
+          onTroubleshootingClick={() => {
             alert('clicked help link');
           }}
         />

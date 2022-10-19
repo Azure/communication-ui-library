@@ -1501,7 +1501,7 @@ export const UnsupportedBrowser: (props: UnsupportedBrowserProps) => JSX.Element
 
 // @beta
 export interface UnsupportedBrowserProps {
-    onTroubleShootingClick: () => void;
+    onTroubleshootingClick?: () => void;
     strings: UnsupportedBrowserStrings;
 }
 
