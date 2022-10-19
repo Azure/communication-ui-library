@@ -55,6 +55,32 @@ export const _RemoteVideoTile = React.memo(
       showMuteIndicator
     } = props;
 
+    // Initialize the scaling mode with the value from the props. Default is 'Crop'
+    const [scalingMode, setScalingMode] = React.useState<VideoStreamOptions['scalingMode']>(
+      remoteVideoViewOptions?.scalingMode ?? 'Crop'
+    );
+
+    // Called when Video Tile contextual menu item `Fill Frame` is clicked
+    const fillFrame = useMemo(() => {
+      setScalingMode('Crop');
+    }, [scalingMode]);
+
+    // Called when Video Tile contextual menu item `Fit to Frame` is clicked
+    const fitToFrame = useMemo(() => {
+      setScalingMode('Fit');
+    }, [scalingMode]);
+
+    // Use this attribute to display the contextual menu item text in Video Tile
+    const fitOrFillText = useMemo(() => {
+      // The strings here should come from localized video tile strings.
+      return scalingMode === 'Crop' ? 'Fit to Frame' : 'Fill Frame';
+    }, [scalingMode]);
+
+    // Use this function to provide onClick behavior to the contextual menu item in Video Tile for fill/fit
+    const toggleFitOrFill = useMemo(() => {
+      return scalingMode === 'Crop' ? fitToFrame : fillFrame;
+    }, [scalingMode]);
+
     const remoteVideoStreamProps: RemoteVideoStreamLifecycleMaintainerProps = useMemo(
       () => ({
         isMirrored: remoteVideoViewOptions?.isMirrored,
@@ -65,7 +91,7 @@ export const _RemoteVideoTile = React.memo(
         onDisposeRemoteStreamView,
         remoteParticipantId: userId,
         renderElementExists: !!renderElement,
-        scalingMode: remoteVideoViewOptions?.scalingMode
+        scalingMode: scalingMode
       }),
       [
         isAvailable,
