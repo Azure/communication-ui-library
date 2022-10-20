@@ -198,6 +198,7 @@ export const IsCallEndedPage = (
     | /* @conditional-compile-remove(PSTN-calls) */ 'hold'
     | /* @conditional-compile-remove(rooms) */ 'roomNotFound'
     | /* @conditional-compile-remove(rooms) */ 'deniedPermissionToRoom'
+    | /* @conditional-compile-remove(unsupported-browser) */ 'unsupportedEnvironment'
 ): boolean => END_CALL_PAGES.includes(page);
 
 /**

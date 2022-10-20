@@ -15,6 +15,7 @@ import { IContextualMenuStyles } from '@fluentui/react';
 import { IDropdownOption } from '@fluentui/react';
 import { IDropdownStyles } from '@fluentui/react';
 import { IIconProps } from '@fluentui/react';
+import { ILinkStyles } from '@fluentui/react';
 import { IMessageBarProps } from '@fluentui/react';
 import { IModalProps } from '@fluentui/react';
 import { IPersonaStyleProps } from '@fluentui/react';
@@ -64,6 +65,55 @@ export type AnnouncerProps = {
 // @public
 export interface BaseCustomStyles {
     root?: IStyle;
+}
+
+// @beta
+export const BrowserPermissionDenied: (props: BrowserPermissionDeniedProps) => JSX.Element;
+
+// @beta
+export const BrowserPermissionDeniedIOS: (props: BrowserPermissionDeniedIOSProps) => JSX.Element;
+
+// @beta
+export interface BrowserPermissionDeniedIOSProps extends BrowserPermissionDeniedProps {
+    imageSource?: string;
+    strings: BrowserPermissionDeniedIOSStrings;
+}
+
+// @beta
+export interface BrowserPermissionDeniedIOSStrings extends BrowserPermissionDeniedStrings {
+    imageAltText: string;
+    primaryText: string;
+    secondaryText: string;
+    step1DigitText: string;
+    step1Text: string;
+    step2DigitText: string;
+    step2Text: string;
+    step3DigitText: string;
+    step3Text: string;
+    step4DigitText: string;
+    step4Text: string;
+}
+
+// @beta
+export interface BrowserPermissionDeniedProps {
+    onTroubleshootingClick: () => void;
+    onTryAgainClick: () => void;
+    strings: BrowserPermissionDeniedStrings;
+    styles?: BrowserPermissionDeniedStyles;
+}
+
+// @beta
+export interface BrowserPermissionDeniedStrings {
+    linkText: string;
+    primaryButtonText: string;
+    primaryText: string;
+    secondaryText: string;
+}
+
+// @beta
+export interface BrowserPermissionDeniedStyles extends BaseCustomStyles {
+    primaryButton?: IButtonStyles;
+    troubleshootingLink?: ILinkStyles;
 }
 
 // @public
@@ -260,6 +310,8 @@ export interface ComponentLocale {
 
 // @public
 export interface ComponentStrings {
+    BrowserPermissionDenied: BrowserPermissionDeniedStrings;
+    BrowserPermissionDeniedIOS: BrowserPermissionDeniedIOSStrings;
     cameraButton: CameraButtonStrings;
     devicesButton: DevicesButtonStrings;
     dialpad: DialpadStrings;
@@ -423,6 +475,7 @@ export const DEFAULT_COMPONENT_ICONS: {
     DomainPermissionCamera: JSX.Element;
     DomainPermissionMic: JSX.Element;
     UnsupportedBrowserWarning: JSX.Element;
+    BrowserPermissionDeniedError: JSX.Element;
 };
 
 // @internal
@@ -430,8 +483,9 @@ export const _DevicePermissionDropdown: (props: _DevicePermissionDropdownProps) 
 
 // @internal
 export interface _DevicePermissionDropdownProps {
+    askDevicePermission?(constrain: _PermissionConstraints): Promise<void>;
+    constrain?: _PermissionConstraints;
     icon?: JSX.Element;
-    onClickActionButton?: () => Promise<void>;
     options?: IDropdownOption[];
     strings?: _DevicePermissionDropdownStrings;
     styles?: Partial<IDropdownStyles>;
@@ -531,6 +585,7 @@ export const DomainPermissions: (props: DomainPermissionsProps) => JSX.Element;
 // @beta
 export interface DomainPermissionsProps {
     appName: string;
+    onAllowAccessClick?: () => void;
     onTroubleshootingClick: () => void;
     strings: DomainPermissionsStrings;
 }
@@ -538,6 +593,7 @@ export interface DomainPermissionsProps {
 // @beta
 export interface DomainPermissionsStrings {
     linkText: string;
+    primaryButtonText: string;
     primaryText: string;
     secondaryText: string;
 }
@@ -1205,6 +1261,12 @@ export interface ParticipantsButtonStyles extends ControlBarButtonStyles {
 // @public
 export type ParticipantState = 'Idle' | 'Connecting' | 'Ringing' | 'Connected' | 'Hold' | 'InLobby' | 'EarlyMedia' | 'Disconnected';
 
+// @internal
+export type _PermissionConstraints = {
+    audio: boolean;
+    video: boolean;
+};
+
 // @internal (undocumented)
 export type _Permissions = {
     cameraButton: boolean;
@@ -1439,7 +1501,7 @@ export const UnsupportedBrowser: (props: UnsupportedBrowserProps) => JSX.Element
 
 // @beta
 export interface UnsupportedBrowserProps {
-    onTroubleShootingClick: () => void;
+    onTroubleshootingClick?: () => void;
     strings: UnsupportedBrowserStrings;
 }
 

@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Add permissions for Camera and Microphone in devices options",
+  "packageName": "@internal/react-composites",
+  "email": "97124699+prabhjot-msft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

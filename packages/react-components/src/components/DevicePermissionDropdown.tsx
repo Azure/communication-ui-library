@@ -38,9 +38,18 @@ export interface _DevicePermissionDropdownProps {
    */
   options?: IDropdownOption[];
   /**
-   * Function that gets triggered when action button is clicked
+   * Ask for permissions of devices.
+   *
+   * @remarks
+   * Browser permission window will pop up if permissions are not granted yet
+   *
+   * @param constrain - Define constraints for accessing local devices {@link @azure/communication-calling#PermissionConstraints }
    */
-  onClickActionButton?: () => Promise<void>;
+  askDevicePermission?(constrain: _PermissionConstraints): Promise<void>;
+  /**
+   * Define constraints for accessing local devices  {@link @azure/communication-calling#PermissionConstraints }
+   */
+  constrain?: _PermissionConstraints;
   /**
    * Strings for devicepermissiondropdown
    */
@@ -57,7 +66,7 @@ export interface _DevicePermissionDropdownProps {
  * @internal
  */
 export const _DevicePermissionDropdown = (props: _DevicePermissionDropdownProps): JSX.Element => {
-  const { icon, onClickActionButton, strings, options, styles } = props;
+  const { icon, askDevicePermission, constrain, strings, options, styles } = props;
 
   const onRenderPlaceholder = (): JSX.Element => {
     return (
@@ -78,9 +87,23 @@ export const _DevicePermissionDropdown = (props: _DevicePermissionDropdownProps)
       label={strings?.label}
       onRenderPlaceholder={onRenderPlaceholder}
       onRenderCaretDown={onRenderCaretDown}
-      onClick={onClickActionButton}
+      onClick={() => {
+        if (askDevicePermission) {
+          askDevicePermission(constrain ?? { video: true, audio: true });
+        }
+      }}
       options={options ?? []}
       styles={styles}
     />
   );
+};
+
+/**
+ * Define constraints for accessing local devices  {@link @azure/communication-calling#PermissionConstraints }
+ *
+ * @internal
+ */
+export type _PermissionConstraints = {
+  audio: boolean;
+  video: boolean;
 };

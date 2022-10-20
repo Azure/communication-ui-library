@@ -29,6 +29,8 @@ import { modalLayerHostStyle } from '../common/styles/ModalLocalAndRemotePIP.sty
 import { useId } from '@fluentui/react-hooks';
 /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */
 import { HoldPage } from './pages/HoldPage';
+/* @conditional-compile-remove(unsupported-browser) */
+import { UnsupportedBrowserPage } from './pages/UnsupportedBrowser';
 
 /**
  * Props for {@link CallComposite}.
@@ -145,6 +147,20 @@ export type CallCompositeOptions = {
    * if this is not supplied, the composite will not show a 'network troubleshooting' link.
    */
   onNetworkingTroubleShootingClick?: () => void;
+  /* @conditional-compile-remove(unsupported-browser) */
+  /**
+   * Callback you may provide to supply users with a provided page to showcase supported browsers by ACS.
+   *
+   * @example
+   * ```ts
+   * onBrowserTroubleShootingClick?: () =>
+   *  window.open('https://contoso.com/browser-troubleshooting', '_blank');
+   * ```
+   *
+   * @remarks
+   * if this is not supplied, the composite will not show a unsupported browser page.
+   */
+  onEnvironmentInfoTroubleshootingClick?: () => void;
 };
 
 type MainScreenProps = {
@@ -282,6 +298,15 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
         </>
       );
       break;
+    case unsupportedEnvironmentPageTrampoline():
+      pageElement = (
+        <>
+          {
+            /* @conditional-compile-remove(unsupported-browser) */
+            <UnsupportedBrowserPage onTroubleshootingClick={props.options?.onEnvironmentInfoTroubleshootingClick} />
+          }
+        </>
+      );
   }
 
   if (!pageElement) {
@@ -404,5 +429,11 @@ const holdPageTrampoline = (): string => {
   /* @conditional-compile-remove(one-to-n-calling) */
   /* @conditional-compile-remove(PSTN-calls) */
   return 'hold';
+  return 'call';
+};
+
+const unsupportedEnvironmentPageTrampoline = (): string => {
+  /* @conditional-compile-remove(unsupported-browser) */
+  return 'unsupportedEnvironment';
   return 'call';
 };
