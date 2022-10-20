@@ -1,8 +1,30 @@
 # Change Log - @internal/react-composites
 
-This log was last generated on Wed, 05 Oct 2022 18:13:38 GMT and should not be manually modified.
+This log was last generated on Thu, 20 Oct 2022 20:49:51 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.3.2-beta.2](https://github.com/azure/communication-ui-library/tree/@internal/react-composites_v1.3.2-beta.2)
+
+Thu, 20 Oct 2022 20:49:51 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@internal/react-composites_v1.3.2-beta.1...@internal/react-composites_v1.3.2-beta.2)
+
+### Patches
+
+- bugfix: Avoid blank screen on mobile  when call ends with a side pane open ([PR #2408](https://github.com/azure/communication-ui-library/pull/2408) by 82062616+prprabhu-ms@users.noreply.github.com)
+- Add permissions for Camera and Microphone in devices options ([PR #2405](https://github.com/azure/communication-ui-library/pull/2405) by 97124699+prabhjot-msft@users.noreply.github.com)
+- Fix CallWithChat control bar disappearing while the call is in the disconnecting state ([PR #2400](https://github.com/azure/communication-ui-library/pull/2400) by 2684369+JamesBurnside@users.noreply.github.com)
+- Bump @internal/acs-ui-common to v1.3.2-beta.2 ([PR #2413](https://github.com/azure/communication-ui-library/pull/2413) by beachball)
+- Bump @internal/calling-component-bindings to v1.3.2-beta.2 ([PR #2413](https://github.com/azure/communication-ui-library/pull/2413) by beachball)
+- Bump @internal/calling-stateful-client to v1.3.2-beta.2 ([PR #2413](https://github.com/azure/communication-ui-library/pull/2413) by beachball)
+- Bump @internal/chat-component-bindings to v1.3.2-beta.2 ([PR #2413](https://github.com/azure/communication-ui-library/pull/2413) by beachball)
+- Bump @internal/chat-stateful-client to v1.3.2-beta.2 ([PR #2413](https://github.com/azure/communication-ui-library/pull/2413) by beachball)
+- Bump @internal/react-components to v1.3.2-beta.2 ([PR #2413](https://github.com/azure/communication-ui-library/pull/2413) by beachball)
+- Bump @internal/fake-backends to v1.3.2-beta.2 ([PR #2413](https://github.com/azure/communication-ui-library/pull/2413) by beachball)
+
+### Changes
+
+- Remove camera access error bar error for consumer role ([PR #2406](https://github.com/azure/communication-ui-library/pull/2406) by miguelgamis@microsoft.com)
 
 ## [1.3.2-beta.1](https://github.com/azure/communication-ui-library/tree/@internal/react-composites_v1.3.2-beta.1)
 

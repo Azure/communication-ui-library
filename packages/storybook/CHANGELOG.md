@@ -1,8 +1,17 @@
 # Change Log - @internal/storybook
 
-This log was last generated on Wed, 05 Oct 2022 18:13:43 GMT and should not be manually modified.
+This log was last generated on Thu, 20 Oct 2022 20:49:51 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.3.2-beta.2](https://github.com/azure/communication-ui-library/tree/@internal/storybook_v1.3.2-beta.2)
+
+Thu, 20 Oct 2022 20:49:51 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@internal/storybook_v1.3.2-beta.1...@internal/storybook_v1.3.2-beta.2)
+
+### Patches
+
+- Bump @azure/communication-react to v1.3.2-beta.2 ([PR #2413](https://github.com/azure/communication-ui-library/pull/2413) by beachball)
 
 ## [1.3.2-beta.1](https://github.com/azure/communication-ui-library/tree/@internal/storybook_v1.3.2-beta.1)
 

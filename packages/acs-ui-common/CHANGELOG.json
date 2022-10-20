@@ -2,6 +2,21 @@
   "name": "@internal/acs-ui-common",
   "entries": [
     {
+      "date": "Thu, 20 Oct 2022 20:49:50 GMT",
+      "tag": "@internal/acs-ui-common_v1.3.2-beta.2",
+      "version": "1.3.2-beta.2",
+      "comments": {
+        "none": [
+          {
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "package": "@internal/acs-ui-common",
+            "commit": "96767fb064fb7dec4a329af4cc8c78f60448850a",
+            "comment": "Bumped"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 05 Oct 2022 18:13:53 GMT",
       "tag": "@internal/acs-ui-common_v1.3.2-beta.1",
       "version": "1.3.2-beta.1",

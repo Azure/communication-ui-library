@@ -2,6 +2,109 @@
   "name": "@azure/communication-react",
   "entries": [
     {
+      "date": "Thu, 20 Oct 2022 20:49:50 GMT",
+      "tag": "@azure/communication-react_v1.3.2-beta.2",
+      "version": "1.3.2-beta.2",
+      "comments": {
+        "none": [
+          {
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "package": "@internal/acs-ui-common",
+            "commit": "96767fb064fb7dec4a329af4cc8c78f60448850a",
+            "comment": "Bumped"
+          },
+          {
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "96767fb064fb7dec4a329af4cc8c78f60448850a",
+            "comment": "Bumped"
+          },
+          {
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "package": "@internal/calling-stateful-client",
+            "commit": "96767fb064fb7dec4a329af4cc8c78f60448850a",
+            "comment": "Bumped"
+          },
+          {
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "package": "@internal/chat-component-bindings",
+            "commit": "96767fb064fb7dec4a329af4cc8c78f60448850a",
+            "comment": "Bumped"
+          },
+          {
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "package": "@internal/chat-stateful-client",
+            "commit": "96767fb064fb7dec4a329af4cc8c78f60448850a",
+            "comment": "Bumped"
+          },
+          {
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "package": "@internal/fake-backends",
+            "commit": "96767fb064fb7dec4a329af4cc8c78f60448850a",
+            "comment": "Bumped"
+          },
+          {
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "96767fb064fb7dec4a329af4cc8c78f60448850a",
+            "comment": "Bumped"
+          },
+          {
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "96767fb064fb7dec4a329af4cc8c78f60448850a",
+            "comment": "Bumped"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/react-composites",
+            "commit": "e32ac255798267e07d3123178bc68ca237f022f0",
+            "comment": "Set the call id to undefined in adapter only after we know it has disconnected"
+          },
+          {
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "96767fb064fb7dec4a329af4cc8c78f60448850a",
+            "comment": "Bumped"
+          }
+        ],
+        "patch": [
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "edd932b29f1a4aa9f52683afd873b565a41ab14b",
+            "comment": "Fix VideoGallery showing video spinners when the CallComposites are disconnecting from a call. "
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "8d8c5d89c3e6a3f074463e658e38792f39e0e9aa",
+            "comment": "bugfix: Avoid blank screen on mobile  when call ends with a side pane open"
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "aea9709c3267a2c13ebd556e0f4c329b2593b316",
+            "comment": "Add permissions for Camera and Microphone in devices options"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "edd932b29f1a4aa9f52683afd873b565a41ab14b",
+            "comment": "Fix CallWithChat control bar disappearing while the call is in the disconnecting state"
+          }
+        ],
+        "prerelease": [
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "b58b0495d8bc5526c79dfd5828639948a186573a",
+            "comment": "Remove camera access error bar error for consumer role"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 05 Oct 2022 18:13:37 GMT",
       "tag": "@azure/communication-react_v1.3.2-beta.1",
       "version": "1.3.2-beta.1",
