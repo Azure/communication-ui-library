@@ -65,7 +65,10 @@ export const RenderVideoTileExample = (): JSX.Element => {
   useEffect(() => {
     // Start rendering video into a html element contained in localStreamState.
     // This will trigger an update of localStreamState when element gets created
-    localStreamState && callClient.createView(call?.id, undefined /*undefined for local video*/, localStreamState);
+    localStreamState &&
+      callClient.createView(call?.id, undefined /*undefined for local video*/, localStreamState, {
+        scalingMode: 'Crop'
+      });
   });
 
   // localStreamState.view.target is the stream <video /> element to render in your component
