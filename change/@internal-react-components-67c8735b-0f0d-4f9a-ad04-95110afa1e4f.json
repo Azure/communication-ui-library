@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add disabled option for CallWithChat control bar buttons",
-  "packageName": "@internal/react-components",
-  "email": "edwardlee@microsoft.com",
-  "dependentChangeType": "patch"
-}

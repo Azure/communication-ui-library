@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "CallComposite will not request for camera permissions when the role prop is Consumer.",
-  "packageName": "@internal/react-composites",
-  "email": "miguelgamis@microsoft.com",
-  "dependentChangeType": "patch"
-}

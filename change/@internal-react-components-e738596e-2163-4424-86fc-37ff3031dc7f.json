@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add tests for PSTN and 1:N calling in the videoGallery and horizontalGallery",
-  "packageName": "@internal/react-components",
-  "email": "94866715+dmceachernmsft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
