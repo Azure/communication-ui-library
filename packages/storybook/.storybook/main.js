@@ -21,6 +21,9 @@ module.exports = {
   // Speeds up webpack build time after every code change. Improvements of up
   // to 4-5 seconds can be seen. Comment if components don't render properly.
   typescript: { reactDocgen: 'react-docgen' },
+  core: {
+    builder: 'webpack5',
+  },
   addons: [
     '@storybook/addon-links',
     {
@@ -58,19 +61,6 @@ module.exports = {
       '@internal/calling-component-bindings': path.resolve(__dirname, '../../calling-component-bindings/src'),
       '@internal/acs-ui-common': path.resolve(__dirname, '../../acs-ui-common/src')
     };
-
-    config.module.rules.push({
-      // Loader required due to: https://github.com/fb55/htmlparser2/issues/1237#issuecomment-1182522861
-      test: /htmlparser2\/lib\/esm\/index.js$/,
-      use: [
-        {
-          loader: 'babel-loader',
-          options: {
-            plugins: ['@babel/plugin-proposal-export-namespace-from']
-          }
-        }
-      ]
-    });
 
     return config;
   },
