@@ -19394,7 +19394,7 @@ packages:
     dev: false
     name: '@rush-temp/check-treeshaking'
     resolution:
-      integrity: sha512-4mTKExefCEQku6fJ5a6ro8B8No/PWOMn7ksC9K+Q+Ew7cY87BfN3600PrAggaWsCgILdmY83BPgaQ2O0eFcgJA==
+      integrity: sha512-G8h8RI6mMDoy0jKaA26dyBfdU3fV4IzsRA13jFYzSM4WvDFhWCeRB3ldAE1O8bQCs3e2XkV/GNnKCnjuJxTw0A==
       tarball: file:projects/check-treeshaking.tgz
     version: 0.0.0
   file:projects/communication-react.tgz:
@@ -19952,6 +19952,7 @@ packages:
       '@azure/communication-signaling': 1.0.0-beta.13
       '@azure/core-http': 1.2.4
       '@babel/core': 7.16.5
+      '@babel/plugin-proposal-export-namespace-from': 7.16.7_@babel+core@7.16.5
       '@babel/preset-env': 7.13.10_@babel+core@7.16.5
       '@fluentui/react': 8.98.3_c2a703770fc22cd5845ac34fc7d0fe24
       '@fluentui/react-file-type-icons': 8.5.8_796713c4bb4631ac40b03d54b6277837
@@ -20050,7 +20051,7 @@ packages:
     dev: false
     name: '@rush-temp/storybook'
     resolution:
-      integrity: sha512-KmO9TpezJgtlHk+fvunn67VckPlQgFpaQMiPkS/rYjhQmskSLqtz1ffTthCleIBL+OckqfHHczmW5IdAg0oBnA==
+      integrity: sha512-+JEJTVmv+ohvWmzgxyZRLc+YiZ3nCowpOLiSjYCjMhi4Vp/KfrAFYzLPCAapIPIu5JF3hkpeS75PqbOcO8k8Gg==
       tarball: file:projects/storybook.tgz
     version: 0.0.0
 specifiers:

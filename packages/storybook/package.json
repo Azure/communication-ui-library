@@ -39,6 +39,7 @@
   },
   "devDependencies": {
     "@babel/core": "~7.16.0",
+    "@babel/plugin-proposal-export-namespace-from": "~7.16.0",
     "@babel/preset-env": "7.13.10",
     "@mdx-js/react": "^1.6.22",
     "@microsoft/api-documenter": "~7.12.11",

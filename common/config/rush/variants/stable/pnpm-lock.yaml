@@ -19636,6 +19636,7 @@ packages:
       '@azure/communication-signaling': 1.0.0-beta.13
       '@azure/core-http': 1.2.4
       '@babel/core': 7.16.12
+      '@babel/plugin-proposal-export-namespace-from': 7.16.7_@babel+core@7.16.12
       '@babel/preset-env': 7.13.10_@babel+core@7.16.12
       '@fluentui/react': 8.98.3_2d01476b285282802fb4e2f491d411ef
       '@fluentui/react-file-type-icons': 8.5.14_31347e879eca8fbed0f611d143439f58
@@ -19725,7 +19726,7 @@ packages:
     dev: false
     name: '@rush-temp/storybook'
     resolution:
-      integrity: sha512-KmO9TpezJgtlHk+fvunn67VckPlQgFpaQMiPkS/rYjhQmskSLqtz1ffTthCleIBL+OckqfHHczmW5IdAg0oBnA==
+      integrity: sha512-+JEJTVmv+ohvWmzgxyZRLc+YiZ3nCowpOLiSjYCjMhi4Vp/KfrAFYzLPCAapIPIu5JF3hkpeS75PqbOcO8k8Gg==
       tarball: file:projects/storybook.tgz
     version: 0.0.0
 specifiers:
