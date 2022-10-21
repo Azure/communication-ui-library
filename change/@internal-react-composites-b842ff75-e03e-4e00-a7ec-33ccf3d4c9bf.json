@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Update startCall and removeParticipant adapter methods to use CommunicationIdentifier as userId",
-  "packageName": "@internal/react-composites",
-  "email": "anjulgarg@live.com",
-  "dependentChangeType": "patch"
-}

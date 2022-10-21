@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Icon change of speaker button for consumer",
-  "packageName": "@internal/react-components",
-  "email": "97124699+prabhjot-msft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

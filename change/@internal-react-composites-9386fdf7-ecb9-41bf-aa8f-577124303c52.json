@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix dialpad styles so that ellipsis are on left of the number that is being dialed.",
-  "packageName": "@internal/react-composites",
-  "email": "94866715+dmceachernmsft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

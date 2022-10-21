@@ -2,6 +2,79 @@
   "name": "@internal/calling-stateful-client",
   "entries": [
     {
+      "date": "Wed, 05 Oct 2022 18:13:54 GMT",
+      "tag": "@internal/calling-stateful-client_v1.3.2-beta.1",
+      "version": "1.3.2-beta.1",
+      "comments": {
+        "none": [
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/calling-stateful-client",
+            "commit": "7d276116ce0b5aab82b1adc3e24b32709b0db47c",
+            "comment": "Bump package version after hotfix release"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/calling-stateful-client",
+            "commit": "8c0f848a7d5a2b49df5c8d3843bc9e63d8d6345d",
+            "comment": "Add unit test for DeclarativeCallAgent.incomingCalls "
+          },
+          {
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "package": "@internal/calling-stateful-client",
+            "commit": "f42faa2a9830ad1a7bcabba08d9aafcd49632e8b",
+            "comment": "Bumped"
+          }
+        ],
+        "patch": [
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/calling-stateful-client",
+            "commit": "e7a04f1d8859eb0b3a4bfb04ace0a9d129c82a7a",
+            "comment": "Add event logs for disposing local video streams"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/calling-stateful-client",
+            "comment": "Bump @internal/acs-ui-common to v1.3.2-beta.1",
+            "commit": "14adcdc3a3699659701ab1a81c80f1418e384170"
+          }
+        ],
+        "prerelease": [
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/calling-stateful-client",
+            "commit": "ad1972e132bbd1d66b1e4d59c80c4c1b869f3bae",
+            "comment": "bump calling beta to 1.6.0-beta.1"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/calling-stateful-client",
+            "commit": "05c00dee4f3d99d2583b3edb24ac932b2196c8f5",
+            "comment": "Bumped calling SDK beta version to 1.8.0-beta.1"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/calling-stateful-client",
+            "commit": "9f34246aa4b2576bd57c52a97190596f8c1ca097",
+            "comment": "Introduce AlternateCallerId from the Calling SDK to the Calling stateful client."
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/calling-stateful-client",
+            "commit": "023ca9f8bfca85c016661f5ec7cba0c3c76f4474",
+            "comment": "Introduce the alternativeCallerId property from the Calling SDK to the stateful Client and CallContext."
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@internal/calling-stateful-client",
+            "commit": "c27f11267d57741b1d6cc4fa529555c6e7ede7eb",
+            "comment": "Bump calling beta to 1.6.1 beta.1"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 29 Jun 2022 17:31:07 GMT",
       "tag": "@internal/calling-stateful-client_v1.3.1-beta.1",
       "version": "1.3.1-beta.1",

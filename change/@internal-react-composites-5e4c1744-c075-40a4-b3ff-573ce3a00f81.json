@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Introduces behavior to the Calling and CallWithChat control bars to disable buttons when on hold screen.",
-  "packageName": "@internal/react-composites",
-  "email": "94866715+dmceachernmsft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

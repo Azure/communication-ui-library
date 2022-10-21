@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "bugfix: participant button should work during local hold",
-  "packageName": "@internal/calling-component-bindings",
-  "email": "anjulgarg@live.com",
-  "dependentChangeType": "none"
-}
