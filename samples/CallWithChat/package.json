@@ -47,7 +47,6 @@
     "react": "~16.14.0",
     "react-dom": "16.13.1",
     "react-router-dom": "^5.1.2",
-    "reactstrap": "^8.4.1",
     "reselect": "~4.0.0",
     "uuid": "^8.1.0"
   },
