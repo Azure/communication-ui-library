@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Ensure build and test scripts are being awaited",
-  "packageName": "@internal/storybook",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "none"
-}

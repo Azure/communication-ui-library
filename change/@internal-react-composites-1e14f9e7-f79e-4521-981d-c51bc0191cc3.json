@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add role to permissions provider and change default permissions with no role",
-  "packageName": "@internal/react-composites",
-  "email": "97124699+prabhjot-msft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

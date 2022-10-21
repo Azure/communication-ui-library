@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "add device permission prompt dropdown to call composite",
-  "packageName": "@internal/react-composites",
-  "email": "carolinecao@microsoft.com",
-  "dependentChangeType": "patch"
-}

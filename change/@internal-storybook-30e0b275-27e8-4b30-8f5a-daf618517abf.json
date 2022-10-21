@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Added devicePermissionDropdown component storybook doc",
-  "packageName": "@internal/storybook",
-  "email": "carolinecao@microsoft.com",
-  "dependentChangeType": "patch"
-}
