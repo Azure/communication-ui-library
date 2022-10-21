@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Fix bug of dismissed menu when scrolling",
+  "packageName": "@internal/react-components",
+  "email": "jinan@microsoft.com",
+  "dependentChangeType": "patch"
+}

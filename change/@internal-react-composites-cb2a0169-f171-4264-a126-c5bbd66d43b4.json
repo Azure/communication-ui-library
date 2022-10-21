@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Message thread background color in composites matches composite background color",
+  "packageName": "@internal/react-composites",
+  "email": "anjulgarg@live.com",
+  "dependentChangeType": "patch"
+}

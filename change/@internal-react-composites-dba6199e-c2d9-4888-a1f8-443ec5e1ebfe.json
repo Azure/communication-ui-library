@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Run hermetic e2e tests for CallComposite in parallel",
+  "packageName": "@internal/react-composites",
+  "email": "82062616+prprabhu-ms@users.noreply.github.com",
+  "dependentChangeType": "none"
+}

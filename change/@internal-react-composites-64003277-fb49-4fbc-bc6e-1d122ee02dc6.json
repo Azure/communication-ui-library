@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "Convert PeoplePaneContent to a common file",
+  "packageName": "@internal/react-composites",
+  "email": "edwardlee@microsoft.com",
+  "dependentChangeType": "patch"
+}

@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Switched file sharing methods in callWithChat adapter to Arrow functions",
+  "packageName": "@internal/react-composites",
+  "email": "97124699+prabhjot-msft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

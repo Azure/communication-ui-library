@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Add `--debug` flag to `runBrowserTests.mjs`",
+  "packageName": "@internal/react-composites",
+  "email": "prprabhu@microsoft.com",
+  "dependentChangeType": "none"
+}

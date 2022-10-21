@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Resolve ModalLocalAndRemotePIP boundary clipping in PeoplePane mobile view",
+  "packageName": "@internal/react-composites",
+  "email": "edwardlee@microsoft.com",
+  "dependentChangeType": "patch"
+}

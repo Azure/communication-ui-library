@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Fixed bug where voice over does not annouce menu item selected in both calling and callwithchat",
+  "packageName": "@internal/react-components",
+  "email": "carolinecao@microsoft.com",
+  "dependentChangeType": "patch"
+}

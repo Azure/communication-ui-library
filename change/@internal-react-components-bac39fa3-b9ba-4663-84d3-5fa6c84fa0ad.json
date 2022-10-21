@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "VideoGallery consumes the participantState returned by videoGallerySelector",
+  "packageName": "@internal/react-components",
+  "email": "anjulgarg@live.com",
+  "dependentChangeType": "patch"
+}

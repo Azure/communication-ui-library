@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Introduces animations to is speaking when muted indicator",
+  "packageName": "@internal/react-composites",
+  "email": "94866715+dmceachernmsft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

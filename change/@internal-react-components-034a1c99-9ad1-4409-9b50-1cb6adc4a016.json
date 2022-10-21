@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add permissions provider for different roles",
+  "packageName": "@internal/react-components",
+  "email": "jiangnanhello@live.com",
+  "dependentChangeType": "patch"
+}

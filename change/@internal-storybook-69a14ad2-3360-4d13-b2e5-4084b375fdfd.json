@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Added parsing of room id locator in Call composite story",
+  "packageName": "@internal/storybook",
+  "email": "miguelgamis@microsoft.com",
+  "dependentChangeType": "none"
+}

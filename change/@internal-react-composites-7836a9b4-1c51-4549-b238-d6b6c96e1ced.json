@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add new icon backspace",
+  "packageName": "@internal/react-composites",
+  "email": "carolinecao@microsoft.com",
+  "dependentChangeType": "patch"
+}
