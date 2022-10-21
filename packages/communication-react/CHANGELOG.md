@@ -9,16 +9,15 @@ This log was last generated on Fri, 21 Oct 2022 23:01:52 GMT and should not be m
 Fri, 21 Oct 2022 23:01:52 GMT
 [Compare changes](https://github.com/azure/communication-ui-library/compare/1.3.1...1.4.0)
 
+This stable release contains a slew of bug fixes, some of them for bugs filed by our users in our GitHub repository. Thanks!
+The release also contains some small API additions to support these fixes.
+
 ### Minor changes
 
 - `@internal/react-composites`
-  - Call adapter can join a room ([PR #2063](https://github.com/azure/communication-ui-library/pull/2063) by miguelgamis@microsoft.com)
   - Add callEndReason to the onCallEnded event and fix the event to trigger before the composite page transition. ([PR #2201](https://github.com/azure/communication-ui-library/pull/2201) by 2684369+JamesBurnside@users.noreply.github.com)
-  - Convert PeoplePaneContent to a common file ([PR #2083](https://github.com/azure/communication-ui-library/pull/2083) by edwardlee@microsoft.com)
-  - Enzyme tests for rooms ([PR #2225](https://github.com/azure/communication-ui-library/pull/2225) by 97124699+prabhjot-msft@users.noreply.github.com)
 - `@internal/react-components`
   - Remove onFocus callback that focuses directly on content in Chat Message. Added string for aria label of local user's message content.  ([PR #2153](https://github.com/azure/communication-ui-library/pull/2153) by miguelgamis@microsoft.com)
-  - changes for removing participant list button permissions and added permissions for remove participant ([PR #2225](https://github.com/azure/communication-ui-library/pull/2225) by 97124699+prabhjot-msft@users.noreply.github.com)
 
 ### Patches
 
@@ -31,7 +30,6 @@ Fri, 21 Oct 2022 23:01:52 GMT
   - Fixed bug where drawer on mobile does not get dismissed after making a selection ([PR #2115](https://github.com/azure/communication-ui-library/pull/2115) by carolinecao@microsoft.com)
   - Fix running render passes on people pane on every render ([PR #2240](https://github.com/azure/communication-ui-library/pull/2240) by 2684369+JamesBurnside@users.noreply.github.com)
   - Fix Calling Composite's control bar buttons incorrectly showing as disabled when the control bar button is set to `true` in the control bar options ([PR #2325](https://github.com/azure/communication-ui-library/pull/2325) by 2684369+JamesBurnside@users.noreply.github.com)
-  - Fixed input order bug on calling dialpad and dtmf dialpad ([PR #2284](https://github.com/azure/communication-ui-library/pull/2284) by carolinecao@microsoft.com)
   - Fix local device settings dropdowns to be disabled until device permissions are granted ([PR #2351](https://github.com/azure/communication-ui-library/pull/2351) by miguelgamis@microsoft.com)
   - Autofocus on back button when initially opening People and Chat pane ([PR #2045](https://github.com/azure/communication-ui-library/pull/2045) by edwardlee@microsoft.com)
   - Update documentation for onFetchAvatarPersonaData property on BaseComposite to drive clarity to what it does and does not do. ([PR #2027](https://github.com/azure/communication-ui-library/pull/2027) by 94866715+dmceachernmsft@users.noreply.github.com)
@@ -39,7 +37,6 @@ Fri, 21 Oct 2022 23:01:52 GMT
   - Fix call adapter joinCall logic bug. ([PR #2199](https://github.com/azure/communication-ui-library/pull/2199) by miguelgamis@microsoft.com)
   - Composites now using theme.semanticColors.bodyBackground as background color ([PR #2117](https://github.com/azure/communication-ui-library/pull/2117) by anjulgarg@live.com)
   - Add Announcer to copy invite link button to announce action on button. ([PR #2289](https://github.com/azure/communication-ui-library/pull/2289) by 94866715+dmceachernmsft@users.noreply.github.com)
-  - Fix disabled start call button when role is Consumer ([PR #2251](https://github.com/azure/communication-ui-library/pull/2251) by miguelgamis@microsoft.com)
   - Bugfix: Actually show provided participant menu items in CallComposite ([PR #2154](https://github.com/azure/communication-ui-library/pull/2154) by prprabhu@microsoft.com)
   - Introduces animations to is speaking when muted indicator ([PR #2312](https://github.com/azure/communication-ui-library/pull/2312) by 94866715+dmceachernmsft@users.noreply.github.com)
   - Fix scrollbar showing incorrectly in landscape mobile view due to absolutely positioned participant pane in Chat Composite ([PR #2038](https://github.com/azure/communication-ui-library/pull/2038) by anjulgarg@live.com)
@@ -49,23 +46,12 @@ Fri, 21 Oct 2022 23:01:52 GMT
   - Fix logic to show label of MoreButton in ControlBar ([PR #2388](https://github.com/azure/communication-ui-library/pull/2388) by miguelgamis@microsoft.com)
   - BugFix: Add missing foreveryone logic for leaveCall ([PR #2399](https://github.com/azure/communication-ui-library/pull/2399) by carolinecao@microsoft.com)
   - Bump @fluentui/react dependency to 8.98.3 ([PR #2415](https://github.com/azure/communication-ui-library/pull/2415) by 2684369+JamesBurnside@users.noreply.github.com)
-  - Fixed bug where icon background is grey in calling dialpad ([PR #2394](https://github.com/azure/communication-ui-library/pull/2394) by carolinecao@microsoft.com)
   - bugfix: Avoid blank screen on mobile  when call ends with a side pane open ([PR #2407](https://github.com/azure/communication-ui-library/pull/2407) by 82062616+prprabhu-ms@users.noreply.github.com)
   - Remove end call reason from adapter.onCallEnded ([PR #2371](https://github.com/azure/communication-ui-library/pull/2371) by 2684369+JamesBurnside@users.noreply.github.com)
-- `@internal/storybook`
-  - Adds beta banner to file sharing feature in CallWithChat and chat composite docs ([PR #2226](https://github.com/azure/communication-ui-library/pull/2226) by 94866715+dmceachernmsft@users.noreply.github.com)
-  - Fix ui components complete storybook snippet so that the icons render ([PR #2249](https://github.com/azure/communication-ui-library/pull/2249) by 94866715+dmceachernmsft@users.noreply.github.com)
-  - Add a UI Components Overview page to storybook. Clean up the top-most Overview page. ([PR #1785](https://github.com/azure/communication-ui-library/pull/1785) by 2684369+JamesBurnside@users.noreply.github.com)
-  - Add initialize icons to storybook quick start ([PR #2376](https://github.com/azure/communication-ui-library/pull/2376) by carolinecao@microsoft.com)
-  - Slim wrapper around PiPiP component to remap props to work with storybook v6.5.7 ([PR #2056](https://github.com/azure/communication-ui-library/pull/2056) by miguelgamis@microsoft.com)
-  - Introduces setup page for repo discussing manual changes that need to be made to use acs ui library ([PR #2245](https://github.com/azure/communication-ui-library/pull/2245) by 94866715+dmceachernmsft@users.noreply.github.com)
-  - Added Rooms conceptual doc ([PR #2270](https://github.com/azure/communication-ui-library/pull/2270) by miguelgamis@microsoft.com)
-  - Center incoming call toast button icons ([PR #2386](https://github.com/azure/communication-ui-library/pull/2386) by edwardlee@microsoft.com)
-  - Bump @fluentui/react dependency to 8.98.3 ([PR #2415](https://github.com/azure/communication-ui-library/pull/2415) by 2684369+JamesBurnside@users.noreply.github.com)
 - `@internal/react-components`
   - Fixed flaky file sharing tests for upload cards by awaiting file type icons ([PR #2023](https://github.com/azure/communication-ui-library/pull/2023) by 97124699+prabhjot-msft@users.noreply.github.com)
   - Chat message bubble shows border in high contrast modes making each message distinguishable. ([PR #2106](https://github.com/azure/communication-ui-library/pull/2106) by anjulgarg@live.com)
-  - [object Object] ([PR #2165](https://github.com/azure/communication-ui-library/pull/2165) by 97124699+prabhjot-msft@users.noreply.github.com)
+  - Fix for file card navigation issue when multiple files are uploaded ([PR #2165](https://github.com/azure/communication-ui-library/pull/2165) by 97124699+prabhjot-msft@users.noreply.github.com)
   - Fixed bug where voice over does not annouce menu item selected in both calling and callwithchat ([PR #2060](https://github.com/azure/communication-ui-library/pull/2060) by carolinecao@microsoft.com)
   - Memoize ParticipantList callback functions ([PR #2240](https://github.com/azure/communication-ui-library/pull/2240) by 2684369+JamesBurnside@users.noreply.github.com)
   - Add CSS to show/hide menu button on hover/focus  ([PR #2319](https://github.com/azure/communication-ui-library/pull/2319) by carolinecao@microsoft.com)
