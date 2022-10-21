@@ -140,9 +140,21 @@ export interface VideoTileProps {
   /* @conditional-compile-remove(pinned-participants) */
   /**
    * Display custom menu items in the VideoTile's contextual menu.
+   * IMPORTANT:
+   * When a participant is pinned. Make sure there is an announcer that announces that participant xyz was pinned or unpinned.
+   * Now that video tiles have possibility of having custom menu items, the VideoTile needs to be tab focusable.
+   * When a video tile is tab focused, the announcer should announce the video tile participant name along with saying the video tile is pinned (if it is).
+   * For a11y, the VideoTile should be focusable when it is pinned. And the focus should be on the pin icon.
+   * Video Tiles tabbing should follow the behavior currently in Chat Messages. Tab takes you through all the messages, Enter takes you into the message allowing you
+   * to use the contextual menu items.
    */
   menuItems?: Array<{
     key: string;
+    // Use this prop to make the announcer use a custom string instead of the `text` value. For example, `Pin participant John Doe` instead of `pin/unpin`.
+    // When implementing, make sure aria label uses the display name of the person/video tile to meet a11y requirements.
+    // ariaLabel='Video Tile for Donald Trump, pinned, muted' so that when video tile is tab focused, the screen reader announces the video tile
+    // participant name along with saying the video tile is pinned (if it is).
+    ariaLabel?: string;
     text: string;
     onClick: () => void;
     // Checkout https://developer.microsoft.com/en-us/fluentui#/controls/web/contextualmenu
@@ -151,6 +163,8 @@ export interface VideoTileProps {
     icon: IIconProps;
   }>;
 }
+
+// QUESTION: Should we announce when someone toggles fit or fill?
 
 // Coin max size is set to PersonaSize.size100
 const DEFAULT_PERSONA_MAX_SIZE_PX = 100;
