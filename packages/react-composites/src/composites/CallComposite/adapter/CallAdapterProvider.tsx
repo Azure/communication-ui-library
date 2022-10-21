@@ -2,14 +2,14 @@
 // Licensed under the MIT license.
 
 import React, { createContext, useContext } from 'react';
-import { CallAdapter } from './CallAdapter';
+import { CallAdapterCommon } from './CallAdapter';
 
 type CallProviderProps = {
   children: React.ReactNode;
-  adapter: CallAdapter;
+  adapter: CallAdapterCommon;
 };
 
-const CallAdapterContext = createContext<CallAdapter | undefined>(undefined);
+const CallAdapterContext = createContext<CallAdapterCommon | undefined>(undefined);
 
 /**
  * @private
@@ -22,7 +22,7 @@ export const CallAdapterProvider = (props: CallProviderProps): JSX.Element => {
 /**
  * @private
  */
-export const useAdapter = (): CallAdapter => {
+export const useAdapter = (): CallAdapterCommon => {
   const adapter = useContext(CallAdapterContext);
   if (!adapter) {
     throw 'Cannot find adapter please initialize before usage.';

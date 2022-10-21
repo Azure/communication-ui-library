@@ -12,7 +12,9 @@ import type {
   MediaDiagnosticChangedEventArgs,
   NetworkDiagnosticChangedEventArgs,
   PropertyChangedEvent,
-  CallEndReason
+  CallEndReason,
+  /* @conditional-compile-remove(teams-call) */
+  TeamsCall
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions, DtmfTone } from '@azure/communication-calling';
@@ -50,7 +52,7 @@ export const END_CALL_PAGES: CallCompositePage[] = [
 ];
 
 /**
- * {@link CallAdapter} state for pure UI purposes.
+ * {@link CallAdapterCommon} state for pure UI purposes.
  *
  * @public
  */
@@ -60,7 +62,7 @@ export type CallAdapterUiState = {
 };
 
 /**
- * {@link CallAdapter} state inferred from Azure Communication Services backend.
+ * {@link CallAdapterCommon} state inferred from Azure Communication Services backend.
  *
  * @public
  */
@@ -83,7 +85,7 @@ export type CallAdapterClientState = {
 };
 
 /**
- * {@link CallAdapter} state.
+ * {@link CallAdapterCommon} state.
  *
  * @public
  */
@@ -198,7 +200,7 @@ export interface CallAdapterCallManagement {
    *
    * @public
    */
-  joinCall(microphoneOn?: boolean): Call | undefined;
+  joinCall(microphoneOn?: boolean): void;
   /**
    * Leave the call
    *
@@ -242,7 +244,7 @@ export interface CallAdapterCallManagement {
    *
    * @public
    */
-  startCall(participants: string[], options?: StartCallOptions): Call | undefined;
+  startCall(participants: string[], options?: StartCallOptions): void;
   /**
    * Start sharing the screen during a call.
    *
@@ -518,9 +520,37 @@ export interface CallAdapterSubscribers {
  *
  * @public
  */
-export interface CallAdapter
+export interface CallAdapterCommon
   extends AdapterState<CallAdapterState>,
     Disposable,
     CallAdapterCallManagement,
     CallAdapterDeviceManagement,
     CallAdapterSubscribers {}
+
+/**
+ * @public
+ */
+export type CallAdapter = Omit<CallAdapterCommon, keyof ACSCallManagement> & ACSCallManagement;
+
+/**
+ * @public
+ */
+export type ACSCallManagement = {
+  joinCall(microphoneOn?: boolean): Call | undefined;
+  startCall(participants: string[], options?: StartCallOptions): Call | undefined;
+};
+
+/* @conditional-compile-remove(teams-call) */
+/**
+ * @beta
+ */
+export type TeamsCallAdapter = Omit<CallAdapterCommon, keyof TeamsCallManagement> & TeamsCallManagement;
+
+/* @conditional-compile-remove(teams-call) */
+/**
+ * @beta
+ */
+export type TeamsCallManagement = {
+  joinCall(microphoneOn?: boolean): TeamsCall | undefined;
+  startCall(participants: string[], options?: StartCallOptions): TeamsCall | undefined;
+};

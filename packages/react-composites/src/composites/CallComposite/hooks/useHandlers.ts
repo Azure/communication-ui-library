@@ -1,11 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { CallingHandlers } from '@internal/calling-component-bindings';
+import { CallingHandlersCommon } from '@internal/calling-component-bindings';
 import { CommonProperties, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { ReactElement } from 'react';
 import memoizeOne from 'memoize-one';
-import { CallAdapter } from '..';
+import { CallAdapterCommon } from '..';
 import { useAdapter } from '../adapter/CallAdapterProvider';
 import { isCameraOn } from '../utils';
 /* @conditional-compile-remove(PSTN-calls) */
@@ -18,12 +18,12 @@ import { DtmfTone } from '@azure/communication-calling';
 export const useHandlers = <PropsT>(
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   _component: (props: PropsT) => ReactElement | null
-): Pick<CallingHandlers, CommonProperties<CallingHandlers, PropsT>> => {
+): Pick<CallingHandlersCommon, CommonProperties<CallingHandlersCommon, PropsT>> => {
   return createCompositeHandlers(useAdapter());
 };
 
 const createCompositeHandlers = memoizeOne(
-  (adapter: CallAdapter): CallingHandlers => ({
+  (adapter: CallAdapterCommon): CallingHandlersCommon => ({
     onCreateLocalStreamView: async (options) => {
       return await adapter.createStreamView(undefined, options);
     },

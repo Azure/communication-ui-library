@@ -12,7 +12,8 @@ import {
   IsSpeakingChangedListener,
   ParticipantsJoinedListener,
   ParticipantsLeftListener,
-  CallEndedListener
+  CallEndedListener,
+  ACSCallManagement
 } from '../../CallComposite';
 import {
   MessageReadListener,
@@ -65,7 +66,7 @@ export interface CallWithChatAdapterManagement {
    *
    * @public
    */
-  joinCall(microphoneOn?: boolean): Call | undefined;
+  joinCall(microphoneOn?: boolean): void;
   /**
    * Leave the call.
    *
@@ -369,11 +370,16 @@ export interface CallWithChatAdapterSubscriptions {
  *
  * @public
  */
-export interface CallWithChatAdapter
+export interface CallWithChatAdapterCommon
   extends CallWithChatAdapterManagement,
     AdapterState<CallWithChatAdapterState>,
     Disposable,
     CallWithChatAdapterSubscriptions {}
+
+/**
+ * @public
+ */
+export type CallWithChatAdapter = Omit<CallWithChatAdapterCommon, keyof ACSCallManagement> & ACSCallManagement;
 
 /**
  * Events fired off by the {@link CallWithChatAdapter}.

@@ -2,11 +2,11 @@
 // Licensed under the MIT license.
 
 import {
-  Call,
   UserFacingDiagnosticsFeature,
   Features,
   MediaDiagnosticChangedEventArgs,
-  NetworkDiagnosticChangedEventArgs
+  NetworkDiagnosticChangedEventArgs,
+  CallCommon
 } from '@azure/communication-calling';
 import { EventEmitter } from 'events';
 import { MediaDiagnosticChangedEvent, NetworkDiagnosticChangedEvent } from './CallAdapter';
@@ -18,7 +18,7 @@ export class DiagnosticsForwarder {
   private _diagnostics: UserFacingDiagnosticsFeature;
   private _emitter: EventEmitter;
 
-  constructor(emitter: EventEmitter, call: Call) {
+  constructor(emitter: EventEmitter, call: CallCommon) {
     this._diagnostics = call.feature(Features.UserFacingDiagnostics);
     this._emitter = emitter;
     this.subscribe();
