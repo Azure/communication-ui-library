@@ -4,10 +4,10 @@ This log was last generated on Fri, 21 Oct 2022 23:01:52 GMT and should not be m
 
 <!-- Start content -->
 
-## [1.4.0](https://github.com/azure/communication-ui-library/tree/@azure/communication-react_v1.4.0)
+## [1.4.0](https://github.com/azure/communication-ui-library/tree/1.4.0)
 
-Fri, 21 Oct 2022 23:01:52 GMT 
-[Compare changes](https://github.com/azure/communication-ui-library/compare/@azure/communication-react_v1.3.2-beta.1...@azure/communication-react_v1.4.0)
+Fri, 21 Oct 2022 23:01:52 GMT
+[Compare changes](https://github.com/azure/communication-ui-library/compare/1.3.1...1.4.0)
 
 ### Minor changes
 
@@ -241,10 +241,10 @@ Fri, 21 Oct 2022 23:01:52 GMT
   - Introduce the alternativeCallerId property from the Calling SDK to the stateful Client and CallContext. ([PR #2070](https://github.com/azure/communication-ui-library/pull/2070) by 94866715+dmceachernmsft@users.noreply.github.com)
   - Bump calling beta to 1.6.1 beta.1 ([PR #2074](https://github.com/azure/communication-ui-library/pull/2074) by edwardlee@microsoft.com)
 
-## [1.3.2-beta.1](https://github.com/azure/communication-ui-library/tree/@azure/communication-react_v1.3.2-beta.1)
+## [1.3.2-beta.1](https://github.com/azure/communication-ui-library/tree/1.3.2-beta.1)
 
-Wed, 05 Oct 2022 18:13:37 GMT 
-[Compare changes](https://github.com/azure/communication-ui-library/compare/@azure/communication-react_v1.3.1-beta.1...@azure/communication-react_v1.3.2-beta.1)
+Wed, 05 Oct 2022 18:13:37 GMT
+[Compare changes](https://github.com/azure/communication-ui-library/compare/1.3.1...1.3.2-beta.1)
 
 ### Rooms - Public Preview
 Azure Communication Services now supports Rooms in public preview. You can use our CallComposite experience for your users to interact with your Rooms-based calls. Rooms allows our customers to create calls with specific users and the ability to
@@ -352,7 +352,7 @@ Check out our quickstarts repo in Github [JS Quickstarts](https://github.com/Azu
 This is a patch release for issue [#2186](https://github.com/Azure/communication-ui-library/issues/2186):
 - Fix infinite spinner bug during screenshare. ([PR #2191](https://github.com/Azure/communication-ui-library/pull/2191) by jiangnanhello@live.com).
 
-## [1.3.1-beta.1](https://github.com/azure/communication-ui-library/tree/@azure/communication-react_v1.3.1-beta.1)
+## [1.3.1-beta.1](https://github.com/azure/communication-ui-library/tree/1.3.1-beta.1)
 
 Wed, 29 Jun 2022 17:31:05 GMT
 [Compare changes](https://github.com/azure/communication-ui-library/compare/1.3.0...1.3.1-beta.1)
