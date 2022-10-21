@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Introduces link to troubleShooting page provided by Contoso.",
-  "packageName": "@internal/react-composites",
-  "email": "94866715+dmceachernmsft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

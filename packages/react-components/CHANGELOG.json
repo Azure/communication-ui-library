@@ -2,6 +2,438 @@
   "name": "@internal/react-components",
   "entries": [
     {
+      "date": "Wed, 05 Oct 2022 18:13:46 GMT",
+      "tag": "@internal/react-components_v1.3.2-beta.1",
+      "version": "1.3.2-beta.1",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "1d1326219b4a65464f0ecbe8a8cf33e4de36d20c",
+            "comment": "Update PSTN Gallery behavior to not use complex logic for participants being dialed into the call."
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "5144deaf2c78e83aa8f113734c6abd4d460178de",
+            "comment": "Delete button added to the Dialpad"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "e9fb93501dc19ce26a4238b55bdc7cd6e8ef23b7",
+            "comment": "Add disabled option for CallWithChat control bar buttons"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "6e535dd04bcbc7eb34279c69ba70c9843ec95eb9",
+            "comment": "Introduces showFormatting prop to dialpad component to disable our provided formatting."
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "eb08845873d0431b8cf355149145131f54efa487",
+            "comment": "removed ondisplaydialpadinput, add textFieldValue for contoso to directly set the value inside textfield"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "134964178254ab64ad7f1698d0a563fd92b3724f",
+            "comment": "Fixes typing issues with the hold button strings"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "68c5b09b68db38ea5d2530bf2cea7ebdac2448c7",
+            "comment": "Added devicePermissionDropdown component"
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "2af044d46ab7c55307598c3eaade2aa788b9828b",
+            "comment": "Icon change of speaker button for consumer"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "2a9fe90161c315216e1584ea15b8e66b7ce9c5a3",
+            "comment": "Add isMobile to dialpad so dialpad can handle mobile and web clicks differently"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "0bb131c74c0f82865aa259ac645be7be01277575",
+            "comment": "Add remove participant menu item for participant item if role allows."
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/react-components",
+            "commit": "7cd425e56cd430182e3bbb2e47d6feb97298472f",
+            "comment": "VideoGallery consumes the participantState returned by videoGallerySelector"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "66307695a807ebaa25bb6f910c5aa2a22ae523c2",
+            "comment": "Introduces new component to contoso to provide help to end users struggling with device permissions in the browser."
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "e19eb1f690b982da77e2ab970924fa811d79d4b7",
+            "comment": "change dialpad content name to digit and letter"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/react-components",
+            "commit": "807041195422bb0a0aa501facc7ca4ddafbbf4fa",
+            "comment": "Localize participant state display strings in video tile"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/react-components",
+            "commit": "078c9a6eacdf86d688484a076ceecd8e2218f92c",
+            "comment": "VideoTile can display a participants state such as Connecting, Ringing etc."
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "5a77072d671f2a0122cc01d2b0d2ee5d1824eedb",
+            "comment": "expose conditionally compiled  dialpad code for PSTN call"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "d54d4024a7ba597c1e59014ea583f34a1be05b70",
+            "comment": "Add tests for PSTN and 1:N calling in the videoGallery and horizontalGallery"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/react-components",
+            "commit": "775c4445f7b268ee9358b7fdad60ed917bb886b6",
+            "comment": "Add a new prop VideoTile.participantState for tracking a participants call connection state"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "7fee7d74d8181ffd8b498a04d122bbaa3347c11b",
+            "comment": "Add sparkle icon to Domain Permissions component"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "0020b07e979b896b72ba4d0ac231f4cc9793ff8f",
+            "comment": "Update Fluent-ui/icons package"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "4a1b8945ebaac84222869a5036080d3519eff5e3",
+            "comment": "VideoGallery does not show local video tile if no permissions camera"
+          },
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@internal/react-components",
+            "commit": "aabb14e24435c10cecef624e81e04bfaa989bb79",
+            "comment": "Add permissions provider for different roles"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "897caf60ca1916ae2840e237215b34b9546fe4b9",
+            "comment": "Update hold Icon size in more button in controlBars"
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "e17f4acd6ffce092f575300d8effb7678a296351",
+            "comment": "Changes to add remove button permissions for mobile view & hermetic tests for remove button"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "581d5131c049a9e4a62d43ff75a25e60607b91e8",
+            "comment": "updated placeholder text for dialpad"
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "12b862aba3e5fc1481d2c58df71572710ff336b2",
+            "comment": "Hide Hold button for Rooms Call"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "a82c246835b5175091f330699befc68a4482ef87",
+            "comment": "change label prop for device permission dropdown to be optional"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/react-components",
+            "commit": "af40399a7178ae003bd3a3156af68364d0ba3684",
+            "comment": "ParticipantItem can display a participant state using `participantState` prop"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "a5fc66770b73e4db597b3adc0490d095fc46387c",
+            "comment": "Update Video Gallery to display participants in a 'Connecting' or 'Ringing' state for PSTN and 1:N calling."
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "08381cb10335ec2a699260fd2e095f7648ea24b7",
+            "comment": "ScreenShareButton, MicrophoneButton, CameraButton, and DevicesButton no longer hooked to role permissions context."
+          },
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@internal/react-components",
+            "commit": "18fd62a19876bd7f07b19062852a481a1bf6f326",
+            "comment": "Add component behaviors according to permissions"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "5fdeb47a35b2402dde0dba8eb387cd58e72aef9e",
+            "comment": "Introduce UI for call isntances where the browser is unsupported"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "b4ff2cfcd37a8d13143e560fae5a775760623137",
+            "comment": "make unused exported beta interface internal, add longpress hook to detect long press and return +  "
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "0a6d28a511f14d041738464702d5a574004b6d29",
+            "comment": "Create error bar to display troubleshooting links for network/device permission errors"
+          }
+        ],
+        "patch": [
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "ff335adb066abcd555e629705b705375fb07ed71",
+            "comment": "Replace floating div with border with inset border of video tile to show user is speaking."
+          },
+          {
+            "author": "79329532+alkwa-msft@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "078d47cbd83fa8deff22755d11a6cd06a537321a",
+            "comment": "correctly setting maxHeight for people context menu"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "8a90de48bfb3480ed4b057f659c0cb08b9cf7735",
+            "comment": "Export Announcer component to be used internally."
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "0bb0843e1bfac3d512cfb08ae61c816513ef070c",
+            "comment": "Fixed flaky file sharing tests for upload cards by awaiting file type icons"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/react-components",
+            "commit": "7a5321af59885d33f715b1d09dfeb4e5b4d80784",
+            "comment": "Chat message bubble shows border in high contrast modes making each message distinguishable."
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "9576fb72f13b0dab56dcb8e44d130dbf13119527",
+            "comment": {
+              "title": "",
+              "value": ""
+            }
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "644bc5788ef7c187331f1be5addb0c1814d715eb",
+            "comment": "Fixed bug where voice over does not annouce menu item selected in both calling and callwithchat"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "289797ff8213fcb3626d8215da6612359d987bda",
+            "comment": "Memoize ParticipantList callback functions"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "839d818f0bd55c0587d3f1adc6ee4b24ad3ffeb7",
+            "comment": "Add CSS to show/hide menu button on hover/focus "
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "36ecf8671abef55213144b32d585c966b2a34e19",
+            "comment": "Load new messages only when scroll bar is at the top"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "5c2e89027916e9ce7f5cf7aa1b2892348d198bc0",
+            "comment": "Fix React hook order console errors for CameraButton."
+          },
+          {
+            "author": "jinan@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "1796bbf1cd8e0f74e5825f942e5061b232f0f464",
+            "comment": "Hotfix: infinite spinner for screenShare in stable"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "6ffed9be50767938f162f9570c9365ff097563d6",
+            "comment": "changed z-index so new message button shows ontop of chat bubble"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/react-components",
+            "commit": "d387570f3f45888ba7e23be09dd2eec0842654f0",
+            "comment": "Fix invalid scrollbars when gif images are shared in chat"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "aa3f5a06f3b7d6c2333c3b2025760c2bb22725e3",
+            "comment": "Make participant items tab navigable"
+          },
+          {
+            "author": "jinan@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "6933bb7c7960f040c5294b468c859637283afa9f",
+            "comment": "Fix bug of dismissed menu when scrolling"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/react-components",
+            "commit": "8268d570611617415030b683a7a74d03af3125dd",
+            "comment": "Control Bar uses theme.semanticColors.bodyBackground instead of theme.palette.white"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "ced6194b421f2b75b54ff5bd0041237b37336dec",
+            "comment": "Updated tooltip strings to not be title case"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "50a936e241fb96869a8fa57be0bfdc5f04151345",
+            "comment": "Fix voiceover tab navigation of messages including system messages. Hide message action flyout when focus blurs."
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/react-components",
+            "comment": "Bump @internal/acs-ui-common to v1.3.2-beta.1",
+            "commit": "14adcdc3a3699659701ab1a81c80f1418e384170"
+          }
+        ],
+        "none": [
+          {
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "f42faa2a9830ad1a7bcabba08d9aafcd49632e8b",
+            "comment": "Bumped"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "bd002b51bcc2a24bcafddbcd6497c899543d838f",
+            "comment": "Add data-ui-id to the drawer menu"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/react-components",
+            "commit": "7619658a4b427d80fc4b2071246802c9160ee961",
+            "comment": "Lower opacity of video tile placeholder if participant state is provided"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/react-components",
+            "commit": "655e457b8260d492ccffd927f25a16e59e95ea0f",
+            "comment": "Add hermetic test for participant items in call composite"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "2d654673b4096abc721fe0f764be82c646f84bbe",
+            "comment": "set default for dialpad showdelete button"
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "e0e50671a225760f6e55b3c8e5fadf960a8a617e",
+            "comment": "Refactored File sharing code to improve the use of conditional compilation"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "7d276116ce0b5aab82b1adc3e24b32709b0db47c",
+            "comment": "Bump package version after hotfix release"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "8acc1e67b7c52abc853040c881b980fd53df381e",
+            "comment": "Add id attribute to drawer menu items"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/react-components",
+            "commit": "14adcdc3a3699659701ab1a81c80f1418e384170",
+            "comment": "Center dialpad backspace icon"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/react-components",
+            "commit": "6269de43118a64daa49e38790959e656ffab60ec",
+            "comment": "Truncate participant state inside participant item if it is too long"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "e8f8036cce85b788aafc722bc9c0fdb2978e9a84",
+            "comment": "added data-ui-id for hermantic tests"
+          },
+          {
+            "author": "prprabhu@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "ce155f3656522fc592a743af84ccc334072d585b",
+            "comment": "Add an tag to a DOM element for browser tests"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/react-components",
+            "commit": "4bebf289651c29b46dee36596349eb97eea1f857",
+            "comment": "Update 1:N calling UI to match figma specs"
+          }
+        ],
+        "minor": [
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "004160418269a98a7282923c11ff63d8c748bbad",
+            "comment": "Remove onFocus callback that focuses directly on content in Chat Message. Added string for aria label of local user's message content. "
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "9957cbb2a55a57eaab3c175c370a173f1695d288",
+            "comment": "changes for removing participant list button permissions and added permissions for remove participant"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 29 Jun 2022 17:31:05 GMT",
       "tag": "@internal/react-components_v1.3.1-beta.1",
       "version": "1.3.1-beta.1",

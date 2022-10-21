@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Hiding copy link button for Rooms call",
-  "packageName": "@internal/react-composites",
-  "email": "miguelgamis@microsoft.com",
-  "dependentChangeType": "patch"
-}

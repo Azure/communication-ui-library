@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Add initialize icons to storybook quick start",
-  "packageName": "@internal/storybook",
-  "email": "carolinecao@microsoft.com",
-  "dependentChangeType": "patch"
-}

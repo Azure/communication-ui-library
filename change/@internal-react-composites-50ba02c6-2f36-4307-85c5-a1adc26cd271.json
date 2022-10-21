@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Changed HighContrastAwareIcon to internal component and moved permissions logic for devices button to react-composites",
-  "packageName": "@internal/react-composites",
-  "email": "97124699+prabhjot-msft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "VideoGallery does not show local video tile if no permissions camera",
-  "packageName": "@internal/react-components",
-  "email": "miguelgamis@microsoft.com",
-  "dependentChangeType": "patch"
-}

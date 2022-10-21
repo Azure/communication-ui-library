@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Chat message bubble shows border in high contrast modes making each message distinguishable.",
-  "packageName": "@internal/react-components",
-  "email": "anjulgarg@live.com",
-  "dependentChangeType": "patch"
-}
