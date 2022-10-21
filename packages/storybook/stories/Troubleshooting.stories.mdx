@@ -61,3 +61,20 @@ by `npm add`.
 ```
 PS C:\tmp\acs\my-react-app> npm add --legacy-peer-deps @azure/communication-react
 ```
+
+## Project build errors
+
+### WEBPACK ERROR: Unexpected token: `export * as`
+
+```
+ERROR in /workspaces/communication-ui-library/common/temp/node_modules/.pnpm/htmlparser2@8.0.1/node_modules/htmlparser2/lib/esm/index.js 59:9
+Module parse failed: Unexpected token (59:9)
+You may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders
+|     return getFeed(parseDOM(feed, options));
+| }
+> export * as DomUtils from "domutils";
+| // Old name for DomHandler
+| export { DomHandler as DefaultHandler };
+```
+
+This issue will occur when using `@azure/communication-react` with a webpack version < 5. The best course of action is to upgrade your webpack version to 5. If this is not possible there are workarounds: https://github.com/fb55/htmlparser2/issues/1237#issuecomment-1182522861.
