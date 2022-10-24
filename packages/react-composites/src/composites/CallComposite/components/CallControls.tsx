@@ -94,7 +94,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
     () => ({
       dialpadModalAriaLabel: localeStrings.strings.call.dialpadModalAriaLabel,
       dialpadCloseModalButtonAriaLabel: localeStrings.strings.call.dialpadCloseModalButtonAriaLabel,
-      placeholderText: localeStrings.strings.call.dtmfDialpadPlaceHolderText
+      placeholderText: localeStrings.strings.call.dtmfDialpadPlaceholderText
     }),
     [localeStrings]
   );
