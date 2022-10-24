@@ -497,7 +497,7 @@ export interface CallCompositeStrings {
     dialpadModalTitle: string;
     dialpadStartCallButtonLabel: string;
     dismissSidePaneButtonLabel?: string;
-    dtmfDialpadPlaceHolderText: string;
+    dtmfDialpadPlaceholderText: string;
     failedToJoinCallDueToNoNetworkMoreDetails?: string;
     failedToJoinCallDueToNoNetworkTitle: string;
     failedToJoinTeamsMeetingReasonAccessDeniedMoreDetails?: string;
@@ -964,7 +964,7 @@ export interface CallWithChatCompositeStrings {
     dialpadModalTitle: string;
     dialpadStartCallButtonLabel: string;
     dismissSidePaneButtonLabel?: string;
-    dtmfDialpadPlaceHolderText: string;
+    dtmfDialpadPlaceholderText: string;
     moreDrawerAudioDeviceMenuTitle?: string;
     moreDrawerButtonLabel: string;
     moreDrawerButtonTooltip: string;
