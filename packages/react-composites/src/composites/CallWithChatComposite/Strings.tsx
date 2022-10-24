@@ -138,6 +138,7 @@ export interface CallWithChatCompositeStrings {
    * Aria Label for dialpad Modal close button
    */
   dialpadCloseModalButtonAriaLabel: string;
+  /* @conditional-compile-remove(PSTN-calls) */
   /**
    * Placeholder text for dtmf dialpad
    */
