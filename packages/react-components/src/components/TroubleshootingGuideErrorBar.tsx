@@ -21,7 +21,8 @@ import {
  * @internal
  */
 export interface _TroubleshootingGuideErrorBarStrings {
-  linkText?: string;
+  devicePermissionLinkText?: string;
+  networkTroubleshootingLinkText?: string;
   dismissButtonText?: string;
 }
 
@@ -108,47 +109,70 @@ export const _TroubleshootingGuideErrorBar = (props: _TroubleshootingGuideErrorB
 
   return (
     <Stack data-ui-id="error-bar-stack">
-      {toShow.map((error) => (
-        <MessageBar
-          {...props}
-          styles={messageBarStyle(theme, messageBarType(error.type))}
-          key={error.type}
-          messageBarType={messageBarType(error.type)}
-          messageBarIconProps={messageBarIconProps(error.type)}
-          actions={
-            <MessageBarButton
-              text={troubleshootingGuideStrings.dismissButtonText}
-              styles={dismissButtonStyle(theme)}
-              onClick={() => {
-                setDismissedErrors(dismissError(dismissedErrors, error));
-              }}
-              ariaLabel={strings.dismissButtonAriaLabel}
-            />
-          }
-          isMultiline={false}
-        >
-          {onPermissionsTroubleshootingClick || onNetworkingTroubleshootingClick ? (
-            <div>
-              {strings[error.type]}
+      {toShow.map((error) => {
+        const devicePermissionErrorBar = (
+          <div>
+            {strings[error.type]}
+            {onPermissionsTroubleshootingClick && (
               <Link
                 styles={linkStyle(theme)}
                 onClick={() => {
-                  if (onPermissionsTroubleshootingClick) {
-                    onPermissionsTroubleshootingClick(permissionsState);
-                  } else if (onNetworkingTroubleshootingClick) {
-                    onNetworkingTroubleshootingClick();
-                  }
+                  onPermissionsTroubleshootingClick(permissionsState);
                 }}
                 underline
               >
-                <span>{troubleshootingGuideStrings.linkText}</span>
+                <span>{troubleshootingGuideStrings.devicePermissionLinkText}</span>
               </Link>
-            </div>
-          ) : (
-            <div>{strings[error.type]} </div>
-          )}
-        </MessageBar>
-      ))}
+            )}
+          </div>
+        );
+
+        const networkErrorBar = (
+          <div>
+            {strings[error.type]}
+            {onNetworkingTroubleshootingClick && (
+              <Link styles={linkStyle(theme)} onClick={onNetworkingTroubleshootingClick} underline>
+                <span>{troubleshootingGuideStrings.networkTroubleshootingLinkText}</span>
+              </Link>
+            )}
+          </div>
+        );
+
+        return (
+          <MessageBar
+            {...props}
+            styles={messageBarStyle(theme, messageBarType(error.type))}
+            key={error.type}
+            messageBarType={messageBarType(error.type)}
+            messageBarIconProps={messageBarIconProps(error.type)}
+            actions={
+              <MessageBarButton
+                text={troubleshootingGuideStrings.dismissButtonText}
+                styles={dismissButtonStyle(theme)}
+                onClick={() => {
+                  setDismissedErrors(dismissError(dismissedErrors, error));
+                }}
+                ariaLabel={strings.dismissButtonAriaLabel}
+              />
+            }
+            isMultiline={false}
+          >
+            {showErrorBar(error.type, devicePermissionErrorBar, networkErrorBar)}
+          </MessageBar>
+        );
+      })}
     </Stack>
   );
+};
+
+const showErrorBar = (
+  errorType: string,
+  devicePermissionErrorBar: JSX.Element,
+  networkErrorBar: JSX.Element
+): JSX.Element => {
+  if (errorType === 'callNetworkQualityLow') {
+    return networkErrorBar;
+  } else {
+    return devicePermissionErrorBar;
+  }
 };
