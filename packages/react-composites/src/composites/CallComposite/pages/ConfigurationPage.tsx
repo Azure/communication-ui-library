@@ -188,6 +188,26 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
   /* @conditional-compile-remove(call-readiness) */
   const networkErrors = errorBarProps.activeErrorMessages.filter((message) => message.type === 'callNetworkQualityLow');
 
+  /* @conditional-compile-remove(call-readiness) */
+  const [isDrawerShowing, setIsDrawerShowing] = useState(true);
+  /* @conditional-compile-remove(call-readiness) */
+  const onLightDismissTriggered = (): void => {
+    // do nothing here
+    // only way to dismiss this drawer is clicking on allow access which will leads to device permission prompt
+  };
+  /* @conditional-compile-remove(call-readiness) */
+  const drawerStyle: _DrawerSurfaceStyles = {
+    root: {
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      width: '100%',
+      height: '100%',
+      // apply zindex = 99 so drawer appear over device buttons and other components in the config page
+      zIndex: 99
+    }
+  };
+
   return (
     <Stack className={mobileView ? configurationContainerStyleMobile : configurationContainerStyleDesktop}>
       <Stack styles={bannerNotificationStyles}>
