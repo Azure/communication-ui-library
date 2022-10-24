@@ -40,7 +40,7 @@ export interface DomainPermissionsProps {
   /**
    * Localization strings for DomainPermissions component.
    */
-  strings: DomainPermissionsStrings;
+  strings?: DomainPermissionsStrings;
 }
 
 /**
@@ -84,13 +84,13 @@ const DomainPermissionsContainer = (props: DomainPermissionsProps): JSX.Element 
         </Stack>
       </Stack>
       <Stack styles={textContainerStyles}>
-        <Text styles={primaryTextStyles}>{_formatString(strings.primaryText, { appName: appName })}</Text>
-        <Text styles={secondaryTextStyles}>{strings.secondaryText}</Text>
+        <Text styles={primaryTextStyles}>{_formatString(strings?.primaryText ?? '', { appName: appName })}</Text>
+        <Text styles={secondaryTextStyles}>{strings?.secondaryText}</Text>
         {onAllowAccessClick && (
-          <PrimaryButton styles={primaryButtonStyles} text={strings.primaryButtonText} onClick={onAllowAccessClick} />
+          <PrimaryButton styles={primaryButtonStyles} text={strings?.primaryButtonText} onClick={onAllowAccessClick} />
         )}
         <Link styles={linkTextStyles} onClick={onTroubleshootingClick}>
-          {strings.linkText}
+          {strings?.linkText}
         </Link>
       </Stack>
     </Stack>

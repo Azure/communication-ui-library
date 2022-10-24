@@ -587,7 +587,7 @@ export interface DomainPermissionsProps {
     appName: string;
     onAllowAccessClick?: () => void;
     onTroubleshootingClick: () => void;
-    strings: DomainPermissionsStrings;
+    strings?: DomainPermissionsStrings;
 }
 
 // @beta
