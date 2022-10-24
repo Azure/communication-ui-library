@@ -5,7 +5,10 @@
     "removeButtonLabel": "Quitar",
     "sharingIconLabel": "Compartiendo",
     "mutedIconLabel": "Silenciado",
-    "displayNamePlaceholder": "Participante sin nombre"
+    "displayNamePlaceholder": "Participante sin nombre",
+    "participantStateConnecting": "Llamando...",
+    "participantStateRinging": "Llamando...",
+    "participantStateHold": "En espera"
   },
   "typingIndicator": {
     "singleUser": "{user} está escribiendo...",
@@ -18,7 +21,10 @@
     "placeholderText": "Escribir un mensaje",
     "textTooLong": "La longitud del mensaje supera el límite máximo.",
     "sendButtonAriaLabel": "Enviar mensaje",
-    "fileUploadsPendingError": "Cargando... Espere."
+    "fileUploadsPendingError": "Cargando... Espere.",
+    "removeFile": "Quitar archivo",
+    "uploading": "Cargando",
+    "uploadCompleted": "Carga completada"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "Mensaje enviado",
@@ -110,6 +116,8 @@
     "failToSendTag": "Error al enviar",
     "editedTag": "Editado",
     "liveAuthorIntro": "{author} dice",
+    "messageContentAriaText": "{author} dijo {message}",
+    "messageContentMineAriaText": "Has dicho {message}",
     "editBoxTextLimit": "El mensaje supera el límite de {limitNumber} caracteres",
     "editBoxPlaceholderText": "Editar el mensaje",
     "newMessagesIndicator": "Mensajes nuevos",
@@ -117,7 +125,8 @@
     "editBoxCancelButton": "Cancelar",
     "editBoxSubmitButton": "Enviar",
     "messageReadCount": "Leído por {messageReadByCount} de {remoteParticipantsCount}",
-    "actionMenuMoreOptions": "Más opciones"
+    "actionMenuMoreOptions": "Más opciones",
+    "downloadFile": "Descargar archivo"
   },
   "errorBar": {
     "unableToReachChatService": "Sin conexión",
@@ -138,10 +147,13 @@
     "callNoMicrophoneFound": "No se encontraron micrófonos. Conecta un dispositivo de entrada de audio.",
     "callMicrophoneAccessDenied": "No se puede acceder al micrófono. Haga clic en el bloqueo de la barra de direcciones para conceder permiso a esta página web.",
     "callMicrophoneMutedBySystem": "Su sistema ha silenciado su audio.",
+    "callMicrophoneUnmutedBySystem": "Su micrófono se ha recuperado y el sistema ha activado el audio.",
     "callMacOsMicrophoneAccessDenied": "No se puede acceder al micrófono. Conceda permiso al micrófono en la configuración de privacidad de macOS.",
     "callLocalVideoFreeze": "El ancho de banda de red es deficiente. Es posible que el vídeo aparezca pausado para otros usuarios en la llamada.",
     "callCameraAccessDenied": "No se puede acceder a la cámara. Haga clic en el bloqueo de la barra de direcciones para conceder permiso a esta página web.",
     "callCameraAlreadyInUse": "No se puede acceder a la cámara. Puede que ya la esté usando otra aplicación.",
+    "callVideoStoppedBySystem": "El sistema ha detenido el vídeo.",
+    "callVideoRecoveredBySystem": "El vídeo se ha reanudado.",
     "callMacOsCameraAccessDenied": "MacOS está bloqueando el acceso a la cámara. Actualiza la configuración de privacidad para permitir que este explorador acceda a la cámara.",
     "callMacOsScreenShareAccessDenied": "MacOS está bloqueando el uso compartido de la pantalla. Actualice la configuración de privacidad para permitir que este explorador grabe la pantalla.",
     "dismissButtonAriaLabel": "Cerrar",
@@ -158,12 +170,50 @@
     "displayNamePlaceholder": "Participante sin nombre"
   },
   "dialpad": {
-    "placeholderText": "Introducir un número"
+    "placeholderText": "Introduzca el número de teléfono",
+    "deleteButtonAriaLabel": "Eliminar"
   },
-  "HoldButton": {
+  "holdButton": {
     "onLabel": "Reanudar",
     "offLabel": "En espera",
-    "toolTipOnContent": "Reanudar llamada",
-    "toolTipOffContent": "Poner llamada en espera"
+    "tooltipOnContent": "Reanudar llamada",
+    "tooltipOffContent": "Poner llamada en espera"
+  },
+  "videoTile": {
+    "participantStateConnecting": "Llamando...",
+    "participantStateRinging": "Llamando...",
+    "participantStateHold": "En espera"
+  },
+  "DomainPermissions": {
+    "primaryText": "Permitir que {appName} usen la cámara y el micrófono",
+    "secondaryText": "Esto es para que los participantes puedan verle y oírle.",
+    "linkText": "¿Necesitas ayuda? Obtén ayuda para la solución de problemas",
+    "primaryButtonText": "Permitir acceso"
+  },
+  "UnsupportedBrowser": {
+    "primaryText": "Explorador no compatible",
+    "secondaryText": "Únase a esta llamada con un explorador compatible.",
+    "moreHelpLink": "Más ayuda"
+  },
+  "BrowserPermissionDenied": {
+    "primaryText": "No se puede usar la cámara o el micrófono",
+    "secondaryText": "Es posible que el explorador no tenga acceso a la cámara o al micrófono. Para solucionar este problema, abra Preferencias del sistema.",
+    "primaryButtonText": "Intentar de nuevo",
+    "linkText": "¿Necesitas ayuda? Obtén ayuda para la solución de problemas"
+  },
+  "BrowserPermissionDeniedIOS": {
+    "primaryText": "Permite el acceso al micrófono para continuar",
+    "secondaryText": "Para que otros participantes puedan oírte.",
+    "primaryButtonText": "Intentar de nuevo",
+    "imageAltText": "Ubicación de permisos del dispositivo de micrófono y cámara para iOS",
+    "linkText": "¿Necesitas ayuda? Obtén ayuda para la solución de problemas",
+    "step1Text": "Ve a la aplicación de Configuración",
+    "step2Text": "Desplázate hacia abajo hasta la configuración de este explorador",
+    "step3Text": "Activar micrófono (cámara opcional)",
+    "step4Text": "Intenta unirte de nuevo a la llamada",
+    "step1DigitText": "1",
+    "step2DigitText": "2",
+    "step3DigitText": "3",
+    "step4DigitText": "4"
   }
 }

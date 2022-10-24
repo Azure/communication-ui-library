@@ -5,7 +5,10 @@
     "removeButtonLabel": "Entfernen",
     "sharingIconLabel": "Teilen",
     "mutedIconLabel": "Stumm geschaltet",
-    "displayNamePlaceholder": "Unbenannter Teilnehmer"
+    "displayNamePlaceholder": "Unbenannter Teilnehmer",
+    "participantStateConnecting": "Anrufen...",
+    "participantStateRinging": "Anrufen...",
+    "participantStateHold": "In der Warteschleife"
   },
   "typingIndicator": {
     "singleUser": "{user} schreibt ...",
@@ -18,7 +21,10 @@
     "placeholderText": "Nachricht eingeben",
     "textTooLong": "Ihre Nachrichtenlänge überschreitet den maximalen Grenzwert.",
     "sendButtonAriaLabel": "Nachricht senden",
-    "fileUploadsPendingError": "Wird hochgeladen... Bitte warten."
+    "fileUploadsPendingError": "Wird hochgeladen... Bitte warten.",
+    "removeFile": "Datei entfernen",
+    "uploading": "Hochladen",
+    "uploadCompleted": "Upload abgeschlossen"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "Nachricht gesendet",
@@ -80,7 +86,7 @@
   },
   "participantsButton": {
     "label": "Personen",
-    "tooltipContent": "Teilnehmer anzeigen",
+    "tooltipContent": "Teilnehmende anzeigen",
     "menuHeader": "In diesem Anruf",
     "participantsListButtonLabel": "{numParticipants} Personen",
     "muteAllButtonLabel": "Alle stumm schalten",
@@ -110,6 +116,8 @@
     "failToSendTag": "Fehler beim Senden",
     "editedTag": "Bearbeitet",
     "liveAuthorIntro": "{author} sagt",
+    "messageContentAriaText": "{author} hat {message} gesagt",
+    "messageContentMineAriaText": "Sie sagten {message}",
     "editBoxTextLimit": "Ihre Nachricht überschreitet das Limit von {limitNumber} Zeichen.",
     "editBoxPlaceholderText": "Bearbeiten Sie Ihre Nachricht",
     "newMessagesIndicator": "Neue Nachrichten",
@@ -117,7 +125,8 @@
     "editBoxCancelButton": "Abbrechen",
     "editBoxSubmitButton": "Übermitteln",
     "messageReadCount": "Gelesen von {messageReadByCount} von {remoteParticipantsCount}",
-    "actionMenuMoreOptions": "Weitere Optionen"
+    "actionMenuMoreOptions": "Weitere Optionen",
+    "downloadFile": "Datei herunterladen"
   },
   "errorBar": {
     "unableToReachChatService": "Sie sind offline.",
@@ -138,10 +147,13 @@
     "callNoMicrophoneFound": "Es wurden keine Mikrofone gefunden. Schließen Sie ein Audioeingabegerät an.",
     "callMicrophoneAccessDenied": "Auf das Mikrofon kann nicht zugegriffen werden. Klicken Sie auf die Sperre in der Adressleiste, um dieser Webseite Berechtigungen zu erteilen.",
     "callMicrophoneMutedBySystem": "Sie werden von Ihrem System stummgeschaltet.",
+    "callMicrophoneUnmutedBySystem": "Ihr Mikrofon wurde wiederhergestellt, und Ihr System hat die Stummschaltung aufgehoben.",
     "callMacOsMicrophoneAccessDenied": "Auf das Mikrofon kann nicht zugegriffen werden. Erteilen Sie die Mikrofonberechtigung in Ihren macOS-Datenschutzeinstellungen.",
     "callLocalVideoFreeze": "Die Netzwerkbandbreite ist schlecht. Ihr Video wird möglicherweise für andere Personen während des Anrufs angehalten angezeigt.",
     "callCameraAccessDenied": "Auf die Kamera kann nicht zugegriffen werden. Klicken Sie auf die Sperre in der Adressleiste, um dieser Webseite Berechtigungen zu erteilen.",
     "callCameraAlreadyInUse": "Auf die Kamera kann nicht zugegriffen werden. Sie wird möglicherweise bereits von einer anderen Anwendung verwendet.",
+    "callVideoStoppedBySystem": "Ihr Video wurde von Ihrem System beendet.",
+    "callVideoRecoveredBySystem": "Ihr Video wurde fortgesetzt.",
     "callMacOsCameraAccessDenied": "MacOS blockiert den Zugriff auf Ihre Kamera. Aktualisieren Sie Ihre Datenschutzeinstellungen, damit dieser Browser auf Ihre Kamera zugreifen kann.",
     "callMacOsScreenShareAccessDenied": "MacOS blockiert die Bildschirmfreigabe. Aktualisieren Sie Ihre Datenschutzeinstellungen, damit dieser Browser Ihren Bildschirm aufzeichnen kann.",
     "dismissButtonAriaLabel": "Schließen",
@@ -158,12 +170,50 @@
     "displayNamePlaceholder": "Unbenannter Teilnehmer"
   },
   "dialpad": {
-    "placeholderText": "Eine Nummer eingeben"
+    "placeholderText": "Telefonnummer eingeben",
+    "deleteButtonAriaLabel": "Löschen"
   },
-  "HoldButton": {
+  "holdButton": {
     "onLabel": "Fortsetzen",
     "offLabel": "Halten",
-    "toolTipOnContent": "Anruf fortsetzen",
-    "toolTipOffContent": "Anruf halten"
+    "tooltipOnContent": "Anruf fortsetzen",
+    "tooltipOffContent": "Anruf halten"
+  },
+  "videoTile": {
+    "participantStateConnecting": "Anrufen...",
+    "participantStateRinging": "Anrufen...",
+    "participantStateHold": "In der Warteschleife"
+  },
+  "DomainPermissions": {
+    "primaryText": "Zulassen, dass {appName} Ihre Kamera und Ihr Mikrofon verwendet",
+    "secondaryText": "So können die Teilnehmer Sie sehen und hören.",
+    "linkText": "Benötigen Sie Hilfe? Hilfe zur Problembehandlung",
+    "primaryButtonText": "Zugriff erlauben"
+  },
+  "UnsupportedBrowser": {
+    "primaryText": "Der Browser wird nicht unterstützt.",
+    "secondaryText": "Bitte nehmen Sie über einen kompatiblen Browser an diesem Anruf teil.",
+    "moreHelpLink": "Weitere Hilfe"
+  },
+  "BrowserPermissionDenied": {
+    "primaryText": "Kamera oder Mikrofon kann nicht verwendet werden",
+    "secondaryText": "Ihr Browser hat möglicherweise keinen Zugriff auf Ihre Kamera oder Ihr Mikrofon. Öffnen Sie die Systemeinstellungen, um dieses Problem zu beheben.",
+    "primaryButtonText": "Erneut versuchen",
+    "linkText": "Benötigen Sie Hilfe? Hilfe zur Problembehandlung"
+  },
+  "BrowserPermissionDeniedIOS": {
+    "primaryText": "Mikrofonzugriff zulassen, um fortzufahren",
+    "secondaryText": "Damit andere Teilnehmer Sie hören können.",
+    "primaryButtonText": "Erneut versuchen",
+    "imageAltText": "Berechtigungsspeicherort für Mikrofon- und Kamerageräte für iOS",
+    "linkText": "Benötigen Sie Hilfe? Hilfe zur Problembehandlung",
+    "step1Text": "Zur Einstellungs-App wechseln",
+    "step2Text": "Scrollen Sie nach unten zu den Einstellungen dieses Browsers",
+    "step3Text": "Mikrofon einschalten (Kamera optional)",
+    "step4Text": "Versuchen Sie erneut, dem Anruf beizutreten",
+    "step1DigitText": "1",
+    "step2DigitText": "2",
+    "step3DigitText": "3",
+    "step4DigitText": "4"
   }
 }
