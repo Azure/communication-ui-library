@@ -282,7 +282,7 @@ export interface CallCompositeStrings {
   /**
    * Placeholder text for dtmf dialpad
    */
-  dtmfDialpadPlaceHolderText: string;
+  dtmfDialpadPlaceholderText: string;
   /* @conditional-compile-remove(PSTN-calls) */
   /**
    * Label for the button to open dtmf dialpad
