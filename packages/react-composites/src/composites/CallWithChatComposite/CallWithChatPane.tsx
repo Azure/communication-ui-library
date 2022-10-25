@@ -95,53 +95,58 @@ export const CallWithChatPane = (props: {
       />
     );
 
-  const chatContent = (
-    <ChatComposite
-      {...props.chatCompositeProps}
-      adapter={props.chatAdapter}
-      fluentTheme={theme}
-      options={{
-        topic: false,
-        /* @conditional-compile-remove(chat-composite-participant-pane) */
-        participantPane: false,
-        /* @conditional-compile-remove(file-sharing) */
-        fileSharing: props.fileSharing
-      }}
-      onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
-    />
-  );
-
-  /**
-   * In a CallWithChat when a participant is removed, we must remove them from both
-   * the call and the chat thread.
-   */
-  const removeParticipantFromCallWithChat = async (participantId: string): Promise<void> => {
-    await props.callAdapter.removeParticipant(participantId);
-    await props.chatAdapter.removeParticipant(participantId);
-  };
-
-  /* @conditional-compile-remove(PSTN-calls) */
-  const addParticipantToCall = async (
-    participant: PhoneNumberIdentifier,
-    options?: AddPhoneNumberOptions
-  ): Promise<void> => {
-    await props.callAdapter.addParticipant(participant, options);
-  };
-
-  const peopleContent = (
-    <CallAdapterProvider adapter={props.callAdapter}>
-      <PeoplePaneContent
-        {...props}
-        onRemoveParticipant={removeParticipantFromCallWithChat}
-        setDrawerMenuItems={setDrawerMenuItems}
-        strings={callWithChatStrings}
-        /* @conditional-compile-remove(PSTN-calls) */
-        onAddParticipant={addParticipantToCall}
-        /* @conditional-compile-remove(PSTN-calls) */
-        alternateCallerId={alternateCallerId}
+  const chatContent = useMemo(
+    () => (
+      <ChatComposite
+        {...props.chatCompositeProps}
+        adapter={props.chatAdapter}
+        fluentTheme={theme}
+        options={{
+          topic: false,
+          /* @conditional-compile-remove(chat-composite-participant-pane) */
+          participantPane: false,
+          /* @conditional-compile-remove(file-sharing) */
+          fileSharing: props.fileSharing
+        }}
+        onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
       />
-    </CallAdapterProvider>
+    ),
+    [props.chatCompositeProps, props.chatAdapter, props.fileSharing, props.onFetchAvatarPersonaData, theme]
   );
+
+  const peopleContent = useMemo(() => {
+    /**
+     * In a CallWithChat when a participant is removed, we must remove them from both
+     * the call and the chat thread.
+     */
+    const removeParticipantFromCallWithChat = async (participantId: string): Promise<void> => {
+      await props.callAdapter.removeParticipant(participantId);
+      await props.chatAdapter.removeParticipant(participantId);
+    };
+
+    /* @conditional-compile-remove(PSTN-calls) */
+    const addParticipantToCall = async (
+      participant: PhoneNumberIdentifier,
+      options?: AddPhoneNumberOptions
+    ): Promise<void> => {
+      await props.callAdapter.addParticipant(participant, options);
+    };
+
+    return (
+      <CallAdapterProvider adapter={props.callAdapter}>
+        <PeoplePaneContent
+          {...props}
+          onRemoveParticipant={removeParticipantFromCallWithChat}
+          setDrawerMenuItems={setDrawerMenuItems}
+          strings={callWithChatStrings}
+          /* @conditional-compile-remove(PSTN-calls) */
+          onAddParticipant={addParticipantToCall}
+          /* @conditional-compile-remove(PSTN-calls) */
+          alternateCallerId={alternateCallerId}
+        />
+      </CallAdapterProvider>
+    );
+  }, [alternateCallerId, callWithChatStrings, props]);
 
   const minMaxDragPosition = useMinMaxDragPosition(props.modalLayerHostId, props.rtl);
 
@@ -160,8 +165,8 @@ export const CallWithChatPane = (props: {
       <Stack.Item verticalFill grow styles={paneBodyContainer}>
         <Stack horizontal styles={scrollableContainer}>
           <Stack.Item verticalFill styles={scrollableContainerContents}>
-            <Stack styles={props.activePane === 'chat' ? availableSpaceStyles : hiddenStyles}>{chatContent}</Stack>
-            <Stack styles={props.activePane === 'people' ? availableSpaceStyles : hiddenStyles}>{peopleContent}</Stack>
+            {props.activePane === 'chat' && <Stack styles={availableSpaceStyles}>{chatContent}</Stack>}
+            {props.activePane === 'people' && <Stack styles={availableSpaceStyles}>{peopleContent}</Stack>}
           </Stack.Item>
         </Stack>
       </Stack.Item>
