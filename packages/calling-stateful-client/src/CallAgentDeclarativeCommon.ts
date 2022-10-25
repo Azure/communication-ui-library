@@ -231,9 +231,21 @@ export abstract class ProxyCallAgentCommon {
         };
       }
       case 'dispose': {
-        return async (): Promise<void> => {
+        /* @conditional-compile-remove(calling-beta-sdk) */
+        return (): void => {
           target.dispose();
           this.unsubscribe();
+        };
+        // Wrapping CallAgent.dispose in a callback type (): Promise<void> to accomodate the change of CallAgent.dispose
+        // in calling beta version 1.8.0-beta.1 from callback type (): Promise<void> to (): void
+        const callAgentDisposeAsyncCallbackWrapper = async (): Promise<void> => {
+          await target.dispose();
+          return Promise.resolve();
+        };
+        return (): Promise<void> => {
+          return callAgentDisposeAsyncCallbackWrapper().then(() => {
+            this.unsubscribe();
+          });
         };
       }
       /**

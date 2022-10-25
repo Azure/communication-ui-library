@@ -37,6 +37,8 @@ import { modalLayerHostStyle } from '../common/styles/ModalLocalAndRemotePIP.sty
 import { SendDtmfDialpad } from '../common/SendDtmfDialpad';
 /* @conditional-compile-remove(PSTN-calls) */
 import { useCallWithChatCompositeStrings } from './hooks/useCallWithChatCompositeStrings';
+/* @conditional-compile-remove(call-readiness) */
+import { DevicePermissionRestrictions } from '../CallComposite/CallComposite';
 
 /**
  * Props required for the {@link CallWithChatComposite}
@@ -85,6 +87,45 @@ export type CallWithChatCompositeOptions = {
    * @beta
    */
   fileSharing?: FileSharingOptions;
+  /* @conditional-compile-remove(call-readiness) */
+  /**
+   * Device permission restrictions for your call.
+   * Require device permissions to be set or have them as optional or not required to start a call
+   */
+  devicePermissions?: DevicePermissionRestrictions;
+  /* @conditional-compile-remove(call-readiness) */
+  /**
+   * Callback you may provide to supply users with further steps to troubleshoot why they have been
+   * unable to grant your site the required permissions for the call.
+   *
+   * @example
+   * ```ts
+   * onPermissionsTroubleshootingClick: () =>
+   *  window.open('https://contoso.com/permissions-troubleshooting', '_blank');
+   * ```
+   *
+   * @remarks
+   * if this is not supplied, the composite will not show a 'further troubleshooting' link.
+   */
+  onPermissionsTroubleshootingClick?: (permissionsState: {
+    camera: PermissionState;
+    microphone: PermissionState;
+  }) => void;
+  /* @conditional-compile-remove(call-readiness) */
+  /**
+   * Optional callback to supply users with further troubleshooting steps for network issues
+   * experienced when connecting to a call.
+   *
+   * @example
+   * ```ts
+   * onNetworkingTroubleShootingClick?: () =>
+   *  window.open('https://contoso.com/network-troubleshooting', '_blank');
+   * ```
+   *
+   * @remarks
+   * if this is not supplied, the composite will not show a 'network troubleshooting' link.
+   */
+  onNetworkingTroubleShootingClick?: () => void;
 };
 
 /**
@@ -163,6 +204,8 @@ type CallWithChatScreenProps = {
   /* @conditional-compile-remove(file-sharing) */
   fileSharing?: FileSharingOptions;
   rtl?: boolean;
+  /* @conditional-compile-remove(call-readiness) */
+  devicePermissions?: DevicePermissionRestrictions;
 };
 
 const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
@@ -215,7 +258,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
   const isInLocalHold = currentPage === 'hold';
   const hasJoinedCall = !!(currentPage && hasJoinedCallFn(currentPage, currentCallState ?? 'None'));
   const showControlBar = isInLobbyOrConnecting || hasJoinedCall;
-  const isMobileWithActivePane = mobileView && activePane !== 'none';
+  const isMobileWithActivePane = mobileView && hasJoinedCall && activePane !== 'none';
 
   /** Constant setting of id for the parent stack of the composite */
   const compositeParentDivId = useId('callWithChatCompositeParentDiv-internal');
@@ -274,6 +317,10 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
     togglePeople();
   }, [togglePeople]);
 
+  // On mobile, when there is an active call and some side pane is active,
+  // we hide the call composite via CSS to show only the pane.
+  // We only set `display` to `none` instead of unmounting the call composite component tree
+  // to avoid the performance cost of rerendering video streams when we later show the composite again.
   const callCompositeContainerCSS = useMemo(() => {
     return { display: isMobileWithActivePane ? 'none' : 'flex' };
   }, [isMobileWithActivePane]);
@@ -299,7 +346,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
     () => ({
       dialpadModalAriaLabel: callWithChatStrings.dialpadModalAriaLabel,
       dialpadCloseModalButtonAriaLabel: callWithChatStrings.dialpadCloseModalButtonAriaLabel,
-      placeholderText: callWithChatStrings.dtmfDialpadPlaceHolderText
+      placeholderText: callWithChatStrings.dtmfDialpadPlaceholderText
     }),
     [callWithChatStrings]
   );
@@ -320,7 +367,11 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
             <CallComposite
               {...props}
               formFactor={formFactor}
-              options={{ callControls: false }}
+              options={{
+                callControls: false,
+                /* @conditional-compile-remove(call-readiness) */
+                devicePermissions: props.devicePermissions
+              }}
               adapter={callAdapter}
               fluentTheme={fluentTheme}
             />
@@ -428,6 +479,8 @@ export const CallWithChatComposite = (props: CallWithChatCompositeProps): JSX.El
     <BaseProvider fluentTheme={fluentTheme} rtl={rtl} locale={props.locale} icons={props.icons}>
       <CallWithChatScreen
         {...props}
+        /* @conditional-compile-remove(call-readiness) */
+        devicePermissions={options?.devicePermissions}
         callWithChatAdapter={adapter}
         formFactor={formFactor}
         callControls={options?.callControls}
@@ -443,10 +496,11 @@ export const CallWithChatComposite = (props: CallWithChatCompositeProps): JSX.El
 const hasJoinedCallFn = (page: CallCompositePage, callStatus: CallState): boolean => {
   /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(one-to-n-calling) */
   return (
-    (page === 'call' && (callStatus === 'Connected' || callStatus === 'RemoteHold')) ||
-    (page === 'hold' && callStatus === 'LocalHold')
+    (page === 'call' &&
+      (callStatus === 'Connected' || callStatus === 'RemoteHold' || callStatus === 'Disconnecting')) ||
+    (page === 'hold' && (callStatus === 'LocalHold' || callStatus === 'Disconnecting'))
   );
-  return page === 'call' && callStatus === 'Connected';
+  return page === 'call' && (callStatus === 'Connected' || callStatus === 'Disconnecting');
 };
 
 const showShowChatTabHeaderButton = (callControls?: boolean | CallWithChatControlOptions): boolean => {

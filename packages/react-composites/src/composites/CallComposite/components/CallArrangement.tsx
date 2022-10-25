@@ -12,9 +12,11 @@ import {
   ErrorBarProps,
   useTheme
 } from '@internal/react-components';
+/* @conditional-compile-remove(rooms) */
+import { _usePermissions } from '@internal/react-components';
 import React, { useMemo, useRef } from 'react';
 /* @conditional-compile-remove(one-to-n-calling) */
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
 /* @conditional-compile-remove(one-to-n-calling) */
 import { AvatarPersonaDataCallback } from '../../common/AvatarPersona';
 import { containerDivStyles } from '../../common/ContainerRectProps';
@@ -22,9 +24,7 @@ import { containerDivStyles } from '../../common/ContainerRectProps';
 import { useAdapter } from '../adapter/CallAdapterProvider';
 import { CallControls, CallControlsProps } from '../components/CallControls';
 /* @conditional-compile-remove(one-to-n-calling) */
-import { useSelector } from '../hooks/useSelector';
-/* @conditional-compile-remove(one-to-n-calling) */
-import { callStatusSelector } from '../selectors/callStatusSelector';
+import { useSidePaneState } from '../hooks/useSidePaneState';
 import {
   callControlsContainerStyles,
   notificationsContainerStyles,
@@ -37,7 +37,7 @@ import {
 /* @conditional-compile-remove(one-to-n-calling) */
 import { CallControlOptions } from '../types/CallControlOptions';
 /* @conditional-compile-remove(one-to-n-calling) */
-import { CallPane, CallPaneOption } from './CallPane';
+import { CallPane } from './CallPane';
 import { MutedNotification, MutedNotificationProps } from './MutedNotification';
 
 /**
@@ -78,33 +78,10 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   /* @conditional-compile-remove(one-to-n-calling) */
   const adapter = useAdapter();
   /* @conditional-compile-remove(one-to-n-calling) */
-  const [activePane, setActivePane] = useState<CallPaneOption>('none');
-  /* @conditional-compile-remove(one-to-n-calling) */
-  const { callStatus } = useSelector(callStatusSelector);
+  const { activePane, closePane, openPeoplePane, togglePeoplePane } = useSidePaneState();
 
   /* @conditional-compile-remove(one-to-n-calling) */
-  const closePane = useCallback(() => {
-    setActivePane('none');
-  }, [setActivePane]);
-
-  /* @conditional-compile-remove(one-to-n-calling) */
-  const isMobileWithActivePane = props.mobileView && activePane !== 'none';
-
-  /* @conditional-compile-remove(one-to-n-calling) */
-  const togglePeople = useCallback(() => {
-    if (activePane === 'people' || !_isInCall(callStatus)) {
-      setActivePane('none');
-    } else {
-      setActivePane('people');
-    }
-  }, [activePane, setActivePane, callStatus]);
-
-  /* @conditional-compile-remove(one-to-n-calling) */
-  const selectPeople = useCallback(() => {
-    if (_isInCall(callStatus)) {
-      setActivePane('people');
-    }
-  }, [setActivePane, callStatus]);
+  const isMobileWithActivePane = props.mobileView && activePane;
 
   /* @conditional-compile-remove(one-to-n-calling) */
   const callCompositeContainerCSS = useMemo(() => {
@@ -121,7 +98,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
 
   /* @conditional-compile-remove(one-to-n-calling) */
   const callPaneContent = useCallback((): JSX.Element => {
-    if (adapter && _isInCall(callStatus) && activePane === 'people') {
+    if (adapter && activePane === 'people') {
       return (
         <CallPane
           callAdapter={adapter}
@@ -129,7 +106,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
           onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
           onFetchParticipantMenuItems={props.callControlProps?.onFetchParticipantMenuItems}
           onPeopleButtonClicked={
-            showShowPeopleTabHeaderButton(props.callControlProps.options) ? selectPeople : undefined
+            showShowPeopleTabHeaderButton(props.callControlProps.options) ? openPeoplePane : undefined
           }
           callControls={
             typeof props.callControlProps.options !== 'boolean' ? props.callControlProps.options : undefined
@@ -145,7 +122,6 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   }, [
     activePane,
     adapter,
-    callStatus,
     closePane,
     props.callControlProps.callInvitationURL,
     props.callControlProps?.onFetchParticipantMenuItems,
@@ -153,8 +129,26 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     props.mobileView,
     props.modalLayerHostId,
     props.onFetchAvatarPersonaData,
-    selectPeople
+    openPeoplePane
   ]);
+
+  /* @conditional-compile-remove(rooms) */
+  const rolePermissions = _usePermissions();
+
+  let canUnmute = true;
+  /* @conditional-compile-remove(rooms) */
+  canUnmute = rolePermissions.microphoneButton;
+
+  let errorBarProps = props.errorBarProps;
+
+  /* @conditional-compile-remove(rooms) */
+  // TODO: move this logic to the error bar selector once role is plumbed from the headless SDK
+  if (!rolePermissions.cameraButton && props.errorBarProps) {
+    errorBarProps = {
+      ...props.errorBarProps,
+      activeErrorMessages: props.errorBarProps.activeErrorMessages.filter((e) => e.type !== 'callCameraAccessDenied')
+    };
+  }
 
   return (
     <div ref={containerRef} className={mergeStyles(containerDivStyles)}>
@@ -164,12 +158,12 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
             <Stack styles={bannerNotificationStyles}>
               <_ComplianceBanner {...props.complianceBannerProps} />
             </Stack>
-            {props.errorBarProps !== false && (
+            {errorBarProps !== false && (
               <Stack styles={bannerNotificationStyles}>
-                <ErrorBar {...props.errorBarProps} />
+                <ErrorBar {...errorBarProps} />
               </Stack>
             )}
-            {!!props.mutedNotificationProps && <MutedNotification {...props.mutedNotificationProps} />}
+            {canUnmute && !!props.mutedNotificationProps && <MutedNotification {...props.mutedNotificationProps} />}
           </Stack.Item>
           <Stack.Item grow style={callCompositeContainerFlex()}>
             <Stack.Item styles={callGalleryStyles} grow>
@@ -193,7 +187,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                 /* @conditional-compile-remove(one-to-n-calling) */
                 peopleButtonChecked={activePane === 'people'}
                 /* @conditional-compile-remove(one-to-n-calling) */
-                onPeopleButtonClicked={togglePeople}
+                onPeopleButtonClicked={togglePeoplePane}
               />
             </Stack.Item>
           )}

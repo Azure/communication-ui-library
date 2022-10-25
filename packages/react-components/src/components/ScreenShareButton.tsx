@@ -5,9 +5,7 @@ import React from 'react';
 import { useLocale } from '../localization';
 import { ControlBarButton, ControlBarButtonProps } from './ControlBarButton';
 import { DefaultPalette, IButtonStyles, mergeStyles, Theme, useTheme } from '@fluentui/react';
-import { HighContrastAwareIcon } from './HighContrastAwareIcon';
-/* @conditional-compile-remove(rooms) */
-import { _usePermissions } from '../permissions/PermissionsProvider';
+import { _HighContrastAwareIcon } from './HighContrastAwareIcon';
 
 /**
  * Strings of {@link ScreenShareButton} that can be overridden.
@@ -59,15 +57,11 @@ export const ScreenShareButton = (props: ScreenShareButtonProps): JSX.Element =>
   const theme = useTheme();
   const styles = screenshareButtonStyles(theme);
 
-  let disabled = props.disabled;
-  /* @conditional-compile-remove(rooms) */
-  disabled = !_usePermissions().screenShare || disabled;
-
   const onRenderScreenShareOnIcon = (): JSX.Element => (
-    <HighContrastAwareIcon disabled={disabled} iconName="ControlButtonScreenShareStop" />
+    <_HighContrastAwareIcon disabled={props.disabled} iconName="ControlButtonScreenShareStop" />
   );
   const onRenderScreenShareOffIcon = (): JSX.Element => (
-    <HighContrastAwareIcon disabled={disabled} iconName="ControlButtonScreenShareStart" />
+    <_HighContrastAwareIcon disabled={props.disabled} iconName="ControlButtonScreenShareStart" />
   );
 
   return (
@@ -79,7 +73,7 @@ export const ScreenShareButton = (props: ScreenShareButtonProps): JSX.Element =>
       onRenderOffIcon={props.onRenderOffIcon ?? onRenderScreenShareOffIcon}
       strings={strings}
       labelKey={props.labelKey ?? 'screenShareButtonLabel'}
-      disabled={disabled}
+      disabled={props.disabled}
     />
   );
 };

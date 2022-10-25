@@ -39,7 +39,7 @@
   },
   "endCallButton": {
     "label": "Leave",
-    "tooltipContent": "Leave Call"
+    "tooltipContent": "Leave call"
   },
   "cameraButton": {
     "onLabel": "Turn off",
@@ -49,7 +49,7 @@
     "tooltipOffContent": "Turn on camera",
     "tooltipVideoLoadingContent": "Video is loading",
     "cameraMenuTitle": "Camera",
-    "cameraMenuTooltip": "Choose Camera",
+    "cameraMenuTooltip": "Choose camera",
     "cameraButtonSplitRoleDescription": "Split button",
     "onSplitButtonAriaLabel": "Turn off camera and camera options",
     "offSplitButtonAriaLabel": "Turn on camera and camera options",
@@ -63,9 +63,9 @@
     "tooltipOnContent": "Mute microphone",
     "tooltipOffContent": "Unmute microphone",
     "microphoneMenuTitle": "Microphone",
-    "microphoneMenuTooltip": "Choose Microphone",
+    "microphoneMenuTooltip": "Choose microphone",
     "speakerMenuTitle": "Speaker",
-    "speakerMenuTooltip": "Choose Speaker",
+    "speakerMenuTooltip": "Choose speaker",
     "microphoneButtonSplitRoleDescription": "Split button",
     "onSplitButtonAriaLabel": "Mute microphone and audio options",
     "offSplitButtonAriaLabel": "Unmute microphone and audio options",
@@ -76,17 +76,17 @@
     "label": "Devices",
     "tooltipContent": "Manage devices",
     "cameraMenuTitle": "Camera",
-    "cameraMenuTooltip": "Choose Camera",
+    "cameraMenuTooltip": "Choose camera",
     "audioDeviceMenuTitle": "Audio Device",
-    "audioDeviceMenuTooltip": "Choose Audio Device",
+    "audioDeviceMenuTooltip": "Choose audio device",
     "microphoneMenuTitle": "Microphone",
-    "microphoneMenuTooltip": "Choose Microphone",
+    "microphoneMenuTooltip": "Choose microphone",
     "speakerMenuTitle": "Speaker",
-    "speakerMenuTooltip": "Choose Speaker"
+    "speakerMenuTooltip": "Choose speaker"
   },
   "participantsButton": {
     "label": "People",
-    "tooltipContent": "Show Participants",
+    "tooltipContent": "Show participants",
     "menuHeader": "In this call",
     "participantsListButtonLabel": "{numParticipants} people",
     "muteAllButtonLabel": "Mute all",
@@ -183,5 +183,37 @@
     "participantStateConnecting": "Calling...",
     "participantStateRinging": "Calling...",
     "participantStateHold": "On hold"
+  },
+  "DomainPermissions": {
+    "primaryText": "Allow {appName} to use your camera and microphone",
+    "secondaryText": "This is so participants can see and hear you.",
+    "linkText": "Need help? Get troubleshooting help",
+    "primaryButtonText": "Allow Access"
+  },
+  "UnsupportedBrowser": {
+    "primaryText": "Browser not supported",
+    "secondaryText": "Please join this call using a compatible browser.",
+    "moreHelpLink": "More help"
+  },
+  "BrowserPermissionDenied": {
+    "primaryText": "Can't use your camera or microphone",
+    "secondaryText": "Your browser might not have access to your camera or microphone. To fix this, open System Preferences.",
+    "primaryButtonText": "Try again",
+    "linkText": "Need help? Get troubleshooting help"
+  },
+  "BrowserPermissionDeniedIOS": {
+    "primaryText": "Allow microphone access to continue",
+    "secondaryText": "So other participants can hear you.",
+    "primaryButtonText": "Try again",
+    "imageAltText": "Microphone and camera device permission location for iOS",
+    "linkText": "Need help? Get troubleshooting help",
+    "step1Text": "Go to the Settings app",
+    "step2Text": "Scroll down to settings for this browser",
+    "step3Text": "Turn on Microphone (Camera optional)",
+    "step4Text": "Try joining the call again",
+    "step1DigitText": "1",
+    "step2DigitText": "2",
+    "step3DigitText": "3",
+    "step4DigitText": "4"
   }
 }

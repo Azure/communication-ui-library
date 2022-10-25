@@ -11,6 +11,8 @@ This repository follows a green-trunk development model. All development happens
 
 _This document applies to beta and stable releases. Alpha releases are created nightly through a separate [light-weight mechanism](#creating-alpha-releases)._
 
+_This document applies to normal releases, off of `main`. For hotfixing a prior release on NPM, see [documentation on creating hotfixes](./hotfix-release.md)._
+
 ## Step 1: Creating a release branch
 
 Both beta and stable release follow a two step workflow, aided by github actions.

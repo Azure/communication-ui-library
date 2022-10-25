@@ -71,6 +71,8 @@ class MockCallAgent implements CallAgent {
   kind = 'CallAgent' as CallAgentKind;
   emitter = new EventEmitter();
   feature;
+  /* @conditional-compile-remove(calling-beta-sdk) */
+  kind;
   startCall(
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[],

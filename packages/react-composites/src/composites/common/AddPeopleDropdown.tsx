@@ -22,7 +22,7 @@ import { _preventDismissOnEvent as preventDismissOnEvent } from '@internal/acs-u
 import { copyLinkButtonContainerStyles, copyLinkButtonStackStyles } from './styles/PeoplePaneContent.styles';
 import { drawerContainerStyles } from '../CallComposite/styles/CallComposite.styles';
 import { convertContextualMenuItemToDrawerMenuItem } from '../CallWithChatComposite/ConvertContextualMenuItemToDrawerMenuItem';
-import { CommunicationIdentifier } from '@azure/communication-common';
+import { PhoneNumberIdentifier } from '@azure/communication-common';
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 
 /** @private */
@@ -38,7 +38,7 @@ export interface AddPeopleDropdownProps {
   inviteLink?: string;
   mobileView?: boolean;
   strings: AddPeopleDropdownStrings;
-  onAddParticipant: (participant: CommunicationIdentifier, options?: AddPhoneNumberOptions) => void;
+  onAddParticipant: (participant: PhoneNumberIdentifier, options?: AddPhoneNumberOptions) => void;
   alternateCallerId?: string;
 }
 
@@ -125,15 +125,17 @@ export const AddPeopleDropdown = (props: AddPeopleDropdownProps): JSX.Element =>
     return (
       <Stack>
         <Announcer ariaLive={'assertive'} announcementString={announcerStrings} />
-        <Stack.Item styles={copyLinkButtonContainerStyles}>
-          <PrimaryButton
-            onClick={setDrawerMenuItemsForAddPeople}
-            styles={copyLinkButtonStylesThemed}
-            onRenderIcon={() => PeoplePaneAddPersonIconTrampoline()}
-            text={strings.peoplePaneAddPeopleButtonLabel}
-            data-ui-id="call-add-people-button"
-          />
-        </Stack.Item>
+        {defaultMenuProps.items.length > 0 && (
+          <Stack.Item styles={copyLinkButtonContainerStyles}>
+            <PrimaryButton
+              onClick={setDrawerMenuItemsForAddPeople}
+              styles={copyLinkButtonStylesThemed}
+              onRenderIcon={() => PeoplePaneAddPersonIconTrampoline()}
+              text={strings.peoplePaneAddPeopleButtonLabel}
+              data-ui-id="call-add-people-button"
+            />
+          </Stack.Item>
+        )}
 
         {addPeopleDrawerMenuItems.length > 0 && (
           <Stack styles={drawerContainerStyles} data-ui-id="call-add-people-dropdown">
@@ -170,15 +172,17 @@ export const AddPeopleDropdown = (props: AddPeopleDropdownProps): JSX.Element =>
             />
           )}
 
-          <Stack styles={copyLinkButtonStackStyles}>
-            <DefaultButton
-              onRenderIcon={() => PeoplePaneAddPersonIconTrampoline()}
-              text={strings.peoplePaneAddPeopleButtonLabel}
-              menuProps={defaultMenuProps}
-              styles={copyLinkButtonStylesThemed}
-              data-ui-id="call-add-people-button"
-            />
-          </Stack>
+          {defaultMenuProps.items.length > 0 && (
+            <Stack styles={copyLinkButtonStackStyles}>
+              <DefaultButton
+                onRenderIcon={() => PeoplePaneAddPersonIconTrampoline()}
+                text={strings.peoplePaneAddPeopleButtonLabel}
+                menuProps={defaultMenuProps}
+                styles={copyLinkButtonStylesThemed}
+                data-ui-id="call-add-people-button"
+              />
+            </Stack>
+          )}
         </Stack>
       }
     </>

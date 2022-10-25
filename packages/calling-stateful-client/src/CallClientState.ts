@@ -479,6 +479,7 @@ export class CallError extends Error {
  */
 export type CallErrorTarget =
   | 'Call.addParticipant'
+  | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.dispose'
   | 'Call.feature'
   | 'Call.hangUp'
   | 'Call.hold'
@@ -508,7 +509,7 @@ export type CallErrorTarget =
   | /* @conditional-compile-remove(teams-call) */ 'CallClient.createTeamsCallAgent'
   | 'CallClient.feature'
   | 'CallClient.getDeviceManager'
-  | /* @conditional-compile-remove(teams-call) */ 'CallClient.getEnvironmentInfo'
+  | /* @conditional-compile-remove(calling-beta-sdk) */ 'CallClient.getEnvironmentInfo'
   | 'DeviceManager.askDevicePermission'
   | 'DeviceManager.getCameras'
   | 'DeviceManager.getMicrophones'
