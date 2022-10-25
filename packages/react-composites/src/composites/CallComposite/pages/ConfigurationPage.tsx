@@ -177,6 +177,17 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
     }
   };
 
+  /* @conditional-compile-remove(call-readiness) */
+  const permissionsState: {
+    camera: PermissionState;
+    microphone: PermissionState;
+  } = {
+    camera: cameraPermissionGranted ? 'granted' : 'denied',
+    microphone: microphonePermissionGranted ? 'granted' : 'denied'
+  };
+  /* @conditional-compile-remove(call-readiness) */
+  const networkErrors = errorBarProps.activeErrorMessages.filter((message) => message.type === 'callNetworkQualityLow');
+
   return (
     <Stack className={mobileView ? configurationContainerStyleMobile : configurationContainerStyleDesktop}>
       <Stack styles={bannerNotificationStyles}>
