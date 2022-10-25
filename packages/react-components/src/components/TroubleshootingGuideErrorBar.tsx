@@ -112,7 +112,7 @@ export const _TroubleshootingGuideErrorBar = (props: _TroubleshootingGuideErrorB
       {toShow.map((error) => {
         const devicePermissionErrorBar = (
           <div>
-            {strings[error.type]}
+            {strings[error.type]}{' '}
             {onPermissionsTroubleshootingClick && (
               <Link
                 styles={linkStyle(theme)}
@@ -129,7 +129,7 @@ export const _TroubleshootingGuideErrorBar = (props: _TroubleshootingGuideErrorB
 
         const networkErrorBar = (
           <div>
-            {strings[error.type]}
+            {strings[error.type]}{' '}
             {onNetworkingTroubleshootingClick && (
               <Link styles={linkStyle(theme)} onClick={onNetworkingTroubleshootingClick} underline>
                 <span>{troubleshootingGuideStrings.networkTroubleshootingLinkText}</span>

@@ -108,11 +108,11 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     camera: PermissionState;
     microphone: PermissionState;
   }): void => {
-    console.log(permissionState);
+    alert('permission troubleshooting clicked');
   };
 
   const onNetworkingTroubleShootingClick = (): void => {
-    console.log('network trouble shoot');
+    alert('network troubleshooting clicked');
   };
 
   return (
