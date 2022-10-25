@@ -217,6 +217,10 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           }}
           /* @conditional-compile-remove(call-readiness) */
           devicePermissions={props.options?.devicePermissions}
+          /* @conditional-compile-remove(call-readiness) */
+          onPermissionsTroubleshootingClick={props.options?.onPermissionsTroubleshootingClick}
+          /* @conditional-compile-remove(call-readiness) */
+          onNetworkingTroubleShootingClick={props.options?.onNetworkingTroubleShootingClick}
         />
       );
       break;

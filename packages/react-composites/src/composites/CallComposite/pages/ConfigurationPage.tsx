@@ -42,6 +42,7 @@ import { usePropsFor } from '../hooks/usePropsFor';
 import { useAdapter } from '../adapter/CallAdapterProvider';
 /* @conditional-compile-remove(call-readiness) */
 import { DevicePermissionRestrictions } from '../CallComposite';
+import { ConfigurationpageErrorBar } from '../components/ConfigurationpageErrorBar';
 
 /**
  * @private
@@ -51,13 +52,26 @@ export interface ConfigurationPageProps {
   startCallHandler(): void;
   /* @conditional-compile-remove(call-readiness) */
   devicePermissions?: DevicePermissionRestrictions;
+  /* @conditional-compile-remove(call-readiness) */
+  onPermissionsTroubleshootingClick?: (permissionsState: {
+    camera: PermissionState;
+    microphone: PermissionState;
+  }) => void;
+  /* @conditional-compile-remove(call-readiness) */
+  onNetworkingTroubleShootingClick?: () => void;
 }
 
 /**
  * @private
  */
 export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element => {
-  const { startCallHandler, mobileView, /* @conditional-compile-remove(call-readiness) */ devicePermissions } = props;
+  const {
+    startCallHandler,
+    mobileView,
+    /* @conditional-compile-remove(call-readiness) */ devicePermissions,
+    /* @conditional-compile-remove(call-readiness) */ onPermissionsTroubleshootingClick,
+    /* @conditional-compile-remove(call-readiness) */ onNetworkingTroubleShootingClick
+  } = props;
 
   const options = useAdaptedSelector(getCallingSelector(DevicesButton));
   const localDeviceSettingsHandlers = useHandlers(LocalDeviceSettings);
@@ -116,6 +130,17 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
   mobileWithPreview = mobileWithPreview && rolePermissions.cameraButton;
 
   /* @conditional-compile-remove(call-readiness) */
+  const permissionsState: {
+    camera: PermissionState;
+    microphone: PermissionState;
+  } = {
+    camera: cameraPermissionGranted ? 'granted' : 'denied',
+    microphone: microphonePermissionGranted ? 'granted' : 'denied'
+  };
+  /* @conditional-compile-remove(call-readiness) */
+  const networkErrors = errorBarProps.activeErrorMessages.filter((message) => message.type === 'callNetworkQualityLow');
+
+  /* @conditional-compile-remove(call-readiness) */
   const [isDrawerShowing, setIsDrawerShowing] = useState(true);
   /* @conditional-compile-remove(call-readiness) */
   const [isModalShowing, setIsModalShowing] = useState(false);
@@ -145,7 +170,20 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
   return (
     <Stack className={mobileView ? configurationContainerStyleMobile : configurationContainerStyleDesktop}>
       <Stack styles={bannerNotificationStyles}>
-        <ErrorBar {...errorBarProps} />
+        <ConfigurationpageErrorBar
+          /* @conditional-compile-remove(call-readiness) */
+          // show trouble shooting error bar when encountering network error/ permission error
+          showTroubleShootingErrorBar={
+            !cameraPermissionGranted || !microphonePermissionGranted || networkErrors.length > 0
+          }
+          /* @conditional-compile-remove(call-readiness) */
+          permissionsState={permissionsState}
+          /* @conditional-compile-remove(call-readiness) */
+          onNetworkingTroubleShootingClick={onNetworkingTroubleShootingClick}
+          /* @conditional-compile-remove(call-readiness) */
+          onPermissionsTroubleshootingClick={onPermissionsTroubleshootingClick}
+          errorBarProps={errorBarProps}
+        />
       </Stack>
 
       {
