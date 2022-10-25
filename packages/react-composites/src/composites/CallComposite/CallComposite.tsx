@@ -344,44 +344,44 @@ export const CallComposite = (props: CallCompositeProps): JSX.Element => {
     /* @conditional-compile-remove(rooms) */
     role
   } = props;
-  useEffect(() => {
-    (async () => {
-      /* @conditional-compile-remove(rooms) */
-      if (role === 'Consumer') {
-        // Need to ask for audio devices to get access to speakers. Speaker permission is tied to microphone permission (when you request 'audio' permission using the SDK) its
-        // actually granting access to query both microphone and speaker. TODO: Need some investigation to see if we can get access to speakers without SDK.
-        await adapter.askDevicePermission({ video: false, audio: true });
-        adapter.querySpeakers();
-        return;
-      }
-      /* @conditional-compile-remove(call-readiness) */
-      if (options?.devicePermissions) {
-        const videoPermission = options?.devicePermissions.camera !== 'doNotPrompt';
-        const audioPermission = options?.devicePermissions.microphone !== 'doNotPrompt';
-        await adapter.askDevicePermission({
-          video: videoPermission,
-          audio: audioPermission
-        });
-        if (videoPermission) {
-          adapter.queryCameras();
-        }
-        if (audioPermission) {
-          adapter.queryMicrophones();
-        }
-        adapter.querySpeakers();
-        return;
-      }
+  // useEffect(() => {
+  //   (async () => {
+  //     /* @conditional-compile-remove(rooms) */
+  //     if (role === 'Consumer') {
+  //       // Need to ask for audio devices to get access to speakers. Speaker permission is tied to microphone permission (when you request 'audio' permission using the SDK) its
+  //       // actually granting access to query both microphone and speaker. TODO: Need some investigation to see if we can get access to speakers without SDK.
+  //       await adapter.askDevicePermission({ video: false, audio: true });
+  //       adapter.querySpeakers();
+  //       return;
+  //     }
+  //     /* @conditional-compile-remove(call-readiness) */
+  //     if (options?.devicePermissions) {
+  //       const videoPermission = options?.devicePermissions.camera !== 'doNotPrompt';
+  //       const audioPermission = options?.devicePermissions.microphone !== 'doNotPrompt';
+  //       await adapter.askDevicePermission({
+  //         video: videoPermission,
+  //         audio: audioPermission
+  //       });
+  //       if (videoPermission) {
+  //         adapter.queryCameras();
+  //       }
+  //       if (audioPermission) {
+  //         adapter.queryMicrophones();
+  //       }
+  //       adapter.querySpeakers();
+  //       return;
+  //     }
 
-      await adapter.askDevicePermission({ video: true, audio: true });
-      adapter.queryCameras();
-      adapter.queryMicrophones();
-      adapter.querySpeakers();
-    })();
-  }, [
-    adapter,
-    /* @conditional-compile-remove(rooms) */ role,
-    /* @conditional-compile-remove(call-readiness) */ options?.devicePermissions
-  ]);
+  //     await adapter.askDevicePermission({ video: true, audio: true });
+  //     adapter.queryCameras();
+  //     adapter.queryMicrophones();
+  //     adapter.querySpeakers();
+  //   })();
+  // }, [
+  //   adapter,
+  //   /* @conditional-compile-remove(rooms) */ role,
+  //   /* @conditional-compile-remove(call-readiness) */ options?.devicePermissions
+  // ]);
 
   const mobileView = formFactor === 'mobile';
 

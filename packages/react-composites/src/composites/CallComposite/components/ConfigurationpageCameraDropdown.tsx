@@ -22,6 +22,7 @@ export interface ConfigurationpageCameraDropdownProps {
   cameraGrantedDropdown: JSX.Element;
   cameraPermissionGranted: boolean;
   dropdownProps?: Record<string, never> & Partial<CallingHandlers>;
+  onClickEnableDevicePermission?: () => void;
 }
 
 /**
@@ -45,6 +46,7 @@ export const ConfigurationpageCameraDropdown = (props: ConfigurationpageCameraDr
       icon={
         <CallCompositeIcon iconName="ControlButtonCameraOn" style={{ height: '1.25rem', marginRight: '0.625rem' }} />
       }
+      onClick={props.onClickEnableDevicePermission}
       {...props.dropdownProps}
     />
   );

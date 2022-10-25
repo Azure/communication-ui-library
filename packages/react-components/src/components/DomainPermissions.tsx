@@ -32,7 +32,7 @@ export interface DomainPermissionsProps {
   /**
    * Action to be taken by the more help link. Possible to send to external page or show other modal.
    */
-  onTroubleshootingClick: () => void;
+  onTroubleshootingClick?: () => void;
   /**
    * Action to be taken by the Allow Access button.
    */
@@ -89,9 +89,11 @@ const DomainPermissionsContainer = (props: DomainPermissionsProps): JSX.Element 
         {onAllowAccessClick && (
           <PrimaryButton styles={primaryButtonStyles} text={strings.primaryButtonText} onClick={onAllowAccessClick} />
         )}
-        <Link styles={linkTextStyles} onClick={onTroubleshootingClick}>
-          {strings.linkText}
-        </Link>
+        {onTroubleshootingClick && (
+          <Link styles={linkTextStyles} onClick={onTroubleshootingClick}>
+            {strings?.linkText}
+          </Link>
+        )}
       </Stack>
     </Stack>
   );

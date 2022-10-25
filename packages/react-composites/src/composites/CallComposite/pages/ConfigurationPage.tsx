@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useAdaptedSelector } from '../hooks/useAdaptedSelector';
 import { useHandlers } from '../hooks/useHandlers';
 import { LocalDeviceSettings } from '../components/LocalDeviceSettings';
@@ -9,10 +9,17 @@ import { StartCallButton } from '../components/StartCallButton';
 import { devicePermissionSelector } from '../selectors/devicePermissionSelector';
 import { useSelector } from '../hooks/useSelector';
 import { DevicesButton, ErrorBar } from '@internal/react-components';
+/* @conditional-compile-remove(call-readiness) */
+import {
+  DomainPermissions,
+  _DrawerSurface,
+  _DrawerSurfaceStyles,
+  BrowserPermissionDenied as BrowserPermissionDeniedComponent
+} from '@internal/react-components';
 /* @conditional-compile-remove(rooms) */
 import { _usePermissions, _Permissions } from '@internal/react-components';
 import { getCallingSelector } from '@internal/calling-component-bindings';
-import { Stack } from '@fluentui/react';
+import { Modal, Stack } from '@fluentui/react';
 import { LocalPreview } from '../components/LocalPreview';
 import {
   callDetailsStyleDesktop,
@@ -108,11 +115,75 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
   /* @conditional-compile-remove(rooms) */
   mobileWithPreview = mobileWithPreview && rolePermissions.cameraButton;
 
+  /* @conditional-compile-remove(call-readiness) */
+  const [isDrawerShowing, setIsDrawerShowing] = useState(true);
+  /* @conditional-compile-remove(call-readiness) */
+  const [isModalShowing, setIsModalShowing] = useState(false);
+  /* @conditional-compile-remove(call-readiness) */
+  const onLightDismissTriggered = (): void => {
+    // do nothing here
+    // only way to dismiss this drawer is clicking on allow access which will leads to device permission prompt
+  };
+  /* @conditional-compile-remove(call-readiness) */
+  const drawerStyle: _DrawerSurfaceStyles = {
+    root: {
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      width: '100%',
+      height: '100%',
+      // apply zindex = 99 so drawer appear over device buttons and other components in the config page
+      zIndex: 99
+    }
+  };
+
+  /* @conditional-compile-remove(call-readiness) */
+  const onClickEnableDevicePermission = (): void => {
+    setIsModalShowing(true);
+  };
+
   return (
     <Stack className={mobileView ? configurationContainerStyleMobile : configurationContainerStyleDesktop}>
       <Stack styles={bannerNotificationStyles}>
         <ErrorBar {...errorBarProps} />
       </Stack>
+
+      {
+        /* @conditional-compile-remove(call-readiness) */
+        //show this when clicking on enable camera/mic button on desktop
+        !mobileView && (!cameraPermissionGranted || !microphonePermissionGranted) && (
+          <Modal
+            isOpen={isModalShowing}
+            isBlocking={false}
+            onDismiss={() => {
+              setIsModalShowing(false);
+            }}
+            overlay={{ styles: { root: { background: 'rgba(0,0,0,0.9)' } } }}
+          >
+            <DomainPermissions appName={'app'} onTroubleshootingClick={() => alert('clicked trouble shooting link')} />
+          </Modal>
+        )
+      }
+
+      {
+        /* @conditional-compile-remove(call-readiness) */
+        //show this for mobile
+        mobileView && isDrawerShowing && (
+          <_DrawerSurface onLightDismiss={onLightDismissTriggered} styles={drawerStyle}>
+            <DomainPermissions
+              appName={'app'}
+              onTroubleshootingClick={() => console.log('clicked trouble shooting link')}
+              onAllowAccessClick={async () => {
+                await adapter.askDevicePermission({ video: true, audio: true });
+                adapter.queryCameras();
+                adapter.queryMicrophones();
+                adapter.querySpeakers();
+                setIsDrawerShowing(false);
+              }}
+            />
+          </_DrawerSurface>
+        )
+      }
       <Stack
         grow
         horizontal={!mobileWithPreview}
@@ -142,6 +213,8 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
                 {...localDeviceSettingsHandlers}
                 cameraPermissionGranted={cameraPermissionGranted}
                 microphonePermissionGranted={microphonePermissionGranted}
+                /* @conditional-compile-remove(call-readiness) */
+                onClickEnableDevicePermission={onClickEnableDevicePermission}
               />
             </>
           )}
