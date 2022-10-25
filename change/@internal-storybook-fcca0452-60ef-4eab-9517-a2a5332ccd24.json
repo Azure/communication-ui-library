@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Update Calling composite and CallWithChat Composite docs to reflect new prop for alternateCallerId",
-  "packageName": "@internal/storybook",
-  "email": "94866715+dmceachernmsft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

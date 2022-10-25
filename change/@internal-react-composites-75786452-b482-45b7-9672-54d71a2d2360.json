@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Bugfix: Actually show provided participant menu items in CallComposite",
-  "packageName": "@internal/react-composites",
-  "email": "prprabhu@microsoft.com",
-  "dependentChangeType": "patch"
-}

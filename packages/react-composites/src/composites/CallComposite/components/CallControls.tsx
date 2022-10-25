@@ -94,7 +94,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
     () => ({
       dialpadModalAriaLabel: localeStrings.strings.call.dialpadModalAriaLabel,
       dialpadCloseModalButtonAriaLabel: localeStrings.strings.call.dialpadCloseModalButtonAriaLabel,
-      placeholderText: localeStrings.strings.call.dtmfDialpadPlaceHolderText
+      placeholderText: localeStrings.strings.call.dtmfDialpadPlaceholderText
     }),
     [localeStrings]
   );
@@ -268,7 +268,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
                 strings={moreButtonStrings}
                 menuIconProps={{ hidden: true }}
                 menuProps={{ items: moreButtonContextualMenuItems() }}
-                showLabel={!props.isMobile}
+                showLabel={options?.displayType !== 'compact'}
               />
             )
           }

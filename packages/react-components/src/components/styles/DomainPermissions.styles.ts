@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IIconStyles, ILinkStyles, IStackStyles, ITextStyles, Theme } from '@fluentui/react';
+import { IButtonStyles, IIconStyles, ILinkStyles, IStackStyles, ITextStyles, Theme } from '@fluentui/react';
 import { _pxToRem } from '@internal/acs-ui-common';
 
 /**
@@ -64,7 +64,7 @@ export const secondaryTextStyles: ITextStyles = {
   root: {
     margin: 'auto',
     fontWeight: 400,
-    paddingBottom: '0.5rem'
+    paddingBottom: _pxToRem(22)
   }
 };
 
@@ -76,5 +76,17 @@ export const linkTextStyles: ILinkStyles = {
     margin: 'auto',
     fontWeight: 600,
     textAlign: 'inherit'
+  }
+};
+
+/**
+ * @internal
+ */
+export const primaryButtonStyles: IButtonStyles = {
+  root: {
+    paddingTop: '1.5rem',
+    paddingBottom: '1.5rem',
+    borderRadius: '0.5rem',
+    marginBottom: _pxToRem(22)
   }
 };

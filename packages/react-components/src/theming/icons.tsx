@@ -42,6 +42,8 @@ import {
   MicProhibited16Filled,
   VideoProhibited16Filled
 } from '@fluentui/react-icons';
+/* @conditional-compile-remove(call-readiness) */
+import { Important20Filled } from '@fluentui/react-icons';
 
 /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
 import { Backspace20Regular } from '@fluentui/react-icons';
@@ -147,6 +149,21 @@ const UnsupportedBrowserWarning = (): JSX.Element => {
   );
 };
 
+/* @conditional-compile-remove(call-readiness) */
+const BrowserPermissionDenied20Filled = (): JSX.Element => {
+  const theme = useTheme();
+  return (
+    <Stack
+      horizontalAlign={'center'}
+      styles={{ root: { borderRadius: '100%', background: theme.palette.themeLighterAlt, padding: '2rem' } }}
+    >
+      <div className={mergeStyles(scaledIconStyles(theme))}>
+        <Important20Filled />
+      </div>
+    </Stack>
+  );
+};
+
 /**
  * The default set of icons that are available to use in the UI components.
  *
@@ -221,7 +238,9 @@ export const DEFAULT_COMPONENT_ICONS = {
   /* @conditional-compile-remove(call-readiness) */
   DomainPermissionMic: <DomainPermissionMic20Filled />,
   /* @conditional-compile-remove(unsupported-browser) */
-  UnsupportedBrowserWarning: <UnsupportedBrowserWarning />
+  UnsupportedBrowserWarning: <UnsupportedBrowserWarning />,
+  /* @conditional-compile-remove(call-readiness) */
+  BrowserPermissionDeniedError: <BrowserPermissionDenied20Filled />
 };
 
 /* @conditional-compile-remove(unsupported-browser) */

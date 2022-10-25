@@ -175,7 +175,6 @@ export interface CallAdapter extends AdapterState<CallAdapterState>, Disposable,
 // @public
 export type CallAdapterCallEndedEvent = {
     callId?: string;
-    callEndReason?: CallEndReason;
 };
 
 // @public
@@ -487,7 +486,7 @@ export type CallingHandlers = {
     onStartScreenShare: () => Promise<void>;
     onStopScreenShare: () => Promise<void>;
     onToggleScreenShare: () => Promise<void>;
-    onHangUp: () => Promise<void>;
+    onHangUp: (forEveryone?: boolean) => Promise<void>;
     onCreateLocalStreamView: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
     onCreateRemoteStreamView: (userId: string, options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
     onRemoveParticipant(userId: string): Promise<void>;
@@ -778,7 +777,6 @@ export interface CallWithChatCompositeStrings {
     copyInviteLinkActionedAriaLabel: string;
     copyInviteLinkButtonLabel: string;
     dismissSidePaneButtonLabel?: string;
-    dtmfDialpadPlaceHolderText: string;
     moreDrawerAudioDeviceMenuTitle?: string;
     moreDrawerButtonLabel: string;
     moreDrawerButtonTooltip: string;
@@ -2257,7 +2255,6 @@ export interface SendBoxStylesProps extends BaseCustomStyles {
 
 // @public
 export interface StatefulCallClient extends CallClient {
-    createCallAgent(...args: Parameters<CallClient['createCallAgent']>): Promise<DeclarativeCallAgent>;
     createView(callId: string | undefined, participantId: CommunicationIdentifier | undefined, stream: LocalVideoStreamState | RemoteVideoStreamState, options?: CreateViewOptions): Promise<CreateViewResult | undefined>;
     disposeView(callId: string | undefined, participantId: CommunicationIdentifier | undefined, stream: LocalVideoStreamState | RemoteVideoStreamState): void;
     getState(): CallClientState;

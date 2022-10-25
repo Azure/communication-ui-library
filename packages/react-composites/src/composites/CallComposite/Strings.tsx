@@ -282,7 +282,7 @@ export interface CallCompositeStrings {
   /**
    * Placeholder text for dtmf dialpad
    */
-  dtmfDialpadPlaceHolderText: string;
+  dtmfDialpadPlaceholderText: string;
   /* @conditional-compile-remove(PSTN-calls) */
   /**
    * Label for the button to open dtmf dialpad
@@ -322,4 +322,9 @@ export interface CallCompositeStrings {
    * Control bar People button ToolTipContent
    */
   peopleButtonTooltipClose: string;
+  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+  /**
+   * Label disaplayed on the lobby screen during a 1:1 outbound call.
+   */
+  outboundCallingNoticeString: string;
 }

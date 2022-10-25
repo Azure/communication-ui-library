@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "runBrowserTests: Continue on failure, and separate output from playwright invocations",
-  "packageName": "@internal/react-composites",
-  "email": "82062616+prprabhu-ms@users.noreply.github.com",
-  "dependentChangeType": "none"
-}

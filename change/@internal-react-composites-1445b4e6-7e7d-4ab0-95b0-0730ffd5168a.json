@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Fix local device settings dropdowns to be disabled until device permissions are granted",
-  "packageName": "@internal/react-composites",
-  "email": "miguelgamis@microsoft.com",
-  "dependentChangeType": "patch"
-}

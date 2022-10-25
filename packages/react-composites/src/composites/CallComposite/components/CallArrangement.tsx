@@ -139,6 +139,17 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   /* @conditional-compile-remove(rooms) */
   canUnmute = rolePermissions.microphoneButton;
 
+  let errorBarProps = props.errorBarProps;
+
+  /* @conditional-compile-remove(rooms) */
+  // TODO: move this logic to the error bar selector once role is plumbed from the headless SDK
+  if (!rolePermissions.cameraButton && props.errorBarProps) {
+    errorBarProps = {
+      ...props.errorBarProps,
+      activeErrorMessages: props.errorBarProps.activeErrorMessages.filter((e) => e.type !== 'callCameraAccessDenied')
+    };
+  }
+
   return (
     <div ref={containerRef} className={mergeStyles(containerDivStyles)}>
       <Stack verticalFill horizontalAlign="stretch" className={containerClassName} data-ui-id={props.dataUiId}>
@@ -147,9 +158,9 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
             <Stack styles={bannerNotificationStyles}>
               <_ComplianceBanner {...props.complianceBannerProps} />
             </Stack>
-            {props.errorBarProps !== false && (
+            {errorBarProps !== false && (
               <Stack styles={bannerNotificationStyles}>
-                <ErrorBar {...props.errorBarProps} />
+                <ErrorBar {...errorBarProps} />
               </Stack>
             )}
             {canUnmute && !!props.mutedNotificationProps && <MutedNotification {...props.mutedNotificationProps} />}

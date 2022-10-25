@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Lower opacity of video tile placeholder if participant state is provided",
-  "packageName": "@internal/react-components",
-  "email": "anjulgarg@live.com",
-  "dependentChangeType": "none"
-}

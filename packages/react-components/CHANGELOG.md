@@ -1,8 +1,78 @@
 # Change Log - @internal/react-components
 
-This log was last generated on Wed, 29 Jun 2022 17:31:05 GMT and should not be manually modified.
+This log was last generated on Wed, 05 Oct 2022 18:13:46 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.3.2-beta.1](https://github.com/azure/communication-ui-library/tree/@internal/react-components_v1.3.2-beta.1)
+
+Wed, 05 Oct 2022 18:13:46 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@internal/react-components_v1.3.1-beta.1...@internal/react-components_v1.3.2-beta.1)
+
+### Minor changes
+
+- Remove onFocus callback that focuses directly on content in Chat Message. Added string for aria label of local user's message content.  ([PR #2153](https://github.com/azure/communication-ui-library/pull/2153) by miguelgamis@microsoft.com)
+- changes for removing participant list button permissions and added permissions for remove participant ([PR #2225](https://github.com/azure/communication-ui-library/pull/2225) by 97124699+prabhjot-msft@users.noreply.github.com)
+
+### Patches
+
+- Replace floating div with border with inset border of video tile to show user is speaking. ([PR #2236](https://github.com/azure/communication-ui-library/pull/2236) by miguelgamis@microsoft.com)
+- correctly setting maxHeight for people context menu ([PR #2034](https://github.com/azure/communication-ui-library/pull/2034) by 79329532+alkwa-msft@users.noreply.github.com)
+- Export Announcer component to be used internally. ([PR #2289](https://github.com/azure/communication-ui-library/pull/2289) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Fixed flaky file sharing tests for upload cards by awaiting file type icons ([PR #2023](https://github.com/azure/communication-ui-library/pull/2023) by 97124699+prabhjot-msft@users.noreply.github.com)
+- Chat message bubble shows border in high contrast modes making each message distinguishable. ([PR #2106](https://github.com/azure/communication-ui-library/pull/2106) by anjulgarg@live.com)
+- [object Object] ([PR #2165](https://github.com/azure/communication-ui-library/pull/2165) by 97124699+prabhjot-msft@users.noreply.github.com)
+- Fixed bug where voice over does not annouce menu item selected in both calling and callwithchat ([PR #2060](https://github.com/azure/communication-ui-library/pull/2060) by carolinecao@microsoft.com)
+- Memoize ParticipantList callback functions ([PR #2240](https://github.com/azure/communication-ui-library/pull/2240) by 2684369+JamesBurnside@users.noreply.github.com)
+- Add CSS to show/hide menu button on hover/focus  ([PR #2319](https://github.com/azure/communication-ui-library/pull/2319) by carolinecao@microsoft.com)
+- Load new messages only when scroll bar is at the top ([PR #2355](https://github.com/azure/communication-ui-library/pull/2355) by edwardlee@microsoft.com)
+- Fix React hook order console errors for CameraButton. ([PR #2198](https://github.com/azure/communication-ui-library/pull/2198) by miguelgamis@microsoft.com)
+- Hotfix: infinite spinner for screenShare in stable ([PR #2191](https://github.com/azure/communication-ui-library/pull/2191) by jinan@microsoft.com)
+- changed z-index so new message button shows ontop of chat bubble ([PR #2046](https://github.com/azure/communication-ui-library/pull/2046) by carolinecao@microsoft.com)
+- Fix invalid scrollbars when gif images are shared in chat ([PR #2037](https://github.com/azure/communication-ui-library/pull/2037) by anjulgarg@live.com)
+- Make participant items tab navigable ([PR #2045](https://github.com/azure/communication-ui-library/pull/2045) by edwardlee@microsoft.com)
+- Fix bug of dismissed menu when scrolling ([PR #2069](https://github.com/azure/communication-ui-library/pull/2069) by jinan@microsoft.com)
+- Control Bar uses theme.semanticColors.bodyBackground instead of theme.palette.white ([PR #2117](https://github.com/azure/communication-ui-library/pull/2117) by anjulgarg@live.com)
+- Updated tooltip strings to not be title case ([PR #2350](https://github.com/azure/communication-ui-library/pull/2350) by miguelgamis@microsoft.com)
+- Fix voiceover tab navigation of messages including system messages. Hide message action flyout when focus blurs. ([PR #2042](https://github.com/azure/communication-ui-library/pull/2042) by miguelgamis@microsoft.com)
+- Bump @internal/acs-ui-common to v1.3.2-beta.1 ([PR #2379](https://github.com/azure/communication-ui-library/pull/2379) by beachball)
+
+### Changes
+
+- Update PSTN Gallery behavior to not use complex logic for participants being dialed into the call. ([PR #2237](https://github.com/azure/communication-ui-library/pull/2237) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Delete button added to the Dialpad ([PR #2085](https://github.com/azure/communication-ui-library/pull/2085) by carolinecao@microsoft.com)
+- Add disabled option for CallWithChat control bar buttons ([PR #2294](https://github.com/azure/communication-ui-library/pull/2294) by edwardlee@microsoft.com)
+- Introduces showFormatting prop to dialpad component to disable our provided formatting. ([PR #2288](https://github.com/azure/communication-ui-library/pull/2288) by 94866715+dmceachernmsft@users.noreply.github.com)
+- removed ondisplaydialpadinput, add textFieldValue for contoso to directly set the value inside textfield ([PR #2281](https://github.com/azure/communication-ui-library/pull/2281) by carolinecao@microsoft.com)
+- Fixes typing issues with the hold button strings ([PR #2197](https://github.com/azure/communication-ui-library/pull/2197) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Added devicePermissionDropdown component ([PR #2367](https://github.com/azure/communication-ui-library/pull/2367) by carolinecao@microsoft.com)
+- Icon change of speaker button for consumer ([PR #2340](https://github.com/azure/communication-ui-library/pull/2340) by 97124699+prabhjot-msft@users.noreply.github.com)
+- Add isMobile to dialpad so dialpad can handle mobile and web clicks differently ([PR #2283](https://github.com/azure/communication-ui-library/pull/2283) by carolinecao@microsoft.com)
+- Add remove participant menu item for participant item if role allows. ([PR #2328](https://github.com/azure/communication-ui-library/pull/2328) by miguelgamis@microsoft.com)
+- VideoGallery consumes the participantState returned by videoGallerySelector ([PR #2143](https://github.com/azure/communication-ui-library/pull/2143) by anjulgarg@live.com)
+- Introduces new component to contoso to provide help to end users struggling with device permissions in the browser. ([PR #2298](https://github.com/azure/communication-ui-library/pull/2298) by 94866715+dmceachernmsft@users.noreply.github.com)
+- change dialpad content name to digit and letter ([PR #2262](https://github.com/azure/communication-ui-library/pull/2262) by carolinecao@microsoft.com)
+- Localize participant state display strings in video tile ([PR #2149](https://github.com/azure/communication-ui-library/pull/2149) by anjulgarg@live.com)
+- VideoTile can display a participants state such as Connecting, Ringing etc. ([PR #2210](https://github.com/azure/communication-ui-library/pull/2210) by anjulgarg@live.com)
+- expose conditionally compiled  dialpad code for PSTN call ([PR #2196](https://github.com/azure/communication-ui-library/pull/2196) by carolinecao@microsoft.com)
+- Add tests for PSTN and 1:N calling in the videoGallery and horizontalGallery ([PR #2176](https://github.com/azure/communication-ui-library/pull/2176) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Add a new prop VideoTile.participantState for tracking a participants call connection state ([PR #2142](https://github.com/azure/communication-ui-library/pull/2142) by anjulgarg@live.com)
+- Add sparkle icon to Domain Permissions component ([PR #2307](https://github.com/azure/communication-ui-library/pull/2307) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Update Fluent-ui/icons package ([PR #2305](https://github.com/azure/communication-ui-library/pull/2305) by 94866715+dmceachernmsft@users.noreply.github.com)
+- VideoGallery does not show local video tile if no permissions camera ([PR #2349](https://github.com/azure/communication-ui-library/pull/2349) by miguelgamis@microsoft.com)
+- Add permissions provider for different roles ([PR #2079](https://github.com/azure/communication-ui-library/pull/2079) by jiangnanhello@live.com)
+- Update hold Icon size in more button in controlBars ([PR #2265](https://github.com/azure/communication-ui-library/pull/2265) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Changes to add remove button permissions for mobile view & hermetic tests for remove button ([PR #2244](https://github.com/azure/communication-ui-library/pull/2244) by 97124699+prabhjot-msft@users.noreply.github.com)
+- updated placeholder text for dialpad ([PR #2076](https://github.com/azure/communication-ui-library/pull/2076) by carolinecao@microsoft.com)
+- Hide Hold button for Rooms Call ([PR #2378](https://github.com/azure/communication-ui-library/pull/2378) by 97124699+prabhjot-msft@users.noreply.github.com)
+- change label prop for device permission dropdown to be optional ([PR #2372](https://github.com/azure/communication-ui-library/pull/2372) by carolinecao@microsoft.com)
+- ParticipantItem can display a participant state using `participantState` prop ([PR #2161](https://github.com/azure/communication-ui-library/pull/2161) by anjulgarg@live.com)
+- Update Video Gallery to display participants in a 'Connecting' or 'Ringing' state for PSTN and 1:N calling. ([PR #2163](https://github.com/azure/communication-ui-library/pull/2163) by 94866715+dmceachernmsft@users.noreply.github.com)
+- ScreenShareButton, MicrophoneButton, CameraButton, and DevicesButton no longer hooked to role permissions context. ([PR #2303](https://github.com/azure/communication-ui-library/pull/2303) by miguelgamis@microsoft.com)
+- Add component behaviors according to permissions ([PR #2104](https://github.com/azure/communication-ui-library/pull/2104) by jiangnanhello@live.com)
+- Introduce UI for call isntances where the browser is unsupported ([PR #2334](https://github.com/azure/communication-ui-library/pull/2334) by 94866715+dmceachernmsft@users.noreply.github.com)
+- make unused exported beta interface internal, add longpress hook to detect long press and return +   ([PR #2260](https://github.com/azure/communication-ui-library/pull/2260) by carolinecao@microsoft.com)
+- Create error bar to display troubleshooting links for network/device permission errors ([PR #2345](https://github.com/azure/communication-ui-library/pull/2345) by carolinecao@microsoft.com)
 
 ## [1.3.1-beta.1](https://github.com/azure/communication-ui-library/tree/@internal/react-components_v1.3.1-beta.1)
 

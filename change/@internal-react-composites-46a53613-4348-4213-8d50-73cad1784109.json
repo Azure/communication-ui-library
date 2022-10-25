@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Composites now using theme.semanticColors.bodyBackground as background color",
-  "packageName": "@internal/react-composites",
-  "email": "anjulgarg@live.com",
-  "dependentChangeType": "patch"
-}

@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Update the fromFlatCommunicationIdentifier function to detect phone numbers in E.164 format.",
-  "packageName": "@internal/acs-ui-common",
-  "email": "94866715+dmceachernmsft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

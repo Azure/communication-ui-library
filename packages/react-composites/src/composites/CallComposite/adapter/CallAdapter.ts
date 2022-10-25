@@ -11,8 +11,7 @@ import type {
   StartCallOptions,
   MediaDiagnosticChangedEventArgs,
   NetworkDiagnosticChangedEventArgs,
-  PropertyChangedEvent,
-  CallEndReason
+  PropertyChangedEvent
 } from '@azure/communication-calling';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 import type { CommunicationIdentifierKind } from '@azure/communication-common';
@@ -41,7 +40,8 @@ export type CallCompositePage =
   | 'lobby'
   | /* @conditional-compile-remove(rooms) */ 'deniedPermissionToRoom'
   | 'removedFromCall'
-  | /* @conditional-compile-remove(rooms) */ 'roomNotFound';
+  | /* @conditional-compile-remove(rooms) */ 'roomNotFound'
+  | /* @conditional-compile-remove(unsupported-browser) */ 'unsupportedEnvironment';
 
 /**
  * Subset of CallCompositePages that represent an end call state.
@@ -53,7 +53,8 @@ export const END_CALL_PAGES: CallCompositePage[] = [
   'leftCall',
   /* @conditional-compile-remove(rooms) */ 'deniedPermissionToRoom',
   'removedFromCall',
-  /* @conditional-compile-remove(rooms) */ 'roomNotFound'
+  /* @conditional-compile-remove(rooms) */ 'roomNotFound',
+  /* @conditional-compile-remove(unsupported-browser) */ 'unsupportedEnvironment'
 ];
 
 /**
@@ -156,7 +157,7 @@ export type DisplayNameChangedListener = (event: {
  *
  * @public
  */
-export type CallAdapterCallEndedEvent = { callId?: string; callEndReason?: CallEndReason };
+export type CallAdapterCallEndedEvent = { callId?: string };
 
 /**
  * Callback for {@link CallAdapterSubscribers} 'callEnded' event.
