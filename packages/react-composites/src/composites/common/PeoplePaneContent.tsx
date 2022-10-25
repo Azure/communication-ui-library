@@ -31,6 +31,7 @@ import { AddPhoneNumberOptions } from '@azure/communication-calling';
  * @private
  */
 export const PeoplePaneContent = (props: {
+  active: boolean;
   inviteLink?: string;
   onRemoveParticipant: (participantId: string) => void;
   /* @conditional-compile-remove(PSTN-calls) */
@@ -105,16 +106,18 @@ export const PeoplePaneContent = (props: {
           {participantList}
         </Stack.Item>
 
-        <AddPeopleButton
-          inviteLink={inviteLink}
-          mobileView={props.mobileView}
-          participantList={participantList}
-          strings={strings}
-          /* @conditional-compile-remove(PSTN-calls) */
-          onAddParticipant={props.onAddParticipant}
-          /* @conditional-compile-remove(PSTN-calls) */
-          alternateCallerId={props.alternateCallerId}
-        />
+        {props.active && (
+          <AddPeopleButton
+            inviteLink={inviteLink}
+            mobileView={props.mobileView}
+            participantList={participantList}
+            strings={strings}
+            /* @conditional-compile-remove(PSTN-calls) */
+            onAddParticipant={props.onAddParticipant}
+            /* @conditional-compile-remove(PSTN-calls) */
+            alternateCallerId={props.alternateCallerId}
+          />
+        )}
       </Stack>
     );
   }
