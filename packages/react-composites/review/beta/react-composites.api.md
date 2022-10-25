@@ -45,12 +45,9 @@ import { Role } from '@internal/react-components';
 import { RoomCallLocator } from '@azure/communication-calling';
 import { SendMessageOptions } from '@azure/communication-chat';
 import { StartCallOptions } from '@azure/communication-calling';
-/* @conditional-compile-remove(teams-call) */
-import type { StartTeamsCallOptions } from '@azure/communication-calling';
 import { StatefulCallClient } from '@internal/calling-stateful-client';
 import { StatefulChatClient } from '@internal/chat-stateful-client';
-/* @conditional-compile-remove(teams-call) */
-import { TeamsCall } from '@azure/communication-calling';
+import type { TeamsCall } from '@azure/communication-calling';
 import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { Theme } from '@fluentui/react';
 import { VideoDeviceInfo } from '@azure/communication-calling';
@@ -59,6 +56,7 @@ import { VideoStreamOptions } from '@internal/react-components';
 // @public (undocumented)
 export type ACSCallManagement = {
     joinCall(microphoneOn?: boolean): Call | undefined;
+    startCall(participants: string[], options?: StartCallOptions): Call | undefined;
 };
 
 // @public
@@ -149,7 +147,7 @@ export type CallAdapterCallEndedEvent = {
 };
 
 // @public
-export interface CallAdapterCallManagement<CallType extends Call | /* @conditional-compile-remove(teams-call) */ TeamsCall = Call> {
+export interface CallAdapterCallManagement {
     // @beta
     addParticipant(participant: CommunicationIdentifier, options?: AddPhoneNumberOptions): Promise<void>;
     createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void | CreateVideoStreamViewResult>;
@@ -164,7 +162,7 @@ export interface CallAdapterCallManagement<CallType extends Call | /* @condition
     resumeCall(): Promise<void>;
     // @beta
     sendDtmfTone(dtmfTone: DtmfTone): Promise<void>;
-    startCall(participants: string[], options?: CallType extends Call ? StartCallOptions : StartTeamsCallOptions): CallType | undefined;
+    startCall(participants: string[], options?: StartCallOptions): void;
     startCamera(options?: VideoStreamOptions): Promise<void>;
     startScreenShare(): Promise<void>;
     stopCamera(): Promise<void>;
@@ -185,7 +183,7 @@ export type CallAdapterClientState = {
 };
 
 // @public
-export interface CallAdapterCommon<CallType extends Call | /* @conditional-compile-remove(teams-call) */ TeamsCall = Call> extends AdapterState<CallAdapterState>, Disposable, CallAdapterCallManagement<CallType>, CallAdapterDeviceManagement, CallAdapterSubscribers {
+export interface CallAdapterCommon extends AdapterState<CallAdapterState>, Disposable, CallAdapterCallManagement, CallAdapterDeviceManagement, CallAdapterSubscribers {
 }
 
 // @public
@@ -1182,7 +1180,7 @@ export type TeamsCallAdapter = Omit<CallAdapterCommon, keyof TeamsCallManagement
 // @beta (undocumented)
 export type TeamsCallManagement = {
     joinCall(microphoneOn?: boolean): TeamsCall | undefined;
-    startCall(participants: string[], options?: StartTeamsCallOptions): TeamsCall | undefined;
+    startCall(participants: string[], options?: StartCallOptions): TeamsCall | undefined;
 };
 
 // @public
@@ -1191,7 +1189,7 @@ export type TopicChangedListener = (event: {
 }) => void;
 
 // @public
-export const useAzureCommunicationCallAdapter: <Type extends "ACS" | "Teams" = "ACS">(args: Partial<AzureCommunicationCallAdapterArgs>, afterCreate?: ((adapter: CallAdapterCommon<Type extends "ACS" ? Call : TeamsCall>) => Promise<CallAdapterCommon<Type extends "ACS" ? Call : TeamsCall>>) | undefined, beforeDispose?: ((adapter: CallAdapterCommon<Type extends "ACS" ? Call : TeamsCall>) => Promise<void>) | undefined, type?: Type) => CallAdapterCommon<Type extends "ACS" ? Call : TeamsCall> | undefined;
+export const useAzureCommunicationCallAdapter: (args: Partial<AzureCommunicationCallAdapterArgs>, afterCreate?: ((adapter: CallAdapter) => Promise<CallAdapter>) | undefined, beforeDispose?: ((adapter: CallAdapter) => Promise<void>) | undefined) => CallAdapter | undefined;
 
 // @public
 export const useAzureCommunicationCallWithChatAdapter: (args: Partial<AzureCommunicationCallWithChatAdapterArgs>, afterCreate?: ((adapter: CallWithChatAdapter) => Promise<CallWithChatAdapter>) | undefined, beforeDispose?: ((adapter: CallWithChatAdapter) => Promise<void>) | undefined) => CallWithChatAdapter | undefined;

@@ -68,10 +68,7 @@ import { RoomCallLocator } from '@azure/communication-calling';
 import { ScalingMode } from '@azure/communication-calling';
 import { SendMessageOptions } from '@azure/communication-chat';
 import { StartCallOptions } from '@azure/communication-calling';
-import type { StartTeamsCallOptions } from '@azure/communication-calling';
-/* @conditional-compile-remove(teams-call) */
 import { TeamsCall } from '@azure/communication-calling';
-/* @conditional-compile-remove(teams-call) */
 import { TeamsCallAgent } from '@azure/communication-calling';
 import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { Theme } from '@fluentui/react';
@@ -85,6 +82,7 @@ import { VideoStreamRendererView } from '@azure/communication-calling';
 // @public (undocumented)
 export type ACSCallManagement = {
     joinCall(microphoneOn?: boolean): Call | undefined;
+    startCall(participants: string[], options?: StartCallOptions): Call | undefined;
 };
 
 // @public
@@ -204,7 +202,7 @@ export type CallAdapterCallEndedEvent = {
 };
 
 // @public
-export interface CallAdapterCallManagement<CallType extends Call | TeamsCall = Call> {
+export interface CallAdapterCallManagement {
     // @beta
     addParticipant(participant: CommunicationIdentifier, options?: AddPhoneNumberOptions): Promise<void>;
     createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void | CreateVideoStreamViewResult>;
@@ -219,7 +217,7 @@ export interface CallAdapterCallManagement<CallType extends Call | TeamsCall = C
     resumeCall(): Promise<void>;
     // @beta
     sendDtmfTone(dtmfTone: DtmfTone_2): Promise<void>;
-    startCall(participants: string[], options?: CallType extends Call ? StartCallOptions : StartTeamsCallOptions): CallType | undefined;
+    startCall(participants: string[], options?: StartCallOptions): void;
     startCamera(options?: VideoStreamOptions): Promise<void>;
     startScreenShare(): Promise<void>;
     stopCamera(): Promise<void>;
@@ -240,7 +238,7 @@ export type CallAdapterClientState = {
 };
 
 // @public
-export interface CallAdapterCommon<CallType extends Call | TeamsCall = Call> extends AdapterState<CallAdapterState>, Disposable, CallAdapterCallManagement<CallType>, CallAdapterDeviceManagement, CallAdapterSubscribers {
+export interface CallAdapterCommon extends AdapterState<CallAdapterState>, Disposable, CallAdapterCallManagement, CallAdapterDeviceManagement, CallAdapterSubscribers {
 }
 
 // @public
@@ -300,7 +298,7 @@ export const CallAgentProvider: (props: CallAgentProviderProps) => JSX.Element;
 // @public
 export interface CallAgentProviderProps {
     // (undocumented)
-    callAgent?: CallAgent | TeamsCallAgent;
+    callAgent?: CallAgent | /* @conditional-compile-remove(teams-call) */ TeamsCallAgent;
     // (undocumented)
     children: React_2.ReactNode;
 }
@@ -540,12 +538,12 @@ export type CallErrors = {
 };
 
 // @public
-export type CallErrorTarget = 'Call.addParticipant' | 'Call.feature' | 'Call.hangUp' | 'Call.hold' | 'Call.mute' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.muteIncomingAudio' | 'Call.off' | 'Call.on' | 'Call.removeParticipant' | 'Call.resume' | 'Call.sendDtmf' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.startAudio' | 'Call.startScreenSharing' | 'Call.startVideo' | 'Call.stopScreenSharing' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.stopAudio' | 'Call.stopVideo' | 'Call.unmute' | 'Call.dispose' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.unmuteIncomingAudio' | 'CallAgent.dispose' | 'CallAgent.feature' | 'CallAgent.join' | 'CallAgent.off' | 'CallAgent.on' | 'CallAgent.startCall' | 'CallClient.createCallAgent' | 'CallClient.createTeamsCallAgent' | 'CallClient.feature' | 'CallClient.getDeviceManager' | /* @conditional-compile-remove(calling-beta-sdk) */ 'CallClient.getEnvironmentInfo' | 'DeviceManager.askDevicePermission' | 'DeviceManager.getCameras' | 'DeviceManager.getMicrophones' | 'DeviceManager.getSpeakers' | 'DeviceManager.off' | 'DeviceManager.on' | 'DeviceManager.selectMicrophone' | 'DeviceManager.selectSpeaker' | 'IncomingCall.accept' | 'IncomingCall.reject' | 'TeamsCall.addParticipant';
+export type CallErrorTarget = 'Call.addParticipant' | 'Call.feature' | 'Call.hangUp' | 'Call.hold' | 'Call.mute' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.muteIncomingAudio' | 'Call.off' | 'Call.on' | 'Call.removeParticipant' | 'Call.resume' | 'Call.sendDtmf' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.startAudio' | 'Call.startScreenSharing' | 'Call.startVideo' | 'Call.stopScreenSharing' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.stopAudio' | 'Call.stopVideo' | 'Call.unmute' | 'Call.dispose' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.unmuteIncomingAudio' | 'CallAgent.dispose' | 'CallAgent.feature' | 'CallAgent.join' | 'CallAgent.off' | 'CallAgent.on' | 'CallAgent.startCall' | 'CallClient.createCallAgent' | /* @conditional-compile-remove(teams-call) */ 'CallClient.createTeamsCallAgent' | 'CallClient.feature' | 'CallClient.getDeviceManager' | /* @conditional-compile-remove(teams-call) */ 'CallClient.getEnvironmentInfo' | 'DeviceManager.askDevicePermission' | 'DeviceManager.getCameras' | 'DeviceManager.getMicrophones' | 'DeviceManager.getSpeakers' | 'DeviceManager.off' | 'DeviceManager.on' | 'DeviceManager.selectMicrophone' | 'DeviceManager.selectSpeaker' | 'IncomingCall.accept' | 'IncomingCall.reject' | /* @conditional-compile-remove(teams-call) */ 'TeamsCall.addParticipant';
 
 // Warning: (ae-internal-missing-underscore) The name "CallHandlersOf" should be prefixed with an underscore because the declaration is marked as @internal
 //
 // @internal (undocumented)
-export type CallHandlersOf<AgentType extends TeamsCallAgent | CallAgent> = AgentType extends CallAgent ? CallingHandlers : TeamsCallingHandlers;
+export type CallHandlersOf<AgentType extends TeamsCallAgent | CallAgent> = AgentType extends CallAgent ? CallingHandlers : never | /* @conditional-compile-remove(teams-call) */ TeamsCallingHandlers;
 
 // @public
 export type CallIdChangedListener = (event: {
@@ -557,8 +555,10 @@ export type CallingBaseSelectorProps = {
     callId: string;
 };
 
-// @public (undocumented)
-export type CallingHandlers = CallingHandlersCommon;
+// @public
+export type CallingHandlers = Omit<CallingHandlersCommon, 'onStartCall'> & {
+    onStartCall: (participants: CommunicationIdentifier[], options?: StartCallOptions) => Call | undefined;
+};
 
 // @public
 export type CallingHandlersCommon = {
@@ -616,7 +616,7 @@ export const CallProvider: (props: CallProviderProps) => JSX.Element;
 // @public
 export interface CallProviderProps {
     // (undocumented)
-    call?: Call | TeamsCall;
+    call?: Call | /* @conditional-compile-remove(teams-call) */ TeamsCall;
     // (undocumented)
     children: React_2.ReactNode;
 }
@@ -644,14 +644,13 @@ export interface CallState {
     startTime: Date;
     state: CallState_2;
     transcription: TranscriptionCallFeature;
-    // (undocumented)
     type: 'Teams' | 'ACS';
 }
 
 // Warning: (ae-internal-missing-underscore) The name "CallTypeOf" should be prefixed with an underscore because the declaration is marked as @internal
 //
 // @internal (undocumented)
-export type CallTypeOf<AgentType extends TeamsCallAgent | CallAgent> = AgentType extends CallAgent ? Call : TeamsCall;
+export type CallTypeOf<AgentType extends TeamsCallAgent | CallAgent> = AgentType extends CallAgent ? Call : never | /* @conditional-compile-remove(teams-call) */ TeamsCall;
 
 // @public (undocumented)
 export type CallWithChatAdapter = Omit<CallWithChatAdapterCommon, keyof ACSCallManagement> & ACSCallManagement;
@@ -2730,15 +2729,15 @@ export interface SystemMessageCommon extends MessageCommon {
 // @beta (undocumented)
 export type TeamsCallAdapter = Omit<CallAdapterCommon, keyof TeamsCallManagement> & TeamsCallManagement;
 
-// @public
+// @beta
 export type TeamsCallingHandlers = Omit<CallingHandlersCommon, 'onStartCall'> & {
-    onStartCall: (participants: CommunicationIdentifier[], options?: StartCallOptions) => TeamsCall | undefined;
+    onStartCall: (participants: CommunicationIdentifier[], options?: StartCallOptions) => /* @conditional-compile-remove(teams-call) */ TeamsCall | undefined;
 };
 
 // @beta (undocumented)
 export type TeamsCallManagement = {
     joinCall(microphoneOn?: boolean): TeamsCall | undefined;
-    startCall(participants: string[], options?: StartTeamsCallOptions): TeamsCall | undefined;
+    startCall(participants: string[], options?: StartCallOptions): TeamsCall | undefined;
 };
 
 // @public
@@ -2799,7 +2798,7 @@ export type UpdateMessageCallback = (messageId: string, content: string, metadat
 }) => Promise<void>;
 
 // @public
-export const useAzureCommunicationCallAdapter: <Type extends "Teams" | "ACS" = "ACS">(args: Partial<AzureCommunicationCallAdapterArgs>, afterCreate?: ((adapter: CallAdapterCommon<Type extends "ACS" ? Call : TeamsCall>) => Promise<CallAdapterCommon<Type extends "ACS" ? Call : TeamsCall>>) | undefined, beforeDispose?: ((adapter: CallAdapterCommon<Type extends "ACS" ? Call : TeamsCall>) => Promise<void>) | undefined, type?: Type) => CallAdapterCommon<Type extends "ACS" ? Call : TeamsCall> | undefined;
+export const useAzureCommunicationCallAdapter: (args: Partial<AzureCommunicationCallAdapterArgs>, afterCreate?: ((adapter: CallAdapter) => Promise<CallAdapter>) | undefined, beforeDispose?: ((adapter: CallAdapter) => Promise<void>) | undefined) => CallAdapter | undefined;
 
 // @public
 export const useAzureCommunicationCallWithChatAdapter: (args: Partial<AzureCommunicationCallWithChatAdapterArgs>, afterCreate?: ((adapter: CallWithChatAdapter) => Promise<CallWithChatAdapter>) | undefined, beforeDispose?: ((adapter: CallWithChatAdapter) => Promise<void>) | undefined) => CallWithChatAdapter | undefined;
@@ -2832,10 +2831,10 @@ export const usePropsFor: <Component extends (props: any) => JSX.Element>(compon
 export const useSelector: <ParamT extends Selector | undefined>(selector: ParamT, selectorProps?: (ParamT extends Selector ? Parameters<ParamT>[1] : undefined) | undefined, type?: "chat" | "calling" | undefined) => ParamT extends Selector ? ReturnType<ParamT> : undefined;
 
 // @public
-export const useTeamsCall: () => TeamsCall | undefined;
+export const useTeamsCall: () => /* @conditional-compile-remove(teams-call) */ TeamsCall | undefined;
 
 // @beta
-export const useTeamsCallAgent: () => TeamsCallAgent | undefined;
+export const useTeamsCallAgent: () => /* @conditional-compile-remove(teams-call) */ TeamsCallAgent | undefined;
 
 // @public
 export const useTheme: () => Theme;
