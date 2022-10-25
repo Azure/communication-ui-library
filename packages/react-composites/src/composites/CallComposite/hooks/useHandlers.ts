@@ -30,8 +30,8 @@ const createCompositeHandlers = memoizeOne(
     onCreateRemoteStreamView: async (userId, options) => {
       return await adapter.createStreamView(userId, options);
     },
-    onHangUp: async () => {
-      await adapter.leaveCall();
+    onHangUp: async (forEveryone?: boolean) => {
+      await adapter.leaveCall(forEveryone);
     },
     /* @conditional-compile-remove(PSTN-calls) */
     onToggleHold: async () => {
@@ -88,6 +88,10 @@ const createCompositeHandlers = memoizeOne(
     },
     onDisposeRemoteStreamView: async (userId) => {
       return adapter.disposeStreamView(userId);
+    },
+    /* @conditional-compile-remove(call-readiness) */
+    askDevicePermission: async (constrain) => {
+      return adapter.askDevicePermission(constrain);
     }
   })
 );

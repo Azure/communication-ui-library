@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "expose conditionally compiled  dialpad code for PSTN call",
-  "packageName": "@internal/react-components",
-  "email": "carolinecao@microsoft.com",
-  "dependentChangeType": "patch"
-}

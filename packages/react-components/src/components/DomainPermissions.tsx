@@ -3,7 +3,7 @@
 
 import React from 'react';
 /* @conditional-compile-remove(call-readiness) */
-import { Stack, Text, Link, Icon, useTheme } from '@fluentui/react';
+import { Stack, Text, Link, Icon, useTheme, PrimaryButton } from '@fluentui/react';
 /* @conditional-compile-remove(call-readiness) */
 import { useLocale } from '../localization';
 /* @conditional-compile-remove(call-readiness) */
@@ -13,6 +13,7 @@ import {
   iconContainerStyles,
   iconPrimaryStyles,
   linkTextStyles,
+  primaryButtonStyles,
   primaryTextStyles,
   secondaryTextStyles,
   sparkleIconBackdropStyles,
@@ -32,6 +33,10 @@ export interface DomainPermissionsProps {
    * Action to be taken by the more help link. Possible to send to external page or show other modal.
    */
   onTroubleshootingClick: () => void;
+  /**
+   * Action to be taken by the Allow Access button.
+   */
+  onAllowAccessClick?: () => void;
   /**
    * Localization strings for DomainPermissions component.
    */
@@ -55,11 +60,15 @@ export interface DomainPermissionsStrings {
    * More help link string.
    */
   linkText: string;
+  /**
+   * Primary button text string.
+   */
+  primaryButtonText: string;
 }
 
 /* @conditional-compile-remove(call-readiness) */
 const DomainPermissionsContainer = (props: DomainPermissionsProps): JSX.Element => {
-  const { appName, onTroubleshootingClick, strings } = props;
+  const { appName, onTroubleshootingClick, onAllowAccessClick, strings } = props;
   const theme = useTheme();
   return (
     <Stack style={{ padding: '2rem', maxWidth: '25.375rem' }}>
@@ -77,6 +86,9 @@ const DomainPermissionsContainer = (props: DomainPermissionsProps): JSX.Element 
       <Stack styles={textContainerStyles}>
         <Text styles={primaryTextStyles}>{_formatString(strings.primaryText, { appName: appName })}</Text>
         <Text styles={secondaryTextStyles}>{strings.secondaryText}</Text>
+        {onAllowAccessClick && (
+          <PrimaryButton styles={primaryButtonStyles} text={strings.primaryButtonText} onClick={onAllowAccessClick} />
+        )}
         <Link styles={linkTextStyles} onClick={onTroubleshootingClick}>
           {strings.linkText}
         </Link>

@@ -395,8 +395,9 @@ export const _DevicePermissionDropdown: (props: _DevicePermissionDropdownProps) 
 
 // @internal
 export interface _DevicePermissionDropdownProps {
+    askDevicePermission?(constrain: _PermissionConstraints): Promise<void>;
+    constrain?: _PermissionConstraints;
     icon?: JSX.Element;
-    onClickActionButton?: () => Promise<void>;
     options?: IDropdownOption[];
     strings?: _DevicePermissionDropdownStrings;
     styles?: Partial<IDropdownStyles>;
@@ -1126,6 +1127,12 @@ export interface ParticipantsButtonStyles extends ControlBarButtonStyles {
 export type ParticipantState = 'Idle' | 'Connecting' | 'Ringing' | 'Connected' | 'Hold' | 'InLobby' | 'EarlyMedia' | 'Disconnected';
 
 // @internal
+export type _PermissionConstraints = {
+    audio: boolean;
+    video: boolean;
+};
+
+// @internal
 export const _PictureInPictureInPicture: (props: _PictureInPictureInPictureProps) => JSX.Element;
 
 // @internal
@@ -1281,9 +1288,11 @@ export interface _TroubleshootingGuideErrorBarProps extends ErrorBarProps {
 // @internal
 export interface _TroubleshootingGuideErrorBarStrings {
     // (undocumented)
+    devicePermissionLinkText?: string;
+    // (undocumented)
     dismissButtonText?: string;
     // (undocumented)
-    linkText?: string;
+    networkTroubleshootingLinkText?: string;
 }
 
 // @public

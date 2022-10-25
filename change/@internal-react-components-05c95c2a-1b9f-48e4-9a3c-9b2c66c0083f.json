@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Memoize ParticipantList callback functions",
-  "packageName": "@internal/react-components",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Updated tooltip strings to not be title case",
-  "packageName": "@internal/react-components",
-  "email": "miguelgamis@microsoft.com",
-  "dependentChangeType": "patch"
-}

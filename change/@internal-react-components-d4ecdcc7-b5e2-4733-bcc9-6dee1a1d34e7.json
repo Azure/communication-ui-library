@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "VideoTile can display a participants state such as Connecting, Ringing etc.",
-  "packageName": "@internal/react-components",
-  "email": "anjulgarg@live.com",
-  "dependentChangeType": "patch"
-}

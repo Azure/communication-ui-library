@@ -73,9 +73,9 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
   /* @conditional-compile-remove(one-to-n-calling) */
   const peopleButtonStrings = useMemo(
     () => ({
-      label: localeStrings.strings.callWithChat.peopleButtonLabel,
-      tooltipOffContent: localeStrings.strings.callWithChat.peopleButtonTooltipOpen,
-      tooltipOnContent: localeStrings.strings.callWithChat.peopleButtonTooltipClose
+      label: localeStrings.strings.call.peopleButtonLabel,
+      tooltipOffContent: localeStrings.strings.call.peopleButtonTooltipOpen,
+      tooltipOnContent: localeStrings.strings.call.peopleButtonTooltipClose
     }),
     [localeStrings]
   );
@@ -94,7 +94,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
     () => ({
       dialpadModalAriaLabel: localeStrings.strings.call.dialpadModalAriaLabel,
       dialpadCloseModalButtonAriaLabel: localeStrings.strings.call.dialpadCloseModalButtonAriaLabel,
-      placeholderText: localeStrings.strings.call.dtmfDialpadPlaceHolderText
+      placeholderText: localeStrings.strings.call.dtmfDialpadPlaceholderText
     }),
     [localeStrings]
   );
@@ -268,7 +268,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
                 strings={moreButtonStrings}
                 menuIconProps={{ hidden: true }}
                 menuProps={{ items: moreButtonContextualMenuItems() }}
-                showLabel={!props.isMobile}
+                showLabel={options?.displayType !== 'compact'}
               />
             )
           }

@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Custom composite end call screens when room call join fails when room does not exist or user is not invited to room.",
-  "packageName": "@internal/react-composites",
-  "email": "miguelgamis@microsoft.com",
-  "dependentChangeType": "patch"
-}
