@@ -72,9 +72,18 @@ jobs:
           git checkout -b release/${{ steps.version.outputs.version }}
           echo "::set-output name=releasebranch::release/${{ steps.version.outputs.version }}"
 
+      # After forcing the dependency package versions to that for stable build, we regenerate the
+      # PNPM shrinkwrap file for the *beta* build variant. This is needed because CI workflows
+      # need to first install beta dependencies, even when building for the stable flavor.
+      # When we force the dependencies to their stable variants, we change the versions available
+      # for this default installation, and must update the shrinkwrap file accordingly.
+      # e.g. https://github.com/Azure/communication-ui-library/pull/2441 was needed to unbreak CI
+      # on a stable release branch.
       - name: Force build flavor to `stable`
         if: ${{ startsWith(github.event.inputs.branch, 'prerelease-stable-minor') || startsWith(github.event.inputs.branch, 'prerelease-stable-patch')}}
-        run: node ./common/scripts/force-build-flavor.mjs stable
+        run: |
+          node ./common/scripts/force-build-flavor.mjs stable
+          rush update
 
       - name: Force build flavor to `beta`
         if: ${{ startsWith(github.event.inputs.branch, 'prerelease-beta' )}}
