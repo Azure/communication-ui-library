@@ -107,6 +107,18 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     callInvitationUrl = undefined;
   }
 
+  const onPermissionsTroubleshootingClick = (permissionState: {
+    camera: PermissionState;
+    microphone: PermissionState;
+  }): void => {
+    console.log(permissionState);
+    alert('permission troubleshooting clicked');
+  };
+
+  const onNetworkingTroubleShootingClick = (): void => {
+    alert('network troubleshooting clicked');
+  };
+
   return (
     <CallComposite
       adapter={adapter}
@@ -118,6 +130,8 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
       options={{ callReadinessOptedIn: callReadinessOptedIn }}
       /* @conditional-compile-remove(rooms) */
       role={role}
+      /* @conditional-compile-remove(call-readiness) */
+      options={{ onPermissionsTroubleshootingClick, onNetworkingTroubleShootingClick }}
     />
   );
 };

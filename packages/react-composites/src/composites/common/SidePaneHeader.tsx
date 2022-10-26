@@ -19,12 +19,12 @@ export const SidePaneHeader = (props: {
   const theme = useTheme();
   const sidePaneCloseButtonStyles = useMemo(
     () => ({
-      root: { minWidth: '1.5rem', padding: 0 },
+      root: { minWidth: '1.5rem', padding: 0, backgroundColor: theme.semanticColors.bodyBackground },
       icon: { color: theme.palette.neutralSecondary },
       iconHovered: { color: theme.palette.neutralSecondary },
       iconPressed: { color: theme.palette.neutralSecondary }
     }),
-    [theme.palette.neutralSecondary]
+    [theme.palette.neutralSecondary, theme.semanticColors.bodyBackground]
   );
 
   return (

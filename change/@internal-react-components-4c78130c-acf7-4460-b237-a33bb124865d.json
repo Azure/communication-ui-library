@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "change label prop for device permission dropdown to be optional",
-  "packageName": "@internal/react-components",
-  "email": "carolinecao@microsoft.com",
-  "dependentChangeType": "patch"
-}

@@ -83,6 +83,8 @@ export const _RemoteVideoTile = React.memo(
     // Handle creating, destroying and updating the video stream as necessary
     useRemoteVideoStreamLifecycleMaintainer(remoteVideoStreamProps);
 
+    const showLoadingIndicator = isAvailable && isReceiving === false && props.participantState !== 'Disconnected';
+
     const renderVideoStreamElement = useMemo(() => {
       // Checking if renderElement is well defined or not as calling SDK has a number of video streams limitation which
       // implies that, after their threshold, all streams have no child (blank video)
@@ -92,9 +94,9 @@ export const _RemoteVideoTile = React.memo(
       }
 
       return (
-        <StreamMedia videoStreamElement={renderElement} loadingState={isReceiving === false ? 'loading' : 'none'} />
+        <StreamMedia videoStreamElement={renderElement} loadingState={showLoadingIndicator ? 'loading' : 'none'} />
       );
-    }, [renderElement, isReceiving]);
+    }, [renderElement, showLoadingIndicator]);
 
     return (
       <VideoTile

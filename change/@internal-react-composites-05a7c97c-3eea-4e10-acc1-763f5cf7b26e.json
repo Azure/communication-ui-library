@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Update startCall usage by call adapter to pass in audio and video options from configuration screen.",
-  "packageName": "@internal/react-composites",
-  "email": "94866715+dmceachernmsft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

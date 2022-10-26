@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "change dialpad content name to digit and letter",
-  "packageName": "@internal/react-components",
-  "email": "carolinecao@microsoft.com",
-  "dependentChangeType": "patch"
-}

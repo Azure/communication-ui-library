@@ -211,9 +211,9 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     return this.callAdapter.joinCall(microphoneOn);
   }
   /** Leave current Call. */
-  public async leaveCall(): Promise<void> {
+  public async leaveCall(forEveryone?: boolean): Promise<void> {
     // Only remove self from the GroupCall. Contoso must manage access to Chat.
-    await this.callAdapter.leaveCall();
+    await this.callAdapter.leaveCall(forEveryone);
   }
   /** Start a new Call. */
   public startCall(

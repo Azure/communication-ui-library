@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Rename chat e2e test folders to match convention",
-  "packageName": "@internal/react-composites",
-  "email": "prprabhu@microsoft.com",
-  "dependentChangeType": "none"
-}
