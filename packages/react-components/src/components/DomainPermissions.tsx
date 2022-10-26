@@ -32,7 +32,7 @@ export interface DomainPermissionsProps {
   /**
    * Action to be taken by the more help link. Possible to send to external page or show other modal.
    */
-  onTroubleshootingClick: () => void;
+  onTroubleshootingClick?: () => void;
   /**
    * Action to be taken by the Allow Access button.
    */
@@ -84,14 +84,18 @@ const DomainPermissionsContainer = (props: DomainPermissionsProps): JSX.Element 
         </Stack>
       </Stack>
       <Stack styles={textContainerStyles}>
-        <Text styles={primaryTextStyles}>{_formatString(strings?.primaryText ?? '', { appName: appName })}</Text>
+        {strings && isValidString(strings?.primaryText) && (
+          <Text styles={primaryTextStyles}>{_formatString(strings.primaryText, { appName: appName })}</Text>
+        )}
         <Text styles={secondaryTextStyles}>{strings?.secondaryText}</Text>
         {onAllowAccessClick && (
           <PrimaryButton styles={primaryButtonStyles} text={strings?.primaryButtonText} onClick={onAllowAccessClick} />
         )}
-        <Link styles={linkTextStyles} onClick={onTroubleshootingClick}>
-          {strings?.linkText}
-        </Link>
+        {onTroubleshootingClick && (
+          <Link styles={linkTextStyles} onClick={onTroubleshootingClick}>
+            {strings?.linkText}
+          </Link>
+        )}
       </Stack>
     </Stack>
   );
@@ -109,4 +113,9 @@ export const DomainPermissions = (props: DomainPermissionsProps): JSX.Element =>
   /* @conditional-compile-remove(call-readiness) */
   return <DomainPermissionsContainer {...props} strings={props.strings ? props.strings : locale} />;
   return <></>;
+};
+
+/* @conditional-compile-remove(call-readiness) */
+const isValidString = (string: string | undefined): boolean => {
+  return !!string && string.length > 0;
 };

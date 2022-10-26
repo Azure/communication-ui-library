@@ -146,7 +146,7 @@ export const CallPane = (props: {
         </CallAdapterProvider>
       )}
       {drawerMenuItems.length > 0 && (
-        <Stack styles={drawerContainerStyles}>
+        <Stack styles={drawerContainerStyles()}>
           <_DrawerMenu onLightDismiss={() => setDrawerMenuItems([])} items={drawerMenuItems} />
         </Stack>
       )}

@@ -51,7 +51,7 @@ export const SendDtmfDialpad = (props: SendDtmfDialpadProps): JSX.Element => {
     return (
       <Stack>
         {showDialpad && (
-          <Stack styles={drawerContainerStyles}>
+          <Stack styles={drawerContainerStyles()}>
             <_DrawerSurface onLightDismiss={onDismissTriggered}>
               <Stack style={{ padding: '1rem' }}>
                 <Dialpad

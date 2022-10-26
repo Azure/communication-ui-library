@@ -1923,7 +1923,7 @@ export const DomainPermissions: (props: DomainPermissionsProps) => JSX.Element;
 export interface DomainPermissionsProps {
     appName: string;
     onAllowAccessClick?: () => void;
-    onTroubleshootingClick: () => void;
+    onTroubleshootingClick?: () => void;
     strings?: DomainPermissionsStrings;
 }
 

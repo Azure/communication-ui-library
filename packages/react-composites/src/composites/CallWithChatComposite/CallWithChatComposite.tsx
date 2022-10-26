@@ -425,7 +425,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
         {showControlBar && showDrawer && (
           <ChatAdapterProvider adapter={chatProps.adapter}>
             <CallAdapterProvider adapter={callAdapter}>
-              <Stack styles={drawerContainerStyles}>
+              <Stack styles={drawerContainerStyles()}>
                 <PreparedMoreDrawer
                   callControls={props.callControls}
                   onLightDismiss={closeDrawer}
@@ -445,7 +445,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
           showControlBar && showDtmfDialpad && (
             <ChatAdapterProvider adapter={chatProps.adapter}>
               <CallAdapterProvider adapter={callAdapter}>
-                <Stack styles={drawerContainerStyles}>
+                <Stack styles={drawerContainerStyles()}>
                   <SendDtmfDialpad
                     isMobile={mobileView}
                     strings={dialpadStrings}

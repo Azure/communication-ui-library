@@ -40,6 +40,8 @@ import { useAdapter } from '../adapter/CallAdapterProvider';
 /* @conditional-compile-remove(call-readiness) */
 import { DevicePermissionRestrictions } from '../CallComposite';
 import { ConfigurationpageErrorBar } from '../components/ConfigurationpageErrorBar';
+/* @conditional-compile-remove(call-readiness) */
+import { drawerContainerStyles } from '../styles/CallComposite.styles';
 
 /**
  * @private
@@ -127,26 +129,6 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
   mobileWithPreview = mobileWithPreview && rolePermissions.cameraButton;
 
   /* @conditional-compile-remove(call-readiness) */
-  const [isDrawerShowing, setIsDrawerShowing] = useState(true);
-  /* @conditional-compile-remove(call-readiness) */
-  const onLightDismissTriggered = (): void => {
-    // do nothing here
-    // only way to dismiss this drawer is clicking on allow access which will leads to device permission prompt
-  };
-  /* @conditional-compile-remove(call-readiness) */
-  const drawerStyle: _DrawerSurfaceStyles = {
-    root: {
-      position: 'absolute',
-      top: 0,
-      left: 0,
-      width: '100%',
-      height: '100%',
-      // apply zindex = 99 so drawer appear over device buttons and other components in the config page
-      zIndex: 99
-    }
-  };
-
-  /* @conditional-compile-remove(call-readiness) */
   const permissionsState: {
     camera: PermissionState;
     microphone: PermissionState;
@@ -163,18 +145,6 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
   const onLightDismissTriggered = (): void => {
     // do nothing here
     // only way to dismiss this drawer is clicking on allow access which will leads to device permission prompt
-  };
-  /* @conditional-compile-remove(call-readiness) */
-  const drawerStyle: _DrawerSurfaceStyles = {
-    root: {
-      position: 'absolute',
-      top: 0,
-      left: 0,
-      width: '100%',
-      height: '100%',
-      // apply zindex = 99 so drawer appear over device buttons and other components in the config page
-      zIndex: 99
-    }
   };
 
   return (
@@ -199,10 +169,16 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
       {
         /* @conditional-compile-remove(call-readiness) */
         mobileView && isDrawerShowing && (
-          <_DrawerSurface onLightDismiss={onLightDismissTriggered} styles={drawerStyle}>
+          <_DrawerSurface onLightDismiss={onLightDismissTriggered} styles={drawerContainerStyles(99)}>
             <DomainPermissions
               appName={'app'}
-              onTroubleshootingClick={() => console.log('clicked trouble shooting link')}
+              onTroubleshootingClick={
+                onPermissionsTroubleshootingClick
+                  ? () => {
+                      onPermissionsTroubleshootingClick(permissionsState);
+                    }
+                  : undefined
+              }
               onAllowAccessClick={async () => {
                 await adapter.askDevicePermission({ video: true, audio: true });
                 adapter.queryCameras();
