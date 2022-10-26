@@ -118,7 +118,7 @@ export type CallCompositeOptions = {
   /* @conditional-compile-remove(call-readiness) */
   /**
    * Opt in call readiness feature for your call
-   * setting this to True will add call readiness feature in call experience
+   * Setting this to `true` will add call readiness features to the call experience
    */
   callReadinessOptedIn?: boolean;
   /* @conditional-compile-remove(call-readiness) */
@@ -356,27 +356,6 @@ export const CallComposite = (props: CallCompositeProps): JSX.Element => {
     role
   } = props;
 
-  const getQueryOptions = (options: {
-    /* @conditional-compile-remove(rooms) */ role?: Role;
-    /* @conditional-compile-remove(call-readiness) */ callReadinessOptedIn?: boolean;
-  }): PermissionConstraints => {
-    /* @conditional-compile-remove(call-readiness) */
-    if (options.callReadinessOptedIn) {
-      return {
-        video: false,
-        audio: false
-      };
-    }
-    /* @conditional-compile-remove(rooms) */
-    if (options.role === 'Consumer') {
-      return {
-        video: false,
-        audio: true
-      };
-    }
-    return { video: true, audio: true };
-  };
-
   useEffect(() => {
     (async () => {
       const constrain = getQueryOptions({
@@ -447,4 +426,25 @@ const unsupportedEnvironmentPageTrampoline = (): string => {
   /* @conditional-compile-remove(unsupported-browser) */
   return 'unsupportedEnvironment';
   return 'call';
+};
+
+const getQueryOptions = (options: {
+  /* @conditional-compile-remove(rooms) */ role?: Role;
+  /* @conditional-compile-remove(call-readiness) */ callReadinessOptedIn?: boolean;
+}): PermissionConstraints => {
+  /* @conditional-compile-remove(call-readiness) */
+  if (options.callReadinessOptedIn) {
+    return {
+      video: false,
+      audio: false
+    };
+  }
+  /* @conditional-compile-remove(rooms) */
+  if (options.role === 'Consumer') {
+    return {
+      video: false,
+      audio: true
+    };
+  }
+  return { video: true, audio: true };
 };
