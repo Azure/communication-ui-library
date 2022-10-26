@@ -5,8 +5,8 @@ const forbiddenDependencies = require('./forbiddenDependencies');
 
 // thanks to https://github.com/webpack/webpack/issues/2090#issuecomment-302643018
 function findEntry(mod) {
-  if (mod.reasons.length > 0 && mod.reasons[0].module.resource) {
-    return findEntry(mod.reasons[0].module);
+  if (mod.issuer) {
+    return findEntry(mod.issuer);
   }
   return mod.resource;
 }
