@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Fix an issue where other participants did not show in the video gallery",
+  "packageName": "@internal/calling-stateful-client",
+  "email": "2684369+JamesBurnside@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
