@@ -19,18 +19,6 @@ module.exports = {
           }
         ],
         exclude: /node_modules/
-      },
-      {
-        // Loader required due to: https://github.com/fb55/htmlparser2/issues/1237#issuecomment-1182522861
-        test: /htmlparser2\/lib\/esm\/index.js$/,
-        use: [
-          {
-            loader: 'babel-loader',
-            options: {
-              plugins: ['@babel/plugin-proposal-export-namespace-from']
-            }
-          }
-        ]
       }
     ]
   },
