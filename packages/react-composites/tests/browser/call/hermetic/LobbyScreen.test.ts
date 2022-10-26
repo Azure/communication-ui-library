@@ -33,7 +33,7 @@ test.describe('Lobby page tests', async () => {
 
     await waitForSelector(page, dataUiId(IDS.lobbyScreenTitle));
 
-    expect(await stableScreenshot(page)).toMatchSnapshot('lobby-page-groupCall.png');
+    expect(await stableScreenshot(page)).toMatchSnapshot('lobby-page-group-call.png');
   });
 
   test('lobby page shows correct strings when starting a ACS outbound call', async ({ page, serverUrl }) => {
