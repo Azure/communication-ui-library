@@ -4,15 +4,15 @@ const path = require('path');
 const forbiddenDependencies = require('./forbiddenDependencies');
 
 // thanks to https://github.com/webpack/webpack/issues/2090#issuecomment-302643018
-function findEntry(mod) {
-  if (mod.issuer) {
-    return findEntry(mod.issuer);
+function findEntry(mod, compilation) {
+  if (compilation.moduleGraph && compilation.moduleGraph.getIssuer(mod)) {
+    return findEntry(compilation.moduleGraph.getIssuer(mod, compilation));
   }
   return mod.resource;
 }
 
 function getCurrentEntry(context) {
-  const absolutePath = findEntry(context._module);
+  const absolutePath = findEntry(context._module, context._compilation);
   return path.relative(__dirname, absolutePath).replace(/\\/g, '/');
 }
 
