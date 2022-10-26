@@ -152,6 +152,8 @@ export interface MessageThreadStyles extends BaseCustomStyles {
   chatItemMessageContainer?: ComponentSlotStyle;
   /** Styles for my chat message container. */
   myChatMessageContainer?: ComponentSlotStyle;
+  /** Styles for my chat message container in case of failure. */
+  failedMyChatMessageContainer?: ComponentSlotStyle;
   /** Styles for chat message container. */
   chatMessageContainer?: ComponentSlotStyle;
   /** Styles for system message container. */
@@ -359,10 +361,10 @@ const memoizeAllMessages = memoizeFnAll(
     switch (message.messageType) {
       case 'chat': {
         const myChatMessageStyle =
-          styles?.myChatMessageContainer || message.status === 'failed'
-            ? FailedMyChatMessageContainer
-            : defaultMyChatMessageContainer;
-        const chatMessageStyle = styles?.chatMessageContainer || defaultChatMessageContainer;
+          message.status === 'failed'
+            ? styles?.failedMyChatMessageContainer ?? styles?.myChatMessageContainer ?? FailedMyChatMessageContainer
+            : styles?.myChatMessageContainer ?? defaultMyChatMessageContainer;
+        const chatMessageStyle = styles?.chatMessageContainer ?? defaultChatMessageContainer;
         messageProps.messageContainerStyle = message.mine ? myChatMessageStyle : chatMessageStyle;
 
         const chatMessageComponent =
