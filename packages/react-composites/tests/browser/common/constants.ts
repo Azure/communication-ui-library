@@ -30,5 +30,6 @@ export const IDS = {
   moreButton: 'call-with-chat-composite-more-button',
   callPage: 'call-page',
   unsupportedBrowserIcon: 'unsupportedBrowserIcon',
-  unsupportedBrowserLink: 'unsupportedBrowserLink'
+  unsupportedBrowserLink: 'unsupportedBrowserLink',
+  lobbyScreenTitle: 'lobbyScreenTitle'
 };
