@@ -33,7 +33,7 @@ test.describe('Lobby page tests', async () => {
 
     await waitForSelector(page, dataUiId(IDS.lobbyScreenTitle));
 
-    expect(await stableScreenshot(page)).toMatchSnapshot('lobbyPage-groupCall.png');
+    expect(await stableScreenshot(page)).toMatchSnapshot('lobby-page-groupCall.png');
   });
 
   test('lobby page shows correct strings when starting a ACS outbound call', async ({ page, serverUrl }) => {
@@ -53,7 +53,7 @@ test.describe('Lobby page tests', async () => {
 
     await waitForSelector(page, dataUiId(IDS.lobbyScreenTitle));
 
-    expect(await stableScreenshot(page)).toMatchSnapshot('lobbyPage-ACScall.png');
+    expect(await stableScreenshot(page)).toMatchSnapshot('lobby-page-one-to-n-call.png');
   });
 
   test('lobby page shows correct strings when starting a PSTN outbound call', async ({ page, serverUrl }) => {
@@ -73,6 +73,6 @@ test.describe('Lobby page tests', async () => {
 
     await waitForSelector(page, dataUiId(IDS.lobbyScreenTitle));
 
-    expect(await stableScreenshot(page)).toMatchSnapshot('lobbyPage-PSTNcall.png');
+    expect(await stableScreenshot(page)).toMatchSnapshot('lobby-page-pstn-call.png');
   });
 });
