@@ -40,7 +40,11 @@ export const SendDtmfDialpad = (props: SendDtmfDialpadProps): JSX.Element => {
   const [textFieldValue, setTextFieldValue] = useState<string>();
 
   const onChange = (input: string): void => {
-    setTextFieldValue(input);
+    if (input.length > 25) {
+      setTextFieldValue(input.slice(1));
+    } else {
+      setTextFieldValue(input);
+    }
   };
 
   const dialpadModalStyle: Partial<IModalStyles> = useMemo(() => themeddialpadModalStyle(theme), [theme]);
