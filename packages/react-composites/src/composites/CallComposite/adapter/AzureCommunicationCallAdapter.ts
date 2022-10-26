@@ -282,6 +282,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     this.resumeCall.bind(this);
     /* @conditional-compile-remove(PSTN-calls) */
     this.sendDtmfTone.bind(this);
+    this.switchCall.bind(this);
   }
 
   public dispose(): void {
@@ -461,6 +462,16 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
         await this.handlers.onToggleScreenShare();
       }
     });
+  }
+
+  public async switchCall(newCall: Call, oldCall?: Call): Promise<void> {
+    if (oldCall) {
+      await oldCall.hold();
+    }
+    if (newCall.state === 'LocalHold') {
+      await newCall.resume();
+    }
+    this.processNewCall(newCall);
   }
 
   public startCall(

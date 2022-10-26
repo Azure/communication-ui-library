@@ -266,6 +266,8 @@ export interface CallAdapterCallManagement {
     startScreenShare(): Promise<void>;
     stopCamera(): Promise<void>;
     stopScreenShare(): Promise<void>;
+    // @beta
+    switchCall(newCall: Call, oldCall?: Call): Promise<void>;
     unmute(): Promise<void>;
 }
 
@@ -746,6 +748,8 @@ export interface CallWithChatAdapterManagement {
     startScreenShare(): Promise<void>;
     stopCamera(): Promise<void>;
     stopScreenShare(): Promise<void>;
+    // (undocumented)
+    switchCall: (newCall: Call, oldCall?: Call) => Promise<void>;
     unmute(): Promise<void>;
     // @beta (undocumented)
     updateFileUploadErrorMessage: (id: string, errorMessage: string) => void;

@@ -339,6 +339,12 @@ export interface CallAdapterCallManagement {
    * @beta
    */
   sendDtmfTone(dtmfTone: DtmfTone): Promise<void>;
+  /**
+   * Switches call in the adapter
+   *
+   * @beta
+   */
+  switchCall(newCall: Call, oldCall?: Call): Promise<void>;
 }
 
 /**

@@ -406,6 +406,10 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     return await this.callAdapter.sendDtmfTone(dtmfTone);
   }
 
+  public async switchCall(newCall: Call, oldCall?: Call): Promise<void> {
+    return await this.callAdapter.switchCall(newCall, oldCall);
+  }
+
   on(event: 'callParticipantsJoined', listener: ParticipantsJoinedListener): void;
   on(event: 'callParticipantsLeft', listener: ParticipantsLeftListener): void;
   on(event: 'callEnded', listener: CallEndedListener): void;

@@ -153,6 +153,10 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
   public sendDtmfTone = async (dtmfTone: DtmfTone): Promise<void> => {
     await this.callWithChatAdapter.sendDtmfTone(dtmfTone);
   };
+
+  public switchCall = async (newCall: Call, oldCall: Call): Promise<void> => {
+    await this.callWithChatAdapter.switchCall(newCall, oldCall);
+  };
 }
 
 function callAdapterStateFromCallWithChatAdapterState(

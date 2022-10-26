@@ -98,6 +98,9 @@ export class MockCallAdapter implements CallAdapter {
   setSpeaker(): Promise<void> {
     throw Error('setSpeaker not implemented');
   }
+  switchCall(): Promise<void> {
+    throw Error('switchCall not implemented');
+  }
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   sendDtmfTone(dtmfTone: DtmfTone): Promise<void> {
     throw Error('sendDtmfTone not implemented');

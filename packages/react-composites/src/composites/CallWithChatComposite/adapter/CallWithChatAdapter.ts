@@ -333,6 +333,8 @@ export interface CallWithChatAdapterManagement {
    * @beta
    */
   sendDtmfTone: (dtmfTone: DtmfTone) => Promise<void>;
+
+  switchCall: (newCall: Call, oldCall?: Call) => Promise<void>;
 }
 
 /**

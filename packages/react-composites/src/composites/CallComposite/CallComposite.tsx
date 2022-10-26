@@ -182,7 +182,6 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
 
   const adapter = useAdapter();
   const locale = useLocale();
-
   let pageElement: JSX.Element | undefined;
   /* @conditional-compile-remove(rooms) */
   switch (page) {

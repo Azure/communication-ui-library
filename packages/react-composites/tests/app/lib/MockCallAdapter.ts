@@ -25,7 +25,6 @@ export class MockCallAdapter implements CallAdapter {
     this._state = populateViewTargets(initialState);
     this._emitter = new EventEmitter();
   }
-
   addParticipant(): Promise<void> {
     throw Error('addParticipant not implemented');
   }
@@ -97,6 +96,9 @@ export class MockCallAdapter implements CallAdapter {
   }
   sendDtmfTone(): Promise<void> {
     throw Error('sendDtmfTone not implemented');
+  }
+  switchCall(): Promise<void> {
+    throw Error('switchCall is not implemented');
   }
   async setCamera(sourceInfo: VideoDeviceInfo): Promise<void> {
     this.modifyState((draft: CallAdapterState) => {
