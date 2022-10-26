@@ -10,12 +10,7 @@ import { devicePermissionSelector } from '../selectors/devicePermissionSelector'
 import { useSelector } from '../hooks/useSelector';
 import { DevicesButton, ErrorBar } from '@internal/react-components';
 /* @conditional-compile-remove(call-readiness) */
-import {
-  DomainPermissions,
-  _DrawerSurface,
-  _DrawerSurfaceStyles,
-  BrowserPermissionDenied as BrowserPermissionDeniedComponent
-} from '@internal/react-components';
+import { DomainPermissions } from '@internal/react-components';
 /* @conditional-compile-remove(rooms) */
 import { _usePermissions, _Permissions } from '@internal/react-components';
 import { getCallingSelector } from '@internal/calling-component-bindings';
@@ -141,26 +136,7 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
   const networkErrors = errorBarProps.activeErrorMessages.filter((message) => message.type === 'callNetworkQualityLow');
 
   /* @conditional-compile-remove(call-readiness) */
-  const [isDrawerShowing, setIsDrawerShowing] = useState(true);
-  /* @conditional-compile-remove(call-readiness) */
   const [isModalShowing, setIsModalShowing] = useState(false);
-  /* @conditional-compile-remove(call-readiness) */
-  const onLightDismissTriggered = (): void => {
-    // do nothing here
-    // only way to dismiss this drawer is clicking on allow access which will leads to device permission prompt
-  };
-  /* @conditional-compile-remove(call-readiness) */
-  const drawerStyle: _DrawerSurfaceStyles = {
-    root: {
-      position: 'absolute',
-      top: 0,
-      left: 0,
-      width: '100%',
-      height: '100%',
-      // apply zindex = 99 so drawer appear over device buttons and other components in the config page
-      zIndex: 99
-    }
-  };
 
   /* @conditional-compile-remove(call-readiness) */
   const onClickEnableDevicePermission = (): void => {
@@ -200,26 +176,6 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
           >
             <DomainPermissions appName={'app'} onTroubleshootingClick={() => alert('clicked trouble shooting link')} />
           </Modal>
-        )
-      }
-
-      {
-        /* @conditional-compile-remove(call-readiness) */
-        //show this for mobile
-        mobileView && isDrawerShowing && (
-          <_DrawerSurface onLightDismiss={onLightDismissTriggered} styles={drawerStyle}>
-            <DomainPermissions
-              appName={'app'}
-              onTroubleshootingClick={() => console.log('clicked trouble shooting link')}
-              onAllowAccessClick={async () => {
-                await adapter.askDevicePermission({ video: true, audio: true });
-                adapter.queryCameras();
-                adapter.queryMicrophones();
-                adapter.querySpeakers();
-                setIsDrawerShowing(false);
-              }}
-            />
-          </_DrawerSurface>
         )
       }
       <Stack
