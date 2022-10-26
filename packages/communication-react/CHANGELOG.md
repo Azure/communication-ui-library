@@ -19,6 +19,7 @@ The release also contains some small API additions to support these fixes.
   - BugFix: Add missing foreveryone logic for leaveCall ([PR #2399](https://github.com/azure/communication-ui-library/pull/2399) by carolinecao@microsoft.com)
   - Introduce a typename `ParticipantState`. Permissible values unchanged. ([PR #2161](https://github.com/Azure/communication-ui-library/pull/2161))
 - `@internal/react-components`
+  - Add ability to style a failed message in the MessageThread component. ([PR #2449](https://github.com/azure/communication-ui-library/pull/2449) by jboinembalome@gmail.com)
   - Remove onFocus callback that focuses directly on content in Chat Message. Added string for aria label of local user's message content.  ([PR #2153](https://github.com/azure/communication-ui-library/pull/2153) by miguelgamis@microsoft.com)
 
 ### Patches
