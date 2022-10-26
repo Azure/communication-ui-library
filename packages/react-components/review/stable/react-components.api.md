@@ -1288,9 +1288,11 @@ export interface _TroubleshootingGuideErrorBarProps extends ErrorBarProps {
 // @internal
 export interface _TroubleshootingGuideErrorBarStrings {
     // (undocumented)
+    devicePermissionLinkText?: string;
+    // (undocumented)
     dismissButtonText?: string;
     // (undocumented)
-    linkText?: string;
+    networkTroubleshootingLinkText?: string;
 }
 
 // @public
