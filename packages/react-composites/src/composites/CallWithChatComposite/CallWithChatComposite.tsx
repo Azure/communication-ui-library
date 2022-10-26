@@ -346,7 +346,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
     () => ({
       dialpadModalAriaLabel: callWithChatStrings.dialpadModalAriaLabel,
       dialpadCloseModalButtonAriaLabel: callWithChatStrings.dialpadCloseModalButtonAriaLabel,
-      placeholderText: callWithChatStrings.dtmfDialpadPlaceHolderText
+      placeholderText: callWithChatStrings.dtmfDialpadPlaceholderText
     }),
     [callWithChatStrings]
   );
