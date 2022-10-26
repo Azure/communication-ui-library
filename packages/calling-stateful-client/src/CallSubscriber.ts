@@ -160,10 +160,18 @@ export class CallSubscriber {
 
   private remoteParticipantsUpdated = (event: { added: RemoteParticipant[]; removed: RemoteParticipant[] }): void => {
     event.added.forEach((participant: RemoteParticipant) => {
-      this.addParticipantListener(participant);
+      try {
+        this.addParticipantListener(participant);
+      } catch (e) {
+        console.error(e);
+      }
     });
     event.removed.forEach((participant: RemoteParticipant) => {
-      this.removeParticipantListener(participant);
+      try {
+        this.removeParticipantListener(participant);
+      } catch (e) {
+        console.error(e);
+      }
     });
 
     // Remove any added participants from remoteParticipantsEnded if they are there and add any removed participants to
