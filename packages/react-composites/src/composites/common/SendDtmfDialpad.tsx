@@ -41,7 +41,7 @@ export const SendDtmfDialpad = (props: SendDtmfDialpadProps): JSX.Element => {
 
   const onChange = (input: string): void => {
     if (input.length > 25) {
-      setTextFieldValue('.' + '.' + '.' + input.slice(4));
+      setTextFieldValue(input.slice(1));
     } else {
       setTextFieldValue(input);
     }

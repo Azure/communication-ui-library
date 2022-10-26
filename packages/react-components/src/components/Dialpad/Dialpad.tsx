@@ -340,5 +340,5 @@ export const Dialpad = (props: DialpadProps): JSX.Element => {
 
 const sanitizeInput = (input: string): string => {
   // remove non-valid characters from input: letters,special characters excluding +, *,#
-  return input.replace(/[^\d*#+.]/g, '');
+  return input.replace(/[^\d*#+]/g, '');
 };
