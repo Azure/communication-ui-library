@@ -135,6 +135,7 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
   /* @conditional-compile-remove(call-readiness) */
   const networkErrors = errorBarProps.activeErrorMessages.filter((message) => message.type === 'callNetworkQualityLow');
 
+
   /* @conditional-compile-remove(call-readiness) */
   const [isModalShowing, setIsModalShowing] = useState(false);
 
@@ -142,7 +143,7 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
   const onClickEnableDevicePermission = (): void => {
     setIsModalShowing(true);
   };
-
+  
   return (
     <Stack className={mobileView ? configurationContainerStyleMobile : configurationContainerStyleDesktop}>
       <Stack styles={bannerNotificationStyles}>
