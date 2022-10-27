@@ -53,7 +53,7 @@ export const PeoplePaneContent = (props: {
         let contextualMenuItems: IContextualMenuItem[] = createDefaultContextualMenuItems(
           participant,
           strings,
-          removeButtonAllowed ? participantListDefaultProps.onRemoveParticipant : undefined,
+          removeButtonAllowed && participant.isRemovable ? participantListDefaultProps.onRemoveParticipant : undefined,
           participantListDefaultProps.myUserId
         );
         if (onFetchParticipantMenuItems) {
