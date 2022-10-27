@@ -120,6 +120,7 @@ export const CallPane = (props: {
             <Stack styles={props.activePane === 'people' ? availableSpaceStyles : hiddenStyles}>
               <CallAdapterProvider adapter={props.callAdapter}>
                 <PeoplePaneContent
+                  active={props.activePane === 'people'}
                   {...props}
                   onRemoveParticipant={removeParticipantFromCall}
                   /* @conditional-compile-remove(PSTN-calls) */
