@@ -19,7 +19,7 @@ import { createAutoRefreshingCredential } from '../utils/credential';
 import { WEB_APP_TITLE } from '../utils/AppUtils';
 import { useIsMobile } from '../utils/useIsMobile';
 /* @conditional-compile-remove(call-readiness) */
-import { CallCompositeOptions } from '@internal/react-composites';
+import { CallCompositeOptions } from '@azure/communication-react';
 
 export interface CallScreenProps {
   token: string;
@@ -85,7 +85,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
       onPermissionsTroubleshootingClick,
       onNetworkingTroubleShootingClick
     }),
-    [callReadinessOptedIn, onPermissionsTroubleshootingClick, onNetworkingTroubleShootingClick]
+    [callReadinessOptedIn]
   );
 
   const adapter = useAzureCommunicationCallAdapter(
