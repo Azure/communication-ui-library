@@ -131,6 +131,7 @@ export const CallWithChatPane = (props: {
   const peopleContent = (
     <CallAdapterProvider adapter={props.callAdapter}>
       <PeoplePaneContent
+        active={props.activePane === 'people'}
         {...props}
         onRemoveParticipant={removeParticipantFromCallWithChat}
         setDrawerMenuItems={setDrawerMenuItems}
