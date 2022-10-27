@@ -4,7 +4,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import { App } from './App.snippet'; // this should point to your App.tsx file
+import App from './App'; // this should point to your App.tsx file
 
 ReactDOM.render(
   <div className="wrapper">
