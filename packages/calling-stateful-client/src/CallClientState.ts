@@ -16,6 +16,8 @@ import {
   ScalingMode,
   VideoDeviceInfo
 } from '@azure/communication-calling';
+/* @conditional-compile-remove(rooms) */
+import { ParticipantRole } from '@azure/communication-calling';
 import {
   CommunicationUserKind,
   MicrosoftTeamsUserKind,
@@ -175,6 +177,11 @@ export interface RemoteParticipantState {
    * Proxy of {@link @azure/communication-calling#RemoteParticipant.isSpeaking}.
    */
   isSpeaking: boolean;
+  /* @conditional-compile-remove(rooms) */
+  /**
+   * Proxy of {@link @azure/communication-calling#RemoteParticipant.role}.
+   */
+  role?: ParticipantRole;
 }
 
 /**
@@ -267,6 +274,11 @@ export interface CallState {
    * Stores the latest call diagnostics.
    */
   diagnostics: DiagnosticsCallFeatureState;
+  /* @conditional-compile-remove(rooms) */
+  /**
+   * Proxy of {@link @azure/communication-calling#Call.role}.
+   */
+  role?: ParticipantRole;
 }
 
 /**
