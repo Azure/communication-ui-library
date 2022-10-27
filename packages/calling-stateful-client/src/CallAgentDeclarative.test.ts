@@ -11,12 +11,12 @@ import {
   JoinCallOptions,
   TeamsMeetingLinkLocator,
   RecordingCallFeature,
-  StartCallOptions,
   TranscriptionCallFeature,
   CallFeatureFactory,
-  /* @conditional-compile-remove(teams-call) */
-  CallAgentKind
+  StartCallOptions
 } from '@azure/communication-calling';
+/* @conditional-compile-remove(teams-call) */
+import { CallAgentKind } from '@azure/communication-calling';
 /* @conditional-compile-remove(calling-beta-sdk) */
 import { GroupChatCallLocator, MeetingLocator, RoomLocator } from '@azure/communication-calling';
 import { CommunicationUserIdentifier, PhoneNumberIdentifier, UnknownIdentifier } from '@azure/communication-common';
@@ -71,7 +71,6 @@ class MockCallAgent implements CallAgent {
   kind = 'CallAgent' as CallAgentKind;
   emitter = new EventEmitter();
   feature;
-  /* @conditional-compile-remove(calling-beta-sdk) */
   startCall(
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[],

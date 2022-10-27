@@ -195,9 +195,8 @@ class ProxyCallClient implements ProxyHandler<CallClient> {
           'CallClient.createCallAgent'
         );
       }
-      /* @conditional-compile-remove(teams-call) */
       case 'createTeamsCallAgent': {
-        return this._context.withAsyncErrorTeedToState(
+        /* @conditional-compile-remove(teams-call) */ return this._context.withAsyncErrorTeedToState(
           async (...args: Parameters<CallClient['createTeamsCallAgent']>): Promise<DeclarativeTeamsCallAgent> => {
             // createCallAgent will throw an exception if the previous callAgent was not disposed. If the previous
             // callAgent was disposed then it would have unsubscribed to events so we can just create a new declarative
@@ -211,6 +210,7 @@ class ProxyCallClient implements ProxyHandler<CallClient> {
           },
           'CallClient.createTeamsCallAgent'
         );
+        return Reflect.get(target, prop);
       }
       case 'getDeviceManager': {
         return this._context.withAsyncErrorTeedToState(async () => {

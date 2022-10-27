@@ -9,14 +9,11 @@ import {
   IncomingCall as SdkIncomingCall,
   VideoStreamRendererView,
   Call,
-  CallAgent,
-  /* @conditional-compile-remove(teams-call) */
-  TeamsCall,
-  /* @conditional-compile-remove(teams-call) */
-  TeamsIncomingCall,
-  /* @conditional-compile-remove(teams-call) */
-  TeamsCallAgent
+  CallAgent
 } from '@azure/communication-calling';
+
+/* @conditional-compile-remove(teams-call) */
+import { TeamsCall, TeamsIncomingCall, TeamsCallAgent } from '@azure/communication-calling';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import {
   CallState,
@@ -92,6 +89,7 @@ export function convertSdkCallToDeclarativeCall(
   });
   return {
     id: call.id,
+    /* @conditional-compile-remove(teams-call) */
     type: isACSCall(call) ? 'ACS' : 'Teams',
     callerInfo: call.callerInfo,
     state: call.state,
@@ -149,7 +147,9 @@ export function convertFromSDKToDeclarativeVideoStreamRendererView(
  * @private
  */
 export const isACSCall = (call: Call | /* @conditional-compile-remove(teams-call) */ TeamsCall): call is Call => {
+  /* @conditional-compile-remove(teams-call) */
   return call.kind === 'Call';
+  return true;
 };
 
 /**
@@ -158,5 +158,7 @@ export const isACSCall = (call: Call | /* @conditional-compile-remove(teams-call
 export const isACSCallAgent = (
   callAgent: CallAgent | /* @conditional-compile-remove(teams-call) */ TeamsCallAgent
 ): callAgent is CallAgent => {
+  /* @conditional-compile-remove(teams-call) */
   return callAgent.kind === 'CallAgent';
+  return true;
 };

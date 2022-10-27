@@ -4,6 +4,7 @@
 import { CallAgent } from '@azure/communication-calling';
 import { ProxyCallAgentCommon } from './CallAgentDeclarativeCommon';
 import { CallContext } from './CallContext';
+/* @conditional-compile-remove(teams-call) */
 import { DeclarativeIncomingCall } from './IncomingCallDeclarative';
 import { InternalCallContext } from './InternalCallContext';
 import { disposeAllViews } from './StreamUtils';

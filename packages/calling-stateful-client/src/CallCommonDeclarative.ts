@@ -1,8 +1,15 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { CallCommon } from '@azure/communication-calling';
+/* @conditional-compile-remove(teams-call) */
+import { CallCommon as CallCommonBeta } from '@azure/communication-calling';
+import { Call } from '@azure/communication-calling';
 import { CallContext } from './CallContext';
+
+/**
+ * @private
+ */
+export type CallCommon = Call | /* @conditional-compile-remove(teams-call) */ CallCommonBeta;
 
 /**
  * @private

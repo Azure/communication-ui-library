@@ -1,11 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import {
-  CallEndReason,
-  IncomingCall,
-  /* @conditional-compile-remove(teams-call) */ TeamsIncomingCall
-} from '@azure/communication-calling';
+import { CallEndReason, IncomingCall } from '@azure/communication-calling';
+
+/* @conditional-compile-remove(teams-call) */
+import { TeamsIncomingCall } from '@azure/communication-calling';
 
 /**
  * Keeps track of the listeners assigned to a particular incoming call because when we get an event from SDK, it doesn't
@@ -14,7 +13,7 @@ import {
  * call.
  */
 export class IncomingCallSubscriber {
-  private _incomingCall: TeamsIncomingCall | IncomingCall;
+  private _incomingCall: IncomingCall | /* @conditional-compile-remove(teams-call) */ TeamsIncomingCall;
   private _setIncomingCallEnded: (incomingCallId: string, callEndReason: CallEndReason) => void;
 
   constructor(

@@ -1,10 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import {
-  IncomingCall,
-  /* @conditional-compile-remove(teams-call) */ TeamsIncomingCall
-} from '@azure/communication-calling';
+import { IncomingCall } from '@azure/communication-calling';
+/* @conditional-compile-remove(teams-call) */
+import { TeamsIncomingCall } from '@azure/communication-calling';
 import { CallContext } from './CallContext';
 
 /**

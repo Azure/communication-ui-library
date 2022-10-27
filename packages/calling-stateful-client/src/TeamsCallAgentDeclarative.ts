@@ -1,16 +1,20 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { TeamsCallAgent } from '@azure/communication-calling';
+/* @conditional-compile-remove(teams-call) */
+import { TeamsCallAgent as TeamsCallAgentBeta } from '@azure/communication-calling';
 import { ProxyCallAgentCommon } from './CallAgentDeclarativeCommon';
 import { CallContext } from './CallContext';
+/* @conditional-compile-remove(teams-call) */
 import { DeclarativeIncomingCall } from './IncomingCallDeclarative';
 import { InternalCallContext } from './InternalCallContext';
 import { disposeAllViews } from './StreamUtils';
 
+type TeamsCallAgent = never | /* @conditional-compile-remove(teams-call) */ TeamsCallAgentBeta;
+
 /**
  * @public
- * `DeclarativeCallAgent` extends and proxies the {@link @azure/communication-calling#CallAgent}
+ * `DeclarativeTeamsCallAgent` extends and proxies the {@link @azure/communication-calling#TeamsCallAgent}
  */
 export type DeclarativeTeamsCallAgent = TeamsCallAgent & /* @conditional-compile-remove(one-to-n-calling) */ {
   /**
@@ -25,24 +29,29 @@ export type DeclarativeTeamsCallAgent = TeamsCallAgent & /* @conditional-compile
 };
 
 /**
- * ProxyCallAgent proxies CallAgent and saves any returned state in the given context. It will subscribe to all state
- * updates in the CallAgent and in the contained Calls and RemoteParticipants. When dispose is called it will
+ * ProxyTeamsCallAgent proxies TeamsCallAgent and saves any returned state in the given context. It will subscribe to all state
+ * updates in the TeamsCallAgent and in the contained TeamsCalls and RemoteParticipants. When dispose is called it will
  * unsubscribe from all state updates.
  */
 class ProxyTeamsCallAgent extends ProxyCallAgentCommon implements ProxyHandler<DeclarativeTeamsCallAgent> {
+  /* @conditional-compile-remove(teams-call) */
   private _callAgent: TeamsCallAgent;
 
   constructor(callAgent: TeamsCallAgent, context: CallContext, internalContext: InternalCallContext) {
     super(context, internalContext);
+    /* @conditional-compile-remove(teams-call) */
     this._callAgent = callAgent;
     this.subscribe();
   }
 
   protected subscribe = (): void => {
+    /* @conditional-compile-remove(teams-call) */
     this._callAgent.on('callsUpdated', this.callsUpdated);
+    /* @conditional-compile-remove(teams-call) */
     this._callAgent.on('incomingCall', this.incomingCall);
 
-    // There could be scenario that when ProxyCallAgent is created that the given CallAgent already has Calls. In this
+    /* @conditional-compile-remove(teams-call) */
+    // There could be scenario that when ProxyTeamsCallAgent is created that the given CallAgent already has TeamsCalls. In this
     // case we need to make sure to subscribe to those already existing Calls.
     for (const call of this._callAgent.calls) {
       this.addCall(call);
@@ -50,22 +59,25 @@ class ProxyTeamsCallAgent extends ProxyCallAgentCommon implements ProxyHandler<D
   };
 
   protected unsubscribe = (): void => {
+    /* @conditional-compile-remove(teams-call) */
     this._callAgent.off('callsUpdated', this.callsUpdated);
+    /* @conditional-compile-remove(teams-call) */
     this._callAgent.off('incomingCall', this.incomingCall);
 
     this.unregisterSubscriber();
   };
 
   public get<P extends keyof TeamsCallAgent>(target: TeamsCallAgent, prop: P): any {
+    /* @conditional-compile-remove(teams-call) */
     return super.getCommon(target, prop);
   }
 }
 
 /**
- * Creates a declarative CallAgent by proxying CallAgent with ProxyCallAgent which will track state updates by updating
+ * Creates a declarative CallAgent by proxying TeamsCallAgent with ProxyTeamsCallAgent which will track state updates by updating
  * the given context.
  *
- * @param callAgent - CallAgent from SDK
+ * @param callAgent - TeamsCallAgent from SDK
  * @param context - CallContext from StatefulCallClient
  * @param internalContext- InternalCallContext from StatefulCallClient
  */
@@ -74,9 +86,8 @@ export const teamsCallAgentDeclaratify = (
   context: CallContext,
   internalContext: InternalCallContext
 ): DeclarativeTeamsCallAgent => {
-  // Make sure there are no existing call data if creating a new CallAgentDeclarative (if creating a new
-  // CallAgentDeclarative after disposing of the hold one will mean context have old call state). TODO: should we stop
-  // rendering when the previous callAgent is disposed?
+  // Make sure there are no existing call data if creating a new TeamsCallAgentDeclarative (if creating a new
+  // TeamsCallAgentDeclarative after disposing of the hold one will mean context have old call state).
   disposeAllViews(context, internalContext);
 
   context.clearCallRelatedState();
