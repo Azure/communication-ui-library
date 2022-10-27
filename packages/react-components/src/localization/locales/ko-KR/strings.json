@@ -5,7 +5,10 @@
     "removeButtonLabel": "제거",
     "sharingIconLabel": "공유 중",
     "mutedIconLabel": "음소거됨",
-    "displayNamePlaceholder": "명명되지 않은 참가자"
+    "displayNamePlaceholder": "명명되지 않은 참가자",
+    "participantStateConnecting": "전화 거는 중...",
+    "participantStateRinging": "전화 거는 중...",
+    "participantStateHold": "대기 중"
   },
   "typingIndicator": {
     "singleUser": "{user} 님이 입력 중...",
@@ -18,7 +21,10 @@
     "placeholderText": "메시지를 입력하세요",
     "textTooLong": "메시지 길이가 최대 제한을 초과했습니다.",
     "sendButtonAriaLabel": "메시지 보내기",
-    "fileUploadsPendingError": "업로드 중... 잠시만 기다려 주세요."
+    "fileUploadsPendingError": "업로드 중... 잠시만 기다려 주세요.",
+    "removeFile": "파일 제거",
+    "uploading": "업로드 중",
+    "uploadCompleted": "업로드 완료"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "메시지를 보냄",
@@ -33,7 +39,7 @@
   },
   "endCallButton": {
     "label": "휴가",
-    "tooltipContent": "통화 종료"
+    "tooltipContent": "통화에서 나가기"
   },
   "cameraButton": {
     "onLabel": "끄기",
@@ -80,7 +86,7 @@
   },
   "participantsButton": {
     "label": "사용자",
-    "tooltipContent": "프레젠테이션 표시",
+    "tooltipContent": "참가자 표시",
     "menuHeader": "이 통화에서",
     "participantsListButtonLabel": "{numParticipants}명",
     "muteAllButtonLabel": "모두 음소거",
@@ -110,6 +116,8 @@
     "failToSendTag": "보내기 실패",
     "editedTag": "편집됨",
     "liveAuthorIntro": "{author} 님이 말합니다.",
+    "messageContentAriaText": "{author} 님이 {message}(이)라고 말했습니다.",
+    "messageContentMineAriaText": "내가 {message}(이)라고 말했습니다.",
     "editBoxTextLimit": "메시지가 {limitNumber} 문자 제한을 초과했습니다.",
     "editBoxPlaceholderText": "메시지 편집",
     "newMessagesIndicator": "새 메시지",
@@ -117,7 +125,8 @@
     "editBoxCancelButton": "취소",
     "editBoxSubmitButton": "제출",
     "messageReadCount": "{messageReadByCount}/{remoteParticipantsCount}명이 읽음",
-    "actionMenuMoreOptions": "추가 옵션"
+    "actionMenuMoreOptions": "추가 옵션",
+    "downloadFile": "파일 다운로드"
   },
   "errorBar": {
     "unableToReachChatService": "오프라인 상태입니다.",
@@ -138,10 +147,13 @@
     "callNoMicrophoneFound": "마이크를 찾을 수 없습니다. 오디오 입력 장치를 연결합니다.",
     "callMicrophoneAccessDenied": "마이크에 액세스할 수 없습니다. 주소 표시줄에서 잠금을 클릭하여 이 웹 페이지에 권한을 부여합니다.",
     "callMicrophoneMutedBySystem": "시스템에 의해 음소거되었습니다.",
+    "callMicrophoneUnmutedBySystem": "마이크가 복구되었으며 시스템에서 음소거를 해제했습니다.",
     "callMacOsMicrophoneAccessDenied": "마이크에 액세스할 수 없습니다. macOS 개인 정보 설정에서 마이크 권한을 부여합니다.",
     "callLocalVideoFreeze": "네트워크 대역폭이 불량합니다. 통화 중에 다른 사람에 대해 비디오가 일시 중지된 것 같습니다.",
     "callCameraAccessDenied": "카메라에 액세스할 수 없습니다. 주소 표시줄에서 잠금을 클릭하여 이 웹 페이지에 권한을 부여합니다.",
     "callCameraAlreadyInUse": "카메라에 액세스할 수 없습니다. 다른 응용 프로그램에서 이미 사용 중일 수 있습니다.",
+    "callVideoStoppedBySystem": "시스템에 의해 비디오가 중지되었습니다.",
+    "callVideoRecoveredBySystem": "비디오가 다시 시작되었습니다.",
     "callMacOsCameraAccessDenied": "MacOS에서 카메라에 대한 액세스를 차단하고 있습니다. 이 브라우저에서 카메라에 액세스할 수 있도록 개인 정보 설정을 업데이트합니다.",
     "callMacOsScreenShareAccessDenied": "MacOS에서 화면 공유를 차단하고 있습니다. 이 브라우저에서 화면을 녹화할 수 있도록 개인 정보 설정을 업데이트합니다.",
     "dismissButtonAriaLabel": "닫기",
@@ -158,12 +170,50 @@
     "displayNamePlaceholder": "명명되지 않은 참가자"
   },
   "dialpad": {
-    "placeholderText": "번호 입력"
+    "placeholderText": "전화 번호를 입력하세요.",
+    "deleteButtonAriaLabel": "삭제"
   },
-  "HoldButton": {
+  "holdButton": {
     "onLabel": "계속",
     "offLabel": "보류",
-    "toolTipOnContent": "통화 계속하기",
-    "toolTipOffContent": "통화 대기"
+    "tooltipOnContent": "통화 계속하기",
+    "tooltipOffContent": "통화 대기"
+  },
+  "videoTile": {
+    "participantStateConnecting": "전화 거는 중...",
+    "participantStateRinging": "전화 거는 중...",
+    "participantStateHold": "대기 중"
+  },
+  "DomainPermissions": {
+    "primaryText": "{appName} 님이 카메라와 마이크를 사용하도록 허용",
+    "secondaryText": "참가자가 사용자를 보고 들을 수 있도록 합니다.",
+    "linkText": "도움이 필요하신가요? 문제 해결 도움말 보기",
+    "primaryButtonText": "액세스 허용"
+  },
+  "UnsupportedBrowser": {
+    "primaryText": "지원되지 않는 브라우저",
+    "secondaryText": "호환되는 브라우저를 사용하여 이 통화에 참여하세요.",
+    "moreHelpLink": "추가 도움말"
+  },
+  "BrowserPermissionDenied": {
+    "primaryText": "카메라 또는 마이크를 사용할 수 없음",
+    "secondaryText": "브라우저에서 카메라 또는 마이크에 액세스할 수 없을 수 있습니다. 이 문제를 해결하려면 시스템 기본 설정을 엽니다.",
+    "primaryButtonText": "다시 시도",
+    "linkText": "도움이 필요하신가요? 문제 해결 도움말 보기"
+  },
+  "BrowserPermissionDeniedIOS": {
+    "primaryText": "계속하려면 마이크 액세스 허용",
+    "secondaryText": "따라서 다른 참가자가 여러분의 의견을 들을 수 있습니다.",
+    "primaryButtonText": "다시 시도",
+    "imageAltText": "iOS용 마이크 및 카메라 장치 권한 위치",
+    "linkText": "도움이 필요하신가요? 문제 해결 도움말 보기",
+    "step1Text": "설정 앱으로 이동합니다.",
+    "step2Text": "이 브라우저의 설정에 Scroll down",
+    "step3Text": "마이크 켜기(카메라 선택 사항)",
+    "step4Text": "통화에 다시 참가해 보세요.",
+    "step1DigitText": "1",
+    "step2DigitText": "2",
+    "step3DigitText": "3",
+    "step4DigitText": "4"
   }
 }
