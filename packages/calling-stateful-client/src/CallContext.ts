@@ -254,7 +254,7 @@ export class CallContext {
   }
 
   /* @conditional-compile-remove(rooms) */
-  public setRoleChanged(callId: string, role: ParticipantRole): void {
+  public setRole(callId: string, role: ParticipantRole): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {

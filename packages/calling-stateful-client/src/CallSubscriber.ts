@@ -164,7 +164,7 @@ export class CallSubscriber {
 
   /* @conditional-compile-remove(rooms) */
   private callRoleChangedHandler = (): void => {
-    this._context.setRoleChanged(this._callIdRef.callId, this._call.role);
+    this._context.setRole(this._callIdRef.callId, this._call.role);
   };
 
   private remoteParticipantsUpdated = (event: { added: RemoteParticipant[]; removed: RemoteParticipant[] }): void => {
