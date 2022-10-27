@@ -133,6 +133,23 @@ export const createDefaultCallingHandlers = memoizeOne(
     };
 
     const onToggleCamera = async (options?: VideoStreamOptions): Promise<void> => {
+      const previewOn = _isPreviewOn(callClient.getState().deviceManager);
+
+      if (previewOn && call && _isInLobbyOrConnecting(call.state)) {
+        // This is to workaround: https://skype.visualstudio.com/SPOOL/_workitems/edit/3030558.
+        // Currently when we transition from connecting -> call state, if the camera was on,
+        // in MediaGallery we trigger toggleCamera. This triggers onStartLocalVideo which destroys
+        // the unparentedView and creates a new stream in the call - so all looks well.
+        // However, if someone turns off their camera during the lobbyOrConnecting screen, the
+        // call.localVideoStreams will be empty (as the stream is currently stored in the unparented
+        // views and was never transitioned to the call object).
+        // The correct fix for this is to ensure that callAgent.onStartCall is called with the
+        // localvideostream as a videoOption, then when call.onLocalVideoStreamsUpdated is called
+        // with the local video stream we clean up the state.
+        await onDisposeLocalStreamView();
+        return;
+      }
+
       if (call && (_isInCall(call.state) || _isInLobbyOrConnecting(call.state))) {
         const stream = call.localVideoStreams.find((stream) => stream.mediaStreamType === 'Video');
         if (stream) {
@@ -143,7 +160,6 @@ export const createDefaultCallingHandlers = memoizeOne(
       } else {
         const selectedCamera = callClient.getState().deviceManager.selectedCamera;
         if (selectedCamera) {
-          const previewOn = _isPreviewOn(callClient.getState().deviceManager);
           if (previewOn) {
             await onDisposeLocalStreamView();
           } else {
