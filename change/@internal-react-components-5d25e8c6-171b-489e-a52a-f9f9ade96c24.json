@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Introduce UI for call isntances where the browser is unsupported",
-  "packageName": "@internal/react-components",
-  "email": "94866715+dmceachernmsft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "typecheck browser test as part of build",
-  "packageName": "@internal/react-composites",
-  "email": "82062616+prprabhu-ms@users.noreply.github.com",
-  "dependentChangeType": "none"
-}

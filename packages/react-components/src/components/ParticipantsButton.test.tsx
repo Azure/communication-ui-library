@@ -20,7 +20,7 @@ describe('ParticipantsButton strings should be localizable and overridable', () 
   test('Should localize button label', async () => {
     const testLocale = createTestLocale({ participantsButton: { label: Math.random().toString() } });
     const component = mountWithLocalization(<ParticipantsButton showLabel={true} participants={[]} />, testLocale);
-    expect(component.text()).toBe(testLocale.strings.participantsButton.label);
+    expect(component.find('button').text()).toBe(testLocale.strings.participantsButton.label);
   });
 
   test('Should override button label with `strings` prop', async () => {
@@ -30,6 +30,6 @@ describe('ParticipantsButton strings should be localizable and overridable', () 
       <ParticipantsButton showLabel={true} participants={[]} strings={participantButtonStrings} />,
       testLocale
     );
-    expect(component.text()).toBe(participantButtonStrings.label);
+    expect(component.find('button').text()).toBe(participantButtonStrings.label);
   });
 });

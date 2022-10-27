@@ -34,7 +34,7 @@ const MessageContentAsRichTextHTML = (props: ChatMessageContentProps): JSX.Eleme
   const htmlToReactParser = new Parser();
   const liveAuthor = _formatString(props.liveAuthorIntro, { author: `${props.message.senderDisplayName}` });
   return (
-    <div data-ui-status={props.message.status} role="text" aria-text={props.messageContentAriaText}>
+    <div data-ui-status={props.message.status} role="text" aria-label={props.messageContentAriaText}>
       <LiveMessage
         message={`${props.message.mine ? '' : liveAuthor} ${extractContent(props.message.content || '')}`}
         aria-live="polite"

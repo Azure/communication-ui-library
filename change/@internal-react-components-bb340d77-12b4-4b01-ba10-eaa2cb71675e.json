@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Introduce Hermetic tests for the unsupportedEnvironmentPage in the Call Composite",
+  "packageName": "@internal/react-components",
+  "email": "94866715+dmceachernmsft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

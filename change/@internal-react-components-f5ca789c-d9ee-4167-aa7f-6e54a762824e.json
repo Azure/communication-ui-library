@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Bump package version after hotfix release",
-  "packageName": "@internal/react-components",
-  "email": "82062616+prprabhu-ms@users.noreply.github.com",
-  "dependentChangeType": "none"
-}

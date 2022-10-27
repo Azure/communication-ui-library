@@ -1,8 +1,26 @@
 # Change Log - @internal/calling-stateful-client
 
-This log was last generated on Wed, 29 Jun 2022 17:31:07 GMT and should not be manually modified.
+This log was last generated on Wed, 05 Oct 2022 18:13:54 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.3.2-beta.1](https://github.com/azure/communication-ui-library/tree/@internal/calling-stateful-client_v1.3.2-beta.1)
+
+Wed, 05 Oct 2022 18:13:54 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@internal/calling-stateful-client_v1.3.1-beta.1...@internal/calling-stateful-client_v1.3.2-beta.1)
+
+### Patches
+
+- Add event logs for disposing local video streams ([PR #2121](https://github.com/azure/communication-ui-library/pull/2121) by 2684369+JamesBurnside@users.noreply.github.com)
+- Bump @internal/acs-ui-common to v1.3.2-beta.1 ([PR #2379](https://github.com/azure/communication-ui-library/pull/2379) by beachball)
+
+### Changes
+
+- bump calling beta to 1.6.0-beta.1 ([PR #2047](https://github.com/azure/communication-ui-library/pull/2047) by miguelgamis@microsoft.com)
+- Bumped calling SDK beta version to 1.8.0-beta.1 ([PR #2362](https://github.com/azure/communication-ui-library/pull/2362) by miguelgamis@microsoft.com)
+- Introduce AlternateCallerId from the Calling SDK to the Calling stateful client. ([PR #2095](https://github.com/azure/communication-ui-library/pull/2095) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Introduce the alternativeCallerId property from the Calling SDK to the stateful Client and CallContext. ([PR #2070](https://github.com/azure/communication-ui-library/pull/2070) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Bump calling beta to 1.6.1 beta.1 ([PR #2074](https://github.com/azure/communication-ui-library/pull/2074) by edwardlee@microsoft.com)
 
 ## [1.3.1-beta.1](https://github.com/azure/communication-ui-library/tree/@internal/calling-stateful-client_v1.3.1-beta.1)
 

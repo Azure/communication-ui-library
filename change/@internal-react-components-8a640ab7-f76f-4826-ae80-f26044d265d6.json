@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "removed ondisplaydialpadinput, add textFieldValue for contoso to directly set the value inside textfield",
-  "packageName": "@internal/react-components",
-  "email": "carolinecao@microsoft.com",
-  "dependentChangeType": "patch"
-}

@@ -34,6 +34,21 @@ export function BaseApp(props: { queryArgs: QueryArgs; callAdapter?: CallAdapter
 
   const ParticipantItemOptions = queryArgs.showParticipantItemIcon ? <MoreHorizontal20Regular /> : <></>;
 
+  const onEnvironmentInfoTroubleshootingClick = queryArgs.useTroubleShootingActions // useTroubleShootingActions is for all CallReadiness Callbacks
+    ? () => alert('you are using a unsupported browser')
+    : undefined;
+
+  let customCallCompositeOptions;
+
+  if (onEnvironmentInfoTroubleshootingClick) {
+    customCallCompositeOptions = {
+      ...queryArgs.customCallCompositeOptions,
+      onEnvironmentInfoTroubleshootingClick: onEnvironmentInfoTroubleshootingClick
+    };
+  } else {
+    customCallCompositeOptions = queryArgs.customCallCompositeOptions;
+  }
+
   return (
     <>
       {!callAdapter && 'Initializing call adapter...'}
@@ -50,8 +65,8 @@ export function BaseApp(props: { queryArgs: QueryArgs; callAdapter?: CallAdapter
                 queryArgs.injectParticipantMenuItems ? onFetchParticipantMenuItems : undefined
               }
               options={
-                queryArgs.customCallCompositeOptions
-                  ? queryArgs.customCallCompositeOptions
+                customCallCompositeOptions !== undefined
+                  ? customCallCompositeOptions
                   : queryArgs.injectCustomButtons
                   ? {
                       callControls: {

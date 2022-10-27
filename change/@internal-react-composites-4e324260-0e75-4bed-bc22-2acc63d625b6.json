@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Add Hermantic test for participant pane ",
-  "packageName": "@internal/react-composites",
-  "email": "carolinecao@microsoft.com",
-  "dependentChangeType": "none"
-}

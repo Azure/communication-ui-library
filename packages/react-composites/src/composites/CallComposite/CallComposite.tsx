@@ -217,6 +217,10 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           }}
           /* @conditional-compile-remove(call-readiness) */
           devicePermissions={props.options?.devicePermissions}
+          /* @conditional-compile-remove(call-readiness) */
+          onPermissionsTroubleshootingClick={props.options?.onPermissionsTroubleshootingClick}
+          /* @conditional-compile-remove(call-readiness) */
+          onNetworkingTroubleShootingClick={props.options?.onNetworkingTroubleShootingClick}
         />
       );
       break;
@@ -302,10 +306,8 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
       pageElement = (
         <>
           {
-            /* @conditional-compile-remove(unsupported-browser) */ props.options
-              ?.onEnvironmentInfoTroubleshootingClick && (
-              <UnsupportedBrowserPage onTroubleshootingClick={props.options?.onEnvironmentInfoTroubleshootingClick} />
-            )
+            /* @conditional-compile-remove(unsupported-browser) */
+            <UnsupportedBrowserPage onTroubleshootingClick={props.options?.onEnvironmentInfoTroubleshootingClick} />
           }
         </>
       );

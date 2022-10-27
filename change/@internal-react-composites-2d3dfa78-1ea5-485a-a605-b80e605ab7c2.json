@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "fix: joinCall set correct mute state based on microphoneOn parameter",
-  "packageName": "@internal/react-composites",
-  "email": "fanjin1989@gmail.com",
-  "dependentChangeType": "patch"
-}

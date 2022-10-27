@@ -25,9 +25,9 @@ describe('MicrophoneButton strings should be localizable and overridable', () =>
       microphoneButton: { offLabel: Math.random().toString(), onLabel: Math.random().toString() }
     });
     const component = mountWithLocalization(<MicrophoneButton showLabel={true} />, testLocale);
-    expect(component.text()).toBe(testLocale.strings.microphoneButton.offLabel);
+    expect(component.find('button').text()).toBe(testLocale.strings.microphoneButton.offLabel);
     component.setProps({ checked: true });
-    expect(component.text()).toBe(testLocale.strings.microphoneButton.onLabel);
+    expect(component.find('button').text()).toBe(testLocale.strings.microphoneButton.onLabel);
   });
 
   test('Should override button label with `strings` prop', async () => {
@@ -39,8 +39,8 @@ describe('MicrophoneButton strings should be localizable and overridable', () =>
       <MicrophoneButton strings={microphoneButtonStrings} showLabel={true} />,
       testLocale
     );
-    expect(component.text()).toBe(microphoneButtonStrings.offLabel);
+    expect(component.find('button').text()).toBe(microphoneButtonStrings.offLabel);
     component.setProps({ checked: true });
-    expect(component.text()).toBe(microphoneButtonStrings.onLabel);
+    expect(component.find('button').text()).toBe(microphoneButtonStrings.onLabel);
   });
 });

@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Bump @fluentui/react dependency to 8.98.3",
+  "packageName": "@internal/react-composites",
+  "email": "2684369+JamesBurnside@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

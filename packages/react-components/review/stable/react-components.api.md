@@ -928,6 +928,7 @@ export interface MessageThreadStyles extends BaseCustomStyles {
     chatContainer?: ComponentSlotStyle;
     chatItemMessageContainer?: ComponentSlotStyle;
     chatMessageContainer?: ComponentSlotStyle;
+    failedMyChatMessageContainer?: ComponentSlotStyle;
     loadPreviousMessagesButtonContainer?: IStyle;
     messageStatusContainer?: (mine: boolean) => IStyle;
     myChatItemMessageContainer?: ComponentSlotStyle;
@@ -1288,9 +1289,11 @@ export interface _TroubleshootingGuideErrorBarProps extends ErrorBarProps {
 // @internal
 export interface _TroubleshootingGuideErrorBarStrings {
     // (undocumented)
+    devicePermissionLinkText?: string;
+    // (undocumented)
     dismissButtonText?: string;
     // (undocumented)
-    linkText?: string;
+    networkTroubleshootingLinkText?: string;
 }
 
 // @public
