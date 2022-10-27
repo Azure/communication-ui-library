@@ -847,21 +847,9 @@ export const DEFAULT_COMPOSITE_ICONS: {
     MoreDrawerSpeakers?: JSX.Element | undefined;
     SendBoxAttachFile?: JSX.Element | undefined;
     ChatMessageOptions: JSX.Element;
-    ControlButtonParticipantsContextualMenuItem: JSX.Element;
-    CancelFileUpload: JSX.Element;
-    DownloadFile: JSX.Element;
     ErrorBarCallVideoRecoveredBySystem: JSX.Element;
     ErrorBarCallVideoStoppedBySystem: JSX.Element;
     MessageResend: JSX.Element;
-    HoldCallContextualMenuItem: JSX.Element;
-    HoldCallButton: JSX.Element;
-    ResumeCall: JSX.Element;
-    BackSpace: JSX.Element;
-    DomainPermissionsSparkle: JSX.Element;
-    DomainPermissionCamera: JSX.Element;
-    DomainPermissionMic: JSX.Element;
-    UnsupportedBrowserWarning: JSX.Element;
-    BrowserPermissionDeniedError: JSX.Element;
 };
 
 // @public
