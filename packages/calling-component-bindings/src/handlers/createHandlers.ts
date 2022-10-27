@@ -135,7 +135,7 @@ export const createDefaultCallingHandlers = memoizeOne(
     const onToggleCamera = async (options?: VideoStreamOptions): Promise<void> => {
       const previewOn = _isPreviewOn(callClient.getState().deviceManager);
 
-      if (previewOn && call && _isInLobbyOrConnecting(call.state)) {
+      if (previewOn && call && call.state === 'Connecting') {
         // This is to workaround: https://skype.visualstudio.com/SPOOL/_workitems/edit/3030558.
         // The root cause of the issue is caused by never transitioning the unparented view to the
         // call object when going from configuration page (disconnected call state) to connecting.
