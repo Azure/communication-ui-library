@@ -19,19 +19,19 @@ import { IncomingCallSubscriber } from './IncomingCallSubscriber';
 import { InternalCallContext } from './InternalCallContext';
 import { disposeAllViewsFromCall } from './StreamUtils';
 /* @conditional-compile-remove(teams-call) */
-import { teamsCallDeclaratify } from './TeamsCallDeclarative';
+import { DeclarativeTeamsCall, teamsCallDeclaratify } from './TeamsCallDeclarative';
 
 /**
  * TODO: This should likely be exported?
  *
  * @private
  */
-export interface DeclarativeCallCommon extends CallCommon {
+export type DeclarativeCallCommon = CallCommon & {
   /**
    * Stop any declarative specific subscriptions and remove declarative subscribers.
    */
   unsubscribe(): void;
-}
+};
 
 /**
  * ProxyCallAgent proxies CallAgent and saves any returned state in the given context. It will subscribe to all state
@@ -166,7 +166,7 @@ export abstract class ProxyCallAgentCommon {
     /* @conditional-compile-remove(teams-call) */
     if (!isACSCall(call)) {
       const newDeclarativeCall = teamsCallDeclaratify(call, this._context);
-      this._declarativeCalls.set(call, newDeclarativeCall as DeclarativeCall);
+      this._declarativeCalls.set(call, newDeclarativeCall as DeclarativeTeamsCall);
       return newDeclarativeCall;
     }
 
@@ -244,7 +244,7 @@ export abstract class ProxyCallAgentCommon {
             if (!isACSCallAgent(target)) {
               (target as TeamsCallAgent).off(...(args as Parameters<TeamsCallAgent['off']>));
             }
-            if (!isACSCallAgent(target)) {
+            if (isACSCallAgent(target)) {
               (target as CallAgent).off(...(args as Parameters<CallAgent['off']>));
             }
           }
