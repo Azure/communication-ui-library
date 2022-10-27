@@ -32,7 +32,6 @@ type InferredCallErrorTargets =
    */
   | 'CallAgent.feature'
   | /* @conditional-compile-remove(calling-beta-sdk) */ 'CallClient.getEnvironmentInfo'
-  | 'Call.dispose'
   | /* @conditional-compile-remove(teams-call) */ 'TeamsCall.addParticipant'
   | 'CallClient.feature';
 
