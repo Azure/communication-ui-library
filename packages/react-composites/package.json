@@ -70,16 +70,16 @@
     "uuid": "^8.1.0"
   },
   "peerDependencies": {
-    "@azure/communication-calling": "1.4.4",
-    "@azure/communication-chat": "1.2.0",
+    "@azure/communication-calling": ">=1.4.4",
+    "@azure/communication-chat": ">=1.2.0",
     "@types/react": ">=16.8.0 <18.0.0",
     "@types/react-dom": ">=16.8.0 <18.0.0",
     "react": ">=16.8.0 <18.0.0",
     "react-dom": ">=16.8.0 <18.0.0"
   },
   "devDependencies": {
-    "@azure/communication-calling": "1.4.4",
-    "@azure/communication-chat": "1.2.0",
+    "@azure/communication-calling": ">=1.4.4",
+    "@azure/communication-chat": ">=1.2.0",
     "@azure/communication-identity": "~1.1.0",
     "@azure/communication-signaling": "1.0.0-beta.13",
     "@babel/cli": "~7.16.0",
