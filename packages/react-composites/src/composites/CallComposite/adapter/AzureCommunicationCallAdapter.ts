@@ -464,6 +464,12 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     });
   }
 
+  /**
+   * Handler to switch between calls in the adapter's internal {@link CallAgent} Calls array.
+   *
+   * @param newCall Call just accepted by a incoming call or the call that you wish to switch to.
+   * @param oldCall Call that is currently in the adapter to put on hold
+   */
   public async switchCall(newCall: Call, oldCall?: Call): Promise<void> {
     if (oldCall) {
       await oldCall.hold();
