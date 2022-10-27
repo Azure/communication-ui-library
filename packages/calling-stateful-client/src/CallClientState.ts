@@ -497,7 +497,6 @@ export type CallErrorTarget =
   | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.stopAudio'
   | 'Call.stopVideo'
   | 'Call.unmute'
-  | 'Call.dispose'
   | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.unmuteIncomingAudio'
   | 'CallAgent.dispose'
   | 'CallAgent.feature'
