@@ -87,14 +87,15 @@ export const displayNameStyle: IStyle = {
 /**
  * @private
  */
-export const iconContainerStyle = (theme: Theme): IStyle => ({
+export const iconContainerStyle: IStyle = {
   margin: 'auto',
   alignItems: 'center',
   '& svg': {
     display: 'block',
-    color: theme.palette.neutralPrimary
+    // Similar to text color, icon color will be inherited from parent container
+    color: 'inherit'
   }
-});
+};
 
 /**
  * @private
