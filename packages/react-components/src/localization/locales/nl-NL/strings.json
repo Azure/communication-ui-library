@@ -5,7 +5,10 @@
     "removeButtonLabel": "Verwijderen",
     "sharingIconLabel": "Delen",
     "mutedIconLabel": "Gedempt",
-    "displayNamePlaceholder": "Naamloze deelnemer"
+    "displayNamePlaceholder": "Naamloze deelnemer",
+    "participantStateConnecting": "Bellen...",
+    "participantStateRinging": "Bellen...",
+    "participantStateHold": "In de wacht"
   },
   "typingIndicator": {
     "singleUser": "{user} typt ...",
@@ -18,7 +21,10 @@
     "placeholderText": "Een bericht invoeren",
     "textTooLong": "De lengte van uw bericht overschrijdt de maximumlimiet.",
     "sendButtonAriaLabel": "Bericht verzenden",
-    "fileUploadsPendingError": "Uploaden.... Een ogenblik geduld."
+    "fileUploadsPendingError": "Uploaden.... Een ogenblik geduld.",
+    "removeFile": "Bestand verwijderen",
+    "uploading": "Uploaden",
+    "uploadCompleted": "Upload voltooid"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "Bericht verzonden",
@@ -110,6 +116,8 @@
     "failToSendTag": "Verzenden mislukt",
     "editedTag": "Bewerkt",
     "liveAuthorIntro": "{author} zegt",
+    "messageContentAriaText": "{author} zei {message}",
+    "messageContentMineAriaText": "U zei: {message}",
     "editBoxTextLimit": "Uw bericht heeft de limiet van {limitNumber} tekens overschreden",
     "editBoxPlaceholderText": "Uw bericht bewerken",
     "newMessagesIndicator": "Nieuwe berichten",
@@ -117,7 +125,8 @@
     "editBoxCancelButton": "Annuleren",
     "editBoxSubmitButton": "Verzenden",
     "messageReadCount": "Gelezen door {messageReadByCount} van {remoteParticipantsCount}",
-    "actionMenuMoreOptions": "Meer opties"
+    "actionMenuMoreOptions": "Meer opties",
+    "downloadFile": "Bestand downloaden"
   },
   "errorBar": {
     "unableToReachChatService": "U bent offline",
@@ -138,10 +147,13 @@
     "callNoMicrophoneFound": "Geen microfoons gevonden. Sluit een audio-invoerapparaat aan.",
     "callMicrophoneAccessDenied": "Kan geen toegang krijgen tot de microfoon. Klik op de vergrendeling in de adresbalk om toestemming te verlenen aan deze webpagina.",
     "callMicrophoneMutedBySystem": "U bent gedempt door jouw systeem.",
+    "callMicrophoneUnmutedBySystem": "De microfoon is hersteld en het dempen van de microfoon is door het systeem opgeheven.",
     "callMacOsMicrophoneAccessDenied": "Kan geen toegang krijgen tot de microfoon. Verleen microfoonmachtiging in de privacyinstellingen voor macOS.",
     "callLocalVideoFreeze": "De netwerkbandbreedte is slecht. Je video wordt mogelijk onderbroken weergegeven voor anderen in het gesprek.",
     "callCameraAccessDenied": "Kan geen toegang krijgen tot de camera. Klik op de vergrendeling in de adresbalk om toestemming te verlenen aan deze webpagina.",
     "callCameraAlreadyInUse": "Kan geen toegang krijgen tot de camera. Het wordt mogelijk al gebruikt door een andere toepassing.",
+    "callVideoStoppedBySystem": "Uw video is gestopt door uw systeem.",
+    "callVideoRecoveredBySystem": "Uw video is hervat.",
     "callMacOsCameraAccessDenied": "MacOS blokkeert de toegang tot jouw camera. Werk je privacyinstellingen bij, zodat deze browser toegang heeft tot jouw camera.",
     "callMacOsScreenShareAccessDenied": "MacOS blokkeert scherm delen. Werk je privacyinstellingen bij, zodat deze browser jouw scherm kan opnemen.",
     "dismissButtonAriaLabel": "Sluiten",
@@ -158,12 +170,50 @@
     "displayNamePlaceholder": "Naamloze deelnemer"
   },
   "dialpad": {
-    "placeholderText": "Voer een nummer in"
+    "placeholderText": "Telefoonnummer invoeren",
+    "deleteButtonAriaLabel": "Verwijderen"
   },
-  "HoldButton": {
+  "holdButton": {
     "onLabel": "Hervatten",
     "offLabel": "Pauze",
-    "toolTipOnContent": "Gesprek hervatten",
-    "toolTipOffContent": "Gesprek in wachtrij plaatsen"
+    "tooltipOnContent": "Gesprek hervatten",
+    "tooltipOffContent": "Gesprek in wachtrij plaatsen"
+  },
+  "videoTile": {
+    "participantStateConnecting": "Bellen...",
+    "participantStateRinging": "Bellen...",
+    "participantStateHold": "In de wacht"
+  },
+  "DomainPermissions": {
+    "primaryText": "Toestaan dat {appName} uw camera en microfoon gebruikt",
+    "secondaryText": "Dit is zodat deelnemers u kunnen zien en horen.",
+    "linkText": "Hulp nodig? Hulp bij probleemoplossing",
+    "primaryButtonText": "Toegang verlenen"
+  },
+  "UnsupportedBrowser": {
+    "primaryText": "Browser wordt niet ondersteund",
+    "secondaryText": "Neem deel aan dit gesprek via een compatibele browser.",
+    "moreHelpLink": "Meer hulp"
+  },
+  "BrowserPermissionDenied": {
+    "primaryText": "Kan uw camera of microfoon niet gebruiken",
+    "secondaryText": "Uw browser heeft mogelijk geen toegang tot uw camera of microfoon. Open Systeemvoorkeuren om dit op te lossen.",
+    "primaryButtonText": "Opnieuw proberen",
+    "linkText": "Hulp nodig? Hulp bij probleemoplossing"
+  },
+  "BrowserPermissionDeniedIOS": {
+    "primaryText": "Microfoontoegang toestaan om door te gaan",
+    "secondaryText": "Zodat andere deelnemers u kunnen horen.",
+    "primaryButtonText": "Opnieuw proberen",
+    "imageAltText": "Machtigingslocatie voor microfoon en cameraapparaat voor iOS",
+    "linkText": "Hulp nodig? Hulp bij probleemoplossing",
+    "step1Text": "Ga naar de app Instellingen",
+    "step2Text": "Schuif omlaag naar instellingen voor deze browser",
+    "step3Text": "Microfoon inschakelen (camera optioneel)",
+    "step4Text": "Probeer opnieuw deel te nemen aan het gesprek",
+    "step1DigitText": "1",
+    "step2DigitText": "2",
+    "step3DigitText": "3",
+    "step4DigitText": "4"
   }
 }

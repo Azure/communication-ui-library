@@ -5,7 +5,10 @@
     "removeButtonLabel": "削除",
     "sharingIconLabel": "共有",
     "mutedIconLabel": "ミュート状態",
-    "displayNamePlaceholder": "名前のない参加者"
+    "displayNamePlaceholder": "名前のない参加者",
+    "participantStateConnecting": "呼び出し中...",
+    "participantStateRinging": "呼び出し中...",
+    "participantStateHold": "保留中"
   },
   "typingIndicator": {
     "singleUser": "{user} さんが入力しています...",
@@ -18,7 +21,10 @@
     "placeholderText": "メッセージを入力",
     "textTooLong": "メッセージの長さが上限を超えています。",
     "sendButtonAriaLabel": "メッセージの送信",
-    "fileUploadsPendingError": "アップロード中です... お待ちください。"
+    "fileUploadsPendingError": "アップロード中です... お待ちください。",
+    "removeFile": "ファイルを削除します",
+    "uploading": "アップロード中",
+    "uploadCompleted": "アップロードが完了しました"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "メッセージを送信しました",
@@ -33,7 +39,7 @@
   },
   "endCallButton": {
     "label": "退出",
-    "tooltipContent": "通話から退席"
+    "tooltipContent": "通話を終了"
   },
   "cameraButton": {
     "onLabel": "オフにする",
@@ -43,7 +49,7 @@
     "tooltipOffContent": "カメラをオンにする",
     "tooltipVideoLoadingContent": "ビデオの読み込み中です",
     "cameraMenuTitle": "カメラ",
-    "cameraMenuTooltip": "カメラの選択",
+    "cameraMenuTooltip": "カメラを選択する",
     "cameraButtonSplitRoleDescription": "分割ボタン",
     "onSplitButtonAriaLabel": "カメラとカメラ オプションをオフにする",
     "offSplitButtonAriaLabel": "カメラとカメラ オプションをオンにする",
@@ -57,9 +63,9 @@
     "tooltipOnContent": "マイクをミュートにする",
     "tooltipOffContent": "マイクのミュートを解除する",
     "microphoneMenuTitle": "マイク",
-    "microphoneMenuTooltip": "マイクの選択",
+    "microphoneMenuTooltip": "マイクを選択する",
     "speakerMenuTitle": "スピーカー",
-    "speakerMenuTooltip": "スピーカーの選択",
+    "speakerMenuTooltip": "スピーカーを選択する",
     "microphoneButtonSplitRoleDescription": "分割ボタン",
     "onSplitButtonAriaLabel": "マイクとオーディオのオプションをミュートにする",
     "offSplitButtonAriaLabel": "マイクとオーディオのオプションのミュートを解除する",
@@ -70,17 +76,17 @@
     "label": "デバイス",
     "tooltipContent": "デバイスの管理",
     "cameraMenuTitle": "カメラ",
-    "cameraMenuTooltip": "カメラの選択",
+    "cameraMenuTooltip": "カメラを選択する",
     "audioDeviceMenuTitle": "オーディオ デバイス",
-    "audioDeviceMenuTooltip": "オーディオ デバイスの選択",
+    "audioDeviceMenuTooltip": "オーディオ デバイスを選択する",
     "microphoneMenuTitle": "マイク",
-    "microphoneMenuTooltip": "マイクの選択",
+    "microphoneMenuTooltip": "マイクを選択する",
     "speakerMenuTitle": "スピーカー",
-    "speakerMenuTooltip": "スピーカーの選択"
+    "speakerMenuTooltip": "スピーカーを選択する"
   },
   "participantsButton": {
     "label": "ユーザー",
-    "tooltipContent": "参加者を表示する",
+    "tooltipContent": "参加者を表示",
     "menuHeader": "この通話で",
     "participantsListButtonLabel": "{numParticipants} 人",
     "muteAllButtonLabel": "全員をミュート",
@@ -110,6 +116,8 @@
     "failToSendTag": "送信できませんでした",
     "editedTag": "編集済み",
     "liveAuthorIntro": "{author} さんの発言",
+    "messageContentAriaText": "{author} が {message} と言いました",
+    "messageContentMineAriaText": "{message} と言いました",
     "editBoxTextLimit": "メッセージが{limitNumber}文字の制限を超えています",
     "editBoxPlaceholderText": "メッセージを編集する",
     "newMessagesIndicator": "新しいメッセージ",
@@ -117,7 +125,8 @@
     "editBoxCancelButton": "取り消し",
     "editBoxSubmitButton": "送信",
     "messageReadCount": "{remoteParticipantsCount} の {messageReadByCount} による読み取り",
-    "actionMenuMoreOptions": "その他のオプション"
+    "actionMenuMoreOptions": "その他のオプション",
+    "downloadFile": "ファイルをダウンロード"
   },
   "errorBar": {
     "unableToReachChatService": "オフラインです",
@@ -138,10 +147,13 @@
     "callNoMicrophoneFound": "マイクが見つかりません。オーディオ入力デバイスを接続します。",
     "callMicrophoneAccessDenied": "マイクにアクセスできません。アドレス バーのロックをクリックして、この Web ページにアクセス許可を付与します。",
     "callMicrophoneMutedBySystem": "システムによってミュートになっています。",
+    "callMicrophoneUnmutedBySystem": "マイクが回復し、システムによってミュートが解除されました。",
     "callMacOsMicrophoneAccessDenied": "マイクにアクセスできません。macOS のプライバシー設定でマイクへのアクセス許可を付与します。",
     "callLocalVideoFreeze": "ネットワーク帯域幅が不十分です。通話中に他のユーザーのビデオが一時停止している可能性があります。",
     "callCameraAccessDenied": "カメラにアクセスできません。アドレス バーのロックをクリックして、この Web ページにアクセス許可を付与します。",
     "callCameraAlreadyInUse": "カメラにアクセスできません。別のアプリケーションによって既に使用されている可能性があります。",
+    "callVideoStoppedBySystem": "ビデオはシステムによって停止されました。",
+    "callVideoRecoveredBySystem": "ビデオが再開されました。",
     "callMacOsCameraAccessDenied": "MacOS がカメラへのアクセスをブロックしています。プライバシー設定を更新して、このブラウザーがカメラにアクセスできるようにします。",
     "callMacOsScreenShareAccessDenied": "MacOS は画面の共有をブロックしています。プライバシー設定を更新して、このブラウザーで画面を録画できるようにします。",
     "dismissButtonAriaLabel": "閉じる",
@@ -158,12 +170,50 @@
     "displayNamePlaceholder": "名前のない参加者"
   },
   "dialpad": {
-    "placeholderText": "番号の入力"
+    "placeholderText": "電話番号を入力してください",
+    "deleteButtonAriaLabel": "削除"
   },
-  "HoldButton": {
+  "holdButton": {
     "onLabel": "再開",
     "offLabel": "保留",
-    "toolTipOnContent": "通話の再開",
-    "toolTipOffContent": "通話の保留"
+    "tooltipOnContent": "通話の再開",
+    "tooltipOffContent": "通話の保留"
+  },
+  "videoTile": {
+    "participantStateConnecting": "呼び出し中...",
+    "participantStateRinging": "呼び出し中...",
+    "participantStateHold": "保留中"
+  },
+  "DomainPermissions": {
+    "primaryText": "{appName}にカメラとマイクの使用を許可する",
+    "secondaryText": "これは、参加者があなたのことを見たり聞いたりできるようにするものです。",
+    "linkText": "ヘルプが必要ですか? トラブルシューティングのヘルプを表示",
+    "primaryButtonText": "アクセスを許可"
+  },
+  "UnsupportedBrowser": {
+    "primaryText": "サポートされていないブラウザーです",
+    "secondaryText": "互換性のあるブラウザーを使用して、この通話に参加してください。",
+    "moreHelpLink": "さらにヘルプを見る"
+  },
+  "BrowserPermissionDenied": {
+    "primaryText": "カメラまたはマイクを使用できません",
+    "secondaryText": "お使いのブラウザーはカメラまたはマイクにアクセスできない可能性があります。この問題を解決するには、[システム環境設定] を開きます。",
+    "primaryButtonText": "再試行",
+    "linkText": "ヘルプが必要ですか? トラブルシューティングのヘルプを表示"
+  },
+  "BrowserPermissionDeniedIOS": {
+    "primaryText": "マイクへのアクセスを許可して続行する",
+    "secondaryText": "そのため、他の参加者はあなたの声を聞くことができます。",
+    "primaryButtonText": "再試行",
+    "imageAltText": "iOS のマイクとカメラ デバイスのアクセス許可の場所",
+    "linkText": "ヘルプが必要ですか? トラブルシューティングのヘルプを表示",
+    "step1Text": "設定アプリに移動します。",
+    "step2Text": "このブラウザーの設定まで下にスクロール",
+    "step3Text": "マイクをオンにする (カメラはオプション)",
+    "step4Text": "もう一度通話に参加してみてください",
+    "step1DigitText": "1",
+    "step2DigitText": "2",
+    "step3DigitText": "3",
+    "step4DigitText": "4"
   }
 }

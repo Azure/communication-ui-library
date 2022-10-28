@@ -25,7 +25,8 @@
      */
     // "some-library": "1.2.3"
     // This is the version for stable build (please also update allowedAlternativeVersions below)
-    "@azure/communication-calling": "1.4.4"
+    "@azure/communication-calling": "1.4.4",
+    "@azure/communication-chat": "1.2.0"
   },
 
   /**
@@ -55,6 +56,7 @@
   "allowedAlternativeVersions": {
     // This is the version for stable build (please also update preferredVersions above)
     "@azure/communication-calling": ["1.4.4"],
+    "@azure/communication-chat": ["1.2.0"],
     "webpack": [
       // All projects should use this version by default
       "5.38.1",
