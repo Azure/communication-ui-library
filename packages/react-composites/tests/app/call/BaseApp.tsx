@@ -38,9 +38,26 @@ export function BaseApp(props: { queryArgs: QueryArgs; callAdapter?: CallAdapter
     ? () => alert('you are using a unsupported browser')
     : undefined;
 
+  const onPermissionsTroubleshootingClick = queryArgs.useCallReadiness
+    ? (permissionsState: { camera: PermissionState; microphone: PermissionState }) => {
+        alert(permissionsState);
+      }
+    : undefined;
+
   let customCallCompositeOptions;
 
-  if (onEnvironmentInfoTroubleshootingClick) {
+  if (onEnvironmentInfoTroubleshootingClick && onPermissionsTroubleshootingClick) {
+    customCallCompositeOptions = {
+      ...queryArgs.customCallCompositeOptions,
+      onEnvironmentInfoTroubleshootingClick: onEnvironmentInfoTroubleshootingClick,
+      onPermissionsTroubleshootingClick: onPermissionsTroubleshootingClick
+    };
+  } else if (onPermissionsTroubleshootingClick) {
+    customCallCompositeOptions = {
+      ...queryArgs.customCallCompositeOptions,
+      onPermissionsTroubleshootingClick: onPermissionsTroubleshootingClick
+    };
+  } else if (onEnvironmentInfoTroubleshootingClick) {
     customCallCompositeOptions = {
       ...queryArgs.customCallCompositeOptions,
       onEnvironmentInfoTroubleshootingClick: onEnvironmentInfoTroubleshootingClick

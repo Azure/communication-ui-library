@@ -87,6 +87,7 @@ export const _DevicePermissionDropdown = (props: _DevicePermissionDropdownProps)
 
   return (
     <Dropdown
+      data-ui-id={'permission-dropdown'}
       placeholder={strings?.placeHolderText}
       label={strings?.label}
       onRenderPlaceholder={onRenderPlaceholder}

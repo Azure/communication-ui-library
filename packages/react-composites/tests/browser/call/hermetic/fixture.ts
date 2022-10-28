@@ -96,6 +96,52 @@ export function defaultMockCallAdapterState(participants?: MockRemoteParticipant
 }
 
 /**
+ * Create the default {@link MockCallAdapterState}for call readiness hermetic e2e tests.
+ */
+export function defaultMockCallAdapterStateCallReadiness(
+  participants?: MockRemoteParticipantState[]
+): MockCallAdapterState {
+  const remoteParticipants: Record<string, MockRemoteParticipantState> = {};
+  participants?.forEach((p) => {
+    remoteParticipants[toFlatCommunicationIdentifier(p.identifier)] = p;
+  });
+  return {
+    displayName: 'Agnes Thompson',
+    isLocalPreviewMicrophoneEnabled: false,
+    page: 'configuration',
+    userId: { kind: 'communicationUser', communicationUserId: '1' },
+    devices: {
+      isSpeakerSelectionAvailable: true,
+      cameras: [],
+      microphones: [],
+      speakers: [
+        {
+          name: '',
+          id: 'speaker:',
+          isSystemDefault: true,
+          deviceType: 'Speaker'
+        }
+      ],
+      unparentedViews: [],
+      selectedMicrophone: {
+        name: '',
+        id: 'microphone:',
+        isSystemDefault: true,
+        deviceType: 'Microphone'
+      },
+      selectedSpeaker: {
+        name: '',
+        id: 'speaker:',
+        isSystemDefault: true,
+        deviceType: 'Speaker'
+      }
+    },
+    isTeamsCall: false,
+    latestErrors: {}
+  };
+}
+
+/**
  * Create the default {@link MockRemoteParticipantState} for hermetic e2e tests.
  *
  * Use this to add participants to state created via {@link defaultCallAdapterState}.
