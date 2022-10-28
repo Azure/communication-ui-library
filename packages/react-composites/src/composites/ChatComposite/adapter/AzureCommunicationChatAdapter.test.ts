@@ -111,6 +111,24 @@ describe('Error is reflected in state and events', () => {
     const allLoaded = await adapter.loadPreviousChatMessages(1);
     expect(allLoaded).toBe(true);
   });
+
+  it('when sendTypingNotifiaction fails', async () => {
+    const threadClient = new StubChatThreadClient();
+    threadClient.sendTypingNotification = (): Promise<boolean> => {
+      throw new Error('injected error');
+    };
+    const adapter = await createChatAdapterWithStubs(new StubChatClient(threadClient));
+    const stateListener = new StateChangeListener(adapter);
+    const errorListener = new ErrorListener(adapter);
+
+    await expect(adapter.sendTypingIndicator()).rejects.toThrow();
+
+    expect(stateListener.onChangeCalledCount).toBe(1);
+    const latestError = stateListener.state.latestErrors['ChatThreadClient.sendTypingNotification'];
+    expect(latestError).toBeDefined();
+    expect(errorListener.errors.length).toBe(1);
+    expect(errorListener.errors[0].target).toBe('ChatThreadClient.sendTypingNotification');
+  });
 });
 
 const createChatAdapterWithStubs = async (chatClient: StubChatClient): Promise<ChatAdapter> => {
