@@ -112,7 +112,7 @@ describe('Error is reflected in state and events', () => {
     expect(allLoaded).toBe(true);
   });
 
-  it('when sendTypingNotifiaction fails', async () => {
+  it('when sendTypingNotification fails', async () => {
     const threadClient = new StubChatThreadClient();
     threadClient.sendTypingNotification = (): Promise<boolean> => {
       throw new Error('injected error');
