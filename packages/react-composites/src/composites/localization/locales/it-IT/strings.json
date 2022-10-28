@@ -67,7 +67,7 @@
     "resumingCallButtonAriaLabel": "Riprendi chiamata",
     "holdScreenLabel": "In attesa.",
     "openDtmfDialpadLabel": "Mostra tastiera",
-    "dtmfDialpadPlaceHolderText": "Immetti il numero",
+    "dtmfDialpadPlaceholderText": "Immetti il numero",
     "outboundCallingNoticeString": "Chiamata in corso..."
   },
   "chat": {
@@ -105,6 +105,6 @@
     "dialpadModalAriaLabel": "Tastiera",
     "dialpadCloseModalButtonAriaLabel": "Chiudi tastiera",
     "openDtmfDialpadLabel": "Mostra tastiera",
-    "dtmfDialpadPlaceHolderText": "Immetti il numero"
+    "dtmfDialpadPlaceholderText": "Immetti il numero"
   }
 }

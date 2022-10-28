@@ -67,7 +67,7 @@
     "resumingCallButtonAriaLabel": "Gesprek hervatten",
     "holdScreenLabel": "U staat in de wacht",
     "openDtmfDialpadLabel": "Toetsenblok weergeven",
-    "dtmfDialpadPlaceHolderText": "Nummer invoeren",
+    "dtmfDialpadPlaceholderText": "Nummer invoeren",
     "outboundCallingNoticeString": "Bellen..."
   },
   "chat": {
@@ -105,6 +105,6 @@
     "dialpadModalAriaLabel": "Telefoonkiezer",
     "dialpadCloseModalButtonAriaLabel": "Toetsenblok sluiten",
     "openDtmfDialpadLabel": "Toetsenblok weergeven",
-    "dtmfDialpadPlaceHolderText": "Nummer invoeren"
+    "dtmfDialpadPlaceholderText": "Nummer invoeren"
   }
 }

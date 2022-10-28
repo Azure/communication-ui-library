@@ -67,7 +67,7 @@
     "resumingCallButtonAriaLabel": "Возобновить вызов",
     "holdScreenLabel": "Ваш звонок на удержании",
     "openDtmfDialpadLabel": "Показать панель набора номера",
-    "dtmfDialpadPlaceHolderText": "Введите номер",
+    "dtmfDialpadPlaceholderText": "Введите номер",
     "outboundCallingNoticeString": "Выполняется вызов..."
   },
   "chat": {
@@ -105,6 +105,6 @@
     "dialpadModalAriaLabel": "Панель набора номера",
     "dialpadCloseModalButtonAriaLabel": "Закрыть панель набора номера",
     "openDtmfDialpadLabel": "Показать панель набора номера",
-    "dtmfDialpadPlaceHolderText": "Введите номер"
+    "dtmfDialpadPlaceholderText": "Введите номер"
   }
 }

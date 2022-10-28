@@ -67,7 +67,7 @@
     "resumingCallButtonAriaLabel": "Anruf fortsetzen",
     "holdScreenLabel": "Sie sind in der Warteschleife.",
     "openDtmfDialpadLabel": "Wähltastatur anzeigen",
-    "dtmfDialpadPlaceHolderText": "Nummer eingeben",
+    "dtmfDialpadPlaceholderText": "Nummer eingeben",
     "outboundCallingNoticeString": "Anrufen..."
   },
   "chat": {
@@ -105,6 +105,6 @@
     "dialpadModalAriaLabel": "Wähltastatur",
     "dialpadCloseModalButtonAriaLabel": "Wähltastatur schließen",
     "openDtmfDialpadLabel": "Wähltastatur anzeigen",
-    "dtmfDialpadPlaceHolderText": "Nummer eingeben"
+    "dtmfDialpadPlaceholderText": "Nummer eingeben"
   }
 }

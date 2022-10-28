@@ -67,7 +67,7 @@
     "resumingCallButtonAriaLabel": "繼續通話",
     "holdScreenLabel": "您的通話已保留",
     "openDtmfDialpadLabel": "顯示撥號盤",
-    "dtmfDialpadPlaceHolderText": "輸入號碼",
+    "dtmfDialpadPlaceholderText": "輸入號碼",
     "outboundCallingNoticeString": "撥號中..."
   },
   "chat": {
@@ -105,6 +105,6 @@
     "dialpadModalAriaLabel": "撥號鍵台",
     "dialpadCloseModalButtonAriaLabel": "關閉撥號鍵台",
     "openDtmfDialpadLabel": "顯示撥號盤",
-    "dtmfDialpadPlaceHolderText": "輸入號碼"
+    "dtmfDialpadPlaceholderText": "輸入號碼"
   }
 }
