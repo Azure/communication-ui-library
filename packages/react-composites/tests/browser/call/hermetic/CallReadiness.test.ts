@@ -49,7 +49,7 @@ test.describe('Call Readiness tests', async () => {
     expect(await stableScreenshot(page)).toMatchSnapshot(`call-readiness-desktop-helper-modal.png`);
   });
 
-  test('Call Readiness error bar should show up when user deny permissions', async ({ page, serverUrl }, testInfo) => {
+  test('Call Readiness error bar should show up when user deny permissions', async ({ page, serverUrl }) => {
     test.skip(isTestProfileStableFlavor());
 
     const initialState = defaultMockCallAdapterStateCallReadiness();
@@ -66,7 +66,7 @@ test.describe('Call Readiness tests', async () => {
     expect(await stableScreenshot(page)).toMatchSnapshot(`call-readiness-error-bar.png`);
   });
 
-  test('Call Readiness feature should be hidden when not opted in', async ({ page, serverUrl }, testInfo) => {
+  test('Call Readiness feature should be hidden when not opted in', async ({ page, serverUrl }) => {
     test.skip(isTestProfileStableFlavor());
 
     const initialState = defaultMockCallAdapterStateCallReadiness();
