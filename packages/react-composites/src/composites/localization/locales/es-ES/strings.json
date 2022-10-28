@@ -67,7 +67,7 @@
     "resumingCallButtonAriaLabel": "Reanudar llamada",
     "holdScreenLabel": "Está en espera",
     "openDtmfDialpadLabel": "Mostrar teclado de marcado",
-    "dtmfDialpadPlaceHolderText": "Introducir número",
+    "dtmfDialpadPlaceholderText": "Introducir número",
     "outboundCallingNoticeString": "Llamando..."
   },
   "chat": {
@@ -105,6 +105,6 @@
     "dialpadModalAriaLabel": "Teclado de marcado",
     "dialpadCloseModalButtonAriaLabel": "Cerrar teclado de marcado",
     "openDtmfDialpadLabel": "Mostrar teclado de marcado",
-    "dtmfDialpadPlaceHolderText": "Introducir número"
+    "dtmfDialpadPlaceholderText": "Introducir número"
   }
 }

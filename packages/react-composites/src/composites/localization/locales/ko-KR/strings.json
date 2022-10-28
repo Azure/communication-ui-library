@@ -67,7 +67,7 @@
     "resumingCallButtonAriaLabel": "통화 계속하기",
     "holdScreenLabel": "대기 중입니다.",
     "openDtmfDialpadLabel": "다이얼패드 표시",
-    "dtmfDialpadPlaceHolderText": "번호 입력",
+    "dtmfDialpadPlaceholderText": "번호 입력",
     "outboundCallingNoticeString": "전화 거는 중..."
   },
   "chat": {
@@ -105,6 +105,6 @@
     "dialpadModalAriaLabel": "다이얼패드",
     "dialpadCloseModalButtonAriaLabel": "다이얼패드 닫기",
     "openDtmfDialpadLabel": "다이얼패드 표시",
-    "dtmfDialpadPlaceHolderText": "번호 입력"
+    "dtmfDialpadPlaceholderText": "번호 입력"
   }
 }

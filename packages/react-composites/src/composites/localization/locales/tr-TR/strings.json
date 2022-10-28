@@ -67,7 +67,7 @@
     "resumingCallButtonAriaLabel": "Görüşmeye devam edin",
     "holdScreenLabel": "Beklemeye alındınız",
     "openDtmfDialpadLabel": "Tuş takımını göster",
-    "dtmfDialpadPlaceHolderText": "Numara girin",
+    "dtmfDialpadPlaceholderText": "Numara girin",
     "outboundCallingNoticeString": "Aranıyor..."
   },
   "chat": {
@@ -105,6 +105,6 @@
     "dialpadModalAriaLabel": "Tuş takımı",
     "dialpadCloseModalButtonAriaLabel": "Tuş takımını kapat",
     "openDtmfDialpadLabel": "Tuş takımını göster",
-    "dtmfDialpadPlaceHolderText": "Numara girin"
+    "dtmfDialpadPlaceholderText": "Numara girin"
   }
 }

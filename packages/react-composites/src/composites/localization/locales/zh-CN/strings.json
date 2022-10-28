@@ -67,7 +67,7 @@
     "resumingCallButtonAriaLabel": "继续通话",
     "holdScreenLabel": "你的通话处于保留状态",
     "openDtmfDialpadLabel": "显示拨号盘",
-    "dtmfDialpadPlaceHolderText": "输入号码",
+    "dtmfDialpadPlaceholderText": "输入号码",
     "outboundCallingNoticeString": "正在呼叫..."
   },
   "chat": {
@@ -105,6 +105,6 @@
     "dialpadModalAriaLabel": "拨号盘",
     "dialpadCloseModalButtonAriaLabel": "关闭拨号盘",
     "openDtmfDialpadLabel": "显示拨号盘",
-    "dtmfDialpadPlaceHolderText": "输入号码"
+    "dtmfDialpadPlaceholderText": "输入号码"
   }
 }

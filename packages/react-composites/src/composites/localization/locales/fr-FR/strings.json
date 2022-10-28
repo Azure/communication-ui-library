@@ -67,7 +67,7 @@
     "resumingCallButtonAriaLabel": "Reprendre l’appel",
     "holdScreenLabel": "Vous avez été mis(e) en attente.",
     "openDtmfDialpadLabel": "Afficher le pavé numérique",
-    "dtmfDialpadPlaceHolderText": "Saisir un numéro",
+    "dtmfDialpadPlaceholderText": "Saisir un numéro",
     "outboundCallingNoticeString": "Appel en cours..."
   },
   "chat": {
@@ -105,6 +105,6 @@
     "dialpadModalAriaLabel": "Pavé numérique",
     "dialpadCloseModalButtonAriaLabel": "Fermer le pavé numérique",
     "openDtmfDialpadLabel": "Afficher le pavé numérique",
-    "dtmfDialpadPlaceHolderText": "Saisir un numéro"
+    "dtmfDialpadPlaceholderText": "Saisir un numéro"
   }
 }

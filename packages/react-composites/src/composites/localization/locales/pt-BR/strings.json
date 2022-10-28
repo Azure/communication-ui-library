@@ -67,7 +67,7 @@
     "resumingCallButtonAriaLabel": "Retomar chamada",
     "holdScreenLabel": "Você está em espera",
     "openDtmfDialpadLabel": "Mostrar teclado de discagem",
-    "dtmfDialpadPlaceHolderText": "Digite o número",
+    "dtmfDialpadPlaceholderText": "Digite o número",
     "outboundCallingNoticeString": "Chamando..."
   },
   "chat": {
@@ -105,6 +105,6 @@
     "dialpadModalAriaLabel": "Teclado de discagem",
     "dialpadCloseModalButtonAriaLabel": "Fechar teclado",
     "openDtmfDialpadLabel": "Mostrar teclado de discagem",
-    "dtmfDialpadPlaceHolderText": "Digite o número"
+    "dtmfDialpadPlaceholderText": "Digite o número"
   }
 }
