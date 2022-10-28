@@ -24,6 +24,7 @@ export type {
   VideoStreamRendererViewState
 } from './CallClientState';
 export type { CreateViewResult } from './StreamUtils';
+/* @conditional-compile-remove(one-to-n-calling) */
 export type { DeclarativeCallAgent } from './CallAgentDeclarative';
 /* @conditional-compile-remove(one-to-n-calling) */
 export type { DeclarativeIncomingCall } from './IncomingCallDeclarative';

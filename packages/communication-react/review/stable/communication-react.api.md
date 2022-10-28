@@ -174,7 +174,7 @@ export interface CallAdapter extends AdapterState<CallAdapterState>, Disposable,
 
 // @public
 export type CallAdapterCallEndedEvent = {
-    callId?: string;
+    callId: string;
 };
 
 // @public
@@ -1338,9 +1338,6 @@ export interface CustomMessage extends MessageCommon {
 
 // @public
 export const darkTheme: PartialTheme & CallingTheme;
-
-// @public
-export type DeclarativeCallAgent = CallAgent;
 
 // @public
 export const DEFAULT_COMPONENT_ICONS: {

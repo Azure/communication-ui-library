@@ -24,7 +24,8 @@
      * instead of the latest version.
      */
     // "some-library": "1.2.3"
-    "@azure/communication-calling": "1.8.0-beta.1"
+    "@azure/communication-calling": "1.8.0-beta.1",
+    "@azure/communication-chat": "1.2.0"
   },
 
   /**
@@ -53,6 +54,7 @@
    */
   "allowedAlternativeVersions": {
     "@azure/communication-calling": ["1.8.0-beta.1"],
+    "@azure/communication-chat": ["1.2.0"],
     "webpack": [
       // All projects should use this version by default
       "5.38.1",
