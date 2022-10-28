@@ -58,6 +58,8 @@ export interface ConfigurationPageProps {
   }) => void;
   /* @conditional-compile-remove(call-readiness) */
   onNetworkingTroubleShootingClick?: () => void;
+  /* @conditional-compile-remove(call-readiness) */
+  callReadinessOptedIn?: boolean;
 }
 
 /**
@@ -69,7 +71,8 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
     mobileView,
     /* @conditional-compile-remove(call-readiness) */ devicePermissions,
     /* @conditional-compile-remove(call-readiness) */ onPermissionsTroubleshootingClick,
-    /* @conditional-compile-remove(call-readiness) */ onNetworkingTroubleShootingClick
+    /* @conditional-compile-remove(call-readiness) */ onNetworkingTroubleShootingClick,
+    /* @conditional-compile-remove(call-readiness) */ callReadinessOptedIn = false
   } = props;
 
   const options = useAdaptedSelector(getCallingSelector(DevicesButton));
@@ -163,12 +166,14 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
           /* @conditional-compile-remove(call-readiness) */
           onPermissionsTroubleshootingClick={onPermissionsTroubleshootingClick}
           errorBarProps={errorBarProps}
+          /* @conditional-compile-remove(call-readiness) */
+          callReadinessOptedIn={callReadinessOptedIn}
         />
       </Stack>
 
       {
         /* @conditional-compile-remove(call-readiness) */
-        mobileView && isDrawerShowing && (
+        mobileView && isDrawerShowing && callReadinessOptedIn && (
           <_DrawerSurface onLightDismiss={onLightDismissTriggered} styles={drawerContainerStyles(99)}>
             <DomainPermissions
               appName={'app'}
@@ -219,6 +224,8 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
                 {...localDeviceSettingsHandlers}
                 cameraPermissionGranted={cameraPermissionGranted}
                 microphonePermissionGranted={microphonePermissionGranted}
+                /* @conditional-compile-remove(call-readiness) */
+                callReadinessOptedIn={callReadinessOptedIn}
               />
             </>
           )}

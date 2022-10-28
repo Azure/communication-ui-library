@@ -592,6 +592,7 @@ export interface DomainPermissionsProps {
 
 // @beta
 export interface DomainPermissionsStrings {
+    ariaLabel: string;
     linkText: string;
     primaryButtonText: string;
     primaryText: string;

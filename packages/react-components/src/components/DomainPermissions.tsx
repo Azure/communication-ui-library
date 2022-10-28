@@ -64,6 +64,10 @@ export interface DomainPermissionsStrings {
    * Primary button text string.
    */
   primaryButtonText: string;
+  /**
+   * aira label describing the content of the container
+   */
+  ariaLabel: string;
 }
 
 /* @conditional-compile-remove(call-readiness) */
@@ -71,7 +75,7 @@ const DomainPermissionsContainer = (props: DomainPermissionsProps): JSX.Element 
   const { appName, onTroubleshootingClick, onAllowAccessClick, strings } = props;
   const theme = useTheme();
   return (
-    <Stack style={{ padding: '2rem', maxWidth: '25.375rem' }}>
+    <Stack style={{ padding: '2rem', maxWidth: '25.375rem' }} aria-label={strings?.ariaLabel}>
       <Stack horizontal style={{ paddingBottom: '1rem' }} horizontalAlign={'space-between'}>
         <Stack styles={iconContainerStyles} horizontalAlign={'center'}>
           <Icon styles={iconPrimaryStyles} iconName={'DomainPermissionCamera'}></Icon>
