@@ -5,8 +5,10 @@ import { CallAgentCommon, CallCommon, TeamsCallAgent } from './BetaToStableTypes
 import { IncomingCallManagement } from './CallAgentDeclarative';
 import { clearCallRelatedState, DeclarativeCallCommon, ProxyCallAgentCommon } from './CallAgentDeclarativeCommon';
 import { CallContext } from './CallContext';
+/* @conditional-compile-remove(teams-call) */
 import { isTeamsCall, isTeamsCallAgent } from './Converter';
 import { InternalCallContext } from './InternalCallContext';
+/* @conditional-compile-remove(teams-call) */
 import { teamsCallDeclaratify } from './TeamsCallDeclarative';
 
 /**
