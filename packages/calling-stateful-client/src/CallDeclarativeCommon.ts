@@ -1,8 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-/* @conditional-compile-remove(teams-call) */
-
 import { CallContext } from './CallContext';
 import { CallCommon } from './BetaToStableTypes';
 
