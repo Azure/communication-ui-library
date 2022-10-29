@@ -1,32 +1,20 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-
-/* @conditional-compile-remove(teams-call) */
-import { TeamsCallAgent as TeamsCallAgentBeta } from '@azure/communication-calling';
-import { ProxyCallAgentCommon } from './CallAgentDeclarativeCommon';
+import { CallAgentCommon, CallCommon, TeamsCallAgent } from './BetaToStableTypes';
+/* @conditional-compile-remove(one-to-n-calling) */
+import { IncomingCallManagement } from './CallAgentDeclarative';
+import { clearCallRelatedState, DeclarativeCallCommon, ProxyCallAgentCommon } from './CallAgentDeclarativeCommon';
 import { CallContext } from './CallContext';
-/* @conditional-compile-remove(teams-call) */
-import { DeclarativeIncomingCall } from './IncomingCallDeclarative';
+import { isTeamsCall, isTeamsCallAgent } from './Converter';
 import { InternalCallContext } from './InternalCallContext';
-import { disposeAllViews } from './StreamUtils';
-
-type TeamsCallAgent = never | /* @conditional-compile-remove(teams-call) */ TeamsCallAgentBeta;
+import { teamsCallDeclaratify } from './TeamsCallDeclarative';
 
 /**
- * @public
+ * @beta
  * `DeclarativeTeamsCallAgent` extends and proxies the {@link @azure/communication-calling#TeamsCallAgent}
  */
-export type DeclarativeTeamsCallAgent = TeamsCallAgent & /* @conditional-compile-remove(one-to-n-calling) */ {
-  /**
-   * @beta
-   * A readonly array that returns all the active `incomingCalls`.
-   * An active incoming call is a call that has not been answered, declined or disconnected.
-   *
-   * @Remark This attribute doesn't exist on the {@link @azure/communication-calling#CallAgent} interface.
-   * @returns readonly array of {@link DeclarativeIncomingCall}
-   */
-  incomingCalls: ReadonlyArray<DeclarativeIncomingCall>;
-};
+export type DeclarativeTeamsCallAgent = TeamsCallAgent &
+  /* @conditional-compile-remove(one-to-n-calling) */ IncomingCallManagement;
 
 /**
  * ProxyTeamsCallAgent proxies TeamsCallAgent and saves any returned state in the given context. It will subscribe to all state
@@ -44,7 +32,7 @@ class ProxyTeamsCallAgent extends ProxyCallAgentCommon implements ProxyHandler<D
     this.subscribe();
   }
 
-  protected subscribe = (): void => {
+  private subscribe = (): void => {
     /* @conditional-compile-remove(teams-call) */
     this._callAgent.on('callsUpdated', this.callsUpdated);
     /* @conditional-compile-remove(teams-call) */
@@ -67,6 +55,46 @@ class ProxyTeamsCallAgent extends ProxyCallAgentCommon implements ProxyHandler<D
     this.unregisterSubscriber();
   };
 
+  protected callDeclaratify(call: CallCommon, context: CallContext): DeclarativeCallCommon {
+    /* @conditional-compile-remove(teams-call) */
+    if (isTeamsCall(call)) {
+      return teamsCallDeclaratify(call, context);
+    }
+    throw new Error('Not reachable code for callDeclaratify.');
+  }
+
+  protected startCall(agent: CallAgentCommon, args: unknown[]): CallCommon {
+    /* @conditional-compile-remove(teams-call) */
+    if (isTeamsCallAgent(agent)) {
+      return agent.startCall(...(args as Parameters<TeamsCallAgent['startCall']>));
+    }
+    throw Error('Unreachable code for TeamsCallAgentDeclarative.startCall()');
+  }
+
+  protected joinCall(agent: CallAgentCommon, args: unknown[]): CallCommon {
+    /* @conditional-compile-remove(teams-call) */
+    if (isTeamsCallAgent(agent)) {
+      return agent.join(...(args as Parameters<TeamsCallAgent['join']>));
+    }
+    throw Error('Unreachable code for TeamsCallAgentDeclarative.joinCall()');
+  }
+
+  protected agentSubscribe(agent: CallAgentCommon, args: unknown[]): void {
+    /* @conditional-compile-remove(teams-call) */
+    if (isTeamsCallAgent(agent)) {
+      agent.on(...(args as Parameters<TeamsCallAgent['on']>));
+    }
+    throw Error('Unreachable code for TeamsCallAgentDeclarative.agentSubscribe()');
+  }
+
+  protected agentUnsubscribe(agent: CallAgentCommon, args: unknown[]): void {
+    /* @conditional-compile-remove(teams-call) */
+    if (isTeamsCallAgent(agent)) {
+      agent.off(...(args as Parameters<TeamsCallAgent['off']>));
+    }
+    throw Error('Unreachable code for TeamsCallAgentDeclarative.agentUnsubscribe()');
+  }
+
   public get<P extends keyof TeamsCallAgent>(target: TeamsCallAgent, prop: P): any {
     /* @conditional-compile-remove(teams-call) */
     return super.getCommon(target, prop);
@@ -86,12 +114,7 @@ export const teamsCallAgentDeclaratify = (
   context: CallContext,
   internalContext: InternalCallContext
 ): DeclarativeTeamsCallAgent => {
-  // Make sure there are no existing call data if creating a new TeamsCallAgentDeclarative (if creating a new
-  // TeamsCallAgentDeclarative after disposing of the hold one will mean context have old call state).
-  disposeAllViews(context, internalContext);
-
-  context.clearCallRelatedState();
-  internalContext.clearCallRelatedState();
+  clearCallRelatedState(context, internalContext);
   return new Proxy(
     callAgent,
     new ProxyTeamsCallAgent(callAgent, context, internalContext)

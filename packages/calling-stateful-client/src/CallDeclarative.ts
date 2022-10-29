@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { Call } from '@azure/communication-calling';
-import { ProxyCallCommon } from './CallCommonDeclarative';
+import { ProxyCallCommon } from './CallDeclarativeCommon';
 import { CallContext } from './CallContext';
 
 /**

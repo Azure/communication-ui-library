@@ -1,15 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-/* @conditional-compile-remove(teams-call) */
-import { TeamsCall as TeamsCallBeta } from '@azure/communication-calling';
-import { ProxyCallCommon } from './CallCommonDeclarative';
+import { TeamsCall } from './BetaToStableTypes';
+import { ProxyCallCommon } from './CallDeclarativeCommon';
 import { CallContext } from './CallContext';
 
-type TeamsCall = never | /* @conditional-compile-remove(teams-call) */ TeamsCallBeta;
-
 /**
- * TODO: This should likely be exported?
  *
  * @private
  */

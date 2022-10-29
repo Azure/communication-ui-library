@@ -2,14 +2,9 @@
 // Licensed under the MIT license.
 
 /* @conditional-compile-remove(teams-call) */
-import { CallCommon as CallCommonBeta } from '@azure/communication-calling';
-import { Call } from '@azure/communication-calling';
-import { CallContext } from './CallContext';
 
-/**
- * @private
- */
-export type CallCommon = Call | /* @conditional-compile-remove(teams-call) */ CallCommonBeta;
+import { CallContext } from './CallContext';
+import { CallCommon } from './BetaToStableTypes';
 
 /**
  * @private

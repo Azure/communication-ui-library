@@ -2,19 +2,16 @@
 // Licensed under the MIT license.
 
 import {
-  Call as SdkCall,
   RemoteParticipant as SdkRemoteParticipant,
   RemoteVideoStream as SdkRemoteVideoStream,
   LocalVideoStream as SdkLocalVideoStream,
-  IncomingCall as SdkIncomingCall,
   VideoStreamRendererView,
   Call,
   CallAgent
 } from '@azure/communication-calling';
 
-/* @conditional-compile-remove(teams-call) */
-import { TeamsCall, TeamsIncomingCall, TeamsCallAgent } from '@azure/communication-calling';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
+import { CallAgentCommon, CallCommon, IncomingCallCommon, TeamsCall, TeamsCallAgent } from './BetaToStableTypes';
 import {
   CallState,
   RemoteParticipantState as DeclarativeRemoteParticipant,
@@ -79,9 +76,7 @@ export function convertSdkParticipantToDeclarativeParticipant(
  *
  * Note at the time of writing only one LocalVideoStream is supported by the SDK.
  */
-export function convertSdkCallToDeclarativeCall(
-  call: SdkCall | /* @conditional-compile-remove(teams-call) */ TeamsCall
-): CallState {
+export function convertSdkCallToDeclarativeCall(call: CallCommon): CallState {
   const declarativeRemoteParticipants = {};
   call.remoteParticipants.forEach((participant: SdkRemoteParticipant) => {
     declarativeRemoteParticipants[toFlatCommunicationIdentifier(participant.identifier)] =
@@ -119,9 +114,7 @@ export function convertSdkCallToDeclarativeCall(
 /**
  * @private
  */
-export function convertSdkIncomingCallToDeclarativeIncomingCall(
-  call: SdkIncomingCall | /* @conditional-compile-remove(teams-call) */ TeamsIncomingCall
-): DeclarativeIncomingCall {
+export function convertSdkIncomingCallToDeclarativeIncomingCall(call: IncomingCallCommon): DeclarativeIncomingCall {
   return {
     id: call.id,
     callerInfo: call.callerInfo,
@@ -146,7 +139,7 @@ export function convertFromSDKToDeclarativeVideoStreamRendererView(
 /**
  * @private
  */
-export const isACSCall = (call: Call | /* @conditional-compile-remove(teams-call) */ TeamsCall): call is Call => {
+export const isACSCall = (call: CallCommon): call is Call => {
   /* @conditional-compile-remove(teams-call) */
   return call.kind === 'Call';
   return true;
@@ -155,10 +148,26 @@ export const isACSCall = (call: Call | /* @conditional-compile-remove(teams-call
 /**
  * @private
  */
-export const isACSCallAgent = (
-  callAgent: CallAgent | /* @conditional-compile-remove(teams-call) */ TeamsCallAgent
-): callAgent is CallAgent => {
+export const isACSCallAgent = (callAgent: CallAgentCommon): callAgent is CallAgent => {
   /* @conditional-compile-remove(teams-call) */
   return callAgent.kind === 'CallAgent';
   return true;
+};
+
+/**
+ * @private
+ */
+export const isTeamsCall = (call: CallCommon): call is TeamsCall => {
+  /* @conditional-compile-remove(teams-call) */
+  return call.kind === 'TeamsCall';
+  return false;
+};
+
+/**
+ * @private
+ */
+export const isTeamsCallAgent = (callAgent: CallAgentCommon): callAgent is TeamsCallAgent => {
+  /* @conditional-compile-remove(teams-call) */
+  return callAgent.kind === 'TeamsCallAgent';
+  return false;
 };
