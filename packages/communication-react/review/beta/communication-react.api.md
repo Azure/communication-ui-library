@@ -57,6 +57,7 @@ import { MediaStreamType } from '@azure/communication-calling';
 import { MicrosoftTeamsUserKind } from '@azure/communication-common';
 import type { NetworkDiagnosticChangedEventArgs } from '@azure/communication-calling';
 import { PartialTheme } from '@fluentui/react';
+import { ParticipantRole } from '@azure/communication-calling';
 import { PermissionConstraints } from '@azure/communication-calling';
 import { PersonaInitialsColor } from '@fluentui/react';
 import { PersonaPresence } from '@fluentui/react';
@@ -236,7 +237,7 @@ export interface CallAdapter extends AdapterState<CallAdapterState>, Disposable,
 
 // @public
 export type CallAdapterCallEndedEvent = {
-    callId?: string;
+    callId: string;
 };
 
 // @public
@@ -446,6 +447,7 @@ export type CallCompositeOptions = {
     errorBar?: boolean;
     callControls?: boolean | CallControlOptions;
     devicePermissions?: DevicePermissionRestrictions;
+    callReadinessOptedIn?: boolean;
     onPermissionsTroubleshootingClick?: (permissionsState: {
         camera: PermissionState;
         microphone: PermissionState;
@@ -688,6 +690,7 @@ export interface CallState {
     remoteParticipantsEnded: {
         [keys: string]: RemoteParticipantState;
     };
+    role?: ParticipantRole;
     screenShareRemoteParticipant?: string;
     startTime: Date;
     state: CallState_2;
@@ -938,6 +941,7 @@ export type CallWithChatCompositeOptions = {
         microphone: PermissionState;
     }) => void;
     onNetworkingTroubleShootingClick?: () => void;
+    callReadinessOptedIn?: boolean;
 };
 
 // @public
@@ -2674,6 +2678,7 @@ export interface RemoteParticipantState {
     identifier: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind | UnknownIdentifierKind;
     isMuted: boolean;
     isSpeaking: boolean;
+    role?: ParticipantRole;
     state: RemoteParticipantState_2;
     videoStreams: {
         [key: number]: RemoteVideoStreamState;
