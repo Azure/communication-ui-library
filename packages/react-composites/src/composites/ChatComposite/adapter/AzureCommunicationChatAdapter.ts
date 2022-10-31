@@ -228,7 +228,9 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   }
 
   async sendTypingIndicator(): Promise<void> {
-    await this.handlers.onTyping();
+    await this.asyncTeeErrorToEventEmitter(async () => {
+      await this.handlers.onTyping();
+    });
   }
 
   async removeParticipant(userId: string): Promise<void> {
