@@ -8,7 +8,6 @@ The hero samples are closely based on the sample applications in this repository
 | --                                 | --                                      |
 | [Chat][hero-chat]                  | [samples/Chat][samples-chat]            |
 | [Callling][hero-calling]           | [samples/Calling][samples-calling]      |
-| [CallWithChat][hero-callwithchat]  | [samples/Calling][samples-callwithchat] |
 
 We refer to the samples in this monorepository as _upstream_ of the hero samples.
 
@@ -20,10 +19,8 @@ While the hero samples are based on the samples in this repository, there are so
 
 [hero-chat]: https://github.com/Azure-Samples/communication-services-web-chat-hero
 [hero-calling]: https://github.com/Azure-Samples/communication-services-web-calling-hero
-[hero-callwithchat]: https://github.com/Azure-Samples/communication-services-web-callwithchat-hero
 [samples-chat]: ../../samples/Chat/
 [samples-calling]: ../../samples/Calling/
-[samples-callwithchat]: ../../samples/CallWithChat/
 
 ## When to update the hero samples
 
