@@ -89,19 +89,15 @@ const convertRemoteParticipantToParticipantListParticipantBeta = (
   isSpeaking: boolean,
   role: Role
 ): CallParticipantListParticipant => {
-  const identifier = fromFlatCommunicationIdentifier(userId);
   return {
-    userId,
-    displayName,
-    state,
-    isMuted,
-    isScreenSharing,
-    isSpeaking,
-    // ACS users can not remove Teams users.
-    // Removing unknown types of users is undefined.
-    isRemovable:
-      getIdentifierKind(identifier).kind === 'communicationUser' ||
-      getIdentifierKind(identifier).kind === 'phoneNumber',
+    ...convertRemoteParticipantToParticipantListParticipant(
+      userId,
+      displayName,
+      state,
+      isMuted,
+      isScreenSharing,
+      isSpeaking
+    ),
     role
   };
 };
