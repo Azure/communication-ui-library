@@ -2696,7 +2696,7 @@ export interface RemoteVideoStreamState {
 }
 
 // @beta
-export type Role = 'Unknown' | 'Presenter' | 'Attendee' | 'Consumer' | 'Organizer';
+export type Role = 'Presenter' | 'Attendee' | 'Consumer' | 'Organizer';
 
 // @public
 export const ScreenShareButton: (props: ScreenShareButtonProps) => JSX.Element;
