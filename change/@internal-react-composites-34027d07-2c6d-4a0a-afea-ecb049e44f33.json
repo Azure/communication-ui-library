@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "BrowserPermissionDenied Components created",
-  "packageName": "@internal/react-composites",
-  "email": "edwardlee@microsoft.com",
-  "dependentChangeType": "patch"
-}
