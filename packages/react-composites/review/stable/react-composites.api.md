@@ -124,7 +124,7 @@ export interface CallAdapter extends AdapterState<CallAdapterState>, Disposable,
 
 // @public
 export type CallAdapterCallEndedEvent = {
-    callId?: string;
+    callId: string;
 };
 
 // @public
@@ -576,7 +576,6 @@ export interface CallWithChatCompositeStrings {
     copyInviteLinkActionedAriaLabel: string;
     copyInviteLinkButtonLabel: string;
     dismissSidePaneButtonLabel?: string;
-    dtmfDialpadPlaceHolderText: string;
     moreDrawerAudioDeviceMenuTitle?: string;
     moreDrawerButtonLabel: string;
     moreDrawerButtonTooltip: string;

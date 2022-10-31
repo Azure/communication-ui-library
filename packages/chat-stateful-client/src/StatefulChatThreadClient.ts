@@ -109,6 +109,14 @@ class ProxyChatThreadClient implements ProxyHandler<ChatThreadClient> {
       case 'listReadReceipts': {
         return createDecoratedListReadReceipts(chatThreadClient, this._context);
       }
+      case 'sendTypingNotification': {
+        return this._context.withAsyncErrorTeedToState(
+          async (...args: Parameters<ChatThreadClient['sendTypingNotification']>) => {
+            return await chatThreadClient.sendTypingNotification(...args);
+          },
+          'ChatThreadClient.sendTypingNotification'
+        );
+      }
       case 'removeParticipant': {
         return this._context.withAsyncErrorTeedToState(
           async (...args: Parameters<ChatThreadClient['removeParticipant']>) => {

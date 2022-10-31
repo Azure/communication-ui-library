@@ -27,7 +27,7 @@
   "dependencies": {
     "@azure/abort-controller": "^1.0.0",
     "@azure/communication-identity": "~1.1.0",
-    "@azure/communication-calling": "1.8.0-beta.1 || 1.4.4",
+    "@azure/communication-calling": "1.8.0-beta.1 || >=1.4.4",
     "@azure/communication-common": "2.0.0",
     "@azure/communication-react": "1.4.1-beta.0",
     "@azure/logger": "1.0.3",
@@ -47,7 +47,6 @@
     "react": "~16.14.0",
     "react-dom": "16.13.1",
     "react-router-dom": "^5.1.2",
-    "reactstrap": "^8.4.1",
     "reselect": "~4.0.0",
     "uuid": "^8.1.0"
   },

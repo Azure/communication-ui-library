@@ -136,7 +136,7 @@ export interface CallAdapter extends AdapterState<CallAdapterState>, Disposable,
 
 // @public
 export type CallAdapterCallEndedEvent = {
-    callId?: string;
+    callId: string;
 };
 
 // @public
@@ -298,6 +298,7 @@ export type CallCompositeOptions = {
     errorBar?: boolean;
     callControls?: boolean | CallControlOptions;
     devicePermissions?: DevicePermissionRestrictions;
+    callReadinessOptedIn?: boolean;
     onPermissionsTroubleshootingClick?: (permissionsState: {
         camera: PermissionState;
         microphone: PermissionState;
@@ -349,7 +350,7 @@ export interface CallCompositeStrings {
     dialpadModalTitle: string;
     dialpadStartCallButtonLabel: string;
     dismissSidePaneButtonLabel?: string;
-    dtmfDialpadPlaceHolderText: string;
+    dtmfDialpadPlaceholderText: string;
     failedToJoinCallDueToNoNetworkMoreDetails?: string;
     failedToJoinCallDueToNoNetworkTitle: string;
     failedToJoinTeamsMeetingReasonAccessDeniedMoreDetails?: string;
@@ -679,6 +680,7 @@ export type CallWithChatCompositeOptions = {
         microphone: PermissionState;
     }) => void;
     onNetworkingTroubleShootingClick?: () => void;
+    callReadinessOptedIn?: boolean;
 };
 
 // @public
@@ -706,7 +708,7 @@ export interface CallWithChatCompositeStrings {
     dialpadModalTitle: string;
     dialpadStartCallButtonLabel: string;
     dismissSidePaneButtonLabel?: string;
-    dtmfDialpadPlaceHolderText: string;
+    dtmfDialpadPlaceholderText: string;
     moreDrawerAudioDeviceMenuTitle?: string;
     moreDrawerButtonLabel: string;
     moreDrawerButtonTooltip: string;

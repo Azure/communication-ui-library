@@ -5,7 +5,6 @@
 ```ts
 
 import { AudioDeviceInfo } from '@azure/communication-calling';
-import { CallAgent } from '@azure/communication-calling';
 import { CallClient } from '@azure/communication-calling';
 import { CallClientOptions } from '@azure/communication-calling';
 import { CallDirection } from '@azure/communication-calling';
@@ -108,9 +107,6 @@ export type CreateViewResult = {
 };
 
 // @public
-export type DeclarativeCallAgent = CallAgent;
-
-// @public
 export type DeviceManagerState = {
     isSpeakerSelectionAvailable: boolean;
     selectedMicrophone?: AudioDeviceInfo;
@@ -185,7 +181,6 @@ export interface RemoteVideoStreamState {
 
 // @public
 export interface StatefulCallClient extends CallClient {
-    createCallAgent(...args: Parameters<CallClient['createCallAgent']>): Promise<DeclarativeCallAgent>;
     createView(callId: string | undefined, participantId: CommunicationIdentifier | undefined, stream: LocalVideoStreamState | RemoteVideoStreamState, options?: CreateViewOptions): Promise<CreateViewResult | undefined>;
     disposeView(callId: string | undefined, participantId: CommunicationIdentifier | undefined, stream: LocalVideoStreamState | RemoteVideoStreamState): void;
     getState(): CallClientState;
