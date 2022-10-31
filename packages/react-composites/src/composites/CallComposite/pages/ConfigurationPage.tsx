@@ -43,6 +43,9 @@ import { ConfigurationpageErrorBar } from '../components/ConfigurationpageErrorB
 /* @conditional-compile-remove(call-readiness) */
 import { drawerContainerStyles } from '../styles/CallComposite.styles';
 
+/* @conditional-compile-remove(call-readiness) */
+const DRAWER_HIGH_Z_BAND = 99; // setting z index to  99 so that it sit above all components
+
 /**
  * @private
  */
@@ -66,8 +69,6 @@ export interface ConfigurationPageProps {
  * @private
  */
 export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element => {
-  const DRAWER_HIGH_Z_BAND = 99; // setting z index to  99 so that it sit above all components
-
   const {
     startCallHandler,
     mobileView,
