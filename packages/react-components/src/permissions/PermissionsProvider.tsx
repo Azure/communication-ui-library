@@ -90,8 +90,9 @@ export const _usePermissions = (): _Permissions => useContext(PermissionsContext
 
 /**
  * @beta
+ * The connection state of a call participant.
  */
-export type Role = 'Presenter' | 'Attendee' | 'Consumer';
+export type Role = 'Unknown' | 'Presenter' | 'Attendee' | 'Consumer' | 'Organizer';
 
 /**
  * @internal

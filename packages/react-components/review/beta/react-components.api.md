@@ -133,6 +133,7 @@ export type CallParticipantListParticipant = ParticipantListParticipant & {
     isScreenSharing?: boolean;
     isMuted?: boolean;
     isSpeaking?: boolean;
+    role?: Role;
 };
 
 // @public
@@ -1343,8 +1344,8 @@ export const _RemoteVideoTile: React_2.MemoExoticComponent<(props: {
     participantState?: ParticipantState | undefined;
 }) => JSX.Element>;
 
-// @beta (undocumented)
-export type Role = 'Presenter' | 'Attendee' | 'Consumer';
+// @beta
+export type Role = 'Unknown' | 'Presenter' | 'Attendee' | 'Consumer' | 'Organizer';
 
 // @public
 export const ScreenShareButton: (props: ScreenShareButtonProps) => JSX.Element;
