@@ -7,8 +7,8 @@ import { _DrawerMenu, _DrawerMenuItemProps, _DrawerSurface } from '@internal/rea
 import { IModalStyles, Modal, Stack, useTheme, IconButton } from '@fluentui/react';
 
 import { themeddialpadModalStyle, themedDialpadStyle } from './SendDtmfDialpad.styles';
-import { drawerContainerStyles } from '../CallWithChatComposite/styles/CallWithChatCompositeStyles';
 import { usePropsFor } from '../CallComposite/hooks/usePropsFor';
+import { drawerContainerStyles } from '../CallComposite/styles/CallComposite.styles';
 
 /** @private */
 export interface SendDtmfDialpadStrings {

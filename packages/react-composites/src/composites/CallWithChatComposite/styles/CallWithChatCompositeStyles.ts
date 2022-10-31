@@ -3,8 +3,6 @@
 
 import { IStackStyles } from '@fluentui/react';
 
-const DEFAULT_Z_INDEX = 1;
-
 /**
  * @private
  */
@@ -34,24 +32,6 @@ export const controlBarContainerStyles: IStackStyles = {
     position: 'relative'
   }
 };
-
-/**
- * @private
- * Drawer styles to be used to house the _DrawerComponent on top of other content on the screen.
- * @param zIndex: this defaults to DEFAULT_Z_INDEX if unset
- */
-export const drawerContainerStyles = (zIndex: number = DEFAULT_Z_INDEX): IStackStyles => ({
-  root: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    width: '100%',
-    height: '100%',
-    // Any zIndex > 0 will work because this is the only absolutely
-    // positioned element in the container.
-    zIndex: zIndex
-  }
-});
 
 /**
  * Chat button might have a optional notification icon attached that must be positioned absolute inside the chat button.

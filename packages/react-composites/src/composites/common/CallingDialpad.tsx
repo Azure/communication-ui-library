@@ -12,9 +12,10 @@ import { themeddialpadModalStyle } from './CallingDialpad.styles';
 import { themedCallButtonStyle, themedDialpadStyle } from './CallingDialpad.styles';
 /* @conditional-compile-remove(PSTN-calls) */
 import { CallWithChatCompositeIcon } from './icons';
-import { drawerContainerStyles } from '../CallWithChatComposite/styles/CallWithChatCompositeStyles';
+
 import { PhoneNumberIdentifier } from '@azure/communication-common';
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
+import { drawerContainerStyles } from '../CallComposite/styles/CallComposite.styles';
 
 /** @private */
 export interface CallingDialpadStrings {
