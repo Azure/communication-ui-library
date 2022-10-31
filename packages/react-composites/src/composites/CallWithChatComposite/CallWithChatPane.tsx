@@ -23,7 +23,7 @@ import { SidePaneHeader } from '../common/SidePaneHeader';
 import { useCallWithChatCompositeStrings } from './hooks/useCallWithChatCompositeStrings';
 import { ModalLocalAndRemotePIP } from '../common/ModalLocalAndRemotePIP';
 import { PeoplePaneContent } from '../common/PeoplePaneContent';
-import { drawerContainerStyles } from './styles/CallWithChatCompositeStyles';
+
 import { TabHeader } from '../common/TabHeader';
 /* @conditional-compile-remove(file-sharing) */
 import { FileSharingOptions } from '../ChatComposite';
@@ -38,6 +38,7 @@ import { PhoneNumberIdentifier } from '@azure/communication-common';
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { CallWithChatControlOptions } from './CallWithChatComposite';
 import { isDisabled } from '../CallComposite/utils';
+import { drawerContainerStyles } from '../CallComposite/styles/CallComposite.styles';
 
 /**
  * Pane that is used to store chat and people for CallWithChat composite

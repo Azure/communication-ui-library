@@ -43,6 +43,8 @@ import { ConfigurationpageErrorBar } from '../components/ConfigurationpageErrorB
 /* @conditional-compile-remove(call-readiness) */
 import { drawerContainerStyles } from '../styles/CallComposite.styles';
 
+const DRAWER_HIGH_Z_BAND = 99; // setting z index to  99 so that it sit above all components
+
 /**
  * @private
  */
@@ -174,7 +176,7 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
       {
         /* @conditional-compile-remove(call-readiness) */
         mobileView && isDrawerShowing && callReadinessOptedIn && (
-          <_DrawerSurface onLightDismiss={onLightDismissTriggered} styles={drawerContainerStyles(99)}>
+          <_DrawerSurface onLightDismiss={onLightDismissTriggered} styles={drawerContainerStyles(DRAWER_HIGH_Z_BAND)}>
             <DomainPermissions
               appName={'app'}
               onTroubleshootingClick={
