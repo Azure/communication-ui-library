@@ -95,9 +95,7 @@ export const _DevicePermissionDropdown = (props: _DevicePermissionDropdownProps)
         if (askDevicePermission) {
           askDevicePermission(constrain ?? { video: true, audio: true });
         }
-        if (onClick) {
-          onClick();
-        }
+        onClick?.();
       }}
       options={options ?? []}
       styles={styles}

@@ -3,6 +3,8 @@
 
 import React from 'react';
 /* @conditional-compile-remove(call-readiness) */
+import { useMemo } from 'react';
+/* @conditional-compile-remove(call-readiness) */
 import { useState } from 'react';
 import { useAdaptedSelector } from '../hooks/useAdaptedSelector';
 import { useHandlers } from '../hooks/useHandlers';
@@ -160,10 +162,10 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
   const [isModalShowing, setIsModalShowing] = useState(false);
 
   /* @conditional-compile-remove(call-readiness) */
-  const onClickEnableDevicePermission = (): void => {
+  const onClickEnableDevicePermission = useMemo(() => {
     setIsModalShowing(true);
-  };
-  
+  }, []);
+
   return (
     <Stack className={mobileView ? configurationContainerStyleMobile : configurationContainerStyleDesktop}>
       <Stack styles={bannerNotificationStyles}>
