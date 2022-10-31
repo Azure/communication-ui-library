@@ -1,5 +1,5 @@
 {
-  "type": "minor",
+  "type": "prerelease",
   "comment": "Add TeamsCall and TeamsCallAgent to stateful - Add new beta feature flag \"teams-call\" - Extract common logic CallAgentCommon and CallCommon",
   "packageName": "@internal/calling-stateful-client",
   "email": "jinan@microsoft.com",

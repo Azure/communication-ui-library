@@ -11,7 +11,7 @@ import { createView, disposeView, CreateViewResult } from './StreamUtils';
 import { CommunicationIdentifier, CommunicationUserIdentifier, getIdentifierKind } from '@azure/communication-common';
 import { _getApplicationId } from '@internal/acs-ui-common';
 import { callingStatefulLogger } from './Logger';
-/* @conditional-compile-remove(teams-call) */
+/* @conditional-compile-remove(teams-identity-support) */
 import { DeclarativeTeamsCallAgent, teamsCallAgentDeclaratify } from './TeamsCallAgentDeclarative';
 
 /**
@@ -167,7 +167,7 @@ class ProxyCallClient implements ProxyHandler<CallClient> {
   private _internalContext: InternalCallContext;
   private _callAgent:
     | DeclarativeCallAgent
-    | /* @conditional-compile-remove(teams-call) */ DeclarativeTeamsCallAgent
+    | /* @conditional-compile-remove(teams-identity-support) */ DeclarativeTeamsCallAgent
     | undefined;
   private _deviceManager: DeviceManager | undefined;
   private _sdkDeviceManager: DeviceManager | undefined;
@@ -196,7 +196,7 @@ class ProxyCallClient implements ProxyHandler<CallClient> {
         );
       }
       case 'createTeamsCallAgent': {
-        /* @conditional-compile-remove(teams-call) */ return this._context.withAsyncErrorTeedToState(
+        /* @conditional-compile-remove(teams-identity-support) */ return this._context.withAsyncErrorTeedToState(
           async (...args: Parameters<CallClient['createTeamsCallAgent']>): Promise<DeclarativeTeamsCallAgent> => {
             // createCallAgent will throw an exception if the previous callAgent was not disposed. If the previous
             // callAgent was disposed then it would have unsubscribed to events so we can just create a new declarative

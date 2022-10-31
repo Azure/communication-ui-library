@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { Call, CallAgent, CallEndReason, CollectionUpdatedEvent } from '@azure/communication-calling';
-/* @conditional-compile-remove(teams-call) */
+/* @conditional-compile-remove(teams-identity-support) */
 import { TeamsCallAgent } from '@azure/communication-calling';
 import { CallContext } from './CallContext';
 import { DeclarativeCall } from './CallDeclarative';
@@ -155,7 +155,7 @@ export abstract class ProxyCallAgentCommon {
   // We can't directly override get function because it is proxied,
   // Add a getCommon function and call it in child class
   protected getCommon<
-    AgentType extends CallAgent | /* @conditional-compile-remove(teams-call) */ TeamsCallAgent,
+    AgentType extends CallAgent | /* @conditional-compile-remove(teams-identity-support) */ TeamsCallAgent,
     P extends keyof CallAgent
   >(target: AgentType, prop: P): any {
     switch (prop) {

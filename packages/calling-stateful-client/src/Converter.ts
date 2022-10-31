@@ -84,7 +84,7 @@ export function convertSdkCallToDeclarativeCall(call: CallCommon): CallState {
   });
   return {
     id: call.id,
-    /* @conditional-compile-remove(teams-call) */
+    /* @conditional-compile-remove(teams-identity-support) */
     type: isACSCall(call) ? 'ACS' : 'Teams',
     callerInfo: call.callerInfo,
     state: call.state,
@@ -142,7 +142,7 @@ export function convertFromSDKToDeclarativeVideoStreamRendererView(
  * @private
  */
 export const isACSCall = (call: CallCommon): call is Call => {
-  /* @conditional-compile-remove(teams-call) */
+  /* @conditional-compile-remove(teams-identity-support) */
   return call.kind === 'Call';
   return true;
 };
@@ -151,7 +151,7 @@ export const isACSCall = (call: CallCommon): call is Call => {
  * @private
  */
 export const isACSCallAgent = (callAgent: CallAgentCommon): callAgent is CallAgent => {
-  /* @conditional-compile-remove(teams-call) */
+  /* @conditional-compile-remove(teams-identity-support) */
   return callAgent.kind === 'CallAgent';
   return true;
 };
@@ -160,7 +160,7 @@ export const isACSCallAgent = (callAgent: CallAgentCommon): callAgent is CallAge
  * @private
  */
 export const isTeamsCall = (call: CallCommon): call is TeamsCall => {
-  /* @conditional-compile-remove(teams-call) */
+  /* @conditional-compile-remove(teams-identity-support) */
   return call.kind === 'TeamsCall';
   return false;
 };
@@ -169,7 +169,7 @@ export const isTeamsCall = (call: CallCommon): call is TeamsCall => {
  * @private
  */
 export const isTeamsCallAgent = (callAgent: CallAgentCommon): callAgent is TeamsCallAgent => {
-  /* @conditional-compile-remove(teams-call) */
+  /* @conditional-compile-remove(teams-identity-support) */
   return callAgent.kind === 'TeamsCallAgent';
   return false;
 };

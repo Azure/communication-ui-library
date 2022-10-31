@@ -34,8 +34,8 @@ process.env['COMMUNICATION_REACT_FLAVOR'] === 'stable' &&
         'rooms',
         // Adhoc calls to a Teams user.
         'teams-adhoc-call',
-        // Joining calls using teams token (CTE)
-        'teams-call',
+        // Joining calls using teams token
+        'teams-identity-support',
         'unsupported-browser',
         // Support Calling SDK isReceiving flag, shows a loading spinner on the video tile when isAvailable is true but isReceiving is false
         'video-stream-is-receiving-flag',

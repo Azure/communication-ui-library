@@ -32,7 +32,7 @@ type InferredCallErrorTargets =
    */
   | 'CallAgent.feature'
   | /* @conditional-compile-remove(calling-beta-sdk) */ 'CallClient.getEnvironmentInfo'
-  | /* @conditional-compile-remove(calling-beta-sdk) */ /* @conditional-compile-remove(teams-call) */ 'TeamsCall.addParticipant'
+  | /* @conditional-compile-remove(calling-beta-sdk) */ /* @conditional-compile-remove(teams-identity-support) */ 'TeamsCall.addParticipant'
   | 'CallClient.feature';
 
 type CallObjectMethodNames<TName extends string, T> = {

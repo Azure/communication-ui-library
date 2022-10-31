@@ -1,5 +1,5 @@
 {
-  "type": "none",
+  "type": "prerelease",
   "comment": "Add TeamsCall and TeamsCallAgent to stateful - Add new beta feature flag \"teams-call\" - Extract common logic CallAgentCommon and CallCommon",
   "packageName": "@internal/react-composites",
   "email": "jinan@microsoft.com",
