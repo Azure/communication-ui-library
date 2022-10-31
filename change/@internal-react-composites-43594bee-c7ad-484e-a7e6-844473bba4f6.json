@@ -1,6 +1,6 @@
 {
-  "type": "patch",
-  "comment": "Fixed bug where icon background is grey in calling dialpad",
+  "type": "prerelease",
+  "comment": "Add enable call readiness option for Call and CallWithChat composite",
   "packageName": "@internal/react-composites",
   "email": "carolinecao@microsoft.com",
   "dependentChangeType": "patch"
