@@ -23,7 +23,7 @@ test.describe('Call Readiness tests', async () => {
     const initialState = defaultMockCallAdapterStateCallReadiness();
     await page.goto(
       buildUrlWithMockAdapter(serverUrl, initialState, {
-        useCallReadiness: 'true',
+        usePermissionTroubleshootingActions: 'true',
         customCallCompositeOptions: JSON.stringify({ callReadinessOptedIn: true })
       })
     );
@@ -38,7 +38,7 @@ test.describe('Call Readiness tests', async () => {
     const initialState = defaultMockCallAdapterStateCallReadiness();
     await page.goto(
       buildUrlWithMockAdapter(serverUrl, initialState, {
-        useCallReadiness: 'true',
+        usePermissionTroubleshootingActions: 'true',
         customCallCompositeOptions: JSON.stringify({ callReadinessOptedIn: true })
       })
     );
@@ -56,7 +56,7 @@ test.describe('Call Readiness tests', async () => {
     initialState.devices.deviceAccess = { video: false, audio: false };
     await page.goto(
       buildUrlWithMockAdapter(serverUrl, initialState, {
-        useCallReadiness: 'true',
+        usePermissionTroubleshootingActions: 'true',
         customCallCompositeOptions: JSON.stringify({ callReadinessOptedIn: true })
       })
     );

@@ -16,8 +16,8 @@ export interface QueryArgs {
   callInvitationUrl?: string;
   showParticipantItemIcon: boolean;
   customCallCompositeOptions?: CallCompositeOptions;
-  useTroubleShootingActions?: boolean;
-  useCallReadiness?: boolean;
+  useEnvironmentInfoTroubleshootingOptions?: boolean;
+  usePermissionTroubleshootingActions?: boolean;
 
   // These are only set for live tests.
   // TODO: Separate the args out better.
@@ -38,8 +38,8 @@ export function parseQueryArgs(): QueryArgs {
     injectParticipantMenuItems: Boolean(params.injectParticipantMenuItems),
     injectCustomButtons: Boolean(params.injectCustomButtons),
     showParticipantItemIcon: Boolean(params.showParticipantItemIcon),
-    useTroubleShootingActions: Boolean(params.useTroubleShootingActions),
-    useCallReadiness: Boolean(params.useCallReadiness),
+    useEnvironmentInfoTroubleshootingOptions: Boolean(params.useEnvironmentInfoTroubleshootingOptions),
+    usePermissionTroubleshootingActions: Boolean(params.usePermissionTroubleshootingActions),
     userId: params.userId ?? '',
     groupId: params.groupId ?? '',
     token: params.token ?? '',

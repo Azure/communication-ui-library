@@ -34,36 +34,20 @@ export function BaseApp(props: { queryArgs: QueryArgs; callAdapter?: CallAdapter
 
   const ParticipantItemOptions = queryArgs.showParticipantItemIcon ? <MoreHorizontal20Regular /> : <></>;
 
-  const onEnvironmentInfoTroubleshootingClick = queryArgs.useTroubleShootingActions // useTroubleShootingActions is for all CallReadiness Callbacks
-    ? () => alert('you are using a unsupported browser')
-    : undefined;
+  let customCallCompositeOptions = queryArgs.customCallCompositeOptions;
 
-  const onPermissionsTroubleshootingClick = queryArgs.useCallReadiness
-    ? (permissionsState: { camera: PermissionState; microphone: PermissionState }) => {
-        alert(permissionsState);
-      }
-    : undefined;
-
-  let customCallCompositeOptions;
-
-  if (onEnvironmentInfoTroubleshootingClick && onPermissionsTroubleshootingClick) {
+  if (queryArgs.useEnvironmentInfoTroubleshootingOptions) {
     customCallCompositeOptions = {
-      ...queryArgs.customCallCompositeOptions,
-      onEnvironmentInfoTroubleshootingClick: onEnvironmentInfoTroubleshootingClick,
-      onPermissionsTroubleshootingClick: onPermissionsTroubleshootingClick
-    };
-  } else if (onPermissionsTroubleshootingClick) {
-    customCallCompositeOptions = {
-      ...queryArgs.customCallCompositeOptions,
-      onPermissionsTroubleshootingClick: onPermissionsTroubleshootingClick
-    };
-  } else if (onEnvironmentInfoTroubleshootingClick) {
-    customCallCompositeOptions = {
-      ...queryArgs.customCallCompositeOptions,
+      ...customCallCompositeOptions,
       onEnvironmentInfoTroubleshootingClick: onEnvironmentInfoTroubleshootingClick
     };
-  } else {
-    customCallCompositeOptions = queryArgs.customCallCompositeOptions;
+  }
+
+  if (queryArgs.usePermissionTroubleshootingActions) {
+    customCallCompositeOptions = {
+      ...customCallCompositeOptions,
+      onPermissionsTroubleshootingClick: onPermissionsTroubleshootingClick
+    };
   }
 
   return (
@@ -156,3 +140,9 @@ const onFetchCustomButtonProps: CustomCallControlButtonCallback[] = [
     };
   }
 ];
+
+const onPermissionsTroubleshootingClick = (permissionsState: unknown) => {
+  alert(permissionsState);
+};
+
+const onEnvironmentInfoTroubleshootingClick = () => alert('you are using a unsupported browser');
