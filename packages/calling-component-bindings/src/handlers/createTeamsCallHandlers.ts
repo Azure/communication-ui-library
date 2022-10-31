@@ -46,7 +46,7 @@ export const createDefaultTeamsCallingHandlers = memoizeOne(
     deviceManager: StatefulDeviceManager | undefined,
     call: /* @conditional-compile-remove(teams-call) */ TeamsCall | undefined
   ): never | /* @conditional-compile-remove(teams-call) */ TeamsCallingHandlers => {
-    const calingsHandlers = createDefaultCallingHandlersCommon(callClient, callAgent, deviceManager, call);
+    const calingsHandlers = createDefaultCallingHandlersCommon(callClient, deviceManager, call);
     return {
       ...calingsHandlers,
       onStartCall: (participants, options) => {

@@ -40,7 +40,7 @@ export const createDefaultACSCallingHandlers = memoizeOne(
     call: Call | undefined
   ): CallingHandlers => {
     return {
-      ...createDefaultCallingHandlersCommon(callClient, callAgent, deviceManager, call),
+      ...createDefaultCallingHandlersCommon(callClient, deviceManager, call),
       // FIXME: onStartCall API should use string, not the underlying SDK types.
       onStartCall: (participants: CommunicationIdentifier[], options?: StartCallOptions): Call | undefined => {
         return callAgent ? callAgent.startCall(participants, options) : undefined;

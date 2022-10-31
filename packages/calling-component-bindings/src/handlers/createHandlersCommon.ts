@@ -5,11 +5,9 @@ import {
   AddPhoneNumberOptions,
   AudioDeviceInfo,
   Call,
-  CallAgent,
   LocalVideoStream,
   StartCallOptions,
   TeamsCall,
-  TeamsCallAgent,
   VideoDeviceInfo
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
@@ -84,7 +82,6 @@ export const areStreamsEqual = (prevStream: LocalVideoStream, newStream: LocalVi
 export const createDefaultCallingHandlersCommon = memoizeOne(
   (
     callClient: StatefulCallClient,
-    callAgent: CallAgent | TeamsCallAgent | undefined,
     deviceManager: StatefulDeviceManager | undefined,
     call: Call | TeamsCall | undefined
   ): CallingHandlersCommon => {
