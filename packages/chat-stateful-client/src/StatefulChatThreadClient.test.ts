@@ -317,7 +317,7 @@ describe('stateful chatThreadClient correctly wraps errors', () => {
     );
   });
 
-  test('when sendTypingNotification failes', async () => {
+  test('when sendTypingNotification fails', async () => {
     const chatThreadClient = createMockChatThreadClient('threadId');
     chatThreadClient.sendTypingNotification = async (): Promise<boolean> => {
       throw new Error('injected error');
