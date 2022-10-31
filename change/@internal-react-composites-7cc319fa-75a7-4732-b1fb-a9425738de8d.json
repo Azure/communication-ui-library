@@ -1,6 +1,6 @@
 {
-  "type": "prerelease",
-  "comment": "Update lobby screen to reflect to the user who they are calling in a  1:1 PSTN or ACS call.",
+  "type": "patch",
+  "comment": "Fix issue where typingIndicator errors were not being caught by the ChatAdapter",
   "packageName": "@internal/react-composites",
   "email": "94866715+dmceachernmsft@users.noreply.github.com",
   "dependentChangeType": "patch"
