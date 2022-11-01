@@ -27,7 +27,7 @@ export type IncomingCallManagement = {
 };
 
 /**
- * @public
+ * @beta
  * `DeclarativeCallAgent` extends and proxies the {@link @azure/communication-calling#CallAgent}
  */
 export type DeclarativeCallAgent = CallAgent &
