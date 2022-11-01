@@ -587,12 +587,13 @@ export const DomainPermissions: (props: DomainPermissionsProps) => JSX.Element;
 export interface DomainPermissionsProps {
     appName: string;
     onAllowAccessClick?: () => void;
-    onTroubleshootingClick: () => void;
-    strings: DomainPermissionsStrings;
+    onTroubleshootingClick?: () => void;
+    strings?: DomainPermissionsStrings;
 }
 
 // @beta
 export interface DomainPermissionsStrings {
+    ariaLabel: string;
     linkText: string;
     primaryButtonText: string;
     primaryText: string;

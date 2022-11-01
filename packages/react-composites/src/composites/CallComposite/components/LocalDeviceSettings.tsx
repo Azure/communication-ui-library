@@ -86,6 +86,7 @@ export interface LocalDeviceSettingsType {
   onSelectCamera: (device: VideoDeviceInfo, options?: VideoStreamOptions) => Promise<void>;
   onSelectMicrophone: (device: AudioDeviceInfo) => Promise<void>;
   onSelectSpeaker: (device: AudioDeviceInfo) => Promise<void>;
+  callReadinessOptedIn?: boolean;
 }
 
 /**
@@ -207,6 +208,8 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
             cameraPermissionGranted={cameraPermissionGranted ?? false}
             /* @conditional-compile-remove(call-readiness) */
             dropdownProps={dropdownProps}
+            /* @conditional-compile-remove(call-readiness) */
+            callReadinessOptedIn={props.callReadinessOptedIn ?? false}
           />
         </Stack>
       )}
@@ -224,6 +227,8 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
             micPermissionGranted={micPermissionGranted ?? false}
             /* @conditional-compile-remove(call-readiness) */
             dropdownProps={dropdownProps}
+            /* @conditional-compile-remove(call-readiness) */
+            callReadinessOptedIn={props.callReadinessOptedIn ?? false}
           />
           <Dropdown
             aria-labelledby={'call-composite-local-sound-settings-label'}

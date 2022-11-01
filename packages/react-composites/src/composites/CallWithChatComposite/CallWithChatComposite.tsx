@@ -10,8 +10,7 @@ import { CallState } from '@azure/communication-calling';
 import {
   callCompositeContainerStyles,
   compositeOuterContainerStyles,
-  controlBarContainerStyles,
-  drawerContainerStyles
+  controlBarContainerStyles
 } from './styles/CallWithChatCompositeStyles';
 import { CallWithChatAdapter } from './adapter/CallWithChatAdapter';
 import { CallWithChatBackedCallAdapter } from './adapter/CallWithChatBackedCallAdapter';
@@ -39,6 +38,7 @@ import { SendDtmfDialpad } from '../common/SendDtmfDialpad';
 import { useCallWithChatCompositeStrings } from './hooks/useCallWithChatCompositeStrings';
 /* @conditional-compile-remove(call-readiness) */
 import { DevicePermissionRestrictions } from '../CallComposite/CallComposite';
+import { drawerContainerStyles } from '../CallComposite/styles/CallComposite.styles';
 
 /**
  * Props required for the {@link CallWithChatComposite}
@@ -435,7 +435,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
         {showControlBar && showDrawer && (
           <ChatAdapterProvider adapter={chatProps.adapter}>
             <CallAdapterProvider adapter={callAdapter}>
-              <Stack styles={drawerContainerStyles}>
+              <Stack styles={drawerContainerStyles()}>
                 <PreparedMoreDrawer
                   callControls={props.callControls}
                   onLightDismiss={closeDrawer}
@@ -455,7 +455,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
           showControlBar && showDtmfDialpad && (
             <ChatAdapterProvider adapter={chatProps.adapter}>
               <CallAdapterProvider adapter={callAdapter}>
-                <Stack styles={drawerContainerStyles}>
+                <Stack styles={drawerContainerStyles()}>
                   <SendDtmfDialpad
                     isMobile={mobileView}
                     strings={dialpadStrings}

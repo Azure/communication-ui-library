@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Fix VideoGallery showing video spinners when the CallComposites are disconnecting from a call. ",
-  "packageName": "@internal/react-components",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

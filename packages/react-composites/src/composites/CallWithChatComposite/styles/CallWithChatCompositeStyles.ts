@@ -33,20 +33,6 @@ export const controlBarContainerStyles: IStackStyles = {
   }
 };
 
-/** @private */
-export const drawerContainerStyles: IStackStyles = {
-  root: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    width: '100%',
-    height: '100%',
-    // Any zIndex > 0 will work because this is the only absolutely
-    // positioned element in the container.
-    zIndex: 1
-  }
-};
-
 /**
  * Chat button might have a optional notification icon attached that must be positioned absolute inside the chat button.
  * this requires the parent to have `position relative`
