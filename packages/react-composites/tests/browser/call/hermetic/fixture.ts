@@ -98,7 +98,7 @@ export function defaultMockCallAdapterState(participants?: MockRemoteParticipant
 /**
  * Create the default {@link MockCallAdapterState}for call readiness hermetic e2e tests.
  */
-export function defaultMockCallAdapterStateCallReadiness(
+export function defaultMockCallAdapterStateDeviceDisabled(
   participants?: MockRemoteParticipantState[]
 ): MockCallAdapterState {
   const remoteParticipants: Record<string, MockRemoteParticipantState> = {};
