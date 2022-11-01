@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add strings used in CallPane for Call Composite",
-  "packageName": "@internal/react-composites",
-  "email": "edwardlee@microsoft.com",
-  "dependentChangeType": "patch"
-}

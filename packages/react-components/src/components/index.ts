@@ -88,6 +88,23 @@ export type {
   DevicesButtonContextualMenuStyles
 } from './DevicesButton';
 
+/* @conditional-compile-remove(call-readiness) */
+export { DomainPermissions } from './DomainPermissions';
+/* @conditional-compile-remove(call-readiness) */
+export type { DomainPermissionsStrings, DomainPermissionsProps } from './DomainPermissions';
+/* @conditional-compile-remove(call-readiness) */
+export { BrowserPermissionDenied } from './BrowserPermissionDenied';
+/* @conditional-compile-remove(call-readiness) */
+export type {
+  BrowserPermissionDeniedStrings,
+  BrowserPermissionDeniedStyles,
+  BrowserPermissionDeniedProps
+} from './BrowserPermissionDenied';
+/* @conditional-compile-remove(call-readiness) */
+export { BrowserPermissionDeniedIOS } from './BrowserPermissionDeniedIOS';
+/* @conditional-compile-remove(call-readiness) */
+export type { BrowserPermissionDeniedIOSStrings, BrowserPermissionDeniedIOSProps } from './BrowserPermissionDeniedIOS';
+
 export { ParticipantsButton } from './ParticipantsButton';
 export type {
   ParticipantsButtonContextualMenuStyles,
@@ -137,3 +154,22 @@ export type { HoldButtonProps, HoldButtonStrings } from './HoldButton';
 
 export { _LocalVideoTile } from './LocalVideoTile';
 export { _RemoteVideoTile } from './RemoteVideoTile';
+export { _HighContrastAwareIcon } from './HighContrastAwareIcon';
+export type { _HighContrastAwareIconProps } from './HighContrastAwareIcon';
+
+/* @conditional-compile-remove(unsupported-browser) */
+export { UnsupportedBrowser } from './UnsupportedBrowser';
+/* @conditional-compile-remove(unsupported-browser) */
+export type { UnsupportedBrowserStrings, UnsupportedBrowserProps } from './UnsupportedBrowser';
+export { _TroubleshootingGuideErrorBar } from './TroubleshootingGuideErrorBar';
+export type {
+  _TroubleshootingGuideErrorBarStrings,
+  _TroubleshootingGuideErrorBarProps
+} from './TroubleshootingGuideErrorBar';
+
+export { _DevicePermissionDropdown } from './DevicePermissionDropdown';
+export type {
+  _DevicePermissionDropdownStrings,
+  _DevicePermissionDropdownProps,
+  _PermissionConstraints
+} from './DevicePermissionDropdown';

@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { Call } from '@azure/communication-calling';
-import { ProxyCallCommon } from './CallCommonDeclarative';
+import { ProxyCallCommon } from './CallDeclarativeCommon';
 import { CallContext } from './CallContext';
 
 /**
@@ -50,5 +50,5 @@ export const callDeclaratify = (call: Call, context: CallContext): DeclarativeCa
     value: () => proxyCall.unsubscribe()
   });
 
-  return new Proxy(call, proxyCall) as any as DeclarativeCall;
+  return new Proxy(call, proxyCall) as DeclarativeCall;
 };

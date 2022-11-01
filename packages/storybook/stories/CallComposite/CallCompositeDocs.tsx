@@ -182,6 +182,26 @@ export const getDocs: () => JSX.Element = () => {
         accepts an object where you can provide a custom JSX element against an icon name key.
       </Description>
 
+      <Heading>Customize Call Controls</Heading>
+      <Description>
+        The `options` prop allows you to customize some parts of the Call Composite. This prop is of type
+        [CallCompositeOptions](https://docs.microsoft.com/en-us/javascript/api/@azure/communication-react/callcompositeoptions?view=azure-node-latest).
+        The `callControls` property can be used to customize the call controls. This property is of type
+        [CallControlOptions](https://docs.microsoft.com/en-us/javascript/api/@azure/communication-react/callcontroloptions?view=azure-node-latest).
+      </Description>
+      <Description>For example, you can hide the camera button by using `callControls` as shown below:</Description>
+      <Source code="<CallComposite options={{ callControls: { cameraButton: false } }} />" />
+      <Description>
+        You can display the call controls in a compact mode using `callControls` as shown below:
+      </Description>
+      <Source code="<CallComposite options={{ callControls: { displayType: 'compact' } }} />" />
+      <Description>
+        You can disable some call controls (refer to
+        [CallControlOptions](https://docs.microsoft.com/en-us/javascript/api/@azure/communication-react/callcontroloptions?view=azure-node-latest))
+        using `callControls` as shown below:
+      </Description>
+      <Source code="<CallComposite options={{ callControls: { screenShareButton: { disabled: true } } }} />" />
+
       <Heading>Joining an existing Call</Heading>
       <Description>
         The [join existing call](./?path=/story/composites-call-joinexistingcall--join-existing-call) provides an easy
@@ -196,7 +216,7 @@ export const getDocs: () => JSX.Element = () => {
         Communication Users or, a mix between ACS and PSTN users. To make these outbound calls you need to provide a
         `locator` that contains participantIds that you are looking to call to the
         [CallAdapter](./?path=/docs/composite-adapters--page). For PSTN these IDs are the phone numbers that you are
-        looking to call. For Azure Communication Users you will need to provide their unique ACS aquired `userId`.
+        looking to call. For Azure Communication Users you will need to provide their unique ACS acquired `userId`.
       </Description>
       <Source code={callParticipantsLocatorSnippet} />
       <Description>
@@ -206,6 +226,20 @@ export const getDocs: () => JSX.Element = () => {
         phone number serves as your caller ID when calling PSTN. This phone number is not required for calling other
         Azure Communications users, however, will be required if you are looking to call a ACS user and a PSTN user in
         the same call.
+      </Description>
+
+      <Heading>Rooms</Heading>
+      <SingleLineBetaBanner />
+      <Description>
+        The CallComposite supports [Rooms](./?path=/docs/rooms--page). To join a room call you need to provide a
+        `locator` that contains the roomId of the room call you want to join to the
+        [CallAdapter](./?path=/docs/composite-adapters--page). An example snippet is shown in the 'How to incorporate
+        Rooms in your experience' section in our [Rooms doc](./?path=/docs/rooms--page).
+      </Description>
+      <Description>
+        Note: A room needs be created using the Rooms Client to obtain a roomId. Also with the Rooms Client, ACS users
+        need to be added to that room using their userId. To use the Rooms Client to create a room follow these
+        [quickstarts](https://docs.microsoft.com/en-us/azure/communication-services/quickstarts/rooms/get-started-rooms).
       </Description>
 
       <Heading>Call Composite Props</Heading>

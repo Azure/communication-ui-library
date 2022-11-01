@@ -1,24 +1,24 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { TeamsCall } from '@azure/communication-calling';
-import { ProxyCallCommon } from './CallCommonDeclarative';
+import { TeamsCall } from './BetaToStableTypes';
+import { ProxyCallCommon } from './CallDeclarativeCommon';
 import { CallContext } from './CallContext';
 
 /**
- * TODO: This should likely be exported?
  *
  * @private
  */
-export interface DeclarativeTeamsCall extends TeamsCall {
+export type DeclarativeTeamsCall = TeamsCall & {
   /**
    * Stop any declarative specific subscriptions and remove declarative subscribers.
    */
   unsubscribe(): void;
-}
+};
 
 class ProxyTeamsCall extends ProxyCallCommon implements ProxyHandler<TeamsCall> {
   public get<P extends keyof TeamsCall>(target: TeamsCall, prop: P): any {
+    /* @conditional-compile-remove(teams-identity-support) */
     switch (prop) {
       case 'addParticipant': {
         return this.getContext().withAsyncErrorTeedToState(async function (
@@ -31,6 +31,7 @@ class ProxyTeamsCall extends ProxyCallCommon implements ProxyHandler<TeamsCall> 
       default:
         return super.get(target, prop as any);
     }
+    return super.get(target, prop as any);
   }
 }
 

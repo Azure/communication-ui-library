@@ -1,8 +1,32 @@
 # Change Log - @internal/chat-component-bindings
 
-This log was last generated on Wed, 29 Jun 2022 17:31:08 GMT and should not be manually modified.
+This log was last generated on Fri, 21 Oct 2022 23:02:10 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.4.0](https://github.com/azure/communication-ui-library/tree/@internal/chat-component-bindings_v1.4.0)
+
+Fri, 21 Oct 2022 23:02:10 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@internal/chat-component-bindings_v1.3.2-beta.1...@internal/chat-component-bindings_v1.4.0)
+
+### Patches
+
+- Show datetime when there are more than 5 mins between each message ([PR #2299](https://github.com/azure/communication-ui-library/pull/2299) by carolinecao@microsoft.com)
+- Bump @internal/acs-ui-common to v1.4.0 ([commit](https://github.com/azure/communication-ui-library/commit/6e9b927acf587b957b60434f6ccc8265277d2434) by beachball)
+- Bump @internal/chat-stateful-client to v1.4.0 ([commit](https://github.com/azure/communication-ui-library/commit/6e9b927acf587b957b60434f6ccc8265277d2434) by beachball)
+- Bump @internal/react-components to v1.4.0 ([commit](https://github.com/azure/communication-ui-library/commit/6e9b927acf587b957b60434f6ccc8265277d2434) by beachball)
+
+## [1.3.2-beta.1](https://github.com/azure/communication-ui-library/tree/@internal/chat-component-bindings_v1.3.2-beta.1)
+
+Wed, 05 Oct 2022 18:13:55 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@internal/chat-component-bindings_v1.3.1-beta.1...@internal/chat-component-bindings_v1.3.2-beta.1)
+
+### Patches
+
+- Show datetime when there are more than 5 mins between each message ([PR #2299](https://github.com/azure/communication-ui-library/pull/2299) by carolinecao@microsoft.com)
+- Bump @internal/acs-ui-common to v1.3.2-beta.1 ([PR #2379](https://github.com/azure/communication-ui-library/pull/2379) by beachball)
+- Bump @internal/chat-stateful-client to v1.3.2-beta.1 ([PR #2379](https://github.com/azure/communication-ui-library/pull/2379) by beachball)
+- Bump @internal/react-components to v1.3.2-beta.1 ([PR #2379](https://github.com/azure/communication-ui-library/pull/2379) by beachball)
 
 ## [1.3.1-beta.1](https://github.com/azure/communication-ui-library/tree/@internal/chat-component-bindings_v1.3.1-beta.1)
 

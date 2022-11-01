@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Fixed input order bug on calling dialpad and dtmf dialpad",
-  "packageName": "@internal/react-composites",
-  "email": "carolinecao@microsoft.com",
-  "dependentChangeType": "patch"
-}

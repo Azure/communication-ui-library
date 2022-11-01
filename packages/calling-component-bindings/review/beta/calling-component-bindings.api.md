@@ -21,6 +21,7 @@ import { CommunicationIdentifier } from '@azure/communication-common';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 import { CreateVideoStreamViewResult } from '@internal/react-components';
 import { DeviceManagerState } from '@internal/calling-stateful-client';
+import { _DevicePermissionDropdown } from '@internal/react-components';
 import { DevicesButton } from '@internal/react-components';
 import { Dialpad } from '@internal/react-components';
 import { DominantSpeakersInfo } from '@azure/communication-calling';
@@ -31,6 +32,7 @@ import { HoldButton } from '@internal/react-components';
 import { MicrophoneButton } from '@internal/react-components';
 import { ParticipantList } from '@internal/react-components';
 import { ParticipantsButton } from '@internal/react-components';
+import { PermissionConstraints } from '@azure/communication-calling';
 import { PhoneNumberIdentifier } from '@azure/communication-common';
 import { default as React_2 } from 'react';
 import { ReactElement } from 'react';
@@ -96,7 +98,7 @@ export type CallingHandlersCommon = {
     onStartScreenShare: () => Promise<void>;
     onStopScreenShare: () => Promise<void>;
     onToggleScreenShare: () => Promise<void>;
-    onHangUp: () => Promise<void>;
+    onHangUp: (forEveryone?: boolean) => Promise<void>;
     onToggleHold: () => Promise<void>;
     onCreateLocalStreamView: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
     onCreateRemoteStreamView: (userId: string, options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
@@ -166,7 +168,7 @@ export type ErrorBarSelector = (state: CallClientState, props: CallingBaseSelect
 };
 
 // @public
-export type GetCallingSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof VideoGallery> extends true ? VideoGallerySelector : AreEqual<Component, typeof DevicesButton> extends true ? DevicesButtonSelector : AreEqual<Component, typeof MicrophoneButton> extends true ? MicrophoneButtonSelector : AreEqual<Component, typeof CameraButton> extends true ? CameraButtonSelector : AreEqual<Component, typeof ScreenShareButton> extends true ? ScreenShareButtonSelector : AreEqual<Component, typeof ParticipantList> extends true ? ParticipantListSelector : AreEqual<Component, typeof ParticipantsButton> extends true ? ParticipantsButtonSelector : AreEqual<Component, typeof EndCallButton> extends true ? EmptySelector : AreEqual<Component, typeof ErrorBar> extends true ? ErrorBarSelector : AreEqual<Component, typeof Dialpad> extends true ? EmptySelector : AreEqual<Component, typeof HoldButton> extends true ? HoldButtonSelector : undefined;
+export type GetCallingSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof VideoGallery> extends true ? VideoGallerySelector : AreEqual<Component, typeof DevicesButton> extends true ? DevicesButtonSelector : AreEqual<Component, typeof MicrophoneButton> extends true ? MicrophoneButtonSelector : AreEqual<Component, typeof CameraButton> extends true ? CameraButtonSelector : AreEqual<Component, typeof ScreenShareButton> extends true ? ScreenShareButtonSelector : AreEqual<Component, typeof ParticipantList> extends true ? ParticipantListSelector : AreEqual<Component, typeof ParticipantsButton> extends true ? ParticipantsButtonSelector : AreEqual<Component, typeof EndCallButton> extends true ? EmptySelector : AreEqual<Component, typeof ErrorBar> extends true ? ErrorBarSelector : AreEqual<Component, typeof Dialpad> extends true ? EmptySelector : AreEqual<Component, typeof HoldButton> extends true ? HoldButtonSelector : AreEqual<Component, typeof _DevicePermissionDropdown> extends true ? EmptySelector : undefined;
 
 // @public
 export const getCallingSelector: <Component extends (props: any) => JSX.Element | undefined>(component: Component) => GetCallingSelector<Component>;

@@ -16,6 +16,8 @@ import {
   ScalingMode,
   VideoDeviceInfo
 } from '@azure/communication-calling';
+/* @conditional-compile-remove(rooms) */
+import { ParticipantRole } from '@azure/communication-calling';
 import {
   CommunicationUserKind,
   MicrosoftTeamsUserKind,
@@ -175,6 +177,11 @@ export interface RemoteParticipantState {
    * Proxy of {@link @azure/communication-calling#RemoteParticipant.isSpeaking}.
    */
   isSpeaking: boolean;
+  /* @conditional-compile-remove(rooms) */
+  /**
+   * Proxy of {@link @azure/communication-calling#RemoteParticipant.role}.
+   */
+  role?: ParticipantRole;
 }
 
 /**
@@ -188,7 +195,7 @@ export interface CallState {
    * Proxy of {@link @azure/communication-calling#Call.id}.
    */
   id: string;
-  /* @conditional-compile-remove(teams-call) */
+  /* @conditional-compile-remove(teams-identity-support) */
   /**
    * Type of the call.
    */
@@ -272,6 +279,11 @@ export interface CallState {
    * Stores the latest call diagnostics.
    */
   diagnostics: DiagnosticsCallFeatureState;
+  /* @conditional-compile-remove(rooms) */
+  /**
+   * Proxy of {@link @azure/communication-calling#Call.role}.
+   */
+  role?: ParticipantRole;
 }
 
 /**
@@ -479,6 +491,7 @@ export class CallError extends Error {
  */
 export type CallErrorTarget =
   | 'Call.addParticipant'
+  | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.dispose'
   | 'Call.feature'
   | 'Call.hangUp'
   | 'Call.hold'
@@ -496,7 +509,6 @@ export type CallErrorTarget =
   | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.stopAudio'
   | 'Call.stopVideo'
   | 'Call.unmute'
-  | 'Call.dispose'
   | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.unmuteIncomingAudio'
   | 'CallAgent.dispose'
   | 'CallAgent.feature'
@@ -505,10 +517,10 @@ export type CallErrorTarget =
   | 'CallAgent.on'
   | 'CallAgent.startCall'
   | 'CallClient.createCallAgent'
-  | /* @conditional-compile-remove(teams-call) */ 'CallClient.createTeamsCallAgent'
+  | /* @conditional-compile-remove(calling-beta-sdk) */ /* @conditional-compile-remove(teams-identity-support) */ 'CallClient.createTeamsCallAgent'
   | 'CallClient.feature'
   | 'CallClient.getDeviceManager'
-  | /* @conditional-compile-remove(teams-call) */ 'CallClient.getEnvironmentInfo'
+  | /* @conditional-compile-remove(calling-beta-sdk) */ 'CallClient.getEnvironmentInfo'
   | 'DeviceManager.askDevicePermission'
   | 'DeviceManager.getCameras'
   | 'DeviceManager.getMicrophones'
@@ -519,7 +531,7 @@ export type CallErrorTarget =
   | 'DeviceManager.selectSpeaker'
   | 'IncomingCall.accept'
   | 'IncomingCall.reject'
-  | /* @conditional-compile-remove(teams-call) */ 'TeamsCall.addParticipant';
+  | /* @conditional-compile-remove(calling-beta-sdk) */ /* @conditional-compile-remove(teams-identity-support) */ 'TeamsCall.addParticipant';
 
 /**
  * State only proxy for {@link @azure/communication-calling#DiagnosticsCallFeature}.

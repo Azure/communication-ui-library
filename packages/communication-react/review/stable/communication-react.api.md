@@ -174,8 +174,7 @@ export interface CallAdapter extends AdapterState<CallAdapterState>, Disposable,
 
 // @public
 export type CallAdapterCallEndedEvent = {
-    callId?: string;
-    callEndReason?: CallEndReason;
+    callId: string;
 };
 
 // @public
@@ -487,10 +486,10 @@ export type CallingHandlers = {
     onStartScreenShare: () => Promise<void>;
     onStopScreenShare: () => Promise<void>;
     onToggleScreenShare: () => Promise<void>;
-    onHangUp: () => Promise<void>;
+    onHangUp: (forEveryone?: boolean) => Promise<void>;
     onCreateLocalStreamView: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
     onCreateRemoteStreamView: (userId: string, options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
-    onRemoveParticipant: (userId: string) => Promise<void>;
+    onRemoveParticipant(userId: string): Promise<void>;
     onDisposeRemoteStreamView: (userId: string) => Promise<void>;
     onDisposeLocalStreamView: () => Promise<void>;
 };
@@ -778,7 +777,6 @@ export interface CallWithChatCompositeStrings {
     copyInviteLinkActionedAriaLabel: string;
     copyInviteLinkButtonLabel: string;
     dismissSidePaneButtonLabel?: string;
-    dtmfDialpadPlaceHolderText: string;
     moreDrawerAudioDeviceMenuTitle?: string;
     moreDrawerButtonLabel: string;
     moreDrawerButtonTooltip: string;
@@ -1342,9 +1340,6 @@ export interface CustomMessage extends MessageCommon {
 export const darkTheme: PartialTheme & CallingTheme;
 
 // @public
-export type DeclarativeCallAgent = CallAgent;
-
-// @public
 export const DEFAULT_COMPONENT_ICONS: {
     ChatMessageOptions: JSX.Element;
     ControlButtonCameraOff: JSX.Element;
@@ -1906,6 +1901,7 @@ export interface MessageThreadStyles extends BaseCustomStyles {
     chatContainer?: ComponentSlotStyle;
     chatItemMessageContainer?: ComponentSlotStyle;
     chatMessageContainer?: ComponentSlotStyle;
+    failedMyChatMessageContainer?: ComponentSlotStyle;
     loadPreviousMessagesButtonContainer?: IStyle;
     messageStatusContainer?: (mine: boolean) => IStyle;
     myChatItemMessageContainer?: ComponentSlotStyle;
@@ -2257,7 +2253,6 @@ export interface SendBoxStylesProps extends BaseCustomStyles {
 
 // @public
 export interface StatefulCallClient extends CallClient {
-    createCallAgent(...args: Parameters<CallClient['createCallAgent']>): Promise<DeclarativeCallAgent>;
     createView(callId: string | undefined, participantId: CommunicationIdentifier | undefined, stream: LocalVideoStreamState | RemoteVideoStreamState, options?: CreateViewOptions): Promise<CreateViewResult | undefined>;
     disposeView(callId: string | undefined, participantId: CommunicationIdentifier | undefined, stream: LocalVideoStreamState | RemoteVideoStreamState): void;
     getState(): CallClientState;

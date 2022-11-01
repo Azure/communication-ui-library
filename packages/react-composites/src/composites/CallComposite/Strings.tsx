@@ -282,7 +282,7 @@ export interface CallCompositeStrings {
   /**
    * Placeholder text for dtmf dialpad
    */
-  dtmfDialpadPlaceHolderText: string;
+  dtmfDialpadPlaceholderText: string;
   /* @conditional-compile-remove(PSTN-calls) */
   /**
    * Label for the button to open dtmf dialpad
@@ -292,4 +292,39 @@ export interface CallCompositeStrings {
    * aria label for when the invite link has been actioned
    */
   copyInviteLinkActionedAriaLabel: string;
+  /* @conditional-compile-remove(rooms) */
+  /**
+   * Title text of the page shown to the user when the user attempts to join a room that cannot be found.
+   */
+  roomNotFoundTitle: string;
+  /* @conditional-compile-remove(rooms) */
+  /**
+   * More details text of the page shown to the user when the user attempts to join a room that cannot be found.
+   */
+  roomNotFoundDetails?: string;
+  /* @conditional-compile-remove(rooms) */
+  /**
+   * Title text of the page shown to the user when the user attempts to join a room to which they are not invited.
+   */
+  deniedPermissionToRoomTitle: string;
+  /* @conditional-compile-remove(rooms) */
+  /**
+   * More details text of the page shown to the user when the user attempts to join a room to which they are not invited.
+   */
+  deniedPermissionToRoomDetails?: string;
+  /* @conditional-compile-remove(one-to-n-calling) */
+  /**
+   * Control bar People button ToolTipContent
+   */
+  peopleButtonTooltipOpen: string;
+  /* @conditional-compile-remove(one-to-n-calling) */
+  /**
+   * Control bar People button ToolTipContent
+   */
+  peopleButtonTooltipClose: string;
+  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+  /**
+   * Label disaplayed on the lobby screen during a 1:1 outbound call.
+   */
+  outboundCallingNoticeString: string;
 }

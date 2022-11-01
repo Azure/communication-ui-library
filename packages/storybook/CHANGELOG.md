@@ -1,8 +1,78 @@
 # Change Log - @internal/storybook
 
-This log was last generated on Wed, 29 Jun 2022 17:31:07 GMT and should not be manually modified.
+This log was last generated on Fri, 21 Oct 2022 23:01:55 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.4.0](https://github.com/azure/communication-ui-library/tree/@internal/storybook_v1.4.0)
+
+Fri, 21 Oct 2022 23:01:55 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@internal/storybook_v1.3.2-beta.1...@internal/storybook_v1.4.0)
+
+### Patches
+
+- Adds beta banner to file sharing feature in CallWithChat and chat composite docs ([PR #2226](https://github.com/azure/communication-ui-library/pull/2226) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Fix ui components complete storybook snippet so that the icons render ([PR #2249](https://github.com/azure/communication-ui-library/pull/2249) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Add a UI Components Overview page to storybook. Clean up the top-most Overview page. ([PR #1785](https://github.com/azure/communication-ui-library/pull/1785) by 2684369+JamesBurnside@users.noreply.github.com)
+- Add initialize icons to storybook quick start ([PR #2376](https://github.com/azure/communication-ui-library/pull/2376) by carolinecao@microsoft.com)
+- Slim wrapper around PiPiP component to remap props to work with storybook v6.5.7 ([PR #2056](https://github.com/azure/communication-ui-library/pull/2056) by miguelgamis@microsoft.com)
+- Introduces setup page for repo discussing manual changes that need to be made to use acs ui library ([PR #2245](https://github.com/azure/communication-ui-library/pull/2245) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Added Rooms conceptual doc ([PR #2270](https://github.com/azure/communication-ui-library/pull/2270) by miguelgamis@microsoft.com)
+- Center incoming call toast button icons ([PR #2386](https://github.com/azure/communication-ui-library/pull/2386) by edwardlee@microsoft.com)
+- Bump @fluentui/react dependency to 8.98.3 ([PR #2415](https://github.com/azure/communication-ui-library/pull/2415) by 2684369+JamesBurnside@users.noreply.github.com)
+- Bump @azure/communication-react to v1.4.0 ([commit](https://github.com/azure/communication-ui-library/commit/6e9b927acf587b957b60434f6ccc8265277d2434) by beachball)
+
+### Changes
+
+- Use sparkle icon for DomainPermissions component in storybook ([PR #2307](https://github.com/azure/communication-ui-library/pull/2307) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Added devicePermissionDropdown component storybook doc ([PR #2367](https://github.com/azure/communication-ui-library/pull/2367) by carolinecao@microsoft.com)
+- Bump calling beta to 1.6.1 beta.1 ([PR #2074](https://github.com/azure/communication-ui-library/pull/2074) by edwardlee@microsoft.com)
+- Adds internal storybook page for new DomainPermissions Component ([PR #2298](https://github.com/azure/communication-ui-library/pull/2298) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Update storybook to show how to use onchange and textfieldValue props to customize formatting ([PR #2281](https://github.com/azure/communication-ui-library/pull/2281) by carolinecao@microsoft.com)
+- Introduce page for new unsupported browser UI ([PR #2334](https://github.com/azure/communication-ui-library/pull/2334) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Update Fluent-ui/icons package ([PR #2305](https://github.com/azure/communication-ui-library/pull/2305) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Create internal story for error bar to display troubleshooting links for network/device permission errors ([PR #2345](https://github.com/azure/communication-ui-library/pull/2345) by carolinecao@microsoft.com)
+- Bumped calling SDK beta version to 1.8.0-beta.1 ([PR #2362](https://github.com/azure/communication-ui-library/pull/2362) by miguelgamis@microsoft.com)
+- Add PSTN and 1:N storybook examples ([PR #2233](https://github.com/azure/communication-ui-library/pull/2233) by edwardlee@microsoft.com)
+- bump calling beta to 1.6.0-beta.1 ([PR #2047](https://github.com/azure/communication-ui-library/pull/2047) by miguelgamis@microsoft.com)
+- Change participantIDs to participantIds ([PR #2310](https://github.com/azure/communication-ui-library/pull/2310) by anjulgarg@live.com)
+- Storybook updated for dialpad ([PR #2085](https://github.com/azure/communication-ui-library/pull/2085) by carolinecao@microsoft.com)
+- Update Calling composite and CallWithChat Composite docs to reflect new prop for alternateCallerId ([PR #2160](https://github.com/azure/communication-ui-library/pull/2160) by 94866715+dmceachernmsft@users.noreply.github.com)
+- fix issues with unsupported browser stories. ([PR #2387](https://github.com/azure/communication-ui-library/pull/2387) by 94866715+dmceachernmsft@users.noreply.github.com)
+- BrowserPermissionDenied Desktop and mobile storybook entry created ([PR #2382](https://github.com/azure/communication-ui-library/pull/2382) by edwardlee@microsoft.com)
+
+## [1.3.2-beta.1](https://github.com/azure/communication-ui-library/tree/@internal/storybook_v1.3.2-beta.1)
+
+Wed, 05 Oct 2022 18:13:43 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@internal/storybook_v1.3.1-beta.1...@internal/storybook_v1.3.2-beta.1)
+
+### Patches
+
+- Adds beta banner to file sharing feature in CallWithChat and chat composite docs ([PR #2226](https://github.com/azure/communication-ui-library/pull/2226) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Fix ui components complete storybook snippet so that the icons render ([PR #2249](https://github.com/azure/communication-ui-library/pull/2249) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Add a UI Components Overview page to storybook. Clean up the top-most Overview page. ([PR #1785](https://github.com/azure/communication-ui-library/pull/1785) by 2684369+JamesBurnside@users.noreply.github.com)
+- Add initialize icons to storybook quick start ([PR #2376](https://github.com/azure/communication-ui-library/pull/2376) by carolinecao@microsoft.com)
+- Slim wrapper around PiPiP component to remap props to work with storybook v6.5.7 ([PR #2056](https://github.com/azure/communication-ui-library/pull/2056) by miguelgamis@microsoft.com)
+- Introduces setup page for repo discussing manual changes that need to be made to use acs ui library ([PR #2245](https://github.com/azure/communication-ui-library/pull/2245) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Added Rooms conceptual doc ([PR #2270](https://github.com/azure/communication-ui-library/pull/2270) by miguelgamis@microsoft.com)
+- Bump @azure/communication-react to v1.3.2-beta.1 ([PR #2379](https://github.com/azure/communication-ui-library/pull/2379) by beachball)
+
+### Changes
+
+- Use sparkle icon for DomainPermissions component in storybook ([PR #2307](https://github.com/azure/communication-ui-library/pull/2307) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Added devicePermissionDropdown component storybook doc ([PR #2367](https://github.com/azure/communication-ui-library/pull/2367) by carolinecao@microsoft.com)
+- Bump calling beta to 1.6.1 beta.1 ([PR #2074](https://github.com/azure/communication-ui-library/pull/2074) by edwardlee@microsoft.com)
+- Adds internal storybook page for new DomainPermissions Component ([PR #2298](https://github.com/azure/communication-ui-library/pull/2298) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Update storybook to show how to use onchange and textfieldValue props to customize formatting ([PR #2281](https://github.com/azure/communication-ui-library/pull/2281) by carolinecao@microsoft.com)
+- Introduce page for new unsupported browser UI ([PR #2334](https://github.com/azure/communication-ui-library/pull/2334) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Update Fluent-ui/icons package ([PR #2305](https://github.com/azure/communication-ui-library/pull/2305) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Create internal story for error bar to display troubleshooting links for network/device permission errors ([PR #2345](https://github.com/azure/communication-ui-library/pull/2345) by carolinecao@microsoft.com)
+- Bumped calling SDK beta version to 1.8.0-beta.1 ([PR #2362](https://github.com/azure/communication-ui-library/pull/2362) by miguelgamis@microsoft.com)
+- Add PSTN and 1:N storybook examples ([PR #2233](https://github.com/azure/communication-ui-library/pull/2233) by edwardlee@microsoft.com)
+- bump calling beta to 1.6.0-beta.1 ([PR #2047](https://github.com/azure/communication-ui-library/pull/2047) by miguelgamis@microsoft.com)
+- Change participantIDs to participantIds ([PR #2310](https://github.com/azure/communication-ui-library/pull/2310) by anjulgarg@live.com)
+- Storybook updated for dialpad ([PR #2085](https://github.com/azure/communication-ui-library/pull/2085) by carolinecao@microsoft.com)
+- Update Calling composite and CallWithChat Composite docs to reflect new prop for alternateCallerId ([PR #2160](https://github.com/azure/communication-ui-library/pull/2160) by 94866715+dmceachernmsft@users.noreply.github.com)
 
 ## [1.3.1-beta.1](https://github.com/azure/communication-ui-library/tree/@internal/storybook_v1.3.1-beta.1)
 

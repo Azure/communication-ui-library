@@ -2,6 +2,254 @@
   "name": "@internal/calling-component-bindings",
   "entries": [
     {
+      "date": "Fri, 21 Oct 2022 23:02:09 GMT",
+      "tag": "@internal/calling-component-bindings_v1.4.0",
+      "version": "1.4.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "6a2c4ec019b23d6a83dec58da2f94ee01cfc97a8",
+            "comment": "Fix screenshare button selector to disable button when call is InLobby or Connecting state."
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "a84700611269426a809d199730be3a03a3433a94",
+            "comment": "BugFix: Fix local camera getting into a bad state when the camera takes longer to turn on than the call took to connect"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "4b6b869076764310ef1ef2d7cd0409b291e6c9c8",
+            "comment": "BugFix: Add missing foreveryone logic for leaveCall"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/calling-component-bindings",
+            "comment": "Bump @internal/acs-ui-common to v1.4.0",
+            "commit": "6e9b927acf587b957b60434f6ccc8265277d2434"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/calling-component-bindings",
+            "comment": "Bump @internal/calling-stateful-client to v1.4.0",
+            "commit": "6e9b927acf587b957b60434f6ccc8265277d2434"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/calling-component-bindings",
+            "comment": "Bump @internal/react-components to v1.4.0",
+            "commit": "6e9b927acf587b957b60434f6ccc8265277d2434"
+          }
+        ],
+        "prerelease": [
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "af40399a7178ae003bd3a3156af68364d0ba3684",
+            "comment": "videoGallerySelector returns remote participants with a participant state"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "ad1972e132bbd1d66b1e4d59c80c4c1b869f3bae",
+            "comment": "bump calling beta to 1.6.0-beta.1"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "919ad8dce031447b0d2375df311231f8fa1d95bb",
+            "comment": "Update onStartCall and onRemoveParticipant Calling Handler functions to use CommunicationIdentifier as userId instead of string"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "c27f11267d57741b1d6cc4fa529555c6e7ede7eb",
+            "comment": "Bump calling beta to 1.6.1 beta.1"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "ee03cd3d801fdd454dcdd15151b6c27ad2b5daa3",
+            "comment": "Account for RemoteHold call status in Call Composite"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "5a77072d671f2a0122cc01d2b0d2ee5d1824eedb",
+            "comment": "expose conditionally compiled  dialpad code for PSTN call"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "05c00dee4f3d99d2583b3edb24ac932b2196c8f5",
+            "comment": "Bumped calling SDK beta version to 1.8.0-beta.1"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "23f63d3c80a655348b974dd2a0db9dbcbe50686e",
+            "comment": "updated _isInCall util function to reflect hold states as being in a call as well."
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "49a6b27e1974b2d404e15232bef719b47285e7e7",
+            "comment": "Update AddParticipant handler to match desired overloads."
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "7cd425e56cd430182e3bbb2e47d6feb97298472f",
+            "comment": "videoGallerySelector returns remote participants with their call connection state"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "14be621f265bb7faa615cf04466d5a6980dc22b0",
+            "comment": "create handlers for askDevicePermission"
+          }
+        ],
+        "none": [
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "50b076e142b87605121b21be4944b6856d83718d",
+            "comment": "bugfix: participant button should work during local hold"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "7d276116ce0b5aab82b1adc3e24b32709b0db47c",
+            "comment": "Bump package version after hotfix release"
+          },
+          {
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "f42faa2a9830ad1a7bcabba08d9aafcd49632e8b",
+            "comment": "Bumped"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 05 Oct 2022 18:13:53 GMT",
+      "tag": "@internal/calling-component-bindings_v1.3.2-beta.1",
+      "version": "1.3.2-beta.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "6a2c4ec019b23d6a83dec58da2f94ee01cfc97a8",
+            "comment": "Fix screenshare button selector to disable button when call is InLobby or Connecting state."
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/calling-component-bindings",
+            "comment": "Bump @internal/acs-ui-common to v1.3.2-beta.1",
+            "commit": "14adcdc3a3699659701ab1a81c80f1418e384170"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/calling-component-bindings",
+            "comment": "Bump @internal/calling-stateful-client to v1.3.2-beta.1",
+            "commit": "14adcdc3a3699659701ab1a81c80f1418e384170"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/calling-component-bindings",
+            "comment": "Bump @internal/react-components to v1.3.2-beta.1",
+            "commit": "14adcdc3a3699659701ab1a81c80f1418e384170"
+          }
+        ],
+        "prerelease": [
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "af40399a7178ae003bd3a3156af68364d0ba3684",
+            "comment": "videoGallerySelector returns remote participants with a participant state"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "ad1972e132bbd1d66b1e4d59c80c4c1b869f3bae",
+            "comment": "bump calling beta to 1.6.0-beta.1"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "919ad8dce031447b0d2375df311231f8fa1d95bb",
+            "comment": "Update onStartCall and onRemoveParticipant Calling Handler functions to use CommunicationIdentifier as userId instead of string"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "c27f11267d57741b1d6cc4fa529555c6e7ede7eb",
+            "comment": "Bump calling beta to 1.6.1 beta.1"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "ee03cd3d801fdd454dcdd15151b6c27ad2b5daa3",
+            "comment": "Account for RemoteHold call status in Call Composite"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "5a77072d671f2a0122cc01d2b0d2ee5d1824eedb",
+            "comment": "expose conditionally compiled  dialpad code for PSTN call"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "05c00dee4f3d99d2583b3edb24ac932b2196c8f5",
+            "comment": "Bumped calling SDK beta version to 1.8.0-beta.1"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "23f63d3c80a655348b974dd2a0db9dbcbe50686e",
+            "comment": "updated _isInCall util function to reflect hold states as being in a call as well."
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "49a6b27e1974b2d404e15232bef719b47285e7e7",
+            "comment": "Update AddParticipant handler to match desired overloads."
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "7cd425e56cd430182e3bbb2e47d6feb97298472f",
+            "comment": "videoGallerySelector returns remote participants with their call connection state"
+          }
+        ],
+        "none": [
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "50b076e142b87605121b21be4944b6856d83718d",
+            "comment": "bugfix: participant button should work during local hold"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "7d276116ce0b5aab82b1adc3e24b32709b0db47c",
+            "comment": "Bump package version after hotfix release"
+          },
+          {
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "f42faa2a9830ad1a7bcabba08d9aafcd49632e8b",
+            "comment": "Bumped"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 29 Jun 2022 17:31:07 GMT",
       "tag": "@internal/calling-component-bindings_v1.3.1-beta.1",
       "version": "1.3.1-beta.1",

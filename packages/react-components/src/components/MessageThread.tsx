@@ -152,6 +152,8 @@ export interface MessageThreadStyles extends BaseCustomStyles {
   chatItemMessageContainer?: ComponentSlotStyle;
   /** Styles for my chat message container. */
   myChatMessageContainer?: ComponentSlotStyle;
+  /** Styles for my chat message container in case of failure. */
+  failedMyChatMessageContainer?: ComponentSlotStyle;
   /** Styles for chat message container. */
   chatMessageContainer?: ComponentSlotStyle;
   /** Styles for system message container. */
@@ -359,10 +361,10 @@ const memoizeAllMessages = memoizeFnAll(
     switch (message.messageType) {
       case 'chat': {
         const myChatMessageStyle =
-          styles?.myChatMessageContainer || message.status === 'failed'
-            ? FailedMyChatMessageContainer
-            : defaultMyChatMessageContainer;
-        const chatMessageStyle = styles?.chatMessageContainer || defaultChatMessageContainer;
+          message.status === 'failed'
+            ? styles?.failedMyChatMessageContainer ?? styles?.myChatMessageContainer ?? FailedMyChatMessageContainer
+            : styles?.myChatMessageContainer ?? defaultMyChatMessageContainer;
+        const chatMessageStyle = styles?.chatMessageContainer ?? defaultChatMessageContainer;
         messageProps.messageContainerStyle = message.mine ? myChatMessageStyle : chatMessageStyle;
 
         const chatMessageComponent =
@@ -851,7 +853,6 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
         // Fetch message until scrollTop reach the threshold for fetching new message
         while (!isAllChatMessagesLoadedRef.current && chatScrollDivRef.current.scrollTop <= 500) {
           isAllChatMessagesLoadedRef.current = await onLoadPreviousChatMessages(numberOfChatMessagesToReload);
-          // Release CPU resources for 200 milliseconds between each loop.
           await delay(200);
         }
         isLoadingChatMessagesRef.current = false;
@@ -883,11 +884,8 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     if (!chatScrollDivRef.current) {
       return;
     }
-    if (previousTopRef.current === 0) {
-      const currentHeight = chatScrollDivRef.current.scrollHeight;
-      chatScrollDivRef.current.scrollTop =
-        chatScrollDivRef.current.scrollTop + currentHeight - previousHeightRef.current;
-    }
+    chatScrollDivRef.current.scrollTop =
+      chatScrollDivRef.current.scrollHeight - (previousHeightRef.current - previousTopRef.current);
   }, [messages]);
 
   // Fetch more messages to make the scroll bar appear, infinity scroll is then handled in the handleScroll function.
