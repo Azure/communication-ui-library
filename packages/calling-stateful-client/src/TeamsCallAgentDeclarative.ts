@@ -65,36 +65,36 @@ class ProxyTeamsCallAgent extends ProxyCallAgentCommon implements ProxyHandler<D
     throw new Error('Not reachable code, DeclarativeTeamsCallAgent.callDeclaratify must be called with an TeamsCall.');
   }
 
-  protected startCall(agent: CallAgentCommon, args: unknown[]): CallCommon {
+  protected startCall(agent: CallAgentCommon, args: Parameters<TeamsCallAgent['startCall']>): CallCommon {
     /* @conditional-compile-remove(teams-identity-support) */
     if (isTeamsCallAgent(agent)) {
-      return agent.startCall(...(args as Parameters<TeamsCallAgent['startCall']>));
+      return agent.startCall(...args);
     }
     throw new Error('Not reachable code, DeclarativeTeamsCallAgent.startCall must be called with an TeamsCallAgent.');
   }
 
-  protected joinCall(agent: CallAgentCommon, args: unknown[]): CallCommon {
+  protected joinCall(agent: CallAgentCommon, args: Parameters<TeamsCallAgent['join']>): CallCommon {
     /* @conditional-compile-remove(teams-identity-support) */
     if (isTeamsCallAgent(agent)) {
-      return agent.join(...(args as Parameters<TeamsCallAgent['join']>));
+      return agent.join(...args);
     }
     throw new Error('Not reachable code, DeclarativeTeamsCallAgent.joinCall must be called with an TeamsCallAgent.');
   }
 
-  protected agentSubscribe(agent: CallAgentCommon, args: unknown[]): void {
+  protected agentSubscribe(agent: CallAgentCommon, args: Parameters<TeamsCallAgent['on']>): void {
     /* @conditional-compile-remove(teams-identity-support) */
     if (isTeamsCallAgent(agent)) {
-      agent.on(...(args as Parameters<TeamsCallAgent['on']>));
+      agent.on(...args);
     }
     throw new Error(
       'Not reachable code, DeclarativeTeamsCallAgent.agentSubscribe must be called with an TeamsCallAgent.'
     );
   }
 
-  protected agentUnsubscribe(agent: CallAgentCommon, args: unknown[]): void {
+  protected agentUnsubscribe(agent: CallAgentCommon, args: Parameters<TeamsCallAgent['off']>): void {
     /* @conditional-compile-remove(teams-identity-support) */
     if (isTeamsCallAgent(agent)) {
-      agent.off(...(args as Parameters<TeamsCallAgent['off']>));
+      agent.off(...args);
     }
     throw new Error(
       'Not reachable code, DeclarativeTeamsCallAgent.agentUnsubscribe must be called with an TeamsCallAgent.'

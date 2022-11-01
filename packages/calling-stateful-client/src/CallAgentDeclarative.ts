@@ -72,30 +72,30 @@ class ProxyCallAgent extends ProxyCallAgentCommon implements ProxyHandler<Declar
     throw new Error('Not reachable code, DeclarativeCallAgent.callDeclaratify must be called with an ACS call.');
   }
 
-  protected startCall(agent: CallAgentCommon, args: unknown[]): CallCommon {
+  protected startCall(agent: CallAgentCommon, args: Parameters<CallAgent['startCall']>): CallCommon {
     if (isACSCallAgent(agent)) {
-      return agent.startCall(...(args as Parameters<CallAgent['startCall']>));
+      return agent.startCall(...args);
     }
     throw Error('Unreachable code, DeclarativeCallAgent.startCall must be called with an ACS callAgent.');
   }
 
-  protected joinCall(agent: CallAgentCommon, args: unknown[]): CallCommon {
+  protected joinCall(agent: CallAgentCommon, args: Parameters<CallAgent['join']>): CallCommon {
     if (isACSCallAgent(agent)) {
-      return agent.join(...(args as Parameters<CallAgent['join']>));
+      return agent.join(...args);
     }
     throw Error('Unreachable code, DeclarativeCallAgent.joinCall must be called with an ACS callAgent.');
   }
 
-  protected agentSubscribe(agent: CallAgentCommon, args: unknown[]): void {
+  protected agentSubscribe(agent: CallAgentCommon, args: Parameters<CallAgent['on']>): void {
     if (isACSCallAgent(agent)) {
-      return agent.on(...(args as Parameters<CallAgent['on']>));
+      return agent.on(...args);
     }
     throw Error('Unreachable code, DeclarativeCallAgent.agentSubscribe must be called with an ACS callAgent.');
   }
 
-  protected agentUnsubscribe(agent: CallAgentCommon, args: unknown[]): void {
+  protected agentUnsubscribe(agent: CallAgentCommon, args: Parameters<CallAgent['off']>): void {
     if (isACSCallAgent(agent)) {
-      return agent.off(...(args as Parameters<CallAgent['off']>));
+      return agent.off(...args);
     }
     throw Error('Unreachable code, DeclarativeCallAgent.agentUnsubscribe must be called with an ACS callAgent.');
   }

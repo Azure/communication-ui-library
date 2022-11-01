@@ -50,5 +50,5 @@ export const callDeclaratify = (call: Call, context: CallContext): DeclarativeCa
     value: () => proxyCall.unsubscribe()
   });
 
-  return new Proxy(call, proxyCall) as any as DeclarativeCall;
+  return new Proxy(call, proxyCall) as DeclarativeCall;
 };
