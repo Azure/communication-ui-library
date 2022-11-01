@@ -62,7 +62,7 @@ class ProxyTeamsCallAgent extends ProxyCallAgentCommon implements ProxyHandler<D
     if (isTeamsCall(call)) {
       return teamsCallDeclaratify(call, context);
     }
-    throw new Error('Not reachable code for callDeclaratify.');
+    throw new Error('Not reachable code, DeclarativeTeamsCallAgent.callDeclaratify must be called with an TeamsCall.');
   }
 
   protected startCall(agent: CallAgentCommon, args: unknown[]): CallCommon {
@@ -70,7 +70,7 @@ class ProxyTeamsCallAgent extends ProxyCallAgentCommon implements ProxyHandler<D
     if (isTeamsCallAgent(agent)) {
       return agent.startCall(...(args as Parameters<TeamsCallAgent['startCall']>));
     }
-    throw Error('Unreachable code for TeamsCallAgentDeclarative.startCall()');
+    throw new Error('Not reachable code, DeclarativeTeamsCallAgent.startCall must be called with an TeamsCallAgent.');
   }
 
   protected joinCall(agent: CallAgentCommon, args: unknown[]): CallCommon {
@@ -78,7 +78,7 @@ class ProxyTeamsCallAgent extends ProxyCallAgentCommon implements ProxyHandler<D
     if (isTeamsCallAgent(agent)) {
       return agent.join(...(args as Parameters<TeamsCallAgent['join']>));
     }
-    throw Error('Unreachable code for TeamsCallAgentDeclarative.joinCall()');
+    throw new Error('Not reachable code, DeclarativeTeamsCallAgent.joinCall must be called with an TeamsCallAgent.');
   }
 
   protected agentSubscribe(agent: CallAgentCommon, args: unknown[]): void {
@@ -86,7 +86,9 @@ class ProxyTeamsCallAgent extends ProxyCallAgentCommon implements ProxyHandler<D
     if (isTeamsCallAgent(agent)) {
       agent.on(...(args as Parameters<TeamsCallAgent['on']>));
     }
-    throw Error('Unreachable code for TeamsCallAgentDeclarative.agentSubscribe()');
+    throw new Error(
+      'Not reachable code, DeclarativeTeamsCallAgent.agentSubscribe must be called with an TeamsCallAgent.'
+    );
   }
 
   protected agentUnsubscribe(agent: CallAgentCommon, args: unknown[]): void {
@@ -94,7 +96,9 @@ class ProxyTeamsCallAgent extends ProxyCallAgentCommon implements ProxyHandler<D
     if (isTeamsCallAgent(agent)) {
       agent.off(...(args as Parameters<TeamsCallAgent['off']>));
     }
-    throw Error('Unreachable code for TeamsCallAgentDeclarative.agentUnsubscribe()');
+    throw new Error(
+      'Not reachable code, DeclarativeTeamsCallAgent.agentUnsubscribe must be called with an TeamsCallAgent.'
+    );
   }
 
   public get<P extends keyof TeamsCallAgent>(target: TeamsCallAgent, prop: P): any {
