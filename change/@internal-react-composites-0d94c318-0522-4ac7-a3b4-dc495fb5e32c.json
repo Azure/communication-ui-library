@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "Add TeamsCall and TeamsCallAgent to stateful",
+  "comment": "Add TeamsCall and TeamsCallAgent to StatefulClient",
   "packageName": "@internal/react-composites",
   "email": "jinan@microsoft.com",
   "dependentChangeType": "none"
