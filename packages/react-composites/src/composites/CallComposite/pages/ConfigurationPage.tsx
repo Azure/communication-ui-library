@@ -3,8 +3,6 @@
 
 import React from 'react';
 /* @conditional-compile-remove(call-readiness) */
-import { useMemo } from 'react';
-/* @conditional-compile-remove(call-readiness) */
 import { useState } from 'react';
 import { useAdaptedSelector } from '../hooks/useAdaptedSelector';
 import { useHandlers } from '../hooks/useHandlers';
@@ -157,14 +155,8 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
     // only way to dismiss this drawer is clicking on allow access which will leads to device permission prompt
   };
 
-
   /* @conditional-compile-remove(call-readiness) */
   const [isModalShowing, setIsModalShowing] = useState(false);
-
-  /* @conditional-compile-remove(call-readiness) */
-  const onClickEnableDevicePermission = useMemo(() => {
-    setIsModalShowing(true);
-  }, []);
 
   return (
     <Stack className={mobileView ? configurationContainerStyleMobile : configurationContainerStyleDesktop}>
@@ -270,7 +262,9 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
                 /* @conditional-compile-remove(call-readiness) */
                 callReadinessOptedIn={callReadinessOptedIn}
                 /* @conditional-compile-remove(call-readiness) */
-                onClickEnableDevicePermission={onClickEnableDevicePermission}
+                onClickEnableDevicePermission={() => {
+                  setIsModalShowing(true);
+                }}
               />
             </>
           )}
