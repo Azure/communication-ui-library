@@ -2,7 +2,6 @@
 // Licensed under the MIT license.
 
 import {
-  AddPhoneNumberOptions,
   AudioDeviceInfo,
   Call,
   LocalVideoStream,
@@ -11,14 +10,15 @@ import {
   VideoDeviceInfo
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
-import { DtmfTone } from '@azure/communication-calling';
-/* @conditional-compile-remove(PSTN-calls) */
+import { DtmfTone, AddPhoneNumberOptions } from '@azure/communication-calling';
+/* @conditional-compile-remove(call-readiness) */
+import { PermissionConstraints } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { CreateViewResult, StatefulCallClient, StatefulDeviceManager } from '@internal/calling-stateful-client';
 import memoizeOne from 'memoize-one';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
-import { disposeAllLocalPreviewViews, _isInCall, _isPreviewOn } from '../utils/callUtils';
+import { disposeAllLocalPreviewViews, _isInCall, _isInLobbyOrConnecting, _isPreviewOn } from '../utils/callUtils';
 import {
   CommunicationUserIdentifier,
   PhoneNumberIdentifier,
@@ -44,9 +44,12 @@ export type CallingHandlersCommon = {
   onStartScreenShare: () => Promise<void>;
   onStopScreenShare: () => Promise<void>;
   onToggleScreenShare: () => Promise<void>;
-  onHangUp: () => Promise<void>;
+  onHangUp: (forEveryone?: boolean) => Promise<void>;
   /* @conditional-compile-remove(PSTN-calls) */
   onToggleHold: () => Promise<void>;
+  onAddParticipant(participant: CommunicationUserIdentifier): Promise<void>;
+  /* @conditional-compile-remove(PSTN-calls) */
+  onAddParticipant(participant: PhoneNumberIdentifier, options: AddPhoneNumberOptions): Promise<void>;
   /* @conditional-compile-remove(PSTN-calls) */
   onCreateLocalStreamView: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
   onCreateRemoteStreamView: (
@@ -61,8 +64,11 @@ export type CallingHandlersCommon = {
     participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[],
     options?: StartCallOptions
   ) => void;
-  onAddParticipant: (participant: CommunicationIdentifier, options?: AddPhoneNumberOptions) => Promise<void>;
-  onRemoveParticipant: (userId: string) => Promise<void>;
+  onRemoveParticipant(userId: string): Promise<void>;
+  /* @conditional-compile-remove(PSTN-calls) */
+  onRemoveParticipant(participant: CommunicationIdentifier): Promise<void>;
+  /* @conditional-compile-remove(call-readiness) */
+  askDevicePermission: (constrain: PermissionConstraints) => Promise<void>;
 };
 /**
  * @private
@@ -122,7 +128,32 @@ export const createDefaultCallingHandlersCommon = memoizeOne(
     };
 
     const onToggleCamera = async (options?: VideoStreamOptions): Promise<void> => {
-      if (call && _isInCall(call.state)) {
+      const previewOn = _isPreviewOn(callClient.getState().deviceManager);
+
+      if (previewOn && call && call.state === 'Connecting') {
+        // This is to workaround: https://skype.visualstudio.com/SPOOL/_workitems/edit/3030558.
+        // The root cause of the issue is caused by never transitioning the unparented view to the
+        // call object when going from configuration page (disconnected call state) to connecting.
+        //
+        // Currently the only time the local video stream is moved from unparented view to the call
+        // object is when we transition from connecting -> call state. If the camera was on,
+        // inside the MediaGallery we trigger toggleCamera. This triggers onStartLocalVideo which
+        // destroys the unparentedView and creates a new stream in the call - so all looks well.
+        //
+        // However, if someone turns off their camera during the lobbyOrConnecting screen, the
+        // call.localVideoStreams will be empty (as the stream is currently stored in the unparented
+        // views and was never transitioned to the call object) and thus we incorrectly try to create
+        // a new video stream for the call object, instead of only stopping the unparented view.
+        //
+        // The correct fix for this is to ensure that callAgent.onStartCall is called with the
+        // localvideostream as a videoOption. That will mean call.onLocalVideoStreamsUpdated will
+        // be triggered when the call is in connecting state, which we can then transition the
+        // local video stream to the stateful call client and get into a clean state.
+        await onDisposeLocalStreamView();
+        return;
+      }
+
+      if (call && (_isInCall(call.state) || _isInLobbyOrConnecting(call.state))) {
         const stream = call.localVideoStreams.find((stream) => stream.mediaStreamType === 'Video');
         if (stream) {
           await onStopLocalVideo(stream);
@@ -132,7 +163,6 @@ export const createDefaultCallingHandlersCommon = memoizeOne(
       } else {
         const selectedCamera = callClient.getState().deviceManager.selectedCamera;
         if (selectedCamera) {
-          const previewOn = _isPreviewOn(callClient.getState().deviceManager);
           if (previewOn) {
             await onDisposeLocalStreamView();
           } else {
@@ -209,7 +239,8 @@ export const createDefaultCallingHandlersCommon = memoizeOne(
     const onToggleScreenShare = async (): Promise<void> =>
       call?.isScreenSharingOn ? await onStopScreenShare() : await onStartScreenShare();
 
-    const onHangUp = async (): Promise<void> => await call?.hangUp();
+    const onHangUp = async (forEveryone?: boolean): Promise<void> =>
+      await call?.hangUp({ forEveryone: forEveryone === true ? true : false });
 
     /* @conditional-compile-remove(PSTN-calls) */
     const onToggleHold = async (): Promise<void> =>
@@ -326,8 +357,15 @@ export const createDefaultCallingHandlersCommon = memoizeOne(
     /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
     const onSendDtmfTone = async (dtmfTone: DtmfTone): Promise<void> => await call?.sendDtmf(dtmfTone);
 
-    const notImplemented = () => {
+    const notImplemented = (): any => {
       throw new Error('Not implemented, cannot call a method from an abstract object');
+    };
+
+    /* @conditional-compile-remove(call-readiness) */
+    const askDevicePermission = async (constrain: PermissionConstraints): Promise<void> => {
+      if (deviceManager) {
+        await deviceManager?.askDevicePermission(constrain);
+      }
     };
 
     return {
@@ -350,7 +388,8 @@ export const createDefaultCallingHandlersCommon = memoizeOne(
       onAddParticipant: notImplemented,
       onRemoveParticipant: notImplemented,
       onStartCall: notImplemented,
-      /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */ onSendDtmfTone
+      /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */ onSendDtmfTone,
+      askDevicePermission
     };
   }
 );

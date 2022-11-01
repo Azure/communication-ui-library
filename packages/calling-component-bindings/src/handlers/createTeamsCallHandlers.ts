@@ -4,12 +4,13 @@
 import { StartCallOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-call) */
 import { TeamsCall, TeamsCallAgent } from '@azure/communication-calling';
-/* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
 /* @conditional-compile-remove(PSTN-calls) */
-import { AddPhoneNumberOptions } from '@azure/communication-calling';
-/* @conditional-compile-remove(PSTN-calls) */
-import { CommunicationIdentifier, isCommunicationUserIdentifier } from '@azure/communication-common';
-import { Common } from '@internal/acs-ui-common';
+import {
+  CommunicationIdentifier,
+  isCommunicationUserIdentifier,
+  PhoneNumberIdentifier
+} from '@azure/communication-common';
+import { Common, _toCommunicationIdentifier } from '@internal/acs-ui-common';
 import { StatefulCallClient, StatefulDeviceManager } from '@internal/calling-stateful-client';
 import memoizeOne from 'memoize-one';
 import { ReactElement } from 'react';
@@ -56,15 +57,21 @@ export const createDefaultTeamsCallingHandlers = memoizeOne(
         }
         return callAgent ? callAgent.startCall(participants, threadId ? { threadId } : undefined) : undefined;
       },
-      onAddParticipant: async (participant: CommunicationIdentifier, options?: AddPhoneNumberOptions) => {
-        const threadId = options?.threadId;
+      /* @conditional-compile-remove(PSTN-calls) */
+      onAddParticipant: async (participant, options?): Promise<void> => {
         if (isCommunicationUserIdentifier(participant)) {
           throw new Error('CommunicationIdentifier in Teams call is not supported!');
         }
-        call?.addParticipant(participant, threadId ? { threadId } : undefined);
+        await call?.addParticipant(participant as PhoneNumberIdentifier, options);
       },
-      onRemoveParticipant: async (userId) => {
-        await call?.removeParticipant({ microsoftTeamsUserId: userId });
+      onRemoveParticipant: async (
+        userId: string | /* @conditional-compile-remove(PSTN-calls) */ CommunicationIdentifier
+      ): Promise<void> => {
+        const participant = _toCommunicationIdentifier(userId);
+        if (isCommunicationUserIdentifier(participant)) {
+          throw new Error('CommunicationIdentifier in Teams call is not supported!');
+        }
+        await call?.removeParticipant(participant);
       }
     };
   }
