@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import { RemoteParticipantState } from '@azure/communication-calling';
 import { getIdentifierKind } from '@azure/communication-common';
 import { fromFlatCommunicationIdentifier, memoizeFnAll } from '@internal/acs-ui-common';
 import { CallParticipantListParticipant } from '@internal/react-components';
@@ -14,7 +15,7 @@ export const memoizedConvertAllremoteParticipants = memoizeFnAll(
   (
     userId: string,
     displayName: string | undefined,
-    state: 'Idle' | 'Connecting' | 'Ringing' | 'Connected' | 'Hold' | 'InLobby' | 'EarlyMedia' | 'Disconnected',
+    state: RemoteParticipantState,
     isMuted: boolean,
     isScreenSharing: boolean,
     isSpeaking: boolean
@@ -33,7 +34,7 @@ export const memoizedConvertAllremoteParticipants = memoizeFnAll(
 const convertRemoteParticipantToParticipantListParticipant = (
   userId: string,
   displayName: string | undefined,
-  state: 'Idle' | 'Connecting' | 'Ringing' | 'Connected' | 'Hold' | 'InLobby' | 'EarlyMedia' | 'Disconnected',
+  state: RemoteParticipantState,
   isMuted: boolean,
   isScreenSharing: boolean,
   isSpeaking: boolean
@@ -61,7 +62,7 @@ export const memoizedConvertAllremoteParticipantsBeta = memoizeFnAll(
   (
     userId: string,
     displayName: string | undefined,
-    state: 'Idle' | 'Connecting' | 'Ringing' | 'Connected' | 'Hold' | 'InLobby' | 'EarlyMedia' | 'Disconnected',
+    state: RemoteParticipantState,
     isMuted: boolean,
     isScreenSharing: boolean,
     isSpeaking: boolean,
@@ -83,7 +84,7 @@ export const memoizedConvertAllremoteParticipantsBeta = memoizeFnAll(
 const convertRemoteParticipantToParticipantListParticipantBeta = (
   userId: string,
   displayName: string | undefined,
-  state: 'Idle' | 'Connecting' | 'Ringing' | 'Connected' | 'Hold' | 'InLobby' | 'EarlyMedia' | 'Disconnected',
+  state: RemoteParticipantState,
   isMuted: boolean,
   isScreenSharing: boolean,
   isSpeaking: boolean,
