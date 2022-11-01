@@ -1,8 +1,36 @@
 # Change Log - @internal/calling-component-bindings
 
-This log was last generated on Wed, 05 Oct 2022 18:13:53 GMT and should not be manually modified.
+This log was last generated on Fri, 21 Oct 2022 23:02:09 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.4.0](https://github.com/azure/communication-ui-library/tree/@internal/calling-component-bindings_v1.4.0)
+
+Fri, 21 Oct 2022 23:02:09 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@internal/calling-component-bindings_v1.3.2-beta.1...@internal/calling-component-bindings_v1.4.0)
+
+### Patches
+
+- Fix screenshare button selector to disable button when call is InLobby or Connecting state. ([PR #2059](https://github.com/azure/communication-ui-library/pull/2059) by 94866715+dmceachernmsft@users.noreply.github.com)
+- BugFix: Fix local camera getting into a bad state when the camera takes longer to turn on than the call took to connect ([PR #2412](https://github.com/azure/communication-ui-library/pull/2412) by 2684369+JamesBurnside@users.noreply.github.com)
+- BugFix: Add missing foreveryone logic for leaveCall ([PR #2399](https://github.com/azure/communication-ui-library/pull/2399) by carolinecao@microsoft.com)
+- Bump @internal/acs-ui-common to v1.4.0 ([commit](https://github.com/azure/communication-ui-library/commit/6e9b927acf587b957b60434f6ccc8265277d2434) by beachball)
+- Bump @internal/calling-stateful-client to v1.4.0 ([commit](https://github.com/azure/communication-ui-library/commit/6e9b927acf587b957b60434f6ccc8265277d2434) by beachball)
+- Bump @internal/react-components to v1.4.0 ([commit](https://github.com/azure/communication-ui-library/commit/6e9b927acf587b957b60434f6ccc8265277d2434) by beachball)
+
+### Changes
+
+- videoGallerySelector returns remote participants with a participant state ([PR #2161](https://github.com/azure/communication-ui-library/pull/2161) by anjulgarg@live.com)
+- bump calling beta to 1.6.0-beta.1 ([PR #2047](https://github.com/azure/communication-ui-library/pull/2047) by miguelgamis@microsoft.com)
+- Update onStartCall and onRemoveParticipant Calling Handler functions to use CommunicationIdentifier as userId instead of string ([PR #2377](https://github.com/azure/communication-ui-library/pull/2377) by anjulgarg@live.com)
+- Bump calling beta to 1.6.1 beta.1 ([PR #2074](https://github.com/azure/communication-ui-library/pull/2074) by edwardlee@microsoft.com)
+- Account for RemoteHold call status in Call Composite ([PR #2232](https://github.com/azure/communication-ui-library/pull/2232) by edwardlee@microsoft.com)
+- expose conditionally compiled  dialpad code for PSTN call ([PR #2196](https://github.com/azure/communication-ui-library/pull/2196) by carolinecao@microsoft.com)
+- Bumped calling SDK beta version to 1.8.0-beta.1 ([PR #2362](https://github.com/azure/communication-ui-library/pull/2362) by miguelgamis@microsoft.com)
+- updated _isInCall util function to reflect hold states as being in a call as well. ([PR #2202](https://github.com/azure/communication-ui-library/pull/2202) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Update AddParticipant handler to match desired overloads. ([PR #2280](https://github.com/azure/communication-ui-library/pull/2280) by 94866715+dmceachernmsft@users.noreply.github.com)
+- videoGallerySelector returns remote participants with their call connection state ([PR #2143](https://github.com/azure/communication-ui-library/pull/2143) by anjulgarg@live.com)
+- create handlers for askDevicePermission ([PR #2389](https://github.com/azure/communication-ui-library/pull/2389) by carolinecao@microsoft.com)
 
 ## [1.3.2-beta.1](https://github.com/azure/communication-ui-library/tree/@internal/calling-component-bindings_v1.3.2-beta.1)
 

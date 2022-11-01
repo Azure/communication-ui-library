@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Close button set root backgroud to theme.semanticColors.bodyBackground",
-  "packageName": "@internal/react-composites",
-  "email": "miguelgamis@microsoft.com",
-  "dependentChangeType": "patch"
-}
