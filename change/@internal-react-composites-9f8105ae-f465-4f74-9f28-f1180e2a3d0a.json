@@ -1,6 +1,6 @@
 {
-  "type": "prerelease",
-  "comment": "Remove camera access error bar error for consumer role",
+  "type": "patch",
+  "comment": "Fix CallWithChatPane drawer menu that stays open after switching mobile tabs",
   "packageName": "@internal/react-composites",
   "email": "miguelgamis@microsoft.com",
   "dependentChangeType": "patch"
