@@ -141,8 +141,8 @@ const onFetchCustomButtonProps: CustomCallControlButtonCallback[] = [
   }
 ];
 
-const onPermissionsTroubleshootingClick = (permissionsState: unknown) => {
+const onPermissionsTroubleshootingClick = (permissionsState: unknown): void => {
   alert(permissionsState);
 };
 
-const onEnvironmentInfoTroubleshootingClick = () => alert('you are using a unsupported browser');
+const onEnvironmentInfoTroubleshootingClick = (): void => alert('you are using a unsupported browser');
