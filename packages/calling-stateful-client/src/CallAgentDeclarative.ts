@@ -6,10 +6,10 @@ import { CallAgentCommon, CallCommon } from './BetaToStableTypes';
 import { clearCallRelatedState, DeclarativeCallCommon, ProxyCallAgentCommon } from './CallAgentDeclarativeCommon';
 import { CallContext } from './CallContext';
 import { callDeclaratify } from './CallDeclarative';
-import { isACSCall, isACSCallAgent } from './Converter';
 /* @conditional-compile-remove(one-to-n-calling) */
 import { DeclarativeIncomingCall } from './IncomingCallDeclarative';
 import { InternalCallContext } from './InternalCallContext';
+import { isACSCall, isACSCallAgent } from './TypeGuards';
 
 /* @conditional-compile-remove(one-to-n-calling) */
 /**

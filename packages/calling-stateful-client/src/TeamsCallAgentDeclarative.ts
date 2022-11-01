@@ -6,7 +6,7 @@ import { IncomingCallManagement } from './CallAgentDeclarative';
 import { clearCallRelatedState, DeclarativeCallCommon, ProxyCallAgentCommon } from './CallAgentDeclarativeCommon';
 import { CallContext } from './CallContext';
 /* @conditional-compile-remove(teams-identity-support) */
-import { isTeamsCall, isTeamsCallAgent } from './Converter';
+import { isTeamsCall, isTeamsCallAgent } from './TypeGuards';
 import { InternalCallContext } from './InternalCallContext';
 /* @conditional-compile-remove(teams-identity-support) */
 import { teamsCallDeclaratify } from './TeamsCallDeclarative';

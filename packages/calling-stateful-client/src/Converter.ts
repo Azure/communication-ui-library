@@ -5,13 +5,11 @@ import {
   RemoteParticipant as SdkRemoteParticipant,
   RemoteVideoStream as SdkRemoteVideoStream,
   LocalVideoStream as SdkLocalVideoStream,
-  VideoStreamRendererView,
-  Call,
-  CallAgent
+  VideoStreamRendererView
 } from '@azure/communication-calling';
 
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
-import { CallAgentCommon, CallCommon, IncomingCallCommon, TeamsCall, TeamsCallAgent } from './BetaToStableTypes';
+import { CallCommon, IncomingCallCommon } from './BetaToStableTypes';
 import {
   CallState,
   RemoteParticipantState as DeclarativeRemoteParticipant,
@@ -20,6 +18,8 @@ import {
   IncomingCallState as DeclarativeIncomingCall,
   VideoStreamRendererViewState as DeclarativeVideoStreamRendererView
 } from './CallClientState';
+/* @conditional-compile-remove(teams-identity-support) */
+import { isACSCall } from './TypeGuards';
 
 /**
  * @private
@@ -137,39 +137,3 @@ export function convertFromSDKToDeclarativeVideoStreamRendererView(
     target: view.target
   };
 }
-
-/**
- * @private
- */
-export const isACSCall = (call: CallCommon): call is Call => {
-  /* @conditional-compile-remove(teams-identity-support) */
-  return call.kind === 'Call';
-  return true;
-};
-
-/**
- * @private
- */
-export const isACSCallAgent = (callAgent: CallAgentCommon): callAgent is CallAgent => {
-  /* @conditional-compile-remove(teams-identity-support) */
-  return callAgent.kind === 'CallAgent';
-  return true;
-};
-
-/**
- * @private
- */
-export const isTeamsCall = (call: CallCommon): call is TeamsCall => {
-  /* @conditional-compile-remove(teams-identity-support) */
-  return call.kind === 'TeamsCall';
-  return false;
-};
-
-/**
- * @private
- */
-export const isTeamsCallAgent = (callAgent: CallAgentCommon): callAgent is TeamsCallAgent => {
-  /* @conditional-compile-remove(teams-identity-support) */
-  return callAgent.kind === 'TeamsCallAgent';
-  return false;
-};
