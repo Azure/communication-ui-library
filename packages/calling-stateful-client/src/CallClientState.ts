@@ -16,6 +16,8 @@ import {
   ScalingMode,
   VideoDeviceInfo
 } from '@azure/communication-calling';
+/* @conditional-compile-remove(unsupported-browser) */
+import { EnvironmentInfo } from '@azure/communication-calling';
 import {
   CommunicationUserKind,
   MicrosoftTeamsUserKind,
@@ -418,6 +420,11 @@ export interface CallClientState {
    * be used as the caller id in the PSTN call.
    */
   alternateCallerId?: string;
+  /* @conditional-compile-remove(unsupported-browser */
+  /**
+   * state to track the environment that the stateful client was made in is supported
+   */
+  environmentInfo?: EnvironmentInfo;
 }
 
 /**

@@ -123,6 +123,9 @@ export type CameraButtonSelector = (state: CallClientState, props: CallingBaseSe
 // @public
 export const cameraButtonSelector: CameraButtonSelector;
 
+// @internal
+export const _checkBrowserSupported: (callClient: StatefulCallClient) => Promise<boolean>;
+
 // @public
 export const createDefaultCallingHandlers: (callClient: StatefulCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined) => CallingHandlers;
 

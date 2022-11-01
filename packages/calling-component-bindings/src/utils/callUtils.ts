@@ -75,3 +75,14 @@ const memoizedUpdateDisplayName = memoizeFnAll((participantId: string, participa
     return participant;
   }
 });
+
+/* @conditional-compile-remove(unsupported-browser) */
+/**
+ * Check whether the call is in a supported browser
+ *
+ * @internal
+ */
+export const _checkBrowserSupported = async (callClient: StatefulCallClient): Promise<boolean> => {
+  const environmentInfo = await callClient.getEnvironmentInfo();
+  return environmentInfo.isSupportedBrowser;
+};

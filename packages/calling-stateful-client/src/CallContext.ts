@@ -2,7 +2,13 @@
 // Licensed under the MIT license.
 
 import { CommunicationIdentifierKind } from '@azure/communication-common';
-import { AudioDeviceInfo, DeviceAccess, DominantSpeakersInfo, VideoDeviceInfo } from '@azure/communication-calling';
+import {
+  AudioDeviceInfo,
+  DeviceAccess,
+  DominantSpeakersInfo,
+  EnvironmentInfo,
+  VideoDeviceInfo
+} from '@azure/communication-calling';
 import { AzureLogger, createClientLogger, getLogLevel } from '@azure/logger';
 import EventEmitter from 'events';
 import { enableMapSet, enablePatches, Patch, produce } from 'immer';
@@ -68,6 +74,7 @@ export class CallContext {
       },
       callAgent: undefined,
       userId: userId,
+      /* @conditional-compile-remove(unsupported-browser) */ environmentInfo: undefined,
       /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId: alternateCallerId,
       latestErrors: {} as CallErrors
     };
@@ -183,6 +190,13 @@ export class CallContext {
         delete draft.calls[oldCallId];
         draft.calls[newCallId] = call;
       }
+    });
+  }
+
+  /* @conditional-compile-remove(unsupported-browser) */
+  public setEnvironmentInfo(envInfo: EnvironmentInfo): void {
+    this.modifyState((draft: CallClientState) => {
+      draft.environmentInfo = envInfo;
     });
   }
 
