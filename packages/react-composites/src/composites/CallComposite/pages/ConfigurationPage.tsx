@@ -157,6 +157,7 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
 
   /* @conditional-compile-remove(call-readiness) */
   const [isModalShowing, setIsModalShowing] = useState(false);
+
   return (
     <Stack className={mobileView ? configurationContainerStyleMobile : configurationContainerStyleDesktop}>
       <Stack styles={bannerNotificationStyles}>

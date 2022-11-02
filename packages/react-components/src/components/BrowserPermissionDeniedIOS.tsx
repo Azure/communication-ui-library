@@ -109,7 +109,6 @@ const BrowserPermissionDeniedIOSContainer = (props: BrowserPermissionDeniedIOSPr
     <Stack styles={browserPermissionContainerStyles}>
       {imageSource && (
         <Stack styles={mergeStyleSets(iOSImageContainer, { root: { background: theme.palette.neutralLighter } })}>
-
           {isValidString(strings?.imageAltText) && (
             <Image
               src={imageSource ?? ''}
@@ -122,7 +121,6 @@ const BrowserPermissionDeniedIOSContainer = (props: BrowserPermissionDeniedIOSPr
       )}
       <Stack style={{ padding: '1rem', paddingBottom: '1.25rem' }}>
         <Stack styles={textContainerStyles}>
-
           {isValidString(strings?.primaryText) && <Text styles={primaryTextStyles}>{strings?.primaryText}</Text>}
           {isValidString(strings?.secondaryText) && <Text styles={secondaryTextStyles}>{strings?.secondaryText}</Text>}
           {isValidString(strings?.step1Text) && (

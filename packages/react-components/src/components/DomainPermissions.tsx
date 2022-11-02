@@ -123,8 +123,3 @@ export const DomainPermissions = (props: DomainPermissionsProps): JSX.Element =>
   return <DomainPermissionsContainer {...props} strings={props.strings ? props.strings : locale} />;
   return <></>;
 };
-
-/* @conditional-compile-remove(call-readiness) */
-const isValidString = (string: string | undefined): boolean => {
-  return !!string && string.length > 0;
-};

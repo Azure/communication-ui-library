@@ -98,6 +98,7 @@ const BrowserPermissionDeniedContainer = (props: BrowserPermissionDeniedProps): 
       <Stack styles={textContainerStyles}>
         {isValidString(strings?.primaryText) && <Text styles={primaryTextStyles}>{strings?.primaryText}</Text>}
         {isValidString(strings?.secondaryText) && <Text styles={secondaryTextStyles}>{strings?.secondaryText}</Text>}
+
         {onTryAgainClick && isValidString(strings?.primaryButtonText) && (
           <PrimaryButton
             styles={mergeStyleSets(primaryButtonStyles, styles?.primaryButton)}
@@ -105,6 +106,7 @@ const BrowserPermissionDeniedContainer = (props: BrowserPermissionDeniedProps): 
             onClick={onTryAgainClick}
           />
         )}
+
         {onTroubleshootingClick && isValidString(strings?.linkText) && (
           <Link styles={mergeStyleSets(linkTextStyles, styles?.troubleshootingLink)} onClick={onTroubleshootingClick}>
             {strings?.linkText}

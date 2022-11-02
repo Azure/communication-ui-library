@@ -3,8 +3,6 @@
 
 import { IStackStyles } from '@fluentui/react';
 
-const DEFAULT_Z_INDEX = 1;
-
 /**
  * @private
  */
