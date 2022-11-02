@@ -87,19 +87,29 @@ function defaultMockConfigPageStateDeviceDisabled(): MockCallAdapterState {
   state.call = undefined;
   state.devices = {
     isSpeakerSelectionAvailable: true,
-    selectedCamera: { id: 'camera1', name: '1st Camera', deviceType: 'UsbCamera' },
-    cameras: [{ id: 'camera1', name: '1st Camera', deviceType: 'UsbCamera' }],
-    selectedMicrophone: {
-      id: 'microphone1',
-      name: '1st Microphone',
-      deviceType: 'Microphone',
-      isSystemDefault: true
-    },
-    microphones: [{ id: 'microphone1', name: '1st Microphone', deviceType: 'Microphone', isSystemDefault: true }],
-    selectedSpeaker: { id: 'speaker1', name: '1st Speaker', deviceType: 'Speaker', isSystemDefault: true },
-    speakers: [{ id: 'speaker1', name: '1st Speaker', deviceType: 'Speaker', isSystemDefault: true }],
+    cameras: [],
+    microphones: [],
+    speakers: [
+      {
+        name: '',
+        id: 'speaker:',
+        isSystemDefault: true,
+        deviceType: 'Speaker'
+      }
+    ],
     unparentedViews: [],
-    deviceAccess: { video: true, audio: true }
+    selectedMicrophone: {
+      name: '',
+      id: 'microphone:',
+      isSystemDefault: true,
+      deviceType: 'Microphone'
+    },
+    selectedSpeaker: {
+      name: '',
+      id: 'speaker:',
+      isSystemDefault: true,
+      deviceType: 'Speaker'
+    }
   };
 
   return state;
