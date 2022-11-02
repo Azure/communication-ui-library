@@ -113,6 +113,19 @@ const getCallEndReason = (call: CallState): CallEndReasons => {
 };
 
 /**
+ * type definition for conditional-compilation
+ */
+type GetCallCompositePageFunction = ((
+  call: CallState | undefined,
+  previousCall: CallState | undefined
+) => CallCompositePage) &
+  /* @conditional-compile-remove(unsupported-browser) */ ((
+    call: CallState | undefined,
+    previousCall: CallState | undefined,
+    environmentInfo?: EnvironmentInfo
+  ) => CallCompositePage);
+
+/**
  * Get the current call composite page based on the current call composite state
  *
  * @param Call - The current call state
@@ -125,10 +138,10 @@ const getCallEndReason = (call: CallState): CallEndReasons => {
  *
  * @private
  */
-export const getCallCompositePage = (
-  call: CallState | undefined,
-  previousCall: CallState | undefined,
-  /* @conditional-compile-remove(unsupported-browser) */ environmentInfo?: EnvironmentInfo
+export const getCallCompositePage: GetCallCompositePageFunction = (
+  call,
+  previousCall,
+  environmentInfo?
 ): CallCompositePage => {
   /* @conditional-compile-remove(unsupported-browser) */
   if (environmentInfo && !environmentInfo.isSupportedBrowser) {
