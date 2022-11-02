@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "bump calling beta dependency for unsupportedBrowser functionality.",
+  "packageName": "@internal/calling-stateful-client",
+  "email": "94866715+dmceachernmsft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
