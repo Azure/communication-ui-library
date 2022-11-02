@@ -17,6 +17,8 @@ import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react
 import type { CommunicationIdentifierKind } from '@azure/communication-common';
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions, DtmfTone } from '@azure/communication-calling';
+/* @conditional-compile-remove(unsupported-browser) */
+import { EnvironmentInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
 import type {
   CommunicationIdentifier,
@@ -88,6 +90,11 @@ export type CallAdapterClientState = {
    * Azure communications Phone number to make PSTN calls with.
    */
   alternateCallerId?: string;
+  /* @conditional-compile-remove(unsupported-browser) */
+  /**
+   * Environment information about system the adapter is made on
+   */
+  environmentInfo?: EnvironmentInfo;
 };
 
 /**

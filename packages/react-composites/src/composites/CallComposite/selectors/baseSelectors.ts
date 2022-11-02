@@ -2,6 +2,8 @@
 // Licensed under the MIT license.
 
 import { CallState as SDKCallStatus, DominantSpeakersInfo } from '@azure/communication-calling';
+/* @conditional-compile-remove(unsupported-browser) */
+import { EnvironmentInfo } from '@azure/communication-calling';
 import {
   CallState,
   DeviceManagerState,
@@ -96,3 +98,8 @@ export const getRemoteParticipants = (
   | {
       [keys: string]: RemoteParticipantState;
     } => state.call?.remoteParticipants;
+
+/**
+ * @private
+ */
+export const getEnvironmentInfo = (state: CallAdapterState): EnvironmentInfo | undefined => state.environmentInfo;

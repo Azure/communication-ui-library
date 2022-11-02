@@ -82,7 +82,8 @@ class CallContext {
       page: 'configuration',
       latestErrors: clientState.latestErrors,
       isTeamsCall,
-      /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId: clientState.alternateCallerId
+      /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId: clientState.alternateCallerId,
+      /* @conditional-compile-remove(unsupported-browser) */ environmentInfo: clientState.environmentInfo
     };
   }
 
@@ -126,7 +127,11 @@ class CallContext {
 
     // As the state is transitioning to a new state, trigger appropriate callback events.
     const oldPage = this.state.page;
-    const newPage = getCallCompositePage(call, latestEndedCall);
+    const newPage = getCallCompositePage(
+      call,
+      latestEndedCall,
+      /* @conditional-compile-remove(unsupported-browser) */ clientState.environmentInfo
+    );
     if (!IsCallEndedPage(oldPage) && IsCallEndedPage(newPage)) {
       this.emitter.emit('callEnded', { callId: this.callId });
       // Reset the callId to undefined as the call has ended.
@@ -892,6 +897,9 @@ export const createAzureCommunicationCallAdapterFromClient = async (
   locator: CallAdapterLocator
 ): Promise<CallAdapter> => {
   const deviceManager = (await callClient.getDeviceManager()) as StatefulDeviceManager;
+  /* @conditional-compile-remove(unsupported-browser) */
+  await callClient.getEnvironmentInfo();
+  console.log(callClient.getState().environmentInfo);
   return new AzureCommunicationCallAdapter(callClient, locator, callAgent, deviceManager);
 };
 
