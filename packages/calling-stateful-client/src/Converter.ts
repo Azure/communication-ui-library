@@ -103,7 +103,9 @@ export function convertSdkCallToDeclarativeCall(call: SdkCall): CallState {
     transcription: { isTranscriptionActive: false },
     screenShareRemoteParticipant: undefined,
     startTime: new Date(),
-    endTime: undefined
+    endTime: undefined,
+    /* @conditional-compile-remove(rooms) */
+    role: call.role
   };
 }
 

@@ -137,7 +137,7 @@ export interface CallAdapter extends AdapterState<CallAdapterState>, Disposable,
 
 // @public
 export type CallAdapterCallEndedEvent = {
-    callId?: string;
+    callId: string;
 };
 
 // @public
@@ -300,6 +300,7 @@ export type CallCompositeOptions = {
     errorBar?: boolean;
     callControls?: boolean | CallControlOptions;
     devicePermissions?: DevicePermissionRestrictions;
+    callReadinessOptedIn?: boolean;
     onPermissionsTroubleshootingClick?: (permissionsState: {
         camera: PermissionState;
         microphone: PermissionState;
@@ -682,6 +683,7 @@ export type CallWithChatCompositeOptions = {
         microphone: PermissionState;
     }) => void;
     onNetworkingTroubleShootingClick?: () => void;
+    callReadinessOptedIn?: boolean;
 };
 
 // @public

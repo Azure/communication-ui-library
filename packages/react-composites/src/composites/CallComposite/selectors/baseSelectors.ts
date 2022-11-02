@@ -4,6 +4,8 @@
 import { CallState as SDKCallStatus, DominantSpeakersInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
+/* @conditional-compile-remove(rooms) */
+import { ParticipantRole } from '@azure/communication-calling';
 import {
   CallState,
   DeviceManagerState,
@@ -48,6 +50,12 @@ export const getIsScreenShareOn = (state: CallAdapterState): boolean => state.ca
  * @private
  */
 export const getIsPreviewCameraOn = (state: CallAdapterState): boolean => _isPreviewOn(state.devices);
+
+/* @conditional-compile-remove(rooms) */
+/**
+ * @private
+ */
+export const getRole = (state: CallAdapterState): ParticipantRole | undefined => state.call?.role;
 
 /**
  * @private

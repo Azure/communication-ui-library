@@ -5,7 +5,10 @@
     "removeButtonLabel": "删除",
     "sharingIconLabel": "共享",
     "mutedIconLabel": "已静音",
-    "displayNamePlaceholder": "未命名的参与者"
+    "displayNamePlaceholder": "未命名的参与者",
+    "participantStateConnecting": "正在呼叫...",
+    "participantStateRinging": "正在呼叫...",
+    "participantStateHold": "待机音乐"
   },
   "typingIndicator": {
     "singleUser": "{user} 正在键入...",
@@ -18,7 +21,10 @@
     "placeholderText": "输入消息",
     "textTooLong": "你的消息长度超过了最大限制。",
     "sendButtonAriaLabel": "发送消息",
-    "fileUploadsPendingError": "正在上载...请稍候。"
+    "fileUploadsPendingError": "正在上载...请稍候。",
+    "removeFile": "删除文件",
+    "uploading": "正在上传",
+    "uploadCompleted": "已完成上传"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "已发送消息",
@@ -33,7 +39,7 @@
   },
   "endCallButton": {
     "label": "退出",
-    "tooltipContent": "离开会议"
+    "tooltipContent": "离开通话"
   },
   "cameraButton": {
     "onLabel": "关闭",
@@ -74,9 +80,9 @@
     "audioDeviceMenuTitle": "音频设备",
     "audioDeviceMenuTooltip": "选择音频设备",
     "microphoneMenuTitle": "麦克风",
-    "microphoneMenuTooltip": "选择麦克风",
+    "microphoneMenuTooltip": "选择“麦克风”",
     "speakerMenuTitle": "免提",
-    "speakerMenuTooltip": "选择扬声器"
+    "speakerMenuTooltip": "选择“扬声器”"
   },
   "participantsButton": {
     "label": "人员",
@@ -110,6 +116,8 @@
     "failToSendTag": "发送失败",
     "editedTag": "已编辑",
     "liveAuthorIntro": "{author} 说",
+    "messageContentAriaText": "{author} 说了 {message}",
+    "messageContentMineAriaText": "你说了 {message}",
     "editBoxTextLimit": "你的消息超过了{limitNumber}个字符的限制",
     "editBoxPlaceholderText": "编辑消息",
     "newMessagesIndicator": "新消息",
@@ -117,7 +125,8 @@
     "editBoxCancelButton": "取消",
     "editBoxSubmitButton": "提交",
     "messageReadCount": "{messageReadByCount}/{remoteParticipantsCount} 人已读",
-    "actionMenuMoreOptions": "更多选项"
+    "actionMenuMoreOptions": "更多选项",
+    "downloadFile": "下载文件"
   },
   "errorBar": {
     "unableToReachChatService": "你已脱机",
@@ -138,10 +147,13 @@
     "callNoMicrophoneFound": "找不到麦克风。连接音频输入设备。",
     "callMicrophoneAccessDenied": "无法访问麦克风。单击地址栏中的锁定以授予对此网页的权限。",
     "callMicrophoneMutedBySystem": "系统已将你设为静音。",
+    "callMicrophoneUnmutedBySystem": "你的麦克风已恢复，系统已取消静音。",
     "callMacOsMicrophoneAccessDenied": "无法访问麦克风。在 macOS 隐私设置中授予麦克风权限。",
     "callLocalVideoFreeze": "网络带宽较差。你的视频可能会在通话中为其他人暂停。",
     "callCameraAccessDenied": "无法访问照相机。单击地址栏中的锁定以授予对此网页的权限。",
     "callCameraAlreadyInUse": "无法访问照相机。它可能已被其他应用程序使用。",
+    "callVideoStoppedBySystem": "你的系统已停止你的视频。",
+    "callVideoRecoveredBySystem": "你的视频已恢复。",
     "callMacOsCameraAccessDenied": "MacOS 正在阻止访问你的相机。更新你的隐私设置以允许此浏览器访问你的相机。",
     "callMacOsScreenShareAccessDenied": "MacOS 正在阻止屏幕共享。更新你的隐私设置以允许此浏览器录制你的屏幕。",
     "dismissButtonAriaLabel": "关闭",
@@ -158,12 +170,50 @@
     "displayNamePlaceholder": "未命名的参与者"
   },
   "dialpad": {
-    "placeholderText": "输入号码"
+    "placeholderText": "输入电话号码",
+    "deleteButtonAriaLabel": "删除"
   },
-  "HoldButton": {
+  "holdButton": {
     "onLabel": "恢复",
     "offLabel": "支持",
-    "toolTipOnContent": "继续呼叫",
-    "toolTipOffContent": "保持呼叫"
+    "tooltipOnContent": "继续呼叫",
+    "tooltipOffContent": "保持呼叫"
+  },
+  "videoTile": {
+    "participantStateConnecting": "正在呼叫...",
+    "participantStateRinging": "正在呼叫...",
+    "participantStateHold": "待机音乐"
+  },
+  "DomainPermissions": {
+    "primaryText": "允许{appName}使用你的相机和麦克风",
+    "secondaryText": "这样参与者就可以看到并听到你的声音。",
+    "linkText": "需要帮助? 获取疑难解答帮助",
+    "primaryButtonText": "允许访问"
+  },
+  "UnsupportedBrowser": {
+    "primaryText": "浏览器不受支持",
+    "secondaryText": "请使用兼容的浏览器加入此通话。",
+    "moreHelpLink": "更多帮助"
+  },
+  "BrowserPermissionDenied": {
+    "primaryText": "无法使用摄像头或麦克风",
+    "secondaryText": "你的浏览器可能无法访问你的相机或麦克风。若要解决此问题，请打开“系统首选项”。",
+    "primaryButtonText": "重试",
+    "linkText": "需要帮助? 获取疑难解答帮助"
+  },
+  "BrowserPermissionDeniedIOS": {
+    "primaryText": "允许麦克风访问以继续",
+    "secondaryText": "这样其他参与者就可以听到你的声音。",
+    "primaryButtonText": "重试",
+    "imageAltText": "iOS 的麦克风和摄像头设备权限位置",
+    "linkText": "需要帮助? 获取疑难解答帮助",
+    "step1Text": "转到设置应用",
+    "step2Text": "向下滚动到此浏览器的设置",
+    "step3Text": "打开麦克风(摄像头可选)",
+    "step4Text": "再次尝试加入通话",
+    "step1DigitText": "1",
+    "step2DigitText": "2",
+    "step3DigitText": "3",
+    "step4DigitText": "4"
   }
 }
