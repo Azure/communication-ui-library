@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "modify dropdown props to include askDevicePermission",
+  "comment": "Make components string optional",
   "packageName": "@internal/react-components",
   "email": "carolinecao@microsoft.com",
   "dependentChangeType": "patch"

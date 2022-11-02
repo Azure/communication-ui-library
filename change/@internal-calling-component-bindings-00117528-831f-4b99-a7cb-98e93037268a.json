@@ -1,7 +1,7 @@
 {
   "type": "prerelease",
-  "comment": "create handlers for askDevicePermission",
+  "comment": "Added role to selectors",
   "packageName": "@internal/calling-component-bindings",
-  "email": "carolinecao@microsoft.com",
+  "email": "miguelgamis@microsoft.com",
   "dependentChangeType": "patch"
 }

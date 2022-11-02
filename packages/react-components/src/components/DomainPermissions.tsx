@@ -19,6 +19,8 @@ import {
   sparkleIconBackdropStyles,
   textContainerStyles
 } from './styles/DomainPermissions.styles';
+/* @conditional-compile-remove(call-readiness) */
+import { isValidString } from './utils';
 
 /**
  * @beta
@@ -65,7 +67,7 @@ export interface DomainPermissionsStrings {
    */
   primaryButtonText: string;
   /**
-   * aira label describing the content of the container
+   * Aira label describing the content of the container
    */
   ariaLabel: string;
 }
@@ -91,11 +93,14 @@ const DomainPermissionsContainer = (props: DomainPermissionsProps): JSX.Element 
         {strings && isValidString(strings?.primaryText) && (
           <Text styles={primaryTextStyles}>{_formatString(strings.primaryText, { appName: appName })}</Text>
         )}
-        <Text styles={secondaryTextStyles}>{strings?.secondaryText}</Text>
-        {onAllowAccessClick && (
+        {strings && isValidString(strings?.secondaryText) && (
+          <Text styles={secondaryTextStyles}>{strings?.secondaryText}</Text>
+        )}
+
+        {onAllowAccessClick && isValidString(strings?.primaryButtonText) && (
           <PrimaryButton styles={primaryButtonStyles} text={strings?.primaryButtonText} onClick={onAllowAccessClick} />
         )}
-        {onTroubleshootingClick && (
+        {onTroubleshootingClick && isValidString(strings?.linkText) && (
           <Link styles={linkTextStyles} onClick={onTroubleshootingClick}>
             {strings?.linkText}
           </Link>

@@ -14,12 +14,15 @@ import {
 import { CallParticipantListParticipant } from '@internal/react-components';
 import { _updateUserDisplayNames } from './utils/callUtils';
 import { memoizedConvertAllremoteParticipants } from './utils/participantListSelectorUtils';
+/* @conditional-compile-remove(rooms) */
+import { memoizedConvertAllremoteParticipantsBeta } from './utils/participantListSelectorUtils';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 
 const convertRemoteParticipantsToParticipantListParticipants = (
   remoteParticipants: RemoteParticipantState[]
 ): CallParticipantListParticipant[] => {
-  return memoizedConvertAllremoteParticipants((memoizeFn) => {
+  /* eslint-disable @typescript-eslint/explicit-function-return-type */
+  const conversionCallback = (memoizeFn) => {
     return (
       remoteParticipants
         // temporarily hiding lobby participants in ACS clients till we can admit users through ACS clients
@@ -36,7 +39,8 @@ const convertRemoteParticipantsToParticipantListParticipants = (
             participant.state,
             participant.isMuted,
             isScreenSharing,
-            participant.isSpeaking
+            participant.isSpeaking,
+            /* @conditional-compile-remove(rooms) */ participant.role
           );
         })
         .sort((a, b) => {
@@ -51,7 +55,10 @@ const convertRemoteParticipantsToParticipantListParticipants = (
           }
         })
     );
-  });
+  };
+  /* @conditional-compile-remove(rooms) */
+  return memoizedConvertAllremoteParticipantsBeta(conversionCallback);
+  return memoizedConvertAllremoteParticipants(conversionCallback);
 };
 
 /**

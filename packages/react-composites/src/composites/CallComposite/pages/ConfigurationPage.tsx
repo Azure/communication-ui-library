@@ -45,6 +45,9 @@ import { ConfigurationpageErrorBar } from '../components/ConfigurationpageErrorB
 /* @conditional-compile-remove(call-readiness) */
 import { drawerContainerStyles } from '../styles/CallComposite.styles';
 
+/* @conditional-compile-remove(call-readiness) */
+const DRAWER_HIGH_Z_BAND = 99; // setting z index to  99 so that it sit above all components
+
 /**
  * @private
  */
@@ -154,12 +157,6 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
 
   /* @conditional-compile-remove(call-readiness) */
   const [isModalShowing, setIsModalShowing] = useState(false);
-
-  /* @conditional-compile-remove(call-readiness) */
-  const onClickEnableDevicePermission = (): void => {
-    setIsModalShowing(true);
-  };
-
   return (
     <Stack className={mobileView ? configurationContainerStyleMobile : configurationContainerStyleDesktop}>
       <Stack styles={bannerNotificationStyles}>
@@ -211,7 +208,7 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
       {
         /* @conditional-compile-remove(call-readiness) */
         mobileView && isDrawerShowing && callReadinessOptedIn && (
-          <_DrawerSurface onLightDismiss={onLightDismissTriggered} styles={drawerContainerStyles(99)}>
+          <_DrawerSurface onLightDismiss={onLightDismissTriggered} styles={drawerContainerStyles(DRAWER_HIGH_Z_BAND)}>
             <DomainPermissions
               appName={'app'}
               onTroubleshootingClick={
@@ -264,7 +261,9 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
                 /* @conditional-compile-remove(call-readiness) */
                 callReadinessOptedIn={callReadinessOptedIn}
                 /* @conditional-compile-remove(call-readiness) */
-                onClickEnableDevicePermission={onClickEnableDevicePermission}
+                onClickEnableDevicePermission={() => {
+                  setIsModalShowing(true);
+                }}
               />
             </>
           )}

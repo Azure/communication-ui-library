@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+/* @conditional-compile-remove(rooms) */
+import { Role } from '../permissions';
 import { CommunicationParticipant } from './CommunicationParticipant';
 
 /**
@@ -17,6 +19,9 @@ export type CallParticipantListParticipant = ParticipantListParticipant & {
   isMuted?: boolean;
   /** Whether calling participant is speaking */
   isSpeaking?: boolean;
+  /* @conditional-compile-remove(rooms) */
+  /** Role of participant in Rooms call */
+  role?: Role;
 };
 
 /**
