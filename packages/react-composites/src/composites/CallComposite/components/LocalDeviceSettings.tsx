@@ -87,6 +87,8 @@ export interface LocalDeviceSettingsType {
   onSelectMicrophone: (device: AudioDeviceInfo) => Promise<void>;
   onSelectSpeaker: (device: AudioDeviceInfo) => Promise<void>;
   callReadinessOptedIn?: boolean;
+  /* @conditional-compile-remove(call-readiness) */
+  onClickEnableDevicePermission?: () => void;
 }
 
 /**
@@ -210,6 +212,8 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
             dropdownProps={dropdownProps}
             /* @conditional-compile-remove(call-readiness) */
             callReadinessOptedIn={props.callReadinessOptedIn ?? false}
+            /* @conditional-compile-remove(call-readiness) */
+            onClickEnableDevicePermission={props.onClickEnableDevicePermission}
           />
         </Stack>
       )}
@@ -229,6 +233,8 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
             dropdownProps={dropdownProps}
             /* @conditional-compile-remove(call-readiness) */
             callReadinessOptedIn={props.callReadinessOptedIn ?? false}
+            /* @conditional-compile-remove(call-readiness) */
+            onClickEnableDevicePermission={props.onClickEnableDevicePermission}
           />
           <Dropdown
             aria-labelledby={'call-composite-local-sound-settings-label'}
