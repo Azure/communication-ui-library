@@ -47,6 +47,10 @@ export interface _DevicePermissionDropdownProps {
    */
   askDevicePermission?(constrain: _PermissionConstraints): Promise<void>;
   /**
+   * Optional callback when component is clicked
+   */
+  onClick?: () => void;
+  /**
    * Define constraints for accessing local devices  {@link @azure/communication-calling#PermissionConstraints }
    */
   constrain?: _PermissionConstraints;
@@ -66,7 +70,7 @@ export interface _DevicePermissionDropdownProps {
  * @internal
  */
 export const _DevicePermissionDropdown = (props: _DevicePermissionDropdownProps): JSX.Element => {
-  const { icon, askDevicePermission, constrain, strings, options, styles } = props;
+  const { icon, askDevicePermission, onClick, constrain, strings, options, styles } = props;
 
   const onRenderPlaceholder = (): JSX.Element => {
     return (
@@ -83,6 +87,7 @@ export const _DevicePermissionDropdown = (props: _DevicePermissionDropdownProps)
 
   return (
     <Dropdown
+      data-ui-id={'permission-dropdown'}
       placeholder={strings?.placeHolderText}
       label={strings?.label}
       onRenderPlaceholder={onRenderPlaceholder}
@@ -91,6 +96,7 @@ export const _DevicePermissionDropdown = (props: _DevicePermissionDropdownProps)
         if (askDevicePermission) {
           askDevicePermission(constrain ?? { video: true, audio: true });
         }
+        onClick?.();
       }}
       options={options ?? []}
       styles={styles}

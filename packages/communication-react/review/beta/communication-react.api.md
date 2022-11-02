@@ -191,7 +191,7 @@ export interface BaseCustomStyles {
 // @beta
 export interface BrowserPermissionDeniedIOSProps extends BrowserPermissionDeniedProps {
     imageSource?: string;
-    strings: BrowserPermissionDeniedIOSStrings;
+    strings?: BrowserPermissionDeniedIOSStrings;
 }
 
 // @beta
@@ -211,9 +211,9 @@ export interface BrowserPermissionDeniedIOSStrings extends BrowserPermissionDeni
 
 // @beta
 export interface BrowserPermissionDeniedProps {
-    onTroubleshootingClick: () => void;
-    onTryAgainClick: () => void;
-    strings: BrowserPermissionDeniedStrings;
+    onTroubleshootingClick?: () => void;
+    onTryAgainClick?: () => void;
+    strings?: BrowserPermissionDeniedStrings;
     styles?: BrowserPermissionDeniedStyles;
 }
 
@@ -1791,6 +1791,7 @@ export interface _DevicePermissionDropdownProps {
     askDevicePermission?(constrain: _PermissionConstraints): Promise<void>;
     constrain?: _PermissionConstraints;
     icon?: JSX.Element;
+    onClick?: () => void;
     options?: IDropdownOption[];
     strings?: _DevicePermissionDropdownStrings;
     styles?: Partial<IDropdownStyles>;
