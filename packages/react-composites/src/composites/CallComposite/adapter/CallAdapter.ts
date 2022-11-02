@@ -14,6 +14,8 @@ import type {
   PropertyChangedEvent
 } from '@azure/communication-calling';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
+/* @conditional-compile-remove(rooms) */
+import { Role } from '@internal/react-components';
 import type { CommunicationIdentifierKind } from '@azure/communication-common';
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions, DtmfTone } from '@azure/communication-calling';
@@ -88,6 +90,12 @@ export type CallAdapterClientState = {
    * Azure communications Phone number to make PSTN calls with.
    */
   alternateCallerId?: string;
+  /* @conditional-compile-remove(rooms) */
+  /**
+   * Optional role of the local user that is assumed before a call is started. This role will determine permissions
+   * in the configuration page of the {@link CallComposite}.
+   */
+  roleHint?: Role;
 };
 
 /**

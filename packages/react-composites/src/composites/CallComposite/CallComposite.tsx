@@ -61,14 +61,6 @@ export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcon
    * Flags to enable/disable or customize UI elements of the {@link CallComposite}.
    */
   options?: CallCompositeOptions;
-
-  /* @conditional-compile-remove(rooms) */
-  /**
-   * Set the role to enable/disable capacities. This property should be properly set for Rooms calls. The role of a
-   * user for a room can be obtained using the Rooms API. The role of the user will be synced with ACS services when
-   * a Rooms call starts.
-   */
-  roleHint?: Role;
 }
 
 /* @conditional-compile-remove(call-readiness) */
@@ -360,10 +352,11 @@ export const CallComposite = (props: CallCompositeProps): JSX.Element => {
     onFetchAvatarPersonaData,
     onFetchParticipantMenuItems,
     options,
-    formFactor = 'desktop',
-    /* @conditional-compile-remove(rooms) */
-    roleHint
+    formFactor = 'desktop'
   } = props;
+
+  /* @conditional-compile-remove(rooms) */
+  const roleHint = adapter.getState().roleHint;
 
   useEffect(() => {
     (async () => {

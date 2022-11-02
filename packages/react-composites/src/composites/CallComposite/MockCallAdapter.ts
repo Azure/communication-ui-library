@@ -2,6 +2,8 @@
 // Licensed under the MIT license.
 
 import { AudioDeviceInfo, Call, DtmfTone, PermissionConstraints, VideoDeviceInfo } from '@azure/communication-calling';
+/* @conditional-compile-remove(rooms) */
+import { Role } from '@internal/react-components';
 import { CallAdapter, CallAdapterState } from './adapter';
 
 /**
@@ -9,11 +11,18 @@ import { CallAdapter, CallAdapterState } from './adapter';
  */
 // TODO: Remove this simplified copy of the MockCallAdapter when the original MockCallAdapter is moved to fake-backends package and can be imported
 export class MockCallAdapter implements CallAdapter {
-  constructor(testState: { askDevicePermission?: (constrain: PermissionConstraints) => Promise<void> }) {
+  constructor(testState: {
+    askDevicePermission?: (constrain: PermissionConstraints) => Promise<void>;
+    /* @conditional-compile-remove(rooms) */ roleHint?: Role;
+  }) {
     this.state = defaultCallAdapterState;
 
     if (testState.askDevicePermission) {
       this.askDevicePermission = testState.askDevicePermission;
+    }
+    /* @conditional-compile-remove(rooms) */
+    if (testState.roleHint) {
+      this.state.roleHint = testState.roleHint;
     }
   }
 
