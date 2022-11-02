@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { concatStyleSets, ContextualMenu, IDragOptions, IStyle, LayerHost, mergeStyles, Stack } from '@fluentui/react';
+import { concatStyleSets, IStyle, LayerHost, mergeStyles, Stack } from '@fluentui/react';
 import React, { useCallback, useMemo, useRef } from 'react';
 import { GridLayoutStyles } from '.';
 import { smartDominantSpeakerParticipants } from '../gallery';
@@ -24,12 +24,10 @@ import { HORIZONTAL_GALLERY_BUTTON_WIDTH, HORIZONTAL_GALLERY_GAP } from './style
 import {
   LARGE_HORIZONTAL_GALLERY_TILE_SIZE_REM,
   SMALL_HORIZONTAL_GALLERY_TILE_SIZE_REM,
-  floatingLocalVideoModalStyle,
   floatingLocalVideoTileStyle,
   horizontalGalleryContainerStyle,
   horizontalGalleryStyle,
   layerHostStyle,
-  localVideoTileContainerStyle,
   videoGalleryContainerStyle,
   videoGalleryOuterDivStyle,
   localVideoTileOuterPaddingPX,
@@ -41,12 +39,12 @@ import { LocalScreenShare } from './VideoGallery/LocalScreenShare';
 import { RemoteScreenShare } from './VideoGallery/RemoteScreenShare';
 import { useId } from '@fluentui/react-hooks';
 import { LocalVideoCameraCycleButtonProps } from './LocalVideoCameraButton';
-import { localVideoTileWithControlsContainerStyle, LOCAL_VIDEO_TILE_ZINDEX } from './styles/VideoGallery.styles';
 import { _ICoordinates, _ModalClone } from './ModalClone/ModalClone';
 import { _formatString } from '@internal/acs-ui-common';
 import { _LocalVideoTile } from './LocalVideoTile';
 /* @conditional-compile-remove(rooms) */
 import { _usePermissions } from '../permissions';
+import { _LocalVideoTileLayout } from './VideoGallery/LocalVideoTileLayout';
 
 // Currently the Calling JS SDK supports up to 4 remote video streams
 const DEFAULT_MAX_REMOTE_VIDEO_STREAMS = 4;
@@ -158,13 +156,6 @@ export interface VideoGalleryProps {
    */
   localVideoCameraCycleButtonProps?: LocalVideoCameraCycleButtonProps;
 }
-
-const DRAG_OPTIONS: IDragOptions = {
-  moveMenuItemText: 'Move',
-  closeMenuItemText: 'Close',
-  menu: ContextualMenu,
-  keepInBounds: true
-};
 
 // Manually override the max position used to keep the modal in the bounds of its container.
 // This is a workaround for: https://github.com/microsoft/fluentui/issues/20122
@@ -426,37 +417,17 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       ref={containerRef}
       className={mergeStyles(videoGalleryOuterDivStyle, styles?.root)}
     >
-      {shouldFloatLocalVideo &&
-        !shouldFloatNonDraggableLocalVideo &&
-        localVideoTile &&
-        (horizontalGalleryPresent ? (
-          <Stack className={mergeStyles(localVideoTileContainerStyle(theme, isNarrow))}>{localVideoTile}</Stack>
-        ) : (
-          <_ModalClone
-            isOpen={true}
-            isModeless={true}
-            dragOptions={DRAG_OPTIONS}
-            styles={floatingLocalVideoModalStyle(theme, isNarrow)}
-            layerProps={{ hostId: layerHostId }}
-            maxDragPosition={modalMaxDragPosition}
-            minDragPosition={modalMinDragPosition}
-          >
-            {localVideoTile}
-          </_ModalClone>
-        ))}
-      {
-        // When we use showCameraSwitcherInLocalPreview it disables dragging to allow keyboard navigation.
-        shouldFloatNonDraggableLocalVideo && localVideoTile && remoteParticipants.length > 0 && (
-          <Stack
-            className={mergeStyles(localVideoTileWithControlsContainerStyle(theme, isNarrow), {
-              boxShadow: theme.effects.elevation8,
-              zIndex: LOCAL_VIDEO_TILE_ZINDEX
-            })}
-          >
-            {localVideoTile}
-          </Stack>
-        )
-      }
+      <_LocalVideoTileLayout
+        shouldFloatLocalVideo={shouldFloatLocalVideo}
+        shouldFloatNonDraggableLocalVideo={shouldFloatNonDraggableLocalVideo}
+        horizontalGalleryPresent={horizontalGalleryPresent}
+        localVideoTile={localVideoTile}
+        isNarrow={isNarrow}
+        layerHostId={layerHostId}
+        modalMaxDragPosition={modalMaxDragPosition}
+        modalMinDragPosition={modalMinDragPosition}
+        remoteParticipantsLength={remoteParticipants.length}
+      />
       <Stack horizontal={false} styles={videoGalleryContainerStyle}>
         {screenShareParticipant ? (
           remoteScreenShareComponent
@@ -489,3 +460,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     </div>
   );
 };
+
+// GridLayout
+// PinnedLayout
+// SpotlightLayout
+// FocusLayout
