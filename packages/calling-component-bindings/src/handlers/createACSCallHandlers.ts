@@ -12,7 +12,7 @@ import {
   isMicrosoftTeamsUserIdentifier,
   isPhoneNumberIdentifier
 } from '@azure/communication-common';
-import { fromFlatCommunicationIdentifier } from '@internal/acs-ui-common';
+import { _toCommunicationIdentifier } from '@internal/acs-ui-common';
 import { StatefulCallClient, StatefulDeviceManager } from '@internal/calling-stateful-client';
 import memoizeOne from 'memoize-one';
 import { CallingHandlersCommon, createDefaultCallingHandlersCommon } from './createHandlersCommon';
@@ -47,17 +47,21 @@ export const createDefaultACSCallingHandlers = memoizeOne(
       },
       /* @conditional-compile-remove(PSTN-calls) */
       onAddParticipant: async (
-        participant: CommunicationIdentifier,
+        userId: string | CommunicationIdentifier,
         options?: AddPhoneNumberOptions
       ): Promise<void> => {
+        const participant = _toCommunicationIdentifier(userId);
         if (isPhoneNumberIdentifier(participant)) {
           call?.addParticipant(participant, options);
         } else if (isCommunicationUserIdentifier(participant) || isMicrosoftTeamsUserIdentifier(participant)) {
           call?.addParticipant(participant);
         }
       },
-      onRemoveParticipant: async (userId: string): Promise<void> => {
-        await call?.removeParticipant(fromFlatCommunicationIdentifier(userId));
+      onRemoveParticipant: async (
+        userId: string | /* @conditional-compile-remove(PSTN-calls) */ CommunicationIdentifier
+      ): Promise<void> => {
+        const participant = _toCommunicationIdentifier(userId);
+        await call?.removeParticipant(participant);
       }
     };
   }

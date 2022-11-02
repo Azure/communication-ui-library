@@ -1,15 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { StartCallOptions } from '@azure/communication-calling';
+import { AddPhoneNumberOptions, StartCallOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-call) */
 import { TeamsCall, TeamsCallAgent } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
-import {
-  CommunicationIdentifier,
-  isCommunicationUserIdentifier,
-  PhoneNumberIdentifier
-} from '@azure/communication-common';
+import { CommunicationIdentifier, isCommunicationUserIdentifier, isPhoneNumberIdentifier } from '@azure/communication-common';
 import { Common, _toCommunicationIdentifier } from '@internal/acs-ui-common';
 import { StatefulCallClient, StatefulDeviceManager } from '@internal/calling-stateful-client';
 import memoizeOne from 'memoize-one';
@@ -58,11 +54,20 @@ export const createDefaultTeamsCallingHandlers = memoizeOne(
         return callAgent ? callAgent.startCall(participants, threadId ? { threadId } : undefined) : undefined;
       },
       /* @conditional-compile-remove(PSTN-calls) */
-      onAddParticipant: async (participant, options?): Promise<void> => {
-        if (isCommunicationUserIdentifier(participant)) {
-          throw new Error('CommunicationIdentifier in Teams call is not supported!');
+      onAddParticipant: async (
+        userId: string | CommunicationIdentifier,
+        options?: AddPhoneNumberOptions
+      ): Promise<void> => {
+        const participant = _toCommunicationIdentifier(userId);
+        const threadId = options?.threadId;
+        if (isPhoneNumberIdentifier(participant)) {
+          call?.addParticipant(participant, threadId ? { threadId } : undefined);
+        } else {
+          if (isCommunicationUserIdentifier(participant)) {
+            throw new Error('CommunicationIdentifier in Teams call is not supported!');
+          }
+          call?.addParticipant(participant, threadId ? { threadId } : undefined);
         }
-        await call?.addParticipant(participant as PhoneNumberIdentifier, options);
       },
       onRemoveParticipant: async (
         userId: string | /* @conditional-compile-remove(PSTN-calls) */ CommunicationIdentifier

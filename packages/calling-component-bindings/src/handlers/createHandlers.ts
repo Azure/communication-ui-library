@@ -14,7 +14,6 @@ import { ReactElement } from 'react';
 /* @conditional-compile-remove(teams-call) */
 import { createDefaultTeamsCallingHandlers, TeamsCallingHandlers } from './createTeamsCallHandlers';
 import { CallingHandlers, createDefaultACSCallingHandlers } from './createACSCallHandlers';
-import { CommunicationIdentifier, isCommunicationUserIdentifier, isMicrosoftTeamsUserIdentifier, isPhoneNumberIdentifier } from '@azure/communication-common';
 
 /**
  * @internal
@@ -92,20 +91,4 @@ export const createDefaultCallingHandlersForComponent = <
   _Component: (props: Props) => ReactElement | null
 ): Common<CallHandlersOf<AgentType>, Props> => {
   return createDefaultCallingHandlers(callClient, callAgent, deviceManager, call);
-};
-
-/* @conditional-compile-remove(PSTN-calls) */
-/**
- * Helper function for determining participant type.
- */
-const participantTypeHelper = (p: CommunicationIdentifier): string => {
-  if (isPhoneNumberIdentifier(p)) {
-    return 'PSTN';
-  } else if (isCommunicationUserIdentifier(p)) {
-    return 'ACS';
-  } else if (isMicrosoftTeamsUserIdentifier(p)) {
-    return 'Teams';
-  } else {
-    return 'unknown';
-  }
 };
