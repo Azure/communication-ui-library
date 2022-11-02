@@ -2,13 +2,9 @@
 // Licensed under the MIT license.
 
 import { CommunicationIdentifierKind } from '@azure/communication-common';
-import {
-  AudioDeviceInfo,
-  DeviceAccess,
-  DominantSpeakersInfo,
-  EnvironmentInfo,
-  VideoDeviceInfo
-} from '@azure/communication-calling';
+import { AudioDeviceInfo, DeviceAccess, DominantSpeakersInfo, VideoDeviceInfo } from '@azure/communication-calling';
+/* @conditional-compile-remove(unsupported-browser) */
+import { EnvironmentInfo } from '@azure/communication-calling';
 import { AzureLogger, createClientLogger, getLogLevel } from '@azure/logger';
 import EventEmitter from 'events';
 import { enableMapSet, enablePatches, Patch, produce } from 'immer';

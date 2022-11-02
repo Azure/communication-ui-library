@@ -2,15 +2,9 @@
 // Licensed under the MIT license.
 
 import { deviceManagerDeclaratify } from './DeviceManagerDeclarative';
-import {
-  CallClient,
-  CallClientOptions,
-  CreateViewOptions,
-  DeviceManager,
-  Features
-} from '@azure/communication-calling';
+import { CallClient, CallClientOptions, CreateViewOptions, DeviceManager } from '@azure/communication-calling';
 /* @conditional-compile-remove(unsupported-browser) */
-import { EnvironmentInfo } from '@azure/communication-calling';
+import { EnvironmentInfo, Features } from '@azure/communication-calling';
 import { CallClientState, LocalVideoStreamState, RemoteVideoStreamState } from './CallClientState';
 import { CallContext } from './CallContext';
 import { callAgentDeclaratify, DeclarativeCallAgent } from './CallAgentDeclarative';
@@ -226,6 +220,7 @@ class ProxyCallClient implements ProxyHandler<CallClient> {
         }, 'CallClient.getDeviceManager');
       }
       case 'getEnvironmentInfo': {
+        /* @conditional-compile-remove(unsupported-browser) */
         return this._context.withAsyncErrorTeedToState(async () => {
           const environmentInfo = await target.feature(Features.DebugInfo).getEnvironmentInfo();
           this._context.setEnvironmentInfo(environmentInfo);

@@ -99,6 +99,7 @@ export const getRemoteParticipants = (
       [keys: string]: RemoteParticipantState;
     } => state.call?.remoteParticipants;
 
+/* @conditional-compile-remove(unsupported-browser) */
 /**
  * @private
  */
