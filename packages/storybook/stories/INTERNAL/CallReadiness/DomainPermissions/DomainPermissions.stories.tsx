@@ -3,9 +3,9 @@
 
 import { Stack } from '@fluentui/react';
 import {
-  CameraAndMicDomainPermissions as CameraAndMicDomainPermissionsComponent,
+  CameraAndMicrophoneDomainPermissions as CameraAndMicrophoneDomainPermissionsComponent,
   CameraDomainPermissions as CameraDomainPermissionsComponent,
-  MicDomainPermissions as MicDomainPermissionsComponent,
+  MicrophoneDomainPermissions as MicrophoneDomainPermissionsComponent,
   _DrawerSurface
 } from '@internal/react-components';
 import { Canvas, Description, Heading, Props, Title } from '@storybook/addon-docs';
@@ -31,10 +31,10 @@ const DomainPermissionsStory = (args: ArgsFrom<typeof storyControls>): JSX.Eleme
   return (
     <Stack>
       {args.domainRequest === controlsToAdd.domainDeviceRequest.options[0] && (
-        <CameraAndMicDomainPermissionsComponent
+        <CameraAndMicrophoneDomainPermissionsComponent
           appName={args.appName}
           onTroubleshootingClick={() => alert('you clicked the help text')}
-          strings={localStrings.CameraAndMicDomainPermissions}
+          strings={localStrings.CameraAndMicrophoneDomainPermissions}
         />
       )}
       {args.domainRequest === controlsToAdd.domainDeviceRequest.options[1] && (
@@ -46,10 +46,10 @@ const DomainPermissionsStory = (args: ArgsFrom<typeof storyControls>): JSX.Eleme
         />
       )}
       {args.domainRequest === controlsToAdd.domainDeviceRequest.options[2] && (
-        <MicDomainPermissionsComponent
+        <MicrophoneDomainPermissionsComponent
           appName={args.appName}
           onTroubleshootingClick={() => alert('you clicked the help text')}
-          strings={localStrings.MicDomainPermissions}
+          strings={localStrings.MicrophoneDomainPermissions}
         />
       )}
     </Stack>
@@ -77,7 +77,7 @@ const getDocs: () => JSX.Element = () => {
       <Canvas mdxSource={DomainPermissionsDrawerExample}>
         <DomainPermissionsDrawer />
       </Canvas>
-      <Props of={CameraAndMicDomainPermissionsComponent} />
+      <Props of={CameraAndMicrophoneDomainPermissionsComponent} />
     </Stack>
   );
 };
@@ -89,7 +89,7 @@ export const DomainPermissions = DomainPermissionsStory.bind({});
 export default {
   id: `${COMPONENT_FOLDER_PREFIX}-internal-domain-permissions`,
   title: `${COMPONENT_FOLDER_PREFIX}/Internal/CallReadiness/Domain Permissions`,
-  component: CameraAndMicDomainPermissionsComponent,
+  component: CameraAndMicrophoneDomainPermissionsComponent,
   argTypes: {
     ...storyControls,
 

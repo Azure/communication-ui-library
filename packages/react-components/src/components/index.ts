@@ -90,21 +90,21 @@ export type {
 
 /* @conditional-compile-remove(call-readiness) */
 export {
-  CameraAndMicDomainPermissions,
-  MicDomainPermissions,
+  CameraAndMicrophoneDomainPermissions,
+  MicrophoneDomainPermissions,
   CameraDomainPermissions
 } from './DevicePermissions/DomainPermissions';
 /* @conditional-compile-remove(call-readiness) */
 export type { DomainPermissionsStrings } from './DevicePermissions/DomainPermissionsScaffolding';
 /* @conditional-compile-remove(call-readiness) */
 export type {
-  CameraAndMicDomainPermissionsStrings,
-  CameraAndMicDomainPermissionsProps,
+  CameraAndMicrophoneDomainPermissionsStrings,
+  CameraAndMicrophoneDomainPermissionsProps,
   CameraDomainPermissionsStrings,
   CameraDomainPermissionsProps,
   CommonDomainPermissionsProps,
-  MicDomainPermissionsStrings,
-  MicDomainPermissionsProps
+  MicrophoneDomainPermissionsStrings,
+  MicrophoneDomainPermissionsProps
 } from './DevicePermissions/DomainPermissions';
 /* @conditional-compile-remove(call-readiness) */
 export { BrowserPermissionDenied } from './DevicePermissions/BrowserPermissionDenied';

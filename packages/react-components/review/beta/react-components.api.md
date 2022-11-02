@@ -137,22 +137,18 @@ export type CallParticipantListParticipant = ParticipantListParticipant & {
 };
 
 // @beta
-export const CameraAndMicDomainPermissions: (props: CameraAndMicDomainPermissionsProps) => JSX.Element;
+export const CameraAndMicrophoneDomainPermissions: (props: CameraAndMicrophoneDomainPermissionsProps) => JSX.Element;
 
 // @beta
-export interface CameraAndMicDomainPermissionsProps extends CommonDomainPermissionsProps {
-    // (undocumented)
+export interface CameraAndMicrophoneDomainPermissionsProps extends CommonDomainPermissionsProps {
     cameraIconName?: string;
-    // (undocumented)
     connectorIconName?: string;
-    // (undocumented)
-    micIconName?: string;
-    // (undocumented)
-    strings?: CameraAndMicDomainPermissionsStrings;
+    microphoneIconName?: string;
+    strings?: CameraAndMicrophoneDomainPermissionsStrings;
 }
 
 // @beta
-export type CameraAndMicDomainPermissionsStrings = DomainPermissionsStrings;
+export type CameraAndMicrophoneDomainPermissionsStrings = DomainPermissionsStrings;
 
 // @public
 export const CameraButton: (props: CameraButtonProps) => JSX.Element;
@@ -201,9 +197,7 @@ export const CameraDomainPermissions: (props: CameraDomainPermissionsProps) => J
 
 // @beta
 export interface CameraDomainPermissionsProps extends CommonDomainPermissionsProps {
-    // (undocumented)
     cameraIconName?: string;
-    // (undocumented)
     strings?: CameraDomainPermissionsStrings;
 }
 
@@ -352,7 +346,7 @@ export interface ComponentLocale {
 export interface ComponentStrings {
     BrowserPermissionDenied: BrowserPermissionDeniedStrings;
     BrowserPermissionDeniedIOS: BrowserPermissionDeniedIOSStrings;
-    CameraAndMicDomainPermissions: DomainPermissionsStrings;
+    CameraAndMicrophoneDomainPermissions: DomainPermissionsStrings;
     cameraButton: CameraButtonStrings;
     CameraDomainPermissions: DomainPermissionsStrings;
     devicesButton: DevicesButtonStrings;
@@ -362,8 +356,8 @@ export interface ComponentStrings {
     holdButton: HoldButtonStrings;
     messageStatusIndicator: MessageStatusIndicatorStrings;
     messageThread: MessageThreadStrings;
-    MicDomainPermissions: DomainPermissionsStrings;
     microphoneButton: MicrophoneButtonStrings;
+    MicrophoneDomainPermissions: DomainPermissionsStrings;
     participantItem: ParticipantItemStrings;
     participantsButton: ParticipantsButtonStrings;
     screenShareButton: ScreenShareButtonStrings;
@@ -1101,20 +1095,6 @@ export interface MessageThreadStyles extends BaseCustomStyles {
     systemMessageContainer?: ComponentSlotStyle;
 }
 
-// @beta
-export const MicDomainPermissions: (props: MicDomainPermissionsProps) => JSX.Element;
-
-// @beta
-export interface MicDomainPermissionsProps extends CommonDomainPermissionsProps {
-    // (undocumented)
-    microphoneIconName?: string;
-    // (undocumented)
-    strings?: MicDomainPermissionsStrings;
-}
-
-// @beta
-export type MicDomainPermissionsStrings = DomainPermissionsStrings;
-
 // @public
 export const MicrophoneButton: (props: MicrophoneButtonProps) => JSX.Element;
 
@@ -1159,6 +1139,18 @@ export interface MicrophoneButtonStrings {
 export interface MicrophoneButtonStyles extends ControlBarButtonStyles {
     menuStyles?: Partial<MicrophoneButtonContextualMenuStyles>;
 }
+
+// @beta
+export const MicrophoneDomainPermissions: (props: MicrophoneDomainPermissionsProps) => JSX.Element;
+
+// @beta
+export interface MicrophoneDomainPermissionsProps extends CommonDomainPermissionsProps {
+    microphoneIconName?: string;
+    strings?: MicrophoneDomainPermissionsStrings;
+}
+
+// @beta
+export type MicrophoneDomainPermissionsStrings = DomainPermissionsStrings;
 
 // @internal (undocumented)
 export const _ModalClone: React_3.FunctionComponent<_ExtendedIModalProps>;

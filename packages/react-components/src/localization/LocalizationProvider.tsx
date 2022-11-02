@@ -94,13 +94,13 @@ export interface ComponentStrings {
   holdButton: HoldButtonStrings;
   /* @conditional-compile-remove(call-readiness) */
   /** Strings for DomainPermissions */
-  CameraAndMicDomainPermissions: DomainPermissionsStrings;
+  CameraAndMicrophoneDomainPermissions: DomainPermissionsStrings;
   /* @conditional-compile-remove(call-readiness) */
   /** Strings for DomainPermissions */
   CameraDomainPermissions: DomainPermissionsStrings;
   /* @conditional-compile-remove(call-readiness) */
   /** Strings for DomainPermissions */
-  MicDomainPermissions: DomainPermissionsStrings;
+  MicrophoneDomainPermissions: DomainPermissionsStrings;
   /* @conditional-compile-remove(unsupported-browser) */
   /** Strings for unsupported browser UI */
   UnsupportedBrowser: UnsupportedBrowserStrings;

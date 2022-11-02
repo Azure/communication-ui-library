@@ -39,7 +39,7 @@ export interface DomainPermissionsContainerProps {
    * Name of icon to be used for the mic icon.
    * If this is not provided the icon will not be shown.
    */
-  micIconName?: string;
+  microphoneIconName?: string;
   /**
    * Action to be taken by the more help link. Possible to send to external page or show other modal.
    * If this is not provided the button will not be shown.
@@ -100,9 +100,9 @@ export const DomainPermissionsContainer = (props: DomainPermissionsContainerProp
             <Icon styles={sparkleIconBackdropStyles(theme)} iconName={props.connectorIconName}></Icon>
           </Stack>
         )}
-        {props.micIconName && (
+        {props.microphoneIconName && (
           <Stack styles={iconContainerStyles} horizontalAlign={'center'}>
-            <Icon styles={iconPrimaryStyles} iconName={props.micIconName}></Icon>
+            <Icon styles={iconPrimaryStyles} iconName={props.microphoneIconName}></Icon>
           </Stack>
         )}
       </Stack>

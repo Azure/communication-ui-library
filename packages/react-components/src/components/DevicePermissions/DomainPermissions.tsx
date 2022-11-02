@@ -33,19 +33,23 @@ export interface CommonDomainPermissionsProps {
 
 /**
  * @beta
- * Strings for CameraAndMicDomainPermissions component.
+ * Strings for CameraAndMicrophoneDomainPermissions component.
  */
-export type CameraAndMicDomainPermissionsStrings = DomainPermissionsStrings;
+export type CameraAndMicrophoneDomainPermissionsStrings = DomainPermissionsStrings;
 
 /**
  * @beta
- * Props for CameraAndMicDomainPermissions component.
+ * Props for CameraAndMicrophoneDomainPermissions component.
  */
-export interface CameraAndMicDomainPermissionsProps extends CommonDomainPermissionsProps {
+export interface CameraAndMicrophoneDomainPermissionsProps extends CommonDomainPermissionsProps {
+  /** Icon name for the camera icon */
   cameraIconName?: string;
-  micIconName?: string;
+  /** Icon name for the microphone icon */
+  microphoneIconName?: string;
+  /** Icon name for the central icon between the camera and microphone icons */
   connectorIconName?: string;
-  strings?: CameraAndMicDomainPermissionsStrings;
+  /** Strings for use with the {@link CameraAndMicrophoneDomainPermissions} */
+  strings?: CameraAndMicrophoneDomainPermissionsStrings;
 }
 
 /**
@@ -54,9 +58,9 @@ export interface CameraAndMicDomainPermissionsProps extends CommonDomainPermissi
  * Component to allow Contoso to help their end user with their devices should their permissions be blocked
  * by their browsers settings.
  */
-export const CameraAndMicDomainPermissions = (props: CameraAndMicDomainPermissionsProps): JSX.Element => {
+export const CameraAndMicrophoneDomainPermissions = (props: CameraAndMicrophoneDomainPermissionsProps): JSX.Element => {
   /* @conditional-compile-remove(call-readiness) */
-  const locale = useLocale().strings.CameraAndMicDomainPermissions;
+  const locale = useLocale().strings.CameraAndMicrophoneDomainPermissions;
 
   /* @conditional-compile-remove(call-readiness) */
   const strings = useShallowMerge(locale, props.strings);
@@ -68,7 +72,7 @@ export const CameraAndMicDomainPermissions = (props: CameraAndMicDomainPermissio
       strings={strings}
       cameraIconName={props.cameraIconName ?? 'DomainPermissionCamera'}
       connectorIconName={props.cameraIconName ?? 'DomainPermissionsSparkle'}
-      micIconName={props.cameraIconName ?? 'DomainPermissionMic'}
+      microphoneIconName={props.cameraIconName ?? 'DomainPermissionMic'}
       onPrimaryButtonClick={props.onContinueAnywayClick}
     />
   );
@@ -77,17 +81,19 @@ export const CameraAndMicDomainPermissions = (props: CameraAndMicDomainPermissio
 
 /**
  * @beta
- * Strings for MicDomainPermissions component.
+ * Strings for MicrophoneDomainPermissions component.
  */
-export type MicDomainPermissionsStrings = DomainPermissionsStrings;
+export type MicrophoneDomainPermissionsStrings = DomainPermissionsStrings;
 
 /**
  * @beta
- * Props for MicDomainPermissions component.
+ * Props for MicrophoneDomainPermissions component.
  */
-export interface MicDomainPermissionsProps extends CommonDomainPermissionsProps {
+export interface MicrophoneDomainPermissionsProps extends CommonDomainPermissionsProps {
+  /** Icon name for the microphone icon */
   microphoneIconName?: string;
-  strings?: MicDomainPermissionsStrings;
+  /** Strings for use with the {@link MicrophoneDomainPermissions} */
+  strings?: MicrophoneDomainPermissionsStrings;
 }
 
 /**
@@ -96,9 +102,9 @@ export interface MicDomainPermissionsProps extends CommonDomainPermissionsProps 
  *
  * @beta
  */
-export const MicDomainPermissions = (props: MicDomainPermissionsProps): JSX.Element => {
+export const MicrophoneDomainPermissions = (props: MicrophoneDomainPermissionsProps): JSX.Element => {
   /* @conditional-compile-remove(call-readiness) */
-  const locale = useLocale().strings.MicDomainPermissions;
+  const locale = useLocale().strings.MicrophoneDomainPermissions;
 
   /* @conditional-compile-remove(call-readiness) */
   const strings = useShallowMerge(locale, props.strings);
@@ -126,7 +132,9 @@ export type CameraDomainPermissionsStrings = DomainPermissionsStrings;
  * Props for CameraDomainPermissions component.
  */
 export interface CameraDomainPermissionsProps extends CommonDomainPermissionsProps {
+  /** Icon name for the camera icon */
   cameraIconName?: string;
+  /** Strings for use with the {@link CameraDomainPermissions} */
   strings?: CameraDomainPermissionsStrings;
 }
 
@@ -148,7 +156,7 @@ export const CameraDomainPermissions = (props: CameraDomainPermissionsProps): JS
     <DomainPermissionsContainer
       {...props}
       strings={strings}
-      micIconName={props.cameraIconName ?? 'DomainPermissionCamera'}
+      microphoneIconName={props.cameraIconName ?? 'DomainPermissionCamera'}
       onPrimaryButtonClick={props.onContinueAnywayClick}
     />
   );
