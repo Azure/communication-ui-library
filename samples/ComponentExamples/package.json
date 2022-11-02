@@ -21,8 +21,8 @@
     "_typecheck": "rushx _by-flavor \"if-env COMMUNICATION_REACT_FLAVOR=stable && echo skip || (if-env COMMUNICATION_REACT_FLAVOR=beta && tsc)\""
   },
   "dependencies": {
-    "@azure/communication-chat": "1.2.0",
-    "@azure/communication-calling": "1.9.0-alpha.20221030.1 || 1.4.4",
+    "@azure/communication-chat": ">=1.2.0",
+    "@azure/communication-calling": "1.9.0-alpha.20221030.1 || >=1.4.4",
     "@azure/communication-common": "2.0.0",
     "@azure/communication-identity": "~1.1.0",
     "@azure/communication-react": "1.4.1-beta.0",
