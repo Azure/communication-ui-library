@@ -899,7 +899,6 @@ export const createAzureCommunicationCallAdapterFromClient = async (
   const deviceManager = (await callClient.getDeviceManager()) as StatefulDeviceManager;
   /* @conditional-compile-remove(unsupported-browser) */
   await callClient.getEnvironmentInfo();
-  console.log(callClient.getState().environmentInfo);
   return new AzureCommunicationCallAdapter(callClient, locator, callAgent, deviceManager);
 };
 
