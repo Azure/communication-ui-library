@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Set the call id to undefined in adapter only after we know it has disconnected",
-  "packageName": "@internal/react-composites",
-  "email": "anjulgarg@live.com",
-  "dependentChangeType": "none"
-}

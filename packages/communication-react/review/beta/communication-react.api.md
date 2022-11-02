@@ -57,6 +57,7 @@ import { MediaStreamType } from '@azure/communication-calling';
 import { MicrosoftTeamsUserKind } from '@azure/communication-common';
 import type { NetworkDiagnosticChangedEventArgs } from '@azure/communication-calling';
 import { PartialTheme } from '@fluentui/react';
+import { ParticipantRole } from '@azure/communication-calling';
 import { PermissionConstraints } from '@azure/communication-calling';
 import { PersonaInitialsColor } from '@fluentui/react';
 import { PersonaPresence } from '@fluentui/react';
@@ -190,7 +191,7 @@ export interface BaseCustomStyles {
 // @beta
 export interface BrowserPermissionDeniedIOSProps extends BrowserPermissionDeniedProps {
     imageSource?: string;
-    strings: BrowserPermissionDeniedIOSStrings;
+    strings?: BrowserPermissionDeniedIOSStrings;
 }
 
 // @beta
@@ -210,9 +211,9 @@ export interface BrowserPermissionDeniedIOSStrings extends BrowserPermissionDeni
 
 // @beta
 export interface BrowserPermissionDeniedProps {
-    onTroubleshootingClick: () => void;
-    onTryAgainClick: () => void;
-    strings: BrowserPermissionDeniedStrings;
+    onTroubleshootingClick?: () => void;
+    onTryAgainClick?: () => void;
+    strings?: BrowserPermissionDeniedStrings;
     styles?: BrowserPermissionDeniedStyles;
 }
 
@@ -236,7 +237,7 @@ export interface CallAdapter extends AdapterState<CallAdapterState>, Disposable,
 
 // @public
 export type CallAdapterCallEndedEvent = {
-    callId?: string;
+    callId: string;
 };
 
 // @public
@@ -446,6 +447,7 @@ export type CallCompositeOptions = {
     errorBar?: boolean;
     callControls?: boolean | CallControlOptions;
     devicePermissions?: DevicePermissionRestrictions;
+    callReadinessOptedIn?: boolean;
     onPermissionsTroubleshootingClick?: (permissionsState: {
         camera: PermissionState;
         microphone: PermissionState;
@@ -651,6 +653,7 @@ export type CallParticipantListParticipant = ParticipantListParticipant & {
     isScreenSharing?: boolean;
     isMuted?: boolean;
     isSpeaking?: boolean;
+    role?: Role;
 };
 
 // @beta
@@ -688,6 +691,7 @@ export interface CallState {
     remoteParticipantsEnded: {
         [keys: string]: RemoteParticipantState;
     };
+    role?: ParticipantRole;
     screenShareRemoteParticipant?: string;
     startTime: Date;
     state: CallState_2;
@@ -937,6 +941,7 @@ export type CallWithChatCompositeOptions = {
         microphone: PermissionState;
     }) => void;
     onNetworkingTroubleShootingClick?: () => void;
+    callReadinessOptedIn?: boolean;
 };
 
 // @public
@@ -1787,6 +1792,7 @@ export interface _DevicePermissionDropdownProps {
     askDevicePermission?(constrain: _PermissionConstraints): Promise<void>;
     constrain?: _PermissionConstraints;
     icon?: JSX.Element;
+    onClick?: () => void;
     options?: IDropdownOption[];
     strings?: _DevicePermissionDropdownStrings;
     styles?: Partial<IDropdownStyles>;
@@ -1923,12 +1929,13 @@ export const DomainPermissions: (props: DomainPermissionsProps) => JSX.Element;
 export interface DomainPermissionsProps {
     appName: string;
     onAllowAccessClick?: () => void;
-    onTroubleshootingClick: () => void;
-    strings: DomainPermissionsStrings;
+    onTroubleshootingClick?: () => void;
+    strings?: DomainPermissionsStrings;
 }
 
 // @beta
 export interface DomainPermissionsStrings {
+    ariaLabel: string;
     linkText: string;
     primaryButtonText: string;
     primaryText: string;
@@ -2673,6 +2680,7 @@ export interface RemoteParticipantState {
     identifier: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind | UnknownIdentifierKind;
     isMuted: boolean;
     isSpeaking: boolean;
+    role?: ParticipantRole;
     state: RemoteParticipantState_2;
     videoStreams: {
         [key: number]: RemoteVideoStreamState;
@@ -2689,8 +2697,8 @@ export interface RemoteVideoStreamState {
     view?: VideoStreamRendererViewState;
 }
 
-// @beta (undocumented)
-export type Role = 'Presenter' | 'Attendee' | 'Consumer';
+// @beta
+export type Role = 'Presenter' | 'Attendee' | 'Consumer' | 'Organizer';
 
 // @public
 export const ScreenShareButton: (props: ScreenShareButtonProps) => JSX.Element;

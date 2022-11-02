@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "BrowserPermissionDenied Desktop and mobile storybook entry created",
-  "packageName": "@internal/storybook",
-  "email": "edwardlee@microsoft.com",
-  "dependentChangeType": "patch"
-}

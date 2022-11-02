@@ -19,6 +19,8 @@ import {
   sparkleIconBackdropStyles,
   textContainerStyles
 } from './styles/DomainPermissions.styles';
+/* @conditional-compile-remove(call-readiness) */
+import { isValidString } from './utils';
 
 /**
  * @beta
@@ -32,7 +34,7 @@ export interface DomainPermissionsProps {
   /**
    * Action to be taken by the more help link. Possible to send to external page or show other modal.
    */
-  onTroubleshootingClick: () => void;
+  onTroubleshootingClick?: () => void;
   /**
    * Action to be taken by the Allow Access button.
    */
@@ -40,7 +42,7 @@ export interface DomainPermissionsProps {
   /**
    * Localization strings for DomainPermissions component.
    */
-  strings: DomainPermissionsStrings;
+  strings?: DomainPermissionsStrings;
 }
 
 /**
@@ -64,6 +66,10 @@ export interface DomainPermissionsStrings {
    * Primary button text string.
    */
   primaryButtonText: string;
+  /**
+   * Aira label describing the content of the container
+   */
+  ariaLabel: string;
 }
 
 /* @conditional-compile-remove(call-readiness) */
@@ -71,7 +77,7 @@ const DomainPermissionsContainer = (props: DomainPermissionsProps): JSX.Element 
   const { appName, onTroubleshootingClick, onAllowAccessClick, strings } = props;
   const theme = useTheme();
   return (
-    <Stack style={{ padding: '2rem', maxWidth: '25.375rem' }}>
+    <Stack style={{ padding: '2rem', maxWidth: '25.375rem' }} aria-label={strings?.ariaLabel}>
       <Stack horizontal style={{ paddingBottom: '1rem' }} horizontalAlign={'space-between'}>
         <Stack styles={iconContainerStyles} horizontalAlign={'center'}>
           <Icon styles={iconPrimaryStyles} iconName={'DomainPermissionCamera'}></Icon>
@@ -84,14 +90,21 @@ const DomainPermissionsContainer = (props: DomainPermissionsProps): JSX.Element 
         </Stack>
       </Stack>
       <Stack styles={textContainerStyles}>
-        <Text styles={primaryTextStyles}>{_formatString(strings.primaryText, { appName: appName })}</Text>
-        <Text styles={secondaryTextStyles}>{strings.secondaryText}</Text>
-        {onAllowAccessClick && (
-          <PrimaryButton styles={primaryButtonStyles} text={strings.primaryButtonText} onClick={onAllowAccessClick} />
+        {strings && isValidString(strings?.primaryText) && (
+          <Text styles={primaryTextStyles}>{_formatString(strings.primaryText, { appName: appName })}</Text>
         )}
-        <Link styles={linkTextStyles} onClick={onTroubleshootingClick}>
-          {strings.linkText}
-        </Link>
+        {strings && isValidString(strings?.secondaryText) && (
+          <Text styles={secondaryTextStyles}>{strings?.secondaryText}</Text>
+        )}
+
+        {onAllowAccessClick && isValidString(strings?.primaryButtonText) && (
+          <PrimaryButton styles={primaryButtonStyles} text={strings?.primaryButtonText} onClick={onAllowAccessClick} />
+        )}
+        {onTroubleshootingClick && isValidString(strings?.linkText) && (
+          <Link styles={linkTextStyles} onClick={onTroubleshootingClick}>
+            {strings?.linkText}
+          </Link>
+        )}
       </Stack>
     </Stack>
   );

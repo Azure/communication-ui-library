@@ -120,6 +120,7 @@ export const CallPane = (props: {
             <Stack styles={props.activePane === 'people' ? availableSpaceStyles : hiddenStyles}>
               <CallAdapterProvider adapter={props.callAdapter}>
                 <PeoplePaneContent
+                  active={props.activePane === 'people'}
                   {...props}
                   onRemoveParticipant={removeParticipantFromCall}
                   /* @conditional-compile-remove(PSTN-calls) */
@@ -146,7 +147,7 @@ export const CallPane = (props: {
         </CallAdapterProvider>
       )}
       {drawerMenuItems.length > 0 && (
-        <Stack styles={drawerContainerStyles}>
+        <Stack styles={drawerContainerStyles()}>
           <_DrawerMenu onLightDismiss={() => setDrawerMenuItems([])} items={drawerMenuItems} />
         </Stack>
       )}

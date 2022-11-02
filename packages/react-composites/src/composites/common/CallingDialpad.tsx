@@ -12,9 +12,10 @@ import { themeddialpadModalStyle } from './CallingDialpad.styles';
 import { themedCallButtonStyle, themedDialpadStyle } from './CallingDialpad.styles';
 /* @conditional-compile-remove(PSTN-calls) */
 import { CallWithChatCompositeIcon } from './icons';
-import { drawerContainerStyles } from '../CallWithChatComposite/styles/CallWithChatCompositeStyles';
+
 import { PhoneNumberIdentifier } from '@azure/communication-common';
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
+import { drawerContainerStyles } from '../CallComposite/styles/CallComposite.styles';
 
 /** @private */
 export interface CallingDialpadStrings {
@@ -87,7 +88,7 @@ export const CallingDialpad = (props: CallingDialpadProps): JSX.Element => {
     return (
       <Stack data-ui-id="call-with-chat-composite-dialpad">
         {showDialpad && (
-          <Stack styles={drawerContainerStyles}>
+          <Stack styles={drawerContainerStyles()}>
             <_DrawerSurface onLightDismiss={onDismissTriggered}>
               <Stack style={{ padding: '1rem' }}>{dialpadComponent()}</Stack>
             </_DrawerSurface>
