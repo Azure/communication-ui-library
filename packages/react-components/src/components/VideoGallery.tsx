@@ -417,6 +417,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       ref={containerRef}
       className={mergeStyles(videoGalleryOuterDivStyle, styles?.root)}
     >
+      <LayerHost id={layerHostId} className={mergeStyles(layerHostStyle)} />
       <_LocalVideoTileLayout
         shouldFloatLocalVideo={shouldFloatLocalVideo}
         shouldFloatNonDraggableLocalVideo={shouldFloatNonDraggableLocalVideo}
@@ -454,8 +455,6 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
             </ResponsiveHorizontalGallery>
           </div>
         )}
-
-        <LayerHost id={layerHostId} className={mergeStyles(layerHostStyle)} />
       </Stack>
     </div>
   );
