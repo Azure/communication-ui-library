@@ -883,7 +883,8 @@ export const useAzureCommunicationCallAdapter = (
       credential,
       displayName,
       locator,
-      userId
+      userId,
+      /* @conditional-compile-remove(PSTN-calls) */ roleHint
     ]
   );
 
