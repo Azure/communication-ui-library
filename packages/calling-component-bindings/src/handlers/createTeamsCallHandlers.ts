@@ -5,7 +5,11 @@ import { AddPhoneNumberOptions, StartCallOptions } from '@azure/communication-ca
 /* @conditional-compile-remove(teams-call) */
 import { TeamsCall, TeamsCallAgent } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
-import { CommunicationIdentifier, isCommunicationUserIdentifier, isPhoneNumberIdentifier } from '@azure/communication-common';
+import {
+  CommunicationIdentifier,
+  isCommunicationUserIdentifier,
+  isPhoneNumberIdentifier
+} from '@azure/communication-common';
 import { Common, _toCommunicationIdentifier } from '@internal/acs-ui-common';
 import { StatefulCallClient, StatefulDeviceManager } from '@internal/calling-stateful-client';
 import memoizeOne from 'memoize-one';
