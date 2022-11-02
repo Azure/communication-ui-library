@@ -184,12 +184,26 @@
     "participantStateRinging": "Calling...",
     "participantStateHold": "On hold"
   },
-  "DomainPermissions": {
+  "CameraAndMicDomainPermissions": {
     "primaryText": "Allow {appName} to use your camera and microphone",
     "secondaryText": "This is so participants can see and hear you.",
     "linkText": "Need help? Get troubleshooting help",
-    "primaryButtonText": "Allow Access",
+    "primaryButtonText": "Continue Anyway",
     "ariaLabel": "Allow camera and microphone access"
+  },
+  "CameraDomainPermissions": {
+    "primaryText": "Allow {appName} to use your camera",
+    "secondaryText": "This is so participants can see you.",
+    "linkText": "Need help? Get troubleshooting help",
+    "primaryButtonText": "Continue Anyway",
+    "ariaLabel": "Allow camera access"
+  },
+  "MicDomainPermissions": {
+    "primaryText": "Allow {appName} to use your microphone",
+    "secondaryText": "This is so participants can hear you.",
+    "linkText": "Need help? Get troubleshooting help",
+    "primaryButtonText": "Continue Anyway",
+    "ariaLabel": "Allow microphone access"
   },
   "UnsupportedBrowser": {
     "primaryText": "Browser not supported",

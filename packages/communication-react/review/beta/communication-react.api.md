@@ -1019,6 +1019,24 @@ export interface CallWithChatControlOptions {
 // @public
 export type CallWithChatEvent = 'callError' | 'chatError' | 'callEnded' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'callParticipantsJoined' | 'callParticipantsLeft' | 'selectedMicrophoneChanged' | 'selectedSpeakerChanged' | 'messageReceived' | 'messageSent' | 'messageRead' | 'chatParticipantsAdded' | 'chatParticipantsRemoved';
 
+// @beta
+export const CameraAndMicDomainPermissions: (props: CameraAndMicDomainPermissionsProps) => JSX.Element;
+
+// @beta
+export interface CameraAndMicDomainPermissionsProps extends CommonDomainPermissionsProps {
+    // (undocumented)
+    cameraIconName?: string;
+    // (undocumented)
+    connectorIconName?: string;
+    // (undocumented)
+    micIconName?: string;
+    // (undocumented)
+    strings?: CameraAndMicDomainPermissionsStrings;
+}
+
+// @beta
+export type CameraAndMicDomainPermissionsStrings = DomainPermissionsStrings;
+
 // @public
 export const CameraButton: (props: CameraButtonProps) => JSX.Element;
 
@@ -1068,6 +1086,20 @@ export interface CameraButtonStrings {
 export interface CameraButtonStyles extends ControlBarButtonStyles {
     menuStyles?: Partial<CameraButtonContextualMenuStyles>;
 }
+
+// @beta
+export const CameraDomainPermissions: (props: CameraDomainPermissionsProps) => JSX.Element;
+
+// @beta
+export interface CameraDomainPermissionsProps extends CommonDomainPermissionsProps {
+    // (undocumented)
+    cameraIconName?: string;
+    // (undocumented)
+    strings?: CameraDomainPermissionsStrings;
+}
+
+// @beta
+export type CameraDomainPermissionsStrings = DomainPermissionsStrings;
 
 // @public
 export type ChatAdapter = ChatAdapterThreadManagement & AdapterState<ChatAdapterState> & Disposable & ChatAdapterSubscribers & FileUploadAdapter;
@@ -1304,6 +1336,13 @@ export type ClientState = CallClientState & ChatClientState;
 // @public
 export type Common<A, B> = Pick<A, CommonProperties<A, B>>;
 
+// @beta
+export interface CommonDomainPermissionsProps {
+    appName: string;
+    onContinueAnywayClick?: () => void;
+    onTroubleshootingClick?: () => void;
+}
+
 // @public
 export type CommonProperties<A, B> = {
     [P in keyof A & keyof B]: A[P] extends B[P] ? P : never;
@@ -1374,15 +1413,17 @@ export type ComponentProps<Component extends (props: any) => JSX.Element> = Chat
 export interface ComponentStrings {
     BrowserPermissionDenied: BrowserPermissionDeniedStrings;
     BrowserPermissionDeniedIOS: BrowserPermissionDeniedIOSStrings;
+    CameraAndMicDomainPermissions: DomainPermissionsStrings;
     cameraButton: CameraButtonStrings;
+    CameraDomainPermissions: DomainPermissionsStrings;
     devicesButton: DevicesButtonStrings;
     dialpad: DialpadStrings;
-    DomainPermissions: DomainPermissionsStrings;
     endCallButton: EndCallButtonStrings;
     errorBar: ErrorBarStrings;
     holdButton: HoldButtonStrings;
     messageStatusIndicator: MessageStatusIndicatorStrings;
     messageThread: MessageThreadStrings;
+    MicDomainPermissions: DomainPermissionsStrings;
     microphoneButton: MicrophoneButtonStrings;
     participantItem: ParticipantItemStrings;
     participantsButton: ParticipantsButtonStrings;
@@ -1923,24 +1964,13 @@ export interface Disposable {
 }
 
 // @beta
-export const DomainPermissions: (props: DomainPermissionsProps) => JSX.Element;
-
-// @beta
-export interface DomainPermissionsProps {
-    appName: string;
-    onAllowAccessClick?: () => void;
-    onTroubleshootingClick?: () => void;
-    strings?: DomainPermissionsStrings;
-}
-
-// @beta
-export interface DomainPermissionsStrings {
-    ariaLabel: string;
-    linkText: string;
-    primaryButtonText: string;
-    primaryText: string;
-    secondaryText: string;
-}
+export type DomainPermissionsStrings = {
+    primaryText?: string;
+    secondaryText?: string;
+    linkText?: string;
+    primaryButtonText?: string;
+    ariaLabel?: string;
+};
 
 // @beta
 export type DtmfTone = 'A' | 'B' | 'C' | 'D' | 'Flash' | 'Num0' | 'Num1' | 'Num2' | 'Num3' | 'Num4' | 'Num5' | 'Num6' | 'Num7' | 'Num8' | 'Num9' | 'Pound' | 'Star';
@@ -2407,6 +2437,20 @@ export interface MessageThreadStyles extends BaseCustomStyles {
     newMessageButtonContainer?: IStyle;
     systemMessageContainer?: ComponentSlotStyle;
 }
+
+// @beta
+export const MicDomainPermissions: (props: MicDomainPermissionsProps) => JSX.Element;
+
+// @beta
+export interface MicDomainPermissionsProps extends CommonDomainPermissionsProps {
+    // (undocumented)
+    microphoneIconName?: string;
+    // (undocumented)
+    strings?: MicDomainPermissionsStrings;
+}
+
+// @beta
+export type MicDomainPermissionsStrings = DomainPermissionsStrings;
 
 // @public
 export const MicrophoneButton: (props: MicrophoneButtonProps) => JSX.Element;

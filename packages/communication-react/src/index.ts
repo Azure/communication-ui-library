@@ -118,7 +118,22 @@ export { HoldButton } from '../../react-components/src';
 export { Dialpad } from '../../react-components/src';
 
 /* @conditional-compile-remove(call-readiness) */
-export { DomainPermissions } from '../../react-components/src';
+export {
+  CameraAndMicDomainPermissions,
+  MicDomainPermissions,
+  CameraDomainPermissions
+} from '../../react-components/src';
+/* @conditional-compile-remove(call-readiness) */
+export type {
+  CameraAndMicDomainPermissionsStrings,
+  CameraAndMicDomainPermissionsProps,
+  CameraDomainPermissionsStrings,
+  CameraDomainPermissionsProps,
+  CommonDomainPermissionsProps,
+  DomainPermissionsStrings,
+  MicDomainPermissionsStrings,
+  MicDomainPermissionsProps
+} from '../../react-components/src';
 
 export type {
   _IdentifierProviderProps,
@@ -232,8 +247,6 @@ export type {
 } from '../../react-components/src';
 /* @conditional-compile-remove(PSTN-calls) */
 export type { HoldButtonProps, HoldButtonStrings, VideoTileStrings } from '../../react-components/src';
-/* @conditional-compile-remove(call-readiness) */
-export type { DomainPermissionsStrings, DomainPermissionsProps } from '../../react-components/src';
 /* @conditional-compile-remove(call-readiness) */
 export type { BrowserPermissionDeniedStrings, BrowserPermissionDeniedProps } from '../../react-components/src';
 /* @conditional-compile-remove(call-readiness) */

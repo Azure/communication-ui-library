@@ -136,6 +136,24 @@ export type CallParticipantListParticipant = ParticipantListParticipant & {
     role?: Role;
 };
 
+// @beta
+export const CameraAndMicDomainPermissions: (props: CameraAndMicDomainPermissionsProps) => JSX.Element;
+
+// @beta
+export interface CameraAndMicDomainPermissionsProps extends CommonDomainPermissionsProps {
+    // (undocumented)
+    cameraIconName?: string;
+    // (undocumented)
+    connectorIconName?: string;
+    // (undocumented)
+    micIconName?: string;
+    // (undocumented)
+    strings?: CameraAndMicDomainPermissionsStrings;
+}
+
+// @beta
+export type CameraAndMicDomainPermissionsStrings = DomainPermissionsStrings;
+
 // @public
 export const CameraButton: (props: CameraButtonProps) => JSX.Element;
 
@@ -178,6 +196,20 @@ export interface CameraButtonStyles extends ControlBarButtonStyles {
     menuStyles?: Partial<CameraButtonContextualMenuStyles>;
 }
 
+// @beta
+export const CameraDomainPermissions: (props: CameraDomainPermissionsProps) => JSX.Element;
+
+// @beta
+export interface CameraDomainPermissionsProps extends CommonDomainPermissionsProps {
+    // (undocumented)
+    cameraIconName?: string;
+    // (undocumented)
+    strings?: CameraDomainPermissionsStrings;
+}
+
+// @beta
+export type CameraDomainPermissionsStrings = DomainPermissionsStrings;
+
 // @public
 export interface ChatMessage extends MessageCommon {
     // (undocumented)
@@ -205,6 +237,13 @@ export interface ChatMessage extends MessageCommon {
     senderId?: string;
     // (undocumented)
     status?: MessageStatus;
+}
+
+// @beta
+export interface CommonDomainPermissionsProps {
+    appName: string;
+    onContinueAnywayClick?: () => void;
+    onTroubleshootingClick?: () => void;
 }
 
 // @public
@@ -313,15 +352,17 @@ export interface ComponentLocale {
 export interface ComponentStrings {
     BrowserPermissionDenied: BrowserPermissionDeniedStrings;
     BrowserPermissionDeniedIOS: BrowserPermissionDeniedIOSStrings;
+    CameraAndMicDomainPermissions: DomainPermissionsStrings;
     cameraButton: CameraButtonStrings;
+    CameraDomainPermissions: DomainPermissionsStrings;
     devicesButton: DevicesButtonStrings;
     dialpad: DialpadStrings;
-    DomainPermissions: DomainPermissionsStrings;
     endCallButton: EndCallButtonStrings;
     errorBar: ErrorBarStrings;
     holdButton: HoldButtonStrings;
     messageStatusIndicator: MessageStatusIndicatorStrings;
     messageThread: MessageThreadStrings;
+    MicDomainPermissions: DomainPermissionsStrings;
     microphoneButton: MicrophoneButtonStrings;
     participantItem: ParticipantItemStrings;
     participantsButton: ParticipantsButtonStrings;
@@ -582,24 +623,13 @@ export interface DialpadStyles {
 }
 
 // @beta
-export const DomainPermissions: (props: DomainPermissionsProps) => JSX.Element;
-
-// @beta
-export interface DomainPermissionsProps {
-    appName: string;
-    onAllowAccessClick?: () => void;
-    onTroubleshootingClick?: () => void;
-    strings?: DomainPermissionsStrings;
-}
-
-// @beta
-export interface DomainPermissionsStrings {
-    ariaLabel: string;
-    linkText: string;
-    primaryButtonText: string;
-    primaryText: string;
-    secondaryText: string;
-}
+export type DomainPermissionsStrings = {
+    primaryText?: string;
+    secondaryText?: string;
+    linkText?: string;
+    primaryButtonText?: string;
+    ariaLabel?: string;
+};
 
 // @internal
 export const _DrawerMenu: (props: _DrawerMenuProps) => JSX.Element;
@@ -1070,6 +1100,20 @@ export interface MessageThreadStyles extends BaseCustomStyles {
     newMessageButtonContainer?: IStyle;
     systemMessageContainer?: ComponentSlotStyle;
 }
+
+// @beta
+export const MicDomainPermissions: (props: MicDomainPermissionsProps) => JSX.Element;
+
+// @beta
+export interface MicDomainPermissionsProps extends CommonDomainPermissionsProps {
+    // (undocumented)
+    microphoneIconName?: string;
+    // (undocumented)
+    strings?: MicDomainPermissionsStrings;
+}
+
+// @beta
+export type MicDomainPermissionsStrings = DomainPermissionsStrings;
 
 // @public
 export const MicrophoneButton: (props: MicrophoneButtonProps) => JSX.Element;
