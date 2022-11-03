@@ -143,6 +143,7 @@ export const getCallCompositePage: GetCallCompositePageFunction = (
   previousCall,
   environmentInfo?
 ): CallCompositePage => {
+  /* @conditional-compile-remove(unsupported-browser) */
   if (environmentInfo && environmentInfo.isSupportedBrowser === false) {
     return 'unsupportedEnvironment';
   }
@@ -160,7 +161,7 @@ export const getCallCompositePage: GetCallCompositePageFunction = (
       return 'call';
     } else if (_isInCall(call?.state)) {
       return 'call';
-    } /* @conditional-compile-remove(unsupported-browser) */ else {
+    } else {
       // When the call object has been constructed after clicking , but before 'connecting' has been
       // set on the call object, we continue to show the configuration screen.
       // The call object does not correctly reflect local device state until `call.state` moves to `connecting`.
