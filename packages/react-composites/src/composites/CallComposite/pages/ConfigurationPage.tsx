@@ -17,6 +17,8 @@ import { DomainPermissions, _DrawerSurface, _DrawerSurfaceStyles } from '@intern
 import { _usePermissions, _Permissions } from '@internal/react-components';
 import { getCallingSelector } from '@internal/calling-component-bindings';
 import { Stack } from '@fluentui/react';
+/* @conditional-compile-remove(call-readiness) */
+import { Modal } from '@fluentui/react';
 import { LocalPreview } from '../components/LocalPreview';
 import {
   callDetailsStyleDesktop,
@@ -153,6 +155,9 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
     // only way to dismiss this drawer is clicking on allow access which will leads to device permission prompt
   };
 
+  /* @conditional-compile-remove(call-readiness) */
+  const [isModalShowing, setIsModalShowing] = useState(false);
+
   return (
     <Stack className={mobileView ? configurationContainerStyleMobile : configurationContainerStyleDesktop}>
       <Stack styles={bannerNotificationStyles}>
@@ -173,6 +178,33 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
           callReadinessOptedIn={callReadinessOptedIn}
         />
       </Stack>
+
+      {
+        /* @conditional-compile-remove(call-readiness) */
+        //show this when clicking on enable camera button or enable mic button on desktop for the first time
+        //does not show if user has already grant mic or camera access
+        !mobileView && !cameraPermissionGranted && !microphonePermissionGranted && callReadinessOptedIn && (
+          <Modal
+            isOpen={isModalShowing}
+            isBlocking={false}
+            onDismiss={() => {
+              setIsModalShowing(false);
+            }}
+            overlay={{ styles: { root: { background: 'rgba(0,0,0,0.9)' } } }}
+          >
+            <DomainPermissions
+              appName={'app'}
+              onTroubleshootingClick={
+                onPermissionsTroubleshootingClick
+                  ? () => {
+                      onPermissionsTroubleshootingClick(permissionsState);
+                    }
+                  : undefined
+              }
+            />
+          </Modal>
+        )
+      }
 
       {
         /* @conditional-compile-remove(call-readiness) */
@@ -229,6 +261,10 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
                 microphonePermissionGranted={microphonePermissionGranted}
                 /* @conditional-compile-remove(call-readiness) */
                 callReadinessOptedIn={callReadinessOptedIn}
+                /* @conditional-compile-remove(call-readiness) */
+                onClickEnableDevicePermission={() => {
+                  setIsModalShowing(true);
+                }}
               />
             </>
           )}

@@ -76,7 +76,7 @@ export const BrowserPermissionDeniedIOS: (props: BrowserPermissionDeniedIOSProps
 // @beta
 export interface BrowserPermissionDeniedIOSProps extends BrowserPermissionDeniedProps {
     imageSource?: string;
-    strings: BrowserPermissionDeniedIOSStrings;
+    strings?: BrowserPermissionDeniedIOSStrings;
 }
 
 // @beta
@@ -96,9 +96,9 @@ export interface BrowserPermissionDeniedIOSStrings extends BrowserPermissionDeni
 
 // @beta
 export interface BrowserPermissionDeniedProps {
-    onTroubleshootingClick: () => void;
-    onTryAgainClick: () => void;
-    strings: BrowserPermissionDeniedStrings;
+    onTroubleshootingClick?: () => void;
+    onTryAgainClick?: () => void;
+    strings?: BrowserPermissionDeniedStrings;
     styles?: BrowserPermissionDeniedStyles;
 }
 
@@ -133,6 +133,7 @@ export type CallParticipantListParticipant = ParticipantListParticipant & {
     isScreenSharing?: boolean;
     isMuted?: boolean;
     isSpeaking?: boolean;
+    role?: Role;
 };
 
 // @public
@@ -486,6 +487,7 @@ export interface _DevicePermissionDropdownProps {
     askDevicePermission?(constrain: _PermissionConstraints): Promise<void>;
     constrain?: _PermissionConstraints;
     icon?: JSX.Element;
+    onClick?: () => void;
     options?: IDropdownOption[];
     strings?: _DevicePermissionDropdownStrings;
     styles?: Partial<IDropdownStyles>;
@@ -1344,8 +1346,8 @@ export const _RemoteVideoTile: React_2.MemoExoticComponent<(props: {
     participantState?: ParticipantState | undefined;
 }) => JSX.Element>;
 
-// @beta (undocumented)
-export type Role = 'Presenter' | 'Attendee' | 'Consumer';
+// @beta
+export type Role = 'Presenter' | 'Attendee' | 'Consumer' | 'Organizer';
 
 // @public
 export const ScreenShareButton: (props: ScreenShareButtonProps) => JSX.Element;

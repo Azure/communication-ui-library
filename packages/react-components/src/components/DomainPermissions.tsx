@@ -19,6 +19,8 @@ import {
   sparkleIconBackdropStyles,
   textContainerStyles
 } from './styles/DomainPermissions.styles';
+/* @conditional-compile-remove(call-readiness) */
+import { isValidString } from './utils';
 
 /**
  * @beta
@@ -120,9 +122,4 @@ export const DomainPermissions = (props: DomainPermissionsProps): JSX.Element =>
   /* @conditional-compile-remove(call-readiness) */
   return <DomainPermissionsContainer {...props} strings={props.strings ? props.strings : locale} />;
   return <></>;
-};
-
-/* @conditional-compile-remove(call-readiness) */
-const isValidString = (string: string | undefined): boolean => {
-  return !!string && string.length > 0;
 };
