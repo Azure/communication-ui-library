@@ -215,8 +215,8 @@ class ProxyCallClient implements ProxyHandler<CallClient> {
         }, 'CallClient.getDeviceManager');
       }
       case 'feature': {
+        /* @conditional-compile-remove(unsupported-browser) */
         return this._context.withErrorTeedToState((...args: Parameters<CallClient['feature']>) => {
-          /* @conditional-compile-remove(unsupported-browser) */
           if (args[0] === Features.DebugInfo) {
             const feature = target.feature(Features.DebugInfo);
             /**
