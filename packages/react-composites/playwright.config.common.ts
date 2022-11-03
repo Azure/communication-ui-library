@@ -9,14 +9,14 @@ const DESKTOP_VIEWPORT = {
   height: 768
 };
 
-const TEST_ROOT = './tests/browser';
-
+const snapshotDir = process.env.SNAPSHOT_DIR;
+if (!snapshotDir) {
+  throw new Error('Environment variable SNAPSHOT_DIR not set');
+}
 const outputDir = process.env.PLAYWRIGHT_OUTPUT_DIR;
 if (!outputDir) {
   throw new Error('Environment variable PLAYWRIGHT_OUTPUT_DIR not set');
 }
-
-const buildFlavor: 'beta' | 'stable' = process.env['COMMUNICATION_REACT_FLAVOR'] === 'stable' ? 'stable' : 'beta';
 
 const chromeLaunchOptions = {
   channel: 'chrome',
@@ -90,7 +90,7 @@ const config: PlaywrightTestConfig = {
     }
   ],
   reporter: process.env.CI ? CI_REPORTERS : LOCAL_REPORTERS,
-  snapshotDir: `${TEST_ROOT}/snapshots/${buildFlavor}`
+  snapshotDir: snapshotDir
 };
 
 export default config;

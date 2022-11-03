@@ -4,7 +4,7 @@
 
 import { exec, getBuildFlavor } from './common.mjs';
 import path from 'path';
-import { rmdirSync } from 'fs';
+import { rmSync } from 'fs';
 import { quote } from 'shell-quote';
 import { fileURLToPath } from 'url';
 import yargs from 'yargs/yargs';
@@ -15,18 +15,20 @@ const __dirname = path.dirname(__filename);
 const PACKLET_ROOT = path.join(__dirname, '..');
 const BASE_OUTPUT_DIR = path.join(PACKLET_ROOT, 'test-results');
 const TEST_ROOT = path.join(PACKLET_ROOT, 'tests', 'browser');
-const TESTS = {
+const PREPROCESSED_TEST_ROOT = path.join(PACKLET_ROOT, 'preprocessed-tests');
+const TEST_PATH_RELATIVE = {
   hermetic: {
-    call: path.join(TEST_ROOT, 'call', 'hermetic'),
-    chat: path.join(TEST_ROOT, 'chat', 'hermetic'),
-    callWithChat: path.join(TEST_ROOT, 'callwithchat', 'hermetic')
+    call: path.join('call', 'hermetic'),
+    chat: path.join('chat', 'hermetic'),
+    callWithChat: path.join('callwithchat', 'hermetic')
   },
   live: {
-    call: path.join(TEST_ROOT, 'call', 'live'),
-    chat: path.join(TEST_ROOT, 'chat', 'live'),
-    callWithChat: path.join(TEST_ROOT, 'callwithchat', 'live')
+    call: path.join('call', 'live'),
+    chat: path.join('chat', 'live'),
+    callWithChat: path.join('callwithchat', 'live')
   }
 };
+
 const PLAYWRIGHT_CONFIG = {
   hermetic: path.join(PACKLET_ROOT, 'playwright.config.hermetic.ts'),
   live: path.join(PACKLET_ROOT, 'playwright.config.live.ts')
@@ -38,20 +40,25 @@ const PLAYWRIGHT_PROJECT = {
 };
 
 async function main(argv) {
+  if (isStableBuild()) {
+    await preprocess(TEST_ROOT, PREPROCESSED_TEST_ROOT);
+  }
+  const testRoot = isStableBuild() ? PREPROCESSED_TEST_ROOT : TEST_ROOT;
+
   const args = parseArgs(argv);
   setup();
   if (args.stress) {
-    await runStress(args);
+    await runStress(testRoot, args);
   } else {
-    await runAll(args);
+    await runAll(testRoot, args);
   }
 }
 
-async function runStress(args) {
+async function runStress(testRoot, args) {
   let failureCount = 0;
   for (let i = 0; i < args.stress; i++) {
     try {
-      await runAll(args);
+      await runAll(testRoot, args);
     } catch (e) {
       failureCount += 1;
       console.log('Test failed with', e);
@@ -63,11 +70,11 @@ async function runStress(args) {
   }
 }
 
-async function runAll(args) {
+async function runAll(testRoot, args) {
   let success = true;
   for (const composite of args.composites) {
     try {
-      await runOne(args, composite, 'hermetic');
+      await runOne(testRoot, args, composite, 'hermetic');
     } catch (e) {
       if (args.failFast) {
         throw e;
@@ -79,7 +86,7 @@ async function runAll(args) {
   if (!args.hermeticOnly) {
     for (const composite of args.composites) {
       try {
-        await runOne(args, composite, 'live');
+        await runOne(testRoot, args, composite, 'live');
       } catch (e) {
         if (args.failFast) {
           throw e;
@@ -94,15 +101,15 @@ async function runAll(args) {
   }
 }
 
-async function runOne(args, composite, hermeticity) {
-  const test = TESTS[hermeticity][composite];
+async function runOne(testRoot, args, composite, hermeticity) {
+  const test = path.join(testRoot, TEST_PATH_RELATIVE[hermeticity][composite]);
   if (!test) {
     return;
   }
 
   const env = {
     ...process.env,
-    COMMUNICATION_REACT_FLAVOR: getBuildFlavor(),
+    SNAPSHOT_DIR: path.join(testRoot, 'snapshots', getBuildFlavor()),
     PLAYWRIGHT_OUTPUT_DIR: path.join(BASE_OUTPUT_DIR, Date.now().toString())
   };
 
@@ -134,7 +141,12 @@ async function runOne(args, composite, hermeticity) {
 
 function setup() {
   console.log('Cleaning up output directory...');
-  rmdirSync(BASE_OUTPUT_DIR, { recursive: true });
+  rmSync(BASE_OUTPUT_DIR, { recursive: true, force: true });
+}
+
+async function preprocess(fromDir, toDir) {
+  console.log('Preprocessing tests...');
+  rmSync(toDir, { recursive: true, force: true });
 }
 
 function parseArgs(argv) {
@@ -218,6 +230,10 @@ function parseArgs(argv) {
     args.composites = ['call', 'chat', 'callWithChat'];
   }
   return args;
+}
+
+function isStableBuild() {
+  return getBuildFlavor() === 'stable';
 }
 
 await main(process.argv);
