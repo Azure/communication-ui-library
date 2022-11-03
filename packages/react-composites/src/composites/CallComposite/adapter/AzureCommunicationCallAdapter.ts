@@ -498,10 +498,13 @@ export class AzureCommunicationCallAdapter<
     });
   }
 
-  public startCall( participants:
-    | string[]
-    /* @conditional-compile-remove(PSTN-calls) */
-    | CommunicationIdentifier[],, options?: StartCallOptions): CallTypeOf<AgentType> | undefined {
+  public startCall(
+    participants:
+      | string[]
+      /* @conditional-compile-remove(PSTN-calls) */
+      | CommunicationIdentifier[],
+    options?: StartCallOptions
+  ): CallTypeOf<AgentType> | undefined {
     if (_isInCall(this.getState().call?.state ?? 'None')) {
       throw new Error('You are already in the call.');
     }
