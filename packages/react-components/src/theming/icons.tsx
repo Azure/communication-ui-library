@@ -40,9 +40,7 @@ import {
   WifiWarning20Filled,
   SpeakerMute16Filled,
   MicProhibited16Filled,
-  VideoProhibited16Filled,
-  MicProhibited20Filled,
-  VideoProhibited20Filled
+  VideoProhibited16Filled
 } from '@fluentui/react-icons';
 /* @conditional-compile-remove(call-readiness) */
 import { Important20Filled } from '@fluentui/react-icons';
@@ -51,7 +49,7 @@ import { Important20Filled } from '@fluentui/react-icons';
 import { Backspace20Regular } from '@fluentui/react-icons';
 
 /* @conditional-compile-remove(call-readiness) */
-import { Sparkle20Filled } from '@fluentui/react-icons';
+import { Sparkle20Filled, VideoProhibited20Filled, MicProhibited20Filled } from '@fluentui/react-icons';
 
 /* @conditional-compile-remove(file-sharing) */
 import { ArrowDownload16Regular } from '@fluentui/react-icons';
