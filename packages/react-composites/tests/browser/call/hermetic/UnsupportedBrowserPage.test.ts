@@ -23,7 +23,7 @@ test.describe('unsupportedBrowser page tests', async () => {
 
     await page.goto(
       buildUrlWithMockAdapter(serverUrl, defaultMockUnsupportedBrowserPageState(), {
-        useTroubleShootingActions: 'true'
+        useEnvironmentInfoTroubleshootingOptions: 'true'
       })
     );
 
