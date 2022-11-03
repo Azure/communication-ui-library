@@ -40,7 +40,9 @@ import {
   WifiWarning20Filled,
   SpeakerMute16Filled,
   MicProhibited16Filled,
-  VideoProhibited16Filled
+  VideoProhibited16Filled,
+  MicProhibited20Filled,
+  VideoProhibited20Filled
 } from '@fluentui/react-icons';
 /* @conditional-compile-remove(call-readiness) */
 import { Important20Filled } from '@fluentui/react-icons';
@@ -114,6 +116,36 @@ const DomainPermissionCamera20Filled = (): JSX.Element => {
     >
       <div className={mergeStyles(scaledIconStyles(theme))}>
         <Video20Filled />
+      </div>
+    </Stack>
+  );
+};
+
+/* @conditional-compile-remove(call-readiness) */
+const DomainPermissionsMicDenied20Filled = (): JSX.Element => {
+  const theme = useTheme();
+  return (
+    <Stack
+      horizontalAlign={'center'}
+      styles={{ root: { borderRadius: '100%', background: theme.palette.themeLighterAlt, padding: '2rem' } }}
+    >
+      <div className={mergeStyles(scaledIconStyles(theme))}>
+        <MicProhibited20Filled />
+      </div>
+    </Stack>
+  );
+};
+
+/* @conditional-compile-remove(call-readiness) */
+const DomainPermissionsCameraDenied20Filled = (): JSX.Element => {
+  const theme = useTheme();
+  return (
+    <Stack
+      horizontalAlign={'center'}
+      styles={{ root: { borderRadius: '100%', background: theme.palette.themeLighterAlt, padding: '2rem' } }}
+    >
+      <div className={mergeStyles(scaledIconStyles(theme))}>
+        <VideoProhibited20Filled />
       </div>
     </Stack>
   );
@@ -237,6 +269,10 @@ export const DEFAULT_COMPONENT_ICONS = {
   DomainPermissionCamera: <DomainPermissionCamera20Filled />,
   /* @conditional-compile-remove(call-readiness) */
   DomainPermissionMic: <DomainPermissionMic20Filled />,
+  /* @conditional-compile-remove(call-readiness) */
+  DomainPermissionCameraDenied: <DomainPermissionsCameraDenied20Filled />,
+  /* @conditional-compile-remove(call-readiness) */
+  DomainPermissionMicDenied: <DomainPermissionsMicDenied20Filled />,
   /* @conditional-compile-remove(unsupported-browser) */
   UnsupportedBrowserWarning: <UnsupportedBrowserWarning />,
   /* @conditional-compile-remove(call-readiness) */

@@ -11,7 +11,6 @@ import {
 import { Canvas, Description, Heading, Props, Title } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
-import { useLocale } from '../../../../../react-components/src/localization';
 import { SingleLineBetaBanner } from '../../../BetaBanners/SingleLineBetaBanner';
 import { COMPONENT_FOLDER_PREFIX } from '../../../constants';
 import { ArgsFrom, controlsToAdd, hiddenControl } from '../../../controlsUtils';
@@ -23,18 +22,18 @@ const DomainPermissionsModalExample = require('!!raw-loader!./snippets/DomainPer
 
 const storyControls = {
   domainRequest: controlsToAdd.domainDeviceRequest,
-  appName: controlsToAdd.appName
+  appName: controlsToAdd.appName,
+  type: controlsToAdd.domainDeviceRequestStatus
 };
 
 const DomainPermissionsStory = (args: ArgsFrom<typeof storyControls>): JSX.Element => {
-  const localStrings = useLocale().strings;
   return (
     <Stack>
       {args.domainRequest === controlsToAdd.domainDeviceRequest.options[0] && (
         <CameraAndMicrophoneDomainPermissionsComponent
           appName={args.appName}
           onTroubleshootingClick={() => alert('you clicked the help text')}
-          strings={localStrings.CameraAndMicrophoneDomainPermissions}
+          type={args.type === 'Request' ? 'request' : 'denied'}
         />
       )}
       {args.domainRequest === controlsToAdd.domainDeviceRequest.options[1] && (
@@ -42,14 +41,14 @@ const DomainPermissionsStory = (args: ArgsFrom<typeof storyControls>): JSX.Eleme
           appName={args.appName}
           onTroubleshootingClick={() => alert('you clicked the help text')}
           onContinueAnywayClick={() => alert('you clicked the continue anyway button')}
-          strings={localStrings.CameraDomainPermissions}
+          type={args.type === 'Request' ? 'request' : 'denied'}
         />
       )}
       {args.domainRequest === controlsToAdd.domainDeviceRequest.options[2] && (
         <MicrophoneDomainPermissionsComponent
           appName={args.appName}
           onTroubleshootingClick={() => alert('you clicked the help text')}
-          strings={localStrings.MicrophoneDomainPermissions}
+          type={args.type === 'Request' ? 'request' : 'denied'}
         />
       )}
     </Stack>
