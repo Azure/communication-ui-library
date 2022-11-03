@@ -188,21 +188,21 @@
     "primaryText": "Allow {appName} to use your camera and microphone",
     "secondaryText": "This is so participants can see and hear you.",
     "linkText": "Need help? Get troubleshooting help",
-    "primaryButtonText": "Continue Anyway",
+    "primaryButtonText": "Continue without camera and microphone",
     "ariaLabel": "Allow camera and microphone access"
   },
   "CameraDomainPermissions": {
     "primaryText": "Allow {appName} to use your camera",
     "secondaryText": "This is so participants can see you.",
     "linkText": "Need help? Get troubleshooting help",
-    "primaryButtonText": "Continue Anyway",
+    "primaryButtonText": "Continue without camera",
     "ariaLabel": "Allow camera access"
   },
   "MicrophoneDomainPermissions": {
     "primaryText": "Allow {appName} to use your microphone",
     "secondaryText": "This is so participants can hear you.",
     "linkText": "Need help? Get troubleshooting help",
-    "primaryButtonText": "Continue Anyway",
+    "primaryButtonText": "Continue without microphone",
     "ariaLabel": "Allow microphone access"
   },
   "UnsupportedBrowser": {
