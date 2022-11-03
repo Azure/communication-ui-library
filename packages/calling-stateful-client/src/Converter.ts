@@ -2,14 +2,14 @@
 // Licensed under the MIT license.
 
 import {
-  Call as SdkCall,
   RemoteParticipant as SdkRemoteParticipant,
   RemoteVideoStream as SdkRemoteVideoStream,
   LocalVideoStream as SdkLocalVideoStream,
-  IncomingCall as SdkIncomingCall,
   VideoStreamRendererView
 } from '@azure/communication-calling';
+
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
+import { CallCommon, IncomingCallCommon } from './BetaToStableTypes';
 import {
   CallState,
   RemoteParticipantState as DeclarativeRemoteParticipant,
@@ -18,6 +18,8 @@ import {
   IncomingCallState as DeclarativeIncomingCall,
   VideoStreamRendererViewState as DeclarativeVideoStreamRendererView
 } from './CallClientState';
+/* @conditional-compile-remove(teams-identity-support) */
+import { isACSCall } from './TypeGuards';
 
 /**
  * @private
@@ -74,7 +76,7 @@ export function convertSdkParticipantToDeclarativeParticipant(
  *
  * Note at the time of writing only one LocalVideoStream is supported by the SDK.
  */
-export function convertSdkCallToDeclarativeCall(call: SdkCall): CallState {
+export function convertSdkCallToDeclarativeCall(call: CallCommon): CallState {
   const declarativeRemoteParticipants = {};
   call.remoteParticipants.forEach((participant: SdkRemoteParticipant) => {
     declarativeRemoteParticipants[toFlatCommunicationIdentifier(participant.identifier)] =
@@ -82,6 +84,8 @@ export function convertSdkCallToDeclarativeCall(call: SdkCall): CallState {
   });
   return {
     id: call.id,
+    /* @conditional-compile-remove(teams-identity-support) */
+    type: isACSCall(call) ? 'ACS' : 'Teams',
     callerInfo: call.callerInfo,
     state: call.state,
     callEndReason: call.callEndReason,
@@ -112,7 +116,7 @@ export function convertSdkCallToDeclarativeCall(call: SdkCall): CallState {
 /**
  * @private
  */
-export function convertSdkIncomingCallToDeclarativeIncomingCall(call: SdkIncomingCall): DeclarativeIncomingCall {
+export function convertSdkIncomingCallToDeclarativeIncomingCall(call: IncomingCallCommon): DeclarativeIncomingCall {
   return {
     id: call.id,
     callerInfo: call.callerInfo,
