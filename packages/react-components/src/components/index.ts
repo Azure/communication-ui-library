@@ -95,7 +95,10 @@ export {
   CameraDomainPermissions
 } from './DevicePermissions/DomainPermissions';
 /* @conditional-compile-remove(call-readiness) */
-export type { DomainPermissionsStrings } from './DevicePermissions/DomainPermissionsScaffolding';
+export type {
+  DomainPermissionsStrings,
+  DomainPermissionsStyles
+} from './DevicePermissions/DomainPermissionsScaffolding';
 /* @conditional-compile-remove(call-readiness) */
 export type {
   CameraAndMicrophoneDomainPermissionsStrings,

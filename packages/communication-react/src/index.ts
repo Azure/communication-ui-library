@@ -131,6 +131,7 @@ export type {
   CameraDomainPermissionsProps,
   CommonDomainPermissionsProps,
   DomainPermissionsStrings,
+  DomainPermissionsStyles,
   MicrophoneDomainPermissionsStrings,
   MicrophoneDomainPermissionsProps
 } from '../../react-components/src';

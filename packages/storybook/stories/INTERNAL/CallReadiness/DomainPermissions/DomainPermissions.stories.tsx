@@ -96,9 +96,10 @@ export default {
     onTroubleshootingClick: hiddenControl,
     onContinueAnywayClick: hiddenControl,
     cameraIconName: hiddenControl,
-    micIconName: hiddenControl,
+    microphoneIconName: hiddenControl,
     connectorIconName: hiddenControl,
-    strings: hiddenControl
+    strings: hiddenControl,
+    styles: hiddenControl
   },
   parameters: {
     docs: {

@@ -2,7 +2,17 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import { Stack, Text, Link, Icon, useTheme, PrimaryButton } from '@fluentui/react';
+import {
+  Stack,
+  Text,
+  Link,
+  Icon,
+  useTheme,
+  PrimaryButton,
+  ILinkStyles,
+  IButtonStyles,
+  mergeStyleSets
+} from '@fluentui/react';
 import { _formatString, _pxToRem } from '@internal/acs-ui-common';
 import {
   iconContainerStyles,
@@ -15,6 +25,7 @@ import {
   textContainerStyles
 } from '../styles/DomainPermissions.styles';
 import { isValidString } from '../utils';
+import { BaseCustomStyles } from '../../types';
 
 /**
  * @private
@@ -24,7 +35,7 @@ export interface DomainPermissionsContainerProps {
   /**
    * Name of application calling experience is in.
    */
-  appName: string;
+  appName?: string;
   /**
    * Name of icon to be used for the camera icon.
    * If this is not provided the icon will not be shown.
@@ -54,6 +65,10 @@ export interface DomainPermissionsContainerProps {
    * Localization strings for DomainPermissions component.
    */
   strings?: DomainPermissionsStrings;
+  /**
+   * Styles for DomainPermissions component.
+   */
+  styles?: DomainPermissionsStyles;
 }
 
 /**
@@ -83,6 +98,18 @@ export type DomainPermissionsStrings = {
   ariaLabel?: string;
 };
 
+/**
+ * Fluent styles for {@link DomainPermissionsContainer}.
+ *
+ * @beta
+ */
+export interface DomainPermissionsStyles extends BaseCustomStyles {
+  /** Styles for the primary button. */
+  primaryButton?: IButtonStyles;
+  /** Styles for the help troubleshooting link text. */
+  troubleshootingLink?: ILinkStyles;
+}
+
 /** @private */
 export const DomainPermissionsContainer = (props: DomainPermissionsContainerProps): JSX.Element => {
   const { appName, onTroubleshootingClick, onPrimaryButtonClick, strings } = props;
@@ -108,7 +135,9 @@ export const DomainPermissionsContainer = (props: DomainPermissionsContainerProp
       </Stack>
       <Stack styles={textContainerStyles}>
         {strings && isValidString(strings?.primaryText) && (
-          <Text styles={primaryTextStyles}>{_formatString(strings.primaryText, { appName: appName })}</Text>
+          <Text styles={primaryTextStyles}>
+            {appName ? _formatString(strings.primaryText, { appName: appName }) : strings.primaryText}
+          </Text>
         )}
         {strings && isValidString(strings?.secondaryText) && (
           <Text styles={secondaryTextStyles}>{strings?.secondaryText}</Text>
@@ -116,13 +145,16 @@ export const DomainPermissionsContainer = (props: DomainPermissionsContainerProp
 
         {onPrimaryButtonClick && isValidString(strings?.primaryButtonText) && (
           <PrimaryButton
-            styles={primaryButtonStyles}
+            styles={mergeStyleSets(primaryButtonStyles, props.styles?.primaryButton)}
             text={strings?.primaryButtonText}
             onClick={onPrimaryButtonClick}
           />
         )}
         {onTroubleshootingClick && isValidString(strings?.linkText) && (
-          <Link styles={linkTextStyles} onClick={onTroubleshootingClick}>
+          <Link
+            styles={mergeStyleSets(linkTextStyles, props.styles?.troubleshootingLink)}
+            onClick={onTroubleshootingClick}
+          >
             {strings?.linkText}
           </Link>
         )}
