@@ -1335,6 +1335,7 @@ export interface CommonDomainPermissionsProps {
     appName: string;
     onContinueAnywayClick?: () => void;
     onTroubleshootingClick?: () => void;
+    styles?: DomainPermissionsStyles;
 }
 
 // @public
@@ -1965,6 +1966,12 @@ export type DomainPermissionsStrings = {
     primaryButtonText?: string;
     ariaLabel?: string;
 };
+
+// @beta
+export interface DomainPermissionsStyles extends BaseCustomStyles {
+    primaryButton?: IButtonStyles;
+    troubleshootingLink?: ILinkStyles;
+}
 
 // @beta
 export type DtmfTone = 'A' | 'B' | 'C' | 'D' | 'Flash' | 'Num0' | 'Num1' | 'Num2' | 'Num3' | 'Num4' | 'Num5' | 'Num6' | 'Num7' | 'Num8' | 'Num9' | 'Pound' | 'Star';

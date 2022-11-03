@@ -4,7 +4,7 @@
 import React from 'react';
 /* @conditional-compile-remove(call-readiness) */
 import { useLocale } from '../../localization';
-import { DomainPermissionsStrings } from './DomainPermissionsScaffolding';
+import { DomainPermissionsStrings, DomainPermissionsStyles } from './DomainPermissionsScaffolding';
 /* @conditional-compile-remove(call-readiness) */
 import { DomainPermissionsContainer } from './DomainPermissionsScaffolding';
 /* @conditional-compile-remove(call-readiness) */
@@ -29,6 +29,10 @@ export interface CommonDomainPermissionsProps {
    * If this is not provided the button will not be shown.
    */
   onContinueAnywayClick?: () => void;
+  /**
+   * Styles for DomainPermissions component.
+   */
+  styles?: DomainPermissionsStyles;
 }
 
 /**
@@ -71,8 +75,8 @@ export const CameraAndMicrophoneDomainPermissions = (props: CameraAndMicrophoneD
       {...props}
       strings={strings}
       cameraIconName={props.cameraIconName ?? 'DomainPermissionCamera'}
-      connectorIconName={props.cameraIconName ?? 'DomainPermissionsSparkle'}
-      microphoneIconName={props.cameraIconName ?? 'DomainPermissionMic'}
+      connectorIconName={props.connectorIconName ?? 'DomainPermissionsSparkle'}
+      microphoneIconName={props.microphoneIconName ?? 'DomainPermissionMic'}
       onPrimaryButtonClick={props.onContinueAnywayClick}
     />
   );

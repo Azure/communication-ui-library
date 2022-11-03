@@ -238,6 +238,7 @@ export interface CommonDomainPermissionsProps {
     appName: string;
     onContinueAnywayClick?: () => void;
     onTroubleshootingClick?: () => void;
+    styles?: DomainPermissionsStyles;
 }
 
 // @public
@@ -624,6 +625,12 @@ export type DomainPermissionsStrings = {
     primaryButtonText?: string;
     ariaLabel?: string;
 };
+
+// @beta
+export interface DomainPermissionsStyles extends BaseCustomStyles {
+    primaryButton?: IButtonStyles;
+    troubleshootingLink?: ILinkStyles;
+}
 
 // @internal
 export const _DrawerMenu: (props: _DrawerMenuProps) => JSX.Element;
