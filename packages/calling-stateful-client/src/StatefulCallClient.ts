@@ -214,11 +214,24 @@ class ProxyCallClient implements ProxyHandler<CallClient> {
           return this._deviceManager;
         }, 'CallClient.getDeviceManager');
       }
-      case 'feature(Features.DebugInfo).getEnvironmentInfo': {
-        /* @conditional-compile-remove(unsupported-browser) */
-        return this._context.withAsyncErrorTeedToState(async () => {
-          const environmentInfo = await target.feature(Features.DebugInfo).getEnvironmentInfo();
-          this._context.setEnvironmentInfo(environmentInfo);
+      case 'feature': {
+        return this._context.withErrorTeedToState((...args: Parameters<CallClient['feature']>) => {
+          /* @conditional-compile-remove(unsupported-browser) */
+          if (args[0] === Features.DebugInfo) {
+            const feature = target.feature(Features.DebugInfo);
+            /**
+             * add to this object if we want to proxy anything else off the DebugInfo feature object.
+             */
+            return {
+              ...feature,
+              getEnvironmentInfo: async () => {
+                const environmentInfo = await feature.getEnvironmentInfo();
+                this._context.setEnvironmentInfo(environmentInfo);
+                return environmentInfo;
+              }
+            };
+          }
+          return Reflect.get(target, prop);
         }, 'CallClient.feature');
       }
       default:
