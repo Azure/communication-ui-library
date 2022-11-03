@@ -115,7 +115,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     return <Spinner label={'Creating adapter'} ariaLive="assertive" labelPosition="top" />;
   }
 
-  let callInvitationUrl: string | undefined = window.location.href;
+  const callInvitationUrl: string | undefined = window.location.href;
 
   return (
     <CallComposite
