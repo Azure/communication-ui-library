@@ -3,21 +3,25 @@
 
 import {
   createDefaultCallingHandlers,
-  /* @conditional-compile-remove(teams-call) */
-  createDefaultTeamsCallingHandlers,
   _isInCall,
   _isInLobbyOrConnecting,
   CallHandlersOf,
   CallTypeOf
 } from '@internal/calling-component-bindings';
+
+/* @conditional-compile-remove(teams-identity-support) */
+import { createDefaultTeamsCallingHandlers } from '@internal/calling-component-bindings';
 import {
   CallClientState,
+  CallCommon,
   CallError,
   CallState,
   createStatefulCallClient,
   StatefulCallClient,
   StatefulDeviceManager
 } from '@internal/calling-stateful-client';
+/* @conditional-compile-remove(teams-identity-support) */
+import { isACSCallAgent } from '@internal/calling-stateful-client';
 import {
   AudioOptions,
   CallAgent,
@@ -30,10 +34,9 @@ import {
   PermissionConstraints,
   PropertyChangedEvent,
   StartCallOptions,
-  VideoOptions,
-  CallCommon
+  VideoOptions
 } from '@azure/communication-calling';
-/* @conditional-compile-remove(teams-call) */
+/* @conditional-compile-remove(teams-identity-support) */
 import { TeamsCallAgent } from '@azure/communication-calling';
 /* @conditional-compile-remove(rooms) */
 import { RoomCallLocator } from '@azure/communication-calling';
@@ -53,11 +56,11 @@ import {
   ParticipantsLeftListener,
   DiagnosticChangedEventListner,
   CallAdapterCallEndedEvent,
-  CallAdapter,
-  /* @conditional-compile-remove(teams-call) */
-  TeamsCallAdapter
+  CallAdapter
 } from './CallAdapter';
-import { getCallCompositePage, isACSCallAgent, IsCallEndedPage, isCameraOn } from '../utils';
+/* @conditional-compile-remove(teams-identity-support) */
+import { TeamsCallAdapter } from './CallAdapter';
+import { getCallCompositePage, IsCallEndedPage, isCameraOn } from '../utils';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 import { toFlatCommunicationIdentifier, _toCommunicationIdentifier } from '@internal/acs-ui-common';
 import {
@@ -176,7 +179,7 @@ const findLatestEndedCall = (calls: { [key: string]: CallState }): CallState | u
  * @private
  */
 export class AzureCommunicationCallAdapter<
-  AgentType extends CallAgent | /* @conditional-compile-remove(teams-call) */ TeamsCallAgent = CallAgent
+  AgentType extends CallAgent | /* @conditional-compile-remove(teams-identity-support) */ TeamsCallAgent = CallAgent
 > implements CallAdapterCommon
 {
   private callClient: StatefulCallClient;
@@ -242,7 +245,7 @@ export class AzureCommunicationCallAdapter<
 
     this.callClient.onStateChange(onStateChange);
 
-    /* @conditional-compile-remove(teams-call) */
+    /* @conditional-compile-remove(teams-identity-support) */
     if (!isACSCallAgent(callAgent)) {
       this.handlers = createDefaultTeamsCallingHandlers(
         callClient,
@@ -370,7 +373,7 @@ export class AzureCommunicationCallAdapter<
     /* @conditional-compile-remove(rooms) */
     const isRoomsCall = 'roomId' in this.locator;
 
-    /* @conditional-compile-remove(teams-call) */
+    /* @conditional-compile-remove(teams-identity-support) */
     if (!isACSCallAgent(this.callAgent)) {
       if (isTeamsMeeting) {
         return this.callAgent.join(this.locator as TeamsMeetingLinkLocator, {
@@ -801,7 +804,7 @@ export const createAzureCommunicationCallAdapter = async ({
   return adapter;
 };
 
-/* @conditional-compile-remove(teams-call) */
+/* @conditional-compile-remove(teams-identity-support) */
 /**
  * @beta
  */
@@ -824,7 +827,7 @@ export const createAzureCommunicationTeamsCallAdapter = async ({
 
 type AdapterType<CallType extends 'ACS' | 'Teams'> = CallType extends 'ACS'
   ? CallAdapter
-  : /* @conditional-compile-remove(teams-call) */ TeamsCallAdapter;
+  : /* @conditional-compile-remove(teams-identity-support) */ TeamsCallAdapter;
 
 /**
  * @private
@@ -888,7 +891,7 @@ export const useAzureCommunicationCallAdapterGeneric = <CallType extends 'ACS' |
           setAdapter(newAdapter);
         }
 
-        /* @conditional-compile-remove(teams-call) */
+        /* @conditional-compile-remove(teams-identity-support) */
         if (type === 'Teams') {
           let newAdapter = (await createAzureCommunicationTeamsCallAdapter({
             credential,
@@ -975,7 +978,7 @@ export const useAzureCommunicationCallAdapter = (
   return useAzureCommunicationCallAdapterGeneric(args, afterCreate, beforeDispose, 'ACS');
 };
 
-/* @conditional-compile-remove(teams-call) */
+/* @conditional-compile-remove(teams-identity-support) */
 /**
  * A custom React hook to simplify the creation of {@link TeamsCallAdapter}.
  *
@@ -1031,7 +1034,7 @@ export const createAzureCommunicationCallAdapterFromClient = async (
   return new AzureCommunicationCallAdapter(callClient, locator, callAgent, deviceManager);
 };
 
-/* @conditional-compile-remove(teams-call) */
+/* @conditional-compile-remove(teams-identity-support) */
 /**
  * Create a {@link TeamsCallAdapter} using the provided {@link StatefulCallClient}.
  *

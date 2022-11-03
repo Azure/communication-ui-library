@@ -306,7 +306,7 @@ export const CallAgentProvider: (props: CallAgentProviderProps) => JSX.Element;
 // @public
 export interface CallAgentProviderProps {
     // (undocumented)
-    callAgent?: CallAgent | /* @conditional-compile-remove(teams-call) */ TeamsCallAgent;
+    callAgent?: CallAgent | /* @conditional-compile-remove(teams-identity-support) */ TeamsCallAgent;
     // (undocumented)
     children: React_2.ReactNode;
 }
@@ -635,7 +635,7 @@ export const CallProvider: (props: CallProviderProps) => JSX.Element;
 // @public
 export interface CallProviderProps {
     // (undocumented)
-    call?: Call | /* @conditional-compile-remove(teams-call) */ TeamsCall;
+    call?: Call | /* @conditional-compile-remove(teams-identity-support) */ TeamsCall;
     // (undocumented)
     children: React_2.ReactNode;
 }
@@ -670,7 +670,7 @@ export interface CallState {
 // Warning: (ae-internal-missing-underscore) The name "CallTypeOf" should be prefixed with an underscore because the declaration is marked as @internal
 //
 // @internal (undocumented)
-export type CallTypeOf<AgentType extends TeamsCallAgent | CallAgent> = AgentType extends CallAgent ? Call : never | /* @conditional-compile-remove(teams-call) */ TeamsCall;
+export type CallTypeOf<AgentType extends TeamsCallAgent | CallAgent> = AgentType extends CallAgent ? Call : never | /* @conditional-compile-remove(teams-identity-support) */ TeamsCall;
 
 // @public (undocumented)
 export type CallWithChatAdapter = Omit<CallWithChatAdapterCommon, keyof ACSCallManagement> & ACSCallManagement;
@@ -2836,7 +2836,7 @@ export type TeamsCallAdapter = Omit<CallAdapterCommon, keyof TeamsCallManagement
 
 // @beta
 export type TeamsCallingHandlers = Omit<CallingHandlersCommon, 'onStartCall'> & {
-    onStartCall: (participants: CommunicationIdentifier[], options?: StartCallOptions) => /* @conditional-compile-remove(teams-call) */ TeamsCall | undefined;
+    onStartCall: (participants: CommunicationIdentifier[], options?: StartCallOptions) => /* @conditional-compile-remove(teams-identity-support) */ TeamsCall | undefined;
 };
 
 // @beta (undocumented)
@@ -2952,10 +2952,10 @@ export const usePropsFor: <Component extends (props: any) => JSX.Element>(compon
 export const useSelector: <ParamT extends Selector | undefined>(selector: ParamT, selectorProps?: (ParamT extends Selector ? Parameters<ParamT>[1] : undefined) | undefined, type?: "chat" | "calling" | undefined) => ParamT extends Selector ? ReturnType<ParamT> : undefined;
 
 // @public
-export const useTeamsCall: () => /* @conditional-compile-remove(teams-call) */ TeamsCall | undefined;
+export const useTeamsCall: () => /* @conditional-compile-remove(teams-identity-support) */ TeamsCall | undefined;
 
 // @beta
-export const useTeamsCallAgent: () => /* @conditional-compile-remove(teams-call) */ TeamsCallAgent | undefined;
+export const useTeamsCallAgent: () => /* @conditional-compile-remove(teams-identity-support) */ TeamsCallAgent | undefined;
 
 // @public
 export const useTheme: () => Theme;

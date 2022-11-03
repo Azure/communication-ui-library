@@ -11,10 +11,10 @@ import type {
   StartCallOptions,
   MediaDiagnosticChangedEventArgs,
   NetworkDiagnosticChangedEventArgs,
-  PropertyChangedEvent,
-  /* @conditional-compile-remove(teams-call) */
-  TeamsCall
+  PropertyChangedEvent
 } from '@azure/communication-calling';
+/* @conditional-compile-remove(teams-identity-support) */
+import { TeamsCall } from '@azure/communication-calling';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 import type { CommunicationIdentifierKind } from '@azure/communication-common';
 /* @conditional-compile-remove(PSTN-calls) */
@@ -557,13 +557,13 @@ export type ACSCallManagement = {
   startCall(participants: string[], options?: StartCallOptions): Call | undefined;
 };
 
-/* @conditional-compile-remove(teams-call) */
+/* @conditional-compile-remove(teams-identity-support) */
 /**
  * @beta
  */
 export type TeamsCallAdapter = Omit<CallAdapterCommon, keyof TeamsCallManagement> & TeamsCallManagement;
 
-/* @conditional-compile-remove(teams-call) */
+/* @conditional-compile-remove(teams-identity-support) */
 /**
  * @beta
  */

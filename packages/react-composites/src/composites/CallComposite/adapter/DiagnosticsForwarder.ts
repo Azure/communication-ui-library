@@ -5,9 +5,9 @@ import {
   UserFacingDiagnosticsFeature,
   Features,
   MediaDiagnosticChangedEventArgs,
-  NetworkDiagnosticChangedEventArgs,
-  CallCommon
+  NetworkDiagnosticChangedEventArgs
 } from '@azure/communication-calling';
+import { CallCommon } from '@internal/calling-stateful-client';
 import { EventEmitter } from 'events';
 import { MediaDiagnosticChangedEvent, NetworkDiagnosticChangedEvent } from './CallAdapter';
 
