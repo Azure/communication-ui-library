@@ -4,7 +4,7 @@
 import { DeviceManagerState, RemoteParticipantState, StatefulCallClient } from '@internal/calling-stateful-client';
 import { CallState as CallStatus } from '@azure/communication-calling';
 /* @conditional-compile-remove(unsupported-browser) */
-import { Features } from '@azure/communication-calling';
+import { Features, EnvironmentInfo } from '@azure/communication-calling';
 import { isPhoneNumberIdentifier } from '@azure/communication-common';
 import { memoizeFnAll, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 
@@ -84,7 +84,7 @@ const memoizedUpdateDisplayName = memoizeFnAll((participantId: string, participa
  *
  * @internal
  */
-export const _checkBrowserSupported = async (callClient: StatefulCallClient): Promise<boolean> => {
+export const _getEnvironmentInfo = async (callClient: StatefulCallClient): Promise<EnvironmentInfo> => {
   const environmentInfo = await callClient.feature(Features.DebugInfo).getEnvironmentInfo();
-  return environmentInfo.isSupportedBrowser;
+  return environmentInfo;
 };

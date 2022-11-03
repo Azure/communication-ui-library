@@ -34,6 +34,6 @@ export { _isInCall, _isPreviewOn, _isInLobbyOrConnecting } from './utils/callUti
 /* @conditional-compile-remove(PSTN-calls) */
 export { _updateUserDisplayNames } from './utils/callUtils';
 /* @conditional-compile-remove(unsupported-browser) */
-export { _checkBrowserSupported } from './utils/callUtils';
+export { _getEnvironmentInfo } from './utils/callUtils';
 
 export { _videoGalleryRemoteParticipantsMemo, _dominantSpeakersWithFlatId } from './utils/videoGalleryUtils';
