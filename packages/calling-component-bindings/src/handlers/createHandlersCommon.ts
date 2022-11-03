@@ -6,25 +6,20 @@ import {
   Call,
   LocalVideoStream,
   StartCallOptions,
-  TeamsCall,
   VideoDeviceInfo
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
 import { DtmfTone, AddPhoneNumberOptions } from '@azure/communication-calling';
+/* @conditional-compile-remove(teams-identity-support) */
+import { TeamsCall } from '@azure/communication-calling';
 /* @conditional-compile-remove(call-readiness) */
 import { PermissionConstraints } from '@azure/communication-calling';
-/* @conditional-compile-remove(PSTN-calls) */
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { CreateViewResult, StatefulCallClient, StatefulDeviceManager } from '@internal/calling-stateful-client';
 import memoizeOne from 'memoize-one';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 import { disposeAllLocalPreviewViews, _isInCall, _isInLobbyOrConnecting, _isPreviewOn } from '../utils/callUtils';
-import {
-  CommunicationUserIdentifier,
-  PhoneNumberIdentifier,
-  UnknownIdentifier,
-  CommunicationIdentifier
-} from '@azure/communication-common';
+import { CommunicationUserIdentifier, PhoneNumberIdentifier, UnknownIdentifier } from '@azure/communication-common';
 
 /**
  * Object containing all the handlers required for calling components.
@@ -47,10 +42,10 @@ export type CallingHandlersCommon = {
   onHangUp: (forEveryone?: boolean) => Promise<void>;
   /* @conditional-compile-remove(PSTN-calls) */
   onToggleHold: () => Promise<void>;
+  /* @conditional-compile-remove(PSTN-calls) */
   onAddParticipant(participant: CommunicationUserIdentifier): Promise<void>;
   /* @conditional-compile-remove(PSTN-calls) */
   onAddParticipant(participant: PhoneNumberIdentifier, options: AddPhoneNumberOptions): Promise<void>;
-  /* @conditional-compile-remove(PSTN-calls) */
   onCreateLocalStreamView: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
   onCreateRemoteStreamView: (
     userId: string,
@@ -89,7 +84,7 @@ export const createDefaultCallingHandlersCommon = memoizeOne(
   (
     callClient: StatefulCallClient,
     deviceManager: StatefulDeviceManager | undefined,
-    call: Call | TeamsCall | undefined
+    call: Call | /* @conditional-compile-remove(teams-identity-support) */ TeamsCall | undefined
   ): CallingHandlersCommon => {
     const onStartLocalVideo = async (): Promise<void> => {
       // Before the call object creates a stream, dispose of any local preview streams.
@@ -385,10 +380,12 @@ export const createDefaultCallingHandlersCommon = memoizeOne(
       onStartLocalVideo,
       onDisposeRemoteStreamView,
       onDisposeLocalStreamView,
+      /* @conditional-compile-remove(PSTN-calls) */
       onAddParticipant: notImplemented,
       onRemoveParticipant: notImplemented,
       onStartCall: notImplemented,
       /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */ onSendDtmfTone,
+      /* @conditional-compile-remove(call-readiness) */
       askDevicePermission
     };
   }

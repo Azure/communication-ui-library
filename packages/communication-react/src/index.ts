@@ -38,9 +38,7 @@ export type {
   CallingBaseSelectorProps,
   CallingHandlersCommon,
   CallTypeOf,
-  CallHandlersOf,
-  /* @conditional-compile-remove(teams-call) */
-  TeamsCallingHandlers
+  CallHandlersOf
 } from '../../calling-component-bindings/src';
 export type {
   ChatClientProviderProps,
@@ -56,15 +54,14 @@ export {
   CallProvider,
   useCallClient,
   useCallAgent,
-  /* @conditional-compile-remove(teams-call) */
-  useTeamsCallAgent,
-  /* @conditional-compile-remove(teams-call) */
-  useTeamsCall,
   useCall,
   useDeviceManager,
   getCallingSelector,
   createDefaultCallingHandlers
 } from '../../calling-component-bindings/src';
+
+/* @conditional-compile-remove(teams-identity-support) */
+export { useTeamsCallAgent, useTeamsCall, TeamsCallingHandlers } from '../../calling-component-bindings/src';
 
 export type {
   ScreenShareButtonSelector,

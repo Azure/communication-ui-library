@@ -2,61 +2,52 @@
 // Licensed under the MIT license.
 
 import { Call, CallAgent } from '@azure/communication-calling';
-/* @conditional-compile-remove(teams-call) */
+/* @conditional-compile-remove(teams-identity-support) */
 import { TeamsCall, TeamsCallAgent } from '@azure/communication-calling';
-/* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
-/* @conditional-compile-remove(PSTN-calls) */
-/* @conditional-compile-remove(PSTN-calls) */
 import { Common } from '@internal/acs-ui-common';
-import { StatefulCallClient, StatefulDeviceManager } from '@internal/calling-stateful-client';
+import {
+  CallAgentCommon,
+  isACSCall,
+  isACSCallAgent,
+  StatefulCallClient,
+  StatefulDeviceManager
+} from '@internal/calling-stateful-client';
+/* @conditional-compile-remove(teams-identity-support) */
+import { isTeamsCall, isTeamsCallAgent } from '@internal/calling-stateful-client';
 import memoizeOne from 'memoize-one';
 import { ReactElement } from 'react';
-/* @conditional-compile-remove(teams-call) */
+/* @conditional-compile-remove(teams-identity-support) */
 import { createDefaultTeamsCallingHandlers, TeamsCallingHandlers } from './createTeamsCallHandlers';
 import { CallingHandlers, createDefaultACSCallingHandlers } from './createACSCallHandlers';
 
 /**
- * @internal
+ * @public
  */
-export type CallTypeOf<AgentType extends TeamsCallAgent | CallAgent> = AgentType extends CallAgent
-  ? Call
-  : never | /* @conditional-compile-remove(teams-call) */ TeamsCall; // remove "never" type when move to stable
+export type CallTypeOf<
+  AgentType extends CallAgent | /* @conditional-compile-remove(teams-identity-support) */ TeamsCallAgent
+> = AgentType extends CallAgent ? Call : never | /* @conditional-compile-remove(teams-identity-support) */ TeamsCall; // remove "never" type when move to stable
 
 /**
- * @internal
+ * @public
  */
-export type CallHandlersOf<AgentType extends TeamsCallAgent | CallAgent> = AgentType extends CallAgent
+export type CallHandlersOf<
+  AgentType extends CallAgent | /* @conditional-compile-remove(teams-identity-support) */ TeamsCallAgent
+> = AgentType extends CallAgent
   ? CallingHandlers
-  : never | /* @conditional-compile-remove(teams-call) */ TeamsCallingHandlers; // remove "never" type when move to stable
-
-/**
- * @private
- */
-export const isACSCallAgent = (
-  callAgent: CallAgent | /* @conditional-compile-remove(teams-call) */ TeamsCallAgent
-): callAgent is CallAgent => {
-  return callAgent.kind === 'CallAgent';
-};
-
-/**
- * @private
- */
-export const isACSCall = (call: Call | /* @conditional-compile-remove(teams-call) */ TeamsCall): call is Call => {
-  return call.kind === 'TeamsCall';
-};
+  : never | /* @conditional-compile-remove(teams-identity-support) */ TeamsCallingHandlers; // remove "never" type when move to stable
 
 /**
  * @public
  */
 export const createDefaultCallingHandlers = memoizeOne(
-  <AgentType extends /* @conditional-compile-remove(teams-call) */ TeamsCallAgent | CallAgent = CallAgent>(
+  <AgentType extends CallAgentCommon = CallAgent>(
     callClient: StatefulCallClient,
     callAgent: AgentType | undefined,
     deviceManager: StatefulDeviceManager | undefined,
     call: CallTypeOf<AgentType> | undefined
   ): CallHandlersOf<AgentType> => {
-    /* @conditional-compile-remove(teams-call) */
-    if (callAgent && !isACSCallAgent(callAgent) && (!call || (call && !isACSCall(call)))) {
+    /* @conditional-compile-remove(teams-identity-support) */
+    if (callAgent && isTeamsCallAgent(callAgent) && (!call || (call && isTeamsCall(call)))) {
       return createDefaultTeamsCallingHandlers(callClient, callAgent, deviceManager, call) as any;
     }
     if (callAgent && isACSCallAgent(callAgent) && (!call || (call && isACSCall(call)))) {
@@ -80,10 +71,7 @@ export const createDefaultCallingHandlers = memoizeOne(
  *
  * @public
  */
-export const createDefaultCallingHandlersForComponent = <
-  Props,
-  AgentType extends CallAgent | /* @conditional-compile-remove(teams-call) */ TeamsCallAgent = CallAgent
->(
+export const createDefaultCallingHandlersForComponent = <Props, AgentType extends CallAgentCommon = CallAgent>(
   callClient: StatefulCallClient,
   callAgent: AgentType | undefined,
   deviceManager: StatefulDeviceManager | undefined,

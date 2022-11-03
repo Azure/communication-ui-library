@@ -20,12 +20,12 @@ import {
 } from '@azure/communication-calling';
 
 /**
- * @private
+ * @internal
  */
 export type CallCommon = Call | /* @conditional-compile-remove(teams-identity-support) */ CallCommonBeta;
 
 /**
- * @private
+ * @internal
  */
 export type CallAgentCommon = CallAgent | /* @conditional-compile-remove(teams-identity-support) */ CallAgentCommonBeta;
 

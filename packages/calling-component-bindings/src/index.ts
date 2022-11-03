@@ -4,7 +4,7 @@
 export type { CallingBaseSelectorProps } from './baseSelectors';
 export * from './callControlSelectors';
 export { createDefaultCallingHandlers } from './handlers/createHandlers';
-/* @conditional-compile-remove(teams-call) */
+/* @conditional-compile-remove(teams-identity-support) */
 export { createDefaultTeamsCallingHandlers } from './handlers/createTeamsCallHandlers';
 export type { ParticipantListSelector } from './participantListSelector';
 export type { ParticipantsButtonSelector } from './participantsButtonSelector';
@@ -15,9 +15,12 @@ export type { HoldButtonSelector } from './callControlSelectors';
 
 export type { CallHandlersOf, CallTypeOf } from './handlers/createHandlers';
 export type { CallingHandlers } from './handlers/createACSCallHandlers';
-/* @conditional-compile-remove(teams-call) */
+/* @conditional-compile-remove(teams-identity-support) */
 export type { TeamsCallingHandlers } from './handlers/createTeamsCallHandlers';
 export type { CallingHandlersCommon } from './handlers/createHandlersCommon';
+
+/* @conditional-compile-remove(teams-identity-support) */
+export { useTeamsCall, useTeamsCallAgent } from './providers';
 
 export {
   CallAgentProvider,
@@ -26,11 +29,7 @@ export {
   useCall,
   useCallAgent,
   useCallClient,
-  useDeviceManager,
-  /* @conditional-compile-remove(teams-call) */
-  useTeamsCall,
-  /* @conditional-compile-remove(teams-call) */
-  useTeamsCallAgent
+  useDeviceManager
 } from './providers';
 export type { CallAgentProviderProps, CallClientProviderProps, CallProviderProps } from './providers';
 
