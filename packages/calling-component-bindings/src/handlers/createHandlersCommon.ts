@@ -20,6 +20,8 @@ import memoizeOne from 'memoize-one';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 import { disposeAllLocalPreviewViews, _isInCall, _isInLobbyOrConnecting, _isPreviewOn } from '../utils/callUtils';
 import { CommunicationUserIdentifier, PhoneNumberIdentifier, UnknownIdentifier } from '@azure/communication-common';
+/* @conditional-compile-remove(PSTN-calls) */
+import { CommunicationIdentifier } from '@azure/communication-common';
 
 /**
  * Object containing all the handlers required for calling components.
@@ -42,10 +44,10 @@ export type CallingHandlersCommon = {
   onHangUp: (forEveryone?: boolean) => Promise<void>;
   /* @conditional-compile-remove(PSTN-calls) */
   onToggleHold: () => Promise<void>;
-  /* @conditional-compile-remove(PSTN-calls) */
   onAddParticipant(participant: CommunicationUserIdentifier): Promise<void>;
   /* @conditional-compile-remove(PSTN-calls) */
   onAddParticipant(participant: PhoneNumberIdentifier, options: AddPhoneNumberOptions): Promise<void>;
+  /* @conditional-compile-remove(PSTN-calls) */
   onCreateLocalStreamView: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
   onCreateRemoteStreamView: (
     userId: string,

@@ -6,7 +6,6 @@ import { Call, CallAgent } from '@azure/communication-calling';
 import { TeamsCall, TeamsCallAgent } from '@azure/communication-calling';
 import { Common } from '@internal/acs-ui-common';
 import {
-  CallAgentCommon,
   isACSCall,
   isACSCallAgent,
   StatefulCallClient,
@@ -40,7 +39,7 @@ export type CallHandlersOf<
  * @public
  */
 export const createDefaultCallingHandlers = memoizeOne(
-  <AgentType extends CallAgentCommon = CallAgent>(
+  <AgentType extends CallAgent | /* @conditional-compile-remove(teams-identity-support) */ TeamsCallAgent = CallAgent>(
     callClient: StatefulCallClient,
     callAgent: AgentType | undefined,
     deviceManager: StatefulDeviceManager | undefined,
@@ -71,7 +70,10 @@ export const createDefaultCallingHandlers = memoizeOne(
  *
  * @public
  */
-export const createDefaultCallingHandlersForComponent = <Props, AgentType extends CallAgentCommon = CallAgent>(
+export const createDefaultCallingHandlersForComponent = <
+  Props,
+  AgentType extends CallAgent | /* @conditional-compile-remove(teams-identity-support) */ TeamsCallAgent = CallAgent
+>(
   callClient: StatefulCallClient,
   callAgent: AgentType | undefined,
   deviceManager: StatefulDeviceManager | undefined,
