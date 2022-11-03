@@ -186,7 +186,7 @@ const App = (): JSX.Element => {
           /* @conditional-compile-remove(rooms) */
           role={role}
           /* @conditional-compile-remove(call-readiness) */
-          callReadinessOptedIn={true}
+          callReadinessOptedIn={false}
         />
       );
     }
