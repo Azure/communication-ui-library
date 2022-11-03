@@ -4,7 +4,7 @@
 import { deviceManagerDeclaratify } from './DeviceManagerDeclarative';
 import { CallClient, CallClientOptions, CreateViewOptions, DeviceManager } from '@azure/communication-calling';
 /* @conditional-compile-remove(unsupported-browser) */
-import { EnvironmentInfo, Features } from '@azure/communication-calling';
+import { Features } from '@azure/communication-calling';
 import { CallClientState, LocalVideoStreamState, RemoteVideoStreamState } from './CallClientState';
 import { CallContext } from './CallContext';
 import { callAgentDeclaratify, DeclarativeCallAgent } from './CallAgentDeclarative';
@@ -143,11 +143,6 @@ export interface StatefulCallClient extends CallClient {
    * @public
    */
   createCallAgent(...args: Parameters<CallClient['createCallAgent']>): Promise<DeclarativeCallAgent>;
-  /* @conditional-compile-remove(unsupported-browser) */
-  /**
-   * Gets the environmentInfo that the client is created in
-   */
-  getEnvironmentInfo(): Promise<EnvironmentInfo>;
 }
 
 /**
@@ -219,7 +214,7 @@ class ProxyCallClient implements ProxyHandler<CallClient> {
           return this._deviceManager;
         }, 'CallClient.getDeviceManager');
       }
-      case 'getEnvironmentInfo': {
+      case 'feature(Features.DebugInfo).getEnvironmentInfo': {
         /* @conditional-compile-remove(unsupported-browser) */
         return this._context.withAsyncErrorTeedToState(async () => {
           const environmentInfo = await target.feature(Features.DebugInfo).getEnvironmentInfo();
