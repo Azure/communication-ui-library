@@ -915,15 +915,15 @@ const createAzureCommunicationCallAdapterFromClientStable = async (
   return new AzureCommunicationCallAdapter(callClient, locator, callAgent, deviceManager);
 };
 
-let createAzureCommunicationCallAdapterFromClientBeta!: (
+let createAzureCommunicationCallAdapterFromClientToExport: (
   callClient: StatefulCallClient,
   callAgent: CallAgent,
   locator: CallAdapterLocator,
   /* @conditional-compile-remove(rooms) */ roleHint?: Role
-) => Promise<CallAdapter>;
+) => Promise<CallAdapter> = createAzureCommunicationCallAdapterFromClientStable;
 
 /* @conditional-compile-remove(rooms) */
-createAzureCommunicationCallAdapterFromClientBeta = async (
+createAzureCommunicationCallAdapterFromClientToExport = async (
   callClient: StatefulCallClient,
   callAgent: CallAgent,
   locator: CallAdapterLocator,
@@ -933,12 +933,6 @@ createAzureCommunicationCallAdapterFromClientBeta = async (
   return new AzureCommunicationCallAdapter(callClient, locator, callAgent, deviceManager, roleHint);
 };
 
-function shouldIncludeRoomsFeature(): boolean {
-  /* @conditional-compile-remove(rooms) */
-  return true;
-  return false;
-}
-
 /**
  * Create a {@link CallAdapter} using the provided {@link StatefulCallClient}.
  *
@@ -947,9 +941,7 @@ function shouldIncludeRoomsFeature(): boolean {
  *
  * @public
  */
-export const createAzureCommunicationCallAdapterFromClient = shouldIncludeRoomsFeature()
-  ? createAzureCommunicationCallAdapterFromClientBeta
-  : createAzureCommunicationCallAdapterFromClientStable;
+export const createAzureCommunicationCallAdapterFromClient = createAzureCommunicationCallAdapterFromClientToExport;
 
 const isCallError = (e: Error): e is CallError => {
   return e['target'] !== undefined && e['innerError'] !== undefined;
