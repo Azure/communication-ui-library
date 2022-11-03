@@ -15,7 +15,13 @@ import {
 import { AddPhoneNumberOptions, DtmfTone } from '@azure/communication-calling';
 import { CallWithChatAdapterState } from '../state/CallWithChatAdapterState';
 /* @conditional-compile-remove(PSTN-calls) */
-import { CommunicationIdentifier } from '@azure/communication-common';
+import {
+  CommunicationIdentifier,
+  CommunicationUserIdentifier,
+  isPhoneNumberIdentifier,
+  PhoneNumberIdentifier
+} from '@azure/communication-common';
+import { _toCommunicationIdentifier } from '@internal/acs-ui-common';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
@@ -76,9 +82,16 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
   public joinCall = (microphoneOn?: boolean): Call | undefined => {
     return this.callWithChatAdapter.joinCall(microphoneOn);
   };
-  public leaveCall = async (): Promise<void> => await this.callWithChatAdapter.leaveCall();
-  public startCall = (participants: string[], options: StartCallOptions): Call | undefined => {
-    return this.callWithChatAdapter.startCall(participants, options);
+  public leaveCall = async (forEveryone?: boolean): Promise<void> =>
+    await this.callWithChatAdapter.leaveCall(forEveryone);
+  public startCall = (
+    participants: string[] | /* @conditional-compile-remove(PSTN-calls) */ CommunicationIdentifier[],
+    options: StartCallOptions
+  ): Call | undefined => {
+    let communicationParticipants = participants;
+    /* @conditional-compile-remove(PSTN-calls) */
+    communicationParticipants = participants.map(_toCommunicationIdentifier);
+    return this.callWithChatAdapter.startCall(communicationParticipants, options);
   };
   public setCamera = async (sourceId: VideoDeviceInfo, options?: VideoStreamOptions): Promise<void> =>
     await this.callWithChatAdapter.setCamera(sourceId, options);
@@ -98,8 +111,14 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
   public unmute = async (): Promise<void> => await this.callWithChatAdapter.unmute();
   public startScreenShare = async (): Promise<void> => await this.callWithChatAdapter.startScreenShare();
   public stopScreenShare = async (): Promise<void> => await this.callWithChatAdapter.stopScreenShare();
-  public removeParticipant = async (userId: string): Promise<void> =>
-    await this.callWithChatAdapter.removeParticipant(userId);
+  public removeParticipant = async (
+    userId: string | /* @conditional-compile-remove(PSTN-calls) */ CommunicationIdentifier
+  ): Promise<void> => {
+    let participant = userId;
+    /* @conditional-compile-remove(PSTN-calls) */
+    participant = _toCommunicationIdentifier(userId);
+    await this.callWithChatAdapter.removeParticipant(participant);
+  };
   public createStreamView = async (
     remoteUserId?: string,
     options?: VideoStreamOptions
@@ -116,12 +135,20 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
     await this.callWithChatAdapter.resumeCall();
   };
   /* @conditional-compile-remove(PSTN-calls) */
-  public addParticipant = async (
-    participant: CommunicationIdentifier,
+  public async addParticipant(participant: PhoneNumberIdentifier, options?: AddPhoneNumberOptions): Promise<void>;
+  /* @conditional-compile-remove(PSTN-calls) */
+  public async addParticipant(participant: CommunicationUserIdentifier): Promise<void>;
+  /* @conditional-compile-remove(PSTN-calls) */
+  public async addParticipant(
+    participant: PhoneNumberIdentifier | CommunicationUserIdentifier,
     options?: AddPhoneNumberOptions
-  ): Promise<void> => {
-    await this.callWithChatAdapter.addParticipant(participant, options);
-  };
+  ): Promise<void> {
+    if (isPhoneNumberIdentifier(participant) && options) {
+      return this.callWithChatAdapter.addParticipant(participant as PhoneNumberIdentifier, options);
+    } else {
+      return this.callWithChatAdapter.addParticipant(participant as CommunicationUserIdentifier);
+    }
+  }
 
   /* @conditional-compile-remove(PSTN-calls) */
   public sendDtmfTone = async (dtmfTone: DtmfTone): Promise<void> => {

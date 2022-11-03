@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "VideoGallery displays participants connection states such as Connecting, Hold etc.",
-  "packageName": "@internal/react-composites",
-  "email": "anjulgarg@live.com",
-  "dependentChangeType": "patch"
-}

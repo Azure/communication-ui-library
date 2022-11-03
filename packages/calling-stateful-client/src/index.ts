@@ -23,7 +23,10 @@ export type {
   TranscriptionCallFeatureState as TranscriptionCallFeature,
   VideoStreamRendererViewState
 } from './CallClientState';
+export { isACSCall, isACSCallAgent, isTeamsCall, isTeamsCallAgent } from './TypeGuards';
 export type { CreateViewResult } from './StreamUtils';
-export type { DeclarativeCallAgent } from './CallAgentDeclarative';
+export type { CallCommon, CallAgentCommon } from './BetaToStableTypes';
+/* @conditional-compile-remove(one-to-n-calling) */
+export type { DeclarativeCallAgent, IncomingCallManagement } from './CallAgentDeclarative';
 /* @conditional-compile-remove(one-to-n-calling) */
 export type { DeclarativeIncomingCall } from './IncomingCallDeclarative';

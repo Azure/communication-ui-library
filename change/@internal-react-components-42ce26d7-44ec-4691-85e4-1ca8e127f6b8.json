@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Control Bar uses theme.semanticColors.bodyBackground instead of theme.palette.white",
-  "packageName": "@internal/react-components",
-  "email": "anjulgarg@live.com",
-  "dependentChangeType": "patch"
-}

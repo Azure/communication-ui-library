@@ -23,7 +23,7 @@ import { SidePaneHeader } from '../common/SidePaneHeader';
 import { useCallWithChatCompositeStrings } from './hooks/useCallWithChatCompositeStrings';
 import { ModalLocalAndRemotePIP } from '../common/ModalLocalAndRemotePIP';
 import { PeoplePaneContent } from '../common/PeoplePaneContent';
-import { drawerContainerStyles } from './styles/CallWithChatCompositeStyles';
+
 import { TabHeader } from '../common/TabHeader';
 /* @conditional-compile-remove(file-sharing) */
 import { FileSharingOptions } from '../ChatComposite';
@@ -33,11 +33,12 @@ import { getPipStyles } from '../common/styles/ModalLocalAndRemotePIP.styles';
 import { useMinMaxDragPosition } from '../common/utils';
 import { availableSpaceStyles, hiddenStyles, sidePaneStyles, sidePaneTokens } from '../common/styles/Pane.styles';
 /* @conditional-compile-remove(PSTN-calls) */
-import { CommunicationIdentifier } from '@azure/communication-common';
+import { PhoneNumberIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { CallWithChatControlOptions } from './CallWithChatComposite';
 import { isDisabled } from '../CallComposite/utils';
+import { drawerContainerStyles } from '../CallComposite/styles/CallComposite.styles';
 
 /**
  * Pane that is used to store chat and people for CallWithChat composite
@@ -122,7 +123,7 @@ export const CallWithChatPane = (props: {
 
   /* @conditional-compile-remove(PSTN-calls) */
   const addParticipantToCall = async (
-    participant: CommunicationIdentifier,
+    participant: PhoneNumberIdentifier,
     options?: AddPhoneNumberOptions
   ): Promise<void> => {
     await props.callAdapter.addParticipant(participant, options);
@@ -131,6 +132,7 @@ export const CallWithChatPane = (props: {
   const peopleContent = (
     <CallAdapterProvider adapter={props.callAdapter}>
       <PeoplePaneContent
+        active={props.activePane === 'people'}
         {...props}
         onRemoveParticipant={removeParticipantFromCallWithChat}
         setDrawerMenuItems={setDrawerMenuItems}
@@ -166,17 +168,18 @@ export const CallWithChatPane = (props: {
         </Stack>
       </Stack.Item>
       {props.mobileView && (
-        <ModalLocalAndRemotePIP
-          callAdapter={props.callAdapter}
-          modalLayerHostId={props.modalLayerHostId}
-          hidden={hidden}
-          styles={pipStyles}
-          minDragPosition={minMaxDragPosition.minDragPosition}
-          maxDragPosition={minMaxDragPosition.maxDragPosition}
-        />
+        <CallAdapterProvider adapter={props.callAdapter}>
+          <ModalLocalAndRemotePIP
+            modalLayerHostId={props.modalLayerHostId}
+            hidden={hidden}
+            styles={pipStyles}
+            minDragPosition={minMaxDragPosition.minDragPosition}
+            maxDragPosition={minMaxDragPosition.maxDragPosition}
+          />
+        </CallAdapterProvider>
       )}
       {drawerMenuItems.length > 0 && (
-        <Stack styles={drawerContainerStyles}>
+        <Stack styles={drawerContainerStyles()}>
           <_DrawerMenu onLightDismiss={() => setDrawerMenuItems([])} items={drawerMenuItems} />
         </Stack>
       )}

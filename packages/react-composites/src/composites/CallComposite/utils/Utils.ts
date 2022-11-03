@@ -16,6 +16,10 @@ import {
 const ACCESS_DENIED_TEAMS_MEETING_SUB_CODE = 5854;
 const REMOTE_PSTN_USER_HUNG_UP = 560000;
 const REMOVED_FROM_CALL_SUB_CODES = [5000, 5300, REMOTE_PSTN_USER_HUNG_UP];
+/* @conditional-compile-remove(rooms) */
+const ROOM_NOT_FOUND_SUB_CODE = 5751;
+/* @conditional-compile-remove(rooms) */
+const DENIED_PERMISSION_TO_ROOM_SUB_CODE = 5828;
 
 /**
  * @private
@@ -64,7 +68,9 @@ export const reduceCallControlsForMobile = (
 enum CallEndReasons {
   LEFT_CALL,
   ACCESS_DENIED,
-  REMOVED_FROM_CALL
+  REMOVED_FROM_CALL,
+  ROOM_NOT_FOUND,
+  DENIED_PERMISSION_TO_ROOM
 }
 
 const getCallEndReason = (call: CallState): CallEndReasons => {
@@ -90,6 +96,16 @@ const getCallEndReason = (call: CallState): CallEndReasons => {
 
   if (call.callEndReason?.subCode && REMOVED_FROM_CALL_SUB_CODES.includes(call.callEndReason.subCode)) {
     return CallEndReasons.REMOVED_FROM_CALL;
+  }
+
+  /* @conditional-compile-remove(rooms) */
+  if (call.callEndReason?.subCode && call.callEndReason.subCode === ROOM_NOT_FOUND_SUB_CODE) {
+    return CallEndReasons.ROOM_NOT_FOUND;
+  }
+
+  /* @conditional-compile-remove(rooms) */
+  if (call.callEndReason?.subCode && call.callEndReason.subCode === DENIED_PERMISSION_TO_ROOM_SUB_CODE) {
+    return CallEndReasons.DENIED_PERMISSION_TO_ROOM;
   }
 
   if (call.callEndReason) {
@@ -143,6 +159,13 @@ export const getCallCompositePage = (
 
   if (previousCall) {
     const reason = getCallEndReason(previousCall);
+    /* @conditional-compile-remove(rooms) */
+    switch (reason) {
+      case CallEndReasons.ROOM_NOT_FOUND:
+        return 'roomNotFound';
+      case CallEndReasons.DENIED_PERMISSION_TO_ROOM:
+        return 'deniedPermissionToRoom';
+    }
     switch (reason) {
       case CallEndReasons.ACCESS_DENIED:
         return 'accessDeniedTeamsMeeting';
@@ -179,6 +202,9 @@ export const IsCallEndedPage = (
     | 'lobby'
     | 'removedFromCall'
     | /* @conditional-compile-remove(PSTN-calls) */ 'hold'
+    | /* @conditional-compile-remove(rooms) */ 'roomNotFound'
+    | /* @conditional-compile-remove(rooms) */ 'deniedPermissionToRoom'
+    | /* @conditional-compile-remove(unsupported-browser) */ 'unsupportedEnvironment'
 ): boolean => END_CALL_PAGES.includes(page);
 
 /**
@@ -216,16 +242,18 @@ export const disableCallControls = (
 
 /**
  * Check if a disabled object is provided for a button and returns if the button is disabled.
+ * A button is only disabled if is explicitly set to disabled.
  *
  * @param option
  * @returns whether a button is disabled
  * @private
  */
-export const isDisabled = (option?: boolean | { disabled: boolean }): boolean => {
-  if (typeof option !== 'boolean') {
-    return !!option?.disabled;
+export const isDisabled = (option: boolean | { disabled: boolean } | undefined): boolean => {
+  if (option === undefined || typeof option === 'boolean') {
+    return false;
   }
-  return option;
+
+  return option.disabled;
 };
 
 /**

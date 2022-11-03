@@ -1,0 +1,22 @@
+# This workflow is deprecated. Use ./update-snapshots.yml instead.
+#
+# This workflow will be deleted once the replacement has been stabilized.
+name: update snapshots (deprecated)
+
+on:
+  pull_request:
+    types: [labeled]
+  workflow_dispatch:
+
+jobs:
+  holler:
+    name: This is not the droid you are looking for
+    runs-on: ubuntu-latest
+    steps:
+      - name: Redirect to the real droid
+        if: ${{ github.event.label.name == 'ui change' || contains( github.event.pull_request.labels.*.name, 'ui change') || github.event_name == 'workflow_dispatch' }}
+        run: |
+          echo 'This workflow is deprecated.'
+          echo 'Trigger the new workflow by setting the "update_snapshots" label on your Pull Request'
+          echo 'See https://github.com/Azure/communication-ui-library/blob/0707a918473df3a69de8c04c751abeedcbb49cb1/packages/react-composites/tests/README.md?plain=1#L82'
+          exit 1

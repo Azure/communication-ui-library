@@ -2,27 +2,36 @@
 // Licensed under the MIT license.
 
 import { CallAgent } from '@azure/communication-calling';
-import { ProxyCallAgentCommon } from './CallAgentDeclarativeCommon';
+import { CallAgentCommon, CallCommon } from './BetaToStableTypes';
+import { clearCallRelatedState, DeclarativeCallCommon, ProxyCallAgentCommon } from './CallAgentDeclarativeCommon';
 import { CallContext } from './CallContext';
+import { callDeclaratify } from './CallDeclarative';
+/* @conditional-compile-remove(one-to-n-calling) */
 import { DeclarativeIncomingCall } from './IncomingCallDeclarative';
 import { InternalCallContext } from './InternalCallContext';
-import { disposeAllViews } from './StreamUtils';
+import { isACSCall, isACSCallAgent } from './TypeGuards';
 
+/* @conditional-compile-remove(one-to-n-calling) */
 /**
- * @public
- * `DeclarativeCallAgent` extends and proxies the {@link @azure/communication-calling#CallAgent}
+ * @beta
+ * This contains a readonly array that returns all the active `incomingCalls`.
+ * An active incoming call is a call that has not been answered, declined or disconnected.
  */
-export type DeclarativeCallAgent = CallAgent & /* @conditional-compile-remove(one-to-n-calling) */ {
+export type IncomingCallManagement = {
   /**
    * @beta
-   * A readonly array that returns all the active `incomingCalls`.
-   * An active incoming call is a call that has not been answered, declined or disconnected.
-   *
    * @Remark This attribute doesn't exist on the {@link @azure/communication-calling#CallAgent} interface.
    * @returns readonly array of {@link DeclarativeIncomingCall}
    */
   incomingCalls: ReadonlyArray<DeclarativeIncomingCall>;
 };
+
+/**
+ * @beta
+ * `DeclarativeCallAgent` extends and proxies the {@link @azure/communication-calling#CallAgent}
+ */
+export type DeclarativeCallAgent = CallAgent &
+  /* @conditional-compile-remove(one-to-n-calling) */ IncomingCallManagement;
 
 /**
  * ProxyCallAgent proxies CallAgent and saves any returned state in the given context. It will subscribe to all state
@@ -38,7 +47,7 @@ class ProxyCallAgent extends ProxyCallAgentCommon implements ProxyHandler<Declar
     this.subscribe();
   }
 
-  protected subscribe = (): void => {
+  private subscribe = (): void => {
     this._callAgent.on('callsUpdated', this.callsUpdated);
     this._callAgent.on('incomingCall', this.incomingCall);
 
@@ -55,6 +64,41 @@ class ProxyCallAgent extends ProxyCallAgentCommon implements ProxyHandler<Declar
 
     this.unregisterSubscriber();
   };
+
+  protected callDeclaratify(call: CallCommon, context: CallContext): DeclarativeCallCommon {
+    if (isACSCall(call)) {
+      return callDeclaratify(call, context);
+    }
+    throw new Error('Not reachable code, DeclarativeCallAgent.callDeclaratify must be called with an ACS call.');
+  }
+
+  protected startCall(agent: CallAgentCommon, args: Parameters<CallAgent['startCall']>): CallCommon {
+    if (isACSCallAgent(agent)) {
+      return agent.startCall(...args);
+    }
+    throw Error('Unreachable code, DeclarativeCallAgent.startCall must be called with an ACS callAgent.');
+  }
+
+  protected joinCall(agent: CallAgentCommon, args: Parameters<CallAgent['join']>): CallCommon {
+    if (isACSCallAgent(agent)) {
+      return agent.join(...args);
+    }
+    throw Error('Unreachable code, DeclarativeCallAgent.joinCall must be called with an ACS callAgent.');
+  }
+
+  protected agentSubscribe(agent: CallAgentCommon, args: Parameters<CallAgent['on']>): void {
+    if (isACSCallAgent(agent)) {
+      return agent.on(...args);
+    }
+    throw Error('Unreachable code, DeclarativeCallAgent.agentSubscribe must be called with an ACS callAgent.');
+  }
+
+  protected agentUnsubscribe(agent: CallAgentCommon, args: Parameters<CallAgent['off']>): void {
+    if (isACSCallAgent(agent)) {
+      return agent.off(...args);
+    }
+    throw Error('Unreachable code, DeclarativeCallAgent.agentUnsubscribe must be called with an ACS callAgent.');
+  }
 
   public get<P extends keyof CallAgent>(target: CallAgent, prop: P): any {
     return super.getCommon(target, prop);
@@ -74,12 +118,6 @@ export const callAgentDeclaratify = (
   context: CallContext,
   internalContext: InternalCallContext
 ): DeclarativeCallAgent => {
-  // Make sure there are no existing call data if creating a new CallAgentDeclarative (if creating a new
-  // CallAgentDeclarative after disposing of the hold one will mean context have old call state). TODO: should we stop
-  // rendering when the previous callAgent is disposed?
-  disposeAllViews(context, internalContext);
-
-  context.clearCallRelatedState();
-  internalContext.clearCallRelatedState();
+  clearCallRelatedState(context, internalContext);
   return new Proxy(callAgent, new ProxyCallAgent(callAgent, context, internalContext)) as DeclarativeCallAgent;
 };

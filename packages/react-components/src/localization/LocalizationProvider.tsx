@@ -21,6 +21,14 @@ import {
 import { HoldButtonStrings } from '../components';
 /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
 import { DialpadStrings } from '../components';
+/* @conditional-compile-remove(call-readiness) */
+import { DomainPermissionsStrings } from '../components/DomainPermissions';
+/* @conditional-compile-remove(call-readiness) */
+import { BrowserPermissionDeniedStrings } from '../components/BrowserPermissionDenied';
+/* @conditional-compile-remove(call-readiness) */
+import { BrowserPermissionDeniedIOSStrings } from '../components/BrowserPermissionDeniedIOS';
+/* @conditional-compile-remove(call-readiness) */ /* @conditional-compile-remove(unsupported-browser) */
+import { UnsupportedBrowserStrings } from '../components/UnsupportedBrowser';
 /* @conditional-compile-remove(one-to-n-calling) */
 // @conditional-compile-remove(PSTN-calls)
 import { VideoTileStrings } from '../components/VideoTile';
@@ -84,6 +92,18 @@ export interface ComponentStrings {
   /* @conditional-compile-remove(one-to-n-calling) */ /* @condtional-compile-remove(one-to-n-calling) */
   /** Strings for HoldButton */
   holdButton: HoldButtonStrings;
+  /* @conditional-compile-remove(call-readiness) */
+  /** Strings for DomainPermissions */
+  DomainPermissions: DomainPermissionsStrings;
+  /* @conditional-compile-remove(unsupported-browser) */
+  /** Strings for unsupported browser UI */
+  UnsupportedBrowser: UnsupportedBrowserStrings;
+  /* @conditional-compile-remove(call-readiness) */
+  /** Strings for BrowserPemissionDenied */
+  BrowserPermissionDenied: BrowserPermissionDeniedStrings;
+  /* @conditional-compile-remove(call-readiness) */
+  /** Strings for BrowserPemissionDeniedIOS */
+  BrowserPermissionDeniedIOS: BrowserPermissionDeniedIOSStrings;
 }
 
 /**

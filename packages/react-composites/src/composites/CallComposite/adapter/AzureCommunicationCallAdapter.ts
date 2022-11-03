@@ -59,17 +59,16 @@ import {
 } from './CallAdapter';
 import { getCallCompositePage, isACSCallAgent, IsCallEndedPage, isCameraOn } from '../utils';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
-import { fromFlatCommunicationIdentifier, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
+import { toFlatCommunicationIdentifier, _toCommunicationIdentifier } from '@internal/acs-ui-common';
 import {
   CommunicationTokenCredential,
   CommunicationUserIdentifier,
   isCommunicationUserIdentifier,
   isPhoneNumberIdentifier,
   UnknownIdentifier,
-  PhoneNumberIdentifier
+  PhoneNumberIdentifier,
+  CommunicationIdentifier
 } from '@azure/communication-common';
-/* @conditional-compile-remove(PSTN-calls) */
-import { CommunicationIdentifier } from '@azure/communication-common';
 import { ParticipantSubscriber } from './ParticipantSubcriber';
 import { AdapterError } from '../../common/adapters';
 import { DiagnosticsForwarder } from './DiagnosticsForwarder';
@@ -130,18 +129,18 @@ class CallContext {
   }
 
   public updateClientState(clientState: CallClientState): void {
-    const call = this.callId ? clientState.calls[this.callId] : undefined;
+    let call = this.callId ? clientState.calls[this.callId] : undefined;
     const latestEndedCall = findLatestEndedCall(clientState.callsEnded);
 
     // As the state is transitioning to a new state, trigger appropriate callback events.
     const oldPage = this.state.page;
     const newPage = getCallCompositePage(call, latestEndedCall);
     if (!IsCallEndedPage(oldPage) && IsCallEndedPage(newPage)) {
-      this.emitter.emit('callEnded', {
-        callId: this.callId,
-        callEndedCode: latestEndedCall?.callEndReason?.code,
-        callEndedSubCode: latestEndedCall?.callEndReason?.subCode
-      });
+      this.emitter.emit('callEnded', { callId: this.callId });
+      // Reset the callId to undefined as the call has ended.
+      this.setCurrentCallId(undefined);
+      // Make sure that the call is set to undefined in the state.
+      call = undefined;
     }
 
     if (this.state.page) {
@@ -420,14 +419,13 @@ export class AzureCommunicationCallAdapter<
     }
   }
 
-  public async leaveCall(): Promise<void> {
-    await this.handlers.onHangUp();
+  public async leaveCall(forEveryone?: boolean): Promise<void> {
+    await this.handlers.onHangUp(forEveryone);
     this.unsubscribeCallEvents();
-    this.call = undefined;
     this.handlers = createDefaultCallingHandlers(this.callClient, this.callAgent, this.deviceManager, undefined);
-    this.context.setCurrentCallId(undefined);
-    // Resync state after callId is set
-    this.context.updateClientState(this.callClient.getState());
+    // We set the adapter.call object to undefined immediately when a call is ended.
+    // We do not set the context.callId to undefined because it is a part of the immutable data flow loop.
+    this.call = undefined;
     this.stopCamera();
     this.mute();
   }
@@ -500,7 +498,10 @@ export class AzureCommunicationCallAdapter<
     });
   }
 
-  public startCall(participants: string[], options?: StartCallOptions): CallTypeOf<AgentType> | undefined {
+  public startCall( participants:
+    | string[]
+    /* @conditional-compile-remove(PSTN-calls) */
+    | CommunicationIdentifier[],, options?: StartCallOptions): CallTypeOf<AgentType> | undefined {
     if (_isInCall(this.getState().call?.state ?? 'None')) {
       throw new Error('You are already in the call.');
     }
@@ -508,10 +509,10 @@ export class AzureCommunicationCallAdapter<
     const idsToAdd = participants.map((participant) => {
       // FIXME: `onStartCall` does not allow a Teams user.
       // Need some way to return an error if a Teams user is provided.
-      const backendId = fromFlatCommunicationIdentifier(participant);
+      const backendId: CommunicationIdentifier = _toCommunicationIdentifier(participant);
       if (isPhoneNumberIdentifier(backendId)) {
         if (options?.alternateCallerId === undefined) {
-          throw new Error('unable to start call, PSTN user present with no alternateCallerId.');
+          throw new Error('Unable to start call, PSTN user present with no alternateCallerId.');
         }
         return backendId as PhoneNumberIdentifier;
       } else if (isCommunicationUserIdentifier(backendId)) {
@@ -539,13 +540,29 @@ export class AzureCommunicationCallAdapter<
     this.subscribeCallEvents();
   }
 
-  public async removeParticipant(userId: string): Promise<void> {
-    this.handlers.onRemoveParticipant(userId);
+  public async removeParticipant(
+    userId: string | /* @conditional-compile-remove(PSTN-calls) */ CommunicationIdentifier
+  ): Promise<void> {
+    let participant = userId;
+    /* @conditional-compile-remove(PSTN-calls) */
+    participant = _toCommunicationIdentifier(userId);
+    this.handlers.onRemoveParticipant(participant);
   }
 
   /* @conditional-compile-remove(PSTN-calls) */
-  public async addParticipant(participant: CommunicationIdentifier, options?: AddPhoneNumberOptions): Promise<void> {
-    this.handlers.onAddParticipant(participant, options);
+  public async addParticipant(participant: PhoneNumberIdentifier, options?: AddPhoneNumberOptions): Promise<void>;
+  /* @conditional-compile-remove(PSTN-calls) */
+  public async addParticipant(participant: CommunicationUserIdentifier): Promise<void>;
+  /* @conditional-compile-remove(PSTN-calls) */
+  public async addParticipant(
+    participant: PhoneNumberIdentifier | CommunicationUserIdentifier,
+    options?: AddPhoneNumberOptions
+  ): Promise<void> {
+    if (isPhoneNumberIdentifier(participant) && options) {
+      this.handlers.onAddParticipant(participant, options);
+    } else if (isCommunicationUserIdentifier(participant)) {
+      this.handlers.onAddParticipant(participant);
+    }
   }
 
   /* @conditional-compile-remove(PSTN-calls) */

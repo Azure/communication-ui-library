@@ -1,43 +1,29 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import {
-  Call,
-  CallAgent,
-  CallCommon,
-  CallEndReason,
-  CollectionUpdatedEvent,
-  IncomingCall,
-  TeamsCall,
-  TeamsCallAgent,
-  TeamsIncomingCall
-} from '@azure/communication-calling';
+import { Call, CallAgent, CallEndReason, CollectionUpdatedEvent } from '@azure/communication-calling';
+/* @conditional-compile-remove(teams-identity-support) */
+import { TeamsCallAgent } from '@azure/communication-calling';
 import { CallContext } from './CallContext';
-import { callDeclaratify, DeclarativeCall } from './CallDeclarative';
+import { DeclarativeCall } from './CallDeclarative';
 import { CallSubscriber } from './CallSubscriber';
-import {
-  convertSdkCallToDeclarativeCall,
-  convertSdkIncomingCallToDeclarativeIncomingCall,
-  isACSCall,
-  isACSCallAgent
-} from './Converter';
+import { convertSdkCallToDeclarativeCall, convertSdkIncomingCallToDeclarativeIncomingCall } from './Converter';
 import { DeclarativeIncomingCall, incomingCallDeclaratify } from './IncomingCallDeclarative';
 import { IncomingCallSubscriber } from './IncomingCallSubscriber';
 import { InternalCallContext } from './InternalCallContext';
-import { disposeAllViewsFromCall } from './StreamUtils';
-import { teamsCallDeclaratify } from './TeamsCallDeclarative';
+import { CallAgentCommon, CallCommon, IncomingCallCommon } from './BetaToStableTypes';
+import { disposeAllViews, disposeAllViewsFromCall } from './StreamUtils';
 
 /**
- * TODO: This should likely be exported?
  *
  * @private
  */
-export interface DeclarativeCallCommon extends CallCommon {
+export type DeclarativeCallCommon = CallCommon & {
   /**
    * Stop any declarative specific subscriptions and remove declarative subscribers.
    */
   unsubscribe(): void;
-}
+};
 
 /**
  * ProxyCallAgent proxies CallAgent and saves any returned state in the given context. It will subscribe to all state
@@ -50,7 +36,7 @@ export abstract class ProxyCallAgentCommon {
   private _callSubscribers: Map<CallCommon, CallSubscriber>;
   private _incomingCallSubscribers: Map<string, IncomingCallSubscriber>;
   private _declarativeIncomingCalls: Map<string, DeclarativeIncomingCall>;
-  private _declarativeCalls: Map<CallCommon, DeclarativeCall>;
+  private _declarativeCalls: Map<CallCommon, DeclarativeCallCommon>;
   private _externalCallsUpdatedListeners: Set<CollectionUpdatedEvent<CallCommon>>;
 
   constructor(context: CallContext, internalContext: InternalCallContext) {
@@ -62,8 +48,6 @@ export abstract class ProxyCallAgentCommon {
     this._declarativeCalls = new Map<Call, DeclarativeCall>();
     this._externalCallsUpdatedListeners = new Set<CollectionUpdatedEvent<CallCommon>>();
   }
-
-  protected abstract subscribe(): void;
 
   // Unsubscribe is called when CallAgent is disposed. This should mean no more updating of existing call but we don't
   // remove any existing state.
@@ -87,7 +71,9 @@ export abstract class ProxyCallAgentCommon {
 
   protected abstract unsubscribe(): void;
 
-  protected callsUpdated = (event: { added: (TeamsCall | Call)[]; removed: (TeamsCall | Call)[] }): void => {
+  protected abstract callDeclaratify(call: CallCommon, context: CallContext): DeclarativeCallCommon;
+
+  protected callsUpdated = (event: { added: CallCommon[]; removed: CallCommon[] }): void => {
     const addedStatefulCall: DeclarativeCallCommon[] = [];
     for (const call of event.added) {
       const statefulCall = this.addCall(call);
@@ -108,11 +94,7 @@ export abstract class ProxyCallAgentCommon {
         removedStatefulCall.push(declarativeCall);
         this._declarativeCalls.delete(call);
       } else {
-        if (isACSCall(call)) {
-          removedStatefulCall.push(callDeclaratify(call, this._context));
-        } else {
-          removedStatefulCall.push(teamsCallDeclaratify(call, this._context));
-        }
+        removedStatefulCall.push(this.callDeclaratify(call, this._context));
       }
     }
 
@@ -131,7 +113,7 @@ export abstract class ProxyCallAgentCommon {
     this._context.setIncomingCallEnded(incomingCallId, callEndReason);
   };
 
-  protected incomingCall = ({ incomingCall }: { incomingCall: TeamsIncomingCall | IncomingCall }): void => {
+  protected incomingCall = ({ incomingCall }: { incomingCall: IncomingCallCommon }): void => {
     // Make sure to not subscribe to the incoming call if we are already subscribed to it.
     if (!this._incomingCallSubscribers.has(incomingCall.id)) {
       this._incomingCallSubscribers.set(
@@ -143,7 +125,7 @@ export abstract class ProxyCallAgentCommon {
     this._context.setIncomingCall(convertSdkIncomingCallToDeclarativeIncomingCall(incomingCall));
   };
 
-  protected addCall = (call: TeamsCall | Call): DeclarativeCallCommon => {
+  protected addCall = (call: CallCommon): DeclarativeCallCommon => {
     this._callSubscribers.get(call)?.unsubscribe();
 
     // For API extentions we need to have the call in the state when we are subscribing as we may want to update the
@@ -153,46 +135,40 @@ export abstract class ProxyCallAgentCommon {
     return this.getOrCreateDeclarativeCall(call);
   };
 
-  private getOrCreateDeclarativeCall = (call: TeamsCall | Call): DeclarativeCallCommon => {
+  private getOrCreateDeclarativeCall = (call: CallCommon): DeclarativeCallCommon => {
     const declarativeCall = this._declarativeCalls.get(call);
     if (declarativeCall) {
       return declarativeCall;
     }
 
-    const newDeclarativeCall = isACSCall(call)
-      ? callDeclaratify(call, this._context)
-      : teamsCallDeclaratify(call, this._context);
-    this._declarativeCalls.set(call, newDeclarativeCall as DeclarativeCall);
+    const newDeclarativeCall = this.callDeclaratify(call, this._context);
+    this._declarativeCalls.set(call, newDeclarativeCall);
     return newDeclarativeCall;
   };
 
-  public getCommon<AgentType extends CallAgent | TeamsCallAgent, P extends keyof CallAgent>(
-    target: AgentType,
-    prop: P
-  ): any {
+  // args could be either from teamsCall or Call, set it as unknown and cast it in child class later
+  protected abstract startCall(agent: CallAgentCommon, args: unknown[]): CallCommon;
+  protected abstract joinCall(agent: CallAgentCommon, args: unknown[]): CallCommon;
+  protected abstract agentSubscribe(agent: CallAgentCommon, args: unknown[]): void;
+  protected abstract agentUnsubscribe(agent: CallAgentCommon, args: unknown[]): void;
+
+  // We can't directly override get function because it is proxied,
+  // Add a getCommon function and call it in child class
+  protected getCommon<
+    AgentType extends CallAgent | /* @conditional-compile-remove(teams-identity-support) */ TeamsCallAgent,
+    P extends keyof CallAgent
+  >(target: AgentType, prop: P): any {
     switch (prop) {
       case 'startCall': {
         return this._context.withErrorTeedToState((...args: Parameters<AgentType['startCall']>): CallCommon => {
-          let call: TeamsCall | Call;
-          if (isACSCallAgent(target)) {
-            call = (target as CallAgent).startCall(...(args as Parameters<CallAgent['startCall']>));
-          } else {
-            call = (target as TeamsCallAgent).startCall(...(args as Parameters<TeamsCallAgent['startCall']>));
-          }
-
+          const call = this.startCall(target, args);
           this.addCall(call);
           return this.getOrCreateDeclarativeCall(call);
         }, 'CallAgent.startCall');
       }
       case 'join': {
         return this._context.withErrorTeedToState((...args: Parameters<AgentType['join']>): CallCommon => {
-          let call: TeamsCall | Call;
-          if (isACSCallAgent(target)) {
-            call = (target as CallAgent).join(...(args as Parameters<CallAgent['join']>));
-          } else {
-            call = (target as TeamsCallAgent).join(...(args as Parameters<TeamsCallAgent['join']>));
-          }
-
+          const call = this.joinCall(target, args);
           this.addCall(call);
           return this.getOrCreateDeclarativeCall(call);
         }, 'CallAgent.join');
@@ -207,11 +183,7 @@ export abstract class ProxyCallAgentCommon {
             const listener = args[1];
             this._externalCallsUpdatedListeners.add(listener as CollectionUpdatedEvent<CallCommon>);
           } else {
-            if (isACSCallAgent(target)) {
-              (target as CallAgent).on(...(args as Parameters<CallAgent['on']>));
-            } else {
-              (target as TeamsCallAgent).on(...(args as Parameters<TeamsCallAgent['on']>));
-            }
+            this.agentSubscribe(target, args);
           }
         };
       }
@@ -222,18 +194,26 @@ export abstract class ProxyCallAgentCommon {
             const listener = args[1];
             this._externalCallsUpdatedListeners.delete(listener as CollectionUpdatedEvent<CallCommon>);
           } else {
-            if (isACSCallAgent(target)) {
-              (target as CallAgent).off(...(args as Parameters<CallAgent['off']>));
-            } else {
-              (target as TeamsCallAgent).off(...(args as Parameters<TeamsCallAgent['off']>));
-            }
+            this.agentUnsubscribe(target, args);
           }
         };
       }
       case 'dispose': {
-        return async (): Promise<void> => {
+        /* @conditional-compile-remove(calling-beta-sdk) */
+        return (): void => {
           target.dispose();
           this.unsubscribe();
+        };
+        // Wrapping CallAgent.dispose in a callback type (): Promise<void> to accomodate the change of CallAgent.dispose
+        // in calling beta version 1.8.0-beta.1 from callback type (): Promise<void> to (): void
+        const callAgentDisposeAsyncCallbackWrapper = async (): Promise<void> => {
+          await target.dispose();
+          return Promise.resolve();
+        };
+        return (): Promise<void> => {
+          return callAgentDisposeAsyncCallbackWrapper().then(() => {
+            this.unsubscribe();
+          });
         };
       }
       /**
@@ -253,3 +233,16 @@ export abstract class ProxyCallAgentCommon {
     }
   }
 }
+
+/**
+ * @private
+ */
+export const clearCallRelatedState = (context: CallContext, internalContext: InternalCallContext): void => {
+  // Make sure there are no existing call data if creating a new CallAgentDeclarative (if creating a new
+  // CallAgentDeclarative after disposing of the hold one will mean context have old call state). TODO: should we stop
+  // rendering when the previous callAgent is disposed?
+  disposeAllViews(context, internalContext);
+
+  context.clearCallRelatedState();
+  internalContext.clearCallRelatedState();
+};

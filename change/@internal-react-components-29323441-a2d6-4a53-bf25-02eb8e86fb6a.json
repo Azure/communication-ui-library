@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "updated placeholder text for dialpad",
-  "packageName": "@internal/react-components",
-  "email": "carolinecao@microsoft.com",
-  "dependentChangeType": "patch"
-}

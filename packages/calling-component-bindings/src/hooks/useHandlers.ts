@@ -2,8 +2,8 @@
 // Licensed under the MIT license.
 
 import { ReactElement, useContext } from 'react';
-import { StatefulCallClient } from '@internal/calling-stateful-client';
-import { createDefaultCallingHandlersForComponent, isACSCall, isACSCallAgent } from '../handlers/createHandlers';
+import { isACSCall, isACSCallAgent, StatefulCallClient } from '@internal/calling-stateful-client';
+import { createDefaultCallingHandlersForComponent } from '../handlers/createHandlers';
 import { CallAgentContext, CallClientContext, CallContext, useDeviceManager } from '../providers';
 
 /**

@@ -2,22 +2,14 @@
 // Licensed under the MIT license.
 
 import {
-  Call as SdkCall,
   RemoteParticipant as SdkRemoteParticipant,
   RemoteVideoStream as SdkRemoteVideoStream,
   LocalVideoStream as SdkLocalVideoStream,
-  IncomingCall as SdkIncomingCall,
-  VideoStreamRendererView,
-  Call,
-  CallAgent,
-  /* @conditional-compile-remove(teams-call) */
-  TeamsCall,
-  /* @conditional-compile-remove(teams-call) */
-  TeamsIncomingCall,
-  /* @conditional-compile-remove(teams-call) */
-  TeamsCallAgent
+  VideoStreamRendererView
 } from '@azure/communication-calling';
+
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
+import { CallCommon, IncomingCallCommon } from './BetaToStableTypes';
 import {
   CallState,
   RemoteParticipantState as DeclarativeRemoteParticipant,
@@ -26,6 +18,8 @@ import {
   IncomingCallState as DeclarativeIncomingCall,
   VideoStreamRendererViewState as DeclarativeVideoStreamRendererView
 } from './CallClientState';
+/* @conditional-compile-remove(teams-identity-support) */
+import { isACSCall } from './TypeGuards';
 
 /**
  * @private
@@ -82,9 +76,7 @@ export function convertSdkParticipantToDeclarativeParticipant(
  *
  * Note at the time of writing only one LocalVideoStream is supported by the SDK.
  */
-export function convertSdkCallToDeclarativeCall(
-  call: SdkCall | /* @conditional-compile-remove(teams-call) */ TeamsCall
-): CallState {
+export function convertSdkCallToDeclarativeCall(call: CallCommon): CallState {
   const declarativeRemoteParticipants = {};
   call.remoteParticipants.forEach((participant: SdkRemoteParticipant) => {
     declarativeRemoteParticipants[toFlatCommunicationIdentifier(participant.identifier)] =
@@ -92,6 +84,7 @@ export function convertSdkCallToDeclarativeCall(
   });
   return {
     id: call.id,
+    /* @conditional-compile-remove(teams-identity-support) */
     type: isACSCall(call) ? 'ACS' : 'Teams',
     callerInfo: call.callerInfo,
     state: call.state,
@@ -114,16 +107,16 @@ export function convertSdkCallToDeclarativeCall(
     transcription: { isTranscriptionActive: false },
     screenShareRemoteParticipant: undefined,
     startTime: new Date(),
-    endTime: undefined
+    endTime: undefined,
+    /* @conditional-compile-remove(rooms) */
+    role: call.role
   };
 }
 
 /**
  * @private
  */
-export function convertSdkIncomingCallToDeclarativeIncomingCall(
-  call: SdkIncomingCall | /* @conditional-compile-remove(teams-call) */ TeamsIncomingCall
-): DeclarativeIncomingCall {
+export function convertSdkIncomingCallToDeclarativeIncomingCall(call: IncomingCallCommon): DeclarativeIncomingCall {
   return {
     id: call.id,
     callerInfo: call.callerInfo,
@@ -144,19 +137,3 @@ export function convertFromSDKToDeclarativeVideoStreamRendererView(
     target: view.target
   };
 }
-
-/**
- * @private
- */
-export const isACSCall = (call: Call | /* @conditional-compile-remove(teams-call) */ TeamsCall): call is Call => {
-  return call.kind === 'Call';
-};
-
-/**
- * @private
- */
-export const isACSCallAgent = (
-  callAgent: CallAgent | /* @conditional-compile-remove(teams-call) */ TeamsCallAgent
-): callAgent is CallAgent => {
-  return callAgent.kind === 'CallAgent';
-};

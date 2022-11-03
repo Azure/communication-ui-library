@@ -64,3 +64,44 @@ describe('CallComposite device permission test for different roles', () => {
     expect(videoDevicePermissionRequests).toBe(0);
   });
 });
+
+describe('CallComposite device permission test for call readiness opted in/opted out', () => {
+  let audioDevicePermissionRequests = 0;
+  let videoDevicePermissionRequests = 0;
+
+  const countDevicePermissionRequests = async (constrain: { audio: boolean; video: boolean }): Promise<void> => {
+    if (constrain.video) {
+      videoDevicePermissionRequests++;
+    }
+    if (constrain.audio) {
+      audioDevicePermissionRequests++;
+    }
+  };
+  const adapter = new MockCallAdapter({ askDevicePermission: countDevicePermissionRequests });
+
+  beforeEach(() => {
+    // Register icons used in CallComposite to avoid warnings
+    registerIcons({
+      icons: {
+        chevrondown: <></>
+      }
+    });
+
+    // Reset permission request counters to 0
+    audioDevicePermissionRequests = 0;
+    videoDevicePermissionRequests = 0;
+  });
+
+  test('Audio and video device permission should be requested when no devicePermission prompt is set', async () => {
+    mount(<CallComposite adapter={adapter} />);
+    expect(audioDevicePermissionRequests).toBe(1);
+    expect(videoDevicePermissionRequests).toBe(1);
+  });
+
+  /* @conditional-compile-remove(call-readiness) */
+  test('Audio and video device permission should not be requested when callreadiness option opted in', async () => {
+    mount(<CallComposite adapter={adapter} options={{ callReadinessOptedIn: true }} />);
+    expect(audioDevicePermissionRequests).toBe(0);
+    expect(videoDevicePermissionRequests).toBe(0);
+  });
+});

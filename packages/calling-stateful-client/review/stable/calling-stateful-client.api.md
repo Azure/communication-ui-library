@@ -5,6 +5,7 @@
 ```ts
 
 import { AudioDeviceInfo } from '@azure/communication-calling';
+import { Call } from '@azure/communication-calling';
 import { CallAgent } from '@azure/communication-calling';
 import { CallClient } from '@azure/communication-calling';
 import { CallClientOptions } from '@azure/communication-calling';
@@ -32,6 +33,11 @@ import { VideoDeviceInfo } from '@azure/communication-calling';
 import { VideoStreamRenderer } from '@azure/communication-calling';
 import { VideoStreamRendererView } from '@azure/communication-calling';
 
+// Warning: (ae-internal-missing-underscore) The name "CallAgentCommon" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
+export type CallAgentCommon = CallAgent;
+
 // @public
 export interface CallAgentState {
     displayName?: string;
@@ -56,6 +62,11 @@ export interface CallClientState {
     latestErrors: CallErrors;
     userId: CommunicationIdentifierKind;
 }
+
+// Warning: (ae-internal-missing-underscore) The name "CallCommon" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
+export type CallCommon = Call;
 
 // @public
 export class CallError extends Error {
@@ -108,9 +119,6 @@ export type CreateViewResult = {
 };
 
 // @public
-export type DeclarativeCallAgent = CallAgent;
-
-// @public
 export type DeviceManagerState = {
     isSpeakerSelectionAvailable: boolean;
     selectedMicrophone?: AudioDeviceInfo;
@@ -137,6 +145,26 @@ export interface IncomingCallState {
     id: string;
     startTime: Date;
 }
+
+// Warning: (ae-internal-missing-underscore) The name "isACSCall" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
+export const isACSCall: (call: CallCommon) => call is Call;
+
+// Warning: (ae-internal-missing-underscore) The name "isACSCallAgent" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
+export const isACSCallAgent: (callAgent: CallAgentCommon) => callAgent is CallAgent;
+
+// Warning: (ae-internal-missing-underscore) The name "isTeamsCall" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
+export const isTeamsCall: (call: CallCommon) => call is never;
+
+// Warning: (ae-internal-missing-underscore) The name "isTeamsCallAgent" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
+export const isTeamsCallAgent: (callAgent: CallAgentCommon) => callAgent is never;
 
 // @public
 export interface LocalVideoStreamState {
@@ -185,7 +213,6 @@ export interface RemoteVideoStreamState {
 
 // @public
 export interface StatefulCallClient extends CallClient {
-    createCallAgent(...args: Parameters<CallClient['createCallAgent']>): Promise<DeclarativeCallAgent>;
     createView(callId: string | undefined, participantId: CommunicationIdentifier | undefined, stream: LocalVideoStreamState | RemoteVideoStreamState, options?: CreateViewOptions): Promise<CreateViewResult | undefined>;
     disposeView(callId: string | undefined, participantId: CommunicationIdentifier | undefined, stream: LocalVideoStreamState | RemoteVideoStreamState): void;
     getState(): CallClientState;

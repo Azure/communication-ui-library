@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Introduce resuming state for the holdPane screen in the Calling Composite.",
-  "packageName": "@internal/react-composites",
-  "email": "94866715+dmceachernmsft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

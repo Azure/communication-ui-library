@@ -1,7 +1,0 @@
-{
-  "type": "minor",
-  "comment": "changes for removing participant list button permissions and added permissions for remove participant",
-  "packageName": "@internal/react-components",
-  "email": "97124699+prabhjot-msft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

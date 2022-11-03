@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "videoGallerySelector returns remote participants with their call connection state",
-  "packageName": "@internal/calling-component-bindings",
-  "email": "anjulgarg@live.com",
-  "dependentChangeType": "patch"
-}

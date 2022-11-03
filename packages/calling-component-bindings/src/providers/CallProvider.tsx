@@ -2,14 +2,16 @@
 // Licensed under the MIT license.
 
 import React, { useContext, createContext } from 'react';
-import { Call, /* @conditional-compile-remove(teams-call) */ TeamsCall } from '@azure/communication-calling';
-import { isACSCall } from '../handlers/createHandlers';
+import { Call } from '@azure/communication-calling';
+/* @conditional-compile-remove(teams-identity-support) */
+import { TeamsCall } from '@azure/communication-calling';
+import { isACSCall } from '@internal/calling-stateful-client';
 
 /**
  * @private
  */
 export type CallContextType = {
-  call: Call | /* @conditional-compile-remove(teams-call) */ TeamsCall | undefined;
+  call: Call | /* @conditional-compile-remove(teams-identity-support) */ TeamsCall | undefined;
 };
 
 /**
@@ -19,7 +21,7 @@ export type CallContextType = {
  */
 export interface CallProviderProps {
   children: React.ReactNode;
-  call?: Call | /* @conditional-compile-remove(teams-call) */ TeamsCall;
+  call?: Call | /* @conditional-compile-remove(teams-identity-support) */ TeamsCall;
 }
 
 /**
@@ -65,6 +67,7 @@ export const useCall = (): Call | undefined => {
   return call;
 };
 
+/* @conditional-compile-remove(teams-identity-support) */
 /**
  * Hook to obtain {@link @azure/communication-calling#TeamsCall} from the provider.
  *
@@ -73,7 +76,7 @@ export const useCall = (): Call | undefined => {
  *
  * @public
  */
-export const useTeamsCall = (): /* @conditional-compile-remove(teams-call) */ TeamsCall | undefined => {
+export const useTeamsCall = (): undefined | /* @conditional-compile-remove(teams-identity-support) */ TeamsCall => {
   const call = useContext(CallContext)?.call;
   if (call && isACSCall(call)) {
     throw new Error('Regular ACS Call object was provided, try useCall() instead');

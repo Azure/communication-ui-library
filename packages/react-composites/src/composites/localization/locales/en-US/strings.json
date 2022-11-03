@@ -36,8 +36,12 @@
     "mutedMessage": "You're muted",
     "networkReconnectMoreDetails": "Looks like something went wrong. We're trying to get back into the call.",
     "networkReconnectTitle": "Hold on",
+    "deniedPermissionToRoomDetails": "You do not have permission to join this room.",
+    "deniedPermissionToRoomTitle": "Permission denied to room",
     "peopleButtonLabel": "People",
     "peoplePaneTitle": "People",
+    "peopleButtonTooltipOpen": "Show participants",
+    "peopleButtonTooltipClose": "Hide participants",
     "peoplePaneSubTitle": "In this call",
     "privacyPolicy": "Privacy policy",
     "rejoinCallButtonLabel": "Re-join call",
@@ -46,6 +50,8 @@
     "removeMenuLabel": "Remove",
     "returnToCallButtonAriaDescription": "Return to Call",
     "returnToCallButtonAriaLabel": "Back",
+    "roomNotFoundDetails": "Room ID provided is not valid.",
+    "roomNotFoundTitle": "Room not found",
     "soundLabel": "Sound",
     "startCallButtonLabel": "Start call",
     "openDialpadButtonLabel": "Dial phone number",
@@ -61,7 +67,8 @@
     "resumingCallButtonAriaLabel": "Resume call",
     "holdScreenLabel": "You're on hold",
     "openDtmfDialpadLabel": "Show dialpad",
-    "dtmfDialpadPlaceHolderText": "Enter number"
+    "dtmfDialpadPlaceholderText": "Enter number",
+    "outboundCallingNoticeString": "Calling..."
   },
   "chat": {
     "chatListHeader": "In this chat",
@@ -98,6 +105,6 @@
     "dialpadModalAriaLabel": "Dialpad",
     "dialpadCloseModalButtonAriaLabel": "Close dialpad",
     "openDtmfDialpadLabel": "Show dialpad",
-    "dtmfDialpadPlaceHolderText": "Enter number"
+    "dtmfDialpadPlaceholderText": "Enter number"
   }
 }

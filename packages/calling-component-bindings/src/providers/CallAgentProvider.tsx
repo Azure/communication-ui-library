@@ -1,15 +1,17 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { CallAgent, /* @conditional-compile-remove(teams-call) */ TeamsCallAgent } from '@azure/communication-calling';
+import { CallAgent } from '@azure/communication-calling';
+/* @conditional-compile-remove(teams-identity-support) */
+import { TeamsCallAgent } from '@azure/communication-calling';
+import { isACSCallAgent } from '@internal/calling-stateful-client';
 import React, { createContext, useContext } from 'react';
-import { isACSCallAgent } from '../handlers/createHandlers';
 
 /**
  * @private
  */
 export type CallAgentContextType = {
-  callAgent: CallAgent | /* @conditional-compile-remove(teams-call) */ TeamsCallAgent | undefined;
+  callAgent: CallAgent | /* @conditional-compile-remove(teams-identity-support) */ TeamsCallAgent | undefined;
 };
 
 /**
@@ -24,7 +26,7 @@ export const CallAgentContext = createContext<CallAgentContextType | undefined>(
  */
 export interface CallAgentProviderProps {
   children: React.ReactNode;
-  callAgent?: CallAgent | /* @conditional-compile-remove(teams-call) */ TeamsCallAgent;
+  callAgent?: CallAgent | /* @conditional-compile-remove(teams-identity-support) */ TeamsCallAgent;
 }
 
 const CallAgentProviderBase = (props: CallAgentProviderProps): JSX.Element => {
@@ -70,7 +72,9 @@ export const useCallAgent = (): CallAgent | undefined => {
  *
  * @beta
  */
-export const useTeamsCallAgent = (): /* @conditional-compile-remove(teams-call) */ TeamsCallAgent | undefined => {
+export const useTeamsCallAgent = ():
+  | undefined
+  | /* @conditional-compile-remove(teams-identity-support) */ TeamsCallAgent => {
   const callAgent = useContext(CallAgentContext)?.callAgent;
   if (callAgent && isACSCallAgent(callAgent)) {
     throw new Error('Regular CallAgent object was provided, try useCall() instead');

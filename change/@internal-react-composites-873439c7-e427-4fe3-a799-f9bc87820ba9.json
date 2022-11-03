@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Update adhoc call work for making PSTN and 1:N calls.",
-  "packageName": "@internal/react-composites",
-  "email": "94866715+dmceachernmsft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

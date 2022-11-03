@@ -5,7 +5,10 @@
     "removeButtonLabel": "Rimuovi",
     "sharingIconLabel": "Condivisione",
     "mutedIconLabel": "Disattivato",
-    "displayNamePlaceholder": "Partecipante senza nome"
+    "displayNamePlaceholder": "Partecipante senza nome",
+    "participantStateConnecting": "Chiamata in corso...",
+    "participantStateRinging": "Chiamata in corso...",
+    "participantStateHold": "Per l'attesa"
   },
   "typingIndicator": {
     "singleUser": "{user} sta scrivendo ...",
@@ -18,7 +21,10 @@
     "placeholderText": "Immetti un messaggio",
     "textTooLong": "La lunghezza del messaggio supera il limite massimo.",
     "sendButtonAriaLabel": "Invio messaggio",
-    "fileUploadsPendingError": "Caricamento in corso... Attendere."
+    "fileUploadsPendingError": "Caricamento in corso... Attendere.",
+    "removeFile": "Rimuovi file",
+    "uploading": "Caricamento in corso",
+    "uploadCompleted": "Caricamento completato"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "Il messaggio è stato inviato",
@@ -43,7 +49,7 @@
     "tooltipOffContent": "Accendi la videocamera",
     "tooltipVideoLoadingContent": "Il video è in corso di caricamento",
     "cameraMenuTitle": "Fotocamera",
-    "cameraMenuTooltip": "Scegli la fotocamera",
+    "cameraMenuTooltip": "Scegli fotocamera",
     "cameraButtonSplitRoleDescription": "Pulsante di menu combinato",
     "onSplitButtonAriaLabel": "Disattiva fotocamera e le opzioni della fotocamera",
     "offSplitButtonAriaLabel": "Attiva fotocamera e le opzioni della fotocamera",
@@ -57,9 +63,9 @@
     "tooltipOnContent": "Disattiva microfono",
     "tooltipOffContent": "Riattiva microfono",
     "microphoneMenuTitle": "Microfono",
-    "microphoneMenuTooltip": "Scegli il microfono",
+    "microphoneMenuTooltip": "Scegli microfono",
     "speakerMenuTitle": "Altoparlante",
-    "speakerMenuTooltip": "Scegli l’altoparlante",
+    "speakerMenuTooltip": "Scegli altoparlante",
     "microphoneButtonSplitRoleDescription": "Pulsante di menu combinato",
     "onSplitButtonAriaLabel": "Disattiva microfono e opzioni audio",
     "offSplitButtonAriaLabel": "Attiva microfono e opzioni audio",
@@ -70,13 +76,13 @@
     "label": "Dispositivi",
     "tooltipContent": "Gestisci dispositivi",
     "cameraMenuTitle": "Fotocamera",
-    "cameraMenuTooltip": "Scegli la fotocamera",
+    "cameraMenuTooltip": "Scegli fotocamera",
     "audioDeviceMenuTitle": "Dispositivo audio",
     "audioDeviceMenuTooltip": "Scegli dispositivo audio",
     "microphoneMenuTitle": "Microfono",
-    "microphoneMenuTooltip": "Scegli il microfono",
+    "microphoneMenuTooltip": "Scegli microfono",
     "speakerMenuTitle": "Altoparlante",
-    "speakerMenuTooltip": "Scegli l’altoparlante"
+    "speakerMenuTooltip": "Scegli altoparlante"
   },
   "participantsButton": {
     "label": "Persone",
@@ -110,6 +116,8 @@
     "failToSendTag": "Invio non riuscito",
     "editedTag": "Modificato",
     "liveAuthorIntro": "{author} dice",
+    "messageContentAriaText": "{author} ha detto {message}",
+    "messageContentMineAriaText": "Hai detto {message}",
     "editBoxTextLimit": "Il messaggio ha superato il limite di caratteri {limitNumber}",
     "editBoxPlaceholderText": "Modifica il messaggio",
     "newMessagesIndicator": "Nuovi messaggi",
@@ -117,7 +125,8 @@
     "editBoxCancelButton": "Annulla",
     "editBoxSubmitButton": "Invia",
     "messageReadCount": "Letto da {messageReadByCount} di {remoteParticipantsCount}",
-    "actionMenuMoreOptions": "Altre opzioni"
+    "actionMenuMoreOptions": "Altre opzioni",
+    "downloadFile": "Scarica file"
   },
   "errorBar": {
     "unableToReachChatService": "Sei offline",
@@ -138,10 +147,13 @@
     "callNoMicrophoneFound": "Nessun microfono trovato. Connetti un dispositivo di input audio.",
     "callMicrophoneAccessDenied": "Impossibile accedere al microfono. Fare clic sul blocco nella barra degli indirizzi per concedere l'autorizzazione a questa pagina Web.",
     "callMicrophoneMutedBySystem": "Il sistema disattiva l'audio.",
+    "callMicrophoneUnmutedBySystem": "Il microfono è stato ripristinato e il sistema ha riattivato l'audio.",
     "callMacOsMicrophoneAccessDenied": "Impossibile accedere al microfono. Concedi l'autorizzazione al microfono nelle impostazioni di privacy di macOS.",
     "callLocalVideoFreeze": "Larghezza di banda di rete insufficiente. Il video potrebbe essere sospeso per gli altri partecipanti alla chiamata.",
     "callCameraAccessDenied": "Non è possibile accedere alla fotocamera. Fare clic sul blocco nella barra degli indirizzi per concedere l'autorizzazione a questa pagina Web.",
     "callCameraAlreadyInUse": "Non è possibile accedere alla fotocamera. Potrebbe essere già in uso da un'altra applicazione.",
+    "callVideoStoppedBySystem": "Il video è stato arrestato dal sistema.",
+    "callVideoRecoveredBySystem": "Il video è ripreso.",
     "callMacOsCameraAccessDenied": "MacOS sta bloccando l'accesso alla fotocamera. Aggiorna le impostazioni di privacy per consentire a questo browser di accedere alla fotocamera.",
     "callMacOsScreenShareAccessDenied": "MacOS sta bloccando la condivisione dello schermo. Aggiorna le impostazioni di privacy per consentire a questo browser di registrare lo schermo.",
     "dismissButtonAriaLabel": "Chiudi",
@@ -158,12 +170,50 @@
     "displayNamePlaceholder": "Partecipante senza nome"
   },
   "dialpad": {
-    "placeholderText": "Inserisci un numero"
+    "placeholderText": "Inserisci numero di telefono",
+    "deleteButtonAriaLabel": "Elimina"
   },
-  "HoldButton": {
+  "holdButton": {
     "onLabel": "Riprendi",
     "offLabel": "Mantenere",
-    "toolTipOnContent": "Riprendi chiamata",
-    "toolTipOffContent": "Metti in attesa chiamata"
+    "tooltipOnContent": "Riprendi chiamata",
+    "tooltipOffContent": "Metti in attesa chiamata"
+  },
+  "videoTile": {
+    "participantStateConnecting": "Chiamata in corso...",
+    "participantStateRinging": "Chiamata in corso...",
+    "participantStateHold": "Per l'attesa"
+  },
+  "DomainPermissions": {
+    "primaryText": "Consenti a {appName} di usare la fotocamera e il microfono",
+    "secondaryText": "In questo modo i partecipanti possono vederti e sentirti.",
+    "linkText": "Serve aiuto? Guida alla risoluzione dei problemi",
+    "primaryButtonText": "Consenti l'accesso"
+  },
+  "UnsupportedBrowser": {
+    "primaryText": "Browser non supportato",
+    "secondaryText": "Partecipa alla chiamata utilizzando un browser compatibile.",
+    "moreHelpLink": "Ulteriore assistenza"
+  },
+  "BrowserPermissionDenied": {
+    "primaryText": "Non è possibile usare la fotocamera o il microfono",
+    "secondaryText": "Il browser potrebbe non avere accesso alla fotocamera o al microfono. Per risolvere il problema, aprire Preferenze di sistema.",
+    "primaryButtonText": "Riprova",
+    "linkText": "Serve aiuto? Guida alla risoluzione dei problemi"
+  },
+  "BrowserPermissionDeniedIOS": {
+    "primaryText": "Consenti l'accesso al microfono per continuare",
+    "secondaryText": "Così gli altri partecipanti possono sentirti.",
+    "primaryButtonText": "Riprova",
+    "imageAltText": "Posizione dell'autorizzazione del microfono e della fotocamera per iOS",
+    "linkText": "Serve aiuto? Guida alla risoluzione dei problemi",
+    "step1Text": "Vai alle impostazioni dell'app",
+    "step2Text": "Scorri verso il basso fino alle impostazioni per questo browser",
+    "step3Text": "Attiva microfono (fotocamera facoltativa)",
+    "step4Text": "Prova a partecipare di nuovo alla chiamata",
+    "step1DigitText": "1",
+    "step2DigitText": "2",
+    "step3DigitText": "3",
+    "step4DigitText": "4"
   }
 }

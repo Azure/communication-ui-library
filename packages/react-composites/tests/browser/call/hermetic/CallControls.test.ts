@@ -5,6 +5,7 @@ import { buildUrlWithMockAdapter, defaultMockCallAdapterState, defaultMockRemote
 import { expect } from '@playwright/test';
 import { dataUiId, stableScreenshot, waitForSelector } from '../../common/utils';
 import { IDS } from '../../common/constants';
+import type { CallCompositeOptions } from '../../../../src';
 
 test.describe('CallControls tests', async () => {
   test('CallControls when number of mics drops to zero', async ({ page, serverUrl }) => {
@@ -29,5 +30,31 @@ test.describe('Call composite custom button injection tests', () => {
     const initialState = defaultMockCallAdapterState([defaultMockRemoteParticipant('Paul Bridges')]);
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { injectCustomButtons: 'true' }));
     expect(await stableScreenshot(page)).toMatchSnapshot(`custom-buttons.png`);
+  });
+});
+
+test.describe('Call composite custom call control options tests', () => {
+  test('Control bar buttons correctly show as compact with camera disabled and end call button hidden', async ({
+    page,
+    serverUrl
+  }) => {
+    const initialState = defaultMockCallAdapterState([defaultMockRemoteParticipant('Paul Bridges')]);
+    const testOptions: CallCompositeOptions = {
+      callControls: {
+        displayType: 'compact',
+        cameraButton: {
+          disabled: true
+        },
+        microphoneButton: true,
+        endCallButton: false,
+        devicesButton: undefined
+      }
+    };
+    await page.goto(
+      buildUrlWithMockAdapter(serverUrl, initialState, {
+        customCallCompositeOptions: JSON.stringify(testOptions)
+      })
+    );
+    expect(await stableScreenshot(page)).toMatchSnapshot(`user-set-control-bar-button-options.png`);
   });
 });
