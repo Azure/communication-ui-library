@@ -196,6 +196,49 @@ export interface BaseCustomStyles {
     root?: IStyle;
 }
 
+// @beta
+export interface BrowserPermissionDeniedIOSProps extends BrowserPermissionDeniedProps {
+    imageSource?: string;
+    strings: BrowserPermissionDeniedIOSStrings;
+}
+
+// @beta
+export interface BrowserPermissionDeniedIOSStrings extends BrowserPermissionDeniedStrings {
+    imageAltText: string;
+    primaryText: string;
+    secondaryText: string;
+    step1DigitText: string;
+    step1Text: string;
+    step2DigitText: string;
+    step2Text: string;
+    step3DigitText: string;
+    step3Text: string;
+    step4DigitText: string;
+    step4Text: string;
+}
+
+// @beta
+export interface BrowserPermissionDeniedProps {
+    onTroubleshootingClick: () => void;
+    onTryAgainClick: () => void;
+    strings: BrowserPermissionDeniedStrings;
+    styles?: BrowserPermissionDeniedStyles;
+}
+
+// @beta
+export interface BrowserPermissionDeniedStrings {
+    linkText: string;
+    primaryButtonText: string;
+    primaryText: string;
+    secondaryText: string;
+}
+
+// @beta
+export interface BrowserPermissionDeniedStyles extends BaseCustomStyles {
+    primaryButton?: IButtonStyles;
+    troubleshootingLink?: ILinkStyles;
+}
+
 // @public
 export interface CallAdapter extends AdapterState<CallAdapterState>, Disposable, CallAdapterCallManagement, CallAdapterDeviceManagement, CallAdapterSubscribers {
 }
@@ -622,6 +665,7 @@ export type CallParticipantListParticipant = ParticipantListParticipant & {
     isScreenSharing?: boolean;
     isMuted?: boolean;
     isSpeaking?: boolean;
+    role?: Role;
 };
 
 // @beta
@@ -1767,6 +1811,7 @@ export interface _DevicePermissionDropdownProps {
     askDevicePermission?(constrain: _PermissionConstraints): Promise<void>;
     constrain?: _PermissionConstraints;
     icon?: JSX.Element;
+    onClick?: () => void;
     options?: IDropdownOption[];
     strings?: _DevicePermissionDropdownStrings;
     styles?: Partial<IDropdownStyles>;
@@ -2676,8 +2721,8 @@ export interface RemoteVideoStreamState {
     view?: VideoStreamRendererViewState;
 }
 
-// @beta (undocumented)
-export type Role = 'Presenter' | 'Attendee' | 'Consumer';
+// @beta
+export type Role = 'Presenter' | 'Attendee' | 'Consumer' | 'Organizer';
 
 // @public
 export const ScreenShareButton: (props: ScreenShareButtonProps) => JSX.Element;

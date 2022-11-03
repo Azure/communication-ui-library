@@ -72,6 +72,12 @@ import { VideoDeviceInfo } from '@azure/communication-calling';
 import { VideoStreamRenderer } from '@azure/communication-calling';
 import { VideoStreamRendererView } from '@azure/communication-calling';
 
+// @public (undocumented)
+export type ACSCallManagement = {
+    joinCall(microphoneOn?: boolean): Call | undefined;
+    startCall(participants: string[], options?: StartCallOptions): Call | undefined;
+};
+
 // @public
 export interface ActiveErrorMessage {
     timestamp?: Date;
@@ -168,9 +174,8 @@ export interface BaseCustomStyles {
     root?: IStyle;
 }
 
-// @public
-export interface CallAdapter extends AdapterState<CallAdapterState>, Disposable, CallAdapterCallManagement, CallAdapterDeviceManagement, CallAdapterSubscribers {
-}
+// @public (undocumented)
+export type CallAdapter = Omit<CallAdapterCommon, keyof ACSCallManagement> & ACSCallManagement;
 
 // @public
 export type CallAdapterCallEndedEvent = {
@@ -181,7 +186,7 @@ export type CallAdapterCallEndedEvent = {
 export interface CallAdapterCallManagement {
     createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void | CreateVideoStreamViewResult>;
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
-    joinCall(microphoneOn?: boolean): Call | undefined;
+    joinCall(microphoneOn?: boolean): void;
     leaveCall(forEveryone?: boolean): Promise<void>;
     mute(): Promise<void>;
     removeParticipant(userId: string): Promise<void>;
@@ -203,6 +208,10 @@ export type CallAdapterClientState = {
     isTeamsCall: boolean;
     latestErrors: AdapterErrors;
 };
+
+// @public
+export interface CallAdapterCommon extends AdapterState<CallAdapterState>, Disposable, CallAdapterCallManagement, CallAdapterDeviceManagement, CallAdapterSubscribers {
+}
 
 // @public
 export interface CallAdapterDeviceManagement {
@@ -380,7 +389,7 @@ export type CallCompositePage = 'accessDeniedTeamsMeeting' | 'call' | 'configura
 
 // @public
 export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcons> {
-    adapter: CallAdapter;
+    adapter: CallAdapterCommon;
     callInvitationUrl?: string;
     formFactor?: 'desktop' | 'mobile';
     options?: CallCompositeOptions;
@@ -573,8 +582,11 @@ export interface CallState {
 // @public (undocumented)
 export type CallTypeOf<AgentType extends CallAgent> = AgentType extends CallAgent ? Call : never;
 
+// @public (undocumented)
+export type CallWithChatAdapter = Omit<CallWithChatAdapterCommon, keyof ACSCallManagement> & ACSCallManagement;
+
 // @public
-export interface CallWithChatAdapter extends CallWithChatAdapterManagement, AdapterState<CallWithChatAdapterState>, Disposable, CallWithChatAdapterSubscriptions {
+export interface CallWithChatAdapterCommon extends CallWithChatAdapterManagement, AdapterState<CallWithChatAdapterState>, Disposable, CallWithChatAdapterSubscriptions {
 }
 
 // @public
@@ -584,7 +596,7 @@ export interface CallWithChatAdapterManagement {
     deleteMessage(messageId: string): Promise<void>;
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
     fetchInitialData(): Promise<void>;
-    joinCall(microphoneOn?: boolean): Call | undefined;
+    joinCall(microphoneOn?: boolean): void;
     leaveCall(forEveryone?: boolean): Promise<void>;
     loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
     mute(): Promise<void>;
