@@ -923,6 +923,12 @@ let createAzureCommunicationCallAdapterFromClientToExport: (
 ) => Promise<CallAdapter> = createAzureCommunicationCallAdapterFromClientStable;
 
 /* @conditional-compile-remove(rooms) */
+/**
+ * Create a {@link CallAdapter} using the provided {@link StatefulCallClient} and a provided role
+ * to hint the user of their role specific for Rooms calls.
+ *
+ * @beta
+ */
 createAzureCommunicationCallAdapterFromClientToExport = async (
   callClient: StatefulCallClient,
   callAgent: CallAgent,
