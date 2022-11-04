@@ -93,22 +93,31 @@ export interface ComponentStrings {
   /** Strings for HoldButton */
   holdButton: HoldButtonStrings;
   /* @conditional-compile-remove(call-readiness) */
-  /** Strings for DomainPermissions */
-  CameraAndMicrophoneDomainPermissions: DomainPermissionsStrings;
+  /** Strings for a domain permission request prompt */
+  CameraAndMicrophoneDomainPermissionsRequest: DomainPermissionsStrings;
   /* @conditional-compile-remove(call-readiness) */
-  /** Strings for DomainPermissions */
-  CameraDomainPermissions: DomainPermissionsStrings;
+  /** Strings for a domain permission request prompt */
+  CameraDomainPermissionsRequest: DomainPermissionsStrings;
   /* @conditional-compile-remove(call-readiness) */
-  /** Strings for DomainPermissions */
-  MicrophoneDomainPermissions: DomainPermissionsStrings;
+  /** Strings for a domain permission request prompt */
+  MicrophoneDomainPermissionsRequest: DomainPermissionsStrings;
   /* @conditional-compile-remove(call-readiness) */
-  /** Strings for DomainPermissions */
+  /** Strings for a domain permission generic checking prompt */
+  CameraAndMicrophoneDomainPermissionsCheck: DomainPermissionsStrings;
+  /* @conditional-compile-remove(call-readiness) */
+  /** Strings for a domain permission generic checking prompt */
+  CameraDomainPermissionsCheck: DomainPermissionsStrings;
+  /* @conditional-compile-remove(call-readiness) */
+  /** Strings for a domain permission generic checking prompt */
+  MicrophoneDomainPermissionsCheck: DomainPermissionsStrings;
+  /* @conditional-compile-remove(call-readiness) */
+  /** Strings for a domain permission denied prompt */
   CameraAndMicrophoneDomainPermissionsDenied: DomainPermissionsStrings;
   /* @conditional-compile-remove(call-readiness) */
-  /** Strings for DomainPermissions */
+  /** Strings for a domain permission denied prompt */
   CameraDomainPermissionsDenied: DomainPermissionsStrings;
   /* @conditional-compile-remove(call-readiness) */
-  /** Strings for DomainPermissions */
+  /** Strings for a domain permission denied prompt */
   MicrophoneDomainPermissionsDenied: DomainPermissionsStrings;
   /* @conditional-compile-remove(unsupported-browser) */
   /** Strings for unsupported browser UI */

@@ -33,7 +33,7 @@ const DomainPermissionsStory = (args: ArgsFrom<typeof storyControls>): JSX.Eleme
         <CameraAndMicrophoneDomainPermissionsComponent
           appName={args.appName}
           onTroubleshootingClick={() => alert('you clicked the help text')}
-          type={args.type === 'Request' ? 'request' : 'denied'}
+          type={(args.type as string).toLowerCase() as 'request' | 'denied' | 'check'}
         />
       )}
       {args.domainRequest === controlsToAdd.domainDeviceRequest.options[1] && (
@@ -41,14 +41,14 @@ const DomainPermissionsStory = (args: ArgsFrom<typeof storyControls>): JSX.Eleme
           appName={args.appName}
           onTroubleshootingClick={() => alert('you clicked the help text')}
           onContinueAnywayClick={() => alert('you clicked the continue anyway button')}
-          type={args.type === 'Request' ? 'request' : 'denied'}
+          type={(args.type as string).toLowerCase() as 'request' | 'denied' | 'check'}
         />
       )}
       {args.domainRequest === controlsToAdd.domainDeviceRequest.options[2] && (
         <MicrophoneDomainPermissionsComponent
           appName={args.appName}
           onTroubleshootingClick={() => alert('you clicked the help text')}
-          type={args.type === 'Request' ? 'request' : 'denied'}
+          type={(args.type as string).toLowerCase() as 'request' | 'denied' | 'check'}
         />
       )}
     </Stack>

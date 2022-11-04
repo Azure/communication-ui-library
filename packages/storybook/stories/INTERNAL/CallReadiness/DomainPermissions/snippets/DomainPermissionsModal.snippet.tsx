@@ -8,7 +8,7 @@ import { useLocale } from '../../../../../../react-components/src/localization';
 
 export const DomainPermissionsModal: () => JSX.Element = () => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
-  const locale = useLocale().strings.CameraAndMicrophoneDomainPermissions;
+  const locale = useLocale().strings.CameraAndMicrophoneDomainPermissionsRequest;
   return (
     <>
       <PrimaryButton onClick={() => setModalOpen(true)}>Open Domain Permissions Modal</PrimaryButton>
