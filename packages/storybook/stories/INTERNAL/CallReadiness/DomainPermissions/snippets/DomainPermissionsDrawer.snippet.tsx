@@ -31,6 +31,7 @@ export const DomainPermissionsDrawer: () => JSX.Element = () => {
               appName={'Contoso app'}
               onTroubleshootingClick={() => alert('clicked trouble shooting link')}
               strings={locale}
+              type={'request'}
             />
           </_DrawerSurface>
         )}
