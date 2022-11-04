@@ -225,6 +225,12 @@ export const controlsToAdd = {
     defaultValue: 'Camera and Microphone',
     name: 'Device Request Type'
   },
+  domainDeviceRequestStatus: {
+    control: 'select',
+    options: ['Request', 'Denied'],
+    defaultValue: 'Request',
+    name: 'Request Status'
+  },
   disabled: { control: 'boolean', defaultValue: false, name: 'Disable component' },
   displayName: { control: 'text', defaultValue: 'John Smith', name: 'Display Name' },
   enableJumpToNewMessageButton: { control: 'boolean', defaultValue: true, name: 'Enable Jump To New Message' },

@@ -205,6 +205,24 @@
     "primaryButtonText": "Continue without microphone",
     "ariaLabel": "Allow microphone access"
   },
+  "CameraAndMicrophoneDomainPermissionsDenied": {
+    "primaryText": "Unable to access camera and microphone",
+    "secondaryText": "Click the lock icon in the address bar to grant microphone permissions to this webpage. A page refresh may be required.",
+    "primaryButtonText": "Continue without camera and microphone",
+    "linkText": "Need help? Get troubleshooting help"
+  },
+  "CameraDomainPermissionsDenied": {
+    "primaryText": "Unable to access camera",
+    "secondaryText": "Click the lock icon in the address bar to grant camera permissions to this webpage. A page refresh may be required.",
+    "primaryButtonText": "Continue without camera",
+    "linkText": "Need help? Get troubleshooting help"
+  },
+  "MicrophoneDomainPermissionsDenied": {
+    "primaryText": "Unable to access microphone",
+    "secondaryText": "Click the lock icon in the address bar to grant microphone permissions to this webpage. A page refresh may be required.",
+    "primaryButtonText": "Continue without microphone",
+    "linkText": "Need help? Get troubleshooting help"
+  },
   "UnsupportedBrowser": {
     "primaryText": "Browser not supported",
     "secondaryText": "Please join this call using a compatible browser.",

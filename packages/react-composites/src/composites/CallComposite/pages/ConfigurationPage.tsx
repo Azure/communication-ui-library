@@ -201,6 +201,7 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
                     }
                   : undefined
               }
+              type="request"
             />
           </Modal>
         )
@@ -219,6 +220,7 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
                     }
                   : undefined
               }
+              type="request"
               onContinueAnywayClick={async () => {
                 await adapter.askDevicePermission({ video: true, audio: true });
                 adapter.queryCameras();

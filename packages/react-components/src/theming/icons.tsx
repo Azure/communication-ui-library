@@ -49,7 +49,7 @@ import { Important20Filled } from '@fluentui/react-icons';
 import { Backspace20Regular } from '@fluentui/react-icons';
 
 /* @conditional-compile-remove(call-readiness) */
-import { Sparkle20Filled } from '@fluentui/react-icons';
+import { Sparkle20Filled, VideoProhibited20Filled, MicProhibited20Filled } from '@fluentui/react-icons';
 
 /* @conditional-compile-remove(file-sharing) */
 import { ArrowDownload16Regular } from '@fluentui/react-icons';
@@ -110,6 +110,30 @@ const DomainPermissionCamera20Filled = (): JSX.Element => {
     <Stack horizontalAlign={'center'} styles={domainPermissionIconBackgroundStyle(theme)}>
       <div className={mergeStyles(scaledIconStyles(theme))}>
         <Video20Filled />
+      </div>
+    </Stack>
+  );
+};
+
+/* @conditional-compile-remove(call-readiness) */
+const DomainPermissionsMicDenied20Filled = (): JSX.Element => {
+  const theme = useTheme();
+  return (
+    <Stack horizontalAlign={'center'} styles={domainPermissionIconBackgroundStyle(theme)}>
+      <div className={mergeStyles(scaledIconStyles(theme))}>
+        <MicProhibited20Filled />
+      </div>
+    </Stack>
+  );
+};
+
+/* @conditional-compile-remove(call-readiness) */
+const DomainPermissionsCameraDenied20Filled = (): JSX.Element => {
+  const theme = useTheme();
+  return (
+    <Stack horizontalAlign={'center'} styles={domainPermissionIconBackgroundStyle(theme)}>
+      <div className={mergeStyles(scaledIconStyles(theme))}>
+        <VideoProhibited20Filled />
       </div>
     </Stack>
   );
@@ -230,6 +254,10 @@ export const DEFAULT_COMPONENT_ICONS = {
   DomainPermissionCamera: <DomainPermissionCamera20Filled />,
   /* @conditional-compile-remove(call-readiness) */
   DomainPermissionMic: <DomainPermissionMic20Filled />,
+  /* @conditional-compile-remove(call-readiness) */
+  DomainPermissionCameraDenied: <DomainPermissionsCameraDenied20Filled />,
+  /* @conditional-compile-remove(call-readiness) */
+  DomainPermissionMicDenied: <DomainPermissionsMicDenied20Filled />,
   /* @conditional-compile-remove(unsupported-browser) */
   UnsupportedBrowserWarning: <UnsupportedBrowserWarning />,
   /* @conditional-compile-remove(call-readiness) */

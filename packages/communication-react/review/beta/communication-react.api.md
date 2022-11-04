@@ -1337,6 +1337,7 @@ export interface CommonDomainPermissionsProps {
     onContinueAnywayClick?: () => void;
     onTroubleshootingClick?: () => void;
     styles?: DomainPermissionsStyles;
+    type: 'request' | 'denied';
 }
 
 // @public
@@ -1410,8 +1411,10 @@ export interface ComponentStrings {
     BrowserPermissionDenied: BrowserPermissionDeniedStrings;
     BrowserPermissionDeniedIOS: BrowserPermissionDeniedIOSStrings;
     CameraAndMicrophoneDomainPermissions: DomainPermissionsStrings;
+    CameraAndMicrophoneDomainPermissionsDenied: DomainPermissionsStrings;
     cameraButton: CameraButtonStrings;
     CameraDomainPermissions: DomainPermissionsStrings;
+    CameraDomainPermissionsDenied: DomainPermissionsStrings;
     devicesButton: DevicesButtonStrings;
     dialpad: DialpadStrings;
     endCallButton: EndCallButtonStrings;
@@ -1421,6 +1424,7 @@ export interface ComponentStrings {
     messageThread: MessageThreadStrings;
     microphoneButton: MicrophoneButtonStrings;
     MicrophoneDomainPermissions: DomainPermissionsStrings;
+    MicrophoneDomainPermissionsDenied: DomainPermissionsStrings;
     participantItem: ParticipantItemStrings;
     participantsButton: ParticipantsButtonStrings;
     screenShareButton: ScreenShareButtonStrings;
@@ -1713,6 +1717,8 @@ export const DEFAULT_COMPONENT_ICONS: {
     DomainPermissionsSparkle: JSX.Element;
     DomainPermissionCamera: JSX.Element;
     DomainPermissionMic: JSX.Element;
+    DomainPermissionCameraDenied: JSX.Element;
+    DomainPermissionMicDenied: JSX.Element;
     UnsupportedBrowserWarning: JSX.Element;
     BrowserPermissionDeniedError: JSX.Element;
 };
@@ -1802,6 +1808,8 @@ export const DEFAULT_COMPOSITE_ICONS: {
     DomainPermissionsSparkle: JSX.Element;
     DomainPermissionCamera: JSX.Element;
     DomainPermissionMic: JSX.Element;
+    DomainPermissionCameraDenied: JSX.Element;
+    DomainPermissionMicDenied: JSX.Element;
     UnsupportedBrowserWarning: JSX.Element;
     BrowserPermissionDeniedError: JSX.Element;
 };

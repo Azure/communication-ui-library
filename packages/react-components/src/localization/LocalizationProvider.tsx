@@ -101,6 +101,15 @@ export interface ComponentStrings {
   /* @conditional-compile-remove(call-readiness) */
   /** Strings for DomainPermissions */
   MicrophoneDomainPermissions: DomainPermissionsStrings;
+  /* @conditional-compile-remove(call-readiness) */
+  /** Strings for DomainPermissions */
+  CameraAndMicrophoneDomainPermissionsDenied: DomainPermissionsStrings;
+  /* @conditional-compile-remove(call-readiness) */
+  /** Strings for DomainPermissions */
+  CameraDomainPermissionsDenied: DomainPermissionsStrings;
+  /* @conditional-compile-remove(call-readiness) */
+  /** Strings for DomainPermissions */
+  MicrophoneDomainPermissionsDenied: DomainPermissionsStrings;
   /* @conditional-compile-remove(unsupported-browser) */
   /** Strings for unsupported browser UI */
   UnsupportedBrowser: UnsupportedBrowserStrings;

@@ -19,6 +19,7 @@ export const DomainPermissionsModal: () => JSX.Element = () => {
             alert('clicked trouble shooting');
           }}
           strings={locale}
+          type={'request'}
         />
       </Modal>
     </>

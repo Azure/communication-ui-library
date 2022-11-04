@@ -20,6 +20,10 @@ export interface CommonDomainPermissionsProps {
    */
   appName: string;
   /**
+   * Type of the Domain Permissions component.
+   */
+  type: 'request' | 'denied';
+  /**
    * Action to be taken by the more help link. Possible to send to external page or show other modal.
    * If this is not provided the button will not be shown.
    */
@@ -64,19 +68,33 @@ export interface CameraAndMicrophoneDomainPermissionsProps extends CommonDomainP
  */
 export const CameraAndMicrophoneDomainPermissions = (props: CameraAndMicrophoneDomainPermissionsProps): JSX.Element => {
   /* @conditional-compile-remove(call-readiness) */
-  const locale = useLocale().strings.CameraAndMicrophoneDomainPermissions;
+  const locale = useLocale().strings;
 
   /* @conditional-compile-remove(call-readiness) */
-  const strings = useShallowMerge(locale, props.strings);
+  const strings = useShallowMerge(
+    props.type === 'denied'
+      ? locale.CameraAndMicrophoneDomainPermissionsDenied
+      : locale.CameraAndMicrophoneDomainPermissions,
+    props.strings
+  );
+
+  /* @conditional-compile-remove(call-readiness) */
+  const cameraIconName =
+    props.microphoneIconName ?? props.type === 'denied' ? 'DomainPermissionCameraDenied' : 'DomainPermissionCamera';
+  /* @conditional-compile-remove(call-readiness) */
+  const microphoneIconName =
+    props.microphoneIconName ?? props.type === 'denied' ? 'DomainPermissionMicDenied' : 'DomainPermissionMic';
+  /* @conditional-compile-remove(call-readiness) */
+  const connectorIconName = props.microphoneIconName ?? 'DomainPermissionsSparkle';
 
   /* @conditional-compile-remove(call-readiness) */
   return (
     <DomainPermissionsContainer
       {...props}
       strings={strings}
-      cameraIconName={props.cameraIconName ?? 'DomainPermissionCamera'}
-      connectorIconName={props.connectorIconName ?? 'DomainPermissionsSparkle'}
-      microphoneIconName={props.microphoneIconName ?? 'DomainPermissionMic'}
+      cameraIconName={cameraIconName}
+      connectorIconName={connectorIconName}
+      microphoneIconName={microphoneIconName}
       onPrimaryButtonClick={props.onContinueAnywayClick}
     />
   );
@@ -108,17 +126,24 @@ export interface MicrophoneDomainPermissionsProps extends CommonDomainPermission
  */
 export const MicrophoneDomainPermissions = (props: MicrophoneDomainPermissionsProps): JSX.Element => {
   /* @conditional-compile-remove(call-readiness) */
-  const locale = useLocale().strings.MicrophoneDomainPermissions;
+  const locale = useLocale().strings;
 
   /* @conditional-compile-remove(call-readiness) */
-  const strings = useShallowMerge(locale, props.strings);
+  const strings = useShallowMerge(
+    props.type === 'denied' ? locale.MicrophoneDomainPermissionsDenied : locale.MicrophoneDomainPermissions,
+    props.strings
+  );
+
+  /* @conditional-compile-remove(call-readiness) */
+  const iconName =
+    props.microphoneIconName ?? props.type === 'denied' ? 'DomainPermissionMicDenied' : 'DomainPermissionMic';
 
   /* @conditional-compile-remove(call-readiness) */
   return (
     <DomainPermissionsContainer
       {...props}
       strings={strings}
-      cameraIconName={props.microphoneIconName ?? 'DomainPermissionMic'}
+      cameraIconName={iconName}
       onPrimaryButtonClick={props.onContinueAnywayClick}
     />
   );
@@ -150,17 +175,24 @@ export interface CameraDomainPermissionsProps extends CommonDomainPermissionsPro
  */
 export const CameraDomainPermissions = (props: CameraDomainPermissionsProps): JSX.Element => {
   /* @conditional-compile-remove(call-readiness) */
-  const locale = useLocale().strings.CameraDomainPermissions;
+  const locale = useLocale().strings;
 
   /* @conditional-compile-remove(call-readiness) */
-  const strings = useShallowMerge(locale, props.strings);
+  const strings = useShallowMerge(
+    props.type === 'denied' ? locale.CameraDomainPermissionsDenied : locale.CameraDomainPermissions,
+    props.strings
+  );
+
+  /* @conditional-compile-remove(call-readiness) */
+  const iconName =
+    props.cameraIconName ?? props.type === 'denied' ? 'DomainPermissionCameraDenied' : 'DomainPermissionCamera';
 
   /* @conditional-compile-remove(call-readiness) */
   return (
     <DomainPermissionsContainer
       {...props}
       strings={strings}
-      microphoneIconName={props.cameraIconName ?? 'DomainPermissionCamera'}
+      microphoneIconName={iconName}
       onPrimaryButtonClick={props.onContinueAnywayClick}
     />
   );
