@@ -113,7 +113,9 @@ async function runOne(testRoot, args, composite, hermeticity) {
   }
 
   const extraEnv = {
-    SNAPSHOT_DIR: path.join(testRoot, 'snapshots', getBuildFlavor()),
+    // Snapshots are always stored in the original test sources, even when the test root
+    // is different due to preprocessed test files.
+    SNAPSHOT_DIR: path.join(TEST_ROOT, 'browser', 'snapshots', getBuildFlavor()),
     // TODO(prprabhu) Drop this envvar once tests stop using `isTestProfileStableFlavor()`.
     COMMUNICATION_REACT_FLAVOR: getBuildFlavor(),
     PLAYWRIGHT_OUTPUT_DIR: path.join(BASE_OUTPUT_DIR, Date.now().toString())
