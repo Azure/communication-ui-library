@@ -30,6 +30,8 @@ import {
   StartCallOptions,
   VideoOptions
 } from '@azure/communication-calling';
+/* @conditional-compile-remove(unsupported-browser) */
+import { EnvironmentInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(rooms) */
 import { RoomCallLocator } from '@azure/communication-calling';
 /* @conditional-compile-remove(unsupported-browser) */
@@ -287,6 +289,8 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     this.resumeCall.bind(this);
     /* @conditional-compile-remove(PSTN-calls) */
     this.sendDtmfTone.bind(this);
+    /* @conditional-compile-remove(unsupported-browser) */
+    this.getEnvironmentInfo.bind(this);
   }
 
   public dispose(): void {
@@ -464,6 +468,13 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
       if (this.call?.isScreenSharingOn) {
         await this.handlers.onToggleScreenShare();
       }
+    });
+  }
+
+  /* @conditional-compile-remove(unsupported-browser) */
+  public async getEnvironmentInfo(): Promise<EnvironmentInfo> {
+    return await this.asyncTeeErrorToEventEmitter(async () => {
+      return this.callClient.feature(Features.DebugInfo).getEnvironmentInfo();
     });
   }
 
@@ -900,10 +911,6 @@ export const createAzureCommunicationCallAdapterFromClient = async (
   locator: CallAdapterLocator
 ): Promise<CallAdapter> => {
   const deviceManager = (await callClient.getDeviceManager()) as StatefulDeviceManager;
-  /* @conditional-compile-remove(unsupported-browser) */
-  const feature = callClient.feature(Features.DebugInfo);
-  /* @conditional-compile-remove(unsupported-browser) */
-  await feature.getEnvironmentInfo();
   return new AzureCommunicationCallAdapter(callClient, locator, callAgent, deviceManager);
 };
 

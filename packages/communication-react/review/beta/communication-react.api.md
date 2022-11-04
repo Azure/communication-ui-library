@@ -250,6 +250,8 @@ export interface CallAdapterCallManagement {
     createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void | CreateVideoStreamViewResult>;
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
     // @beta
+    getEnvironmentInfo(): Promise<EnvironmentInfo>;
+    // @beta
     holdCall(): Promise<void>;
     joinCall(microphoneOn?: boolean): Call | undefined;
     leaveCall(forEveryone?: boolean): Promise<void>;
@@ -451,6 +453,7 @@ export type CallCompositeOptions = {
     callControls?: boolean | CallControlOptions;
     devicePermissions?: DevicePermissionRestrictions;
     callReadinessOptedIn?: boolean;
+    unsupportedBrowserOptedIn?: boolean;
     onPermissionsTroubleshootingClick?: (permissionsState: {
         camera: PermissionState;
         microphone: PermissionState;
@@ -721,6 +724,8 @@ export interface CallWithChatAdapterManagement {
     deleteMessage(messageId: string): Promise<void>;
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
     fetchInitialData(): Promise<void>;
+    // @beta
+    getEnvironmentInfo(): Promise<EnvironmentInfo>;
     // @beta
     holdCall: () => Promise<void>;
     joinCall(microphoneOn?: boolean): Call | undefined;

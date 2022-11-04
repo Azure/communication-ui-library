@@ -121,6 +121,12 @@ export type CallCompositeOptions = {
    * Setting this to `true` will add call readiness features to the call experience
    */
   callReadinessOptedIn?: boolean;
+  /* @conditional-compile-remove(unsupported-browser) */
+  /**
+   * Opt in Unsupported browser feature for CallComposite
+   * Setting this to `true` will add the unsupportedBrowser Check to the CallComposite.
+   */
+  unsupportedBrowserOptedIn?: boolean;
   /* @conditional-compile-remove(call-readiness) */
   /**
    * Callback you may provide to supply users with further steps to troubleshoot why they have been
@@ -376,6 +382,11 @@ export const CallComposite = (props: CallCompositeProps): JSX.Element => {
   ]);
 
   const mobileView = formFactor === 'mobile';
+
+  /* @conditional-compile-remove(unsupported-browser) */
+  if (props.options?.unsupportedBrowserOptedIn) {
+    adapter.getEnvironmentInfo();
+  }
 
   /* @conditional-compile-remove(one-to-n-calling) */
   const modalLayerHostId = useId('modalLayerhost');

@@ -15,6 +15,8 @@ import {
   StartCallOptions,
   VideoDeviceInfo
 } from '@azure/communication-calling';
+/* @conditional-compile-remove(unsupported-browser) */
+import { EnvironmentInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions, DtmfTone } from '@azure/communication-calling';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
@@ -405,6 +407,11 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   /* @conditional-compile-remove(PSTN-calls) */
   public async sendDtmfTone(dtmfTone: DtmfTone): Promise<void> {
     return await this.callAdapter.sendDtmfTone(dtmfTone);
+  }
+
+  /* @conditional-compile-remove(unsupported-browser) */
+  public async getEnvironmentInfo(): Promise<EnvironmentInfo> {
+    return await this.callAdapter.getEnvironmentInfo();
   }
 
   on(event: 'callParticipantsJoined', listener: ParticipantsJoinedListener): void;

@@ -83,7 +83,8 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     () => ({
       callReadinessOptedIn: callReadinessOptedIn,
       onPermissionsTroubleshootingClick,
-      onNetworkingTroubleShootingClick
+      onNetworkingTroubleShootingClick,
+      unsupportedBrowserOptedIn: false
     }),
     [callReadinessOptedIn]
   );
