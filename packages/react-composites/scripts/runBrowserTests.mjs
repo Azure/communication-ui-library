@@ -17,20 +17,20 @@ const BABELRC = path.join(PACKLET_ROOT, '.babelrc.js');
 const BASE_OUTPUT_DIR = path.join(PACKLET_ROOT, 'test-results');
 
 const SRC_ROOT = path.join(PACKLET_ROOT, 'src');
-const TEST_ROOT = path.join(PACKLET_ROOT, 'tests', 'browser');
+const TEST_ROOT = path.join(PACKLET_ROOT, 'tests');
 const PREPROCESSED_ROOT = path.join(PACKLET_ROOT, 'preprocessed');
-const PREPROCESSED_TEST_ROOT = path.join(PREPROCESSED_ROOT, 'tests', 'browser');
+const PREPROCESSED_TEST_ROOT = path.join(PREPROCESSED_ROOT, 'tests');
 const PREPROCESSED_SRC_ROOT = path.join(PREPROCESSED_ROOT, 'src');
 const TEST_PATH_RELATIVE = {
   hermetic: {
-    call: path.join('call', 'hermetic'),
-    chat: path.join('chat', 'hermetic'),
-    callWithChat: path.join('callwithchat', 'hermetic')
+    call: path.join('browser', 'call', 'hermetic'),
+    chat: path.join('browser', 'chat', 'hermetic'),
+    callWithChat: path.join('browser', 'callwithchat', 'hermetic')
   },
   live: {
-    call: path.join('call', 'live'),
-    chat: path.join('chat', 'live'),
-    callWithChat: path.join('callwithchat', 'live')
+    call: path.join('browser', 'call', 'live'),
+    chat: path.join('browser', 'chat', 'live'),
+    callWithChat: path.join('browser', 'callwithchat', 'live')
   }
 };
 
@@ -112,8 +112,7 @@ async function runOne(testRoot, args, composite, hermeticity) {
     return;
   }
 
-  const env = {
-    ...process.env,
+  const extraEnv = {
     SNAPSHOT_DIR: path.join(testRoot, 'snapshots', getBuildFlavor()),
     // TODO(prprabhu) Drop this envvar once tests stop using `isTestProfileStableFlavor()`.
     COMMUNICATION_REACT_FLAVOR: getBuildFlavor(),
@@ -131,7 +130,7 @@ async function runOne(testRoot, args, composite, hermeticity) {
   }
   if (args.debug) {
     cmdArgs.push('--debug');
-    env['LOCAL_DEBUG'] = true;
+    extraEnv['LOCAL_DEBUG'] = true;
   }
   if (args.failFast) {
     cmdArgs.push('-x');
@@ -142,7 +141,7 @@ async function runOne(testRoot, args, composite, hermeticity) {
   if (args.dryRun) {
     console.log(`DRYRUN: Would have run ${cmd}`);
   } else {
-    await exec(cmd, env);
+    await exec(cmd, extraEnv);
   }
 }
 
@@ -153,8 +152,14 @@ function setup() {
 
 async function preprocessTests() {
   fs.rmSync(PREPROCESSED_ROOT, { recursive: true, force: true });
+  await createTsconfigTrampoline();
   await preprocessDir(SRC_ROOT, PREPROCESSED_SRC_ROOT);
   await preprocessDir(TEST_ROOT, PREPROCESSED_TEST_ROOT);
+}
+
+async function createTsconfigTrampoline() {
+  fs.mkdirsSync(PREPROCESSED_ROOT);
+  fs.writeFileSync(path.join(PREPROCESSED_ROOT, 'tsconfig.json'), '{ "extends": "../tsconfig.preprocess.json" }');
 }
 
 async function preprocessDir(fromDir, toDir) {
