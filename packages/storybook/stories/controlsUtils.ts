@@ -149,6 +149,11 @@ export const controlsToAdd = {
     name: 'Alternate CallerID',
     type: { name: 'string', required: true }
   },
+  appName: {
+    control: 'text',
+    defaultValue: 'Storybook',
+    name: 'App Name'
+  },
   avatarInitials: { control: 'text', defaultValue: 'A B', name: 'Avatar initials' },
   botAvatar: { control: 'radio', options: botAvatars, defaultValue: 'Default', name: 'Bot Avatar' },
   botToken: {
@@ -213,6 +218,12 @@ export const controlsToAdd = {
     options: CONTROL_BAR_LAYOUTS,
     defaultValue: 'floatingBottom',
     name: 'Layout'
+  },
+  domainDeviceRequest: {
+    control: 'select',
+    options: ['Camera and Microphone', 'Camera Only', 'Microphone Only'],
+    defaultValue: 'Camera and Microphone',
+    name: 'Device Request Type'
   },
   disabled: { control: 'boolean', defaultValue: false, name: 'Disable component' },
   displayName: { control: 'text', defaultValue: 'John Smith', name: 'Display Name' },

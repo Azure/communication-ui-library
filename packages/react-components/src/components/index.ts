@@ -89,9 +89,26 @@ export type {
 } from './DevicesButton';
 
 /* @conditional-compile-remove(call-readiness) */
-export { DomainPermissions } from './DevicePermissions/DomainPermissions';
+export {
+  CameraAndMicrophoneDomainPermissions,
+  MicrophoneDomainPermissions,
+  CameraDomainPermissions
+} from './DevicePermissions/DomainPermissions';
 /* @conditional-compile-remove(call-readiness) */
-export type { DomainPermissionsStrings, DomainPermissionsProps } from './DevicePermissions/DomainPermissions';
+export type {
+  DomainPermissionsStrings,
+  DomainPermissionsStyles
+} from './DevicePermissions/DomainPermissionsScaffolding';
+/* @conditional-compile-remove(call-readiness) */
+export type {
+  CameraAndMicrophoneDomainPermissionsStrings,
+  CameraAndMicrophoneDomainPermissionsProps,
+  CameraDomainPermissionsStrings,
+  CameraDomainPermissionsProps,
+  CommonDomainPermissionsProps,
+  MicrophoneDomainPermissionsStrings,
+  MicrophoneDomainPermissionsProps
+} from './DevicePermissions/DomainPermissions';
 /* @conditional-compile-remove(call-readiness) */
 export { BrowserPermissionDenied } from './DevicePermissions/BrowserPermissionDenied';
 /* @conditional-compile-remove(call-readiness) */

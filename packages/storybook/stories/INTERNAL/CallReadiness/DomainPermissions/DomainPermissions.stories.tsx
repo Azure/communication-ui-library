@@ -2,30 +2,56 @@
 // Licensed under the MIT license.
 
 import { Stack } from '@fluentui/react';
-import { DomainPermissions as DomainPermissionsComponent, _DrawerSurface } from '@internal/react-components';
+import {
+  CameraAndMicrophoneDomainPermissions as CameraAndMicrophoneDomainPermissionsComponent,
+  CameraDomainPermissions as CameraDomainPermissionsComponent,
+  MicrophoneDomainPermissions as MicrophoneDomainPermissionsComponent,
+  _DrawerSurface
+} from '@internal/react-components';
 import { Canvas, Description, Heading, Props, Title } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 import { useLocale } from '../../../../../react-components/src/localization';
 import { SingleLineBetaBanner } from '../../../BetaBanners/SingleLineBetaBanner';
 import { COMPONENT_FOLDER_PREFIX } from '../../../constants';
+import { ArgsFrom, controlsToAdd, hiddenControl } from '../../../controlsUtils';
 import { DomainPermissionsDrawer } from './snippets/DomainPermissionsDrawer.snippet';
 import { DomainPermissionsModal } from './snippets/DomainPermissionsModal.snippet';
 
 const DomainPermissionsDrawerExample = require('!!raw-loader!./snippets/DomainPermissionsDrawer.snippet.tsx').default;
 const DomainPermissionsModalExample = require('!!raw-loader!./snippets/DomainPermissionsModal.snippet.tsx').default;
 
-const DomainPermissionsStory = (): JSX.Element => {
-  const locale = useLocale().strings.DomainPermissions;
+const storyControls = {
+  domainRequest: controlsToAdd.domainDeviceRequest,
+  appName: controlsToAdd.appName
+};
+
+const DomainPermissionsStory = (args: ArgsFrom<typeof storyControls>): JSX.Element => {
+  const localStrings = useLocale().strings;
   return (
     <Stack>
-      <DomainPermissionsComponent
-        appName={'Contoso App'}
-        onTroubleshootingClick={function (): void {
-          alert('you clicked the help text');
-        }}
-        strings={locale}
-      />
+      {args.domainRequest === controlsToAdd.domainDeviceRequest.options[0] && (
+        <CameraAndMicrophoneDomainPermissionsComponent
+          appName={args.appName}
+          onTroubleshootingClick={() => alert('you clicked the help text')}
+          strings={localStrings.CameraAndMicrophoneDomainPermissions}
+        />
+      )}
+      {args.domainRequest === controlsToAdd.domainDeviceRequest.options[1] && (
+        <CameraDomainPermissionsComponent
+          appName={args.appName}
+          onTroubleshootingClick={() => alert('you clicked the help text')}
+          onContinueAnywayClick={() => alert('you clicked the continue anyway button')}
+          strings={localStrings.CameraDomainPermissions}
+        />
+      )}
+      {args.domainRequest === controlsToAdd.domainDeviceRequest.options[2] && (
+        <MicrophoneDomainPermissionsComponent
+          appName={args.appName}
+          onTroubleshootingClick={() => alert('you clicked the help text')}
+          strings={localStrings.MicrophoneDomainPermissions}
+        />
+      )}
     </Stack>
   );
 };
@@ -51,7 +77,7 @@ const getDocs: () => JSX.Element = () => {
       <Canvas mdxSource={DomainPermissionsDrawerExample}>
         <DomainPermissionsDrawer />
       </Canvas>
-      <Props of={DomainPermissionsComponent} />
+      <Props of={CameraAndMicrophoneDomainPermissionsComponent} />
     </Stack>
   );
 };
@@ -63,7 +89,19 @@ export const DomainPermissions = DomainPermissionsStory.bind({});
 export default {
   id: `${COMPONENT_FOLDER_PREFIX}-internal-domain-permissions`,
   title: `${COMPONENT_FOLDER_PREFIX}/Internal/CallReadiness/Domain Permissions`,
-  component: DomainPermissionsComponent,
+  component: CameraAndMicrophoneDomainPermissionsComponent,
+  argTypes: {
+    ...storyControls,
+
+    // hidden controls
+    onTroubleshootingClick: hiddenControl,
+    onContinueAnywayClick: hiddenControl,
+    cameraIconName: hiddenControl,
+    microphoneIconName: hiddenControl,
+    connectorIconName: hiddenControl,
+    strings: hiddenControl,
+    styles: hiddenControl
+  },
   parameters: {
     docs: {
       page: () => getDocs()

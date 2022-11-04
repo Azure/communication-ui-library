@@ -12,7 +12,7 @@ import { devicePermissionSelector } from '../selectors/devicePermissionSelector'
 import { useSelector } from '../hooks/useSelector';
 import { DevicesButton, ErrorBar } from '@internal/react-components';
 /* @conditional-compile-remove(call-readiness) */
-import { DomainPermissions, _DrawerSurface, _DrawerSurfaceStyles } from '@internal/react-components';
+import { CameraAndMicrophoneDomainPermissions, _DrawerSurface, _DrawerSurfaceStyles } from '@internal/react-components';
 /* @conditional-compile-remove(rooms) */
 import { _usePermissions, _Permissions } from '@internal/react-components';
 import { getCallingSelector } from '@internal/calling-component-bindings';
@@ -192,7 +192,7 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
             }}
             overlay={{ styles: { root: { background: 'rgba(0,0,0,0.9)' } } }}
           >
-            <DomainPermissions
+            <CameraAndMicrophoneDomainPermissions
               appName={'app'}
               onTroubleshootingClick={
                 onPermissionsTroubleshootingClick
@@ -210,7 +210,7 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
         /* @conditional-compile-remove(call-readiness) */
         mobileView && isDrawerShowing && callReadinessOptedIn && (
           <_DrawerSurface onLightDismiss={onLightDismissTriggered} styles={drawerContainerStyles(DRAWER_HIGH_Z_BAND)}>
-            <DomainPermissions
+            <CameraAndMicrophoneDomainPermissions
               appName={'app'}
               onTroubleshootingClick={
                 onPermissionsTroubleshootingClick
@@ -219,7 +219,7 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
                     }
                   : undefined
               }
-              onAllowAccessClick={async () => {
+              onContinueAnywayClick={async () => {
                 await adapter.askDevicePermission({ video: true, audio: true });
                 adapter.queryCameras();
                 adapter.queryMicrophones();
