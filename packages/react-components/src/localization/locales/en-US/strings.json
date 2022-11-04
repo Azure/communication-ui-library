@@ -184,12 +184,44 @@
     "participantStateRinging": "Calling...",
     "participantStateHold": "On hold"
   },
-  "DomainPermissions": {
+  "CameraAndMicrophoneDomainPermissions": {
     "primaryText": "Allow {appName} to use your camera and microphone",
     "secondaryText": "This is so participants can see and hear you.",
     "linkText": "Need help? Get troubleshooting help",
-    "primaryButtonText": "Allow Access",
+    "primaryButtonText": "Continue without camera and microphone",
     "ariaLabel": "Allow camera and microphone access"
+  },
+  "CameraDomainPermissions": {
+    "primaryText": "Allow {appName} to use your camera",
+    "secondaryText": "This is so participants can see you.",
+    "linkText": "Need help? Get troubleshooting help",
+    "primaryButtonText": "Continue without camera",
+    "ariaLabel": "Allow camera access"
+  },
+  "MicrophoneDomainPermissions": {
+    "primaryText": "Allow {appName} to use your microphone",
+    "secondaryText": "This is so participants can hear you.",
+    "linkText": "Need help? Get troubleshooting help",
+    "primaryButtonText": "Continue without microphone",
+    "ariaLabel": "Allow microphone access"
+  },
+  "CameraAndMicrophoneDomainPermissionsDenied": {
+    "primaryText": "Unable to access camera and microphone",
+    "secondaryText": "Click the lock icon in the address bar to grant microphone permissions to this webpage. A page refresh may be required.",
+    "primaryButtonText": "Continue without camera and microphone",
+    "linkText": "Need help? Get troubleshooting help"
+  },
+  "CameraDomainPermissionsDenied": {
+    "primaryText": "Unable to access camera",
+    "secondaryText": "Click the lock icon in the address bar to grant camera permissions to this webpage. A page refresh may be required.",
+    "primaryButtonText": "Continue without camera",
+    "linkText": "Need help? Get troubleshooting help"
+  },
+  "MicrophoneDomainPermissionsDenied": {
+    "primaryText": "Unable to access microphone",
+    "secondaryText": "Click the lock icon in the address bar to grant microphone permissions to this webpage. A page refresh may be required.",
+    "primaryButtonText": "Continue without microphone",
+    "linkText": "Need help? Get troubleshooting help"
   },
   "UnsupportedBrowser": {
     "primaryText": "Browser not supported",

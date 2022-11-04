@@ -22,11 +22,11 @@ import { HoldButtonStrings } from '../components';
 /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
 import { DialpadStrings } from '../components';
 /* @conditional-compile-remove(call-readiness) */
-import { DomainPermissionsStrings } from '../components/DomainPermissions';
+import { DomainPermissionsStrings } from '../components/DevicePermissions/DomainPermissionsScaffolding';
 /* @conditional-compile-remove(call-readiness) */
-import { BrowserPermissionDeniedStrings } from '../components/BrowserPermissionDenied';
+import { BrowserPermissionDeniedStrings } from '../components/DevicePermissions/BrowserPermissionDenied';
 /* @conditional-compile-remove(call-readiness) */
-import { BrowserPermissionDeniedIOSStrings } from '../components/BrowserPermissionDeniedIOS';
+import { BrowserPermissionDeniedIOSStrings } from '../components/DevicePermissions/BrowserPermissionDeniedIOS';
 /* @conditional-compile-remove(call-readiness) */ /* @conditional-compile-remove(unsupported-browser) */
 import { UnsupportedBrowserStrings } from '../components/UnsupportedBrowser';
 /* @conditional-compile-remove(one-to-n-calling) */
@@ -94,7 +94,22 @@ export interface ComponentStrings {
   holdButton: HoldButtonStrings;
   /* @conditional-compile-remove(call-readiness) */
   /** Strings for DomainPermissions */
-  DomainPermissions: DomainPermissionsStrings;
+  CameraAndMicrophoneDomainPermissions: DomainPermissionsStrings;
+  /* @conditional-compile-remove(call-readiness) */
+  /** Strings for DomainPermissions */
+  CameraDomainPermissions: DomainPermissionsStrings;
+  /* @conditional-compile-remove(call-readiness) */
+  /** Strings for DomainPermissions */
+  MicrophoneDomainPermissions: DomainPermissionsStrings;
+  /* @conditional-compile-remove(call-readiness) */
+  /** Strings for DomainPermissions */
+  CameraAndMicrophoneDomainPermissionsDenied: DomainPermissionsStrings;
+  /* @conditional-compile-remove(call-readiness) */
+  /** Strings for DomainPermissions */
+  CameraDomainPermissionsDenied: DomainPermissionsStrings;
+  /* @conditional-compile-remove(call-readiness) */
+  /** Strings for DomainPermissions */
+  MicrophoneDomainPermissionsDenied: DomainPermissionsStrings;
   /* @conditional-compile-remove(unsupported-browser) */
   /** Strings for unsupported browser UI */
   UnsupportedBrowser: UnsupportedBrowserStrings;
