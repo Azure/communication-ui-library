@@ -38,10 +38,12 @@ import {
   ChevronLeft20Regular,
   ChevronRight20Regular,
   WifiWarning20Filled,
-  SpeakerMute16Filled
+  SpeakerMute16Filled,
+  MicProhibited16Filled,
+  VideoProhibited16Filled
 } from '@fluentui/react-icons';
 /* @conditional-compile-remove(call-readiness) */
-import { Important20Filled, MicProhibited16Filled, VideoProhibited16Filled } from '@fluentui/react-icons';
+import { Important20Filled } from '@fluentui/react-icons';
 
 /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
 import { Backspace20Regular } from '@fluentui/react-icons';
@@ -61,6 +63,7 @@ import { _pxToRem } from '@internal/acs-ui-common';
 import React from 'react';
 /* @conditional-compile-remove(unsupported-browser) */
 import { useTheme } from './FluentThemeProvider';
+/* @conditional-compile-remove(call-readiness) */
 import { domainPermissionIconBackgroundStyle, scaledIconStyles } from './icons.styles';
 
 /**
