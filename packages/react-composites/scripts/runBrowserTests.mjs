@@ -187,7 +187,10 @@ async function preprocessDir(fromDir, toDir) {
       '--config-file',
       BABELRC,
       '--keep-file-extension'
-    ])
+    ]),
+    {
+      COMMUNICATION_REACT_FLAVOR: 'stable'
+    }
   );
 }
 

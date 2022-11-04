@@ -25,8 +25,8 @@ test.describe('Filesharing Attach file icon', async () => {
   });
 });
 
+/* @conditional-compile-remove(file-sharing) */
 test.describe('Filesharing SendBox', async () => {
-  test.skip(isTestProfileStableFlavor());
   test('shows file cards for uploaded files', async ({ serverUrl, page }) => {
     await page.goto(
       buildUrlForChatAppUsingFakeAdapter(serverUrl, {
