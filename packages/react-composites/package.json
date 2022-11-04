@@ -131,6 +131,7 @@
     "eslint-plugin-react": "^7.18.3",
     "eslint": "^7.7.0",
     "express": "~4.16.1",
+    "fs-extra": "~10.1.0",
     "html-webpack-plugin": "~5.3.1",
     "husky": "^4.3.0",
     "if-env": "~1.0.4",
