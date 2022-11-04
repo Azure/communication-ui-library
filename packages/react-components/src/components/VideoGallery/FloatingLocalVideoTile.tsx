@@ -14,7 +14,7 @@ import {
 /**
  * @private
  */
-export interface _LocalVideoTileLayoutProps {
+export interface _FloatingLocalVideoTileProps {
   shouldFloatLocalVideo: boolean;
   shouldFloatNonDraggableLocalVideo: boolean;
   horizontalGalleryPresent: boolean;
@@ -36,7 +36,7 @@ const DRAG_OPTIONS: IDragOptions = {
 /**
  * @private
  */
-export const _LocalVideoTileLayout = (props: _LocalVideoTileLayoutProps): JSX.Element => {
+export const _FloatingLocalVideoTile = (props: _FloatingLocalVideoTileProps): JSX.Element => {
   const {
     shouldFloatLocalVideo,
     shouldFloatNonDraggableLocalVideo,

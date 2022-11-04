@@ -25,7 +25,7 @@ import {
 } from '../styles/VideoGallery.styles';
 import { VideoGalleryStyles } from '../VideoGallery';
 import { LocalScreenShare } from './LocalScreenShare';
-import { _LocalVideoTileLayout } from './LocalVideoTileLayout';
+import { _FloatingLocalVideoTile } from './FloatingLocalVideoTile';
 import { RemoteScreenShare } from './RemoteScreenShare';
 
 // Currently the Calling JS SDK supports up to 4 remote video streams
@@ -176,7 +176,7 @@ export const _FloatingLocalVideoLayout = (props: _FloatingLocalVideoLayoutProps)
   return (
     <>
       <LayerHost id={layerHostId} className={mergeStyles(layerHostStyle)} />
-      <_LocalVideoTileLayout
+      <_FloatingLocalVideoTile
         shouldFloatLocalVideo={shouldFloatLocalVideo}
         shouldFloatNonDraggableLocalVideo={shouldFloatNonDraggableLocalVideo}
         horizontalGalleryPresent={horizontalGalleryPresent}

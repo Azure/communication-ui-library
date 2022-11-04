@@ -33,7 +33,6 @@ import { _formatString } from '@internal/acs-ui-common';
 import { _LocalVideoTile } from './LocalVideoTile';
 /* @conditional-compile-remove(rooms) */
 import { _usePermissions } from '../permissions';
-import { _LocalVideoTileLayout } from './VideoGallery/LocalVideoTileLayout';
 import { _FloatingLocalVideoLayout } from './VideoGallery/FloatingLocalVideoLayout';
 
 /**
