@@ -22,7 +22,7 @@ import { HoldButtonStrings } from '../components';
 /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
 import { DialpadStrings } from '../components';
 /* @conditional-compile-remove(call-readiness) */
-import { DomainPermissionsStrings } from '../components/DevicePermissions/DomainPermissions';
+import { DomainPermissionsStrings } from '../components/DevicePermissions/DomainPermissionsScaffolding';
 /* @conditional-compile-remove(call-readiness) */
 import { BrowserPermissionDeniedStrings } from '../components/DevicePermissions/BrowserPermissionDenied';
 /* @conditional-compile-remove(call-readiness) */
@@ -94,7 +94,22 @@ export interface ComponentStrings {
   holdButton: HoldButtonStrings;
   /* @conditional-compile-remove(call-readiness) */
   /** Strings for DomainPermissions */
-  DomainPermissions: DomainPermissionsStrings;
+  CameraAndMicrophoneDomainPermissions: DomainPermissionsStrings;
+  /* @conditional-compile-remove(call-readiness) */
+  /** Strings for DomainPermissions */
+  CameraDomainPermissions: DomainPermissionsStrings;
+  /* @conditional-compile-remove(call-readiness) */
+  /** Strings for DomainPermissions */
+  MicrophoneDomainPermissions: DomainPermissionsStrings;
+  /* @conditional-compile-remove(call-readiness) */
+  /** Strings for DomainPermissions */
+  CameraAndMicrophoneDomainPermissionsDenied: DomainPermissionsStrings;
+  /* @conditional-compile-remove(call-readiness) */
+  /** Strings for DomainPermissions */
+  CameraDomainPermissionsDenied: DomainPermissionsStrings;
+  /* @conditional-compile-remove(call-readiness) */
+  /** Strings for DomainPermissions */
+  MicrophoneDomainPermissionsDenied: DomainPermissionsStrings;
   /* @conditional-compile-remove(unsupported-browser) */
   /** Strings for unsupported browser UI */
   UnsupportedBrowser: UnsupportedBrowserStrings;

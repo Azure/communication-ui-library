@@ -1020,6 +1020,20 @@ export interface CallWithChatControlOptions {
 // @public
 export type CallWithChatEvent = 'callError' | 'chatError' | 'callEnded' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'callParticipantsJoined' | 'callParticipantsLeft' | 'selectedMicrophoneChanged' | 'selectedSpeakerChanged' | 'messageReceived' | 'messageSent' | 'messageRead' | 'chatParticipantsAdded' | 'chatParticipantsRemoved';
 
+// @beta
+export const CameraAndMicrophoneDomainPermissions: (props: CameraAndMicrophoneDomainPermissionsProps) => JSX.Element;
+
+// @beta
+export interface CameraAndMicrophoneDomainPermissionsProps extends CommonDomainPermissionsProps {
+    cameraIconName?: string;
+    connectorIconName?: string;
+    microphoneIconName?: string;
+    strings?: CameraAndMicrophoneDomainPermissionsStrings;
+}
+
+// @beta
+export type CameraAndMicrophoneDomainPermissionsStrings = DomainPermissionsStrings;
+
 // @public
 export const CameraButton: (props: CameraButtonProps) => JSX.Element;
 
@@ -1069,6 +1083,18 @@ export interface CameraButtonStrings {
 export interface CameraButtonStyles extends ControlBarButtonStyles {
     menuStyles?: Partial<CameraButtonContextualMenuStyles>;
 }
+
+// @beta
+export const CameraDomainPermissions: (props: CameraDomainPermissionsProps) => JSX.Element;
+
+// @beta
+export interface CameraDomainPermissionsProps extends CommonDomainPermissionsProps {
+    cameraIconName?: string;
+    strings?: CameraDomainPermissionsStrings;
+}
+
+// @beta
+export type CameraDomainPermissionsStrings = DomainPermissionsStrings;
 
 // @public
 export type ChatAdapter = ChatAdapterThreadManagement & AdapterState<ChatAdapterState> & Disposable & ChatAdapterSubscribers & FileUploadAdapter;
@@ -1305,6 +1331,15 @@ export type ClientState = CallClientState & ChatClientState;
 // @public
 export type Common<A, B> = Pick<A, CommonProperties<A, B>>;
 
+// @beta
+export interface CommonDomainPermissionsProps {
+    appName: string;
+    onContinueAnywayClick?: () => void;
+    onTroubleshootingClick?: () => void;
+    styles?: DomainPermissionsStyles;
+    type: 'request' | 'denied';
+}
+
 // @public
 export type CommonProperties<A, B> = {
     [P in keyof A & keyof B]: A[P] extends B[P] ? P : never;
@@ -1375,16 +1410,21 @@ export type ComponentProps<Component extends (props: any) => JSX.Element> = Chat
 export interface ComponentStrings {
     BrowserPermissionDenied: BrowserPermissionDeniedStrings;
     BrowserPermissionDeniedIOS: BrowserPermissionDeniedIOSStrings;
+    CameraAndMicrophoneDomainPermissions: DomainPermissionsStrings;
+    CameraAndMicrophoneDomainPermissionsDenied: DomainPermissionsStrings;
     cameraButton: CameraButtonStrings;
+    CameraDomainPermissions: DomainPermissionsStrings;
+    CameraDomainPermissionsDenied: DomainPermissionsStrings;
     devicesButton: DevicesButtonStrings;
     dialpad: DialpadStrings;
-    DomainPermissions: DomainPermissionsStrings;
     endCallButton: EndCallButtonStrings;
     errorBar: ErrorBarStrings;
     holdButton: HoldButtonStrings;
     messageStatusIndicator: MessageStatusIndicatorStrings;
     messageThread: MessageThreadStrings;
     microphoneButton: MicrophoneButtonStrings;
+    MicrophoneDomainPermissions: DomainPermissionsStrings;
+    MicrophoneDomainPermissionsDenied: DomainPermissionsStrings;
     participantItem: ParticipantItemStrings;
     participantsButton: ParticipantsButtonStrings;
     screenShareButton: ScreenShareButtonStrings;
@@ -1677,6 +1717,8 @@ export const DEFAULT_COMPONENT_ICONS: {
     DomainPermissionsSparkle: JSX.Element;
     DomainPermissionCamera: JSX.Element;
     DomainPermissionMic: JSX.Element;
+    DomainPermissionCameraDenied: JSX.Element;
+    DomainPermissionMicDenied: JSX.Element;
     UnsupportedBrowserWarning: JSX.Element;
     BrowserPermissionDeniedError: JSX.Element;
 };
@@ -1766,6 +1808,8 @@ export const DEFAULT_COMPOSITE_ICONS: {
     DomainPermissionsSparkle: JSX.Element;
     DomainPermissionCamera: JSX.Element;
     DomainPermissionMic: JSX.Element;
+    DomainPermissionCameraDenied: JSX.Element;
+    DomainPermissionMicDenied: JSX.Element;
     UnsupportedBrowserWarning: JSX.Element;
     BrowserPermissionDeniedError: JSX.Element;
 };
@@ -1922,23 +1966,18 @@ export interface Disposable {
 }
 
 // @beta
-export const DomainPermissions: (props: DomainPermissionsProps) => JSX.Element;
+export type DomainPermissionsStrings = {
+    primaryText?: string;
+    secondaryText?: string;
+    linkText?: string;
+    primaryButtonText?: string;
+    ariaLabel?: string;
+};
 
 // @beta
-export interface DomainPermissionsProps {
-    appName: string;
-    onAllowAccessClick?: () => void;
-    onTroubleshootingClick?: () => void;
-    strings?: DomainPermissionsStrings;
-}
-
-// @beta
-export interface DomainPermissionsStrings {
-    ariaLabel: string;
-    linkText: string;
-    primaryButtonText: string;
-    primaryText: string;
-    secondaryText: string;
+export interface DomainPermissionsStyles extends BaseCustomStyles {
+    primaryButton?: IButtonStyles;
+    troubleshootingLink?: ILinkStyles;
 }
 
 // @beta
@@ -2466,6 +2505,18 @@ export interface MicrophoneButtonStrings {
 export interface MicrophoneButtonStyles extends ControlBarButtonStyles {
     menuStyles?: Partial<MicrophoneButtonContextualMenuStyles>;
 }
+
+// @beta
+export const MicrophoneDomainPermissions: (props: MicrophoneDomainPermissionsProps) => JSX.Element;
+
+// @beta
+export interface MicrophoneDomainPermissionsProps extends CommonDomainPermissionsProps {
+    microphoneIconName?: string;
+    strings?: MicrophoneDomainPermissionsStrings;
+}
+
+// @beta
+export type MicrophoneDomainPermissionsStrings = DomainPermissionsStrings;
 
 // @public
 export type NetworkDiagnosticChangedEvent = NetworkDiagnosticChangedEventArgs & {

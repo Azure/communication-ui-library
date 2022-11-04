@@ -3,112 +3,62 @@
 
 import React from 'react';
 /* @conditional-compile-remove(call-readiness) */
-import { Stack, Text, Link, Icon, useTheme, PrimaryButton } from '@fluentui/react';
-/* @conditional-compile-remove(call-readiness) */
 import { useLocale } from '../../localization';
+import { DomainPermissionsStrings, DomainPermissionsStyles } from './DomainPermissionsScaffolding';
 /* @conditional-compile-remove(call-readiness) */
-import { _formatString, _pxToRem } from '@internal/acs-ui-common';
+import { DomainPermissionsContainer } from './DomainPermissionsScaffolding';
 /* @conditional-compile-remove(call-readiness) */
-import {
-  iconContainerStyles,
-  iconPrimaryStyles,
-  linkTextStyles,
-  primaryButtonStyles,
-  primaryTextStyles,
-  secondaryTextStyles,
-  sparkleIconBackdropStyles,
-  textContainerStyles
-} from '../styles/DomainPermissions.styles';
-/* @conditional-compile-remove(call-readiness) */
-import { isValidString } from '../utils';
+import { useShallowMerge } from '../utils/merge';
 
 /**
  * @beta
- * Props for DomainPermissions component.
+ * Props for DomainPermissions components.
  */
-export interface DomainPermissionsProps {
+export interface CommonDomainPermissionsProps {
   /**
    * Name of application calling experience is in.
    */
   appName: string;
   /**
+   * Type of the Domain Permissions component.
+   */
+  type: 'request' | 'denied';
+  /**
    * Action to be taken by the more help link. Possible to send to external page or show other modal.
+   * If this is not provided the button will not be shown.
    */
   onTroubleshootingClick?: () => void;
   /**
-   * Action to be taken by the Allow Access button.
+   * Action that is taken when the user clicks the continue anyway button.
+   * If this is not provided the button will not be shown.
    */
-  onAllowAccessClick?: () => void;
+  onContinueAnywayClick?: () => void;
   /**
-   * Localization strings for DomainPermissions component.
+   * Styles for DomainPermissions component.
    */
-  strings?: DomainPermissionsStrings;
+  styles?: DomainPermissionsStyles;
 }
 
 /**
  * @beta
- * Strings for DomainPermissions component
+ * Strings for CameraAndMicrophoneDomainPermissions component.
  */
-export interface DomainPermissionsStrings {
-  /**
-   * Main text string.
-   */
-  primaryText: string;
-  /**
-   * Subtext string.
-   */
-  secondaryText: string;
-  /**
-   * More help link string.
-   */
-  linkText: string;
-  /**
-   * Primary button text string.
-   */
-  primaryButtonText: string;
-  /**
-   * Aira label describing the content of the container
-   */
-  ariaLabel: string;
+export type CameraAndMicrophoneDomainPermissionsStrings = DomainPermissionsStrings;
+
+/**
+ * @beta
+ * Props for CameraAndMicrophoneDomainPermissions component.
+ */
+export interface CameraAndMicrophoneDomainPermissionsProps extends CommonDomainPermissionsProps {
+  /** Icon name for the camera icon */
+  cameraIconName?: string;
+  /** Icon name for the microphone icon */
+  microphoneIconName?: string;
+  /** Icon name for the central icon between the camera and microphone icons */
+  connectorIconName?: string;
+  /** Strings for use with the {@link CameraAndMicrophoneDomainPermissions} */
+  strings?: CameraAndMicrophoneDomainPermissionsStrings;
 }
-
-/* @conditional-compile-remove(call-readiness) */
-const DomainPermissionsContainer = (props: DomainPermissionsProps): JSX.Element => {
-  const { appName, onTroubleshootingClick, onAllowAccessClick, strings } = props;
-  const theme = useTheme();
-  return (
-    <Stack style={{ padding: '2rem', maxWidth: '25.375rem' }} aria-label={strings?.ariaLabel}>
-      <Stack horizontal style={{ paddingBottom: '1rem' }} horizontalAlign={'space-between'}>
-        <Stack styles={iconContainerStyles} horizontalAlign={'center'}>
-          <Icon styles={iconPrimaryStyles} iconName={'DomainPermissionCamera'}></Icon>
-        </Stack>
-        <Stack styles={iconContainerStyles} horizontalAlign={'center'}>
-          <Icon styles={sparkleIconBackdropStyles(theme)} iconName={'DomainPermissionsSparkle'}></Icon>
-        </Stack>
-        <Stack styles={iconContainerStyles} horizontalAlign={'center'}>
-          <Icon styles={iconPrimaryStyles} iconName={'DomainPermissionMic'}></Icon>
-        </Stack>
-      </Stack>
-      <Stack styles={textContainerStyles}>
-        {strings && isValidString(strings?.primaryText) && (
-          <Text styles={primaryTextStyles}>{_formatString(strings.primaryText, { appName: appName })}</Text>
-        )}
-        {strings && isValidString(strings?.secondaryText) && (
-          <Text styles={secondaryTextStyles}>{strings?.secondaryText}</Text>
-        )}
-
-        {onAllowAccessClick && isValidString(strings?.primaryButtonText) && (
-          <PrimaryButton styles={primaryButtonStyles} text={strings?.primaryButtonText} onClick={onAllowAccessClick} />
-        )}
-        {onTroubleshootingClick && isValidString(strings?.linkText) && (
-          <Link styles={linkTextStyles} onClick={onTroubleshootingClick}>
-            {strings?.linkText}
-          </Link>
-        )}
-      </Stack>
-    </Stack>
-  );
-};
 
 /**
  * @beta
@@ -116,10 +66,135 @@ const DomainPermissionsContainer = (props: DomainPermissionsProps): JSX.Element 
  * Component to allow Contoso to help their end user with their devices should their permissions be blocked
  * by their browsers settings.
  */
-export const DomainPermissions = (props: DomainPermissionsProps): JSX.Element => {
+export const CameraAndMicrophoneDomainPermissions = (props: CameraAndMicrophoneDomainPermissionsProps): JSX.Element => {
   /* @conditional-compile-remove(call-readiness) */
-  const locale = useLocale().strings.DomainPermissions;
+  const locale = useLocale().strings;
+
   /* @conditional-compile-remove(call-readiness) */
-  return <DomainPermissionsContainer {...props} strings={props.strings ? props.strings : locale} />;
+  const strings = useShallowMerge(
+    props.type === 'denied'
+      ? locale.CameraAndMicrophoneDomainPermissionsDenied
+      : locale.CameraAndMicrophoneDomainPermissions,
+    props.strings
+  );
+
+  /* @conditional-compile-remove(call-readiness) */
+  const cameraIconName =
+    props.microphoneIconName ?? props.type === 'denied' ? 'DomainPermissionCameraDenied' : 'DomainPermissionCamera';
+  /* @conditional-compile-remove(call-readiness) */
+  const microphoneIconName =
+    props.microphoneIconName ?? props.type === 'denied' ? 'DomainPermissionMicDenied' : 'DomainPermissionMic';
+  /* @conditional-compile-remove(call-readiness) */
+  const connectorIconName = props.microphoneIconName ?? 'DomainPermissionsSparkle';
+
+  /* @conditional-compile-remove(call-readiness) */
+  return (
+    <DomainPermissionsContainer
+      {...props}
+      strings={strings}
+      cameraIconName={cameraIconName}
+      connectorIconName={connectorIconName}
+      microphoneIconName={microphoneIconName}
+      onPrimaryButtonClick={props.onContinueAnywayClick}
+    />
+  );
+  return <></>;
+};
+
+/**
+ * @beta
+ * Strings for MicrophoneDomainPermissions component.
+ */
+export type MicrophoneDomainPermissionsStrings = DomainPermissionsStrings;
+
+/**
+ * @beta
+ * Props for MicrophoneDomainPermissions component.
+ */
+export interface MicrophoneDomainPermissionsProps extends CommonDomainPermissionsProps {
+  /** Icon name for the microphone icon */
+  microphoneIconName?: string;
+  /** Strings for use with the {@link MicrophoneDomainPermissions} */
+  strings?: MicrophoneDomainPermissionsStrings;
+}
+
+/**
+ * Component to allow Contoso to help their end user with their devices should their permissions be blocked
+ * by their browsers settings.
+ *
+ * @beta
+ */
+export const MicrophoneDomainPermissions = (props: MicrophoneDomainPermissionsProps): JSX.Element => {
+  /* @conditional-compile-remove(call-readiness) */
+  const locale = useLocale().strings;
+
+  /* @conditional-compile-remove(call-readiness) */
+  const strings = useShallowMerge(
+    props.type === 'denied' ? locale.MicrophoneDomainPermissionsDenied : locale.MicrophoneDomainPermissions,
+    props.strings
+  );
+
+  /* @conditional-compile-remove(call-readiness) */
+  const iconName =
+    props.microphoneIconName ?? props.type === 'denied' ? 'DomainPermissionMicDenied' : 'DomainPermissionMic';
+
+  /* @conditional-compile-remove(call-readiness) */
+  return (
+    <DomainPermissionsContainer
+      {...props}
+      strings={strings}
+      cameraIconName={iconName}
+      onPrimaryButtonClick={props.onContinueAnywayClick}
+    />
+  );
+  return <></>;
+};
+
+/**
+ * @beta
+ * Strings for CameraDomainPermissions component.
+ */
+export type CameraDomainPermissionsStrings = DomainPermissionsStrings;
+
+/**
+ * @beta
+ * Props for CameraDomainPermissions component.
+ */
+export interface CameraDomainPermissionsProps extends CommonDomainPermissionsProps {
+  /** Icon name for the camera icon */
+  cameraIconName?: string;
+  /** Strings for use with the {@link CameraDomainPermissions} */
+  strings?: CameraDomainPermissionsStrings;
+}
+
+/**
+ * Component to allow Contoso to help their end user with their devices should their permissions be blocked
+ * by their browsers settings.
+ *
+ * @beta
+ */
+export const CameraDomainPermissions = (props: CameraDomainPermissionsProps): JSX.Element => {
+  /* @conditional-compile-remove(call-readiness) */
+  const locale = useLocale().strings;
+
+  /* @conditional-compile-remove(call-readiness) */
+  const strings = useShallowMerge(
+    props.type === 'denied' ? locale.CameraDomainPermissionsDenied : locale.CameraDomainPermissions,
+    props.strings
+  );
+
+  /* @conditional-compile-remove(call-readiness) */
+  const iconName =
+    props.cameraIconName ?? props.type === 'denied' ? 'DomainPermissionCameraDenied' : 'DomainPermissionCamera';
+
+  /* @conditional-compile-remove(call-readiness) */
+  return (
+    <DomainPermissionsContainer
+      {...props}
+      strings={strings}
+      microphoneIconName={iconName}
+      onPrimaryButtonClick={props.onContinueAnywayClick}
+    />
+  );
   return <></>;
 };

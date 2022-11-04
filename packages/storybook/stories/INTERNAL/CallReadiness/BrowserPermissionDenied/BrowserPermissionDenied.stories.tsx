@@ -5,7 +5,6 @@ import { Stack } from '@fluentui/react';
 import {
   BrowserPermissionDenied as BrowserPermissionDeniedComponent,
   BrowserPermissionDeniedIOS as BrowserPermissionDeniedIOSComponent,
-  DomainPermissions as DomainPermissionsComponent,
   _DrawerSurface
 } from '@internal/react-components';
 import { Canvas, Description, Heading, Props, Subheading, Title } from '@storybook/addon-docs';
@@ -89,7 +88,7 @@ const getDocs: () => JSX.Element = () => {
       <Canvas mdxSource={BrowserPermissionDeniedAndroidDrawerExample}>
         <BrowserPemissionDeniedAndroidDrawer />
       </Canvas>
-      <Props of={DomainPermissionsComponent} />
+      <Props of={BrowserPermissionDeniedComponent} />
     </Stack>
   );
 };
