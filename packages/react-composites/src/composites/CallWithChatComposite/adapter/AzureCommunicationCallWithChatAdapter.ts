@@ -85,8 +85,9 @@ class CallWithChatContext {
   private emitter = new EventEmitter();
   private state: CallWithChatAdapterState;
 
-  constructor(clientState: CallWithChatAdapterState) {
+  constructor(clientState: CallWithChatAdapterState, maxListeners = 50) {
     this.state = clientState;
+    this.emitter.setMaxListeners(maxListeners);
   }
 
   public onStateChange(handler: CallWithChatAdapterStateChangedHandler): void {
