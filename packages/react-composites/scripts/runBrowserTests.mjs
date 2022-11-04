@@ -30,7 +30,7 @@ const TEST_PATH_RELATIVE = {
   hermetic: {
     call: path.join('tests', 'browser', 'call', 'hermetic'),
     chat: path.join('tests', 'browser', 'chat', 'hermetic'),
-    callWithChat: path.join('test', 'browser', 'callwithchat', 'hermetic')
+    callWithChat: path.join('tests', 'browser', 'callwithchat', 'hermetic')
   },
   live: {
     call: path.join('tests', 'browser', 'call', 'live'),
