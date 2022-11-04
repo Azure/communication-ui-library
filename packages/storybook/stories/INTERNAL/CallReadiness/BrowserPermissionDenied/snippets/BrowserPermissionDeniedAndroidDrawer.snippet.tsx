@@ -8,7 +8,7 @@ import { useLocale } from '../../../../../../react-components/src/localization';
 import { MobilePreviewContainer } from '../../../../MobileContainer';
 
 export const BrowserPemissionDeniedAndroidDrawer: () => JSX.Element = () => {
-  const locale = useLocale().strings.CameraAndMicrophoneDomainPermissions;
+  const locale = useLocale().strings.CameraAndMicrophoneDomainPermissionsRequest;
   const [isDrawerShowing, setIsDrawerShowing] = useState(true);
   const onLightDismissTriggered = (): void => setIsDrawerShowing(false);
   return (
