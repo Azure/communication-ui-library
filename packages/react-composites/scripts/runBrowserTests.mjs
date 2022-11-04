@@ -17,22 +17,28 @@ const BABELRC = path.join(PACKLET_ROOT, '.babelrc.js');
 const BASE_OUTPUT_DIR = path.join(PACKLET_ROOT, 'test-results');
 
 const SRC_ROOT = path.join(PACKLET_ROOT, 'src');
-const TEST_ROOT = path.join(PACKLET_ROOT, 'tests');
+// The default root directory for Playright tests is the directory that
+// contains the Playwright configuraion file.
+const TEST_ROOT = path.join(PACKLET_ROOT);
 const PREPROCESSED_ROOT = path.join(PACKLET_ROOT, 'preprocessed');
-const PREPROCESSED_TEST_ROOT = path.join(PREPROCESSED_ROOT, 'tests');
+// For preprocessed tests, we specify a different root directory so that the
+// test snapshot path generation computes the the same relative path to the
+// test root.
+const PREPROCESSED_TEST_ROOT = path.join(PREPROCESSED_ROOT);
 const PREPROCESSED_SRC_ROOT = path.join(PREPROCESSED_ROOT, 'src');
 const TEST_PATH_RELATIVE = {
   hermetic: {
-    call: path.join('browser', 'call', 'hermetic'),
-    chat: path.join('browser', 'chat', 'hermetic'),
-    callWithChat: path.join('browser', 'callwithchat', 'hermetic')
+    call: path.join('tests', 'browser', 'call', 'hermetic'),
+    chat: path.join('tests', 'browser', 'chat', 'hermetic'),
+    callWithChat: path.join('test', 'browser', 'callwithchat', 'hermetic')
   },
   live: {
-    call: path.join('browser', 'call', 'live'),
-    chat: path.join('browser', 'chat', 'live'),
-    callWithChat: path.join('browser', 'callwithchat', 'live')
+    call: path.join('tests', 'browser', 'call', 'live'),
+    chat: path.join('tests', 'browser', 'chat', 'live'),
+    callWithChat: path.join('tests', 'browser', 'callwithchat', 'live')
   }
 };
+const SNAPSHOT_ROOT = path.join(TEST_ROOT, 'tests', 'browser', 'snapshots');
 
 const PLAYWRIGHT_CONFIG = {
   hermetic: path.join(PACKLET_ROOT, 'playwright.config.hermetic.ts'),
@@ -113,9 +119,10 @@ async function runOne(testRoot, args, composite, hermeticity) {
   }
 
   const extraEnv = {
-    // Snapshots are always stored in the original test sources, even when the test root
+    TEST_DIR: testRoot,
+    // Snapshots are always stored with the original test sources, even when the test root
     // is different due to preprocessed test files.
-    SNAPSHOT_DIR: path.join(TEST_ROOT, 'browser', 'snapshots', getBuildFlavor()),
+    SNAPSHOT_DIR: path.join(SNAPSHOT_ROOT, getBuildFlavor()),
     // TODO(prprabhu) Drop this envvar once tests stop using `isTestProfileStableFlavor()`.
     COMMUNICATION_REACT_FLAVOR: getBuildFlavor(),
     PLAYWRIGHT_OUTPUT_DIR: path.join(BASE_OUTPUT_DIR, Date.now().toString())
@@ -156,7 +163,7 @@ async function preprocessTests() {
   fs.rmSync(PREPROCESSED_ROOT, { recursive: true, force: true });
   await createTsconfigTrampoline();
   await preprocessDir(SRC_ROOT, PREPROCESSED_SRC_ROOT);
-  await preprocessDir(TEST_ROOT, PREPROCESSED_TEST_ROOT);
+  await preprocessDir(path.join(TEST_ROOT, 'tests'), path.join(PREPROCESSED_TEST_ROOT, 'tests'));
 }
 
 async function createTsconfigTrampoline() {

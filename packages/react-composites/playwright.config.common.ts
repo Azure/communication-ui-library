@@ -9,6 +9,10 @@ const DESKTOP_VIEWPORT = {
   height: 768
 };
 
+const testDir = process.env.TEST_DIR;
+if (!testDir) {
+  throw new Error('Environment variable TEST_DIR not set');
+}
 const snapshotDir = process.env.SNAPSHOT_DIR;
 if (!snapshotDir) {
   throw new Error('Environment variable SNAPSHOT_DIR not set');
@@ -90,6 +94,7 @@ const config: PlaywrightTestConfig = {
     }
   ],
   reporter: process.env.CI ? CI_REPORTERS : LOCAL_REPORTERS,
+  testDir: testDir,
   snapshotDir: snapshotDir
 };
 
