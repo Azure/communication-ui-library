@@ -6,7 +6,6 @@ import {
   buildUrl,
   dataUiId,
   isTestProfileDesktop,
-  isTestProfileStableFlavor,
   loadCallPageWithParticipantVideos,
   pageClick,
   stableScreenshot,
@@ -54,8 +53,8 @@ test.describe('CallWithChat Composite CallWithChat Page Tests', () => {
     expect(await stableScreenshot(page)).toMatchSnapshot(`call-with-chat-gallery-screen-with-people-pane.png`);
   });
 
+  /* @conditional-compile-remove(PSTN-calls) */
   test('More Drawer menu opens and displays dialpad', async ({ pages }) => {
-    test.skip(isTestProfileStableFlavor());
     const page = pages[1];
     await pageClick(page, dataUiId('call-with-chat-composite-more-button'));
     const moreButtonShowDialpadButton = await page.$('div[role="menu"] >> text="Show dialpad"');
@@ -63,8 +62,8 @@ test.describe('CallWithChat Composite CallWithChat Page Tests', () => {
     expect(await stableScreenshot(page)).toMatchSnapshot(`call-with-chat-more-drawer-dtmf-dialpad.png`);
   });
 
+  /* @conditional-compile-remove(PSTN-calls) */
   test('More Drawer menu opens and can choose to be on hold', async ({ pages }) => {
-    test.skip(isTestProfileStableFlavor());
     const page = pages[1];
     await pageClick(page, dataUiId('call-with-chat-composite-more-button'));
     const moreButtonHoldCallButton = await page.$('div[role="menu"] >> text="Hold call"');
