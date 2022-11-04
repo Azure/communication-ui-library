@@ -89,7 +89,7 @@ export interface ComponentStrings {
   // @conditional-compile-remove(PSTN-calls)
   /** Strings for VideoTile */
   videoTile: VideoTileStrings;
-  /* @conditional-compile-remove(one-to-n-calling) */ /* @condtional-compile-remove(one-to-n-calling) */
+  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   /** Strings for HoldButton */
   holdButton: HoldButtonStrings;
   /* @conditional-compile-remove(call-readiness) */
