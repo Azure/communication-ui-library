@@ -1336,7 +1336,7 @@ export interface CommonDomainPermissionsProps {
     onContinueAnywayClick?: () => void;
     onTroubleshootingClick?: () => void;
     styles?: DomainPermissionsStyles;
-    type: 'request' | 'denied';
+    type: 'request' | 'denied' | 'checking';
 }
 
 // @public
@@ -1409,11 +1409,13 @@ export type ComponentProps<Component extends (props: any) => JSX.Element> = Chat
 export interface ComponentStrings {
     BrowserPermissionDenied: BrowserPermissionDeniedStrings;
     BrowserPermissionDeniedIOS: BrowserPermissionDeniedIOSStrings;
-    CameraAndMicrophoneDomainPermissions: DomainPermissionsStrings;
+    CameraAndMicrophoneDomainPermissionsCheck: DomainPermissionsStrings;
     CameraAndMicrophoneDomainPermissionsDenied: DomainPermissionsStrings;
+    CameraAndMicrophoneDomainPermissionsRequest: DomainPermissionsStrings;
     cameraButton: CameraButtonStrings;
-    CameraDomainPermissions: DomainPermissionsStrings;
+    CameraDomainPermissionsCheck: DomainPermissionsStrings;
     CameraDomainPermissionsDenied: DomainPermissionsStrings;
+    CameraDomainPermissionsRequest: DomainPermissionsStrings;
     devicesButton: DevicesButtonStrings;
     dialpad: DialpadStrings;
     endCallButton: EndCallButtonStrings;
@@ -1422,8 +1424,9 @@ export interface ComponentStrings {
     messageStatusIndicator: MessageStatusIndicatorStrings;
     messageThread: MessageThreadStrings;
     microphoneButton: MicrophoneButtonStrings;
-    MicrophoneDomainPermissions: DomainPermissionsStrings;
+    MicrophoneDomainPermissionsCheck: DomainPermissionsStrings;
     MicrophoneDomainPermissionsDenied: DomainPermissionsStrings;
+    MicrophoneDomainPermissionsRequest: DomainPermissionsStrings;
     participantItem: ParticipantItemStrings;
     participantsButton: ParticipantsButtonStrings;
     screenShareButton: ScreenShareButtonStrings;

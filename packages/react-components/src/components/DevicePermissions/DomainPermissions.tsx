@@ -22,7 +22,7 @@ export interface CommonDomainPermissionsProps {
   /**
    * Type of the Domain Permissions component.
    */
-  type: 'request' | 'denied';
+  type: 'request' | 'denied' | 'checking';
   /**
    * Action to be taken by the more help link. Possible to send to external page or show other modal.
    * If this is not provided the button will not be shown.
@@ -74,7 +74,9 @@ export const CameraAndMicrophoneDomainPermissions = (props: CameraAndMicrophoneD
   const strings = useShallowMerge(
     props.type === 'denied'
       ? locale.CameraAndMicrophoneDomainPermissionsDenied
-      : locale.CameraAndMicrophoneDomainPermissions,
+      : props.type === 'request'
+      ? locale.CameraAndMicrophoneDomainPermissionsRequest
+      : locale.CameraAndMicrophoneDomainPermissionsCheck,
     props.strings
   );
 
@@ -130,7 +132,11 @@ export const MicrophoneDomainPermissions = (props: MicrophoneDomainPermissionsPr
 
   /* @conditional-compile-remove(call-readiness) */
   const strings = useShallowMerge(
-    props.type === 'denied' ? locale.MicrophoneDomainPermissionsDenied : locale.MicrophoneDomainPermissions,
+    props.type === 'denied'
+      ? locale.MicrophoneDomainPermissionsDenied
+      : props.type === 'request'
+      ? locale.MicrophoneDomainPermissionsRequest
+      : locale.MicrophoneDomainPermissionsCheck,
     props.strings
   );
 
@@ -179,7 +185,11 @@ export const CameraDomainPermissions = (props: CameraDomainPermissionsProps): JS
 
   /* @conditional-compile-remove(call-readiness) */
   const strings = useShallowMerge(
-    props.type === 'denied' ? locale.CameraDomainPermissionsDenied : locale.CameraDomainPermissions,
+    props.type === 'denied'
+      ? locale.CameraDomainPermissionsDenied
+      : props.type === 'request'
+      ? locale.CameraDomainPermissionsRequest
+      : locale.CameraDomainPermissionsCheck,
     props.strings
   );
 

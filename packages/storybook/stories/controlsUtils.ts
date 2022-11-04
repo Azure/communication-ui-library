@@ -227,7 +227,7 @@ export const controlsToAdd = {
   },
   domainDeviceRequestStatus: {
     control: 'select',
-    options: ['Request', 'Denied'],
+    options: ['Request', 'Denied', 'Checking'],
     defaultValue: 'Request',
     name: 'Request Status'
   },
