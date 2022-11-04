@@ -74,7 +74,7 @@ class CallContext {
   private state: CallAdapterState;
   private callId: string | undefined;
 
-  constructor(clientState: CallClientState, isTeamsCall: boolean) {
+  constructor(clientState: CallClientState, isTeamsCall: boolean, maxListeners = 50) {
     this.state = {
       isLocalPreviewMicrophoneEnabled: false,
       userId: clientState.userId,
@@ -87,6 +87,7 @@ class CallContext {
       /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId: clientState.alternateCallerId,
       /* @conditional-compile-remove(unsupported-browser) */ environmentInfo: clientState.environmentInfo
     };
+    this.emitter.setMaxListeners(maxListeners);
   }
 
   public onStateChange(handler: (_uiState: CallAdapterState) => void): void {

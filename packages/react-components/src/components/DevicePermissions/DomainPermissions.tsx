@@ -5,7 +5,7 @@ import React from 'react';
 /* @conditional-compile-remove(call-readiness) */
 import { Stack, Text, Link, Icon, useTheme, PrimaryButton } from '@fluentui/react';
 /* @conditional-compile-remove(call-readiness) */
-import { useLocale } from '../localization';
+import { useLocale } from '../../localization';
 /* @conditional-compile-remove(call-readiness) */
 import { _formatString, _pxToRem } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(call-readiness) */
@@ -18,9 +18,9 @@ import {
   secondaryTextStyles,
   sparkleIconBackdropStyles,
   textContainerStyles
-} from './styles/DomainPermissions.styles';
+} from '../styles/DomainPermissions.styles';
 /* @conditional-compile-remove(call-readiness) */
-import { isValidString } from './utils';
+import { isValidString } from '../utils';
 
 /**
  * @beta

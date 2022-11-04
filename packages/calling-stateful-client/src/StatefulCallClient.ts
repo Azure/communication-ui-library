@@ -13,6 +13,8 @@ import { createView, disposeView, CreateViewResult } from './StreamUtils';
 import { CommunicationIdentifier, CommunicationUserIdentifier, getIdentifierKind } from '@azure/communication-common';
 import { _getApplicationId } from '@internal/acs-ui-common';
 import { callingStatefulLogger } from './Logger';
+/* @conditional-compile-remove(teams-identity-support) */
+import { DeclarativeTeamsCallAgent, teamsCallAgentDeclaratify } from './TeamsCallAgentDeclarative';
 
 /**
  * Defines the methods that allow CallClient {@link @azure/communication-calling#CallClient} to be used statefully.
@@ -165,7 +167,10 @@ export type CallStateModifier = (state: CallClientState) => void;
 class ProxyCallClient implements ProxyHandler<CallClient> {
   private _context: CallContext;
   private _internalContext: InternalCallContext;
-  private _callAgent: DeclarativeCallAgent | undefined;
+  private _callAgent:
+    | DeclarativeCallAgent
+    | /* @conditional-compile-remove(teams-identity-support) */ DeclarativeTeamsCallAgent
+    | undefined;
   private _deviceManager: DeviceManager | undefined;
   private _sdkDeviceManager: DeviceManager | undefined;
 
@@ -191,6 +196,23 @@ class ProxyCallClient implements ProxyHandler<CallClient> {
           },
           'CallClient.createCallAgent'
         );
+      }
+      case 'createTeamsCallAgent': {
+        /* @conditional-compile-remove(teams-identity-support) */ return this._context.withAsyncErrorTeedToState(
+          async (...args: Parameters<CallClient['createTeamsCallAgent']>): Promise<DeclarativeTeamsCallAgent> => {
+            // createCallAgent will throw an exception if the previous callAgent was not disposed. If the previous
+            // callAgent was disposed then it would have unsubscribed to events so we can just create a new declarative
+            // callAgent if the createCallAgent succeeds.
+            const callAgent = await target.createTeamsCallAgent(...args);
+            this._callAgent = teamsCallAgentDeclaratify(callAgent, this._context, this._internalContext);
+            this._context.setCallAgent({
+              displayName: undefined
+            });
+            return this._callAgent;
+          },
+          'CallClient.createTeamsCallAgent'
+        );
+        return Reflect.get(target, prop);
       }
       case 'getDeviceManager': {
         return this._context.withAsyncErrorTeedToState(async () => {

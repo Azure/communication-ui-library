@@ -197,6 +197,11 @@ export interface CallState {
    * Proxy of {@link @azure/communication-calling#Call.id}.
    */
   id: string;
+  /* @conditional-compile-remove(teams-identity-support) */
+  /**
+   * Type of the call.
+   */
+  type: 'Teams' | 'ACS';
   /**
    * Proxy of {@link @azure/communication-calling#Call.callerInfo}.
    */
@@ -519,7 +524,7 @@ export type CallErrorTarget =
   | 'CallAgent.on'
   | 'CallAgent.startCall'
   | 'CallClient.createCallAgent'
-  | /* @conditional-compile-remove(calling-beta-sdk) */ 'CallClient.createTeamsCallAgent'
+  | /* @conditional-compile-remove(calling-beta-sdk) */ /* @conditional-compile-remove(teams-identity-support) */ 'CallClient.createTeamsCallAgent'
   | 'CallClient.feature'
   | 'CallClient.getDeviceManager'
   | /* @conditional-compile-remove(calling-beta-sdk) */ 'CallClient.getEnvironmentInfo'
@@ -532,7 +537,8 @@ export type CallErrorTarget =
   | 'DeviceManager.selectMicrophone'
   | 'DeviceManager.selectSpeaker'
   | 'IncomingCall.accept'
-  | 'IncomingCall.reject';
+  | 'IncomingCall.reject'
+  | /* @conditional-compile-remove(calling-beta-sdk) */ /* @conditional-compile-remove(teams-identity-support) */ 'TeamsCall.addParticipant';
 
 /**
  * State only proxy for {@link @azure/communication-calling#DiagnosticsCallFeature}.
