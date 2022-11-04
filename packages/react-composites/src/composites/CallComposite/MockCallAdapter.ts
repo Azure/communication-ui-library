@@ -13,7 +13,7 @@ import { CallAdapter, CallAdapterState } from './adapter';
 export class MockCallAdapter implements CallAdapter {
   constructor(testState: {
     askDevicePermission?: (constrain: PermissionConstraints) => Promise<void>;
-    /* @conditional-compile-remove(rooms) */ roleHint?: Role;
+    /* @conditional-compile-remove(rooms) */ options?: { roleHint?: Role };
   }) {
     this.state = defaultCallAdapterState;
 
@@ -21,8 +21,8 @@ export class MockCallAdapter implements CallAdapter {
       this.askDevicePermission = testState.askDevicePermission;
     }
     /* @conditional-compile-remove(rooms) */
-    if (testState.roleHint) {
-      this.state.roleHint = testState.roleHint;
+    if (testState.options?.roleHint) {
+      this.state.roleHint = testState.options.roleHint;
     }
   }
 

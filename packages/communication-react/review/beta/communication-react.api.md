@@ -143,7 +143,9 @@ export type AzureCommunicationCallAdapterArgs = {
     credential: CommunicationTokenCredential;
     locator: CallAdapterLocator;
     alternateCallerId?: string;
-    roleHint?: Role;
+    options?: {
+        roleHint?: Role;
+    };
 };
 
 // @public
@@ -1506,10 +1508,12 @@ export interface ControlBarProps {
 }
 
 // @public
-export const createAzureCommunicationCallAdapter: ({ userId, displayName, credential, locator, alternateCallerId, roleHint }: AzureCommunicationCallAdapterArgs) => Promise<CallAdapter>;
+export const createAzureCommunicationCallAdapter: ({ userId, displayName, credential, locator, alternateCallerId, options }: AzureCommunicationCallAdapterArgs) => Promise<CallAdapter>;
 
 // @public
-export const createAzureCommunicationCallAdapterFromClient: (callClient: StatefulCallClient, callAgent: CallAgent, locator: CallAdapterLocator, roleHint?: Role | undefined) => Promise<CallAdapter>;
+export const createAzureCommunicationCallAdapterFromClient: (callClient: StatefulCallClient, callAgent: CallAgent, locator: CallAdapterLocator, options?: {
+    roleHint?: Role | undefined;
+} | undefined) => Promise<CallAdapter>;
 
 // @public
 export const createAzureCommunicationCallWithChatAdapter: ({ userId, displayName, credential, endpoint, locator, alternateCallerId }: AzureCommunicationCallWithChatAdapterArgs) => Promise<CallWithChatAdapter>;

@@ -77,7 +77,7 @@ class CallContext {
   constructor(
     clientState: CallClientState,
     isTeamsCall: boolean,
-    /* @conditional-compile-remove(rooms) */ roleHint?: undefined | /* @conditional-compile-remove(rooms) */ Role
+    /* @conditional-compile-remove(rooms) */ options?: { /* @conditional-compile-remove(rooms) */ roleHint?: Role }
   ) {
     this.state = {
       isLocalPreviewMicrophoneEnabled: false,
@@ -89,7 +89,7 @@ class CallContext {
       latestErrors: clientState.latestErrors,
       isTeamsCall,
       /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId: clientState.alternateCallerId,
-      /* @conditional-compile-remove(rooms) */ roleHint
+      /* @conditional-compile-remove(rooms) */ roleHint: options?.roleHint
     };
   }
 
@@ -203,7 +203,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     locator: CallAdapterLocator,
     callAgent: CallAgent,
     deviceManager: StatefulDeviceManager,
-    /* @conditional-compile-remove(rooms) */ roleHint?: undefined | /* @conditional-compile-remove(rooms) */ Role
+    /* @conditional-compile-remove(rooms) */ options?: { /* @conditional-compile-remove(rooms) */ roleHint?: Role }
   ) {
     this.bindPublicMethods();
     this.callClient = callClient;
@@ -214,7 +214,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     this.context = new CallContext(
       callClient.getState(),
       isTeamsMeeting,
-      /* @conditional-compile-remove(rooms) */ roleHint
+      /* @conditional-compile-remove(rooms) */ options
     );
 
     this.context.onCallEnded((endCallData) => this.emitter.emit('callEnded', endCallData));
@@ -746,7 +746,7 @@ export type AzureCommunicationCallAdapterArgs = {
   /* @conditional-compile-remove(PSTN-calls) */
   alternateCallerId?: string;
   /* @conditional-compile-remove(rooms) */
-  roleHint?: Role;
+  options?: { roleHint?: Role };
 };
 
 /**
@@ -764,7 +764,7 @@ export const createAzureCommunicationCallAdapter = async ({
   credential,
   locator,
   /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
-  /* @conditional-compile-remove(rooms) */ roleHint
+  /* @conditional-compile-remove(rooms) */ options
 }: AzureCommunicationCallAdapterArgs): Promise<CallAdapter> => {
   const callClient = createStatefulCallClient({
     userId,
@@ -777,7 +777,7 @@ export const createAzureCommunicationCallAdapter = async ({
     callClient,
     callAgent,
     locator,
-    /* @conditional-compile-remove(rooms) */ roleHint
+    /* @conditional-compile-remove(rooms) */ options
   );
   return adapter;
 };
@@ -823,7 +823,7 @@ export const useAzureCommunicationCallAdapter = (
     locator,
     userId,
     /*@conditional-compile-remove(PSTN-calls) */ alternateCallerId,
-    /*@conditional-compile-remove(rooms) */ roleHint
+    /*@conditional-compile-remove(rooms) */ options
   } = args;
 
   // State update needed to rerender the parent component when a new adapter is created.
@@ -865,7 +865,7 @@ export const useAzureCommunicationCallAdapter = (
           locator,
           userId,
           /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
-          /* @conditional-compile-remove(rooms) */ roleHint
+          /* @conditional-compile-remove(rooms) */ options
         });
         if (afterCreateRef.current) {
           newAdapter = await afterCreateRef.current(newAdapter);
@@ -884,7 +884,7 @@ export const useAzureCommunicationCallAdapter = (
       displayName,
       locator,
       userId,
-      /* @conditional-compile-remove(PSTN-calls) */ roleHint
+      /* @conditional-compile-remove(PSTN-calls) */ options
     ]
   );
 
@@ -919,7 +919,7 @@ let createAzureCommunicationCallAdapterFromClientToExport: (
   callClient: StatefulCallClient,
   callAgent: CallAgent,
   locator: CallAdapterLocator,
-  /* @conditional-compile-remove(rooms) */ roleHint?: Role
+  /* @conditional-compile-remove(rooms) */ options?: { roleHint?: Role }
 ) => Promise<CallAdapter> = createAzureCommunicationCallAdapterFromClientStable;
 
 /* @conditional-compile-remove(rooms) */
@@ -927,16 +927,19 @@ let createAzureCommunicationCallAdapterFromClientToExport: (
  * Create a {@link CallAdapter} using the provided {@link StatefulCallClient} and a provided role
  * to hint the user of their role specific for Rooms calls.
  *
+ * Useful if you want to keep a reference to {@link StatefulCallClient}.
+ * Consider using {@link createAzureCommunicationCallAdapter} for a simpler API.
+ *
  * @beta
  */
 createAzureCommunicationCallAdapterFromClientToExport = async (
   callClient: StatefulCallClient,
   callAgent: CallAgent,
   locator: CallAdapterLocator,
-  roleHint?: Role
+  /* @conditional-compile-remove(rooms) */ options?: { /* @conditional-compile-remove(rooms) */ roleHint?: Role }
 ): Promise<CallAdapter> => {
   const deviceManager = (await callClient.getDeviceManager()) as StatefulDeviceManager;
-  return new AzureCommunicationCallAdapter(callClient, locator, callAgent, deviceManager, roleHint);
+  return new AzureCommunicationCallAdapter(callClient, locator, callAgent, deviceManager, options);
 };
 
 /**
