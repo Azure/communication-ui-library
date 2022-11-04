@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Remove camera access error bar error for consumer role",
-  "packageName": "@internal/react-composites",
-  "email": "miguelgamis@microsoft.com",
-  "dependentChangeType": "patch"
-}

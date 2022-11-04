@@ -228,6 +228,8 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           onPermissionsTroubleshootingClick={props.options?.onPermissionsTroubleshootingClick}
           /* @conditional-compile-remove(call-readiness) */
           onNetworkingTroubleShootingClick={props.options?.onNetworkingTroubleShootingClick}
+          /* @conditional-compile-remove(call-readiness) */
+          callReadinessOptedIn={props.options?.callReadinessOptedIn}
         />
       );
       break;

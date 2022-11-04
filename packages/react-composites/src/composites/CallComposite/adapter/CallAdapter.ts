@@ -157,7 +157,7 @@ export type DisplayNameChangedListener = (event: {
  *
  * @public
  */
-export type CallAdapterCallEndedEvent = { callId?: string };
+export type CallAdapterCallEndedEvent = { callId: string };
 
 /**
  * Callback for {@link CallAdapterSubscribers} 'callEnded' event.

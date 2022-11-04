@@ -5,7 +5,6 @@
 ```ts
 
 import { AudioDeviceInfo } from '@azure/communication-calling';
-import { CallAgent } from '@azure/communication-calling';
 import { CallClient } from '@azure/communication-calling';
 import { CallClientOptions } from '@azure/communication-calling';
 import { CallDirection } from '@azure/communication-calling';
@@ -106,9 +105,6 @@ export type CreateViewResult = {
     renderer: VideoStreamRenderer;
     view: VideoStreamRendererView;
 };
-
-// @public
-export type DeclarativeCallAgent = CallAgent;
 
 // @public
 export type DeviceManagerState = {
