@@ -112,7 +112,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
       joinInvitationURL={window.location.href}
       formFactor={isMobileSession ? 'mobile' : 'desktop'}
       /* @conditional-compile-remove(call-readiness) */
-      options={options}
+      options={{ ...options, unsupportedBrowserOptedIn: true }}
     />
   );
 };

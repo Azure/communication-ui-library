@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 /* @conditional-compile-remove(unsupported-browser) */
-import { Stack } from '@fluentui/react';
+import { IStackStyles, Stack } from '@fluentui/react';
 /* @conditional-compile-remove(unsupported-browser) */
 import { UnsupportedBrowser } from '@internal/react-components';
 import React from 'react';
@@ -30,9 +30,16 @@ export const UnsupportedBrowserPage = (props: UnsupportedBrowserPageProps): JSX.
 
   /* @conditional-compile-remove(unsupported-browser) */
   return (
-    <Stack styles={{ root: { margin: 'auto', paddingTop: '3rem' } }}>
+    <Stack styles={containerStyles}>
       <UnsupportedBrowser onTroubleshootingClick={onTroubleshootingClick} strings={unsupportedBrowserStrings} />
     </Stack>
   );
   return <></>;
+};
+
+const containerStyles: IStackStyles = {
+  root: {
+    margin: 'auto',
+    paddingTop: '3rem'
+  }
 };

@@ -132,6 +132,12 @@ export type CallWithChatCompositeOptions = {
    * setting this to True will add call readiness feature in call experience
    */
   callReadinessOptedIn?: boolean;
+  /* @conditional-compile-remove(unsupported-browser) */
+  /**
+   * Opt in Unsupported browser feature for CallComposite
+   * Setting this to `true` will add the unsupportedBrowser Check to the CallComposite.
+   */
+  unsupportedBrowserOptedIn?: boolean;
 };
 
 /**
@@ -214,6 +220,8 @@ type CallWithChatScreenProps = {
   devicePermissions?: DevicePermissionRestrictions;
   /* @conditional-compile-remove(call-readiness) */
   callReadinessOptedIn?: boolean;
+  /* @conditional-compile-remove(unsupported-browser) */
+  unsupportedBrowserOptedIn?: boolean;
 };
 
 const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
@@ -380,7 +388,9 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
                 /* @conditional-compile-remove(call-readiness) */
                 devicePermissions: props.devicePermissions,
                 /* @conditional-compile-remove(call-readiness) */
-                callReadinessOptedIn: props.callReadinessOptedIn
+                callReadinessOptedIn: props.callReadinessOptedIn,
+                /* @conditional-compile-remove(unsupported-browser) */
+                unsupportedBrowserOptedIn: props.unsupportedBrowserOptedIn
               }}
               adapter={callAdapter}
               fluentTheme={fluentTheme}
@@ -500,6 +510,8 @@ export const CallWithChatComposite = (props: CallWithChatCompositeProps): JSX.El
         fluentTheme={fluentTheme}
         /* @conditional-compile-remove(file-sharing) */
         fileSharing={options?.fileSharing}
+        /* @conditional-compile-remove(unsupported-browser) */
+        unsupportedBrowserOptedIn={options?.unsupportedBrowserOptedIn}
       />
     </BaseProvider>
   );
