@@ -63,6 +63,7 @@ import { _pxToRem } from '@internal/acs-ui-common';
 import React from 'react';
 /* @conditional-compile-remove(unsupported-browser) */
 import { useTheme } from './FluentThemeProvider';
+/* @conditional-compile-remove(call-readiness) */
 import { domainPermissionIconBackgroundStyle, scaledIconStyles } from './icons.styles';
 
 /**
