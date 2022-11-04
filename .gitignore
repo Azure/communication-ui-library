@@ -93,7 +93,6 @@ build/
 temp/
 docGen/
 preprocessed/
-preprocessed-tests/
 preprocess-dist/
 
 # Release outputs

@@ -15,8 +15,12 @@ const __dirname = path.dirname(__filename);
 const PACKLET_ROOT = path.join(__dirname, '..');
 const BABELRC = path.join(PACKLET_ROOT, '.babelrc.js');
 const BASE_OUTPUT_DIR = path.join(PACKLET_ROOT, 'test-results');
+
+const SRC_ROOT = path.join(PACKLET_ROOT, 'src');
 const TEST_ROOT = path.join(PACKLET_ROOT, 'tests', 'browser');
-const PREPROCESSED_TEST_ROOT = path.join(PACKLET_ROOT, 'preprocessed-tests');
+const PREPROCESSED_ROOT = path.join(PACKLET_ROOT, 'preprocessed');
+const PREPROCESSED_TEST_ROOT = path.join(PREPROCESSED_ROOT, 'tests', 'browser');
+const PREPROCESSED_SRC_ROOT = path.join(PREPROCESSED_ROOT, 'src');
 const TEST_PATH_RELATIVE = {
   hermetic: {
     call: path.join('call', 'hermetic'),
@@ -42,7 +46,7 @@ const PLAYWRIGHT_PROJECT = {
 
 async function main(argv) {
   if (isStableBuild()) {
-    await preprocess(TEST_ROOT, PREPROCESSED_TEST_ROOT);
+    await preprocessTests();
   }
   const testRoot = isStableBuild() ? PREPROCESSED_TEST_ROOT : TEST_ROOT;
 
@@ -145,10 +149,16 @@ function setup() {
   fs.rmSync(BASE_OUTPUT_DIR, { recursive: true, force: true });
 }
 
-async function preprocess(fromDir, toDir) {
-  console.log('Preprocessing tests...');
-  fs.rmSync(toDir, { recursive: true, force: true });
-  fs.copySync(fromDir, toDir, { errorOnExist: true, preserveTimestamps: true });
+async function preprocessTests() {
+  fs.rmSync(PREPROCESSED_ROOT, { recursive: true, force: true });
+  await preprocessDir(SRC_ROOT, PREPROCESSED_SRC_ROOT);
+  await preprocessDir(TEST_ROOT, PREPROCESSED_TEST_ROOT);
+}
+
+async function preprocessDir(fromDir, toDir) {
+  console.log(`Preprocessing ${fromDir} to ${toDir}`);
+  fs.mkdirsSync(toDir);
+  fs.copySync(fromDir, toDir, { overwrite: true, preserveTimestamps: true });
   await exec(
     quote([
       'npx',
@@ -160,8 +170,7 @@ async function preprocess(fromDir, toDir) {
       '.ts,.tsx',
       '--config-file',
       BABELRC,
-      '--keep-file-extension',
-      '--relative'
+      '--keep-file-extension'
     ])
   );
 }
