@@ -1,36 +1,37 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Call } from '@azure/communication-calling';
+import { TeamsCall } from './BetaToStableTypes';
 import { ProxyCallCommon } from './CallDeclarativeCommon';
 import { CallContext } from './CallContext';
 
 /**
- * TODO: This should likely be exported?
  *
  * @private
  */
-export interface DeclarativeCall extends Call {
+export type DeclarativeTeamsCall = TeamsCall & {
   /**
    * Stop any declarative specific subscriptions and remove declarative subscribers.
    */
   unsubscribe(): void;
-}
+};
 
-class ProxyCall extends ProxyCallCommon implements ProxyHandler<Call> {
-  public get<P extends keyof Call>(target: Call, prop: P): any {
+class ProxyTeamsCall extends ProxyCallCommon implements ProxyHandler<TeamsCall> {
+  public get<P extends keyof TeamsCall>(target: TeamsCall, prop: P): any {
+    /* @conditional-compile-remove(teams-identity-support) */
     switch (prop) {
       case 'addParticipant': {
         return this.getContext().withAsyncErrorTeedToState(async function (
-          ...args: Parameters<Call['addParticipant']>
+          ...args: Parameters<TeamsCall['addParticipant']>
         ) {
           return await target.addParticipant(...args);
         },
-        'Call.addParticipant');
+        'TeamsCall.addParticipant');
       }
       default:
         return super.get(target, prop as any);
     }
+    return super.get(target, prop as any);
   }
 }
 
@@ -40,15 +41,16 @@ class ProxyCall extends ProxyCallCommon implements ProxyHandler<Call> {
  * call to the context properly (need to have the Call in context to update it - CallAgentDeclarative will add Call to
  * context)
  *
- * @param call - Call from SDK
+ * @param call - TeamsCall from SDK
  * @param context - CallContext from StatefulCallClient
  */
-export const callDeclaratify = (call: Call, context: CallContext): DeclarativeCall => {
-  const proxyCall = new ProxyCall(context);
+export const teamsCallDeclaratify = (call: TeamsCall, context: CallContext): DeclarativeTeamsCall => {
+  const proxyCall = new ProxyTeamsCall(context);
+  proxyCall.unsubscribe();
   Object.defineProperty(call, 'unsubscribe', {
     configurable: false,
     value: () => proxyCall.unsubscribe()
   });
 
-  return new Proxy(call, proxyCall) as DeclarativeCall;
+  return new Proxy(call, proxyCall) as DeclarativeTeamsCall;
 };
