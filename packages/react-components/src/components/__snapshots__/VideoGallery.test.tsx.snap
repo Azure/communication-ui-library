@@ -1,0 +1,105 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`VideoGallery should render local video tile as the only tile: VideoGallery-with-local-participant 1`] = `
+LoadedCheerio {
+  "0": <div
+    class="ms-Stack css-119"
+    style="height: 100px; width: 100px; position: relative;"
+  >
+    <div
+      class="css-114"
+      data-ui-id="video-gallery"
+    >
+      <div
+        class="ms-Stack css-121"
+      >
+        <div
+          class="css-123"
+        >
+          <div
+            aria-label="Movable Local Video Tile"
+            class="ms-Stack css-119"
+            role="dialog"
+            tabindex="0"
+          >
+            <div
+              class="ms-Stack css-129"
+              data-ui-id="video-tile"
+            >
+              <div
+                class="ms-Stack css-130"
+              >
+                <div
+                  class="ms-Stack css-131"
+                />
+                <div
+                  class="css-132"
+                >
+                  <div
+                    class="css-133"
+                    data-ui-id="stream-media-container"
+                  >
+                    <div
+                      style="height: 50px; width: 50px; background-color: purple;"
+                    >
+                      <div>
+                        LOCAL PARTICIPANT
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="ms-Stack css-134"
+              >
+                <div
+                  class="ms-Stack css-135"
+                >
+                  <span
+                    class="css-136"
+                    title="You"
+                  >
+                    You
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="ms-LayerHost css-120"
+          id="layerhost0"
+        />
+      </div>
+    </div>
+  </div>,
+  "_root": LoadedCheerio {
+    "0": Document {
+      "children": Array [
+        <html>
+          <head />
+          <body />
+        </html>,
+      ],
+      "endIndex": null,
+      "next": null,
+      "parent": null,
+      "prev": null,
+      "startIndex": null,
+      "type": "root",
+      "x-mode": "quirks",
+    },
+    "_root": [Circular],
+    "length": 1,
+    "options": Object {
+      "decodeEntities": true,
+      "xml": false,
+    },
+  },
+  "length": 1,
+  "options": Object {
+    "decodeEntities": true,
+    "xml": false,
+  },
+}
+`;
