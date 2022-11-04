@@ -115,6 +115,8 @@ async function runOne(testRoot, args, composite, hermeticity) {
   const env = {
     ...process.env,
     SNAPSHOT_DIR: path.join(testRoot, 'snapshots', getBuildFlavor()),
+    // TODO(prprabhu) Drop this envvar once tests stop using `isTestProfileStableFlavor()`.
+    COMMUNICATION_REACT_FLAVOR: getBuildFlavor(),
     PLAYWRIGHT_OUTPUT_DIR: path.join(BASE_OUTPUT_DIR, Date.now().toString())
   };
 
