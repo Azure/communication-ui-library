@@ -4,7 +4,7 @@
 
 import { exec, getBuildFlavor } from './common.mjs';
 import path from 'path';
-import { rmSync } from 'fs';
+import fs from 'fs-extra';
 import { quote } from 'shell-quote';
 import { fileURLToPath } from 'url';
 import yargs from 'yargs/yargs';
@@ -13,6 +13,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const PACKLET_ROOT = path.join(__dirname, '..');
+const BABELRC = path.join(PACKLET_ROOT, '.babelrc.js');
 const BASE_OUTPUT_DIR = path.join(PACKLET_ROOT, 'test-results');
 const TEST_ROOT = path.join(PACKLET_ROOT, 'tests', 'browser');
 const PREPROCESSED_TEST_ROOT = path.join(PACKLET_ROOT, 'preprocessed-tests');
@@ -141,12 +142,28 @@ async function runOne(testRoot, args, composite, hermeticity) {
 
 function setup() {
   console.log('Cleaning up output directory...');
-  rmSync(BASE_OUTPUT_DIR, { recursive: true, force: true });
+  fs.rmSync(BASE_OUTPUT_DIR, { recursive: true, force: true });
 }
 
 async function preprocess(fromDir, toDir) {
   console.log('Preprocessing tests...');
-  rmSync(toDir, { recursive: true, force: true });
+  fs.rmSync(toDir, { recursive: true, force: true });
+  fs.copySync(fromDir, toDir, { errorOnExist: true, preserveTimestamps: true });
+  await exec(
+    quote([
+      'npx',
+      'babel',
+      fromDir,
+      '--out-dir',
+      toDir,
+      '--extensions',
+      '.ts,.tsx',
+      '--config-file',
+      BABELRC,
+      '--keep-file-extension',
+      '--relative'
+    ])
+  );
 }
 
 function parseArgs(argv) {
