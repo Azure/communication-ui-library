@@ -3,7 +3,7 @@
 
 import { mergeStyles } from '@fluentui/react';
 /* @conditional-compile-remove(call-readiness) */ /* @conditional-compile-remove(unsupported-browser) */
-import { IStyle, Stack, Theme } from '@fluentui/react';
+import { Stack } from '@fluentui/react';
 import {
   ArrowClockwise16Regular,
   CallEnd20Filled,
@@ -63,6 +63,7 @@ import { _pxToRem } from '@internal/acs-ui-common';
 import React from 'react';
 /* @conditional-compile-remove(unsupported-browser) */
 import { useTheme } from './FluentThemeProvider';
+import { domainPermissionIconBackgroundStyle, scaledIconStyles } from './icons.styles';
 
 /**
  * Icons used by the React components exported from this library.
@@ -93,10 +94,7 @@ const MoreHorizontal18Regular = (): JSX.Element => (
 const DomainPermissionMic20Filled = (): JSX.Element => {
   const theme = useTheme();
   return (
-    <Stack
-      horizontalAlign={'center'}
-      styles={{ root: { borderRadius: '100%', background: theme.palette.themeLighterAlt, padding: '2rem' } }}
-    >
+    <Stack horizontalAlign={'center'} styles={domainPermissionIconBackgroundStyle(theme)}>
       <div className={mergeStyles(scaledIconStyles(theme))}>
         <MicOn20Filled />
       </div>
@@ -108,10 +106,7 @@ const DomainPermissionMic20Filled = (): JSX.Element => {
 const DomainPermissionCamera20Filled = (): JSX.Element => {
   const theme = useTheme();
   return (
-    <Stack
-      horizontalAlign={'center'}
-      styles={{ root: { borderRadius: '100%', background: theme.palette.themeLighterAlt, padding: '2rem' } }}
-    >
+    <Stack horizontalAlign={'center'} styles={domainPermissionIconBackgroundStyle(theme)}>
       <div className={mergeStyles(scaledIconStyles(theme))}>
         <Video20Filled />
       </div>
@@ -153,10 +148,7 @@ const UnsupportedBrowserWarning = (): JSX.Element => {
 const BrowserPermissionDenied20Filled = (): JSX.Element => {
   const theme = useTheme();
   return (
-    <Stack
-      horizontalAlign={'center'}
-      styles={{ root: { borderRadius: '100%', background: theme.palette.themeLighterAlt, padding: '2rem' } }}
-    >
+    <Stack horizontalAlign={'center'} styles={domainPermissionIconBackgroundStyle(theme)}>
       <div className={mergeStyles(scaledIconStyles(theme))}>
         <Important20Filled />
       </div>
@@ -241,17 +233,4 @@ export const DEFAULT_COMPONENT_ICONS = {
   UnsupportedBrowserWarning: <UnsupportedBrowserWarning />,
   /* @conditional-compile-remove(call-readiness) */
   BrowserPermissionDeniedError: <BrowserPermissionDenied20Filled />
-};
-
-/* @conditional-compile-remove(unsupported-browser) */
-const scaledIconStyles = (theme: Theme): IStyle => {
-  return {
-    transform: 'scale(2)',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    lineHeight: '0.2rem',
-    color: theme.palette.themePrimary,
-    zIndex: 1
-  };
 };
