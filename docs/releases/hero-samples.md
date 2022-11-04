@@ -97,3 +97,12 @@ This section uses [an update to the chat hero sample](https://github.com/Azure-S
 #### Call hero sample
 
 - Remove webpack injected globals and their use. [Example commit](https://github.com/Azure-Samples/communication-services-web-calling-hero/pull/154/commits/6d3a2854bdef06bc8304d6c11ad086facb8c4286)
+
+## Hero sample releases
+
+Whenever you update a hero sample, consider creating a new "release". The release bundles up the sample application and makes it available for the one-click deploy off of the sample README. As this one-click deploy is likely to be the first experience folks have with Azure Communication Services, it is important that it works smoothly and shows off the best features we have to offer!
+
+* [Chat](https://github.com/Azure-Samples/communication-services-web-chat-hero/releases)
+* [Calling](https://github.com/Azure-Samples/communication-services-web-calling-hero/releases)
+
+![image](https://user-images.githubusercontent.com/82062616/199340693-634f7a6f-c066-40ad-a2fd-b32f2523238c.png)

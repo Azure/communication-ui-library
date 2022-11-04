@@ -2,6 +2,8 @@
 // Licensed under the MIT license.
 
 import React from 'react';
+/* @conditional-compile-remove(call-readiness) */
+import { useState } from 'react';
 import { useAdaptedSelector } from '../hooks/useAdaptedSelector';
 import { useHandlers } from '../hooks/useHandlers';
 import { LocalDeviceSettings } from '../components/LocalDeviceSettings';
@@ -9,10 +11,14 @@ import { StartCallButton } from '../components/StartCallButton';
 import { devicePermissionSelector } from '../selectors/devicePermissionSelector';
 import { useSelector } from '../hooks/useSelector';
 import { DevicesButton, ErrorBar } from '@internal/react-components';
+/* @conditional-compile-remove(call-readiness) */
+import { DomainPermissions, _DrawerSurface, _DrawerSurfaceStyles } from '@internal/react-components';
 /* @conditional-compile-remove(rooms) */
 import { _usePermissions, _Permissions } from '@internal/react-components';
 import { getCallingSelector } from '@internal/calling-component-bindings';
 import { Stack } from '@fluentui/react';
+/* @conditional-compile-remove(call-readiness) */
+import { Modal } from '@fluentui/react';
 import { LocalPreview } from '../components/LocalPreview';
 import {
   callDetailsStyleDesktop,
@@ -36,6 +42,11 @@ import { useAdapter } from '../adapter/CallAdapterProvider';
 /* @conditional-compile-remove(call-readiness) */
 import { DevicePermissionRestrictions } from '../CallComposite';
 import { ConfigurationpageErrorBar } from '../components/ConfigurationpageErrorBar';
+/* @conditional-compile-remove(call-readiness) */
+import { drawerContainerStyles } from '../styles/CallComposite.styles';
+
+/* @conditional-compile-remove(call-readiness) */
+const DRAWER_HIGH_Z_BAND = 99; // setting z index to  99 so that it sit above all components
 
 /**
  * @private
@@ -52,6 +63,8 @@ export interface ConfigurationPageProps {
   }) => void;
   /* @conditional-compile-remove(call-readiness) */
   onNetworkingTroubleShootingClick?: () => void;
+  /* @conditional-compile-remove(call-readiness) */
+  callReadinessOptedIn?: boolean;
 }
 
 /**
@@ -63,7 +76,8 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
     mobileView,
     /* @conditional-compile-remove(call-readiness) */ devicePermissions,
     /* @conditional-compile-remove(call-readiness) */ onPermissionsTroubleshootingClick,
-    /* @conditional-compile-remove(call-readiness) */ onNetworkingTroubleShootingClick
+    /* @conditional-compile-remove(call-readiness) */ onNetworkingTroubleShootingClick,
+    /* @conditional-compile-remove(call-readiness) */ callReadinessOptedIn = false
   } = props;
 
   const options = useAdaptedSelector(getCallingSelector(DevicesButton));
@@ -133,6 +147,17 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
   /* @conditional-compile-remove(call-readiness) */
   const networkErrors = errorBarProps.activeErrorMessages.filter((message) => message.type === 'callNetworkQualityLow');
 
+  /* @conditional-compile-remove(call-readiness) */
+  const [isDrawerShowing, setIsDrawerShowing] = useState(true);
+  /* @conditional-compile-remove(call-readiness) */
+  const onLightDismissTriggered = (): void => {
+    // do nothing here
+    // only way to dismiss this drawer is clicking on allow access which will leads to device permission prompt
+  };
+
+  /* @conditional-compile-remove(call-readiness) */
+  const [isModalShowing, setIsModalShowing] = useState(false);
+
   return (
     <Stack className={mobileView ? configurationContainerStyleMobile : configurationContainerStyleDesktop}>
       <Stack styles={bannerNotificationStyles}>
@@ -149,8 +174,62 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
           /* @conditional-compile-remove(call-readiness) */
           onPermissionsTroubleshootingClick={onPermissionsTroubleshootingClick}
           errorBarProps={errorBarProps}
+          /* @conditional-compile-remove(call-readiness) */
+          callReadinessOptedIn={callReadinessOptedIn}
         />
       </Stack>
+
+      {
+        /* @conditional-compile-remove(call-readiness) */
+        //show this when clicking on enable camera button or enable mic button on desktop for the first time
+        //does not show if user has already grant mic or camera access
+        !mobileView && !cameraPermissionGranted && !microphonePermissionGranted && callReadinessOptedIn && (
+          <Modal
+            isOpen={isModalShowing}
+            isBlocking={false}
+            onDismiss={() => {
+              setIsModalShowing(false);
+            }}
+            overlay={{ styles: { root: { background: 'rgba(0,0,0,0.9)' } } }}
+          >
+            <DomainPermissions
+              appName={'app'}
+              onTroubleshootingClick={
+                onPermissionsTroubleshootingClick
+                  ? () => {
+                      onPermissionsTroubleshootingClick(permissionsState);
+                    }
+                  : undefined
+              }
+            />
+          </Modal>
+        )
+      }
+
+      {
+        /* @conditional-compile-remove(call-readiness) */
+        mobileView && isDrawerShowing && callReadinessOptedIn && (
+          <_DrawerSurface onLightDismiss={onLightDismissTriggered} styles={drawerContainerStyles(DRAWER_HIGH_Z_BAND)}>
+            <DomainPermissions
+              appName={'app'}
+              onTroubleshootingClick={
+                onPermissionsTroubleshootingClick
+                  ? () => {
+                      onPermissionsTroubleshootingClick(permissionsState);
+                    }
+                  : undefined
+              }
+              onAllowAccessClick={async () => {
+                await adapter.askDevicePermission({ video: true, audio: true });
+                adapter.queryCameras();
+                adapter.queryMicrophones();
+                adapter.querySpeakers();
+                setIsDrawerShowing(false);
+              }}
+            />
+          </_DrawerSurface>
+        )
+      }
       <Stack
         grow
         horizontal={!mobileWithPreview}
@@ -180,6 +259,12 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
                 {...localDeviceSettingsHandlers}
                 cameraPermissionGranted={cameraPermissionGranted}
                 microphonePermissionGranted={microphonePermissionGranted}
+                /* @conditional-compile-remove(call-readiness) */
+                callReadinessOptedIn={callReadinessOptedIn}
+                /* @conditional-compile-remove(call-readiness) */
+                onClickEnableDevicePermission={() => {
+                  setIsModalShowing(true);
+                }}
               />
             </>
           )}
