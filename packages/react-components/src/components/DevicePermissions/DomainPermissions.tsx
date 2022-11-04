@@ -22,7 +22,7 @@ export interface CommonDomainPermissionsProps {
   /**
    * Type of the Domain Permissions component.
    */
-  type: 'request' | 'denied' | 'checking';
+  type: 'request' | 'denied' | 'check';
   /**
    * Action to be taken by the more help link. Possible to send to external page or show other modal.
    * If this is not provided the button will not be shown.

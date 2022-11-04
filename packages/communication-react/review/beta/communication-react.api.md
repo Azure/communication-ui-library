@@ -1336,7 +1336,7 @@ export interface CommonDomainPermissionsProps {
     onContinueAnywayClick?: () => void;
     onTroubleshootingClick?: () => void;
     styles?: DomainPermissionsStyles;
-    type: 'request' | 'denied' | 'checking';
+    type: 'request' | 'denied' | 'check';
 }
 
 // @public
