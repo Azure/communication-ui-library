@@ -3,74 +3,68 @@
 exports[`VideoGallery should render local video tile as the only tile: VideoGallery-with-local-participant 1`] = `
 LoadedCheerio {
   "0": <div
-    class="ms-Stack css-119"
-    style="height: 100px; width: 100px; position: relative;"
+    class="css-114"
+    data-ui-id="video-gallery"
   >
     <div
-      class="css-114"
-      data-ui-id="video-gallery"
+      class="ms-Stack css-120"
     >
       <div
-        class="ms-Stack css-121"
+        class="css-122"
       >
         <div
-          class="css-123"
+          aria-label="Movable Local Video Tile"
+          class="ms-Stack css-123"
+          role="dialog"
+          tabindex="0"
         >
           <div
-            aria-label="Movable Local Video Tile"
-            class="ms-Stack css-119"
-            role="dialog"
-            tabindex="0"
+            class="ms-Stack css-129"
+            data-ui-id="video-tile"
           >
             <div
-              class="ms-Stack css-129"
-              data-ui-id="video-tile"
+              class="ms-Stack css-130"
+              style=""
             >
               <div
-                class="ms-Stack css-130"
+                class="ms-Stack css-153"
+              />
+              <div
+                class="css-154"
               >
                 <div
-                  class="ms-Stack css-131"
-                />
-                <div
-                  class="css-132"
+                  class="css-155"
+                  data-ui-id="stream-media-container"
                 >
-                  <div
-                    class="css-133"
-                    data-ui-id="stream-media-container"
-                  >
-                    <div
-                      style="height: 50px; width: 50px; background-color: purple;"
-                    >
-                      <div>
-                        LOCAL PARTICIPANT
-                      </div>
+                  <div>
+                    <div>
+                      LOCAL PARTICIPANT
                     </div>
                   </div>
                 </div>
               </div>
+            </div>
+            <div
+              class="ms-Stack css-149"
+            >
               <div
-                class="ms-Stack css-134"
+                class="ms-Stack css-156"
               >
-                <div
-                  class="ms-Stack css-135"
+                <span
+                  class="css-151"
+                  title="You"
                 >
-                  <span
-                    class="css-136"
-                    title="You"
-                  >
-                    You
-                  </span>
-                </div>
+                  You
+                </span>
               </div>
             </div>
           </div>
         </div>
-        <div
-          class="ms-LayerHost css-120"
-          id="layerhost0"
-        />
       </div>
+      <div
+        class="ms-LayerHost css-119"
+        id="layerhost0"
+      />
     </div>
   </div>,
   "_root": LoadedCheerio {
