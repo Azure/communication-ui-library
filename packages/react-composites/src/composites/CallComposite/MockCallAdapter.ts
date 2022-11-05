@@ -128,6 +128,8 @@ const defaultCallAdapterState: CallAdapterState = {
   page: 'call',
   call: {
     id: 'call1',
+    /* @conditional-compile-remove(teams-identity-support) */
+    type: 'ACS',
     callerInfo: { displayName: 'caller', identifier: { kind: 'communicationUser', communicationUserId: '1' } },
     direction: 'Incoming',
     transcription: { isTranscriptionActive: false },
