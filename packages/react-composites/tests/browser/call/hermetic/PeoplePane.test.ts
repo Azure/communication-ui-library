@@ -22,8 +22,6 @@ import {
 } from '../../common/utils';
 import { IDS } from '../../common/constants';
 
-const flavor = process.env?.['COMMUNICATION_REACT_FLAVOR'];
-
 // TODO(prprabhu): Merge the two tests below in a single `describe`
 // after metrics show that the tests have been stabilized.
 test.describe('Call Composite E2E CallPage Tests', () => {
@@ -51,7 +49,8 @@ test.describe('Call Composite E2E CallPage Tests', () => {
     } else {
       await pageClick(page, dataUiId('call-composite-participants-button'));
     }
-    if (flavor === 'stable') {
+
+    if (isTestProfileStableFlavor()) {
       const buttonCallOut = await waitForSelector(page, '.ms-Callout');
       // This will ensure no animation is happening for the callout
       await buttonCallOut.waitForElementState('stable');
@@ -86,7 +85,7 @@ test.describe('Call Composite E2E CallPage Tests', () => {
     );
     await pageClick(page, dataUiId('call-composite-participants-button'));
 
-    if (flavor === 'beta') {
+    if (!isTestProfileStableFlavor()) {
       await waitForSelector(page, dataUiId('call-composite-people-pane'));
     } else {
       await pageClick(page, dataUiId(IDS.participantButtonPeopleMenuItem));
@@ -125,7 +124,7 @@ test.describe('Call Composite E2E CallPage Tests', () => {
       await pageClick(page, dataUiId('call-composite-participants-button'));
     }
 
-    if (flavor === 'stable') {
+    if (isTestProfileStableFlavor()) {
       await pageClick(page, dataUiId(IDS.participantButtonPeopleMenuItem));
       // click on last person (myself) to remove any hover effect on participant items
       await pageClick(page, dataUiId('participant-item') + ' >> nth=3');
@@ -167,7 +166,7 @@ test.describe('Call composite participant menu items injection tests', async () 
     } else {
       await pageClick(page, dataUiId('call-composite-participants-button'));
     }
-    if (flavor === 'beta') {
+    if (!isTestProfileStableFlavor()) {
       if (!isTestProfileDesktop(testInfo)) {
         // click the first participant
         await pageClick(page, `${dataUiId('participant-list')} [role="menuitem"]`);
