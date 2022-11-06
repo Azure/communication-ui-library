@@ -14,7 +14,6 @@ import {
   dataUiId,
   isTestProfileDesktop,
   isTestProfileMobile,
-  isTestProfileStableFlavor,
   pageClick,
   perStepLocalTimeout,
   stableScreenshot,
