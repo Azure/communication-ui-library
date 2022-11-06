@@ -14,7 +14,6 @@ import {
   dataUiId,
   isTestProfileDesktop,
   isTestProfileMobile,
-  isTestProfileStableFlavor,
   pageClick,
   perStepLocalTimeout,
   stableScreenshot,
@@ -22,7 +21,7 @@ import {
   waitForSelector
 } from '../../common/utils';
 import { IDS } from '../../common/constants';
-import { MockCallAdapterState } from 'common';
+import { MockCallAdapterState } from '../../../common';
 
 test.describe('Participant list flyout tests', () => {
   test.skip(!participantListShownAsFlyout());
