@@ -21,7 +21,21 @@ import {
   waitForSelector
 } from '../../common/utils';
 import { IDS } from '../../common/constants';
-import { MockCallAdapterState } from '../../../common';
+import type { MockCallAdapterState } from '../../../common';
+
+const participantListShownAsFlyout = (): boolean => {
+  /* @conditional-compile-remove(one-to-n-calling) */
+  return false;
+  return true;
+};
+
+const participantListShownAsSidePane = (testInfo: TestInfo): boolean => {
+  return isTestProfileDesktop(testInfo) && !participantListShownAsFlyout();
+};
+
+const participantListShownAsFullScreenPane = (testInfo: TestInfo): boolean => {
+  return isTestProfileMobile(testInfo) && !participantListShownAsFlyout();
+};
 
 test.describe('Participant list flyout tests', () => {
   test.skip(!participantListShownAsFlyout());
@@ -182,18 +196,4 @@ const participantListInitialState = (): MockCallAdapterState => {
   ]);
   addDefaultMockLocalVideoStreamState(initialState);
   return initialState;
-};
-
-const participantListShownAsFlyout = (): boolean => {
-  /* @conditional-compile-remove(one-to-n-calling) */
-  return false;
-  return true;
-};
-
-const participantListShownAsSidePane = (testInfo: TestInfo): boolean => {
-  return isTestProfileDesktop(testInfo) && !participantListShownAsFlyout();
-};
-
-const participantListShownAsFullScreenPane = (testInfo: TestInfo): boolean => {
-  return isTestProfileMobile(testInfo) && !participantListShownAsFlyout();
 };
