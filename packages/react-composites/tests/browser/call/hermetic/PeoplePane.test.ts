@@ -37,6 +37,20 @@ test.describe('Participant list flyout tests', () => {
     await buttonCallOut.waitForElementState('stable');
     expect(await stableScreenshot(page)).toMatchSnapshot(`video-gallery-page-participants-flyout.png`);
   });
+
+  test('participant list opens and displays ellipses if passing in custom icon', async ({ page, serverUrl }) => {
+    await page.goto(
+      buildUrlWithMockAdapter(serverUrl, participantListInitialState(), {
+        showParticipantItemIcon: 'true',
+        callInvitationUrl: 'testUrl'
+      })
+    );
+    await pageClick(page, dataUiId('call-composite-participants-button'));
+    await pageClick(page, dataUiId(IDS.participantButtonPeopleMenuItem));
+    // click on last person (myself) to remove any hover effect on participant items
+    await pageClick(page, dataUiId('participant-item') + ' >> nth=3');
+    expect(await stableScreenshot(page)).toMatchSnapshot(`video-gallery-page-participants-flyout-custom-ellipses.png`);
+  });
 });
 
 test.describe('Participant list side pane tests', () => {
@@ -49,6 +63,18 @@ test.describe('Participant list side pane tests', () => {
     await pageClick(page, dataUiId('call-composite-participants-button'));
     await waitForSelector(page, dataUiId('call-composite-people-pane'));
     expect(await stableScreenshot(page)).toMatchSnapshot(`video-gallery-page-participants-flyout.png`);
+  });
+
+  test('participant list opens and displays ellipses if passing in custom icon', async ({ page, serverUrl }) => {
+    await page.goto(
+      buildUrlWithMockAdapter(serverUrl, participantListInitialState(), {
+        showParticipantItemIcon: 'true',
+        callInvitationUrl: 'testUrl'
+      })
+    );
+    await pageClick(page, dataUiId('call-composite-participants-button'));
+    await waitForSelector(page, dataUiId('call-composite-people-pane'));
+    expect(await stableScreenshot(page)).toMatchSnapshot(`video-gallery-page-participants-flyout-custom-ellipses.png`);
   });
 });
 
@@ -67,6 +93,23 @@ test.describe('Participant list full screen pane tests', () => {
     await waitForPiPiPToHaveLoaded(page, { skipVideoCheck: true });
 
     expect(await stableScreenshot(page)).toMatchSnapshot(`video-gallery-page-participants-flyout.png`);
+  });
+
+  test('participant list opens and displays ellipses if passing in custom icon', async ({ page, serverUrl }) => {
+    await page.goto(
+      buildUrlWithMockAdapter(serverUrl, participantListInitialState(), {
+        showParticipantItemIcon: 'true',
+        callInvitationUrl: 'testUrl'
+      })
+    );
+    await pageClick(page, dataUiId('call-with-chat-composite-more-button'));
+    const drawerPeopleMenuDiv = await page.$('div[role="menu"] >> text=People');
+    await drawerPeopleMenuDiv?.click();
+
+    await waitForSelector(page, dataUiId('call-composite-people-pane'));
+    await waitForPiPiPToHaveLoaded(page, { skipVideoCheck: true });
+
+    expect(await stableScreenshot(page)).toMatchSnapshot(`video-gallery-page-participants-flyout-custom-ellipses.png`);
   });
 });
 
@@ -100,38 +143,6 @@ const participantListShownAsFullScreenPane = (testInfo: TestInfo): boolean => {
 // TODO(prprabhu): Merge the two tests below in a single `describe`
 // after metrics show that the tests have been stabilized.
 test.describe('Call Composite E2E CallPage Tests', () => {
-  test('participant list opens and displays ellipses if passing in custom icon for desktop', async ({
-    page,
-    serverUrl
-  }, testInfo) => {
-    //only run this test on desktop
-    test.skip(!isTestProfileDesktop(testInfo));
-    const paul = defaultMockRemoteParticipant('Paul Bridges');
-    addVideoStream(paul, true);
-    paul.isSpeaking = true;
-    const fiona = defaultMockRemoteParticipant('Fiona Harper');
-    addVideoStream(fiona, true);
-    const participants = [paul, defaultMockRemoteParticipant('Eryka Klein'), fiona];
-    const initialState = defaultMockCallAdapterState(participants);
-
-    await page.goto(
-      buildUrlWithMockAdapter(serverUrl, initialState, {
-        showParticipantItemIcon: 'true',
-        callInvitationUrl: 'testUrl'
-      })
-    );
-    await pageClick(page, dataUiId('call-composite-participants-button'));
-
-    if (!isTestProfileStableFlavor()) {
-      await waitForSelector(page, dataUiId('call-composite-people-pane'));
-    } else {
-      await pageClick(page, dataUiId(IDS.participantButtonPeopleMenuItem));
-      // click on last person (myself) to remove any hover effect on participant items
-      await pageClick(page, dataUiId('participant-item') + ' >> nth=3');
-    }
-    expect(await stableScreenshot(page)).toMatchSnapshot(`video-gallery-page-participants-flyout-custom-ellipses.png`);
-  });
-
   test('participant list with custom ellipses on mobile, should not show ellipses for beta version people pane', async ({
     page,
     serverUrl
