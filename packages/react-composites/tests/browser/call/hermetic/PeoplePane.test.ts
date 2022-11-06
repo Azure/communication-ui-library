@@ -51,6 +51,27 @@ test.describe('Participant list flyout tests', () => {
     await pageClick(page, dataUiId('participant-item') + ' >> nth=3');
     expect(await stableScreenshot(page)).toMatchSnapshot(`video-gallery-page-participants-flyout-custom-ellipses.png`);
   });
+
+  test('injected menu items appear', async ({ page, serverUrl }) => {
+    await page.goto(
+      buildUrlWithMockAdapter(serverUrl, participantListInitialState(), {
+        injectParticipantMenuItems: 'true',
+        callInvitationUrl: 'testUrl'
+      })
+    );
+    await waitForSelector(page, dataUiId(IDS.videoGallery));
+
+    // Open participants flyout.
+    await pageClick(page, dataUiId('call-composite-participants-button'));
+    await pageClick(page, dataUiId(IDS.participantButtonPeopleMenuItem));
+    // There should be at least one participant. Just click on the first.
+    await page.hover(dataUiId('participant-item') + ' >> nth=0');
+    await pageClick(page, dataUiId(IDS.participantItemMenuButton) + ' >> nth=0');
+
+    const injectedMenuItem = await waitForSelector(page, dataUiId('test-app-participant-menu-item'));
+    await injectedMenuItem.waitForElementState('stable', { timeout: perStepLocalTimeout() });
+    expect(await stableScreenshot(page)).toMatchSnapshot(`participant-menu-item-flyout.png`);
+  });
 });
 
 test.describe('Participant list side pane tests', () => {
@@ -76,9 +97,27 @@ test.describe('Participant list side pane tests', () => {
     await waitForSelector(page, dataUiId('call-composite-people-pane'));
     expect(await stableScreenshot(page)).toMatchSnapshot(`video-gallery-page-participants-flyout-custom-ellipses.png`);
   });
+
+  test('injected menu items appear', async ({ page, serverUrl }, testInfo) => {
+    await page.goto(
+      buildUrlWithMockAdapter(serverUrl, participantListInitialState(), {
+        injectParticipantMenuItems: 'true',
+        callInvitationUrl: 'testUrl'
+      })
+    );
+    await waitForSelector(page, dataUiId(IDS.videoGallery));
+
+    // Open participants flyout.
+    await pageClick(page, dataUiId('call-composite-participants-button'));
+    await page.hover(dataUiId('participant-item'));
+    await pageClick(page, dataUiId(IDS.participantItemMenuButton));
+    await waitForSelector(page, '.ms-ContextualMenu-itemText');
+
+    expect(await stableScreenshot(page)).toMatchSnapshot(`participant-menu-item-flyout.png`);
+  });
 });
 
-test.describe('Participant list full screen pane tests', () => {
+test.describe('Participant list full screen pane with drawer tests', () => {
   test('participant list loads correctly', async ({ page, serverUrl }, testInfo) => {
     test.skip(!participantListShownAsFullScreenPane(testInfo));
 
@@ -111,6 +150,26 @@ test.describe('Participant list full screen pane tests', () => {
 
     expect(await stableScreenshot(page)).toMatchSnapshot(`video-gallery-page-participants-flyout-custom-ellipses.png`);
   });
+
+  test('injected menu items appear', async ({ page, serverUrl }, testInfo) => {
+    await page.goto(
+      buildUrlWithMockAdapter(serverUrl, participantListInitialState(), {
+        injectParticipantMenuItems: 'true',
+        callInvitationUrl: 'testUrl'
+      })
+    );
+    await waitForSelector(page, dataUiId(IDS.videoGallery));
+
+    await pageClick(page, dataUiId('call-with-chat-composite-more-button'));
+    const drawerPeopleMenuDiv = await page.$('div[role="menu"] >> text=People');
+    await drawerPeopleMenuDiv?.click();
+    // click the first participant
+    await pageClick(page, `${dataUiId('participant-list')} [role="menuitem"]`);
+
+    // wait for drawer to have opened
+    await waitForSelector(page, dataUiId('drawer-menu'));
+    expect(await stableScreenshot(page)).toMatchSnapshot(`participant-menu-item-flyout.png`);
+  });
 });
 
 const participantListInitialState = (): MockCallAdapterState => {
@@ -139,102 +198,3 @@ const participantListShownAsSidePane = (testInfo: TestInfo): boolean => {
 const participantListShownAsFullScreenPane = (testInfo: TestInfo): boolean => {
   return isTestProfileMobile(testInfo) && !participantListShownAsFlyout();
 };
-
-// TODO(prprabhu): Merge the two tests below in a single `describe`
-// after metrics show that the tests have been stabilized.
-test.describe('Call Composite E2E CallPage Tests', () => {
-  test('participant list with custom ellipses on mobile, should not show ellipses for beta version people pane', async ({
-    page,
-    serverUrl
-  }, testInfo) => {
-    //only run this test on mobile
-    test.skip(isTestProfileDesktop(testInfo));
-    const paul = defaultMockRemoteParticipant('Paul Bridges');
-    addVideoStream(paul, true);
-    paul.isSpeaking = true;
-    const fiona = defaultMockRemoteParticipant('Fiona Harper');
-    addVideoStream(fiona, true);
-    const participants = [paul, defaultMockRemoteParticipant('Eryka Klein'), fiona];
-    const initialState = defaultMockCallAdapterState(participants);
-
-    await page.goto(
-      buildUrlWithMockAdapter(serverUrl, initialState, {
-        showParticipantItemIcon: 'true',
-        callInvitationUrl: 'testUrl'
-      })
-    );
-
-    if (!isTestProfileStableFlavor()) {
-      await pageClick(page, dataUiId('call-with-chat-composite-more-button'));
-      const drawerPeopleMenuDiv = await page.$('div[role="menu"] >> text=People');
-      await drawerPeopleMenuDiv?.click();
-    } else {
-      await pageClick(page, dataUiId('call-composite-participants-button'));
-    }
-
-    if (isTestProfileStableFlavor()) {
-      await pageClick(page, dataUiId(IDS.participantButtonPeopleMenuItem));
-      // click on last person (myself) to remove any hover effect on participant items
-      await pageClick(page, dataUiId('participant-item') + ' >> nth=3');
-    } else {
-      await waitForSelector(page, dataUiId('call-composite-people-pane'));
-      await waitForPiPiPToHaveLoaded(page, { skipVideoCheck: true });
-    }
-    expect(await stableScreenshot(page)).toMatchSnapshot(
-      `video-gallery-page-participants-flyout-no-ellipses-beta-people-pane.png`
-    );
-  });
-});
-
-test.describe('Call composite participant menu items injection tests', async () => {
-  // TODO: Split this test into multiple tests: one for beta/desktop, beta/mobile, stable each.
-  // Do this after the test has been stabilized. Keep the same name for flakiness analysis.
-  test('injected menu items appear', async ({ page, serverUrl }, testInfo) => {
-    const paul = defaultMockRemoteParticipant('Paul Bridges');
-    addVideoStream(paul, true);
-    paul.isSpeaking = true;
-    const fiona = defaultMockRemoteParticipant('Fiona Harper');
-    addVideoStream(fiona, true);
-    const participants = [paul, defaultMockRemoteParticipant('Eryka Klein'), fiona];
-    const initialState = defaultMockCallAdapterState(participants);
-
-    await page.goto(
-      buildUrlWithMockAdapter(serverUrl, initialState, {
-        injectParticipantMenuItems: 'true',
-        callInvitationUrl: 'testUrl'
-      })
-    );
-    await waitForSelector(page, dataUiId(IDS.videoGallery));
-
-    // Open participants flyout.
-    if (!isTestProfileDesktop(testInfo) && !isTestProfileStableFlavor()) {
-      await pageClick(page, dataUiId('call-with-chat-composite-more-button'));
-      const drawerPeopleMenuDiv = await page.$('div[role="menu"] >> text=People');
-      await drawerPeopleMenuDiv?.click();
-    } else {
-      await pageClick(page, dataUiId('call-composite-participants-button'));
-    }
-    if (!isTestProfileStableFlavor()) {
-      if (!isTestProfileDesktop(testInfo)) {
-        // click the first participant
-        await pageClick(page, `${dataUiId('participant-list')} [role="menuitem"]`);
-        // wait for drawer to have opened
-        await waitForSelector(page, dataUiId('drawer-menu'));
-      } else {
-        await page.hover(dataUiId('participant-item'));
-        await pageClick(page, dataUiId(IDS.participantItemMenuButton));
-        await waitForSelector(page, '.ms-ContextualMenu-itemText');
-      }
-    } else {
-      // Open participant list flyout
-      await pageClick(page, dataUiId(IDS.participantButtonPeopleMenuItem));
-      await page.hover(dataUiId('participant-item') + ' >> nth=0');
-      // There should be at least one participant. Just click on the first.
-      await pageClick(page, dataUiId(IDS.participantItemMenuButton) + ' >> nth=0');
-
-      const injectedMenuItem = await waitForSelector(page, dataUiId('test-app-participant-menu-item'));
-      await injectedMenuItem.waitForElementState('stable', { timeout: perStepLocalTimeout() });
-    }
-    expect(await stableScreenshot(page)).toMatchSnapshot(`participant-menu-item-flyout.png`);
-  });
-});
