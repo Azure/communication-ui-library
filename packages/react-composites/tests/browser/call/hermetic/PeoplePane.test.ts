@@ -52,6 +52,8 @@ test.describe('Participant list flyout tests', () => {
   });
 
   test('participant list opens and displays ellipses if passing in custom icon', async ({ page, serverUrl }) => {
+    test.skip(!participantListShownAsFlyout());
+
     await page.goto(
       buildUrlWithMockAdapter(serverUrl, participantListInitialState(), {
         showParticipantItemIcon: 'true',
@@ -66,6 +68,8 @@ test.describe('Participant list flyout tests', () => {
   });
 
   test('injected menu items appear', async ({ page, serverUrl }) => {
+    test.skip(!participantListShownAsFlyout());
+
     await page.goto(
       buildUrlWithMockAdapter(serverUrl, participantListInitialState(), {
         injectParticipantMenuItems: 'true',
@@ -99,7 +103,12 @@ test.describe('Participant list side pane tests', () => {
     expect(await stableScreenshot(page)).toMatchSnapshot(`video-gallery-page-participants-flyout.png`);
   });
 
-  test('participant list opens and displays ellipses if passing in custom icon', async ({ page, serverUrl }) => {
+  test('participant list opens and displays ellipses if passing in custom icon', async ({
+    page,
+    serverUrl
+  }, testInfo) => {
+    test.skip(!participantListShownAsSidePane(testInfo));
+
     await page.goto(
       buildUrlWithMockAdapter(serverUrl, participantListInitialState(), {
         showParticipantItemIcon: 'true',
@@ -111,7 +120,9 @@ test.describe('Participant list side pane tests', () => {
     expect(await stableScreenshot(page)).toMatchSnapshot(`video-gallery-page-participants-flyout-custom-ellipses.png`);
   });
 
-  test('injected menu items appear', async ({ page, serverUrl }) => {
+  test('injected menu items appear', async ({ page, serverUrl }, testInfo) => {
+    test.skip(!participantListShownAsSidePane(testInfo));
+
     await page.goto(
       buildUrlWithMockAdapter(serverUrl, participantListInitialState(), {
         injectParticipantMenuItems: 'true',
@@ -147,7 +158,12 @@ test.describe('Participant list full screen pane with drawer tests', () => {
     expect(await stableScreenshot(page)).toMatchSnapshot(`video-gallery-page-participants-flyout.png`);
   });
 
-  test('participant list opens and displays ellipses if passing in custom icon', async ({ page, serverUrl }) => {
+  test('participant list opens and displays ellipses if passing in custom icon', async ({
+    page,
+    serverUrl
+  }, testInfo) => {
+    test.skip(!participantListShownAsFullScreenPane(testInfo));
+
     await page.goto(
       buildUrlWithMockAdapter(serverUrl, participantListInitialState(), {
         showParticipantItemIcon: 'true',
@@ -164,7 +180,9 @@ test.describe('Participant list full screen pane with drawer tests', () => {
     expect(await stableScreenshot(page)).toMatchSnapshot(`video-gallery-page-participants-flyout-custom-ellipses.png`);
   });
 
-  test('injected menu items appear', async ({ page, serverUrl }) => {
+  test('injected menu items appear', async ({ page, serverUrl }, testInfo) => {
+    test.skip(!participantListShownAsFullScreenPane(testInfo));
+
     await page.goto(
       buildUrlWithMockAdapter(serverUrl, participantListInitialState(), {
         injectParticipantMenuItems: 'true',
