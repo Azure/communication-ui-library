@@ -40,6 +40,6 @@ test.describe('JS Bundle Test', () => {
       content: `document.querySelector('[data-ui-id=message-timestamp]').innerText='timestamp';`
     });
 
-    // expect(await page.screenshot()).toMatchSnapshot('embeddedJsHtml.png');
+    expect(await page.screenshot()).toMatchSnapshot('embeddedJsHtml.png');
   });
 });

@@ -33,7 +33,7 @@ test.describe('JS Bundle Test', () => {
   // only need to make sure it is loading correctly, the rest will be the responsibility of composite tests
   test('Whether html page is loaded correctly with call composite', async ({ page }) => {
     expect(await page.waitForSelector('text=Start call')).toBeTruthy();
-
-    // expect(await page.screenshot()).toMatchSnapshot('embeddedJsHtml.png');
+    await page.waitForTimeout(1000);
+    expect(await page.screenshot()).toMatchSnapshot('embeddedJsHtml.png');
   });
 });
