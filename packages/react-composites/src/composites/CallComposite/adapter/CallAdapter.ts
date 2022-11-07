@@ -252,7 +252,16 @@ export interface CallAdapterCallManagement {
    *
    * @public
    */
-  startCall(participants: string[], options?: StartCallOptions): Call | undefined;
+  startCall(participants: string[], options?: StartCallOptions): void;
+  /* @conditional-compile-remove(PSTN-calls) */
+  /**
+   * Start the call.
+   *
+   * @param participants - An array of participant to join
+   *
+   * @public
+   */
+  startCall(participants: CommunicationIdentifier[], options?: StartCallOptions): void;
   /**
    * Start sharing the screen during a call.
    *
@@ -555,6 +564,8 @@ export type CallAdapter = Omit<CallAdapterCommon, keyof ACSCallManagement> & ACS
 export type ACSCallManagement = {
   joinCall(microphoneOn?: boolean): Call | undefined;
   startCall(participants: string[], options?: StartCallOptions): Call | undefined;
+  /* @conditional-compile-remove(PSTN-calls) */
+  startCall(participants: CommunicationIdentifier[], options?: StartCallOptions): Call | undefined;
 };
 
 /* @conditional-compile-remove(teams-identity-support) */
@@ -570,4 +581,6 @@ export type TeamsCallAdapter = Omit<CallAdapterCommon, keyof TeamsCallManagement
 export type TeamsCallManagement = {
   joinCall(microphoneOn?: boolean): TeamsCall | undefined;
   startCall(participants: string[], options?: StartCallOptions): TeamsCall | undefined;
+  /* @conditional-compile-remove(PSTN-calls) */
+  startCall(participants: CommunicationIdentifier[], options?: StartCallOptions): TeamsCall | undefined;
 };

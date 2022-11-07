@@ -47,7 +47,7 @@ import { SendMessageOptions } from '@azure/communication-chat';
 import { StartCallOptions } from '@azure/communication-calling';
 import { StatefulCallClient } from '@internal/calling-stateful-client';
 import { StatefulChatClient } from '@internal/chat-stateful-client';
-import type { TeamsCall } from '@azure/communication-calling';
+import { TeamsCall } from '@azure/communication-calling';
 import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { Theme } from '@fluentui/react';
 import { VideoDeviceInfo } from '@azure/communication-calling';
@@ -57,6 +57,7 @@ import { VideoStreamOptions } from '@internal/react-components';
 export type ACSCallManagement = {
     joinCall(microphoneOn?: boolean): Call | undefined;
     startCall(participants: string[], options?: StartCallOptions): Call | undefined;
+    startCall(participants: CommunicationIdentifier[], options?: StartCallOptions): Call | undefined;
 };
 
 // @public
@@ -165,9 +166,8 @@ export interface CallAdapterCallManagement {
     resumeCall(): Promise<void>;
     // @beta
     sendDtmfTone(dtmfTone: DtmfTone): Promise<void>;
-    startCall(participants: string[], options?: StartCallOptions): Call | undefined;
-    // @beta
-    startCall(participants: CommunicationIdentifier[], options?: StartCallOptions): Call | undefined;
+    startCall(participants: string[], options?: StartCallOptions): void;
+    startCall(participants: CommunicationIdentifier[], options?: StartCallOptions): void;
     startCamera(options?: VideoStreamOptions): Promise<void>;
     startScreenShare(): Promise<void>;
     stopCamera(): Promise<void>;
@@ -1227,6 +1227,7 @@ export type TeamsCallAdapter = Omit<CallAdapterCommon, keyof TeamsCallManagement
 export type TeamsCallManagement = {
     joinCall(microphoneOn?: boolean): TeamsCall | undefined;
     startCall(participants: string[], options?: StartCallOptions): TeamsCall | undefined;
+    startCall(participants: CommunicationIdentifier[], options?: StartCallOptions): TeamsCall | undefined;
 };
 
 // @public
