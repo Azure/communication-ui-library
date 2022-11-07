@@ -12,11 +12,13 @@ import { devicePermissionSelector } from '../selectors/devicePermissionSelector'
 import { useSelector } from '../hooks/useSelector';
 import { DevicesButton, ErrorBar } from '@internal/react-components';
 /* @conditional-compile-remove(call-readiness) */
-import { DomainPermissions, _DrawerSurface, _DrawerSurfaceStyles } from '@internal/react-components';
+import { CameraAndMicrophoneDomainPermissions, _DrawerSurface, _DrawerSurfaceStyles } from '@internal/react-components';
 /* @conditional-compile-remove(rooms) */
 import { _usePermissions, _Permissions } from '@internal/react-components';
 import { getCallingSelector } from '@internal/calling-component-bindings';
 import { Stack } from '@fluentui/react';
+/* @conditional-compile-remove(call-readiness) */
+import { Modal } from '@fluentui/react';
 import { LocalPreview } from '../components/LocalPreview';
 import {
   callDetailsStyleDesktop,
@@ -153,6 +155,9 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
     // only way to dismiss this drawer is clicking on allow access which will leads to device permission prompt
   };
 
+  /* @conditional-compile-remove(call-readiness) */
+  const [isModalShowing, setIsModalShowing] = useState(false);
+
   return (
     <Stack className={mobileView ? configurationContainerStyleMobile : configurationContainerStyleDesktop}>
       <Stack styles={bannerNotificationStyles}>
@@ -176,9 +181,18 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
 
       {
         /* @conditional-compile-remove(call-readiness) */
-        mobileView && isDrawerShowing && callReadinessOptedIn && (
-          <_DrawerSurface onLightDismiss={onLightDismissTriggered} styles={drawerContainerStyles(DRAWER_HIGH_Z_BAND)}>
-            <DomainPermissions
+        //show this when clicking on enable camera button or enable mic button on desktop for the first time
+        //does not show if user has already grant mic or camera access
+        !mobileView && !cameraPermissionGranted && !microphonePermissionGranted && callReadinessOptedIn && (
+          <Modal
+            isOpen={isModalShowing}
+            isBlocking={false}
+            onDismiss={() => {
+              setIsModalShowing(false);
+            }}
+            overlay={{ styles: { root: { background: 'rgba(0,0,0,0.9)' } } }}
+          >
+            <CameraAndMicrophoneDomainPermissions
               appName={'app'}
               onTroubleshootingClick={
                 onPermissionsTroubleshootingClick
@@ -187,7 +201,27 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
                     }
                   : undefined
               }
-              onAllowAccessClick={async () => {
+              type="request"
+            />
+          </Modal>
+        )
+      }
+
+      {
+        /* @conditional-compile-remove(call-readiness) */
+        mobileView && isDrawerShowing && callReadinessOptedIn && (
+          <_DrawerSurface onLightDismiss={onLightDismissTriggered} styles={drawerContainerStyles(DRAWER_HIGH_Z_BAND)}>
+            <CameraAndMicrophoneDomainPermissions
+              appName={'app'}
+              onTroubleshootingClick={
+                onPermissionsTroubleshootingClick
+                  ? () => {
+                      onPermissionsTroubleshootingClick(permissionsState);
+                    }
+                  : undefined
+              }
+              type="request"
+              onContinueAnywayClick={async () => {
                 await adapter.askDevicePermission({ video: true, audio: true });
                 adapter.queryCameras();
                 adapter.queryMicrophones();
@@ -229,6 +263,10 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
                 microphonePermissionGranted={microphonePermissionGranted}
                 /* @conditional-compile-remove(call-readiness) */
                 callReadinessOptedIn={callReadinessOptedIn}
+                /* @conditional-compile-remove(call-readiness) */
+                onClickEnableDevicePermission={() => {
+                  setIsModalShowing(true);
+                }}
               />
             </>
           )}

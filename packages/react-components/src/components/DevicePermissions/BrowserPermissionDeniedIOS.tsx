@@ -7,7 +7,7 @@ import { useMemo } from 'react';
 /* @conditional-compile-remove(call-readiness) */
 import { Stack, Text, Link, PrimaryButton, mergeStyleSets, useTheme, Image, ImageFit } from '@fluentui/react';
 /* @conditional-compile-remove(call-readiness) */
-import { useLocale } from '../localization';
+import { useLocale } from '../../localization';
 /* @conditional-compile-remove(call-readiness) */
 import { _formatString, _pxToRem } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(call-readiness) */
@@ -23,8 +23,10 @@ import {
   primaryTextStyles,
   secondaryTextStyles,
   textContainerStyles
-} from './styles/BrowserPermissionDenied.styles';
+} from './../styles/BrowserPermissionDenied.styles';
 import { BrowserPermissionDeniedProps, BrowserPermissionDeniedStrings } from './BrowserPermissionDenied';
+/* @conditional-compile-remove(call-readiness) */
+import { isValidString } from '../utils';
 
 /**
  * @beta
@@ -34,7 +36,7 @@ export interface BrowserPermissionDeniedIOSProps extends BrowserPermissionDenied
   /**
    * Localization strings for BrowserPermissionDeniedIOS component.
    */
-  strings: BrowserPermissionDeniedIOSStrings;
+  strings?: BrowserPermissionDeniedIOSStrings;
   /**
    * Link to image source.
    *
@@ -107,58 +109,64 @@ const BrowserPermissionDeniedIOSContainer = (props: BrowserPermissionDeniedIOSPr
     <Stack styles={browserPermissionContainerStyles}>
       {imageSource && (
         <Stack styles={mergeStyleSets(iOSImageContainer, { root: { background: theme.palette.neutralLighter } })}>
-          <Image
-            src={imageSource ?? ''}
-            alt={strings.imageAltText}
-            imageFit={ImageFit.centerContain}
-            style={{ padding: '1.5rem' }}
-          />
+          {isValidString(strings?.imageAltText) && (
+            <Image
+              src={imageSource ?? ''}
+              alt={strings?.imageAltText}
+              imageFit={ImageFit.centerContain}
+              style={{ padding: '1.5rem' }}
+            />
+          )}
         </Stack>
       )}
       <Stack style={{ padding: '1rem', paddingBottom: '1.25rem' }}>
         <Stack styles={textContainerStyles}>
-          <Text styles={primaryTextStyles}>{strings.primaryText}</Text>
-          <Text styles={secondaryTextStyles}>{strings.secondaryText}</Text>
-          {strings.step1Text && (
+          {isValidString(strings?.primaryText) && <Text styles={primaryTextStyles}>{strings?.primaryText}</Text>}
+          {isValidString(strings?.secondaryText) && <Text styles={secondaryTextStyles}>{strings?.secondaryText}</Text>}
+          {isValidString(strings?.step1Text) && (
             <Stack styles={iOSStepsContainerStyles}>
               <Stack horizontalAlign={'center'} styles={stepsCircleStyle}>
-                <Text styles={iOSStepsDigitTextStyles}>{strings.step1DigitText}</Text>
+                <Text styles={iOSStepsDigitTextStyles}>{strings?.step1DigitText}</Text>
               </Stack>
-              <Text styles={iOSStepsTextStyles}>{strings.step1Text}</Text>
+              <Text styles={iOSStepsTextStyles}>{strings?.step1Text}</Text>
             </Stack>
           )}
-          {strings.step2Text && (
+          {isValidString(strings?.step2Text) && (
             <Stack styles={iOSStepsContainerStyles}>
               <Stack horizontalAlign={'center'} styles={stepsCircleStyle}>
-                <Text styles={iOSStepsDigitTextStyles}>{strings.step2DigitText}</Text>
+                <Text styles={iOSStepsDigitTextStyles}>{strings?.step2DigitText}</Text>
               </Stack>
-              <Text styles={iOSStepsTextStyles}>{strings.step2Text}</Text>
+              <Text styles={iOSStepsTextStyles}>{strings?.step2Text}</Text>
             </Stack>
           )}
-          {strings.step3Text && (
+          {isValidString(strings?.step3Text) && (
             <Stack styles={iOSStepsContainerStyles}>
               <Stack horizontalAlign={'center'} styles={stepsCircleStyle}>
-                <Text styles={iOSStepsDigitTextStyles}>{strings.step3DigitText}</Text>
+                <Text styles={iOSStepsDigitTextStyles}>{strings?.step3DigitText}</Text>
               </Stack>
-              <Text styles={iOSStepsTextStyles}>{strings.step3Text}</Text>
+              <Text styles={iOSStepsTextStyles}>{strings?.step3Text}</Text>
             </Stack>
           )}
-          {strings.step4Text && (
+          {isValidString(strings?.step4Text) && (
             <Stack styles={mergeStyleSets(iOSStepsContainerStyles, { root: { paddingBottom: '1.5rem' } })}>
               <Stack horizontalAlign={'center'} styles={stepsCircleStyle}>
-                <Text styles={iOSStepsDigitTextStyles}>{strings.step4DigitText}</Text>
+                <Text styles={iOSStepsDigitTextStyles}>{strings?.step4DigitText}</Text>
               </Stack>
-              <Text styles={iOSStepsTextStyles}>{strings.step4Text}</Text>
+              <Text styles={iOSStepsTextStyles}>{strings?.step4Text}</Text>
             </Stack>
           )}
-          <PrimaryButton
-            styles={mergeStyleSets(primaryButtonStyles, styles?.primaryButton)}
-            text={strings.primaryButtonText}
-            onClick={onTryAgainClick}
-          />
-          <Link styles={mergeStyleSets(linkTextStyles, styles?.troubleshootingLink)} onClick={onTroubleshootingClick}>
-            {strings.linkText}
-          </Link>
+          {isValidString(strings?.primaryButtonText) && (
+            <PrimaryButton
+              styles={mergeStyleSets(primaryButtonStyles, styles?.primaryButton)}
+              text={strings?.primaryButtonText}
+              onClick={onTryAgainClick}
+            />
+          )}
+          {isValidString(strings?.linkText) && (
+            <Link styles={mergeStyleSets(linkTextStyles, styles?.troubleshootingLink)} onClick={onTroubleshootingClick}>
+              {strings?.linkText}
+            </Link>
+          )}
         </Stack>
       </Stack>
     </Stack>

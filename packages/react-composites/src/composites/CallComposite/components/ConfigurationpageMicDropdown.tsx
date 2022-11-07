@@ -23,6 +23,7 @@ export interface ConfigurationpageMicDropdownProps {
   micPermissionGranted: boolean;
   dropdownProps?: Record<string, never> & Partial<CallingHandlers>;
   callReadinessOptedIn?: boolean;
+  onClickEnableDevicePermission?: () => void;
 }
 
 /**
@@ -44,6 +45,7 @@ export const ConfigurationpageMicDropdown = (props: ConfigurationpageMicDropdown
       constrain={{ video: false, audio: true }}
       strings={devicePermissionDropdownStringsMicrophone}
       icon={<CallCompositeIcon iconName="ControlButtonMicOn" style={{ height: '1.25rem', marginRight: '0.625rem' }} />}
+      onClick={props.onClickEnableDevicePermission}
       {...props.dropdownProps}
     />
   );

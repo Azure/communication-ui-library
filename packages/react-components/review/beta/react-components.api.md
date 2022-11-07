@@ -76,7 +76,7 @@ export const BrowserPermissionDeniedIOS: (props: BrowserPermissionDeniedIOSProps
 // @beta
 export interface BrowserPermissionDeniedIOSProps extends BrowserPermissionDeniedProps {
     imageSource?: string;
-    strings: BrowserPermissionDeniedIOSStrings;
+    strings?: BrowserPermissionDeniedIOSStrings;
 }
 
 // @beta
@@ -96,9 +96,9 @@ export interface BrowserPermissionDeniedIOSStrings extends BrowserPermissionDeni
 
 // @beta
 export interface BrowserPermissionDeniedProps {
-    onTroubleshootingClick: () => void;
-    onTryAgainClick: () => void;
-    strings: BrowserPermissionDeniedStrings;
+    onTroubleshootingClick?: () => void;
+    onTryAgainClick?: () => void;
+    strings?: BrowserPermissionDeniedStrings;
     styles?: BrowserPermissionDeniedStyles;
 }
 
@@ -133,7 +133,22 @@ export type CallParticipantListParticipant = ParticipantListParticipant & {
     isScreenSharing?: boolean;
     isMuted?: boolean;
     isSpeaking?: boolean;
+    role?: Role;
 };
+
+// @beta
+export const CameraAndMicrophoneDomainPermissions: (props: CameraAndMicrophoneDomainPermissionsProps) => JSX.Element;
+
+// @beta
+export interface CameraAndMicrophoneDomainPermissionsProps extends CommonDomainPermissionsProps {
+    cameraIconName?: string;
+    connectorIconName?: string;
+    microphoneIconName?: string;
+    strings?: CameraAndMicrophoneDomainPermissionsStrings;
+}
+
+// @beta
+export type CameraAndMicrophoneDomainPermissionsStrings = DomainPermissionsStrings;
 
 // @public
 export const CameraButton: (props: CameraButtonProps) => JSX.Element;
@@ -177,6 +192,18 @@ export interface CameraButtonStyles extends ControlBarButtonStyles {
     menuStyles?: Partial<CameraButtonContextualMenuStyles>;
 }
 
+// @beta
+export const CameraDomainPermissions: (props: CameraDomainPermissionsProps) => JSX.Element;
+
+// @beta
+export interface CameraDomainPermissionsProps extends CommonDomainPermissionsProps {
+    cameraIconName?: string;
+    strings?: CameraDomainPermissionsStrings;
+}
+
+// @beta
+export type CameraDomainPermissionsStrings = DomainPermissionsStrings;
+
 // @public
 export interface ChatMessage extends MessageCommon {
     // (undocumented)
@@ -204,6 +231,15 @@ export interface ChatMessage extends MessageCommon {
     senderId?: string;
     // (undocumented)
     status?: MessageStatus;
+}
+
+// @beta
+export interface CommonDomainPermissionsProps {
+    appName: string;
+    onContinueAnywayClick?: () => void;
+    onTroubleshootingClick?: () => void;
+    styles?: DomainPermissionsStyles;
+    type: 'request' | 'denied' | 'check';
 }
 
 // @public
@@ -312,16 +348,24 @@ export interface ComponentLocale {
 export interface ComponentStrings {
     BrowserPermissionDenied: BrowserPermissionDeniedStrings;
     BrowserPermissionDeniedIOS: BrowserPermissionDeniedIOSStrings;
+    CameraAndMicrophoneDomainPermissionsCheck: DomainPermissionsStrings;
+    CameraAndMicrophoneDomainPermissionsDenied: DomainPermissionsStrings;
+    CameraAndMicrophoneDomainPermissionsRequest: DomainPermissionsStrings;
     cameraButton: CameraButtonStrings;
+    CameraDomainPermissionsCheck: DomainPermissionsStrings;
+    CameraDomainPermissionsDenied: DomainPermissionsStrings;
+    CameraDomainPermissionsRequest: DomainPermissionsStrings;
     devicesButton: DevicesButtonStrings;
     dialpad: DialpadStrings;
-    DomainPermissions: DomainPermissionsStrings;
     endCallButton: EndCallButtonStrings;
     errorBar: ErrorBarStrings;
     holdButton: HoldButtonStrings;
     messageStatusIndicator: MessageStatusIndicatorStrings;
     messageThread: MessageThreadStrings;
     microphoneButton: MicrophoneButtonStrings;
+    MicrophoneDomainPermissionsCheck: DomainPermissionsStrings;
+    MicrophoneDomainPermissionsDenied: DomainPermissionsStrings;
+    MicrophoneDomainPermissionsRequest: DomainPermissionsStrings;
     participantItem: ParticipantItemStrings;
     participantsButton: ParticipantsButtonStrings;
     screenShareButton: ScreenShareButtonStrings;
@@ -474,6 +518,8 @@ export const DEFAULT_COMPONENT_ICONS: {
     DomainPermissionsSparkle: JSX.Element;
     DomainPermissionCamera: JSX.Element;
     DomainPermissionMic: JSX.Element;
+    DomainPermissionCameraDenied: JSX.Element;
+    DomainPermissionMicDenied: JSX.Element;
     UnsupportedBrowserWarning: JSX.Element;
     BrowserPermissionDeniedError: JSX.Element;
 };
@@ -486,6 +532,7 @@ export interface _DevicePermissionDropdownProps {
     askDevicePermission?(constrain: _PermissionConstraints): Promise<void>;
     constrain?: _PermissionConstraints;
     icon?: JSX.Element;
+    onClick?: () => void;
     options?: IDropdownOption[];
     strings?: _DevicePermissionDropdownStrings;
     styles?: Partial<IDropdownStyles>;
@@ -580,23 +627,18 @@ export interface DialpadStyles {
 }
 
 // @beta
-export const DomainPermissions: (props: DomainPermissionsProps) => JSX.Element;
+export type DomainPermissionsStrings = {
+    primaryText?: string;
+    secondaryText?: string;
+    linkText?: string;
+    primaryButtonText?: string;
+    ariaLabel?: string;
+};
 
 // @beta
-export interface DomainPermissionsProps {
-    appName: string;
-    onAllowAccessClick?: () => void;
-    onTroubleshootingClick?: () => void;
-    strings?: DomainPermissionsStrings;
-}
-
-// @beta
-export interface DomainPermissionsStrings {
-    ariaLabel: string;
-    linkText: string;
-    primaryButtonText: string;
-    primaryText: string;
-    secondaryText: string;
+export interface DomainPermissionsStyles extends BaseCustomStyles {
+    primaryButton?: IButtonStyles;
+    troubleshootingLink?: ILinkStyles;
 }
 
 // @internal
@@ -1114,6 +1156,18 @@ export interface MicrophoneButtonStyles extends ControlBarButtonStyles {
     menuStyles?: Partial<MicrophoneButtonContextualMenuStyles>;
 }
 
+// @beta
+export const MicrophoneDomainPermissions: (props: MicrophoneDomainPermissionsProps) => JSX.Element;
+
+// @beta
+export interface MicrophoneDomainPermissionsProps extends CommonDomainPermissionsProps {
+    microphoneIconName?: string;
+    strings?: MicrophoneDomainPermissionsStrings;
+}
+
+// @beta
+export type MicrophoneDomainPermissionsStrings = DomainPermissionsStrings;
+
 // @internal (undocumented)
 export const _ModalClone: React_3.FunctionComponent<_ExtendedIModalProps>;
 
@@ -1344,8 +1398,8 @@ export const _RemoteVideoTile: React_2.MemoExoticComponent<(props: {
     participantState?: ParticipantState | undefined;
 }) => JSX.Element>;
 
-// @beta (undocumented)
-export type Role = 'Presenter' | 'Attendee' | 'Consumer';
+// @beta
+export type Role = 'Presenter' | 'Attendee' | 'Consumer' | 'Organizer';
 
 // @public
 export const ScreenShareButton: (props: ScreenShareButtonProps) => JSX.Element;

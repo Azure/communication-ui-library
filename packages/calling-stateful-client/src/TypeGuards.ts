@@ -5,7 +5,7 @@ import { Call, CallAgent } from '@azure/communication-calling';
 import { CallAgentCommon, CallCommon, TeamsCall, TeamsCallAgent } from './BetaToStableTypes';
 
 /**
- * @internal
+ * @private
  */
 export const isACSCall = (call: CallCommon): call is Call => {
   /* @conditional-compile-remove(teams-identity-support) */
@@ -14,7 +14,7 @@ export const isACSCall = (call: CallCommon): call is Call => {
 };
 
 /**
- * @internal
+ * @private
  */
 export const isACSCallAgent = (callAgent: CallAgentCommon): callAgent is CallAgent => {
   /* @conditional-compile-remove(teams-identity-support) */
@@ -23,7 +23,7 @@ export const isACSCallAgent = (callAgent: CallAgentCommon): callAgent is CallAge
 };
 
 /**
- * @internal
+ * @private
  */
 export const isTeamsCall = (call: CallCommon): call is TeamsCall => {
   /* @conditional-compile-remove(teams-identity-support) */
@@ -32,7 +32,7 @@ export const isTeamsCall = (call: CallCommon): call is TeamsCall => {
 };
 
 /**
- * @internal
+ * @private
  */
 export const isTeamsCallAgent = (callAgent: CallAgentCommon): callAgent is TeamsCallAgent => {
   /* @conditional-compile-remove(teams-identity-support) */
