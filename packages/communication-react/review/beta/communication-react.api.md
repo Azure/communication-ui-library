@@ -952,6 +952,7 @@ export type CallWithChatCompositeOptions = {
     }) => void;
     onNetworkingTroubleShootingClick?: () => void;
     callReadinessOptedIn?: boolean;
+    unsupportedBrowserOptedIn?: boolean;
 };
 
 // @public
