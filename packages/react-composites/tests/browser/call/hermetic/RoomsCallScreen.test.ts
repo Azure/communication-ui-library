@@ -17,7 +17,7 @@ import { IDS } from '../../common/constants';
 test.describe('Rooms DeviceButton tests for different roles', async () => {
   test('All devices are shown for Presenter', async ({ page, serverUrl }) => {
     const initialState = defaultMockCallAdapterState();
-    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { role: 'Presenter' }));
+    await page.goto(buildUrlWithMockAdapter(serverUrl, { ...initialState, roleHint: 'Presenter' }));
     await waitForSelector(page, dataUiId(IDS.videoGallery));
     await waitForSelector(page, dataUiId(IDS.deviceButton));
     await pageClick(page, dataUiId(IDS.deviceButton));
@@ -26,7 +26,7 @@ test.describe('Rooms DeviceButton tests for different roles', async () => {
 
   test('All devices are shown for Attendee', async ({ page, serverUrl }) => {
     const initialState = defaultMockCallAdapterState();
-    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { role: 'Attendee' }));
+    await page.goto(buildUrlWithMockAdapter(serverUrl, { ...initialState, roleHint: 'Attendee' }));
     await waitForSelector(page, dataUiId(IDS.videoGallery));
     await waitForSelector(page, dataUiId(IDS.deviceButton));
     await pageClick(page, dataUiId(IDS.deviceButton));
@@ -37,14 +37,14 @@ test.describe('Rooms DeviceButton tests for different roles', async () => {
 test.describe('Rooms CallScreen tests for different roles', async () => {
   test('All CallControls are enabled for Presenter', async ({ page, serverUrl }) => {
     const initialState = defaultMockCallAdapterState();
-    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { role: 'Presenter' }));
+    await page.goto(buildUrlWithMockAdapter(serverUrl, { ...initialState, roleHint: 'Presenter' }));
     await waitForSelector(page, dataUiId(IDS.videoGallery));
     expect(await stableScreenshot(page)).toMatchSnapshot('rooms-call-screen-presenter.png');
   });
 
   test('Screen Share is disabled for Attendee', async ({ page, serverUrl }) => {
     const initialState = defaultMockCallAdapterState();
-    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { role: 'Attendee' }));
+    await page.goto(buildUrlWithMockAdapter(serverUrl, { ...initialState, roleHint: 'Attendee' }));
     await waitForSelector(page, dataUiId(IDS.videoGallery));
     expect(await stableScreenshot(page)).toMatchSnapshot('rooms-call-screen-attendee.png');
   });
@@ -54,7 +54,7 @@ test.describe('Rooms CallScreen tests for different roles', async () => {
     const vasily = defaultMockRemoteParticipant('Vasily Podkolzin');
     const participants = [paul, vasily];
     const initialState = defaultMockCallAdapterState(participants);
-    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { role: 'Consumer' }));
+    await page.goto(buildUrlWithMockAdapter(serverUrl, { ...initialState, roleHint: 'Consumer' }));
     await waitForSelector(page, dataUiId(IDS.videoGallery));
     expect(await stableScreenshot(page)).toMatchSnapshot('rooms-call-screen-consumer-remote-participants.png');
   });
@@ -66,7 +66,7 @@ test.describe('Rooms Participant RemoveButton tests for different roles', async 
     const paul = defaultMockRemoteParticipant('Paul Bridges');
     const participants = [paul];
     const initialState = defaultMockCallAdapterState(participants);
-    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { role: 'Presenter' }));
+    await page.goto(buildUrlWithMockAdapter(serverUrl, { ...initialState, roleHint: 'Presenter' }));
     await openRemoveParticipantMenu(page, testInfo);
     expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot(
       'rooms-call-remove-participant-presenter.png'
@@ -78,7 +78,7 @@ test.describe('Rooms Participant RemoveButton tests for different roles', async 
     const paul = defaultMockRemoteParticipant('Paul Bridges');
     const participants = [paul];
     const initialState = defaultMockCallAdapterState(participants);
-    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { role: 'Attendee' }));
+    await page.goto(buildUrlWithMockAdapter(serverUrl, { ...initialState, roleHint: 'Attendee' }));
     await expectNoRemoveParticipantMenuItem(page, testInfo);
   });
 
@@ -87,7 +87,7 @@ test.describe('Rooms Participant RemoveButton tests for different roles', async 
     const paul = defaultMockRemoteParticipant('Paul Bridges');
     const participants = [paul];
     const initialState = defaultMockCallAdapterState(participants);
-    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { role: 'Consumer' }));
+    await page.goto(buildUrlWithMockAdapter(serverUrl, { ...initialState, roleHint: 'Consumer' }));
     await expectNoRemoveParticipantMenuItem(page, testInfo);
   });
 });
