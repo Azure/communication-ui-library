@@ -97,7 +97,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
       /* @conditional-compile-remove(PSTN-calls) */
       alternateCallerId,
       /* @conditional-compile-remove(rooms) */
-      roleHint
+      options: { roleHint }
     },
     afterCreate
   );
