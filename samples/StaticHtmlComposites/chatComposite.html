@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>Embedded chat composite basic example</title>
+
+  <!-- Ensure that fonts have loaded before tests are run -->
+  <link rel="preload" href="./fonts/segoeui-regular.woff2" as="font" crossorigin="anonymous" />
+  <link rel="preload" href="./fonts/segoeui-semibold.woff2" as="font" crossorigin="anonymous" />
+  <link rel="preload" href="./fonts/segoeui-bold.woff2" as="font" crossorigin="anonymous" />
+  <style>
+    body {
+      width: 100vw;
+      height: 100vh;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      /* bring your own prefixes */
+      transform: translate(-50%, -50%);
+    }
+    #chat-composite-container {
+      height: 100%;
+    }
+    @font-face {
+      font-weight: 400;
+      src: url('./fonts/segoeui-regular.woff2') format('woff2');
+      font-family: 'Segoe UI';
+    }
+    @font-face {
+      font-weight: 600;
+      src: url('./fonts/segoeui-semibold.woff2') format('woff2');
+      font-family: 'Segoe UI';
+    }
+    @font-face {
+      font-weight: 700;
+      src: url('./fonts/segoeui-bold.woff2') format('woff2');
+      font-family: 'Segoe UI';
+    }
+  </style>
+</head>
+
+<body>
+  <!-- height need to be set for composite to fit the layout -->
+  <div id="chat-composite-container"></div>
+  <!-- replace with https://github.com/Azure/communication-ui-library/releases/latest/download/chatComposite.js for development and prototyping -->
+  <script src="./chatComposite.js"></script>
+  <script src="./service.js"></script>
+  <script type="module">
+    const testParams = service.loadConfigFromUrlQuery();
+    const { user, token } = testParams.token
+      ? { token: testParams.token, user: { communicationUserId: testParams.userId } }
+      : { ...(await service.createUserWithToken()) };
+    // Call composite sample code starts here
+    const displayName = testParams.displayName ?? 'Bob';
+    const threadId = testParams.threadId ?? (await service.createChatThread());
+    testParams.threadId ?? (await service.addChatUser(threadId, user, displayName));
+    const endpoint = testParams.endpointUrl ?? (await service.getEndpointUrl());
+
+    // Chat composite sample code starts here
+    const chatAdapter = await chatComposite.loadChatComposite(
+      {
+        userId: user,
+        token: token,
+        displayName: displayName,
+        endpoint: endpoint,
+        threadId: threadId
+      },
+      document.getElementById('chat-composite-container'),
+      {
+        options: { participantPane: true, topic: false },
+        // To prevent stale composite issues we are using a unique value (e.g the date) as a key for this component
+        key: new Date()
+      }
+    );
+
+    await chatAdapter.sendMessage('Hello to you! 👋');
+
+    window.onbeforeunload = () => {
+      chatAdapter.dispose();
+    };
+  </script>
+</body>

@@ -5,7 +5,7 @@ import dotenv from 'dotenv';
 
 dotenv.config({ path: path.join(__dirname, '..', '.env') });
 
-const SERVER_URL = 'http://localhost:8080';
+const SERVER_URL = 'http://localhost:8080/chatComposite.html';
 const PARTICIPANTS = ['Jack'];
 
 test.describe('JS Bundle Test', () => {
@@ -31,8 +31,7 @@ test.describe('JS Bundle Test', () => {
   });
 
   // only need to make sure it is loading correctly, the rest will be the responsibility of composite tests
-  test('Whether html page is loaded right with 2 composites', async ({ page }) => {
-    expect(await page.waitForSelector('text=Start call')).toBeTruthy();
+  test('Whether html page is loaded correctly with chat composite', async ({ page }) => {
     expect(await page.waitForSelector('text=Hello to you')).toBeTruthy();
     // Wait for message to finish sending
     await page.waitForTimeout(1000);
@@ -41,6 +40,6 @@ test.describe('JS Bundle Test', () => {
       content: `document.querySelector('[data-ui-id=message-timestamp]').innerText='timestamp';`
     });
 
-    expect(await page.screenshot()).toMatchSnapshot('embeddedJsHtml.png');
+    // expect(await page.screenshot()).toMatchSnapshot('embeddedJsHtml.png');
   });
 });

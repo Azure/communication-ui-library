@@ -6,9 +6,9 @@ import { Meta } from '@storybook/addon-docs';
   parameters={{ previewTabs: { canvas: { disable: true, hidden: true } } }}
 />
 
-# Use Composites inside JavaScript-based Applications
+# Use UI Composites inside JavaScript-based Applications
 
-If you are not using React, you can still embed a calling/chat composite into your html page with a simple `<script>` tag and several lines of code like:
+If you are not using React, you can still add a UI composite into your html page with a simple `<script>` tag and several lines of code like:
 
 You can easily find prebuilt bundles from:
 
@@ -16,11 +16,13 @@ You can easily find prebuilt bundles from:
 
 [The latest bundles for call composite](https://github.com/Azure/communication-ui-library/releases/latest/download/callComposite.js)
 
+[The latest bundles for callWithChat composite](https://github.com/Azure/communication-ui-library/releases/latest/download/callWithChatComposite.js)
+
 For development and prototyping purpose, import these 2 urls with `<script>` tags will be the fastest way. In production environment, we recommend that serving composite files on your own CDN will help with performance.
 
 ## Use Composites in html
 
-After importing chat/calling composite bundle, you are able to load composites using these 2 code snippets:
+After importing UI bundle, you are able to load composites using these 2 code snippets:
 
 ```tsx
 const chatAdapter = await chatComposite.loadChatComposite(
@@ -53,7 +55,23 @@ const callAdapter = await callComposite.loadCallComposite(
 );
 ```
 
-Check [Chat Composite Basic Example](./?path=/docs/composites-chat-basicexample--basic-example) and [Call Composite Basic Example](./?path=/docs/composites-call-basicexample--basic-example) to see optional props of composites
+```tsx
+const callWithChatAdapter = await callWithChatComposite.loadCallWithChatComposite(
+  //The for composite which allows you control composite externally,
+  // This function will be exposed to window.callWithChatComposite once you import composite bundle
+  {
+    userId, // Object { communicationUserId: string }
+    token, // string
+    displayName, // string
+    endpoint: endpoint,
+    locator: { callLocator: { groupId: groupId }, chatThreadId: threadId } // UI callWithChat-specific locator
+  },
+  elementToRender, // container element
+  props // Optional, Object contains all optional props for composite, check composite page for more details
+);
+```
+
+Check [Chat Composite Basic Example](./?path=/docs/composites-chat-basicexample--basic-example), [Call Composite Basic Example](./?path=/docs/composites-call-basicexample--basic-example), and [CallWithChat Composite Basic Example](./?path=/docs/composites-call-with-chat-basicexample--basic-example) to see optional props of composites
 
 For more details of adapter, check [Adapters for Composites](./?path=/story/composite-adapters--page)
 

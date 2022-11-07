@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>Embedded call composite basic example</title>
+
+  <!-- Ensure that fonts have loaded before tests are run -->
+  <link rel="preload" href="./fonts/segoeui-regular.woff2" as="font" crossorigin="anonymous" />
+  <link rel="preload" href="./fonts/segoeui-semibold.woff2" as="font" crossorigin="anonymous" />
+  <link rel="preload" href="./fonts/segoeui-bold.woff2" as="font" crossorigin="anonymous" />
+  <style>
+    body {
+      width: 100vw;
+      height: 100vh;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      /* bring your own prefixes */
+      transform: translate(-50%, -50%);
+    }
+    #call-composite-container {
+      height: 100%;
+    }
+    @font-face {
+      font-weight: 400;
+      src: url('./fonts/segoeui-regular.woff2') format('woff2');
+      font-family: 'Segoe UI';
+    }
+    @font-face {
+      font-weight: 600;
+      src: url('./fonts/segoeui-semibold.woff2') format('woff2');
+      font-family: 'Segoe UI';
+    }
+    @font-face {
+      font-weight: 700;
+      src: url('./fonts/segoeui-bold.woff2') format('woff2');
+      font-family: 'Segoe UI';
+    }
+  </style>
+</head>
+
+<body>
+  <div id="call-composite-container"></div>
+  <!-- replace with https://github.com/Azure/communication-ui-library/releases/latest/download/callComposite.js for development and prototyping -->
+  <script src="./callComposite.js"></script>
+  <script src="./service.js"></script>
+  <script type="module">
+    const testParams = service.loadConfigFromUrlQuery();
+    const { user, token } = testParams.token
+      ? { token: testParams.token, user: { communicationUserId: testParams.userId } }
+      : { ...(await service.createUserWithToken()) };
+    const groupId = await service.createGUID();
+    // Call composite sample code starts here
+    const displayName = testParams.displayName ?? 'Bob';
+
+    const callAdapter = await callComposite.loadCallComposite(
+      {
+        userId: user,
+        token: token,
+        displayName: displayName,
+        locator: { groupId: groupId } // Provide any GUID to join a group
+      },
+      document.getElementById('call-composite-container')
+    );
+
+    window.onbeforeunload = () => {
+      callAdapter.dispose();
+    };
+  </script>
+</body>
