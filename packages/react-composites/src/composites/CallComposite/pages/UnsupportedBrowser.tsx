@@ -37,6 +37,7 @@ export const UnsupportedBrowserPage = (props: UnsupportedBrowserPageProps): JSX.
   return <></>;
 };
 
+/* @conditional-compile-remove(unsupported-browser) */
 const containerStyles: IStackStyles = {
   root: {
     margin: 'auto',
