@@ -40,12 +40,3 @@ export const messageBarStyle = (theme: ITheme, errorType: MessageBarType): IMess
     paddingTop: '0.8rem'
   }
 });
-
-/**
- * @private
- */
-export const linkStyle = (theme: ITheme): ILinkStyles => ({
-  root: {
-    span: {}
-  }
-});
