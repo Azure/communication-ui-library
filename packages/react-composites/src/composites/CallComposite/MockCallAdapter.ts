@@ -15,7 +15,7 @@ export class MockCallAdapter implements CallAdapter {
     askDevicePermission?: (constrain: PermissionConstraints) => Promise<void>;
     /* @conditional-compile-remove(rooms) */ options?: { roleHint?: Role };
   }) {
-    this.state = defaultCallAdapterState;
+    this.state = { ...defaultCallAdapterState };
 
     if (testState.askDevicePermission) {
       this.askDevicePermission = testState.askDevicePermission;
