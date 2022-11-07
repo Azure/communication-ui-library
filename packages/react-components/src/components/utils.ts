@@ -178,10 +178,9 @@ export const customIconName: Partial<{ [key in ErrorType]: string }> = {
   callMacOsCameraAccessDenied: 'ErrorBarCallMacOsCameraAccessDenied'
 };
 
-/* @conditional-compile-remove(call-readiness) */
 /**
  * @private
  */
-export const isValidString = (string: string | undefined): boolean => {
+export const isValidString = (string: string | undefined): string is string => {
   return !!string && string.length > 0;
 };
