@@ -34,19 +34,20 @@ export function BaseApp(props: { queryArgs: QueryArgs; callAdapter?: CallAdapter
 
   const ParticipantItemOptions = queryArgs.showParticipantItemIcon ? <MoreHorizontal20Regular /> : <></>;
 
-  const onEnvironmentInfoTroubleshootingClick = queryArgs.useTroubleShootingActions // useTroubleShootingActions is for all CallReadiness Callbacks
-    ? () => alert('you are using a unsupported browser')
-    : undefined;
+  let customCallCompositeOptions = queryArgs.customCallCompositeOptions;
 
-  let customCallCompositeOptions;
-
-  if (onEnvironmentInfoTroubleshootingClick) {
+  if (queryArgs.useEnvironmentInfoTroubleshootingOptions) {
     customCallCompositeOptions = {
-      ...queryArgs.customCallCompositeOptions,
+      ...customCallCompositeOptions,
       onEnvironmentInfoTroubleshootingClick: onEnvironmentInfoTroubleshootingClick
     };
-  } else {
-    customCallCompositeOptions = queryArgs.customCallCompositeOptions;
+  }
+
+  if (queryArgs.usePermissionTroubleshootingActions) {
+    customCallCompositeOptions = {
+      ...customCallCompositeOptions,
+      onPermissionsTroubleshootingClick: onPermissionsTroubleshootingClick
+    };
   }
 
   return (
@@ -59,7 +60,7 @@ export function BaseApp(props: { queryArgs: QueryArgs; callAdapter?: CallAdapter
               icons={{ ParticipantItemOptions: ParticipantItemOptions }}
               adapter={callAdapter}
               locale={locale}
-              role={queryArgs.role}
+              roleHint={queryArgs.role}
               formFactor={isMobile() ? 'mobile' : 'desktop'}
               onFetchParticipantMenuItems={
                 queryArgs.injectParticipantMenuItems ? onFetchParticipantMenuItems : undefined
@@ -139,3 +140,9 @@ const onFetchCustomButtonProps: CustomCallControlButtonCallback[] = [
     };
   }
 ];
+
+const onPermissionsTroubleshootingClick = (permissionsState: unknown): void => {
+  alert(permissionsState);
+};
+
+const onEnvironmentInfoTroubleshootingClick = (): void => alert('you are using a unsupported browser');

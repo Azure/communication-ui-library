@@ -398,6 +398,7 @@ export interface _DevicePermissionDropdownProps {
     askDevicePermission?(constrain: _PermissionConstraints): Promise<void>;
     constrain?: _PermissionConstraints;
     icon?: JSX.Element;
+    onClick?: () => void;
     options?: IDropdownOption[];
     strings?: _DevicePermissionDropdownStrings;
     styles?: Partial<IDropdownStyles>;

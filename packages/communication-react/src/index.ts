@@ -118,7 +118,23 @@ export { HoldButton } from '../../react-components/src';
 export { Dialpad } from '../../react-components/src';
 
 /* @conditional-compile-remove(call-readiness) */
-export { DomainPermissions } from '../../react-components/src';
+export {
+  CameraAndMicrophoneDomainPermissions,
+  MicrophoneDomainPermissions,
+  CameraDomainPermissions
+} from '../../react-components/src';
+/* @conditional-compile-remove(call-readiness) */
+export type {
+  CameraAndMicrophoneDomainPermissionsStrings,
+  CameraAndMicrophoneDomainPermissionsProps,
+  CameraDomainPermissionsStrings,
+  CameraDomainPermissionsProps,
+  CommonDomainPermissionsProps,
+  DomainPermissionsStrings,
+  DomainPermissionsStyles,
+  MicrophoneDomainPermissionsStrings,
+  MicrophoneDomainPermissionsProps
+} from '../../react-components/src';
 
 export type {
   _IdentifierProviderProps,
@@ -233,8 +249,6 @@ export type {
 /* @conditional-compile-remove(PSTN-calls) */
 export type { HoldButtonProps, HoldButtonStrings, VideoTileStrings } from '../../react-components/src';
 /* @conditional-compile-remove(call-readiness) */
-export type { DomainPermissionsStrings, DomainPermissionsProps } from '../../react-components/src';
-/* @conditional-compile-remove(call-readiness) */
 export type { BrowserPermissionDeniedStrings, BrowserPermissionDeniedProps } from '../../react-components/src';
 /* @conditional-compile-remove(call-readiness) */
 export type {
@@ -245,6 +259,7 @@ export type {
 export * from '../../react-components/src/localization/locales';
 export * from '../../react-components/src/theming';
 export * from '../../calling-stateful-client/src';
+/* @conditional-compile-remove(one-to-n-calling) */
 export type { DeclarativeCallAgent } from '../../calling-stateful-client/src';
 export { createStatefulChatClient } from '../../chat-stateful-client/src';
 export type {

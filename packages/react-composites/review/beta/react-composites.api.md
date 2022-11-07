@@ -136,7 +136,7 @@ export interface CallAdapter extends AdapterState<CallAdapterState>, Disposable,
 
 // @public
 export type CallAdapterCallEndedEvent = {
-    callId?: string;
+    callId: string;
 };
 
 // @public
@@ -298,6 +298,7 @@ export type CallCompositeOptions = {
     errorBar?: boolean;
     callControls?: boolean | CallControlOptions;
     devicePermissions?: DevicePermissionRestrictions;
+    callReadinessOptedIn?: boolean;
     onPermissionsTroubleshootingClick?: (permissionsState: {
         camera: PermissionState;
         microphone: PermissionState;
@@ -315,7 +316,7 @@ export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcon
     callInvitationUrl?: string;
     formFactor?: 'desktop' | 'mobile';
     options?: CallCompositeOptions;
-    role?: Role;
+    roleHint?: Role;
 }
 
 // @public
@@ -679,6 +680,7 @@ export type CallWithChatCompositeOptions = {
         microphone: PermissionState;
     }) => void;
     onNetworkingTroubleShootingClick?: () => void;
+    callReadinessOptedIn?: boolean;
 };
 
 // @public
@@ -1062,6 +1064,8 @@ export const DEFAULT_COMPOSITE_ICONS: {
     DomainPermissionsSparkle: JSX.Element;
     DomainPermissionCamera: JSX.Element;
     DomainPermissionMic: JSX.Element;
+    DomainPermissionCameraDenied: JSX.Element;
+    DomainPermissionMicDenied: JSX.Element;
     UnsupportedBrowserWarning: JSX.Element;
     BrowserPermissionDeniedError: JSX.Element;
 };

@@ -18,6 +18,8 @@ import { useSwitchableFluentTheme } from '../theming/SwitchableFluentThemeProvid
 import { createAutoRefreshingCredential } from '../utils/credential';
 import { WEB_APP_TITLE } from '../utils/AppUtils';
 import { useIsMobile } from '../utils/useIsMobile';
+/* @conditional-compile-remove(call-readiness) */
+import { CallCompositeOptions } from '@azure/communication-react';
 
 export interface CallScreenProps {
   token: string;
@@ -29,6 +31,8 @@ export interface CallScreenProps {
   onCallEnded: () => void;
   /* @conditional-compile-remove(rooms) */
   role?: Role;
+  /* @conditional-compile-remove(call-readiness) */
+  callReadinessOptedIn?: boolean;
 }
 
 export const CallScreen = (props: CallScreenProps): JSX.Element => {
@@ -39,7 +43,8 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     displayName,
     onCallEnded,
     /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
-    /* @conditional-compile-remove(rooms) */ role
+    /* @conditional-compile-remove(rooms) */ role,
+    /* @conditional-compile-remove(call-readiness) */ callReadinessOptedIn
   } = props;
   const callIdRef = useRef<string>();
   const { currentTheme, currentRtl } = useSwitchableFluentTheme();
@@ -72,6 +77,17 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     () => createAutoRefreshingCredential(toFlatCommunicationIdentifier(userId), token),
     [token, userId]
   );
+
+  /* @conditional-compile-remove(call-readiness) */
+  const options: CallCompositeOptions = useMemo(
+    () => ({
+      callReadinessOptedIn: callReadinessOptedIn,
+      onPermissionsTroubleshootingClick,
+      onNetworkingTroubleShootingClick
+    }),
+    [callReadinessOptedIn]
+  );
+
   const adapter = useAzureCommunicationCallAdapter(
     {
       userId,
@@ -104,18 +120,6 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     callInvitationUrl = undefined;
   }
 
-  const onPermissionsTroubleshootingClick = (permissionState: {
-    camera: PermissionState;
-    microphone: PermissionState;
-  }): void => {
-    console.log(permissionState);
-    alert('permission troubleshooting clicked');
-  };
-
-  const onNetworkingTroubleShootingClick = (): void => {
-    alert('network troubleshooting clicked');
-  };
-
   return (
     <CallComposite
       adapter={adapter}
@@ -124,9 +128,9 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
       callInvitationUrl={callInvitationUrl}
       formFactor={isMobileSession ? 'mobile' : 'desktop'}
       /* @conditional-compile-remove(rooms) */
-      role={role}
+      roleHint={role}
       /* @conditional-compile-remove(call-readiness) */
-      options={{ onPermissionsTroubleshootingClick, onNetworkingTroubleShootingClick }}
+      options={options}
     />
   );
 };
@@ -142,4 +146,18 @@ const convertPageStateToString = (state: CallAdapterState): string => {
     default:
       return `${state.page}`;
   }
+};
+
+/* @conditional-compile-remove(call-readiness) */
+const onPermissionsTroubleshootingClick = (permissionState: {
+  camera: PermissionState;
+  microphone: PermissionState;
+}): void => {
+  console.log(permissionState);
+  alert('permission troubleshooting clicked');
+};
+
+/* @conditional-compile-remove(call-readiness) */
+const onNetworkingTroubleShootingClick = (): void => {
+  alert('network troubleshooting clicked');
 };

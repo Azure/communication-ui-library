@@ -5,7 +5,10 @@
     "removeButtonLabel": "Supprimer",
     "sharingIconLabel": "Partage",
     "mutedIconLabel": "Muet activé",
-    "displayNamePlaceholder": "Participant non identifié"
+    "displayNamePlaceholder": "Participant non identifié",
+    "participantStateConnecting": "Appel en cours...",
+    "participantStateRinging": "Appel en cours...",
+    "participantStateHold": "En attente"
   },
   "typingIndicator": {
     "singleUser": "{user} en train d’écrire...",
@@ -18,7 +21,10 @@
     "placeholderText": "Saisir un message",
     "textTooLong": "La longueur de votre message dépasse la limite maximale.",
     "sendButtonAriaLabel": "Envoyer un message",
-    "fileUploadsPendingError": "Chargement en cours... Veuillez patienter."
+    "fileUploadsPendingError": "Chargement en cours... Veuillez patienter.",
+    "removeFile": "Supprimer un fichier",
+    "uploading": "Chargement",
+    "uploadCompleted": "Téléchargement terminé"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "Message envoyé",
@@ -33,7 +39,7 @@
   },
   "endCallButton": {
     "label": "Quitter",
-    "tooltipContent": "Quitter l’appel"
+    "tooltipContent": "Quitter l'appel"
   },
   "cameraButton": {
     "onLabel": "Désactiver",
@@ -70,13 +76,13 @@
     "label": "Appareils",
     "tooltipContent": "Gérer les appareils",
     "cameraMenuTitle": "Appareil photo",
-    "cameraMenuTooltip": "Choisir une caméra",
+    "cameraMenuTooltip": "Choisissez l'appareil photo",
     "audioDeviceMenuTitle": "Périphérique audio",
-    "audioDeviceMenuTooltip": "Choisir un périphérique audio",
+    "audioDeviceMenuTooltip": "Choisissez un périphérique audio",
     "microphoneMenuTitle": "Microphone",
-    "microphoneMenuTooltip": "Choisir le micro",
+    "microphoneMenuTooltip": "Choisissez le micro",
     "speakerMenuTitle": "Haut-parleur",
-    "speakerMenuTooltip": "Choisir une enceinte"
+    "speakerMenuTooltip": "Choisissez le haut-parleur"
   },
   "participantsButton": {
     "label": "Personnes",
@@ -110,6 +116,8 @@
     "failToSendTag": "Échec de l'envoi",
     "editedTag": "Modifié",
     "liveAuthorIntro": "{author} dit",
+    "messageContentAriaText": "{author} a dit {message}",
+    "messageContentMineAriaText": "Vous avez dit {message}",
     "editBoxTextLimit": "Votre message dépasse la limite de {limitNumber} caractères",
     "editBoxPlaceholderText": "Modifier votre message",
     "newMessagesIndicator": "Nouveaux messages",
@@ -117,7 +125,8 @@
     "editBoxCancelButton": "Annuler",
     "editBoxSubmitButton": "Envoyer",
     "messageReadCount": "Lu par {messageReadByCount} participants sur {remoteParticipantsCount}",
-    "actionMenuMoreOptions": "Plus d’options"
+    "actionMenuMoreOptions": "Plus d’options",
+    "downloadFile": "Télécharger un fichier"
   },
   "errorBar": {
     "unableToReachChatService": "Vous êtes hors connexion",
@@ -138,10 +147,13 @@
     "callNoMicrophoneFound": "Aucun micro n’a été trouvé. Connectez un périphérique d’entrée audio.",
     "callMicrophoneAccessDenied": "Impossible d’accéder au microphone. Cliquez sur le verrou dans la barre d’adresses pour accorder l’autorisation à cette page Web.",
     "callMicrophoneMutedBySystem": "Votre micro est désactivé par votre système.",
+    "callMicrophoneUnmutedBySystem": "Votre micro a été récupéré et la son a été activé par votre système.",
     "callMacOsMicrophoneAccessDenied": "Impossible d’accéder au microphone. Accordez l’autorisation de microphone dans vos paramètres de confidentialité macOS.",
     "callLocalVideoFreeze": "La bande passante réseau est médiocre. Votre vidéo peut apparaître suspendue pour les autres participants à l’appel.",
     "callCameraAccessDenied": "Impossible d’accéder à la caméra. Cliquez sur le verrou dans la barre d’adresses pour accorder l’autorisation à cette page Web.",
     "callCameraAlreadyInUse": "Impossible d’accéder à la caméra. Il est peut-être déjà utilisé par une autre application.",
+    "callVideoStoppedBySystem": "Votre vidéo a été arrêtée par votre système.",
+    "callVideoRecoveredBySystem": "Votre vidéo a repris.",
     "callMacOsCameraAccessDenied": "MacOS bloque l’accès à votre caméra. Mettez à jour vos paramètres de confidentialité pour autoriser ce navigateur à accéder à votre caméra.",
     "callMacOsScreenShareAccessDenied": "MacOS bloque le partage d’écran. Mettez à jour vos paramètres de confidentialité pour permettre à ce navigateur d’enregistrer votre écran.",
     "dismissButtonAriaLabel": "Fermer",
@@ -158,12 +170,50 @@
     "displayNamePlaceholder": "Participant non identifié"
   },
   "dialpad": {
-    "placeholderText": "Entrer un numéro"
+    "placeholderText": "Entrer un numéro de téléphone",
+    "deleteButtonAriaLabel": "Supprimer"
   },
-  "HoldButton": {
+  "holdButton": {
     "onLabel": "Reprendre",
     "offLabel": "Mettre en attente",
-    "toolTipOnContent": "Reprendre l’appel",
-    "toolTipOffContent": "Mettre l’appel en attente"
+    "tooltipOnContent": "Reprendre l’appel",
+    "tooltipOffContent": "Mettre l’appel en attente"
+  },
+  "videoTile": {
+    "participantStateConnecting": "Appel en cours...",
+    "participantStateRinging": "Appel en cours...",
+    "participantStateHold": "En attente"
+  },
+  "DomainPermissions": {
+    "primaryText": "Autoriser {appName} à utiliser votre caméra et votre microphone",
+    "secondaryText": "Cela permet aux participants de vous voir et de vous entendre.",
+    "linkText": "Besoin d’aide ? Obtenir de l’aide sur la résolution des problèmes",
+    "primaryButtonText": "Autoriser l’accès"
+  },
+  "UnsupportedBrowser": {
+    "primaryText": "Navigateur non pris en charge",
+    "secondaryText": "Rejoignez cet appel à l’aide d’un navigateur compatible.",
+    "moreHelpLink": "Plus d'aide"
+  },
+  "BrowserPermissionDenied": {
+    "primaryText": "Impossible d’utiliser votre caméra ou votre micro",
+    "secondaryText": "Votre navigateur n’a peut-être pas accès à votre caméra ou à votre micro. Pour résoudre ce problème, ouvrez Préférences système.",
+    "primaryButtonText": "Réessayer",
+    "linkText": "Besoin d’aide ? Obtenir de l’aide sur la résolution des problèmes"
+  },
+  "BrowserPermissionDeniedIOS": {
+    "primaryText": "Autoriser l’accès au microphone pour continuer",
+    "secondaryText": "Ainsi, les autres participants peuvent vous entendre.",
+    "primaryButtonText": "Réessayer",
+    "imageAltText": "Emplacement des autorisations pour le microphone et la caméra pour iOS",
+    "linkText": "Besoin d’aide ? Obtenir de l’aide sur la résolution des problèmes",
+    "step1Text": "Accéder à l’application Paramètres",
+    "step2Text": "Faites défiler vers le bas pour accéder aux paramètres de ce navigateur",
+    "step3Text": "Activer le microphone (caméra facultative)",
+    "step4Text": "Réessayez de rejoindre l’appel",
+    "step1DigitText": "1",
+    "step2DigitText": "2",
+    "step3DigitText": "3",
+    "step4DigitText": "4"
   }
 }
