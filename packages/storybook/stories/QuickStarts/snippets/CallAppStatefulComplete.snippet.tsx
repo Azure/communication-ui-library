@@ -9,13 +9,14 @@ import {
   createStatefulCallClient,
   StatefulCallClient
 } from '@azure/communication-react';
-import { registerIcons } from '@fluentui/react';
+import { initializeIcons, registerIcons } from '@fluentui/react';
 import React, { useEffect, useMemo, useState } from 'react';
 import CallingComponents from './CallComponentsStateful';
 
-function App(): JSX.Element {
-  registerIcons({ icons: DEFAULT_COMPONENT_ICONS });
+initializeIcons();
+registerIcons({ icons: DEFAULT_COMPONENT_ICONS });
 
+function App(): JSX.Element {
   const userAccessToken = '<Azure Communication Services Resource Access Token>';
   const userId = '<User Id associated to the token>';
   const tokenCredential = useMemo(() => {

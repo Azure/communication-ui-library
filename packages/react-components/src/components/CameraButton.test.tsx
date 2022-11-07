@@ -6,18 +6,28 @@ import { CameraButton } from './CameraButton';
 import Enzyme from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import { createTestLocale, mountWithLocalization } from './utils/testUtils';
+import { registerIcons } from '@fluentui/react';
 
 Enzyme.configure({ adapter: new Adapter() });
 
 describe('CameraButton strings should be localizable and overridable', () => {
+  beforeEach(() => {
+    registerIcons({
+      icons: {
+        controlbuttoncameraoff: <></>,
+        chevrondown: <></>,
+        controlbuttoncameraon: <></>
+      }
+    });
+  });
   test('Should localize button label ', async () => {
     const testLocale = createTestLocale({
       cameraButton: { offLabel: Math.random().toString(), onLabel: Math.random().toString() }
     });
     const component = mountWithLocalization(<CameraButton showLabel={true} />, testLocale);
-    expect(component.text()).toBe(testLocale.strings.cameraButton.offLabel);
+    expect(component.find('button').text()).toBe(testLocale.strings.cameraButton.offLabel);
     component.setProps({ checked: true });
-    expect(component.text()).toBe(testLocale.strings.cameraButton.onLabel);
+    expect(component.find('button').text()).toBe(testLocale.strings.cameraButton.onLabel);
   });
 
   test('Should override button label with `strings` prop', async () => {
@@ -29,8 +39,8 @@ describe('CameraButton strings should be localizable and overridable', () => {
       <CameraButton showLabel={true} strings={cameraButtonStrings} />,
       testLocale
     );
-    expect(component.text()).toBe(cameraButtonStrings.offLabel);
+    expect(component.find('button').text()).toBe(cameraButtonStrings.offLabel);
     component.setProps({ checked: true });
-    expect(component.text()).toBe(cameraButtonStrings.onLabel);
+    expect(component.find('button').text()).toBe(cameraButtonStrings.onLabel);
   });
 });

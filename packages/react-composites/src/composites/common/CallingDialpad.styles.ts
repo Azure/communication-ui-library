@@ -8,7 +8,7 @@ import { DialpadStyles } from '@internal/react-components';
 /**
  * @private
  */
-export const themedDialpadModelStyle = (theme: Theme): Partial<IModalStyles> => ({
+export const themeddialpadModalStyle = (theme: Theme): Partial<IModalStyles> => ({
   main: {
     borderRadius: theme.effects.roundedCorner6,
     padding: '1rem'
@@ -32,12 +32,19 @@ export const themedDialpadStyle = (isMobile: boolean, theme: Theme): Partial<Dia
     field: {
       backgroundColor: theme.palette.white,
       fontSize: theme.fonts.large.fontSize,
-      padding: '1.063rem 0.5rem',
+      padding: '0 0.5rem',
       textAlign: isMobile ? 'center' : 'left',
-      paddingTop: 0
+      ':active': {
+        padding: '0 0.5rem'
+      }
     }
   },
-  primaryContent: {
+  deleteIcon: {
+    root: {
+      backgroundColor: theme.palette.white
+    }
+  },
+  digit: {
     color: theme.palette.themeDarkAlt
   }
 });

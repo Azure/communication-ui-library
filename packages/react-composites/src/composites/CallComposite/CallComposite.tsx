@@ -15,18 +15,25 @@ import { ConfigurationPage } from './pages/ConfigurationPage';
 import { NoticePage } from './pages/NoticePage';
 import { useSelector } from './hooks/useSelector';
 import { getPage } from './selectors/baseSelectors';
+/* @conditional-compile-remove(rooms) */
+import { getRole } from './selectors/baseSelectors';
 import { LobbyPage } from './pages/LobbyPage';
 import { mainScreenContainerStyleDesktop, mainScreenContainerStyleMobile } from './styles/CallComposite.styles';
 import { CallControlOptions } from './types/CallControlOptions';
 
 /* @conditional-compile-remove(rooms) */
 import { _PermissionsProvider, Role, _getPermissions } from '@internal/react-components';
-/* @conditional-compile-remove(one-to-n-calling) */
+/* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
 import { LayerHost, mergeStyles } from '@fluentui/react';
-/* @conditional-compile-remove(one-to-n-calling) */
+/* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
 import { modalLayerHostStyle } from '../common/styles/ModalLocalAndRemotePIP.styles';
-/* @conditional-compile-remove(one-to-n-calling) */
+/* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
 import { useId } from '@fluentui/react-hooks';
+/* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */
+import { HoldPage } from './pages/HoldPage';
+/* @conditional-compile-remove(unsupported-browser) */
+import { UnsupportedBrowserPage } from './pages/UnsupportedBrowser';
+import { PermissionConstraints } from '@azure/communication-calling';
 
 /**
  * Props for {@link CallComposite}.
@@ -57,9 +64,35 @@ export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcon
 
   /* @conditional-compile-remove(rooms) */
   /**
-   * Set this to enable/disable capacities for different roles
+   * Set the role to enable/disable capacities. This property should be properly set for Rooms calls. The role of a
+   * user for a room can be obtained using the Rooms API. The role of the user will be synced with ACS services when
+   * a Rooms call starts.
    */
-  role?: Role;
+  roleHint?: Role;
+}
+
+/* @conditional-compile-remove(call-readiness) */
+/**
+ * Device Permission restrictions.
+ * Be able to start a call depending on camera and microphone permission options.
+ *
+ * @beta
+ */
+export interface DevicePermissionRestrictions {
+  /**
+   * Camera Permission prompts for your call.
+   * 'required' - requires the permission to be allowed before permitting the user join the call.
+   * 'optional' - permission can be disallowed and the user is still permitted to join the call.
+   * 'doNotPrompt' - permission is not required and the user is not prompted to allow the permission.
+   */
+  camera: 'required' | 'optional' | 'doNotPrompt';
+  /**
+   * Microphone permission prompts for your call.
+   * 'required' - requires the permission to be allowed before permitting the user join the call.
+   * 'optional' - permission can be disallowed and the user is still permitted to join the call.
+   * 'doNotPrompt' - permission is not required and the user is not prompted to allow the permission.
+   */
+  microphone: 'required' | 'optional' | 'doNotPrompt';
 }
 
 /**
@@ -80,11 +113,70 @@ export type CallCompositeOptions = {
    * @defaultValue true
    */
   callControls?: boolean | CallControlOptions;
+  /* @conditional-compile-remove(call-readiness) */
+  /**
+   * Device permission restrictions for your call.
+   * Require device permissions to be set or have them as optional or not required to start a call
+   */
+  devicePermissions?: DevicePermissionRestrictions;
+  /* @conditional-compile-remove(call-readiness) */
+  /**
+   * Opt in call readiness feature for your call
+   * Setting this to `true` will add call readiness features to the call experience
+   */
+  callReadinessOptedIn?: boolean;
+  /* @conditional-compile-remove(call-readiness) */
+  /**
+   * Callback you may provide to supply users with further steps to troubleshoot why they have been
+   * unable to grant your site the required permissions for the call.
+   *
+   * @example
+   * ```ts
+   * onPermissionsTroubleshootingClick: () =>
+   *  window.open('https://contoso.com/permissions-troubleshooting', '_blank');
+   * ```
+   *
+   * @remarks
+   * if this is not supplied, the composite will not show a 'further troubleshooting' link.
+   */
+  onPermissionsTroubleshootingClick?: (permissionsState: {
+    camera: PermissionState;
+    microphone: PermissionState;
+  }) => void;
+  /* @conditional-compile-remove(call-readiness) */
+  /**
+   * Callback you may provide to supply users with further steps to troubleshoot why they have been
+   * having network issues when connecting to the call.
+   *
+   * @example
+   * ```ts
+   * onNetworkingTroubleShootingClick?: () =>
+   *  window.open('https://contoso.com/network-troubleshooting', '_blank');
+   * ```
+   *
+   * @remarks
+   * if this is not supplied, the composite will not show a 'network troubleshooting' link.
+   */
+  onNetworkingTroubleShootingClick?: () => void;
+  /* @conditional-compile-remove(unsupported-browser) */
+  /**
+   * Callback you may provide to supply users with a provided page to showcase supported browsers by ACS.
+   *
+   * @example
+   * ```ts
+   * onBrowserTroubleShootingClick?: () =>
+   *  window.open('https://contoso.com/browser-troubleshooting', '_blank');
+   * ```
+   *
+   * @remarks
+   * if this is not supplied, the composite will not show a unsupported browser page.
+   */
+  onEnvironmentInfoTroubleshootingClick?: () => void;
 };
 
 type MainScreenProps = {
   mobileView: boolean;
-  /* @conditional-compile-remove(one-to-n-calling) */
+  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   modalLayerHostId: string;
   onRenderAvatar?: OnRenderAvatarCallback;
   callInvitationUrl?: string;
@@ -92,7 +184,7 @@ type MainScreenProps = {
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
   options?: CallCompositeOptions;
   /* @conditional-compile-remove(rooms) */
-  role?: Role;
+  roleHint?: Role;
 };
 
 const MainScreen = (props: MainScreenProps): JSX.Element => {
@@ -102,8 +194,33 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
   const adapter = useAdapter();
   const locale = useLocale();
 
-  let pageElement: JSX.Element;
+  /* @conditional-compile-remove(rooms) */
+  const role = useSelector(getRole);
 
+  let pageElement: JSX.Element | undefined;
+  /* @conditional-compile-remove(rooms) */
+  switch (page) {
+    case 'roomNotFound':
+      pageElement = (
+        <NoticePage
+          iconName="NoticePageInvalidRoom"
+          title={locale.strings.call.roomNotFoundTitle}
+          moreDetails={locale.strings.call.roomNotFoundDetails}
+          dataUiId={'room-not-found-page'}
+        />
+      );
+      break;
+    case 'deniedPermissionToRoom':
+      pageElement = (
+        <NoticePage
+          iconName="NoticePageInvalidRoom"
+          title={locale.strings.call.deniedPermissionToRoomTitle}
+          moreDetails={locale.strings.call.deniedPermissionToRoomDetails}
+          dataUiId={'not-invited-to-room-page'}
+        />
+      );
+      break;
+  }
   switch (page) {
     case 'configuration':
       pageElement = (
@@ -112,6 +229,14 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           startCallHandler={(): void => {
             adapter.joinCall();
           }}
+          /* @conditional-compile-remove(call-readiness) */
+          devicePermissions={props.options?.devicePermissions}
+          /* @conditional-compile-remove(call-readiness) */
+          onPermissionsTroubleshootingClick={props.options?.onPermissionsTroubleshootingClick}
+          /* @conditional-compile-remove(call-readiness) */
+          onNetworkingTroubleShootingClick={props.options?.onNetworkingTroubleShootingClick}
+          /* @conditional-compile-remove(call-readiness) */
+          callReadinessOptedIn={props.options?.callReadinessOptedIn}
         />
       );
       break;
@@ -159,7 +284,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
       pageElement = (
         <LobbyPage
           mobileView={props.mobileView}
-          /* @conditional-compile-remove(one-to-n-calling) */
+          /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
           modalLayerHostId={props.modalLayerHostId}
           options={props.options}
         />
@@ -173,17 +298,43 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           onFetchAvatarPersonaData={onFetchAvatarPersonaData}
           onFetchParticipantMenuItems={onFetchParticipantMenuItems}
           mobileView={props.mobileView}
-          /* @conditional-compile-remove(one-to-n-calling) */
+          /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
           modalLayerHostId={props.modalLayerHostId}
           options={props.options}
         />
       );
       break;
-    default:
-      throw new Error('Invalid call composite page');
+    /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+    case holdPageTrampoline():
+      pageElement = (
+        <>
+          {
+            /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ <HoldPage
+              mobileView={props.mobileView}
+              modalLayerHostId={props.modalLayerHostId}
+              options={props.options}
+            />
+          }
+        </>
+      );
+      break;
+    case unsupportedEnvironmentPageTrampoline():
+      pageElement = (
+        <>
+          {
+            /* @conditional-compile-remove(unsupported-browser) */
+            <UnsupportedBrowserPage onTroubleshootingClick={props.options?.onEnvironmentInfoTroubleshootingClick} />
+          }
+        </>
+      );
   }
+
+  if (!pageElement) {
+    throw new Error('Invalid call composite page');
+  }
+
   /* @conditional-compile-remove(rooms) */
-  const permissions = _getPermissions(props.role);
+  const permissions = _getPermissions(role === 'Unknown' || role === undefined ? props.roleHint : role);
 
   // default retElement for stable version
   let retElement = pageElement;
@@ -211,20 +362,29 @@ export const CallComposite = (props: CallCompositeProps): JSX.Element => {
     options,
     formFactor = 'desktop',
     /* @conditional-compile-remove(rooms) */
-    role
+    roleHint
   } = props;
+
   useEffect(() => {
     (async () => {
-      await adapter.askDevicePermission({ video: true, audio: true });
+      const constrain = getQueryOptions({
+        /* @conditional-compile-remove(rooms) */ role: roleHint,
+        /* @conditional-compile-remove(call-readiness) */ callReadinessOptedIn: options?.callReadinessOptedIn ?? false
+      });
+      await adapter.askDevicePermission(constrain);
       adapter.queryCameras();
       adapter.queryMicrophones();
       adapter.querySpeakers();
     })();
-  }, [adapter]);
+  }, [
+    adapter,
+    /* @conditional-compile-remove(rooms) */ roleHint,
+    /* @conditional-compile-remove(call-readiness) */ options?.callReadinessOptedIn
+  ]);
 
   const mobileView = formFactor === 'mobile';
 
-  /* @conditional-compile-remove(one-to-n-calling) */
+  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   const modalLayerHostId = useId('modalLayerhost');
 
   const mainScreenContainerClassName = useMemo(() => {
@@ -240,11 +400,11 @@ export const CallComposite = (props: CallCompositeProps): JSX.Element => {
             onFetchAvatarPersonaData={onFetchAvatarPersonaData}
             onFetchParticipantMenuItems={onFetchParticipantMenuItems}
             mobileView={mobileView}
-            /* @conditional-compile-remove(one-to-n-calling) */
+            /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
             modalLayerHostId={modalLayerHostId}
             options={options}
             /* @conditional-compile-remove(rooms) */
-            role={role}
+            roleHint={roleHint}
           />
           {
             // This layer host is for ModalLocalAndRemotePIP in CallPane. This LayerHost cannot be inside the CallPane
@@ -252,12 +412,48 @@ export const CallComposite = (props: CallCompositeProps): JSX.Element => {
             // the Modal because the draggable bounds thinks it has no space and will always return to its initial position after dragging.
             // Additionally, this layer host cannot be in the Call Arrangement as it needs to be rendered before useMinMaxDragPosition() in
             // common/utils useRef is called.
-            // Warning: this is fragile and works because the call arrangement page is only rendered after the call has connected and thus this LayerHost will be guaranteed to have rendered (and subsequently mounted in the DOM). This ensures the DOM element will be available before the call to `document.getElementById(modalLayerHostId)` is made.
-            /* @conditional-compile-remove(one-to-n-calling) */
+            // Warning: this is fragile and works because the call arrangement page is only rendered after the call has connected and thus this
+            // LayerHost will be guaranteed to have rendered (and subsequently mounted in the DOM). This ensures the DOM element will be available
+            // before the call to `document.getElementById(modalLayerHostId)` is made.
+            /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
             mobileView && <LayerHost id={modalLayerHostId} className={mergeStyles(modalLayerHostStyle)} />
           }
         </CallAdapterProvider>
       </BaseProvider>
     </div>
   );
+};
+
+const holdPageTrampoline = (): string => {
+  /* @conditional-compile-remove(one-to-n-calling) */
+  /* @conditional-compile-remove(PSTN-calls) */
+  return 'hold';
+  return 'call';
+};
+
+const unsupportedEnvironmentPageTrampoline = (): string => {
+  /* @conditional-compile-remove(unsupported-browser) */
+  return 'unsupportedEnvironment';
+  return 'call';
+};
+
+const getQueryOptions = (options: {
+  /* @conditional-compile-remove(rooms) */ role?: Role;
+  /* @conditional-compile-remove(call-readiness) */ callReadinessOptedIn?: boolean;
+}): PermissionConstraints => {
+  /* @conditional-compile-remove(call-readiness) */
+  if (options.callReadinessOptedIn) {
+    return {
+      video: false,
+      audio: false
+    };
+  }
+  /* @conditional-compile-remove(rooms) */
+  if (options.role === 'Consumer') {
+    return {
+      video: false,
+      audio: true
+    };
+  }
+  return { video: true, audio: true };
 };

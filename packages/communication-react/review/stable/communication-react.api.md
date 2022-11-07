@@ -173,6 +173,11 @@ export interface CallAdapter extends AdapterState<CallAdapterState>, Disposable,
 }
 
 // @public
+export type CallAdapterCallEndedEvent = {
+    callId: string;
+};
+
+// @public
 export interface CallAdapterCallManagement {
     createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void | CreateVideoStreamViewResult>;
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
@@ -391,6 +396,7 @@ export interface CallCompositeStrings {
     complianceBannerTranscriptionStopped: string;
     configurationPageCallDetails?: string;
     configurationPageTitle: string;
+    copyInviteLinkActionedAriaLabel: string;
     defaultPlaceHolder: string;
     failedToJoinCallDueToNoNetworkMoreDetails?: string;
     failedToJoinCallDueToNoNetworkTitle: string;
@@ -435,9 +441,7 @@ export type CallControlOptions = {
 };
 
 // @public
-export type CallEndedListener = (event: {
-    callId: string;
-}) => void;
+export type CallEndedListener = (event: CallAdapterCallEndedEvent) => void;
 
 // @public
 export class CallError extends Error {
@@ -482,10 +486,10 @@ export type CallingHandlers = {
     onStartScreenShare: () => Promise<void>;
     onStopScreenShare: () => Promise<void>;
     onToggleScreenShare: () => Promise<void>;
-    onHangUp: () => Promise<void>;
+    onHangUp: (forEveryone?: boolean) => Promise<void>;
     onCreateLocalStreamView: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
     onCreateRemoteStreamView: (userId: string, options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
-    onRemoveParticipant: (userId: string) => Promise<void>;
+    onRemoveParticipant(userId: string): Promise<void>;
     onDisposeRemoteStreamView: (userId: string) => Promise<void>;
     onDisposeLocalStreamView: () => Promise<void>;
 };
@@ -506,7 +510,7 @@ export interface CallingTheme {
 
 // @public
 export type CallParticipantListParticipant = ParticipantListParticipant & {
-    state: 'Idle' | 'Connecting' | 'Ringing' | 'Connected' | 'Hold' | 'InLobby' | 'EarlyMedia' | 'Disconnected';
+    state: ParticipantState;
     isScreenSharing?: boolean;
     isMuted?: boolean;
     isSpeaking?: boolean;
@@ -770,6 +774,7 @@ export interface CallWithChatCompositeStrings {
     chatButtonTooltipClosedWithMessageCount: string;
     chatButtonTooltipOpen: string;
     chatPaneTitle: string;
+    copyInviteLinkActionedAriaLabel: string;
     copyInviteLinkButtonLabel: string;
     dismissSidePaneButtonLabel?: string;
     moreDrawerAudioDeviceMenuTitle?: string;
@@ -1335,9 +1340,6 @@ export interface CustomMessage extends MessageCommon {
 export const darkTheme: PartialTheme & CallingTheme;
 
 // @public
-export type DeclarativeCallAgent = CallAgent;
-
-// @public
 export const DEFAULT_COMPONENT_ICONS: {
     ChatMessageOptions: JSX.Element;
     ControlButtonCameraOff: JSX.Element;
@@ -1877,6 +1879,7 @@ export interface MessageThreadStrings {
     friday: string;
     liveAuthorIntro: string;
     messageContentAriaText: string;
+    messageContentMineAriaText: string;
     messageReadCount?: string;
     monday: string;
     newMessagesIndicator: string;
@@ -1898,6 +1901,7 @@ export interface MessageThreadStyles extends BaseCustomStyles {
     chatContainer?: ComponentSlotStyle;
     chatItemMessageContainer?: ComponentSlotStyle;
     chatMessageContainer?: ComponentSlotStyle;
+    failedMyChatMessageContainer?: ComponentSlotStyle;
     loadPreviousMessagesButtonContainer?: IStyle;
     messageStatusContainer?: (mine: boolean) => IStyle;
     myChatItemMessageContainer?: ComponentSlotStyle;
@@ -2146,6 +2150,9 @@ export type ParticipantsRemovedListener = (event: {
 }) => void;
 
 // @public
+export type ParticipantState = 'Idle' | 'Connecting' | 'Ringing' | 'Connected' | 'Hold' | 'InLobby' | 'EarlyMedia' | 'Disconnected';
+
+// @public
 export type ReadReceiptsBySenderId = {
     [key: string]: {
         lastReadMessage: string;
@@ -2246,7 +2253,6 @@ export interface SendBoxStylesProps extends BaseCustomStyles {
 
 // @public
 export interface StatefulCallClient extends CallClient {
-    createCallAgent(...args: Parameters<CallClient['createCallAgent']>): Promise<DeclarativeCallAgent>;
     createView(callId: string | undefined, participantId: CommunicationIdentifier | undefined, stream: LocalVideoStreamState | RemoteVideoStreamState, options?: CreateViewOptions): Promise<CreateViewResult | undefined>;
     disposeView(callId: string | undefined, participantId: CommunicationIdentifier | undefined, stream: LocalVideoStreamState | RemoteVideoStreamState): void;
     getState(): CallClientState;

@@ -2,12 +2,7 @@
 // Licensed under the MIT license.
 
 import React, { useMemo } from 'react';
-import {
-  CreateVideoStreamViewResult,
-  OnRenderAvatarCallback,
-  VideoGalleryRemoteParticipantState,
-  VideoStreamOptions
-} from '../types';
+import { CreateVideoStreamViewResult, OnRenderAvatarCallback, ParticipantState, VideoStreamOptions } from '../types';
 import { StreamMedia } from './StreamMedia';
 import {
   useRemoteVideoStreamLifecycleMaintainer,
@@ -42,7 +37,7 @@ export const _RemoteVideoTile = React.memo(
     showMuteIndicator?: boolean;
     showLabel?: boolean;
     personaMinSize?: number;
-    state?: VideoGalleryRemoteParticipantState;
+    participantState?: ParticipantState;
   }) => {
     const {
       isAvailable,
@@ -57,10 +52,7 @@ export const _RemoteVideoTile = React.memo(
       userId,
       displayName,
       onRenderAvatar,
-      showMuteIndicator,
-      /* @conditional-compile-remove(one-to-n-calling) */
-      /* @conditional-compile-remove(PSTN-calls) */
-      state
+      showMuteIndicator
     } = props;
 
     const remoteVideoStreamProps: RemoteVideoStreamLifecycleMaintainerProps = useMemo(
@@ -91,6 +83,8 @@ export const _RemoteVideoTile = React.memo(
     // Handle creating, destroying and updating the video stream as necessary
     useRemoteVideoStreamLifecycleMaintainer(remoteVideoStreamProps);
 
+    const showLoadingIndicator = isAvailable && isReceiving === false && props.participantState !== 'Disconnected';
+
     const renderVideoStreamElement = useMemo(() => {
       // Checking if renderElement is well defined or not as calling SDK has a number of video streams limitation which
       // implies that, after their threshold, all streams have no child (blank video)
@@ -99,8 +93,10 @@ export const _RemoteVideoTile = React.memo(
         return undefined;
       }
 
-      return <StreamMedia videoStreamElement={renderElement} loadingState={isReceiving ? 'none' : 'loading'} />;
-    }, [renderElement, isReceiving]);
+      return (
+        <StreamMedia videoStreamElement={renderElement} loadingState={showLoadingIndicator ? 'loading' : 'none'} />
+      );
+    }, [renderElement, showLoadingIndicator]);
 
     return (
       <VideoTile
@@ -112,11 +108,11 @@ export const _RemoteVideoTile = React.memo(
         isMuted={isMuted}
         isSpeaking={isSpeaking}
         showMuteIndicator={showMuteIndicator}
-        showLabel={props.showLabel}
         personaMinSize={props.personaMinSize}
+        showLabel={props.showLabel}
         /* @conditional-compile-remove(one-to-n-calling) */
         /* @conditional-compile-remove(PSTN-calls) */
-        participantState={state}
+        participantState={props.participantState}
       />
     );
   }

@@ -7,7 +7,6 @@ import Enzyme from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import { createTestLocale, mountWithLocalization } from './utils/testUtils';
 import { setIconOptions } from '@fluentui/react';
-
 // Suppress icon warnings for tests. Icons are fetched from CDN which we do not want to perform during tests.
 // More information: https://github.com/microsoft/fluentui/wiki/Using-icons#test-scenarios
 setIconOptions({
@@ -35,7 +34,7 @@ describe('DevicesButton strings should be localizable and overridable', () => {
   test('Should localize button label', async () => {
     const testLocale = createTestLocale({ devicesButton: { label: Math.random().toString() } });
     const component = mountWithLocalization(<DevicesButton showLabel={true} {...mockProps} />, testLocale);
-    expect(component.text()).toBe(testLocale.strings.devicesButton.label);
+    expect(component.find('button').text()).toBe(testLocale.strings.devicesButton.label);
   });
 
   test('Should override button label with `strings` prop', async () => {
@@ -45,6 +44,6 @@ describe('DevicesButton strings should be localizable and overridable', () => {
       <DevicesButton showLabel={true} {...mockProps} strings={devicesButtonStrings} />,
       testLocale
     );
-    expect(component.text()).toBe(devicesButtonStrings.label);
+    expect(component.find('button').text()).toBe(devicesButtonStrings.label);
   });
 });

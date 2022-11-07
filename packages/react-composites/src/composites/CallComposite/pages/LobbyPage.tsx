@@ -8,13 +8,14 @@ import { CallCompositeOptions } from '../CallComposite';
 import { CallArrangement } from '../components/CallArrangement';
 import { usePropsFor } from '../hooks/usePropsFor';
 import { LobbyOverlayProps, LobbyTile } from '../components/LobbyTile';
-import { getCallStatus } from '../selectors/baseSelectors';
-import { reduceCallControlsForMobile } from '../utils';
-import { CallControlOptions } from '../types/CallControlOptions';
+import { getCallStatus, getRemoteParticipants } from '../selectors/baseSelectors';
+import { disableCallControls, reduceCallControlsForMobile } from '../utils';
 import { CallCompositeStrings } from '../Strings';
 import { useLocale } from '../../localization';
 import { useLocalVideoStartTrigger } from '../components/MediaGallery';
 import { CallCompositeIcon } from '../../common/icons';
+import { isPhoneNumberIdentifier, PhoneNumberIdentifier } from '@azure/communication-common';
+import { RemoteParticipantState } from '@internal/calling-stateful-client';
 
 /**
  * @private
@@ -37,6 +38,8 @@ export const LobbyPage = (props: LobbyPageProps): JSX.Element => {
   const callState = useSelector(getCallStatus);
   const inLobby = callState === 'InLobby';
 
+  const participants = useSelector(getRemoteParticipants) ?? {};
+
   useLocalVideoStartTrigger(lobbyProps.localParticipantVideoStream.isAvailable, inLobby);
 
   // Reduce the controls shown when mobile view is enabled.
@@ -44,7 +47,7 @@ export const LobbyPage = (props: LobbyPageProps): JSX.Element => {
     ? reduceCallControlsForMobile(props.options?.callControls)
     : props.options?.callControls;
 
-  callControlOptions = disableLobbyPageControls(callControlOptions);
+  callControlOptions = disableCallControls(callControlOptions, ['screenShareButton', 'participantsButton']);
 
   return (
     <CallArrangement
@@ -57,36 +60,41 @@ export const LobbyPage = (props: LobbyPageProps): JSX.Element => {
       mobileView={props.mobileView}
       /* @conditional-compile-remove(one-to-n-calling) */
       modalLayerHostId={props.modalLayerHostId}
-      onRenderGalleryContent={() => <LobbyTile {...lobbyProps} overlayProps={overlayProps(strings, inLobby)} />}
+      onRenderGalleryContent={() => (
+        <LobbyTile {...lobbyProps} overlayProps={overlayProps(strings, inLobby, Object.values(participants))} />
+      )}
       dataUiId={'lobby-page'}
     />
   );
 };
 
-const disableLobbyPageControls = (
-  callControlOptions: CallControlOptions | boolean | undefined
-): CallControlOptions | boolean | undefined => {
-  let newOptions = callControlOptions;
-  if (newOptions !== false) {
-    if (newOptions === true || newOptions === undefined) {
-      newOptions = {
-        participantsButton: { disabled: true },
-        screenShareButton: { disabled: true }
-      };
-    } else {
-      if (newOptions.participantsButton !== false) {
-        newOptions.participantsButton = { disabled: true };
-      }
-      if (newOptions.screenShareButton !== false) {
-        newOptions.screenShareButton = { disabled: true };
-      }
-    }
-  }
-  return newOptions;
-};
+const overlayProps = (
+  strings: CallCompositeStrings,
+  inLobby: boolean,
+  remoteParticipants: RemoteParticipantState[]
+): LobbyOverlayProps => {
+  /**
+   * Only grab the first participant because there will only be one in this situation.
+   * when starting a call with multiple people the call goes to the connected state and composite goes directly to
+   * videoGallery.
+   *
+   * We also need to check the participant state since in a group call the remote participants array will populate just before
+   * the user joins. In this situation we also check the participant states. in a groupCall the state of the participants
+   * will be 'Idle'.
+   */
+  const outboundCallParticipant: RemoteParticipantState | undefined =
+    remoteParticipants[0] &&
+    ['Ringing', 'Connecting'].includes(remoteParticipants[0].state) &&
+    remoteParticipants.length === 1
+      ? remoteParticipants[0]
+      : undefined;
 
-const overlayProps = (strings: CallCompositeStrings, inLobby: boolean): LobbyOverlayProps =>
-  inLobby ? overlayPropsWaitingToBeAdmitted(strings) : overlayPropsConnectingToCall(strings);
+  return inLobby
+    ? overlayPropsWaitingToBeAdmitted(strings)
+    : outboundCallParticipant
+    ? overlayPropsOutboundCall(strings, outboundCallParticipant)
+    : overlayPropsConnectingToCall(strings);
+};
 
 const overlayPropsConnectingToCall = (strings: CallCompositeStrings): LobbyOverlayProps => ({
   title: strings.lobbyScreenConnectingToCallTitle,
@@ -99,3 +107,25 @@ const overlayPropsWaitingToBeAdmitted = (strings: CallCompositeStrings): LobbyOv
   moreDetails: strings.lobbyScreenWaitingToBeAdmittedMoreDetails,
   overlayIcon: <CallCompositeIcon iconName="LobbyScreenWaitingToBeAdmitted" />
 });
+
+const overlayPropsOutboundCall = (
+  strings: CallCompositeStrings,
+  participant: RemoteParticipantState
+): LobbyOverlayProps => {
+  if (isPhoneNumberIdentifier(participant.identifier)) {
+    return {
+      title: (participant.identifier as PhoneNumberIdentifier).phoneNumber,
+      moreDetails: outboundCallStringsTrampoline(strings)
+    };
+  } else {
+    return {
+      title: outboundCallStringsTrampoline(strings)
+    };
+  }
+};
+
+const outboundCallStringsTrampoline = (strings: CallCompositeStrings): string => {
+  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+  return strings.outboundCallingNoticeString;
+  return '';
+};

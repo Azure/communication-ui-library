@@ -8,6 +8,8 @@ import memoizeOne from 'memoize-one';
 import { CallAdapter } from '..';
 import { useAdapter } from '../adapter/CallAdapterProvider';
 import { isCameraOn } from '../utils';
+/* @conditional-compile-remove(PSTN-calls) */
+import { DtmfTone } from '@azure/communication-calling';
 
 /**
  * @private
@@ -28,8 +30,8 @@ const createCompositeHandlers = memoizeOne(
     onCreateRemoteStreamView: async (userId, options) => {
       return await adapter.createStreamView(userId, options);
     },
-    onHangUp: async () => {
-      await adapter.leaveCall();
+    onHangUp: async (forEveryone?: boolean) => {
+      await adapter.leaveCall(forEveryone);
     },
     /* @conditional-compile-remove(PSTN-calls) */
     onToggleHold: async () => {
@@ -38,6 +40,10 @@ const createCompositeHandlers = memoizeOne(
     /* @conditional-compile-remove(PSTN-calls) */
     onAddParticipant: async (participant, options?) => {
       return await adapter.addParticipant(participant, options);
+    },
+    /* @conditional-compile-remove(PSTN-calls) */
+    onSendDtmfTone: async (dtmfTone: DtmfTone) => {
+      await adapter.sendDtmfTone(dtmfTone);
     },
     onRemoveParticipant: async (userId) => {
       await adapter.removeParticipant(userId);
@@ -82,6 +88,10 @@ const createCompositeHandlers = memoizeOne(
     },
     onDisposeRemoteStreamView: async (userId) => {
       return adapter.disposeStreamView(userId);
+    },
+    /* @conditional-compile-remove(call-readiness) */
+    askDevicePermission: async (constrain) => {
+      return adapter.askDevicePermission(constrain);
     }
   })
 );

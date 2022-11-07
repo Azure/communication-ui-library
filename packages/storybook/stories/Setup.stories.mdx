@@ -1,0 +1,138 @@
+import { Meta, Source } from '@storybook/addon-docs';
+
+import indexText from '!!raw-loader!./snippets/ReactIndex.snippet.tsx';
+
+<Meta
+  id="setup-communication-react"
+  title="Setup"
+  parameters={{ previewTabs: { canvas: { disable: true, hidden: true } } }}
+/>
+
+# Setting up your app to use Azure Communications UI Library
+
+Currently the Azure Communications UI library supports react versions `>=16.8.0` and `< 18`
+
+When following this setup guide, the react version bundled with the `create-react-app` will need
+to be downgraded from react 18 to a supported react version. This page will cover which packages that need downgrading and files
+that need to be edited to get you up and running.
+
+## Prerequisites
+
+Before you get started make sure you have all the following prerequisites set up and ready to go.
+
+- An Azure account with an active subscription. [Create an account for free](https://azure.microsoft.com/free/?WT.mc_id=A261C142F).
+- [Node.js](https://nodejs.org/) Active LTS and Maintenance LTS versions (Node 14.19.0 and above).
+- An active Communication Services resource. [Create a Communication Services resource](https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-azp).
+- An identity with both VoIP and Chat scopes. Generate an identity using the [Azure Portal](https://docs.microsoft.com/azure/communication-services/quickstarts/identity/quick-create-identity).
+
+## Setting Up
+
+UI Library requires a React environment to be setup. Next we will do that.
+
+### Set Up React App
+
+We'll use the create-react-app typescript template for our application. For more information, see: [Get Started with React](https://reactjs.org/docs/create-a-new-react-app.html)
+
+```bash
+
+npx create-react-app your-ui-lib-application --template typescript
+
+cd your-ui-lib-application
+
+```
+
+### Revert `index.tsx` to older version
+
+The latest `creat-react-app` template is incompatible with React 16/17 libraries.
+Replace the content of the generated `index.tsx` file with the following snippet
+so that it works with the target React versions:
+
+<Source code={indexText} />
+
+**Note:** Various tutorials in this documentation modify the contents of the generated `App.tsx` file.
+The `index.tsx` file should look identical for all the tutorials, as shown here.
+
+### Setting up your React app packages
+
+Since React 18 also updates all of its dependencies we will need to make sure that we downgrade the react packages present in
+react versions between `16.8.0` and `< 18`.
+
+We recommend the following configuration of React-related dependencies:
+
+```json
+"dependencies": {
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^12.1.5",
+    "@testing-library/react-hooks": "^3.4.2",
+    "@testing-library/user-event": "^13.5.0",
+    "@types/jest": "^27.5.2",
+    "@types/node": "^16.11.49",
+    "@types/react": "^16.9.49",
+    "@types/react-dom": "^16.9.8",
+    "react": "~16.14.0",
+    "react-dom": "16.13.1",
+    "react-router-dom": "^5.1.2",
+    "react-scripts": "^5.0.1",
+    "react-test-renderer": "^16.14.0",
+    "reactstrap": "^8.4.1",
+    "typescript": "^4.7.4",
+    "web-vitals": "^2.1.4"
+}
+```
+
+Should you want to update anything make sure that it is compatible with react versions `< 18`
+
+### Installing the Package
+
+#### Package prequiresites
+
+The Azure Communication UI Library supports the following minimum versions:
+
+- `typescript` >= 3.7.0
+- `webpack` >= 5.3.8
+
+#### npm install
+
+Use the `npm install` command to install the Azure Communication Services UI Library for JavaScript.
+
+```bash
+npm install @azure/communication-react
+```
+
+`@azure/communication-react` specifies core AzureCommunication Services as `peerDependencies` so that you
+can most consistently user the API from the core libraries in your application. You need to install those libraries as well:
+
+```bash
+npm install @azure/communication-calling@1.4.4
+npm install @azure/communication-chat@1.2.0
+```
+
+To try out our [composite adapters](./?path=/docs/quickstarts-composites--page) snippets you will need to install `uuid`
+
+```bash
+npm install uuid
+npm install @types/uuid
+```
+
+### Working with our beta features
+
+If you are looking to experiment with our latest beta calling features, ensure to install the corresponding beta dependencies.
+
+```bash
+npm install @azure/communication-calling@next
+```
+
+### Testing your app
+
+You need to downgrade or consider removing the provided `App.test.tsx` file. This is because it is
+using the new testing library `@testing-library/react` which is not compatible with versions of react `< 18`. If this file is not modified, the app will fail to build correctly in the next step.
+
+### Run Create React App
+
+Finally, you can now run the app using the command below:
+
+```bash
+npm run start
+```
+
+To start your application in development mode.

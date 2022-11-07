@@ -3,6 +3,8 @@
 
 import React, { useState } from 'react';
 import { Stack, PrimaryButton, Image, ChoiceGroup, IChoiceGroupOption, Text, TextField } from '@fluentui/react';
+/* @conditional-compile-remove(PSTN-calls) */
+import { registerIcons } from '@fluentui/react';
 import heroSVG from '../../assets/hero.svg';
 import {
   imgStyle,
@@ -15,7 +17,8 @@ import {
   containerTokens,
   headerStyle,
   teamsItemStyle,
-  buttonStyle
+  buttonStyle,
+  dialpadOptionStyles
 } from '../styles/HomeScreen.styles';
 /* @conditional-compile-remove(PSTN-calls) */
 import { outboundTextField } from '../styles/HomeScreen.styles';
@@ -26,6 +29,10 @@ import { DisplayNameField } from './DisplayNameField';
 import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
 import { Dialpad } from '@azure/communication-react';
+/* @conditional-compile-remove(PSTN-calls) */
+import { Backspace20Regular } from '@fluentui/react-icons';
+/* @conditional-compile-remove(PSTN-calls) */
+import { useIsMobile } from '../utils/useIsMobile';
 
 export interface HomeScreenProps {
   startCallHandler(callDetails: {
@@ -81,6 +88,12 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
       (teamsCallChosen && teamsLink) ||
       /* @conditional-compile-remove(PSTN-calls) */ (pstnCallChosen && dialpadParticipant && alternateCallerId) ||
       /* @conditional-compile-remove(one-to-n-calling) */ (outboundParticipants && acsCallChosen));
+
+  /* @conditional-compile-remove(PSTN-calls) */
+  registerIcons({ icons: { BackSpace: <Backspace20Regular /> } });
+
+  /* @conditional-compile-remove(PSTN-calls) */
+  const isMobileSession = useIsMobile();
   return (
     <Stack
       horizontal
@@ -131,18 +144,21 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
               /* @conditional-compile-remove(PSTN-calls) */ pstnCallChosen && (
                 <Stack>
                   <Stack>
-                    <Dialpad
-                      onChange={(newValue) => {
-                        /**
-                         * We need to pass in the formatting for the phone number string in the onChange handler
-                         * to make sure the phone number is in E.164 format.
-                         *
-                         * write regexp to flatten this
-                         */
-                        const phoneNumber = '+' + newValue?.replace('[^0-9]', '');
-                        setDialpadParticipant(phoneNumber);
-                      }}
-                    />
+                    <Stack styles={dialpadOptionStyles}>
+                      <Dialpad
+                        isMobile={isMobileSession}
+                        onChange={(newValue) => {
+                          /**
+                           * We need to pass in the formatting for the phone number string in the onChange handler
+                           * to make sure the phone number is in E.164 format.
+                           *
+                           * write regexp to flatten this
+                           */
+                          const phoneNumber = '+' + newValue?.replace(/\D/g, '');
+                          setDialpadParticipant(phoneNumber);
+                        }}
+                      />
+                    </Stack>
                     <TextField
                       className={outboundTextField}
                       label={'ACS phone number for Caller ID'}

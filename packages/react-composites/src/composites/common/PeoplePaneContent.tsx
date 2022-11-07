@@ -9,6 +9,8 @@ import {
   ParticipantMenuItemsCallback,
   _DrawerMenuItemProps
 } from '@internal/react-components';
+/* @conditional-compile-remove(rooms) */
+import { _usePermissions } from '@internal/react-components';
 import React, { useMemo } from 'react';
 import { CallWithChatCompositeStrings } from '../CallWithChatComposite';
 import { usePropsFor } from '../CallComposite/hooks/usePropsFor';
@@ -17,33 +19,41 @@ import { ParticipantListWithHeading } from '../common/ParticipantContainer';
 import { peoplePaneContainerTokens } from '../common/styles/ParticipantContainer.styles';
 import { participantListContainerStyles, peoplePaneContainerStyle } from './styles/PeoplePaneContent.styles';
 import { convertContextualMenuItemToDrawerMenuItem } from '../CallWithChatComposite/ConvertContextualMenuItemToDrawerMenuItem';
-/* @conditional-compile-remove(one-to-n-calling) */
+/* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
 import { CallCompositeStrings } from '../CallComposite';
 import { AddPeopleButton } from './AddPeopleButton';
+/* @conditional-compile-remove(PSTN-calls) */
+import { PhoneNumberIdentifier } from '@azure/communication-common';
+/* @conditional-compile-remove(PSTN-calls) */
+import { AddPhoneNumberOptions } from '@azure/communication-calling';
 
 /**
  * @private
  */
 export const PeoplePaneContent = (props: {
+  active: boolean;
   inviteLink?: string;
   onRemoveParticipant: (participantId: string) => void;
+  /* @conditional-compile-remove(PSTN-calls) */
+  onAddParticipant: (participant: PhoneNumberIdentifier, options?: AddPhoneNumberOptions) => void;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
   strings: CallWithChatCompositeStrings | /* @conditional-compile-remove(one-to-n-calling) */ CallCompositeStrings;
   setDrawerMenuItems: (_DrawerMenuItemProps) => void;
   mobileView?: boolean;
+  /* @conditional-compile-remove(PSTN-calls) */
+  alternateCallerId?: string;
 }): JSX.Element => {
   const { inviteLink, onFetchParticipantMenuItems, setDrawerMenuItems, strings, onRemoveParticipant } = props;
-
   const participantListDefaultProps = usePropsFor(ParticipantList);
-
+  const removeButtonAllowed = hasRemoveParticipantsPermissionTrampoline();
   const setDrawerMenuItemsForParticipant: (participant?: ParticipantListParticipant) => void = useMemo(() => {
     return (participant?: ParticipantListParticipant) => {
       if (participant) {
         let contextualMenuItems: IContextualMenuItem[] = createDefaultContextualMenuItems(
           participant,
           strings,
-          participantListDefaultProps.onRemoveParticipant,
+          removeButtonAllowed && participant.isRemovable ? participantListDefaultProps.onRemoveParticipant : undefined,
           participantListDefaultProps.myUserId
         );
         if (onFetchParticipantMenuItems) {
@@ -63,6 +73,7 @@ export const PeoplePaneContent = (props: {
     strings,
     participantListDefaultProps.onRemoveParticipant,
     participantListDefaultProps.myUserId,
+    removeButtonAllowed,
     onFetchParticipantMenuItems,
     setDrawerMenuItems
   ]);
@@ -83,7 +94,7 @@ export const PeoplePaneContent = (props: {
       isMobile={props.mobileView}
       participantListProps={participantListProps}
       onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
-      onFetchParticipantMenuItems={props.onFetchParticipantMenuItems}
+      onFetchParticipantMenuItems={props.mobileView ? undefined : props.onFetchParticipantMenuItems}
       title={props.strings.peoplePaneSubTitle}
     />
   );
@@ -95,12 +106,18 @@ export const PeoplePaneContent = (props: {
           {participantList}
         </Stack.Item>
 
-        <AddPeopleButton
-          inviteLink={inviteLink}
-          mobileView={props.mobileView}
-          participantList={participantList}
-          strings={strings}
-        />
+        {props.active && (
+          <AddPeopleButton
+            inviteLink={inviteLink}
+            mobileView={props.mobileView}
+            participantList={participantList}
+            strings={strings}
+            /* @conditional-compile-remove(PSTN-calls) */
+            onAddParticipant={props.onAddParticipant}
+            /* @conditional-compile-remove(PSTN-calls) */
+            alternateCallerId={props.alternateCallerId}
+          />
+        )}
       </Stack>
     );
   }
@@ -111,6 +128,10 @@ export const PeoplePaneContent = (props: {
       mobileView={props.mobileView}
       participantList={participantList}
       strings={strings}
+      /* @conditional-compile-remove(PSTN-calls) */
+      onAddParticipant={props.onAddParticipant}
+      /* @conditional-compile-remove(PSTN-calls) */
+      alternateCallerId={props.alternateCallerId}
     />
   );
 };
@@ -125,12 +146,14 @@ export const PeoplePaneContent = (props: {
  */
 const createDefaultContextualMenuItems = (
   participant: ParticipantListParticipant,
-  strings: CallWithChatCompositeStrings | /* @conditional-compile-remove(one-to-n-calling) */ CallCompositeStrings,
-  onRemoveParticipant: (userId: string) => Promise<void>,
+  strings:
+    | CallWithChatCompositeStrings
+    | /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */ CallCompositeStrings,
+  onRemoveParticipant?: (userId: string) => Promise<void>,
   localParticipantUserId?: string
 ): IContextualMenuItem[] => {
   const menuItems: IContextualMenuItem[] = [];
-  if (participant?.userId !== localParticipantUserId) {
+  if (onRemoveParticipant && participant?.userId !== localParticipantUserId) {
     menuItems.push({
       key: 'remove',
       text: strings.removeMenuLabel,
@@ -141,9 +164,18 @@ const createDefaultContextualMenuItems = (
       },
       iconProps: {
         iconName: 'UserRemove'
-      },
-      disabled: !participant.isRemovable
+      }
     });
   }
   return menuItems;
+};
+
+/**
+ * @private
+ */
+const hasRemoveParticipantsPermissionTrampoline = (): boolean => {
+  /* @conditional-compile-remove(rooms) */
+  return _usePermissions().removeParticipantButton;
+  // Return true if stable.
+  return true;
 };

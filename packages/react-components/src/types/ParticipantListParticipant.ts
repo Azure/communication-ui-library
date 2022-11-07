@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+/* @conditional-compile-remove(rooms) */
+import { Role } from '../permissions';
 import { CommunicationParticipant } from './CommunicationParticipant';
 
 /**
@@ -10,13 +12,16 @@ import { CommunicationParticipant } from './CommunicationParticipant';
  */
 export type CallParticipantListParticipant = ParticipantListParticipant & {
   /** State of calling participant */
-  state: 'Idle' | 'Connecting' | 'Ringing' | 'Connected' | 'Hold' | 'InLobby' | 'EarlyMedia' | 'Disconnected';
+  state: ParticipantState;
   /** Whether calling participant is screen sharing */
   isScreenSharing?: boolean;
   /** Whether calling participant is muted */
   isMuted?: boolean;
   /** Whether calling participant is speaking */
   isSpeaking?: boolean;
+  /* @conditional-compile-remove(rooms) */
+  /** Role of participant in Rooms call */
+  role?: Role;
 };
 
 /**
@@ -30,3 +35,17 @@ export type ParticipantListParticipant = CommunicationParticipant & {
    */
   isRemovable: boolean;
 };
+
+/**
+ * @public
+ * The connection state of a call participant.
+ */
+export type ParticipantState =
+  | 'Idle'
+  | 'Connecting'
+  | 'Ringing'
+  | 'Connected'
+  | 'Hold'
+  | 'InLobby'
+  | 'EarlyMedia'
+  | 'Disconnected';

@@ -10,12 +10,16 @@ import {
   toFlatCommunicationIdentifier,
   useAzureCommunicationCallAdapter
 } from '@azure/communication-react';
+/* @conditional-compile-remove(rooms) */
+import { Role } from '@azure/communication-react';
 import { Spinner } from '@fluentui/react';
 import React, { useCallback, useEffect, useMemo, useRef } from 'react';
 import { useSwitchableFluentTheme } from '../theming/SwitchableFluentThemeProvider';
 import { createAutoRefreshingCredential } from '../utils/credential';
 import { WEB_APP_TITLE } from '../utils/AppUtils';
 import { useIsMobile } from '../utils/useIsMobile';
+/* @conditional-compile-remove(call-readiness) */
+import { CallCompositeOptions } from '@azure/communication-react';
 
 export interface CallScreenProps {
   token: string;
@@ -25,6 +29,10 @@ export interface CallScreenProps {
   /* @conditional-compile-remove(PSTN-calls) */
   alternateCallerId?: string;
   onCallEnded: () => void;
+  /* @conditional-compile-remove(rooms) */
+  role?: Role;
+  /* @conditional-compile-remove(call-readiness) */
+  callReadinessOptedIn?: boolean;
 }
 
 export const CallScreen = (props: CallScreenProps): JSX.Element => {
@@ -34,7 +42,9 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     callLocator,
     displayName,
     onCallEnded,
-    /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId
+    /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
+    /* @conditional-compile-remove(rooms) */ role,
+    /* @conditional-compile-remove(call-readiness) */ callReadinessOptedIn
   } = props;
   const callIdRef = useRef<string>();
   const { currentTheme, currentRtl } = useSwitchableFluentTheme();
@@ -67,6 +77,17 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     () => createAutoRefreshingCredential(toFlatCommunicationIdentifier(userId), token),
     [token, userId]
   );
+
+  /* @conditional-compile-remove(call-readiness) */
+  const options: CallCompositeOptions = useMemo(
+    () => ({
+      callReadinessOptedIn: callReadinessOptedIn,
+      onPermissionsTroubleshootingClick,
+      onNetworkingTroubleShootingClick
+    }),
+    [callReadinessOptedIn]
+  );
+
   const adapter = useAzureCommunicationCallAdapter(
     {
       userId,
@@ -92,13 +113,24 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     return <Spinner label={'Creating adapter'} ariaLive="assertive" labelPosition="top" />;
   }
 
+  let callInvitationUrl: string | undefined = window.location.href;
+  /* @conditional-compile-remove(rooms) */
+  // If role is defined then the call is a Rooms call so we should not make call invitation link available
+  if (role) {
+    callInvitationUrl = undefined;
+  }
+
   return (
     <CallComposite
       adapter={adapter}
       fluentTheme={currentTheme.theme}
       rtl={currentRtl}
-      callInvitationUrl={window.location.href}
+      callInvitationUrl={callInvitationUrl}
       formFactor={isMobileSession ? 'mobile' : 'desktop'}
+      /* @conditional-compile-remove(rooms) */
+      roleHint={role}
+      /* @conditional-compile-remove(call-readiness) */
+      options={options}
     />
   );
 };
@@ -114,4 +146,18 @@ const convertPageStateToString = (state: CallAdapterState): string => {
     default:
       return `${state.page}`;
   }
+};
+
+/* @conditional-compile-remove(call-readiness) */
+const onPermissionsTroubleshootingClick = (permissionState: {
+  camera: PermissionState;
+  microphone: PermissionState;
+}): void => {
+  console.log(permissionState);
+  alert('permission troubleshooting clicked');
+};
+
+/* @conditional-compile-remove(call-readiness) */
+const onNetworkingTroubleShootingClick = (): void => {
+  alert('network troubleshooting clicked');
 };

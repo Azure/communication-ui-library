@@ -13,13 +13,16 @@ import type {
   NetworkDiagnosticChangedEventArgs,
   PropertyChangedEvent
 } from '@azure/communication-calling';
-/* @conditional-compile-remove(PSTN-calls) */
-import { AddPhoneNumberOptions } from '@azure/communication-calling';
-
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 import type { CommunicationIdentifierKind } from '@azure/communication-common';
 /* @conditional-compile-remove(PSTN-calls) */
-import { CommunicationIdentifier } from '@azure/communication-common';
+import { AddPhoneNumberOptions, DtmfTone } from '@azure/communication-calling';
+/* @conditional-compile-remove(PSTN-calls) */
+import type {
+  CommunicationIdentifier,
+  CommunicationUserIdentifier,
+  PhoneNumberIdentifier
+} from '@azure/communication-common';
 import type { AdapterState, Disposable, AdapterError, AdapterErrors } from '../../common/adapters';
 
 /**
@@ -31,10 +34,28 @@ export type CallCompositePage =
   | 'accessDeniedTeamsMeeting'
   | 'call'
   | 'configuration'
+  | /* @conditional-compile-remove(PSTN-calls) */ 'hold'
   | 'joinCallFailedDueToNoNetwork'
   | 'leftCall'
   | 'lobby'
-  | 'removedFromCall';
+  | /* @conditional-compile-remove(rooms) */ 'deniedPermissionToRoom'
+  | 'removedFromCall'
+  | /* @conditional-compile-remove(rooms) */ 'roomNotFound'
+  | /* @conditional-compile-remove(unsupported-browser) */ 'unsupportedEnvironment';
+
+/**
+ * Subset of CallCompositePages that represent an end call state.
+ * @private
+ */
+export const END_CALL_PAGES: CallCompositePage[] = [
+  'accessDeniedTeamsMeeting',
+  'joinCallFailedDueToNoNetwork',
+  'leftCall',
+  /* @conditional-compile-remove(rooms) */ 'deniedPermissionToRoom',
+  'removedFromCall',
+  /* @conditional-compile-remove(rooms) */ 'roomNotFound',
+  /* @conditional-compile-remove(unsupported-browser) */ 'unsupportedEnvironment'
+];
 
 /**
  * {@link CallAdapter} state for pure UI purposes.
@@ -132,11 +153,18 @@ export type DisplayNameChangedListener = (event: {
 }) => void;
 
 /**
+ * Payload for {@link CallEndedListener} containing details on the ended call.
+ *
+ * @public
+ */
+export type CallAdapterCallEndedEvent = { callId: string };
+
+/**
  * Callback for {@link CallAdapterSubscribers} 'callEnded' event.
  *
  * @public
  */
-export type CallEndedListener = (event: { callId: string }) => void;
+export type CallEndedListener = (event: CallAdapterCallEndedEvent) => void;
 
 /**
  * Payload for {@link DiagnosticChangedEventListner} where there is a change in a media diagnostic.
@@ -223,6 +251,13 @@ export interface CallAdapterCallManagement {
    * @public
    */
   startCall(participants: string[], options?: StartCallOptions): Call | undefined;
+  /* @conditional-compile-remove(PSTN-calls) */
+  /**
+   * Start the call.
+   * @param participants - An array of {@link @azure/communication-common#CommunicationIdentifier} to be called
+   * @beta
+   */
+  startCall(participants: CommunicationIdentifier[], options?: StartCallOptions): Call | undefined;
   /**
    * Start sharing the screen during a call.
    *
@@ -243,6 +278,13 @@ export interface CallAdapterCallManagement {
    * @public
    */
   removeParticipant(userId: string): Promise<void>;
+  /* @conditional-compile-remove(PSTN-calls) */
+  /**
+   * Remove a participant from the call.
+   * @param participant - {@link @azure/communication-common#CommunicationIdentifier} of the participant to be removed
+   * @beta
+   */
+  removeParticipant(participant: CommunicationIdentifier): Promise<void>;
   /**
    * Create the html view for a stream.
    *
@@ -287,7 +329,16 @@ export interface CallAdapterCallManagement {
    *
    * @beta
    */
-  addParticipant(participant: CommunicationIdentifier, options?: AddPhoneNumberOptions): Promise<void>;
+  addParticipant(participant: PhoneNumberIdentifier, options?: AddPhoneNumberOptions): Promise<void>;
+  /* @conditional-compile-remove(PSTN-calls) */
+  addParticipant(participant: CommunicationUserIdentifier): Promise<void>;
+  /* @conditional-compile-remove(PSTN-calls) */
+  /**
+   * send dtmf tone to another participant in a 1:1 PSTN call
+   *
+   * @beta
+   */
+  sendDtmfTone(dtmfTone: DtmfTone): Promise<void>;
 }
 
 /**

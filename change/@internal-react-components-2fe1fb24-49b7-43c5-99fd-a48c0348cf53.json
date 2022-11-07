@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "changed z-index so new message button shows ontop of chat bubble",
-  "packageName": "@internal/react-components",
-  "email": "carolinecao@microsoft.com",
-  "dependentChangeType": "patch"
-}

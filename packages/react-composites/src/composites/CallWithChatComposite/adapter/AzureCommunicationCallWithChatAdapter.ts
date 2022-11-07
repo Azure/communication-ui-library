@@ -16,7 +16,7 @@ import {
   VideoDeviceInfo
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
-import { AddPhoneNumberOptions } from '@azure/communication-calling';
+import { AddPhoneNumberOptions, DtmfTone } from '@azure/communication-calling';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 /* @conditional-compile-remove(file-sharing) */
 import { FileMetadata } from '@internal/react-components';
@@ -57,7 +57,11 @@ import {
 import { EventEmitter } from 'events';
 import { CommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(PSTN-calls) */
-import { CommunicationIdentifier } from '@azure/communication-common';
+import {
+  CommunicationIdentifier,
+  isCommunicationUserIdentifier,
+  PhoneNumberIdentifier
+} from '@azure/communication-common';
 import { getChatThreadFromTeamsLink } from './parseTeamsUrl';
 import { AdapterError } from '../../common/adapters';
 
@@ -72,6 +76,7 @@ import { StatefulCallClient } from '@internal/calling-stateful-client';
 import { StatefulChatClient } from '@internal/chat-stateful-client';
 import { ChatThreadClient } from '@azure/communication-chat';
 import { useEffect, useRef, useState } from 'react';
+import { _toCommunicationIdentifier } from '@internal/acs-ui-common';
 
 type CallWithChatAdapterStateChangedHandler = (newState: CallWithChatAdapterState) => void;
 
@@ -80,8 +85,9 @@ class CallWithChatContext {
   private emitter = new EventEmitter();
   private state: CallWithChatAdapterState;
 
-  constructor(clientState: CallWithChatAdapterState) {
+  constructor(clientState: CallWithChatAdapterState, maxListeners = 50) {
     this.state = clientState;
+    this.emitter.setMaxListeners(maxListeners);
   }
 
   public onStateChange(handler: CallWithChatAdapterStateChangedHandler): void {
@@ -197,6 +203,8 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     this.resumeCall.bind(this);
     /* @conditional-compile-remove(PSTN-calls) */
     this.addParticipant.bind(this);
+    /* @conditional-compile-remove(PSTN-calls) */
+    this.sendDtmfTone.bind(this);
   }
 
   /** Join existing Call. */
@@ -204,13 +212,19 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     return this.callAdapter.joinCall(microphoneOn);
   }
   /** Leave current Call. */
-  public async leaveCall(): Promise<void> {
+  public async leaveCall(forEveryone?: boolean): Promise<void> {
     // Only remove self from the GroupCall. Contoso must manage access to Chat.
-    await this.callAdapter.leaveCall();
+    await this.callAdapter.leaveCall(forEveryone);
   }
   /** Start a new Call. */
-  public startCall(participants: string[], options?: StartCallOptions): Call | undefined {
-    return this.callAdapter.startCall(participants, options);
+  public startCall(
+    participants: string[] | /* @conditional-compile-remove(PSTN-calls) */ CommunicationIdentifier[],
+    options?: StartCallOptions
+  ): Call | undefined {
+    let communicationParticipants = participants;
+    /* @conditional-compile-remove(PSTN-calls) */
+    communicationParticipants = participants.map(_toCommunicationIdentifier);
+    return this.callAdapter.startCall(communicationParticipants, options);
   }
   /**
    * Subscribe to state change events.
@@ -239,9 +253,13 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     this.callAdapter.dispose();
   }
   /** Remove a participant from the Call only. */
-  public async removeParticipant(userId: string): Promise<void> {
-    // Only remove the participant from the GroupCall. Contoso must manage access to Chat.
-    await this.callAdapter.removeParticipant(userId);
+  public async removeParticipant(
+    userId: string | /* @conditional-compile-remove(PSTN-calls) */ CommunicationIdentifier
+  ): Promise<void> {
+    let participant = userId;
+    /* @conditional-compile-remove(PSTN-calls) */
+    participant = _toCommunicationIdentifier(userId);
+    await this.callAdapter.removeParticipant(participant);
   }
   public async setCamera(device: VideoDeviceInfo, options?: VideoStreamOptions): Promise<void> {
     await this.callAdapter.setCamera(device, options);
@@ -369,8 +387,24 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     return await this.callAdapter.resumeCall();
   }
   /* @conditional-compile-remove(PSTN-calls) */
-  public async addParticipant(participant: CommunicationIdentifier, options?: AddPhoneNumberOptions): Promise<void> {
-    return await this.callAdapter.addParticipant(participant, options);
+  public async addParticipant(participant: PhoneNumberIdentifier, options?: AddPhoneNumberOptions): Promise<void>;
+  /* @conditional-compile-remove(PSTN-calls) */
+  public async addParticipant(participant: CommunicationUserIdentifier): Promise<void>;
+  /* @conditional-compile-remove(PSTN-calls) */
+  public async addParticipant(
+    participant: PhoneNumberIdentifier | CommunicationUserIdentifier,
+    options?: AddPhoneNumberOptions
+  ): Promise<void> {
+    if (isCommunicationUserIdentifier(participant)) {
+      return await this.callAdapter.addParticipant(participant);
+    } else {
+      return await this.callAdapter.addParticipant(participant, options);
+    }
+  }
+
+  /* @conditional-compile-remove(PSTN-calls) */
+  public async sendDtmfTone(dtmfTone: DtmfTone): Promise<void> {
+    return await this.callAdapter.sendDtmfTone(dtmfTone);
   }
 
   on(event: 'callParticipantsJoined', listener: ParticipantsJoinedListener): void;
@@ -753,6 +787,18 @@ export const createAzureCommunicationCallWithChatAdapterFromClients = async ({
   const [callAdapter, chatAdapter] = await Promise.all([createCallAdapterPromise, createChatAdapterPromise]);
   return new AzureCommunicationCallWithChatAdapter(callAdapter, chatAdapter);
 };
+
+/**
+ * Create a {@link CallWithChatAdapter} from the underlying adapters.
+ *
+ * This is an internal factory function used by browser tests to inject fake adapters for call and chat.
+ *
+ * @internal
+ */
+export const _createAzureCommunicationCallWithChatAdapterFromAdapters = (
+  callAdapter: CallAdapter,
+  chatAdapter: ChatAdapter
+): CallWithChatAdapter => new AzureCommunicationCallWithChatAdapter(callAdapter, chatAdapter);
 
 const isTeamsMeetingLinkLocator = (
   locator: CallAndChatLocator | TeamsMeetingLinkLocator

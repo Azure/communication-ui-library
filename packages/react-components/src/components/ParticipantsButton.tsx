@@ -25,7 +25,7 @@ import { useIdentifiers } from '../identifiers';
 import { CommunicationParticipant } from '../types/CommunicationParticipant';
 import { OnRenderAvatarCallback } from '../types/OnRender';
 import { ParticipantListParticipant } from '../types';
-import { HighContrastAwareIcon } from './HighContrastAwareIcon';
+import { _HighContrastAwareIcon } from './HighContrastAwareIcon';
 import { _preventDismissOnEvent as preventDismissOnEvent } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(rooms) */
 import { _usePermissions } from '../permissions/PermissionsProvider';
@@ -176,12 +176,10 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
     showParticipantOverflowTooltip
   } = props;
 
-  let disabled = props.disabled;
-  /* @conditional-compile-remove(rooms) */
-  disabled = disabled || !_usePermissions().participantList;
+  const disabled = props.disabled;
 
   const onRenderPeopleIcon = (): JSX.Element => (
-    <HighContrastAwareIcon disabled={disabled} iconName="ControlButtonParticipants" />
+    <_HighContrastAwareIcon disabled={disabled} iconName="ControlButtonParticipants" />
   );
 
   const ids = useIdentifiers();

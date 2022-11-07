@@ -11,10 +11,8 @@ import {
 } from '@fluentui/react';
 import React from 'react';
 import { useLocale } from '../localization';
-/* @conditional-compile-remove(rooms) */
-import { _usePermissions } from '../permissions/PermissionsProvider';
 import { ControlBarButton, ControlBarButtonProps, ControlBarButtonStyles } from './ControlBarButton';
-import { HighContrastAwareIcon } from './HighContrastAwareIcon';
+import { _HighContrastAwareIcon } from './HighContrastAwareIcon';
 import { buttonFlyoutItemStyles } from './styles/ControlBar.styles';
 import { _preventDismissOnEvent as preventDismissOnEvent } from '@internal/acs-ui-common';
 
@@ -376,25 +374,12 @@ export const DevicesButton = (props: DevicesButtonProps): JSX.Element => {
   const localeStrings = useLocale().strings.devicesButton;
   const strings = { ...localeStrings, ...props.strings };
 
-  /* @conditional-compile-remove(rooms) */
-  const isSelectMicAllowed = _usePermissions().microphoneButton;
-  /* @conditional-compile-remove(rooms) */
-  const isSelectCamAllowed = _usePermissions().cameraButton;
-
   const devicesButtonMenu =
-    props.menuProps ??
-    generateDefaultDeviceMenuProps(
-      { ...props, styles: props.styles?.menuStyles },
-      strings,
-      /* @conditional-compile-remove(rooms) */
-      isSelectCamAllowed,
-      /* @conditional-compile-remove(rooms) */
-      isSelectMicAllowed
-    );
+    props.menuProps ?? generateDefaultDeviceMenuProps({ ...props, styles: props.styles?.menuStyles }, strings);
 
-  const onRenderOptionsIcon = (): JSX.Element => (
-    <HighContrastAwareIcon disabled={props.disabled} iconName="ControlButtonOptions" />
-  );
+  const onRenderOptionsIcon = (): JSX.Element => {
+    return <_HighContrastAwareIcon disabled={props.disabled} iconName="ControlButtonOptions" />;
+  };
 
   return (
     <ControlBarButton

@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IStyle, mergeStyles } from '@fluentui/react';
+import { IStyle, mergeStyles, Theme } from '@fluentui/react';
 
 /**
  * @private
@@ -42,9 +42,10 @@ export const overlayContainerStyles: IStyle = {
  */
 export const tileInfoContainerStyle = mergeStyles({
   position: 'absolute',
-  bottom: '0.5rem',
-  left: '0.5rem',
-  width: 'calc(100% - 1rem)'
+  bottom: '0',
+  left: '0',
+  padding: '0.5rem',
+  width: '100%'
 });
 
 /**
@@ -86,34 +87,28 @@ export const displayNameStyle: IStyle = {
 /**
  * @private
  */
-export const participantStateStyle: IStyle = {
-  textAlign: 'center',
-  paddingTop: '0.5rem',
-  fontWeight: 600,
-  fontSize: '0.75rem'
-};
-
-/**
- * @private
- */
 export const iconContainerStyle: IStyle = {
-  height: '100%',
+  margin: 'auto',
   alignItems: 'center',
   '& svg': {
-    display: 'block'
+    display: 'block',
+    // Similar to text color, icon color will be inherited from parent container
+    color: 'inherit'
   }
 };
 
 /**
  * @private
  */
-export const isSpeakingBorderDiv: IStyle = {
-  zIndex: 1,
-  width: '100%',
-  height: '100%',
-  position: 'absolute',
-  top: '0',
-  left: '0',
-  // Ensure the isSpeaking element does not steal any pointer events such as onClick events
-  pointerEvents: 'none'
+export const participantStateStringStyles = (theme: Theme): IStyle => {
+  return {
+    minWidth: 'max-content',
+    color: theme.palette.black,
+    fontSize: '0.75rem',
+    lineHeight: 'normal',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+    padding: '0.1rem'
+  };
 };

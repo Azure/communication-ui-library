@@ -2,9 +2,11 @@
 // Licensed under the MIT license.
 
 import { ChatComposite } from '@azure/communication-react';
+import { Stack } from '@fluentui/react';
 import { Title, Description, Heading, Source, Props } from '@storybook/addon-docs';
 import React from 'react';
 import { SingleLineBetaBanner } from '../BetaBanners/SingleLineBetaBanner';
+import { overviewPageImagesStackStyle } from '../constants';
 
 const containerText = require('!!raw-loader!./snippets/Container.snippet.tsx').default;
 const customDataModelExampleContainerText =
@@ -40,8 +42,20 @@ export const getDocs: () => JSX.Element = () => {
     <>
       <Title>ChatComposite</Title>
       <Description>
-        ChatComposite brings together key components to provide a full chat experience out of the box.
+        ChatComposite provides a chat experience where user can send and receive messages. Message thread events such as
+        typing indicators, whether the message has been successfully delivered or read, or participants entering and
+        leaving the chat are displayed to the user as part of the chat thread. Here is a visual example of Chat
+        composite.
       </Description>
+      <Stack style={overviewPageImagesStackStyle}>
+        <Stack.Item align="center">
+          <img
+            style={{ width: '100%' }}
+            src="images/chatComposite_NoParticipantsList.png"
+            alt="Chat composite with the participants list"
+          />
+        </Stack.Item>
+      </Stack>
       <Description>
         Note that ChatComposite has a min width and height of respectively 17.5rem and 20rem (280px x 320px, with
         default rem at 16px).
@@ -151,6 +165,7 @@ export const getDocs: () => JSX.Element = () => {
       <Source code={customDateTimeFormatExampleText} />
 
       <Heading>Adding file sharing</Heading>
+      <SingleLineBetaBanner />
       <Description>
         The Chat Composite supports file sharing capabilities in conjunction with your choice of a storage solution.
         Using the provided APIs, you can enable the composite to support uploading files and displaying them on the send

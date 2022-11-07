@@ -173,42 +173,42 @@ export interface CallCompositeStrings {
    * Tooltip text used to inform a user that toggling microphone in lobby is not supported.
    */
   microphoneToggleInLobbyNotAllowed: string;
-  /* @conditional-compile-remove(one-to-n-calling) */
+  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   /**
    * Side pane People section Title.
    */
   peoplePaneTitle: string;
-  /* @conditional-compile-remove(one-to-n-calling) */
+  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   /**
    * Aria label string for return to call back button
    */
   returnToCallButtonAriaLabel?: string;
-  /* @conditional-compile-remove(one-to-n-calling) */
+  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   /**
    * Aria Description string for return to call button
    */
   returnToCallButtonAriaDescription?: string;
-  /* @conditional-compile-remove(one-to-n-calling) */
+  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   /**
    * control bar People button label
    */
   peopleButtonLabel: string;
-  /* @conditional-compile-remove(one-to-n-calling) */
+  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   /**
    * control bar Chat button label.
    */
   chatButtonLabel: string;
-  /* @conditional-compile-remove(one-to-n-calling) */
+  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   /**
    * Label for SidePaneHeader dismiss button
    */
   dismissSidePaneButtonLabel?: string;
-  /* @conditional-compile-remove(one-to-n-calling) */
+  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   /**
    * Side pane People section subheader.
    */
   peoplePaneSubTitle: string;
-  /* @conditional-compile-remove(one-to-n-calling) */
+  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   /**
    * Label for button to copy invite link
    */
@@ -218,7 +218,7 @@ export interface CallCompositeStrings {
    * Label for button to open dialpad
    */
   openDialpadButtonLabel: string;
-  /* @conditional-compile-remove(one-to-n-calling) */
+  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   /**
    * Label for menu item to remove participant
    */
@@ -248,4 +248,83 @@ export interface CallCompositeStrings {
    * Aria Label for dialpad Modal close button
    */
   dialpadCloseModalButtonAriaLabel: string;
+  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+  /**
+   * label for more button in the Calling composite
+   */
+  moreButtonCallingLabel: string;
+  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+  /**
+   * Label for the resume call button on the hold pane
+   */
+  resumeCallButtonLabel: string;
+  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+  /**
+   * Label for the resume call button on the hold pane when call is resuming
+   */
+  resumingCallButtonLabel: string;
+  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+  /**
+   * Aria label for the resume call button on the hold pane
+   */
+  resumeCallButtonAriaLabel: string;
+  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+  /**
+   * Aria label for the resume call button on the hold pane when call is resuming
+   */
+  resumingCallButtonAriaLabel: string;
+  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+  /**
+   * Label for the hold pane
+   */
+  holdScreenLabel: string;
+  /* @conditional-compile-remove(PSTN-calls) */
+  /**
+   * Placeholder text for dtmf dialpad
+   */
+  dtmfDialpadPlaceholderText: string;
+  /* @conditional-compile-remove(PSTN-calls) */
+  /**
+   * Label for the button to open dtmf dialpad
+   */
+  openDtmfDialpadLabel: string;
+  /**
+   * aria label for when the invite link has been actioned
+   */
+  copyInviteLinkActionedAriaLabel: string;
+  /* @conditional-compile-remove(rooms) */
+  /**
+   * Title text of the page shown to the user when the user attempts to join a room that cannot be found.
+   */
+  roomNotFoundTitle: string;
+  /* @conditional-compile-remove(rooms) */
+  /**
+   * More details text of the page shown to the user when the user attempts to join a room that cannot be found.
+   */
+  roomNotFoundDetails?: string;
+  /* @conditional-compile-remove(rooms) */
+  /**
+   * Title text of the page shown to the user when the user attempts to join a room to which they are not invited.
+   */
+  deniedPermissionToRoomTitle: string;
+  /* @conditional-compile-remove(rooms) */
+  /**
+   * More details text of the page shown to the user when the user attempts to join a room to which they are not invited.
+   */
+  deniedPermissionToRoomDetails?: string;
+  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
+  /**
+   * Control bar People button ToolTipContent
+   */
+  peopleButtonTooltipOpen: string;
+  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
+  /**
+   * Control bar People button ToolTipContent
+   */
+  peopleButtonTooltipClose: string;
+  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+  /**
+   * Label disaplayed on the lobby screen during a 1:1 outbound call.
+   */
+  outboundCallingNoticeString: string;
 }

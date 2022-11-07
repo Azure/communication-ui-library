@@ -10,7 +10,7 @@ import {
   useTheme
 } from '@fluentui/react';
 
-import { _DrawerMenu, _DrawerMenuItemProps } from '@internal/react-components';
+import { _DrawerMenu, _DrawerMenuItemProps, Announcer } from '@internal/react-components';
 import copy from 'copy-to-clipboard';
 import { useMemo, useState } from 'react';
 /* @conditional-compile-remove(PSTN-calls) */
@@ -22,12 +22,15 @@ import { _preventDismissOnEvent as preventDismissOnEvent } from '@internal/acs-u
 import { copyLinkButtonContainerStyles, copyLinkButtonStackStyles } from './styles/PeoplePaneContent.styles';
 import { drawerContainerStyles } from '../CallComposite/styles/CallComposite.styles';
 import { convertContextualMenuItemToDrawerMenuItem } from '../CallWithChatComposite/ConvertContextualMenuItemToDrawerMenuItem';
+import { PhoneNumberIdentifier } from '@azure/communication-common';
+import { AddPhoneNumberOptions } from '@azure/communication-calling';
 
 /** @private */
 export interface AddPeopleDropdownStrings extends CallingDialpadStrings {
   copyInviteLinkButtonLabel: string;
   openDialpadButtonLabel: string;
   peoplePaneAddPeopleButtonLabel: string;
+  copyInviteLinkActionedAriaLabel: string;
 }
 
 /** @private */
@@ -35,15 +38,19 @@ export interface AddPeopleDropdownProps {
   inviteLink?: string;
   mobileView?: boolean;
   strings: AddPeopleDropdownStrings;
+  onAddParticipant: (participant: PhoneNumberIdentifier, options?: AddPhoneNumberOptions) => void;
+  alternateCallerId?: string;
 }
 
 /** @private */
 export const AddPeopleDropdown = (props: AddPeopleDropdownProps): JSX.Element => {
   const theme = useTheme();
 
-  const { inviteLink, strings, mobileView } = props;
+  const { inviteLink, strings, mobileView, onAddParticipant, alternateCallerId } = props;
 
   const [showDialpad, setShowDialpad] = useState(false);
+
+  const [announcerStrings, setAnnouncerStrings] = useState<string>();
 
   const menuStyleThemed = useMemo(() => themedMenuStyle(theme), [theme]);
 
@@ -56,6 +63,10 @@ export const AddPeopleDropdown = (props: AddPeopleDropdownProps): JSX.Element =>
       useTargetWidth: true,
       calloutProps: {
         preventDismissOnEvent
+      },
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      onMenuOpened(contextualMenu?) {
+        setAnnouncerStrings(undefined);
       }
     };
 
@@ -65,26 +76,34 @@ export const AddPeopleDropdown = (props: AddPeopleDropdownProps): JSX.Element =>
         text: strings.copyInviteLinkButtonLabel,
         itemProps: { styles: copyLinkButtonStylesThemed },
         iconProps: { iconName: 'Link', style: iconStyles },
-        onClick: () => copy(inviteLink)
+        onClick: () => {
+          setAnnouncerStrings(strings.copyInviteLinkActionedAriaLabel);
+          copy(inviteLink);
+        }
       });
     }
 
-    menuProps.items.push({
-      key: 'DialpadKey',
-      text: strings.openDialpadButtonLabel,
-      itemProps: { styles: copyLinkButtonStylesThemed },
-      iconProps: { iconName: PeoplePaneOpenDialpadIconNameTrampoline(), style: iconStyles },
-      onClick: () => setShowDialpad(true),
-      'data-ui-id': 'call-with-chat-composite-dial-phone-number-button'
-    });
+    // only show the dialpad option when alternateCallerId is set
+    if (alternateCallerId) {
+      menuProps.items.push({
+        key: 'DialpadKey',
+        text: strings.openDialpadButtonLabel,
+        itemProps: { styles: copyLinkButtonStylesThemed },
+        iconProps: { iconName: PeoplePaneOpenDialpadIconNameTrampoline(), style: iconStyles },
+        onClick: () => setShowDialpad(true),
+        'data-ui-id': 'call-dial-phone-number-button'
+      });
+    }
 
     return menuProps;
   }, [
-    strings.copyInviteLinkButtonLabel,
-    strings.openDialpadButtonLabel,
-    copyLinkButtonStylesThemed,
+    menuStyleThemed,
     inviteLink,
-    menuStyleThemed
+    alternateCallerId,
+    strings.copyInviteLinkButtonLabel,
+    strings.copyInviteLinkActionedAriaLabel,
+    strings.openDialpadButtonLabel,
+    copyLinkButtonStylesThemed
   ]);
 
   const onDismissDialpad = (): void => {
@@ -105,23 +124,34 @@ export const AddPeopleDropdown = (props: AddPeopleDropdownProps): JSX.Element =>
   if (mobileView) {
     return (
       <Stack>
-        <Stack.Item styles={copyLinkButtonContainerStyles}>
-          <PrimaryButton
-            onClick={setDrawerMenuItemsForAddPeople}
-            styles={copyLinkButtonStylesThemed}
-            onRenderIcon={() => PeoplePaneAddPersonIconTrampoline()}
-            text={strings.peoplePaneAddPeopleButtonLabel}
-            data-ui-id="call-with-chat-composite-add-people-button"
-          />
-        </Stack.Item>
+        <Announcer ariaLive={'assertive'} announcementString={announcerStrings} />
+        {defaultMenuProps.items.length > 0 && (
+          <Stack.Item styles={copyLinkButtonContainerStyles}>
+            <PrimaryButton
+              onClick={setDrawerMenuItemsForAddPeople}
+              styles={copyLinkButtonStylesThemed}
+              onRenderIcon={() => PeoplePaneAddPersonIconTrampoline()}
+              text={strings.peoplePaneAddPeopleButtonLabel}
+              data-ui-id="call-add-people-button"
+            />
+          </Stack.Item>
+        )}
 
         {addPeopleDrawerMenuItems.length > 0 && (
-          <Stack styles={drawerContainerStyles} data-ui-id="call-with-chat-composite-add-people-dropdown">
+          <Stack styles={drawerContainerStyles()} data-ui-id="call-add-people-dropdown">
             <_DrawerMenu onLightDismiss={() => setAddPeopleDrawerMenuItems([])} items={addPeopleDrawerMenuItems} />
           </Stack>
         )}
-
-        <CallingDialpad isMobile strings={strings} showDialpad={showDialpad} onDismissDialpad={onDismissDialpad} />
+        {alternateCallerId && (
+          <CallingDialpad
+            isMobile
+            strings={strings}
+            showDialpad={showDialpad}
+            onDismissDialpad={onDismissDialpad}
+            onAddParticipant={onAddParticipant}
+            alternateCallerId={alternateCallerId}
+          />
+        )}
       </Stack>
     );
   }
@@ -130,22 +160,29 @@ export const AddPeopleDropdown = (props: AddPeopleDropdownProps): JSX.Element =>
     <>
       {
         <Stack>
-          <CallingDialpad
-            isMobile={false}
-            strings={strings}
-            showDialpad={showDialpad}
-            onDismissDialpad={onDismissDialpad}
-          />
-
-          <Stack styles={copyLinkButtonStackStyles}>
-            <DefaultButton
-              onRenderIcon={() => PeoplePaneAddPersonIconTrampoline()}
-              text={strings.peoplePaneAddPeopleButtonLabel}
-              menuProps={defaultMenuProps}
-              styles={copyLinkButtonStylesThemed}
-              data-ui-id="call-with-chat-composite-add-people-button"
+          <Announcer ariaLive={'assertive'} announcementString={announcerStrings} />
+          {alternateCallerId && (
+            <CallingDialpad
+              isMobile={false}
+              strings={strings}
+              showDialpad={showDialpad}
+              onDismissDialpad={onDismissDialpad}
+              onAddParticipant={onAddParticipant}
+              alternateCallerId={alternateCallerId}
             />
-          </Stack>
+          )}
+
+          {defaultMenuProps.items.length > 0 && (
+            <Stack styles={copyLinkButtonStackStyles}>
+              <DefaultButton
+                onRenderIcon={() => PeoplePaneAddPersonIconTrampoline()}
+                text={strings.peoplePaneAddPeopleButtonLabel}
+                menuProps={defaultMenuProps}
+                styles={copyLinkButtonStylesThemed}
+                data-ui-id="call-add-people-button"
+              />
+            </Stack>
+          )}
         </Stack>
       }
     </>

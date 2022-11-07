@@ -9,6 +9,7 @@ import {
 } from '@azure/communication-react';
 import { PartialTheme, Theme } from '@fluentui/react';
 import React, { useMemo } from 'react';
+import { validate as validateUUID } from 'uuid';
 
 export type ContainerProps = {
   userId: CommunicationUserIdentifier;
@@ -23,15 +24,26 @@ export type ContainerProps = {
 };
 
 const isTeamsMeetingLink = (link: string): boolean => link.startsWith('https://teams.microsoft.com/l/meetup-join');
-const isGroupLink = (link: string): boolean => link.indexOf('-') !== -1;
+const isGroupID = (id: string): boolean => validateUUID(id);
+const isRoomID = (id: string): boolean => {
+  const num = Number(id);
 
-const createLocator = (link: string): CallAdapterLocator => {
-  if (isTeamsMeetingLink(link)) {
-    return { meetingLink: link };
-  } else if (isGroupLink(link)) {
-    return { groupId: link };
+  if (Number.isInteger(num) && num > 0) {
+    return true;
   }
-  return { roomId: link };
+
+  return false;
+};
+
+const createCallAdapterLocator = (locator: string): CallAdapterLocator | undefined => {
+  if (isTeamsMeetingLink(locator)) {
+    return { meetingLink: locator };
+  } else if (isGroupID(locator)) {
+    return { groupId: locator };
+  } else if (isRoomID(locator)) {
+    return { roomId: locator };
+  }
+  return undefined;
 };
 
 export const ContosoCallContainer = (props: ContainerProps): JSX.Element => {
@@ -43,7 +55,8 @@ export const ContosoCallContainer = (props: ContainerProps): JSX.Element => {
       return undefined;
     }
   }, [props.token]);
-  const locator = useMemo(() => createLocator(props.locator), [props.locator]);
+
+  const locator = useMemo(() => createCallAdapterLocator(props.locator), [props.locator]);
 
   const adapter = useAzureCommunicationCallAdapter(
     {
@@ -55,6 +68,10 @@ export const ContosoCallContainer = (props: ContainerProps): JSX.Element => {
     undefined,
     leaveCall
   );
+
+  if (!locator) {
+    return <>Provided call locator '{props.locator}' is not recognized.</>;
+  }
 
   if (adapter) {
     return (

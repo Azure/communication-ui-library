@@ -9,24 +9,25 @@ import {
   StartCallOptions,
   VideoDeviceInfo
 } from '@azure/communication-calling';
-/* @conditional-compile-remove(dialpad) */
-import { DtmfTone } from '@azure/communication-calling';
-/* @conditional-compile-remove(PSTN-calls) */
-import { AddPhoneNumberOptions } from '@azure/communication-calling';
+/* @conditional-compile-remove(call-readiness) */
+import { PermissionConstraints } from '@azure/communication-calling';
+/* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
+import { DtmfTone, AddPhoneNumberOptions } from '@azure/communication-calling';
 import { CommunicationUserIdentifier, PhoneNumberIdentifier, UnknownIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(PSTN-calls) */
 import {
-  CommunicationIdentifier,
   isCommunicationUserIdentifier,
   isMicrosoftTeamsUserIdentifier,
   isPhoneNumberIdentifier
 } from '@azure/communication-common';
-import { Common, fromFlatCommunicationIdentifier, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
+/* @conditional-compile-remove(PSTN-calls) */
+import { CommunicationIdentifier } from '@azure/communication-common';
+import { Common, toFlatCommunicationIdentifier, _toCommunicationIdentifier } from '@internal/acs-ui-common';
 import { CreateViewResult, StatefulCallClient, StatefulDeviceManager } from '@internal/calling-stateful-client';
 import memoizeOne from 'memoize-one';
 import { ReactElement } from 'react';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
-import { disposeAllLocalPreviewViews, _isInCall, _isPreviewOn } from '../utils/callUtils';
+import { disposeAllLocalPreviewViews, _isInCall, _isInLobbyOrConnecting, _isPreviewOn } from '../utils/callUtils';
 
 /**
  * Object containing all the handlers required for calling components.
@@ -50,21 +51,27 @@ export type CallingHandlers = {
   onStartScreenShare: () => Promise<void>;
   onStopScreenShare: () => Promise<void>;
   onToggleScreenShare: () => Promise<void>;
-  onHangUp: () => Promise<void>;
+  onHangUp: (forEveryone?: boolean) => Promise<void>;
   /* @conditional-compile-remove(PSTN-calls) */
   onToggleHold: () => Promise<void>;
   /* @conditional-compile-remove(PSTN-calls) */
-  onAddParticipant: (participant: CommunicationIdentifier, options?: AddPhoneNumberOptions) => Promise<void>;
+  onAddParticipant(participant: CommunicationUserIdentifier): Promise<void>;
+  /* @conditional-compile-remove(PSTN-calls) */
+  onAddParticipant(participant: PhoneNumberIdentifier, options: AddPhoneNumberOptions): Promise<void>;
   onCreateLocalStreamView: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
   onCreateRemoteStreamView: (
     userId: string,
     options?: VideoStreamOptions
   ) => Promise<void | CreateVideoStreamViewResult>;
-  onRemoveParticipant: (userId: string) => Promise<void>;
+  onRemoveParticipant(userId: string): Promise<void>;
+  /* @conditional-compile-remove(PSTN-calls) */
+  onRemoveParticipant(participant: CommunicationIdentifier): Promise<void>;
   onDisposeRemoteStreamView: (userId: string) => Promise<void>;
   onDisposeLocalStreamView: () => Promise<void>;
-  /* @conditional-compile-remove(dialpad) */
-  onSendDtmfTone?: (dtmfTone: DtmfTone) => Promise<void>;
+  /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
+  onSendDtmfTone: (dtmfTone: DtmfTone) => Promise<void>;
+  /* @conditional-compile-remove(call-readiness) */
+  askDevicePermission: (constrain: PermissionConstraints) => Promise<void>;
 };
 
 /**
@@ -126,7 +133,32 @@ export const createDefaultCallingHandlers = memoizeOne(
     };
 
     const onToggleCamera = async (options?: VideoStreamOptions): Promise<void> => {
-      if (call && _isInCall(call.state)) {
+      const previewOn = _isPreviewOn(callClient.getState().deviceManager);
+
+      if (previewOn && call && call.state === 'Connecting') {
+        // This is to workaround: https://skype.visualstudio.com/SPOOL/_workitems/edit/3030558.
+        // The root cause of the issue is caused by never transitioning the unparented view to the
+        // call object when going from configuration page (disconnected call state) to connecting.
+        //
+        // Currently the only time the local video stream is moved from unparented view to the call
+        // object is when we transition from connecting -> call state. If the camera was on,
+        // inside the MediaGallery we trigger toggleCamera. This triggers onStartLocalVideo which
+        // destroys the unparentedView and creates a new stream in the call - so all looks well.
+        //
+        // However, if someone turns off their camera during the lobbyOrConnecting screen, the
+        // call.localVideoStreams will be empty (as the stream is currently stored in the unparented
+        // views and was never transitioned to the call object) and thus we incorrectly try to create
+        // a new video stream for the call object, instead of only stopping the unparented view.
+        //
+        // The correct fix for this is to ensure that callAgent.onStartCall is called with the
+        // localvideostream as a videoOption. That will mean call.onLocalVideoStreamsUpdated will
+        // be triggered when the call is in connecting state, which we can then transition the
+        // local video stream to the stateful call client and get into a clean state.
+        await onDisposeLocalStreamView();
+        return;
+      }
+
+      if (call && (_isInCall(call.state) || _isInLobbyOrConnecting(call.state))) {
         const stream = call.localVideoStreams.find((stream) => stream.mediaStreamType === 'Video');
         if (stream) {
           await onStopLocalVideo(stream);
@@ -136,7 +168,6 @@ export const createDefaultCallingHandlers = memoizeOne(
       } else {
         const selectedCamera = callClient.getState().deviceManager.selectedCamera;
         if (selectedCamera) {
-          const previewOn = _isPreviewOn(callClient.getState().deviceManager);
           if (previewOn) {
             await onDisposeLocalStreamView();
           } else {
@@ -154,7 +185,6 @@ export const createDefaultCallingHandlers = memoizeOne(
       }
     };
 
-    // FIXME: onStartCall API should use string, not the underlying SDK types.
     const onStartCall = (
       participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[],
       options?: StartCallOptions
@@ -221,7 +251,8 @@ export const createDefaultCallingHandlers = memoizeOne(
     const onToggleScreenShare = async (): Promise<void> =>
       call?.isScreenSharingOn ? await onStopScreenShare() : await onStartScreenShare();
 
-    const onHangUp = async (): Promise<void> => await call?.hangUp();
+    const onHangUp = async (forEveryone?: boolean): Promise<void> =>
+      await call?.hangUp({ forEveryone: forEveryone === true ? true : false });
 
     /* @conditional-compile-remove(PSTN-calls) */
     const onToggleHold = async (): Promise<void> =>
@@ -335,24 +366,35 @@ export const createDefaultCallingHandlers = memoizeOne(
       await disposeAllLocalPreviewViews(callClient);
     };
 
-    const onRemoveParticipant = async (userId: string): Promise<void> => {
-      await call?.removeParticipant(fromFlatCommunicationIdentifier(userId));
+    const onRemoveParticipant = async (
+      userId: string | /* @conditional-compile-remove(PSTN-calls) */ CommunicationIdentifier
+    ): Promise<void> => {
+      const participant = _toCommunicationIdentifier(userId);
+      await call?.removeParticipant(participant);
     };
 
     /* @conditional-compile-remove(PSTN-calls) */
-    const onAddParticipant = async (
-      participant: CommunicationIdentifier,
-      options?: AddPhoneNumberOptions
-    ): Promise<void> => {
-      if (isPhoneNumberIdentifier(participant)) {
-        await call?.addParticipant(participant, options);
-      } else if (isCommunicationUserIdentifier(participant) || isMicrosoftTeamsUserIdentifier(participant)) {
-        await call?.addParticipant(participant);
+    const onAddParticipant = async (participant, options?): Promise<void> => {
+      const participantType = participantTypeHelper(participant);
+      switch (participantType) {
+        case 'PSTN':
+          await call?.addParticipant(participant as PhoneNumberIdentifier, options);
+          break;
+        case 'ACS':
+          await call?.addParticipant(participant as CommunicationUserIdentifier);
+          break;
       }
     };
 
-    /* @conditional-compile-remove(dialpad) */
+    /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
     const onSendDtmfTone = async (dtmfTone: DtmfTone): Promise<void> => await call?.sendDtmf(dtmfTone);
+
+    /* @conditional-compile-remove(call-readiness) */
+    const askDevicePermission = async (constrain: PermissionConstraints): Promise<void> => {
+      if (deviceManager) {
+        await deviceManager?.askDevicePermission(constrain);
+      }
+    };
 
     return {
       onHangUp,
@@ -375,8 +417,9 @@ export const createDefaultCallingHandlers = memoizeOne(
       onStartLocalVideo,
       onDisposeRemoteStreamView,
       onDisposeLocalStreamView,
-      /* @conditional-compile-remove(dialpad) */
-      onSendDtmfTone
+      /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */ onSendDtmfTone,
+      /* @conditional-compile-remove(call-readiness) */
+      askDevicePermission
     };
   }
 );
@@ -403,4 +446,20 @@ export const createDefaultCallingHandlersForComponent = <Props>(
   _Component: (props: Props) => ReactElement | null
 ): Common<CallingHandlers, Props> => {
   return createDefaultCallingHandlers(callClient, callAgent, deviceManager, call);
+};
+
+/* @conditional-compile-remove(PSTN-calls) */
+/**
+ * Helper function for determining participant type.
+ */
+const participantTypeHelper = (p: CommunicationIdentifier): string => {
+  if (isPhoneNumberIdentifier(p)) {
+    return 'PSTN';
+  } else if (isCommunicationUserIdentifier(p)) {
+    return 'ACS';
+  } else if (isMicrosoftTeamsUserIdentifier(p)) {
+    return 'Teams';
+  } else {
+    return 'unknown';
+  }
 };

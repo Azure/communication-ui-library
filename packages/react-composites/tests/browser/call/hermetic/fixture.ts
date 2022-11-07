@@ -4,17 +4,17 @@
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { Page, test as base } from '@playwright/test';
 import path from 'path';
-import { createTestServer } from '../../../server';
-import { bindConsoleErrorForwarding } from '../../common/fixtureHelpers';
+import { createTestServer } from '../../common/server';
+import { loadNewPageWithPermissionsForCalls } from '../../common/fixtureHelpers';
 import { encodeQueryData } from '../../common/utils';
 import type {
   MockCallAdapterState,
   MockRemoteParticipantState,
   MockVideoStreamRendererViewState
-} from '../MockCallAdapterState';
+} from '../../../common';
 
 const SERVER_URL = 'http://localhost';
-const APP_DIR = path.join(__dirname, '../app');
+const APP_DIR = path.join(__dirname, '../../../app/call');
 
 /**
  * Create the test URL.
@@ -42,10 +42,7 @@ export interface TestFixture {
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 const usePage = async ({ browser }, use) => {
-  const context = await browser.newContext({ permissions: ['notifications', 'camera', 'microphone'] });
-  const page = await context.newPage();
-  bindConsoleErrorForwarding(page);
-  await use(page);
+  await use(await loadNewPageWithPermissionsForCalls(browser));
 };
 
 /**
@@ -62,6 +59,8 @@ export function defaultMockCallAdapterState(participants?: MockRemoteParticipant
     page: 'call',
     call: {
       id: 'call1',
+      /* @conditional-compile-remove(teams-identity-support) */
+      type: 'ACS',
       callerInfo: { displayName: 'caller', identifier: { kind: 'communicationUser', communicationUserId: '1' } },
       direction: 'Incoming',
       transcription: { isTranscriptionActive: false },
@@ -105,7 +104,7 @@ export function defaultMockCallAdapterState(participants?: MockRemoteParticipant
  */
 export function defaultMockRemoteParticipant(displayName: string): MockRemoteParticipantState {
   return {
-    identifier: { kind: 'communicationUser', communicationUserId: `${displayName}-id` },
+    identifier: { kind: 'communicationUser', communicationUserId: `8:acs:${displayName}-id` },
     state: 'Connected',
     videoStreams: {
       1: {
@@ -125,6 +124,44 @@ export function defaultMockRemoteParticipant(displayName: string): MockRemotePar
     isSpeaking: false,
     displayName: displayName
   };
+}
+
+/**
+ * Create the default {@link MockRemoteParticipantState} for a PSTN participant in a hermetic e2e test
+ *
+ * use to add PSTN participants to the {@link defaultCallAdapterState}
+ */
+export function defaultMockRemotePSTNParticipant(phoneNumber: string): MockRemoteParticipantState {
+  return {
+    identifier: { kind: 'phoneNumber', phoneNumber: `${phoneNumber}` },
+    state: 'Connected',
+    videoStreams: {},
+    isMuted: true,
+    isSpeaking: false,
+    displayName: phoneNumber
+  };
+}
+
+/**
+ * Add the default {@link MockLocalVideoStreamState} for hermetic e2e tests.
+ *
+ * Use this to add outgoing video to state created via {@link defaultCallAdapterState}.
+ */
+export function addDefaultMockLocalVideoStreamState(state: MockCallAdapterState): void {
+  if (!state.call) {
+    throw new Error('state.call must be defined');
+  }
+  state.call.localVideoStreams = [
+    {
+      source: {
+        deviceType: 'UsbCamera',
+        id: 'FakeLocalCamera',
+        name: 'FakeLocalCamera'
+      },
+      mediaStreamType: 'Video',
+      dummyView: { scalingMode: 'Crop', isMirrored: false }
+    }
+  ];
 }
 
 /**

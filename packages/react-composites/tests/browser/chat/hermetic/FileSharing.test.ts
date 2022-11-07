@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 import { expect } from '@playwright/test';
-import { sendMessage, waitForMessageDelivered, waitForTypingIndicatorHidden } from '../../common/chatTestHelpers';
+import { sendMessage, waitForMessageDelivered } from '../../common/chatTestHelpers';
 import { dataUiId, isTestProfileStableFlavor, stableScreenshot, waitForSelector } from '../../common/utils';
 import { buildUrlForChatAppUsingFakeAdapter, DEFAULT_FAKE_CHAT_ADAPTER_ARGS, test, TEST_PARTICIPANTS } from './fixture';
 
@@ -25,8 +25,8 @@ test.describe('Filesharing Attach file icon', async () => {
   });
 });
 
+/* @conditional-compile-remove(file-sharing) */
 test.describe('Filesharing SendBox', async () => {
-  test.skip(isTestProfileStableFlavor());
   test('shows file cards for uploaded files', async ({ serverUrl, page }) => {
     await page.goto(
       buildUrlForChatAppUsingFakeAdapter(serverUrl, {
@@ -275,7 +275,6 @@ test.describe('Filesharing Message Thread', async () => {
         sendRemoteFileSharingMessage: true
       })
     );
-    await waitForTypingIndicatorHidden(page);
 
     expect(
       await stableScreenshot(page, {

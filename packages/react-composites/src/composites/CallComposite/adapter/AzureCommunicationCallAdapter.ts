@@ -33,7 +33,7 @@ import {
 /* @conditional-compile-remove(rooms) */
 import { RoomCallLocator } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
-import { AddPhoneNumberOptions } from '@azure/communication-calling';
+import { AddPhoneNumberOptions, DtmfTone } from '@azure/communication-calling';
 import { EventEmitter } from 'events';
 import {
   CallAdapter,
@@ -46,21 +46,21 @@ import {
   IsSpeakingChangedListener,
   ParticipantsJoinedListener,
   ParticipantsLeftListener,
-  DiagnosticChangedEventListner
+  DiagnosticChangedEventListner,
+  CallAdapterCallEndedEvent
 } from './CallAdapter';
-import { getCallCompositePage, isCameraOn } from '../utils';
+import { getCallCompositePage, IsCallEndedPage, isCameraOn } from '../utils';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
-import { fromFlatCommunicationIdentifier, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
+import { toFlatCommunicationIdentifier, _toCommunicationIdentifier } from '@internal/acs-ui-common';
 import {
   CommunicationTokenCredential,
   CommunicationUserIdentifier,
   isCommunicationUserIdentifier,
   isPhoneNumberIdentifier,
   UnknownIdentifier,
-  PhoneNumberIdentifier
+  PhoneNumberIdentifier,
+  CommunicationIdentifier
 } from '@azure/communication-common';
-/* @conditional-compile-remove(PSTN-calls) */
-import { CommunicationIdentifier } from '@azure/communication-common';
 import { ParticipantSubscriber } from './ParticipantSubcriber';
 import { AdapterError } from '../../common/adapters';
 import { DiagnosticsForwarder } from './DiagnosticsForwarder';
@@ -72,7 +72,7 @@ class CallContext {
   private state: CallAdapterState;
   private callId: string | undefined;
 
-  constructor(clientState: CallClientState, isTeamsCall: boolean) {
+  constructor(clientState: CallClientState, isTeamsCall: boolean, maxListeners = 50) {
     this.state = {
       isLocalPreviewMicrophoneEnabled: false,
       userId: clientState.userId,
@@ -84,6 +84,7 @@ class CallContext {
       isTeamsCall,
       /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId: clientState.alternateCallerId
     };
+    this.emitter.setMaxListeners(maxListeners);
   }
 
   public onStateChange(handler: (_uiState: CallAdapterState) => void): void {
@@ -112,19 +113,41 @@ class CallContext {
     this.callId = callId;
   }
 
+  public onCallEnded(handler: (callEndedData: CallAdapterCallEndedEvent) => void): void {
+    this.emitter.on('callEnded', handler);
+  }
+
+  public offCallEnded(handler: (callEndedData: CallAdapterCallEndedEvent) => void): void {
+    this.emitter.off('callEnded', handler);
+  }
+
   public updateClientState(clientState: CallClientState): void {
-    const call = this.callId ? clientState.calls[this.callId] : undefined;
+    let call = this.callId ? clientState.calls[this.callId] : undefined;
     const latestEndedCall = findLatestEndedCall(clientState.callsEnded);
-    this.setState({
-      ...this.state,
-      userId: clientState.userId,
-      displayName: clientState.callAgent?.displayName,
-      call,
-      page: getCallCompositePage(call, latestEndedCall),
-      endedCall: latestEndedCall,
-      devices: clientState.deviceManager,
-      latestErrors: clientState.latestErrors
-    });
+
+    // As the state is transitioning to a new state, trigger appropriate callback events.
+    const oldPage = this.state.page;
+    const newPage = getCallCompositePage(call, latestEndedCall);
+    if (!IsCallEndedPage(oldPage) && IsCallEndedPage(newPage)) {
+      this.emitter.emit('callEnded', { callId: this.callId });
+      // Reset the callId to undefined as the call has ended.
+      this.setCurrentCallId(undefined);
+      // Make sure that the call is set to undefined in the state.
+      call = undefined;
+    }
+
+    if (this.state.page) {
+      this.setState({
+        ...this.state,
+        userId: clientState.userId,
+        displayName: clientState.callAgent?.displayName,
+        call,
+        page: newPage,
+        endedCall: latestEndedCall,
+        devices: clientState.deviceManager,
+        latestErrors: clientState.latestErrors
+      });
+    }
   }
 }
 
@@ -182,6 +205,9 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     this.deviceManager = deviceManager;
     const isTeamsMeeting = 'meetingLink' in this.locator;
     this.context = new CallContext(callClient.getState(), isTeamsMeeting);
+
+    this.context.onCallEnded((endCallData) => this.emitter.emit('callEnded', endCallData));
+
     const onStateChange = (clientState: CallClientState): void => {
       // unsubscribe when the instance gets disposed
       if (!this) {
@@ -252,6 +278,8 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     this.holdCall.bind(this);
     /* @conditional-compile-remove(PSTN-calls) */
     this.resumeCall.bind(this);
+    /* @conditional-compile-remove(PSTN-calls) */
+    this.sendDtmfTone.bind(this);
   }
 
   public dispose(): void {
@@ -289,20 +317,20 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
       throw new Error('You are already in the call!');
     }
 
-    /* @conditional-compile-remove(teams-adhoc-call) */
-    /* @conditional-compile-remove(PSTN-calls) */
-    if (isOutboundCall(this.locator)) {
-      const phoneNumber = this.getState().alternateCallerId;
-      return this.startCall(this.locator.participantIDs, {
-        alternateCallerId: phoneNumber ? { phoneNumber: phoneNumber } : undefined
-      });
-    }
-
     return this.teeErrorToEventEmitter(() => {
       const audioOptions: AudioOptions = { muted: !(microphoneOn ?? this.getState().isLocalPreviewMicrophoneEnabled) };
       // TODO: find a way to expose stream to here
       const videoOptions = { localVideoStreams: this.localStream ? [this.localStream] : undefined };
-
+      /* @conditional-compile-remove(teams-adhoc-call) */
+      /* @conditional-compile-remove(PSTN-calls) */
+      if (isOutboundCall(this.locator)) {
+        const phoneNumber = this.getState().alternateCallerId;
+        return this.startCall(this.locator.participantIds, {
+          alternateCallerId: phoneNumber ? { phoneNumber: phoneNumber } : undefined,
+          audioOptions,
+          videoOptions
+        });
+      }
       const call = this._joinCall(audioOptions, videoOptions);
 
       this.processNewCall(call);
@@ -311,9 +339,9 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
   }
 
   private _joinCall(audioOptions: AudioOptions, videoOptions: VideoOptions): Call {
-    const isTeamsMeeting = !('groupId' in this.locator);
+    const isTeamsMeeting = 'meetingLink' in this.locator;
     /* @conditional-compile-remove(rooms) */
-    const isRoomsCall = !('roomId' in this.locator);
+    const isRoomsCall = 'roomId' in this.locator;
 
     if (isTeamsMeeting) {
       return this.callAgent.join(this.locator as TeamsMeetingLinkLocator, {
@@ -353,18 +381,15 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     }
   }
 
-  public async leaveCall(): Promise<void> {
-    const callId = this.call?.id;
-    await this.handlers.onHangUp();
+  public async leaveCall(forEveryone?: boolean): Promise<void> {
+    await this.handlers.onHangUp(forEveryone);
     this.unsubscribeCallEvents();
-    this.call = undefined;
     this.handlers = createDefaultCallingHandlers(this.callClient, this.callAgent, this.deviceManager, undefined);
-    this.context.setCurrentCallId(undefined);
-    // Resync state after callId is set
-    this.context.updateClientState(this.callClient.getState());
+    // We set the adapter.call object to undefined immediately when a call is ended.
+    // We do not set the context.callId to undefined because it is a part of the immutable data flow loop.
+    this.call = undefined;
     this.stopCamera();
     this.mute();
-    this.emitter.emit('callEnded', { callId });
   }
 
   public async setCamera(device: VideoDeviceInfo, options?: VideoStreamOptions): Promise<void> {
@@ -435,7 +460,13 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     });
   }
 
-  public startCall(participants: string[], options?: StartCallOptions): Call | undefined {
+  public startCall(
+    participants:
+      | string[]
+      /* @conditional-compile-remove(PSTN-calls) */
+      | CommunicationIdentifier[],
+    options?: StartCallOptions
+  ): Call | undefined {
     if (_isInCall(this.getState().call?.state ?? 'None')) {
       throw new Error('You are already in the call.');
     }
@@ -443,10 +474,10 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     const idsToAdd = participants.map((participant) => {
       // FIXME: `onStartCall` does not allow a Teams user.
       // Need some way to return an error if a Teams user is provided.
-      const backendId = fromFlatCommunicationIdentifier(participant);
+      const backendId: CommunicationIdentifier = _toCommunicationIdentifier(participant);
       if (isPhoneNumberIdentifier(backendId)) {
         if (options?.alternateCallerId === undefined) {
-          throw new Error('unable to start call, PSTN user present with no alternateCallerId.');
+          throw new Error('Unable to start call, PSTN user present with no alternateCallerId.');
         }
         return backendId as PhoneNumberIdentifier;
       } else if (isCommunicationUserIdentifier(backendId)) {
@@ -474,13 +505,29 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     this.subscribeCallEvents();
   }
 
-  public async removeParticipant(userId: string): Promise<void> {
-    this.handlers.onRemoveParticipant(userId);
+  public async removeParticipant(
+    userId: string | /* @conditional-compile-remove(PSTN-calls) */ CommunicationIdentifier
+  ): Promise<void> {
+    let participant = userId;
+    /* @conditional-compile-remove(PSTN-calls) */
+    participant = _toCommunicationIdentifier(userId);
+    this.handlers.onRemoveParticipant(participant);
   }
 
   /* @conditional-compile-remove(PSTN-calls) */
-  public async addParticipant(participant: CommunicationIdentifier, options?: AddPhoneNumberOptions): Promise<void> {
-    this.handlers.onAddParticipant(participant, options);
+  public async addParticipant(participant: PhoneNumberIdentifier, options?: AddPhoneNumberOptions): Promise<void>;
+  /* @conditional-compile-remove(PSTN-calls) */
+  public async addParticipant(participant: CommunicationUserIdentifier): Promise<void>;
+  /* @conditional-compile-remove(PSTN-calls) */
+  public async addParticipant(
+    participant: PhoneNumberIdentifier | CommunicationUserIdentifier,
+    options?: AddPhoneNumberOptions
+  ): Promise<void> {
+    if (isPhoneNumberIdentifier(participant) && options) {
+      this.handlers.onAddParticipant(participant, options);
+    } else if (isCommunicationUserIdentifier(participant)) {
+      this.handlers.onAddParticipant(participant);
+    }
   }
 
   /* @conditional-compile-remove(PSTN-calls) */
@@ -495,6 +542,11 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     if (this.call?.state === 'LocalHold') {
       this.handlers.onToggleHold();
     }
+  }
+
+  /* @conditional-compile-remove(PSTN-calls) */
+  public async sendDtmfTone(dtmfTone: DtmfTone): Promise<void> {
+    this.handlers.onSendDtmfTone(dtmfTone);
   }
 
   public getState(): CallAdapterState {
@@ -619,7 +671,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     try {
       return await f();
     } catch (error) {
-      if (isCallError(error)) {
+      if (isCallError(error as Error)) {
         this.emitter.emit('error', error as AdapterError);
       }
       throw error;
@@ -630,7 +682,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     try {
       return f();
     } catch (error) {
-      if (isCallError(error)) {
+      if (isCallError(error as Error)) {
         this.emitter.emit('error', error as AdapterError);
       }
       throw error;
@@ -654,7 +706,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
  * @beta
  */
 export type CallParticipantsLocator = {
-  participantIDs: string[];
+  participantIds: string[];
 };
 
 /**
@@ -851,5 +903,5 @@ const isCallError = (e: Error): e is CallError => {
 /* @conditional-compile-remove(teams-adhoc-call) */
 /* @conditional-compile-remove(PSTN-calls) */
 const isOutboundCall = (callLocator: CallAdapterLocator): callLocator is CallParticipantsLocator => {
-  return 'participantIDs' in callLocator;
+  return 'participantIds' in callLocator;
 };

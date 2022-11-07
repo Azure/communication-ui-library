@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Fixed flaky file sharing tests for upload cards by awaiting file type icons",
-  "packageName": "@internal/react-components",
-  "email": "97124699+prabhjot-msft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

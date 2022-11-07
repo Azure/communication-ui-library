@@ -10,6 +10,8 @@ import {
   _DrawerMenuItemProps as DrawerMenuItemProps,
   _DrawerMenuItemProps
 } from '@internal/react-components';
+/* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+import { HoldButton } from '@internal/react-components';
 import { AudioDeviceInfo } from '@azure/communication-calling';
 import { CallWithChatControlOptions } from '../CallWithChatComposite';
 /* @conditional-compile-remove(control-bar-button-injection) */
@@ -18,6 +20,11 @@ import {
   generateCustomCallWithChatDrawerButtons,
   onFetchCustomButtonPropsTrampoline
 } from '../CustomButton';
+/* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+import { usePropsFor } from '../../CallComposite/hooks/usePropsFor';
+/* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+import { useLocale } from '../../localization';
+import { isDisabled } from '../../CallComposite/utils';
 
 /** @private */
 export interface MoreDrawerStrings {
@@ -81,7 +88,9 @@ export interface MoreDrawerProps extends MoreDrawerDevicesMenuProps {
   onLightDismiss: () => void;
   onPeopleButtonClicked: () => void;
   callControls?: boolean | CallWithChatControlOptions;
+  onClickShowDialpad?: () => void;
   strings: MoreDrawerStrings;
+  disableButtonsForHoldScreen?: boolean;
 }
 
 const inferCallWithChatControlOptions = (
@@ -99,6 +108,12 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
   const drawerMenuItems: DrawerMenuItemProps[] = [];
 
   const { speakers, onSelectSpeaker, onLightDismiss } = props;
+
+  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+  const localeStrings = useLocale();
+  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+  const holdButtonProps = usePropsFor(HoldButton);
+
   const onSpeakerItemClick = useCallback(
     (_ev, itemKey) => {
       const selected = speakers?.find((speaker) => speaker.id === itemKey);
@@ -117,6 +132,7 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
   if (props.speakers && props.speakers.length > 0) {
     drawerMenuItems.push({
       itemKey: 'speakers',
+      disabled: props.disableButtonsForHoldScreen,
       text: props.strings.speakerMenuTitle,
       iconProps: { iconName: 'MoreDrawerSpeakers' },
       subMenuProps: props.speakers.map((speaker) => ({
@@ -158,6 +174,7 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
 
     drawerMenuItems.push({
       itemKey: itemKey,
+      disabled: props.disableButtonsForHoldScreen,
       text: text,
       iconProps: { iconName: iconName },
       subMenuProps: props.microphones.map((mic) => ({
@@ -167,20 +184,51 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
         },
         text: mic.name,
         onItemClick: onMicrophoneItemClick,
-        secondaryIconProps: isDeviceSelected(mic, props.selectedMicrophone) ? { iconName: 'Accept' } : undefined
+        secondaryIconProps: isDeviceSelected(mic, props.selectedMicrophone) ? { iconName: 'Accept' } : undefined,
+        disabled: drawerSelectionOptions !== false ? isDisabled(drawerSelectionOptions.microphoneButton) : undefined
       })),
       secondaryText: props.selectedMicrophone?.name
     });
   }
-
   if (drawerSelectionOptions !== false && isEnabled(drawerSelectionOptions?.peopleButton)) {
     drawerMenuItems.push({
       itemKey: 'people',
       text: props.strings.peopleButtonLabel,
       iconProps: { iconName: 'MoreDrawerPeople' },
-      onItemClick: props.onPeopleButtonClicked
+      onItemClick: props.onPeopleButtonClicked,
+      disabled: drawerSelectionOptions !== false ? isDisabled(drawerSelectionOptions.peopleButton) : undefined
     });
   }
+
+  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+  if (drawerSelectionOptions !== false && isEnabled(drawerSelectionOptions?.holdButton)) {
+    drawerMenuItems.push({
+      itemKey: 'holdButtonKey',
+      disabled:
+        props.disableButtonsForHoldScreen ||
+        (drawerSelectionOptions !== false ? isDisabled(drawerSelectionOptions.holdButton) : undefined),
+      text: localeStrings.component.strings.holdButton.tooltipOffContent,
+      onItemClick: () => {
+        holdButtonProps.onToggleHold();
+      },
+      iconProps: { iconName: 'HoldCallContextualMenuItem', styles: { root: { lineHeight: 0 } } }
+    });
+  }
+
+  /*@conditional-compile-remove(PSTN-calls) */
+  // dtmf tone sending only works for 1:1 PSTN call
+  if (drawerSelectionOptions !== false && props.onClickShowDialpad) {
+    drawerMenuItems.push({
+      itemKey: 'showDialpadKey',
+      disabled: props.disableButtonsForHoldScreen,
+      text: localeStrings.strings.callWithChat.openDtmfDialpadLabel,
+      onItemClick: () => {
+        props.onClickShowDialpad && props.onClickShowDialpad();
+      },
+      iconProps: { iconName: 'Dialpad', styles: { root: { lineHeight: 0 } } }
+    });
+  }
+
   /* @conditional-compile-remove(control-bar-button-injection) */
   const customDrawerButtons = useMemo(
     () =>

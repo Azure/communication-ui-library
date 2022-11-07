@@ -30,7 +30,11 @@ export type CallControlOptions = {
    * Show or Hide Camera Button during a call
    * @defaultValue true
    */
-  cameraButton?: boolean;
+  cameraButton?:
+    | boolean
+    | /* @conditional-compile-remove(PSTN-calls) */ {
+        disabled: boolean;
+      };
   /**
    * Show or Hide EndCall button during a call.
    * @defaultValue true
@@ -40,12 +44,20 @@ export type CallControlOptions = {
    * Show or Hide Microphone button during a call.
    * @defaultValue true
    */
-  microphoneButton?: boolean;
+  microphoneButton?:
+    | boolean
+    | /* @conditional-compile-remove(PSTN-calls) */ {
+        disabled: boolean;
+      };
   /**
    * Show or Hide Devices button during a call.
    * @defaultValue true
    */
-  devicesButton?: boolean;
+  devicesButton?:
+    | boolean
+    | /* @conditional-compile-remove(PSTN-calls) */ {
+        disabled: boolean;
+      };
   /**
    * Show, Hide or Disable participants button during a call.
    * @defaultValue true
@@ -56,6 +68,13 @@ export type CallControlOptions = {
    * @defaultValue true
    */
   screenShareButton?: boolean | { disabled: boolean };
+  /* @conditional-compile-remove(PSTN-calls) */
+  /* @conditional-compile-remove(one-to-n-calling) */
+  /**
+   * Show, Hide or disable the more button during a call.
+   * @defaultValue true
+   */
+  moreButton?: boolean;
   /* @conditional-compile-remove(control-bar-button-injection) */
   /**
    * Inject custom buttons in the call controls.
@@ -63,6 +82,8 @@ export type CallControlOptions = {
    * @beta
    */
   onFetchCustomButtonProps?: CustomCallControlButtonCallback[];
+  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+  holdButton?: boolean | { disabled: boolean };
 };
 
 /**
@@ -111,6 +132,9 @@ export interface CustomCallControlButtonCallbackArgs {
  * @beta
  */
 export interface CustomControlButtonProps {
+  /**
+   * Calback for when button is clicked
+   */
   onItemClick?: () => void;
   /**
    * Whether the buttons is disabled
@@ -130,6 +154,22 @@ export interface CustomControlButtonProps {
    * Optional label for the button
    */
   text?: string;
+  /**
+   * A unique key for the button
+   */
+  key?: string | number;
+  /**
+   * The aria label of the button for the benefit of screen readers.
+   */
+  ariaLabel?: string;
+  /**
+   * Detailed description of the button for the benefit of screen readers.
+   */
+  ariaDescription?: string;
+  /**
+   * A unique id set for the standard HTML id attibute
+   */
+  id?: string;
 }
 
 /**

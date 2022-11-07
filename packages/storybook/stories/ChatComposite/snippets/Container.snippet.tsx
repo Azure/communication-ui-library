@@ -20,6 +20,7 @@ export type ContainerProps = {
   participants?: boolean;
   topic?: boolean;
   locale?: CompositeLocale;
+  formFactor?: 'desktop' | 'mobile';
 };
 
 export const ContosoChatContainer = (props: ContainerProps): JSX.Element => {
@@ -53,10 +54,10 @@ export const ContosoChatContainer = (props: ContainerProps): JSX.Element => {
           fluentTheme={props.fluentTheme}
           options={{
             errorBar: props.errorBar,
-            participantPane: props.participants,
             topic: props.topic
           }}
           locale={props.locale}
+          formFactor={props.formFactor}
         />
       </div>
     );

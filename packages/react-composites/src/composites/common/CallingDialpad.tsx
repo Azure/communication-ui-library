@@ -8,11 +8,14 @@ import { _DrawerMenu, _DrawerMenuItemProps, _DrawerSurface } from '@internal/rea
 import { IModalStyles, Modal, Stack, useTheme, Text, IconButton } from '@fluentui/react';
 import { IButtonStyles, PrimaryButton } from '@fluentui/react';
 
-import { themedDialpadModelStyle } from './CallingDialpad.styles';
+import { themeddialpadModalStyle } from './CallingDialpad.styles';
 import { themedCallButtonStyle, themedDialpadStyle } from './CallingDialpad.styles';
 /* @conditional-compile-remove(PSTN-calls) */
 import { CallWithChatCompositeIcon } from './icons';
-import { drawerContainerStyles } from '../CallWithChatComposite/styles/CallWithChatCompositeStyles';
+
+import { PhoneNumberIdentifier } from '@azure/communication-common';
+import { AddPhoneNumberOptions } from '@azure/communication-calling';
+import { drawerContainerStyles } from '../CallComposite/styles/CallComposite.styles';
 
 /** @private */
 export interface CallingDialpadStrings {
@@ -28,11 +31,13 @@ export interface CallingDialpadProps {
   showDialpad: boolean;
   strings: CallingDialpadStrings;
   onDismissDialpad: () => void;
+  onAddParticipant: (participant: PhoneNumberIdentifier, options?: AddPhoneNumberOptions) => void;
+  alternateCallerId: string;
 }
 
 /** @private */
 export const CallingDialpad = (props: CallingDialpadProps): JSX.Element => {
-  const { strings, isMobile, showDialpad, onDismissDialpad } = props;
+  const { strings, isMobile, showDialpad, onDismissDialpad, onAddParticipant, alternateCallerId } = props;
   const [textFieldInput, setTextFieldInput] = useState('');
 
   const theme = useTheme();
@@ -43,11 +48,20 @@ export const CallingDialpad = (props: CallingDialpadProps): JSX.Element => {
   };
 
   const onClickCall = (): void => {
-    //place holder for adding calling functionality
-    console.log(textFieldInput);
+    if (onAddParticipant) {
+      /**
+       * Format the phone number in dialpad textfield to make sure the phone number is in E.164 format.
+       * We assume the input number always include countrycode
+       */
+
+      const phoneNumber = { phoneNumber: '+' + textFieldInput.replace(/\D/g, '').replaceAll(' ', '') };
+
+      onAddParticipant(phoneNumber, { alternateCallerId: { phoneNumber: alternateCallerId } });
+      onDismissTriggered();
+    }
   };
 
-  const dialpadModelStyle: Partial<IModalStyles> = useMemo(() => themedDialpadModelStyle(theme), [theme]);
+  const dialpadModalStyle: Partial<IModalStyles> = useMemo(() => themeddialpadModalStyle(theme), [theme]);
 
   const dialpadStyle: Partial<DialpadStyles> = useMemo(() => themedDialpadStyle(isMobile, theme), [theme, isMobile]);
 
@@ -56,7 +70,7 @@ export const CallingDialpad = (props: CallingDialpadProps): JSX.Element => {
   const dialpadComponent = (): JSX.Element => {
     return (
       <>
-        <Dialpad onChange={setTextFieldInput} styles={dialpadStyle} />
+        <Dialpad styles={dialpadStyle} onChange={setTextFieldInput} isMobile={isMobile} />
         <PrimaryButton
           text={strings.dialpadStartCallButtonLabel}
           onRenderIcon={() => DialpadStartCallIconTrampoline()}
@@ -74,9 +88,9 @@ export const CallingDialpad = (props: CallingDialpadProps): JSX.Element => {
     return (
       <Stack data-ui-id="call-with-chat-composite-dialpad">
         {showDialpad && (
-          <Stack styles={drawerContainerStyles}>
+          <Stack styles={drawerContainerStyles()}>
             <_DrawerSurface onLightDismiss={onDismissTriggered}>
-              <Stack style={{ padding: '16px' }}>{dialpadComponent()}</Stack>
+              <Stack style={{ padding: '1rem' }}>{dialpadComponent()}</Stack>
             </_DrawerSurface>
           </Stack>
         )}
@@ -92,7 +106,7 @@ export const CallingDialpad = (props: CallingDialpadProps): JSX.Element => {
           isOpen={showDialpad}
           onDismiss={onDismissTriggered}
           isBlocking={true}
-          styles={dialpadModelStyle}
+          styles={dialpadModalStyle}
           data-ui-id="call-with-chat-composite-dialpad"
         >
           <Stack horizontal horizontalAlign="space-between" verticalAlign="center">
@@ -101,11 +115,11 @@ export const CallingDialpad = (props: CallingDialpadProps): JSX.Element => {
               iconProps={{ iconName: 'Cancel' }}
               ariaLabel={strings.dialpadCloseModalButtonAriaLabel}
               onClick={onDismissTriggered}
-              style={{ color: 'black' }}
+              style={{ color: theme.palette.black }}
             />
           </Stack>
 
-          <Stack>{dialpadComponent()}</Stack>
+          <Stack style={{ overflow: 'hidden' }}>{dialpadComponent()}</Stack>
         </Modal>
       }
     </>

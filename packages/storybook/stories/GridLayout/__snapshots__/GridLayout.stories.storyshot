@@ -36,41 +36,31 @@ exports[`storybook snapshot tests Storyshots UI Components/Grid Layout Grid Layo
             data-ui-id="video-tile"
           >
             <div
-              className="stub-classname"
-            />
-            <div
               className="ms-Stack stub-classname"
             >
               <div
                 className="ms-Stack stub-classname"
               >
                 <div
-                  aria-label=""
-                  className="ms-Persona ms-Persona--size48 stub-classname"
-                  style={
-                    Object {
-                      "height": 100,
-                      "minWidth": 100,
-                    }
-                  }
+                  className="ms-Stack stub-classname"
                 >
                   <div
-                    className="ms-Persona-coin ms-Persona--size48 stub-classname"
-                    role="presentation"
+                    aria-label=""
+                    className="ms-Persona ms-Persona--size48 stub-classname"
+                    style={
+                      Object {
+                        "height": 100,
+                        "minWidth": 100,
+                      }
+                    }
                   >
                     <div
-                      className="ms-Persona-imageArea stub-classname"
+                      className="ms-Persona-coin ms-Persona--size48 stub-classname"
                       role="presentation"
-                      style={
-                        Object {
-                          "height": 100,
-                          "width": 100,
-                        }
-                      }
                     >
                       <div
-                        aria-hidden="true"
-                        className="ms-Persona-initials stub-classname"
+                        className="ms-Persona-imageArea stub-classname"
+                        role="presentation"
                         style={
                           Object {
                             "height": 100,
@@ -78,9 +68,20 @@ exports[`storybook snapshot tests Storyshots UI Components/Grid Layout Grid Layo
                           }
                         }
                       >
-                        <span>
-                          M
-                        </span>
+                        <div
+                          aria-hidden="true"
+                          className="ms-Persona-initials stub-classname"
+                          style={
+                            Object {
+                              "height": 100,
+                              "width": 100,
+                            }
+                          }
+                        >
+                          <span>
+                            M
+                          </span>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -107,41 +108,31 @@ exports[`storybook snapshot tests Storyshots UI Components/Grid Layout Grid Layo
             data-ui-id="video-tile"
           >
             <div
-              className="stub-classname"
-            />
-            <div
               className="ms-Stack stub-classname"
             >
               <div
                 className="ms-Stack stub-classname"
               >
                 <div
-                  aria-label=""
-                  className="ms-Persona ms-Persona--size48 stub-classname"
-                  style={
-                    Object {
-                      "height": 100,
-                      "minWidth": 100,
-                    }
-                  }
+                  className="ms-Stack stub-classname"
                 >
                   <div
-                    className="ms-Persona-coin ms-Persona--size48 stub-classname"
-                    role="presentation"
+                    aria-label=""
+                    className="ms-Persona ms-Persona--size48 stub-classname"
+                    style={
+                      Object {
+                        "height": 100,
+                        "minWidth": 100,
+                      }
+                    }
                   >
                     <div
-                      className="ms-Persona-imageArea stub-classname"
+                      className="ms-Persona-coin ms-Persona--size48 stub-classname"
                       role="presentation"
-                      style={
-                        Object {
-                          "height": 100,
-                          "width": 100,
-                        }
-                      }
                     >
                       <div
-                        aria-hidden="true"
-                        className="ms-Persona-initials stub-classname"
+                        className="ms-Persona-imageArea stub-classname"
+                        role="presentation"
                         style={
                           Object {
                             "height": 100,
@@ -149,9 +140,20 @@ exports[`storybook snapshot tests Storyshots UI Components/Grid Layout Grid Layo
                           }
                         }
                       >
-                        <span>
-                          J
-                        </span>
+                        <div
+                          aria-hidden="true"
+                          className="ms-Persona-initials stub-classname"
+                          style={
+                            Object {
+                              "height": 100,
+                              "width": 100,
+                            }
+                          }
+                        >
+                          <span>
+                            J
+                          </span>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -178,41 +180,31 @@ exports[`storybook snapshot tests Storyshots UI Components/Grid Layout Grid Layo
             data-ui-id="video-tile"
           >
             <div
-              className="stub-classname"
-            />
-            <div
               className="ms-Stack stub-classname"
             >
               <div
                 className="ms-Stack stub-classname"
               >
                 <div
-                  aria-label=""
-                  className="ms-Persona ms-Persona--size48 stub-classname"
-                  style={
-                    Object {
-                      "height": 100,
-                      "minWidth": 100,
-                    }
-                  }
+                  className="ms-Stack stub-classname"
                 >
                   <div
-                    className="ms-Persona-coin ms-Persona--size48 stub-classname"
-                    role="presentation"
+                    aria-label=""
+                    className="ms-Persona ms-Persona--size48 stub-classname"
+                    style={
+                      Object {
+                        "height": 100,
+                        "minWidth": 100,
+                      }
+                    }
                   >
                     <div
-                      className="ms-Persona-imageArea stub-classname"
+                      className="ms-Persona-coin ms-Persona--size48 stub-classname"
                       role="presentation"
-                      style={
-                        Object {
-                          "height": 100,
-                          "width": 100,
-                        }
-                      }
                     >
                       <div
-                        aria-hidden="true"
-                        className="ms-Persona-initials stub-classname"
+                        className="ms-Persona-imageArea stub-classname"
+                        role="presentation"
                         style={
                           Object {
                             "height": 100,
@@ -220,9 +212,20 @@ exports[`storybook snapshot tests Storyshots UI Components/Grid Layout Grid Layo
                           }
                         }
                       >
-                        <span>
-                          P
-                        </span>
+                        <div
+                          aria-hidden="true"
+                          className="ms-Persona-initials stub-classname"
+                          style={
+                            Object {
+                              "height": 100,
+                              "width": 100,
+                            }
+                          }
+                        >
+                          <span>
+                            P
+                          </span>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -249,41 +252,31 @@ exports[`storybook snapshot tests Storyshots UI Components/Grid Layout Grid Layo
             data-ui-id="video-tile"
           >
             <div
-              className="stub-classname"
-            />
-            <div
               className="ms-Stack stub-classname"
             >
               <div
                 className="ms-Stack stub-classname"
               >
                 <div
-                  aria-label=""
-                  className="ms-Persona ms-Persona--size48 stub-classname"
-                  style={
-                    Object {
-                      "height": 100,
-                      "minWidth": 100,
-                    }
-                  }
+                  className="ms-Stack stub-classname"
                 >
                   <div
-                    className="ms-Persona-coin ms-Persona--size48 stub-classname"
-                    role="presentation"
+                    aria-label=""
+                    className="ms-Persona ms-Persona--size48 stub-classname"
+                    style={
+                      Object {
+                        "height": 100,
+                        "minWidth": 100,
+                      }
+                    }
                   >
                     <div
-                      className="ms-Persona-imageArea stub-classname"
+                      className="ms-Persona-coin ms-Persona--size48 stub-classname"
                       role="presentation"
-                      style={
-                        Object {
-                          "height": 100,
-                          "width": 100,
-                        }
-                      }
                     >
                       <div
-                        aria-hidden="true"
-                        className="ms-Persona-initials stub-classname"
+                        className="ms-Persona-imageArea stub-classname"
+                        role="presentation"
                         style={
                           Object {
                             "height": 100,
@@ -291,9 +284,20 @@ exports[`storybook snapshot tests Storyshots UI Components/Grid Layout Grid Layo
                           }
                         }
                       >
-                        <span>
-                          D
-                        </span>
+                        <div
+                          aria-hidden="true"
+                          className="ms-Persona-initials stub-classname"
+                          style={
+                            Object {
+                              "height": 100,
+                              "width": 100,
+                            }
+                          }
+                        >
+                          <span>
+                            D
+                          </span>
+                        </div>
                       </div>
                     </div>
                   </div>
