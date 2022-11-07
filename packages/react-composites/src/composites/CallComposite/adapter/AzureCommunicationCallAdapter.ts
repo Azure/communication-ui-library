@@ -474,7 +474,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
   /* @conditional-compile-remove(unsupported-browser) */
   public async getEnvironmentInfo(): Promise<EnvironmentInfo> {
     return await this.asyncTeeErrorToEventEmitter(async () => {
-      return this.callClient.feature(Features.DebugInfo).getEnvironmentInfo();
+      return await this.callClient.feature(Features.DebugInfo).getEnvironmentInfo();
     });
   }
 
