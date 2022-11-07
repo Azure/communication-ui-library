@@ -25,7 +25,6 @@ export const messageBarStyle = (theme: ITheme, errorType: MessageBarType): IMess
   innerText: {
     paddingTop: errorType === MessageBarType.warning ? '0.15rem' : '0.1rem', // to move the inner text of the message bar down to be centered
     lineHeight: 'none',
-    color: theme.palette.black,
     alignSelf: 'center',
     whiteSpace: 'normal'
   },
@@ -47,8 +46,6 @@ export const messageBarStyle = (theme: ITheme, errorType: MessageBarType): IMess
  */
 export const linkStyle = (theme: ITheme): ILinkStyles => ({
   root: {
-    span: {
-      color: theme.palette.black
-    }
+    span: {}
   }
 });
