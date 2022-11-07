@@ -111,7 +111,7 @@ test.describe('Participant list side pane tests', () => {
     expect(await stableScreenshot(page)).toMatchSnapshot(`video-gallery-page-participants-flyout-custom-ellipses.png`);
   });
 
-  test('injected menu items appear', async ({ page, serverUrl }, testInfo) => {
+  test('injected menu items appear', async ({ page, serverUrl }) => {
     await page.goto(
       buildUrlWithMockAdapter(serverUrl, participantListInitialState(), {
         injectParticipantMenuItems: 'true',
@@ -164,7 +164,7 @@ test.describe('Participant list full screen pane with drawer tests', () => {
     expect(await stableScreenshot(page)).toMatchSnapshot(`video-gallery-page-participants-flyout-custom-ellipses.png`);
   });
 
-  test('injected menu items appear', async ({ page, serverUrl }, testInfo) => {
+  test('injected menu items appear', async ({ page, serverUrl }) => {
     await page.goto(
       buildUrlWithMockAdapter(serverUrl, participantListInitialState(), {
         injectParticipantMenuItems: 'true',
