@@ -1,57 +1,57 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`VideoGallery should render local video tile as the only tile: VideoGallery-with-local-participant 1`] = `
+exports[`VideoGallery floatingLocalVideo Layout should render local video tile as the only tile: VideoGallery-with-local-participant 1`] = `
 LoadedCheerio {
   "0": <div
-    class="css-114"
+    class="css-145"
     data-ui-id="video-gallery"
   >
     <div
-      class="ms-Stack css-120"
+      class="ms-Stack css-151"
     >
       <div
-        class="css-122"
+        class="css-153"
       >
         <div
           aria-label="Movable Local Video Tile"
-          class="ms-Stack css-123"
+          class="ms-Stack css-154"
           role="dialog"
           tabindex="0"
         >
           <div
-            class="ms-Stack css-129"
+            class="ms-Stack css-160"
             data-ui-id="video-tile"
           >
             <div
-              class="ms-Stack css-130"
+              class="ms-Stack css-161"
               style=""
             >
               <div
-                class="ms-Stack css-153"
+                class="ms-Stack css-184"
               />
               <div
-                class="css-154"
+                class="css-185"
               >
                 <div
-                  class="css-155"
+                  class="css-186"
                   data-ui-id="stream-media-container"
                 >
                   <div>
-                    <div>
-                      LOCAL PARTICIPANT
-                    </div>
+                    <video>
+                      VIDEO
+                    </video>
                   </div>
                 </div>
               </div>
             </div>
             <div
-              class="ms-Stack css-149"
+              class="ms-Stack css-180"
             >
               <div
-                class="ms-Stack css-156"
+                class="ms-Stack css-187"
               >
                 <span
-                  class="css-151"
+                  class="css-182"
                   title="You"
                 >
                   You
@@ -62,7 +62,7 @@ LoadedCheerio {
         </div>
       </div>
       <div
-        class="ms-LayerHost css-119"
+        class="ms-LayerHost css-150"
         id="layerhost0"
       />
     </div>
