@@ -21,7 +21,21 @@ import {
   waitForSelector
 } from '../../common/utils';
 import { IDS } from '../../common/constants';
-import { MockCallAdapterState } from 'common';
+import type { MockCallAdapterState } from '../../../common';
+
+const participantListShownAsFlyout = (): boolean => {
+  /* @conditional-compile-remove(one-to-n-calling) */
+  return false;
+  return true;
+};
+
+const participantListShownAsSidePane = (testInfo: TestInfo): boolean => {
+  return isTestProfileDesktop(testInfo) && !participantListShownAsFlyout();
+};
+
+const participantListShownAsFullScreenPane = (testInfo: TestInfo): boolean => {
+  return isTestProfileMobile(testInfo) && !participantListShownAsFlyout();
+};
 
 test.describe('Participant list flyout tests', () => {
   test.skip(!participantListShownAsFlyout());
@@ -38,6 +52,8 @@ test.describe('Participant list flyout tests', () => {
   });
 
   test('participant list opens and displays ellipses if passing in custom icon', async ({ page, serverUrl }) => {
+    test.skip(!participantListShownAsFlyout());
+
     await page.goto(
       buildUrlWithMockAdapter(serverUrl, participantListInitialState(), {
         showParticipantItemIcon: 'true',
@@ -52,6 +68,8 @@ test.describe('Participant list flyout tests', () => {
   });
 
   test('injected menu items appear', async ({ page, serverUrl }) => {
+    test.skip(!participantListShownAsFlyout());
+
     await page.goto(
       buildUrlWithMockAdapter(serverUrl, participantListInitialState(), {
         injectParticipantMenuItems: 'true',
@@ -85,7 +103,12 @@ test.describe('Participant list side pane tests', () => {
     expect(await stableScreenshot(page)).toMatchSnapshot(`video-gallery-page-participants-flyout.png`);
   });
 
-  test('participant list opens and displays ellipses if passing in custom icon', async ({ page, serverUrl }) => {
+  test('participant list opens and displays ellipses if passing in custom icon', async ({
+    page,
+    serverUrl
+  }, testInfo) => {
+    test.skip(!participantListShownAsSidePane(testInfo));
+
     await page.goto(
       buildUrlWithMockAdapter(serverUrl, participantListInitialState(), {
         showParticipantItemIcon: 'true',
@@ -98,6 +121,8 @@ test.describe('Participant list side pane tests', () => {
   });
 
   test('injected menu items appear', async ({ page, serverUrl }, testInfo) => {
+    test.skip(!participantListShownAsSidePane(testInfo));
+
     await page.goto(
       buildUrlWithMockAdapter(serverUrl, participantListInitialState(), {
         injectParticipantMenuItems: 'true',
@@ -133,7 +158,12 @@ test.describe('Participant list full screen pane with drawer tests', () => {
     expect(await stableScreenshot(page)).toMatchSnapshot(`video-gallery-page-participants-flyout.png`);
   });
 
-  test('participant list opens and displays ellipses if passing in custom icon', async ({ page, serverUrl }) => {
+  test('participant list opens and displays ellipses if passing in custom icon', async ({
+    page,
+    serverUrl
+  }, testInfo) => {
+    test.skip(!participantListShownAsFullScreenPane(testInfo));
+
     await page.goto(
       buildUrlWithMockAdapter(serverUrl, participantListInitialState(), {
         showParticipantItemIcon: 'true',
@@ -151,6 +181,8 @@ test.describe('Participant list full screen pane with drawer tests', () => {
   });
 
   test('injected menu items appear', async ({ page, serverUrl }, testInfo) => {
+    test.skip(!participantListShownAsFullScreenPane(testInfo));
+
     await page.goto(
       buildUrlWithMockAdapter(serverUrl, participantListInitialState(), {
         injectParticipantMenuItems: 'true',
@@ -182,18 +214,4 @@ const participantListInitialState = (): MockCallAdapterState => {
   ]);
   addDefaultMockLocalVideoStreamState(initialState);
   return initialState;
-};
-
-const participantListShownAsFlyout = (): boolean => {
-  /* @conditional-compile-remove(one-to-n-calling) */
-  return false;
-  return true;
-};
-
-const participantListShownAsSidePane = (testInfo: TestInfo): boolean => {
-  return isTestProfileDesktop(testInfo) && !participantListShownAsFlyout();
-};
-
-const participantListShownAsFullScreenPane = (testInfo: TestInfo): boolean => {
-  return isTestProfileMobile(testInfo) && !participantListShownAsFlyout();
 };
