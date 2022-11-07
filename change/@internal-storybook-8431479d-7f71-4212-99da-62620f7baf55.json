@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Center incoming call toast button icons",
-  "packageName": "@internal/storybook",
-  "email": "edwardlee@microsoft.com",
-  "dependentChangeType": "patch"
-}

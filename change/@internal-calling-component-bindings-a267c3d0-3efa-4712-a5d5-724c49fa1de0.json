@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "create handlers for askDevicePermission",
-  "packageName": "@internal/calling-component-bindings",
-  "email": "carolinecao@microsoft.com",
-  "dependentChangeType": "patch"
-}

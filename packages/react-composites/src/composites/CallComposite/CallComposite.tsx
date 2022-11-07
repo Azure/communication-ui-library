@@ -15,6 +15,8 @@ import { ConfigurationPage } from './pages/ConfigurationPage';
 import { NoticePage } from './pages/NoticePage';
 import { useSelector } from './hooks/useSelector';
 import { getPage } from './selectors/baseSelectors';
+/* @conditional-compile-remove(rooms) */
+import { getRole } from './selectors/baseSelectors';
 import { LobbyPage } from './pages/LobbyPage';
 import { mainScreenContainerStyleDesktop, mainScreenContainerStyleMobile } from './styles/CallComposite.styles';
 import { CallControlOptions } from './types/CallControlOptions';
@@ -31,6 +33,7 @@ import { useId } from '@fluentui/react-hooks';
 import { HoldPage } from './pages/HoldPage';
 /* @conditional-compile-remove(unsupported-browser) */
 import { UnsupportedBrowserPage } from './pages/UnsupportedBrowser';
+import { PermissionConstraints } from '@azure/communication-calling';
 
 /**
  * Props for {@link CallComposite}.
@@ -61,9 +64,11 @@ export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcon
 
   /* @conditional-compile-remove(rooms) */
   /**
-   * Set this to enable/disable capacities for different roles
+   * Set the role to enable/disable capacities. This property should be properly set for Rooms calls. The role of a
+   * user for a room can be obtained using the Rooms API. The role of the user will be synced with ACS services when
+   * a Rooms call starts.
    */
-  role?: Role;
+  roleHint?: Role;
 }
 
 /* @conditional-compile-remove(call-readiness) */
@@ -114,6 +119,12 @@ export type CallCompositeOptions = {
    * Require device permissions to be set or have them as optional or not required to start a call
    */
   devicePermissions?: DevicePermissionRestrictions;
+  /* @conditional-compile-remove(call-readiness) */
+  /**
+   * Opt in call readiness feature for your call
+   * Setting this to `true` will add call readiness features to the call experience
+   */
+  callReadinessOptedIn?: boolean;
   /* @conditional-compile-remove(call-readiness) */
   /**
    * Callback you may provide to supply users with further steps to troubleshoot why they have been
@@ -173,7 +184,7 @@ type MainScreenProps = {
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
   options?: CallCompositeOptions;
   /* @conditional-compile-remove(rooms) */
-  role?: Role;
+  roleHint?: Role;
 };
 
 const MainScreen = (props: MainScreenProps): JSX.Element => {
@@ -182,6 +193,9 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
 
   const adapter = useAdapter();
   const locale = useLocale();
+
+  /* @conditional-compile-remove(rooms) */
+  const role = useSelector(getRole);
 
   let pageElement: JSX.Element | undefined;
   /* @conditional-compile-remove(rooms) */
@@ -221,6 +235,8 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           onPermissionsTroubleshootingClick={props.options?.onPermissionsTroubleshootingClick}
           /* @conditional-compile-remove(call-readiness) */
           onNetworkingTroubleShootingClick={props.options?.onNetworkingTroubleShootingClick}
+          /* @conditional-compile-remove(call-readiness) */
+          callReadinessOptedIn={props.options?.callReadinessOptedIn}
         />
       );
       break;
@@ -318,7 +334,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
   }
 
   /* @conditional-compile-remove(rooms) */
-  const permissions = _getPermissions(props.role);
+  const permissions = _getPermissions(role === 'Unknown' || role === undefined ? props.roleHint : role);
 
   // default retElement for stable version
   let retElement = pageElement;
@@ -346,45 +362,24 @@ export const CallComposite = (props: CallCompositeProps): JSX.Element => {
     options,
     formFactor = 'desktop',
     /* @conditional-compile-remove(rooms) */
-    role
+    roleHint
   } = props;
+
   useEffect(() => {
     (async () => {
-      /* @conditional-compile-remove(rooms) */
-      if (role === 'Consumer') {
-        // Need to ask for audio devices to get access to speakers. Speaker permission is tied to microphone permission (when you request 'audio' permission using the SDK) its
-        // actually granting access to query both microphone and speaker. TODO: Need some investigation to see if we can get access to speakers without SDK.
-        await adapter.askDevicePermission({ video: false, audio: true });
-        adapter.querySpeakers();
-        return;
-      }
-      /* @conditional-compile-remove(call-readiness) */
-      if (options?.devicePermissions) {
-        const videoPermission = options?.devicePermissions.camera !== 'doNotPrompt';
-        const audioPermission = options?.devicePermissions.microphone !== 'doNotPrompt';
-        await adapter.askDevicePermission({
-          video: videoPermission,
-          audio: audioPermission
-        });
-        if (videoPermission) {
-          adapter.queryCameras();
-        }
-        if (audioPermission) {
-          adapter.queryMicrophones();
-        }
-        adapter.querySpeakers();
-        return;
-      }
-
-      await adapter.askDevicePermission({ video: true, audio: true });
+      const constrain = getQueryOptions({
+        /* @conditional-compile-remove(rooms) */ role: roleHint,
+        /* @conditional-compile-remove(call-readiness) */ callReadinessOptedIn: options?.callReadinessOptedIn ?? false
+      });
+      await adapter.askDevicePermission(constrain);
       adapter.queryCameras();
       adapter.queryMicrophones();
       adapter.querySpeakers();
     })();
   }, [
     adapter,
-    /* @conditional-compile-remove(rooms) */ role,
-    /* @conditional-compile-remove(call-readiness) */ options?.devicePermissions
+    /* @conditional-compile-remove(rooms) */ roleHint,
+    /* @conditional-compile-remove(call-readiness) */ options?.callReadinessOptedIn
   ]);
 
   const mobileView = formFactor === 'mobile';
@@ -409,7 +404,7 @@ export const CallComposite = (props: CallCompositeProps): JSX.Element => {
             modalLayerHostId={modalLayerHostId}
             options={options}
             /* @conditional-compile-remove(rooms) */
-            role={role}
+            roleHint={roleHint}
           />
           {
             // This layer host is for ModalLocalAndRemotePIP in CallPane. This LayerHost cannot be inside the CallPane
@@ -440,4 +435,25 @@ const unsupportedEnvironmentPageTrampoline = (): string => {
   /* @conditional-compile-remove(unsupported-browser) */
   return 'unsupportedEnvironment';
   return 'call';
+};
+
+const getQueryOptions = (options: {
+  /* @conditional-compile-remove(rooms) */ role?: Role;
+  /* @conditional-compile-remove(call-readiness) */ callReadinessOptedIn?: boolean;
+}): PermissionConstraints => {
+  /* @conditional-compile-remove(call-readiness) */
+  if (options.callReadinessOptedIn) {
+    return {
+      video: false,
+      audio: false
+    };
+  }
+  /* @conditional-compile-remove(rooms) */
+  if (options.role === 'Consumer') {
+    return {
+      video: false,
+      audio: true
+    };
+  }
+  return { video: true, audio: true };
 };
