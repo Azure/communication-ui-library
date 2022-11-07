@@ -832,7 +832,7 @@ type AdapterType<CallType extends 'ACS' | 'Teams'> = CallType extends 'ACS'
 /**
  * @private
  */
-export const useAzureCommunicationCallAdapterGeneric = <CallType extends 'ACS' | 'Teams' = 'ACS'>(
+const useAzureCommunicationCallAdapterGeneric = <CallType extends 'ACS' | 'Teams' = 'ACS'>(
   args: Partial<AzureCommunicationCallAdapterArgs>,
   afterCreate?: (adapter: AdapterType<CallType>) => Promise<AdapterType<CallType>>,
   beforeDispose?: (adapter: AdapterType<CallType>) => Promise<void>,
