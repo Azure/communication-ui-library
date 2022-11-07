@@ -163,7 +163,7 @@ export const CallWithChatPane = (props: {
         <Stack horizontal styles={scrollableContainer}>
           <Stack.Item verticalFill styles={scrollableContainerContents}>
             <Stack styles={props.activePane === 'chat' ? availableSpaceStyles : hiddenStyles}>{chatContent}</Stack>
-            <Stack styles={props.activePane === 'people' ? availableSpaceStyles : hiddenStyles}>{peopleContent}</Stack>
+            {props.activePane === 'people' && peopleContent}
           </Stack.Item>
         </Stack>
       </Stack.Item>
