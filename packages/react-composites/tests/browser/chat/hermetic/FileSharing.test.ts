@@ -2,12 +2,11 @@
 // Licensed under the MIT license.
 import { expect } from '@playwright/test';
 import { sendMessage, waitForMessageDelivered } from '../../common/chatTestHelpers';
-import { dataUiId, isTestProfileStableFlavor, stableScreenshot, waitForSelector } from '../../common/utils';
+import { dataUiId, stableScreenshot, waitForSelector } from '../../common/utils';
 import { buildUrlForChatAppUsingFakeAdapter, DEFAULT_FAKE_CHAT_ADAPTER_ARGS, test, TEST_PARTICIPANTS } from './fixture';
 
+/* @conditional-compile-remove(file-sharing) */
 test.describe('Filesharing Attach file icon', async () => {
-  test.skip(isTestProfileStableFlavor());
-
   test('is not visible if filesharing options are undefined', async ({ serverUrl, page }) => {
     await page.goto(buildUrlForChatAppUsingFakeAdapter(serverUrl, DEFAULT_FAKE_CHAT_ADAPTER_ARGS));
     expect(
@@ -56,9 +55,8 @@ test.describe('Filesharing SendBox', async () => {
   });
 });
 
+/* @conditional-compile-remove(file-sharing) */
 test.describe('Filesharing ProgressBar', async () => {
-  test.skip(isTestProfileStableFlavor());
-
   test('is visible if progress is between 0 and 1', async ({ serverUrl, page }) => {
     await page.goto(
       buildUrlForChatAppUsingFakeAdapter(serverUrl, {
@@ -150,9 +148,8 @@ test.describe('Filesharing ProgressBar', async () => {
   });
 });
 
+/* @conditional-compile-remove(file-sharing) */
 test.describe('Filesharing SendBox Errorbar', async () => {
-  test.skip(isTestProfileStableFlavor());
-
   test('shows file upload error', async ({ serverUrl, page }) => {
     await page.goto(
       buildUrlForChatAppUsingFakeAdapter(serverUrl, {
@@ -199,9 +196,8 @@ test.describe('Filesharing SendBox Errorbar', async () => {
   });
 });
 
+/* @conditional-compile-remove(file-sharing) */
 test.describe('Filesharing Global Errorbar', async () => {
-  test.skip(isTestProfileStableFlavor());
-
   test('shows file download error', async ({ serverUrl, page }) => {
     await page.goto(
       buildUrlForChatAppUsingFakeAdapter(serverUrl, {
@@ -233,9 +229,8 @@ test.describe('Filesharing Global Errorbar', async () => {
   });
 });
 
+/* @conditional-compile-remove(file-sharing) */
 test.describe('Filesharing Message Thread', async () => {
-  test.skip(isTestProfileStableFlavor());
-
   test('contains File Download Card', async ({ serverUrl, page }) => {
     await page.goto(
       buildUrlForChatAppUsingFakeAdapter(serverUrl, {
@@ -286,9 +281,8 @@ test.describe('Filesharing Message Thread', async () => {
   });
 });
 
+/* @conditional-compile-remove(file-sharing) */
 test.describe('Filesharing Edit Message', async () => {
-  test.skip(isTestProfileStableFlavor());
-
   test.beforeEach(async ({ serverUrl, page }) => {
     await page.goto(
       buildUrlForChatAppUsingFakeAdapter(serverUrl, {
