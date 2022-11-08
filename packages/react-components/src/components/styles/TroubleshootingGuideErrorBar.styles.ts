@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IButtonStyles, ILinkStyles, IMessageBarStyles, ITheme, MessageBarType } from '@fluentui/react';
+import { IButtonStyles, IMessageBarStyles, ITheme, MessageBarType } from '@fluentui/react';
 
 /**
  * @private
