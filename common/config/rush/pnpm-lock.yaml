@@ -2338,7 +2338,7 @@ packages:
       '@jest/test-result': 26.6.2
       '@jest/transform': 26.6.2
       '@jest/types': 26.6.2
-      '@types/node': 18.11.3
+      '@types/node': 18.11.5
       ansi-escapes: 4.3.2
       chalk: 4.1.2
       exit: 0.1.2
@@ -2832,6 +2832,7 @@ packages:
     dependencies:
       mkdirp: 1.0.4
       rimraf: 3.0.2
+    deprecated: This functionality has been moved to @npmcli/fs
     dev: false
     engines:
       node: '>=10'
@@ -5420,16 +5421,6 @@ packages:
     dev: false
     resolution:
       integrity: sha512-2J0nE95rHXHyQ24cWjMKJ1tqB/ds8z/cyeOZxJhcb+rW+SQASVjuznUSmdz5GpVJTzU8JkhYut0D3siFDD6wsA==
-  /@webpack-cli/configtest/1.2.0_196e681456f11e809d8928f4499c300a:
-    dependencies:
-      webpack: 4.46.0_webpack-cli@4.10.0
-      webpack-cli: 4.10.0_webpack@4.46.0
-    dev: false
-    peerDependencies:
-      webpack: 4.x.x || 5.x.x
-      webpack-cli: 4.x.x
-    resolution:
-      integrity: sha512-4FB8Tj6xyVkyqjj1OaTqCjXYULB9FMkqQ8yGrZjRDrYh0nOE+7Lhs45WioWQQMV+ceFlE368Ukhe6xdvJM9Egg==
   /@webpack-cli/configtest/1.2.0_69574e65506de74a817e8de68330e733:
     dependencies:
       webpack: 5.38.1_webpack-cli@4.10.0
@@ -5464,7 +5455,7 @@ packages:
       integrity: sha512-oxnCNGj88fL+xzV+dacXs44HcDwf1ovs3AuEzvP7mqXw7fQntqIhQ1BRmynh4qEKQSSSRSWVyXRjmTbZIX9V2Q==
   /@webpack-cli/serve/1.7.0_webpack-cli@4.10.0:
     dependencies:
-      webpack-cli: 4.10.0_webpack@4.46.0
+      webpack-cli: 4.10.0_webpack@5.38.1
     dev: false
     peerDependencies:
       webpack-cli: 4.x.x
@@ -6151,7 +6142,7 @@ packages:
       mkdirp: 0.5.6
       pify: 4.0.1
       schema-utils: 2.7.1
-      webpack: 4.46.0_webpack-cli@4.10.0
+      webpack: 4.46.0
     dev: false
     engines:
       node: '>= 6.9'
@@ -17038,7 +17029,7 @@ packages:
       serialize-javascript: 4.0.0
       source-map: 0.6.1
       terser: 4.8.1
-      webpack: 4.46.0_webpack-cli@4.10.0
+      webpack: 4.46.0
       webpack-sources: 1.4.3
       worker-farm: 1.7.0
     dev: false
@@ -18194,42 +18185,6 @@ packages:
         optional: true
     resolution:
       integrity: sha512-NLhDfH/h4O6UOy+0LSso42xvYypClINuMNBVVzX4vX98TmTaTUxwRbXdhucbFMd2qLaCTcLq/PdYrvi8onw90w==
-  /webpack-cli/4.10.0_webpack@4.46.0:
-    dependencies:
-      '@discoveryjs/json-ext': 0.5.7
-      '@webpack-cli/configtest': 1.2.0_196e681456f11e809d8928f4499c300a
-      '@webpack-cli/info': 1.5.0_webpack-cli@4.10.0
-      '@webpack-cli/serve': 1.7.0_webpack-cli@4.10.0
-      colorette: 2.0.19
-      commander: 7.2.0
-      cross-spawn: 7.0.3
-      fastest-levenshtein: 1.0.16
-      import-local: 3.1.0
-      interpret: 2.2.0
-      rechoir: 0.7.1
-      webpack: 4.46.0_webpack-cli@4.10.0
-      webpack-merge: 5.8.0
-    dev: false
-    engines:
-      node: '>=10.13.0'
-    hasBin: true
-    peerDependencies:
-      '@webpack-cli/generators': '*'
-      '@webpack-cli/migrate': '*'
-      webpack: 4.x.x || 5.x.x
-      webpack-bundle-analyzer: '*'
-      webpack-dev-server: '*'
-    peerDependenciesMeta:
-      '@webpack-cli/generators':
-        optional: true
-      '@webpack-cli/migrate':
-        optional: true
-      webpack-bundle-analyzer:
-        optional: true
-      webpack-dev-server:
-        optional: true
-    resolution:
-      integrity: sha512-NLhDfH/h4O6UOy+0LSso42xvYypClINuMNBVVzX4vX98TmTaTUxwRbXdhucbFMd2qLaCTcLq/PdYrvi8onw90w==
   /webpack-cli/4.10.0_webpack@5.38.1:
     dependencies:
       '@discoveryjs/json-ext': 0.5.7
@@ -18447,46 +18402,6 @@ packages:
       tapable: 1.1.3
       terser-webpack-plugin: 1.4.5_webpack@4.46.0
       watchpack: 1.7.5
-      webpack-sources: 1.4.3
-    dev: false
-    engines:
-      node: '>=6.11.5'
-    hasBin: true
-    peerDependencies:
-      webpack-cli: '*'
-      webpack-command: '*'
-    peerDependenciesMeta:
-      webpack-cli:
-        optional: true
-      webpack-command:
-        optional: true
-    resolution:
-      integrity: sha512-6jJuJjg8znb/xRItk7bkT0+Q7AHCYjjFnvKIWQPkNIOyRqoCGvkOs0ipeQzrqz4l5FtN5ZI/ukEHroeX/o1/5Q==
-  /webpack/4.46.0_webpack-cli@4.10.0:
-    dependencies:
-      '@webassemblyjs/ast': 1.9.0
-      '@webassemblyjs/helper-module-context': 1.9.0
-      '@webassemblyjs/wasm-edit': 1.9.0
-      '@webassemblyjs/wasm-parser': 1.9.0
-      acorn: 6.4.2
-      ajv: 6.12.6
-      ajv-keywords: 3.5.2_ajv@6.12.6
-      chrome-trace-event: 1.0.3
-      enhanced-resolve: 4.5.0
-      eslint-scope: 4.0.3
-      json-parse-better-errors: 1.0.2
-      loader-runner: 2.4.0
-      loader-utils: 1.4.0
-      memory-fs: 0.4.1
-      micromatch: 3.1.10
-      mkdirp: 0.5.6
-      neo-async: 2.6.2
-      node-libs-browser: 2.2.1
-      schema-utils: 1.0.0
-      tapable: 1.1.3
-      terser-webpack-plugin: 1.4.5_webpack@4.46.0
-      watchpack: 1.7.5
-      webpack-cli: 4.10.0_webpack@4.46.0
       webpack-sources: 1.4.3
     dev: false
     engines:
@@ -19068,7 +18983,7 @@ packages:
     dev: false
     name: '@rush-temp/calling-component-bindings'
     resolution:
-      integrity: sha512-7tn/jhYpQKognrgfcD6aJxi2/FrKxDspWl+MzBJm4QozMxJimgv9KN06Qy8lyK6krbARVRVirHlqPq6Ao4+65Q==
+      integrity: sha512-P5O1e47Uzjwtsa0fPI0OXYX5K94n8e/otB/8dQE3AuOvH5RT4ZeASLdjX+/sefu4aMK6mp+YKO0OMdwvctWK5A==
       tarball: file:projects/calling-component-bindings.tgz
     version: 0.0.0
   file:projects/calling-stateful-client.tgz:
@@ -19108,7 +19023,7 @@ packages:
     dev: false
     name: '@rush-temp/calling-stateful-client'
     resolution:
-      integrity: sha512-x3213NX7Zad9kiknnzxQS2HbaUlpdZnY6hTdeTzPIyCRW3+Vso/3nCTQ7633nALgzzQbUTM5jBHmFwmNAdxUOA==
+      integrity: sha512-rR/4kvplV3WHyQ1WdFsUj1o4tie4bRgic41VIuHLIUR4cH7fTtlBVxKbl6zf2SeTOvD8x+2jnPJKGiiuJTFm3A==
       tarball: file:projects/calling-stateful-client.tgz
     version: 0.0.0
   file:projects/calling.tgz:
@@ -19182,7 +19097,7 @@ packages:
     dev: false
     name: '@rush-temp/calling'
     resolution:
-      integrity: sha512-hSyybejq5EXEH3v0YXY60H4lc37Xw+J+lCMStiLj7EwxWUunq7+9Xm+PJD85RH6ndiYMfTcq4xwfN0ZvqjMkzw==
+      integrity: sha512-2hUy2ssywpFrf9mU3iZuAHI9cGm6Pmj2iq/KTxEHSBev1FVbIUSre0q4EkkMJ2bmE1KBjweVVasezwdOr6zE8A==
       tarball: file:projects/calling.tgz
     version: 0.0.0
   file:projects/callwithchat.tgz:
@@ -19255,7 +19170,7 @@ packages:
     dev: false
     name: '@rush-temp/callwithchat'
     resolution:
-      integrity: sha512-aQv3uh8F0jYnFd0+Y7gFvZst479VBaQmYEv7uX0NgmASv4zWBDrj3yuqHGxcIRXdNLGG2sL9ZPy2VwK9pcrdsg==
+      integrity: sha512-++qVj2xp22W5Bn/hv2kbxr3oSFEhvF9MKUlZLUJyWgwNh2wkjBx/HqiGpoxi/fdP1bXamg8MUJ6fIIeshODT9g==
       tarball: file:projects/callwithchat.tgz
     version: 0.0.0
   file:projects/chat-component-bindings.tgz:
@@ -19292,7 +19207,7 @@ packages:
     dev: false
     name: '@rush-temp/chat-component-bindings'
     resolution:
-      integrity: sha512-e0fxHbLdqtsGBzuNmlM8kcbbga6ZBqDNg5UghnbF9WH+4pwS4eGJlyw+x7iiqMbN5kPGICQspholWEnQ5YZzIA==
+      integrity: sha512-OppeoEHO9pU7raWJWChofIQDUzXAKaE6UC5KHTzJOUNYGDU7d/c8BgQNIa3BbSLlsXCkS8nixtoY6+yuFDnPrg==
       tarball: file:projects/chat-component-bindings.tgz
     version: 0.0.0
   file:projects/chat-stateful-client.tgz:
@@ -19334,7 +19249,7 @@ packages:
     dev: false
     name: '@rush-temp/chat-stateful-client'
     resolution:
-      integrity: sha512-sPaIDNeJOKkD5xPcpbIJCqfgfvOUh3iC0R06LtPODp5B9Enujyyzb6f8hgssmKXClrXZPU5ZlcV480TwSVbLAA==
+      integrity: sha512-uyzfX2f5YMQUbiWIcJRi7lisznTo5IIuFJYOuV/uUJN1Hsn+UeIQeS8I9x9J8FacYGfN2VLssyTgeSQ07v1F1g==
       tarball: file:projects/chat-stateful-client.tgz
     version: 0.0.0
   file:projects/chat.tgz:
@@ -19403,14 +19318,14 @@ packages:
     dev: false
     name: '@rush-temp/chat'
     resolution:
-      integrity: sha512-Gj+5ssvUKXU+2vFP4ELydapGCSq26rCZonvPwgpE0O+uZQF9t556cRmlqHVJh0g9hnrKEby+BCUo1ptL/ErX1w==
+      integrity: sha512-bg4Cbzpa8P6n7PkjdvGmh/U0Px5Zrzv/a9yvfTApj/jRNfwReYq38X/cj/3UP4e0bnYwEvMFjI8pAac8IZ0YHQ==
       tarball: file:projects/chat.tgz
     version: 0.0.0
   file:projects/check-treeshaking.tgz:
     dependencies:
       '@babel/core': 7.16.12
       '@babel/plugin-proposal-export-namespace-from': 7.16.7_@babel+core@7.16.12
-      babel-loader: 8.1.0_2ca4133eaad1ede48c0159d2a9c3555f
+      babel-loader: 8.1.0_aa6d88355c68f323db0a612de3ad0c55
       eslint: 7.32.0
       eslint-config-prettier: 6.15.0_eslint@7.32.0
       eslint-plugin-header: 3.1.1_eslint@7.32.0
@@ -19418,12 +19333,12 @@ packages:
       eslint-plugin-prettier: 3.4.1_8142a4287e8e8e0691574dfac8adcedb
       prettier: 2.3.1
       rimraf: 2.7.1
-      webpack: 4.46.0_webpack-cli@4.10.0
-      webpack-cli: 4.10.0_webpack@4.46.0
+      webpack: 5.38.1_webpack-cli@4.10.0
+      webpack-cli: 4.10.0_webpack@5.38.1
     dev: false
     name: '@rush-temp/check-treeshaking'
     resolution:
-      integrity: sha512-G8h8RI6mMDoy0jKaA26dyBfdU3fV4IzsRA13jFYzSM4WvDFhWCeRB3ldAE1O8bQCs3e2XkV/GNnKCnjuJxTw0A==
+      integrity: sha512-4mmYbma3PDXmYlGIYtO0L9Ltxxm7RrvERN5H6mA60qKhu+RF8pmc1Ri2Wz8UGvntDOAwh2Q09j9AHWURhkG4Bw==
       tarball: file:projects/check-treeshaking.tgz
     version: 0.0.0
   file:projects/communication-react.tgz:
@@ -19510,7 +19425,7 @@ packages:
     dev: false
     name: '@rush-temp/communication-react'
     resolution:
-      integrity: sha512-mIe3gC4xBTAmbTHUoEq0cHItMbe7aEhG96GTKCohB5MrxfiJKABxHJ8xkYYjEyLCGPDCeKxCtWeStJO/NoIA/w==
+      integrity: sha512-RpSvBhK6uhwxTwT6qcq/u7U1Muco1RemE8w6wQ++xZue7EwNv0tTtw0No1TftwBqhfV+N+Yl2j5c5Y0gxil3SA==
       tarball: file:projects/communication-react.tgz
     version: 0.0.0
   file:projects/component-examples.tgz:
@@ -19560,7 +19475,7 @@ packages:
     dev: false
     name: '@rush-temp/component-examples'
     resolution:
-      integrity: sha512-eSwEol5u0a1k3/31WqHrE4f6glxxkWVzWGz8F8JGbV7uVxi3e+O7wMFi1Ipfb75srbkBsPGqg9Pcn/F62gvvOg==
+      integrity: sha512-3n6M45spr5ZLSbR/lr+NEuJ1ByPbieyvQEARylHbc0B0YeDJw+u5+WY6bl/BIsDc58OyJEbLYKj2WZsMk8Z0bw==
       tarball: file:projects/component-examples.tgz
     version: 0.0.0
   file:projects/config.tgz:
@@ -19619,7 +19534,7 @@ packages:
     dev: false
     name: '@rush-temp/fake-backends'
     resolution:
-      integrity: sha512-vs9l1jUawzIK/Z5KewpxiYzc4zSZdoOODkKcYV7kSVRT1pO4dTGTyQFn99V/FhY0TCqP/mf5HFgOsiwuLDCl8Q==
+      integrity: sha512-OwfTwlz6kBRQSqgDex+joz+sLQOlzOTXXM4NkbSZTIO2gX1yM9DfhwQ9RRPt94LGyvxHYYCiC8C2iZoX8sc30g==
       tarball: file:projects/fake-backends.tgz
     version: 0.0.0
   file:projects/react-components.tgz:
@@ -19703,7 +19618,7 @@ packages:
     dev: false
     name: '@rush-temp/react-components'
     resolution:
-      integrity: sha512-Qv7gpTtJS7HdGlwKhMg9a0YVe/JMXUxjyhh5JxQeIYA+cWa0M0r18GcComWJhuf7N/u3JDTSBfNFC87umdTblQ==
+      integrity: sha512-N8uxttwHVUbGYpoFirbCMpCs8WzEVahFLXqYx1WCgq9OXOiCgTye9aCgOzVJwe7tSdpUmfpjG+3J3mfZmAQmiA==
       tarball: file:projects/react-components.tgz
     version: 0.0.0
   file:projects/react-composites.tgz:
@@ -19769,6 +19684,7 @@ packages:
       eslint-plugin-react-hooks: 4.6.0_eslint@7.32.0
       events: 3.3.0
       express: 4.16.4
+      fs-extra: 10.1.0
       html-webpack-plugin: 5.3.2_webpack@5.38.1
       husky: 4.3.8
       if-env: 1.0.4
@@ -19812,7 +19728,7 @@ packages:
     dev: false
     name: '@rush-temp/react-composites'
     resolution:
-      integrity: sha512-0Nt7i8rH9+PvO3PofC6XBMNCW1x1qF30AMk6nASCPIjyu5Mkj6VyHgU8/tlwym9MzDaAtgGeF2gLtWm2yHxGRg==
+      integrity: sha512-Yn9l5RHyaam7r7bEeoOFMllYiaOhVetpUvsXjqXaLtDdgGGyb6b6i9g9XVrr8G4JiITEDUaxj4ajXvTTBOMNLA==
       tarball: file:projects/react-composites.tgz
     version: 0.0.0
   file:projects/sample-automation-tests.tgz:
@@ -19875,7 +19791,7 @@ packages:
     dev: false
     name: '@rush-temp/sample-static-html-composites'
     resolution:
-      integrity: sha512-8ibrJ9oqvb28EuXSHq6e78IWxnhYP35opB/6Uow2Oc7aIz6GFd2oKYDdZJiu24tiKHZwF2erVf4GdPgirFiZLA==
+      integrity: sha512-IOeg9VlG5F3WZLNzvx+cl6cTuGq/9AlGcxfAxx6WOKMe0oued6635mrUEHnLnd0RJ4fWp8yfEcbBuiyaT6h5QQ==
       tarball: file:projects/sample-static-html-composites.tgz
     version: 0.0.0
   file:projects/server.tgz:
@@ -20029,7 +19945,7 @@ packages:
     dev: false
     name: '@rush-temp/storybook'
     resolution:
-      integrity: sha512-oiKadxRVw+rhblZg4EthwcjiU0LOHW6kaRYguABLBQl4MMB0QXB986MciDjlXvXNQzISI3vhpR50C62Aq0u15g==
+      integrity: sha512-EsbS6mpgc05g01Hp+f4Gumn4rCCNlvIjZl74h/kjidYFoju5/vJShpXL95/ooN2uQ976hLJbxkDx4lGDRRnR9Q==
       tarball: file:projects/storybook.tgz
     version: 0.0.0
 specifiers:

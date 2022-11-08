@@ -71,6 +71,8 @@ interface TestData {
 
 function createMockCall(mockCallId: string): CallState {
   const call: CallState = {
+    /* @conditional-compile-remove(teams-identity-support) */
+    type: 'ACS',
     id: mockCallId,
     callerInfo: {} as CallerInfo,
     state: 'None',

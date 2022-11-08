@@ -177,3 +177,10 @@ export const customIconName: Partial<{ [key in ErrorType]: string }> = {
   callVideoRecoveredBySystem: 'ErrorBarCallVideoRecoveredBySystem',
   callMacOsCameraAccessDenied: 'ErrorBarCallMacOsCameraAccessDenied'
 };
+
+/**
+ * @private
+ */
+export const isValidString = (string: string | undefined): string is string => {
+  return !!string && string.length > 0;
+};

@@ -16,7 +16,8 @@ export interface QueryArgs {
   callInvitationUrl?: string;
   showParticipantItemIcon: boolean;
   customCallCompositeOptions?: CallCompositeOptions;
-  useTroubleShootingActions?: boolean;
+  useEnvironmentInfoTroubleshootingOptions?: boolean;
+  usePermissionTroubleshootingActions?: boolean;
 
   // These are only set for live tests.
   // TODO: Separate the args out better.
@@ -29,6 +30,7 @@ export interface QueryArgs {
 export function parseQueryArgs(): QueryArgs {
   const urlSearchParams = new URLSearchParams(window.location.search);
   const params = Object.fromEntries(urlSearchParams.entries());
+
   return {
     mockCallAdapterState: params.mockCallAdapterState ? JSON.parse(params.mockCallAdapterState) : undefined,
     useFrLocale: Boolean(params.useFrLocale),
@@ -36,7 +38,8 @@ export function parseQueryArgs(): QueryArgs {
     injectParticipantMenuItems: Boolean(params.injectParticipantMenuItems),
     injectCustomButtons: Boolean(params.injectCustomButtons),
     showParticipantItemIcon: Boolean(params.showParticipantItemIcon),
-    useTroubleShootingActions: Boolean(params.useTroubleShootingActions),
+    useEnvironmentInfoTroubleshootingOptions: Boolean(params.useEnvironmentInfoTroubleshootingOptions),
+    usePermissionTroubleshootingActions: Boolean(params.usePermissionTroubleshootingActions),
     userId: params.userId ?? '',
     groupId: params.groupId ?? '',
     token: params.token ?? '',

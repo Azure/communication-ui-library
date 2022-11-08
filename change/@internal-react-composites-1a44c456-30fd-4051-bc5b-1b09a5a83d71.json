@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Introduces hermetic tests in the CallComposite for the unsupportedEnvironment page",
-  "packageName": "@internal/react-composites",
-  "email": "94866715+dmceachernmsft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
