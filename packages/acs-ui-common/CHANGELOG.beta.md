@@ -4,22 +4,9 @@ This log was last generated on Mon, 13 Jun 2022 18:29:29 GMT and should not be m
 
 <!-- Start content -->
 
-## [1.3.0](https://github.com/azure/communication-ui-library/tree/@internal/acs-ui-common_v1.3.0)
-
-Mon, 13 Jun 2022 18:29:29 GMT 
-[Compare changes](https://github.com/azure/communication-ui-library/compare/@internal/acs-ui-common_v1.2.2-beta.1...@internal/acs-ui-common_v1.3.0)
-
-### Patches
-
-- Add default replacer to do safe stringify ([PR #1921](https://github.com/azure/communication-ui-library/pull/1921) by jinan@microsoft.com)
-
-### Changes
-
-- Updating @azure/communication-chat to 1.2.0 ([PR #1815](https://github.com/azure/communication-ui-library/pull/1815) by anjulgarg@live.com)
-
 ## [1.1.1-beta.1](https://github.com/azure/communication-ui-library/tree/@internal/acs-ui-common_v1.1.1-beta.1)
 
-Tue, 01 Mar 2022 16:43:00 GMT 
+Tue, 01 Mar 2022 16:43:00 GMT
 [Compare changes](https://github.com/azure/communication-ui-library/compare/@internal/acs-ui-common_v1.0.1...@internal/acs-ui-common_v1.1.1-beta.1)
 
 ### Patches
@@ -32,7 +19,7 @@ Tue, 01 Mar 2022 16:43:00 GMT
 
 ## [1.0.0-beta.8](https://github.com/azure/communication-ui-library/tree/@internal/acs-ui-common_v1.0.0-beta.8)
 
-Wed, 17 Nov 2021 22:21:27 GMT 
+Wed, 17 Nov 2021 22:21:27 GMT
 [Compare changes](https://github.com/azure/communication-ui-library/compare/@internal/acs-ui-common_v1.0.0-beta.7..@internal/acs-ui-common_v1.0.0-beta.8)
 
 ### Changes
@@ -42,7 +29,7 @@ Wed, 17 Nov 2021 22:21:27 GMT
 
 ## [1.0.0-beta.6](https://github.com/azure/communication-ui-library/tree/@internal/acs-ui-common_v1.0.0-beta.6)
 
-Tue, 28 Sep 2021 19:19:18 GMT 
+Tue, 28 Sep 2021 19:19:18 GMT
 [Compare changes](https://github.com/azure/communication-ui-library/compare/@internal/acs-ui-common_v1.0.0-beta.5..@internal/acs-ui-common_v1.0.0-beta.6)
 
 ### Changes
@@ -52,7 +39,7 @@ Tue, 28 Sep 2021 19:19:18 GMT
 
 ## [1.0.0-beta.5](https://github.com/azure/communication-ui-library/tree/@internal/acs-ui-common_v1.0.0-beta.5)
 
-Mon, 13 Sep 2021 21:02:16 GMT 
+Mon, 13 Sep 2021 21:02:16 GMT
 [Compare changes](https://github.com/azure/communication-ui-library/compare/@internal/acs-ui-common_v1.0.0-beta.3..@internal/acs-ui-common_v1.0.0-beta.5)
 
 ### Changes
@@ -63,7 +50,7 @@ Mon, 13 Sep 2021 21:02:16 GMT
 
 ## [1.0.0-beta.3](https://github.com/azure/communication-ui-library/tree/@internal/acs-ui-common_v1.0.0-beta.3)
 
-Mon, 16 Aug 2021 21:18:19 GMT 
+Mon, 16 Aug 2021 21:18:19 GMT
 [Compare changes](https://github.com/azure/communication-ui-library/compare/@internal/acs-ui-common_v1.0.0-beta.2..@internal/acs-ui-common_v1.0.0-beta.3)
 
 ### Changes
@@ -73,7 +60,7 @@ Mon, 16 Aug 2021 21:18:19 GMT
 
 ## [1.0.0-beta.2](https://github.com/azure/communication-ui-library/tree/acs-ui-common_v1.0.0-beta.2)
 
-Fri, 09 Jul 2021 20:41:33 GMT 
+Fri, 09 Jul 2021 20:41:33 GMT
 [Compare changes](https://github.com/azure/communication-ui-library/compare/acs-ui-common_v1.0.0-beta.1..acs-ui-common_v1.0.0-beta.2)
 
 ### Changes
