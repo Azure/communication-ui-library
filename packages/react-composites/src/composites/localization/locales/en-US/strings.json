@@ -68,7 +68,9 @@
     "holdScreenLabel": "You're on hold",
     "openDtmfDialpadLabel": "Show dialpad",
     "dtmfDialpadPlaceholderText": "Enter number",
-    "outboundCallingNoticeString": "Calling..."
+    "outboundCallingNoticeString": "Calling...",
+    "participantJoinedNoticeString": "Participant joined",
+    "participantLeftNoticeString": "Participant left"
   },
   "chat": {
     "chatListHeader": "In this chat",

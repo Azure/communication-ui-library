@@ -6,7 +6,8 @@ import {
   VideoGallery,
   VideoStreamOptions,
   OnRenderAvatarCallback,
-  CustomAvatarOptions
+  CustomAvatarOptions,
+  Announcer
 } from '@internal/react-components';
 import { usePropsFor } from '../hooks/usePropsFor';
 import { AvatarPersona, AvatarPersonaDataCallback } from '../../common/AvatarPersona';
@@ -16,6 +17,8 @@ import { useHandlers } from '../hooks/useHandlers';
 import { useSelector } from '../hooks/useSelector';
 import { localVideoCameraCycleButtonSelector } from '../selectors/LocalVideoTileSelector';
 import { LocalVideoCameraCycleButton } from '@internal/react-components';
+import { useAdapter } from '../adapter/CallAdapterProvider';
+import { useLocale } from '../../localization';
 
 const VideoGalleryStyles = {
   root: {
@@ -50,6 +53,10 @@ export interface MediaGalleryProps {
  * @private
  */
 export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
+  const adapter = useAdapter();
+  const locale = useLocale().strings.call;
+  const [announcerString, setAnnouncerString] = useState<string>('');
+
   const videoGalleryProps = usePropsFor(VideoGallery);
   const cameraSwitcherCameras = useSelector(localVideoCameraCycleButtonSelector);
   const cameraSwitcherCallback = useHandlers(LocalVideoCameraCycleButton);
@@ -59,6 +66,32 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
       ...cameraSwitcherCameras
     };
   }, [cameraSwitcherCallback, cameraSwitcherCameras]);
+
+  useMemo(() => {
+    const onPersonJoined = (e) => {
+      setAnnouncerString(locale.participantJoinedNoticeString);
+      setInterval(() => {
+        setAnnouncerString('');
+      }, 5000);
+    };
+    adapter.on('participantsJoined', onPersonJoined);
+    return () => {
+      adapter.off('participantsJoined', onPersonJoined);
+    };
+  }, []);
+
+  useMemo(() => {
+    const onPersonLeft = (e) => {
+      setAnnouncerString(locale.participantLeftNoticeString);
+      setInterval(() => {
+        setAnnouncerString('');
+      }, 5000);
+    };
+    adapter.on('participantsLeft', onPersonLeft);
+    return () => {
+      adapter.off('participantsLeft', onPersonLeft);
+    };
+  }, []);
 
   const onRenderAvatar = useCallback(
     (userId?: string, options?: CustomAvatarOptions) => {
@@ -76,16 +109,19 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
   useLocalVideoStartTrigger(!!props.isVideoStreamOn);
   const VideoGalleryMemoized = useMemo(() => {
     return (
-      <VideoGallery
-        {...videoGalleryProps}
-        localVideoViewOptions={localVideoViewOptions}
-        remoteVideoViewOptions={remoteVideoViewOptions}
-        styles={VideoGalleryStyles}
-        layout="floatingLocalVideo"
-        showCameraSwitcherInLocalPreview={props.isMobile}
-        localVideoCameraCycleButtonProps={cameraSwitcherProps}
-        onRenderAvatar={onRenderAvatar}
-      />
+      <>
+        <Announcer announcementString={announcerString} ariaLive={'polite'} />
+        <VideoGallery
+          {...videoGalleryProps}
+          localVideoViewOptions={localVideoViewOptions}
+          remoteVideoViewOptions={remoteVideoViewOptions}
+          styles={VideoGalleryStyles}
+          layout="floatingLocalVideo"
+          showCameraSwitcherInLocalPreview={props.isMobile}
+          localVideoCameraCycleButtonProps={cameraSwitcherProps}
+          onRenderAvatar={onRenderAvatar}
+        />
+      </>
     );
   }, [videoGalleryProps, props.isMobile, onRenderAvatar, cameraSwitcherProps]);
 
