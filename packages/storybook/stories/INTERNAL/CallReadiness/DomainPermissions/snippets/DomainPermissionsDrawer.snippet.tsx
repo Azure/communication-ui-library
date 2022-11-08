@@ -2,13 +2,13 @@
 // Licensed under the MIT license.
 
 import { Stack } from '@fluentui/react';
-import { _DrawerSurface, DomainPermissions } from '@internal/react-components';
+import { _DrawerSurface, CameraAndMicrophoneDomainPermissions } from '@internal/react-components';
 import React, { useState } from 'react';
 import { useLocale } from '../../../../../../react-components/src/localization';
 import { MobilePreviewContainer } from '../../../../MobileContainer';
 
 export const DomainPermissionsDrawer: () => JSX.Element = () => {
-  const locale = useLocale().strings.DomainPermissions;
+  const locale = useLocale().strings.CameraAndMicrophoneDomainPermissionsRequest;
   const [isDrawerShowing, setIsDrawerShowing] = useState(true);
   const onLightDismissTriggered = (): void => setIsDrawerShowing(false);
   return (
@@ -27,10 +27,11 @@ export const DomainPermissionsDrawer: () => JSX.Element = () => {
         )}
         {isDrawerShowing && (
           <_DrawerSurface onLightDismiss={onLightDismissTriggered}>
-            <DomainPermissions
+            <CameraAndMicrophoneDomainPermissions
               appName={'Contoso app'}
               onTroubleshootingClick={() => alert('clicked trouble shooting link')}
               strings={locale}
+              type={'request'}
             />
           </_DrawerSurface>
         )}

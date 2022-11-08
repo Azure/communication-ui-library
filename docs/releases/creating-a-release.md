@@ -122,7 +122,7 @@ This process has the following benefits:
 You are now ready to publish the package!
 
 **Releasing to NPM is an irreversible action**.
-Even though most of the steps necessary to release the package are automated via a GitHub workflow, you should run through the [checklist of pre and post release actions](../references/release-checklist.md) to take to ensure a confident release.
+Even though most of the steps necessary to release the package are automated via a GitHub workflow, you should run through the [checklist of pre and post release actions](./release-checklist.md) to take to ensure a confident release.
 
 **Rule of two**: It is recommended to pair up with a team member for this last step to reduce the changes of human error.
 

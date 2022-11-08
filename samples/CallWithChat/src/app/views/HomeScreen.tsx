@@ -17,7 +17,8 @@ import {
   containerTokens,
   headerStyle,
   teamsItemStyle,
-  buttonStyle
+  buttonStyle,
+  dialpadOptionStyles
 } from '../styles/HomeScreen.styles';
 /* @conditional-compile-remove(PSTN-calls) */
 import { outboundTextField } from '../styles/HomeScreen.styles';
@@ -143,19 +144,21 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
               /* @conditional-compile-remove(PSTN-calls) */ pstnCallChosen && (
                 <Stack>
                   <Stack>
-                    <Dialpad
-                      isMobile={isMobileSession}
-                      onChange={(newValue) => {
-                        /**
-                         * We need to pass in the formatting for the phone number string in the onChange handler
-                         * to make sure the phone number is in E.164 format.
-                         *
-                         * write regexp to flatten this
-                         */
-                        const phoneNumber = '+' + newValue?.replace(/\D/g, '');
-                        setDialpadParticipant(phoneNumber);
-                      }}
-                    />
+                    <Stack styles={dialpadOptionStyles}>
+                      <Dialpad
+                        isMobile={isMobileSession}
+                        onChange={(newValue) => {
+                          /**
+                           * We need to pass in the formatting for the phone number string in the onChange handler
+                           * to make sure the phone number is in E.164 format.
+                           *
+                           * write regexp to flatten this
+                           */
+                          const phoneNumber = '+' + newValue?.replace(/\D/g, '');
+                          setDialpadParticipant(phoneNumber);
+                        }}
+                      />
+                    </Stack>
                     <TextField
                       className={outboundTextField}
                       label={'ACS phone number for Caller ID'}

@@ -11,8 +11,6 @@ import { IButtonStyles, IStyle, ITextFieldStyles, Theme } from '@fluentui/react'
 export const containerStyles = (theme: Theme): IStyle => {
   return {
     maxWidth: '16rem',
-    padding: '1.25rem',
-    margin: '1.5rem',
     textAlign: 'center',
     background: `${theme.palette.white}`,
     borderRadius: '0.75rem'
