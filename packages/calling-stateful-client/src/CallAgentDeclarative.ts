@@ -2,14 +2,14 @@
 // Licensed under the MIT license.
 
 import { CallAgent } from '@azure/communication-calling';
-import { CallAgentCommon, CallCommon } from './BetaToStableTypes';
+import { CallAgentCommon, CallCommon } from '@internal/acs-ui-common';
 import { clearCallRelatedState, DeclarativeCallCommon, ProxyCallAgentCommon } from './CallAgentDeclarativeCommon';
 import { CallContext } from './CallContext';
 import { callDeclaratify } from './CallDeclarative';
 /* @conditional-compile-remove(one-to-n-calling) */
 import { DeclarativeIncomingCall } from './IncomingCallDeclarative';
 import { InternalCallContext } from './InternalCallContext';
-import { isACSCall, isACSCallAgent } from './TypeGuards';
+import { isACSCall, isACSCallAgent } from '@internal/acs-ui-common';
 
 /* @conditional-compile-remove(one-to-n-calling) */
 /**

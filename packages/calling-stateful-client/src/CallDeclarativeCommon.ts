@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { CallContext } from './CallContext';
-import { CallCommon } from './BetaToStableTypes';
+import { CallCommon } from '@internal/acs-ui-common';
 
 /**
  * @private

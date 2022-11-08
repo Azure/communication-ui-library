@@ -72,10 +72,8 @@ export interface CallClientProviderProps {
     children: React_2.ReactNode;
 }
 
-// Warning: (ae-internal-missing-underscore) The name "CallHandlersOf" should be prefixed with an underscore because the declaration is marked as @internal
-//
-// @internal (undocumented)
-export type CallHandlersOf<AgentType extends TeamsCallAgent | CallAgent> = AgentType extends CallAgent ? CallingHandlers : never | /* @conditional-compile-remove(teams-identity-support) */ TeamsCallingHandlers;
+// @public (undocumented)
+export type CallHandlersOf<AgentType extends CallAgent | /* @conditional-compile-remove(teams-identity-support) */ TeamsCallAgent> = AgentType extends CallAgent ? CallingHandlers : never | /* @conditional-compile-remove(teams-identity-support) */ TeamsCallingHandlers;
 
 // @public
 export type CallingBaseSelectorProps = {
@@ -124,10 +122,8 @@ export interface CallProviderProps {
     children: React_2.ReactNode;
 }
 
-// Warning: (ae-internal-missing-underscore) The name "CallTypeOf" should be prefixed with an underscore because the declaration is marked as @internal
-//
-// @internal (undocumented)
-export type CallTypeOf<AgentType extends TeamsCallAgent | CallAgent> = AgentType extends CallAgent ? Call : never | /* @conditional-compile-remove(teams-identity-support) */ TeamsCall;
+// @public (undocumented)
+export type CallTypeOf<AgentType extends CallAgent | /* @conditional-compile-remove(teams-identity-support) */ TeamsCallAgent> = AgentType extends CallAgent ? Call : never | /* @conditional-compile-remove(teams-identity-support) */ TeamsCall;
 
 // @public
 export type CameraButtonSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
@@ -144,7 +140,7 @@ export const cameraButtonSelector: CameraButtonSelector;
 export const createDefaultCallingHandlers: <AgentType extends TeamsCallAgent | CallAgent = CallAgent>(callClient: StatefulCallClient, callAgent: AgentType | undefined, deviceManager: StatefulDeviceManager | undefined, call: CallTypeOf<AgentType> | undefined) => CallHandlersOf<AgentType>;
 
 // @beta
-export const createDefaultTeamsCallingHandlers: (callClient: StatefulCallClient, callAgent: /* @conditional-compile-remove(teams-identity-support) */ TeamsCallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: /* @conditional-compile-remove(teams-identity-support) */ TeamsCall | undefined) => never | /* @conditional-compile-remove(teams-identity-support) */ TeamsCallingHandlers;
+export const createDefaultTeamsCallingHandlers: (callClient: StatefulCallClient, callAgent: undefined | /* @conditional-compile-remove(teams-identity-support) */ TeamsCallAgent, deviceManager: StatefulDeviceManager | undefined, call: undefined | /* @conditional-compile-remove(teams-identity-support) */ TeamsCall) => never | TeamsCallingHandlers;
 
 // @public
 export type DevicesButtonSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
@@ -229,7 +225,7 @@ export const screenShareButtonSelector: ScreenShareButtonSelector;
 
 // @beta
 export type TeamsCallingHandlers = Omit<CallingHandlersCommon, 'onStartCall'> & {
-    onStartCall: (participants: CommunicationIdentifier[], options?: StartCallOptions) => /* @conditional-compile-remove(teams-identity-support) */ TeamsCall | undefined;
+    onStartCall: (participants: CommunicationIdentifier[], options?: StartCallOptions) => void | /* @conditional-compile-remove(teams-identity-support) */ TeamsCall;
 };
 
 // @internal
@@ -257,10 +253,10 @@ export const useCallingSelector: <SelectorT extends (state: CallClientState, pro
 export const useDeviceManager: () => StatefulDeviceManager | undefined;
 
 // @public
-export const useTeamsCall: () => /* @conditional-compile-remove(teams-identity-support) */ TeamsCall | undefined;
+export const useTeamsCall: () => undefined | /* @conditional-compile-remove(teams-identity-support) */ TeamsCall;
 
 // @beta
-export const useTeamsCallAgent: () => /* @conditional-compile-remove(teams-identity-support) */ TeamsCallAgent | undefined;
+export const useTeamsCallAgent: () => undefined | /* @conditional-compile-remove(teams-identity-support) */ TeamsCallAgent;
 
 // @internal (undocumented)
 export const _videoGalleryRemoteParticipantsMemo: (remoteParticipants: RemoteParticipantState[] | undefined) => VideoGalleryRemoteParticipant[];

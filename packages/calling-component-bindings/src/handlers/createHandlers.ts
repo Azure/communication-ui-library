@@ -4,15 +4,11 @@
 import { Call, CallAgent } from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-identity-support) */
 import { TeamsCall, TeamsCallAgent } from '@azure/communication-calling';
-import { Common } from '@internal/acs-ui-common';
-import {
-  isACSCall,
-  isACSCallAgent,
-  StatefulCallClient,
-  StatefulDeviceManager
-} from '@internal/calling-stateful-client';
+import { Common, isACSCall, isACSCallAgent } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(teams-identity-support) */
-import { isTeamsCall, isTeamsCallAgent } from '@internal/calling-stateful-client';
+import { isTeamsCall, isTeamsCallAgent } from '@internal/acs-ui-common';
+import { StatefulCallClient, StatefulDeviceManager } from '@internal/calling-stateful-client';
+import {} from '@internal/calling-stateful-client';
 import memoizeOne from 'memoize-one';
 import { ReactElement } from 'react';
 /* @conditional-compile-remove(teams-identity-support) */

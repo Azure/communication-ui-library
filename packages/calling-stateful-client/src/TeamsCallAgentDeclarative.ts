@@ -1,12 +1,12 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import { CallAgentCommon, CallCommon, TeamsCallAgent } from './BetaToStableTypes';
+import { CallAgentCommon, CallCommon, TeamsCallAgent } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(one-to-n-calling) */
 import { IncomingCallManagement } from './CallAgentDeclarative';
 import { clearCallRelatedState, DeclarativeCallCommon, ProxyCallAgentCommon } from './CallAgentDeclarativeCommon';
 import { CallContext } from './CallContext';
 /* @conditional-compile-remove(teams-identity-support) */
-import { isTeamsCall, isTeamsCallAgent } from './TypeGuards';
+import { isTeamsCall, isTeamsCallAgent } from '@internal/acs-ui-common';
 import { InternalCallContext } from './InternalCallContext';
 /* @conditional-compile-remove(teams-identity-support) */
 import { teamsCallDeclaratify } from './TeamsCallDeclarative';
