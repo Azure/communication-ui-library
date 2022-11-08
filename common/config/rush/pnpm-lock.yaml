@@ -2338,7 +2338,7 @@ packages:
       '@jest/test-result': 26.6.2
       '@jest/transform': 26.6.2
       '@jest/types': 26.6.2
-      '@types/node': 18.11.5
+      '@types/node': 18.11.3
       ansi-escapes: 4.3.2
       chalk: 4.1.2
       exit: 0.1.2
