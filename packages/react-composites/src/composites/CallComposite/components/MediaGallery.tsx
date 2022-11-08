@@ -137,36 +137,46 @@ const useParticipantChangedAnnouncement = (): string => {
   const adapter = useAdapter();
   const locale = useLocale().strings.call;
   const [announcerString, setAnnouncerString] = useState<string>('');
+  /**
+   * state to track whether there is currently a timer set in the MediaGallery
+   */
+  const [timeoutState, setTimeoutState] = useState<ReturnType<typeof setTimeout>>();
+
+  const setParticipantEventString = (string: string): void => {
+    setAnnouncerString('');
+    /**
+     * These set timeouts are needed to clear the announcer string in case we have multiple
+     * participants join. Since the narrator will only announce the string in the
+     * Announcer component should the string change.
+     */
+    if (timeoutState) {
+      clearTimeout(timeoutState);
+      setTimeoutState(undefined);
+    }
+    setTimeoutState(
+      setTimeout(() => {
+        setAnnouncerString(string);
+        setTimeoutState(undefined);
+      }, 500)
+    );
+  };
 
   useEffect(() => {
     const onPersonJoined = (e) => {
-      setAnnouncerString('');
-      /**
-       * These set timeouts are needed to clear the announcer string in case we have multiple
-       * participants join. Since the narrator will only announce the string in the
-       * Announcer component should the string change.
-       */
-      setTimeout(() => {
-        setAnnouncerString(locale.participantJoinedNoticeString);
-      }, 0);
+      setParticipantEventString(locale.participantJoinedNoticeString);
     };
     adapter.on('participantsJoined', onPersonJoined);
+
     const onPersonLeft = (e) => {
-      setAnnouncerString('');
-      setTimeout(() => {
-        setAnnouncerString(locale.participantLeftNoticeString);
-      }, 0);
+      setParticipantEventString(locale.participantLeftNoticeString);
     };
     adapter.on('participantsLeft', onPersonLeft);
+
     return () => {
       adapter.off('participantsJoined', onPersonJoined);
       adapter.off('participantsLeft', onPersonLeft);
     };
   }, [adapter]);
-
-  useEffect(() => {
-    console.log(announcerString);
-  }, [announcerString]);
 
   return announcerString;
 };
