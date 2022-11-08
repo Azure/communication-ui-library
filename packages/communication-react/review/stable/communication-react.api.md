@@ -414,6 +414,8 @@ export interface CallCompositeStrings {
     mutedMessage: string;
     networkReconnectMoreDetails: string;
     networkReconnectTitle: string;
+    participantJoinedNoticeString: string;
+    participantLeftNoticeString: string;
     privacyPolicy: string;
     rejoinCallButtonLabel: string;
     removedFromCallMoreDetails?: string;

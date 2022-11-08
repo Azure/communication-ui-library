@@ -521,6 +521,8 @@ export interface CallCompositeStrings {
     openDialpadButtonLabel: string;
     openDtmfDialpadLabel: string;
     outboundCallingNoticeString: string;
+    participantJoinedNoticeString: string;
+    participantLeftNoticeString: string;
     peopleButtonLabel: string;
     peopleButtonTooltipClose: string;
     peopleButtonTooltipOpen: string;
