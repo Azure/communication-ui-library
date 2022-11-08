@@ -144,16 +144,17 @@ const useParticipantChangedAnnouncement = (): string => {
 
   const setParticipantEventString = (string: string): void => {
     setAnnouncerString('');
-    /**
-     * These set timeouts are needed to clear the announcer string in case we have multiple
-     * participants join. Since the narrator will only announce the string in the
-     * Announcer component should the string change.
-     */
+
     if (timeoutState) {
       clearTimeout(timeoutState);
       setTimeoutState(undefined);
     }
     setTimeoutState(
+      /**
+       * These set timeouts are needed to clear the announcer string in case we have multiple
+       * participants join. Since the narrator will only announce the string in the
+       * Announcer component should the string change.
+       */
       setTimeout(() => {
         setAnnouncerString(string);
         setTimeoutState(undefined);
