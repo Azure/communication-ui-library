@@ -95,7 +95,7 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
         />
       </>
     );
-  }, [videoGalleryProps, props.isMobile, onRenderAvatar, cameraSwitcherProps]);
+  }, [videoGalleryProps, props.isMobile, onRenderAvatar, cameraSwitcherProps, announcerString]);
 
   return VideoGalleryMemoized;
 };
@@ -162,12 +162,12 @@ const useParticipantChangedAnnouncement = (): string => {
   };
 
   useEffect(() => {
-    const onPersonJoined = (e) => {
+    const onPersonJoined = (): void => {
       setParticipantEventString(locale.participantJoinedNoticeString);
     };
     adapter.on('participantsJoined', onPersonJoined);
 
-    const onPersonLeft = (e) => {
+    const onPersonLeft = (): void => {
       setParticipantEventString(locale.participantLeftNoticeString);
     };
     adapter.on('participantsLeft', onPersonLeft);
@@ -176,7 +176,7 @@ const useParticipantChangedAnnouncement = (): string => {
       adapter.off('participantsJoined', onPersonJoined);
       adapter.off('participantsLeft', onPersonLeft);
     };
-  }, [adapter]);
+  }, [adapter, locale.participantJoinedNoticeString, locale.participantLeftNoticeString, setParticipantEventString]);
 
   return announcerString;
 };
