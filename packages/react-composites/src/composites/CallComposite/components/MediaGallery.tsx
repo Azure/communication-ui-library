@@ -53,45 +53,17 @@ export interface MediaGalleryProps {
  * @private
  */
 export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
-  const adapter = useAdapter();
-  const locale = useLocale().strings.call;
-  const [announcerString, setAnnouncerString] = useState<string>('');
-
   const videoGalleryProps = usePropsFor(VideoGallery);
   const cameraSwitcherCameras = useSelector(localVideoCameraCycleButtonSelector);
   const cameraSwitcherCallback = useHandlers(LocalVideoCameraCycleButton);
+  const announcerString = useParticipantChangedAnnouncement();
+
   const cameraSwitcherProps = useMemo(() => {
     return {
       ...cameraSwitcherCallback,
       ...cameraSwitcherCameras
     };
   }, [cameraSwitcherCallback, cameraSwitcherCameras]);
-
-  useMemo(() => {
-    const onPersonJoined = (e) => {
-      setAnnouncerString(locale.participantJoinedNoticeString);
-      setInterval(() => {
-        setAnnouncerString('');
-      }, 5000);
-    };
-    adapter.on('participantsJoined', onPersonJoined);
-    return () => {
-      adapter.off('participantsJoined', onPersonJoined);
-    };
-  }, []);
-
-  useMemo(() => {
-    const onPersonLeft = (e) => {
-      setAnnouncerString(locale.participantLeftNoticeString);
-      setInterval(() => {
-        setAnnouncerString('');
-      }, 5000);
-    };
-    adapter.on('participantsLeft', onPersonLeft);
-    return () => {
-      adapter.off('participantsLeft', onPersonLeft);
-    };
-  }, []);
 
   const onRenderAvatar = useCallback(
     (userId?: string, options?: CustomAvatarOptions) => {
@@ -110,7 +82,7 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
   const VideoGalleryMemoized = useMemo(() => {
     return (
       <>
-        <Announcer announcementString={announcerString} ariaLive={'polite'} />
+        <Announcer announcementString={announcerString} ariaLive={'assertive'} />
         <VideoGallery
           {...videoGalleryProps}
           localVideoViewOptions={localVideoViewOptions}
@@ -153,4 +125,48 @@ export const useLocalVideoStartTrigger = (isLocalVideoAvailable: boolean, should
       setIsButtonStatusSynced(true);
     }
   }, [shouldTransition, isButtonStatusSynced, isPreviewCameraOn, isLocalVideoAvailable, mediaGalleryHandlers]);
+};
+
+/**
+ * sets the announcement string whenever a Participant comes or goes from a call to be
+ * used by the system narrator.
+ *
+ * @returns string to be used by the narrator and Announcer component
+ */
+const useParticipantChangedAnnouncement = (): string => {
+  const adapter = useAdapter();
+  const locale = useLocale().strings.call;
+  const [announcerString, setAnnouncerString] = useState<string>('');
+
+  useEffect(() => {
+    const onPersonJoined = (e) => {
+      setAnnouncerString('');
+      /**
+       * These set timeouts are needed to clear the announcer string in case we have multiple
+       * participants join. Since the narrator will only announce the string in the
+       * Announcer component should the string change.
+       */
+      setTimeout(() => {
+        setAnnouncerString(locale.participantJoinedNoticeString);
+      }, 0);
+    };
+    adapter.on('participantsJoined', onPersonJoined);
+    const onPersonLeft = (e) => {
+      setAnnouncerString('');
+      setTimeout(() => {
+        setAnnouncerString(locale.participantLeftNoticeString);
+      }, 0);
+    };
+    adapter.on('participantsLeft', onPersonLeft);
+    return () => {
+      adapter.off('participantsJoined', onPersonJoined);
+      adapter.off('participantsLeft', onPersonLeft);
+    };
+  }, [adapter]);
+
+  useEffect(() => {
+    console.log(announcerString);
+  }, [announcerString]);
+
+  return announcerString;
 };
