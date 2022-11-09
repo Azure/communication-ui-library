@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Show unknown persona coin when a participant items display name is not available",
+  "packageName": "@internal/react-components",
+  "email": "anjulgarg@live.com",
+  "dependentChangeType": "patch"
+}
