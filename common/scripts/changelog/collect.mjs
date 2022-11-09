@@ -1,30 +1,51 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { copyFile } from 'fs/promises';
+import { copyFile, rm, rename } from 'fs/promises';
 import path from 'path';
 import { REPO_ROOT } from '../lib/constants.mjs';
 import { exec, exec_output } from "../lib/exec.mjs";
-import { CHANGE_DIR, CHANGE_DIR_BETA } from './constants.mjs';
+import { CHANGE_DIR, CHANGE_DIR_BETA, CHANGE_DIR_STABLE_TEMP } from './constants.mjs';
 import { generateChangelogs } from './changelog.mjs';
 
 async function main() {
-    await ensureCleanWorkingDirectory();
-    const changelogs = await listTargetChangelogs('stable');
+    const args = process.argv;
+    const buildFlavor = args[2];
+    if (buildFlavor !== 'stable' && buildFlavor !== 'beta') {
+        console.error(`Usage: ${args[0]} ${args[1]} <beta|stable>`);
+        throw new Error(`Unknown build flavor ${buildFlavor}`);
+    }
 
-    console.log('Will update the following CHANLOGEs:');
+    await ensureCleanWorkingDirectory();
+
+    const changelogs = await listTargetChangelogs(buildFlavor);
+    console.log('Will update the following CHANGELOGs:');
     changelogs.forEach(({ target }) => {
         console.log(`  ${target}`);
     });
 
-    await createTemporaryChangelogs(changelogs);
-    await generateChangelogs();
-    await commitChangelogs(changelogs);
+    try {
+        if (buildFlavor === 'beta') {
+            await swapInBetaChangeFiles();
+        }
+        await createTemporaryChangelogs(changelogs);
+        await generateChangelogs();
+        if (buildFlavor === 'beta') {
+            await restoreStableChangeFiles();
+        }
+        await commitChangelogs(changelogs);
+    } finally {
+        await restoreWorkingDirectory()
+    }
+}
 
-    // We started by checking that the working directory was clean.
-    // So it is safe to delete any tracked working directory changes
-    // as they could only have been introduced by this script.
-    await cleanWorkingDirectory()
+async function swapInBetaChangeFiles() {
+    await rename(CHANGE_DIR, CHANGE_DIR_STABLE_TEMP);
+    await rename(CHANGE_DIR_BETA, CHANGE_DIR);
+}
+
+async function restoreStableChangeFiles() {
+    await rename(CHANGE_DIR_STABLE_TEMP, CHANGE_DIR);
 }
 
 async function ensureCleanWorkingDirectory() {
@@ -64,7 +85,12 @@ async function commitChangelogs(changelogs) {
     await exec('git commit -m "Collect CHANGELOGs"');
 }
 
-async function cleanWorkingDirectory() {
+async function restoreWorkingDirectory() {
+    // Delete swapped change files, if any.
+    await rm(CHANGE_DIR, { recursive: true, force: true });
+    // We started by checking that the working directory was clean.
+    // So it is safe to delete any tracked working directory changes
+    // as they could only have been introduced by this script.
     await exec(`git checkout -f`);
 }
 
