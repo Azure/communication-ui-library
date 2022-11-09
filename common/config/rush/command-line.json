@@ -12,8 +12,8 @@
     {
       "commandKind": "global",
       "name": "changelog",
-      "summary": "Runs beachball change",
-      "shellCommand": "node common/config/node_modules/beachball/bin/beachball",
+      "summary": "Generate change files",
+      "shellCommand": "node common/scripts/changelog/change.mjs",
       "safeForSimultaneousRushProcesses": true
     },
     {
