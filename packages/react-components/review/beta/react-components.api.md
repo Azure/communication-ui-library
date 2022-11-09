@@ -1680,6 +1680,13 @@ export interface VideoTileProps {
     isMirrored?: boolean;
     isMuted?: boolean;
     isSpeaking?: boolean;
+    menuItems?: Array<{
+        key: string;
+        ariaLabel?: string;
+        text: string;
+        onClick: () => void;
+        icon: IIconProps;
+    }>;
     noVideoAvailableAriaLabel?: string;
     onRenderPlaceholder?: OnRenderAvatarCallback;
     participantState?: ParticipantState;
