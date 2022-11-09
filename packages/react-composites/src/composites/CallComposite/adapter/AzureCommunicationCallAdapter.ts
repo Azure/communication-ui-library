@@ -290,7 +290,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     /* @conditional-compile-remove(PSTN-calls) */
     this.sendDtmfTone.bind(this);
     /* @conditional-compile-remove(unsupported-browser) */
-    this.getEnvironmentInfo.bind(this);
+    this.populateEnvironmentInfo.bind(this);
   }
 
   public dispose(): void {
@@ -472,7 +472,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
   }
 
   /* @conditional-compile-remove(unsupported-browser) */
-  public async getEnvironmentInfo(): Promise<EnvironmentInfo> {
+  public async populateEnvironmentInfo(): Promise<EnvironmentInfo> {
     return await this.asyncTeeErrorToEventEmitter(async () => {
       return await this.callClient.feature(Features.DebugInfo).getEnvironmentInfo();
     });

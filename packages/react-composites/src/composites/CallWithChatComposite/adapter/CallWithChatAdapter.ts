@@ -341,7 +341,7 @@ export interface CallWithChatAdapterManagement {
    *
    * @beta
    */
-  getEnvironmentInfo?(): Promise<EnvironmentInfo>;
+  populateEnvironmentInfo?(): Promise<EnvironmentInfo>;
 }
 
 /**

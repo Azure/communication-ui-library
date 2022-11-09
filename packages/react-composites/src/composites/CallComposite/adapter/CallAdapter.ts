@@ -352,7 +352,7 @@ export interface CallAdapterCallManagement {
    *
    * @beta
    */
-  getEnvironmentInfo?(): Promise<EnvironmentInfo>;
+  populateEnvironmentInfo?(): Promise<EnvironmentInfo>;
 }
 
 /**

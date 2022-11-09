@@ -153,10 +153,10 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
   }
   /* @conditional-compile-remove(unsupported-browser) */
   public async getEnvironmentInfo(): Promise<EnvironmentInfo> {
-    if (!this.callWithChatAdapter.getEnvironmentInfo) {
+    if (!this.callWithChatAdapter.populateEnvironmentInfo) {
       throw new Error('getEnvironmentInfo not implemented');
     }
-    return await this.callWithChatAdapter.getEnvironmentInfo();
+    return await this.callWithChatAdapter.populateEnvironmentInfo();
   }
 
   /* @conditional-compile-remove(PSTN-calls) */

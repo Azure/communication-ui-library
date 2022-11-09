@@ -411,10 +411,10 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
 
   /* @conditional-compile-remove(unsupported-browser) */
   public async getEnvironmentInfo(): Promise<EnvironmentInfo> {
-    if (!this.callAdapter.getEnvironmentInfo) {
+    if (!this.callAdapter.populateEnvironmentInfo) {
       throw new Error('getEnvironmentInfo is not implemented');
     }
-    return await this.callAdapter.getEnvironmentInfo();
+    return await this.callAdapter.populateEnvironmentInfo();
   }
 
   on(event: 'callParticipantsJoined', listener: ParticipantsJoinedListener): void;
