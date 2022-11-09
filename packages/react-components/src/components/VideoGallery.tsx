@@ -48,10 +48,16 @@ import { _LocalVideoTile } from './LocalVideoTile';
 /* @conditional-compile-remove(rooms) */
 import { _usePermissions } from '../permissions';
 
-// Currently the Calling JS SDK supports up to 4 remote video streams
-const DEFAULT_MAX_REMOTE_VIDEO_STREAMS = 4;
-// Set aside only 6 dominant speakers for remaining audio participants
-const MAX_AUDIO_DOMINANT_SPEAKERS = 6;
+/**
+ * @private
+ * Currently the Calling JS SDK supports up to 4 remote video streams
+ */
+export const DEFAULT_MAX_REMOTE_VIDEO_STREAMS = 4;
+/**
+ * @private
+ * Set aside only 6 dominant speakers for remaining audio participants
+ */
+export const MAX_AUDIO_DOMINANT_SPEAKERS = 6;
 
 /**
  * All strings that may be shown on the UI in the {@link VideoGallery}.
@@ -336,6 +342,9 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
 
   const defaultOnRenderVideoTile = useCallback(
     (participant: VideoGalleryRemoteParticipant, isVideoParticipant?: boolean) => {
+      if (onRenderRemoteVideoTile) {
+        return onRenderRemoteVideoTile(participant);
+      }
       const remoteVideoStream = participant.videoStream;
       return (
         <_RemoteVideoTile
@@ -354,14 +363,19 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
         />
       );
     },
-    [onCreateRemoteStreamView, onDisposeRemoteStreamView, remoteVideoViewOptions, onRenderAvatar, showMuteIndicator]
+    [
+      onRenderRemoteVideoTile,
+      onCreateRemoteStreamView,
+      onDisposeRemoteStreamView,
+      remoteVideoViewOptions,
+      onRenderAvatar,
+      showMuteIndicator
+    ]
   );
 
-  const videoTiles = onRenderRemoteVideoTile
-    ? visibleVideoParticipants.current.map((participant) => onRenderRemoteVideoTile(participant))
-    : visibleVideoParticipants.current.map((participant): JSX.Element => {
-        return defaultOnRenderVideoTile(participant, true);
-      });
+  const videoTiles = visibleVideoParticipants.current.map((participant): JSX.Element => {
+    return defaultOnRenderVideoTile(participant, true);
+  });
 
   const audioTiles = onRenderRemoteVideoTile
     ? visibleAudioParticipants.current.map((participant) => onRenderRemoteVideoTile(participant))
