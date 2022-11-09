@@ -88,7 +88,7 @@ export interface VideoTileProps {
   isMuted?: boolean;
   /* @conditional-compile-remove(pinned-participants) */
   /**
-   * If true, the video tile will be rendered with a pin icon.
+   * If true, the video tile will show the pin icon.
    */
   isPinned?: boolean;
   /**
@@ -307,7 +307,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
                 isPinned && (
                   <Stack className={mergeStyles(iconContainerStyle)}>
                     <Icon
-                      iconName="PinnedSolid"
+                      iconName="VideoTilePinned"
                       className={mergeStyles({
                         padding: '0.125rem'
                       })}
