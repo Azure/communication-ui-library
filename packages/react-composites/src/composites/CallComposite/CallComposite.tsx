@@ -384,7 +384,7 @@ export const CallComposite = (props: CallCompositeProps): JSX.Element => {
   const mobileView = formFactor === 'mobile';
 
   /* @conditional-compile-remove(unsupported-browser) */
-  if (props.options?.unsupportedBrowserOptedIn) {
+  if (props.options?.unsupportedBrowserOptedIn && adapter.getEnvironmentInfo) {
     adapter.getEnvironmentInfo();
   }
 

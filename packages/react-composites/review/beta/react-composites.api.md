@@ -149,7 +149,7 @@ export interface CallAdapterCallManagement {
     createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void | CreateVideoStreamViewResult>;
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
     // @beta
-    getEnvironmentInfo(): Promise<EnvironmentInfo>;
+    getEnvironmentInfo?(): Promise<EnvironmentInfo>;
     // @beta
     holdCall(): Promise<void>;
     joinCall(microphoneOn?: boolean): Call | undefined;
@@ -462,7 +462,7 @@ export interface CallWithChatAdapterManagement {
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
     fetchInitialData(): Promise<void>;
     // @beta
-    getEnvironmentInfo(): Promise<EnvironmentInfo>;
+    getEnvironmentInfo?(): Promise<EnvironmentInfo>;
     // @beta
     holdCall: () => Promise<void>;
     joinCall(microphoneOn?: boolean): Call | undefined;
