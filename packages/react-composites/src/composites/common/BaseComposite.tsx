@@ -18,7 +18,6 @@ import { AvatarPersonaDataCallback } from './AvatarPersona';
 import { CallCompositeIcons, CallWithChatCompositeIcons, ChatCompositeIcons, DEFAULT_COMPOSITE_ICONS } from './icons';
 import { globalLayerHostStyle } from './styles/GlobalHostLayer.styles';
 import { useId } from '@fluentui/react-hooks';
-
 /**
  * Properties common to all composites exported from this library.
  *
@@ -92,10 +91,20 @@ export const BaseProvider = (
   }
 
   /**
+   * Before registering fluent icons, we should check DEFAULT_COMPOSITE_ICONS and strip out the key value pairs where value is undefined
+   */
+  const iconsToRegister = {};
+  Object.entries(DEFAULT_COMPOSITE_ICONS).forEach(([key, value]) => {
+    if (value) {
+      iconsToRegister[key] = value;
+    }
+  });
+
+  /**
    * We register the default icon mappings merged with custom icons provided through props
    * to ensure all icons render correctly.
    */
-  registerIcons({ icons: { ...DEFAULT_COMPOSITE_ICONS, ...props.icons } });
+  registerIcons({ icons: { ...iconsToRegister, ...props.icons } });
 
   // we use Customizer to override default LayerHost injected to <body />
   // which stop polluting global dom tree and increase compatibility with react-full-screen
