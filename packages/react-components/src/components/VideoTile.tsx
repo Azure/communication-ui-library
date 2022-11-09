@@ -86,6 +86,11 @@ export interface VideoTileProps {
    * Whether the video is muted or not.
    */
   isMuted?: boolean;
+  /* @conditional-compile-remove(pinned-participants) */
+  /**
+   * If true, the video tile will be rendered with a pin icon.
+   */
+  isPinned?: boolean;
   /**
    * Display Name of the Participant to be shown in the label.
    * @remarks `displayName` is used to generate avatar initials if `initialsName` is not provided.
@@ -167,6 +172,8 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
     initialsName,
     isMirrored,
     isMuted,
+    /* @conditional-compile-remove(pinned-participants) */
+    isPinned,
     onRenderPlaceholder,
     renderElement,
     showLabel = true,
@@ -295,6 +302,19 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
                   <Icon iconName="VideoTileMicOff" />
                 </Stack>
               )}
+              {
+                /* @conditional-compile-remove(pinned-participants) */
+                isPinned && (
+                  <Stack className={mergeStyles(iconContainerStyle)}>
+                    <Icon
+                      iconName="PinnedSolid"
+                      className={mergeStyles({
+                        padding: '0.125rem'
+                      })}
+                    />
+                  </Stack>
+                )
+              }
             </Stack>
           </Stack>
         )}
