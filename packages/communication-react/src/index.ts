@@ -61,7 +61,10 @@ export {
 } from '../../calling-component-bindings/src';
 
 /* @conditional-compile-remove(teams-identity-support) */
-export { useTeamsCallAgent, useTeamsCall, TeamsCallingHandlers } from '../../calling-component-bindings/src';
+export { useTeamsCallAgent, useTeamsCall } from '../../calling-component-bindings/src';
+
+/* @conditional-compile-remove(teams-identity-support) */
+export type { TeamsCallingHandlers } from '../../calling-component-bindings/src';
 
 export type {
   ScreenShareButtonSelector,
