@@ -163,7 +163,7 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
   const strings = { ...localeStrings, ...props.strings };
 
   const avatarOptions = {
-    text: displayName,
+    text: displayName ?? strings.displayNamePlaceholder,
     size: PersonaSize.size32,
     presence: presence,
     initialsTextColor: 'white',
@@ -183,7 +183,7 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
       )}
       {...avatarOptions}
       // Show a '?' icon if the display name of the participant is not available.
-      showUnknownPersonaCoin={!avatarOptions.text || avatarOptions.text === strings.displayNamePlaceholder}
+      showUnknownPersonaCoin={!displayName}
     />
   );
 
