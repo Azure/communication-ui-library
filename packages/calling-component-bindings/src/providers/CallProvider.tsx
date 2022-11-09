@@ -57,6 +57,8 @@ export const CallProvider = (props: CallProviderProps): JSX.Element => <CallProv
  * Useful when implementing a custom component that utilizes the providers
  * exported from this library.
  *
+ * you must have previously used the CallProvider with a Call object to use this hook
+ *
  * @public
  */
 export const useCall = (): Call | undefined => {
@@ -73,6 +75,8 @@ export const useCall = (): Call | undefined => {
  *
  * Useful when implementing a custom component that utilizes the providers
  * exported from this library.
+ *
+ * you must have previously used the CallProvider with a TeamsCall object to use this hook
  *
  * @beta
  */
