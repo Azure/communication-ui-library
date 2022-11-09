@@ -5,6 +5,22 @@ import { ThemeToolTipWithPanel } from './ThemeToolTipWithPanel';
 import { initTelemetry } from './telemetry';
 import { TextDirectionToolTip } from './TextDirectionToolTip';
 import { LocaleToolTip } from './LocaleToolTip';
+import { initializeIcons, registerIcons } from '@fluentui/react';
+import { initializeFileTypeIcons } from '@fluentui/react-file-type-icons';
+import { DEFAULT_COMPONENT_ICONS } from '@azure/communication-react';
+import { HandRight20Regular, Open20Regular, Record20Regular, People20Regular } from '@fluentui/react-icons';
+
+// icons used in stories that are not part of the default component icons
+const storyIcons = {
+  Open: <Open20Regular />,
+  Participants: <People20Regular />,
+  Record: <Record20Regular />,
+  RightHand: <HandRight20Regular />
+};
+initializeIcons();
+initializeFileTypeIcons();
+registerIcons({ icons: {...DEFAULT_COMPONENT_ICONS, ...storyIcons} });
+
 
 declare let __NPM_PACKAGE_VERSION__: string; // Injected by webpack
 console.log(`This Storybook was compiled for @azure/communication-react version ${__NPM_PACKAGE_VERSION__}`);
