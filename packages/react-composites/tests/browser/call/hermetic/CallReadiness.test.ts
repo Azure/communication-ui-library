@@ -6,7 +6,6 @@ import { expect, Page } from '@playwright/test';
 import {
   dataUiId,
   isTestProfileMobile,
-  isTestProfileStableFlavor,
   pageClick,
   stableScreenshot,
   waitForPageFontsLoaded,
@@ -14,13 +13,12 @@ import {
 } from '../../common/utils';
 import type { MockCallAdapterState } from '../../../common';
 
+/* @conditional-compile-remove(call-readiness) */
 test.describe('Tests for guidance UI on config page to guide users through enabling device permissions', async () => {
   test('Configuration page should show enable camera/mic button when camera and mic permissions are not set', async ({
     page,
     serverUrl
   }) => {
-    test.skip(isTestProfileStableFlavor());
-
     const initialState = defaultMockConfigPageStateDeviceDisabled();
     await page.goto(
       buildUrlWithMockAdapter(serverUrl, initialState, {
@@ -34,7 +32,6 @@ test.describe('Tests for guidance UI on config page to guide users through enabl
   });
 
   test('Clicking on enable camera/mic button should show modal on Desktop', async ({ page, serverUrl }, testInfo) => {
-    test.skip(isTestProfileStableFlavor());
     test.skip(isTestProfileMobile(testInfo));
     const initialState = defaultMockConfigPageStateDeviceDisabled();
     await page.goto(
@@ -51,8 +48,6 @@ test.describe('Tests for guidance UI on config page to guide users through enabl
   });
 
   test('Call Readiness error bar should show up when user deny permissions', async ({ page, serverUrl }) => {
-    test.skip(isTestProfileStableFlavor());
-
     const initialState = defaultMockConfigPageStateDeviceDisabled();
     initialState.devices.deviceAccess = { video: false, audio: false };
     await page.goto(
@@ -68,8 +63,6 @@ test.describe('Tests for guidance UI on config page to guide users through enabl
   });
 
   test('Call Readiness feature should be hidden when not opted in', async ({ page, serverUrl }) => {
-    test.skip(isTestProfileStableFlavor());
-
     const initialState = defaultMockConfigPageStateDeviceDisabled();
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
 

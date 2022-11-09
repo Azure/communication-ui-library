@@ -23,11 +23,11 @@ import { CallControlOptions } from './types/CallControlOptions';
 
 /* @conditional-compile-remove(rooms) */
 import { _PermissionsProvider, Role, _getPermissions } from '@internal/react-components';
-/* @conditional-compile-remove(one-to-n-calling) */
+/* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
 import { LayerHost, mergeStyles } from '@fluentui/react';
-/* @conditional-compile-remove(one-to-n-calling) */
+/* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
 import { modalLayerHostStyle } from '../common/styles/ModalLocalAndRemotePIP.styles';
-/* @conditional-compile-remove(one-to-n-calling) */
+/* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
 import { useId } from '@fluentui/react-hooks';
 /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */
 import { HoldPage } from './pages/HoldPage';
@@ -168,7 +168,7 @@ export type CallCompositeOptions = {
 
 type MainScreenProps = {
   mobileView: boolean;
-  /* @conditional-compile-remove(one-to-n-calling) */
+  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   modalLayerHostId: string;
   onRenderAvatar?: OnRenderAvatarCallback;
   callInvitationUrl?: string;
@@ -276,7 +276,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
       pageElement = (
         <LobbyPage
           mobileView={props.mobileView}
-          /* @conditional-compile-remove(one-to-n-calling) */
+          /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
           modalLayerHostId={props.modalLayerHostId}
           options={props.options}
         />
@@ -290,7 +290,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           onFetchAvatarPersonaData={onFetchAvatarPersonaData}
           onFetchParticipantMenuItems={onFetchParticipantMenuItems}
           mobileView={props.mobileView}
-          /* @conditional-compile-remove(one-to-n-calling) */
+          /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
           modalLayerHostId={props.modalLayerHostId}
           options={props.options}
         />
@@ -377,7 +377,7 @@ export const CallComposite = (props: CallCompositeProps): JSX.Element => {
 
   const mobileView = formFactor === 'mobile';
 
-  /* @conditional-compile-remove(one-to-n-calling) */
+  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   const modalLayerHostId = useId('modalLayerhost');
 
   const mainScreenContainerClassName = useMemo(() => {
@@ -393,7 +393,7 @@ export const CallComposite = (props: CallCompositeProps): JSX.Element => {
             onFetchAvatarPersonaData={onFetchAvatarPersonaData}
             onFetchParticipantMenuItems={onFetchParticipantMenuItems}
             mobileView={mobileView}
-            /* @conditional-compile-remove(one-to-n-calling) */
+            /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
             modalLayerHostId={modalLayerHostId}
             options={options}
             /* @conditional-compile-remove(rooms) */
@@ -408,7 +408,7 @@ export const CallComposite = (props: CallCompositeProps): JSX.Element => {
             // Warning: this is fragile and works because the call arrangement page is only rendered after the call has connected and thus this
             // LayerHost will be guaranteed to have rendered (and subsequently mounted in the DOM). This ensures the DOM element will be available
             // before the call to `document.getElementById(modalLayerHostId)` is made.
-            /* @conditional-compile-remove(one-to-n-calling) */
+            /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
             mobileView && <LayerHost id={modalLayerHostId} className={mergeStyles(modalLayerHostStyle)} />
           }
         </CallAdapterProvider>

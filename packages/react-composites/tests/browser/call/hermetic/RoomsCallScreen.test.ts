@@ -7,7 +7,6 @@ import {
   dataUiId,
   hidePiPiP,
   isTestProfileDesktop,
-  isTestProfileStableFlavor,
   pageClick,
   stableScreenshot,
   waitForSelector
@@ -60,9 +59,9 @@ test.describe('Rooms CallScreen tests for different roles', async () => {
   });
 });
 
+/* @conditional-compile-remove(rooms) */
 test.describe('Rooms Participant RemoveButton tests for different roles', async () => {
   test('Remove button is enabled for Presenter', async ({ page, serverUrl }, testInfo) => {
-    test.skip(isTestProfileStableFlavor());
     const paul = defaultMockRemoteParticipant('Paul Bridges');
     const participants = [paul];
     const initialState = defaultMockCallAdapterState(participants);
@@ -74,7 +73,6 @@ test.describe('Rooms Participant RemoveButton tests for different roles', async 
   });
 
   test('No ellipses button for remote participant items for Attendee', async ({ page, serverUrl }, testInfo) => {
-    test.skip(isTestProfileStableFlavor());
     const paul = defaultMockRemoteParticipant('Paul Bridges');
     const participants = [paul];
     const initialState = defaultMockCallAdapterState(participants);
@@ -83,7 +81,6 @@ test.describe('Rooms Participant RemoveButton tests for different roles', async 
   });
 
   test('No ellipses button for remote participant items for Consumer', async ({ page, serverUrl }, testInfo) => {
-    test.skip(isTestProfileStableFlavor());
     const paul = defaultMockRemoteParticipant('Paul Bridges');
     const participants = [paul];
     const initialState = defaultMockCallAdapterState(participants);
