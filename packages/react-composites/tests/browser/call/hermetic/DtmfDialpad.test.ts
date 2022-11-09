@@ -2,13 +2,12 @@
 // Licensed under the MIT license.
 
 import { expect } from '@playwright/test';
-import { dataUiId, isTestProfileStableFlavor, pageClick, stableScreenshot, waitForSelector } from '../../common/utils';
+import { dataUiId, pageClick, stableScreenshot, waitForSelector } from '../../common/utils';
 import { buildUrlWithMockAdapter, defaultMockCallAdapterState, defaultMockRemoteParticipant, test } from './fixture';
 
+/* @conditional-compile-remove(PSTN-calls) */
 test.describe('Dtmf dialpad tests', async () => {
   test('Dtmf dialpad should render in 1:1 PSTN call', async ({ page, serverUrl }) => {
-    test.skip(isTestProfileStableFlavor());
-
     const paul = defaultMockRemoteParticipant('Paul Bridges');
 
     const participant = [paul];
@@ -25,8 +24,6 @@ test.describe('Dtmf dialpad tests', async () => {
     expect(await stableScreenshot(page)).toMatchSnapshot(`Call-Dtmf-Dialpad.png`);
   });
   test('Dtmf dialpad should not render in non-PSTN call', async ({ page, serverUrl }) => {
-    test.skip(isTestProfileStableFlavor());
-
     const initialState = defaultMockCallAdapterState();
 
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));

@@ -15,15 +15,15 @@ import {
 /* @conditional-compile-remove(rooms) */
 import { _usePermissions } from '@internal/react-components';
 import React, { useMemo, useRef } from 'react';
-/* @conditional-compile-remove(one-to-n-calling) */
+/* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
 import { useCallback } from 'react';
-/* @conditional-compile-remove(one-to-n-calling) */
+/* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
 import { AvatarPersonaDataCallback } from '../../common/AvatarPersona';
 import { containerDivStyles } from '../../common/ContainerRectProps';
-/* @conditional-compile-remove(one-to-n-calling) */
+/* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
 import { useAdapter } from '../adapter/CallAdapterProvider';
 import { CallControls, CallControlsProps } from '../components/CallControls';
-/* @conditional-compile-remove(one-to-n-calling) */
+/* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
 import { useSidePaneState } from '../hooks/useSidePaneState';
 import {
   callControlsContainerStyles,
@@ -34,9 +34,9 @@ import {
   galleryParentContainerStyles,
   bannerNotificationStyles
 } from '../styles/CallPage.styles';
-/* @conditional-compile-remove(one-to-n-calling) */
+/* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
 import { CallControlOptions } from '../types/CallControlOptions';
-/* @conditional-compile-remove(one-to-n-calling) */
+/* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
 import { CallPane } from './CallPane';
 import { MutedNotification, MutedNotificationProps } from './MutedNotification';
 
@@ -51,9 +51,9 @@ export interface CallArrangementProps {
   onRenderGalleryContent: () => JSX.Element;
   dataUiId: string;
   mobileView: boolean;
-  /* @conditional-compile-remove(one-to-n-calling) */
+  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   modalLayerHostId: string;
-  /* @conditional-compile-remove(one-to-n-calling) */
+  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
 }
 
@@ -75,15 +75,15 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   const containerWidth = _useContainerWidth(containerRef);
   const containerHeight = _useContainerHeight(containerRef);
 
-  /* @conditional-compile-remove(one-to-n-calling) */
+  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   const adapter = useAdapter();
-  /* @conditional-compile-remove(one-to-n-calling) */
+  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   const { activePane, closePane, openPeoplePane, togglePeoplePane } = useSidePaneState();
 
-  /* @conditional-compile-remove(one-to-n-calling) */
+  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   const isMobileWithActivePane = props.mobileView && activePane;
 
-  /* @conditional-compile-remove(one-to-n-calling) */
+  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   const callCompositeContainerCSS = useMemo(() => {
     return { display: isMobileWithActivePane ? 'none' : 'flex' };
   }, [isMobileWithActivePane]);
@@ -91,12 +91,12 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   // To be removed once feature is out of beta, replace with callCompositeContainerCSS
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   const callCompositeContainerFlex = () => {
-    /* @conditional-compile-remove(one-to-n-calling) */
+    /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
     return callCompositeContainerCSS;
     return { display: 'flex' };
   };
 
-  /* @conditional-compile-remove(one-to-n-calling) */
+  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   const callPaneContent = useCallback((): JSX.Element => {
     if (adapter && activePane === 'people') {
       return (
@@ -174,10 +174,14 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
               )}
             </Stack.Item>
           </Stack.Item>
-          {/* @conditional-compile-remove(one-to-n-calling) */ callPaneContent()}
+          {
+            /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
+            callPaneContent()
+          }
         </Stack>
         {props.callControlProps?.options !== false &&
-          /* @conditional-compile-remove(one-to-n-calling) */ !isMobileWithActivePane && (
+          /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
+          !isMobileWithActivePane && (
             <Stack.Item className={callControlsContainerStyles}>
               <CallControls
                 {...props.callControlProps}
@@ -196,7 +200,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   );
 };
 
-/* @conditional-compile-remove(one-to-n-calling) */
+/* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
 const showShowPeopleTabHeaderButton = (callControls?: boolean | CallControlOptions): boolean => {
   if (callControls === undefined || callControls === true) {
     return true;
