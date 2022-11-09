@@ -30,17 +30,17 @@ export type CallCommon = Call | /* @conditional-compile-remove(teams-identity-su
 export type CallAgentCommon = CallAgent | /* @conditional-compile-remove(teams-identity-support) */ CallAgentCommonBeta;
 
 /**
- * @private
+ * @internal
  */
 export type TeamsCall = never | /* @conditional-compile-remove(teams-identity-support) */ TeamsCallBeta;
 
 /**
- * @private
+ * @internal
  */
 export type TeamsCallAgent = never | /* @conditional-compile-remove(teams-identity-support) */ TeamsCallAgentBeta;
 
 /**
- * @private
+ * @internal
  */
 export type IncomingCallCommon =
   | IncomingCall

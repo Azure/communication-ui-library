@@ -5,7 +5,7 @@ import React, { useContext, createContext } from 'react';
 import { Call } from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-identity-support) */
 import { TeamsCall } from '@azure/communication-calling';
-import { isACSCall } from '@internal/calling-stateful-client';
+import { isACSCall } from '@internal/acs-ui-common';
 
 /**
  * @private

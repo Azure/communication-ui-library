@@ -11,7 +11,7 @@ import { convertSdkCallToDeclarativeCall, convertSdkIncomingCallToDeclarativeInc
 import { DeclarativeIncomingCall, incomingCallDeclaratify } from './IncomingCallDeclarative';
 import { IncomingCallSubscriber } from './IncomingCallSubscriber';
 import { InternalCallContext } from './InternalCallContext';
-import { CallAgentCommon, CallCommon, IncomingCallCommon } from './BetaToStableTypes';
+import { CallAgentCommon, CallCommon, IncomingCallCommon } from '@internal/acs-ui-common';
 import { disposeAllViews, disposeAllViewsFromCall } from './StreamUtils';
 
 /**
@@ -177,7 +177,7 @@ export abstract class ProxyCallAgentCommon {
         return Array.from(this._declarativeCalls.values());
       }
       case 'on': {
-        return (...args: Parameters<CallAgent['on']> | Parameters<AgentType['on']>): void => {
+        return (...args: Parameters<AgentType['on']>): void => {
           const isCallsUpdated = args[0] === 'callsUpdated';
           if (isCallsUpdated) {
             const listener = args[1];

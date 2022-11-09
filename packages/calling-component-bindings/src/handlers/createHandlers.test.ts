@@ -4,9 +4,9 @@
 import { CallAgent, CallAgentOptions, DeviceManager } from '@azure/communication-calling';
 import { CommunicationTokenCredential } from '@azure/communication-common';
 import { ReactElement } from 'react';
-import { createDefaultCallingHandlersForComponent } from './createHandlers';
+import { createDefaultCallingHandlersForComponent } from './createDefaultCallingHandlersForComponent';
 import { StatefulCallClient, CreateViewResult } from '@internal/calling-stateful-client';
-import { CallingHandlers } from './createACSCallHandlers';
+import { CallingHandlers } from './createHandlers';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function TestCallClientComponent(props: CallingHandlers): ReactElement | null {

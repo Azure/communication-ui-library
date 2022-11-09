@@ -13,11 +13,10 @@ export type { ErrorBarSelector } from './errorBarSelector';
 /* @conditional-compile-remove(PSTN-calls) */
 export type { HoldButtonSelector } from './callControlSelectors';
 
-export type { CallHandlersOf, CallTypeOf } from './handlers/createHandlers';
-export type { CallingHandlers } from './handlers/createACSCallHandlers';
+export type { CallingHandlers } from './handlers/createHandlers';
 /* @conditional-compile-remove(teams-identity-support) */
 export type { TeamsCallingHandlers } from './handlers/createTeamsCallHandlers';
-export type { CallingHandlersCommon } from './handlers/createHandlersCommon';
+export type { CommonCallingHandlers, SharedCallingHandlers } from './handlers/createCommonHandlers';
 
 /* @conditional-compile-remove(teams-identity-support) */
 export { useTeamsCall, useTeamsCallAgent } from './providers';

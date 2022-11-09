@@ -33,7 +33,8 @@
   },
   "peerDependencies": {
     "react": ">=16.8.0 <18.0.0",
-    "@types/react": ">=16.8.0 <18.0.0"
+    "@types/react": ">=16.8.0 <18.0.0",
+    "@azure/communication-calling": "1.8.0-beta.1 || >=1.4.4"
   },
   "devDependencies": {
     "@babel/cli": "~7.16.0",

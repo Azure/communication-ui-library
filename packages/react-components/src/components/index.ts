@@ -89,21 +89,41 @@ export type {
 } from './DevicesButton';
 
 /* @conditional-compile-remove(call-readiness) */
-export { DomainPermissions } from './DomainPermissions';
+export {
+  CameraAndMicrophoneDomainPermissions,
+  MicrophoneDomainPermissions,
+  CameraDomainPermissions
+} from './DevicePermissions/DomainPermissions';
 /* @conditional-compile-remove(call-readiness) */
-export type { DomainPermissionsStrings, DomainPermissionsProps } from './DomainPermissions';
+export type {
+  DomainPermissionsStrings,
+  DomainPermissionsStyles
+} from './DevicePermissions/DomainPermissionsScaffolding';
 /* @conditional-compile-remove(call-readiness) */
-export { BrowserPermissionDenied } from './BrowserPermissionDenied';
+export type {
+  CameraAndMicrophoneDomainPermissionsStrings,
+  CameraAndMicrophoneDomainPermissionsProps,
+  CameraDomainPermissionsStrings,
+  CameraDomainPermissionsProps,
+  CommonDomainPermissionsProps,
+  MicrophoneDomainPermissionsStrings,
+  MicrophoneDomainPermissionsProps
+} from './DevicePermissions/DomainPermissions';
+/* @conditional-compile-remove(call-readiness) */
+export { BrowserPermissionDenied } from './DevicePermissions/BrowserPermissionDenied';
 /* @conditional-compile-remove(call-readiness) */
 export type {
   BrowserPermissionDeniedStrings,
   BrowserPermissionDeniedStyles,
   BrowserPermissionDeniedProps
-} from './BrowserPermissionDenied';
+} from './DevicePermissions/BrowserPermissionDenied';
 /* @conditional-compile-remove(call-readiness) */
-export { BrowserPermissionDeniedIOS } from './BrowserPermissionDeniedIOS';
+export { BrowserPermissionDeniedIOS } from './DevicePermissions/BrowserPermissionDeniedIOS';
 /* @conditional-compile-remove(call-readiness) */
-export type { BrowserPermissionDeniedIOSStrings, BrowserPermissionDeniedIOSProps } from './BrowserPermissionDeniedIOS';
+export type {
+  BrowserPermissionDeniedIOSStrings,
+  BrowserPermissionDeniedIOSProps
+} from './DevicePermissions/BrowserPermissionDeniedIOS';
 
 export { ParticipantsButton } from './ParticipantsButton';
 export type {
@@ -167,9 +187,9 @@ export type {
   _TroubleshootingGuideErrorBarProps
 } from './TroubleshootingGuideErrorBar';
 
-export { _DevicePermissionDropdown } from './DevicePermissionDropdown';
+export { _DevicePermissionDropdown } from './DevicePermissions/DevicePermissionDropdown';
 export type {
   _DevicePermissionDropdownStrings,
   _DevicePermissionDropdownProps,
   _PermissionConstraints
-} from './DevicePermissionDropdown';
+} from './DevicePermissions/DevicePermissionDropdown';

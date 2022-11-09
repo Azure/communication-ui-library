@@ -36,9 +36,8 @@ export type {
   GetCallingSelector,
   CallingHandlers,
   CallingBaseSelectorProps,
-  CallingHandlersCommon,
-  CallTypeOf,
-  CallHandlersOf
+  CommonCallingHandlers,
+  SharedCallingHandlers
 } from '../../calling-component-bindings/src';
 export type {
   ChatClientProviderProps,
@@ -127,7 +126,23 @@ export { HoldButton } from '../../react-components/src';
 export { Dialpad } from '../../react-components/src';
 
 /* @conditional-compile-remove(call-readiness) */
-export { DomainPermissions } from '../../react-components/src';
+export {
+  CameraAndMicrophoneDomainPermissions,
+  MicrophoneDomainPermissions,
+  CameraDomainPermissions
+} from '../../react-components/src';
+/* @conditional-compile-remove(call-readiness) */
+export type {
+  CameraAndMicrophoneDomainPermissionsStrings,
+  CameraAndMicrophoneDomainPermissionsProps,
+  CameraDomainPermissionsStrings,
+  CameraDomainPermissionsProps,
+  CommonDomainPermissionsProps,
+  DomainPermissionsStrings,
+  DomainPermissionsStyles,
+  MicrophoneDomainPermissionsStrings,
+  MicrophoneDomainPermissionsProps
+} from '../../react-components/src';
 
 export type {
   _IdentifierProviderProps,
@@ -241,8 +256,6 @@ export type {
 } from '../../react-components/src';
 /* @conditional-compile-remove(PSTN-calls) */
 export type { HoldButtonProps, HoldButtonStrings, VideoTileStrings } from '../../react-components/src';
-/* @conditional-compile-remove(call-readiness) */
-export type { DomainPermissionsStrings, DomainPermissionsProps } from '../../react-components/src';
 /* @conditional-compile-remove(call-readiness) */
 export type { BrowserPermissionDeniedStrings, BrowserPermissionDeniedProps } from '../../react-components/src';
 /* @conditional-compile-remove(call-readiness) */

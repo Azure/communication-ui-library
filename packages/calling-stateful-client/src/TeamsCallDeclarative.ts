@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { TeamsCall } from './BetaToStableTypes';
+import { TeamsCall } from '@internal/acs-ui-common';
 import { ProxyCallCommon } from './CallDeclarativeCommon';
 import { CallContext } from './CallContext';
 

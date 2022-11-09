@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { CallEndReason } from '@azure/communication-calling';
-import { IncomingCallCommon } from './BetaToStableTypes';
+import { IncomingCallCommon } from '@internal/acs-ui-common';
 
 /**
  * Keeps track of the listeners assigned to a particular incoming call because when we get an event from SDK, it doesn't

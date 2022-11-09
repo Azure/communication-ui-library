@@ -8,8 +8,7 @@ import {
   VideoStreamRendererView
 } from '@azure/communication-calling';
 
-import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
-import { CallCommon, IncomingCallCommon } from './BetaToStableTypes';
+import { CallCommon, IncomingCallCommon, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import {
   CallState,
   RemoteParticipantState as DeclarativeRemoteParticipant,
@@ -19,7 +18,7 @@ import {
   VideoStreamRendererViewState as DeclarativeVideoStreamRendererView
 } from './CallClientState';
 /* @conditional-compile-remove(teams-identity-support) */
-import { isACSCall } from './TypeGuards';
+import { isACSCall } from '@internal/acs-ui-common';
 
 /**
  * @private

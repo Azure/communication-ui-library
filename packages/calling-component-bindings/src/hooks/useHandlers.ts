@@ -2,8 +2,9 @@
 // Licensed under the MIT license.
 
 import { ReactElement, useContext } from 'react';
-import { isACSCall, isACSCallAgent, StatefulCallClient } from '@internal/calling-stateful-client';
-import { createDefaultCallingHandlersForComponent } from '../handlers/createHandlers';
+import { StatefulCallClient } from '@internal/calling-stateful-client';
+import { isACSCall, isACSCallAgent, isTeamsCall, isTeamsCallAgent } from '@internal/acs-ui-common';
+import { createDefaultCallingHandlersForComponent } from '../handlers/createDefaultCallingHandlersForComponent';
 import { CallAgentContext, CallClientContext, CallContext, useDeviceManager } from '../providers';
 
 /**
@@ -25,8 +26,8 @@ export const useHandlers = <PropsT>(component: (props: PropsT) => ReactElement |
   }
 
   // Handle edge case, validate if call and callAgent are the same type (ACS/Teams)
-  if (callAgent && !isACSCallAgent(callAgent)) {
-    if (call && isACSCall(call)) {
+  if (callAgent && isTeamsCallAgent(callAgent)) {
+    if (call && !isTeamsCall(call)) {
       throw new Error('A TeamsCall must be provided when callAgent is TeamsCallAgent');
     }
   }

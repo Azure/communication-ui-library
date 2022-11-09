@@ -15,6 +15,8 @@ import { ConfigurationPage } from './pages/ConfigurationPage';
 import { NoticePage } from './pages/NoticePage';
 import { useSelector } from './hooks/useSelector';
 import { getPage } from './selectors/baseSelectors';
+/* @conditional-compile-remove(rooms) */
+import { getRole } from './selectors/baseSelectors';
 import { LobbyPage } from './pages/LobbyPage';
 import { mainScreenContainerStyleDesktop, mainScreenContainerStyleMobile } from './styles/CallComposite.styles';
 import { CallControlOptions } from './types/CallControlOptions';
@@ -62,9 +64,11 @@ export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcon
 
   /* @conditional-compile-remove(rooms) */
   /**
-   * Set this to enable/disable capacities for different roles
+   * Set the role to enable/disable capacities. This property should be properly set for Rooms calls. The role of a
+   * user for a room can be obtained using the Rooms API. The role of the user will be synced with ACS services when
+   * a Rooms call starts.
    */
-  role?: Role;
+  roleHint?: Role;
 }
 
 /* @conditional-compile-remove(call-readiness) */
@@ -180,7 +184,7 @@ type MainScreenProps = {
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
   options?: CallCompositeOptions;
   /* @conditional-compile-remove(rooms) */
-  role?: Role;
+  roleHint?: Role;
 };
 
 const MainScreen = (props: MainScreenProps): JSX.Element => {
@@ -189,6 +193,9 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
 
   const adapter = useAdapter();
   const locale = useLocale();
+
+  /* @conditional-compile-remove(rooms) */
+  const role = useSelector(getRole);
 
   let pageElement: JSX.Element | undefined;
   /* @conditional-compile-remove(rooms) */
@@ -327,7 +334,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
   }
 
   /* @conditional-compile-remove(rooms) */
-  const permissions = _getPermissions(props.role);
+  const permissions = _getPermissions(role === 'Unknown' || role === undefined ? props.roleHint : role);
 
   // default retElement for stable version
   let retElement = pageElement;
@@ -355,13 +362,13 @@ export const CallComposite = (props: CallCompositeProps): JSX.Element => {
     options,
     formFactor = 'desktop',
     /* @conditional-compile-remove(rooms) */
-    role
+    roleHint
   } = props;
 
   useEffect(() => {
     (async () => {
       const constrain = getQueryOptions({
-        /* @conditional-compile-remove(rooms) */ role: role,
+        /* @conditional-compile-remove(rooms) */ role: roleHint,
         /* @conditional-compile-remove(call-readiness) */ callReadinessOptedIn: options?.callReadinessOptedIn ?? false
       });
       await adapter.askDevicePermission(constrain);
@@ -371,7 +378,7 @@ export const CallComposite = (props: CallCompositeProps): JSX.Element => {
     })();
   }, [
     adapter,
-    /* @conditional-compile-remove(rooms) */ role,
+    /* @conditional-compile-remove(rooms) */ roleHint,
     /* @conditional-compile-remove(call-readiness) */ options?.callReadinessOptedIn
   ]);
 
@@ -397,7 +404,7 @@ export const CallComposite = (props: CallCompositeProps): JSX.Element => {
             modalLayerHostId={modalLayerHostId}
             options={options}
             /* @conditional-compile-remove(rooms) */
-            role={role}
+            roleHint={roleHint}
           />
           {
             // This layer host is for ModalLocalAndRemotePIP in CallPane. This LayerHost cannot be inside the CallPane
