@@ -15,7 +15,7 @@ import { StatefulCallClient, StatefulDeviceManager } from '@internal/calling-sta
 import memoizeOne from 'memoize-one';
 import { ReactElement } from 'react';
 import { isTeamsCallParticipants } from '../utils/callUtils';
-import { CallingHandlersCommon, createDefaultCallingHandlersCommon } from './createHandlersCommon';
+import { createDefaultCommonCallingHandlers, SharedCallingHandlers } from './createCommonHandlers';
 
 /**
  * Object containing all the teams call handlers required for calling components.
@@ -25,7 +25,7 @@ import { CallingHandlersCommon, createDefaultCallingHandlersCommon } from './cre
  *
  * @beta
  */
-export type TeamsCallingHandlers = Omit<CallingHandlersCommon, 'onStartCall'> & {
+export type TeamsCallingHandlers = SharedCallingHandlers & {
   onStartCall: (
     participants: CommunicationIdentifier[],
     options?: StartCallOptions
@@ -33,7 +33,7 @@ export type TeamsCallingHandlers = Omit<CallingHandlersCommon, 'onStartCall'> & 
 };
 
 /**
- * Create the default implementation of {@link CallingHandlers} for teams call.
+ * Create the default implementation of {@link TeamsCallingHandlers} for teams call.
  *
  * Useful when implementing a custom component that utilizes the providers
  * exported from this library.
@@ -47,7 +47,7 @@ export const createDefaultTeamsCallingHandlers = memoizeOne(
     deviceManager: StatefulDeviceManager | undefined,
     call: undefined | /* @conditional-compile-remove(teams-identity-support) */ TeamsCall
   ): never | TeamsCallingHandlers => {
-    const calingsHandlers = createDefaultCallingHandlersCommon(callClient, deviceManager, call);
+    const calingsHandlers = createDefaultCommonCallingHandlers(callClient, deviceManager, call);
     return {
       ...calingsHandlers,
       onStartCall: (participants, options) => {

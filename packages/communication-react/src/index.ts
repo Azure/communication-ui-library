@@ -36,9 +36,8 @@ export type {
   GetCallingSelector,
   CallingHandlers,
   CallingBaseSelectorProps,
-  CallingHandlersCommon,
-  CallTypeOf,
-  CallHandlersOf
+  CommonCallingHandlers,
+  SharedCallingHandlers
 } from '../../calling-component-bindings/src';
 export type {
   ChatClientProviderProps,
@@ -61,7 +60,11 @@ export {
 } from '../../calling-component-bindings/src';
 
 /* @conditional-compile-remove(teams-identity-support) */
-export { useTeamsCallAgent, useTeamsCall } from '../../calling-component-bindings/src';
+export {
+  useTeamsCallAgent,
+  useTeamsCall,
+  createDefaultTeamsCallingHandlers
+} from '../../calling-component-bindings/src';
 
 /* @conditional-compile-remove(teams-identity-support) */
 export type { TeamsCallingHandlers } from '../../calling-component-bindings/src';

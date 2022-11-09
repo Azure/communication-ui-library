@@ -1,80 +1,78 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Call, CallAgent } from '@azure/communication-calling';
-/* @conditional-compile-remove(teams-identity-support) */
-import { TeamsCall, TeamsCallAgent } from '@azure/communication-calling';
-import { Common, isACSCall, isACSCallAgent } from '@internal/acs-ui-common';
-/* @conditional-compile-remove(teams-identity-support) */
-import { isTeamsCall, isTeamsCallAgent } from '@internal/acs-ui-common';
+import { Call, CallAgent, StartCallOptions } from '@azure/communication-calling';
+/* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
+/* @conditional-compile-remove(PSTN-calls) */
+import { AddPhoneNumberOptions } from '@azure/communication-calling';
+/* @conditional-compile-remove(PSTN-calls) */
+import {
+  isCommunicationUserIdentifier,
+  isMicrosoftTeamsUserIdentifier,
+  isPhoneNumberIdentifier
+} from '@azure/communication-common';
+import { CommunicationIdentifier } from '@azure/communication-common';
+
+import { _toCommunicationIdentifier } from '@internal/acs-ui-common';
 import { StatefulCallClient, StatefulDeviceManager } from '@internal/calling-stateful-client';
-import {} from '@internal/calling-stateful-client';
 import memoizeOne from 'memoize-one';
-import { ReactElement } from 'react';
-/* @conditional-compile-remove(teams-identity-support) */
-import { createDefaultTeamsCallingHandlers, TeamsCallingHandlers } from './createTeamsCallHandlers';
-import { CallingHandlers, createDefaultACSCallingHandlers } from './createACSCallHandlers';
+import { isNonTeamsCallParticipants } from '../utils/callUtils';
+import { createDefaultCommonCallingHandlers, SharedCallingHandlers } from './createCommonHandlers';
 
 /**
+ * Object containing all the handlers required for calling components.
+ *
+ * Calling related components from this package are able to pick out relevant handlers from this object.
+ * See {@link useHandlers} and {@link usePropsFor}.
+ *
  * @public
  */
-export type CallTypeOf<
-  AgentType extends CallAgent | /* @conditional-compile-remove(teams-identity-support) */ TeamsCallAgent
-> = AgentType extends CallAgent ? Call : never | /* @conditional-compile-remove(teams-identity-support) */ TeamsCall; // remove "never" type when move to stable
+export type CallingHandlers = SharedCallingHandlers & {
+  onStartCall: (participants: CommunicationIdentifier[], options?: StartCallOptions) => Call | undefined;
+};
 
 /**
- * @public
- */
-export type CallHandlersOf<
-  AgentType extends CallAgent | /* @conditional-compile-remove(teams-identity-support) */ TeamsCallAgent
-> = AgentType extends CallAgent
-  ? CallingHandlers
-  : never | /* @conditional-compile-remove(teams-identity-support) */ TeamsCallingHandlers; // remove "never" type when move to stable
-
-/**
+ * Create the default implementation of {@link CallingHandlers} for teams call.
+ *
+ * Useful when implementing a custom component that utilizes the providers
+ * exported from this library.
+ *
  * @public
  */
 export const createDefaultCallingHandlers = memoizeOne(
-  <AgentType extends CallAgent | /* @conditional-compile-remove(teams-identity-support) */ TeamsCallAgent = CallAgent>(
+  (
     callClient: StatefulCallClient,
-    callAgent: AgentType | undefined,
+    callAgent: CallAgent | undefined,
     deviceManager: StatefulDeviceManager | undefined,
-    call: CallTypeOf<AgentType> | undefined
-  ): CallHandlersOf<AgentType> => {
-    /* @conditional-compile-remove(teams-identity-support) */
-    if (callAgent && isTeamsCallAgent(callAgent) && (!call || (call && isTeamsCall(call)))) {
-      return createDefaultTeamsCallingHandlers(callClient, callAgent, deviceManager, call) as any;
-    }
-    if (callAgent && isACSCallAgent(callAgent) && (!call || (call && isACSCall(call)))) {
-      return createDefaultACSCallingHandlers(callClient, callAgent, deviceManager, call) as any;
-    }
-    throw new Error('CallAgent type and Call type are not compatible!');
+    call: Call | undefined
+  ): CallingHandlers => {
+    return {
+      ...createDefaultCommonCallingHandlers(callClient, deviceManager, call),
+      // FIXME: onStartCall API should use string, not the underlying SDK types.
+      onStartCall: (participants: CommunicationIdentifier[], options?: StartCallOptions): Call | undefined => {
+        if (!isNonTeamsCallParticipants(participants)) {
+          throw new Error('TeamsUserIdentifier in Teams call is not supported!');
+        }
+        return callAgent ? callAgent.startCall(participants, options) : undefined;
+      },
+      /* @conditional-compile-remove(PSTN-calls) */
+      onAddParticipant: async (
+        userId: string | CommunicationIdentifier,
+        options?: AddPhoneNumberOptions
+      ): Promise<void> => {
+        const participant = _toCommunicationIdentifier(userId);
+        if (isPhoneNumberIdentifier(participant)) {
+          call?.addParticipant(participant, options);
+        } else if (isCommunicationUserIdentifier(participant) || isMicrosoftTeamsUserIdentifier(participant)) {
+          call?.addParticipant(participant);
+        }
+      },
+      onRemoveParticipant: async (
+        userId: string | /* @conditional-compile-remove(PSTN-calls) */ CommunicationIdentifier
+      ): Promise<void> => {
+        const participant = _toCommunicationIdentifier(userId);
+        await call?.removeParticipant(participant);
+      }
+    };
   }
 );
-
-/**
- * Create a set of default handlers for given component. Memoization is applied to the result. Multiple invocations with
- * the same arguments will return the same handler instances. DeclarativeCallAgent, DeclarativeDeviceManager, and
- * DeclarativeCall may be undefined. If undefined, their associated handlers will not be created and returned.
- *
- * @param callClient - StatefulCallClient returned from
- *   {@link @azure/communication-react#createStatefulCallClient}.
- * @param callAgent - Instance of {@link @azure/communication-calling#CallClient}.
- * @param deviceManager - Instance of {@link @azure/communication-calling#DeviceManager}.
- * @param call - Instance of {@link @azure/communication-calling#Call}.
- * @param _ - React component that you want to generate handlers for.
- *
- * @public
- */
-export const createDefaultCallingHandlersForComponent = <
-  Props,
-  AgentType extends CallAgent | /* @conditional-compile-remove(teams-identity-support) */ TeamsCallAgent = CallAgent
->(
-  callClient: StatefulCallClient,
-  callAgent: AgentType | undefined,
-  deviceManager: StatefulDeviceManager | undefined,
-  call: CallTypeOf<AgentType> | undefined,
-  _Component: (props: Props) => ReactElement | null
-): Common<CallHandlersOf<AgentType>, Props> => {
-  return createDefaultCallingHandlers(callClient, callAgent, deviceManager, call);
-};

@@ -24,14 +24,10 @@ import { CommunicationUserIdentifier, PhoneNumberIdentifier, UnknownIdentifier }
 import { CommunicationIdentifier } from '@azure/communication-common';
 
 /**
- * Object containing all the handlers required for calling components.
- *
- * Calling related components from this package are able to pick out relevant handlers from this object.
- * See {@link useHandlers} and {@link usePropsFor}.
- *
  * @public
  */
-export type CallingHandlersCommon = {
+// This is the set of handlers share exact same parameters and return values for all call types.
+export type SharedCallingHandlers = {
   onStartLocalVideo: () => Promise<void>;
   onToggleCamera: (options?: VideoStreamOptions) => Promise<void>;
   onSelectMicrophone: (device: AudioDeviceInfo) => Promise<void>;
@@ -57,16 +53,32 @@ export type CallingHandlersCommon = {
   onDisposeLocalStreamView: () => Promise<void>;
   /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
   onSendDtmfTone: (dtmfTone: DtmfTone) => Promise<void>;
-  onStartCall: (
-    participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[],
-    options?: StartCallOptions
-  ) => void;
   onRemoveParticipant(userId: string): Promise<void>;
   /* @conditional-compile-remove(PSTN-calls) */
   onRemoveParticipant(participant: CommunicationIdentifier): Promise<void>;
   /* @conditional-compile-remove(call-readiness) */
   askDevicePermission: (constrain: PermissionConstraints) => Promise<void>;
 };
+
+/**
+ * Object containing all the handlers required for calling components.
+ *
+ * Calling related components from this package are able to pick out relevant handlers from this object.
+ * See {@link useHandlers} and {@link usePropsFor}.
+ *
+ * @public
+ */
+// CommonCallingHandlers is an interface compatible with TeamsCallingHandlers and CallingHandlers
+// which is also a common interface required by components and adapters
+// components and adapters only requires onStartCall is a function returning void
+// but in TeamsCallingHandlers and CallingHandlers, it returns different types for non-breaking change reason
+export type CommonCallingHandlers = SharedCallingHandlers & {
+  onStartCall: (
+    participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[],
+    options?: StartCallOptions
+  ) => void;
+};
+
 /**
  * @private
  */
@@ -82,12 +94,12 @@ export const areStreamsEqual = (prevStream: LocalVideoStream, newStream: LocalVi
  *
  * @public
  */
-export const createDefaultCallingHandlersCommon = memoizeOne(
+export const createDefaultCommonCallingHandlers = memoizeOne(
   (
     callClient: StatefulCallClient,
     deviceManager: StatefulDeviceManager | undefined,
     call: Call | /* @conditional-compile-remove(teams-identity-support) */ TeamsCall | undefined
-  ): CallingHandlersCommon => {
+  ): CommonCallingHandlers => {
     const onStartLocalVideo = async (): Promise<void> => {
       // Before the call object creates a stream, dispose of any local preview streams.
       // @TODO: is there any way to parent the unparented view to the call object instead

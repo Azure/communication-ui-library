@@ -38,7 +38,7 @@ import { Common } from '@internal/acs-ui-common';
 import { AreEqual } from '@internal/acs-ui-common';
 import { ParticipantsButton } from '@internal/react-components';
 import { ErrorBarSelector, errorBarSelector } from '../errorBarSelector';
-import { CallingHandlersCommon } from '../handlers/createHandlersCommon';
+import { CommonCallingHandlers } from '../handlers/createCommonHandlers';
 
 /**
  * Primary hook to get all hooks necessary for a calling Component.
@@ -61,7 +61,7 @@ import { CallingHandlersCommon } from '../handlers/createHandlersCommon';
 export const usePropsFor = <Component extends (props: any) => JSX.Element>(
   component: Component
 ): GetSelector<Component> extends (props: any) => any
-  ? ReturnType<GetSelector<Component>> & Common<CallingHandlersCommon, Parameters<Component>[0]>
+  ? ReturnType<GetSelector<Component>> & Common<CommonCallingHandlers, Parameters<Component>[0]>
   : undefined => {
   const selector = getSelector(component);
   const props = useSelector(selector);
