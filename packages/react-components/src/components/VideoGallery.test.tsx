@@ -25,7 +25,6 @@ describe('VideoGallery floatingLocalVideo Layout', () => {
         localParticipant: createLocalParticipant({
           videoStream: {
             isAvailable: true,
-            isReceiving: true,
             renderElement: createVideoDivElement()
           }
         }),
@@ -38,8 +37,7 @@ describe('VideoGallery floatingLocalVideo Layout', () => {
     root.setProps({
       localParticipant: createLocalParticipant({
         videoStream: {
-          isAvailable: true,
-          isReceiving: true
+          isAvailable: true
         }
       })
     });
@@ -52,13 +50,13 @@ describe('VideoGallery floatingLocalVideo Layout', () => {
 
   test('should render 1 remote video tile and floating local video', () => {
     const localParticipant = createLocalParticipant({
-      videoStream: { isAvailable: true, isReceiving: true, renderElement: createVideoDivElement() }
+      videoStream: { isAvailable: true, renderElement: createVideoDivElement() }
     });
     const root = mountVideoGalleryWithLocalParticipant({ localParticipant });
     root.setProps({ layout: 'floatingLocalVideo' });
     const remoteParticipants = Array.from({ length: 1 }, () =>
       createRemoteParticipant({
-        videoStream: { isAvailable: true, isReceiving: true, renderElement: createVideoDivElement() }
+        videoStream: { isAvailable: true, renderElement: createVideoDivElement() }
       })
     );
     root.setProps({ remoteParticipants });
@@ -69,13 +67,13 @@ describe('VideoGallery floatingLocalVideo Layout', () => {
 
   test('should render horizontal gallery when remote video tiles more than max', () => {
     const localParticipant = createLocalParticipant({
-      videoStream: { isAvailable: true, isReceiving: true, renderElement: createVideoDivElement() }
+      videoStream: { isAvailable: true, renderElement: createVideoDivElement() }
     });
     const root = mountVideoGalleryWithLocalParticipant({ localParticipant });
     root.setProps({ layout: 'floatingLocalVideo' });
     const remoteParticipants = Array.from({ length: 6 }, () =>
       createRemoteParticipant({
-        videoStream: { isAvailable: true, isReceiving: true, renderElement: createVideoDivElement() }
+        videoStream: { isAvailable: true, renderElement: createVideoDivElement() }
       })
     );
     root.setProps({ remoteParticipants });
@@ -122,7 +120,7 @@ const createLocalParticipant = (attrs?: Partial<VideoGalleryLocalParticipant>): 
     videoStream: {
       id: attrs?.videoStream?.id ?? Math.random(),
       isAvailable: attrs?.videoStream?.isAvailable ?? false,
-      isReceiving: attrs?.videoStream?.isReceiving ?? false,
+      isReceiving: attrs?.videoStream?.isReceiving ?? true,
       isMirrored: attrs?.videoStream?.isMirrored ?? false,
       renderElement: attrs?.videoStream?.renderElement ?? undefined
     }
@@ -145,14 +143,14 @@ const createRemoteParticipant = (attrs?: Partial<VideoGalleryRemoteParticipant>)
     screenShareStream: {
       id: attrs?.screenShareStream?.id ?? 1,
       isAvailable: attrs?.screenShareStream?.isAvailable ?? false,
-      isReceiving: attrs?.screenShareStream?.isReceiving ?? false,
+      isReceiving: attrs?.screenShareStream?.isReceiving ?? true,
       isMirrored: attrs?.screenShareStream?.isMirrored ?? false,
       renderElement: attrs?.screenShareStream?.renderElement ?? undefined
     },
     videoStream: {
       id: attrs?.videoStream?.id ?? 1,
       isAvailable: attrs?.videoStream?.isAvailable ?? false,
-      isReceiving: attrs?.videoStream?.isReceiving ?? false,
+      isReceiving: attrs?.videoStream?.isReceiving ?? true,
       isMirrored: attrs?.videoStream?.isMirrored ?? false,
       renderElement: attrs?.videoStream?.renderElement ?? undefined
     },
