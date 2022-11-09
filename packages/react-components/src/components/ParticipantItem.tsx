@@ -182,6 +182,8 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
         styles?.avatar
       )}
       {...avatarOptions}
+      // Show a '?' icon if the display name of the participant is not available.
+      showUnknownPersonaCoin={!avatarOptions.text || avatarOptions.text === strings.displayNamePlaceholder}
     />
   );
 
