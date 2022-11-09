@@ -249,3 +249,24 @@ export const isDisabled = (option: boolean | { disabled: boolean } | undefined):
 
   return option.disabled;
 };
+
+/* @conditional-compile-remove(call-readiness) */
+/**
+ *
+ * This function uses permission API to determine if device permission state is granted, prompt or denied
+ * @returns whether device permission state is granted, prompt or denied
+ * If returned value is rejected, means permission API is not supported on this browser
+ * @private
+ */
+export const getDevicePermissionState = (
+  setVideoState: (state: PermissionState) => void,
+  setAudioState: (state: PermissionState) => void
+): void => {
+  navigator.permissions.query({ name: 'camera' }).then((result) => {
+    setVideoState(result.state);
+  });
+
+  navigator.permissions.query({ name: 'microphone' }).then((result) => {
+    setAudioState(result.state);
+  });
+};
