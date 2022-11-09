@@ -245,9 +245,8 @@ export const DEFAULT_COMPONENT_ICONS = {
   SendBoxSend: <Send20Regular />,
   SendBoxSendHovered: <Send20Filled />,
   VideoTileMicOff: <MicOff16Filled />,
-  /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */ DialpadBackspace: (
-    <Backspace20Regular />
-  ),
+  /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
+  DialpadBackspace: <Backspace20Regular />,
   /* @conditional-compile-remove(call-readiness) */
   DomainPermissionsSparkle: <DomainPermissionSparkle20Filled />,
   /* @conditional-compile-remove(call-readiness) */
