@@ -196,7 +196,7 @@ export type ScreenShareButtonSelector = (state: CallClientState, props: CallingB
 // @public
 export const screenShareButtonSelector: ScreenShareButtonSelector;
 
-// @public (undocumented)
+// @public
 export type SharedCallingHandlers = {
     onStartLocalVideo: () => Promise<void>;
     onToggleCamera: (options?: VideoStreamOptions) => Promise<void>;
@@ -250,7 +250,7 @@ export const useCallingSelector: <SelectorT extends (state: CallClientState, pro
 // @public
 export const useDeviceManager: () => StatefulDeviceManager | undefined;
 
-// @public
+// @beta
 export const useTeamsCall: () => undefined | /* @conditional-compile-remove(teams-identity-support) */ TeamsCall;
 
 // @beta

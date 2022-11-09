@@ -27,17 +27,13 @@ export type AreParamEqual<A extends (props: any) => JSX.Element | undefined, B e
 // @public
 export type AreTypeEqual<A, B> = A extends B ? (B extends A ? true : false) : false;
 
-// Warning: (ae-internal-missing-underscore) The name "CallAgentCommon" should be prefixed with an underscore because the declaration is marked as @internal
-//
-// @internal (undocumented)
+// @public
 export type CallAgentCommon = CallAgent | /* @conditional-compile-remove(teams-identity-support) */ CallAgentCommon_2;
 
 // @public
 export type CallbackType<KeyT, ArgsT extends unknown[], FnRetT> = (memoizedFn: FunctionWithKey<KeyT, ArgsT, FnRetT>) => FnRetT[];
 
-// Warning: (ae-internal-missing-underscore) The name "CallCommon" should be prefixed with an underscore because the declaration is marked as @internal
-//
-// @internal (undocumented)
+// @public
 export type CallCommon = Call | /* @conditional-compile-remove(teams-identity-support) */ CallCommon_2;
 
 // @public
@@ -63,9 +59,7 @@ export type FunctionWithKey<KeyT, ArgsT extends unknown[], RetT> = (key: KeyT, .
 // @internal
 export const _getApplicationId: () => string;
 
-// Warning: (ae-internal-missing-underscore) The name "IncomingCallCommon" should be prefixed with an underscore because the declaration is marked as @internal
-//
-// @internal (undocumented)
+// @public
 export type IncomingCallCommon = IncomingCall | /* @conditional-compile-remove(teams-identity-support) */ IncomingCallCommon_2;
 
 // @internal (undocumented)
@@ -115,14 +109,10 @@ export const _pxToRem: (px: number) => string;
 // @internal
 export const _safeJSONStringify: (value: unknown, replacer?: ((this: unknown, key: string, value: unknown) => unknown) | undefined, space?: string | number | undefined) => string | undefined;
 
-// Warning: (ae-internal-missing-underscore) The name "TeamsCall" should be prefixed with an underscore because the declaration is marked as @internal
-//
-// @internal (undocumented)
+// @beta (undocumented)
 export type TeamsCall = never | /* @conditional-compile-remove(teams-identity-support) */ TeamsCall_2;
 
-// Warning: (ae-internal-missing-underscore) The name "TeamsCallAgent" should be prefixed with an underscore because the declaration is marked as @internal
-//
-// @internal (undocumented)
+// @beta (undocumented)
 export type TeamsCallAgent = never | /* @conditional-compile-remove(teams-identity-support) */ TeamsCallAgent_2;
 
 // Warning: (ae-internal-missing-underscore) The name "TelemetryEvent" should be prefixed with an underscore because the declaration is marked as @internal

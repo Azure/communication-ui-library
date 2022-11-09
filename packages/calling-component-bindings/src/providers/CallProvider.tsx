@@ -74,7 +74,7 @@ export const useCall = (): Call | undefined => {
  * Useful when implementing a custom component that utilizes the providers
  * exported from this library.
  *
- * @public
+ * @beta
  */
 export const useTeamsCall = (): undefined | /* @conditional-compile-remove(teams-identity-support) */ TeamsCall => {
   const call = useContext(CallContext)?.call;

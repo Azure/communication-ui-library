@@ -25,8 +25,8 @@ import { CommunicationIdentifier } from '@azure/communication-common';
 
 /**
  * @public
+ * This is the set of handlers share exact same parameters and return values for all call types.
  */
-// This is the set of handlers share exact same parameters and return values for all call types.
 export type SharedCallingHandlers = {
   onStartLocalVideo: () => Promise<void>;
   onToggleCamera: (options?: VideoStreamOptions) => Promise<void>;
