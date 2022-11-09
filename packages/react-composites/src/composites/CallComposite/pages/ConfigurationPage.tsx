@@ -151,8 +151,9 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
     camera: PermissionState;
     microphone: PermissionState;
   } = {
-    camera: videoState ?? 'denied',
-    microphone: audioState ?? 'denied'
+    // fall back to using cameraPermissionGranted and microphonePermissionGranted if permission API is not supported
+    camera: videoState ?? (cameraPermissionGranted ? 'granted' : 'denied'),
+    microphone: audioState ?? (microphonePermissionGranted ? 'granted' : 'denied')
   };
   /* @conditional-compile-remove(call-readiness) */
   const networkErrors = errorBarProps.activeErrorMessages.filter((message) => message.type === 'callNetworkQualityLow');
