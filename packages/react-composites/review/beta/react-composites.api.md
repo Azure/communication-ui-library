@@ -1065,7 +1065,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     HoldCallContextualMenuItem: JSX.Element;
     HoldCallButton: JSX.Element;
     ResumeCall: JSX.Element;
-    BackSpace: JSX.Element;
+    DialpadBackspace: JSX.Element;
     DomainPermissionsSparkle: JSX.Element;
     DomainPermissionCamera: JSX.Element;
     DomainPermissionMic: JSX.Element;
