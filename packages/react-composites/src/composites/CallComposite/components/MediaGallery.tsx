@@ -84,7 +84,7 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
   const VideoGalleryMemoized = useMemo(() => {
     return (
       <>
-        <Announcer announcementString={announcerString} ariaLive={'assertive'} />
+        <Announcer announcementString={announcerString} ariaLive={'polite'} />
         <VideoGallery
           {...videoGalleryProps}
           localVideoViewOptions={localVideoViewOptions}
