@@ -491,6 +491,7 @@ export interface CallCompositeStrings {
     configurationPageTitle: string;
     copyInviteLinkActionedAriaLabel: string;
     copyInviteLinkButtonLabel: string;
+    defaultParticipantChangedString: string;
     defaultPlaceHolder: string;
     deniedPermissionToRoomDetails?: string;
     deniedPermissionToRoomTitle: string;

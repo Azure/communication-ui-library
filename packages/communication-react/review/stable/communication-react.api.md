@@ -397,6 +397,7 @@ export interface CallCompositeStrings {
     configurationPageCallDetails?: string;
     configurationPageTitle: string;
     copyInviteLinkActionedAriaLabel: string;
+    defaultParticipantChangedString: string;
     defaultPlaceHolder: string;
     failedToJoinCallDueToNoNetworkMoreDetails?: string;
     failedToJoinCallDueToNoNetworkTitle: string;
