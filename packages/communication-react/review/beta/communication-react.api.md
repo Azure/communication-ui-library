@@ -1556,8 +1556,8 @@ export const createAzureCommunicationCallAdapter: ({ userId, displayName, creden
 
 // @public
 export const createAzureCommunicationCallAdapterFromClient: (callClient: StatefulCallClient, callAgent: CallAgent, locator: CallAdapterLocator, options?: {
-    roleHint?: Role | undefined;
-} | undefined) => Promise<CallAdapter>;
+    roleHint?: Role;
+}) => Promise<CallAdapter>;
 
 // @public
 export const createAzureCommunicationCallWithChatAdapter: ({ userId, displayName, credential, endpoint, locator, alternateCallerId }: AzureCommunicationCallWithChatAdapterArgs) => Promise<CallWithChatAdapter>;
