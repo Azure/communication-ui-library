@@ -86,7 +86,8 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
       credential,
       endpoint,
       locator,
-      /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId
+      /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
+      /* @conditional-compile-remove(unsuspported-browser) */ callingFeatures: { unsupportedEnvironment: true }
     },
     afterAdapterCreate
   );
@@ -111,8 +112,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
       rtl={currentRtl}
       joinInvitationURL={window.location.href}
       formFactor={isMobileSession ? 'mobile' : 'desktop'}
-      /* @conditional-compile-remove(call-readiness) */
-      options={{ ...options, unsupportedBrowserOptedIn: true }}
+      options={options}
     />
   );
 };

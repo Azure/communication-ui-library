@@ -121,12 +121,6 @@ export type CallCompositeOptions = {
    * Setting this to `true` will add call readiness features to the call experience
    */
   callReadinessOptedIn?: boolean;
-  /* @conditional-compile-remove(unsupported-browser) */
-  /**
-   * Opt in Unsupported browser feature for CallComposite
-   * Setting this to `true` will add the unsupportedBrowser Check to the CallComposite.
-   */
-  unsupportedBrowserOptedIn?: boolean;
   /* @conditional-compile-remove(call-readiness) */
   /**
    * Callback you may provide to supply users with further steps to troubleshoot why they have been
@@ -317,15 +311,17 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
         </>
       );
       break;
-    case unsupportedEnvironmentPageTrampoline():
-      pageElement = (
-        <>
-          {
-            /* @conditional-compile-remove(unsupported-browser) */
-            <UnsupportedBrowserPage onTroubleshootingClick={props.options?.onEnvironmentInfoTroubleshootingClick} />
-          }
-        </>
-      );
+  }
+
+  if (adapter.getState().features?.unsupportedEnvironment && !adapter.getState().environmentInfo?.isSupportedBrowser) {
+    pageElement = (
+      <>
+        {
+          /* @conditional-compile-remove(unsupported-browser) */
+          <UnsupportedBrowserPage onTroubleshootingClick={props.options?.onEnvironmentInfoTroubleshootingClick} />
+        }
+      </>
+    );
   }
 
   if (!pageElement) {
@@ -384,7 +380,7 @@ export const CallComposite = (props: CallCompositeProps): JSX.Element => {
   const mobileView = formFactor === 'mobile';
 
   /* @conditional-compile-remove(unsupported-browser) */
-  if (props.options?.unsupportedBrowserOptedIn && adapter.populateEnvironmentInfo) {
+  if (adapter.getState().features?.unsupportedEnvironment && adapter.populateEnvironmentInfo) {
     adapter.populateEnvironmentInfo();
   }
 
@@ -432,12 +428,6 @@ const holdPageTrampoline = (): string => {
   /* @conditional-compile-remove(one-to-n-calling) */
   /* @conditional-compile-remove(PSTN-calls) */
   return 'hold';
-  return 'call';
-};
-
-const unsupportedEnvironmentPageTrampoline = (): string => {
-  /* @conditional-compile-remove(unsupported-browser) */
-  return 'unsupportedEnvironment';
   return 'call';
 };
 

@@ -144,6 +144,7 @@ export type AzureCommunicationCallAdapterArgs = {
     credential: CommunicationTokenCredential;
     locator: CallAdapterLocator;
     alternateCallerId?: string;
+    features?: CallAdapterOptionalFeatures;
 };
 
 // @public
@@ -154,6 +155,7 @@ export type AzureCommunicationCallWithChatAdapterArgs = {
     credential: CommunicationTokenCredential;
     locator: CallAndChatLocator | TeamsMeetingLinkLocator;
     alternateCallerId?: string;
+    callingFeatures?: CallAdapterOptionalFeatures;
 };
 
 // @public
@@ -250,12 +252,12 @@ export interface CallAdapterCallManagement {
     createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void | CreateVideoStreamViewResult>;
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
     // @beta
-    getEnvironmentInfo(): Promise<EnvironmentInfo>;
-    // @beta
     holdCall(): Promise<void>;
     joinCall(microphoneOn?: boolean): Call | undefined;
     leaveCall(forEveryone?: boolean): Promise<void>;
     mute(): Promise<void>;
+    // @beta
+    populateEnvironmentInfo?(): Promise<EnvironmentInfo>;
     removeParticipant(userId: string): Promise<void>;
     // @beta
     removeParticipant(participant: CommunicationIdentifier): Promise<void>;
@@ -284,6 +286,7 @@ export type CallAdapterClientState = {
     latestErrors: AdapterErrors;
     alternateCallerId?: string;
     environmentInfo?: EnvironmentInfo;
+    features?: CallAdapterOptionalFeatures;
 };
 
 // @public
@@ -299,6 +302,11 @@ export interface CallAdapterDeviceManagement {
 
 // @public
 export type CallAdapterLocator = TeamsMeetingLinkLocator | GroupCallLocator | /* @conditional-compile-remove(rooms) */ RoomCallLocator | /* @conditional-compile-remove(teams-adhoc-call) */ /* @conditional-compile-remove(PSTN-calls) */ CallParticipantsLocator;
+
+// @beta
+export type CallAdapterOptionalFeatures = {
+    unsupportedEnvironment?: boolean;
+};
 
 // @public
 export type CallAdapterState = CallAdapterUiState & CallAdapterClientState;
@@ -453,7 +461,6 @@ export type CallCompositeOptions = {
     callControls?: boolean | CallControlOptions;
     devicePermissions?: DevicePermissionRestrictions;
     callReadinessOptedIn?: boolean;
-    unsupportedBrowserOptedIn?: boolean;
     onPermissionsTroubleshootingClick?: (permissionsState: {
         camera: PermissionState;
         microphone: PermissionState;
@@ -725,13 +732,13 @@ export interface CallWithChatAdapterManagement {
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
     fetchInitialData(): Promise<void>;
     // @beta
-    getEnvironmentInfo(): Promise<EnvironmentInfo>;
-    // @beta
     holdCall: () => Promise<void>;
     joinCall(microphoneOn?: boolean): Call | undefined;
     leaveCall(forEveryone?: boolean): Promise<void>;
     loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
     mute(): Promise<void>;
+    // @beta
+    populateEnvironmentInfo?(): Promise<EnvironmentInfo>;
     queryCameras(): Promise<VideoDeviceInfo[]>;
     queryMicrophones(): Promise<AudioDeviceInfo[]>;
     querySpeakers(): Promise<AudioDeviceInfo[]>;
@@ -952,7 +959,6 @@ export type CallWithChatCompositeOptions = {
     }) => void;
     onNetworkingTroubleShootingClick?: () => void;
     callReadinessOptedIn?: boolean;
-    unsupportedBrowserOptedIn?: boolean;
 };
 
 // @public
@@ -1516,13 +1522,13 @@ export interface ControlBarProps {
 }
 
 // @public
-export const createAzureCommunicationCallAdapter: ({ userId, displayName, credential, locator, alternateCallerId }: AzureCommunicationCallAdapterArgs) => Promise<CallAdapter>;
+export const createAzureCommunicationCallAdapter: ({ userId, displayName, credential, locator, alternateCallerId, features }: AzureCommunicationCallAdapterArgs) => Promise<CallAdapter>;
 
 // @public
-export const createAzureCommunicationCallAdapterFromClient: (callClient: StatefulCallClient, callAgent: CallAgent, locator: CallAdapterLocator) => Promise<CallAdapter>;
+export const createAzureCommunicationCallAdapterFromClient: (callClient: StatefulCallClient, callAgent: CallAgent, locator: CallAdapterLocator, features?: CallAdapterOptionalFeatures | undefined) => Promise<CallAdapter>;
 
 // @public
-export const createAzureCommunicationCallWithChatAdapter: ({ userId, displayName, credential, endpoint, locator, alternateCallerId }: AzureCommunicationCallWithChatAdapterArgs) => Promise<CallWithChatAdapter>;
+export const createAzureCommunicationCallWithChatAdapter: ({ userId, displayName, credential, endpoint, locator, alternateCallerId, callingFeatures }: AzureCommunicationCallWithChatAdapterArgs) => Promise<CallWithChatAdapter>;
 
 // @public
 export const createAzureCommunicationCallWithChatAdapterFromClients: ({ callClient, callAgent, callLocator, chatClient, chatThreadClient }: AzureCommunicationCallWithChatAdapterFromClientArgs) => Promise<CallWithChatAdapter>;

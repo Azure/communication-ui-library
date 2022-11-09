@@ -20,6 +20,8 @@ import { WEB_APP_TITLE } from '../utils/AppUtils';
 import { useIsMobile } from '../utils/useIsMobile';
 /* @conditional-compile-remove(call-readiness) */
 import { CallCompositeOptions } from '@azure/communication-react';
+/* @conditional-compile-remove(unsuspported-browser) */
+import { CallAdapterOptionalFeatures } from '@azure/communication-react';
 
 export interface CallScreenProps {
   token: string;
@@ -89,6 +91,11 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     [callReadinessOptedIn]
   );
 
+  /* @conditional-compile-remove(unsuspported-browser) */
+  const callingFeatures: CallAdapterOptionalFeatures = {
+    unsupportedEnvironment: true
+  };
+
   const adapter = useAzureCommunicationCallAdapter(
     {
       userId,
@@ -96,7 +103,9 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
       credential,
       locator: callLocator,
       /* @conditional-compile-remove(PSTN-calls) */
-      alternateCallerId
+      alternateCallerId,
+      /* @conditional-compile-remove(unsuspported-browser) */
+      features: callingFeatures
     },
     afterCreate
   );

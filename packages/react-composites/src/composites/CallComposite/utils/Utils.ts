@@ -143,13 +143,6 @@ export const getCallCompositePage: GetCallCompositePageFunction = (
   previousCall,
   environmentInfo?
 ): CallCompositePage => {
-  /* @conditional-compile-remove(unsupported-browser) */
-  if (environmentInfo && environmentInfo.isSupportedBrowser === false) {
-    return 'unsupportedEnvironment';
-    /**TODO: Remove this to make it so that the environment info is used in the composite only to show a
-     * overlay
-     */
-  }
   // Must check for ongoing call *before* looking at any previous calls.
   // If the composite completes one call and joins another, the previous calls
   // will be populated, but not relevant for determining the page.

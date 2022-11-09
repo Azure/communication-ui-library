@@ -79,6 +79,7 @@ import { StatefulChatClient } from '@internal/chat-stateful-client';
 import { ChatThreadClient } from '@azure/communication-chat';
 import { useEffect, useRef, useState } from 'react';
 import { _toCommunicationIdentifier } from '@internal/acs-ui-common';
+import { CallAdapterOptionalFeatures } from '../../CallComposite/adapter/CallAdapter';
 
 type CallWithChatAdapterStateChangedHandler = (newState: CallWithChatAdapterState) => void;
 
@@ -597,6 +598,8 @@ export type AzureCommunicationCallWithChatAdapterArgs = {
   locator: CallAndChatLocator | TeamsMeetingLinkLocator;
   /* @conditional-compile-remove(PSTN-calls) */
   alternateCallerId?: string;
+  /* @conditional-compile-remove(unsupported-browser) */
+  callingFeatures?: CallAdapterOptionalFeatures;
 };
 
 /**
@@ -611,7 +614,8 @@ export const createAzureCommunicationCallWithChatAdapter = async ({
   credential,
   endpoint,
   locator,
-  /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId
+  /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
+  callingFeatures
 }: AzureCommunicationCallWithChatAdapterArgs): Promise<CallWithChatAdapter> => {
   const callAdapterLocator = isTeamsMeetingLinkLocator(locator) ? locator : locator.callLocator;
   const createCallAdapterPromise = createAzureCommunicationCallAdapter({
@@ -619,7 +623,8 @@ export const createAzureCommunicationCallWithChatAdapter = async ({
     displayName,
     credential,
     locator: callAdapterLocator,
-    /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId
+    /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
+    /* @conditional-compile-remove(unsupported-browser) */ features: callingFeatures
   });
 
   const threadId = isTeamsMeetingLinkLocator(locator)

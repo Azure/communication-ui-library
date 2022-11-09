@@ -51,7 +51,8 @@ import {
   ParticipantsJoinedListener,
   ParticipantsLeftListener,
   DiagnosticChangedEventListner,
-  CallAdapterCallEndedEvent
+  CallAdapterCallEndedEvent,
+  CallAdapterOptionalFeatures
 } from './CallAdapter';
 import { getCallCompositePage, IsCallEndedPage, isCameraOn } from '../utils';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
@@ -76,7 +77,12 @@ class CallContext {
   private state: CallAdapterState;
   private callId: string | undefined;
 
-  constructor(clientState: CallClientState, isTeamsCall: boolean, maxListeners = 50) {
+  constructor(
+    clientState: CallClientState,
+    isTeamsCall: boolean,
+    features?: CallAdapterOptionalFeatures,
+    maxListeners = 50
+  ) {
     this.state = {
       isLocalPreviewMicrophoneEnabled: false,
       userId: clientState.userId,
@@ -87,7 +93,8 @@ class CallContext {
       latestErrors: clientState.latestErrors,
       isTeamsCall,
       /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId: clientState.alternateCallerId,
-      /* @conditional-compile-remove(unsupported-browser) */ environmentInfo: clientState.environmentInfo
+      /* @conditional-compile-remove(unsupported-browser) */ environmentInfo: clientState.environmentInfo,
+      /* @conditional-compile-remove(unsupported-browser) */ features: features
     };
     this.emitter.setMaxListeners(maxListeners);
   }
@@ -132,11 +139,7 @@ class CallContext {
 
     // As the state is transitioning to a new state, trigger appropriate callback events.
     const oldPage = this.state.page;
-    const newPage = getCallCompositePage(
-      call,
-      latestEndedCall,
-      /* @conditional-compile-remove(unsupported-browser) */ clientState.environmentInfo
-    );
+    const newPage = getCallCompositePage(call, latestEndedCall);
     if (!IsCallEndedPage(oldPage) && IsCallEndedPage(newPage)) {
       this.emitter.emit('callEnded', { callId: this.callId });
       // Reset the callId to undefined as the call has ended.
@@ -205,7 +208,8 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     callClient: StatefulCallClient,
     locator: CallAdapterLocator,
     callAgent: CallAgent,
-    deviceManager: StatefulDeviceManager
+    deviceManager: StatefulDeviceManager,
+    features?: CallAdapterOptionalFeatures
   ) {
     this.bindPublicMethods();
     this.callClient = callClient;
@@ -213,7 +217,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     this.locator = locator;
     this.deviceManager = deviceManager;
     const isTeamsMeeting = 'meetingLink' in this.locator;
-    this.context = new CallContext(callClient.getState(), isTeamsMeeting);
+    this.context = new CallContext(callClient.getState(), isTeamsMeeting, features);
 
     this.context.onCallEnded((endCallData) => this.emitter.emit('callEnded', endCallData));
 
@@ -474,6 +478,9 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
   /* @conditional-compile-remove(unsupported-browser) */
   public async populateEnvironmentInfo(): Promise<EnvironmentInfo> {
     return await this.asyncTeeErrorToEventEmitter(async () => {
+      if (!this.context.getState().features?.unsupportedEnvironment) {
+        throw new Error('unsupportedEnvironment feature not enabled.');
+      }
       return await this.callClient.feature(Features.DebugInfo).getEnvironmentInfo();
     });
   }
@@ -752,6 +759,8 @@ export type AzureCommunicationCallAdapterArgs = {
   locator: CallAdapterLocator;
   /* @conditional-compile-remove(PSTN-calls) */
   alternateCallerId?: string;
+  /* @conditional-compile-remove(unsupported-browser) */
+  features?: CallAdapterOptionalFeatures;
 };
 
 /**
@@ -768,7 +777,8 @@ export const createAzureCommunicationCallAdapter = async ({
   displayName,
   credential,
   locator,
-  /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId
+  /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
+  /* @conditional-compile-remove(unsupported-browser) */ features
 }: AzureCommunicationCallAdapterArgs): Promise<CallAdapter> => {
   const callClient = createStatefulCallClient({
     userId,
@@ -777,7 +787,7 @@ export const createAzureCommunicationCallAdapter = async ({
   const callAgent = await callClient.createCallAgent(credential, {
     displayName
   });
-  const adapter = createAzureCommunicationCallAdapterFromClient(callClient, callAgent, locator);
+  const adapter = createAzureCommunicationCallAdapterFromClient(callClient, callAgent, locator, features);
   return adapter;
 };
 
@@ -816,8 +826,14 @@ export const useAzureCommunicationCallAdapter = (
    */
   beforeDispose?: (adapter: CallAdapter) => Promise<void>
 ): CallAdapter | undefined => {
-  const { credential, displayName, locator, userId, /*@conditional-compile-remove(PSTN-calls) */ alternateCallerId } =
-    args;
+  const {
+    credential,
+    displayName,
+    locator,
+    userId,
+    /*@conditional-compile-remove(PSTN-calls) */ alternateCallerId,
+    /* @conditional-compile-remove(unsupported-browser) */ features
+  } = args;
 
   // State update needed to rerender the parent component when a new adapter is created.
   const [adapter, setAdapter] = useState<CallAdapter | undefined>(undefined);
@@ -857,7 +873,8 @@ export const useAzureCommunicationCallAdapter = (
           displayName,
           locator,
           userId,
-          /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId
+          /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
+          /* @conditional-compile-remove(unsupported-browser) */ features
         });
         if (afterCreateRef.current) {
           newAdapter = await afterCreateRef.current(newAdapter);
@@ -908,10 +925,17 @@ export const useAzureCommunicationCallAdapter = (
 export const createAzureCommunicationCallAdapterFromClient = async (
   callClient: StatefulCallClient,
   callAgent: CallAgent,
-  locator: CallAdapterLocator
+  locator: CallAdapterLocator,
+  /* @conditional-compile-remove(unsupported-browser) */ features?: CallAdapterOptionalFeatures
 ): Promise<CallAdapter> => {
   const deviceManager = (await callClient.getDeviceManager()) as StatefulDeviceManager;
-  return new AzureCommunicationCallAdapter(callClient, locator, callAgent, deviceManager);
+  return new AzureCommunicationCallAdapter(
+    callClient,
+    locator,
+    callAgent,
+    deviceManager,
+    /* @conditional-compile-remove(unsupported-browser) */ features
+  );
 };
 
 const isCallError = (e: Error): e is CallError => {

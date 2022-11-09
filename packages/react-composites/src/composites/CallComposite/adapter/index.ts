@@ -10,6 +10,8 @@ export type { AzureCommunicationCallAdapterArgs, CallAdapterLocator } from './Az
 
 /* @conditional-compile-remove(teams-adhoc-call) */
 export type { CallParticipantsLocator } from './AzureCommunicationCallAdapter';
+/* @conditional-compile-remove(unsupported-browser) */
+export type { CallAdapterOptionalFeatures } from './CallAdapter';
 
 export type {
   CallAdapter,
