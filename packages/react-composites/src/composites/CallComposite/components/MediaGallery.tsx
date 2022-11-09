@@ -17,10 +17,8 @@ import { useHandlers } from '../hooks/useHandlers';
 import { useSelector } from '../hooks/useSelector';
 import { localVideoCameraCycleButtonSelector } from '../selectors/LocalVideoTileSelector';
 import { LocalVideoCameraCycleButton } from '@internal/react-components';
-import { useAdapter } from '../adapter/CallAdapterProvider';
-import { useLocale } from '../../localization';
-import { RemoteParticipant } from '@azure/communication-calling';
 import { _formatString } from '@internal/acs-ui-common';
+import { useParticipantChangedAnnouncement } from '../utils/MediaGalleryUtils';
 
 const VideoGalleryStyles = {
   root: {
@@ -127,91 +125,4 @@ export const useLocalVideoStartTrigger = (isLocalVideoAvailable: boolean, should
       setIsButtonStatusSynced(true);
     }
   }, [shouldTransition, isButtonStatusSynced, isPreviewCameraOn, isLocalVideoAvailable, mediaGalleryHandlers]);
-};
-
-/**
- * sets the announcement string whenever a Participant comes or goes from a call to be
- * used by the system narrator.
- *
- * @returns string to be used by the narrator and Announcer component
- */
-const useParticipantChangedAnnouncement = (): string => {
-  const adapter = useAdapter();
-  const locale = useLocale().strings.call;
-  const [announcerString, setAnnouncerString] = useState<string>('');
-  /**
-   * state to track whether there is currently a timer set in the MediaGallery
-   */
-  const [timeoutState, setTimeoutState] = useState<ReturnType<typeof setTimeout>>();
-
-  const setParticipantEventString = (string: string): void => {
-    setAnnouncerString('');
-
-    if (timeoutState) {
-      clearTimeout(timeoutState);
-      setTimeoutState(undefined);
-    }
-    setTimeoutState(
-      /**
-       * These set timeouts are needed to clear the announcer string in case we have multiple
-       * participants join. Since the narrator will only announce the string in the
-       * Announcer component should the string change.
-       */
-      setTimeout(() => {
-        setAnnouncerString(string);
-        setTimeoutState(undefined);
-      }, 500)
-    );
-  };
-
-  useEffect(() => {
-    const onPersonJoined = (e: { joined: RemoteParticipant[] }): void => {
-      setParticipantEventString(
-        createAnnouncmentString(locale.participantJoinedNoticeString, locale.defaultParticipantChangedString, e.joined)
-      );
-    };
-    adapter.on('participantsJoined', onPersonJoined);
-
-    const onPersonLeft = (e: { removed: RemoteParticipant[] }): void => {
-      setParticipantEventString(
-        createAnnouncmentString(locale.participantLeftNoticeString, locale.defaultParticipantChangedString, e.removed)
-      );
-    };
-    adapter.on('participantsLeft', onPersonLeft);
-
-    return () => {
-      adapter.off('participantsJoined', onPersonJoined);
-      adapter.off('participantsLeft', onPersonLeft);
-    };
-  }, [adapter, locale.participantJoinedNoticeString, locale.participantLeftNoticeString, setParticipantEventString]);
-
-  return announcerString;
-};
-
-/**
- * Generates the announcement string for when a participant joins or leaves a call.
- */
-const createAnnouncmentString = (
-  localeString: string,
-  defaultName: string,
-  participants?: RemoteParticipant[]
-): string => {
-  if (participants) {
-    if (participants.length === 1) {
-      return _formatString(localeString, {
-        displayName: participants[0].displayName ? participants[0].displayName : defaultName
-      });
-    } else {
-      let names = '';
-      participants.forEach((p) => {
-        if (names === '') {
-          names = names + (p.displayName ? p.displayName : defaultName);
-        }
-        names = names + ' ' + (p.displayName ? p.displayName : defaultName);
-      });
-      return _formatString(localeString, { displayName: names });
-    }
-  } else {
-    return _formatString(localeString, { displayName: defaultName });
-  }
 };
