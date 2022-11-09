@@ -5,7 +5,7 @@ import { ThemeToolTipWithPanel } from './ThemeToolTipWithPanel';
 import { initTelemetry } from './telemetry';
 import { TextDirectionToolTip } from './TextDirectionToolTip';
 import { LocaleToolTip } from './LocaleToolTip';
-import { initializeIcons, registerIcons } from '@fluentui/react';
+import { initializeIcons, loadTheme, registerIcons } from '@fluentui/react';
 import { initializeFileTypeIcons } from '@fluentui/react-file-type-icons';
 import { DEFAULT_COMPONENT_ICONS } from '@azure/communication-react';
 import { HandRight20Regular, Open20Regular, Record20Regular, People20Regular } from '@fluentui/react-icons';
@@ -17,6 +17,9 @@ const storyIcons = {
   Record: <Record20Regular />,
   RightHand: <HandRight20Regular />
 };
+
+// Removing `loadTheme({})` causes storybook declaration exception.
+loadTheme({});
 initializeIcons();
 initializeFileTypeIcons();
 registerIcons({ icons: {...DEFAULT_COMPONENT_ICONS, ...storyIcons} });
