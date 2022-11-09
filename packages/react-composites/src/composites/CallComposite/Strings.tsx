@@ -335,4 +335,8 @@ export interface CallCompositeStrings {
    * Notice to be announced be narrator when a participant leaves a call
    */
   participantLeftNoticeString: string;
+  /**
+   * string to be used to announce a change in participant if they have no displayName
+   */
+  defaultParticipantChangedString: string;
 }

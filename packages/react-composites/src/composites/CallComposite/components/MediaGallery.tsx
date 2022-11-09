@@ -19,6 +19,8 @@ import { localVideoCameraCycleButtonSelector } from '../selectors/LocalVideoTile
 import { LocalVideoCameraCycleButton } from '@internal/react-components';
 import { useAdapter } from '../adapter/CallAdapterProvider';
 import { useLocale } from '../../localization';
+import { RemoteParticipant } from '@azure/communication-calling';
+import { _formatString } from '@internal/acs-ui-common';
 
 const VideoGalleryStyles = {
   root: {
@@ -163,13 +165,17 @@ const useParticipantChangedAnnouncement = (): string => {
   };
 
   useEffect(() => {
-    const onPersonJoined = (): void => {
-      setParticipantEventString(locale.participantJoinedNoticeString);
+    const onPersonJoined = (e: { joined: RemoteParticipant[] }): void => {
+      setParticipantEventString(
+        createAnnouncmentString(locale.participantJoinedNoticeString, locale.defaultParticipantChangedString, e.joined)
+      );
     };
     adapter.on('participantsJoined', onPersonJoined);
 
-    const onPersonLeft = (): void => {
-      setParticipantEventString(locale.participantLeftNoticeString);
+    const onPersonLeft = (e: { removed: RemoteParticipant[] }): void => {
+      setParticipantEventString(
+        createAnnouncmentString(locale.participantLeftNoticeString, locale.defaultParticipantChangedString, e.removed)
+      );
     };
     adapter.on('participantsLeft', onPersonLeft);
 
@@ -180,4 +186,32 @@ const useParticipantChangedAnnouncement = (): string => {
   }, [adapter, locale.participantJoinedNoticeString, locale.participantLeftNoticeString, setParticipantEventString]);
 
   return announcerString;
+};
+
+/**
+ * Generates the announcement string for when a participant joins or leaves a call.
+ */
+const createAnnouncmentString = (
+  localeString: string,
+  defaultName: string,
+  participants?: RemoteParticipant[]
+): string => {
+  if (participants) {
+    if (participants.length === 1) {
+      return _formatString(localeString, {
+        displayName: participants[0].displayName ? participants[0].displayName : defaultName
+      });
+    } else {
+      let names = '';
+      participants.forEach((p) => {
+        if (names === '') {
+          names = names + (p.displayName ? p.displayName : defaultName);
+        }
+        names = names + ' ' + (p.displayName ? p.displayName : defaultName);
+      });
+      return _formatString(localeString, { displayName: names });
+    }
+  } else {
+    return _formatString(localeString, { displayName: defaultName });
+  }
 };
