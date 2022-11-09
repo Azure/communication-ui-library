@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 
 import { Call } from '@azure/communication-calling';
+import { ProxyCallCommon } from './CallDeclarativeCommon';
 import { CallContext } from './CallContext';
 
 /**
@@ -16,69 +17,19 @@ export interface DeclarativeCall extends Call {
   unsubscribe(): void;
 }
 
-class ProxyCall implements ProxyHandler<Call> {
-  private _context: CallContext;
-
-  constructor(context: CallContext) {
-    this._context = context;
-  }
-
-  public unsubscribe(): void {
-    /** No subscriptions yet. But there will be one for transfer feature soon. */
-  }
-
+class ProxyCall extends ProxyCallCommon implements ProxyHandler<Call> {
   public get<P extends keyof Call>(target: Call, prop: P): any {
     switch (prop) {
-      case 'mute': {
-        return this._context.withAsyncErrorTeedToState(async function (...args: Parameters<Call['mute']>) {
-          return await target.mute(...args);
-        }, 'Call.mute');
-      }
-      case 'unmute': {
-        return this._context.withAsyncErrorTeedToState(async function (...args: Parameters<Call['unmute']>) {
-          return await target.unmute(...args);
-        }, 'Call.unmute');
-      }
-      case 'startVideo': {
-        return this._context.withAsyncErrorTeedToState(async function (...args: Parameters<Call['startVideo']>) {
-          return await target.startVideo(...args);
-        }, 'Call.startVideo');
-      }
-      case 'stopVideo': {
-        return this._context.withAsyncErrorTeedToState(async function (...args: Parameters<Call['stopVideo']>) {
-          return await target.stopVideo(...args);
-        }, 'Call.stopVideo');
-      }
-      case 'startScreenSharing': {
-        return this._context.withAsyncErrorTeedToState(async function (
-          ...args: Parameters<Call['startScreenSharing']>
-        ) {
-          return await target.startScreenSharing(...args);
-        },
-        'Call.startScreenSharing');
-      }
-      case 'stopScreenSharing': {
-        return this._context.withAsyncErrorTeedToState(async function (...args: Parameters<Call['stopScreenSharing']>) {
-          return await target.stopScreenSharing(...args);
-        }, 'Call.stopScreenSharing');
-      }
-      case 'hold': {
-        return this._context.withAsyncErrorTeedToState(async function (...args: Parameters<Call['hold']>) {
-          return await target.hold(...args);
-        }, 'Call.hold');
-      }
-      case 'resume': {
-        return this._context.withAsyncErrorTeedToState(async function (...args: Parameters<Call['resume']>) {
-          return await target.resume(...args);
-        }, 'Call.resume');
-      }
       case 'addParticipant': {
-        return this._context.withAsyncErrorTeedToState(async function (...args: Parameters<Call['addParticipant']>) {
+        return this.getContext().withAsyncErrorTeedToState(async function (
+          ...args: Parameters<Call['addParticipant']>
+        ) {
           return await target.addParticipant(...args);
-        }, 'Call.addParticipant');
+        },
+        'Call.addParticipant');
       }
       default:
-        return Reflect.get(target, prop);
+        return super.get(target, prop as any);
     }
   }
 }
