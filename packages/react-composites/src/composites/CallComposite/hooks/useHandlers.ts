@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { CallingHandlersCommon } from '@internal/calling-component-bindings';
+import { CommonCallingHandlers } from '@internal/calling-component-bindings';
 import { CommonProperties, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { ReactElement } from 'react';
 import memoizeOne from 'memoize-one';
@@ -18,12 +18,12 @@ import { DtmfTone } from '@azure/communication-calling';
 export const useHandlers = <PropsT>(
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   _component: (props: PropsT) => ReactElement | null
-): Pick<CallingHandlersCommon, CommonProperties<CallingHandlersCommon, PropsT>> => {
+): Pick<CommonCallingHandlers, CommonProperties<CommonCallingHandlers, PropsT>> => {
   return createCompositeHandlers(useAdapter());
 };
 
 const createCompositeHandlers = memoizeOne(
-  (adapter: CallAdapterCommon): CallingHandlersCommon => ({
+  (adapter: CallAdapterCommon): CommonCallingHandlers => ({
     onCreateLocalStreamView: async (options) => {
       return await adapter.createStreamView(undefined, options);
     },

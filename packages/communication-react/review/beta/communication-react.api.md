@@ -10,10 +10,8 @@ import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { AudioDeviceInfo } from '@azure/communication-calling';
 import { Call } from '@azure/communication-calling';
 import { CallAgent } from '@azure/communication-calling';
-import { CallAgentCommon as CallAgentCommon_2 } from '@azure/communication-calling';
 import { CallClient } from '@azure/communication-calling';
 import { CallClientOptions } from '@azure/communication-calling';
-import { CallCommon as CallCommon_2 } from '@azure/communication-calling';
 import { CallDirection } from '@azure/communication-calling';
 import { CallEndReason } from '@azure/communication-calling';
 import { CallerInfo } from '@azure/communication-calling';
@@ -346,11 +344,6 @@ export type CallAdapterUiState = {
     page: CallCompositePage;
 };
 
-// Warning: (ae-internal-missing-underscore) The name "CallAgentCommon" should be prefixed with an underscore because the declaration is marked as @internal
-//
-// @internal (undocumented)
-export type CallAgentCommon = CallAgent | /* @conditional-compile-remove(teams-identity-support) */ CallAgentCommon_2;
-
 // @public
 export const CallAgentProvider: (props: CallAgentProviderProps) => JSX.Element;
 
@@ -404,11 +397,6 @@ export interface CallClientState {
     latestErrors: CallErrors;
     userId: CommunicationIdentifierKind;
 }
-
-// Warning: (ae-internal-missing-underscore) The name "CallCommon" should be prefixed with an underscore because the declaration is marked as @internal
-//
-// @internal (undocumented)
-export type CallCommon = Call | /* @conditional-compile-remove(teams-identity-support) */ CallCommon_2;
 
 // @public
 export const CallComposite: (props: CallCompositeProps) => JSX.Element;
@@ -620,9 +608,6 @@ export type CallErrors = {
 // @public
 export type CallErrorTarget = 'Call.addParticipant' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.dispose' | 'Call.feature' | 'Call.hangUp' | 'Call.hold' | 'Call.mute' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.muteIncomingAudio' | 'Call.off' | 'Call.on' | 'Call.removeParticipant' | 'Call.resume' | 'Call.sendDtmf' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.startAudio' | 'Call.startScreenSharing' | 'Call.startVideo' | 'Call.stopScreenSharing' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.stopAudio' | 'Call.stopVideo' | 'Call.unmute' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.unmuteIncomingAudio' | 'CallAgent.dispose' | 'CallAgent.feature' | 'CallAgent.join' | 'CallAgent.off' | 'CallAgent.on' | 'CallAgent.startCall' | 'CallClient.createCallAgent' | /* @conditional-compile-remove(calling-beta-sdk) */ /* @conditional-compile-remove(teams-identity-support) */ 'CallClient.createTeamsCallAgent' | 'CallClient.feature' | 'CallClient.getDeviceManager' | /* @conditional-compile-remove(calling-beta-sdk) */ 'CallClient.getEnvironmentInfo' | 'DeviceManager.askDevicePermission' | 'DeviceManager.getCameras' | 'DeviceManager.getMicrophones' | 'DeviceManager.getSpeakers' | 'DeviceManager.off' | 'DeviceManager.on' | 'DeviceManager.selectMicrophone' | 'DeviceManager.selectSpeaker' | 'IncomingCall.accept' | 'IncomingCall.reject' | /* @conditional-compile-remove(calling-beta-sdk) */ /* @conditional-compile-remove(teams-identity-support) */ 'TeamsCall.addParticipant';
 
-// @public (undocumented)
-export type CallHandlersOf<AgentType extends CallAgent | /* @conditional-compile-remove(teams-identity-support) */ TeamsCallAgent> = AgentType extends CallAgent ? CallingHandlers : never | /* @conditional-compile-remove(teams-identity-support) */ TeamsCallingHandlers;
-
 // @public
 export type CallIdChangedListener = (event: {
     callId: string;
@@ -703,9 +688,6 @@ export interface CallState {
     transcription: TranscriptionCallFeature;
     type: 'Teams' | 'ACS';
 }
-
-// @public (undocumented)
-export type CallTypeOf<AgentType extends CallAgent | /* @conditional-compile-remove(teams-identity-support) */ TeamsCallAgent> = AgentType extends CallAgent ? Call : never | /* @conditional-compile-remove(teams-identity-support) */ TeamsCall;
 
 // @public (undocumented)
 export type CallWithChatAdapter = Omit<CallWithChatAdapterCommon, keyof ACSCallManagement> & ACSCallManagement;
@@ -1582,14 +1564,11 @@ export const createAzureCommunicationChatAdapter: ({ endpoint: endpointUrl, user
 // @public
 export const createAzureCommunicationChatAdapterFromClient: (chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient) => Promise<ChatAdapter>;
 
-// @public (undocumented)
-export const createDefaultCallingHandlers: <AgentType extends CallAgent | TeamsCallAgent = CallAgent>(callClient: StatefulCallClient, callAgent: AgentType | undefined, deviceManager: StatefulDeviceManager | undefined, call: CallTypeOf<AgentType> | undefined) => CallHandlersOf<AgentType>;
+// @public
+export const createDefaultCallingHandlers: (callClient: StatefulCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined) => CallingHandlers;
 
 // @public
 export const createDefaultChatHandlers: (chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient) => ChatHandlers;
-
-// @beta
-export const createDefaultTeamsCallingHandlers: (callClient: StatefulCallClient, callAgent: undefined | /* @conditional-compile-remove(teams-identity-support) */ TeamsCallAgent, deviceManager: StatefulDeviceManager | undefined, call: undefined | /* @conditional-compile-remove(teams-identity-support) */ TeamsCall) => never | TeamsCallingHandlers;
 
 // @public
 export const createStatefulCallClient: (args: StatefulCallClientArgs, options?: StatefulCallClientOptions | undefined) => StatefulCallClient;
@@ -2249,16 +2228,6 @@ export interface IncomingCallState {
     startTime: Date;
 }
 
-// Warning: (ae-internal-missing-underscore) The name "isACSCall" should be prefixed with an underscore because the declaration is marked as @internal
-//
-// @internal (undocumented)
-export const isACSCall: (call: CallCommon) => call is Call;
-
-// Warning: (ae-internal-missing-underscore) The name "isACSCallAgent" should be prefixed with an underscore because the declaration is marked as @internal
-//
-// @internal (undocumented)
-export const isACSCallAgent: (callAgent: CallAgentCommon) => callAgent is CallAgent;
-
 // @public
 export type IsLocalScreenSharingActiveChangedListener = (event: {
     isScreenSharingOn: boolean;
@@ -2275,16 +2244,6 @@ export type IsSpeakingChangedListener = (event: {
     identifier: CommunicationIdentifierKind;
     isSpeaking: boolean;
 }) => void;
-
-// Warning: (ae-internal-missing-underscore) The name "isTeamsCall" should be prefixed with an underscore because the declaration is marked as @internal
-//
-// @internal (undocumented)
-export const isTeamsCall: (call: CallCommon) => call is TeamsCall;
-
-// Warning: (ae-internal-missing-underscore) The name "isTeamsCallAgent" should be prefixed with an underscore because the declaration is marked as @internal
-//
-// @internal (undocumented)
-export const isTeamsCallAgent: (callAgent: CallAgentCommon) => callAgent is TeamsCallAgent;
 
 // @public
 export interface JumpToNewMessageButtonProps {
@@ -2974,9 +2933,19 @@ export interface SystemMessageCommon extends MessageCommon {
     messageType: 'system';
 }
 
+// @beta (undocumented)
+export type TeamsCallAdapter = Omit<CallAdapterCommon, keyof TeamsCallManagement> & TeamsCallManagement;
+
 // @beta
 export type TeamsCallingHandlers = SharedCallingHandlers & {
     onStartCall: (participants: CommunicationIdentifier[], options?: StartCallOptions) => void | /* @conditional-compile-remove(teams-identity-support) */ TeamsCall;
+};
+
+// @beta (undocumented)
+export type TeamsCallManagement = {
+    joinCall(microphoneOn?: boolean): TeamsCall | undefined;
+    startCall(participants: string[], options?: StartCallOptions): TeamsCall | undefined;
+    startCall(participants: CommunicationIdentifier[], options?: StartCallOptions): TeamsCall | undefined;
 };
 
 // @public

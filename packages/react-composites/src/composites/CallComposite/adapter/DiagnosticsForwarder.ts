@@ -7,7 +7,7 @@ import {
   MediaDiagnosticChangedEventArgs,
   NetworkDiagnosticChangedEventArgs
 } from '@azure/communication-calling';
-import { CallCommon } from '@internal/calling-stateful-client';
+import { CallCommon } from '@internal/acs-ui-common';
 import { EventEmitter } from 'events';
 import { MediaDiagnosticChangedEvent, NetworkDiagnosticChangedEvent } from './CallAdapter';
 

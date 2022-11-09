@@ -2,18 +2,17 @@
 // Licensed under the MIT license.
 
 import {
+  CallingHandlers,
   createDefaultCallingHandlers,
+  TeamsCallingHandlers,
   _isInCall,
-  _isInLobbyOrConnecting,
-  CallHandlersOf,
-  CallTypeOf
+  _isInLobbyOrConnecting
 } from '@internal/calling-component-bindings';
 
 /* @conditional-compile-remove(teams-identity-support) */
 import { createDefaultTeamsCallingHandlers } from '@internal/calling-component-bindings';
 import {
   CallClientState,
-  CallCommon,
   CallError,
   CallState,
   createStatefulCallClient,
@@ -21,7 +20,7 @@ import {
   StatefulDeviceManager
 } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(teams-identity-support) */
-import { isACSCallAgent } from '@internal/calling-stateful-client';
+import { CallAgentCommon, isACSCall, isACSCallAgent, isTeamsCall, isTeamsCallAgent } from '@internal/acs-ui-common';
 import {
   AudioOptions,
   CallAgent,
@@ -34,7 +33,9 @@ import {
   PermissionConstraints,
   PropertyChangedEvent,
   StartCallOptions,
-  VideoOptions
+  VideoOptions,
+  Call,
+  TeamsCall
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-identity-support) */
 import { TeamsCallAgent } from '@azure/communication-calling';
@@ -62,7 +63,7 @@ import {
 import { TeamsCallAdapter } from './CallAdapter';
 import { getCallCompositePage, IsCallEndedPage, isCameraOn } from '../utils';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
-import { toFlatCommunicationIdentifier, _toCommunicationIdentifier } from '@internal/acs-ui-common';
+import { toFlatCommunicationIdentifier, _toCommunicationIdentifier, CallCommon } from '@internal/acs-ui-common';
 import {
   CommunicationTokenCredential,
   CommunicationUserIdentifier,
@@ -76,6 +77,16 @@ import { ParticipantSubscriber } from './ParticipantSubcriber';
 import { AdapterError } from '../../common/adapters';
 import { DiagnosticsForwarder } from './DiagnosticsForwarder';
 import { useEffect, useRef, useState } from 'react';
+
+type CallHandlersOf<
+  AgentType extends CallAgent | /* @conditional-compile-remove(teams-identity-support) */ TeamsCallAgent
+> = AgentType extends CallAgent
+  ? CallingHandlers
+  : never | /* @conditional-compile-remove(teams-identity-support) */ TeamsCallingHandlers; // remove "never" type when move to stable
+
+type CallTypeOf<
+  AgentType extends CallAgent | /* @conditional-compile-remove(teams-identity-support) */ TeamsCallAgent
+> = AgentType extends CallAgent ? Call : never | /* @conditional-compile-remove(teams-identity-support) */ TeamsCall;
 
 /** Context of call, which is a centralized context for all state updates */
 class CallContext {
@@ -426,7 +437,7 @@ export class AzureCommunicationCallAdapter<
   public async leaveCall(forEveryone?: boolean): Promise<void> {
     await this.handlers.onHangUp(forEveryone);
     this.unsubscribeCallEvents();
-    this.handlers = createDefaultCallingHandlers(this.callClient, this.callAgent, this.deviceManager, undefined);
+    this.handlers = this.createHandlers(this.callClient, this.callAgent, this.deviceManager, undefined);
     // We set the adapter.call object to undefined immediately when a call is ended.
     // We do not set the context.callId to undefined because it is a part of the immutable data flow loop.
     this.call = undefined;
@@ -466,6 +477,27 @@ export class AzureCommunicationCallAdapter<
         await this.handlers.onToggleCamera();
       }
     });
+  }
+
+  private createHandlers(
+    callClient: StatefulCallClient,
+    callAgent: CallAgentCommon,
+    deviceManager: StatefulDeviceManager | undefined,
+    call: CallCommon | undefined
+  ): CallHandlersOf<AgentType> {
+    // Call can be either undefined or ACS Call
+    if (isACSCallAgent(callAgent) && (!call || (call && isACSCall(call)))) {
+      return createDefaultCallingHandlers(callClient, callAgent, deviceManager, call) as CallHandlersOf<AgentType>;
+    } else if (isTeamsCallAgent(this.callAgent) && (!call || (call && isTeamsCall(call)))) {
+      return createDefaultTeamsCallingHandlers(
+        this.callClient,
+        this.callAgent,
+        this.deviceManager,
+        call
+      ) as CallHandlersOf<AgentType>;
+    } else {
+      throw new Error('Unhandled agent type');
+    }
   }
 
   public async mute(): Promise<void> {
@@ -543,7 +575,7 @@ export class AzureCommunicationCallAdapter<
 
     // Resync state after callId is set
     this.context.updateClientState(this.callClient.getState());
-    this.handlers = createDefaultCallingHandlers(this.callClient, this.callAgent, this.deviceManager, this.call);
+    this.handlers = this.createHandlers(this.callClient, this.callAgent, this.deviceManager, this.call);
     this.subscribeCallEvents();
   }
 
