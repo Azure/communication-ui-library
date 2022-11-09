@@ -64,7 +64,7 @@ export const CallProvider = (props: CallProviderProps): JSX.Element => <CallProv
 export const useCall = (): Call | undefined => {
   const call = useContext(CallContext)?.call;
   if (call && !isACSCall(call)) {
-    throw new Error('Must provide a Regular Call object.');
+    throw new Error('Incorrect call type: Must provide a Regular Call object.');
   }
   return call;
 };
@@ -83,7 +83,7 @@ export const useCall = (): Call | undefined => {
 export const useTeamsCall = (): undefined | /* @conditional-compile-remove(teams-identity-support) */ TeamsCall => {
   const call = useContext(CallContext)?.call;
   if (call && !isTeamsCall(call)) {
-    throw new Error('Must provide a TeamsCall object.');
+    throw new Error('Incorrect call type: Must provide a TeamsCall object.');
   }
   return call;
 };
