@@ -104,3 +104,6 @@ export const getRemoteParticipants = (
   | {
       [keys: string]: RemoteParticipantState;
     } => state.call?.remoteParticipants;
+
+/** @private */
+export const getCaptionsFeatureEnabled = (state: CallAdapterState): boolean => !!state.features?.captions;

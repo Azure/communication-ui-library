@@ -127,6 +127,11 @@ class CallContext {
 
     // As the state is transitioning to a new state, trigger appropriate callback events.
     const oldPage = this.state.page;
+
+    // update getCallCompositePage to have something like:
+    /*
+      const isBrowserSupported = !this.state.features?.unsupportedBrowser || clientState.environmentInfo.isBrowserSupported;
+    */
     const newPage = getCallCompositePage(call, latestEndedCall);
     if (!IsCallEndedPage(oldPage) && IsCallEndedPage(newPage)) {
       this.emitter.emit('callEnded', { callId: this.callId });
@@ -734,6 +739,27 @@ export type AzureCommunicationCallAdapterArgs = {
   locator: CallAdapterLocator;
   /* @conditional-compile-remove(PSTN-calls) */
   alternateCallerId?: string;
+  /** Optional features that can be enabled/disabled */
+  options?: {
+    /**
+     * (Example feature) - Show an unsupported browser in the call composite.
+     * The composite will show a blocking page to the user if the browser is not supported.
+     * @defaultValue false
+     */
+    unsupportedBrowser?: boolean;
+    /**
+     * (Example feature) - Enable captions in the call composite.
+     * This shows a captions button to the user where they can toggle captions on and off.
+     * @defaultValue true
+     */
+    captions?: boolean;
+    /**
+     * (Example feature)
+     * Enable rich text chat editor in the chat composite. (This would be chat adapter but for the sake of brevity putting here)
+     * @defaultValue true
+     */
+    richTextChatSupport?: boolean;
+  };
 };
 
 /**

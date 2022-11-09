@@ -37,6 +37,21 @@ export interface CallWithChatAdapterUiState {
    * @beta
    */
   fileUploads?: FileUploadsUiState;
+  /** State of opt-in features */
+  features?: {
+    /**
+     * (Example feature)
+     */
+    unsupportedBrowser?: boolean;
+    /**
+     * (Example feature)
+     */
+    captions?: boolean;
+    /**
+     * (Example feature) - this would be chat adapter but for the sake of brevity putting here
+     */
+    richTextChatSupport?: boolean;
+  };
 }
 
 /**

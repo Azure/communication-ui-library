@@ -90,6 +90,11 @@ export type AzureCommunicationCallAdapterArgs = {
     credential: CommunicationTokenCredential;
     locator: CallAdapterLocator;
     alternateCallerId?: string;
+    options?: {
+        unsupportedBrowser?: boolean;
+        captions?: boolean;
+        richTextChatSupport?: boolean;
+    };
 };
 
 // @public
@@ -230,6 +235,11 @@ export interface CallAdapterSubscribers {
 export type CallAdapterUiState = {
     isLocalPreviewMicrophoneEnabled: boolean;
     page: CallCompositePage;
+    features?: {
+        unsupportedBrowser?: boolean;
+        captions?: boolean;
+        richTextChatSupport?: boolean;
+    };
 };
 
 // @public
@@ -577,6 +587,11 @@ export interface CallWithChatAdapterSubscriptions {
 
 // @public
 export interface CallWithChatAdapterUiState {
+    features?: {
+        unsupportedBrowser?: boolean;
+        captions?: boolean;
+        richTextChatSupport?: boolean;
+    };
     // @beta
     fileUploads?: FileUploadsUiState;
     isLocalPreviewMicrophoneEnabled: boolean;

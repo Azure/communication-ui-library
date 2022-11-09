@@ -198,6 +198,10 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
   /* @conditional-compile-remove(rooms) */
   cameraButtonIsEnabled = rolePermissions.cameraButton && cameraButtonIsEnabled;
 
+  /*
+  const captionsButtonEnabled = useSelector(getCaptionsFeatureEnabled) 
+  */
+
   return (
     <Stack horizontalAlign="center">
       {

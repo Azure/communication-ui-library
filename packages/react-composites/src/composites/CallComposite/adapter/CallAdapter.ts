@@ -65,6 +65,21 @@ export const END_CALL_PAGES: CallCompositePage[] = [
 export type CallAdapterUiState = {
   isLocalPreviewMicrophoneEnabled: boolean;
   page: CallCompositePage;
+  /** State of opt-in features */
+  features?: {
+    /**
+     * (Example feature)
+     */
+    unsupportedBrowser?: boolean;
+    /**
+     * (Example feature)
+     */
+    captions?: boolean;
+    /**
+     * (Example feature) - this would be chat adapter but for the sake of brevity putting here
+     */
+    richTextChatSupport?: boolean;
+  };
 };
 
 /**
