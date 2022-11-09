@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "Add a new prop  that allows developers to inject contextual menu and drawer menu items in Video Tile",
+  "comment": "Add a new prop 'menu items' that allows developers to inject contextual menu items in Video Tile",
   "packageName": "@internal/react-components",
   "email": "97124699+prabhjot-msft@users.noreply.github.com",
   "dependentChangeType": "patch"

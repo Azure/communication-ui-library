@@ -164,6 +164,7 @@ const DefaultPlaceholder = (props: CustomAvatarOptions): JSX.Element => {
   );
 };
 
+/* @conditional-compile-remove(pinned-participants) */
 /**
  * @internal
  */
@@ -175,6 +176,7 @@ export type VideoTileMenuItem = {
   icon: IIconProps;
 };
 
+/* @conditional-compile-remove(pinned-participants) */
 /**
  * @internal
  */
@@ -259,6 +261,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
   const canShowLabel = showLabel && (displayName || (showMuteIndicator && isMuted));
   const participantStateString = participantStateStringTrampoline(props, locale);
 
+  /* @conditional-compile-remove(pinned-participants) */
   const optionsMenuItems = (menuItems: VideoTileMenuItems): IContextualMenuItem[] => {
     const contextualMenuItems: IContextualMenuItem[] = [];
     menuItems.forEach((item: VideoTileMenuItem) => {
