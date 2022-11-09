@@ -28,13 +28,13 @@
     "_test:by-flavor": "(if-env COMMUNICATION_REACT_FLAVOR=stable && rushx preprocess || if-env COMMUNICATION_REACT_FLAVOR=beta && echo \"skip preprocess\") && jest"
   },
   "dependencies": {
-    "@azure/communication-calling": "1.8.0-beta.1 || >=1.4.4",
     "@azure/communication-common": "2.0.0",
     "@azure/logger": "1.0.3"
   },
   "peerDependencies": {
     "react": ">=16.8.0 <18.0.0",
-    "@types/react": ">=16.8.0 <18.0.0"
+    "@types/react": ">=16.8.0 <18.0.0",
+    "@azure/communication-calling": "1.8.0-beta.1 || >=1.4.4"
   },
   "devDependencies": {
     "@babel/cli": "~7.16.0",
