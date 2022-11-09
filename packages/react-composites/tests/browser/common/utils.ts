@@ -394,20 +394,6 @@ export const isTestProfileDesktop = (testInfo: TestInfo): boolean => {
   return testName.includes('desktop') ? true : false;
 };
 
-/**
- * Helper function to determine whether to skip a test for a beta feature in stable test run.
- */
-export const isTestProfileStableFlavor = (): boolean => {
-  const flavor = process.env?.['COMMUNICATION_REACT_FLAVOR'];
-  if (flavor === 'stable') {
-    return true;
-  } else if (flavor === 'beta') {
-    return false;
-  } else {
-    throw 'Faled to find Communication React Flavor env variable';
-  }
-};
-
 export interface StubOptions {
   /** Stub out all timestamps in the chat message thread. */
   stubMessageTimestamps?: boolean;
