@@ -48,6 +48,7 @@ import { StartCallOptions } from '@azure/communication-calling';
 import { StatefulCallClient } from '@internal/calling-stateful-client';
 import { StatefulChatClient } from '@internal/chat-stateful-client';
 import { TeamsCall } from '@azure/communication-calling';
+import { TeamsCallAgent } from '@azure/communication-calling';
 import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { Theme } from '@fluentui/react';
 import { VideoDeviceInfo } from '@azure/communication-calling';
@@ -950,6 +951,12 @@ export const createAzureCommunicationChatAdapter: ({ endpoint: endpointUrl, user
 // @public
 export const createAzureCommunicationChatAdapterFromClient: (chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient) => Promise<ChatAdapter>;
 
+// @beta (undocumented)
+export const createAzureCommunicationTeamsCallAdapter: ({ userId, credential, locator, alternateCallerId }: AzureCommunicationCallAdapterArgs) => Promise<TeamsCallAdapter>;
+
+// @beta
+export const createAzureCommunicationTeamsCallAdapterFromClient: (callClient: StatefulCallClient, callAgent: TeamsCallAgent, locator: CallAdapterLocator) => Promise<TeamsCallAdapter>;
+
 // @beta
 export type CustomCallControlButtonCallback = (args: CustomCallControlButtonCallbackArgs) => CustomCallControlButtonProps;
 
@@ -1238,13 +1245,16 @@ export type TopicChangedListener = (event: {
 }) => void;
 
 // @public
-export const useAzureCommunicationCallAdapter: (args: Partial<AzureCommunicationCallAdapterArgs>, afterCreate?: ((adapter: CallAdapter) => Promise<CallAdapter>) | undefined, beforeDispose?: ((adapter: CallAdapter) => Promise<void>) | undefined) => CallAdapter | undefined;
+export const useAzureCommunicationCallAdapter: (args: Partial<AzureCommunicationCallAdapterArgs>, afterCreate?: ((adapter: CallAdapter) => Promise<CallAdapterCommon>) | undefined, beforeDispose?: ((adapter: CallAdapter) => Promise<void>) | undefined) => CallAdapter | undefined;
 
 // @public
 export const useAzureCommunicationCallWithChatAdapter: (args: Partial<AzureCommunicationCallWithChatAdapterArgs>, afterCreate?: ((adapter: CallWithChatAdapter) => Promise<CallWithChatAdapter>) | undefined, beforeDispose?: ((adapter: CallWithChatAdapter) => Promise<void>) | undefined) => CallWithChatAdapter | undefined;
 
 // @public
 export const useAzureCommunicationChatAdapter: (args: Partial<AzureCommunicationChatAdapterArgs>, afterCreate?: ((adapter: ChatAdapter) => Promise<ChatAdapter>) | undefined, beforeDispose?: ((adapter: ChatAdapter) => Promise<void>) | undefined) => ChatAdapter | undefined;
+
+// @beta
+export const useAzureCommunicationTeamsCallAdapter: (args: Partial<AzureCommunicationCallAdapterArgs>, afterCreate?: ((adapter: TeamsCallAdapter) => Promise<CallAdapterCommon>) | undefined, beforeDispose?: ((adapter: TeamsCallAdapter) => Promise<void>) | undefined) => TeamsCallAdapter | undefined;
 
 // @internal
 export const _useCompositeLocale: () => CompositeLocale;

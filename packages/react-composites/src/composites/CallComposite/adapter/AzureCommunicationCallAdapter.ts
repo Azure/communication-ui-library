@@ -1000,7 +1000,7 @@ export const useAzureCommunicationCallAdapter = (
    *
    * If set, must return the modified adapter.
    */
-  afterCreate?: (adapter: CallAdapter) => Promise<CallAdapter>,
+  afterCreate?: (adapter: CallAdapter) => Promise<CallAdapterCommon>,
   /**
    * Optional callback called before the adapter is disposed.
    *
@@ -1008,7 +1008,12 @@ export const useAzureCommunicationCallAdapter = (
    */
   beforeDispose?: (adapter: CallAdapter) => Promise<void>
 ): CallAdapter | undefined => {
-  return useAzureCommunicationCallAdapterGeneric(args, afterCreate, beforeDispose, 'ACS');
+  return useAzureCommunicationCallAdapterGeneric(
+    args,
+    afterCreate as (adapter: CallAdapter) => Promise<CallAdapter>,
+    beforeDispose,
+    'ACS'
+  );
 };
 
 /* @conditional-compile-remove(teams-identity-support) */
@@ -1026,7 +1031,7 @@ export const useAzureCommunicationCallAdapter = (
  *
  * @beta
  */
-export const useTeamsAzureCommunicationCallAdapter = (
+export const useAzureCommunicationTeamsCallAdapter = (
   /**
    * Arguments to be passed to {@link createAzureCommunicationCallAdapter}.
    *
@@ -1039,7 +1044,7 @@ export const useTeamsAzureCommunicationCallAdapter = (
    *
    * If set, must return the modified adapter.
    */
-  afterCreate?: (adapter: TeamsCallAdapter) => Promise<TeamsCallAdapter>,
+  afterCreate?: (adapter: TeamsCallAdapter) => Promise<CallAdapterCommon>,
   /**
    * Optional callback called before the adapter is disposed.
    *
@@ -1047,7 +1052,12 @@ export const useTeamsAzureCommunicationCallAdapter = (
    */
   beforeDispose?: (adapter: TeamsCallAdapter) => Promise<void>
 ): TeamsCallAdapter | undefined => {
-  return useAzureCommunicationCallAdapterGeneric(args, afterCreate, beforeDispose, 'Teams');
+  return useAzureCommunicationCallAdapterGeneric(
+    args,
+    afterCreate as (adapter: TeamsCallAdapter) => Promise<TeamsCallAdapter>,
+    beforeDispose,
+    'Teams'
+  );
 };
 
 /**

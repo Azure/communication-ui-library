@@ -6,6 +6,13 @@ export {
   createAzureCommunicationCallAdapterFromClient,
   useAzureCommunicationCallAdapter
 } from './AzureCommunicationCallAdapter';
+
+/* @conditional-compile-remove(teams-identity-support) */
+export {
+  createAzureCommunicationTeamsCallAdapter,
+  createAzureCommunicationTeamsCallAdapterFromClient,
+  useAzureCommunicationTeamsCallAdapter
+} from './AzureCommunicationCallAdapter';
 export type { AzureCommunicationCallAdapterArgs, CallAdapterLocator } from './AzureCommunicationCallAdapter';
 
 /* @conditional-compile-remove(teams-adhoc-call) */
