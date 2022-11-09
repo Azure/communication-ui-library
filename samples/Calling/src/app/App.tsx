@@ -56,6 +56,8 @@ const App = (): JSX.Element => {
   const [displayName, setDisplayName] = useState<string>('');
   /* @conditional-compile-remove(rooms) */
   const [role, setRole] = useState<Role>();
+  /* @conditional-compile-remove(rooms) */
+  const [teamsToken, setTeamsToken] = useState<string>();
 
   /* @conditional-compile-remove(PSTN-calls) */
   const [alternateCallerId, setAlternateCallerId] = useState<string | undefined>();
@@ -147,7 +149,7 @@ const App = (): JSX.Element => {
             if (!joiningExistingCall) {
               window.history.pushState({}, document.title, window.location.origin + getJoinParams(callLocator));
             }
-
+            setTeamsToken(callDetails.teamsToken);
             setPage('call');
           }}
         />
@@ -176,7 +178,7 @@ const App = (): JSX.Element => {
       }
       return (
         <CallScreen
-          token={token}
+          token={teamsToken ?? token}
           userId={userId}
           displayName={displayName}
           callLocator={callLocator}
@@ -187,6 +189,7 @@ const App = (): JSX.Element => {
           role={role}
           /* @conditional-compile-remove(call-readiness) */
           callReadinessOptedIn={false}
+          isTeamsIdentityCall={!!teamsToken}
         />
       );
     }
