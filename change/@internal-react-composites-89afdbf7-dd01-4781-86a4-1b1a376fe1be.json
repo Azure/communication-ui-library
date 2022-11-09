@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Use permission API to get device permissions ",
+  "packageName": "@internal/react-composites",
+  "email": "carolinecao@microsoft.com",
+  "dependentChangeType": "none"
+}
