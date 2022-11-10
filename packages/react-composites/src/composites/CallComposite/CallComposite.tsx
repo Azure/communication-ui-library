@@ -313,7 +313,11 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
       break;
   }
 
-  if (adapter.getState().features?.unsupportedEnvironment && !adapter.getState().environmentInfo?.isSupportedBrowser) {
+  /* @conditional-compile-remove(unsupported-browser) */
+  if (
+    adapter.getState().features?.unsupportedEnvironment &&
+    adapter.getState().environmentInfo?.isSupportedBrowser === false
+  ) {
     pageElement = (
       <>
         {

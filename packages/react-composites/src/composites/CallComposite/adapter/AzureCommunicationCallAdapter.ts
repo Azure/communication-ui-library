@@ -51,9 +51,10 @@ import {
   ParticipantsJoinedListener,
   ParticipantsLeftListener,
   DiagnosticChangedEventListner,
-  CallAdapterCallEndedEvent,
-  CallAdapterOptionalFeatures
+  CallAdapterCallEndedEvent
 } from './CallAdapter';
+/* @conditional-compile-remove(unsupported-browser) */
+import { CallAdapterOptionalFeatures } from './CallAdapter';
 import { getCallCompositePage, IsCallEndedPage, isCameraOn } from '../utils';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 import { toFlatCommunicationIdentifier, _toCommunicationIdentifier } from '@internal/acs-ui-common';
@@ -80,7 +81,7 @@ class CallContext {
   constructor(
     clientState: CallClientState,
     isTeamsCall: boolean,
-    features?: CallAdapterOptionalFeatures,
+    /* @conditional-compile-remove(unsupported-browser) */ features?: CallAdapterOptionalFeatures,
     maxListeners = 50
   ) {
     this.state = {
@@ -209,7 +210,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     locator: CallAdapterLocator,
     callAgent: CallAgent,
     deviceManager: StatefulDeviceManager,
-    features?: CallAdapterOptionalFeatures
+    /* @conditional-compile-remove(unsupported-browser) */ features?: CallAdapterOptionalFeatures
   ) {
     this.bindPublicMethods();
     this.callClient = callClient;
@@ -217,7 +218,11 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     this.locator = locator;
     this.deviceManager = deviceManager;
     const isTeamsMeeting = 'meetingLink' in this.locator;
-    this.context = new CallContext(callClient.getState(), isTeamsMeeting, features);
+    this.context = new CallContext(
+      callClient.getState(),
+      isTeamsMeeting,
+      /* @conditional-compile-remove(unsupported-browser) */ features
+    );
 
     this.context.onCallEnded((endCallData) => this.emitter.emit('callEnded', endCallData));
 
@@ -787,7 +792,12 @@ export const createAzureCommunicationCallAdapter = async ({
   const callAgent = await callClient.createCallAgent(credential, {
     displayName
   });
-  const adapter = createAzureCommunicationCallAdapterFromClient(callClient, callAgent, locator, features);
+  const adapter = createAzureCommunicationCallAdapterFromClient(
+    callClient,
+    callAgent,
+    locator,
+    /* @conditional-compile-remove(unsupported-browser) */ features
+  );
   return adapter;
 };
 
@@ -929,6 +939,10 @@ export const createAzureCommunicationCallAdapterFromClient = async (
   /* @conditional-compile-remove(unsupported-browser) */ features?: CallAdapterOptionalFeatures
 ): Promise<CallAdapter> => {
   const deviceManager = (await callClient.getDeviceManager()) as StatefulDeviceManager;
+  /* @conditional-compile-remove(unsupported-browser) */
+  if (features?.unsupportedEnvironment === true) {
+    await callClient.feature(Features.DebugInfo).getEnvironmentInfo();
+  }
   return new AzureCommunicationCallAdapter(
     callClient,
     locator,
