@@ -11,7 +11,7 @@ export { _getApplicationId } from './telemetry';
 export { _formatString } from './localizationUtils';
 export { _safeJSONStringify } from './safeStringify';
 export { _convertRemToPx, _preventDismissOnEvent } from './common';
-export { isACSCall, isACSCallAgent, isTeamsCall, isTeamsCallAgent } from './TypeGuards';
+export { _isACSCall, _isACSCallAgent, _isTeamsCall, _isTeamsCallAgent } from './TypeGuards';
 
 export type { Common, CommonProperties } from './commonProperties';
 export type { CallbackType, FunctionWithKey } from './memoizeFnAll';

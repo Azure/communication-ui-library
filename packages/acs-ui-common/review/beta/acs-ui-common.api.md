@@ -68,25 +68,17 @@ export interface _IObjectMap<T> {
     [key: string]: T;
 }
 
-// Warning: (ae-internal-missing-underscore) The name "isACSCall" should be prefixed with an underscore because the declaration is marked as @internal
-//
 // @internal (undocumented)
-export const isACSCall: (call: CallCommon) => call is Call;
+export const _isACSCall: (call: CallCommon) => call is Call;
 
-// Warning: (ae-internal-missing-underscore) The name "isACSCallAgent" should be prefixed with an underscore because the declaration is marked as @internal
-//
 // @internal (undocumented)
-export const isACSCallAgent: (callAgent: CallAgentCommon) => callAgent is CallAgent;
+export const _isACSCallAgent: (callAgent: CallAgentCommon) => callAgent is CallAgent;
 
-// Warning: (ae-internal-missing-underscore) The name "isTeamsCall" should be prefixed with an underscore because the declaration is marked as @internal
-//
 // @internal (undocumented)
-export const isTeamsCall: (call: CallCommon) => call is TeamsCall_2;
+export const _isTeamsCall: (call: CallCommon) => call is TeamsCall_2;
 
-// Warning: (ae-internal-missing-underscore) The name "isTeamsCallAgent" should be prefixed with an underscore because the declaration is marked as @internal
-//
 // @internal (undocumented)
-export const isTeamsCallAgent: (callAgent: CallAgentCommon) => callAgent is TeamsCallAgent_2;
+export const _isTeamsCallAgent: (callAgent: CallAgentCommon) => callAgent is TeamsCallAgent_2;
 
 // @internal
 export const _logEvent: (logger: AzureLogger, event: TelemetryEvent) => void;

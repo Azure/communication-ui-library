@@ -81,7 +81,7 @@ class CallContext {
       call: undefined,
       page: 'configuration',
       latestErrors: clientState.latestErrors,
-      isTeamsCall,
+      isTeamsCall: isTeamsCall,
       /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId: clientState.alternateCallerId
     };
     this.emitter.setMaxListeners(maxListeners);

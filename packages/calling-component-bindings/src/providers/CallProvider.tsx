@@ -5,7 +5,7 @@ import React, { useContext, createContext } from 'react';
 import { Call } from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-identity-support) */
 import { TeamsCall } from '@azure/communication-calling';
-import { isACSCall, isTeamsCall } from '@internal/acs-ui-common';
+import { _isACSCall, _isTeamsCall } from '@internal/acs-ui-common';
 
 /**
  * @private
@@ -63,7 +63,7 @@ export const CallProvider = (props: CallProviderProps): JSX.Element => <CallProv
  */
 export const useCall = (): Call | undefined => {
   const call = useContext(CallContext)?.call;
-  if (call && !isACSCall(call)) {
+  if (call && !_isACSCall(call)) {
     throw new Error('Incorrect call type: Must provide a Regular Call object.');
   }
   return call;
@@ -82,7 +82,7 @@ export const useCall = (): Call | undefined => {
  */
 export const useTeamsCall = (): undefined | /* @conditional-compile-remove(teams-identity-support) */ TeamsCall => {
   const call = useContext(CallContext)?.call;
-  if (call && !isTeamsCall(call)) {
+  if (call && !_isTeamsCall(call)) {
     throw new Error('Incorrect call type: Must provide a TeamsCall object.');
   }
   return call;

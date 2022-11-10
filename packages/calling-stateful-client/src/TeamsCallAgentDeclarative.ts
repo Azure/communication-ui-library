@@ -6,7 +6,7 @@ import { IncomingCallManagement } from './CallAgentDeclarative';
 import { clearCallRelatedState, DeclarativeCallCommon, ProxyCallAgentCommon } from './CallAgentDeclarativeCommon';
 import { CallContext } from './CallContext';
 /* @conditional-compile-remove(teams-identity-support) */
-import { isTeamsCall, isTeamsCallAgent } from '@internal/acs-ui-common';
+import { _isTeamsCall, _isTeamsCallAgent } from '@internal/acs-ui-common';
 import { InternalCallContext } from './InternalCallContext';
 /* @conditional-compile-remove(teams-identity-support) */
 import { teamsCallDeclaratify } from './TeamsCallDeclarative';
@@ -59,7 +59,7 @@ class ProxyTeamsCallAgent extends ProxyCallAgentCommon implements ProxyHandler<D
 
   protected callDeclaratify(call: CallCommon, context: CallContext): DeclarativeCallCommon {
     /* @conditional-compile-remove(teams-identity-support) */
-    if (isTeamsCall(call)) {
+    if (_isTeamsCall(call)) {
       return teamsCallDeclaratify(call, context);
     }
     throw new Error('Not reachable code, DeclarativeTeamsCallAgent.callDeclaratify must be called with an TeamsCall.');
@@ -67,7 +67,7 @@ class ProxyTeamsCallAgent extends ProxyCallAgentCommon implements ProxyHandler<D
 
   protected startCall(agent: CallAgentCommon, args: Parameters<TeamsCallAgent['startCall']>): CallCommon {
     /* @conditional-compile-remove(teams-identity-support) */
-    if (isTeamsCallAgent(agent)) {
+    if (_isTeamsCallAgent(agent)) {
       return agent.startCall(...args);
     }
     throw new Error('Not reachable code, DeclarativeTeamsCallAgent.startCall must be called with an TeamsCallAgent.');
@@ -75,7 +75,7 @@ class ProxyTeamsCallAgent extends ProxyCallAgentCommon implements ProxyHandler<D
 
   protected joinCall(agent: CallAgentCommon, args: Parameters<TeamsCallAgent['join']>): CallCommon {
     /* @conditional-compile-remove(teams-identity-support) */
-    if (isTeamsCallAgent(agent)) {
+    if (_isTeamsCallAgent(agent)) {
       return agent.join(...args);
     }
     throw new Error('Not reachable code, DeclarativeTeamsCallAgent.joinCall must be called with an TeamsCallAgent.');
@@ -83,7 +83,7 @@ class ProxyTeamsCallAgent extends ProxyCallAgentCommon implements ProxyHandler<D
 
   protected agentSubscribe(agent: CallAgentCommon, args: Parameters<TeamsCallAgent['on']>): void {
     /* @conditional-compile-remove(teams-identity-support) */
-    if (isTeamsCallAgent(agent)) {
+    if (_isTeamsCallAgent(agent)) {
       agent.on(...args);
     }
     throw new Error(
@@ -93,7 +93,7 @@ class ProxyTeamsCallAgent extends ProxyCallAgentCommon implements ProxyHandler<D
 
   protected agentUnsubscribe(agent: CallAgentCommon, args: Parameters<TeamsCallAgent['off']>): void {
     /* @conditional-compile-remove(teams-identity-support) */
-    if (isTeamsCallAgent(agent)) {
+    if (_isTeamsCallAgent(agent)) {
       agent.off(...args);
     }
     throw new Error(

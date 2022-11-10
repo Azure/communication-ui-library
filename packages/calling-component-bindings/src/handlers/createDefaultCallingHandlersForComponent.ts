@@ -1,9 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { CallAgentCommon, CallCommon, Common, isACSCall, isACSCallAgent } from '@internal/acs-ui-common';
+import { CallAgentCommon, CallCommon, Common, _isACSCall, _isACSCallAgent } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(teams-identity-support) */
-import { isTeamsCall, isTeamsCallAgent } from '@internal/acs-ui-common';
+import { _isTeamsCall, _isTeamsCallAgent } from '@internal/acs-ui-common';
 import { StatefulCallClient, StatefulDeviceManager } from '@internal/calling-stateful-client';
 import { ReactElement } from 'react';
 /* @conditional-compile-remove(teams-identity-support) */
@@ -33,10 +33,10 @@ export const createDefaultCallingHandlersForComponent = <Props>(
   _Component: (props: Props) => ReactElement | null
 ): Common<CommonCallingHandlers, Props> => {
   /* @conditional-compile-remove(teams-identity-support) */
-  if (callAgent && isTeamsCallAgent(callAgent) && (!call || (call && isTeamsCall(call)))) {
+  if (callAgent && _isTeamsCallAgent(callAgent) && (!call || (call && _isTeamsCall(call)))) {
     return createDefaultTeamsCallingHandlers(callClient, callAgent, deviceManager, call);
   }
-  if (callAgent && isACSCallAgent(callAgent) && (!call || (call && isACSCall(call)))) {
+  if (callAgent && _isACSCallAgent(callAgent) && (!call || (call && _isACSCall(call)))) {
     return createDefaultCallingHandlers(callClient, callAgent, deviceManager, call);
   }
   throw new Error('CallAgent type and Call type are not compatible!');
