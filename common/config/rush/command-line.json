@@ -20,7 +20,7 @@
       "commandKind": "global",
       "name": "changelog:check",
       "summary": "Checks change files have been generated",
-      "shellCommand": "node common/config/node_modules/beachball/bin/beachball check",
+      "shellCommand": "node common/scripts/changelog/check.mjs",
       "safeForSimultaneousRushProcesses": true
     },
     {
