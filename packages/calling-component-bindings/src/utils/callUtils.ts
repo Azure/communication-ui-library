@@ -92,12 +92,7 @@ const memoizedUpdateDisplayName = memoizeFnAll((participantId: string, participa
 export const isTeamsCallParticipants = (
   participants: CommunicationIdentifier[]
 ): participants is (PhoneNumberIdentifier | MicrosoftTeamsUserIdentifier | UnknownIdentifier)[] => {
-  for (const p of participants) {
-    if (isCommunicationUserIdentifier(p)) {
-      return false;
-    }
-  }
-  return true;
+  return participants.every((p) => !isCommunicationUserIdentifier(p));
 };
 
 /**
@@ -107,10 +102,5 @@ export const isTeamsCallParticipants = (
 export const isACSCallParticipants = (
   participants: CommunicationIdentifier[]
 ): participants is (PhoneNumberIdentifier | CommunicationUserIdentifier | UnknownIdentifier)[] => {
-  for (const p of participants) {
-    if (isMicrosoftTeamsUserIdentifier(p)) {
-      return false;
-    }
-  }
-  return true;
+  return participants.every((p) => !isMicrosoftTeamsUserIdentifier(p));
 };
