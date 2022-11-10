@@ -18,13 +18,6 @@
     },
     {
       "commandKind": "global",
-      "name": "changelog:check",
-      "summary": "Checks change files have been generated",
-      "shellCommand": "node common/scripts/changelog/check.mjs",
-      "safeForSimultaneousRushProcesses": true
-    },
-    {
-      "commandKind": "global",
       "name": "ensure-consistent-versions",
       "summary": "Ensure that package versions for released artifacts are consistent",
       "description": "Ensure that package versions for released artifacts are consistent.",
