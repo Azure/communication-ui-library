@@ -11,6 +11,9 @@ import { getPackageInfos } from '../../config/node_modules/beachball/lib/monorep
 import {gatherBumpInfo} from '../../config/node_modules/beachball/lib/bump/gatherBumpInfo.js';
 import {performBump} from '../../config/node_modules/beachball/lib/bump/performBump.js';
 import { getOptions } from '../../config/node_modules/beachball/lib/options/getOptions.js';
+import { CHANGE_DIR } from './constants.mjs';
+
+import fs from 'fs';
 
 export async function generateChangelogs() {
   const options = getOptions([]);
@@ -24,8 +27,18 @@ export async function generateChangelogs() {
     bumpInfo.packageInfos[name] = preservedPackages[name];
   }
   await performBump(bumpInfo, options);
+
+  // Beachball deletes the change file directory which causes confusion for scripts
+  // that manipulate working directory paths.
+  ensureDirectory(CHANGE_DIR);
 }
 
 function clone(obj) {
   return JSON.parse(JSON.stringify(obj));
+}
+
+function ensureDirectory(dir) {
+  if (!fs.statSync(dir, {throwIfNoEntry: false})) {
+      fs.mkdirSync(dir);
+  }
 }
