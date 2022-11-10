@@ -270,7 +270,7 @@ const DialpadContainer = (props: {
                 ariaLabel={props.strings.deleteButtonAriaLabel}
                 onClick={deleteNumbers}
                 styles={concatStyleSets(iconButtonStyles(theme), props.styles?.deleteIcon)}
-                iconProps={{ iconName: 'BackSpace' }}
+                iconProps={{ iconName: 'DialpadBackspace' }}
               />
             )}
           </>

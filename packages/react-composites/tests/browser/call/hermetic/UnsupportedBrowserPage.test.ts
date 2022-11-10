@@ -4,13 +4,12 @@
 import { expect } from '@playwright/test';
 import type { MockCallAdapterState } from '../../../common';
 import { IDS } from '../../common/constants';
-import { dataUiId, isTestProfileStableFlavor, stableScreenshot, waitForSelector } from '../../common/utils';
+import { dataUiId, stableScreenshot, waitForSelector } from '../../common/utils';
 import { buildUrlWithMockAdapter, defaultMockCallAdapterState, test } from './fixture';
 
+/* @conditional-compile-remove(unsupported-browser) */
 test.describe('unsupportedBrowser page tests', async () => {
   test('unsupportedBrowser displays correctly without a help link', async ({ page, serverUrl }) => {
-    test.skip(isTestProfileStableFlavor());
-
     await page.goto(buildUrlWithMockAdapter(serverUrl, defaultMockUnsupportedBrowserPageState()));
 
     await waitForSelector(page, dataUiId(IDS.unsupportedBrowserIcon));
@@ -19,8 +18,6 @@ test.describe('unsupportedBrowser page tests', async () => {
   });
 
   test('unsupportedBrowser displays correctly with a help link', async ({ page, serverUrl }) => {
-    test.skip(isTestProfileStableFlavor());
-
     await page.goto(
       buildUrlWithMockAdapter(serverUrl, defaultMockUnsupportedBrowserPageState(), {
         useEnvironmentInfoTroubleshootingOptions: 'true'

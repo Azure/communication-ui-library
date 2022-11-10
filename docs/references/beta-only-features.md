@@ -107,15 +107,3 @@ You an help with the manual step of figuring out what the CHANGELOG is in each r
 * `prerelease` for a change that affects only the beta flavor build
 * `patch`, `minor` or `major` for changes that affect the stable (and of course beta) flavor build as appropriate.
 * `none` for documentation changes etc that don't affect the NPM bundle meaningfully.
-
-# Conditionally Adding a E2E test
-
-Conditional compilation creates a problem with the e2e tests. The tests themselves are not actually conditionally compiled, while the applications themselves are served in the different flavors.
-
-So when adding a new test to the suite keep this in mind and use the following call:
-
-```TypeScript
-test.skip(isTestProfileStableFlavor());
-```
-
-The `isTestProfileStableFlavor()` function is checking the environment variables of the session to check what flavor it is running in since it wont conditionally compile the test out.
