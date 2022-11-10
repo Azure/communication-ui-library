@@ -5,9 +5,8 @@ import fs from 'fs';
 import path from 'path';
 
 import { BEACHBALL, CHANGE_DIR, CHANGE_DIR_BETA } from './constants.mjs';
+import { parseNewChangeFiles } from './utils.mjs';
 import { exec, exec_output } from '../lib/index.mjs';
-
-const NEW_CHANGE_FILE_REGEXP = /\s*A\s*change\/(.*\.json)\s*/;
 
 async function main() {
     const args = process.argv.slice(2);
@@ -40,11 +39,6 @@ async function duplicateChangeFiles() {
     await exec(`git commit -m 'Duplicate change files for beta release'`);
 }
 
-function parseNewChangeFiles(stdout) {
-    const lines = stdout.split('\n');
-    const matches = lines.map(line => line.match(NEW_CHANGE_FILE_REGEXP)).filter(match => !!match);
-    // Extract the first capture group.
-    return matches.map(match => match[1]);
-}
+
 
 await main();
