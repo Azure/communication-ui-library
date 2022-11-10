@@ -70,16 +70,15 @@ export const createDefaultTeamsCallingHandlers = memoizeOne(
         const participant = _toCommunicationIdentifier(userId);
         /* @conditional-compile-remove(teams-identity-support) */
         const threadId = options?.threadId;
+        if (isCommunicationUserIdentifier(participant)) {
+          throw new Error('CommunicationIdentifier in Teams call is not supported!');
+        }
         /* @conditional-compile-remove(teams-identity-support) */
         if (isPhoneNumberIdentifier(participant)) {
           call?.addParticipant(participant, threadId ? { threadId } : undefined);
-        } else {
-          if (isCommunicationUserIdentifier(participant)) {
-            throw new Error('CommunicationIdentifier in Teams call is not supported!');
-          }
-          /* @conditional-compile-remove(teams-identity-support) */
-          call?.addParticipant(participant, threadId ? { threadId } : undefined);
         }
+        /* @conditional-compile-remove(teams-identity-support) */
+        call?.addParticipant(participant);
       },
       onRemoveParticipant: async (
         userId: string | /* @conditional-compile-remove(PSTN-calls) */ CommunicationIdentifier
