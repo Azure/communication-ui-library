@@ -10,7 +10,18 @@ import { exec, exec_output } from '../lib/index.mjs';
 const NEW_CHANGE_FILE_REGEXP = /\s*A\s*change\/(.*\.json)\s*/;
 
 async function main() {
-    await exec(`node ${BEACHBALL} -p @azure/communication-react`);
+    const args = process.argv.slice(2);
+    // Warning: We don't have a shellquote available in this script.
+    // So a user of this script can use it for arbitrary shell command execution.
+    // But if they can run this script, they can already run arbitrary commands.
+    // So, meh.
+    const cmd = [
+        'node',
+        BEACHBALL,
+        '-p', '@azure/communication-react',
+        ...args
+    ];
+    await exec(cmd.join(' '));
     await duplicateChangeFiles();
 }
 
@@ -22,7 +33,6 @@ async function duplicateChangeFiles() {
     }
 
     console.log(`Duplicating ${newChangeFiles.length} change files into ${CHANGE_DIR_BETA}`);
-    ensureDirectory(CHANGE_DIR_BETA);
     for (const file of newChangeFiles) {
         fs.copyFileSync(path.join(CHANGE_DIR, file), path.join(CHANGE_DIR_BETA, file));
     }
@@ -35,12 +45,6 @@ function parseNewChangeFiles(stdout) {
     const matches = lines.map(line => line.match(NEW_CHANGE_FILE_REGEXP)).filter(match => !!match);
     // Extract the first capture group.
     return matches.map(match => match[1]);
-}
-
-function ensureDirectory(path) {
-    if (!fs.statSync(path, {throwIfNoEntry: false})) {
-        fs.mkdirSync(path);
-    }
 }
 
 await main();
