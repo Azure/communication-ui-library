@@ -53,7 +53,6 @@ import {
   DiagnosticChangedEventListner,
   CallAdapterCallEndedEvent
 } from './CallAdapter';
-/* @conditional-compile-remove(unsupported-browser) */
 import { CallAdapterOptionalFeatures } from './CallAdapter';
 import { getCallCompositePage, IsCallEndedPage, isCameraOn } from '../utils';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
@@ -81,7 +80,7 @@ class CallContext {
   constructor(
     clientState: CallClientState,
     isTeamsCall: boolean,
-    /* @conditional-compile-remove(unsupported-browser) */ features?: CallAdapterOptionalFeatures,
+    features?: CallAdapterOptionalFeatures,
     maxListeners = 50
   ) {
     this.state = {
@@ -210,7 +209,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     locator: CallAdapterLocator,
     callAgent: CallAgent,
     deviceManager: StatefulDeviceManager,
-    /* @conditional-compile-remove(unsupported-browser) */ features?: CallAdapterOptionalFeatures
+    features?: CallAdapterOptionalFeatures
   ) {
     this.bindPublicMethods();
     this.callClient = callClient;
@@ -218,11 +217,7 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     this.locator = locator;
     this.deviceManager = deviceManager;
     const isTeamsMeeting = 'meetingLink' in this.locator;
-    this.context = new CallContext(
-      callClient.getState(),
-      isTeamsMeeting,
-      /* @conditional-compile-remove(unsupported-browser) */ features
-    );
+    this.context = new CallContext(callClient.getState(), isTeamsMeeting, features);
 
     this.context.onCallEnded((endCallData) => this.emitter.emit('callEnded', endCallData));
 
@@ -932,11 +927,16 @@ export const useAzureCommunicationCallAdapter = (
  *
  * @public
  */
-export const createAzureCommunicationCallAdapterFromClient = async (
+export const createAzureCommunicationCallAdapterFromClient: (
   callClient: StatefulCallClient,
   callAgent: CallAgent,
   locator: CallAdapterLocator,
   /* @conditional-compile-remove(unsupported-browser) */ features?: CallAdapterOptionalFeatures
+) => Promise<CallAdapter> = async (
+  callClient: StatefulCallClient,
+  callAgent: CallAgent,
+  locator: CallAdapterLocator,
+  features?: CallAdapterOptionalFeatures
 ): Promise<CallAdapter> => {
   const deviceManager = (await callClient.getDeviceManager()) as StatefulDeviceManager;
   /* @conditional-compile-remove(unsupported-browser) */

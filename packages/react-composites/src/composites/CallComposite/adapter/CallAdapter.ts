@@ -59,7 +59,6 @@ export const END_CALL_PAGES: CallCompositePage[] = [
   /* @conditional-compile-remove(unsupported-browser) */ 'unsupportedEnvironment'
 ];
 
-/* @conditional-compile-remove(unsupported-browser) */
 /**
  * options object to enable opt in features for the CallAdapter
  *
