@@ -87,6 +87,7 @@ const memoizedUpdateDisplayName = memoizeFnAll((participantId: string, participa
 
 /**
  * @private
+ * A type guard to ensure all participants are acceptable type for Teams call
  */
 export const isTeamsCallParticipants = (
   participants: CommunicationIdentifier[]
@@ -101,8 +102,9 @@ export const isTeamsCallParticipants = (
 
 /**
  * @private
+ * A type guard to ensure all participants are acceptable type for ACS call
  */
-export const isNonTeamsCallParticipants = (
+export const isACSCallParticipants = (
   participants: CommunicationIdentifier[]
 ): participants is (PhoneNumberIdentifier | CommunicationUserIdentifier | UnknownIdentifier)[] => {
   for (const p of participants) {

@@ -3,7 +3,7 @@
 
 import { CommunicationIdentifier } from '@azure/communication-common';
 import { DeviceManagerState, LocalVideoStreamState } from '@internal/calling-stateful-client';
-import { isNonTeamsCallParticipants, isTeamsCallParticipants, _isInCall, _isPreviewOn } from './utils/callUtils';
+import { isACSCallParticipants, isTeamsCallParticipants, _isInCall, _isPreviewOn } from './utils/callUtils';
 
 const deviceManagerMock: DeviceManagerState = {
   isSpeakerSelectionAvailable: false,
@@ -83,7 +83,7 @@ describe('callUtils tests', () => {
   });
 
   test('isNonTeamsCallParticipants should return true if all participants are non teams participant', () => {
-    expect(isNonTeamsCallParticipants(nonTeamsParticipants)).toEqual(true);
-    expect(isNonTeamsCallParticipants(teamsParticipants)).toEqual(false);
+    expect(isACSCallParticipants(nonTeamsParticipants)).toEqual(true);
+    expect(isACSCallParticipants(teamsParticipants)).toEqual(false);
   });
 });
