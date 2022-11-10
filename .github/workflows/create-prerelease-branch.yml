@@ -74,18 +74,19 @@ jobs:
       - name: Bump beta package versions if beta
         if: ${{ github.event.inputs.bump_type == 'beta' }}
         run: node common/scripts/bump-beta-version.js
-
       - name: Bump stable patch package versions
         if: ${{ github.event.inputs.bump_type == 'stable-patch' }}
         run: node common/scripts/bump-stable-version.js patch
-
       - name: Bump stable minor package versions
         if: ${{ github.event.inputs.bump_type == 'stable-minor' }}
         run: node common/scripts/bump-stable-version.js minor
 
-      # Generate changelog using beachball
-      - name: Generate changelog using beachball
-        run: node common/scripts/beachball-changelog-only.js
+      - name: Generate beta CHANGELOG
+        if: ${{ github.event.inputs.bump_type == 'beta' }}
+        run: node common/scripts/changelog/collect.mjs beta
+      - name: Generate stable CHANGELOG
+        if: ${{ github.event.inputs.bump_type == 'stable-patch' || github.event.inputs.bump_type == 'stable-minor' }}
+        run: node common/scripts/changelog/collect.mjs stable
 
       # Important to check version consistency again after bumping versions.
       - name: Ensure all package versions are consistent
@@ -111,9 +112,8 @@ jobs:
           git commit -m "${{github.event.inputs.bump_type}} version bump pre-release branch"
           git push -u origin "${{ steps.prereleasebranch.outputs.prereleasebranch }}"
 
-      # we will want to run rush changelog with type none make sure that all packlets have change files
-      - name: Add beachball changelog
-        run: node common/config/node_modules/beachball/bin/beachball.js change -m Bumped versions for release --type none
+      - name: Add trivial changefile
+        run: node common/scripts/changelog/change.mjs -m 'Bumped versions for release' --type none
 
       # create Groom branch for the changelog and version bumps
       - name: Hop into Groom branch
