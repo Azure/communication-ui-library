@@ -32,27 +32,26 @@ export const useParticipantChangedAnnouncement = (): string => {
    */
   const [timeoutState, setTimeoutState] = useState<ReturnType<typeof setTimeout>>();
 
-  const setParticipantEventString = (string: string): void => {
-    setAnnouncerString('');
-
-    if (timeoutState) {
-      clearTimeout(timeoutState);
-      setTimeoutState(undefined);
-    }
-    setTimeoutState(
-      /**
-       * These set timeouts are needed to clear the announcer string in case we have multiple
-       * participants join. Since the narrator will only announce the string in the
-       * Announcer component should the string change.
-       */
-      setTimeout(() => {
-        setAnnouncerString(string);
-        setTimeoutState(undefined);
-      }, PARTICIPANT_ANNOUNCEMENT_DELAY)
-    );
-  };
-
   useEffect(() => {
+    const setParticipantEventString = (string: string): void => {
+      setAnnouncerString('');
+
+      if (timeoutState) {
+        clearTimeout(timeoutState);
+        setTimeoutState(undefined);
+      }
+      setTimeoutState(
+        /**
+         * These set timeouts are needed to clear the announcer string in case we have multiple
+         * participants join. Since the narrator will only announce the string in the
+         * Announcer component should the string change.
+         */
+        setTimeout(() => {
+          setAnnouncerString(string);
+          setTimeoutState(undefined);
+        }, PARTICIPANT_ANNOUNCEMENT_DELAY)
+      );
+    };
     const onPersonJoined = (e: { joined: RemoteParticipant[] }): void => {
       setParticipantEventString(
         createAnnouncmentString(locale.participantJoinedNoticeString, locale.defaultParticipantChangedString, e.joined)
@@ -71,7 +70,13 @@ export const useParticipantChangedAnnouncement = (): string => {
       adapter.off('participantsJoined', onPersonJoined);
       adapter.off('participantsLeft', onPersonLeft);
     };
-  }, [adapter, locale.participantJoinedNoticeString, locale.participantLeftNoticeString, setParticipantEventString]);
+  }, [
+    adapter,
+    locale.participantJoinedNoticeString,
+    locale.participantLeftNoticeString,
+    locale.defaultParticipantChangedString,
+    timeoutState
+  ]);
 
   return announcerString;
 };
