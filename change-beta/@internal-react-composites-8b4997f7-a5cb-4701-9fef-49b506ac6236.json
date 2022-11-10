@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Introduce e2e tests for lobby screen in calling composite to validate experience for different call types.",
-  "packageName": "@internal/react-composites",
-  "email": "94866715+dmceachernmsft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

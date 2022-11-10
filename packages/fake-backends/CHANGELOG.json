@@ -2,6 +2,43 @@
   "name": "@internal/fake-backends",
   "entries": [
     {
+      "date": "Thu, 10 Nov 2022 07:17:30 GMT",
+      "tag": "@internal/fake-backends_v1.4.1-beta.0",
+      "version": "1.4.1-beta.0",
+      "comments": {
+        "none": [
+          {
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "package": "@internal/fake-backends",
+            "commit": "c8e8d74de3f7804e0187538d696bbfe7a37e0248",
+            "comment": "Bumped"
+          }
+        ],
+        "patch": [
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/fake-backends",
+            "commit": "8cb67542c822c72db69c77e223747d55fe5b4d54",
+            "comment": "Allow a range of communication services dependency packages"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/fake-backends",
+            "comment": "Bump @internal/acs-ui-common to v1.4.1-beta.0",
+            "commit": "c8d3d24cf8d17695a2992940a0fc753f94bf6f9e"
+          }
+        ],
+        "prerelease": [
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/fake-backends",
+            "commit": "d087da7a35600150eb119411c99a6142cc0be829",
+            "comment": "gee"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 21 Oct 2022 23:02:11 GMT",
       "tag": "@internal/fake-backends_v1.4.0",
       "version": "1.4.0",

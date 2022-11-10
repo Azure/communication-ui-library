@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Refresh string translations",
-  "packageName": "@internal/react-composites",
-  "email": "82062616+prprabhu-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Fix remove participant logic for teams user. Make sure to enforce isRemovable property on participantList participant.",
-  "packageName": "@internal/react-composites",
-  "email": "94866715+dmceachernmsft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
