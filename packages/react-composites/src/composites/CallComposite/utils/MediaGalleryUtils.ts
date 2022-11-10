@@ -1,11 +1,12 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { RemoteParticipant } from '@azure/communication-calling';
 import { _formatString } from '@internal/acs-ui-common';
+import { RemoteParticipantState } from '@internal/calling-stateful-client';
 import { useEffect, useState } from 'react';
 import { useLocale } from '../../localization';
-import { useAdapter } from '../adapter/CallAdapterProvider';
+import { useSelector } from '../hooks/useSelector';
+import { getRemoteParticipants } from '../selectors/baseSelectors';
 
 /**
  * Delay value for when a participant has left or joined
@@ -24,13 +25,15 @@ const PARTICIPANT_ANNOUNCEMENT_DELAY = 500;
  * @internal
  */
 export const useParticipantChangedAnnouncement = (): string => {
-  const adapter = useAdapter();
   const locale = useLocale().strings.call;
   const [announcerString, setAnnouncerString] = useState<string>('');
   /**
    * state to track whether there is currently a timer set in the useParticipantChangedAnnouncement hook
    */
   const [timeoutState, setTimeoutState] = useState<ReturnType<typeof setTimeout>>();
+  const remoteParticipantsObject = useSelector(getRemoteParticipants);
+  const remoteParticipants = Object.values(remoteParticipantsObject ?? {});
+  const [currentParticipants, setCurrentParticipants] = useState<RemoteParticipantState[]>(remoteParticipants);
 
   useEffect(() => {
     const setParticipantEventString = (string: string): void => {
@@ -52,31 +55,34 @@ export const useParticipantChangedAnnouncement = (): string => {
         }, PARTICIPANT_ANNOUNCEMENT_DELAY)
       );
     };
-    const onPersonJoined = (e: { joined: RemoteParticipant[] }): void => {
+    if (remoteParticipants.length < currentParticipants.length) {
+      //someone left
+      const whoLeft = currentParticipants.filter((p) => {
+        if (!remoteParticipants.includes(p)) {
+          return p;
+        }
+        return;
+      });
+      console.log(whoLeft);
       setParticipantEventString(
-        createAnnouncmentString(locale.participantJoinedNoticeString, locale.defaultParticipantChangedString, e.joined)
+        createAnnouncmentString(locale.participantLeftNoticeString, locale.defaultParticipantChangedString, whoLeft)
       );
-    };
-    adapter.on('participantsJoined', onPersonJoined);
-
-    const onPersonLeft = (e: { removed: RemoteParticipant[] }): void => {
+      setCurrentParticipants(remoteParticipants);
+    } else if (remoteParticipants.length > currentParticipants.length) {
+      // someone joined
+      const whoJoined = remoteParticipants.filter((p) => {
+        if (!currentParticipants.includes(p)) {
+          return p;
+        }
+        return;
+      });
+      console.log(whoJoined);
       setParticipantEventString(
-        createAnnouncmentString(locale.participantLeftNoticeString, locale.defaultParticipantChangedString, e.removed)
+        createAnnouncmentString(locale.participantJoinedNoticeString, locale.defaultParticipantChangedString, whoJoined)
       );
-    };
-    adapter.on('participantsLeft', onPersonLeft);
-
-    return () => {
-      adapter.off('participantsJoined', onPersonJoined);
-      adapter.off('participantsLeft', onPersonLeft);
-    };
-  }, [
-    adapter,
-    locale.participantJoinedNoticeString,
-    locale.participantLeftNoticeString,
-    locale.defaultParticipantChangedString,
-    timeoutState
-  ]);
+      setCurrentParticipants(remoteParticipants);
+    }
+  }, [remoteParticipants, currentParticipants]);
 
   return announcerString;
 };
@@ -87,24 +93,18 @@ export const useParticipantChangedAnnouncement = (): string => {
 const createAnnouncmentString = (
   localeString: string,
   defaultName: string,
-  participants?: RemoteParticipant[]
+  participants?: RemoteParticipantState[]
 ): string => {
   if (participants) {
     if (participants.length === 1) {
       return _formatString(localeString, {
-        displayName: participants[0].displayName ? participants[0].displayName : defaultName
+        displayNames: participants[0].displayName ? participants[0].displayName : defaultName
       });
     } else {
-      let names = '';
-      participants.forEach((p) => {
-        if (names === '') {
-          names = names + (p.displayName ? p.displayName : defaultName);
-        }
-        names = names + ' ' + (p.displayName ? p.displayName : defaultName);
-      });
-      return _formatString(localeString, { displayName: names });
+      const names = participants.map((p) => p.displayName ?? defaultName).join(', ');
+      return _formatString(localeString, { displayNames: names });
     }
   } else {
-    return _formatString(localeString, { displayName: defaultName });
+    return _formatString(localeString, { displayNames: defaultName });
   }
 };
