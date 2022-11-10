@@ -10,7 +10,7 @@ import { exec, exec_output } from '../lib/index.mjs';
 const NEW_CHANGE_FILE_REGEXP = /\s*A\s*change\/(.*\.json)\s*/;
 
 async function main() {
-    await exec(`node ${BEACHBALL} -p @internal/storybook`);
+    await exec(`node ${BEACHBALL} -p @azure/communication-react`);
     await duplicateChangeFiles();
 }
 
