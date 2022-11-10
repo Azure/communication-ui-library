@@ -7,6 +7,7 @@ import {
   CommunicationIdentifier,
   CommunicationUserIdentifier,
   isCommunicationUserIdentifier,
+  isMicrosoftTeamsUserIdentifier,
   isPhoneNumberIdentifier,
   MicrosoftTeamsUserIdentifier,
   PhoneNumberIdentifier,
@@ -105,7 +106,7 @@ export const isNonTeamsCallParticipants = (
   participants: CommunicationIdentifier[]
 ): participants is (PhoneNumberIdentifier | CommunicationUserIdentifier | UnknownIdentifier)[] => {
   for (const p of participants) {
-    if (isCommunicationUserIdentifier(p)) {
+    if (isMicrosoftTeamsUserIdentifier(p)) {
       return false;
     }
   }

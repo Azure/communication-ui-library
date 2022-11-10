@@ -32,6 +32,9 @@ export const createDefaultCallingHandlersForComponent = <Props>(
   call: CallCommon | undefined,
   _Component: (props: Props) => ReactElement | null
 ): Common<CommonCallingHandlers, Props> => {
+  if (!callAgent && !call && !deviceManager) {
+    return createDefaultCallingHandlers(callClient, callAgent, deviceManager, call);
+  }
   /* @conditional-compile-remove(teams-identity-support) */
   if (callAgent && _isTeamsCallAgent(callAgent) && (!call || (call && _isTeamsCall(call)))) {
     return createDefaultTeamsCallingHandlers(callClient, callAgent, deviceManager, call);
