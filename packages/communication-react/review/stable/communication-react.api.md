@@ -255,11 +255,6 @@ export type CallAdapterUiState = {
     page: CallCompositePage;
 };
 
-// Warning: (ae-internal-missing-underscore) The name "CallAgentCommon" should be prefixed with an underscore because the declaration is marked as @internal
-//
-// @internal (undocumented)
-export type CallAgentCommon = CallAgent;
-
 // @public
 export const CallAgentProvider: (props: CallAgentProviderProps) => JSX.Element;
 
@@ -312,11 +307,6 @@ export interface CallClientState {
     latestErrors: CallErrors;
     userId: CommunicationIdentifierKind;
 }
-
-// Warning: (ae-internal-missing-underscore) The name "CallCommon" should be prefixed with an underscore because the declaration is marked as @internal
-//
-// @internal (undocumented)
-export type CallCommon = Call;
 
 // @public
 export const CallComposite: (props: CallCompositeProps) => JSX.Element;
@@ -474,9 +464,6 @@ export type CallErrors = {
 // @public
 export type CallErrorTarget = 'Call.addParticipant' | 'Call.feature' | 'Call.hangUp' | 'Call.hold' | 'Call.mute' | 'Call.off' | 'Call.on' | 'Call.removeParticipant' | 'Call.resume' | 'Call.sendDtmf' | 'Call.startScreenSharing' | 'Call.startVideo' | 'Call.stopScreenSharing' | 'Call.stopVideo' | 'Call.unmute' | 'CallAgent.dispose' | 'CallAgent.feature' | 'CallAgent.join' | 'CallAgent.off' | 'CallAgent.on' | 'CallAgent.startCall' | 'CallClient.createCallAgent' | 'CallClient.feature' | 'CallClient.getDeviceManager' | 'DeviceManager.askDevicePermission' | 'DeviceManager.getCameras' | 'DeviceManager.getMicrophones' | 'DeviceManager.getSpeakers' | 'DeviceManager.off' | 'DeviceManager.on' | 'DeviceManager.selectMicrophone' | 'DeviceManager.selectSpeaker' | 'IncomingCall.accept' | 'IncomingCall.reject';
 
-// @public (undocumented)
-export type CallHandlersOf<AgentType extends CallAgent> = AgentType extends CallAgent ? CallingHandlers : never;
-
 // @public
 export type CallIdChangedListener = (event: {
     callId: string;
@@ -488,28 +475,8 @@ export type CallingBaseSelectorProps = {
 };
 
 // @public
-export type CallingHandlers = Omit<CallingHandlersCommon, 'onStartCall'> & {
+export type CallingHandlers = SharedCallingHandlers & {
     onStartCall: (participants: CommunicationIdentifier[], options?: StartCallOptions) => Call | undefined;
-};
-
-// @public
-export type CallingHandlersCommon = {
-    onStartLocalVideo: () => Promise<void>;
-    onToggleCamera: (options?: VideoStreamOptions) => Promise<void>;
-    onSelectMicrophone: (device: AudioDeviceInfo) => Promise<void>;
-    onSelectSpeaker: (device: AudioDeviceInfo) => Promise<void>;
-    onSelectCamera: (device: VideoDeviceInfo, options?: VideoStreamOptions) => Promise<void>;
-    onToggleMicrophone: () => Promise<void>;
-    onStartScreenShare: () => Promise<void>;
-    onStopScreenShare: () => Promise<void>;
-    onToggleScreenShare: () => Promise<void>;
-    onHangUp: (forEveryone?: boolean) => Promise<void>;
-    onCreateLocalStreamView: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
-    onCreateRemoteStreamView: (userId: string, options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
-    onDisposeRemoteStreamView: (userId: string) => Promise<void>;
-    onDisposeLocalStreamView: () => Promise<void>;
-    onStartCall: (participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[], options?: StartCallOptions) => void;
-    onRemoveParticipant(userId: string): Promise<void>;
 };
 
 // @public
@@ -569,9 +536,6 @@ export interface CallState {
     state: CallState_2;
     transcription: TranscriptionCallFeature;
 }
-
-// @public (undocumented)
-export type CallTypeOf<AgentType extends CallAgent> = AgentType extends CallAgent ? Call : never;
 
 // @public
 export interface CallWithChatAdapter extends CallWithChatAdapterManagement, AdapterState<CallWithChatAdapterState>, Disposable, CallWithChatAdapterSubscriptions {
@@ -1104,6 +1068,11 @@ export type ClientState = CallClientState & ChatClientState;
 export type Common<A, B> = Pick<A, CommonProperties<A, B>>;
 
 // @public
+export type CommonCallingHandlers = SharedCallingHandlers & {
+    onStartCall: (participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[], options?: StartCallOptions) => void;
+};
+
+// @public
 export type CommonProperties<A, B> = {
     [P in keyof A & keyof B]: A[P] extends B[P] ? P : never;
 }[keyof A & keyof B];
@@ -1312,8 +1281,8 @@ export const createAzureCommunicationChatAdapter: ({ endpoint: endpointUrl, user
 // @public
 export const createAzureCommunicationChatAdapterFromClient: (chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient) => Promise<ChatAdapter>;
 
-// @public (undocumented)
-export const createDefaultCallingHandlers: <AgentType extends CallAgent = CallAgent>(callClient: StatefulCallClient, callAgent: AgentType | undefined, deviceManager: StatefulDeviceManager | undefined, call: CallTypeOf<AgentType> | undefined) => CallHandlersOf<AgentType>;
+// @public
+export const createDefaultCallingHandlers: (callClient: StatefulCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined) => CallingHandlers;
 
 // @public
 export const createDefaultChatHandlers: (chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient) => ChatHandlers;
@@ -1711,16 +1680,6 @@ export interface IncomingCallState {
     startTime: Date;
 }
 
-// Warning: (ae-internal-missing-underscore) The name "isACSCall" should be prefixed with an underscore because the declaration is marked as @internal
-//
-// @internal (undocumented)
-export const isACSCall: (call: CallCommon) => call is Call;
-
-// Warning: (ae-internal-missing-underscore) The name "isACSCallAgent" should be prefixed with an underscore because the declaration is marked as @internal
-//
-// @internal (undocumented)
-export const isACSCallAgent: (callAgent: CallAgentCommon) => callAgent is CallAgent;
-
 // @public
 export type IsLocalScreenSharingActiveChangedListener = (event: {
     isScreenSharingOn: boolean;
@@ -1737,16 +1696,6 @@ export type IsSpeakingChangedListener = (event: {
     identifier: CommunicationIdentifierKind;
     isSpeaking: boolean;
 }) => void;
-
-// Warning: (ae-internal-missing-underscore) The name "isTeamsCall" should be prefixed with an underscore because the declaration is marked as @internal
-//
-// @internal (undocumented)
-export const isTeamsCall: (call: CallCommon) => call is never;
-
-// Warning: (ae-internal-missing-underscore) The name "isTeamsCallAgent" should be prefixed with an underscore because the declaration is marked as @internal
-//
-// @internal (undocumented)
-export const isTeamsCallAgent: (callAgent: CallAgentCommon) => callAgent is never;
 
 // @public
 export interface JumpToNewMessageButtonProps {
@@ -2291,6 +2240,25 @@ export interface SendBoxStylesProps extends BaseCustomStyles {
     textField?: IStyle;
     textFieldContainer?: IStyle;
 }
+
+// @public
+export type SharedCallingHandlers = {
+    onStartLocalVideo: () => Promise<void>;
+    onToggleCamera: (options?: VideoStreamOptions) => Promise<void>;
+    onSelectMicrophone: (device: AudioDeviceInfo) => Promise<void>;
+    onSelectSpeaker: (device: AudioDeviceInfo) => Promise<void>;
+    onSelectCamera: (device: VideoDeviceInfo, options?: VideoStreamOptions) => Promise<void>;
+    onToggleMicrophone: () => Promise<void>;
+    onStartScreenShare: () => Promise<void>;
+    onStopScreenShare: () => Promise<void>;
+    onToggleScreenShare: () => Promise<void>;
+    onHangUp: (forEveryone?: boolean) => Promise<void>;
+    onCreateLocalStreamView: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
+    onCreateRemoteStreamView: (userId: string, options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
+    onDisposeRemoteStreamView: (userId: string) => Promise<void>;
+    onDisposeLocalStreamView: () => Promise<void>;
+    onRemoveParticipant(userId: string): Promise<void>;
+};
 
 // @public
 export interface StatefulCallClient extends CallClient {

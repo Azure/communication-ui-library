@@ -40,10 +40,10 @@ export type SharedCallingHandlers = {
   onHangUp: (forEveryone?: boolean) => Promise<void>;
   /* @conditional-compile-remove(PSTN-calls) */
   onToggleHold: () => Promise<void>;
+  /* @conditional-compile-remove(PSTN-calls) */
   onAddParticipant(participant: CommunicationUserIdentifier): Promise<void>;
   /* @conditional-compile-remove(PSTN-calls) */
   onAddParticipant(participant: PhoneNumberIdentifier, options: AddPhoneNumberOptions): Promise<void>;
-  /* @conditional-compile-remove(PSTN-calls) */
   onCreateLocalStreamView: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
   onCreateRemoteStreamView: (
     userId: string,
