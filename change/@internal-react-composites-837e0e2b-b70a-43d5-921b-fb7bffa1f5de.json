@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Access role from stateful call client in CallComposite and changed CallComposite prop name from role to roleHint.",
-  "packageName": "@internal/react-composites",
-  "email": "miguelgamis@microsoft.com",
-  "dependentChangeType": "patch"
-}

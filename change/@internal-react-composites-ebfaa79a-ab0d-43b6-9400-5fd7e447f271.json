@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add allow access modal to configuration screen",
-  "packageName": "@internal/react-composites",
-  "email": "carolinecao@microsoft.com",
-  "dependentChangeType": "patch"
-}
