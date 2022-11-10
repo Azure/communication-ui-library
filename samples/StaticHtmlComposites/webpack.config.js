@@ -61,6 +61,10 @@ const config = {
       template: './callWithChatComposite.html',
       filename: 'callWithChatComposite.html'
     }),
+    new HtmlWebpackPlugin({
+      template: './index.css',
+      filename: 'index.css'
+    }),
     new CopyWebpackPlugin({
       patterns: [
         { from: path.join(__dirname, 'fonts', 'segoeui-bold.woff2'), to: 'fonts' },
