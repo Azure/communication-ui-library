@@ -339,4 +339,8 @@ export interface CallCompositeStrings {
    * string to be used to announce a change in participant if they have no displayName
    */
   defaultParticipantChangedString: string;
+  /**
+   * string to be used to announce when more than 3 participants have joined at the same time.
+   */
+  participantsJoinedOverflowString: string;
 }

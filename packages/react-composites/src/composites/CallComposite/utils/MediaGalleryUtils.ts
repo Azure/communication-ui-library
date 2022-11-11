@@ -74,7 +74,12 @@ export const useParticipantChangedAnnouncement = (): string => {
       });
       console.log(whoLeft);
       setParticipantEventString(
-        createAnnouncmentString(locale.participantLeftNoticeString, locale.defaultParticipantChangedString, whoLeft)
+        createAnnouncmentString(
+          locale.participantLeftNoticeString,
+          locale.defaultParticipantChangedString,
+          locale.participantsJoinedOverflowString,
+          whoLeft
+        )
       );
       setCurrentParticipants(remoteParticipants);
     } else if (remoteParticipants.length > currentParticipants.length) {
@@ -87,7 +92,12 @@ export const useParticipantChangedAnnouncement = (): string => {
       });
       console.log(whoJoined);
       setParticipantEventString(
-        createAnnouncmentString(locale.participantJoinedNoticeString, locale.defaultParticipantChangedString, whoJoined)
+        createAnnouncmentString(
+          locale.participantJoinedNoticeString,
+          locale.defaultParticipantChangedString,
+          locale.participantsJoinedOverflowString,
+          whoJoined
+        )
       );
       setCurrentParticipants(remoteParticipants);
     }
@@ -102,16 +112,22 @@ export const useParticipantChangedAnnouncement = (): string => {
 const createAnnouncmentString = (
   localeString: string,
   defaultName: string,
+  overflowString: string,
   participants?: RemoteParticipantState[]
 ): string => {
   if (participants) {
-    if (participants.length === 1) {
-      return _formatString(localeString, {
-        displayNames: participants[0].displayName ? participants[0].displayName : defaultName
-      });
-    } else {
+    if (participants.length <= 3) {
       const names = participants.map((p) => p.displayName ?? defaultName).join(', ');
       return _formatString(localeString, { displayNames: names });
+    } else {
+      const numberOfExtraParticipants = participants.length - 3;
+      const names = participants
+        .slice(0, 2)
+        .map((p) => p.displayName ?? defaultName)
+        .join(', ');
+      const namesPlusExtra =
+        names + _formatString(overflowString, { numOfParticipants: numberOfExtraParticipants.toString() });
+      return _formatString(localeString, { displayNames: namesPlusExtra });
     }
   } else {
     return _formatString(localeString, { displayNames: defaultName });
