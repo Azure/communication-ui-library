@@ -1,6 +1,6 @@
 ![ui-library-banner-image.png](./docs/images/ui-library-banner-image.png)
 
-Whitespace
+Whitespace again.
 
 # Azure Communication Services UI Library
 
