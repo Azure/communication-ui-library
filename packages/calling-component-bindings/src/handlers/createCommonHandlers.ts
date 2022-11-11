@@ -76,12 +76,9 @@ export const areStreamsEqual = (prevStream: LocalVideoStream, newStream: LocalVi
 };
 
 /**
- * Create the default implementation of {@link CallingHandlers}.
+ * Create the common implementation of {@link CallingHandlers} for all types of Call
  *
- * Useful when implementing a custom component that utilizes the providers
- * exported from this library.
- *
- * @public
+ * @private
  */
 export const createDefaultCommonCallingHandlers = memoizeOne(
   (
