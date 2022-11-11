@@ -1,15 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import {
-  Call,
-  CallAgent,
-  CallAgentCommon,
-  CallCommon,
-  CallEndReason,
-  CollectionUpdatedEvent,
-  IncomingCallCommon
-} from '@azure/communication-calling';
+import { Call, CallAgent, CallEndReason, CollectionUpdatedEvent } from '@azure/communication-calling';
+
+import { IncomingCallCommon, CallAgentCommon, CallCommon } from './BetaToStableTypes';
+
 /* @conditional-compile-remove(teams-identity-support) */
 import { TeamsCallAgent } from '@azure/communication-calling';
 import { CallContext } from './CallContext';
