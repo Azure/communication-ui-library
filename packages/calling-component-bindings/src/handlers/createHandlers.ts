@@ -17,7 +17,7 @@ import { _toCommunicationIdentifier } from '@internal/acs-ui-common';
 import { StatefulCallClient, StatefulDeviceManager } from '@internal/calling-stateful-client';
 import memoizeOne from 'memoize-one';
 import { isACSCallParticipants } from '../utils/callUtils';
-import { createDefaultCommonCallingHandlers, SharedCallingHandlers } from './createCommonHandlers';
+import { createDefaultCommonCallingHandlers, CommonCallingHandlers } from './createCommonHandlers';
 
 /**
  * Object containing all the handlers required for calling components.
@@ -27,9 +27,9 @@ import { createDefaultCommonCallingHandlers, SharedCallingHandlers } from './cre
  *
  * @public
  */
-export type CallingHandlers = SharedCallingHandlers & {
+export interface CallingHandlers extends CommonCallingHandlers {
   onStartCall: (participants: CommunicationIdentifier[], options?: StartCallOptions) => Call | undefined;
-};
+}
 
 /**
  * Create the default implementation of {@link CallingHandlers} for teams call.

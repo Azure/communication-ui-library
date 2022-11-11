@@ -16,7 +16,7 @@ export type { HoldButtonSelector } from './callControlSelectors';
 export type { CallingHandlers } from './handlers/createHandlers';
 /* @conditional-compile-remove(teams-identity-support) */
 export type { TeamsCallingHandlers } from './handlers/createTeamsCallHandlers';
-export type { CommonCallingHandlers, SharedCallingHandlers } from './handlers/createCommonHandlers';
+export type { CommonCallingHandlers } from './handlers/createCommonHandlers';
 
 /* @conditional-compile-remove(teams-identity-support) */
 export { useTeamsCall, useTeamsCallAgent } from './providers';

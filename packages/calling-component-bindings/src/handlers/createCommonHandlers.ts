@@ -24,10 +24,14 @@ import { CommunicationUserIdentifier, PhoneNumberIdentifier, UnknownIdentifier }
 import { CommunicationIdentifier } from '@azure/communication-common';
 
 /**
+ * Object containing all the handlers required for calling components.
+ *
+ * Calling related components from this package are able to pick out relevant handlers from this object.
+ * See {@link useHandlers} and {@link usePropsFor}.
+ *
  * @public
- * This is the set of handlers share exact same parameters and return values for all call types.
  */
-export type SharedCallingHandlers = {
+export interface CommonCallingHandlers {
   onStartLocalVideo: () => Promise<void>;
   onToggleCamera: (options?: VideoStreamOptions) => Promise<void>;
   onSelectMicrophone: (device: AudioDeviceInfo) => Promise<void>;
@@ -58,26 +62,11 @@ export type SharedCallingHandlers = {
   onRemoveParticipant(participant: CommunicationIdentifier): Promise<void>;
   /* @conditional-compile-remove(call-readiness) */
   askDevicePermission: (constrain: PermissionConstraints) => Promise<void>;
-};
-
-/**
- * Object containing all the handlers required for calling components.
- *
- * Calling related components from this package are able to pick out relevant handlers from this object.
- * See {@link useHandlers} and {@link usePropsFor}.
- *
- * @public
- */
-// CommonCallingHandlers is an interface compatible with TeamsCallingHandlers and CallingHandlers
-// which is also a common interface required by components and adapters
-// components and adapters only requires onStartCall is a function returning void
-// but in TeamsCallingHandlers and CallingHandlers, it returns different types for non-breaking change reason
-export type CommonCallingHandlers = SharedCallingHandlers & {
   onStartCall: (
     participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[],
     options?: StartCallOptions
   ) => void;
-};
+}
 
 /**
  * @private

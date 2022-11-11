@@ -78,9 +78,10 @@ export type CallingBaseSelectorProps = {
 };
 
 // @public
-export type CallingHandlers = SharedCallingHandlers & {
+export interface CallingHandlers extends CommonCallingHandlers {
+    // (undocumented)
     onStartCall: (participants: CommunicationIdentifier[], options?: StartCallOptions) => Call | undefined;
-};
+}
 
 // @public
 export const CallProvider: (props: CallProviderProps) => JSX.Element;
@@ -105,9 +106,52 @@ export type CameraButtonSelector = (state: CallClientState, props: CallingBaseSe
 export const cameraButtonSelector: CameraButtonSelector;
 
 // @public
-export type CommonCallingHandlers = SharedCallingHandlers & {
+export interface CommonCallingHandlers {
+    // (undocumented)
+    askDevicePermission: (constrain: PermissionConstraints) => Promise<void>;
+    // (undocumented)
+    onAddParticipant(participant: CommunicationUserIdentifier): Promise<void>;
+    // (undocumented)
+    onAddParticipant(participant: PhoneNumberIdentifier, options: AddPhoneNumberOptions): Promise<void>;
+    // (undocumented)
+    onCreateLocalStreamView: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
+    // (undocumented)
+    onCreateRemoteStreamView: (userId: string, options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
+    // (undocumented)
+    onDisposeLocalStreamView: () => Promise<void>;
+    // (undocumented)
+    onDisposeRemoteStreamView: (userId: string) => Promise<void>;
+    // (undocumented)
+    onHangUp: (forEveryone?: boolean) => Promise<void>;
+    // (undocumented)
+    onRemoveParticipant(userId: string): Promise<void>;
+    // (undocumented)
+    onRemoveParticipant(participant: CommunicationIdentifier): Promise<void>;
+    // (undocumented)
+    onSelectCamera: (device: VideoDeviceInfo, options?: VideoStreamOptions) => Promise<void>;
+    // (undocumented)
+    onSelectMicrophone: (device: AudioDeviceInfo) => Promise<void>;
+    // (undocumented)
+    onSelectSpeaker: (device: AudioDeviceInfo) => Promise<void>;
+    // (undocumented)
+    onSendDtmfTone: (dtmfTone: DtmfTone) => Promise<void>;
+    // (undocumented)
     onStartCall: (participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[], options?: StartCallOptions) => void;
-};
+    // (undocumented)
+    onStartLocalVideo: () => Promise<void>;
+    // (undocumented)
+    onStartScreenShare: () => Promise<void>;
+    // (undocumented)
+    onStopScreenShare: () => Promise<void>;
+    // (undocumented)
+    onToggleCamera: (options?: VideoStreamOptions) => Promise<void>;
+    // (undocumented)
+    onToggleHold: () => Promise<void>;
+    // (undocumented)
+    onToggleMicrophone: () => Promise<void>;
+    // (undocumented)
+    onToggleScreenShare: () => Promise<void>;
+}
 
 // @public
 export const createDefaultCallingHandlers: (callClient: StatefulCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined) => CallingHandlers;
@@ -196,35 +240,11 @@ export type ScreenShareButtonSelector = (state: CallClientState, props: CallingB
 // @public
 export const screenShareButtonSelector: ScreenShareButtonSelector;
 
-// @public
-export type SharedCallingHandlers = {
-    onStartLocalVideo: () => Promise<void>;
-    onToggleCamera: (options?: VideoStreamOptions) => Promise<void>;
-    onSelectMicrophone: (device: AudioDeviceInfo) => Promise<void>;
-    onSelectSpeaker: (device: AudioDeviceInfo) => Promise<void>;
-    onSelectCamera: (device: VideoDeviceInfo, options?: VideoStreamOptions) => Promise<void>;
-    onToggleMicrophone: () => Promise<void>;
-    onStartScreenShare: () => Promise<void>;
-    onStopScreenShare: () => Promise<void>;
-    onToggleScreenShare: () => Promise<void>;
-    onHangUp: (forEveryone?: boolean) => Promise<void>;
-    onToggleHold: () => Promise<void>;
-    onAddParticipant(participant: CommunicationUserIdentifier): Promise<void>;
-    onAddParticipant(participant: PhoneNumberIdentifier, options: AddPhoneNumberOptions): Promise<void>;
-    onCreateLocalStreamView: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
-    onCreateRemoteStreamView: (userId: string, options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
-    onDisposeRemoteStreamView: (userId: string) => Promise<void>;
-    onDisposeLocalStreamView: () => Promise<void>;
-    onSendDtmfTone: (dtmfTone: DtmfTone) => Promise<void>;
-    onRemoveParticipant(userId: string): Promise<void>;
-    onRemoveParticipant(participant: CommunicationIdentifier): Promise<void>;
-    askDevicePermission: (constrain: PermissionConstraints) => Promise<void>;
-};
-
 // @beta
-export type TeamsCallingHandlers = SharedCallingHandlers & {
-    onStartCall: (participants: CommunicationIdentifier[], options?: StartCallOptions) => void | /* @conditional-compile-remove(teams-identity-support) */ TeamsCall;
-};
+export interface TeamsCallingHandlers extends CommonCallingHandlers {
+    // (undocumented)
+    onStartCall: (participants: CommunicationIdentifier[], options?: StartCallOptions) => undefined | /* @conditional-compile-remove(teams-identity-support) */ TeamsCall;
+}
 
 // @internal
 export const _updateUserDisplayNames: (participants: RemoteParticipantState[]) => RemoteParticipantState[];
