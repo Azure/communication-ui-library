@@ -32,7 +32,16 @@ export const useParticipantChangedAnnouncement = (): string => {
    */
   const [timeoutState, setTimeoutState] = useState<ReturnType<typeof setTimeout>>();
   const remoteParticipantsObject = useSelector(getRemoteParticipants);
-  const remoteParticipants = Object.values(remoteParticipantsObject ?? {});
+  const remoteParticipants = Object.values(remoteParticipantsObject ?? {}).filter((p) => {
+    /**
+     * We need to make sure remote participants are in the connected state. If they are not
+     * they might not have their displayName set in the call state just yet.
+     */
+    if (p.state === 'Connected') {
+      return p;
+    }
+    return;
+  });
   const [currentParticipants, setCurrentParticipants] = useState<RemoteParticipantState[]>(remoteParticipants);
 
   useEffect(() => {
