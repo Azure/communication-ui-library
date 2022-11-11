@@ -1,5 +1,7 @@
 ![ui-library-banner-image.png](./docs/images/ui-library-banner-image.png)
 
+Whitespace
+
 # Azure Communication Services UI Library
 
 [![Storybook](https://raw.githubusercontent.com/storybooks/brand/master/badge/badge-storybook.svg)](https://azure.github.io/communication-ui-library)
