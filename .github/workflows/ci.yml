@@ -69,10 +69,12 @@ jobs:
       - name: Check result of flavor switch
         if: ${{ always() && steps.switch-flavor.outcome == 'failure' }}
         run: echo "Failed to switch to stable flavor, please make sure you run 'rush update:stable' if dependencies were updated." && exit 1
-      # Perform changelog check
+
       - name: Check the necessary change file has been submitted
         if: ${{ github.event_name == 'pull_request' }}
-        run: node common/scripts/changelog/check.mjs ${{ github.base_ref }} ${{ github.head_ref }}
+        # GitHub provides remote branch names as refs.
+        run: node common/scripts/changelog/check.mjs origin/${{ github.base_ref }} origin/${{ github.head_ref }}
+
       # Perform lint check
       - name: Run linter
         run: rush lint
