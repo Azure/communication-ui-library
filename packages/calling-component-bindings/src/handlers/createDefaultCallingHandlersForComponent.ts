@@ -1,10 +1,17 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { CallAgentCommon, CallCommon, Common, _isACSCall, _isACSCallAgent } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(teams-identity-support) */
-import { _isTeamsCall, _isTeamsCallAgent } from '@internal/acs-ui-common';
-import { StatefulCallClient, StatefulDeviceManager } from '@internal/calling-stateful-client';
+import { _isTeamsCall, _isTeamsCallAgent } from '@internal/calling-stateful-client';
+import { Common } from '@internal/acs-ui-common';
+import {
+  StatefulCallClient,
+  StatefulDeviceManager,
+  CallAgentCommon,
+  CallCommon,
+  _isACSCall,
+  _isACSCallAgent
+} from '@internal/calling-stateful-client';
 import { ReactElement } from 'react';
 /* @conditional-compile-remove(teams-identity-support) */
 import { createDefaultTeamsCallingHandlers } from './createTeamsCallHandlers';

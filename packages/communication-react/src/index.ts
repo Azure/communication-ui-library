@@ -270,7 +270,7 @@ export type {
 } from '../../react-components/src';
 export * from '../../react-components/src/localization/locales';
 export * from '../../react-components/src/theming';
-export * from '../../calling-stateful-client/src';
+export * from '../../calling-stateful-client/src/index-public';
 /* @conditional-compile-remove(one-to-n-calling) */
 export type { DeclarativeCallAgent } from '../../calling-stateful-client/src';
 export { createStatefulChatClient } from '../../chat-stateful-client/src';

@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { IncomingCall } from '@azure/communication-calling';
-import { IncomingCallCommon } from '@internal/acs-ui-common';
+import { IncomingCallCommon } from './BetaToStableTypes';
 import { CallContext } from './CallContext';
 
 /**

@@ -4,7 +4,7 @@
 import { CallAgent } from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-identity-support) */
 import { TeamsCallAgent } from '@azure/communication-calling';
-import { _isACSCallAgent } from '@internal/acs-ui-common';
+import { _isACSCallAgent } from '@internal/calling-stateful-client';
 import React, { createContext, useContext } from 'react';
 
 /**

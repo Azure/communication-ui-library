@@ -1,7 +1,15 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Call, CallAgent, CallEndReason, CollectionUpdatedEvent } from '@azure/communication-calling';
+import {
+  Call,
+  CallAgent,
+  CallAgentCommon,
+  CallCommon,
+  CallEndReason,
+  CollectionUpdatedEvent,
+  IncomingCallCommon
+} from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-identity-support) */
 import { TeamsCallAgent } from '@azure/communication-calling';
 import { CallContext } from './CallContext';
@@ -11,7 +19,6 @@ import { convertSdkCallToDeclarativeCall, convertSdkIncomingCallToDeclarativeInc
 import { DeclarativeIncomingCall, incomingCallDeclaratify } from './IncomingCallDeclarative';
 import { IncomingCallSubscriber } from './IncomingCallSubscriber';
 import { InternalCallContext } from './InternalCallContext';
-import { CallAgentCommon, CallCommon, IncomingCallCommon } from '@internal/acs-ui-common';
 import { disposeAllViews, disposeAllViewsFromCall } from './StreamUtils';
 
 /**

@@ -8,15 +8,7 @@
 
 import { AzureLogger } from '@azure/logger';
 import { AzureLogLevel } from '@azure/logger';
-import { Call } from '@azure/communication-calling';
-import { CallAgent } from '@azure/communication-calling';
-import { CallAgentCommon as CallAgentCommon_2 } from '@azure/communication-calling';
-import { CallCommon as CallCommon_2 } from '@azure/communication-calling';
 import { CommunicationIdentifier } from '@azure/communication-common';
-import { IncomingCall } from '@azure/communication-calling';
-import { IncomingCallCommon as IncomingCallCommon_2 } from '@azure/communication-calling';
-import { TeamsCall as TeamsCall_2 } from '@azure/communication-calling';
-import { TeamsCallAgent as TeamsCallAgent_2 } from '@azure/communication-calling';
 
 // @public
 export type AreEqual<A extends (props: any) => JSX.Element | undefined, B extends (props: any) => JSX.Element | undefined> = true extends AreTypeEqual<A, B> & AreParamEqual<A, B> ? true : false;
@@ -28,13 +20,7 @@ export type AreParamEqual<A extends (props: any) => JSX.Element | undefined, B e
 export type AreTypeEqual<A, B> = A extends B ? (B extends A ? true : false) : false;
 
 // @public
-export type CallAgentCommon = CallAgent | /* @conditional-compile-remove(teams-identity-support) */ CallAgentCommon_2;
-
-// @public
 export type CallbackType<KeyT, ArgsT extends unknown[], FnRetT> = (memoizedFn: FunctionWithKey<KeyT, ArgsT, FnRetT>) => FnRetT[];
-
-// @public
-export type CallCommon = Call | /* @conditional-compile-remove(teams-identity-support) */ CallCommon_2;
 
 // @public
 export type Common<A, B> = Pick<A, CommonProperties<A, B>>;
@@ -59,26 +45,11 @@ export type FunctionWithKey<KeyT, ArgsT extends unknown[], RetT> = (key: KeyT, .
 // @internal
 export const _getApplicationId: () => string;
 
-// @public
-export type IncomingCallCommon = IncomingCall | /* @conditional-compile-remove(teams-identity-support) */ IncomingCallCommon_2;
-
 // @internal (undocumented)
 export interface _IObjectMap<T> {
     // (undocumented)
     [key: string]: T;
 }
-
-// @internal (undocumented)
-export const _isACSCall: (call: CallCommon) => call is Call;
-
-// @internal (undocumented)
-export const _isACSCallAgent: (callAgent: CallAgentCommon) => callAgent is CallAgent;
-
-// @internal (undocumented)
-export const _isTeamsCall: (call: CallCommon) => call is TeamsCall_2;
-
-// @internal (undocumented)
-export const _isTeamsCallAgent: (callAgent: CallAgentCommon) => callAgent is TeamsCallAgent_2;
 
 // @internal
 export const _logEvent: (logger: AzureLogger, event: TelemetryEvent) => void;
@@ -100,12 +71,6 @@ export const _pxToRem: (px: number) => string;
 
 // @internal
 export const _safeJSONStringify: (value: unknown, replacer?: ((this: unknown, key: string, value: unknown) => unknown) | undefined, space?: string | number | undefined) => string | undefined;
-
-// @beta (undocumented)
-export type TeamsCall = never | /* @conditional-compile-remove(teams-identity-support) */ TeamsCall_2;
-
-// @beta (undocumented)
-export type TeamsCallAgent = never | /* @conditional-compile-remove(teams-identity-support) */ TeamsCallAgent_2;
 
 // Warning: (ae-internal-missing-underscore) The name "TelemetryEvent" should be prefixed with an underscore because the declaration is marked as @internal
 //
