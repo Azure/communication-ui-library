@@ -91,7 +91,7 @@ class CallContext {
       latestErrors: clientState.latestErrors,
       isTeamsCall,
       /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId: clientState.alternateCallerId,
-      /* @conditional-compile-remove(unsupported-browser) */ environmentInfo: clientState.environmentInfo
+      /* @conditional-compile-remove(unsupported-browser) */ environmentInfo: clientState.environmentInfo,
       /* @conditional-compile-remove(rooms) */ roleHint: options?.roleHint
     };
     this.emitter.setMaxListeners(options?.maxListeners ?? 50);
