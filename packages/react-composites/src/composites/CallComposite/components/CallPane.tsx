@@ -63,7 +63,7 @@ export const CallPane = (props: {
 
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   const getStrings = () => {
-    /* @conditional-compile-remove(one-to-n-calling) */
+    /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
     return localeStrings.strings.call;
 
     return localeStrings.strings.callWithChat;

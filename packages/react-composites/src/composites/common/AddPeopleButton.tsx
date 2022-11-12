@@ -4,7 +4,7 @@ import { concatStyleSets, DefaultButton, IButtonStyles, PrimaryButton, Stack, us
 import copy from 'copy-to-clipboard';
 import React, { useMemo } from 'react';
 import { CallWithChatCompositeStrings } from '../../index-public';
-/* @conditional-compile-remove(one-to-n-calling) */
+/* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
 import { CallCompositeStrings } from '../../index-public';
 import { CallWithChatCompositeIcon } from './icons';
 import { peoplePaneContainerTokens } from './styles/ParticipantContainer.styles';
@@ -27,7 +27,9 @@ export interface AddPeopleButtonProps {
   inviteLink?: string;
   mobileView?: boolean;
   participantList?: JSX.Element;
-  strings: CallWithChatCompositeStrings | /* @conditional-compile-remove(one-to-n-calling) */ CallCompositeStrings;
+  strings:
+    | CallWithChatCompositeStrings
+    | /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */ CallCompositeStrings;
   /* @conditional-compile-remove(PSTN-calls) */
   onAddParticipant: (participant: PhoneNumberIdentifier, options?: AddPhoneNumberOptions) => void;
   alternateCallerId?: string;

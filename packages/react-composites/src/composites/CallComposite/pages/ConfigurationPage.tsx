@@ -12,7 +12,7 @@ import { devicePermissionSelector } from '../selectors/devicePermissionSelector'
 import { useSelector } from '../hooks/useSelector';
 import { DevicesButton, ErrorBar } from '@internal/react-components';
 /* @conditional-compile-remove(call-readiness) */
-import { DomainPermissions, _DrawerSurface, _DrawerSurfaceStyles } from '@internal/react-components';
+import { CameraAndMicrophoneDomainPermissions, _DrawerSurface, _DrawerSurfaceStyles } from '@internal/react-components';
 /* @conditional-compile-remove(rooms) */
 import { _usePermissions, _Permissions } from '@internal/react-components';
 import { getCallingSelector } from '@internal/calling-component-bindings';
@@ -44,6 +44,8 @@ import { DevicePermissionRestrictions } from '../CallComposite';
 import { ConfigurationpageErrorBar } from '../components/ConfigurationpageErrorBar';
 /* @conditional-compile-remove(call-readiness) */
 import { drawerContainerStyles } from '../styles/CallComposite.styles';
+/* @conditional-compile-remove(call-readiness) */
+import { getDevicePermissionState } from '../utils';
 
 /* @conditional-compile-remove(call-readiness) */
 const DRAWER_HIGH_Z_BAND = 99; // setting z index to  99 so that it sit above all components
@@ -83,6 +85,14 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
   const options = useAdaptedSelector(getCallingSelector(DevicesButton));
   const localDeviceSettingsHandlers = useHandlers(LocalDeviceSettings);
   const { video: cameraPermissionGranted, audio: microphonePermissionGranted } = useSelector(devicePermissionSelector);
+  /* @conditional-compile-remove(call-readiness) */
+  // use permission API to get video and audio permission state
+  const [videoState, setVideoState] = useState<PermissionState | undefined>(undefined);
+  /* @conditional-compile-remove(call-readiness) */
+  const [audioState, setAudioState] = useState<PermissionState | undefined>(undefined);
+  /* @conditional-compile-remove(call-readiness) */
+  getDevicePermissionState(setVideoState, setAudioState);
+
   let errorBarProps = usePropsFor(ErrorBar);
   const adapter = useAdapter();
   const deviceState = adapter.getState().devices;
@@ -141,8 +151,9 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
     camera: PermissionState;
     microphone: PermissionState;
   } = {
-    camera: cameraPermissionGranted ? 'granted' : 'denied',
-    microphone: microphonePermissionGranted ? 'granted' : 'denied'
+    // fall back to using cameraPermissionGranted and microphonePermissionGranted if permission API is not supported
+    camera: videoState ?? (cameraPermissionGranted ? 'granted' : 'denied'),
+    microphone: audioState ?? (microphonePermissionGranted ? 'granted' : 'denied')
   };
   /* @conditional-compile-remove(call-readiness) */
   const networkErrors = errorBarProps.activeErrorMessages.filter((message) => message.type === 'callNetworkQualityLow');
@@ -192,7 +203,7 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
             }}
             overlay={{ styles: { root: { background: 'rgba(0,0,0,0.9)' } } }}
           >
-            <DomainPermissions
+            <CameraAndMicrophoneDomainPermissions
               appName={'app'}
               onTroubleshootingClick={
                 onPermissionsTroubleshootingClick
@@ -201,6 +212,7 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
                     }
                   : undefined
               }
+              type="request"
             />
           </Modal>
         )
@@ -210,7 +222,7 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
         /* @conditional-compile-remove(call-readiness) */
         mobileView && isDrawerShowing && callReadinessOptedIn && (
           <_DrawerSurface onLightDismiss={onLightDismissTriggered} styles={drawerContainerStyles(DRAWER_HIGH_Z_BAND)}>
-            <DomainPermissions
+            <CameraAndMicrophoneDomainPermissions
               appName={'app'}
               onTroubleshootingClick={
                 onPermissionsTroubleshootingClick
@@ -219,7 +231,8 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
                     }
                   : undefined
               }
-              onAllowAccessClick={async () => {
+              type="request"
+              onContinueAnywayClick={async () => {
                 await adapter.askDevicePermission({ video: true, audio: true });
                 adapter.queryCameras();
                 adapter.queryMicrophones();
