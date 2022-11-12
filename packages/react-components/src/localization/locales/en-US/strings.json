@@ -184,12 +184,65 @@
     "participantStateRinging": "Calling...",
     "participantStateHold": "On hold"
   },
-  "DomainPermissions": {
+  "CameraAndMicrophoneDomainPermissionsRequest": {
     "primaryText": "Allow {appName} to use your camera and microphone",
     "secondaryText": "This is so participants can see and hear you.",
     "linkText": "Need help? Get troubleshooting help",
-    "primaryButtonText": "Allow Access",
+    "primaryButtonText": "Continue without camera and microphone",
     "ariaLabel": "Allow camera and microphone access"
+  },
+  "CameraDomainPermissionsRequest": {
+    "primaryText": "Allow {appName} to use your camera",
+    "secondaryText": "This is so participants can see you.",
+    "linkText": "Need help? Get troubleshooting help",
+    "primaryButtonText": "Continue without camera",
+    "ariaLabel": "Allow camera access"
+  },
+  "MicrophoneDomainPermissionsRequest": {
+    "primaryText": "Allow {appName} to use your microphone",
+    "secondaryText": "This is so participants can hear you.",
+    "linkText": "Need help? Get troubleshooting help",
+    "primaryButtonText": "Continue without microphone",
+    "ariaLabel": "Allow microphone access"
+  },
+  "CameraAndMicrophoneDomainPermissionsCheck": {
+    "primaryText": "Checking for camera and microphone access",
+    "secondaryText": "Allow access if prompted. This is so participants can see and hear you.",
+    "linkText": "Need help? Get troubleshooting help",
+    "primaryButtonText": "Continue without camera and microphone",
+    "ariaLabel": "Checking for camera and microphone access. Allow access if prompted."
+  },
+  "CameraDomainPermissionsCheck": {
+    "primaryText": "Checking for camera access",
+    "secondaryText": "Allow access if prompted. This is so participants can see you.",
+    "linkText": "Need help? Get troubleshooting help",
+    "primaryButtonText": "Continue without camera",
+    "ariaLabel": "Checking for camera access. Allow access if prompted."
+  },
+  "MicrophoneDomainPermissionsCheck": {
+    "primaryText": "Checking for microphone access",
+    "secondaryText": "Allow access if prompted. This is so participants can hear you.",
+    "linkText": "Need help? Get troubleshooting help",
+    "primaryButtonText": "Continue without microphone",
+    "ariaLabel": "Checking for microphone access. Allow access if prompted."
+  },
+  "CameraAndMicrophoneDomainPermissionsDenied": {
+    "primaryText": "Unable to access camera and microphone",
+    "secondaryText": "Click the lock icon in the address bar to grant microphone permissions to this webpage. A page refresh may be required.",
+    "primaryButtonText": "Continue without camera and microphone",
+    "linkText": "Need help? Get troubleshooting help"
+  },
+  "CameraDomainPermissionsDenied": {
+    "primaryText": "Unable to access camera",
+    "secondaryText": "Click the lock icon in the address bar to grant camera permissions to this webpage. A page refresh may be required.",
+    "primaryButtonText": "Continue without camera",
+    "linkText": "Need help? Get troubleshooting help"
+  },
+  "MicrophoneDomainPermissionsDenied": {
+    "primaryText": "Unable to access microphone",
+    "secondaryText": "Click the lock icon in the address bar to grant microphone permissions to this webpage. A page refresh may be required.",
+    "primaryButtonText": "Continue without microphone",
+    "linkText": "Need help? Get troubleshooting help"
   },
   "UnsupportedBrowser": {
     "primaryText": "Browser not supported",

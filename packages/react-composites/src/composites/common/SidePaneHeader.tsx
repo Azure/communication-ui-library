@@ -3,7 +3,7 @@
 import { CommandBarButton, Stack } from '@fluentui/react';
 import { useTheme } from '@internal/react-components';
 import React, { useMemo } from 'react';
-/* @conditional-compile-remove(one-to-n-calling) */
+/* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
 import { CallCompositeStrings } from '../CallComposite';
 import { CallWithChatCompositeStrings } from '../CallWithChatComposite';
 import { sidePaneHeaderContainerStyles, sidePaneHeaderStyles } from '../common/styles/ParticipantContainer.styles';
@@ -14,7 +14,9 @@ import { sidePaneHeaderContainerStyles, sidePaneHeaderStyles } from '../common/s
 export const SidePaneHeader = (props: {
   headingText: string;
   onClose: () => void;
-  strings: CallWithChatCompositeStrings | /* @conditional-compile-remove(one-to-n-calling) */ CallCompositeStrings;
+  strings:
+    | CallWithChatCompositeStrings
+    | /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */ CallCompositeStrings;
 }): JSX.Element => {
   const theme = useTheme();
   const sidePaneCloseButtonStyles = useMemo(
