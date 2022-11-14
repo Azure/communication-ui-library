@@ -313,18 +313,19 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
   }
 
   /* @conditional-compile-remove(unsupported-browser) */
-  if (
-    adapter.getState().features?.unsupportedEnvironment &&
-    adapter.getState().environmentInfo?.isSupportedBrowser === false
-  ) {
-    pageElement = (
-      <>
-        {
-          /* @conditional-compile-remove(unsupported-browser) */
-          <UnsupportedBrowserPage onTroubleshootingClick={props.options?.onEnvironmentInfoTroubleshootingClick} />
-        }
-      </>
-    );
+  if (adapter.getState().features?.unsupportedEnvironment) {
+    switch (page) {
+      case 'unsupportedEnvironment':
+        pageElement = (
+          <>
+            {
+              /* @conditional-compile-remove(unsupported-browser) */
+              <UnsupportedBrowserPage onTroubleshootingClick={props.options?.onEnvironmentInfoTroubleshootingClick} />
+            }
+          </>
+        );
+        break;
+    }
   }
 
   if (!pageElement) {

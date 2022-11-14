@@ -143,10 +143,17 @@ export const getCallCompositePage: GetCallCompositePageFunction = (
   previousCall,
   environmentInfo?
 ): CallCompositePage => {
-  // Must check for ongoing call *before* looking at any previous calls.
-  // If the composite completes one call and joins another, the previous calls
-  // will be populated, but not relevant for determining the page.
+  console.log(environmentInfo);
+  /* @conditional-compile-remove(unsupported-browser) */
+  if (environmentInfo?.isSupportedBrowser === false) {
+    return 'unsupportedEnvironment';
+  }
+
   if (call) {
+    // Must check for ongoing call *before* looking at any previous calls.
+    // If the composite completes one call and joins another, the previous calls
+    // will be populated, but not relevant for determining the page.
+
     // `_isInLobbyOrConnecting` needs to be checked first because `_isInCall` also returns true when call is in lobby.
     if (_isInLobbyOrConnecting(call?.state)) {
       return 'lobby';

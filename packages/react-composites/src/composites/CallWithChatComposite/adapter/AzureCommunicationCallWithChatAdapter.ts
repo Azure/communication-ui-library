@@ -684,7 +684,8 @@ export const useAzureCommunicationCallWithChatAdapter = (
     endpoint,
     locator,
     userId,
-    /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId
+    /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
+    /* @conditional-compile-remove(unsupported-browser) */ features
   } = args;
 
   // State update needed to rerender the parent component when a new adapter is created.
@@ -728,7 +729,8 @@ export const useAzureCommunicationCallWithChatAdapter = (
           endpoint,
           locator,
           userId,
-          /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId
+          /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
+          /* @conditional-compile-remove(unsupported-browser) */ features
         });
         if (afterCreateRef.current) {
           newAdapter = await afterCreateRef.current(newAdapter);

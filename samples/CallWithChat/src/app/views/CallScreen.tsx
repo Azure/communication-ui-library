@@ -87,7 +87,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
       endpoint,
       locator,
       /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
-      /* @conditional-compile-remove(unsuspported-browser) */ callingFeatures: { unsupportedEnvironment: true }
+      /* @conditional-compile-remove(unsuspported-browser) */ features: { unsupportedEnvironment: true }
     },
     afterAdapterCreate
   );

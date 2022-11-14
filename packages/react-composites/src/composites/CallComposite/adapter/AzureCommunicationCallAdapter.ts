@@ -142,7 +142,8 @@ class CallContext {
 
     // As the state is transitioning to a new state, trigger appropriate callback events.
     const oldPage = this.state.page;
-    const newPage = getCallCompositePage(call, latestEndedCall);
+    const environmentInfo = this.state.features?.unsupportedEnvironment ? this.state.environmentInfo : undefined;
+    const newPage = getCallCompositePage(call, latestEndedCall, environmentInfo);
     if (!IsCallEndedPage(oldPage) && IsCallEndedPage(newPage)) {
       this.emitter.emit('callEnded', { callId: this.callId });
       // Reset the callId to undefined as the call has ended.
