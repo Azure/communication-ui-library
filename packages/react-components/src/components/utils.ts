@@ -1,8 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IIconProps, MessageBarType } from '@fluentui/react';
+import { IContextualMenuItem, IIconProps, MessageBarType } from '@fluentui/react';
 import { ActiveErrorMessage, ErrorType } from './ErrorBar';
+
+import { VideoTileMenuItem, VideoTileMenuItems } from './VideoTile';
 
 /**
  * @private
@@ -147,6 +149,25 @@ export const messageBarType = (errorType: ErrorType): MessageBarType => {
     default:
       return MessageBarType.error;
   }
+};
+
+/* @conditional-compile-remove(pinned-participants) */
+/**
+ * @private
+ */
+export const mapMenuItemsToContextualMenuItems = (menuItems: VideoTileMenuItems): IContextualMenuItem[] => {
+  const contextualMenuItems: IContextualMenuItem[] = [];
+  menuItems.map((item: VideoTileMenuItem) => {
+    contextualMenuItems.push({
+      key: item.key,
+      text: item.text,
+      ariaLabel: item.ariaLabel,
+      onClick: item.onClick,
+      iconProps: item.icon
+    });
+  });
+
+  return contextualMenuItems;
 };
 
 /**

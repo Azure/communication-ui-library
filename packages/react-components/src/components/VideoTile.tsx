@@ -25,9 +25,11 @@ import {
 } from './styles/VideoTile.styles';
 import { getVideoTileOverrideColor } from './utils/videoTileStylesUtils';
 /* @conditional-compile-remove(pinned-participants) */
-import { DefaultButton, IContextualMenuItem, IIconProps, concatStyleSets } from '@fluentui/react';
+import { DefaultButton, IIconProps, concatStyleSets } from '@fluentui/react';
 /* @conditional-compile-remove(pinned-participants) */
 import { menuButtonStyles } from './styles/VideoTile.styles';
+/* @conditional-compile-remove(pinned-participants) */
+import { mapMenuItemsToContextualMenuItems } from './utils';
 
 /**
  * Strings of {@link VideoTile} that can be overridden.
@@ -179,7 +181,29 @@ export type VideoTileMenuItem = {
  */
 export type VideoTileMenuItems = Array<VideoTileMenuItem>;
 
+/* @conditional-compile-remove(pinned-participants) */
+const menuIcon = (): JSX.Element => <MoreHorizontal20Filled primaryFill="currentColor" />;
+
 const defaultPersonaStyles = { root: { margin: 'auto', maxHeight: '100%' } };
+/* @conditional-compile-remove(pinned-participants) */
+/** @private */
+const VideoTileMoreOptionsButton = (props: {
+  menuItems?: Array<VideoTileMenuItem>;
+  menuStyles?: IStyle;
+}): JSX.Element => {
+  const { menuItems, menuStyles } = props;
+  if (!menuItems || menuItems.length === 0) {
+    return <></>;
+  }
+  return (
+    <DefaultButton
+      styles={concatStyleSets(menuButtonStyles, menuStyles ?? {})}
+      onRenderIcon={menuIcon}
+      menuIconProps={{ hidden: true }}
+      menuProps={{ items: mapMenuItemsToContextualMenuItems(menuItems) }}
+    />
+  );
+};
 
 /**
  * A component to render the video stream for a single call participant.
@@ -258,24 +282,6 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
 
   const canShowLabel = showLabel && (displayName || (showMuteIndicator && isMuted));
   const participantStateString = participantStateStringTrampoline(props, locale);
-
-  /* @conditional-compile-remove(pinned-participants) */
-  const optionsMenuItems = (menuItems: VideoTileMenuItems): IContextualMenuItem[] => {
-    const contextualMenuItems: IContextualMenuItem[] = [];
-    menuItems.forEach((item: VideoTileMenuItem) => {
-      contextualMenuItems.push({
-        key: item.key,
-        text: item.text,
-        ariaLabel: item.ariaLabel,
-        onClick: item.onClick,
-        iconProps: item.icon
-      });
-    });
-
-    return contextualMenuItems;
-  };
-  const menuIcon = (): JSX.Element => <MoreHorizontal20Filled key={'chatOnIconKey'} primaryFill="currentColor" />;
-
   return (
     <Ref innerRef={videoTileRef}>
       <Stack
@@ -344,14 +350,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
               )}
               {
                 /* @conditional-compile-remove(pinned-participants) */
-                menuItems && menuItems.length > 0 && (
-                  <DefaultButton
-                    styles={concatStyleSets(menuButtonStyles, props.styles ?? {})}
-                    onRenderIcon={menuIcon}
-                    menuIconProps={{ hidden: true }}
-                    menuProps={{ items: optionsMenuItems(menuItems) }}
-                  />
-                )
+                <VideoTileMoreOptionsButton menuItems={menuItems} menuStyles={props.styles} />
               }
             </Stack>
           </Stack>
