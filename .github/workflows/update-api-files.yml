@@ -71,9 +71,9 @@ jobs:
         run: |
           if [[ -z $(git status packages -s) ]]
           then
-            echo "::set-output name=hasChanged::false"
+            echo "hasChanged=false" >> $GITHUB_OUTPUT
           else
-            echo "::set-output name=hasChanged::true"
+            echo "hasChanged=true" >> $GITHUB_OUTPUT
           fi
       - name: Commit new snapshots
         if: ${{ always() && steps.changescheck.outputs.hasChanged == 'true' }}

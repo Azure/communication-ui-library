@@ -49,9 +49,9 @@ jobs:
           echo Days since last commit: $days
 
           if [ $days = "0" ]; then
-            echo "::set-output name=hasChanged::true"
+            echo "hasChanged=true" >> $GITHUB_OUTPUT
           else
-            echo "::set-output name=hasChanged::false"
+            echo "hasChanged=false" >> $GITHUB_OUTPUT
           fi
 
   release:
@@ -88,7 +88,7 @@ jobs:
       - name: Get datetime for alpha release name
         id: datetime
         run: |
-          echo "::set-output name=datetime::$(date +'%Y%m%d%H%M')"
+          echo "datetime=$(date +'%Y%m%d%H%M')" >> $GITHUB_OUTPUT
 
       # Bump alpha package versions
       - name: Bump alpha package versions
@@ -115,7 +115,7 @@ jobs:
         run: |
           ver=$(jq -r .version packages/communication-react/package.json)
           echo version: $ver
-          echo "::set-output name=version::$ver"
+          echo "version=$ver" >> $GITHUB_OUTPUT
 
       # Push git tags
       - name: Create and push git tags

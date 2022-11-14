@@ -28,7 +28,7 @@ jobs:
       - name: Found workflow disptach
         id: workflow_dispatch
         if: ${{ github.event_name == 'workflow_dispatch' }}
-        run: echo "::set-output name=found::true"
+        run: echo "found=true" >> $GITHUB_OUTPUT
       - name: Found required label
         id: label
         if: ${{ github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'update_snapshots') }}
@@ -36,7 +36,7 @@ jobs:
           # Required for running `gh`.
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          echo "::set-output name=found::true"
+          echo "found=true" >> $GITHUB_OUTPUT
           gh pr edit ${{ github.event.number }} --remove-label update_snapshots
 
   get_matrix:
@@ -55,7 +55,7 @@ jobs:
         with:
           node-version: '14.x'
       - id: get-matrix
-        run: echo "::set-output name=matrix::$(node ./common/scripts/workflow-read-matrix.mjs)"
+        run: echo "matrix=$(node ./common/scripts/workflow-read-matrix.mjs)" >> $GITHUB_OUTPUT
 
   component_examples:
     needs: [precondition, get_matrix]
@@ -123,9 +123,9 @@ jobs:
         run: |
           if [[ -z $(git status samples/tests -s) ]]
           then
-            echo "::set-output name=hasChanged::false"
+            echo "hasChanged=false" >> $GITHUB_OUTPUT
           else
-            echo "::set-output name=hasChanged::true"
+            echo "hasChanged=true" >> $GITHUB_OUTPUT
             exit
           fi
       - name: Create a patch file for snapshot updates
@@ -207,9 +207,9 @@ jobs:
         run: |
           if [[ -z $(git status samples/tests -s) ]]
           then
-            echo "::set-output name=hasChanged::false"
+            echo "hasChanged=false" >> $GITHUB_OUTPUT
           else
-            echo "::set-output name=hasChanged::true"
+            echo "hasChanged=true" >> $GITHUB_OUTPUT
             exit
           fi
       - name: Push new snapshots, if any
@@ -298,9 +298,9 @@ jobs:
         run: |
           if [[ -z $(git status packages -s) ]]
           then
-            echo "::set-output name=hasChanged::false"
+            echo "hasChanged=false" >> $GITHUB_OUTPUT
           else
-            echo "::set-output name=hasChanged::true"
+            echo "hasChanged=true" >> $GITHUB_OUTPUT
           fi
       - name: Push new snapshots, if any
         if: ${{ steps.changescheck.outputs.hasChanged == 'true' }}
@@ -388,9 +388,9 @@ jobs:
         run: |
           if [[ -z $(git status packages -s) ]]
           then
-            echo "::set-output name=hasChanged::false"
+            echo "hasChanged=false" >> $GITHUB_OUTPUT
           else
-            echo "::set-output name=hasChanged::true"
+            echo "hasChanged=true" >> $GITHUB_OUTPUT
           fi
       - name: Push new snapshots, if any
         if: ${{ steps.changescheck.outputs.hasChanged == 'true' }}
@@ -478,9 +478,9 @@ jobs:
         run: |
           if [[ -z $(git status packages -s) ]]
           then
-            echo "::set-output name=hasChanged::false"
+            echo "hasChanged=false" >> $GITHUB_OUTPUT
           else
-            echo "::set-output name=hasChanged::true"
+            echo "hasChanged=true" >> $GITHUB_OUTPUT
           fi
       - name: Push new snapshots, if any
         if: ${{ steps.changescheck.outputs.hasChanged == 'true' }}
