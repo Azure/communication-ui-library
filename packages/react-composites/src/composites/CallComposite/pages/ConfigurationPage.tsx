@@ -44,6 +44,8 @@ import { DevicePermissionRestrictions } from '../CallComposite';
 import { ConfigurationpageErrorBar } from '../components/ConfigurationpageErrorBar';
 /* @conditional-compile-remove(call-readiness) */
 import { drawerContainerStyles } from '../styles/CallComposite.styles';
+/* @conditional-compile-remove(call-readiness) */
+import { getDevicePermissionState } from '../utils';
 
 /* @conditional-compile-remove(call-readiness) */
 const DRAWER_HIGH_Z_BAND = 99; // setting z index to  99 so that it sit above all components
@@ -83,6 +85,14 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
   const options = useAdaptedSelector(getCallingSelector(DevicesButton));
   const localDeviceSettingsHandlers = useHandlers(LocalDeviceSettings);
   const { video: cameraPermissionGranted, audio: microphonePermissionGranted } = useSelector(devicePermissionSelector);
+  /* @conditional-compile-remove(call-readiness) */
+  // use permission API to get video and audio permission state
+  const [videoState, setVideoState] = useState<PermissionState | undefined>(undefined);
+  /* @conditional-compile-remove(call-readiness) */
+  const [audioState, setAudioState] = useState<PermissionState | undefined>(undefined);
+  /* @conditional-compile-remove(call-readiness) */
+  getDevicePermissionState(setVideoState, setAudioState);
+
   let errorBarProps = usePropsFor(ErrorBar);
   const adapter = useAdapter();
   const deviceState = adapter.getState().devices;
@@ -141,8 +151,9 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
     camera: PermissionState;
     microphone: PermissionState;
   } = {
-    camera: cameraPermissionGranted ? 'granted' : 'denied',
-    microphone: microphonePermissionGranted ? 'granted' : 'denied'
+    // fall back to using cameraPermissionGranted and microphonePermissionGranted if permission API is not supported
+    camera: videoState ?? (cameraPermissionGranted ? 'granted' : 'denied'),
+    microphone: audioState ?? (microphonePermissionGranted ? 'granted' : 'denied')
   };
   /* @conditional-compile-remove(call-readiness) */
   const networkErrors = errorBarProps.activeErrorMessages.filter((message) => message.type === 'callNetworkQualityLow');
