@@ -70,7 +70,10 @@ jobs:
       - name: Install dependencies
         run: rush install
 
-      # Bump package versions
+      # ####################################################################
+      # Create pre-release branch
+      #
+      # Bump versions first so we can use the new version in the branch name.
       - name: Bump beta package versions if beta
         if: ${{ github.event.inputs.bump_type == 'beta' }}
         run: node common/scripts/bump-beta-version.js
@@ -81,18 +84,7 @@ jobs:
         if: ${{ github.event.inputs.bump_type == 'stable-minor' }}
         run: node common/scripts/bump-stable-version.js minor
 
-      - name: Generate beta CHANGELOG
-        if: ${{ github.event.inputs.bump_type == 'beta' }}
-        run: node common/scripts/changelog/collect.mjs beta
-      - name: Generate stable CHANGELOG
-        if: ${{ github.event.inputs.bump_type == 'stable-patch' || github.event.inputs.bump_type == 'stable-minor' }}
-        run: node common/scripts/changelog/collect.mjs stable
-
-      # Important to check version consistency again after bumping versions.
-      - name: Ensure all package versions are consistent
-        run: rush ensure-consistent-versions
-
-      # Retrieve new version to create branch with
+      # Retrieve new version so we can use it in the branch name.
       - name: Retrieve new version from package.json
         id: version
         run: |
@@ -100,27 +92,41 @@ jobs:
           echo version: $ver
           echo "::set-output name=version::$ver"
 
-      # Commit changes
-      - name: Hop into new branch
+      - name: Hop into new branch before comitting changes
         id: prereleasebranch
         run: |
           git checkout -b prerelease-${{github.event.inputs.bump_type}}/${{ steps.version.outputs.version }}
           echo "::set-output name=prereleasebranch::prerelease-${{github.event.inputs.bump_type}}/${{ steps.version.outputs.version }}"
-      - name: Commit changes
+
+      - name: Commit package version bump
         run: |
           git add .
-          git commit -m "${{github.event.inputs.bump_type}} version bump pre-release branch"
-          git push -u origin "${{ steps.prereleasebranch.outputs.prereleasebranch }}"
+          git commit -m "${{github.event.inputs.bump_type}} version bump"
 
-      - name: Add trivial changefile
-        run: node common/scripts/changelog/change.mjs -m 'Bumped versions for release' --type none
+      - name: Generate beta CHANGELOG
+        if: ${{ github.event.inputs.bump_type == 'beta' }}
+        run: node common/scripts/changelog/collect.mjs beta
+      - name: Generate stable CHANGELOG
+        if: ${{ github.event.inputs.bump_type == 'stable-patch' || github.event.inputs.bump_type == 'stable-minor' }}
+        run: node common/scripts/changelog/collect.mjs stable
 
-      # create Groom branch for the changelog and version bumps
-      - name: Hop into Groom branch
+      - name: sanity check - ensure all package versions are consistent
+        run: rush ensure-consistent-versions
+
+      - name: Push new branch to remote
+        run: git push -u origin "${{ steps.prereleasebranch.outputs.prereleasebranch }}"
+
+      # ####################################################################
+      # Create a PR to groom the CHANGELOG
+      #
+      - name: Hop into new branch
         id: groombranch
         run: |
           git checkout -b groom-changelog-${{github.event.inputs.bumptype}}/${{ steps.version.outputs.version }}
           echo "::set-output name=groombranch::groom-changelog-${{github.event.inputs.bumptype}}/${{ steps.version.outputs.version }}"
+
+      - name: Add trivial changefile so CI does not complain about the CHANGELOG grooming PR
+        run: node common/scripts/changelog/change.mjs -m 'Bumped versions for release' --type none
 
       # Push groom changes
       - name: Create groom file and push changes
