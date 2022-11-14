@@ -152,9 +152,9 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
     }
   }
   /* @conditional-compile-remove(unsupported-browser) */
-  public async getEnvironmentInfo(): Promise<EnvironmentInfo> {
+  public async populateEnvironmentInfo(): Promise<EnvironmentInfo> {
     if (!this.callWithChatAdapter.populateEnvironmentInfo) {
-      throw new Error('getEnvironmentInfo not implemented');
+      throw new Error('populateEnvironmentInfo not implemented');
     }
     return await this.callWithChatAdapter.populateEnvironmentInfo();
   }

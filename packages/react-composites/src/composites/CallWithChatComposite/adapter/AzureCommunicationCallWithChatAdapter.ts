@@ -412,9 +412,9 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   }
 
   /* @conditional-compile-remove(unsupported-browser) */
-  public async getEnvironmentInfo(): Promise<EnvironmentInfo> {
+  public async populateEnvironmentInfo(): Promise<EnvironmentInfo> {
     if (!this.callAdapter.populateEnvironmentInfo) {
-      throw new Error('getEnvironmentInfo is not implemented');
+      throw new Error('populateEnvironmentInfo is not implemented');
     }
     return await this.callAdapter.populateEnvironmentInfo();
   }
@@ -600,7 +600,7 @@ export type AzureCommunicationCallWithChatAdapterArgs = {
   /* @conditional-compile-remove(PSTN-calls) */
   alternateCallerId?: string;
   /* @conditional-compile-remove(unsupported-browser) */
-  callingFeatures?: CallAdapterOptionalFeatures;
+  features?: CallAdapterOptionalFeatures;
 };
 
 /**
@@ -616,7 +616,7 @@ export const createAzureCommunicationCallWithChatAdapter = async ({
   endpoint,
   locator,
   /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
-  /* @conditional-compile-remove(unsupported-browser) */ callingFeatures
+  /* @conditional-compile-remove(unsupported-browser) */ features
 }: AzureCommunicationCallWithChatAdapterArgs): Promise<CallWithChatAdapter> => {
   const callAdapterLocator = isTeamsMeetingLinkLocator(locator) ? locator : locator.callLocator;
   const createCallAdapterPromise = createAzureCommunicationCallAdapter({
@@ -625,7 +625,7 @@ export const createAzureCommunicationCallWithChatAdapter = async ({
     credential,
     locator: callAdapterLocator,
     /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
-    /* @conditional-compile-remove(unsupported-browser) */ features: callingFeatures
+    /* @conditional-compile-remove(unsupported-browser) */ features: features
   });
 
   const threadId = isTeamsMeetingLinkLocator(locator)
