@@ -4,6 +4,7 @@ import {
   fromFlatCommunicationIdentifier,
   useAzureCommunicationCallAdapter
 } from '@azure/communication-react';
+import { initializeIcons } from '@fluentui/react';
 import React, { useMemo } from 'react';
 
 /**
@@ -31,6 +32,8 @@ const DISPLAY_NAME = '<Display Name>';
  * A list of ACS User IDs to call
  */
 const ACS_USER_IDS = ['<ACS User ID>'];
+
+initializeIcons();
 
 /**
  * Entry point of your application.

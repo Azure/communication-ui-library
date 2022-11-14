@@ -32,7 +32,7 @@ jobs:
         with:
           node-version: '14.x'
       - id: get-matrix
-        run: echo "::set-output name=matrix::$(node ./common/scripts/workflow-read-matrix.mjs)"
+        run: echo "matrix=$(node ./common/scripts/workflow-read-matrix.mjs)" >> $GITHUB_OUTPUT
 
   build_packages:
     needs: get_matrix
@@ -588,12 +588,12 @@ jobs:
         id: bundles
         run: |
           base_size=$(jq -r ".[0].parsedSize" base/report.json)
-          echo "::set-output name=base_size::${base_size}"
+          echo "base_size=${base_size}" >> $GITHUB_OUTPUT
           current_size=$(jq -r ".[0].parsedSize" current/report.json)
-          echo "::set-output name=current_size::${current_size}"
+          echo "current_size=${current_size}" >> $GITHUB_OUTPUT
           change=$([ $current_size -gt $base_size ] && echo "increased❗" || ([ $current_size = $base_size ] && echo "not changed" || echo "decreased✅"))
-          echo "::set-output name=change::${change}"
-          echo "::set-output name=diff::$(($current_size - $base_size))"
+          echo "change=${change}" >> $GITHUB_OUTPUT
+          echo "diff=$(($current_size - $base_size))" >> $GITHUB_OUTPUT
       - name: Find Comment
         uses: peter-evans/find-comment@v2
         id: fc
