@@ -4,6 +4,7 @@ import {
   fromFlatCommunicationIdentifier,
   useAzureCommunicationCallAdapter
 } from '@azure/communication-react';
+import { initializeIcons } from '@fluentui/react';
 import React, { useMemo } from 'react';
 
 /**
@@ -40,6 +41,8 @@ const ALTERNATE_CALLER_ID = '<Azure Communication Services Managed Phone Number>
  * A list of phone numbers to call
  */
 const PHONE_NUMBERS = ['<Phone Number>'];
+
+initializeIcons();
 
 /**
  * Entry point of your application.
