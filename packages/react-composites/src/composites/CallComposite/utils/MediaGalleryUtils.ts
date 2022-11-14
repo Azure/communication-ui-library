@@ -47,22 +47,7 @@ export const useParticipantChangedAnnouncement = (): string => {
   useEffect(() => {
     const setParticipantEventString = (string: string): void => {
       setAnnouncerString('');
-
-      if (timeoutState) {
-        clearTimeout(timeoutState);
-        setTimeoutState(undefined);
-      }
-      setTimeoutState(
-        /**
-         * These set timeouts are needed to clear the announcer string in case we have multiple
-         * participants join. Since the narrator will only announce the string in the
-         * Announcer component should the string change.
-         */
-        setTimeout(() => {
-          setAnnouncerString(string);
-          setTimeoutState(undefined);
-        }, PARTICIPANT_ANNOUNCEMENT_DELAY)
-      );
+      setAnnouncerString(string);
     };
     if (remoteParticipants.length < currentParticipants.length) {
       //someone left
@@ -72,7 +57,6 @@ export const useParticipantChangedAnnouncement = (): string => {
         }
         return;
       });
-      console.log(whoLeft);
       setParticipantEventString(
         createAnnouncmentString(
           locale.participantLeftNoticeString,
@@ -90,7 +74,6 @@ export const useParticipantChangedAnnouncement = (): string => {
         }
         return;
       });
-      console.log(whoJoined);
       setParticipantEventString(
         createAnnouncmentString(
           locale.participantJoinedNoticeString,
@@ -116,6 +99,7 @@ const createAnnouncmentString = (
   participants?: RemoteParticipantState[]
 ): string => {
   if (participants) {
+    console.log(participants);
     if (participants.length <= 3) {
       const names = participants.map((p) => p.displayName ?? defaultName).join(', ');
       return _formatString(localeString, { displayNames: names });
