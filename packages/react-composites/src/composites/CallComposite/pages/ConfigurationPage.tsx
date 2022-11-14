@@ -207,20 +207,21 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
         />
       </Stack>
 
-      {callReadinessOptedIn && videoState && audioState && (
-        /* @conditional-compile-remove(call-readiness) */
-        <>
-          {callReadinessModal(
-            mobileView,
-            audioState,
-            videoState,
-            permissionsState,
-            isModalShowing,
-            setIsModalShowing,
-            onPermissionsTroubleshootingClick
-          )}
-        </>
-      )}
+      {
+        /* @conditional-compile-remove(call-readiness) */ callReadinessOptedIn && videoState && audioState && (
+          <>
+            {callReadinessModal(
+              mobileView,
+              audioState,
+              videoState,
+              permissionsState,
+              isModalShowing,
+              setIsModalShowing,
+              onPermissionsTroubleshootingClick
+            )}
+          </>
+        )
+      }
 
 
       {
