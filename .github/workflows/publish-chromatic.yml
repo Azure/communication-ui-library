@@ -61,7 +61,7 @@ jobs:
           echo "Storybook URL before: $storybookurl"
           newurl=${storybookurl/%iframe.html}
           echo "Storybook URL after: $newurl"
-          echo "::set-output name=url::$newurl"
+          echo "url=$newurl" >> $GITHUB_OUTPUT
 
       - name: Add Storybook URL as Issue Comment
         if: github.event_name == 'pull_request'
