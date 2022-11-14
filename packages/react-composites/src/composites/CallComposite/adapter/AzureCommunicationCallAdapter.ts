@@ -142,7 +142,7 @@ class CallContext {
 
     // As the state is transitioning to a new state, trigger appropriate callback events.
     const oldPage = this.state.page;
-    /* @conditional-compile-remove(unsuspported-browser) */
+    /* @conditional-compile-remove(unsupported-browser) */
     const environmentInfo = this.state.features?.unsupportedEnvironment ? this.state.environmentInfo : undefined;
     const newPage = getCallCompositePage(
       call,
