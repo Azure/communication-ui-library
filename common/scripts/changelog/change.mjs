@@ -1,6 +1,19 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+/**
+ * Script to generate change files for changes in this repository.
+ *
+ * This script is a wrapper for `beachball change`.
+ * - The change file is generated only for the publicly released packlet: @azure/communication-react
+ * - Seprate change file is created for stable and beta releases
+ *
+ * Usage:
+ *   node common/scripts/changelog/change.mjs
+ *   # Or, forward arguments to `beachball change`:
+ *   node common/scripts/changelog/change.mjs -t patch -m 'Fix video gallery flicker'
+ */
+
 import fs from 'fs';
 import path from 'path';
 
@@ -38,7 +51,5 @@ async function duplicateChangeFiles() {
     await exec(`git add ${CHANGE_DIR_BETA}`);
     await exec(`git commit -m 'Duplicate change files for beta release'`);
 }
-
-
 
 await main();

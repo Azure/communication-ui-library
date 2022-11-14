@@ -1,6 +1,15 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+/**
+ * Script to check that changefile has been generated for each Pull Request.
+ *
+ * This script is only useful in the context of PR validation.
+ *
+ * Usage:
+ *   node common/scripts/changelog/check.mjs origin/main origin/feature-pony
+ */
+
 import { REPO_ROOT } from "../lib/constants.mjs";
 import { exec_output } from "../lib/exec.mjs";
 import path from 'path';

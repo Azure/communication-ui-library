@@ -2,9 +2,11 @@
 // Licensed under the MIT license.
 
 /**
- * Workaround for generating changelog without bumping versions.
- * Beachball doesn't expose changelog command currently.
+ * A helper module to generate CHANGELOG files without bumping packlet versions.
+ * This module is a workaround because beachball doesn't expose changelog command currently.
  * Upstream feature request: https://github.com/microsoft/beachball/issues/650
+ *
+ * This module is not a script entry-point. See ./collect.mjs for the script that uses this module.
  */
 
 import { getPackageInfos } from '../../config/node_modules/beachball/lib/monorepo/getPackageInfos.js';

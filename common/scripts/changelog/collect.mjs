@@ -1,8 +1,19 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+/**
+ * Script to collect CHANGELOG files for stable and beta releases.
+ *
+ * This script processes the change files generated previously via the ./change.mjs.
+ * It collects the changes into the CHANGELOG relevant for the release type.
+ *
+ * Usage:
+ *   node common/scripts/changelog/collect.mjs stable
+ *   node common/scripts/changelog/collect.mjs beta
+ */
+
 import { copyFile, rm, rename } from 'fs/promises';
-import { exec, exec_output } from "../lib/exec.mjs";
+import { exec } from "../lib/exec.mjs";
 import { CHANGE_DIR, CHANGE_DIR_BETA, CHANGE_DIR_STABLE_TEMP, COMMUNICATION_REACT_CHANGELOG_BETA, COMMUNICATION_REACT_CHANGELOG_STABLE, COMMUNICATION_REACT_CHANGELOG_TEMPORARY } from './constants.mjs';
 import { generateChangelogs } from './changelog.mjs';
 
