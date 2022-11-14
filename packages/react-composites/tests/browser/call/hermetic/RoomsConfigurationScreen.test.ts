@@ -8,19 +8,25 @@ import type { MockCallAdapterState } from '../../../common';
 
 test.describe('Rooms Call Configuration Screen Tests for different roles', () => {
   test('All configurations are enabled for Presenter', async ({ page, serverUrl }) => {
-    await page.goto(buildUrlWithMockAdapter(serverUrl, defaultMockConfigurationPageState(), { role: 'Presenter' }));
+    await page.goto(
+      buildUrlWithMockAdapter(serverUrl, { ...defaultMockConfigurationPageState(), roleHint: 'Presenter' })
+    );
     await waitForCallCompositeToLoad(page);
     expect(await stableScreenshot(page)).toMatchSnapshot(`rooms-configuration-page-presenter.png`);
   });
 
   test('All configurations are enabled for Attendee', async ({ page, serverUrl }) => {
-    await page.goto(buildUrlWithMockAdapter(serverUrl, defaultMockConfigurationPageState(), { role: 'Attendee' }));
+    await page.goto(
+      buildUrlWithMockAdapter(serverUrl, { ...defaultMockConfigurationPageState(), roleHint: 'Attendee' })
+    );
     await waitForCallCompositeToLoad(page);
     expect(await stableScreenshot(page)).toMatchSnapshot(`rooms-configuration-page-attendee.png`);
   });
 
   test('Only configurations for speaker are enabled for Consumer', async ({ page, serverUrl }) => {
-    await page.goto(buildUrlWithMockAdapter(serverUrl, defaultMockConfigurationPageState(), { role: 'Consumer' }));
+    await page.goto(
+      buildUrlWithMockAdapter(serverUrl, { ...defaultMockConfigurationPageState(), roleHint: 'Consumer' })
+    );
     await waitForCallCompositeToLoad(page);
     expect(await stableScreenshot(page)).toMatchSnapshot(`rooms-configuration-page-consumer.png`);
   });
