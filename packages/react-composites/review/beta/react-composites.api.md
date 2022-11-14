@@ -91,7 +91,13 @@ export type AzureCommunicationCallAdapterArgs = {
     credential: CommunicationTokenCredential;
     locator: CallAdapterLocator;
     alternateCallerId?: string;
+<<<<<<< HEAD
     features?: CallAdapterOptionalFeatures;
+=======
+    options?: {
+        roleHint?: Role;
+    };
+>>>>>>> 8d001c83e11fc54740c7b869638e1f2581584d6f
 };
 
 // @public
@@ -185,7 +191,11 @@ export type CallAdapterClientState = {
     latestErrors: AdapterErrors;
     alternateCallerId?: string;
     environmentInfo?: EnvironmentInfo;
+<<<<<<< HEAD
     features?: CallAdapterOptionalFeatures;
+=======
+    roleHint?: Role;
+>>>>>>> 8d001c83e11fc54740c7b869638e1f2581584d6f
 };
 
 // @public
@@ -328,7 +338,6 @@ export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcon
     callInvitationUrl?: string;
     formFactor?: 'desktop' | 'mobile';
     options?: CallCompositeOptions;
-    role?: Role;
 }
 
 // @public
@@ -932,10 +941,19 @@ export interface CompositeStrings {
 }
 
 // @public
+<<<<<<< HEAD
 export const createAzureCommunicationCallAdapter: ({ userId, displayName, credential, locator, alternateCallerId, features }: AzureCommunicationCallAdapterArgs) => Promise<CallAdapter>;
 
 // @public
 export const createAzureCommunicationCallAdapterFromClient: (callClient: StatefulCallClient, callAgent: CallAgent, locator: CallAdapterLocator, features?: CallAdapterOptionalFeatures) => Promise<CallAdapter>;
+=======
+export const createAzureCommunicationCallAdapter: ({ userId, displayName, credential, locator, alternateCallerId, options }: AzureCommunicationCallAdapterArgs) => Promise<CallAdapter>;
+
+// @public
+export const createAzureCommunicationCallAdapterFromClient: (callClient: StatefulCallClient, callAgent: CallAgent, locator: CallAdapterLocator, options?: {
+    roleHint?: Role;
+}) => Promise<CallAdapter>;
+>>>>>>> 8d001c83e11fc54740c7b869638e1f2581584d6f
 
 // @public
 export const createAzureCommunicationCallWithChatAdapter: ({ userId, displayName, credential, endpoint, locator, alternateCallerId, callingFeatures }: AzureCommunicationCallWithChatAdapterArgs) => Promise<CallWithChatAdapter>;
@@ -1075,10 +1093,12 @@ export const DEFAULT_COMPOSITE_ICONS: {
     HoldCallContextualMenuItem: JSX.Element;
     HoldCallButton: JSX.Element;
     ResumeCall: JSX.Element;
-    BackSpace: JSX.Element;
+    DialpadBackspace: JSX.Element;
     DomainPermissionsSparkle: JSX.Element;
     DomainPermissionCamera: JSX.Element;
     DomainPermissionMic: JSX.Element;
+    DomainPermissionCameraDenied: JSX.Element;
+    DomainPermissionMicDenied: JSX.Element;
     UnsupportedBrowserWarning: JSX.Element;
     BrowserPermissionDeniedError: JSX.Element;
 };

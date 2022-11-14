@@ -90,7 +90,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
       /* @conditional-compile-remove(one-to-n-calling) */ (outboundParticipants && acsCallChosen));
 
   /* @conditional-compile-remove(PSTN-calls) */
-  registerIcons({ icons: { BackSpace: <Backspace20Regular /> } });
+  registerIcons({ icons: { DialpadBackspace: <Backspace20Regular /> } });
 
   /* @conditional-compile-remove(PSTN-calls) */
   const isMobileSession = useIsMobile();

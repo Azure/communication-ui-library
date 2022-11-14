@@ -22,7 +22,7 @@ import { HoldButtonStrings } from '../components';
 /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
 import { DialpadStrings } from '../components';
 /* @conditional-compile-remove(call-readiness) */
-import { DomainPermissionsStrings } from '../components/DevicePermissions/DomainPermissions';
+import { DomainPermissionsStrings } from '../components/DevicePermissions/DomainPermissionsScaffolding';
 /* @conditional-compile-remove(call-readiness) */
 import { BrowserPermissionDeniedStrings } from '../components/DevicePermissions/BrowserPermissionDenied';
 /* @conditional-compile-remove(call-readiness) */
@@ -89,12 +89,36 @@ export interface ComponentStrings {
   // @conditional-compile-remove(PSTN-calls)
   /** Strings for VideoTile */
   videoTile: VideoTileStrings;
-  /* @conditional-compile-remove(one-to-n-calling) */ /* @condtional-compile-remove(one-to-n-calling) */
+  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   /** Strings for HoldButton */
   holdButton: HoldButtonStrings;
   /* @conditional-compile-remove(call-readiness) */
-  /** Strings for DomainPermissions */
-  DomainPermissions: DomainPermissionsStrings;
+  /** Strings for a domain permission request prompt */
+  CameraAndMicrophoneDomainPermissionsRequest: DomainPermissionsStrings;
+  /* @conditional-compile-remove(call-readiness) */
+  /** Strings for a domain permission request prompt */
+  CameraDomainPermissionsRequest: DomainPermissionsStrings;
+  /* @conditional-compile-remove(call-readiness) */
+  /** Strings for a domain permission request prompt */
+  MicrophoneDomainPermissionsRequest: DomainPermissionsStrings;
+  /* @conditional-compile-remove(call-readiness) */
+  /** Strings for a domain permission generic checking prompt */
+  CameraAndMicrophoneDomainPermissionsCheck: DomainPermissionsStrings;
+  /* @conditional-compile-remove(call-readiness) */
+  /** Strings for a domain permission generic checking prompt */
+  CameraDomainPermissionsCheck: DomainPermissionsStrings;
+  /* @conditional-compile-remove(call-readiness) */
+  /** Strings for a domain permission generic checking prompt */
+  MicrophoneDomainPermissionsCheck: DomainPermissionsStrings;
+  /* @conditional-compile-remove(call-readiness) */
+  /** Strings for a domain permission denied prompt */
+  CameraAndMicrophoneDomainPermissionsDenied: DomainPermissionsStrings;
+  /* @conditional-compile-remove(call-readiness) */
+  /** Strings for a domain permission denied prompt */
+  CameraDomainPermissionsDenied: DomainPermissionsStrings;
+  /* @conditional-compile-remove(call-readiness) */
+  /** Strings for a domain permission denied prompt */
+  MicrophoneDomainPermissionsDenied: DomainPermissionsStrings;
   /* @conditional-compile-remove(unsupported-browser) */
   /** Strings for unsupported browser UI */
   UnsupportedBrowser: UnsupportedBrowserStrings;

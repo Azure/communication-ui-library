@@ -47,8 +47,8 @@ const coffeeIconStyle = {
  * @public
  */
 export const COMPOSITE_ONLY_ICONS: CompositeIcons = {
-  ChevronLeft: <FontIcon iconName="ChevronLeft" />,
-  Link: <FontIcon iconName="Link" />,
+  ChevronLeft: undefined,
+  Link: undefined,
   LobbyScreenConnectingToCall: <CoffeeIcon />,
   LobbyScreenWaitingToBeAdmitted: <CoffeeIcon />,
   LocalDeviceSettingsCamera: <Video20Filled />,

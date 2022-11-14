@@ -22,7 +22,6 @@ describe('CallComposite device permission test for different roles', () => {
       audioDevicePermissionRequests++;
     }
   };
-  const adapter = new MockCallAdapter({ askDevicePermission: countDevicePermissionRequests });
 
   beforeEach(() => {
     // Register icons used in CallComposite to avoid warnings
@@ -38,6 +37,7 @@ describe('CallComposite device permission test for different roles', () => {
   });
 
   test('Audio and video device permission should be requested when no role is assigned', async () => {
+    const adapter = new MockCallAdapter({ askDevicePermission: countDevicePermissionRequests });
     mount(<CallComposite adapter={adapter} />);
     expect(audioDevicePermissionRequests).toBe(1);
     expect(videoDevicePermissionRequests).toBe(1);
@@ -45,21 +45,33 @@ describe('CallComposite device permission test for different roles', () => {
 
   /* @conditional-compile-remove(rooms) */
   test('Audio and video device permission should be requested for Presenter role', async () => {
-    mount(<CallComposite adapter={adapter} role={'Presenter'} />);
+    const adapter = new MockCallAdapter({
+      askDevicePermission: countDevicePermissionRequests,
+      options: { roleHint: 'Presenter' }
+    });
+    mount(<CallComposite adapter={adapter} />);
     expect(audioDevicePermissionRequests).toBe(1);
     expect(videoDevicePermissionRequests).toBe(1);
   });
 
   /* @conditional-compile-remove(rooms) */
   test('Audio and video device permission should be requested for Attendee role', async () => {
-    mount(<CallComposite adapter={adapter} role={'Attendee'} />);
+    const adapter = new MockCallAdapter({
+      askDevicePermission: countDevicePermissionRequests,
+      options: { roleHint: 'Attendee' }
+    });
+    mount(<CallComposite adapter={adapter} />);
     expect(audioDevicePermissionRequests).toBe(1);
     expect(videoDevicePermissionRequests).toBe(1);
   });
 
   /* @conditional-compile-remove(rooms) */
   test('Only audio device permission should be requested for Consumer role', async () => {
-    mount(<CallComposite adapter={adapter} role={'Consumer'} />);
+    const adapter = new MockCallAdapter({
+      askDevicePermission: countDevicePermissionRequests,
+      options: { roleHint: 'Consumer' }
+    });
+    mount(<CallComposite adapter={adapter} />);
     expect(audioDevicePermissionRequests).toBe(1);
     expect(videoDevicePermissionRequests).toBe(0);
   });

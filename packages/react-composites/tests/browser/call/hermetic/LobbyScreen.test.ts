@@ -10,7 +10,7 @@ import {
   test
 } from './fixture';
 import { IDS } from '../../common/constants';
-import { dataUiId, isTestProfileStableFlavor, stableScreenshot, waitForSelector } from '../../common/utils';
+import { dataUiId, stableScreenshot, waitForSelector } from '../../common/utils';
 
 test.describe('Lobby page tests', async () => {
   test('Lobby page shows correct strings when joining a group call', async ({ page, serverUrl }) => {
@@ -36,9 +36,8 @@ test.describe('Lobby page tests', async () => {
     expect(await stableScreenshot(page)).toMatchSnapshot('lobby-page-group-call.png');
   });
 
+  /* @conditional-compile-remove(one-to-n-calling) */
   test('lobby page shows correct strings when starting a ACS outbound call', async ({ page, serverUrl }) => {
-    test.skip(isTestProfileStableFlavor());
-
     const joel = defaultMockRemoteParticipant('Joel');
     joel.state = 'Connecting';
     const participants = [joel];
@@ -56,9 +55,8 @@ test.describe('Lobby page tests', async () => {
     expect(await stableScreenshot(page)).toMatchSnapshot('lobby-page-one-to-n-call.png');
   });
 
+  /* @conditional-compile-remove(PSTN-calls) */
   test('lobby page shows correct strings when starting a PSTN outbound call', async ({ page, serverUrl }) => {
-    test.skip(isTestProfileStableFlavor());
-
     const ellie = defaultMockRemotePSTNParticipant('15556667777');
     ellie.state = 'Ringing';
     const participants = [ellie];
