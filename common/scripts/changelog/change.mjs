@@ -30,6 +30,10 @@ async function main() {
     const cmd = [
         'node',
         BEACHBALL,
+        // With `-p`, beachball _always_ generates a changefile.
+        // It does not check if there are any changes / any changefiles already exist.
+        // This is intentional as it gives the developer the control on when to create changefiles
+        // for the entire package (irrespective of which packlet contains the changes).
         '-p', '@azure/communication-react',
         ...args
     ];
