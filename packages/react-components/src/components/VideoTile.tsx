@@ -22,6 +22,8 @@ import {
   tileInfoContainerStyle,
   participantStateStringStyles
 } from './styles/VideoTile.styles';
+/* @conditional-compile-remove(pinned-participants) */
+import { pinIconStyle } from './styles/VideoTile.styles';
 import { getVideoTileOverrideColor } from './utils/videoTileStylesUtils';
 
 /**
@@ -306,12 +308,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
                 /* @conditional-compile-remove(pinned-participants) */
                 isPinned && (
                   <Stack className={mergeStyles(iconContainerStyle)}>
-                    <Icon
-                      iconName="VideoTilePinned"
-                      className={mergeStyles({
-                        padding: '0.125rem'
-                      })}
-                    />
+                    <Icon iconName="VideoTilePinned" className={mergeStyles(pinIconStyle)} />
                   </Stack>
                 )
               }
