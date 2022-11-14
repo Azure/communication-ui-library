@@ -96,7 +96,7 @@ class CallContext {
       isTeamsCall,
       /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId: clientState.alternateCallerId,
       /* @conditional-compile-remove(unsupported-browser) */ environmentInfo: clientState.environmentInfo,
-      /* @conditional-compile-remove(unsupported-browser) */ features: features
+      /* @conditional-compile-remove(unsupported-browser) */ features: features,
       /* @conditional-compile-remove(rooms) */ roleHint: options?.roleHint
     };
     this.emitter.setMaxListeners(options?.maxListeners ?? 50);
@@ -221,8 +221,13 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     this.locator = locator;
     this.deviceManager = deviceManager;
     const isTeamsMeeting = 'meetingLink' in this.locator;
-    this.context = new CallContext(callClient.getState(), isTeamsMeeting, features, /* @conditional-compile-remove(rooms) */ options);
-    
+    this.context = new CallContext(
+      callClient.getState(),
+      isTeamsMeeting,
+      features,
+      /* @conditional-compile-remove(rooms) */ options
+    );
+
     this.context.onCallEnded((endCallData) => this.emitter.emit('callEnded', endCallData));
 
     const onStateChange = (clientState: CallClientState): void => {
