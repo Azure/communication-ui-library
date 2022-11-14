@@ -1,7 +1,0 @@
-{
-  "type": "minor",
-  "comment": "Revert breaking API change in `CallEndedListener` callback",
-  "packageName": "@internal/react-composites",
-  "email": "82062616+prprabhu-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

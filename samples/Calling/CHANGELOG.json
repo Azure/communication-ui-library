@@ -2,6 +2,51 @@
   "name": "calling",
   "entries": [
     {
+      "date": "Mon, 14 Nov 2022 19:20:37 GMT",
+      "tag": "calling_v0.0.1",
+      "version": "0.0.1",
+      "comments": {
+        "undefined": [
+          {
+            "author": "beachball",
+            "package": "calling",
+            "comment": "Bump @azure/communication-react to v1.5.0",
+            "commit": "8ea641356b71545caba2a9b57c1988af13b5ac1d"
+          },
+          {
+            "author": "beachball",
+            "package": "calling",
+            "comment": "Bump @internal/acs-ui-common to v1.5.0",
+            "commit": "8ea641356b71545caba2a9b57c1988af13b5ac1d"
+          },
+          {
+            "author": "beachball",
+            "package": "calling",
+            "comment": "Bump @internal/calling-component-bindings to v1.5.0",
+            "commit": "8ea641356b71545caba2a9b57c1988af13b5ac1d"
+          },
+          {
+            "author": "beachball",
+            "package": "calling",
+            "comment": "Bump @internal/calling-stateful-client to v1.5.0",
+            "commit": "8ea641356b71545caba2a9b57c1988af13b5ac1d"
+          },
+          {
+            "author": "beachball",
+            "package": "calling",
+            "comment": "Bump @internal/react-components to v1.5.0",
+            "commit": "8ea641356b71545caba2a9b57c1988af13b5ac1d"
+          },
+          {
+            "author": "beachball",
+            "package": "calling",
+            "comment": "Bump @internal/react-composites to v1.5.0",
+            "commit": "8ea641356b71545caba2a9b57c1988af13b5ac1d"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 21 Oct 2022 23:02:13 GMT",
       "tag": "calling_v0.0.1",
       "version": "0.0.1",

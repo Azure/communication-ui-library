@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add troubleshooting error bar to call composite config ",
-  "packageName": "@internal/react-composites",
-  "email": "carolinecao@microsoft.com",
-  "dependentChangeType": "patch"
-}
