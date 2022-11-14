@@ -284,11 +284,8 @@ export type CallAdapterClientState = {
     isTeamsCall: boolean;
     latestErrors: AdapterErrors;
     alternateCallerId?: string;
-<<<<<<< HEAD
     environmentInfo?: EnvironmentInfo;
-=======
     roleHint?: Role;
->>>>>>> 15e96736000730240fe32e18b9bb4b9767e8aa8d
 };
 
 // @public
