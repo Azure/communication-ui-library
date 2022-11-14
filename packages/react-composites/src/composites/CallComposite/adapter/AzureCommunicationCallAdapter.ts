@@ -964,7 +964,7 @@ export const createAzureCommunicationCallAdapterFromClient: (
   callAgent: CallAgent,
   locator: CallAdapterLocator,
   features?: CallAdapterOptionalFeatures,
-  options?: { roleHint?: Role }
+  options?
 ): Promise<CallAdapter> => {
   const deviceManager = (await callClient.getDeviceManager()) as StatefulDeviceManager;
   /* @conditional-compile-remove(unsupported-browser) */
