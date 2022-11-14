@@ -2,6 +2,21 @@
   "name": "component-examples",
   "entries": [
     {
+      "date": "Mon, 14 Nov 2022 19:34:11 GMT",
+      "tag": "component-examples_v0.0.1",
+      "version": "0.0.1",
+      "comments": {
+        "undefined": [
+          {
+            "author": "beachball",
+            "package": "component-examples",
+            "comment": "Bump @azure/communication-react to v1.4.1-beta.1",
+            "commit": "419bfd68b29cd8c012fd97dc804597af35b1d7c8"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 21 Oct 2022 23:02:13 GMT",
       "tag": "component-examples_v0.0.1",
       "version": "0.0.1",

@@ -2,6 +2,97 @@
   "name": "@internal/storybook",
   "entries": [
     {
+      "date": "Mon, 14 Nov 2022 19:34:09 GMT",
+      "tag": "@internal/storybook_v1.4.1-beta.1",
+      "version": "1.4.1-beta.1",
+      "comments": {
+        "none": [
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "1e0f9b6bb5d2e5c98fc1076160b5b25d03cf3695",
+            "comment": "Clean up storybook quickstart setup page"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "c5efaf6677c46c017e3297a003a1df905f4044f1",
+            "comment": "Update domain permissions story to have checking device permissions type"
+          },
+          {
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "c8e8d74de3f7804e0187538d696bbfe7a37e0248",
+            "comment": "Bumped"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "not available",
+            "comment": "xkcd"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "363401bdd3c81c42cf776243734740ea8d25390c",
+            "comment": "Update internal story to have denied vs request domain permission skus"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "3aab73e61303d02385497dfe6116f4d5f03b4f94",
+            "comment": "Add stories for individual camera and mic permission modals in internal folder"
+          }
+        ],
+        "patch": [
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "41f8e688e1f277a644a26b8aaef30ac3ffd5798c",
+            "comment": "Bump dependencies to get closer to react 18 support"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/storybook",
+            "commit": "29cecd954712376ed4b9a4fe4ed9300f4112672d",
+            "comment": "Move icon register code to manager to avoid re-register warning on load"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "8cb67542c822c72db69c77e223747d55fe5b4d54",
+            "comment": "Allow a range of communication services dependency packages"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "7244e8add398513a81398441c90b8a07f43ba309",
+            "comment": "Add documentation for minimum typescript and webpack versions."
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/storybook",
+            "comment": "Bump @azure/communication-react to v1.4.1-beta.1",
+            "commit": "419bfd68b29cd8c012fd97dc804597af35b1d7c8"
+          }
+        ],
+        "prerelease": [
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/storybook",
+            "commit": "d5c6baf76a616d8c3556e0e479da975b6a366305",
+            "comment": "Updated troubleshooting error bar storybook "
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "d087da7a35600150eb119411c99a6142cc0be829",
+            "comment": "cc"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 21 Oct 2022 23:01:55 GMT",
       "tag": "@internal/storybook_v1.4.0",
       "version": "1.4.0",
