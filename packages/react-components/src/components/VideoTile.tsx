@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Icon, IContextualMenuItem, IIconProps, IStyle, mergeStyles, Persona, Stack, Text } from '@fluentui/react';
+import { Icon, IStyle, mergeStyles, Persona, Stack, Text } from '@fluentui/react';
 import { MoreHorizontal20Filled } from '@fluentui/react-icons';
 import { Ref } from '@fluentui/react-northstar';
 import React, { useLayoutEffect, useMemo, useRef, useState } from 'react';
@@ -12,7 +12,6 @@ import { BaseCustomStyles, CustomAvatarOptions, OnRenderAvatarCallback } from '.
 /* @conditional-compile-remove(one-to-n-calling) */
 /* @conditional-compile-remove(PSTN-calls) */
 import { ParticipantState } from '../types';
-import { ControlBarButton } from './ControlBarButton';
 import {
   disabledVideoHint,
   displayNameStyle,
@@ -25,6 +24,10 @@ import {
   participantStateStringStyles
 } from './styles/VideoTile.styles';
 import { getVideoTileOverrideColor } from './utils/videoTileStylesUtils';
+/* @conditional-compile-remove(pinned-participants) */
+import { DefaultButton, IContextualMenuItem, IIconProps, concatStyleSets } from '@fluentui/react';
+/* @conditional-compile-remove(pinned-participants) */
+import { menuButtonStyles } from './styles/VideoTile.styles';
 
 /**
  * Strings of {@link VideoTile} that can be overridden.
@@ -92,13 +95,7 @@ export interface VideoTileProps {
   /**
    * Display custom menu items in the VideoTile's contextual menu.
    */
-  menuItems?: Array<{
-    key: string;
-    ariaLabel?: string;
-    text: string;
-    onClick: () => void;
-    icon: IIconProps;
-  }>;
+  menuItems?: Array<VideoTileMenuItem>;
   /**
    * Display Name of the Participant to be shown in the label.
    * @remarks `displayName` is used to generate avatar initials if `initialsName` is not provided.
@@ -206,6 +203,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
     userId,
     noVideoAvailableAriaLabel,
     isSpeaking,
+    /* @conditional-compile-remove(pinned-participants) */
     menuItems,
     personaMinSize = DEFAULT_PERSONA_MIN_SIZE_PX,
     personaMaxSize = DEFAULT_PERSONA_MAX_SIZE_PX
@@ -268,6 +266,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
       contextualMenuItems.push({
         key: item.key,
         text: item.text,
+        ariaLabel: item.ariaLabel,
         onClick: item.onClick,
         iconProps: item.icon
       });
@@ -275,12 +274,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
 
     return contextualMenuItems;
   };
-
-  const optionsIconStyles = mergeStyles({
-    minWidth: '2rem',
-    minHeight: '0rem'
-  });
-  const icon = (): JSX.Element => <MoreHorizontal20Filled key={'chatOnIconKey'} primaryFill="currentColor" />;
+  const menuIcon = (): JSX.Element => <MoreHorizontal20Filled key={'chatOnIconKey'} primaryFill="currentColor" />;
 
   return (
     <Ref innerRef={videoTileRef}>
@@ -351,13 +345,11 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
               {
                 /* @conditional-compile-remove(pinned-participants) */
                 menuItems && menuItems.length > 0 && (
-                  <ControlBarButton
-                    labelKey={'optionsButtonLabelKey'}
-                    onRenderOnIcon={icon}
-                    onRenderOffIcon={icon}
+                  <DefaultButton
+                    styles={concatStyleSets(menuButtonStyles, props.styles ?? {})}
+                    onRenderIcon={menuIcon}
                     menuIconProps={{ hidden: true }}
                     menuProps={{ items: optionsMenuItems(menuItems) }}
-                    className={optionsIconStyles}
                   />
                 )
               }

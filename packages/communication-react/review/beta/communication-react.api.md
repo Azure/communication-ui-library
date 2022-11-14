@@ -41,6 +41,7 @@ import { IContextualMenuItemStyles } from '@fluentui/react';
 import { IContextualMenuStyles } from '@fluentui/react';
 import { IDropdownOption } from '@fluentui/react';
 import { IDropdownStyles } from '@fluentui/react';
+import { IIconProps } from '@fluentui/react';
 import { ILinkStyles } from '@fluentui/react';
 import { IMessageBarProps } from '@fluentui/react';
 import { IncomingCall } from '@azure/communication-calling';
@@ -3119,6 +3120,17 @@ export interface VideoStreamRendererViewState {
 // @public
 export const VideoTile: (props: VideoTileProps) => JSX.Element;
 
+// Warning: (ae-internal-missing-underscore) The name "VideoTileMenuItem" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
+export type VideoTileMenuItem = {
+    key: string;
+    ariaLabel?: string;
+    text: string;
+    onClick: () => void;
+    icon: IIconProps;
+};
+
 // @public
 export interface VideoTileProps {
     children?: React_2.ReactNode;
@@ -3127,6 +3139,7 @@ export interface VideoTileProps {
     isMirrored?: boolean;
     isMuted?: boolean;
     isSpeaking?: boolean;
+    menuItems?: Array<VideoTileMenuItem>;
     noVideoAvailableAriaLabel?: string;
     onRenderPlaceholder?: OnRenderAvatarCallback;
     participantState?: ParticipantState;
