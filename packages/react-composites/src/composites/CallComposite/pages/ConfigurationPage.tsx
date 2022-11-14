@@ -229,9 +229,14 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
               <LocalDeviceSettings
                 {...options}
                 {...localDeviceSettingsHandlers}
-                // fall back to using cameraPermissionGranted and microphonePermissionGranted if permission API is not supported
-                cameraPermissionGranted={videoState ? videoState === 'granted' : cameraPermissionGranted}
-                microphonePermissionGranted={audioState ? audioState === 'granted' : microphonePermissionGranted}
+                cameraPermissionGranted={cameraPermissionGrantedTrampoline(
+                  cameraPermissionGranted,
+                  /* @conditional-compile-remove(call-readiness) */ videoState
+                )}
+                microphonePermissionGranted={micPermissionGrantedTrampoline(
+                  microphonePermissionGranted,
+                  /* @conditional-compile-remove(call-readiness) */ audioState
+                )}
                 /* @conditional-compile-remove(call-readiness) */
                 callReadinessOptedIn={callReadinessOptedIn}
                 /* @conditional-compile-remove(call-readiness) */
@@ -262,6 +267,26 @@ const localPreviewTrampoline = (mobileView: boolean, doNotShow?: boolean): JSX.E
     return undefined;
   }
   return <LocalPreview mobileView={mobileView} showDevicesButton={mobileView} />;
+};
+
+const cameraPermissionGrantedTrampoline = (
+  cameraPermissionGranted: boolean | undefined,
+  videoState?: PermissionState | undefined
+): boolean | undefined => {
+  /* @conditional-compile-remove(call-readiness) */
+  return videoState ? videoState === 'granted' : cameraPermissionGranted;
+
+  return cameraPermissionGranted;
+};
+
+const micPermissionGrantedTrampoline = (
+  microphonePermissionGranted: boolean | undefined,
+  audioState?: PermissionState | undefined
+): boolean | undefined => {
+  /* @conditional-compile-remove(call-readiness) */
+  return audioState ? audioState === 'granted' : microphonePermissionGranted;
+
+  return microphonePermissionGranted;
 };
 
 /* @conditional-compile-remove(call-readiness) */
