@@ -749,7 +749,8 @@ export const useAzureCommunicationCallWithChatAdapter = (
       displayName,
       endpoint,
       locator,
-      userId
+      userId,
+      /* @conditional-compile-remove(unsupported-browser) */ features
     ]
   );
 

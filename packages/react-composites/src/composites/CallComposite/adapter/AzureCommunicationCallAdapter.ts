@@ -924,6 +924,7 @@ export const useAzureCommunicationCallAdapter = (
       displayName,
       locator,
       userId,
+      /* @conditional-compile-remove(unsupported-browser) */ features,
       /* @conditional-compile-remove(PSTN-calls) */ options
     ]
   );
