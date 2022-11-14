@@ -4,8 +4,8 @@ import {
   fromFlatCommunicationIdentifier,
   useAzureCommunicationCallAdapter
 } from '@azure/communication-react';
-import React, { useMemo } from 'react';
 import { initializeIcons } from '@fluentui/react';
+import React, { useMemo } from 'react';
 
 /**
  * Authentication information needed for your client application to use
