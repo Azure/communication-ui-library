@@ -32,8 +32,8 @@ The less magical behavior of `rush changelog` as compared to `beachball change` 
 
 This is a tool similar to `beachball check` with the significant difference in behavior that it checks for change-files compared to the base branch of a Pull Request. It is used by CI and should not be used by developers locally.
 
-### Collecting change-logs
+### `common/scripts/changelog/collect.mjs`
 
-The change-logs for [stable](../../packages/communication-react/CHANGELOG.stable.md) and [beta](../../packages/communication-react/CHANGELOG.beta.md) are maintained separately. As part of package release preparation, we use [common/scripts/changelog/collect.mjs](../../common/scripts/changelog/collect.mjs) to update these change-logs and delete the collected change-files.
+The change-logs for [stable](../../packages/communication-react/CHANGELOG.stable.md) and [beta](../../packages/communication-react/CHANGELOG.beta.md) releases are maintained separately. As part of package release preparation, we use [`common/scripts/changelog/collect.mjs`](../../common/scripts/changelog/collect.mjs) to update these change-logs and delete the collected change-files.
 
 Under the hood, this script `beachball bump`, but it avoids actually bumping the package versions (done in a separate release automation step) and uses temporary files to make sure that the correct change-log is updated based on the type of release.
