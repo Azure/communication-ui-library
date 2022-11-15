@@ -90,6 +90,7 @@ export const AvatarPersona = (props: AvatarPersonaProps): JSX.Element => {
       initialsTextColor={data?.initialsTextColor ?? initialsTextColor ?? 'white'}
       // default disable tooltip unless specified
       showOverflowTooltip={showOverflowTooltip ?? false}
+      showUnknownPersonaCoin={!(data?.text || text)}
     />
   );
 };
