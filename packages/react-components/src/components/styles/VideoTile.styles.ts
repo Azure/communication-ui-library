@@ -87,6 +87,13 @@ export const displayNameStyle: IStyle = {
 /**
  * @private
  */
+export const pinIconStyle: IStyle = {
+  padding: '0.125rem'
+};
+
+/**
+ * @private
+ */
 export const iconContainerStyle: IStyle = {
   margin: 'auto',
   alignItems: 'center',

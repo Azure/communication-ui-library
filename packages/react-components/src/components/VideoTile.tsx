@@ -24,11 +24,11 @@ import {
   tileInfoContainerStyle,
   participantStateStringStyles
 } from './styles/VideoTile.styles';
+/* @conditional-compile-remove(pinned-participants) */
+import { pinIconStyle, menuButtonStyles } from './styles/VideoTile.styles';
 import { getVideoTileOverrideColor } from './utils/videoTileStylesUtils';
 /* @conditional-compile-remove(pinned-participants) */
 import { DefaultButton, IIconProps, concatStyleSets, DirectionalHint } from '@fluentui/react';
-/* @conditional-compile-remove(pinned-participants) */
-import { menuButtonStyles } from './styles/VideoTile.styles';
 /* @conditional-compile-remove(pinned-participants) */
 import { mapMenuItemsToContextualMenuItems } from './utils';
 
@@ -99,6 +99,11 @@ export interface VideoTileProps {
    * Display custom menu items in the VideoTile's contextual menu.
    */
   menuItems?: VideoTileMenuItems;
+  /* @conditional-compile-remove(pinned-participants) */
+  /**
+   * If true, the video tile will show the pin icon.
+   */
+  isPinned?: boolean;
   /**
    * Display Name of the Participant to be shown in the label.
    * @remarks `displayName` is used to generate avatar initials if `initialsName` is not provided.
@@ -211,6 +216,8 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
     initialsName,
     isMirrored,
     isMuted,
+    /* @conditional-compile-remove(pinned-participants) */
+    isPinned,
     onRenderPlaceholder,
     renderElement,
     showLabel = true,
@@ -343,6 +350,14 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
               {
                 /* @conditional-compile-remove(pinned-participants) */
                 <VideoTileMoreOptionsButton menuItems={menuItems} menuStyles={props.styles} />
+              }
+              {
+                /* @conditional-compile-remove(pinned-participants) */
+                isPinned && (
+                  <Stack className={mergeStyles(iconContainerStyle)}>
+                    <Icon iconName="VideoTilePinned" className={mergeStyles(pinIconStyle)} />
+                  </Stack>
+                )
               }
             </Stack>
           </Stack>
