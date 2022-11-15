@@ -147,9 +147,10 @@ export type {
   MicrophoneDomainPermissionsProps
 } from '../../react-components/src';
 
+/* @conditional-compile-remove(pinned-participants) */
+export type { VideoTileMenuItems } from '../../react-components/src';
+
 export type {
-  /* @conditional-compile-remove(pinned-participants) */
-  VideoTileMenuItems,
   _IdentifierProviderProps,
   _Identifiers,
   ActiveErrorMessage,
