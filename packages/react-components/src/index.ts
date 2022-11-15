@@ -20,8 +20,7 @@ export {
 /* @conditional-compile-remove(rooms) */
 export type { _Permissions, _PermissionsProviderProps, Role } from './permissions';
 
-/* @conditional-compile-remove(pinned-participants) */
-export type { VideoTileMenuItem } from './components/VideoTile';
+export type { VideoTileMenuItems } from './components/VideoTile';
 
 export type {
   BaseCustomStyles,

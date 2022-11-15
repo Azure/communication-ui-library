@@ -1672,16 +1672,14 @@ export interface VideoStreamOptions {
 // @public
 export const VideoTile: (props: VideoTileProps) => JSX.Element;
 
-// Warning: (ae-internal-missing-underscore) The name "VideoTileMenuItem" should be prefixed with an underscore because the declaration is marked as @internal
-//
-// @internal (undocumented)
-export type VideoTileMenuItem = {
+// @beta
+export type VideoTileMenuItems = Array<{
     key: string;
     ariaLabel?: string;
     text: string;
     onClick: () => void;
-    icon: IIconProps;
-};
+    iconProps: IIconProps;
+}>;
 
 // @public
 export interface VideoTileProps {
@@ -1691,7 +1689,7 @@ export interface VideoTileProps {
     isMirrored?: boolean;
     isMuted?: boolean;
     isSpeaking?: boolean;
-    menuItems?: Array<VideoTileMenuItem>;
+    menuItems?: VideoTileMenuItems;
     noVideoAvailableAriaLabel?: string;
     onRenderPlaceholder?: OnRenderAvatarCallback;
     participantState?: ParticipantState;

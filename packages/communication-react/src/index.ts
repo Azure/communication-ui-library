@@ -148,8 +148,7 @@ export type {
 } from '../../react-components/src';
 
 export type {
-  /* @conditional-compile-remove(pinned-participants) */
-  VideoTileMenuItem,
+  VideoTileMenuItems,
   _IdentifierProviderProps,
   _Identifiers,
   ActiveErrorMessage,

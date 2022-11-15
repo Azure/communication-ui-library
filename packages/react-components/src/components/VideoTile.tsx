@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 
 import { Icon, IStyle, mergeStyles, Persona, Stack, Text } from '@fluentui/react';
+/* @conditional-compile-remove(pinned-participants) */
 import { MoreHorizontal20Filled } from '@fluentui/react-icons';
 import { Ref } from '@fluentui/react-northstar';
 import React, { useLayoutEffect, useMemo, useRef, useState } from 'react';
@@ -25,7 +26,7 @@ import {
 } from './styles/VideoTile.styles';
 import { getVideoTileOverrideColor } from './utils/videoTileStylesUtils';
 /* @conditional-compile-remove(pinned-participants) */
-import { DefaultButton, IIconProps, concatStyleSets } from '@fluentui/react';
+import { DefaultButton, IIconProps, concatStyleSets, DirectionalHint } from '@fluentui/react';
 /* @conditional-compile-remove(pinned-participants) */
 import { menuButtonStyles } from './styles/VideoTile.styles';
 /* @conditional-compile-remove(pinned-participants) */
@@ -97,7 +98,7 @@ export interface VideoTileProps {
   /**
    * Display custom menu items in the VideoTile's contextual menu.
    */
-  menuItems?: Array<VideoTileMenuItem>;
+  menuItems?: VideoTileMenuItems;
   /**
    * Display Name of the Participant to be shown in the label.
    * @remarks `displayName` is used to generate avatar initials if `initialsName` is not provided.
@@ -163,34 +164,25 @@ const DefaultPlaceholder = (props: CustomAvatarOptions): JSX.Element => {
   );
 };
 
-/* @conditional-compile-remove(pinned-participants) */
 /**
- * @internal
+ * @beta
+ * MenuItems to be diplayed in video tile in the contextual/drawer menu
  */
-export type VideoTileMenuItem = {
+export type VideoTileMenuItems = Array<{
   key: string;
   ariaLabel?: string;
   text: string;
   onClick: () => void;
-  icon: IIconProps;
-};
-
-/* @conditional-compile-remove(pinned-participants) */
-/**
- * @internal
- */
-export type VideoTileMenuItems = Array<VideoTileMenuItem>;
+  iconProps: IIconProps;
+}>;
 
 /* @conditional-compile-remove(pinned-participants) */
 const menuIcon = (): JSX.Element => <MoreHorizontal20Filled primaryFill="currentColor" />;
 
 const defaultPersonaStyles = { root: { margin: 'auto', maxHeight: '100%' } };
+
 /* @conditional-compile-remove(pinned-participants) */
-/** @private */
-const VideoTileMoreOptionsButton = (props: {
-  menuItems?: Array<VideoTileMenuItem>;
-  menuStyles?: IStyle;
-}): JSX.Element => {
+const VideoTileMoreOptionsButton = (props: { menuItems?: VideoTileMenuItems; menuStyles?: IStyle }): JSX.Element => {
   const { menuItems, menuStyles } = props;
   if (!menuItems || menuItems.length === 0) {
     return <></>;
@@ -200,7 +192,7 @@ const VideoTileMoreOptionsButton = (props: {
       styles={concatStyleSets(menuButtonStyles, menuStyles ?? {})}
       onRenderIcon={menuIcon}
       menuIconProps={{ hidden: true }}
-      menuProps={{ items: mapMenuItemsToContextualMenuItems(menuItems) }}
+      menuProps={{ items: mapMenuItemsToContextualMenuItems(menuItems), directionalHint: DirectionalHint.topRightEdge }}
     />
   );
 };
