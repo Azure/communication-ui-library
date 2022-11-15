@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "showUnknownPersonaCoin can be set for AvatarPersonaData to show a ? instead of initials",
+  "packageName": "@azure/communication-react",
+  "email": "anjulgarg@live.com",
+  "dependentChangeType": "patch"
+}
