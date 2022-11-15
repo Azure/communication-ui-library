@@ -448,6 +448,7 @@ export type CustomAvatarOptions = {
     styles?: IStyleFunctionOrObject<IPersonaStyleProps, IPersonaStyles>;
     text?: string;
     participantState?: ParticipantState;
+    showUnknownPersonaCoin?: boolean;
 };
 
 // @public
