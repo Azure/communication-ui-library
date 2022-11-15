@@ -158,14 +158,13 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
   // When permission API is not available, we want to show screen saying checking for access (disappears on its own)
   // then based on permission setting, we show permission denied or nothing
   /* @conditional-compile-remove(call-readiness) */
-  const [checkPermissionModalShowing, setCheckPermissionModalShowing] = useState(true);
-  /* @conditional-compile-remove(call-readiness) */
-  const [permissionDeniedModalShowing, setPermissionDeniedModalShowing] = useState(false);
+  const [minimumFallbackTimerElapsed, setMinimumFallbackTimerElapsed] = useState(false);
   /* @conditional-compile-remove(call-readiness) */
   setTimeout(() => {
-    setCheckPermissionModalShowing(false);
-    setPermissionDeniedModalShowing(true);
+    setMinimumFallbackTimerElapsed(true);
   }, 2000);
+  /* @conditional-compile-remove(call-readiness) */
+  const forceShowingCheckPermissions = !minimumFallbackTimerElapsed;
 
   return (
     <Stack className={mobileView ? configurationContainerStyleMobile : configurationContainerStyleDesktop}>
@@ -218,8 +217,7 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
               mobileView={mobileView}
               cameraPermissionGranted={cameraPermissionGranted}
               microphonePermissionGranted={microphonePermissionGranted}
-              checkPermissionModalShowing={checkPermissionModalShowing}
-              permissionDeniedModalShowing={permissionDeniedModalShowing}
+              checkPermissionModalShowing={forceShowingCheckPermissions}
               permissionsState={permissionsState}
               isPermissionsModalDismissed={isPermissionsModalDismissed}
               setIsPermissionsModalDismissed={setIsPermissionsModalDismissed}

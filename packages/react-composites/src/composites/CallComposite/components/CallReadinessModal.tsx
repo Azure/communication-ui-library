@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-/* @conditional-compile-remove(call-readiness) */
+
 import React from 'react';
 /* @conditional-compile-remove(call-readiness) */
 import { Modal } from '@fluentui/react';
@@ -13,7 +13,6 @@ import {
 } from '@internal/react-components';
 /* @conditional-compile-remove(call-readiness) */
 import { drawerContainerStyles } from '../styles/CallComposite.styles';
-
 /* @conditional-compile-remove(call-readiness) */
 const DRAWER_HIGH_Z_BAND = 99; // setting z index to  99 so that it sit above all components
 
@@ -200,7 +199,6 @@ export const CallReadinessModalFallBack = (props: {
   cameraPermissionGranted: boolean | undefined;
   microphonePermissionGranted: boolean | undefined;
   checkPermissionModalShowing: boolean;
-  permissionDeniedModalShowing: boolean;
   permissionsState: {
     camera: PermissionState;
     microphone: PermissionState;
@@ -217,7 +215,6 @@ export const CallReadinessModalFallBack = (props: {
     cameraPermissionGranted,
     microphonePermissionGranted,
     checkPermissionModalShowing,
-    permissionDeniedModalShowing,
     permissionsState,
     isPermissionsModalDismissed,
     setIsPermissionsModalDismissed,
@@ -303,7 +300,7 @@ export const CallReadinessModalFallBack = (props: {
             />
           </_DrawerSurface>
         )}
-        {isPermissionsModalDismissed && permissionDeniedModalShowing && modal !== undefined && (
+        {isPermissionsModalDismissed && !checkPermissionModalShowing && modal !== undefined && (
           <_DrawerSurface onLightDismiss={onLightDismissTriggered} styles={drawerContainerStyles(DRAWER_HIGH_Z_BAND)}>
             {modal()}
           </_DrawerSurface>
@@ -338,7 +335,7 @@ export const CallReadinessModalFallBack = (props: {
           </Modal>
         )}
 
-        {permissionDeniedModalShowing && modal !== undefined && (
+        {!checkPermissionModalShowing && modal !== undefined && (
           <Modal
             isOpen={isPermissionsModalDismissed}
             isBlocking={false}
@@ -353,4 +350,12 @@ export const CallReadinessModalFallBack = (props: {
       </>
     );
   }
+};
+
+/**
+ * Placeholder for conditional compile
+ * @private
+ */
+export const CallReadinessModalPlaceHolder = (): JSX.Element => {
+  return <></>;
 };
