@@ -263,7 +263,7 @@ export const getDevicePermissionState = (
   setAudioState: (state: PermissionState | 'unsupported') => void
 ): void => {
   navigator.permissions
-    .query({ name: 'camera' })
+    .query({ name: 'camera' as PermissionName })
     .then((result) => {
       setVideoState(result.state);
     })
@@ -272,7 +272,7 @@ export const getDevicePermissionState = (
     });
 
   navigator.permissions
-    .query({ name: 'microphone' })
+    .query({ name: 'microphone' as PermissionName })
     .then((result) => {
       setAudioState(result.state);
     })

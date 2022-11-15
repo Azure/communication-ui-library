@@ -187,6 +187,7 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
         />
       </Stack>
       {
+
         /* @conditional-compile-remove(call-readiness) */
         // show the following screen if permission API is availible (not unsupported) and videoState, audioState is assigned values
         callReadinessOptedIn &&

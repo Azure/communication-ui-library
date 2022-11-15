@@ -37,3 +37,29 @@ export async function exec(cmd, extraEnv) {
       });
     });
   }
+
+  export async function exec_output(cmd) {
+    console.log(`Running ${cmd}`);
+
+    const child = child_process.spawn(cmd, {
+      shell: true,
+      stdio: ['inherit', 'pipe', 'inherit']
+    });
+
+    return new Promise((resolve, reject) => {
+      let output = '';
+      child.stdout.on('data', (data) => {
+        output += data;
+      });
+
+      child.on('exit', (code) => {
+        if (code != 0) {
+          reject(`Child exited with non-zero code: ${code}`);
+        }
+        resolve(output);
+      });
+      child.on('error', (err) => {
+        reject(`Child failed to start: ${err}`);
+      });
+    });
+  }
