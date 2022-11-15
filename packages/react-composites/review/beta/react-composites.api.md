@@ -90,9 +90,12 @@ export type AzureCommunicationCallAdapterArgs = {
     credential: CommunicationTokenCredential;
     locator: CallAdapterLocator;
     alternateCallerId?: string;
-    options?: {
-        roleHint?: Role;
-    };
+    options?: AzureCommunicationCallAdapterOptions;
+};
+
+// @beta
+export type AzureCommunicationCallAdapterOptions = {
+    roleHint?: Role;
 };
 
 // @public
@@ -1073,6 +1076,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     DomainPermissionMicDenied: JSX.Element;
     UnsupportedBrowserWarning: JSX.Element;
     BrowserPermissionDeniedError: JSX.Element;
+    VideoTilePinned: JSX.Element;
 };
 
 // @beta

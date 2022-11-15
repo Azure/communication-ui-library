@@ -3,12 +3,15 @@
 
 import React, { useContext, createContext } from 'react';
 import { Call } from '@azure/communication-calling';
+/* @conditional-compile-remove(teams-identity-support) */
+import { TeamsCall } from '@azure/communication-calling';
+import { _isACSCall, _isTeamsCall } from '@internal/calling-stateful-client';
 
 /**
  * @private
  */
 export type CallContextType = {
-  call: Call | undefined;
+  call: Call | /* @conditional-compile-remove(teams-identity-support) */ TeamsCall | undefined;
 };
 
 /**
@@ -18,7 +21,7 @@ export type CallContextType = {
  */
 export interface CallProviderProps {
   children: React.ReactNode;
-  call?: Call;
+  call?: Call | /* @conditional-compile-remove(teams-identity-support) */ TeamsCall;
 }
 
 /**
@@ -54,8 +57,33 @@ export const CallProvider = (props: CallProviderProps): JSX.Element => <CallProv
  * Useful when implementing a custom component that utilizes the providers
  * exported from this library.
  *
+ * you must have previously used the CallProvider with a Call object to use this hook
+ *
  * @public
  */
 export const useCall = (): Call | undefined => {
-  return useContext(CallContext)?.call;
+  const call = useContext(CallContext)?.call;
+  if (call && !_isACSCall(call)) {
+    throw new Error('Incorrect call type: Must provide a Regular Call object.');
+  }
+  return call;
+};
+
+/* @conditional-compile-remove(teams-identity-support) */
+/**
+ * Hook to obtain {@link @azure/communication-calling#TeamsCall} from the provider.
+ *
+ * Useful when implementing a custom component that utilizes the providers
+ * exported from this library.
+ *
+ * you must have previously used the CallProvider with a TeamsCall object to use this hook
+ *
+ * @beta
+ */
+export const useTeamsCall = (): undefined | /* @conditional-compile-remove(teams-identity-support) */ TeamsCall => {
+  const call = useContext(CallContext)?.call;
+  if (call && !_isTeamsCall(call)) {
+    throw new Error('Incorrect call type: Must provide a TeamsCall object.');
+  }
+  return call;
 };
