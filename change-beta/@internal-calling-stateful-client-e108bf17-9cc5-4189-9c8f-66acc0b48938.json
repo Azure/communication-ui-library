@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Only export DeclarativeCallAgent in beta build",
-  "packageName": "@internal/calling-stateful-client",
-  "email": "82062616+prprabhu-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
