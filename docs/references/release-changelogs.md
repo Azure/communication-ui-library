@@ -9,7 +9,7 @@ Because we separate [stable and beta release channels for the package](./beta-on
 At a high level, change-log maintenance happens in two steps:
 
 - Each change, in the form of a Pull Request to `main` in this repository adds a change-file - a file with a short description and type of the change.
-  - Developers generate these files by running `rush changelog` and CI enforces the existings of change files in Pull Requests.
+  - Developers generate these files by running `rush changelog` and CI enforces the existance of change files in Pull Requests.
 - The change-files are collected and summarized into the change-logs as part of the [release process](../releases/creating-a-release.md).
 
 ## Under the hood
@@ -36,4 +36,4 @@ This is a tool similar to `beachball check` with the significant difference in b
 
 The change-logs for [stable](../../packages/communication-react/CHANGELOG.stable.md) and [beta](../../packages/communication-react/CHANGELOG.beta.md) releases are maintained separately. As part of package release preparation, we use this script to update these change-logs and delete the collected change-files.
 
-Under the hood, this script `beachball bump`, but it avoids actually bumping the package versions (done in a separate release automation step) and uses temporary files to make sure that the correct change-log is updated based on the type of release.
+Under the hood, this script uses `beachball bump`, but it avoids actually bumping the package versions (done in a separate release automation step) and uses temporary files to make sure that the correct change-log is updated based on the type of release.
