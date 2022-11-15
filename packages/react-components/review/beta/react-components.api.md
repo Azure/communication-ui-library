@@ -522,6 +522,7 @@ export const DEFAULT_COMPONENT_ICONS: {
     DomainPermissionMicDenied: JSX.Element;
     UnsupportedBrowserWarning: JSX.Element;
     BrowserPermissionDeniedError: JSX.Element;
+    VideoTilePinned: JSX.Element;
 };
 
 // @internal
@@ -1679,6 +1680,7 @@ export interface VideoTileProps {
     initialsName?: string;
     isMirrored?: boolean;
     isMuted?: boolean;
+    isPinned?: boolean;
     isSpeaking?: boolean;
     noVideoAvailableAriaLabel?: string;
     onRenderPlaceholder?: OnRenderAvatarCallback;
