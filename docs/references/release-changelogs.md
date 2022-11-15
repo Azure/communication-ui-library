@@ -2,7 +2,7 @@
 
 A clear and exhaustive [change-log](https://en.wikipedia.org/wiki/Changelog) is essential for customers who depend on the [`@azure/communication-react` package on NPM](https://www.npmjs.com/package/@azure/communication-react) to be able to update to newer versions of the package with confidence.
 
-Our change-log is mantained in-tree, rooted in the [top-level CHANGELOG.md file](../../CHANGELOG.md).
+Our change-log is mantained in-tree, rooted in the [top-level CHANGELOG.md file](https://github.com/Azure/communication-ui-library/blob/main/CHANGELOG.md).
 
 Because we separate [stable and beta release channels for the package](./beta-only-features.md), we need to maintain separate change-logs for customers on those channels. The top-level change-log links to these separate change-logs.
 
