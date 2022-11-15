@@ -97,14 +97,14 @@ jobs:
         run: |
           ver=$(jq -r .version packages/communication-react/package.json)
           echo version: $ver
-          echo "::set-output name=version::$ver"
+          echo "version=$ver" >> $GITHUB_OUTPUT
 
       # Commit changes
       - name: Hop into new branch
         id: prereleasebranch
         run: |
           git checkout -b prerelease-${{github.event.inputs.bump_type}}/${{ steps.version.outputs.version }}
-          echo "::set-output name=prereleasebranch::prerelease-${{github.event.inputs.bump_type}}/${{ steps.version.outputs.version }}"
+          echo "prereleasebranch=prerelease-${{github.event.inputs.bump_type}}/${{ steps.version.outputs.version }}" >> $GITHUB_OUTPUT
       - name: Commit changes
         run: |
           git add .
@@ -120,7 +120,7 @@ jobs:
         id: groombranch
         run: |
           git checkout -b groom-changelog-${{github.event.inputs.bumptype}}/${{ steps.version.outputs.version }}
-          echo "::set-output name=groombranch::groom-changelog-${{github.event.inputs.bumptype}}/${{ steps.version.outputs.version }}"
+          echo "groombranch=groom-changelog-${{github.event.inputs.bumptype}}/${{ steps.version.outputs.version }}" >> $GITHUB_OUTPUT
 
       # Push groom changes
       - name: Create groom file and push changes

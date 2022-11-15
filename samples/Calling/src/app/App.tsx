@@ -184,7 +184,7 @@ const App = (): JSX.Element => {
           alternateCallerId={alternateCallerId}
           onCallEnded={() => setPage('endCall')}
           /* @conditional-compile-remove(rooms) */
-          role={role}
+          roleHint={role}
           /* @conditional-compile-remove(call-readiness) */
           callReadinessOptedIn={false}
         />

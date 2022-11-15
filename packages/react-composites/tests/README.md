@@ -110,14 +110,30 @@ When developing (hermetic or live) browswer tests, use the following workflow:
 
 ### Conditional Compilation
 
+Just like the rest of the UI library code, the test applications and the browser tests use conditional compilation.
 For a primer on conditional compilation in this repository, see the [top-level docs](../../../docs/references/beta-only-features.md).
 
-Just like the rest of the UI library code, the test applications for browser tests use conditional compilation. By contrast, the browser tests themselves are not conditionally compiled (yet!).
+Most commonly, you may want to write a test that runs only when a conditionally compiled feature is enabled or disabled. A common pattern for this is to define a helper function that uses conditional compilation, and use `test.skip()`:
 
-For now, you must explicitly skip tests that are not relevant to stable flavored builds via [`isTestProfileStableFlavor()`](./browser/common/utils.ts)
+```Typescript
 
-```TypeScript
-test.skip(isTestProfileStableFlavor());
+const demoFeatureEnabled = (): boolean => {
+  /* @conditional-compile-remove(demo) */
+  return true;
+  return false;
+};
+
+test('test demo feature', async () => {
+  test.skip(!demoFeatureEnabled());
+
+  // ...
+});
+
+test('test default behavior when demo feature is disabled', async () => {
+  test.skip(demoFeatureEnabled());
+
+  // ...
+});
 ```
 
 ### Mobile Only tests
@@ -127,7 +143,7 @@ If you are writing a test for only on Mobile make sure to add it to a test suite
 Once you have added your test to the appropriate suite use the following call to make sure it is not run on the desktop project:
 
 ```Typescript
-test.only('Your test name here', async ({ pages }, testInfo) => {
+test('Your test name here', async ({ pages }, testInfo) => {
     // Mobile check
     test.skip(skipTestIfDesktop(testInfo));
     '...'
