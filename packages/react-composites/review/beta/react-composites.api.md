@@ -342,7 +342,6 @@ export interface CallCompositeStrings {
     configurationPageTitle: string;
     copyInviteLinkActionedAriaLabel: string;
     copyInviteLinkButtonLabel: string;
-    defaultParticipantChangedString: string;
     defaultPlaceHolder: string;
     deniedPermissionToRoomDetails?: string;
     deniedPermissionToRoomTitle: string;
@@ -375,6 +374,7 @@ export interface CallCompositeStrings {
     outboundCallingNoticeString: string;
     participantJoinedNoticeString: string;
     participantLeftNoticeString: string;
+    participantsJoinedOverflowString: string;
     peopleButtonLabel: string;
     peopleButtonTooltipClose: string;
     peopleButtonTooltipOpen: string;
@@ -396,6 +396,7 @@ export interface CallCompositeStrings {
     roomNotFoundTitle: string;
     soundLabel: string;
     startCallButtonLabel: string;
+    unnamedParticipantChangedString: string;
 }
 
 // @public

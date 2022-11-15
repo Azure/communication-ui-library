@@ -48,7 +48,7 @@ export const useParticipantChangedAnnouncement = (): string => {
       setParticipantEventString(
         createAnnouncmentString(
           locale.participantLeftNoticeString,
-          locale.defaultParticipantChangedString,
+          locale.unnamedParticipantChangedString,
           locale.participantsJoinedOverflowString,
           whoLeft
         )
@@ -65,7 +65,7 @@ export const useParticipantChangedAnnouncement = (): string => {
       setParticipantEventString(
         createAnnouncmentString(
           locale.participantJoinedNoticeString,
-          locale.defaultParticipantChangedString,
+          locale.unnamedParticipantChangedString,
           locale.participantsJoinedOverflowString,
           whoJoined
         )

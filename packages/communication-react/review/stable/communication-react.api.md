@@ -397,7 +397,6 @@ export interface CallCompositeStrings {
     configurationPageCallDetails?: string;
     configurationPageTitle: string;
     copyInviteLinkActionedAriaLabel: string;
-    defaultParticipantChangedString: string;
     defaultPlaceHolder: string;
     failedToJoinCallDueToNoNetworkMoreDetails?: string;
     failedToJoinCallDueToNoNetworkTitle: string;
@@ -417,12 +416,14 @@ export interface CallCompositeStrings {
     networkReconnectTitle: string;
     participantJoinedNoticeString: string;
     participantLeftNoticeString: string;
+    participantsJoinedOverflowString: string;
     privacyPolicy: string;
     rejoinCallButtonLabel: string;
     removedFromCallMoreDetails?: string;
     removedFromCallTitle: string;
     soundLabel: string;
     startCallButtonLabel: string;
+    unnamedParticipantChangedString: string;
 }
 
 // @public

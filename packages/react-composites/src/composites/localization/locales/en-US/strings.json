@@ -71,7 +71,7 @@
     "outboundCallingNoticeString": "Calling...",
     "participantJoinedNoticeString": "{displayNames} joined",
     "participantLeftNoticeString": "{displayNames} left",
-    "defaultParticipantChangedString": "unnamed participant",
+    "unnamedParticipantChangedString": "unnamed participant",
     "participantsJoinedOverflowString": "{numOfParticipants} other participants"
   },
   "chat": {
