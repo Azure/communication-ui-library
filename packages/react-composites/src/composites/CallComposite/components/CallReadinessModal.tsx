@@ -51,7 +51,6 @@ export const CallReadinessModal = (props: {
     // only way to dismiss this drawer is clicking on allow access which will leads to device permission prompt
   };
 
-  console.log(videoState, audioState);
   const showModal =
     videoState === 'denied' || videoState === 'prompt' || audioState === 'denied' || audioState === 'prompt';
 
