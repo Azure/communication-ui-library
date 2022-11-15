@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Icon, IStyle, mergeStyles, Persona, Stack, Text } from '@fluentui/react';
+import { Icon, IStyle, mergeStyles, Persona, Stack, Text, IIconProps } from '@fluentui/react';
 /* @conditional-compile-remove(pinned-participants) */
 import { MoreHorizontal20Filled } from '@fluentui/react-icons';
 import { Ref } from '@fluentui/react-northstar';
@@ -28,7 +28,7 @@ import {
 import { pinIconStyle, menuButtonStyles } from './styles/VideoTile.styles';
 import { getVideoTileOverrideColor } from './utils/videoTileStylesUtils';
 /* @conditional-compile-remove(pinned-participants) */
-import { DefaultButton, IIconProps, concatStyleSets, DirectionalHint } from '@fluentui/react';
+import { DefaultButton, concatStyleSets, DirectionalHint } from '@fluentui/react';
 /* @conditional-compile-remove(pinned-participants) */
 import { mapMenuItemsToContextualMenuItems } from './utils';
 
