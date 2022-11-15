@@ -184,6 +184,7 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
         styles?.avatar
       )}
       {...avatarOptions}
+      showUnknownPersonaCoin
     />
   );
 
