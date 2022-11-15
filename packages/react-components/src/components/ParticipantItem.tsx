@@ -168,7 +168,9 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
     size: PersonaSize.size32,
     presence: presence,
     initialsTextColor: 'white',
-    showOverflowTooltip: showParticipantOverflowTooltip
+    showOverflowTooltip: showParticipantOverflowTooltip,
+    // Show a '?' icon if the display name of the participant is not available.
+    showUnknownPersonaCoin: showUnknownPersonaCoin
   };
 
   const avatar = onRenderAvatar ? (
@@ -183,8 +185,6 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
         styles?.avatar
       )}
       {...avatarOptions}
-      // Show a '?' icon if the display name of the participant is not available.
-      showUnknownPersonaCoin={showUnknownPersonaCoin}
     />
   );
 
