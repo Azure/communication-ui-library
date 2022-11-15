@@ -3,6 +3,7 @@
 
 import { IPersonaProps, Persona, PersonaInitialsColor } from '@fluentui/react';
 import React, { useEffect, useState } from 'react';
+import { useLocale } from '../localization';
 
 /**
  * Custom data attributes for displaying avatar for a user.
@@ -66,6 +67,8 @@ export interface AvatarPersonaProps extends IPersonaProps {
 export const AvatarPersona = (props: AvatarPersonaProps): JSX.Element => {
   const { userId, dataProvider, text, imageUrl, imageInitials, initialsColor, initialsTextColor, showOverflowTooltip } =
     props;
+  const locale = useLocale();
+  const displayNamePlaceholder = locale.component.strings.participantItem.displayNamePlaceholder;
 
   const [data, setData] = useState<AvatarPersonaData | undefined>();
 
@@ -90,7 +93,7 @@ export const AvatarPersona = (props: AvatarPersonaProps): JSX.Element => {
       initialsTextColor={data?.initialsTextColor ?? initialsTextColor ?? 'white'}
       // default disable tooltip unless specified
       showOverflowTooltip={showOverflowTooltip ?? false}
-      showUnknownPersonaCoin={!(data?.text || text)}
+      showUnknownPersonaCoin={(data?.text ?? text) === displayNamePlaceholder}
     />
   );
 };
