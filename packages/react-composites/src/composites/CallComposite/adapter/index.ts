@@ -7,6 +7,8 @@ export {
   useAzureCommunicationCallAdapter
 } from './AzureCommunicationCallAdapter';
 export type { AzureCommunicationCallAdapterArgs, CallAdapterLocator } from './AzureCommunicationCallAdapter';
+/* @conditional-compile-remove(rooms) */
+export type { AzureCommunicationCallAdapterOptions } from './AzureCommunicationCallAdapter';
 
 /* @conditional-compile-remove(teams-adhoc-call) */
 export type { CallParticipantsLocator } from './AzureCommunicationCallAdapter';
