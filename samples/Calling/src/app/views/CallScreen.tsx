@@ -11,6 +11,8 @@ import {
   useAzureCommunicationCallAdapter
 } from '@azure/communication-react';
 /* @conditional-compile-remove(rooms) */
+import { AzureCommunicationCallAdapterOptions } from '@azure/communication-react';
+/* @conditional-compile-remove(rooms) */
 import { Role } from '@azure/communication-react';
 import { Spinner } from '@fluentui/react';
 import React, { useCallback, useEffect, useMemo, useRef } from 'react';
@@ -88,6 +90,9 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     [callReadinessOptedIn]
   );
 
+  /* @conditional-compile-remove(rooms) */
+  const callAdapterOptions: AzureCommunicationCallAdapterOptions = useMemo(() => ({ roleHint }), [roleHint]);
+
   const adapter = useAzureCommunicationCallAdapter(
     {
       userId,
@@ -97,7 +102,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
       /* @conditional-compile-remove(PSTN-calls) */
       alternateCallerId,
       /* @conditional-compile-remove(rooms) */
-      options: { roleHint }
+      options: callAdapterOptions
     },
     afterCreate
   );
