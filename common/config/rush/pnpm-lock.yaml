@@ -449,7 +449,7 @@ packages:
     dependencies:
       '@babel/core': 7.16.12
       '@babel/helper-annotate-as-pure': 7.18.6
-      regexpu-core: 5.2.1
+      regexpu-core: 5.2.2
     dev: false
     engines:
       node: '>=6.9.0'
@@ -4459,7 +4459,7 @@ packages:
       '@babel/preset-env': 7.13.10_@babel+core@7.16.12
       '@babel/types': 7.20.2
       '@mdx-js/mdx': 1.6.22
-      '@types/lodash': 4.14.188
+      '@types/lodash': 4.14.189
       js-string-escape: 1.0.1
       loader-utils: 2.0.4
       lodash: 4.17.21
@@ -5135,10 +5135,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-dRLjCWHYg4oaA77cxO64oO+7JwCwnIzkZPdrrC71jQmQtlhM556pwKo5bUzqvZndkVbeFLIIi+9TC40JNF5hNQ==
-  /@types/lodash/4.14.188:
+  /@types/lodash/4.14.189:
     dev: false
     resolution:
-      integrity: sha512-zmEmF5OIM3rb7SbLCFYoQhO4dGt2FRM9AMkxvA3LaADOF1n8in/zGJlWji9fmafLoNyz+FoL6FE0SLtGIArD7w==
+      integrity: sha512-kb9/98N6X8gyME9Cf7YaqIMvYGnBSWqEci6tiettE6iJWH1XdJz/PO8LB0GtLCG7x8dU3KWhZT+lA1a35127tA==
   /@types/mdast/3.0.10:
     dependencies:
       '@types/unist': 2.0.6
@@ -6468,12 +6468,12 @@ packages:
       node: '>= 0.4'
     resolution:
       integrity: sha512-DMD0KiN46eipeziST1LPP/STfDU0sufISXmjSgvVsoU2tqxctQeASejWcfNtxYKqETM1UxQ8sp2OrSBWpHY6sw==
-  /axe-core/4.5.1:
+  /axe-core/4.5.2:
     dev: false
     engines:
       node: '>=4'
     resolution:
-      integrity: sha512-1exVbW0X1O/HSr/WMwnaweyqcWOgZgLiVxdLG34pvSQk4NlYQr9OUy0JLwuhFfuVNQzzqgH57eYzkFBCb3bIsQ==
+      integrity: sha512-u2MVsXfew5HBvjsczCv+xlwdNnB1oQR9HlAcsejZttNjKKSkeDNVwB1vMThIUIFI9GoT57Vtk8iQLwqOfAkboA==
   /axobject-query/2.2.0:
     dev: false
     resolution:
@@ -9254,7 +9254,7 @@ packages:
       aria-query: 4.2.2
       array-includes: 3.1.6
       ast-types-flow: 0.0.7
-      axe-core: 4.5.1
+      axe-core: 4.5.2
       axobject-query: 2.2.0
       damerau-levenshtein: 1.0.8
       emoji-regex: 9.2.2
@@ -15829,19 +15829,19 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-pq2bWo9mVD43nbts2wGv17XLiNLya+GklZ8kaDLV2Z08gDCsGpnKn9BFMepvWuHCbyVvY7J5o5+BVvoQbmlJLg==
-  /regexpu-core/5.2.1:
+  /regexpu-core/5.2.2:
     dependencies:
       regenerate: 1.4.2
       regenerate-unicode-properties: 10.1.0
       regjsgen: 0.7.1
       regjsparser: 0.9.1
       unicode-match-property-ecmascript: 2.0.0
-      unicode-match-property-value-ecmascript: 2.0.0
+      unicode-match-property-value-ecmascript: 2.1.0
     dev: false
     engines:
       node: '>=4'
     resolution:
-      integrity: sha512-HrnlNtpvqP1Xkb28tMhBUO2EbyUHdQlsnlAhzWcwHy8WJR53UWr7/MAvqrsQKMbV4qdpv03oTMG8iIhfsPFktQ==
+      integrity: sha512-T0+1Zp2wjF/juXMrMxHxidqGYn8U4R+zleSJhX9tQ1PUsS8a9UtYfbsF9LdiVgNX3kiX8RNaKM42nfSgvFJjmw==
   /regextras/0.8.0:
     dev: false
     engines:
@@ -18039,12 +18039,12 @@ packages:
       node: '>=4'
     resolution:
       integrity: sha512-5kaZCrbp5mmbz5ulBkDkbY0SsPOjKqVS35VpL9ulMPfSl0J0Xsm+9Evphv9CoIZFwre7aJoa94AY6seMKGVN5Q==
-  /unicode-match-property-value-ecmascript/2.0.0:
+  /unicode-match-property-value-ecmascript/2.1.0:
     dev: false
     engines:
       node: '>=4'
     resolution:
-      integrity: sha512-7Yhkc0Ye+t4PNYzOGKedDhXbYIBe1XEQYQxOPyhcXNMJ0WCABqqj6ckydd6pWRZTHV4GuCPKdBAUiMc60tsKVw==
+      integrity: sha512-qxkjQt6qjg/mYscYMC0XKRn3Rh0wFPlfxB0xkt9CfyTvpX1Ra0+rAmdX2QyAobptSEvuy4RtpPRui6XkV+8wjA==
   /unicode-property-aliases-ecmascript/2.1.0:
     dev: false
     engines:
