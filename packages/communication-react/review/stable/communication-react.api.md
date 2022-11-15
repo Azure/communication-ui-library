@@ -37,6 +37,7 @@ import { IButtonStyles } from '@fluentui/react';
 import { IContextualMenuItem } from '@fluentui/react';
 import { IContextualMenuItemStyles } from '@fluentui/react';
 import { IContextualMenuStyles } from '@fluentui/react';
+import { IIconProps } from '@fluentui/react';
 import { IMessageBarProps } from '@fluentui/react';
 import { IPersonaStyleProps } from '@fluentui/react';
 import { IPersonaStyles } from '@fluentui/react';
@@ -2529,6 +2530,15 @@ export interface VideoStreamRendererViewState {
 
 // @public
 export const VideoTile: (props: VideoTileProps) => JSX.Element;
+
+// @beta
+export type VideoTileMenuItems = Array<{
+    key: string;
+    ariaLabel?: string;
+    text: string;
+    onClick: () => void;
+    iconProps: IIconProps;
+}>;
 
 // @public
 export interface VideoTileProps {
