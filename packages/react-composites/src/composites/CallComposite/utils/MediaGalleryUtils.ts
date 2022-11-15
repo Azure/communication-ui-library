@@ -9,14 +9,6 @@ import { useSelector } from '../hooks/useSelector';
 import { getRemoteParticipants } from '../selectors/baseSelectors';
 
 /**
- * Delay value for when a participant has left or joined
- *
- * this is to allow the narrator some room so it isnt stuttering whenever there is a change
- * in participants.
- */
-const PARTICIPANT_ANNOUNCEMENT_DELAY = 500;
-
-/**
  * sets the announcement string whenever a Participant comes or goes from a call to be
  * used by the system narrator.
  *
@@ -27,10 +19,6 @@ const PARTICIPANT_ANNOUNCEMENT_DELAY = 500;
 export const useParticipantChangedAnnouncement = (): string => {
   const locale = useLocale().strings.call;
   const [announcerString, setAnnouncerString] = useState<string>('');
-  /**
-   * state to track whether there is currently a timer set in the useParticipantChangedAnnouncement hook
-   */
-  const [timeoutState, setTimeoutState] = useState<ReturnType<typeof setTimeout>>();
   const remoteParticipantsObject = useSelector(getRemoteParticipants);
   const remoteParticipants = Object.values(remoteParticipantsObject ?? {}).filter((p) => {
     /**
