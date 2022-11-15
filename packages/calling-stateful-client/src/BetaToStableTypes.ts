@@ -20,27 +20,30 @@ import {
 } from '@azure/communication-calling';
 
 /**
- * @private
+ * @public
+ * The common interface for all types of Calls
  */
 export type CallCommon = Call | /* @conditional-compile-remove(teams-identity-support) */ CallCommonBeta;
 
 /**
- * @private
+ * @public
+ * The common interface for all types of CallAgents
  */
 export type CallAgentCommon = CallAgent | /* @conditional-compile-remove(teams-identity-support) */ CallAgentCommonBeta;
 
 /**
- * @private
+ * @beta
  */
 export type TeamsCall = never | /* @conditional-compile-remove(teams-identity-support) */ TeamsCallBeta;
 
 /**
- * @private
+ * @beta
  */
 export type TeamsCallAgent = never | /* @conditional-compile-remove(teams-identity-support) */ TeamsCallAgentBeta;
 
 /**
- * @private
+ * @public
+ * The common interface for all types of IncomingCalls
  */
 export type IncomingCallCommon =
   | IncomingCall
