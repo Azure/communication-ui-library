@@ -12,7 +12,13 @@ import { devicePermissionSelector } from '../selectors/devicePermissionSelector'
 import { useSelector } from '../hooks/useSelector';
 import { DevicesButton, ErrorBar } from '@internal/react-components';
 /* @conditional-compile-remove(call-readiness) */
-import { CameraAndMicrophoneDomainPermissions, _DrawerSurface, _DrawerSurfaceStyles } from '@internal/react-components';
+import {
+  MicrophoneDomainPermissions,
+  CameraDomainPermissions,
+  CameraAndMicrophoneDomainPermissions,
+  _DrawerSurface,
+  _DrawerSurfaceStyles
+} from '@internal/react-components';
 /* @conditional-compile-remove(rooms) */
 import { _usePermissions, _Permissions } from '@internal/react-components';
 import { getCallingSelector } from '@internal/calling-component-bindings';
@@ -169,6 +175,18 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
   /* @conditional-compile-remove(call-readiness) */
   const [isModalShowing, setIsModalShowing] = useState(false);
 
+  // When permission API is not available, we want to show screen saying checking for access (disappears on its own)
+  // then based on permission setting, we show permission denied or nothing
+  /* @conditional-compile-remove(call-readiness) */
+  const [checkPermissionModalShowing, setCheckPermissionModalShowing] = useState(true);
+  /* @conditional-compile-remove(call-readiness) */
+  const [permissionDeniedModalShowing, setPermissionDeniedModalShowing] = useState(false);
+  /* @conditional-compile-remove(call-readiness) */
+  setTimeout(() => {
+    setCheckPermissionModalShowing(false);
+    setPermissionDeniedModalShowing(true);
+  }, 2000);
+
   return (
     <Stack className={mobileView ? configurationContainerStyleMobile : configurationContainerStyleDesktop}>
       <Stack styles={bannerNotificationStyles}>
@@ -243,6 +261,26 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
           </_DrawerSurface>
         )
       }
+
+      {
+        /* @conditional-compile-remove(call-readiness) */ callReadinessOptedIn &&
+          (videoState === undefined || audioState === undefined) && (
+            <>
+              {callReadinessModalFallBack(
+                mobileView,
+                cameraPermissionGranted,
+                microphonePermissionGranted,
+                checkPermissionModalShowing,
+                permissionDeniedModalShowing,
+                permissionsState,
+                isModalShowing,
+                setIsModalShowing,
+                onPermissionsTroubleshootingClick
+              )}
+            </>
+          )
+      }
+
       <Stack
         grow
         horizontal={!mobileWithPreview}
@@ -302,4 +340,148 @@ const localPreviewTrampoline = (mobileView: boolean, doNotShow?: boolean): JSX.E
     return undefined;
   }
   return <LocalPreview mobileView={mobileView} showDevicesButton={mobileView} />;
+};
+
+/* @conditional-compile-remove(call-readiness) */
+// This is called when permission api is not available
+const callReadinessModalFallBack = (
+  mobileView: boolean,
+  cameraPermissionGranted: boolean | undefined,
+  microphonePermissionGranted: boolean | undefined,
+  checkPermissionModalShowing: boolean,
+  permissionDeniedModalShowing: boolean,
+  permissionsState: {
+    camera: PermissionState;
+    microphone: PermissionState;
+  },
+  isModalShowing: boolean,
+  setIsModalShowing: (boolean) => void,
+  onPermissionsTroubleshootingClick?: (permissionsState: {
+    camera: PermissionState;
+    microphone: PermissionState;
+  }) => void
+): JSX.Element => {
+  const onLightDismissTriggered = (): void => {
+    // do nothing here
+    // only way to dismiss this drawer is clicking on allow access which will leads to device permission prompt
+  };
+
+  // When permissions are not set, value is undefined, do nothing here
+  // When permissions are set to denied, value is false, show helper screen
+  const modal = (): JSX.Element | undefined => {
+    if (cameraPermissionGranted === false && microphonePermissionGranted === false) {
+      return (
+        <CameraAndMicrophoneDomainPermissions
+          appName={'app'}
+          onTroubleshootingClick={
+            onPermissionsTroubleshootingClick
+              ? () => {
+                  onPermissionsTroubleshootingClick(permissionsState);
+                }
+              : undefined
+          }
+          type="denied"
+        />
+      );
+    } else if (cameraPermissionGranted === false && microphonePermissionGranted) {
+      return (
+        <CameraDomainPermissions
+          appName={'app'}
+          onTroubleshootingClick={
+            onPermissionsTroubleshootingClick
+              ? () => {
+                  onPermissionsTroubleshootingClick(permissionsState);
+                }
+              : undefined
+          }
+          onContinueAnywayClick={() => {
+            setIsModalShowing(false);
+          }}
+          type="denied"
+        />
+      );
+    } else if (cameraPermissionGranted && microphonePermissionGranted === false) {
+      return (
+        <MicrophoneDomainPermissions
+          appName={'app'}
+          onTroubleshootingClick={
+            onPermissionsTroubleshootingClick
+              ? () => {
+                  onPermissionsTroubleshootingClick(permissionsState);
+                }
+              : undefined
+          }
+          type="denied"
+        />
+      );
+    } else {
+      return undefined;
+    }
+  };
+  if (mobileView) {
+    return (
+      <>
+        {checkPermissionModalShowing && (
+          <_DrawerSurface onLightDismiss={onLightDismissTriggered} styles={drawerContainerStyles(DRAWER_HIGH_Z_BAND)}>
+            <CameraAndMicrophoneDomainPermissions
+              appName={'app'}
+              onTroubleshootingClick={
+                onPermissionsTroubleshootingClick
+                  ? () => {
+                      onPermissionsTroubleshootingClick(permissionsState);
+                    }
+                  : undefined
+              }
+              type="check"
+            />
+          </_DrawerSurface>
+        )}
+        {isModalShowing && permissionDeniedModalShowing && modal() !== undefined && (
+          <_DrawerSurface onLightDismiss={onLightDismissTriggered} styles={drawerContainerStyles(DRAWER_HIGH_Z_BAND)}>
+            {modal()}
+          </_DrawerSurface>
+        )}
+      </>
+    );
+  } else {
+    return (
+      <>
+        {checkPermissionModalShowing && (
+          <Modal
+            isOpen={isModalShowing}
+            isBlocking={false}
+            onDismiss={() => {
+              setIsModalShowing(false);
+            }}
+            overlay={{ styles: { root: { background: 'rgba(0,0,0,0.9)' } } }}
+          >
+            <CameraAndMicrophoneDomainPermissions
+              appName={'app'}
+              onTroubleshootingClick={
+                onPermissionsTroubleshootingClick
+                  ? () => {
+                      onPermissionsTroubleshootingClick(permissionsState);
+                    }
+                  : undefined
+              }
+              type="check"
+            />
+          </Modal>
+        )}
+
+        {permissionDeniedModalShowing && modal() !== undefined && (
+          <Modal
+            isOpen={isModalShowing}
+            isBlocking={false}
+            onDismiss={() => {
+              setIsModalShowing(false);
+            }}
+            overlay={{ styles: { root: { background: 'rgba(0,0,0,0.9)' } } }}
+          >
+            {modal()}
+          </Modal>
+        )}
+      </>
+    );
+  }
 };
