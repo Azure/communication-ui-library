@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Focus on participant list when opening people pane",
+  "packageName": "@internal/react-composites",
+  "email": "edwardlee@microsoft.com",
+  "dependentChangeType": "patch"
+}
