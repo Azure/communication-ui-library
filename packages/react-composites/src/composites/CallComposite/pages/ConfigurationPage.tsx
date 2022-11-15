@@ -166,8 +166,7 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
 
   /* @conditional-compile-remove(call-readiness) */
   const [isModalShowing, setIsModalShowing] = useState(true);
-  
-  
+
   // When permission API is not available, we want to show screen saying checking for access (disappears on its own)
   // then based on permission setting, we show permission denied or nothing
   /* @conditional-compile-remove(call-readiness) */
@@ -180,8 +179,6 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
     setPermissionDeniedModalShowing(true);
   }, 2000);
 
-
-  
   return (
     <Stack className={mobileView ? configurationContainerStyleMobile : configurationContainerStyleDesktop}>
       <Stack styles={bannerNotificationStyles}>
@@ -218,8 +215,6 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
           </>
         )
       }
-
-
 
       {
         /* @conditional-compile-remove(call-readiness) */ callReadinessOptedIn &&
@@ -327,6 +322,7 @@ const micPermissionGrantedTrampoline = (
   return microphonePermissionGranted;
 };
 
+/* @conditional-compile-remove(call-readiness) */
 const callReadinessModal = (
   mobileView: boolean,
   audioState: PermissionState,
@@ -484,7 +480,6 @@ const callReadinessModal = (
   }
 };
 
-
 /* @conditional-compile-remove(call-readiness) */
 // This is called when permission api is not available
 const callReadinessModalFallBack = (
@@ -628,4 +623,3 @@ const callReadinessModalFallBack = (
     );
   }
 };
-
