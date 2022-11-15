@@ -361,19 +361,14 @@ export const CallComposite = (props: CallCompositeProps): JSX.Element => {
   useEffect(() => {
     (async () => {
       const constrain = getQueryOptions({
-        /* @conditional-compile-remove(rooms) */ role: roleHint,
-        /* @conditional-compile-remove(call-readiness) */ callReadinessOptedIn: options?.callReadinessOptedIn ?? false
+        /* @conditional-compile-remove(rooms) */ role: roleHint
       });
       await adapter.askDevicePermission(constrain);
       adapter.queryCameras();
       adapter.queryMicrophones();
       adapter.querySpeakers();
     })();
-  }, [
-    adapter,
-    /* @conditional-compile-remove(rooms) */ roleHint,
-    /* @conditional-compile-remove(call-readiness) */ options?.callReadinessOptedIn
-  ]);
+  }, [adapter, /* @conditional-compile-remove(rooms) */ roleHint]);
 
   const mobileView = formFactor === 'mobile';
 
@@ -430,17 +425,7 @@ const unsupportedEnvironmentPageTrampoline = (): string => {
   return 'call';
 };
 
-const getQueryOptions = (options: {
-  /* @conditional-compile-remove(rooms) */ role?: Role;
-  /* @conditional-compile-remove(call-readiness) */ callReadinessOptedIn?: boolean;
-}): PermissionConstraints => {
-  /* @conditional-compile-remove(call-readiness) */
-  if (options.callReadinessOptedIn) {
-    return {
-      video: false,
-      audio: false
-    };
-  }
+const getQueryOptions = (options: { /* @conditional-compile-remove(rooms) */ role?: Role }): PermissionConstraints => {
   /* @conditional-compile-remove(rooms) */
   if (options.role === 'Consumer') {
     return {
