@@ -18930,6 +18930,7 @@ packages:
       integrity: sha512-V50KMwwzqJV0NpZIZFwfOD5/lyny3WlSzRiXgA0G7VUnRlqttta1L6UQIHzd6EuBY/cHGfwTIck7w1yH6Q5zUw==
   file:projects/acs-ui-common.tgz:
     dependencies:
+      '@azure/communication-calling': 1.4.4
       '@azure/communication-common': 2.0.0
       '@azure/logger': 1.0.3
       '@babel/cli': 7.16.8_@babel+core@7.16.12
@@ -18962,7 +18963,7 @@ packages:
     dev: false
     name: '@rush-temp/acs-ui-common'
     resolution:
-      integrity: sha512-MK4HDQLksxN07MYChnuMJlUGPR9g6qGKGWtSLq6iJXVUsK37ons08bbyeUlh9WYhcKFRjGDesu4qujsenfZTHQ==
+      integrity: sha512-KPACOf6UMXeUu35S/srV1+9WhgFCb+LjgeCvojn02ANRjImh6Go+0Gc73etf+NWkdSoOk8opoUKEcyZA5Yljzg==
       tarball: file:projects/acs-ui-common.tgz
     version: 0.0.0
   file:projects/calling-component-bindings.tgz:
