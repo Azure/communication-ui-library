@@ -22,7 +22,7 @@ import { WEB_APP_TITLE } from '../utils/AppUtils';
 import { useIsMobile } from '../utils/useIsMobile';
 /* @conditional-compile-remove(call-readiness) */
 import { CallCompositeOptions } from '@azure/communication-react';
-/* @conditional-compile-remove(unsuspported-browser) */
+/* @conditional-compile-remove(unsupported-browser) */
 import { CallAdapterOptionalFeatures } from '@azure/communication-react';
 
 export interface CallScreenProps {
@@ -93,7 +93,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     [callReadinessOptedIn]
   );
 
-  /* @conditional-compile-remove(unsuspported-browser) */
+  /* @conditional-compile-remove(unsupported-browser) */
   const callingFeatures: CallAdapterOptionalFeatures = {
     unsupportedEnvironment: true
   };
@@ -108,7 +108,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
       locator: callLocator,
       /* @conditional-compile-remove(PSTN-calls) */
       alternateCallerId,
-      /* @conditional-compile-remove(unsuspported-browser) */
+      /* @conditional-compile-remove(unsupported-browser) */
       features: callingFeatures,
       /* @conditional-compile-remove(rooms) */
       options: callAdapterOptions
