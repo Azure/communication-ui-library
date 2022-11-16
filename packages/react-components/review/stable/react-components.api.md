@@ -1418,6 +1418,15 @@ export interface VideoStreamOptions {
 // @public
 export const VideoTile: (props: VideoTileProps) => JSX.Element;
 
+// @beta
+export type VideoTileMenuItems = Array<{
+    key: string;
+    ariaLabel?: string;
+    text: string;
+    onClick: () => void;
+    iconProps: IIconProps;
+}>;
+
 // @public
 export interface VideoTileProps {
     children?: React_2.ReactNode;
