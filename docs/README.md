@@ -37,3 +37,4 @@ Looking to make a contribution to this repo? Check out our guide for a walk-thro
 - [Automated tests help us move fast](./references/automated-tests.md)
 - [Reviewer notes](./reviewer-notes/README.md) - Common guidelines gleaned through code reviews
 - [Hero sample maintenance](./releases/hero-samples.md) - When and how to update hero samples
+- [Release change-logs](./references/release-changelogs.md) - describes how we maintain change-logs for releases
