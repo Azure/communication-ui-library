@@ -7,6 +7,7 @@ import {
   CommunicationIdentifier,
   CommunicationUserIdentifier,
   isCommunicationUserIdentifier,
+  isMicrosoftTeamsUserIdentifier,
   isPhoneNumberIdentifier,
   MicrosoftTeamsUserIdentifier,
   PhoneNumberIdentifier,
@@ -86,28 +87,20 @@ const memoizedUpdateDisplayName = memoizeFnAll((participantId: string, participa
 
 /**
  * @private
+ * A type guard to ensure all participants are acceptable type for Teams call
  */
 export const isTeamsCallParticipants = (
   participants: CommunicationIdentifier[]
 ): participants is (PhoneNumberIdentifier | MicrosoftTeamsUserIdentifier | UnknownIdentifier)[] => {
-  for (const p of participants) {
-    if (isCommunicationUserIdentifier(p)) {
-      return false;
-    }
-  }
-  return true;
+  return participants.every((p) => !isCommunicationUserIdentifier(p));
 };
 
 /**
  * @private
+ * A type guard to ensure all participants are acceptable type for ACS call
  */
-export const isNonTeamsCallParticipants = (
+export const isACSCallParticipants = (
   participants: CommunicationIdentifier[]
 ): participants is (PhoneNumberIdentifier | CommunicationUserIdentifier | UnknownIdentifier)[] => {
-  for (const p of participants) {
-    if (isCommunicationUserIdentifier(p)) {
-      return false;
-    }
-  }
-  return true;
+  return participants.every((p) => !isMicrosoftTeamsUserIdentifier(p));
 };

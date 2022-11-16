@@ -11,14 +11,10 @@ import { StartCallButton } from '../components/StartCallButton';
 import { devicePermissionSelector } from '../selectors/devicePermissionSelector';
 import { useSelector } from '../hooks/useSelector';
 import { DevicesButton, ErrorBar } from '@internal/react-components';
-/* @conditional-compile-remove(call-readiness) */
-import { CameraAndMicrophoneDomainPermissions, _DrawerSurface, _DrawerSurfaceStyles } from '@internal/react-components';
 /* @conditional-compile-remove(rooms) */
 import { _usePermissions, _Permissions } from '@internal/react-components';
 import { getCallingSelector } from '@internal/calling-component-bindings';
 import { Stack } from '@fluentui/react';
-/* @conditional-compile-remove(call-readiness) */
-import { Modal } from '@fluentui/react';
 import { LocalPreview } from '../components/LocalPreview';
 import {
   callDetailsStyleDesktop,
@@ -43,10 +39,9 @@ import { useAdapter } from '../adapter/CallAdapterProvider';
 import { DevicePermissionRestrictions } from '../CallComposite';
 import { ConfigurationpageErrorBar } from '../components/ConfigurationpageErrorBar';
 /* @conditional-compile-remove(call-readiness) */
-import { drawerContainerStyles } from '../styles/CallComposite.styles';
-
+import { getDevicePermissionState } from '../utils';
 /* @conditional-compile-remove(call-readiness) */
-const DRAWER_HIGH_Z_BAND = 99; // setting z index to  99 so that it sit above all components
+import { CallReadinessModal, CallReadinessModalFallBack } from '../components/CallReadinessModal';
 
 /**
  * @private
@@ -83,6 +78,14 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
   const options = useAdaptedSelector(getCallingSelector(DevicesButton));
   const localDeviceSettingsHandlers = useHandlers(LocalDeviceSettings);
   const { video: cameraPermissionGranted, audio: microphonePermissionGranted } = useSelector(devicePermissionSelector);
+  /* @conditional-compile-remove(call-readiness) */
+  // use permission API to get video and audio permission state
+  const [videoState, setVideoState] = useState<PermissionState | 'unsupported' | undefined>(undefined);
+  /* @conditional-compile-remove(call-readiness) */
+  const [audioState, setAudioState] = useState<PermissionState | 'unsupported' | undefined>(undefined);
+  /* @conditional-compile-remove(call-readiness) */
+  getDevicePermissionState(setVideoState, setAudioState);
+
   let errorBarProps = usePropsFor(ErrorBar);
   const adapter = useAdapter();
   const deviceState = adapter.getState().devices;
@@ -141,22 +144,27 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
     camera: PermissionState;
     microphone: PermissionState;
   } = {
-    camera: cameraPermissionGranted ? 'granted' : 'denied',
-    microphone: microphonePermissionGranted ? 'granted' : 'denied'
+    // fall back to using cameraPermissionGranted and microphonePermissionGranted if permission API is not supported
+    camera: videoState && videoState !== 'unsupported' ? videoState : cameraPermissionGranted ? 'granted' : 'denied',
+    microphone:
+      audioState && audioState !== 'unsupported' ? audioState : microphonePermissionGranted ? 'granted' : 'denied'
   };
   /* @conditional-compile-remove(call-readiness) */
   const networkErrors = errorBarProps.activeErrorMessages.filter((message) => message.type === 'callNetworkQualityLow');
 
   /* @conditional-compile-remove(call-readiness) */
-  const [isDrawerShowing, setIsDrawerShowing] = useState(true);
-  /* @conditional-compile-remove(call-readiness) */
-  const onLightDismissTriggered = (): void => {
-    // do nothing here
-    // only way to dismiss this drawer is clicking on allow access which will leads to device permission prompt
-  };
+  const [isPermissionsModalDismissed, setIsPermissionsModalDismissed] = useState(true);
 
+  // When permission API is not available, we want to show screen saying checking for access (disappears on its own)
+  // then based on permission setting, we show permission denied or nothing
   /* @conditional-compile-remove(call-readiness) */
-  const [isModalShowing, setIsModalShowing] = useState(false);
+  const [minimumFallbackTimerElapsed, setMinimumFallbackTimerElapsed] = useState(false);
+  /* @conditional-compile-remove(call-readiness) */
+  setTimeout(() => {
+    setMinimumFallbackTimerElapsed(true);
+  }, 2000);
+  /* @conditional-compile-remove(call-readiness) */
+  const forceShowingCheckPermissions = !minimumFallbackTimerElapsed;
 
   return (
     <Stack className={mobileView ? configurationContainerStyleMobile : configurationContainerStyleDesktop}>
@@ -178,60 +186,46 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
           callReadinessOptedIn={callReadinessOptedIn}
         />
       </Stack>
-
       {
         /* @conditional-compile-remove(call-readiness) */
-        //show this when clicking on enable camera button or enable mic button on desktop for the first time
-        //does not show if user has already grant mic or camera access
-        !mobileView && !cameraPermissionGranted && !microphonePermissionGranted && callReadinessOptedIn && (
-          <Modal
-            isOpen={isModalShowing}
-            isBlocking={false}
-            onDismiss={() => {
-              setIsModalShowing(false);
-            }}
-            overlay={{ styles: { root: { background: 'rgba(0,0,0,0.9)' } } }}
-          >
-            <CameraAndMicrophoneDomainPermissions
-              appName={'app'}
-              onTroubleshootingClick={
-                onPermissionsTroubleshootingClick
-                  ? () => {
-                      onPermissionsTroubleshootingClick(permissionsState);
-                    }
-                  : undefined
-              }
-              type="request"
+        // show the following screen if permission API is availible (not unsupported) and videoState, audioState is assigned values
+        callReadinessOptedIn &&
+          videoState &&
+          videoState !== 'unsupported' &&
+          audioState &&
+          audioState !== 'unsupported' && (
+            <CallReadinessModal
+              mobileView={mobileView}
+              audioState={audioState}
+              videoState={videoState}
+              permissionsState={permissionsState}
+              isPermissionsModalDismissed={isPermissionsModalDismissed}
+              setIsPermissionsModalDismissed={setIsPermissionsModalDismissed}
+              onPermissionsTroubleshootingClick={onPermissionsTroubleshootingClick}
             />
-          </Modal>
-        )
+          )
       }
 
       {
         /* @conditional-compile-remove(call-readiness) */
-        mobileView && isDrawerShowing && callReadinessOptedIn && (
-          <_DrawerSurface onLightDismiss={onLightDismissTriggered} styles={drawerContainerStyles(DRAWER_HIGH_Z_BAND)}>
-            <CameraAndMicrophoneDomainPermissions
-              appName={'app'}
-              onTroubleshootingClick={
-                onPermissionsTroubleshootingClick
-                  ? () => {
-                      onPermissionsTroubleshootingClick(permissionsState);
-                    }
-                  : undefined
-              }
-              type="request"
-              onContinueAnywayClick={async () => {
-                await adapter.askDevicePermission({ video: true, audio: true });
-                adapter.queryCameras();
-                adapter.queryMicrophones();
-                adapter.querySpeakers();
-                setIsDrawerShowing(false);
-              }}
+        // show the following screen if permission API is not availible (unsupported) and videoState, audioState is assigned values
+        callReadinessOptedIn &&
+          videoState &&
+          audioState &&
+          (videoState === 'unsupported' || audioState === 'unsupported') && (
+            <CallReadinessModalFallBack
+              mobileView={mobileView}
+              cameraPermissionGranted={cameraPermissionGranted}
+              microphonePermissionGranted={microphonePermissionGranted}
+              checkPermissionModalShowing={forceShowingCheckPermissions}
+              permissionsState={permissionsState}
+              isPermissionsModalDismissed={isPermissionsModalDismissed}
+              setIsPermissionsModalDismissed={setIsPermissionsModalDismissed}
+              onPermissionsTroubleshootingClick={onPermissionsTroubleshootingClick}
             />
-          </_DrawerSurface>
-        )
+          )
       }
+
       <Stack
         grow
         horizontal={!mobileWithPreview}
@@ -259,13 +253,19 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
               <LocalDeviceSettings
                 {...options}
                 {...localDeviceSettingsHandlers}
-                cameraPermissionGranted={cameraPermissionGranted}
-                microphonePermissionGranted={microphonePermissionGranted}
+                cameraPermissionGranted={cameraPermissionGrantedTrampoline(
+                  cameraPermissionGranted,
+                  /* @conditional-compile-remove(call-readiness) */ videoState
+                )}
+                microphonePermissionGranted={micPermissionGrantedTrampoline(
+                  microphonePermissionGranted,
+                  /* @conditional-compile-remove(call-readiness) */ audioState
+                )}
                 /* @conditional-compile-remove(call-readiness) */
                 callReadinessOptedIn={callReadinessOptedIn}
                 /* @conditional-compile-remove(call-readiness) */
                 onClickEnableDevicePermission={() => {
-                  setIsModalShowing(true);
+                  setIsPermissionsModalDismissed(true);
                 }}
               />
             </>
@@ -291,4 +291,24 @@ const localPreviewTrampoline = (mobileView: boolean, doNotShow?: boolean): JSX.E
     return undefined;
   }
   return <LocalPreview mobileView={mobileView} showDevicesButton={mobileView} />;
+};
+
+const cameraPermissionGrantedTrampoline = (
+  cameraPermissionGranted: boolean | undefined,
+  videoState?: PermissionState | 'unsupported' | undefined
+): boolean | undefined => {
+  /* @conditional-compile-remove(call-readiness) */
+  return videoState && videoState !== 'unsupported' ? videoState === 'granted' : cameraPermissionGranted;
+
+  return cameraPermissionGranted;
+};
+
+const micPermissionGrantedTrampoline = (
+  microphonePermissionGranted: boolean | undefined,
+  audioState?: PermissionState | 'unsupported' | undefined
+): boolean | undefined => {
+  /* @conditional-compile-remove(call-readiness) */
+  return audioState && audioState !== 'unsupported' ? audioState === 'granted' : microphonePermissionGranted;
+
+  return microphonePermissionGranted;
 };

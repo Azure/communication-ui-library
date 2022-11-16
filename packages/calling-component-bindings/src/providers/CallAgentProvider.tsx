@@ -4,7 +4,7 @@
 import { CallAgent } from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-identity-support) */
 import { TeamsCallAgent } from '@azure/communication-calling';
-import { isACSCallAgent } from '@internal/acs-ui-common';
+import { _isACSCallAgent } from '@internal/calling-stateful-client';
 import React, { createContext, useContext } from 'react';
 
 /**
@@ -58,7 +58,7 @@ export const CallAgentProvider = (props: CallAgentProviderProps): JSX.Element =>
  */
 export const useCallAgent = (): CallAgent | undefined => {
   const callAgent = useContext(CallAgentContext)?.callAgent;
-  if (callAgent && !isACSCallAgent(callAgent)) {
+  if (callAgent && !_isACSCallAgent(callAgent)) {
     throw new Error('TeamsCallAgent object was provided, try useTeamsCall() instead');
   }
   return callAgent;
@@ -76,7 +76,7 @@ export const useTeamsCallAgent = ():
   | undefined
   | /* @conditional-compile-remove(teams-identity-support) */ TeamsCallAgent => {
   const callAgent = useContext(CallAgentContext)?.callAgent;
-  if (callAgent && isACSCallAgent(callAgent)) {
+  if (callAgent && _isACSCallAgent(callAgent)) {
     throw new Error('Regular CallAgent object was provided, try useCall() instead');
   }
   return callAgent;

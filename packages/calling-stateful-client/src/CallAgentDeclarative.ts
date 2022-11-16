@@ -2,14 +2,14 @@
 // Licensed under the MIT license.
 
 import { CallAgent } from '@azure/communication-calling';
-import { CallAgentCommon, CallCommon } from '@internal/acs-ui-common';
 import { clearCallRelatedState, DeclarativeCallCommon, ProxyCallAgentCommon } from './CallAgentDeclarativeCommon';
 import { CallContext } from './CallContext';
 import { callDeclaratify } from './CallDeclarative';
 /* @conditional-compile-remove(one-to-n-calling) */
 import { DeclarativeIncomingCall } from './IncomingCallDeclarative';
 import { InternalCallContext } from './InternalCallContext';
-import { isACSCall, isACSCallAgent } from '@internal/acs-ui-common';
+import { _isACSCall, _isACSCallAgent } from './TypeGuards';
+import { CallAgentCommon, CallCommon } from './BetaToStableTypes';
 
 /* @conditional-compile-remove(one-to-n-calling) */
 /**
@@ -66,35 +66,35 @@ class ProxyCallAgent extends ProxyCallAgentCommon implements ProxyHandler<Declar
   };
 
   protected callDeclaratify(call: CallCommon, context: CallContext): DeclarativeCallCommon {
-    if (isACSCall(call)) {
+    if (_isACSCall(call)) {
       return callDeclaratify(call, context);
     }
     throw new Error('Not reachable code, DeclarativeCallAgent.callDeclaratify must be called with an ACS call.');
   }
 
   protected startCall(agent: CallAgentCommon, args: Parameters<CallAgent['startCall']>): CallCommon {
-    if (isACSCallAgent(agent)) {
+    if (_isACSCallAgent(agent)) {
       return agent.startCall(...args);
     }
     throw Error('Unreachable code, DeclarativeCallAgent.startCall must be called with an ACS callAgent.');
   }
 
   protected joinCall(agent: CallAgentCommon, args: Parameters<CallAgent['join']>): CallCommon {
-    if (isACSCallAgent(agent)) {
+    if (_isACSCallAgent(agent)) {
       return agent.join(...args);
     }
     throw Error('Unreachable code, DeclarativeCallAgent.joinCall must be called with an ACS callAgent.');
   }
 
   protected agentSubscribe(agent: CallAgentCommon, args: Parameters<CallAgent['on']>): void {
-    if (isACSCallAgent(agent)) {
+    if (_isACSCallAgent(agent)) {
       return agent.on(...args);
     }
     throw Error('Unreachable code, DeclarativeCallAgent.agentSubscribe must be called with an ACS callAgent.');
   }
 
   protected agentUnsubscribe(agent: CallAgentCommon, args: Parameters<CallAgent['off']>): void {
-    if (isACSCallAgent(agent)) {
+    if (_isACSCallAgent(agent)) {
       return agent.off(...args);
     }
     throw Error('Unreachable code, DeclarativeCallAgent.agentUnsubscribe must be called with an ACS callAgent.');

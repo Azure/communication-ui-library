@@ -8,7 +8,7 @@ import {
   VideoStreamRendererView
 } from '@azure/communication-calling';
 
-import { CallCommon, IncomingCallCommon, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
+import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import {
   CallState,
   RemoteParticipantState as DeclarativeRemoteParticipant,
@@ -18,7 +18,8 @@ import {
   VideoStreamRendererViewState as DeclarativeVideoStreamRendererView
 } from './CallClientState';
 /* @conditional-compile-remove(teams-identity-support) */
-import { isACSCall } from '@internal/acs-ui-common';
+import { _isACSCall } from './TypeGuards';
+import { CallCommon, IncomingCallCommon } from './BetaToStableTypes';
 
 /**
  * @private
@@ -84,7 +85,7 @@ export function convertSdkCallToDeclarativeCall(call: CallCommon): CallState {
   return {
     id: call.id,
     /* @conditional-compile-remove(teams-identity-support) */
-    type: isACSCall(call) ? 'ACS' : 'Teams',
+    type: _isACSCall(call) ? 'ACS' : 'Teams',
     callerInfo: call.callerInfo,
     state: call.state,
     callEndReason: call.callEndReason,

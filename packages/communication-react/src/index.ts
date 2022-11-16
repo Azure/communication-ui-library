@@ -36,8 +36,7 @@ export type {
   GetCallingSelector,
   CallingHandlers,
   CallingBaseSelectorProps,
-  CommonCallingHandlers,
-  SharedCallingHandlers
+  CommonCallingHandlers
 } from '../../calling-component-bindings/src';
 export type {
   ChatClientProviderProps,
@@ -60,7 +59,11 @@ export {
 } from '../../calling-component-bindings/src';
 
 /* @conditional-compile-remove(teams-identity-support) */
-export { useTeamsCallAgent, useTeamsCall } from '../../calling-component-bindings/src';
+export {
+  useTeamsCallAgent,
+  useTeamsCall,
+  createDefaultTeamsCallingHandlers
+} from '../../calling-component-bindings/src';
 
 /* @conditional-compile-remove(teams-identity-support) */
 export type { TeamsCallingHandlers } from '../../calling-component-bindings/src';
@@ -266,7 +269,7 @@ export type {
 } from '../../react-components/src';
 export * from '../../react-components/src/localization/locales';
 export * from '../../react-components/src/theming';
-export * from '../../calling-stateful-client/src';
+export * from '../../calling-stateful-client/src/index-public';
 /* @conditional-compile-remove(one-to-n-calling) */
 export type { DeclarativeCallAgent } from '../../calling-stateful-client/src';
 export { createStatefulChatClient } from '../../chat-stateful-client/src';

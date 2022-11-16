@@ -32,7 +32,7 @@ jobs:
         with:
           node-version: '14.x'
       - id: get-matrix
-        run: echo "::set-output name=matrix::$(node ./common/scripts/workflow-read-matrix.mjs)"
+        run: echo "matrix=$(node ./common/scripts/workflow-read-matrix.mjs)" >> $GITHUB_OUTPUT
 
   build_packages:
     needs: get_matrix
@@ -69,9 +69,12 @@ jobs:
       - name: Check result of flavor switch
         if: ${{ always() && steps.switch-flavor.outcome == 'failure' }}
         run: echo "Failed to switch to stable flavor, please make sure you run 'rush update:stable' if dependencies were updated." && exit 1
-      # Perform changelog check
+
       - name: Check the necessary change file has been submitted
-        run: rush changelog:check
+        if: ${{ github.event_name == 'pull_request' }}
+        # GitHub provides remote branch names as refs.
+        run: node common/scripts/changelog/check.mjs origin/${{ github.base_ref }} origin/${{ github.head_ref }}
+
       # Perform lint check
       - name: Run linter
         run: rush lint
@@ -585,12 +588,12 @@ jobs:
         id: bundles
         run: |
           base_size=$(jq -r ".[0].parsedSize" base/report.json)
-          echo "::set-output name=base_size::${base_size}"
+          echo "base_size=${base_size}" >> $GITHUB_OUTPUT
           current_size=$(jq -r ".[0].parsedSize" current/report.json)
-          echo "::set-output name=current_size::${current_size}"
+          echo "current_size=${current_size}" >> $GITHUB_OUTPUT
           change=$([ $current_size -gt $base_size ] && echo "increased❗" || ([ $current_size = $base_size ] && echo "not changed" || echo "decreased✅"))
-          echo "::set-output name=change::${change}"
-          echo "::set-output name=diff::$(($current_size - $base_size))"
+          echo "change=${change}" >> $GITHUB_OUTPUT
+          echo "diff=$(($current_size - $base_size))" >> $GITHUB_OUTPUT
       - name: Find Comment
         uses: peter-evans/find-comment@v2
         id: fc

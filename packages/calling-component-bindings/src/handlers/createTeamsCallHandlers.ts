@@ -15,7 +15,7 @@ import { StatefulCallClient, StatefulDeviceManager } from '@internal/calling-sta
 import memoizeOne from 'memoize-one';
 import { ReactElement } from 'react';
 import { isTeamsCallParticipants } from '../utils/callUtils';
-import { createDefaultCommonCallingHandlers, SharedCallingHandlers } from './createCommonHandlers';
+import { createDefaultCommonCallingHandlers, CommonCallingHandlers } from './createCommonHandlers';
 
 /**
  * Object containing all the teams call handlers required for calling components.
@@ -25,12 +25,12 @@ import { createDefaultCommonCallingHandlers, SharedCallingHandlers } from './cre
  *
  * @beta
  */
-export type TeamsCallingHandlers = SharedCallingHandlers & {
+export interface TeamsCallingHandlers extends CommonCallingHandlers {
   onStartCall: (
     participants: CommunicationIdentifier[],
     options?: StartCallOptions
-  ) => void | /* @conditional-compile-remove(teams-identity-support) */ TeamsCall;
-};
+  ) => undefined | /* @conditional-compile-remove(teams-identity-support) */ TeamsCall;
+}
 
 /**
  * Create the default implementation of {@link TeamsCallingHandlers} for teams call.
@@ -47,9 +47,8 @@ export const createDefaultTeamsCallingHandlers = memoizeOne(
     deviceManager: StatefulDeviceManager | undefined,
     call: undefined | /* @conditional-compile-remove(teams-identity-support) */ TeamsCall
   ): never | TeamsCallingHandlers => {
-    const calingsHandlers = createDefaultCommonCallingHandlers(callClient, deviceManager, call);
     return {
-      ...calingsHandlers,
+      ...createDefaultCommonCallingHandlers(callClient, deviceManager, call),
       onStartCall: (participants, options) => {
         /* @conditional-compile-remove(teams-identity-support) */
         const threadId = options?.threadId;
@@ -71,16 +70,15 @@ export const createDefaultTeamsCallingHandlers = memoizeOne(
         const participant = _toCommunicationIdentifier(userId);
         /* @conditional-compile-remove(teams-identity-support) */
         const threadId = options?.threadId;
+        if (isCommunicationUserIdentifier(participant)) {
+          throw new Error('CommunicationIdentifier in Teams call is not supported!');
+        }
         /* @conditional-compile-remove(teams-identity-support) */
         if (isPhoneNumberIdentifier(participant)) {
           call?.addParticipant(participant, threadId ? { threadId } : undefined);
-        } else {
-          if (isCommunicationUserIdentifier(participant)) {
-            throw new Error('CommunicationIdentifier in Teams call is not supported!');
-          }
-          /* @conditional-compile-remove(teams-identity-support) */
-          call?.addParticipant(participant, threadId ? { threadId } : undefined);
         }
+        /* @conditional-compile-remove(teams-identity-support) */
+        call?.addParticipant(participant);
       },
       onRemoveParticipant: async (
         userId: string | /* @conditional-compile-remove(PSTN-calls) */ CommunicationIdentifier

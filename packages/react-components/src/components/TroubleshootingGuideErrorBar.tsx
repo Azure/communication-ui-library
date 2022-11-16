@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, MessageBar, MessageBarButton, Stack, useTheme } from '@fluentui/react';
 import { useLocale } from '../localization';
 import { ErrorBarProps } from './ErrorBar';
-import { dismissButtonStyle, linkStyle, messageBarStyle } from './styles/TroubleshootingGuideErrorBar.styles';
+import { dismissButtonStyle, messageBarStyle } from './styles/TroubleshootingGuideErrorBar.styles';
 import {
   DismissedError,
   dismissError,
@@ -115,7 +115,6 @@ export const _TroubleshootingGuideErrorBar = (props: _TroubleshootingGuideErrorB
             {strings[error.type]}{' '}
             {onPermissionsTroubleshootingClick && (
               <Link
-                styles={linkStyle(theme)}
                 onClick={() => {
                   onPermissionsTroubleshootingClick(permissionsState);
                 }}
@@ -131,7 +130,7 @@ export const _TroubleshootingGuideErrorBar = (props: _TroubleshootingGuideErrorB
           <div>
             {strings[error.type]}{' '}
             {onNetworkingTroubleshootingClick && (
-              <Link styles={linkStyle(theme)} onClick={onNetworkingTroubleshootingClick} underline>
+              <Link onClick={onNetworkingTroubleshootingClick} underline>
                 <span>{troubleshootingGuideStrings.networkTroubleshootingLinkText}</span>
               </Link>
             )}

@@ -23,11 +23,11 @@ import { CallControlOptions } from './types/CallControlOptions';
 
 /* @conditional-compile-remove(rooms) */
 import { _PermissionsProvider, Role, _getPermissions } from '@internal/react-components';
-/* @conditional-compile-remove(one-to-n-calling) */
+/* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
 import { LayerHost, mergeStyles } from '@fluentui/react';
-/* @conditional-compile-remove(one-to-n-calling) */
+/* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
 import { modalLayerHostStyle } from '../common/styles/ModalLocalAndRemotePIP.styles';
-/* @conditional-compile-remove(one-to-n-calling) */
+/* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
 import { useId } from '@fluentui/react-hooks';
 /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */
 import { HoldPage } from './pages/HoldPage';
@@ -61,14 +61,6 @@ export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcon
    * Flags to enable/disable or customize UI elements of the {@link CallComposite}.
    */
   options?: CallCompositeOptions;
-
-  /* @conditional-compile-remove(rooms) */
-  /**
-   * Set the role to enable/disable capacities. This property should be properly set for Rooms calls. The role of a
-   * user for a room can be obtained using the Rooms API. The role of the user will be synced with ACS services when
-   * a Rooms call starts.
-   */
-  roleHint?: Role;
 }
 
 /* @conditional-compile-remove(call-readiness) */
@@ -176,7 +168,7 @@ export type CallCompositeOptions = {
 
 type MainScreenProps = {
   mobileView: boolean;
-  /* @conditional-compile-remove(one-to-n-calling) */
+  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   modalLayerHostId: string;
   onRenderAvatar?: OnRenderAvatarCallback;
   callInvitationUrl?: string;
@@ -284,7 +276,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
       pageElement = (
         <LobbyPage
           mobileView={props.mobileView}
-          /* @conditional-compile-remove(one-to-n-calling) */
+          /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
           modalLayerHostId={props.modalLayerHostId}
           options={props.options}
         />
@@ -298,7 +290,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           onFetchAvatarPersonaData={onFetchAvatarPersonaData}
           onFetchParticipantMenuItems={onFetchParticipantMenuItems}
           mobileView={props.mobileView}
-          /* @conditional-compile-remove(one-to-n-calling) */
+          /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
           modalLayerHostId={props.modalLayerHostId}
           options={props.options}
         />
@@ -360,31 +352,27 @@ export const CallComposite = (props: CallCompositeProps): JSX.Element => {
     onFetchAvatarPersonaData,
     onFetchParticipantMenuItems,
     options,
-    formFactor = 'desktop',
-    /* @conditional-compile-remove(rooms) */
-    roleHint
+    formFactor = 'desktop'
   } = props;
+
+  /* @conditional-compile-remove(rooms) */
+  const roleHint = adapter.getState().roleHint;
 
   useEffect(() => {
     (async () => {
       const constrain = getQueryOptions({
-        /* @conditional-compile-remove(rooms) */ role: roleHint,
-        /* @conditional-compile-remove(call-readiness) */ callReadinessOptedIn: options?.callReadinessOptedIn ?? false
+        /* @conditional-compile-remove(rooms) */ role: roleHint
       });
       await adapter.askDevicePermission(constrain);
       adapter.queryCameras();
       adapter.queryMicrophones();
       adapter.querySpeakers();
     })();
-  }, [
-    adapter,
-    /* @conditional-compile-remove(rooms) */ roleHint,
-    /* @conditional-compile-remove(call-readiness) */ options?.callReadinessOptedIn
-  ]);
+  }, [adapter, /* @conditional-compile-remove(rooms) */ roleHint]);
 
   const mobileView = formFactor === 'mobile';
 
-  /* @conditional-compile-remove(one-to-n-calling) */
+  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   const modalLayerHostId = useId('modalLayerhost');
 
   const mainScreenContainerClassName = useMemo(() => {
@@ -400,7 +388,7 @@ export const CallComposite = (props: CallCompositeProps): JSX.Element => {
             onFetchAvatarPersonaData={onFetchAvatarPersonaData}
             onFetchParticipantMenuItems={onFetchParticipantMenuItems}
             mobileView={mobileView}
-            /* @conditional-compile-remove(one-to-n-calling) */
+            /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
             modalLayerHostId={modalLayerHostId}
             options={options}
             /* @conditional-compile-remove(rooms) */
@@ -415,7 +403,7 @@ export const CallComposite = (props: CallCompositeProps): JSX.Element => {
             // Warning: this is fragile and works because the call arrangement page is only rendered after the call has connected and thus this
             // LayerHost will be guaranteed to have rendered (and subsequently mounted in the DOM). This ensures the DOM element will be available
             // before the call to `document.getElementById(modalLayerHostId)` is made.
-            /* @conditional-compile-remove(one-to-n-calling) */
+            /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
             mobileView && <LayerHost id={modalLayerHostId} className={mergeStyles(modalLayerHostStyle)} />
           }
         </CallAdapterProvider>
@@ -437,17 +425,7 @@ const unsupportedEnvironmentPageTrampoline = (): string => {
   return 'call';
 };
 
-const getQueryOptions = (options: {
-  /* @conditional-compile-remove(rooms) */ role?: Role;
-  /* @conditional-compile-remove(call-readiness) */ callReadinessOptedIn?: boolean;
-}): PermissionConstraints => {
-  /* @conditional-compile-remove(call-readiness) */
-  if (options.callReadinessOptedIn) {
-    return {
-      video: false,
-      audio: false
-    };
-  }
+const getQueryOptions = (options: { /* @conditional-compile-remove(rooms) */ role?: Role }): PermissionConstraints => {
   /* @conditional-compile-remove(rooms) */
   if (options.role === 'Consumer') {
     return {
