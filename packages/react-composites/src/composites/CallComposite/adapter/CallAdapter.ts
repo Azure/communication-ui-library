@@ -565,31 +565,20 @@ export interface CallAdapterCommon
 /**
  * @public
  */
-export type CallAdapter = Omit<CallAdapterCommon, keyof ACSCallManagement> & ACSCallManagement;
-
-/**
- * @public
- */
-export type ACSCallManagement = {
+export interface CallAdapter extends CallAdapterCommon {
   joinCall(microphoneOn?: boolean): Call | undefined;
   startCall(participants: string[], options?: StartCallOptions): Call | undefined;
   /* @conditional-compile-remove(PSTN-calls) */
   startCall(participants: CommunicationIdentifier[], options?: StartCallOptions): Call | undefined;
-};
+}
 
 /* @conditional-compile-remove(teams-identity-support) */
 /**
  * @beta
  */
-export type TeamsCallAdapter = Omit<CallAdapterCommon, keyof TeamsCallManagement> & TeamsCallManagement;
-
-/* @conditional-compile-remove(teams-identity-support) */
-/**
- * @beta
- */
-export type TeamsCallManagement = {
+export interface TeamsCallAdapter extends CallAdapterCommon {
   joinCall(microphoneOn?: boolean): TeamsCall | undefined;
   startCall(participants: string[], options?: StartCallOptions): TeamsCall | undefined;
   /* @conditional-compile-remove(PSTN-calls) */
   startCall(participants: CommunicationIdentifier[], options?: StartCallOptions): TeamsCall | undefined;
-};
+}

@@ -83,13 +83,6 @@ import { VideoDeviceInfo } from '@azure/communication-calling';
 import { VideoStreamRenderer } from '@azure/communication-calling';
 import { VideoStreamRendererView } from '@azure/communication-calling';
 
-// @public (undocumented)
-export type ACSCallManagement = {
-    joinCall(microphoneOn?: boolean): Call | undefined;
-    startCall(participants: string[], options?: StartCallOptions): Call | undefined;
-    startCall(participants: CommunicationIdentifier[], options?: StartCallOptions): Call | undefined;
-};
-
 // @public
 export interface ActiveErrorMessage {
     timestamp?: Date;
@@ -247,7 +240,14 @@ export interface BrowserPermissionDeniedStyles extends BaseCustomStyles {
 }
 
 // @public (undocumented)
-export type CallAdapter = Omit<CallAdapterCommon, keyof ACSCallManagement> & ACSCallManagement;
+export interface CallAdapter extends CallAdapterCommon {
+    // (undocumented)
+    joinCall(microphoneOn?: boolean): Call | undefined;
+    // (undocumented)
+    startCall(participants: string[], options?: StartCallOptions): Call | undefined;
+    // (undocumented)
+    startCall(participants: CommunicationIdentifier[], options?: StartCallOptions): Call | undefined;
+}
 
 // @public
 export type CallAdapterCallEndedEvent = {
@@ -697,7 +697,14 @@ export interface CallState {
 }
 
 // @public (undocumented)
-export type CallWithChatAdapter = Omit<CallWithChatAdapterCommon, keyof ACSCallManagement> & ACSCallManagement;
+export interface CallWithChatAdapter extends CallWithChatAdapterCommon {
+    // (undocumented)
+    joinCall(microphoneOn?: boolean): Call | undefined;
+    // (undocumented)
+    startCall(participants: string[], options?: StartCallOptions): Call | undefined;
+    // (undocumented)
+    startCall(participants: CommunicationIdentifier[], options?: StartCallOptions): Call | undefined;
+}
 
 // @public
 export interface CallWithChatAdapterCommon extends CallWithChatAdapterManagement, AdapterState<CallWithChatAdapterState>, Disposable, CallWithChatAdapterSubscriptions {
@@ -2972,20 +2979,20 @@ export interface SystemMessageCommon extends MessageCommon {
 }
 
 // @beta (undocumented)
-export type TeamsCallAdapter = Omit<CallAdapterCommon, keyof TeamsCallManagement> & TeamsCallManagement;
+export interface TeamsCallAdapter extends CallAdapterCommon {
+    // (undocumented)
+    joinCall(microphoneOn?: boolean): TeamsCall | undefined;
+    // (undocumented)
+    startCall(participants: string[], options?: StartCallOptions): TeamsCall | undefined;
+    // (undocumented)
+    startCall(participants: CommunicationIdentifier[], options?: StartCallOptions): TeamsCall | undefined;
+}
 
 // @beta
 export interface TeamsCallingHandlers extends CommonCallingHandlers {
     // (undocumented)
     onStartCall: (participants: CommunicationIdentifier[], options?: StartCallOptions) => undefined | /* @conditional-compile-remove(teams-identity-support) */ TeamsCall;
 }
-
-// @beta (undocumented)
-export type TeamsCallManagement = {
-    joinCall(microphoneOn?: boolean): TeamsCall | undefined;
-    startCall(participants: string[], options?: StartCallOptions): TeamsCall | undefined;
-    startCall(participants: CommunicationIdentifier[], options?: StartCallOptions): TeamsCall | undefined;
-};
 
 // @public
 export const toFlatCommunicationIdentifier: (identifier: CommunicationIdentifier) => string;

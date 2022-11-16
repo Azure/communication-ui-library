@@ -54,13 +54,6 @@ import { Theme } from '@fluentui/react';
 import { VideoDeviceInfo } from '@azure/communication-calling';
 import { VideoStreamOptions } from '@internal/react-components';
 
-// @public (undocumented)
-export type ACSCallManagement = {
-    joinCall(microphoneOn?: boolean): Call | undefined;
-    startCall(participants: string[], options?: StartCallOptions): Call | undefined;
-    startCall(participants: CommunicationIdentifier[], options?: StartCallOptions): Call | undefined;
-};
-
 // @public
 export interface AdapterError extends Error {
     innerError: Error;
@@ -146,7 +139,14 @@ export interface BaseCompositeProps<TIcons extends Record<string, JSX.Element>> 
 }
 
 // @public (undocumented)
-export type CallAdapter = Omit<CallAdapterCommon, keyof ACSCallManagement> & ACSCallManagement;
+export interface CallAdapter extends CallAdapterCommon {
+    // (undocumented)
+    joinCall(microphoneOn?: boolean): Call | undefined;
+    // (undocumented)
+    startCall(participants: string[], options?: StartCallOptions): Call | undefined;
+    // (undocumented)
+    startCall(participants: CommunicationIdentifier[], options?: StartCallOptions): Call | undefined;
+}
 
 // @public
 export type CallAdapterCallEndedEvent = {
@@ -455,7 +455,14 @@ export type CallParticipantsLocator = {
 };
 
 // @public (undocumented)
-export type CallWithChatAdapter = Omit<CallWithChatAdapterCommon, keyof ACSCallManagement> & ACSCallManagement;
+export interface CallWithChatAdapter extends CallWithChatAdapterCommon {
+    // (undocumented)
+    joinCall(microphoneOn?: boolean): Call | undefined;
+    // (undocumented)
+    startCall(participants: string[], options?: StartCallOptions): Call | undefined;
+    // (undocumented)
+    startCall(participants: CommunicationIdentifier[], options?: StartCallOptions): Call | undefined;
+}
 
 // @public
 export interface CallWithChatAdapterCommon extends CallWithChatAdapterManagement, AdapterState<CallWithChatAdapterState>, Disposable, CallWithChatAdapterSubscriptions {
@@ -1239,14 +1246,14 @@ export type ParticipantsRemovedListener = (event: {
 }) => void;
 
 // @beta (undocumented)
-export type TeamsCallAdapter = Omit<CallAdapterCommon, keyof TeamsCallManagement> & TeamsCallManagement;
-
-// @beta (undocumented)
-export type TeamsCallManagement = {
+export interface TeamsCallAdapter extends CallAdapterCommon {
+    // (undocumented)
     joinCall(microphoneOn?: boolean): TeamsCall | undefined;
+    // (undocumented)
     startCall(participants: string[], options?: StartCallOptions): TeamsCall | undefined;
+    // (undocumented)
     startCall(participants: CommunicationIdentifier[], options?: StartCallOptions): TeamsCall | undefined;
-};
+}
 
 // @public
 export type TopicChangedListener = (event: {

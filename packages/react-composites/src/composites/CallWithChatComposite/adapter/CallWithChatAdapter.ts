@@ -12,8 +12,7 @@ import {
   IsSpeakingChangedListener,
   ParticipantsJoinedListener,
   ParticipantsLeftListener,
-  CallEndedListener,
-  ACSCallManagement
+  CallEndedListener
 } from '../../CallComposite';
 import {
   MessageReadListener,
@@ -396,7 +395,12 @@ export interface CallWithChatAdapterCommon
 /**
  * @public
  */
-export type CallWithChatAdapter = Omit<CallWithChatAdapterCommon, keyof ACSCallManagement> & ACSCallManagement;
+export interface CallWithChatAdapter extends CallWithChatAdapterCommon {
+  joinCall(microphoneOn?: boolean): Call | undefined;
+  startCall(participants: string[], options?: StartCallOptions): Call | undefined;
+  /* @conditional-compile-remove(PSTN-calls) */
+  startCall(participants: CommunicationIdentifier[], options?: StartCallOptions): Call | undefined;
+}
 
 /**
  * Events fired off by the {@link CallWithChatAdapter}.

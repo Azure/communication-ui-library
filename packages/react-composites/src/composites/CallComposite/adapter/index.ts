@@ -22,7 +22,6 @@ export type { CallParticipantsLocator } from './AzureCommunicationCallAdapter';
 
 export type {
   CallAdapter,
-  ACSCallManagement,
   CallAdapterCommon,
   CallAdapterCallEndedEvent,
   CallAdapterCallManagement,
@@ -46,4 +45,4 @@ export type {
 } from './CallAdapter';
 
 /* @conditional-compile-remove(teams-identity-support) */
-export type { TeamsCallAdapter, TeamsCallManagement } from './CallAdapter';
+export type { TeamsCallAdapter } from './CallAdapter';
