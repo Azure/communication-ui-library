@@ -123,8 +123,6 @@ async function runOne(testRoot, args, composite, hermeticity) {
     // Snapshots are always stored with the original test sources, even when the test root
     // is different due to preprocessed test files.
     SNAPSHOT_DIR: path.join(SNAPSHOT_ROOT, getBuildFlavor()),
-    // TODO(prprabhu) Drop this envvar once tests stop using `isTestProfileStableFlavor()`.
-    COMMUNICATION_REACT_FLAVOR: getBuildFlavor(),
     PLAYWRIGHT_OUTPUT_DIR: path.join(BASE_OUTPUT_DIR, Date.now().toString())
   };
 

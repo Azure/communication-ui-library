@@ -514,7 +514,7 @@ export const DEFAULT_COMPONENT_ICONS: {
     SendBoxSend: JSX.Element;
     SendBoxSendHovered: JSX.Element;
     VideoTileMicOff: JSX.Element;
-    BackSpace: JSX.Element;
+    DialpadBackspace: JSX.Element;
     DomainPermissionsSparkle: JSX.Element;
     DomainPermissionCamera: JSX.Element;
     DomainPermissionMic: JSX.Element;
@@ -522,6 +522,7 @@ export const DEFAULT_COMPONENT_ICONS: {
     DomainPermissionMicDenied: JSX.Element;
     UnsupportedBrowserWarning: JSX.Element;
     BrowserPermissionDeniedError: JSX.Element;
+    VideoTilePinned: JSX.Element;
 };
 
 // @internal
@@ -1672,6 +1673,15 @@ export interface VideoStreamOptions {
 // @public
 export const VideoTile: (props: VideoTileProps) => JSX.Element;
 
+// @beta
+export type VideoTileMenuItems = Array<{
+    key: string;
+    ariaLabel?: string;
+    text: string;
+    onClick: () => void;
+    iconProps: IIconProps;
+}>;
+
 // @public
 export interface VideoTileProps {
     children?: React_2.ReactNode;
@@ -1679,7 +1689,9 @@ export interface VideoTileProps {
     initialsName?: string;
     isMirrored?: boolean;
     isMuted?: boolean;
+    isPinned?: boolean;
     isSpeaking?: boolean;
+    menuItems?: VideoTileMenuItems;
     noVideoAvailableAriaLabel?: string;
     onRenderPlaceholder?: OnRenderAvatarCallback;
     participantState?: ParticipantState;

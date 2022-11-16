@@ -61,14 +61,6 @@ export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcon
    * Flags to enable/disable or customize UI elements of the {@link CallComposite}.
    */
   options?: CallCompositeOptions;
-
-  /* @conditional-compile-remove(rooms) */
-  /**
-   * Set the role to enable/disable capacities. This property should be properly set for Rooms calls. The role of a
-   * user for a room can be obtained using the Rooms API. The role of the user will be synced with ACS services when
-   * a Rooms call starts.
-   */
-  roleHint?: Role;
 }
 
 /* @conditional-compile-remove(call-readiness) */
@@ -360,27 +352,23 @@ export const CallComposite = (props: CallCompositeProps): JSX.Element => {
     onFetchAvatarPersonaData,
     onFetchParticipantMenuItems,
     options,
-    formFactor = 'desktop',
-    /* @conditional-compile-remove(rooms) */
-    roleHint
+    formFactor = 'desktop'
   } = props;
+
+  /* @conditional-compile-remove(rooms) */
+  const roleHint = adapter.getState().roleHint;
 
   useEffect(() => {
     (async () => {
       const constrain = getQueryOptions({
-        /* @conditional-compile-remove(rooms) */ role: roleHint,
-        /* @conditional-compile-remove(call-readiness) */ callReadinessOptedIn: options?.callReadinessOptedIn ?? false
+        /* @conditional-compile-remove(rooms) */ role: roleHint
       });
       await adapter.askDevicePermission(constrain);
       adapter.queryCameras();
       adapter.queryMicrophones();
       adapter.querySpeakers();
     })();
-  }, [
-    adapter,
-    /* @conditional-compile-remove(rooms) */ roleHint,
-    /* @conditional-compile-remove(call-readiness) */ options?.callReadinessOptedIn
-  ]);
+  }, [adapter, /* @conditional-compile-remove(rooms) */ roleHint]);
 
   const mobileView = formFactor === 'mobile';
 
@@ -437,17 +425,7 @@ const unsupportedEnvironmentPageTrampoline = (): string => {
   return 'call';
 };
 
-const getQueryOptions = (options: {
-  /* @conditional-compile-remove(rooms) */ role?: Role;
-  /* @conditional-compile-remove(call-readiness) */ callReadinessOptedIn?: boolean;
-}): PermissionConstraints => {
-  /* @conditional-compile-remove(call-readiness) */
-  if (options.callReadinessOptedIn) {
-    return {
-      video: false,
-      audio: false
-    };
-  }
+const getQueryOptions = (options: { /* @conditional-compile-remove(rooms) */ role?: Role }): PermissionConstraints => {
   /* @conditional-compile-remove(rooms) */
   if (options.role === 'Consumer') {
     return {

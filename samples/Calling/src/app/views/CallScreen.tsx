@@ -11,6 +11,8 @@ import {
   useAzureCommunicationCallAdapter
 } from '@azure/communication-react';
 /* @conditional-compile-remove(rooms) */
+import { AzureCommunicationCallAdapterOptions } from '@azure/communication-react';
+/* @conditional-compile-remove(rooms) */
 import { Role } from '@azure/communication-react';
 import { Spinner } from '@fluentui/react';
 import React, { useCallback, useEffect, useMemo, useRef } from 'react';
@@ -30,7 +32,7 @@ export interface CallScreenProps {
   alternateCallerId?: string;
   onCallEnded: () => void;
   /* @conditional-compile-remove(rooms) */
-  role?: Role;
+  roleHint?: Role;
   /* @conditional-compile-remove(call-readiness) */
   callReadinessOptedIn?: boolean;
 }
@@ -43,7 +45,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     displayName,
     onCallEnded,
     /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
-    /* @conditional-compile-remove(rooms) */ role,
+    /* @conditional-compile-remove(rooms) */ roleHint,
     /* @conditional-compile-remove(call-readiness) */ callReadinessOptedIn
   } = props;
   const callIdRef = useRef<string>();
@@ -88,6 +90,9 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     [callReadinessOptedIn]
   );
 
+  /* @conditional-compile-remove(rooms) */
+  const callAdapterOptions: AzureCommunicationCallAdapterOptions = useMemo(() => ({ roleHint }), [roleHint]);
+
   const adapter = useAzureCommunicationCallAdapter(
     {
       userId,
@@ -95,7 +100,9 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
       credential,
       locator: callLocator,
       /* @conditional-compile-remove(PSTN-calls) */
-      alternateCallerId
+      alternateCallerId,
+      /* @conditional-compile-remove(rooms) */
+      options: callAdapterOptions
     },
     afterCreate
   );
@@ -115,8 +122,8 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
 
   let callInvitationUrl: string | undefined = window.location.href;
   /* @conditional-compile-remove(rooms) */
-  // If role is defined then the call is a Rooms call so we should not make call invitation link available
-  if (role) {
+  // If roleHint is defined then the call is a Rooms call so we should not make call invitation link available
+  if (roleHint) {
     callInvitationUrl = undefined;
   }
 
@@ -127,8 +134,6 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
       rtl={currentRtl}
       callInvitationUrl={callInvitationUrl}
       formFactor={isMobileSession ? 'mobile' : 'desktop'}
-      /* @conditional-compile-remove(rooms) */
-      roleHint={role}
       /* @conditional-compile-remove(call-readiness) */
       options={options}
     />

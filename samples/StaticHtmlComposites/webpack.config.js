@@ -7,6 +7,7 @@ const config = {
   entry: {
     chatComposite: './src/chatComposite.js',
     callComposite: './src/callComposite.js',
+    callWithChatComposite: './src/callWithChatComposite.js',
     service: './src/service.js'
   },
   mode: 'development', // change to 'production' for optimization
@@ -44,7 +45,26 @@ const config = {
     ]
   },
   plugins: [
-    new HtmlWebpackPlugin({ template: 'index.html' }),
+    new HtmlWebpackPlugin({
+      template: './index.html',
+      filename: 'index.html'
+    }),
+    new HtmlWebpackPlugin({
+      template: './callComposite.html',
+      filename: 'callComposite.html'
+    }),
+    new HtmlWebpackPlugin({
+      template: './chatComposite.html',
+      filename: 'chatComposite.html'
+    }),
+    new HtmlWebpackPlugin({
+      template: './callWithChatComposite.html',
+      filename: 'callWithChatComposite.html'
+    }),
+    new HtmlWebpackPlugin({
+      template: './index.css',
+      filename: 'index.css'
+    }),
     new CopyWebpackPlugin({
       patterns: [
         { from: path.join(__dirname, 'fonts', 'segoeui-bold.woff2'), to: 'fonts' },
