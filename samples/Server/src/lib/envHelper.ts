@@ -19,11 +19,11 @@ export const getEndpoint = (): string => {
 };
 
 export const getAdminUserId = (): string => {
-  const adminUserId = process.env['AdminUserId'] || appSettings.AdminUserId);
+  const adminUserId = process.env['AdminUserId'] || appSettings.AdminUserId;
 
   if (!adminUserId) {
     throw new Error('No ACS Admin UserId provided');
   }
-  
+
   return adminUserId;
-}
+};
