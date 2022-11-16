@@ -9,9 +9,6 @@ This log was last generated on Tue, 15 Nov 2022 21:12:22 GMT and should not be m
 Tue, 15 Nov 2022 21:12:22 GMT 
 [Compare changes](https://github.com/azure/communication-ui-library/compare/1.4.0...1.4.1-beta.1)
 
-This beta release contains a slew of bug fixes with small related API additions.
-In addition, we introduce improvements to the Rooms feature Call Readiness components and correlated capabilities.
-
 ### Features
 - Add role and getRole to selectors ([PR #2419](https://github.com/azure/communication-ui-library/pull/2419) by miguelgamis@microsoft.com)
 - Add rooms role into calling stateful client ([PR #2417](https://github.com/azure/communication-ui-library/pull/2417) by miguelgamis@microsoft.com)
@@ -43,8 +40,8 @@ In addition, we introduce improvements to the Rooms feature Call Readiness compo
 - Fix remove participant logic for teams user by making sure to enforce isRemovable property on participantList participant. ([PR #2454](https://github.com/azure/communication-ui-library/pull/2454) by 94866715+dmceachernmsft@users.noreply.github.com)
 - Fix CallWithChatPane drawer menu from staying open after switching mobile tabs ([PR #2447](https://github.com/azure/communication-ui-library/pull/2447) by miguelgamis@microsoft.com)
 - Fix dark mode text for TroubleshootingGuideErrorBar messages ([PR #2501](https://github.com/azure/communication-ui-library/pull/2501) by edwardlee@microsoft.com)
-- Set icon definition to undefined if icon is defined by fluent ([PR #2506](https://github.com/azure/communication-ui-library/pull/2506) by carolinecao@microsoft.com)
-- Move icon register code to manager to avoid re-register warning on load ([PR #2506](https://github.com/azure/communication-ui-library/pull/2506) by carolinecao@microsoft.com)
+- Fix for icons re-registered warnings in the console ([PR #2506](https://github.com/azure/communication-ui-library/pull/2506) by carolinecao@microsoft.com)
+- Fix mute indicator color not matching display name ([PR #2451](https://github.com/azure/communication-ui-library/pull/2451) by anjulgarg@live.com)
 
 ### Improvements
 - Update html-to-react dependency. Note: This change requires Webpack > 4 ([PR #2428](https://github.com/azure/communication-ui-library/pull/2428) by 2684369+JamesBurnside@users.noreply.github.com)
@@ -52,11 +49,6 @@ In addition, we introduce improvements to the Rooms feature Call Readiness compo
 - Bump dependencies to get closer to react 18 support ([PR #2427](https://github.com/azure/communication-ui-library/pull/2427) by 2684369+JamesBurnside@users.noreply.github.com)
 - Focus on participant list when opening people pane ([PR #2492](https://github.com/azure/communication-ui-library/pull/2492) by edwardlee@microsoft.com)
 - Config page local preview does not show a black screen when camera devices are removed ([PR #2456](https://github.com/azure/communication-ui-library/pull/2456) by anjulgarg@live.com)
-- Increase max listener limit for Call and CallWithChat Composite ([PR #2483](https://github.com/azure/communication-ui-library/pull/2483) by carolinecao@microsoft.com)
-- Add documentation for minimum typescript and webpack versions ([PR #2428](https://github.com/azure/communication-ui-library/pull/2428) by 2684369+JamesBurnside@users.noreply.github.com)
-- Bugfix mute indicator color not matching display name ([PR #2451](https://github.com/azure/communication-ui-library/pull/2451) by anjulgarg@live.com)
-- Introduce e2e tests for lobby screen in calling composite to validate experience for different call types. ([PR #2435](https://github.com/azure/communication-ui-library/pull/2435) by 94866715+dmceachernmsft@users.noreply.github.com)
-- initializeIcons() in 1:N and PSTN quickstarts ([PR #2517](https://github.com/azure/communication-ui-library/pull/2517) by 82062616+prprabhu-ms@users.noreply.github.com)
 
 ## [1.3.2-beta.1](https://github.com/azure/communication-ui-library/tree/1.3.2-beta.1)
 
