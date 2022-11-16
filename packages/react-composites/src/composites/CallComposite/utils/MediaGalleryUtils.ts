@@ -5,8 +5,18 @@ import { _formatString } from '@internal/acs-ui-common';
 import { RemoteParticipantState } from '@internal/calling-stateful-client';
 import { useEffect, useState } from 'react';
 import { useLocale } from '../../localization';
+import { CallAdapterState } from '../adapter';
 import { useSelector } from '../hooks/useSelector';
-import { getRemoteParticipants } from '../selectors/baseSelectors';
+
+const getRemoteParticipantsConnectedSelector = (callState: CallAdapterState): RemoteParticipantState[] => {
+  return Object.values(callState.call?.remoteParticipants ?? {}).filter(
+    /**
+     * We need to make sure remote participants are in the connected state. If they are not
+     * they might not have their displayName set in the call state just yet.
+     */
+    (p) => p.state === 'Connected'
+  );
+};
 
 /**
  * sets the announcement string whenever a Participant comes or goes from a call to be
@@ -19,32 +29,18 @@ import { getRemoteParticipants } from '../selectors/baseSelectors';
 export const useParticipantChangedAnnouncement = (): string => {
   const locale = useLocale().strings.call;
   const [announcerString, setAnnouncerString] = useState<string>('');
-  const remoteParticipantsObject = useSelector(getRemoteParticipants);
-  const remoteParticipants = Object.values(remoteParticipantsObject ?? {}).filter((p) => {
-    /**
-     * We need to make sure remote participants are in the connected state. If they are not
-     * they might not have their displayName set in the call state just yet.
-     */
-    if (p.state === 'Connected') {
-      return p;
-    }
-    return;
-  });
-  const [currentParticipants, setCurrentParticipants] = useState<RemoteParticipantState[]>(remoteParticipants);
+  const remoteParticipants = useSelector(getRemoteParticipantsConnectedSelector);
+  const [previousParticipants, setPreviousParticipants] = useState<RemoteParticipantState[]>(remoteParticipants);
 
   useEffect(() => {
     const setParticipantEventString = (string: string): void => {
       setAnnouncerString('');
       setAnnouncerString(string);
     };
-    if (remoteParticipants.length < currentParticipants.length) {
+
+    if (previousParticipants.length > remoteParticipants.length) {
+      const whoLeft = previousParticipants.filter((p) => !remoteParticipants.includes(p));
       //someone left
-      const whoLeft = currentParticipants.filter((p) => {
-        if (!remoteParticipants.includes(p)) {
-          return p;
-        }
-        return;
-      });
       setParticipantEventString(
         createAnnouncmentString(
           locale.participantLeftNoticeString,
@@ -53,15 +49,10 @@ export const useParticipantChangedAnnouncement = (): string => {
           whoLeft
         )
       );
-      setCurrentParticipants(remoteParticipants);
-    } else if (remoteParticipants.length > currentParticipants.length) {
+      setPreviousParticipants(remoteParticipants);
+    } else if (remoteParticipants.length > previousParticipants.length) {
+      const whoJoined = remoteParticipants.filter((p) => !previousParticipants.includes(p));
       // someone joined
-      const whoJoined = remoteParticipants.filter((p) => {
-        if (!currentParticipants.includes(p)) {
-          return p;
-        }
-        return;
-      });
       setParticipantEventString(
         createAnnouncmentString(
           locale.participantJoinedNoticeString,
@@ -70,11 +61,10 @@ export const useParticipantChangedAnnouncement = (): string => {
           whoJoined
         )
       );
-      setCurrentParticipants(remoteParticipants);
+      setPreviousParticipants(remoteParticipants);
     }
   }, [
     remoteParticipants,
-    currentParticipants,
     locale.participantJoinedNoticeString,
     locale.unnamedParticipantChangedString,
     locale.participantsJoinedOverflowString,
@@ -91,23 +81,19 @@ const createAnnouncmentString = (
   localeString: string,
   defaultName: string,
   overflowString: string,
-  participants?: RemoteParticipantState[]
+  participants: RemoteParticipantState[]
 ): string => {
-  if (participants) {
-    if (participants.length <= 3) {
-      const names = participants.map((p) => p.displayName ?? defaultName).join(', ');
-      return _formatString(localeString, { displayNames: names });
-    } else {
-      const numberOfExtraParticipants = participants.length - 3;
-      const names = participants
-        .slice(0, 2)
-        .map((p) => p.displayName ?? defaultName)
-        .join(', ');
-      const namesPlusExtra =
-        names + _formatString(overflowString, { numOfParticipants: numberOfExtraParticipants.toString() });
-      return _formatString(localeString, { displayNames: namesPlusExtra });
-    }
+  if (participants.length <= 3) {
+    const names = participants.map((p) => p.displayName ?? defaultName).join(', ');
+    return _formatString(localeString, { displayNames: names });
   } else {
-    return _formatString(localeString, { displayNames: defaultName });
+    const numberOfExtraParticipants = participants.length - 3;
+    const names = participants
+      .slice(0, 2)
+      .map((p) => p.displayName ?? defaultName)
+      .join(', ');
+    const namesPlusExtra =
+      names + _formatString(overflowString, { numOfParticipants: numberOfExtraParticipants.toString() });
+    return _formatString(localeString, { displayNames: namesPlusExtra });
   }
 };
