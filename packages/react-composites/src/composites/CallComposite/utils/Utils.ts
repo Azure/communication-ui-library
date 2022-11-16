@@ -259,16 +259,16 @@ export const isDisabled = (option: boolean | { disabled: boolean } | undefined):
  * @private
  */
 export const getDevicePermissionState = (
-  setVideoState: (state: PermissionState) => void,
-  setAudioState: (state: PermissionState) => void
+  setVideoState: (state: PermissionState | 'unsupported') => void,
+  setAudioState: (state: PermissionState | 'unsupported') => void
 ): void => {
   navigator.permissions
     .query({ name: 'camera' as PermissionName })
     .then((result) => {
       setVideoState(result.state);
     })
-    .catch((error) => {
-      console.log(error);
+    .catch(() => {
+      setVideoState('unsupported');
     });
 
   navigator.permissions
@@ -276,7 +276,7 @@ export const getDevicePermissionState = (
     .then((result) => {
       setAudioState(result.state);
     })
-    .catch((error) => {
-      console.log(error);
+    .catch(() => {
+      setAudioState('unsupported');
     });
 };
