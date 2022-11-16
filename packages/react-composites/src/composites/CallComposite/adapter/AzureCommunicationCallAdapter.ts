@@ -4,13 +4,12 @@
 import {
   CallingHandlers,
   createDefaultCallingHandlers,
-  TeamsCallingHandlers,
   _isInCall,
   _isInLobbyOrConnecting
 } from '@internal/calling-component-bindings';
 
 /* @conditional-compile-remove(teams-identity-support) */
-import { createDefaultTeamsCallingHandlers } from '@internal/calling-component-bindings';
+import { createDefaultTeamsCallingHandlers, TeamsCallingHandlers } from '@internal/calling-component-bindings';
 import {
   CallClientState,
   CallError,
@@ -19,7 +18,6 @@ import {
   StatefulCallClient,
   StatefulDeviceManager
 } from '@internal/calling-stateful-client';
-/* @conditional-compile-remove(teams-identity-support) */
 import {
   CallAgentCommon,
   _isACSCall,
@@ -41,11 +39,10 @@ import {
   PropertyChangedEvent,
   StartCallOptions,
   VideoOptions,
-  Call,
-  TeamsCall
+  Call
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-identity-support) */
-import { TeamsCallAgent } from '@azure/communication-calling';
+import { TeamsCallAgent, TeamsCall } from '@azure/communication-calling';
 /* @conditional-compile-remove(rooms) */
 import { RoomCallLocator } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
@@ -507,16 +504,18 @@ export class AzureCommunicationCallAdapter<
     // Call can be either undefined or ACS Call
     if (_isACSCallAgent(callAgent) && (!call || (call && _isACSCall(call)))) {
       return createDefaultCallingHandlers(callClient, callAgent, deviceManager, call) as CallHandlersOf<AgentType>;
-    } else if (_isTeamsCallAgent(this.callAgent) && (!call || (call && _isTeamsCall(call)))) {
+    }
+
+    /* @conditional-compile-remove(teams-identity-support) */
+    if (_isTeamsCallAgent(this.callAgent) && (!call || (call && _isTeamsCall(call)))) {
       return createDefaultTeamsCallingHandlers(
         this.callClient,
         this.callAgent,
         this.deviceManager,
         call
       ) as CallHandlersOf<AgentType>;
-    } else {
-      throw new Error('Unhandled agent type');
     }
+    throw new Error('Unhandled agent type');
   }
 
   public async mute(): Promise<void> {
@@ -998,11 +997,13 @@ const useAzureCommunicationCallAdapterGeneric = <CallType extends 'ACS' | 'Teams
     [
       adapterRef,
       afterCreateRef,
+      /* @conditional-compile-remove(PSTN-calls) */
       alternateCallerId,
       beforeDisposeRef,
       credential,
       displayName,
       locator,
+      /* @conditional-compile-remove(rooms) */
       options,
       type,
       userId
