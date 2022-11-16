@@ -19344,7 +19344,6 @@ packages:
       integrity: sha512-V50KMwwzqJV0NpZIZFwfOD5/lyny3WlSzRiXgA0G7VUnRlqttta1L6UQIHzd6EuBY/cHGfwTIck7w1yH6Q5zUw==
   file:projects/acs-ui-common.tgz:
     dependencies:
-      '@azure/communication-calling': 1.8.0-beta.1
       '@azure/communication-common': 2.0.0
       '@azure/logger': 1.0.3
       '@babel/cli': 7.16.8_@babel+core@7.16.12
