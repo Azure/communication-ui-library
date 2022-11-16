@@ -24,6 +24,9 @@ export {
 } from './adapter';
 export type { AzureCommunicationCallAdapterArgs, CallAdapterLocator } from './adapter';
 
+/* @conditional-compile-remove(rooms) */
+export type { AzureCommunicationCallAdapterOptions } from './adapter';
+
 /* @conditional-compile-remove(teams-adhoc-call) */
 export type { CallParticipantsLocator } from './adapter';
 

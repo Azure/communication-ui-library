@@ -91,19 +91,13 @@ export type AzureCommunicationCallAdapterArgs = {
     credential: CommunicationTokenCredential;
     locator: CallAdapterLocator;
     alternateCallerId?: string;
-<<<<<<< HEAD
     features?: CallAdapterOptionalFeatures;
-    options?: {
-        roleHint?: Role;
-    };
-=======
     options?: AzureCommunicationCallAdapterOptions;
 };
 
 // @beta
 export type AzureCommunicationCallAdapterOptions = {
     roleHint?: Role;
->>>>>>> 7e8b56e8eafdc78bfdbaf7b7a40344b06db0a81e
 };
 
 // @public
