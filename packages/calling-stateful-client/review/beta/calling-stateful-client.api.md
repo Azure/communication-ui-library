@@ -5,9 +5,12 @@
 ```ts
 
 import { AudioDeviceInfo } from '@azure/communication-calling';
+import { Call } from '@azure/communication-calling';
 import { CallAgent } from '@azure/communication-calling';
+import { CallAgentCommon as CallAgentCommon_2 } from '@azure/communication-calling';
 import { CallClient } from '@azure/communication-calling';
 import { CallClientOptions } from '@azure/communication-calling';
+import { CallCommon as CallCommon_2 } from '@azure/communication-calling';
 import { CallDirection } from '@azure/communication-calling';
 import { CallEndReason } from '@azure/communication-calling';
 import { CallerInfo } from '@azure/communication-calling';
@@ -22,6 +25,7 @@ import { DeviceManager } from '@azure/communication-calling';
 import { DominantSpeakersInfo } from '@azure/communication-calling';
 import { EnvironmentInfo } from '@azure/communication-calling';
 import { IncomingCall } from '@azure/communication-calling';
+import { IncomingCallCommon as IncomingCallCommon_2 } from '@azure/communication-calling';
 import { LatestMediaDiagnostics } from '@azure/communication-calling';
 import { LatestNetworkDiagnostics } from '@azure/communication-calling';
 import { MediaStreamType } from '@azure/communication-calling';
@@ -30,10 +34,15 @@ import { ParticipantRole } from '@azure/communication-calling';
 import { PhoneNumberKind } from '@azure/communication-common';
 import { RemoteParticipantState as RemoteParticipantState_2 } from '@azure/communication-calling';
 import { ScalingMode } from '@azure/communication-calling';
+import { TeamsCall as TeamsCall_2 } from '@azure/communication-calling';
+import { TeamsCallAgent as TeamsCallAgent_2 } from '@azure/communication-calling';
 import { UnknownIdentifierKind } from '@azure/communication-common';
 import { VideoDeviceInfo } from '@azure/communication-calling';
 import { VideoStreamRenderer } from '@azure/communication-calling';
 import { VideoStreamRendererView } from '@azure/communication-calling';
+
+// @public
+export type CallAgentCommon = CallAgent | /* @conditional-compile-remove(teams-identity-support) */ CallAgentCommon_2;
 
 // @public
 export interface CallAgentState {
@@ -61,6 +70,9 @@ export interface CallClientState {
     latestErrors: CallErrors;
     userId: CommunicationIdentifierKind;
 }
+
+// @public
+export type CallCommon = Call | /* @conditional-compile-remove(teams-identity-support) */ CallCommon_2;
 
 // @public
 export class CallError extends Error {
@@ -139,6 +151,9 @@ export interface DiagnosticsCallFeatureState {
     network: NetworkDiagnosticsState;
 }
 
+// @public
+export type IncomingCallCommon = IncomingCall | /* @conditional-compile-remove(teams-identity-support) */ IncomingCallCommon_2;
+
 // @beta
 export type IncomingCallManagement = {
     incomingCalls: ReadonlyArray<DeclarativeIncomingCall>;
@@ -152,6 +167,18 @@ export interface IncomingCallState {
     id: string;
     startTime: Date;
 }
+
+// @internal (undocumented)
+export const _isACSCall: (call: CallCommon) => call is Call;
+
+// @internal (undocumented)
+export const _isACSCallAgent: (callAgent: CallAgentCommon) => callAgent is CallAgent;
+
+// @internal (undocumented)
+export const _isTeamsCall: (call: CallCommon) => call is TeamsCall_2;
+
+// @internal (undocumented)
+export const _isTeamsCallAgent: (callAgent: CallAgentCommon) => callAgent is TeamsCallAgent_2;
 
 // @public
 export interface LocalVideoStreamState {
@@ -227,6 +254,12 @@ export type StatefulCallClientOptions = {
 export interface StatefulDeviceManager extends DeviceManager {
     selectCamera: (VideoDeviceInfo: any) => void;
 }
+
+// @beta (undocumented)
+export type TeamsCall = never | /* @conditional-compile-remove(teams-identity-support) */ TeamsCall_2;
+
+// @beta (undocumented)
+export type TeamsCallAgent = never | /* @conditional-compile-remove(teams-identity-support) */ TeamsCallAgent_2;
 
 // @public
 export interface TranscriptionCallFeature {

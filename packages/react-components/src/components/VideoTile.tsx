@@ -1,7 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Icon, IStyle, mergeStyles, Persona, Stack, Text } from '@fluentui/react';
+import { Icon, IStyle, mergeStyles, Persona, Stack, Text, IIconProps } from '@fluentui/react';
+/* @conditional-compile-remove(pinned-participants) */
+import { MoreHorizontal20Filled } from '@fluentui/react-icons';
 import { Ref } from '@fluentui/react-northstar';
 import React, { useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { useIdentifiers } from '../identifiers';
@@ -22,7 +24,13 @@ import {
   tileInfoContainerStyle,
   participantStateStringStyles
 } from './styles/VideoTile.styles';
+/* @conditional-compile-remove(pinned-participants) */
+import { pinIconStyle, menuButtonStyles } from './styles/VideoTile.styles';
 import { getVideoTileOverrideColor } from './utils/videoTileStylesUtils';
+/* @conditional-compile-remove(pinned-participants) */
+import { DefaultButton, concatStyleSets, DirectionalHint } from '@fluentui/react';
+/* @conditional-compile-remove(pinned-participants) */
+import { mapMenuItemsToContextualMenuItems } from './utils';
 
 /**
  * Strings of {@link VideoTile} that can be overridden.
@@ -86,6 +94,16 @@ export interface VideoTileProps {
    * Whether the video is muted or not.
    */
   isMuted?: boolean;
+  /* @conditional-compile-remove(pinned-participants) */
+  /**
+   * Display custom menu items in the VideoTile's contextual menu.
+   */
+  menuItems?: VideoTileMenuItems;
+  /* @conditional-compile-remove(pinned-participants) */
+  /**
+   * If true, the video tile will show the pin icon.
+   */
+  isPinned?: boolean;
   /**
    * Display Name of the Participant to be shown in the label.
    * @remarks `displayName` is used to generate avatar initials if `initialsName` is not provided.
@@ -151,7 +169,38 @@ const DefaultPlaceholder = (props: CustomAvatarOptions): JSX.Element => {
   );
 };
 
+/**
+ * @beta
+ * MenuItems to be diplayed in video tile in the contextual/drawer menu
+ */
+export type VideoTileMenuItems = Array<{
+  key: string;
+  ariaLabel?: string;
+  text: string;
+  onClick: () => void;
+  iconProps: IIconProps;
+}>;
+
+/* @conditional-compile-remove(pinned-participants) */
+const menuIcon = (): JSX.Element => <MoreHorizontal20Filled primaryFill="currentColor" />;
+
 const defaultPersonaStyles = { root: { margin: 'auto', maxHeight: '100%' } };
+
+/* @conditional-compile-remove(pinned-participants) */
+const VideoTileMoreOptionsButton = (props: { menuItems?: VideoTileMenuItems; menuStyles?: IStyle }): JSX.Element => {
+  const { menuItems, menuStyles } = props;
+  if (!menuItems || menuItems.length === 0) {
+    return <></>;
+  }
+  return (
+    <DefaultButton
+      styles={concatStyleSets(menuButtonStyles, menuStyles ?? {})}
+      onRenderIcon={menuIcon}
+      menuIconProps={{ hidden: true }}
+      menuProps={{ items: mapMenuItemsToContextualMenuItems(menuItems), directionalHint: DirectionalHint.topRightEdge }}
+    />
+  );
+};
 
 /**
  * A component to render the video stream for a single call participant.
@@ -167,6 +216,8 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
     initialsName,
     isMirrored,
     isMuted,
+    /* @conditional-compile-remove(pinned-participants) */
+    isPinned,
     onRenderPlaceholder,
     renderElement,
     showLabel = true,
@@ -175,6 +226,8 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
     userId,
     noVideoAvailableAriaLabel,
     isSpeaking,
+    /* @conditional-compile-remove(pinned-participants) */
+    menuItems,
     personaMinSize = DEFAULT_PERSONA_MIN_SIZE_PX,
     personaMaxSize = DEFAULT_PERSONA_MAX_SIZE_PX
   } = props;
@@ -228,7 +281,6 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
 
   const canShowLabel = showLabel && (displayName || (showMuteIndicator && isMuted));
   const participantStateString = participantStateStringTrampoline(props, locale);
-
   return (
     <Ref innerRef={videoTileRef}>
       <Stack
@@ -295,6 +347,18 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
                   <Icon iconName="VideoTileMicOff" />
                 </Stack>
               )}
+              {
+                /* @conditional-compile-remove(pinned-participants) */
+                <VideoTileMoreOptionsButton menuItems={menuItems} menuStyles={props.styles} />
+              }
+              {
+                /* @conditional-compile-remove(pinned-participants) */
+                isPinned && (
+                  <Stack className={mergeStyles(iconContainerStyle)}>
+                    <Icon iconName="VideoTilePinned" className={mergeStyles(pinIconStyle)} />
+                  </Stack>
+                )
+              }
             </Stack>
           </Stack>
         )}
