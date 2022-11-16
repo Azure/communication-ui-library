@@ -64,9 +64,6 @@ export interface CallClientProviderProps {
     children: React_2.ReactNode;
 }
 
-// @public (undocumented)
-export type CallHandlersOf<AgentType extends CallAgent> = AgentType extends CallAgent ? CallingHandlers : never;
-
 // @public
 export type CallingBaseSelectorProps = {
     callId: string;
@@ -88,9 +85,6 @@ export interface CallProviderProps {
     // (undocumented)
     children: React_2.ReactNode;
 }
-
-// @public (undocumented)
-export type CallTypeOf<AgentType extends CallAgent> = AgentType extends CallAgent ? Call : never;
 
 // @public
 export type CameraButtonSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
