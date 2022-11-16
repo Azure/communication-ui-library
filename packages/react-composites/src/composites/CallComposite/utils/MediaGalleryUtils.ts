@@ -72,7 +72,14 @@ export const useParticipantChangedAnnouncement = (): string => {
       );
       setCurrentParticipants(remoteParticipants);
     }
-  }, [remoteParticipants, currentParticipants]);
+  }, [
+    remoteParticipants,
+    currentParticipants,
+    locale.participantJoinedNoticeString,
+    locale.unnamedParticipantChangedString,
+    locale.participantsJoinedOverflowString,
+    locale.participantLeftNoticeString
+  ]);
 
   return announcerString;
 };
@@ -87,7 +94,6 @@ const createAnnouncmentString = (
   participants?: RemoteParticipantState[]
 ): string => {
   if (participants) {
-    console.log(participants);
     if (participants.length <= 3) {
       const names = participants.map((p) => p.displayName ?? defaultName).join(', ');
       return _formatString(localeString, { displayNames: names });
