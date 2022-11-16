@@ -34,6 +34,20 @@ This is a tool similar to `beachball check` with the significant difference in b
 
 ### `common/scripts/changelog/collect.mjs`
 
-The change-logs for [stable](../../packages/communication-react/CHANGELOG.stable.md) and [beta](../../packages/communication-react/CHANGELOG.beta.md) releases are maintained separately. As part of package release preparation, we use this script to update these change-logs and delete the collected change-files.
+The change-logs for stable and beta releases are maintained separately. As part of package release preparation, we use this script to update these change-logs and delete the collected change-files.
 
 Under the hood, this script uses `beachball bump`, but it avoids actually bumping the package versions (done in a separate release automation step) and uses temporary files to make sure that the correct change-log is updated based on the type of release.
+
+Relevant files in the repo are:
+
+    - change/
+      - *
+    - change-beta/
+      - *
+    - packages/
+      - communication-react/
+        - CHANGELOG.beta.md
+        - CHANGELOG.stable.md
+
+- When collecting change-logs for stable release, all the files under `change/` are collected into `packages/communication-react/CHANGELOG.stable.md`
+- When collecting change-logs for beta release, all the files under `change-beta/` are collected into `packages/communication-react/CHANGELOG.beta.md`
