@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IStyle, mergeStyles, Theme } from '@fluentui/react';
+import { IButtonStyles, IStyle, mergeStyles, Theme } from '@fluentui/react';
 
 /**
  * @private
@@ -87,6 +87,13 @@ export const displayNameStyle: IStyle = {
 /**
  * @private
  */
+export const pinIconStyle: IStyle = {
+  padding: '0.125rem'
+};
+
+/**
+ * @private
+ */
 export const iconContainerStyle: IStyle = {
   margin: 'auto',
   alignItems: 'center',
@@ -111,4 +118,40 @@ export const participantStateStringStyles = (theme: Theme): IStyle => {
     whiteSpace: 'nowrap',
     padding: '0.1rem'
   };
+};
+
+/**
+ * @private
+ */
+export const menuButtonStyles: IButtonStyles = {
+  root: {
+    background: 'none',
+    border: 'none',
+    borderRadius: 0,
+    minHeight: '0.125rem',
+    minWidth: '2rem',
+    width: '100%',
+    maxWidth: '3rem',
+    svg: {
+      verticalAlign: 'text-top'
+    }
+  },
+  splitButtonMenuButton: {
+    border: 'none'
+  },
+  flexContainer: {
+    flexFlow: 'column',
+    display: 'contents'
+  },
+  label: {
+    fontSize: '0.625rem',
+    fontWeight: '400',
+    lineHeight: '1rem',
+    cursor: 'pointer',
+    display: 'block',
+    margin: '0rem 0.25rem',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap'
+  }
 };

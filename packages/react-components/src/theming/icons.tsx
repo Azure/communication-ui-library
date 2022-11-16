@@ -42,10 +42,14 @@ import {
   MicProhibited16Filled,
   VideoProhibited16Filled
 } from '@fluentui/react-icons';
-/* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
-import { Backspace20Regular } from '@fluentui/react-icons';
 /* @conditional-compile-remove(call-readiness) */
 import { Important20Filled } from '@fluentui/react-icons';
+
+/* @conditional-compile-remove(pinned-participants) */
+import { Pin16Filled } from '@fluentui/react-icons';
+
+/* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
+import { Backspace20Regular } from '@fluentui/react-icons';
 
 /* @conditional-compile-remove(call-readiness) */
 import { Sparkle20Filled, VideoProhibited20Filled, MicProhibited20Filled } from '@fluentui/react-icons';
@@ -260,5 +264,7 @@ export const DEFAULT_COMPONENT_ICONS = {
   /* @conditional-compile-remove(unsupported-browser) */
   UnsupportedBrowserWarning: <UnsupportedBrowserWarning />,
   /* @conditional-compile-remove(call-readiness) */
-  BrowserPermissionDeniedError: <BrowserPermissionDenied20Filled />
+  BrowserPermissionDeniedError: <BrowserPermissionDenied20Filled />,
+  /* @conditional-compile-remove(pinned-participants) */
+  VideoTilePinned: <Pin16Filled />
 };

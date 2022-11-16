@@ -15,6 +15,7 @@ import {
 } from '@fluentui/react';
 import { _formatString, _pxToRem } from '@internal/acs-ui-common';
 import {
+  iconBannerContainerStyles,
   iconContainerStyles,
   iconPrimaryStyles,
   linkTextStyles,
@@ -110,25 +111,31 @@ export interface DomainPermissionsStyles extends BaseCustomStyles {
   troubleshootingLink?: ILinkStyles;
 }
 
+/**
+ * spacing for the icons in the banner.
+ */
+const tokens = { childrenGap: '2rem' };
+
 /** @private */
 export const DomainPermissionsContainer = (props: DomainPermissionsContainerProps): JSX.Element => {
   const { appName, onTroubleshootingClick, onPrimaryButtonClick, strings } = props;
   const theme = useTheme();
+
   return (
     <Stack style={{ padding: '2rem', maxWidth: '25.375rem' }} aria-label={strings?.ariaLabel}>
-      <Stack horizontal style={{ paddingBottom: '1rem' }} horizontalAlign={'space-between'}>
+      <Stack styles={iconBannerContainerStyles} horizontal horizontalAlign={'center'} verticalFill tokens={tokens}>
         {props.cameraIconName && (
-          <Stack styles={iconContainerStyles} horizontalAlign={'center'}>
+          <Stack>
             <Icon styles={iconPrimaryStyles} iconName={props.cameraIconName}></Icon>
           </Stack>
         )}
         {props.connectorIconName && (
-          <Stack styles={iconContainerStyles} horizontalAlign={'center'}>
+          <Stack styles={iconContainerStyles} horizontal>
             <Icon styles={sparkleIconBackdropStyles(theme)} iconName={props.connectorIconName}></Icon>
           </Stack>
         )}
         {props.microphoneIconName && (
-          <Stack styles={iconContainerStyles} horizontalAlign={'center'}>
+          <Stack>
             <Icon styles={iconPrimaryStyles} iconName={props.microphoneIconName}></Icon>
           </Stack>
         )}

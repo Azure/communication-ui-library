@@ -63,14 +63,14 @@ jobs:
         run: |
           ver=$(jq -r .version packages/communication-react/package.json)
           echo version: $ver
-          echo "::set-output name=version::$ver"
+          echo "version=$ver" >> $GITHUB_OUTPUT
 
       # Create new release branch
       - name: Hop into new branch
         id: releasebranch
         run: |
           git checkout -b release/${{ steps.version.outputs.version }}
-          echo "::set-output name=releasebranch::release/${{ steps.version.outputs.version }}"
+          echo "releasebranch=release/${{ steps.version.outputs.version }}" >> $GITHUB_OUTPUT
 
       # After forcing the dependency package versions to that for stable build, we regenerate the
       # PNPM shrinkwrap file for the *beta* build variant. This is needed because CI workflows
@@ -93,9 +93,8 @@ jobs:
       - name: Synchronize package version reported to telemetry
         run: node common/scripts/sync-telemetry-package-version
 
-      # we will want to run rush changelog with type none make sure that all packlets have change files
-      - name: Add beachball changelog
-        run: node ./common/config/node_modules/beachball/bin/beachball.js change -m Create release branch and update SDK versions --type none
+      - name: Add changelog
+        run: node ./common/scripts/changelog/change.mjs -m 'Create release branch and update SDK versions' --type none
 
       # Commit new dependencies
       - name: Commit changes

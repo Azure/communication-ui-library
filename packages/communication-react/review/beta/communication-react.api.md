@@ -41,6 +41,7 @@ import { IContextualMenuItemStyles } from '@fluentui/react';
 import { IContextualMenuStyles } from '@fluentui/react';
 import { IDropdownOption } from '@fluentui/react';
 import { IDropdownStyles } from '@fluentui/react';
+import { IIconProps } from '@fluentui/react';
 import { ILinkStyles } from '@fluentui/react';
 import { IMessageBarProps } from '@fluentui/react';
 import { IncomingCall } from '@azure/communication-calling';
@@ -72,6 +73,8 @@ import { RoomCallLocator } from '@azure/communication-calling';
 import { ScalingMode } from '@azure/communication-calling';
 import { SendMessageOptions } from '@azure/communication-chat';
 import { StartCallOptions } from '@azure/communication-calling';
+import { TeamsCall } from '@azure/communication-calling';
+import { TeamsCallAgent } from '@azure/communication-calling';
 import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { Theme } from '@fluentui/react';
 import { TypingIndicatorReceivedEvent } from '@azure/communication-chat';
@@ -143,9 +146,12 @@ export type AzureCommunicationCallAdapterArgs = {
     credential: CommunicationTokenCredential;
     locator: CallAdapterLocator;
     alternateCallerId?: string;
-    options?: {
-        roleHint?: Role;
-    };
+    options?: AzureCommunicationCallAdapterOptions;
+};
+
+// @beta
+export type AzureCommunicationCallAdapterOptions = {
+    roleHint?: Role;
 };
 
 // @public
@@ -343,7 +349,7 @@ export const CallAgentProvider: (props: CallAgentProviderProps) => JSX.Element;
 // @public
 export interface CallAgentProviderProps {
     // (undocumented)
-    callAgent?: CallAgent;
+    callAgent?: CallAgent | /* @conditional-compile-remove(teams-identity-support) */ TeamsCallAgent;
     // (undocumented)
     children: React_2.ReactNode;
 }
@@ -611,30 +617,10 @@ export type CallingBaseSelectorProps = {
 };
 
 // @public
-export type CallingHandlers = {
-    onStartLocalVideo: () => Promise<void>;
-    onToggleCamera: (options?: VideoStreamOptions) => Promise<void>;
-    onStartCall: (participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[], options?: StartCallOptions) => Call | undefined;
-    onSelectMicrophone: (device: AudioDeviceInfo) => Promise<void>;
-    onSelectSpeaker: (device: AudioDeviceInfo) => Promise<void>;
-    onSelectCamera: (device: VideoDeviceInfo, options?: VideoStreamOptions) => Promise<void>;
-    onToggleMicrophone: () => Promise<void>;
-    onStartScreenShare: () => Promise<void>;
-    onStopScreenShare: () => Promise<void>;
-    onToggleScreenShare: () => Promise<void>;
-    onHangUp: (forEveryone?: boolean) => Promise<void>;
-    onToggleHold: () => Promise<void>;
-    onAddParticipant(participant: CommunicationUserIdentifier): Promise<void>;
-    onAddParticipant(participant: PhoneNumberIdentifier, options: AddPhoneNumberOptions): Promise<void>;
-    onCreateLocalStreamView: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
-    onCreateRemoteStreamView: (userId: string, options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
-    onRemoveParticipant(userId: string): Promise<void>;
-    onRemoveParticipant(participant: CommunicationIdentifier): Promise<void>;
-    onDisposeRemoteStreamView: (userId: string) => Promise<void>;
-    onDisposeLocalStreamView: () => Promise<void>;
-    onSendDtmfTone: (dtmfTone: DtmfTone_2) => Promise<void>;
-    askDevicePermission: (constrain: PermissionConstraints) => Promise<void>;
-};
+export interface CallingHandlers extends CommonCallingHandlers {
+    // (undocumented)
+    onStartCall: (participants: CommunicationIdentifier[], options?: StartCallOptions) => Call | undefined;
+}
 
 // @public
 export type CallingReturnProps<Component extends (props: any) => JSX.Element> = GetCallingSelector<Component> extends (state: CallClientState, props: any) => any ? ReturnType<GetCallingSelector<Component>> & Common<CallingHandlers, Parameters<Component>[0]> : never;
@@ -670,7 +656,7 @@ export const CallProvider: (props: CallProviderProps) => JSX.Element;
 // @public
 export interface CallProviderProps {
     // (undocumented)
-    call?: Call;
+    call?: Call | /* @conditional-compile-remove(teams-identity-support) */ TeamsCall;
     // (undocumented)
     children: React_2.ReactNode;
 }
@@ -1334,6 +1320,54 @@ export type ClientState = CallClientState & ChatClientState;
 // @public
 export type Common<A, B> = Pick<A, CommonProperties<A, B>>;
 
+// @public
+export interface CommonCallingHandlers {
+    // (undocumented)
+    askDevicePermission: (constrain: PermissionConstraints) => Promise<void>;
+    // (undocumented)
+    onAddParticipant(participant: CommunicationUserIdentifier): Promise<void>;
+    // (undocumented)
+    onAddParticipant(participant: PhoneNumberIdentifier, options: AddPhoneNumberOptions): Promise<void>;
+    // (undocumented)
+    onCreateLocalStreamView: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
+    // (undocumented)
+    onCreateRemoteStreamView: (userId: string, options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
+    // (undocumented)
+    onDisposeLocalStreamView: () => Promise<void>;
+    // (undocumented)
+    onDisposeRemoteStreamView: (userId: string) => Promise<void>;
+    // (undocumented)
+    onHangUp: (forEveryone?: boolean) => Promise<void>;
+    // (undocumented)
+    onRemoveParticipant(userId: string): Promise<void>;
+    // (undocumented)
+    onRemoveParticipant(participant: CommunicationIdentifier): Promise<void>;
+    // (undocumented)
+    onSelectCamera: (device: VideoDeviceInfo, options?: VideoStreamOptions) => Promise<void>;
+    // (undocumented)
+    onSelectMicrophone: (device: AudioDeviceInfo) => Promise<void>;
+    // (undocumented)
+    onSelectSpeaker: (device: AudioDeviceInfo) => Promise<void>;
+    // (undocumented)
+    onSendDtmfTone: (dtmfTone: DtmfTone_2) => Promise<void>;
+    // (undocumented)
+    onStartCall: (participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[], options?: StartCallOptions) => void;
+    // (undocumented)
+    onStartLocalVideo: () => Promise<void>;
+    // (undocumented)
+    onStartScreenShare: () => Promise<void>;
+    // (undocumented)
+    onStopScreenShare: () => Promise<void>;
+    // (undocumented)
+    onToggleCamera: (options?: VideoStreamOptions) => Promise<void>;
+    // (undocumented)
+    onToggleHold: () => Promise<void>;
+    // (undocumented)
+    onToggleMicrophone: () => Promise<void>;
+    // (undocumented)
+    onToggleScreenShare: () => Promise<void>;
+}
+
 // @beta
 export interface CommonDomainPermissionsProps {
     appName: string;
@@ -1577,6 +1611,9 @@ export const createDefaultCallingHandlers: (callClient: StatefulCallClient, call
 // @public
 export const createDefaultChatHandlers: (chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient) => ChatHandlers;
 
+// @beta
+export const createDefaultTeamsCallingHandlers: (callClient: StatefulCallClient, callAgent: undefined | /* @conditional-compile-remove(teams-identity-support) */ TeamsCallAgent, deviceManager: StatefulDeviceManager | undefined, call: undefined | /* @conditional-compile-remove(teams-identity-support) */ TeamsCall) => never | TeamsCallingHandlers;
+
 // @public
 export const createStatefulCallClient: (args: StatefulCallClientArgs, options?: StatefulCallClientOptions | undefined) => StatefulCallClient;
 
@@ -1729,6 +1766,7 @@ export const DEFAULT_COMPONENT_ICONS: {
     DomainPermissionMicDenied: JSX.Element;
     UnsupportedBrowserWarning: JSX.Element;
     BrowserPermissionDeniedError: JSX.Element;
+    VideoTilePinned: JSX.Element;
 };
 
 // @public
@@ -1820,6 +1858,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     DomainPermissionMicDenied: JSX.Element;
     UnsupportedBrowserWarning: JSX.Element;
     BrowserPermissionDeniedError: JSX.Element;
+    VideoTilePinned: JSX.Element;
 };
 
 // @public
@@ -2915,6 +2954,12 @@ export interface SystemMessageCommon extends MessageCommon {
     messageType: 'system';
 }
 
+// @beta
+export interface TeamsCallingHandlers extends CommonCallingHandlers {
+    // (undocumented)
+    onStartCall: (participants: CommunicationIdentifier[], options?: StartCallOptions) => undefined | /* @conditional-compile-remove(teams-identity-support) */ TeamsCall;
+}
+
 // @public
 export const toFlatCommunicationIdentifier: (identifier: CommunicationIdentifier) => string;
 
@@ -3021,6 +3066,12 @@ export const usePropsFor: <Component extends (props: any) => JSX.Element>(compon
 // @public
 export const useSelector: <ParamT extends Selector | undefined>(selector: ParamT, selectorProps?: (ParamT extends Selector ? Parameters<ParamT>[1] : undefined) | undefined, type?: "chat" | "calling" | undefined) => ParamT extends Selector ? ReturnType<ParamT> : undefined;
 
+// @beta
+export const useTeamsCall: () => undefined | /* @conditional-compile-remove(teams-identity-support) */ TeamsCall;
+
+// @beta
+export const useTeamsCallAgent: () => undefined | /* @conditional-compile-remove(teams-identity-support) */ TeamsCallAgent;
+
 // @public
 export const useTheme: () => Theme;
 
@@ -3124,6 +3175,15 @@ export interface VideoStreamRendererViewState {
 // @public
 export const VideoTile: (props: VideoTileProps) => JSX.Element;
 
+// @beta
+export type VideoTileMenuItems = Array<{
+    key: string;
+    ariaLabel?: string;
+    text: string;
+    onClick: () => void;
+    iconProps: IIconProps;
+}>;
+
 // @public
 export interface VideoTileProps {
     children?: React_2.ReactNode;
@@ -3131,7 +3191,9 @@ export interface VideoTileProps {
     initialsName?: string;
     isMirrored?: boolean;
     isMuted?: boolean;
+    isPinned?: boolean;
     isSpeaking?: boolean;
+    menuItems?: VideoTileMenuItems;
     noVideoAvailableAriaLabel?: string;
     onRenderPlaceholder?: OnRenderAvatarCallback;
     participantState?: ParticipantState;

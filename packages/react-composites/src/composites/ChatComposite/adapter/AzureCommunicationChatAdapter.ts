@@ -384,7 +384,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     try {
       return await f();
     } catch (error) {
-      if (isChatError(error)) {
+      if (isChatError(error as Error)) {
         this.emitter.emit('error', error as AdapterError);
       }
       throw error;
