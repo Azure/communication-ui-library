@@ -70,17 +70,8 @@ export interface AvatarPersonaProps extends IPersonaProps {
  * @private
  */
 export const AvatarPersona = (props: AvatarPersonaProps): JSX.Element => {
-  const {
-    userId,
-    dataProvider,
-    text,
-    imageUrl,
-    imageInitials,
-    initialsColor,
-    initialsTextColor,
-    showOverflowTooltip,
-    showUnknownPersonaCoin
-  } = props;
+  const { userId, dataProvider, text, imageUrl, imageInitials, initialsColor, initialsTextColor, showOverflowTooltip } =
+    props;
 
   const [data, setData] = useState<AvatarPersonaData | undefined>();
 
@@ -106,7 +97,7 @@ export const AvatarPersona = (props: AvatarPersonaProps): JSX.Element => {
       // default disable tooltip unless specified
       showOverflowTooltip={showOverflowTooltip ?? false}
       /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
-      showUnknownPersonaCoin={data?.showUnknownPersonaCoin ?? showUnknownPersonaCoin ?? false}
+      showUnknownPersonaCoin={data?.showUnknownPersonaCoin ?? props.showUnknownPersonaCoin ?? false}
     />
   );
 };
