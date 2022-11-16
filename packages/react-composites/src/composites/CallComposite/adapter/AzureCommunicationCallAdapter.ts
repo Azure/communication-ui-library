@@ -739,6 +739,21 @@ export type CallAdapterLocator =
   | /* @conditional-compile-remove(rooms) */ RoomCallLocator
   | /* @conditional-compile-remove(teams-adhoc-call) */ /* @conditional-compile-remove(PSTN-calls) */ CallParticipantsLocator;
 
+/* @conditional-compile-remove(rooms) */
+/**
+ * Optional parameters to create {@link AzureCommunicationCallAdapter}
+ *
+ * @beta
+ */
+export type AzureCommunicationCallAdapterOptions = {
+  /**
+   * Use this to hint the role of the user when the role is not available before a Rooms call is started. This value
+   * should be obtained using the Rooms API. This role will determine permissions in the configuration page of the
+   * {@link CallComposite}. The true role of the user will be synced with ACS services when a Rooms call starts.
+   */
+  roleHint?: Role;
+};
+
 /**
  * Arguments for creating the Azure Communication Services implementation of {@link CallAdapter}.
  *
@@ -757,14 +772,7 @@ export type AzureCommunicationCallAdapterArgs = {
   /**
    * Optional parameters for the {@link AzureCommunicationCallAdapter} created
    */
-  options?: {
-    /**
-     * Use this to hint the role of the user when the role is not available before a Rooms call is started. This value
-     * should be obtained using the Rooms API. This role will determine permissions in the configuration page of the
-     * {@link CallComposite}. The true role of the user will be synced with ACS services when a Rooms call starts.
-     */
-    roleHint?: Role;
-  };
+  options?: AzureCommunicationCallAdapterOptions;
 };
 
 /**

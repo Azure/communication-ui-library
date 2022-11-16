@@ -93,9 +93,8 @@ jobs:
       - name: Synchronize package version reported to telemetry
         run: node common/scripts/sync-telemetry-package-version
 
-      # we will want to run rush changelog with type none make sure that all packlets have change files
-      - name: Add beachball changelog
-        run: node ./common/config/node_modules/beachball/bin/beachball.js change -m Create release branch and update SDK versions --type none
+      - name: Add changelog
+        run: node ./common/scripts/changelog/change.mjs -m 'Create release branch and update SDK versions' --type none
 
       # Commit new dependencies
       - name: Commit changes

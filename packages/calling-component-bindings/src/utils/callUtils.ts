@@ -5,7 +5,16 @@ import { DeviceManagerState, RemoteParticipantState, StatefulCallClient } from '
 import { CallState as CallStatus } from '@azure/communication-calling';
 /* @conditional-compile-remove(unsupported-browser) */
 import { Features, EnvironmentInfo } from '@azure/communication-calling';
-import { isPhoneNumberIdentifier } from '@azure/communication-common';
+import {
+  CommunicationIdentifier,
+  CommunicationUserIdentifier,
+  isCommunicationUserIdentifier,
+  isMicrosoftTeamsUserIdentifier,
+  isPhoneNumberIdentifier,
+  MicrosoftTeamsUserIdentifier,
+  PhoneNumberIdentifier,
+  UnknownIdentifier
+} from '@azure/communication-common';
 import { memoizeFnAll, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 
 /**
@@ -87,4 +96,24 @@ const memoizedUpdateDisplayName = memoizeFnAll((participantId: string, participa
 export const _getEnvironmentInfo = async (callClient: StatefulCallClient): Promise<EnvironmentInfo> => {
   const environmentInfo = await callClient.feature(Features.DebugInfo).getEnvironmentInfo();
   return environmentInfo;
+};
+
+/**
+ * @private
+ * A type guard to ensure all participants are acceptable type for Teams call
+ */
+export const isTeamsCallParticipants = (
+  participants: CommunicationIdentifier[]
+): participants is (PhoneNumberIdentifier | MicrosoftTeamsUserIdentifier | UnknownIdentifier)[] => {
+  return participants.every((p) => !isCommunicationUserIdentifier(p));
+};
+
+/**
+ * @private
+ * A type guard to ensure all participants are acceptable type for ACS call
+ */
+export const isACSCallParticipants = (
+  participants: CommunicationIdentifier[]
+): participants is (PhoneNumberIdentifier | CommunicationUserIdentifier | UnknownIdentifier)[] => {
+  return participants.every((p) => !isMicrosoftTeamsUserIdentifier(p));
 };

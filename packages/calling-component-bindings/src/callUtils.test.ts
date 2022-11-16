@@ -1,8 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import { CommunicationIdentifier } from '@azure/communication-common';
 import { DeviceManagerState, LocalVideoStreamState } from '@internal/calling-stateful-client';
-import { _isInCall, _isPreviewOn } from './utils/callUtils';
+import { isACSCallParticipants, isTeamsCallParticipants, _isInCall, _isPreviewOn } from './utils/callUtils';
 
 const deviceManagerMock: DeviceManagerState = {
   isSpeakerSelectionAvailable: false,
@@ -31,6 +32,24 @@ const validLocalVideoStreamMock: LocalVideoStreamState = {
   }
 };
 
+const nonTeamsParticipants: CommunicationIdentifier[] = [
+  {
+    phoneNumber: '0000000'
+  },
+  {
+    communicationUserId: '0000000'
+  }
+];
+
+const teamsParticipants: CommunicationIdentifier[] = [
+  {
+    phoneNumber: '0000000'
+  },
+  {
+    microsoftTeamsUserId: '0000000'
+  }
+];
+
 describe('callUtils tests', () => {
   test('isInCall should return true if state is Conneted or InLobby', () => {
     // false conditions
@@ -56,5 +75,15 @@ describe('callUtils tests', () => {
 
     // true when there is a valid unparented view
     expect(_isPreviewOn({ ...deviceManagerMock, unparentedViews: [validLocalVideoStreamMock] })).toEqual(true);
+  });
+
+  test('isTeamsCallParticipants should return true if all participants are non teams participant', () => {
+    expect(isTeamsCallParticipants(nonTeamsParticipants)).toEqual(false);
+    expect(isTeamsCallParticipants(teamsParticipants)).toEqual(true);
+  });
+
+  test('isNonTeamsCallParticipants should return true if all participants are non teams participant', () => {
+    expect(isACSCallParticipants(nonTeamsParticipants)).toEqual(true);
+    expect(isACSCallParticipants(teamsParticipants)).toEqual(false);
   });
 });
