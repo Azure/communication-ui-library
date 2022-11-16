@@ -23,6 +23,8 @@ export const joinThread = async (threadId: string, userId: string, displayName: 
     const response = await fetch(`/addUser/${threadId}`, requestOptions);
     if (response.status === StatusCode.CREATED) {
       return true;
+    } else if (response.status == StatusCode.NOTFOUND) {
+      return false;
     }
   } catch (error) {
     console.error('Failed at adding user, Error: ', error);

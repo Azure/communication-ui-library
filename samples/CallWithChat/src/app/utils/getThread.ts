@@ -4,7 +4,6 @@
 import { createThread } from './createThread';
 import { getExistingThreadIdFromURL } from './getThreadId';
 
-const ERROR_TEXT_THREAD_NOT_RECORDED = 'Thread id is not recorded in server';
 export const getThread = async (): Promise<string> => {
   const exisitedThreadId = await getExistingThreadIdFromURL();
   if (exisitedThreadId && exisitedThreadId.length > 0) {

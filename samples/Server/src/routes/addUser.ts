@@ -27,25 +27,29 @@ interface AddUserParam {
 router.post('/:threadId', async function (req, res, next) {
   const addUserParam: AddUserParam = req.body;
   const threadId = req.params['threadId'];
-  
+
   // create a user from the adminUserId and create a credential around that
   const credential = new AzureCommunicationTokenCredential({
     tokenRefresher: async () => (await getToken(createUser(), ['chat', 'voip'])).token,
     refreshProactively: true
   });
-  
+
   const chatClient = new ChatClient(getEndpoint(), credential);
   const chatThreadClient = await chatClient.getChatThreadClient(threadId);
 
-  await chatThreadClient.addParticipants({
-    participants: [
-      {
-        id: { communicationUserId: addUserParam.Id },
-        displayName: addUserParam.DisplayName
-      }
-    ]
-  });
-  res.sendStatus(201);
+  try {
+    await chatThreadClient.addParticipants({
+      participants: [
+        {
+          id: { communicationUserId: addUserParam.Id },
+          displayName: addUserParam.DisplayName
+        }
+      ]
+    });
+    res.sendStatus(201);
+  } catch (err) {
+    res.sendStatus(404);
+  }
 });
 
 export default router;
