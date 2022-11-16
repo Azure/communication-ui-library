@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import { CallAgentCommon, CallCommon, TeamsCallAgent } from '@internal/acs-ui-common';
+import { CallAgentCommon, CallCommon, TeamsCallAgent } from './BetaToStableTypes';
 /* @conditional-compile-remove(one-to-n-calling) */
 import { IncomingCallManagement } from './CallAgentDeclarative';
 import { clearCallRelatedState, DeclarativeCallCommon, ProxyCallAgentCommon } from './CallAgentDeclarativeCommon';

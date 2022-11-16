@@ -20,7 +20,14 @@ import {
   StatefulDeviceManager
 } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(teams-identity-support) */
-import { CallAgentCommon, isACSCall, isACSCallAgent, isTeamsCall, isTeamsCallAgent } from '@internal/acs-ui-common';
+import {
+  CallAgentCommon,
+  _isACSCall,
+  _isACSCallAgent,
+  _isTeamsCall,
+  _isTeamsCallAgent
+} from '@internal/calling-stateful-client';
+import { CallCommon } from '@internal/calling-stateful-client';
 import {
   AudioOptions,
   CallAgent,
@@ -65,7 +72,7 @@ import { getCallCompositePage, IsCallEndedPage, isCameraOn } from '../utils';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 /* @conditional-compile-remove(rooms) */
 import { Role } from '@internal/react-components';
-import { toFlatCommunicationIdentifier, _toCommunicationIdentifier, CallCommon } from '@internal/acs-ui-common';
+import { toFlatCommunicationIdentifier, _toCommunicationIdentifier } from '@internal/acs-ui-common';
 import {
   CommunicationTokenCredential,
   CommunicationUserIdentifier,
@@ -270,7 +277,7 @@ export class AzureCommunicationCallAdapter<
     this.callClient.onStateChange(onStateChange);
 
     /* @conditional-compile-remove(teams-identity-support) */
-    if (!isACSCallAgent(callAgent)) {
+    if (!_isACSCallAgent(callAgent)) {
       this.handlers = createDefaultTeamsCallingHandlers(
         callClient,
         callAgent,
@@ -398,7 +405,7 @@ export class AzureCommunicationCallAdapter<
     const isRoomsCall = 'roomId' in this.locator;
 
     /* @conditional-compile-remove(teams-identity-support) */
-    if (!isACSCallAgent(this.callAgent)) {
+    if (!_isACSCallAgent(this.callAgent)) {
       if (isTeamsMeeting) {
         return this.callAgent.join(this.locator as TeamsMeetingLinkLocator, {
           audioOptions,
@@ -498,9 +505,9 @@ export class AzureCommunicationCallAdapter<
     call: CallCommon | undefined
   ): CallHandlersOf<AgentType> {
     // Call can be either undefined or ACS Call
-    if (isACSCallAgent(callAgent) && (!call || (call && isACSCall(call)))) {
+    if (_isACSCallAgent(callAgent) && (!call || (call && _isACSCall(call)))) {
       return createDefaultCallingHandlers(callClient, callAgent, deviceManager, call) as CallHandlersOf<AgentType>;
-    } else if (isTeamsCallAgent(this.callAgent) && (!call || (call && isTeamsCall(call)))) {
+    } else if (_isTeamsCallAgent(this.callAgent) && (!call || (call && _isTeamsCall(call)))) {
       return createDefaultTeamsCallingHandlers(
         this.callClient,
         this.callAgent,

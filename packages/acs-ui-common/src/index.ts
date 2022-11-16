@@ -11,14 +11,12 @@ export { _getApplicationId } from './telemetry';
 export { _formatString } from './localizationUtils';
 export { _safeJSONStringify } from './safeStringify';
 export { _convertRemToPx, _preventDismissOnEvent } from './common';
-export { isACSCall, isACSCallAgent, isTeamsCall, isTeamsCallAgent } from './TypeGuards';
 
 export type { Common, CommonProperties } from './commonProperties';
 export type { CallbackType, FunctionWithKey } from './memoizeFnAll';
 export type { AreEqual, AreParamEqual, AreTypeEqual } from './areEqual';
 export type { MessageStatus } from './MessageStatus';
 export type { _IObjectMap } from './localizationUtils';
-export type { CallAgentCommon, CallCommon, TeamsCall, TeamsCallAgent, IncomingCallCommon } from './BetaToStableTypes';
 
 export { _MAX_EVENT_LISTENERS } from './constants';
 
