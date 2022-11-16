@@ -9,7 +9,7 @@ import { buildUrlWithMockAdapter, defaultMockCallAdapterState, test } from './fi
 
 /* @conditional-compile-remove(unsupported-browser) */
 test.describe('unsupportedBrowser page tests', async () => {
-  test('unsupportedBrowser displays correctly without a help link', async ({ page, serverUrl }) => {
+  test.only('unsupportedBrowser displays correctly without a help link', async ({ page, serverUrl }) => {
     await page.goto(buildUrlWithMockAdapter(serverUrl, defaultMockUnsupportedBrowserPageState()));
 
     await waitForSelector(page, dataUiId(IDS.unsupportedBrowserIcon));
@@ -34,5 +34,6 @@ test.describe('unsupportedBrowser page tests', async () => {
 const defaultMockUnsupportedBrowserPageState = (): MockCallAdapterState => {
   const state = defaultMockCallAdapterState();
   state.page = 'unsupportedEnvironment';
+  state.features = { unsupportedEnvironment: true };
   return state;
 };
