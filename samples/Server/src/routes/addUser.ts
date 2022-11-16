@@ -2,9 +2,10 @@
 // Licensed under the MIT license.
 
 import { ChatClient } from '@azure/communication-chat';
+import { AzureCommunicationTokenCredential } from '@azure/communication-common';
 import * as express from 'express';
 import { getEndpoint } from '../lib/envHelper';
-import { threadIdToModeratorCredentialMap } from '../lib/chat/threadIdToModeratorTokenMap';
+import { createUser, getToken } from '../lib/identityClient';
 
 const router = express.Router();
 interface AddUserParam {
@@ -26,9 +27,14 @@ interface AddUserParam {
 router.post('/:threadId', async function (req, res, next) {
   const addUserParam: AddUserParam = req.body;
   const threadId = req.params['threadId'];
-  const moderatorCredential = threadIdToModeratorCredentialMap.get(threadId);
-
-  const chatClient = new ChatClient(getEndpoint(), moderatorCredential);
+  
+  // create a user from the adminUserId and create a credential around that
+  const credential = new AzureCommunicationTokenCredential({
+    tokenRefresher: async () => (await getToken(createUser(), ['chat', 'voip'])).token,
+    refreshProactively: true
+  });
+  
+  const chatClient = new ChatClient(getEndpoint(), credential);
   const chatThreadClient = await chatClient.getChatThreadClient(threadId);
 
   await chatThreadClient.addParticipants({

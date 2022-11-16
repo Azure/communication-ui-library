@@ -36,7 +36,6 @@ import { getToken } from './utils/getToken';
 import { getExistingThreadIdFromURL } from './utils/getExistingThreadIdFromURL';
 import { joinThread } from './utils/joinThread';
 import { getEndpointUrl } from './utils/getEndpointUrl';
-import { checkThreadValid } from './utils/checkThreadValid';
 
 // These props are set by the caller of ConfigurationScreen in the JSX and not found in context
 export interface ConfigurationScreenProps {
@@ -123,7 +122,7 @@ export default (props: ConfigurationScreenProps): JSX.Element => {
       const setScreenState = async (): Promise<void> => {
         try {
           const threadId = getExistingThreadIdFromURL();
-          if (!(await checkThreadValid(threadId))) {
+          if (!threadId) {
             throw new Error(ERROR_TEXT_THREAD_NOT_RECORDED);
           }
         } catch (error) {
