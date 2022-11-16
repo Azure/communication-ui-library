@@ -48,6 +48,9 @@ router.post('/:threadId', async function (req, res, next) {
     });
     res.sendStatus(201);
   } catch (err) {
+    // we will return a 404 if the thread to join is not accessible by the server user.
+    // The server user needs to be in the thread in order to add someone.
+    // So we are returning back that we can't find the thread to add the client user to.
     res.sendStatus(404);
   }
 });
