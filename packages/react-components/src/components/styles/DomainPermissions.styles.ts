@@ -21,8 +21,7 @@ export const iconContainerStyles: IStackStyles = {
 export const iconBannerContainerStyles: IStackStyles = {
   root: {
     paddingBottom: '1rem',
-    minWidth: '20rem',
-    maxWidth: '20rem',
+    width: '20rem',
     margin: 'auto'
   }
 };
