@@ -111,19 +111,19 @@ export interface DomainPermissionsStyles extends BaseCustomStyles {
   troubleshootingLink?: ILinkStyles;
 }
 
+/**
+ * spacing for the icons in the banner.
+ */
+const tokens = { childrenGap: '2rem' };
+
 /** @private */
 export const DomainPermissionsContainer = (props: DomainPermissionsContainerProps): JSX.Element => {
   const { appName, onTroubleshootingClick, onPrimaryButtonClick, strings } = props;
   const theme = useTheme();
+
   return (
     <Stack style={{ padding: '2rem', maxWidth: '25.375rem' }} aria-label={strings?.ariaLabel}>
-      <Stack
-        styles={iconBannerContainerStyles}
-        horizontal
-        horizontalAlign={'center'}
-        verticalFill
-        tokens={{ childrenGap: '2rem' }}
-      >
+      <Stack styles={iconBannerContainerStyles} horizontal horizontalAlign={'center'} verticalFill tokens={tokens}>
         {props.cameraIconName && (
           <Stack>
             <Icon styles={iconPrimaryStyles} iconName={props.cameraIconName}></Icon>
