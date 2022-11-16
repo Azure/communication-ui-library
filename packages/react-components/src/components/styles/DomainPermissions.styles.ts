@@ -9,8 +9,21 @@ import { _pxToRem } from '@internal/acs-ui-common';
  */
 export const iconContainerStyles: IStackStyles = {
   root: {
-    margin: 'auto',
+    marginTop: 'auto',
+    marginBottom: 'auto',
     position: 'relative'
+  }
+};
+
+/**
+ * @internal
+ */
+export const iconBannerContainerStyles: IStackStyles = {
+  root: {
+    paddingBottom: '1rem',
+    minWidth: '20rem',
+    maxWidth: '20rem',
+    margin: 'auto'
   }
 };
 
