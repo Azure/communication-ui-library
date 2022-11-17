@@ -80,7 +80,7 @@ export const useParticipantChangedAnnouncement = (): string => {
 /**
  * Generates the announcement string for when a participant joins or leaves a call.
  */
-const createAnnouncmentString = (
+export const createAnnouncmentString = (
   direction: 'joined' | 'left',
   participants: RemoteParticipantState[],
   strings: ParticipantChangedAnnouncmentStrings
