@@ -328,11 +328,11 @@ export interface CallCompositeStrings {
    */
   outboundCallingNoticeString: string;
   /**
-   * Notice to be announced be narrator when a participant joins a call
+   * Notice to be announced by narrator when a participant joins a call
    */
   participantJoinedNoticeString: string;
   /**
-   * Notice to be announced be narrator when a participant leaves a call
+   * Notice to be announced by narrator when a participant leaves a call
    */
   participantLeftNoticeString: string;
   /**
