@@ -89,10 +89,15 @@ const createAnnouncmentString = (
     return _formatString(localeString, { displayNames: names });
   } else {
     const numberOfExtraParticipants = participants.length - 3;
-    const names = participants
-      .slice(0, 2)
-      .map((p) => p.displayName ?? defaultName)
-      .join(', ');
+    const names =
+      participants.filter((p) => p.displayName).length > 0
+        ? participants
+            .filter((p) => p.displayName)
+            .slice(0, 2)
+            .map((p) => p.displayName ?? defaultName)
+            .join(', ')
+        : defaultName;
+
     const namesPlusExtra =
       names + _formatString(overflowString, { numOfParticipants: numberOfExtraParticipants.toString() });
     return _formatString(localeString, { displayNames: namesPlusExtra });
