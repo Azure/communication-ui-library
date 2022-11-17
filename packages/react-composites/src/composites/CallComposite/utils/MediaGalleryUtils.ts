@@ -3,7 +3,7 @@
 
 import { _formatString } from '@internal/acs-ui-common';
 import { RemoteParticipantState } from '@internal/calling-stateful-client';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useLocale } from '../../localization';
 import { CallAdapterState } from '../adapter';
 import { useSelector } from '../hooks/useSelector';
@@ -18,6 +18,17 @@ const getRemoteParticipantsConnectedSelector = (callState: CallAdapterState): Re
   );
 };
 
+type ParticipantChangedAnnouncmentStrings = {
+  participantJoinedNoticeString: string;
+  twoParticipantJoinedNoticeString: string;
+  threeParticipantJoinedNoticeString: string;
+  participantLeftNoticeString: string;
+  twoParticipantLeftNoticeString: string;
+  threeParticipantLeftNoticeString: string;
+  unnamedParticipantChangedString: string;
+  participantsOverflowString: string;
+};
+
 /**
  * sets the announcement string whenever a Participant comes or goes from a call to be
  * used by the system narrator.
@@ -28,6 +39,18 @@ const getRemoteParticipantsConnectedSelector = (callState: CallAdapterState): Re
  */
 export const useParticipantChangedAnnouncement = (): string => {
   const locale = useLocale().strings.call;
+  const strings = useMemo(() => {
+    return {
+      participantJoinedNoticeString: locale.participantJoinedNoticeString,
+      twoParticipantJoinedNoticeString: locale.twoParticipantJoinedNoticeString,
+      threeParticipantJoinedNoticeString: locale.threeParticipantJoinedNoticeString,
+      participantLeftNoticeString: locale.participantLeftNoticeString,
+      twoParticipantLeftNoticeString: locale.twoParticipantLeftNoticeString,
+      threeParticipantLeftNoticeString: locale.threeParticipantLeftNoticeString,
+      unnamedParticipantChangedString: locale.unnamedParticipantChangedString,
+      participantsOverflowString: locale.participantsOverflowString
+    };
+  }, [locale]);
   const [announcerString, setAnnouncerString] = useState<string>('');
   const remoteParticipants = useSelector(getRemoteParticipantsConnectedSelector);
   const [previousParticipants, setPreviousParticipants] = useState<RemoteParticipantState[]>(remoteParticipants);
@@ -41,36 +64,15 @@ export const useParticipantChangedAnnouncement = (): string => {
     if (previousParticipants.length > remoteParticipants.length) {
       const whoLeft = previousParticipants.filter((p) => !remoteParticipants.includes(p));
       //someone left
-      setParticipantEventString(
-        createAnnouncmentString(
-          locale.participantLeftNoticeString,
-          locale.unnamedParticipantChangedString,
-          locale.participantsJoinedOverflowString,
-          whoLeft
-        )
-      );
+      setParticipantEventString(createAnnouncmentString('left', whoLeft, strings));
       setPreviousParticipants(remoteParticipants);
     } else if (remoteParticipants.length > previousParticipants.length) {
       const whoJoined = remoteParticipants.filter((p) => !previousParticipants.includes(p));
       // someone joined
-      setParticipantEventString(
-        createAnnouncmentString(
-          locale.participantJoinedNoticeString,
-          locale.unnamedParticipantChangedString,
-          locale.participantsJoinedOverflowString,
-          whoJoined
-        )
-      );
+      setParticipantEventString(createAnnouncmentString('joined', whoJoined, strings));
       setPreviousParticipants(remoteParticipants);
     }
-  }, [
-    remoteParticipants,
-    previousParticipants,
-    locale.participantJoinedNoticeString,
-    locale.unnamedParticipantChangedString,
-    locale.participantsJoinedOverflowString,
-    locale.participantLeftNoticeString
-  ]);
+  }, [remoteParticipants, previousParticipants, strings]);
 
   return announcerString;
 };
@@ -79,14 +81,38 @@ export const useParticipantChangedAnnouncement = (): string => {
  * Generates the announcement string for when a participant joins or leaves a call.
  */
 const createAnnouncmentString = (
-  localeString: string,
-  defaultName: string,
-  overflowString: string,
-  participants: RemoteParticipantState[]
+  direction: 'joined' | 'left',
+  participants: RemoteParticipantState[],
+  strings: ParticipantChangedAnnouncmentStrings
 ): string => {
-  if (participants.length <= 3) {
-    const names = participants.map((p) => p.displayName ?? defaultName).join(', ');
-    return _formatString(localeString, { displayNames: names });
+  switch (participants.length) {
+    case 1:
+      const oneName = participants[0].displayName ?? strings.unnamedParticipantChangedString;
+      return _formatString(
+        direction === 'joined' ? strings.participantJoinedNoticeString : strings.participantLeftNoticeString,
+        { displayNames: oneName }
+      );
+    case 2:
+      const twoNames = participants.map((p) => p.displayName ?? strings.unnamedParticipantChangedString);
+      return _formatString(
+        direction === 'joined' ? strings.twoParticipantJoinedNoticeString : strings.twoParticipantLeftNoticeString,
+        {
+          displayName1: twoNames[0],
+          displayName2: twoNames[1]
+        }
+      );
+    case 3:
+      const threeNames = participants.map((p) => p.displayName ?? strings.unnamedParticipantChangedString);
+      return _formatString(
+        direction === 'joined' ? strings.threeParticipantJoinedNoticeString : strings.threeParticipantLeftNoticeString,
+        {
+          displayName1: threeNames[0],
+          displayName2: threeNames[1],
+          displayName3: threeNames[1]
+        }
+      );
+    default:
+      break;
   }
   /**
    * We don't want to announce every name when more than 3 participants join at once so
@@ -97,14 +123,19 @@ const createAnnouncmentString = (
       ? participants
           .filter((p) => p.displayName)
           .slice(0, 2)
-          .map((p) => p.displayName ?? defaultName)
+          .map((p) => p.displayName ?? strings.unnamedParticipantChangedString)
           .join(', ')
       : /** if we have no participants with displayNames we just announce one unnamed participant */
-        defaultName;
+        strings.unnamedParticipantChangedString;
 
-  const numberOfExtraParticipants = names === defaultName ? participants.length - 1 : participants.length - 1;
+  const numberOfExtraParticipants =
+    names === strings.unnamedParticipantChangedString ? participants.length - 1 : participants.length - 1;
 
   const namesPlusExtra =
-    names + _formatString(overflowString, { numOfParticipants: numberOfExtraParticipants.toString() });
-  return _formatString(localeString, { displayNames: namesPlusExtra });
+    names +
+    _formatString(strings.participantsOverflowString, { numOfParticipants: numberOfExtraParticipants.toString() });
+  return _formatString(
+    direction === 'joined' ? strings.participantJoinedNoticeString : strings.participantLeftNoticeString,
+    { displayNames: namesPlusExtra }
+  );
 };

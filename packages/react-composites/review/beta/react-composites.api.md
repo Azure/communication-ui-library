@@ -380,7 +380,7 @@ export interface CallCompositeStrings {
     outboundCallingNoticeString: string;
     participantJoinedNoticeString: string;
     participantLeftNoticeString: string;
-    participantsJoinedOverflowString: string;
+    participantsOverflowString: string;
     peopleButtonLabel: string;
     peopleButtonTooltipClose: string;
     peopleButtonTooltipOpen: string;
@@ -402,6 +402,10 @@ export interface CallCompositeStrings {
     roomNotFoundTitle: string;
     soundLabel: string;
     startCallButtonLabel: string;
+    threeParticipantJoinedNoticeString: string;
+    threeParticipantLeftNoticeString: string;
+    twoParticipantJoinedNoticeString: string;
+    twoParticipantLeftNoticeString: string;
     unnamedParticipantChangedString: string;
 }
 

@@ -70,9 +70,13 @@
     "dtmfDialpadPlaceholderText": "Enter number",
     "outboundCallingNoticeString": "Calling...",
     "participantJoinedNoticeString": "{displayNames} joined",
+    "twoParticipantJoinedNoticeString": "{displayName1} and {displayName2} have joined",
+    "threeParticipantJoinedNoticeString": "{displayName1}, {displayName2} and {displayName3} have joined",
     "participantLeftNoticeString": "{displayNames} left",
+    "twoParticipantLeftNoticeString": "{displayName1} and {displayName2} have left",
+    "threeParticipantLeftNoticeString": "{displayName1}, {displayName2} and {displayName3} have left",
     "unnamedParticipantChangedString": "unnamed participant",
-    "participantsJoinedOverflowString": "{numOfParticipants} other participants"
+    "participantsOverflowString": "{numOfParticipants} other participants"
   },
   "chat": {
     "chatListHeader": "In this chat",

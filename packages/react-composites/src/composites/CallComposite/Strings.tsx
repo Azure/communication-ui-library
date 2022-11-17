@@ -332,9 +332,25 @@ export interface CallCompositeStrings {
    */
   participantJoinedNoticeString: string;
   /**
+   * Notice to be announced by narrator when a participant joins a call
+   */
+  twoParticipantJoinedNoticeString: string;
+  /**
+   * Notice to be announced by narrator when a participant joins a call
+   */
+  threeParticipantJoinedNoticeString: string;
+  /**
    * Notice to be announced by narrator when a participant leaves a call
    */
   participantLeftNoticeString: string;
+  /**
+   * Notice to be announced by narrator when 2 participants leave a call
+   */
+  twoParticipantLeftNoticeString: string;
+  /**
+   * Notice to be announced by narrator when 3 participants leave a call
+   */
+  threeParticipantLeftNoticeString: string;
   /**
    * string to be used to announce a change in participant if they have no displayName
    */
@@ -342,5 +358,5 @@ export interface CallCompositeStrings {
   /**
    * string to be used to announce when more than 3 participants have joined at the same time.
    */
-  participantsJoinedOverflowString: string;
+  participantsOverflowString: string;
 }

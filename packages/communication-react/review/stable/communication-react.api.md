@@ -416,13 +416,17 @@ export interface CallCompositeStrings {
     networkReconnectTitle: string;
     participantJoinedNoticeString: string;
     participantLeftNoticeString: string;
-    participantsJoinedOverflowString: string;
+    participantsOverflowString: string;
     privacyPolicy: string;
     rejoinCallButtonLabel: string;
     removedFromCallMoreDetails?: string;
     removedFromCallTitle: string;
     soundLabel: string;
     startCallButtonLabel: string;
+    threeParticipantJoinedNoticeString: string;
+    threeParticipantLeftNoticeString: string;
+    twoParticipantJoinedNoticeString: string;
+    twoParticipantLeftNoticeString: string;
     unnamedParticipantChangedString: string;
 }
 
