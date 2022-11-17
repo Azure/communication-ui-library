@@ -65,6 +65,7 @@ export const useParticipantChangedAnnouncement = (): string => {
     }
   }, [
     remoteParticipants,
+    previousParticipants,
     locale.participantJoinedNoticeString,
     locale.unnamedParticipantChangedString,
     locale.participantsJoinedOverflowString,
