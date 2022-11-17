@@ -88,7 +88,10 @@ const createAnnouncmentString = (
     const names = participants.map((p) => p.displayName ?? defaultName).join(', ');
     return _formatString(localeString, { displayNames: names });
   } else {
-    const numberOfExtraParticipants = participants.length - 3;
+    /**
+     * We don't want to announce every name when more than 3 participants join at once so
+     * we parse out the first 3 names we have and announce those.
+     */
     const names =
       participants.filter((p) => p.displayName).length > 0
         ? participants
@@ -96,7 +99,10 @@ const createAnnouncmentString = (
             .slice(0, 2)
             .map((p) => p.displayName ?? defaultName)
             .join(', ')
-        : defaultName;
+        : /** if we have no participants with displayNames we just announce one unnamed participant */
+          defaultName;
+
+    const numberOfExtraParticipants = names === defaultName ? participants.length - 1 : participants.length - 1;
 
     const namesPlusExtra =
       names + _formatString(overflowString, { numOfParticipants: numberOfExtraParticipants.toString() });
