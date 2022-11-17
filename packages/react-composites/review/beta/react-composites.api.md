@@ -369,6 +369,8 @@ export interface CallCompositeStrings {
     lobbyScreenConnectingToCallTitle: string;
     lobbyScreenWaitingToBeAdmittedMoreDetails?: string;
     lobbyScreenWaitingToBeAdmittedTitle: string;
+    manyParticipantsChanged: string;
+    manyUnnamedParticipantsChanged: string;
     microphonePermissionDenied: string;
     microphoneToggleInLobbyNotAllowed: string;
     moreButtonCallingLabel: string;
@@ -380,7 +382,6 @@ export interface CallCompositeStrings {
     outboundCallingNoticeString: string;
     participantJoinedNoticeString: string;
     participantLeftNoticeString: string;
-    participantsOverflowString: string;
     peopleButtonLabel: string;
     peopleButtonTooltipClose: string;
     peopleButtonTooltipOpen: string;

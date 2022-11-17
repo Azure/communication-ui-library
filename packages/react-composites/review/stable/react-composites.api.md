@@ -312,6 +312,8 @@ export interface CallCompositeStrings {
     lobbyScreenConnectingToCallTitle: string;
     lobbyScreenWaitingToBeAdmittedMoreDetails?: string;
     lobbyScreenWaitingToBeAdmittedTitle: string;
+    manyParticipantsChanged: string;
+    manyUnnamedParticipantsChanged: string;
     microphonePermissionDenied: string;
     microphoneToggleInLobbyNotAllowed: string;
     mutedMessage: string;
@@ -319,7 +321,6 @@ export interface CallCompositeStrings {
     networkReconnectTitle: string;
     participantJoinedNoticeString: string;
     participantLeftNoticeString: string;
-    participantsOverflowString: string;
     privacyPolicy: string;
     rejoinCallButtonLabel: string;
     removedFromCallMoreDetails?: string;
