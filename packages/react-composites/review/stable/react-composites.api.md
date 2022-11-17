@@ -37,16 +37,12 @@ import { SendMessageOptions } from '@azure/communication-chat';
 import { StartCallOptions } from '@azure/communication-calling';
 import { StatefulCallClient } from '@internal/calling-stateful-client';
 import { StatefulChatClient } from '@internal/chat-stateful-client';
+import { TeamsCall } from '@azure/communication-calling';
+import { TeamsCallAgent } from '@azure/communication-calling';
 import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { Theme } from '@fluentui/react';
 import { VideoDeviceInfo } from '@azure/communication-calling';
 import { VideoStreamOptions } from '@internal/react-components';
-
-// @public (undocumented)
-export type ACSCallManagement = {
-    joinCall(microphoneOn?: boolean): Call | undefined;
-    startCall(participants: string[], options?: StartCallOptions): Call | undefined;
-};
 
 // @public
 export interface AdapterError extends Error {
@@ -125,7 +121,12 @@ export interface BaseCompositeProps<TIcons extends Record<string, JSX.Element>> 
 }
 
 // @public (undocumented)
-export type CallAdapter = Omit<CallAdapterCommon, keyof ACSCallManagement> & ACSCallManagement;
+export interface CallAdapter extends CallAdapterCommon {
+    // (undocumented)
+    joinCall(microphoneOn?: boolean): Call | undefined;
+    // (undocumented)
+    startCall(participants: string[], options?: StartCallOptions): Call | undefined;
+}
 
 // @public
 export type CallAdapterCallEndedEvent = {
@@ -361,7 +362,12 @@ export type CallIdChangedListener = (event: {
 }) => void;
 
 // @public (undocumented)
-export type CallWithChatAdapter = Omit<CallWithChatAdapterCommon, keyof ACSCallManagement> & ACSCallManagement;
+export interface CallWithChatAdapter extends CallWithChatAdapterCommon {
+    // (undocumented)
+    joinCall(microphoneOn?: boolean): Call | undefined;
+    // (undocumented)
+    startCall(participants: string[], options?: StartCallOptions): Call | undefined;
+}
 
 // @public
 export interface CallWithChatAdapterCommon extends CallWithChatAdapterManagement, AdapterState<CallWithChatAdapterState>, Disposable, CallWithChatAdapterSubscriptions {
@@ -791,6 +797,12 @@ export const createAzureCommunicationChatAdapter: ({ endpoint: endpointUrl, user
 // @public
 export const createAzureCommunicationChatAdapterFromClient: (chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient) => Promise<ChatAdapter>;
 
+// @beta (undocumented)
+export const createAzureCommunicationTeamsCallAdapter: ({ userId, credential, locator }: AzureCommunicationCallAdapterArgs) => Promise<TeamsCallAdapter>;
+
+// @beta
+export const createAzureCommunicationTeamsCallAdapterFromClient: (callClient: StatefulCallClient, callAgent: TeamsCallAgent, locator: CallAdapterLocator) => Promise<TeamsCallAdapter>;
+
 // @public
 export const DEFAULT_COMPOSITE_ICONS: {
     EditBoxCancel: JSX.Element;
@@ -941,6 +953,14 @@ export type ParticipantsRemovedListener = (event: {
     removedBy: ChatParticipant;
 }) => void;
 
+// @beta (undocumented)
+export interface TeamsCallAdapter extends CallAdapterCommon {
+    // (undocumented)
+    joinCall(microphoneOn?: boolean): TeamsCall | undefined;
+    // (undocumented)
+    startCall(participants: string[], options?: StartCallOptions): TeamsCall | undefined;
+}
+
 // @public
 export type TopicChangedListener = (event: {
     topic: string;
@@ -954,6 +974,9 @@ export const useAzureCommunicationCallWithChatAdapter: (args: Partial<AzureCommu
 
 // @public
 export const useAzureCommunicationChatAdapter: (args: Partial<AzureCommunicationChatAdapterArgs>, afterCreate?: ((adapter: ChatAdapter) => Promise<ChatAdapter>) | undefined, beforeDispose?: ((adapter: ChatAdapter) => Promise<void>) | undefined) => ChatAdapter | undefined;
+
+// @beta
+export const useAzureCommunicationTeamsCallAdapter: (args: Partial<AzureCommunicationCallAdapterArgs>, afterCreate?: ((adapter: TeamsCallAdapter) => Promise<CallAdapterCommon>) | undefined, beforeDispose?: ((adapter: TeamsCallAdapter) => Promise<void>) | undefined) => TeamsCallAdapter | undefined;
 
 // @internal
 export const _useCompositeLocale: () => CompositeLocale;

@@ -11,7 +11,7 @@ process.env['COMMUNICATION_REACT_FLAVOR'] === 'stable' &&
         'call-readiness',
         // Flag to add API only available in beta calling SDK to mocks and internal types.
         // This feature should be stabilized whenever calling SDK is stabilized.
-        'calling-beta-sdk',
+        // 'calling-beta-sdk',
         // Participant pane in the `ChatComposite`.
         'chat-composite-participant-pane',
         // API for injecting custom buttons in he control bar for
@@ -35,7 +35,7 @@ process.env['COMMUNICATION_REACT_FLAVOR'] === 'stable' &&
         // Adhoc calls to a Teams user.
         'teams-adhoc-call',
         // Joining calls using teams token
-        'teams-identity-support',
+        // 'teams-identity-support',
         'unsupported-browser',
         // Support Calling SDK isReceiving flag, shows a loading spinner on the video tile when isAvailable is true but isReceiving is false
         'video-stream-is-receiving-flag',
@@ -49,6 +49,8 @@ process.env['COMMUNICATION_REACT_FLAVOR'] === 'stable' &&
         // Demo feature. Used in live-documentation of conditional compilation.
         // Do not use in production code.
         'stabilizedDemo',
+        'calling-beta-sdk',
+        'teams-identity-support'
       ]
     }
   ]);
