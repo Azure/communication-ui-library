@@ -49,6 +49,7 @@ Tue, 15 Nov 2022 21:12:22 GMT
 - Bump dependencies to get closer to react 18 support ([PR #2427](https://github.com/azure/communication-ui-library/pull/2427) by 2684369+JamesBurnside@users.noreply.github.com)
 - Focus on participant list when opening people pane ([PR #2492](https://github.com/azure/communication-ui-library/pull/2492) by edwardlee@microsoft.com)
 - Config page local preview does not show a black screen when camera devices are removed ([PR #2456](https://github.com/azure/communication-ui-library/pull/2456) by anjulgarg@live.com)
+- Bumped calling SDK beta version to 1.9.1-beta.1 ([PR #2475](https://github.com/azure/communication-ui-library/pull/2475) by 94866715+dmceachernmsft@users.noreply.github.com)
 
 ## [1.3.2-beta.1](https://github.com/azure/communication-ui-library/tree/1.3.2-beta.1)
 
