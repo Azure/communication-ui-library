@@ -76,7 +76,8 @@
     "twoParticipantLeftNoticeString": "{displayName1} and {displayName2} have left",
     "threeParticipantLeftNoticeString": "{displayName1}, {displayName2} and {displayName3} have left",
     "unnamedParticipantChangedString": "unnamed participant",
-    "participantsOverflowString": "{numOfParticipants} other participants"
+    "manyUnnamedParticipantsChanged": "unnamed participant and {numOfParticipants} other participants",
+    "manyParticipantsChanged": "{displayName1}, {displayName2}, {displayName3} and {numOfParticipants} other participants"
   },
   "chat": {
     "chatListHeader": "In this chat",

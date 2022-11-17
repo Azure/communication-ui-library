@@ -8,6 +8,10 @@ import { useLocale } from '../../localization';
 import { CallAdapterState } from '../adapter';
 import { useSelector } from '../hooks/useSelector';
 
+/**
+ * Custom selector for this hook to retrieve all the participants that are currently
+ * connected to the call.
+ */
 const getRemoteParticipantsConnectedSelector = (callState: CallAdapterState): RemoteParticipantState[] => {
   return Object.values(callState.call?.remoteParticipants ?? {}).filter(
     /**
@@ -26,7 +30,8 @@ type ParticipantChangedAnnouncmentStrings = {
   twoParticipantLeftNoticeString: string;
   threeParticipantLeftNoticeString: string;
   unnamedParticipantChangedString: string;
-  participantsOverflowString: string;
+  manyParticipantsChanged: string;
+  manyUnnamedParticipantsChanged: string;
 };
 
 /**
@@ -48,7 +53,8 @@ export const useParticipantChangedAnnouncement = (): string => {
       twoParticipantLeftNoticeString: locale.twoParticipantLeftNoticeString,
       threeParticipantLeftNoticeString: locale.threeParticipantLeftNoticeString,
       unnamedParticipantChangedString: locale.unnamedParticipantChangedString,
-      participantsOverflowString: locale.participantsOverflowString
+      manyParticipantsChanged: locale.manyParticipantsChanged,
+      manyUnnamedParticipantsChanged: locale.manyUnnamedParticipantsChanged
     };
   }, [locale]);
   const [announcerString, setAnnouncerString] = useState<string>('');
@@ -85,6 +91,20 @@ export const createAnnouncmentString = (
   participants: RemoteParticipantState[],
   strings: ParticipantChangedAnnouncmentStrings
 ): string => {
+  /**
+   * Check that we have more than 1 participant, if they all have no displayName return unnamed participants
+   * overflow string
+   */
+  if (participants.filter((p) => p.displayName).length === 0 && participants.length > 0) {
+    const participantsString = _formatString(strings.manyUnnamedParticipantsChanged, {
+      numOfParticipants: (participants.length - 1).toString()
+    });
+    return _formatString(
+      direction === 'joined' ? strings.participantJoinedNoticeString : strings.participantLeftNoticeString,
+      { displayNames: participantsString }
+    );
+  }
+
   switch (participants.length) {
     case 1:
       const oneName = participants[0].displayName ?? strings.unnamedParticipantChangedString;
@@ -114,28 +134,25 @@ export const createAnnouncmentString = (
     default:
       break;
   }
+
   /**
+   * If we have more than 3 participants joining we need to do something more to announce them
+   * appropriately.
+   *
    * We don't want to announce every name when more than 3 participants join at once so
-   * we parse out the first 3 names we have and announce those.
+   * we parse out the first 3 names we have and announce those with the number of others.
    */
-  const names =
-    participants.filter((p) => p.displayName).length > 0
-      ? participants
-          .filter((p) => p.displayName)
-          .slice(0, 2)
-          .map((p) => p.displayName ?? strings.unnamedParticipantChangedString)
-          .join(', ')
-      : /** if we have no participants with displayNames we just announce one unnamed participant */
-        strings.unnamedParticipantChangedString;
+  const numberOfExtraParticipants = participants.length - 3;
 
-  const numberOfExtraParticipants =
-    names === strings.unnamedParticipantChangedString ? participants.length - 1 : participants.length - 1;
+  const whoChanged = _formatString(strings.manyParticipantsChanged, {
+    displayName1: participants[0].displayName ?? strings.unnamedParticipantChangedString,
+    displayName2: participants[1].displayName ?? strings.unnamedParticipantChangedString,
+    displayName3: participants[2].displayName ?? strings.unnamedParticipantChangedString,
+    numOfParticipants: numberOfExtraParticipants.toString()
+  });
 
-  const namesPlusExtra =
-    names +
-    _formatString(strings.participantsOverflowString, { numOfParticipants: numberOfExtraParticipants.toString() });
   return _formatString(
     direction === 'joined' ? strings.participantJoinedNoticeString : strings.participantLeftNoticeString,
-    { displayNames: namesPlusExtra }
+    { displayNames: whoChanged }
   );
 };

@@ -358,5 +358,9 @@ export interface CallCompositeStrings {
   /**
    * string to be used to announce when more than 3 participants have joined at the same time.
    */
-  participantsOverflowString: string;
+  manyParticipantsChanged: string;
+  /**
+   * string to be used to announce when multiple unnamed participants have joined at the same time.
+   */
+  manyUnnamedParticipantsChanged: string;
 }

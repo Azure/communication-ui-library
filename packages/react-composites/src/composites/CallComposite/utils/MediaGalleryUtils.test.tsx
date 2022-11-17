@@ -31,7 +31,8 @@ const strings = {
   twoParticipantLeftNoticeString: '{displayName1} and {displayName2} have left',
   threeParticipantLeftNoticeString: '{displayName1}, {displayName2} and {displayName3} have left',
   unnamedParticipantChangedString: 'unnamed participant',
-  participantsOverflowString: '{numOfParticipants} other participants'
+  manyParticipantsChanged: '{displayName1}, {displayName2}, {displayName3} and {numOfParticipants} other participants',
+  manyUnnamedParticipantsChanged: 'unnamed participant and {numOfParticipants} other participants'
 };
 
 describe('Participant Changed announcement string tests', () => {
@@ -117,17 +118,41 @@ describe('Participant Changed announcement string tests', () => {
 
     expect(createAnnouncmentString('joined', participants, strings)).toEqual(
       _formatString(strings.participantJoinedNoticeString, {
-        displayNames:
-          strings.unnamedParticipantChangedString +
-          _formatString(strings.participantsOverflowString, { numOfParticipants: '4' })
+        displayNames: _formatString(strings.manyUnnamedParticipantsChanged, { numOfParticipants: '4' })
       })
     );
 
     expect(createAnnouncmentString('left', participants, strings)).toEqual(
       _formatString(strings.participantLeftNoticeString, {
-        displayNames:
-          strings.unnamedParticipantChangedString +
-          _formatString(strings.participantsOverflowString, { numOfParticipants: '4' })
+        displayNames: _formatString(strings.manyUnnamedParticipantsChanged, { numOfParticipants: '4' })
+      })
+    );
+  });
+  test('Strings when multiple named participants join and leave should be correct', () => {
+    const participants: RemoteParticipantState[] = [];
+    for (let i = 0; i < 5; i++) {
+      participants.push(mockParticipant);
+    }
+
+    expect(createAnnouncmentString('joined', participants, strings)).toEqual(
+      _formatString(strings.participantJoinedNoticeString, {
+        displayNames: _formatString(strings.manyParticipantsChanged, {
+          displayName1: 'test',
+          displayName2: 'test',
+          displayName3: 'test',
+          numOfParticipants: '2'
+        })
+      })
+    );
+
+    expect(createAnnouncmentString('left', participants, strings)).toEqual(
+      _formatString(strings.participantLeftNoticeString, {
+        displayNames: _formatString(strings.manyParticipantsChanged, {
+          displayName1: 'test',
+          displayName2: 'test',
+          displayName3: 'test',
+          numOfParticipants: '2'
+        })
       })
     );
   });
