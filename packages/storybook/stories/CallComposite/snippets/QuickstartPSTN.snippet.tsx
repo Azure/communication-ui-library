@@ -33,7 +33,9 @@ const DISPLAY_NAME = '<Display Name>';
  *
  * You can obtain and manage phone numbers from the Azure portal as described here:
  * https://docs.microsoft.com/en-us/azure/communication-services/quickstarts/telephony/get-phone-number
- *
+ * This phone number should be in E.164 format.
+ * E.164 numbers are formatted as [+] [country code] [phone number including area code].
+ * For example, +14255550123 for a US phone number.
  */
 const ALTERNATE_CALLER_ID = '<Azure Communication Services Managed Phone Number>';
 
