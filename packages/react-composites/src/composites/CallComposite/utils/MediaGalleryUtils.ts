@@ -107,18 +107,21 @@ export const createAnnouncmentString = (
    * Check that we have more than 1 participant, if they all have no displayName return unnamed participants
    * overflow string
    */
+  const unnamedParticipants = participants.filter((p) => p.displayName === undefined);
+  const namedParicipants = participants.filter((p) => p.displayName);
+  const sortedParticipants = namedParicipants.concat(unnamedParticipants);
 
-  if (participants.filter((p) => p.displayName).length === 0 && participants.length > 0) {
+  if (sortedParticipants.filter((p) => p.displayName).length === 0 && sortedParticipants.length > 1) {
     return _formatString(
       direction === 'joined' ? strings.manyUnnamedParticipantsJoined : strings.manyUnnamedParticipantsLeft,
       {
-        numOfParticipants: (participants.length - 1).toString()
+        numOfParticipants: (sortedParticipants.length - 1).toString()
       }
     );
   }
-  const participantNames = participants.map((p) => p.displayName ?? strings.unnamedParticipantString);
+  const participantNames = sortedParticipants.map((p) => p.displayName ?? strings.unnamedParticipantString);
 
-  switch (participants.length) {
+  switch (sortedParticipants.length) {
     case 1:
       return _formatString(
         direction === 'joined' ? strings.participantJoinedNoticeString : strings.participantLeftNoticeString,
@@ -151,7 +154,7 @@ export const createAnnouncmentString = (
    * we parse out the first 3 names we have and announce those with the number of others.
    */
 
-  const numberOfExtraParticipants = participants.length - 3;
+  const numberOfExtraParticipants = sortedParticipants.length - 3;
 
   return _formatString(direction === 'joined' ? strings.manyParticipantsJoined : strings.manyParticipantsLeft, {
     displayName1: participants[0].displayName ?? strings.unnamedParticipantString,
