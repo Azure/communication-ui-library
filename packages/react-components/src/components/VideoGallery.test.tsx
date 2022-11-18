@@ -27,7 +27,7 @@ describe('VideoGallery default layout', () => {
     // Need to mock this because the HorizontalGallery uses this function. But JSDOM does not actually do any
     // rendering so getComputedStyle(document.documentElement).fontSize won't actually have a value
     jest.spyOn(acs_ui_common, '_convertRemToPx').mockImplementation((rem: number) => {
-      return rem * 12;
+      return rem * 16;
     });
   });
 
@@ -115,7 +115,7 @@ describe('VideoGallery default layout', () => {
     );
     root.setProps({ remoteParticipants });
     expect(gridVideoTileCount(root)).toBe(DEFAULT_MAX_REMOTE_VIDEO_STREAMS + 1); // +1 for the local video stream
-    expect(root.find(HorizontalGallery).find(VideoTile).length).toBe(3);
+    expect(root.find(HorizontalGallery).find(VideoTile).length).toBe(2);
   });
 });
 
@@ -174,7 +174,7 @@ const createRemoteParticipant = (attrs?: Partial<VideoGalleryRemoteParticipant>)
     displayName: attrs?.displayName ?? 'Remote Participant',
     isMuted: attrs?.isMuted ?? false,
     isSpeaking: attrs?.isSpeaking ?? false,
-    state: attrs?.state ?? 'Connected',
+    /* @conditional-compile-remove(demo) */ state: attrs?.state ?? 'Connected',
     screenShareStream: {
       id: attrs?.screenShareStream?.id ?? 1,
       isAvailable: attrs?.screenShareStream?.isAvailable ?? false,
