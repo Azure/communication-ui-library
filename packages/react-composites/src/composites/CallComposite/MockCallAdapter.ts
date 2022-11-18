@@ -4,6 +4,7 @@
 import { AudioDeviceInfo, Call, DtmfTone, PermissionConstraints, VideoDeviceInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(rooms) */
 import { Role } from '@internal/react-components';
+import { EventEmitter } from 'stream';
 import { CallAdapter, CallAdapterState } from './adapter';
 
 /**
@@ -28,15 +29,23 @@ export class MockCallAdapter implements CallAdapter {
 
   state: CallAdapterState;
 
+  private emitter = new EventEmitter();
+
+  setState(state: CallAdapterState) {
+    this.state = state;
+    this.emitter.emit('stateChanged', state);
+  }
+
   addParticipant(): Promise<void> {
     throw Error('addParticipant not implemented');
   }
-  onStateChange(): void {
-    return;
+  onStateChange(handler: (state: CallAdapterState) => void): void {
+    this.emitter.addListener('stateChanged', handler);
   }
-  offStateChange(): void {
-    return;
+  offStateChange(handler: (state: CallAdapterState) => void): void {
+    this.emitter.removeListener('stateChanged', handler);
   }
+
   getState(): CallAdapterState {
     return this.state;
   }

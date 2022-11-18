@@ -1,12 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { _formatString } from '@internal/acs-ui-common';
-import { RemoteParticipantState } from '@internal/calling-stateful-client';
-import React, { useEffect } from 'react';
+import { toFlatCommunicationIdentifier, _formatString } from '@internal/acs-ui-common';
+import { CallState, RemoteParticipantState } from '@internal/calling-stateful-client';
+import React from 'react';
 import { COMPOSITE_LOCALE_EN_US } from '../../localization/locales';
 import { LocalizationProvider } from '../../localization/LocalizationProvider';
-import { CallAdapterState } from '../adapter/CallAdapter';
 import { CallAdapterProvider } from '../adapter/CallAdapterProvider';
 import { MockCallAdapter } from '../MockCallAdapter';
 import { useParticipantChangedAnnouncement } from './MediaGalleryUtils';
@@ -14,6 +13,7 @@ import Enzyme, { ReactWrapper, mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import { act } from 'react-dom/test-utils';
 import { initializeIcons } from '@fluentui/react';
+import { CommunicationUserKind } from '@azure/communication-common';
 
 const strings = {
   participantJoinedNoticeString: '{displayName} joined',
@@ -41,20 +41,13 @@ const locale = {
   }
 };
 
-function RootWrapper(props: { adapter: MockCallAdapter; participants: RemoteParticipantState[] }): JSX.Element {
-  const { adapter, participants } = props;
-  useEffect(() => {
-    adapter.state = {
-      call: {
-        remoteParticipants: participants
-      }
-    } as unknown as CallAdapterState;
-  }, [participants]);
+function RootWrapper(props: { adapter: MockCallAdapter }): JSX.Element {
+  const { adapter } = props;
   return (
     <>
       <CallAdapterProvider adapter={adapter}>
         <LocalizationProvider locale={locale}>
-          <HookWrapper participants={participants} />
+          <HookWrapper />
         </LocalizationProvider>
       </CallAdapterProvider>
     </>
@@ -62,31 +55,40 @@ function RootWrapper(props: { adapter: MockCallAdapter; participants: RemotePart
 }
 
 // participants is passed down just to trigger a rerender.
-function HookWrapper(props: { participants: RemoteParticipantState[] }): JSX.Element {
+function HookWrapper(): JSX.Element {
   const announcement = useParticipantChangedAnnouncement();
-  return <div id="announcedString">muahahaha {announcement}</div>;
+  return <div id="announcedString">{announcement}</div>;
 }
 
 function mountWithNoParticipants(): { root: ReactWrapper; adapter: MockCallAdapter } {
   const adapter = new MockCallAdapter({});
   let root;
   act(() => {
-    root = mount(<RootWrapper adapter={adapter} participants={[]} />);
+    root = mount(<RootWrapper adapter={adapter} />);
   });
   return { root, adapter };
 }
 
 function setParticipants(root: ReactWrapper, adapter: MockCallAdapter, participantNames: string[]): void {
-  const participants = participantNames.map((name) => ({
-    displayName: name,
-    identifier: { communicationUserId: name, kind: 'communicationUser' },
-    state: 'Connected',
-    videoStreams: {},
-    isMuted: false,
-    isSpeaking: false
-  }));
+  const participants = Object.fromEntries(
+    participantNames.map((name) => {
+      const identifier: CommunicationUserKind = { communicationUserId: name, kind: 'communicationUser' };
+      const participant: RemoteParticipantState = {
+        displayName: name,
+        identifier: identifier,
+        state: 'Connected',
+        videoStreams: {},
+        isMuted: false,
+        isSpeaking: false
+      };
+      return [toFlatCommunicationIdentifier(identifier), participant];
+    })
+  );
+  const call: CallState | undefined = adapter.state.call
+    ? { ...adapter.state.call, remoteParticipants: participants }
+    : undefined;
   act(() => {
-    root.setProps({ adapter, participants });
+    adapter.setState({ ...adapter.state, call });
   });
 }
 
@@ -104,6 +106,6 @@ describe.only('useParticipantChangedAnnouncement', () => {
   test('gets invoked', () => {
     const { root, adapter } = mountWithNoParticipants();
     setParticipants(root, adapter, ['donald']);
-    expectAnnouncement(root, 'muahahaha');
+    expectAnnouncement(root, 'donald joined');
   });
 });

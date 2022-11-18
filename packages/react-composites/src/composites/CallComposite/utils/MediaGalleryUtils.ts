@@ -62,28 +62,28 @@ export const useParticipantChangedAnnouncement = (): string => {
     };
   }, [locale]);
   const [announcerString, setAnnouncerString] = useState<string>('');
-  const remoteParticipants = useSelector(getRemoteParticipantsConnectedSelector);
-  const [previousParticipants, setPreviousParticipants] = useState<RemoteParticipantState[]>(remoteParticipants);
+  const currentParticipants = useSelector(getRemoteParticipantsConnectedSelector);
+  const [previousParticipants, setPreviousParticipants] = useState<RemoteParticipantState[]>(currentParticipants);
 
-  useEffect(() => {
-    const setParticipantEventString = (string: string): void => {
-      setAnnouncerString('');
-      setAnnouncerString(string);
-    };
+  const resetAnnoucement = (string: string): void => {
+    setAnnouncerString('');
+    setAnnouncerString(string);
+  };
 
-    if (previousParticipants.length > remoteParticipants.length) {
-      const whoLeft = previousParticipants.filter((p) => !remoteParticipants.includes(p));
-      //someone left
-      setParticipantEventString(createAnnouncmentString('left', whoLeft, strings));
-      setPreviousParticipants(remoteParticipants);
-    } else if (remoteParticipants.length > previousParticipants.length) {
-      const whoJoined = remoteParticipants.filter((p) => !previousParticipants.includes(p));
-      // someone joined
-      setParticipantEventString(createAnnouncmentString('joined', whoJoined, strings));
-      setPreviousParticipants(remoteParticipants);
-    }
-  }, [remoteParticipants, previousParticipants, strings]);
-
+  useEffect(
+    () => {
+      const whoJoined = currentParticipants.filter((p) => !previousParticipants.includes(p));
+      if (whoJoined.length > 0) {
+        resetAnnoucement(createAnnouncmentString('joined', whoJoined, strings));
+      }
+      // Update cached value at the end.
+      setPreviousParticipants(currentParticipants);
+    },
+    // previousParticipants caches the value of `currenParticipants`. We _don't_ want this
+    // hook to run for when `previousParticipants` is updated.
+    // If we did, the second run would always clear out the value of `whoJoined` etc.
+    [currentParticipants, strings]
+  );
   return announcerString;
 };
 
@@ -99,6 +99,7 @@ export const createAnnouncmentString = (
    * Check that we have more than 1 participant, if they all have no displayName return unnamed participants
    * overflow string
    */
+
   if (participants.filter((p) => p.displayName).length === 0 && participants.length > 0) {
     return _formatString(
       direction === 'joined' ? strings.manyUnnamedParticipantsJoined : strings.manyUnnamedParticipantsLeft,
@@ -134,6 +135,7 @@ export const createAnnouncmentString = (
       );
   }
 
+  return 'xkcd';
   /**
    * If we have more than 3 participants joining we need to do something more to announce them
    * appropriately.
@@ -141,6 +143,7 @@ export const createAnnouncmentString = (
    * We don't want to announce every name when more than 3 participants join at once so
    * we parse out the first 3 names we have and announce those with the number of others.
    */
+  /*
   const numberOfExtraParticipants = participants.length - 3;
 
   return _formatString(direction === 'joined' ? strings.manyParticipantsJoined : strings.manyParticipantsLeft, {
@@ -149,4 +152,5 @@ export const createAnnouncmentString = (
     displayName3: participants[2].displayName ?? strings.unnamedParticipantString,
     numOfParticipants: numberOfExtraParticipants.toString()
   });
+*/
 };
