@@ -3,7 +3,7 @@
 
 import { toFlatCommunicationIdentifier, _formatString } from '@internal/acs-ui-common';
 import { CallState, RemoteParticipantState } from '@internal/calling-stateful-client';
-import React from 'react';
+import React, { useState } from 'react';
 import { COMPOSITE_LOCALE_EN_US } from '../../localization/locales';
 import { LocalizationProvider } from '../../localization/LocalizationProvider';
 import { CallAdapterProvider } from '../adapter/CallAdapterProvider';
@@ -56,8 +56,13 @@ function RootWrapper(props: { adapter: MockCallAdapter }): JSX.Element {
 
 // participants is passed down just to trigger a rerender.
 function HookWrapper(): JSX.Element {
+  const [announcements, setAnnouncements] = useState<string[]>([]);
   const announcement = useParticipantChangedAnnouncement();
-  return <div id="announcedString">{announcement}</div>;
+  // Don't do this in prod code. This can render loop forever.
+  if (announcements.findIndex((a) => a === announcement) === -1) {
+    setAnnouncements([...announcements, announcement]);
+  }
+  return <div id="announcedString">{JSON.stringify(announcements)}</div>;
 }
 
 function mountWithParticipants(participantNames?: string[]): { root: ReactWrapper; adapter: MockCallAdapter } {
@@ -95,12 +100,17 @@ function setParticipants(root: ReactWrapper, adapter: MockCallAdapter, participa
   });
 }
 
-function expectAnnouncement(root: ReactWrapper, value: string): void {
+function expectAnnounced(root: ReactWrapper, value: string): void {
   const announcement = root.find('#announcedString');
   expect(announcement.html().toString()).toContain(value);
 }
 
-describe('useParticipantChangedAnnouncement', () => {
+function expectNotAnnounced(root: ReactWrapper, value: string): void {
+  const announcement = root.find('#announcedString');
+  expect(announcement.html().toString()).not.toContain(value);
+}
+
+describe.only('useParticipantChangedAnnouncement', () => {
   beforeAll(() => {
     Enzyme.configure({ adapter: new Adapter() });
     initializeIcons();
@@ -109,12 +119,13 @@ describe('useParticipantChangedAnnouncement', () => {
   test('when 1 participant joined', () => {
     const { root, adapter } = mountWithParticipants();
     setParticipants(root, adapter, ['donald']);
-    expectAnnouncement(root, 'donald joined');
+    expectAnnounced(root, 'donald joined');
+    expectNotAnnounced(root, 'donald left');
   });
 
-  test.only('when 1 participant leaves', () => {
+  test('when 1 participant leaves', () => {
     const { root, adapter } = mountWithParticipants(['donald']);
     setParticipants(root, adapter, []);
-    expectAnnouncement(root, 'donald left');
+    expectAnnounced(root, 'donald left');
   });
 });
