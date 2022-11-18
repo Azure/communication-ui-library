@@ -3,25 +3,17 @@
 
 import { _formatString } from '@internal/acs-ui-common';
 import { RemoteParticipantState } from '@internal/calling-stateful-client';
-import { createAnnouncmentString } from './MediaGalleryUtils';
-
-const mockParticipant: RemoteParticipantState = {
-  displayName: 'test',
-  identifier: { communicationUserId: 'test', kind: 'communicationUser' },
-  state: 'Connected',
-  videoStreams: {},
-  isMuted: false,
-  isSpeaking: false
-};
-
-const mockNoNameParticipant: RemoteParticipantState = {
-  displayName: undefined,
-  identifier: { communicationUserId: 'test', kind: 'communicationUser' },
-  state: 'Connected',
-  videoStreams: {},
-  isMuted: false,
-  isSpeaking: false
-};
+import React, { useEffect } from 'react';
+import { COMPOSITE_LOCALE_EN_US } from '../../localization/locales';
+import { LocalizationProvider } from '../../localization/LocalizationProvider';
+import { CallAdapterState } from '../adapter/CallAdapter';
+import { CallAdapterProvider } from '../adapter/CallAdapterProvider';
+import { MockCallAdapter } from '../MockCallAdapter';
+import { useParticipantChangedAnnouncement } from './MediaGalleryUtils';
+import Enzyme, { ReactWrapper, mount } from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
+import { act } from 'react-dom/test-utils';
+import { initializeIcons } from '@fluentui/react';
 
 const strings = {
   participantJoinedNoticeString: '{displayName} joined',
@@ -38,117 +30,80 @@ const strings = {
   manyParticipantsLeft: '{displayName1}, {displayName2}, {displayName3} and {numOfParticipants} other participants left'
 };
 
-describe('Participant Changed announcement string tests', () => {
-  test('Strings when participants join should be correct', () => {
-    let participants: RemoteParticipantState[] = [];
-
-    // test one participant joined with names
-    participants.push(mockParticipant);
-
-    expect(createAnnouncmentString('joined', participants, strings)).toEqual(
-      _formatString(strings.participantJoinedNoticeString, { displayName: 'test' })
-    );
-
-    participants = [];
-
-    // test two participants joined with names
-    for (let i = 0; i < 2; i++) {
-      participants.push(mockParticipant);
+const locale = {
+  ...COMPOSITE_LOCALE_EN_US,
+  strings: {
+    ...COMPOSITE_LOCALE_EN_US.strings,
+    call: {
+      ...COMPOSITE_LOCALE_EN_US.strings.call,
+      ...strings
     }
+  }
+};
 
-    expect(createAnnouncmentString('joined', participants, strings)).toEqual(
-      _formatString(strings.twoParticipantJoinedNoticeString, { displayName1: 'test', displayName2: 'test' })
-    );
+function RootWrapper(props: { adapter: MockCallAdapter; participants: RemoteParticipantState[] }): JSX.Element {
+  const { adapter, participants } = props;
+  useEffect(() => {
+    adapter.state = {
+      call: {
+        remoteParticipants: participants
+      }
+    } as unknown as CallAdapterState;
+  }, [participants]);
+  return (
+    <>
+      <CallAdapterProvider adapter={adapter}>
+        <LocalizationProvider locale={locale}>
+          <HookWrapper participants={participants} />
+        </LocalizationProvider>
+      </CallAdapterProvider>
+    </>
+  );
+}
 
-    participants = [];
+// participants is passed down just to trigger a rerender.
+function HookWrapper(props: { participants: RemoteParticipantState[] }): JSX.Element {
+  const announcement = useParticipantChangedAnnouncement();
+  return <div id="announcedString">muahahaha {announcement}</div>;
+}
 
-    // test 3 participants with names
-    for (let i = 0; i < 3; i++) {
-      participants.push(mockParticipant);
-    }
+function mountWithNoParticipants(): { root: ReactWrapper; adapter: MockCallAdapter } {
+  const adapter = new MockCallAdapter({});
+  let root;
+  act(() => {
+    root = mount(<RootWrapper adapter={adapter} participants={[]} />);
+  });
+  return { root, adapter };
+}
 
-    expect(createAnnouncmentString('joined', participants, strings)).toEqual(
-      _formatString(strings.threeParticipantJoinedNoticeString, {
-        displayName1: 'test',
-        displayName2: 'test',
-        displayName3: 'test'
-      })
-    );
+function setParticipants(root: ReactWrapper, adapter: MockCallAdapter, participantNames: string[]): void {
+  const participants = participantNames.map((name) => ({
+    displayName: name,
+    identifier: { communicationUserId: name, kind: 'communicationUser' },
+    state: 'Connected',
+    videoStreams: {},
+    isMuted: false,
+    isSpeaking: false
+  }));
+  act(() => {
+    root.setProps({ adapter, participants });
+  });
+}
+
+function expectAnnouncement(root: ReactWrapper, value: string): void {
+  const announcement = root.find('#announcedString');
+  expect(announcement.html().toString()).toContain(value);
+}
+
+describe.only('useParticipantChangedAnnouncement', () => {
+  beforeAll(() => {
+    Enzyme.configure({ adapter: new Adapter() });
+    initializeIcons();
   });
 
-  test('Strings when participants left should be correct', () => {
-    let participants: RemoteParticipantState[] = [];
-
-    // test one participant joined with names
-    participants.push(mockParticipant);
-
-    expect(createAnnouncmentString('left', participants, strings)).toEqual(
-      _formatString(strings.participantLeftNoticeString, { displayName: 'test' })
-    );
-
-    participants = [];
-
-    // test two participants joined with names
-    for (let i = 0; i < 2; i++) {
-      participants.push(mockParticipant);
-    }
-
-    expect(createAnnouncmentString('left', participants, strings)).toEqual(
-      _formatString(strings.twoParticipantLeftNoticeString, { displayName1: 'test', displayName2: 'test' })
-    );
-
-    participants = [];
-
-    // test 3 participants with names
-    for (let i = 0; i < 3; i++) {
-      participants.push(mockParticipant);
-    }
-
-    expect(createAnnouncmentString('left', participants, strings)).toEqual(
-      _formatString(strings.threeParticipantLeftNoticeString, {
-        displayName1: 'test',
-        displayName2: 'test',
-        displayName3: 'test'
-      })
-    );
-  });
-  test('Strings when multiple unnamed participants join and leave should be correct', () => {
-    const participants: RemoteParticipantState[] = [];
-
-    for (let i = 0; i < 5; i++) {
-      participants.push(mockNoNameParticipant);
-    }
-
-    expect(createAnnouncmentString('joined', participants, strings)).toEqual(
-      _formatString(strings.manyUnnamedParticipantsJoined, { numOfParticipants: '4' })
-    );
-
-    expect(createAnnouncmentString('left', participants, strings)).toEqual(
-      _formatString(strings.manyUnnamedParticipantsLeft, { numOfParticipants: '4' })
-    );
-  });
-  test('Strings when multiple named participants join and leave should be correct', () => {
-    const participants: RemoteParticipantState[] = [];
-    for (let i = 0; i < 5; i++) {
-      participants.push(mockParticipant);
-    }
-
-    expect(createAnnouncmentString('joined', participants, strings)).toEqual(
-      _formatString(strings.manyParticipantsJoined, {
-        displayName1: 'test',
-        displayName2: 'test',
-        displayName3: 'test',
-        numOfParticipants: '2'
-      })
-    );
-
-    expect(createAnnouncmentString('left', participants, strings)).toEqual(
-      _formatString(strings.manyParticipantsLeft, {
-        displayName1: 'test',
-        displayName2: 'test',
-        displayName3: 'test',
-        numOfParticipants: '2'
-      })
-    );
+  test('gets invoked', () => {
+    const { root, adapter } = mountWithNoParticipants();
+    setParticipants(root, adapter, ['donald']);
+    expectAnnouncement(root, 'muahahaha');
   });
 });
