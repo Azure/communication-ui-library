@@ -128,4 +128,13 @@ describe.only('useParticipantChangedAnnouncement', () => {
     setParticipants(root, adapter, []);
     expectAnnounced(root, 'donald left');
   });
+
+  // Edge case.
+  test.skip('when 1 participant joins and another leaves', () => {
+    const { root, adapter } = mountWithParticipants(['donald']);
+    setParticipants(root, adapter, ['prathmesh']);
+    expectAnnounced(root, 'donald left');
+    expectAnnounced(root, 'prathmesh joined');
+    expectNotAnnounced(root, 'prathmesh left');
+  });
 });

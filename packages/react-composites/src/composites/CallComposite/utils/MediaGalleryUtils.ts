@@ -66,6 +66,10 @@ export const useParticipantChangedAnnouncement = (): string => {
   const [previousParticipants, setPreviousParticipants] = useState<RemoteParticipantState[]>(currentParticipants);
 
   const resetAnnoucement = (string: string): void => {
+    // Is this really needed?
+    // React does not promise that we will see a DOM update with '' value.
+    // If we're getting announcer to announce the same name twice in sequence, it's probably keyed off of the
+    // actual DOM node, which will update even if we don't reest to '' first.
     setAnnouncerString('');
     setAnnouncerString(string);
   };
