@@ -10,6 +10,7 @@ import { VideoGalleryLocalParticipant, VideoGalleryRemoteParticipant } from '../
 import { HorizontalGallery } from './HorizontalGallery';
 import { DEFAULT_MAX_REMOTE_VIDEO_STREAMS, VideoGallery, VideoGalleryProps } from './VideoGallery';
 import { VideoTile } from './VideoTile';
+import { v1 as createGUID } from 'uuid';
 import * as responsive from './utils/responsive';
 import * as acs_ui_common from '@internal/acs-ui-common';
 
@@ -166,9 +167,8 @@ const createVideoDivElement = (): HTMLDivElement => {
 };
 
 const createRemoteParticipant = (attrs?: Partial<VideoGalleryRemoteParticipant>): VideoGalleryRemoteParticipant => {
-  const id = Math.random().toString();
   return {
-    userId: attrs?.userId ?? `remoteParticipant-${id}`,
+    userId: attrs?.userId ?? `remoteParticipant-${createGUID()}`,
     displayName: attrs?.displayName ?? 'Remote Participant',
     isMuted: attrs?.isMuted ?? false,
     isSpeaking: attrs?.isSpeaking ?? false,
