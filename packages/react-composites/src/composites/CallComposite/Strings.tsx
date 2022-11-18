@@ -354,13 +354,21 @@ export interface CallCompositeStrings {
   /**
    * string to be used to announce a change in participant if they have no displayName
    */
-  unnamedParticipantChangedString: string;
+  unnamedParticipantString: string;
   /**
    * string to be used to announce when more than 3 participants have joined at the same time.
    */
-  manyParticipantsChanged: string;
+  manyParticipantsJoined: string;
+  /**
+   * string to be used to announce when more than 3 participants have left at the same time.
+   */
+  manyParticipantsLeft: string;
   /**
    * string to be used to announce when multiple unnamed participants have joined at the same time.
    */
-  manyUnnamedParticipantsChanged: string;
+  manyUnnamedParticipantsJoined: string;
+  /**
+   * string to be used to announce when multiple unnamed participants have left at the same time.
+   */
+  manyUnnamedParticipantsLeft: string;
 }

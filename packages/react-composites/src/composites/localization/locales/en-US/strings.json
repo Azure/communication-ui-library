@@ -75,9 +75,11 @@
     "participantLeftNoticeString": "{displayNames} left",
     "twoParticipantLeftNoticeString": "{displayName1} and {displayName2} have left",
     "threeParticipantLeftNoticeString": "{displayName1}, {displayName2} and {displayName3} have left",
-    "unnamedParticipantChangedString": "unnamed participant",
-    "manyUnnamedParticipantsChanged": "unnamed participant and {numOfParticipants} other participants",
-    "manyParticipantsChanged": "{displayName1}, {displayName2}, {displayName3} and {numOfParticipants} other participants"
+    "unnamedParticipantString": "unnamed participant",
+    "manyUnnamedParticipantsJoined": "unnamed participant and {numOfParticipants} other participants joined",
+    "manyUnnamedParticipantsLeft": "unnamed participant and {numOfParticipants} other participants left",
+    "manyParticipantsJoined": "{displayName1}, {displayName2}, {displayName3} and {numOfParticipants} other participants joined",
+    "manyParticipantsLeft": "{displayName1}, {displayName2}, {displayName3} and {numOfParticipants} other participants left"
   },
   "chat": {
     "chatListHeader": "In this chat",

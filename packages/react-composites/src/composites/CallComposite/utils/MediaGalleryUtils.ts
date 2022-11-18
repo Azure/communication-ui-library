@@ -29,9 +29,11 @@ type ParticipantChangedAnnouncmentStrings = {
   participantLeftNoticeString: string;
   twoParticipantLeftNoticeString: string;
   threeParticipantLeftNoticeString: string;
-  unnamedParticipantChangedString: string;
-  manyParticipantsChanged: string;
-  manyUnnamedParticipantsChanged: string;
+  unnamedParticipantString: string;
+  manyParticipantsJoined: string;
+  manyParticipantsLeft: string;
+  manyUnnamedParticipantsJoined: string;
+  manyUnnamedParticipantsLeft: string;
 };
 
 /**
@@ -52,9 +54,11 @@ export const useParticipantChangedAnnouncement = (): string => {
       participantLeftNoticeString: locale.participantLeftNoticeString,
       twoParticipantLeftNoticeString: locale.twoParticipantLeftNoticeString,
       threeParticipantLeftNoticeString: locale.threeParticipantLeftNoticeString,
-      unnamedParticipantChangedString: locale.unnamedParticipantChangedString,
-      manyParticipantsChanged: locale.manyParticipantsChanged,
-      manyUnnamedParticipantsChanged: locale.manyUnnamedParticipantsChanged
+      unnamedParticipantString: locale.unnamedParticipantString,
+      manyParticipantsJoined: locale.manyParticipantsJoined,
+      manyParticipantsLeft: locale.manyParticipantsLeft,
+      manyUnnamedParticipantsJoined: locale.manyUnnamedParticipantsJoined,
+      manyUnnamedParticipantsLeft: locale.manyUnnamedParticipantsLeft
     };
   }, [locale]);
   const [announcerString, setAnnouncerString] = useState<string>('');
@@ -96,39 +100,36 @@ export const createAnnouncmentString = (
    * overflow string
    */
   if (participants.filter((p) => p.displayName).length === 0 && participants.length > 0) {
-    const participantsString = _formatString(strings.manyUnnamedParticipantsChanged, {
-      numOfParticipants: (participants.length - 1).toString()
-    });
     return _formatString(
-      direction === 'joined' ? strings.participantJoinedNoticeString : strings.participantLeftNoticeString,
-      { displayNames: participantsString }
+      direction === 'joined' ? strings.manyUnnamedParticipantsJoined : strings.manyUnnamedParticipantsLeft,
+      {
+        numOfParticipants: (participants.length - 1).toString()
+      }
     );
   }
-  const oneName = participants[0].displayName ?? strings.unnamedParticipantChangedString;
-  const twoNames = participants.map((p) => p.displayName ?? strings.unnamedParticipantChangedString);
-  const threeNames = participants.map((p) => p.displayName ?? strings.unnamedParticipantChangedString);
+  const participantNames = participants.map((p) => p.displayName ?? strings.unnamedParticipantString);
 
   switch (participants.length) {
     case 1:
       return _formatString(
         direction === 'joined' ? strings.participantJoinedNoticeString : strings.participantLeftNoticeString,
-        { displayNames: oneName }
+        { displayNames: participantNames[0] }
       );
     case 2:
       return _formatString(
         direction === 'joined' ? strings.twoParticipantJoinedNoticeString : strings.twoParticipantLeftNoticeString,
         {
-          displayName1: twoNames[0],
-          displayName2: twoNames[1]
+          displayName1: participantNames[0],
+          displayName2: participantNames[1]
         }
       );
     case 3:
       return _formatString(
         direction === 'joined' ? strings.threeParticipantJoinedNoticeString : strings.threeParticipantLeftNoticeString,
         {
-          displayName1: threeNames[0],
-          displayName2: threeNames[1],
-          displayName3: threeNames[1]
+          displayName1: participantNames[0],
+          displayName2: participantNames[1],
+          displayName3: participantNames[1]
         }
       );
   }
@@ -142,12 +143,15 @@ export const createAnnouncmentString = (
    */
   const numberOfExtraParticipants = participants.length - 3;
 
-  const whoChanged = _formatString(strings.manyParticipantsChanged, {
-    displayName1: participants[0].displayName ?? strings.unnamedParticipantChangedString,
-    displayName2: participants[1].displayName ?? strings.unnamedParticipantChangedString,
-    displayName3: participants[2].displayName ?? strings.unnamedParticipantChangedString,
-    numOfParticipants: numberOfExtraParticipants.toString()
-  });
+  const whoChanged = _formatString(
+    direction === 'joined' ? strings.manyParticipantsJoined : strings.manyParticipantsLeft,
+    {
+      displayName1: participants[0].displayName ?? strings.unnamedParticipantString,
+      displayName2: participants[1].displayName ?? strings.unnamedParticipantString,
+      displayName3: participants[2].displayName ?? strings.unnamedParticipantString,
+      numOfParticipants: numberOfExtraParticipants.toString()
+    }
+  );
 
   return _formatString(
     direction === 'joined' ? strings.participantJoinedNoticeString : strings.participantLeftNoticeString,

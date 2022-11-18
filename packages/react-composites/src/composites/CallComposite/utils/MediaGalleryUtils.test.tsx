@@ -30,9 +30,12 @@ const strings = {
   participantLeftNoticeString: '{displayNames} left',
   twoParticipantLeftNoticeString: '{displayName1} and {displayName2} have left',
   threeParticipantLeftNoticeString: '{displayName1}, {displayName2} and {displayName3} have left',
-  unnamedParticipantChangedString: 'unnamed participant',
-  manyParticipantsChanged: '{displayName1}, {displayName2}, {displayName3} and {numOfParticipants} other participants',
-  manyUnnamedParticipantsChanged: 'unnamed participant and {numOfParticipants} other participants'
+  unnamedParticipantString: 'unnamed participant',
+  manyUnnamedParticipantsJoined: 'unnamed participant and {numOfParticipants} other participants joined',
+  manyUnnamedParticipantsLeft: 'unnamed participant and {numOfParticipants} other participants left',
+  manyParticipantsJoined:
+    '{displayName1}, {displayName2}, {displayName3} and {numOfParticipants} other participants joined',
+  manyParticipantsLeft: '{displayName1}, {displayName2}, {displayName3} and {numOfParticipants} other participants left'
 };
 
 describe('Participant Changed announcement string tests', () => {
@@ -117,15 +120,11 @@ describe('Participant Changed announcement string tests', () => {
     }
 
     expect(createAnnouncmentString('joined', participants, strings)).toEqual(
-      _formatString(strings.participantJoinedNoticeString, {
-        displayNames: _formatString(strings.manyUnnamedParticipantsChanged, { numOfParticipants: '4' })
-      })
+      _formatString(strings.manyUnnamedParticipantsJoined, { numOfParticipants: '4' })
     );
 
     expect(createAnnouncmentString('left', participants, strings)).toEqual(
-      _formatString(strings.participantLeftNoticeString, {
-        displayNames: _formatString(strings.manyUnnamedParticipantsChanged, { numOfParticipants: '4' })
-      })
+      _formatString(strings.manyUnnamedParticipantsLeft, { numOfParticipants: '4' })
     );
   });
   test('Strings when multiple named participants join and leave should be correct', () => {
@@ -136,7 +135,7 @@ describe('Participant Changed announcement string tests', () => {
 
     expect(createAnnouncmentString('joined', participants, strings)).toEqual(
       _formatString(strings.participantJoinedNoticeString, {
-        displayNames: _formatString(strings.manyParticipantsChanged, {
+        displayNames: _formatString(strings.manyParticipantsJoined, {
           displayName1: 'test',
           displayName2: 'test',
           displayName3: 'test',
@@ -147,7 +146,7 @@ describe('Participant Changed announcement string tests', () => {
 
     expect(createAnnouncmentString('left', participants, strings)).toEqual(
       _formatString(strings.participantLeftNoticeString, {
-        displayNames: _formatString(strings.manyParticipantsChanged, {
+        displayNames: _formatString(strings.manyParticipantsLeft, {
           displayName1: 'test',
           displayName2: 'test',
           displayName3: 'test',

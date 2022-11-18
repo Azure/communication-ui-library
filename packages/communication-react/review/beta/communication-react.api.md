@@ -559,7 +559,7 @@ export interface CallCompositeStrings {
     threeParticipantLeftNoticeString: string;
     twoParticipantJoinedNoticeString: string;
     twoParticipantLeftNoticeString: string;
-    unnamedParticipantChangedString: string;
+    unnamedParticipantString: string;
 }
 
 // @public
