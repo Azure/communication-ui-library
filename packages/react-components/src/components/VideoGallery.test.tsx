@@ -36,7 +36,6 @@ describe('VideoGallery default layout', () => {
 
   test('should render local video tile in the grid alongside remote tiles', () => {
     const localParticipant = createLocalParticipant({
-      userId: 'localUser',
       videoStream: { isAvailable: false, renderElement: createVideoDivElement() }
     });
 
@@ -53,7 +52,7 @@ describe('VideoGallery default layout', () => {
     expect(
       gridLayout
         .find(VideoTile)
-        .findWhere((n) => n.prop('userId') === 'localUser')
+        .findWhere((n) => n.prop('userId') === 'localParticipant')
         .exists()
     ).toBe(true);
   });
@@ -146,7 +145,7 @@ const gridAudioTileCount = (root: ReactWrapper<VideoGalleryProps>): number =>
 
 const createLocalParticipant = (attrs?: Partial<VideoGalleryLocalParticipant>): VideoGalleryLocalParticipant => {
   return {
-    userId: attrs?.userId ?? `localParticipant-${Math.random().toString()}`,
+    userId: attrs?.userId ?? 'localParticipant',
     isMuted: attrs?.isMuted ?? false,
     displayName: attrs?.displayName ?? 'Local Participant',
     isScreenSharingOn: attrs?.isScreenSharingOn ?? false,
@@ -167,8 +166,9 @@ const createVideoDivElement = (): HTMLDivElement => {
 };
 
 const createRemoteParticipant = (attrs?: Partial<VideoGalleryRemoteParticipant>): VideoGalleryRemoteParticipant => {
+  const id = Math.random().toString();
   return {
-    userId: attrs?.userId ?? `remoteParticipant-${Math.random().toString()}`,
+    userId: attrs?.userId ?? `remoteParticipant-${id}`,
     displayName: attrs?.displayName ?? 'Remote Participant',
     isMuted: attrs?.isMuted ?? false,
     isSpeaking: attrs?.isSpeaking ?? false,
