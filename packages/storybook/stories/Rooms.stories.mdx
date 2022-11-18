@@ -1,9 +1,12 @@
 import { Meta, Source } from '@storybook/addon-docs';
+import { DetailedBetaBanner } from './BetaBanners/DetailedBetaBanner';
 import RoomsCallSnippetText from '!!raw-loader!./snippets/RoomsCall.snippet.tsx';
 
 <Meta id="rooms" title="Concepts/Rooms" parameters={{ previewTabs: { canvas: { disable: true, hidden: true } } }} />
 
 # Rooms
+
+<DetailedBetaBanner version={'1.3.2-beta.1'} />
 
 Rooms secures which users can join an ACS call. Rooms also assigns roles to users to limit their access in an ACS call.
 
