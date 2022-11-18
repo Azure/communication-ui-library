@@ -104,16 +104,17 @@ export const createAnnouncmentString = (
       { displayNames: participantsString }
     );
   }
+  const oneName = participants[0].displayName ?? strings.unnamedParticipantChangedString;
+  const twoNames = participants.map((p) => p.displayName ?? strings.unnamedParticipantChangedString);
+  const threeNames = participants.map((p) => p.displayName ?? strings.unnamedParticipantChangedString);
 
   switch (participants.length) {
     case 1:
-      const oneName = participants[0].displayName ?? strings.unnamedParticipantChangedString;
       return _formatString(
         direction === 'joined' ? strings.participantJoinedNoticeString : strings.participantLeftNoticeString,
         { displayNames: oneName }
       );
     case 2:
-      const twoNames = participants.map((p) => p.displayName ?? strings.unnamedParticipantChangedString);
       return _formatString(
         direction === 'joined' ? strings.twoParticipantJoinedNoticeString : strings.twoParticipantLeftNoticeString,
         {
@@ -122,7 +123,6 @@ export const createAnnouncmentString = (
         }
       );
     case 3:
-      const threeNames = participants.map((p) => p.displayName ?? strings.unnamedParticipantChangedString);
       return _formatString(
         direction === 'joined' ? strings.threeParticipantJoinedNoticeString : strings.threeParticipantLeftNoticeString,
         {
@@ -131,8 +131,6 @@ export const createAnnouncmentString = (
           displayName3: threeNames[1]
         }
       );
-    default:
-      break;
   }
 
   /**
