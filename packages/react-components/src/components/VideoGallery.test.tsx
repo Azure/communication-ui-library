@@ -29,6 +29,9 @@ describe('VideoGallery default layout', () => {
     jest.spyOn(acs_ui_common, '_convertRemToPx').mockImplementation((rem: number) => {
       return rem * 16;
     });
+    // Need to mock hook _useContainerWidth because the returned width is used by HorizontalGallery to decide
+    // how many tiles to show per page
+    jest.spyOn(responsive, '_useContainerWidth').mockImplementation(() => 500);
   });
 
   test('should render local video tile in the grid alongside remote tiles', () => {
@@ -95,14 +98,9 @@ describe('VideoGallery default layout', () => {
     expect(root.find(HorizontalGallery).exists()).toBe(false);
   });
 
-  test('should render max allowed video tiles with streams in the grid ', () => {
+  test('should render max allowed video tiles with streams in the grid', () => {
     const localParticipant = createLocalParticipant({
       videoStream: { isAvailable: true, renderElement: createVideoDivElement() }
-    });
-    // Need to mock hook _useContainerWidth because the returned width is used by HorizontalGallery to decide how many
-    // tiles to show
-    jest.spyOn(responsive, '_useContainerWidth').mockImplementation(() => {
-      return 500;
     });
 
     const root = mountVideoGalleryWithLocalParticipant({ localParticipant });
