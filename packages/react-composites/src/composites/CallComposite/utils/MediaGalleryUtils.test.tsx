@@ -60,12 +60,15 @@ function HookWrapper(): JSX.Element {
   return <div id="announcedString">{announcement}</div>;
 }
 
-function mountWithNoParticipants(): { root: ReactWrapper; adapter: MockCallAdapter } {
+function mountWithParticipants(participantNames?: string[]): { root: ReactWrapper; adapter: MockCallAdapter } {
   const adapter = new MockCallAdapter({});
   let root;
   act(() => {
     root = mount(<RootWrapper adapter={adapter} />);
   });
+  if (participantNames) {
+    setParticipants(root, adapter, participantNames);
+  }
   return { root, adapter };
 }
 
@@ -97,15 +100,21 @@ function expectAnnouncement(root: ReactWrapper, value: string): void {
   expect(announcement.html().toString()).toContain(value);
 }
 
-describe.only('useParticipantChangedAnnouncement', () => {
+describe('useParticipantChangedAnnouncement', () => {
   beforeAll(() => {
     Enzyme.configure({ adapter: new Adapter() });
     initializeIcons();
   });
 
-  test('gets invoked', () => {
-    const { root, adapter } = mountWithNoParticipants();
+  test('when 1 participant joined', () => {
+    const { root, adapter } = mountWithParticipants();
     setParticipants(root, adapter, ['donald']);
     expectAnnouncement(root, 'donald joined');
+  });
+
+  test.only('when 1 participant leaves', () => {
+    const { root, adapter } = mountWithParticipants(['donald']);
+    setParticipants(root, adapter, []);
+    expectAnnouncement(root, 'donald left');
   });
 });

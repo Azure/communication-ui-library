@@ -76,6 +76,10 @@ export const useParticipantChangedAnnouncement = (): string => {
       if (whoJoined.length > 0) {
         resetAnnoucement(createAnnouncmentString('joined', whoJoined, strings));
       }
+      const whoLeft = previousParticipants.filter((p) => !currentParticipants.includes(p));
+      if (whoLeft.length > 0) {
+        resetAnnoucement(createAnnouncmentString('left', whoLeft, strings));
+      }
       // Update cached value at the end.
       setPreviousParticipants(currentParticipants);
     },
