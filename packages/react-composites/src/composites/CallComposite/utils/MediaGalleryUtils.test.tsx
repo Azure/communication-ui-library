@@ -26,8 +26,9 @@ const strings = {
   manyUnnamedParticipantsJoined: 'unnamed participant and {numOfParticipants} other participants joined',
   manyUnnamedParticipantsLeft: 'unnamed participant and {numOfParticipants} other participants left',
   manyParticipantsJoined:
-    '{displayName1}, {displayName2}, {displayName3} and {numOfParticipants} other participants joined',
-  manyParticipantsLeft: '{displayName1}, {displayName2}, {displayName3} and {numOfParticipants} other participants left'
+    '{displayName1}, {displayName2}, {displayName3} and {numOfParticipants} other participants have joined',
+  manyParticipantsLeft:
+    '{displayName1}, {displayName2}, {displayName3} and {numOfParticipants} other participants have left'
 };
 
 const locale = {
@@ -189,5 +190,29 @@ describe.only('useParticipantChangedAnnouncement', () => {
     expectNotAnnounced(root, 'donald left');
     expectNotAnnounced(root, 'zeta left');
     expectNotAnnounced(root, 'donald, prathmesh and zeta have joined');
+  });
+
+  test('when 4 participants joined', () => {
+    const { root, adapter } = mountWithParticipants([]);
+    setParticipants(root, adapter, [
+      participantWithName('donald'),
+      participantWithName('prathmesh'),
+      participantWithName('zeta'),
+      participantWithName('armadillo')
+    ]);
+    expectAnnounced(root, 'donald, prathmesh, zeta and 1 other participants have joined');
+  });
+
+  test('when 4 participants left', () => {
+    const straggler = participantWithName('straggler');
+    const { root, adapter } = mountWithParticipants([
+      participantWithName('donald'),
+      straggler,
+      participantWithName('prathmesh'),
+      participantWithName('zeta'),
+      participantWithName('armadillo')
+    ]);
+    setParticipants(root, adapter, [straggler]);
+    expectAnnounced(root, 'donald, prathmesh, zeta and 1 other participants have left');
   });
 });

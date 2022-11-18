@@ -143,7 +143,6 @@ export const createAnnouncmentString = (
       );
   }
 
-  return 'xkcd';
   /**
    * If we have more than 3 participants joining we need to do something more to announce them
    * appropriately.
@@ -151,7 +150,7 @@ export const createAnnouncmentString = (
    * We don't want to announce every name when more than 3 participants join at once so
    * we parse out the first 3 names we have and announce those with the number of others.
    */
-  /*
+
   const numberOfExtraParticipants = participants.length - 3;
 
   return _formatString(direction === 'joined' ? strings.manyParticipantsJoined : strings.manyParticipantsLeft, {
@@ -160,5 +159,4 @@ export const createAnnouncmentString = (
     displayName3: participants[2].displayName ?? strings.unnamedParticipantString,
     numOfParticipants: numberOfExtraParticipants.toString()
   });
-*/
 };
