@@ -62,7 +62,7 @@ function HookWrapper(): JSX.Element {
   if (announcements.findIndex((a) => a === announcement) === -1) {
     setAnnouncements([...announcements, announcement]);
   }
-  return <div id="announcedString">{JSON.stringify(announcements)}</div>;
+  return <div id="announcedString">{JSON.stringify(announcements.map((v) => `|${v}|`))}</div>;
 }
 
 function mountWithParticipants(participants?: RemoteParticipantState[]): {
@@ -108,12 +108,12 @@ function participantWithName(name: string): RemoteParticipantState {
 
 function expectAnnounced(root: ReactWrapper, value: string): void {
   const announcement = root.find('#announcedString');
-  expect(announcement.html().toString()).toContain(value);
+  expect(announcement.html().toString()).toContain(`|${value}|`);
 }
 
 function expectNotAnnounced(root: ReactWrapper, value: string): void {
   const announcement = root.find('#announcedString');
-  expect(announcement.html().toString()).not.toContain(value);
+  expect(announcement.html().toString()).not.toContain(`|${value}|`);
 }
 
 describe.only('useParticipantChangedAnnouncement', () => {
@@ -153,7 +153,7 @@ describe.only('useParticipantChangedAnnouncement', () => {
     expectNotAnnounced(root, 'prathmesh and zeta have left');
   });
 
-  test.only('when 2 participants left', () => {
+  test('when 2 participants left', () => {
     const donald = participantWithName('donald');
     const { root, adapter } = mountWithParticipants([
       donald,
@@ -166,8 +166,8 @@ describe.only('useParticipantChangedAnnouncement', () => {
     expectNotAnnounced(root, 'donald left');
   });
 
-  test('when 3 participant left', () => {
-    const { root, adapter } = mountWithParticipants();
+  test('when 3 participants joined', () => {
+    const { root, adapter } = mountWithParticipants([]);
     setParticipants(root, adapter, [
       participantWithName('donald'),
       participantWithName('prathmesh'),
@@ -175,5 +175,19 @@ describe.only('useParticipantChangedAnnouncement', () => {
     ]);
     expectAnnounced(root, 'donald, prathmesh and zeta have joined');
     expectNotAnnounced(root, 'donald, prathmesh and zeta have left');
+  });
+
+  test('when 3 participant left', () => {
+    const donald = participantWithName('donald');
+    const prathmesh = participantWithName('prathmesh');
+    const { root, adapter } = mountWithParticipants([donald]);
+    setParticipants(root, adapter, [donald, prathmesh]);
+    setParticipants(root, adapter, [donald, prathmesh, participantWithName('zeta')]);
+    setParticipants(root, adapter, []);
+    expectAnnounced(root, 'donald, prathmesh and zeta have left');
+    expectNotAnnounced(root, 'prathmesh left');
+    expectNotAnnounced(root, 'donald left');
+    expectNotAnnounced(root, 'zeta left');
+    expectNotAnnounced(root, 'donald, prathmesh and zeta have joined');
   });
 });
