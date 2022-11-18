@@ -153,7 +153,20 @@ describe.only('useParticipantChangedAnnouncement', () => {
     expectNotAnnounced(root, 'prathmesh and zeta have left');
   });
 
-  test('when 3 participant joined', () => {
+  test.only('when 2 participants left', () => {
+    const donald = participantWithName('donald');
+    const { root, adapter } = mountWithParticipants([
+      donald,
+      participantWithName('prathmesh'),
+      participantWithName('zeta')
+    ]);
+    setParticipants(root, adapter, [donald]);
+    expectAnnounced(root, 'prathmesh and zeta have left');
+    expectNotAnnounced(root, 'prathmesh and zeta have joined');
+    expectNotAnnounced(root, 'donald left');
+  });
+
+  test('when 3 participant left', () => {
     const { root, adapter } = mountWithParticipants();
     setParticipants(root, adapter, [
       participantWithName('donald'),
