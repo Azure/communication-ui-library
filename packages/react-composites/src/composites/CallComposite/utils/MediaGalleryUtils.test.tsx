@@ -107,6 +107,17 @@ function participantWithName(name: string): RemoteParticipantState {
   };
 }
 
+function participantWithoutName(userId: string): RemoteParticipantState {
+  const identifier: CommunicationUserKind = { communicationUserId: userId, kind: 'communicationUser' };
+  return {
+    identifier: identifier,
+    state: 'Connected',
+    videoStreams: {},
+    isMuted: false,
+    isSpeaking: false
+  };
+}
+
 function expectAnnounced(root: ReactWrapper, value: string): void {
   const announcement = root.find('#announcedString');
   expect(announcement.html().toString()).toContain(`|${value}|`);
@@ -214,5 +225,21 @@ describe.only('useParticipantChangedAnnouncement', () => {
     ]);
     setParticipants(root, adapter, [straggler]);
     expectAnnounced(root, 'donald, prathmesh, zeta and 1 other participants have left');
+  });
+
+  // FIXME
+  test('when 1 unnamed participant joined', () => {
+    const { root, adapter } = mountWithParticipants();
+    setParticipants(root, adapter, [participantWithoutName('some-id')]);
+    expectAnnounced(root, 'unnamed participant joined');
+    expectNotAnnounced(root, 'unnamed participant left');
+    expectNotAnnounced(root, 'some-id joined');
+  });
+
+  test('when 1 unnamed participant left', () => {
+    const { root, adapter } = mountWithParticipants([participantWithoutName('some-id')]);
+    setParticipants(root, adapter, []);
+    expectAnnounced(root, 'unnamed participant left');
+    expectNotAnnounced(root, 'some-id left');
   });
 });
