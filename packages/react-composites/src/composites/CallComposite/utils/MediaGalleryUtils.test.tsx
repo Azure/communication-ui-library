@@ -24,10 +24,10 @@ const mockNoNameParticipant: RemoteParticipantState = {
 };
 
 const strings = {
-  participantJoinedNoticeString: '{displayNames} joined',
+  participantJoinedNoticeString: '{displayName} joined',
   twoParticipantJoinedNoticeString: '{displayName1} and {displayName2} have joined',
   threeParticipantJoinedNoticeString: '{displayName1}, {displayName2} and {displayName3} have joined',
-  participantLeftNoticeString: '{displayNames} left',
+  participantLeftNoticeString: '{displayName} left',
   twoParticipantLeftNoticeString: '{displayName1} and {displayName2} have left',
   threeParticipantLeftNoticeString: '{displayName1}, {displayName2} and {displayName3} have left',
   unnamedParticipantString: 'unnamed participant',
@@ -46,7 +46,7 @@ describe('Participant Changed announcement string tests', () => {
     participants.push(mockParticipant);
 
     expect(createAnnouncmentString('joined', participants, strings)).toEqual(
-      _formatString(strings.participantJoinedNoticeString, { displayNames: 'test' })
+      _formatString(strings.participantJoinedNoticeString, { displayName: 'test' })
     );
 
     participants = [];
@@ -83,7 +83,7 @@ describe('Participant Changed announcement string tests', () => {
     participants.push(mockParticipant);
 
     expect(createAnnouncmentString('left', participants, strings)).toEqual(
-      _formatString(strings.participantLeftNoticeString, { displayNames: 'test' })
+      _formatString(strings.participantLeftNoticeString, { displayName: 'test' })
     );
 
     participants = [];
@@ -134,24 +134,20 @@ describe('Participant Changed announcement string tests', () => {
     }
 
     expect(createAnnouncmentString('joined', participants, strings)).toEqual(
-      _formatString(strings.participantJoinedNoticeString, {
-        displayNames: _formatString(strings.manyParticipantsJoined, {
-          displayName1: 'test',
-          displayName2: 'test',
-          displayName3: 'test',
-          numOfParticipants: '2'
-        })
+      _formatString(strings.manyParticipantsJoined, {
+        displayName1: 'test',
+        displayName2: 'test',
+        displayName3: 'test',
+        numOfParticipants: '2'
       })
     );
 
     expect(createAnnouncmentString('left', participants, strings)).toEqual(
-      _formatString(strings.participantLeftNoticeString, {
-        displayNames: _formatString(strings.manyParticipantsLeft, {
-          displayName1: 'test',
-          displayName2: 'test',
-          displayName3: 'test',
-          numOfParticipants: '2'
-        })
+      _formatString(strings.manyParticipantsLeft, {
+        displayName1: 'test',
+        displayName2: 'test',
+        displayName3: 'test',
+        numOfParticipants: '2'
       })
     );
   });

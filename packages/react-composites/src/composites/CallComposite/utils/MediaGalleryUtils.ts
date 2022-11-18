@@ -113,7 +113,7 @@ export const createAnnouncmentString = (
     case 1:
       return _formatString(
         direction === 'joined' ? strings.participantJoinedNoticeString : strings.participantLeftNoticeString,
-        { displayNames: participantNames[0] }
+        { displayName: participantNames[0] }
       );
     case 2:
       return _formatString(
@@ -143,18 +143,10 @@ export const createAnnouncmentString = (
    */
   const numberOfExtraParticipants = participants.length - 3;
 
-  const whoChanged = _formatString(
-    direction === 'joined' ? strings.manyParticipantsJoined : strings.manyParticipantsLeft,
-    {
-      displayName1: participants[0].displayName ?? strings.unnamedParticipantString,
-      displayName2: participants[1].displayName ?? strings.unnamedParticipantString,
-      displayName3: participants[2].displayName ?? strings.unnamedParticipantString,
-      numOfParticipants: numberOfExtraParticipants.toString()
-    }
-  );
-
-  return _formatString(
-    direction === 'joined' ? strings.participantJoinedNoticeString : strings.participantLeftNoticeString,
-    { displayNames: whoChanged }
-  );
+  return _formatString(direction === 'joined' ? strings.manyParticipantsJoined : strings.manyParticipantsLeft, {
+    displayName1: participants[0].displayName ?? strings.unnamedParticipantString,
+    displayName2: participants[1].displayName ?? strings.unnamedParticipantString,
+    displayName3: participants[2].displayName ?? strings.unnamedParticipantString,
+    numOfParticipants: numberOfExtraParticipants.toString()
+  });
 };
