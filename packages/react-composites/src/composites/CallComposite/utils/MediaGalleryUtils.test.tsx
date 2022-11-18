@@ -65,39 +65,45 @@ function HookWrapper(): JSX.Element {
   return <div id="announcedString">{JSON.stringify(announcements)}</div>;
 }
 
-function mountWithParticipants(participantNames?: string[]): { root: ReactWrapper; adapter: MockCallAdapter } {
+function mountWithParticipants(participants?: RemoteParticipantState[]): {
+  root: ReactWrapper;
+  adapter: MockCallAdapter;
+} {
   const adapter = new MockCallAdapter({});
   let root;
   act(() => {
     root = mount(<RootWrapper adapter={adapter} />);
   });
-  if (participantNames) {
-    setParticipants(root, adapter, participantNames);
+  if (participants) {
+    setParticipants(root, adapter, participants);
   }
   return { root, adapter };
 }
 
-function setParticipants(root: ReactWrapper, adapter: MockCallAdapter, participantNames: string[]): void {
-  const participants = Object.fromEntries(
-    participantNames.map((name) => {
-      const identifier: CommunicationUserKind = { communicationUserId: name, kind: 'communicationUser' };
-      const participant: RemoteParticipantState = {
-        displayName: name,
-        identifier: identifier,
-        state: 'Connected',
-        videoStreams: {},
-        isMuted: false,
-        isSpeaking: false
-      };
-      return [toFlatCommunicationIdentifier(identifier), participant];
-    })
-  );
+function setParticipants(root: ReactWrapper, adapter: MockCallAdapter, participants: RemoteParticipantState[]): void {
   const call: CallState | undefined = adapter.state.call
-    ? { ...adapter.state.call, remoteParticipants: participants }
+    ? {
+        ...adapter.state.call,
+        remoteParticipants: Object.fromEntries(
+          participants.map((p) => [toFlatCommunicationIdentifier(p.identifier), p])
+        )
+      }
     : undefined;
   act(() => {
     adapter.setState({ ...adapter.state, call });
   });
+}
+
+function participantWithName(name: string): RemoteParticipantState {
+  const identifier: CommunicationUserKind = { communicationUserId: name, kind: 'communicationUser' };
+  return {
+    displayName: name,
+    identifier: identifier,
+    state: 'Connected',
+    videoStreams: {},
+    isMuted: false,
+    isSpeaking: false
+  };
 }
 
 function expectAnnounced(root: ReactWrapper, value: string): void {
@@ -118,23 +124,43 @@ describe.only('useParticipantChangedAnnouncement', () => {
 
   test('when 1 participant joined', () => {
     const { root, adapter } = mountWithParticipants();
-    setParticipants(root, adapter, ['donald']);
+    setParticipants(root, adapter, [participantWithName('donald')]);
     expectAnnounced(root, 'donald joined');
     expectNotAnnounced(root, 'donald left');
   });
 
   test('when 1 participant leaves', () => {
-    const { root, adapter } = mountWithParticipants(['donald']);
+    const { root, adapter } = mountWithParticipants([participantWithName('donald')]);
     setParticipants(root, adapter, []);
     expectAnnounced(root, 'donald left');
   });
 
   // Edge case.
   test.skip('when 1 participant joins and another leaves', () => {
-    const { root, adapter } = mountWithParticipants(['donald']);
-    setParticipants(root, adapter, ['prathmesh']);
+    const { root, adapter } = mountWithParticipants([participantWithName('donald')]);
+    setParticipants(root, adapter, [participantWithName('prathmesh')]);
     expectAnnounced(root, 'donald left');
     expectAnnounced(root, 'prathmesh joined');
     expectNotAnnounced(root, 'prathmesh left');
+  });
+
+  test('when 2 participants joined', () => {
+    const donald = participantWithName('donald');
+    const { root, adapter } = mountWithParticipants([donald]);
+    setParticipants(root, adapter, [donald, participantWithName('prathmesh'), participantWithName('zeta')]);
+    expectAnnounced(root, 'prathmesh and zeta have joined');
+    expectNotAnnounced(root, 'donald left');
+    expectNotAnnounced(root, 'prathmesh and zeta have left');
+  });
+
+  test('when 3 participant joined', () => {
+    const { root, adapter } = mountWithParticipants();
+    setParticipants(root, adapter, [
+      participantWithName('donald'),
+      participantWithName('prathmesh'),
+      participantWithName('zeta')
+    ]);
+    expectAnnounced(root, 'donald, prathmesh and zeta have joined');
+    expectNotAnnounced(root, 'donald, prathmesh and zeta have left');
   });
 });

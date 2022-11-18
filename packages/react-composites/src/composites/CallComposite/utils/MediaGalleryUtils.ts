@@ -138,7 +138,7 @@ export const createAnnouncmentString = (
         {
           displayName1: participantNames[0],
           displayName2: participantNames[1],
-          displayName3: participantNames[1]
+          displayName3: participantNames[2]
         }
       );
   }
