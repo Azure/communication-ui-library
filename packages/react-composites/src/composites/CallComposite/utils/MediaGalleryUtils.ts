@@ -104,13 +104,17 @@ export const createAnnouncmentString = (
   strings: ParticipantChangedAnnouncmentStrings
 ): string => {
   /**
-   * Check that we have more than 1 participant, if they all have no displayName return unnamed participants
-   * overflow string
+   * Filter participants into two arrays to put all the unnamed participants at the back of the
+   * names being announced.
    */
   const unnamedParticipants = participants.filter((p) => p.displayName === undefined);
   const namedParicipants = participants.filter((p) => p.displayName);
   const sortedParticipants = namedParicipants.concat(unnamedParticipants);
 
+  /**
+   * if there are only unnamed participants present in the array announce a special unnamed participants
+   * only string.
+   */
   if (sortedParticipants.filter((p) => p.displayName).length === 0 && sortedParticipants.length > 1) {
     return _formatString(
       direction === 'joined' ? strings.manyUnnamedParticipantsJoined : strings.manyUnnamedParticipantsLeft,
