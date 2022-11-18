@@ -148,7 +148,7 @@ const gridAudioTileCount = (root: ReactWrapper<VideoGalleryProps>): number =>
 
 const createLocalParticipant = (attrs?: Partial<VideoGalleryLocalParticipant>): VideoGalleryLocalParticipant => {
   return {
-    userId: attrs?.userId ?? `localParticipant-${Math.random()}`,
+    userId: attrs?.userId ?? `localParticipant-${Math.random().toString()}`,
     isMuted: attrs?.isMuted ?? false,
     displayName: attrs?.displayName ?? 'Local Participant',
     isScreenSharingOn: attrs?.isScreenSharingOn ?? false,
@@ -170,7 +170,7 @@ const createVideoDivElement = (): HTMLDivElement => {
 
 const createRemoteParticipant = (attrs?: Partial<VideoGalleryRemoteParticipant>): VideoGalleryRemoteParticipant => {
   return {
-    userId: attrs?.userId ?? `remoteParticipant-${Math.random()}`,
+    userId: attrs?.userId ?? `remoteParticipant-${Math.random().toString()}`,
     displayName: attrs?.displayName ?? 'Remote Participant',
     isMuted: attrs?.isMuted ?? false,
     isSpeaking: attrs?.isSpeaking ?? false,
