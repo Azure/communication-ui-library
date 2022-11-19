@@ -9,7 +9,7 @@ import { BannerPalette, blueBannerPalette } from './BannerPalettes';
 import { ImportantHeading } from './ImportantBannerHeading';
 
 /** @private */
-export const DetailedBetaBanner = (props: { palette?: BannerPalette }): JSX.Element => {
+export const DetailedBetaBanner = (props: { palette?: BannerPalette; version?: string }): JSX.Element => {
   const palette: BannerPalette = props.palette ?? blueBannerPalette;
   return (
     <Stack className={bannerContainerStyles(palette.background)}>
@@ -18,9 +18,16 @@ export const DetailedBetaBanner = (props: { palette?: BannerPalette }): JSX.Elem
       </Stack.Item>
       <Stack.Item>
         <Text className={mergeStyles({ lineHeight: '1.5rem' })}>
-          This feature is currently in public preview. Public preview APIs may be unstable and are not recommended for
-          production workloads. As such these features are only available in @azure/communication-react npm packages
-          suffixed with -beta. For more information, see:{' '}
+          This feature is currently in public preview {props.version ? 'version' : ''}{' '}
+          {props.version ? (
+            <b>
+              {'>'}={props.version}
+            </b>
+          ) : (
+            ''
+          )}
+          . Public preview APIs may be unstable and are not recommended for production workloads. As such these features
+          are only available in @azure/communication-react npm packages suffixed with -beta. For more information, see:{' '}
           <Link
             className={mergeStyles({ color: palette.link, fontWeight: '600' })}
             href={MICROSOFT_AZURE_PREVIEWS_URL}

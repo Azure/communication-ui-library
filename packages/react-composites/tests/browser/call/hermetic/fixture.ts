@@ -102,7 +102,7 @@ export function defaultMockCallAdapterState(participants?: MockRemoteParticipant
  *
  * Use this to add participants to state created via {@link defaultCallAdapterState}.
  */
-export function defaultMockRemoteParticipant(displayName: string): MockRemoteParticipantState {
+export function defaultMockRemoteParticipant(displayName?: string): MockRemoteParticipantState {
   return {
     identifier: { kind: 'communicationUser', communicationUserId: `8:acs:${displayName}-id` },
     state: 'Connected',

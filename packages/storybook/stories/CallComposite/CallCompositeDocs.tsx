@@ -210,7 +210,7 @@ export const getDocs: () => JSX.Element = () => {
       </Description>
 
       <Heading>PSTN and 1:N Calling</Heading>
-      <SingleLineBetaBanner />
+      <SingleLineBetaBanner version={'1.3.2-beta.1'} />
       <Description>
         The CallComposite supports making outbound PSTN and 1:N calls. 1:N is a call either between just Azure
         Communication Users or, a mix between ACS and PSTN users. To make these outbound calls you need to provide a
@@ -229,7 +229,7 @@ export const getDocs: () => JSX.Element = () => {
       </Description>
 
       <Heading>Rooms</Heading>
-      <SingleLineBetaBanner />
+      <SingleLineBetaBanner version={'1.3.2-beta.1'} />
       <Description>
         The CallComposite supports [Rooms](./?path=/docs/rooms--page). To join a room call you need to provide a
         `locator` that contains the roomId of the room call you want to join to the
