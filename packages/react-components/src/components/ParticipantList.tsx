@@ -128,14 +128,12 @@ const onRenderParticipantDefault = (
         )
       : () => null;
 
-  const displayName = !participant.displayName ? strings.displayNamePlaceholder : participant.displayName;
-
   return (
     <ParticipantItem
       styles={styles}
       key={participant.userId}
       userId={participant.userId}
-      displayName={displayName}
+      displayName={participant.displayName}
       me={myUserId ? participant.userId === myUserId : false}
       menuItems={menuItems}
       presence={presence}
