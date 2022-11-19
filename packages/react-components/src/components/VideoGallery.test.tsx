@@ -13,6 +13,7 @@ import { VideoTile } from './VideoTile';
 import { v1 as createGUID } from 'uuid';
 import * as responsive from './utils/responsive';
 import * as acs_ui_common from '@internal/acs-ui-common';
+import { RemoteScreenShare } from './VideoGallery/RemoteScreenShare';
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -114,6 +115,44 @@ describe('VideoGallery default layout', () => {
     root.setProps({ remoteParticipants });
     expect(gridVideoTileCount(root)).toBe(DEFAULT_MAX_REMOTE_VIDEO_STREAMS + 1); // +1 for the local video stream
     expect(root.find(HorizontalGallery).find(VideoTile).length).toBe(2);
+  });
+
+  test('should render remote screenshare and render dominant speaking remote participants in horizontal gallery', () => {
+    const localParticipant = createLocalParticipant({
+      videoStream: { isAvailable: true, renderElement: createVideoDivElement() }
+    });
+    const root = mountVideoGalleryWithLocalParticipant({ localParticipant });
+
+    // 8 remote audio participants
+    const remoteParticipants = Array.from({ length: 8 }, () => createRemoteParticipant());
+    // 1 remote video participant
+    remoteParticipants.push(
+      createRemoteParticipant({
+        userId: 'remoteVideoParticipant',
+        videoStream: { isAvailable: true, renderElement: createVideoDivElement() }
+      })
+    );
+    // 1 remote screen sharing participants
+    remoteParticipants.push(
+      createRemoteParticipant({
+        userId: 'remoteScreenSharingParticipant',
+        isScreenSharingOn: true,
+        screenShareStream: { isAvailable: true, renderElement: createVideoDivElement() }
+      })
+    );
+
+    root.setProps({
+      remoteParticipants,
+      dominantSpeakers: ['remoteScreenSharingParticipant', 'remoteVideoParticipant']
+    });
+
+    expect(root.find(RemoteScreenShare).length).toBe(1);
+    expect(root.find(HorizontalGallery).find(VideoTile).length).toBe(2);
+    expect(root.find(HorizontalGallery).find(StreamMedia).length).toBe(1);
+    expect(root.find(HorizontalGallery).find(VideoTile).first().prop('userId')).toBe('remoteVideoParticipant');
+    expect(root.find(HorizontalGallery).find(VideoTile).first().find(StreamMedia).exists()).toBe(true);
+    expect(root.find(HorizontalGallery).find(VideoTile).at(1).prop('userId')).toBe('remoteScreenSharingParticipant');
+    expect(root.find(HorizontalGallery).find(VideoTile).at(1).find(StreamMedia).exists()).toBe(false);
   });
 });
 
