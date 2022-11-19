@@ -3,24 +3,10 @@
 
 import { _formatString } from '@internal/acs-ui-common';
 import { RemoteParticipantState } from '@internal/calling-stateful-client';
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useLocale } from '../../localization';
-import { CallAdapterState } from '../adapter';
 import { useSelector } from '../hooks/useSelector';
-
-/**
- * Custom selector for this hook to retrieve all the participants that are currently
- * connected to the call.
- */
-const getRemoteParticipantsConnectedSelector = (callState: CallAdapterState): RemoteParticipantState[] => {
-  return Object.values(callState.call?.remoteParticipants ?? {}).filter(
-    /**
-     * We need to make sure remote participants are in the connected state. If they are not
-     * they might not have their displayName set in the call state just yet.
-     */
-    (p) => p.state === 'Connected'
-  );
-};
+import { getRemoteParticipantsConnectedSelector } from '../selectors/mediaGallerySelector';
 
 type ParticipantChangedAnnouncmentStrings = {
   participantJoinedNoticeString: string;
@@ -74,14 +60,14 @@ export const useParticipantChangedAnnouncement = (): string => {
     setAnnouncerString(string);
   };
 
-  useEffect(
+  useMemo(
     () => {
       const whoJoined = currentParticipants.filter((p) => !previousParticipants.includes(p));
-      if (whoJoined.length > 0) {
+      const whoLeft = previousParticipants.filter((p) => !currentParticipants.includes(p));
+      if (whoJoined.length > whoLeft.length) {
         resetAnnoucement(createAnnouncmentString('joined', whoJoined, strings));
       }
-      const whoLeft = previousParticipants.filter((p) => !currentParticipants.includes(p));
-      if (whoLeft.length > 0) {
+      if (whoLeft.length > whoJoined.length) {
         resetAnnoucement(createAnnouncmentString('left', whoLeft, strings));
       }
       // Update cached value at the end.
@@ -90,7 +76,7 @@ export const useParticipantChangedAnnouncement = (): string => {
     // previousParticipants caches the value of `currenParticipants`. We _don't_ want this
     // hook to run for when `previousParticipants` is updated.
     // If we did, the second run would always clear out the value of `whoJoined` etc.
-    [currentParticipants, strings]
+    [currentParticipants, previousParticipants, strings]
   );
   return announcerString;
 };
@@ -161,9 +147,9 @@ export const createAnnouncmentString = (
   const numberOfExtraParticipants = sortedParticipants.length - 3;
 
   return _formatString(direction === 'joined' ? strings.manyParticipantsJoined : strings.manyParticipantsLeft, {
-    displayName1: participants[0].displayName ?? strings.unnamedParticipantString,
-    displayName2: participants[1].displayName ?? strings.unnamedParticipantString,
-    displayName3: participants[2].displayName ?? strings.unnamedParticipantString,
+    displayName1: sortedParticipants[0].displayName ?? strings.unnamedParticipantString,
+    displayName2: sortedParticipants[1].displayName ?? strings.unnamedParticipantString,
+    displayName3: sortedParticipants[2].displayName ?? strings.unnamedParticipantString,
     numOfParticipants: numberOfExtraParticipants.toString()
   });
 };

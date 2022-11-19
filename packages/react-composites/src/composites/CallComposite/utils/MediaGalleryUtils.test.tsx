@@ -273,4 +273,35 @@ describe.only('useParticipantChangedAnnouncement', () => {
     expectAnnounced(root, 'unnamed participant and 4 other participants left');
     expectNotAnnounced(root, 'some-id has left');
   });
+
+  test('when more than one participant joined with unnamed participants', () => {
+    const { root, adapter } = mountWithParticipants([]);
+    setParticipants(root, adapter, [
+      participantWithName('donald'),
+      participantWithoutName('some-id'),
+      participantWithoutName('some-id1'),
+      participantWithName('prathmesh'),
+      participantWithoutName('some-id2'),
+      participantWithName('armadillo'),
+      participantWithoutName('some-id3'),
+      participantWithoutName('some-id4')
+    ]);
+    expectAnnounced(root, 'donald, prathmesh, armadillo and 5 other participants have joined');
+    expectNotAnnounced(root, 'some-id has joined');
+  });
+  test('when more than one participant left with unnamed participants', () => {
+    const { root, adapter } = mountWithParticipants([
+      participantWithName('donald'),
+      participantWithoutName('some-id'),
+      participantWithoutName('some-id1'),
+      participantWithName('prathmesh'),
+      participantWithoutName('some-id2'),
+      participantWithName('armadillo'),
+      participantWithoutName('some-id3'),
+      participantWithoutName('some-id4')
+    ]);
+    setParticipants(root, adapter, []);
+    expectAnnounced(root, 'donald, prathmesh, armadillo and 5 other participants have left');
+    expectNotAnnounced(root, 'some-id has left');
+  });
 });
