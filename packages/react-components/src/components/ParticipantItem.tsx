@@ -163,11 +163,12 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
   const strings = { ...localeStrings, ...props.strings };
 
   const avatarOptions = {
-    text: displayName,
+    text: displayName?.trim() || strings.displayNamePlaceholder,
     size: PersonaSize.size32,
     presence: presence,
     initialsTextColor: 'white',
-    showOverflowTooltip: showParticipantOverflowTooltip
+    showOverflowTooltip: showParticipantOverflowTooltip,
+    showUnknownPersonaCoin: !displayName?.trim() || displayName === strings.displayNamePlaceholder
   };
 
   const avatar = onRenderAvatar ? (

@@ -165,4 +165,24 @@ test.describe('Participant pane tests', async () => {
     }, participantStringId);
     expect(await stableScreenshot(page)).toMatchSnapshot('PSTN-participant-pane-callee-name-truncation.png');
   });
+
+  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
+  test('Participant shows unknown icon when displayName is missing', async ({ page, serverUrl }, testInfo) => {
+    const remoteParticipantWithNoName = defaultMockRemoteParticipant();
+    const initialState = defaultMockCallAdapterState([remoteParticipantWithNoName]);
+    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { callInvitationUrl: 'testUrl' }));
+
+    await waitForSelector(page, dataUiId(IDS.videoGallery));
+
+    if (!isTestProfileDesktop(testInfo)) {
+      await pageClick(page, dataUiId('call-with-chat-composite-more-button'));
+      const drawerPeopleMenuDiv = await page.$('div[role="menu"] >> text=People');
+      await drawerPeopleMenuDiv?.click();
+    } else {
+      await pageClick(page, dataUiId('call-composite-participants-button'));
+    }
+
+    await waitForSelector(page, dataUiId('call-composite-people-pane'));
+    expect(await stableScreenshot(page)).toMatchSnapshot('participant-with-no-name-unknown-icon.png');
+  });
 });

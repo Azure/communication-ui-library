@@ -135,6 +135,7 @@ export type AvatarPersonaData = {
     imageInitials?: string;
     initialsColor?: PersonaInitialsColor | string;
     initialsTextColor?: string;
+    showUnknownPersonaCoin?: boolean;
 };
 
 // @public
@@ -1660,6 +1661,7 @@ export type CustomAvatarOptions = {
     styles?: IStyleFunctionOrObject<IPersonaStyleProps, IPersonaStyles>;
     text?: string;
     participantState?: ParticipantState;
+    showUnknownPersonaCoin?: boolean;
 };
 
 // @beta
