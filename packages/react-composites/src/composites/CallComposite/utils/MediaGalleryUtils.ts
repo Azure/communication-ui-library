@@ -64,10 +64,10 @@ export const useParticipantChangedAnnouncement = (): string => {
     () => {
       const whoJoined = currentParticipants.filter((p) => !previousParticipants.includes(p));
       const whoLeft = previousParticipants.filter((p) => !currentParticipants.includes(p));
-      if (whoJoined.length > whoLeft.length) {
+      if (whoJoined.length > 0) {
         resetAnnoucement(createAnnouncmentString('joined', whoJoined, strings));
       }
-      if (whoLeft.length > whoJoined.length) {
+      if (whoLeft.length > 0) {
         resetAnnoucement(createAnnouncmentString('left', whoLeft, strings));
       }
       // Update cached value at the end.

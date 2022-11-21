@@ -147,7 +147,9 @@ describe.only('useParticipantChangedAnnouncement', () => {
     expectAnnounced(root, 'donald left');
   });
 
-  // Edge case.
+  // We don't currently handle the case when participants join and lave _at the exact same time_.
+  // This is a very unlikely case as even a few milliseconds difference between participants
+  // joinging / leaving will lead to two separate events rather than a single one.
   test.skip('when 1 participant joins and another leaves', () => {
     const { root, adapter } = mountWithParticipants([participantWithName('donald')]);
     setParticipants(root, adapter, [participantWithName('prathmesh')]);
@@ -227,7 +229,6 @@ describe.only('useParticipantChangedAnnouncement', () => {
     expectAnnounced(root, 'donald, prathmesh, zeta and 1 other participants have left');
   });
 
-  // FIXME
   test('when 1 unnamed participant joined', () => {
     const { root, adapter } = mountWithParticipants();
     setParticipants(root, adapter, [participantWithoutName('some-id')]);
@@ -289,6 +290,7 @@ describe.only('useParticipantChangedAnnouncement', () => {
     expectAnnounced(root, 'donald, prathmesh, armadillo and 5 other participants have joined');
     expectNotAnnounced(root, 'some-id has joined');
   });
+
   test('when more than one participant left with unnamed participants', () => {
     const { root, adapter } = mountWithParticipants([
       participantWithName('donald'),
@@ -303,5 +305,22 @@ describe.only('useParticipantChangedAnnouncement', () => {
     setParticipants(root, adapter, []);
     expectAnnounced(root, 'donald, prathmesh, armadillo and 5 other participants have left');
     expectNotAnnounced(root, 'some-id has left');
+  });
+
+  // FIXME: This test is current broken because we need to compare participants by IDs in the hook.
+  test.skip('when 1 participant joined and then mutes their mic', () => {
+    const donald = participantWithName('donald');
+    // An entirely new `RemoteParticipant` object is returned when a field in the object changes.
+    const mutedDonald = participantWithName('donald');
+    mutedDonald.isMuted = true;
+    const speakingDonald = participantWithName('donald');
+    speakingDonald.isSpeaking = true;
+
+    const { root, adapter } = mountWithParticipants();
+    setParticipants(root, adapter, [donald]);
+    setParticipants(root, adapter, [mutedDonald]);
+    setParticipants(root, adapter, [speakingDonald]);
+    expectAnnounced(root, 'donald joined');
+    expectNotAnnounced(root, 'donald left');
   });
 });
