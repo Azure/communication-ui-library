@@ -256,10 +256,8 @@ export interface CallAdapterCallManagement {
   unmute(): Promise<void>;
   /**
    * Start the call.
-   *
-   * @param participants - An array of participant ids to join
-   *
-   * @public
+   * @param participants - An array of {@link @azure/communication-common#CommunicationIdentifier} to be called
+   * @beta
    */
   startCall(participants: string[], options?: StartCallOptions): void;
   /* @conditional-compile-remove(PSTN-calls) */

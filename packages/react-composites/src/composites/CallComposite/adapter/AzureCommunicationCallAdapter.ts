@@ -211,7 +211,7 @@ export class AzureCommunicationCallAdapter<
   private localStream: SDKLocalVideoStream | undefined;
   private locator: CallAdapterLocator;
   // Never use directly, even internally. Use `call` property instead.
-  private _call?: CallTypeOf<AgentType>;
+  private _call?: CallCommon;
   private context: CallContext;
   private diagnosticsForwarder?: DiagnosticsForwarder;
   private handlers: CallHandlersOf<AgentType>;
@@ -219,11 +219,11 @@ export class AzureCommunicationCallAdapter<
   private emitter: EventEmitter = new EventEmitter();
   private onClientStateChange: (clientState: CallClientState) => void;
 
-  private get call(): CallTypeOf<AgentType> | undefined {
+  private get call(): CallCommon | undefined {
     return this._call;
   }
 
-  private set call(newCall: CallTypeOf<AgentType> | undefined) {
+  private set call(newCall: CallCommon | undefined) {
     this.resetDiagnosticsForwarder(newCall);
     this._call = newCall;
   }
@@ -273,24 +273,7 @@ export class AzureCommunicationCallAdapter<
 
     this.callClient.onStateChange(onStateChange);
 
-    /* @conditional-compile-remove(teams-identity-support) */
-    if (!_isACSCallAgent(callAgent)) {
-      this.handlers = createDefaultTeamsCallingHandlers(
-        callClient,
-        callAgent,
-        deviceManager,
-        undefined
-      ) as CallHandlersOf<AgentType>;
-
-      return;
-    }
-
-    this.handlers = createDefaultCallingHandlers(
-      callClient,
-      callAgent,
-      deviceManager,
-      undefined
-    ) as CallHandlersOf<AgentType>;
+    this.handlers = this.createHandlers(callClient, callAgent, deviceManager, undefined);
   }
 
   // TODO: update this to include the 'selectedCameraChanged' when calling adds it to the device manager
@@ -402,7 +385,7 @@ export class AzureCommunicationCallAdapter<
     const isRoomsCall = 'roomId' in this.locator;
 
     /* @conditional-compile-remove(teams-identity-support) */
-    if (!_isACSCallAgent(this.callAgent)) {
+    if (_isTeamsCallAgent(this.callAgent)) {
       if (isTeamsMeeting) {
         return this.callAgent.join(this.locator as TeamsMeetingLinkLocator, {
           audioOptions,
@@ -584,10 +567,10 @@ export class AzureCommunicationCallAdapter<
     }
     this.processNewCall(call);
 
-    return this.call;
+    return call;
   }
 
-  private processNewCall(call: CallTypeOf<AgentType>): void {
+  private processNewCall(call: CallCommon): void {
     this.call = call;
     this.context.setCurrentCallId(call.id);
 
