@@ -24,6 +24,12 @@ export const joinThread = async (threadId: string, userId: string, displayName: 
     if (response.status === StatusCode.CREATED) {
       return true;
     }
+    // if we are attempting to add a user to a thread that is not a thread our admin user is already a part of to add in this user
+    // we would be unable to add the user
+    // so we are returning a 404 if the thread we want to add them to cannot be accessed by our server user
+    else if (response.status === StatusCode.NOTFOUND) {
+      return false;
+    }
   } catch (error) {
     console.error('Failed at adding user, Error: ', error);
   }

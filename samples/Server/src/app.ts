@@ -11,7 +11,6 @@ import path from 'path';
 import issueToken from './routes/issueToken';
 import refreshToken from './routes/refreshToken';
 import getEndpointUrl from './routes/getEndpointUrl';
-import isValidThread from './routes/isValidThread';
 import userConfig from './routes/userConfig';
 import createThread from './routes/createThread';
 import addUser from './routes/addUser';
@@ -55,12 +54,6 @@ app.use('/getEndpointUrl', cors(), getEndpointUrl);
  * purpose: Chat,Calling: get ACS token with the given scope
  */
 app.use('/token', cors(), issueToken);
-
-/**
- * route: /isValidThread
- * purpose: Chat: check if thread is valid
- */
-app.use('/isValidThread', cors(), isValidThread);
 
 /**
  * route: /userConfig
