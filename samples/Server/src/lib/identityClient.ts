@@ -16,7 +16,7 @@ const getIdentityClient = (): CommunicationIdentityClient =>
   identityClient ?? (identityClient = new CommunicationIdentityClient(getResourceConnectionString()));
 
 // replicate here to allow for mocks in tests
-export const createUser = (): CommunicationUserIdentifier => {
+export const getAdminUser = (): CommunicationUserIdentifier => {
   return { communicationUserId: getAdminUserId() };
 };
 export const getToken = (user: CommunicationUserIdentifier, scopes: TokenScope[]): Promise<CommunicationAccessToken> =>

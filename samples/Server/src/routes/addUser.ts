@@ -5,7 +5,7 @@ import { ChatClient } from '@azure/communication-chat';
 import { AzureCommunicationTokenCredential } from '@azure/communication-common';
 import * as express from 'express';
 import { getEndpoint } from '../lib/envHelper';
-import { createUser, getToken } from '../lib/identityClient';
+import { getAdminUser, getToken } from '../lib/identityClient';
 
 const router = express.Router();
 interface AddUserParam {
@@ -30,7 +30,7 @@ router.post('/:threadId', async function (req, res, next) {
 
   // create a user from the adminUserId and create a credential around that
   const credential = new AzureCommunicationTokenCredential({
-    tokenRefresher: async () => (await getToken(createUser(), ['chat', 'voip'])).token,
+    tokenRefresher: async () => (await getToken(getAdminUser(), ['chat', 'voip'])).token,
     refreshProactively: true
   });
 
