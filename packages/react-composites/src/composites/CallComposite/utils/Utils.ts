@@ -8,6 +8,8 @@ import { CallState } from '@internal/calling-stateful-client';
 import { isPhoneNumberIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
+/* @conditional-compile-remove(unsupported-browser) */
+import { CallAdapterOptionalFeatures } from '../adapter/CallAdapter';
 
 const ACCESS_DENIED_TEAMS_MEETING_SUB_CODE = 5854;
 const REMOTE_PSTN_USER_HUNG_UP = 560000;
@@ -122,7 +124,8 @@ type GetCallCompositePageFunction = ((
   /* @conditional-compile-remove(unsupported-browser) */ ((
     call: CallState | undefined,
     previousCall: CallState | undefined,
-    environmentInfo?: EnvironmentInfo
+    environmentInfo?: EnvironmentInfo,
+    features?: CallAdapterOptionalFeatures
   ) => CallCompositePage);
 
 /**
@@ -141,10 +144,11 @@ type GetCallCompositePageFunction = ((
 export const getCallCompositePage: GetCallCompositePageFunction = (
   call,
   previousCall,
-  environmentInfo?
+  environmentInfo?,
+  features?
 ): CallCompositePage => {
   /* @conditional-compile-remove(unsupported-browser) */
-  if (environmentInfo?.isSupportedBrowser === false) {
+  if (features?.unsupportedEnvironment && environmentInfo?.isSupportedBrowser === false) {
     return 'unsupportedEnvironment';
   }
 

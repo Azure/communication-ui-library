@@ -11,8 +11,6 @@ import {
   PermissionConstraints,
   StartCallOptions
 } from '@azure/communication-calling';
-/* @conditional-compile-remove(unsupported-browser) */
-import { EnvironmentInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions, DtmfTone } from '@azure/communication-calling';
 import { CallWithChatAdapterState } from '../state/CallWithChatAdapterState';
@@ -150,13 +148,6 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
     } else {
       return this.callWithChatAdapter.addParticipant(participant as CommunicationUserIdentifier);
     }
-  }
-  /* @conditional-compile-remove(unsupported-browser) */
-  public async populateEnvironmentInfo(): Promise<EnvironmentInfo> {
-    if (!this.callWithChatAdapter.populateEnvironmentInfo) {
-      throw new Error('populateEnvironmentInfo not implemented');
-    }
-    return await this.callWithChatAdapter.populateEnvironmentInfo();
   }
 
   /* @conditional-compile-remove(PSTN-calls) */

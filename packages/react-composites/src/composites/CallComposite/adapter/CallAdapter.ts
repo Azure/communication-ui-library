@@ -372,13 +372,6 @@ export interface CallAdapterCallManagement {
    * @beta
    */
   sendDtmfTone(dtmfTone: DtmfTone): Promise<void>;
-  /* @conditional-compile-remove(unsupported-browser) */
-  /**
-   * Get the environment that the adapter was constructed in.
-   *
-   * @beta
-   */
-  populateEnvironmentInfo?(): Promise<EnvironmentInfo>;
 }
 
 /**

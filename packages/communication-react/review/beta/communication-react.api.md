@@ -266,8 +266,6 @@ export interface CallAdapterCallManagement {
     joinCall(microphoneOn?: boolean): Call | undefined;
     leaveCall(forEveryone?: boolean): Promise<void>;
     mute(): Promise<void>;
-    // @beta
-    populateEnvironmentInfo?(): Promise<EnvironmentInfo>;
     removeParticipant(userId: string): Promise<void>;
     // @beta
     removeParticipant(participant: CommunicationIdentifier): Promise<void>;
@@ -727,8 +725,6 @@ export interface CallWithChatAdapterManagement {
     leaveCall(forEveryone?: boolean): Promise<void>;
     loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
     mute(): Promise<void>;
-    // @beta
-    populateEnvironmentInfo?(): Promise<EnvironmentInfo>;
     queryCameras(): Promise<VideoDeviceInfo[]>;
     queryMicrophones(): Promise<AudioDeviceInfo[]>;
     querySpeakers(): Promise<AudioDeviceInfo[]>;

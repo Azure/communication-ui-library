@@ -56,7 +56,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
   const afterCreate = useCallback(
     async (adapter: CallAdapter): Promise<CallAdapter> => {
       adapter.on('callEnded', () => {
-        onCallEnded();
+        // onCallEnded();
       });
       adapter.on('error', (e) => {
         // Error is already acted upon by the Call composite, but the surrounding application could
@@ -87,16 +87,18 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     () => ({
       callReadinessOptedIn: callReadinessOptedIn,
       onPermissionsTroubleshootingClick,
-      onNetworkingTroubleShootingClick,
-      unsupportedBrowserOptedIn: false
+      onNetworkingTroubleShootingClick
     }),
     [callReadinessOptedIn]
   );
 
   /* @conditional-compile-remove(unsupported-browser) */
-  const callingFeatures: CallAdapterOptionalFeatures = {
-    unsupportedEnvironment: true
-  };
+  const callingFeatures: CallAdapterOptionalFeatures = useMemo(
+    () => ({
+      unsupportedEnvironment: true
+    }),
+    []
+  );
   /* @conditional-compile-remove(rooms) */
   const callAdapterOptions: AzureCommunicationCallAdapterOptions = useMemo(() => ({ roleHint }), [roleHint]);
 

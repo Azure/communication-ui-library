@@ -30,8 +30,6 @@ import {
   StartCallOptions,
   VideoOptions
 } from '@azure/communication-calling';
-/* @conditional-compile-remove(unsupported-browser) */
-import { EnvironmentInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(rooms) */
 import { RoomCallLocator } from '@azure/communication-calling';
 /* @conditional-compile-remove(unsupported-browser) */
@@ -147,7 +145,8 @@ class CallContext {
     const newPage = getCallCompositePage(
       call,
       latestEndedCall,
-      /* @conditional-compile-remove(unsupported-browser) */ environmentInfo
+      /* @conditional-compile-remove(unsupported-browser) */ environmentInfo,
+      /* @conditional-compile-remove(unsupported-browser) */ this.state.features
     );
     if (!IsCallEndedPage(oldPage) && IsCallEndedPage(newPage)) {
       this.emitter.emit('callEnded', { callId: this.callId });
@@ -308,8 +307,6 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     this.resumeCall.bind(this);
     /* @conditional-compile-remove(PSTN-calls) */
     this.sendDtmfTone.bind(this);
-    /* @conditional-compile-remove(unsupported-browser) */
-    this.populateEnvironmentInfo.bind(this);
   }
 
   public dispose(): void {
@@ -487,16 +484,6 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
       if (this.call?.isScreenSharingOn) {
         await this.handlers.onToggleScreenShare();
       }
-    });
-  }
-
-  /* @conditional-compile-remove(unsupported-browser) */
-  public async populateEnvironmentInfo(): Promise<EnvironmentInfo> {
-    return await this.asyncTeeErrorToEventEmitter(async () => {
-      if (!this.context.getState().features?.unsupportedEnvironment) {
-        throw new Error('unsupportedEnvironment feature not enabled.');
-      }
-      return await this.callClient.feature(Features.DebugInfo).getEnvironmentInfo();
     });
   }
 
@@ -987,9 +974,7 @@ export const createAzureCommunicationCallAdapterFromClient: (
 ): Promise<CallAdapter> => {
   const deviceManager = (await callClient.getDeviceManager()) as StatefulDeviceManager;
   /* @conditional-compile-remove(unsupported-browser) */
-  if (features?.unsupportedEnvironment === true) {
-    await callClient.feature(Features.DebugInfo).getEnvironmentInfo();
-  }
+  await callClient.feature(Features.DebugInfo).getEnvironmentInfo();
   return new AzureCommunicationCallAdapter(
     callClient,
     locator,

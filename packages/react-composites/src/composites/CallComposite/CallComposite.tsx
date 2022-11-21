@@ -313,19 +313,17 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
   }
 
   /* @conditional-compile-remove(unsupported-browser) */
-  if (adapter.getState().features?.unsupportedEnvironment) {
-    switch (page) {
-      case 'unsupportedEnvironment':
-        pageElement = (
-          <>
-            {
-              /* @conditional-compile-remove(unsupported-browser) */
-              <UnsupportedBrowserPage onTroubleshootingClick={props.options?.onEnvironmentInfoTroubleshootingClick} />
-            }
-          </>
-        );
-        break;
-    }
+  switch (page) {
+    case 'unsupportedEnvironment':
+      pageElement = (
+        <>
+          {
+            /* @conditional-compile-remove(unsupported-browser) */
+            <UnsupportedBrowserPage onTroubleshootingClick={props.options?.onEnvironmentInfoTroubleshootingClick} />
+          }
+        </>
+      );
+      break;
   }
 
   if (!pageElement) {
@@ -378,11 +376,6 @@ export const CallComposite = (props: CallCompositeProps): JSX.Element => {
   }, [adapter, /* @conditional-compile-remove(rooms) */ roleHint]);
 
   const mobileView = formFactor === 'mobile';
-
-  /* @conditional-compile-remove(unsupported-browser) */
-  if (adapter.getState().features?.unsupportedEnvironment && adapter.populateEnvironmentInfo) {
-    adapter.populateEnvironmentInfo();
-  }
 
   /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   const modalLayerHostId = useId('modalLayerhost');
