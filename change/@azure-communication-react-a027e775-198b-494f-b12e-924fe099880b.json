@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Revert Require webpack 5 in our lib... (#2428)",
+  "packageName": "@azure/communication-react",
+  "email": "edwardlee@microsoft.com",
+  "dependentChangeType": "none"
+}
