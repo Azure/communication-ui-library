@@ -85,11 +85,11 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     [callReadinessOptedIn]
   );
 
-  /* @conditional-compile-remove(rooms) */
+  /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(unsupported-browser) */
   const callAdapterOptions: AzureCommunicationCallAdapterOptions = useMemo(
     () => ({
       roleHint,
-      /* @conditional-compile-remove(unsupported-browser) */ features: { unsupportedEnvironment: true }
+      features: { unsupportedEnvironment: true }
     }),
     [roleHint]
   );
