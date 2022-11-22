@@ -52,6 +52,7 @@ import {
   CallAdapterCallEndedEvent,
   CallAdapter
 } from './CallAdapter';
+/* @conditional-compile-remove(teams-identity-support)) */
 import { TeamsCallAdapter } from './CallAdapter';
 import { getCallCompositePage, IsCallEndedPage, isCameraOn } from '../utils';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
@@ -849,7 +850,9 @@ export const createAzureCommunicationTeamsCallAdapter = async ({
 /**
  * @private
  */
-const useAzureCommunicationCallAdapterGeneric = <AdapterType extends CallAdapter | TeamsCallAdapter>(
+const useAzureCommunicationCallAdapterGeneric = <
+  AdapterType extends CallAdapter | /* @conditional-compile-remove(teams-identity-support) */ TeamsCallAdapter
+>(
   args: Partial<AzureCommunicationCallAdapterArgs>,
   createAzureCommunicationCallAdapter: (args: AzureCommunicationCallAdapterArgs) => Promise<AdapterType>,
   afterCreate?: (adapter: AdapterType) => Promise<AdapterType>,

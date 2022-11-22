@@ -1,7 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { CallState, DeviceManagerState, TeamsCall } from '@internal/calling-stateful-client';
+import { CallState, DeviceManagerState } from '@internal/calling-stateful-client';
+/* @conditional-compile-remove(teams-identity-support) */
+import { TeamsCall } from '@azure/communication-calling';
 import type {
   AudioDeviceInfo,
   VideoDeviceInfo,
@@ -570,6 +572,7 @@ export interface CallAdapter extends CommonCallAdapter {
   startCall(participants: CommunicationIdentifier[], options?: StartCallOptions): Call | undefined;
 }
 
+/* @conditional-compile-remove(teams-identity-support) */
 /**
  * An Adapter interface specific for Teams identity which extends {@link CommonCallAdapter}.
  *
