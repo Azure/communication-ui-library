@@ -769,7 +769,7 @@ export type AzureCommunicationCallAdapterOptions = {
 };
 
 /**
- * Arguments for creating the Azure Communication Services implementation of {@link CommonCallAdapter}.
+ * Arguments for creating the Azure Communication Services implementation of {@link CallAdapter}.
  *
  * Note: `displayName` can be a maximum of 256 characters.
  *
@@ -791,6 +791,24 @@ export type AzureCommunicationCallAdapterArgs = {
    * Optional parameters for the {@link AzureCommunicationCallAdapter} created
    */
   options?: AzureCommunicationCallAdapterOptions;
+};
+
+/* @conditional-compile-remove(teams-identity-support) */
+/**
+ * Arguments for creating the Azure Communication Services implementation of {@link TeamsCallAdapter}.
+ *
+ * @beta
+ */
+export type TeamsCallAdapterArgs = {
+  userId: CommunicationUserIdentifier;
+  credential: CommunicationTokenCredential;
+  locator: TeamsMeetingLinkLocator;
+  /* @conditional-compile-remove(PSTN-calls) */
+  /**
+   * A phone number in E.164 format procured using Azure Communication Services that will be used to represent callers identity.
+   * E.164 numbers are formatted as [+] [country code] [phone number including area code]. For example, +14255550123 for a US phone number.
+   */
+  alternateCallerId?: string;
 };
 
 /**
@@ -835,7 +853,7 @@ export const createAzureCommunicationTeamsCallAdapter = async ({
   credential,
   locator,
   /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId
-}: AzureCommunicationCallAdapterArgs): Promise<TeamsCallAdapter> => {
+}: TeamsCallAdapterArgs): Promise<TeamsCallAdapter> => {
   const callClient = createStatefulCallClient({
     userId,
     /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId
