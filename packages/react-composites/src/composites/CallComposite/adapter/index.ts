@@ -22,7 +22,7 @@ export type { CallParticipantsLocator } from './AzureCommunicationCallAdapter';
 
 export type {
   CallAdapter,
-  CallAdapterCommon,
+  CommonCallAdapter as CallAdapterCommon,
   CallAdapterCallEndedEvent,
   CallAdapterCallManagement,
   CallAdapterClientState,

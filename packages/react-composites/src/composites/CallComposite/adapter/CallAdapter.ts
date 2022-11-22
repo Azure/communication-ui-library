@@ -62,7 +62,7 @@ export const END_CALL_PAGES: CallCompositePage[] = [
 ];
 
 /**
- * {@link CallAdapterCommon} state for pure UI purposes.
+ * {@link CommonCallAdapter} state for pure UI purposes.
  *
  * @public
  */
@@ -72,7 +72,7 @@ export type CallAdapterUiState = {
 };
 
 /**
- * {@link CallAdapterCommon} state inferred from Azure Communication Services backend.
+ * {@link CommonCallAdapter} state inferred from Azure Communication Services backend.
  *
  * @public
  */
@@ -102,7 +102,7 @@ export type CallAdapterClientState = {
 };
 
 /**
- * {@link CallAdapterCommon} state.
+ * {@link CommonCallAdapter} state.
  *
  * @public
  */
@@ -553,7 +553,7 @@ export interface CallAdapterSubscribers {
  *
  * @public
  */
-export interface CallAdapterCommon
+export interface CommonCallAdapter
   extends AdapterState<CallAdapterState>,
     Disposable,
     CallAdapterCallManagement,
@@ -563,7 +563,7 @@ export interface CallAdapterCommon
 /**
  * @public
  */
-export interface CallAdapter extends CallAdapterCommon {
+export interface CallAdapter extends CommonCallAdapter {
   joinCall(microphoneOn?: boolean): Call | undefined;
   startCall(participants: string[], options?: StartCallOptions): Call | undefined;
   /* @conditional-compile-remove(PSTN-calls) */
@@ -574,7 +574,7 @@ export interface CallAdapter extends CallAdapterCommon {
 /**
  * @beta
  */
-export interface TeamsCallAdapter extends CallAdapterCommon {
+export interface TeamsCallAdapter extends CommonCallAdapter {
   joinCall(microphoneOn?: boolean): TeamsCall | undefined;
   startCall(participants: string[], options?: StartCallOptions): TeamsCall | undefined;
   /* @conditional-compile-remove(PSTN-calls) */

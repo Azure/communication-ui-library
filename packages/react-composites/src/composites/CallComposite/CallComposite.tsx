@@ -8,7 +8,7 @@ import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { BaseProvider, BaseCompositeProps } from '../common/BaseComposite';
 import { CallCompositeIcons } from '../common/icons';
 import { useLocale } from '../localization';
-import { CallAdapterCommon } from './adapter/CallAdapter';
+import { CommonCallAdapter } from './adapter/CallAdapter';
 import { CallAdapterProvider, useAdapter } from './adapter/CallAdapterProvider';
 import { CallPage } from './pages/CallPage';
 import { ConfigurationPage } from './pages/ConfigurationPage';
@@ -45,7 +45,7 @@ export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcon
    * An adapter provides logic and data to the composite.
    * Composite can also be controlled using the adapter.
    */
-  adapter: CallAdapterCommon;
+  adapter: CommonCallAdapter;
   /**
    * Optimizes the composite form factor for either desktop or mobile.
    * @remarks `mobile` is currently only optimized for Portrait mode on mobile devices and does not support landscape.

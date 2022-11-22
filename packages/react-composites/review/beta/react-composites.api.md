@@ -173,6 +173,7 @@ export interface CallAdapterCallManagement {
     resumeCall(): Promise<void>;
     // @beta
     sendDtmfTone(dtmfTone: DtmfTone): Promise<void>;
+    // @beta
     startCall(participants: string[], options?: StartCallOptions): void;
     startCall(participants: CommunicationIdentifier[], options?: StartCallOptions): void;
     startCamera(options?: VideoStreamOptions): Promise<void>;
@@ -1261,7 +1262,7 @@ export type TopicChangedListener = (event: {
 }) => void;
 
 // @public
-export const useAzureCommunicationCallAdapter: (args: Partial<AzureCommunicationCallAdapterArgs>, afterCreate?: ((adapter: CallAdapter) => Promise<CallAdapterCommon>) | undefined, beforeDispose?: ((adapter: CallAdapter) => Promise<void>) | undefined) => CallAdapter | undefined;
+export const useAzureCommunicationCallAdapter: (args: Partial<AzureCommunicationCallAdapterArgs>, afterCreate?: ((adapter: CallAdapter) => Promise<CallAdapter>) | undefined, beforeDispose?: ((adapter: CallAdapter) => Promise<void>) | undefined) => CallAdapter | undefined;
 
 // @public
 export const useAzureCommunicationCallWithChatAdapter: (args: Partial<AzureCommunicationCallWithChatAdapterArgs>, afterCreate?: ((adapter: CallWithChatAdapter) => Promise<CallWithChatAdapter>) | undefined, beforeDispose?: ((adapter: CallWithChatAdapter) => Promise<void>) | undefined) => CallWithChatAdapter | undefined;
@@ -1270,7 +1271,7 @@ export const useAzureCommunicationCallWithChatAdapter: (args: Partial<AzureCommu
 export const useAzureCommunicationChatAdapter: (args: Partial<AzureCommunicationChatAdapterArgs>, afterCreate?: ((adapter: ChatAdapter) => Promise<ChatAdapter>) | undefined, beforeDispose?: ((adapter: ChatAdapter) => Promise<void>) | undefined) => ChatAdapter | undefined;
 
 // @beta
-export const useAzureCommunicationTeamsCallAdapter: (args: Partial<AzureCommunicationCallAdapterArgs>, afterCreate?: ((adapter: TeamsCallAdapter) => Promise<CallAdapterCommon>) | undefined, beforeDispose?: ((adapter: TeamsCallAdapter) => Promise<void>) | undefined) => TeamsCallAdapter | undefined;
+export const useAzureCommunicationTeamsCallAdapter: (args: Partial<AzureCommunicationCallAdapterArgs>, afterCreate?: ((adapter: TeamsCallAdapter) => Promise<TeamsCallAdapter>) | undefined, beforeDispose?: ((adapter: TeamsCallAdapter) => Promise<void>) | undefined) => TeamsCallAdapter | undefined;
 
 // @internal
 export const _useCompositeLocale: () => CompositeLocale;
