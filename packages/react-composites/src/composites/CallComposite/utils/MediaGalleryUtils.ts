@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { _formatString } from '@internal/acs-ui-common';
+import { toFlatCommunicationIdentifier, _formatString } from '@internal/acs-ui-common';
 import { RemoteParticipantState } from '@internal/calling-stateful-client';
 import { useMemo, useState } from 'react';
 import { useLocale } from '../../localization';
@@ -57,10 +57,14 @@ export const useParticipantChangedAnnouncement = (): string => {
 
   useMemo(
     () => {
-      const currentIds = currentParticipants.map((p) => p.identifier);
-      const previousIds = previousParticipants.map((p) => p.identifier);
-      const whoJoined = currentParticipants.filter((p) => !previousIds.includes(p.identifier));
-      const whoLeft = previousParticipants.filter((p) => !currentIds.includes(p.identifier));
+      const currentIds = currentParticipants.map((p) => toFlatCommunicationIdentifier(p.identifier));
+      const previousIds = previousParticipants.map((p) => toFlatCommunicationIdentifier(p.identifier));
+      const whoJoined = currentParticipants.filter(
+        (p) => !previousIds.includes(toFlatCommunicationIdentifier(p.identifier))
+      );
+      const whoLeft = previousParticipants.filter(
+        (p) => !currentIds.includes(toFlatCommunicationIdentifier(p.identifier))
+      );
       console.log('run');
       if (whoJoined.length > 0) {
         resetAnnoucement(createAnnouncmentString('joined', whoJoined, strings));

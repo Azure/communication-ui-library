@@ -307,8 +307,7 @@ describe.only('useParticipantChangedAnnouncement', () => {
     expectNotAnnounced(root, 'some-id has left');
   });
 
-  // FIXME: This test is current broken because we need to compare participants by IDs in the hook.
-  test.skip('when 1 participant joined and then mutes their mic', () => {
+  test('when 1 participant joined and then mutes their mic', () => {
     const donald = participantWithName('donald');
     // An entirely new `RemoteParticipant` object is returned when a field in the object changes.
     const mutedDonald = participantWithName('donald');
