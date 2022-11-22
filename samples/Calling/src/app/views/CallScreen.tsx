@@ -22,8 +22,6 @@ import { WEB_APP_TITLE } from '../utils/AppUtils';
 import { useIsMobile } from '../utils/useIsMobile';
 /* @conditional-compile-remove(call-readiness) */
 import { CallCompositeOptions } from '@azure/communication-react';
-/* @conditional-compile-remove(unsupported-browser) */
-import { CallAdapterOptionalFeatures } from '@azure/communication-react';
 
 export interface CallScreenProps {
   token: string;
@@ -56,7 +54,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
   const afterCreate = useCallback(
     async (adapter: CallAdapter): Promise<CallAdapter> => {
       adapter.on('callEnded', () => {
-        onCallEnded();
+        // onCallEnded();
       });
       adapter.on('error', (e) => {
         // Error is already acted upon by the Call composite, but the surrounding application could
@@ -92,15 +90,11 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     [callReadinessOptedIn]
   );
 
-  /* @conditional-compile-remove(unsupported-browser) */
-  const callingFeatures: CallAdapterOptionalFeatures = useMemo(
-    () => ({
-      unsupportedEnvironment: true
-    }),
-    []
-  );
   /* @conditional-compile-remove(rooms) */
-  const callAdapterOptions: AzureCommunicationCallAdapterOptions = useMemo(() => ({ roleHint }), [roleHint]);
+  const callAdapterOptions: AzureCommunicationCallAdapterOptions = useMemo(
+    () => ({ roleHint, features: { unsupportedEnvironment: true } }),
+    [roleHint]
+  );
 
   const adapter = useAzureCommunicationCallAdapter(
     {
@@ -110,8 +104,6 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
       locator: callLocator,
       /* @conditional-compile-remove(PSTN-calls) */
       alternateCallerId,
-      /* @conditional-compile-remove(unsupported-browser) */
-      features: callingFeatures,
       /* @conditional-compile-remove(rooms) */
       options: callAdapterOptions
     },

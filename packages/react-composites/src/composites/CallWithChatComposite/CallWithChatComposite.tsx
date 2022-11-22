@@ -214,8 +214,6 @@ type CallWithChatScreenProps = {
   devicePermissions?: DevicePermissionRestrictions;
   /* @conditional-compile-remove(call-readiness) */
   callReadinessOptedIn?: boolean;
-  /* @conditional-compile-remove(unsupported-browser) */
-  unsupportedBrowserOptedIn?: boolean;
 };
 
 const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {

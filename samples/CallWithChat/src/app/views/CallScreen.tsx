@@ -79,6 +79,10 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     [callIdRef]
   );
 
+  const callAdapterOptions = useMemo(() => {
+    return { features: { unsupportedEnvironment: true } };
+  }, []);
+
   const adapter = useAzureCommunicationCallWithChatAdapter(
     {
       userId,
@@ -87,7 +91,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
       endpoint,
       locator,
       /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
-      /* @conditional-compile-remove(unsupported-browser) */ features: { unsupportedEnvironment: true }
+      /* @conditional-compile-remove(unsupported-browser) */ callAdapterOptions
     },
     afterAdapterCreate
   );

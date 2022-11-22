@@ -80,9 +80,13 @@ class CallContext {
   constructor(
     clientState: CallClientState,
     isTeamsCall: boolean,
-    features?: CallAdapterOptionalFeatures,
-    options?: { maxListeners?: number; /* @conditional-compile-remove(rooms) */ roleHint?: Role }
+    options?: {
+      /* @conditional-compile-remove(rooms) */ roleHint?: Role;
+      /* @conditional-compile-remove(unsupported-browser) */ features?: CallAdapterOptionalFeatures;
+      maxListeners?: number;
+    }
   ) {
+    console.log(options?.features);
     this.state = {
       isLocalPreviewMicrophoneEnabled: false,
       userId: clientState.userId,
@@ -94,7 +98,7 @@ class CallContext {
       isTeamsCall,
       /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId: clientState.alternateCallerId,
       /* @conditional-compile-remove(unsupported-browser) */ environmentInfo: clientState.environmentInfo,
-      /* @conditional-compile-remove(unsupported-browser) */ features: features,
+      /* @conditional-compile-remove(unsupported-browser) */ features: options?.features,
       /* @conditional-compile-remove(rooms) */ roleHint: options?.roleHint
     };
     this.emitter.setMaxListeners(options?.maxListeners ?? 50);
@@ -141,7 +145,7 @@ class CallContext {
     // As the state is transitioning to a new state, trigger appropriate callback events.
     const oldPage = this.state.page;
     /* @conditional-compile-remove(unsupported-browser) */
-    const environmentInfo = this.state.features?.unsupportedEnvironment ? this.state.environmentInfo : undefined;
+    const environmentInfo = this.state.environmentInfo;
     const newPage = getCallCompositePage(
       call,
       latestEndedCall,
@@ -217,21 +221,16 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     locator: CallAdapterLocator,
     callAgent: CallAgent,
     deviceManager: StatefulDeviceManager,
-    features?: CallAdapterOptionalFeatures,
-    /* @conditional-compile-remove(rooms) */ options?: { /* @conditional-compile-remove(rooms) */ roleHint?: Role }
+    options?: AzureCommunicationCallAdapterOptions
   ) {
+    console.log(options);
     this.bindPublicMethods();
     this.callClient = callClient;
     this.callAgent = callAgent;
     this.locator = locator;
     this.deviceManager = deviceManager;
     const isTeamsMeeting = 'meetingLink' in this.locator;
-    this.context = new CallContext(
-      callClient.getState(),
-      isTeamsMeeting,
-      features,
-      /* @conditional-compile-remove(rooms) */ options
-    );
+    this.context = new CallContext(callClient.getState(), isTeamsMeeting, options);
 
     this.context.onCallEnded((endCallData) => this.emitter.emit('callEnded', endCallData));
 
@@ -747,19 +746,25 @@ export type CallAdapterLocator =
   | /* @conditional-compile-remove(rooms) */ RoomCallLocator
   | /* @conditional-compile-remove(teams-adhoc-call) */ /* @conditional-compile-remove(PSTN-calls) */ CallParticipantsLocator;
 
-/* @conditional-compile-remove(rooms) */
+/* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(unsupported-browser) */
 /**
  * Optional parameters to create {@link AzureCommunicationCallAdapter}
  *
  * @beta
  */
 export type AzureCommunicationCallAdapterOptions = {
+  /* @conditional-compile-remove(rooms) */
   /**
    * Use this to hint the role of the user when the role is not available before a Rooms call is started. This value
    * should be obtained using the Rooms API. This role will determine permissions in the configuration page of the
    * {@link CallComposite}. The true role of the user will be synced with ACS services when a Rooms call starts.
    */
   roleHint?: Role;
+  /* @conditional-compile-remove(unsupported-browser) */
+  /**
+   * Optional feature flags to be enabled in the CallAdapter.
+   */
+  features?: CallAdapterOptionalFeatures;
 };
 
 /**
@@ -780,8 +785,6 @@ export type AzureCommunicationCallAdapterArgs = {
    * E.164 numbers are formatted as [+] [country code] [phone number including area code]. For example, +14255550123 for a US phone number.
    */
   alternateCallerId?: string;
-  /* @conditional-compile-remove(unsupported-browser) */
-  features?: CallAdapterOptionalFeatures;
   /* @conditional-compile-remove(rooms) */
   /**
    * Optional parameters for the {@link AzureCommunicationCallAdapter} created
@@ -804,7 +807,6 @@ export const createAzureCommunicationCallAdapter = async ({
   credential,
   locator,
   /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
-  /* @conditional-compile-remove(unsupported-browser) */ features,
   /* @conditional-compile-remove(rooms) */ options
 }: AzureCommunicationCallAdapterArgs): Promise<CallAdapter> => {
   const callClient = createStatefulCallClient({
@@ -818,7 +820,6 @@ export const createAzureCommunicationCallAdapter = async ({
     callClient,
     callAgent,
     locator,
-    /* @conditional-compile-remove(unsupported-browser) */ features,
     /* @conditional-compile-remove(rooms) */ options
   );
   return adapter;
@@ -865,7 +866,6 @@ export const useAzureCommunicationCallAdapter = (
     locator,
     userId,
     /*@conditional-compile-remove(PSTN-calls) */ alternateCallerId,
-    /* @conditional-compile-remove(unsupported-browser) */ features,
     /*@conditional-compile-remove(rooms) */ options
   } = args;
 
@@ -908,7 +908,6 @@ export const useAzureCommunicationCallAdapter = (
           locator,
           userId,
           /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
-          /* @conditional-compile-remove(unsupported-browser) */ features,
           /* @conditional-compile-remove(rooms) */ options
         });
         if (afterCreateRef.current) {
@@ -928,7 +927,6 @@ export const useAzureCommunicationCallAdapter = (
       displayName,
       locator,
       userId,
-      /* @conditional-compile-remove(unsupported-browser) */ features,
       /* @conditional-compile-remove(PSTN-calls) */ options
     ]
   );
@@ -963,13 +961,11 @@ export const createAzureCommunicationCallAdapterFromClient: (
   callClient: StatefulCallClient,
   callAgent: CallAgent,
   locator: CallAdapterLocator,
-  /* @conditional-compile-remove(unsupported-browser) */ features?: CallAdapterOptionalFeatures,
-  /* @conditional-compile-remove(rooms) */ options?: { roleHint?: Role }
+  /* @conditional-compile-remove(rooms) */ options?: AzureCommunicationCallAdapterOptions
 ) => Promise<CallAdapter> = async (
   callClient: StatefulCallClient,
   callAgent: CallAgent,
   locator: CallAdapterLocator,
-  features?: CallAdapterOptionalFeatures,
   options?
 ): Promise<CallAdapter> => {
   const deviceManager = (await callClient.getDeviceManager()) as StatefulDeviceManager;
@@ -980,7 +976,6 @@ export const createAzureCommunicationCallAdapterFromClient: (
     locator,
     callAgent,
     deviceManager,
-    /* @conditional-compile-remove(unsupported-browser) */ features,
     /* @conditional-compile-remove(rooms) */ options
   );
 };
