@@ -2,15 +2,33 @@
 
 This document provides an overview of the internal structure of this repository.
 
-This repository houses the source code for [`@azure/communication-ui-library` package on NPM](https://www.npmjs.com/package/@azure/communication-react) along with associated tooling and supporting infrastructure (e.g. browser tests, sample applications etc.).
+This repository houses the source code for [`@azure/communication-react` package on NPM](https://www.npmjs.com/package/@azure/communication-react) along with associated tooling and supporting infrastructure (e.g. browser tests, sample applications etc.).
 
-There is some overlap between this document and the conceptual sections in the user-facing documentation for `@azure/communication-ui-library`. Read the user-documentation before continuing to get a better understanding of the internals. Suggested reading:
+There is some overlap between this document and the conceptual sections in the user-facing documentation for `@azure/communication-react`. Read the user-documentation before continuing to get a better understanding of the internals. Suggested reading:
 
 - An [overview](https://azure.github.io/communication-ui-library/?path=/docs/overview--page) of the main offering.
 - An understanding of the [UI composites](https://azure.github.io/communication-ui-library/?path=/docs/quickstarts-composites--page) and the [adapters](https://azure.github.io/communication-ui-library/?path=/docs/composite-adapters--page) that power them.
 - An understanding of the [UI components](https://azure.github.io/communication-ui-library/?path=/docs/overview-uicomponents--page) and the [stateful data layer](https://azure.github.io/communication-ui-library/?path=/docs/statefulclient-overview--page) that powers them.
 
-## Architecture
+These documents are geared towards customers. As such, they focus primarily on getting off the ground using the different APIs available in the library and some intricacies of _how_ to use the API.
+
+Documentation in this directory dives into the _why_.
+
+## Architecture - layering
+
+At a high level, the library exposes two distinct layers of APIs.
+
+- A lower-abstraction API in the form of UI components, stateful ACS modality clients (chat / calling) and bindings between the two. The focus in this layer is in giving the customers maximum flexibility. The API makes the default use-cases easier but not at the cost of making non-default use-cases impossible.
+
+- A higher-abstraction API in the form of UI composites, powered by adapters. The focus in this layer is in addressing specific end-to-end use-cases well. While this layer does provide customers some customizability, it choses to make some non-default use-cases hard or impossible. By restricting the set of supported use-cases, this layer is able to support the covered use-cases more extensively and with minimal effort from Contoso.
+
+The user-facing documentation in [storybook](https://azure.github.io/communication-ui-library) starts with the composite layer, as it's the easiest API to use for new customers. It then progressively reveals the components API as an alternative for power-users.
+
+This document starts with the component layer, as it forms the foundation for the composite layer in addition to being a public API customers can use.
+
+## Component layer
+
+
 
         ┌────────────────────────────────────────────────────────┐
         │                                                        │
