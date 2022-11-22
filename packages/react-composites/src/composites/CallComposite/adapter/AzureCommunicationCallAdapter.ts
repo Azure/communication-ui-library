@@ -51,6 +51,7 @@ import {
   DiagnosticChangedEventListner,
   CallAdapterCallEndedEvent
 } from './CallAdapter';
+/* @conditional-compile-remove(unsupported-browser) */
 import { CallAdapterOptionalFeatures } from './CallAdapter';
 import { getCallCompositePage, IsCallEndedPage, isCameraOn } from '../utils';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
@@ -86,7 +87,6 @@ class CallContext {
       maxListeners?: number;
     }
   ) {
-    console.log(options?.features);
     this.state = {
       isLocalPreviewMicrophoneEnabled: false,
       userId: clientState.userId,
@@ -746,7 +746,6 @@ export type CallAdapterLocator =
   | /* @conditional-compile-remove(rooms) */ RoomCallLocator
   | /* @conditional-compile-remove(teams-adhoc-call) */ /* @conditional-compile-remove(PSTN-calls) */ CallParticipantsLocator;
 
-/* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(unsupported-browser) */
 /**
  * Optional parameters to create {@link AzureCommunicationCallAdapter}
  *
