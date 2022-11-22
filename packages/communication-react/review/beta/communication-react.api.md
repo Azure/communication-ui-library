@@ -294,10 +294,7 @@ export type CallAdapterClientState = {
     latestErrors: AdapterErrors;
     alternateCallerId?: string;
     environmentInfo?: EnvironmentInfo;
-<<<<<<< HEAD
     features?: CallAdapterOptionalFeatures;
-=======
->>>>>>> 5e9aa8e455df220373fdfc07059e21116b89cda1
     roleHint?: Role;
 };
 
