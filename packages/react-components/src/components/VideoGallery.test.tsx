@@ -27,14 +27,7 @@ describe('VideoGallery default layout tests', () => {
       }
     });
 
-    // Need to mock this because the HorizontalGallery uses this function. But JSDOM does not actually do any
-    // rendering so getComputedStyle(document.documentElement).fontSize won't actually have a value
-    jest.spyOn(acs_ui_common, '_convertRemToPx').mockImplementation((rem: number) => {
-      return rem * 16;
-    });
-    // Need to mock hook _useContainerWidth because the returned width is used by HorizontalGallery to decide
-    // how many tiles to show per page
-    jest.spyOn(responsive, '_useContainerWidth').mockImplementation(() => 500);
+    mockVideoGalleryInternalHelpers();
   });
 
   test('should render local video tile in the grid alongside remote tiles', () => {
@@ -176,14 +169,7 @@ describe('VideoGallery floating local video layout', () => {
       }
     });
 
-    // Need to mock this because the HorizontalGallery uses this function. But JSDOM does not actually do any
-    // rendering so getComputedStyle(document.documentElement).fontSize won't actually have a value
-    jest.spyOn(acs_ui_common, '_convertRemToPx').mockImplementation((rem: number) => {
-      return rem * 16;
-    });
-    // Need to mock hook _useContainerWidth because the returned width is used by HorizontalGallery to decide
-    // how many tiles to show per page
-    jest.spyOn(responsive, '_useContainerWidth').mockImplementation(() => 500);
+    mockVideoGalleryInternalHelpers();
   });
 
   test('should have floating local video tile present', () => {
@@ -362,4 +348,15 @@ const createRemoteParticipant = (attrs?: Partial<VideoGalleryRemoteParticipant>)
     },
     isScreenSharingOn: attrs?.isScreenSharingOn ?? false
   };
+};
+
+const mockVideoGalleryInternalHelpers = () => {
+  // Need to mock this because the HorizontalGallery uses this function. But JSDOM does not actually do any
+  // rendering so getComputedStyle(document.documentElement).fontSize will not actually have a value
+  jest.spyOn(acs_ui_common, '_convertRemToPx').mockImplementation((rem: number) => {
+    return rem * 16;
+  });
+  // Need to mock hook _useContainerWidth because the returned width is used by HorizontalGallery to decide
+  // how many tiles to show per page
+  jest.spyOn(responsive, '_useContainerWidth').mockImplementation(() => 500);
 };
