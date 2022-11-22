@@ -72,12 +72,6 @@ import { VideoDeviceInfo } from '@azure/communication-calling';
 import { VideoStreamRenderer } from '@azure/communication-calling';
 import { VideoStreamRendererView } from '@azure/communication-calling';
 
-// @public (undocumented)
-export type ACSCallManagement = {
-    joinCall(microphoneOn?: boolean): Call | undefined;
-    startCall(participants: string[], options?: StartCallOptions): Call | undefined;
-};
-
 // @public
 export interface ActiveErrorMessage {
     timestamp?: Date;
@@ -174,8 +168,13 @@ export interface BaseCustomStyles {
     root?: IStyle;
 }
 
-// @public (undocumented)
-export type CallAdapter = Omit<CallAdapterCommon, keyof ACSCallManagement> & ACSCallManagement;
+// @public
+export interface CallAdapter extends CommonCallAdapter {
+    // (undocumented)
+    joinCall(microphoneOn?: boolean): Call | undefined;
+    // (undocumented)
+    startCall(participants: string[], options?: StartCallOptions): Call | undefined;
+}
 
 // @public
 export type CallAdapterCallEndedEvent = {
@@ -190,7 +189,8 @@ export interface CallAdapterCallManagement {
     leaveCall(forEveryone?: boolean): Promise<void>;
     mute(): Promise<void>;
     removeParticipant(userId: string): Promise<void>;
-    startCall(participants: string[], options?: StartCallOptions): Call | undefined;
+    // @beta
+    startCall(participants: string[], options?: StartCallOptions): void;
     startCamera(options?: VideoStreamOptions): Promise<void>;
     startScreenShare(): Promise<void>;
     stopCamera(): Promise<void>;
@@ -208,10 +208,6 @@ export type CallAdapterClientState = {
     isTeamsCall: boolean;
     latestErrors: AdapterErrors;
 };
-
-// @public
-export interface CallAdapterCommon extends AdapterState<CallAdapterState>, Disposable, CallAdapterCallManagement, CallAdapterDeviceManagement, CallAdapterSubscribers {
-}
 
 // @public
 export interface CallAdapterDeviceManagement {
@@ -263,11 +259,6 @@ export type CallAdapterUiState = {
     isLocalPreviewMicrophoneEnabled: boolean;
     page: CallCompositePage;
 };
-
-// Warning: (ae-internal-missing-underscore) The name "CallAgentCommon" should be prefixed with an underscore because the declaration is marked as @internal
-//
-// @internal (undocumented)
-export type CallAgentCommon = CallAgent;
 
 // @public
 export const CallAgentProvider: (props: CallAgentProviderProps) => JSX.Element;
@@ -321,11 +312,6 @@ export interface CallClientState {
     latestErrors: CallErrors;
     userId: CommunicationIdentifierKind;
 }
-
-// Warning: (ae-internal-missing-underscore) The name "CallCommon" should be prefixed with an underscore because the declaration is marked as @internal
-//
-// @internal (undocumented)
-export type CallCommon = Call;
 
 // @public
 export const CallComposite: (props: CallCompositeProps) => JSX.Element;
@@ -389,7 +375,7 @@ export type CallCompositePage = 'accessDeniedTeamsMeeting' | 'call' | 'configura
 
 // @public
 export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcons> {
-    adapter: CallAdapterCommon;
+    adapter: CommonCallAdapter;
     callInvitationUrl?: string;
     formFactor?: 'desktop' | 'mobile';
     options?: CallCompositeOptions;
@@ -483,9 +469,6 @@ export type CallErrors = {
 // @public
 export type CallErrorTarget = 'Call.addParticipant' | 'Call.feature' | 'Call.hangUp' | 'Call.hold' | 'Call.mute' | 'Call.off' | 'Call.on' | 'Call.removeParticipant' | 'Call.resume' | 'Call.sendDtmf' | 'Call.startScreenSharing' | 'Call.startVideo' | 'Call.stopScreenSharing' | 'Call.stopVideo' | 'Call.unmute' | 'CallAgent.dispose' | 'CallAgent.feature' | 'CallAgent.join' | 'CallAgent.off' | 'CallAgent.on' | 'CallAgent.startCall' | 'CallClient.createCallAgent' | 'CallClient.feature' | 'CallClient.getDeviceManager' | 'DeviceManager.askDevicePermission' | 'DeviceManager.getCameras' | 'DeviceManager.getMicrophones' | 'DeviceManager.getSpeakers' | 'DeviceManager.off' | 'DeviceManager.on' | 'DeviceManager.selectMicrophone' | 'DeviceManager.selectSpeaker' | 'IncomingCall.accept' | 'IncomingCall.reject';
 
-// @public (undocumented)
-export type CallHandlersOf<AgentType extends CallAgent> = AgentType extends CallAgent ? CallingHandlers : never;
-
 // @public
 export type CallIdChangedListener = (event: {
     callId: string;
@@ -561,10 +544,12 @@ export interface CallState {
 }
 
 // @public (undocumented)
-export type CallTypeOf<AgentType extends CallAgent> = AgentType extends CallAgent ? Call : never;
-
-// @public (undocumented)
-export type CallWithChatAdapter = Omit<CallWithChatAdapterCommon, keyof ACSCallManagement> & ACSCallManagement;
+export interface CallWithChatAdapter extends CallWithChatAdapterCommon {
+    // (undocumented)
+    joinCall(microphoneOn?: boolean): Call | undefined;
+    // (undocumented)
+    startCall(participants: string[], options?: StartCallOptions): Call | undefined;
+}
 
 // @public
 export interface CallWithChatAdapterCommon extends CallWithChatAdapterManagement, AdapterState<CallWithChatAdapterState>, Disposable, CallWithChatAdapterSubscriptions {
@@ -1097,6 +1082,10 @@ export type ClientState = CallClientState & ChatClientState;
 export type Common<A, B> = Pick<A, CommonProperties<A, B>>;
 
 // @public
+export interface CommonCallAdapter extends AdapterState<CallAdapterState>, Disposable, CallAdapterCallManagement, CallAdapterDeviceManagement, CallAdapterSubscribers {
+}
+
+// @public
 export interface CommonCallingHandlers {
     // (undocumented)
     onCreateLocalStreamView: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
@@ -1341,8 +1330,8 @@ export const createAzureCommunicationChatAdapter: ({ endpoint: endpointUrl, user
 // @public
 export const createAzureCommunicationChatAdapterFromClient: (chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient) => Promise<ChatAdapter>;
 
-// @public (undocumented)
-export const createDefaultCallingHandlers: <AgentType extends CallAgent = CallAgent>(callClient: StatefulCallClient, callAgent: AgentType | undefined, deviceManager: StatefulDeviceManager | undefined, call: CallTypeOf<AgentType> | undefined) => CallHandlersOf<AgentType>;
+// @public
+export const createDefaultCallingHandlers: (callClient: StatefulCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined) => CallingHandlers;
 
 // @public
 export const createDefaultChatHandlers: (chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient) => ChatHandlers;
@@ -1740,16 +1729,6 @@ export interface IncomingCallState {
     startTime: Date;
 }
 
-// Warning: (ae-internal-missing-underscore) The name "isACSCall" should be prefixed with an underscore because the declaration is marked as @internal
-//
-// @internal (undocumented)
-export const isACSCall: (call: CallCommon) => call is Call;
-
-// Warning: (ae-internal-missing-underscore) The name "isACSCallAgent" should be prefixed with an underscore because the declaration is marked as @internal
-//
-// @internal (undocumented)
-export const isACSCallAgent: (callAgent: CallAgentCommon) => callAgent is CallAgent;
-
 // @public
 export type IsLocalScreenSharingActiveChangedListener = (event: {
     isScreenSharingOn: boolean;
@@ -1766,16 +1745,6 @@ export type IsSpeakingChangedListener = (event: {
     identifier: CommunicationIdentifierKind;
     isSpeaking: boolean;
 }) => void;
-
-// Warning: (ae-internal-missing-underscore) The name "isTeamsCall" should be prefixed with an underscore because the declaration is marked as @internal
-//
-// @internal (undocumented)
-export const isTeamsCall: (call: CallCommon) => call is never;
-
-// Warning: (ae-internal-missing-underscore) The name "isTeamsCallAgent" should be prefixed with an underscore because the declaration is marked as @internal
-//
-// @internal (undocumented)
-export const isTeamsCallAgent: (callAgent: CallAgentCommon) => callAgent is never;
 
 // @public
 export interface JumpToNewMessageButtonProps {

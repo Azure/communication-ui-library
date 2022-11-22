@@ -2,8 +2,6 @@
 // Licensed under the MIT license.
 
 import { _isInCall, _isInLobbyOrConnecting } from '@internal/calling-component-bindings';
-
-/* @conditional-compile-remove(teams-identity-support) */
 import {
   CallClientState,
   CallError,
@@ -14,6 +12,7 @@ import {
   TeamsCall,
   TeamsCallAgent as BetaTeamsCallAgent
 } from '@internal/calling-stateful-client';
+/* @conditional-compile-remove(teams-identity-support) */
 import { _isTeamsCallAgent } from '@internal/calling-stateful-client';
 import { CallCommon } from '@internal/calling-stateful-client';
 import {
@@ -29,9 +28,10 @@ import {
   PropertyChangedEvent,
   StartCallOptions,
   VideoOptions,
-  Call,
-  TeamsCallAgent
+  Call
 } from '@azure/communication-calling';
+/* @conditional-compile-remove(teams-identity-support)) */
+import { TeamsCallAgent } from '@azure/communication-calling';
 /* @conditional-compile-remove(rooms) */
 import { RoomCallLocator } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
@@ -52,7 +52,6 @@ import {
   CallAdapterCallEndedEvent,
   CallAdapter
 } from './CallAdapter';
-/* @conditional-compile-remove(teams-identity-support) */
 import { TeamsCallAdapter } from './CallAdapter';
 import { getCallCompositePage, IsCallEndedPage, isCameraOn } from '../utils';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
@@ -917,13 +916,13 @@ const useAzureCommunicationCallAdapterGeneric = <AdapterType extends CallAdapter
     [
       adapterRef,
       afterCreateRef,
-      alternateCallerId,
+      /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
       beforeDisposeRef,
       createAzureCommunicationCallAdapter,
       credential,
       displayName,
       locator,
-      options,
+      /* @conditional-compile-remove(rooms) */ options,
       userId
     ]
   );

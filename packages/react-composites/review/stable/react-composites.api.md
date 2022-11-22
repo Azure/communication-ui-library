@@ -42,12 +42,6 @@ import { Theme } from '@fluentui/react';
 import { VideoDeviceInfo } from '@azure/communication-calling';
 import { VideoStreamOptions } from '@internal/react-components';
 
-// @public (undocumented)
-export type ACSCallManagement = {
-    joinCall(microphoneOn?: boolean): Call | undefined;
-    startCall(participants: string[], options?: StartCallOptions): Call | undefined;
-};
-
 // @public
 export interface AdapterError extends Error {
     innerError: Error;
@@ -124,8 +118,13 @@ export interface BaseCompositeProps<TIcons extends Record<string, JSX.Element>> 
     rtl?: boolean;
 }
 
-// @public (undocumented)
-export type CallAdapter = Omit<CallAdapterCommon, keyof ACSCallManagement> & ACSCallManagement;
+// @public
+export interface CallAdapter extends CommonCallAdapter {
+    // (undocumented)
+    joinCall(microphoneOn?: boolean): Call | undefined;
+    // (undocumented)
+    startCall(participants: string[], options?: StartCallOptions): Call | undefined;
+}
 
 // @public
 export type CallAdapterCallEndedEvent = {
@@ -140,6 +139,7 @@ export interface CallAdapterCallManagement {
     leaveCall(forEveryone?: boolean): Promise<void>;
     mute(): Promise<void>;
     removeParticipant(userId: string): Promise<void>;
+    // @beta
     startCall(participants: string[], options?: StartCallOptions): void;
     startCamera(options?: VideoStreamOptions): Promise<void>;
     startScreenShare(): Promise<void>;
@@ -158,10 +158,6 @@ export type CallAdapterClientState = {
     isTeamsCall: boolean;
     latestErrors: AdapterErrors;
 };
-
-// @public
-export interface CallAdapterCommon extends AdapterState<CallAdapterState>, Disposable, CallAdapterCallManagement, CallAdapterDeviceManagement, CallAdapterSubscribers {
-}
 
 // @public
 export interface CallAdapterDeviceManagement {
@@ -282,7 +278,7 @@ export type CallCompositePage = 'accessDeniedTeamsMeeting' | 'call' | 'configura
 
 // @public
 export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcons> {
-    adapter: CallAdapterCommon;
+    adapter: CommonCallAdapter;
     callInvitationUrl?: string;
     formFactor?: 'desktop' | 'mobile';
     options?: CallCompositeOptions;
@@ -361,7 +357,12 @@ export type CallIdChangedListener = (event: {
 }) => void;
 
 // @public (undocumented)
-export type CallWithChatAdapter = Omit<CallWithChatAdapterCommon, keyof ACSCallManagement> & ACSCallManagement;
+export interface CallWithChatAdapter extends CallWithChatAdapterCommon {
+    // (undocumented)
+    joinCall(microphoneOn?: boolean): Call | undefined;
+    // (undocumented)
+    startCall(participants: string[], options?: StartCallOptions): Call | undefined;
+}
 
 // @public
 export interface CallWithChatAdapterCommon extends CallWithChatAdapterManagement, AdapterState<CallWithChatAdapterState>, Disposable, CallWithChatAdapterSubscriptions {
@@ -710,6 +711,10 @@ export interface ChatCompositeStrings {
 }
 
 // @public
+export interface CommonCallAdapter extends AdapterState<CallAdapterState>, Disposable, CallAdapterCallManagement, CallAdapterDeviceManagement, CallAdapterSubscribers {
+}
+
+// @public
 export const COMPOSITE_LOCALE_DE_DE: CompositeLocale;
 
 // @public
@@ -947,7 +952,7 @@ export type TopicChangedListener = (event: {
 }) => void;
 
 // @public
-export const useAzureCommunicationCallAdapter: (args: Partial<AzureCommunicationCallAdapterArgs>, afterCreate?: ((adapter: CallAdapter) => Promise<CallAdapterCommon>) | undefined, beforeDispose?: ((adapter: CallAdapter) => Promise<void>) | undefined) => CallAdapter | undefined;
+export const useAzureCommunicationCallAdapter: (args: Partial<AzureCommunicationCallAdapterArgs>, afterCreate?: ((adapter: CallAdapter) => Promise<CallAdapter>) | undefined, beforeDispose?: ((adapter: CallAdapter) => Promise<void>) | undefined) => CallAdapter | undefined;
 
 // @public
 export const useAzureCommunicationCallWithChatAdapter: (args: Partial<AzureCommunicationCallWithChatAdapterArgs>, afterCreate?: ((adapter: CallWithChatAdapter) => Promise<CallWithChatAdapter>) | undefined, beforeDispose?: ((adapter: CallWithChatAdapter) => Promise<void>) | undefined) => CallWithChatAdapter | undefined;

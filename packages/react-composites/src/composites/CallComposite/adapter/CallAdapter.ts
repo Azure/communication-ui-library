@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { CallState, DeviceManagerState } from '@internal/calling-stateful-client';
+import { CallState, DeviceManagerState, TeamsCall } from '@internal/calling-stateful-client';
 import type {
   AudioDeviceInfo,
   VideoDeviceInfo,
@@ -13,8 +13,6 @@ import type {
   NetworkDiagnosticChangedEventArgs,
   PropertyChangedEvent
 } from '@azure/communication-calling';
-/* @conditional-compile-remove(teams-identity-support) */
-import { TeamsCall } from '@azure/communication-calling';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 /* @conditional-compile-remove(rooms) */
 import { Role } from '@internal/react-components';
@@ -561,6 +559,8 @@ export interface CommonCallAdapter
     CallAdapterSubscribers {}
 
 /**
+ *  An Adapter interface specific for Azure Communication identity which extends {@link CommonCallAdapter}.
+ *
  * @public
  */
 export interface CallAdapter extends CommonCallAdapter {
@@ -570,8 +570,9 @@ export interface CallAdapter extends CommonCallAdapter {
   startCall(participants: CommunicationIdentifier[], options?: StartCallOptions): Call | undefined;
 }
 
-/* @conditional-compile-remove(teams-identity-support) */
 /**
+ * An Adapter interface specific for Teams identity which extends {@link CommonCallAdapter}.
+ *
  * @beta
  */
 export interface TeamsCallAdapter extends CommonCallAdapter {

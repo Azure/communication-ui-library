@@ -2,12 +2,9 @@
 // Licensed under the MIT license.
 
 import { CallAgent } from '@azure/communication-calling';
-import {
-  CallingHandlers,
-  createDefaultCallingHandlers,
-  createDefaultTeamsCallingHandlers,
-  TeamsCallingHandlers
-} from '@internal/calling-component-bindings';
+import { CallingHandlers, createDefaultCallingHandlers } from '@internal/calling-component-bindings';
+/* @conditional-compile-remove(teams-identity-support)) */
+import { createDefaultTeamsCallingHandlers, TeamsCallingHandlers } from '@internal/calling-component-bindings';
 import {
   CallCommon,
   StatefulCallClient,
