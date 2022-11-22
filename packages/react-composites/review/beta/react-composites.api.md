@@ -139,8 +139,8 @@ export interface BaseCompositeProps<TIcons extends Record<string, JSX.Element>> 
     rtl?: boolean;
 }
 
-// @public (undocumented)
-export interface CallAdapter extends CallAdapterCommon {
+// @public
+export interface CallAdapter extends CommonCallAdapter {
     // (undocumented)
     joinCall(microphoneOn?: boolean): Call | undefined;
     // (undocumented)
@@ -196,10 +196,6 @@ export type CallAdapterClientState = {
     alternateCallerId?: string;
     roleHint?: Role;
 };
-
-// @public
-export interface CallAdapterCommon extends AdapterState<CallAdapterState>, Disposable, CallAdapterCallManagement, CallAdapterDeviceManagement, CallAdapterSubscribers {
-}
 
 // @public
 export interface CallAdapterDeviceManagement {
@@ -332,7 +328,7 @@ export type CallCompositePage = 'accessDeniedTeamsMeeting' | 'call' | 'configura
 
 // @public
 export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcons> {
-    adapter: CallAdapterCommon;
+    adapter: CommonCallAdapter;
     callInvitationUrl?: string;
     formFactor?: 'desktop' | 'mobile';
     options?: CallCompositeOptions;
@@ -885,6 +881,10 @@ export interface ChatCompositeStrings {
 }
 
 // @public
+export interface CommonCallAdapter extends AdapterState<CallAdapterState>, Disposable, CallAdapterCallManagement, CallAdapterDeviceManagement, CallAdapterSubscribers {
+}
+
+// @public
 export const COMPOSITE_LOCALE_DE_DE: CompositeLocale;
 
 // @public
@@ -1247,8 +1247,8 @@ export type ParticipantsRemovedListener = (event: {
     removedBy: ChatParticipant;
 }) => void;
 
-// @beta (undocumented)
-export interface TeamsCallAdapter extends CallAdapterCommon {
+// @beta
+export interface TeamsCallAdapter extends CommonCallAdapter {
     // (undocumented)
     joinCall(microphoneOn?: boolean): TeamsCall | undefined;
     // (undocumented)
