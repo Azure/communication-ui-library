@@ -14,10 +14,11 @@ import { v1 as createGUID } from 'uuid';
 import * as responsive from './utils/responsive';
 import * as acs_ui_common from '@internal/acs-ui-common';
 import { RemoteScreenShare } from './VideoGallery/RemoteScreenShare';
+import { act } from 'react-dom/test-utils';
 
 Enzyme.configure({ adapter: new Adapter() });
 
-describe('VideoGallery default layout', () => {
+describe('VideoGallery default layout tests', () => {
   beforeAll(() => {
     registerIcons({
       icons: {
@@ -43,13 +44,15 @@ describe('VideoGallery default layout', () => {
 
     const root = mountVideoGalleryWithLocalParticipant({ localParticipant });
 
-    root.setProps({ layout: 'default' });
     const remoteParticipants = Array.from({ length: 10 }, () =>
       createRemoteParticipant({
         videoStream: { isAvailable: false, renderElement: createVideoDivElement() }
       })
     );
-    root.setProps({ remoteParticipants });
+
+    act(() => {
+      root.setProps({ layout: 'default', remoteParticipants });
+    });
     const gridLayout = root.find(GridLayout);
     expect(
       gridLayout
@@ -66,13 +69,15 @@ describe('VideoGallery default layout', () => {
 
     const root = mountVideoGalleryWithLocalParticipant({ localParticipant });
 
-    root.setProps({ layout: 'default' });
     const remoteParticipants = Array.from({ length: 10 }, () =>
       createRemoteParticipant({
         videoStream: { isAvailable: false, renderElement: createVideoDivElement() }
       })
     );
-    root.setProps({ remoteParticipants });
+
+    act(() => {
+      root.setProps({ layout: 'default', remoteParticipants });
+    });
     expect(root.find(_ModalClone).exists()).toBe(false);
   });
 
@@ -83,13 +88,15 @@ describe('VideoGallery default layout', () => {
 
     const root = mountVideoGalleryWithLocalParticipant({ localParticipant });
 
-    root.setProps({ layout: 'default' });
     const remoteParticipants = Array.from({ length: 10 }, () =>
       createRemoteParticipant({
         videoStream: { isAvailable: false, renderElement: createVideoDivElement() }
       })
     );
-    root.setProps({ remoteParticipants });
+
+    act(() => {
+      root.setProps({ layout: 'default', remoteParticipants });
+    });
     expect(tileCount(root)).toBe(11);
     expect(audioTileCount(root)).toBe(11);
     expect(videoTileCount(root)).toBe(0);
@@ -106,13 +113,15 @@ describe('VideoGallery default layout', () => {
 
     const root = mountVideoGalleryWithLocalParticipant({ localParticipant });
 
-    root.setProps({ layout: 'default' });
     const remoteParticipants = Array.from({ length: 10 }, () =>
       createRemoteParticipant({
         videoStream: { isAvailable: true, renderElement: createVideoDivElement() }
       })
     );
-    root.setProps({ remoteParticipants });
+
+    act(() => {
+      root.setProps({ layout: 'default', remoteParticipants });
+    });
     expect(gridVideoTileCount(root)).toBe(DEFAULT_MAX_REMOTE_VIDEO_STREAMS + 1); // +1 for the local video stream
     expect(root.find(HorizontalGallery).find(VideoTile).length).toBe(2);
   });
@@ -141,9 +150,11 @@ describe('VideoGallery default layout', () => {
       })
     );
 
-    root.setProps({
-      remoteParticipants,
-      dominantSpeakers: ['remoteScreenSharingParticipant', 'remoteVideoParticipant']
+    act(() => {
+      root.setProps({
+        remoteParticipants,
+        dominantSpeakers: ['remoteScreenSharingParticipant', 'remoteVideoParticipant']
+      });
     });
 
     expect(root.find(RemoteScreenShare).length).toBe(1);
