@@ -81,18 +81,16 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
   useLocalVideoStartTrigger(!!props.isVideoStreamOn);
   const VideoGalleryMemoized = useMemo(() => {
     return (
-      <>
-        <VideoGallery
-          {...videoGalleryProps}
-          localVideoViewOptions={localVideoViewOptions}
-          remoteVideoViewOptions={remoteVideoViewOptions}
-          styles={VideoGalleryStyles}
-          layout="floatingLocalVideo"
-          showCameraSwitcherInLocalPreview={props.isMobile}
-          localVideoCameraCycleButtonProps={cameraSwitcherProps}
-          onRenderAvatar={onRenderAvatar}
-        />
-      </>
+      <VideoGallery
+        {...videoGalleryProps}
+        localVideoViewOptions={localVideoViewOptions}
+        remoteVideoViewOptions={remoteVideoViewOptions}
+        styles={VideoGalleryStyles}
+        layout="floatingLocalVideo"
+        showCameraSwitcherInLocalPreview={props.isMobile}
+        localVideoCameraCycleButtonProps={cameraSwitcherProps}
+        onRenderAvatar={onRenderAvatar}
+      />
     );
   }, [videoGalleryProps, props.isMobile, onRenderAvatar, cameraSwitcherProps]);
 

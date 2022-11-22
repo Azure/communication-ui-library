@@ -65,7 +65,6 @@ export const useParticipantChangedAnnouncement = (): string => {
       const whoLeft = previousParticipants.filter(
         (p) => !currentIds.includes(toFlatCommunicationIdentifier(p.identifier))
       );
-      console.log('run');
       if (whoJoined.length > 0) {
         resetAnnoucement(createAnnouncmentString('joined', whoJoined, strings));
       }
