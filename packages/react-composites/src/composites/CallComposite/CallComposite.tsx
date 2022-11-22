@@ -424,17 +424,7 @@ const holdPageTrampoline = (): string => {
   return 'call';
 };
 
-const getQueryOptions = (options: {
-  /* @conditional-compile-remove(rooms) */ role?: Role;
-  /* @conditional-compile-remove(call-readiness) */ callReadinessOptedIn?: boolean;
-}): PermissionConstraints => {
-  /* @conditional-compile-remove(call-readiness) */
-  if (options.callReadinessOptedIn) {
-    return {
-      video: false,
-      audio: false
-    };
-  }
+const getQueryOptions = (options: { /* @conditional-compile-remove(rooms) */ role?: Role }): PermissionConstraints => {
   /* @conditional-compile-remove(rooms) */
   if (options.role === 'Consumer') {
     return {
