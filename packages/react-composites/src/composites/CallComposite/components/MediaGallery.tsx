@@ -82,7 +82,6 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
   const VideoGalleryMemoized = useMemo(() => {
     return (
       <>
-        <Announcer announcementString={announcerString} ariaLive={'polite'} />
         <VideoGallery
           {...videoGalleryProps}
           localVideoViewOptions={localVideoViewOptions}
@@ -95,9 +94,14 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
         />
       </>
     );
-  }, [videoGalleryProps, props.isMobile, onRenderAvatar, cameraSwitcherProps, announcerString]);
+  }, [videoGalleryProps, props.isMobile, onRenderAvatar, cameraSwitcherProps]);
 
-  return VideoGalleryMemoized;
+  return (
+    <>
+      <Announcer announcementString={announcerString} ariaLive={'polite'} />
+      {VideoGalleryMemoized}
+    </>
+  );
 };
 
 /**

@@ -52,18 +52,16 @@ export const useParticipantChangedAnnouncement = (): string => {
   const [previousParticipants, setPreviousParticipants] = useState<RemoteParticipantState[]>(currentParticipants);
 
   const resetAnnoucement = (string: string): void => {
-    // Is this really needed?
-    // React does not promise that we will see a DOM update with '' value.
-    // If we're getting announcer to announce the same name twice in sequence, it's probably keyed off of the
-    // actual DOM node, which will update even if we don't reest to '' first.
-    setAnnouncerString('');
     setAnnouncerString(string);
   };
 
   useMemo(
     () => {
-      const whoJoined = currentParticipants.filter((p) => !previousParticipants.includes(p));
-      const whoLeft = previousParticipants.filter((p) => !currentParticipants.includes(p));
+      const currentIds = currentParticipants.map((p) => p.identifier);
+      const previousIds = previousParticipants.map((p) => p.identifier);
+      const whoJoined = currentParticipants.filter((p) => !previousIds.includes(p.identifier));
+      const whoLeft = previousParticipants.filter((p) => !currentIds.includes(p.identifier));
+      console.log('run');
       if (whoJoined.length > 0) {
         resetAnnoucement(createAnnouncmentString('joined', whoJoined, strings));
       }
@@ -89,6 +87,12 @@ export const createAnnouncmentString = (
   participants: RemoteParticipantState[],
   strings: ParticipantChangedAnnouncmentStrings
 ): string => {
+  /**
+   * If there are no participants return empty string.
+   */
+  if (participants.length === 0) {
+    return '';
+  }
   /**
    * Filter participants into two arrays to put all the unnamed participants at the back of the
    * names being announced.
