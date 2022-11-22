@@ -31,7 +31,7 @@ export class MockCallAdapter implements CallAdapter {
 
   private emitter = new EventEmitter();
 
-  setState(state: CallAdapterState) {
+  setState(state: CallAdapterState): void {
     this.state = state;
     this.emitter.emit('stateChanged', state);
   }
