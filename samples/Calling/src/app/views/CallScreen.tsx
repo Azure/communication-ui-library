@@ -87,7 +87,10 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
 
   /* @conditional-compile-remove(rooms) */
   const callAdapterOptions: AzureCommunicationCallAdapterOptions = useMemo(
-    () => ({ roleHint, features: { unsupportedEnvironment: true } }),
+    () => ({
+      roleHint,
+      /* @conditional-compile-remove(unsupported-browser) */ features: { unsupportedEnvironment: true }
+    }),
     [roleHint]
   );
 
@@ -99,7 +102,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
       locator: callLocator,
       /* @conditional-compile-remove(PSTN-calls) */
       alternateCallerId,
-      /* @conditional-compile-remove(rooms) */
+      /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(unsupported-browser) */
       options: callAdapterOptions
     },
     afterCreate

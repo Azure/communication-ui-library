@@ -79,6 +79,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     [callIdRef]
   );
 
+  /* @conditional-compile-remove(unsupported-browser) */
   const callAdapterOptions = useMemo(() => {
     return { features: { unsupportedEnvironment: true } };
   }, []);
