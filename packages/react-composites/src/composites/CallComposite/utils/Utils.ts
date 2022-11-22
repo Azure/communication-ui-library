@@ -6,6 +6,8 @@ import { _isInCall, _isPreviewOn, _isInLobbyOrConnecting } from '@internal/calli
 import { CallControlOptions } from '../types/CallControlOptions';
 import { CallState } from '@internal/calling-stateful-client';
 import { isPhoneNumberIdentifier } from '@azure/communication-common';
+/* @conditional-compile-remove(unsupported-browser) */
+import { EnvironmentInfo } from '@azure/communication-calling';
 
 const ACCESS_DENIED_TEAMS_MEETING_SUB_CODE = 5854;
 const REMOTE_PSTN_USER_HUNG_UP = 560000;
@@ -111,6 +113,19 @@ const getCallEndReason = (call: CallState): CallEndReasons => {
 };
 
 /**
+ * type definition for conditional-compilation
+ */
+type GetCallCompositePageFunction = ((
+  call: CallState | undefined,
+  previousCall: CallState | undefined
+) => CallCompositePage) &
+  /* @conditional-compile-remove(unsupported-browser) */ ((
+    call: CallState | undefined,
+    previousCall: CallState | undefined,
+    environmentInfo?: EnvironmentInfo
+  ) => CallCompositePage);
+
+/**
  * Get the current call composite page based on the current call composite state
  *
  * @param Call - The current call state
@@ -123,10 +138,15 @@ const getCallEndReason = (call: CallState): CallEndReasons => {
  *
  * @private
  */
-export const getCallCompositePage = (
-  call: CallState | undefined,
-  previousCall: CallState | undefined
+export const getCallCompositePage: GetCallCompositePageFunction = (
+  call,
+  previousCall,
+  environmentInfo?
 ): CallCompositePage => {
+  /* @conditional-compile-remove(unsupported-browser) */
+  if (environmentInfo && environmentInfo.isSupportedBrowser === false) {
+    return 'unsupportedEnvironment';
+  }
   // Must check for ongoing call *before* looking at any previous calls.
   // If the composite completes one call and joins another, the previous calls
   // will be populated, but not relevant for determining the page.

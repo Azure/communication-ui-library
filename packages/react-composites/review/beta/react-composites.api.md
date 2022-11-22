@@ -27,6 +27,7 @@ import { ControlBarButtonStyles } from '@internal/react-components';
 import { CreateVideoStreamViewResult } from '@internal/react-components';
 import { DeviceManagerState } from '@internal/calling-stateful-client';
 import { DtmfTone } from '@azure/communication-calling';
+import { EnvironmentInfo } from '@azure/communication-calling';
 import { FileDownloadHandler } from '@internal/react-components';
 import { FileMetadata } from '@internal/react-components';
 import { GroupCallLocator } from '@azure/communication-calling';
@@ -186,6 +187,7 @@ export type CallAdapterClientState = {
     isTeamsCall: boolean;
     latestErrors: AdapterErrors;
     alternateCallerId?: string;
+    environmentInfo?: EnvironmentInfo;
     roleHint?: Role;
 };
 
@@ -597,6 +599,7 @@ export interface CallWithChatClientState {
     chat?: ChatThreadClientState;
     devices: DeviceManagerState;
     displayName: string | undefined;
+    environmentInfo?: EnvironmentInfo;
     isTeamsCall: boolean;
     latestCallErrors: AdapterErrors;
     latestChatErrors: AdapterErrors;

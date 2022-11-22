@@ -33,6 +33,7 @@ import { DeviceAccess } from '@azure/communication-calling';
 import { DeviceManager } from '@azure/communication-calling';
 import { DominantSpeakersInfo } from '@azure/communication-calling';
 import { DtmfTone as DtmfTone_2 } from '@azure/communication-calling';
+import { EnvironmentInfo } from '@azure/communication-calling';
 import { GroupCallLocator } from '@azure/communication-calling';
 import { IButtonProps } from '@fluentui/react';
 import { IButtonStyles } from '@fluentui/react';
@@ -290,6 +291,7 @@ export type CallAdapterClientState = {
     isTeamsCall: boolean;
     latestErrors: AdapterErrors;
     alternateCallerId?: string;
+    environmentInfo?: EnvironmentInfo;
     roleHint?: Role;
 };
 
@@ -388,6 +390,7 @@ export interface CallClientState {
         [key: string]: CallState;
     };
     deviceManager: DeviceManagerState;
+    environmentInfo?: EnvironmentInfo;
     incomingCalls: {
         [key: string]: IncomingCallState;
     };
@@ -842,6 +845,7 @@ export interface CallWithChatClientState {
     chat?: ChatThreadClientState;
     devices: DeviceManagerState;
     displayName: string | undefined;
+    environmentInfo?: EnvironmentInfo;
     isTeamsCall: boolean;
     latestCallErrors: AdapterErrors;
     latestChatErrors: AdapterErrors;
