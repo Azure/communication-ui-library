@@ -36,7 +36,6 @@ import { getToken } from './utils/getToken';
 import { getExistingThreadIdFromURL } from './utils/getExistingThreadIdFromURL';
 import { joinThread } from './utils/joinThread';
 import { getEndpointUrl } from './utils/getEndpointUrl';
-import { checkThreadValid } from './utils/checkThreadValid';
 
 // These props are set by the caller of ConfigurationScreen in the JSX and not found in context
 export interface ConfigurationScreenProps {
@@ -54,7 +53,6 @@ const CONFIGURATIONSCREEN_SHOWING_JOIN_CHAT = 2;
 const CONFIGURATIONSCREEN_SHOWING_INVALID_THREAD = 3;
 const CONFIGURATIONSCREEN_SHOWING_SPINNER_INITIALIZE_CHAT = 4;
 
-const ALERT_TEXT_TRY_AGAIN = "You can't be added at this moment. Please wait at least 60 seconds to try again.";
 const AVATAR_LABEL = 'Avatar';
 const ERROR_TEXT_THREAD_INVALID = 'Thread Id is not valid, please revisit home page to create a new thread';
 const ERROR_TEXT_THREAD_NOT_RECORDED = 'Thread id is not recorded in server';
@@ -107,7 +105,7 @@ export default (props: ConfigurationScreenProps): JSX.Element => {
 
       const result = await joinThread(threadId, token.identity, name);
       if (!result) {
-        alert(ALERT_TEXT_TRY_AGAIN);
+        setConfigurationScreenState(CONFIGURATIONSCREEN_SHOWING_INVALID_THREAD);
         setDisableJoinChatButton(false);
         return;
       }
@@ -123,7 +121,7 @@ export default (props: ConfigurationScreenProps): JSX.Element => {
       const setScreenState = async (): Promise<void> => {
         try {
           const threadId = getExistingThreadIdFromURL();
-          if (!(await checkThreadValid(threadId))) {
+          if (!threadId) {
             throw new Error(ERROR_TEXT_THREAD_NOT_RECORDED);
           }
         } catch (error) {
