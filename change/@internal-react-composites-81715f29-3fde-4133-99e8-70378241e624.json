@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Fixes A11y issue where composite does not announce to the user that a participant has left/joined.",
-  "packageName": "@internal/react-composites",
-  "email": "94866715+dmceachernmsft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
