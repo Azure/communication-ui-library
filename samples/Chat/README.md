@@ -26,8 +26,11 @@ Additional documentation for this sample can be found on [Microsoft Docs](https:
     git clone https://github.com/Azure/communication-ui-library.git
     ```
 
-1. Get the `Connection String` and `EndpointUrl` from the Azure portal. For more information on connection strings and EndpointUrl, see [Create an Azure Communication Resources](https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource)
-1. Once you get the `Connection String` and `EndpointUrl`, add both strings to the **samples/Server/appsetting.json** file found under the Chat folder. Input your connection string in the variable: `ResourceConnectionString`. Input your endpoint url in the variable: `EndpointUrl`.
+1. Get the `Connection String` from the Azure portal. For more information on connection strings, see [Create an Azure Communication Resources](https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource)
+1. Once you get the `Connection String`, add the connection string to the **samples/Server/appsetting.json** file. Input your connection string in the variable: `ResourceConnectionString`.
+1. Once you get the `Endpoint`, add the endpoint string to the **samples/Server/appsetting.json** file. Input your connection string in the variable: `EndpointUrl`.
+1. Get the `identity` from the Azure portal. Click on `Identities & User Access Tokens` in Azure portal. Generate a user with `Chat` scope.
+1. Once you get the `identity` string, add the identity string to the **samples/Server/appsetting.json** file. Input your identity string in the variable: `AdminUserId`. This is the server user to add new users to the chat thread.
 
 ## Local run
 

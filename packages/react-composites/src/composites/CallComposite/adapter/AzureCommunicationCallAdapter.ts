@@ -781,6 +781,10 @@ export type AzureCommunicationCallAdapterArgs = {
   credential: CommunicationTokenCredential;
   locator: CallAdapterLocator;
   /* @conditional-compile-remove(PSTN-calls) */
+  /**
+   * A phone number in E.164 format procured using Azure Communication Services that will be used to represent callers identity.
+   * E.164 numbers are formatted as [+] [country code] [phone number including area code]. For example, +14255550123 for a US phone number.
+   */
   alternateCallerId?: string;
   /* @conditional-compile-remove(rooms) */
   /**

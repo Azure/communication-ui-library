@@ -19,7 +19,7 @@ const getDocs: () => JSX.Element = () => {
   /* eslint-disable react/no-unescaped-entities */
   return (
     <>
-      <SingleLineBetaBanner />
+      <SingleLineBetaBanner version={'1.3.2-beta.1'} topOfPage={true} />
       <Title>Dialpad</Title>
       <Description>
         Component to render a Dialpad. This component allows numbers and +, *, # input by clicking on dialpad or using

@@ -80,6 +80,7 @@ export type AvatarPersonaData = {
     imageInitials?: string;
     initialsColor?: PersonaInitialsColor | string;
     initialsTextColor?: string;
+    showUnknownPersonaCoin?: boolean;
 };
 
 // @public

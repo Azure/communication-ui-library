@@ -37,6 +37,12 @@ export type CustomAvatarOptions = {
   /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
   /** State for the participant to be displayed in the defaultPlaceHolder */
   participantState?: ParticipantState;
+  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+  /**
+   * If true, show the special coin for unknown persona.
+   * It has '?' in place of initials, with static font and background colors
+   */
+  showUnknownPersonaCoin?: boolean;
 };
 
 /**

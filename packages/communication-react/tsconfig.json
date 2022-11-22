@@ -2,7 +2,6 @@
   "extends": "../../common/config/tsc/tsconfig.json",
   "compilerOptions": {
     "baseUrl": "./src",
-    "inlineSources": true,
     "outDir": "./dist/dist-esm",
     "paths": {
       "@internal/chat-component-bindings": ["../../chat-component-bindings/src"],
