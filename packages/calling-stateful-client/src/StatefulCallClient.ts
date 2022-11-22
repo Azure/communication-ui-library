@@ -3,6 +3,8 @@
 
 import { deviceManagerDeclaratify } from './DeviceManagerDeclarative';
 import { CallClient, CallClientOptions, CreateViewOptions, DeviceManager } from '@azure/communication-calling';
+/* @conditional-compile-remove(unsupported-browser) */
+import { Features } from '@azure/communication-calling';
 import { CallClientState, LocalVideoStreamState, RemoteVideoStreamState } from './CallClientState';
 import { CallContext } from './CallContext';
 import { callAgentDeclaratify, DeclarativeCallAgent } from './CallAgentDeclarative';
@@ -233,6 +235,26 @@ class ProxyCallClient implements ProxyHandler<CallClient> {
           this._deviceManager = deviceManagerDeclaratify(deviceManager, this._context);
           return this._deviceManager;
         }, 'CallClient.getDeviceManager');
+      }
+      case 'feature': {
+        /* @conditional-compile-remove(unsupported-browser) */
+        return this._context.withErrorTeedToState((...args: Parameters<CallClient['feature']>) => {
+          if (args[0] === Features.DebugInfo) {
+            const feature = target.feature(Features.DebugInfo);
+            /**
+             * add to this object if we want to proxy anything else off the DebugInfo feature object.
+             */
+            return {
+              ...feature,
+              getEnvironmentInfo: async () => {
+                const environmentInfo = await feature.getEnvironmentInfo();
+                this._context.setEnvironmentInfo(environmentInfo);
+                return environmentInfo;
+              }
+            };
+          }
+          return Reflect.get(target, prop);
+        }, 'CallClient.feature');
       }
       default:
         return Reflect.get(target, prop);

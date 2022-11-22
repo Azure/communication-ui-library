@@ -44,8 +44,7 @@ export const linkTextStyles: ILinkStyles = {
  */
 export const containerStyles: IStackStyles = {
   root: {
-    padding: '2rem',
-    maxWidth: '25.374rem'
+    padding: '2rem'
   }
 };
 
