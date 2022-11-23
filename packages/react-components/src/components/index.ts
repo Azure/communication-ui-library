@@ -185,6 +185,10 @@ export type { UnsupportedBrowserStrings, UnsupportedBrowserProps } from './Unsup
 export { UnsupportedBrowserVersion } from './UnsupportedBrowserVersion';
 /* @conditional-compile-remove(unsupported-browser) */
 export type { UnsupportedBrowserVersionStrings, UnsupportedBrowserVersionProps } from './UnsupportedBrowserVersion';
+/* @conditional-compile-remove(unsupported-browser) */ /* @conditional-compile-remove(unsupported-browser) */
+export { UnsupportedOperatingSystem } from './UnsupportedOperatingSystem';
+/* @conditional-compile-remove(unsupported-browser) */
+export type { UnsupportedOperatingSystemStrings, UnsupportedOperatingSystemProps } from './UnsupportedOperatingSystem';
 
 export { _TroubleshootingGuideErrorBar } from './TroubleshootingGuideErrorBar';
 export type {

@@ -2,33 +2,37 @@
 // Licensed under the MIT license.
 
 import { Stack } from '@fluentui/react';
-import { _DrawerSurface, UnsupportedBrowser, UnsupportedBrowserVersion } from '@internal/react-components';
+import {
+  _DrawerSurface,
+  UnsupportedBrowser,
+  UnsupportedBrowserVersion,
+  UnsupportedOperatingSystem
+} from '@internal/react-components';
 import React, { useState } from 'react';
+import {} from '../../../../../react-components/src/components/UnsupportedOperatingSystem';
 import { useLocale } from '../../../../../react-components/src/localization';
 import { MobilePreviewContainer } from '../../../MobileContainer';
 
 export const UnsupportedEnvironmentDrawers: () => JSX.Element = () => {
   const locale = useLocale().strings.UnsupportedBrowser;
-  const [isDrawer1Showing, setIsDrawer1Showing] = useState(true);
-  const [isDrawer2Showing, setIsDrawer2Showing] = useState(true);
-  const onLightDismissTriggered1 = (): void => setIsDrawer1Showing(false);
-  const onLightDismissTriggered2 = (): void => setIsDrawer2Showing(false);
+  const [isDrawerShowing, setIsDrawerShowing] = useState(true);
+  const onLightDismissTriggered = (): void => setIsDrawerShowing(false);
   return (
-    <Stack horizontal>
+    <Stack horizontal wrap>
       <MobilePreviewContainer>
-        {!isDrawer1Showing && (
+        {!isDrawerShowing && (
           <Stack
             styles={{ root: { cursor: 'pointer' } }}
             verticalFill
             verticalAlign="center"
             horizontalAlign="center"
-            onClick={() => setIsDrawer1Showing(true)}
+            onClick={() => setIsDrawerShowing(true)}
           >
             Click to show drawer
           </Stack>
         )}
-        {isDrawer1Showing && (
-          <_DrawerSurface onLightDismiss={onLightDismissTriggered1}>
+        {isDrawerShowing && (
+          <_DrawerSurface onLightDismiss={onLightDismissTriggered}>
             <UnsupportedBrowser
               onTroubleshootingClick={() => alert('clicked trouble shooting link')}
               strings={locale}
@@ -37,20 +41,41 @@ export const UnsupportedEnvironmentDrawers: () => JSX.Element = () => {
         )}
       </MobilePreviewContainer>
       <MobilePreviewContainer>
-        {!isDrawer2Showing && (
+        {!isDrawerShowing && (
           <Stack
             styles={{ root: { cursor: 'pointer' } }}
             verticalFill
             verticalAlign="center"
             horizontalAlign="center"
-            onClick={() => setIsDrawer2Showing(true)}
+            onClick={() => setIsDrawerShowing(true)}
           >
             Click to show drawer
           </Stack>
         )}
-        {isDrawer2Showing && (
-          <_DrawerSurface onLightDismiss={onLightDismissTriggered2}>
+        {isDrawerShowing && (
+          <_DrawerSurface onLightDismiss={onLightDismissTriggered}>
             <UnsupportedBrowserVersion
+              onTroubleshootingClick={() => alert('clicked compatibility link')}
+              strings={locale}
+            />
+          </_DrawerSurface>
+        )}
+      </MobilePreviewContainer>
+      <MobilePreviewContainer>
+        {!isDrawerShowing && (
+          <Stack
+            styles={{ root: { cursor: 'pointer' } }}
+            verticalFill
+            verticalAlign="center"
+            horizontalAlign="center"
+            onClick={() => setIsDrawerShowing(true)}
+          >
+            Click to show drawer
+          </Stack>
+        )}
+        {isDrawerShowing && (
+          <_DrawerSurface onLightDismiss={onLightDismissTriggered}>
+            <UnsupportedOperatingSystem
               onTroubleshootingClick={() => alert('clicked compatibility link')}
               strings={locale}
             />

@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { Modal, PrimaryButton, Stack } from '@fluentui/react';
-import { UnsupportedBrowser, UnsupportedBrowserVersion } from '@internal/react-components';
+import { UnsupportedBrowser, UnsupportedBrowserVersion, UnsupportedOperatingSystem } from '@internal/react-components';
 import React, { useState } from 'react';
 
 import { useLocale } from '../../../../../react-components/src/localization';
@@ -11,6 +11,7 @@ export const UnsupportedEnvironmentModals: () => JSX.Element = () => {
   const locale = useLocale().strings.UnsupportedBrowser;
   const [modal1Open, setModal1Open] = useState<boolean>(false);
   const [modal2Open, setModal2Open] = useState<boolean>(false);
+  const [modal3Open, setModal3Open] = useState<boolean>(false);
   return (
     <Stack horizontal>
       <PrimaryButton
@@ -29,6 +30,14 @@ export const UnsupportedEnvironmentModals: () => JSX.Element = () => {
       >
         Open UnsupportedBrowserVersion Modal
       </PrimaryButton>
+      <PrimaryButton
+        style={{ margin: 'auto' }}
+        onClick={() => {
+          setModal3Open(true);
+        }}
+      >
+        Open UnsupportedOperatingSystem Modal
+      </PrimaryButton>
       <Modal isOpen={modal1Open} onDismiss={() => setModal1Open(false)}>
         <UnsupportedBrowser
           strings={locale}
@@ -39,6 +48,14 @@ export const UnsupportedEnvironmentModals: () => JSX.Element = () => {
       </Modal>
       <Modal isOpen={modal2Open} onDismiss={() => setModal2Open(false)}>
         <UnsupportedBrowserVersion
+          strings={locale}
+          onTroubleshootingClick={() => {
+            alert('clicked help link');
+          }}
+        />
+      </Modal>
+      <Modal isOpen={modal3Open} onDismiss={() => setModal3Open(false)}>
+        <UnsupportedOperatingSystem
           strings={locale}
           onTroubleshootingClick={() => {
             alert('clicked help link');
