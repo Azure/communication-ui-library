@@ -15,39 +15,12 @@ import { act } from 'react-dom/test-utils';
 import { initializeIcons } from '@fluentui/react';
 import { CommunicationUserKind } from '@azure/communication-common';
 
-const strings = {
-  participantJoinedNoticeString: '{displayName} joined',
-  twoParticipantJoinedNoticeString: '{displayName1} and {displayName2} have joined',
-  threeParticipantJoinedNoticeString: '{displayName1}, {displayName2} and {displayName3} have joined',
-  participantLeftNoticeString: '{displayName} left',
-  twoParticipantLeftNoticeString: '{displayName1} and {displayName2} have left',
-  threeParticipantLeftNoticeString: '{displayName1}, {displayName2} and {displayName3} have left',
-  unnamedParticipantString: 'unnamed participant',
-  manyUnnamedParticipantsJoined: 'unnamed participant and {numOfParticipants} other participants joined',
-  manyUnnamedParticipantsLeft: 'unnamed participant and {numOfParticipants} other participants left',
-  manyParticipantsJoined:
-    '{displayName1}, {displayName2}, {displayName3} and {numOfParticipants} other participants have joined',
-  manyParticipantsLeft:
-    '{displayName1}, {displayName2}, {displayName3} and {numOfParticipants} other participants have left'
-};
-
-const locale = {
-  ...COMPOSITE_LOCALE_EN_US,
-  strings: {
-    ...COMPOSITE_LOCALE_EN_US.strings,
-    call: {
-      ...COMPOSITE_LOCALE_EN_US.strings.call,
-      ...strings
-    }
-  }
-};
-
 function RootWrapper(props: { adapter: MockCallAdapter }): JSX.Element {
   const { adapter } = props;
   return (
     <>
       <CallAdapterProvider adapter={adapter}>
-        <LocalizationProvider locale={locale}>
+        <LocalizationProvider locale={COMPOSITE_LOCALE_EN_US}>
           <HookWrapper />
         </LocalizationProvider>
       </CallAdapterProvider>
@@ -213,7 +186,7 @@ describe.only('useParticipantChangedAnnouncement', () => {
       participantWithName('zeta'),
       participantWithName('armadillo')
     ]);
-    expectAnnounced(root, 'donald, prathmesh, zeta and 1 other participants have joined');
+    expectAnnounced(root, 'donald, prathmesh, zeta and 1 other participants joined');
   });
 
   test('when 4 participants left', () => {
@@ -226,7 +199,7 @@ describe.only('useParticipantChangedAnnouncement', () => {
       participantWithName('armadillo')
     ]);
     setParticipants(root, adapter, [straggler]);
-    expectAnnounced(root, 'donald, prathmesh, zeta and 1 other participants have left');
+    expectAnnounced(root, 'donald, prathmesh, zeta and 1 other participants left');
   });
 
   test('when 1 unnamed participant joined', () => {
@@ -287,7 +260,7 @@ describe.only('useParticipantChangedAnnouncement', () => {
       participantWithoutName('some-id3'),
       participantWithoutName('some-id4')
     ]);
-    expectAnnounced(root, 'donald, prathmesh, armadillo and 5 other participants have joined');
+    expectAnnounced(root, 'donald, prathmesh, armadillo and 5 other participants joined');
     expectNotAnnounced(root, 'some-id has joined');
   });
 
@@ -303,7 +276,7 @@ describe.only('useParticipantChangedAnnouncement', () => {
       participantWithoutName('some-id4')
     ]);
     setParticipants(root, adapter, []);
-    expectAnnounced(root, 'donald, prathmesh, armadillo and 5 other participants have left');
+    expectAnnounced(root, 'donald, prathmesh, armadillo and 5 other participants left');
     expectNotAnnounced(root, 'some-id has left');
   });
 
