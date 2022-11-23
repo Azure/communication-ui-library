@@ -181,6 +181,9 @@ export type { _HighContrastAwareIconProps } from './HighContrastAwareIcon';
 export { UnsupportedBrowser } from './UnsupportedBrowser';
 /* @conditional-compile-remove(unsupported-browser) */
 export type { UnsupportedBrowserStrings, UnsupportedBrowserProps } from './UnsupportedBrowser';
+
+export { UnsupportedBrowserVersion } from './UnsupportedBrowserVersion';
+export type { UnsupportedBrowserVersionStrings, UnsupportedBrowserVersionProps } from './UnsupportedBrowserVersion';
 export { _TroubleshootingGuideErrorBar } from './TroubleshootingGuideErrorBar';
 export type {
   _TroubleshootingGuideErrorBarStrings,

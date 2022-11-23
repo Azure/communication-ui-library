@@ -16,14 +16,13 @@ import {
   mainTextStyles,
   secondaryTextStyles
 } from './styles/UnsupportedBrowser.styles';
-import { EnvironmentInfo } from '@azure/communication-calling';
 
 /**
  * Strings for UnsupportedBrowser component
  *
  * @beta
  */
-export interface UnsupportedBrowserStrings {
+export interface UnsupportedBrowserVersionStrings {
   /** String for the primary text */
   primaryText: string;
   /** String for the secondary text */
@@ -33,21 +32,19 @@ export interface UnsupportedBrowserStrings {
 }
 
 /**
- * props for UnsupportedBrowser UI
+ * props for UnsupportedBrowserVersion UI
  *
  * @beta
  */
-export interface UnsupportedBrowserProps {
+export interface UnsupportedBrowserVersionProps {
   /** Handler to perform a action when the help link is actioned */
   onTroubleshootingClick?: () => void;
   /** String overrides for the component */
-  strings: UnsupportedBrowserStrings;
-  /** Environment information to allow the component to change its strings accordingly */
-  environmentInfo?: EnvironmentInfo;
+  strings: UnsupportedBrowserVersionStrings;
 }
 
 /* @conditional-compile-remove(unsupported-browser) */
-const UnsupportedBrowserContainer = (props: UnsupportedBrowserProps): JSX.Element => {
+const UnsupportedBrowserVersionContainer = (props: UnsupportedBrowserVersionProps): JSX.Element => {
   const { onTroubleshootingClick, strings } = props;
   return (
     <Stack styles={containerStyles}>
@@ -60,7 +57,7 @@ const UnsupportedBrowserContainer = (props: UnsupportedBrowserProps): JSX.Elemen
           onClick={() => {
             onTroubleshootingClick();
           }}
-          data-ui-id="unsupportedBrowserLink"
+          data-ui-id="unsupportedBrowserVersionLink"
         >
           {strings.moreHelpLink}
         </Link>
@@ -74,10 +71,10 @@ const UnsupportedBrowserContainer = (props: UnsupportedBrowserProps): JSX.Elemen
  *
  * @beta
  */
-export const UnsupportedBrowser = (props: UnsupportedBrowserProps): JSX.Element => {
+export const UnsupportedBrowserVersion = (props: UnsupportedBrowserVersionProps): JSX.Element => {
   /* @conditional-compile-remove(unsupported-browser) */
-  const strings = useLocale().strings.UnsupportedBrowser;
+  const strings = useLocale().strings.UnsupportedBrowserVersion;
   /* @conditional-compile-remove(unsupported-browser) */
-  return <UnsupportedBrowserContainer {...props} strings={strings} />;
+  return <UnsupportedBrowserVersionContainer {...props} strings={strings} />;
   return <></>;
 };
