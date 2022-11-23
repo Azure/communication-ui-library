@@ -381,14 +381,14 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
 
     /* @conditional-compile-remove(teams-identity-support) */
     if (_isTeamsCallAgent(this.callAgent)) {
-      if (isTeamsMeeting) {
-        return this.callAgent.join(this.locator as TeamsMeetingLinkLocator, {
-          audioOptions,
-          videoOptions
-        }) as CallTypeOf<AgentType>;
-      } else {
+      if (!isTeamsMeeting) {
         throw new Error('Locator not supported by TeamsCallAgent');
       }
+
+      return this.callAgent.join(this.locator as TeamsMeetingLinkLocator, {
+        audioOptions,
+        videoOptions
+      }) as CallTypeOf<AgentType>;
     }
     if (isTeamsMeeting) {
       return this.callAgent.join(this.locator as TeamsMeetingLinkLocator, {
