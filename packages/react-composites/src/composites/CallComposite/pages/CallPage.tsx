@@ -66,7 +66,8 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
   return (
     <CallArrangement
       complianceBannerProps={{ ...complianceBannerProps, strings }}
-      errorBarProps={options?.errorBar !== false && { ...errorBarProps }}
+      // Ignore errors from before current call. This avoids old errors from showing up when a user re-joins a call.
+      errorBarProps={options?.errorBar !== false && { ...errorBarProps, ignorePremountErrors: true }}
       mutedNotificationProps={mutedNotificationProps}
       callControlProps={{
         callInvitationURL: callInvitationURL,

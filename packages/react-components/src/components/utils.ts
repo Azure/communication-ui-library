@@ -100,7 +100,8 @@ export const dropDismissalsForInactiveErrors = (
  */
 export const errorsToShow = (
   activeErrorMessages: ActiveErrorMessage[],
-  dismissedErrors: DismissedError[]
+  dismissedErrors: DismissedError[],
+  mountTimestamp?: Date
 ): ActiveErrorMessage[] => {
   const dismissed: Map<ErrorType, DismissedError> = new Map();
   for (const error of dismissedErrors) {
@@ -108,6 +109,11 @@ export const errorsToShow = (
   }
 
   return activeErrorMessages.filter((error) => {
+    if (mountTimestamp && error.timestamp && mountTimestamp > error.timestamp) {
+      // Error has a timestamp and it is older than when the component was mounted.
+      return false;
+    }
+
     const dismissal = dismissed.get(error.type);
     if (!dismissal) {
       // This error was never dismissed.
