@@ -34,5 +34,6 @@ test.describe('unsupportedBrowser page tests', async () => {
 const defaultMockUnsupportedBrowserPageState = (): MockCallAdapterState => {
   const state = defaultMockCallAdapterState();
   state.page = 'unsupportedEnvironment';
+  state.features = { unsupportedEnvironment: true };
   return state;
 };

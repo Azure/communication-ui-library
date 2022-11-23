@@ -89,6 +89,7 @@ type CallWithChatClientStateInternal = Omit<
   | 'latestErrors'
   | 'userId'
   | /* @conditional-compile-remove(PSTN-calls) */ 'alternateCallerId'
+  | /* @conditional-compile-remove(unsupported-browser) */ 'features'
   | /* @conditional-compile-remove(rooms) */ 'roleHint'
 >;
 
