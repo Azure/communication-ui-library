@@ -245,7 +245,11 @@ export interface BrowserPermissionDeniedStyles extends BaseCustomStyles {
 }
 
 // @public
-export interface CallAdapter extends AdapterState<CallAdapterState>, Disposable, CallAdapterCallManagement, CallAdapterDeviceManagement, CallAdapterSubscribers {
+export interface CallAdapter extends CommonCallAdapter {
+    joinCall(microphoneOn?: boolean): Call | undefined;
+    startCall(participants: string[], options?: StartCallOptions): Call | undefined;
+    // @beta
+    startCall(participants: CommunicationIdentifier[], options?: StartCallOptions): Call | undefined;
 }
 
 // @public
@@ -253,8 +257,16 @@ export type CallAdapterCallEndedEvent = {
     callId: string;
 };
 
+// @public @deprecated
+export interface CallAdapterCallManagement extends CallAdapterCallOperations {
+    joinCall(microphoneOn?: boolean): Call | undefined;
+    startCall(participants: string[], options?: StartCallOptions): Call | undefined;
+    // @beta
+    startCall(participants: CommunicationIdentifier[], options?: StartCallOptions): Call | undefined;
+}
+
 // @public
-export interface CallAdapterCallManagement {
+export interface CallAdapterCallOperations {
     // @beta
     addParticipant(participant: PhoneNumberIdentifier, options?: AddPhoneNumberOptions): Promise<void>;
     // (undocumented)
@@ -263,7 +275,6 @@ export interface CallAdapterCallManagement {
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
     // @beta
     holdCall(): Promise<void>;
-    joinCall(microphoneOn?: boolean): Call | undefined;
     leaveCall(forEveryone?: boolean): Promise<void>;
     mute(): Promise<void>;
     removeParticipant(userId: string): Promise<void>;
@@ -273,9 +284,6 @@ export interface CallAdapterCallManagement {
     resumeCall(): Promise<void>;
     // @beta
     sendDtmfTone(dtmfTone: DtmfTone_2): Promise<void>;
-    startCall(participants: string[], options?: StartCallOptions): Call | undefined;
-    // @beta
-    startCall(participants: CommunicationIdentifier[], options?: StartCallOptions): Call | undefined;
     startCamera(options?: VideoStreamOptions): Promise<void>;
     startScreenShare(): Promise<void>;
     stopCamera(): Promise<void>;
@@ -483,7 +491,7 @@ export type CallCompositePage = 'accessDeniedTeamsMeeting' | 'call' | 'configura
 
 // @public
 export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcons> {
-    adapter: CallAdapter;
+    adapter: CommonCallAdapter;
     callInvitationUrl?: string;
     formFactor?: 'desktop' | 'mobile';
     options?: CallCompositeOptions;
@@ -1334,6 +1342,14 @@ export type ClientState = CallClientState & ChatClientState;
 export type Common<A, B> = Pick<A, CommonProperties<A, B>>;
 
 // @public
+export interface CommonCallAdapter extends AdapterState<CallAdapterState>, Disposable, CallAdapterCallOperations, CallAdapterDeviceManagement, CallAdapterSubscribers {
+    joinCall(microphoneOn?: boolean): void;
+    startCall(participants: string[], options?: StartCallOptions): void;
+    // @beta
+    startCall(participants: CommunicationIdentifier[], options?: StartCallOptions): void;
+}
+
+// @public
 export interface CommonCallingHandlers {
     // (undocumented)
     askDevicePermission: (constrain: PermissionConstraints) => Promise<void>;
@@ -1616,6 +1632,12 @@ export const createAzureCommunicationChatAdapter: ({ endpoint: endpointUrl, user
 
 // @public
 export const createAzureCommunicationChatAdapterFromClient: (chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient) => Promise<ChatAdapter>;
+
+// @beta (undocumented)
+export const createAzureCommunicationTeamsCallAdapter: ({ userId, credential, locator, alternateCallerId }: AzureCommunicationCallAdapterArgs) => Promise<TeamsCallAdapter>;
+
+// @beta
+export const createAzureCommunicationTeamsCallAdapterFromClient: (callClient: StatefulCallClient, callAgent: TeamsCallAgent, locator: CallAdapterLocator) => Promise<TeamsCallAdapter>;
 
 // @public
 export const createDefaultCallingHandlers: (callClient: StatefulCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined) => CallingHandlers;
@@ -2968,6 +2990,13 @@ export interface SystemMessageCommon extends MessageCommon {
 }
 
 // @beta
+export interface TeamsCallAdapter extends CommonCallAdapter {
+    joinCall(microphoneOn?: boolean): TeamsCall | undefined;
+    startCall(participants: string[], options?: StartCallOptions): TeamsCall | undefined;
+    startCall(participants: CommunicationIdentifier[], options?: StartCallOptions): TeamsCall | undefined;
+}
+
+// @beta
 export interface TeamsCallingHandlers extends CommonCallingHandlers {
     // (undocumented)
     onStartCall: (participants: CommunicationIdentifier[], options?: StartCallOptions) => undefined | /* @conditional-compile-remove(teams-identity-support) */ TeamsCall;
@@ -3070,6 +3099,9 @@ export const useAzureCommunicationCallWithChatAdapter: (args: Partial<AzureCommu
 
 // @public
 export const useAzureCommunicationChatAdapter: (args: Partial<AzureCommunicationChatAdapterArgs>, afterCreate?: ((adapter: ChatAdapter) => Promise<ChatAdapter>) | undefined, beforeDispose?: ((adapter: ChatAdapter) => Promise<void>) | undefined) => ChatAdapter | undefined;
+
+// @beta
+export const useAzureCommunicationTeamsCallAdapter: (args: Partial<AzureCommunicationCallAdapterArgs>, afterCreate?: ((adapter: TeamsCallAdapter) => Promise<TeamsCallAdapter>) | undefined, beforeDispose?: ((adapter: TeamsCallAdapter) => Promise<void>) | undefined) => TeamsCallAdapter | undefined;
 
 // @public
 export const useCall: () => Call | undefined;
