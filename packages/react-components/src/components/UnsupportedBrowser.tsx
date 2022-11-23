@@ -15,8 +15,7 @@ import {
   linkTextStyles,
   mainTextStyles,
   secondaryTextStyles
-} from './styles/UnsupportedBrowser.styles';
-import { EnvironmentInfo } from '@azure/communication-calling';
+} from './styles/UnsupportedEnvironment.styles';
 
 /**
  * Strings for UnsupportedBrowser component
@@ -42,8 +41,6 @@ export interface UnsupportedBrowserProps {
   onTroubleshootingClick?: () => void;
   /** String overrides for the component */
   strings: UnsupportedBrowserStrings;
-  /** Environment information to allow the component to change its strings accordingly */
-  environmentInfo?: EnvironmentInfo;
 }
 
 /* @conditional-compile-remove(unsupported-browser) */

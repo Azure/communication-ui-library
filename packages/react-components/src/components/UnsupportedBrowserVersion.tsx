@@ -15,7 +15,7 @@ import {
   linkTextStyles,
   mainTextStyles,
   secondaryTextStyles
-} from './styles/UnsupportedBrowser.styles';
+} from './styles/UnsupportedEnvironment.styles';
 
 /**
  * Strings for UnsupportedBrowser component

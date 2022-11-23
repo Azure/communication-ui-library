@@ -372,6 +372,7 @@ export interface ComponentStrings {
     sendBox: SendBoxStrings;
     typingIndicator: TypingIndicatorStrings;
     UnsupportedBrowser: UnsupportedBrowserStrings;
+    UnsupportedBrowserVersion: UnsupportedBrowserVersionStrings;
     videoGallery: VideoGalleryStrings;
     videoTile: VideoTileStrings;
 }
@@ -1567,6 +1568,22 @@ export interface UnsupportedBrowserProps {
 
 // @beta
 export interface UnsupportedBrowserStrings {
+    moreHelpLink: string;
+    primaryText: string;
+    secondaryText: string;
+}
+
+// @beta
+export const UnsupportedBrowserVersion: (props: UnsupportedBrowserVersionProps) => JSX.Element;
+
+// @beta
+export interface UnsupportedBrowserVersionProps {
+    onTroubleshootingClick?: () => void;
+    strings: UnsupportedBrowserVersionStrings;
+}
+
+// @beta
+export interface UnsupportedBrowserVersionStrings {
     moreHelpLink: string;
     primaryText: string;
     secondaryText: string;

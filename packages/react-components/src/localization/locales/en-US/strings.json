@@ -249,6 +249,11 @@
     "secondaryText": "Please join this call using a compatible browser.",
     "moreHelpLink": "More help"
   },
+  "UnsupportedBrowserVersion": {
+    "primaryText": "Browser version not supported",
+    "secondaryText": "Please update your browser and then try joining the call again.",
+    "moreHelpLink": "See compatibility requirements"
+  },
   "BrowserPermissionDenied": {
     "primaryText": "Can't use your camera or microphone",
     "secondaryText": "Your browser might not have access to your camera or microphone. To fix this, open System Preferences.",

@@ -1484,6 +1484,7 @@ export interface ComponentStrings {
     sendBox: SendBoxStrings;
     typingIndicator: TypingIndicatorStrings;
     UnsupportedBrowser: UnsupportedBrowserStrings;
+    UnsupportedBrowserVersion: UnsupportedBrowserVersionStrings;
     videoGallery: VideoGalleryStrings;
     videoTile: VideoTileStrings;
 }
