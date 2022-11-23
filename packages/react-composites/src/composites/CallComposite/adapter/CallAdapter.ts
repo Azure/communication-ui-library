@@ -21,6 +21,8 @@ import { Role } from '@internal/react-components';
 import type { CommunicationIdentifierKind } from '@azure/communication-common';
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions, DtmfTone } from '@azure/communication-calling';
+/* @conditional-compile-remove(unsupported-browser) */
+import { EnvironmentInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
 import type {
   CommunicationIdentifier,
@@ -62,6 +64,18 @@ export const END_CALL_PAGES: CallCompositePage[] = [
 ];
 
 /**
+ * options object to enable opt in features for the CallAdapter
+ *
+ * @beta
+ */
+export type CallAdapterOptionalFeatures = {
+  /**
+   * Feature flag for enabling the unsupported environment logic in the CallAdapter.
+   */
+  unsupportedEnvironment?: boolean;
+};
+
+/**
  * {@link CommonCallAdapter} state for pure UI purposes.
  *
  * @public
@@ -92,6 +106,16 @@ export type CallAdapterClientState = {
    * Azure communications Phone number to make PSTN calls with.
    */
   alternateCallerId?: string;
+  /* @conditional-compile-remove(unsupported-browser) */
+  /**
+   * Environment information about system the adapter is made on
+   */
+  environmentInfo?: EnvironmentInfo;
+  /* @conditional-compile-remove(unsupported-browser) */
+  /**
+   * Optional features that are to be enabled through the adapter.
+   */
+  features?: CallAdapterOptionalFeatures;
   /* @conditional-compile-remove(rooms) */
   /**
    * Use this to hint the role of the user when the role is not available before a Rooms call is started. This value
