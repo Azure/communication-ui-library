@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fix VideoTile more button styles and add support for long touch",
+  "packageName": "@azure/communication-react",
+  "email": "anjulgarg@live.com",
+  "dependentChangeType": "patch"
+}
