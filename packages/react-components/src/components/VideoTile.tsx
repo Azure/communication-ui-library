@@ -184,6 +184,12 @@ const videoTileMoreIconProps = { iconName: 'VideoTileMoreOptions' };
 /* @conditional-compile-remove(pinned-participants) */
 const videoTileMoreMenuIconProps = { iconName: undefined, style: { display: 'none' } };
 /* @conditional-compile-remove(pinned-participants) */
+const videoTileMoreMenuProps = {
+  directionalHint: DirectionalHint.topRightEdge,
+  isBeakVisible: false,
+  styles: { container: { maxWidth: '8rem' } }
+};
+/* @conditional-compile-remove(pinned-participants) */
 const VideoTileMoreOptionsButton = (props: { contextualMenu?: IContextualMenuProps }): JSX.Element => {
   const { contextualMenu } = props;
   if (!contextualMenu) {
@@ -193,7 +199,7 @@ const VideoTileMoreOptionsButton = (props: { contextualMenu?: IContextualMenuPro
     <IconButton
       styles={videoTileMoreButtonStyle}
       iconProps={videoTileMoreIconProps}
-      menuProps={{ directionalHint: DirectionalHint.topRightEdge, isBeakVisible: false, ...contextualMenu }}
+      menuProps={{ ...videoTileMoreMenuProps, ...contextualMenu }}
       menuIconProps={videoTileMoreMenuIconProps}
     />
   );

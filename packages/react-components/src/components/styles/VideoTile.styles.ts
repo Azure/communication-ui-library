@@ -127,6 +127,10 @@ export const participantStateStringStyles = (theme: Theme): IStyle => {
 export const videoTileMoreButtonStyle: IButtonStyles = {
   root: {
     color: 'inherit',
-    height: '100%'
+    // To ensure that the button is clickable when there is a floating video tile
+    zIndex: 1
+  },
+  rootHovered: {
+    color: 'inherit'
   }
 };

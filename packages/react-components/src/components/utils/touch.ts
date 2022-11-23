@@ -2,7 +2,7 @@ import React from 'react';
 
 export const useLongTouch = (ref: React.RefObject<HTMLElement>, onLongTouch: () => void): void => {
   const longTouchTimeout = React.useRef<number | undefined>(undefined);
-  const longTouchTimeoutDuration = 500;
+  const longTouchTimeoutDuration = 700; // 700ms
 
   React.useEffect(() => {
     const element = ref.current;
