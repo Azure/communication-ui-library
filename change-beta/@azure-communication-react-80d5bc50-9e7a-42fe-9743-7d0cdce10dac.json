@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Ignore errors from previous call when surfacing errors to composite UI",
+  "packageName": "@azure/communication-react",
+  "email": "82062616+prprabhu-ms@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
