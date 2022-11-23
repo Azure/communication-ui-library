@@ -22,6 +22,17 @@ export {
   createAzureCommunicationCallAdapterFromClient,
   useAzureCommunicationCallAdapter
 } from './adapter';
+
+/* @conditional-compile-remove(teams-identity-support) */
+export {
+  createAzureCommunicationTeamsCallAdapter,
+  createAzureCommunicationTeamsCallAdapterFromClient,
+  useAzureCommunicationTeamsCallAdapter
+} from './adapter';
+
+/* @conditional-compile-remove(teams-identity-support) */
+export type { TeamsCallAdapter } from './adapter';
+
 export type {
   AzureCommunicationCallAdapterArgs,
   CallAdapterLocator,
