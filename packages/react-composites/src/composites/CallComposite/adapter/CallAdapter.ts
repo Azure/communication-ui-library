@@ -209,15 +209,7 @@ export type DiagnosticChangedEventListner = (
  *
  * @public
  */
-export interface CallAdapterCallManagement {
-  /**
-   * Join the call with microphone initially on/off.
-   *
-   * @param microphoneOn - Whether microphone is initially enabled
-   *
-   * @public
-   */
-  joinCall(microphoneOn?: boolean): Call | undefined;
+export interface CallAdapterCallOperations {
   /**
    * Leave the call
    *
@@ -254,21 +246,6 @@ export interface CallAdapterCallManagement {
    * @public
    */
   unmute(): Promise<void>;
-  /**
-   * Start the call.
-   *
-   * @param participants - An array of participant ids to join
-   *
-   * @public
-   */
-  startCall(participants: string[], options?: StartCallOptions): Call | undefined;
-  /* @conditional-compile-remove(PSTN-calls) */
-  /**
-   * Start the call.
-   * @param participants - An array of {@link @azure/communication-common#CommunicationIdentifier} to be called
-   * @beta
-   */
-  startCall(participants: CommunicationIdentifier[], options?: StartCallOptions): Call | undefined;
   /**
    * Start sharing the screen during a call.
    *
@@ -548,6 +525,37 @@ export interface CallAdapterSubscribers {
   off(event: 'error', listener: (e: AdapterError) => void): void;
 }
 
+/**
+ * Functionality for managing the current call or start a new call
+ *
+ * @public
+ */
+export interface CallAdapterCallManagement extends CallAdapterCallOperations {
+  /**
+   * Join the call with microphone initially on/off.
+   *
+   * @param microphoneOn - Whether microphone is initially enabled
+   *
+   * @public
+   */
+  joinCall(microphoneOn?: boolean): Call | undefined;
+  /**
+   * Start the call.
+   *
+   * @param participants - An array of participant ids to join
+   *
+   * @public
+   */
+  startCall(participants: string[], options?: StartCallOptions): Call | undefined;
+  /* @conditional-compile-remove(PSTN-calls) */
+  /**
+   * Start the call.
+   * @param participants - An array of {@link @azure/communication-common#CommunicationIdentifier} to be called
+   * @beta
+   */
+  startCall(participants: CommunicationIdentifier[], options?: StartCallOptions): Call | undefined;
+}
+
 // TODO: Flatten the adapter structure and deprecate CallAdapterCallManagement
 /**
  * {@link CallComposite} Adapter interface.
@@ -557,12 +565,31 @@ export interface CallAdapterSubscribers {
 export interface CommonCallAdapter
   extends AdapterState<CallAdapterState>,
     Disposable,
-    Omit<CallAdapterCallManagement, 'joinCall' | 'startCall'>,
+    CallAdapterCallOperations,
     CallAdapterDeviceManagement,
     CallAdapterSubscribers {
+  /**
+   * Join the call with microphone initially on/off.
+   *
+   * @param microphoneOn - Whether microphone is initially enabled
+   *
+   * @public
+   */
   joinCall(microphoneOn?: boolean): void;
+  /**
+   * Start the call.
+   *
+   * @param participants - An array of participant ids to join
+   *
+   * @public
+   */
   startCall(participants: string[], options?: StartCallOptions): void;
   /* @conditional-compile-remove(PSTN-calls) */
+  /**
+   * Start the call.
+   * @param participants - An array of {@link @azure/communication-common#CommunicationIdentifier} to be called
+   * @beta
+   */
   startCall(participants: CommunicationIdentifier[], options?: StartCallOptions): void;
 }
 
@@ -572,9 +599,28 @@ export interface CommonCallAdapter
  * @public
  */
 export interface CallAdapter extends CommonCallAdapter {
+  /**
+   * Join the call with microphone initially on/off.
+   *
+   * @param microphoneOn - Whether microphone is initially enabled
+   *
+   * @public
+   */
   joinCall(microphoneOn?: boolean): Call | undefined;
+  /**
+   * Start the call.
+   *
+   * @param participants - An array of participant ids to join
+   *
+   * @public
+   */
   startCall(participants: string[], options?: StartCallOptions): Call | undefined;
   /* @conditional-compile-remove(PSTN-calls) */
+  /**
+   * Start the call.
+   * @param participants - An array of {@link @azure/communication-common#CommunicationIdentifier} to be called
+   * @beta
+   */
   startCall(participants: CommunicationIdentifier[], options?: StartCallOptions): Call | undefined;
 }
 
@@ -585,8 +631,27 @@ export interface CallAdapter extends CommonCallAdapter {
  * @beta
  */
 export interface TeamsCallAdapter extends CommonCallAdapter {
+  /**
+   * Join the call with microphone initially on/off.
+   *
+   * @param microphoneOn - Whether microphone is initially enabled
+   *
+   * @beta
+   */
   joinCall(microphoneOn?: boolean): TeamsCall | undefined;
+  /**
+   * Start the call.
+   *
+   * @param participants - An array of participant ids to join
+   *
+   * @beta
+   */
   startCall(participants: string[], options?: StartCallOptions): TeamsCall | undefined;
   /* @conditional-compile-remove(PSTN-calls) */
+  /**
+   * Start the call.
+   * @param participants - An array of {@link @azure/communication-common#CommunicationIdentifier} to be called
+   * @beta
+   */
   startCall(participants: CommunicationIdentifier[], options?: StartCallOptions): TeamsCall | undefined;
 }
