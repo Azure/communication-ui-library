@@ -847,7 +847,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
 
   // Infinite scrolling + threadInitialize function
   const fetchNewMessageWhenAtTop = useCallback(async () => {
-    if (chatScrollDivRef.current && !isLoadingChatMessagesRef.current) {
+    if (!isLoadingChatMessagesRef.current) {
       if (onLoadPreviousChatMessages) {
         isLoadingChatMessagesRef.current = true;
         // Fetch message until scrollTop reach the threshold for fetching new message
