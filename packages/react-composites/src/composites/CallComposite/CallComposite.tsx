@@ -315,14 +315,13 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
   /* @conditional-compile-remove(unsupported-browser) */
   switch (page) {
     case 'unsupportedEnvironment':
-      const environmentInfo = adapter.getState().environmentInfo;
       pageElement = (
         <>
           {
             /* @conditional-compile-remove(unsupported-browser) */
             <UnsupportedBrowserPage
               onTroubleshootingClick={props.options?.onEnvironmentInfoTroubleshootingClick}
-              environmentInfo={environmentInfo}
+              environmentInfo={adapter.getState().environmentInfo}
             />
           }
         </>
