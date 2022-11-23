@@ -45,7 +45,8 @@ export const tileInfoContainerStyle = mergeStyles({
   bottom: '0',
   left: '0',
   padding: '0.5rem',
-  width: '100%'
+  width: '100%',
+  maxHeight: '2.5rem'
 });
 
 /**
@@ -58,7 +59,7 @@ export const disabledVideoHint = mergeStyles({
   overflow: 'hidden',
   whiteSpace: 'nowrap',
   alignItems: 'center',
-  padding: '0.15rem',
+  padding: '0.25rem',
   maxWidth: '100%'
 });
 
@@ -123,35 +124,9 @@ export const participantStateStringStyles = (theme: Theme): IStyle => {
 /**
  * @private
  */
-export const menuButtonStyles: IButtonStyles = {
+export const videoTileMoreButtonStyle: IButtonStyles = {
   root: {
-    background: 'none',
-    border: 'none',
-    borderRadius: 0,
-    minHeight: '0.125rem',
-    minWidth: '2rem',
-    width: '100%',
-    maxWidth: '3rem',
-    svg: {
-      verticalAlign: 'text-top'
-    }
-  },
-  splitButtonMenuButton: {
-    border: 'none'
-  },
-  flexContainer: {
-    flexFlow: 'column',
-    display: 'contents'
-  },
-  label: {
-    fontSize: '0.625rem',
-    fontWeight: '400',
-    lineHeight: '1rem',
-    cursor: 'pointer',
-    display: 'block',
-    margin: '0rem 0.25rem',
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
-    whiteSpace: 'nowrap'
+    color: 'inherit',
+    height: '100%'
   }
 };

@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { merge, Stack } from '@fluentui/react';
+import { merge, Stack, Text } from '@fluentui/react';
 import React, { useCallback, useMemo, useState } from 'react';
 import { _DrawerSurfaceProps } from '.';
 import { useTheme } from '../../theming/FluentThemeProvider';
@@ -33,6 +33,8 @@ export interface _DrawerMenuProps {
   onLightDismiss: () => void;
 
   styles?: _DrawerMenuStyles;
+
+  title?: string;
 }
 
 /**
@@ -45,6 +47,8 @@ export const _DrawerMenu = (props: _DrawerMenuProps): JSX.Element => {
   // When a sub menu item is clicked the menu items displayed is updated to be that of the submenu.
   // To track this state we store a list of the keys clicked up until this point.
   const [selectedKeyPath, setSelectedKeyPath] = useState<string[]>([]);
+
+  const theme = useTheme();
 
   // Get the menu items that should be rendered
   const menuItemsToRender = useMemo(() => {
@@ -89,6 +93,13 @@ export const _DrawerMenu = (props: _DrawerMenuProps): JSX.Element => {
   return (
     <_DrawerSurface styles={props.styles?.drawerSurfaceStyles} onLightDismiss={props.onLightDismiss}>
       <Stack styles={props.styles} role="menu" data-ui-id="drawer-menu">
+        {props.title && menuItemsToRender && menuItemsToRender?.length > 0 ? (
+          <Stack horizontalAlign="center" style={{ justifyContent: 'center', height: '2rem' }}>
+            <Text color={theme.palette.neutralSecondary}>{props.title}</Text>
+          </Stack>
+        ) : (
+          <></>
+        )}
         {menuItemsToRender?.slice(0, 1).map((item) => (
           <DrawerMenuItem
             {...item}

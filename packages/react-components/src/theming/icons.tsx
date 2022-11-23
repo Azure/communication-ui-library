@@ -266,5 +266,7 @@ export const DEFAULT_COMPONENT_ICONS = {
   /* @conditional-compile-remove(call-readiness) */
   BrowserPermissionDeniedError: <BrowserPermissionDenied20Filled />,
   /* @conditional-compile-remove(pinned-participants) */
-  VideoTilePinned: <Pin16Filled />
+  VideoTilePinned: <Pin16Filled />,
+  /* @conditional-compile-remove(pinned-participants) */
+  VideoTileMoreOptions: <MoreHorizontal20Filled />
 };
