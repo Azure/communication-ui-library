@@ -35,6 +35,7 @@ import { VideoTileStrings } from '../components/VideoTile';
 import { COMPONENT_LOCALE_EN_US } from './locales';
 /* @conditional-compile-remove(unsupported-browser) */
 import { UnsupportedBrowserVersionStrings } from '../components/UnsupportedBrowserVersion';
+/* @conditional-compile-remove(unsupported-browser) */
 import { UnsupportedOperatingSystemStrings } from '../components/UnsupportedOperatingSystem';
 
 /**
