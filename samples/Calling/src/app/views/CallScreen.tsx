@@ -30,7 +30,6 @@ export interface CallScreenProps {
   displayName: string;
   /* @conditional-compile-remove(PSTN-calls) */
   alternateCallerId?: string;
-  onCallEnded: () => void;
   /* @conditional-compile-remove(rooms) */
   roleHint?: Role;
   /* @conditional-compile-remove(call-readiness) */
@@ -43,7 +42,6 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     userId,
     callLocator,
     displayName,
-    onCallEnded,
     /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
     /* @conditional-compile-remove(rooms) */ roleHint,
     /* @conditional-compile-remove(call-readiness) */ callReadinessOptedIn
@@ -53,9 +51,6 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
   const isMobileSession = useIsMobile();
   const afterCreate = useCallback(
     async (adapter: CallAdapter): Promise<CallAdapter> => {
-      adapter.on('callEnded', () => {
-        onCallEnded();
-      });
       adapter.on('error', (e) => {
         // Error is already acted upon by the Call composite, but the surrounding application could
         // add top-level error handling logic here (e.g. reporting telemetry).
@@ -72,7 +67,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
       });
       return adapter;
     },
-    [callIdRef, onCallEnded]
+    [callIdRef]
   );
 
   const credential = useMemo(
@@ -90,8 +85,14 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     [callReadinessOptedIn]
   );
 
-  /* @conditional-compile-remove(rooms) */
-  const callAdapterOptions: AzureCommunicationCallAdapterOptions = useMemo(() => ({ roleHint }), [roleHint]);
+  /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(unsupported-browser) */
+  const callAdapterOptions: AzureCommunicationCallAdapterOptions = useMemo(
+    () => ({
+      roleHint,
+      features: { unsupportedEnvironment: true }
+    }),
+    [roleHint]
+  );
 
   const adapter = useAzureCommunicationCallAdapter(
     {
@@ -101,7 +102,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
       locator: callLocator,
       /* @conditional-compile-remove(PSTN-calls) */
       alternateCallerId,
-      /* @conditional-compile-remove(rooms) */
+      /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(unsupported-browser) */
       options: callAdapterOptions
     },
     afterCreate
