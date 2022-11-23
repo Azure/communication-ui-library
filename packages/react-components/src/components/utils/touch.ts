@@ -1,5 +1,11 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
 import React from 'react';
 
+/**
+ * @private
+ */
 export const useLongTouch = (ref: React.RefObject<HTMLElement>, onLongTouch: () => void): void => {
   const longTouchTimeout = React.useRef<number | undefined>(undefined);
   const longTouchTimeoutDuration = 700; // 700ms
