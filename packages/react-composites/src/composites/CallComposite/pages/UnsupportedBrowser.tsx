@@ -6,7 +6,7 @@ import { EnvironmentInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(unsupported-browser) */
 import { IStackStyles, Stack } from '@fluentui/react';
 /* @conditional-compile-remove(unsupported-browser) */
-import { UnsupportedBrowser, UnsupportedBrowserVersion } from '@internal/react-components';
+import { UnsupportedBrowser, UnsupportedBrowserVersion, UnsupportedOperatingSystem } from '@internal/react-components';
 import React from 'react';
 /* @conditional-compile-remove(unsupported-browser) */
 import { useLocale } from '../../localization';
@@ -33,11 +33,20 @@ export const UnsupportedBrowserPage = (props: UnsupportedBrowserPageProps): JSX.
   const unsupportedBrowserStrings = locale.component.strings.UnsupportedBrowser;
   /* @conditional-compile-remove(unsupported-browser) */
   const unsupportedBrowserVersionStrings = locale.component.strings.UnsupportedBrowserVersion;
+  /* @conditional-compile-remove(unsupported-browser) */
+  const unsupportedOperatingSystemStrings = locale.component.strings.UnsupportedOperatngSystem;
 
   /* @conditional-compile-remove(unsupported-browser) */
   let pageElement: JSX.Element | undefined;
   /* @conditional-compile-remove(unsupported-browser) */
-  if (!environmentInfo?.isSupportedBrowser) {
+  if (!environmentInfo?.isSupportedPlatform) {
+    pageElement = (
+      <UnsupportedOperatingSystem
+        onTroubleshootingClick={onTroubleshootingClick}
+        strings={unsupportedOperatingSystemStrings}
+      />
+    );
+  } else if (!environmentInfo?.isSupportedBrowser) {
     pageElement = (
       <UnsupportedBrowser onTroubleshootingClick={onTroubleshootingClick} strings={unsupportedBrowserStrings} />
     );
