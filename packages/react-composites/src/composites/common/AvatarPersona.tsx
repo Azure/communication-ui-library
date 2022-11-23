@@ -33,6 +33,12 @@ export type AvatarPersonaData = {
    * @defaultvalue `white`
    */
   initialsTextColor?: string;
+  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+  /**
+   * If true, show the special coin for unknown persona.
+   * It has '?' in place of initials, with static font and background colors
+   */
+  showUnknownPersonaCoin?: boolean;
 };
 
 /**
@@ -90,6 +96,8 @@ export const AvatarPersona = (props: AvatarPersonaProps): JSX.Element => {
       initialsTextColor={data?.initialsTextColor ?? initialsTextColor ?? 'white'}
       // default disable tooltip unless specified
       showOverflowTooltip={showOverflowTooltip ?? false}
+      /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+      showUnknownPersonaCoin={data?.showUnknownPersonaCoin ?? props.showUnknownPersonaCoin ?? false}
     />
   );
 };
