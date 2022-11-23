@@ -262,13 +262,13 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
       this.context.updateClientState(clientState);
     };
 
+    this.handlers = createHandlers(callClient, callAgent, deviceManager, undefined);
+
     this.onClientStateChange = onStateChange;
 
     this.subscribeDeviceManagerEvents();
 
     this.callClient.onStateChange(onStateChange);
-
-    this.handlers = createHandlers(callClient, callAgent, deviceManager, undefined);
   }
 
   // TODO: update this to include the 'selectedCameraChanged' when calling adds it to the device manager
