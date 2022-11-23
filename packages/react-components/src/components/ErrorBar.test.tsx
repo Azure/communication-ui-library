@@ -124,7 +124,7 @@ describe('ErrorBar dismissal with multiple errors', () => {
   });
 });
 
-describe.only('ErrorBar handling of errors from previous call or chat', () => {
+describe('ErrorBar handling of errors from previous call or chat', () => {
   beforeAll(() => {
     Enzyme.configure({ adapter: new Adapter() });
     initializeIcons();
