@@ -14,6 +14,7 @@ import { useLocale } from '../../localization';
  */
 export type UnsupportedBrowserPageProps = {
   onTroubleshootingClick?: () => void;
+  // ADD PROP FOR ENVIRONMENTINFO
 };
 
 /**
@@ -28,6 +29,7 @@ export const UnsupportedBrowserPage = (props: UnsupportedBrowserPageProps): JSX.
   /* @conditional-compile-remove(unsupported-browser) */
   const unsupportedBrowserStrings = locale.component.strings.UnsupportedBrowser;
 
+  // CYCLE DIFFERENT COMPONENTS BASED ON ENVIRONMENTINFO
   /* @conditional-compile-remove(unsupported-browser) */
   return (
     <Stack styles={containerStyles}>
