@@ -3041,6 +3041,22 @@ export interface UnsupportedBrowserStrings {
     secondaryText: string;
 }
 
+// @beta
+export const UnsupportedBrowserVersion: (props: UnsupportedBrowserVersionProps) => JSX.Element;
+
+// @beta
+export interface UnsupportedBrowserVersionProps {
+    onTroubleshootingClick?: () => void;
+    strings: UnsupportedBrowserVersionStrings;
+}
+
+// @beta
+export interface UnsupportedBrowserVersionStrings {
+    moreHelpLink: string;
+    primaryText: string;
+    secondaryText: string;
+}
+
 // @public
 export type UpdateMessageCallback = (messageId: string, content: string, metadata?: Record<string, string>, options?: {
     attachedFilesMetadata?: FileMetadata[];
