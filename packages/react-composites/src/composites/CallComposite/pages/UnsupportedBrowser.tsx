@@ -57,6 +57,8 @@ export const UnsupportedBrowserPage = (props: UnsupportedBrowserPageProps): JSX.
         strings={unsupportedBrowserVersionStrings}
       />
     );
+  } else {
+    throw new Error('There was a problem with your environment info');
   }
 
   /* @conditional-compile-remove(unsupported-browser) */
