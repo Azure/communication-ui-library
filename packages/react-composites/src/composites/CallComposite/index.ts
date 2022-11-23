@@ -22,7 +22,12 @@ export {
   createAzureCommunicationCallAdapterFromClient,
   useAzureCommunicationCallAdapter
 } from './adapter';
-export type { AzureCommunicationCallAdapterArgs, CallAdapterLocator } from './adapter';
+export type {
+  AzureCommunicationCallAdapterArgs,
+  CallAdapterLocator,
+  CommonCallAdapter,
+  CallAdapterCallOperations
+} from './adapter';
 
 /* @conditional-compile-remove(rooms) */
 export type { AzureCommunicationCallAdapterOptions } from './adapter';
