@@ -148,7 +148,6 @@ export const getCallCompositePage: GetCallCompositePageFunction = (
   features?
 ): CallCompositePage => {
   /* @conditional-compile-remove(unsupported-browser) */
-  console.log(environmentInfo);
   if (
     features?.unsupportedEnvironment &&
     (environmentInfo?.isSupportedBrowser === false ||
