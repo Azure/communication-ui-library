@@ -525,9 +525,10 @@ export interface CallAdapterSubscribers {
   off(event: 'error', listener: (e: AdapterError) => void): void;
 }
 
+// This type remains for non-breaking change reason
 /**
  * Functionality for managing the current call or start a new call
- *
+ * @deprecated CallAdapter interface will be flatten, consider using CallAdapter directly
  * @public
  */
 export interface CallAdapterCallManagement extends CallAdapterCallOperations {
@@ -556,7 +557,7 @@ export interface CallAdapterCallManagement extends CallAdapterCallOperations {
   startCall(participants: CommunicationIdentifier[], options?: StartCallOptions): Call | undefined;
 }
 
-// TODO: Flatten the adapter structure and deprecate CallAdapterCallManagement
+// TODO: Flatten the adapter structure
 /**
  * {@link CallComposite} Adapter interface.
  *

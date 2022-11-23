@@ -74,7 +74,7 @@ export interface CallWithChatAdapterManagement {
    *
    * @public
    */
-  joinCall(microphoneOn?: boolean): void;
+  joinCall(microphoneOn?: boolean): Call | undefined;
   /**
    * Leave the call.
    *
@@ -386,21 +386,11 @@ export interface CallWithChatAdapterSubscriptions {
  *
  * @public
  */
-export interface CallWithChatAdapterCommon
+export interface CallWithChatAdapter
   extends CallWithChatAdapterManagement,
     AdapterState<CallWithChatAdapterState>,
     Disposable,
     CallWithChatAdapterSubscriptions {}
-
-/**
- * @public
- */
-export interface CallWithChatAdapter extends CallWithChatAdapterCommon {
-  joinCall(microphoneOn?: boolean): Call | undefined;
-  startCall(participants: string[], options?: StartCallOptions): Call | undefined;
-  /* @conditional-compile-remove(PSTN-calls) */
-  startCall(participants: CommunicationIdentifier[], options?: StartCallOptions): Call | undefined;
-}
 
 /**
  * Events fired off by the {@link CallWithChatAdapter}.

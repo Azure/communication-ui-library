@@ -5,7 +5,6 @@ export * from './CallWithChatComposite';
 
 export type {
   CallWithChatAdapter,
-  CallWithChatAdapterCommon,
   CallWithChatEvent,
   CallWithChatAdapterManagement,
   CallWithChatAdapterSubscriptions

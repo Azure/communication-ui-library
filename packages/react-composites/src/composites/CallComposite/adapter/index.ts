@@ -25,6 +25,7 @@ export type {
   CommonCallAdapter,
   CallAdapterCallEndedEvent,
   CallAdapterCallManagement,
+  CallAdapterCallOperations,
   CallAdapterClientState,
   CallAdapterDeviceManagement,
   CallAdapterState,
