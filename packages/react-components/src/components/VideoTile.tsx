@@ -1,7 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Icon, IconButton, IContextualMenuProps, IStyle, mergeStyles, Persona, Stack, Text } from '@fluentui/react';
+import { Icon, IStyle, mergeStyles, Persona, Stack, Text } from '@fluentui/react';
+/* @conditional-compile-remove(pinned-participants) */
+import { IconButton, IContextualMenuProps } from '@fluentui/react';
 import { Ref } from '@fluentui/react-northstar';
 import React, { useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { useIdentifiers } from '../identifiers';
@@ -11,6 +13,8 @@ import { BaseCustomStyles, CustomAvatarOptions, OnRenderAvatarCallback } from '.
 /* @conditional-compile-remove(one-to-n-calling) */
 /* @conditional-compile-remove(PSTN-calls) */
 import { ParticipantState } from '../types';
+/* @conditional-compile-remove(pinned-participants) */
+import { videoTileMoreButtonStyle } from './styles/VideoTile.styles';
 import {
   disabledVideoHint,
   displayNameStyle,
@@ -20,8 +24,7 @@ import {
   rootStyles,
   tileInfoContainerStyle,
   videoContainerStyles,
-  videoHint,
-  videoTileMoreButtonStyle
+  videoHint
 } from './styles/VideoTile.styles';
 /* @conditional-compile-remove(pinned-participants) */
 import { pinIconStyle } from './styles/VideoTile.styles';
@@ -31,6 +34,7 @@ import { DirectionalHint } from '@fluentui/react';
 /* @conditional-compile-remove(pinned-participants) */
 import { _DrawerMenu, _DrawerMenuProps } from './Drawer';
 import { _DrawerMenuItemProps } from './Drawer/DrawerMenuItem';
+/* @conditional-compile-remove(pinned-participants) */
 import { useLongTouch } from './utils/touch';
 
 /**
