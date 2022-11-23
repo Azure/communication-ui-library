@@ -217,7 +217,7 @@ export interface CallAdapterCallManagement {
    *
    * @public
    */
-  joinCall(microphoneOn?: boolean): void;
+  joinCall(microphoneOn?: boolean): Call | undefined;
   /**
    * Leave the call
    *
@@ -256,19 +256,19 @@ export interface CallAdapterCallManagement {
   unmute(): Promise<void>;
   /**
    * Start the call.
-   * @param participants - An array of {@link @azure/communication-common#CommunicationIdentifier} to be called
-   * @beta
-   */
-  startCall(participants: string[], options?: StartCallOptions): void;
-  /* @conditional-compile-remove(PSTN-calls) */
-  /**
-   * Start the call.
    *
-   * @param participants - An array of participant to join
+   * @param participants - An array of participant ids to join
    *
    * @public
    */
-  startCall(participants: CommunicationIdentifier[], options?: StartCallOptions): void;
+  startCall(participants: string[], options?: StartCallOptions): Call | undefined;
+  /* @conditional-compile-remove(PSTN-calls) */
+  /**
+   * Start the call.
+   * @param participants - An array of {@link @azure/communication-common#CommunicationIdentifier} to be called
+   * @beta
+   */
+  startCall(participants: CommunicationIdentifier[], options?: StartCallOptions): Call | undefined;
   /**
    * Start sharing the screen during a call.
    *
@@ -548,6 +548,7 @@ export interface CallAdapterSubscribers {
   off(event: 'error', listener: (e: AdapterError) => void): void;
 }
 
+// TODO: Flatten the adapter structure and deprecate CallAdapterCallManagement
 /**
  * {@link CallComposite} Adapter interface.
  *
@@ -556,9 +557,14 @@ export interface CallAdapterSubscribers {
 export interface CommonCallAdapter
   extends AdapterState<CallAdapterState>,
     Disposable,
-    CallAdapterCallManagement,
+    Omit<CallAdapterCallManagement, 'joinCall' | 'startCall'>,
     CallAdapterDeviceManagement,
-    CallAdapterSubscribers {}
+    CallAdapterSubscribers {
+  joinCall(microphoneOn?: boolean): void;
+  startCall(participants: string[], options?: StartCallOptions): void;
+  /* @conditional-compile-remove(PSTN-calls) */
+  startCall(participants: CommunicationIdentifier[], options?: StartCallOptions): void;
+}
 
 /**
  *  An Adapter interface specific for Azure Communication identity which extends {@link CommonCallAdapter}.
