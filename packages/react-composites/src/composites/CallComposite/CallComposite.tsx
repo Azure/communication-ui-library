@@ -310,7 +310,11 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
         </>
       );
       break;
-    case unsupportedEnvironmentPageTrampoline():
+  }
+
+  /* @conditional-compile-remove(unsupported-browser) */
+  switch (page) {
+    case 'unsupportedEnvironment':
       pageElement = (
         <>
           {
@@ -319,6 +323,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           }
         </>
       );
+      break;
   }
 
   if (!pageElement) {
@@ -416,12 +421,6 @@ const holdPageTrampoline = (): string => {
   /* @conditional-compile-remove(one-to-n-calling) */
   /* @conditional-compile-remove(PSTN-calls) */
   return 'hold';
-  return 'call';
-};
-
-const unsupportedEnvironmentPageTrampoline = (): string => {
-  /* @conditional-compile-remove(unsupported-browser) */
-  return 'unsupportedEnvironment';
   return 'call';
 };
 
