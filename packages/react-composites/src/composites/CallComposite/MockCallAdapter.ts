@@ -2,6 +2,8 @@
 // Licensed under the MIT license.
 
 import { AudioDeviceInfo, Call, DtmfTone, PermissionConstraints, VideoDeviceInfo } from '@azure/communication-calling';
+/* @conditional-compile-remove(PSTN-calls) */
+import { EnvironmentInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(rooms) */
 import { Role } from '@internal/react-components';
 import { CallAdapter, CallAdapterState } from './adapter';
@@ -116,6 +118,10 @@ export class MockCallAdapter implements CallAdapter {
   }
   off(): void {
     throw Error('off not implemented');
+  }
+  /* @conditional-compile-remove(PSTN-calls) */
+  getEnvironmentInfo(): Promise<EnvironmentInfo> {
+    throw Error('getEnvironmentInfo not implemented');
   }
 }
 
