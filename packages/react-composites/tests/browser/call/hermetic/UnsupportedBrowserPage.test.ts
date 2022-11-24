@@ -43,7 +43,7 @@ test.describe('unsupportedBrowser page tests', async () => {
 
     await page.goto(buildUrlWithMockAdapter(serverUrl, state));
 
-    await waitForSelector(page, dataUiId(IDS.unsupportedBrowserIcon));
+    await waitForSelector(page, dataUiId(IDS.unsupportedEnvironmentIcon));
 
     expect(await stableScreenshot(page)).toMatchSnapshot(`unsupportedBrowserVersion-with-no-link.png`);
   });
@@ -58,7 +58,8 @@ test.describe('unsupportedBrowser page tests', async () => {
       })
     );
 
-    await waitForSelector(page, dataUiId(IDS.unsupportedBrowserIcon));
+    await waitForSelector(page, dataUiId(IDS.unsupportedEnvironmentIcon));
+    await waitForSelector(page, dataUiId(IDS.unsupportedEnvironmentLink));
 
     expect(await stableScreenshot(page)).toMatchSnapshot(`unsupportedBrowserVersion-with-link.png`);
   });
@@ -69,7 +70,7 @@ test.describe('unsupportedBrowser page tests', async () => {
 
     await page.goto(buildUrlWithMockAdapter(serverUrl, state));
 
-    await waitForSelector(page, dataUiId(IDS.unsupportedBrowserIcon));
+    await waitForSelector(page, dataUiId(IDS.unsupportedEnvironmentIcon));
 
     expect(await stableScreenshot(page)).toMatchSnapshot(`unsupportedOperatingSystem-with-no-link.png`);
   });
@@ -84,8 +85,8 @@ test.describe('unsupportedBrowser page tests', async () => {
       })
     );
 
-    await waitForSelector(page, dataUiId(IDS.unsupportedBrowserIcon));
-    await waitForSelector(page, dataUiId(IDS.unsupportedBrowserLink));
+    await waitForSelector(page, dataUiId(IDS.unsupportedEnvironmentIcon));
+    await waitForSelector(page, dataUiId(IDS.unsupportedEnvironmentLink));
 
     expect(await stableScreenshot(page)).toMatchSnapshot(`unsupportedOperatingSystem-with-link.png`);
   });
