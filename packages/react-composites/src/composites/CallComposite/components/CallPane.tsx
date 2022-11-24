@@ -10,7 +10,7 @@ import {
   useTheme
 } from '@internal/react-components';
 import React, { useMemo, useState } from 'react';
-import { CallAdapter, CallControlOptions } from '../';
+import { CommonCallAdapter, CallControlOptions } from '../';
 import { CallAdapterProvider } from '../adapter/CallAdapterProvider';
 import { AvatarPersonaDataCallback } from '../../common/AvatarPersona';
 import {
@@ -44,7 +44,7 @@ import { CallSidePaneOption } from '../hooks/useSidePaneState';
  */
 /** @beta */
 export const CallPane = (props: {
-  callAdapter: CallAdapter;
+  callAdapter: CommonCallAdapter;
   onClose: () => void;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
