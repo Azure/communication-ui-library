@@ -247,12 +247,12 @@
   "UnsupportedBrowser": {
     "primaryText": "Browser not supported",
     "secondaryText": "Please join this call using a compatible browser.",
-    "moreHelpLink": "See compatibility requirements"
+    "moreHelpText": "More help"
   },
   "UnsupportedBrowserVersion": {
     "primaryText": "Browser version not supported",
     "secondaryText": "Please update your browser and then try joining the call again.",
-    "moreHelpLink": "See compatibility requirements"
+    "moreHelpText": "See compatibility requirements"
   },
   "UnsupportedOperatingSystem": {
     "primaryText": "Operating system not supported",

@@ -14,19 +14,29 @@ import {
   mainTextStyles,
   secondaryTextStyles
 } from './styles/UnsupportedEnvironment.styles';
-import { UnsupportedBrowserStrings } from './UnsupportedBrowser';
-import { UnsupportedBrowserVersionStrings } from './UnsupportedBrowserVersion';
 
 /**
- * Props for UnsupportedEnvironment base UI component
+ * @private
+ */
+export interface UnsupportedEnvironmentStrings {
+  /** String for the primary text */
+  primaryText: string;
+  /** String for the secondary text */
+  secondaryText: string;
+  /** String to display in the text for the help link */
+  moreHelpText: string;
+}
+
+/**
+ * props for {@link UnsupportedEnvironment} UI
  *
- * @beta
+ * @private
  */
 export interface UnsupportedEnvironmentProps {
   /** Handler to perform a action when the help link is actioned */
   onTroubleshootingClick?: () => void;
   /** String overrides for the component */
-  strings: UnsupportedBrowserStrings | UnsupportedBrowserVersionStrings;
+  strings: UnsupportedEnvironmentStrings;
 }
 
 /* @conditional-compile-remove(unsupported-browser) */
@@ -34,7 +44,7 @@ const UnsupportedEnvironmentContainer = (props: UnsupportedEnvironmentProps): JS
   const { onTroubleshootingClick, strings } = props;
   return (
     <Stack styles={containerStyles}>
-      <Icon styles={iconStyles} iconName="UnsupportedBrowserWarning" data-ui-id="unsupportedBrowserIcon"></Icon>
+      <Icon styles={iconStyles} iconName="UnsupportedEnvironmentWarning" data-ui-id="unsupportedEnvironmentIcon"></Icon>
       <Text styles={mainTextStyles}>{strings.primaryText}</Text>
       <Text styles={secondaryTextStyles}>{strings.secondaryText}</Text>
       {onTroubleshootingClick && (
@@ -43,9 +53,9 @@ const UnsupportedEnvironmentContainer = (props: UnsupportedEnvironmentProps): JS
           onClick={() => {
             onTroubleshootingClick();
           }}
-          data-ui-id="unsupportedBrowserLink"
+          data-ui-id="unsupportedEnvironmentLink"
         >
-          {strings.moreHelpLink}
+          {strings.moreHelpText}
         </Link>
       )}
     </Stack>
@@ -55,7 +65,7 @@ const UnsupportedEnvironmentContainer = (props: UnsupportedEnvironmentProps): JS
 /**
  * UI to display to the user that the environment they are using is not supported by calling application.
  *
- * @beta
+ * @private
  */
 export const UnsupportedEnvironment = (props: UnsupportedEnvironmentProps): JSX.Element => {
   /* @conditional-compile-remove(unsupported-browser) */
