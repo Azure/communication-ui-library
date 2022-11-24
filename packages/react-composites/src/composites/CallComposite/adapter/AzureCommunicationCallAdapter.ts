@@ -223,7 +223,6 @@ export class AzureCommunicationCallAdapter implements CallAdapter {
     deviceManager: StatefulDeviceManager,
     options?: AzureCommunicationCallAdapterOptions
   ) {
-    console.log(options);
     this.bindPublicMethods();
     this.callClient = callClient;
     this.callAgent = callAgent;

@@ -8,51 +8,52 @@ import { useLocale } from '../../../../../react-components/src/localization';
 import { MobilePreviewContainer } from '../../../MobileContainer';
 
 export const UnsupportedEnvironmentDrawers: () => JSX.Element = () => {
-  const locale = useLocale().strings.UnsupportedBrowser;
-  const [isDrawer1Showing, setIsDrawer1Showing] = useState(true);
-  const [isDrawer2Showing, setIsDrawer2Showing] = useState(true);
-  const onLightDismissTriggered1 = (): void => setIsDrawer1Showing(false);
-  const onLightDismissTriggered2 = (): void => setIsDrawer2Showing(false);
+  const unsupportedBrowserStrings = useLocale().strings.UnsupportedBrowser;
+  const unsupportedBrowserVersionStrings = useLocale().strings.UnsupportedBrowserVersion;
+  const [unsupportedBrowserShowing, setUnsupportedBrowserShowing] = useState(true);
+  const [unsupportedBrowserVersionShowing, setUnsupportedBrowserVersionShowing] = useState(true);
+  const onLightDismissTriggeredUnsupportedBrowser = (): void => setUnsupportedBrowserShowing(false);
+  const onLightDismissTriggeredUnsupportedBrowserVersion = (): void => setUnsupportedBrowserVersionShowing(false);
   return (
     <Stack horizontal>
       <MobilePreviewContainer>
-        {!isDrawer1Showing && (
+        {!unsupportedBrowserShowing && (
           <Stack
             styles={{ root: { cursor: 'pointer' } }}
             verticalFill
             verticalAlign="center"
             horizontalAlign="center"
-            onClick={() => setIsDrawer1Showing(true)}
+            onClick={() => setUnsupportedBrowserShowing(true)}
           >
             Click to show drawer
           </Stack>
         )}
-        {isDrawer1Showing && (
-          <_DrawerSurface onLightDismiss={onLightDismissTriggered1}>
+        {unsupportedBrowserShowing && (
+          <_DrawerSurface onLightDismiss={onLightDismissTriggeredUnsupportedBrowser}>
             <UnsupportedBrowser
               onTroubleshootingClick={() => alert('clicked trouble shooting link')}
-              strings={locale}
+              strings={unsupportedBrowserStrings}
             />
           </_DrawerSurface>
         )}
       </MobilePreviewContainer>
       <MobilePreviewContainer>
-        {!isDrawer2Showing && (
+        {!unsupportedBrowserVersionShowing && (
           <Stack
             styles={{ root: { cursor: 'pointer' } }}
             verticalFill
             verticalAlign="center"
             horizontalAlign="center"
-            onClick={() => setIsDrawer2Showing(true)}
+            onClick={() => setUnsupportedBrowserVersionShowing(true)}
           >
             Click to show drawer
           </Stack>
         )}
-        {isDrawer2Showing && (
-          <_DrawerSurface onLightDismiss={onLightDismissTriggered2}>
+        {unsupportedBrowserVersionShowing && (
+          <_DrawerSurface onLightDismiss={onLightDismissTriggeredUnsupportedBrowserVersion}>
             <UnsupportedBrowserVersion
               onTroubleshootingClick={() => alert('clicked compatibility link')}
-              strings={locale}
+              strings={unsupportedBrowserVersionStrings}
             />
           </_DrawerSurface>
         )}
