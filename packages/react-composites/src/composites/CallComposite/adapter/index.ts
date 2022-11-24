@@ -6,6 +6,13 @@ export {
   createAzureCommunicationCallAdapterFromClient,
   useAzureCommunicationCallAdapter
 } from './AzureCommunicationCallAdapter';
+
+/* @conditional-compile-remove(teams-identity-support) */
+export {
+  createAzureCommunicationTeamsCallAdapter,
+  createAzureCommunicationTeamsCallAdapterFromClient,
+  useAzureCommunicationTeamsCallAdapter
+} from './AzureCommunicationCallAdapter';
 export type { AzureCommunicationCallAdapterArgs, CallAdapterLocator } from './AzureCommunicationCallAdapter';
 /* @conditional-compile-remove(rooms) */
 export type { AzureCommunicationCallAdapterOptions } from './AzureCommunicationCallAdapter';
@@ -17,8 +24,10 @@ export type { CallAdapterOptionalFeatures } from './CallAdapter';
 
 export type {
   CallAdapter,
+  CommonCallAdapter,
   CallAdapterCallEndedEvent,
   CallAdapterCallManagement,
+  CallAdapterCallOperations,
   CallAdapterClientState,
   CallAdapterDeviceManagement,
   CallAdapterState,
@@ -37,3 +46,6 @@ export type {
   ParticipantsJoinedListener,
   ParticipantsLeftListener
 } from './CallAdapter';
+
+/* @conditional-compile-remove(teams-identity-support) */
+export type { TeamsCallAdapter } from './CallAdapter';
