@@ -299,6 +299,10 @@ export type { UnsupportedBrowserStrings, UnsupportedBrowserProps } from '../../r
 export { UnsupportedBrowserVersion } from '../../react-components/src';
 /* @conditional-compile-remove(unsupported-browser) */
 export type { UnsupportedBrowserVersionStrings, UnsupportedBrowserVersionProps } from '../../react-components/src';
+/* @conditional-compile-remove(unsupported-browser) */
+export { UnsupportedOperatingSystem } from '../../react-components/src';
+/* @conditional-compile-remove(unsupported-browser) */
+export type { UnsupportedOperatingSystemStrings, UnsupportedOperatingSystemProps } from '../../react-components/src';
 /* @conditional-compile-remove(call-readiness) */
 export { _DevicePermissionDropdown } from '../../react-components/src';
 /* @conditional-compile-remove(call-readiness) */

@@ -22,7 +22,7 @@ export interface UnsupportedBrowserStrings {
 }
 
 /**
- * props for UnsupportedBrowser UI
+ * Props for UnsupportedBrowser UI
  *
  * @beta
  */

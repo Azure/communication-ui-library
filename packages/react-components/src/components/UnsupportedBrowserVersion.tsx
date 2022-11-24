@@ -22,7 +22,7 @@ export interface UnsupportedBrowserVersionStrings {
 }
 
 /**
- * props for UnsupportedBrowserVersion UI
+ * Props for UnsupportedBrowserVersion UI
  *
  * @beta
  */
@@ -34,7 +34,7 @@ export interface UnsupportedBrowserVersionProps {
 }
 
 /**
- * UI to display to the user that the browser they are using is not supported by calling application.
+ * UI to display to the user that the browser version they are using is not supported by calling application.
  *
  * @beta
  */

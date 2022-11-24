@@ -22,7 +22,7 @@ export interface UnsupportedOperatingSystemStrings {
 }
 
 /**
- * props for UnsupportedOperatingSystem UI
+ * Props for UnsupportedOperatingSystem UI
  *
  * @beta
  */
@@ -34,7 +34,7 @@ export interface UnsupportedOperatingSystemProps {
 }
 
 /**
- * UI to display to the user that the browser they are using is not supported by calling application.
+ * UI to display to the user that the operating system they are using is not supported by calling application.
  *
  * @beta
  */

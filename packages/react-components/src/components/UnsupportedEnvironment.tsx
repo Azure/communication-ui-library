@@ -18,7 +18,7 @@ import { UnsupportedBrowserStrings } from './UnsupportedBrowser';
 import { UnsupportedBrowserVersionStrings } from './UnsupportedBrowserVersion';
 
 /**
- * props for UnsupportedBrowser UI
+ * Props for UnsupportedEnvironment base UI component
  *
  * @beta
  */
@@ -53,7 +53,7 @@ const UnsupportedEnvironmentContainer = (props: UnsupportedEnvironmentProps): JS
 };
 
 /**
- * UI to display to the user that the browser they are using is not supported by calling application.
+ * UI to display to the user that the environment they are using is not supported by calling application.
  *
  * @beta
  */
