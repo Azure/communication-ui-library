@@ -20,7 +20,7 @@ At a high level, the library exposes two distinct layers of APIs.
 
 - A lower-abstraction API in the form of UI components, stateful ACS modality clients (chat / calling) and bindings between the two. The focus in this layer is in giving the customers maximum flexibility. The API makes the default use-cases easier but not at the cost of making non-default use-cases impossible.
 
-- A higher-abstraction API in the form of UI composites, powered by adapters. The focus in this layer is in addressing specific end-to-end use-cases well. While this layer does provide customers some customizability, it choses to make some non-default use-cases hard or impossible. By restricting the set of supported use-cases, this layer is able to support the covered use-cases more extensively and with minimal effort from Contoso.
+- A higher-abstraction API in the form of UI composites, powered by adapters. This layer addresses specific end-to-end use-cases well. While this layer does provide customers some customizability, it choses to make some non-default use-cases hard or impossible. By restricting the set of supported use-cases, this layer is able to support the covered use-cases more extensively and with minimal effort from customers.
 
 The user-facing documentation in [storybook](https://azure.github.io/communication-ui-library) starts with the composite layer, as it's the easiest API to use for new customers. It then progressively reveals the components API as an alternative for power-users.
 
@@ -31,8 +31,6 @@ This document starts with the component layer, as it forms the foundation for th
 The component layer provides a set of UI components and bindings that allow the components to work with the ACS backend services. The architecture follows [unidirectional data flow](./ComponentDesign.md).
 
 A typical application that uses the component layer API looks as follows:
-
-
 
         ┌────────────────────────────────────────────────────────┐
         │                                                        │
@@ -53,11 +51,11 @@ A typical application that uses the component layer API looks as follows:
         │    ┌───┼────────────────────────────┼──────┐           │
         │    │   │   Component Bindings       │      │           │
         │    │   │                            │      │           │
-        │    │ Handlers                    Selectors │           │
-        │    │   │                            │      │           │
-        │    │   │                            │      │           │
-        │    │   │                            │      │           │
-        │    └───┼────────────────────────────┼──────┘           │
+        │    │ Handlers                   Selectors  │           │
+        │    │  * onToggleCamera()            │      │           │
+        │    │  * onSendMessage()             │      │           │
+        │    │  ...                           │      │           │
+        │    └───┬────────────────────────────┼──────┘           │
         │        │                            │                  │
         │        │                            │                  │
         │    ┌───▼────────────────────────────┴──────┐           │
@@ -73,8 +71,6 @@ A typical application that uses the component layer API looks as follows:
         │    └───────────────────────────────────────┘           │
         │                                                        │
         └────────────────────────────────────────────────────────┘
-
-_edit on [asciiflow](https://asciiflow.com/#/share/eJzVlt1OwjAUx1%2FlpJcEMJoYlSthJmKMiQni1W7KVlmT0i5dhyDhLQwP4rVP45N4AAOiGysLH%2BOkabt2%2BeWcf3vajoikPUZqJOaCdypUewEpE0GHTOPgyCUDl9Suzk%2FLLhli7%2BziEnuGDQx%2BuOTr%2FfOIiutKrCGn%2FQI4ShoVKaiHoeAeNVzJzQBQgrrvg1FhRbA%2BE1B61KrPfaYjiCMuu9Ay1LCXWDiCM2miBEA7YtC%2BA0%2F1QiVn%2F3AJNAzL8MpNsByHDpc%2BIqNVABxqFdIkgVmDETnLiFKFXA9BdRqxMUqmESwhDhViutZaiQbVOSHPuKzqFklMD3N78sCiiHbZU6AZ9fNCqtVqmhq2EAvLgOy8TD422HMWkSVObx9yqHRc9Sxhyef1IimhsThOViOzBGVLlAFqUumL6UGZYC0mmGcUTu7Lm8KBiraJ%2FnucHtmfwV1m2KQQ4syapKs%2BI7yE3VNacvCuwQSd43JDAmoSCDaQfexCSzcAmnhfCrw8oXVznyyqJeiavsWaneCzqhfLn0dfxZtLvQUQyr2ZR0VQ2MLWQw5V0lzKYwvAERWXjMn4G%2FY7SRM%3D)_
 
 ### Stateful clients
 
@@ -102,7 +98,7 @@ The two parts of the component layer - stateful clients and UI components define
 - [Selectors](./WritingSelectors.md) effeciently bind UI component data props to specific nodes in the immutable state exposed by the stateful layer. Selectors are setup to (1) avoid unnecessary component rerenders, and (2) avoid costly computation to determine when the component needs to rerender.
 - Handlers bind UI component callback props to methods exposed by the stateful layer.
 
-For both selectors and handlers, the library exposes a very simple API for customers wanting to connect the UI components and the stateful clients without any customization - a single `usePropsFor` hook. The library also exposes a more verbose API for sophisticated use-cases. This progressive disclosure of detail allows customers to do simple things easily without limiting more complex scenarios.
+For both selectors and handlers, the library exposes a very simple API for customers wanting to connect the UI components and the stateful clients without any customization - a single `usePropsFor` hook. The library also exposes a more verbose API for sophisticated use-cases. Power users retain the freedom to arbitrarily modify the bindings, or provide their own to get the behavior they desire. This progressive disclosure of detail allows customers to do simple things easily without limiting more complex scenarios.
 
 ## Composite layer
 
@@ -124,12 +120,12 @@ An application that leverages one of the composites looks as follows:
         │   │  * ChatComposite                    │   │
         │   │  * CallWithChatComposite            │   │
         │   │    ┌─────────────────────────────┐  │   │
-        │   │    │ UI Components               │  │   │
+        │   │    │ Internal: UI Components     │  │   │
         │   │    └─┬───────────────────────▲───┘  │   │
         │   │      │                       │      │   │
-        │   │    ┌─┼───────────────────────┼───┐  │   │
-        │   │    │ │   Component Bindings  │   │  │   │
-        │   │    │ │                       │   │  │   │
+        │   │    ┌─┴───────────────────────┴───┐  │   │
+        │   │    │ Internal: Component Bindings│  │   │
+        │   │    │ ┼                       ┼   │  │   │
         │   │    │Handlers            Selectors│  │   │
         │   │    └─┬───────────────────────┬───┘  │   │
         │   │      │                       │      │   │
@@ -141,19 +137,17 @@ An application that leverages one of the composites looks as follows:
         │   │  * ChatAdapter               │      │   │
         │   │  * CallWithChatAdapter       │      │   │
         │   │      │                       │      │   │
-        │   │    ┌─▼───────────────────────┼───┐  │   │
-        │   │    │ StatefulClients         │   │  │   │
-        │   │    └─────────────────────────┴───┘  │   │
+        │   │    ┌─▼───────────────────────┴───┐  │   │
+        │   │    │ Internal: Stateful Clients  │  │   │
+        │   │    └─────────────────────────────┘  │   │
         │   │                                     │   │
         │   └─────────────────────────────────────┘   │
         │                                             │
         │                                             │
         └─────────────────────────────────────────────┘
 
-_edit on [asciiflow](https://asciiflow.com/#/share/eJzNlcFOwzAMhl%2FFyhGtl4GE2G30ws4T4pJLaAONlCVV40qbpr0F2oNwRDwNT0ImttKVJe0KLY2syJXyOc7v1FkTxRacTEgupHgMWBYlQS6CSC9SbQRyQ0ZEshXP7JI1JUtKJjdXlyNKVtYbX4%2Bth3yJ9oOSj5f34Rilys4QaoXaaJimqRQRQ6EVuMY3BRcQZpwhBxazFHlmnNBJqpAPciPUM2BSjVSi4F%2F0%2BZkD3M%2BsXIe6u097gtydnElZ0OeRCcOWpN3zQWDijOAgO5bcv28hs%2BIKqzLX0n9p29eGWZccR3GGqvWXW8gNt0LF9oc0JaxRBO%2B19Ee4YyqWlQ4y55JHqDPTa70bK9e%2B3v1bJYdqlu78YYDZ7%2Bap78Xxq3%2FoifsQ57O2j7ZmS734OEYd27BeTnov5vatmwL59oU52uf%2BKZehFEfdvLSwLu%2BuLpZH7ZpxkuzfKjk0H7%2BkhmOUbMjmE1qM9VQ%3D)_
-
-The composite API is split into two parts. The composite proper corresponds to the UI components from the lower-level API.
-- The composite consists of a single React component that renders the entire composite throughout the experience.
+The composite API is split into two parts. The UI composite corresponds to the UI components from the lower-level API.
+- Unlike the various components exported as individual React components, the composite consists of a single React component that renders the entire composite throughout the experience.
 - Unlike the UI components, the composite is more stateful / less pure and has complex business logic specific to the scenario.
 - Composite API is much more limited than components. The intent is to maintain some freedom of iterative improvement by reducing the exposed API. For example, while it is possible to provide a theme to color the component, it is not possible to style indvidual parts of the UI freely.
 
