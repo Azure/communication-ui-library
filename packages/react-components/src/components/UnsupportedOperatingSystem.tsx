@@ -18,7 +18,7 @@ export interface UnsupportedOperatingSystemStrings {
   /** String for the secondary text */
   secondaryText: string;
   /** String for the help link */
-  moreHelpLink: string;
+  moreHelpText: string;
 }
 
 /**
