@@ -12,7 +12,7 @@ test.describe('unsupportedBrowser page tests', async () => {
   test('unsupportedBrowser displays correctly without a help link', async ({ page, serverUrl }) => {
     await page.goto(buildUrlWithMockAdapter(serverUrl, defaultMockUnsupportedBrowserPageState()));
 
-    await waitForSelector(page, dataUiId(IDS.unsupportedBrowserIcon));
+    await waitForSelector(page, dataUiId(IDS.unsupportedEnvironmentIcon));
 
     expect(await stableScreenshot(page)).toMatchSnapshot(`unsupportedBrowserPage-no-link.png`);
   });
@@ -24,8 +24,8 @@ test.describe('unsupportedBrowser page tests', async () => {
       })
     );
 
-    await waitForSelector(page, dataUiId(IDS.unsupportedBrowserIcon));
-    await waitForSelector(page, dataUiId(IDS.unsupportedBrowserLink));
+    await waitForSelector(page, dataUiId(IDS.unsupportedEnvironmentIcon));
+    await waitForSelector(page, dataUiId(IDS.unsupportedEnvironmentLink));
 
     expect(await stableScreenshot(page)).toMatchSnapshot(`unsupportedBrowserPage-with-link.png`);
   });

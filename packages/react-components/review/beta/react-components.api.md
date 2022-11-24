@@ -522,7 +522,7 @@ export const DEFAULT_COMPONENT_ICONS: {
     DomainPermissionMic: JSX.Element;
     DomainPermissionCameraDenied: JSX.Element;
     DomainPermissionMicDenied: JSX.Element;
-    UnsupportedBrowserWarning: JSX.Element;
+    UnsupportedEnvironmentWarning: JSX.Element;
     BrowserPermissionDeniedError: JSX.Element;
     VideoTilePinned: JSX.Element;
 };
@@ -1569,7 +1569,7 @@ export interface UnsupportedBrowserProps {
 
 // @beta
 export interface UnsupportedBrowserStrings {
-    moreHelpLink: string;
+    moreHelpText: string;
     primaryText: string;
     secondaryText: string;
 }
@@ -1585,7 +1585,7 @@ export interface UnsupportedBrowserVersionProps {
 
 // @beta
 export interface UnsupportedBrowserVersionStrings {
-    moreHelpLink: string;
+    moreHelpText: string;
     primaryText: string;
     secondaryText: string;
 }
