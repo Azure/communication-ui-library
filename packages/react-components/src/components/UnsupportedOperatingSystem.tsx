@@ -2,20 +2,10 @@
 // Licensed under the MIT license.
 
 /* @conditional-compile-remove(unsupported-browser) */
-import { Icon, Link, Stack, Text } from '@fluentui/react';
-/* @conditional-compile-remove(unsupported-browser) */
 import { _pxToRem } from '@internal/acs-ui-common';
 import React from 'react';
 /* @conditional-compile-remove(unsupported-browser) */
-import { useLocale } from '../localization';
-/* @conditional-compile-remove(unsupported-browser) */
-import {
-  containerStyles,
-  iconStyles,
-  linkTextStyles,
-  mainTextStyles,
-  secondaryTextStyles
-} from './styles/UnsupportedEnvironment.styles';
+import { UnsupportedEnvironment } from './UnsupportedEnvironment';
 
 /**
  * Strings for UnsupportedBrowser component
@@ -43,29 +33,6 @@ export interface UnsupportedOperatingSystemProps {
   strings: UnsupportedOperatingSystemStrings;
 }
 
-/* @conditional-compile-remove(unsupported-browser) */
-const UnsupportedOperatingSystemContainer = (props: UnsupportedOperatingSystemProps): JSX.Element => {
-  const { onTroubleshootingClick, strings } = props;
-  return (
-    <Stack styles={containerStyles}>
-      <Icon styles={iconStyles} iconName="UnsupportedBrowserWarning" data-ui-id="unsupportedBrowserIcon"></Icon>
-      <Text styles={mainTextStyles}>{strings.primaryText}</Text>
-      <Text styles={secondaryTextStyles}>{strings.secondaryText}</Text>
-      {onTroubleshootingClick && (
-        <Link
-          styles={linkTextStyles}
-          onClick={() => {
-            onTroubleshootingClick();
-          }}
-          data-ui-id="unsupportedOperatingSystemLink"
-        >
-          {strings.moreHelpLink}
-        </Link>
-      )}
-    </Stack>
-  );
-};
-
 /**
  * UI to display to the user that the browser they are using is not supported by calling application.
  *
@@ -73,8 +40,8 @@ const UnsupportedOperatingSystemContainer = (props: UnsupportedOperatingSystemPr
  */
 export const UnsupportedOperatingSystem = (props: UnsupportedOperatingSystemProps): JSX.Element => {
   /* @conditional-compile-remove(unsupported-browser) */
-  const strings = useLocale().strings.UnsupportedOperatingSystem;
+  const { onTroubleshootingClick, strings } = props;
   /* @conditional-compile-remove(unsupported-browser) */
-  return <UnsupportedOperatingSystemContainer {...props} strings={strings} />;
+  return <UnsupportedEnvironment onTroubleshootingClick={onTroubleshootingClick} strings={strings} />;
   return <></>;
 };

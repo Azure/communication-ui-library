@@ -34,7 +34,7 @@ export const UnsupportedBrowserPage = (props: UnsupportedBrowserPageProps): JSX.
   /* @conditional-compile-remove(unsupported-browser) */
   const unsupportedBrowserVersionStrings = locale.component.strings.UnsupportedBrowserVersion;
   /* @conditional-compile-remove(unsupported-browser) */
-  const unsupportedOperatingSystemStrings = locale.component.strings.UnsupportedOperatngSystem;
+  const unsupportedOperatingSystemStrings = locale.component.strings.UnsupportedOperatingSystem;
 
   /* @conditional-compile-remove(unsupported-browser) */
   let pageElement: JSX.Element | undefined;
