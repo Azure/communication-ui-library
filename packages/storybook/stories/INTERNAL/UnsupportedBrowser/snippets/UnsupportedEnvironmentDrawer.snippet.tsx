@@ -14,70 +14,76 @@ import { useLocale } from '../../../../../react-components/src/localization';
 import { MobilePreviewContainer } from '../../../MobileContainer';
 
 export const UnsupportedEnvironmentDrawers: () => JSX.Element = () => {
-  const locale = useLocale().strings.UnsupportedBrowser;
-  const [isDrawerShowing, setIsDrawerShowing] = useState(true);
-  const onLightDismissTriggered = (): void => setIsDrawerShowing(false);
+  const unsupportedBrowserStrings = useLocale().strings.UnsupportedBrowser;
+  const unsupportedBrowserVersionStrings = useLocale().strings.UnsupportedBrowserVersion;
+  const unsupportedOperatingSystemStrings = useLocale().strings.UnsupportedOperatingSystem;
+  const [unsupportedBrowserShowing, setUnsupportedBrowserShowing] = useState(true);
+  const [unsupportedBrowserVersionShowing, setUnsupportedBrowserVersionShowing] = useState(true);
+  const [unsupportedOperatingSystemShowing, setUnsupportedOperatingSystemShowing] = useState(true);
+  const onLightDismissTriggeredUnsupportedBrowser = (): void => setUnsupportedBrowserShowing(false);
+  const onLightDismissTriggeredUnsupportedBrowserVersion = (): void => setUnsupportedBrowserVersionShowing(false);
+  const onLightDismissTriggeredUnsupportedOperatingSystem = (): void => setUnsupportedBrowserVersionShowing(false);
   return (
     <Stack horizontal wrap>
       <MobilePreviewContainer>
-        {!isDrawerShowing && (
+        {!unsupportedBrowserShowing && (
           <Stack
             styles={{ root: { cursor: 'pointer' } }}
             verticalFill
             verticalAlign="center"
             horizontalAlign="center"
-            onClick={() => setIsDrawerShowing(true)}
+            onClick={() => setUnsupportedBrowserShowing(true)}
           >
             Click to show drawer
           </Stack>
         )}
-        {isDrawerShowing && (
-          <_DrawerSurface onLightDismiss={onLightDismissTriggered}>
+        {unsupportedBrowserShowing && (
+          <_DrawerSurface onLightDismiss={onLightDismissTriggeredUnsupportedBrowser}>
             <UnsupportedBrowser
               onTroubleshootingClick={() => alert('clicked trouble shooting link')}
-              strings={locale}
+              strings={unsupportedBrowserStrings}
             />
           </_DrawerSurface>
         )}
       </MobilePreviewContainer>
       <MobilePreviewContainer>
-        {!isDrawerShowing && (
+        {!unsupportedBrowserVersionShowing && (
           <Stack
             styles={{ root: { cursor: 'pointer' } }}
             verticalFill
             verticalAlign="center"
             horizontalAlign="center"
-            onClick={() => setIsDrawerShowing(true)}
+            onClick={() => setUnsupportedBrowserVersionShowing(true)}
           >
             Click to show drawer
           </Stack>
         )}
-        {isDrawerShowing && (
-          <_DrawerSurface onLightDismiss={onLightDismissTriggered}>
+        {unsupportedBrowserVersionShowing && (
+          <_DrawerSurface onLightDismiss={onLightDismissTriggeredUnsupportedBrowserVersion}>
             <UnsupportedBrowserVersion
               onTroubleshootingClick={() => alert('clicked compatibility link')}
-              strings={locale}
+              strings={unsupportedBrowserVersionStrings}
             />
           </_DrawerSurface>
         )}
       </MobilePreviewContainer>
       <MobilePreviewContainer>
-        {!isDrawerShowing && (
+        {!unsupportedOperatingSystemShowing && (
           <Stack
             styles={{ root: { cursor: 'pointer' } }}
             verticalFill
             verticalAlign="center"
             horizontalAlign="center"
-            onClick={() => setIsDrawerShowing(true)}
+            onClick={() => setUnsupportedOperatingSystemShowing(true)}
           >
             Click to show drawer
           </Stack>
         )}
-        {isDrawerShowing && (
-          <_DrawerSurface onLightDismiss={onLightDismissTriggered}>
+        {unsupportedOperatingSystemShowing && (
+          <_DrawerSurface onLightDismiss={onLightDismissTriggeredUnsupportedOperatingSystem}>
             <UnsupportedOperatingSystem
               onTroubleshootingClick={() => alert('clicked compatibility link')}
-              strings={locale}
+              strings={unsupportedOperatingSystemStrings}
             />
           </_DrawerSurface>
         )}

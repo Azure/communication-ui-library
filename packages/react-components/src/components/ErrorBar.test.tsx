@@ -4,7 +4,7 @@
 import React from 'react';
 import { act } from 'react-dom/test-utils';
 import { initializeIcons, MessageBar } from '@fluentui/react';
-import { ActiveErrorMessage, ErrorBar } from './ErrorBar';
+import { ActiveErrorMessage, ErrorBar, ErrorBarProps } from './ErrorBar';
 import Enzyme, { ReactWrapper, mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 
@@ -110,6 +110,11 @@ describe('ErrorBar dismissal for errors without timestamp', () => {
 });
 
 describe('ErrorBar dismissal with multiple errors', () => {
+  beforeAll(() => {
+    Enzyme.configure({ adapter: new Adapter() });
+    initializeIcons();
+  });
+
   it('clearing an error with multiple errors leaves other errors untouched', () => {
     const root = mountErrorBarWithDefaults();
     setActiveErrors(root, [{ type: 'accessDenied', timestamp: new Date(Date.now()) }, { type: 'muteGeneric' }]);
@@ -119,10 +124,47 @@ describe('ErrorBar dismissal with multiple errors', () => {
   });
 });
 
-const mountErrorBarWithDefaults = (): ReactWrapper => {
+describe('ErrorBar handling of errors from previous call or chat', () => {
+  beforeAll(() => {
+    Enzyme.configure({ adapter: new Adapter() });
+    initializeIcons();
+  });
+
+  it('shows all old errors by default', () => {
+    const oldErrors: ActiveErrorMessage[] = [
+      // Make sure old error is in the past.
+      { type: 'accessDenied', timestamp: new Date(Date.now() - 10) },
+      { type: 'muteGeneric' }
+    ];
+    const root = mountErrorBarWithDefaults();
+    setActiveErrors(root, oldErrors);
+    expect(messageBarCount(root)).toBe(2);
+  });
+
+  it('does not show old errors with timestamp when ignorePremountErrors is set', () => {
+    // Make sure old error is in the past.
+    const oldErrors: ActiveErrorMessage[] = [{ type: 'accessDenied', timestamp: new Date(Date.now() - 10) }];
+    const root = mountErrorBarWithDefaults({ ignorePremountErrors: true });
+    setActiveErrors(root, oldErrors);
+    expect(messageBarCount(root)).toBe(0);
+  });
+
+  it('shows old errors without timestamp when ignorePremountErrors is set', () => {
+    const oldErrors: ActiveErrorMessage[] = [{ type: 'muteGeneric' }];
+    const root = mountErrorBarWithDefaults({ ignorePremountErrors: true });
+    setActiveErrors(root, oldErrors);
+    expect(messageBarCount(root)).toBe(1);
+  });
+});
+
+const mountErrorBarWithDefaults = (props?: Partial<ErrorBarProps>): ReactWrapper => {
+  const mergedProps: ErrorBarProps = {
+    activeErrorMessages: [],
+    ...(props ?? {})
+  };
   let root;
   act(() => {
-    root = mount(<ErrorBar activeErrorMessages={[]} />);
+    root = mount(<ErrorBar {...mergedProps} />);
   });
   return root;
 };

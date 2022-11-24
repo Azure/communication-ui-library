@@ -8,16 +8,18 @@ import React, { useState } from 'react';
 import { useLocale } from '../../../../../react-components/src/localization';
 
 export const UnsupportedEnvironmentModals: () => JSX.Element = () => {
-  const locale = useLocale().strings.UnsupportedBrowser;
-  const [modal1Open, setModal1Open] = useState<boolean>(false);
-  const [modal2Open, setModal2Open] = useState<boolean>(false);
-  const [modal3Open, setModal3Open] = useState<boolean>(false);
+  const unsupportedBrowserStrings = useLocale().strings.UnsupportedBrowser;
+  const unsupportedBrowserVersionStrings = useLocale().strings.UnsupportedBrowserVersion;
+  const unsupportedBrowserOperatingSystem = useLocale().strings.UnsupportedBrowserVersion;
+  const [unsupportedBrowserModalOpen, setUnsupportedBrowserModalOpen] = useState<boolean>(false);
+  const [unsupportedBrowserVersionModalOpen, setUnsupportedBrowserVersionModalOpen] = useState<boolean>(false);
+  const [unsupportedOperatingSystemModalOpen, setUnsupportedOperatingSystemModalOpen] = useState<boolean>(false);
   return (
     <Stack horizontal>
       <PrimaryButton
         style={{ margin: 'auto' }}
         onClick={() => {
-          setModal1Open(true);
+          setUnsupportedBrowserModalOpen(true);
         }}
       >
         Open UnsupportedBrowser Modal
@@ -25,7 +27,7 @@ export const UnsupportedEnvironmentModals: () => JSX.Element = () => {
       <PrimaryButton
         style={{ margin: 'auto' }}
         onClick={() => {
-          setModal2Open(true);
+          setUnsupportedBrowserVersionModalOpen(true);
         }}
       >
         Open UnsupportedBrowserVersion Modal
@@ -33,30 +35,33 @@ export const UnsupportedEnvironmentModals: () => JSX.Element = () => {
       <PrimaryButton
         style={{ margin: 'auto' }}
         onClick={() => {
-          setModal3Open(true);
+          setUnsupportedOperatingSystemModalOpen(true);
         }}
       >
         Open UnsupportedOperatingSystem Modal
       </PrimaryButton>
-      <Modal isOpen={modal1Open} onDismiss={() => setModal1Open(false)}>
+      <Modal isOpen={unsupportedBrowserModalOpen} onDismiss={() => setUnsupportedBrowserModalOpen(false)}>
         <UnsupportedBrowser
-          strings={locale}
+          strings={unsupportedBrowserStrings}
           onTroubleshootingClick={() => {
             alert('clicked help link');
           }}
         />
       </Modal>
-      <Modal isOpen={modal2Open} onDismiss={() => setModal2Open(false)}>
+      <Modal isOpen={unsupportedBrowserVersionModalOpen} onDismiss={() => setUnsupportedBrowserVersionModalOpen(false)}>
         <UnsupportedBrowserVersion
-          strings={locale}
+          strings={unsupportedBrowserVersionStrings}
           onTroubleshootingClick={() => {
             alert('clicked help link');
           }}
         />
       </Modal>
-      <Modal isOpen={modal3Open} onDismiss={() => setModal3Open(false)}>
+      <Modal
+        isOpen={unsupportedOperatingSystemModalOpen}
+        onDismiss={() => setUnsupportedOperatingSystemModalOpen(false)}
+      >
         <UnsupportedOperatingSystem
-          strings={locale}
+          strings={unsupportedBrowserOperatingSystem}
           onTroubleshootingClick={() => {
             alert('clicked help link');
           }}

@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { IMessageBarProps, MessageBar, Stack } from '@fluentui/react';
 import { useLocale } from '../localization';
 import {
@@ -31,6 +31,17 @@ export interface ErrorBarProps extends IMessageBarProps {
    * Currently active errors.
    */
   activeErrorMessages: ActiveErrorMessage[];
+
+  /**
+   * If set, errors with {@link ActiveErrorMessage.timestamp} older than the time this component is mounted
+   * are not shown.
+   *
+   * This is useful when using the {@link ErrorBar} with a stateful client that handles more than one call
+   * or chat thread. Set this prop to ignore errors from previous call or chat.
+   *
+   * @defaultValue false
+   */
+  ignorePremountErrors?: boolean;
 }
 
 /**
@@ -234,6 +245,10 @@ export const ErrorBar = (props: ErrorBarProps): JSX.Element => {
   const localeStrings = useLocale().strings.errorBar;
   const strings = props.strings ?? localeStrings;
 
+  // Timestamp for when this comopnent is first mounted.
+  // Never updated through the lifecycle of this component.
+  const mountTimestamp = useRef(new Date(Date.now()));
+
   const [dismissedErrors, setDismissedErrors] = useState<DismissedError[]>([]);
 
   // dropDismissalsForInactiveErrors only returns a new object if `dismissedErrors` actually changes.
@@ -243,7 +258,11 @@ export const ErrorBar = (props: ErrorBarProps): JSX.Element => {
     [props.activeErrorMessages, dismissedErrors]
   );
 
-  const toShow = errorsToShow(props.activeErrorMessages, dismissedErrors);
+  const toShow = errorsToShow(
+    props.activeErrorMessages,
+    dismissedErrors,
+    props.ignorePremountErrors ? mountTimestamp.current : undefined
+  );
 
   return (
     <Stack data-ui-id="error-bar-stack">
