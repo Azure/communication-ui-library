@@ -3,6 +3,8 @@
 
 import { DeviceManagerState, RemoteParticipantState, StatefulCallClient } from '@internal/calling-stateful-client';
 import { CallState as CallStatus } from '@azure/communication-calling';
+/* @conditional-compile-remove(unsupported-browser) */
+import { Features, EnvironmentInfo } from '@azure/communication-calling';
 import {
   CommunicationIdentifier,
   CommunicationUserIdentifier,
@@ -84,6 +86,17 @@ const memoizedUpdateDisplayName = memoizeFnAll((participantId: string, participa
     return participant;
   }
 });
+
+/* @conditional-compile-remove(unsupported-browser) */
+/**
+ * Check whether the call is in a supported browser
+ *
+ * @internal
+ */
+export const _getEnvironmentInfo = async (callClient: StatefulCallClient): Promise<EnvironmentInfo> => {
+  const environmentInfo = await callClient.feature(Features.DebugInfo).getEnvironmentInfo();
+  return environmentInfo;
+};
 
 /**
  * @private

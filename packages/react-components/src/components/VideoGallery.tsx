@@ -48,10 +48,16 @@ import { _LocalVideoTile } from './LocalVideoTile';
 /* @conditional-compile-remove(rooms) */
 import { _usePermissions } from '../permissions';
 
-// Currently the Calling JS SDK supports up to 4 remote video streams
-const DEFAULT_MAX_REMOTE_VIDEO_STREAMS = 4;
-// Set aside only 6 dominant speakers for remaining audio participants
-const MAX_AUDIO_DOMINANT_SPEAKERS = 6;
+/**
+ * @private
+ * Currently the Calling JS SDK supports up to 4 remote video streams
+ */
+export const DEFAULT_MAX_REMOTE_VIDEO_STREAMS = 4;
+/**
+ * @private
+ * Set aside only 6 dominant speakers for remaining audio participants
+ */
+export const MAX_AUDIO_DOMINANT_SPEAKERS = 6;
 
 /**
  * All strings that may be shown on the UI in the {@link VideoGallery}.

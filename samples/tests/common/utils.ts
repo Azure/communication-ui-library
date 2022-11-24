@@ -48,3 +48,15 @@ export const encodeQueryData = (user: IdentityType, qArgs?: { [key: string]: str
   }
   return qs.join('&');
 };
+
+export const getTestCSS = (): string => {
+  return `
+  input {
+    color: transparent;
+    text-shadow: 0 0 0 black;
+  } 
+  input:focus {
+    outline: none;
+  }
+`;
+};

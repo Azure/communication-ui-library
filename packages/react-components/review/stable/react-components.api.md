@@ -568,6 +568,7 @@ export const ErrorBar: (props: ErrorBarProps) => JSX.Element;
 // @public
 export interface ErrorBarProps extends IMessageBarProps {
     activeErrorMessages: ActiveErrorMessage[];
+    ignorePremountErrors?: boolean;
     strings?: ErrorBarStrings;
 }
 
@@ -1417,6 +1418,15 @@ export interface VideoStreamOptions {
 
 // @public
 export const VideoTile: (props: VideoTileProps) => JSX.Element;
+
+// @beta
+export type VideoTileMenuItems = Array<{
+    key: string;
+    ariaLabel?: string;
+    text: string;
+    onClick: () => void;
+    iconProps: IIconProps;
+}>;
 
 // @public
 export interface VideoTileProps {

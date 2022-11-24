@@ -8,7 +8,7 @@ import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { BaseProvider, BaseCompositeProps } from '../common/BaseComposite';
 import { CallCompositeIcons } from '../common/icons';
 import { useLocale } from '../localization';
-import { CallAdapter } from './adapter/CallAdapter';
+import { CommonCallAdapter } from './adapter/CallAdapter';
 import { CallAdapterProvider, useAdapter } from './adapter/CallAdapterProvider';
 import { CallPage } from './pages/CallPage';
 import { ConfigurationPage } from './pages/ConfigurationPage';
@@ -45,7 +45,7 @@ export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcon
    * An adapter provides logic and data to the composite.
    * Composite can also be controlled using the adapter.
    */
-  adapter: CallAdapter;
+  adapter: CommonCallAdapter;
   /**
    * Optimizes the composite form factor for either desktop or mobile.
    * @remarks `mobile` is currently only optimized for Portrait mode on mobile devices and does not support landscape.
@@ -310,7 +310,11 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
         </>
       );
       break;
-    case unsupportedEnvironmentPageTrampoline():
+  }
+
+  /* @conditional-compile-remove(unsupported-browser) */
+  switch (page) {
+    case 'unsupportedEnvironment':
       pageElement = (
         <>
           {
@@ -319,6 +323,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           }
         </>
       );
+      break;
   }
 
   if (!pageElement) {
@@ -361,19 +366,14 @@ export const CallComposite = (props: CallCompositeProps): JSX.Element => {
   useEffect(() => {
     (async () => {
       const constrain = getQueryOptions({
-        /* @conditional-compile-remove(rooms) */ role: roleHint,
-        /* @conditional-compile-remove(call-readiness) */ callReadinessOptedIn: options?.callReadinessOptedIn ?? false
+        /* @conditional-compile-remove(rooms) */ role: roleHint
       });
       await adapter.askDevicePermission(constrain);
       adapter.queryCameras();
       adapter.queryMicrophones();
       adapter.querySpeakers();
     })();
-  }, [
-    adapter,
-    /* @conditional-compile-remove(rooms) */ roleHint,
-    /* @conditional-compile-remove(call-readiness) */ options?.callReadinessOptedIn
-  ]);
+  }, [adapter, /* @conditional-compile-remove(rooms) */ roleHint]);
 
   const mobileView = formFactor === 'mobile';
 
@@ -424,23 +424,7 @@ const holdPageTrampoline = (): string => {
   return 'call';
 };
 
-const unsupportedEnvironmentPageTrampoline = (): string => {
-  /* @conditional-compile-remove(unsupported-browser) */
-  return 'unsupportedEnvironment';
-  return 'call';
-};
-
-const getQueryOptions = (options: {
-  /* @conditional-compile-remove(rooms) */ role?: Role;
-  /* @conditional-compile-remove(call-readiness) */ callReadinessOptedIn?: boolean;
-}): PermissionConstraints => {
-  /* @conditional-compile-remove(call-readiness) */
-  if (options.callReadinessOptedIn) {
-    return {
-      video: false,
-      audio: false
-    };
-  }
+const getQueryOptions = (options: { /* @conditional-compile-remove(rooms) */ role?: Role }): PermissionConstraints => {
   /* @conditional-compile-remove(rooms) */
   if (options.role === 'Consumer') {
     return {
