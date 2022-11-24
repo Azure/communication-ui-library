@@ -17,12 +17,12 @@ export interface UnsupportedOperatingSystemStrings {
   primaryText: string;
   /** String for the secondary text */
   secondaryText: string;
-  /** String for the help link */
-  moreHelpLink: string;
+  /** String to display in the text for the help link */
+  moreHelpText: string;
 }
 
 /**
- * Props for UnsupportedOperatingSystem UI
+ * Props for {@link UnsupportedOperatingSystem} UI
  *
  * @beta
  */
@@ -34,7 +34,7 @@ export interface UnsupportedOperatingSystemProps {
 }
 
 /**
- * UI to display to the user that the operating system they are using is not supported by calling application.
+ * UI to display to the user that the operating system they are using is not supported by Azure Communications Calling service.
  *
  * @beta
  */

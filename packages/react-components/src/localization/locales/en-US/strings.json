@@ -257,7 +257,7 @@
   "UnsupportedOperatingSystem": {
     "primaryText": "Operating system not supported",
     "secondaryText": "Please join this call using a device with a compatible operating system.",
-    "moreHelpLink": "See compatibility requirements"
+    "moreHelpText": "See compatibility requirements"
   },
   "BrowserPermissionDenied": {
     "primaryText": "Can't use your camera or microphone",
