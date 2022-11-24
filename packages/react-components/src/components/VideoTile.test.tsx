@@ -15,6 +15,7 @@ describe('VideoTile', () => {
     initializeIcons();
   });
 
+  /* @conditional-compile-remove(pinned-participants) */
   test('onLongTouch should trigger callback', async () => {
     const mockCallback = jest.fn();
     const wrapper = mount(<VideoTile onLongTouch={mockCallback} />);
