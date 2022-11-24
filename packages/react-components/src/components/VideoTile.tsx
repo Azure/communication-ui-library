@@ -31,6 +31,7 @@ import { getVideoTileOverrideColor } from './utils/videoTileStylesUtils';
 import { DefaultButton, concatStyleSets, DirectionalHint } from '@fluentui/react';
 /* @conditional-compile-remove(pinned-participants) */
 import { mapMenuItemsToContextualMenuItems } from './utils';
+import useLongPress from './utils/useLongPress';
 
 /**
  * Strings of {@link VideoTile} that can be overridden.
@@ -143,6 +144,12 @@ export interface VideoTileProps {
   /* @conditional-compile-remove(one-to-n-calling) */
   /* @conditional-compile-remove(PSTN-calls) */
   strings?: VideoTileStrings;
+
+  /* @conditional-compile-remove(pinned-participants) */
+  /**
+   * Callback triggered by video tile on touch and hold.
+   */
+  onLongTouch?: () => void;
 }
 
 // Coin max size is set to PersonaSize.size100
@@ -256,6 +263,13 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
     return () => currentObserver.disconnect();
   }, [observer, videoTileRef]);
 
+  /* @conditional-compile-remove(pinned-participants) */
+  const longPress = useLongPress(
+    () => undefined,
+    () => props.onLongTouch?.(),
+    true
+  );
+
   const placeholderOptions = {
     userId,
     text: initialsName || displayName,
@@ -304,6 +318,8 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
           },
           styles?.root
         )}
+        /* @conditional-compile-remove(pinned-participants) */
+        {...longPress.handlers}
       >
         {isVideoRendered ? (
           <Stack

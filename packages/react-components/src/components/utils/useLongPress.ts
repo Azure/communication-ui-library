@@ -29,22 +29,23 @@ export default function useLongPress(
     setIsLongPress(false);
     timerRef.current = setTimeout(() => {
       setIsLongPress(true);
+      onLongPress();
     }, 500);
   }
 
   function handleOnClick(): void {
-    // when it's mobile use ontouchstart and ontouchend to fire onclick and onlongpress event
     if (isMobile) {
       return;
     }
-    onClick();
-    if (isLongPress) {
-      onLongPress();
-      return;
+    if (!isLongPress) {
+      onClick();
     }
   }
 
   function handleOnKeyDown(): void {
+    if (isMobile) {
+      return;
+    }
     if (action) {
       setAction(false);
       startPressTimer();
@@ -52,15 +53,24 @@ export default function useLongPress(
   }
 
   function handleOnKeyUp(): void {
+    if (isMobile) {
+      return;
+    }
     setAction(true);
     timerRef.current && clearTimeout(timerRef.current);
   }
 
   function handleOnMouseDown(): void {
+    if (isMobile) {
+      return;
+    }
     startPressTimer();
   }
 
   function handleOnMouseUp(): void {
+    if (isMobile) {
+      return;
+    }
     timerRef.current && clearTimeout(timerRef.current);
   }
 
@@ -69,10 +79,6 @@ export default function useLongPress(
   }
 
   function handleOnTouchEnd(): void {
-    if (isMobile) {
-      isLongPress ? onLongPress() : onClick();
-    }
-
     timerRef.current && clearTimeout(timerRef.current);
   }
 
