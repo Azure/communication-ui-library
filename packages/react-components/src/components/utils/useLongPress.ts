@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { useRef, useState } from 'react';
+import { useMemo, useRef, useState, useCallback } from 'react';
 
 /**
  * @private
@@ -25,24 +25,24 @@ export default function useLongPress(
   const [isLongPress, setIsLongPress] = useState(false);
   const [action, setAction] = useState(false);
 
-  function startPressTimer(): void {
+  const startPressTimer = useCallback(() => {
     setIsLongPress(false);
     timerRef.current = setTimeout(() => {
       setIsLongPress(true);
       onLongPress();
     }, 500);
-  }
+  }, [onLongPress]);
 
-  function handleOnClick(): void {
+  const handleOnClick = useCallback(() => {
     if (touchEventsOnly) {
       return;
     }
     if (!isLongPress) {
       onClick();
     }
-  }
+  }, [isLongPress, onClick, touchEventsOnly]);
 
-  function handleOnKeyDown(): void {
+  const handleOnKeyDown = useCallback(() => {
     if (touchEventsOnly) {
       return;
     }
@@ -50,47 +50,58 @@ export default function useLongPress(
       setAction(false);
       startPressTimer();
     }
-  }
+  }, [action, startPressTimer, touchEventsOnly]);
 
-  function handleOnKeyUp(): void {
+  const handleOnKeyUp = useCallback(() => {
     if (touchEventsOnly) {
       return;
     }
     setAction(true);
     timerRef.current && clearTimeout(timerRef.current);
-  }
+  }, [touchEventsOnly]);
 
-  function handleOnMouseDown(): void {
+  const handleOnMouseDown = useCallback(() => {
     if (touchEventsOnly) {
       return;
     }
     startPressTimer();
-  }
+  }, [startPressTimer, touchEventsOnly]);
 
-  function handleOnMouseUp(): void {
+  const handleOnMouseUp = useCallback(() => {
     if (touchEventsOnly) {
       return;
     }
     timerRef.current && clearTimeout(timerRef.current);
-  }
+  }, [touchEventsOnly]);
 
-  function handleOnTouchStart(): void {
+  const handleOnTouchStart = useCallback(() => {
     startPressTimer();
-  }
+  }, [startPressTimer]);
 
-  function handleOnTouchEnd(): void {
+  const handleOnTouchEnd = useCallback(() => {
     timerRef.current && clearTimeout(timerRef.current);
-  }
+  }, []);
 
-  return {
-    handlers: {
-      onClick: handleOnClick,
-      onMouseDown: handleOnMouseDown,
-      onMouseUp: handleOnMouseUp,
-      onTouchStart: handleOnTouchStart,
-      onTouchEnd: handleOnTouchEnd,
-      onKeyDown: handleOnKeyDown,
-      onKeyUp: handleOnKeyUp
-    }
-  };
+  return useMemo(
+    () => ({
+      handlers: {
+        onClick: handleOnClick,
+        onMouseDown: handleOnMouseDown,
+        onMouseUp: handleOnMouseUp,
+        onTouchStart: handleOnTouchStart,
+        onTouchEnd: handleOnTouchEnd,
+        onKeyDown: handleOnKeyDown,
+        onKeyUp: handleOnKeyUp
+      }
+    }),
+    [
+      handleOnClick,
+      handleOnKeyDown,
+      handleOnKeyUp,
+      handleOnMouseDown,
+      handleOnMouseUp,
+      handleOnTouchEnd,
+      handleOnTouchStart
+    ]
+  );
 }
