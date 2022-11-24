@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import { EnvironmentInfo } from '@azure/communication-calling';
 import { expect } from '@playwright/test';
 import type { MockCallAdapterState } from '../../../common';
 import { IDS } from '../../common/constants';
@@ -11,17 +12,8 @@ import { buildUrlWithMockAdapter, defaultMockCallAdapterState, test } from './fi
 test.describe('unsupportedBrowser page tests', async () => {
   test('unsupportedBrowser displays correctly without a help link', async ({ page, serverUrl }) => {
     const state = defaultMockUnsupportedBrowserPageState();
-    state.environmentInfo = {
-      isSupportedBrowser: false,
-      isSupportedBrowserVersion: false,
-      isSupportedPlatform: true,
-      isSupportedEnvironment: true,
-      environment: {
-        platform: 'test',
-        browser: 'test',
-        browserVersion: 'test'
-      }
-    };
+    state.environmentInfo = setMockEnvironmentInfo(true, false, false);
+
     await page.goto(buildUrlWithMockAdapter(serverUrl, state));
 
     await waitForSelector(page, dataUiId(IDS.unsupportedBrowserIcon));
@@ -31,17 +23,8 @@ test.describe('unsupportedBrowser page tests', async () => {
 
   test.only('unsupportedBrowser displays correctly with a help link', async ({ page, serverUrl }) => {
     const state = defaultMockUnsupportedBrowserPageState();
-    state.environmentInfo = {
-      isSupportedBrowser: false,
-      isSupportedBrowserVersion: false,
-      isSupportedPlatform: true,
-      isSupportedEnvironment: true,
-      environment: {
-        platform: 'test',
-        browser: 'test',
-        browserVersion: 'test'
-      }
-    };
+    state.environmentInfo = setMockEnvironmentInfo(true, false, false);
+
     await page.goto(
       buildUrlWithMockAdapter(serverUrl, state, {
         useEnvironmentInfoTroubleshootingOptions: 'true'
@@ -57,8 +40,21 @@ test.describe('unsupportedBrowser page tests', async () => {
 
 const defaultMockUnsupportedBrowserPageState = (): MockCallAdapterState => {
   const state = defaultMockCallAdapterState();
-
   state.page = 'unsupportedEnvironment';
   state.features = { unsupportedEnvironment: true };
   return state;
+};
+
+const setMockEnvironmentInfo = (platform: boolean, browser: boolean, version: boolean): EnvironmentInfo => {
+  return {
+    isSupportedBrowser: browser,
+    isSupportedBrowserVersion: version,
+    isSupportedPlatform: platform,
+    isSupportedEnvironment: true,
+    environment: {
+      platform: 'test',
+      browser: 'test',
+      browserVersion: 'test'
+    }
+  };
 };
