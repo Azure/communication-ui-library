@@ -21,7 +21,7 @@ test.describe('unsupportedBrowser page tests', async () => {
     expect(await stableScreenshot(page)).toMatchSnapshot(`unsupportedBrowserPage-no-link.png`);
   });
 
-  test.only('unsupportedBrowser displays correctly with a help link', async ({ page, serverUrl }) => {
+  test('unsupportedBrowser displays correctly with a help link', async ({ page, serverUrl }) => {
     const state = defaultMockUnsupportedBrowserPageState();
     state.environmentInfo = setMockEnvironmentInfo(true, false, false);
 
