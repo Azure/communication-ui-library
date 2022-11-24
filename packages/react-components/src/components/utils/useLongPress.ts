@@ -9,7 +9,7 @@ import { useRef, useState } from 'react';
 export default function useLongPress(
   onClick: () => void,
   onLongPress: () => void,
-  isMobile: boolean
+  touchEventsOnly: boolean
 ): {
   handlers: {
     onClick: () => void;
@@ -34,7 +34,7 @@ export default function useLongPress(
   }
 
   function handleOnClick(): void {
-    if (isMobile) {
+    if (touchEventsOnly) {
       return;
     }
     if (!isLongPress) {
@@ -43,7 +43,7 @@ export default function useLongPress(
   }
 
   function handleOnKeyDown(): void {
-    if (isMobile) {
+    if (touchEventsOnly) {
       return;
     }
     if (action) {
@@ -53,7 +53,7 @@ export default function useLongPress(
   }
 
   function handleOnKeyUp(): void {
-    if (isMobile) {
+    if (touchEventsOnly) {
       return;
     }
     setAction(true);
@@ -61,14 +61,14 @@ export default function useLongPress(
   }
 
   function handleOnMouseDown(): void {
-    if (isMobile) {
+    if (touchEventsOnly) {
       return;
     }
     startPressTimer();
   }
 
   function handleOnMouseUp(): void {
-    if (isMobile) {
+    if (touchEventsOnly) {
       return;
     }
     timerRef.current && clearTimeout(timerRef.current);
