@@ -10,16 +10,40 @@ import { buildUrlWithMockAdapter, defaultMockCallAdapterState, test } from './fi
 /* @conditional-compile-remove(unsupported-browser) */
 test.describe('unsupportedBrowser page tests', async () => {
   test('unsupportedBrowser displays correctly without a help link', async ({ page, serverUrl }) => {
-    await page.goto(buildUrlWithMockAdapter(serverUrl, defaultMockUnsupportedBrowserPageState()));
+    const state = defaultMockUnsupportedBrowserPageState();
+    state.environmentInfo = {
+      isSupportedBrowser: false,
+      isSupportedBrowserVersion: false,
+      isSupportedPlatform: true,
+      isSupportedEnvironment: true,
+      environment: {
+        platform: 'test',
+        browser: 'test',
+        browserVersion: 'test'
+      }
+    };
+    await page.goto(buildUrlWithMockAdapter(serverUrl, state));
 
     await waitForSelector(page, dataUiId(IDS.unsupportedBrowserIcon));
 
     expect(await stableScreenshot(page)).toMatchSnapshot(`unsupportedBrowserPage-no-link.png`);
   });
 
-  test('unsupportedBrowser displays correctly with a help link', async ({ page, serverUrl }) => {
+  test.only('unsupportedBrowser displays correctly with a help link', async ({ page, serverUrl }) => {
+    const state = defaultMockUnsupportedBrowserPageState();
+    state.environmentInfo = {
+      isSupportedBrowser: false,
+      isSupportedBrowserVersion: false,
+      isSupportedPlatform: true,
+      isSupportedEnvironment: true,
+      environment: {
+        platform: 'test',
+        browser: 'test',
+        browserVersion: 'test'
+      }
+    };
     await page.goto(
-      buildUrlWithMockAdapter(serverUrl, defaultMockUnsupportedBrowserPageState(), {
+      buildUrlWithMockAdapter(serverUrl, state, {
         useEnvironmentInfoTroubleshootingOptions: 'true'
       })
     );
@@ -33,6 +57,7 @@ test.describe('unsupportedBrowser page tests', async () => {
 
 const defaultMockUnsupportedBrowserPageState = (): MockCallAdapterState => {
   const state = defaultMockCallAdapterState();
+
   state.page = 'unsupportedEnvironment';
   state.features = { unsupportedEnvironment: true };
   return state;
