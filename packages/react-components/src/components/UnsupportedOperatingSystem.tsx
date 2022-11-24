@@ -17,12 +17,12 @@ export interface UnsupportedOperatingSystemStrings {
   primaryText: string;
   /** String for the secondary text */
   secondaryText: string;
-  /** String for the help link */
+  /** String to display in the text for the help link */
   moreHelpText: string;
 }
 
 /**
- * Props for UnsupportedOperatingSystem UI
+ * Props for {@link UnsupportedOperatingSystem} UI
  *
  * @beta
  */
