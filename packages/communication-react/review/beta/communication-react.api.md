@@ -3240,6 +3240,7 @@ export interface VideoTileProps {
     isSpeaking?: boolean;
     menuItems?: VideoTileMenuItems;
     noVideoAvailableAriaLabel?: string;
+    onLongTouch?: () => void;
     onRenderPlaceholder?: OnRenderAvatarCallback;
     participantState?: ParticipantState;
     personaMaxSize?: number;
