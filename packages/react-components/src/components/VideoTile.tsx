@@ -264,11 +264,13 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
   }, [observer, videoTileRef]);
 
   /* @conditional-compile-remove(pinned-participants) */
-  const longPress = useLongPress(
-    () => undefined,
-    () => props.onLongTouch?.(),
-    true
-  );
+  const onLongPressClick = React.useCallback(() => undefined, []);
+  /* @conditional-compile-remove(pinned-participants) */
+  const onLongPress = React.useCallback(() => {
+    props.onLongTouch?.();
+  }, [props.onLongTouch]);
+  /* @conditional-compile-remove(pinned-participants) */
+  const longPress = useLongPress(onLongPressClick, onLongPress, true);
 
   const placeholderOptions = {
     userId,

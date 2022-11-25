@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { useMemo, useRef, useState, useCallback } from 'react';
+import { useMemo, useRef, useState, useCallback, useEffect } from 'react';
 
 /**
  * @private
@@ -24,6 +24,17 @@ export default function useLongPress(
   const timerRef = useRef<ReturnType<typeof setTimeout>>();
   const [isLongPress, setIsLongPress] = useState(false);
   const [action, setAction] = useState(false);
+
+  useEffect(() => {
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+    }
+    return () => {
+      if (timerRef.current) {
+        clearTimeout(timerRef.current);
+      }
+    };
+  }, [onClick, onLongPress, touchEventsOnly]);
 
   const startPressTimer = useCallback(() => {
     setIsLongPress(false);
