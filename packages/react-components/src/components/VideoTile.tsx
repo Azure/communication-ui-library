@@ -31,6 +31,7 @@ import { getVideoTileOverrideColor } from './utils/videoTileStylesUtils';
 import { DefaultButton, concatStyleSets, DirectionalHint } from '@fluentui/react';
 /* @conditional-compile-remove(pinned-participants) */
 import { mapMenuItemsToContextualMenuItems } from './utils';
+/* @conditional-compile-remove(pinned-participants) */
 import useLongPress from './utils/useLongPress';
 
 /**
@@ -272,6 +273,11 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
   }, [props.onLongTouch]);
   /* @conditional-compile-remove(pinned-participants) */
   const longPress = useLongPress(onLongPressClick, onLongPress, true);
+  const longPressHandlers = useMemo(() => {
+    /* @conditional-compile-remove(pinned-participants) */
+    return longPress.handlers;
+    return {};
+  }, [/* @conditional-compile-remove(pinned-participants) */ longPress.handlers]);
 
   const placeholderOptions = {
     userId,
@@ -321,8 +327,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
           },
           styles?.root
         )}
-        /* @conditional-compile-remove(pinned-participants) */
-        {...longPress.handlers}
+        {...longPressHandlers}
       >
         {isVideoRendered ? (
           <Stack

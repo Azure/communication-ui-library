@@ -15,15 +15,17 @@ describe('VideoTile', () => {
     initializeIcons();
   });
 
-  /* @conditional-compile-remove(pinned-participants) */
   test('onLongTouch should trigger callback', async () => {
     const mockCallback = jest.fn();
-    const wrapper = mount(<VideoTile onLongTouch={mockCallback} />);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const videoTileProps = { onLongTouch: mockCallback } as any;
+    const wrapper = mount(<VideoTile {...videoTileProps} />);
     await act(async () => {
       wrapper.simulate('touchstart');
       await new Promise((resolve) => setTimeout(resolve, 1000));
       wrapper.simulate('touchend');
     });
+    /* @conditional-compile-remove(pinned-participants) */
     expect(mockCallback).toBeCalledTimes(1);
   });
 });
