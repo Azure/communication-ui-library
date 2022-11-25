@@ -265,19 +265,17 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
   }, [observer, videoTileRef]);
 
   /* @conditional-compile-remove(pinned-participants) */
-  const onLongPressClick = React.useCallback(() => undefined, []);
-  /* @conditional-compile-remove(pinned-participants) */
-  const onLongPress = React.useCallback(() => {
-    props.onLongTouch?.();
+  const useLongPressProps = useMemo(() => {
+    return {
+      onLongPress: () => {
+        props.onLongTouch?.();
+      },
+      touchEventsOnly: true
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.onLongTouch]);
   /* @conditional-compile-remove(pinned-participants) */
-  const longPress = useLongPress(onLongPressClick, onLongPress, true);
-  const longPressHandlers = useMemo(() => {
-    /* @conditional-compile-remove(pinned-participants) */
-    return longPress.handlers;
-    return {};
-  }, [/* @conditional-compile-remove(pinned-participants) */ longPress.handlers]);
+  const longPressHandlers = useLongPress(useLongPressProps);
 
   const placeholderOptions = {
     userId,

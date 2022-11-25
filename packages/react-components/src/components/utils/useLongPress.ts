@@ -6,21 +6,20 @@ import { useMemo, useRef, useState, useCallback, useEffect } from 'react';
 /**
  * @private
  */
-export default function useLongPress(
-  onClick: () => void,
-  onLongPress: () => void,
-  touchEventsOnly: boolean
-): {
-  handlers: {
-    onClick: () => void;
-    onMouseDown: () => void;
-    onMouseUp: () => void;
-    onTouchStart: () => void;
-    onTouchEnd: () => void;
-    onKeyDown: () => void;
-    onKeyUp: () => void;
-  };
+export default function useLongPress(props: {
+  onClick?: () => void;
+  onLongPress: () => void;
+  touchEventsOnly?: boolean;
+}): {
+  onClick: () => void;
+  onMouseDown: () => void;
+  onMouseUp: () => void;
+  onTouchStart: () => void;
+  onTouchEnd: () => void;
+  onKeyDown: () => void;
+  onKeyUp: () => void;
 } {
+  const { onClick, onLongPress, touchEventsOnly = false } = props;
   const timerRef = useRef<ReturnType<typeof setTimeout>>();
   const [isLongPress, setIsLongPress] = useState(false);
   const [action, setAction] = useState(false);
@@ -45,7 +44,7 @@ export default function useLongPress(
   }, [onLongPress]);
 
   const handleOnClick = useCallback(() => {
-    if (touchEventsOnly) {
+    if (touchEventsOnly || !onClick) {
       return;
     }
     if (!isLongPress) {
@@ -95,15 +94,13 @@ export default function useLongPress(
 
   return useMemo(
     () => ({
-      handlers: {
-        onClick: handleOnClick,
-        onMouseDown: handleOnMouseDown,
-        onMouseUp: handleOnMouseUp,
-        onTouchStart: handleOnTouchStart,
-        onTouchEnd: handleOnTouchEnd,
-        onKeyDown: handleOnKeyDown,
-        onKeyUp: handleOnKeyUp
-      }
+      onClick: handleOnClick,
+      onMouseDown: handleOnMouseDown,
+      onMouseUp: handleOnMouseUp,
+      onTouchStart: handleOnTouchStart,
+      onTouchEnd: handleOnTouchEnd,
+      onKeyDown: handleOnKeyDown,
+      onKeyUp: handleOnKeyUp
     }),
     [
       handleOnClick,
