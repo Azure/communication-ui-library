@@ -268,6 +268,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
   /* @conditional-compile-remove(pinned-participants) */
   const onLongPress = React.useCallback(() => {
     props.onLongTouch?.();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.onLongTouch]);
   /* @conditional-compile-remove(pinned-participants) */
   const longPress = useLongPress(onLongPressClick, onLongPress, true);
