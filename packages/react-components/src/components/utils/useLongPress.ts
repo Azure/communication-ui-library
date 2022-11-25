@@ -7,8 +7,8 @@ import { useMemo, useRef, useState, useCallback, useEffect } from 'react';
  * @private
  */
 export default function useLongPress(props: {
-  onClick?: () => void;
   onLongPress: () => void;
+  onClick?: () => void;
   touchEventsOnly?: boolean;
 }): {
   onClick: () => void;
