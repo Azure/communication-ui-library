@@ -264,17 +264,16 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
     return () => currentObserver.disconnect();
   }, [observer, videoTileRef]);
 
-  /* @conditional-compile-remove(pinned-participants) */
   const useLongPressProps = useMemo(() => {
     return {
       onLongPress: () => {
+        /* @conditional-compile-remove(pinned-participants) */
         props.onLongTouch?.();
       },
       touchEventsOnly: true
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.onLongTouch]);
-  /* @conditional-compile-remove(pinned-participants) */
   const longPressHandlers = useLongPress(useLongPressProps);
 
   const placeholderOptions = {
