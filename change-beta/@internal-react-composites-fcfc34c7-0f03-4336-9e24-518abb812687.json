@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Increase max listener limit to remove warning in console",
-  "packageName": "@internal/react-composites",
-  "email": "carolinecao@microsoft.com",
-  "dependentChangeType": "patch"
-}
