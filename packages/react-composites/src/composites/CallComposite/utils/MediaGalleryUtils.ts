@@ -3,7 +3,7 @@
 
 import { toFlatCommunicationIdentifier, _formatString } from '@internal/acs-ui-common';
 import { RemoteParticipantState } from '@internal/calling-stateful-client';
-import { useMemo, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import { useLocale } from '../../localization';
 import { useSelector } from '../hooks/useSelector';
 import { getRemoteParticipantsConnectedSelector } from '../selectors/mediaGallerySelector';
@@ -49,36 +49,36 @@ export const useParticipantChangedAnnouncement = (): string => {
   }, [locale]);
   const [announcerString, setAnnouncerString] = useState<string>('');
   const currentParticipants = useSelector(getRemoteParticipantsConnectedSelector);
-  const [previousParticipants, setPreviousParticipants] = useState<RemoteParticipantState[]>(currentParticipants);
+  /**
+   * We want to use a useRef here since we want to not fire this hook based on the previous participants
+   * this allows this value to be used in the hook without being in the dependency array.
+   *
+   * Note: By definition if this hook is used in another component it is not pure anymore.
+   */
+  const previousParticipants = useRef<RemoteParticipantState[]>(currentParticipants);
 
   const resetAnnoucement = (string: string): void => {
     setAnnouncerString(string);
   };
 
-  useMemo(
-    () => {
-      const currentIds = currentParticipants.map((p) => toFlatCommunicationIdentifier(p.identifier));
-      const previousIds = previousParticipants.map((p) => toFlatCommunicationIdentifier(p.identifier));
-      const whoJoined = currentParticipants.filter(
-        (p) => !previousIds.includes(toFlatCommunicationIdentifier(p.identifier))
-      );
-      const whoLeft = previousParticipants.filter(
-        (p) => !currentIds.includes(toFlatCommunicationIdentifier(p.identifier))
-      );
-      if (whoJoined.length > 0) {
-        resetAnnoucement(createAnnouncmentString('joined', whoJoined, strings));
-      }
-      if (whoLeft.length > 0) {
-        resetAnnoucement(createAnnouncmentString('left', whoLeft, strings));
-      }
-      // Update cached value at the end.
-      setPreviousParticipants(currentParticipants);
-    },
-    // previousParticipants caches the value of `currenParticipants`. We _don't_ want this
-    // hook to run for when `previousParticipants` is updated.
-    // If we did, the second run would always clear out the value of `whoJoined` etc.
-    [currentParticipants, previousParticipants, strings]
-  );
+  useMemo(() => {
+    const currentIds = currentParticipants.map((p) => toFlatCommunicationIdentifier(p.identifier));
+    const previousIds = previousParticipants.current.map((p) => toFlatCommunicationIdentifier(p.identifier));
+    const whoJoined = currentParticipants.filter(
+      (p) => !previousIds.includes(toFlatCommunicationIdentifier(p.identifier))
+    );
+    const whoLeft = previousParticipants.current.filter(
+      (p) => !currentIds.includes(toFlatCommunicationIdentifier(p.identifier))
+    );
+    if (whoJoined.length > 0) {
+      resetAnnoucement(createAnnouncmentString('joined', whoJoined, strings));
+    }
+    if (whoLeft.length > 0) {
+      resetAnnoucement(createAnnouncmentString('left', whoLeft, strings));
+    }
+    // Update cached value at the end.
+    previousParticipants.current = currentParticipants;
+  }, [currentParticipants, strings]);
   return announcerString;
 };
 
