@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { EnvironmentInfo } from '@azure/communication-calling';
+import type { EnvironmentInfo } from '@azure/communication-calling';
 import { expect } from '@playwright/test';
 import type { MockCallAdapterState } from '../../../common';
 import { IDS } from '../../common/constants';
