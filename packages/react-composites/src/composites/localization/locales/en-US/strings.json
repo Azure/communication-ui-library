@@ -68,7 +68,18 @@
     "holdScreenLabel": "You're on hold",
     "openDtmfDialpadLabel": "Show dialpad",
     "dtmfDialpadPlaceholderText": "Enter number",
-    "outboundCallingNoticeString": "Calling..."
+    "outboundCallingNoticeString": "Calling...",
+    "participantJoinedNoticeString": "{displayName} joined",
+    "twoParticipantJoinedNoticeString": "{displayName1} and {displayName2} have joined",
+    "threeParticipantJoinedNoticeString": "{displayName1}, {displayName2} and {displayName3} have joined",
+    "participantLeftNoticeString": "{displayName} left",
+    "twoParticipantLeftNoticeString": "{displayName1} and {displayName2} have left",
+    "threeParticipantLeftNoticeString": "{displayName1}, {displayName2} and {displayName3} have left",
+    "unnamedParticipantString": "unnamed participant",
+    "manyUnnamedParticipantsJoined": "unnamed participant and {numOfParticipants} other participants joined",
+    "manyUnnamedParticipantsLeft": "unnamed participant and {numOfParticipants} other participants left",
+    "manyParticipantsJoined": "{displayName1}, {displayName2}, {displayName3} and {numOfParticipants} other participants joined",
+    "manyParticipantsLeft": "{displayName1}, {displayName2}, {displayName3} and {numOfParticipants} other participants left"
   },
   "chat": {
     "chatListHeader": "In this chat",
