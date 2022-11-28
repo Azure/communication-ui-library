@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Updated troubleshooting error bar storybook ",
-  "packageName": "@internal/storybook",
-  "email": "carolinecao@microsoft.com",
-  "dependentChangeType": "patch"
-}

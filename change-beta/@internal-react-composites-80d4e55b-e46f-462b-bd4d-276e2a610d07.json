@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Bump dependencies to get closer to react 18 support",
-  "packageName": "@internal/react-composites",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
