@@ -6,7 +6,9 @@ import { _isInCall, _isPreviewOn, _isInLobbyOrConnecting } from '@internal/calli
 import { CallControlOptions } from '../types/CallControlOptions';
 import { CallState } from '@internal/calling-stateful-client';
 import { isPhoneNumberIdentifier } from '@azure/communication-common';
+/* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
+/* @conditional-compile-remove(unsupported-browser) */
 import { CallAdapterOptionalFeatures } from '../adapter/CallAdapter';
 
 const ACCESS_DENIED_TEAMS_MEETING_SUB_CODE = 5854;
@@ -113,6 +115,19 @@ const getCallEndReason = (call: CallState): CallEndReasons => {
 };
 
 /**
+ * type definition for conditional-compilation
+ */
+type GetCallCompositePageFunction = ((
+  call: CallState | undefined,
+  previousCall: CallState | undefined
+) => CallCompositePage) &
+  /* @conditional-compile-remove(unsupported-browser) */ ((
+    call: CallState | undefined,
+    previousCall: CallState | undefined,
+    environmentInfo?: EnvironmentInfo,
+    features?: CallAdapterOptionalFeatures
+  ) => CallCompositePage);
+/**
  * Get the current call composite page based on the current call composite state
  *
  * @param Call - The current call state
@@ -125,13 +140,14 @@ const getCallEndReason = (call: CallState): CallEndReasons => {
  *
  * @private
  */
-export const getCallCompositePage = (
-  call: CallState | undefined,
-  previousCall: CallState | undefined,
-  environmentInfo?: EnvironmentInfo,
-  features?: CallAdapterOptionalFeatures
+export const getCallCompositePage: GetCallCompositePageFunction = (
+  call,
+  previousCall,
+  environmentInfo?,
+  features?
 ): CallCompositePage => {
-  if (isUnsupportedEnvironmentTrampoline(features, environmentInfo)) {
+  /* @conditional-compile-remove(unsupported-browser) */
+  if (isUnsupportedEnvironment(features, environmentInfo)) {
     return 'unsupportedEnvironment';
   }
 
@@ -289,8 +305,8 @@ export const getDevicePermissionState = (
       setAudioState('unsupported');
     });
 };
-
-const isUnsupportedEnvironmentTrampoline = (
+/* @conditional-compile-remove(unsupported-browser) */
+const isUnsupportedEnvironment = (
   features?: CallAdapterOptionalFeatures,
   environmentInfo?: EnvironmentInfo
 ): boolean => {
@@ -300,5 +316,4 @@ const isUnsupportedEnvironmentTrampoline = (
       environmentInfo?.isSupportedBrowserVersion === false ||
       environmentInfo?.isSupportedPlatform === false)
   );
-  return false;
 };

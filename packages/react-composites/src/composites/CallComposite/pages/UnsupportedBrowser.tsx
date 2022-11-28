@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { EnvironmentInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(unsupported-browser) */
+import { EnvironmentInfo } from '@azure/communication-calling';
 import { IStackStyles, Stack } from '@fluentui/react';
 /* @conditional-compile-remove(unsupported-browser) */
 import { UnsupportedBrowser, UnsupportedBrowserVersion, UnsupportedOperatingSystem } from '@internal/react-components';
@@ -15,6 +15,7 @@ import { useLocale } from '../../localization';
  */
 export type UnsupportedBrowserPageProps = {
   onTroubleshootingClick?: () => void;
+  /* @conditional-compile-remove(unsupported-browser) */
   environmentInfo?: EnvironmentInfo;
 };
 
@@ -23,6 +24,7 @@ export type UnsupportedBrowserPageProps = {
  * @internal
  */
 export const UnsupportedBrowserPage = (props: UnsupportedBrowserPageProps): JSX.Element => {
+  /* @conditional-compile-remove(unsupported-browser) */
   const { onTroubleshootingClick, environmentInfo } = props;
   /* @conditional-compile-remove(unsupported-browser) */
   const locale = useLocale();
@@ -33,7 +35,8 @@ export const UnsupportedBrowserPage = (props: UnsupportedBrowserPageProps): JSX.
   /* @conditional-compile-remove(unsupported-browser) */
   const unsupportedOperatingSystemStrings = locale.component.strings.UnsupportedOperatingSystem;
 
-  let pageElement: JSX.Element | undefined;
+  let pageElement: JSX.Element | undefined = <></>;
+  /* @conditional-compile-remove(unsupported-browser) */
   if (!environmentInfo?.isSupportedPlatform) {
     pageElement = (
       <UnsupportedOperatingSystem
