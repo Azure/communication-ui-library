@@ -350,7 +350,7 @@ const createRemoteParticipant = (attrs?: Partial<VideoGalleryRemoteParticipant>)
   };
 };
 
-const mockVideoGalleryInternalHelpers = () => {
+const mockVideoGalleryInternalHelpers = (): void => {
   // Need to mock this because the HorizontalGallery uses this function. But JSDOM does not actually do any
   // rendering so getComputedStyle(document.documentElement).fontSize will not actually have a value
   jest.spyOn(acs_ui_common, '_convertRemToPx').mockImplementation((rem: number) => {
