@@ -3099,7 +3099,7 @@ export interface UnsupportedOperatingSystemProps {
 
 // @beta
 export interface UnsupportedOperatingSystemStrings {
-    moreHelpLink: string;
+    moreHelpText: string;
     primaryText: string;
     secondaryText: string;
 }

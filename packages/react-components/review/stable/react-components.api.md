@@ -1356,6 +1356,22 @@ export interface UnsupportedBrowserVersionStrings {
     secondaryText: string;
 }
 
+// @beta
+export const UnsupportedOperatingSystem: (props: UnsupportedOperatingSystemProps) => JSX.Element;
+
+// @beta
+export interface UnsupportedOperatingSystemProps {
+    onTroubleshootingClick?: () => void;
+    strings: UnsupportedOperatingSystemStrings;
+}
+
+// @beta
+export interface UnsupportedOperatingSystemStrings {
+    moreHelpText: string;
+    primaryText: string;
+    secondaryText: string;
+}
+
 // @public
 export type UpdateMessageCallback = (messageId: string, content: string) => Promise<void>;
 
