@@ -719,6 +719,7 @@ export const ErrorBar: (props: ErrorBarProps) => JSX.Element;
 // @public
 export interface ErrorBarProps extends IMessageBarProps {
     activeErrorMessages: ActiveErrorMessage[];
+    ignorePremountErrors?: boolean;
     strings?: ErrorBarStrings;
 }
 
@@ -1694,6 +1695,7 @@ export interface VideoTileProps {
     isSpeaking?: boolean;
     menuItems?: VideoTileMenuItems;
     noVideoAvailableAriaLabel?: string;
+    onLongTouch?: () => void;
     onRenderPlaceholder?: OnRenderAvatarCallback;
     participantState?: ParticipantState;
     personaMaxSize?: number;

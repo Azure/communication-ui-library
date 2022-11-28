@@ -8,7 +8,7 @@ import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { BaseProvider, BaseCompositeProps } from '../common/BaseComposite';
 import { CallCompositeIcons } from '../common/icons';
 import { useLocale } from '../localization';
-import { CallAdapter } from './adapter/CallAdapter';
+import { CommonCallAdapter } from './adapter/CallAdapter';
 import { CallAdapterProvider, useAdapter } from './adapter/CallAdapterProvider';
 import { CallPage } from './pages/CallPage';
 import { ConfigurationPage } from './pages/ConfigurationPage';
@@ -45,7 +45,7 @@ export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcon
    * An adapter provides logic and data to the composite.
    * Composite can also be controlled using the adapter.
    */
-  adapter: CallAdapter;
+  adapter: CommonCallAdapter;
   /**
    * Optimizes the composite form factor for either desktop or mobile.
    * @remarks `mobile` is currently only optimized for Portrait mode on mobile devices and does not support landscape.
@@ -310,7 +310,11 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
         </>
       );
       break;
-    case unsupportedEnvironmentPageTrampoline():
+  }
+
+  /* @conditional-compile-remove(unsupported-browser) */
+  switch (page) {
+    case 'unsupportedEnvironment':
       pageElement = (
         <>
           {
@@ -319,6 +323,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           }
         </>
       );
+      break;
   }
 
   if (!pageElement) {
@@ -416,12 +421,6 @@ const holdPageTrampoline = (): string => {
   /* @conditional-compile-remove(one-to-n-calling) */
   /* @conditional-compile-remove(PSTN-calls) */
   return 'hold';
-  return 'call';
-};
-
-const unsupportedEnvironmentPageTrampoline = (): string => {
-  /* @conditional-compile-remove(unsupported-browser) */
-  return 'unsupportedEnvironment';
   return 'call';
 };
 

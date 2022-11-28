@@ -27,6 +27,7 @@ import { Dialpad } from '@internal/react-components';
 import { DominantSpeakersInfo } from '@azure/communication-calling';
 import { DtmfTone } from '@azure/communication-calling';
 import { EndCallButton } from '@internal/react-components';
+import { EnvironmentInfo } from '@azure/communication-calling';
 import { ErrorBar } from '@internal/react-components';
 import { HoldButton } from '@internal/react-components';
 import { MicrophoneButton } from '@internal/react-components';
@@ -188,6 +189,9 @@ export type GetCallingSelector<Component extends (props: any) => JSX.Element | u
 
 // @public
 export const getCallingSelector: <Component extends (props: any) => JSX.Element | undefined>(component: Component) => GetCallingSelector<Component>;
+
+// @internal
+export const _getEnvironmentInfo: (callClient: StatefulCallClient) => Promise<EnvironmentInfo>;
 
 // @public
 export type HoldButtonSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
