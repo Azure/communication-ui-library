@@ -477,7 +477,6 @@ function disposeViewLocalVideo(context: CallContext, internalContext: InternalCa
       level: 'info',
       message: 'LocalVideoStream is already disposed.'
     });
-    console.warn('LocalVideoStream is already disposed');
     return;
   }
 
@@ -488,7 +487,7 @@ function disposeViewLocalVideo(context: CallContext, internalContext: InternalCa
     _logEvent(callingStatefulLogger, {
       name: EventNames.LOCAL_STREAM_STOPPING,
       level: 'info',
-      message: 'Remote stream is already stopping.',
+      message: 'Local stream is already stopping.',
       data: streamLogInfo
     });
     return;
