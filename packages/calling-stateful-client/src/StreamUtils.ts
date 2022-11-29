@@ -223,7 +223,7 @@ async function createViewLocalVideo(
     _logEvent(callingStatefulLogger, {
       name: EventNames.LOCAL_STREAM_STOPPING,
       level: 'warning',
-      message: 'LocalVideoStream was in the middle of stopping. Resetting state to "Rendering".'
+      message: 'LocalVideoStream was marked as stopping by dispose view. Resetting state to "Rendering".'
     });
     internalContext.setLocalRenderInfo(callId, renderInfo.stream, 'Rendering', renderInfo.renderer);
     return;
