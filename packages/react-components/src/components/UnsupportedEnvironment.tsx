@@ -44,7 +44,11 @@ const UnsupportedEnvironmentContainer = (props: UnsupportedEnvironmentProps): JS
   const { onTroubleshootingClick, strings } = props;
   return (
     <Stack styles={containerStyles}>
-      <Icon styles={iconStyles} iconName="UnsupportedEnvironmentWarning" data-ui-id="unsupportedEnvironmentIcon"></Icon>
+      <Icon
+        styles={iconStyles}
+        iconName="UnsupportedEnvironmentWarning"
+        data-ui-id="unsupported-environment-icon"
+      ></Icon>
       <Text styles={mainTextStyles}>{strings.primaryText}</Text>
       <Text styles={secondaryTextStyles}>{strings.secondaryText}</Text>
       {onTroubleshootingClick && (
@@ -53,7 +57,7 @@ const UnsupportedEnvironmentContainer = (props: UnsupportedEnvironmentProps): JS
           onClick={() => {
             onTroubleshootingClick();
           }}
-          data-ui-id="unsupportedEnvironmentLink"
+          data-ui-id="unsupported-environment-link"
         >
           {strings.moreHelpText}
         </Link>

@@ -1,83 +1,99 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { useRef, useState } from 'react';
+import { useMemo, useRef, useState, useCallback, useEffect } from 'react';
 
 /**
  * @private
  */
-export default function useLongPress(
-  onClick: () => void,
-  onLongPress: () => void,
-  isMobile: boolean
-): {
-  handlers: {
-    onClick: () => void;
-    onMouseDown: () => void;
-    onMouseUp: () => void;
-    onTouchStart: () => void;
-    onTouchEnd: () => void;
-    onKeyDown: () => void;
-    onKeyUp: () => void;
-  };
+export default function useLongPress(props: {
+  onLongPress: () => void;
+  onClick?: () => void;
+  touchEventsOnly?: boolean;
+}): {
+  onClick: () => void;
+  onMouseDown: () => void;
+  onMouseUp: () => void;
+  onTouchStart: () => void;
+  onTouchEnd: () => void;
+  onKeyDown: () => void;
+  onKeyUp: () => void;
 } {
+  const { onClick, onLongPress, touchEventsOnly = false } = props;
   const timerRef = useRef<ReturnType<typeof setTimeout>>();
   const [isLongPress, setIsLongPress] = useState(false);
   const [action, setAction] = useState(false);
 
-  function startPressTimer(): void {
+  useEffect(() => {
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+    }
+    return () => {
+      if (timerRef.current) {
+        clearTimeout(timerRef.current);
+      }
+    };
+  }, [onClick, onLongPress, touchEventsOnly]);
+
+  const startPressTimer = useCallback(() => {
     setIsLongPress(false);
     timerRef.current = setTimeout(() => {
       setIsLongPress(true);
-    }, 500);
-  }
-
-  function handleOnClick(): void {
-    // when it's mobile use ontouchstart and ontouchend to fire onclick and onlongpress event
-    if (isMobile) {
-      return;
-    }
-    onClick();
-    if (isLongPress) {
       onLongPress();
+    }, 500);
+  }, [onLongPress]);
+
+  const handleOnClick = useCallback(() => {
+    if (touchEventsOnly || !onClick) {
       return;
     }
-  }
+    if (!isLongPress) {
+      onClick();
+    }
+  }, [isLongPress, onClick, touchEventsOnly]);
 
-  function handleOnKeyDown(): void {
+  const handleOnKeyDown = useCallback(() => {
+    if (touchEventsOnly) {
+      return;
+    }
     if (action) {
       setAction(false);
       startPressTimer();
     }
-  }
+  }, [action, startPressTimer, touchEventsOnly]);
 
-  function handleOnKeyUp(): void {
+  const handleOnKeyUp = useCallback(() => {
+    if (touchEventsOnly) {
+      return;
+    }
     setAction(true);
     timerRef.current && clearTimeout(timerRef.current);
-  }
+  }, [touchEventsOnly]);
 
-  function handleOnMouseDown(): void {
-    startPressTimer();
-  }
-
-  function handleOnMouseUp(): void {
-    timerRef.current && clearTimeout(timerRef.current);
-  }
-
-  function handleOnTouchStart(): void {
-    startPressTimer();
-  }
-
-  function handleOnTouchEnd(): void {
-    if (isMobile) {
-      isLongPress ? onLongPress() : onClick();
+  const handleOnMouseDown = useCallback(() => {
+    if (touchEventsOnly) {
+      return;
     }
+    startPressTimer();
+  }, [startPressTimer, touchEventsOnly]);
 
+  const handleOnMouseUp = useCallback(() => {
+    if (touchEventsOnly) {
+      return;
+    }
     timerRef.current && clearTimeout(timerRef.current);
-  }
+  }, [touchEventsOnly]);
 
-  return {
-    handlers: {
+  const handleOnTouchStart = useCallback(() => {
+    startPressTimer();
+  }, [startPressTimer]);
+
+  const handleOnTouchEnd = useCallback(() => {
+    timerRef.current && clearTimeout(timerRef.current);
+  }, []);
+
+  return useMemo(
+    () => ({
       onClick: handleOnClick,
       onMouseDown: handleOnMouseDown,
       onMouseUp: handleOnMouseUp,
@@ -85,6 +101,15 @@ export default function useLongPress(
       onTouchEnd: handleOnTouchEnd,
       onKeyDown: handleOnKeyDown,
       onKeyUp: handleOnKeyUp
-    }
-  };
+    }),
+    [
+      handleOnClick,
+      handleOnKeyDown,
+      handleOnKeyUp,
+      handleOnMouseDown,
+      handleOnMouseUp,
+      handleOnTouchEnd,
+      handleOnTouchStart
+    ]
+  );
 }

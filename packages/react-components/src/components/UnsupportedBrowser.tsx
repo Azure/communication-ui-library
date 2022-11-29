@@ -1,10 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-/* @conditional-compile-remove(unsupported-browser) */
 import { _pxToRem } from '@internal/acs-ui-common';
 import React from 'react';
-/* @conditional-compile-remove(unsupported-browser) */
 import { UnsupportedEnvironment } from './UnsupportedEnvironment';
 
 /**
@@ -27,7 +25,7 @@ export interface UnsupportedBrowserStrings {
  * @beta
  */
 export interface UnsupportedBrowserProps {
-  /** Handler to perform a action when the help link is actioned */
+  /** Handler to perform an action when the help link is actioned */
   onTroubleshootingClick?: () => void;
   /** String overrides for the component */
   strings: UnsupportedBrowserStrings;
@@ -39,9 +37,6 @@ export interface UnsupportedBrowserProps {
  * @beta
  */
 export const UnsupportedBrowser = (props: UnsupportedBrowserProps): JSX.Element => {
-  /* @conditional-compile-remove(unsupported-browser) */
   const { onTroubleshootingClick, strings } = props;
-  /* @conditional-compile-remove(unsupported-browser) */
   return <UnsupportedEnvironment onTroubleshootingClick={onTroubleshootingClick} strings={strings} />;
-  return <></>;
 };

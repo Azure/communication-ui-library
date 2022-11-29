@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Allow a range of communication services dependency packages",
-  "packageName": "@internal/calling-stateful-client",
-  "email": "82062616+prprabhu-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

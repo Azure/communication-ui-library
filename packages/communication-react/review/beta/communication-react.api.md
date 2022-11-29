@@ -541,6 +541,10 @@ export interface CallCompositeStrings {
     lobbyScreenConnectingToCallTitle: string;
     lobbyScreenWaitingToBeAdmittedMoreDetails?: string;
     lobbyScreenWaitingToBeAdmittedTitle: string;
+    manyParticipantsJoined: string;
+    manyParticipantsLeft: string;
+    manyUnnamedParticipantsJoined: string;
+    manyUnnamedParticipantsLeft: string;
     microphonePermissionDenied: string;
     microphoneToggleInLobbyNotAllowed: string;
     moreButtonCallingLabel: string;
@@ -550,6 +554,8 @@ export interface CallCompositeStrings {
     openDialpadButtonLabel: string;
     openDtmfDialpadLabel: string;
     outboundCallingNoticeString: string;
+    participantJoinedNoticeString: string;
+    participantLeftNoticeString: string;
     peopleButtonLabel: string;
     peopleButtonTooltipClose: string;
     peopleButtonTooltipOpen: string;
@@ -571,6 +577,11 @@ export interface CallCompositeStrings {
     roomNotFoundTitle: string;
     soundLabel: string;
     startCallButtonLabel: string;
+    threeParticipantJoinedNoticeString: string;
+    threeParticipantLeftNoticeString: string;
+    twoParticipantJoinedNoticeString: string;
+    twoParticipantLeftNoticeString: string;
+    unnamedParticipantString: string;
 }
 
 // @public
@@ -3274,6 +3285,7 @@ export interface VideoTileProps {
     isSpeaking?: boolean;
     menuItems?: VideoTileMenuItems;
     noVideoAvailableAriaLabel?: string;
+    onLongTouch?: () => void;
     onRenderPlaceholder?: OnRenderAvatarCallback;
     participantState?: ParticipantState;
     personaMaxSize?: number;

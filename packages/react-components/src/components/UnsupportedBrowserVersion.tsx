@@ -1,10 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-/* @conditional-compile-remove(unsupported-browser) */
 import { _pxToRem } from '@internal/acs-ui-common';
 import React from 'react';
-/* @conditional-compile-remove(unsupported-browser) */
 import { UnsupportedEnvironment } from './UnsupportedEnvironment';
 
 /**
@@ -27,21 +25,19 @@ export interface UnsupportedBrowserVersionStrings {
  * @beta
  */
 export interface UnsupportedBrowserVersionProps {
-  /** Handler to perform a action when the help link is actioned */
+  /** Handler to perform an action when the help link is actioned */
   onTroubleshootingClick?: () => void;
   /** String overrides for the component */
   strings: UnsupportedBrowserVersionStrings;
 }
 
 /**
- * UI to display to the user that the browser they are using is not supported by Azure Communications Calling service.
+ * UI to display to the user that the browser version they are using is out of date
+ * and not supported by Azure Communications Calling service.
  *
  * @beta
  */
 export const UnsupportedBrowserVersion = (props: UnsupportedBrowserVersionProps): JSX.Element => {
-  /* @conditional-compile-remove(unsupported-browser) */
   const { onTroubleshootingClick, strings } = props;
-  /* @conditional-compile-remove(unsupported-browser) */
   return <UnsupportedEnvironment onTroubleshootingClick={onTroubleshootingClick} strings={strings} />;
-  return <></>;
 };

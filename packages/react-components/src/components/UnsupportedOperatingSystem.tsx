@@ -1,10 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-/* @conditional-compile-remove(unsupported-browser) */
 import { _pxToRem } from '@internal/acs-ui-common';
 import React from 'react';
-/* @conditional-compile-remove(unsupported-browser) */
 import { UnsupportedEnvironment } from './UnsupportedEnvironment';
 
 /**
@@ -34,14 +32,12 @@ export interface UnsupportedOperatingSystemProps {
 }
 
 /**
- * UI to display to the user that the operating system they are using is not supported by calling application.
+ * UI to display to the user that the operating system they are using is not supported by Azure Communications Calling service.
  *
  * @beta
  */
 export const UnsupportedOperatingSystem = (props: UnsupportedOperatingSystemProps): JSX.Element => {
-  /* @conditional-compile-remove(unsupported-browser) */
   const { onTroubleshootingClick, strings } = props;
-  /* @conditional-compile-remove(unsupported-browser) */
   return <UnsupportedEnvironment onTroubleshootingClick={onTroubleshootingClick} strings={strings} />;
   return <></>;
 };

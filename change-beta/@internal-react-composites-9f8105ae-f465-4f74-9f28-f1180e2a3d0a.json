@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Fix CallWithChatPane drawer menu that stays open after switching mobile tabs",
-  "packageName": "@internal/react-composites",
-  "email": "miguelgamis@microsoft.com",
-  "dependentChangeType": "patch"
-}
