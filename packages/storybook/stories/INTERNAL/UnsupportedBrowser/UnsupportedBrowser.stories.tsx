@@ -37,11 +37,11 @@ const getDocs: () => JSX.Element = () => {
       <SingleLineBetaBanner />
       <Title>Unsupported Browser</Title>
       <Description>
-        Component to display help information when the app is loaded in a unsuppported environment. Shows different
-        screens based on what the environment info from the calling SDK is reporting.
+        Component to display help information when the app is loaded in an unsuppported environment. Shows different
+        screens based on the environment info the calling SDK is reporting.
       </Description>
       <Heading>Using in a Modal</Heading>
-      <Description>This component while used in a modal here can also be used as it's own page.</Description>
+      <Description>This component can also be used as it's own page or as in a modal as shown here.</Description>
       <Canvas mdxSource={UnsupportedBrowserModalExamples}>
         <UnsupportedEnvironmentModals />
       </Canvas>
