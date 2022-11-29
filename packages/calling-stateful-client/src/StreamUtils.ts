@@ -218,12 +218,12 @@ async function createViewLocalVideo(
   }
 
   // "Stopping" only happens if the stream was in "rendering" but `disposeView` was called.
-  // Now `createView` has been re-called when can flip the state back to "rendering".
+  // Now that `createView` has been re-called, we can flip the state back to "rendering".
   if (renderInfo.status === 'Stopping') {
     _logEvent(callingStatefulLogger, {
       name: EventNames.LOCAL_STREAM_STOPPING,
       level: 'warning',
-      message: 'LocalVideoStream was is in the middle of stopping. Resetting state to "Rendering".'
+      message: 'LocalVideoStream was in the middle of stopping. Resetting state to "Rendering".'
     });
     internalContext.setLocalRenderInfo(callId, renderInfo.stream, 'Rendering', renderInfo.renderer);
     return;
