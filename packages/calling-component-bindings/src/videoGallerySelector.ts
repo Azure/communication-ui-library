@@ -4,7 +4,6 @@
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { CallClientState, RemoteParticipantState } from '@internal/calling-stateful-client';
 import { VideoGalleryLocalParticipant, VideoGalleryRemoteParticipant } from '@internal/react-components';
-import memoizeOne from 'memoize-one';
 import { createSelector } from 'reselect';
 import {
   CallingBaseSelectorProps,
