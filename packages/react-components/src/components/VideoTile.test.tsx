@@ -39,7 +39,8 @@ describe('VideoTile', () => {
   test('VideoTile shows more button when contextualMenu is set', async () => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const videoTileProps = { displayName: 'John Doe', contextualMenu: { items: [] } } as any;
-    const wrapper = mount(<VideoTile {...videoTileProps} />);
+    const wrapper = mount(<VideoTile />);
+    wrapper.setProps(videoTileProps);
     /* @conditional-compile-remove(pinned-participants) */
     expect(wrapper.find(IconButton).length).toBe(1);
   });
@@ -47,7 +48,8 @@ describe('VideoTile', () => {
   test('VideoTile does not show more button when contextualMenu is undefined', async () => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const videoTileProps = { displayName: 'John Doe', contextualMenu: undefined } as any;
-    const wrapper = mount(<VideoTile {...videoTileProps} />);
+    const wrapper = mount(<VideoTile />);
+    wrapper.setProps(videoTileProps);
     /* @conditional-compile-remove(pinned-participants) */
     expect(wrapper.find(IconButton).length).toBe(0);
   });
