@@ -14,10 +14,11 @@ import { v1 as createGUID } from 'uuid';
 import * as responsive from './utils/responsive';
 import * as acs_ui_common from '@internal/acs-ui-common';
 import { RemoteScreenShare } from './VideoGallery/RemoteScreenShare';
+import { act } from 'react-dom/test-utils';
 
 Enzyme.configure({ adapter: new Adapter() });
 
-describe('VideoGallery default layout', () => {
+describe('VideoGallery default layout tests', () => {
   beforeAll(() => {
     registerIcons({
       icons: {
@@ -26,14 +27,7 @@ describe('VideoGallery default layout', () => {
       }
     });
 
-    // Need to mock this because the HorizontalGallery uses this function. But JSDOM does not actually do any
-    // rendering so getComputedStyle(document.documentElement).fontSize won't actually have a value
-    jest.spyOn(acs_ui_common, '_convertRemToPx').mockImplementation((rem: number) => {
-      return rem * 16;
-    });
-    // Need to mock hook _useContainerWidth because the returned width is used by HorizontalGallery to decide
-    // how many tiles to show per page
-    jest.spyOn(responsive, '_useContainerWidth').mockImplementation(() => 500);
+    mockVideoGalleryInternalHelpers();
   });
 
   test('should render local video tile in the grid alongside remote tiles', () => {
@@ -43,13 +37,15 @@ describe('VideoGallery default layout', () => {
 
     const root = mountVideoGalleryWithLocalParticipant({ localParticipant });
 
-    root.setProps({ layout: 'default' });
     const remoteParticipants = Array.from({ length: 10 }, () =>
       createRemoteParticipant({
         videoStream: { isAvailable: false, renderElement: createVideoDivElement() }
       })
     );
-    root.setProps({ remoteParticipants });
+
+    act(() => {
+      root.setProps({ layout: 'default', remoteParticipants });
+    });
     const gridLayout = root.find(GridLayout);
     expect(
       gridLayout
@@ -66,13 +62,15 @@ describe('VideoGallery default layout', () => {
 
     const root = mountVideoGalleryWithLocalParticipant({ localParticipant });
 
-    root.setProps({ layout: 'default' });
     const remoteParticipants = Array.from({ length: 10 }, () =>
       createRemoteParticipant({
         videoStream: { isAvailable: false, renderElement: createVideoDivElement() }
       })
     );
-    root.setProps({ remoteParticipants });
+
+    act(() => {
+      root.setProps({ layout: 'default', remoteParticipants });
+    });
     expect(root.find(_ModalClone).exists()).toBe(false);
   });
 
@@ -83,13 +81,15 @@ describe('VideoGallery default layout', () => {
 
     const root = mountVideoGalleryWithLocalParticipant({ localParticipant });
 
-    root.setProps({ layout: 'default' });
     const remoteParticipants = Array.from({ length: 10 }, () =>
       createRemoteParticipant({
         videoStream: { isAvailable: false, renderElement: createVideoDivElement() }
       })
     );
-    root.setProps({ remoteParticipants });
+
+    act(() => {
+      root.setProps({ layout: 'default', remoteParticipants });
+    });
     expect(tileCount(root)).toBe(11);
     expect(audioTileCount(root)).toBe(11);
     expect(videoTileCount(root)).toBe(0);
@@ -106,14 +106,134 @@ describe('VideoGallery default layout', () => {
 
     const root = mountVideoGalleryWithLocalParticipant({ localParticipant });
 
-    root.setProps({ layout: 'default' });
+    const remoteParticipants = Array.from({ length: 10 }, () =>
+      createRemoteParticipant({
+        videoStream: { isAvailable: true, renderElement: createVideoDivElement() }
+      })
+    );
+
+    act(() => {
+      root.setProps({ layout: 'default', remoteParticipants });
+    });
+    expect(gridVideoTileCount(root)).toBe(DEFAULT_MAX_REMOTE_VIDEO_STREAMS + 1); // +1 for the local video stream
+    expect(root.find(HorizontalGallery).find(VideoTile).length).toBe(2);
+  });
+
+  test('should render remote screenshare and render dominant speaking remote participants in horizontal gallery', () => {
+    const localParticipant = createLocalParticipant({
+      videoStream: { isAvailable: true, renderElement: createVideoDivElement() }
+    });
+    const root = mountVideoGalleryWithLocalParticipant({ localParticipant });
+
+    // 8 remote audio participants
+    const remoteParticipants = Array.from({ length: 8 }, () => createRemoteParticipant());
+    // 1 remote video participant
+    remoteParticipants.push(
+      createRemoteParticipant({
+        userId: 'remoteVideoParticipant',
+        videoStream: { isAvailable: true, renderElement: createVideoDivElement() }
+      })
+    );
+    // 1 remote screen sharing participants
+    remoteParticipants.push(
+      createRemoteParticipant({
+        userId: 'remoteScreenSharingParticipant',
+        isScreenSharingOn: true,
+        screenShareStream: { isAvailable: true, renderElement: createVideoDivElement() }
+      })
+    );
+
+    act(() => {
+      root.setProps({
+        remoteParticipants,
+        dominantSpeakers: ['remoteScreenSharingParticipant', 'remoteVideoParticipant']
+      });
+    });
+
+    expect(root.find(RemoteScreenShare).length).toBe(1);
+    expect(root.find(HorizontalGallery).find(VideoTile).length).toBe(2);
+    expect(root.find(HorizontalGallery).find(StreamMedia).length).toBe(1);
+    expect(root.find(HorizontalGallery).find(VideoTile).first().prop('userId')).toBe('remoteVideoParticipant');
+    expect(root.find(HorizontalGallery).find(VideoTile).first().find(StreamMedia).exists()).toBe(true);
+    expect(root.find(HorizontalGallery).find(VideoTile).at(1).prop('userId')).toBe('remoteScreenSharingParticipant');
+    expect(root.find(HorizontalGallery).find(VideoTile).at(1).find(StreamMedia).exists()).toBe(false);
+  });
+});
+
+describe('VideoGallery floating local video layout', () => {
+  beforeAll(() => {
+    registerIcons({
+      icons: {
+        horizontalgalleryleftbutton: <></>,
+        horizontalgalleryrightbutton: <></>
+      }
+    });
+
+    mockVideoGalleryInternalHelpers();
+  });
+
+  test('should have floating local video tile present', () => {
+    const localParticipant = createLocalParticipant({
+      videoStream: { isAvailable: false, renderElement: createVideoDivElement() }
+    });
+
+    const root = mountVideoGalleryWithLocalParticipant({ localParticipant });
+
+    root.setProps({ layout: 'floatingLocalVideo' });
+    const remoteParticipants = Array.from({ length: 10 }, () =>
+      createRemoteParticipant({
+        videoStream: { isAvailable: false, renderElement: createVideoDivElement() }
+      })
+    );
+    root.setProps({ remoteParticipants });
+    expect(root.find(_ModalClone).exists()).toBe(true);
+    expect(
+      root
+        .find(GridLayout)
+        .find(VideoTile)
+        .findWhere((n) => n.prop('userId') === 'localUser')
+        .exists()
+    ).toBe(false);
+  });
+
+  test('should render all remote video tiles in the grid', () => {
+    const localParticipant = createLocalParticipant({
+      videoStream: { isAvailable: false }
+    });
+
+    const root = mountVideoGalleryWithLocalParticipant({ localParticipant });
+
+    root.setProps({ layout: 'floatingLocalVideo' });
+    const remoteParticipants = Array.from({ length: 10 }, () =>
+      createRemoteParticipant({
+        videoStream: { isAvailable: false, renderElement: createVideoDivElement() }
+      })
+    );
+    root.setProps({ remoteParticipants });
+    expect(tileCount(root)).toBe(10);
+    expect(audioTileCount(root)).toBe(10);
+    expect(videoTileCount(root)).toBe(0);
+    expect(gridTileCount(root)).toBe(10);
+    expect(gridAudioTileCount(root)).toBe(10);
+    expect(gridVideoTileCount(root)).toBe(0);
+    expect(root.find(HorizontalGallery).exists()).toBe(false);
+  });
+
+  test('should render max allowed video tiles with streams in the grid', () => {
+    const localParticipant = createLocalParticipant({
+      videoStream: { isAvailable: true, renderElement: createVideoDivElement() }
+    });
+
+    const root = mountVideoGalleryWithLocalParticipant({ localParticipant });
+
+    root.setProps({ layout: 'floatingLocalVideo' });
     const remoteParticipants = Array.from({ length: 10 }, () =>
       createRemoteParticipant({
         videoStream: { isAvailable: true, renderElement: createVideoDivElement() }
       })
     );
     root.setProps({ remoteParticipants });
-    expect(gridVideoTileCount(root)).toBe(DEFAULT_MAX_REMOTE_VIDEO_STREAMS + 1); // +1 for the local video stream
+    expect(gridVideoTileCount(root)).toBe(DEFAULT_MAX_REMOTE_VIDEO_STREAMS);
     expect(root.find(HorizontalGallery).find(VideoTile).length).toBe(2);
   });
 
@@ -228,4 +348,15 @@ const createRemoteParticipant = (attrs?: Partial<VideoGalleryRemoteParticipant>)
     },
     isScreenSharingOn: attrs?.isScreenSharingOn ?? false
   };
+};
+
+const mockVideoGalleryInternalHelpers = (): void => {
+  // Need to mock this because the HorizontalGallery uses this function. But JSDOM does not actually do any
+  // rendering so getComputedStyle(document.documentElement).fontSize will not actually have a value
+  jest.spyOn(acs_ui_common, '_convertRemToPx').mockImplementation((rem: number) => {
+    return rem * 16;
+  });
+  // Need to mock hook _useContainerWidth because the returned width is used by HorizontalGallery to decide
+  // how many tiles to show per page
+  jest.spyOn(responsive, '_useContainerWidth').mockImplementation(() => 500);
 };
