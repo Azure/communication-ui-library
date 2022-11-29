@@ -1,8 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Icon, IconButton, IStyle, mergeStyles, Persona, Stack, Text } from '@fluentui/react';
-
+import { Icon, IStyle, mergeStyles, Persona, Stack, Text } from '@fluentui/react';
+/* @conditional-compile-remove(pinned-participants) */
+import { IconButton } from '@fluentui/react';
 import { Ref } from '@fluentui/react-northstar';
 import React, { useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { useIdentifiers } from '../identifiers';
