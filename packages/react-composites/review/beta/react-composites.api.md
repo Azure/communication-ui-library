@@ -1122,6 +1122,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     UnsupportedBrowserWarning: JSX.Element;
     BrowserPermissionDeniedError: JSX.Element;
     VideoTilePinned: JSX.Element;
+    VideoTileMoreOptions: JSX.Element;
 };
 
 // @beta
