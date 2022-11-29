@@ -327,4 +327,48 @@ export interface CallCompositeStrings {
    * Label disaplayed on the lobby screen during a 1:1 outbound call.
    */
   outboundCallingNoticeString: string;
+  /**
+   * Notice to be announced by narrator when a participant joins a call
+   */
+  participantJoinedNoticeString: string;
+  /**
+   * Notice to be announced by narrator when a participant joins a call
+   */
+  twoParticipantJoinedNoticeString: string;
+  /**
+   * Notice to be announced by narrator when a participant joins a call
+   */
+  threeParticipantJoinedNoticeString: string;
+  /**
+   * Notice to be announced by narrator when a participant leaves a call
+   */
+  participantLeftNoticeString: string;
+  /**
+   * Notice to be announced by narrator when 2 participants leave a call
+   */
+  twoParticipantLeftNoticeString: string;
+  /**
+   * Notice to be announced by narrator when 3 participants leave a call
+   */
+  threeParticipantLeftNoticeString: string;
+  /**
+   * string to be used to announce a change in participant if they have no displayName
+   */
+  unnamedParticipantString: string;
+  /**
+   * string to be used to announce when more than 3 participants have joined at the same time.
+   */
+  manyParticipantsJoined: string;
+  /**
+   * string to be used to announce when more than 3 participants have left at the same time.
+   */
+  manyParticipantsLeft: string;
+  /**
+   * string to be used to announce when multiple unnamed participants have joined at the same time.
+   */
+  manyUnnamedParticipantsJoined: string;
+  /**
+   * string to be used to announce when multiple unnamed participants have left at the same time.
+   */
+  manyUnnamedParticipantsLeft: string;
 }
