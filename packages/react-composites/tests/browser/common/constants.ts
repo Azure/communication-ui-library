@@ -29,7 +29,7 @@ export const IDS = {
   holdPage: 'hold-page',
   moreButton: 'call-with-chat-composite-more-button',
   callPage: 'call-page',
-  unsupportedEnvironmentIcon: 'unsupportedEnvironmentIcon',
-  unsupportedEnvironmentLink: 'unsupportedEnvironmentLink',
+  unsupportedEnvironmentIcon: 'unsupported-environment-icon',
+  unsupportedEnvironmentLink: 'unsupported-environment-link',
   lobbyScreenTitle: 'lobbyScreenTitle'
 };

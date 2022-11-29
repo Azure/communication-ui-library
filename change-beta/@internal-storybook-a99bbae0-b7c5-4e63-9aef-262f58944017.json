@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Update internal story to have denied vs request domain permission skus",
-  "packageName": "@internal/storybook",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "none"
-}
