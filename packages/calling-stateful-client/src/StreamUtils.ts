@@ -217,13 +217,15 @@ async function createViewLocalVideo(
     return;
   }
 
+  // "Stopping" only happens if the stream was in "rendering" but `disposeView` was called.
+  // Now `createView` has been re-called when can flip the state back to "rendering".
   if (renderInfo.status === 'Stopping') {
     _logEvent(callingStatefulLogger, {
       name: EventNames.LOCAL_STREAM_STOPPING,
       level: 'warning',
-      message: 'LocalVideoStream is in the middle of stopping.'
+      message: 'LocalVideoStream was is in the middle of stopping. Resetting state to "Rendering".'
     });
-    console.warn('LocalVideoStream is in the middle of stopping');
+    internalContext.setLocalRenderInfo(callId, renderInfo.stream, 'Rendering', renderInfo.renderer);
     return;
   }
 
@@ -468,20 +470,46 @@ function disposeViewLocalVideo(context: CallContext, internalContext: InternalCa
     return;
   }
 
-  // Sets the status and also renderer. I think we need to always set renderer to undefined since in all status when
-  // cleaned up should have renderer as undefined. If the status is 'Rendered' and renderer is not defined it should
-  // be cleaned up below so we can set it to undefined here.
-  if (renderInfo.status === 'Rendering') {
+  // Nothing to dispose of or clean up -- we can safely exit early here.
+  if (renderInfo.status === 'NotRendered') {
+    _logEvent(callingStatefulLogger, {
+      name: EventNames.LOCAL_STREAM_ALREADY_DISPOSED,
+      level: 'info',
+      message: 'LocalVideoStream is already disposed.'
+    });
+    console.warn('LocalVideoStream is already disposed');
+    return;
+  }
+
+  // Status is already marked as "stopping" so we can exit early here. This is because stopping only occurs
+  // when the stream is being created in createView but hasn't been completed being created yet. The createView
+  // method will see the "stopping" status and perform the cleanup
+  if (renderInfo.status === 'Stopping') {
     _logEvent(callingStatefulLogger, {
       name: EventNames.LOCAL_STREAM_STOPPING,
       level: 'info',
-      message: 'Local stream is still rendering. Changing status to stopping.',
+      message: 'Remote stream is already stopping.',
       data: streamLogInfo
     });
-    internalContext.setLocalRenderInfo(callId, renderInfo.stream, 'Stopping', undefined);
-  } else {
-    internalContext.setLocalRenderInfo(callId, renderInfo.stream, 'NotRendered', undefined);
+    return;
   }
+
+  // If the stream is in the middle of being rendered (i.e. has state "Rendering"), we need the status as
+  // "stopping" without performing any cleanup. This will tell the `createView` method that it should stop
+  // rendering and clean up the state once the view has finished being created.
+  if (renderInfo.status === 'Rendering') {
+    _logEvent(callingStatefulLogger, {
+      name: EventNames.REMOTE_STREAM_STOPPING,
+      level: 'info',
+      message: 'Remote stream is still rendering. Changing status to stopping.',
+      data: streamLogInfo
+    });
+    internalContext.setLocalRenderInfo(callId, renderInfo.stream, 'Stopping', renderInfo.renderer);
+    return;
+  }
+
+  // Else the state must be in the "Rendered" state, so we can dispose the renderer and clean up the state.
+  internalContext.setLocalRenderInfo(callId, renderInfo.stream, 'NotRendered', undefined);
 
   if (renderInfo.renderer) {
     _logEvent(callingStatefulLogger, {
