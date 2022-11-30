@@ -25,11 +25,12 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  print-inputs:
+  workflow-info:
     runs-on: ubuntu-latest
     steps:
       - name: job summary
         run: |
+          echo "### branch: ${GITHUB_REF##*/}" >> $GITHUB_STEP_SUMMARY
           echo "### inputs" >> $GITHUB_STEP_SUMMARY
           echo "- npm-tag: ${{ inputs.npm-tag }}" >> $GITHUB_STEP_SUMMARY
           echo "- release-flavor: ${{ inputs.release-flavor }}" >> $GITHUB_STEP_SUMMARY
