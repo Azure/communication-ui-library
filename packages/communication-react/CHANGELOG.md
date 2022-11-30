@@ -13,12 +13,6 @@ This is a patch release for issue where the local video tile was not showing the
 
 - Fix: Local video not showing to local user but still broadcasts to others in the call. ([PR #2558](https://github.com/Azure/communication-ui-library/pull/2558) by 2684369+JamesBurnside@users.noreply.github.com).
 
-## [1.3.1](https://github.com/azure/communication-ui-library/tree/1.3.1)
-
-This is a patch release for issue [#2186](https://github.com/Azure/communication-ui-library/issues/2186):
-
-- Fix infinite spinner bug during screenshare. ([PR #2191](https://github.com/Azure/communication-ui-library/pull/2191) by jiangnanhello@live.com).
-
 ## [1.4.0](https://github.com/azure/communication-ui-library/tree/1.4.0)
 
 Fri, 21 Oct 2022 23:01:52 GMT
