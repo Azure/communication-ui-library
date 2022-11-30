@@ -22,7 +22,7 @@ export const UnsupportedEnvironmentDrawers: () => JSX.Element = () => {
   const [unsupportedOperatingSystemShowing, setUnsupportedOperatingSystemShowing] = useState(false);
   const onLightDismissTriggeredUnsupportedBrowser = (): void => setUnsupportedBrowserShowing(false);
   const onLightDismissTriggeredUnsupportedBrowserVersion = (): void => setUnsupportedBrowserVersionShowing(false);
-  const onLightDismissTriggeredUnsupportedOperatingSystem = (): void => setUnsupportedBrowserVersionShowing(false);
+  const onLightDismissTriggeredUnsupportedOperatingSystem = (): void => setUnsupportedOperatingSystemShowing(false);
   return (
     <Stack horizontal wrap>
       <MobilePreviewContainer>
