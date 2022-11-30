@@ -9,7 +9,6 @@ import {
   UnsupportedOperatingSystem
 } from '@internal/react-components';
 import React, { useState } from 'react';
-import {} from '../../../../../react-components/src/components/UnsupportedOperatingSystem';
 import { useLocale } from '../../../../../react-components/src/localization';
 import { MobilePreviewContainer } from '../../../MobileContainer';
 

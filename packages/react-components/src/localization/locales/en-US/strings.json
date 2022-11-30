@@ -247,7 +247,7 @@
   "UnsupportedBrowser": {
     "primaryText": "Browser not supported",
     "secondaryText": "Please join this call using a compatible browser.",
-    "moreHelpLinkText": "More help"
+    "moreHelpLinkText": "See compatibility requirements"
   },
   "UnsupportedBrowserVersion": {
     "primaryText": "Browser version not supported",
