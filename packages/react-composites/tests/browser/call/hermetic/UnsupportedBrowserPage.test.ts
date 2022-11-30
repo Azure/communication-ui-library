@@ -12,7 +12,12 @@ import { buildUrlWithMockAdapter, defaultMockCallAdapterState, test } from './fi
 test.describe('unsupportedBrowser page tests', async () => {
   test('unsupportedBrowser displays correctly without a help link', async ({ page, serverUrl }) => {
     const state = defaultMockUnsupportedBrowserPageState();
-    state.environmentInfo = setMockEnvironmentInfo(true, false, false);
+    const envConfig = {
+      platform: true,
+      browser: false,
+      version: false
+    };
+    state.environmentInfo = setMockEnvironmentInfo(envConfig);
 
     await page.goto(buildUrlWithMockAdapter(serverUrl, state));
 
@@ -23,7 +28,12 @@ test.describe('unsupportedBrowser page tests', async () => {
 
   test('unsupportedBrowser displays correctly with a help link', async ({ page, serverUrl }) => {
     const state = defaultMockUnsupportedBrowserPageState();
-    state.environmentInfo = setMockEnvironmentInfo(true, false, false);
+    const envConfig = {
+      platform: true,
+      browser: false,
+      version: false
+    };
+    state.environmentInfo = setMockEnvironmentInfo(envConfig);
 
     await page.goto(
       buildUrlWithMockAdapter(serverUrl, state, {
@@ -45,11 +55,15 @@ const defaultMockUnsupportedBrowserPageState = (): MockCallAdapterState => {
   return state;
 };
 
-const setMockEnvironmentInfo = (platform: boolean, browser: boolean, version: boolean): EnvironmentInfo => {
+const setMockEnvironmentInfo = (envConfig: {
+  platform: boolean;
+  browser: boolean;
+  version: boolean;
+}): EnvironmentInfo => {
   return {
-    isSupportedBrowser: browser,
-    isSupportedBrowserVersion: version,
-    isSupportedPlatform: platform,
+    isSupportedBrowser: envConfig.browser,
+    isSupportedBrowserVersion: envConfig.version,
+    isSupportedPlatform: envConfig.platform,
     isSupportedEnvironment: true,
     environment: {
       platform: 'test',
