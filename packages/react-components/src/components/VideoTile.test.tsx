@@ -1,7 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { initializeIcons } from '@fluentui/react';
+import { initializeIcons, registerIcons } from '@fluentui/react';
+/* @conditional-compile-remove(pinned-participants) */
+import { IconButton } from '@fluentui/react';
 import Enzyme, { mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import React from 'react';
@@ -13,6 +15,11 @@ Enzyme.configure({ adapter: new Adapter() });
 describe('VideoTile', () => {
   beforeAll(() => {
     initializeIcons();
+    registerIcons({
+      icons: {
+        videotilemoreoptions: <></>
+      }
+    });
   });
 
   test('onLongTouch should trigger callback', async () => {
@@ -27,5 +34,23 @@ describe('VideoTile', () => {
     });
     /* @conditional-compile-remove(pinned-participants) */
     expect(mockCallback).toBeCalledTimes(1);
+  });
+
+  test('VideoTile shows more button when contextualMenu is set', async () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const videoTileProps = { displayName: 'John Doe', contextualMenu: { items: [] } } as any;
+    const wrapper = mount(<VideoTile />);
+    wrapper.setProps(videoTileProps);
+    /* @conditional-compile-remove(pinned-participants) */
+    expect(wrapper.find(IconButton).length).toBe(1);
+  });
+
+  test('VideoTile does not show more button when contextualMenu is undefined', async () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const videoTileProps = { displayName: 'John Doe', contextualMenu: undefined } as any;
+    const wrapper = mount(<VideoTile />);
+    wrapper.setProps(videoTileProps);
+    /* @conditional-compile-remove(pinned-participants) */
+    expect(wrapper.find(IconButton).length).toBe(0);
   });
 });
