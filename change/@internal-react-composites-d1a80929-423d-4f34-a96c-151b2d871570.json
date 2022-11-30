@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "use dialpad to send DTMF tones ",
-  "packageName": "@internal/react-composites",
-  "email": "carolinecao@microsoft.com",
-  "dependentChangeType": "patch"
-}

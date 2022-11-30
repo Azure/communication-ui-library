@@ -152,6 +152,8 @@ export interface MessageThreadStyles extends BaseCustomStyles {
   chatItemMessageContainer?: ComponentSlotStyle;
   /** Styles for my chat message container. */
   myChatMessageContainer?: ComponentSlotStyle;
+  /** Styles for my chat message container in case of failure. */
+  failedMyChatMessageContainer?: ComponentSlotStyle;
   /** Styles for chat message container. */
   chatMessageContainer?: ComponentSlotStyle;
   /** Styles for system message container. */
@@ -359,10 +361,10 @@ const memoizeAllMessages = memoizeFnAll(
     switch (message.messageType) {
       case 'chat': {
         const myChatMessageStyle =
-          styles?.myChatMessageContainer || message.status === 'failed'
-            ? FailedMyChatMessageContainer
-            : defaultMyChatMessageContainer;
-        const chatMessageStyle = styles?.chatMessageContainer || defaultChatMessageContainer;
+          message.status === 'failed'
+            ? styles?.failedMyChatMessageContainer ?? styles?.myChatMessageContainer ?? FailedMyChatMessageContainer
+            : styles?.myChatMessageContainer ?? defaultMyChatMessageContainer;
+        const chatMessageStyle = styles?.chatMessageContainer ?? defaultChatMessageContainer;
         messageProps.messageContainerStyle = message.mine ? myChatMessageStyle : chatMessageStyle;
 
         const chatMessageComponent =
@@ -845,11 +847,15 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
 
   // Infinite scrolling + threadInitialize function
   const fetchNewMessageWhenAtTop = useCallback(async () => {
-    if (chatScrollDivRef.current && !isLoadingChatMessagesRef.current) {
+    if (!isLoadingChatMessagesRef.current) {
       if (onLoadPreviousChatMessages) {
         isLoadingChatMessagesRef.current = true;
         // Fetch message until scrollTop reach the threshold for fetching new message
-        while (!isAllChatMessagesLoadedRef.current && chatScrollDivRef.current.scrollTop <= 500) {
+        while (
+          !isAllChatMessagesLoadedRef.current &&
+          chatScrollDivRef.current &&
+          chatScrollDivRef.current.scrollTop <= 500
+        ) {
           isAllChatMessagesLoadedRef.current = await onLoadPreviousChatMessages(numberOfChatMessagesToReload);
           await delay(200);
         }
@@ -857,14 +863,6 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
       }
     }
   }, [numberOfChatMessagesToReload, onLoadPreviousChatMessages]);
-
-  const handleInfiniteScroll = useCallback((): void => {
-    if (!chatScrollDivRef.current) {
-      return;
-    }
-
-    fetchNewMessageWhenAtTop();
-  }, [fetchNewMessageWhenAtTop]);
 
   // The below 2 of useEffects are design for fixing infinite scrolling problem
   // Scrolling element will behave differently when scrollTop = 0(it sticks at the top)
@@ -907,13 +905,13 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   useEffect(() => {
     const chatScrollDiv = chatScrollDivRef.current;
     chatScrollDiv?.addEventListener('scroll', handleScrollToTheBottom);
-    chatScrollDiv?.addEventListener('scroll', handleInfiniteScroll);
+    chatScrollDiv?.addEventListener('scroll', fetchNewMessageWhenAtTop);
 
     return () => {
       chatScrollDiv?.removeEventListener('scroll', handleScrollToTheBottom);
-      chatScrollDiv?.removeEventListener('scroll', handleInfiniteScroll);
+      chatScrollDiv?.removeEventListener('scroll', fetchNewMessageWhenAtTop);
     };
-  }, [handleInfiniteScroll, handleScrollToTheBottom]);
+  }, [fetchNewMessageWhenAtTop, handleScrollToTheBottom]);
 
   /**
    * ClientHeight controls the number of messages to render. However ClientHeight will not be initialized after the

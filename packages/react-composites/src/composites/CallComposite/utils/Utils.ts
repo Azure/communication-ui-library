@@ -6,6 +6,10 @@ import { _isInCall, _isPreviewOn, _isInLobbyOrConnecting } from '@internal/calli
 import { CallControlOptions } from '../types/CallControlOptions';
 import { CallState } from '@internal/calling-stateful-client';
 import { isPhoneNumberIdentifier } from '@azure/communication-common';
+/* @conditional-compile-remove(unsupported-browser) */
+import { EnvironmentInfo } from '@azure/communication-calling';
+/* @conditional-compile-remove(unsupported-browser) */
+import { CallAdapterOptionalFeatures } from '../adapter/CallAdapter';
 
 const ACCESS_DENIED_TEAMS_MEETING_SUB_CODE = 5854;
 const REMOTE_PSTN_USER_HUNG_UP = 560000;
@@ -111,6 +115,19 @@ const getCallEndReason = (call: CallState): CallEndReasons => {
 };
 
 /**
+ * type definition for conditional-compilation
+ */
+type GetCallCompositePageFunction = ((
+  call: CallState | undefined,
+  previousCall: CallState | undefined
+) => CallCompositePage) &
+  /* @conditional-compile-remove(unsupported-browser) */ ((
+    call: CallState | undefined,
+    previousCall: CallState | undefined,
+    environmentInfo?: EnvironmentInfo,
+    features?: CallAdapterOptionalFeatures
+  ) => CallCompositePage);
+/**
  * Get the current call composite page based on the current call composite state
  *
  * @param Call - The current call state
@@ -123,14 +140,22 @@ const getCallEndReason = (call: CallState): CallEndReasons => {
  *
  * @private
  */
-export const getCallCompositePage = (
-  call: CallState | undefined,
-  previousCall: CallState | undefined
+export const getCallCompositePage: GetCallCompositePageFunction = (
+  call,
+  previousCall,
+  environmentInfo?,
+  features?
 ): CallCompositePage => {
-  // Must check for ongoing call *before* looking at any previous calls.
-  // If the composite completes one call and joins another, the previous calls
-  // will be populated, but not relevant for determining the page.
+  /* @conditional-compile-remove(unsupported-browser) */
+  if (isUnsupportedEnvironment(features, environmentInfo)) {
+    return 'unsupportedEnvironment';
+  }
+
   if (call) {
+    // Must check for ongoing call *before* looking at any previous calls.
+    // If the composite completes one call and joins another, the previous calls
+    // will be populated, but not relevant for determining the page.
+
     // `_isInLobbyOrConnecting` needs to be checked first because `_isInCall` also returns true when call is in lobby.
     if (_isInLobbyOrConnecting(call?.state)) {
       return 'lobby';
@@ -248,4 +273,45 @@ export const isDisabled = (option: boolean | { disabled: boolean } | undefined):
   }
 
   return option.disabled;
+};
+
+/* @conditional-compile-remove(call-readiness) */
+/**
+ *
+ * This function uses permission API to determine if device permission state is granted, prompt or denied
+ * @returns whether device permission state is granted, prompt or denied
+ * If permission API is not supported on this browser, do nothing and log out error
+ * @private
+ */
+export const getDevicePermissionState = (
+  setVideoState: (state: PermissionState | 'unsupported') => void,
+  setAudioState: (state: PermissionState | 'unsupported') => void
+): void => {
+  navigator.permissions
+    .query({ name: 'camera' as PermissionName })
+    .then((result) => {
+      setVideoState(result.state);
+    })
+    .catch(() => {
+      setVideoState('unsupported');
+    });
+
+  navigator.permissions
+    .query({ name: 'microphone' as PermissionName })
+    .then((result) => {
+      setAudioState(result.state);
+    })
+    .catch(() => {
+      setAudioState('unsupported');
+    });
+};
+/* @conditional-compile-remove(unsupported-browser) */
+const isUnsupportedEnvironment = (
+  features?: CallAdapterOptionalFeatures,
+  environmentInfo?: EnvironmentInfo
+): boolean => {
+  return !!(
+    features?.unsupportedEnvironment &&
+    (environmentInfo?.isSupportedBrowser === false || environmentInfo?.isSupportedBrowserVersion === false)
+  );
 };

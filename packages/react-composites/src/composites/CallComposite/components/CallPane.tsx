@@ -10,7 +10,7 @@ import {
   useTheme
 } from '@internal/react-components';
 import React, { useMemo, useState } from 'react';
-import { CallAdapter, CallControlOptions } from '../';
+import { CommonCallAdapter, CallControlOptions } from '../';
 import { CallAdapterProvider } from '../adapter/CallAdapterProvider';
 import { AvatarPersonaDataCallback } from '../../common/AvatarPersona';
 import {
@@ -44,7 +44,7 @@ import { CallSidePaneOption } from '../hooks/useSidePaneState';
  */
 /** @beta */
 export const CallPane = (props: {
-  callAdapter: CallAdapter;
+  callAdapter: CommonCallAdapter;
   onClose: () => void;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
@@ -63,7 +63,7 @@ export const CallPane = (props: {
 
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   const getStrings = () => {
-    /* @conditional-compile-remove(one-to-n-calling) */
+    /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
     return localeStrings.strings.call;
 
     return localeStrings.strings.callWithChat;
@@ -120,6 +120,7 @@ export const CallPane = (props: {
             <Stack styles={props.activePane === 'people' ? availableSpaceStyles : hiddenStyles}>
               <CallAdapterProvider adapter={props.callAdapter}>
                 <PeoplePaneContent
+                  active={props.activePane === 'people'}
                   {...props}
                   onRemoveParticipant={removeParticipantFromCall}
                   /* @conditional-compile-remove(PSTN-calls) */
@@ -146,7 +147,7 @@ export const CallPane = (props: {
         </CallAdapterProvider>
       )}
       {drawerMenuItems.length > 0 && (
-        <Stack styles={drawerContainerStyles}>
+        <Stack styles={drawerContainerStyles()}>
           <_DrawerMenu onLightDismiss={() => setDrawerMenuItems([])} items={drawerMenuItems} />
         </Stack>
       )}

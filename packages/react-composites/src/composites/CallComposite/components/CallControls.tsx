@@ -23,9 +23,9 @@ import { Microphone } from './buttons/Microphone';
 import { Participants } from './buttons/Participants';
 import { ScreenShare } from './buttons/ScreenShare';
 import { ContainerRectProps } from '../../common/ContainerRectProps';
-/* @conditional-compile-remove(one-to-n-calling) */
+/* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
 import { People } from './buttons/People';
-/* @conditional-compile-remove(one-to-n-calling) */
+/* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
 import { useLocale } from '../../localization';
 /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
 import { MoreButton } from '../../common/MoreButton';
@@ -43,9 +43,9 @@ import { isDisabled } from '../utils';
  * @private
  */
 export type CallControlsProps = {
-  /* @conditional-compile-remove(one-to-n-calling) */
+  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   peopleButtonChecked?: boolean;
-  /* @conditional-compile-remove(one-to-n-calling) */
+  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   onPeopleButtonClicked?: () => void;
   callInvitationURL?: string;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
@@ -67,10 +67,10 @@ const controlBarStyles = memoizeFunction((background: string) => ({ root: { back
 export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX.Element => {
   const options = useMemo(() => (typeof props.options === 'boolean' ? {} : props.options), [props.options]);
 
-  /* @conditional-compile-remove(one-to-n-calling) */
+  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   const localeStrings = useLocale();
 
-  /* @conditional-compile-remove(one-to-n-calling) */
+  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   const peopleButtonStrings = useMemo(
     () => ({
       label: localeStrings.strings.call.peopleButtonLabel,
@@ -94,7 +94,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
     () => ({
       dialpadModalAriaLabel: localeStrings.strings.call.dialpadModalAriaLabel,
       dialpadCloseModalButtonAriaLabel: localeStrings.strings.call.dialpadCloseModalButtonAriaLabel,
-      placeholderText: localeStrings.strings.call.dtmfDialpadPlaceHolderText
+      placeholderText: localeStrings.strings.call.dtmfDialpadPlaceholderText
     }),
     [localeStrings]
   );

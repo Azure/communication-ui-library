@@ -27,6 +27,7 @@ import { ControlBarButtonStyles } from '@internal/react-components';
 import { CreateVideoStreamViewResult } from '@internal/react-components';
 import { DeviceManagerState } from '@internal/calling-stateful-client';
 import { DtmfTone } from '@azure/communication-calling';
+import { EnvironmentInfo } from '@azure/communication-calling';
 import { FileDownloadHandler } from '@internal/react-components';
 import { FileMetadata } from '@internal/react-components';
 import { GroupCallLocator } from '@azure/communication-calling';
@@ -47,6 +48,8 @@ import { SendMessageOptions } from '@azure/communication-chat';
 import { StartCallOptions } from '@azure/communication-calling';
 import { StatefulCallClient } from '@internal/calling-stateful-client';
 import { StatefulChatClient } from '@internal/chat-stateful-client';
+import { TeamsCall } from '@azure/communication-calling';
+import { TeamsCallAgent } from '@azure/communication-calling';
 import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { Theme } from '@fluentui/react';
 import { VideoDeviceInfo } from '@azure/communication-calling';
@@ -78,6 +81,7 @@ export type AvatarPersonaData = {
     imageInitials?: string;
     initialsColor?: PersonaInitialsColor | string;
     initialsTextColor?: string;
+    showUnknownPersonaCoin?: boolean;
 };
 
 // @public
@@ -90,6 +94,13 @@ export type AzureCommunicationCallAdapterArgs = {
     credential: CommunicationTokenCredential;
     locator: CallAdapterLocator;
     alternateCallerId?: string;
+    options?: AzureCommunicationCallAdapterOptions;
+};
+
+// @beta
+export type AzureCommunicationCallAdapterOptions = {
+    roleHint?: Role;
+    features?: CallAdapterOptionalFeatures;
 };
 
 // @public
@@ -100,6 +111,7 @@ export type AzureCommunicationCallWithChatAdapterArgs = {
     credential: CommunicationTokenCredential;
     locator: CallAndChatLocator | TeamsMeetingLinkLocator;
     alternateCallerId?: string;
+    callAdapterOptions?: AzureCommunicationCallAdapterOptions;
 };
 
 // @public
@@ -131,16 +143,28 @@ export interface BaseCompositeProps<TIcons extends Record<string, JSX.Element>> 
 }
 
 // @public
-export interface CallAdapter extends AdapterState<CallAdapterState>, Disposable, CallAdapterCallManagement, CallAdapterDeviceManagement, CallAdapterSubscribers {
+export interface CallAdapter extends CommonCallAdapter {
+    joinCall(microphoneOn?: boolean): Call | undefined;
+    startCall(participants: string[], options?: StartCallOptions): Call | undefined;
+    // @beta
+    startCall(participants: CommunicationIdentifier[], options?: StartCallOptions): Call | undefined;
 }
 
 // @public
 export type CallAdapterCallEndedEvent = {
-    callId?: string;
+    callId: string;
 };
 
+// @public @deprecated
+export interface CallAdapterCallManagement extends CallAdapterCallOperations {
+    joinCall(microphoneOn?: boolean): Call | undefined;
+    startCall(participants: string[], options?: StartCallOptions): Call | undefined;
+    // @beta
+    startCall(participants: CommunicationIdentifier[], options?: StartCallOptions): Call | undefined;
+}
+
 // @public
-export interface CallAdapterCallManagement {
+export interface CallAdapterCallOperations {
     // @beta
     addParticipant(participant: PhoneNumberIdentifier, options?: AddPhoneNumberOptions): Promise<void>;
     // (undocumented)
@@ -149,7 +173,6 @@ export interface CallAdapterCallManagement {
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
     // @beta
     holdCall(): Promise<void>;
-    joinCall(microphoneOn?: boolean): Call | undefined;
     leaveCall(forEveryone?: boolean): Promise<void>;
     mute(): Promise<void>;
     removeParticipant(userId: string): Promise<void>;
@@ -159,9 +182,6 @@ export interface CallAdapterCallManagement {
     resumeCall(): Promise<void>;
     // @beta
     sendDtmfTone(dtmfTone: DtmfTone): Promise<void>;
-    startCall(participants: string[], options?: StartCallOptions): Call | undefined;
-    // @beta
-    startCall(participants: CommunicationIdentifier[], options?: StartCallOptions): Call | undefined;
     startCamera(options?: VideoStreamOptions): Promise<void>;
     startScreenShare(): Promise<void>;
     stopCamera(): Promise<void>;
@@ -181,6 +201,9 @@ export type CallAdapterClientState = {
     isTeamsCall: boolean;
     latestErrors: AdapterErrors;
     alternateCallerId?: string;
+    environmentInfo?: EnvironmentInfo;
+    features?: CallAdapterOptionalFeatures;
+    roleHint?: Role;
 };
 
 // @public
@@ -196,6 +219,11 @@ export interface CallAdapterDeviceManagement {
 
 // @public
 export type CallAdapterLocator = TeamsMeetingLinkLocator | GroupCallLocator | /* @conditional-compile-remove(rooms) */ RoomCallLocator | /* @conditional-compile-remove(teams-adhoc-call) */ /* @conditional-compile-remove(PSTN-calls) */ CallParticipantsLocator;
+
+// @beta
+export type CallAdapterOptionalFeatures = {
+    unsupportedEnvironment?: boolean;
+};
 
 // @public
 export type CallAdapterState = CallAdapterUiState & CallAdapterClientState;
@@ -300,6 +328,7 @@ export type CallCompositeOptions = {
     errorBar?: boolean;
     callControls?: boolean | CallControlOptions;
     devicePermissions?: DevicePermissionRestrictions;
+    callReadinessOptedIn?: boolean;
     onPermissionsTroubleshootingClick?: (permissionsState: {
         camera: PermissionState;
         microphone: PermissionState;
@@ -313,11 +342,10 @@ export type CallCompositePage = 'accessDeniedTeamsMeeting' | 'call' | 'configura
 
 // @public
 export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcons> {
-    adapter: CallAdapter;
+    adapter: CommonCallAdapter;
     callInvitationUrl?: string;
     formFactor?: 'desktop' | 'mobile';
     options?: CallCompositeOptions;
-    role?: Role;
 }
 
 // @public
@@ -351,7 +379,7 @@ export interface CallCompositeStrings {
     dialpadModalTitle: string;
     dialpadStartCallButtonLabel: string;
     dismissSidePaneButtonLabel?: string;
-    dtmfDialpadPlaceHolderText: string;
+    dtmfDialpadPlaceholderText: string;
     failedToJoinCallDueToNoNetworkMoreDetails?: string;
     failedToJoinCallDueToNoNetworkTitle: string;
     failedToJoinTeamsMeetingReasonAccessDeniedMoreDetails?: string;
@@ -364,6 +392,10 @@ export interface CallCompositeStrings {
     lobbyScreenConnectingToCallTitle: string;
     lobbyScreenWaitingToBeAdmittedMoreDetails?: string;
     lobbyScreenWaitingToBeAdmittedTitle: string;
+    manyParticipantsJoined: string;
+    manyParticipantsLeft: string;
+    manyUnnamedParticipantsJoined: string;
+    manyUnnamedParticipantsLeft: string;
     microphonePermissionDenied: string;
     microphoneToggleInLobbyNotAllowed: string;
     moreButtonCallingLabel: string;
@@ -373,6 +405,11 @@ export interface CallCompositeStrings {
     openDialpadButtonLabel: string;
     openDtmfDialpadLabel: string;
     outboundCallingNoticeString: string;
+<<<<<<< HEAD
+=======
+    participantJoinedNoticeString: string;
+    participantLeftNoticeString: string;
+>>>>>>> fb0f5f95f6f3f6324ce07ec61906c8ba6813e3a9
     peopleButtonLabel: string;
     peopleButtonTooltipClose: string;
     peopleButtonTooltipOpen: string;
@@ -394,6 +431,11 @@ export interface CallCompositeStrings {
     roomNotFoundTitle: string;
     soundLabel: string;
     startCallButtonLabel: string;
+    threeParticipantJoinedNoticeString: string;
+    threeParticipantLeftNoticeString: string;
+    twoParticipantJoinedNoticeString: string;
+    twoParticipantLeftNoticeString: string;
+    unnamedParticipantString: string;
 }
 
 // @public
@@ -593,6 +635,7 @@ export interface CallWithChatClientState {
     chat?: ChatThreadClientState;
     devices: DeviceManagerState;
     displayName: string | undefined;
+    environmentInfo?: EnvironmentInfo;
     isTeamsCall: boolean;
     latestCallErrors: AdapterErrors;
     latestChatErrors: AdapterErrors;
@@ -683,6 +726,7 @@ export type CallWithChatCompositeOptions = {
         microphone: PermissionState;
     }) => void;
     onNetworkingTroubleShootingClick?: () => void;
+    callReadinessOptedIn?: boolean;
 };
 
 // @public
@@ -710,7 +754,7 @@ export interface CallWithChatCompositeStrings {
     dialpadModalTitle: string;
     dialpadStartCallButtonLabel: string;
     dismissSidePaneButtonLabel?: string;
-    dtmfDialpadPlaceHolderText: string;
+    dtmfDialpadPlaceholderText: string;
     moreDrawerAudioDeviceMenuTitle?: string;
     moreDrawerButtonLabel: string;
     moreDrawerButtonTooltip: string;
@@ -858,6 +902,14 @@ export interface ChatCompositeStrings {
 }
 
 // @public
+export interface CommonCallAdapter extends AdapterState<CallAdapterState>, Disposable, CallAdapterCallOperations, CallAdapterDeviceManagement, CallAdapterSubscribers {
+    joinCall(microphoneOn?: boolean): void;
+    startCall(participants: string[], options?: StartCallOptions): void;
+    // @beta
+    startCall(participants: CommunicationIdentifier[], options?: StartCallOptions): void;
+}
+
+// @public
 export const COMPOSITE_LOCALE_DE_DE: CompositeLocale;
 
 // @public
@@ -919,13 +971,13 @@ export interface CompositeStrings {
 }
 
 // @public
-export const createAzureCommunicationCallAdapter: ({ userId, displayName, credential, locator, alternateCallerId }: AzureCommunicationCallAdapterArgs) => Promise<CallAdapter>;
+export const createAzureCommunicationCallAdapter: ({ userId, displayName, credential, locator, alternateCallerId, options }: AzureCommunicationCallAdapterArgs) => Promise<CallAdapter>;
 
 // @public
-export const createAzureCommunicationCallAdapterFromClient: (callClient: StatefulCallClient, callAgent: CallAgent, locator: CallAdapterLocator) => Promise<CallAdapter>;
+export const createAzureCommunicationCallAdapterFromClient: (callClient: StatefulCallClient, callAgent: CallAgent, locator: CallAdapterLocator, options?: AzureCommunicationCallAdapterOptions) => Promise<CallAdapter>;
 
 // @public
-export const createAzureCommunicationCallWithChatAdapter: ({ userId, displayName, credential, endpoint, locator, alternateCallerId }: AzureCommunicationCallWithChatAdapterArgs) => Promise<CallWithChatAdapter>;
+export const createAzureCommunicationCallWithChatAdapter: ({ userId, displayName, credential, endpoint, locator, alternateCallerId, callAdapterOptions }: AzureCommunicationCallWithChatAdapterArgs) => Promise<CallWithChatAdapter>;
 
 // @internal
 export const _createAzureCommunicationCallWithChatAdapterFromAdapters: (callAdapter: CallAdapter, chatAdapter: ChatAdapter) => CallWithChatAdapter;
@@ -938,6 +990,12 @@ export const createAzureCommunicationChatAdapter: ({ endpoint: endpointUrl, user
 
 // @public
 export const createAzureCommunicationChatAdapterFromClient: (chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient) => Promise<ChatAdapter>;
+
+// @beta (undocumented)
+export const createAzureCommunicationTeamsCallAdapter: ({ userId, credential, locator, alternateCallerId }: AzureCommunicationCallAdapterArgs) => Promise<TeamsCallAdapter>;
+
+// @beta
+export const createAzureCommunicationTeamsCallAdapterFromClient: (callClient: StatefulCallClient, callAgent: TeamsCallAgent, locator: CallAdapterLocator) => Promise<TeamsCallAdapter>;
 
 // @beta
 export type CustomCallControlButtonCallback = (args: CustomCallControlButtonCallbackArgs) => CustomCallControlButtonProps;
@@ -1062,12 +1120,16 @@ export const DEFAULT_COMPOSITE_ICONS: {
     HoldCallContextualMenuItem: JSX.Element;
     HoldCallButton: JSX.Element;
     ResumeCall: JSX.Element;
-    BackSpace: JSX.Element;
+    DialpadBackspace: JSX.Element;
     DomainPermissionsSparkle: JSX.Element;
     DomainPermissionCamera: JSX.Element;
     DomainPermissionMic: JSX.Element;
-    UnsupportedBrowserWarning: JSX.Element;
+    DomainPermissionCameraDenied: JSX.Element;
+    DomainPermissionMicDenied: JSX.Element;
+    UnsupportedEnvironmentWarning: JSX.Element;
     BrowserPermissionDeniedError: JSX.Element;
+    VideoTilePinned: JSX.Element;
+    VideoTileMoreOptions: JSX.Element;
 };
 
 // @beta
@@ -1209,6 +1271,13 @@ export type ParticipantsRemovedListener = (event: {
     removedBy: ChatParticipant;
 }) => void;
 
+// @beta
+export interface TeamsCallAdapter extends CommonCallAdapter {
+    joinCall(microphoneOn?: boolean): TeamsCall | undefined;
+    startCall(participants: string[], options?: StartCallOptions): TeamsCall | undefined;
+    startCall(participants: CommunicationIdentifier[], options?: StartCallOptions): TeamsCall | undefined;
+}
+
 // @public
 export type TopicChangedListener = (event: {
     topic: string;
@@ -1222,6 +1291,9 @@ export const useAzureCommunicationCallWithChatAdapter: (args: Partial<AzureCommu
 
 // @public
 export const useAzureCommunicationChatAdapter: (args: Partial<AzureCommunicationChatAdapterArgs>, afterCreate?: ((adapter: ChatAdapter) => Promise<ChatAdapter>) | undefined, beforeDispose?: ((adapter: ChatAdapter) => Promise<void>) | undefined) => ChatAdapter | undefined;
+
+// @beta
+export const useAzureCommunicationTeamsCallAdapter: (args: Partial<AzureCommunicationCallAdapterArgs>, afterCreate?: ((adapter: TeamsCallAdapter) => Promise<TeamsCallAdapter>) | undefined, beforeDispose?: ((adapter: TeamsCallAdapter) => Promise<void>) | undefined) => TeamsCallAdapter | undefined;
 
 // @internal
 export const _useCompositeLocale: () => CompositeLocale;

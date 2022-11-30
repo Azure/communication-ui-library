@@ -3,6 +3,8 @@
 
 import { IStackStyles, IStyle, mergeStyles } from '@fluentui/react';
 
+const DEFAULT_Z_INDEX = 1;
+
 const mainScreenContainerStyle: IStyle = {
   height: '100%',
   width: '100%'
@@ -26,8 +28,12 @@ export const mainScreenContainerStyleMobile = mergeStyles({
   minHeight: '13rem' // max height of min-height of composite pages (Configuration page & Call page)
 });
 
-/** @private */
-export const drawerContainerStyles: IStackStyles = {
+/**
+ * @private
+ * Drawer styles to be used to house the _DrawerComponent on top of other content on the screen.
+ * @param zIndex: this defaults to DEFAULT_Z_INDEX if unset
+ */
+export const drawerContainerStyles = (zIndex: number = DEFAULT_Z_INDEX): IStackStyles => ({
   root: {
     position: 'absolute',
     top: 0,
@@ -36,6 +42,6 @@ export const drawerContainerStyles: IStackStyles = {
     height: '100%',
     // Any zIndex > 0 will work because this is the only absolutely
     // positioned element in the container.
-    zIndex: 1
+    zIndex: zIndex
   }
-};
+});

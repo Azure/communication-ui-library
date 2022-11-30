@@ -5,9 +5,12 @@
 ```ts
 
 import { AudioDeviceInfo } from '@azure/communication-calling';
+import { Call } from '@azure/communication-calling';
 import { CallAgent } from '@azure/communication-calling';
+import { CallAgentCommon as CallAgentCommon_2 } from '@azure/communication-calling';
 import { CallClient } from '@azure/communication-calling';
 import { CallClientOptions } from '@azure/communication-calling';
+import { CallCommon as CallCommon_2 } from '@azure/communication-calling';
 import { CallDirection } from '@azure/communication-calling';
 import { CallEndReason } from '@azure/communication-calling';
 import { CallerInfo } from '@azure/communication-calling';
@@ -20,18 +23,26 @@ import { CreateViewOptions } from '@azure/communication-calling';
 import { DeviceAccess } from '@azure/communication-calling';
 import { DeviceManager } from '@azure/communication-calling';
 import { DominantSpeakersInfo } from '@azure/communication-calling';
+import { EnvironmentInfo } from '@azure/communication-calling';
 import { IncomingCall } from '@azure/communication-calling';
+import { IncomingCallCommon as IncomingCallCommon_2 } from '@azure/communication-calling';
 import { LatestMediaDiagnostics } from '@azure/communication-calling';
 import { LatestNetworkDiagnostics } from '@azure/communication-calling';
 import { MediaStreamType } from '@azure/communication-calling';
 import { MicrosoftTeamsUserKind } from '@azure/communication-common';
+import { ParticipantRole } from '@azure/communication-calling';
 import { PhoneNumberKind } from '@azure/communication-common';
 import { RemoteParticipantState as RemoteParticipantState_2 } from '@azure/communication-calling';
 import { ScalingMode } from '@azure/communication-calling';
+import { TeamsCall as TeamsCall_2 } from '@azure/communication-calling';
+import { TeamsCallAgent as TeamsCallAgent_2 } from '@azure/communication-calling';
 import { UnknownIdentifierKind } from '@azure/communication-common';
 import { VideoDeviceInfo } from '@azure/communication-calling';
 import { VideoStreamRenderer } from '@azure/communication-calling';
 import { VideoStreamRendererView } from '@azure/communication-calling';
+
+// @public
+export type CallAgentCommon = CallAgent | /* @conditional-compile-remove(teams-identity-support) */ CallAgentCommon_2;
 
 // @public
 export interface CallAgentState {
@@ -49,6 +60,7 @@ export interface CallClientState {
         [key: string]: CallState;
     };
     deviceManager: DeviceManagerState;
+    environmentInfo?: EnvironmentInfo;
     incomingCalls: {
         [key: string]: IncomingCallState;
     };
@@ -58,6 +70,9 @@ export interface CallClientState {
     latestErrors: CallErrors;
     userId: CommunicationIdentifierKind;
 }
+
+// @public
+export type CallCommon = Call | /* @conditional-compile-remove(teams-identity-support) */ CallCommon_2;
 
 // @public
 export class CallError extends Error {
@@ -73,7 +88,7 @@ export type CallErrors = {
 };
 
 // @public
-export type CallErrorTarget = 'Call.addParticipant' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.dispose' | 'Call.feature' | 'Call.hangUp' | 'Call.hold' | 'Call.mute' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.muteIncomingAudio' | 'Call.off' | 'Call.on' | 'Call.removeParticipant' | 'Call.resume' | 'Call.sendDtmf' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.startAudio' | 'Call.startScreenSharing' | 'Call.startVideo' | 'Call.stopScreenSharing' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.stopAudio' | 'Call.stopVideo' | 'Call.unmute' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.unmuteIncomingAudio' | 'CallAgent.dispose' | 'CallAgent.feature' | 'CallAgent.join' | 'CallAgent.off' | 'CallAgent.on' | 'CallAgent.startCall' | 'CallClient.createCallAgent' | /* @conditional-compile-remove(calling-beta-sdk) */ 'CallClient.createTeamsCallAgent' | 'CallClient.feature' | 'CallClient.getDeviceManager' | /* @conditional-compile-remove(calling-beta-sdk) */ 'CallClient.getEnvironmentInfo' | 'DeviceManager.askDevicePermission' | 'DeviceManager.getCameras' | 'DeviceManager.getMicrophones' | 'DeviceManager.getSpeakers' | 'DeviceManager.off' | 'DeviceManager.on' | 'DeviceManager.selectMicrophone' | 'DeviceManager.selectSpeaker' | 'IncomingCall.accept' | 'IncomingCall.reject';
+export type CallErrorTarget = 'Call.addParticipant' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.dispose' | 'Call.feature' | 'Call.hangUp' | 'Call.hold' | 'Call.mute' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.muteIncomingAudio' | 'Call.off' | 'Call.on' | 'Call.removeParticipant' | 'Call.resume' | 'Call.sendDtmf' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.startAudio' | 'Call.startScreenSharing' | 'Call.startVideo' | 'Call.stopScreenSharing' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.stopAudio' | 'Call.stopVideo' | 'Call.unmute' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.unmuteIncomingAudio' | 'CallAgent.dispose' | 'CallAgent.feature' | 'CallAgent.join' | 'CallAgent.off' | 'CallAgent.on' | 'CallAgent.startCall' | 'CallClient.createCallAgent' | /* @conditional-compile-remove(calling-beta-sdk) */ /* @conditional-compile-remove(teams-identity-support) */ 'CallClient.createTeamsCallAgent' | 'CallClient.feature' | 'CallClient.getDeviceManager' | /* @conditional-compile-remove(calling-beta-sdk) */ 'CallClient.getEnvironmentInfo' | 'DeviceManager.askDevicePermission' | 'DeviceManager.getCameras' | 'DeviceManager.getMicrophones' | 'DeviceManager.getSpeakers' | 'DeviceManager.off' | 'DeviceManager.on' | 'DeviceManager.selectMicrophone' | 'DeviceManager.selectSpeaker' | 'IncomingCall.accept' | 'IncomingCall.reject' | /* @conditional-compile-remove(calling-beta-sdk) */ /* @conditional-compile-remove(teams-identity-support) */ 'TeamsCall.addParticipant';
 
 // @public
 export interface CallState {
@@ -94,10 +109,12 @@ export interface CallState {
     remoteParticipantsEnded: {
         [keys: string]: RemoteParticipantState;
     };
+    role?: ParticipantRole;
     screenShareRemoteParticipant?: string;
     startTime: Date;
     state: CallState_2;
     transcription: TranscriptionCallFeature;
+    type: 'Teams' | 'ACS';
 }
 
 // @public
@@ -109,10 +126,8 @@ export type CreateViewResult = {
     view: VideoStreamRendererView;
 };
 
-// @public
-export type DeclarativeCallAgent = CallAgent & /* @conditional-compile-remove(one-to-n-calling) */ {
-    incomingCalls: ReadonlyArray<DeclarativeIncomingCall>;
-};
+// @beta
+export type DeclarativeCallAgent = CallAgent & IncomingCallManagement;
 
 // @beta
 export type DeclarativeIncomingCall = IncomingCall;
@@ -137,6 +152,14 @@ export interface DiagnosticsCallFeatureState {
 }
 
 // @public
+export type IncomingCallCommon = IncomingCall | /* @conditional-compile-remove(teams-identity-support) */ IncomingCallCommon_2;
+
+// @beta
+export type IncomingCallManagement = {
+    incomingCalls: ReadonlyArray<DeclarativeIncomingCall>;
+};
+
+// @public
 export interface IncomingCallState {
     callEndReason?: CallEndReason;
     callerInfo: CallerInfo;
@@ -144,6 +167,18 @@ export interface IncomingCallState {
     id: string;
     startTime: Date;
 }
+
+// @internal (undocumented)
+export const _isACSCall: (call: CallCommon) => call is Call;
+
+// @internal (undocumented)
+export const _isACSCallAgent: (callAgent: CallAgentCommon) => callAgent is CallAgent;
+
+// @internal (undocumented)
+export const _isTeamsCall: (call: CallCommon) => call is TeamsCall_2;
+
+// @internal (undocumented)
+export const _isTeamsCallAgent: (callAgent: CallAgentCommon) => callAgent is TeamsCallAgent_2;
 
 // @public
 export interface LocalVideoStreamState {
@@ -176,6 +211,7 @@ export interface RemoteParticipantState {
     identifier: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind | UnknownIdentifierKind;
     isMuted: boolean;
     isSpeaking: boolean;
+    role?: ParticipantRole;
     state: RemoteParticipantState_2;
     videoStreams: {
         [key: number]: RemoteVideoStreamState;
@@ -218,6 +254,12 @@ export type StatefulCallClientOptions = {
 export interface StatefulDeviceManager extends DeviceManager {
     selectCamera: (VideoDeviceInfo: any) => void;
 }
+
+// @beta (undocumented)
+export type TeamsCall = never | /* @conditional-compile-remove(teams-identity-support) */ TeamsCall_2;
+
+// @beta (undocumented)
+export type TeamsCallAgent = never | /* @conditional-compile-remove(teams-identity-support) */ TeamsCallAgent_2;
 
 // @public
 export interface TranscriptionCallFeature {

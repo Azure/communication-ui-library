@@ -73,7 +73,10 @@ class ProxyDeviceManager implements ProxyHandler<DeviceManager> {
   };
 
   private videoDevicesUpdated = async (): Promise<void> => {
-    this._context.setDeviceManagerCameras(dedupeById(await this._deviceManager.getCameras()));
+    // Device Manager always has a camera with '' name if there are no real camera devices available.
+    // We don't want to show that in the UI.
+    const realCameras = (await this._deviceManager.getCameras()).filter((c) => !!c.name);
+    this._context.setDeviceManagerCameras(dedupeById(realCameras));
   };
 
   private audioDevicesUpdated = async (): Promise<void> => {
@@ -94,8 +97,11 @@ class ProxyDeviceManager implements ProxyHandler<DeviceManager> {
       case 'getCameras': {
         return this._context.withAsyncErrorTeedToState((): Promise<VideoDeviceInfo[]> => {
           return target.getCameras().then((cameras: VideoDeviceInfo[]) => {
-            this._context.setDeviceManagerCameras(dedupeById(cameras));
-            return cameras;
+            // Device Manager always has a camera with '' name if there are no real camera devices available.
+            // We don't want to show that in the UI.
+            const realCameras = cameras.filter((c) => !!c.name);
+            this._context.setDeviceManagerCameras(dedupeById(realCameras));
+            return realCameras;
           });
         }, 'DeviceManager.getCameras');
       }

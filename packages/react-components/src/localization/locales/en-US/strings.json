@@ -5,7 +5,7 @@
     "removeButtonLabel": "Remove",
     "sharingIconLabel": "Sharing",
     "mutedIconLabel": "Muted",
-    "displayNamePlaceholder": "Unnamed Participant",
+    "displayNamePlaceholder": "Unnamed participant",
     "participantStateConnecting": "Calling...",
     "participantStateRinging": "Calling...",
     "participantStateHold": "On hold"
@@ -167,7 +167,7 @@
     "localVideoCameraSwitcherLabel": "Switch camera",
     "localVideoMovementLabel": "Movable Local Video Tile",
     "localVideoSelectedDescription": "{cameraName} selected",
-    "displayNamePlaceholder": "Unnamed Participant"
+    "displayNamePlaceholder": "Unnamed participant"
   },
   "dialpad": {
     "placeholderText": "Enter phone number",
@@ -184,16 +184,75 @@
     "participantStateRinging": "Calling...",
     "participantStateHold": "On hold"
   },
-  "DomainPermissions": {
+  "CameraAndMicrophoneDomainPermissionsRequest": {
     "primaryText": "Allow {appName} to use your camera and microphone",
     "secondaryText": "This is so participants can see and hear you.",
     "linkText": "Need help? Get troubleshooting help",
-    "primaryButtonText": "Allow Access"
+    "primaryButtonText": "Continue without camera and microphone",
+    "ariaLabel": "Allow camera and microphone access"
+  },
+  "CameraDomainPermissionsRequest": {
+    "primaryText": "Allow {appName} to use your camera",
+    "secondaryText": "This is so participants can see you.",
+    "linkText": "Need help? Get troubleshooting help",
+    "primaryButtonText": "Continue without camera",
+    "ariaLabel": "Allow camera access"
+  },
+  "MicrophoneDomainPermissionsRequest": {
+    "primaryText": "Allow {appName} to use your microphone",
+    "secondaryText": "This is so participants can hear you.",
+    "linkText": "Need help? Get troubleshooting help",
+    "primaryButtonText": "Continue without microphone",
+    "ariaLabel": "Allow microphone access"
+  },
+  "CameraAndMicrophoneDomainPermissionsCheck": {
+    "primaryText": "Checking for camera and microphone access",
+    "secondaryText": "Allow access if prompted. This is so participants can see and hear you.",
+    "linkText": "Need help? Get troubleshooting help",
+    "primaryButtonText": "Continue without camera and microphone",
+    "ariaLabel": "Checking for camera and microphone access. Allow access if prompted."
+  },
+  "CameraDomainPermissionsCheck": {
+    "primaryText": "Checking for camera access",
+    "secondaryText": "Allow access if prompted. This is so participants can see you.",
+    "linkText": "Need help? Get troubleshooting help",
+    "primaryButtonText": "Continue without camera",
+    "ariaLabel": "Checking for camera access. Allow access if prompted."
+  },
+  "MicrophoneDomainPermissionsCheck": {
+    "primaryText": "Checking for microphone access",
+    "secondaryText": "Allow access if prompted. This is so participants can hear you.",
+    "linkText": "Need help? Get troubleshooting help",
+    "primaryButtonText": "Continue without microphone",
+    "ariaLabel": "Checking for microphone access. Allow access if prompted."
+  },
+  "CameraAndMicrophoneDomainPermissionsDenied": {
+    "primaryText": "Unable to access camera and microphone",
+    "secondaryText": "Click the lock icon in the address bar to grant microphone permissions to this webpage. A page refresh may be required.",
+    "primaryButtonText": "Continue without camera and microphone",
+    "linkText": "Need help? Get troubleshooting help"
+  },
+  "CameraDomainPermissionsDenied": {
+    "primaryText": "Unable to access camera",
+    "secondaryText": "Click the lock icon in the address bar to grant camera permissions to this webpage. A page refresh may be required.",
+    "primaryButtonText": "Continue without camera",
+    "linkText": "Need help? Get troubleshooting help"
+  },
+  "MicrophoneDomainPermissionsDenied": {
+    "primaryText": "Unable to access microphone",
+    "secondaryText": "Click the lock icon in the address bar to grant microphone permissions to this webpage. A page refresh may be required.",
+    "primaryButtonText": "Continue without microphone",
+    "linkText": "Need help? Get troubleshooting help"
   },
   "UnsupportedBrowser": {
     "primaryText": "Browser not supported",
     "secondaryText": "Please join this call using a compatible browser.",
-    "moreHelpLink": "Need help? Get troubleshooting help"
+    "moreHelpText": "More help"
+  },
+  "UnsupportedBrowserVersion": {
+    "primaryText": "Browser version not supported",
+    "secondaryText": "Please update your browser and then try joining the call again.",
+    "moreHelpText": "See compatibility requirements"
   },
   "BrowserPermissionDenied": {
     "primaryText": "Can't use your camera or microphone",

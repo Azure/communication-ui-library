@@ -59,6 +59,8 @@ export function defaultMockCallAdapterState(participants?: MockRemoteParticipant
     page: 'call',
     call: {
       id: 'call1',
+      /* @conditional-compile-remove(teams-identity-support) */
+      type: 'ACS',
       callerInfo: { displayName: 'caller', identifier: { kind: 'communicationUser', communicationUserId: '1' } },
       direction: 'Incoming',
       transcription: { isTranscriptionActive: false },
@@ -100,7 +102,7 @@ export function defaultMockCallAdapterState(participants?: MockRemoteParticipant
  *
  * Use this to add participants to state created via {@link defaultCallAdapterState}.
  */
-export function defaultMockRemoteParticipant(displayName: string): MockRemoteParticipantState {
+export function defaultMockRemoteParticipant(displayName?: string): MockRemoteParticipantState {
   return {
     identifier: { kind: 'communicationUser', communicationUserId: `8:acs:${displayName}-id` },
     state: 'Connected',

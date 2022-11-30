@@ -4,7 +4,7 @@ import { Link } from '@storybook/components/dist/cjs/tooltip/TooltipLinkList';
 import { useGlobals } from '@storybook/api';
 import addons from '@storybook/addons';
 import { FORCE_RE_RENDER } from '@storybook/core-events';
-import { TextField, DefaultButton, Stack, Panel, initializeIcons } from '@fluentui/react';
+import { TextField, DefaultButton, Stack, Panel} from '@fluentui/react';
 import { THEMES } from '../stories/themes';
 
 export const ThemeToolTipWithPanel = (props: { active: boolean }): JSX.Element => {
@@ -12,8 +12,6 @@ export const ThemeToolTipWithPanel = (props: { active: boolean }): JSX.Element =
   const [textValue, setTextValue] = useState('');
   const [showPanel, setShowPanel] = useState(false);
   const [error, setError] = useState('');
-
-  initializeIcons();
 
   const validateThenUpdate = () => {
     if (!textValue.trim()) {

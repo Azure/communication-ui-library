@@ -5,6 +5,7 @@
 ```ts
 
 import { AudioDeviceInfo } from '@azure/communication-calling';
+import { Call } from '@azure/communication-calling';
 import { CallAgent } from '@azure/communication-calling';
 import { CallClient } from '@azure/communication-calling';
 import { CallClientOptions } from '@azure/communication-calling';
@@ -20,6 +21,7 @@ import { CreateViewOptions } from '@azure/communication-calling';
 import { DeviceAccess } from '@azure/communication-calling';
 import { DeviceManager } from '@azure/communication-calling';
 import { DominantSpeakersInfo } from '@azure/communication-calling';
+import { IncomingCall } from '@azure/communication-calling';
 import { LatestMediaDiagnostics } from '@azure/communication-calling';
 import { LatestNetworkDiagnostics } from '@azure/communication-calling';
 import { MediaStreamType } from '@azure/communication-calling';
@@ -31,6 +33,9 @@ import { UnknownIdentifierKind } from '@azure/communication-common';
 import { VideoDeviceInfo } from '@azure/communication-calling';
 import { VideoStreamRenderer } from '@azure/communication-calling';
 import { VideoStreamRendererView } from '@azure/communication-calling';
+
+// @public
+export type CallAgentCommon = CallAgent;
 
 // @public
 export interface CallAgentState {
@@ -56,6 +61,9 @@ export interface CallClientState {
     latestErrors: CallErrors;
     userId: CommunicationIdentifierKind;
 }
+
+// @public
+export type CallCommon = Call;
 
 // @public
 export class CallError extends Error {
@@ -108,9 +116,6 @@ export type CreateViewResult = {
 };
 
 // @public
-export type DeclarativeCallAgent = CallAgent;
-
-// @public
 export type DeviceManagerState = {
     isSpeakerSelectionAvailable: boolean;
     selectedMicrophone?: AudioDeviceInfo;
@@ -130,6 +135,9 @@ export interface DiagnosticsCallFeatureState {
 }
 
 // @public
+export type IncomingCallCommon = IncomingCall;
+
+// @public
 export interface IncomingCallState {
     callEndReason?: CallEndReason;
     callerInfo: CallerInfo;
@@ -137,6 +145,18 @@ export interface IncomingCallState {
     id: string;
     startTime: Date;
 }
+
+// @internal (undocumented)
+export const _isACSCall: (call: CallCommon) => call is Call;
+
+// @internal (undocumented)
+export const _isACSCallAgent: (callAgent: CallAgentCommon) => callAgent is CallAgent;
+
+// @internal (undocumented)
+export const _isTeamsCall: (call: CallCommon) => call is never;
+
+// @internal (undocumented)
+export const _isTeamsCallAgent: (callAgent: CallAgentCommon) => callAgent is never;
 
 // @public
 export interface LocalVideoStreamState {
@@ -185,7 +205,6 @@ export interface RemoteVideoStreamState {
 
 // @public
 export interface StatefulCallClient extends CallClient {
-    createCallAgent(...args: Parameters<CallClient['createCallAgent']>): Promise<DeclarativeCallAgent>;
     createView(callId: string | undefined, participantId: CommunicationIdentifier | undefined, stream: LocalVideoStreamState | RemoteVideoStreamState, options?: CreateViewOptions): Promise<CreateViewResult | undefined>;
     disposeView(callId: string | undefined, participantId: CommunicationIdentifier | undefined, stream: LocalVideoStreamState | RemoteVideoStreamState): void;
     getState(): CallClientState;
@@ -208,6 +227,12 @@ export type StatefulCallClientOptions = {
 export interface StatefulDeviceManager extends DeviceManager {
     selectCamera: (VideoDeviceInfo: any) => void;
 }
+
+// @beta (undocumented)
+export type TeamsCall = never;
+
+// @beta (undocumented)
+export type TeamsCallAgent = never;
 
 // @public
 export interface TranscriptionCallFeature {

@@ -119,23 +119,29 @@ export interface BaseCompositeProps<TIcons extends Record<string, JSX.Element>> 
 }
 
 // @public
-export interface CallAdapter extends AdapterState<CallAdapterState>, Disposable, CallAdapterCallManagement, CallAdapterDeviceManagement, CallAdapterSubscribers {
+export interface CallAdapter extends CommonCallAdapter {
+    joinCall(microphoneOn?: boolean): Call | undefined;
+    startCall(participants: string[], options?: StartCallOptions): Call | undefined;
 }
 
 // @public
 export type CallAdapterCallEndedEvent = {
-    callId?: string;
+    callId: string;
 };
 
+// @public @deprecated
+export interface CallAdapterCallManagement extends CallAdapterCallOperations {
+    joinCall(microphoneOn?: boolean): Call | undefined;
+    startCall(participants: string[], options?: StartCallOptions): Call | undefined;
+}
+
 // @public
-export interface CallAdapterCallManagement {
+export interface CallAdapterCallOperations {
     createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void | CreateVideoStreamViewResult>;
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
-    joinCall(microphoneOn?: boolean): Call | undefined;
     leaveCall(forEveryone?: boolean): Promise<void>;
     mute(): Promise<void>;
     removeParticipant(userId: string): Promise<void>;
-    startCall(participants: string[], options?: StartCallOptions): Call | undefined;
     startCamera(options?: VideoStreamOptions): Promise<void>;
     startScreenShare(): Promise<void>;
     stopCamera(): Promise<void>;
@@ -273,7 +279,7 @@ export type CallCompositePage = 'accessDeniedTeamsMeeting' | 'call' | 'configura
 
 // @public
 export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcons> {
-    adapter: CallAdapter;
+    adapter: CommonCallAdapter;
     callInvitationUrl?: string;
     formFactor?: 'desktop' | 'mobile';
     options?: CallCompositeOptions;
@@ -312,17 +318,28 @@ export interface CallCompositeStrings {
     lobbyScreenConnectingToCallTitle: string;
     lobbyScreenWaitingToBeAdmittedMoreDetails?: string;
     lobbyScreenWaitingToBeAdmittedTitle: string;
+    manyParticipantsJoined: string;
+    manyParticipantsLeft: string;
+    manyUnnamedParticipantsJoined: string;
+    manyUnnamedParticipantsLeft: string;
     microphonePermissionDenied: string;
     microphoneToggleInLobbyNotAllowed: string;
     mutedMessage: string;
     networkReconnectMoreDetails: string;
     networkReconnectTitle: string;
+    participantJoinedNoticeString: string;
+    participantLeftNoticeString: string;
     privacyPolicy: string;
     rejoinCallButtonLabel: string;
     removedFromCallMoreDetails?: string;
     removedFromCallTitle: string;
     soundLabel: string;
     startCallButtonLabel: string;
+    threeParticipantJoinedNoticeString: string;
+    threeParticipantLeftNoticeString: string;
+    twoParticipantJoinedNoticeString: string;
+    twoParticipantLeftNoticeString: string;
+    unnamedParticipantString: string;
 }
 
 // @public
@@ -576,7 +593,6 @@ export interface CallWithChatCompositeStrings {
     copyInviteLinkActionedAriaLabel: string;
     copyInviteLinkButtonLabel: string;
     dismissSidePaneButtonLabel?: string;
-    dtmfDialpadPlaceHolderText: string;
     moreDrawerAudioDeviceMenuTitle?: string;
     moreDrawerButtonLabel: string;
     moreDrawerButtonTooltip: string;
@@ -696,6 +712,12 @@ export interface ChatCompositeProps extends BaseCompositeProps<ChatCompositeIcon
 // @public
 export interface ChatCompositeStrings {
     chatListHeader: string;
+}
+
+// @public
+export interface CommonCallAdapter extends AdapterState<CallAdapterState>, Disposable, CallAdapterCallOperations, CallAdapterDeviceManagement, CallAdapterSubscribers {
+    joinCall(microphoneOn?: boolean): void;
+    startCall(participants: string[], options?: StartCallOptions): void;
 }
 
 // @public

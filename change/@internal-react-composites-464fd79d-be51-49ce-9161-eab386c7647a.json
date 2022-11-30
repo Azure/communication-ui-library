@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Fix call adapter joinCall logic bug.",
-  "packageName": "@internal/react-composites",
-  "email": "miguelgamis@microsoft.com",
-  "dependentChangeType": "patch"
-}

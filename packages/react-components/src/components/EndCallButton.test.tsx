@@ -13,7 +13,7 @@ describe('EndCallButton strings should be localizable and overridable', () => {
   test('Should localize button label', async () => {
     const testLocale = createTestLocale({ endCallButton: { label: Math.random().toString() } });
     const component = mountWithLocalization(<EndCallButton showLabel={true} />, testLocale);
-    expect(component.text()).toBe(testLocale.strings.endCallButton.label);
+    expect(component.find('button').text()).toBe(testLocale.strings.endCallButton.label);
   });
 
   test('Should override button label with `strings` prop', async () => {
@@ -23,6 +23,6 @@ describe('EndCallButton strings should be localizable and overridable', () => {
       <EndCallButton showLabel={true} strings={endCallButtonStrings} />,
       testLocale
     );
-    expect(component.text()).toBe(endCallButtonStrings.label);
+    expect(component.find('button').text()).toBe(endCallButtonStrings.label);
   });
 });

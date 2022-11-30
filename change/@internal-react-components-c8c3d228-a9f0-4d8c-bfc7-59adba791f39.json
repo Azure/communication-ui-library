@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Localize participant state display strings in video tile",
-  "packageName": "@internal/react-components",
-  "email": "anjulgarg@live.com",
-  "dependentChangeType": "patch"
-}

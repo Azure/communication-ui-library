@@ -9,11 +9,13 @@ import React from 'react';
 import { useLocale } from '../../../../react-components/src/localization';
 import { SingleLineBetaBanner } from '../../BetaBanners/SingleLineBetaBanner';
 import { COMPONENT_FOLDER_PREFIX } from '../../constants';
-import { UnsupportedBrowserDrawer } from './snippets/UnsupportedBrowserDrawer.snippet';
-import { UnsupportedBrowserModal } from './snippets/UnsupportedBrowserModal.snippet';
+import { UnsupportedEnvironmentDrawers } from './snippets/UnsupportedEnvironmentDrawer.snippet';
+import { UnsupportedEnvironmentModals } from './snippets/UnsupportedEnvironmentModal.snippet';
 
-const UnsupportedBrowserDrawerExample = require('!!raw-loader!./snippets/UnsupportedBrowserDrawer.snippet.tsx').default;
-const UnsupportedBrowserModalExample = require('!!raw-loader!./snippets/UnsupportedBrowserModal.snippet.tsx').default;
+const UnsupportedBrowserDrawerExamples =
+  require('!!raw-loader!./snippets/UnsupportedEnvironmentDrawer.snippet.tsx').default;
+const UnsupportedBrowserModalExamples =
+  require('!!raw-loader!./snippets/UnsupportedEnvironmentModal.snippet.tsx').default;
 
 const UnsupportedBrowserStory = (): JSX.Element => {
   const locale = useLocale().strings.UnsupportedBrowser;
@@ -21,7 +23,7 @@ const UnsupportedBrowserStory = (): JSX.Element => {
     <Stack>
       <UnsupportedBrowserComponent
         strings={locale}
-        onTroubleShootingClick={() => {
+        onTroubleshootingClick={() => {
           alert('Clicked help link');
         }}
       />
@@ -34,16 +36,20 @@ const getDocs: () => JSX.Element = () => {
     <Stack>
       <SingleLineBetaBanner />
       <Title>Unsupported Browser</Title>
-      <Description>Component to display help information when the app is loaded in a unsuppported browser.</Description>
+      <Description>
+        Component to display help information when the app is loaded in an unsuppported environment. Shows different
+        screens based on the environment info the calling SDK is reporting.
+      </Description>
       <Heading>Using in a Modal</Heading>
-      <Description>This component while used in a modal here can also be used as it's own page.</Description>
-      <Canvas mdxSource={UnsupportedBrowserModalExample}>
-        <UnsupportedBrowserModal />
+      <Description>This component can also be used as it's own page or as in a modal as shown here.</Description>
+      <Canvas mdxSource={UnsupportedBrowserModalExamples}>
+        <UnsupportedEnvironmentModals />
       </Canvas>
       <Heading>Using on mobile</Heading>
-      <Canvas mdxSource={UnsupportedBrowserDrawerExample}>
-        <UnsupportedBrowserDrawer />
+      <Canvas mdxSource={UnsupportedBrowserDrawerExamples}>
+        <UnsupportedEnvironmentDrawers />
       </Canvas>
+
       <Props of={UnsupportedBrowserComponent} />
     </Stack>
   );

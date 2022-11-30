@@ -34,6 +34,22 @@ export function BaseApp(props: { queryArgs: QueryArgs; callAdapter?: CallAdapter
 
   const ParticipantItemOptions = queryArgs.showParticipantItemIcon ? <MoreHorizontal20Regular /> : <></>;
 
+  let customCallCompositeOptions = queryArgs.customCallCompositeOptions;
+
+  if (queryArgs.useEnvironmentInfoTroubleshootingOptions) {
+    customCallCompositeOptions = {
+      ...customCallCompositeOptions,
+      onEnvironmentInfoTroubleshootingClick: onEnvironmentInfoTroubleshootingClick
+    };
+  }
+
+  if (queryArgs.usePermissionTroubleshootingActions) {
+    customCallCompositeOptions = {
+      ...customCallCompositeOptions,
+      onPermissionsTroubleshootingClick: onPermissionsTroubleshootingClick
+    };
+  }
+
   return (
     <>
       {!callAdapter && 'Initializing call adapter...'}
@@ -44,14 +60,13 @@ export function BaseApp(props: { queryArgs: QueryArgs; callAdapter?: CallAdapter
               icons={{ ParticipantItemOptions: ParticipantItemOptions }}
               adapter={callAdapter}
               locale={locale}
-              role={queryArgs.role}
               formFactor={isMobile() ? 'mobile' : 'desktop'}
               onFetchParticipantMenuItems={
                 queryArgs.injectParticipantMenuItems ? onFetchParticipantMenuItems : undefined
               }
               options={
-                queryArgs.customCallCompositeOptions
-                  ? queryArgs.customCallCompositeOptions
+                customCallCompositeOptions !== undefined
+                  ? customCallCompositeOptions
                   : queryArgs.injectCustomButtons
                   ? {
                       callControls: {
@@ -124,3 +139,9 @@ const onFetchCustomButtonProps: CustomCallControlButtonCallback[] = [
     };
   }
 ];
+
+const onPermissionsTroubleshootingClick = (permissionsState: unknown): void => {
+  alert(permissionsState);
+};
+
+const onEnvironmentInfoTroubleshootingClick = (): void => alert('you are using a unsupported browser');

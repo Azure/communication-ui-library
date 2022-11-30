@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Fix screenshare button selector to disable button when call is InLobby or Connecting state.",
-  "packageName": "@internal/calling-component-bindings",
-  "email": "94866715+dmceachernmsft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

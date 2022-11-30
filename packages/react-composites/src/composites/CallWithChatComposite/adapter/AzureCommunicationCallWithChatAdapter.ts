@@ -77,6 +77,8 @@ import { StatefulChatClient } from '@internal/chat-stateful-client';
 import { ChatThreadClient } from '@azure/communication-chat';
 import { useEffect, useRef, useState } from 'react';
 import { _toCommunicationIdentifier } from '@internal/acs-ui-common';
+/* @conditional-compile-remove(unsupported-browser) */
+import { AzureCommunicationCallAdapterOptions } from '../../CallComposite/adapter/AzureCommunicationCallAdapter';
 
 type CallWithChatAdapterStateChangedHandler = (newState: CallWithChatAdapterState) => void;
 
@@ -85,8 +87,9 @@ class CallWithChatContext {
   private emitter = new EventEmitter();
   private state: CallWithChatAdapterState;
 
-  constructor(clientState: CallWithChatAdapterState) {
+  constructor(clientState: CallWithChatAdapterState, maxListeners = 50) {
     this.state = clientState;
+    this.emitter.setMaxListeners(maxListeners);
   }
 
   public onStateChange(handler: CallWithChatAdapterStateChangedHandler): void {
@@ -211,9 +214,9 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     return this.callAdapter.joinCall(microphoneOn);
   }
   /** Leave current Call. */
-  public async leaveCall(): Promise<void> {
+  public async leaveCall(forEveryone?: boolean): Promise<void> {
     // Only remove self from the GroupCall. Contoso must manage access to Chat.
-    await this.callAdapter.leaveCall();
+    await this.callAdapter.leaveCall(forEveryone);
   }
   /** Start a new Call. */
   public startCall(
@@ -590,6 +593,8 @@ export type AzureCommunicationCallWithChatAdapterArgs = {
   locator: CallAndChatLocator | TeamsMeetingLinkLocator;
   /* @conditional-compile-remove(PSTN-calls) */
   alternateCallerId?: string;
+  /* @conditional-compile-remove(unsupported-browser) */
+  callAdapterOptions?: AzureCommunicationCallAdapterOptions;
 };
 
 /**
@@ -604,7 +609,8 @@ export const createAzureCommunicationCallWithChatAdapter = async ({
   credential,
   endpoint,
   locator,
-  /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId
+  /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
+  /* @conditional-compile-remove(unsupported-browser) */ callAdapterOptions
 }: AzureCommunicationCallWithChatAdapterArgs): Promise<CallWithChatAdapter> => {
   const callAdapterLocator = isTeamsMeetingLinkLocator(locator) ? locator : locator.callLocator;
   const createCallAdapterPromise = createAzureCommunicationCallAdapter({
@@ -612,7 +618,8 @@ export const createAzureCommunicationCallWithChatAdapter = async ({
     displayName,
     credential,
     locator: callAdapterLocator,
-    /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId
+    /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
+    /* @conditional-compile-remove(unsupported-browser) */ options: callAdapterOptions
   });
 
   const threadId = isTeamsMeetingLinkLocator(locator)
@@ -671,7 +678,8 @@ export const useAzureCommunicationCallWithChatAdapter = (
     endpoint,
     locator,
     userId,
-    /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId
+    /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
+    /* @conditional-compile-remove(unsupported-browser) */ callAdapterOptions
   } = args;
 
   // State update needed to rerender the parent component when a new adapter is created.
@@ -715,7 +723,8 @@ export const useAzureCommunicationCallWithChatAdapter = (
           endpoint,
           locator,
           userId,
-          /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId
+          /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
+          /* @conditional-compile-remove(unsupported-browser) */ callAdapterOptions
         });
         if (afterCreateRef.current) {
           newAdapter = await afterCreateRef.current(newAdapter);
@@ -734,7 +743,8 @@ export const useAzureCommunicationCallWithChatAdapter = (
       displayName,
       endpoint,
       locator,
-      userId
+      userId,
+      /* @conditional-compile-remove(unsupported-browser) */ callAdapterOptions
     ]
   );
 

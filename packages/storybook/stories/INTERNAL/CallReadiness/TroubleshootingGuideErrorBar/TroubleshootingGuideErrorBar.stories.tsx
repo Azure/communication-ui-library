@@ -32,13 +32,9 @@ const TroubleshootingGuideErrorBarStory = (args): JSX.Element => {
     microphone: 'granted'
   };
 
-  const permissionTroubleshootingGuideStrings: _TroubleshootingGuideErrorBarStrings = {
-    linkText: 'Troubleshooting Camera and Microphone Permissions',
-    dismissButtonText: 'OK'
-  };
-
-  const networkTroubleshootingGuideStrings: _TroubleshootingGuideErrorBarStrings = {
-    linkText: 'Troubleshooting Network Connection',
+  const troubleshootingGuideStrings: _TroubleshootingGuideErrorBarStrings = {
+    devicePermissionLinkText: 'Troubleshooting Camera and Microphone Permissions',
+    networkTroubleshootingLinkText: 'Troubleshooting Network Connection',
     dismissButtonText: 'OK'
   };
 
@@ -54,15 +50,9 @@ const TroubleshootingGuideErrorBarStory = (args): JSX.Element => {
       <_TroubleshootingGuideErrorBar
         activeErrorMessages={args.errorTypes.map((t) => ({ type: t, timestamp: new Date(Date.now()) }))}
         onPermissionsTroubleshootingClick={onPermissionsTroubleshootingClick}
-        permissionsState={permissionsState}
-        troubleshootingGuideStrings={permissionTroubleshootingGuideStrings}
-      />
-
-      <_TroubleshootingGuideErrorBar
-        activeErrorMessages={args.errorTypes.map((t) => ({ type: t, timestamp: new Date(Date.now()) }))}
         onNetworkingTroubleshootingClick={onNetworkingTroubleshootingClick}
         permissionsState={permissionsState}
-        troubleshootingGuideStrings={networkTroubleshootingGuideStrings}
+        troubleshootingGuideStrings={troubleshootingGuideStrings}
       />
     </div>
   );

@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Add a UI Components Overview page to storybook. Clean up the top-most Overview page.",
-  "packageName": "@internal/storybook",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

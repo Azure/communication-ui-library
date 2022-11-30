@@ -2,6 +2,657 @@
   "name": "@internal/storybook",
   "entries": [
     {
+      "date": "Tue, 15 Nov 2022 21:12:26 GMT",
+      "tag": "@internal/storybook_v1.4.1-beta.1",
+      "version": "1.4.1-beta.1",
+      "comments": {
+        "none": [
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "1e0f9b6bb5d2e5c98fc1076160b5b25d03cf3695",
+            "comment": "Clean up storybook quickstart setup page"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "c5efaf6677c46c017e3297a003a1df905f4044f1",
+            "comment": "Update domain permissions story to have checking device permissions type"
+          },
+          {
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "c8e8d74de3f7804e0187538d696bbfe7a37e0248",
+            "comment": "Bumped"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "363401bdd3c81c42cf776243734740ea8d25390c",
+            "comment": "Update internal story to have denied vs request domain permission skus"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "3aab73e61303d02385497dfe6116f4d5f03b4f94",
+            "comment": "Add stories for individual camera and mic permission modals in internal folder"
+          }
+        ],
+        "patch": [
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "41f8e688e1f277a644a26b8aaef30ac3ffd5798c",
+            "comment": "Bump dependencies to get closer to react 18 support"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/storybook",
+            "commit": "29cecd954712376ed4b9a4fe4ed9300f4112672d",
+            "comment": "Move icon register code to manager to avoid re-register warning on load"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "8cb67542c822c72db69c77e223747d55fe5b4d54",
+            "comment": "Allow a range of communication services dependency packages"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "7244e8add398513a81398441c90b8a07f43ba309",
+            "comment": "Add documentation for minimum typescript and webpack versions."
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/storybook",
+            "comment": "Bump @azure/communication-react to v1.4.1-beta.1",
+            "commit": "4c9756eb717a363c2d533804fcba8d1caf3cfb40"
+          }
+        ],
+        "prerelease": [
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/storybook",
+            "commit": "d5c6baf76a616d8c3556e0e479da975b6a366305",
+            "comment": "Updated troubleshooting error bar storybook "
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "a85305c823be1f5601c2979694f27f82e6eabc9b",
+            "comment": "initializeIcons() in 1:N and PSTN quickstarts"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 21 Oct 2022 23:01:55 GMT",
+      "tag": "@internal/storybook_v1.4.0",
+      "version": "1.4.0",
+      "comments": {
+        "none": [
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "7d276116ce0b5aab82b1adc3e24b32709b0db47c",
+            "comment": "Bump package version after hotfix release"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/storybook",
+            "commit": "cb2a9a1732f67c8ab9280dbcbb1407a44591d83c",
+            "comment": "Remove participant pane option from storybook as it's not part of the stable api"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/storybook",
+            "commit": "3cf5ac7d8e9ded15bdacfffca6e0a745e6d0853c",
+            "comment": "Check if call locator is a valid UUID before joining a group call in CallComposite storybook preview."
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "f563183c67423195a8585f43327621454b281be0",
+            "comment": "Fix file sharing link to tutorial on chat composite docs"
+          },
+          {
+            "author": "jinan@microsoft.com",
+            "package": "@internal/storybook",
+            "commit": "08585bf84bb41e409f4c01ffc7c9f0a3752a1fdd",
+            "comment": "Remove deprecated core-http from dependencies list"
+          },
+          {
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "f42faa2a9830ad1a7bcabba08d9aafcd49632e8b",
+            "comment": "Bumped"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/storybook",
+            "commit": "b53028a69556878c77fbaf627894fc594de25c1d",
+            "comment": "Fix snippet code in adapter documentation"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/storybook",
+            "commit": "7162b4f5d3e8dcfb4fbdbf5270eedc5fd7c2ea07",
+            "comment": "Added parsing of room id locator in Call composite story"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/storybook",
+            "commit": "57ed3f8f8d03a2b96bd994a25ca9b3aa2ce0ce0a",
+            "comment": "Added tsconfig path to fake-backends package"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "8792e4c5f2266c529ee2641df2034600b36600c9",
+            "comment": "Restrict all @internal imports from storybook"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/storybook",
+            "commit": "0b90524e985e4befd00d8046560c727de2001488",
+            "comment": "Update storybook to include documentation on Call Composite options prop"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "cb6b18dc0ffe981450b3a82fbe1775c28ca3c60f",
+            "comment": "Doc update for CallAndChat locator in the storybook docs"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "c6aabfec5b37e3c5ad42fd3173681e2e6e22731b",
+            "comment": "Fix test command"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "31726a6e0ce24dfc180028eec10f9adf3144ecdc",
+            "comment": "Quality of life improvements to call with chat composite stories"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "7a64bf2f22329bf8cceedbf9bedb6b8e6414d76b",
+            "comment": "QOL storybook improvements"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "5b7efec4dd21401144d0513e851b6c6f4de7b5df",
+            "comment": "Skip build, test, lint on stable builds"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "431984afce8db41ee9cbec0916582abe0b22626d",
+            "comment": "Ensure build and test scripts are being awaited"
+          },
+          {
+            "author": "79329532+alkwa-msft@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "3877cd12e9fa460a2cbc7786805e305eaf91213d",
+            "comment": "updating how to use callComposite.js to join a group call"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/storybook",
+            "commit": "89be1097ace40ecb7590a2cb880537d14738395b",
+            "comment": "Add installation of uuid package in composite quickstart guide"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/storybook",
+            "commit": "078c9a6eacdf86d688484a076ceecd8e2218f92c",
+            "comment": "Update snippets for VideoTile"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "f1d6c742e45761fd6a4df66365690d55ecf04e28",
+            "comment": "chat composite story qol improvments"
+          }
+        ],
+        "prerelease": [
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "7fee7d74d8181ffd8b498a04d122bbaa3347c11b",
+            "comment": "Use sparkle icon for DomainPermissions component in storybook"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/storybook",
+            "commit": "68c5b09b68db38ea5d2530bf2cea7ebdac2448c7",
+            "comment": "Added devicePermissionDropdown component storybook doc"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@internal/storybook",
+            "commit": "c27f11267d57741b1d6cc4fa529555c6e7ede7eb",
+            "comment": "Bump calling beta to 1.6.1 beta.1"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "66307695a807ebaa25bb6f910c5aa2a22ae523c2",
+            "comment": "Adds internal storybook page for new DomainPermissions Component"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/storybook",
+            "commit": "eb08845873d0431b8cf355149145131f54efa487",
+            "comment": "Update storybook to show how to use onchange and textfieldValue props to customize formatting"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "5fdeb47a35b2402dde0dba8eb387cd58e72aef9e",
+            "comment": "Introduce page for new unsupported browser UI"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "0020b07e979b896b72ba4d0ac231f4cc9793ff8f",
+            "comment": "Update Fluent-ui/icons package"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/storybook",
+            "commit": "0a6d28a511f14d041738464702d5a574004b6d29",
+            "comment": "Create internal story for error bar to display troubleshooting links for network/device permission errors"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/storybook",
+            "commit": "05c00dee4f3d99d2583b3edb24ac932b2196c8f5",
+            "comment": "Bumped calling SDK beta version to 1.8.0-beta.1"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@internal/storybook",
+            "commit": "6cd70189f30d653fe40e5d41e27fffa22099ac76",
+            "comment": "Add PSTN and 1:N storybook examples"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/storybook",
+            "commit": "ad1972e132bbd1d66b1e4d59c80c4c1b869f3bae",
+            "comment": "bump calling beta to 1.6.0-beta.1"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/storybook",
+            "commit": "790d3b526104525210b61a26564f4ba780e749b6",
+            "comment": "Change participantIDs to participantIds"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/storybook",
+            "commit": "5144deaf2c78e83aa8f113734c6abd4d460178de",
+            "comment": "Storybook updated for dialpad"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "262b8dade19af247edbd0975bc45e79e2aa8f8ed",
+            "comment": "Update Calling composite and CallWithChat Composite docs to reflect new prop for alternateCallerId"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "06c1774261e85f5c4232bfd6dbbed2599ea9a6b7",
+            "comment": "fix issues with unsupported browser stories."
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@internal/storybook",
+            "commit": "b305ce60101cd8ce9570caa12ebd503effb5ffea",
+            "comment": "BrowserPermissionDenied Desktop and mobile storybook entry created"
+          }
+        ],
+        "patch": [
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "8b5c019cdee5400456a21bca5f6c5a25e7ca4063",
+            "comment": "Adds beta banner to file sharing feature in CallWithChat and chat composite docs"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "c95dc6973bbb1391bb0926688e9ec2f026dd7362",
+            "comment": "Fix ui components complete storybook snippet so that the icons render"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "418931ac0af4208fde8c1828c85125e82439aa2b",
+            "comment": "Add a UI Components Overview page to storybook. Clean up the top-most Overview page."
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/storybook",
+            "commit": "139432055230f99c44556d3e96bf8135a695901e",
+            "comment": "Add initialize icons to storybook quick start"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/storybook",
+            "commit": "8b38abb8fd7a4f5be074e08b600ad96a86fcaf32",
+            "comment": "Slim wrapper around PiPiP component to remap props to work with storybook v6.5.7"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "b765d788605d682a21156ffed185573858735ee9",
+            "comment": "Introduces setup page for repo discussing manual changes that need to be made to use acs ui library"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/storybook",
+            "commit": "0c9d93b628009b02187e33a5bedf3b9f68b501aa",
+            "comment": "Added Rooms conceptual doc"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@internal/storybook",
+            "commit": "3343328feaab4b8e200dd70e4e72a21e27ce2364",
+            "comment": "Center incoming call toast button icons"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "4137e79f5dfffe09608f54c728d339e19d2d0acc",
+            "comment": "Bump @fluentui/react dependency to 8.98.3"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/storybook",
+            "comment": "Bump @azure/communication-react to v1.4.0",
+            "commit": "6e9b927acf587b957b60434f6ccc8265277d2434"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 05 Oct 2022 18:13:43 GMT",
+      "tag": "@internal/storybook_v1.3.2-beta.1",
+      "version": "1.3.2-beta.1",
+      "comments": {
+        "none": [
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "7d276116ce0b5aab82b1adc3e24b32709b0db47c",
+            "comment": "Bump package version after hotfix release"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/storybook",
+            "commit": "cb2a9a1732f67c8ab9280dbcbb1407a44591d83c",
+            "comment": "Remove participant pane option from storybook as it's not part of the stable api"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/storybook",
+            "commit": "3cf5ac7d8e9ded15bdacfffca6e0a745e6d0853c",
+            "comment": "Check if call locator is a valid UUID before joining a group call in CallComposite storybook preview."
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "f563183c67423195a8585f43327621454b281be0",
+            "comment": "Fix file sharing link to tutorial on chat composite docs"
+          },
+          {
+            "author": "jinan@microsoft.com",
+            "package": "@internal/storybook",
+            "commit": "08585bf84bb41e409f4c01ffc7c9f0a3752a1fdd",
+            "comment": "Remove deprecated core-http from dependencies list"
+          },
+          {
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "f42faa2a9830ad1a7bcabba08d9aafcd49632e8b",
+            "comment": "Bumped"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/storybook",
+            "commit": "b53028a69556878c77fbaf627894fc594de25c1d",
+            "comment": "Fix snippet code in adapter documentation"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/storybook",
+            "commit": "7162b4f5d3e8dcfb4fbdbf5270eedc5fd7c2ea07",
+            "comment": "Added parsing of room id locator in Call composite story"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/storybook",
+            "commit": "57ed3f8f8d03a2b96bd994a25ca9b3aa2ce0ce0a",
+            "comment": "Added tsconfig path to fake-backends package"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "8792e4c5f2266c529ee2641df2034600b36600c9",
+            "comment": "Restrict all @internal imports from storybook"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/storybook",
+            "commit": "0b90524e985e4befd00d8046560c727de2001488",
+            "comment": "Update storybook to include documentation on Call Composite options prop"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "cb6b18dc0ffe981450b3a82fbe1775c28ca3c60f",
+            "comment": "Doc update for CallAndChat locator in the storybook docs"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "c6aabfec5b37e3c5ad42fd3173681e2e6e22731b",
+            "comment": "Fix test command"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "31726a6e0ce24dfc180028eec10f9adf3144ecdc",
+            "comment": "Quality of life improvements to call with chat composite stories"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "7a64bf2f22329bf8cceedbf9bedb6b8e6414d76b",
+            "comment": "QOL storybook improvements"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "5b7efec4dd21401144d0513e851b6c6f4de7b5df",
+            "comment": "Skip build, test, lint on stable builds"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "431984afce8db41ee9cbec0916582abe0b22626d",
+            "comment": "Ensure build and test scripts are being awaited"
+          },
+          {
+            "author": "79329532+alkwa-msft@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "3877cd12e9fa460a2cbc7786805e305eaf91213d",
+            "comment": "updating how to use callComposite.js to join a group call"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/storybook",
+            "commit": "89be1097ace40ecb7590a2cb880537d14738395b",
+            "comment": "Add installation of uuid package in composite quickstart guide"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/storybook",
+            "commit": "078c9a6eacdf86d688484a076ceecd8e2218f92c",
+            "comment": "Update snippets for VideoTile"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "f1d6c742e45761fd6a4df66365690d55ecf04e28",
+            "comment": "chat composite story qol improvments"
+          }
+        ],
+        "prerelease": [
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "7fee7d74d8181ffd8b498a04d122bbaa3347c11b",
+            "comment": "Use sparkle icon for DomainPermissions component in storybook"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/storybook",
+            "commit": "68c5b09b68db38ea5d2530bf2cea7ebdac2448c7",
+            "comment": "Added devicePermissionDropdown component storybook doc"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@internal/storybook",
+            "commit": "c27f11267d57741b1d6cc4fa529555c6e7ede7eb",
+            "comment": "Bump calling beta to 1.6.1 beta.1"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "66307695a807ebaa25bb6f910c5aa2a22ae523c2",
+            "comment": "Adds internal storybook page for new DomainPermissions Component"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/storybook",
+            "commit": "eb08845873d0431b8cf355149145131f54efa487",
+            "comment": "Update storybook to show how to use onchange and textfieldValue props to customize formatting"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "5fdeb47a35b2402dde0dba8eb387cd58e72aef9e",
+            "comment": "Introduce page for new unsupported browser UI"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "0020b07e979b896b72ba4d0ac231f4cc9793ff8f",
+            "comment": "Update Fluent-ui/icons package"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/storybook",
+            "commit": "0a6d28a511f14d041738464702d5a574004b6d29",
+            "comment": "Create internal story for error bar to display troubleshooting links for network/device permission errors"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/storybook",
+            "commit": "05c00dee4f3d99d2583b3edb24ac932b2196c8f5",
+            "comment": "Bumped calling SDK beta version to 1.8.0-beta.1"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@internal/storybook",
+            "commit": "6cd70189f30d653fe40e5d41e27fffa22099ac76",
+            "comment": "Add PSTN and 1:N storybook examples"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/storybook",
+            "commit": "ad1972e132bbd1d66b1e4d59c80c4c1b869f3bae",
+            "comment": "bump calling beta to 1.6.0-beta.1"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/storybook",
+            "commit": "790d3b526104525210b61a26564f4ba780e749b6",
+            "comment": "Change participantIDs to participantIds"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/storybook",
+            "commit": "5144deaf2c78e83aa8f113734c6abd4d460178de",
+            "comment": "Storybook updated for dialpad"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "262b8dade19af247edbd0975bc45e79e2aa8f8ed",
+            "comment": "Update Calling composite and CallWithChat Composite docs to reflect new prop for alternateCallerId"
+          }
+        ],
+        "patch": [
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "8b5c019cdee5400456a21bca5f6c5a25e7ca4063",
+            "comment": "Adds beta banner to file sharing feature in CallWithChat and chat composite docs"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "c95dc6973bbb1391bb0926688e9ec2f026dd7362",
+            "comment": "Fix ui components complete storybook snippet so that the icons render"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "418931ac0af4208fde8c1828c85125e82439aa2b",
+            "comment": "Add a UI Components Overview page to storybook. Clean up the top-most Overview page."
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/storybook",
+            "commit": "139432055230f99c44556d3e96bf8135a695901e",
+            "comment": "Add initialize icons to storybook quick start"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/storybook",
+            "commit": "8b38abb8fd7a4f5be074e08b600ad96a86fcaf32",
+            "comment": "Slim wrapper around PiPiP component to remap props to work with storybook v6.5.7"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "b765d788605d682a21156ffed185573858735ee9",
+            "comment": "Introduces setup page for repo discussing manual changes that need to be made to use acs ui library"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/storybook",
+            "commit": "0c9d93b628009b02187e33a5bedf3b9f68b501aa",
+            "comment": "Added Rooms conceptual doc"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/storybook",
+            "comment": "Bump @azure/communication-react to v1.3.2-beta.1",
+            "commit": "14adcdc3a3699659701ab1a81c80f1418e384170"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 29 Jun 2022 17:31:07 GMT",
       "tag": "@internal/storybook_v1.3.1-beta.1",
       "version": "1.3.1-beta.1",

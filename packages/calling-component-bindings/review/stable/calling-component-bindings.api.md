@@ -16,6 +16,7 @@ import { CallParticipantListParticipant } from '@internal/react-components';
 import { CallState } from '@azure/communication-calling';
 import { CameraButton } from '@internal/react-components';
 import { Common } from '@internal/acs-ui-common';
+import { CommunicationIdentifier } from '@azure/communication-common';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 import { CreateVideoStreamViewResult } from '@internal/react-components';
 import { DeviceManagerState } from '@internal/calling-stateful-client';
@@ -69,24 +70,10 @@ export type CallingBaseSelectorProps = {
 };
 
 // @public
-export type CallingHandlers = {
-    onStartLocalVideo: () => Promise<void>;
-    onToggleCamera: (options?: VideoStreamOptions) => Promise<void>;
-    onStartCall: (participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[], options?: StartCallOptions) => Call | undefined;
-    onSelectMicrophone: (device: AudioDeviceInfo) => Promise<void>;
-    onSelectSpeaker: (device: AudioDeviceInfo) => Promise<void>;
-    onSelectCamera: (device: VideoDeviceInfo, options?: VideoStreamOptions) => Promise<void>;
-    onToggleMicrophone: () => Promise<void>;
-    onStartScreenShare: () => Promise<void>;
-    onStopScreenShare: () => Promise<void>;
-    onToggleScreenShare: () => Promise<void>;
-    onHangUp: () => Promise<void>;
-    onCreateLocalStreamView: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
-    onCreateRemoteStreamView: (userId: string, options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
-    onRemoveParticipant(userId: string): Promise<void>;
-    onDisposeRemoteStreamView: (userId: string) => Promise<void>;
-    onDisposeLocalStreamView: () => Promise<void>;
-};
+export interface CallingHandlers extends CommonCallingHandlers {
+    // (undocumented)
+    onStartCall: (participants: CommunicationIdentifier[], options?: StartCallOptions) => Call | undefined;
+}
 
 // @public
 export const CallProvider: (props: CallProviderProps) => JSX.Element;
@@ -109,6 +96,42 @@ export type CameraButtonSelector = (state: CallClientState, props: CallingBaseSe
 
 // @public
 export const cameraButtonSelector: CameraButtonSelector;
+
+// @public
+export interface CommonCallingHandlers {
+    // (undocumented)
+    onCreateLocalStreamView: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
+    // (undocumented)
+    onCreateRemoteStreamView: (userId: string, options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
+    // (undocumented)
+    onDisposeLocalStreamView: () => Promise<void>;
+    // (undocumented)
+    onDisposeRemoteStreamView: (userId: string) => Promise<void>;
+    // (undocumented)
+    onHangUp: (forEveryone?: boolean) => Promise<void>;
+    // (undocumented)
+    onRemoveParticipant(userId: string): Promise<void>;
+    // (undocumented)
+    onSelectCamera: (device: VideoDeviceInfo, options?: VideoStreamOptions) => Promise<void>;
+    // (undocumented)
+    onSelectMicrophone: (device: AudioDeviceInfo) => Promise<void>;
+    // (undocumented)
+    onSelectSpeaker: (device: AudioDeviceInfo) => Promise<void>;
+    // (undocumented)
+    onStartCall: (participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[], options?: StartCallOptions) => void;
+    // (undocumented)
+    onStartLocalVideo: () => Promise<void>;
+    // (undocumented)
+    onStartScreenShare: () => Promise<void>;
+    // (undocumented)
+    onStopScreenShare: () => Promise<void>;
+    // (undocumented)
+    onToggleCamera: (options?: VideoStreamOptions) => Promise<void>;
+    // (undocumented)
+    onToggleMicrophone: () => Promise<void>;
+    // (undocumented)
+    onToggleScreenShare: () => Promise<void>;
+}
 
 // @public
 export const createDefaultCallingHandlers: (callClient: StatefulCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined) => CallingHandlers;
@@ -195,10 +218,10 @@ export const useCallAgent: () => CallAgent | undefined;
 export const useCallClient: () => StatefulCallClient;
 
 // @public
-export const useCallingHandlers: <PropsT>(component: (props: PropsT) => ReactElement | null) => Common<CallingHandlers, PropsT> | undefined;
+export const useCallingHandlers: <PropsT>(component: (props: PropsT) => ReactElement | null) => Common<CommonCallingHandlers, PropsT> | undefined;
 
 // @public
-export const useCallingPropsFor: <Component extends (props: any) => JSX.Element>(component: Component) => GetCallingSelector<Component> extends (props: any) => any ? ReturnType<GetCallingSelector<Component>> & Common<CallingHandlers, Parameters<Component>[0]> : undefined;
+export const useCallingPropsFor: <Component extends (props: any) => JSX.Element>(component: Component) => GetCallingSelector<Component> extends (props: any) => any ? ReturnType<GetCallingSelector<Component>> & Common<CommonCallingHandlers, Parameters<Component>[0]> : undefined;
 
 // @public
 export const useCallingSelector: <SelectorT extends (state: CallClientState, props: any) => any, ParamT extends SelectorT | undefined>(selector: ParamT, selectorProps?: Parameters<SelectorT>[1] | undefined) => ParamT extends SelectorT ? ReturnType<SelectorT> : undefined;

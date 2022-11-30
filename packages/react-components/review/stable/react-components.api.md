@@ -398,6 +398,7 @@ export interface _DevicePermissionDropdownProps {
     askDevicePermission?(constrain: _PermissionConstraints): Promise<void>;
     constrain?: _PermissionConstraints;
     icon?: JSX.Element;
+    onClick?: () => void;
     options?: IDropdownOption[];
     strings?: _DevicePermissionDropdownStrings;
     styles?: Partial<IDropdownStyles>;
@@ -567,6 +568,7 @@ export const ErrorBar: (props: ErrorBarProps) => JSX.Element;
 // @public
 export interface ErrorBarProps extends IMessageBarProps {
     activeErrorMessages: ActiveErrorMessage[];
+    ignorePremountErrors?: boolean;
     strings?: ErrorBarStrings;
 }
 
@@ -928,6 +930,7 @@ export interface MessageThreadStyles extends BaseCustomStyles {
     chatContainer?: ComponentSlotStyle;
     chatItemMessageContainer?: ComponentSlotStyle;
     chatMessageContainer?: ComponentSlotStyle;
+    failedMyChatMessageContainer?: ComponentSlotStyle;
     loadPreviousMessagesButtonContainer?: IStyle;
     messageStatusContainer?: (mine: boolean) => IStyle;
     myChatItemMessageContainer?: ComponentSlotStyle;
@@ -1288,9 +1291,11 @@ export interface _TroubleshootingGuideErrorBarProps extends ErrorBarProps {
 // @internal
 export interface _TroubleshootingGuideErrorBarStrings {
     // (undocumented)
+    devicePermissionLinkText?: string;
+    // (undocumented)
     dismissButtonText?: string;
     // (undocumented)
-    linkText?: string;
+    networkTroubleshootingLinkText?: string;
 }
 
 // @public
@@ -1317,6 +1322,38 @@ export interface TypingIndicatorStrings {
 export interface TypingIndicatorStylesProps extends BaseCustomStyles {
     typingString?: IStyle;
     typingUserDisplayName?: IStyle;
+}
+
+// @beta
+export const UnsupportedBrowser: (props: UnsupportedBrowserProps) => JSX.Element;
+
+// @beta
+export interface UnsupportedBrowserProps {
+    onTroubleshootingClick?: () => void;
+    strings: UnsupportedBrowserStrings;
+}
+
+// @beta
+export interface UnsupportedBrowserStrings {
+    moreHelpText: string;
+    primaryText: string;
+    secondaryText: string;
+}
+
+// @beta
+export const UnsupportedBrowserVersion: (props: UnsupportedBrowserVersionProps) => JSX.Element;
+
+// @beta
+export interface UnsupportedBrowserVersionProps {
+    onTroubleshootingClick?: () => void;
+    strings: UnsupportedBrowserVersionStrings;
+}
+
+// @beta
+export interface UnsupportedBrowserVersionStrings {
+    moreHelpText: string;
+    primaryText: string;
+    secondaryText: string;
 }
 
 // @public

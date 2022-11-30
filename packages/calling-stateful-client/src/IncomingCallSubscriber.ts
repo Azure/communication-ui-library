@@ -1,7 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { CallEndReason, IncomingCall } from '@azure/communication-calling';
+import { CallEndReason } from '@azure/communication-calling';
+import { IncomingCallCommon } from './BetaToStableTypes';
 
 /**
  * Keeps track of the listeners assigned to a particular incoming call because when we get an event from SDK, it doesn't
@@ -10,11 +11,11 @@ import { CallEndReason, IncomingCall } from '@azure/communication-calling';
  * call.
  */
 export class IncomingCallSubscriber {
-  private _incomingCall: IncomingCall;
+  private _incomingCall: IncomingCallCommon;
   private _setIncomingCallEnded: (incomingCallId: string, callEndReason: CallEndReason) => void;
 
   constructor(
-    incomingCall: IncomingCall,
+    incomingCall: IncomingCallCommon,
     // setIncomingCallEnded callback is used so parent can clean up IncomingCallSubscriber.
     setIncomingCallEnded: (incomingCallId: string, callEndReason: CallEndReason) => void
   ) {

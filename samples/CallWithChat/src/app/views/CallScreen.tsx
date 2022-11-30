@@ -11,6 +11,8 @@ import {
   CallWithChatComposite,
   CallWithChatAdapter
 } from '@azure/communication-react';
+/* @conditional-compile-remove(call-readiness) */
+import { CallCompositeOptions } from '@azure/communication-react';
 import { Spinner } from '@fluentui/react';
 import React, { useCallback, useEffect, useMemo, useRef } from 'react';
 import { useSwitchableFluentTheme } from '../theming/SwitchableFluentThemeProvider';
@@ -25,6 +27,8 @@ export interface CallScreenProps {
   endpoint: string;
   locator: CallAndChatLocator | TeamsMeetingLinkLocator;
   /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId?: string;
+  /* @conditional-compile-remove(call-readiness) */
+  callReadinessOptedIn?: boolean;
 }
 
 export const CallScreen = (props: CallScreenProps): JSX.Element => {
@@ -34,7 +38,8 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     displayName,
     endpoint,
     locator,
-    /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId
+    /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
+    /* @conditional-compile-remove(call-readiness) */ callReadinessOptedIn
   } = props;
   const callIdRef = useRef<string>();
   const { currentTheme, currentRtl } = useSwitchableFluentTheme();
@@ -44,6 +49,9 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     () => createAutoRefreshingCredential(toFlatCommunicationIdentifier(userId), token),
     [userId, token]
   );
+
+  /* @conditional-compile-remove(call-readiness) */
+  const options: CallCompositeOptions = useMemo(() => ({ callReadinessOptedIn }), [callReadinessOptedIn]);
 
   const afterAdapterCreate = useCallback(
     async (adapter: CallWithChatAdapter): Promise<CallWithChatAdapter> => {
@@ -71,6 +79,11 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     [callIdRef]
   );
 
+  /* @conditional-compile-remove(unsupported-browser) */
+  const callAdapterOptions = useMemo(() => {
+    return { features: { unsupportedEnvironment: true } };
+  }, []);
+
   const adapter = useAzureCommunicationCallWithChatAdapter(
     {
       userId,
@@ -78,7 +91,8 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
       credential,
       endpoint,
       locator,
-      /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId
+      /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
+      /* @conditional-compile-remove(unsupported-browser) */ callAdapterOptions
     },
     afterAdapterCreate
   );
@@ -103,6 +117,8 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
       rtl={currentRtl}
       joinInvitationURL={window.location.href}
       formFactor={isMobileSession ? 'mobile' : 'desktop'}
+      /* @conditional-compile-remove(call-readiness) */
+      options={options}
     />
   );
 };

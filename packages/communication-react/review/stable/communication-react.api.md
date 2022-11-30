@@ -169,23 +169,29 @@ export interface BaseCustomStyles {
 }
 
 // @public
-export interface CallAdapter extends AdapterState<CallAdapterState>, Disposable, CallAdapterCallManagement, CallAdapterDeviceManagement, CallAdapterSubscribers {
+export interface CallAdapter extends CommonCallAdapter {
+    joinCall(microphoneOn?: boolean): Call | undefined;
+    startCall(participants: string[], options?: StartCallOptions): Call | undefined;
 }
 
 // @public
 export type CallAdapterCallEndedEvent = {
-    callId?: string;
+    callId: string;
 };
 
+// @public @deprecated
+export interface CallAdapterCallManagement extends CallAdapterCallOperations {
+    joinCall(microphoneOn?: boolean): Call | undefined;
+    startCall(participants: string[], options?: StartCallOptions): Call | undefined;
+}
+
 // @public
-export interface CallAdapterCallManagement {
+export interface CallAdapterCallOperations {
     createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void | CreateVideoStreamViewResult>;
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
-    joinCall(microphoneOn?: boolean): Call | undefined;
     leaveCall(forEveryone?: boolean): Promise<void>;
     mute(): Promise<void>;
     removeParticipant(userId: string): Promise<void>;
-    startCall(participants: string[], options?: StartCallOptions): Call | undefined;
     startCamera(options?: VideoStreamOptions): Promise<void>;
     startScreenShare(): Promise<void>;
     stopCamera(): Promise<void>;
@@ -370,7 +376,7 @@ export type CallCompositePage = 'accessDeniedTeamsMeeting' | 'call' | 'configura
 
 // @public
 export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcons> {
-    adapter: CallAdapter;
+    adapter: CommonCallAdapter;
     callInvitationUrl?: string;
     formFactor?: 'desktop' | 'mobile';
     options?: CallCompositeOptions;
@@ -409,17 +415,28 @@ export interface CallCompositeStrings {
     lobbyScreenConnectingToCallTitle: string;
     lobbyScreenWaitingToBeAdmittedMoreDetails?: string;
     lobbyScreenWaitingToBeAdmittedTitle: string;
+    manyParticipantsJoined: string;
+    manyParticipantsLeft: string;
+    manyUnnamedParticipantsJoined: string;
+    manyUnnamedParticipantsLeft: string;
     microphonePermissionDenied: string;
     microphoneToggleInLobbyNotAllowed: string;
     mutedMessage: string;
     networkReconnectMoreDetails: string;
     networkReconnectTitle: string;
+    participantJoinedNoticeString: string;
+    participantLeftNoticeString: string;
     privacyPolicy: string;
     rejoinCallButtonLabel: string;
     removedFromCallMoreDetails?: string;
     removedFromCallTitle: string;
     soundLabel: string;
     startCallButtonLabel: string;
+    threeParticipantJoinedNoticeString: string;
+    threeParticipantLeftNoticeString: string;
+    twoParticipantJoinedNoticeString: string;
+    twoParticipantLeftNoticeString: string;
+    unnamedParticipantString: string;
 }
 
 // @public
@@ -475,24 +492,10 @@ export type CallingBaseSelectorProps = {
 };
 
 // @public
-export type CallingHandlers = {
-    onStartLocalVideo: () => Promise<void>;
-    onToggleCamera: (options?: VideoStreamOptions) => Promise<void>;
-    onStartCall: (participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[], options?: StartCallOptions) => Call | undefined;
-    onSelectMicrophone: (device: AudioDeviceInfo) => Promise<void>;
-    onSelectSpeaker: (device: AudioDeviceInfo) => Promise<void>;
-    onSelectCamera: (device: VideoDeviceInfo, options?: VideoStreamOptions) => Promise<void>;
-    onToggleMicrophone: () => Promise<void>;
-    onStartScreenShare: () => Promise<void>;
-    onStopScreenShare: () => Promise<void>;
-    onToggleScreenShare: () => Promise<void>;
-    onHangUp: () => Promise<void>;
-    onCreateLocalStreamView: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
-    onCreateRemoteStreamView: (userId: string, options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
-    onRemoveParticipant(userId: string): Promise<void>;
-    onDisposeRemoteStreamView: (userId: string) => Promise<void>;
-    onDisposeLocalStreamView: () => Promise<void>;
-};
+export interface CallingHandlers extends CommonCallingHandlers {
+    // (undocumented)
+    onStartCall: (participants: CommunicationIdentifier[], options?: StartCallOptions) => Call | undefined;
+}
 
 // @public
 export type CallingReturnProps<Component extends (props: any) => JSX.Element> = GetCallingSelector<Component> extends (state: CallClientState, props: any) => any ? ReturnType<GetCallingSelector<Component>> & Common<CallingHandlers, Parameters<Component>[0]> : never;
@@ -777,7 +780,6 @@ export interface CallWithChatCompositeStrings {
     copyInviteLinkActionedAriaLabel: string;
     copyInviteLinkButtonLabel: string;
     dismissSidePaneButtonLabel?: string;
-    dtmfDialpadPlaceHolderText: string;
     moreDrawerAudioDeviceMenuTitle?: string;
     moreDrawerButtonLabel: string;
     moreDrawerButtonTooltip: string;
@@ -1084,6 +1086,48 @@ export type ClientState = CallClientState & ChatClientState;
 export type Common<A, B> = Pick<A, CommonProperties<A, B>>;
 
 // @public
+export interface CommonCallAdapter extends AdapterState<CallAdapterState>, Disposable, CallAdapterCallOperations, CallAdapterDeviceManagement, CallAdapterSubscribers {
+    joinCall(microphoneOn?: boolean): void;
+    startCall(participants: string[], options?: StartCallOptions): void;
+}
+
+// @public
+export interface CommonCallingHandlers {
+    // (undocumented)
+    onCreateLocalStreamView: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
+    // (undocumented)
+    onCreateRemoteStreamView: (userId: string, options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
+    // (undocumented)
+    onDisposeLocalStreamView: () => Promise<void>;
+    // (undocumented)
+    onDisposeRemoteStreamView: (userId: string) => Promise<void>;
+    // (undocumented)
+    onHangUp: (forEveryone?: boolean) => Promise<void>;
+    // (undocumented)
+    onRemoveParticipant(userId: string): Promise<void>;
+    // (undocumented)
+    onSelectCamera: (device: VideoDeviceInfo, options?: VideoStreamOptions) => Promise<void>;
+    // (undocumented)
+    onSelectMicrophone: (device: AudioDeviceInfo) => Promise<void>;
+    // (undocumented)
+    onSelectSpeaker: (device: AudioDeviceInfo) => Promise<void>;
+    // (undocumented)
+    onStartCall: (participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[], options?: StartCallOptions) => void;
+    // (undocumented)
+    onStartLocalVideo: () => Promise<void>;
+    // (undocumented)
+    onStartScreenShare: () => Promise<void>;
+    // (undocumented)
+    onStopScreenShare: () => Promise<void>;
+    // (undocumented)
+    onToggleCamera: (options?: VideoStreamOptions) => Promise<void>;
+    // (undocumented)
+    onToggleMicrophone: () => Promise<void>;
+    // (undocumented)
+    onToggleScreenShare: () => Promise<void>;
+}
+
+// @public
 export type CommonProperties<A, B> = {
     [P in keyof A & keyof B]: A[P] extends B[P] ? P : never;
 }[keyof A & keyof B];
@@ -1341,9 +1385,6 @@ export interface CustomMessage extends MessageCommon {
 export const darkTheme: PartialTheme & CallingTheme;
 
 // @public
-export type DeclarativeCallAgent = CallAgent;
-
-// @public
 export const DEFAULT_COMPONENT_ICONS: {
     ChatMessageOptions: JSX.Element;
     ControlButtonCameraOff: JSX.Element;
@@ -1572,6 +1613,7 @@ export const ErrorBar: (props: ErrorBarProps) => JSX.Element;
 // @public
 export interface ErrorBarProps extends IMessageBarProps {
     activeErrorMessages: ActiveErrorMessage[];
+    ignorePremountErrors?: boolean;
     strings?: ErrorBarStrings;
 }
 
@@ -1905,6 +1947,7 @@ export interface MessageThreadStyles extends BaseCustomStyles {
     chatContainer?: ComponentSlotStyle;
     chatItemMessageContainer?: ComponentSlotStyle;
     chatMessageContainer?: ComponentSlotStyle;
+    failedMyChatMessageContainer?: ComponentSlotStyle;
     loadPreviousMessagesButtonContainer?: IStyle;
     messageStatusContainer?: (mine: boolean) => IStyle;
     myChatItemMessageContainer?: ComponentSlotStyle;
@@ -2256,7 +2299,6 @@ export interface SendBoxStylesProps extends BaseCustomStyles {
 
 // @public
 export interface StatefulCallClient extends CallClient {
-    createCallAgent(...args: Parameters<CallClient['createCallAgent']>): Promise<DeclarativeCallAgent>;
     createView(callId: string | undefined, participantId: CommunicationIdentifier | undefined, stream: LocalVideoStreamState | RemoteVideoStreamState, options?: CreateViewOptions): Promise<CreateViewResult | undefined>;
     disposeView(callId: string | undefined, participantId: CommunicationIdentifier | undefined, stream: LocalVideoStreamState | RemoteVideoStreamState): void;
     getState(): CallClientState;
