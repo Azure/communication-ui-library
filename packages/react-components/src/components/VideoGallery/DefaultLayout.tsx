@@ -32,9 +32,9 @@ export interface DefaultLayoutStyles extends BaseCustomStyles {
 }
 
 /**
- * Props for {@link VideoGallery}.
+ * Props for {@link _DefaultLayout}.
  *
- * @public
+ * @private
  */
 export interface _DefaultLayoutProps {
   /**
@@ -53,10 +53,10 @@ export interface _DefaultLayoutProps {
 }
 
 /**
- * VideoGallery represents a layout of video tiles for a specific call.
- * It displays a {@link VideoTile} for the local user as well as for each remote participant who has joined the call.
+ * DefaultLayout displays elements passed to `gridComponents` prop in the grid area and elements passed to
+ * `horizontalGalleryComponents` prop in the horizontal gallery area.
  *
- * @public
+ * @private
  */
 export const _DefaultLayout = (props: _DefaultLayoutProps): JSX.Element => {
   const { gridComponents, horizontalGalleryComponents, styles } = props;
@@ -77,7 +77,7 @@ export const _DefaultLayout = (props: _DefaultLayoutProps): JSX.Element => {
         <GridLayout key="grid-layout" styles={styles?.gridLayout}>
           {gridComponents}
         </GridLayout>
-        {horizontalGalleryComponents && (
+        {horizontalGalleryComponents && horizontalGalleryComponents.length > 0 && (
           <div style={{ paddingTop: '0.5rem' }}>
             <ResponsiveHorizontalGallery
               key="responsive-horizontal-gallery"

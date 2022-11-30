@@ -497,5 +497,12 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       </div>
     );
   }
-  return <_DefaultLayout gridComponents={gridTiles} horizontalGalleryComponents={horizontalGalleryTiles} />;
+
+  const gridComponents = localParticipant.isScreenSharingOn
+    ? [localScreenShareStreamComponent]
+    : remoteScreenShareComponent
+    ? [remoteScreenShareComponent]
+    : gridTiles;
+
+  return <_DefaultLayout gridComponents={gridComponents} horizontalGalleryComponents={horizontalGalleryTiles} />;
 };
