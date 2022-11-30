@@ -405,11 +405,8 @@ export interface CallCompositeStrings {
     openDialpadButtonLabel: string;
     openDtmfDialpadLabel: string;
     outboundCallingNoticeString: string;
-<<<<<<< HEAD
-=======
     participantJoinedNoticeString: string;
     participantLeftNoticeString: string;
->>>>>>> fb0f5f95f6f3f6324ce07ec61906c8ba6813e3a9
     peopleButtonLabel: string;
     peopleButtonTooltipClose: string;
     peopleButtonTooltipOpen: string;

@@ -243,7 +243,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
 
     this.context.onCallEnded((endCallData) => this.emitter.emit('callEnded', endCallData));
 
-    const call = callAgent.calls.find((call) => call.state === 'Connecting');
+    const call = (callAgent as CallAgent).calls.find((call) => (call as Call).state === 'Connecting');
 
     const onStateChange = (clientState: CallClientState): void => {
       // unsubscribe when the instance gets disposed

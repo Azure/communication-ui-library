@@ -115,6 +115,10 @@ export abstract class ProxyCallAgentCommon {
     this._context.setIncomingCallEnded(incomingCallId, callEndReason);
   };
 
+  private onAcceptIncomingCall = (incomingCallId: string): void => {
+    this._declarativeIncomingCalls.delete(incomingCallId);
+  };
+
   protected incomingCall = ({ incomingCall }: { incomingCall: IncomingCallCommon }): void => {
     // Make sure to not subscribe to the incoming call if we are already subscribed to it.
     if (!this._incomingCallSubscribers.has(incomingCall.id)) {
@@ -123,7 +127,13 @@ export abstract class ProxyCallAgentCommon {
         new IncomingCallSubscriber(incomingCall, this.setIncomingCallEnded)
       );
     }
-    this._declarativeIncomingCalls.set(incomingCall.id, incomingCallDeclaratify(incomingCall, this._context));
+    const onAcceptCallBack = () => {
+      this.onAcceptIncomingCall(incomingCall.id);
+    };
+    this._declarativeIncomingCalls.set(
+      incomingCall.id,
+      incomingCallDeclaratify(incomingCall, this._context, onAcceptCallBack)
+    );
     this._context.setIncomingCall(convertSdkIncomingCallToDeclarativeIncomingCall(incomingCall));
   };
 
