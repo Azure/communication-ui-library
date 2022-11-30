@@ -17,9 +17,9 @@ export const UnsupportedEnvironmentDrawers: () => JSX.Element = () => {
   const unsupportedBrowserStrings = useLocale().strings.UnsupportedBrowser;
   const unsupportedBrowserVersionStrings = useLocale().strings.UnsupportedBrowserVersion;
   const unsupportedOperatingSystemStrings = useLocale().strings.UnsupportedOperatingSystem;
-  const [unsupportedBrowserShowing, setUnsupportedBrowserShowing] = useState(true);
-  const [unsupportedBrowserVersionShowing, setUnsupportedBrowserVersionShowing] = useState(true);
-  const [unsupportedOperatingSystemShowing, setUnsupportedOperatingSystemShowing] = useState(true);
+  const [unsupportedBrowserShowing, setUnsupportedBrowserShowing] = useState(false);
+  const [unsupportedBrowserVersionShowing, setUnsupportedBrowserVersionShowing] = useState(false);
+  const [unsupportedOperatingSystemShowing, setUnsupportedOperatingSystemShowing] = useState(false);
   const onLightDismissTriggeredUnsupportedBrowser = (): void => setUnsupportedBrowserShowing(false);
   const onLightDismissTriggeredUnsupportedBrowserVersion = (): void => setUnsupportedBrowserVersionShowing(false);
   const onLightDismissTriggeredUnsupportedOperatingSystem = (): void => setUnsupportedBrowserVersionShowing(false);
