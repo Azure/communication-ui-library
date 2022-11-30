@@ -18,12 +18,12 @@
     "lint:quiet": "rushx lint -- --quiet"
   },
   "dependencies": {
-    "@internal/acs-ui-common": "1.4.0",
-    "@internal/react-components": "1.4.0",
-    "@internal/chat-stateful-client": "1.4.0",
-    "@internal/calling-stateful-client": "1.4.0",
-    "@internal/chat-component-bindings": "1.4.0",
-    "@internal/calling-component-bindings": "1.4.0"
+    "@internal/acs-ui-common": "1.4.1",
+    "@internal/react-components": "1.4.1",
+    "@internal/chat-stateful-client": "1.4.1",
+    "@internal/calling-stateful-client": "1.4.1",
+    "@internal/chat-component-bindings": "1.4.1",
+    "@internal/calling-component-bindings": "1.4.1"
   },
   "devDependencies": {
     "eslint": "^7.7.0",
