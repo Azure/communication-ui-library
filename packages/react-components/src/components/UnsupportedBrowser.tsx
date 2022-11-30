@@ -16,7 +16,7 @@ export interface UnsupportedBrowserStrings {
   /** String for the secondary text */
   secondaryText: string;
   /** String to display in the text for the help link */
-  moreHelpText: string;
+  moreHelpLinkText: string;
 }
 
 /**

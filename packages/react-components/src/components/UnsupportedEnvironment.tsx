@@ -24,7 +24,7 @@ export interface UnsupportedEnvironmentStrings {
   /** String for the secondary text */
   secondaryText: string;
   /** String to display in the text for the help link */
-  moreHelpText: string;
+  moreHelpLinkText: string;
 }
 
 /**
@@ -59,7 +59,7 @@ const UnsupportedEnvironmentContainer = (props: UnsupportedEnvironmentProps): JS
           }}
           data-ui-id="unsupported-environment-link"
         >
-          {strings.moreHelpText}
+          {strings.moreHelpLinkText}
         </Link>
       )}
     </Stack>

@@ -3080,7 +3080,7 @@ export interface UnsupportedBrowserProps {
 
 // @beta
 export interface UnsupportedBrowserStrings {
-    moreHelpText: string;
+    moreHelpLinkText: string;
     primaryText: string;
     secondaryText: string;
 }
@@ -3096,7 +3096,7 @@ export interface UnsupportedBrowserVersionProps {
 
 // @beta
 export interface UnsupportedBrowserVersionStrings {
-    moreHelpText: string;
+    moreHelpLinkText: string;
     primaryText: string;
     secondaryText: string;
 }
@@ -3112,7 +3112,7 @@ export interface UnsupportedOperatingSystemProps {
 
 // @beta
 export interface UnsupportedOperatingSystemStrings {
-    moreHelpText: string;
+    moreHelpLinkText: string;
     primaryText: string;
     secondaryText: string;
 }
