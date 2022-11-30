@@ -374,10 +374,7 @@ export interface ComponentStrings {
     typingIndicator: TypingIndicatorStrings;
     UnsupportedBrowser: UnsupportedBrowserStrings;
     UnsupportedBrowserVersion: UnsupportedBrowserVersionStrings;
-<<<<<<< HEAD
     UnsupportedOperatingSystem: UnsupportedOperatingSystemStrings;
-=======
->>>>>>> b3eb013be390e5dd3895fccb995b1950b1a93693
     videoGallery: VideoGalleryStrings;
     videoTile: VideoTileStrings;
 }
@@ -1575,11 +1572,7 @@ export interface UnsupportedBrowserProps {
 
 // @beta
 export interface UnsupportedBrowserStrings {
-<<<<<<< HEAD
     moreHelpLinkText: string;
-=======
-    moreHelpText: string;
->>>>>>> b3eb013be390e5dd3895fccb995b1950b1a93693
     primaryText: string;
     secondaryText: string;
 }
@@ -1595,7 +1588,6 @@ export interface UnsupportedBrowserVersionProps {
 
 // @beta
 export interface UnsupportedBrowserVersionStrings {
-<<<<<<< HEAD
     moreHelpLinkText: string;
     primaryText: string;
     secondaryText: string;
@@ -1613,9 +1605,6 @@ export interface UnsupportedOperatingSystemProps {
 // @beta
 export interface UnsupportedOperatingSystemStrings {
     moreHelpLinkText: string;
-=======
-    moreHelpText: string;
->>>>>>> b3eb013be390e5dd3895fccb995b1950b1a93693
     primaryText: string;
     secondaryText: string;
 }
