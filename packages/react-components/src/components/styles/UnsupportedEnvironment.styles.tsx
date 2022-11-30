@@ -24,7 +24,8 @@ export const secondaryTextStyles: ITextStyles = {
   root: {
     margin: 'auto',
     fontWeight: 400,
-    paddingBottom: '0.5rem'
+    paddingBottom: '0.5rem',
+    textAlign: 'center'
   }
 };
 

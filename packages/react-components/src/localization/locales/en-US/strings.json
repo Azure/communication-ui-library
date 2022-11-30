@@ -247,7 +247,12 @@
   "UnsupportedBrowser": {
     "primaryText": "Browser not supported",
     "secondaryText": "Please join this call using a compatible browser.",
-    "moreHelpLink": "More help"
+    "moreHelpText": "More help"
+  },
+  "UnsupportedBrowserVersion": {
+    "primaryText": "Browser version not supported",
+    "secondaryText": "Please update your browser and then try joining the call again.",
+    "moreHelpText": "See compatibility requirements"
   },
   "BrowserPermissionDenied": {
     "primaryText": "Can't use your camera or microphone",

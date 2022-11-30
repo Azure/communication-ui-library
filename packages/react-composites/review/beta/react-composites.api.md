@@ -1119,7 +1119,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     DomainPermissionMic: JSX.Element;
     DomainPermissionCameraDenied: JSX.Element;
     DomainPermissionMicDenied: JSX.Element;
-    UnsupportedBrowserWarning: JSX.Element;
+    UnsupportedEnvironmentWarning: JSX.Element;
     BrowserPermissionDeniedError: JSX.Element;
     VideoTilePinned: JSX.Element;
     VideoTileMoreOptions: JSX.Element;

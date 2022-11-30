@@ -2,9 +2,10 @@
 // Licensed under the MIT license.
 
 /* @conditional-compile-remove(unsupported-browser) */
+import { EnvironmentInfo } from '@azure/communication-calling';
 import { IStackStyles, Stack } from '@fluentui/react';
 /* @conditional-compile-remove(unsupported-browser) */
-import { UnsupportedBrowser } from '@internal/react-components';
+import { UnsupportedBrowser, UnsupportedBrowserVersion } from '@internal/react-components';
 import React from 'react';
 /* @conditional-compile-remove(unsupported-browser) */
 import { useLocale } from '../../localization';
@@ -14,6 +15,8 @@ import { useLocale } from '../../localization';
  */
 export type UnsupportedBrowserPageProps = {
   onTroubleshootingClick?: () => void;
+  /* @conditional-compile-remove(unsupported-browser) */
+  environmentInfo?: EnvironmentInfo;
 };
 
 /**
@@ -22,22 +25,32 @@ export type UnsupportedBrowserPageProps = {
  */
 export const UnsupportedBrowserPage = (props: UnsupportedBrowserPageProps): JSX.Element => {
   /* @conditional-compile-remove(unsupported-browser) */
-  const { onTroubleshootingClick } = props;
+  const { onTroubleshootingClick, environmentInfo } = props;
   /* @conditional-compile-remove(unsupported-browser) */
   const locale = useLocale();
   /* @conditional-compile-remove(unsupported-browser) */
   const unsupportedBrowserStrings = locale.component.strings.UnsupportedBrowser;
-
   /* @conditional-compile-remove(unsupported-browser) */
-  return (
-    <Stack styles={containerStyles}>
+  const unsupportedBrowserVersionStrings = locale.component.strings.UnsupportedBrowserVersion;
+
+  let pageElement: JSX.Element | undefined = <></>;
+  /* @conditional-compile-remove(unsupported-browser) */
+  if (!environmentInfo?.isSupportedBrowser) {
+    pageElement = (
       <UnsupportedBrowser onTroubleshootingClick={onTroubleshootingClick} strings={unsupportedBrowserStrings} />
-    </Stack>
-  );
-  return <></>;
+    );
+  } else if (!environmentInfo?.isSupportedBrowserVersion) {
+    pageElement = (
+      <UnsupportedBrowserVersion
+        onTroubleshootingClick={onTroubleshootingClick}
+        strings={unsupportedBrowserVersionStrings}
+      />
+    );
+  }
+
+  return <Stack styles={containerStyles}>{pageElement}</Stack>;
 };
 
-/* @conditional-compile-remove(unsupported-browser) */
 const containerStyles: IStackStyles = {
   root: {
     margin: 'auto',

@@ -233,7 +233,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     deviceManager: StatefulDeviceManager,
     options?: AzureCommunicationCallAdapterOptions
   ) {
-    console.log(options);
     this.bindPublicMethods();
     this.callClient = callClient;
     this.callAgent = callAgent;
