@@ -116,6 +116,8 @@ export interface VideoGalleryProps {
   styles?: VideoGalleryStyles;
   /** Layout of the video tiles. */
   layout?: VideoGalleryLayout;
+  scalingModeOverride: Map<string, 'fill' | 'fit'>;
+  onScalingModeChange: (userId: string, scalingMode: 'fill' | 'fit') => void;
   /** Local video particpant */
   localParticipant: VideoGalleryLocalParticipant;
   /** List of remote video particpants */
@@ -346,6 +348,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       return (
         <_RemoteVideoTile
           key={participant.userId}
+          remoteParticipant={participant}
           {...participant}
           onCreateRemoteStreamView={isVideoParticipant ? onCreateRemoteStreamView : undefined}
           onDisposeRemoteStreamView={isVideoParticipant ? onDisposeRemoteStreamView : undefined}

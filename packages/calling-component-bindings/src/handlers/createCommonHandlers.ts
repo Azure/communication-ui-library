@@ -5,6 +5,7 @@ import {
   AudioDeviceInfo,
   Call,
   LocalVideoStream,
+  ScalingMode,
   StartCallOptions,
   VideoDeviceInfo
 } from '@azure/communication-calling';
@@ -360,6 +361,12 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
     const askDevicePermission = async (constrain: PermissionConstraints): Promise<void> => {
       if (deviceManager) {
         await deviceManager?.askDevicePermission(constrain);
+      }
+    };
+
+    const onChangeRemoteVideoScalingMode = async (userId: string, scalingMode: ScalingMode): Promise<void> => {
+      if (!call) {
+        return;
       }
     };
 

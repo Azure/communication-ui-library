@@ -7,7 +7,8 @@ import {
   VideoStreamOptions,
   OnRenderAvatarCallback,
   CustomAvatarOptions,
-  Announcer
+  Announcer,
+  CreateVideoStreamViewResult
 } from '@internal/react-components';
 import { usePropsFor } from '../hooks/usePropsFor';
 import { AvatarPersona, AvatarPersonaDataCallback } from '../../common/AvatarPersona';
@@ -54,6 +55,26 @@ export interface MediaGalleryProps {
  */
 export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
   const videoGalleryProps = usePropsFor(VideoGallery);
+  // const remoteParticipants = videoGalleryProps.remoteParticipants;
+  // const participantsWithScalingModes = updateScalingModes(remoteParticipants);
+
+  // Internal Map
+  const viewMap = {
+    userId: view
+  };
+
+  const onCreateRemoteStreamView: (
+    userId: string,
+    options?: VideoStreamOptions
+  ) => Promise<void | CreateVideoStreamViewResult> = async (userId, options) => {
+    const view = await videoGalleryProps.onCreateRemoteStreamView(userId, options);
+    return view;
+  };
+
+  // const remoteParticipants = videoGalleryProps.remoteParticipants;
+  // remoteParticipants.find((i) => i.userId === 'test')?.videoStream.scalingMode = 'Crop';
+  // videoGalleryProps.remoteParticipants = remoteParticipants;
+
   const cameraSwitcherCameras = useSelector(localVideoCameraCycleButtonSelector);
   const cameraSwitcherCallback = useHandlers(LocalVideoCameraCycleButton);
   const announcerString = useParticipantChangedAnnouncement();
@@ -83,6 +104,7 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     return (
       <VideoGallery
         {...videoGalleryProps}
+        onCreateRemoteStreamView={onCreateRemoteStreamView.bind(this)}
         localVideoViewOptions={localVideoViewOptions}
         remoteVideoViewOptions={remoteVideoViewOptions}
         styles={VideoGalleryStyles}

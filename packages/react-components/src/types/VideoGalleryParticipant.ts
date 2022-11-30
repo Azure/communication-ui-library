@@ -58,6 +58,8 @@ export interface VideoGalleryStream {
   isMirrored?: boolean;
   /** Render element of the video stream */
   renderElement?: HTMLElement;
+  /** Scaling mode */
+  scalingMode: ViewScalingMode;
 }
 
 /**

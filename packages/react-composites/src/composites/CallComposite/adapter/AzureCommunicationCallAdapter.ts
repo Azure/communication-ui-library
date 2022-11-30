@@ -59,7 +59,7 @@ import { CallAdapterOptionalFeatures } from './CallAdapter';
 /* @conditional-compile-remove(teams-identity-support) */
 import { TeamsCallAdapter } from './CallAdapter';
 import { getCallCompositePage, IsCallEndedPage, isCameraOn } from '../utils';
-import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
+import { CreateVideoStreamViewResult, VideoStreamOptions, ViewScalingMode } from '@internal/react-components';
 /* @conditional-compile-remove(rooms) */
 import { Role } from '@internal/react-components';
 import { toFlatCommunicationIdentifier, _toCommunicationIdentifier } from '@internal/acs-ui-common';
@@ -419,6 +419,8 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
       return await this.handlers.onCreateRemoteStreamView(remoteUserId, options);
     }
   }
+
+  public async updateScalingMode(remoteUserId: string, scalingMode: ViewScalingMode) {}
 
   public async disposeStreamView(remoteUserId?: string): Promise<void> {
     if (remoteUserId === undefined) {

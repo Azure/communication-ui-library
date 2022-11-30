@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { VideoStreamOptions, CreateVideoStreamViewResult, ViewScalingMode } from '../../types';
 
 /** @private */
@@ -131,11 +131,16 @@ export interface RemoteVideoStreamLifecycleMaintainerProps extends VideoStreamLi
  *
  * @private
  */
-export const useRemoteVideoStreamLifecycleMaintainer = (props: RemoteVideoStreamLifecycleMaintainerProps): void => {
+export const useRemoteVideoStreamLifecycleMaintainer = (
+  props: RemoteVideoStreamLifecycleMaintainerProps
+): CreateVideoStreamViewResult | void => {
   const { remoteParticipantId, onCreateRemoteStreamView, onDisposeRemoteStreamView } = props;
+  const [createViewResult, setCreateViewResult] = React.useState<CreateVideoStreamViewResult | void>();
   const onCreateStreamView = useMemo(
     () => (options?: VideoStreamOptions) => {
-      return onCreateRemoteStreamView?.(remoteParticipantId, options);
+      return onCreateRemoteStreamView?.(remoteParticipantId, options).then((result) => {
+        setCreateViewResult(result);
+      });
     },
     [onCreateRemoteStreamView, remoteParticipantId]
   );
@@ -146,9 +151,11 @@ export const useRemoteVideoStreamLifecycleMaintainer = (props: RemoteVideoStream
     [onDisposeRemoteStreamView, remoteParticipantId]
   );
 
-  return useVideoStreamLifecycleMaintainer({
+  useVideoStreamLifecycleMaintainer({
     ...props,
     onCreateStreamView,
     onDisposeStreamView
   });
+
+  return createViewResult;
 };

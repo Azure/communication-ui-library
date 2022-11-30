@@ -2,7 +2,13 @@
 // Licensed under the MIT license.
 
 import React, { useMemo } from 'react';
-import { CreateVideoStreamViewResult, OnRenderAvatarCallback, ParticipantState, VideoStreamOptions } from '../types';
+import {
+  CreateVideoStreamViewResult,
+  OnRenderAvatarCallback,
+  ParticipantState,
+  VideoGalleryRemoteParticipant,
+  VideoStreamOptions
+} from '../types';
 import { StreamMedia } from './StreamMedia';
 import {
   useRemoteVideoStreamLifecycleMaintainer,
@@ -20,6 +26,7 @@ import { VideoTile } from './VideoTile';
 export const _RemoteVideoTile = React.memo(
   (props: {
     userId: string;
+    remoteParticipant: VideoGalleryRemoteParticipant;
     onCreateRemoteStreamView?: (
       userId: string,
       options?: VideoStreamOptions
@@ -80,8 +87,12 @@ export const _RemoteVideoTile = React.memo(
       ]
     );
 
+    const scalingMode = props.remoteParticipant.videoStream?.scalingMode;
     // Handle creating, destroying and updating the video stream as necessary
-    useRemoteVideoStreamLifecycleMaintainer(remoteVideoStreamProps);
+    const createViewResult = useRemoteVideoStreamLifecycleMaintainer(remoteVideoStreamProps);
+    if (createViewResult) {
+      createViewResult.view.updateScalingMode();
+    }
 
     const showLoadingIndicator = isAvailable && isReceiving === false && props.participantState !== 'Disconnected';
 
