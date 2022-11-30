@@ -42,14 +42,18 @@ export interface _DefaultLayoutProps {
    *
    * @Example
    * ```
-   * <DefaultLayout styles={{ root: { border: 'solid 1px red' } }} />
+   * <_DefaultLayout styles={{ root: { border: 'solid 1px red' } }} />
    * ```
    */
   styles?: DefaultLayoutStyles;
-
-  gridComponents?: JSX.Element[];
-
-  horizontalGalleryComponents?: JSX.Element[];
+  /**
+   * Elements to display in the grid
+   */
+  gridElements?: JSX.Element[];
+  /**
+   * Elements to display in the horizontal gallery
+   */
+  horizontalGalleryElements?: JSX.Element[];
 }
 
 /**
@@ -59,7 +63,7 @@ export interface _DefaultLayoutProps {
  * @private
  */
 export const _DefaultLayout = (props: _DefaultLayoutProps): JSX.Element => {
-  const { gridComponents, horizontalGalleryComponents, styles } = props;
+  const { gridElements, horizontalGalleryElements, styles } = props;
 
   const ids = useIdentifiers();
 
@@ -75,9 +79,9 @@ export const _DefaultLayout = (props: _DefaultLayoutProps): JSX.Element => {
     >
       <Stack horizontal={false} styles={videoGalleryContainerStyle}>
         <GridLayout key="grid-layout" styles={styles?.gridLayout}>
-          {gridComponents}
+          {gridElements}
         </GridLayout>
-        {horizontalGalleryComponents && horizontalGalleryComponents.length > 0 && (
+        {horizontalGalleryElements && horizontalGalleryElements.length > 0 && (
           <div style={{ paddingTop: '0.5rem' }}>
             <ResponsiveHorizontalGallery
               key="responsive-horizontal-gallery"
@@ -89,7 +93,7 @@ export const _DefaultLayout = (props: _DefaultLayoutProps): JSX.Element => {
               buttonWidthRem={HORIZONTAL_GALLERY_BUTTON_WIDTH}
               gapWidthRem={HORIZONTAL_GALLERY_GAP}
             >
-              {horizontalGalleryComponents}
+              {horizontalGalleryElements}
             </ResponsiveHorizontalGallery>
           </div>
         )}
