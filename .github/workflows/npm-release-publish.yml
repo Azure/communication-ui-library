@@ -25,6 +25,14 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  print-inputs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: job summary
+        run: |
+          echo "### inputs" >> $GITHUB_STEP_SUMMARY
+          echo "- npm-tag: ${{ inputs.npm-tag }}" >> $GITHUB_STEP_SUMMARY
+          echo "- release-flavor: ${{ inputs.release-flavor }}" >> $GITHUB_STEP_SUMMARY
   publish:
     environment:
       name: npm
