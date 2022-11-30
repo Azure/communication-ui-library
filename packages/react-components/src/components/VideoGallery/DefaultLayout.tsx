@@ -17,7 +17,7 @@ import {
   SMALL_HORIZONTAL_GALLERY_TILE_SIZE_REM,
   videoGalleryContainerStyle,
   videoGalleryOuterDivStyle
-} from '../styles/VideoGallery.styles';
+} from './styles/DefaultLayout.styles';
 import { isNarrowWidth, _useContainerWidth } from '../utils/responsive';
 
 /**
