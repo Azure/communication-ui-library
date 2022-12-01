@@ -31,7 +31,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Trigger touchdown build pipeline. Commit changes if current branch is not 'main'.
+      - name: Trigger touchdown build pipeline. Commit changes if specified on workflow dispatch input.
         uses: Azure/pipelines@v1.2
         with:
           azure-devops-project-url: 'https://skype.visualstudio.com/SCC'
