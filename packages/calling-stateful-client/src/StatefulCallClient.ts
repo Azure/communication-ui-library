@@ -365,11 +365,10 @@ export const createStatefulCallClientWithDeps = (
     ): Promise<CreateViewResult | undefined> => {
       const participantIdKind = participantId ? getIdentifierKind(participantId) : undefined;
       const result = await createView(context, internalContext, callId, participantIdKind, stream, options);
-      // We only need to declaratify the VideoStreamRendererView object for remote participants.
-      // Because the updateScalingMode only needs to be called on remote participant stream views.
+      // We only need to declaratify the VideoStreamRendererView object for remote participants. Because the updateScalingMode only needs to be called on remote participant stream views.
       if ('id' in stream && callId && participantId && result) {
         const participantKey = toFlatCommunicationIdentifier(participantId);
-        result.view = videoStreamRendererViewDeclaratify(result?.view, context, callId, participantKey, stream.id);
+        result.view = videoStreamRendererViewDeclaratify(result.view, context, callId, participantKey, stream.id);
       }
       return result;
     }

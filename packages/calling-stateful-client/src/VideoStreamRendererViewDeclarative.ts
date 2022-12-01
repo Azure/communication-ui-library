@@ -36,9 +36,8 @@ export class ProxyVideoStreamRendererView implements ProxyHandler<VideoStreamRen
 }
 
 /**
- * Creates a declarative Incoming Call by proxying IncomingCall using ProxyIncomingCall.
- * @param incomingCall - IncomingCall from SDK
- * @returns proxied IncomingCall
+ * Creates a declarative VideoStreamRendererView that is backed by a VideoStreamRendererView from the SDK.
+ * Calling methods on this declarative object triggers state updates in the stateful client.
  */
 export const videoStreamRendererViewDeclaratify = (
   view: VideoStreamRendererView,
