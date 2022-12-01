@@ -11,10 +11,11 @@ import { callAgentDeclaratify, DeclarativeCallAgent } from './CallAgentDeclarati
 import { InternalCallContext } from './InternalCallContext';
 import { createView, disposeView, CreateViewResult } from './StreamUtils';
 import { CommunicationIdentifier, CommunicationUserIdentifier, getIdentifierKind } from '@azure/communication-common';
-import { _getApplicationId } from '@internal/acs-ui-common';
+import { toFlatCommunicationIdentifier, _getApplicationId } from '@internal/acs-ui-common';
 import { callingStatefulLogger } from './Logger';
 /* @conditional-compile-remove(teams-identity-support) */
 import { DeclarativeTeamsCallAgent, teamsCallAgentDeclaratify } from './TeamsCallAgentDeclarative';
+import { videoStreamRendererViewDeclaratify } from './VideoStreamRendererViewDeclarative';
 
 /**
  * Defines the methods that allow CallClient {@link @azure/communication-calling#CallClient} to be used statefully.
@@ -356,14 +357,21 @@ export const createStatefulCallClientWithDeps = (
   });
   Object.defineProperty(callClient, 'createView', {
     configurable: false,
-    value: (
+    value: async (
       callId: string | undefined,
       participantId: CommunicationIdentifier | undefined,
       stream: LocalVideoStreamState | RemoteVideoStreamState,
       options?: CreateViewOptions
     ): Promise<CreateViewResult | undefined> => {
       const participantIdKind = participantId ? getIdentifierKind(participantId) : undefined;
-      return createView(context, internalContext, callId, participantIdKind, stream, options);
+      const result = await createView(context, internalContext, callId, participantIdKind, stream, options);
+      // We only need to declaratify the VideoStreamRendererView object for remote participants.
+      // Because the updateScalingMode only needs to be called on remote participant stream views.
+      if ('id' in stream && callId && participantId && result) {
+        const participantKey = toFlatCommunicationIdentifier(participantId);
+        result.view = videoStreamRendererViewDeclaratify(result?.view, context, callId, participantKey, stream.id);
+      }
+      return result;
     }
   });
   Object.defineProperty(callClient, 'disposeView', {
