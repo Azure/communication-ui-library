@@ -32,17 +32,17 @@ export interface DefaultLayoutStyles extends BaseCustomStyles {
 }
 
 /**
- * Props for {@link _DefaultLayout}.
+ * Props for {@link DefaultLayout}.
  *
  * @private
  */
-export interface _DefaultLayoutProps {
+export interface DefaultLayoutProps {
   /**
    * Allows users to pass an object containing custom CSS styles for the gallery container.
    *
    * @Example
    * ```
-   * <_DefaultLayout styles={{ root: { border: 'solid 1px red' } }} />
+   * <DefaultLayout styles={{ root: { border: 'solid 1px red' } }} />
    * ```
    */
   styles?: DefaultLayoutStyles;
@@ -62,7 +62,7 @@ export interface _DefaultLayoutProps {
  *
  * @private
  */
-export const _DefaultLayout = (props: _DefaultLayoutProps): JSX.Element => {
+export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
   const { gridElements, horizontalGalleryElements, styles } = props;
 
   const ids = useIdentifiers();
@@ -82,7 +82,7 @@ export const _DefaultLayout = (props: _DefaultLayoutProps): JSX.Element => {
           {gridElements}
         </GridLayout>
         {horizontalGalleryElements && horizontalGalleryElements.length > 0 && (
-          <div style={{ paddingTop: '0.5rem' }}>
+          <Stack styles={{ root: { paddingTop: '0.5rem' } }}>
             <ResponsiveHorizontalGallery
               key="responsive-horizontal-gallery"
               containerStyles={horizontalGalleryContainerStyle(false, isNarrow)}
@@ -95,7 +95,7 @@ export const _DefaultLayout = (props: _DefaultLayoutProps): JSX.Element => {
             >
               {horizontalGalleryElements}
             </ResponsiveHorizontalGallery>
-          </div>
+          </Stack>
         )}
       </Stack>
     </div>

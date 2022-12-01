@@ -47,7 +47,7 @@ import { _formatString } from '@internal/acs-ui-common';
 import { _LocalVideoTile } from './LocalVideoTile';
 /* @conditional-compile-remove(rooms) */
 import { _usePermissions } from '../permissions';
-import { _DefaultLayout } from './VideoGallery/DefaultLayout';
+import { DefaultLayout } from './VideoGallery/DefaultLayout';
 
 /**
  * @private
@@ -476,7 +476,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
             </GridLayout>
           )}
           {horizontalGalleryPresent && (
-            <div style={{ paddingTop: '0.5rem' }}>
+            <Stack styles={{ root: { paddingTop: '0.5rem' } }}>
               <ResponsiveHorizontalGallery
                 key="responsive-horizontal-gallery"
                 containerStyles={horizontalGalleryContainerStyle(shouldFloatLocalVideo, isNarrow)}
@@ -489,7 +489,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
               >
                 {horizontalGalleryTiles}
               </ResponsiveHorizontalGallery>
-            </div>
+            </Stack>
           )}
 
           <LayerHost id={layerHostId} className={mergeStyles(layerHostStyle)} />
@@ -504,5 +504,5 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     ? [remoteScreenShareComponent]
     : gridTiles;
 
-  return <_DefaultLayout gridElements={gridElements} horizontalGalleryElements={horizontalGalleryTiles} />;
+  return <DefaultLayout gridElements={gridElements} horizontalGalleryElements={horizontalGalleryTiles} />;
 };
