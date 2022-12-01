@@ -519,7 +519,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
    * @param oldCall Call that is currently in the adapter to put on hold
    */
   public async switchCall(newCall: Call, oldCall?: Call): Promise<void> {
-    if (oldCall) {
+    if (oldCall && oldCall.state !== 'Disconnected') {
       await oldCall.hold();
     }
     if (newCall.state === 'LocalHold') {
