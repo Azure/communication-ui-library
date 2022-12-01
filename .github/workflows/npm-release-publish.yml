@@ -30,8 +30,9 @@ jobs:
     steps:
       - name: job summary
         run: |
-          echo "### branch: ${GITHUB_REF##*/}" >> $GITHUB_STEP_SUMMARY
-          echo "### inputs" >> $GITHUB_STEP_SUMMARY
+          echo "### Job Inputs - Review before approving workflow"
+          echo "This job has been triggered with the following inputs, review these are correct before approving the npm deployment." >> $GITHUB_STEP_SUMMARY
+          echo "- release branch: ${{ github.head_ref }}" >> $GITHUB_STEP_SUMMARY
           echo "- npm-tag: ${{ inputs.npm-tag }}" >> $GITHUB_STEP_SUMMARY
           echo "- release-flavor: ${{ inputs.release-flavor }}" >> $GITHUB_STEP_SUMMARY
   publish:
