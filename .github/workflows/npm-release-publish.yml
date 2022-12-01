@@ -30,7 +30,7 @@ jobs:
     steps:
       - name: job summary
         run: |
-          echo "### Job Inputs - Review before approving workflow"
+          echo "### Job Inputs - Review before approving workflow" >> $GITHUB_STEP_SUMMARY
           echo "This job has been triggered with the following inputs, review these are correct before approving the npm deployment." >> $GITHUB_STEP_SUMMARY
           echo "- release branch: ${{ github.head_ref }}" >> $GITHUB_STEP_SUMMARY
           echo "- npm-tag: ${{ inputs.npm-tag }}" >> $GITHUB_STEP_SUMMARY
