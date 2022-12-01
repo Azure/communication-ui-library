@@ -25,10 +25,10 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  workflow-info:
+  job-inputs:
     runs-on: ubuntu-latest
     steps:
-      - name: job summary
+      - name: job inputs summary
         run: |
           echo "### Job Inputs - Review before approving workflow" >> $GITHUB_STEP_SUMMARY
           echo "This job has been triggered with the following inputs, review these are correct before approving the npm deployment." >> $GITHUB_STEP_SUMMARY
