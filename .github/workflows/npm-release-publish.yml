@@ -28,11 +28,15 @@ jobs:
   job-inputs:
     runs-on: ubuntu-latest
     steps:
+      - name: Set branch name
+        id: vars
+        run: echo ::set-output name=branch::${GITHUB_REF#refs/*/}
+
       - name: job inputs summary
         run: |
           echo "### Job Inputs - Review before approving workflow" >> $GITHUB_STEP_SUMMARY
           echo "This job has been triggered with the following inputs, review these are correct before approving the npm deployment." >> $GITHUB_STEP_SUMMARY
-          echo "- release branch: ${{ github.head_ref }}" >> $GITHUB_STEP_SUMMARY
+          echo "- release branch: ${{ steps.vars.outputs.branch }}" >> $GITHUB_STEP_SUMMARY
           echo "- npm-tag: ${{ inputs.npm-tag }}" >> $GITHUB_STEP_SUMMARY
           echo "- release-flavor: ${{ inputs.release-flavor }}" >> $GITHUB_STEP_SUMMARY
   publish:
