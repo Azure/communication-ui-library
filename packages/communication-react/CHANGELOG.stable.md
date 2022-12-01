@@ -1,8 +1,17 @@
 # Change Log - @azure/communication-react
 
-This log was last generated on Fri, 21 Oct 2022 23:01:52 GMT and should not be manually modified.
+This log was last generated on Wed, 30 Nov 2022 17:40:55 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.4.1](https://github.com/azure/communication-ui-library/tree/1.4.1)
+
+Wed, 30 Nov 2022 17:40:55 GMT
+[Compare changes](https://github.com/azure/communication-ui-library/compare/1.4.0...1.4.1)
+
+This is a patch release for issue where the local video tile was not showing the users local stream despite the camera being on [more details](https://github.com/Azure/communication-ui-library/pull/2558):
+
+- Fix: Local video not showing to local user but still broadcasts to others in the call. ([PR #2558](https://github.com/Azure/communication-ui-library/pull/2558) by 2684369+JamesBurnside@users.noreply.github.com).
 
 ## [1.4.0](https://github.com/azure/communication-ui-library/tree/1.4.0)
 

@@ -1516,6 +1516,7 @@ export interface ComponentStrings {
     typingIndicator: TypingIndicatorStrings;
     UnsupportedBrowser: UnsupportedBrowserStrings;
     UnsupportedBrowserVersion: UnsupportedBrowserVersionStrings;
+    UnsupportedOperatingSystem: UnsupportedOperatingSystemStrings;
     videoGallery: VideoGalleryStrings;
     videoTile: VideoTileStrings;
 }
@@ -3083,7 +3084,7 @@ export interface UnsupportedBrowserProps {
 
 // @beta
 export interface UnsupportedBrowserStrings {
-    moreHelpText: string;
+    moreHelpLinkText: string;
     primaryText: string;
     secondaryText: string;
 }
@@ -3099,7 +3100,23 @@ export interface UnsupportedBrowserVersionProps {
 
 // @beta
 export interface UnsupportedBrowserVersionStrings {
-    moreHelpText: string;
+    moreHelpLinkText: string;
+    primaryText: string;
+    secondaryText: string;
+}
+
+// @beta
+export const UnsupportedOperatingSystem: (props: UnsupportedOperatingSystemProps) => JSX.Element;
+
+// @beta
+export interface UnsupportedOperatingSystemProps {
+    onTroubleshootingClick?: () => void;
+    strings: UnsupportedOperatingSystemStrings;
+}
+
+// @beta
+export interface UnsupportedOperatingSystemStrings {
+    moreHelpLinkText: string;
     primaryText: string;
     secondaryText: string;
 }
@@ -3218,6 +3235,7 @@ export interface VideoGalleryStream {
     isMirrored?: boolean;
     isReceiving?: boolean;
     renderElement?: HTMLElement;
+    scalingMode?: ViewScalingMode;
 }
 
 // @public

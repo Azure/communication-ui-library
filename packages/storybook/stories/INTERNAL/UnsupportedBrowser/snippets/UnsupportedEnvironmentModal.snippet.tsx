@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { Modal, PrimaryButton, Stack } from '@fluentui/react';
-import { UnsupportedBrowser, UnsupportedBrowserVersion } from '@internal/react-components';
+import { UnsupportedBrowser, UnsupportedBrowserVersion, UnsupportedOperatingSystem } from '@internal/react-components';
 import React, { useState } from 'react';
 
 import { useLocale } from '../../../../../react-components/src/localization';
@@ -10,8 +10,10 @@ import { useLocale } from '../../../../../react-components/src/localization';
 export const UnsupportedEnvironmentModals: () => JSX.Element = () => {
   const unsupportedBrowserStrings = useLocale().strings.UnsupportedBrowser;
   const unsupportedBrowserVersionStrings = useLocale().strings.UnsupportedBrowserVersion;
+  const unsupportedBrowserOperatingSystem = useLocale().strings.UnsupportedBrowserVersion;
   const [unsupportedBrowserModalOpen, setUnsupportedBrowserModalOpen] = useState<boolean>(false);
   const [unsupportedBrowserVersionModalOpen, setUnsupportedBrowserVersionModalOpen] = useState<boolean>(false);
+  const [unsupportedOperatingSystemModalOpen, setUnsupportedOperatingSystemModalOpen] = useState<boolean>(false);
   return (
     <Stack horizontal>
       <PrimaryButton
@@ -30,6 +32,14 @@ export const UnsupportedEnvironmentModals: () => JSX.Element = () => {
       >
         Open UnsupportedBrowserVersion Modal
       </PrimaryButton>
+      <PrimaryButton
+        style={{ margin: 'auto' }}
+        onClick={() => {
+          setUnsupportedOperatingSystemModalOpen(true);
+        }}
+      >
+        Open UnsupportedOperatingSystem Modal
+      </PrimaryButton>
       <Modal isOpen={unsupportedBrowserModalOpen} onDismiss={() => setUnsupportedBrowserModalOpen(false)}>
         <UnsupportedBrowser
           strings={unsupportedBrowserStrings}
@@ -41,6 +51,17 @@ export const UnsupportedEnvironmentModals: () => JSX.Element = () => {
       <Modal isOpen={unsupportedBrowserVersionModalOpen} onDismiss={() => setUnsupportedBrowserVersionModalOpen(false)}>
         <UnsupportedBrowserVersion
           strings={unsupportedBrowserVersionStrings}
+          onTroubleshootingClick={() => {
+            alert('clicked help link');
+          }}
+        />
+      </Modal>
+      <Modal
+        isOpen={unsupportedOperatingSystemModalOpen}
+        onDismiss={() => setUnsupportedOperatingSystemModalOpen(false)}
+      >
+        <UnsupportedOperatingSystem
+          strings={unsupportedBrowserOperatingSystem}
           onTroubleshootingClick={() => {
             alert('clicked help link');
           }}
