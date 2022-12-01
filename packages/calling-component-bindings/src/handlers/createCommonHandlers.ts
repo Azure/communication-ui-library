@@ -296,7 +296,9 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
         // Hardcoded `scalingMode` since it is highly unlikely that CONTOSO would ever want to use a different scaling mode for screenshare.
         // Using `Crop` would crop the contents of screenshare and `Stretch` would warp it.
         // `Fit` is the only mode that maintains the integrity of the screen being shared.
-        await callClient.createView(call.id, participant.identifier, screenShareStream, { scalingMode: 'Fit' });
+        createViewResult = await callClient.createView(call.id, participant.identifier, screenShareStream, {
+          scalingMode: 'Fit'
+        });
       }
 
       return createViewResult?.view ? { view: createViewResult?.view } : undefined;
