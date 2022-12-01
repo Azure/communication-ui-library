@@ -46,6 +46,80 @@ test.describe('unsupportedBrowser page tests', async () => {
 
     expect(await stableScreenshot(page)).toMatchSnapshot(`unsupportedBrowserPage-with-link.png`);
   });
+
+  test('unsupportedBrowserVersion displays correctly with no help link', async ({ page, serverUrl }) => {
+    const state = defaultMockUnsupportedBrowserPageState();
+    const envConfig = {
+      platform: true,
+      browser: true,
+      version: false
+    };
+    state.environmentInfo = setMockEnvironmentInfo(envConfig);
+
+    await page.goto(buildUrlWithMockAdapter(serverUrl, state));
+
+    await waitForSelector(page, dataUiId(IDS.unsupportedEnvironmentIcon));
+
+    expect(await stableScreenshot(page)).toMatchSnapshot(`unsupportedBrowserVersion-with-no-link.png`);
+  });
+
+  test('unsupportedBrowserVersion displays correctly with help link', async ({ page, serverUrl }) => {
+    const state = defaultMockUnsupportedBrowserPageState();
+    const envConfig = {
+      platform: true,
+      browser: true,
+      version: false
+    };
+    state.environmentInfo = setMockEnvironmentInfo(envConfig);
+
+    await page.goto(
+      buildUrlWithMockAdapter(serverUrl, state, {
+        useEnvironmentInfoTroubleshootingOptions: 'true'
+      })
+    );
+
+    await waitForSelector(page, dataUiId(IDS.unsupportedEnvironmentIcon));
+    await waitForSelector(page, dataUiId(IDS.unsupportedEnvironmentLink));
+
+    expect(await stableScreenshot(page)).toMatchSnapshot(`unsupportedBrowserVersion-with-link.png`);
+  });
+
+  test('unsupportedOperatingSystem displays correctly with no link', async ({ page, serverUrl }) => {
+    const state = defaultMockUnsupportedBrowserPageState();
+    const envConfig = {
+      platform: false,
+      browser: false,
+      version: false
+    };
+    state.environmentInfo = setMockEnvironmentInfo(envConfig);
+
+    await page.goto(buildUrlWithMockAdapter(serverUrl, state));
+
+    await waitForSelector(page, dataUiId(IDS.unsupportedEnvironmentIcon));
+
+    expect(await stableScreenshot(page)).toMatchSnapshot(`unsupportedOperatingSystem-with-no-link.png`);
+  });
+
+  test('unsupportedOperatingSystem displays correctly with link', async ({ page, serverUrl }) => {
+    const state = defaultMockUnsupportedBrowserPageState();
+    const envConfig = {
+      platform: false,
+      browser: false,
+      version: false
+    };
+    state.environmentInfo = setMockEnvironmentInfo(envConfig);
+
+    await page.goto(
+      buildUrlWithMockAdapter(serverUrl, state, {
+        useEnvironmentInfoTroubleshootingOptions: 'true'
+      })
+    );
+
+    await waitForSelector(page, dataUiId(IDS.unsupportedEnvironmentIcon));
+    await waitForSelector(page, dataUiId(IDS.unsupportedEnvironmentLink));
+
+    expect(await stableScreenshot(page)).toMatchSnapshot(`unsupportedOperatingSystem-with-link.png`);
+  });
 });
 
 const defaultMockUnsupportedBrowserPageState = (): MockCallAdapterState => {
