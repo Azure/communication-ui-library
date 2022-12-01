@@ -1,24 +1,16 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { concatStyleSets, mergeStyles, Stack } from '@fluentui/react';
+import { mergeStyles, Stack } from '@fluentui/react';
 import React, { useRef } from 'react';
 import { GridLayoutStyles } from '..';
 import { useIdentifiers } from '../../identifiers/IdentifierProvider';
 import { BaseCustomStyles } from '../../types';
 import { GridLayout } from '../GridLayout';
 import { HorizontalGalleryStyles } from '../HorizontalGallery';
-import { ResponsiveHorizontalGallery } from '../ResponsiveHorizontalGallery';
-import { HORIZONTAL_GALLERY_BUTTON_WIDTH, HORIZONTAL_GALLERY_GAP } from '../styles/HorizontalGallery.styles';
-import {
-  horizontalGalleryContainerStyle,
-  horizontalGalleryStyle,
-  LARGE_HORIZONTAL_GALLERY_TILE_SIZE_REM,
-  SMALL_HORIZONTAL_GALLERY_TILE_SIZE_REM,
-  videoGalleryContainerStyle,
-  videoGalleryOuterDivStyle
-} from './styles/DefaultLayout.styles';
 import { isNarrowWidth, _useContainerWidth } from '../utils/responsive';
+import { videoGalleryContainerStyle, videoGalleryOuterDivStyle } from './styles/DefaultLayout.styles';
+import { VideoGalleryResponsiveHorizontalGallery } from './VideoGalleryResponsiveHorizontalGallery';
 
 /**
  * {@link DefaultLayoutStyles} Component Styles.
@@ -82,20 +74,11 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
           {gridElements}
         </GridLayout>
         {horizontalGalleryElements && horizontalGalleryElements.length > 0 && (
-          <Stack styles={{ root: { paddingTop: '0.5rem' } }}>
-            <ResponsiveHorizontalGallery
-              key="responsive-horizontal-gallery"
-              containerStyles={horizontalGalleryContainerStyle(false, isNarrow)}
-              horizontalGalleryStyles={concatStyleSets(horizontalGalleryStyle(isNarrow), styles?.horizontalGallery)}
-              childWidthRem={
-                isNarrow ? SMALL_HORIZONTAL_GALLERY_TILE_SIZE_REM.width : LARGE_HORIZONTAL_GALLERY_TILE_SIZE_REM.width
-              }
-              buttonWidthRem={HORIZONTAL_GALLERY_BUTTON_WIDTH}
-              gapWidthRem={HORIZONTAL_GALLERY_GAP}
-            >
-              {horizontalGalleryElements}
-            </ResponsiveHorizontalGallery>
-          </Stack>
+          <VideoGalleryResponsiveHorizontalGallery
+            isNarrow={isNarrow}
+            horizontalGalleryElements={horizontalGalleryElements}
+            styles={styles?.horizontalGallery}
+          />
         )}
       </Stack>
     </div>

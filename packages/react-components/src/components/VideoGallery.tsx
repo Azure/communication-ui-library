@@ -19,15 +19,9 @@ import {
 import { GridLayout } from './GridLayout';
 import { HorizontalGalleryStyles } from './HorizontalGallery';
 import { _RemoteVideoTile } from './RemoteVideoTile';
-import { ResponsiveHorizontalGallery } from './ResponsiveHorizontalGallery';
-import { HORIZONTAL_GALLERY_BUTTON_WIDTH, HORIZONTAL_GALLERY_GAP } from './styles/HorizontalGallery.styles';
 import {
-  LARGE_HORIZONTAL_GALLERY_TILE_SIZE_REM,
-  SMALL_HORIZONTAL_GALLERY_TILE_SIZE_REM,
   floatingLocalVideoModalStyle,
   floatingLocalVideoTileStyle,
-  horizontalGalleryContainerStyle,
-  horizontalGalleryStyle,
   layerHostStyle,
   localVideoTileContainerStyle,
   videoGalleryContainerStyle,
@@ -48,6 +42,7 @@ import { _LocalVideoTile } from './LocalVideoTile';
 /* @conditional-compile-remove(rooms) */
 import { _usePermissions } from '../permissions';
 import { DefaultLayout } from './VideoGallery/DefaultLayout';
+import { VideoGalleryResponsiveHorizontalGallery } from './VideoGallery/VideoGalleryResponsiveHorizontalGallery';
 
 /**
  * @private
@@ -476,20 +471,12 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
             </GridLayout>
           )}
           {horizontalGalleryPresent && (
-            <Stack styles={{ root: { paddingTop: '0.5rem' } }}>
-              <ResponsiveHorizontalGallery
-                key="responsive-horizontal-gallery"
-                containerStyles={horizontalGalleryContainerStyle(shouldFloatLocalVideo, isNarrow)}
-                horizontalGalleryStyles={concatStyleSets(horizontalGalleryStyle(isNarrow), styles?.horizontalGallery)}
-                childWidthRem={
-                  isNarrow ? SMALL_HORIZONTAL_GALLERY_TILE_SIZE_REM.width : LARGE_HORIZONTAL_GALLERY_TILE_SIZE_REM.width
-                }
-                buttonWidthRem={HORIZONTAL_GALLERY_BUTTON_WIDTH}
-                gapWidthRem={HORIZONTAL_GALLERY_GAP}
-              >
-                {horizontalGalleryTiles}
-              </ResponsiveHorizontalGallery>
-            </Stack>
+            <VideoGalleryResponsiveHorizontalGallery
+              shouldFloatLocalVideo={true}
+              isNarrow={isNarrow}
+              horizontalGalleryElements={horizontalGalleryTiles}
+              styles={styles?.horizontalGallery}
+            />
           )}
 
           <LayerHost id={layerHostId} className={mergeStyles(layerHostStyle)} />
