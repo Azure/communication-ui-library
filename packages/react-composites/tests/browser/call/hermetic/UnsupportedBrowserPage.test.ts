@@ -49,7 +49,12 @@ test.describe('unsupportedBrowser page tests', async () => {
 
   test('unsupportedBrowserVersion displays correctly with no help link', async ({ page, serverUrl }) => {
     const state = defaultMockUnsupportedBrowserPageState();
-    state.environmentInfo = setMockEnvironmentInfo(true, true, false);
+    const envConfig = {
+      platform: true,
+      browser: true,
+      version: false
+    };
+    state.environmentInfo = setMockEnvironmentInfo(envConfig);
 
     await page.goto(buildUrlWithMockAdapter(serverUrl, state));
 
@@ -60,7 +65,12 @@ test.describe('unsupportedBrowser page tests', async () => {
 
   test('unsupportedBrowserVersion displays correctly with help link', async ({ page, serverUrl }) => {
     const state = defaultMockUnsupportedBrowserPageState();
-    state.environmentInfo = setMockEnvironmentInfo(true, true, false);
+    const envConfig = {
+      platform: true,
+      browser: true,
+      version: false
+    };
+    state.environmentInfo = setMockEnvironmentInfo(envConfig);
 
     await page.goto(
       buildUrlWithMockAdapter(serverUrl, state, {
@@ -76,7 +86,12 @@ test.describe('unsupportedBrowser page tests', async () => {
 
   test('unsupportedOperatingSystem displays correctly with no link', async ({ page, serverUrl }) => {
     const state = defaultMockUnsupportedBrowserPageState();
-    state.environmentInfo = setMockEnvironmentInfo(false, false, false);
+    const envConfig = {
+      platform: false,
+      browser: false,
+      version: false
+    };
+    state.environmentInfo = setMockEnvironmentInfo(envConfig);
 
     await page.goto(buildUrlWithMockAdapter(serverUrl, state));
 
@@ -87,7 +102,12 @@ test.describe('unsupportedBrowser page tests', async () => {
 
   test('unsupportedOperatingSystem displays correctly with link', async ({ page, serverUrl }) => {
     const state = defaultMockUnsupportedBrowserPageState();
-    state.environmentInfo = setMockEnvironmentInfo(false, false, false);
+    const envConfig = {
+      platform: false,
+      browser: false,
+      version: false
+    };
+    state.environmentInfo = setMockEnvironmentInfo(envConfig);
 
     await page.goto(
       buildUrlWithMockAdapter(serverUrl, state, {
