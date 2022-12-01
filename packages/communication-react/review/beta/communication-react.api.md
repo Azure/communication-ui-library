@@ -3231,6 +3231,7 @@ export interface VideoGalleryStream {
     isMirrored?: boolean;
     isReceiving?: boolean;
     renderElement?: HTMLElement;
+    scalingMode?: ViewScalingMode;
 }
 
 // @public
