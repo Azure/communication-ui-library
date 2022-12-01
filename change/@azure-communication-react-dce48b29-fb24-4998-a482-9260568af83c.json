@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "enable call readiness for samples",
+  "packageName": "@azure/communication-react",
+  "email": "carolinecao@microsoft.com",
+  "dependentChangeType": "none"
+}
