@@ -127,7 +127,6 @@ type GetCallCompositePageFunction = ((
     environmentInfo?: EnvironmentInfo,
     features?: CallAdapterOptionalFeatures
   ) => CallCompositePage);
-
 /**
  * Get the current call composite page based on the current call composite state
  *
@@ -148,7 +147,7 @@ export const getCallCompositePage: GetCallCompositePageFunction = (
   features?
 ): CallCompositePage => {
   /* @conditional-compile-remove(unsupported-browser) */
-  if (features?.unsupportedEnvironment && environmentInfo?.isSupportedBrowser === false) {
+  if (isUnsupportedEnvironment(features, environmentInfo)) {
     return 'unsupportedEnvironment';
   }
 
@@ -305,4 +304,16 @@ export const getDevicePermissionState = (
     .catch(() => {
       setAudioState('unsupported');
     });
+};
+/* @conditional-compile-remove(unsupported-browser) */
+const isUnsupportedEnvironment = (
+  features?: CallAdapterOptionalFeatures,
+  environmentInfo?: EnvironmentInfo
+): boolean => {
+  return !!(
+    features?.unsupportedEnvironment &&
+    (environmentInfo?.isSupportedBrowser === false ||
+      environmentInfo?.isSupportedBrowserVersion === false ||
+      environmentInfo?.isSupportedPlatform === false)
+  );
 };

@@ -13,7 +13,8 @@ export const mainTextStyles: ITextStyles = {
     fontSize: _pxToRem(20),
     lineHeight: _pxToRem(28),
     paddingBottom: '1rem',
-    margin: 'auto'
+    margin: 'auto',
+    textAlign: 'center'
   }
 };
 
@@ -24,7 +25,8 @@ export const secondaryTextStyles: ITextStyles = {
   root: {
     margin: 'auto',
     fontWeight: 400,
-    paddingBottom: '0.5rem'
+    paddingBottom: '0.5rem',
+    textAlign: 'center'
   }
 };
 
@@ -35,7 +37,7 @@ export const linkTextStyles: ILinkStyles = {
   root: {
     margin: 'auto',
     fontWeight: 600,
-    textAlign: 'inherit'
+    textAlign: 'center'
   }
 };
 

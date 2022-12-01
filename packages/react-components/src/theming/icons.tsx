@@ -150,7 +150,7 @@ const DomainPermissionSparkle20Filled = (): JSX.Element => (
 );
 
 /* @conditional-compile-remove(unsupported-browser) */
-const UnsupportedBrowserWarning = (): JSX.Element => {
+const UnsupportedEnvironmentWarning = (): JSX.Element => {
   const theme = useTheme();
   return (
     <Stack
@@ -262,7 +262,7 @@ export const DEFAULT_COMPONENT_ICONS = {
   /* @conditional-compile-remove(call-readiness) */
   DomainPermissionMicDenied: <DomainPermissionsMicDenied20Filled />,
   /* @conditional-compile-remove(unsupported-browser) */
-  UnsupportedBrowserWarning: <UnsupportedBrowserWarning />,
+  UnsupportedEnvironmentWarning: <UnsupportedEnvironmentWarning />,
   /* @conditional-compile-remove(call-readiness) */
   BrowserPermissionDeniedError: <BrowserPermissionDenied20Filled />,
   /* @conditional-compile-remove(pinned-participants) */
