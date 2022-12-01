@@ -24,7 +24,7 @@ export interface UnsupportedEnvironmentStrings {
   /** String for the secondary text */
   secondaryText: string;
   /** String to display in the text for the help link */
-  moreHelpText: string;
+  moreHelpLinkText: string;
 }
 
 /**
@@ -59,7 +59,7 @@ const UnsupportedEnvironmentContainer = (props: UnsupportedEnvironmentProps): JS
           }}
           data-ui-id="unsupported-environment-link"
         >
-          {strings.moreHelpText}
+          {strings.moreHelpLinkText}
         </Link>
       )}
     </Stack>
@@ -67,7 +67,7 @@ const UnsupportedEnvironmentContainer = (props: UnsupportedEnvironmentProps): JS
 };
 
 /**
- * UI to display to the user that the browser they are using is not supported by calling application.
+ * UI to display to the user that the environment they are using is not supported by calling application.
  *
  * @private
  */

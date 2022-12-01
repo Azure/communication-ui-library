@@ -10,7 +10,7 @@ import { UnsupportedEnvironment } from './UnsupportedEnvironment';
  *
  * @beta
  */
-export interface UnsupportedBrowserStrings {
+export interface UnsupportedOperatingSystemStrings {
   /** String for the primary text */
   primaryText: string;
   /** String for the secondary text */
@@ -20,23 +20,23 @@ export interface UnsupportedBrowserStrings {
 }
 
 /**
- * props for {@link UnsupportedBrowser} UI
+ * Props for {@link UnsupportedOperatingSystem} UI
  *
  * @beta
  */
-export interface UnsupportedBrowserProps {
-  /** Handler to perform an action when the help link is actioned */
+export interface UnsupportedOperatingSystemProps {
+  /** Handler to perform a action when the help link is actioned */
   onTroubleshootingClick?: () => void;
   /** String overrides for the component */
-  strings: UnsupportedBrowserStrings;
+  strings: UnsupportedOperatingSystemStrings;
 }
 
 /**
- * UI to display to the user that the browser they are using is not supported by Azure Communications Calling service.
+ * UI to display to the user that the operating system they are using is not supported by Azure Communications Calling service.
  *
  * @beta
  */
-export const UnsupportedBrowser = (props: UnsupportedBrowserProps): JSX.Element => {
+export const UnsupportedOperatingSystem = (props: UnsupportedOperatingSystemProps): JSX.Element => {
   const { onTroubleshootingClick, strings } = props;
   return <UnsupportedEnvironment onTroubleshootingClick={onTroubleshootingClick} strings={strings} />;
 };
