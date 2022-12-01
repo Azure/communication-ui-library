@@ -3080,11 +3080,7 @@ export interface UnsupportedBrowserProps {
 
 // @beta
 export interface UnsupportedBrowserStrings {
-<<<<<<< HEAD
-    moreHelpText: string;
-=======
     moreHelpLinkText: string;
->>>>>>> 4cf3804b0075bed218d832de5e737e6a214b7d1f
     primaryText: string;
     secondaryText: string;
 }
@@ -3100,11 +3096,7 @@ export interface UnsupportedBrowserVersionProps {
 
 // @beta
 export interface UnsupportedBrowserVersionStrings {
-<<<<<<< HEAD
-    moreHelpText: string;
-=======
     moreHelpLinkText: string;
->>>>>>> 4cf3804b0075bed218d832de5e737e6a214b7d1f
     primaryText: string;
     secondaryText: string;
 }
@@ -3120,11 +3112,7 @@ export interface UnsupportedOperatingSystemProps {
 
 // @beta
 export interface UnsupportedOperatingSystemStrings {
-<<<<<<< HEAD
-    moreHelpText: string;
-=======
     moreHelpLinkText: string;
->>>>>>> 4cf3804b0075bed218d832de5e737e6a214b7d1f
     primaryText: string;
     secondaryText: string;
 }
