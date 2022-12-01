@@ -36,9 +36,9 @@ jobs:
         run: |
           echo "### Job Inputs - Review before approving workflow" >> $GITHUB_STEP_SUMMARY
           echo "This job has been triggered with the following inputs, review these are correct before approving the npm deployment." >> $GITHUB_STEP_SUMMARY
-          echo "- release branch: `${{ steps.vars.outputs.branch }}"` >> $GITHUB_STEP_SUMMARY
-          echo "- npm-tag: `${{ inputs.npm-tag }}"` >> $GITHUB_STEP_SUMMARY
-          echo "- release-flavor: `${{ inputs.release-flavor }}"` >> $GITHUB_STEP_SUMMARY
+          echo "- release branch: \`${{ steps.vars.outputs.branch }}"\` >> $GITHUB_STEP_SUMMARY
+          echo "- npm-tag: \`${{ inputs.npm-tag }}"\` >> $GITHUB_STEP_SUMMARY
+          echo "- release-flavor: \`${{ inputs.release-flavor }}"\` >> $GITHUB_STEP_SUMMARY
   publish:
     environment:
       name: npm
