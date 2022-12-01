@@ -16,7 +16,7 @@ export interface UnsupportedOperatingSystemStrings {
   /** String for the secondary text */
   secondaryText: string;
   /** String to display in the text for the help link */
-  moreHelpText: string;
+  moreHelpLinkText: string;
 }
 
 /**
@@ -39,5 +39,4 @@ export interface UnsupportedOperatingSystemProps {
 export const UnsupportedOperatingSystem = (props: UnsupportedOperatingSystemProps): JSX.Element => {
   const { onTroubleshootingClick, strings } = props;
   return <UnsupportedEnvironment onTroubleshootingClick={onTroubleshootingClick} strings={strings} />;
-  return <></>;
 };

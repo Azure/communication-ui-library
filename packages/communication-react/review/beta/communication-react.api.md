@@ -39,10 +39,10 @@ import { IButtonProps } from '@fluentui/react';
 import { IButtonStyles } from '@fluentui/react';
 import { IContextualMenuItem } from '@fluentui/react';
 import { IContextualMenuItemStyles } from '@fluentui/react';
+import { IContextualMenuProps } from '@fluentui/react';
 import { IContextualMenuStyles } from '@fluentui/react';
 import { IDropdownOption } from '@fluentui/react';
 import { IDropdownStyles } from '@fluentui/react';
-import { IIconProps } from '@fluentui/react';
 import { ILinkStyles } from '@fluentui/react';
 import { IMessageBarProps } from '@fluentui/react';
 import { IncomingCall } from '@azure/communication-calling';
@@ -1814,6 +1814,7 @@ export const DEFAULT_COMPONENT_ICONS: {
     UnsupportedEnvironmentWarning: JSX.Element;
     BrowserPermissionDeniedError: JSX.Element;
     VideoTilePinned: JSX.Element;
+    VideoTileMoreOptions: JSX.Element;
 };
 
 // @public
@@ -1906,6 +1907,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     UnsupportedEnvironmentWarning: JSX.Element;
     BrowserPermissionDeniedError: JSX.Element;
     VideoTilePinned: JSX.Element;
+    VideoTileMoreOptions: JSX.Element;
 };
 
 // @public
@@ -3078,7 +3080,11 @@ export interface UnsupportedBrowserProps {
 
 // @beta
 export interface UnsupportedBrowserStrings {
+<<<<<<< HEAD
     moreHelpText: string;
+=======
+    moreHelpLinkText: string;
+>>>>>>> 4cf3804b0075bed218d832de5e737e6a214b7d1f
     primaryText: string;
     secondaryText: string;
 }
@@ -3094,7 +3100,11 @@ export interface UnsupportedBrowserVersionProps {
 
 // @beta
 export interface UnsupportedBrowserVersionStrings {
+<<<<<<< HEAD
     moreHelpText: string;
+=======
+    moreHelpLinkText: string;
+>>>>>>> 4cf3804b0075bed218d832de5e737e6a214b7d1f
     primaryText: string;
     secondaryText: string;
 }
@@ -3110,7 +3120,11 @@ export interface UnsupportedOperatingSystemProps {
 
 // @beta
 export interface UnsupportedOperatingSystemStrings {
+<<<<<<< HEAD
     moreHelpText: string;
+=======
+    moreHelpLinkText: string;
+>>>>>>> 4cf3804b0075bed218d832de5e737e6a214b7d1f
     primaryText: string;
     secondaryText: string;
 }
@@ -3229,6 +3243,7 @@ export interface VideoGalleryStream {
     isMirrored?: boolean;
     isReceiving?: boolean;
     renderElement?: HTMLElement;
+    scalingMode?: ViewScalingMode;
 }
 
 // @public
@@ -3265,25 +3280,16 @@ export interface VideoStreamRendererViewState {
 // @public
 export const VideoTile: (props: VideoTileProps) => JSX.Element;
 
-// @beta
-export type VideoTileMenuItems = Array<{
-    key: string;
-    ariaLabel?: string;
-    text: string;
-    onClick: () => void;
-    iconProps: IIconProps;
-}>;
-
 // @public
 export interface VideoTileProps {
     children?: React_2.ReactNode;
+    contextualMenu?: IContextualMenuProps;
     displayName?: string;
     initialsName?: string;
     isMirrored?: boolean;
     isMuted?: boolean;
     isPinned?: boolean;
     isSpeaking?: boolean;
-    menuItems?: VideoTileMenuItems;
     noVideoAvailableAriaLabel?: string;
     onLongTouch?: () => void;
     onRenderPlaceholder?: OnRenderAvatarCallback;
