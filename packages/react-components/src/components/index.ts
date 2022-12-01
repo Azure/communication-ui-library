@@ -181,6 +181,8 @@ export { UnsupportedBrowser } from './UnsupportedBrowser';
 export type { UnsupportedBrowserStrings, UnsupportedBrowserProps } from './UnsupportedBrowser';
 export { UnsupportedBrowserVersion } from './UnsupportedBrowserVersion';
 export type { UnsupportedBrowserVersionStrings, UnsupportedBrowserVersionProps } from './UnsupportedBrowserVersion';
+export { UnsupportedOperatingSystem } from './UnsupportedOperatingSystem';
+export type { UnsupportedOperatingSystemStrings, UnsupportedOperatingSystemProps } from './UnsupportedOperatingSystem';
 
 export { _TroubleshootingGuideErrorBar } from './TroubleshootingGuideErrorBar';
 export type {
