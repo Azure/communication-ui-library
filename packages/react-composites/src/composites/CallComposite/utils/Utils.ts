@@ -312,6 +312,8 @@ const isUnsupportedEnvironment = (
 ): boolean => {
   return !!(
     features?.unsupportedEnvironment &&
-    (environmentInfo?.isSupportedBrowser === false || environmentInfo?.isSupportedBrowserVersion === false)
+    (environmentInfo?.isSupportedBrowser === false ||
+      environmentInfo?.isSupportedBrowserVersion === false ||
+      environmentInfo?.isSupportedPlatform === false)
   );
 };
