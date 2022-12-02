@@ -347,7 +347,8 @@ const memoizeAllMessages = memoizeFnAll(
     onRenderMessage?: (message: MessageProps, defaultOnRender?: MessageRenderer) => JSX.Element,
     onUpdateMessage?: UpdateMessageCallback,
     onDeleteMessage?: (messageId: string) => Promise<void>,
-    onSendMessage?: (content: string) => Promise<void>
+    onSendMessage?: (content: string) => Promise<void>,
+    disableEditing?: boolean
   ): ShorthandValue<ChatItemProps> => {
     const messageProps: MessageProps = {
       message,
@@ -355,7 +356,8 @@ const memoizeAllMessages = memoizeFnAll(
       showDate: showMessageDate,
       onUpdateMessage,
       onDeleteMessage,
-      onSendMessage
+      onSendMessage,
+      disableEditing
     };
 
     switch (message.messageType) {
@@ -729,7 +731,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     /* @conditional-compile-remove(date-time-customization) */
     onDisplayDateTimeString
   } = props;
-
+  console.log('MESSAGE THREAD', props.disableEditing);
   const onRenderFileDownloads = onRenderFileDownloadsTrampoline(props);
 
   const [messages, setMessages] = useState<(ChatMessage | SystemMessage | CustomMessage)[]>([]);
@@ -1095,7 +1097,8 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
             onRenderMessage,
             onUpdateMessage,
             onDeleteMessage,
-            onSendMessage
+            onSendMessage,
+            props.disableEditing
           );
         });
       }),
@@ -1118,7 +1121,8 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
       onSendMessage,
       lastSeenChatMessage,
       lastSendingChatMessage,
-      lastDeliveredChatMessage
+      lastDeliveredChatMessage,
+      props.disableEditing
     ]
   );
 
