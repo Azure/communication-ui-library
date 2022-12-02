@@ -79,6 +79,10 @@ export interface VideoGalleryStrings {
   localVideoSelectedDescription: string;
   /** placeholder text for participants who does not have a display name*/
   displayNamePlaceholder: string;
+  /** Menu text shown in Video Tile contextual menu for setting a remote participants video to fit in frame */
+  fitRemoteParticipantToFrame: string;
+  /** Menu text shown in Video Tile contextual menu for setting a remote participants video to fill the frame */
+  fillRemoteParticipantFrame: string;
 }
 
 /**
@@ -209,7 +213,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   const ids = useIdentifiers();
   const theme = useTheme();
   const localeStrings = useLocale().strings.videoGallery;
-  const strings = { ...localeStrings, ...props.strings };
+  const strings = useMemo(() => ({ ...localeStrings, ...props.strings }), [localeStrings, props.strings]);
 
   const shouldFloatLocalVideo = !!(layout === 'floatingLocalVideo' && remoteParticipants.length > 0);
   const shouldFloatNonDraggableLocalVideo = !!(showCameraSwitcherInLocalPreview && shouldFloatLocalVideo);
@@ -356,10 +360,18 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           remoteVideoViewOptions={isVideoParticipant ? remoteVideoViewOptions : undefined}
           onRenderAvatar={onRenderAvatar}
           showMuteIndicator={showMuteIndicator}
+          strings={strings}
         />
       );
     },
-    [onCreateRemoteStreamView, onDisposeRemoteStreamView, remoteVideoViewOptions, onRenderAvatar, showMuteIndicator]
+    [
+      onCreateRemoteStreamView,
+      onDisposeRemoteStreamView,
+      remoteVideoViewOptions,
+      onRenderAvatar,
+      showMuteIndicator,
+      strings
+    ]
   );
 
   const videoTiles = onRenderRemoteVideoTile

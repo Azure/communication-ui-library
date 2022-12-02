@@ -9,6 +9,7 @@ import {
   VideoStreamOptions
 } from '../types';
 import { StreamMedia } from './StreamMedia';
+import { VideoGalleryStrings } from './VideoGallery';
 import {
   RemoteVideoStreamLifecycleMaintainerProps,
   useRemoteVideoStreamLifecycleMaintainer
@@ -41,6 +42,7 @@ export const _RemoteVideoTile = React.memo(
     showMuteIndicator?: boolean;
     showLabel?: boolean;
     personaMinSize?: number;
+    strings: VideoGalleryStrings;
   }) => {
     const {
       isAvailable,
@@ -53,7 +55,8 @@ export const _RemoteVideoTile = React.memo(
       userId,
       onRenderAvatar,
       showMuteIndicator,
-      remoteParticipant
+      remoteParticipant,
+      strings
     } = props;
 
     const remoteVideoStreamProps: RemoteVideoStreamLifecycleMaintainerProps = useMemo(
@@ -89,7 +92,14 @@ export const _RemoteVideoTile = React.memo(
       setView(createVideoStreamResult?.view);
     }, [createVideoStreamResult?.view]);
 
-    const contextualMenuProps = useVideoTileContextualMenuProps({ remoteParticipant, view });
+    const contextualMenuProps = useVideoTileContextualMenuProps({
+      remoteParticipant,
+      view,
+      strings: {
+        fitToFrame: strings.fitRemoteParticipantToFrame,
+        fillFrame: strings.fillRemoteParticipantFrame
+      }
+    });
 
     const showLoadingIndicator = isAvailable && isReceiving === false && remoteParticipant.state !== 'Disconnected';
 

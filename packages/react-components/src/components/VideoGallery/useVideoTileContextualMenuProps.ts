@@ -11,8 +11,12 @@ import { VideoGalleryRemoteParticipant, ViewScalingMode } from '../../types';
 export const useVideoTileContextualMenuProps = (props: {
   remoteParticipant: VideoGalleryRemoteParticipant;
   view?: { updateScalingMode: (scalingMode: ViewScalingMode) => Promise<void> };
+  strings: {
+    fitToFrame: string;
+    fillFrame: string;
+  };
 }): IContextualMenuProps | undefined => {
-  const { view, remoteParticipant } = props;
+  const { view, remoteParticipant, strings } = props;
 
   const contextualMenuProps: IContextualMenuProps | undefined = useMemo(() => {
     const items: IContextualMenuItem[] = [];
@@ -20,7 +24,7 @@ export const useVideoTileContextualMenuProps = (props: {
       if (remoteParticipant.videoStream?.scalingMode === 'Crop') {
         items.push({
           key: 'fitToFrame',
-          text: `Fit to frame`,
+          text: strings.fitToFrame,
           iconProps: { iconName: 'FitWidth' },
           onClick: () => {
             view?.updateScalingMode('Fit');
@@ -29,7 +33,7 @@ export const useVideoTileContextualMenuProps = (props: {
       } else {
         items.push({
           key: 'fillFrame',
-          text: `Fill frame`,
+          text: strings.fillFrame,
           iconProps: { iconName: 'FitPage' },
           onClick: () => {
             view?.updateScalingMode('Crop');
@@ -41,7 +45,7 @@ export const useVideoTileContextualMenuProps = (props: {
       return undefined;
     }
     return { items };
-  }, [remoteParticipant.videoStream?.scalingMode, view]);
+  }, [remoteParticipant.videoStream?.scalingMode, strings.fillFrame, strings.fitToFrame, view]);
 
   return contextualMenuProps;
 };
