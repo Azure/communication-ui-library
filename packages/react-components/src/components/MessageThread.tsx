@@ -731,7 +731,6 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     /* @conditional-compile-remove(date-time-customization) */
     onDisplayDateTimeString
   } = props;
-  console.log('MESSAGE THREAD', props.disableEditing);
   const onRenderFileDownloads = onRenderFileDownloadsTrampoline(props);
 
   const [messages, setMessages] = useState<(ChatMessage | SystemMessage | CustomMessage)[]>([]);
