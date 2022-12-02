@@ -346,7 +346,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       return (
         <_RemoteVideoTile
           key={participant.userId}
-          {...participant}
+          userId={participant.userId}
+          remoteParticipant={participant}
           onCreateRemoteStreamView={isVideoParticipant ? onCreateRemoteStreamView : undefined}
           onDisposeRemoteStreamView={isVideoParticipant ? onDisposeRemoteStreamView : undefined}
           isAvailable={isVideoParticipant ? remoteVideoStream?.isAvailable : false}
@@ -355,8 +356,6 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           remoteVideoViewOptions={isVideoParticipant ? remoteVideoViewOptions : undefined}
           onRenderAvatar={onRenderAvatar}
           showMuteIndicator={showMuteIndicator}
-          /* @conditional-compile-remove(PSTN-calls) */
-          participantState={participant.state}
         />
       );
     },

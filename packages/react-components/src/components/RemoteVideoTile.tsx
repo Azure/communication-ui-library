@@ -1,13 +1,19 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React, { useMemo } from 'react';
-import { CreateVideoStreamViewResult, OnRenderAvatarCallback, ParticipantState, VideoStreamOptions } from '../types';
+import React, { useEffect, useMemo, useState } from 'react';
+import {
+  CreateVideoStreamViewResult,
+  OnRenderAvatarCallback,
+  VideoGalleryRemoteParticipant,
+  VideoStreamOptions
+} from '../types';
 import { StreamMedia } from './StreamMedia';
 import {
-  useRemoteVideoStreamLifecycleMaintainer,
-  RemoteVideoStreamLifecycleMaintainerProps
+  RemoteVideoStreamLifecycleMaintainerProps,
+  useRemoteVideoStreamLifecycleMaintainer
 } from './VideoGallery/useVideoStreamLifecycleMaintainer';
+import { useVideoTileContextualMenuProps } from './VideoGallery/useVideoTileContextualMenuProps';
 import { VideoTile } from './VideoTile';
 
 /**
@@ -20,6 +26,7 @@ import { VideoTile } from './VideoTile';
 export const _RemoteVideoTile = React.memo(
   (props: {
     userId: string;
+    remoteParticipant: VideoGalleryRemoteParticipant;
     onCreateRemoteStreamView?: (
       userId: string,
       options?: VideoStreamOptions
@@ -27,32 +34,26 @@ export const _RemoteVideoTile = React.memo(
     onDisposeRemoteStreamView?: (userId: string) => Promise<void>;
     isAvailable?: boolean;
     isReceiving?: boolean;
-    isMuted?: boolean;
-    isSpeaking?: boolean;
     isScreenSharingOn?: boolean; // TODO: Remove this once onDisposeRemoteStreamView no longer disposes of screen share stream
     renderElement?: HTMLElement;
-    displayName?: string;
     remoteVideoViewOptions?: VideoStreamOptions;
     onRenderAvatar?: OnRenderAvatarCallback;
     showMuteIndicator?: boolean;
     showLabel?: boolean;
     personaMinSize?: number;
-    participantState?: ParticipantState;
   }) => {
     const {
       isAvailable,
       isReceiving = true, // default to true to prevent any breaking change
-      isMuted,
-      isSpeaking,
       isScreenSharingOn,
       onCreateRemoteStreamView,
       onDisposeRemoteStreamView,
       remoteVideoViewOptions,
       renderElement,
       userId,
-      displayName,
       onRenderAvatar,
-      showMuteIndicator
+      showMuteIndicator,
+      remoteParticipant
     } = props;
 
     const remoteVideoStreamProps: RemoteVideoStreamLifecycleMaintainerProps = useMemo(
@@ -81,9 +82,16 @@ export const _RemoteVideoTile = React.memo(
     );
 
     // Handle creating, destroying and updating the video stream as necessary
-    useRemoteVideoStreamLifecycleMaintainer(remoteVideoStreamProps);
+    const createVideoStreamResult = useRemoteVideoStreamLifecycleMaintainer(remoteVideoStreamProps);
 
-    const showLoadingIndicator = isAvailable && isReceiving === false && props.participantState !== 'Disconnected';
+    const [view, setView] = useState<CreateVideoStreamViewResult['view']>();
+    useEffect(() => {
+      setView(createVideoStreamResult?.view);
+    }, [createVideoStreamResult?.view]);
+
+    const contextualMenuProps = useVideoTileContextualMenuProps({ remoteParticipant, view });
+
+    const showLoadingIndicator = isAvailable && isReceiving === false && remoteParticipant.state !== 'Disconnected';
 
     const renderVideoStreamElement = useMemo(() => {
       // Checking if renderElement is well defined or not as calling SDK has a number of video streams limitation which
@@ -103,16 +111,17 @@ export const _RemoteVideoTile = React.memo(
         key={userId}
         userId={userId}
         renderElement={renderVideoStreamElement}
-        displayName={displayName}
+        displayName={remoteParticipant.displayName}
         onRenderPlaceholder={onRenderAvatar}
-        isMuted={isMuted}
-        isSpeaking={isSpeaking}
+        isMuted={remoteParticipant.isMuted}
+        isSpeaking={remoteParticipant.isSpeaking}
         showMuteIndicator={showMuteIndicator}
         personaMinSize={props.personaMinSize}
         showLabel={props.showLabel}
         /* @conditional-compile-remove(one-to-n-calling) */
         /* @conditional-compile-remove(PSTN-calls) */
-        participantState={props.participantState}
+        participantState={remoteParticipant.state}
+        contextualMenu={contextualMenuProps}
       />
     );
   }

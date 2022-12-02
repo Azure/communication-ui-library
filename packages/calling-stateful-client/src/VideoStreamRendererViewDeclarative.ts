@@ -23,10 +23,9 @@ export class ProxyVideoStreamRendererView implements ProxyHandler<VideoStreamRen
   public get<P extends keyof VideoStreamRendererView>(target: VideoStreamRendererView, prop: P): any {
     switch (prop) {
       case 'updateScalingMode': {
-        return async (args: Parameters<VideoStreamRendererView['updateScalingMode']>) => {
-          const result = await target.updateScalingMode(...args);
+        return async (...args: Parameters<VideoStreamRendererView['updateScalingMode']>) => {
+          await target.updateScalingMode(...args);
           this._context.setRemoteVideoStreamViewScalingMode(this._callId, this._participantId, this._streamId, args[0]);
-          return result;
         };
       }
       default:
