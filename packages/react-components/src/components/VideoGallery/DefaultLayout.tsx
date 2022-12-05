@@ -1,27 +1,15 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { mergeStyles, Stack } from '@fluentui/react';
-import React, { useRef } from 'react';
-import { GridLayoutStyles } from '..';
-import { useIdentifiers } from '../../identifiers/IdentifierProvider';
-import { BaseCustomStyles } from '../../types';
+import { Stack } from '@fluentui/react';
+import React from 'react';
+import { VideoGalleryRemoteParticipant } from '../../types';
 import { GridLayout } from '../GridLayout';
-import { HorizontalGalleryStyles } from '../HorizontalGallery';
-import { isNarrowWidth, _useContainerWidth } from '../utils/responsive';
-import { videoGalleryContainerStyle, videoGalleryOuterDivStyle } from './styles/DefaultLayout.styles';
+import { isNarrowWidth } from '../utils/responsive';
+import { VideoGalleryStyles } from '../VideoGallery';
+import { rootLayoutStyle } from './styles/DefaultLayout.styles';
 import { VideoGalleryResponsiveHorizontalGallery } from './VideoGalleryResponsiveHorizontalGallery';
-
-/**
- * {@link DefaultLayoutStyles} Component Styles.
- * @public
- */
-export interface DefaultLayoutStyles extends BaseCustomStyles {
-  /** Styles for the grid layout */
-  gridLayout?: GridLayoutStyles;
-  /** Styles for the horizontal gallery  */
-  horizontalGallery?: HorizontalGalleryStyles;
-}
+import { useFloatingLocalVideoLayout } from './videoGalleryUtils';
 
 /**
  * Props for {@link DefaultLayout}.
@@ -34,53 +22,97 @@ export interface DefaultLayoutProps {
    *
    * @Example
    * ```
-   * <DefaultLayout styles={{ root: { border: 'solid 1px red' } }} />
+   * <VideoGallery styles={{ root: { border: 'solid 1px red' } }} />
    * ```
    */
-  styles?: DefaultLayoutStyles;
+  styles?: VideoGalleryStyles;
+  /** List of remote video particpants */
+  remoteParticipants?: VideoGalleryRemoteParticipant[];
+  /** Callback to render each remote participant */
+  onRenderRemoteParticipant: (participant: VideoGalleryRemoteParticipant, isVideoParticipant?: boolean) => JSX.Element;
+  /** List of dominant speaker userIds in the order of their dominance. 0th index is the most dominant. */
+  dominantSpeakers?: string[];
+  /** Component that contains local video content */
+  localVideoComponent?: JSX.Element;
+  /** Component that contains screen share content */
+  screenShareComponent?: JSX.Element;
   /**
-   * Elements to display in the grid
+   * Maximum number of participant remote video streams that is rendered.
+   * @defaultValue 4
    */
-  gridElements?: JSX.Element[];
+  maxRemoteVideoStreams?: number;
   /**
-   * Elements to display in the horizontal gallery
+   * Width of parent element
    */
-  horizontalGalleryElements?: JSX.Element[];
+  parentWidth?: number;
 }
 
 /**
- * DefaultLayout displays elements passed to `gridComponents` prop in the grid area and elements passed to
- * `horizontalGalleryComponents` prop in the horizontal gallery area.
+ * DefaultLayout displays remote participants, local video component, and screen sharing component in
+ * a grid and horizontal gallery.
  *
  * @private
  */
 export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
-  const { gridElements, horizontalGalleryElements, styles } = props;
+  const {
+    remoteParticipants = [],
+    dominantSpeakers,
+    localVideoComponent,
+    screenShareComponent,
+    onRenderRemoteParticipant,
+    styles,
+    maxRemoteVideoStreams,
+    parentWidth
+  } = props;
 
-  const ids = useIdentifiers();
+  const isNarrow = parentWidth ? isNarrowWidth(parentWidth) : false;
 
-  const containerRef = useRef<HTMLDivElement>(null);
-  const containerWidth = _useContainerWidth(containerRef);
-  const isNarrow = containerWidth ? isNarrowWidth(containerWidth) : false;
+  const floatingLocalVideoLayout = useFloatingLocalVideoLayout({
+    remoteParticipants,
+    dominantSpeakers,
+    maxRemoteVideoStreams,
+    isScreenShareActive: !!screenShareComponent
+  });
+
+  let activeVideoStreams = 0;
+
+  const gridTiles = floatingLocalVideoLayout.gridParticipants.map((p) => {
+    return onRenderRemoteParticipant(
+      p,
+      maxRemoteVideoStreams
+        ? p.videoStream?.isAvailable && activeVideoStreams++ < maxRemoteVideoStreams
+        : p.videoStream?.isAvailable
+    );
+  });
+  const horizontalGridTiles = floatingLocalVideoLayout.horizontalGalleryParticipants.map((p) => {
+    return onRenderRemoteParticipant(
+      p,
+      maxRemoteVideoStreams
+        ? p.videoStream?.isAvailable && activeVideoStreams++ < maxRemoteVideoStreams
+        : p.videoStream?.isAvailable
+    );
+  });
+
+  if (localVideoComponent) {
+    gridTiles.push(localVideoComponent);
+  }
 
   return (
-    <div
-      data-ui-id={ids.videoGallery}
-      ref={containerRef}
-      className={mergeStyles(videoGalleryOuterDivStyle, styles?.root)}
-    >
-      <Stack horizontal={false} styles={videoGalleryContainerStyle}>
+    <Stack horizontal={false} styles={rootLayoutStyle}>
+      {screenShareComponent ? (
+        screenShareComponent
+      ) : (
         <GridLayout key="grid-layout" styles={styles?.gridLayout}>
-          {gridElements}
+          {gridTiles}
         </GridLayout>
-        {horizontalGalleryElements && horizontalGalleryElements.length > 0 && (
-          <VideoGalleryResponsiveHorizontalGallery
-            isNarrow={isNarrow}
-            horizontalGalleryElements={horizontalGalleryElements}
-            styles={styles?.horizontalGallery}
-          />
-        )}
-      </Stack>
-    </div>
+      )}
+      {horizontalGridTiles.length > 0 && (
+        <VideoGalleryResponsiveHorizontalGallery
+          isNarrow={isNarrow}
+          horizontalGalleryElements={horizontalGridTiles}
+          styles={styles?.horizontalGallery}
+        />
+      )}
+    </Stack>
   );
 };

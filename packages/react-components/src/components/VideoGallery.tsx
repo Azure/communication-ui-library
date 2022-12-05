@@ -485,11 +485,28 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     );
   }
 
-  const gridElements = localParticipant.isScreenSharingOn
-    ? [localScreenShareStreamComponent]
-    : remoteScreenShareComponent
-    ? [remoteScreenShareComponent]
-    : gridTiles;
+  const screenShareComponent = remoteScreenShareComponent
+    ? remoteScreenShareComponent
+    : localParticipant.isScreenSharingOn
+    ? localScreenShareStreamComponent
+    : undefined;
 
-  return <DefaultLayout gridElements={gridElements} horizontalGalleryElements={horizontalGalleryTiles} />;
+  return (
+    <div
+      data-ui-id={ids.videoGallery}
+      ref={containerRef}
+      className={mergeStyles(videoGalleryOuterDivStyle, styles?.root)}
+    >
+      <DefaultLayout
+        remoteParticipants={remoteParticipants}
+        onRenderRemoteParticipant={onRenderRemoteVideoTile ?? defaultOnRenderVideoTile}
+        localVideoComponent={localVideoTile}
+        screenShareComponent={screenShareComponent}
+        maxRemoteVideoStreams={maxRemoteVideoStreams}
+        dominantSpeakers={dominantSpeakers}
+        parentWidth={containerWidth}
+        styles={styles}
+      />
+    </div>
+  );
 };
