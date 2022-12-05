@@ -1,7 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React, { useEffect, useMemo, useState } from 'react';
+import { IContextualMenuProps } from '@fluentui/react';
+import React, { useMemo } from 'react';
 import {
   CreateVideoStreamViewResult,
   OnRenderAvatarCallback,
@@ -58,8 +59,7 @@ export const _RemoteVideoTile = React.memo(
       onRenderAvatar,
       showMuteIndicator,
       remoteParticipant,
-      participantState,
-      strings
+      participantState
     } = props;
 
     const remoteVideoStreamProps: RemoteVideoStreamLifecycleMaintainerProps = useMemo(
@@ -90,17 +90,17 @@ export const _RemoteVideoTile = React.memo(
     // Handle creating, destroying and updating the video stream as necessary
     const createVideoStreamResult = useRemoteVideoStreamLifecycleMaintainer(remoteVideoStreamProps);
 
-    const [view, setView] = useState<CreateVideoStreamViewResult['view']>();
-    useEffect(() => {
-      setView(createVideoStreamResult?.view);
-    }, [createVideoStreamResult?.view]);
-
     const contextualMenuProps = useVideoTileContextualMenuProps({
       remoteParticipant,
-      view,
+      view: createVideoStreamResult?.view,
       /* @conditional-compile-remove(pinned-participants) */
-      strings: { ...strings }
+      strings: { ...props.strings }
     });
+
+    const videoTileContextualMenuProps = useMemo(
+      () => videoTileContextualMenuPropsTrampoline(contextualMenuProps),
+      [contextualMenuProps]
+    );
 
     const showLoadingIndicator = isAvailable && isReceiving === false && participantState !== 'Disconnected';
 
@@ -132,8 +132,22 @@ export const _RemoteVideoTile = React.memo(
         /* @conditional-compile-remove(one-to-n-calling) */
         /* @conditional-compile-remove(PSTN-calls) */
         participantState={participantState}
-        contextualMenu={contextualMenuProps}
+        {...videoTileContextualMenuProps}
       />
     );
   }
 );
+
+const videoTileContextualMenuPropsTrampoline = (
+  contextualMenuProps?: IContextualMenuProps
+): { contextualMenu?: IContextualMenuProps } => {
+  if (!contextualMenuProps) {
+    return {};
+  }
+  /* @conditional-compile-remove(pinned-participants) */
+  return {
+    contextualMenu: contextualMenuProps
+  };
+
+  return {};
+};

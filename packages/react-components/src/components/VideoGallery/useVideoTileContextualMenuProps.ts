@@ -16,12 +16,15 @@ export const useVideoTileContextualMenuProps = (props: {
   };
   view?: { updateScalingMode: (scalingMode: ViewScalingMode) => Promise<void> };
 }): IContextualMenuProps | undefined => {
-  const { view, remoteParticipant, strings } = props;
+  const { view, strings } = props;
   const scalingMode = useMemo(() => {
     /* @conditional-compile-remove(pinned-participants) */
-    return remoteParticipant.videoStream?.scalingMode;
-    return;
-  }, [remoteParticipant.videoStream?.scalingMode]);
+    return props.remoteParticipant.videoStream?.scalingMode;
+    return undefined;
+  }, [
+    /* @conditional-compile-remove(pinned-participants) */
+    props.remoteParticipant.videoStream?.scalingMode
+  ]);
 
   const contextualMenuProps: IContextualMenuProps | undefined = useMemo(() => {
     const items: IContextualMenuItem[] = [];
@@ -52,9 +55,7 @@ export const useVideoTileContextualMenuProps = (props: {
       return undefined;
     }
 
-    /* @conditional-compile-remove(pinned-participants) */
     return { items };
-    return;
   }, [scalingMode, strings, view]);
 
   return contextualMenuProps;
