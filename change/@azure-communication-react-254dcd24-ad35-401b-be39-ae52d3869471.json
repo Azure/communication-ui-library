@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Update Composite dropdown behavior to correctly notify the user that they have no devices.",
+  "packageName": "@azure/communication-react",
+  "email": "94866715+dmceachernmsft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
