@@ -32,6 +32,20 @@ test.describe('Call Composite E2E Configuration Screen Tests', () => {
     await waitForCallCompositeToLoad(page);
     expect(await stableScreenshot(page)).toMatchSnapshot('call-configuration-page-with-call-details.png');
   });
+
+  test.only('Configuration screen should show no devices available', async ({ page, serverUrl }) => {
+    const state = defaultMockConfigurationPageState();
+    state.devices = {
+      cameras: [],
+      microphones: [],
+      speakers: [],
+      isSpeakerSelectionAvailable: true,
+      unparentedViews: [],
+      deviceAccess: { audio: true, video: true }
+    };
+    await page.goto(buildUrlWithMockAdapter(serverUrl, state));
+    expect(await stableScreenshot(page)).toMatchSnapshot(`call-configuration-page-no-devices.png`);
+  });
 });
 
 function defaultMockConfigurationPageState(): MockCallAdapterState {

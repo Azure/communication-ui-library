@@ -34,9 +34,21 @@ export interface CallCompositeStrings {
    */
   cameraLabel: string;
   /**
+   * Label for when there are no cameras present on configuration screen.
+   */
+  noCameraLabel: string;
+  /**
    * Label for sound dropdown.
    */
   soundLabel: string;
+  /**
+   * Label for when no microphones were found on the configuration screen
+   */
+  noMicrophonesLabel: string;
+  /**
+   * Label for when no speakers were found on the configuration screen.
+   */
+  noSpeakersLabel: string;
   /**
    * Error shown when camera access is blocked by the browser.
    */
