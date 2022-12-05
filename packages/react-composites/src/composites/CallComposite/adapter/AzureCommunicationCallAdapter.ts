@@ -980,7 +980,7 @@ const useAzureCommunicationCallAdapterGeneric = <
       })();
     },
     // Explicitly list all arguments so that caller doesn't have to memoize the `args` object.
-    [adapterRef, afterCreateRef, alternateCallerId, args, beforeDisposeRef, credential, locator, options, type, userId]
+    [adapterRef, afterCreateRef, args, beforeDisposeRef, credential, locator, options, type, userId]
   );
 
   // Dispose any existing adapter when the component unmounts.
