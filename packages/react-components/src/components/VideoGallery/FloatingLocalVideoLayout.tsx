@@ -127,6 +127,9 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
 
   let activeVideoStreams = 0;
 
+  const shouldFloatLocalVideo = floatingLocalVideoLayout.gridParticipants.length > 0;
+  const shouldFloatNonDraggableLocalVideo = !!(showCameraSwitcherInLocalPreview && shouldFloatLocalVideo);
+
   const gridTiles = floatingLocalVideoLayout.gridParticipants.map((p) => {
     return onRenderRemoteParticipant(
       p,
@@ -135,7 +138,12 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
         : p.videoStream?.isAvailable
     );
   });
-  const horizontalGridTiles = floatingLocalVideoLayout.horizontalGalleryParticipants.map((p) => {
+
+  if (!shouldFloatLocalVideo && localVideoComponent) {
+    gridTiles.push(localVideoComponent);
+  }
+
+  const horizontalGalleryTiles = floatingLocalVideoLayout.horizontalGalleryParticipants.map((p) => {
     return onRenderRemoteParticipant(
       p,
       maxRemoteVideoStreams
@@ -144,46 +152,22 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
     );
   });
 
-  const shouldFloatLocalVideo = gridTiles.length > 0;
-  const shouldFloatNonDraggableLocalVideo = !!(showCameraSwitcherInLocalPreview && shouldFloatLocalVideo);
-
-  const modalWidth = isNarrow ? SMALL_FLOATING_MODAL_SIZE_PX.width : LARGE_FLOATING_MODAL_SIZE_PX.width;
-  const modalHeight = isNarrow ? SMALL_FLOATING_MODAL_SIZE_PX.height : LARGE_FLOATING_MODAL_SIZE_PX.height;
-  // The minimum drag position is the top left of the video gallery. i.e. the modal (PiP) should not be able
-  // to be dragged offscreen and these are the top and left bounds of that calculation.
-  const modalMinDragPosition: _ICoordinates | undefined = useMemo(
-    () =>
-      parentWidth && parentHeight
-        ? {
-            // We use -parentWidth/Height because our modal is positioned to start in the bottom right,
-            // hence (0,0) is the bottom right of the video gallery.
-            x: -parentWidth + modalWidth + localVideoTileOuterPaddingPX,
-            y: -parentHeight + modalHeight + localVideoTileOuterPaddingPX
-          }
-        : undefined,
-    [parentHeight, parentWidth, modalHeight, modalWidth]
-  );
-
   const layerHostId = useId('layerhost');
 
   return (
     <Stack styles={{ root: { position: 'relative', width: '100%', height: '100%' } }}>
       {!shouldFloatNonDraggableLocalVideo &&
         localVideoComponent &&
-        (horizontalGridTiles.length > 0 ? (
+        (horizontalGalleryTiles.length > 0 ? (
           <Stack className={mergeStyles(localVideoTileContainerStyle(theme, isNarrow))}>{localVideoComponent}</Stack>
         ) : (
-          <_ModalClone
-            isOpen={true}
-            isModeless={true}
-            dragOptions={DRAG_OPTIONS}
-            styles={floatingLocalVideoModalStyle(theme, isNarrow)}
-            layerProps={{ hostId: layerHostId }}
-            maxDragPosition={modalMaxDragPosition}
-            minDragPosition={modalMinDragPosition}
-          >
-            {localVideoComponent}
-          </_ModalClone>
+          <FloatingLocalVideo
+            localVideoComponent={localVideoComponent}
+            layerHostId={layerHostId}
+            isNarrow={isNarrow}
+            parentWidth={parentWidth}
+            parentHeight={parentHeight}
+          />
         ))}
       {
         // When we use showCameraSwitcherInLocalPreview it disables dragging to allow keyboard navigation.
@@ -206,16 +190,59 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
             {gridTiles}
           </GridLayout>
         )}
-        {horizontalGridTiles.length > 0 && (
+        {horizontalGalleryTiles.length > 0 && (
           <VideoGalleryResponsiveHorizontalGallery
             isNarrow={isNarrow}
             shouldFloatLocalVideo={true}
-            horizontalGalleryElements={horizontalGridTiles}
+            horizontalGalleryElements={horizontalGalleryTiles}
             styles={styles?.horizontalGallery}
           />
         )}
         <LayerHost id={layerHostId} className={mergeStyles(layerHostStyle)} />
       </Stack>
     </Stack>
+  );
+};
+
+const FloatingLocalVideo = (props: {
+  localVideoComponent: JSX.Element;
+  layerHostId: string;
+  isNarrow?: boolean;
+  parentWidth?: number;
+  parentHeight?: number;
+}): JSX.Element => {
+  const { localVideoComponent, layerHostId, isNarrow, parentWidth, parentHeight } = props;
+
+  const theme = useTheme();
+
+  const modalWidth = isNarrow ? SMALL_FLOATING_MODAL_SIZE_PX.width : LARGE_FLOATING_MODAL_SIZE_PX.width;
+  const modalHeight = isNarrow ? SMALL_FLOATING_MODAL_SIZE_PX.height : LARGE_FLOATING_MODAL_SIZE_PX.height;
+  // The minimum drag position is the top left of the video gallery. i.e. the modal (PiP) should not be able
+  // to be dragged offscreen and these are the top and left bounds of that calculation.
+  const modalMinDragPosition: _ICoordinates | undefined = useMemo(
+    () =>
+      parentWidth && parentHeight
+        ? {
+            // We use -parentWidth/Height because our modal is positioned to start in the bottom right,
+            // hence (0,0) is the bottom right of the video gallery.
+            x: -parentWidth + modalWidth + localVideoTileOuterPaddingPX,
+            y: -parentHeight + modalHeight + localVideoTileOuterPaddingPX
+          }
+        : undefined,
+    [parentHeight, parentWidth, modalHeight, modalWidth]
+  );
+
+  return (
+    <_ModalClone
+      isOpen={true}
+      isModeless={true}
+      dragOptions={DRAG_OPTIONS}
+      styles={floatingLocalVideoModalStyle(theme, isNarrow)}
+      layerProps={{ hostId: layerHostId }}
+      maxDragPosition={modalMaxDragPosition}
+      minDragPosition={modalMinDragPosition}
+    >
+      {localVideoComponent}
+    </_ModalClone>
   );
 };
