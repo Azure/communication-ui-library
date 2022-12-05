@@ -403,10 +403,6 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   };
   const horizontalGalleryTiles = createHorizontalGalleryTiles();
 
-  if (!shouldFloatLocalVideo && localVideoTile) {
-    gridTiles.push(localVideoTile);
-  }
-
   const localScreenShareStreamComponent = <LocalScreenShare localParticipant={localParticipant} />;
 
   const remoteScreenShareComponent = screenShareParticipant && (
