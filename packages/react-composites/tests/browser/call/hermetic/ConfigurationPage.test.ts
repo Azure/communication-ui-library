@@ -33,7 +33,7 @@ test.describe('Call Composite E2E Configuration Screen Tests', () => {
     expect(await stableScreenshot(page)).toMatchSnapshot('call-configuration-page-with-call-details.png');
   });
 
-  test.only('Configuration screen should show no devices available', async ({ page, serverUrl }) => {
+  test('Configuration screen should show no devices available', async ({ page, serverUrl }) => {
     const state = defaultMockConfigurationPageState();
     state.devices = {
       cameras: [],
