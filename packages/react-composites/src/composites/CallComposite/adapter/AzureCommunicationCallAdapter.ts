@@ -915,14 +915,6 @@ const useAzureCommunicationCallAdapterGeneric = <
 ): AdapterType | undefined => {
   const { credential, locator, userId, /*@conditional-compile-remove(rooms) */ options } = args;
 
-  /*@conditional-compile-remove(PSTN-calls) */
-  let alternateCallerId: string | undefined;
-  /*@conditional-compile-remove(PSTN-calls) */
-  if ('displayName' in args) {
-    /*@conditional-compile-remove(PSTN-calls) */
-    alternateCallerId = args.alternateCallerId;
-  }
-
   // State update needed to rerender the parent component when a new adapter is created.
   const [adapter, setAdapter] = useState<AdapterType | undefined>(undefined);
   // Ref needed for cleanup to access the old adapter created asynchronously.
@@ -969,7 +961,7 @@ const useAzureCommunicationCallAdapterGeneric = <
             displayName: args.displayName,
             locator,
             userId: userId as CommunicationUserIdentifier,
-            /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
+            /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId: args.alternateCallerId,
             /* @conditional-compile-remove(rooms) */ options
           })) as AdapterType;
         } else {
