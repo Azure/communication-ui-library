@@ -10,42 +10,47 @@ import { VideoGalleryRemoteParticipant, ViewScalingMode } from '../../types';
  */
 export const useVideoTileContextualMenuProps = (props: {
   remoteParticipant: VideoGalleryRemoteParticipant;
-  view?: { updateScalingMode: (scalingMode: ViewScalingMode) => Promise<void> };
-  strings: {
-    fitToFrame: string;
-    fillFrame: string;
+  strings?: {
+    fitRemoteParticipantToFrame?: string;
+    fillRemoteParticipantFrame?: string;
   };
+  view?: { updateScalingMode: (scalingMode: ViewScalingMode) => Promise<void> };
 }): IContextualMenuProps | undefined => {
   const { view, remoteParticipant, strings } = props;
 
   const contextualMenuProps: IContextualMenuProps | undefined = useMemo(() => {
     const items: IContextualMenuItem[] = [];
     if (remoteParticipant.videoStream?.scalingMode) {
-      if (remoteParticipant.videoStream?.scalingMode === 'Crop') {
+      if (remoteParticipant.videoStream?.scalingMode === 'Crop' && strings?.fitRemoteParticipantToFrame) {
         items.push({
-          key: 'fitToFrame',
-          text: strings.fitToFrame,
+          key: 'fitRemoteParticipantToFrame',
+          text: strings.fitRemoteParticipantToFrame,
           iconProps: { iconName: 'VideoTileScaleFit', styles: { root: { lineHeight: '1rem' } } },
           onClick: () => {
             view?.updateScalingMode('Fit');
           }
         });
-      } else {
-        items.push({
-          key: 'fillFrame',
-          text: strings.fillFrame,
-          iconProps: { iconName: 'VideoTileScaleFill', styles: { root: { lineHeight: '1rem' } } },
-          onClick: () => {
-            view?.updateScalingMode('Crop');
-          }
-        });
+      } else if (remoteParticipant.videoStream?.scalingMode === 'Fit' && strings?.fillRemoteParticipantFrame) {
+        {
+          items.push({
+            key: 'fillRemoteParticipantFrame',
+            text: strings.fillRemoteParticipantFrame,
+            iconProps: { iconName: 'VideoTileScaleFill', styles: { root: { lineHeight: '1rem' } } },
+            onClick: () => {
+              view?.updateScalingMode('Crop');
+            }
+          });
+        }
       }
     }
     if (items.length === 0) {
       return undefined;
     }
+
+    /* @conditional-compile-remove(pinned-participants) */
     return { items };
-  }, [remoteParticipant.videoStream?.scalingMode, strings.fillFrame, strings.fitToFrame, view]);
+    return;
+  }, [remoteParticipant.videoStream?.scalingMode, strings, view]);
 
   return contextualMenuProps;
 };

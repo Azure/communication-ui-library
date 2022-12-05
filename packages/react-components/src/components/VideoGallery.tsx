@@ -79,8 +79,10 @@ export interface VideoGalleryStrings {
   localVideoSelectedDescription: string;
   /** placeholder text for participants who does not have a display name*/
   displayNamePlaceholder: string;
+  /* @conditional-compile-remove(pinned-participants) */
   /** Menu text shown in Video Tile contextual menu for setting a remote participants video to fit in frame */
   fitRemoteParticipantToFrame: string;
+  /* @conditional-compile-remove(pinned-participants) */
   /** Menu text shown in Video Tile contextual menu for setting a remote participants video to fill the frame */
   fillRemoteParticipantFrame: string;
 }

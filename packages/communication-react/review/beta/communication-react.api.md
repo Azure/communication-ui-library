@@ -1815,6 +1815,8 @@ export const DEFAULT_COMPONENT_ICONS: {
     BrowserPermissionDeniedError: JSX.Element;
     VideoTilePinned: JSX.Element;
     VideoTileMoreOptions: JSX.Element;
+    VideoTileScaleFit: JSX.Element;
+    VideoTileScaleFill: JSX.Element;
 };
 
 // @public
@@ -1908,6 +1910,8 @@ export const DEFAULT_COMPOSITE_ICONS: {
     BrowserPermissionDeniedError: JSX.Element;
     VideoTilePinned: JSX.Element;
     VideoTileMoreOptions: JSX.Element;
+    VideoTileScaleFit: JSX.Element;
+    VideoTileScaleFill: JSX.Element;
 };
 
 // @public
@@ -3237,6 +3241,8 @@ export interface VideoGalleryStream {
 // @public
 export interface VideoGalleryStrings {
     displayNamePlaceholder: string;
+    fillRemoteParticipantFrame: string;
+    fitRemoteParticipantToFrame: string;
     localVideoCameraSwitcherLabel: string;
     localVideoLabel: string;
     localVideoMovementLabel: string;

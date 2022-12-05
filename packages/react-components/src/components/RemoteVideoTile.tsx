@@ -42,7 +42,7 @@ export const _RemoteVideoTile = React.memo(
     showMuteIndicator?: boolean;
     showLabel?: boolean;
     personaMinSize?: number;
-    strings: VideoGalleryStrings;
+    strings?: VideoGalleryStrings;
   }) => {
     const {
       isAvailable,
@@ -95,10 +95,8 @@ export const _RemoteVideoTile = React.memo(
     const contextualMenuProps = useVideoTileContextualMenuProps({
       remoteParticipant,
       view,
-      strings: {
-        fitToFrame: strings.fitRemoteParticipantToFrame,
-        fillFrame: strings.fillRemoteParticipantFrame
-      }
+      /* @conditional-compile-remove(pinned-participants) */
+      strings: { ...strings }
     });
 
     const showLoadingIndicator = isAvailable && isReceiving === false && remoteParticipant.state !== 'Disconnected';
