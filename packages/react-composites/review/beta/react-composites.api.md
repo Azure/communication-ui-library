@@ -400,7 +400,7 @@ export interface CallCompositeStrings {
     mutedMessage: string;
     networkReconnectMoreDetails: string;
     networkReconnectTitle: string;
-    noCameraLabel: string;
+    noCamerasLabel: string;
     noMicrophonesLabel: string;
     noSpeakersLabel: string;
     openDialpadButtonLabel: string;
