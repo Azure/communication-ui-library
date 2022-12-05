@@ -363,6 +363,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           onRenderAvatar={onRenderAvatar}
           showMuteIndicator={showMuteIndicator}
           strings={strings}
+          /* @conditional-compile-remove(PSTN-calls) */
+          participantState={participant.state}
         />
       );
     },

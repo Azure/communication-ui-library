@@ -5,6 +5,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import {
   CreateVideoStreamViewResult,
   OnRenderAvatarCallback,
+  ParticipantState,
   VideoGalleryRemoteParticipant,
   VideoStreamOptions
 } from '../types';
@@ -43,6 +44,7 @@ export const _RemoteVideoTile = React.memo(
     showLabel?: boolean;
     personaMinSize?: number;
     strings?: VideoGalleryStrings;
+    participantState?: ParticipantState;
   }) => {
     const {
       isAvailable,
@@ -56,6 +58,7 @@ export const _RemoteVideoTile = React.memo(
       onRenderAvatar,
       showMuteIndicator,
       remoteParticipant,
+      participantState,
       strings
     } = props;
 
@@ -99,7 +102,7 @@ export const _RemoteVideoTile = React.memo(
       strings: { ...strings }
     });
 
-    const showLoadingIndicator = isAvailable && isReceiving === false && remoteParticipant.state !== 'Disconnected';
+    const showLoadingIndicator = isAvailable && isReceiving === false && participantState !== 'Disconnected';
 
     const renderVideoStreamElement = useMemo(() => {
       // Checking if renderElement is well defined or not as calling SDK has a number of video streams limitation which
@@ -128,7 +131,7 @@ export const _RemoteVideoTile = React.memo(
         showLabel={props.showLabel}
         /* @conditional-compile-remove(one-to-n-calling) */
         /* @conditional-compile-remove(PSTN-calls) */
-        participantState={remoteParticipant.state}
+        participantState={participantState}
         contextualMenu={contextualMenuProps}
       />
     );

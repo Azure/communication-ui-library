@@ -17,11 +17,16 @@ export const useVideoTileContextualMenuProps = (props: {
   view?: { updateScalingMode: (scalingMode: ViewScalingMode) => Promise<void> };
 }): IContextualMenuProps | undefined => {
   const { view, remoteParticipant, strings } = props;
+  const scalingMode = useMemo(() => {
+    /* @conditional-compile-remove(pinned-participants) */
+    return remoteParticipant.videoStream?.scalingMode;
+    return;
+  }, [remoteParticipant.videoStream?.scalingMode]);
 
   const contextualMenuProps: IContextualMenuProps | undefined = useMemo(() => {
     const items: IContextualMenuItem[] = [];
-    if (remoteParticipant.videoStream?.scalingMode) {
-      if (remoteParticipant.videoStream?.scalingMode === 'Crop' && strings?.fitRemoteParticipantToFrame) {
+    if (scalingMode) {
+      if (scalingMode === 'Crop' && strings?.fitRemoteParticipantToFrame) {
         items.push({
           key: 'fitRemoteParticipantToFrame',
           text: strings.fitRemoteParticipantToFrame,
@@ -30,7 +35,7 @@ export const useVideoTileContextualMenuProps = (props: {
             view?.updateScalingMode('Fit');
           }
         });
-      } else if (remoteParticipant.videoStream?.scalingMode === 'Fit' && strings?.fillRemoteParticipantFrame) {
+      } else if (scalingMode === 'Fit' && strings?.fillRemoteParticipantFrame) {
         {
           items.push({
             key: 'fillRemoteParticipantFrame',
@@ -50,7 +55,7 @@ export const useVideoTileContextualMenuProps = (props: {
     /* @conditional-compile-remove(pinned-participants) */
     return { items };
     return;
-  }, [remoteParticipant.videoStream?.scalingMode, strings, view]);
+  }, [scalingMode, strings, view]);
 
   return contextualMenuProps;
 };
