@@ -25,7 +25,7 @@ export const useVideoTileContextualMenuProps = (props: {
         items.push({
           key: 'fitToFrame',
           text: strings.fitToFrame,
-          iconProps: { iconName: 'FitWidth' },
+          iconProps: { iconName: 'VideoTileScaleFit', styles: { root: { lineHeight: '1rem' } } },
           onClick: () => {
             view?.updateScalingMode('Fit');
           }
@@ -34,7 +34,7 @@ export const useVideoTileContextualMenuProps = (props: {
         items.push({
           key: 'fillFrame',
           text: strings.fillFrame,
-          iconProps: { iconName: 'FitPage' },
+          iconProps: { iconName: 'VideoTileScaleFill', styles: { root: { lineHeight: '1rem' } } },
           onClick: () => {
             view?.updateScalingMode('Crop');
           }
