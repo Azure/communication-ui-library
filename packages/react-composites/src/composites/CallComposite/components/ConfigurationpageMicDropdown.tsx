@@ -41,12 +41,12 @@ export const ConfigurationpageMicDropdown = (props: ConfigurationpageMicDropdown
   /* @conditional-compile-remove(call-readiness) */
   const microphoneBlockedDropdown = (
     <_DevicePermissionDropdown
-      {...props.dropdownProps}
       styles={dropDownStyles(theme)}
       constrain={{ video: false, audio: true }}
       strings={devicePermissionDropdownStringsMicrophone}
       icon={<CallCompositeIcon iconName="ControlButtonMicOn" style={{ height: '1.25rem', marginRight: '0.625rem' }} />}
       onClick={props.onClickEnableDevicePermission}
+      {...props.dropdownProps}
     />
   );
 

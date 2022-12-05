@@ -103,7 +103,7 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
   const cameraLabel = locale.strings.call.cameraLabel;
   const soundLabel = locale.strings.call.soundLabel;
   const noSpeakersLabel = locale.strings.call.noSpeakersLabel;
-  const noCameraLabel = locale.strings.call.noCameraLabel;
+  const noCameraLabel = locale.strings.call.noCamerasLabel;
   const noMicLabel = locale.strings.call.noMicrophonesLabel;
 
   const cameraPermissionGranted = props.cameraPermissionGranted;

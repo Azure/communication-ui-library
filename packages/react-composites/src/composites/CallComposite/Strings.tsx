@@ -36,7 +36,7 @@ export interface CallCompositeStrings {
   /**
    * Label for when there are no cameras present on configuration screen.
    */
-  noCameraLabel: string;
+  noCamerasLabel: string;
   /**
    * Label for sound dropdown.
    */

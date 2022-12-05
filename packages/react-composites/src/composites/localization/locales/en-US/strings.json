@@ -1,7 +1,7 @@
 {
   "call": {
     "cameraLabel": "Camera",
-    "noCameraLabel": "No cameras found",
+    "noCamerasLabel": "No cameras found",
     "cameraPermissionDenied": "Your browser is blocking access to your camera",
     "cameraTurnedOff": "Your camera is turned off",
     "chatButtonLabel": "Chat",
