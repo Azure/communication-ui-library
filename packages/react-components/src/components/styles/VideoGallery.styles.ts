@@ -211,7 +211,7 @@ export const localVideoCameraCycleButtonStyles = (theme: Theme): IButtonStyles =
     },
     flexContainer: {
       paddingBottom: _pxToRem(8),
-      height: 'none'
+      height: 'unset'
     }
   };
 };
