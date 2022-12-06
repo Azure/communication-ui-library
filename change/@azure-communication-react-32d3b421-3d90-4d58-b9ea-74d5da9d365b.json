@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "DefaultLayout component added to refactor VideoGallery",
+  "packageName": "@azure/communication-react",
+  "email": "miguelgamis@microsoft.com",
+  "dependentChangeType": "none"
+}
