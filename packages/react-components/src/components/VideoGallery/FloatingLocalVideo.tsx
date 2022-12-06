@@ -10,7 +10,7 @@ import {
   LARGE_FLOATING_MODAL_SIZE_PX,
   localVideoTileOuterPaddingPX,
   SMALL_FLOATING_MODAL_SIZE_PX
-} from '../styles/VideoGallery.styles';
+} from './styles/FloatingLocalVideo.styles';
 
 const DRAG_OPTIONS: IDragOptions = {
   moveMenuItemText: 'Move',

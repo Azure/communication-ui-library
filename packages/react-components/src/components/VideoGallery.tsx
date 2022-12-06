@@ -16,7 +16,6 @@ import {
 } from '../types';
 import { HorizontalGalleryStyles } from './HorizontalGallery';
 import { _RemoteVideoTile } from './RemoteVideoTile';
-import { floatingLocalVideoTileStyle, videoGalleryOuterDivStyle } from './styles/VideoGallery.styles';
 import { isNarrowWidth, _useContainerHeight, _useContainerWidth } from './utils/responsive';
 import { LocalScreenShare } from './VideoGallery/LocalScreenShare';
 import { RemoteScreenShare } from './VideoGallery/RemoteScreenShare';
@@ -29,6 +28,8 @@ import { _usePermissions } from '../permissions';
 import { DefaultLayout } from './VideoGallery/DefaultLayout';
 import { FloatingLocalVideoLayout } from './VideoGallery/FloatingLocalVideoLayout';
 import { useIdentifiers } from '../identifiers';
+import { videoGalleryOuterDivStyle } from './styles/VideoGallery.styles';
+import { floatingLocalVideoTileStyle } from './VideoGallery/styles/FloatingLocalVideo.styles';
 
 /**
  * @private

@@ -8,15 +8,14 @@ import { useTheme } from '../../theming';
 import { VideoGalleryRemoteParticipant } from '../../types';
 import { GridLayout } from '../GridLayout';
 import {
-  layerHostStyle,
   localVideoTileContainerStyle,
   localVideoTileWithControlsContainerStyle,
   LOCAL_VIDEO_TILE_ZINDEX
-} from '../styles/VideoGallery.styles';
+} from './styles/FloatingLocalVideo.styles';
 import { isNarrowWidth } from '../utils/responsive';
 import { VideoGalleryStyles } from '../VideoGallery';
 import { FloatingLocalVideo } from './FloatingLocalVideo';
-import { innerLayoutStyle, rootLayoutStyle } from './styles/FloatingLocalVideoLayout.styles';
+import { innerLayoutStyle, layerHostStyle, rootLayoutStyle } from './styles/FloatingLocalVideoLayout.styles';
 import { VideoGalleryResponsiveHorizontalGallery } from './VideoGalleryResponsiveHorizontalGallery';
 import { useFloatingLocalVideoLayout } from './videoGalleryUtils';
 
