@@ -267,6 +267,14 @@ const DialpadContainer = (props: {
         onChange={(e: any) => {
           setText(e.target.value);
         }}
+        onClick={(e: any) => {
+          const input = e.target;
+          const end = input.value.length;
+
+          // Move focus to end of input field
+          input.setSelectionRange(end, end);
+          input.focus();
+        }}
         placeholder={props.strings.placeholderText}
         data-test-id="dialpad-input"
         onRenderSuffix={(): JSX.Element => (
