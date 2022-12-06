@@ -56,13 +56,16 @@ export const FloatingLocalVideo = (props: {
     [parentHeight, parentWidth, modalHeight, modalWidth]
   );
 
+  const modalStyles = useMemo(() => floatingLocalVideoModalStyle(theme, isNarrow), [theme, isNarrow]);
+  const layerProps = useMemo(() => ({ hostId: layerHostId }), [layerHostId]);
+
   return (
     <_ModalClone
       isOpen={true}
       isModeless={true}
       dragOptions={DRAG_OPTIONS}
-      styles={floatingLocalVideoModalStyle(theme, isNarrow)}
-      layerProps={{ hostId: layerHostId }}
+      styles={modalStyles}
+      layerProps={layerProps}
       maxDragPosition={modalMaxDragPosition}
       minDragPosition={modalMinDragPosition}
     >
