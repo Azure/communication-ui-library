@@ -46,6 +46,7 @@ export const _RemoteVideoTile = React.memo(
     personaMinSize?: number;
     strings?: VideoGalleryStrings;
     participantState?: ParticipantState;
+    showRemoteVideoTileContextualMenu?: boolean;
   }) => {
     const {
       isAvailable,
@@ -59,7 +60,8 @@ export const _RemoteVideoTile = React.memo(
       onRenderAvatar,
       showMuteIndicator,
       remoteParticipant,
-      participantState
+      participantState,
+      showRemoteVideoTileContextualMenu = true
     } = props;
 
     const remoteVideoStreamProps: RemoteVideoStreamLifecycleMaintainerProps = useMemo(
@@ -97,10 +99,12 @@ export const _RemoteVideoTile = React.memo(
       strings: { ...props.strings }
     });
 
-    const videoTileContextualMenuProps = useMemo(
-      () => videoTileContextualMenuPropsTrampoline(contextualMenuProps),
-      [contextualMenuProps]
-    );
+    const videoTileContextualMenuProps = useMemo(() => {
+      if (!showRemoteVideoTileContextualMenu) {
+        return {};
+      }
+      return videoTileContextualMenuPropsTrampoline(contextualMenuProps);
+    }, [contextualMenuProps, showRemoteVideoTileContextualMenu]);
 
     const showLoadingIndicator = isAvailable && isReceiving === false && participantState !== 'Disconnected';
 

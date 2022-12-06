@@ -1404,6 +1404,7 @@ export const _RemoteVideoTile: React_2.MemoExoticComponent<(props: {
     personaMinSize?: number | undefined;
     strings?: VideoGalleryStrings | undefined;
     participantState?: ParticipantState | undefined;
+    showRemoteVideoTileContextualMenu?: boolean | undefined;
 }) => JSX.Element>;
 
 // @beta
@@ -1664,6 +1665,7 @@ export interface VideoGalleryProps {
     remoteVideoViewOptions?: VideoStreamOptions;
     showCameraSwitcherInLocalPreview?: boolean;
     showMuteIndicator?: boolean;
+    showRemoteVideoTileContextualMenu?: boolean;
     strings?: Partial<VideoGalleryStrings>;
     styles?: VideoGalleryStyles;
 }

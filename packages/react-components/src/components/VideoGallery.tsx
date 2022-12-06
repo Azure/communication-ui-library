@@ -169,6 +169,12 @@ export interface VideoGalleryProps {
    * Camera control information for button to switch cameras.
    */
   localVideoCameraCycleButtonProps?: LocalVideoCameraCycleButtonProps;
+  /* @conditional-compile-remove(pinned-participants) */
+  /**
+   * Whether to show the remote video tile contextual menu.
+   * @defaultValue `true`
+   */
+  showRemoteVideoTileContextualMenu?: boolean;
 }
 
 const DRAG_OPTIONS: IDragOptions = {
@@ -365,6 +371,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           strings={strings}
           /* @conditional-compile-remove(PSTN-calls) */
           participantState={participant.state}
+          /* @conditional-compile-remove(pinned-participants) */
+          showRemoteVideoTileContextualMenu={props.showRemoteVideoTileContextualMenu}
         />
       );
     },
@@ -374,7 +382,9 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       remoteVideoViewOptions,
       onRenderAvatar,
       showMuteIndicator,
-      strings
+      strings,
+      /* @conditional-compile-remove(pinned-participants) */
+      props.showRemoteVideoTileContextualMenu
     ]
   );
 
