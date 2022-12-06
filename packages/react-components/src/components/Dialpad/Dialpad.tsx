@@ -267,6 +267,7 @@ const DialpadContainer = (props: {
         onChange={(e: any) => {
           setText(e.target.value);
         }}
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         onClick={(e: any) => {
           const input = e.target;
           const end = input.value.length;
