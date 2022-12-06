@@ -128,7 +128,6 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
   let activeVideoStreams = 0;
 
   const shouldFloatLocalVideo = floatingLocalVideoLayout.gridParticipants.length > 0;
-  const shouldFloatNonDraggableLocalVideo = !!(showCameraSwitcherInLocalPreview && shouldFloatLocalVideo);
 
   const gridTiles = floatingLocalVideoLayout.gridParticipants.map((p) => {
     return onRenderRemoteParticipant(
@@ -154,34 +153,34 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
 
   const layerHostId = useId('layerhost');
 
+  const wrappedLocalVideoComponent =
+    localVideoComponent && shouldFloatLocalVideo ? (
+      // When we use showCameraSwitcherInLocalPreview it disables dragging to allow keyboard navigation.
+      showCameraSwitcherInLocalPreview ? (
+        <Stack
+          className={mergeStyles(localVideoTileWithControlsContainerStyle(theme, isNarrow), {
+            boxShadow: theme.effects.elevation8,
+            zIndex: LOCAL_VIDEO_TILE_ZINDEX
+          })}
+        >
+          {localVideoComponent}
+        </Stack>
+      ) : horizontalGalleryTiles.length > 0 ? (
+        <Stack className={mergeStyles(localVideoTileContainerStyle(theme, isNarrow))}>{localVideoComponent}</Stack>
+      ) : (
+        <FloatingLocalVideo
+          localVideoComponent={localVideoComponent}
+          layerHostId={layerHostId}
+          isNarrow={isNarrow}
+          parentWidth={parentWidth}
+          parentHeight={parentHeight}
+        />
+      )
+    ) : undefined;
+
   return (
     <Stack styles={{ root: { position: 'relative', width: '100%', height: '100%' } }}>
-      {!shouldFloatNonDraggableLocalVideo &&
-        localVideoComponent &&
-        (horizontalGalleryTiles.length > 0 ? (
-          <Stack className={mergeStyles(localVideoTileContainerStyle(theme, isNarrow))}>{localVideoComponent}</Stack>
-        ) : (
-          <FloatingLocalVideo
-            localVideoComponent={localVideoComponent}
-            layerHostId={layerHostId}
-            isNarrow={isNarrow}
-            parentWidth={parentWidth}
-            parentHeight={parentHeight}
-          />
-        ))}
-      {
-        // When we use showCameraSwitcherInLocalPreview it disables dragging to allow keyboard navigation.
-        shouldFloatNonDraggableLocalVideo && localVideoComponent && gridTiles.length > 0 && (
-          <Stack
-            className={mergeStyles(localVideoTileWithControlsContainerStyle(theme, isNarrow), {
-              boxShadow: theme.effects.elevation8,
-              zIndex: LOCAL_VIDEO_TILE_ZINDEX
-            })}
-          >
-            {localVideoComponent}
-          </Stack>
-        )
-      }
+      {wrappedLocalVideoComponent}
       <Stack horizontal={false} styles={rootLayoutStyle}>
         {screenShareComponent ? (
           screenShareComponent
