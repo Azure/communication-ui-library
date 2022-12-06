@@ -47,14 +47,14 @@ export const useFloatingLocalVideoLayout = (props: {
   /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
   const callingParticipants = remoteParticipants.filter((p) => p.state === ('Connecting' || 'Ringing'));
   /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
-  const visibleCallingParticipantsSet = new Set(callingParticipants.map((p) => p.userId));
+  const callingParticipantsSet = new Set(callingParticipants.map((p) => p.userId));
 
   visibleAudioParticipants.current = smartDominantSpeakerParticipants({
     participants:
       remoteParticipants?.filter(
         (p) =>
           !visibleVideoParticipantsSet.has(p.userId) &&
-          /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ !visibleCallingParticipantsSet.has(
+          /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ !callingParticipantsSet.has(
             p.userId
           )
       ) ?? [],
@@ -71,7 +71,9 @@ export const useFloatingLocalVideoLayout = (props: {
     return visibleVideoParticipants.current.length > 0
       ? visibleVideoParticipants.current
       : visibleAudioParticipants.current;
-  }, []);
+  }, [
+    /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ callingParticipants
+  ]);
 
   const gridParticipants = getGridParticipants();
 
@@ -90,7 +92,10 @@ export const useFloatingLocalVideoLayout = (props: {
         : [];
       return visibleVideoParticipants.current.length > 0 ? visibleAudioParticipants.current : [];
     }
-  }, []);
+  }, [
+    /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ callingParticipants,
+    isScreenShareActive
+  ]);
 
   const horizontalGalleryParticipants = getHorizontalGalleryRemoteParticipants();
 
