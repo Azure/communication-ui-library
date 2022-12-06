@@ -4,11 +4,9 @@
 import { ContextualMenu, IDragOptions, LayerHost, mergeStyles, Stack } from '@fluentui/react';
 import { useId } from '@fluentui/react-hooks';
 import React, { useMemo } from 'react';
-import { GridLayoutStyles } from '..';
 import { useTheme } from '../../theming';
-import { BaseCustomStyles, VideoGalleryRemoteParticipant } from '../../types';
+import { VideoGalleryRemoteParticipant } from '../../types';
 import { GridLayout } from '../GridLayout';
-import { HorizontalGalleryStyles } from '../HorizontalGallery';
 import { _ICoordinates, _ModalClone } from '../ModalClone/ModalClone';
 import {
   floatingLocalVideoModalStyle,
@@ -27,31 +25,15 @@ import { VideoGalleryResponsiveHorizontalGallery } from './VideoGalleryResponsiv
 import { useFloatingLocalVideoLayout } from './videoGalleryUtils';
 
 /**
- * {@link DefaultLayoutStyles} Component Styles.
- * @public
- */
-export interface DefaultLayoutStyles extends BaseCustomStyles {
-  /** Styles for the grid layout */
-  gridLayout?: GridLayoutStyles;
-  /** Styles for the horizontal gallery  */
-  horizontalGallery?: HorizontalGalleryStyles;
-}
-
-/**
- * Props for {@link DefaultLayout}.
+ * Props for {@link FloatingLocalVideoLayout}.
  *
  * @private
  */
 export interface FloatingLocalVideoLayoutProps {
   /**
-   * Allows users to pass an object containing custom CSS styles for the gallery container.
-   *
-   * @Example
-   * ```
-   * <VideoGallery styles={{ root: { border: 'solid 1px red' } }} />
-   * ```
+   * Styles for the {@link FloatingLocalVideoLayout}
    */
-  styles?: VideoGalleryStyles;
+  styles?: Omit<VideoGalleryStyles, 'root'>;
   /** List of remote video particpants */
   remoteParticipants?: VideoGalleryRemoteParticipant[];
   /** Callback to render each remote participant */
