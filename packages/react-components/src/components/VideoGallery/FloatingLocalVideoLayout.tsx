@@ -92,8 +92,6 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
 
   let activeVideoStreams = 0;
 
-  const shouldFloatLocalVideo = floatingLocalVideoLayout.gridParticipants.length > 0;
-
   const gridTiles = floatingLocalVideoLayout.gridParticipants.map((p) => {
     return onRenderRemoteParticipant(
       p,
@@ -102,6 +100,8 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
         : p.videoStream?.isAvailable
     );
   });
+
+  const shouldFloatLocalVideo = remoteParticipants.length > 0;
 
   if (!shouldFloatLocalVideo && localVideoComponent) {
     gridTiles.push(localVideoComponent);
