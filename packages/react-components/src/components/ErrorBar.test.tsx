@@ -3,19 +3,22 @@
 
 import React from 'react';
 import { act } from 'react-dom/test-utils';
-import { initializeIcons, MessageBar } from '@fluentui/react';
+import { MessageBar, registerIcons } from '@fluentui/react';
 import { ActiveErrorMessage, ErrorBar, ErrorBarProps } from './ErrorBar';
 import Enzyme, { ReactWrapper, mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 
 const ONE_DAY_MILLISECONDS = 24 * 3600 * 1000;
 
-describe('ErrorBar self-clearing error', () => {
-  beforeAll(() => {
-    Enzyme.configure({ adapter: new Adapter() });
-    initializeIcons();
-  });
+Enzyme.configure({ adapter: new Adapter() });
+registerIcons({
+  icons: {
+    errorbarclear: <></>,
+    errorbadge: <></>
+  }
+});
 
+describe('ErrorBar self-clearing error', () => {
   test('error bar is hidden when an error with timestamp is cleared', () => {
     const root = mountErrorBarWithDefaults();
     setAccessDeniedErrorAt(root, new Date(Date.now()));
@@ -38,11 +41,6 @@ describe('ErrorBar self-clearing error', () => {
 });
 
 describe('ErrorBar dismissal for errors with timestamp', () => {
-  beforeAll(() => {
-    Enzyme.configure({ adapter: new Adapter() });
-    initializeIcons();
-  });
-
   it('error can be dimissed', () => {
     const root = mountErrorBarWithDefaults();
     setAccessDeniedErrorAt(root, new Date(Date.now()));
@@ -78,11 +76,6 @@ describe('ErrorBar dismissal for errors with timestamp', () => {
 });
 
 describe('ErrorBar dismissal for errors without timestamp', () => {
-  beforeAll(() => {
-    Enzyme.configure({ adapter: new Adapter() });
-    initializeIcons();
-  });
-
   it('error can be dimissed', () => {
     const root = mountErrorBarWithDefaults();
     setAccessDeniedErrorWithoutTimestamp(root);
@@ -110,11 +103,6 @@ describe('ErrorBar dismissal for errors without timestamp', () => {
 });
 
 describe('ErrorBar dismissal with multiple errors', () => {
-  beforeAll(() => {
-    Enzyme.configure({ adapter: new Adapter() });
-    initializeIcons();
-  });
-
   it('clearing an error with multiple errors leaves other errors untouched', () => {
     const root = mountErrorBarWithDefaults();
     setActiveErrors(root, [{ type: 'accessDenied', timestamp: new Date(Date.now()) }, { type: 'muteGeneric' }]);
@@ -125,11 +113,6 @@ describe('ErrorBar dismissal with multiple errors', () => {
 });
 
 describe('ErrorBar handling of errors from previous call or chat', () => {
-  beforeAll(() => {
-    Enzyme.configure({ adapter: new Adapter() });
-    initializeIcons();
-  });
-
   it('shows all old errors by default', () => {
     const oldErrors: ActiveErrorMessage[] = [
       // Make sure old error is in the past.
