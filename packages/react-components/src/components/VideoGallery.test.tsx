@@ -145,6 +145,7 @@ describe('VideoGallery default layout tests', () => {
 
     act(() => {
       root.setProps({
+        layout: 'floatingLocalVideo',
         remoteParticipants,
         dominantSpeakers: ['remoteScreenSharingParticipant', 'remoteVideoParticipant']
       });
@@ -179,13 +180,16 @@ describe('VideoGallery floating local video layout', () => {
 
     const root = mountVideoGalleryWithLocalParticipant({ localParticipant });
 
-    root.setProps({ layout: 'floatingLocalVideo' });
     const remoteParticipants = Array.from({ length: 10 }, () =>
       createRemoteParticipant({
         videoStream: { isAvailable: false, renderElement: createVideoDivElement() }
       })
     );
-    root.setProps({ remoteParticipants });
+
+    act(() => {
+      root.setProps({ layout: 'floatingLocalVideo', remoteParticipants });
+    });
+
     expect(root.find(_ModalClone).exists()).toBe(true);
     expect(
       root
@@ -203,13 +207,16 @@ describe('VideoGallery floating local video layout', () => {
 
     const root = mountVideoGalleryWithLocalParticipant({ localParticipant });
 
-    root.setProps({ layout: 'floatingLocalVideo' });
     const remoteParticipants = Array.from({ length: 10 }, () =>
       createRemoteParticipant({
         videoStream: { isAvailable: false, renderElement: createVideoDivElement() }
       })
     );
-    root.setProps({ remoteParticipants });
+
+    act(() => {
+      root.setProps({ layout: 'floatingLocalVideo', remoteParticipants });
+    });
+
     expect(tileCount(root)).toBe(10);
     expect(audioTileCount(root)).toBe(10);
     expect(videoTileCount(root)).toBe(0);
@@ -226,13 +233,16 @@ describe('VideoGallery floating local video layout', () => {
 
     const root = mountVideoGalleryWithLocalParticipant({ localParticipant });
 
-    root.setProps({ layout: 'floatingLocalVideo' });
     const remoteParticipants = Array.from({ length: 10 }, () =>
       createRemoteParticipant({
         videoStream: { isAvailable: true, renderElement: createVideoDivElement() }
       })
     );
-    root.setProps({ remoteParticipants });
+
+    act(() => {
+      root.setProps({ layout: 'floatingLocalVideo', remoteParticipants });
+    });
+
     expect(gridVideoTileCount(root)).toBe(DEFAULT_MAX_REMOTE_VIDEO_STREAMS);
     expect(root.find(HorizontalGallery).find(VideoTile).length).toBe(2);
   });
@@ -261,9 +271,12 @@ describe('VideoGallery floating local video layout', () => {
       })
     );
 
-    root.setProps({
-      remoteParticipants,
-      dominantSpeakers: ['remoteScreenSharingParticipant', 'remoteVideoParticipant']
+    act(() => {
+      root.setProps({
+        layout: 'floatingLocalVideo',
+        remoteParticipants,
+        dominantSpeakers: ['remoteScreenSharingParticipant', 'remoteVideoParticipant']
+      });
     });
 
     expect(root.find(RemoteScreenShare).length).toBe(1);

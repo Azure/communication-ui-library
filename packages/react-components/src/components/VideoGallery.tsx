@@ -19,15 +19,9 @@ import {
 import { GridLayout } from './GridLayout';
 import { HorizontalGalleryStyles } from './HorizontalGallery';
 import { _RemoteVideoTile } from './RemoteVideoTile';
-import { ResponsiveHorizontalGallery } from './ResponsiveHorizontalGallery';
-import { HORIZONTAL_GALLERY_BUTTON_WIDTH, HORIZONTAL_GALLERY_GAP } from './styles/HorizontalGallery.styles';
 import {
-  LARGE_HORIZONTAL_GALLERY_TILE_SIZE_REM,
-  SMALL_HORIZONTAL_GALLERY_TILE_SIZE_REM,
   floatingLocalVideoModalStyle,
   floatingLocalVideoTileStyle,
-  horizontalGalleryContainerStyle,
-  horizontalGalleryStyle,
   layerHostStyle,
   localVideoTileContainerStyle,
   videoGalleryContainerStyle,
@@ -47,6 +41,8 @@ import { _formatString } from '@internal/acs-ui-common';
 import { _LocalVideoTile } from './LocalVideoTile';
 /* @conditional-compile-remove(rooms) */
 import { _usePermissions } from '../permissions';
+import { DefaultLayout } from './VideoGallery/DefaultLayout';
+import { VideoGalleryResponsiveHorizontalGallery } from './VideoGallery/VideoGalleryResponsiveHorizontalGallery';
 
 /**
  * @private
@@ -426,72 +422,91 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   const horizontalGalleryPresent = horizontalGalleryTiles && horizontalGalleryTiles.length > 0;
   const layerHostId = useId('layerhost');
 
+  if (layout === 'floatingLocalVideo') {
+    return (
+      <div
+        data-ui-id={ids.videoGallery}
+        ref={containerRef}
+        className={mergeStyles(videoGalleryOuterDivStyle, styles?.root)}
+      >
+        {shouldFloatLocalVideo &&
+          !shouldFloatNonDraggableLocalVideo &&
+          localVideoTile &&
+          (horizontalGalleryPresent ? (
+            <Stack className={mergeStyles(localVideoTileContainerStyle(theme, isNarrow))}>{localVideoTile}</Stack>
+          ) : (
+            <_ModalClone
+              isOpen={true}
+              isModeless={true}
+              dragOptions={DRAG_OPTIONS}
+              styles={floatingLocalVideoModalStyle(theme, isNarrow)}
+              layerProps={{ hostId: layerHostId }}
+              maxDragPosition={modalMaxDragPosition}
+              minDragPosition={modalMinDragPosition}
+            >
+              {localVideoTile}
+            </_ModalClone>
+          ))}
+        {
+          // When we use showCameraSwitcherInLocalPreview it disables dragging to allow keyboard navigation.
+          shouldFloatNonDraggableLocalVideo && localVideoTile && remoteParticipants.length > 0 && (
+            <Stack
+              className={mergeStyles(localVideoTileWithControlsContainerStyle(theme, isNarrow), {
+                boxShadow: theme.effects.elevation8,
+                zIndex: LOCAL_VIDEO_TILE_ZINDEX
+              })}
+            >
+              {localVideoTile}
+            </Stack>
+          )
+        }
+        <Stack horizontal={false} styles={videoGalleryContainerStyle}>
+          {screenShareParticipant ? (
+            remoteScreenShareComponent
+          ) : localParticipant?.isScreenSharingOn ? (
+            localScreenShareStreamComponent
+          ) : (
+            <GridLayout key="grid-layout" styles={styles?.gridLayout}>
+              {gridTiles}
+            </GridLayout>
+          )}
+          {horizontalGalleryPresent && (
+            <VideoGalleryResponsiveHorizontalGallery
+              shouldFloatLocalVideo={true}
+              isNarrow={isNarrow}
+              horizontalGalleryElements={horizontalGalleryTiles}
+              styles={styles?.horizontalGallery}
+            />
+          )}
+
+          <LayerHost id={layerHostId} className={mergeStyles(layerHostStyle)} />
+        </Stack>
+      </div>
+    );
+  }
+
+  const screenShareComponent = remoteScreenShareComponent
+    ? remoteScreenShareComponent
+    : localParticipant.isScreenSharingOn
+    ? localScreenShareStreamComponent
+    : undefined;
+
   return (
     <div
       data-ui-id={ids.videoGallery}
       ref={containerRef}
       className={mergeStyles(videoGalleryOuterDivStyle, styles?.root)}
     >
-      {shouldFloatLocalVideo &&
-        !shouldFloatNonDraggableLocalVideo &&
-        localVideoTile &&
-        (horizontalGalleryPresent ? (
-          <Stack className={mergeStyles(localVideoTileContainerStyle(theme, isNarrow))}>{localVideoTile}</Stack>
-        ) : (
-          <_ModalClone
-            isOpen={true}
-            isModeless={true}
-            dragOptions={DRAG_OPTIONS}
-            styles={floatingLocalVideoModalStyle(theme, isNarrow)}
-            layerProps={{ hostId: layerHostId }}
-            maxDragPosition={modalMaxDragPosition}
-            minDragPosition={modalMinDragPosition}
-          >
-            {localVideoTile}
-          </_ModalClone>
-        ))}
-      {
-        // When we use showCameraSwitcherInLocalPreview it disables dragging to allow keyboard navigation.
-        shouldFloatNonDraggableLocalVideo && localVideoTile && remoteParticipants.length > 0 && (
-          <Stack
-            className={mergeStyles(localVideoTileWithControlsContainerStyle(theme, isNarrow), {
-              boxShadow: theme.effects.elevation8,
-              zIndex: LOCAL_VIDEO_TILE_ZINDEX
-            })}
-          >
-            {localVideoTile}
-          </Stack>
-        )
-      }
-      <Stack horizontal={false} styles={videoGalleryContainerStyle}>
-        {screenShareParticipant ? (
-          remoteScreenShareComponent
-        ) : localParticipant?.isScreenSharingOn ? (
-          localScreenShareStreamComponent
-        ) : (
-          <GridLayout key="grid-layout" styles={styles?.gridLayout}>
-            {gridTiles}
-          </GridLayout>
-        )}
-        {horizontalGalleryPresent && (
-          <div style={{ paddingTop: '0.5rem' }}>
-            <ResponsiveHorizontalGallery
-              key="responsive-horizontal-gallery"
-              containerStyles={horizontalGalleryContainerStyle(shouldFloatLocalVideo, isNarrow)}
-              horizontalGalleryStyles={concatStyleSets(horizontalGalleryStyle(isNarrow), styles?.horizontalGallery)}
-              childWidthRem={
-                isNarrow ? SMALL_HORIZONTAL_GALLERY_TILE_SIZE_REM.width : LARGE_HORIZONTAL_GALLERY_TILE_SIZE_REM.width
-              }
-              buttonWidthRem={HORIZONTAL_GALLERY_BUTTON_WIDTH}
-              gapWidthRem={HORIZONTAL_GALLERY_GAP}
-            >
-              {horizontalGalleryTiles}
-            </ResponsiveHorizontalGallery>
-          </div>
-        )}
-
-        <LayerHost id={layerHostId} className={mergeStyles(layerHostStyle)} />
-      </Stack>
+      <DefaultLayout
+        remoteParticipants={remoteParticipants}
+        onRenderRemoteParticipant={onRenderRemoteVideoTile ?? defaultOnRenderVideoTile}
+        localVideoComponent={localVideoTile}
+        screenShareComponent={screenShareComponent}
+        maxRemoteVideoStreams={maxRemoteVideoStreams}
+        dominantSpeakers={dominantSpeakers}
+        parentWidth={containerWidth}
+        styles={styles}
+      />
     </div>
   );
 };
