@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { useRef } from 'react';
+import { useCallback, useRef } from 'react';
 import { smartDominantSpeakerParticipants } from '../../gallery';
 import { VideoGalleryParticipant, VideoGalleryRemoteParticipant } from '../../types';
 
@@ -63,7 +63,7 @@ export const useFloatingLocalVideoLayout = (props: {
     maxDominantSpeakers: maxAudioDominantSpeakers
   });
 
-  const getGridParticipants = (): VideoGalleryRemoteParticipant[] => {
+  const getGridParticipants = useCallback((): VideoGalleryRemoteParticipant[] => {
     /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
     return visibleVideoParticipants.current.length > 0
       ? visibleVideoParticipants.current
@@ -71,10 +71,11 @@ export const useFloatingLocalVideoLayout = (props: {
     return visibleVideoParticipants.current.length > 0
       ? visibleVideoParticipants.current
       : visibleAudioParticipants.current;
-  };
+  }, []);
+
   const gridParticipants = getGridParticipants();
 
-  const getHorizontalGalleryRemoteParticipants = (): VideoGalleryRemoteParticipant[] => {
+  const getHorizontalGalleryRemoteParticipants = useCallback((): VideoGalleryRemoteParticipant[] => {
     if (isScreenShareActive) {
       // If screen sharing is active, assign video and audio participants as horizontal gallery participants
       /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
@@ -89,7 +90,7 @@ export const useFloatingLocalVideoLayout = (props: {
         : [];
       return visibleVideoParticipants.current.length > 0 ? visibleAudioParticipants.current : [];
     }
-  };
+  }, []);
 
   const horizontalGalleryParticipants = getHorizontalGalleryRemoteParticipants();
 

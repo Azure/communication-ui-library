@@ -79,15 +79,16 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
   const gridTiles = floatingLocalVideoLayout.gridParticipants.map((p) => {
     return onRenderRemoteParticipant(
       p,
-      maxRemoteVideoStreams
+      maxRemoteVideoStreams && maxRemoteVideoStreams >= 0
         ? p.videoStream?.isAvailable && activeVideoStreams++ < maxRemoteVideoStreams
         : p.videoStream?.isAvailable
     );
   });
-  const horizontalGridTiles = floatingLocalVideoLayout.horizontalGalleryParticipants.map((p) => {
+
+  const horizontalGalleryTiles = floatingLocalVideoLayout.horizontalGalleryParticipants.map((p) => {
     return onRenderRemoteParticipant(
       p,
-      maxRemoteVideoStreams
+      maxRemoteVideoStreams && maxRemoteVideoStreams >= 0
         ? p.videoStream?.isAvailable && activeVideoStreams++ < maxRemoteVideoStreams
         : p.videoStream?.isAvailable
     );
@@ -106,10 +107,10 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
           {gridTiles}
         </GridLayout>
       )}
-      {horizontalGridTiles.length > 0 && (
+      {horizontalGalleryTiles.length > 0 && (
         <VideoGalleryResponsiveHorizontalGallery
           isNarrow={isNarrow}
-          horizontalGalleryElements={horizontalGridTiles}
+          horizontalGalleryElements={horizontalGalleryTiles}
           styles={styles?.horizontalGallery}
         />
       )}
