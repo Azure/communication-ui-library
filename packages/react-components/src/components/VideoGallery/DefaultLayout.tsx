@@ -18,14 +18,9 @@ import { useFloatingLocalVideoLayout } from './videoGalleryUtils';
  */
 export interface DefaultLayoutProps {
   /**
-   * Allows users to pass an object containing custom CSS styles for the gallery container.
-   *
-   * @Example
-   * ```
-   * <VideoGallery styles={{ root: { border: 'solid 1px red' } }} />
-   * ```
+   * Styles for the {@link DefaultLayout}
    */
-  styles?: VideoGalleryStyles;
+  styles?: Omit<VideoGalleryStyles, 'root'>;
   /** List of remote video particpants */
   remoteParticipants?: VideoGalleryRemoteParticipant[];
   /** Callback to render each remote participant */
