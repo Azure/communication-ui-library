@@ -16,7 +16,7 @@ import {
 import { isNarrowWidth } from '../utils/responsive';
 import { VideoGalleryStyles } from '../VideoGallery';
 import { FloatingLocalVideo } from './FloatingLocalVideo';
-import { rootLayoutStyle } from './styles/DefaultLayout.styles';
+import { innerLayoutStyle, rootLayoutStyle } from './styles/FloatingLocalVideoLayout.styles';
 import { VideoGalleryResponsiveHorizontalGallery } from './VideoGalleryResponsiveHorizontalGallery';
 import { useFloatingLocalVideoLayout } from './videoGalleryUtils';
 
@@ -144,9 +144,9 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
     ) : undefined;
 
   return (
-    <Stack styles={{ root: { position: 'relative', width: '100%', height: '100%' } }}>
+    <Stack styles={rootLayoutStyle}>
       {wrappedLocalVideoComponent}
-      <Stack horizontal={false} styles={rootLayoutStyle}>
+      <Stack horizontal={false} styles={innerLayoutStyle}>
         {screenShareComponent ? (
           screenShareComponent
         ) : (
