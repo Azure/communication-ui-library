@@ -132,7 +132,7 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
   const gridTiles = floatingLocalVideoLayout.gridParticipants.map((p) => {
     return onRenderRemoteParticipant(
       p,
-      maxRemoteVideoStreams
+      maxRemoteVideoStreams && maxRemoteVideoStreams >= 0
         ? p.videoStream?.isAvailable && activeVideoStreams++ < maxRemoteVideoStreams
         : p.videoStream?.isAvailable
     );
@@ -145,7 +145,7 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
   const horizontalGalleryTiles = floatingLocalVideoLayout.horizontalGalleryParticipants.map((p) => {
     return onRenderRemoteParticipant(
       p,
-      maxRemoteVideoStreams
+      maxRemoteVideoStreams && maxRemoteVideoStreams >= 0
         ? p.videoStream?.isAvailable && activeVideoStreams++ < maxRemoteVideoStreams
         : p.videoStream?.isAvailable
     );
