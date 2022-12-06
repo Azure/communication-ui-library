@@ -71,7 +71,7 @@ export const useFloatingLocalVideoLayout = (props: {
     return visibleVideoParticipants.current.length > 0
       ? visibleVideoParticipants.current
       : visibleAudioParticipants.current;
-  }, []);
+  }, [callingParticipants]);
 
   const gridParticipants = getGridParticipants();
 
@@ -90,7 +90,7 @@ export const useFloatingLocalVideoLayout = (props: {
         : [];
       return visibleVideoParticipants.current.length > 0 ? visibleAudioParticipants.current : [];
     }
-  }, []);
+  }, [callingParticipants, isScreenShareActive]);
 
   const horizontalGalleryParticipants = getHorizontalGalleryRemoteParticipants();
 
