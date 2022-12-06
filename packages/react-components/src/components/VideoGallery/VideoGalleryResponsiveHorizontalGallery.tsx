@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { concatStyleSets, Stack } from '@fluentui/react';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { HorizontalGalleryStyles } from '../HorizontalGallery';
 import { ResponsiveHorizontalGallery } from '../ResponsiveHorizontalGallery';
 import { HORIZONTAL_GALLERY_BUTTON_WIDTH, HORIZONTAL_GALLERY_GAP } from '../styles/HorizontalGallery.styles';
@@ -23,12 +23,19 @@ export const VideoGalleryResponsiveHorizontalGallery = (props: {
   styles?: HorizontalGalleryStyles;
 }): JSX.Element => {
   const { shouldFloatLocalVideo = false, isNarrow = false, horizontalGalleryElements, styles } = props;
+
+  const containerStyles = useMemo(
+    () => horizontalGalleryContainerStyle(shouldFloatLocalVideo, isNarrow),
+    [shouldFloatLocalVideo, isNarrow]
+  );
+  const galleryStyles = useMemo(() => concatStyleSets(horizontalGalleryStyle(isNarrow), styles), [isNarrow, styles]);
+
   return (
     <Stack styles={{ root: { paddingTop: '0.5rem' } }}>
       <ResponsiveHorizontalGallery
         key="responsive-horizontal-gallery"
-        containerStyles={horizontalGalleryContainerStyle(shouldFloatLocalVideo, isNarrow)}
-        horizontalGalleryStyles={concatStyleSets(horizontalGalleryStyle(isNarrow), styles)}
+        containerStyles={containerStyles}
+        horizontalGalleryStyles={galleryStyles}
         childWidthRem={
           isNarrow ? SMALL_HORIZONTAL_GALLERY_TILE_SIZE_REM.width : LARGE_HORIZONTAL_GALLERY_TILE_SIZE_REM.width
         }
