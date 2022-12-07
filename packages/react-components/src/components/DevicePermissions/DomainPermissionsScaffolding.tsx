@@ -123,7 +123,7 @@ export const DomainPermissionsContainer = (props: DomainPermissionsContainerProp
 
   return (
     <Stack
-      style={{ padding: '2rem', maxWidth: '25.375rem', maxHeight: '100%', alignSelf: 'center', overflow: 'hidden' }}
+      style={{ padding: '2rem', maxWidth: '25.375rem', maxHeight: '100vh', alignSelf: 'center', overflow: 'hidden' }}
       aria-label={strings?.ariaLabel}
     >
       <Stack styles={iconBannerContainerStyles} horizontal horizontalAlign={'center'} verticalFill tokens={tokens}>
