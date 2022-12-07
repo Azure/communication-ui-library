@@ -89,7 +89,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
   const callAdapterOptions: AzureCommunicationCallAdapterOptions = useMemo(
     () => ({
       roleHint,
-      features: { unsupportedEnvironment: true }
+      features: { unsupportedEnvironment: false }
     }),
     [roleHint]
   );
