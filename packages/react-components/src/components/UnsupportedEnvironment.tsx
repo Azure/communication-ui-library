@@ -98,10 +98,15 @@ const continueAnywayButtonStyles = (theme: Theme): IButtonStyles => {
     root: {
       backgroundColor: theme.palette.white,
       margin: '0.5rem',
-      borderColor: theme.palette.black
+      borderColor: theme.palette.neutralDark
     },
     rootHovered: {
-      backgroundColor: theme.palette.neutralLight
+      backgroundColor: theme.palette.neutralLight,
+      borderColor: theme.palette.neutralDark
+    },
+    rootPressed: {
+      color: theme.palette.white,
+      backgroundColor: theme.palette.neutralDark
     },
     textContainer: {
       color: theme.palette.black
