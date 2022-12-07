@@ -64,6 +64,9 @@ export const useFloatingLocalVideoLayout = (props: {
   });
 
   const getGridParticipants = useCallback((): VideoGalleryRemoteParticipant[] => {
+    if (isScreenShareActive) {
+      return [];
+    }
     /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
     return visibleVideoParticipants.current.length > 0
       ? visibleVideoParticipants.current
