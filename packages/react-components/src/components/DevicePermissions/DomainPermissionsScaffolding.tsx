@@ -122,7 +122,7 @@ export const DomainPermissionsContainer = (props: DomainPermissionsContainerProp
   const theme = useTheme();
 
   return (
-    <Stack style={{ padding: '2rem', maxWidth: '25.375rem' }} aria-label={strings?.ariaLabel}>
+    <Stack style={{ padding: '2rem', maxWidth: '25.375rem', alignSelf: 'center' }} aria-label={strings?.ariaLabel}>
       <Stack styles={iconBannerContainerStyles} horizontal horizontalAlign={'center'} verticalFill tokens={tokens}>
         {props.cameraIconName && (
           <Stack>
