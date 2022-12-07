@@ -1,14 +1,15 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { CommunicationUserIdentifier } from '@azure/communication-common';
+import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 import {
   CallAdapterLocator,
-  CallAdapter,
   CallAdapterState,
   CallComposite,
   toFlatCommunicationIdentifier,
-  useAzureCommunicationCallAdapter
+  useAzureCommunicationCallAdapter,
+  useAzureCommunicationTeamsCallAdapter,
+  CommonCallAdapter
 } from '@azure/communication-react';
 /* @conditional-compile-remove(rooms) */
 import { AzureCommunicationCallAdapterOptions } from '@azure/communication-react';
@@ -34,23 +35,15 @@ export interface CallScreenProps {
   roleHint?: Role;
   /* @conditional-compile-remove(call-readiness) */
   callReadinessOptedIn?: boolean;
+  isTeamsIdentityCall?: boolean;
 }
 
 export const CallScreen = (props: CallScreenProps): JSX.Element => {
-  const {
-    token,
-    userId,
-    callLocator,
-    displayName,
-    /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
-    /* @conditional-compile-remove(rooms) */ roleHint,
-    /* @conditional-compile-remove(call-readiness) */ callReadinessOptedIn
-  } = props;
+  const { token, userId, /* @conditional-compile-remove(teams-identity-support) */ isTeamsIdentityCall } = props;
   const callIdRef = useRef<string>();
-  const { currentTheme, currentRtl } = useSwitchableFluentTheme();
-  const isMobileSession = useIsMobile();
+
   const afterCreate = useCallback(
-    async (adapter: CallAdapter): Promise<CallAdapter> => {
+    async <CallAdapterType extends CommonCallAdapter>(adapter: CallAdapterType): Promise<CallAdapterType> => {
       adapter.on('error', (e) => {
         // Error is already acted upon by the Call composite, but the surrounding application could
         // add top-level error handling logic here (e.g. reporting telemetry).
@@ -71,19 +64,60 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
   );
 
   const credential = useMemo(
-    () => createAutoRefreshingCredential(toFlatCommunicationIdentifier(userId), token),
-    [token, userId]
+    () =>
+      isTeamsIdentityCall
+        ? new AzureCommunicationTokenCredential(token)
+        : createAutoRefreshingCredential(toFlatCommunicationIdentifier(userId), token),
+    [isTeamsIdentityCall, token, userId]
   );
 
-  /* @conditional-compile-remove(call-readiness) */
-  const options: CallCompositeOptions = useMemo(
-    () => ({
-      callReadinessOptedIn: callReadinessOptedIn,
-      onPermissionsTroubleshootingClick,
-      onNetworkingTroubleShootingClick
-    }),
-    [callReadinessOptedIn]
+  return isTeamsIdentityCall ? (
+    <TeamsCallScreen afterCreate={afterCreate} credential={credential} {...props} />
+  ) : (
+    <ACSCallScreen afterCreate={afterCreate} credential={credential} {...props} />
   );
+};
+
+type CommonCallScreenProps = CallScreenProps & {
+  afterCreate?: <CallAdapterType extends CommonCallAdapter>(adapter: CallAdapterType) => Promise<CallAdapterType>;
+  credential: AzureCommunicationTokenCredential;
+};
+
+const TeamsCallScreen = (props: CommonCallScreenProps): JSX.Element => {
+  const {
+    userId,
+    displayName,
+    credential,
+    callLocator,
+    /* @conditional-compile-remove(PSTN-calls) */
+    alternateCallerId,
+    afterCreate
+  } = props;
+  const adapter = useAzureCommunicationTeamsCallAdapter(
+    {
+      userId,
+      displayName,
+      credential,
+      locator: callLocator,
+      /* @conditional-compile-remove(PSTN-calls) */
+      alternateCallerId
+    },
+    afterCreate
+  );
+  return <CompositeWrapper {...props} adapter={adapter} />;
+};
+
+const ACSCallScreen = (props: CommonCallScreenProps): JSX.Element => {
+  const {
+    userId,
+    displayName,
+    credential,
+    callLocator,
+    /* @conditional-compile-remove(PSTN-calls) */
+    alternateCallerId,
+    afterCreate,
+    roleHint
+  } = props;
 
   /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(unsupported-browser) */
   const callAdapterOptions: AzureCommunicationCallAdapterOptions = useMemo(
@@ -93,7 +127,6 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     }),
     [roleHint]
   );
-
   const adapter = useAzureCommunicationCallAdapter(
     {
       userId,
@@ -106,6 +139,29 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
       options: callAdapterOptions
     },
     afterCreate
+  );
+  return <CompositeWrapper {...props} adapter={adapter} />;
+};
+
+type CompositeWrapperProps = CommonCallScreenProps & { adapter?: CommonCallAdapter };
+
+const CompositeWrapper = (props: CompositeWrapperProps): JSX.Element => {
+  const {
+    /* @conditional-compile-remove(rooms) */ roleHint,
+    /* @conditional-compile-remove(call-readiness) */ callReadinessOptedIn,
+    adapter
+  } = props;
+  const { currentTheme, currentRtl } = useSwitchableFluentTheme();
+  const isMobileSession = useIsMobile();
+
+  /* @conditional-compile-remove(call-readiness) */
+  const options: CallCompositeOptions = useMemo(
+    () => ({
+      callReadinessOptedIn: callReadinessOptedIn,
+      onPermissionsTroubleshootingClick,
+      onNetworkingTroubleShootingClick
+    }),
+    [callReadinessOptedIn]
   );
 
   // Dispose of the adapter in the window's before unload event.
