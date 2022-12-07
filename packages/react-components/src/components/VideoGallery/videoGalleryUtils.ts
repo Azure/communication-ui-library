@@ -75,7 +75,8 @@ export const useFloatingLocalVideoLayout = (props: {
       ? visibleVideoParticipants.current
       : visibleAudioParticipants.current;
   }, [
-    /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ callingParticipants
+    /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ callingParticipants,
+    isScreenShareActive
   ]);
 
   const gridParticipants = getGridParticipants();
