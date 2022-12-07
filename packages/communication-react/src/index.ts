@@ -147,9 +147,6 @@ export type {
   MicrophoneDomainPermissionsProps
 } from '../../react-components/src';
 
-/* @conditional-compile-remove(pinned-participants) */
-export type { VideoTileMenuItems } from '../../react-components/src';
-
 export type {
   _IdentifierProviderProps,
   _Identifiers,
@@ -295,6 +292,14 @@ export * from './mergedHooks';
 export { UnsupportedBrowser } from '../../react-components/src';
 /* @conditional-compile-remove(unsupported-browser) */
 export type { UnsupportedBrowserStrings, UnsupportedBrowserProps } from '../../react-components/src';
+/* @conditional-compile-remove(unsupported-browser) */
+export { UnsupportedBrowserVersion } from '../../react-components/src';
+/* @conditional-compile-remove(unsupported-browser) */
+export type { UnsupportedBrowserVersionStrings, UnsupportedBrowserVersionProps } from '../../react-components/src';
+/* @conditional-compile-remove(unsupported-browser) */
+export { UnsupportedOperatingSystem } from '../../react-components/src';
+/* @conditional-compile-remove(unsupported-browser) */
+export type { UnsupportedOperatingSystemStrings, UnsupportedOperatingSystemProps } from '../../react-components/src';
 /* @conditional-compile-remove(call-readiness) */
 export { _DevicePermissionDropdown } from '../../react-components/src';
 /* @conditional-compile-remove(call-readiness) */

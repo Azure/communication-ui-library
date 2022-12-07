@@ -2,7 +2,13 @@
 // Licensed under the MIT license.
 
 import { CommunicationIdentifierKind } from '@azure/communication-common';
-import { AudioDeviceInfo, DeviceAccess, DominantSpeakersInfo, VideoDeviceInfo } from '@azure/communication-calling';
+import {
+  AudioDeviceInfo,
+  DeviceAccess,
+  DominantSpeakersInfo,
+  ScalingMode,
+  VideoDeviceInfo
+} from '@azure/communication-calling';
 /* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(rooms) */
@@ -491,6 +497,26 @@ export class CallContext {
           const stream = participant.videoStreams[streamId];
           if (stream) {
             stream.view = view;
+          }
+        }
+      }
+    });
+  }
+
+  public setRemoteVideoStreamViewScalingMode(
+    callId: string,
+    participantKey: string,
+    streamId: number,
+    scalingMode: ScalingMode
+  ): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        const participant = call.remoteParticipants[participantKey];
+        if (participant) {
+          const stream = participant.videoStreams[streamId];
+          if (stream && stream.view) {
+            stream.view.scalingMode = scalingMode;
           }
         }
       }

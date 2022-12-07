@@ -123,35 +123,20 @@ export const participantStateStringStyles = (theme: Theme): IStyle => {
 /**
  * @private
  */
-export const menuButtonStyles: IButtonStyles = {
+export const moreButtonStyles: IButtonStyles = {
   root: {
-    background: 'none',
-    border: 'none',
-    borderRadius: 0,
-    minHeight: '0.125rem',
-    minWidth: '2rem',
-    width: '100%',
-    maxWidth: '3rem',
-    svg: {
-      verticalAlign: 'text-top'
-    }
+    // To ensure that the button is clickable when there is a floating video tile
+    zIndex: 1,
+    color: 'inherit',
+    height: '100%'
   },
-  splitButtonMenuButton: {
-    border: 'none'
+  rootHovered: {
+    background: 'none'
   },
-  flexContainer: {
-    flexFlow: 'column',
-    display: 'contents'
+  rootPressed: {
+    background: 'none'
   },
-  label: {
-    fontSize: '0.625rem',
-    fontWeight: '400',
-    lineHeight: '1rem',
-    cursor: 'pointer',
-    display: 'block',
-    margin: '0rem 0.25rem',
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
-    whiteSpace: 'nowrap'
+  rootExpanded: {
+    background: 'none'
   }
 };

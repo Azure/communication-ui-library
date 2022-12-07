@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect } from 'react';
 import { IStyle, IButtonStyles, ITextFieldStyles } from '@fluentui/react';
 
 import { IconButton } from '@fluentui/react';
@@ -150,20 +150,26 @@ const DialpadButton = (props: {
 
   const { digit, index, onClick, onLongPress, isMobile = false } = props;
 
-  const clickFunction = useCallback(async () => {
-    onClick(digit, index);
-  }, [digit, index, onClick]);
+  const useLongPressProps = React.useMemo(
+    () => ({
+      onClick: async () => {
+        onClick(digit, index);
+      },
+      onLongPress: async () => {
+        onLongPress(digit, index);
+      },
+      touchEventsOnly: isMobile
+    }),
+    [digit, index, isMobile, onClick, onLongPress]
+  );
 
-  const longPressFunction = useCallback(async () => {
-    onLongPress(digit, index);
-  }, [digit, index, onLongPress]);
+  const longPressHandlers = useLongPress(useLongPressProps);
 
-  const { handlers } = useLongPress(clickFunction, longPressFunction, isMobile);
   return (
     <DefaultButton
       data-test-id={`dialpad-button-${props.index}`}
       styles={concatStyleSets(buttonStyles(theme), props.styles?.button)}
-      {...handlers}
+      {...longPressHandlers}
     >
       <Stack>
         <Text className={mergeStyles(digitStyles(theme), props.styles?.digit)}>{props.digit}</Text>
@@ -260,6 +266,15 @@ const DialpadContainer = (props: {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         onChange={(e: any) => {
           setText(e.target.value);
+        }}
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        onClick={(e: any) => {
+          const input = e.target;
+          const end = input.value.length;
+
+          // Move focus to end of input field
+          input.setSelectionRange(end, end);
+          input.focus();
         }}
         placeholder={props.strings.placeholderText}
         data-test-id="dialpad-input"

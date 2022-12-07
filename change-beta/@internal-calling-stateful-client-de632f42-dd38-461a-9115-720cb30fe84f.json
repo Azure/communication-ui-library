@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add rooms role into calling stateful client",
-  "packageName": "@internal/calling-stateful-client",
-  "email": "miguelgamis@microsoft.com",
-  "dependentChangeType": "patch"
-}

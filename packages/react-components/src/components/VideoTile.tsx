@@ -1,9 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Icon, IStyle, mergeStyles, Persona, Stack, Text, IIconProps } from '@fluentui/react';
+import { Icon, IStyle, mergeStyles, Persona, Stack, Text } from '@fluentui/react';
 /* @conditional-compile-remove(pinned-participants) */
-import { MoreHorizontal20Filled } from '@fluentui/react-icons';
+import { IconButton } from '@fluentui/react';
 import { Ref } from '@fluentui/react-northstar';
 import React, { useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { useIdentifiers } from '../identifiers';
@@ -24,13 +24,15 @@ import {
   tileInfoContainerStyle,
   participantStateStringStyles
 } from './styles/VideoTile.styles';
-/* @conditional-compile-remove(pinned-participants) */
-import { pinIconStyle, menuButtonStyles } from './styles/VideoTile.styles';
 import { getVideoTileOverrideColor } from './utils/videoTileStylesUtils';
 /* @conditional-compile-remove(pinned-participants) */
-import { DefaultButton, concatStyleSets, DirectionalHint } from '@fluentui/react';
+import { pinIconStyle } from './styles/VideoTile.styles';
 /* @conditional-compile-remove(pinned-participants) */
-import { mapMenuItemsToContextualMenuItems } from './utils';
+import { DirectionalHint, IContextualMenuProps } from '@fluentui/react';
+/* @conditional-compile-remove(pinned-participants) */
+import useLongPress from './utils/useLongPress';
+/* @conditional-compile-remove(pinned-participants) */
+import { moreButtonStyles } from './styles/VideoTile.styles';
 
 /**
  * Strings of {@link VideoTile} that can be overridden.
@@ -96,11 +98,6 @@ export interface VideoTileProps {
   isMuted?: boolean;
   /* @conditional-compile-remove(pinned-participants) */
   /**
-   * Display custom menu items in the VideoTile's contextual menu.
-   */
-  menuItems?: VideoTileMenuItems;
-  /* @conditional-compile-remove(pinned-participants) */
-  /**
    * If true, the video tile will show the pin icon.
    */
   isPinned?: boolean;
@@ -143,6 +140,18 @@ export interface VideoTileProps {
   /* @conditional-compile-remove(one-to-n-calling) */
   /* @conditional-compile-remove(PSTN-calls) */
   strings?: VideoTileStrings;
+  /* @conditional-compile-remove(pinned-participants) */
+  /**
+   * Display custom menu items in the VideoTile's contextual menu.
+   * Uses Fluent UI ContextualMenu.
+   * An ellipses icon will be displayed to open the contextual menu if this prop is defined.
+   */
+  contextualMenu?: IContextualMenuProps;
+  /* @conditional-compile-remove(pinned-participants) */
+  /**
+   * Callback triggered by video tile on touch and hold.
+   */
+  onLongTouch?: () => void;
 }
 
 // Coin max size is set to PersonaSize.size100
@@ -169,35 +178,30 @@ const DefaultPlaceholder = (props: CustomAvatarOptions): JSX.Element => {
   );
 };
 
-/**
- * @beta
- * MenuItems to be diplayed in video tile in the contextual/drawer menu
- */
-export type VideoTileMenuItems = Array<{
-  key: string;
-  ariaLabel?: string;
-  text: string;
-  onClick: () => void;
-  iconProps: IIconProps;
-}>;
-
-/* @conditional-compile-remove(pinned-participants) */
-const menuIcon = (): JSX.Element => <MoreHorizontal20Filled primaryFill="currentColor" />;
-
 const defaultPersonaStyles = { root: { margin: 'auto', maxHeight: '100%' } };
 
 /* @conditional-compile-remove(pinned-participants) */
-const VideoTileMoreOptionsButton = (props: { menuItems?: VideoTileMenuItems; menuStyles?: IStyle }): JSX.Element => {
-  const { menuItems, menuStyles } = props;
-  if (!menuItems || menuItems.length === 0) {
+const videoTileMoreIconProps = { iconName: 'VideoTileMoreOptions' };
+/* @conditional-compile-remove(pinned-participants) */
+const videoTileMoreMenuIconProps = { iconName: undefined, style: { display: 'none' } };
+/* @conditional-compile-remove(pinned-participants) */
+const videoTileMoreMenuProps = {
+  directionalHint: DirectionalHint.topLeftEdge,
+  isBeakVisible: false,
+  styles: { container: { maxWidth: '8rem' } }
+};
+/* @conditional-compile-remove(pinned-participants) */
+const VideoTileMoreOptionsButton = (props: { contextualMenu?: IContextualMenuProps }): JSX.Element => {
+  const { contextualMenu } = props;
+  if (!contextualMenu) {
     return <></>;
   }
   return (
-    <DefaultButton
-      styles={concatStyleSets(menuButtonStyles, menuStyles ?? {})}
-      onRenderIcon={menuIcon}
-      menuIconProps={{ hidden: true }}
-      menuProps={{ items: mapMenuItemsToContextualMenuItems(menuItems), directionalHint: DirectionalHint.topRightEdge }}
+    <IconButton
+      styles={moreButtonStyles}
+      iconProps={videoTileMoreIconProps}
+      menuIconProps={videoTileMoreMenuIconProps}
+      menuProps={{ ...videoTileMoreMenuProps, ...contextualMenu }}
     />
   );
 };
@@ -226,10 +230,10 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
     userId,
     noVideoAvailableAriaLabel,
     isSpeaking,
-    /* @conditional-compile-remove(pinned-participants) */
-    menuItems,
     personaMinSize = DEFAULT_PERSONA_MIN_SIZE_PX,
-    personaMaxSize = DEFAULT_PERSONA_MAX_SIZE_PX
+    personaMaxSize = DEFAULT_PERSONA_MAX_SIZE_PX,
+    /* @conditional-compile-remove(pinned-participants) */
+    contextualMenu
   } = props;
 
   const [personaSize, setPersonaSize] = useState(100);
@@ -255,6 +259,27 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
     const currentObserver = observer.current;
     return () => currentObserver.disconnect();
   }, [observer, videoTileRef]);
+
+  /* @conditional-compile-remove(pinned-participants) */
+  const useLongPressProps = useMemo(() => {
+    return {
+      onLongPress: () => {
+        props.onLongTouch?.();
+      },
+      touchEventsOnly: true
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.onLongTouch]);
+  /* @conditional-compile-remove(pinned-participants) */
+  const longPressHandlers = useLongPress(useLongPressProps);
+  const longPressHandlersTrampoline = useMemo(() => {
+    /* @conditional-compile-remove(pinned-participants) */
+    return longPressHandlers;
+    return {};
+  }, [
+    /* @conditional-compile-remove(pinned-participants) */
+    longPressHandlers
+  ]);
 
   const placeholderOptions = {
     userId,
@@ -304,6 +329,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
           },
           styles?.root
         )}
+        {...longPressHandlersTrampoline}
       >
         {isVideoRendered ? (
           <Stack
@@ -349,7 +375,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
               )}
               {
                 /* @conditional-compile-remove(pinned-participants) */
-                <VideoTileMoreOptionsButton menuItems={menuItems} menuStyles={props.styles} />
+                <VideoTileMoreOptionsButton contextualMenu={contextualMenu} />
               }
               {
                 /* @conditional-compile-remove(pinned-participants) */
