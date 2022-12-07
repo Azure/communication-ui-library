@@ -2,13 +2,16 @@
 // Licensed under the MIT license.
 
 /* @conditional-compile-remove(unsupported-browser) */
-import { EnvironmentInfo } from '@azure/communication-calling';
 import { IStackStyles, Stack } from '@fluentui/react';
+/* @conditional-compile-remove(unsupported-browser) */
+import { UnsupportedBrowserEnvironmentInfo } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(unsupported-browser) */
 import { UnsupportedBrowser, UnsupportedBrowserVersion, UnsupportedOperatingSystem } from '@internal/react-components';
 import React from 'react';
 /* @conditional-compile-remove(unsupported-browser) */
 import { useLocale } from '../../localization';
+import { CallAdapterOptionalFeatures } from '../adapter';
+import { useAdapter } from '../adapter/CallAdapterProvider';
 
 /**
  * @internal
@@ -16,7 +19,7 @@ import { useLocale } from '../../localization';
 export type UnsupportedBrowserPageProps = {
   onTroubleshootingClick?: () => void;
   /* @conditional-compile-remove(unsupported-browser) */
-  environmentInfo?: EnvironmentInfo;
+  environmentInfo?: UnsupportedBrowserEnvironmentInfo;
 };
 
 /**
@@ -26,6 +29,21 @@ export type UnsupportedBrowserPageProps = {
 export const UnsupportedBrowserPage = (props: UnsupportedBrowserPageProps): JSX.Element => {
   /* @conditional-compile-remove(unsupported-browser) */
   const { onTroubleshootingClick, environmentInfo } = props;
+  const adapter = useAdapter();
+
+  const unsupportedEnvironmentFeature = adapter.getState().features?.unsupportedEnvironment;
+
+  const onClickContinue =
+    unsupportedEnvironmentFeature === true
+      ? undefined
+      : unsupportedEnvironmentFeature === false || undefined
+      ? undefined
+      : unsupportedEnvironmentFeature?.unsupportedBrowserVersionContinue
+      ? () => {
+          adapter.allowWithUnsupportedBrowserVersion();
+        }
+      : undefined;
+
   /* @conditional-compile-remove(unsupported-browser) */
   const locale = useLocale();
   /* @conditional-compile-remove(unsupported-browser) */
@@ -53,6 +71,7 @@ export const UnsupportedBrowserPage = (props: UnsupportedBrowserPageProps): JSX.
       <UnsupportedBrowserVersion
         onTroubleshootingClick={onTroubleshootingClick}
         strings={unsupportedBrowserVersionStrings}
+        onClickContinue={onClickContinue}
       />
     );
   } else {

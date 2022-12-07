@@ -21,8 +21,7 @@ import { Role } from '@internal/react-components';
 import type { CommunicationIdentifierKind } from '@azure/communication-common';
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions, DtmfTone } from '@azure/communication-calling';
-/* @conditional-compile-remove(unsupported-browser) */
-import { EnvironmentInfo } from '@azure/communication-calling';
+
 /* @conditional-compile-remove(PSTN-calls) */
 import type {
   CommunicationIdentifier,
@@ -30,6 +29,8 @@ import type {
   PhoneNumberIdentifier
 } from '@azure/communication-common';
 import type { AdapterState, Disposable, AdapterError, AdapterErrors } from '../../common/adapters';
+/* @conditional-compile-remove(unsupported-browser) */
+import { UnsupportedBrowserEnvironmentInfo } from '@internal/calling-stateful-client';
 
 /**
  * Major UI screens shown in the {@link CallComposite}.
@@ -63,6 +64,10 @@ export const END_CALL_PAGES: CallCompositePage[] = [
   /* @conditional-compile-remove(unsupported-browser) */ 'unsupportedEnvironment'
 ];
 
+export type UnsupportedEnvironmentFeatures = {
+  unsupportedBrowserVersionContinue?: boolean;
+};
+
 /**
  * options object to enable opt in features for the CallAdapter
  *
@@ -72,7 +77,7 @@ export type CallAdapterOptionalFeatures = {
   /**
    * Feature flag for enabling the unsupported environment logic in the CallAdapter.
    */
-  unsupportedEnvironment?: boolean;
+  unsupportedEnvironment?: boolean | UnsupportedEnvironmentFeatures;
 };
 
 /**
@@ -83,6 +88,8 @@ export type CallAdapterOptionalFeatures = {
 export type CallAdapterUiState = {
   isLocalPreviewMicrophoneEnabled: boolean;
   page: CallCompositePage;
+  /* @conditional-compile-remove(unsupported-browser) */
+  oldBrowserVersionOptIn?: boolean;
 };
 
 /**
@@ -110,7 +117,7 @@ export type CallAdapterClientState = {
   /**
    * Environment information about system the adapter is made on
    */
-  environmentInfo?: EnvironmentInfo;
+  environmentInfo?: UnsupportedBrowserEnvironmentInfo;
   /* @conditional-compile-remove(unsupported-browser) */
   /**
    * Optional features that are to be enabled through the adapter.
@@ -351,6 +358,11 @@ export interface CallAdapterCallOperations {
    * @beta
    */
   sendDtmfTone(dtmfTone: DtmfTone): Promise<void>;
+  /* @conditional-compile-remove(unsupported-browser) */
+  /**
+   * Continues into a call when the browser version is not supported.
+   */
+  allowWithUnsupportedBrowserVersion(): void;
 }
 
 /**

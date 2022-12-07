@@ -125,7 +125,8 @@ type GetCallCompositePageFunction = ((
     call: CallState | undefined,
     previousCall: CallState | undefined,
     environmentInfo?: EnvironmentInfo,
-    features?: CallAdapterOptionalFeatures
+    features?: CallAdapterOptionalFeatures,
+    unsupportedBrowserVersionOptedIn?: boolean
   ) => CallCompositePage);
 /**
  * Get the current call composite page based on the current call composite state
@@ -144,10 +145,11 @@ export const getCallCompositePage: GetCallCompositePageFunction = (
   call,
   previousCall,
   environmentInfo?,
-  features?
+  features?,
+  unsupportedBrowserVersionOptedIn?
 ): CallCompositePage => {
   /* @conditional-compile-remove(unsupported-browser) */
-  if (isUnsupportedEnvironment(features, environmentInfo)) {
+  if (isUnsupportedEnvironment(features, environmentInfo, unsupportedBrowserVersionOptedIn)) {
     return 'unsupportedEnvironment';
   }
 
@@ -308,7 +310,8 @@ export const getDevicePermissionState = (
 /* @conditional-compile-remove(unsupported-browser) */
 const isUnsupportedEnvironment = (
   features?: CallAdapterOptionalFeatures,
-  environmentInfo?: EnvironmentInfo
+  environmentInfo?: EnvironmentInfo,
+  unsupportedBrowserVersionOptedIn?: boolean
 ): boolean => {
   return !!(
     features?.unsupportedEnvironment &&

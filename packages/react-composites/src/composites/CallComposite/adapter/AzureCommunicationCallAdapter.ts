@@ -106,6 +106,7 @@ class CallContext {
       isTeamsCall,
       /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId: clientState.alternateCallerId,
       /* @conditional-compile-remove(unsupported-browser) */ environmentInfo: clientState.environmentInfo,
+      /* @conditional-compile-remove(unsupported-browser) */ oldBrowserVersionOptIn: false,
       /* @conditional-compile-remove(unsupported-browser) */ features: options?.features,
       /* @conditional-compile-remove(rooms) */ roleHint: options?.roleHint
     };
@@ -158,7 +159,8 @@ class CallContext {
       call,
       latestEndedCall,
       /* @conditional-compile-remove(unsupported-browser) */ environmentInfo,
-      /* @conditional-compile-remove(unsupported-browser) */ this.state.features
+      /* @conditional-compile-remove(unsupported-browser) */ this.state.features,
+      /* @conditional-compile-remove(unsupported-browser) */ this.state.oldBrowserVersionOptIn
     );
     if (!IsCallEndedPage(oldPage) && IsCallEndedPage(newPage)) {
       this.emitter.emit('callEnded', { callId: this.callId });
@@ -315,6 +317,8 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     this.resumeCall.bind(this);
     /* @conditional-compile-remove(PSTN-calls) */
     this.sendDtmfTone.bind(this);
+    /* @conditional-compile-remote(unsupported-browser) */
+    this.continueWithUnsupportedBrowserVersion.bind(this);
   }
 
   public dispose(): void {
@@ -504,6 +508,12 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
         await this.handlers.onToggleScreenShare();
       }
     });
+  }
+
+  /* @conditional-compile-remove(unsupported-browser) */
+  public continueWithUnsupportedBrowserVersion(): void {
+    this.context.setState({ ...this.context.getState(), oldBrowserVersionOptIn: true });
+    return;
   }
 
   public startCall(

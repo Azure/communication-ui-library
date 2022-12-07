@@ -52,6 +52,7 @@ import { TeamsCall } from '@azure/communication-calling';
 import { TeamsCallAgent } from '@azure/communication-calling';
 import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { Theme } from '@fluentui/react';
+import { UnsupportedBrowserEnvironmentInfo } from '@internal/calling-stateful-client';
 import { VideoDeviceInfo } from '@azure/communication-calling';
 import { VideoStreamOptions } from '@internal/react-components';
 
@@ -199,7 +200,7 @@ export type CallAdapterClientState = {
     isTeamsCall: boolean;
     latestErrors: AdapterErrors;
     alternateCallerId?: string;
-    environmentInfo?: EnvironmentInfo;
+    environmentInfo?: UnsupportedBrowserEnvironmentInfo;
     features?: CallAdapterOptionalFeatures;
     roleHint?: Role;
 };
