@@ -2,10 +2,11 @@
 // Licensed under the MIT license.
 
 /* @conditional-compile-remove(unsupported-browser) */
-import { Icon, Link, Stack, Text } from '@fluentui/react';
+import { IButtonStyles, Icon, Link, PrimaryButton, Stack, Text, Theme } from '@fluentui/react';
 /* @conditional-compile-remove(unsupported-browser) */
 import { _pxToRem } from '@internal/acs-ui-common';
 import React from 'react';
+import { useTheme } from '../theming';
 /* @conditional-compile-remove(unsupported-browser) */
 import {
   containerStyles,
@@ -25,6 +26,8 @@ export interface UnsupportedEnvironmentStrings {
   secondaryText: string;
   /** String to display in the text for the help link */
   moreHelpLinkText: string;
+  /** String for continue without updating button */
+  continueAnywayButtonText?: string;
 }
 
 /**
@@ -37,11 +40,14 @@ export interface UnsupportedEnvironmentProps {
   onTroubleshootingClick?: () => void;
   /** String overrides for the component */
   strings: UnsupportedEnvironmentStrings;
+  /** Allow user to continue into the call */
+  onClickContinue?: () => void;
 }
 
 /* @conditional-compile-remove(unsupported-browser) */
 const UnsupportedEnvironmentContainer = (props: UnsupportedEnvironmentProps): JSX.Element => {
-  const { onTroubleshootingClick, strings } = props;
+  const { onTroubleshootingClick, strings, onClickContinue } = props;
+  const theme = useTheme();
   return (
     <Stack styles={containerStyles}>
       <Icon
@@ -62,6 +68,16 @@ const UnsupportedEnvironmentContainer = (props: UnsupportedEnvironmentProps): JS
           {strings.moreHelpLinkText}
         </Link>
       )}
+      {onClickContinue && (
+        <PrimaryButton
+          styles={continueAnywayButtonStyles(theme)}
+          onClick={() => {
+            onClickContinue();
+          }}
+        >
+          {strings.continueAnywayButtonText}
+        </PrimaryButton>
+      )}
     </Stack>
   );
 };
@@ -75,4 +91,20 @@ export const UnsupportedEnvironment = (props: UnsupportedEnvironmentProps): JSX.
   /* @conditional-compile-remove(unsupported-browser) */
   return <UnsupportedEnvironmentContainer {...props} />;
   return <></>;
+};
+
+const continueAnywayButtonStyles = (theme: Theme): IButtonStyles => {
+  return {
+    root: {
+      backgroundColor: theme.palette.white,
+      margin: '0.5rem',
+      borderColor: theme.palette.black
+    },
+    rootHovered: {
+      backgroundColor: theme.palette.neutralLight
+    },
+    textContainer: {
+      color: theme.palette.black
+    }
+  };
 };

@@ -252,7 +252,8 @@
   "UnsupportedBrowserVersion": {
     "primaryText": "Browser version not supported",
     "secondaryText": "Please update your browser and then try joining the call again.",
-    "moreHelpLinkText": "See compatibility requirements"
+    "moreHelpLinkText": "See compatibility requirements",
+    "continueAnywayButtonText": "Continue without updating"
   },
   "UnsupportedOperatingSystem": {
     "primaryText": "Operating system not supported",
