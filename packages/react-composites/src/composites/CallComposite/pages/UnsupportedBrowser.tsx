@@ -2,15 +2,14 @@
 // Licensed under the MIT license.
 
 /* @conditional-compile-remove(unsupported-browser) */
-import { IStackStyles, Stack } from '@fluentui/react';
+import { EnvironmentInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(unsupported-browser) */
-import { UnsupportedBrowserEnvironmentInfo } from '@internal/calling-stateful-client';
+import { IStackStyles, Stack } from '@fluentui/react';
 /* @conditional-compile-remove(unsupported-browser) */
 import { UnsupportedBrowser, UnsupportedBrowserVersion, UnsupportedOperatingSystem } from '@internal/react-components';
 import React from 'react';
 /* @conditional-compile-remove(unsupported-browser) */
 import { useLocale } from '../../localization';
-import { CallAdapterOptionalFeatures } from '../adapter';
 import { useAdapter } from '../adapter/CallAdapterProvider';
 
 /**
@@ -19,7 +18,7 @@ import { useAdapter } from '../adapter/CallAdapterProvider';
 export type UnsupportedBrowserPageProps = {
   onTroubleshootingClick?: () => void;
   /* @conditional-compile-remove(unsupported-browser) */
-  environmentInfo?: UnsupportedBrowserEnvironmentInfo;
+  environmentInfo?: EnvironmentInfo;
 };
 
 /**

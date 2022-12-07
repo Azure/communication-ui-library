@@ -39,6 +39,8 @@ export interface CallWithChatAdapterUiState {
    * @beta
    */
   fileUploads?: FileUploadsUiState;
+  /* @conditional-compile-remove(unsupported-browser) */
+  oldBrowserVersionOptIn?: boolean;
 }
 
 /**

@@ -3,7 +3,7 @@
 
 import { CallState, DeviceManagerState } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(teams-identity-support) */
-import { TeamsCall } from '@azure/communication-calling';
+import { EnvironmentInfo, TeamsCall } from '@azure/communication-calling';
 import type {
   AudioDeviceInfo,
   VideoDeviceInfo,
@@ -29,8 +29,6 @@ import type {
   PhoneNumberIdentifier
 } from '@azure/communication-common';
 import type { AdapterState, Disposable, AdapterError, AdapterErrors } from '../../common/adapters';
-/* @conditional-compile-remove(unsupported-browser) */
-import { UnsupportedBrowserEnvironmentInfo } from '@internal/calling-stateful-client';
 
 /**
  * Major UI screens shown in the {@link CallComposite}.
@@ -64,7 +62,15 @@ export const END_CALL_PAGES: CallCompositePage[] = [
   /* @conditional-compile-remove(unsupported-browser) */ 'unsupportedEnvironment'
 ];
 
+/**
+ * Feature options for unsupported browser functionality
+ *
+ * @beta
+ */
 export type UnsupportedEnvironmentFeatures = {
+  /**
+   * Will allow the end user to choose to enter a call with a unsupported browser version.
+   */
   unsupportedBrowserVersionContinue?: boolean;
 };
 
@@ -117,7 +123,7 @@ export type CallAdapterClientState = {
   /**
    * Environment information about system the adapter is made on
    */
-  environmentInfo?: UnsupportedBrowserEnvironmentInfo;
+  environmentInfo?: EnvironmentInfo;
   /* @conditional-compile-remove(unsupported-browser) */
   /**
    * Optional features that are to be enabled through the adapter.

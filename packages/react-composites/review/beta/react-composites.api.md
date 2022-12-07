@@ -52,7 +52,6 @@ import { TeamsCall } from '@azure/communication-calling';
 import { TeamsCallAgent } from '@azure/communication-calling';
 import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { Theme } from '@fluentui/react';
-import { UnsupportedBrowserEnvironmentInfo } from '@internal/calling-stateful-client';
 import { VideoDeviceInfo } from '@azure/communication-calling';
 import { VideoStreamOptions } from '@internal/react-components';
 
@@ -170,6 +169,7 @@ export interface CallAdapterCallOperations {
     addParticipant(participant: PhoneNumberIdentifier, options?: AddPhoneNumberOptions): Promise<void>;
     // (undocumented)
     addParticipant(participant: CommunicationUserIdentifier): Promise<void>;
+    allowWithUnsupportedBrowserVersion(): void;
     createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void | CreateVideoStreamViewResult>;
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
     // @beta
@@ -200,7 +200,7 @@ export type CallAdapterClientState = {
     isTeamsCall: boolean;
     latestErrors: AdapterErrors;
     alternateCallerId?: string;
-    environmentInfo?: UnsupportedBrowserEnvironmentInfo;
+    environmentInfo?: EnvironmentInfo;
     features?: CallAdapterOptionalFeatures;
     roleHint?: Role;
 };
@@ -221,7 +221,7 @@ export type CallAdapterLocator = TeamsMeetingLinkLocator | GroupCallLocator | /*
 
 // @beta
 export type CallAdapterOptionalFeatures = {
-    unsupportedEnvironment?: boolean;
+    unsupportedEnvironment?: boolean | UnsupportedEnvironmentFeatures;
 };
 
 // @public
@@ -259,6 +259,7 @@ export interface CallAdapterSubscribers {
 export type CallAdapterUiState = {
     isLocalPreviewMicrophoneEnabled: boolean;
     page: CallCompositePage;
+    oldBrowserVersionOptIn?: boolean;
 };
 
 // @public
@@ -486,6 +487,7 @@ export interface CallWithChatAdapterManagement {
     addParticipant(participant: PhoneNumberIdentifier, options?: AddPhoneNumberOptions): Promise<void>;
     // (undocumented)
     addParticipant(participant: CommunicationUserIdentifier): Promise<void>;
+    allowWithUnsupportedBrowserVersion(): void;
     askDevicePermission(constrain: PermissionConstraints): Promise<void>;
     // @beta (undocumented)
     cancelFileUpload: (id: string) => void;
@@ -619,6 +621,8 @@ export interface CallWithChatAdapterUiState {
     // @beta
     fileUploads?: FileUploadsUiState;
     isLocalPreviewMicrophoneEnabled: boolean;
+    // (undocumented)
+    oldBrowserVersionOptIn?: boolean;
     page: CallCompositePage;
 }
 
@@ -1276,6 +1280,11 @@ export interface TeamsCallAdapter extends CommonCallAdapter {
 export type TopicChangedListener = (event: {
     topic: string;
 }) => void;
+
+// @beta
+export type UnsupportedEnvironmentFeatures = {
+    unsupportedBrowserVersionContinue?: boolean;
+};
 
 // @public
 export const useAzureCommunicationCallAdapter: (args: Partial<AzureCommunicationCallAdapterArgs>, afterCreate?: ((adapter: CallAdapter) => Promise<CallAdapter>) | undefined, beforeDispose?: ((adapter: CallAdapter) => Promise<void>) | undefined) => CallAdapter | undefined;
