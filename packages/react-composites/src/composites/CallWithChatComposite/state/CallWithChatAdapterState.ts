@@ -47,7 +47,7 @@ export interface CallWithChatAdapterUiState {
    *
    * @beta
    */
-  oldBrowserVersionOptIn?: boolean;
+  unsupportedBrowserVersionsAllowed?: boolean;
 }
 
 /**

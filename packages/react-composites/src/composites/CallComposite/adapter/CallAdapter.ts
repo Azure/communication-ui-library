@@ -95,7 +95,7 @@ export type CallAdapterUiState = {
   isLocalPreviewMicrophoneEnabled: boolean;
   page: CallCompositePage;
   /* @conditional-compile-remove(unsupported-browser) */
-  oldBrowserVersionOptIn?: boolean;
+  unsupportedBrowserVersionsAllowed?: boolean;
 };
 
 /**

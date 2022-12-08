@@ -106,7 +106,7 @@ class CallContext {
       isTeamsCall,
       /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId: clientState.alternateCallerId,
       /* @conditional-compile-remove(unsupported-browser) */ environmentInfo: clientState.environmentInfo,
-      /* @conditional-compile-remove(unsupported-browser) */ oldBrowserVersionOptIn: false,
+      /* @conditional-compile-remove(unsupported-browser) */ unsupportedBrowserVersionsAllowed: false,
       /* @conditional-compile-remove(unsupported-browser) */ features: options?.features,
       /* @conditional-compile-remove(rooms) */ roleHint: options?.roleHint
     };
@@ -159,7 +159,7 @@ class CallContext {
       latestEndedCall,
       /* @conditional-compile-remove(unsupported-browser) */ environmentInfo,
       /* @conditional-compile-remove(unsupported-browser) */ this.state.features,
-      /* @conditional-compile-remove(unsupported-browser) */ this.state.oldBrowserVersionOptIn
+      /* @conditional-compile-remove(unsupported-browser) */ this.state.unsupportedBrowserVersionsAllowed
     );
     if (!IsCallEndedPage(oldPage) && IsCallEndedPage(newPage)) {
       this.emitter.emit('callEnded', { callId: this.callId });
@@ -511,7 +511,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
 
   /* @conditional-compile-remove(unsupported-browser) */
   public allowUnsupportedBrowserVersion(): void {
-    this.context.setState({ ...this.context.getState(), oldBrowserVersionOptIn: true });
+    this.context.setState({ ...this.context.getState(), unsupportedBrowserVersionsAllowed: true });
     return this.context.updateClientState(this.callClient.getState());
   }
 
