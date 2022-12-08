@@ -47,6 +47,8 @@ export const _RemoteVideoTile = React.memo(
     strings?: VideoGalleryStrings;
     participantState?: ParticipantState;
     showRemoteVideoTileContextualMenu?: boolean;
+    contextualMenu?: IContextualMenuProps;
+    isPinned?: boolean;
   }) => {
     const {
       isAvailable,
@@ -137,6 +139,7 @@ export const _RemoteVideoTile = React.memo(
         /* @conditional-compile-remove(PSTN-calls) */
         participantState={participantState}
         {...videoTileContextualMenuProps}
+        isPinned={props.isPinned}
       />
     );
   }

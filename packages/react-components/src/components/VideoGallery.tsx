@@ -2,6 +2,8 @@
 // Licensed under the MIT license.
 
 import { concatStyleSets, IStyle, mergeStyles, Stack } from '@fluentui/react';
+/* @conditional-compile-remove(pinned-participants) */
+import { IContextualMenuItem } from '@fluentui/react';
 import React, { useCallback, useMemo, useRef } from 'react';
 import { GridLayoutStyles } from '.';
 import { useLocale } from '../localization';
@@ -165,6 +167,16 @@ export interface VideoGalleryProps {
    * @defaultValue `true`
    */
   showRemoteVideoTileContextualMenu?: boolean;
+  /* @conditional-compile-remove(pinned-participants) */
+  /**
+   * This callback will be called when a participant video tile is pinned
+   */
+  onPinParticipant?: (userId: string) => void;
+  /* @conditional-compile-remove(pinned-participants) */
+  /**
+   * This callback will be called when a participant video tile is un-pinned
+   */
+  onUnpinParticipant?: (userId: string) => void;
 }
 
 /**
@@ -192,7 +204,11 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     showMuteIndicator,
     maxRemoteVideoStreams = DEFAULT_MAX_REMOTE_VIDEO_STREAMS,
     showCameraSwitcherInLocalPreview,
-    localVideoCameraCycleButtonProps
+    localVideoCameraCycleButtonProps,
+    /* @conditional-compile-remove(pinned-participants) */
+    onPinParticipant,
+    /* @conditional-compile-remove(pinned-participants) */
+    onUnpinParticipant
   } = props;
 
   const ids = useIdentifiers();
@@ -208,7 +224,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   const isNarrow = containerWidth ? isNarrowWidth(containerWidth) : false;
 
   /* @conditional-compile-remove(pinned-participants) */
-  const [pinnedParticipantsState, _] = React.useState<string[]>([]);
+  const [pinnedParticipantsState, setPinnedParticipantsState] = React.useState<string[]>([]);
   /* @conditional-compile-remove(pinned-participants) */
   // Use pinnedParticipants from props but if it is not defined use the maintained state of pinned participants
   const pinnedParticipants = props.pinnedParticipants ?? pinnedParticipantsState;
@@ -286,6 +302,40 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   const defaultOnRenderVideoTile = useCallback(
     (participant: VideoGalleryRemoteParticipant, isVideoParticipant?: boolean) => {
       const remoteVideoStream = participant.videoStream;
+
+      /* @conditional-compile-remove(pinned-participants) */
+      const menuItems: IContextualMenuItem[] = [];
+      /* @conditional-compile-remove(pinned-participants) */
+      const isPinned = pinnedParticipants?.includes(participant.userId);
+      /* @conditional-compile-remove(pinned-participants) */
+      if (pinnedParticipants) {
+        if (isPinned) {
+          menuItems.push({
+            key: 'unpin',
+            text: 'Unpin',
+            onClick: () => {
+              if (pinnedParticipants) {
+                setPinnedParticipantsState(pinnedParticipants.filter((p) => p !== participant.userId));
+              }
+              onUnpinParticipant?.(participant.userId);
+            },
+            'data-ui-id': 'video-tile-unpin-participant-button'
+          });
+        } else {
+          menuItems.push({
+            key: 'pin',
+            text: 'Pin',
+            onClick: () => {
+              if (pinnedParticipants && !pinnedParticipants.includes(participant.userId)) {
+                setPinnedParticipantsState(pinnedParticipants.concat(participant.userId));
+              }
+              onPinParticipant?.(participant.userId);
+            },
+            'data-ui-id': 'video-tile-pin-participant-button'
+          });
+        }
+      }
+
       return (
         <_RemoteVideoTile
           key={participant.userId}
@@ -304,6 +354,10 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           participantState={participant.state}
           /* @conditional-compile-remove(pinned-participants) */
           showRemoteVideoTileContextualMenu={props.showRemoteVideoTileContextualMenu}
+          /* @conditional-compile-remove(pinned-participants) */
+          contextualMenu={menuItems.length > 0 ? { items: menuItems } : undefined}
+          /* @conditional-compile-remove(pinned-participants) */
+          isPinned={isPinned}
         />
       );
     },
@@ -314,8 +368,11 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       onRenderAvatar,
       showMuteIndicator,
       strings,
-      /* @conditional-compile-remove(pinned-participants) */
-      props.showRemoteVideoTileContextualMenu
+      /* @conditional-compile-remove(pinned-participants) */ props.showRemoteVideoTileContextualMenu,
+      /* @conditional-compile-remove(pinned-participants) */ pinnedParticipants,
+      /* @conditional-compile-remove(pinned-participants) */ setPinnedParticipantsState,
+      /* @conditional-compile-remove(pinned-participants) */ onPinParticipant,
+      /* @conditional-compile-remove(pinned-participants) */ onUnpinParticipant
     ]
   );
 
@@ -336,8 +393,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   const screenShareComponent = remoteScreenShareComponent
     ? remoteScreenShareComponent
     : localParticipant.isScreenSharingOn
-    ? localScreenShareStreamComponent
-    : undefined;
+      ? localScreenShareStreamComponent
+      : undefined;
 
   const layoutProps = useMemo(
     () => ({

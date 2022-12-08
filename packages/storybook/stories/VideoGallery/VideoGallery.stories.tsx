@@ -228,7 +228,9 @@ export default {
     showMuteIndicator: hiddenControl,
     dominantSpeakers: hiddenControl,
     strings: hiddenControl,
-    maxRemoteVideoStreams: hiddenControl
+    maxRemoteVideoStreams: hiddenControl,
+    onPinParticipant: hiddenControl,
+    onUnpinParticipant: hiddenControl
   },
   parameters: {
     docs: {
