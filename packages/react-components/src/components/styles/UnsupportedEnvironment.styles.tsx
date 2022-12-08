@@ -14,7 +14,8 @@ export const mainTextStyles: ITextStyles = {
     lineHeight: _pxToRem(28),
     paddingBottom: '1rem',
     margin: 'auto',
-    textAlign: 'center'
+    textAlign: 'center',
+    padding: '0.5rem'
   }
 };
 
@@ -26,7 +27,8 @@ export const secondaryTextStyles: ITextStyles = {
     margin: 'auto',
     fontWeight: 400,
     paddingBottom: '0.5rem',
-    textAlign: 'center'
+    textAlign: 'center',
+    padding: '0.5rem'
   }
 };
 
@@ -37,7 +39,8 @@ export const linkTextStyles: ILinkStyles = {
   root: {
     margin: 'auto',
     fontWeight: 600,
-    textAlign: 'center'
+    textAlign: 'center',
+    padding: '0.5rem'
   }
 };
 
@@ -47,7 +50,7 @@ export const linkTextStyles: ILinkStyles = {
 export const containerStyles: IStackStyles = {
   root: {
     padding: '2rem',
-    width: _pxToRem(375)
+    maxWidth: _pxToRem(375)
   }
 };
 
@@ -66,22 +69,11 @@ export const iconStyles: IIconStyles = {
 export const continueAnywayButtonStyles = (theme: Theme): IButtonStyles => {
   return {
     root: {
-      backgroundColor: theme.palette.white,
+      backgroundColor: '#C4314B',
       margin: '0.5rem',
       borderColor: theme.palette.neutralLight,
-      boxShadow: theme.effects.elevation4
-    },
-    rootHovered: {
-      backgroundColor: theme.palette.neutralLighter,
-      borderColor: theme.palette.neutralLight
-    },
-    rootPressed: {
-      color: theme.palette.white,
-      backgroundColor: theme.palette.neutralLight,
-      borderColor: theme.palette.neutralLight
-    },
-    textContainer: {
-      color: theme.palette.black
+      padding: '1rem',
+      color: theme.palette.white
     }
   };
 };

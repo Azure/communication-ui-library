@@ -169,7 +169,7 @@ export interface CallAdapterCallOperations {
     addParticipant(participant: PhoneNumberIdentifier, options?: AddPhoneNumberOptions): Promise<void>;
     // (undocumented)
     addParticipant(participant: CommunicationUserIdentifier): Promise<void>;
-    allowWithUnsupportedBrowserVersion(): void;
+    allowUnsupportedBrowserVersion(): void;
     createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void | CreateVideoStreamViewResult>;
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
     // @beta
@@ -487,7 +487,7 @@ export interface CallWithChatAdapterManagement {
     addParticipant(participant: PhoneNumberIdentifier, options?: AddPhoneNumberOptions): Promise<void>;
     // (undocumented)
     addParticipant(participant: CommunicationUserIdentifier): Promise<void>;
-    allowWithUnsupportedBrowserVersion(): void;
+    allowUnsupportedBrowserVersion(): void;
     askDevicePermission(constrain: PermissionConstraints): Promise<void>;
     // @beta (undocumented)
     cancelFileUpload: (id: string) => void;
@@ -621,7 +621,7 @@ export interface CallWithChatAdapterUiState {
     // @beta
     fileUploads?: FileUploadsUiState;
     isLocalPreviewMicrophoneEnabled: boolean;
-    // (undocumented)
+    // @beta
     oldBrowserVersionOptIn?: boolean;
     page: CallCompositePage;
 }
@@ -1283,7 +1283,7 @@ export type TopicChangedListener = (event: {
 
 // @beta
 export type UnsupportedEnvironmentFeatures = {
-    unsupportedBrowserVersionContinue?: boolean;
+    unsupportedBrowserVersionAllowed?: boolean;
 };
 
 // @public

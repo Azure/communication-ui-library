@@ -337,7 +337,7 @@ export interface CallWithChatAdapterManagement {
   /**
    * Continues into a call when the browser version is not supported.
    */
-  allowWithUnsupportedBrowserVersion(): void;
+  allowUnsupportedBrowserVersion(): void;
 }
 
 /**

@@ -151,8 +151,8 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
   }
 
   /* @conditional-compile-remove(unsupported-browser) */
-  public allowWithUnsupportedBrowserVersion(): void {
-    return this.callWithChatAdapter.allowWithUnsupportedBrowserVersion();
+  public allowUnsupportedBrowserVersion(): void {
+    return this.callWithChatAdapter.allowUnsupportedBrowserVersion();
   }
   /* @conditional-compile-remove(PSTN-calls) */
   public sendDtmfTone = async (dtmfTone: DtmfTone): Promise<void> => {

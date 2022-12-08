@@ -317,7 +317,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     /* @conditional-compile-remove(PSTN-calls) */
     this.sendDtmfTone.bind(this);
     /* @conditional-compile-remove(unsupported-browser) */
-    this.allowWithUnsupportedBrowserVersion.bind(this);
+    this.allowUnsupportedBrowserVersion.bind(this);
   }
 
   public dispose(): void {
@@ -510,7 +510,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   }
 
   /* @conditional-compile-remove(unsupported-browser) */
-  public allowWithUnsupportedBrowserVersion(): void {
+  public allowUnsupportedBrowserVersion(): void {
     this.context.setState({ ...this.context.getState(), oldBrowserVersionOptIn: true });
     return this.context.updateClientState(this.callClient.getState());
   }

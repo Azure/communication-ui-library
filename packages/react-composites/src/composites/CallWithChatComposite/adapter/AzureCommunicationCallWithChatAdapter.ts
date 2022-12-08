@@ -208,7 +208,7 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     /* @conditional-compile-remove(PSTN-calls) */
     this.sendDtmfTone.bind(this);
     /* @conditional-compile-remove(unsupported-browser) */
-    this.allowWithUnsupportedBrowserVersion.bind(this);
+    this.allowUnsupportedBrowserVersion.bind(this);
   }
 
   /** Join existing Call. */
@@ -412,8 +412,8 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   }
 
   /* @conditional-compile-remove(unsupported-browser) */
-  public allowWithUnsupportedBrowserVersion(): void {
-    return this.callAdapter.allowWithUnsupportedBrowserVersion();
+  public allowUnsupportedBrowserVersion(): void {
+    return this.callAdapter.allowUnsupportedBrowserVersion();
   }
 
   on(event: 'callParticipantsJoined', listener: ParticipantsJoinedListener): void;

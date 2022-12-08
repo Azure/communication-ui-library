@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 /* @conditional-compile-remove(unsupported-browser) */
-import { Icon, Link, PrimaryButton, Stack, Text } from '@fluentui/react';
+import { DefaultButton, Icon, Link, Stack, Text } from '@fluentui/react';
 /* @conditional-compile-remove(unsupported-browser) */
 import { _pxToRem } from '@internal/acs-ui-common';
 import React from 'react';
@@ -38,17 +38,24 @@ export interface UnsupportedEnvironmentStrings {
  * @private
  */
 export interface UnsupportedEnvironmentProps {
-  /** Handler to perform a action when the help link is actioned */
+  /**
+   * Handler to perform a action when the help link is actioned
+   */
   onTroubleshootingClick?: () => void;
-  /** String overrides for the component */
-  strings: UnsupportedEnvironmentStrings;
-  /** Allow user to continue into the call */
-  onClickContinue?: () => void;
+  /**
+   * String overrides for the component
+   */
+  strings?: UnsupportedEnvironmentStrings;
+  /**
+   * CallBack for the continue anyay button. Use this as a mechanism to allow users into
+   * a call with a unsupported browser version.
+   */
+  onContinueClick?: () => void;
 }
 
 /* @conditional-compile-remove(unsupported-browser) */
 const UnsupportedEnvironmentContainer = (props: UnsupportedEnvironmentProps): JSX.Element => {
-  const { onTroubleshootingClick, strings, onClickContinue } = props;
+  const { onTroubleshootingClick, strings, onContinueClick } = props;
   const theme = useTheme();
   return (
     <Stack styles={containerStyles}>
@@ -57,28 +64,17 @@ const UnsupportedEnvironmentContainer = (props: UnsupportedEnvironmentProps): JS
         iconName="UnsupportedEnvironmentWarning"
         data-ui-id="unsupported-environment-icon"
       ></Icon>
-      <Text styles={mainTextStyles}>{strings.primaryText}</Text>
-      <Text styles={secondaryTextStyles}>{strings.secondaryText}</Text>
+      <Text styles={mainTextStyles}>{strings?.primaryText}</Text>
+      <Text styles={secondaryTextStyles}>{strings?.secondaryText}</Text>
       {onTroubleshootingClick && (
-        <Link
-          styles={linkTextStyles}
-          onClick={() => {
-            onTroubleshootingClick();
-          }}
-          data-ui-id="unsupported-environment-link"
-        >
-          {strings.moreHelpLinkText}
+        <Link styles={linkTextStyles} onClick={onTroubleshootingClick} data-ui-id="unsupported-environment-link">
+          {strings?.moreHelpLinkText}
         </Link>
       )}
-      {onClickContinue && (
-        <PrimaryButton
-          styles={continueAnywayButtonStyles(theme)}
-          onClick={() => {
-            onClickContinue();
-          }}
-        >
-          {strings.continueAnywayButtonText}
-        </PrimaryButton>
+      {onContinueClick && (
+        <DefaultButton styles={continueAnywayButtonStyles(theme)} onClick={onContinueClick}>
+          {strings?.continueAnywayButtonText}
+        </DefaultButton>
       )}
     </Stack>
   );

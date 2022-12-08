@@ -40,6 +40,13 @@ export interface CallWithChatAdapterUiState {
    */
   fileUploads?: FileUploadsUiState;
   /* @conditional-compile-remove(unsupported-browser) */
+  /**
+   * State to track whether the end user has opted in to using a
+   * out of date version of a supported browser. Allows the user
+   * to start a call in this state.
+   *
+   * @beta
+   */
   oldBrowserVersionOptIn?: boolean;
 }
 

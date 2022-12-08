@@ -71,7 +71,7 @@ export type UnsupportedEnvironmentFeatures = {
   /**
    * Will allow the end user to choose to enter a call with a unsupported browser version.
    */
-  unsupportedBrowserVersionContinue?: boolean;
+  unsupportedBrowserVersionAllowed?: boolean;
 };
 
 /**
@@ -368,7 +368,7 @@ export interface CallAdapterCallOperations {
   /**
    * Continues into a call when the browser version is not supported.
    */
-  allowWithUnsupportedBrowserVersion(): void;
+  allowUnsupportedBrowserVersion(): void;
 }
 
 /**

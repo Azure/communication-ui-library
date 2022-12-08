@@ -81,7 +81,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
 
   /* @conditional-compile-remove(unsupported-browser) */
   const callAdapterOptions = useMemo(() => {
-    return { features: { unsupportedEnvironment: { unsupportedBrowserVersionContinue: true } } };
+    return { features: { unsupportedEnvironment: { unsupportedBrowserVersionAllowed: true } } };
   }, []);
 
   const adapter = useAzureCommunicationCallWithChatAdapter(

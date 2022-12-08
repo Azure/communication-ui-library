@@ -33,14 +33,14 @@ export const UnsupportedBrowserPage = (props: UnsupportedBrowserPageProps): JSX.
   /* @conditional-compile-remove(unsupported-browser) */
   const unsupportedEnvironmentFeature = adapter.getState().features?.unsupportedEnvironment;
   /* @conditional-compile-remove(unsupported-browser) */
-  const onClickContinue =
+  const onContinueClick =
     unsupportedEnvironmentFeature === true
       ? undefined
       : unsupportedEnvironmentFeature === false || undefined
       ? undefined
-      : unsupportedEnvironmentFeature?.unsupportedBrowserVersionContinue
+      : unsupportedEnvironmentFeature?.unsupportedBrowserVersionAllowed
       ? () => {
-          adapter.allowWithUnsupportedBrowserVersion();
+          adapter.allowUnsupportedBrowserVersion();
         }
       : undefined;
 
@@ -71,7 +71,7 @@ export const UnsupportedBrowserPage = (props: UnsupportedBrowserPageProps): JSX.
       <UnsupportedBrowserVersion
         onTroubleshootingClick={onTroubleshootingClick}
         strings={unsupportedBrowserVersionStrings}
-        onClickContinue={onClickContinue}
+        onContinueClick={onContinueClick}
       />
     );
   } else {
