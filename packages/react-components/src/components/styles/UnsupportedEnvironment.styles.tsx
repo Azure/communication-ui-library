@@ -12,7 +12,6 @@ export const mainTextStyles: ITextStyles = {
     fontWeight: 600,
     fontSize: _pxToRem(20),
     lineHeight: _pxToRem(28),
-    paddingBottom: '1rem',
     margin: 'auto',
     textAlign: 'center',
     padding: '0.5rem'
@@ -27,8 +26,7 @@ export const secondaryTextStyles: ITextStyles = {
     margin: 'auto',
     fontWeight: 400,
     paddingBottom: '0.5rem',
-    textAlign: 'center',
-    padding: '0.5rem'
+    textAlign: 'center'
   }
 };
 
