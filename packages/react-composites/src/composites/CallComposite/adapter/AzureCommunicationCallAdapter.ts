@@ -149,8 +149,8 @@ class CallContext {
 
   public updateClientState(clientState: CallClientState): void {
     let call = this.callId ? clientState.calls[this.callId] : undefined;
-    const latestEndedCall = findLatestEndedCall(clientState.callsEnded);
-
+    const latestEndedCall = clientState.callsEnded ? findLatestEndedCall(clientState.callsEnded) : undefined;
+    console.log(this.state);
     // As the state is transitioning to a new state, trigger appropriate callback events.
     const oldPage = this.state.page;
     /* @conditional-compile-remove(unsupported-browser) */
@@ -513,7 +513,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   /* @conditional-compile-remove(unsupported-browser) */
   public allowWithUnsupportedBrowserVersion(): void {
     this.context.setState({ ...this.context.getState(), oldBrowserVersionOptIn: true });
-    return;
+    return this.context.updateClientState(this.callClient.getState());
   }
 
   public startCall(

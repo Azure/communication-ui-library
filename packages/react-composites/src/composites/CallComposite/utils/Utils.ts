@@ -143,7 +143,7 @@ type GetCallCompositePageFunction = ((
  */
 export const getCallCompositePage: GetCallCompositePageFunction = (
   call,
-  previousCall,
+  previousCall?,
   environmentInfo?,
   features?,
   unsupportedBrowserVersionOptedIn?
@@ -316,7 +316,7 @@ const isUnsupportedEnvironment = (
   return !!(
     features?.unsupportedEnvironment &&
     (environmentInfo?.isSupportedBrowser === false ||
-      environmentInfo?.isSupportedBrowserVersion === false ||
+      (environmentInfo?.isSupportedBrowserVersion === false && !unsupportedBrowserVersionOptedIn) ||
       environmentInfo?.isSupportedPlatform === false)
   );
 };
