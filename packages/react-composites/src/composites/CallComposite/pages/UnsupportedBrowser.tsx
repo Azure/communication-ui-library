@@ -3,13 +3,13 @@
 
 /* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
-/* @conditional-compile-remove(unsupported-browser) */
 import { IStackStyles, Stack } from '@fluentui/react';
 /* @conditional-compile-remove(unsupported-browser) */
 import { UnsupportedBrowser, UnsupportedBrowserVersion, UnsupportedOperatingSystem } from '@internal/react-components';
 import React from 'react';
 /* @conditional-compile-remove(unsupported-browser) */
 import { useLocale } from '../../localization';
+/* @conditional-compile-remove(unsupported-browser) */
 import { useAdapter } from '../adapter/CallAdapterProvider';
 
 /**
@@ -28,10 +28,11 @@ export type UnsupportedBrowserPageProps = {
 export const UnsupportedBrowserPage = (props: UnsupportedBrowserPageProps): JSX.Element => {
   /* @conditional-compile-remove(unsupported-browser) */
   const { onTroubleshootingClick, environmentInfo } = props;
+  /* @conditional-compile-remove(unsupported-browser) */
   const adapter = useAdapter();
-
+  /* @conditional-compile-remove(unsupported-browser) */
   const unsupportedEnvironmentFeature = adapter.getState().features?.unsupportedEnvironment;
-
+  /* @conditional-compile-remove(unsupported-browser) */
   const onClickContinue =
     unsupportedEnvironmentFeature === true
       ? undefined

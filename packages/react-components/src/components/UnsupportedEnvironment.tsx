@@ -6,6 +6,7 @@ import { Icon, Link, PrimaryButton, Stack, Text } from '@fluentui/react';
 /* @conditional-compile-remove(unsupported-browser) */
 import { _pxToRem } from '@internal/acs-ui-common';
 import React from 'react';
+/* @conditional-compile-remove(unsupported-browser) */
 import { useTheme } from '../theming';
 /* @conditional-compile-remove(unsupported-browser) */
 import {

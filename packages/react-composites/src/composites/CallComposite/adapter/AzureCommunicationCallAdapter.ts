@@ -317,7 +317,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     this.resumeCall.bind(this);
     /* @conditional-compile-remove(PSTN-calls) */
     this.sendDtmfTone.bind(this);
-    /* @conditional-compile-remote(unsupported-browser) */
+    /* @conditional-compile-remove(unsupported-browser) */
     this.allowWithUnsupportedBrowserVersion.bind(this);
   }
 
