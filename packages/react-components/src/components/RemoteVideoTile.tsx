@@ -1,11 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-<<<<<<< Updated upstream
-import React, { useMemo } from 'react';
-import { CreateVideoStreamViewResult, OnRenderAvatarCallback, ParticipantState, VideoStreamOptions } from '../types';
-=======
-import { IContextualMenuProps, Layer, Stack } from '@fluentui/react';
+import { Layer, Stack } from '@fluentui/react';
 import React, { useMemo } from 'react';
 import {
   CreateVideoStreamViewResult,
@@ -15,7 +11,6 @@ import {
   VideoStreamOptions
 } from '../types';
 import { _DrawerMenu, _DrawerMenuItemProps } from './Drawer';
->>>>>>> Stashed changes
 import { StreamMedia } from './StreamMedia';
 import {
   useRemoteVideoStreamLifecycleMaintainer,
@@ -51,11 +46,8 @@ export const _RemoteVideoTile = React.memo(
     showLabel?: boolean;
     personaMinSize?: number;
     participantState?: ParticipantState;
-<<<<<<< Updated upstream
-=======
     showRemoteVideoTileContextualMenu?: boolean;
     hostId?: string;
->>>>>>> Stashed changes
   }) => {
     const {
       isAvailable,
@@ -119,23 +111,6 @@ export const _RemoteVideoTile = React.memo(
     const [drawerMenuItems, setDrawerMenuItems] = React.useState<_DrawerMenuItemProps[]>([]);
 
     return (
-<<<<<<< Updated upstream
-      <VideoTile
-        key={userId}
-        userId={userId}
-        renderElement={renderVideoStreamElement}
-        displayName={displayName}
-        onRenderPlaceholder={onRenderAvatar}
-        isMuted={isMuted}
-        isSpeaking={isSpeaking}
-        showMuteIndicator={showMuteIndicator}
-        personaMinSize={props.personaMinSize}
-        showLabel={props.showLabel}
-        /* @conditional-compile-remove(one-to-n-calling) */
-        /* @conditional-compile-remove(PSTN-calls) */
-        participantState={props.participantState}
-      />
-=======
       <>
         <VideoTile
           key={userId}
@@ -184,7 +159,6 @@ export const _RemoteVideoTile = React.memo(
           </Layer>
         )}
       </>
->>>>>>> Stashed changes
     );
   }
 );
