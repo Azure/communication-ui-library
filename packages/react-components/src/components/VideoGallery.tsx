@@ -194,8 +194,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   const containerHeight = _useContainerHeight(containerRef);
   const isNarrow = containerWidth ? isNarrowWidth(containerWidth) : false;
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [pinnedParticipants, setPinnedParticipants] = useState(props.pinnedParticipants);
+  const [pinnedParticipants, _] = useState(props.pinnedParticipants);
 
   /* @conditional-compile-remove(rooms) */
   const permissions = _usePermissions();
