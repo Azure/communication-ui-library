@@ -2,7 +2,9 @@
 // Licensed under the MIT license.
 
 import { concatStyleSets, IStyle, mergeStyles, Stack } from '@fluentui/react';
-import React, { useCallback, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useMemo, useRef } from 'react';
+/* @conditional-compile-remove(pinned-participants) */
+import { useState } from 'react';
 import { GridLayoutStyles } from '.';
 import { useLocale } from '../localization';
 import { useTheme } from '../theming';
@@ -30,6 +32,7 @@ import { FloatingLocalVideoLayout } from './VideoGallery/FloatingLocalVideoLayou
 import { useIdentifiers } from '../identifiers';
 import { videoGalleryOuterDivStyle } from './styles/VideoGallery.styles';
 import { floatingLocalVideoTileStyle } from './VideoGallery/styles/FloatingLocalVideo.styles';
+/* @conditional-compile-remove(pinned-participants) */
 import { PinnedParticipantsLayout } from './VideoGallery/PinnedParticipantsLayout';
 
 /**
@@ -194,6 +197,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   const containerHeight = _useContainerHeight(containerRef);
   const isNarrow = containerWidth ? isNarrowWidth(containerWidth) : false;
 
+  /* @conditional-compile-remove(pinned-participants) */
   const [pinnedParticipants, _] = useState(props.pinnedParticipants);
 
   /* @conditional-compile-remove(rooms) */
@@ -309,8 +313,10 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     ? localScreenShareStreamComponent
     : undefined;
 
-  const videoGalleryLayout =
-    pinnedParticipants && pinnedParticipants.length > 0 ? (
+  let videoGalleryLayout: JSX.Element;
+  /* @conditional-compile-remove(pinned-participants) */
+  if (pinnedParticipants && pinnedParticipants.length > 0) {
+    videoGalleryLayout = (
       <PinnedParticipantsLayout
         remoteParticipants={remoteParticipants}
         pinnedParticipants={pinnedParticipants}
@@ -325,7 +331,11 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
         styles={styles}
         isLocalVideoFloating={layout === 'floatingLocalVideo'}
       />
-    ) : layout === 'floatingLocalVideo' ? (
+    );
+  }
+
+  if (layout === 'floatingLocalVideo') {
+    videoGalleryLayout = (
       <FloatingLocalVideoLayout
         remoteParticipants={remoteParticipants}
         onRenderRemoteParticipant={onRenderRemoteVideoTile ?? defaultOnRenderVideoTile}
@@ -338,7 +348,9 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
         parentHeight={containerHeight}
         styles={styles}
       />
-    ) : (
+    );
+  } else {
+    videoGalleryLayout = (
       <DefaultLayout
         remoteParticipants={remoteParticipants}
         onRenderRemoteParticipant={onRenderRemoteVideoTile ?? defaultOnRenderVideoTile}
@@ -350,6 +362,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
         styles={styles}
       />
     );
+  }
 
   return (
     <div
