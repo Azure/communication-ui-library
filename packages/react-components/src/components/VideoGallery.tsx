@@ -324,6 +324,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
         parentWidth={containerWidth}
         parentHeight={containerHeight}
         styles={styles}
+        isLocalVideoFloating={layout === 'floatingLocalVideo'}
       />
     ) : layout === 'floatingLocalVideo' ? (
       <FloatingLocalVideoLayout

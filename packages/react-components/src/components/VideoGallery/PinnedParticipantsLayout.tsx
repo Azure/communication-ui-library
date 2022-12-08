@@ -58,6 +58,10 @@ export interface PinnedParticipantsLayoutProps {
    * Height of parent element
    */
   parentHeight?: number;
+  /**
+   * Whether local video should be floating
+   */
+  isLocalVideoFloating?: boolean;
 }
 
 /**
@@ -78,7 +82,8 @@ export const PinnedParticipantsLayout = (props: PinnedParticipantsLayoutProps): 
     maxRemoteVideoStreams,
     showCameraSwitcherInLocalPreview,
     parentWidth,
-    parentHeight
+    parentHeight,
+    isLocalVideoFloating
   } = props;
 
   const theme = useTheme();
@@ -95,7 +100,7 @@ export const PinnedParticipantsLayout = (props: PinnedParticipantsLayoutProps): 
 
   let activeVideoStreams = 0;
 
-  const shouldFloatLocalVideo = remoteParticipants.length > 0;
+  const shouldFloatLocalVideo = isLocalVideoFloating && remoteParticipants.length > 0;
 
   const gridTiles = pinnedParticipantsLayout.gridParticipants.map((p) => {
     return onRenderRemoteParticipant(
@@ -106,7 +111,7 @@ export const PinnedParticipantsLayout = (props: PinnedParticipantsLayoutProps): 
     );
   });
 
-  if (!shouldFloatLocalVideo && localVideoComponent) {
+  if (localVideoComponent && !shouldFloatLocalVideo) {
     gridTiles.push(localVideoComponent);
   }
 
