@@ -1,11 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { concatStyleSets, ContextualMenu, IDragOptions, IStyle, LayerHost, mergeStyles, Stack } from '@fluentui/react';
+import { concatStyleSets, IStyle, mergeStyles, Stack } from '@fluentui/react';
 import React, { useCallback, useMemo, useRef } from 'react';
 import { GridLayoutStyles } from '.';
-import { smartDominantSpeakerParticipants } from '../gallery';
-import { useIdentifiers } from '../identifiers/IdentifierProvider';
 import { useLocale } from '../localization';
 import { useTheme } from '../theming';
 import {
@@ -16,33 +14,22 @@ import {
   VideoStreamOptions,
   CreateVideoStreamViewResult
 } from '../types';
-import { GridLayout } from './GridLayout';
 import { HorizontalGalleryStyles } from './HorizontalGallery';
 import { _RemoteVideoTile } from './RemoteVideoTile';
-import {
-  floatingLocalVideoModalStyle,
-  floatingLocalVideoTileStyle,
-  layerHostStyle,
-  localVideoTileContainerStyle,
-  videoGalleryContainerStyle,
-  videoGalleryOuterDivStyle,
-  localVideoTileOuterPaddingPX,
-  SMALL_FLOATING_MODAL_SIZE_PX,
-  LARGE_FLOATING_MODAL_SIZE_PX
-} from './styles/VideoGallery.styles';
 import { isNarrowWidth, _useContainerHeight, _useContainerWidth } from './utils/responsive';
 import { LocalScreenShare } from './VideoGallery/LocalScreenShare';
 import { RemoteScreenShare } from './VideoGallery/RemoteScreenShare';
-import { useId } from '@fluentui/react-hooks';
 import { LocalVideoCameraCycleButtonProps } from './LocalVideoCameraButton';
-import { localVideoTileWithControlsContainerStyle, LOCAL_VIDEO_TILE_ZINDEX } from './styles/VideoGallery.styles';
 import { _ICoordinates, _ModalClone } from './ModalClone/ModalClone';
 import { _formatString } from '@internal/acs-ui-common';
 import { _LocalVideoTile } from './LocalVideoTile';
 /* @conditional-compile-remove(rooms) */
 import { _usePermissions } from '../permissions';
 import { DefaultLayout } from './VideoGallery/DefaultLayout';
-import { VideoGalleryResponsiveHorizontalGallery } from './VideoGallery/VideoGalleryResponsiveHorizontalGallery';
+import { FloatingLocalVideoLayout } from './VideoGallery/FloatingLocalVideoLayout';
+import { useIdentifiers } from '../identifiers';
+import { videoGalleryOuterDivStyle } from './styles/VideoGallery.styles';
+import { floatingLocalVideoTileStyle } from './VideoGallery/styles/FloatingLocalVideo.styles';
 
 /**
  * @private
@@ -161,19 +148,6 @@ export interface VideoGalleryProps {
   localVideoCameraCycleButtonProps?: LocalVideoCameraCycleButtonProps;
 }
 
-const DRAG_OPTIONS: IDragOptions = {
-  moveMenuItemText: 'Move',
-  closeMenuItemText: 'Close',
-  menu: ContextualMenu,
-  keepInBounds: true
-};
-
-// Manually override the max position used to keep the modal in the bounds of its container.
-// This is a workaround for: https://github.com/microsoft/fluentui/issues/20122
-// Because our modal starts in the bottom right corner, we can say that this is the max (i.e. rightmost and bottomost)
-// position the modal can be dragged to.
-const modalMaxDragPosition = { x: localVideoTileOuterPaddingPX, y: localVideoTileOuterPaddingPX };
-
 /**
  * VideoGallery represents a layout of video tiles for a specific call.
  * It displays a {@link VideoTile} for the local user as well as for each remote participant who has joined the call.
@@ -208,63 +182,11 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   const strings = { ...localeStrings, ...props.strings };
 
   const shouldFloatLocalVideo = !!(layout === 'floatingLocalVideo' && remoteParticipants.length > 0);
-  const shouldFloatNonDraggableLocalVideo = !!(showCameraSwitcherInLocalPreview && shouldFloatLocalVideo);
 
   const containerRef = useRef<HTMLDivElement>(null);
   const containerWidth = _useContainerWidth(containerRef);
   const containerHeight = _useContainerHeight(containerRef);
   const isNarrow = containerWidth ? isNarrowWidth(containerWidth) : false;
-  const visibleVideoParticipants = useRef<VideoGalleryRemoteParticipant[]>([]);
-  const visibleAudioParticipants = useRef<VideoGalleryRemoteParticipant[]>([]);
-  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
-  const visibleCallingParticipants = useRef<VideoGalleryRemoteParticipant[]>([]);
-
-  const modalWidth = isNarrow ? SMALL_FLOATING_MODAL_SIZE_PX.width : LARGE_FLOATING_MODAL_SIZE_PX.width;
-  const modalHeight = isNarrow ? SMALL_FLOATING_MODAL_SIZE_PX.height : LARGE_FLOATING_MODAL_SIZE_PX.height;
-  // The minimum drag position is the top left of the video gallery. i.e. the modal (PiP) should not be able
-  // to be dragged offscreen and these are the top and left bounds of that calculation.
-  const modalMinDragPosition: _ICoordinates | undefined = useMemo(
-    () =>
-      containerWidth && containerHeight
-        ? {
-            // We use -containerWidth/Height because our modal is positioned to start in the bottom right,
-            // hence (0,0) is the bottom right of the video gallery.
-            x: -containerWidth + modalWidth + localVideoTileOuterPaddingPX,
-            y: -containerHeight + modalHeight + localVideoTileOuterPaddingPX
-          }
-        : undefined,
-    [containerHeight, containerWidth, modalHeight, modalWidth]
-  );
-
-  visibleVideoParticipants.current = smartDominantSpeakerParticipants({
-    participants: remoteParticipants?.filter((p) => p.videoStream?.isAvailable) ?? [],
-    dominantSpeakers,
-    lastVisibleParticipants: visibleVideoParticipants.current,
-    maxDominantSpeakers: maxRemoteVideoStreams
-  }).slice(0, maxRemoteVideoStreams);
-
-  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
-  visibleCallingParticipants.current = remoteParticipants?.filter((p) => p.state === ('Connecting' || 'Ringing')) ?? [];
-
-  // This set will be used to filter out participants already in visibleVideoParticipants
-  const visibleVideoParticipantsSet = new Set(visibleVideoParticipants.current.map((p) => p.userId));
-
-  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
-  const visibleCallingParticipantsSet = new Set(visibleCallingParticipants.current.map((p) => p.userId));
-
-  visibleAudioParticipants.current = smartDominantSpeakerParticipants({
-    participants:
-      remoteParticipants?.filter(
-        (p) =>
-          !visibleVideoParticipantsSet.has(p.userId) &&
-          /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ !visibleCallingParticipantsSet.has(
-            p.userId
-          )
-      ) ?? [],
-    dominantSpeakers,
-    lastVisibleParticipants: visibleAudioParticipants.current,
-    maxDominantSpeakers: MAX_AUDIO_DOMINANT_SPEAKERS
-  });
 
   /* @conditional-compile-remove(rooms) */
   const permissions = _usePermissions();
@@ -359,53 +281,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     [onCreateRemoteStreamView, onDisposeRemoteStreamView, remoteVideoViewOptions, onRenderAvatar, showMuteIndicator]
   );
 
-  const videoTiles = onRenderRemoteVideoTile
-    ? visibleVideoParticipants.current.map((participant) => onRenderRemoteVideoTile(participant))
-    : visibleVideoParticipants.current.map((participant): JSX.Element => {
-        return defaultOnRenderVideoTile(participant, true);
-      });
-
-  const audioTiles = onRenderRemoteVideoTile
-    ? visibleAudioParticipants.current.map((participant) => onRenderRemoteVideoTile(participant))
-    : visibleAudioParticipants.current.map((participant): JSX.Element => {
-        return defaultOnRenderVideoTile(participant, false);
-      });
-
-  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
-  const callingTiles = onRenderRemoteVideoTile
-    ? visibleCallingParticipants.current.map((participant) => onRenderRemoteVideoTile(participant))
-    : visibleCallingParticipants.current.map((participant): JSX.Element => {
-        return defaultOnRenderVideoTile(participant, false);
-      });
   const screenShareParticipant = remoteParticipants.find((participant) => participant.screenShareStream?.isAvailable);
-  const screenShareActive = screenShareParticipant || localParticipant?.isScreenSharingOn;
-
-  const createGridTiles = (): JSX.Element[] => {
-    /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
-    return videoTiles.length > 0 ? videoTiles : audioTiles.concat(callingTiles);
-    return videoTiles.length > 0 ? videoTiles : audioTiles;
-  };
-  const gridTiles = createGridTiles();
-
-  const createHorizontalGalleryTiles = (): JSX.Element[] => {
-    if (screenShareActive) {
-      // If screen sharing is active, assign video and audio participants as horizontal gallery participants
-      /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
-      return videoTiles.concat(audioTiles.concat(callingTiles));
-      return videoTiles.concat(audioTiles);
-    } else {
-      // If screen sharing is not active, then assign all video tiles as grid tiles.
-      // If there are no video tiles, then assign audio tiles as grid tiles.
-      /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
-      return videoTiles.length > 0 ? audioTiles.concat(callingTiles) : [];
-      return videoTiles.length > 0 ? audioTiles : [];
-    }
-  };
-  const horizontalGalleryTiles = createHorizontalGalleryTiles();
-
-  if (!shouldFloatLocalVideo && localVideoTile) {
-    gridTiles.push(localVideoTile);
-  }
 
   const localScreenShareStreamComponent = <LocalScreenShare localParticipant={localParticipant} />;
 
@@ -419,84 +295,27 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     />
   );
 
-  const horizontalGalleryPresent = horizontalGalleryTiles && horizontalGalleryTiles.length > 0;
-  const layerHostId = useId('layerhost');
-
-  if (layout === 'floatingLocalVideo') {
-    return (
-      <div
-        data-ui-id={ids.videoGallery}
-        ref={containerRef}
-        className={mergeStyles(videoGalleryOuterDivStyle, styles?.root)}
-      >
-        {shouldFloatLocalVideo &&
-          !shouldFloatNonDraggableLocalVideo &&
-          localVideoTile &&
-          (horizontalGalleryPresent ? (
-            <Stack className={mergeStyles(localVideoTileContainerStyle(theme, isNarrow))}>{localVideoTile}</Stack>
-          ) : (
-            <_ModalClone
-              isOpen={true}
-              isModeless={true}
-              dragOptions={DRAG_OPTIONS}
-              styles={floatingLocalVideoModalStyle(theme, isNarrow)}
-              layerProps={{ hostId: layerHostId }}
-              maxDragPosition={modalMaxDragPosition}
-              minDragPosition={modalMinDragPosition}
-            >
-              {localVideoTile}
-            </_ModalClone>
-          ))}
-        {
-          // When we use showCameraSwitcherInLocalPreview it disables dragging to allow keyboard navigation.
-          shouldFloatNonDraggableLocalVideo && localVideoTile && remoteParticipants.length > 0 && (
-            <Stack
-              className={mergeStyles(localVideoTileWithControlsContainerStyle(theme, isNarrow), {
-                boxShadow: theme.effects.elevation8,
-                zIndex: LOCAL_VIDEO_TILE_ZINDEX
-              })}
-            >
-              {localVideoTile}
-            </Stack>
-          )
-        }
-        <Stack horizontal={false} styles={videoGalleryContainerStyle}>
-          {screenShareParticipant ? (
-            remoteScreenShareComponent
-          ) : localParticipant?.isScreenSharingOn ? (
-            localScreenShareStreamComponent
-          ) : (
-            <GridLayout key="grid-layout" styles={styles?.gridLayout}>
-              {gridTiles}
-            </GridLayout>
-          )}
-          {horizontalGalleryPresent && (
-            <VideoGalleryResponsiveHorizontalGallery
-              shouldFloatLocalVideo={true}
-              isNarrow={isNarrow}
-              horizontalGalleryElements={horizontalGalleryTiles}
-              styles={styles?.horizontalGallery}
-            />
-          )}
-
-          <LayerHost id={layerHostId} className={mergeStyles(layerHostStyle)} />
-        </Stack>
-      </div>
-    );
-  }
-
   const screenShareComponent = remoteScreenShareComponent
     ? remoteScreenShareComponent
     : localParticipant.isScreenSharingOn
     ? localScreenShareStreamComponent
     : undefined;
 
-  return (
-    <div
-      data-ui-id={ids.videoGallery}
-      ref={containerRef}
-      className={mergeStyles(videoGalleryOuterDivStyle, styles?.root)}
-    >
+  const videoGalleryLayout =
+    layout === 'floatingLocalVideo' ? (
+      <FloatingLocalVideoLayout
+        remoteParticipants={remoteParticipants}
+        onRenderRemoteParticipant={onRenderRemoteVideoTile ?? defaultOnRenderVideoTile}
+        localVideoComponent={localVideoTile}
+        screenShareComponent={screenShareComponent}
+        showCameraSwitcherInLocalPreview={showCameraSwitcherInLocalPreview}
+        maxRemoteVideoStreams={maxRemoteVideoStreams}
+        dominantSpeakers={dominantSpeakers}
+        parentWidth={containerWidth}
+        parentHeight={containerHeight}
+        styles={styles}
+      />
+    ) : (
       <DefaultLayout
         remoteParticipants={remoteParticipants}
         onRenderRemoteParticipant={onRenderRemoteVideoTile ?? defaultOnRenderVideoTile}
@@ -507,6 +326,15 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
         parentWidth={containerWidth}
         styles={styles}
       />
+    );
+
+  return (
+    <div
+      data-ui-id={ids.videoGallery}
+      ref={containerRef}
+      className={mergeStyles(videoGalleryOuterDivStyle, styles?.root)}
+    >
+      {videoGalleryLayout}
     </div>
   );
 };
