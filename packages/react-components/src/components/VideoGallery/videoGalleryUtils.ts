@@ -5,10 +5,18 @@ import { useCallback, useRef } from 'react';
 import { smartDominantSpeakerParticipants } from '../../gallery';
 import { VideoGalleryParticipant, VideoGalleryRemoteParticipant } from '../../types';
 
-type LayoutResult = {
+interface UseFloatingLocalVideoLayoutArgs {
+  remoteParticipants: VideoGalleryRemoteParticipant[];
+  dominantSpeakers?: string[];
+  maxRemoteVideoStreams?: number;
+  maxAudioDominantSpeakers?: number;
+  isScreenShareActive?: boolean;
+}
+
+interface LayoutResult {
   gridParticipants: VideoGalleryParticipant[];
   horizontalGalleryParticipants: VideoGalleryParticipant[];
-};
+}
 
 const DEFAULT_MAX_REMOTE_VIDEOSTREAMS = 4;
 
@@ -17,13 +25,7 @@ const DEFAULT_MAX_AUDIO_DOMINANT_SPEAKERS = 6;
 /**
  * @private
  */
-export const useFloatingLocalVideoLayout = (props: {
-  remoteParticipants: VideoGalleryRemoteParticipant[];
-  dominantSpeakers?: string[];
-  maxRemoteVideoStreams?: number;
-  maxAudioDominantSpeakers?: number;
-  isScreenShareActive?: boolean;
-}): LayoutResult => {
+export const useFloatingLocalVideoLayout = (props: UseFloatingLocalVideoLayoutArgs): LayoutResult => {
   const visibleVideoParticipants = useRef<VideoGalleryRemoteParticipant[]>([]);
   const visibleAudioParticipants = useRef<VideoGalleryRemoteParticipant[]>([]);
 
@@ -104,4 +106,52 @@ export const useFloatingLocalVideoLayout = (props: {
   const horizontalGalleryParticipants = getHorizontalGalleryRemoteParticipants();
 
   return { gridParticipants, horizontalGalleryParticipants };
+};
+
+interface UsePinnedParticipantLayoutArgs extends UseFloatingLocalVideoLayoutArgs {
+  pinnedParticipantUserIds: string[];
+}
+
+/**
+ * @private
+ */
+export const usePinnedParticipantLayout = (props: UsePinnedParticipantLayoutArgs): LayoutResult => {
+  const pinnedParticipants: VideoGalleryRemoteParticipant[] = [];
+  const remoteParticpantMap = props.remoteParticipants.reduce((map, remoteParticipant) => {
+    map[remoteParticipant.userId] = remoteParticipant;
+    return map;
+  }, {});
+  let pinnedParticipantsWithVideoOnCount = 0;
+  props.pinnedParticipantUserIds.forEach((id) => {
+    const pinnedParticipant = remoteParticpantMap[id];
+    if (pinnedParticipant) {
+      pinnedParticipants.push(pinnedParticipant);
+      if (pinnedParticipant.videoStream?.isAvailable) {
+        pinnedParticipantsWithVideoOnCount++;
+      }
+    }
+  });
+  const pinnedParticipantUserIdSet = new Set(props.pinnedParticipantUserIds);
+  const unpinnedParticipants = props.remoteParticipants.filter((p) => !pinnedParticipantUserIdSet.has(p.userId));
+
+  const floatingLocalVideoLayout = useFloatingLocalVideoLayout({
+    ...props,
+    remoteParticipants: unpinnedParticipants,
+    maxRemoteVideoStreams: props.maxRemoteVideoStreams
+      ? props.maxRemoteVideoStreams - pinnedParticipantsWithVideoOnCount
+      : undefined
+  });
+
+  return {
+    gridParticipants: props.isScreenShareActive
+      ? []
+      : pinnedParticipants.length > 0
+      ? pinnedParticipants
+      : floatingLocalVideoLayout.gridParticipants,
+    horizontalGalleryParticipants: props.isScreenShareActive
+      ? pinnedParticipants.concat(floatingLocalVideoLayout.horizontalGalleryParticipants)
+      : pinnedParticipants.length > 0
+      ? floatingLocalVideoLayout.gridParticipants.concat(floatingLocalVideoLayout.horizontalGalleryParticipants)
+      : floatingLocalVideoLayout.horizontalGalleryParticipants
+  };
 };

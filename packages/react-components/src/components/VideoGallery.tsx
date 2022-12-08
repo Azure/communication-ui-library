@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { concatStyleSets, IStyle, mergeStyles, Stack } from '@fluentui/react';
-import React, { useCallback, useMemo, useRef } from 'react';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { GridLayoutStyles } from '.';
 import { useLocale } from '../localization';
 import { useTheme } from '../theming';
@@ -30,6 +30,7 @@ import { FloatingLocalVideoLayout } from './VideoGallery/FloatingLocalVideoLayou
 import { useIdentifiers } from '../identifiers';
 import { videoGalleryOuterDivStyle } from './styles/VideoGallery.styles';
 import { floatingLocalVideoTileStyle } from './VideoGallery/styles/FloatingLocalVideo.styles';
+import { PinnedParticipantsLayout } from './VideoGallery/PinnedParticipantsLayout';
 
 /**
  * @private
@@ -146,6 +147,11 @@ export interface VideoGalleryProps {
    * Camera control information for button to switch cameras.
    */
   localVideoCameraCycleButtonProps?: LocalVideoCameraCycleButtonProps;
+  /* @conditional-compile-remove(pinned-participants) */
+  /**
+   * List of pinned participant userIds
+   */
+  pinnedParticipants?: string[];
 }
 
 /**
@@ -187,6 +193,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   const containerWidth = _useContainerWidth(containerRef);
   const containerHeight = _useContainerHeight(containerRef);
   const isNarrow = containerWidth ? isNarrowWidth(containerWidth) : false;
+
+  const [pinnedParticipants, setPinnedParticipants] = useState(props.pinnedParticipants);
 
   /* @conditional-compile-remove(rooms) */
   const permissions = _usePermissions();
@@ -302,7 +310,21 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     : undefined;
 
   const videoGalleryLayout =
-    layout === 'floatingLocalVideo' ? (
+    pinnedParticipants && pinnedParticipants.length > 0 ? (
+      <PinnedParticipantsLayout
+        remoteParticipants={remoteParticipants}
+        pinnedParticipants={pinnedParticipants}
+        onRenderRemoteParticipant={onRenderRemoteVideoTile ?? defaultOnRenderVideoTile}
+        localVideoComponent={localVideoTile}
+        screenShareComponent={screenShareComponent}
+        showCameraSwitcherInLocalPreview={showCameraSwitcherInLocalPreview}
+        maxRemoteVideoStreams={maxRemoteVideoStreams}
+        dominantSpeakers={dominantSpeakers}
+        parentWidth={containerWidth}
+        parentHeight={containerHeight}
+        styles={styles}
+      />
+    ) : layout === 'floatingLocalVideo' ? (
       <FloatingLocalVideoLayout
         remoteParticipants={remoteParticipants}
         onRenderRemoteParticipant={onRenderRemoteVideoTile ?? defaultOnRenderVideoTile}
