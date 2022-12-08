@@ -150,7 +150,6 @@ class CallContext {
   public updateClientState(clientState: CallClientState): void {
     let call = this.callId ? clientState.calls[this.callId] : undefined;
     const latestEndedCall = clientState.callsEnded ? findLatestEndedCall(clientState.callsEnded) : undefined;
-    console.log(this.state);
     // As the state is transitioning to a new state, trigger appropriate callback events.
     const oldPage = this.state.page;
     /* @conditional-compile-remove(unsupported-browser) */
