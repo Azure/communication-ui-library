@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 /* @conditional-compile-remove(unsupported-browser) */
-import { IButtonStyles, Icon, Link, PrimaryButton, Stack, Text, Theme } from '@fluentui/react';
+import { Icon, Link, PrimaryButton, Stack, Text } from '@fluentui/react';
 /* @conditional-compile-remove(unsupported-browser) */
 import { _pxToRem } from '@internal/acs-ui-common';
 import React from 'react';
@@ -10,6 +10,7 @@ import { useTheme } from '../theming';
 /* @conditional-compile-remove(unsupported-browser) */
 import {
   containerStyles,
+  continueAnywayButtonStyles,
   iconStyles,
   linkTextStyles,
   mainTextStyles,
@@ -91,27 +92,4 @@ export const UnsupportedEnvironment = (props: UnsupportedEnvironmentProps): JSX.
   /* @conditional-compile-remove(unsupported-browser) */
   return <UnsupportedEnvironmentContainer {...props} />;
   return <></>;
-};
-
-const continueAnywayButtonStyles = (theme: Theme): IButtonStyles => {
-  return {
-    root: {
-      backgroundColor: theme.palette.white,
-      margin: '0.5rem',
-      borderColor: theme.palette.neutralLight,
-      boxShadow: theme.effects.elevation4
-    },
-    rootHovered: {
-      backgroundColor: theme.palette.neutralLighter,
-      borderColor: theme.palette.neutralLight
-    },
-    rootPressed: {
-      color: theme.palette.white,
-      backgroundColor: theme.palette.neutralLight,
-      borderColor: theme.palette.neutralLight
-    },
-    textContainer: {
-      color: theme.palette.black
-    }
-  };
 };
