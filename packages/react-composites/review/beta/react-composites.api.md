@@ -259,7 +259,7 @@ export interface CallAdapterSubscribers {
 export type CallAdapterUiState = {
     isLocalPreviewMicrophoneEnabled: boolean;
     page: CallCompositePage;
-    oldBrowserVersionOptIn?: boolean;
+    unsupportedBrowserVersionsAllowed?: boolean;
 };
 
 // @public
@@ -621,9 +621,9 @@ export interface CallWithChatAdapterUiState {
     // @beta
     fileUploads?: FileUploadsUiState;
     isLocalPreviewMicrophoneEnabled: boolean;
-    // @beta
-    oldBrowserVersionOptIn?: boolean;
     page: CallCompositePage;
+    // @beta
+    unsupportedBrowserVersionsAllowed?: boolean;
 }
 
 // @public

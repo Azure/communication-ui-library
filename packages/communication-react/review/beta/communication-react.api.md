@@ -271,7 +271,7 @@ export interface CallAdapterCallOperations {
     addParticipant(participant: PhoneNumberIdentifier, options?: AddPhoneNumberOptions): Promise<void>;
     // (undocumented)
     addParticipant(participant: CommunicationUserIdentifier): Promise<void>;
-    allowWithUnsupportedBrowserVersion(): void;
+    allowUnsupportedBrowserVersion(): void;
     createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void | CreateVideoStreamViewResult>;
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
     // @beta
@@ -361,7 +361,7 @@ export interface CallAdapterSubscribers {
 export type CallAdapterUiState = {
     isLocalPreviewMicrophoneEnabled: boolean;
     page: CallCompositePage;
-    oldBrowserVersionOptIn?: boolean;
+    unsupportedBrowserVersionsAllowed?: boolean;
 };
 
 // @public
@@ -731,7 +731,7 @@ export interface CallWithChatAdapterManagement {
     addParticipant(participant: PhoneNumberIdentifier, options?: AddPhoneNumberOptions): Promise<void>;
     // (undocumented)
     addParticipant(participant: CommunicationUserIdentifier): Promise<void>;
-    allowWithUnsupportedBrowserVersion(): void;
+    allowUnsupportedBrowserVersion(): void;
     askDevicePermission(constrain: PermissionConstraints): Promise<void>;
     // @beta (undocumented)
     cancelFileUpload: (id: string) => void;
@@ -865,9 +865,9 @@ export interface CallWithChatAdapterUiState {
     // @beta
     fileUploads?: FileUploadsUiState;
     isLocalPreviewMicrophoneEnabled: boolean;
-    // (undocumented)
-    oldBrowserVersionOptIn?: boolean;
     page: CallCompositePage;
+    // @beta
+    unsupportedBrowserVersionsAllowed?: boolean;
 }
 
 // @public
@@ -3095,9 +3095,9 @@ export const UnsupportedBrowserVersion: (props: UnsupportedBrowserVersionProps) 
 
 // @beta
 export interface UnsupportedBrowserVersionProps {
-    onClickContinue?: () => void;
+    onContinueClick?: () => void;
     onTroubleshootingClick?: () => void;
-    strings: UnsupportedBrowserVersionStrings;
+    strings?: UnsupportedBrowserVersionStrings;
 }
 
 // @beta
@@ -3110,7 +3110,7 @@ export interface UnsupportedBrowserVersionStrings {
 
 // @beta
 export type UnsupportedEnvironmentFeatures = {
-    unsupportedBrowserVersionContinue?: boolean;
+    unsupportedBrowserVersionAllowed?: boolean;
 };
 
 // @beta
