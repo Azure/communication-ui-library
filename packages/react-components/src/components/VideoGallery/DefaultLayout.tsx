@@ -9,7 +9,7 @@ import { isNarrowWidth } from '../utils/responsive';
 import { VideoGalleryStyles } from '../VideoGallery';
 import { rootLayoutStyle } from './styles/DefaultLayout.styles';
 import { VideoGalleryResponsiveHorizontalGallery } from './VideoGalleryResponsiveHorizontalGallery';
-import { useFloatingLocalVideoLayout } from './videoGalleryUtils';
+import { useFloatingLocalVideoLayout } from './utils/videoGalleryLayoutUtils';
 
 /**
  * Props for {@link DefaultLayout}.

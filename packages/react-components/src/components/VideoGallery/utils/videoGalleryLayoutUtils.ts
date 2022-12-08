@@ -2,8 +2,8 @@
 // Licensed under the MIT license.
 
 import { useCallback, useRef } from 'react';
-import { smartDominantSpeakerParticipants } from '../../gallery';
-import { VideoGalleryParticipant, VideoGalleryRemoteParticipant } from '../../types';
+import { smartDominantSpeakerParticipants } from '../../../gallery';
+import { VideoGalleryParticipant, VideoGalleryRemoteParticipant } from '../../../types';
 
 interface UseFloatingLocalVideoLayoutArgs {
   remoteParticipants: VideoGalleryRemoteParticipant[];

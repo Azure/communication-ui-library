@@ -17,7 +17,7 @@ import { VideoGalleryStyles } from '../VideoGallery';
 import { FloatingLocalVideo } from './FloatingLocalVideo';
 import { innerLayoutStyle, layerHostStyle, rootLayoutStyle } from './styles/FloatingLocalVideoLayout.styles';
 import { VideoGalleryResponsiveHorizontalGallery } from './VideoGalleryResponsiveHorizontalGallery';
-import { useFloatingLocalVideoLayout } from './videoGalleryUtils';
+import { useFloatingLocalVideoLayout } from './utils/videoGalleryLayoutUtils';
 
 /**
  * Props for {@link FloatingLocalVideoLayout}.
