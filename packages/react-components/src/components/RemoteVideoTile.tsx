@@ -1,8 +1,21 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+<<<<<<< Updated upstream
 import React, { useMemo } from 'react';
 import { CreateVideoStreamViewResult, OnRenderAvatarCallback, ParticipantState, VideoStreamOptions } from '../types';
+=======
+import { IContextualMenuProps, Layer, Stack } from '@fluentui/react';
+import React, { useMemo } from 'react';
+import {
+  CreateVideoStreamViewResult,
+  OnRenderAvatarCallback,
+  ParticipantState,
+  VideoGalleryRemoteParticipant,
+  VideoStreamOptions
+} from '../types';
+import { _DrawerMenu, _DrawerMenuItemProps } from './Drawer';
+>>>>>>> Stashed changes
 import { StreamMedia } from './StreamMedia';
 import {
   useRemoteVideoStreamLifecycleMaintainer,
@@ -38,6 +51,11 @@ export const _RemoteVideoTile = React.memo(
     showLabel?: boolean;
     personaMinSize?: number;
     participantState?: ParticipantState;
+<<<<<<< Updated upstream
+=======
+    showRemoteVideoTileContextualMenu?: boolean;
+    hostId?: string;
+>>>>>>> Stashed changes
   }) => {
     const {
       isAvailable,
@@ -98,7 +116,10 @@ export const _RemoteVideoTile = React.memo(
       );
     }, [renderElement, showLoadingIndicator]);
 
+    const [drawerMenuItems, setDrawerMenuItems] = React.useState<_DrawerMenuItemProps[]>([]);
+
     return (
+<<<<<<< Updated upstream
       <VideoTile
         key={userId}
         userId={userId}
@@ -114,6 +135,56 @@ export const _RemoteVideoTile = React.memo(
         /* @conditional-compile-remove(PSTN-calls) */
         participantState={props.participantState}
       />
+=======
+      <>
+        <VideoTile
+          key={userId}
+          userId={userId}
+          renderElement={renderVideoStreamElement}
+          displayName={remoteParticipant.displayName}
+          onRenderPlaceholder={onRenderAvatar}
+          isMuted={remoteParticipant.isMuted}
+          isSpeaking={remoteParticipant.isSpeaking}
+          showMuteIndicator={showMuteIndicator}
+          personaMinSize={props.personaMinSize}
+          showLabel={props.showLabel}
+          /* @conditional-compile-remove(one-to-n-calling) */
+          /* @conditional-compile-remove(PSTN-calls) */
+          participantState={participantState}
+          {...videoTileContextualMenuProps}
+          onLongTouch={() => {
+            console.log('long touch');
+            setDrawerMenuItems([
+              {
+                itemKey: 'fit',
+                text: 'Fit to screen',
+                onItemClick: () => console.log('fit to screen')
+              }
+            ]);
+          }}
+        />
+        {drawerMenuItems.length > 0 && (
+          <Layer hostId={props.hostId} style={{ zIndex: 2, position: 'absolute' }}>
+            <Stack
+              styles={{
+                root: {
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  width: '100%',
+                  height: '100%',
+                  // Any zIndex > 0 will work because this is the only absolutely
+                  // positioned element in the container.
+                  zIndex: 2
+                }
+              }}
+            >
+              <_DrawerMenu onLightDismiss={() => setDrawerMenuItems([])} items={drawerMenuItems} />
+            </Stack>
+          </Layer>
+        )}
+      </>
+>>>>>>> Stashed changes
     );
   }
 );
