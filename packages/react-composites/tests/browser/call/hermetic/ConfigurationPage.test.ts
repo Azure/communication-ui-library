@@ -50,10 +50,7 @@ test.describe('Call Composite E2E Configuration Screen Tests', () => {
     expect(await stableScreenshot(page)).toMatchSnapshot(`call-configuration-page-no-devices-desktop.png`);
   });
 
-  test.only('Configuration screen mobile buttons disabled because no devices', async ({
-    page,
-    serverUrl
-  }, testInfo) => {
+  test('Configuration screen mobile buttons disabled because no devices', async ({ page, serverUrl }, testInfo) => {
     test.skip(isTestProfileDesktop(testInfo));
     const state = defaultMockConfigurationPageState();
     state.devices = deviceManagerWithNoDevicesState();
