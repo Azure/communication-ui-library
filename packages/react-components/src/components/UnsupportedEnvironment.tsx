@@ -75,7 +75,11 @@ const UnsupportedEnvironmentContainer = (props: UnsupportedEnvironmentProps): JS
         </Link>
       )}
       {onContinueClick && (
-        <DefaultButton styles={continueAnywayButtonStyles(theme)} onClick={onContinueClick}>
+        <DefaultButton
+          data-ui-id="allowUnsupportedBrowserButton"
+          styles={continueAnywayButtonStyles(theme)}
+          onClick={onContinueClick}
+        >
           {strings?.continueAnywayButtonText}
         </DefaultButton>
       )}
