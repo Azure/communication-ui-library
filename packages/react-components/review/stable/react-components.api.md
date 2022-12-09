@@ -1170,21 +1170,21 @@ export type ReadReceiptsBySenderId = {
 // @internal
 export const _RemoteVideoTile: React_2.MemoExoticComponent<(props: {
     userId: string;
+    remoteParticipant: VideoGalleryRemoteParticipant;
     onCreateRemoteStreamView?: ((userId: string, options?: VideoStreamOptions | undefined) => Promise<void | CreateVideoStreamViewResult>) | undefined;
     onDisposeRemoteStreamView?: ((userId: string) => Promise<void>) | undefined;
     isAvailable?: boolean | undefined;
     isReceiving?: boolean | undefined;
-    isMuted?: boolean | undefined;
-    isSpeaking?: boolean | undefined;
     isScreenSharingOn?: boolean | undefined;
     renderElement?: HTMLElement | undefined;
-    displayName?: string | undefined;
     remoteVideoViewOptions?: VideoStreamOptions | undefined;
     onRenderAvatar?: OnRenderAvatarCallback | undefined;
     showMuteIndicator?: boolean | undefined;
     showLabel?: boolean | undefined;
     personaMinSize?: number | undefined;
+    strings?: VideoGalleryStrings | undefined;
     participantState?: ParticipantState | undefined;
+    showRemoteVideoTileContextualMenu?: boolean | undefined;
 }) => JSX.Element>;
 
 // @public
