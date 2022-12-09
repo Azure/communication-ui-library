@@ -15,7 +15,8 @@ import {
   iconStyles,
   linkTextStyles,
   mainTextStyles,
-  secondaryTextStyles
+  secondaryTextStyles,
+  testContainerStyles
 } from './styles/UnsupportedEnvironment.styles';
 
 /**
@@ -28,7 +29,7 @@ export interface UnsupportedEnvironmentStrings {
   secondaryText: string;
   /** String to display in the text for the help link */
   moreHelpLinkText: string;
-  /** String for continue without updating button */
+  /** String for continue anyway button */
   continueAnywayButtonText?: string;
 }
 
@@ -64,8 +65,10 @@ const UnsupportedEnvironmentContainer = (props: UnsupportedEnvironmentProps): JS
         iconName="UnsupportedEnvironmentWarning"
         data-ui-id="unsupported-environment-icon"
       ></Icon>
-      <Text styles={mainTextStyles}>{strings?.primaryText}</Text>
-      <Text styles={secondaryTextStyles}>{strings?.secondaryText}</Text>
+      <Stack styles={testContainerStyles}>
+        <Text styles={mainTextStyles}>{strings?.primaryText}</Text>
+        <Text styles={secondaryTextStyles}>{strings?.secondaryText}</Text>
+      </Stack>
       {onTroubleshootingClick && (
         <Link styles={linkTextStyles} onClick={onTroubleshootingClick} data-ui-id="unsupported-environment-link">
           {strings?.moreHelpLinkText}

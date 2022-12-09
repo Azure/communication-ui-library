@@ -25,8 +25,17 @@ export const secondaryTextStyles: ITextStyles = {
   root: {
     margin: 'auto',
     fontWeight: 400,
-    paddingBottom: '0.5rem',
     textAlign: 'center'
+  }
+};
+
+/**
+ * @internal
+ */
+export const testContainerStyles: IStackStyles = {
+  root: {
+    padding: '1rem',
+    margin: 'auto'
   }
 };
 
@@ -38,7 +47,7 @@ export const linkTextStyles: ILinkStyles = {
     margin: 'auto',
     fontWeight: 600,
     textAlign: 'center',
-    padding: '0.5rem'
+    padding: '1rem'
   }
 };
 
@@ -68,7 +77,7 @@ export const continueAnywayButtonStyles = (theme: Theme): IButtonStyles => {
   return {
     root: {
       backgroundColor: '#C4314B',
-      margin: '0.5rem',
+      margin: '1rem',
       borderColor: theme.palette.neutralLight,
       padding: '1rem',
       color: theme.palette.white
