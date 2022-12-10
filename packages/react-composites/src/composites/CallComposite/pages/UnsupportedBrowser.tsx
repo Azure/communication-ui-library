@@ -36,9 +36,9 @@ export const UnsupportedBrowserPage = (props: UnsupportedBrowserPageProps): JSX.
   const onContinueClick =
     unsupportedEnvironmentFeature === true
       ? undefined
-      : unsupportedEnvironmentFeature === false || undefined
+      : unsupportedEnvironmentFeature === false || unsupportedEnvironmentFeature === undefined
       ? undefined
-      : unsupportedEnvironmentFeature?.unsupportedBrowserVersionAllowed
+      : unsupportedEnvironmentFeature.unsupportedBrowserVersionAllowed
       ? () => {
           adapter.allowUnsupportedBrowserVersion();
         }

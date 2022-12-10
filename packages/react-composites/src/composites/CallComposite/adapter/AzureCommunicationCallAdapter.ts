@@ -154,13 +154,12 @@ class CallContext {
     const oldPage = this.state.page;
     /* @conditional-compile-remove(unsupported-browser) */
     const environmentInfo = this.state.environmentInfo;
-    const newPage = getCallCompositePage(
-      call,
-      latestEndedCall,
+    const newPage = getCallCompositePage(call, latestEndedCall, {
       /* @conditional-compile-remove(unsupported-browser) */ environmentInfo,
-      /* @conditional-compile-remove(unsupported-browser) */ this.state.features,
-      /* @conditional-compile-remove(unsupported-browser) */ this.state.unsupportedBrowserVersionsAllowed
-    );
+      /* @conditional-compile-remove(unsupported-browser) */ features: this.state.features,
+      /* @conditional-compile-remove(unsupported-browser) */ unsupportedBrowserVersionOptedIn:
+        this.state.unsupportedBrowserVersionsAllowed
+    });
     if (!IsCallEndedPage(oldPage) && IsCallEndedPage(newPage)) {
       this.emitter.emit('callEnded', { callId: this.callId });
       // Reset the callId to undefined as the call has ended.
@@ -181,6 +180,9 @@ class CallContext {
         latestErrors: clientState.latestErrors
       });
     }
+  }
+  public setAllowedUnsupportedBrowser(): void {
+    this.setState({ ...this.state, unsupportedBrowserVersionsAllowed: true });
   }
 }
 
@@ -511,8 +513,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
 
   /* @conditional-compile-remove(unsupported-browser) */
   public allowUnsupportedBrowserVersion(): void {
-    this.context.setState({ ...this.context.getState(), unsupportedBrowserVersionsAllowed: true });
-    return this.context.updateClientState(this.callClient.getState());
+    this.context.setAllowedUnsupportedBrowser();
   }
 
   public startCall(
