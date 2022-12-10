@@ -210,7 +210,10 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   const isNarrow = containerWidth ? isNarrowWidth(containerWidth) : false;
 
   /* @conditional-compile-remove(pinned-participants) */
-  const [pinnedParticipants, _] = useState(props.pinnedParticipants);
+  const [pinnedParticipantsState, _] = useState<string[]>([]);
+  /* @conditional-compile-remove(pinned-participants) */
+  // Use pinnedParticipants from props but if it is not defined use the maintained state of pinned participants
+  const pinnedParticipants = props.pinnedParticipants ? props.pinnedParticipants : pinnedParticipantsState;
 
   /* @conditional-compile-remove(rooms) */
   const permissions = _usePermissions();
