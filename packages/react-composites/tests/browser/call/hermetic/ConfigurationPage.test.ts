@@ -47,7 +47,7 @@ test.describe('Call Composite E2E Configuration Screen Tests', () => {
     const state = defaultMockConfigurationPageState();
     state.devices = deviceManagerWithNoDevicesState();
     await page.goto(buildUrlWithMockAdapter(serverUrl, state));
-    expect(await stableScreenshot(page)).toMatchSnapshot(`call-configuration-page-no-devices.png`);
+    expect(await stableScreenshot(page)).toMatchSnapshot(`desktop-call-configuration-page-no-devices.png`);
   });
 
   test('Configuration screen mobile buttons disabled because no devices', async ({ page, serverUrl }, testInfo) => {
@@ -59,7 +59,7 @@ test.describe('Call Composite E2E Configuration Screen Tests', () => {
 
     await waitForSelector(page, dataUiId(IDS.configurationScreenDevicesButton));
 
-    expect(await stableScreenshot(page)).toMatchSnapshot(`call-configuration-page-no-devices.png`);
+    expect(await stableScreenshot(page)).toMatchSnapshot(`mobile-call-configuration-page-no-devices.png`);
   });
 });
 
