@@ -153,13 +153,16 @@ class CallContext {
     // As the state is transitioning to a new state, trigger appropriate callback events.
     const oldPage = this.state.page;
     /* @conditional-compile-remove(unsupported-browser) */
-    const environmentInfo = this.state.environmentInfo;
-    const newPage = getCallCompositePage(call, latestEndedCall, {
-      /* @conditional-compile-remove(unsupported-browser) */ environmentInfo,
-      /* @conditional-compile-remove(unsupported-browser) */ features: this.state.features,
-      /* @conditional-compile-remove(unsupported-browser) */ unsupportedBrowserVersionOptedIn:
-        this.state.unsupportedBrowserVersionsAllowed
-    });
+    const environmentInfo = {
+      environmentInfo: this.state.environmentInfo,
+      features: this.state.features,
+      unsupportedBrowserVersionOptedIn: this.state.unsupportedBrowserVersionsAllowed
+    };
+    const newPage = getCallCompositePage(
+      call,
+      latestEndedCall,
+      /* @conditional-compile-remove(unsupported-browser) */ environmentInfo
+    );
     if (!IsCallEndedPage(oldPage) && IsCallEndedPage(newPage)) {
       this.emitter.emit('callEnded', { callId: this.callId });
       // Reset the callId to undefined as the call has ended.
@@ -181,6 +184,8 @@ class CallContext {
       });
     }
   }
+
+  /* @conditional-compile-remove(unsupported-browser) */
   public setAllowedUnsupportedBrowser(): void {
     this.setState({ ...this.state, unsupportedBrowserVersionsAllowed: true });
   }
