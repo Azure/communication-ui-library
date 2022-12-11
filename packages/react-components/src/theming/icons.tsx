@@ -25,6 +25,8 @@ import {
   MoreHorizontal20Filled,
   MoreHorizontal20Regular,
   People20Filled,
+  Pin20Regular,
+  PinOff20Regular,
   Settings20Filled,
   Send20Filled,
   Send20Regular,
@@ -272,5 +274,9 @@ export const DEFAULT_COMPONENT_ICONS = {
   /* @conditional-compile-remove(pinned-participants) */
   VideoTileScaleFit: <ScaleFit20Regular />,
   /* @conditional-compile-remove(pinned-participants) */
-  VideoTileScaleFill: <ScaleFill20Regular />
+  VideoTileScaleFill: <ScaleFill20Regular />,
+  /* @conditional-compile-remove(pinned-participants) */
+  PinParticipant: <Pin20Regular />,
+  /* @conditional-compile-remove(pinned-participants) */
+  UnpinParticipant: <PinOff20Regular />
 };

@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IContextualMenuProps } from '@fluentui/react';
+import { IContextualMenuItem, IContextualMenuProps } from '@fluentui/react';
 import React, { useMemo } from 'react';
 import {
   CreateVideoStreamViewResult,
@@ -47,7 +47,8 @@ export const _RemoteVideoTile = React.memo(
     strings?: VideoGalleryStrings;
     participantState?: ParticipantState;
     showRemoteVideoTileContextualMenu?: boolean;
-    contextualMenu?: IContextualMenuProps;
+    onPinParticipant?: (userId: string) => void;
+    onUnpinParticipant?: (userId: string) => void;
     isPinned?: boolean;
   }) => {
     const {
@@ -63,7 +64,10 @@ export const _RemoteVideoTile = React.memo(
       showMuteIndicator,
       remoteParticipant,
       participantState,
-      showRemoteVideoTileContextualMenu = true
+      showRemoteVideoTileContextualMenu = true,
+      isPinned,
+      onPinParticipant,
+      onUnpinParticipant
     } = props;
 
     const remoteVideoStreamProps: RemoteVideoStreamLifecycleMaintainerProps = useMemo(
@@ -100,6 +104,31 @@ export const _RemoteVideoTile = React.memo(
       /* @conditional-compile-remove(pinned-participants) */
       strings: { ...props.strings }
     });
+
+    /* @conditional-compile-remove(pinned-participants) */
+    const menuItems: IContextualMenuItem[] = [];
+    /* @conditional-compile-remove(pinned-participants) */
+    if (isPinned) {
+      menuItems.push({
+        key: 'unpin',
+        text: props.strings?.unpinParticipantForMe ?? '',
+        iconProps: { iconName: 'UnpinParticipant', styles: { root: { lineHeight: '1rem' } } },
+        onClick: () => onUnpinParticipant?.(userId),
+        'data-ui-id': 'video-tile-unpin-participant-button'
+      });
+    } else {
+      menuItems.push({
+        key: 'pin',
+        text: props.strings?.pinParticipantForMe ?? '',
+        iconProps: { iconName: 'PinParticipant', styles: { root: { lineHeight: '1rem' } } },
+        onClick: () => onPinParticipant?.(userId),
+        'data-ui-id': 'video-tile-pin-participant-button'
+      });
+    }
+
+    if (contextualMenuProps) {
+      contextualMenuProps.items = menuItems.concat(contextualMenuProps.items);
+    }
 
     const videoTileContextualMenuProps = useMemo(() => {
       if (!showRemoteVideoTileContextualMenu) {
@@ -138,7 +167,11 @@ export const _RemoteVideoTile = React.memo(
         /* @conditional-compile-remove(one-to-n-calling) */
         /* @conditional-compile-remove(PSTN-calls) */
         participantState={participantState}
-        {...videoTileContextualMenuProps}
+        contextualMenu={
+          videoTileContextualMenuProps.contextualMenu
+            ? videoTileContextualMenuProps.contextualMenu
+            : { items: menuItems }
+        }
         isPinned={props.isPinned}
       />
     );

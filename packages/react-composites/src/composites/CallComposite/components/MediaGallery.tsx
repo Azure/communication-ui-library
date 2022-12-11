@@ -77,8 +77,6 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     [props.onFetchAvatarPersonaData]
   );
 
-  const pinnedParticipants = [];
-
   useLocalVideoStartTrigger(!!props.isVideoStreamOn);
   const VideoGalleryMemoized = useMemo(() => {
     return (
@@ -93,8 +91,6 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
         onRenderAvatar={onRenderAvatar}
         /* @conditional-compile-remove(pinned-participants) */
         showRemoteVideoTileContextualMenu={!props.isMobile}
-        /* @conditional-compile-remove(pinned-participants) */
-        pinnedParticipants={pinnedParticipants}
       />
     );
   }, [videoGalleryProps, props.isMobile, onRenderAvatar, cameraSwitcherProps]);

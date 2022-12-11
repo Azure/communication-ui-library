@@ -2,8 +2,6 @@
 // Licensed under the MIT license.
 
 import { concatStyleSets, IStyle, mergeStyles, Stack } from '@fluentui/react';
-/* @conditional-compile-remove(pinned-participants) */
-import { IContextualMenuItem } from '@fluentui/react';
 import React, { useCallback, useMemo, useRef } from 'react';
 import { GridLayoutStyles } from '.';
 import { useLocale } from '../localization';
@@ -72,6 +70,12 @@ export interface VideoGalleryStrings {
   /* @conditional-compile-remove(pinned-participants) */
   /** Menu text shown in Video Tile contextual menu for setting a remote participants video to fill the frame */
   fillRemoteParticipantFrame: string;
+  /* @conditional-compile-remove(pinned-participants) */
+  /** Menu text shown in Video Tile contextual menu for pinning a remote participant's video tile */
+  pinParticipantForMe: string;
+  /* @conditional-compile-remove(pinned-participants) */
+  /** Menu text shown in Video Tile contextual menu for setting a remote participant's video tile */
+  unpinParticipantForMe: string;
 }
 
 /**
@@ -304,37 +308,17 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       const remoteVideoStream = participant.videoStream;
 
       /* @conditional-compile-remove(pinned-participants) */
-      const menuItems: IContextualMenuItem[] = [];
-      /* @conditional-compile-remove(pinned-participants) */
       const isPinned = pinnedParticipants?.includes(participant.userId);
       /* @conditional-compile-remove(pinned-participants) */
-      if (pinnedParticipants) {
-        if (isPinned) {
-          menuItems.push({
-            key: 'unpin',
-            text: 'Unpin',
-            onClick: () => {
-              if (pinnedParticipants) {
-                setPinnedParticipantsState(pinnedParticipants.filter((p) => p !== participant.userId));
-              }
-              onUnpinParticipant?.(participant.userId);
-            },
-            'data-ui-id': 'video-tile-unpin-participant-button'
-          });
-        } else {
-          menuItems.push({
-            key: 'pin',
-            text: 'Pin',
-            onClick: () => {
-              if (pinnedParticipants && !pinnedParticipants.includes(participant.userId)) {
-                setPinnedParticipantsState(pinnedParticipants.concat(participant.userId));
-              }
-              onPinParticipant?.(participant.userId);
-            },
-            'data-ui-id': 'video-tile-pin-participant-button'
-          });
+      const defaultPinParticipant = (userId: string) => {
+        if (!pinnedParticipantsState.includes(participant.userId)) {
+          setPinnedParticipantsState(pinnedParticipantsState.concat(userId));
         }
-      }
+      };
+      /* @conditional-compile-remove(pinned-participants) */
+      const defaultUnpinParticipant = (userId: string) => {
+        setPinnedParticipantsState(pinnedParticipantsState.filter((p) => p !== userId));
+      };
 
       return (
         <_RemoteVideoTile
@@ -355,7 +339,15 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           /* @conditional-compile-remove(pinned-participants) */
           showRemoteVideoTileContextualMenu={props.showRemoteVideoTileContextualMenu}
           /* @conditional-compile-remove(pinned-participants) */
-          contextualMenu={menuItems.length > 0 ? { items: menuItems } : undefined}
+          onPinParticipant={(userId: string) => {
+            defaultPinParticipant(userId);
+            onPinParticipant?.(userId);
+          }}
+          /* @conditional-compile-remove(pinned-participants) */
+          onUnpinParticipant={(userId: string) => {
+            defaultUnpinParticipant(userId);
+            onUnpinParticipant?.(userId);
+          }}
           /* @conditional-compile-remove(pinned-participants) */
           isPinned={isPinned}
         />
@@ -393,8 +385,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   const screenShareComponent = remoteScreenShareComponent
     ? remoteScreenShareComponent
     : localParticipant.isScreenSharingOn
-      ? localScreenShareStreamComponent
-      : undefined;
+    ? localScreenShareStreamComponent
+    : undefined;
 
   const layoutProps = useMemo(
     () => ({
