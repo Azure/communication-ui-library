@@ -11,7 +11,7 @@ import {
 } from '@fluentui/react';
 import { _formatString } from '@internal/acs-ui-common';
 import copy from 'copy-to-clipboard';
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import {
   ParticipantList,
   ParticipantListProps,
@@ -29,6 +29,7 @@ import { _HighContrastAwareIcon } from './HighContrastAwareIcon';
 import { _preventDismissOnEvent as preventDismissOnEvent } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(rooms) */
 import { _usePermissions } from '../permissions/PermissionsProvider';
+import { Announcer } from './Announcer';
 
 /**
  * Styles for the {@link ParticipantsButton} menu.
@@ -82,6 +83,10 @@ export interface ParticipantsButtonStrings {
    * Label of menu button to mute all participants
    */
   muteAllButtonLabel: string;
+  /**
+   * Narrator announcement for when the invite link has been copied by the user to the clipboard
+   */
+  copyInviteLinkActionedAriaLabel: string;
 }
 
 /**
@@ -178,6 +183,8 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
 
   const disabled = props.disabled;
 
+  const [copyInviteLinkAnnouncerStrings, setCopyInviteLinkAnnouncerStrings] = useState<string>('');
+
   const onRenderPeopleIcon = (): JSX.Element => (
     <_HighContrastAwareIcon disabled={disabled} iconName="ControlButtonParticipants" />
   );
@@ -189,6 +196,20 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
       onMuteAll();
     }
   }, [onMuteAll]);
+
+  /**
+   * sets the announcement string for when the link is copied.
+   */
+  const toggleAnnouncerString = useCallback(() => {
+    setCopyInviteLinkAnnouncerStrings(strings.copyInviteLinkActionedAriaLabel);
+    /**
+     * Clears the announcer string after the user clicks the
+     * copyInviteLink button allowing it to be re-announced.
+     */
+    setTimeout(() => {
+      setCopyInviteLinkAnnouncerStrings('');
+    }, 3000);
+  }, []);
 
   const defaultParticipantList = useCallback(() => {
     return (
@@ -313,7 +334,10 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
         title: strings.copyInviteLinkButtonLabel,
         itemProps: { styles: styles?.menuStyles?.menuItemStyles },
         iconProps: { iconName: 'Link' },
-        onClick: onCopyCallback
+        onClick: () => {
+          onCopyCallback();
+          toggleAnnouncerString();
+        }
       });
     }
 
@@ -333,14 +357,17 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
   ]);
 
   return (
-    <ControlBarButton
-      {...props}
-      disabled={disabled}
-      menuProps={props.menuProps ?? defaultMenuProps}
-      menuIconProps={{ hidden: true }}
-      onRenderIcon={onRenderIcon ?? onRenderPeopleIcon}
-      strings={strings}
-      labelKey={props.labelKey ?? 'participantsButtonLabel'}
-    />
+    <>
+      <Announcer announcementString={copyInviteLinkAnnouncerStrings} ariaLive={'polite'} />
+      <ControlBarButton
+        {...props}
+        disabled={disabled}
+        menuProps={props.menuProps ?? defaultMenuProps}
+        menuIconProps={{ hidden: true }}
+        onRenderIcon={onRenderIcon ?? onRenderPeopleIcon}
+        strings={strings}
+        labelKey={props.labelKey ?? 'participantsButtonLabel'}
+      />
+    </>
   );
 };
