@@ -163,6 +163,18 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps & Cont
       <Stack.Item grow>
         <CallAdapterProvider adapter={props.callAdapter}>
           <Stack horizontalAlign="center">
+            {/*
+              hidden button to set first tab keypress focus on ControlBar on initial render. 
+              Unable to set initial focus on Microphone as it causes tooltip to render. On mount, button is
+              autofocused then immediately hidden
+            */}
+            <ControlBarButton
+              autoFocus
+              ariaHidden={true}
+              data-ui-id={'call-with-chat-autofocus-hidden-button'}
+              styles={hiddenAutoFocusButtonStyles}
+              tabIndex={-1}
+            />
             <Stack.Item>
               {/*
                   Note: We use the layout="horizontal" instead of dockedBottom because of how we position the
@@ -172,18 +184,6 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps & Cont
                   occluding some of its content.
                 */}
               <ControlBar layout="horizontal" styles={centerContainerStyles}>
-                {/*
-                  hidden button to set first tab keypress focus on ControlBar on initial render. 
-                  Unable to set initial focus on Microphone as it causes tooltip to render. On mount, button is
-                  autofocused then immediately hidden
-                */}
-                <ControlBarButton
-                  autoFocus
-                  ariaHidden={true}
-                  data-ui-id={'call-with-chat-autofocus-hidden-button'}
-                  styles={hiddenAutoFocusButtonStyles}
-                  tabIndex={-1}
-                />
                 {isEnabled(options.microphoneButton) && (
                   <Microphone
                     displayType={options.displayType}
