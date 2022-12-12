@@ -333,6 +333,11 @@ export interface CallWithChatAdapterManagement {
    * @beta
    */
   sendDtmfTone: (dtmfTone: DtmfTone) => Promise<void>;
+  /* @conditional-compile-remove(unsupported-browser) */
+  /**
+   * Continues into a call when the browser version is not supported.
+   */
+  allowUnsupportedBrowserVersion(): void;
 }
 
 /**

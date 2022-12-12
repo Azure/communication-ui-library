@@ -2,17 +2,20 @@
 // Licensed under the MIT license.
 
 /* @conditional-compile-remove(unsupported-browser) */
-import { Icon, Link, Stack, Text } from '@fluentui/react';
+import { DefaultButton, Icon, Link, Stack, Text } from '@fluentui/react';
 /* @conditional-compile-remove(unsupported-browser) */
 import { _pxToRem } from '@internal/acs-ui-common';
 import React from 'react';
 /* @conditional-compile-remove(unsupported-browser) */
+import { useTheme } from '../theming';
+/* @conditional-compile-remove(unsupported-browser) */
 import {
   containerStyles,
-  iconStyles,
+  continueAnywayButtonStyles,
   linkTextStyles,
   mainTextStyles,
-  secondaryTextStyles
+  secondaryTextStyles,
+  testContainerStyles
 } from './styles/UnsupportedEnvironment.styles';
 
 /**
@@ -25,6 +28,8 @@ export interface UnsupportedEnvironmentStrings {
   secondaryText: string;
   /** String to display in the text for the help link */
   moreHelpLinkText: string;
+  /** String for continue anyway button */
+  continueAnywayButtonText?: string;
 }
 
 /**
@@ -33,34 +38,41 @@ export interface UnsupportedEnvironmentStrings {
  * @private
  */
 export interface UnsupportedEnvironmentProps {
-  /** Handler to perform a action when the help link is actioned */
+  /**
+   * Handler to perform a action when the help link is actioned
+   */
   onTroubleshootingClick?: () => void;
-  /** String overrides for the component */
-  strings: UnsupportedEnvironmentStrings;
+  /**
+   * String overrides for the component
+   */
+  strings?: UnsupportedEnvironmentStrings;
+  /**
+   * CallBack for the continue anyay button. Use this as a mechanism to allow users into
+   * a call with a unsupported browser version.
+   */
+  onContinueClick?: () => void;
 }
 
 /* @conditional-compile-remove(unsupported-browser) */
 const UnsupportedEnvironmentContainer = (props: UnsupportedEnvironmentProps): JSX.Element => {
-  const { onTroubleshootingClick, strings } = props;
+  const { onTroubleshootingClick, strings, onContinueClick } = props;
+  const theme = useTheme();
   return (
-    <Stack styles={containerStyles}>
-      <Icon
-        styles={iconStyles}
-        iconName="UnsupportedEnvironmentWarning"
-        data-ui-id="unsupported-environment-icon"
-      ></Icon>
-      <Text styles={mainTextStyles}>{strings.primaryText}</Text>
-      <Text styles={secondaryTextStyles}>{strings.secondaryText}</Text>
+    <Stack styles={containerStyles} tokens={{ childrenGap: '2rem' }}>
+      <Icon iconName="UnsupportedEnvironmentWarning" data-ui-id="unsupported-environment-icon"></Icon>
+      <Stack styles={testContainerStyles} tokens={{ childrenGap: '0.25rem' }}>
+        <Text styles={mainTextStyles}>{strings?.primaryText}</Text>
+        <Text styles={secondaryTextStyles}>{strings?.secondaryText}</Text>
+      </Stack>
       {onTroubleshootingClick && (
-        <Link
-          styles={linkTextStyles}
-          onClick={() => {
-            onTroubleshootingClick();
-          }}
-          data-ui-id="unsupported-environment-link"
-        >
-          {strings.moreHelpLinkText}
+        <Link styles={linkTextStyles} onClick={onTroubleshootingClick} data-ui-id="unsupported-environment-link">
+          {strings?.moreHelpLinkText}
         </Link>
+      )}
+      {onContinueClick && (
+        <DefaultButton styles={continueAnywayButtonStyles(theme)} onClick={onContinueClick}>
+          {strings?.continueAnywayButtonText}
+        </DefaultButton>
       )}
     </Stack>
   );
