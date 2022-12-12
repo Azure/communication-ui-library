@@ -41,6 +41,7 @@ export const ConfigurationpageCameraDropdown = (props: ConfigurationpageCameraDr
   /* @conditional-compile-remove(call-readiness) */
   const cameraBlockedDropdown = (
     <_DevicePermissionDropdown
+      {...props.dropdownProps}
       styles={dropDownStyles(theme)}
       constrain={{ video: true, audio: false }}
       strings={devicePermissionDropdownStringsCamera}
@@ -48,7 +49,6 @@ export const ConfigurationpageCameraDropdown = (props: ConfigurationpageCameraDr
         <CallCompositeIcon iconName="ControlButtonCameraOn" style={{ height: '1.25rem', marginRight: '0.625rem' }} />
       }
       onClick={props.onClickEnableDevicePermission}
-      {...props.dropdownProps}
     />
   );
 

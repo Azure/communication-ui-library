@@ -551,6 +551,9 @@ export interface CallCompositeStrings {
     mutedMessage: string;
     networkReconnectMoreDetails: string;
     networkReconnectTitle: string;
+    noCamerasLabel: string;
+    noMicrophonesLabel: string;
+    noSpeakersLabel: string;
     openDialpadButtonLabel: string;
     openDtmfDialpadLabel: string;
     outboundCallingNoticeString: string;
