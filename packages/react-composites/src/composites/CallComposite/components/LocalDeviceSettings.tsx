@@ -102,6 +102,9 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
   const defaultPlaceHolder = locale.strings.call.defaultPlaceHolder;
   const cameraLabel = locale.strings.call.cameraLabel;
   const soundLabel = locale.strings.call.soundLabel;
+  const noSpeakersLabel = locale.strings.call.noSpeakersLabel;
+  const noCameraLabel = locale.strings.call.noCamerasLabel;
+  const noMicLabel = locale.strings.call.noMicrophonesLabel;
 
   const cameraPermissionGranted = props.cameraPermissionGranted;
   const micPermissionGranted = props.microphonePermissionGranted;
@@ -131,14 +134,18 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
   /* @conditional-compile-remove(call-readiness) */
   const dropdownProps = usePropsFor(_DevicePermissionDropdown);
 
+  const hasCameras = props.cameras.length > 0;
+  const hasMicrophones = props.microphones.length > 0;
+  const hasSpeakers = props.speakers.length > 0;
+
   const cameraGrantedDropdown = (
     <Dropdown
       data-ui-id="call-composite-local-camera-settings"
       aria-labelledby={'call-composite-local-camera-settings-label'}
-      placeholder={defaultPlaceHolder}
+      placeholder={hasCameras ? defaultPlaceHolder : noCameraLabel}
       options={cameraPermissionGranted ? getDropDownList(props.cameras) : [{ key: 'deniedOrUnknown', text: '' }]}
       styles={dropDownStyles(theme)}
-      disabled={!cameraPermissionGranted}
+      disabled={!cameraPermissionGranted || !hasCameras}
       errorMessage={
         props.cameraPermissionGranted === undefined || props.cameraPermissionGranted
           ? undefined
@@ -165,9 +172,9 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
       {roleCanUseMic && (
         <Dropdown
           aria-labelledby={'call-composite-local-sound-settings-label'}
-          placeholder={defaultPlaceHolder}
+          placeholder={hasMicrophones ? defaultPlaceHolder : noMicLabel}
           styles={dropDownStyles(theme)}
-          disabled={!micPermissionGranted}
+          disabled={!micPermissionGranted || !hasMicrophones}
           errorMessage={
             props.microphonePermissionGranted === undefined || props.microphonePermissionGranted
               ? undefined
@@ -238,7 +245,7 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
           />
           <Dropdown
             aria-labelledby={'call-composite-local-sound-settings-label'}
-            placeholder={defaultPlaceHolder}
+            placeholder={hasSpeakers ? defaultPlaceHolder : noSpeakersLabel}
             styles={dropDownStyles(theme)}
             disabled={props.speakers.length === 0}
             options={getDropDownList(props.speakers)}
