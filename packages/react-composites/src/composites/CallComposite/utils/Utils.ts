@@ -124,8 +124,11 @@ type GetCallCompositePageFunction = ((
   /* @conditional-compile-remove(unsupported-browser) */ ((
     call: CallState | undefined,
     previousCall: CallState | undefined,
-    environmentInfo?: EnvironmentInfo,
-    features?: CallAdapterOptionalFeatures
+    unsupportedBrowserInfo?: {
+      environmentInfo?: EnvironmentInfo;
+      features?: CallAdapterOptionalFeatures;
+      unsupportedBrowserVersionOptedIn?: boolean;
+    }
   ) => CallCompositePage);
 /**
  * Get the current call composite page based on the current call composite state
@@ -142,12 +145,17 @@ type GetCallCompositePageFunction = ((
  */
 export const getCallCompositePage: GetCallCompositePageFunction = (
   call,
-  previousCall,
-  environmentInfo?,
-  features?
+  previousCall?,
+  unsupportedBrowserInfo?
 ): CallCompositePage => {
   /* @conditional-compile-remove(unsupported-browser) */
-  if (isUnsupportedEnvironment(features, environmentInfo)) {
+  if (
+    isUnsupportedEnvironment(
+      unsupportedBrowserInfo.features,
+      unsupportedBrowserInfo.environmentInfo,
+      unsupportedBrowserInfo.unsupportedBrowserVersionOptedIn
+    )
+  ) {
     return 'unsupportedEnvironment';
   }
 
@@ -308,12 +316,13 @@ export const getDevicePermissionState = (
 /* @conditional-compile-remove(unsupported-browser) */
 const isUnsupportedEnvironment = (
   features?: CallAdapterOptionalFeatures,
-  environmentInfo?: EnvironmentInfo
+  environmentInfo?: EnvironmentInfo,
+  unsupportedBrowserVersionOptedIn?: boolean
 ): boolean => {
   return !!(
     features?.unsupportedEnvironment &&
     (environmentInfo?.isSupportedBrowser === false ||
-      environmentInfo?.isSupportedBrowserVersion === false ||
+      (environmentInfo?.isSupportedBrowserVersion === false && !unsupportedBrowserVersionOptedIn) ||
       environmentInfo?.isSupportedPlatform === false)
   );
 };

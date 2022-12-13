@@ -47,7 +47,7 @@ export type { AzureCommunicationCallAdapterOptions } from './adapter';
 export type { CallParticipantsLocator } from './adapter';
 
 /* @conditional-compile-remove(unsupported-browser) */
-export type { CallAdapterOptionalFeatures } from './adapter';
+export type { CallAdapterOptionalFeatures, UnsupportedEnvironmentFeatures } from './adapter';
 
 export type {
   CallAdapter,

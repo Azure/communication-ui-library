@@ -271,6 +271,7 @@ export interface CallAdapterCallOperations {
     addParticipant(participant: PhoneNumberIdentifier, options?: AddPhoneNumberOptions): Promise<void>;
     // (undocumented)
     addParticipant(participant: CommunicationUserIdentifier): Promise<void>;
+    allowUnsupportedBrowserVersion(): void;
     createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void | CreateVideoStreamViewResult>;
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
     // @beta
@@ -322,7 +323,7 @@ export type CallAdapterLocator = TeamsMeetingLinkLocator | GroupCallLocator | /*
 
 // @beta
 export type CallAdapterOptionalFeatures = {
-    unsupportedEnvironment?: boolean;
+    unsupportedEnvironment?: boolean | UnsupportedEnvironmentFeatures;
 };
 
 // @public
@@ -360,6 +361,7 @@ export interface CallAdapterSubscribers {
 export type CallAdapterUiState = {
     isLocalPreviewMicrophoneEnabled: boolean;
     page: CallCompositePage;
+    unsupportedBrowserVersionsAllowed?: boolean;
 };
 
 // @public
@@ -551,6 +553,9 @@ export interface CallCompositeStrings {
     mutedMessage: string;
     networkReconnectMoreDetails: string;
     networkReconnectTitle: string;
+    noCamerasLabel: string;
+    noMicrophonesLabel: string;
+    noSpeakersLabel: string;
     openDialpadButtonLabel: string;
     openDtmfDialpadLabel: string;
     outboundCallingNoticeString: string;
@@ -729,6 +734,7 @@ export interface CallWithChatAdapterManagement {
     addParticipant(participant: PhoneNumberIdentifier, options?: AddPhoneNumberOptions): Promise<void>;
     // (undocumented)
     addParticipant(participant: CommunicationUserIdentifier): Promise<void>;
+    allowUnsupportedBrowserVersion(): void;
     askDevicePermission(constrain: PermissionConstraints): Promise<void>;
     // @beta (undocumented)
     cancelFileUpload: (id: string) => void;
@@ -863,6 +869,8 @@ export interface CallWithChatAdapterUiState {
     fileUploads?: FileUploadsUiState;
     isLocalPreviewMicrophoneEnabled: boolean;
     page: CallCompositePage;
+    // @beta
+    unsupportedBrowserVersionsAllowed?: boolean;
 }
 
 // @public
@@ -3094,16 +3102,23 @@ export const UnsupportedBrowserVersion: (props: UnsupportedBrowserVersionProps) 
 
 // @beta
 export interface UnsupportedBrowserVersionProps {
+    onContinueClick?: () => void;
     onTroubleshootingClick?: () => void;
-    strings: UnsupportedBrowserVersionStrings;
+    strings?: UnsupportedBrowserVersionStrings;
 }
 
 // @beta
 export interface UnsupportedBrowserVersionStrings {
+    continueAnywayButtonText?: string;
     moreHelpLinkText: string;
     primaryText: string;
     secondaryText: string;
 }
+
+// @beta
+export type UnsupportedEnvironmentFeatures = {
+    unsupportedBrowserVersionAllowed?: boolean;
+};
 
 // @beta
 export const UnsupportedOperatingSystem: (props: UnsupportedOperatingSystemProps) => JSX.Element;

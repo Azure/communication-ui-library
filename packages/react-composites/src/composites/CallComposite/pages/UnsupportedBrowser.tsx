@@ -9,6 +9,8 @@ import { UnsupportedBrowser, UnsupportedBrowserVersion, UnsupportedOperatingSyst
 import React from 'react';
 /* @conditional-compile-remove(unsupported-browser) */
 import { useLocale } from '../../localization';
+/* @conditional-compile-remove(unsupported-browser) */
+import { useAdapter } from '../adapter/CallAdapterProvider';
 
 /**
  * @internal
@@ -26,6 +28,22 @@ export type UnsupportedBrowserPageProps = {
 export const UnsupportedBrowserPage = (props: UnsupportedBrowserPageProps): JSX.Element => {
   /* @conditional-compile-remove(unsupported-browser) */
   const { onTroubleshootingClick, environmentInfo } = props;
+  /* @conditional-compile-remove(unsupported-browser) */
+  const adapter = useAdapter();
+  /* @conditional-compile-remove(unsupported-browser) */
+  const unsupportedEnvironmentFeature = adapter.getState().features?.unsupportedEnvironment;
+  /* @conditional-compile-remove(unsupported-browser) */
+  const onContinueClick =
+    unsupportedEnvironmentFeature === true
+      ? undefined
+      : unsupportedEnvironmentFeature === false || unsupportedEnvironmentFeature === undefined
+      ? undefined
+      : unsupportedEnvironmentFeature.unsupportedBrowserVersionAllowed
+      ? () => {
+          adapter.allowUnsupportedBrowserVersion();
+        }
+      : undefined;
+
   /* @conditional-compile-remove(unsupported-browser) */
   const locale = useLocale();
   /* @conditional-compile-remove(unsupported-browser) */
@@ -53,6 +71,7 @@ export const UnsupportedBrowserPage = (props: UnsupportedBrowserPageProps): JSX.
       <UnsupportedBrowserVersion
         onTroubleshootingClick={onTroubleshootingClick}
         strings={unsupportedBrowserVersionStrings}
+        onContinueClick={onContinueClick}
       />
     );
   } else {

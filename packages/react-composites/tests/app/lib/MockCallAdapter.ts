@@ -38,6 +38,9 @@ export class MockCallAdapter implements CallAdapter {
   getState(): CallAdapterState {
     return this._state;
   }
+  allowUnsupportedBrowserVersion(): void {
+    throw Error('allowWithUnsupportedBrowserVersion not implemented');
+  }
   dispose(): void {
     throw Error('dispose not implemented');
   }
