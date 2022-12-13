@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { VideoStreamOptions, CreateVideoStreamViewResult, ViewScalingMode } from '../../types';
 
 /** @private */
@@ -36,7 +36,9 @@ interface VideoStreamLifecycleMaintainerProps extends VideoStreamLifecycleMainta
  *
  * @private
  */
-const useVideoStreamLifecycleMaintainer = (props: VideoStreamLifecycleMaintainerProps): void => {
+const useVideoStreamLifecycleMaintainer = (
+  props: VideoStreamLifecycleMaintainerProps
+): CreateVideoStreamViewResult | undefined => {
   const {
     isMirrored,
     isScreenSharingOn,
@@ -47,9 +49,13 @@ const useVideoStreamLifecycleMaintainer = (props: VideoStreamLifecycleMaintainer
     scalingMode
   } = props;
 
+  const [videoStreamViewResult, setVideoStreamViewResult] = useState<CreateVideoStreamViewResult | undefined>();
+
   useEffect(() => {
     if (isStreamAvailable && !renderElementExists) {
-      onCreateStreamView?.({ isMirrored, scalingMode });
+      onCreateStreamView?.({ isMirrored, scalingMode })?.then((result) => {
+        result && setVideoStreamViewResult(result);
+      });
     }
 
     // Always clean up element to make tile up to date and be able to dispose correctly
@@ -82,6 +88,8 @@ const useVideoStreamLifecycleMaintainer = (props: VideoStreamLifecycleMaintainer
       }
     };
   }, [isScreenSharingOn, onDisposeStreamView]);
+
+  return videoStreamViewResult;
 };
 
 /** @private */
@@ -95,7 +103,9 @@ export interface LocalVideoStreamLifecycleMaintainerProps extends VideoStreamLif
  *
  * @private
  */
-export const useLocalVideoStreamLifecycleMaintainer = (props: LocalVideoStreamLifecycleMaintainerProps): void => {
+export const useLocalVideoStreamLifecycleMaintainer = (
+  props: LocalVideoStreamLifecycleMaintainerProps
+): CreateVideoStreamViewResult | undefined => {
   const { onCreateLocalStreamView, onDisposeLocalStreamView } = props;
   const onCreateStreamView = useMemo(
     () => (options?: VideoStreamOptions) => {
@@ -131,7 +141,9 @@ export interface RemoteVideoStreamLifecycleMaintainerProps extends VideoStreamLi
  *
  * @private
  */
-export const useRemoteVideoStreamLifecycleMaintainer = (props: RemoteVideoStreamLifecycleMaintainerProps): void => {
+export const useRemoteVideoStreamLifecycleMaintainer = (
+  props: RemoteVideoStreamLifecycleMaintainerProps
+): CreateVideoStreamViewResult | undefined => {
   const { remoteParticipantId, onCreateRemoteStreamView, onDisposeRemoteStreamView } = props;
   const onCreateStreamView = useMemo(
     () => (options?: VideoStreamOptions) => {

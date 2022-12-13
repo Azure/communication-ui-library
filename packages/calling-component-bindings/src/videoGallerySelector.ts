@@ -21,7 +21,8 @@ import { checkIsSpeaking } from './utils/SelectorUtils';
 import {
   _videoGalleryRemoteParticipantsMemo,
   _dominantSpeakersWithFlatId,
-  convertRemoteParticipantToVideoGalleryRemoteParticipant
+  convertRemoteParticipantToVideoGalleryRemoteParticipant,
+  memoizeLocalParticipant
 } from './utils/videoGalleryUtils';
 
 /**
@@ -85,17 +86,7 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
             screenShareRemoteParticipant.displayName
           )
         : undefined,
-      localParticipant: {
-        userId: identifier,
-        displayName: displayName ?? '',
-        isMuted: isMuted,
-        isScreenSharingOn: isScreenSharingOn,
-        videoStream: {
-          isAvailable: !!localVideoStream,
-          isMirrored: localVideoStream?.view?.isMirrored,
-          renderElement: localVideoStream?.view?.target
-        }
-      },
+      localParticipant: memoizeLocalParticipant(identifier, displayName, isMuted, isScreenSharingOn, localVideoStream),
       remoteParticipants: _videoGalleryRemoteParticipantsMemo(
         updateUserDisplayNamesTrampoline(remoteParticipants ? Object.values(remoteParticipants) : noRemoteParticipants)
       ),
