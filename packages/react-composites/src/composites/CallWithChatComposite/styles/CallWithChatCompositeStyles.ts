@@ -43,3 +43,19 @@ export const ChatButtonContainerStyles: IStackStyles = {
     position: 'relative'
   }
 };
+
+/** @private */
+export const hiddenAutoFocusButtonStyles: IStackStyles = {
+  root: {
+    width: '0',
+    height: '0',
+    margin: '0',
+    minHeight: '0',
+    minWidth: '0',
+    maxHeight: '0',
+    maxWidth: '0',
+    outline: 'none',
+    padding: '0',
+    position: 'absolute'
+  }
+};

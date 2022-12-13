@@ -272,9 +272,10 @@
     "moreHelpLinkText": "See compatibility requirements"
   },
   "UnsupportedBrowserVersion": {
-    "primaryText": "Browser version not supported",
-    "secondaryText": "Please update your browser and then try joining the call again.",
-    "moreHelpLinkText": "See compatibility requirements"
+    "primaryText": "Browser update needed",
+    "secondaryText": "To ensure the best call possible, please update your browser and then try joining the call again.",
+    "moreHelpLinkText": "See compatibility requirements",
+    "continueAnywayButtonText": "Start call without updating"
   },
   "UnsupportedOperatingSystem": {
     "primaryText": "Operating system not supported",
