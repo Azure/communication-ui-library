@@ -102,33 +102,11 @@ export const _RemoteVideoTile = React.memo(
       remoteParticipant,
       view: createVideoStreamResult?.view,
       /* @conditional-compile-remove(pinned-participants) */
-      strings: { ...props.strings }
+      strings: { ...props.strings },
+      isPinned,
+      onPinParticipant,
+      onUnpinParticipant
     });
-
-    /* @conditional-compile-remove(pinned-participants) */
-    const menuItems: IContextualMenuItem[] = [];
-    /* @conditional-compile-remove(pinned-participants) */
-    if (isPinned) {
-      menuItems.push({
-        key: 'unpin',
-        text: props.strings?.unpinParticipantForMe ?? '',
-        iconProps: { iconName: 'UnpinParticipant', styles: { root: { lineHeight: '1rem' } } },
-        onClick: () => onUnpinParticipant?.(userId),
-        'data-ui-id': 'video-tile-unpin-participant-button'
-      });
-    } else {
-      menuItems.push({
-        key: 'pin',
-        text: props.strings?.pinParticipantForMe ?? '',
-        iconProps: { iconName: 'PinParticipant', styles: { root: { lineHeight: '1rem' } } },
-        onClick: () => onPinParticipant?.(userId),
-        'data-ui-id': 'video-tile-pin-participant-button'
-      });
-    }
-
-    if (contextualMenuProps) {
-      contextualMenuProps.items = menuItems.concat(contextualMenuProps.items);
-    }
 
     const videoTileContextualMenuProps = useMemo(() => {
       if (!showRemoteVideoTileContextualMenu) {
@@ -167,11 +145,7 @@ export const _RemoteVideoTile = React.memo(
         /* @conditional-compile-remove(one-to-n-calling) */
         /* @conditional-compile-remove(PSTN-calls) */
         participantState={participantState}
-        contextualMenu={
-          videoTileContextualMenuProps.contextualMenu
-            ? videoTileContextualMenuProps.contextualMenu
-            : { items: menuItems }
-        }
+        {...videoTileContextualMenuProps}
         isPinned={props.isPinned}
       />
     );
