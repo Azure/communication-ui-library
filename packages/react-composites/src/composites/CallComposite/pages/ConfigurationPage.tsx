@@ -99,7 +99,9 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
   if (!rolePermissions.cameraButton) {
     errorBarProps = {
       ...errorBarProps,
-      activeErrorMessages: errorBarProps.activeErrorMessages.filter((e) => e.type !== 'callCameraAccessDenied')
+      activeErrorMessages: errorBarProps.activeErrorMessages.filter(
+        (e) => e.type !== 'callCameraAccessDenied' && e.type !== 'callCameraAccessDeniedSafari'
+      )
     };
   }
   /* @conditional-compile-remove(rooms) */

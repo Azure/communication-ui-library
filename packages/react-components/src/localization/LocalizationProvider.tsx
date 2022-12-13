@@ -118,11 +118,20 @@ export interface ComponentStrings {
   /** Strings for a domain permission denied prompt */
   CameraAndMicrophoneDomainPermissionsDenied: DomainPermissionsStrings;
   /* @conditional-compile-remove(call-readiness) */
+  /** Strings for a domain permission denied prompt for safari browsers*/
+  CameraAndMicrophoneDomainPermissionsDeniedSafari: DomainPermissionsStrings;
+  /* @conditional-compile-remove(call-readiness) */
   /** Strings for a domain permission denied prompt */
   CameraDomainPermissionsDenied: DomainPermissionsStrings;
   /* @conditional-compile-remove(call-readiness) */
   /** Strings for a domain permission denied prompt */
   MicrophoneDomainPermissionsDenied: DomainPermissionsStrings;
+  /* @conditional-compile-remove(call-readiness) */
+  /** Strings for a domain permission denied prompt for safari browsers*/
+  CameraDomainPermissionsDeniedSafari: DomainPermissionsStrings;
+  /* @conditional-compile-remove(call-readiness) */
+  /** Strings for a domain permission denied prompt for safari browsers*/
+  MicrophoneDomainPermissionsDeniedSafari: DomainPermissionsStrings;
   /* @conditional-compile-remove(unsupported-browser) */
   /** Strings for unsupported browser UI */
   UnsupportedBrowser: UnsupportedBrowserStrings;

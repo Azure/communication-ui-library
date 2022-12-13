@@ -43,6 +43,8 @@ export const errorBarSelector: ErrorBarSelector = createSelector(
     // have timestamps for errors.
     const activeErrorMessages: ActiveErrorMessage[] = [];
 
+    const isSafari = navigator.userAgent.indexOf('Safari') > -1 && navigator.userAgent.indexOf('Chrome') <= -1;
+
     // Errors reported via diagnostics are more reliable than from API method failures, so process those first.
     if (
       diagnostics?.network.latest.networkReceiveQuality?.value === DiagnosticQuality.Bad ||
@@ -56,7 +58,10 @@ export const errorBarSelector: ErrorBarSelector = createSelector(
     if (diagnostics?.media.latest.noMicrophoneDevicesEnumerated?.value === true) {
       activeErrorMessages.push({ type: 'callNoMicrophoneFound' });
     }
-    if (deviceManager.deviceAccess?.audio === false) {
+    if (deviceManager.deviceAccess?.audio === false && isSafari) {
+      activeErrorMessages.push({ type: 'callMicrophoneAccessDeniedSafari' });
+    }
+    if (deviceManager.deviceAccess?.audio === false && !isSafari) {
       activeErrorMessages.push({ type: 'callMicrophoneAccessDenied' });
     }
     if (diagnostics?.media.latest.microphonePermissionDenied?.value === true) {
@@ -85,8 +90,9 @@ export const errorBarSelector: ErrorBarSelector = createSelector(
         activeErrorMessages.push({ type: 'callVideoRecoveredBySystem' });
       }
     }
-
-    if (deviceManager.deviceAccess?.video === false) {
+    if (deviceManager.deviceAccess?.video === false && isSafari) {
+      activeErrorMessages.push({ type: 'callCameraAccessDeniedSafari' });
+    } else if (deviceManager.deviceAccess?.video === false) {
       activeErrorMessages.push({ type: 'callCameraAccessDenied' });
     } else {
       if (diagnostics?.media.latest.cameraFreeze?.value === true) {
