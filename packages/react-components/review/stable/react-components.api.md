@@ -1346,12 +1346,14 @@ export const UnsupportedBrowserVersion: (props: UnsupportedBrowserVersionProps) 
 
 // @beta
 export interface UnsupportedBrowserVersionProps {
+    onContinueClick?: () => void;
     onTroubleshootingClick?: () => void;
-    strings: UnsupportedBrowserVersionStrings;
+    strings?: UnsupportedBrowserVersionStrings;
 }
 
 // @beta
 export interface UnsupportedBrowserVersionStrings {
+    continueAnywayButtonText?: string;
     moreHelpLinkText: string;
     primaryText: string;
     secondaryText: string;
