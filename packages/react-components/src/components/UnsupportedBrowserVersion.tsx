@@ -17,6 +17,8 @@ export interface UnsupportedBrowserVersionStrings {
   secondaryText: string;
   /** String to display in the text for the help link */
   moreHelpLinkText: string;
+  /** String for continue without updating button */
+  continueAnywayButtonText?: string;
 }
 
 /**
@@ -28,7 +30,9 @@ export interface UnsupportedBrowserVersionProps {
   /** Handler to perform an action when the help link is actioned */
   onTroubleshootingClick?: () => void;
   /** String overrides for the component */
-  strings: UnsupportedBrowserVersionStrings;
+  strings?: UnsupportedBrowserVersionStrings;
+  /** Handler to allow user to continue into the call */
+  onContinueClick?: () => void;
 }
 
 /**
@@ -38,6 +42,12 @@ export interface UnsupportedBrowserVersionProps {
  * @beta
  */
 export const UnsupportedBrowserVersion = (props: UnsupportedBrowserVersionProps): JSX.Element => {
-  const { onTroubleshootingClick, strings } = props;
-  return <UnsupportedEnvironment onTroubleshootingClick={onTroubleshootingClick} strings={strings} />;
+  const { onTroubleshootingClick, strings, onContinueClick } = props;
+  return (
+    <UnsupportedEnvironment
+      onTroubleshootingClick={onTroubleshootingClick}
+      strings={strings}
+      onContinueClick={onContinueClick}
+    />
+  );
 };
