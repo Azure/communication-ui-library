@@ -6,7 +6,8 @@ import {
   VideoGallery,
   VideoStreamOptions,
   OnRenderAvatarCallback,
-  CustomAvatarOptions
+  CustomAvatarOptions,
+  Announcer
 } from '@internal/react-components';
 import { usePropsFor } from '../hooks/usePropsFor';
 import { AvatarPersona, AvatarPersonaDataCallback } from '../../common/AvatarPersona';
@@ -16,6 +17,8 @@ import { useHandlers } from '../hooks/useHandlers';
 import { useSelector } from '../hooks/useSelector';
 import { localVideoCameraCycleButtonSelector } from '../selectors/LocalVideoTileSelector';
 import { LocalVideoCameraCycleButton } from '@internal/react-components';
+import { _formatString } from '@internal/acs-ui-common';
+import { useParticipantChangedAnnouncement } from '../utils/MediaGalleryUtils';
 
 const VideoGalleryStyles = {
   root: {
@@ -53,6 +56,8 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
   const videoGalleryProps = usePropsFor(VideoGallery);
   const cameraSwitcherCameras = useSelector(localVideoCameraCycleButtonSelector);
   const cameraSwitcherCallback = useHandlers(LocalVideoCameraCycleButton);
+  const announcerString = useParticipantChangedAnnouncement();
+
   const cameraSwitcherProps = useMemo(() => {
     return {
       ...cameraSwitcherCallback,
@@ -85,11 +90,18 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
         showCameraSwitcherInLocalPreview={props.isMobile}
         localVideoCameraCycleButtonProps={cameraSwitcherProps}
         onRenderAvatar={onRenderAvatar}
+        /* @conditional-compile-remove(pinned-participants) */
+        showRemoteVideoTileContextualMenu={!props.isMobile}
       />
     );
   }, [videoGalleryProps, props.isMobile, onRenderAvatar, cameraSwitcherProps]);
 
-  return VideoGalleryMemoized;
+  return (
+    <>
+      <Announcer announcementString={announcerString} ariaLive={'polite'} />
+      {VideoGalleryMemoized}
+    </>
+  );
 };
 
 /**

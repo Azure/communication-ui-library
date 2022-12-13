@@ -1,7 +1,9 @@
 import { MessageBar } from '@fluentui/react';
 import { Meta, Source } from '@storybook/addon-docs';
 const CallAdapterExampleText = require('!!raw-loader!./snippets/CallAdapterExample.snippet.tsx').default;
+const CallAdapterStateChangesText = require('!!raw-loader!./snippets/CallAdapterStateChanges.snippet.txt').default;
 const ChatAdapterExampleText = require('!!raw-loader!./snippets/ChatAdapterExample.snippet.tsx').default;
+const ChatAdapterStateChangesText = require('!!raw-loader!./snippets/ChatAdapterStateChanges.snippet.txt').default;
 
 <Meta
   id="composite-adapters"
@@ -67,64 +69,11 @@ Below are some examples that might be helpful, but additional methods are availa
 
 #### Call Adapter Examples
 
-```typescript
-
-//Access state and state changes, including CallClient and UI
-callAdapter.onStateChange((state) => {
-  console.log(state.userId)
-})
-callAdapter.getState().userId
-callAdapter.getState().call
-callAdapter.getState().devices
-
-//Access actions for the call
-callAdapter.mute()
-callAdapter.queryMicrophones()
-callAdapter.startCamera()
-
-//Call events
-callAdapter.on('participantsJoined, (event)=>{
-  event.joined.forEach((participant) => {
-    console.log(participant.displayName);
-  });
-})
-callAdapter.on('callEnded, (event) => {
-  console.log(event.callId);
-})
-callAdapter.on('error', (e: Error) => {
-  console.log(JSON.stringify(e))
-})
-
-```
+<Source code={CallAdapterStateChangesText} />
 
 #### Chat Adapter Examples
 
-```typescript
-
-//Access state and state changes, including ChatClient and UI
-chatAdapter.onStateChange((state) => {
-  console.log(state.userId)
-})
-chatAdapter.getState().thread
-chatAdapter.getState().userId
-
-//Access actions for the chat
-chatAdapter.sendMessage()
-chatAdapter.removeParticipants()
-chatAdapter.setTopic()
-
-//Chat events
-chatAdapter.on('messageReceived, (event) => {
-  console.log(event.message.content?.message);
-})
-chatAdapter.on('messageSent, (event) => {
-  console.log(event.message.content?.message);
-})
-chatAdapter.on('topicChanged', (event) => {
-  console.log(event.topic);
-})
-
-```
+<Source code={ChatAdapterStateChangesText} />
 
 ## Interfaces
 
@@ -144,7 +93,7 @@ chatAdapter.on('topicChanged', (event) => {
 | **`stopCamera`**                | Stop the camera This method will stop rendering a local camera view when the call is not active.                                                                                                                                                                                                                     | `() => Promise<void>`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
 | **`mute`**                      | Mute the current user during the call or disable microphone locally.                                                                                                                                                                                                                                                 | `() => Promise<void>`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
 | **`unmute`**                    | Unmute the current user during the call or enable microphone locally.                                                                                                                                                                                                                                                | `() => Promise<void>`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
-| **`startCall`** **(Beta)**      | Start the call.                                                                                                                                                                                                                                                                                                      | `(participants: string[]) => Call ` \| ` undefined` <br /><br />`participants`: Array of participantIDs to join                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| **`startCall`** **(Beta)**      | Start the call.                                                                                                                                                                                                                                                                                                      | `(participants: string[]) => Call ` \| ` undefined` <br /><br />`participants`: Array of participantIds to join                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
 | **`startScreenShare`**          | Start sharing the screen during a call.                                                                                                                                                                                                                                                                              | `() => Promise<void>`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
 | **`stopScreenShare`**           | Stop sharing the screen.                                                                                                                                                                                                                                                                                             | `() => Promise<void>`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
 | **`addParticipant`** **(Beta)** | Add a participant to the call.                                                                                                                                                                                                                                                                                       | `(participant: ` [`CommunicationIdentifier`](https://docs.microsoft.com/en-us/javascript/api/@azure/communication-common/communicationidentifier?view=azure-node-latest)`, options?: ` [`AddPhoneNumberOptions`](https://docs.microsoft.com/en-us/javascript/api/azure-communication-services/@azure/communication-calling/addphonenumberoptions?view=azure-communication-services-js)`) => Promise<void>`                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
@@ -219,7 +168,7 @@ async function createAzureCommunicationCallAdapter(args: AzureCommunicationCallA
 | **`userId`**                       | [`CommunicationUserIdentifier`](https://docs.microsoft.com/en-us/javascript/api/@azure/communication-common/communicationuseridentifier)                                                                                                                                                                                                                                                                                                 |
 | **`displayName`**                  | `string` <br />_DisplayName has a limit of of 256 characters._                                                                                                                                                                                                                                                                                                                                                                           |
 | **`credential`**                   | [`CommunicationTokenCredential`](https://docs.microsoft.com/en-us/javascript/api/@azure/communication-common/azurecommunicationtokencredential)                                                                                                                                                                                                                                                                                          |
-| **`locator`**                      | [`GroupCallLocator`](https://docs.microsoft.com/en-us/javascript/api/azure-communication-services/@azure/communication-calling/groupcalllocator) \| [`TeamsMeetingLinkLocator`](https://docs.microsoft.com/en-us/javascript/api/azure-communication-services/@azure/communication-calling/teamsmeetinglinklocator) \| `CallParticipantsLocator` **(Beta)** <br /><br /> _CallParticipantsLocator is an array of participantIDs to join._ |
+| **`locator`**                      | [`GroupCallLocator`](https://docs.microsoft.com/en-us/javascript/api/azure-communication-services/@azure/communication-calling/groupcalllocator) \| [`TeamsMeetingLinkLocator`](https://docs.microsoft.com/en-us/javascript/api/azure-communication-services/@azure/communication-calling/teamsmeetinglinklocator) \| `CallParticipantsLocator` **(Beta)** <br /><br /> _CallParticipantsLocator is an array of participantIds to join._ |
 | **`alternateCallerId`** **(Beta)** | `string`                                                                                                                                                                                                                                                                                                                                                                                                                                 |
 
 ### createAzureCommunicationChatAdapter

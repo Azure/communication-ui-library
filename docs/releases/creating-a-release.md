@@ -11,6 +11,8 @@ This repository follows a green-trunk development model. All development happens
 
 _This document applies to beta and stable releases. Alpha releases are created nightly through a separate [light-weight mechanism](#creating-alpha-releases)._
 
+_This document applies to normal releases, off of `main`. For hotfixing a prior release on NPM, see [documentation on creating hotfixes](./hotfix-release.md)._
+
 ## Step 1: Creating a release branch
 
 Both beta and stable release follow a two step workflow, aided by github actions.
@@ -120,7 +122,7 @@ This process has the following benefits:
 You are now ready to publish the package!
 
 **Releasing to NPM is an irreversible action**.
-Even though most of the steps necessary to release the package are automated via a GitHub workflow, you should run through the [checklist of pre and post release actions](../references/release-checklist.md) to take to ensure a confident release.
+Even though most of the steps necessary to release the package are automated via a GitHub workflow, you should run through the [checklist of pre and post release actions](./release-checklist.md) to take to ensure a confident release.
 
 **Rule of two**: It is recommended to pair up with a team member for this last step to reduce the changes of human error.
 

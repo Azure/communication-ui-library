@@ -28,7 +28,6 @@ import { useIsMobile } from './utils/useIsMobile';
 import { useSecondaryInstanceCheck } from './utils/useSecondaryInstanceCheck';
 import { CallError } from './views/CallError';
 import { CallScreen } from './views/CallScreen';
-import { EndCall } from './views/EndCall';
 import { HomeScreen } from './views/HomeScreen';
 import { PageOpenInAnotherTab } from './views/PageOpenInAnotherTab';
 import { UnsupportedBrowserPage } from './views/UnsupportedBrowserPage';
@@ -41,7 +40,7 @@ console.log(
 
 initializeIcons();
 
-type AppPages = 'home' | 'call' | 'endCall';
+type AppPages = 'home' | 'call';
 
 const App = (): JSX.Element => {
   const [page, setPage] = useState<AppPages>('home');
@@ -153,10 +152,7 @@ const App = (): JSX.Element => {
         />
       );
     }
-    case 'endCall': {
-      document.title = `end call - ${WEB_APP_TITLE}`;
-      return <EndCall rejoinHandler={() => setPage('call')} homeHandler={navigateToHomePage} />;
-    }
+
     case 'call': {
       if (userCredentialFetchError) {
         document.title = `error - ${WEB_APP_TITLE}`;
@@ -182,9 +178,10 @@ const App = (): JSX.Element => {
           callLocator={callLocator}
           /* @conditional-compile-remove(PSTN-calls) */
           alternateCallerId={alternateCallerId}
-          onCallEnded={() => setPage('endCall')}
           /* @conditional-compile-remove(rooms) */
-          role={role}
+          roleHint={role}
+          /* @conditional-compile-remove(call-readiness) */
+          callReadinessOptedIn={true}
         />
       );
     }
@@ -203,7 +200,7 @@ const getJoinParams = (locator: CallAdapterLocator): string => {
     return '?roomId=' + encodeURIComponent(locator.roomId);
   }
   /* @conditional-compile-remove(PSTN-calls) */
-  if ('participantIDs' in locator) {
+  if ('participantIds' in locator) {
     return '';
   }
   return '?groupId=' + encodeURIComponent(locator.groupId);

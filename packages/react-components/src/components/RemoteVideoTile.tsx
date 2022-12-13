@@ -1,13 +1,22 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import { IContextualMenuProps } from '@fluentui/react';
 import React, { useMemo } from 'react';
-import { CreateVideoStreamViewResult, OnRenderAvatarCallback, ParticipantState, VideoStreamOptions } from '../types';
-import { StreamMedia } from './StreamMedia';
 import {
-  useRemoteVideoStreamLifecycleMaintainer,
-  RemoteVideoStreamLifecycleMaintainerProps
+  CreateVideoStreamViewResult,
+  OnRenderAvatarCallback,
+  ParticipantState,
+  VideoGalleryRemoteParticipant,
+  VideoStreamOptions
+} from '../types';
+import { StreamMedia } from './StreamMedia';
+import { VideoGalleryStrings } from './VideoGallery';
+import {
+  RemoteVideoStreamLifecycleMaintainerProps,
+  useRemoteVideoStreamLifecycleMaintainer
 } from './VideoGallery/useVideoStreamLifecycleMaintainer';
+import { useVideoTileContextualMenuProps } from './VideoGallery/useVideoTileContextualMenuProps';
 import { VideoTile } from './VideoTile';
 
 /**
@@ -20,6 +29,7 @@ import { VideoTile } from './VideoTile';
 export const _RemoteVideoTile = React.memo(
   (props: {
     userId: string;
+    remoteParticipant: VideoGalleryRemoteParticipant;
     onCreateRemoteStreamView?: (
       userId: string,
       options?: VideoStreamOptions
@@ -27,32 +37,31 @@ export const _RemoteVideoTile = React.memo(
     onDisposeRemoteStreamView?: (userId: string) => Promise<void>;
     isAvailable?: boolean;
     isReceiving?: boolean;
-    isMuted?: boolean;
-    isSpeaking?: boolean;
     isScreenSharingOn?: boolean; // TODO: Remove this once onDisposeRemoteStreamView no longer disposes of screen share stream
     renderElement?: HTMLElement;
-    displayName?: string;
     remoteVideoViewOptions?: VideoStreamOptions;
     onRenderAvatar?: OnRenderAvatarCallback;
     showMuteIndicator?: boolean;
     showLabel?: boolean;
     personaMinSize?: number;
+    strings?: VideoGalleryStrings;
     participantState?: ParticipantState;
+    showRemoteVideoTileContextualMenu?: boolean;
   }) => {
     const {
       isAvailable,
       isReceiving = true, // default to true to prevent any breaking change
-      isMuted,
-      isSpeaking,
       isScreenSharingOn,
       onCreateRemoteStreamView,
       onDisposeRemoteStreamView,
       remoteVideoViewOptions,
       renderElement,
       userId,
-      displayName,
       onRenderAvatar,
-      showMuteIndicator
+      showMuteIndicator,
+      remoteParticipant,
+      participantState,
+      showRemoteVideoTileContextualMenu = true
     } = props;
 
     const remoteVideoStreamProps: RemoteVideoStreamLifecycleMaintainerProps = useMemo(
@@ -81,7 +90,23 @@ export const _RemoteVideoTile = React.memo(
     );
 
     // Handle creating, destroying and updating the video stream as necessary
-    useRemoteVideoStreamLifecycleMaintainer(remoteVideoStreamProps);
+    const createVideoStreamResult = useRemoteVideoStreamLifecycleMaintainer(remoteVideoStreamProps);
+
+    const contextualMenuProps = useVideoTileContextualMenuProps({
+      remoteParticipant,
+      view: createVideoStreamResult?.view,
+      /* @conditional-compile-remove(pinned-participants) */
+      strings: { ...props.strings }
+    });
+
+    const videoTileContextualMenuProps = useMemo(() => {
+      if (!showRemoteVideoTileContextualMenu) {
+        return {};
+      }
+      return videoTileContextualMenuPropsTrampoline(contextualMenuProps);
+    }, [contextualMenuProps, showRemoteVideoTileContextualMenu]);
+
+    const showLoadingIndicator = isAvailable && isReceiving === false && participantState !== 'Disconnected';
 
     const renderVideoStreamElement = useMemo(() => {
       // Checking if renderElement is well defined or not as calling SDK has a number of video streams limitation which
@@ -92,26 +117,41 @@ export const _RemoteVideoTile = React.memo(
       }
 
       return (
-        <StreamMedia videoStreamElement={renderElement} loadingState={isReceiving === false ? 'loading' : 'none'} />
+        <StreamMedia videoStreamElement={renderElement} loadingState={showLoadingIndicator ? 'loading' : 'none'} />
       );
-    }, [renderElement, isReceiving]);
+    }, [renderElement, showLoadingIndicator]);
 
     return (
       <VideoTile
         key={userId}
         userId={userId}
         renderElement={renderVideoStreamElement}
-        displayName={displayName}
+        displayName={remoteParticipant.displayName}
         onRenderPlaceholder={onRenderAvatar}
-        isMuted={isMuted}
-        isSpeaking={isSpeaking}
+        isMuted={remoteParticipant.isMuted}
+        isSpeaking={remoteParticipant.isSpeaking}
         showMuteIndicator={showMuteIndicator}
         personaMinSize={props.personaMinSize}
         showLabel={props.showLabel}
         /* @conditional-compile-remove(one-to-n-calling) */
         /* @conditional-compile-remove(PSTN-calls) */
-        participantState={props.participantState}
+        participantState={participantState}
+        {...videoTileContextualMenuProps}
       />
     );
   }
 );
+
+const videoTileContextualMenuPropsTrampoline = (
+  contextualMenuProps?: IContextualMenuProps
+): { contextualMenu?: IContextualMenuProps } => {
+  if (!contextualMenuProps) {
+    return {};
+  }
+  /* @conditional-compile-remove(pinned-participants) */
+  return {
+    contextualMenu: contextualMenuProps
+  };
+
+  return {};
+};

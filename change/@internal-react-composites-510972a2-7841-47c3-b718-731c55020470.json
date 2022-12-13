@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Convert ModalLocalAndRemotePip to a common file",
-  "packageName": "@internal/react-composites",
-  "email": "edwardlee@microsoft.com",
-  "dependentChangeType": "none"
-}

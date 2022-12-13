@@ -34,9 +34,21 @@ export interface CallCompositeStrings {
    */
   cameraLabel: string;
   /**
+   * Label for when there are no cameras present on configuration screen.
+   */
+  noCamerasLabel: string;
+  /**
    * Label for sound dropdown.
    */
   soundLabel: string;
+  /**
+   * Label for when no microphones were found on the configuration screen
+   */
+  noMicrophonesLabel: string;
+  /**
+   * Label for when no speakers were found on the configuration screen.
+   */
+  noSpeakersLabel: string;
   /**
    * Error shown when camera access is blocked by the browser.
    */
@@ -173,42 +185,42 @@ export interface CallCompositeStrings {
    * Tooltip text used to inform a user that toggling microphone in lobby is not supported.
    */
   microphoneToggleInLobbyNotAllowed: string;
-  /* @conditional-compile-remove(one-to-n-calling) */
+  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   /**
    * Side pane People section Title.
    */
   peoplePaneTitle: string;
-  /* @conditional-compile-remove(one-to-n-calling) */
+  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   /**
    * Aria label string for return to call back button
    */
   returnToCallButtonAriaLabel?: string;
-  /* @conditional-compile-remove(one-to-n-calling) */
+  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   /**
    * Aria Description string for return to call button
    */
   returnToCallButtonAriaDescription?: string;
-  /* @conditional-compile-remove(one-to-n-calling) */
+  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   /**
    * control bar People button label
    */
   peopleButtonLabel: string;
-  /* @conditional-compile-remove(one-to-n-calling) */
+  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   /**
    * control bar Chat button label.
    */
   chatButtonLabel: string;
-  /* @conditional-compile-remove(one-to-n-calling) */
+  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   /**
    * Label for SidePaneHeader dismiss button
    */
   dismissSidePaneButtonLabel?: string;
-  /* @conditional-compile-remove(one-to-n-calling) */
+  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   /**
    * Side pane People section subheader.
    */
   peoplePaneSubTitle: string;
-  /* @conditional-compile-remove(one-to-n-calling) */
+  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   /**
    * Label for button to copy invite link
    */
@@ -218,7 +230,7 @@ export interface CallCompositeStrings {
    * Label for button to open dialpad
    */
   openDialpadButtonLabel: string;
-  /* @conditional-compile-remove(one-to-n-calling) */
+  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   /**
    * Label for menu item to remove participant
    */
@@ -282,7 +294,7 @@ export interface CallCompositeStrings {
   /**
    * Placeholder text for dtmf dialpad
    */
-  dtmfDialpadPlaceHolderText: string;
+  dtmfDialpadPlaceholderText: string;
   /* @conditional-compile-remove(PSTN-calls) */
   /**
    * Label for the button to open dtmf dialpad
@@ -292,4 +304,83 @@ export interface CallCompositeStrings {
    * aria label for when the invite link has been actioned
    */
   copyInviteLinkActionedAriaLabel: string;
+  /* @conditional-compile-remove(rooms) */
+  /**
+   * Title text of the page shown to the user when the user attempts to join a room that cannot be found.
+   */
+  roomNotFoundTitle: string;
+  /* @conditional-compile-remove(rooms) */
+  /**
+   * More details text of the page shown to the user when the user attempts to join a room that cannot be found.
+   */
+  roomNotFoundDetails?: string;
+  /* @conditional-compile-remove(rooms) */
+  /**
+   * Title text of the page shown to the user when the user attempts to join a room to which they are not invited.
+   */
+  deniedPermissionToRoomTitle: string;
+  /* @conditional-compile-remove(rooms) */
+  /**
+   * More details text of the page shown to the user when the user attempts to join a room to which they are not invited.
+   */
+  deniedPermissionToRoomDetails?: string;
+  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
+  /**
+   * Control bar People button ToolTipContent
+   */
+  peopleButtonTooltipOpen: string;
+  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
+  /**
+   * Control bar People button ToolTipContent
+   */
+  peopleButtonTooltipClose: string;
+  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+  /**
+   * Label disaplayed on the lobby screen during a 1:1 outbound call.
+   */
+  outboundCallingNoticeString: string;
+  /**
+   * Notice to be announced by narrator when a participant joins a call
+   */
+  participantJoinedNoticeString: string;
+  /**
+   * Notice to be announced by narrator when a participant joins a call
+   */
+  twoParticipantJoinedNoticeString: string;
+  /**
+   * Notice to be announced by narrator when a participant joins a call
+   */
+  threeParticipantJoinedNoticeString: string;
+  /**
+   * Notice to be announced by narrator when a participant leaves a call
+   */
+  participantLeftNoticeString: string;
+  /**
+   * Notice to be announced by narrator when 2 participants leave a call
+   */
+  twoParticipantLeftNoticeString: string;
+  /**
+   * Notice to be announced by narrator when 3 participants leave a call
+   */
+  threeParticipantLeftNoticeString: string;
+  /**
+   * string to be used to announce a change in participant if they have no displayName
+   */
+  unnamedParticipantString: string;
+  /**
+   * string to be used to announce when more than 3 participants have joined at the same time.
+   */
+  manyParticipantsJoined: string;
+  /**
+   * string to be used to announce when more than 3 participants have left at the same time.
+   */
+  manyParticipantsLeft: string;
+  /**
+   * string to be used to announce when multiple unnamed participants have joined at the same time.
+   */
+  manyUnnamedParticipantsJoined: string;
+  /**
+   * string to be used to announce when multiple unnamed participants have left at the same time.
+   */
+  manyUnnamedParticipantsLeft: string;
 }

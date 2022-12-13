@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Convert TabHeader and SidePaneHeader to common files",
-  "packageName": "@internal/react-composites",
-  "email": "edwardlee@microsoft.com",
-  "dependentChangeType": "none"
-}

@@ -11,6 +11,8 @@ import {
   useAzureCommunicationCallAdapter
 } from '@azure/communication-react';
 /* @conditional-compile-remove(rooms) */
+import { AzureCommunicationCallAdapterOptions } from '@azure/communication-react';
+/* @conditional-compile-remove(rooms) */
 import { Role } from '@azure/communication-react';
 import { Spinner } from '@fluentui/react';
 import React, { useCallback, useEffect, useMemo, useRef } from 'react';
@@ -18,6 +20,8 @@ import { useSwitchableFluentTheme } from '../theming/SwitchableFluentThemeProvid
 import { createAutoRefreshingCredential } from '../utils/credential';
 import { WEB_APP_TITLE } from '../utils/AppUtils';
 import { useIsMobile } from '../utils/useIsMobile';
+/* @conditional-compile-remove(call-readiness) */
+import { CallCompositeOptions } from '@azure/communication-react';
 
 export interface CallScreenProps {
   token: string;
@@ -26,9 +30,10 @@ export interface CallScreenProps {
   displayName: string;
   /* @conditional-compile-remove(PSTN-calls) */
   alternateCallerId?: string;
-  onCallEnded: () => void;
   /* @conditional-compile-remove(rooms) */
-  role?: Role;
+  roleHint?: Role;
+  /* @conditional-compile-remove(call-readiness) */
+  callReadinessOptedIn?: boolean;
 }
 
 export const CallScreen = (props: CallScreenProps): JSX.Element => {
@@ -37,18 +42,15 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     userId,
     callLocator,
     displayName,
-    onCallEnded,
     /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
-    /* @conditional-compile-remove(rooms) */ role
+    /* @conditional-compile-remove(rooms) */ roleHint,
+    /* @conditional-compile-remove(call-readiness) */ callReadinessOptedIn
   } = props;
   const callIdRef = useRef<string>();
   const { currentTheme, currentRtl } = useSwitchableFluentTheme();
   const isMobileSession = useIsMobile();
   const afterCreate = useCallback(
     async (adapter: CallAdapter): Promise<CallAdapter> => {
-      adapter.on('callEnded', () => {
-        onCallEnded();
-      });
       adapter.on('error', (e) => {
         // Error is already acted upon by the Call composite, but the surrounding application could
         // add top-level error handling logic here (e.g. reporting telemetry).
@@ -65,13 +67,33 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
       });
       return adapter;
     },
-    [callIdRef, onCallEnded]
+    [callIdRef]
   );
 
   const credential = useMemo(
     () => createAutoRefreshingCredential(toFlatCommunicationIdentifier(userId), token),
     [token, userId]
   );
+
+  /* @conditional-compile-remove(call-readiness) */
+  const options: CallCompositeOptions = useMemo(
+    () => ({
+      callReadinessOptedIn: callReadinessOptedIn,
+      onPermissionsTroubleshootingClick,
+      onNetworkingTroubleShootingClick
+    }),
+    [callReadinessOptedIn]
+  );
+
+  /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(unsupported-browser) */
+  const callAdapterOptions: AzureCommunicationCallAdapterOptions = useMemo(
+    () => ({
+      roleHint,
+      features: { unsupportedEnvironment: { unsupportedBrowserVersionAllowed: true } }
+    }),
+    [roleHint]
+  );
+
   const adapter = useAzureCommunicationCallAdapter(
     {
       userId,
@@ -79,7 +101,9 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
       credential,
       locator: callLocator,
       /* @conditional-compile-remove(PSTN-calls) */
-      alternateCallerId
+      alternateCallerId,
+      /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(unsupported-browser) */
+      options: callAdapterOptions
     },
     afterCreate
   );
@@ -97,15 +121,22 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     return <Spinner label={'Creating adapter'} ariaLive="assertive" labelPosition="top" />;
   }
 
+  let callInvitationUrl: string | undefined = window.location.href;
+  /* @conditional-compile-remove(rooms) */
+  // If roleHint is defined then the call is a Rooms call so we should not make call invitation link available
+  if (roleHint) {
+    callInvitationUrl = undefined;
+  }
+
   return (
     <CallComposite
       adapter={adapter}
       fluentTheme={currentTheme.theme}
       rtl={currentRtl}
-      callInvitationUrl={window.location.href}
+      callInvitationUrl={callInvitationUrl}
       formFactor={isMobileSession ? 'mobile' : 'desktop'}
-      /* @conditional-compile-remove(rooms) */
-      role={role}
+      /* @conditional-compile-remove(call-readiness) */
+      options={options}
     />
   );
 };
@@ -121,4 +152,18 @@ const convertPageStateToString = (state: CallAdapterState): string => {
     default:
       return `${state.page}`;
   }
+};
+
+/* @conditional-compile-remove(call-readiness) */
+const onPermissionsTroubleshootingClick = (permissionState: {
+  camera: PermissionState;
+  microphone: PermissionState;
+}): void => {
+  console.log(permissionState);
+  alert('permission troubleshooting clicked');
+};
+
+/* @conditional-compile-remove(call-readiness) */
+const onNetworkingTroubleShootingClick = (): void => {
+  alert('network troubleshooting clicked');
 };

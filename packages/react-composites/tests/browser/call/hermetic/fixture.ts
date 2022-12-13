@@ -59,6 +59,8 @@ export function defaultMockCallAdapterState(participants?: MockRemoteParticipant
     page: 'call',
     call: {
       id: 'call1',
+      /* @conditional-compile-remove(teams-identity-support) */
+      type: 'ACS',
       callerInfo: { displayName: 'caller', identifier: { kind: 'communicationUser', communicationUserId: '1' } },
       direction: 'Incoming',
       transcription: { isTranscriptionActive: false },
@@ -100,7 +102,7 @@ export function defaultMockCallAdapterState(participants?: MockRemoteParticipant
  *
  * Use this to add participants to state created via {@link defaultCallAdapterState}.
  */
-export function defaultMockRemoteParticipant(displayName: string): MockRemoteParticipantState {
+export function defaultMockRemoteParticipant(displayName?: string): MockRemoteParticipantState {
   return {
     identifier: { kind: 'communicationUser', communicationUserId: `8:acs:${displayName}-id` },
     state: 'Connected',
@@ -215,3 +217,28 @@ export const test = base.extend<TestFixture>({
   /** @returns An empty browser page. Tests should load the app via page.goto(). */
   page: [usePage, { scope: 'test' }]
 });
+
+/**
+ * Sets up the default state for the configuration screen.
+ */
+export const defaultMockConfigurationPageState = (): MockCallAdapterState => {
+  const state = defaultMockCallAdapterState();
+  state.page = 'configuration';
+  state.call = undefined;
+  return state;
+};
+
+/**
+ * Since we are providing a .y4m video to act as a fake video stream, chrome
+ * uses it's file path as the camera name. This file location can differ on
+ * every device causing a diff error in test screenshot comparisons.
+ * To avoid this error, we replace the unique file path with a custom string.
+ */
+export const stubLocalCameraName = async (page: Page): Promise<void> => {
+  await page.evaluate(() => {
+    const element = document.querySelector('[data-ui-id="call-composite-local-camera-settings"]');
+    if (element) {
+      element.innerHTML = element.innerHTML.replace(/C:.*?y4m/g, 'Fake Camera');
+    }
+  });
+};

@@ -152,6 +152,8 @@ export interface MessageThreadStyles extends BaseCustomStyles {
   chatItemMessageContainer?: ComponentSlotStyle;
   /** Styles for my chat message container. */
   myChatMessageContainer?: ComponentSlotStyle;
+  /** Styles for my chat message container in case of failure. */
+  failedMyChatMessageContainer?: ComponentSlotStyle;
   /** Styles for chat message container. */
   chatMessageContainer?: ComponentSlotStyle;
   /** Styles for system message container. */
@@ -345,7 +347,8 @@ const memoizeAllMessages = memoizeFnAll(
     onRenderMessage?: (message: MessageProps, defaultOnRender?: MessageRenderer) => JSX.Element,
     onUpdateMessage?: UpdateMessageCallback,
     onDeleteMessage?: (messageId: string) => Promise<void>,
-    onSendMessage?: (content: string) => Promise<void>
+    onSendMessage?: (content: string) => Promise<void>,
+    disableEditing?: boolean
   ): ShorthandValue<ChatItemProps> => {
     const messageProps: MessageProps = {
       message,
@@ -353,16 +356,17 @@ const memoizeAllMessages = memoizeFnAll(
       showDate: showMessageDate,
       onUpdateMessage,
       onDeleteMessage,
-      onSendMessage
+      onSendMessage,
+      disableEditing
     };
 
     switch (message.messageType) {
       case 'chat': {
         const myChatMessageStyle =
-          styles?.myChatMessageContainer || message.status === 'failed'
-            ? FailedMyChatMessageContainer
-            : defaultMyChatMessageContainer;
-        const chatMessageStyle = styles?.chatMessageContainer || defaultChatMessageContainer;
+          message.status === 'failed'
+            ? styles?.failedMyChatMessageContainer ?? styles?.myChatMessageContainer ?? FailedMyChatMessageContainer
+            : styles?.myChatMessageContainer ?? defaultMyChatMessageContainer;
+        const chatMessageStyle = styles?.chatMessageContainer ?? defaultChatMessageContainer;
         messageProps.messageContainerStyle = message.mine ? myChatMessageStyle : chatMessageStyle;
 
         const chatMessageComponent =
@@ -727,7 +731,6 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     /* @conditional-compile-remove(date-time-customization) */
     onDisplayDateTimeString
   } = props;
-
   const onRenderFileDownloads = onRenderFileDownloadsTrampoline(props);
 
   const [messages, setMessages] = useState<(ChatMessage | SystemMessage | CustomMessage)[]>([]);
@@ -845,27 +848,22 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
 
   // Infinite scrolling + threadInitialize function
   const fetchNewMessageWhenAtTop = useCallback(async () => {
-    if (chatScrollDivRef.current && !isLoadingChatMessagesRef.current) {
+    if (!isLoadingChatMessagesRef.current) {
       if (onLoadPreviousChatMessages) {
         isLoadingChatMessagesRef.current = true;
         // Fetch message until scrollTop reach the threshold for fetching new message
-        while (!isAllChatMessagesLoadedRef.current && chatScrollDivRef.current.scrollTop <= 500) {
+        while (
+          !isAllChatMessagesLoadedRef.current &&
+          chatScrollDivRef.current &&
+          chatScrollDivRef.current.scrollTop <= 500
+        ) {
           isAllChatMessagesLoadedRef.current = await onLoadPreviousChatMessages(numberOfChatMessagesToReload);
-          // Release CPU resources for 200 milliseconds between each loop.
           await delay(200);
         }
         isLoadingChatMessagesRef.current = false;
       }
     }
   }, [numberOfChatMessagesToReload, onLoadPreviousChatMessages]);
-
-  const handleInfiniteScroll = useCallback((): void => {
-    if (!chatScrollDivRef.current) {
-      return;
-    }
-
-    fetchNewMessageWhenAtTop();
-  }, [fetchNewMessageWhenAtTop]);
 
   // The below 2 of useEffects are design for fixing infinite scrolling problem
   // Scrolling element will behave differently when scrollTop = 0(it sticks at the top)
@@ -883,11 +881,8 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     if (!chatScrollDivRef.current) {
       return;
     }
-    if (previousTopRef.current === 0) {
-      const currentHeight = chatScrollDivRef.current.scrollHeight;
-      chatScrollDivRef.current.scrollTop =
-        chatScrollDivRef.current.scrollTop + currentHeight - previousHeightRef.current;
-    }
+    chatScrollDivRef.current.scrollTop =
+      chatScrollDivRef.current.scrollHeight - (previousHeightRef.current - previousTopRef.current);
   }, [messages]);
 
   // Fetch more messages to make the scroll bar appear, infinity scroll is then handled in the handleScroll function.
@@ -911,13 +906,13 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   useEffect(() => {
     const chatScrollDiv = chatScrollDivRef.current;
     chatScrollDiv?.addEventListener('scroll', handleScrollToTheBottom);
-    chatScrollDiv?.addEventListener('scroll', handleInfiniteScroll);
+    chatScrollDiv?.addEventListener('scroll', fetchNewMessageWhenAtTop);
 
     return () => {
       chatScrollDiv?.removeEventListener('scroll', handleScrollToTheBottom);
-      chatScrollDiv?.removeEventListener('scroll', handleInfiniteScroll);
+      chatScrollDiv?.removeEventListener('scroll', fetchNewMessageWhenAtTop);
     };
-  }, [handleInfiniteScroll, handleScrollToTheBottom]);
+  }, [fetchNewMessageWhenAtTop, handleScrollToTheBottom]);
 
   /**
    * ClientHeight controls the number of messages to render. However ClientHeight will not be initialized after the
@@ -1101,7 +1096,8 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
             onRenderMessage,
             onUpdateMessage,
             onDeleteMessage,
-            onSendMessage
+            onSendMessage,
+            props.disableEditing
           );
         });
       }),
@@ -1124,7 +1120,8 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
       onSendMessage,
       lastSeenChatMessage,
       lastSendingChatMessage,
-      lastDeliveredChatMessage
+      lastDeliveredChatMessage,
+      props.disableEditing
     ]
   );
 

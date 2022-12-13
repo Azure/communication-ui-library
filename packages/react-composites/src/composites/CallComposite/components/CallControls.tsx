@@ -10,6 +10,8 @@ import { _isInLobbyOrConnecting } from '@internal/calling-component-bindings';
 import { ControlBar, ParticipantMenuItemsCallback } from '@internal/react-components';
 /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
 import { HoldButton } from '@internal/react-components';
+/* @conditional-compile-remove(rooms) */
+import { _usePermissions } from '@internal/react-components';
 import React, { useMemo } from 'react';
 import { CallControlOptions } from '../types/CallControlOptions';
 import { Camera } from './buttons/Camera';
@@ -21,9 +23,9 @@ import { Microphone } from './buttons/Microphone';
 import { Participants } from './buttons/Participants';
 import { ScreenShare } from './buttons/ScreenShare';
 import { ContainerRectProps } from '../../common/ContainerRectProps';
-/* @conditional-compile-remove(one-to-n-calling) */
+/* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
 import { People } from './buttons/People';
-/* @conditional-compile-remove(one-to-n-calling) */
+/* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
 import { useLocale } from '../../localization';
 /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
 import { MoreButton } from '../../common/MoreButton';
@@ -41,9 +43,9 @@ import { isDisabled } from '../utils';
  * @private
  */
 export type CallControlsProps = {
-  /* @conditional-compile-remove(one-to-n-calling) */
+  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   peopleButtonChecked?: boolean;
-  /* @conditional-compile-remove(one-to-n-calling) */
+  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   onPeopleButtonClicked?: () => void;
   callInvitationURL?: string;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
@@ -65,15 +67,15 @@ const controlBarStyles = memoizeFunction((background: string) => ({ root: { back
 export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX.Element => {
   const options = useMemo(() => (typeof props.options === 'boolean' ? {} : props.options), [props.options]);
 
-  /* @conditional-compile-remove(one-to-n-calling) */
+  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   const localeStrings = useLocale();
 
-  /* @conditional-compile-remove(one-to-n-calling) */
+  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   const peopleButtonStrings = useMemo(
     () => ({
-      label: localeStrings.strings.callWithChat.peopleButtonLabel,
-      tooltipOffContent: localeStrings.strings.callWithChat.peopleButtonTooltipOpen,
-      tooltipOnContent: localeStrings.strings.callWithChat.peopleButtonTooltipClose
+      label: localeStrings.strings.call.peopleButtonLabel,
+      tooltipOffContent: localeStrings.strings.call.peopleButtonTooltipOpen,
+      tooltipOnContent: localeStrings.strings.call.peopleButtonTooltipClose
     }),
     [localeStrings]
   );
@@ -92,7 +94,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
     () => ({
       dialpadModalAriaLabel: localeStrings.strings.call.dialpadModalAriaLabel,
       dialpadCloseModalButtonAriaLabel: localeStrings.strings.call.dialpadCloseModalButtonAriaLabel,
-      placeholderText: localeStrings.strings.call.dtmfDialpadPlaceHolderText
+      placeholderText: localeStrings.strings.call.dtmfDialpadPlaceholderText
     }),
     [localeStrings]
   );
@@ -125,19 +127,21 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
       });
     }
 
-    items.push({
-      key: 'holdButtonKey',
-      text: localeStrings.component.strings.holdButton.tooltipOffContent,
-      onClick: () => {
-        holdButtonProps.onToggleHold();
-      },
-      iconProps: { iconName: 'HoldCallContextualMenuItem', styles: { root: { lineHeight: 0 } } },
-      itemProps: {
-        styles: buttonFlyoutIncreasedSizeStyles
-      },
-      disabled: isDisabled(options?.holdButton),
-      ['data-ui-id']: 'hold-button'
-    });
+    if (!isRoomsCallTrampoline()) {
+      items.push({
+        key: 'holdButtonKey',
+        text: localeStrings.component.strings.holdButton.tooltipOffContent,
+        onClick: () => {
+          holdButtonProps.onToggleHold();
+        },
+        iconProps: { iconName: 'HoldCallContextualMenuItem', styles: { root: { lineHeight: 0 } } },
+        itemProps: {
+          styles: buttonFlyoutIncreasedSizeStyles
+        },
+        disabled: isDisabled(options?.holdButton),
+        ['data-ui-id']: 'hold-button'
+      });
+    }
 
     /* @conditional-compile-remove(PSTN-calls) */
     // dtmf tone sending only works for 1:1 PSTN call
@@ -179,6 +183,21 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
     setShowDialpad(false);
   };
 
+  /* @conditional-compile-remove(rooms) */
+  const rolePermissions = _usePermissions();
+
+  let screenShareButtonIsEnabled = isEnabled(options?.screenShareButton);
+  /* @conditional-compile-remove(rooms) */
+  screenShareButtonIsEnabled = rolePermissions.screenShare && screenShareButtonIsEnabled;
+
+  let microphoneButtonIsEnabled = isEnabled(options?.microphoneButton);
+  /* @conditional-compile-remove(rooms) */
+  microphoneButtonIsEnabled = rolePermissions.microphoneButton && microphoneButtonIsEnabled;
+
+  let cameraButtonIsEnabled = isEnabled(options?.cameraButton);
+  /* @conditional-compile-remove(rooms) */
+  cameraButtonIsEnabled = rolePermissions.cameraButton && cameraButtonIsEnabled;
+
   return (
     <Stack horizontalAlign="center">
       {
@@ -199,13 +218,13 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
             occluding some of its content.
          */}
         <ControlBar layout="horizontal" styles={controlBarStyles(theme.semanticColors.bodyBackground)}>
-          {isEnabled(options?.microphoneButton) && (
+          {microphoneButtonIsEnabled && (
             <Microphone displayType={options?.displayType} disabled={isDisabled(options?.microphoneButton)} />
           )}
-          {isEnabled(options?.cameraButton) && (
+          {cameraButtonIsEnabled && (
             <Camera displayType={options?.displayType} disabled={isDisabled(options?.cameraButton)} />
           )}
-          {isEnabled(options?.screenShareButton) && (
+          {screenShareButtonIsEnabled && (
             <ScreenShare
               option={options?.screenShareButton}
               displayType={options?.displayType}
@@ -244,12 +263,12 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
           )}
           {
             /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */
-            isEnabled(options?.moreButton) && (
+            isEnabled(options?.moreButton) && moreButtonContextualMenuItems().length > 0 && (
               <MoreButton
                 strings={moreButtonStrings}
                 menuIconProps={{ hidden: true }}
                 menuProps={{ items: moreButtonContextualMenuItems() }}
-                showLabel={!props.isMobile}
+                showLabel={options?.displayType !== 'compact'}
               />
             )
           }
@@ -262,3 +281,13 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
 };
 
 const isEnabled = (option: unknown): boolean => option !== false;
+
+/** @private */
+export const isRoomsCallTrampoline = (): boolean => {
+  /* @conditional-compile-remove(rooms) */
+  const rolePermissions = _usePermissions();
+  /* @conditional-compile-remove(rooms) */
+  return !!rolePermissions.role;
+
+  return false;
+};

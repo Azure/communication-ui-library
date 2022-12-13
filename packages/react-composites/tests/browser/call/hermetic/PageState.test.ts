@@ -42,4 +42,24 @@ test.describe('Page state tests', async () => {
     await waitForSelector(page, dataUiId('call-composite-start-call-button'));
     expect(await stableScreenshot(page)).toMatchSnapshot('removed-from-call-page.png');
   });
+
+  /* @conditional-compile-remove(rooms) */
+  test('Page when local participant tries to join a room that cannot be not found', async ({ page, serverUrl }) => {
+    const initialState = defaultMockCallAdapterState();
+    initialState.page = 'roomNotFound';
+    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
+    await waitForPageFontsLoaded(page);
+    await waitForSelector(page, dataUiId('call-composite-start-call-button'));
+    expect(await stableScreenshot(page)).toMatchSnapshot('room-not-found-page.png');
+  });
+
+  /* @conditional-compile-remove(rooms) */
+  test('Page when local participant tries to join a room that they are not invited to', async ({ page, serverUrl }) => {
+    const initialState = defaultMockCallAdapterState();
+    initialState.page = 'deniedPermissionToRoom';
+    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
+    await waitForPageFontsLoaded(page);
+    await waitForSelector(page, dataUiId('call-composite-start-call-button'));
+    expect(await stableScreenshot(page)).toMatchSnapshot('permission-denied-to-room-page.png');
+  });
 });

@@ -5,14 +5,12 @@ import React, { useCallback, useState } from 'react';
 import { useLocale } from '../localization';
 import { VideoStreamOptions } from '../types';
 import { ControlBarButton, ControlBarButtonProps } from './ControlBarButton';
-import { HighContrastAwareIcon } from './HighContrastAwareIcon';
+import { _HighContrastAwareIcon } from './HighContrastAwareIcon';
 
 import { IContextualMenuItemStyles, IContextualMenuStyles } from '@fluentui/react';
 import { ControlBarButtonStyles } from './ControlBarButton';
 import { OptionsDevice, generateDefaultDeviceMenuProps } from './DevicesButton';
 import { Announcer } from './Announcer';
-/* @conditional-compile-remove(rooms) */
-import { _usePermissions } from '../permissions';
 
 const defaultLocalVideoViewOptions = {
   scalingMode: 'Crop',
@@ -148,17 +146,13 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
   const strings = { ...localeStrings, ...props.strings };
   const [announcerString, setAnnouncerString] = useState<string | undefined>(undefined);
 
-  let disabled = props.disabled || waitForCamera;
-  /* @conditional-compile-remove(rooms) */
-  const permissions = _usePermissions();
-  /* @conditional-compile-remove(rooms) */
-  disabled = disabled || !permissions.cameraButton;
+  const disabled = props.disabled || waitForCamera;
 
   const onRenderCameraOnIcon = (): JSX.Element => (
-    <HighContrastAwareIcon disabled={disabled} iconName="ControlButtonCameraOn" />
+    <_HighContrastAwareIcon disabled={disabled} iconName="ControlButtonCameraOn" />
   );
   const onRenderCameraOffIcon = (): JSX.Element => (
-    <HighContrastAwareIcon disabled={disabled} iconName="ControlButtonCameraOff" />
+    <_HighContrastAwareIcon disabled={disabled} iconName="ControlButtonCameraOff" />
   );
   if (waitForCamera && strings.tooltipVideoLoadingContent) {
     strings.tooltipDisabledContent = strings.tooltipVideoLoadingContent;

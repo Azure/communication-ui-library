@@ -31,7 +31,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Trigger touchdown build pipeline. Commit changes if current branch is not 'main'.
+      - name: Trigger touchdown build pipeline. Commit changes if specified on workflow dispatch input.
         uses: Azure/pipelines@v1.2
         with:
           azure-devops-project-url: 'https://skype.visualstudio.com/SCC'
@@ -57,7 +57,7 @@ jobs:
           if [ $issue_count -gt 0 ]; then
             echo "No need to create new issue, one already exists"
           else
-            curl -X POST -H 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' https://api.github.com/repos/Azure/communication-ui-library/issues -d '{"title":"Action to trigger TD Build failed", "body": "Please investigate failures of https://github.com/Azure/communication-ui-library/actions/workflows/run-td-build.yml", "labels":["TDBUILD_FAILURE"]}'
+            curl -X POST -H 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' https://api.github.com/repos/Azure/communication-ui-library/issues -d '{"title":"Action to trigger TD Build failed", "body": "Please investigate: https://github.com/Azure/communication-ui-library/actions/runs/${{ github.run_id }}", "labels":["TDBUILD_FAILURE"]}'
           fi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

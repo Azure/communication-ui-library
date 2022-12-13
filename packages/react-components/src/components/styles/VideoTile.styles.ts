@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IStyle, mergeStyles, Theme } from '@fluentui/react';
+import { IButtonStyles, IStyle, mergeStyles, Theme } from '@fluentui/react';
 
 /**
  * @private
@@ -87,14 +87,22 @@ export const displayNameStyle: IStyle = {
 /**
  * @private
  */
-export const iconContainerStyle = (theme: Theme): IStyle => ({
+export const pinIconStyle: IStyle = {
+  padding: '0.125rem'
+};
+
+/**
+ * @private
+ */
+export const iconContainerStyle: IStyle = {
   margin: 'auto',
   alignItems: 'center',
   '& svg': {
     display: 'block',
-    color: theme.palette.neutralPrimary
+    // Similar to text color, icon color will be inherited from parent container
+    color: 'inherit'
   }
-});
+};
 
 /**
  * @private
@@ -110,4 +118,25 @@ export const participantStateStringStyles = (theme: Theme): IStyle => {
     whiteSpace: 'nowrap',
     padding: '0.1rem'
   };
+};
+
+/**
+ * @private
+ */
+export const moreButtonStyles: IButtonStyles = {
+  root: {
+    // To ensure that the button is clickable when there is a floating video tile
+    zIndex: 1,
+    color: 'inherit',
+    height: '100%'
+  },
+  rootHovered: {
+    background: 'none'
+  },
+  rootPressed: {
+    background: 'none'
+  },
+  rootExpanded: {
+    background: 'none'
+  }
 };

@@ -35,7 +35,8 @@ export type {
   CallProviderProps,
   GetCallingSelector,
   CallingHandlers,
-  CallingBaseSelectorProps
+  CallingBaseSelectorProps,
+  CommonCallingHandlers
 } from '../../calling-component-bindings/src';
 export type {
   ChatClientProviderProps,
@@ -56,6 +57,16 @@ export {
   getCallingSelector,
   createDefaultCallingHandlers
 } from '../../calling-component-bindings/src';
+
+/* @conditional-compile-remove(teams-identity-support) */
+export {
+  useTeamsCallAgent,
+  useTeamsCall,
+  createDefaultTeamsCallingHandlers
+} from '../../calling-component-bindings/src';
+
+/* @conditional-compile-remove(teams-identity-support) */
+export type { TeamsCallingHandlers } from '../../calling-component-bindings/src';
 
 export type {
   ScreenShareButtonSelector,
@@ -116,6 +127,25 @@ export { HoldButton } from '../../react-components/src';
 
 /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
 export { Dialpad } from '../../react-components/src';
+
+/* @conditional-compile-remove(call-readiness) */
+export {
+  CameraAndMicrophoneDomainPermissions,
+  MicrophoneDomainPermissions,
+  CameraDomainPermissions
+} from '../../react-components/src';
+/* @conditional-compile-remove(call-readiness) */
+export type {
+  CameraAndMicrophoneDomainPermissionsStrings,
+  CameraAndMicrophoneDomainPermissionsProps,
+  CameraDomainPermissionsStrings,
+  CameraDomainPermissionsProps,
+  CommonDomainPermissionsProps,
+  DomainPermissionsStrings,
+  DomainPermissionsStyles,
+  MicrophoneDomainPermissionsStrings,
+  MicrophoneDomainPermissionsProps
+} from '../../react-components/src';
 
 export type {
   _IdentifierProviderProps,
@@ -229,11 +259,18 @@ export type {
 } from '../../react-components/src';
 /* @conditional-compile-remove(PSTN-calls) */
 export type { HoldButtonProps, HoldButtonStrings, VideoTileStrings } from '../../react-components/src';
-
+/* @conditional-compile-remove(call-readiness) */
+export type { BrowserPermissionDeniedStrings, BrowserPermissionDeniedProps } from '../../react-components/src';
+/* @conditional-compile-remove(call-readiness) */
+export type {
+  BrowserPermissionDeniedIOSStrings,
+  BrowserPermissionDeniedStyles,
+  BrowserPermissionDeniedIOSProps
+} from '../../react-components/src';
 export * from '../../react-components/src/localization/locales';
 export * from '../../react-components/src/theming';
-
-export * from '../../calling-stateful-client/src';
+export * from '../../calling-stateful-client/src/index-public';
+/* @conditional-compile-remove(one-to-n-calling) */
 export type { DeclarativeCallAgent } from '../../calling-stateful-client/src';
 export { createStatefulChatClient } from '../../chat-stateful-client/src';
 export type {
@@ -250,3 +287,24 @@ export type {
 } from '../../chat-stateful-client/src';
 export * from '../../react-composites/src/index-public';
 export * from './mergedHooks';
+
+/* @conditional-compile-remove(unsupported-browser) */
+export { UnsupportedBrowser } from '../../react-components/src';
+/* @conditional-compile-remove(unsupported-browser) */
+export type { UnsupportedBrowserStrings, UnsupportedBrowserProps } from '../../react-components/src';
+/* @conditional-compile-remove(unsupported-browser) */
+export { UnsupportedBrowserVersion } from '../../react-components/src';
+/* @conditional-compile-remove(unsupported-browser) */
+export type { UnsupportedBrowserVersionStrings, UnsupportedBrowserVersionProps } from '../../react-components/src';
+/* @conditional-compile-remove(unsupported-browser) */
+export { UnsupportedOperatingSystem } from '../../react-components/src';
+/* @conditional-compile-remove(unsupported-browser) */
+export type { UnsupportedOperatingSystemStrings, UnsupportedOperatingSystemProps } from '../../react-components/src';
+/* @conditional-compile-remove(call-readiness) */
+export { _DevicePermissionDropdown } from '../../react-components/src';
+/* @conditional-compile-remove(call-readiness) */
+export type {
+  _DevicePermissionDropdownStrings,
+  _DevicePermissionDropdownProps,
+  _PermissionConstraints
+} from '../../react-components/src';

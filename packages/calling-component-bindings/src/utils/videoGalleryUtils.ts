@@ -8,6 +8,7 @@ import {
 import { memoizeFnAll, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { RemoteParticipantState, RemoteVideoStreamState } from '@internal/calling-stateful-client';
 import { VideoGalleryRemoteParticipant, VideoGalleryStream } from '@internal/react-components';
+import memoizeOne from 'memoize-one';
 import { checkIsSpeaking } from './SelectorUtils';
 
 /** @internal */
@@ -110,6 +111,23 @@ const convertRemoteVideoStreamToVideoGalleryStream = (stream: RemoteVideoStreamS
     /* @conditional-compile-remove(video-stream-is-receiving-flag) */
     isReceiving: stream.isReceiving,
     isMirrored: stream.view?.isMirrored,
-    renderElement: stream.view?.target
+    renderElement: stream.view?.target,
+    /* @conditional-compile-remove(pinned-participants) */
+    scalingMode: stream.view?.scalingMode
   };
 };
+
+/** @private */
+export const memoizeLocalParticipant = memoizeOne(
+  (identifier, displayName, isMuted, isScreenSharingOn, localVideoStream) => ({
+    userId: identifier,
+    displayName: displayName ?? '',
+    isMuted: isMuted,
+    isScreenSharingOn: isScreenSharingOn,
+    videoStream: {
+      isAvailable: !!localVideoStream,
+      isMirrored: localVideoStream?.view?.isMirrored,
+      renderElement: localVideoStream?.view?.target
+    }
+  })
+);

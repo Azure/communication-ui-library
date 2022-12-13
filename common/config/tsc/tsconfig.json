@@ -3,6 +3,7 @@
     "target": "es6",
     "module": "esnext",
     "jsx": "react",
+    "inlineSources": true,
     "declaration": true,
     "declarationMap": true,
     "sourceMap": true,

@@ -10,7 +10,7 @@ import {
   useTheme
 } from '@internal/react-components';
 import React, { useMemo, useState } from 'react';
-import { CallAdapter, CallControlOptions } from '../';
+import { CommonCallAdapter, CallControlOptions } from '../';
 import { CallAdapterProvider } from '../adapter/CallAdapterProvider';
 import { AvatarPersonaDataCallback } from '../../common/AvatarPersona';
 import {
@@ -30,12 +30,13 @@ import { getPipStyles } from '../../common/styles/ModalLocalAndRemotePIP.styles'
 import { useMinMaxDragPosition } from '../../common/utils';
 import { availableSpaceStyles, hiddenStyles, sidePaneStyles, sidePaneTokens } from '../../common/styles/Pane.styles';
 /* @conditional-compile-remove(PSTN-calls) */
-import { CommunicationIdentifier } from '@azure/communication-common';
+import { PhoneNumberIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
 import { useAdapter } from '../adapter/CallAdapterProvider';
 import { isDisabled } from '../utils';
+import { CallSidePaneOption } from '../hooks/useSidePaneState';
 
 /**
  * Pane that is used to store participants for Call composite
@@ -43,13 +44,13 @@ import { isDisabled } from '../utils';
  */
 /** @beta */
 export const CallPane = (props: {
-  callAdapter: CallAdapter;
+  callAdapter: CommonCallAdapter;
   onClose: () => void;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
   onPeopleButtonClicked?: () => void;
   modalLayerHostId: string;
-  activePane: CallPaneOption;
+  activePane: CallSidePaneOption;
   mobileView?: boolean;
   inviteLink?: string;
   rtl?: boolean;
@@ -57,13 +58,12 @@ export const CallPane = (props: {
 }): JSX.Element => {
   const [drawerMenuItems, setDrawerMenuItems] = useState<_DrawerMenuItemProps[]>([]);
 
-  const hidden = props.activePane === 'none';
-  const paneStyles = hidden ? hiddenStyles : props.mobileView ? availableSpaceStyles : sidePaneStyles;
+  const paneStyles = !props.activePane ? hiddenStyles : props.mobileView ? availableSpaceStyles : sidePaneStyles;
   const localeStrings = useLocale();
 
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   const getStrings = () => {
-    /* @conditional-compile-remove(one-to-n-calling) */
+    /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
     return localeStrings.strings.call;
 
     return localeStrings.strings.callWithChat;
@@ -72,21 +72,20 @@ export const CallPane = (props: {
   const strings = getStrings();
   const theme = useTheme();
 
-  const header =
-    props.activePane === 'none' ? null : props.mobileView ? (
-      <TabHeader
-        {...props}
-        strings={strings}
-        activeTab={props.activePane}
-        disablePeopleButton={isDisabled(props.callControls?.participantsButton)}
-      />
-    ) : (
-      <SidePaneHeader
-        {...props}
-        strings={strings}
-        headingText={props.activePane === 'people' ? strings.peoplePaneTitle : ''}
-      />
-    );
+  const header = !props.activePane ? null : props.mobileView ? (
+    <TabHeader
+      {...props}
+      strings={strings}
+      activeTab={props.activePane}
+      disablePeopleButton={isDisabled(props.callControls?.participantsButton)}
+    />
+  ) : (
+    <SidePaneHeader
+      {...props}
+      strings={strings}
+      headingText={props.activePane === 'people' ? strings.peoplePaneTitle : ''}
+    />
+  );
 
   /**
    * In a Call Composite when a participant is removed, we must remove them from the call.
@@ -97,7 +96,7 @@ export const CallPane = (props: {
 
   /* @conditional-compile-remove(PSTN-calls) */
   const addParticipantToCall = async (
-    participant: CommunicationIdentifier,
+    participant: PhoneNumberIdentifier,
     options?: AddPhoneNumberOptions
   ): Promise<void> => {
     await props.callAdapter.addParticipant(participant, options);
@@ -121,6 +120,7 @@ export const CallPane = (props: {
             <Stack styles={props.activePane === 'people' ? availableSpaceStyles : hiddenStyles}>
               <CallAdapterProvider adapter={props.callAdapter}>
                 <PeoplePaneContent
+                  active={props.activePane === 'people'}
                   {...props}
                   onRemoveParticipant={removeParticipantFromCall}
                   /* @conditional-compile-remove(PSTN-calls) */
@@ -136,27 +136,21 @@ export const CallPane = (props: {
         </Stack>
       </Stack.Item>
       {props.mobileView && (
-        <ModalLocalAndRemotePIP
-          callAdapter={props.callAdapter}
-          modalLayerHostId={props.modalLayerHostId}
-          hidden={hidden}
-          styles={pipStyles}
-          minDragPosition={minMaxDragPosition.minDragPosition}
-          maxDragPosition={minMaxDragPosition.maxDragPosition}
-        />
+        <CallAdapterProvider adapter={props.callAdapter}>
+          <ModalLocalAndRemotePIP
+            modalLayerHostId={props.modalLayerHostId}
+            hidden={!props.activePane}
+            styles={pipStyles}
+            minDragPosition={minMaxDragPosition.minDragPosition}
+            maxDragPosition={minMaxDragPosition.maxDragPosition}
+          />
+        </CallAdapterProvider>
       )}
       {drawerMenuItems.length > 0 && (
-        <Stack styles={drawerContainerStyles}>
+        <Stack styles={drawerContainerStyles()}>
           <_DrawerMenu onLightDismiss={() => setDrawerMenuItems([])} items={drawerMenuItems} />
         </Stack>
       )}
     </Stack>
   );
 };
-
-/**
- * Active tab option type for {@link CallPane} component
- * @private
- */
-/** @beta */
-export type CallPaneOption = 'none' | 'people';

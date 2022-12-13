@@ -4,6 +4,7 @@ import {
   fromFlatCommunicationIdentifier,
   useAzureCommunicationCallAdapter
 } from '@azure/communication-react';
+import { initializeIcons } from '@fluentui/react';
 import React, { useMemo } from 'react';
 
 /**
@@ -32,7 +33,9 @@ const DISPLAY_NAME = '<Display Name>';
  *
  * You can obtain and manage phone numbers from the Azure portal as described here:
  * https://docs.microsoft.com/en-us/azure/communication-services/quickstarts/telephony/get-phone-number
- *
+ * This phone number should be in E.164 format.
+ * E.164 numbers are formatted as [+] [country code] [phone number including area code].
+ * For example, +14255550123 for a US phone number.
  */
 const ALTERNATE_CALLER_ID = '<Azure Communication Services Managed Phone Number>';
 
@@ -41,13 +44,15 @@ const ALTERNATE_CALLER_ID = '<Azure Communication Services Managed Phone Number>
  */
 const PHONE_NUMBERS = ['<Phone Number>'];
 
+initializeIcons();
+
 /**
  * Entry point of your application.
  */
 function App(): JSX.Element {
   // Arguments that would usually be provided by your backend service or
   // (indirectly) by the user.
-  const { userId, token, displayName, participantIDs, alternateCallerId } = useAzureCommunicationServiceArgs();
+  const { userId, token, displayName, participantIds, alternateCallerId } = useAzureCommunicationServiceArgs();
 
   // A well-formed token is required to initialize the chat and calling adapters.
   const credential = useMemo(() => {
@@ -67,9 +72,9 @@ function App(): JSX.Element {
       displayName,
       credential,
       alternateCallerId,
-      locator: { participantIDs }
+      locator: { participantIds }
     }),
-    [userId, credential, displayName, alternateCallerId, participantIDs]
+    [userId, credential, displayName, alternateCallerId, participantIds]
   );
   const callAdapter = useAzureCommunicationCallAdapter(callAdapterArgs);
 
@@ -94,14 +99,14 @@ function useAzureCommunicationServiceArgs(): {
   userId: string;
   token: string;
   displayName: string;
-  participantIDs: string[];
+  participantIds: string[];
   alternateCallerId: string;
 } {
   return {
     userId: USER_ID,
     token: TOKEN,
     displayName: DISPLAY_NAME,
-    participantIDs: PHONE_NUMBERS,
+    participantIds: PHONE_NUMBERS,
     alternateCallerId: ALTERNATE_CALLER_ID
   };
 }

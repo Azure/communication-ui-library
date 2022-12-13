@@ -28,5 +28,10 @@ export const IDS = {
   holdButton: 'hold-button',
   holdPage: 'hold-page',
   moreButton: 'call-with-chat-composite-more-button',
-  callPage: 'call-page'
+  callPage: 'call-page',
+  unsupportedEnvironmentIcon: 'unsupported-environment-icon',
+  unsupportedEnvironmentLink: 'unsupported-environment-link',
+  lobbyScreenTitle: 'lobbyScreenTitle',
+  allowUnsupportedBrowserButton: 'allowUnsupportedBrowserButton',
+  configurationScreenDevicesButton: 'call-composite-local-device-settings-options-button'
 };

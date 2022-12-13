@@ -44,7 +44,13 @@ export const EndScreen = (props: EndCallProps): JSX.Element => {
         return;
       }
 
-      await joinThread(threadId, userId, displayName);
+      // potential issue where someone changes the threadId in the url to something the adminUserId is not already in.
+      // this will throw an exception on the server and we will fail to rejoin the chat thread
+      const didJoin = await joinThread(threadId, userId, displayName);
+      if (!didJoin) {
+        console.error('invalid thread. unable to add the user to this thread');
+        return;
+      }
 
       setIsRejoiningThread(true);
       rejoinHandler();

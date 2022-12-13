@@ -22,16 +22,16 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@azure/communication-react": "1.3.2-beta.0",
+    "@azure/communication-react": "1.4.2-beta.0",
     "@azure/communication-common": "2.0.0",
-    "@azure/communication-calling": "1.6.1-beta.1 || 1.4.4",
-    "@azure/communication-chat": "1.2.0",
+    "@azure/communication-calling": "1.9.1-beta.1 || >=1.4.4",
+    "@azure/communication-chat": ">=1.2.0",
     "react": "~16.14.0",
     "react-dom": "16.13.1",
     "uuid": "^8.1.0"
   },
   "devDependencies": {
-    "@azure/communication-identity": "1.0.0",
+    "@azure/communication-identity": "~1.1.0",
     "@babel/core": "~7.16.0",
     "@playwright/test": "~1.22.2",
     "@types/copy-webpack-plugin": "^6.4.0",

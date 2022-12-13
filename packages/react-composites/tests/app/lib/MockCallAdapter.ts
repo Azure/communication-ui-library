@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import { AudioDeviceInfo, Call, VideoDeviceInfo } from '@azure/communication-calling';
+import { AudioDeviceInfo, Call, EnvironmentInfo, VideoDeviceInfo } from '@azure/communication-calling';
 import type { CallAdapter, CallAdapterState } from '../../../src';
 import type { MockCallAdapterState } from '../../common';
 import { produce } from 'immer';
@@ -37,6 +37,9 @@ export class MockCallAdapter implements CallAdapter {
   }
   getState(): CallAdapterState {
     return this._state;
+  }
+  allowUnsupportedBrowserVersion(): void {
+    throw Error('allowWithUnsupportedBrowserVersion not implemented');
   }
   dispose(): void {
     throw Error('dispose not implemented');
@@ -97,6 +100,9 @@ export class MockCallAdapter implements CallAdapter {
   }
   sendDtmfTone(): Promise<void> {
     throw Error('sendDtmfTone not implemented');
+  }
+  getEnvironmentInfo(): Promise<EnvironmentInfo> {
+    throw Error('getEnvironmentInfo not implemented');
   }
   async setCamera(sourceInfo: VideoDeviceInfo): Promise<void> {
     this.modifyState((draft: CallAdapterState) => {

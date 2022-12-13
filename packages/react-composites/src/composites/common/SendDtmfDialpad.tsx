@@ -7,8 +7,8 @@ import { _DrawerMenu, _DrawerMenuItemProps, _DrawerSurface } from '@internal/rea
 import { IModalStyles, Modal, Stack, useTheme, IconButton } from '@fluentui/react';
 
 import { themeddialpadModalStyle, themedDialpadStyle } from './SendDtmfDialpad.styles';
-import { drawerContainerStyles } from '../CallWithChatComposite/styles/CallWithChatCompositeStyles';
 import { usePropsFor } from '../CallComposite/hooks/usePropsFor';
+import { drawerContainerStyles } from '../CallComposite/styles/CallComposite.styles';
 
 /** @private */
 export interface SendDtmfDialpadStrings {
@@ -40,7 +40,11 @@ export const SendDtmfDialpad = (props: SendDtmfDialpadProps): JSX.Element => {
   const [textFieldValue, setTextFieldValue] = useState<string>();
 
   const onChange = (input: string): void => {
-    setTextFieldValue(input);
+    if (input.length > 25) {
+      setTextFieldValue(input.slice(1));
+    } else {
+      setTextFieldValue(input);
+    }
   };
 
   const dialpadModalStyle: Partial<IModalStyles> = useMemo(() => themeddialpadModalStyle(theme), [theme]);
@@ -51,7 +55,7 @@ export const SendDtmfDialpad = (props: SendDtmfDialpadProps): JSX.Element => {
     return (
       <Stack>
         {showDialpad && (
-          <Stack styles={drawerContainerStyles}>
+          <Stack styles={drawerContainerStyles()}>
             <_DrawerSurface onLightDismiss={onDismissTriggered}>
               <Stack style={{ padding: '1rem' }}>
                 <Dialpad

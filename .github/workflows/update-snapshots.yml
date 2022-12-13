@@ -1,0 +1,516 @@
+name: Update snapshots
+
+on:
+  workflow_dispatch:
+  pull_request:
+    types: [labeled]
+
+# cancel workflow when a newer version of the workflow is triggered on the same github ref
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  precondition:
+    name: Determine if this workflow is applicable
+    runs-on: ubuntu-latest
+    outputs:
+      met: ${{ steps.label.outputs.found || steps.workflow_dispatch.outputs.found }}
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          # Use a machine account when checking out. This is to workaround the issue where GitHub
+          # actions, when using the default account, cannot trigger other actions.
+          # This machine account is only for this PAT, pwd was created and thrown away
+          # If an update is needed, create a new account, add access to the repo and generate a new PAT
+          token: ${{ secrets.MACHINE_ACCOUNT_PAT }}
+      - name: Found workflow disptach
+        id: workflow_dispatch
+        if: ${{ github.event_name == 'workflow_dispatch' }}
+        run: echo "found=true" >> $GITHUB_OUTPUT
+      - name: Found required label
+        id: label
+        if: ${{ github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'update_snapshots') }}
+        env:
+          # Required for running `gh`.
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "found=true" >> $GITHUB_OUTPUT
+          gh pr edit ${{ github.event.number }} --remove-label update_snapshots
+
+  get_matrix:
+    name: Set CI flavors
+    needs: precondition
+    if: needs.precondition.outputs.met
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.get-matrix.outputs.matrix }}
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Use Node.js v14.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: '14.x'
+      - id: get-matrix
+        run: echo "matrix=$(node ./common/scripts/workflow-read-matrix.mjs)" >> $GITHUB_OUTPUT
+
+  component_examples:
+    needs: [precondition, get_matrix]
+    if: needs.precondition.outputs.met
+    name: Update component examples snapshots
+    runs-on: ubuntu-latest
+    strategy:
+      matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          # Use a machine account when checking out. This is to workaround the issue where GitHub
+          # actions, when using the default account, cannot trigger other actions.
+          # This machine account is only for this PAT, pwd was created and thrown away
+          # If an update is needed, create a new account, add access to the repo and generate a new PAT
+          token: ${{ secrets.MACHINE_ACCOUNT_PAT }}
+      - name: Checkout branch if on a PR
+        if: ${{ github.event_name != 'workflow_dispatch' }}
+        # On the `pull_request` event, actions/checkout@v2 leaves the local checkout in a detached head state.
+        # Explicitly checkout the target branch so we can push later.
+        run: git checkout ${{ github.event.pull_request.head.ref }}
+      - name: Setup bot git information
+        # User id of github actions bot. See https://api.github.com/users/better-informatics%5Bbot%5D
+        run: |
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+      - name: Use Node.js v14.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: '14.x'
+      - name: Restore node_modules from cache
+        uses: actions/cache@v2
+        with:
+          path: common/temp/pnpm-store
+          key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
+      - name: Install rush
+        run: npm install -g @microsoft/rush@5.47.0
+      - name: Install dependencies
+        run: rush install
+      - name: Switch flavor for stable build
+        if: ${{ matrix.flavor == 'stable' }}
+        run: rush switch-flavor:stable
+      - name: Build Packages
+        run: rush build -t @azure/communication-react
+      - name: Build component examples sample application
+        run: rush build -t component-examples
+      - name: Update snapshots
+        id: updatesnapshots
+        run: |
+          cd samples/tests
+          rushx update:snapshot:examples
+        env:
+          CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
+      - name: Upload test results on failure
+        if: ${{ always() && steps.updatesnapshots.outcome == 'failure' }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: snapshots
+          path: samples/tests/test-results
+      # Check if files have changed
+      # More information see: https://stackoverflow.com/questions/3878624/how-do-i-programmatically-determine-if-there-are-uncommitted-changes
+      - name: Check for snapshot changes
+        id: changescheck
+        run: |
+          if [[ -z $(git status samples/tests -s) ]]
+          then
+            echo "hasChanged=false" >> $GITHUB_OUTPUT
+          else
+            echo "hasChanged=true" >> $GITHUB_OUTPUT
+            exit
+          fi
+      - name: Create a patch file for snapshot updates
+        if: ${{ steps.changescheck.outputs.hasChanged == 'true' }}
+        run: |
+          git add samples/tests/*.png
+          git commit -m 'Update component examples snapshots'
+          git format-patch -1 --output=component-examples.patch
+      - name: Upload snapshot updates, if any
+        if: ${{ steps.changescheck.outputs.hasChanged == 'true' }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: component-examples.patch
+          path: component-examples.patch
+
+  html_bundle:
+    needs: [precondition, get_matrix]
+    if: needs.precondition.outputs.met
+    name: Update embed html bundle snapshots
+    runs-on: ubuntu-latest
+    strategy:
+      matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          # Use a machine account when checking out. This is to workaround the issue where GitHub
+          # actions, when using the default account, cannot trigger other actions.
+          # This machine account is only for this PAT, pwd was created and thrown away
+          # If an update is needed, create a new account, add access to the repo and generate a new PAT
+          token: ${{ secrets.MACHINE_ACCOUNT_PAT }}
+      - name: Checkout branch if on a PR
+        if: ${{ github.event_name != 'workflow_dispatch' }}
+        # On the `pull_request` event, actions/checkout@v2 leaves the local checkout in a detached head state.
+        # Explicitly checkout the target branch so we can push later.
+        run: git checkout ${{ github.event.pull_request.head.ref }}
+      - name: Setup bot git information
+        # User id of github actions bot. See https://api.github.com/users/better-informatics%5Bbot%5D
+        run: |
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+      - name: Use Node.js v14.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: '14.x'
+      - name: Restore node_modules from cache
+        uses: actions/cache@v2
+        with:
+          path: common/temp/pnpm-store
+          key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
+      - name: Install rush
+        run: npm install -g @microsoft/rush@5.47.0
+      - name: Install dependencies
+        run: rush install
+      - name: Switch flavor for stable build
+        if: ${{ matrix.flavor == 'stable' }}
+        run: rush switch-flavor:stable
+      - name: Build Packages
+        run: rush build -t @azure/communication-react
+      - name: Build static HTML composite sample application
+        run: rush build -t sample-static-html-composites
+      - name: Update snapshot
+        id: updatesnapshots
+        run: |
+          cd samples/tests
+          rushx update:snapshot:bundle
+        env:
+          CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
+      - name: Upload snapshot diff
+        if: ${{ always() && steps.updatesnapshots.outcome == 'failure' }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: snapshots
+          path: samples/tests/test-results
+      # Check if files have changed
+      # More information see: https://stackoverflow.com/questions/3878624/how-do-i-programmatically-determine-if-there-are-uncommitted-changes
+      - name: Check for snapshot changes
+        id: changescheck
+        run: |
+          if [[ -z $(git status samples/tests -s) ]]
+          then
+            echo "hasChanged=false" >> $GITHUB_OUTPUT
+          else
+            echo "hasChanged=true" >> $GITHUB_OUTPUT
+            exit
+          fi
+      - name: Push new snapshots, if any
+        if: ${{ steps.changescheck.outputs.hasChanged == 'true' }}
+        # Before pushing changes to origin, merge any intervening changes on the upstream branch.
+        # This allows multiple snapshot update jobs in this action to run concurrently.
+        # - The only files updated locally are UI snapshots
+        # - Each job is responsible for a unique set of UI snapshots
+        # Thus we do not expect any merge conflicts due to the concurrent jobs from this workflows.
+        #
+        # If the UI snapshots are updated in the upstream branch while this job was running
+        # (e.g., due to a merge from the base_ref for a PR), this merge will fail, and the
+        # workflow will have to be triggered again. This is the desired behavior because the workflow
+        # should not silently overwrite updates to the target branch.
+        run: |
+          git add samples/tests/*.png
+          git commit -m 'Update embed html bundle snapshots'
+          git pull origin ${{ needs.get_target_branch.outputs.target }} --no-rebase --no-edit
+          git push
+
+  call_composite:
+    needs: [precondition, get_matrix]
+    if: needs.precondition.outputs.met
+    name: Update packages/react-composites CallComposite browser test snapshots
+    runs-on: ubuntu-latest
+    strategy:
+      matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          # Use a machine account when checking out. This is to workaround the issue where GitHub
+          # actions, when using the default account, cannot trigger other actions.
+          # This machine account is only for this PAT, pwd was created and thrown away
+          # If an update is needed, create a new account, add access to the repo and generate a new PAT
+          token: ${{ secrets.MACHINE_ACCOUNT_PAT }}
+      - name: Checkout branch if on a PR
+        if: ${{ github.event_name != 'workflow_dispatch' }}
+        # On the `pull_request` event, actions/checkout@v2 leaves the local checkout in a detached head state.
+        # Explicitly checkout the target branch so we can push later.
+        run: git checkout ${{ github.event.pull_request.head.ref }}
+      - name: Setup bot git information
+        # User id of github actions bot. See https://api.github.com/users/better-informatics%5Bbot%5D
+        run: |
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+      - name: Use Node.js v14.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: '14.x'
+      - name: Restore node_modules from cache
+        uses: actions/cache@v2
+        with:
+          path: common/temp/pnpm-store
+          key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
+      - name: Install rush
+        run: npm install -g @microsoft/rush@5.47.0
+      - name: Install dependencies
+        run: rush install
+      - name: Switch flavor for stable build
+        if: ${{ matrix.flavor == 'stable' }}
+        run: rush switch-flavor:stable
+      - name: Build packages/react-composites browser tests
+        working-directory: ./packages/react-composites
+        run: rushx build:e2e:call
+      - name: Install packlets used by browser tests
+        run: |
+          cd packages/react-composites
+          rush build -t .
+      - name: Update CallComposite snapshot
+        id: update-call-snapshots
+        run: rushx test:e2e:call:update
+        working-directory: ./packages/react-composites
+        env:
+          CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
+      - name: Upload snapshot diff
+        if: ${{ always() && steps.update-call-snapshots.outcome == 'failure' }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: snapshots
+          path: packages/react-composites/test-results
+      # Check if files have changed
+      # More information see: https://stackoverflow.com/questions/3878624/how-do-i-programmatically-determine-if-there-are-uncommitted-changes
+      - name: Check for snapshot changes
+        id: changescheck
+        run: |
+          if [[ -z $(git status packages -s) ]]
+          then
+            echo "hasChanged=false" >> $GITHUB_OUTPUT
+          else
+            echo "hasChanged=true" >> $GITHUB_OUTPUT
+          fi
+      - name: Push new snapshots, if any
+        if: ${{ steps.changescheck.outputs.hasChanged == 'true' }}
+        # Before pushing changes to origin, merge any intervening changes on the upstream branch.
+        # This allows multiple snapshot update jobs in this action to run concurrently.
+        # - The only files updated locally are UI snapshots
+        # - Each job is responsible for a unique set of UI snapshots
+        # Thus we do not expect any merge conflicts due to the concurrent jobs from this workflows.
+        #
+        # If the UI snapshots are updated in the upstream branch while this job was running
+        # (e.g., due to a merge from the base_ref for a PR), this merge will fail, and the
+        # workflow will have to be triggered again. This is the desired behavior because the workflow
+        # should not silently overwrite updates to the target branch.
+        run: |
+          git add packages/react-composites/*.png
+          git commit -m 'Update packages/react-composites CallComposite browser test snapshots'
+          git pull origin ${{ needs.get_target_branch.outputs.target }} --no-rebase --no-edit
+          git push
+
+  chat_composite:
+    needs: [precondition, get_matrix]
+    if: needs.precondition.outputs.met
+    name: Update packages/react-composites ChatComposite browser test snapshots
+    runs-on: ubuntu-latest
+    strategy:
+      matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          # Use a machine account when checking out. This is to workaround the issue where GitHub
+          # actions, when using the default account, cannot trigger other actions.
+          # This machine account is only for this PAT, pwd was created and thrown away
+          # If an update is needed, create a new account, add access to the repo and generate a new PAT
+          token: ${{ secrets.MACHINE_ACCOUNT_PAT }}
+      - name: Checkout branch if on a PR
+        if: ${{ github.event_name != 'workflow_dispatch' }}
+        # On the `pull_request` event, actions/checkout@v2 leaves the local checkout in a detached head state.
+        # Explicitly checkout the target branch so we can push later.
+        run: git checkout ${{ github.event.pull_request.head.ref }}
+      - name: Setup bot git information
+        # User id of github actions bot. See https://api.github.com/users/better-informatics%5Bbot%5D
+        run: |
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+      - name: Use Node.js v14.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: '14.x'
+      - name: Restore node_modules from cache
+        uses: actions/cache@v2
+        with:
+          path: common/temp/pnpm-store
+          key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
+      - name: Install rush
+        run: npm install -g @microsoft/rush@5.47.0
+      - name: Install dependencies
+        run: rush install
+      - name: Switch flavor for stable build
+        if: ${{ matrix.flavor == 'stable' }}
+        run: rush switch-flavor:stable
+      - name: Build packages/react-composites browser tests
+        working-directory: ./packages/react-composites
+        run: rushx build:e2e:chat
+      - name: Install packlets used by browser tests
+        run: |
+          cd packages/react-composites
+          rush build -t .
+      - name: Update chat snapshot
+        id: update-chat-snapshots
+        run: rushx test:e2e:chat:update
+        working-directory: ./packages/react-composites
+        env:
+          CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
+      - name: Upload snapshot diff
+        if: ${{ always() && steps.update-chat-snapshots.outcome == 'failure' }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: snapshots
+          path: packages/react-composites/test-results
+      # Check if files have changed
+      # More information see: https://stackoverflow.com/questions/3878624/how-do-i-programmatically-determine-if-there-are-uncommitted-changes
+      - name: Check for snapshot changes
+        id: changescheck
+        run: |
+          if [[ -z $(git status packages -s) ]]
+          then
+            echo "hasChanged=false" >> $GITHUB_OUTPUT
+          else
+            echo "hasChanged=true" >> $GITHUB_OUTPUT
+          fi
+      - name: Push new snapshots, if any
+        if: ${{ steps.changescheck.outputs.hasChanged == 'true' }}
+        # Before pushing changes to origin, merge any intervening changes on the upstream branch.
+        # This allows multiple snapshot update jobs in this action to run concurrently.
+        # - The only files updated locally are UI snapshots
+        # - Each job is responsible for a unique set of UI snapshots
+        # Thus we do not expect any merge conflicts due to the concurrent jobs from this workflows.
+        #
+        # If the UI snapshots are updated in the upstream branch while this job was running
+        # (e.g., due to a merge from the base_ref for a PR), this merge will fail, and the
+        # workflow will have to be triggered again. This is the desired behavior because the workflow
+        # should not silently overwrite updates to the target branch.
+        run: |
+          git add packages/react-composites/*.png
+          git commit -m 'Update packages/react-composites ChatComposite browser test snapshots'
+          git pull origin ${{ needs.get_target_branch.outputs.target }} --no-rebase --no-edit
+          git push
+
+  callwithchat_composite:
+    needs: [precondition, get_matrix]
+    if: needs.precondition.outputs.met
+    name: Update packages/react-composites CallWithChatComposite browser test snapshots
+    runs-on: ubuntu-latest
+    strategy:
+      matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          # Use a machine account when checking out. This is to workaround the issue where GitHub
+          # actions, when using the default account, cannot trigger other actions.
+          # This machine account is only for this PAT, pwd was created and thrown away
+          # If an update is needed, create a new account, add access to the repo and generate a new PAT
+          token: ${{ secrets.MACHINE_ACCOUNT_PAT }}
+      - name: Checkout branch if on a PR
+        if: ${{ github.event_name != 'workflow_dispatch' }}
+        # On the `pull_request` event, actions/checkout@v2 leaves the local checkout in a detached head state.
+        # Explicitly checkout the target branch so we can push later.
+        run: git checkout ${{ github.event.pull_request.head.ref }}
+      - name: Setup bot git information
+        # User id of github actions bot. See https://api.github.com/users/better-informatics%5Bbot%5D
+        run: |
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+      - name: Use Node.js v14.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: '14.x'
+      - name: Restore node_modules from cache
+        uses: actions/cache@v2
+        with:
+          path: common/temp/pnpm-store
+          key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
+      - name: Install rush
+        run: npm install -g @microsoft/rush@5.47.0
+      - name: Install dependencies
+        run: rush install
+      - name: Switch flavor for stable build
+        if: ${{ matrix.flavor == 'stable' }}
+        run: rush switch-flavor:stable
+      - name: Build packages/react-composites browser tests
+        working-directory: ./packages/react-composites
+        run: rushx build:e2e:callwithchat
+      - name: Install packlets used by browser tests
+        run: |
+          cd packages/react-composites
+          rush build -t .
+      - name: Update call with chat snapshot
+        id: update-call-with-chat-snapshots
+        run: rushx test:e2e:callwithchat:update
+        working-directory: ./packages/react-composites
+        env:
+          CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
+      - name: Upload snapshot diff
+        if: ${{ always() && steps.update-call-with-chat-snapshots.outcome == 'failure' }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: snapshots
+          path: packages/react-composites/test-results
+      # Check if files have changed
+      # More information see: https://stackoverflow.com/questions/3878624/how-do-i-programmatically-determine-if-there-are-uncommitted-changes
+      - name: Check for snapshot changes
+        id: changescheck
+        run: |
+          if [[ -z $(git status packages -s) ]]
+          then
+            echo "hasChanged=false" >> $GITHUB_OUTPUT
+          else
+            echo "hasChanged=true" >> $GITHUB_OUTPUT
+          fi
+      - name: Push new snapshots, if any
+        if: ${{ steps.changescheck.outputs.hasChanged == 'true' }}
+        # Before pushing changes to origin, merge any intervening changes on the upstream branch.
+        # This allows multiple snapshot update jobs in this action to run concurrently.
+        # - The only files updated locally are UI snapshots
+        # - Each job is responsible for a unique set of UI snapshots
+        # Thus we do not expect any merge conflicts due to the concurrent jobs from this workflows.
+        #
+        # If the UI snapshots are updated in the upstream branch while this job was running
+        # (e.g., due to a merge from the base_ref for a PR), this merge will fail, and the
+        # workflow will have to be triggered again. This is the desired behavior because the workflow
+        # should not silently overwrite updates to the target branch.
+        run: |
+          git add packages/react-composites/*.png
+          git commit -m 'Update packages/react-composites CallWithChatComposite browser test snapshots'
+          git pull origin ${{ needs.get_target_branch.outputs.target }} --no-rebase --no-edit
+          git push
+
+  push_updated_snapshots:
+    needs: [component_examples, html_bundle, call_composite, chat_composite, callwithchat_composite]
+    if: needs.precondition.outputs.met
+    name: Push all updated snapshots to branch
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          # Use a machine account when checking out. This is to workaround the issue where GitHub
+          # actions, when using the default account, cannot trigger other actions.
+          # This machine account is only for this PAT, pwd was created and thrown away
+          # If an update is needed, create a new account, add access to the repo and generate a new PAT
+          token: ${{ secrets.MACHINE_ACCOUNT_PAT }}

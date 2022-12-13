@@ -2,6 +2,8 @@
 // Licensed under the MIT license.
 
 import { mergeStyles } from '@fluentui/react';
+/* @conditional-compile-remove(call-readiness) */ /* @conditional-compile-remove(unsupported-browser) */
+import { Stack } from '@fluentui/react';
 import {
   ArrowClockwise16Regular,
   CallEnd20Filled,
@@ -40,16 +42,32 @@ import {
   MicProhibited16Filled,
   VideoProhibited16Filled
 } from '@fluentui/react-icons';
+/* @conditional-compile-remove(call-readiness) */
+import { Important20Filled } from '@fluentui/react-icons';
+
+/* @conditional-compile-remove(pinned-participants) */
+import { Pin16Filled, ScaleFit20Regular, ScaleFill20Regular } from '@fluentui/react-icons';
 
 /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
 import { Backspace20Regular } from '@fluentui/react-icons';
+
+/* @conditional-compile-remove(call-readiness) */
+import { Sparkle20Filled, VideoProhibited20Filled, MicProhibited20Filled } from '@fluentui/react-icons';
 
 /* @conditional-compile-remove(file-sharing) */
 import { ArrowDownload16Regular } from '@fluentui/react-icons';
 /* @conditional-compile-remove(PSTN-calls) */
 import { CallPause20Regular, CallPause20Filled, Play20Regular, People20Regular } from '@fluentui/react-icons';
 
+/* @conditional-compile-remove(unsupported-browser) */
+import { Warning20Filled } from '@fluentui/react-icons';
+import { _pxToRem } from '@internal/acs-ui-common';
+
 import React from 'react';
+/* @conditional-compile-remove(unsupported-browser) */
+import { useTheme } from './FluentThemeProvider';
+/* @conditional-compile-remove(call-readiness) */
+import { domainPermissionIconBackgroundStyle, scaledIconStyles } from './icons.styles';
 
 /**
  * Icons used by the React components exported from this library.
@@ -75,6 +93,96 @@ const MoreHorizontal18Regular = (): JSX.Element => (
     <MoreHorizontal20Regular />
   </div>
 );
+
+/* @conditional-compile-remove(call-readiness) */
+const DomainPermissionMic20Filled = (): JSX.Element => {
+  const theme = useTheme();
+  return (
+    <Stack horizontalAlign={'center'} styles={domainPermissionIconBackgroundStyle(theme)}>
+      <div className={mergeStyles(scaledIconStyles(theme))}>
+        <MicOn20Filled />
+      </div>
+    </Stack>
+  );
+};
+
+/* @conditional-compile-remove(call-readiness) */
+const DomainPermissionCamera20Filled = (): JSX.Element => {
+  const theme = useTheme();
+  return (
+    <Stack horizontalAlign={'center'} styles={domainPermissionIconBackgroundStyle(theme)}>
+      <div className={mergeStyles(scaledIconStyles(theme))}>
+        <Video20Filled />
+      </div>
+    </Stack>
+  );
+};
+
+/* @conditional-compile-remove(call-readiness) */
+const DomainPermissionsMicDenied20Filled = (): JSX.Element => {
+  const theme = useTheme();
+  return (
+    <Stack horizontalAlign={'center'} styles={domainPermissionIconBackgroundStyle(theme)}>
+      <div className={mergeStyles(scaledIconStyles(theme))}>
+        <MicProhibited20Filled />
+      </div>
+    </Stack>
+  );
+};
+
+/* @conditional-compile-remove(call-readiness) */
+const DomainPermissionsCameraDenied20Filled = (): JSX.Element => {
+  const theme = useTheme();
+  return (
+    <Stack horizontalAlign={'center'} styles={domainPermissionIconBackgroundStyle(theme)}>
+      <div className={mergeStyles(scaledIconStyles(theme))}>
+        <VideoProhibited20Filled />
+      </div>
+    </Stack>
+  );
+};
+
+/* @conditional-compile-remove(call-readiness) */
+const DomainPermissionSparkle20Filled = (): JSX.Element => (
+  <div className={mergeStyles({ transform: 'scale(2)' })}>
+    <Sparkle20Filled />
+  </div>
+);
+
+/* @conditional-compile-remove(unsupported-browser) */
+const UnsupportedEnvironmentWarning = (): JSX.Element => {
+  const theme = useTheme();
+  return (
+    <Stack
+      horizontalAlign={'center'}
+      styles={{
+        root: {
+          width: _pxToRem(84),
+          borderRadius: '100%',
+          background: theme.palette.themeLighterAlt,
+          padding: '2rem',
+          margin: 'auto'
+        }
+      }}
+    >
+      <div className={mergeStyles(scaledIconStyles(theme))}>
+        <Warning20Filled />
+      </div>
+    </Stack>
+  );
+};
+
+/* @conditional-compile-remove(call-readiness) */
+const BrowserPermissionDenied20Filled = (): JSX.Element => {
+  const theme = useTheme();
+  return (
+    <Stack horizontalAlign={'center'} styles={domainPermissionIconBackgroundStyle(theme)}>
+      <div className={mergeStyles(scaledIconStyles(theme))}>
+        <Important20Filled />
+      </div>
+    </Stack>
+  );
+};
 
 /**
  * The default set of icons that are available to use in the UI components.
@@ -129,7 +237,7 @@ export const DEFAULT_COMPONENT_ICONS = {
   OptionsMic: <MicOn20Regular />,
   OptionsSpeaker: <Speaker220Regular />,
   ParticipantItemMicOff: <MicOff16Regular />,
-  ParticipantItemOptions: <MoreHorizontal20Regular />,
+  ParticipantItemOptions: <></>,
   ParticipantItemOptionsHovered: <MoreHorizontal20Filled />,
   ParticipantItemScreenShareStart: <ShareScreenStart20Filled />,
   /* @conditional-compile-remove(PSTN-calls) */
@@ -142,5 +250,27 @@ export const DEFAULT_COMPONENT_ICONS = {
   SendBoxSendHovered: <Send20Filled />,
   VideoTileMicOff: <MicOff16Filled />,
   /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
-  BackSpace: <Backspace20Regular />
+  DialpadBackspace: <Backspace20Regular />,
+  /* @conditional-compile-remove(call-readiness) */
+  DomainPermissionsSparkle: <DomainPermissionSparkle20Filled />,
+  /* @conditional-compile-remove(call-readiness) */
+  DomainPermissionCamera: <DomainPermissionCamera20Filled />,
+  /* @conditional-compile-remove(call-readiness) */
+  DomainPermissionMic: <DomainPermissionMic20Filled />,
+  /* @conditional-compile-remove(call-readiness) */
+  DomainPermissionCameraDenied: <DomainPermissionsCameraDenied20Filled />,
+  /* @conditional-compile-remove(call-readiness) */
+  DomainPermissionMicDenied: <DomainPermissionsMicDenied20Filled />,
+  /* @conditional-compile-remove(unsupported-browser) */
+  UnsupportedEnvironmentWarning: <UnsupportedEnvironmentWarning />,
+  /* @conditional-compile-remove(call-readiness) */
+  BrowserPermissionDeniedError: <BrowserPermissionDenied20Filled />,
+  /* @conditional-compile-remove(pinned-participants) */
+  VideoTilePinned: <Pin16Filled />,
+  /* @conditional-compile-remove(pinned-participants) */
+  VideoTileMoreOptions: <MoreHorizontal20Filled />,
+  /* @conditional-compile-remove(pinned-participants) */
+  VideoTileScaleFit: <ScaleFit20Regular />,
+  /* @conditional-compile-remove(pinned-participants) */
+  VideoTileScaleFill: <ScaleFill20Regular />
 };

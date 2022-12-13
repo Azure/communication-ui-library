@@ -4,11 +4,10 @@
 import { AzureCommunicationTokenCredential } from '@azure/communication-common';
 import { ChatClient, CreateChatThreadOptions, CreateChatThreadRequest } from '@azure/communication-chat';
 import { getEndpoint } from '../envHelper';
-import { threadIdToModeratorCredentialMap } from './threadIdToModeratorTokenMap';
-import { createUser, getToken } from '../identityClient';
+import { getAdminUser, getToken } from '../identityClient';
 
 export const createThread = async (topicName?: string): Promise<string> => {
-  const user = await createUser();
+  const user = await getAdminUser();
 
   const credential = new AzureCommunicationTokenCredential({
     tokenRefresher: async () => (await getToken(user, ['chat', 'voip'])).token,
@@ -35,6 +34,5 @@ export const createThread = async (topicName?: string): Promise<string> => {
     throw new Error(`Invalid or missing ID for newly created thread ${result.chatThread}`);
   }
 
-  threadIdToModeratorCredentialMap.set(threadID, credential);
   return threadID;
 };

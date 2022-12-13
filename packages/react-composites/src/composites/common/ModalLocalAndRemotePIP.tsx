@@ -2,13 +2,13 @@
 // Licensed under the MIT license.
 import { concatStyleSets, ContextualMenu, IDragOptions, Stack } from '@fluentui/react';
 import React, { useMemo } from 'react';
-import { CallAdapter } from '../CallComposite';
-import { CallAdapterProvider } from '../CallComposite/adapter/CallAdapterProvider';
 import { LocalAndRemotePIP } from '../CallComposite/components/LocalAndRemotePIP';
 import { useHandlers } from '../CallComposite/hooks/useHandlers';
 import { useSelector } from '../CallComposite/hooks/useSelector';
 import { localAndRemotePIPSelector } from '../CallComposite/selectors/localAndRemotePIPSelector';
 import { _ModalClone, _ICoordinates } from '@internal/react-components';
+/* @conditional-compile-remove(rooms) */
+import { _RemoteVideoTile, _usePermissions } from '@internal/react-components';
 import {
   hiddenStyle,
   ModalLocalAndRemotePIPStyles,
@@ -26,20 +26,47 @@ const DRAG_OPTIONS: IDragOptions = {
   keepInBounds: true
 };
 
-const _ModalLocalAndRemotePIP = (props: {
+/**
+ * A wrapping component with a draggable {@link LocalAndRemotePIP} component that is bound to a LayerHost component with id
+ * specified by `modalLayerHostId` prop
+ * @private
+ */
+export const ModalLocalAndRemotePIP = (props: {
   hidden: boolean;
   modalLayerHostId: string;
   styles?: ModalLocalAndRemotePIPStyles;
   minDragPosition?: _ICoordinates;
   maxDragPosition?: _ICoordinates;
-}): JSX.Element => {
+}): JSX.Element | null => {
   const rootStyles = props.hidden ? hiddenStyle : PIPContainerStyle;
+
+  /* @conditional-compile-remove(rooms) */
+  const rolePermissions = _usePermissions();
+
   const pictureInPictureProps = useSelector(localAndRemotePIPSelector);
+
   const pictureInPictureHandlers = useHandlers(LocalAndRemotePIP);
-  const localAndRemotePIP = useMemo(
-    () => <LocalAndRemotePIP {...pictureInPictureProps} {...pictureInPictureHandlers} />,
-    [pictureInPictureProps, pictureInPictureHandlers]
-  );
+  const localAndRemotePIP = useMemo(() => {
+    /* @conditional-compile-remove(rooms) */
+    if (!rolePermissions.cameraButton && pictureInPictureProps.dominantRemoteParticipant?.userId) {
+      return (
+        <_RemoteVideoTile
+          {...pictureInPictureProps.dominantRemoteParticipant}
+          remoteParticipant={pictureInPictureProps.dominantRemoteParticipant}
+        />
+      );
+    }
+    return <LocalAndRemotePIP {...pictureInPictureProps} {...pictureInPictureHandlers} />;
+  }, [
+    pictureInPictureProps,
+    pictureInPictureHandlers,
+    /* @conditional-compile-remove(rooms) */ rolePermissions.cameraButton
+  ]);
+
+  /* @conditional-compile-remove(rooms) */
+  if (!rolePermissions.cameraButton && !pictureInPictureProps.dominantRemoteParticipant) {
+    return null;
+  }
 
   const modalStylesThemed = concatStyleSets(modalStyle, props.styles?.modal);
 
@@ -61,26 +88,5 @@ const _ModalLocalAndRemotePIP = (props: {
         }
       </_ModalClone>
     </Stack>
-  );
-};
-
-/**
- * A wrapping component with a draggable {@link LocalAndRemotePIP} component that is bound to a LayerHost component with id
- * specified by `modalLayerHostId` prop
- * @private
- */
-export const ModalLocalAndRemotePIP = (props: {
-  callAdapter: CallAdapter;
-  hidden: boolean;
-  modalLayerHostId: string;
-  children?: React.ReactNode;
-  styles?: ModalLocalAndRemotePIPStyles;
-  minDragPosition?: _ICoordinates;
-  maxDragPosition?: _ICoordinates;
-}): JSX.Element => {
-  return (
-    <CallAdapterProvider adapter={props.callAdapter}>
-      <_ModalLocalAndRemotePIP {...props}>{props.children}</_ModalLocalAndRemotePIP>
-    </CallAdapterProvider>
   );
 };

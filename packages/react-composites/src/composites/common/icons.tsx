@@ -47,8 +47,8 @@ const coffeeIconStyle = {
  * @public
  */
 export const COMPOSITE_ONLY_ICONS: CompositeIcons = {
-  ChevronLeft: <FontIcon iconName="ChevronLeft" />,
-  Link: <FontIcon iconName="Link" />,
+  ChevronLeft: undefined,
+  Link: undefined,
   LobbyScreenConnectingToCall: <CoffeeIcon />,
   LobbyScreenWaitingToBeAdmitted: <CoffeeIcon />,
   LocalDeviceSettingsCamera: <Video20Filled />,
@@ -77,7 +77,9 @@ export const COMPOSITE_ONLY_ICONS: CompositeIcons = {
   /* @conditional-compile-remove(PSTN-calls) */
   PeoplePaneOpenDialpad: <Dialpad20Regular />,
   /* @conditional-compile-remove(PSTN-calls) */
-  DialpadStartCall: <Call20Regular />
+  DialpadStartCall: <Call20Regular />,
+  /* @conditional-compile-remove(rooms) */
+  NoticePageInvalidRoom: <Info20Filled />
 };
 
 /**
@@ -182,6 +184,8 @@ export type CallCompositeIcons = {
   PeoplePaneOpenDialpad?: JSX.Element;
   /* @conditional-compile-remove(PSTN-calls) */
   DialpadStartCall?: JSX.Element;
+  /* @conditional-compile-remove(rooms) */
+  NoticePageInvalidRoom?: JSX.Element;
 };
 
 /**

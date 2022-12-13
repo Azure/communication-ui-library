@@ -6,7 +6,7 @@ import { Stack } from '@fluentui/react';
 import { Meta } from '@storybook/react/types-6-0';
 import React, { useState, useEffect } from 'react';
 import { COMPOSITE_FOLDER_PREFIX, compositeExperienceContainerStyle } from '../constants';
-import { defaultChatCompositeHiddenControls, controlsToAdd } from '../controlsUtils';
+import { defaultChatCompositeHiddenControls, controlsToAdd, ArgsFrom } from '../controlsUtils';
 import { compositeLocale } from '../localizationUtils';
 import { getDocs } from './ChatCompositeDocs';
 import { ContosoChatContainer } from './snippets/Container.snippet';
@@ -25,7 +25,20 @@ const messageArray = [
   'Have fun!'
 ];
 
-const BasicStory = (args, context): JSX.Element => {
+const storyControls = {
+  userId: controlsToAdd.userId,
+  token: controlsToAdd.token,
+  botId: controlsToAdd.botUserId,
+  botToken: controlsToAdd.botToken,
+  endpointUrl: controlsToAdd.endpointUrl,
+  displayName: controlsToAdd.requiredDisplayName,
+  showErrorBar: controlsToAdd.showErrorBar,
+  showParticipants: controlsToAdd.showChatParticipants,
+  showTopic: controlsToAdd.showChatTopic,
+  compositeFormFactor: controlsToAdd.formFactor
+};
+
+const BasicStory = (args: ArgsFrom<typeof storyControls>, context): JSX.Element => {
   const {
     globals: { locale }
   } = context;
@@ -61,6 +74,7 @@ const BasicStory = (args, context): JSX.Element => {
           errorBar={args.showErrorBar}
           participants={args.showParticipants}
           topic={args.showTopic}
+          formFactor={args.compositeFormFactor}
         />
       ) : (
         <ConfigHintBanner />
@@ -76,15 +90,7 @@ export default {
   title: `${COMPOSITE_FOLDER_PREFIX}/ChatComposite/Basic Example`,
   component: ChatComposite,
   argTypes: {
-    userId: controlsToAdd.userId,
-    token: controlsToAdd.token,
-    botId: controlsToAdd.botUserId,
-    botToken: controlsToAdd.botToken,
-    endpointUrl: controlsToAdd.endpointUrl,
-    displayName: controlsToAdd.displayName,
-    showErrorBar: controlsToAdd.showErrorBar,
-    showParticipants: controlsToAdd.showChatParticipants,
-    showTopic: controlsToAdd.showChatTopic,
+    ...storyControls,
     // Hiding auto-generated controls
     ...defaultChatCompositeHiddenControls
   },

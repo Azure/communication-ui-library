@@ -4,6 +4,7 @@ import {
   fromFlatCommunicationIdentifier,
   useAzureCommunicationCallAdapter
 } from '@azure/communication-react';
+import { initializeIcons } from '@fluentui/react';
 import React, { useMemo } from 'react';
 
 /**
@@ -32,13 +33,15 @@ const DISPLAY_NAME = '<Display Name>';
  */
 const ACS_USER_IDS = ['<ACS User ID>'];
 
+initializeIcons();
+
 /**
  * Entry point of your application.
  */
 function App(): JSX.Element {
   // Arguments that would usually be provided by your backend service or
   // (indirectly) by the user.
-  const { userId, token, displayName, participantIDs } = useAzureCommunicationServiceArgs();
+  const { userId, token, displayName, participantIds } = useAzureCommunicationServiceArgs();
 
   // A well-formed token is required to initialize the chat and calling adapters.
   const credential = useMemo(() => {
@@ -57,9 +60,9 @@ function App(): JSX.Element {
       userId: fromFlatCommunicationIdentifier(userId) as CommunicationUserIdentifier,
       displayName,
       credential,
-      locator: { participantIDs }
+      locator: { participantIds }
     }),
-    [userId, credential, displayName, participantIDs]
+    [userId, credential, displayName, participantIds]
   );
   const callAdapter = useAzureCommunicationCallAdapter(callAdapterArgs);
 
@@ -84,13 +87,13 @@ function useAzureCommunicationServiceArgs(): {
   userId: string;
   token: string;
   displayName: string;
-  participantIDs: string[];
+  participantIds: string[];
 } {
   return {
     userId: USER_ID,
     token: TOKEN,
     displayName: DISPLAY_NAME,
-    participantIDs: ACS_USER_IDS
+    participantIds: ACS_USER_IDS
   };
 }
 

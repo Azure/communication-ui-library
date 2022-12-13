@@ -20,7 +20,7 @@ import {
   buttonStyle
 } from '../styles/HomeScreen.styles';
 /* @conditional-compile-remove(PSTN-calls) */
-import { outboundTextField } from '../styles/HomeScreen.styles';
+import { outboundTextField, dialpadOptionStyles } from '../styles/HomeScreen.styles';
 import { ThemeSelector } from '../theming/ThemeSelector';
 import { localStorageAvailable } from '../utils/localStorage';
 import { getDisplayNameFromLocalStorage, saveDisplayNameToLocalStorage } from '../utils/localStorage';
@@ -117,7 +117,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
       /* @conditional-compile-remove(one-to-n-calling) */ (outboundParticipants && acsCallChosen));
 
   /* @conditional-compile-remove(PSTN-calls) */
-  registerIcons({ icons: { BackSpace: <Backspace20Regular /> } });
+  registerIcons({ icons: { DialpadBackspace: <Backspace20Regular /> } });
 
   /* @conditional-compile-remove(PSTN-calls) */
   const isMobileSession = useIsMobile();
@@ -196,17 +196,19 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
             {
               /* @conditional-compile-remove(PSTN-calls) */ pstnCallChosen && (
                 <Stack>
-                  <Dialpad
-                    isMobile={isMobileSession}
-                    onChange={(newValue) => {
-                      /**
-                       * We need to pass in the formatting for the phone number string in the onChange handler
-                       * to make sure the phone number is in E.164 format.
-                       */
-                      const phoneNumber = '+' + newValue?.replace(/\D/g, '');
-                      setDialpadParticipant(phoneNumber);
-                    }}
-                  />
+                  <Stack styles={dialpadOptionStyles}>
+                    <Dialpad
+                      isMobile={isMobileSession}
+                      onChange={(newValue) => {
+                        /**
+                         * We need to pass in the formatting for the phone number string in the onChange handler
+                         * to make sure the phone number is in E.164 format.
+                         */
+                        const phoneNumber = '+' + newValue?.replace(/\D/g, '');
+                        setDialpadParticipant(phoneNumber);
+                      }}
+                    />
+                  </Stack>
                   <TextField
                     className={outboundTextField}
                     label={'ACS phone number for Caller ID'}

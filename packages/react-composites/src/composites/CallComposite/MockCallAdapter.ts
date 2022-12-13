@@ -2,6 +2,11 @@
 // Licensed under the MIT license.
 
 import { AudioDeviceInfo, Call, DtmfTone, PermissionConstraints, VideoDeviceInfo } from '@azure/communication-calling';
+/* @conditional-compile-remove(PSTN-calls) */
+import { EnvironmentInfo } from '@azure/communication-calling';
+/* @conditional-compile-remove(rooms) */
+import { Role } from '@internal/react-components';
+import { EventEmitter } from 'stream';
 import { CallAdapter, CallAdapterState } from './adapter';
 
 /**
@@ -9,24 +14,41 @@ import { CallAdapter, CallAdapterState } from './adapter';
  */
 // TODO: Remove this simplified copy of the MockCallAdapter when the original MockCallAdapter is moved to fake-backends package and can be imported
 export class MockCallAdapter implements CallAdapter {
-  constructor(testState: { askDevicePermission?: (constrain: PermissionConstraints) => Promise<void> }) {
-    this.state = defaultCallAdapterState;
+  constructor(testState: {
+    askDevicePermission?: (constrain: PermissionConstraints) => Promise<void>;
+    /* @conditional-compile-remove(rooms) */ options?: { roleHint?: Role };
+  }) {
+    this.state = { ...defaultCallAdapterState };
 
     if (testState.askDevicePermission) {
       this.askDevicePermission = testState.askDevicePermission;
+    }
+    /* @conditional-compile-remove(rooms) */
+    if (testState.options?.roleHint) {
+      this.state.roleHint = testState.options.roleHint;
     }
   }
 
   state: CallAdapterState;
 
+  private emitter = new EventEmitter();
+
+  setState(state: CallAdapterState): void {
+    this.state = state;
+    this.emitter.emit('stateChanged', state);
+  }
+
   addParticipant(): Promise<void> {
     throw Error('addParticipant not implemented');
   }
-  onStateChange(): void {
-    return;
+  onStateChange(handler: (state: CallAdapterState) => void): void {
+    this.emitter.addListener('stateChanged', handler);
   }
-  offStateChange(): void {
-    return;
+  offStateChange(handler: (state: CallAdapterState) => void): void {
+    this.emitter.removeListener('stateChanged', handler);
+  }
+  allowUnsupportedBrowserVersion(): void {
+    throw Error('allowWithUnsupportedBrowserVersion not implemented');
   }
   getState(): CallAdapterState {
     return this.state;
@@ -108,6 +130,10 @@ export class MockCallAdapter implements CallAdapter {
   off(): void {
     throw Error('off not implemented');
   }
+  /* @conditional-compile-remove(PSTN-calls) */
+  getEnvironmentInfo(): Promise<EnvironmentInfo> {
+    throw Error('getEnvironmentInfo not implemented');
+  }
 }
 
 /**
@@ -119,6 +145,8 @@ const defaultCallAdapterState: CallAdapterState = {
   page: 'call',
   call: {
     id: 'call1',
+    /* @conditional-compile-remove(teams-identity-support) */
+    type: 'ACS',
     callerInfo: { displayName: 'caller', identifier: { kind: 'communicationUser', communicationUserId: '1' } },
     direction: 'Incoming',
     transcription: { isTranscriptionActive: false },

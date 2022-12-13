@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add more button and Hold functionality to Calling composite",
-  "packageName": "@internal/react-composites",
-  "email": "94866715+dmceachernmsft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
