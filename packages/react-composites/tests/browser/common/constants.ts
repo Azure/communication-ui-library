@@ -32,5 +32,6 @@ export const IDS = {
   unsupportedEnvironmentIcon: 'unsupported-environment-icon',
   unsupportedEnvironmentLink: 'unsupported-environment-link',
   lobbyScreenTitle: 'lobbyScreenTitle',
-  allowUnsupportedBrowserButton: 'allowUnsupportedBrowserButton'
+  allowUnsupportedBrowserButton: 'allowUnsupportedBrowserButton',
+  configurationScreenDevicesButton: 'call-composite-local-device-settings-options-button'
 };

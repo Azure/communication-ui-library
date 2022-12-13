@@ -62,6 +62,12 @@ export interface VideoGalleryStrings {
   localVideoSelectedDescription: string;
   /** placeholder text for participants who does not have a display name*/
   displayNamePlaceholder: string;
+  /* @conditional-compile-remove(pinned-participants) */
+  /** Menu text shown in Video Tile contextual menu for setting a remote participants video to fit in frame */
+  fitRemoteParticipantToFrame: string;
+  /* @conditional-compile-remove(pinned-participants) */
+  /** Menu text shown in Video Tile contextual menu for setting a remote participants video to fill the frame */
+  fillRemoteParticipantFrame: string;
 }
 
 /**
@@ -146,6 +152,12 @@ export interface VideoGalleryProps {
    * Camera control information for button to switch cameras.
    */
   localVideoCameraCycleButtonProps?: LocalVideoCameraCycleButtonProps;
+  /* @conditional-compile-remove(pinned-participants) */
+  /**
+   * Whether to show the remote video tile contextual menu.
+   * @defaultValue `true`
+   */
+  showRemoteVideoTileContextualMenu?: boolean;
 }
 
 /**
@@ -179,7 +191,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   const ids = useIdentifiers();
   const theme = useTheme();
   const localeStrings = useLocale().strings.videoGallery;
-  const strings = { ...localeStrings, ...props.strings };
+  const strings = useMemo(() => ({ ...localeStrings, ...props.strings }), [localeStrings, props.strings]);
 
   const shouldFloatLocalVideo = !!(layout === 'floatingLocalVideo' && remoteParticipants.length > 0);
 
@@ -264,7 +276,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       return (
         <_RemoteVideoTile
           key={participant.userId}
-          {...participant}
+          userId={participant.userId}
+          remoteParticipant={participant}
           onCreateRemoteStreamView={isVideoParticipant ? onCreateRemoteStreamView : undefined}
           onDisposeRemoteStreamView={isVideoParticipant ? onDisposeRemoteStreamView : undefined}
           isAvailable={isVideoParticipant ? remoteVideoStream?.isAvailable : false}
@@ -273,12 +286,24 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           remoteVideoViewOptions={isVideoParticipant ? remoteVideoViewOptions : undefined}
           onRenderAvatar={onRenderAvatar}
           showMuteIndicator={showMuteIndicator}
+          strings={strings}
           /* @conditional-compile-remove(PSTN-calls) */
           participantState={participant.state}
+          /* @conditional-compile-remove(pinned-participants) */
+          showRemoteVideoTileContextualMenu={props.showRemoteVideoTileContextualMenu}
         />
       );
     },
-    [onCreateRemoteStreamView, onDisposeRemoteStreamView, remoteVideoViewOptions, onRenderAvatar, showMuteIndicator]
+    [
+      onCreateRemoteStreamView,
+      onDisposeRemoteStreamView,
+      remoteVideoViewOptions,
+      onRenderAvatar,
+      showMuteIndicator,
+      strings,
+      /* @conditional-compile-remove(pinned-participants) */
+      props.showRemoteVideoTileContextualMenu
+    ]
   );
 
   const screenShareParticipant = remoteParticipants.find((participant) => participant.screenShareStream?.isAvailable);

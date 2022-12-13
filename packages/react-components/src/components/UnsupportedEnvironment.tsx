@@ -12,7 +12,6 @@ import { useTheme } from '../theming';
 import {
   containerStyles,
   continueAnywayButtonStyles,
-  iconStyles,
   linkTextStyles,
   mainTextStyles,
   secondaryTextStyles,
@@ -59,13 +58,9 @@ const UnsupportedEnvironmentContainer = (props: UnsupportedEnvironmentProps): JS
   const { onTroubleshootingClick, strings, onContinueClick } = props;
   const theme = useTheme();
   return (
-    <Stack styles={containerStyles}>
-      <Icon
-        styles={iconStyles}
-        iconName="UnsupportedEnvironmentWarning"
-        data-ui-id="unsupported-environment-icon"
-      ></Icon>
-      <Stack styles={testContainerStyles}>
+    <Stack styles={containerStyles} tokens={{ childrenGap: '2rem' }}>
+      <Icon iconName="UnsupportedEnvironmentWarning" data-ui-id="unsupported-environment-icon"></Icon>
+      <Stack styles={testContainerStyles} tokens={{ childrenGap: '0.25rem' }}>
         <Text styles={mainTextStyles}>{strings?.primaryText}</Text>
         <Text styles={secondaryTextStyles}>{strings?.secondaryText}</Text>
       </Stack>

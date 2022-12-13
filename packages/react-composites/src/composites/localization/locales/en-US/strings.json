@@ -1,6 +1,7 @@
 {
   "call": {
     "cameraLabel": "Camera",
+    "noCamerasLabel": "No cameras found",
     "cameraPermissionDenied": "Your browser is blocking access to your camera",
     "cameraTurnedOff": "Your camera is turned off",
     "chatButtonLabel": "Chat",
@@ -53,6 +54,8 @@
     "roomNotFoundDetails": "Room ID provided is not valid.",
     "roomNotFoundTitle": "Room not found",
     "soundLabel": "Sound",
+    "noMicrophonesLabel": "No microphones found",
+    "noSpeakersLabel": "No speakers found",
     "startCallButtonLabel": "Start call",
     "openDialpadButtonLabel": "Dial phone number",
     "peoplePaneAddPeopleButtonLabel": "Add People",

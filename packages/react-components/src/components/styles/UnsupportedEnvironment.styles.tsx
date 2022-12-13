@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IButtonStyles, IIconStyles, ILinkStyles, IStackStyles, ITextStyles, Theme } from '@fluentui/react';
+import { IButtonStyles, ILinkStyles, IStackStyles, ITextStyles, Theme } from '@fluentui/react';
 import { _pxToRem } from '@internal/acs-ui-common';
 
 /**
@@ -34,7 +34,6 @@ export const secondaryTextStyles: ITextStyles = {
  */
 export const testContainerStyles: IStackStyles = {
   root: {
-    padding: '1rem',
     margin: 'auto'
   }
 };
@@ -62,22 +61,12 @@ export const containerStyles: IStackStyles = {
 };
 
 /**
- * @interal
- */
-export const iconStyles: IIconStyles = {
-  root: {
-    paddingBottom: '1rem'
-  }
-};
-
-/**
  * @internal
  */
 export const continueAnywayButtonStyles = (theme: Theme): IButtonStyles => {
   return {
     root: {
       backgroundColor: '#C4314B',
-      margin: '1rem',
       borderColor: theme.palette.neutralLight,
       padding: '1rem',
       color: theme.palette.white
