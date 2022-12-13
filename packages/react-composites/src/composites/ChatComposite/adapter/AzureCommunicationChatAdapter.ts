@@ -39,6 +39,7 @@ import { useEffect, useRef, useState } from 'react';
 import { FileMetadata } from '@internal/react-components';
 /* @conditional-compile-remove(file-sharing) */
 import { FileUploadManager } from '../file-sharing';
+import { isValidIdentifier } from '../../CallComposite/utils/Utils';
 
 /**
  * Context of Chat, which is a centralized context for all state updates
