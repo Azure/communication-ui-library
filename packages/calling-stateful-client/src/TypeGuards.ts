@@ -9,7 +9,7 @@ import { CallAgentCommon, CallCommon, TeamsCall, TeamsCallAgent } from './BetaTo
  */
 export const _isACSCall = (call: CallCommon): call is Call => {
   /* @conditional-compile-remove(teams-identity-support) */
-  return call.kind === 'Call';
+  return !call.kind || call.kind === 'Call';
   return true;
 };
 
@@ -18,7 +18,7 @@ export const _isACSCall = (call: CallCommon): call is Call => {
  */
 export const _isACSCallAgent = (callAgent: CallAgentCommon): callAgent is CallAgent => {
   /* @conditional-compile-remove(teams-identity-support) */
-  return callAgent.kind === 'CallAgent';
+  return !callAgent.kind || callAgent.kind === 'CallAgent';
   return true;
 };
 
