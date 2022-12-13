@@ -54,8 +54,8 @@ export const linkTextStyles: ILinkStyles = {
  */
 export const containerStyles: IStackStyles = {
   root: {
-    padding: '2rem',
-    maxWidth: _pxToRem(375)
+    maxWidth: _pxToRem(375),
+    padding: '2rem'
   }
 };
 
@@ -67,8 +67,8 @@ export const continueAnywayButtonStyles = (theme: Theme): IButtonStyles => {
     root: {
       backgroundColor: '#C4314B',
       borderColor: theme.palette.neutralLight,
-      padding: '1rem',
-      color: theme.palette.white
+      color: theme.palette.white,
+      padding: '1rem'
     }
   };
 };
