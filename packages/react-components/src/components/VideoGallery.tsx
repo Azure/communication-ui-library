@@ -341,7 +341,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     ? localScreenShareStreamComponent
     : undefined;
 
-  let videoGalleryLayout: JSX.Element;
+  let videoGalleryLayout: JSX.Element | undefined = undefined;
   /* @conditional-compile-remove(pinned-participants) */
   if (pinnedParticipants && pinnedParticipants.length > 0) {
     videoGalleryLayout = (
@@ -362,34 +362,36 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     );
   }
 
-  if (layout === 'floatingLocalVideo') {
-    videoGalleryLayout = (
-      <FloatingLocalVideoLayout
-        remoteParticipants={remoteParticipants}
-        onRenderRemoteParticipant={onRenderRemoteVideoTile ?? defaultOnRenderVideoTile}
-        localVideoComponent={localVideoTile}
-        screenShareComponent={screenShareComponent}
-        showCameraSwitcherInLocalPreview={showCameraSwitcherInLocalPreview}
-        maxRemoteVideoStreams={maxRemoteVideoStreams}
-        dominantSpeakers={dominantSpeakers}
-        parentWidth={containerWidth}
-        parentHeight={containerHeight}
-        styles={styles}
-      />
-    );
-  } else {
-    videoGalleryLayout = (
-      <DefaultLayout
-        remoteParticipants={remoteParticipants}
-        onRenderRemoteParticipant={onRenderRemoteVideoTile ?? defaultOnRenderVideoTile}
-        localVideoComponent={localVideoTile}
-        screenShareComponent={screenShareComponent}
-        maxRemoteVideoStreams={maxRemoteVideoStreams}
-        dominantSpeakers={dominantSpeakers}
-        parentWidth={containerWidth}
-        styles={styles}
-      />
-    );
+  if (!videoGalleryLayout) {
+    if (layout === 'floatingLocalVideo') {
+      videoGalleryLayout = (
+        <FloatingLocalVideoLayout
+          remoteParticipants={remoteParticipants}
+          onRenderRemoteParticipant={onRenderRemoteVideoTile ?? defaultOnRenderVideoTile}
+          localVideoComponent={localVideoTile}
+          screenShareComponent={screenShareComponent}
+          showCameraSwitcherInLocalPreview={showCameraSwitcherInLocalPreview}
+          maxRemoteVideoStreams={maxRemoteVideoStreams}
+          dominantSpeakers={dominantSpeakers}
+          parentWidth={containerWidth}
+          parentHeight={containerHeight}
+          styles={styles}
+        />
+      );
+    } else {
+      videoGalleryLayout = (
+        <DefaultLayout
+          remoteParticipants={remoteParticipants}
+          onRenderRemoteParticipant={onRenderRemoteVideoTile ?? defaultOnRenderVideoTile}
+          localVideoComponent={localVideoTile}
+          screenShareComponent={screenShareComponent}
+          maxRemoteVideoStreams={maxRemoteVideoStreams}
+          dominantSpeakers={dominantSpeakers}
+          parentWidth={containerWidth}
+          styles={styles}
+        />
+      );
+    }
   }
 
   return (
