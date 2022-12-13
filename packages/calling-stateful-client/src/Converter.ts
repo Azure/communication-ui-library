@@ -5,7 +5,8 @@ import {
   RemoteParticipant as SdkRemoteParticipant,
   RemoteVideoStream as SdkRemoteVideoStream,
   LocalVideoStream as SdkLocalVideoStream,
-  VideoStreamRendererView
+  VideoStreamRendererView,
+  CallKind
 } from '@azure/communication-calling';
 
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
@@ -85,7 +86,7 @@ export function convertSdkCallToDeclarativeCall(call: CallCommon): CallState {
   return {
     id: call.id,
     /* @conditional-compile-remove(teams-identity-support) */
-    type: _isACSCall(call) ? 'ACS' : 'Teams',
+    kind: _isACSCall(call) ? CallKind.Call : CallKind.TeamsCall,
     callerInfo: call.callerInfo,
     state: call.state,
     callEndReason: call.callEndReason,

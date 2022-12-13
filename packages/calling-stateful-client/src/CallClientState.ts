@@ -6,6 +6,7 @@ import {
   CallDirection,
   CallEndReason,
   CallerInfo,
+  CallKind,
   CallState as CallStatus,
   DeviceAccess,
   DominantSpeakersInfo,
@@ -201,7 +202,7 @@ export interface CallState {
   /**
    * Type of the call.
    */
-  type: 'Teams' | 'ACS';
+  kind: CallKind;
   /**
    * Proxy of {@link @azure/communication-calling#Call.callerInfo}.
    */

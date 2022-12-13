@@ -1,7 +1,14 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { AudioDeviceInfo, Call, DtmfTone, PermissionConstraints, VideoDeviceInfo } from '@azure/communication-calling';
+import {
+  AudioDeviceInfo,
+  Call,
+  CallKind,
+  DtmfTone,
+  PermissionConstraints,
+  VideoDeviceInfo
+} from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
 import { EnvironmentInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(rooms) */
@@ -146,7 +153,7 @@ const defaultCallAdapterState: CallAdapterState = {
   call: {
     id: 'call1',
     /* @conditional-compile-remove(teams-identity-support) */
-    type: 'ACS',
+    kind: CallKind.Call,
     callerInfo: { displayName: 'caller', identifier: { kind: 'communicationUser', communicationUserId: '1' } },
     direction: 'Incoming',
     transcription: { isTranscriptionActive: false },
