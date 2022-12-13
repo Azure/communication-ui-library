@@ -1,22 +1,23 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { mergeStyles, Stack } from '@fluentui/react';
-import {
-  Announcer,
-  CustomAvatarOptions,
-  LocalVideoCameraCycleButton,
-  OnRenderAvatarCallback,
-  VideoGallery,
-  VideoStreamOptions
-} from '@internal/react-components';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { AvatarPersona, AvatarPersonaDataCallback } from '../../common/AvatarPersona';
-import { useHandlers } from '../hooks/useHandlers';
+import {
+  VideoGallery,
+  VideoStreamOptions,
+  OnRenderAvatarCallback,
+  CustomAvatarOptions,
+  Announcer
+} from '@internal/react-components';
 import { usePropsFor } from '../hooks/usePropsFor';
-import { useSelector } from '../hooks/useSelector';
+import { AvatarPersona, AvatarPersonaDataCallback } from '../../common/AvatarPersona';
+import { mergeStyles, Stack } from '@fluentui/react';
 import { getIsPreviewCameraOn } from '../selectors/baseSelectors';
+import { useHandlers } from '../hooks/useHandlers';
+import { useSelector } from '../hooks/useSelector';
 import { localVideoCameraCycleButtonSelector } from '../selectors/LocalVideoTileSelector';
+import { LocalVideoCameraCycleButton } from '@internal/react-components';
+import { _formatString } from '@internal/acs-ui-common';
 import { useParticipantChangedAnnouncement } from '../utils/MediaGalleryUtils';
 
 const VideoGalleryStyles = {
