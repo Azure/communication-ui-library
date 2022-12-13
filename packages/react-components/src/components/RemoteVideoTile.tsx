@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IContextualMenuItem, IContextualMenuProps } from '@fluentui/react';
+import { IContextualMenuProps } from '@fluentui/react';
 import React, { useMemo } from 'react';
 import {
   CreateVideoStreamViewResult,
