@@ -197,20 +197,6 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
     }
   }, [onMuteAll]);
 
-  /**
-   * sets the announcement string for when the link is copied.
-   */
-  const toggleAnnouncerString = useCallback(() => {
-    setCopyInviteLinkAnnouncerStrings(strings.copyInviteLinkActionedAriaLabel);
-    /**
-     * Clears the announcer string after the user clicks the
-     * copyInviteLink button allowing it to be re-announced.
-     */
-    setTimeout(() => {
-      setCopyInviteLinkAnnouncerStrings('');
-    }, 3000);
-  }, []);
-
   const defaultParticipantList = useCallback(() => {
     return (
       <ParticipantList
@@ -247,6 +233,20 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
   const localeStrings = useLocale().strings.participantsButton;
   const strings = useMemo(() => ({ ...localeStrings, ...props.strings }), [localeStrings, props.strings]);
   const participantCount = participants.length;
+
+  /**
+   * sets the announcement string for when the link is copied.
+   */
+  const toggleAnnouncerString = useCallback(() => {
+    setCopyInviteLinkAnnouncerStrings(strings.copyInviteLinkActionedAriaLabel);
+    /**
+     * Clears the announcer string after the user clicks the
+     * copyInviteLink button allowing it to be re-announced.
+     */
+    setTimeout(() => {
+      setCopyInviteLinkAnnouncerStrings('');
+    }, 3000);
+  }, [strings.copyInviteLinkActionedAriaLabel]);
 
   const generateDefaultParticipantsSubMenuProps = useCallback((): IContextualMenuItem[] => {
     const items: IContextualMenuItem[] = [];
@@ -353,7 +353,8 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
     excludeMe,
     ids.participantButtonPeopleMenuItem,
     generateDefaultParticipantsSubMenuProps,
-    onCopyCallback
+    onCopyCallback,
+    toggleAnnouncerString
   ]);
 
   return (

@@ -60,7 +60,7 @@ export const AddPeopleButton = (props: AddPeopleButtonProps): JSX.Element => {
     setTimeout(() => {
       setCopyInviteLinkAnnouncerStrings('');
     }, 3000);
-  }, []);
+  }, [strings.copyInviteLinkActionedAriaLabel]);
 
   /* @conditional-compile-remove(PSTN-calls) */
   if (mobileView) {
