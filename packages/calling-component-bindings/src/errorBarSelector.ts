@@ -43,7 +43,7 @@ export const errorBarSelector: ErrorBarSelector = createSelector(
     // have timestamps for errors.
     const activeErrorMessages: ActiveErrorMessage[] = [];
 
-    const isSafari = navigator.userAgent.indexOf('Safari') > -1 && navigator.userAgent.indexOf('Chrome') <= -1;
+    const isSafari = /^((?!chrome|android|crios|fxios).)*safari/i.test(navigator.userAgent);
 
     // Errors reported via diagnostics are more reliable than from API method failures, so process those first.
     if (

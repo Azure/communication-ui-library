@@ -60,7 +60,7 @@ export interface CameraAndMicrophoneDomainPermissionsProps extends CommonDomainP
   strings?: CameraAndMicrophoneDomainPermissionsStrings;
 }
 /* @conditional-compile-remove(call-readiness) */
-const isSafari = navigator.userAgent.indexOf('Safari') > -1 && navigator.userAgent.indexOf('Chrome') <= -1;
+const isSafari = /^((?!chrome|android|crios|fxios).)*safari/i.test(navigator.userAgent);
 /**
  * @beta
  *
