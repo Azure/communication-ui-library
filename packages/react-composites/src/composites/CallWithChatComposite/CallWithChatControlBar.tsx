@@ -78,7 +78,7 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps & Cont
   useEffect(() => {
     // On mount, button used for initial focus is hidden to prevent screen readers from announcing the initial focus
     if (document.querySelector('[data-ui-id=call-with-chat-autofocus-hidden-button]') === document.activeElement) {
-      document.activeElement?.toggleAttribute('hidden');
+      document.activeElement?.setAttribute('hidden', 'true');
     }
   }, []);
   const theme = useTheme();
