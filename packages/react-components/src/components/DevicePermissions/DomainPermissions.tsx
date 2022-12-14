@@ -26,7 +26,7 @@ export interface CommonDomainPermissionsProps {
   /**
    * Type of the browser domain permission component is rendered in.
    */
-  browser?: String;
+  browser?: string;
   /**
    * Action to be taken by the more help link. Possible to send to external page or show other modal.
    * If this is not provided the button will not be shown.

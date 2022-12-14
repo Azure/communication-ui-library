@@ -237,7 +237,7 @@ export interface ChatMessage extends MessageCommon {
 // @beta
 export interface CommonDomainPermissionsProps {
     appName: string;
-    browser?: String;
+    browser?: string;
     onContinueAnywayClick?: () => void;
     onTroubleshootingClick?: () => void;
     styles?: DomainPermissionsStyles;
