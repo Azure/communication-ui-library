@@ -210,9 +210,9 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     showCameraSwitcherInLocalPreview,
     localVideoCameraCycleButtonProps,
     /* @conditional-compile-remove(pinned-participants) */
-    onPinParticipant,
+    onPinParticipant: onPinParticipantHandler,
     /* @conditional-compile-remove(pinned-participants) */
-    onUnpinParticipant
+    onUnpinParticipant: onUnpinParticipantHandler
   } = props;
 
   const ids = useIdentifiers();
@@ -304,20 +304,22 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   ]);
 
   /* @conditional-compile-remove(pinned-participants) */
-  const defaultPinParticipant = useCallback(
+  const onPinParticipant = useCallback(
     (userId: string) => {
       if (!pinnedParticipantsState.includes(userId)) {
         setPinnedParticipantsState(pinnedParticipantsState.concat(userId));
       }
+      onPinParticipantHandler?.(userId);
     },
-    [pinnedParticipantsState, setPinnedParticipantsState]
+    [pinnedParticipantsState, setPinnedParticipantsState, onPinParticipantHandler]
   );
   /* @conditional-compile-remove(pinned-participants) */
-  const defaultUnpinParticipant = useCallback(
+  const onUnpinParticipant = useCallback(
     (userId: string) => {
       setPinnedParticipantsState(pinnedParticipantsState.filter((p) => p !== userId));
+      onUnpinParticipantHandler?.(userId);
     },
-    [pinnedParticipantsState, setPinnedParticipantsState]
+    [pinnedParticipantsState, setPinnedParticipantsState, onUnpinParticipantHandler]
   );
 
   const defaultOnRenderVideoTile = useCallback(
@@ -346,15 +348,9 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           /* @conditional-compile-remove(pinned-participants) */
           showRemoteVideoTileContextualMenu={props.showRemoteVideoTileContextualMenu}
           /* @conditional-compile-remove(pinned-participants) */
-          onPinParticipant={(userId: string) => {
-            defaultPinParticipant(userId);
-            onPinParticipant?.(userId);
-          }}
+          onPinParticipant={onPinParticipant}
           /* @conditional-compile-remove(pinned-participants) */
-          onUnpinParticipant={(userId: string) => {
-            defaultUnpinParticipant(userId);
-            onUnpinParticipant?.(userId);
-          }}
+          onUnpinParticipant={onUnpinParticipant}
           /* @conditional-compile-remove(pinned-participants) */
           isPinned={isPinned}
         />
@@ -369,7 +365,6 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       strings,
       /* @conditional-compile-remove(pinned-participants) */ props.showRemoteVideoTileContextualMenu,
       /* @conditional-compile-remove(pinned-participants) */ pinnedParticipants,
-      /* @conditional-compile-remove(pinned-participants) */ setPinnedParticipantsState,
       /* @conditional-compile-remove(pinned-participants) */ onPinParticipant,
       /* @conditional-compile-remove(pinned-participants) */ onUnpinParticipant
     ]

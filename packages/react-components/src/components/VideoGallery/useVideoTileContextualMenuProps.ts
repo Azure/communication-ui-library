@@ -35,19 +35,19 @@ export const useVideoTileContextualMenuProps = (props: {
     const items: IContextualMenuItem[] = [];
 
     if (isPinned !== undefined) {
-      if (isPinned && onUnpinParticipant) {
+      if (isPinned && onUnpinParticipant && strings?.unpinParticipantForMe) {
         items.push({
           key: 'unpin',
-          text: strings?.unpinParticipantForMe,
+          text: strings.unpinParticipantForMe,
           iconProps: { iconName: 'UnpinParticipant', styles: { root: { lineHeight: '1rem' } } },
           onClick: () => onUnpinParticipant?.(props.remoteParticipant.userId),
           'data-ui-id': 'video-tile-unpin-participant-button'
         });
       }
-      if (!isPinned && onPinParticipant) {
+      if (!isPinned && onPinParticipant && strings?.pinParticipantForMe) {
         items.push({
           key: 'pin',
-          text: props.strings?.pinParticipantForMe,
+          text: strings.pinParticipantForMe,
           iconProps: { iconName: 'PinParticipant', styles: { root: { lineHeight: '1rem' } } },
           onClick: () => onPinParticipant?.(props.remoteParticipant.userId),
           'data-ui-id': 'video-tile-pin-participant-button'
@@ -82,7 +82,7 @@ export const useVideoTileContextualMenuProps = (props: {
     }
 
     return { items };
-  }, [scalingMode, strings, view]);
+  }, [scalingMode, strings, view, isPinned, onPinParticipant, onUnpinParticipant, props.remoteParticipant.userId]);
 
   return contextualMenuProps;
 };
