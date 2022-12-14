@@ -58,7 +58,7 @@ import {
 import { CallAdapterOptionalFeatures } from './CallAdapter';
 /* @conditional-compile-remove(teams-identity-support) */
 import { TeamsCallAdapter } from './CallAdapter';
-import { getCallCompositePage, IsCallEndedPage, isCameraOn } from '../utils';
+import { getCallCompositePage, IsCallEndedPage, isCameraOn, isValidIdentifier } from '../utils';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 /* @conditional-compile-remove(rooms) */
 import { Role } from '@internal/react-components';
@@ -843,6 +843,10 @@ export const createAzureCommunicationCallAdapter = async ({
   /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
   /* @conditional-compile-remove(rooms) */ options
 }: AzureCommunicationCallAdapterArgs): Promise<CallAdapter> => {
+  if (!isValidIdentifier(userId)) {
+    throw new Error('Invalid identifier. Please provide valid identifier object.');
+  }
+
   const callClient = createStatefulCallClient({
     userId,
     /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId
