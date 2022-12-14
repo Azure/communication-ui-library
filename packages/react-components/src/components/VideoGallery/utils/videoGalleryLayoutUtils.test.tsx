@@ -1,9 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import React from 'react';
+import renderer from 'react-test-renderer';
 import { v1 as createGUID } from 'uuid';
 import { VideoGalleryRemoteParticipant } from '../../../types';
-import { usePinnedParticipantLayout } from './videoGalleryLayoutUtils';
+import { LayoutResult, usePinnedParticipantLayout, UsePinnedParticipantLayoutArgs } from './videoGalleryLayoutUtils';
 
 describe('VideoGallery pinned participants layout ordering and grouping tests', () => {
   test('pinned participants should in grid and video participants should be at the start of horizontal gallery', () => {
@@ -15,15 +17,15 @@ describe('VideoGallery pinned participants layout ordering and grouping tests', 
       });
     });
 
-    const pinnedParticipantsLayout = usePinnedParticipantLayout({
+    const pinnedParticipantsLayout = setup({
       remoteParticipants,
       pinnedParticipantUserIds: ['0', '6'],
       dominantSpeakers: ['3', '4'],
       maxRemoteVideoStreams: 4
     });
 
-    expect(pinnedParticipantsLayout.gridParticipants.map((p) => p.userId)).toBe(['0', '6']);
-    expect(pinnedParticipantsLayout.horizontalGalleryParticipants.map((p) => p.userId)).toBe([
+    expect(pinnedParticipantsLayout?.gridParticipants.map((p) => p.userId)).toStrictEqual(['0', '6']);
+    expect(pinnedParticipantsLayout?.horizontalGalleryParticipants.map((p) => p.userId)).toStrictEqual([
       '3',
       '4',
       '1',
@@ -47,7 +49,7 @@ describe('VideoGallery pinned participants layout ordering and grouping tests', 
         });
       });
 
-      const pinnedParticipantsLayout = usePinnedParticipantLayout({
+      const pinnedParticipantsLayout = setup({
         remoteParticipants,
         pinnedParticipantUserIds: ['0', '6'],
         dominantSpeakers: ['3', '4'],
@@ -55,8 +57,8 @@ describe('VideoGallery pinned participants layout ordering and grouping tests', 
         isScreenShareActive: true
       });
 
-      expect(pinnedParticipantsLayout.gridParticipants.map((p) => p.userId)).toBe([]);
-      expect(pinnedParticipantsLayout.horizontalGalleryParticipants.map((p) => p.userId)).toBe([
+      expect(pinnedParticipantsLayout?.gridParticipants.map((p) => p.userId)).toStrictEqual([]);
+      expect(pinnedParticipantsLayout?.horizontalGalleryParticipants.map((p) => p.userId)).toStrictEqual([
         '0',
         '6',
         '3',
@@ -101,4 +103,14 @@ const createRemoteParticipant = (attrs?: Partial<VideoGalleryRemoteParticipant>)
     },
     isScreenSharingOn: attrs?.isScreenSharingOn ?? false
   };
+};
+
+const setup = (args: UsePinnedParticipantLayoutArgs): LayoutResult | undefined => {
+  let layout: LayoutResult | undefined = undefined;
+  const TestComponent = () => {
+    layout = usePinnedParticipantLayout(args);
+    return null;
+  };
+  renderer.create(<TestComponent />);
+  return layout;
 };

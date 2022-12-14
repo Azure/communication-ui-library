@@ -13,7 +13,7 @@ interface UseFloatingLocalVideoLayoutArgs {
   isScreenShareActive?: boolean;
 }
 
-interface LayoutResult {
+export interface LayoutResult {
   gridParticipants: VideoGalleryParticipant[];
   horizontalGalleryParticipants: VideoGalleryParticipant[];
 }
@@ -108,7 +108,7 @@ export const useFloatingLocalVideoLayout = (props: UseFloatingLocalVideoLayoutAr
   return { gridParticipants, horizontalGalleryParticipants };
 };
 
-interface UsePinnedParticipantLayoutArgs extends UseFloatingLocalVideoLayoutArgs {
+export interface UsePinnedParticipantLayoutArgs extends UseFloatingLocalVideoLayoutArgs {
   pinnedParticipantUserIds: string[];
 }
 
