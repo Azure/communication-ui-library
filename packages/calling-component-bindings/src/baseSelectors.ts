@@ -127,6 +127,5 @@ export const getCallState = (state: CallClientState, props: CallingBaseSelectorP
  * @private
  */
 export const getEnvironmentInfo = (state: CallClientState): EnvironmentInfo | undefined => {
-  console.log(state);
   return state.environmentInfo;
 };
