@@ -24,6 +24,10 @@ export interface CommonDomainPermissionsProps {
    */
   type: 'request' | 'denied' | 'check';
   /**
+   * Type of the browser domain permission component is rendered in.
+   */
+  browser?: String;
+  /**
    * Action to be taken by the more help link. Possible to send to external page or show other modal.
    * If this is not provided the button will not be shown.
    */
@@ -59,8 +63,7 @@ export interface CameraAndMicrophoneDomainPermissionsProps extends CommonDomainP
   /** Strings for use with the {@link CameraAndMicrophoneDomainPermissions} */
   strings?: CameraAndMicrophoneDomainPermissionsStrings;
 }
-/* @conditional-compile-remove(call-readiness) */
-const isSafari = /^((?!chrome|android|crios|fxios).)*safari/i.test(navigator.userAgent);
+
 /**
  * @beta
  *
@@ -72,9 +75,16 @@ export const CameraAndMicrophoneDomainPermissions = (props: CameraAndMicrophoneD
   const locale = useLocale().strings;
 
   /* @conditional-compile-remove(call-readiness) */
+  const isSafari = (): boolean => {
+    /* @conditional-compile-remove(unsupported-browser) */
+    return props.browser === 'safari';
+    return /^((?!chrome|android|crios|fxios).)*safari/i.test(navigator.userAgent);
+  };
+
+  /* @conditional-compile-remove(call-readiness) */
   const strings = useShallowMerge(
     props.type === 'denied'
-      ? isSafari
+      ? isSafari()
         ? locale.CameraAndMicrophoneDomainPermissionsDeniedSafari
         : locale.CameraAndMicrophoneDomainPermissionsDenied
       : props.type === 'request'
@@ -134,9 +144,16 @@ export const MicrophoneDomainPermissions = (props: MicrophoneDomainPermissionsPr
   const locale = useLocale().strings;
 
   /* @conditional-compile-remove(call-readiness) */
+  const isSafari = (): boolean => {
+    /* @conditional-compile-remove(unsupported-browser) */
+    return props.browser === 'safari';
+    return /^((?!chrome|android|crios|fxios).)*safari/i.test(navigator.userAgent);
+  };
+
+  /* @conditional-compile-remove(call-readiness) */
   const strings = useShallowMerge(
     props.type === 'denied'
-      ? isSafari
+      ? isSafari()
         ? locale.MicrophoneDomainPermissionsDeniedSafari
         : locale.MicrophoneDomainPermissionsDenied
       : props.type === 'request'
@@ -189,9 +206,16 @@ export const CameraDomainPermissions = (props: CameraDomainPermissionsProps): JS
   const locale = useLocale().strings;
 
   /* @conditional-compile-remove(call-readiness) */
+  const isSafari = (): boolean => {
+    /* @conditional-compile-remove(unsupported-browser) */
+    return props.browser === 'safari';
+    return /^((?!chrome|android|crios|fxios).)*safari/i.test(navigator.userAgent);
+  };
+
+  /* @conditional-compile-remove(call-readiness) */
   const strings = useShallowMerge(
     props.type === 'denied'
-      ? isSafari
+      ? isSafari()
         ? locale.CameraDomainPermissionsDeniedSafari
         : locale.CameraDomainPermissionsDenied
       : props.type === 'request'

@@ -2,11 +2,12 @@
 // Licensed under the MIT license.
 
 import { CallingBaseSelectorProps, getDeviceManager, getDiagnostics, getLatestErrors } from './baseSelectors';
+/* @conditional-compile-remove(unsupported-browser) */
+import { getEnvironmentInfo } from './baseSelectors';
 import { ActiveErrorMessage, ErrorType } from '@internal/react-components';
 import { createSelector } from 'reselect';
 import { CallClientState, CallErrors, CallErrorTarget } from '@internal/calling-stateful-client';
 import { DiagnosticQuality } from '@azure/communication-calling';
-
 /**
  * Selector type for {@link ErrorBar} component.
  *
@@ -32,8 +33,18 @@ export type ErrorBarSelector = (
  * @public
  */
 export const errorBarSelector: ErrorBarSelector = createSelector(
-  [getLatestErrors, getDiagnostics, getDeviceManager],
-  (latestErrors: CallErrors, diagnostics, deviceManager): { activeErrorMessages: ActiveErrorMessage[] } => {
+  [
+    getLatestErrors,
+    getDiagnostics,
+    getDeviceManager,
+    /* @conditional-compile-remove(unsupported-browser) */ getEnvironmentInfo
+  ],
+  (
+    latestErrors: CallErrors,
+    diagnostics,
+    deviceManager,
+    /* @conditional-compile-remove(unsupported-browser) */ environmentInfo
+  ): { activeErrorMessages: ActiveErrorMessage[] } => {
     // The order in which the errors are returned is significant: The `ErrorBar` shows errors on the UI in that order.
     // There are several options for the ordering:
     //   - Sorted by when the errors happened (latest first / oldest first).
@@ -43,7 +54,11 @@ export const errorBarSelector: ErrorBarSelector = createSelector(
     // have timestamps for errors.
     const activeErrorMessages: ActiveErrorMessage[] = [];
 
-    const isSafari = /^((?!chrome|android|crios|fxios).)*safari/i.test(navigator.userAgent);
+    const isSafari = (): boolean => {
+      /* @conditional-compile-remove(unsupported-browser) */
+      return environmentInfo?.environment.browser === 'safari';
+      return /^((?!chrome|android|crios|fxios).)*safari/i.test(navigator.userAgent);
+    };
 
     // Errors reported via diagnostics are more reliable than from API method failures, so process those first.
     if (
@@ -58,10 +73,10 @@ export const errorBarSelector: ErrorBarSelector = createSelector(
     if (diagnostics?.media.latest.noMicrophoneDevicesEnumerated?.value === true) {
       activeErrorMessages.push({ type: 'callNoMicrophoneFound' });
     }
-    if (deviceManager.deviceAccess?.audio === false && isSafari) {
+    if (deviceManager.deviceAccess?.audio === false && isSafari()) {
       activeErrorMessages.push({ type: 'callMicrophoneAccessDeniedSafari' });
     }
-    if (deviceManager.deviceAccess?.audio === false && !isSafari) {
+    if (deviceManager.deviceAccess?.audio === false && !isSafari()) {
       activeErrorMessages.push({ type: 'callMicrophoneAccessDenied' });
     }
     if (diagnostics?.media.latest.microphonePermissionDenied?.value === true) {
@@ -90,7 +105,7 @@ export const errorBarSelector: ErrorBarSelector = createSelector(
         activeErrorMessages.push({ type: 'callVideoRecoveredBySystem' });
       }
     }
-    if (deviceManager.deviceAccess?.video === false && isSafari) {
+    if (deviceManager.deviceAccess?.video === false && isSafari()) {
       activeErrorMessages.push({ type: 'callCameraAccessDeniedSafari' });
     } else if (deviceManager.deviceAccess?.video === false) {
       activeErrorMessages.push({ type: 'callCameraAccessDenied' });
