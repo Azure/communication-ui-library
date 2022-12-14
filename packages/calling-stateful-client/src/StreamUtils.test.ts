@@ -74,7 +74,7 @@ interface TestData {
 function createMockCall(mockCallId: string): CallState {
   const call: CallState = {
     /* @conditional-compile-remove(teams-identity-support) */
-    kind: CallKind.Call,
+    kind: 'Call' as CallKind,
     id: mockCallId,
     callerInfo: {} as CallerInfo,
     state: 'None',

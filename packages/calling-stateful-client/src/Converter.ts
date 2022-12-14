@@ -86,7 +86,7 @@ export function convertSdkCallToDeclarativeCall(call: CallCommon): CallState {
   return {
     id: call.id,
     /* @conditional-compile-remove(teams-identity-support) */
-    kind: _isACSCall(call) ? CallKind.Call : CallKind.TeamsCall,
+    kind: _isACSCall(call) ? ('Call' as CallKind) : ('TeamsCall' as CallKind),
     callerInfo: call.callerInfo,
     state: call.state,
     callEndReason: call.callEndReason,
