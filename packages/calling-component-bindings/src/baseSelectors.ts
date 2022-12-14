@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 import { DominantSpeakersInfo } from '@azure/communication-calling';
+/* @conditional-compile-remove(unsupported-browser) */
+import { EnvironmentInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(rooms) */
 import { ParticipantRole } from '@azure/communication-calling';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
@@ -119,3 +121,11 @@ export const getDiagnostics = (
  */
 export const getCallState = (state: CallClientState, props: CallingBaseSelectorProps): string =>
   state.calls[props.callId]?.state;
+
+/* @conditional-compile-remove(unsupported-browser) */
+/**
+ * @private
+ */
+export const getEnvironmentInfo = (state: CallClientState): EnvironmentInfo | undefined => {
+  return state.environmentInfo;
+};
