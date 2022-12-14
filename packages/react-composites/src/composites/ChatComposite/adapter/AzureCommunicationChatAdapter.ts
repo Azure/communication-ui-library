@@ -444,7 +444,7 @@ export const createAzureCommunicationChatAdapter = async ({
   threadId
 }: AzureCommunicationChatAdapterArgs): Promise<ChatAdapter> => {
   if (!isValidIdentifier(userId)) {
-    throw new Error('Invalid identifier. Please provide valid identifier object.');
+    throw new Error('Provided userId is invalid. Please provide valid identifier object.');
   }
 
   const chatClient = createStatefulChatClient({
