@@ -1,14 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import {
-  AudioDeviceInfo,
-  Call,
-  CallKind,
-  DtmfTone,
-  PermissionConstraints,
-  VideoDeviceInfo
-} from '@azure/communication-calling';
+import { AudioDeviceInfo, Call, DtmfTone, PermissionConstraints, VideoDeviceInfo } from '@azure/communication-calling';
+/* @conditional-compile-remove(teams-identity-support) */
+import { CallKind } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
 import { EnvironmentInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(rooms) */

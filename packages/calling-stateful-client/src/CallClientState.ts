@@ -6,7 +6,6 @@ import {
   CallDirection,
   CallEndReason,
   CallerInfo,
-  CallKind,
   CallState as CallStatus,
   DeviceAccess,
   DominantSpeakersInfo,
@@ -17,6 +16,8 @@ import {
   ScalingMode,
   VideoDeviceInfo
 } from '@azure/communication-calling';
+/* @conditional-compile-remove(teams-identity-support) */
+import { CallKind } from '@azure/communication-calling';
 /* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(rooms) */

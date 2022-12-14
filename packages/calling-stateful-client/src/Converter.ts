@@ -5,10 +5,10 @@ import {
   RemoteParticipant as SdkRemoteParticipant,
   RemoteVideoStream as SdkRemoteVideoStream,
   LocalVideoStream as SdkLocalVideoStream,
-  VideoStreamRendererView,
-  CallKind
+  VideoStreamRendererView
 } from '@azure/communication-calling';
-
+/* @conditional-compile-remove(teams-identity-support) */
+import { CallKind } from '@azure/communication-calling';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import {
   CallState,

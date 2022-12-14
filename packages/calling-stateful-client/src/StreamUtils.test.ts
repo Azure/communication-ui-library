@@ -7,9 +7,10 @@ import {
   VideoStreamRendererView,
   LocalVideoStream as SdkLocalVideoStream,
   RemoteVideoStream as SdkRemoteVideoStream,
-  VideoDeviceInfo,
-  CallKind
+  VideoDeviceInfo
 } from '@azure/communication-calling';
+/* @conditional-compile-remove(teams-identity-support) */
+import { CallKind } from '@azure/communication-calling';
 import { CommunicationUserKind } from '@azure/communication-common';
 import { CallState, LocalVideoStreamState, RemoteParticipantState, RemoteVideoStreamState } from './CallClientState';
 import { CallContext } from './CallContext';
