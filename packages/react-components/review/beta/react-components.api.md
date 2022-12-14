@@ -530,6 +530,8 @@ export const DEFAULT_COMPONENT_ICONS: {
     VideoTileMoreOptions: JSX.Element;
     VideoTileScaleFit: JSX.Element;
     VideoTileScaleFill: JSX.Element;
+    PinParticipant: JSX.Element;
+    UnpinParticipant: JSX.Element;
 };
 
 // @internal
@@ -1405,7 +1407,9 @@ export const _RemoteVideoTile: React_2.MemoExoticComponent<(props: {
     personaMinSize?: number | undefined;
     strings?: VideoGalleryStrings | undefined;
     participantState?: ParticipantState | undefined;
-    contextualMenu?: IContextualMenuProps | undefined;
+    showRemoteVideoTileContextualMenu?: boolean | undefined;
+    onPinParticipant?: ((userId: string) => void) | undefined;
+    onUnpinParticipant?: ((userId: string) => void) | undefined;
     isPinned?: boolean | undefined;
 }) => JSX.Element>;
 
@@ -1704,8 +1708,10 @@ export interface VideoGalleryStrings {
     localVideoLabel: string;
     localVideoMovementLabel: string;
     localVideoSelectedDescription: string;
+    pinParticipantForMe: string;
     screenIsBeingSharedMessage: string;
     screenShareLoadingMessage: string;
+    unpinParticipantForMe: string;
 }
 
 // @public

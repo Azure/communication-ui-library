@@ -146,6 +146,7 @@ export const _RemoteVideoTile = React.memo(
         /* @conditional-compile-remove(PSTN-calls) */
         participantState={participantState}
         {...videoTileContextualMenuProps}
+        /* @conditional-compile-remove(pinned-participants) */
         isPinned={props.isPinned}
       />
     );

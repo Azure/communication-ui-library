@@ -25,8 +25,6 @@ import {
   MoreHorizontal20Filled,
   MoreHorizontal20Regular,
   People20Filled,
-  Pin20Regular,
-  PinOff20Regular,
   Settings20Filled,
   Send20Filled,
   Send20Regular,
@@ -48,7 +46,13 @@ import {
 import { Important20Filled } from '@fluentui/react-icons';
 
 /* @conditional-compile-remove(pinned-participants) */
-import { Pin16Filled, ScaleFit20Regular, ScaleFill20Regular } from '@fluentui/react-icons';
+import {
+  Pin16Filled,
+  Pin20Regular,
+  PinOff20Regular,
+  ScaleFit20Regular,
+  ScaleFill20Regular
+} from '@fluentui/react-icons';
 
 /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
 import { Backspace20Regular } from '@fluentui/react-icons';
