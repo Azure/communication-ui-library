@@ -303,22 +303,29 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     /* @conditional-compile-remove(rooms) */ permissions.cameraButton
   ]);
 
+  /* @conditional-compile-remove(pinned-participants) */
+  const defaultPinParticipant = useCallback(
+    (userId: string) => {
+      if (!pinnedParticipantsState.includes(userId)) {
+        setPinnedParticipantsState(pinnedParticipantsState.concat(userId));
+      }
+    },
+    [pinnedParticipantsState, setPinnedParticipantsState]
+  );
+  /* @conditional-compile-remove(pinned-participants) */
+  const defaultUnpinParticipant = useCallback(
+    (userId: string) => {
+      setPinnedParticipantsState(pinnedParticipantsState.filter((p) => p !== userId));
+    },
+    [pinnedParticipantsState, setPinnedParticipantsState]
+  );
+
   const defaultOnRenderVideoTile = useCallback(
     (participant: VideoGalleryRemoteParticipant, isVideoParticipant?: boolean) => {
       const remoteVideoStream = participant.videoStream;
 
       /* @conditional-compile-remove(pinned-participants) */
       const isPinned = pinnedParticipants?.includes(participant.userId);
-      /* @conditional-compile-remove(pinned-participants) */
-      const defaultPinParticipant = (userId: string) => {
-        if (!pinnedParticipantsState.includes(participant.userId)) {
-          setPinnedParticipantsState(pinnedParticipantsState.concat(userId));
-        }
-      };
-      /* @conditional-compile-remove(pinned-participants) */
-      const defaultUnpinParticipant = (userId: string) => {
-        setPinnedParticipantsState(pinnedParticipantsState.filter((p) => p !== userId));
-      };
 
       return (
         <_RemoteVideoTile
