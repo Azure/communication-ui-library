@@ -134,6 +134,11 @@ export interface ErrorBarStrings {
   callMicrophoneAccessDenied: string;
 
   /**
+   * Message shown when microphone can be enumerated but access is blocked by the system, for safari browsers
+   */
+  callMicrophoneAccessDeniedSafari: string;
+
+  /**
    * Message shown when microphone is muted by the system (not by local or remote participants)
    */
   callMicrophoneMutedBySystem: string;
@@ -159,6 +164,11 @@ export interface ErrorBarStrings {
    * Message shown when camera can be enumerated but access is blocked by the system.
    */
   callCameraAccessDenied: string;
+
+  /**
+   * Message shown when camera can be enumerated but access is blocked by the system, for safari browsers
+   */
+  callCameraAccessDeniedSafari: string;
 
   /**
    * Message shown when local video fails to start because camera is already in use by

@@ -424,14 +424,14 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
 
   const videoGalleryLayout = useMemo(() => {
     /* @conditional-compile-remove(pinned-participants) */
-    if (pinnedParticipants.length > 0) {
+    if (layoutProps.pinnedParticipants.length > 0) {
       return <PinnedParticipantsLayout {...layoutProps} />;
     }
     if (layout === 'floatingLocalVideo') {
       return <FloatingLocalVideoLayout {...layoutProps} />;
     }
     return <DefaultLayout {...layoutProps} />;
-  }, [layout, layoutProps, /* @conditional-compile-remove(pinned-participants) */ pinnedParticipants.length]);
+  }, [layout, layoutProps]);
 
   return (
     <div

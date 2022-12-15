@@ -139,11 +139,13 @@ export const messageBarType = (errorType: ErrorType): MessageBarType => {
     case 'callNoSpeakerFound':
     case 'callNoMicrophoneFound':
     case 'callMicrophoneAccessDenied':
+    case 'callMicrophoneAccessDeniedSafari':
     case 'callMicrophoneMutedBySystem':
     case 'callMicrophoneUnmutedBySystem':
     case 'callMacOsMicrophoneAccessDenied':
     case 'callLocalVideoFreeze':
     case 'callCameraAccessDenied':
+    case 'callCameraAccessDeniedSafari':
     case 'callCameraAlreadyInUse':
     case 'callVideoStoppedBySystem':
     case 'callVideoRecoveredBySystem':
@@ -173,11 +175,13 @@ export const customIconName: Partial<{ [key in ErrorType]: string }> = {
   callNoSpeakerFound: 'ErrorBarCallNoSpeakerFound',
   callNoMicrophoneFound: 'ErrorBarCallNoMicrophoneFound',
   callMicrophoneAccessDenied: 'ErrorBarCallMicrophoneAccessDenied',
+  callMicrophoneAccessDeniedSafari: 'ErrorBarCallMicrophoneAccessDenied',
   callMicrophoneMutedBySystem: 'ErrorBarCallMicrophoneMutedBySystem',
   callMicrophoneUnmutedBySystem: 'ErrorBarCallMicrophoneUnmutedBySystem',
   callMacOsMicrophoneAccessDenied: 'ErrorBarCallMacOsMicrophoneAccessDenied',
   callLocalVideoFreeze: 'ErrorBarCallLocalVideoFreeze',
   callCameraAccessDenied: 'ErrorBarCallCameraAccessDenied',
+  callCameraAccessDeniedSafari: 'ErrorBarCallCameraAccessDenied',
   callCameraAlreadyInUse: 'ErrorBarCallCameraAlreadyInUse',
   callVideoStoppedBySystem: 'ErrorBarCallVideoStoppedBySystem',
   callVideoRecoveredBySystem: 'ErrorBarCallVideoRecoveredBySystem',
