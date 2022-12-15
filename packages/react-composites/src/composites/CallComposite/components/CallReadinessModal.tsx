@@ -251,7 +251,7 @@ export const CallReadinessModalFallBack = (props: {
   // When permissions are not set, do nothing here
   // When permissions are set to denied, show helper screen
   const showModal = videoState === 'denied' || audioState === 'denied';
-  
+
   /* @conditional-compile-remove(unsupported-browser) */
   const isSafari = _isSafari(environmentInfo);
 
