@@ -2171,6 +2171,7 @@ export type ParticipantsButtonSelector = (state: CallClientState, props: Calling
 
 // @public
 export interface ParticipantsButtonStrings {
+    copyInviteLinkActionedAriaLabel: string;
     copyInviteLinkButtonLabel: string;
     label: string;
     menuHeader: string;

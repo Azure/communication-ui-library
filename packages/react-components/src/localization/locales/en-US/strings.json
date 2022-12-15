@@ -90,7 +90,8 @@
     "menuHeader": "In this call",
     "participantsListButtonLabel": "{numParticipants} people",
     "muteAllButtonLabel": "Mute all",
-    "copyInviteLinkButtonLabel": "Copy invite link"
+    "copyInviteLinkButtonLabel": "Copy invite link",
+    "copyInviteLinkActionedAriaLabel": "Invite link copied"
   },
   "screenShareButton": {
     "onLabel": "Stop presenting",
