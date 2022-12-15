@@ -10,7 +10,7 @@ import { useLocale } from '../../../../../react-components/src/localization';
 export const UnsupportedEnvironmentModals: () => JSX.Element = () => {
   const unsupportedBrowserStrings = useLocale().strings.UnsupportedBrowser;
   const unsupportedBrowserVersionStrings = useLocale().strings.UnsupportedBrowserVersion;
-  const unsupportedBrowserOperatingSystem = useLocale().strings.UnsupportedBrowserVersion;
+  const unsupportedBrowserOperatingSystem = useLocale().strings.UnsupportedOperatingSystem;
   const [unsupportedBrowserModalOpen, setUnsupportedBrowserModalOpen] = useState<boolean>(false);
   const [unsupportedBrowserVersionModalOpen, setUnsupportedBrowserVersionModalOpen] = useState<boolean>(false);
   const [unsupportedOperatingSystemModalOpen, setUnsupportedOperatingSystemModalOpen] = useState<boolean>(false);
