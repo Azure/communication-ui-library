@@ -355,7 +355,7 @@ export const isValidIdentifier = (identifier: CommunicationIdentifier): boolean 
  */
 export const _isSafari = (
   environmentInfo: undefined | /* @conditional-compile-remove(unsupported-browser) */ EnvironmentInfo
-) => {
+): boolean => {
   /* @conditional-compile-remove(unsupported-browser) */
   return environmentInfo?.environment.browser === 'safari';
   return /^((?!chrome|android|crios|fxios).)*safari/i.test(navigator.userAgent);
