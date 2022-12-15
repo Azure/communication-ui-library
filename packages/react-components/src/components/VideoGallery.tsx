@@ -3,8 +3,6 @@
 
 import { concatStyleSets, IStyle, mergeStyles, Stack } from '@fluentui/react';
 import React, { useCallback, useMemo, useRef } from 'react';
-/* @conditional-compile-remove(pinned-participants) */
-import { useState } from 'react';
 import { GridLayoutStyles } from '.';
 import { useLocale } from '../localization';
 import { useTheme } from '../theming';
@@ -210,10 +208,10 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   const isNarrow = containerWidth ? isNarrowWidth(containerWidth) : false;
 
   /* @conditional-compile-remove(pinned-participants) */
-  const [pinnedParticipantsState, _] = useState<string[]>([]);
+  const [pinnedParticipantsState, _] = React.useState<string[]>([]);
   /* @conditional-compile-remove(pinned-participants) */
   // Use pinnedParticipants from props but if it is not defined use the maintained state of pinned participants
-  const pinnedParticipants = props.pinnedParticipants ? props.pinnedParticipants : pinnedParticipantsState;
+  const pinnedParticipants = props.pinnedParticipants ?? pinnedParticipantsState;
 
   /* @conditional-compile-remove(rooms) */
   const permissions = _usePermissions();
@@ -341,58 +339,48 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     ? localScreenShareStreamComponent
     : undefined;
 
-  let videoGalleryLayout: JSX.Element | undefined = undefined;
-  /* @conditional-compile-remove(pinned-participants) */
-  if (pinnedParticipants && pinnedParticipants.length > 0) {
-    videoGalleryLayout = (
-      <PinnedParticipantsLayout
-        remoteParticipants={remoteParticipants}
-        pinnedParticipants={pinnedParticipants}
-        onRenderRemoteParticipant={onRenderRemoteVideoTile ?? defaultOnRenderVideoTile}
-        localVideoComponent={localVideoTile}
-        screenShareComponent={screenShareComponent}
-        showCameraSwitcherInLocalPreview={showCameraSwitcherInLocalPreview}
-        maxRemoteVideoStreams={maxRemoteVideoStreams}
-        dominantSpeakers={dominantSpeakers}
-        parentWidth={containerWidth}
-        parentHeight={containerHeight}
-        styles={styles}
-        isLocalVideoFloating={layout === 'floatingLocalVideo'}
-      />
-    );
-  }
+  const layoutProps = useMemo(
+    () => ({
+      remoteParticipants,
+      /* @conditional-compile-remove(pinned-participants) */ pinnedParticipants,
+      screenShareComponent,
+      showCameraSwitcherInLocalPreview,
+      maxRemoteVideoStreams,
+      dominantSpeakers,
+      styles,
+      onRenderRemoteParticipant: onRenderRemoteVideoTile ?? defaultOnRenderVideoTile,
+      localVideoComponent: localVideoTile,
+      parentWidth: containerWidth,
+      parentHeight: containerHeight,
+      isLocalVideoFloating: layout === 'floatingLocalVideo'
+    }),
+    [
+      remoteParticipants,
+      screenShareComponent,
+      showCameraSwitcherInLocalPreview,
+      maxRemoteVideoStreams,
+      dominantSpeakers,
+      styles,
+      localVideoTile,
+      containerWidth,
+      containerHeight,
+      onRenderRemoteVideoTile,
+      defaultOnRenderVideoTile,
+      layout,
+      /* @conditional-compile-remove(pinned-participants) */ pinnedParticipants
+    ]
+  );
 
-  if (!videoGalleryLayout) {
-    if (layout === 'floatingLocalVideo') {
-      videoGalleryLayout = (
-        <FloatingLocalVideoLayout
-          remoteParticipants={remoteParticipants}
-          onRenderRemoteParticipant={onRenderRemoteVideoTile ?? defaultOnRenderVideoTile}
-          localVideoComponent={localVideoTile}
-          screenShareComponent={screenShareComponent}
-          showCameraSwitcherInLocalPreview={showCameraSwitcherInLocalPreview}
-          maxRemoteVideoStreams={maxRemoteVideoStreams}
-          dominantSpeakers={dominantSpeakers}
-          parentWidth={containerWidth}
-          parentHeight={containerHeight}
-          styles={styles}
-        />
-      );
-    } else {
-      videoGalleryLayout = (
-        <DefaultLayout
-          remoteParticipants={remoteParticipants}
-          onRenderRemoteParticipant={onRenderRemoteVideoTile ?? defaultOnRenderVideoTile}
-          localVideoComponent={localVideoTile}
-          screenShareComponent={screenShareComponent}
-          maxRemoteVideoStreams={maxRemoteVideoStreams}
-          dominantSpeakers={dominantSpeakers}
-          parentWidth={containerWidth}
-          styles={styles}
-        />
-      );
+  const videoGalleryLayout = useMemo(() => {
+    /* @conditional-compile-remove(pinned-participants) */
+    if (pinnedParticipants.length > 0) {
+      return <PinnedParticipantsLayout {...layoutProps} />;
     }
-  }
+    if (layout === 'floatingLocalVideo') {
+      return <FloatingLocalVideoLayout {...layoutProps} />;
+    }
+    return <DefaultLayout {...layoutProps} />;
+  }, [layout, layoutProps, /* @conditional-compile-remove(pinned-participants) */ pinnedParticipants.length]);
 
   return (
     <div

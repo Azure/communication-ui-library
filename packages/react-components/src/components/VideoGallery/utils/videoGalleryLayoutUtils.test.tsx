@@ -107,7 +107,7 @@ const createRemoteParticipant = (attrs?: Partial<VideoGalleryRemoteParticipant>)
 
 const setup = (args: UsePinnedParticipantLayoutArgs): LayoutResult | undefined => {
   let layout: LayoutResult | undefined = undefined;
-  const TestComponent = () => {
+  const TestComponent = (): null => {
     layout = usePinnedParticipantLayout(args);
     return null;
   };

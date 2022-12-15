@@ -5,7 +5,10 @@ import { useCallback, useRef } from 'react';
 import { smartDominantSpeakerParticipants } from '../../../gallery';
 import { VideoGalleryParticipant, VideoGalleryRemoteParticipant } from '../../../types';
 
-interface UseFloatingLocalVideoLayoutArgs {
+/**
+ * @private
+ */
+export interface UseFloatingLocalVideoLayoutArgs {
   remoteParticipants: VideoGalleryRemoteParticipant[];
   dominantSpeakers?: string[];
   maxRemoteVideoStreams?: number;
@@ -13,6 +16,16 @@ interface UseFloatingLocalVideoLayoutArgs {
   isScreenShareActive?: boolean;
 }
 
+/**
+ * @private
+ */
+export interface UsePinnedParticipantLayoutArgs extends UseFloatingLocalVideoLayoutArgs {
+  pinnedParticipantUserIds: string[];
+}
+
+/**
+ * @private
+ */
 export interface LayoutResult {
   gridParticipants: VideoGalleryParticipant[];
   horizontalGalleryParticipants: VideoGalleryParticipant[];
@@ -107,10 +120,6 @@ export const useFloatingLocalVideoLayout = (props: UseFloatingLocalVideoLayoutAr
 
   return { gridParticipants, horizontalGalleryParticipants };
 };
-
-export interface UsePinnedParticipantLayoutArgs extends UseFloatingLocalVideoLayoutArgs {
-  pinnedParticipantUserIds: string[];
-}
 
 /**
  * @private
