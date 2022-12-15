@@ -23,8 +23,6 @@ const DRAWER_HIGH_Z_BAND = 99; // setting z index to  99 so that it sit above al
  */
 export const CallReadinessModal = (props: {
   mobileView: boolean;
-  audioState: PermissionState;
-  videoState: PermissionState;
   permissionsState: {
     camera: PermissionState;
     microphone: PermissionState;
@@ -35,15 +33,11 @@ export const CallReadinessModal = (props: {
     camera: PermissionState;
     microphone: PermissionState;
   }) => void;
-  cameraPermissionGranted: boolean | undefined;
-  microphonePermissionGranted: boolean | undefined;
 }): JSX.Element => {
   const {
     mobileView,
     permissionsState,
     isPermissionsModalDismissed,
-    cameraPermissionGranted,
-    microphonePermissionGranted,
     setIsPermissionsModalDismissed,
     onPermissionsTroubleshootingClick
   } = props;
@@ -53,8 +47,8 @@ export const CallReadinessModal = (props: {
   };
 
   // On Safari browser with 2 options: don't allow/never for this website again, when don't allow is clicked, permissionAPI returns prompt and PermissionGranted from calling sdk returns false (the right value)
-  const videoState: PermissionState = cameraPermissionGranted === false ? 'denied' : props.videoState;
-  const audioState: PermissionState = microphonePermissionGranted === false ? 'denied' : props.audioState;
+  const videoState: PermissionState = permissionsState.camera;
+  const audioState: PermissionState = permissionsState.microphone;
 
   const showModal =
     videoState === 'denied' || videoState === 'prompt' || audioState === 'denied' || audioState === 'prompt';
@@ -202,8 +196,6 @@ export const CallReadinessModal = (props: {
  */
 export const CallReadinessModalFallBack = (props: {
   mobileView: boolean;
-  cameraPermissionGranted: boolean | undefined;
-  microphonePermissionGranted: boolean | undefined;
   checkPermissionModalShowing: boolean;
   permissionsState: {
     camera: PermissionState;
@@ -218,8 +210,6 @@ export const CallReadinessModalFallBack = (props: {
 }): JSX.Element => {
   const {
     mobileView,
-    cameraPermissionGranted,
-    microphonePermissionGranted,
     checkPermissionModalShowing,
     permissionsState,
     isPermissionsModalDismissed,
@@ -231,14 +221,17 @@ export const CallReadinessModalFallBack = (props: {
     // only way to dismiss this drawer is clicking on allow access which will leads to device permission prompt
   };
 
-  // When permissions are not set, value is undefined, do nothing here
-  // When permissions are set to denied, value is false, show helper screen
-  const showModal = cameraPermissionGranted === false || microphonePermissionGranted === false;
+  const videoState = permissionsState.camera;
+  const audioState = permissionsState.microphone;
+
+  // When permissions are not set, do nothing here
+  // When permissions are set to denied, show helper screen
+  const showModal = videoState === 'denied' || audioState === 'denied';
 
   const modal: undefined | (() => JSX.Element) = !showModal
     ? undefined
     : () => {
-        if (cameraPermissionGranted === false && microphonePermissionGranted === false) {
+        if (videoState === 'denied' && audioState === 'denied') {
           return (
             <CameraAndMicrophoneDomainPermissions
               appName={'app'}
@@ -252,7 +245,7 @@ export const CallReadinessModalFallBack = (props: {
               type="denied"
             />
           );
-        } else if (cameraPermissionGranted === false && microphonePermissionGranted) {
+        } else if (videoState === 'denied' && audioState === 'granted') {
           return (
             <CameraDomainPermissions
               appName={'app'}
@@ -289,9 +282,7 @@ export const CallReadinessModalFallBack = (props: {
   if (mobileView) {
     return (
       <>
-        {(checkPermissionModalShowing ||
-          microphonePermissionGranted === undefined ||
-          cameraPermissionGranted === undefined) && (
+        {(checkPermissionModalShowing || audioState === 'prompt' || videoState === 'prompt') && (
           <_DrawerSurface onLightDismiss={onLightDismissTriggered} styles={drawerContainerStyles(DRAWER_HIGH_Z_BAND)}>
             <CameraAndMicrophoneDomainPermissions
               appName={'app'}
@@ -316,9 +307,7 @@ export const CallReadinessModalFallBack = (props: {
   } else {
     return (
       <>
-        {(checkPermissionModalShowing ||
-          microphonePermissionGranted === undefined ||
-          cameraPermissionGranted === undefined) && (
+        {(checkPermissionModalShowing || audioState === 'prompt' || videoState === 'prompt') && (
           <Modal
             isOpen={isPermissionsModalDismissed}
             isBlocking={false}

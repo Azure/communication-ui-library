@@ -150,16 +150,20 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
         ? cameraPermissionGranted !== false
           ? videoState
           : 'denied'
-        : cameraPermissionGranted
-        ? 'granted'
+        : cameraPermissionGranted !== false
+        ? cameraPermissionGranted
+          ? 'granted'
+          : 'prompt'
         : 'denied',
     microphone:
       audioState && audioState !== 'unsupported'
         ? microphonePermissionGranted !== false
           ? audioState
           : 'denied'
-        : microphonePermissionGranted
-        ? 'granted'
+        : microphonePermissionGranted !== false
+        ? microphonePermissionGranted
+          ? 'granted'
+          : 'prompt'
         : 'denied'
   };
   /* @conditional-compile-remove(call-readiness) */
@@ -209,12 +213,8 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
           audioState !== 'unsupported' && (
             <CallReadinessModal
               mobileView={mobileView}
-              audioState={audioState}
-              videoState={videoState}
               permissionsState={permissionsState}
               isPermissionsModalDismissed={isPermissionsModalDismissed}
-              cameraPermissionGranted={cameraPermissionGranted}
-              microphonePermissionGranted={microphonePermissionGranted}
               setIsPermissionsModalDismissed={setIsPermissionsModalDismissed}
               onPermissionsTroubleshootingClick={onPermissionsTroubleshootingClick}
             />
@@ -230,8 +230,6 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
           (videoState === 'unsupported' || audioState === 'unsupported') && (
             <CallReadinessModalFallBack
               mobileView={mobileView}
-              cameraPermissionGranted={cameraPermissionGranted}
-              microphonePermissionGranted={microphonePermissionGranted}
               checkPermissionModalShowing={forceShowingCheckPermissions}
               permissionsState={permissionsState}
               isPermissionsModalDismissed={isPermissionsModalDismissed}
