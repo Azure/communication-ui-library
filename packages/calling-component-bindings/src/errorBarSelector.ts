@@ -1,9 +1,13 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { CallingBaseSelectorProps, getDeviceManager, getDiagnostics, getLatestErrors } from './baseSelectors';
-/* @conditional-compile-remove(unsupported-browser) */
-import { getEnvironmentInfo } from './baseSelectors';
+import {
+  CallingBaseSelectorProps,
+  getDeviceManager,
+  getDiagnostics,
+  getLatestErrors,
+  getEnvironmentInfo
+} from './baseSelectors';
 import { ActiveErrorMessage, ErrorType } from '@internal/react-components';
 import { createSelector } from 'reselect';
 import { CallClientState, CallErrors, CallErrorTarget } from '@internal/calling-stateful-client';
@@ -33,17 +37,12 @@ export type ErrorBarSelector = (
  * @public
  */
 export const errorBarSelector: ErrorBarSelector = createSelector(
-  [
-    getLatestErrors,
-    getDiagnostics,
-    getDeviceManager,
-    /* @conditional-compile-remove(unsupported-browser) */ getEnvironmentInfo
-  ],
+  [getLatestErrors, getDiagnostics, getDeviceManager, getEnvironmentInfo],
   (
     latestErrors: CallErrors,
     diagnostics,
     deviceManager,
-    /* @conditional-compile-remove(unsupported-browser) */ environmentInfo
+    environmentInfo
   ): { activeErrorMessages: ActiveErrorMessage[] } => {
     // The order in which the errors are returned is significant: The `ErrorBar` shows errors on the UI in that order.
     // There are several options for the ordering:
