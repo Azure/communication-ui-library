@@ -89,6 +89,8 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
   let errorBarProps = usePropsFor(ErrorBar);
   const adapter = useAdapter();
   const deviceState = adapter.getState().devices;
+  /* @conditional-compile-remove(unsupported-browser) */
+  const environmentInfo = adapter.getState().environmentInfo;
 
   let disableStartCallButton = !microphonePermissionGranted || deviceState.microphones?.length === 0;
   /* @conditional-compile-remove(rooms) */
@@ -99,7 +101,9 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
   if (!rolePermissions.cameraButton) {
     errorBarProps = {
       ...errorBarProps,
-      activeErrorMessages: errorBarProps.activeErrorMessages.filter((e) => e.type !== 'callCameraAccessDenied')
+      activeErrorMessages: errorBarProps.activeErrorMessages.filter(
+        (e) => e.type !== 'callCameraAccessDenied' && e.type !== 'callCameraAccessDeniedSafari'
+      )
     };
   }
   /* @conditional-compile-remove(rooms) */
@@ -198,6 +202,8 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
               mobileView={mobileView}
               audioState={audioState}
               videoState={videoState}
+              /* @conditional-compile-remove(unsupported-browser) */
+              environmentInfo={environmentInfo}
               permissionsState={permissionsState}
               isPermissionsModalDismissed={isPermissionsModalDismissed}
               setIsPermissionsModalDismissed={setIsPermissionsModalDismissed}
@@ -220,6 +226,8 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
               checkPermissionModalShowing={forceShowingCheckPermissions}
               permissionsState={permissionsState}
               isPermissionsModalDismissed={isPermissionsModalDismissed}
+              /* @conditional-compile-remove(unsupported-browser) */
+              environmentInfo={environmentInfo}
               setIsPermissionsModalDismissed={setIsPermissionsModalDismissed}
               onPermissionsTroubleshootingClick={onPermissionsTroubleshootingClick}
             />
