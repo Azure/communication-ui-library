@@ -1113,6 +1113,7 @@ export interface ParticipantsButtonProps extends ControlBarButtonProps {
 
 // @public
 export interface ParticipantsButtonStrings {
+    copyInviteLinkActionedAriaLabel: string;
     copyInviteLinkButtonLabel: string;
     label: string;
     menuHeader: string;
