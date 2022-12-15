@@ -5,59 +5,29 @@ import { LayerHost, mergeStyles, Stack } from '@fluentui/react';
 import { useId } from '@fluentui/react-hooks';
 import React from 'react';
 import { useTheme } from '../../theming';
-import { VideoGalleryRemoteParticipant } from '../../types';
 import { GridLayout } from '../GridLayout';
+import { isNarrowWidth } from '../utils/responsive';
+import { FloatingLocalVideo } from './FloatingLocalVideo';
+import { FloatingLocalVideoLayoutProps } from './FloatingLocalVideoLayout';
 import {
   localVideoTileContainerStyle,
   localVideoTileWithControlsContainerStyle,
   LOCAL_VIDEO_TILE_ZINDEX
 } from './styles/FloatingLocalVideo.styles';
-import { isNarrowWidth } from '../utils/responsive';
-import { VideoGalleryStyles } from '../VideoGallery';
-import { FloatingLocalVideo } from './FloatingLocalVideo';
 import { innerLayoutStyle, layerHostStyle, rootLayoutStyle } from './styles/FloatingLocalVideoLayout.styles';
-import { VideoGalleryResponsiveHorizontalGallery } from './VideoGalleryResponsiveHorizontalGallery';
 import { usePinnedParticipantLayout } from './utils/videoGalleryLayoutUtils';
+import { VideoGalleryResponsiveHorizontalGallery } from './VideoGalleryResponsiveHorizontalGallery';
 
 /**
  * Props for {@link PinnedParticipantsLayout}.
  *
  * @private
  */
-export interface PinnedParticipantsLayoutProps {
+export interface PinnedParticipantsLayoutProps extends FloatingLocalVideoLayoutProps {
   /**
-   * Styles for the {@link PinnedParticipantsLayout}
+   * List of pinned participant userIds
    */
-  styles?: Omit<VideoGalleryStyles, 'root'>;
-  /** List of remote video particpants */
-  remoteParticipants?: VideoGalleryRemoteParticipant[];
-  /** List of pinned participant userIds */
   pinnedParticipants?: string[];
-  /** Callback to render each remote participant */
-  onRenderRemoteParticipant: (participant: VideoGalleryRemoteParticipant, isVideoParticipant?: boolean) => JSX.Element;
-  /** List of dominant speaker userIds in the order of their dominance. 0th index is the most dominant. */
-  dominantSpeakers?: string[];
-  /** Component that contains local video content */
-  localVideoComponent?: JSX.Element;
-  /** Component that contains screen share content */
-  screenShareComponent?: JSX.Element;
-  /**
-   * Maximum number of participant remote video streams that is rendered.
-   * @defaultValue 4
-   */
-  maxRemoteVideoStreams?: number;
-  /**
-   * Whether to display the local video camera switcher button
-   */
-  showCameraSwitcherInLocalPreview?: boolean;
-  /**
-   * Width of parent element
-   */
-  parentWidth?: number;
-  /**
-   * Height of parent element
-   */
-  parentHeight?: number;
   /**
    * Whether local video should be floating
    */
