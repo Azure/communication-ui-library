@@ -26,7 +26,7 @@ export interface CommonDomainPermissionsProps {
   /**
    * Type of the browser used, the domain permission component will show different guidance text based on the browser type
    */
-  browserHint: 'safari' | 'unset';
+  browserHint?: 'safari' | 'unset';
   /**
    * Action to be taken by the more help link. Possible to send to external page or show other modal.
    * If this is not provided the button will not be shown.

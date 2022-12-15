@@ -1419,7 +1419,7 @@ export interface CommonCallingHandlers {
 // @beta
 export interface CommonDomainPermissionsProps {
     appName: string;
-    browserHint: 'safari' | 'unset';
+    browserHint?: 'safari' | 'unset';
     onContinueAnywayClick?: () => void;
     onTroubleshootingClick?: () => void;
     styles?: DomainPermissionsStyles;
