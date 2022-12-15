@@ -35,13 +35,15 @@ export const CallReadinessModal = (props: {
     camera: PermissionState;
     microphone: PermissionState;
   }) => void;
+  cameraPermissionGranted: boolean | undefined;
+  microphonePermissionGranted: boolean | undefined;
 }): JSX.Element => {
   const {
     mobileView,
-    audioState,
-    videoState,
     permissionsState,
     isPermissionsModalDismissed,
+    cameraPermissionGranted,
+    microphonePermissionGranted,
     setIsPermissionsModalDismissed,
     onPermissionsTroubleshootingClick
   } = props;
@@ -49,6 +51,10 @@ export const CallReadinessModal = (props: {
     // do nothing here
     // only way to dismiss this drawer is clicking on allow access which will leads to device permission prompt
   };
+
+  // On Safari browser with 2 options: don't allow/never for this website again, when don't allow is clicked, permissionAPI returns prompt and PermissionGranted from calling sdk returns false (the right value)
+  const videoState: PermissionState = cameraPermissionGranted === false ? 'denied' : props.videoState;
+  const audioState: PermissionState = microphonePermissionGranted === false ? 'denied' : props.audioState;
 
   const showModal =
     videoState === 'denied' || videoState === 'prompt' || audioState === 'denied' || audioState === 'prompt';

@@ -200,6 +200,8 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
               videoState={videoState}
               permissionsState={permissionsState}
               isPermissionsModalDismissed={isPermissionsModalDismissed}
+              cameraPermissionGranted={cameraPermissionGranted}
+              microphonePermissionGranted={microphonePermissionGranted}
               setIsPermissionsModalDismissed={setIsPermissionsModalDismissed}
               onPermissionsTroubleshootingClick={onPermissionsTroubleshootingClick}
             />
