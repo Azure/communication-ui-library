@@ -71,7 +71,7 @@ export const CallReadinessModal = (props: {
             <CameraAndMicrophoneDomainPermissions
               appName={'app'}
               /* @conditional-compile-remove(unsupported-browser) */
-              isSafari={isSafari}
+              browserHint={isSafari ? 'safari' : 'unset'}
               onTroubleshootingClick={
                 onPermissionsTroubleshootingClick
                   ? () => {
@@ -89,7 +89,7 @@ export const CallReadinessModal = (props: {
             <CameraDomainPermissions
               appName={'app'}
               /* @conditional-compile-remove(unsupported-browser) */
-              isSafari={isSafari}
+              browserHint={isSafari ? 'safari' : 'unset'}
               onTroubleshootingClick={
                 onPermissionsTroubleshootingClick
                   ? () => {
@@ -110,7 +110,7 @@ export const CallReadinessModal = (props: {
             <MicrophoneDomainPermissions
               appName={'app'}
               /* @conditional-compile-remove(unsupported-browser) */
-              isSafari={isSafari}
+              browserHint={isSafari ? 'safari' : 'unset'}
               onTroubleshootingClick={
                 onPermissionsTroubleshootingClick
                   ? () => {
@@ -128,7 +128,7 @@ export const CallReadinessModal = (props: {
             <CameraAndMicrophoneDomainPermissions
               appName={'app'}
               /* @conditional-compile-remove(unsupported-browser) */
-              isSafari={isSafari}
+              browserHint={isSafari ? 'safari' : 'unset'}
               onTroubleshootingClick={
                 onPermissionsTroubleshootingClick
                   ? () => {
@@ -146,7 +146,7 @@ export const CallReadinessModal = (props: {
             <CameraDomainPermissions
               appName={'app'}
               /* @conditional-compile-remove(unsupported-browser) */
-              isSafari={isSafari}
+              browserHint={isSafari ? 'safari' : 'unset'}
               onTroubleshootingClick={
                 onPermissionsTroubleshootingClick
                   ? () => {
@@ -167,7 +167,7 @@ export const CallReadinessModal = (props: {
             <MicrophoneDomainPermissions
               appName={'app'}
               /* @conditional-compile-remove(unsupported-browser) */
-              isSafari={isSafari}
+              browserHint={isSafari ? 'safari' : 'unset'}
               onTroubleshootingClick={
                 onPermissionsTroubleshootingClick
                   ? () => {
@@ -263,7 +263,7 @@ export const CallReadinessModalFallBack = (props: {
             <CameraAndMicrophoneDomainPermissions
               appName={'app'}
               /* @conditional-compile-remove(unsupported-browser) */
-              isSafari={isSafari}
+              browserHint={isSafari ? 'safari' : 'unset'}
               onTroubleshootingClick={
                 onPermissionsTroubleshootingClick
                   ? () => {
@@ -279,7 +279,7 @@ export const CallReadinessModalFallBack = (props: {
             <CameraDomainPermissions
               appName={'app'}
               /* @conditional-compile-remove(unsupported-browser) */
-              isSafari={isSafari}
+              browserHint={isSafari ? 'safari' : 'unset'}
               onTroubleshootingClick={
                 onPermissionsTroubleshootingClick
                   ? () => {
@@ -298,7 +298,7 @@ export const CallReadinessModalFallBack = (props: {
             <MicrophoneDomainPermissions
               appName={'app'}
               /* @conditional-compile-remove(unsupported-browser) */
-              isSafari={isSafari}
+              browserHint={isSafari ? 'safari' : 'unset'}
               onTroubleshootingClick={
                 onPermissionsTroubleshootingClick
                   ? () => {
@@ -320,7 +320,7 @@ export const CallReadinessModalFallBack = (props: {
             <CameraAndMicrophoneDomainPermissions
               appName={'app'}
               /* @conditional-compile-remove(unsupported-browser) */
-              isSafari={isSafari}
+              browserHint={isSafari ? 'safari' : 'unset'}
               onTroubleshootingClick={
                 onPermissionsTroubleshootingClick
                   ? () => {
@@ -354,7 +354,7 @@ export const CallReadinessModalFallBack = (props: {
             <CameraAndMicrophoneDomainPermissions
               appName={'app'}
               /* @conditional-compile-remove(unsupported-browser) */
-              isSafari={isSafari}
+              browserHint={isSafari ? 'safari' : 'unset'}
               onTroubleshootingClick={
                 onPermissionsTroubleshootingClick
                   ? () => {

@@ -24,9 +24,9 @@ export interface CommonDomainPermissionsProps {
    */
   type: 'request' | 'denied' | 'check';
   /**
-   * Whether we are using safari browser or not
+   * Type of the browser used, the domain permission component will show different guidance text based on the browser type
    */
-  isSafari?: boolean;
+  browserHint?: 'safari' | 'unset';
   /**
    * Action to be taken by the more help link. Possible to send to external page or show other modal.
    * If this is not provided the button will not be shown.
@@ -77,7 +77,7 @@ export const CameraAndMicrophoneDomainPermissions = (props: CameraAndMicrophoneD
   /* @conditional-compile-remove(call-readiness) */
   const strings = useShallowMerge(
     props.type === 'denied'
-      ? props.isSafari
+      ? props.browserHint === 'safari'
         ? locale.CameraAndMicrophoneDomainPermissionsDeniedSafari
         : locale.CameraAndMicrophoneDomainPermissionsDenied
       : props.type === 'request'
@@ -139,7 +139,7 @@ export const MicrophoneDomainPermissions = (props: MicrophoneDomainPermissionsPr
   /* @conditional-compile-remove(call-readiness) */
   const strings = useShallowMerge(
     props.type === 'denied'
-      ? props.isSafari
+      ? props.browserHint === 'safari'
         ? locale.MicrophoneDomainPermissionsDeniedSafari
         : locale.MicrophoneDomainPermissionsDenied
       : props.type === 'request'
@@ -194,7 +194,7 @@ export const CameraDomainPermissions = (props: CameraDomainPermissionsProps): JS
   /* @conditional-compile-remove(call-readiness) */
   const strings = useShallowMerge(
     props.type === 'denied'
-      ? props.isSafari
+      ? props.browserHint === 'safari'
         ? locale.CameraDomainPermissionsDeniedSafari
         : locale.CameraDomainPermissionsDenied
       : props.type === 'request'
