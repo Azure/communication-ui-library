@@ -14,8 +14,6 @@ import {
 } from '@azure/communication-common';
 /* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
-/* @conditional-compile-remove(unsupported-browser) */
-import { CallAdapterOptionalFeatures } from '../adapter/CallAdapter';
 
 const ACCESS_DENIED_TEAMS_MEETING_SUB_CODE = 5854;
 const REMOTE_PSTN_USER_HUNG_UP = 560000;
@@ -132,7 +130,6 @@ type GetCallCompositePageFunction = ((
     previousCall: CallState | undefined,
     unsupportedBrowserInfo?: {
       environmentInfo?: EnvironmentInfo;
-      features?: CallAdapterOptionalFeatures;
       unsupportedBrowserVersionOptedIn?: boolean;
     }
   ) => CallCompositePage);
@@ -157,7 +154,6 @@ export const getCallCompositePage: GetCallCompositePageFunction = (
   /* @conditional-compile-remove(unsupported-browser) */
   if (
     isUnsupportedEnvironment(
-      unsupportedBrowserInfo.features,
       unsupportedBrowserInfo.environmentInfo,
       unsupportedBrowserInfo.unsupportedBrowserVersionOptedIn
     )
@@ -321,15 +317,13 @@ export const getDevicePermissionState = (
 };
 /* @conditional-compile-remove(unsupported-browser) */
 const isUnsupportedEnvironment = (
-  features?: CallAdapterOptionalFeatures,
   environmentInfo?: EnvironmentInfo,
   unsupportedBrowserVersionOptedIn?: boolean
 ): boolean => {
   return !!(
-    features?.unsupportedEnvironment &&
-    (environmentInfo?.isSupportedBrowser === false ||
-      (environmentInfo?.isSupportedBrowserVersion === false && !unsupportedBrowserVersionOptedIn) ||
-      environmentInfo?.isSupportedPlatform === false)
+    environmentInfo?.isSupportedBrowser === false ||
+    (environmentInfo?.isSupportedBrowserVersion === false && !unsupportedBrowserVersionOptedIn) ||
+    environmentInfo?.isSupportedPlatform === false
   );
 };
 

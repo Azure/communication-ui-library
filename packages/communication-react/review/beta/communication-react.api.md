@@ -154,7 +154,6 @@ export type AzureCommunicationCallAdapterArgs = {
 // @beta
 export type AzureCommunicationCallAdapterOptions = {
     roleHint?: Role;
-    features?: CallAdapterOptionalFeatures;
 };
 
 // @public
@@ -303,7 +302,6 @@ export type CallAdapterClientState = {
     latestErrors: AdapterErrors;
     alternateCallerId?: string;
     environmentInfo?: EnvironmentInfo;
-    features?: CallAdapterOptionalFeatures;
     roleHint?: Role;
 };
 
@@ -320,11 +318,6 @@ export interface CallAdapterDeviceManagement {
 
 // @public
 export type CallAdapterLocator = TeamsMeetingLinkLocator | GroupCallLocator | /* @conditional-compile-remove(rooms) */ RoomCallLocator | /* @conditional-compile-remove(teams-adhoc-call) */ /* @conditional-compile-remove(PSTN-calls) */ CallParticipantsLocator;
-
-// @beta
-export type CallAdapterOptionalFeatures = {
-    unsupportedEnvironment?: boolean | UnsupportedEnvironmentFeatures;
-};
 
 // @public
 export type CallAdapterState = CallAdapterUiState & CallAdapterClientState;
@@ -3121,11 +3114,6 @@ export interface UnsupportedBrowserVersionStrings {
     primaryText: string;
     secondaryText: string;
 }
-
-// @beta
-export type UnsupportedEnvironmentFeatures = {
-    unsupportedBrowserVersionAllowed?: boolean;
-};
 
 // @beta
 export const UnsupportedOperatingSystem: (props: UnsupportedOperatingSystemProps) => JSX.Element;
