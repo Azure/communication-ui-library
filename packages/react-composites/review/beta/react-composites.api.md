@@ -1122,11 +1122,11 @@ export const DEFAULT_COMPOSITE_ICONS: {
     HoldCallButton: JSX.Element;
     ResumeCall: JSX.Element;
     DialpadBackspace: JSX.Element;
-    DomainPermissionsSparkle: JSX.Element;
-    DomainPermissionCamera: JSX.Element;
-    DomainPermissionMic: JSX.Element;
-    DomainPermissionCameraDenied: JSX.Element;
-    DomainPermissionMicDenied: JSX.Element;
+    SitePermissionsSparkle: JSX.Element;
+    SitePermissionCamera: JSX.Element;
+    SitePermissionMic: JSX.Element;
+    SitePermissionCameraDenied: JSX.Element;
+    SitePermissionMicDenied: JSX.Element;
     UnsupportedEnvironmentWarning: JSX.Element;
     BrowserPermissionDeniedError: JSX.Element;
     VideoTilePinned: JSX.Element;
