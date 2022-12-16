@@ -90,7 +90,8 @@
     "menuHeader": "In this call",
     "participantsListButtonLabel": "{numParticipants} people",
     "muteAllButtonLabel": "Mute all",
-    "copyInviteLinkButtonLabel": "Copy invite link"
+    "copyInviteLinkButtonLabel": "Copy invite link",
+    "copyInviteLinkActionedAriaLabel": "Invite link copied"
   },
   "screenShareButton": {
     "onLabel": "Stop presenting",
@@ -146,11 +147,13 @@
     "callNoSpeakerFound": "No speakers or headphones found. Connect an audio device to hear the call.",
     "callNoMicrophoneFound": "No microphones found. Connect an audio input device.",
     "callMicrophoneAccessDenied": "Unable to access microphone. Click the lock in the address bar to grant permission to this webpage.",
+    "callMicrophoneAccessDeniedSafari": "Unable to access microphone. Refresh the page to allow permissions, or check this browser’s settings and verify permissions are enabled for this website.",
     "callMicrophoneMutedBySystem": "You are muted by your system.",
     "callMicrophoneUnmutedBySystem": "Your microphone recovered and you were unmuted by your system.",
     "callMacOsMicrophoneAccessDenied": "Unable to access microphone. Grant microphone permission in your macOS privacy settings.",
     "callLocalVideoFreeze": "Network bandwidth is poor. Your video may appear paused for others on the call.",
     "callCameraAccessDenied": "Unable to access camera. Click the lock in the address bar to grant permission to this webpage.",
+    "callCameraAccessDeniedSafari": "Unable to access camera. Refresh the page to allow permissions, or check this browser’s settings and verify permissions are enabled for this website.",
     "callCameraAlreadyInUse": "Unable to access camera. It may already be in use by another application.",
     "callVideoStoppedBySystem": "Your video has been stopped by your system.",
     "callVideoRecoveredBySystem": "Your video has resumed.",
@@ -167,7 +170,9 @@
     "localVideoCameraSwitcherLabel": "Switch camera",
     "localVideoMovementLabel": "Movable Local Video Tile",
     "localVideoSelectedDescription": "{cameraName} selected",
-    "displayNamePlaceholder": "Unnamed participant"
+    "displayNamePlaceholder": "Unnamed participant",
+    "fitRemoteParticipantToFrame": "Fit to frame",
+    "fillRemoteParticipantFrame": "Fill frame"
   },
   "dialpad": {
     "placeholderText": "Enter phone number",
@@ -232,6 +237,12 @@
     "primaryButtonText": "Continue without camera and microphone",
     "linkText": "Need help? Get troubleshooting help"
   },
+  "CameraAndMicrophoneDomainPermissionsDeniedSafari": {
+    "primaryText": "Unable to access camera and microphone",
+    "secondaryText": "Refresh the page to allow permissions, or check this browser’s settings and verify permissions are enabled for this website.",
+    "primaryButtonText": "Continue without camera and microphone",
+    "linkText": "Need help? Get troubleshooting help"
+  },
   "CameraDomainPermissionsDenied": {
     "primaryText": "Unable to access camera",
     "secondaryText": "Click the lock icon in the address bar to grant camera permissions to this webpage. A page refresh may be required.",
@@ -244,15 +255,28 @@
     "primaryButtonText": "Continue without microphone",
     "linkText": "Need help? Get troubleshooting help"
   },
+  "CameraDomainPermissionsDeniedSafari": {
+    "primaryText": "Unable to access camera",
+    "secondaryText": "Refresh the page to allow permissions, or check this browser’s settings and verify permissions are enabled for this website.",
+    "primaryButtonText": "Continue without camera",
+    "linkText": "Need help? Get troubleshooting help"
+  },
+  "MicrophoneDomainPermissionsDeniedSafari": {
+    "primaryText": "Unable to access microphone",
+    "secondaryText": "Refresh the page to allow permissions, or check this browser’s settings and verify permissions are enabled for this website.",
+    "primaryButtonText": "Continue without microphone",
+    "linkText": "Need help? Get troubleshooting help"
+  },
   "UnsupportedBrowser": {
     "primaryText": "Browser not supported",
     "secondaryText": "Please join this call using a compatible browser.",
     "moreHelpLinkText": "See compatibility requirements"
   },
   "UnsupportedBrowserVersion": {
-    "primaryText": "Browser version not supported",
-    "secondaryText": "Please update your browser and then try joining the call again.",
-    "moreHelpLinkText": "See compatibility requirements"
+    "primaryText": "Browser update needed",
+    "secondaryText": "To ensure the best call possible, please update your browser and then try joining the call again.",
+    "moreHelpLinkText": "See compatibility requirements",
+    "continueAnywayButtonText": "Start call without updating"
   },
   "UnsupportedOperatingSystem": {
     "primaryText": "Operating system not supported",

@@ -327,6 +327,9 @@ export interface CallCompositeStrings {
     mutedMessage: string;
     networkReconnectMoreDetails: string;
     networkReconnectTitle: string;
+    noCamerasLabel: string;
+    noMicrophonesLabel: string;
+    noSpeakersLabel: string;
     participantJoinedNoticeString: string;
     participantLeftNoticeString: string;
     privacyPolicy: string;

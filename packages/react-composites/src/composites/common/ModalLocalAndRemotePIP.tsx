@@ -49,7 +49,12 @@ export const ModalLocalAndRemotePIP = (props: {
   const localAndRemotePIP = useMemo(() => {
     /* @conditional-compile-remove(rooms) */
     if (!rolePermissions.cameraButton && pictureInPictureProps.dominantRemoteParticipant?.userId) {
-      return <_RemoteVideoTile {...pictureInPictureProps.dominantRemoteParticipant} />;
+      return (
+        <_RemoteVideoTile
+          {...pictureInPictureProps.dominantRemoteParticipant}
+          remoteParticipant={pictureInPictureProps.dominantRemoteParticipant}
+        />
+      );
     }
     return <LocalAndRemotePIP {...pictureInPictureProps} {...pictureInPictureHandlers} />;
   }, [

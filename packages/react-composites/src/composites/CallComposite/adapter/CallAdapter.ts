@@ -3,7 +3,7 @@
 
 import { CallState, DeviceManagerState } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(teams-identity-support) */
-import { TeamsCall } from '@azure/communication-calling';
+import { EnvironmentInfo, TeamsCall } from '@azure/communication-calling';
 import type {
   AudioDeviceInfo,
   VideoDeviceInfo,
@@ -21,8 +21,7 @@ import { Role } from '@internal/react-components';
 import type { CommunicationIdentifierKind } from '@azure/communication-common';
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions, DtmfTone } from '@azure/communication-calling';
-/* @conditional-compile-remove(unsupported-browser) */
-import { EnvironmentInfo } from '@azure/communication-calling';
+
 /* @conditional-compile-remove(PSTN-calls) */
 import type {
   CommunicationIdentifier,
@@ -64,6 +63,18 @@ export const END_CALL_PAGES: CallCompositePage[] = [
 ];
 
 /**
+ * Feature options for unsupported browser functionality
+ *
+ * @beta
+ */
+export type UnsupportedEnvironmentFeatures = {
+  /**
+   * Will allow the end user to choose to enter a call with a unsupported browser version.
+   */
+  unsupportedBrowserVersionAllowed?: boolean;
+};
+
+/**
  * options object to enable opt in features for the CallAdapter
  *
  * @beta
@@ -72,7 +83,7 @@ export type CallAdapterOptionalFeatures = {
   /**
    * Feature flag for enabling the unsupported environment logic in the CallAdapter.
    */
-  unsupportedEnvironment?: boolean;
+  unsupportedEnvironment?: boolean | UnsupportedEnvironmentFeatures;
 };
 
 /**
@@ -83,6 +94,8 @@ export type CallAdapterOptionalFeatures = {
 export type CallAdapterUiState = {
   isLocalPreviewMicrophoneEnabled: boolean;
   page: CallCompositePage;
+  /* @conditional-compile-remove(unsupported-browser) */
+  unsupportedBrowserVersionsAllowed?: boolean;
 };
 
 /**
@@ -351,6 +364,11 @@ export interface CallAdapterCallOperations {
    * @beta
    */
   sendDtmfTone(dtmfTone: DtmfTone): Promise<void>;
+  /* @conditional-compile-remove(unsupported-browser) */
+  /**
+   * Continues into a call when the browser version is not supported.
+   */
+  allowUnsupportedBrowserVersion(): void;
 }
 
 /**

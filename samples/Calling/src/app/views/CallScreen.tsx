@@ -123,7 +123,7 @@ const ACSCallScreen = (props: CommonCallScreenProps): JSX.Element => {
   const callAdapterOptions: AzureCommunicationCallAdapterOptions = useMemo(
     () => ({
       roleHint,
-      features: { unsupportedEnvironment: true }
+      features: { unsupportedEnvironment: { unsupportedBrowserVersionAllowed: true } }
     }),
     [roleHint]
   );

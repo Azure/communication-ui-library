@@ -2,13 +2,37 @@
 // Licensed under the MIT license.
 
 import { useCallback, useRef } from 'react';
-import { smartDominantSpeakerParticipants } from '../../gallery';
-import { VideoGalleryParticipant, VideoGalleryRemoteParticipant } from '../../types';
+import { smartDominantSpeakerParticipants } from '../../../gallery';
+import { VideoGalleryParticipant, VideoGalleryRemoteParticipant } from '../../../types';
 
-type LayoutResult = {
+/**
+ * Arguments for {@link useFloatingLocalVideoLayout } to determine grid participants and horizontal participants
+ * @private
+ */
+export interface UseFloatingLocalVideoLayoutArgs {
+  remoteParticipants: VideoGalleryRemoteParticipant[];
+  dominantSpeakers?: string[];
+  maxRemoteVideoStreams?: number;
+  maxAudioDominantSpeakers?: number;
+  isScreenShareActive?: boolean;
+}
+
+/**
+ * Arguments for {@link usePinnedParticipantLayout } to determine grid participants and horizontal participants
+ * @private
+ */
+export interface UsePinnedParticipantLayoutArgs extends UseFloatingLocalVideoLayoutArgs {
+  pinnedParticipantUserIds: string[];
+}
+
+/**
+ * A layout result that defines grid participants and horizontal participants
+ * @private
+ */
+export interface LayoutResult {
   gridParticipants: VideoGalleryParticipant[];
   horizontalGalleryParticipants: VideoGalleryParticipant[];
-};
+}
 
 const DEFAULT_MAX_REMOTE_VIDEOSTREAMS = 4;
 
@@ -17,13 +41,7 @@ const DEFAULT_MAX_AUDIO_DOMINANT_SPEAKERS = 6;
 /**
  * @private
  */
-export const useFloatingLocalVideoLayout = (props: {
-  remoteParticipants: VideoGalleryRemoteParticipant[];
-  dominantSpeakers?: string[];
-  maxRemoteVideoStreams?: number;
-  maxAudioDominantSpeakers?: number;
-  isScreenShareActive?: boolean;
-}): LayoutResult => {
+export const useFloatingLocalVideoLayout = (props: UseFloatingLocalVideoLayoutArgs): LayoutResult => {
   const visibleVideoParticipants = useRef<VideoGalleryRemoteParticipant[]>([]);
   const visibleAudioParticipants = useRef<VideoGalleryRemoteParticipant[]>([]);
 
@@ -64,6 +82,9 @@ export const useFloatingLocalVideoLayout = (props: {
   });
 
   const getGridParticipants = useCallback((): VideoGalleryRemoteParticipant[] => {
+    if (isScreenShareActive) {
+      return [];
+    }
     /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
     return visibleVideoParticipants.current.length > 0
       ? visibleVideoParticipants.current
@@ -72,7 +93,8 @@ export const useFloatingLocalVideoLayout = (props: {
       ? visibleVideoParticipants.current
       : visibleAudioParticipants.current;
   }, [
-    /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ callingParticipants
+    /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ callingParticipants,
+    isScreenShareActive
   ]);
 
   const gridParticipants = getGridParticipants();
@@ -100,4 +122,57 @@ export const useFloatingLocalVideoLayout = (props: {
   const horizontalGalleryParticipants = getHorizontalGalleryRemoteParticipants();
 
   return { gridParticipants, horizontalGalleryParticipants };
+};
+
+/**
+ * @private
+ */
+export const usePinnedParticipantLayout = (props: UsePinnedParticipantLayoutArgs): LayoutResult => {
+  // map remote participants by userId
+  const remoteParticipantMap = props.remoteParticipants.reduce((map, remoteParticipant) => {
+    map[remoteParticipant.userId] = remoteParticipant;
+    return map;
+  }, {});
+
+  // count pinned participants with video
+  let pinnedParticipantsWithVideoOnCount = 0;
+
+  // get pinned participants in the same order of pinned participant user ids using remoteParticipantMap
+  const pinnedParticipants: VideoGalleryRemoteParticipant[] = [];
+  props.pinnedParticipantUserIds.forEach((id) => {
+    const pinnedParticipant = remoteParticipantMap[id];
+    if (pinnedParticipant) {
+      pinnedParticipants.push(pinnedParticipant);
+      if (pinnedParticipant.videoStream?.isAvailable) {
+        pinnedParticipantsWithVideoOnCount++;
+      }
+    }
+  });
+
+  // get unpinned participants by filtering all remote participants using a set of pinned participant user ids
+  const pinnedParticipantUserIdSet = new Set(props.pinnedParticipantUserIds);
+  const unpinnedParticipants = props.remoteParticipants.filter((p) => !pinnedParticipantUserIdSet.has(p.userId));
+
+  const floatingLocalVideoLayoutProps = {
+    ...props,
+    // if there are pinned participants then we should only consider unpinned participants
+    remoteParticipants: unpinnedParticipants,
+    // if there is a maximum of remote video streams we need to subtract pinned participants with video
+    maxRemoteVideoStreams: props.maxRemoteVideoStreams
+      ? props.maxRemoteVideoStreams - pinnedParticipantsWithVideoOnCount
+      : undefined
+  };
+
+  const floatingLocalVideoLayout = useFloatingLocalVideoLayout(floatingLocalVideoLayoutProps);
+
+  if (props.pinnedParticipantUserIds.length === 0) {
+    return floatingLocalVideoLayout;
+  }
+
+  return {
+    gridParticipants: props.isScreenShareActive ? [] : pinnedParticipants,
+    horizontalGalleryParticipants: props.isScreenShareActive
+      ? pinnedParticipants.concat(floatingLocalVideoLayout.horizontalGalleryParticipants)
+      : floatingLocalVideoLayout.gridParticipants.concat(floatingLocalVideoLayout.horizontalGalleryParticipants)
+  };
 };
