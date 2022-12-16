@@ -934,7 +934,7 @@ const useAzureCommunicationCallAdapterGeneric = <
       if (!credential || !locator || !userId) {
         return;
       }
-      if (adapterKind === 'AzureCommunication' && 'displayName' in args && args?.displayName) {
+      if (adapterKind === 'AzureCommunication' && 'displayName' in args && !args?.displayName) {
         return;
       }
       (async () => {
@@ -954,7 +954,9 @@ const useAzureCommunicationCallAdapterGeneric = <
         let newAdapter: Adapter;
         if (adapterKind === 'AzureCommunication') {
           if (!('displayName' in args) || !args?.displayName) {
-            return;
+            throw new Error(
+              'Unreachable code: displayName is not defined, this should have been checked and return earlier.'
+            );
           }
           newAdapter = (await createAzureCommunicationCallAdapter({
             credential,
