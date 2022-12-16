@@ -89,6 +89,8 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
   let errorBarProps = usePropsFor(ErrorBar);
   const adapter = useAdapter();
   const deviceState = adapter.getState().devices;
+  /* @conditional-compile-remove(unsupported-browser) */
+  const environmentInfo = adapter.getState().environmentInfo;
 
   let disableStartCallButton = !microphonePermissionGranted || deviceState.microphones?.length === 0;
   /* @conditional-compile-remove(rooms) */
@@ -99,7 +101,9 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
   if (!rolePermissions.cameraButton) {
     errorBarProps = {
       ...errorBarProps,
-      activeErrorMessages: errorBarProps.activeErrorMessages.filter((e) => e.type !== 'callCameraAccessDenied')
+      activeErrorMessages: errorBarProps.activeErrorMessages.filter(
+        (e) => e.type !== 'callCameraAccessDenied' && e.type !== 'callCameraAccessDeniedSafari'
+      )
     };
   }
   /* @conditional-compile-remove(rooms) */
@@ -145,9 +149,26 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
     microphone: PermissionState;
   } = {
     // fall back to using cameraPermissionGranted and microphonePermissionGranted if permission API is not supported
-    camera: videoState && videoState !== 'unsupported' ? videoState : cameraPermissionGranted ? 'granted' : 'denied',
+    camera:
+      videoState && videoState !== 'unsupported'
+        ? cameraPermissionGranted !== false
+          ? videoState
+          : 'denied'
+        : cameraPermissionGranted !== false
+        ? cameraPermissionGranted
+          ? 'granted'
+          : 'prompt'
+        : 'denied',
     microphone:
-      audioState && audioState !== 'unsupported' ? audioState : microphonePermissionGranted ? 'granted' : 'denied'
+      audioState && audioState !== 'unsupported'
+        ? microphonePermissionGranted !== false
+          ? audioState
+          : 'denied'
+        : microphonePermissionGranted !== false
+        ? microphonePermissionGranted
+          ? 'granted'
+          : 'prompt'
+        : 'denied'
   };
   /* @conditional-compile-remove(call-readiness) */
   const networkErrors = errorBarProps.activeErrorMessages.filter((message) => message.type === 'callNetworkQualityLow');
@@ -196,8 +217,8 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
           audioState !== 'unsupported' && (
             <CallReadinessModal
               mobileView={mobileView}
-              audioState={audioState}
-              videoState={videoState}
+              /* @conditional-compile-remove(unsupported-browser) */
+              environmentInfo={environmentInfo}
               permissionsState={permissionsState}
               isPermissionsModalDismissed={isPermissionsModalDismissed}
               setIsPermissionsModalDismissed={setIsPermissionsModalDismissed}
@@ -215,11 +236,11 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
           (videoState === 'unsupported' || audioState === 'unsupported') && (
             <CallReadinessModalFallBack
               mobileView={mobileView}
-              cameraPermissionGranted={cameraPermissionGranted}
-              microphonePermissionGranted={microphonePermissionGranted}
               checkPermissionModalShowing={forceShowingCheckPermissions}
               permissionsState={permissionsState}
               isPermissionsModalDismissed={isPermissionsModalDismissed}
+              /* @conditional-compile-remove(unsupported-browser) */
+              environmentInfo={environmentInfo}
               setIsPermissionsModalDismissed={setIsPermissionsModalDismissed}
               onPermissionsTroubleshootingClick={onPermissionsTroubleshootingClick}
             />

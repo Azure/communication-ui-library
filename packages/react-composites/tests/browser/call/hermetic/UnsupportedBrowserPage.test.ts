@@ -5,8 +5,8 @@ import type { EnvironmentInfo } from '@azure/communication-calling';
 import { expect } from '@playwright/test';
 import type { MockCallAdapterState } from '../../../common';
 import { IDS } from '../../common/constants';
-import { dataUiId, stableScreenshot, waitForSelector } from '../../common/utils';
-import { buildUrlWithMockAdapter, defaultMockCallAdapterState, test } from './fixture';
+import { dataUiId, pageClick, stableScreenshot, waitForCallCompositeToLoad, waitForSelector } from '../../common/utils';
+import { buildUrlWithMockAdapter, defaultMockCallAdapterState, stubLocalCameraName, test } from './fixture';
 
 /* @conditional-compile-remove(unsupported-browser) */
 test.describe('unsupportedBrowser page tests', async () => {
@@ -82,6 +82,78 @@ test.describe('unsupportedBrowser page tests', async () => {
     await waitForSelector(page, dataUiId(IDS.unsupportedEnvironmentLink));
 
     expect(await stableScreenshot(page)).toMatchSnapshot(`unsupportedBrowserVersion-with-link.png`);
+  });
+
+  test('unsupportedBrowserVersion displays correctly with help link and continue button', async ({
+    page,
+    serverUrl
+  }) => {
+    const state = defaultMockUnsupportedBrowserPageState();
+    const envConfig = {
+      platform: true,
+      browser: true,
+      version: false
+    };
+    state.environmentInfo = setMockEnvironmentInfo(envConfig);
+    state.features = { unsupportedEnvironment: { unsupportedBrowserVersionAllowed: true } };
+
+    await page.goto(
+      buildUrlWithMockAdapter(serverUrl, state, {
+        useEnvironmentInfoTroubleshootingOptions: 'true'
+      })
+    );
+
+    await waitForSelector(page, dataUiId(IDS.unsupportedEnvironmentIcon));
+    await waitForSelector(page, dataUiId(IDS.unsupportedEnvironmentLink));
+
+    expect(await stableScreenshot(page)).toMatchSnapshot(`unsupportedBrowserVersion-with-link-allow-button.png`);
+  });
+
+  test('unsupportedBrowserVersion displays correctly with continue button', async ({ page, serverUrl }) => {
+    const state = defaultMockUnsupportedBrowserPageState();
+    const envConfig = {
+      platform: true,
+      browser: true,
+      version: false
+    };
+    state.environmentInfo = setMockEnvironmentInfo(envConfig);
+    state.features = { unsupportedEnvironment: { unsupportedBrowserVersionAllowed: true } };
+
+    await page.goto(buildUrlWithMockAdapter(serverUrl, state));
+
+    await waitForSelector(page, dataUiId(IDS.unsupportedEnvironmentIcon));
+
+    expect(await stableScreenshot(page)).toMatchSnapshot(`unsupportedBrowserVersion-with-allow-button.png`);
+  });
+
+  test('unsupportedBrowserVersion with continue button allows user into config screen', async ({ page, serverUrl }) => {
+    const state = defaultMockUnsupportedBrowserPageState();
+    const envConfig = {
+      platform: true,
+      browser: true,
+      version: false
+    };
+    state.environmentInfo = setMockEnvironmentInfo(envConfig);
+    state.features = { unsupportedEnvironment: { unsupportedBrowserVersionAllowed: true } };
+
+    await page.goto(buildUrlWithMockAdapter(serverUrl, state));
+
+    await waitForSelector(page, dataUiId(IDS.unsupportedEnvironmentIcon));
+    await waitForSelector(page, dataUiId(IDS.allowUnsupportedBrowserButton));
+
+    await pageClick(page, dataUiId(IDS.allowUnsupportedBrowserButton));
+
+    state.page = 'configuration';
+    state.call = undefined;
+
+    await page.goto(buildUrlWithMockAdapter(serverUrl, state));
+
+    await waitForCallCompositeToLoad(page);
+    await stubLocalCameraName(page);
+
+    expect(await stableScreenshot(page)).toMatchSnapshot(
+      `unsupportedBrowserVersion-with-allow-button-config-screen.png`
+    );
   });
 
   test('unsupportedOperatingSystem displays correctly with no link', async ({ page, serverUrl }) => {

@@ -147,7 +147,9 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   if (!rolePermissions.cameraButton && props.errorBarProps) {
     errorBarProps = {
       ...props.errorBarProps,
-      activeErrorMessages: props.errorBarProps.activeErrorMessages.filter((e) => e.type !== 'callCameraAccessDenied')
+      activeErrorMessages: props.errorBarProps.activeErrorMessages.filter(
+        (e) => e.type !== 'callCameraAccessDenied' && e.type !== 'callCameraAccessDeniedSafari'
+      )
     };
   }
 
