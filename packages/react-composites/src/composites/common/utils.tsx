@@ -56,11 +56,11 @@ export const useMinMaxDragPosition = (modalLayerHostId: string, rtl?: boolean): 
  *  hidden button to set first tab keypress focus on a specific grouping.
  *  On mount, button is autofocused then immediately hidden
  */
-export const hiddenFocusStartPoint = () => {
+export const HiddenFocusStartPoint = (): JSX.Element => {
   const [isMounted, setIsMounted] = useState(false);
   useEffect(() => {
     setIsMounted(true);
-  });
+  }, []);
   return (
     <DefaultButton
       autoFocus

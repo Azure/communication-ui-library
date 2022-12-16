@@ -29,7 +29,7 @@ import {
 /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
 import { DesktopMoreButton } from './components/DesktopMoreButton';
 import { isDisabled } from '../CallComposite/utils';
-import { hiddenFocusStartPoint } from '../common/utils';
+import { HiddenFocusStartPoint } from '../common/utils';
 
 /**
  * @private
@@ -157,7 +157,7 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps & Cont
       <Stack.Item grow>
         <CallAdapterProvider adapter={props.callAdapter}>
           <Stack horizontalAlign="center">
-            {hiddenFocusStartPoint()}
+            {HiddenFocusStartPoint()}
             <Stack.Item>
               {/*
                   Note: We use the layout="horizontal" instead of dockedBottom because of how we position the
