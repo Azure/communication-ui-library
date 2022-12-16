@@ -48,6 +48,7 @@ export const Microphone = (props: {
   // tab focus on MicrophoneButton on page load
   return (
     <MicrophoneButton
+      autoFocus
       data-ui-id="call-composite-microphone-button"
       {...microphoneButtonProps}
       showLabel={props.displayType !== 'compact'}
