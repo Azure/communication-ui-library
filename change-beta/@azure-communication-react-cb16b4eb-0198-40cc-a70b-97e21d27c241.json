@@ -1,6 +1,6 @@
 {
   "type": "patch",
-  "comment": "Bugfix microphone tooltip opening on initial mount",
+  "comment": "Change aspect ratio for local video tile to capture full camera view",
   "packageName": "@azure/communication-react",
   "email": "edwardlee@microsoft.com",
   "dependentChangeType": "patch"
