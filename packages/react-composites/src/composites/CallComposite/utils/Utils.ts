@@ -296,7 +296,7 @@ const queryCameraPermissionFromPermissionsAPI = async (): Promise<PermissionStat
   try {
     return (await navigator.permissions.query({ name: 'camera' as PermissionName })).state;
   } catch (e) {
-    console.warn('permissions API is not supported by browser', e);
+    console.info('permissions API is not supported by browser', e);
     return 'unsupported';
   }
 };
@@ -308,7 +308,7 @@ const queryMicrophonePermissionFromPermissionsAPI = async (): Promise<Permission
   try {
     return (await navigator.permissions.query({ name: 'microphone' as PermissionName })).state;
   } catch (e) {
-    console.warn('permissions API is not supported by browser', e);
+    console.info('permissions API is not supported by browser', e);
     return 'unsupported';
   }
 };
@@ -321,7 +321,7 @@ const queryMicrophonePermissionFromPermissionsAPI = async (): Promise<Permission
  * If permission API is not supported on this browser, permission state is set to unsupported.
  * @private
  */
-export const getDevicePermissionStateAsync = async (
+export const getDevicePermissionState = async (
   setVideoState: (state: PermissionState | 'unsupported') => void,
   setAudioState: (state: PermissionState | 'unsupported') => void
 ): Promise<void> => {
