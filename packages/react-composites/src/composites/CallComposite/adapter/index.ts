@@ -49,3 +49,6 @@ export type {
 
 /* @conditional-compile-remove(teams-identity-support) */
 export type { TeamsCallAdapter } from './CallAdapter';
+
+/* @conditional-compile-remove(unsupported-browser) */
+export type { UnsupportedEnvironmentFeatures } from './CallAdapter';

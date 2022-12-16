@@ -24,6 +24,10 @@ export interface CommonDomainPermissionsProps {
    */
   type: 'request' | 'denied' | 'check';
   /**
+   * Type of the browser used, the domain permission component will show different guidance text based on the browser type
+   */
+  browserHint?: 'safari' | 'unset';
+  /**
    * Action to be taken by the more help link. Possible to send to external page or show other modal.
    * If this is not provided the button will not be shown.
    */
@@ -73,7 +77,9 @@ export const CameraAndMicrophoneDomainPermissions = (props: CameraAndMicrophoneD
   /* @conditional-compile-remove(call-readiness) */
   const strings = useShallowMerge(
     props.type === 'denied'
-      ? locale.CameraAndMicrophoneDomainPermissionsDenied
+      ? props.browserHint === 'safari'
+        ? locale.CameraAndMicrophoneDomainPermissionsDeniedSafari
+        : locale.CameraAndMicrophoneDomainPermissionsDenied
       : props.type === 'request'
       ? locale.CameraAndMicrophoneDomainPermissionsRequest
       : locale.CameraAndMicrophoneDomainPermissionsCheck,
@@ -133,7 +139,9 @@ export const MicrophoneDomainPermissions = (props: MicrophoneDomainPermissionsPr
   /* @conditional-compile-remove(call-readiness) */
   const strings = useShallowMerge(
     props.type === 'denied'
-      ? locale.MicrophoneDomainPermissionsDenied
+      ? props.browserHint === 'safari'
+        ? locale.MicrophoneDomainPermissionsDeniedSafari
+        : locale.MicrophoneDomainPermissionsDenied
       : props.type === 'request'
       ? locale.MicrophoneDomainPermissionsRequest
       : locale.MicrophoneDomainPermissionsCheck,
@@ -186,7 +194,9 @@ export const CameraDomainPermissions = (props: CameraDomainPermissionsProps): JS
   /* @conditional-compile-remove(call-readiness) */
   const strings = useShallowMerge(
     props.type === 'denied'
-      ? locale.CameraDomainPermissionsDenied
+      ? props.browserHint === 'safari'
+        ? locale.CameraDomainPermissionsDeniedSafari
+        : locale.CameraDomainPermissionsDenied
       : props.type === 'request'
       ? locale.CameraDomainPermissionsRequest
       : locale.CameraDomainPermissionsCheck,

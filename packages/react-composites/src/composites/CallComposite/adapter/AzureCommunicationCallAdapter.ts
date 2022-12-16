@@ -58,7 +58,7 @@ import {
 import { CallAdapterOptionalFeatures } from './CallAdapter';
 /* @conditional-compile-remove(teams-identity-support) */
 import { TeamsCallAdapter } from './CallAdapter';
-import { getCallCompositePage, IsCallEndedPage, isCameraOn } from '../utils';
+import { getCallCompositePage, IsCallEndedPage, isCameraOn, isValidIdentifier } from '../utils';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 /* @conditional-compile-remove(rooms) */
 import { Role } from '@internal/react-components';
@@ -107,6 +107,7 @@ class CallContext {
       isTeamsCall,
       /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId: clientState.alternateCallerId,
       /* @conditional-compile-remove(unsupported-browser) */ environmentInfo: clientState.environmentInfo,
+      /* @conditional-compile-remove(unsupported-browser) */ unsupportedBrowserVersionsAllowed: false,
       /* @conditional-compile-remove(unsupported-browser) */ features: options?.features,
       /* @conditional-compile-remove(rooms) */ roleHint: options?.roleHint
     };
@@ -149,17 +150,19 @@ class CallContext {
 
   public updateClientState(clientState: CallClientState): void {
     let call = this.callId ? clientState.calls[this.callId] : undefined;
-    const latestEndedCall = findLatestEndedCall(clientState.callsEnded);
-
+    const latestEndedCall = clientState.callsEnded ? findLatestEndedCall(clientState.callsEnded) : undefined;
     // As the state is transitioning to a new state, trigger appropriate callback events.
     const oldPage = this.state.page;
     /* @conditional-compile-remove(unsupported-browser) */
-    const environmentInfo = this.state.environmentInfo;
+    const environmentInfo = {
+      environmentInfo: this.state.environmentInfo,
+      features: this.state.features,
+      unsupportedBrowserVersionOptedIn: this.state.unsupportedBrowserVersionsAllowed
+    };
     const newPage = getCallCompositePage(
       call,
       latestEndedCall,
-      /* @conditional-compile-remove(unsupported-browser) */ environmentInfo,
-      /* @conditional-compile-remove(unsupported-browser) */ this.state.features
+      /* @conditional-compile-remove(unsupported-browser) */ environmentInfo
     );
     if (!IsCallEndedPage(oldPage) && IsCallEndedPage(newPage)) {
       this.emitter.emit('callEnded', { callId: this.callId });
@@ -181,6 +184,11 @@ class CallContext {
         latestErrors: clientState.latestErrors
       });
     }
+  }
+
+  /* @conditional-compile-remove(unsupported-browser) */
+  public setAllowedUnsupportedBrowser(): void {
+    this.setState({ ...this.state, unsupportedBrowserVersionsAllowed: true });
   }
 }
 
@@ -316,6 +324,8 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     this.resumeCall.bind(this);
     /* @conditional-compile-remove(PSTN-calls) */
     this.sendDtmfTone.bind(this);
+    /* @conditional-compile-remove(unsupported-browser) */
+    this.allowUnsupportedBrowserVersion.bind(this);
   }
 
   public dispose(): void {
@@ -505,6 +515,11 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
         await this.handlers.onToggleScreenShare();
       }
     });
+  }
+
+  /* @conditional-compile-remove(unsupported-browser) */
+  public allowUnsupportedBrowserVersion(): void {
+    this.context.setAllowedUnsupportedBrowser();
   }
 
   public startCall(
@@ -858,6 +873,10 @@ export const createAzureCommunicationCallAdapter = async ({
   /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
   /* @conditional-compile-remove(rooms) */ options
 }: AzureCommunicationCallAdapterArgs): Promise<CallAdapter> => {
+  if (!isValidIdentifier(userId)) {
+    throw new Error('Invalid identifier. Please provide valid identifier object.');
+  }
+
   const callClient = createStatefulCallClient({
     userId,
     /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId

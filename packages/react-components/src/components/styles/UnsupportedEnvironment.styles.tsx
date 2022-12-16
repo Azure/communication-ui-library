@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IIconStyles, ILinkStyles, IStackStyles, ITextStyles } from '@fluentui/react';
+import { IButtonStyles, ILinkStyles, IStackStyles, ITextStyles, Theme } from '@fluentui/react';
 import { _pxToRem } from '@internal/acs-ui-common';
 
 /**
@@ -12,9 +12,9 @@ export const mainTextStyles: ITextStyles = {
     fontWeight: 600,
     fontSize: _pxToRem(20),
     lineHeight: _pxToRem(28),
-    paddingBottom: '1rem',
     margin: 'auto',
-    textAlign: 'center'
+    textAlign: 'center',
+    padding: '0.5rem'
   }
 };
 
@@ -25,8 +25,16 @@ export const secondaryTextStyles: ITextStyles = {
   root: {
     margin: 'auto',
     fontWeight: 400,
-    paddingBottom: '0.5rem',
     textAlign: 'center'
+  }
+};
+
+/**
+ * @internal
+ */
+export const testContainerStyles: IStackStyles = {
+  root: {
+    margin: 'auto'
   }
 };
 
@@ -46,15 +54,21 @@ export const linkTextStyles: ILinkStyles = {
  */
 export const containerStyles: IStackStyles = {
   root: {
+    maxWidth: _pxToRem(375),
     padding: '2rem'
   }
 };
 
 /**
- * @interal
+ * @internal
  */
-export const iconStyles: IIconStyles = {
-  root: {
-    paddingBottom: '1rem'
-  }
+export const continueAnywayButtonStyles = (theme: Theme): IButtonStyles => {
+  return {
+    root: {
+      backgroundColor: '#C4314B',
+      borderColor: theme.palette.neutralLight,
+      color: theme.palette.white,
+      padding: '1rem'
+    }
+  };
 };

@@ -62,6 +62,7 @@ export const UnsupportedEnvironmentDrawers: () => JSX.Element = () => {
             <UnsupportedBrowserVersion
               onTroubleshootingClick={() => alert('clicked compatibility link')}
               strings={unsupportedBrowserVersionStrings}
+              onContinueClick={() => alert('you are brave arent you?')}
             />
           </_DrawerSurface>
         )}
