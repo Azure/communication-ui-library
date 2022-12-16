@@ -39,7 +39,7 @@ import { useAdapter } from '../adapter/CallAdapterProvider';
 import { DevicePermissionRestrictions } from '../CallComposite';
 import { ConfigurationpageErrorBar } from '../components/ConfigurationpageErrorBar';
 /* @conditional-compile-remove(call-readiness) */
-import { getDevicePermissionState } from '../utils';
+import { getDevicePermissionStateAsync } from '../utils';
 /* @conditional-compile-remove(call-readiness) */
 import { CallReadinessModal, CallReadinessModalFallBack } from '../components/CallReadinessModal';
 
@@ -84,11 +84,7 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
   /* @conditional-compile-remove(call-readiness) */
   const [audioState, setAudioState] = useState<PermissionState | 'unsupported' | undefined>(undefined);
   /* @conditional-compile-remove(call-readiness) */
-  try {
-    getDevicePermissionState(setVideoState, setAudioState);
-  } catch (e) {
-    console.warn('Browser does not support Permissions API.', e);
-  }
+  getDevicePermissionStateAsync(setVideoState, setAudioState);
 
   let errorBarProps = usePropsFor(ErrorBar);
   const adapter = useAdapter();

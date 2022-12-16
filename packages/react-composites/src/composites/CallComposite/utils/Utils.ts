@@ -289,35 +289,44 @@ export const isDisabled = (option: boolean | { disabled: boolean } | undefined):
   return option.disabled;
 };
 
+/**
+ * @returns Permissions state for the camera.
+ */
+const queryCameraPermissionFromPermissionsAPI = async (): Promise<PermissionState | 'unsupported'> => {
+  try {
+    return (await navigator.permissions.query({ name: 'camera' as PermissionName })).state;
+  } catch (e) {
+    console.warn('permissions API is not supported by browser', e);
+    return 'unsupported';
+  }
+};
+
+/**
+ * @returns Permissions state for the microphone.
+ */
+const queryMicrophonePermissionFromPermissionsAPI = async (): Promise<PermissionState | 'unsupported'> => {
+  try {
+    return (await navigator.permissions.query({ name: 'microphone' as PermissionName })).state;
+  } catch (e) {
+    console.warn('permissions API is not supported by browser', e);
+    return 'unsupported';
+  }
+};
+
 /* @conditional-compile-remove(call-readiness) */
 /**
  *
  * This function uses permission API to determine if device permission state is granted, prompt or denied
  * @returns whether device permission state is granted, prompt or denied
- * If permission API is not supported on this browser, do nothing and log out error
+ * If permission API is not supported on this browser, permission state is set to unsupported.
  * @private
  */
-export const getDevicePermissionState = (
+export const getDevicePermissionStateAsync = async (
   setVideoState: (state: PermissionState | 'unsupported') => void,
   setAudioState: (state: PermissionState | 'unsupported') => void
-): void => {
-  navigator.permissions
-    .query({ name: 'camera' as PermissionName })
-    .then((result) => {
-      setVideoState(result.state);
-    })
-    .catch(() => {
-      setVideoState('unsupported');
-    });
-
-  navigator.permissions
-    .query({ name: 'microphone' as PermissionName })
-    .then((result) => {
-      setAudioState(result.state);
-    })
-    .catch(() => {
-      setAudioState('unsupported');
-    });
+): Promise<void> => {
+  setVideoState(await queryCameraPermissionFromPermissionsAPI());
+  setAudioState(await queryMicrophonePermissionFromPermissionsAPI());
 };
 /* @conditional-compile-remove(unsupported-browser) */
 const isUnsupportedEnvironment = (
