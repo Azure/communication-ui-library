@@ -9,9 +9,9 @@ export {
 
 /* @conditional-compile-remove(teams-identity-support) */
 export {
-  createAzureCommunicationTeamsCallAdapter,
-  createAzureCommunicationTeamsCallAdapterFromClient,
-  useAzureCommunicationTeamsCallAdapter
+  createTeamsCallAdapter,
+  createTeamsCallAdapterFromClient,
+  useTeamsCallAdapter
 } from './AzureCommunicationCallAdapter';
 export type { AzureCommunicationCallAdapterArgs, CallAdapterLocator } from './AzureCommunicationCallAdapter';
 /* @conditional-compile-remove(rooms) */
