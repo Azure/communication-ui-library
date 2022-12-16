@@ -77,7 +77,7 @@ describe('CallComposite device permission test for different roles', () => {
   });
 });
 
-describe('CallComposite device permission test for call readiness opted in/opted out', () => {
+describe('CallComposite device permission test for call readiness', () => {
   let audioDevicePermissionRequests = 0;
   let videoDevicePermissionRequests = 0;
 
