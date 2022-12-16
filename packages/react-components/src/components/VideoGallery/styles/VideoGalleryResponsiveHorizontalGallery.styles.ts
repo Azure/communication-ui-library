@@ -4,16 +4,7 @@
 import { IStyle } from '@fluentui/react';
 import { _pxToRem } from '@internal/acs-ui-common';
 import { HorizontalGalleryStyles } from '../../HorizontalGallery';
-
-/**
- * Small floating modal width and height in rem for small screen
- */
-export const SMALL_FLOATING_MODAL_SIZE_PX = { width: 64, height: 88 };
-
-/**
- * Large floating modal width and height in rem for large screen
- */
-export const LARGE_FLOATING_MODAL_SIZE_PX = { width: 160, height: 120 };
+import { LARGE_FLOATING_MODAL_SIZE_PX, SMALL_FLOATING_MODAL_SIZE_PX } from './FloatingLocalVideo.styles';
 
 /**
  * @private
