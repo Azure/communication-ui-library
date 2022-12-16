@@ -15,8 +15,6 @@ import {
 import { Dialpad } from '@internal/react-components';
 /* @conditional-compile-remove(PSTN-calls) */
 import { HoldButton } from '@internal/react-components';
-/* @conditional-compile-remove(call-readiness) */
-import { _DevicePermissionDropdown } from '@internal/react-components';
 import {
   CameraButtonSelector,
   cameraButtonSelector,
