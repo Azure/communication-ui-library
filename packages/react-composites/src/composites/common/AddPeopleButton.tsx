@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 import { concatStyleSets, DefaultButton, IButtonStyles, PrimaryButton, Stack, useTheme } from '@fluentui/react';
 import copy from 'copy-to-clipboard';
-import React, { useMemo } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { CallWithChatCompositeStrings } from '../../index-public';
 /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
 import { CallCompositeStrings } from '../../index-public';
@@ -21,6 +21,7 @@ import { AddPeopleDropdown } from './AddPeopleDropdown';
 import { PhoneNumberIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
+import { Announcer } from '@internal/react-components';
 
 /** @private */
 export interface AddPeopleButtonProps {
@@ -41,10 +42,25 @@ export const AddPeopleButton = (props: AddPeopleButtonProps): JSX.Element => {
 
   const theme = useTheme();
 
+  const [copyInviteLinkAnnouncerStrings, setCopyInviteLinkAnnouncerStrings] = useState<string>('');
+
   const copyLinkButtonStylesThemed = useMemo(
     (): IButtonStyles => concatStyleSets(copyLinkButtonStyles, themedCopyLinkButtonStyles(mobileView, theme)),
     [mobileView, theme]
   );
+  /**
+   * sets the announcement string for when the link is copied.
+   */
+  const toggleAnnouncerString = useCallback(() => {
+    setCopyInviteLinkAnnouncerStrings(strings.copyInviteLinkActionedAriaLabel);
+    /**
+     * Clears the announcer string after the user clicks the
+     * copyInviteLink button allowing it to be re-announced.
+     */
+    setTimeout(() => {
+      setCopyInviteLinkAnnouncerStrings('');
+    }, 3000);
+  }, [strings.copyInviteLinkActionedAriaLabel]);
 
   /* @conditional-compile-remove(PSTN-calls) */
   if (mobileView) {
@@ -77,8 +93,12 @@ export const AddPeopleButton = (props: AddPeopleButtonProps): JSX.Element => {
       <Stack>
         {inviteLink && (
           <Stack.Item styles={copyLinkButtonContainerStyles}>
+            <Announcer announcementString={copyInviteLinkAnnouncerStrings} ariaLive={'polite'} />
             <PrimaryButton
-              onClick={() => copy(inviteLink ?? '')}
+              onClick={() => {
+                copy(inviteLink ?? '');
+                toggleAnnouncerString();
+              }}
               styles={copyLinkButtonStylesThemed}
               onRenderIcon={() => <CallWithChatCompositeIcon iconName="Link" style={linkIconStyles} />}
               text={strings.copyInviteLinkButtonLabel}
@@ -92,10 +112,14 @@ export const AddPeopleButton = (props: AddPeopleButtonProps): JSX.Element => {
       <Stack tokens={peoplePaneContainerTokens}>
         {inviteLink && (
           <Stack styles={copyLinkButtonStackStyles}>
+            <Announcer announcementString={copyInviteLinkAnnouncerStrings} ariaLive={'polite'} />
             <DefaultButton
               text={strings.copyInviteLinkButtonLabel}
               onRenderIcon={() => <CallWithChatCompositeIcon iconName="Link" style={linkIconStyles} />}
-              onClick={() => copy(inviteLink ?? '')}
+              onClick={() => {
+                copy(inviteLink ?? '');
+                toggleAnnouncerString();
+              }}
               styles={copyLinkButtonStylesThemed}
             />
           </Stack>
