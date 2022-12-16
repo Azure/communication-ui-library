@@ -32,8 +32,6 @@ export interface CallScreenProps {
   alternateCallerId?: string;
   /* @conditional-compile-remove(rooms) */
   roleHint?: Role;
-  /* @conditional-compile-remove(call-readiness) */
-  callReadinessOptedIn?: boolean;
 }
 
 export const CallScreen = (props: CallScreenProps): JSX.Element => {
@@ -43,8 +41,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     callLocator,
     displayName,
     /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
-    /* @conditional-compile-remove(rooms) */ roleHint,
-    /* @conditional-compile-remove(call-readiness) */ callReadinessOptedIn
+    /* @conditional-compile-remove(rooms) */ roleHint
   } = props;
   const callIdRef = useRef<string>();
   const { currentTheme, currentRtl } = useSwitchableFluentTheme();
@@ -78,11 +75,10 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
   /* @conditional-compile-remove(call-readiness) */
   const options: CallCompositeOptions = useMemo(
     () => ({
-      callReadinessOptedIn: callReadinessOptedIn,
       onPermissionsTroubleshootingClick,
       onNetworkingTroubleShootingClick
     }),
-    [callReadinessOptedIn]
+    []
   );
 
   /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(unsupported-browser) */

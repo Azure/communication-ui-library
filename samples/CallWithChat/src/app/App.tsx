@@ -117,8 +117,6 @@ const App = (): JSX.Element => {
           endpoint={callWithChatArgs.endpointUrl}
           /* @conditional-compile-remove(PSTN-calls) */
           alternateCallerId={callWithChatArgs.alternateCallerId}
-          /* @conditional-compile-remove(call-readiness) */
-          callReadinessOptedIn={true}
         />
       );
     }

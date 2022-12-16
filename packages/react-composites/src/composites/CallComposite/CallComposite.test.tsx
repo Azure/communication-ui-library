@@ -109,11 +109,4 @@ describe('CallComposite device permission test for call readiness opted in/opted
     expect(audioDevicePermissionRequests).toBe(1);
     expect(videoDevicePermissionRequests).toBe(1);
   });
-
-  /* @conditional-compile-remove(call-readiness) */
-  test('Audio and video device permission should still be requested when callreadiness option opted in', async () => {
-    mount(<CallComposite adapter={adapter} options={{ callReadinessOptedIn: true }} />);
-    expect(audioDevicePermissionRequests).toBe(1);
-    expect(videoDevicePermissionRequests).toBe(1);
-  });
 });

@@ -180,8 +180,6 @@ const App = (): JSX.Element => {
           alternateCallerId={alternateCallerId}
           /* @conditional-compile-remove(rooms) */
           roleHint={role}
-          /* @conditional-compile-remove(call-readiness) */
-          callReadinessOptedIn={true}
         />
       );
     }

@@ -15,8 +15,7 @@ test.describe('Tests for guidance UI on config page to guide users through enabl
     const initialState = defaultMockConfigPageStateDeviceDisabled();
     await page.goto(
       buildUrlWithMockAdapter(serverUrl, initialState, {
-        usePermissionTroubleshootingActions: 'true',
-        customCallCompositeOptions: JSON.stringify({ callReadinessOptedIn: true })
+        usePermissionTroubleshootingActions: 'true'
       })
     );
     const context = await page.context();
@@ -32,8 +31,7 @@ test.describe('Tests for guidance UI on config page to guide users through enabl
     const initialState = defaultMockConfigPageStateDeviceDisabled();
     await page.goto(
       buildUrlWithMockAdapter(serverUrl, initialState, {
-        usePermissionTroubleshootingActions: 'true',
-        customCallCompositeOptions: JSON.stringify({ callReadinessOptedIn: true })
+        usePermissionTroubleshootingActions: 'true'
       })
     );
 
@@ -53,8 +51,7 @@ test.describe('Tests for guidance UI on config page to guide users through enabl
     const initialState = defaultMockConfigPageStateDeviceDisabled();
     await page.goto(
       buildUrlWithMockAdapter(serverUrl, initialState, {
-        usePermissionTroubleshootingActions: 'true',
-        customCallCompositeOptions: JSON.stringify({ callReadinessOptedIn: true })
+        usePermissionTroubleshootingActions: 'true'
       })
     );
     const context = await page.context();
@@ -72,8 +69,7 @@ test.describe('Tests for guidance UI on config page to guide users through enabl
     const initialState = defaultMockConfigPageStateDeviceDisabled();
     await page.goto(
       buildUrlWithMockAdapter(serverUrl, initialState, {
-        usePermissionTroubleshootingActions: 'true',
-        customCallCompositeOptions: JSON.stringify({ callReadinessOptedIn: true })
+        usePermissionTroubleshootingActions: 'true'
       })
     );
     const context = await page.context();
@@ -93,8 +89,7 @@ test.describe('Tests for guidance UI on config page to guide users through enabl
     initialState.call = undefined;
     await page.goto(
       buildUrlWithMockAdapter(serverUrl, initialState, {
-        usePermissionTroubleshootingActions: 'true',
-        customCallCompositeOptions: JSON.stringify({ callReadinessOptedIn: true })
+        usePermissionTroubleshootingActions: 'true'
       })
     );
     const context = await page.context();

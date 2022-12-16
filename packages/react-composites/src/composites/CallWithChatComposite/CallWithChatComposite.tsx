@@ -126,12 +126,6 @@ export type CallWithChatCompositeOptions = {
    * if this is not supplied, the composite will not show a 'network troubleshooting' link.
    */
   onNetworkingTroubleShootingClick?: () => void;
-  /* @conditional-compile-remove(call-readiness) */
-  /**
-   * Opt in call readiness feature for your call
-   * setting this to True will add call readiness feature in call experience
-   */
-  callReadinessOptedIn?: boolean;
 };
 
 /**
@@ -212,8 +206,6 @@ type CallWithChatScreenProps = {
   rtl?: boolean;
   /* @conditional-compile-remove(call-readiness) */
   devicePermissions?: DevicePermissionRestrictions;
-  /* @conditional-compile-remove(call-readiness) */
-  callReadinessOptedIn?: boolean;
 };
 
 const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
@@ -378,9 +370,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
               options={{
                 callControls: false,
                 /* @conditional-compile-remove(call-readiness) */
-                devicePermissions: props.devicePermissions,
-                /* @conditional-compile-remove(call-readiness) */
-                callReadinessOptedIn: props.callReadinessOptedIn
+                devicePermissions: props.devicePermissions
               }}
               adapter={callAdapter}
               fluentTheme={fluentTheme}
@@ -491,8 +481,6 @@ export const CallWithChatComposite = (props: CallWithChatCompositeProps): JSX.El
         {...props}
         /* @conditional-compile-remove(call-readiness) */
         devicePermissions={options?.devicePermissions}
-        /* @conditional-compile-remove(call-readiness) */
-        callReadinessOptedIn={options?.callReadinessOptedIn}
         callWithChatAdapter={adapter}
         formFactor={formFactor}
         callControls={options?.callControls}

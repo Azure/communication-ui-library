@@ -22,7 +22,6 @@ export interface ConfigurationpageMicDropdownProps {
   micGrantedDropdown: JSX.Element;
   micPermissionGranted: boolean;
   dropdownProps?: Record<string, never> & Partial<CallingHandlers>;
-  callReadinessOptedIn?: boolean;
   onClickEnableDevicePermission?: () => void;
 }
 
@@ -51,8 +50,7 @@ export const ConfigurationpageMicDropdown = (props: ConfigurationpageMicDropdown
   );
 
   /* @conditional-compile-remove(call-readiness) */
-  if (props.callReadinessOptedIn) {
-    return <> {props.micPermissionGranted ? props.micGrantedDropdown : microphoneBlockedDropdown}</>;
-  }
+  return props.micPermissionGranted ? props.micGrantedDropdown : microphoneBlockedDropdown;
+
   return props.micGrantedDropdown;
 };

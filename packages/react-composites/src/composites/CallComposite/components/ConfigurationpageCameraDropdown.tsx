@@ -22,7 +22,6 @@ export interface ConfigurationpageCameraDropdownProps {
   cameraGrantedDropdown: JSX.Element;
   cameraPermissionGranted: boolean;
   dropdownProps?: Record<string, never> & Partial<CallingHandlers>;
-  callReadinessOptedIn?: boolean;
   onClickEnableDevicePermission?: () => void;
 }
 
@@ -53,9 +52,7 @@ export const ConfigurationpageCameraDropdown = (props: ConfigurationpageCameraDr
   );
 
   /* @conditional-compile-remove(call-readiness) */
-  if (props.callReadinessOptedIn) {
-    return <>{props.cameraPermissionGranted ? props.cameraGrantedDropdown : cameraBlockedDropdown}</>;
-  }
+  return props.cameraPermissionGranted ? props.cameraGrantedDropdown : cameraBlockedDropdown;
 
   return props.cameraGrantedDropdown;
 };

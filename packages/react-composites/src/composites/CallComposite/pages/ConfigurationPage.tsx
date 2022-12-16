@@ -58,8 +58,6 @@ export interface ConfigurationPageProps {
   }) => void;
   /* @conditional-compile-remove(call-readiness) */
   onNetworkingTroubleShootingClick?: () => void;
-  /* @conditional-compile-remove(call-readiness) */
-  callReadinessOptedIn?: boolean;
 }
 
 /**
@@ -71,8 +69,7 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
     mobileView,
     /* @conditional-compile-remove(call-readiness) */ devicePermissions,
     /* @conditional-compile-remove(call-readiness) */ onPermissionsTroubleshootingClick,
-    /* @conditional-compile-remove(call-readiness) */ onNetworkingTroubleShootingClick,
-    /* @conditional-compile-remove(call-readiness) */ callReadinessOptedIn = false
+    /* @conditional-compile-remove(call-readiness) */ onNetworkingTroubleShootingClick
   } = props;
 
   const options = useAdaptedSelector(getCallingSelector(DevicesButton));
@@ -203,48 +200,39 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
           /* @conditional-compile-remove(call-readiness) */
           onPermissionsTroubleshootingClick={onPermissionsTroubleshootingClick}
           errorBarProps={errorBarProps}
-          /* @conditional-compile-remove(call-readiness) */
-          callReadinessOptedIn={callReadinessOptedIn}
         />
       </Stack>
       {
         /* @conditional-compile-remove(call-readiness) */
         // show the following screen if permission API is availible (not unsupported) and videoState, audioState is assigned values
-        callReadinessOptedIn &&
-          videoState &&
-          videoState !== 'unsupported' &&
-          audioState &&
-          audioState !== 'unsupported' && (
-            <CallReadinessModal
-              mobileView={mobileView}
-              /* @conditional-compile-remove(unsupported-browser) */
-              environmentInfo={environmentInfo}
-              permissionsState={permissionsState}
-              isPermissionsModalDismissed={isPermissionsModalDismissed}
-              setIsPermissionsModalDismissed={setIsPermissionsModalDismissed}
-              onPermissionsTroubleshootingClick={onPermissionsTroubleshootingClick}
-            />
-          )
+        videoState && videoState !== 'unsupported' && audioState && audioState !== 'unsupported' && (
+          <CallReadinessModal
+            mobileView={mobileView}
+            /* @conditional-compile-remove(unsupported-browser) */
+            environmentInfo={environmentInfo}
+            permissionsState={permissionsState}
+            isPermissionsModalDismissed={isPermissionsModalDismissed}
+            setIsPermissionsModalDismissed={setIsPermissionsModalDismissed}
+            onPermissionsTroubleshootingClick={onPermissionsTroubleshootingClick}
+          />
+        )
       }
 
       {
         /* @conditional-compile-remove(call-readiness) */
         // show the following screen if permission API is not availible (unsupported) and videoState, audioState is assigned values
-        callReadinessOptedIn &&
-          videoState &&
-          audioState &&
-          (videoState === 'unsupported' || audioState === 'unsupported') && (
-            <CallReadinessModalFallBack
-              mobileView={mobileView}
-              checkPermissionModalShowing={forceShowingCheckPermissions}
-              permissionsState={permissionsState}
-              isPermissionsModalDismissed={isPermissionsModalDismissed}
-              /* @conditional-compile-remove(unsupported-browser) */
-              environmentInfo={environmentInfo}
-              setIsPermissionsModalDismissed={setIsPermissionsModalDismissed}
-              onPermissionsTroubleshootingClick={onPermissionsTroubleshootingClick}
-            />
-          )
+        videoState && audioState && (videoState === 'unsupported' || audioState === 'unsupported') && (
+          <CallReadinessModalFallBack
+            mobileView={mobileView}
+            checkPermissionModalShowing={forceShowingCheckPermissions}
+            permissionsState={permissionsState}
+            isPermissionsModalDismissed={isPermissionsModalDismissed}
+            /* @conditional-compile-remove(unsupported-browser) */
+            environmentInfo={environmentInfo}
+            setIsPermissionsModalDismissed={setIsPermissionsModalDismissed}
+            onPermissionsTroubleshootingClick={onPermissionsTroubleshootingClick}
+          />
+        )
       }
 
       <Stack
@@ -282,8 +270,6 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
                   microphonePermissionGranted,
                   /* @conditional-compile-remove(call-readiness) */ audioState
                 )}
-                /* @conditional-compile-remove(call-readiness) */
-                callReadinessOptedIn={callReadinessOptedIn}
                 /* @conditional-compile-remove(call-readiness) */
                 onClickEnableDevicePermission={() => {
                   setIsPermissionsModalDismissed(true);
