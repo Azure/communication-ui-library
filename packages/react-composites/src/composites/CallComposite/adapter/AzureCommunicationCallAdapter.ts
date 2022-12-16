@@ -893,11 +893,11 @@ export const createTeamsCallAdapter = async ({
   return adapter;
 };
 
-type PartialArgsType<AdapterType> = AdapterType extends CallAdapter
+type PartialArgsType<Adapter> = Adapter extends CallAdapter
   ? Partial<AzureCommunicationCallAdapterArgs>
   : Partial<TeamsCallAdapterArgs>;
 
-type AdapterTypeOf<CallType extends 'AzureCommunication' | 'Teams'> = CallType extends 'AzureCommunication'
+type AdapterOf<CallKind extends 'AzureCommunication' | 'Teams'> = CallKind extends 'AzureCommunication'
   ? CallAdapter
   : TeamsCallAdapter;
 
@@ -905,13 +905,13 @@ type AdapterTypeOf<CallType extends 'AzureCommunication' | 'Teams'> = CallType e
  * @private
  */
 const useAzureCommunicationCallAdapterGeneric = <
-  CallType extends 'AzureCommunication' | 'Teams',
-  AdapterType extends AdapterTypeOf<CallType>
+  CallKind extends 'AzureCommunication' | 'Teams',
+  AdapterType extends AdapterOf<CallKind>
 >(
   args: PartialArgsType<AdapterType>,
   afterCreate?: (adapter: AdapterType) => Promise<AdapterType>,
   beforeDispose?: (adapter: AdapterType) => Promise<void>,
-  type: CallType = 'AzureCommunication' as CallType
+  callKind: CallKind = 'AzureCommunication' as CallKind
 ): AdapterType | undefined => {
   const { credential, locator, userId, /*@conditional-compile-remove(rooms) */ options } = args;
 
@@ -934,7 +934,7 @@ const useAzureCommunicationCallAdapterGeneric = <
       if (!credential || !locator || !userId) {
         return;
       }
-      if (type === 'AzureCommunication' && 'displayName' in args && args?.displayName) {
+      if (callKind === 'AzureCommunication' && 'displayName' in args && args?.displayName) {
         return;
       }
       (async () => {
@@ -952,7 +952,7 @@ const useAzureCommunicationCallAdapterGeneric = <
         }
 
         let newAdapter: AdapterType;
-        if (type === 'AzureCommunication') {
+        if (callKind === 'AzureCommunication') {
           if (!('displayName' in args) || !args?.displayName) {
             return;
           }
@@ -980,7 +980,7 @@ const useAzureCommunicationCallAdapterGeneric = <
       })();
     },
     // Explicitly list all arguments so that caller doesn't have to memoize the `args` object.
-    [adapterRef, afterCreateRef, args, beforeDisposeRef, credential, locator, options, type, userId]
+    [adapterRef, afterCreateRef, args, beforeDisposeRef, credential, locator, options, callKind, userId]
   );
 
   // Dispose any existing adapter when the component unmounts.
