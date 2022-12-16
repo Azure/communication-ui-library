@@ -95,7 +95,6 @@ test.describe('unsupportedBrowser page tests', async () => {
       version: false
     };
     state.environmentInfo = setMockEnvironmentInfo(envConfig);
-    state.features = { unsupportedEnvironment: { unsupportedBrowserVersionAllowed: true } };
 
     await page.goto(
       buildUrlWithMockAdapter(serverUrl, state, {
