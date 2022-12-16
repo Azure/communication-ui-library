@@ -1,10 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { DefaultButton, IStackStyles } from '@fluentui/react';
 import { _ICoordinates, _useContainerHeight, _useContainerWidth } from '@internal/react-components';
-import React from 'react';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useMemo, useRef } from 'react';
 import { MODAL_PIP_DEFAULT_PX } from './styles/ModalLocalAndRemotePIP.styles';
 
 /**
@@ -49,48 +47,4 @@ export const useMinMaxDragPosition = (modalLayerHostId: string, rtl?: boolean): 
   );
 
   return { minDragPosition: minDragPosition, maxDragPosition: maxDragPosition };
-};
-
-/**
- * @private
- *  hidden button to set first tab keypress focus on a specific grouping.
- *  On mount, button is autofocused then immediately hidden
- */
-export const HiddenFocusStartPoint = (): JSX.Element => {
-  const [isMounted, setIsMounted] = useState(false);
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
-  return (
-    <DefaultButton
-      autoFocus
-      ariaHidden={true}
-      styles={isMounted ? invisibleHiddenFocusStartPoint : hiddenFocusStartPointStyles}
-      tabIndex={-1}
-    />
-  );
-};
-
-/** @private */
-const hiddenFocusStartPointStyles: IStackStyles = {
-  root: {
-    width: '0',
-    height: '0',
-    margin: '0',
-    minHeight: '0',
-    minWidth: '0',
-    maxHeight: '0',
-    maxWidth: '0',
-    opacity: '0',
-    outline: 'none',
-    padding: '0',
-    position: 'absolute'
-  }
-};
-
-/** @private */
-const invisibleHiddenFocusStartPoint: IStackStyles = {
-  root: {
-    display: 'none'
-  }
 };

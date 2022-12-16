@@ -29,7 +29,7 @@ import {
 /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
 import { DesktopMoreButton } from './components/DesktopMoreButton';
 import { isDisabled } from '../CallComposite/utils';
-import { HiddenFocusStartPoint } from '../common/utils';
+import { HiddenFocusStartPoint } from '../common/HiddenFocusStartPoint';
 
 /**
  * @private
