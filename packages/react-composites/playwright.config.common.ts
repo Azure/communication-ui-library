@@ -86,7 +86,7 @@ const config: PlaywrightTestConfig = {
       use: {
         // Nexus 5 user agent string, taken from node_modules/.../playwright-core/.../deviceDescriptorsSource.json
         userAgent:
-          'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4641.0 Mobile Safari/537.36',
+          'Mozilla/5.0 (Linux; Android 12; SM-S901B) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Mobile Safari/537.36',
         // Support smallest supported mobile viewport (iPhone 5/SE) ({ width: 568, height: 320 })
         viewport: { width: 568, height: 320 },
         deviceScaleFactor: 2,
