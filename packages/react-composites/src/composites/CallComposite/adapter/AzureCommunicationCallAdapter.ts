@@ -107,6 +107,11 @@ class CallContext {
       /* @conditional-compile-remove(rooms) */ roleHint: options?.roleHint
     };
     this.emitter.setMaxListeners(options?.maxListeners ?? 50);
+    this.bindPublicMethods();
+  }
+
+  private bindPublicMethods(): void {
+    this.setAllowedUnsupportedBrowser.bind(this);
   }
 
   public onStateChange(handler: (_uiState: CallAdapterState) => void): void {
