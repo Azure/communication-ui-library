@@ -122,10 +122,13 @@ export const getDiagnostics = (
 export const getCallState = (state: CallClientState, props: CallingBaseSelectorProps): string =>
   state.calls[props.callId]?.state;
 
-/* @conditional-compile-remove(unsupported-browser) */
 /**
  * @private
  */
-export const getEnvironmentInfo = (state: CallClientState): EnvironmentInfo | undefined => {
+export const getEnvironmentInfo = (
+  state: CallClientState
+): undefined | /* @conditional-compile-remove(unsupported-browser) */ EnvironmentInfo => {
+  /* @conditional-compile-remove(unsupported-browser) */
   return state.environmentInfo;
+  return undefined;
 };

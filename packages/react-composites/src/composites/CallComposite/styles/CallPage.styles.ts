@@ -82,12 +82,3 @@ export const bannerNotificationStyles: IStackStyles = {
     pointerEvents: 'auto' // to allow the dismissal or error and warning bars in the notification container
   }
 };
-
-/**
- * @private
- */
-export const callArrangementContainerStyles: IStackStyles = {
-  root: {
-    flexDirection: 'column-reverse' // to allow first initial keyboard focus on ControlBar
-  }
-};
