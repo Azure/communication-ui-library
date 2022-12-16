@@ -111,6 +111,7 @@ class CallContext {
   }
 
   private bindPublicMethods(): void {
+    /* @conditional-compile-remove(unsupported-browser) */
     this.setAllowedUnsupportedBrowser.bind(this);
   }
 
