@@ -190,11 +190,11 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                 </Stack>
               )}
             </Stack.Item>
+            {
+              /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
+              callPaneContent()
+            }
           </Stack.Item>
-          {
-            /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
-            callPaneContent()
-          }
         </Stack>
       </Stack>
     </div>
