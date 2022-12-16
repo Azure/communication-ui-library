@@ -10,7 +10,12 @@ import { CallContext } from './CallContext';
 import { callAgentDeclaratify, DeclarativeCallAgent } from './CallAgentDeclarative';
 import { InternalCallContext } from './InternalCallContext';
 import { createView, disposeView, CreateViewResult } from './StreamUtils';
-import { CommunicationIdentifier, CommunicationUserIdentifier, getIdentifierKind } from '@azure/communication-common';
+import {
+  CommunicationIdentifier,
+  CommunicationUserIdentifier,
+  getIdentifierKind,
+  MicrosoftTeamsUserIdentifier
+} from '@azure/communication-common';
 import { toFlatCommunicationIdentifier, _getApplicationId } from '@internal/acs-ui-common';
 import { callingStatefulLogger } from './Logger';
 /* @conditional-compile-remove(teams-identity-support) */
@@ -273,7 +278,7 @@ export type StatefulCallClientArgs = {
    * UserId from SDK. This is provided for developer convenience to easily access the userId from the
    * state. It is not used by StatefulCallClient.
    */
-  userId: CommunicationUserIdentifier;
+  userId: CommunicationUserIdentifier | MicrosoftTeamsUserIdentifier;
   /* @conditional-compile-remove(PSTN-calls) */
   /**
    * A phone number in E.164 format that will be used to represent the callers identity. This number is required
