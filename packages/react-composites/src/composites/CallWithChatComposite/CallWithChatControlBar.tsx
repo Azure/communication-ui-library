@@ -157,7 +157,7 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps & Cont
       <Stack.Item grow>
         <CallAdapterProvider adapter={props.callAdapter}>
           <Stack horizontalAlign="center">
-            {HiddenFocusStartPoint()}
+            <HiddenFocusStartPoint />
             <Stack.Item>
               {/*
                   Note: We use the layout="horizontal" instead of dockedBottom because of how we position the
