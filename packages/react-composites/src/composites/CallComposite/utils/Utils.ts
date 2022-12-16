@@ -289,6 +289,7 @@ export const isDisabled = (option: boolean | { disabled: boolean } | undefined):
   return option.disabled;
 };
 
+/* @conditional-compile-remove(call-readiness) */
 /**
  * @returns Permissions state for the camera.
  */
@@ -301,6 +302,7 @@ const queryCameraPermissionFromPermissionsAPI = async (): Promise<PermissionStat
   }
 };
 
+/* @conditional-compile-remove(call-readiness) */
 /**
  * @returns Permissions state for the microphone.
  */
