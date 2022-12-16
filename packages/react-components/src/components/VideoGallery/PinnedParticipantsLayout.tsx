@@ -8,41 +8,42 @@ import { useTheme } from '../../theming';
 import { GridLayout } from '../GridLayout';
 import { isNarrowWidth } from '../utils/responsive';
 import { FloatingLocalVideo } from './FloatingLocalVideo';
-import { LayoutProps } from './Layout';
+import { FloatingLocalVideoLayoutProps } from './FloatingLocalVideoLayout';
 import {
   localVideoTileContainerStyle,
   localVideoTileWithControlsContainerStyle,
   LOCAL_VIDEO_TILE_ZINDEX
 } from './styles/FloatingLocalVideo.styles';
 import { innerLayoutStyle, layerHostStyle, rootLayoutStyle } from './styles/FloatingLocalVideoLayout.styles';
-import { useFloatingLocalVideoLayout } from './utils/videoGalleryLayoutUtils';
+import { usePinnedParticipantLayout } from './utils/videoGalleryLayoutUtils';
 import { VideoGalleryResponsiveHorizontalGallery } from './VideoGalleryResponsiveHorizontalGallery';
 
 /**
- * Props for {@link FloatingLocalVideoLayout}.
+ * Props for {@link PinnedParticipantsLayout}.
  *
  * @private
  */
-export interface FloatingLocalVideoLayoutProps extends LayoutProps {
+export interface PinnedParticipantsLayoutProps extends FloatingLocalVideoLayoutProps {
   /**
-   * Whether to display the local video camera switcher button
+   * List of pinned participant userIds
    */
-  showCameraSwitcherInLocalPreview?: boolean;
+  pinnedParticipants?: string[];
   /**
-   * Height of parent element
+   * Whether local video should be floating
    */
-  parentHeight?: number;
+  isLocalVideoFloating?: boolean;
 }
 
 /**
- * FloatingLocalVideoLayout displays remote participants and a screen sharing component in
+ * PinnedParticipantsLayout displays remote participants and a screen sharing component in
  * a grid and horizontal gallery while floating the local video
  *
  * @private
  */
-export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): JSX.Element => {
+export const PinnedParticipantsLayout = (props: PinnedParticipantsLayoutProps): JSX.Element => {
   const {
     remoteParticipants = [],
+    pinnedParticipants = [],
     dominantSpeakers,
     localVideoComponent,
     screenShareComponent,
@@ -51,15 +52,17 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
     maxRemoteVideoStreams,
     showCameraSwitcherInLocalPreview,
     parentWidth,
-    parentHeight
+    parentHeight,
+    isLocalVideoFloating
   } = props;
 
   const theme = useTheme();
 
   const isNarrow = parentWidth ? isNarrowWidth(parentWidth) : false;
 
-  const floatingLocalVideoLayout = useFloatingLocalVideoLayout({
+  const pinnedParticipantsLayout = usePinnedParticipantLayout({
     remoteParticipants,
+    pinnedParticipantUserIds: pinnedParticipants,
     dominantSpeakers,
     maxRemoteVideoStreams,
     isScreenShareActive: !!screenShareComponent
@@ -67,7 +70,9 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
 
   let activeVideoStreams = 0;
 
-  const gridTiles = floatingLocalVideoLayout.gridParticipants.map((p) => {
+  const shouldFloatLocalVideo = isLocalVideoFloating && remoteParticipants.length > 0;
+
+  const gridTiles = pinnedParticipantsLayout.gridParticipants.map((p) => {
     return onRenderRemoteParticipant(
       p,
       maxRemoteVideoStreams && maxRemoteVideoStreams >= 0
@@ -76,13 +81,11 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
     );
   });
 
-  const shouldFloatLocalVideo = remoteParticipants.length > 0;
-
-  if (!shouldFloatLocalVideo && localVideoComponent) {
+  if (localVideoComponent && !shouldFloatLocalVideo) {
     gridTiles.push(localVideoComponent);
   }
 
-  const horizontalGalleryTiles = floatingLocalVideoLayout.horizontalGalleryParticipants.map((p) => {
+  const horizontalGalleryTiles = pinnedParticipantsLayout.horizontalGalleryParticipants.map((p) => {
     return onRenderRemoteParticipant(
       p,
       maxRemoteVideoStreams && maxRemoteVideoStreams >= 0
