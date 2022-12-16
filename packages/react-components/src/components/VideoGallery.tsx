@@ -30,6 +30,8 @@ import { FloatingLocalVideoLayout } from './VideoGallery/FloatingLocalVideoLayou
 import { useIdentifiers } from '../identifiers';
 import { videoGalleryOuterDivStyle } from './styles/VideoGallery.styles';
 import { floatingLocalVideoTileStyle } from './VideoGallery/styles/FloatingLocalVideo.styles';
+/* @conditional-compile-remove(pinned-participants) */
+import { PinnedParticipantsLayout } from './VideoGallery/PinnedParticipantsLayout';
 
 /**
  * @private
@@ -154,6 +156,11 @@ export interface VideoGalleryProps {
   localVideoCameraCycleButtonProps?: LocalVideoCameraCycleButtonProps;
   /* @conditional-compile-remove(pinned-participants) */
   /**
+   * List of pinned participant userIds
+   */
+  pinnedParticipants?: string[];
+  /* @conditional-compile-remove(pinned-participants) */
+  /**
    * Whether to show the remote video tile contextual menu.
    * @defaultValue `true`
    */
@@ -199,6 +206,12 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   const containerWidth = _useContainerWidth(containerRef);
   const containerHeight = _useContainerHeight(containerRef);
   const isNarrow = containerWidth ? isNarrowWidth(containerWidth) : false;
+
+  /* @conditional-compile-remove(pinned-participants) */
+  const [pinnedParticipantsState, _] = React.useState<string[]>([]);
+  /* @conditional-compile-remove(pinned-participants) */
+  // Use pinnedParticipants from props but if it is not defined use the maintained state of pinned participants
+  const pinnedParticipants = props.pinnedParticipants ?? pinnedParticipantsState;
 
   /* @conditional-compile-remove(rooms) */
   const permissions = _usePermissions();
@@ -326,32 +339,48 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     ? localScreenShareStreamComponent
     : undefined;
 
-  const videoGalleryLayout =
-    layout === 'floatingLocalVideo' ? (
-      <FloatingLocalVideoLayout
-        remoteParticipants={remoteParticipants}
-        onRenderRemoteParticipant={onRenderRemoteVideoTile ?? defaultOnRenderVideoTile}
-        localVideoComponent={localVideoTile}
-        screenShareComponent={screenShareComponent}
-        showCameraSwitcherInLocalPreview={showCameraSwitcherInLocalPreview}
-        maxRemoteVideoStreams={maxRemoteVideoStreams}
-        dominantSpeakers={dominantSpeakers}
-        parentWidth={containerWidth}
-        parentHeight={containerHeight}
-        styles={styles}
-      />
-    ) : (
-      <DefaultLayout
-        remoteParticipants={remoteParticipants}
-        onRenderRemoteParticipant={onRenderRemoteVideoTile ?? defaultOnRenderVideoTile}
-        localVideoComponent={localVideoTile}
-        screenShareComponent={screenShareComponent}
-        maxRemoteVideoStreams={maxRemoteVideoStreams}
-        dominantSpeakers={dominantSpeakers}
-        parentWidth={containerWidth}
-        styles={styles}
-      />
-    );
+  const layoutProps = useMemo(
+    () => ({
+      remoteParticipants,
+      /* @conditional-compile-remove(pinned-participants) */ pinnedParticipants,
+      screenShareComponent,
+      showCameraSwitcherInLocalPreview,
+      maxRemoteVideoStreams,
+      dominantSpeakers,
+      styles,
+      onRenderRemoteParticipant: onRenderRemoteVideoTile ?? defaultOnRenderVideoTile,
+      localVideoComponent: localVideoTile,
+      parentWidth: containerWidth,
+      parentHeight: containerHeight,
+      isLocalVideoFloating: layout === 'floatingLocalVideo'
+    }),
+    [
+      remoteParticipants,
+      screenShareComponent,
+      showCameraSwitcherInLocalPreview,
+      maxRemoteVideoStreams,
+      dominantSpeakers,
+      styles,
+      localVideoTile,
+      containerWidth,
+      containerHeight,
+      onRenderRemoteVideoTile,
+      defaultOnRenderVideoTile,
+      layout,
+      /* @conditional-compile-remove(pinned-participants) */ pinnedParticipants
+    ]
+  );
+
+  const videoGalleryLayout = useMemo(() => {
+    /* @conditional-compile-remove(pinned-participants) */
+    if (layoutProps.pinnedParticipants.length > 0) {
+      return <PinnedParticipantsLayout {...layoutProps} />;
+    }
+    if (layout === 'floatingLocalVideo') {
+      return <FloatingLocalVideoLayout {...layoutProps} />;
+    }
+    return <DefaultLayout {...layoutProps} />;
+  }, [layout, layoutProps]);
 
   return (
     <div
