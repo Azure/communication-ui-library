@@ -37,7 +37,7 @@ import { usePropsFor } from '../hooks/usePropsFor';
 import { useAdapter } from '../adapter/CallAdapterProvider';
 /* @conditional-compile-remove(call-readiness) */
 import { DevicePermissionRestrictions } from '../CallComposite';
-import { ConfigurationpageErrorBar } from '../components/ConfigurationpageErrorBar';
+import { ConfigurationPageErrorBar } from '../components/ConfigurationPageErrorBar';
 /* @conditional-compile-remove(call-readiness) */
 import { getDevicePermissionState } from '../utils';
 /* @conditional-compile-remove(call-readiness) */
@@ -190,7 +190,7 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
   return (
     <Stack className={mobileView ? configurationContainerStyleMobile : configurationContainerStyleDesktop}>
       <Stack styles={bannerNotificationStyles}>
-        <ConfigurationpageErrorBar
+        <ConfigurationPageErrorBar
           /* @conditional-compile-remove(call-readiness) */
           // show trouble shooting error bar when encountering network error/ permission error
           showTroubleShootingErrorBar={
