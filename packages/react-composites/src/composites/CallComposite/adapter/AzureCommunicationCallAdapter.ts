@@ -897,7 +897,7 @@ type PartialArgsType<Adapter> = Adapter extends CallAdapter
   ? Partial<AzureCommunicationCallAdapterArgs>
   : Partial<TeamsCallAdapterArgs>;
 
-type AdapterOf<CallKind extends 'AzureCommunication' | 'Teams'> = CallKind extends 'AzureCommunication'
+type AdapterOf<AdapterKind extends 'AzureCommunication' | 'Teams'> = AdapterKind extends 'AzureCommunication'
   ? CallAdapter
   : TeamsCallAdapter;
 
@@ -905,23 +905,23 @@ type AdapterOf<CallKind extends 'AzureCommunication' | 'Teams'> = CallKind exten
  * @private
  */
 const useAzureCommunicationCallAdapterGeneric = <
-  CallKind extends 'AzureCommunication' | 'Teams',
-  AdapterType extends AdapterOf<CallKind>
+  AdapterKind extends 'AzureCommunication' | 'Teams',
+  Adapter extends AdapterOf<AdapterKind>
 >(
-  args: PartialArgsType<AdapterType>,
-  afterCreate?: (adapter: AdapterType) => Promise<AdapterType>,
-  beforeDispose?: (adapter: AdapterType) => Promise<void>,
-  callKind: CallKind = 'AzureCommunication' as CallKind
-): AdapterType | undefined => {
+  args: PartialArgsType<Adapter>,
+  afterCreate?: (adapter: Adapter) => Promise<Adapter>,
+  beforeDispose?: (adapter: Adapter) => Promise<void>,
+  adapterKind: AdapterKind = 'AzureCommunication' as AdapterKind
+): Adapter | undefined => {
   const { credential, locator, userId, /*@conditional-compile-remove(rooms) */ options } = args;
 
   // State update needed to rerender the parent component when a new adapter is created.
-  const [adapter, setAdapter] = useState<AdapterType | undefined>(undefined);
+  const [adapter, setAdapter] = useState<Adapter | undefined>(undefined);
   // Ref needed for cleanup to access the old adapter created asynchronously.
-  const adapterRef = useRef<AdapterType | undefined>(undefined);
+  const adapterRef = useRef<Adapter | undefined>(undefined);
 
-  const afterCreateRef = useRef<((adapter: AdapterType) => Promise<AdapterType>) | undefined>(undefined);
-  const beforeDisposeRef = useRef<((adapter: AdapterType) => Promise<void>) | undefined>(undefined);
+  const afterCreateRef = useRef<((adapter: Adapter) => Promise<Adapter>) | undefined>(undefined);
+  const beforeDisposeRef = useRef<((adapter: Adapter) => Promise<void>) | undefined>(undefined);
   // These refs are updated on *each* render, so that the latest values
   // are used in the `useEffect` closures below.
   // Using a Ref ensures that new values for the callbacks do not trigger the
@@ -934,7 +934,7 @@ const useAzureCommunicationCallAdapterGeneric = <
       if (!credential || !locator || !userId) {
         return;
       }
-      if (callKind === 'AzureCommunication' && 'displayName' in args && args?.displayName) {
+      if (adapterKind === 'AzureCommunication' && 'displayName' in args && args?.displayName) {
         return;
       }
       (async () => {
@@ -951,8 +951,8 @@ const useAzureCommunicationCallAdapterGeneric = <
           adapterRef.current = undefined;
         }
 
-        let newAdapter: AdapterType;
-        if (callKind === 'AzureCommunication') {
+        let newAdapter: Adapter;
+        if (adapterKind === 'AzureCommunication') {
           if (!('displayName' in args) || !args?.displayName) {
             return;
           }
@@ -963,14 +963,14 @@ const useAzureCommunicationCallAdapterGeneric = <
             userId: userId as CommunicationUserIdentifier,
             /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId: args.alternateCallerId,
             /* @conditional-compile-remove(rooms) */ options
-          })) as AdapterType;
+          })) as Adapter;
         } else {
           newAdapter = (await createTeamsCallAdapter({
             credential,
             locator: locator as TeamsMeetingLinkLocator,
             userId: userId as MicrosoftTeamsUserIdentifier,
             /* @conditional-compile-remove(rooms) */ options
-          })) as AdapterType;
+          })) as Adapter;
         }
         if (afterCreateRef.current) {
           newAdapter = await afterCreateRef.current(newAdapter);
@@ -980,7 +980,7 @@ const useAzureCommunicationCallAdapterGeneric = <
       })();
     },
     // Explicitly list all arguments so that caller doesn't have to memoize the `args` object.
-    [adapterRef, afterCreateRef, args, beforeDisposeRef, credential, locator, options, callKind, userId]
+    [adapterRef, afterCreateRef, args, beforeDisposeRef, credential, locator, options, adapterKind, userId]
   );
 
   // Dispose any existing adapter when the component unmounts.
