@@ -157,6 +157,11 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps & Cont
       <Stack.Item grow>
         <CallAdapterProvider adapter={props.callAdapter}>
           <Stack horizontalAlign="center">
+            {/*
+              HiddenFocusStartPoint is a util component used when we can't ensure the initial element for first
+              tab focus is at the top of dom tree. It moves the first-tab focus to the next interact-able element
+              immediately after it in the dom tree.
+              */}
             <HiddenFocusStartPoint />
             <Stack.Item>
               {/*
