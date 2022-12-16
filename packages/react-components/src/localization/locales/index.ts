@@ -4,6 +4,7 @@
 import { PartialDeep } from 'type-fest';
 import { ComponentLocale, ComponentStrings } from '..';
 import en_US from './en-US/strings.json';
+import cs_CZ from './cs-CZ/strings.json';
 import en_GB from './en-GB/strings.json';
 import de_DE from './de-DE/strings.json';
 import es_ES from './es-ES/strings.json';
@@ -32,6 +33,12 @@ const createComponentStrings = (localizedStrings: PartialDeep<ComponentStrings>)
  * @public
  */
 export const COMPONENT_LOCALE_EN_US: ComponentLocale = { strings: en_US };
+/**
+ * Locale for Czech (Czechia).
+ *
+ * @public
+ */
+export const COMPONENT_LOCALE_CS_CZ: ComponentLocale = { strings: createComponentStrings(cs_CZ) };
 /**
  * Locale for English (GB).
  *
