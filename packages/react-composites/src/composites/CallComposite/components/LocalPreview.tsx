@@ -53,6 +53,14 @@ export const LocalPreview = (props: LocalPreviewProps): JSX.Element => {
     isLocalMicrophoneEnabled ? adapter.mute() : adapter.unmute();
   }, [adapter, isLocalMicrophoneEnabled]);
 
+  const hasNoDevices =
+    devicesButtonProps.cameras.length === 0 &&
+    devicesButtonProps.microphones.length === 0 &&
+    devicesButtonProps.speakers.length === 0;
+
+  const hasCameras = devicesButtonProps.cameras.length > 0;
+  const hasMicrophones = devicesButtonProps.microphones.length > 0;
+
   const theme = useTheme();
   const onRenderPlaceholder = useCallback((): JSX.Element => {
     return (
@@ -103,21 +111,21 @@ export const LocalPreview = (props: LocalPreviewProps): JSX.Element => {
             data-ui-id="call-composite-local-device-settings-microphone-button"
             checked={isLocalMicrophoneEnabled}
             onToggleMicrophone={onToggleMic}
-            disabled={!microphonePermissionGranted}
+            disabled={!microphonePermissionGranted || !hasMicrophones}
             showLabel={true}
           />
           <CameraButton
             data-ui-id="call-composite-local-device-settings-camera-button"
             {...cameraButtonProps}
             showLabel={true}
-            disabled={!cameraPermissionGranted}
+            disabled={!cameraPermissionGranted || !hasCameras}
           />
           {props.showDevicesButton && (
             <DevicesButton
               data-ui-id="call-composite-local-device-settings-options-button"
               {...devicesButtonProps}
               // disable button whilst all other buttons are disabled
-              disabled={!microphonePermissionGranted || !cameraPermissionGranted}
+              disabled={!microphonePermissionGranted || !cameraPermissionGranted || hasNoDevices}
               showLabel={true}
               styles={devicesButtonStyles}
             />

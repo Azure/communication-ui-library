@@ -271,6 +271,7 @@ export interface CallAdapterCallOperations {
     addParticipant(participant: PhoneNumberIdentifier, options?: AddPhoneNumberOptions): Promise<void>;
     // (undocumented)
     addParticipant(participant: CommunicationUserIdentifier): Promise<void>;
+    allowUnsupportedBrowserVersion(): void;
     createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void | CreateVideoStreamViewResult>;
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
     // @beta
@@ -322,7 +323,7 @@ export type CallAdapterLocator = TeamsMeetingLinkLocator | GroupCallLocator | /*
 
 // @beta
 export type CallAdapterOptionalFeatures = {
-    unsupportedEnvironment?: boolean;
+    unsupportedEnvironment?: boolean | UnsupportedEnvironmentFeatures;
 };
 
 // @public
@@ -360,6 +361,7 @@ export interface CallAdapterSubscribers {
 export type CallAdapterUiState = {
     isLocalPreviewMicrophoneEnabled: boolean;
     page: CallCompositePage;
+    unsupportedBrowserVersionsAllowed?: boolean;
 };
 
 // @public
@@ -551,6 +553,9 @@ export interface CallCompositeStrings {
     mutedMessage: string;
     networkReconnectMoreDetails: string;
     networkReconnectTitle: string;
+    noCamerasLabel: string;
+    noMicrophonesLabel: string;
+    noSpeakersLabel: string;
     openDialpadButtonLabel: string;
     openDtmfDialpadLabel: string;
     outboundCallingNoticeString: string;
@@ -729,6 +734,7 @@ export interface CallWithChatAdapterManagement {
     addParticipant(participant: PhoneNumberIdentifier, options?: AddPhoneNumberOptions): Promise<void>;
     // (undocumented)
     addParticipant(participant: CommunicationUserIdentifier): Promise<void>;
+    allowUnsupportedBrowserVersion(): void;
     askDevicePermission(constrain: PermissionConstraints): Promise<void>;
     // @beta (undocumented)
     cancelFileUpload: (id: string) => void;
@@ -863,6 +869,8 @@ export interface CallWithChatAdapterUiState {
     fileUploads?: FileUploadsUiState;
     isLocalPreviewMicrophoneEnabled: boolean;
     page: CallCompositePage;
+    // @beta
+    unsupportedBrowserVersionsAllowed?: boolean;
 }
 
 // @public
@@ -1411,6 +1419,7 @@ export interface CommonCallingHandlers {
 // @beta
 export interface CommonDomainPermissionsProps {
     appName: string;
+    browserHint?: 'safari' | 'unset';
     onContinueAnywayClick?: () => void;
     onTroubleshootingClick?: () => void;
     styles?: DomainPermissionsStyles;
@@ -1489,10 +1498,12 @@ export interface ComponentStrings {
     BrowserPermissionDeniedIOS: BrowserPermissionDeniedIOSStrings;
     CameraAndMicrophoneDomainPermissionsCheck: DomainPermissionsStrings;
     CameraAndMicrophoneDomainPermissionsDenied: DomainPermissionsStrings;
+    CameraAndMicrophoneDomainPermissionsDeniedSafari: DomainPermissionsStrings;
     CameraAndMicrophoneDomainPermissionsRequest: DomainPermissionsStrings;
     cameraButton: CameraButtonStrings;
     CameraDomainPermissionsCheck: DomainPermissionsStrings;
     CameraDomainPermissionsDenied: DomainPermissionsStrings;
+    CameraDomainPermissionsDeniedSafari: DomainPermissionsStrings;
     CameraDomainPermissionsRequest: DomainPermissionsStrings;
     devicesButton: DevicesButtonStrings;
     dialpad: DialpadStrings;
@@ -1504,6 +1515,7 @@ export interface ComponentStrings {
     microphoneButton: MicrophoneButtonStrings;
     MicrophoneDomainPermissionsCheck: DomainPermissionsStrings;
     MicrophoneDomainPermissionsDenied: DomainPermissionsStrings;
+    MicrophoneDomainPermissionsDeniedSafari: DomainPermissionsStrings;
     MicrophoneDomainPermissionsRequest: DomainPermissionsStrings;
     participantItem: ParticipantItemStrings;
     participantsButton: ParticipantsButtonStrings;
@@ -1815,6 +1827,8 @@ export const DEFAULT_COMPONENT_ICONS: {
     BrowserPermissionDeniedError: JSX.Element;
     VideoTilePinned: JSX.Element;
     VideoTileMoreOptions: JSX.Element;
+    VideoTileScaleFit: JSX.Element;
+    VideoTileScaleFill: JSX.Element;
 };
 
 // @public
@@ -1908,6 +1922,8 @@ export const DEFAULT_COMPOSITE_ICONS: {
     BrowserPermissionDeniedError: JSX.Element;
     VideoTilePinned: JSX.Element;
     VideoTileMoreOptions: JSX.Element;
+    VideoTileScaleFit: JSX.Element;
+    VideoTileScaleFill: JSX.Element;
 };
 
 // @public
@@ -2111,12 +2127,14 @@ export interface ErrorBarProps extends IMessageBarProps {
 export interface ErrorBarStrings {
     accessDenied: string;
     callCameraAccessDenied: string;
+    callCameraAccessDeniedSafari: string;
     callCameraAlreadyInUse: string;
     callLocalVideoFreeze: string;
     callMacOsCameraAccessDenied: string;
     callMacOsMicrophoneAccessDenied: string;
     callMacOsScreenShareAccessDenied: string;
     callMicrophoneAccessDenied: string;
+    callMicrophoneAccessDeniedSafari: string;
     callMicrophoneMutedBySystem: string;
     callMicrophoneUnmutedBySystem: string;
     callNetworkQualityLow: string;
@@ -2774,6 +2792,7 @@ export type ParticipantsButtonSelector = (state: CallClientState, props: Calling
 
 // @public
 export interface ParticipantsButtonStrings {
+    copyInviteLinkActionedAriaLabel: string;
     copyInviteLinkButtonLabel: string;
     label: string;
     menuHeader: string;
@@ -3090,16 +3109,23 @@ export const UnsupportedBrowserVersion: (props: UnsupportedBrowserVersionProps) 
 
 // @beta
 export interface UnsupportedBrowserVersionProps {
+    onContinueClick?: () => void;
     onTroubleshootingClick?: () => void;
-    strings: UnsupportedBrowserVersionStrings;
+    strings?: UnsupportedBrowserVersionStrings;
 }
 
 // @beta
 export interface UnsupportedBrowserVersionStrings {
+    continueAnywayButtonText?: string;
     moreHelpLinkText: string;
     primaryText: string;
     secondaryText: string;
 }
+
+// @beta
+export type UnsupportedEnvironmentFeatures = {
+    unsupportedBrowserVersionAllowed?: boolean;
+};
 
 // @beta
 export const UnsupportedOperatingSystem: (props: UnsupportedOperatingSystemProps) => JSX.Element;
@@ -3200,10 +3226,12 @@ export interface VideoGalleryProps {
     onRenderAvatar?: OnRenderAvatarCallback;
     onRenderLocalVideoTile?: (localParticipant: VideoGalleryLocalParticipant) => JSX.Element;
     onRenderRemoteVideoTile?: (remoteParticipant: VideoGalleryRemoteParticipant) => JSX.Element;
+    pinnedParticipants?: string[];
     remoteParticipants?: VideoGalleryRemoteParticipant[];
     remoteVideoViewOptions?: VideoStreamOptions;
     showCameraSwitcherInLocalPreview?: boolean;
     showMuteIndicator?: boolean;
+    showRemoteVideoTileContextualMenu?: boolean;
     strings?: Partial<VideoGalleryStrings>;
     styles?: VideoGalleryStyles;
 }
@@ -3237,6 +3265,8 @@ export interface VideoGalleryStream {
 // @public
 export interface VideoGalleryStrings {
     displayNamePlaceholder: string;
+    fillRemoteParticipantFrame: string;
+    fitRemoteParticipantToFrame: string;
     localVideoCameraSwitcherLabel: string;
     localVideoLabel: string;
     localVideoMovementLabel: string;

@@ -31,5 +31,7 @@ export const IDS = {
   callPage: 'call-page',
   unsupportedEnvironmentIcon: 'unsupported-environment-icon',
   unsupportedEnvironmentLink: 'unsupported-environment-link',
-  lobbyScreenTitle: 'lobbyScreenTitle'
+  lobbyScreenTitle: 'lobbyScreenTitle',
+  allowUnsupportedBrowserButton: 'allowUnsupportedBrowserButton',
+  configurationScreenDevicesButton: 'call-composite-local-device-settings-options-button'
 };

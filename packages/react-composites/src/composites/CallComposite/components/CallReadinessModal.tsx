@@ -13,6 +13,10 @@ import {
 } from '@internal/react-components';
 /* @conditional-compile-remove(call-readiness) */
 import { drawerContainerStyles } from '../styles/CallComposite.styles';
+/* @conditional-compile-remove(unsupported-browser) */
+import { EnvironmentInfo } from '@azure/communication-calling';
+/* @conditional-compile-remove(call-readiness) */ /* @conditional-compile-remove(unsupported-browser) */
+import { _isSafari } from '../utils';
 /* @conditional-compile-remove(call-readiness) */
 const DRAWER_HIGH_Z_BAND = 99; // setting z index to  99 so that it sit above all components
 
@@ -23,12 +27,12 @@ const DRAWER_HIGH_Z_BAND = 99; // setting z index to  99 so that it sit above al
  */
 export const CallReadinessModal = (props: {
   mobileView: boolean;
-  audioState: PermissionState;
-  videoState: PermissionState;
   permissionsState: {
     camera: PermissionState;
     microphone: PermissionState;
   };
+  /* @conditional-compile-remove(unsupported-browser) */
+  environmentInfo?: EnvironmentInfo;
   isPermissionsModalDismissed: boolean;
   setIsPermissionsModalDismissed: (boolean) => void;
   onPermissionsTroubleshootingClick?: (permissionsState: {
@@ -38,9 +42,8 @@ export const CallReadinessModal = (props: {
 }): JSX.Element => {
   const {
     mobileView,
-    audioState,
-    videoState,
     permissionsState,
+    /* @conditional-compile-remove(unsupported-browser) */ environmentInfo,
     isPermissionsModalDismissed,
     setIsPermissionsModalDismissed,
     onPermissionsTroubleshootingClick
@@ -50,8 +53,14 @@ export const CallReadinessModal = (props: {
     // only way to dismiss this drawer is clicking on allow access which will leads to device permission prompt
   };
 
+  // On Safari browser with 2 options: don't allow/never for this website again, when don't allow is clicked, permissionAPI returns prompt and PermissionGranted from calling sdk returns false (the right value)
+  const videoState: PermissionState = permissionsState.camera;
+  const audioState: PermissionState = permissionsState.microphone;
+
   const showModal =
     videoState === 'denied' || videoState === 'prompt' || audioState === 'denied' || audioState === 'prompt';
+  /* @conditional-compile-remove(unsupported-browser) */
+  const isSafari = _isSafari(environmentInfo);
 
   const modal: undefined | (() => JSX.Element) = !showModal
     ? undefined
@@ -61,6 +70,8 @@ export const CallReadinessModal = (props: {
           return (
             <CameraAndMicrophoneDomainPermissions
               appName={'app'}
+              /* @conditional-compile-remove(unsupported-browser) */
+              browserHint={isSafari ? 'safari' : 'unset'}
               onTroubleshootingClick={
                 onPermissionsTroubleshootingClick
                   ? () => {
@@ -77,6 +88,8 @@ export const CallReadinessModal = (props: {
           return (
             <CameraDomainPermissions
               appName={'app'}
+              /* @conditional-compile-remove(unsupported-browser) */
+              browserHint={isSafari ? 'safari' : 'unset'}
               onTroubleshootingClick={
                 onPermissionsTroubleshootingClick
                   ? () => {
@@ -96,6 +109,8 @@ export const CallReadinessModal = (props: {
           return (
             <MicrophoneDomainPermissions
               appName={'app'}
+              /* @conditional-compile-remove(unsupported-browser) */
+              browserHint={isSafari ? 'safari' : 'unset'}
               onTroubleshootingClick={
                 onPermissionsTroubleshootingClick
                   ? () => {
@@ -112,6 +127,8 @@ export const CallReadinessModal = (props: {
           return (
             <CameraAndMicrophoneDomainPermissions
               appName={'app'}
+              /* @conditional-compile-remove(unsupported-browser) */
+              browserHint={isSafari ? 'safari' : 'unset'}
               onTroubleshootingClick={
                 onPermissionsTroubleshootingClick
                   ? () => {
@@ -128,6 +145,8 @@ export const CallReadinessModal = (props: {
           return (
             <CameraDomainPermissions
               appName={'app'}
+              /* @conditional-compile-remove(unsupported-browser) */
+              browserHint={isSafari ? 'safari' : 'unset'}
               onTroubleshootingClick={
                 onPermissionsTroubleshootingClick
                   ? () => {
@@ -147,6 +166,8 @@ export const CallReadinessModal = (props: {
           return (
             <MicrophoneDomainPermissions
               appName={'app'}
+              /* @conditional-compile-remove(unsupported-browser) */
+              browserHint={isSafari ? 'safari' : 'unset'}
               onTroubleshootingClick={
                 onPermissionsTroubleshootingClick
                   ? () => {
@@ -196,13 +217,13 @@ export const CallReadinessModal = (props: {
  */
 export const CallReadinessModalFallBack = (props: {
   mobileView: boolean;
-  cameraPermissionGranted: boolean | undefined;
-  microphonePermissionGranted: boolean | undefined;
   checkPermissionModalShowing: boolean;
   permissionsState: {
     camera: PermissionState;
     microphone: PermissionState;
   };
+  /* @conditional-compile-remove(unsupported-browser) */
+  environmentInfo?: EnvironmentInfo;
   isPermissionsModalDismissed: boolean;
   setIsPermissionsModalDismissed: (boolean) => void;
   onPermissionsTroubleshootingClick?: (permissionsState: {
@@ -212,10 +233,9 @@ export const CallReadinessModalFallBack = (props: {
 }): JSX.Element => {
   const {
     mobileView,
-    cameraPermissionGranted,
-    microphonePermissionGranted,
     checkPermissionModalShowing,
     permissionsState,
+    /* @conditional-compile-remove(unsupported-browser) */ environmentInfo,
     isPermissionsModalDismissed,
     setIsPermissionsModalDismissed,
     onPermissionsTroubleshootingClick
@@ -225,17 +245,25 @@ export const CallReadinessModalFallBack = (props: {
     // only way to dismiss this drawer is clicking on allow access which will leads to device permission prompt
   };
 
-  // When permissions are not set, value is undefined, do nothing here
-  // When permissions are set to denied, value is false, show helper screen
-  const showModal = cameraPermissionGranted === false || microphonePermissionGranted === false;
+  const videoState = permissionsState.camera;
+  const audioState = permissionsState.microphone;
+
+  // When permissions are not set, do nothing here
+  // When permissions are set to denied, show helper screen
+  const showModal = videoState === 'denied' || audioState === 'denied';
+
+  /* @conditional-compile-remove(unsupported-browser) */
+  const isSafari = _isSafari(environmentInfo);
 
   const modal: undefined | (() => JSX.Element) = !showModal
     ? undefined
     : () => {
-        if (cameraPermissionGranted === false && microphonePermissionGranted === false) {
+        if (videoState === 'denied' && audioState === 'denied') {
           return (
             <CameraAndMicrophoneDomainPermissions
               appName={'app'}
+              /* @conditional-compile-remove(unsupported-browser) */
+              browserHint={isSafari ? 'safari' : 'unset'}
               onTroubleshootingClick={
                 onPermissionsTroubleshootingClick
                   ? () => {
@@ -246,10 +274,12 @@ export const CallReadinessModalFallBack = (props: {
               type="denied"
             />
           );
-        } else if (cameraPermissionGranted === false && microphonePermissionGranted) {
+        } else if (videoState === 'denied' && audioState === 'granted') {
           return (
             <CameraDomainPermissions
               appName={'app'}
+              /* @conditional-compile-remove(unsupported-browser) */
+              browserHint={isSafari ? 'safari' : 'unset'}
               onTroubleshootingClick={
                 onPermissionsTroubleshootingClick
                   ? () => {
@@ -267,6 +297,8 @@ export const CallReadinessModalFallBack = (props: {
           return (
             <MicrophoneDomainPermissions
               appName={'app'}
+              /* @conditional-compile-remove(unsupported-browser) */
+              browserHint={isSafari ? 'safari' : 'unset'}
               onTroubleshootingClick={
                 onPermissionsTroubleshootingClick
                   ? () => {
@@ -283,12 +315,12 @@ export const CallReadinessModalFallBack = (props: {
   if (mobileView) {
     return (
       <>
-        {(checkPermissionModalShowing ||
-          microphonePermissionGranted === undefined ||
-          cameraPermissionGranted === undefined) && (
+        {(checkPermissionModalShowing || audioState === 'prompt' || videoState === 'prompt') && (
           <_DrawerSurface onLightDismiss={onLightDismissTriggered} styles={drawerContainerStyles(DRAWER_HIGH_Z_BAND)}>
             <CameraAndMicrophoneDomainPermissions
               appName={'app'}
+              /* @conditional-compile-remove(unsupported-browser) */
+              browserHint={isSafari ? 'safari' : 'unset'}
               onTroubleshootingClick={
                 onPermissionsTroubleshootingClick
                   ? () => {
@@ -310,9 +342,7 @@ export const CallReadinessModalFallBack = (props: {
   } else {
     return (
       <>
-        {(checkPermissionModalShowing ||
-          microphonePermissionGranted === undefined ||
-          cameraPermissionGranted === undefined) && (
+        {(checkPermissionModalShowing || audioState === 'prompt' || videoState === 'prompt') && (
           <Modal
             isOpen={isPermissionsModalDismissed}
             isBlocking={false}
@@ -323,6 +353,8 @@ export const CallReadinessModalFallBack = (props: {
           >
             <CameraAndMicrophoneDomainPermissions
               appName={'app'}
+              /* @conditional-compile-remove(unsupported-browser) */
+              browserHint={isSafari ? 'safari' : 'unset'}
               onTroubleshootingClick={
                 onPermissionsTroubleshootingClick
                   ? () => {
