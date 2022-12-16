@@ -3109,7 +3109,7 @@ export const UnsupportedBrowserVersion: (props: UnsupportedBrowserVersionProps) 
 
 // @beta
 export interface UnsupportedBrowserVersionProps {
-    onContinueClick?: () => void;
+    onContinueAnywayClick?: () => void;
     onTroubleshootingClick?: () => void;
     strings?: UnsupportedBrowserVersionStrings;
 }

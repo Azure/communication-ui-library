@@ -50,12 +50,12 @@ export interface UnsupportedEnvironmentProps {
    * CallBack for the continue anyay button. Use this as a mechanism to allow users into
    * a call with a unsupported browser version.
    */
-  onContinueClick?: () => void;
+  onContinueAnywayClick?: () => void;
 }
 
 /* @conditional-compile-remove(unsupported-browser) */
 const UnsupportedEnvironmentContainer = (props: UnsupportedEnvironmentProps): JSX.Element => {
-  const { onTroubleshootingClick, strings, onContinueClick } = props;
+  const { onTroubleshootingClick, strings, onContinueAnywayClick } = props;
   const theme = useTheme();
   return (
     <Stack styles={containerStyles} tokens={{ childrenGap: '2rem' }}>
@@ -69,11 +69,11 @@ const UnsupportedEnvironmentContainer = (props: UnsupportedEnvironmentProps): JS
           {strings?.moreHelpLinkText}
         </Link>
       )}
-      {onContinueClick && (
+      {onContinueAnywayClick && (
         <DefaultButton
           data-ui-id="allowUnsupportedBrowserButton"
           styles={continueAnywayButtonStyles(theme)}
-          onClick={onContinueClick}
+          onClick={onContinueAnywayClick}
         >
           {strings?.continueAnywayButtonText}
         </DefaultButton>
