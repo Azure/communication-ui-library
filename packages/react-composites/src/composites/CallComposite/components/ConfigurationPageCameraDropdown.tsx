@@ -20,6 +20,7 @@ import { CallCompositeIcon } from '../../common/icons';
 export interface ConfigurationPageCameraDropdownProps {
   cameraGrantedDropdown: JSX.Element;
   cameraPermissionGranted: boolean;
+  /* @conditional-compile-remove(call-readiness) */
   dropdownProps: Partial<_DevicePermissionDropdownProps>;
   callReadinessOptedIn?: boolean;
   onClickEnableDevicePermission?: () => void;

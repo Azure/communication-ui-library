@@ -20,6 +20,7 @@ import { CallCompositeIcon } from '../../common/icons';
 export interface ConfigurationPageMicDropdownProps {
   micGrantedDropdown: JSX.Element;
   micPermissionGranted: boolean;
+  /* @conditional-compile-remove(call-readiness) */
   dropdownProps: Partial<_DevicePermissionDropdownProps>;
   callReadinessOptedIn?: boolean;
   onClickEnableDevicePermission?: () => void;
