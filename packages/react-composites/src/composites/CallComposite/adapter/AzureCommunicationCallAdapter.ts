@@ -953,6 +953,7 @@ const useAzureCommunicationCallAdapterGeneric = <
 
         let newAdapter: Adapter;
         if (adapterKind === 'AzureCommunication') {
+          // This is just the type check to ensure that displayName is defined.
           if (!('displayName' in args) || !args?.displayName) {
             throw new Error(
               'Unreachable code: displayName is not defined, this should have been checked and return earlier.'
