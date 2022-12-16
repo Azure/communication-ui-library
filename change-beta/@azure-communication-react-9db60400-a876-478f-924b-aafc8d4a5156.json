@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "Added Czech localization",
+  "packageName": "@azure/communication-react",
+  "email": "petrsvihlik@microsoft.com",
+  "dependentChangeType": "patch"
+}
