@@ -31,7 +31,7 @@ export const UnsupportedBrowserPage = (props: UnsupportedBrowserPageProps): JSX.
   /* @conditional-compile-remove(unsupported-browser) */
   const adapter = useAdapter();
   /* @conditional-compile-remove(unsupported-browser) */
-  const onContinueClick = () => {
+  const onContinueClick = (): void => {
     adapter.allowUnsupportedBrowserVersion();
   };
 
