@@ -117,7 +117,6 @@ test.describe('unsupportedBrowser page tests', async () => {
       version: false
     };
     state.environmentInfo = setMockEnvironmentInfo(envConfig);
-    state.features = { unsupportedEnvironment: { unsupportedBrowserVersionAllowed: true } };
 
     await page.goto(buildUrlWithMockAdapter(serverUrl, state));
 
@@ -134,7 +133,6 @@ test.describe('unsupportedBrowser page tests', async () => {
       version: false
     };
     state.environmentInfo = setMockEnvironmentInfo(envConfig);
-    state.features = { unsupportedEnvironment: { unsupportedBrowserVersionAllowed: true } };
 
     await page.goto(buildUrlWithMockAdapter(serverUrl, state));
 
@@ -197,7 +195,6 @@ test.describe('unsupportedBrowser page tests', async () => {
 const defaultMockUnsupportedBrowserPageState = (): MockCallAdapterState => {
   const state = defaultMockCallAdapterState();
   state.page = 'unsupportedEnvironment';
-  state.features = { unsupportedEnvironment: true };
   return state;
 };
 
