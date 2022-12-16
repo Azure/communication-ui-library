@@ -84,7 +84,11 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
   /* @conditional-compile-remove(call-readiness) */
   const [audioState, setAudioState] = useState<PermissionState | 'unsupported' | undefined>(undefined);
   /* @conditional-compile-remove(call-readiness) */
-  getDevicePermissionState(setVideoState, setAudioState);
+  try {
+    getDevicePermissionState(setVideoState, setAudioState);
+  } catch (e) {
+    console.warn('Browser does not support Permissions API.', e);
+  }
 
   let errorBarProps = usePropsFor(ErrorBar);
   const adapter = useAdapter();
