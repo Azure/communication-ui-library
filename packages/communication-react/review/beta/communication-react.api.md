@@ -478,7 +478,7 @@ export type CallCompositeIcons = {
 export type CallCompositeOptions = {
     errorBar?: boolean;
     callControls?: boolean | CallControlOptions;
-    devicePermissions?: DevicePermissionRestrictions;
+    deviceChecks?: DeviceCheckOptions;
     callReadinessOptedIn?: boolean;
     onPermissionsTroubleshootingClick?: (permissionsState: {
         camera: PermissionState;
@@ -965,7 +965,7 @@ export type CallWithChatCompositeIcons = {
 export type CallWithChatCompositeOptions = {
     callControls?: boolean | CallWithChatControlOptions;
     fileSharing?: FileSharingOptions;
-    devicePermissions?: DevicePermissionRestrictions;
+    deviceChecks?: DeviceCheckOptions;
     onPermissionsTroubleshootingClick?: (permissionsState: {
         camera: PermissionState;
         microphone: PermissionState;
@@ -1926,6 +1926,12 @@ export const DEFAULT_COMPOSITE_ICONS: {
     VideoTileScaleFill: JSX.Element;
 };
 
+// @beta
+export interface DeviceCheckOptions {
+    camera: 'required' | 'optional' | 'doNotPrompt';
+    microphone: 'required' | 'optional' | 'doNotPrompt';
+}
+
 // @public
 export type DeviceManagerState = {
     isSpeakerSelectionAvailable: boolean;
@@ -1958,12 +1964,6 @@ export interface _DevicePermissionDropdownStrings {
     actionButtonContent?: string;
     label?: string;
     placeHolderText: string;
-}
-
-// @beta
-export interface DevicePermissionRestrictions {
-    camera: 'required' | 'optional' | 'doNotPrompt';
-    microphone: 'required' | 'optional' | 'doNotPrompt';
 }
 
 // @public

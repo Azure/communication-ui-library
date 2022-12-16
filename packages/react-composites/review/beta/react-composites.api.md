@@ -327,7 +327,7 @@ export type CallCompositeIcons = {
 export type CallCompositeOptions = {
     errorBar?: boolean;
     callControls?: boolean | CallControlOptions;
-    devicePermissions?: DevicePermissionRestrictions;
+    deviceChecks?: DeviceCheckOptions;
     callReadinessOptedIn?: boolean;
     onPermissionsTroubleshootingClick?: (permissionsState: {
         camera: PermissionState;
@@ -721,7 +721,7 @@ export type CallWithChatCompositeIcons = {
 export type CallWithChatCompositeOptions = {
     callControls?: boolean | CallWithChatControlOptions;
     fileSharing?: FileSharingOptions;
-    devicePermissions?: DevicePermissionRestrictions;
+    deviceChecks?: DeviceCheckOptions;
     onPermissionsTroubleshootingClick?: (permissionsState: {
         camera: PermissionState;
         microphone: PermissionState;
@@ -1136,7 +1136,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
 };
 
 // @beta
-export interface DevicePermissionRestrictions {
+export interface DeviceCheckOptions {
     camera: 'required' | 'optional' | 'doNotPrompt';
     microphone: 'required' | 'optional' | 'doNotPrompt';
 }
