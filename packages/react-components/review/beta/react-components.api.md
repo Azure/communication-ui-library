@@ -295,6 +295,9 @@ export interface _ComplianceBannerStrings {
 }
 
 // @public
+export const COMPONENT_LOCALE_CS_CZ: ComponentLocale;
+
+// @public
 export const COMPONENT_LOCALE_DE_DE: ComponentLocale;
 
 // @public
