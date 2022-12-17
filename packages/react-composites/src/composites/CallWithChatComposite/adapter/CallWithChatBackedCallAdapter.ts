@@ -173,6 +173,8 @@ function callAdapterStateFromCallWithChatAdapterState(
     isTeamsCall: callWithChatAdapterState.isTeamsCall,
     latestErrors: callWithChatAdapterState.latestCallErrors,
     /* @conditional-compile-remove(PSTN-calls) */
-    alternateCallerId: callWithChatAdapterState.alternateCallerId
+    alternateCallerId: callWithChatAdapterState.alternateCallerId,
+    /* @conditional-compile-remove(unsupported-browser) */
+    environmentInfo: callWithChatAdapterState.environmentInfo
   };
 }

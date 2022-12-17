@@ -20,8 +20,6 @@ export type { AzureCommunicationCallAdapterOptions } from './AzureCommunicationC
 /* @conditional-compile-remove(teams-adhoc-call) */
 export type { CallParticipantsLocator } from './AzureCommunicationCallAdapter';
 
-export type { CallAdapterOptionalFeatures } from './CallAdapter';
-
 export type {
   CallAdapter,
   CommonCallAdapter,
@@ -49,6 +47,3 @@ export type {
 
 /* @conditional-compile-remove(teams-identity-support) */
 export type { TeamsCallAdapter } from './CallAdapter';
-
-/* @conditional-compile-remove(unsupported-browser) */
-export type { UnsupportedEnvironmentFeatures } from './CallAdapter';
