@@ -229,6 +229,7 @@ export default {
     dominantSpeakers: hiddenControl,
     strings: hiddenControl,
     maxRemoteVideoStreams: hiddenControl,
+    pinnedParticipants: hiddenControl,
     onPinParticipant: hiddenControl,
     onUnpinParticipant: hiddenControl
   },
