@@ -46,7 +46,13 @@ import {
 import { Important20Filled } from '@fluentui/react-icons';
 
 /* @conditional-compile-remove(pinned-participants) */
-import { Pin16Filled, ScaleFit20Regular, ScaleFill20Regular } from '@fluentui/react-icons';
+import {
+  Pin16Filled,
+  Pin20Regular,
+  PinOff20Regular,
+  ScaleFit20Regular,
+  ScaleFill20Regular
+} from '@fluentui/react-icons';
 
 /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
 import { Backspace20Regular } from '@fluentui/react-icons';
@@ -272,5 +278,9 @@ export const DEFAULT_COMPONENT_ICONS = {
   /* @conditional-compile-remove(pinned-participants) */
   VideoTileScaleFit: <ScaleFit20Regular />,
   /* @conditional-compile-remove(pinned-participants) */
-  VideoTileScaleFill: <ScaleFill20Regular />
+  VideoTileScaleFill: <ScaleFill20Regular />,
+  /* @conditional-compile-remove(pinned-participants) */
+  PinParticipant: <Pin20Regular />,
+  /* @conditional-compile-remove(pinned-participants) */
+  UnpinParticipant: <PinOff20Regular />
 };

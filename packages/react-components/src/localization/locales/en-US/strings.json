@@ -172,7 +172,9 @@
     "localVideoSelectedDescription": "{cameraName} selected",
     "displayNamePlaceholder": "Unnamed participant",
     "fitRemoteParticipantToFrame": "Fit to frame",
-    "fillRemoteParticipantFrame": "Fill frame"
+    "fillRemoteParticipantFrame": "Fill frame",
+    "pinParticipantForMe": "Pin for me",
+    "unpinParticipantForMe": "Unpin for me"
   },
   "dialpad": {
     "placeholderText": "Enter phone number",

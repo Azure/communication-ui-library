@@ -71,7 +71,7 @@ export const UnsupportedBrowserPage = (props: UnsupportedBrowserPageProps): JSX.
       <UnsupportedBrowserVersion
         onTroubleshootingClick={onTroubleshootingClick}
         strings={unsupportedBrowserVersionStrings}
-        onContinueClick={onContinueClick}
+        onContinueAnywayClick={onContinueClick}
       />
     );
   } else {
