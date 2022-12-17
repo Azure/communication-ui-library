@@ -401,10 +401,15 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
       onEnvironmentInfoTroubleshootingClick: props.onEnvironmentInfoTroubleshootingClick
     }),
     [
+      /* @conditional-compile-remove(call-readiness) */
       props.callReadinessOptedIn,
+      /* @conditional-compile-remove(call-readiness) */
       props.devicePermissions,
+      /* @conditional-compile-remove(unsupported-browser) */
       props.onEnvironmentInfoTroubleshootingClick,
+      /* @conditional-compile-remove(call-readiness) */
       props.onNetworkingTroubleShootingClick,
+      /* @conditional-compile-remove(call-readiness) */
       props.onPermissionsTroubleshootingClick
     ]
   );
