@@ -278,7 +278,9 @@ export type StatefulCallClientArgs = {
    * UserId from SDK. This is provided for developer convenience to easily access the userId from the
    * state. It is not used by StatefulCallClient.
    */
-  userId: CommunicationUserIdentifier | MicrosoftTeamsUserIdentifier;
+  userId:
+    | CommunicationUserIdentifier
+    | /* @conditional-compile-remove(teams-identity-support) */ MicrosoftTeamsUserIdentifier;
   /* @conditional-compile-remove(PSTN-calls) */
   /**
    * A phone number in E.164 format that will be used to represent the callers identity. This number is required
