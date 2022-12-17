@@ -47,7 +47,9 @@ export class MockCallAdapter implements CallAdapter {
   offStateChange(handler: (state: CallAdapterState) => void): void {
     this.emitter.removeListener('stateChanged', handler);
   }
-
+  allowUnsupportedBrowserVersion(): void {
+    throw Error('allowWithUnsupportedBrowserVersion not implemented');
+  }
   getState(): CallAdapterState {
     return this.state;
   }

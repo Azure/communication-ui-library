@@ -111,7 +111,7 @@ const AzureCommunicationCallScreen = (props: AzureCommunicationCallScreenProps):
   const callAdapterOptions: AzureCommunicationCallAdapterOptions = useMemo(
     () => ({
       roleHint,
-      features: { unsupportedEnvironment: true }
+      features: { unsupportedEnvironment: { unsupportedBrowserVersionAllowed: true } }
     }),
     [roleHint]
   );
