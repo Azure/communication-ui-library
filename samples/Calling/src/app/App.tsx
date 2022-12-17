@@ -56,6 +56,7 @@ const App = (): JSX.Element => {
   /* @conditional-compile-remove(rooms) */
   const [role, setRole] = useState<Role>();
 
+  /* @conditional-compile-remove(teams-identity-support) */
   const [isTeamsCall, setIsTeamsCall] = useState<boolean>(false);
 
   /* @conditional-compile-remove(PSTN-calls) */
