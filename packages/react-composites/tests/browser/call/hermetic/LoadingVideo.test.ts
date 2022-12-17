@@ -15,7 +15,7 @@ import {
 import type { MockRemoteParticipantState } from '../../../common';
 
 test.describe('Loading Video Spinner tests', async () => {
-  test.only('Video Gallery shows loading spinners in tiles', async ({ page, serverUrl }) => {
+  test('Video Gallery shows loading spinners in tiles', async ({ page, serverUrl }) => {
     // Create more than 4 users to ensure that some are placed in the horizontal gallery
     const numParticipants = 10;
     const participants: MockRemoteParticipantState[] = Array.from({ length: numParticipants }).map((_, i) => {
