@@ -1126,6 +1126,8 @@ export const DEFAULT_COMPOSITE_ICONS: {
     VideoTileMoreOptions: JSX.Element;
     VideoTileScaleFit: JSX.Element;
     VideoTileScaleFill: JSX.Element;
+    PinParticipant: JSX.Element;
+    UnpinParticipant: JSX.Element;
 };
 
 // @beta
