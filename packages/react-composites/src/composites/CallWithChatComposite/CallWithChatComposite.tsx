@@ -36,6 +36,7 @@ import { modalLayerHostStyle } from '../common/styles/ModalLocalAndRemotePIP.sty
 import { SendDtmfDialpad } from '../common/SendDtmfDialpad';
 /* @conditional-compile-remove(PSTN-calls) */
 import { useCallWithChatCompositeStrings } from './hooks/useCallWithChatCompositeStrings';
+import { CallCompositeOptions } from '../CallComposite/CallComposite';
 /* @conditional-compile-remove(call-readiness) */
 import { DevicePermissionRestrictions } from '../CallComposite/CallComposite';
 import { drawerContainerStyles } from '../CallComposite/styles/CallComposite.styles';
@@ -126,6 +127,20 @@ export type CallWithChatCompositeOptions = {
    * if this is not supplied, the composite will not show a 'network troubleshooting' link.
    */
   onNetworkingTroubleShootingClick?: () => void;
+  /* @conditional-compile-remove(unsupported-browser) */
+  /**
+   * Callback you may provide to supply users with a provided page to showcase supported browsers by ACS.
+   *
+   * @example
+   * ```ts
+   * onBrowserTroubleShootingClick?: () =>
+   *  window.open('https://contoso.com/browser-troubleshooting', '_blank');
+   * ```
+   *
+   * @remarks
+   * if this is not supplied, the composite will not show a unsupported browser page.
+   */
+  onEnvironmentInfoTroubleshootingClick?: () => void;
   /* @conditional-compile-remove(call-readiness) */
   /**
    * Opt in call readiness feature for your call
@@ -214,6 +229,15 @@ type CallWithChatScreenProps = {
   devicePermissions?: DevicePermissionRestrictions;
   /* @conditional-compile-remove(call-readiness) */
   callReadinessOptedIn?: boolean;
+  /* @conditional-compile-remove(call-readiness) */
+  onPermissionsTroubleshootingClick?: (permissionsState: {
+    camera: PermissionState;
+    microphone: PermissionState;
+  }) => void;
+  /* @conditional-compile-remove(call-readiness) */
+  onNetworkingTroubleShootingClick?: () => void;
+  /* @conditional-compile-remove(unsupported-browser) */
+  onEnvironmentInfoTroubleshootingClick?: () => void;
 };
 
 const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
@@ -362,6 +386,29 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
   /* @conditional-compile-remove(PSTN-calls) */
   const alternateCallerId = callAdapter.getState().alternateCallerId;
 
+  const callCompositeOptions: CallCompositeOptions = useMemo(
+    () => ({
+      callControls: false,
+      /* @conditional-compile-remove(call-readiness) */
+      devicePermissions: props.devicePermissions,
+      /* @conditional-compile-remove(call-readiness) */
+      callReadinessOptedIn: props.callReadinessOptedIn,
+      /* @conditional-compile-remove(call-readiness) */
+      onNetworkingTroubleShootingClick: props.onNetworkingTroubleShootingClick,
+      /* @conditional-compile-remove(call-readiness) */
+      onPermissionsTroubleshootingClick: props.onPermissionsTroubleshootingClick,
+      /* @conditional-compile-remove(unsupported-browser) */
+      onEnvironmentInfoTroubleshootingClick: props.onEnvironmentInfoTroubleshootingClick
+    }),
+    [
+      props.callReadinessOptedIn,
+      props.devicePermissions,
+      props.onEnvironmentInfoTroubleshootingClick,
+      props.onNetworkingTroubleShootingClick,
+      props.onPermissionsTroubleshootingClick
+    ]
+  );
+
   return (
     <div ref={containerRef} className={mergeStyles(containerDivStyles)}>
       <Stack verticalFill grow styles={compositeOuterContainerStyles} id={compositeParentDivId}>
@@ -375,13 +422,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
             <CallComposite
               {...props}
               formFactor={formFactor}
-              options={{
-                callControls: false,
-                /* @conditional-compile-remove(call-readiness) */
-                devicePermissions: props.devicePermissions,
-                /* @conditional-compile-remove(call-readiness) */
-                callReadinessOptedIn: props.callReadinessOptedIn
-              }}
+              options={callCompositeOptions}
               adapter={callAdapter}
               fluentTheme={fluentTheme}
             />
