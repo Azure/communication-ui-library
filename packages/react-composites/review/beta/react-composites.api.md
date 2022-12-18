@@ -100,7 +100,6 @@ export type AzureCommunicationCallAdapterArgs = {
 // @beta
 export type AzureCommunicationCallAdapterOptions = {
     roleHint?: Role;
-    features?: CallAdapterOptionalFeatures;
 };
 
 // @public
@@ -201,7 +200,6 @@ export type CallAdapterClientState = {
     latestErrors: AdapterErrors;
     alternateCallerId?: string;
     environmentInfo?: EnvironmentInfo;
-    features?: CallAdapterOptionalFeatures;
     roleHint?: Role;
 };
 
@@ -218,11 +216,6 @@ export interface CallAdapterDeviceManagement {
 
 // @public
 export type CallAdapterLocator = TeamsMeetingLinkLocator | GroupCallLocator | /* @conditional-compile-remove(rooms) */ RoomCallLocator | /* @conditional-compile-remove(teams-adhoc-call) */ /* @conditional-compile-remove(PSTN-calls) */ CallParticipantsLocator;
-
-// @beta
-export type CallAdapterOptionalFeatures = {
-    unsupportedEnvironment?: boolean | UnsupportedEnvironmentFeatures;
-};
 
 // @public
 export type CallAdapterState = CallAdapterUiState & CallAdapterClientState;
@@ -1133,6 +1126,8 @@ export const DEFAULT_COMPOSITE_ICONS: {
     VideoTileMoreOptions: JSX.Element;
     VideoTileScaleFit: JSX.Element;
     VideoTileScaleFill: JSX.Element;
+    PinParticipant: JSX.Element;
+    UnpinParticipant: JSX.Element;
 };
 
 // @beta
@@ -1285,11 +1280,6 @@ export interface TeamsCallAdapter extends CommonCallAdapter {
 export type TopicChangedListener = (event: {
     topic: string;
 }) => void;
-
-// @beta
-export type UnsupportedEnvironmentFeatures = {
-    unsupportedBrowserVersionAllowed?: boolean;
-};
 
 // @public
 export const useAzureCommunicationCallAdapter: (args: Partial<AzureCommunicationCallAdapterArgs>, afterCreate?: ((adapter: CallAdapter) => Promise<CallAdapter>) | undefined, beforeDispose?: ((adapter: CallAdapter) => Promise<void>) | undefined) => CallAdapter | undefined;

@@ -154,7 +154,6 @@ export type AzureCommunicationCallAdapterArgs = {
 // @beta
 export type AzureCommunicationCallAdapterOptions = {
     roleHint?: Role;
-    features?: CallAdapterOptionalFeatures;
 };
 
 // @public
@@ -303,7 +302,6 @@ export type CallAdapterClientState = {
     latestErrors: AdapterErrors;
     alternateCallerId?: string;
     environmentInfo?: EnvironmentInfo;
-    features?: CallAdapterOptionalFeatures;
     roleHint?: Role;
 };
 
@@ -320,11 +318,6 @@ export interface CallAdapterDeviceManagement {
 
 // @public
 export type CallAdapterLocator = TeamsMeetingLinkLocator | GroupCallLocator | /* @conditional-compile-remove(rooms) */ RoomCallLocator | /* @conditional-compile-remove(teams-adhoc-call) */ /* @conditional-compile-remove(PSTN-calls) */ CallParticipantsLocator;
-
-// @beta
-export type CallAdapterOptionalFeatures = {
-    unsupportedEnvironment?: boolean | UnsupportedEnvironmentFeatures;
-};
 
 // @public
 export type CallAdapterState = CallAdapterUiState & CallAdapterClientState;
@@ -1832,6 +1825,8 @@ export const DEFAULT_COMPONENT_ICONS: {
     VideoTileMoreOptions: JSX.Element;
     VideoTileScaleFit: JSX.Element;
     VideoTileScaleFill: JSX.Element;
+    PinParticipant: JSX.Element;
+    UnpinParticipant: JSX.Element;
 };
 
 // @public
@@ -1927,6 +1922,8 @@ export const DEFAULT_COMPOSITE_ICONS: {
     VideoTileMoreOptions: JSX.Element;
     VideoTileScaleFit: JSX.Element;
     VideoTileScaleFill: JSX.Element;
+    PinParticipant: JSX.Element;
+    UnpinParticipant: JSX.Element;
 };
 
 // @public
@@ -3112,7 +3109,7 @@ export const UnsupportedBrowserVersion: (props: UnsupportedBrowserVersionProps) 
 
 // @beta
 export interface UnsupportedBrowserVersionProps {
-    onContinueClick?: () => void;
+    onContinueAnywayClick?: () => void;
     onTroubleshootingClick?: () => void;
     strings?: UnsupportedBrowserVersionStrings;
 }
@@ -3124,11 +3121,6 @@ export interface UnsupportedBrowserVersionStrings {
     primaryText: string;
     secondaryText: string;
 }
-
-// @beta
-export type UnsupportedEnvironmentFeatures = {
-    unsupportedBrowserVersionAllowed?: boolean;
-};
 
 // @beta
 export const UnsupportedOperatingSystem: (props: UnsupportedOperatingSystemProps) => JSX.Element;
@@ -3226,9 +3218,12 @@ export interface VideoGalleryProps {
     onCreateRemoteStreamView?: (userId: string, options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
     onDisposeLocalStreamView?: () => void;
     onDisposeRemoteStreamView?: (userId: string) => Promise<void>;
+    onPinParticipant?: (userId: string) => void;
     onRenderAvatar?: OnRenderAvatarCallback;
     onRenderLocalVideoTile?: (localParticipant: VideoGalleryLocalParticipant) => JSX.Element;
     onRenderRemoteVideoTile?: (remoteParticipant: VideoGalleryRemoteParticipant) => JSX.Element;
+    onUnpinParticipant?: (userId: string) => void;
+    pinnedParticipants?: string[];
     remoteParticipants?: VideoGalleryRemoteParticipant[];
     remoteVideoViewOptions?: VideoStreamOptions;
     showCameraSwitcherInLocalPreview?: boolean;
@@ -3273,8 +3268,10 @@ export interface VideoGalleryStrings {
     localVideoLabel: string;
     localVideoMovementLabel: string;
     localVideoSelectedDescription: string;
+    pinParticipantForMe: string;
     screenIsBeingSharedMessage: string;
     screenShareLoadingMessage: string;
+    unpinParticipantForMe: string;
 }
 
 // @public

@@ -3,44 +3,19 @@
 
 import { Stack } from '@fluentui/react';
 import React from 'react';
-import { VideoGalleryRemoteParticipant } from '../../types';
 import { GridLayout } from '../GridLayout';
 import { isNarrowWidth } from '../utils/responsive';
-import { VideoGalleryStyles } from '../VideoGallery';
+import { LayoutProps } from './Layout';
 import { rootLayoutStyle } from './styles/DefaultLayout.styles';
+import { useFloatingLocalVideoLayout } from './utils/videoGalleryLayoutUtils';
 import { VideoGalleryResponsiveHorizontalGallery } from './VideoGalleryResponsiveHorizontalGallery';
-import { useFloatingLocalVideoLayout } from './videoGalleryUtils';
 
 /**
  * Props for {@link DefaultLayout}.
  *
  * @private
  */
-export interface DefaultLayoutProps {
-  /**
-   * Styles for the {@link DefaultLayout}
-   */
-  styles?: Omit<VideoGalleryStyles, 'root'>;
-  /** List of remote video particpants */
-  remoteParticipants?: VideoGalleryRemoteParticipant[];
-  /** Callback to render each remote participant */
-  onRenderRemoteParticipant: (participant: VideoGalleryRemoteParticipant, isVideoParticipant?: boolean) => JSX.Element;
-  /** List of dominant speaker userIds in the order of their dominance. 0th index is the most dominant. */
-  dominantSpeakers?: string[];
-  /** Component that contains local video content */
-  localVideoComponent?: JSX.Element;
-  /** Component that contains screen share content */
-  screenShareComponent?: JSX.Element;
-  /**
-   * Maximum number of participant remote video streams that is rendered.
-   * @defaultValue 4
-   */
-  maxRemoteVideoStreams?: number;
-  /**
-   * Width of parent element
-   */
-  parentWidth?: number;
-}
+export type DefaultLayoutProps = LayoutProps;
 
 /**
  * DefaultLayout displays remote participants, local video component, and screen sharing component in
