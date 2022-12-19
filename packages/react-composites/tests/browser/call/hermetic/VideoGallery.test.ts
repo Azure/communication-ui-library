@@ -86,7 +86,7 @@ test.describe('VideoGallery tests', async () => {
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
 
     // pin remote video tiles up to the max allowed in the call composite
-    for (const i = 0; i < 4; i++) {
+    for (let i = 0; i < 4; i++) {
       // click the more button of an unpinned remote video tile
       await pageClick(page, dataUiId('video-tile-more-options-button') + '>>nth=-1');
       await pageClick(page, dataUiId('video-tile-pin-participant-button'));
