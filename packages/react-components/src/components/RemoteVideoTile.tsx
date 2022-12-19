@@ -120,8 +120,6 @@ export const _RemoteVideoTile = React.memo(
 
     const showLoadingIndicator = isAvailable && isReceiving === false && participantState !== 'Disconnected';
 
-    // const drawerMenuItemProps = convertContextualMenuItemsToDrawerMenuItemProps(contextualMenuProps);
-
     const [drawerMenuItemProps, setDrawerMenuItemProps] = React.useState<_DrawerMenuItemProps[]>([]);
 
     const renderVideoStreamElement = useMemo(() => {
