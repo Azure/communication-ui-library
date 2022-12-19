@@ -24,15 +24,15 @@ import {
   secondaryTextStyles,
   sparkleIconBackdropStyles,
   textContainerStyles
-} from '../styles/DomainPermissions.styles';
+} from '../styles/SitePermissions.styles';
 import { isValidString } from '../utils';
 import { BaseCustomStyles } from '../../types';
 
 /**
  * @private
- * Props for DomainPermissions component.
+ * Props for SitePermissions component.
  */
-export interface DomainPermissionsContainerProps {
+export interface SitePermissionsContainerProps {
   /**
    * Name of application calling experience is in.
    */
@@ -63,20 +63,20 @@ export interface DomainPermissionsContainerProps {
    */
   onPrimaryButtonClick?: () => void;
   /**
-   * Localization strings for DomainPermissions component.
+   * Localization strings for SitePermissions component.
    */
-  strings?: DomainPermissionsStrings;
+  strings?: SitePermissionsStrings;
   /**
-   * Styles for DomainPermissions component.
+   * Styles for SitePermissions component.
    */
-  styles?: DomainPermissionsStyles;
+  styles?: SitePermissionsStyles;
 }
 
 /**
  * @beta
- * Strings for DomainPermissions component
+ * Strings for SitePermissions component
  */
-export type DomainPermissionsStrings = {
+export type SitePermissionsStrings = {
   /**
    * Main text string.
    */
@@ -100,11 +100,11 @@ export type DomainPermissionsStrings = {
 };
 
 /**
- * Fluent styles for {@link DomainPermissionsContainer}.
+ * Fluent styles for {@link SitePermissionsContainer}.
  *
  * @beta
  */
-export interface DomainPermissionsStyles extends BaseCustomStyles {
+export interface SitePermissionsStyles extends BaseCustomStyles {
   /** Styles for the primary button. */
   primaryButton?: IButtonStyles;
   /** Styles for the help troubleshooting link text. */
@@ -117,7 +117,7 @@ export interface DomainPermissionsStyles extends BaseCustomStyles {
 const tokens = { childrenGap: '2rem' };
 
 /** @private */
-export const DomainPermissionsContainer = (props: DomainPermissionsContainerProps): JSX.Element => {
+export const SitePermissionsContainer = (props: SitePermissionsContainerProps): JSX.Element => {
   const { appName, onTroubleshootingClick, onPrimaryButtonClick, strings } = props;
   const theme = useTheme();
 

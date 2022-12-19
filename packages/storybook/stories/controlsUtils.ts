@@ -219,13 +219,13 @@ export const controlsToAdd = {
     defaultValue: 'floatingBottom',
     name: 'Layout'
   },
-  domainDeviceRequest: {
+  siteDeviceRequest: {
     control: 'select',
     options: ['Camera and Microphone', 'Camera Only', 'Microphone Only'],
     defaultValue: 'Camera and Microphone',
     name: 'Device Request Type'
   },
-  domainDeviceRequestStatus: {
+  siteDeviceRequestStatus: {
     control: 'select',
     options: ['Request', 'Denied', 'Check'],
     defaultValue: 'Request',

@@ -17,7 +17,7 @@ export const scaledIconStyles = (theme: Theme): IStyle => {
 };
 
 /** @private */
-export const domainPermissionIconBackgroundStyle = (theme: Theme): IStackStyles => {
+export const sitePermissionIconBackgroundStyle = (theme: Theme): IStackStyles => {
   return {
     root: {
       borderRadius: '100%',
