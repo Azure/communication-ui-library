@@ -4,27 +4,27 @@
 import React from 'react';
 /* @conditional-compile-remove(call-readiness) */
 import { useLocale } from '../../localization';
-import { DomainPermissionsStrings, DomainPermissionsStyles } from './DomainPermissionsScaffolding';
+import { SitePermissionsStrings, SitePermissionsStyles } from './SitePermissionsScaffolding';
 /* @conditional-compile-remove(call-readiness) */
-import { DomainPermissionsContainer } from './DomainPermissionsScaffolding';
+import { SitePermissionsContainer } from './SitePermissionsScaffolding';
 /* @conditional-compile-remove(call-readiness) */
 import { useShallowMerge } from '../utils/merge';
 
 /**
  * @beta
- * Props for DomainPermissions components.
+ * Props for SitePermissions components.
  */
-export interface CommonDomainPermissionsProps {
+export interface CommonSitePermissionsProps {
   /**
    * Name of application calling experience is in.
    */
   appName: string;
   /**
-   * Type of the Domain Permissions component.
+   * Type of the Site Permissions component.
    */
   type: 'request' | 'denied' | 'check';
   /**
-   * Type of the browser used, the domain permission component will show different guidance text based on the browser type
+   * Type of the browser used, the Site permission component will show different guidance text based on the browser type
    */
   browserHint?: 'safari' | 'unset';
   /**
@@ -38,30 +38,30 @@ export interface CommonDomainPermissionsProps {
    */
   onContinueAnywayClick?: () => void;
   /**
-   * Styles for DomainPermissions component.
+   * Styles for SitePermissions component.
    */
-  styles?: DomainPermissionsStyles;
+  styles?: SitePermissionsStyles;
 }
 
 /**
  * @beta
- * Strings for CameraAndMicrophoneDomainPermissions component.
+ * Strings for CameraAndMicrophoneSitePermissions component.
  */
-export type CameraAndMicrophoneDomainPermissionsStrings = DomainPermissionsStrings;
+export type CameraAndMicrophoneSitePermissionsStrings = SitePermissionsStrings;
 
 /**
  * @beta
- * Props for CameraAndMicrophoneDomainPermissions component.
+ * Props for CameraAndMicrophoneSitePermissions component.
  */
-export interface CameraAndMicrophoneDomainPermissionsProps extends CommonDomainPermissionsProps {
+export interface CameraAndMicrophoneSitePermissionsProps extends CommonSitePermissionsProps {
   /** Icon name for the camera icon */
   cameraIconName?: string;
   /** Icon name for the microphone icon */
   microphoneIconName?: string;
   /** Icon name for the central icon between the camera and microphone icons */
   connectorIconName?: string;
-  /** Strings for use with the {@link CameraAndMicrophoneDomainPermissions} */
-  strings?: CameraAndMicrophoneDomainPermissionsStrings;
+  /** Strings for use with the {@link CameraAndMicrophoneSitePermissions} */
+  strings?: CameraAndMicrophoneSitePermissionsStrings;
 }
 
 /**
@@ -70,7 +70,7 @@ export interface CameraAndMicrophoneDomainPermissionsProps extends CommonDomainP
  * Component to allow Contoso to help their end user with their devices should their permissions be blocked
  * by their browsers settings.
  */
-export const CameraAndMicrophoneDomainPermissions = (props: CameraAndMicrophoneDomainPermissionsProps): JSX.Element => {
+export const CameraAndMicrophoneSitePermissions = (props: CameraAndMicrophoneSitePermissionsProps): JSX.Element => {
   /* @conditional-compile-remove(call-readiness) */
   const locale = useLocale().strings;
 
@@ -78,26 +78,26 @@ export const CameraAndMicrophoneDomainPermissions = (props: CameraAndMicrophoneD
   const strings = useShallowMerge(
     props.type === 'denied'
       ? props.browserHint === 'safari'
-        ? locale.CameraAndMicrophoneDomainPermissionsDeniedSafari
-        : locale.CameraAndMicrophoneDomainPermissionsDenied
+        ? locale.CameraAndMicrophoneSitePermissionsDeniedSafari
+        : locale.CameraAndMicrophoneSitePermissionsDenied
       : props.type === 'request'
-      ? locale.CameraAndMicrophoneDomainPermissionsRequest
-      : locale.CameraAndMicrophoneDomainPermissionsCheck,
+      ? locale.CameraAndMicrophoneSitePermissionsRequest
+      : locale.CameraAndMicrophoneSitePermissionsCheck,
     props.strings
   );
 
   /* @conditional-compile-remove(call-readiness) */
   const cameraIconName =
-    props.microphoneIconName ?? props.type === 'denied' ? 'DomainPermissionCameraDenied' : 'DomainPermissionCamera';
+    props.microphoneIconName ?? props.type === 'denied' ? 'SitePermissionCameraDenied' : 'SitePermissionCamera';
   /* @conditional-compile-remove(call-readiness) */
   const microphoneIconName =
-    props.microphoneIconName ?? props.type === 'denied' ? 'DomainPermissionMicDenied' : 'DomainPermissionMic';
+    props.microphoneIconName ?? props.type === 'denied' ? 'SitePermissionMicDenied' : 'SitePermissionMic';
   /* @conditional-compile-remove(call-readiness) */
-  const connectorIconName = props.microphoneIconName ?? 'DomainPermissionsSparkle';
+  const connectorIconName = props.microphoneIconName ?? 'SitePermissionsSparkle';
 
   /* @conditional-compile-remove(call-readiness) */
   return (
-    <DomainPermissionsContainer
+    <SitePermissionsContainer
       {...props}
       strings={strings}
       cameraIconName={cameraIconName}
@@ -111,19 +111,19 @@ export const CameraAndMicrophoneDomainPermissions = (props: CameraAndMicrophoneD
 
 /**
  * @beta
- * Strings for MicrophoneDomainPermissions component.
+ * Strings for MicrophoneSitePermissions component.
  */
-export type MicrophoneDomainPermissionsStrings = DomainPermissionsStrings;
+export type MicrophoneSitePermissionsStrings = SitePermissionsStrings;
 
 /**
  * @beta
- * Props for MicrophoneDomainPermissions component.
+ * Props for MicrophoneSitePermissions component.
  */
-export interface MicrophoneDomainPermissionsProps extends CommonDomainPermissionsProps {
+export interface MicrophoneSitePermissionsProps extends CommonSitePermissionsProps {
   /** Icon name for the microphone icon */
   microphoneIconName?: string;
-  /** Strings for use with the {@link MicrophoneDomainPermissions} */
-  strings?: MicrophoneDomainPermissionsStrings;
+  /** Strings for use with the {@link MicrophoneSitePermissions} */
+  strings?: MicrophoneSitePermissionsStrings;
 }
 
 /**
@@ -132,7 +132,7 @@ export interface MicrophoneDomainPermissionsProps extends CommonDomainPermission
  *
  * @beta
  */
-export const MicrophoneDomainPermissions = (props: MicrophoneDomainPermissionsProps): JSX.Element => {
+export const MicrophoneSitePermissions = (props: MicrophoneSitePermissionsProps): JSX.Element => {
   /* @conditional-compile-remove(call-readiness) */
   const locale = useLocale().strings;
 
@@ -140,21 +140,21 @@ export const MicrophoneDomainPermissions = (props: MicrophoneDomainPermissionsPr
   const strings = useShallowMerge(
     props.type === 'denied'
       ? props.browserHint === 'safari'
-        ? locale.MicrophoneDomainPermissionsDeniedSafari
-        : locale.MicrophoneDomainPermissionsDenied
+        ? locale.MicrophoneSitePermissionsDeniedSafari
+        : locale.MicrophoneSitePermissionsDenied
       : props.type === 'request'
-      ? locale.MicrophoneDomainPermissionsRequest
-      : locale.MicrophoneDomainPermissionsCheck,
+      ? locale.MicrophoneSitePermissionsRequest
+      : locale.MicrophoneSitePermissionsCheck,
     props.strings
   );
 
   /* @conditional-compile-remove(call-readiness) */
   const iconName =
-    props.microphoneIconName ?? props.type === 'denied' ? 'DomainPermissionMicDenied' : 'DomainPermissionMic';
+    props.microphoneIconName ?? props.type === 'denied' ? 'SitePermissionMicDenied' : 'SitePermissionMic';
 
   /* @conditional-compile-remove(call-readiness) */
   return (
-    <DomainPermissionsContainer
+    <SitePermissionsContainer
       {...props}
       strings={strings}
       cameraIconName={iconName}
@@ -166,19 +166,19 @@ export const MicrophoneDomainPermissions = (props: MicrophoneDomainPermissionsPr
 
 /**
  * @beta
- * Strings for CameraDomainPermissions component.
+ * Strings for CameraSitePermissions component.
  */
-export type CameraDomainPermissionsStrings = DomainPermissionsStrings;
+export type CameraSitePermissionsStrings = SitePermissionsStrings;
 
 /**
  * @beta
- * Props for CameraDomainPermissions component.
+ * Props for CameraSitePermissions component.
  */
-export interface CameraDomainPermissionsProps extends CommonDomainPermissionsProps {
+export interface CameraSitePermissionsProps extends CommonSitePermissionsProps {
   /** Icon name for the camera icon */
   cameraIconName?: string;
-  /** Strings for use with the {@link CameraDomainPermissions} */
-  strings?: CameraDomainPermissionsStrings;
+  /** Strings for use with the {@link CameraSitePermissions} */
+  strings?: CameraSitePermissionsStrings;
 }
 
 /**
@@ -187,7 +187,7 @@ export interface CameraDomainPermissionsProps extends CommonDomainPermissionsPro
  *
  * @beta
  */
-export const CameraDomainPermissions = (props: CameraDomainPermissionsProps): JSX.Element => {
+export const CameraSitePermissions = (props: CameraSitePermissionsProps): JSX.Element => {
   /* @conditional-compile-remove(call-readiness) */
   const locale = useLocale().strings;
 
@@ -195,21 +195,21 @@ export const CameraDomainPermissions = (props: CameraDomainPermissionsProps): JS
   const strings = useShallowMerge(
     props.type === 'denied'
       ? props.browserHint === 'safari'
-        ? locale.CameraDomainPermissionsDeniedSafari
-        : locale.CameraDomainPermissionsDenied
+        ? locale.CameraSitePermissionsDeniedSafari
+        : locale.CameraSitePermissionsDenied
       : props.type === 'request'
-      ? locale.CameraDomainPermissionsRequest
-      : locale.CameraDomainPermissionsCheck,
+      ? locale.CameraSitePermissionsRequest
+      : locale.CameraSitePermissionsCheck,
     props.strings
   );
 
   /* @conditional-compile-remove(call-readiness) */
   const iconName =
-    props.cameraIconName ?? props.type === 'denied' ? 'DomainPermissionCameraDenied' : 'DomainPermissionCamera';
+    props.cameraIconName ?? props.type === 'denied' ? 'SitePermissionCameraDenied' : 'SitePermissionCamera';
 
   /* @conditional-compile-remove(call-readiness) */
   return (
-    <DomainPermissionsContainer
+    <SitePermissionsContainer
       {...props}
       strings={strings}
       microphoneIconName={iconName}

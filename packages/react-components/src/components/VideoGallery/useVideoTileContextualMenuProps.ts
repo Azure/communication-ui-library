@@ -13,10 +13,15 @@ export const useVideoTileContextualMenuProps = (props: {
   strings?: {
     fitRemoteParticipantToFrame?: string;
     fillRemoteParticipantFrame?: string;
+    pinParticipantForMe?: string;
+    unpinParticipantForMe?: string;
   };
   view?: { updateScalingMode: (scalingMode: ViewScalingMode) => Promise<void> };
+  isPinned?: boolean;
+  onPinParticipant?: (userId: string) => void;
+  onUnpinParticipant?: (userId: string) => void;
 }): IContextualMenuProps | undefined => {
-  const { view, strings } = props;
+  const { view, strings, isPinned, onPinParticipant, onUnpinParticipant } = props;
   const scalingMode = useMemo(() => {
     /* @conditional-compile-remove(pinned-participants) */
     return props.remoteParticipant.videoStream?.scalingMode;
@@ -28,6 +33,27 @@ export const useVideoTileContextualMenuProps = (props: {
 
   const contextualMenuProps: IContextualMenuProps | undefined = useMemo(() => {
     const items: IContextualMenuItem[] = [];
+
+    if (isPinned !== undefined) {
+      if (isPinned && onUnpinParticipant && strings?.unpinParticipantForMe) {
+        items.push({
+          key: 'unpin',
+          text: strings.unpinParticipantForMe,
+          iconProps: { iconName: 'UnpinParticipant', styles: { root: { lineHeight: '1rem' } } },
+          onClick: () => onUnpinParticipant?.(props.remoteParticipant.userId),
+          'data-ui-id': 'video-tile-unpin-participant-button'
+        });
+      }
+      if (!isPinned && onPinParticipant && strings?.pinParticipantForMe) {
+        items.push({
+          key: 'pin',
+          text: strings.pinParticipantForMe,
+          iconProps: { iconName: 'PinParticipant', styles: { root: { lineHeight: '1rem' } } },
+          onClick: () => onPinParticipant?.(props.remoteParticipant.userId),
+          'data-ui-id': 'video-tile-pin-participant-button'
+        });
+      }
+    }
     if (scalingMode) {
       if (scalingMode === 'Crop' && strings?.fitRemoteParticipantToFrame) {
         items.push({
@@ -56,7 +82,7 @@ export const useVideoTileContextualMenuProps = (props: {
     }
 
     return { items };
-  }, [scalingMode, strings, view]);
+  }, [scalingMode, strings, view, isPinned, onPinParticipant, onUnpinParticipant, props.remoteParticipant.userId]);
 
   return contextualMenuProps;
 };

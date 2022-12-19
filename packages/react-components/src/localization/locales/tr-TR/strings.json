@@ -184,7 +184,7 @@
     "participantStateRinging": "Aranıyor...",
     "participantStateHold": "Beklemede"
   },
-  "DomainPermissions": {
+  "SitePermissions": {
     "primaryText": "{appName} uygulamasının kameranızı ve mikrofonunuzu kullanmasına izin verin",
     "secondaryText": "Bu, katılımcıların sizi görebilmesi ve duyabilmesi içindir.",
     "linkText": "Yardıma mı ihtiyacınız var? Sorun giderme yardımı alın",

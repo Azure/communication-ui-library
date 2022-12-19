@@ -61,6 +61,24 @@ test.describe('Call Composite E2E Configuration Screen Tests', () => {
 
     expect(await stableScreenshot(page)).toMatchSnapshot(`mobile-call-configuration-page-no-devices.png`);
   });
+
+  test('Configuration screen shows error when camera is turned on but in use', async ({ page, serverUrl }) => {
+    const initialState = defaultMockConfigurationPageState();
+    initialState.latestErrors = {
+      'Call.startVideo': {
+        timestamp: new Date(),
+        name: 'ERROR: VIDEO WAS IN USE BY ANOTHER APPLICATION', // dummy error message emulating the error thrown by the browser
+        message: 'Browser was unable to start video as it was in use by another application',
+        target: 'Call.startVideo',
+        innerError: new Error('Inner error of failure to stop video')
+      }
+    };
+
+    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
+    await waitForCallCompositeToLoad(page);
+    await stubLocalCameraName(page);
+    expect(await stableScreenshot(page)).toMatchSnapshot(`call-configuration-page-camera-error.png`);
+  });
 });
 
 function defaultMockConfigurationPageState(): MockCallAdapterState {
