@@ -93,10 +93,10 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
         onRenderAvatar={onRenderAvatar}
         /* @conditional-compile-remove(pinned-participants) */
         showRemoteVideoTileContextualMenu={!props.isMobile}
-        drawerMenuHostId={props.drawerMenuHostId}
+        // @TODO: Provide props.drawerMenuHostId to VideoGallery when VideoGallery props support it.
       />
     );
-  }, [videoGalleryProps, props.isMobile, props.drawerMenuHostId, cameraSwitcherProps, onRenderAvatar]);
+  }, [videoGalleryProps, props.isMobile, cameraSwitcherProps, onRenderAvatar]);
 
   return (
     <>
