@@ -322,7 +322,13 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       }
       onPinParticipantHandler?.(userId);
     },
-    [maxPinnedRemoteVideoTiles, pinnedParticipants.length, setPinnedParticipantsState, onPinParticipantHandler]
+    [
+      maxPinnedRemoteVideoTiles,
+      pinnedParticipants.length,
+      pinnedParticipantsState,
+      setPinnedParticipantsState,
+      onPinParticipantHandler
+    ]
   );
   /* @conditional-compile-remove(pinned-participants) */
   const onUnpinParticipant = useCallback(
