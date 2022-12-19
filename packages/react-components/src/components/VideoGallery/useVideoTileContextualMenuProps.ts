@@ -20,8 +20,9 @@ export const useVideoTileContextualMenuProps = (props: {
   isPinned?: boolean;
   onPinParticipant?: (userId: string) => void;
   onUnpinParticipant?: (userId: string) => void;
+  disablePinMenuItem?: boolean;
 }): IContextualMenuProps | undefined => {
-  const { view, strings, isPinned, onPinParticipant, onUnpinParticipant } = props;
+  const { view, strings, isPinned, onPinParticipant, onUnpinParticipant, disablePinMenuItem } = props;
   const scalingMode = useMemo(() => {
     /* @conditional-compile-remove(pinned-participants) */
     return props.remoteParticipant.videoStream?.scalingMode;
@@ -50,7 +51,8 @@ export const useVideoTileContextualMenuProps = (props: {
           text: strings.pinParticipantForMe,
           iconProps: { iconName: 'PinParticipant', styles: { root: { lineHeight: '1rem' } } },
           onClick: () => onPinParticipant?.(props.remoteParticipant.userId),
-          'data-ui-id': 'video-tile-pin-participant-button'
+          'data-ui-id': 'video-tile-pin-participant-button',
+          disabled: disablePinMenuItem
         });
       }
     }
@@ -82,7 +84,16 @@ export const useVideoTileContextualMenuProps = (props: {
     }
 
     return { items };
-  }, [scalingMode, strings, view, isPinned, onPinParticipant, onUnpinParticipant, props.remoteParticipant.userId]);
+  }, [
+    scalingMode,
+    strings,
+    view,
+    isPinned,
+    onPinParticipant,
+    onUnpinParticipant,
+    props.remoteParticipant.userId,
+    disablePinMenuItem
+  ]);
 
   return contextualMenuProps;
 };

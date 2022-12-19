@@ -50,6 +50,7 @@ export const _RemoteVideoTile = React.memo(
     onPinParticipant?: (userId: string) => void;
     onUnpinParticipant?: (userId: string) => void;
     isPinned?: boolean;
+    disablePinMenuItem?: boolean;
   }) => {
     const {
       isAvailable,
@@ -67,7 +68,8 @@ export const _RemoteVideoTile = React.memo(
       showRemoteVideoTileContextualMenu = true,
       isPinned,
       onPinParticipant,
-      onUnpinParticipant
+      onUnpinParticipant,
+      disablePinMenuItem
     } = props;
 
     const remoteVideoStreamProps: RemoteVideoStreamLifecycleMaintainerProps = useMemo(
@@ -105,7 +107,8 @@ export const _RemoteVideoTile = React.memo(
       strings: { ...props.strings },
       isPinned,
       onPinParticipant,
-      onUnpinParticipant
+      onUnpinParticipant,
+      disablePinMenuItem
     });
 
     const videoTileContextualMenuProps = useMemo(() => {

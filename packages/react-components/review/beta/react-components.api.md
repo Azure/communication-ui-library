@@ -1417,6 +1417,7 @@ export const _RemoteVideoTile: React_2.MemoExoticComponent<(props: {
     onPinParticipant?: ((userId: string) => void) | undefined;
     onUnpinParticipant?: ((userId: string) => void) | undefined;
     isPinned?: boolean | undefined;
+    disablePinMenuItem?: boolean | undefined;
 }) => JSX.Element>;
 
 // @beta
@@ -1667,6 +1668,7 @@ export interface VideoGalleryProps {
     localParticipant: VideoGalleryLocalParticipant;
     localVideoCameraCycleButtonProps?: LocalVideoCameraCycleButtonProps;
     localVideoViewOptions?: VideoStreamOptions;
+    maxPinnedRemoteVideoTiles?: number;
     maxRemoteVideoStreams?: number;
     onCreateLocalStreamView?: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
     onCreateRemoteStreamView?: (userId: string, options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;

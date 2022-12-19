@@ -181,6 +181,12 @@ export interface VideoGalleryProps {
    * This callback will be called when a participant video tile is un-pinned
    */
   onUnpinParticipant?: (userId: string) => void;
+  /* @conditional-compile-remove(pinned-participants) */
+  /**
+   * The maximum number of remote video tiles that can be pinned. The pin menu button in remote video tiles
+   * will be disabled when this maximum is reached.
+   */
+  maxPinnedRemoteVideoTiles?: number;
 }
 
 /**
@@ -212,7 +218,9 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     /* @conditional-compile-remove(pinned-participants) */
     onPinParticipant: onPinParticipantHandler,
     /* @conditional-compile-remove(pinned-participants) */
-    onUnpinParticipant: onUnpinParticipantHandler
+    onUnpinParticipant: onUnpinParticipantHandler,
+    /* @conditional-compile-remove(pinned-participants) */
+    maxPinnedRemoteVideoTiles
   } = props;
 
   const ids = useIdentifiers();
@@ -306,12 +314,15 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   /* @conditional-compile-remove(pinned-participants) */
   const onPinParticipant = useCallback(
     (userId: string) => {
+      if (maxPinnedRemoteVideoTiles && pinnedParticipants.length >= maxPinnedRemoteVideoTiles) {
+        return;
+      }
       if (!pinnedParticipantsState.includes(userId)) {
         setPinnedParticipantsState(pinnedParticipantsState.concat(userId));
       }
       onPinParticipantHandler?.(userId);
     },
-    [pinnedParticipantsState, setPinnedParticipantsState, onPinParticipantHandler]
+    [maxPinnedRemoteVideoTiles, pinnedParticipants.length, setPinnedParticipantsState, onPinParticipantHandler]
   );
   /* @conditional-compile-remove(pinned-participants) */
   const onUnpinParticipant = useCallback(
@@ -353,6 +364,10 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           onUnpinParticipant={onUnpinParticipant}
           /* @conditional-compile-remove(pinned-participants) */
           isPinned={isPinned}
+          /* @conditional-compile-remove(pinned-participants) */
+          disablePinMenuItem={
+            maxPinnedRemoteVideoTiles ? pinnedParticipants.length >= maxPinnedRemoteVideoTiles : undefined
+          }
         />
       );
     },
@@ -366,7 +381,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       /* @conditional-compile-remove(pinned-participants) */ props.showRemoteVideoTileContextualMenu,
       /* @conditional-compile-remove(pinned-participants) */ pinnedParticipants,
       /* @conditional-compile-remove(pinned-participants) */ onPinParticipant,
-      /* @conditional-compile-remove(pinned-participants) */ onUnpinParticipant
+      /* @conditional-compile-remove(pinned-participants) */ onUnpinParticipant,
+      /* @conditional-compile-remove(pinned-participants) */ maxPinnedRemoteVideoTiles
     ]
   );
 
