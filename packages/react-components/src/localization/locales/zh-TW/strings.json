@@ -184,7 +184,7 @@
     "participantStateRinging": "撥號中...",
     "participantStateHold": "電話保留"
   },
-  "DomainPermissions": {
+  "SitePermissions": {
     "primaryText": "允許 {appName} 使用您的相機和麥克風",
     "secondaryText": "這樣參與者才能看到您並聽到您的聲音。",
     "linkText": "需要協助嗎? 取得疑難排解說明",

@@ -138,18 +138,18 @@ export type CallParticipantListParticipant = ParticipantListParticipant & {
 };
 
 // @beta
-export const CameraAndMicrophoneDomainPermissions: (props: CameraAndMicrophoneDomainPermissionsProps) => JSX.Element;
+export const CameraAndMicrophoneSitePermissions: (props: CameraAndMicrophoneSitePermissionsProps) => JSX.Element;
 
 // @beta
-export interface CameraAndMicrophoneDomainPermissionsProps extends CommonDomainPermissionsProps {
+export interface CameraAndMicrophoneSitePermissionsProps extends CommonSitePermissionsProps {
     cameraIconName?: string;
     connectorIconName?: string;
     microphoneIconName?: string;
-    strings?: CameraAndMicrophoneDomainPermissionsStrings;
+    strings?: CameraAndMicrophoneSitePermissionsStrings;
 }
 
 // @beta
-export type CameraAndMicrophoneDomainPermissionsStrings = DomainPermissionsStrings;
+export type CameraAndMicrophoneSitePermissionsStrings = SitePermissionsStrings;
 
 // @public
 export const CameraButton: (props: CameraButtonProps) => JSX.Element;
@@ -194,16 +194,16 @@ export interface CameraButtonStyles extends ControlBarButtonStyles {
 }
 
 // @beta
-export const CameraDomainPermissions: (props: CameraDomainPermissionsProps) => JSX.Element;
+export const CameraSitePermissions: (props: CameraSitePermissionsProps) => JSX.Element;
 
 // @beta
-export interface CameraDomainPermissionsProps extends CommonDomainPermissionsProps {
+export interface CameraSitePermissionsProps extends CommonSitePermissionsProps {
     cameraIconName?: string;
-    strings?: CameraDomainPermissionsStrings;
+    strings?: CameraSitePermissionsStrings;
 }
 
 // @beta
-export type CameraDomainPermissionsStrings = DomainPermissionsStrings;
+export type CameraSitePermissionsStrings = SitePermissionsStrings;
 
 // @public
 export interface ChatMessage extends MessageCommon {
@@ -235,12 +235,12 @@ export interface ChatMessage extends MessageCommon {
 }
 
 // @beta
-export interface CommonDomainPermissionsProps {
+export interface CommonSitePermissionsProps {
     appName: string;
     browserHint?: 'safari' | 'unset';
     onContinueAnywayClick?: () => void;
     onTroubleshootingClick?: () => void;
-    styles?: DomainPermissionsStyles;
+    styles?: SitePermissionsStyles;
     type: 'request' | 'denied' | 'check';
 }
 
@@ -350,15 +350,15 @@ export interface ComponentLocale {
 export interface ComponentStrings {
     BrowserPermissionDenied: BrowserPermissionDeniedStrings;
     BrowserPermissionDeniedIOS: BrowserPermissionDeniedIOSStrings;
-    CameraAndMicrophoneDomainPermissionsCheck: DomainPermissionsStrings;
-    CameraAndMicrophoneDomainPermissionsDenied: DomainPermissionsStrings;
-    CameraAndMicrophoneDomainPermissionsDeniedSafari: DomainPermissionsStrings;
-    CameraAndMicrophoneDomainPermissionsRequest: DomainPermissionsStrings;
+    CameraAndMicrophoneSitePermissionsCheck: SitePermissionsStrings;
+    CameraAndMicrophoneSitePermissionsDenied: SitePermissionsStrings;
+    CameraAndMicrophoneSitePermissionsDeniedSafari: SitePermissionsStrings;
+    CameraAndMicrophoneSitePermissionsRequest: SitePermissionsStrings;
     cameraButton: CameraButtonStrings;
-    CameraDomainPermissionsCheck: DomainPermissionsStrings;
-    CameraDomainPermissionsDenied: DomainPermissionsStrings;
-    CameraDomainPermissionsDeniedSafari: DomainPermissionsStrings;
-    CameraDomainPermissionsRequest: DomainPermissionsStrings;
+    CameraSitePermissionsCheck: SitePermissionsStrings;
+    CameraSitePermissionsDenied: SitePermissionsStrings;
+    CameraSitePermissionsDeniedSafari: SitePermissionsStrings;
+    CameraSitePermissionsRequest: SitePermissionsStrings;
     devicesButton: DevicesButtonStrings;
     dialpad: DialpadStrings;
     endCallButton: EndCallButtonStrings;
@@ -367,10 +367,10 @@ export interface ComponentStrings {
     messageStatusIndicator: MessageStatusIndicatorStrings;
     messageThread: MessageThreadStrings;
     microphoneButton: MicrophoneButtonStrings;
-    MicrophoneDomainPermissionsCheck: DomainPermissionsStrings;
-    MicrophoneDomainPermissionsDenied: DomainPermissionsStrings;
-    MicrophoneDomainPermissionsDeniedSafari: DomainPermissionsStrings;
-    MicrophoneDomainPermissionsRequest: DomainPermissionsStrings;
+    MicrophoneSitePermissionsCheck: SitePermissionsStrings;
+    MicrophoneSitePermissionsDenied: SitePermissionsStrings;
+    MicrophoneSitePermissionsDeniedSafari: SitePermissionsStrings;
+    MicrophoneSitePermissionsRequest: SitePermissionsStrings;
     participantItem: ParticipantItemStrings;
     participantsButton: ParticipantsButtonStrings;
     screenShareButton: ScreenShareButtonStrings;
@@ -523,11 +523,11 @@ export const DEFAULT_COMPONENT_ICONS: {
     SendBoxSendHovered: JSX.Element;
     VideoTileMicOff: JSX.Element;
     DialpadBackspace: JSX.Element;
-    DomainPermissionsSparkle: JSX.Element;
-    DomainPermissionCamera: JSX.Element;
-    DomainPermissionMic: JSX.Element;
-    DomainPermissionCameraDenied: JSX.Element;
-    DomainPermissionMicDenied: JSX.Element;
+    SitePermissionsSparkle: JSX.Element;
+    SitePermissionCamera: JSX.Element;
+    SitePermissionMic: JSX.Element;
+    SitePermissionCameraDenied: JSX.Element;
+    SitePermissionMicDenied: JSX.Element;
     UnsupportedEnvironmentWarning: JSX.Element;
     BrowserPermissionDeniedError: JSX.Element;
     VideoTilePinned: JSX.Element;
@@ -638,21 +638,6 @@ export interface DialpadStyles {
     root?: IStyle;
     // (undocumented)
     textField?: Partial<ITextFieldStyles>;
-}
-
-// @beta
-export type DomainPermissionsStrings = {
-    primaryText?: string;
-    secondaryText?: string;
-    linkText?: string;
-    primaryButtonText?: string;
-    ariaLabel?: string;
-};
-
-// @beta
-export interface DomainPermissionsStyles extends BaseCustomStyles {
-    primaryButton?: IButtonStyles;
-    troubleshootingLink?: ILinkStyles;
 }
 
 // @internal
@@ -1174,16 +1159,16 @@ export interface MicrophoneButtonStyles extends ControlBarButtonStyles {
 }
 
 // @beta
-export const MicrophoneDomainPermissions: (props: MicrophoneDomainPermissionsProps) => JSX.Element;
+export const MicrophoneSitePermissions: (props: MicrophoneSitePermissionsProps) => JSX.Element;
 
 // @beta
-export interface MicrophoneDomainPermissionsProps extends CommonDomainPermissionsProps {
+export interface MicrophoneSitePermissionsProps extends CommonSitePermissionsProps {
     microphoneIconName?: string;
-    strings?: MicrophoneDomainPermissionsStrings;
+    strings?: MicrophoneSitePermissionsStrings;
 }
 
 // @beta
-export type MicrophoneDomainPermissionsStrings = DomainPermissionsStrings;
+export type MicrophoneSitePermissionsStrings = SitePermissionsStrings;
 
 // @internal (undocumented)
 export const _ModalClone: React_3.FunctionComponent<_ExtendedIModalProps>;
@@ -1487,6 +1472,21 @@ export interface SendBoxStylesProps extends BaseCustomStyles {
     systemMessage?: IStyle;
     textField?: IStyle;
     textFieldContainer?: IStyle;
+}
+
+// @beta
+export type SitePermissionsStrings = {
+    primaryText?: string;
+    secondaryText?: string;
+    linkText?: string;
+    primaryButtonText?: string;
+    ariaLabel?: string;
+};
+
+// @beta
+export interface SitePermissionsStyles extends BaseCustomStyles {
+    primaryButton?: IButtonStyles;
+    troubleshootingLink?: ILinkStyles;
 }
 
 // @public
