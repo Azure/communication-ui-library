@@ -36,7 +36,7 @@ import { bannerNotificationStyles } from '../styles/CallPage.styles';
 import { usePropsFor } from '../hooks/usePropsFor';
 import { useAdapter } from '../adapter/CallAdapterProvider';
 /* @conditional-compile-remove(call-readiness) */
-import { DevicePermissionRestrictions } from '../CallComposite';
+import { DeviceCheckOptions } from '../CallComposite';
 import { ConfigurationPageErrorBar } from '../components/ConfigurationPageErrorBar';
 /* @conditional-compile-remove(call-readiness) */
 import { getDevicePermissionState } from '../utils';
@@ -50,7 +50,7 @@ export interface ConfigurationPageProps {
   mobileView: boolean;
   startCallHandler(): void;
   /* @conditional-compile-remove(call-readiness) */
-  devicePermissions?: DevicePermissionRestrictions;
+  deviceChecks?: DeviceCheckOptions;
   /* @conditional-compile-remove(call-readiness) */
   onPermissionsTroubleshootingClick?: (permissionsState: {
     camera: PermissionState;
@@ -69,7 +69,7 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
   const {
     startCallHandler,
     mobileView,
-    /* @conditional-compile-remove(call-readiness) */ devicePermissions,
+    /* @conditional-compile-remove(call-readiness) */ deviceChecks,
     /* @conditional-compile-remove(call-readiness) */ onPermissionsTroubleshootingClick,
     /* @conditional-compile-remove(call-readiness) */ onNetworkingTroubleShootingClick,
     /* @conditional-compile-remove(call-readiness) */ callReadinessOptedIn = false
@@ -114,14 +114,14 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
   }
 
   /* @conditional-compile-remove(call-readiness) */
-  // Overrides role permissions if CallCompositeOptions devicePermissions are set
-  if (devicePermissions) {
+  // Overrides role permissions if CallCompositeOptions deviceChecks are set
+  if (deviceChecks) {
     if (
-      ['doNotPrompt', 'optional'].includes(devicePermissions.camera) &&
-      ['doNotPrompt', 'optional'].includes(devicePermissions.microphone)
+      ['doNotPrompt', 'optional'].includes(deviceChecks.camera) &&
+      ['doNotPrompt', 'optional'].includes(deviceChecks.microphone)
     ) {
       disableStartCallButton = false;
-    } else if (devicePermissions.camera === 'required') {
+    } else if (deviceChecks.camera === 'required') {
       disableStartCallButton = !cameraPermissionGranted || deviceState.cameras?.length === 0;
     }
   }

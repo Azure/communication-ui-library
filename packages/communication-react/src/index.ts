@@ -130,21 +130,21 @@ export { Dialpad } from '../../react-components/src';
 
 /* @conditional-compile-remove(call-readiness) */
 export {
-  CameraAndMicrophoneDomainPermissions,
-  MicrophoneDomainPermissions,
-  CameraDomainPermissions
+  CameraAndMicrophoneSitePermissions,
+  MicrophoneSitePermissions,
+  CameraSitePermissions
 } from '../../react-components/src';
 /* @conditional-compile-remove(call-readiness) */
 export type {
-  CameraAndMicrophoneDomainPermissionsStrings,
-  CameraAndMicrophoneDomainPermissionsProps,
-  CameraDomainPermissionsStrings,
-  CameraDomainPermissionsProps,
-  CommonDomainPermissionsProps,
-  DomainPermissionsStrings,
-  DomainPermissionsStyles,
-  MicrophoneDomainPermissionsStrings,
-  MicrophoneDomainPermissionsProps
+  CameraAndMicrophoneSitePermissionsStrings,
+  CameraAndMicrophoneSitePermissionsProps,
+  CameraSitePermissionsStrings,
+  CameraSitePermissionsProps,
+  CommonSitePermissionsProps,
+  SitePermissionsStrings,
+  SitePermissionsStyles,
+  MicrophoneSitePermissionsStrings,
+  MicrophoneSitePermissionsProps
 } from '../../react-components/src';
 
 export type {

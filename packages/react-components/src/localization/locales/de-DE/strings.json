@@ -184,7 +184,7 @@
     "participantStateRinging": "Anrufen...",
     "participantStateHold": "In der Warteschleife"
   },
-  "DomainPermissions": {
+  "SitePermissions": {
     "primaryText": "Zulassen, dass {appName} Ihre Kamera und Ihr Mikrofon verwendet",
     "secondaryText": "So können die Teilnehmer Sie sehen und hören.",
     "linkText": "Benötigen Sie Hilfe? Hilfe zur Problembehandlung",
