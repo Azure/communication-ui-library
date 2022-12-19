@@ -19,10 +19,10 @@ import {
 import { _usePermissions } from '@internal/react-components';
 /* @conditional-compile-remove(call-readiness) */
 import { useAdapter } from '../adapter/CallAdapterProvider';
-import { ConfigurationpageCameraDropdown } from './ConfigurationpageCameraDropdown';
-import { ConfigurationpageMicDropdown } from './ConfigurationpageMicDropdown';
+import { ConfigurationPageCameraDropdown } from './ConfigurationPageCameraDropdown';
+import { ConfigurationPageMicDropdown } from './ConfigurationPageMicDropdown';
 /* @conditional-compile-remove(call-readiness) */
-import { usePropsFor } from '../hooks/usePropsFor';
+import { useHandlers } from '../hooks/useHandlers';
 
 type iconType = 'Camera' | 'Microphone' | 'Speaker';
 
@@ -131,7 +131,7 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
   }, [adapter, cameraPermissionGranted, micPermissionGranted]);
 
   /* @conditional-compile-remove(call-readiness) */
-  const dropdownProps = usePropsFor(_DevicePermissionDropdown);
+  const dropdownProps = useHandlers(_DevicePermissionDropdown);
 
   const hasCameras = props.cameras.length > 0;
   const hasMicrophones = props.microphones.length > 0;
@@ -211,7 +211,7 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
           >
             {cameraLabel}
           </Label>
-          <ConfigurationpageCameraDropdown
+          <ConfigurationPageCameraDropdown
             cameraGrantedDropdown={cameraGrantedDropdown}
             cameraPermissionGranted={cameraPermissionGranted ?? false}
             /* @conditional-compile-remove(call-readiness) */
@@ -230,7 +230,7 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
           {soundLabel}
         </Label>
         <Stack data-ui-id="call-composite-sound-settings" tokens={mainStackTokens}>
-          <ConfigurationpageMicDropdown
+          <ConfigurationPageMicDropdown
             micGrantedDropdown={micGrantedDropdown}
             micPermissionGranted={micPermissionGranted ?? false}
             /* @conditional-compile-remove(call-readiness) */

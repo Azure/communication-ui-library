@@ -17,7 +17,7 @@ import { Common } from '@internal/acs-ui-common';
 /**
  * @private
  */
-export interface ConfigurationpageErrorBarProps {
+export interface ConfigurationPageErrorBarProps {
   errorBarProps: {
     activeErrorMessages: ActiveErrorMessage[];
   } & Common<CallingHandlers, ErrorBarProps>;
@@ -36,7 +36,7 @@ export interface ConfigurationpageErrorBarProps {
 /**
  * @private
  */
-export const ConfigurationpageErrorBar = (props: ConfigurationpageErrorBarProps): JSX.Element => {
+export const ConfigurationPageErrorBar = (props: ConfigurationPageErrorBarProps): JSX.Element => {
   const {
     errorBarProps,
     /* @conditional-compile-remove(call-readiness) */

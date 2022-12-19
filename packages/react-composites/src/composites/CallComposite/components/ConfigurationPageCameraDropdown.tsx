@@ -13,44 +13,46 @@ import {
 import { dropDownStyles } from '../styles/LocalDeviceSettings.styles';
 /* @conditional-compile-remove(call-readiness) */
 import { CallCompositeIcon } from '../../common/icons';
-import { CallingHandlers } from '@internal/calling-component-bindings';
 
 /**
  * @private
  */
-export interface ConfigurationpageMicDropdownProps {
-  micGrantedDropdown: JSX.Element;
-  micPermissionGranted: boolean;
-  dropdownProps?: Record<string, never> & Partial<CallingHandlers>;
+export interface ConfigurationPageCameraDropdownProps {
+  cameraGrantedDropdown: JSX.Element;
+  cameraPermissionGranted: boolean;
+  /* @conditional-compile-remove(call-readiness) */
+  dropdownProps: Partial<_DevicePermissionDropdownProps>;
   onClickEnableDevicePermission?: () => void;
 }
 
 /**
  * @private
  */
-export const ConfigurationpageMicDropdown = (props: ConfigurationpageMicDropdownProps): JSX.Element => {
+export const ConfigurationPageCameraDropdown = (props: ConfigurationPageCameraDropdownProps): JSX.Element => {
   /* @conditional-compile-remove(call-readiness) */
   const theme = useTheme();
-  /* @conditional-compile-remove(call-readiness) */
-  const devicePermissionDropdownStringsMicrophone: _DevicePermissionDropdownStrings = {
-    placeHolderText: 'Enable Microphone (required)',
-    actionButtonContent: 'Allow'
-  };
 
   /* @conditional-compile-remove(call-readiness) */
-  const microphoneBlockedDropdown = (
+  const devicePermissionDropdownStringsCamera: _DevicePermissionDropdownStrings = {
+    placeHolderText: 'Enable Camera (optional)',
+    actionButtonContent: 'Allow'
+  };
+  /* @conditional-compile-remove(call-readiness) */
+  const cameraBlockedDropdown = (
     <_DevicePermissionDropdown
       {...props.dropdownProps}
       styles={dropDownStyles(theme)}
-      constrain={{ video: false, audio: true }}
-      strings={devicePermissionDropdownStringsMicrophone}
-      icon={<CallCompositeIcon iconName="ControlButtonMicOn" style={{ height: '1.25rem', marginRight: '0.625rem' }} />}
+      constrain={{ video: true, audio: false }}
+      strings={devicePermissionDropdownStringsCamera}
+      icon={
+        <CallCompositeIcon iconName="ControlButtonCameraOn" style={{ height: '1.25rem', marginRight: '0.625rem' }} />
+      }
       onClick={props.onClickEnableDevicePermission}
     />
   );
 
   /* @conditional-compile-remove(call-readiness) */
-  return props.micPermissionGranted ? props.micGrantedDropdown : microphoneBlockedDropdown;
+  return props.cameraPermissionGranted ? props.cameraGrantedDropdown : cameraBlockedDropdown;
 
-  return props.micGrantedDropdown;
+  return props.cameraGrantedDropdown;
 };
