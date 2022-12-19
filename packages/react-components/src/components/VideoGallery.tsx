@@ -185,14 +185,15 @@ export interface VideoGalleryProps {
   /* @conditional-compile-remove(pinned-participants) */
   /**
    * Options for showing the remote video tile menu.
-   * default: { type: 'contextual' }
+   * default: \{ type: 'contextual' \}
    */
   remoteVideoTileMenuOptions?: false | VideoTileContextualMenuProps | VideoTileDrawerMenuProps;
 }
 
 /* @conditional-compile-remove(pinned-participants) */
 /**
- * Properties for showing contextual menu for remote {@link VideoTile} components in {@link VideoGallery}
+ * Properties for showing contextual menu for remote {@link VideoTile} components in {@link VideoGallery}.
+ *
  * @beta
  */
 export interface VideoTileContextualMenuProps {
@@ -204,7 +205,8 @@ export interface VideoTileContextualMenuProps {
 
 /* @conditional-compile-remove(pinned-participants) */
 /**
- * Properties for showing drawer menu on remote {@link VideoTile} long touch in {@link VideoGallery}
+ * Properties for showing drawer menu on remote {@link VideoTile} long touch in {@link VideoGallery}.
+ *
  * @beta
  */
 export interface VideoTileDrawerMenuProps {
