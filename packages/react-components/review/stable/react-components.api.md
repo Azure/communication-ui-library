@@ -576,12 +576,14 @@ export interface ErrorBarProps extends IMessageBarProps {
 export interface ErrorBarStrings {
     accessDenied: string;
     callCameraAccessDenied: string;
+    callCameraAccessDeniedSafari: string;
     callCameraAlreadyInUse: string;
     callLocalVideoFreeze: string;
     callMacOsCameraAccessDenied: string;
     callMacOsMicrophoneAccessDenied: string;
     callMacOsScreenShareAccessDenied: string;
     callMicrophoneAccessDenied: string;
+    callMicrophoneAccessDeniedSafari: string;
     callMicrophoneMutedBySystem: string;
     callMicrophoneUnmutedBySystem: string;
     callNetworkQualityLow: string;
@@ -1186,6 +1188,9 @@ export const _RemoteVideoTile: React_2.MemoExoticComponent<(props: {
     strings?: VideoGalleryStrings | undefined;
     participantState?: ParticipantState | undefined;
     showRemoteVideoTileContextualMenu?: boolean | undefined;
+    onPinParticipant?: ((userId: string) => void) | undefined;
+    onUnpinParticipant?: ((userId: string) => void) | undefined;
+    isPinned?: boolean | undefined;
 }) => JSX.Element>;
 
 // @public
@@ -1346,7 +1351,7 @@ export const UnsupportedBrowserVersion: (props: UnsupportedBrowserVersionProps) 
 
 // @beta
 export interface UnsupportedBrowserVersionProps {
-    onContinueClick?: () => void;
+    onContinueAnywayClick?: () => void;
     onTroubleshootingClick?: () => void;
     strings?: UnsupportedBrowserVersionStrings;
 }

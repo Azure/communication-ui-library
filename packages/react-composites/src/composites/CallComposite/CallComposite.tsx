@@ -65,12 +65,12 @@ export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcon
 
 /* @conditional-compile-remove(call-readiness) */
 /**
- * Device Permission restrictions.
- * Be able to start a call depending on camera and microphone permission options.
+ * Device Checks.
+ * Choose whether or not to block starting a call depending on camera and microphone permission options.
  *
  * @beta
  */
-export interface DevicePermissionRestrictions {
+export interface DeviceCheckOptions {
   /**
    * Camera Permission prompts for your call.
    * 'required' - requires the permission to be allowed before permitting the user join the call.
@@ -107,10 +107,11 @@ export type CallCompositeOptions = {
   callControls?: boolean | CallControlOptions;
   /* @conditional-compile-remove(call-readiness) */
   /**
-   * Device permission restrictions for your call.
-   * Require device permissions to be set or have them as optional or not required to start a call
+   * Device permissions check options for your call.
+   * Here you can choose what device permissions you prompt the user for,
+   * as well as what device permissions must be accepted before starting a call.
    */
-  devicePermissions?: DevicePermissionRestrictions;
+  deviceChecks?: DeviceCheckOptions;
   /* @conditional-compile-remove(call-readiness) */
   /**
    * Opt in call readiness feature for your call
@@ -222,7 +223,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
             adapter.joinCall();
           }}
           /* @conditional-compile-remove(call-readiness) */
-          devicePermissions={props.options?.devicePermissions}
+          deviceChecks={props.options?.deviceChecks}
           /* @conditional-compile-remove(call-readiness) */
           onPermissionsTroubleshootingClick={props.options?.onPermissionsTroubleshootingClick}
           /* @conditional-compile-remove(call-readiness) */

@@ -50,6 +50,9 @@ export const _RemoteVideoTile = React.memo(
     participantState?: ParticipantState;
     showRemoteVideoTileContextualMenu?: boolean;
     drawerMenuHostId?: string;
+    onPinParticipant?: (userId: string) => void;
+    onUnpinParticipant?: (userId: string) => void;
+    isPinned?: boolean;
   }) => {
     const {
       isAvailable,
@@ -64,7 +67,10 @@ export const _RemoteVideoTile = React.memo(
       showMuteIndicator,
       remoteParticipant,
       participantState,
-      showRemoteVideoTileContextualMenu = true
+      showRemoteVideoTileContextualMenu = true,
+      isPinned,
+      onPinParticipant,
+      onUnpinParticipant
     } = props;
 
     const remoteVideoStreamProps: RemoteVideoStreamLifecycleMaintainerProps = useMemo(
@@ -99,7 +105,10 @@ export const _RemoteVideoTile = React.memo(
       remoteParticipant,
       view: createVideoStreamResult?.view,
       /* @conditional-compile-remove(pinned-participants) */
-      strings: { ...props.strings }
+      strings: { ...props.strings },
+      isPinned,
+      onPinParticipant,
+      onUnpinParticipant
     });
 
     const videoTileContextualMenuProps = useMemo(() => {
@@ -145,6 +154,8 @@ export const _RemoteVideoTile = React.memo(
           /* @conditional-compile-remove(PSTN-calls) */
           participantState={participantState}
           {...videoTileContextualMenuProps}
+          /* @conditional-compile-remove(pinned-participants) */
+          isPinned={props.isPinned}
           /* @conditional-compile-remove(pinned-participants) */
           onLongTouch={() =>
             setDrawerMenuItemProps(

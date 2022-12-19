@@ -30,7 +30,10 @@ import { FloatingLocalVideoLayout } from './VideoGallery/FloatingLocalVideoLayou
 import { useIdentifiers } from '../identifiers';
 import { videoGalleryOuterDivStyle } from './styles/VideoGallery.styles';
 import { floatingLocalVideoTileStyle } from './VideoGallery/styles/FloatingLocalVideo.styles';
+/* @conditional-compile-remove(pinned-participants) */
 import { useId } from '@fluentui/react-hooks';
+/* @conditional-compile-remove(pinned-participants) */
+import { PinnedParticipantsLayout } from './VideoGallery/PinnedParticipantsLayout';
 
 /**
  * @private
@@ -69,6 +72,12 @@ export interface VideoGalleryStrings {
   /* @conditional-compile-remove(pinned-participants) */
   /** Menu text shown in Video Tile contextual menu for setting a remote participants video to fill the frame */
   fillRemoteParticipantFrame: string;
+  /* @conditional-compile-remove(pinned-participants) */
+  /** Menu text shown in Video Tile contextual menu for pinning a remote participant's video tile */
+  pinParticipantForMe: string;
+  /* @conditional-compile-remove(pinned-participants) */
+  /** Menu text shown in Video Tile contextual menu for setting a remote participant's video tile */
+  unpinParticipantForMe: string;
 }
 
 /**
@@ -155,10 +164,25 @@ export interface VideoGalleryProps {
   localVideoCameraCycleButtonProps?: LocalVideoCameraCycleButtonProps;
   /* @conditional-compile-remove(pinned-participants) */
   /**
+   * List of pinned participant userIds
+   */
+  pinnedParticipants?: string[];
+  /* @conditional-compile-remove(pinned-participants) */
+  /**
    * Whether to show the remote video tile contextual menu.
    * @defaultValue `true`
    */
   showRemoteVideoTileContextualMenu?: boolean;
+  /* @conditional-compile-remove(pinned-participants) */
+  /**
+   * This callback will be called when a participant video tile is pinned
+   */
+  onPinParticipant?: (userId: string) => void;
+  /* @conditional-compile-remove(pinned-participants) */
+  /**
+   * This callback will be called when a participant video tile is un-pinned
+   */
+  onUnpinParticipant?: (userId: string) => void;
 }
 
 /**
@@ -186,7 +210,11 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     showMuteIndicator,
     maxRemoteVideoStreams = DEFAULT_MAX_REMOTE_VIDEO_STREAMS,
     showCameraSwitcherInLocalPreview,
-    localVideoCameraCycleButtonProps
+    localVideoCameraCycleButtonProps,
+    /* @conditional-compile-remove(pinned-participants) */
+    onPinParticipant: onPinParticipantHandler,
+    /* @conditional-compile-remove(pinned-participants) */
+    onUnpinParticipant: onUnpinParticipantHandler
   } = props;
 
   const ids = useIdentifiers();
@@ -204,6 +232,12 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   const containerWidth = _useContainerWidth(containerRef);
   const containerHeight = _useContainerHeight(containerRef);
   const isNarrow = containerWidth ? isNarrowWidth(containerWidth) : false;
+
+  /* @conditional-compile-remove(pinned-participants) */
+  const [pinnedParticipantsState, setPinnedParticipantsState] = React.useState<string[]>([]);
+  /* @conditional-compile-remove(pinned-participants) */
+  // Use pinnedParticipants from props but if it is not defined use the maintained state of pinned participants
+  const pinnedParticipants = props.pinnedParticipants ?? pinnedParticipantsState;
 
   /* @conditional-compile-remove(rooms) */
   const permissions = _usePermissions();
@@ -275,9 +309,32 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     /* @conditional-compile-remove(rooms) */ permissions.cameraButton
   ]);
 
+  /* @conditional-compile-remove(pinned-participants) */
+  const onPinParticipant = useCallback(
+    (userId: string) => {
+      if (!pinnedParticipantsState.includes(userId)) {
+        setPinnedParticipantsState(pinnedParticipantsState.concat(userId));
+      }
+      onPinParticipantHandler?.(userId);
+    },
+    [pinnedParticipantsState, setPinnedParticipantsState, onPinParticipantHandler]
+  );
+  /* @conditional-compile-remove(pinned-participants) */
+  const onUnpinParticipant = useCallback(
+    (userId: string) => {
+      setPinnedParticipantsState(pinnedParticipantsState.filter((p) => p !== userId));
+      onUnpinParticipantHandler?.(userId);
+    },
+    [pinnedParticipantsState, setPinnedParticipantsState, onUnpinParticipantHandler]
+  );
+
   const defaultOnRenderVideoTile = useCallback(
     (participant: VideoGalleryRemoteParticipant, isVideoParticipant?: boolean) => {
       const remoteVideoStream = participant.videoStream;
+
+      /* @conditional-compile-remove(pinned-participants) */
+      const isPinned = pinnedParticipants?.includes(participant.userId);
+
       return (
         <_RemoteVideoTile
           key={participant.userId}
@@ -297,6 +354,12 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           /* @conditional-compile-remove(pinned-participants) */
           showRemoteVideoTileContextualMenu={props.showRemoteVideoTileContextualMenu}
           drawerMenuHostId={drawerMenuHostId}
+          /* @conditional-compile-remove(pinned-participants) */
+          onPinParticipant={onPinParticipant}
+          /* @conditional-compile-remove(pinned-participants) */
+          onUnpinParticipant={onUnpinParticipant}
+          /* @conditional-compile-remove(pinned-participants) */
+          isPinned={isPinned}
         />
       );
     },
@@ -307,9 +370,11 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       onRenderAvatar,
       showMuteIndicator,
       strings,
-      /* @conditional-compile-remove(pinned-participants) */
-      props.showRemoteVideoTileContextualMenu,
-      drawerMenuHostId
+      /* @conditional-compile-remove(pinned-participants) */ drawerMenuHostId,
+      /* @conditional-compile-remove(pinned-participants) */ props.showRemoteVideoTileContextualMenu,
+      /* @conditional-compile-remove(pinned-participants) */ pinnedParticipants,
+      /* @conditional-compile-remove(pinned-participants) */ onPinParticipant,
+      /* @conditional-compile-remove(pinned-participants) */ onUnpinParticipant
     ]
   );
 
@@ -333,32 +398,48 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     ? localScreenShareStreamComponent
     : undefined;
 
-  const videoGalleryLayout =
-    layout === 'floatingLocalVideo' ? (
-      <FloatingLocalVideoLayout
-        remoteParticipants={remoteParticipants}
-        onRenderRemoteParticipant={onRenderRemoteVideoTile ?? defaultOnRenderVideoTile}
-        localVideoComponent={localVideoTile}
-        screenShareComponent={screenShareComponent}
-        showCameraSwitcherInLocalPreview={showCameraSwitcherInLocalPreview}
-        maxRemoteVideoStreams={maxRemoteVideoStreams}
-        dominantSpeakers={dominantSpeakers}
-        parentWidth={containerWidth}
-        parentHeight={containerHeight}
-        styles={styles}
-      />
-    ) : (
-      <DefaultLayout
-        remoteParticipants={remoteParticipants}
-        onRenderRemoteParticipant={onRenderRemoteVideoTile ?? defaultOnRenderVideoTile}
-        localVideoComponent={localVideoTile}
-        screenShareComponent={screenShareComponent}
-        maxRemoteVideoStreams={maxRemoteVideoStreams}
-        dominantSpeakers={dominantSpeakers}
-        parentWidth={containerWidth}
-        styles={styles}
-      />
-    );
+  const layoutProps = useMemo(
+    () => ({
+      remoteParticipants,
+      /* @conditional-compile-remove(pinned-participants) */ pinnedParticipants,
+      screenShareComponent,
+      showCameraSwitcherInLocalPreview,
+      maxRemoteVideoStreams,
+      dominantSpeakers,
+      styles,
+      onRenderRemoteParticipant: onRenderRemoteVideoTile ?? defaultOnRenderVideoTile,
+      localVideoComponent: localVideoTile,
+      parentWidth: containerWidth,
+      parentHeight: containerHeight,
+      isLocalVideoFloating: layout === 'floatingLocalVideo'
+    }),
+    [
+      remoteParticipants,
+      screenShareComponent,
+      showCameraSwitcherInLocalPreview,
+      maxRemoteVideoStreams,
+      dominantSpeakers,
+      styles,
+      localVideoTile,
+      containerWidth,
+      containerHeight,
+      onRenderRemoteVideoTile,
+      defaultOnRenderVideoTile,
+      layout,
+      /* @conditional-compile-remove(pinned-participants) */ pinnedParticipants
+    ]
+  );
+
+  const videoGalleryLayout = useMemo(() => {
+    /* @conditional-compile-remove(pinned-participants) */
+    if (layoutProps.pinnedParticipants.length > 0) {
+      return <PinnedParticipantsLayout {...layoutProps} />;
+    }
+    if (layout === 'floatingLocalVideo') {
+      return <FloatingLocalVideoLayout {...layoutProps} />;
+    }
+    return <DefaultLayout {...layoutProps} />;
+  }, [layout, layoutProps]);
 
   return (
     <div

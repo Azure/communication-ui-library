@@ -36,8 +36,8 @@ import { bannerNotificationStyles } from '../styles/CallPage.styles';
 import { usePropsFor } from '../hooks/usePropsFor';
 import { useAdapter } from '../adapter/CallAdapterProvider';
 /* @conditional-compile-remove(call-readiness) */
-import { DevicePermissionRestrictions } from '../CallComposite';
-import { ConfigurationpageErrorBar } from '../components/ConfigurationpageErrorBar';
+import { DeviceCheckOptions } from '../CallComposite';
+import { ConfigurationPageErrorBar } from '../components/ConfigurationPageErrorBar';
 /* @conditional-compile-remove(call-readiness) */
 import { getDevicePermissionState } from '../utils';
 /* @conditional-compile-remove(call-readiness) */
@@ -50,7 +50,7 @@ export interface ConfigurationPageProps {
   mobileView: boolean;
   startCallHandler(): void;
   /* @conditional-compile-remove(call-readiness) */
-  devicePermissions?: DevicePermissionRestrictions;
+  deviceChecks?: DeviceCheckOptions;
   /* @conditional-compile-remove(call-readiness) */
   onPermissionsTroubleshootingClick?: (permissionsState: {
     camera: PermissionState;
@@ -69,7 +69,7 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
   const {
     startCallHandler,
     mobileView,
-    /* @conditional-compile-remove(call-readiness) */ devicePermissions,
+    /* @conditional-compile-remove(call-readiness) */ deviceChecks,
     /* @conditional-compile-remove(call-readiness) */ onPermissionsTroubleshootingClick,
     /* @conditional-compile-remove(call-readiness) */ onNetworkingTroubleShootingClick,
     /* @conditional-compile-remove(call-readiness) */ callReadinessOptedIn = false
@@ -89,6 +89,8 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
   let errorBarProps = usePropsFor(ErrorBar);
   const adapter = useAdapter();
   const deviceState = adapter.getState().devices;
+  /* @conditional-compile-remove(unsupported-browser) */
+  const environmentInfo = adapter.getState().environmentInfo;
 
   let disableStartCallButton = !microphonePermissionGranted || deviceState.microphones?.length === 0;
   /* @conditional-compile-remove(rooms) */
@@ -99,7 +101,9 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
   if (!rolePermissions.cameraButton) {
     errorBarProps = {
       ...errorBarProps,
-      activeErrorMessages: errorBarProps.activeErrorMessages.filter((e) => e.type !== 'callCameraAccessDenied')
+      activeErrorMessages: errorBarProps.activeErrorMessages.filter(
+        (e) => e.type !== 'callCameraAccessDenied' && e.type !== 'callCameraAccessDeniedSafari'
+      )
     };
   }
   /* @conditional-compile-remove(rooms) */
@@ -110,14 +114,14 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
   }
 
   /* @conditional-compile-remove(call-readiness) */
-  // Overrides role permissions if CallCompositeOptions devicePermissions are set
-  if (devicePermissions) {
+  // Overrides role permissions if CallCompositeOptions deviceChecks are set
+  if (deviceChecks) {
     if (
-      ['doNotPrompt', 'optional'].includes(devicePermissions.camera) &&
-      ['doNotPrompt', 'optional'].includes(devicePermissions.microphone)
+      ['doNotPrompt', 'optional'].includes(deviceChecks.camera) &&
+      ['doNotPrompt', 'optional'].includes(deviceChecks.microphone)
     ) {
       disableStartCallButton = false;
-    } else if (devicePermissions.camera === 'required') {
+    } else if (deviceChecks.camera === 'required') {
       disableStartCallButton = !cameraPermissionGranted || deviceState.cameras?.length === 0;
     }
   }
@@ -145,9 +149,26 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
     microphone: PermissionState;
   } = {
     // fall back to using cameraPermissionGranted and microphonePermissionGranted if permission API is not supported
-    camera: videoState && videoState !== 'unsupported' ? videoState : cameraPermissionGranted ? 'granted' : 'denied',
+    camera:
+      videoState && videoState !== 'unsupported'
+        ? cameraPermissionGranted !== false
+          ? videoState
+          : 'denied'
+        : cameraPermissionGranted !== false
+        ? cameraPermissionGranted
+          ? 'granted'
+          : 'prompt'
+        : 'denied',
     microphone:
-      audioState && audioState !== 'unsupported' ? audioState : microphonePermissionGranted ? 'granted' : 'denied'
+      audioState && audioState !== 'unsupported'
+        ? microphonePermissionGranted !== false
+          ? audioState
+          : 'denied'
+        : microphonePermissionGranted !== false
+        ? microphonePermissionGranted
+          ? 'granted'
+          : 'prompt'
+        : 'denied'
   };
   /* @conditional-compile-remove(call-readiness) */
   const networkErrors = errorBarProps.activeErrorMessages.filter((message) => message.type === 'callNetworkQualityLow');
@@ -169,7 +190,7 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
   return (
     <Stack className={mobileView ? configurationContainerStyleMobile : configurationContainerStyleDesktop}>
       <Stack styles={bannerNotificationStyles}>
-        <ConfigurationpageErrorBar
+        <ConfigurationPageErrorBar
           /* @conditional-compile-remove(call-readiness) */
           // show trouble shooting error bar when encountering network error/ permission error
           showTroubleShootingErrorBar={
@@ -196,8 +217,8 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
           audioState !== 'unsupported' && (
             <CallReadinessModal
               mobileView={mobileView}
-              audioState={audioState}
-              videoState={videoState}
+              /* @conditional-compile-remove(unsupported-browser) */
+              environmentInfo={environmentInfo}
               permissionsState={permissionsState}
               isPermissionsModalDismissed={isPermissionsModalDismissed}
               setIsPermissionsModalDismissed={setIsPermissionsModalDismissed}
@@ -215,11 +236,11 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
           (videoState === 'unsupported' || audioState === 'unsupported') && (
             <CallReadinessModalFallBack
               mobileView={mobileView}
-              cameraPermissionGranted={cameraPermissionGranted}
-              microphonePermissionGranted={microphonePermissionGranted}
               checkPermissionModalShowing={forceShowingCheckPermissions}
               permissionsState={permissionsState}
               isPermissionsModalDismissed={isPermissionsModalDismissed}
+              /* @conditional-compile-remove(unsupported-browser) */
+              environmentInfo={environmentInfo}
               setIsPermissionsModalDismissed={setIsPermissionsModalDismissed}
               onPermissionsTroubleshootingClick={onPermissionsTroubleshootingClick}
             />

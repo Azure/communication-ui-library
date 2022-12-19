@@ -14,8 +14,6 @@ import {
 } from '@azure/communication-common';
 /* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
-/* @conditional-compile-remove(unsupported-browser) */
-import { CallAdapterOptionalFeatures } from '../adapter/CallAdapter';
 
 const ACCESS_DENIED_TEAMS_MEETING_SUB_CODE = 5854;
 const REMOTE_PSTN_USER_HUNG_UP = 560000;
@@ -132,7 +130,6 @@ type GetCallCompositePageFunction = ((
     previousCall: CallState | undefined,
     unsupportedBrowserInfo?: {
       environmentInfo?: EnvironmentInfo;
-      features?: CallAdapterOptionalFeatures;
       unsupportedBrowserVersionOptedIn?: boolean;
     }
   ) => CallCompositePage);
@@ -157,7 +154,6 @@ export const getCallCompositePage: GetCallCompositePageFunction = (
   /* @conditional-compile-remove(unsupported-browser) */
   if (
     isUnsupportedEnvironment(
-      unsupportedBrowserInfo.features,
       unsupportedBrowserInfo.environmentInfo,
       unsupportedBrowserInfo.unsupportedBrowserVersionOptedIn
     )
@@ -291,45 +287,54 @@ export const isDisabled = (option: boolean | { disabled: boolean } | undefined):
 
 /* @conditional-compile-remove(call-readiness) */
 /**
+ * @returns Permissions state for the camera.
+ */
+const queryCameraPermissionFromPermissionsAPI = async (): Promise<PermissionState | 'unsupported'> => {
+  try {
+    return (await navigator.permissions.query({ name: 'camera' as PermissionName })).state;
+  } catch (e) {
+    console.info('permissions API is not supported by browser', e);
+    return 'unsupported';
+  }
+};
+
+/* @conditional-compile-remove(call-readiness) */
+/**
+ * @returns Permissions state for the microphone.
+ */
+const queryMicrophonePermissionFromPermissionsAPI = async (): Promise<PermissionState | 'unsupported'> => {
+  try {
+    return (await navigator.permissions.query({ name: 'microphone' as PermissionName })).state;
+  } catch (e) {
+    console.info('permissions API is not supported by browser', e);
+    return 'unsupported';
+  }
+};
+
+/* @conditional-compile-remove(call-readiness) */
+/**
  *
  * This function uses permission API to determine if device permission state is granted, prompt or denied
  * @returns whether device permission state is granted, prompt or denied
- * If permission API is not supported on this browser, do nothing and log out error
+ * If permission API is not supported on this browser, permission state is set to unsupported.
  * @private
  */
-export const getDevicePermissionState = (
+export const getDevicePermissionState = async (
   setVideoState: (state: PermissionState | 'unsupported') => void,
   setAudioState: (state: PermissionState | 'unsupported') => void
-): void => {
-  navigator.permissions
-    .query({ name: 'camera' as PermissionName })
-    .then((result) => {
-      setVideoState(result.state);
-    })
-    .catch(() => {
-      setVideoState('unsupported');
-    });
-
-  navigator.permissions
-    .query({ name: 'microphone' as PermissionName })
-    .then((result) => {
-      setAudioState(result.state);
-    })
-    .catch(() => {
-      setAudioState('unsupported');
-    });
+): Promise<void> => {
+  setVideoState(await queryCameraPermissionFromPermissionsAPI());
+  setAudioState(await queryMicrophonePermissionFromPermissionsAPI());
 };
 /* @conditional-compile-remove(unsupported-browser) */
 const isUnsupportedEnvironment = (
-  features?: CallAdapterOptionalFeatures,
   environmentInfo?: EnvironmentInfo,
   unsupportedBrowserVersionOptedIn?: boolean
 ): boolean => {
   return !!(
-    features?.unsupportedEnvironment &&
-    (environmentInfo?.isSupportedBrowser === false ||
-      (environmentInfo?.isSupportedBrowserVersion === false && !unsupportedBrowserVersionOptedIn) ||
-      environmentInfo?.isSupportedPlatform === false)
+    environmentInfo?.isSupportedBrowser === false ||
+    (environmentInfo?.isSupportedBrowserVersion === false && !unsupportedBrowserVersionOptedIn) ||
+    environmentInfo?.isSupportedPlatform === false
   );
 };
 
@@ -347,4 +352,16 @@ export const isValidIdentifier = (identifier: CommunicationIdentifier): boolean 
     isMicrosoftTeamsUserIdentifier(identifier) ||
     isUnknownIdentifier(identifier)
   );
+};
+
+/**
+ * Check if we are using safari browser
+ * @private
+ */
+export const _isSafari = (
+  environmentInfo: undefined | /* @conditional-compile-remove(unsupported-browser) */ EnvironmentInfo
+): boolean => {
+  /* @conditional-compile-remove(unsupported-browser) */
+  return environmentInfo?.environment.browser === 'safari';
+  return /^((?!chrome|android|crios|fxios).)*safari/i.test(navigator.userAgent);
 };

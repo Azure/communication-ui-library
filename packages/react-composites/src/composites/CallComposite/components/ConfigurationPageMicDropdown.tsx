@@ -13,15 +13,15 @@ import {
 import { dropDownStyles } from '../styles/LocalDeviceSettings.styles';
 /* @conditional-compile-remove(call-readiness) */
 import { CallCompositeIcon } from '../../common/icons';
-import { CallingHandlers } from '@internal/calling-component-bindings';
 
 /**
  * @private
  */
-export interface ConfigurationpageMicDropdownProps {
+export interface ConfigurationPageMicDropdownProps {
   micGrantedDropdown: JSX.Element;
   micPermissionGranted: boolean;
-  dropdownProps?: Record<string, never> & Partial<CallingHandlers>;
+  /* @conditional-compile-remove(call-readiness) */
+  dropdownProps: Partial<_DevicePermissionDropdownProps>;
   callReadinessOptedIn?: boolean;
   onClickEnableDevicePermission?: () => void;
 }
@@ -29,7 +29,7 @@ export interface ConfigurationpageMicDropdownProps {
 /**
  * @private
  */
-export const ConfigurationpageMicDropdown = (props: ConfigurationpageMicDropdownProps): JSX.Element => {
+export const ConfigurationPageMicDropdown = (props: ConfigurationPageMicDropdownProps): JSX.Element => {
   /* @conditional-compile-remove(call-readiness) */
   const theme = useTheme();
   /* @conditional-compile-remove(call-readiness) */

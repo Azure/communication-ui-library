@@ -148,14 +148,16 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   if (!rolePermissions.cameraButton && props.errorBarProps) {
     errorBarProps = {
       ...props.errorBarProps,
-      activeErrorMessages: props.errorBarProps.activeErrorMessages.filter((e) => e.type !== 'callCameraAccessDenied')
+      activeErrorMessages: props.errorBarProps.activeErrorMessages.filter(
+        (e) => e.type !== 'callCameraAccessDenied' && e.type !== 'callCameraAccessDeniedSafari'
+      )
     };
   }
 
   return (
     <div ref={containerRef} className={mergeStyles(containerDivStyles)} id={props.id}>
       <Stack verticalFill horizontalAlign="stretch" className={containerClassName} data-ui-id={props.dataUiId}>
-        <Stack horizontal grow styles={callArrangementContainerStyles}>
+        <Stack grow styles={callArrangementContainerStyles}>
           <Stack.Item styles={notificationsContainerStyles}>
             <Stack styles={bannerNotificationStyles}>
               <_ComplianceBanner {...props.complianceBannerProps} />
@@ -183,19 +185,21 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                 />
               </Stack.Item>
             )}
-          <Stack.Item grow style={callCompositeContainerFlex()}>
-            <Stack.Item styles={callGalleryStyles} grow>
-              {props.onRenderGalleryContent && (
-                <Stack verticalFill styles={mediaGalleryContainerStyles}>
-                  {props.onRenderGalleryContent()}
-                </Stack>
-              )}
+          <Stack horizontal grow>
+            <Stack.Item grow style={callCompositeContainerFlex()}>
+              <Stack.Item styles={callGalleryStyles} grow>
+                {props.onRenderGalleryContent && (
+                  <Stack verticalFill styles={mediaGalleryContainerStyles}>
+                    {props.onRenderGalleryContent()}
+                  </Stack>
+                )}
+              </Stack.Item>
             </Stack.Item>
-          </Stack.Item>
-          {
-            /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
-            callPaneContent()
-          }
+            {
+              /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
+              callPaneContent()
+            }
+          </Stack>
         </Stack>
       </Stack>
     </div>

@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React, { useEffect, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { CallAdapterProvider } from '../CallComposite/adapter/CallAdapterProvider';
 import { CallAdapter } from '../CallComposite';
 import { PeopleButton } from './PeopleButton';
@@ -11,7 +11,7 @@ import { callControlsContainerStyles } from '../CallComposite/styles/CallPage.st
 import { useCallWithChatCompositeStrings } from './hooks/useCallWithChatCompositeStrings';
 import { ChatAdapter } from '../ChatComposite';
 import { ChatButtonWithUnreadMessagesBadge } from './ChatButtonWithUnreadMessagesBadge';
-import { BaseCustomStyles, ControlBarButton, ControlBarButtonStyles } from '@internal/react-components';
+import { BaseCustomStyles, ControlBarButtonStyles } from '@internal/react-components';
 import { ControlBar } from '@internal/react-components';
 import { Microphone } from '../CallComposite/components/buttons/Microphone';
 import { Camera } from '../CallComposite/components/buttons/Camera';
@@ -29,7 +29,7 @@ import {
 /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
 import { DesktopMoreButton } from './components/DesktopMoreButton';
 import { isDisabled } from '../CallComposite/utils';
-import { hiddenAutoFocusButtonStyles } from './styles/CallWithChatCompositeStyles';
+import { HiddenFocusStartPoint } from '../common/HiddenFocusStartPoint';
 
 /**
  * @private
@@ -75,12 +75,6 @@ const inferCallWithChatControlOptions = (
  * @private
  */
 export const CallWithChatControlBar = (props: CallWithChatControlBarProps & ContainerRectProps): JSX.Element => {
-  useEffect(() => {
-    // On mount, button used for initial focus is hidden to prevent screen readers from announcing the initial focus
-    if (document.querySelector('[data-ui-id=call-with-chat-autofocus-hidden-button]') === document.activeElement) {
-      document.activeElement?.setAttribute('hidden', 'true');
-    }
-  }, []);
   const theme = useTheme();
   const callWithChatStrings = useCallWithChatCompositeStrings();
   const options = inferCallWithChatControlOptions(props.mobileView, props.callControls);
@@ -164,17 +158,11 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps & Cont
         <CallAdapterProvider adapter={props.callAdapter}>
           <Stack horizontalAlign="center">
             {/*
-              hidden button to set first tab keypress focus on ControlBar on initial render. 
-              Unable to set initial focus on Microphone as it causes tooltip to render. On mount, button is
-              autofocused then immediately hidden
-            */}
-            <ControlBarButton
-              autoFocus
-              ariaHidden={true}
-              data-ui-id={'call-with-chat-autofocus-hidden-button'}
-              styles={hiddenAutoFocusButtonStyles}
-              tabIndex={-1}
-            />
+              HiddenFocusStartPoint is a util component used when we can't ensure the initial element for first
+              tab focus is at the top of dom tree. It moves the first-tab focus to the next interact-able element
+              immediately after it in the dom tree.
+              */}
+            <HiddenFocusStartPoint />
             <Stack.Item>
               {/*
                   Note: We use the layout="horizontal" instead of dockedBottom because of how we position the

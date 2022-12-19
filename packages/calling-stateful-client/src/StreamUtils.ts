@@ -597,7 +597,12 @@ export function createView(
     return createViewLocalVideo(context, internalContext, callId, options);
   } else if (!('id' in stream) && !callId) {
     // Render LocalVideoStream that is not part of a Call
-    return createViewUnparentedVideo(context, internalContext, stream, options);
+    // Because it is not part of the call we don't tee errors to state naturally (e.g. via a Call Client function such as startVideo).
+    // We do not have a startLocalPreviewVideo function, so as a workaround we ensure any errors are propagated here.
+    return context.withAsyncErrorTeedToState(
+      async () => await createViewUnparentedVideo(context, internalContext, stream, options),
+      'Call.startVideo'
+    )();
   } else {
     _logEvent(callingStatefulLogger, {
       name: EventNames.CREATE_STREAM_INVALID_PARAMS,
@@ -626,7 +631,12 @@ export function disposeView(
     disposeViewLocalVideo(context, internalContext, callId);
   } else if (!('id' in stream) && !callId) {
     // Stop rendering LocalVideoStream that is not part of a Call
-    disposeViewUnparentedVideo(context, internalContext, stream);
+    // Because it is not part of the call we don't tee errors to state naturally (e.g. via a Call Client function such as startVideo).
+    // We do not have a stopLocalPreviewVideo function, so as a workaround we ensure any errors are propagated here.
+    context.withErrorTeedToState(
+      () => disposeViewUnparentedVideo(context, internalContext, stream),
+      'Call.stopVideo'
+    )();
   } else {
     _logEvent(callingStatefulLogger, {
       name: EventNames.DISPOSE_STREAM_INVALID_PARAMS,
