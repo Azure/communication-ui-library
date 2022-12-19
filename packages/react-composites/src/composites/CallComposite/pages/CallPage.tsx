@@ -89,6 +89,8 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
               {...mediaGalleryHandlers}
               onRenderAvatar={onRenderAvatar}
               onFetchAvatarPersonaData={onFetchAvatarPersonaData}
+              /* @conditional-compile-remove(pinned-participants) */
+              showRemoteVideoTileMenu={options?.showRemoteVideoTileMenu}
             />
           ) : (
             <NetworkReconnectTile {...networkReconnectTileProps} />

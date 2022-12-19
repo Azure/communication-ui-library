@@ -267,6 +267,8 @@ export type {
   BrowserPermissionDeniedStyles,
   BrowserPermissionDeniedIOSProps
 } from '../../react-components/src';
+/* @conditional-compile-remove(pinned-participants) */
+export type { VideoTileContextualMenuProps, VideoTileDrawerMenuProps } from '../../react-components/src';
 export * from '../../react-components/src/localization/locales';
 export * from '../../react-components/src/theming';
 export * from '../../calling-stateful-client/src/index-public';

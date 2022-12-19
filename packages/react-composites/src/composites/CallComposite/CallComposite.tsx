@@ -164,6 +164,13 @@ export type CallCompositeOptions = {
    * if this is not supplied, the composite will not show a unsupported browser page.
    */
   onEnvironmentInfoTroubleshootingClick?: () => void;
+  /* @conditional-compile-remove(pinned-participants) */
+  /**
+   * If set to false, remote video tiles in the VideoGallery will not have menu options
+   *
+   * default: true
+   */
+  showRemoteVideoTileMenu?: boolean;
 };
 
 type MainScreenProps = {

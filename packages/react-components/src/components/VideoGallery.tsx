@@ -43,6 +43,13 @@ export const DEFAULT_MAX_REMOTE_VIDEO_STREAMS = 4;
  * Set aside only 6 dominant speakers for remaining audio participants
  */
 export const MAX_AUDIO_DOMINANT_SPEAKERS = 6;
+/**
+ * @private
+ * Default remote video tile menu options
+ */
+export const DEFAULT_REMOTE_VIDEO_TILE_MENU_OPTIONS = {
+  type: 'contextual'
+};
 
 /**
  * All strings that may be shown on the UI in the {@link VideoGallery}.
@@ -167,12 +174,6 @@ export interface VideoGalleryProps {
   pinnedParticipants?: string[];
   /* @conditional-compile-remove(pinned-participants) */
   /**
-   * Whether to show the remote video tile contextual menu.
-   * @defaultValue `true`
-   */
-  showRemoteVideoTileContextualMenu?: boolean;
-  /* @conditional-compile-remove(pinned-participants) */
-  /**
    * This callback will be called when a participant video tile is pinned
    */
   onPinParticipant?: (userId: string) => void;
@@ -181,8 +182,43 @@ export interface VideoGalleryProps {
    * This callback will be called when a participant video tile is un-pinned
    */
   onUnpinParticipant?: (userId: string) => void;
+  /* @conditional-compile-remove(pinned-participants) */
+  /**
+   * Options for showing the remote video tile menu.
+   * default: { type: 'contextual' }
+   */
+  remoteVideoTileMenuOptions?: false | VideoTileContextualMenuProps | VideoTileDrawerMenuProps;
 }
 
+/* @conditional-compile-remove(pinned-participants) */
+/**
+ * Properties for showing contextual menu for remote {@link VideoTile} components in {@link VideoGallery}
+ * @beta
+ */
+export interface VideoTileContextualMenuProps {
+  /**
+   * The menu property type
+   */
+  type: 'contextual';
+}
+
+/* @conditional-compile-remove(pinned-participants) */
+/**
+ * Properties for showing drawer menu on remote {@link VideoTile} long touch in {@link VideoGallery}
+ * @beta
+ */
+export interface VideoTileDrawerMenuProps {
+  /**
+   * The menu property type
+   */
+  type: 'drawer';
+  /**
+   * The optional id property provided on an element that the drawer menu should render within when a
+   * remote participant video tile is long touched. If an id is not provided, then a drawer menu will
+   * render within the VideoGallery component.
+   */
+  hostId?: string;
+}
 /**
  * VideoGallery represents a layout of video tiles for a specific call.
  * It displays a {@link VideoTile} for the local user as well as for each remote participant who has joined the call.
@@ -212,7 +248,9 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     /* @conditional-compile-remove(pinned-participants) */
     onPinParticipant: onPinParticipantHandler,
     /* @conditional-compile-remove(pinned-participants) */
-    onUnpinParticipant: onUnpinParticipantHandler
+    onUnpinParticipant: onUnpinParticipantHandler,
+    /* @conditional-compile-remove(pinned-participants) */
+    remoteVideoTileMenuOptions = DEFAULT_REMOTE_VIDEO_TILE_MENU_OPTIONS
   } = props;
 
   const ids = useIdentifiers();
@@ -346,7 +384,9 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           /* @conditional-compile-remove(PSTN-calls) */
           participantState={participant.state}
           /* @conditional-compile-remove(pinned-participants) */
-          showRemoteVideoTileContextualMenu={props.showRemoteVideoTileContextualMenu}
+          showRemoteVideoTileContextualMenu={
+            remoteVideoTileMenuOptions && remoteVideoTileMenuOptions.type === 'contextual'
+          }
           /* @conditional-compile-remove(pinned-participants) */
           onPinParticipant={onPinParticipant}
           /* @conditional-compile-remove(pinned-participants) */
@@ -363,7 +403,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       onRenderAvatar,
       showMuteIndicator,
       strings,
-      /* @conditional-compile-remove(pinned-participants) */ props.showRemoteVideoTileContextualMenu,
+      /* @conditional-compile-remove(pinned-participants) */ remoteVideoTileMenuOptions,
       /* @conditional-compile-remove(pinned-participants) */ pinnedParticipants,
       /* @conditional-compile-remove(pinned-participants) */ onPinParticipant,
       /* @conditional-compile-remove(pinned-participants) */ onUnpinParticipant

@@ -47,6 +47,8 @@ export interface MediaGalleryProps {
   onRenderAvatar?: OnRenderAvatarCallback;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   isMobile?: boolean;
+  /* @conditional-compile-remove(pinned-participants) */
+  showRemoteVideoTileMenu?: boolean;
 }
 
 /**
@@ -91,7 +93,7 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
         localVideoCameraCycleButtonProps={cameraSwitcherProps}
         onRenderAvatar={onRenderAvatar}
         /* @conditional-compile-remove(pinned-participants) */
-        showRemoteVideoTileContextualMenu={!props.isMobile}
+        remoteVideoTileMenuOptions={props.showRemoteVideoTileMenu && (props.isMobile ? { type: 'contextual' } : false)}
       />
     );
   }, [videoGalleryProps, props.isMobile, onRenderAvatar, cameraSwitcherProps]);
