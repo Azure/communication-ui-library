@@ -48,7 +48,7 @@ const getDocs: () => JSX.Element = () => {
   /* eslint-disable react/no-unescaped-entities */
   return (
     <Stack>
-      <Title>Domain Permissions</Title>
+      <Title>Site Permissions</Title>
       <SingleLineBetaBanner />
       <Description>
         Component to display information to the end user when their browser is denied permission to access the camera
