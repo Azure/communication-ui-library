@@ -198,6 +198,7 @@ const VideoTileMoreOptionsButton = (props: { contextualMenu?: IContextualMenuPro
   }
   return (
     <IconButton
+      data-ui-id="video-tile-more-options-button"
       styles={moreButtonStyles}
       iconProps={videoTileMoreIconProps}
       menuIconProps={videoTileMoreMenuIconProps}

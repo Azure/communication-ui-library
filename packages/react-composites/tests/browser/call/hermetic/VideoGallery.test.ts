@@ -9,7 +9,7 @@ import {
   test
 } from './fixture';
 import { expect } from '@playwright/test';
-import { dataUiId, waitForSelector, stableScreenshot } from '../../common/utils';
+import { dataUiId, waitForSelector, stableScreenshot, pageClick } from '../../common/utils';
 import { IDS } from '../../common/constants';
 
 test.describe('VideoGallery tests', async () => {
@@ -72,5 +72,27 @@ test.describe('VideoGallery tests', async () => {
     expect(await stableScreenshot(page)).toMatchSnapshot(
       'video-gallery-with-1-joining-1-hold-gridview-participant.png'
     );
+  });
+
+  /* @conditional-compile-remove(pinned-participants) */
+  test('Remote video tile pin menu button should be disabled when max remote video tiles are pinned', async ({
+    page,
+    serverUrl
+  }) => {
+    const displayNames = ['Tony Hawk', 'Marie Curie', 'Gal Gadot', 'Margaret Atwood', 'Kobe Bryant', "Conan O'Brien"];
+    const participants = displayNames.map((name) => defaultMockRemoteParticipant(name));
+    const initialState = defaultMockCallAdapterState(participants);
+
+    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
+
+    // pin remote video tiles up to the max allowed in the call composite
+    for (var i = 0; i < 4; i++) {
+      // click the more button of an unpinned remote video tile
+      await pageClick(page, dataUiId('video-tile-more-options-button') + '>>nth=-1');
+      await pageClick(page, dataUiId('video-tile-pin-participant-button'));
+    }
+    // click unpinned remote video tile and take  snapshot to verify pin button is disabled
+    await pageClick(page, dataUiId('video-tile-more-options-button') + '>>nth=-1');
+    expect(await stableScreenshot(page)).toMatchSnapshot('disabled-pin-menu-button.png');
   });
 });
