@@ -75,6 +75,7 @@ export const hiddenStyles: IStackStyles = {
 export const sidePaneStyles: IStackStyles = {
   root: {
     height: 'auto',
+    width: '100%',
     padding: '0.5rem 0.25rem',
     maxWidth: '21.5rem'
   }

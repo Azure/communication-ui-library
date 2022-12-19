@@ -38,7 +38,7 @@ import { SendDtmfDialpad } from '../common/SendDtmfDialpad';
 import { useCallWithChatCompositeStrings } from './hooks/useCallWithChatCompositeStrings';
 import { CallCompositeOptions } from '../CallComposite/CallComposite';
 /* @conditional-compile-remove(call-readiness) */
-import { DevicePermissionRestrictions } from '../CallComposite/CallComposite';
+import { DeviceCheckOptions } from '../CallComposite/CallComposite';
 import { drawerContainerStyles } from '../CallComposite/styles/CallComposite.styles';
 
 /**
@@ -90,10 +90,11 @@ export type CallWithChatCompositeOptions = {
   fileSharing?: FileSharingOptions;
   /* @conditional-compile-remove(call-readiness) */
   /**
-   * Device permission restrictions for your call.
-   * Require device permissions to be set or have them as optional or not required to start a call
+   * Device permissions check options for your call.
+   * Here you can choose what device permissions you prompt the user for,
+   * as well as what device permissions must be accepted before starting a call.
    */
-  devicePermissions?: DevicePermissionRestrictions;
+  deviceChecks?: DeviceCheckOptions;
   /* @conditional-compile-remove(call-readiness) */
   /**
    * Callback you may provide to supply users with further steps to troubleshoot why they have been
@@ -226,7 +227,7 @@ type CallWithChatScreenProps = {
   fileSharing?: FileSharingOptions;
   rtl?: boolean;
   /* @conditional-compile-remove(call-readiness) */
-  devicePermissions?: DevicePermissionRestrictions;
+  deviceChecks?: DeviceCheckOptions;
   /* @conditional-compile-remove(call-readiness) */
   callReadinessOptedIn?: boolean;
   /* @conditional-compile-remove(call-readiness) */
@@ -390,7 +391,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
     () => ({
       callControls: false,
       /* @conditional-compile-remove(call-readiness) */
-      devicePermissions: props.devicePermissions,
+      deviceChecks: props.deviceChecks,
       /* @conditional-compile-remove(call-readiness) */
       callReadinessOptedIn: props.callReadinessOptedIn,
       /* @conditional-compile-remove(call-readiness) */
@@ -404,7 +405,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
       /* @conditional-compile-remove(call-readiness) */
       props.callReadinessOptedIn,
       /* @conditional-compile-remove(call-readiness) */
-      props.devicePermissions,
+      props.deviceChecks,
       /* @conditional-compile-remove(unsupported-browser) */
       props.onEnvironmentInfoTroubleshootingClick,
       /* @conditional-compile-remove(call-readiness) */
@@ -536,7 +537,7 @@ export const CallWithChatComposite = (props: CallWithChatCompositeProps): JSX.El
       <CallWithChatScreen
         {...props}
         /* @conditional-compile-remove(call-readiness) */
-        devicePermissions={options?.devicePermissions}
+        deviceChecks={options?.deviceChecks}
         /* @conditional-compile-remove(call-readiness) */
         callReadinessOptedIn={options?.callReadinessOptedIn}
         callWithChatAdapter={adapter}

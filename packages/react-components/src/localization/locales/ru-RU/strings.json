@@ -184,7 +184,7 @@
     "participantStateRinging": "Выполняется вызов...",
     "participantStateHold": "На удержании"
   },
-  "DomainPermissions": {
+  "SitePermissions": {
     "primaryText": "Разрешить {appName} использовать камеру и микрофон",
     "secondaryText": "Это необходимо для того, чтобы участники могли видеть и слышать вас.",
     "linkText": "Нужна помощь? Получите справку по устранению неполадок",

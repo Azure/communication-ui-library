@@ -100,7 +100,6 @@ export type AzureCommunicationCallAdapterArgs = {
 // @beta
 export type AzureCommunicationCallAdapterOptions = {
     roleHint?: Role;
-    features?: CallAdapterOptionalFeatures;
 };
 
 // @public
@@ -201,7 +200,6 @@ export type CallAdapterClientState = {
     latestErrors: AdapterErrors;
     alternateCallerId?: string;
     environmentInfo?: EnvironmentInfo;
-    features?: CallAdapterOptionalFeatures;
     roleHint?: Role;
 };
 
@@ -218,11 +216,6 @@ export interface CallAdapterDeviceManagement {
 
 // @public
 export type CallAdapterLocator = TeamsMeetingLinkLocator | GroupCallLocator | /* @conditional-compile-remove(rooms) */ RoomCallLocator | /* @conditional-compile-remove(teams-adhoc-call) */ /* @conditional-compile-remove(PSTN-calls) */ CallParticipantsLocator;
-
-// @beta
-export type CallAdapterOptionalFeatures = {
-    unsupportedEnvironment?: boolean | UnsupportedEnvironmentFeatures;
-};
 
 // @public
 export type CallAdapterState = CallAdapterUiState & CallAdapterClientState;
@@ -327,7 +320,7 @@ export type CallCompositeIcons = {
 export type CallCompositeOptions = {
     errorBar?: boolean;
     callControls?: boolean | CallControlOptions;
-    devicePermissions?: DevicePermissionRestrictions;
+    deviceChecks?: DeviceCheckOptions;
     callReadinessOptedIn?: boolean;
     onPermissionsTroubleshootingClick?: (permissionsState: {
         camera: PermissionState;
@@ -721,7 +714,7 @@ export type CallWithChatCompositeIcons = {
 export type CallWithChatCompositeOptions = {
     callControls?: boolean | CallWithChatControlOptions;
     fileSharing?: FileSharingOptions;
-    devicePermissions?: DevicePermissionRestrictions;
+    deviceChecks?: DeviceCheckOptions;
     onPermissionsTroubleshootingClick?: (permissionsState: {
         camera: PermissionState;
         microphone: PermissionState;
@@ -1123,11 +1116,11 @@ export const DEFAULT_COMPOSITE_ICONS: {
     HoldCallButton: JSX.Element;
     ResumeCall: JSX.Element;
     DialpadBackspace: JSX.Element;
-    DomainPermissionsSparkle: JSX.Element;
-    DomainPermissionCamera: JSX.Element;
-    DomainPermissionMic: JSX.Element;
-    DomainPermissionCameraDenied: JSX.Element;
-    DomainPermissionMicDenied: JSX.Element;
+    SitePermissionsSparkle: JSX.Element;
+    SitePermissionCamera: JSX.Element;
+    SitePermissionMic: JSX.Element;
+    SitePermissionCameraDenied: JSX.Element;
+    SitePermissionMicDenied: JSX.Element;
     UnsupportedEnvironmentWarning: JSX.Element;
     BrowserPermissionDeniedError: JSX.Element;
     VideoTilePinned: JSX.Element;
@@ -1139,7 +1132,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
 };
 
 // @beta
-export interface DevicePermissionRestrictions {
+export interface DeviceCheckOptions {
     camera: 'required' | 'optional' | 'doNotPrompt';
     microphone: 'required' | 'optional' | 'doNotPrompt';
 }
@@ -1288,11 +1281,6 @@ export interface TeamsCallAdapter extends CommonCallAdapter {
 export type TopicChangedListener = (event: {
     topic: string;
 }) => void;
-
-// @beta
-export type UnsupportedEnvironmentFeatures = {
-    unsupportedBrowserVersionAllowed?: boolean;
-};
 
 // @public
 export const useAzureCommunicationCallAdapter: (args: Partial<AzureCommunicationCallAdapterArgs>, afterCreate?: ((adapter: CallAdapter) => Promise<CallAdapter>) | undefined, beforeDispose?: ((adapter: CallAdapter) => Promise<void>) | undefined) => CallAdapter | undefined;
