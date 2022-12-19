@@ -30,7 +30,6 @@ import { FloatingLocalVideoLayout } from './VideoGallery/FloatingLocalVideoLayou
 import { useIdentifiers } from '../identifiers';
 import { videoGalleryOuterDivStyle } from './styles/VideoGallery.styles';
 import { floatingLocalVideoTileStyle } from './VideoGallery/styles/FloatingLocalVideo.styles';
-/* @conditional-compile-remove(pinned-participants) */
 import { useId } from '@fluentui/react-hooks';
 /* @conditional-compile-remove(pinned-participants) */
 import { PinnedParticipantsLayout } from './VideoGallery/PinnedParticipantsLayout';
