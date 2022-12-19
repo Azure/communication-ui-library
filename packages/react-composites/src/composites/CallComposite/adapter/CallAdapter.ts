@@ -63,30 +63,6 @@ export const END_CALL_PAGES: CallCompositePage[] = [
 ];
 
 /**
- * Feature options for unsupported browser functionality
- *
- * @beta
- */
-export type UnsupportedEnvironmentFeatures = {
-  /**
-   * Will allow the end user to choose to enter a call with a unsupported browser version.
-   */
-  unsupportedBrowserVersionAllowed?: boolean;
-};
-
-/**
- * options object to enable opt in features for the CallAdapter
- *
- * @beta
- */
-export type CallAdapterOptionalFeatures = {
-  /**
-   * Feature flag for enabling the unsupported environment logic in the CallAdapter.
-   */
-  unsupportedEnvironment?: boolean | UnsupportedEnvironmentFeatures;
-};
-
-/**
  * {@link CommonCallAdapter} state for pure UI purposes.
  *
  * @public
@@ -124,11 +100,6 @@ export type CallAdapterClientState = {
    * Environment information about system the adapter is made on
    */
   environmentInfo?: EnvironmentInfo;
-  /* @conditional-compile-remove(unsupported-browser) */
-  /**
-   * Optional features that are to be enabled through the adapter.
-   */
-  features?: CallAdapterOptionalFeatures;
   /* @conditional-compile-remove(rooms) */
   /**
    * Use this to hint the role of the user when the role is not available before a Rooms call is started. This value

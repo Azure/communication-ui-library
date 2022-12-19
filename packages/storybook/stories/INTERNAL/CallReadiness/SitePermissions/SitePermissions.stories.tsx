@@ -3,9 +3,9 @@
 
 import { Stack } from '@fluentui/react';
 import {
-  CameraAndMicrophoneDomainPermissions as CameraAndMicrophoneDomainPermissionsComponent,
-  CameraDomainPermissions as CameraDomainPermissionsComponent,
-  MicrophoneDomainPermissions as MicrophoneDomainPermissionsComponent,
+  CameraAndMicrophoneSitePermissions as CameraAndMicrophoneSitePermissionsComponent,
+  CameraSitePermissions as CameraSitePermissionsComponent,
+  MicrophoneSitePermissions as MicrophoneSitePermissionsComponent,
   _DrawerSurface
 } from '@internal/react-components';
 import { Canvas, Description, Heading, Props, Title } from '@storybook/addon-docs';
@@ -14,38 +14,38 @@ import React from 'react';
 import { SingleLineBetaBanner } from '../../../BetaBanners/SingleLineBetaBanner';
 import { COMPONENT_FOLDER_PREFIX } from '../../../constants';
 import { ArgsFrom, controlsToAdd, hiddenControl } from '../../../controlsUtils';
-import { DomainPermissionsDrawer } from './snippets/DomainPermissionsDrawer.snippet';
-import { DomainPermissionsModal } from './snippets/DomainPermissionsModal.snippet';
+import { SitePermissionsDrawer } from './snippets/SitePermissionsDrawer.snippet';
+import { SitePermissionsModal } from './snippets/SitePermissionsModal.snippet';
 
-const DomainPermissionsDrawerExample = require('!!raw-loader!./snippets/DomainPermissionsDrawer.snippet.tsx').default;
-const DomainPermissionsModalExample = require('!!raw-loader!./snippets/DomainPermissionsModal.snippet.tsx').default;
+const SitePermissionsDrawerExample = require('!!raw-loader!./snippets/SitePermissionsDrawer.snippet.tsx').default;
+const SitePermissionsModalExample = require('!!raw-loader!./snippets/SitePermissionsModal.snippet.tsx').default;
 
 const storyControls = {
-  domainRequest: controlsToAdd.domainDeviceRequest,
+  siteRequest: controlsToAdd.siteDeviceRequest,
   appName: controlsToAdd.appName,
-  type: controlsToAdd.domainDeviceRequestStatus
+  type: controlsToAdd.siteDeviceRequestStatus
 };
 
-const DomainPermissionsStory = (args: ArgsFrom<typeof storyControls>): JSX.Element => {
+const SitePermissionsStory = (args: ArgsFrom<typeof storyControls>): JSX.Element => {
   return (
     <Stack>
-      {args.domainRequest === controlsToAdd.domainDeviceRequest.options[0] && (
-        <CameraAndMicrophoneDomainPermissionsComponent
+      {args.siteRequest === controlsToAdd.siteDeviceRequest.options[0] && (
+        <CameraAndMicrophoneSitePermissionsComponent
           appName={args.appName}
           onTroubleshootingClick={() => alert('you clicked the help text')}
           type={(args.type as string).toLowerCase() as 'request' | 'denied' | 'check'}
         />
       )}
-      {args.domainRequest === controlsToAdd.domainDeviceRequest.options[1] && (
-        <CameraDomainPermissionsComponent
+      {args.siteRequest === controlsToAdd.siteDeviceRequest.options[1] && (
+        <CameraSitePermissionsComponent
           appName={args.appName}
           onTroubleshootingClick={() => alert('you clicked the help text')}
           onContinueAnywayClick={() => alert('you clicked the continue anyway button')}
           type={(args.type as string).toLowerCase() as 'request' | 'denied' | 'check'}
         />
       )}
-      {args.domainRequest === controlsToAdd.domainDeviceRequest.options[2] && (
-        <MicrophoneDomainPermissionsComponent
+      {args.siteRequest === controlsToAdd.siteDeviceRequest.options[2] && (
+        <MicrophoneSitePermissionsComponent
           appName={args.appName}
           onTroubleshootingClick={() => alert('you clicked the help text')}
           type={(args.type as string).toLowerCase() as 'request' | 'denied' | 'check'}
@@ -60,35 +60,35 @@ const getDocs: () => JSX.Element = () => {
   return (
     <Stack>
       <SingleLineBetaBanner />
-      <Title>Domain Permissions</Title>
+      <Title>Site Permissions</Title>
       <Description>
         Component to display information to the end user when their device permissions are not set appropriately
       </Description>
       <Heading>Using in a modal</Heading>
       <Description>
-        you are able to hide the DomainPermissions component in a Modal to show the help tile over your applications
-        user interface.
+        you are able to hide the SitePermissions component in a Modal to show the help tile over your applications user
+        interface.
       </Description>
-      <Canvas mdxSource={DomainPermissionsModalExample}>
-        <DomainPermissionsModal />
+      <Canvas mdxSource={SitePermissionsModalExample}>
+        <SitePermissionsModal />
       </Canvas>
       <Heading>Using on mobile</Heading>
-      <Canvas mdxSource={DomainPermissionsDrawerExample}>
-        <DomainPermissionsDrawer />
+      <Canvas mdxSource={SitePermissionsDrawerExample}>
+        <SitePermissionsDrawer />
       </Canvas>
-      <Props of={CameraAndMicrophoneDomainPermissionsComponent} />
+      <Props of={CameraAndMicrophoneSitePermissionsComponent} />
     </Stack>
   );
 };
 
 // This must be the only named export from this module, and must be named to match the storybook path suffix.
 // This ensures that storybook hoists the story instead of creating a folder with a single entry.
-export const DomainPermissions = DomainPermissionsStory.bind({});
+export const SitePermissions = SitePermissionsStory.bind({});
 
 export default {
-  id: `${COMPONENT_FOLDER_PREFIX}-internal-domain-permissions`,
-  title: `${COMPONENT_FOLDER_PREFIX}/Internal/CallReadiness/Domain Permissions`,
-  component: CameraAndMicrophoneDomainPermissionsComponent,
+  id: `${COMPONENT_FOLDER_PREFIX}-internal-site-permissions`,
+  title: `${COMPONENT_FOLDER_PREFIX}/Internal/CallReadiness/Site Permissions`,
+  component: CameraAndMicrophoneSitePermissionsComponent,
   argTypes: {
     ...storyControls,
 

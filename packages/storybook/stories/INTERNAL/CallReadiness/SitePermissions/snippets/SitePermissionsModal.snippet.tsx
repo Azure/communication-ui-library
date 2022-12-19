@@ -2,18 +2,18 @@
 // Licensed under the MIT license.
 
 import { Modal, PrimaryButton } from '@fluentui/react';
-import { CameraAndMicrophoneDomainPermissions } from '@internal/react-components';
+import { CameraAndMicrophoneSitePermissions } from '@internal/react-components';
 import React, { useState } from 'react';
 import { useLocale } from '../../../../../../react-components/src/localization';
 
-export const DomainPermissionsModal: () => JSX.Element = () => {
+export const SitePermissionsModal: () => JSX.Element = () => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
-  const locale = useLocale().strings.CameraAndMicrophoneDomainPermissionsRequest;
+  const locale = useLocale().strings.CameraAndMicrophoneSitePermissionsRequest;
   return (
     <>
-      <PrimaryButton onClick={() => setModalOpen(true)}>Open Domain Permissions Modal</PrimaryButton>
+      <PrimaryButton onClick={() => setModalOpen(true)}>Open Site Permissions Modal</PrimaryButton>
       <Modal isOpen={modalOpen} onDismiss={() => setModalOpen(false)}>
-        <CameraAndMicrophoneDomainPermissions
+        <CameraAndMicrophoneSitePermissions
           appName={'Contoso app'}
           onTroubleshootingClick={() => {
             alert('clicked trouble shooting');

@@ -46,9 +46,6 @@ export type { AzureCommunicationCallAdapterOptions } from './adapter';
 /* @conditional-compile-remove(teams-adhoc-call) */
 export type { CallParticipantsLocator } from './adapter';
 
-/* @conditional-compile-remove(unsupported-browser) */
-export type { CallAdapterOptionalFeatures, UnsupportedEnvironmentFeatures } from './adapter';
-
 export type {
   CallAdapter,
   CallAdapterCallEndedEvent,
