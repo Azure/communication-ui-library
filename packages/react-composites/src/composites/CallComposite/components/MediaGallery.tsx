@@ -96,7 +96,13 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
         remoteVideoTileMenuOptions={props.showRemoteVideoTileMenu && (props.isMobile ? { type: 'contextual' } : false)}
       />
     );
-  }, [videoGalleryProps, props.showRemoteVideoTileMenu, props.isMobile, onRenderAvatar, cameraSwitcherProps]);
+  }, [
+    videoGalleryProps,
+    props.isMobile,
+    onRenderAvatar,
+    cameraSwitcherProps,
+    /* @conditional-compile-remove(pinned-participants) */ props.showRemoteVideoTileMenu
+  ]);
 
   return (
     <>
