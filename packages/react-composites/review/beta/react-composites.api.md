@@ -328,6 +328,7 @@ export type CallCompositeOptions = {
     }) => void;
     onNetworkingTroubleShootingClick?: () => void;
     onEnvironmentInfoTroubleshootingClick?: () => void;
+    showRemoteVideoTileMenu?: boolean;
 };
 
 // @public
