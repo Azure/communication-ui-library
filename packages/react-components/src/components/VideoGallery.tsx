@@ -216,7 +216,7 @@ export interface VideoTileDrawerMenuProps {
   type: 'drawer';
   /**
    * The optional id property provided on an element that the drawer menu should render within when a
-   * remote participant video tile is long touched. If an id is not provided, then a drawer menu will
+  * remote participant video tile Drawer is shown. If an id is not provided, then a drawer menu will
    * render within the VideoGallery component.
    */
   hostId?: string;
