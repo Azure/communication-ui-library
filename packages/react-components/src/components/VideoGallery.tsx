@@ -199,7 +199,7 @@ export interface VideoGalleryProps {
  */
 export interface VideoTileContextualMenuProps {
   /**
-   * The menu property type
+   * The menu property kind
    */
   kind: 'contextual';
 }
@@ -212,7 +212,7 @@ export interface VideoTileContextualMenuProps {
  */
 export interface VideoTileDrawerMenuProps {
   /**
-   * The menu property type
+   * The menu property kind
    */
   kind: 'drawer';
   /**
