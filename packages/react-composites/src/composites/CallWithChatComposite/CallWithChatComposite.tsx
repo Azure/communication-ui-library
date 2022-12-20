@@ -142,12 +142,6 @@ export type CallWithChatCompositeOptions = {
    * if this is not supplied, the composite will not show a unsupported browser page.
    */
   onEnvironmentInfoTroubleshootingClick?: () => void;
-  /* @conditional-compile-remove(call-readiness) */
-  /**
-   * Opt in call readiness feature for your call
-   * setting this to True will add call readiness feature in call experience
-   */
-  callReadinessOptedIn?: boolean;
 };
 
 /**
@@ -228,8 +222,6 @@ type CallWithChatScreenProps = {
   rtl?: boolean;
   /* @conditional-compile-remove(call-readiness) */
   deviceChecks?: DeviceCheckOptions;
-  /* @conditional-compile-remove(call-readiness) */
-  callReadinessOptedIn?: boolean;
   /* @conditional-compile-remove(call-readiness) */
   onPermissionsTroubleshootingClick?: (permissionsState: {
     camera: PermissionState;
@@ -393,8 +385,6 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
       /* @conditional-compile-remove(call-readiness) */
       deviceChecks: props.deviceChecks,
       /* @conditional-compile-remove(call-readiness) */
-      callReadinessOptedIn: props.callReadinessOptedIn,
-      /* @conditional-compile-remove(call-readiness) */
       onNetworkingTroubleShootingClick: props.onNetworkingTroubleShootingClick,
       /* @conditional-compile-remove(call-readiness) */
       onPermissionsTroubleshootingClick: props.onPermissionsTroubleshootingClick,
@@ -402,8 +392,6 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
       onEnvironmentInfoTroubleshootingClick: props.onEnvironmentInfoTroubleshootingClick
     }),
     [
-      /* @conditional-compile-remove(call-readiness) */
-      props.callReadinessOptedIn,
       /* @conditional-compile-remove(call-readiness) */
       props.deviceChecks,
       /* @conditional-compile-remove(unsupported-browser) */
@@ -538,8 +526,6 @@ export const CallWithChatComposite = (props: CallWithChatCompositeProps): JSX.El
         {...props}
         /* @conditional-compile-remove(call-readiness) */
         deviceChecks={options?.deviceChecks}
-        /* @conditional-compile-remove(call-readiness) */
-        callReadinessOptedIn={options?.callReadinessOptedIn}
         callWithChatAdapter={adapter}
         formFactor={formFactor}
         callControls={options?.callControls}
