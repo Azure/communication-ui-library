@@ -9,7 +9,14 @@ import {
   test
 } from './fixture';
 import { expect } from '@playwright/test';
-import { dataUiId, waitForSelector, stableScreenshot, pageClick } from '../../common/utils';
+import {
+  dataUiId,
+  waitForSelector,
+  stableScreenshot,
+  pageClick,
+  perStepLocalTimeout,
+  screenshotOnFailure
+} from '../../common/utils';
 import { IDS } from '../../common/constants';
 
 test.describe('VideoGallery tests', async () => {
@@ -87,12 +94,16 @@ test.describe('VideoGallery tests', async () => {
 
     // pin remote video tiles up to the max allowed in the call composite
     for (let i = 0; i < 4; i++) {
-      // click the more button of an unpinned remote video tile
-      await pageClick(page, dataUiId('video-tile-more-options-button') + ' >> nth=-1');
+      // click the last more button on the page which is presumably on an unpinned remote video tile
+      const moreOptionsButton = page.locator(dataUiId('video-tile-more-options-button')).last();
+      await screenshotOnFailure(page, async () => await moreOptionsButton.click({ timeout: perStepLocalTimeout() }));
+      // click pin menu button in contextual menu
       await pageClick(page, dataUiId('video-tile-pin-participant-button'));
     }
-    // click unpinned remote video tile and take  snapshot to verify pin button is disabled
-    await pageClick(page, dataUiId('video-tile-more-options-button') + ' >> nth=-1');
+    // click the last more button on the page which is presumably on an unpinned remote video tile
+    const moreOptionsButton = page.locator(dataUiId('video-tile-more-options-button')).last();
+    await screenshotOnFailure(page, async () => await moreOptionsButton.click({ timeout: perStepLocalTimeout() }));
+    // take snapshot to verify pin button is disabled
     expect(await stableScreenshot(page)).toMatchSnapshot('disabled-pin-menu-button.png');
   });
 });
