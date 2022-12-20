@@ -5,6 +5,8 @@ export { CallComposite } from './CallComposite';
 export type { CallCompositeOptions, CallCompositeProps } from './CallComposite';
 /* @conditional-compile-remove(call-readiness) */
 export type { DeviceCheckOptions } from './CallComposite';
+/* @conditional-compile-remove(pinned-participants) */
+export type { RemoteVideoTileMenuOptions } from './CallComposite';
 export type { CallControlDisplayType, CallControlOptions } from './types/CallControlOptions';
 /* @conditional-compile-remove(control-bar-button-injection) */
 export type {

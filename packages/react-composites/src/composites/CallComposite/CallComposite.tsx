@@ -87,6 +87,21 @@ export interface DeviceCheckOptions {
   microphone: 'required' | 'optional' | 'doNotPrompt';
 }
 
+/* @conditional-compile-remove(pinned-participants) */
+/**
+ * Menu options for remote video tiles in {@link VideoGallery}.
+ *
+ * @beta
+ */
+export interface RemoteVideoTileMenuOptions {
+  /**
+   * If set to true, remote video tiles in the VideoGallery will not have menu options
+   *
+   * @defaultValue false
+   */
+  isHidden?: boolean;
+}
+
 /**
  * Optional features of the {@link CallComposite}.
  *
@@ -167,11 +182,9 @@ export type CallCompositeOptions = {
   onEnvironmentInfoTroubleshootingClick?: () => void;
   /* @conditional-compile-remove(pinned-participants) */
   /**
-   * If set to false, remote video tiles in the VideoGallery will not have menu options
-   *
-   * default: true
+   * Remote participant video tile menu options
    */
-  showRemoteVideoTileMenu?: boolean;
+  remoteVideoTileMenu?: RemoteVideoTileMenuOptions;
 };
 
 type MainScreenProps = {

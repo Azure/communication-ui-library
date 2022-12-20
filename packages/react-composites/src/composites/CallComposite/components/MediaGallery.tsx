@@ -19,6 +19,8 @@ import { localVideoCameraCycleButtonSelector } from '../selectors/LocalVideoTile
 import { LocalVideoCameraCycleButton } from '@internal/react-components';
 import { _formatString } from '@internal/acs-ui-common';
 import { useParticipantChangedAnnouncement } from '../utils/MediaGalleryUtils';
+/* @conditional-compile-remove(pinned-participants) */
+import { RemoteVideoTileMenuOptions } from '../CallComposite';
 
 const VideoGalleryStyles = {
   root: {
@@ -48,7 +50,7 @@ export interface MediaGalleryProps {
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   isMobile?: boolean;
   /* @conditional-compile-remove(pinned-participants) */
-  showRemoteVideoTileMenu?: boolean;
+  remoteVideoTileMenuOptions?: RemoteVideoTileMenuOptions;
 }
 
 /**
@@ -82,6 +84,11 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
 
   useLocalVideoStartTrigger(!!props.isVideoStreamOn);
   const VideoGalleryMemoized = useMemo(() => {
+    console.log('props.remoteVideoTileMenuOptions: ', props.remoteVideoTileMenuOptions);
+    console.log(
+      'remoteVideoTileMenuOptions: ',
+      props.remoteVideoTileMenuOptions?.isHidden ? false : props.isMobile ? false : { kind: 'contextual' }
+    );
     return (
       <VideoGallery
         {...videoGalleryProps}
@@ -93,7 +100,9 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
         localVideoCameraCycleButtonProps={cameraSwitcherProps}
         onRenderAvatar={onRenderAvatar}
         /* @conditional-compile-remove(pinned-participants) */
-        remoteVideoTileMenuOptions={props.showRemoteVideoTileMenu && (props.isMobile ? { type: 'contextual' } : false)}
+        remoteVideoTileMenuOptions={
+          props.remoteVideoTileMenuOptions?.isHidden ? false : props.isMobile ? false : { kind: 'contextual' }
+        }
       />
     );
   }, [
@@ -101,7 +110,7 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     props.isMobile,
     onRenderAvatar,
     cameraSwitcherProps,
-    /* @conditional-compile-remove(pinned-participants) */ props.showRemoteVideoTileMenu
+    /* @conditional-compile-remove(pinned-participants) */ props.remoteVideoTileMenuOptions
   ]);
 
   return (

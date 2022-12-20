@@ -1738,13 +1738,13 @@ export const VideoTile: (props: VideoTileProps) => JSX.Element;
 
 // @beta
 export interface VideoTileContextualMenuProps {
-    type: 'contextual';
+    kind: 'contextual';
 }
 
 // @beta
 export interface VideoTileDrawerMenuProps {
     hostId?: string;
-    type: 'drawer';
+    kind: 'drawer';
 }
 
 // @public

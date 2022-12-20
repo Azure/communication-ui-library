@@ -48,7 +48,7 @@ export const MAX_AUDIO_DOMINANT_SPEAKERS = 6;
  * Default remote video tile menu options
  */
 export const DEFAULT_REMOTE_VIDEO_TILE_MENU_OPTIONS = {
-  type: 'contextual'
+  kind: 'contextual'
 };
 
 /**
@@ -169,23 +169,24 @@ export interface VideoGalleryProps {
   localVideoCameraCycleButtonProps?: LocalVideoCameraCycleButtonProps;
   /* @conditional-compile-remove(pinned-participants) */
   /**
-   * List of pinned participant userIds
+   * List of pinned participant userIds.
    */
   pinnedParticipants?: string[];
   /* @conditional-compile-remove(pinned-participants) */
   /**
-   * This callback will be called when a participant video tile is pinned
+   * This callback will be called when a participant video tile is pinned.
    */
   onPinParticipant?: (userId: string) => void;
   /* @conditional-compile-remove(pinned-participants) */
   /**
-   * This callback will be called when a participant video tile is un-pinned
+   * This callback will be called when a participant video tile is un-pinned.
    */
   onUnpinParticipant?: (userId: string) => void;
   /* @conditional-compile-remove(pinned-participants) */
   /**
    * Options for showing the remote video tile menu.
-   * default: \{ type: 'contextual' \}
+   *
+   * @defaultValue \{ kind: 'contextual' \}
    */
   remoteVideoTileMenuOptions?: false | VideoTileContextualMenuProps | VideoTileDrawerMenuProps;
 }
@@ -200,7 +201,7 @@ export interface VideoTileContextualMenuProps {
   /**
    * The menu property type
    */
-  type: 'contextual';
+  kind: 'contextual';
 }
 
 /* @conditional-compile-remove(pinned-participants) */
@@ -213,10 +214,10 @@ export interface VideoTileDrawerMenuProps {
   /**
    * The menu property type
    */
-  type: 'drawer';
+  kind: 'drawer';
   /**
    * The optional id property provided on an element that the drawer menu should render within when a
-  * remote participant video tile Drawer is shown. If an id is not provided, then a drawer menu will
+   * remote participant video tile Drawer is shown. If an id is not provided, then a drawer menu will
    * render within the VideoGallery component.
    */
   hostId?: string;
@@ -387,7 +388,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           participantState={participant.state}
           /* @conditional-compile-remove(pinned-participants) */
           showRemoteVideoTileContextualMenu={
-            remoteVideoTileMenuOptions && remoteVideoTileMenuOptions.type === 'contextual'
+            remoteVideoTileMenuOptions && remoteVideoTileMenuOptions.kind === 'contextual'
           }
           /* @conditional-compile-remove(pinned-participants) */
           onPinParticipant={onPinParticipant}

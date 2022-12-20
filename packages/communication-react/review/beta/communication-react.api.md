@@ -477,7 +477,7 @@ export type CallCompositeOptions = {
     }) => void;
     onNetworkingTroubleShootingClick?: () => void;
     onEnvironmentInfoTroubleshootingClick?: () => void;
-    showRemoteVideoTileMenu?: boolean;
+    remoteVideoTileMenu?: RemoteVideoTileMenuOptions;
 };
 
 // @public
@@ -2824,6 +2824,11 @@ export interface RemoteVideoStreamState {
 }
 
 // @beta
+export interface RemoteVideoTileMenuOptions {
+    isHidden?: boolean;
+}
+
+// @beta
 export type Role = 'Presenter' | 'Attendee' | 'Consumer' | 'Organizer';
 
 // @public
@@ -3269,13 +3274,13 @@ export const VideoTile: (props: VideoTileProps) => JSX.Element;
 
 // @beta
 export interface VideoTileContextualMenuProps {
-    type: 'contextual';
+    kind: 'contextual';
 }
 
 // @beta
 export interface VideoTileDrawerMenuProps {
     hostId?: string;
-    type: 'drawer';
+    kind: 'drawer';
 }
 
 // @public

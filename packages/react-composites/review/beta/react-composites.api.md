@@ -328,7 +328,7 @@ export type CallCompositeOptions = {
     }) => void;
     onNetworkingTroubleShootingClick?: () => void;
     onEnvironmentInfoTroubleshootingClick?: () => void;
-    showRemoteVideoTileMenu?: boolean;
+    remoteVideoTileMenu?: RemoteVideoTileMenuOptions;
 };
 
 // @public
@@ -1270,6 +1270,11 @@ export type ParticipantsRemovedListener = (event: {
     participantsRemoved: ChatParticipant[];
     removedBy: ChatParticipant;
 }) => void;
+
+// @beta
+export interface RemoteVideoTileMenuOptions {
+    isHidden?: boolean;
+}
 
 // @beta
 export interface TeamsCallAdapter extends CommonCallAdapter {
