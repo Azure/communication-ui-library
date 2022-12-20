@@ -13,7 +13,7 @@ import {
 import { _DrawerMenu, _DrawerMenuItemProps } from './Drawer';
 import { StreamMedia } from './StreamMedia';
 import { VideoGalleryStrings } from './VideoGallery';
-import { drawerMenuWrapperStyles } from './VideoGallery/styles/RemoteVideoTile.styles';
+import { drawerMenuWrapperStyles, remoteVideoTileWrapperStyle } from './VideoGallery/styles/RemoteVideoTile.styles';
 import {
   RemoteVideoStreamLifecycleMaintainerProps,
   useRemoteVideoStreamLifecycleMaintainer
@@ -136,7 +136,7 @@ export const _RemoteVideoTile = React.memo(
     }, [renderElement, showLoadingIndicator]);
 
     return (
-      <Stack style={{ height: '100%', width: '100%', position: 'relative' }}>
+      <Stack style={remoteVideoTileWrapperStyle}>
         <VideoTile
           key={userId}
           userId={userId}

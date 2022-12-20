@@ -369,7 +369,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       onRenderAvatar,
       showMuteIndicator,
       strings,
-      /* @conditional-compile-remove(pinned-participants) */ drawerMenuHostId,
+      drawerMenuHostId,
       /* @conditional-compile-remove(pinned-participants) */ props.showRemoteVideoTileContextualMenu,
       /* @conditional-compile-remove(pinned-participants) */ pinnedParticipants,
       /* @conditional-compile-remove(pinned-participants) */ onPinParticipant,
