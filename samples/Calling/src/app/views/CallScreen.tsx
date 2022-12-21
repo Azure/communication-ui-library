@@ -94,8 +94,8 @@ type TeamsCallScreenProps = CallScreenProps & {
 };
 
 const TeamsCallScreen = (props: TeamsCallScreenProps): JSX.Element => {
-  const { afterCreate, ...adapterArgs } = props;
-  const adapter = useAzureCommunicationTeamsCallAdapter(adapterArgs, afterCreate);
+  const { afterCreate, callLocator: locator, ...adapterArgs } = props;
+  const adapter = useAzureCommunicationTeamsCallAdapter({ ...adapterArgs, locator }, afterCreate);
   return <CallCompositeContainer {...props} adapter={adapter} />;
 };
 
@@ -105,7 +105,7 @@ type AzureCommunicationCallScreenProps = CallScreenProps & {
 };
 
 const AzureCommunicationCallScreen = (props: AzureCommunicationCallScreenProps): JSX.Element => {
-  const { roleHint, afterCreate, ...adapterArgs } = props;
+  const { roleHint, afterCreate, callLocator: locator, ...adapterArgs } = props;
 
   /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(unsupported-browser) */
   const callAdapterOptions: AzureCommunicationCallAdapterOptions = useMemo(
@@ -118,6 +118,7 @@ const AzureCommunicationCallScreen = (props: AzureCommunicationCallScreenProps):
   const adapter = useAzureCommunicationCallAdapter(
     {
       ...adapterArgs,
+      locator,
       /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(unsupported-browser) */
       options: callAdapterOptions
     },

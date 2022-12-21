@@ -4,6 +4,8 @@
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(rooms) */
 import { Role } from '@azure/communication-react';
+/* @conditional-compile-remove(teams-identity-support) */
+import { fromFlatCommunicationIdentifier } from '@azure/communication-react';
 import { setLogLevel } from '@azure/logger';
 import { initializeIcons, Spinner } from '@fluentui/react';
 import { CallAdapterLocator } from '@azure/communication-react';
@@ -153,6 +155,9 @@ const App = (): JSX.Element => {
             setIsTeamsCall(!!callDetails.teamsToken);
             /* @conditional-compile-remove(teams-identity-support) */
             callDetails.teamsToken && setToken(callDetails.teamsToken);
+            /* @conditional-compile-remove(teams-identity-support) */
+            callDetails.teamsId &&
+              setUserId(fromFlatCommunicationIdentifier(callDetails.teamsId) as CommunicationUserIdentifier);
             setPage('call');
           }}
         />
@@ -172,7 +177,12 @@ const App = (): JSX.Element => {
         );
       }
 
-      if (!token || !userId || !displayName || !callLocator) {
+      if (
+        !token ||
+        !userId ||
+        (!displayName && /* @conditional-compile-remove(teams-identity-support) */ !isTeamsCall) ||
+        !callLocator
+      ) {
         document.title = `credentials - ${WEB_APP_TITLE}`;
         return <Spinner label={'Getting user credentials from server'} ariaLive="assertive" labelPosition="top" />;
       }

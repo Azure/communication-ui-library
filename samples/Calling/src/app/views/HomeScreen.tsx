@@ -52,6 +52,8 @@ export interface HomeScreenProps {
     alternateCallerId?: string;
     /* @conditional-compile-remove(teams-identity-support) */
     teamsToken?: string;
+    /* @conditional-compile-remove(teams-identity-support) */
+    teamsId?: string;
   }): void;
   joiningExistingCall: boolean;
 }
@@ -79,6 +81,8 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   const roomIdLabel = 'Room ID';
   /* @conditional-compile-remove(teams-identity-support) */
   const teamsTokenLabel = 'Enter a Teams token';
+  /* @conditional-compile-remove(teams-identity-support) */
+  const teamsIdLabel = 'Enter a Teams Id';
   /* @conditional-compile-remove(rooms) */
   const roomsRoleGroupLabel = 'Rooms Role';
   /* @conditional-compile-remove(rooms) */
@@ -106,6 +110,8 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   const [dialPadParticipant, setDialpadParticipant] = useState<string>();
   /* @conditional-compile-remove(teams-identity-support) */
   const [teamsToken, setTeamsToken] = useState<string>();
+  /* @conditional-compile-remove(teams-identity-support) */
+  const [teamsId, setTeamsId] = useState<string>();
 
   const startGroupCall: boolean = chosenCallOption.key === 'ACSCall';
   const teamsCallChosen: boolean = chosenCallOption.key === 'TeamsMeeting';
@@ -125,7 +131,10 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
         chosenRoomsRoleOption) ||
       /* @conditional-compile-remove(PSTN-calls) */ (pstnCallChosen && dialPadParticipant && alternateCallerId) ||
       /* @conditional-compile-remove(one-to-n-calling) */ (outboundParticipants && acsCallChosen) ||
-      /* @conditional-compile-remove(teams-identity-support) */ (teamsIdentityChosen && callLocator && teamsToken));
+      /* @conditional-compile-remove(teams-identity-support) */ (teamsIdentityChosen &&
+        callLocator &&
+        teamsToken &&
+        teamsId));
 
   /* @conditional-compile-remove(PSTN-calls) */
   registerIcons({ icons: { DialpadBackspace: <Backspace20Regular /> } });
@@ -175,6 +184,18 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                     label={teamsTokenLabel}
                     placeholder={'Enter a Teams Token'}
                     onChange={(_, newValue) => setTeamsToken(newValue)}
+                  />
+                </Stack>
+              )
+            }
+            {
+              /* @conditional-compile-remove(teams-identity-support) */ chosenCallOption.key === 'TeamsIdentity' && (
+                <Stack>
+                  <TextField
+                    className={teamsItemStyle}
+                    label={teamsIdLabel}
+                    placeholder={'Enter a Teams id'}
+                    onChange={(_, newValue) => setTeamsId(`8:orgid:${newValue}`)}
                   />
                 </Stack>
               )
@@ -252,14 +273,15 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
             className={buttonStyle}
             text={buttonText}
             onClick={() => {
-              if (displayName) {
-                saveDisplayNameToLocalStorage(displayName);
+              if (displayName || /* @conditional-compile-remove(teams-identity-support) */ teamsIdentityChosen) {
+                displayName && saveDisplayNameToLocalStorage(displayName);
                 /* @conditional-compile-remove(one-to-n-calling) */
                 const acsParticipantsToCall = parseParticipants(outboundParticipants);
                 /* @conditional-compile-remove(PSTN-calls) */
                 const dialpadParticipantToCall = parseParticipants(dialPadParticipant);
                 props.startCallHandler({
-                  displayName,
+                  //TODO: This needs to be updated after we change arg types of TeamsCall
+                  displayName: !displayName ? 'Teams UserName PlaceHolder' : displayName,
                   callLocator: callLocator,
                   /* @conditional-compile-remove(rooms) */
                   option: chosenCallOption.key,
@@ -270,7 +292,9 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                   /* @conditional-compile-remove(PSTN-calls) */
                   alternateCallerId,
                   /* @conditional-compile-remove(teams-identity-support) */
-                  teamsToken
+                  teamsToken,
+                  /* @conditional-compile-remove(teams-identity-support) */
+                  teamsId
                 });
               }
             }}
