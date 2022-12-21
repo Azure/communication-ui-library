@@ -13,23 +13,22 @@ import {
 import { dropDownStyles } from '../styles/LocalDeviceSettings.styles';
 /* @conditional-compile-remove(call-readiness) */
 import { CallCompositeIcon } from '../../common/icons';
-import { CallingHandlers } from '@internal/calling-component-bindings';
 
 /**
  * @private
  */
-export interface ConfigurationpageCameraDropdownProps {
+export interface ConfigurationPageCameraDropdownProps {
   cameraGrantedDropdown: JSX.Element;
   cameraPermissionGranted: boolean;
-  dropdownProps?: Record<string, never> & Partial<CallingHandlers>;
-  callReadinessOptedIn?: boolean;
+  /* @conditional-compile-remove(call-readiness) */
+  dropdownProps: Partial<_DevicePermissionDropdownProps>;
   onClickEnableDevicePermission?: () => void;
 }
 
 /**
  * @private
  */
-export const ConfigurationpageCameraDropdown = (props: ConfigurationpageCameraDropdownProps): JSX.Element => {
+export const ConfigurationPageCameraDropdown = (props: ConfigurationPageCameraDropdownProps): JSX.Element => {
   /* @conditional-compile-remove(call-readiness) */
   const theme = useTheme();
 
@@ -53,9 +52,7 @@ export const ConfigurationpageCameraDropdown = (props: ConfigurationpageCameraDr
   );
 
   /* @conditional-compile-remove(call-readiness) */
-  if (props.callReadinessOptedIn) {
-    return <>{props.cameraPermissionGranted ? props.cameraGrantedDropdown : cameraBlockedDropdown}</>;
-  }
+  return props.cameraPermissionGranted ? props.cameraGrantedDropdown : cameraBlockedDropdown;
 
   return props.cameraGrantedDropdown;
 };

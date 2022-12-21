@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IContextualMenuProps } from '@fluentui/react';
+import { IContextualMenuProps, Layer, Stack } from '@fluentui/react';
 import React, { useMemo } from 'react';
 import {
   CreateVideoStreamViewResult,
@@ -10,8 +10,10 @@ import {
   VideoGalleryRemoteParticipant,
   VideoStreamOptions
 } from '../types';
+import { _DrawerMenu, _DrawerMenuItemProps } from './Drawer';
 import { StreamMedia } from './StreamMedia';
 import { VideoGalleryStrings } from './VideoGallery';
+import { drawerMenuWrapperStyles, remoteVideoTileWrapperStyle } from './VideoGallery/styles/RemoteVideoTile.styles';
 import {
   RemoteVideoStreamLifecycleMaintainerProps,
   useRemoteVideoStreamLifecycleMaintainer
@@ -47,6 +49,7 @@ export const _RemoteVideoTile = React.memo(
     strings?: VideoGalleryStrings;
     participantState?: ParticipantState;
     showRemoteVideoTileContextualMenu?: boolean;
+    drawerMenuHostId?: string;
     onPinParticipant?: (userId: string) => void;
     onUnpinParticipant?: (userId: string) => void;
     isPinned?: boolean;
@@ -117,6 +120,8 @@ export const _RemoteVideoTile = React.memo(
 
     const showLoadingIndicator = isAvailable && isReceiving === false && participantState !== 'Disconnected';
 
+    const [drawerMenuItemProps, setDrawerMenuItemProps] = React.useState<_DrawerMenuItemProps[]>([]);
+
     const renderVideoStreamElement = useMemo(() => {
       // Checking if renderElement is well defined or not as calling SDK has a number of video streams limitation which
       // implies that, after their threshold, all streams have no child (blank video)
@@ -131,24 +136,39 @@ export const _RemoteVideoTile = React.memo(
     }, [renderElement, showLoadingIndicator]);
 
     return (
-      <VideoTile
-        key={userId}
-        userId={userId}
-        renderElement={renderVideoStreamElement}
-        displayName={remoteParticipant.displayName}
-        onRenderPlaceholder={onRenderAvatar}
-        isMuted={remoteParticipant.isMuted}
-        isSpeaking={remoteParticipant.isSpeaking}
-        showMuteIndicator={showMuteIndicator}
-        personaMinSize={props.personaMinSize}
-        showLabel={props.showLabel}
-        /* @conditional-compile-remove(one-to-n-calling) */
-        /* @conditional-compile-remove(PSTN-calls) */
-        participantState={participantState}
-        {...videoTileContextualMenuProps}
-        /* @conditional-compile-remove(pinned-participants) */
-        isPinned={props.isPinned}
-      />
+      <Stack style={remoteVideoTileWrapperStyle}>
+        <VideoTile
+          key={userId}
+          userId={userId}
+          renderElement={renderVideoStreamElement}
+          displayName={remoteParticipant.displayName}
+          onRenderPlaceholder={onRenderAvatar}
+          isMuted={remoteParticipant.isMuted}
+          isSpeaking={remoteParticipant.isSpeaking}
+          showMuteIndicator={showMuteIndicator}
+          personaMinSize={props.personaMinSize}
+          showLabel={props.showLabel}
+          /* @conditional-compile-remove(one-to-n-calling) */
+          /* @conditional-compile-remove(PSTN-calls) */
+          participantState={participantState}
+          {...videoTileContextualMenuProps}
+          /* @conditional-compile-remove(pinned-participants) */
+          isPinned={props.isPinned}
+          /* @conditional-compile-remove(pinned-participants) */
+          onLongTouch={() =>
+            setDrawerMenuItemProps(
+              convertContextualMenuItemsToDrawerMenuItemProps(contextualMenuProps, () => setDrawerMenuItemProps([]))
+            )
+          }
+        />
+        {drawerMenuItemProps.length > 0 && (
+          <Layer hostId={props.drawerMenuHostId}>
+            <Stack styles={drawerMenuWrapperStyles}>
+              <_DrawerMenu onLightDismiss={() => setDrawerMenuItemProps([])} items={drawerMenuItemProps} />
+            </Stack>
+          </Layer>
+        )}
+      </Stack>
     );
   }
 );
@@ -165,4 +185,26 @@ const videoTileContextualMenuPropsTrampoline = (
   };
 
   return {};
+};
+
+/* @conditional-compile-remove(pinned-participants) */
+const convertContextualMenuItemsToDrawerMenuItemProps = (
+  contextualMenuProps?: IContextualMenuProps,
+  onLightDismiss?: () => void
+): _DrawerMenuItemProps[] => {
+  if (!contextualMenuProps) {
+    return [];
+  }
+  return contextualMenuProps.items.map((item) => {
+    return {
+      itemKey: item.key,
+      text: item.text,
+      iconProps: item.iconProps,
+      disabled: item.disabled,
+      onItemClick: () => {
+        item.onClick?.();
+        onLightDismiss?.();
+      }
+    };
+  });
 };

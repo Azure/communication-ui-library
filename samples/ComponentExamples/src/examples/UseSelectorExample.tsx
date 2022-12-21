@@ -16,7 +16,7 @@ const CustomChatThread = ({ messages }: { messages: Message[] }): JSX.Element =>
     <>
       {messages.map((message) =>
         message.messageType === 'chat' ? (
-          <div>
+          <div key={message.messageId}>
             {message.senderDisplayName}: {message.content}
           </div>
         ) : undefined

@@ -20,6 +20,7 @@ import React, { useCallback, useMemo, useRef } from 'react';
 import { createAutoRefreshingCredential } from '../utils/credential';
 import { WEB_APP_TITLE } from '../utils/AppUtils';
 /* @conditional-compile-remove(call-readiness) */
+import { CallCompositeOptions } from '@azure/communication-react';
 import { CallCompositeContainer } from './CallCompositeContainer';
 
 export interface CallScreenProps {
@@ -31,8 +32,7 @@ export interface CallScreenProps {
   alternateCallerId?: string;
   /* @conditional-compile-remove(rooms) */
   roleHint?: Role;
-  /* @conditional-compile-remove(call-readiness) */
-  callReadinessOptedIn?: boolean;
+  /* @conditional-compile-remove(teams-identity-support) */
   isTeamsIdentityCall?: boolean;
 }
 
@@ -107,14 +107,14 @@ type AzureCommunicationCallScreenProps = CallScreenProps & {
 const AzureCommunicationCallScreen = (props: AzureCommunicationCallScreenProps): JSX.Element => {
   const { roleHint, afterCreate, callLocator: locator, ...adapterArgs } = props;
 
-  /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(unsupported-browser) */
+  /* @conditional-compile-remove(rooms) */
   const callAdapterOptions: AzureCommunicationCallAdapterOptions = useMemo(
     () => ({
-      roleHint,
-      features: { unsupportedEnvironment: { unsupportedBrowserVersionAllowed: true } }
+      roleHint
     }),
     [roleHint]
   );
+
   const adapter = useAzureCommunicationCallAdapter(
     {
       ...adapterArgs,
@@ -124,7 +124,16 @@ const AzureCommunicationCallScreen = (props: AzureCommunicationCallScreenProps):
     },
     afterCreate
   );
-  return <CallCompositeContainer {...props} adapter={adapter} />;
+
+  /* @conditional-compile-remove(call-readiness) */
+  const options: CallCompositeOptions = useMemo(
+    () => ({
+      onPermissionsTroubleshootingClick,
+      onNetworkingTroubleShootingClick
+    }),
+    []
+  );
+  return <CallCompositeContainer {...props} adapter={adapter} options={options} />;
 };
 
 const convertPageStateToString = (state: CallAdapterState): string => {
@@ -138,4 +147,18 @@ const convertPageStateToString = (state: CallAdapterState): string => {
     default:
       return `${state.page}`;
   }
+};
+
+/* @conditional-compile-remove(call-readiness) */
+const onPermissionsTroubleshootingClick = (permissionState: {
+  camera: PermissionState;
+  microphone: PermissionState;
+}): void => {
+  console.log(permissionState);
+  alert('permission troubleshooting clicked');
+};
+
+/* @conditional-compile-remove(call-readiness) */
+const onNetworkingTroubleShootingClick = (): void => {
+  alert('network troubleshooting clicked');
 };

@@ -17,7 +17,7 @@ import { Common } from '@internal/acs-ui-common';
 /**
  * @private
  */
-export interface ConfigurationpageErrorBarProps {
+export interface ConfigurationPageErrorBarProps {
   errorBarProps: {
     activeErrorMessages: ActiveErrorMessage[];
   } & Common<CallingHandlers, ErrorBarProps>;
@@ -31,13 +31,12 @@ export interface ConfigurationpageErrorBarProps {
     camera: PermissionState;
     microphone: PermissionState;
   };
-  callReadinessOptedIn?: boolean;
 }
 
 /**
  * @private
  */
-export const ConfigurationpageErrorBar = (props: ConfigurationpageErrorBarProps): JSX.Element => {
+export const ConfigurationPageErrorBar = (props: ConfigurationPageErrorBarProps): JSX.Element => {
   const {
     errorBarProps,
     /* @conditional-compile-remove(call-readiness) */
@@ -47,9 +46,7 @@ export const ConfigurationpageErrorBar = (props: ConfigurationpageErrorBarProps)
     /* @conditional-compile-remove(call-readiness) */
     onNetworkingTroubleShootingClick,
     /* @conditional-compile-remove(call-readiness) */
-    permissionsState,
-    /* @conditional-compile-remove(call-readiness) */
-    callReadinessOptedIn = false
+    permissionsState
   } = props;
 
   /* @conditional-compile-remove(call-readiness) */
@@ -60,7 +57,7 @@ export const ConfigurationpageErrorBar = (props: ConfigurationpageErrorBarProps)
   };
 
   /* @conditional-compile-remove(call-readiness) */
-  if (showTroubleShootingErrorBar && callReadinessOptedIn) {
+  if (showTroubleShootingErrorBar) {
     return (
       <_TroubleshootingGuideErrorBar
         troubleshootingGuideStrings={permissionTroubleshootingGuideStrings}

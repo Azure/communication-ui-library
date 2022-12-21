@@ -184,7 +184,7 @@
     "participantStateRinging": "Appel en cours...",
     "participantStateHold": "En attente"
   },
-  "DomainPermissions": {
+  "SitePermissions": {
     "primaryText": "Autoriser {appName} à utiliser votre caméra et votre microphone",
     "secondaryText": "Cela permet aux participants de vous voir et de vous entendre.",
     "linkText": "Besoin d’aide ? Obtenir de l’aide sur la résolution des problèmes",
