@@ -16,10 +16,13 @@ export const CallCompositeContainer = (props: CallCompositeContainerProps): JSX.
   const isMobileSession = useIsMobile();
 
   /* @conditional-compile-remove(call-readiness) */
-  const options: CallCompositeOptions = useMemo(() => ({
-    onPermissionsTroubleshootingClick,
-    onNetworkingTroubleShootingClick
-  }));
+  const options: CallCompositeOptions = useMemo(
+    () => ({
+      onPermissionsTroubleshootingClick,
+      onNetworkingTroubleShootingClick
+    }),
+    []
+  );
 
   // Dispose of the adapter in the window's before unload event.
   // This ensures the service knows the user intentionally left the call if the user

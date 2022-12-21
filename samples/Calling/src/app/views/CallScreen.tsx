@@ -20,7 +20,6 @@ import React, { useCallback, useMemo, useRef } from 'react';
 import { createAutoRefreshingCredential } from '../utils/credential';
 import { WEB_APP_TITLE } from '../utils/AppUtils';
 /* @conditional-compile-remove(call-readiness) */
-import { CallCompositeOptions } from '@azure/communication-react';
 import { CallCompositeContainer } from './CallCompositeContainer';
 
 export interface CallScreenProps {
@@ -139,18 +138,4 @@ const convertPageStateToString = (state: CallAdapterState): string => {
     default:
       return `${state.page}`;
   }
-};
-
-/* @conditional-compile-remove(call-readiness) */
-const onPermissionsTroubleshootingClick = (permissionState: {
-  camera: PermissionState;
-  microphone: PermissionState;
-}): void => {
-  console.log(permissionState);
-  alert('permission troubleshooting clicked');
-};
-
-/* @conditional-compile-remove(call-readiness) */
-const onNetworkingTroubleShootingClick = (): void => {
-  alert('network troubleshooting clicked');
 };
