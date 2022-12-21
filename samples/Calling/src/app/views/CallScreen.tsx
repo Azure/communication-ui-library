@@ -125,15 +125,7 @@ const AzureCommunicationCallScreen = (props: AzureCommunicationCallScreenProps):
     afterCreate
   );
 
-  /* @conditional-compile-remove(call-readiness) */
-  const options: CallCompositeOptions = useMemo(
-    () => ({
-      onPermissionsTroubleshootingClick,
-      onNetworkingTroubleShootingClick
-    }),
-    []
-  );
-  return <CallCompositeContainer {...props} adapter={adapter} options={options} />;
+  return <CallCompositeContainer {...props} adapter={adapter} />;
 };
 
 const convertPageStateToString = (state: CallAdapterState): string => {

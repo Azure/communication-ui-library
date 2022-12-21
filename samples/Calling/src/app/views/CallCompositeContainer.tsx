@@ -11,23 +11,15 @@ import { CallScreenProps } from './CallScreen';
 export type CallCompositeContainerProps = CallScreenProps & { adapter?: CommonCallAdapter };
 
 export const CallCompositeContainer = (props: CallCompositeContainerProps): JSX.Element => {
-  const {
-    /* @conditional-compile-remove(rooms) */ roleHint,
-    /* @conditional-compile-remove(call-readiness) */ callReadinessOptedIn,
-    adapter
-  } = props;
+  const { /* @conditional-compile-remove(rooms) */ roleHint, adapter } = props;
   const { currentTheme, currentRtl } = useSwitchableFluentTheme();
   const isMobileSession = useIsMobile();
 
   /* @conditional-compile-remove(call-readiness) */
-  const options: CallCompositeOptions = useMemo(
-    () => ({
-      callReadinessOptedIn: callReadinessOptedIn,
-      onPermissionsTroubleshootingClick,
-      onNetworkingTroubleShootingClick
-    }),
-    [callReadinessOptedIn]
-  );
+  const options: CallCompositeOptions = useMemo(() => ({
+    onPermissionsTroubleshootingClick,
+    onNetworkingTroubleShootingClick
+  }));
 
   // Dispose of the adapter in the window's before unload event.
   // This ensures the service knows the user intentionally left the call if the user
