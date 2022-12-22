@@ -963,12 +963,14 @@ const useAzureCommunicationCallAdapterGeneric = <
             /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
             /* @conditional-compile-remove(rooms) */ options
           })) as Adapter;
-        } else {
+        } else if (adapterKind === 'Teams') {
           newAdapter = (await createTeamsCallAdapter({
             credential,
             locator: locator as TeamsMeetingLinkLocator,
             userId: userId as MicrosoftTeamsUserIdentifier
           })) as Adapter;
+        } else {
+          throw new Error('Unreachable code, unknown adapterKind');
         }
         if (afterCreateRef.current) {
           newAdapter = await afterCreateRef.current(newAdapter);
