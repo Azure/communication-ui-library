@@ -22,7 +22,6 @@ import { Role } from '@azure/communication-react';
 import React, { useCallback, useMemo, useRef } from 'react';
 import { createAutoRefreshingCredential } from '../utils/credential';
 import { WEB_APP_TITLE } from '../utils/AppUtils';
-/* @conditional-compile-remove(call-readiness) */
 import { CallCompositeContainer } from './CallCompositeContainer';
 
 export interface CallScreenProps {
@@ -83,7 +82,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
       return new AzureCommunicationTokenCredential(token);
     }
     return createAutoRefreshingCredential(toFlatCommunicationIdentifier(userId), token);
-  }, [isTeamsIdentityCall, token, userId]);
+  }, [token, userId, /* @conditional-compile-remove(teams-identity-support) */ isTeamsIdentityCall]);
   /* @conditional-compile-remove(teams-identity-support) */
   if (isTeamsIdentityCall) {
     return <TeamsCallScreen afterCreate={afterTeamsCallAdapterCreate} credential={credential} {...props} />;
@@ -121,7 +120,7 @@ type AzureCommunicationCallScreenProps = CallScreenProps & {
 const AzureCommunicationCallScreen = (props: AzureCommunicationCallScreenProps): JSX.Element => {
   const { roleHint, afterCreate, callLocator: locator, userId, ...adapterArgs } = props;
 
-  if (!('CommunicationUserIdentifier' in userId)) {
+  if (!('communicationUserId' in userId)) {
     throw new Error('A MicrosoftTeamsUserIdentifier must be provided for Teams Identity Call.');
   }
 
