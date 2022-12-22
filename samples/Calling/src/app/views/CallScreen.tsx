@@ -1,13 +1,17 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
+import {
+  AzureCommunicationTokenCredential,
+  CommunicationUserIdentifier,
+  MicrosoftTeamsUserIdentifier
+} from '@azure/communication-common';
 import {
   CallAdapterLocator,
   CallAdapterState,
   toFlatCommunicationIdentifier,
   useAzureCommunicationCallAdapter,
-  useAzureCommunicationTeamsCallAdapter,
+  useTeamsCallAdapter,
   CommonCallAdapter,
   CallAdapter,
   TeamsCallAdapter
@@ -24,7 +28,7 @@ import { CallCompositeContainer } from './CallCompositeContainer';
 
 export interface CallScreenProps {
   token: string;
-  userId: CommunicationUserIdentifier;
+  userId: CommunicationUserIdentifier | MicrosoftTeamsUserIdentifier;
   callLocator: CallAdapterLocator;
   displayName: string;
   /* @conditional-compile-remove(PSTN-calls) */
@@ -93,8 +97,16 @@ type TeamsCallScreenProps = CallScreenProps & {
 };
 
 const TeamsCallScreen = (props: TeamsCallScreenProps): JSX.Element => {
-  const { afterCreate, callLocator: locator, ...adapterArgs } = props;
-  const adapter = useAzureCommunicationTeamsCallAdapter({ ...adapterArgs, locator }, afterCreate);
+  const { afterCreate, callLocator: locator, userId, ...adapterArgs } = props;
+  if (!('meetingLink' in locator)) {
+    throw new Error('A teams meeting locator must be provided for Teams Identity Call.');
+  }
+
+  if (!('microsoftTeamsUserId' in userId)) {
+    throw new Error('A MicrosoftTeamsUserIdentifier must be provided for Teams Identity Call.');
+  }
+
+  const adapter = useTeamsCallAdapter({ ...adapterArgs, locator }, afterCreate);
   return <CallCompositeContainer {...props} adapter={adapter} />;
 };
 
@@ -104,7 +116,11 @@ type AzureCommunicationCallScreenProps = CallScreenProps & {
 };
 
 const AzureCommunicationCallScreen = (props: AzureCommunicationCallScreenProps): JSX.Element => {
-  const { roleHint, afterCreate, callLocator: locator, ...adapterArgs } = props;
+  const { roleHint, afterCreate, callLocator: locator, userId, ...adapterArgs } = props;
+
+  if (!('CommunicationUserIdentifier' in userId)) {
+    throw new Error('A MicrosoftTeamsUserIdentifier must be provided for Teams Identity Call.');
+  }
 
   /* @conditional-compile-remove(rooms) */
   const callAdapterOptions: AzureCommunicationCallAdapterOptions = useMemo(

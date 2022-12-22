@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { CommunicationUserIdentifier } from '@azure/communication-common';
+import { CommunicationUserIdentifier, MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(rooms) */
 import { Role } from '@azure/communication-react';
 /* @conditional-compile-remove(teams-identity-support) */
@@ -49,7 +49,7 @@ const App = (): JSX.Element => {
 
   // User credentials to join a call with - these are retrieved from the server
   const [token, setToken] = useState<string>();
-  const [userId, setUserId] = useState<CommunicationUserIdentifier>();
+  const [userId, setUserId] = useState<CommunicationUserIdentifier | MicrosoftTeamsUserIdentifier>();
   const [userCredentialFetchError, setUserCredentialFetchError] = useState<boolean>(false);
 
   // Call details to join a call - these are collected from the user on the home screen
@@ -138,7 +138,7 @@ const App = (): JSX.Element => {
 
             /* @conditional-compile-remove(rooms) */
             if ('roomId' in callLocator) {
-              if (userId) {
+              if (userId && 'communicationUserId' in userId) {
                 setRole(callDetails.role as Role);
                 await addUserToRoom(userId.communicationUserId, callLocator.roomId, callDetails.role as Role);
               } else {
@@ -157,7 +157,7 @@ const App = (): JSX.Element => {
             callDetails.teamsToken && setToken(callDetails.teamsToken);
             /* @conditional-compile-remove(teams-identity-support) */
             callDetails.teamsId &&
-              setUserId(fromFlatCommunicationIdentifier(callDetails.teamsId) as CommunicationUserIdentifier);
+              setUserId(fromFlatCommunicationIdentifier(callDetails.teamsId) as MicrosoftTeamsUserIdentifier);
             setPage('call');
           }}
         />

@@ -833,24 +833,6 @@ export type TeamsCallAdapterArgs = {
   userId: MicrosoftTeamsUserIdentifier;
   credential: CommunicationTokenCredential;
   locator: TeamsMeetingLinkLocator;
-  /* @conditional-compile-remove(unsupported-browser) */
-  /**
-   * Optional parameters for the {@link AzureCommunicationCallAdapter} created
-   */
-  options?: TeamsCallAdapterOptions;
-};
-
-/**
- * Optional parameters to create {@link TeamsCallAdapter}
- *
- * @beta
- */
-export type TeamsCallAdapterOptions = {
-  /* @conditional-compile-remove(unsupported-browser) */
-  /**
-   * Optional feature flags to be enabled in the CallAdapter.
-   */
-  features?: CallAdapterOptionalFeatures;
 };
 
 /**
@@ -867,8 +849,7 @@ export const createAzureCommunicationCallAdapter = async ({
   displayName,
   credential,
   locator,
-  /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
-  /* @conditional-compile-remove(rooms) */ options
+  /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId
 }: AzureCommunicationCallAdapterArgs): Promise<CallAdapter> => {
   if (!isValidIdentifier(userId)) {
     throw new Error('Invalid identifier. Please provide valid identifier object.');
@@ -881,12 +862,7 @@ export const createAzureCommunicationCallAdapter = async ({
   const callAgent = await callClient.createCallAgent(credential, {
     displayName
   });
-  const adapter = createAzureCommunicationCallAdapterFromClient(
-    callClient,
-    callAgent,
-    locator,
-    /* @conditional-compile-remove(rooms) */ options
-  );
+  const adapter = createAzureCommunicationCallAdapterFromClient(callClient, callAgent, locator);
   return adapter;
 };
 
@@ -929,7 +905,12 @@ const useAzureCommunicationCallAdapterGeneric = <
   beforeDispose?: (adapter: Adapter) => Promise<void>,
   adapterKind: AdapterKind = 'AzureCommunication' as AdapterKind
 ): Adapter | undefined => {
-  const { credential, locator, userId, /*@conditional-compile-remove(rooms) */ options } = args;
+  const { credential, locator, userId } = args;
+  const displayName = 'displayName' in args ? args.displayName : undefined;
+  /* @conditional-compile-remove(PSTN-calls) */
+  const alternateCallerId = 'alternateCallerId' in args ? args.alternateCallerId : undefined;
+  /* @conditional-compile-remove(rooms) */
+  const options = 'options' in args ? args.options : undefined;
 
   // State update needed to rerender the parent component when a new adapter is created.
   const [adapter, setAdapter] = useState<Adapter | undefined>(undefined);
@@ -950,7 +931,8 @@ const useAzureCommunicationCallAdapterGeneric = <
       if (!credential || !locator || !userId) {
         return;
       }
-      if (adapterKind === 'AzureCommunication' && 'displayName' in args && !args?.displayName) {
+
+      if (adapterKind === 'AzureCommunication' && !displayName) {
         return;
       }
       (async () => {
@@ -970,25 +952,22 @@ const useAzureCommunicationCallAdapterGeneric = <
         let newAdapter: Adapter;
         if (adapterKind === 'AzureCommunication') {
           // This is just the type check to ensure that displayName is defined.
-          if (!('displayName' in args) || !args?.displayName) {
-            throw new Error(
-              'Unreachable code: displayName is not defined, this should have been checked and return earlier.'
-            );
+          if (!displayName) {
+            throw new Error('Unreachable code, displayName already checked above.');
           }
           newAdapter = (await createAzureCommunicationCallAdapter({
             credential,
-            displayName: args.displayName,
+            displayName: displayName,
             locator,
             userId: userId as CommunicationUserIdentifier,
-            /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId: args.alternateCallerId,
+            /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
             /* @conditional-compile-remove(rooms) */ options
           })) as Adapter;
         } else {
           newAdapter = (await createTeamsCallAdapter({
             credential,
             locator: locator as TeamsMeetingLinkLocator,
-            userId: userId as MicrosoftTeamsUserIdentifier,
-            /* @conditional-compile-remove(rooms) */ options
+            userId: userId as MicrosoftTeamsUserIdentifier
           })) as Adapter;
         }
         if (afterCreateRef.current) {
@@ -999,7 +978,20 @@ const useAzureCommunicationCallAdapterGeneric = <
       })();
     },
     // Explicitly list all arguments so that caller doesn't have to memoize the `args` object.
-    [adapterRef, afterCreateRef, args, beforeDisposeRef, credential, locator, options, adapterKind, userId]
+    [
+      adapterRef,
+      afterCreateRef,
+      beforeDisposeRef,
+      credential,
+      locator,
+      adapterKind,
+      userId,
+      displayName,
+      /* @conditional-compile-remove(PSTN-calls) */
+      alternateCallerId,
+      /* @conditional-compile-remove(rooms) */
+      options
+    ]
   );
 
   // Dispose any existing adapter when the component unmounts.
