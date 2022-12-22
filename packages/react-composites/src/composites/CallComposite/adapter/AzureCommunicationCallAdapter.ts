@@ -891,7 +891,7 @@ type PartialArgsType<Adapter> = Adapter extends CallAdapter
 
 type AdapterOf<AdapterKind extends 'AzureCommunication' | 'Teams'> = AdapterKind extends 'AzureCommunication'
   ? CallAdapter
-  : TeamsCallAdapter;
+  : never | /* @conditional-compile-remove(teams-identity-support) */ TeamsCallAdapter;
 
 /**
  * @private
@@ -949,7 +949,7 @@ const useAzureCommunicationCallAdapterGeneric = <
           adapterRef.current = undefined;
         }
 
-        let newAdapter: Adapter;
+        let newAdapter: Adapter | undefined = undefined;
         if (adapterKind === 'AzureCommunication') {
           // This is just the type check to ensure that displayName is defined.
           if (!displayName) {
@@ -964,6 +964,7 @@ const useAzureCommunicationCallAdapterGeneric = <
             /* @conditional-compile-remove(rooms) */ options
           })) as Adapter;
         } else if (adapterKind === 'Teams') {
+          /* @conditional-compile-remove(teams-identity-support) */
           newAdapter = (await createTeamsCallAdapter({
             credential,
             locator: locator as TeamsMeetingLinkLocator,
@@ -972,6 +973,11 @@ const useAzureCommunicationCallAdapterGeneric = <
         } else {
           throw new Error('Unreachable code, unknown adapterKind');
         }
+
+        if (!newAdapter) {
+          throw Error('Unreachable code! Get undefined adapter');
+        }
+
         if (afterCreateRef.current) {
           newAdapter = await afterCreateRef.current(newAdapter);
         }
