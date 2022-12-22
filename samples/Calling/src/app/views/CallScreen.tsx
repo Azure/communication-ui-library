@@ -108,7 +108,7 @@ const TeamsCallScreen = (props: TeamsCallScreenProps): JSX.Element => {
     throw new Error('A MicrosoftTeamsUserIdentifier must be provided for Teams Identity Call.');
   }
 
-  const adapter = useTeamsCallAdapter({ ...adapterArgs, locator }, afterCreate);
+  const adapter = useTeamsCallAdapter({ ...adapterArgs, userId, locator }, afterCreate);
   return <CallCompositeContainer {...props} adapter={adapter} />;
 };
 
@@ -135,6 +135,7 @@ const AzureCommunicationCallScreen = (props: AzureCommunicationCallScreenProps):
   const adapter = useAzureCommunicationCallAdapter(
     {
       ...adapterArgs,
+      userId,
       locator,
       /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(unsupported-browser) */
       options: callAdapterOptions
