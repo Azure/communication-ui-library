@@ -241,7 +241,7 @@ export interface StatefulCallClient extends CallClient {
 
 // @public
 export type StatefulCallClientArgs = {
-    userId: CommunicationUserIdentifier | MicrosoftTeamsUserIdentifier;
+    userId: CommunicationUserIdentifier | /* @conditional-compile-remove(teams-identity-support) */ MicrosoftTeamsUserIdentifier;
     alternateCallerId?: string;
 };
 
