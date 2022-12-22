@@ -28,12 +28,12 @@ test('Phone number conversions', () => {
 });
 
 test('Teams default user conversions', () => {
-  const parsed = fromFlatCommunicationIdentifier('8:origid:OPAQUE');
+  const parsed = fromFlatCommunicationIdentifier('8:orgid:OPAQUE');
   expect(isMicrosoftTeamsUserIdentifier(parsed)).toBeTruthy();
   expect(parsed).toEqual({
     microsoftTeamsUserId: 'OPAQUE'
   });
-  expect(toFlatCommunicationIdentifier(parsed)).toEqual('8:origid:OPAQUE');
+  expect(toFlatCommunicationIdentifier(parsed)).toEqual('8:orgid:OPAQUE');
 });
 
 test('Teams dod user conversions', () => {
