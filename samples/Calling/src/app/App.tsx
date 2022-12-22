@@ -6,6 +6,8 @@ import { CommunicationUserIdentifier } from '@azure/communication-common';
 import { Role } from '@azure/communication-react';
 /* @conditional-compile-remove(teams-identity-support) */
 import { fromFlatCommunicationIdentifier } from '@azure/communication-react';
+/* @conditional-compile-remove(teams-identity-support) */
+import { MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
 import { setLogLevel } from '@azure/logger';
 import { initializeIcons, Spinner } from '@fluentui/react';
 import { CallAdapterLocator } from '@azure/communication-react';
@@ -49,7 +51,9 @@ const App = (): JSX.Element => {
 
   // User credentials to join a call with - these are retrieved from the server
   const [token, setToken] = useState<string>();
-  const [userId, setUserId] = useState<CommunicationUserIdentifier>();
+  const [userId, setUserId] = useState<
+    CommunicationUserIdentifier | /* @conditional-compile-remove(teams-identity-support) */ MicrosoftTeamsUserIdentifier
+  >();
   const [userCredentialFetchError, setUserCredentialFetchError] = useState<boolean>(false);
 
   // Call details to join a call - these are collected from the user on the home screen
@@ -138,7 +142,7 @@ const App = (): JSX.Element => {
 
             /* @conditional-compile-remove(rooms) */
             if ('roomId' in callLocator) {
-              if (userId) {
+              if (userId && 'communicationUserId' in userId) {
                 setRole(callDetails.role as Role);
                 await addUserToRoom(userId.communicationUserId, callLocator.roomId, callDetails.role as Role);
               } else {
@@ -157,7 +161,7 @@ const App = (): JSX.Element => {
             callDetails.teamsToken && setToken(callDetails.teamsToken);
             /* @conditional-compile-remove(teams-identity-support) */
             callDetails.teamsId &&
-              setUserId(fromFlatCommunicationIdentifier(callDetails.teamsId) as CommunicationUserIdentifier);
+              setUserId(fromFlatCommunicationIdentifier(callDetails.teamsId) as MicrosoftTeamsUserIdentifier);
             setPage('call');
           }}
         />
