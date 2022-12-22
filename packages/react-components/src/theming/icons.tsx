@@ -46,7 +46,13 @@ import {
 import { Important20Filled } from '@fluentui/react-icons';
 
 /* @conditional-compile-remove(pinned-participants) */
-import { Pin16Filled, ScaleFit20Regular, ScaleFill20Regular } from '@fluentui/react-icons';
+import {
+  Pin16Filled,
+  Pin20Regular,
+  PinOff20Regular,
+  ScaleFit20Regular,
+  ScaleFill20Regular
+} from '@fluentui/react-icons';
 
 /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
 import { Backspace20Regular } from '@fluentui/react-icons';
@@ -67,7 +73,7 @@ import React from 'react';
 /* @conditional-compile-remove(unsupported-browser) */
 import { useTheme } from './FluentThemeProvider';
 /* @conditional-compile-remove(call-readiness) */
-import { domainPermissionIconBackgroundStyle, scaledIconStyles } from './icons.styles';
+import { sitePermissionIconBackgroundStyle, scaledIconStyles } from './icons.styles';
 
 /**
  * Icons used by the React components exported from this library.
@@ -95,10 +101,10 @@ const MoreHorizontal18Regular = (): JSX.Element => (
 );
 
 /* @conditional-compile-remove(call-readiness) */
-const DomainPermissionMic20Filled = (): JSX.Element => {
+const SitePermissionMic20Filled = (): JSX.Element => {
   const theme = useTheme();
   return (
-    <Stack horizontalAlign={'center'} styles={domainPermissionIconBackgroundStyle(theme)}>
+    <Stack horizontalAlign={'center'} styles={sitePermissionIconBackgroundStyle(theme)}>
       <div className={mergeStyles(scaledIconStyles(theme))}>
         <MicOn20Filled />
       </div>
@@ -107,10 +113,10 @@ const DomainPermissionMic20Filled = (): JSX.Element => {
 };
 
 /* @conditional-compile-remove(call-readiness) */
-const DomainPermissionCamera20Filled = (): JSX.Element => {
+const SitePermissionCamera20Filled = (): JSX.Element => {
   const theme = useTheme();
   return (
-    <Stack horizontalAlign={'center'} styles={domainPermissionIconBackgroundStyle(theme)}>
+    <Stack horizontalAlign={'center'} styles={sitePermissionIconBackgroundStyle(theme)}>
       <div className={mergeStyles(scaledIconStyles(theme))}>
         <Video20Filled />
       </div>
@@ -119,10 +125,10 @@ const DomainPermissionCamera20Filled = (): JSX.Element => {
 };
 
 /* @conditional-compile-remove(call-readiness) */
-const DomainPermissionsMicDenied20Filled = (): JSX.Element => {
+const SitePermissionsMicDenied20Filled = (): JSX.Element => {
   const theme = useTheme();
   return (
-    <Stack horizontalAlign={'center'} styles={domainPermissionIconBackgroundStyle(theme)}>
+    <Stack horizontalAlign={'center'} styles={sitePermissionIconBackgroundStyle(theme)}>
       <div className={mergeStyles(scaledIconStyles(theme))}>
         <MicProhibited20Filled />
       </div>
@@ -131,10 +137,10 @@ const DomainPermissionsMicDenied20Filled = (): JSX.Element => {
 };
 
 /* @conditional-compile-remove(call-readiness) */
-const DomainPermissionsCameraDenied20Filled = (): JSX.Element => {
+const SitePermissionsCameraDenied20Filled = (): JSX.Element => {
   const theme = useTheme();
   return (
-    <Stack horizontalAlign={'center'} styles={domainPermissionIconBackgroundStyle(theme)}>
+    <Stack horizontalAlign={'center'} styles={sitePermissionIconBackgroundStyle(theme)}>
       <div className={mergeStyles(scaledIconStyles(theme))}>
         <VideoProhibited20Filled />
       </div>
@@ -143,7 +149,7 @@ const DomainPermissionsCameraDenied20Filled = (): JSX.Element => {
 };
 
 /* @conditional-compile-remove(call-readiness) */
-const DomainPermissionSparkle20Filled = (): JSX.Element => (
+const SitePermissionSparkle20Filled = (): JSX.Element => (
   <div className={mergeStyles({ transform: 'scale(2)' })}>
     <Sparkle20Filled />
   </div>
@@ -176,7 +182,7 @@ const UnsupportedEnvironmentWarning = (): JSX.Element => {
 const BrowserPermissionDenied20Filled = (): JSX.Element => {
   const theme = useTheme();
   return (
-    <Stack horizontalAlign={'center'} styles={domainPermissionIconBackgroundStyle(theme)}>
+    <Stack horizontalAlign={'center'} styles={sitePermissionIconBackgroundStyle(theme)}>
       <div className={mergeStyles(scaledIconStyles(theme))}>
         <Important20Filled />
       </div>
@@ -252,15 +258,15 @@ export const DEFAULT_COMPONENT_ICONS = {
   /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
   DialpadBackspace: <Backspace20Regular />,
   /* @conditional-compile-remove(call-readiness) */
-  DomainPermissionsSparkle: <DomainPermissionSparkle20Filled />,
+  SitePermissionsSparkle: <SitePermissionSparkle20Filled />,
   /* @conditional-compile-remove(call-readiness) */
-  DomainPermissionCamera: <DomainPermissionCamera20Filled />,
+  SitePermissionCamera: <SitePermissionCamera20Filled />,
   /* @conditional-compile-remove(call-readiness) */
-  DomainPermissionMic: <DomainPermissionMic20Filled />,
+  SitePermissionMic: <SitePermissionMic20Filled />,
   /* @conditional-compile-remove(call-readiness) */
-  DomainPermissionCameraDenied: <DomainPermissionsCameraDenied20Filled />,
+  SitePermissionCameraDenied: <SitePermissionsCameraDenied20Filled />,
   /* @conditional-compile-remove(call-readiness) */
-  DomainPermissionMicDenied: <DomainPermissionsMicDenied20Filled />,
+  SitePermissionMicDenied: <SitePermissionsMicDenied20Filled />,
   /* @conditional-compile-remove(unsupported-browser) */
   UnsupportedEnvironmentWarning: <UnsupportedEnvironmentWarning />,
   /* @conditional-compile-remove(call-readiness) */
@@ -272,5 +278,9 @@ export const DEFAULT_COMPONENT_ICONS = {
   /* @conditional-compile-remove(pinned-participants) */
   VideoTileScaleFit: <ScaleFit20Regular />,
   /* @conditional-compile-remove(pinned-participants) */
-  VideoTileScaleFill: <ScaleFill20Regular />
+  VideoTileScaleFill: <ScaleFill20Regular />,
+  /* @conditional-compile-remove(pinned-participants) */
+  PinParticipant: <Pin20Regular />,
+  /* @conditional-compile-remove(pinned-participants) */
+  UnpinParticipant: <PinOff20Regular />
 };

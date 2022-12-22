@@ -184,7 +184,7 @@
     "participantStateRinging": "Bellen...",
     "participantStateHold": "In de wacht"
   },
-  "DomainPermissions": {
+  "SitePermissions": {
     "primaryText": "Toestaan dat {appName} uw camera en microfoon gebruikt",
     "secondaryText": "Dit is zodat deelnemers u kunnen zien en horen.",
     "linkText": "Hulp nodig? Hulp bij probleemoplossing",

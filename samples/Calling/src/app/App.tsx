@@ -4,6 +4,8 @@
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(rooms) */
 import { Role } from '@azure/communication-react';
+/* @conditional-compile-remove(teams-identity-support) */
+import { fromFlatCommunicationIdentifier } from '@azure/communication-react';
 import { setLogLevel } from '@azure/logger';
 import { initializeIcons, Spinner } from '@fluentui/react';
 import { CallAdapterLocator } from '@azure/communication-react';
@@ -55,6 +57,9 @@ const App = (): JSX.Element => {
   const [displayName, setDisplayName] = useState<string>('');
   /* @conditional-compile-remove(rooms) */
   const [role, setRole] = useState<Role>();
+
+  /* @conditional-compile-remove(teams-identity-support) */
+  const [isTeamsCall, setIsTeamsCall] = useState<boolean>(false);
 
   /* @conditional-compile-remove(PSTN-calls) */
   const [alternateCallerId, setAlternateCallerId] = useState<string | undefined>();
@@ -146,7 +151,13 @@ const App = (): JSX.Element => {
             if (!joiningExistingCall) {
               window.history.pushState({}, document.title, window.location.origin + getJoinParams(callLocator));
             }
-
+            /* @conditional-compile-remove(teams-identity-support) */
+            setIsTeamsCall(!!callDetails.teamsToken);
+            /* @conditional-compile-remove(teams-identity-support) */
+            callDetails.teamsToken && setToken(callDetails.teamsToken);
+            /* @conditional-compile-remove(teams-identity-support) */
+            callDetails.teamsId &&
+              setUserId(fromFlatCommunicationIdentifier(callDetails.teamsId) as CommunicationUserIdentifier);
             setPage('call');
           }}
         />
@@ -166,7 +177,12 @@ const App = (): JSX.Element => {
         );
       }
 
-      if (!token || !userId || !displayName || !callLocator) {
+      if (
+        !token ||
+        !userId ||
+        (!displayName && /* @conditional-compile-remove(teams-identity-support) */ !isTeamsCall) ||
+        !callLocator
+      ) {
         document.title = `credentials - ${WEB_APP_TITLE}`;
         return <Spinner label={'Getting user credentials from server'} ariaLive="assertive" labelPosition="top" />;
       }
@@ -180,8 +196,8 @@ const App = (): JSX.Element => {
           alternateCallerId={alternateCallerId}
           /* @conditional-compile-remove(rooms) */
           roleHint={role}
-          /* @conditional-compile-remove(call-readiness) */
-          callReadinessOptedIn={true}
+          /* @conditional-compile-remove(teams-identity-support) */
+          isTeamsIdentityCall={isTeamsCall}
         />
       );
     }

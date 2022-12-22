@@ -54,8 +54,6 @@ import {
   CallAdapterCallEndedEvent,
   CallAdapter
 } from './CallAdapter';
-/* @conditional-compile-remove(unsupported-browser) */
-import { CallAdapterOptionalFeatures } from './CallAdapter';
 /* @conditional-compile-remove(teams-identity-support) */
 import { TeamsCallAdapter } from './CallAdapter';
 import { getCallCompositePage, IsCallEndedPage, isCameraOn, isValidIdentifier } from '../utils';
@@ -92,7 +90,6 @@ class CallContext {
     isTeamsCall: boolean,
     options?: {
       /* @conditional-compile-remove(rooms) */ roleHint?: Role;
-      /* @conditional-compile-remove(unsupported-browser) */ features?: CallAdapterOptionalFeatures;
       maxListeners?: number;
     }
   ) {
@@ -108,10 +105,15 @@ class CallContext {
       /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId: clientState.alternateCallerId,
       /* @conditional-compile-remove(unsupported-browser) */ environmentInfo: clientState.environmentInfo,
       /* @conditional-compile-remove(unsupported-browser) */ unsupportedBrowserVersionsAllowed: false,
-      /* @conditional-compile-remove(unsupported-browser) */ features: options?.features,
       /* @conditional-compile-remove(rooms) */ roleHint: options?.roleHint
     };
     this.emitter.setMaxListeners(options?.maxListeners ?? 50);
+    this.bindPublicMethods();
+  }
+
+  private bindPublicMethods(): void {
+    /* @conditional-compile-remove(unsupported-browser) */
+    this.setAllowedUnsupportedBrowser.bind(this);
   }
 
   public onStateChange(handler: (_uiState: CallAdapterState) => void): void {
@@ -156,7 +158,6 @@ class CallContext {
     /* @conditional-compile-remove(unsupported-browser) */
     const environmentInfo = {
       environmentInfo: this.state.environmentInfo,
-      features: this.state.features,
       unsupportedBrowserVersionOptedIn: this.state.unsupportedBrowserVersionsAllowed
     };
     const newPage = getCallCompositePage(
@@ -520,6 +521,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   /* @conditional-compile-remove(unsupported-browser) */
   public allowUnsupportedBrowserVersion(): void {
     this.context.setAllowedUnsupportedBrowser();
+    this.context.updateClientState(this.callClient.getState());
   }
 
   public startCall(
@@ -795,11 +797,6 @@ export type AzureCommunicationCallAdapterOptions = {
    * {@link CallComposite}. The true role of the user will be synced with ACS services when a Rooms call starts.
    */
   roleHint?: Role;
-  /* @conditional-compile-remove(unsupported-browser) */
-  /**
-   * Optional feature flags to be enabled in the CallAdapter.
-   */
-  features?: CallAdapterOptionalFeatures;
 };
 
 /**
