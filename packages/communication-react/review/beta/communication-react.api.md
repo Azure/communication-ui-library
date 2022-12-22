@@ -1631,7 +1631,7 @@ export interface ControlBarProps {
 }
 
 // @public
-export const createAzureCommunicationCallAdapter: ({ userId, displayName, credential, locator, alternateCallerId, options }: AzureCommunicationCallAdapterArgs) => Promise<CallAdapter>;
+export const createAzureCommunicationCallAdapter: ({ userId, displayName, credential, locator, alternateCallerId }: AzureCommunicationCallAdapterArgs) => Promise<CallAdapter>;
 
 // @public
 export const createAzureCommunicationCallAdapterFromClient: (callClient: StatefulCallClient, callAgent: CallAgent, locator: CallAdapterLocator, options?: AzureCommunicationCallAdapterOptions) => Promise<CallAdapter>;
@@ -2933,7 +2933,7 @@ export interface StatefulCallClient extends CallClient {
 
 // @public
 export type StatefulCallClientArgs = {
-    userId: CommunicationUserIdentifier | MicrosoftTeamsUserIdentifier;
+    userId: CommunicationUserIdentifier | /* @conditional-compile-remove(teams-identity-support) */ MicrosoftTeamsUserIdentifier;
     alternateCallerId?: string;
 };
 
@@ -3003,12 +3003,6 @@ export type TeamsCallAdapterArgs = {
     userId: MicrosoftTeamsUserIdentifier;
     credential: CommunicationTokenCredential;
     locator: TeamsMeetingLinkLocator;
-    options?: TeamsCallAdapterOptions;
-};
-
-// @beta
-export type TeamsCallAdapterOptions = {
-    features?: CallAdapterOptionalFeatures;
 };
 
 // @beta
