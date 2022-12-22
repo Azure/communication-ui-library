@@ -13,6 +13,7 @@ test('Communication user conversions', () => {
   const parsed = fromFlatCommunicationIdentifier('8:acs:OPAQUE');
   expect(isCommunicationUserIdentifier(parsed)).toBeTruthy();
   expect(parsed).toEqual({
+    kind: 'communicationUser',
     communicationUserId: '8:acs:OPAQUE'
   });
   expect(toFlatCommunicationIdentifier(parsed)).toEqual('8:acs:OPAQUE');
@@ -22,26 +23,32 @@ test('Phone number conversions', () => {
   const parsed = fromFlatCommunicationIdentifier('4:OPAQUE');
   expect(isPhoneNumberIdentifier(parsed)).toBeTruthy();
   expect(parsed).toEqual({
+    kind: 'phoneNumber',
     phoneNumber: 'OPAQUE'
   });
   expect(toFlatCommunicationIdentifier(parsed)).toEqual('4:OPAQUE');
 });
 
 test('Teams default user conversions', () => {
-  const parsed = fromFlatCommunicationIdentifier('8:origid:OPAQUE');
+  const parsed = fromFlatCommunicationIdentifier('8:orgid:OPAQUE');
   expect(isMicrosoftTeamsUserIdentifier(parsed)).toBeTruthy();
   expect(parsed).toEqual({
-    microsoftTeamsUserId: 'OPAQUE'
+    kind: 'microsoftTeamsUser',
+    microsoftTeamsUserId: 'OPAQUE',
+    cloud: 'public',
+    isAnonymous: false
   });
-  expect(toFlatCommunicationIdentifier(parsed)).toEqual('8:origid:OPAQUE');
+  expect(toFlatCommunicationIdentifier(parsed)).toEqual('8:orgid:OPAQUE');
 });
 
 test('Teams dod user conversions', () => {
   const parsed = fromFlatCommunicationIdentifier('8:dod:OPAQUE');
   expect(isMicrosoftTeamsUserIdentifier(parsed)).toBeTruthy();
   expect(parsed).toEqual({
+    kind: 'microsoftTeamsUser',
     microsoftTeamsUserId: 'OPAQUE',
-    cloud: 'dod'
+    cloud: 'dod',
+    isAnonymous: false
   });
   expect(toFlatCommunicationIdentifier(parsed)).toEqual('8:dod:OPAQUE');
 });
@@ -50,8 +57,10 @@ test('Teams gcch user conversions', () => {
   const parsed = fromFlatCommunicationIdentifier('8:gcch:OPAQUE');
   expect(isMicrosoftTeamsUserIdentifier(parsed)).toBeTruthy();
   expect(parsed).toEqual({
+    kind: 'microsoftTeamsUser',
     microsoftTeamsUserId: 'OPAQUE',
-    cloud: 'gcch'
+    cloud: 'gcch',
+    isAnonymous: false
   });
   expect(toFlatCommunicationIdentifier(parsed)).toEqual('8:gcch:OPAQUE');
 });
@@ -60,6 +69,7 @@ test('Teams anonymous user conversions', () => {
   const parsed = fromFlatCommunicationIdentifier('8:teamsvisitor:OPAQUE');
   expect(isMicrosoftTeamsUserIdentifier(parsed)).toBeTruthy();
   expect(parsed).toEqual({
+    kind: 'microsoftTeamsUser',
     microsoftTeamsUserId: 'OPAQUE',
     isAnonymous: true
   });
@@ -69,6 +79,9 @@ test('Teams anonymous user conversions', () => {
 test('Unknown user conversions', () => {
   const parsed = fromFlatCommunicationIdentifier('OPAQUE');
   expect(isUnknownIdentifier(parsed)).toBeTruthy();
-  expect(parsed).toEqual({ id: 'OPAQUE' });
+  expect(parsed).toEqual({
+    kind: 'unknown',
+    id: 'OPAQUE'
+  });
   expect(toFlatCommunicationIdentifier(parsed)).toEqual('OPAQUE');
 });
