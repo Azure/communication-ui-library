@@ -1,21 +1,20 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import {
-  AzureCommunicationTokenCredential,
-  CommunicationUserIdentifier,
-  MicrosoftTeamsUserIdentifier
-} from '@azure/communication-common';
+import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
+/* @conditional-compile-remove(teams-identity-support) */
+import { MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
 import {
   CallAdapterLocator,
   CallAdapterState,
-  toFlatCommunicationIdentifier,
   useAzureCommunicationCallAdapter,
-  useTeamsCallAdapter,
   CommonCallAdapter,
   CallAdapter,
-  TeamsCallAdapter
+  toFlatCommunicationIdentifier
 } from '@azure/communication-react';
+
+/* @conditional-compile-remove(teams-identity-support) */
+import { useTeamsCallAdapter, TeamsCallAdapter } from '@azure/communication-react';
 /* @conditional-compile-remove(rooms) */
 import { AzureCommunicationCallAdapterOptions } from '@azure/communication-react';
 /* @conditional-compile-remove(rooms) */
@@ -28,7 +27,9 @@ import { CallCompositeContainer } from './CallCompositeContainer';
 
 export interface CallScreenProps {
   token: string;
-  userId: CommunicationUserIdentifier | MicrosoftTeamsUserIdentifier;
+  userId:
+    | CommunicationUserIdentifier
+    | /* @conditional-compile-remove(teams-identity-support) */ MicrosoftTeamsUserIdentifier;
   callLocator: CallAdapterLocator;
   displayName: string;
   /* @conditional-compile-remove(PSTN-calls) */
@@ -76,26 +77,28 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     [subscribeAdapterEvents]
   );
 
-  const credential = useMemo(
-    () =>
-      isTeamsIdentityCall
-        ? new AzureCommunicationTokenCredential(token)
-        : createAutoRefreshingCredential(toFlatCommunicationIdentifier(userId), token),
-    [isTeamsIdentityCall, token, userId]
-  );
+  const credential = useMemo(() => {
+    /* @conditional-compile-remove(teams-identity-support) */
+    if (isTeamsIdentityCall) {
+      return new AzureCommunicationTokenCredential(token);
+    }
+    return createAutoRefreshingCredential(toFlatCommunicationIdentifier(userId), token);
+  }, [isTeamsIdentityCall, token, userId]);
+  /* @conditional-compile-remove(teams-identity-support) */
+  if (isTeamsIdentityCall) {
+    return <TeamsCallScreen afterCreate={afterTeamsCallAdapterCreate} credential={credential} {...props} />;
+  }
 
-  return isTeamsIdentityCall ? (
-    <TeamsCallScreen afterCreate={afterTeamsCallAdapterCreate} credential={credential} {...props} />
-  ) : (
-    <AzureCommunicationCallScreen afterCreate={afterCallAdapterCreate} credential={credential} {...props} />
-  );
+  return <AzureCommunicationCallScreen afterCreate={afterCallAdapterCreate} credential={credential} {...props} />;
 };
 
+/* @conditional-compile-remove(teams-identity-support) */
 type TeamsCallScreenProps = CallScreenProps & {
   afterCreate?: (adapter: TeamsCallAdapter) => Promise<TeamsCallAdapter>;
   credential: AzureCommunicationTokenCredential;
 };
 
+/* @conditional-compile-remove(teams-identity-support) */
 const TeamsCallScreen = (props: TeamsCallScreenProps): JSX.Element => {
   const { afterCreate, callLocator: locator, userId, ...adapterArgs } = props;
   if (!('meetingLink' in locator)) {
