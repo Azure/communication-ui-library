@@ -22,12 +22,12 @@ test.describe('Lobby page tests', async () => {
      */
     dina.state = 'Idle';
     const participants = [dina];
-    const initialState = defaultMockCallAdapterState(participants);
+    let initialState = defaultMockCallAdapterState(participants);
 
     if (initialState.call) {
       initialState.call.state = 'Connecting';
     }
-    initialState.page = 'lobby';
+    initialState = { ...initialState, page: 'lobby' };
 
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
 
@@ -41,12 +41,12 @@ test.describe('Lobby page tests', async () => {
     const joel = defaultMockRemoteParticipant('Joel');
     joel.state = 'Connecting';
     const participants = [joel];
-    const initialState = defaultMockCallAdapterState(participants);
+    let initialState = defaultMockCallAdapterState(participants);
 
     if (initialState.call) {
       initialState.call.state = 'Connecting';
     }
-    initialState.page = 'lobby';
+    initialState = { ...initialState, page: 'lobby' };
 
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
 
@@ -60,12 +60,12 @@ test.describe('Lobby page tests', async () => {
     const ellie = defaultMockRemotePSTNParticipant('15556667777');
     ellie.state = 'Ringing';
     const participants = [ellie];
-    const initialState = defaultMockCallAdapterState(participants);
+    let initialState = defaultMockCallAdapterState(participants);
 
     if (initialState.call) {
       initialState.call.state = 'Connecting';
     }
-    initialState.page = 'lobby';
+    initialState = { ...initialState, page: 'lobby' };
 
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
 

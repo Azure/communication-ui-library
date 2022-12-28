@@ -82,9 +82,8 @@ test.describe('Call Composite E2E Configuration Screen Tests', () => {
 });
 
 function defaultMockConfigurationPageState(): MockCallAdapterState {
-  const state = defaultMockCallAdapterState();
-  state.page = 'configuration';
-  state.call = undefined;
+  let state = defaultMockCallAdapterState();
+  state = { ...state, page: 'configuration', call: undefined };
   return state;
 }
 

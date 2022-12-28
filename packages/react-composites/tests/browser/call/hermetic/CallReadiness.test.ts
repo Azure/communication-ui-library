@@ -84,9 +84,8 @@ test.describe('Tests for guidance UI on config page to guide users through enabl
     page,
     serverUrl
   }) => {
-    const initialState = defaultMockCallAdapterState();
-    initialState.page = 'configuration';
-    initialState.call = undefined;
+    let initialState = defaultMockCallAdapterState();
+    initialState = { ...initialState, page: 'configuration', call: undefined };
     await page.goto(
       buildUrlWithMockAdapter(serverUrl, initialState, {
         usePermissionTroubleshootingActions: 'true'
@@ -102,9 +101,8 @@ test.describe('Tests for guidance UI on config page to guide users through enabl
 });
 
 function defaultMockConfigPageStateDeviceDisabled(): MockCallAdapterState {
-  const state = defaultMockCallAdapterState();
-  state.page = 'configuration';
-  state.call = undefined;
+  let state = defaultMockCallAdapterState();
+  state = { ...state, page: 'configuration', call: undefined };
   state.devices = {
     isSpeakerSelectionAvailable: true,
     cameras: [],

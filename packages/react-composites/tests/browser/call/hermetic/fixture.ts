@@ -222,9 +222,8 @@ export const test = base.extend<TestFixture>({
  * Sets up the default state for the configuration screen.
  */
 export const defaultMockConfigurationPageState = (): MockCallAdapterState => {
-  const state = defaultMockCallAdapterState();
-  state.page = 'configuration';
-  state.call = undefined;
+  let state = defaultMockCallAdapterState();
+  state = { ...state, page: 'configuration', call: undefined };
   return state;
 };
 
