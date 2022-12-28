@@ -69,7 +69,8 @@ export const parameters = {
           'Best Practices',
           'Troubleshooting',
           'Identity',
-          'Rooms'
+          'Rooms',
+          'Custom Teams Endpoint'
         ],
         EXAMPLES_FOLDER_PREFIX,
         STATEFUL_CLIENT_PREFIX,
