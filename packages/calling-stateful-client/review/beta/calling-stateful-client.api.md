@@ -52,7 +52,7 @@ export interface CallAgentState {
 
 // @public
 export interface CallClientState {
-    alternateCallerId?: Readonly<string>;
+    readonly alternateCallerId?: string;
     callAgent?: CallAgentState;
     calls: {
         [key: string]: CallState;
@@ -61,7 +61,7 @@ export interface CallClientState {
         [key: string]: CallState;
     };
     deviceManager: DeviceManagerState;
-    environmentInfo?: Readonly<EnvironmentInfo>;
+    readonly environmentInfo?: EnvironmentInfo;
     incomingCalls: {
         [key: string]: IncomingCallState;
     };
@@ -69,7 +69,7 @@ export interface CallClientState {
         [key: string]: IncomingCallState;
     };
     latestErrors: CallErrors;
-    userId: Readonly<CommunicationIdentifierKind>;
+    readonly userId: CommunicationIdentifierKind;
 }
 
 // @public

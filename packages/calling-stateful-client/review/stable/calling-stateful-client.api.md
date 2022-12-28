@@ -59,7 +59,7 @@ export interface CallClientState {
         [key: string]: IncomingCallState;
     };
     latestErrors: CallErrors;
-    userId: CommunicationIdentifierKind;
+    readonly userId: CommunicationIdentifierKind;
 }
 
 // @public

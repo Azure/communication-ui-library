@@ -423,25 +423,25 @@ export interface CallClientState {
    * developer for easier access to userId. Must be passed in at initialization of the {@link StatefulCallClient}.
    * Completely controlled by the developer.
    */
-  userId: Readonly<CommunicationIdentifierKind>;
+  readonly userId: CommunicationIdentifierKind;
   /**
    * Stores the latest error for each API method.
    *
    * See documentation of {@Link CallErrors} for details.
    */
-  latestErrors: Readonly<CallErrors>;
+  latestErrors: CallErrors;
   /* @conditional-compile-remove(PSTN-calls) */
   /**
    * A phone number in E.164 format that will be used to represent callers identity.
    * For example, using the alternateCallerId to add a participant using PSTN, this number will
    * be used as the caller id in the PSTN call.
    */
-  alternateCallerId?: Readonly<string>;
+  readonly alternateCallerId?: string;
   /* @conditional-compile-remove(unsupported-browser) */
   /**
    * state to track the environment that the stateful client was made in is supported
    */
-  environmentInfo?: Readonly<EnvironmentInfo>;
+  readonly environmentInfo?: EnvironmentInfo;
 }
 
 /**

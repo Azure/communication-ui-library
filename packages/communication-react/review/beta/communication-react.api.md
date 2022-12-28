@@ -292,16 +292,16 @@ export interface CallAdapterCallOperations {
 
 // @public
 export type CallAdapterClientState = {
-    userId: Readonly<CommunicationIdentifierKind>;
-    displayName?: Readonly<string>;
-    call?: Readonly<CallState>;
+    readonly userId: CommunicationIdentifierKind;
+    readonly displayName?: string;
+    readonly call?: CallState;
     devices: DeviceManagerState;
-    endedCall?: Readonly<CallState>;
-    isTeamsCall: Readonly<boolean>;
+    readonly endedCall?: CallState;
+    readonly isTeamsCall: boolean;
     latestErrors: AdapterErrors;
-    alternateCallerId?: Readonly<string>;
-    environmentInfo?: Readonly<EnvironmentInfo>;
-    roleHint?: Role;
+    readonly alternateCallerId?: string;
+    readonly environmentInfo?: EnvironmentInfo;
+    readonly roleHint?: Role;
 };
 
 // @public
@@ -352,8 +352,8 @@ export interface CallAdapterSubscribers {
 // @public
 export type CallAdapterUiState = {
     isLocalPreviewMicrophoneEnabled: boolean;
-    page: Readonly<CallCompositePage>;
-    unsupportedBrowserVersionsAllowed?: boolean;
+    readonly page: CallCompositePage;
+    readonly unsupportedBrowserVersionsAllowed?: boolean;
 };
 
 // @public
@@ -391,7 +391,7 @@ export interface CallClientProviderProps {
 
 // @public
 export interface CallClientState {
-    alternateCallerId?: Readonly<string>;
+    readonly alternateCallerId?: string;
     callAgent?: CallAgentState;
     calls: {
         [key: string]: CallState;
@@ -400,7 +400,7 @@ export interface CallClientState {
         [key: string]: CallState;
     };
     deviceManager: DeviceManagerState;
-    environmentInfo?: Readonly<EnvironmentInfo>;
+    readonly environmentInfo?: EnvironmentInfo;
     incomingCalls: {
         [key: string]: IncomingCallState;
     };
@@ -408,7 +408,7 @@ export interface CallClientState {
         [key: string]: IncomingCallState;
     };
     latestErrors: CallErrors;
-    userId: Readonly<CommunicationIdentifierKind>;
+    readonly userId: CommunicationIdentifierKind;
 }
 
 // @public

@@ -58,9 +58,9 @@ test.describe('Participant pane tests', async () => {
 
   /* @conditional-compile-remove(PSTN-calls) */
   test('click on add people button will show dialpad option for PSTN call', async ({ page, serverUrl }, testInfo) => {
-    const initialState = defaultMockCallAdapterState();
+    let initialState = defaultMockCallAdapterState();
     //PSTN call has alternate caller id
-    initialState.alternateCallerId = '+1676568678999';
+    initialState = { ...initialState, alternateCallerId: '+1676568678999' };
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
 
     await waitForSelector(page, dataUiId(IDS.videoGallery));
@@ -82,9 +82,9 @@ test.describe('Participant pane tests', async () => {
 
   /* @conditional-compile-remove(PSTN-calls) */
   test('click on dial phone number will open dialpad in PTSN call', async ({ page, serverUrl }, testInfo) => {
-    const initialState = defaultMockCallAdapterState();
+    let initialState = defaultMockCallAdapterState();
     //PSTN call has alternate caller id
-    initialState.alternateCallerId = '+1676568678999';
+    initialState = { ...initialState, alternateCallerId: '+1676568678999' };
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
 
     await waitForSelector(page, dataUiId(IDS.videoGallery));
@@ -118,9 +118,9 @@ test.describe('Participant pane tests', async () => {
     const paul = defaultMockRemoteParticipant('Paul Bridges');
     paul.state = 'Connecting';
     const participants = [paul];
-    const initialState = defaultMockCallAdapterState(participants);
+    let initialState = defaultMockCallAdapterState(participants);
     //PSTN call has alternate caller id
-    initialState.alternateCallerId = '+1676568678999';
+    initialState = { ...initialState, alternateCallerId: '+1676568678999' };
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
     await waitForSelector(page, dataUiId(IDS.videoGallery));
     if (!isTestProfileDesktop(testInfo)) {
@@ -142,9 +142,9 @@ test.describe('Participant pane tests', async () => {
     );
     longPaul.state = 'Connecting';
     const participants = [longPaul];
-    const initialState = defaultMockCallAdapterState(participants);
+    let initialState = defaultMockCallAdapterState(participants);
     //PSTN call has alternate caller id
-    initialState.alternateCallerId = '+1676568678999';
+    initialState = { ...initialState, alternateCallerId: '+1676568678999' };
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
     await waitForSelector(page, dataUiId(IDS.videoGallery));
     if (!isTestProfileDesktop(testInfo)) {

@@ -69,9 +69,9 @@ export const END_CALL_PAGES: CallCompositePage[] = [
  */
 export type CallAdapterUiState = {
   isLocalPreviewMicrophoneEnabled: boolean;
-  page: Readonly<CallCompositePage>;
+  readonly page: CallCompositePage;
   /* @conditional-compile-remove(unsupported-browser) */
-  unsupportedBrowserVersionsAllowed?: boolean;
+  readonly unsupportedBrowserVersionsAllowed?: boolean;
 };
 
 /**
@@ -80,12 +80,12 @@ export type CallAdapterUiState = {
  * @public
  */
 export type CallAdapterClientState = {
-  userId: Readonly<CommunicationIdentifierKind>;
-  displayName?: Readonly<string>;
-  call?: Readonly<CallState>;
+  readonly userId: CommunicationIdentifierKind;
+  readonly displayName?: string;
+  readonly call?: CallState;
   devices: DeviceManagerState;
-  endedCall?: Readonly<CallState>;
-  isTeamsCall: Readonly<boolean>;
+  readonly endedCall?: CallState;
+  readonly isTeamsCall: boolean;
   /**
    * Latest error encountered for each operation performed via the adapter.
    */
@@ -94,19 +94,19 @@ export type CallAdapterClientState = {
   /**
    * Azure communications Phone number to make PSTN calls with.
    */
-  alternateCallerId?: Readonly<string>;
+  readonly alternateCallerId?: string;
   /* @conditional-compile-remove(unsupported-browser) */
   /**
    * Environment information about system the adapter is made on
    */
-  environmentInfo?: Readonly<EnvironmentInfo>;
+  readonly environmentInfo?: EnvironmentInfo;
   /* @conditional-compile-remove(rooms) */
   /**
    * Use this to hint the role of the user when the role is not available before a Rooms call is started. This value
    * should be obtained using the Rooms API. This role will determine permissions in the configuration page of the
    * {@link CallComposite}. The true role of the user will be synced with ACS services when a Rooms call starts.
    */
-  roleHint?: Role;
+  readonly roleHint?: Role;
 };
 
 /**

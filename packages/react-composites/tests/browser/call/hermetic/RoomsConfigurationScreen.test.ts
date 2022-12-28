@@ -33,8 +33,7 @@ test.describe('Rooms Call Configuration Screen Tests for different roles', () =>
 });
 
 function defaultMockConfigurationPageState(): MockCallAdapterState {
-  const state = defaultMockCallAdapterState();
-  state.page = 'configuration';
-  state.call = undefined;
+  let state = defaultMockCallAdapterState();
+  state = { ...state, call: undefined, page: 'configuration' };
   return state;
 }

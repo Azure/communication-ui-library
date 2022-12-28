@@ -200,10 +200,11 @@ export class CallContext {
   }
 
   /* @conditional-compile-remove(unsupported-browser) */
-  public setEnvironmentInfo(envInfo: EnvironmentInfo): void {
-    this.modifyState((draft: CallClientState) => {
-      draft.environmentInfo = envInfo;
-    });
+  public setEnvironmentInfo(environmentInfo: EnvironmentInfo): void {
+    this.modifyState((draft: CallClientState) => ({
+      ...draft,
+      environmentInfo
+    }));
   }
 
   public setCallIsScreenSharingOn(callId: string, isScreenSharingOn: boolean): void {

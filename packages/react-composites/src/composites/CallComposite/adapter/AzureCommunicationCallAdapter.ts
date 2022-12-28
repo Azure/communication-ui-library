@@ -220,7 +220,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   private locator: CallAdapterLocator;
   // Never use directly, even internally. Use `call` property instead.
   private _call?: CallCommon;
-  private context: CallContext;
+  private readonly context: CallContext;
   private diagnosticsForwarder?: DiagnosticsForwarder;
   private handlers: CallHandlersOf<AgentType>;
   private participantSubscribers = new Map<string, ParticipantSubscriber>();

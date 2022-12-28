@@ -11,13 +11,13 @@ import { buildUrlWithMockAdapter, defaultMockCallAdapterState, stubLocalCameraNa
 /* @conditional-compile-remove(unsupported-browser) */
 test.describe('unsupportedBrowser page tests', async () => {
   test('unsupportedBrowser displays correctly without a help link', async ({ page, serverUrl }) => {
-    const state = defaultMockUnsupportedBrowserPageState();
+    let state = defaultMockUnsupportedBrowserPageState();
     const envConfig = {
       platform: true,
       browser: false,
       version: false
     };
-    state.environmentInfo = setMockEnvironmentInfo(envConfig);
+    state = { ...state, environmentInfo: setMockEnvironmentInfo(envConfig) };
 
     await page.goto(buildUrlWithMockAdapter(serverUrl, state));
 
@@ -27,13 +27,13 @@ test.describe('unsupportedBrowser page tests', async () => {
   });
 
   test('unsupportedBrowser displays correctly with a help link', async ({ page, serverUrl }) => {
-    const state = defaultMockUnsupportedBrowserPageState();
+    let state = defaultMockUnsupportedBrowserPageState();
     const envConfig = {
       platform: true,
       browser: false,
       version: false
     };
-    state.environmentInfo = setMockEnvironmentInfo(envConfig);
+    state = { ...state, environmentInfo: setMockEnvironmentInfo(envConfig) };
 
     await page.goto(
       buildUrlWithMockAdapter(serverUrl, state, {
@@ -48,13 +48,13 @@ test.describe('unsupportedBrowser page tests', async () => {
   });
 
   test('unsupportedBrowserVersion displays correctly with no help link', async ({ page, serverUrl }) => {
-    const state = defaultMockUnsupportedBrowserPageState();
+    let state = defaultMockUnsupportedBrowserPageState();
     const envConfig = {
       platform: true,
       browser: true,
       version: false
     };
-    state.environmentInfo = setMockEnvironmentInfo(envConfig);
+    state = { ...state, environmentInfo: setMockEnvironmentInfo(envConfig) };
 
     await page.goto(buildUrlWithMockAdapter(serverUrl, state));
 
@@ -64,13 +64,13 @@ test.describe('unsupportedBrowser page tests', async () => {
   });
 
   test('unsupportedBrowserVersion displays correctly with help link', async ({ page, serverUrl }) => {
-    const state = defaultMockUnsupportedBrowserPageState();
+    let state = defaultMockUnsupportedBrowserPageState();
     const envConfig = {
       platform: true,
       browser: true,
       version: false
     };
-    state.environmentInfo = setMockEnvironmentInfo(envConfig);
+    state = { ...state, environmentInfo: setMockEnvironmentInfo(envConfig) };
 
     await page.goto(
       buildUrlWithMockAdapter(serverUrl, state, {
@@ -88,13 +88,13 @@ test.describe('unsupportedBrowser page tests', async () => {
     page,
     serverUrl
   }) => {
-    const state = defaultMockUnsupportedBrowserPageState();
+    let state = defaultMockUnsupportedBrowserPageState();
     const envConfig = {
       platform: true,
       browser: true,
       version: false
     };
-    state.environmentInfo = setMockEnvironmentInfo(envConfig);
+    state = { ...state, environmentInfo: setMockEnvironmentInfo(envConfig) };
 
     await page.goto(
       buildUrlWithMockAdapter(serverUrl, state, {
@@ -109,13 +109,13 @@ test.describe('unsupportedBrowser page tests', async () => {
   });
 
   test('unsupportedBrowserVersion displays correctly with continue button', async ({ page, serverUrl }) => {
-    const state = defaultMockUnsupportedBrowserPageState();
+    let state = defaultMockUnsupportedBrowserPageState();
     const envConfig = {
       platform: true,
       browser: true,
       version: false
     };
-    state.environmentInfo = setMockEnvironmentInfo(envConfig);
+    state = { ...state, environmentInfo: setMockEnvironmentInfo(envConfig) };
 
     await page.goto(buildUrlWithMockAdapter(serverUrl, state));
 
@@ -125,13 +125,13 @@ test.describe('unsupportedBrowser page tests', async () => {
   });
 
   test('unsupportedBrowserVersion with continue button allows user into config screen', async ({ page, serverUrl }) => {
-    const state = defaultMockUnsupportedBrowserPageState();
+    let state = defaultMockUnsupportedBrowserPageState();
     const envConfig = {
       platform: true,
       browser: true,
       version: false
     };
-    state.environmentInfo = setMockEnvironmentInfo(envConfig);
+    state = { ...state, environmentInfo: setMockEnvironmentInfo(envConfig) };
 
     await page.goto(buildUrlWithMockAdapter(serverUrl, state));
 
@@ -140,7 +140,7 @@ test.describe('unsupportedBrowser page tests', async () => {
 
     await pageClick(page, dataUiId(IDS.allowUnsupportedBrowserButton));
 
-    state.page = 'configuration';
+    state = { ...state, page: 'configuration' };
     state.call = undefined;
 
     await page.goto(buildUrlWithMockAdapter(serverUrl, state));
@@ -154,13 +154,13 @@ test.describe('unsupportedBrowser page tests', async () => {
   });
 
   test('unsupportedOperatingSystem displays correctly with no link', async ({ page, serverUrl }) => {
-    const state = defaultMockUnsupportedBrowserPageState();
+    let state = defaultMockUnsupportedBrowserPageState();
     const envConfig = {
       platform: false,
       browser: false,
       version: false
     };
-    state.environmentInfo = setMockEnvironmentInfo(envConfig);
+    state = { ...state, environmentInfo: setMockEnvironmentInfo(envConfig) };
 
     await page.goto(buildUrlWithMockAdapter(serverUrl, state));
 
@@ -170,13 +170,13 @@ test.describe('unsupportedBrowser page tests', async () => {
   });
 
   test('unsupportedOperatingSystem displays correctly with link', async ({ page, serverUrl }) => {
-    const state = defaultMockUnsupportedBrowserPageState();
+    let state = defaultMockUnsupportedBrowserPageState();
     const envConfig = {
       platform: false,
       browser: false,
       version: false
     };
-    state.environmentInfo = setMockEnvironmentInfo(envConfig);
+    state = { ...state, environmentInfo: setMockEnvironmentInfo(envConfig) };
 
     await page.goto(
       buildUrlWithMockAdapter(serverUrl, state, {
@@ -192,8 +192,8 @@ test.describe('unsupportedBrowser page tests', async () => {
 });
 
 const defaultMockUnsupportedBrowserPageState = (): MockCallAdapterState => {
-  const state = defaultMockCallAdapterState();
-  state.page = 'unsupportedEnvironment';
+  let state = defaultMockCallAdapterState();
+  state = { ...state, page: 'unsupportedEnvironment' };
   return state;
 };
 

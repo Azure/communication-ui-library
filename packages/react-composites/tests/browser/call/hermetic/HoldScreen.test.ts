@@ -13,7 +13,7 @@ test.describe('Hold screen tests', async () => {
     const vasily = defaultMockRemoteParticipant('Vasily Podkolzin');
 
     const participants = [paul, vasily];
-    const initialState = defaultMockCallAdapterState(participants);
+    let initialState = defaultMockCallAdapterState(participants);
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
     await waitForSelector(page, dataUiId(IDS.moreButton));
     await pageClick(page, dataUiId(IDS.moreButton));
@@ -22,7 +22,7 @@ test.describe('Hold screen tests', async () => {
 
     await waitForSelector(page, dataUiId(IDS.holdButton));
     await pageClick(page, dataUiId(IDS.holdButton));
-    initialState.page = 'hold';
+    initialState = { ...initialState, page: 'hold' };
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
     await waitForSelector(page, dataUiId(IDS.holdPage));
 
@@ -34,7 +34,7 @@ test.describe('Hold screen tests', async () => {
     const vasily = defaultMockRemoteParticipant('Vasily Podkolzin');
 
     const participants = [paul, vasily];
-    const initialState = defaultMockCallAdapterState(participants);
+    let initialState = defaultMockCallAdapterState(participants);
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
     await waitForSelector(page, dataUiId(IDS.moreButton));
     await pageClick(page, dataUiId(IDS.moreButton));
@@ -43,7 +43,7 @@ test.describe('Hold screen tests', async () => {
 
     await waitForSelector(page, dataUiId(IDS.holdButton));
     await pageClick(page, dataUiId(IDS.holdButton));
-    initialState.page = 'hold';
+    initialState = { ...initialState, page: 'hold' };
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
     await waitForSelector(page, dataUiId(IDS.holdPage));
 
@@ -52,7 +52,7 @@ test.describe('Hold screen tests', async () => {
     await waitForSelector(page, dataUiId(IDS.resumeCallButton));
     await pageClick(page, dataUiId(IDS.resumeCallButton));
 
-    initialState.page = 'call';
+    initialState = { ...initialState, page: 'call' };
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
     await waitForSelector(page, dataUiId(IDS.callPage));
 

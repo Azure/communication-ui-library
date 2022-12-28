@@ -8,8 +8,8 @@ import { IDS } from '../../common/constants';
 
 test.describe('Localization tests', async () => {
   test('Configuration page title and participant button in call should be localized', async ({ page, serverUrl }) => {
-    const initialState = defaultMockCallAdapterState();
-    initialState.page = 'configuration';
+    let initialState = defaultMockCallAdapterState();
+    initialState = { ...initialState, page: 'configuration' };
     initialState.call = undefined;
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { useFrLocale: 'true' }));
     await waitForCallCompositeToLoad(page);

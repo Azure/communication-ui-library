@@ -11,10 +11,10 @@ test.describe('Dtmf dialpad tests', async () => {
     const paul = defaultMockRemoteParticipant('Paul Bridges');
 
     const participant = [paul];
-    const initialState = defaultMockCallAdapterState(participant);
+    let initialState = defaultMockCallAdapterState(participant);
 
     //PSTN call has alternate caller id
-    initialState.alternateCallerId = '+1676568678999';
+    initialState = { ...initialState, alternateCallerId: '+1676568678999' };
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
 
     await waitForSelector(page, dataUiId('call-with-chat-composite-more-button'));

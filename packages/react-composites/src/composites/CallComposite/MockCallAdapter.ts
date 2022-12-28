@@ -25,7 +25,7 @@ export class MockCallAdapter implements CallAdapter {
     }
     /* @conditional-compile-remove(rooms) */
     if (testState.options?.roleHint) {
-      this.state.roleHint = testState.options.roleHint;
+      ({ ...this.state, roleHint: testState.options.roleHint });
     }
   }
 
