@@ -69,7 +69,7 @@ export const END_CALL_PAGES: CallCompositePage[] = [
  */
 export type CallAdapterUiState = {
   isLocalPreviewMicrophoneEnabled: boolean;
-  page: CallCompositePage;
+  page: Readonly<CallCompositePage>;
   /* @conditional-compile-remove(unsupported-browser) */
   unsupportedBrowserVersionsAllowed?: boolean;
 };
@@ -80,12 +80,12 @@ export type CallAdapterUiState = {
  * @public
  */
 export type CallAdapterClientState = {
-  userId: CommunicationIdentifierKind;
-  displayName?: string;
-  call?: CallState;
+  userId: Readonly<CommunicationIdentifierKind>;
+  displayName?: Readonly<string>;
+  call?: Readonly<CallState>;
   devices: DeviceManagerState;
-  endedCall?: CallState;
-  isTeamsCall: boolean;
+  endedCall?: Readonly<CallState>;
+  isTeamsCall: Readonly<boolean>;
   /**
    * Latest error encountered for each operation performed via the adapter.
    */
@@ -94,12 +94,12 @@ export type CallAdapterClientState = {
   /**
    * Azure communications Phone number to make PSTN calls with.
    */
-  alternateCallerId?: string;
+  alternateCallerId?: Readonly<string>;
   /* @conditional-compile-remove(unsupported-browser) */
   /**
    * Environment information about system the adapter is made on
    */
-  environmentInfo?: EnvironmentInfo;
+  environmentInfo?: Readonly<EnvironmentInfo>;
   /* @conditional-compile-remove(rooms) */
   /**
    * Use this to hint the role of the user when the role is not available before a Rooms call is started. This value

@@ -192,15 +192,15 @@ export interface CallAdapterCallOperations {
 
 // @public
 export type CallAdapterClientState = {
-    userId: CommunicationIdentifierKind;
-    displayName?: string;
-    call?: CallState;
+    userId: Readonly<CommunicationIdentifierKind>;
+    displayName?: Readonly<string>;
+    call?: Readonly<CallState>;
     devices: DeviceManagerState;
-    endedCall?: CallState;
-    isTeamsCall: boolean;
+    endedCall?: Readonly<CallState>;
+    isTeamsCall: Readonly<boolean>;
     latestErrors: AdapterErrors;
-    alternateCallerId?: string;
-    environmentInfo?: EnvironmentInfo;
+    alternateCallerId?: Readonly<string>;
+    environmentInfo?: Readonly<EnvironmentInfo>;
     roleHint?: Role;
 };
 
@@ -252,7 +252,7 @@ export interface CallAdapterSubscribers {
 // @public
 export type CallAdapterUiState = {
     isLocalPreviewMicrophoneEnabled: boolean;
-    page: CallCompositePage;
+    page: Readonly<CallCompositePage>;
     unsupportedBrowserVersionsAllowed?: boolean;
 };
 

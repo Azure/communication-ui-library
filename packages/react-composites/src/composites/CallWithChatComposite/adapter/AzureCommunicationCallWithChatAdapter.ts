@@ -102,7 +102,7 @@ class CallWithChatContext {
 
   public setState(state: CallWithChatAdapterState): void {
     this.state = state;
-    this.emitter.emit('stateChanged', oldState);
+    this.emitter.emit('stateChanged', this.state);
   }
 
   public getState(): CallWithChatAdapterState {
