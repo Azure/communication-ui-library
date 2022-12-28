@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "Update CallAdapter state to be readonly.",
+  "packageName": "@azure/communication-react",
+  "email": "94866715+dmceachernmsft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
