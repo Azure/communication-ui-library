@@ -76,14 +76,13 @@ import { AdapterError } from '../../common/adapters';
 import { DiagnosticsForwarder } from './DiagnosticsForwarder';
 import { useEffect, useRef, useState } from 'react';
 import { CallHandlersOf, createHandlers } from './createHandlers';
-import { Mutable } from 'type-fest';
 
 type CallTypeOf<AgentType extends CallAgent | BetaTeamsCallAgent> = AgentType extends CallAgent ? Call : TeamsCall;
 
 /** Context of call, which is a centralized context for all state updates */
 class CallContext {
   private emitter: EventEmitter = new EventEmitter();
-  private readonly state: CallAdapterState;
+  private state: CallAdapterState;
   private callId: string | undefined;
 
   constructor(
@@ -126,9 +125,8 @@ class CallContext {
   }
 
   public setState(state: CallAdapterState): void {
-    let oldState = this.state as Mutable<CallAdapterState>;
-    oldState = state;
-    this.emitter.emit('stateChanged', oldState);
+    this.state = state;
+    this.emitter.emit('stateChanged', this.state);
   }
 
   public getState(): CallAdapterState {

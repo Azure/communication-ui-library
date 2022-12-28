@@ -79,14 +79,13 @@ import { useEffect, useRef, useState } from 'react';
 import { _toCommunicationIdentifier } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(unsupported-browser) */
 import { AzureCommunicationCallAdapterOptions } from '../../CallComposite/adapter/AzureCommunicationCallAdapter';
-import { Mutable } from 'type-fest';
 
 type CallWithChatAdapterStateChangedHandler = (newState: CallWithChatAdapterState) => void;
 
 /** Context of Call with Chat, which is a centralized context for all state updates */
 class CallWithChatContext {
   private emitter = new EventEmitter();
-  private readonly state: CallWithChatAdapterState;
+  private state: CallWithChatAdapterState;
 
   constructor(clientState: CallWithChatAdapterState, maxListeners = 50) {
     this.state = clientState;
@@ -102,8 +101,7 @@ class CallWithChatContext {
   }
 
   public setState(state: CallWithChatAdapterState): void {
-    let oldState = this.state as Mutable<CallWithChatAdapterState>;
-    oldState = state;
+    this.state = state;
     this.emitter.emit('stateChanged', oldState);
   }
 
