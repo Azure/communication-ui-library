@@ -19,7 +19,7 @@ export type ContainerProps = {
   callInvitationURL?: string;
   locale?: CompositeLocale;
   options?: CallCompositeOptions;
-  roomId?: string;
+  meetingUrl?: string;
 };
 
 export const ContosoCallContainer = (props: ContainerProps): JSX.Element => {
@@ -37,9 +37,9 @@ export const ContosoCallContainer = (props: ContainerProps): JSX.Element => {
       userId: props.userId,
       displayName: props.displayName, // Max 256 Characters
       credential,
-      locator: props.roomId
+      locator: props.meetingUrl
         ? {
-            roomId: props.roomId
+            meetingLink: props.meetingUrl
           }
         : undefined
     },
@@ -47,8 +47,8 @@ export const ContosoCallContainer = (props: ContainerProps): JSX.Element => {
     leaveCall
   );
 
-  if (!props.roomId) {
-    return <>Room id is not provided.</>;
+  if (!props.meetingUrl) {
+    return <>Teams meeting link is not provided.</>;
   }
 
   if (adapter) {
