@@ -116,18 +116,20 @@ export class CallContext {
   // make sure the state is clean because any left over state (if previous CallAgentDeclarative was disposed) may be
   // invalid.
   public clearCallRelatedState(): void {
-    this.modifyState((draft: CallClientState) => {
-      draft.calls = {};
-      draft.incomingCalls = {};
-      draft.callsEnded = {};
-      draft.incomingCallsEnded = {};
-    });
+    this.modifyState((draft: CallClientState) => ({
+      ...draft,
+      calls: {},
+      incomingCalls: {},
+      callsEnded: {},
+      incomingCallsEnded: {}
+    }));
   }
 
   public setCallAgent(callAgent: CallAgentState): void {
-    this.modifyState((draft: CallClientState) => {
-      draft.callAgent = callAgent;
-    });
+    this.modifyState((draft: CallClientState) => ({
+      ...draft,
+      callAgent: callAgent
+    }));
   }
 
   public setCall(call: CallState): void {

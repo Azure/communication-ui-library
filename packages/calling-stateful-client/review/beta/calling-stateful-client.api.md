@@ -53,22 +53,22 @@ export interface CallAgentState {
 // @public
 export interface CallClientState {
     readonly alternateCallerId?: string;
-    callAgent?: CallAgentState;
-    calls: {
+    readonly callAgent?: CallAgentState;
+    readonly calls: {
         [key: string]: CallState;
     };
-    callsEnded: {
+    readonly callsEnded: {
         [key: string]: CallState;
     };
-    deviceManager: DeviceManagerState;
+    readonly deviceManager: DeviceManagerState;
     readonly environmentInfo?: EnvironmentInfo;
-    incomingCalls: {
+    readonly incomingCalls: {
         [key: string]: IncomingCallState;
     };
-    incomingCallsEnded: {
+    readonly incomingCallsEnded: {
         [key: string]: IncomingCallState;
     };
-    latestErrors: CallErrors;
+    readonly latestErrors: CallErrors;
     readonly userId: CommunicationIdentifierKind;
 }
 

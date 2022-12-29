@@ -397,19 +397,19 @@ export interface CallClientState {
    *
    * Only {@link MAX_CALL_HISTORY_LENGTH} Calls are kept in the history. Oldest calls are evicted if required.
    */
-  callsEnded: { [key: string]: CallState };
+  readonly callsEnded: { [key: string]: CallState };
   /**
    * Proxy of {@link @azure/communication-calling#IncomingCall} as an object with {@link IncomingCall} fields.
    * It is keyed by {@link @azure/communication-calling#IncomingCall.id}.
    */
-  incomingCalls: { [key: string]: IncomingCallState };
+  readonly incomingCalls: { [key: string]: IncomingCallState };
   /**
    * Incoming Calls that have ended are stored here so the callEndReason could be checked.
    * It is an as an object with {@link @azure/communication-calling#Call.id} keys and {@link IncomingCall} values.
    *
    * Only {@link MAX_CALL_HISTORY_LENGTH} Calls are kept in the history. Oldest calls are evicted if required.
    */
-  incomingCallsEnded: { [key: string]: IncomingCallState };
+  readonly incomingCallsEnded: { [key: string]: IncomingCallState };
   /**
    * Proxy of {@link @azure/communication-calling#DeviceManager}. Please review {@link DeviceManagerState}.
    */
@@ -417,7 +417,7 @@ export interface CallClientState {
   /**
    * Proxy of {@link @azure/communication-calling#CallAgent}. Please review {@link CallAgentState}.
    */
-  callAgent?: CallAgentState;
+  readonly callAgent?: CallAgentState;
   /**
    * Stores a userId. This is not used by the {@link StatefulCallClient} and is provided here as a convenience for the
    * developer for easier access to userId. Must be passed in at initialization of the {@link StatefulCallClient}.
@@ -429,7 +429,7 @@ export interface CallClientState {
    *
    * See documentation of {@Link CallErrors} for details.
    */
-  latestErrors: CallErrors;
+  readonly latestErrors: CallErrors;
   /* @conditional-compile-remove(PSTN-calls) */
   /**
    * A phone number in E.164 format that will be used to represent callers identity.

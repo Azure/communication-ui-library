@@ -68,7 +68,7 @@ export const END_CALL_PAGES: CallCompositePage[] = [
  * @public
  */
 export type CallAdapterUiState = {
-  isLocalPreviewMicrophoneEnabled: boolean;
+  readonly isLocalPreviewMicrophoneEnabled: boolean;
   readonly page: CallCompositePage;
   /* @conditional-compile-remove(unsupported-browser) */
   readonly unsupportedBrowserVersionsAllowed?: boolean;
@@ -83,13 +83,13 @@ export type CallAdapterClientState = {
   readonly userId: CommunicationIdentifierKind;
   readonly displayName?: string;
   readonly call?: CallState;
-  devices: DeviceManagerState;
+  readonly devices: DeviceManagerState;
   readonly endedCall?: CallState;
   readonly isTeamsCall: boolean;
   /**
    * Latest error encountered for each operation performed via the adapter.
    */
-  latestErrors: AdapterErrors;
+  readonly latestErrors: AdapterErrors;
   /* @conditional-compile-remove(PSTN-calls) */
   /**
    * Azure communications Phone number to make PSTN calls with.

@@ -154,10 +154,10 @@ export type CallAdapterClientState = {
     readonly userId: CommunicationIdentifierKind;
     readonly displayName?: string;
     readonly call?: CallState;
-    devices: DeviceManagerState;
+    readonly devices: DeviceManagerState;
     readonly endedCall?: CallState;
     readonly isTeamsCall: boolean;
-    latestErrors: AdapterErrors;
+    readonly latestErrors: AdapterErrors;
 };
 
 // @public
@@ -207,7 +207,7 @@ export interface CallAdapterSubscribers {
 
 // @public
 export type CallAdapterUiState = {
-    isLocalPreviewMicrophoneEnabled: boolean;
+    readonly isLocalPreviewMicrophoneEnabled: boolean;
     readonly page: CallCompositePage;
 };
 

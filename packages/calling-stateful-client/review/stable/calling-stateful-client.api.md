@@ -44,21 +44,21 @@ export interface CallAgentState {
 
 // @public
 export interface CallClientState {
-    callAgent?: CallAgentState;
+    readonly callAgent?: CallAgentState;
     calls: {
         [key: string]: CallState;
     };
-    callsEnded: {
+    readonly callsEnded: {
         [key: string]: CallState;
     };
     deviceManager: DeviceManagerState;
-    incomingCalls: {
+    readonly incomingCalls: {
         [key: string]: IncomingCallState;
     };
-    incomingCallsEnded: {
+    readonly incomingCallsEnded: {
         [key: string]: IncomingCallState;
     };
-    latestErrors: CallErrors;
+    readonly latestErrors: CallErrors;
     readonly userId: CommunicationIdentifierKind;
 }
 
