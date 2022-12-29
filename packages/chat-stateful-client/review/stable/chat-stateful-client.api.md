@@ -17,12 +17,12 @@ import { TypingIndicatorReceivedEvent } from '@azure/communication-chat';
 
 // @public
 export type ChatClientState = {
-    userId: CommunicationIdentifierKind;
-    displayName: string;
-    threads: {
+    readonly userId: CommunicationIdentifierKind;
+    readonly displayName: string;
+    readonly threads: {
         [key: string]: ChatThreadClientState;
     };
-    latestErrors: ChatErrors;
+    readonly latestErrors: ChatErrors;
 };
 
 // @public
@@ -49,17 +49,17 @@ export type ChatMessageWithStatus = ChatMessage & {
 
 // @public
 export type ChatThreadClientState = {
-    chatMessages: {
+    readonly chatMessages: {
         [key: string]: ChatMessageWithStatus;
     };
-    participants: {
+    readonly participants: {
         [key: string]: ChatParticipant;
     };
-    threadId: string;
-    properties?: ChatThreadProperties;
-    readReceipts: ChatMessageReadReceipt[];
-    typingIndicators: TypingIndicatorReceivedEvent[];
-    latestReadTime: Date;
+    readonly threadId: string;
+    readonly properties?: ChatThreadProperties;
+    readonly readReceipts: ChatMessageReadReceipt[];
+    readonly typingIndicators: TypingIndicatorReceivedEvent[];
+    readonly latestReadTime: Date;
 };
 
 // @public

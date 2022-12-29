@@ -1157,8 +1157,8 @@ export interface ChatAdapterThreadManagement {
 
 // @public
 export type ChatAdapterUiState = {
-    error?: Error;
-    fileUploads?: FileUploadsUiState;
+    readonly error?: Error;
+    readonly fileUploads?: FileUploadsUiState;
 };
 
 // @public
@@ -1177,12 +1177,12 @@ export type ChatClientProviderProps = {
 
 // @public
 export type ChatClientState = {
-    userId: CommunicationIdentifierKind;
-    displayName: string;
-    threads: {
+    readonly userId: CommunicationIdentifierKind;
+    readonly displayName: string;
+    readonly threads: {
         [key: string]: ChatThreadClientState;
     };
-    latestErrors: ChatErrors;
+    readonly latestErrors: ChatErrors;
 };
 
 // @public
@@ -1190,10 +1190,10 @@ export const ChatComposite: (props: ChatCompositeProps) => JSX.Element;
 
 // @public
 export type ChatCompositeClientState = {
-    userId: CommunicationIdentifierKind;
-    displayName: string;
-    thread: ChatThreadClientState;
-    latestErrors: AdapterErrors;
+    readonly userId: CommunicationIdentifierKind;
+    readonly displayName: string;
+    readonly thread: ChatThreadClientState;
+    readonly latestErrors: AdapterErrors;
 };
 
 // @public
@@ -1327,17 +1327,17 @@ export type ChatThreadClientProviderProps = {
 
 // @public
 export type ChatThreadClientState = {
-    chatMessages: {
+    readonly chatMessages: {
         [key: string]: ChatMessageWithStatus;
     };
-    participants: {
+    readonly participants: {
         [key: string]: ChatParticipant;
     };
-    threadId: string;
-    properties?: ChatThreadProperties;
-    readReceipts: ChatMessageReadReceipt[];
-    typingIndicators: TypingIndicatorReceivedEvent[];
-    latestReadTime: Date;
+    readonly threadId: string;
+    readonly properties?: ChatThreadProperties;
+    readonly readReceipts: ChatMessageReadReceipt[];
+    readonly typingIndicators: TypingIndicatorReceivedEvent[];
+    readonly latestReadTime: Date;
 };
 
 // @public

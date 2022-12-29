@@ -18,7 +18,7 @@ import { FileMetadata } from '@internal/react-components';
 export type ChatAdapterUiState = {
   // FIXME(Delete?)
   // Self-contained state for composite
-  error?: Error;
+  readonly error?: Error;
   /* @conditional-compile-remove(file-sharing) */
   /**
    * Files being uploaded by a user in the current thread.
@@ -26,7 +26,7 @@ export type ChatAdapterUiState = {
    * Array of type {@link FileUploadsUiState}
    * @beta
    */
-  fileUploads?: FileUploadsUiState;
+  readonly fileUploads?: FileUploadsUiState;
 };
 
 /**
@@ -35,13 +35,13 @@ export type ChatAdapterUiState = {
  * @public
  */
 export type ChatCompositeClientState = {
-  userId: CommunicationIdentifierKind;
-  displayName: string;
-  thread: ChatThreadClientState;
+  readonly userId: CommunicationIdentifierKind;
+  readonly displayName: string;
+  readonly thread: ChatThreadClientState;
   /**
    * Latest error encountered for each operation performed via the adapter.
    */
-  latestErrors: AdapterErrors;
+  readonly latestErrors: AdapterErrors;
 };
 
 /**

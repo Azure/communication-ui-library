@@ -85,10 +85,11 @@ export class ChatContext {
   }
 
   public updateChatConfig(userId: CommunicationIdentifierKind, displayName: string): void {
-    this.modifyState((draft: ChatClientState) => {
-      draft.displayName = displayName;
-      draft.userId = userId;
-    });
+    this.modifyState((draft: ChatClientState) => ({
+      ...draft,
+      displayName: displayName,
+      userId: userId
+    }));
   }
 
   public createThreadIfNotExist(threadId: string, properties?: ChatThreadProperties): boolean {
@@ -102,9 +103,9 @@ export class ChatContext {
 
   public updateThread(threadId: string, properties?: ChatThreadProperties): void {
     this.modifyState((draft: ChatClientState) => {
-      const thread = draft.threads[threadId];
+      let thread = draft.threads[threadId];
       if (thread) {
-        thread.properties = properties;
+        thread = { ...thread, properties: properties };
       }
     });
   }
@@ -114,9 +115,9 @@ export class ChatContext {
       if (topic === undefined) {
         return;
       }
-      const thread = draft.threads[threadId];
+      let thread = draft.threads[threadId];
       if (thread && !thread.properties) {
-        thread.properties = { topic: topic };
+        thread = { ...thread, properties: { topic: topic } };
       } else if (thread && thread.properties) {
         thread.properties.topic = topic;
       }
@@ -134,9 +135,9 @@ export class ChatContext {
 
   public setChatMessages(threadId: string, messages: { [key: string]: ChatMessageWithStatus }): void {
     this.modifyState((draft: ChatClientState) => {
-      const threadState = draft.threads[threadId];
+      let threadState = draft.threads[threadId];
       if (threadState) {
-        threadState.chatMessages = messages;
+        threadState = { ...threadState, chatMessages: messages };
       }
 
       // remove typing indicator when receive messages
@@ -225,12 +226,12 @@ export class ChatContext {
 
   public addReadReceipt(threadId: string, readReceipt: ChatMessageReadReceipt): void {
     this.modifyState((draft: ChatClientState) => {
-      const thread = draft.threads[threadId];
+      let thread = draft.threads[threadId];
       const readReceipts = thread?.readReceipts;
       if (thread && readReceipts) {
         // TODO(prprabhu): Replace `this.getState()` with `draft`?
         if (readReceipt.sender !== this.getState().userId && thread.latestReadTime < readReceipt.readOn) {
-          thread.latestReadTime = readReceipt.readOn;
+          thread = { ...thread, latestReadTime: readReceipt.readOn };
         }
         readReceipts.push(readReceipt);
       }
@@ -251,7 +252,7 @@ export class ChatContext {
           });
 
           if (thread.typingIndicators.length !== filteredTypingIndicators.length) {
-            thread.typingIndicators = filteredTypingIndicators;
+            ({ ...thread, typingIndicators: filteredTypingIndicators });
           }
           if (thread.typingIndicators.length > 0) {
             isTypingActive = true;
@@ -364,7 +365,7 @@ export class ChatContext {
       (typingIndicator) => toFlatCommunicationIdentifier(typingIndicator.sender) !== userIdAsKey
     );
     if (filteredTypingIndicators.length !== typingIndicators.length) {
-      thread.typingIndicators = filteredTypingIndicators;
+      ({ ...thread, typingIndicators: filteredTypingIndicators });
     }
   }
 

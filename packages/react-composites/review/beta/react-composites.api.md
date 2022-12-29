@@ -839,8 +839,8 @@ export interface ChatAdapterThreadManagement {
 
 // @public
 export type ChatAdapterUiState = {
-    error?: Error;
-    fileUploads?: FileUploadsUiState;
+    readonly error?: Error;
+    readonly fileUploads?: FileUploadsUiState;
 };
 
 // @public
@@ -848,10 +848,10 @@ export const ChatComposite: (props: ChatCompositeProps) => JSX.Element;
 
 // @public
 export type ChatCompositeClientState = {
-    userId: CommunicationIdentifierKind;
-    displayName: string;
-    thread: ChatThreadClientState;
-    latestErrors: AdapterErrors;
+    readonly userId: CommunicationIdentifierKind;
+    readonly displayName: string;
+    readonly thread: ChatThreadClientState;
+    readonly latestErrors: AdapterErrors;
 };
 
 // @public

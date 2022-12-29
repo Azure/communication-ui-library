@@ -58,9 +58,10 @@ class FileUploadContext {
 
   public clearFileUploads(): void {
     this.chatContext.setState(
-      produce(this.chatContext.getState(), (draft: ChatAdapterState) => {
-        draft.fileUploads = {};
-      })
+      produce(this.chatContext.getState(), (draft: ChatAdapterState) => ({
+        ...draft,
+        fileUploads: {}
+      }))
     );
   }
 

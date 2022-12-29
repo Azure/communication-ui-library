@@ -15,23 +15,23 @@ export type ChatClientState = {
   /**
    * Identifier of the current user.
    */
-  userId: CommunicationIdentifierKind;
+  readonly userId: CommunicationIdentifierKind;
   /**
    * DisplayName of the current user.
    * The same value as what others see in {@link @azure/communication-chat#ChatParticipant.displayName}
    */
-  displayName: string;
+  readonly displayName: string;
   /**
    * Chat threads joined by the current user.
    * Object with {@link ChatThreadClientState} fields, keyed by {@link ChatThreadClientState.threadId}.
    */
-  threads: { [key: string]: ChatThreadClientState };
+  readonly threads: { [key: string]: ChatThreadClientState };
   /**
    * Stores the latest error for each API method.
    *
    * See documentation of {@link ChatErrors} for details.
    */
-  latestErrors: ChatErrors;
+  readonly latestErrors: ChatErrors;
 };
 
 /**
@@ -46,35 +46,35 @@ export type ChatThreadClientState = {
    * Local messages are keyed by keyed by {@link ChatMessageWithStatus.clientMessageId}.
    * Remote messages are keyed by {@link @azure/communication-chat#ChatMessage.id}.
    */
-  chatMessages: { [key: string]: ChatMessageWithStatus };
+  readonly chatMessages: { [key: string]: ChatMessageWithStatus };
   /**
    * Participants of this chat thread.
    *
    * Object with {@link @azure/communication-chat#ChatParticipant} fields,
    * keyed by {@link @azure/communication-chat#ChatParticipant.id}.
    */
-  participants: { [key: string]: ChatParticipant };
+  readonly participants: { [key: string]: ChatParticipant };
   /**
    * Id of this chat thread. Returned from {@link @azure/communication-chat#ChatThreadClient.threadId}
    */
-  threadId: string;
+  readonly threadId: string;
   /**
    * An object containing properties of this chat thread.
    */
-  properties?: ChatThreadProperties;
+  readonly properties?: ChatThreadProperties;
   /**
    * An array of ReadReceipts of this chat thread. Returned from {@link @azure/communication-chat#ChatThreadClient.listReadReceipts}
    */
-  readReceipts: ChatMessageReadReceipt[];
+  readonly readReceipts: ChatMessageReadReceipt[];
   /**
    * An array of typingIndicators of this chat thread. Captured from event listener of {@link @azure/communication-chat#ChatClient}
    * Stateful client only stores recent 8000ms real-time typing indicators data.
    */
-  typingIndicators: TypingIndicatorReceivedEvent[];
+  readonly typingIndicators: TypingIndicatorReceivedEvent[];
   /**
    * Latest timestamp when other users read messages sent by current user.
    */
-  latestReadTime: Date;
+  readonly latestReadTime: Date;
 };
 
 /**
