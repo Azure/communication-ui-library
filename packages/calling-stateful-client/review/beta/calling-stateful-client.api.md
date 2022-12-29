@@ -54,13 +54,13 @@ export interface CallAgentState {
 export interface CallClientState {
     readonly alternateCallerId?: string;
     readonly callAgent?: CallAgentState;
-    readonly calls: {
+    calls: {
         [key: string]: CallState;
     };
     readonly callsEnded: {
         [key: string]: CallState;
     };
-    readonly deviceManager: DeviceManagerState;
+    deviceManager: DeviceManagerState;
     readonly environmentInfo?: EnvironmentInfo;
     readonly incomingCalls: {
         [key: string]: IncomingCallState;
