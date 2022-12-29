@@ -102,31 +102,35 @@ test.describe('Tests for guidance UI on config page to guide users through enabl
 
 function defaultMockConfigPageStateDeviceDisabled(): MockCallAdapterState {
   let state = defaultMockCallAdapterState();
-  state = { ...state, page: 'configuration', call: undefined };
-  state.devices = {
-    isSpeakerSelectionAvailable: true,
-    cameras: [],
-    microphones: [],
-    speakers: [
-      {
+  state = {
+    ...state,
+    page: 'configuration',
+    call: undefined,
+    devices: {
+      isSpeakerSelectionAvailable: true,
+      cameras: [],
+      microphones: [],
+      speakers: [
+        {
+          name: '',
+          id: 'speaker:',
+          isSystemDefault: true,
+          deviceType: 'Speaker'
+        }
+      ],
+      unparentedViews: [],
+      selectedMicrophone: {
+        name: '',
+        id: 'microphone:',
+        isSystemDefault: true,
+        deviceType: 'Microphone'
+      },
+      selectedSpeaker: {
         name: '',
         id: 'speaker:',
         isSystemDefault: true,
         deviceType: 'Speaker'
       }
-    ],
-    unparentedViews: [],
-    selectedMicrophone: {
-      name: '',
-      id: 'microphone:',
-      isSystemDefault: true,
-      deviceType: 'Microphone'
-    },
-    selectedSpeaker: {
-      name: '',
-      id: 'speaker:',
-      isSystemDefault: true,
-      deviceType: 'Speaker'
     }
   };
 

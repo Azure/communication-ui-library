@@ -20,13 +20,16 @@ test.describe('CallWithChat Composite CallWithChat Page Tests', () => {
   });
 
   test('Speaker Submenu click on a new audio device displays correctly on mobile', async ({ page, serverUrl }) => {
-    const callState = defaultMockCallAdapterState([defaultMockRemoteParticipant('Paul Bridges')]);
-    callState.devices = {
-      ...callState.devices,
-      speakers: [
-        { id: 'speaker1', name: '1st Speaker', deviceType: 'Speaker', isSystemDefault: true },
-        { id: 'speaker2', name: '2nd Speaker', deviceType: 'Speaker', isSystemDefault: false }
-      ]
+    let callState = defaultMockCallAdapterState([defaultMockRemoteParticipant('Paul Bridges')]);
+    callState = {
+      ...callState,
+      devices: {
+        ...callState.devices,
+        speakers: [
+          { id: 'speaker1', name: '1st Speaker', deviceType: 'Speaker', isSystemDefault: true },
+          { id: 'speaker2', name: '2nd Speaker', deviceType: 'Speaker', isSystemDefault: false }
+        ]
+      }
     };
     await loadCallPage(page, serverUrl, callState);
 
@@ -45,13 +48,16 @@ test.describe('CallWithChat Composite CallWithChat Page Tests', () => {
   });
 
   test('Microphone Submenu click on a new audio device displays correctly on mobile', async ({ page, serverUrl }) => {
-    const callState = defaultMockCallAdapterState([defaultMockRemoteParticipant('Paul Bridges')]);
-    callState.devices = {
-      ...callState.devices,
-      microphones: [
-        { id: 'microphone1', name: '1st Microphone', deviceType: 'Microphone', isSystemDefault: true },
-        { id: 'microphone2', name: '2nd Microphone', deviceType: 'Microphone', isSystemDefault: false }
-      ]
+    let callState = defaultMockCallAdapterState([defaultMockRemoteParticipant('Paul Bridges')]);
+    callState = {
+      ...callState,
+      devices: {
+        ...callState.devices,
+        microphones: [
+          { id: 'microphone1', name: '1st Microphone', deviceType: 'Microphone', isSystemDefault: true },
+          { id: 'microphone2', name: '2nd Microphone', deviceType: 'Microphone', isSystemDefault: false }
+        ]
+      }
     };
     await loadCallPage(page, serverUrl, callState);
 

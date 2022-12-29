@@ -8,14 +8,17 @@ import { IDS } from '../../common/constants';
 
 test.describe('Error bar tests', async () => {
   test('Failure to start video should be shown on error bar', async ({ page, serverUrl }) => {
-    const initialState = defaultMockCallAdapterState();
-    initialState.latestErrors = {
-      'Call.startVideo': {
-        timestamp: new Date(),
-        name: 'Failure to start video',
-        message: 'Could not start video',
-        target: 'Call.startVideo',
-        innerError: new Error('Inner error of failure to start video')
+    let initialState = defaultMockCallAdapterState();
+    initialState = {
+      ...initialState,
+      latestErrors: {
+        'Call.startVideo': {
+          timestamp: new Date(),
+          name: 'Failure to start video',
+          message: 'Could not start video',
+          target: 'Call.startVideo',
+          innerError: new Error('Inner error of failure to start video')
+        }
       }
     };
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
@@ -25,21 +28,24 @@ test.describe('Error bar tests', async () => {
   });
 
   test('Multiple errors should be shown on error bar', async ({ page, serverUrl }) => {
-    const initialState = defaultMockCallAdapterState();
-    initialState.latestErrors = {
-      'Call.unmute': {
-        timestamp: new Date(),
-        name: 'Failure to unmute',
-        message: 'Could not unmute',
-        target: 'Call.unmute',
-        innerError: new Error('Inner error of failure to unmute')
-      },
-      'Call.stopVideo': {
-        timestamp: new Date(),
-        name: 'Failure to stop video',
-        message: 'Could not stop video',
-        target: 'Call.stopVideo',
-        innerError: new Error('Inner error of failure to stop video')
+    let initialState = defaultMockCallAdapterState();
+    initialState = {
+      ...initialState,
+      latestErrors: {
+        'Call.unmute': {
+          timestamp: new Date(),
+          name: 'Failure to unmute',
+          message: 'Could not unmute',
+          target: 'Call.unmute',
+          innerError: new Error('Inner error of failure to unmute')
+        },
+        'Call.stopVideo': {
+          timestamp: new Date(),
+          name: 'Failure to stop video',
+          message: 'Could not stop video',
+          target: 'Call.stopVideo',
+          innerError: new Error('Inner error of failure to stop video')
+        }
       }
     };
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));

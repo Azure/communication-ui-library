@@ -44,16 +44,16 @@ test.describe('Call Composite E2E Configuration Screen Tests', () => {
 
   test('Configuration screen desktop should show no devices available', async ({ page, serverUrl }, testInfo) => {
     test.skip(isTestProfileMobile(testInfo));
-    const state = defaultMockConfigurationPageState();
-    state.devices = deviceManagerWithNoDevicesState();
+    let state = defaultMockConfigurationPageState();
+    state = { ...state, devices: deviceManagerWithNoDevicesState() };
     await page.goto(buildUrlWithMockAdapter(serverUrl, state));
     expect(await stableScreenshot(page)).toMatchSnapshot(`desktop-call-configuration-page-no-devices.png`);
   });
 
   test('Configuration screen mobile buttons disabled because no devices', async ({ page, serverUrl }, testInfo) => {
     test.skip(isTestProfileDesktop(testInfo));
-    const state = defaultMockConfigurationPageState();
-    state.devices = deviceManagerWithNoDevicesState();
+    let state = defaultMockConfigurationPageState();
+    state = { ...state, devices: deviceManagerWithNoDevicesState() };
 
     await page.goto(buildUrlWithMockAdapter(serverUrl, state));
 
@@ -63,14 +63,17 @@ test.describe('Call Composite E2E Configuration Screen Tests', () => {
   });
 
   test('Configuration screen shows error when camera is turned on but in use', async ({ page, serverUrl }) => {
-    const initialState = defaultMockConfigurationPageState();
-    initialState.latestErrors = {
-      'Call.startVideo': {
-        timestamp: new Date(),
-        name: 'ERROR: VIDEO WAS IN USE BY ANOTHER APPLICATION', // dummy error message emulating the error thrown by the browser
-        message: 'Browser was unable to start video as it was in use by another application',
-        target: 'Call.startVideo',
-        innerError: new Error('Inner error of failure to stop video')
+    let initialState = defaultMockConfigurationPageState();
+    initialState = {
+      ...initialState,
+      latestErrors: {
+        'Call.startVideo': {
+          timestamp: new Date(),
+          name: 'ERROR: VIDEO WAS IN USE BY ANOTHER APPLICATION', // dummy error message emulating the error thrown by the browser
+          message: 'Browser was unable to start video as it was in use by another application',
+          target: 'Call.startVideo',
+          innerError: new Error('Inner error of failure to stop video')
+        }
       }
     };
 
