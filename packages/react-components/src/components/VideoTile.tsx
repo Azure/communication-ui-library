@@ -4,7 +4,6 @@
 import { Icon, IStyle, mergeStyles, Persona, Stack, Text } from '@fluentui/react';
 /* @conditional-compile-remove(pinned-participants) */
 import { IconButton } from '@fluentui/react';
-import { Ref } from '@fluentui/react-northstar';
 import React, { useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { useIdentifiers } from '../identifiers';
 import { ComponentLocale, useLocale } from '../localization';
@@ -237,7 +236,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
   } = props;
 
   const [personaSize, setPersonaSize] = useState(100);
-  const videoTileRef = useRef<HTMLElement>(null);
+  const videoTileRef = useRef<HTMLDivElement>(null);
 
   const locale = useLocale();
   const theme = useTheme();
@@ -307,7 +306,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
   const canShowLabel = showLabel && (displayName || (showMuteIndicator && isMuted));
   const participantStateString = participantStateStringTrampoline(props, locale);
   return (
-    <Ref innerRef={videoTileRef}>
+    <div ref={videoTileRef} style={{ width: '100%', height: '100%' }}>
       <Stack
         data-ui-id={ids.videoTile}
         className={mergeStyles(
@@ -393,7 +392,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
           <Stack className={mergeStyles(overlayContainerStyles, styles?.overlayContainer)}>{children}</Stack>
         )}
       </Stack>
-    </Ref>
+    </div>
   );
 };
 
