@@ -246,6 +246,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
   const observer = useRef(
     new ResizeObserver((entries): void => {
       const { width, height } = entries[0].contentRect;
+      console.log(entries);
       const personaSize = Math.min(width, height) / 3;
       setPersonaSize(Math.max(Math.min(personaSize, personaMaxSize), personaMinSize));
     })
@@ -306,30 +307,30 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
   const canShowLabel = showLabel && (displayName || (showMuteIndicator && isMuted));
   const participantStateString = participantStateStringTrampoline(props, locale);
   return (
-    <div ref={videoTileRef} style={{ width: '100%', height: '100%' }}>
-      <Stack
-        data-ui-id={ids.videoTile}
-        className={mergeStyles(
-          rootStyles,
-          {
-            background: theme.palette.neutralLighter,
-            borderRadius: theme.effects.roundedCorner4
-          },
-          isSpeaking && {
-            '&::before': {
-              content: `''`,
-              position: 'absolute',
-              zIndex: 1,
-              border: `0.25rem solid ${theme.palette.themePrimary}`,
-              borderRadius: theme.effects.roundedCorner4,
-              width: '100%',
-              height: '100%'
-            }
-          },
-          styles?.root
-        )}
-        {...longPressHandlersTrampoline}
-      >
+    <Stack
+      data-ui-id={ids.videoTile}
+      className={mergeStyles(
+        rootStyles,
+        {
+          background: theme.palette.neutralLighter,
+          borderRadius: theme.effects.roundedCorner4
+        },
+        isSpeaking && {
+          '&::before': {
+            content: `''`,
+            position: 'absolute',
+            zIndex: 1,
+            border: `0.25rem solid ${theme.palette.themePrimary}`,
+            borderRadius: theme.effects.roundedCorner4,
+            width: '100%',
+            height: '100%'
+          }
+        },
+        styles?.root
+      )}
+      {...longPressHandlersTrampoline}
+    >
+      <div ref={videoTileRef} style={{ width: '100%', height: '100%' }}>
         {isVideoRendered ? (
           <Stack
             className={mergeStyles(
@@ -391,8 +392,8 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
         {children && (
           <Stack className={mergeStyles(overlayContainerStyles, styles?.overlayContainer)}>{children}</Stack>
         )}
-      </Stack>
-    </div>
+      </div>
+    </Stack>
   );
 };
 
