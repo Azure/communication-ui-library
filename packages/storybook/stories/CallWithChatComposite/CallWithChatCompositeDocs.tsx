@@ -91,8 +91,8 @@ export const getDocs: () => JSX.Element = () => {
       </Description>
       <Description>
         Mobile devices have a pull-down to refresh feature that may impact users from scrolling through messages in
-        chat. A simple and effective way to disable the pull-down to refresh feature is to set an overflow='hidden' OR
-        touch-action='none' style on the body element for your app.
+        chat. A simple and effective way to disable the pull-down to refresh feature is to set an `overflow='hidden'` OR
+        `touch-action='none'` style on the body element for your app.
       </Description>
 
       <Heading>Theming</Heading>
