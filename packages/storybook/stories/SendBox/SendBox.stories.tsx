@@ -9,11 +9,12 @@ import { DetailedBetaBanner } from '../BetaBanners/DetailedBetaBanner';
 
 import { COMPONENT_FOLDER_PREFIX } from '../constants';
 import { controlsToAdd, hiddenControl } from '../controlsUtils';
+import { Snippet } from '../Snippet';
 import { CustomIconExample } from './snippets/CustomIcon.snippet';
 import { CustomStylingExample } from './snippets/CustomStyling.snippet';
 import { FileUploadsExample } from './snippets/FileUploads.snippet';
 import { SendBoxExample } from './snippets/SendBox.snippet';
-import { SendBoxWithSystemMessageExample } from './snippets/SendBoxWithSystemMessage.snippet';
+// import { SendBoxWithSystemMessageExample } from './snippets/SendBoxWithSystemMessage.snippet';
 
 const CustomIconExampleText = require('!!raw-loader!./snippets/CustomIcon.snippet.tsx').default;
 const CustomStylingExampleText = require('!!raw-loader!./snippets/CustomStyling.snippet.tsx').default;
@@ -21,7 +22,6 @@ const FileUploadsExampleText = require('!!raw-loader!./snippets/FileUploads.snip
 const SendBoxExampleText = require('!!raw-loader!./snippets/SendBox.snippet.tsx').default;
 const SendBoxWithSystemMessageExampleText =
   require('!!raw-loader!./snippets/SendBoxWithSystemMessage.snippet.tsx').default;
-
 const importStatement = `import { SendBox } from '@azure/communication-react';`;
 
 const getDocs: () => JSX.Element = () => {
@@ -43,9 +43,18 @@ const getDocs: () => JSX.Element = () => {
 
       <Heading>Add a system message</Heading>
       <Description>To add a system message, use the systemMessage property like in the example below.</Description>
-      <Canvas mdxSource={SendBoxWithSystemMessageExampleText}>
+      <Snippet
+        key="sendBoxWithSystemMessageSnippet"
+        code={SendBoxWithSystemMessageExampleText}
+        startLine={7}
+        endLine={15}
+        githubUrl={
+          'https://github.com/Azure/communication-ui-library/blob/main/packages/storybook/stories/SendBox/snippets/SendBoxWithSystemMessage.snippet.tsx#L7-L15'
+        }
+      />
+      {/* <Canvas mdxSource={SendBoxWithSystemMessageExampleText}>
         <SendBoxWithSystemMessageExample />
-      </Canvas>
+      </Canvas> */}
 
       <Heading>Customize send icon</Heading>
       <Description>
