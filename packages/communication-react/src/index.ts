@@ -300,11 +300,3 @@ export type { UnsupportedBrowserVersionStrings, UnsupportedBrowserVersionProps }
 export { UnsupportedOperatingSystem } from '../../react-components/src';
 /* @conditional-compile-remove(unsupported-browser) */
 export type { UnsupportedOperatingSystemStrings, UnsupportedOperatingSystemProps } from '../../react-components/src';
-/* @conditional-compile-remove(call-readiness) */
-export { _DevicePermissionDropdown } from '../../react-components/src';
-/* @conditional-compile-remove(call-readiness) */
-export type {
-  _DevicePermissionDropdownStrings,
-  _DevicePermissionDropdownProps,
-  _PermissionConstraints
-} from '../../react-components/src';

@@ -54,6 +54,7 @@ export interface MediaGalleryProps {
   onRenderAvatar?: OnRenderAvatarCallback;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   isMobile?: boolean;
+  drawerMenuHostId?: string;
 }
 
 /**
@@ -101,9 +102,10 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
         showRemoteVideoTileContextualMenu={!props.isMobile}
         /* @conditional-compile-remove(pinned-participants) */
         maxPinnedRemoteVideoTiles={MAX_PINNED_REMOTE_VIDEO_TILES}
+        // @TODO: Provide props.drawerMenuHostId to VideoGallery when VideoGallery props support it.
       />
     );
-  }, [videoGalleryProps, props.isMobile, onRenderAvatar, cameraSwitcherProps]);
+  }, [videoGalleryProps, props.isMobile, cameraSwitcherProps, onRenderAvatar]);
 
   return (
     <>

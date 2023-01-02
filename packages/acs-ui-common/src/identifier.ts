@@ -12,7 +12,7 @@ const COMMUNICATION_USER_PREFIX = '8:acs:';
 const PHONE_NUMBER_PREFIX = '4:';
 const TEAMS_DOD_PREFIX = '8:dod:';
 const TEAMS_GCCH_PREFIX = '8:gcch:';
-const TEAMS_USER_PREFIX = '8:origid:';
+const TEAMS_USER_PREFIX = '8:orgid:';
 const TEAMS_VISITOR_PREFIX = '8:teamsvisitor:';
 
 /**

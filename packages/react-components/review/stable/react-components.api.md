@@ -1188,6 +1188,7 @@ export const _RemoteVideoTile: React_2.MemoExoticComponent<(props: {
     strings?: VideoGalleryStrings | undefined;
     participantState?: ParticipantState | undefined;
     showRemoteVideoTileContextualMenu?: boolean | undefined;
+    drawerMenuHostId?: string | undefined;
     onPinParticipant?: ((userId: string) => void) | undefined;
     onUnpinParticipant?: ((userId: string) => void) | undefined;
     isPinned?: boolean | undefined;

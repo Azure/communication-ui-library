@@ -30,6 +30,7 @@ import { FloatingLocalVideoLayout } from './VideoGallery/FloatingLocalVideoLayou
 import { useIdentifiers } from '../identifiers';
 import { videoGalleryOuterDivStyle } from './styles/VideoGallery.styles';
 import { floatingLocalVideoTileStyle } from './VideoGallery/styles/FloatingLocalVideo.styles';
+import { useId } from '@fluentui/react-hooks';
 /* @conditional-compile-remove(pinned-participants) */
 import { PinnedParticipantsLayout } from './VideoGallery/PinnedParticipantsLayout';
 
@@ -228,6 +229,10 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   const localeStrings = useLocale().strings.videoGallery;
   const strings = useMemo(() => ({ ...localeStrings, ...props.strings }), [localeStrings, props.strings]);
 
+  // @TODO: Provide a default value to this hook using the `drawerMenuHostId` value in the props when VideoGallery props have been updated.
+  // Example: `const drawerMenuHostId = useId('drawerMenuHost', props.drawerMenuHostId);`
+  const drawerMenuHostId = useId('drawerMenuHost');
+
   const shouldFloatLocalVideo = !!(layout === 'floatingLocalVideo' && remoteParticipants.length > 0);
 
   const containerRef = useRef<HTMLDivElement>(null);
@@ -364,6 +369,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           participantState={participant.state}
           /* @conditional-compile-remove(pinned-participants) */
           showRemoteVideoTileContextualMenu={props.showRemoteVideoTileContextualMenu}
+          drawerMenuHostId={drawerMenuHostId}
           /* @conditional-compile-remove(pinned-participants) */
           onPinParticipant={onPinParticipant}
           /* @conditional-compile-remove(pinned-participants) */
@@ -384,6 +390,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       onRenderAvatar,
       showMuteIndicator,
       strings,
+      drawerMenuHostId,
       /* @conditional-compile-remove(pinned-participants) */ props.showRemoteVideoTileContextualMenu,
       /* @conditional-compile-remove(pinned-participants) */ pinnedParticipants,
       /* @conditional-compile-remove(pinned-participants) */ onPinParticipant,
@@ -457,6 +464,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
 
   return (
     <div
+      id={drawerMenuHostId}
       data-ui-id={ids.videoGallery}
       ref={containerRef}
       className={mergeStyles(videoGalleryOuterDivStyle, styles?.root)}

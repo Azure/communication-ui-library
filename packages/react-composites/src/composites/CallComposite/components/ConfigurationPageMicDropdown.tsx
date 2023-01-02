@@ -13,23 +13,22 @@ import {
 import { dropDownStyles } from '../styles/LocalDeviceSettings.styles';
 /* @conditional-compile-remove(call-readiness) */
 import { CallCompositeIcon } from '../../common/icons';
-import { CallingHandlers } from '@internal/calling-component-bindings';
 
 /**
  * @private
  */
-export interface ConfigurationpageMicDropdownProps {
+export interface ConfigurationPageMicDropdownProps {
   micGrantedDropdown: JSX.Element;
   micPermissionGranted: boolean;
-  dropdownProps?: Record<string, never> & Partial<CallingHandlers>;
-  callReadinessOptedIn?: boolean;
+  /* @conditional-compile-remove(call-readiness) */
+  dropdownProps: Partial<_DevicePermissionDropdownProps>;
   onClickEnableDevicePermission?: () => void;
 }
 
 /**
  * @private
  */
-export const ConfigurationpageMicDropdown = (props: ConfigurationpageMicDropdownProps): JSX.Element => {
+export const ConfigurationPageMicDropdown = (props: ConfigurationPageMicDropdownProps): JSX.Element => {
   /* @conditional-compile-remove(call-readiness) */
   const theme = useTheme();
   /* @conditional-compile-remove(call-readiness) */
@@ -51,8 +50,7 @@ export const ConfigurationpageMicDropdown = (props: ConfigurationpageMicDropdown
   );
 
   /* @conditional-compile-remove(call-readiness) */
-  if (props.callReadinessOptedIn) {
-    return <> {props.micPermissionGranted ? props.micGrantedDropdown : microphoneBlockedDropdown}</>;
-  }
+  return props.micPermissionGranted ? props.micGrantedDropdown : microphoneBlockedDropdown;
+
   return props.micGrantedDropdown;
 };
