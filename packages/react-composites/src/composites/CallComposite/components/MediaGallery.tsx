@@ -84,11 +84,6 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
 
   useLocalVideoStartTrigger(!!props.isVideoStreamOn);
   const VideoGalleryMemoized = useMemo(() => {
-    console.log('props.remoteVideoTileMenuOptions: ', props.remoteVideoTileMenuOptions);
-    console.log(
-      'remoteVideoTileMenuOptions: ',
-      props.remoteVideoTileMenuOptions?.isHidden ? false : props.isMobile ? false : { kind: 'contextual' }
-    );
     return (
       <VideoGallery
         {...videoGalleryProps}
