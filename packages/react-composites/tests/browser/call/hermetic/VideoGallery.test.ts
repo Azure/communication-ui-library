@@ -15,7 +15,8 @@ import {
   stableScreenshot,
   pageClick,
   perStepLocalTimeout,
-  screenshotOnFailure
+  screenshotOnFailure,
+  isTestProfileMobile
 } from '../../common/utils';
 import { IDS } from '../../common/constants';
 
@@ -85,12 +86,18 @@ test.describe('VideoGallery tests', async () => {
   test('Remote video tile pin menu button should be disabled when max remote video tiles are pinned', async ({
     page,
     serverUrl
-  }) => {
+  }, testInfo) => {
     const displayNames = ['Tony Hawk', 'Marie Curie', 'Gal Gadot', 'Margaret Atwood', 'Kobe Bryant', "Conan O'Brien"];
     const participants = displayNames.map((name) => defaultMockRemoteParticipant(name));
     const initialState = defaultMockCallAdapterState(participants);
 
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
+
+    if (isTestProfileMobile(testInfo)) {
+      // TODO: Test that pin menu item is disabled when maximum remote VideoTiles are pinned in VideoGallery when
+      // drawer menu on long touch has been implemented
+      return;
+    }
 
     // pin remote video tiles up to the max allowed in the call composite
     for (let i = 0; i < 4; i++) {
