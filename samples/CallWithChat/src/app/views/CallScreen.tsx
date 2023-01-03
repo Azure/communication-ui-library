@@ -36,6 +36,16 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     locator,
     /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId
   } = props;
+
+  // Disables pull down to refresh. Prevents accidental page refresh when scrolling through chat messages
+  // Another alternative: set body style touch-action to 'none'. Achieves same result.
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = 'null';
+    };
+  }, []);
+
   const callIdRef = useRef<string>();
   const { currentTheme, currentRtl } = useSwitchableFluentTheme();
   const isMobileSession = useIsMobile();
