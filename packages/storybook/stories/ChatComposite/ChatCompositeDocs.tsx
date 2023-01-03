@@ -123,6 +123,11 @@ export const getDocs: () => JSX.Element = () => {
         composite is responsive to the container it is in and should perform optimally on mobile and desktop
         automatically.
       </Description>
+      <Description>
+        Mobile devices have a pull-down to refresh feature that may impact users from scrolling through messages in
+        chat. A simple and effective way to disable the pull-down to refresh feature is to set an `overflow='hidden'` OR
+        `touch-action='none'` style on the body element for your app.
+      </Description>
 
       <Heading>Custom Data Model</Heading>
       <Description>
