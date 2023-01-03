@@ -20,13 +20,6 @@ import { LocalVideoCameraCycleButton } from '@internal/react-components';
 import { _formatString } from '@internal/acs-ui-common';
 import { useParticipantChangedAnnouncement } from '../utils/MediaGalleryUtils';
 
-/* @conditional-compile-remove(pinned-participants) */
-/**
- * @private
- * Maximum number of remote video tiles that can be pinned
- */
-export const MAX_PINNED_REMOTE_VIDEO_TILES = 4;
-
 const VideoGalleryStyles = {
   root: {
     height: '100%',
@@ -100,8 +93,6 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
         onRenderAvatar={onRenderAvatar}
         /* @conditional-compile-remove(pinned-participants) */
         showRemoteVideoTileContextualMenu={!props.isMobile}
-        /* @conditional-compile-remove(pinned-participants) */
-        maxPinnedRemoteVideoTiles={MAX_PINNED_REMOTE_VIDEO_TILES}
         // @TODO: Provide props.drawerMenuHostId to VideoGallery when VideoGallery props support it.
       />
     );

@@ -390,9 +390,7 @@ describe('VideoGallery pinned participants tests', () => {
           layout: 'floatingLocalVideo',
           remoteParticipants,
           dominantSpeakers: ['1', '6'],
-          pinnedParticipants: pinnedParticipantUserIds,
-          // assign a max value lower than the number of pinnedParticipantUserIds
-          maxPinnedRemoteVideoTiles: 4
+          pinnedParticipants: pinnedParticipantUserIds
         });
       });
 
@@ -432,8 +430,7 @@ describe('VideoGallery pinned participants tests', () => {
         layout: 'floatingLocalVideo',
         remoteParticipants,
         dominantSpeakers: ['1', '6'],
-        pinnedParticipants: pinnedParticipantUserIds,
-        maxPinnedRemoteVideoTiles: 4
+        pinnedParticipants: pinnedParticipantUserIds
       });
     });
 
