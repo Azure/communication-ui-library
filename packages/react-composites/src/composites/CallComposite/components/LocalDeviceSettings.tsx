@@ -86,7 +86,6 @@ export interface LocalDeviceSettingsType {
   onSelectCamera: (device: VideoDeviceInfo, options?: VideoStreamOptions) => Promise<void>;
   onSelectMicrophone: (device: AudioDeviceInfo) => Promise<void>;
   onSelectSpeaker: (device: AudioDeviceInfo) => Promise<void>;
-  callReadinessOptedIn?: boolean;
   /* @conditional-compile-remove(call-readiness) */
   onClickEnableDevicePermission?: () => void;
 }
@@ -218,8 +217,6 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
             /* @conditional-compile-remove(call-readiness) */
             dropdownProps={dropdownProps}
             /* @conditional-compile-remove(call-readiness) */
-            callReadinessOptedIn={props.callReadinessOptedIn ?? false}
-            /* @conditional-compile-remove(call-readiness) */
             onClickEnableDevicePermission={props.onClickEnableDevicePermission}
           />
         </Stack>
@@ -238,8 +235,6 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
             micPermissionGranted={micPermissionGranted ?? false}
             /* @conditional-compile-remove(call-readiness) */
             dropdownProps={dropdownProps}
-            /* @conditional-compile-remove(call-readiness) */
-            callReadinessOptedIn={props.callReadinessOptedIn ?? false}
             /* @conditional-compile-remove(call-readiness) */
             onClickEnableDevicePermission={props.onClickEnableDevicePermission}
           />

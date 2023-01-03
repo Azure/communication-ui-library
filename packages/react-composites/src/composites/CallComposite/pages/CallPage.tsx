@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 
 import { DiagnosticQuality } from '@azure/communication-calling';
+import { useId } from '@fluentui/react-hooks';
 import { _isInCall } from '@internal/calling-component-bindings';
 import { ErrorBar, OnRenderAvatarCallback, ParticipantMenuItemsCallback } from '@internal/react-components';
 import React from 'react';
@@ -63,8 +64,11 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
   // Reduce the controls shown when mobile view is enabled.
   const callControlOptions = mobileView ? reduceCallControlsForMobile(options?.callControls) : options?.callControls;
 
+  const drawerMenuHostId = useId('drawerMenuHost');
+
   return (
     <CallArrangement
+      id={drawerMenuHostId}
       complianceBannerProps={{ ...complianceBannerProps, strings }}
       // Ignore errors from before current call. This avoids old errors from showing up when a user re-joins a call.
       errorBarProps={options?.errorBar !== false && { ...errorBarProps, ignorePremountErrors: true }}
@@ -91,6 +95,7 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
               onFetchAvatarPersonaData={onFetchAvatarPersonaData}
               /* @conditional-compile-remove(pinned-participants) */
               remoteVideoTileMenuOptions={options?.remoteVideoTileMenu}
+              drawerMenuHostId={drawerMenuHostId}
             />
           ) : (
             <NetworkReconnectTile {...networkReconnectTileProps} />

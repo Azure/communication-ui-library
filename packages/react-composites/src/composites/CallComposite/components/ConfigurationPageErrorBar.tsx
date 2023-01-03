@@ -31,7 +31,6 @@ export interface ConfigurationPageErrorBarProps {
     camera: PermissionState;
     microphone: PermissionState;
   };
-  callReadinessOptedIn?: boolean;
 }
 
 /**
@@ -47,9 +46,7 @@ export const ConfigurationPageErrorBar = (props: ConfigurationPageErrorBarProps)
     /* @conditional-compile-remove(call-readiness) */
     onNetworkingTroubleShootingClick,
     /* @conditional-compile-remove(call-readiness) */
-    permissionsState,
-    /* @conditional-compile-remove(call-readiness) */
-    callReadinessOptedIn = false
+    permissionsState
   } = props;
 
   /* @conditional-compile-remove(call-readiness) */
@@ -60,7 +57,7 @@ export const ConfigurationPageErrorBar = (props: ConfigurationPageErrorBarProps)
   };
 
   /* @conditional-compile-remove(call-readiness) */
-  if (showTroubleShootingErrorBar && callReadinessOptedIn) {
+  if (showTroubleShootingErrorBar) {
     return (
       <_TroubleshootingGuideErrorBar
         troubleshootingGuideStrings={permissionTroubleshootingGuideStrings}

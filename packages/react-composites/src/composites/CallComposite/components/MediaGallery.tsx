@@ -49,6 +49,7 @@ export interface MediaGalleryProps {
   onRenderAvatar?: OnRenderAvatarCallback;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   isMobile?: boolean;
+  drawerMenuHostId?: string;
   /* @conditional-compile-remove(pinned-participants) */
   remoteVideoTileMenuOptions?: RemoteVideoTileMenuOptions;
 }
@@ -94,6 +95,7 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
         showCameraSwitcherInLocalPreview={props.isMobile}
         localVideoCameraCycleButtonProps={cameraSwitcherProps}
         onRenderAvatar={onRenderAvatar}
+        // @TODO: Provide props.drawerMenuHostId to VideoGallery when VideoGallery props support it.
         /* @conditional-compile-remove(pinned-participants) */
         remoteVideoTileMenuOptions={
           props.remoteVideoTileMenuOptions?.isHidden ? false : props.isMobile ? false : { kind: 'contextual' }

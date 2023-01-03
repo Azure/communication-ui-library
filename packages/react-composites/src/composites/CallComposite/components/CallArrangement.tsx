@@ -45,6 +45,7 @@ import { MutedNotification, MutedNotificationProps } from './MutedNotification';
  * @private
  */
 export interface CallArrangementProps {
+  id?: string;
   complianceBannerProps: _ComplianceBannerProps;
   errorBarProps: ErrorBarProps | false;
   mutedNotificationProps?: MutedNotificationProps;
@@ -154,7 +155,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   }
 
   return (
-    <div ref={containerRef} className={mergeStyles(containerDivStyles)}>
+    <div ref={containerRef} className={mergeStyles(containerDivStyles)} id={props.id}>
       <Stack verticalFill horizontalAlign="stretch" className={containerClassName} data-ui-id={props.dataUiId}>
         <Stack grow styles={callArrangementContainerStyles}>
           <Stack.Item styles={notificationsContainerStyles}>

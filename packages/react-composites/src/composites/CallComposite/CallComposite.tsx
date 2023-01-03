@@ -129,12 +129,6 @@ export type CallCompositeOptions = {
   deviceChecks?: DeviceCheckOptions;
   /* @conditional-compile-remove(call-readiness) */
   /**
-   * Opt in call readiness feature for your call
-   * Setting this to `true` will add call readiness features to the call experience
-   */
-  callReadinessOptedIn?: boolean;
-  /* @conditional-compile-remove(call-readiness) */
-  /**
    * Callback you may provide to supply users with further steps to troubleshoot why they have been
    * unable to grant your site the required permissions for the call.
    *
@@ -248,8 +242,6 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           onPermissionsTroubleshootingClick={props.options?.onPermissionsTroubleshootingClick}
           /* @conditional-compile-remove(call-readiness) */
           onNetworkingTroubleShootingClick={props.options?.onNetworkingTroubleShootingClick}
-          /* @conditional-compile-remove(call-readiness) */
-          callReadinessOptedIn={props.options?.callReadinessOptedIn}
         />
       );
       break;
