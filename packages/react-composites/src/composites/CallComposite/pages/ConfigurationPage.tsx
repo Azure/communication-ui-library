@@ -14,7 +14,7 @@ import { DevicesButton, ErrorBar } from '@internal/react-components';
 /* @conditional-compile-remove(rooms) */
 import { _usePermissions, _Permissions } from '@internal/react-components';
 import { getCallingSelector } from '@internal/calling-component-bindings';
-import { Stack } from '@fluentui/react';
+import { LayerHost, mergeStyles, Stack } from '@fluentui/react';
 import { LocalPreview } from '../components/LocalPreview';
 import {
   callDetailsStyleDesktop,
@@ -29,7 +29,8 @@ import {
   startCallButtonStyleMobile,
   titleContainerStyleDesktop,
   titleContainerStyleMobile,
-  callDetailsContainerStylesDesktop
+  callDetailsContainerStylesDesktop,
+  callReadinessModalLayerHostStyle
 } from '../styles/CallConfiguration.styles';
 import { useLocale } from '../../localization';
 import { bannerNotificationStyles } from '../styles/CallPage.styles';
@@ -42,6 +43,7 @@ import { ConfigurationPageErrorBar } from '../components/ConfigurationPageErrorB
 import { getDevicePermissionState } from '../utils';
 /* @conditional-compile-remove(call-readiness) */
 import { CallReadinessModal, CallReadinessModalFallBack } from '../components/CallReadinessModal';
+import { useId } from '@fluentui/react-hooks';
 
 /**
  * @private
@@ -82,6 +84,7 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
   const [audioState, setAudioState] = useState<PermissionState | 'unsupported' | undefined>(undefined);
   /* @conditional-compile-remove(call-readiness) */
   getDevicePermissionState(setVideoState, setAudioState);
+  const modalLayerHostId = useId('callReadinessModalLayerhost');
 
   let errorBarProps = usePropsFor(ErrorBar);
   const adapter = useAdapter();
@@ -207,6 +210,7 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
         // show the following screen if permission API is availible (not unsupported) and videoState, audioState is assigned values
         videoState && videoState !== 'unsupported' && audioState && audioState !== 'unsupported' && (
           <CallReadinessModal
+            modalLayerHostId={modalLayerHostId}
             mobileView={mobileView}
             /* @conditional-compile-remove(unsupported-browser) */
             environmentInfo={environmentInfo}
@@ -223,6 +227,7 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
         // show the following screen if permission API is not availible (unsupported) and videoState, audioState is assigned values
         videoState && audioState && (videoState === 'unsupported' || audioState === 'unsupported') && (
           <CallReadinessModalFallBack
+            modalLayerHostId={modalLayerHostId}
             mobileView={mobileView}
             checkPermissionModalShowing={forceShowingCheckPermissions}
             permissionsState={permissionsState}
@@ -288,6 +293,7 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
           </Stack>
         </Stack>
       </Stack>
+      <LayerHost id={modalLayerHostId} className={mergeStyles(callReadinessModalLayerHostStyle)} />
     </Stack>
   );
 };
