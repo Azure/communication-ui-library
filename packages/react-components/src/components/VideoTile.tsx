@@ -246,7 +246,6 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
   const observer = useRef(
     new ResizeObserver((entries): void => {
       const { width, height } = entries[0].contentRect;
-      console.log(entries);
       const personaSize = Math.min(width, height) / 3;
       setPersonaSize(Math.max(Math.min(personaSize, personaMaxSize), personaMinSize));
     })
