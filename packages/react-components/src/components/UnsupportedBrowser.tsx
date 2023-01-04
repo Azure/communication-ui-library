@@ -43,12 +43,12 @@ export const UnsupportedBrowser = (props: UnsupportedBrowserProps): JSX.Element 
   return (
     <UnsupportedEnvironment
       onTroubleshootingClick={onTroubleshootingClick}
-      strings={{ ...unsupportedBrowserstringsTrampoline(locale), ...strings }}
+      strings={{ ...unsupportedBrowserStringsTrampoline(locale), ...strings }}
     />
   );
 };
 
-const unsupportedBrowserstringsTrampoline = (locale: ComponentLocale): UnsupportedBrowserStrings => {
+const unsupportedBrowserStringsTrampoline = (locale: ComponentLocale): UnsupportedBrowserStrings => {
   /* @conditional-compile-remove(unsupported-browser) */
   return locale.strings.UnsupportedBrowser;
   return {
