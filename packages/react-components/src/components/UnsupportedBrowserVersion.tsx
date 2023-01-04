@@ -56,7 +56,7 @@ export const UnsupportedBrowserVersion = (props: UnsupportedBrowserVersionProps)
 
 const unsupportedBrowserVersionStringsTrampoline = (locale: ComponentLocale): UnsupportedBrowserVersionStrings => {
   /* @conditional-compile-remove(unsupported-browser) */
-  return locale.strings.UnsupportedBrowser;
+  return locale.strings.UnsupportedBrowserVersion;
   return {
     primaryText: '',
     secondaryText: '',

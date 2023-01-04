@@ -43,14 +43,14 @@ export const UnsupportedOperatingSystem = (props: UnsupportedOperatingSystemProp
   return (
     <UnsupportedEnvironment
       onTroubleshootingClick={onTroubleshootingClick}
-      strings={strings ? strings : unsupportedBrowserstringsTrampoline(locale)}
+      strings={strings ? strings : unsupportedOperatingSystemStringsTrampoline(locale)}
     />
   );
 };
 
-const unsupportedBrowserstringsTrampoline = (locale: ComponentLocale): UnsupportedOperatingSystemStrings => {
+const unsupportedOperatingSystemStringsTrampoline = (locale: ComponentLocale): UnsupportedOperatingSystemStrings => {
   /* @conditional-compile-remove(unsupported-browser) */
-  return locale.strings.UnsupportedBrowser;
+  return locale.strings.UnsupportedOperatingSystem;
   return {
     primaryText: '',
     secondaryText: '',
