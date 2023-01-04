@@ -263,15 +263,13 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
               )
             }
           </Stack>
-          {chosenCallOption.key !== 'TeamsIdentity' && (
-            <DisplayNameField defaultName={displayName} setName={setDisplayName} />
-          )}
+          <DisplayNameField defaultName={displayName} setName={setDisplayName} />
           <PrimaryButton
             disabled={!buttonEnabled}
             className={buttonStyle}
             text={buttonText}
             onClick={() => {
-              if (displayName || /* @conditional-compile-remove(teams-identity-support) */ teamsIdentityChosen) {
+              if (displayName) {
                 displayName && saveDisplayNameToLocalStorage(displayName);
                 /* @conditional-compile-remove(one-to-n-calling) */
                 const acsParticipantsToCall = parseParticipants(outboundParticipants);
@@ -279,7 +277,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                 const dialpadParticipantToCall = parseParticipants(dialPadParticipant);
                 props.startCallHandler({
                   //TODO: This needs to be updated after we change arg types of TeamsCall
-                  displayName: !displayName ? 'Teams UserName PlaceHolder' : displayName,
+                  displayName,
                   callLocator: callLocator,
                   /* @conditional-compile-remove(rooms) */
                   option: chosenCallOption.key,

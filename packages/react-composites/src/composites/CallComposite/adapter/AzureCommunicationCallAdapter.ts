@@ -833,6 +833,7 @@ export type TeamsCallAdapterArgs = {
   userId: MicrosoftTeamsUserIdentifier;
   credential: CommunicationTokenCredential;
   locator: TeamsMeetingLinkLocator;
+  displayName: string;
 };
 
 /**
@@ -873,10 +874,12 @@ export const createAzureCommunicationCallAdapter = async ({
 export const createTeamsCallAdapter = async ({
   userId,
   credential,
+  displayName,
   locator
 }: TeamsCallAdapterArgs): Promise<TeamsCallAdapter> => {
   const callClient = createStatefulCallClient({
-    userId
+    userId,
+    displayName
   });
   const callAgent = await callClient.createTeamsCallAgent(credential, {
     undefined
@@ -928,13 +931,10 @@ const useAzureCommunicationCallAdapterGeneric = <
 
   useEffect(
     () => {
-      if (!credential || !locator || !userId) {
+      if (!credential || !locator || !userId || !displayName) {
         return;
       }
 
-      if (adapterKind === 'AzureCommunication' && !displayName) {
-        return;
-      }
       (async () => {
         if (adapterRef.current) {
           // Dispose the old adapter when a new one is created.
@@ -951,13 +951,9 @@ const useAzureCommunicationCallAdapterGeneric = <
 
         let newAdapter: Adapter | undefined = undefined;
         if (adapterKind === 'AzureCommunication') {
-          // This is just the type check to ensure that displayName is defined.
-          if (!displayName) {
-            throw new Error('Unreachable code, displayName already checked above.');
-          }
           newAdapter = (await createAzureCommunicationCallAdapter({
             credential,
-            displayName: displayName,
+            displayName,
             locator,
             userId: userId as CommunicationUserIdentifier,
             /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
@@ -968,7 +964,8 @@ const useAzureCommunicationCallAdapterGeneric = <
           newAdapter = (await createTeamsCallAdapter({
             credential,
             locator: locator as TeamsMeetingLinkLocator,
-            userId: userId as MicrosoftTeamsUserIdentifier
+            userId: userId as MicrosoftTeamsUserIdentifier,
+            displayName
           })) as Adapter;
         } else {
           throw new Error('Unreachable code, unknown adapterKind');

@@ -986,7 +986,7 @@ export const createAzureCommunicationChatAdapter: ({ endpoint: endpointUrl, user
 export const createAzureCommunicationChatAdapterFromClient: (chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient) => Promise<ChatAdapter>;
 
 // @beta (undocumented)
-export const createTeamsCallAdapter: ({ userId, credential, locator }: TeamsCallAdapterArgs) => Promise<TeamsCallAdapter>;
+export const createTeamsCallAdapter: ({ userId, credential, displayName, locator }: TeamsCallAdapterArgs) => Promise<TeamsCallAdapter>;
 
 // @beta
 export const createTeamsCallAdapterFromClient: (callClient: StatefulCallClient, callAgent: TeamsCallAgent, locator: CallAdapterLocator) => Promise<TeamsCallAdapter>;
@@ -1281,6 +1281,7 @@ export type TeamsCallAdapterArgs = {
     userId: MicrosoftTeamsUserIdentifier;
     credential: CommunicationTokenCredential;
     locator: TeamsMeetingLinkLocator;
+    displayName: string;
 };
 
 // @public

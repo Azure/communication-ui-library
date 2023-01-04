@@ -400,6 +400,7 @@ export interface CallClientState {
         [key: string]: CallState;
     };
     deviceManager: DeviceManagerState;
+    displayName?: string;
     environmentInfo?: EnvironmentInfo;
     incomingCalls: {
         [key: string]: IncomingCallState;
@@ -1664,7 +1665,7 @@ export const createStatefulCallClient: (args: StatefulCallClientArgs, options?: 
 export const createStatefulChatClient: (args: StatefulChatClientArgs, options?: StatefulChatClientOptions | undefined) => StatefulChatClient;
 
 // @beta (undocumented)
-export const createTeamsCallAdapter: ({ userId, credential, locator }: TeamsCallAdapterArgs) => Promise<TeamsCallAdapter>;
+export const createTeamsCallAdapter: ({ userId, credential, displayName, locator }: TeamsCallAdapterArgs) => Promise<TeamsCallAdapter>;
 
 // @beta
 export const createTeamsCallAdapterFromClient: (callClient: StatefulCallClient, callAgent: TeamsCallAgent, locator: CallAdapterLocator) => Promise<TeamsCallAdapter>;
@@ -2934,6 +2935,7 @@ export interface StatefulCallClient extends CallClient {
 // @public
 export type StatefulCallClientArgs = {
     userId: CommunicationUserIdentifier | /* @conditional-compile-remove(teams-identity-support) */ MicrosoftTeamsUserIdentifier;
+    displayName?: string;
     alternateCallerId?: string;
 };
 
@@ -3003,6 +3005,7 @@ export type TeamsCallAdapterArgs = {
     userId: MicrosoftTeamsUserIdentifier;
     credential: CommunicationTokenCredential;
     locator: TeamsMeetingLinkLocator;
+    displayName: string;
 };
 
 // @beta

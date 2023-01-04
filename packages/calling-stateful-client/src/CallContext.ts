@@ -61,6 +61,7 @@ export class CallContext {
   constructor(
     userId: CommunicationIdentifierKind,
     maxListeners = 50,
+    /* @conditional-compile-remove(teams-identity-support) */ displayName?: string,
     /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId?: string
   ) {
     this._logger = createClientLogger('communication-react:calling-context');
@@ -80,6 +81,7 @@ export class CallContext {
       userId: userId,
       /* @conditional-compile-remove(unsupported-browser) */ environmentInfo: undefined,
       /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId: alternateCallerId,
+      /* @conditional-compile-remove(teams-identity-support) */ displayName,
       latestErrors: {} as CallErrors
     };
     this._emitter = new EventEmitter();

@@ -193,7 +193,9 @@ class ProxyCallClient implements ProxyHandler<CallClient> {
             const callAgent = await target.createCallAgent(...args);
             this._callAgent = callAgentDeclaratify(callAgent, this._context, this._internalContext);
             this._context.setCallAgent({
-              displayName: this._callAgent.displayName
+              displayName:
+                this._callAgent.displayName ||
+                /* @conditional-compile-remove(teams-identity-support) */ this._context.getState().displayName
             });
             return this._callAgent;
           },
@@ -209,7 +211,7 @@ class ProxyCallClient implements ProxyHandler<CallClient> {
             const callAgent = await target.createTeamsCallAgent(...args);
             this._callAgent = teamsCallAgentDeclaratify(callAgent, this._context, this._internalContext);
             this._context.setCallAgent({
-              displayName: undefined
+              displayName: this._context.getState().displayName
             });
             return this._callAgent;
           },
@@ -278,6 +280,12 @@ export type StatefulCallClientArgs = {
   userId:
     | CommunicationUserIdentifier
     | /* @conditional-compile-remove(teams-identity-support) */ MicrosoftTeamsUserIdentifier;
+  /* @conditional-compile-remove(teams-identity-support) */
+  /**
+   * This is the display name for provided by Contoso. This is usually used when there is no displayName from callAgent,
+   * especially for Teams Call. It is recommended for Contoso to provide teams displayName by getting it from Graph API.
+   */
+  displayName?: string;
   /* @conditional-compile-remove(PSTN-calls) */
   /**
    * A phone number in E.164 format that will be used to represent the callers identity. This number is required
@@ -331,6 +339,7 @@ export const createStatefulCallClient = (
     new CallContext(
       getIdentifierKind(args.userId),
       options?.maxStateChangeListeners,
+      /* @conditional-compile-remove(teams-identity-support) */ args.displayName,
       /* @conditional-compile-remove(PSTN-calls) */ args.alternateCallerId
     ),
     new InternalCallContext()

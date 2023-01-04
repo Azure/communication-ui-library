@@ -61,6 +61,7 @@ export interface CallClientState {
         [key: string]: CallState;
     };
     deviceManager: DeviceManagerState;
+    displayName?: string;
     environmentInfo?: EnvironmentInfo;
     incomingCalls: {
         [key: string]: IncomingCallState;
@@ -242,6 +243,7 @@ export interface StatefulCallClient extends CallClient {
 // @public
 export type StatefulCallClientArgs = {
     userId: CommunicationUserIdentifier | /* @conditional-compile-remove(teams-identity-support) */ MicrosoftTeamsUserIdentifier;
+    displayName?: string;
     alternateCallerId?: string;
 };
 

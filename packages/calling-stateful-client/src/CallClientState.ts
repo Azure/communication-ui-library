@@ -442,6 +442,11 @@ export interface CallClientState {
    * state to track the environment that the stateful client was made in is supported
    */
   environmentInfo?: EnvironmentInfo;
+  /* @conditional-compile-remove(teams-identity-support) */
+  /**
+   * state to track the displayName of local user, this is usually user provided for teams call scenario
+   */
+  displayName?: string;
 }
 
 /**
