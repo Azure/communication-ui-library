@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "updating storybook documentation to all note there is a callWithChat composite js bundle",
-  "packageName": "@internal/storybook",
-  "email": "79329532+alkwa-msft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

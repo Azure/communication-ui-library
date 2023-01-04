@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Bugfix disableEditing not working in MessageThread.",
-  "packageName": "@azure/communication-react",
-  "email": "anjulgarg@live.com",
-  "dependentChangeType": "patch"
-}

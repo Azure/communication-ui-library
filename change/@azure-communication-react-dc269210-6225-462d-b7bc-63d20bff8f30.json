@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Add inlineSources to common config",
-  "packageName": "@azure/communication-react",
-  "email": "jinan@microsoft.com",
-  "dependentChangeType": "none"
-}
