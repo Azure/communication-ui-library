@@ -1,6 +1,6 @@
 {
   "name": "@internal/storybook",
-  "version": "1.4.2-beta.0",
+  "version": "1.5.0",
   "description": "Azure Communication Services UI Library Storybook",
   "scripts": {
     "build": "node ./scripts/build.mjs",
@@ -22,7 +22,7 @@
     "@azure/communication-chat": ">=1.2.0",
     "@azure/communication-common": "2.0.0",
     "@azure/communication-identity": "~1.1.0",
-    "@azure/communication-react": "1.4.2-beta.0",
+    "@azure/communication-react": "1.5.0",
     "@fluentui/react-file-type-icons": "~8.5.8",
     "@fluentui/react-hooks": "~8.6.12",
     "@fluentui/react-icons": "~1.1.145",
