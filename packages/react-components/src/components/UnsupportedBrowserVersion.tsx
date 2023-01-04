@@ -48,7 +48,7 @@ export const UnsupportedBrowserVersion = (props: UnsupportedBrowserVersionProps)
   return (
     <UnsupportedEnvironment
       onTroubleshootingClick={onTroubleshootingClick}
-      strings={strings ? strings : unsupportedBrowserVersionStringsTrampoline(locale)}
+      strings={{ ...unsupportedBrowserVersionStringsTrampoline(locale), ...strings }}
       onContinueAnywayClick={onContinueAnywayClick}
     />
   );

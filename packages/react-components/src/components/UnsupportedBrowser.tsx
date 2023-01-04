@@ -43,7 +43,7 @@ export const UnsupportedBrowser = (props: UnsupportedBrowserProps): JSX.Element 
   return (
     <UnsupportedEnvironment
       onTroubleshootingClick={onTroubleshootingClick}
-      strings={strings ? strings : unsupportedBrowserstringsTrampoline(locale)}
+      strings={{ ...unsupportedBrowserstringsTrampoline(locale), ...strings }}
     />
   );
 };

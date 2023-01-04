@@ -43,7 +43,7 @@ export const UnsupportedOperatingSystem = (props: UnsupportedOperatingSystemProp
   return (
     <UnsupportedEnvironment
       onTroubleshootingClick={onTroubleshootingClick}
-      strings={strings ? strings : unsupportedOperatingSystemStringsTrampoline(locale)}
+      strings={{ ...unsupportedOperatingSystemStringsTrampoline(locale), ...strings }}
     />
   );
 };
