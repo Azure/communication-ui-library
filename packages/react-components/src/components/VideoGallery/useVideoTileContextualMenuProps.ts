@@ -40,7 +40,10 @@ export const useVideoTileContextualMenuProps = (props: {
         items.push({
           key: 'unpin',
           text: strings.unpinParticipantForMe,
-          iconProps: { iconName: 'UnpinParticipant', styles: { root: { lineHeight: '1rem' } } },
+          iconProps: {
+            iconName: 'UnpinParticipant',
+            styles: { root: { textAlign: 'center', justifyContent: 'center' } }
+          },
           onClick: () => onUnpinParticipant?.(props.remoteParticipant.userId),
           'data-ui-id': 'video-tile-unpin-participant-button'
         });
@@ -49,7 +52,10 @@ export const useVideoTileContextualMenuProps = (props: {
         items.push({
           key: 'pin',
           text: strings.pinParticipantForMe,
-          iconProps: { iconName: 'PinParticipant', styles: { root: { lineHeight: '1rem' } } },
+          iconProps: {
+            iconName: 'PinParticipant',
+            styles: { root: { textAlign: 'center', justifyContent: 'center' } }
+          },
           onClick: () => onPinParticipant?.(props.remoteParticipant.userId),
           'data-ui-id': 'video-tile-pin-participant-button',
           disabled: disablePinMenuItem
@@ -61,7 +67,10 @@ export const useVideoTileContextualMenuProps = (props: {
         items.push({
           key: 'fitRemoteParticipantToFrame',
           text: strings.fitRemoteParticipantToFrame,
-          iconProps: { iconName: 'VideoTileScaleFit', styles: { root: { lineHeight: '1rem' } } },
+          iconProps: {
+            iconName: 'VideoTileScaleFit',
+            styles: { root: { textAlign: 'center', justifyContent: 'center' } }
+          },
           onClick: () => {
             view?.updateScalingMode('Fit');
           }
@@ -71,10 +80,14 @@ export const useVideoTileContextualMenuProps = (props: {
           items.push({
             key: 'fillRemoteParticipantFrame',
             text: strings.fillRemoteParticipantFrame,
-            iconProps: { iconName: 'VideoTileScaleFill', styles: { root: { lineHeight: '1rem' } } },
+            iconProps: {
+              iconName: 'VideoTileScaleFill',
+              styles: { root: { textAlign: 'center', justifyContent: 'center' } }
+            },
             onClick: () => {
               view?.updateScalingMode('Crop');
-            }
+            },
+            styles: {}
           });
         }
       }
@@ -83,7 +96,7 @@ export const useVideoTileContextualMenuProps = (props: {
       return undefined;
     }
 
-    return { items };
+    return { items, styles: {} };
   }, [
     scalingMode,
     strings,
