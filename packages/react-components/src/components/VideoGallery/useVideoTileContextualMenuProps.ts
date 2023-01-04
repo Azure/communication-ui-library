@@ -14,6 +14,7 @@ export const useVideoTileContextualMenuProps = (props: {
     fitRemoteParticipantToFrame?: string;
     fillRemoteParticipantFrame?: string;
     pinParticipantForMe?: string;
+    pinParticipantForMeWhenLimitReached?: string;
     unpinParticipantForMe?: string;
   };
   view?: { updateScalingMode: (scalingMode: ViewScalingMode) => Promise<void> };
@@ -51,7 +52,7 @@ export const useVideoTileContextualMenuProps = (props: {
       if (!isPinned && onPinParticipant && strings?.pinParticipantForMe) {
         items.push({
           key: 'pin',
-          text: strings.pinParticipantForMe,
+          text: disablePinMenuItem ? strings.pinParticipantForMeWhenLimitReached : strings.pinParticipantForMe,
           iconProps: {
             iconName: 'PinParticipant',
             styles: { root: { textAlign: 'center', justifyContent: 'center' } }
