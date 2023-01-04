@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add displayName param of adapter - add optional displayName of StatefulClient for CTE",
+  "packageName": "@azure/communication-react",
+  "email": "jinan@microsoft.com",
+  "dependentChangeType": "patch"
+}
