@@ -52,7 +52,7 @@ export const useVideoTileContextualMenuProps = (props: {
       if (!isPinned && onPinParticipant && strings?.pinParticipantForMe) {
         items.push({
           key: 'pin',
-          text: strings.pinParticipantForMe,
+          text: disablePinMenuItem ? strings.pinParticipantForMeWhenLimitReached : strings.pinParticipantForMe,
           iconProps: {
             iconName: 'PinParticipant',
             styles: { root: { lineHeight: '1rem', textAlign: 'center' } }
