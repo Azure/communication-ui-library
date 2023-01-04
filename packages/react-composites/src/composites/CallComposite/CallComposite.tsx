@@ -163,7 +163,7 @@ export type CallCompositeOptions = {
 
 type MainScreenProps = {
   mobileView: boolean;
-  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
+  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) @conditional-compile-remove(call-readiness) */
   modalLayerHostId: string;
   onRenderAvatar?: OnRenderAvatarCallback;
   callInvitationUrl?: string;
@@ -391,7 +391,7 @@ export const CallComposite = (props: CallCompositeProps): JSX.Element => {
             onFetchAvatarPersonaData={onFetchAvatarPersonaData}
             onFetchParticipantMenuItems={onFetchParticipantMenuItems}
             mobileView={mobileView}
-            /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) @conditional-compile-remove(call-readiness)*/
+            /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) @conditional-compile-remove(call-readiness) */
             modalLayerHostId={modalLayerHostId}
             options={options}
             /* @conditional-compile-remove(rooms) */

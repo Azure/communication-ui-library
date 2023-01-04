@@ -49,6 +49,7 @@ import { CallReadinessModal, CallReadinessModalFallBack } from '../components/Ca
 export interface ConfigurationPageProps {
   mobileView: boolean;
   startCallHandler(): void;
+  /* @conditional-compile-remove(call-readiness) */
   modalLayerHostId: string;
   /* @conditional-compile-remove(call-readiness) */
   deviceChecks?: DeviceCheckOptions;
@@ -68,7 +69,7 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
   const {
     startCallHandler,
     mobileView,
-    modalLayerHostId,
+    /* @conditional-compile-remove(call-readiness) */ modalLayerHostId,
     /* @conditional-compile-remove(call-readiness) */ deviceChecks,
     /* @conditional-compile-remove(call-readiness) */ onPermissionsTroubleshootingClick,
     /* @conditional-compile-remove(call-readiness) */ onNetworkingTroubleShootingClick
@@ -209,6 +210,7 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
         // show the following screen if permission API is availible (not unsupported) and videoState, audioState is assigned values
         videoState && videoState !== 'unsupported' && audioState && audioState !== 'unsupported' && (
           <CallReadinessModal
+            /* @conditional-compile-remove(call-readiness) */
             modalLayerHostId={modalLayerHostId}
             mobileView={mobileView}
             /* @conditional-compile-remove(unsupported-browser) */
@@ -226,6 +228,7 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
         // show the following screen if permission API is not availible (unsupported) and videoState, audioState is assigned values
         videoState && audioState && (videoState === 'unsupported' || audioState === 'unsupported') && (
           <CallReadinessModalFallBack
+            /* @conditional-compile-remove(call-readiness) */
             modalLayerHostId={modalLayerHostId}
             mobileView={mobileView}
             checkPermissionModalShowing={forceShowingCheckPermissions}
