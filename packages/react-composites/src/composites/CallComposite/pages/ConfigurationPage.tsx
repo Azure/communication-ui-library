@@ -14,7 +14,7 @@ import { DevicesButton, ErrorBar } from '@internal/react-components';
 /* @conditional-compile-remove(rooms) */
 import { _usePermissions, _Permissions } from '@internal/react-components';
 import { getCallingSelector } from '@internal/calling-component-bindings';
-import { LayerHost, mergeStyles, Stack } from '@fluentui/react';
+import { Stack } from '@fluentui/react';
 import { LocalPreview } from '../components/LocalPreview';
 import {
   callDetailsStyleDesktop,
@@ -29,8 +29,7 @@ import {
   startCallButtonStyleMobile,
   titleContainerStyleDesktop,
   titleContainerStyleMobile,
-  callDetailsContainerStylesDesktop,
-  callReadinessModalLayerHostStyle
+  callDetailsContainerStylesDesktop
 } from '../styles/CallConfiguration.styles';
 import { useLocale } from '../../localization';
 import { bannerNotificationStyles } from '../styles/CallPage.styles';
@@ -43,7 +42,6 @@ import { ConfigurationPageErrorBar } from '../components/ConfigurationPageErrorB
 import { getDevicePermissionState } from '../utils';
 /* @conditional-compile-remove(call-readiness) */
 import { CallReadinessModal, CallReadinessModalFallBack } from '../components/CallReadinessModal';
-import { useId } from '@fluentui/react-hooks';
 
 /**
  * @private
@@ -51,6 +49,7 @@ import { useId } from '@fluentui/react-hooks';
 export interface ConfigurationPageProps {
   mobileView: boolean;
   startCallHandler(): void;
+  modalLayerHostId: string;
   /* @conditional-compile-remove(call-readiness) */
   deviceChecks?: DeviceCheckOptions;
   /* @conditional-compile-remove(call-readiness) */
@@ -69,6 +68,7 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
   const {
     startCallHandler,
     mobileView,
+    modalLayerHostId,
     /* @conditional-compile-remove(call-readiness) */ deviceChecks,
     /* @conditional-compile-remove(call-readiness) */ onPermissionsTroubleshootingClick,
     /* @conditional-compile-remove(call-readiness) */ onNetworkingTroubleShootingClick
@@ -84,7 +84,6 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
   const [audioState, setAudioState] = useState<PermissionState | 'unsupported' | undefined>(undefined);
   /* @conditional-compile-remove(call-readiness) */
   getDevicePermissionState(setVideoState, setAudioState);
-  const modalLayerHostId = useId('callReadinessModalLayerhost');
 
   let errorBarProps = usePropsFor(ErrorBar);
   const adapter = useAdapter();
@@ -293,7 +292,6 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
           </Stack>
         </Stack>
       </Stack>
-      <LayerHost id={modalLayerHostId} className={mergeStyles(callReadinessModalLayerHostStyle)} />
     </Stack>
   );
 };

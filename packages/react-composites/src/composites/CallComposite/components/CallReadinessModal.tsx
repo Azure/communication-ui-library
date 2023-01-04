@@ -195,7 +195,10 @@ export const CallReadinessModal = (props: {
   } else if (!mobileView && modal !== undefined) {
     return (
       <_ModalClone
-        styles={{ root: { position: 'unset' } }}
+        styles={{
+          root: { position: 'unset' },
+          main: { position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%, -50%)' }
+        }}
         layerProps={{ hostId: props.modalLayerHostId }}
         isOpen={isPermissionsModalDismissed}
         isBlocking={false}
@@ -348,7 +351,10 @@ export const CallReadinessModalFallBack = (props: {
       <>
         {(checkPermissionModalShowing || audioState === 'prompt' || videoState === 'prompt') && (
           <_ModalClone
-            styles={{ root: { position: 'unset' } }}
+            styles={{
+              root: { position: 'unset' },
+              main: { position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%, -50%)' }
+            }}
             layerProps={{ hostId: props.modalLayerHostId }}
             isOpen={isPermissionsModalDismissed}
             isBlocking={false}
@@ -375,7 +381,10 @@ export const CallReadinessModalFallBack = (props: {
 
         {!checkPermissionModalShowing && modal !== undefined && (
           <_ModalClone
-            styles={{ root: { position: 'unset' } }}
+            styles={{
+              root: { position: 'unset' },
+              main: { position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%, -50%)' }
+            }}
             layerProps={{ hostId: props.modalLayerHostId }}
             isOpen={isPermissionsModalDismissed}
             isBlocking={false}

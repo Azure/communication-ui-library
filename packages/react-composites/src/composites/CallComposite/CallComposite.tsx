@@ -217,6 +217,8 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
             adapter.joinCall();
           }}
           /* @conditional-compile-remove(call-readiness) */
+          modalLayerHostId={props.modalLayerHostId}
+          /* @conditional-compile-remove(call-readiness) */
           deviceChecks={props.options?.deviceChecks}
           /* @conditional-compile-remove(call-readiness) */
           onPermissionsTroubleshootingClick={props.options?.onPermissionsTroubleshootingClick}
@@ -389,7 +391,7 @@ export const CallComposite = (props: CallCompositeProps): JSX.Element => {
             onFetchAvatarPersonaData={onFetchAvatarPersonaData}
             onFetchParticipantMenuItems={onFetchParticipantMenuItems}
             mobileView={mobileView}
-            /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
+            /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) @conditional-compile-remove(call-readiness)*/
             modalLayerHostId={modalLayerHostId}
             options={options}
             /* @conditional-compile-remove(rooms) */
@@ -404,8 +406,8 @@ export const CallComposite = (props: CallCompositeProps): JSX.Element => {
             // Warning: this is fragile and works because the call arrangement page is only rendered after the call has connected and thus this
             // LayerHost will be guaranteed to have rendered (and subsequently mounted in the DOM). This ensures the DOM element will be available
             // before the call to `document.getElementById(modalLayerHostId)` is made.
-            /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
-            mobileView && <LayerHost id={modalLayerHostId} className={mergeStyles(modalLayerHostStyle)} />
+            /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) @conditional-compile-remove(call-readiness) */
+            <LayerHost id={modalLayerHostId} className={mergeStyles(modalLayerHostStyle)} />
           }
         </CallAdapterProvider>
       </BaseProvider>
