@@ -100,7 +100,7 @@ export const createAnnouncmentString = (
    * Filter participants into two arrays to put all the unnamed participants at the back of the
    * names being announced.
    */
-  const unnamedParticipants = participants.filter((p) => p.displayName === undefined);
+  const unnamedParticipants = participants.filter((p) => !p.displayName);
   const namedParicipants = participants.filter((p) => p.displayName);
   const sortedParticipants = namedParicipants.concat(unnamedParticipants);
 
