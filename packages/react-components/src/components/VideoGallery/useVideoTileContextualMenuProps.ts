@@ -62,7 +62,8 @@ export const useVideoTileContextualMenuProps = (props: {
           iconProps: { iconName: 'VideoTileScaleFit', styles: { root: { lineHeight: '1rem' } } },
           onClick: () => {
             view?.updateScalingMode('Fit');
-          }
+          },
+          'data-ui-id': 'video-tile-fit-to-frame'
         });
       } else if (scalingMode === 'Fit' && strings?.fillRemoteParticipantFrame) {
         {
@@ -72,7 +73,8 @@ export const useVideoTileContextualMenuProps = (props: {
             iconProps: { iconName: 'VideoTileScaleFill', styles: { root: { lineHeight: '1rem' } } },
             onClick: () => {
               view?.updateScalingMode('Crop');
-            }
+            },
+            'data-ui-id': 'video-tile-fill-frame'
           });
         }
       }

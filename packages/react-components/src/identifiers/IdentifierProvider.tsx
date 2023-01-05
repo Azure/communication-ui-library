@@ -39,6 +39,8 @@ export interface _Identifiers {
   videoGallery: string;
   /** `data-ui-id` value for `VideoTile` Component */
   videoTile: string;
+  /** `data-ui-id` value for `videoTileMoreOptionsButton` Component */
+  videoTileMoreOptionsButton: string;
   /** `data-ui-id` value for `HorizontalGallery` Component's left navigation button */
   horizontalGalleryLeftNavButton: string;
   /** `data-ui-id` value for `HorizontalGallery` Component's right navigation button */
@@ -57,6 +59,7 @@ const defaultIdentifiers: _Identifiers = {
   typingIndicator: 'typing-indicator',
   videoGallery: 'video-gallery',
   videoTile: 'video-tile',
+  videoTileMoreOptionsButton: 'video-tile-more-options-button',
   horizontalGalleryLeftNavButton: 'horizontal-gallery-left-nav-button',
   horizontalGalleryRightNavButton: 'horizontal-gallery-right-nav-button'
 };
