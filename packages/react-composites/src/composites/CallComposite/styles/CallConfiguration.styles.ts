@@ -125,22 +125,3 @@ export const startCallButtonStyleMobile = mergeStyles({
   width: '100%',
   maxWidth: 'unset'
 });
-
-/**
- * Styles for layer host to bound the modal wrapping Call Readiness screens
- * @private
- */
-export const callReadinessModalLayerHostStyle: IStyle = {
-  display: 'flex',
-  position: 'absolute',
-  width: '100%',
-  height: '100%',
-  overflow: 'hidden',
-  alignItems: 'center',
-  justifyContent: 'center',
-  top: '0',
-  left: '0',
-  zIndex: '10000',
-  // pointer events for layerHost set to none to make descendants interactive
-  pointerEvents: 'none'
-};
