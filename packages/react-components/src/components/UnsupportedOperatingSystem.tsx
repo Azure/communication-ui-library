@@ -29,7 +29,7 @@ export interface UnsupportedOperatingSystemProps {
   /** Handler to perform a action when the help link is actioned */
   onTroubleshootingClick?: () => void;
   /** String overrides for the component */
-  strings: UnsupportedOperatingSystemStrings;
+  strings?: UnsupportedOperatingSystemStrings;
 }
 
 /**
