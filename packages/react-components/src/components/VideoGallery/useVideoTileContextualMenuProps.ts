@@ -43,7 +43,7 @@ export const useVideoTileContextualMenuProps = (props: {
           text: strings.unpinParticipantForMe,
           iconProps: {
             iconName: 'UnpinParticipant',
-            styles: { root: { textAlign: 'center', justifyContent: 'center' } }
+            styles: { root: { lineHeight: '1rem', textAlign: 'center' } }
           },
           onClick: () => onUnpinParticipant?.(props.remoteParticipant.userId),
           'data-ui-id': 'video-tile-unpin-participant-button'
@@ -52,10 +52,10 @@ export const useVideoTileContextualMenuProps = (props: {
       if (!isPinned && onPinParticipant && strings?.pinParticipantForMe) {
         items.push({
           key: 'pin',
-          text: disablePinMenuItem ? strings.pinParticipantForMeWhenLimitReached : strings.pinParticipantForMe,
+          text: strings.pinParticipantForMe,
           iconProps: {
             iconName: 'PinParticipant',
-            styles: { root: { textAlign: 'center', justifyContent: 'center' } }
+            styles: { root: { lineHeight: '1rem', textAlign: 'center' } }
           },
           onClick: () => onPinParticipant?.(props.remoteParticipant.userId),
           'data-ui-id': 'video-tile-pin-participant-button',
@@ -70,7 +70,7 @@ export const useVideoTileContextualMenuProps = (props: {
           text: strings.fitRemoteParticipantToFrame,
           iconProps: {
             iconName: 'VideoTileScaleFit',
-            styles: { root: { textAlign: 'center', justifyContent: 'center' } }
+            styles: { root: { lineHeight: '1rem', textAlign: 'center' } }
           },
           onClick: () => {
             view?.updateScalingMode('Fit');
@@ -83,7 +83,7 @@ export const useVideoTileContextualMenuProps = (props: {
             text: strings.fillRemoteParticipantFrame,
             iconProps: {
               iconName: 'VideoTileScaleFill',
-              styles: { root: { textAlign: 'center', justifyContent: 'center' } }
+              styles: { root: { lineHeight: '1rem', textAlign: 'center' } }
             },
             onClick: () => {
               view?.updateScalingMode('Crop');
