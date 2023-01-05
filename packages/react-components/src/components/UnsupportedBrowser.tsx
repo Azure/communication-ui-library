@@ -3,6 +3,7 @@
 
 import { _pxToRem } from '@internal/acs-ui-common';
 import React from 'react';
+import { ComponentLocale, useLocale } from '../localization';
 import { UnsupportedEnvironment } from './UnsupportedEnvironment';
 
 /**
@@ -28,7 +29,7 @@ export interface UnsupportedBrowserProps {
   /** Handler to perform an action when the help link is actioned */
   onTroubleshootingClick?: () => void;
   /** String overrides for the component */
-  strings: UnsupportedBrowserStrings;
+  strings?: UnsupportedBrowserStrings;
 }
 
 /**
@@ -38,5 +39,21 @@ export interface UnsupportedBrowserProps {
  */
 export const UnsupportedBrowser = (props: UnsupportedBrowserProps): JSX.Element => {
   const { onTroubleshootingClick, strings } = props;
-  return <UnsupportedEnvironment onTroubleshootingClick={onTroubleshootingClick} strings={strings} />;
+  const locale = useLocale();
+  return (
+    <UnsupportedEnvironment
+      onTroubleshootingClick={onTroubleshootingClick}
+      strings={{ ...unsupportedBrowserStringsTrampoline(locale), ...strings }}
+    />
+  );
+};
+
+const unsupportedBrowserStringsTrampoline = (locale: ComponentLocale): UnsupportedBrowserStrings => {
+  /* @conditional-compile-remove(unsupported-browser) */
+  return locale.strings.UnsupportedBrowser;
+  return {
+    primaryText: '',
+    secondaryText: '',
+    moreHelpLinkText: ''
+  };
 };

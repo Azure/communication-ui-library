@@ -3,6 +3,7 @@
 
 import { _pxToRem } from '@internal/acs-ui-common';
 import React from 'react';
+import { ComponentLocale, useLocale } from '../localization';
 import { UnsupportedEnvironment } from './UnsupportedEnvironment';
 
 /**
@@ -28,7 +29,7 @@ export interface UnsupportedOperatingSystemProps {
   /** Handler to perform a action when the help link is actioned */
   onTroubleshootingClick?: () => void;
   /** String overrides for the component */
-  strings: UnsupportedOperatingSystemStrings;
+  strings?: UnsupportedOperatingSystemStrings;
 }
 
 /**
@@ -38,5 +39,21 @@ export interface UnsupportedOperatingSystemProps {
  */
 export const UnsupportedOperatingSystem = (props: UnsupportedOperatingSystemProps): JSX.Element => {
   const { onTroubleshootingClick, strings } = props;
-  return <UnsupportedEnvironment onTroubleshootingClick={onTroubleshootingClick} strings={strings} />;
+  const locale = useLocale();
+  return (
+    <UnsupportedEnvironment
+      onTroubleshootingClick={onTroubleshootingClick}
+      strings={{ ...unsupportedOperatingSystemStringsTrampoline(locale), ...strings }}
+    />
+  );
+};
+
+const unsupportedOperatingSystemStringsTrampoline = (locale: ComponentLocale): UnsupportedOperatingSystemStrings => {
+  /* @conditional-compile-remove(unsupported-browser) */
+  return locale.strings.UnsupportedOperatingSystem;
+  return {
+    primaryText: '',
+    secondaryText: '',
+    moreHelpLinkText: ''
+  };
 };
