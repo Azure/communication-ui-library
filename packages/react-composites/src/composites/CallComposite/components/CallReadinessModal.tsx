@@ -3,14 +3,14 @@
 
 import React from 'react';
 /* @conditional-compile-remove(call-readiness) */
-import { Modal } from '@fluentui/react';
-/* @conditional-compile-remove(call-readiness) */
 import {
   CameraAndMicrophoneSitePermissions,
   CameraSitePermissions,
   MicrophoneSitePermissions,
   _DrawerSurface
 } from '@internal/react-components';
+/* @conditional-compile-remove(call-readiness) */
+import { _ModalClone } from '@internal/react-components';
 /* @conditional-compile-remove(call-readiness) */
 import { drawerContainerStyles } from '../styles/CallComposite.styles';
 /* @conditional-compile-remove(unsupported-browser) */
@@ -27,6 +27,7 @@ const DRAWER_HIGH_Z_BAND = 99; // setting z index to  99 so that it sit above al
  */
 export const CallReadinessModal = (props: {
   mobileView: boolean;
+  modalLayerHostId: string;
   permissionsState: {
     camera: PermissionState;
     microphone: PermissionState;
@@ -193,7 +194,12 @@ export const CallReadinessModal = (props: {
     );
   } else if (!mobileView && modal !== undefined) {
     return (
-      <Modal
+      <_ModalClone
+        styles={{
+          root: { position: 'unset' },
+          main: { position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%, -50%)' }
+        }}
+        layerProps={{ hostId: props.modalLayerHostId }}
         isOpen={isPermissionsModalDismissed}
         isBlocking={false}
         onDismiss={() => {
@@ -202,7 +208,7 @@ export const CallReadinessModal = (props: {
         overlay={{ styles: { root: { background: 'rgba(0,0,0,0.9)' } } }}
       >
         {modal()}
-      </Modal>
+      </_ModalClone>
     );
   } else {
     return <></>;
@@ -222,6 +228,7 @@ export const CallReadinessModalFallBack = (props: {
     camera: PermissionState;
     microphone: PermissionState;
   };
+  modalLayerHostId: string;
   /* @conditional-compile-remove(unsupported-browser) */
   environmentInfo?: EnvironmentInfo;
   isPermissionsModalDismissed: boolean;
@@ -343,7 +350,12 @@ export const CallReadinessModalFallBack = (props: {
     return (
       <>
         {(checkPermissionModalShowing || audioState === 'prompt' || videoState === 'prompt') && (
-          <Modal
+          <_ModalClone
+            styles={{
+              root: { position: 'unset' },
+              main: { position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%, -50%)' }
+            }}
+            layerProps={{ hostId: props.modalLayerHostId }}
             isOpen={isPermissionsModalDismissed}
             isBlocking={false}
             onDismiss={() => {
@@ -364,11 +376,16 @@ export const CallReadinessModalFallBack = (props: {
               }
               type="check"
             />
-          </Modal>
+          </_ModalClone>
         )}
 
         {!checkPermissionModalShowing && modal !== undefined && (
-          <Modal
+          <_ModalClone
+            styles={{
+              root: { position: 'unset' },
+              main: { position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%, -50%)' }
+            }}
+            layerProps={{ hostId: props.modalLayerHostId }}
             isOpen={isPermissionsModalDismissed}
             isBlocking={false}
             onDismiss={() => {
@@ -377,7 +394,7 @@ export const CallReadinessModalFallBack = (props: {
             overlay={{ styles: { root: { background: 'rgba(0,0,0,0.9)' } } }}
           >
             {modal()}
-          </Modal>
+          </_ModalClone>
         )}
       </>
     );
