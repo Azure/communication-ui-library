@@ -191,18 +191,20 @@ const App = (): JSX.Element => {
         return <Spinner label={'Getting user credentials from server'} ariaLive="assertive" labelPosition="top" />;
       }
       return (
-        <CallScreen
-          token={token}
-          userId={userId}
-          displayName={displayName}
-          callLocator={callLocator}
-          /* @conditional-compile-remove(PSTN-calls) */
-          alternateCallerId={alternateCallerId}
-          /* @conditional-compile-remove(rooms) */
-          roleHint={role}
-          /* @conditional-compile-remove(teams-identity-support) */
-          isTeamsIdentityCall={isTeamsCall}
-        />
+        <React.StrictMode>
+          <CallScreen
+            token={token}
+            userId={userId}
+            displayName={displayName}
+            callLocator={callLocator}
+            /* @conditional-compile-remove(PSTN-calls) */
+            alternateCallerId={alternateCallerId}
+            /* @conditional-compile-remove(rooms) */
+            roleHint={role}
+            /* @conditional-compile-remove(teams-identity-support) */
+            isTeamsIdentityCall={isTeamsCall}
+          />
+        </React.StrictMode>
       );
     }
     default:
