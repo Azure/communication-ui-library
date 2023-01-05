@@ -1337,7 +1337,7 @@ export const UnsupportedBrowser: (props: UnsupportedBrowserProps) => JSX.Element
 // @beta
 export interface UnsupportedBrowserProps {
     onTroubleshootingClick?: () => void;
-    strings: UnsupportedBrowserStrings;
+    strings?: UnsupportedBrowserStrings;
 }
 
 // @beta
@@ -1371,7 +1371,7 @@ export const UnsupportedOperatingSystem: (props: UnsupportedOperatingSystemProps
 // @beta
 export interface UnsupportedOperatingSystemProps {
     onTroubleshootingClick?: () => void;
-    strings: UnsupportedOperatingSystemStrings;
+    strings?: UnsupportedOperatingSystemStrings;
 }
 
 // @beta

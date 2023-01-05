@@ -29,7 +29,7 @@ export interface UnsupportedBrowserProps {
   /** Handler to perform an action when the help link is actioned */
   onTroubleshootingClick?: () => void;
   /** String overrides for the component */
-  strings: UnsupportedBrowserStrings;
+  strings?: UnsupportedBrowserStrings;
 }
 
 /**
