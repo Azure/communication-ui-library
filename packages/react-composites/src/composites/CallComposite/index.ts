@@ -4,7 +4,7 @@
 export { CallComposite } from './CallComposite';
 export type { CallCompositeOptions, CallCompositeProps } from './CallComposite';
 /* @conditional-compile-remove(call-readiness) */
-export type { DevicePermissionRestrictions } from './CallComposite';
+export type { DeviceCheckOptions } from './CallComposite';
 export type { CallControlDisplayType, CallControlOptions } from './types/CallControlOptions';
 /* @conditional-compile-remove(control-bar-button-injection) */
 export type {
@@ -24,14 +24,10 @@ export {
 } from './adapter';
 
 /* @conditional-compile-remove(teams-identity-support) */
-export {
-  createAzureCommunicationTeamsCallAdapter,
-  createAzureCommunicationTeamsCallAdapterFromClient,
-  useAzureCommunicationTeamsCallAdapter
-} from './adapter';
+export { createTeamsCallAdapter, createTeamsCallAdapterFromClient, useTeamsCallAdapter } from './adapter';
 
 /* @conditional-compile-remove(teams-identity-support) */
-export type { TeamsCallAdapter } from './adapter';
+export type { TeamsCallAdapter, TeamsCallAdapterArgs } from './adapter';
 
 export type {
   AzureCommunicationCallAdapterArgs,
@@ -45,9 +41,6 @@ export type { AzureCommunicationCallAdapterOptions } from './adapter';
 
 /* @conditional-compile-remove(teams-adhoc-call) */
 export type { CallParticipantsLocator } from './adapter';
-
-/* @conditional-compile-remove(unsupported-browser) */
-export type { CallAdapterOptionalFeatures, UnsupportedEnvironmentFeatures } from './adapter';
 
 export type {
   CallAdapter,

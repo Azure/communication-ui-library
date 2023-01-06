@@ -42,8 +42,6 @@ import { IContextualMenuItem } from '@fluentui/react';
 import { IContextualMenuItemStyles } from '@fluentui/react';
 import { IContextualMenuProps } from '@fluentui/react';
 import { IContextualMenuStyles } from '@fluentui/react';
-import { IDropdownOption } from '@fluentui/react';
-import { IDropdownStyles } from '@fluentui/react';
 import { ILinkStyles } from '@fluentui/react';
 import { IMessageBarProps } from '@fluentui/react';
 import { IncomingCall } from '@azure/communication-calling';
@@ -57,6 +55,7 @@ import { LatestMediaDiagnostics } from '@azure/communication-calling';
 import { LatestNetworkDiagnostics } from '@azure/communication-calling';
 import type { MediaDiagnosticChangedEventArgs } from '@azure/communication-calling';
 import { MediaStreamType } from '@azure/communication-calling';
+import { MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
 import { MicrosoftTeamsUserKind } from '@azure/communication-common';
 import type { NetworkDiagnosticChangedEventArgs } from '@azure/communication-calling';
 import { PartialTheme } from '@fluentui/react';
@@ -155,7 +154,6 @@ export type AzureCommunicationCallAdapterArgs = {
 // @beta
 export type AzureCommunicationCallAdapterOptions = {
     roleHint?: Role;
-    features?: CallAdapterOptionalFeatures;
 };
 
 // @public
@@ -304,7 +302,6 @@ export type CallAdapterClientState = {
     latestErrors: AdapterErrors;
     alternateCallerId?: string;
     environmentInfo?: EnvironmentInfo;
-    features?: CallAdapterOptionalFeatures;
     roleHint?: Role;
 };
 
@@ -321,11 +318,6 @@ export interface CallAdapterDeviceManagement {
 
 // @public
 export type CallAdapterLocator = TeamsMeetingLinkLocator | GroupCallLocator | /* @conditional-compile-remove(rooms) */ RoomCallLocator | /* @conditional-compile-remove(teams-adhoc-call) */ /* @conditional-compile-remove(PSTN-calls) */ CallParticipantsLocator;
-
-// @beta
-export type CallAdapterOptionalFeatures = {
-    unsupportedEnvironment?: boolean | UnsupportedEnvironmentFeatures;
-};
 
 // @public
 export type CallAdapterState = CallAdapterUiState & CallAdapterClientState;
@@ -479,8 +471,7 @@ export type CallCompositeIcons = {
 export type CallCompositeOptions = {
     errorBar?: boolean;
     callControls?: boolean | CallControlOptions;
-    devicePermissions?: DevicePermissionRestrictions;
-    callReadinessOptedIn?: boolean;
+    deviceChecks?: DeviceCheckOptions;
     onPermissionsTroubleshootingClick?: (permissionsState: {
         camera: PermissionState;
         microphone: PermissionState;
@@ -966,13 +957,13 @@ export type CallWithChatCompositeIcons = {
 export type CallWithChatCompositeOptions = {
     callControls?: boolean | CallWithChatControlOptions;
     fileSharing?: FileSharingOptions;
-    devicePermissions?: DevicePermissionRestrictions;
+    deviceChecks?: DeviceCheckOptions;
     onPermissionsTroubleshootingClick?: (permissionsState: {
         camera: PermissionState;
         microphone: PermissionState;
     }) => void;
     onNetworkingTroubleShootingClick?: () => void;
-    callReadinessOptedIn?: boolean;
+    onEnvironmentInfoTroubleshootingClick?: () => void;
 };
 
 // @public
@@ -1051,18 +1042,18 @@ export interface CallWithChatControlOptions {
 export type CallWithChatEvent = 'callError' | 'chatError' | 'callEnded' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'callParticipantsJoined' | 'callParticipantsLeft' | 'selectedMicrophoneChanged' | 'selectedSpeakerChanged' | 'messageReceived' | 'messageSent' | 'messageRead' | 'chatParticipantsAdded' | 'chatParticipantsRemoved';
 
 // @beta
-export const CameraAndMicrophoneDomainPermissions: (props: CameraAndMicrophoneDomainPermissionsProps) => JSX.Element;
+export const CameraAndMicrophoneSitePermissions: (props: CameraAndMicrophoneSitePermissionsProps) => JSX.Element;
 
 // @beta
-export interface CameraAndMicrophoneDomainPermissionsProps extends CommonDomainPermissionsProps {
+export interface CameraAndMicrophoneSitePermissionsProps extends CommonSitePermissionsProps {
     cameraIconName?: string;
     connectorIconName?: string;
     microphoneIconName?: string;
-    strings?: CameraAndMicrophoneDomainPermissionsStrings;
+    strings?: CameraAndMicrophoneSitePermissionsStrings;
 }
 
 // @beta
-export type CameraAndMicrophoneDomainPermissionsStrings = DomainPermissionsStrings;
+export type CameraAndMicrophoneSitePermissionsStrings = SitePermissionsStrings;
 
 // @public
 export const CameraButton: (props: CameraButtonProps) => JSX.Element;
@@ -1115,16 +1106,16 @@ export interface CameraButtonStyles extends ControlBarButtonStyles {
 }
 
 // @beta
-export const CameraDomainPermissions: (props: CameraDomainPermissionsProps) => JSX.Element;
+export const CameraSitePermissions: (props: CameraSitePermissionsProps) => JSX.Element;
 
 // @beta
-export interface CameraDomainPermissionsProps extends CommonDomainPermissionsProps {
+export interface CameraSitePermissionsProps extends CommonSitePermissionsProps {
     cameraIconName?: string;
-    strings?: CameraDomainPermissionsStrings;
+    strings?: CameraSitePermissionsStrings;
 }
 
 // @beta
-export type CameraDomainPermissionsStrings = DomainPermissionsStrings;
+export type CameraSitePermissionsStrings = SitePermissionsStrings;
 
 // @public
 export type ChatAdapter = ChatAdapterThreadManagement & AdapterState<ChatAdapterState> & Disposable & ChatAdapterSubscribers & FileUploadAdapter;
@@ -1417,20 +1408,20 @@ export interface CommonCallingHandlers {
     onToggleScreenShare: () => Promise<void>;
 }
 
-// @beta
-export interface CommonDomainPermissionsProps {
-    appName: string;
-    browserHint?: 'safari' | 'unset';
-    onContinueAnywayClick?: () => void;
-    onTroubleshootingClick?: () => void;
-    styles?: DomainPermissionsStyles;
-    type: 'request' | 'denied' | 'check';
-}
-
 // @public
 export type CommonProperties<A, B> = {
     [P in keyof A & keyof B]: A[P] extends B[P] ? P : never;
 }[keyof A & keyof B];
+
+// @beta
+export interface CommonSitePermissionsProps {
+    appName: string;
+    browserHint?: 'safari' | 'unset';
+    onContinueAnywayClick?: () => void;
+    onTroubleshootingClick?: () => void;
+    styles?: SitePermissionsStyles;
+    type: 'request' | 'denied' | 'check';
+}
 
 // @public
 export type CommunicationParticipant = {
@@ -1497,15 +1488,15 @@ export type ComponentProps<Component extends (props: any) => JSX.Element> = Chat
 export interface ComponentStrings {
     BrowserPermissionDenied: BrowserPermissionDeniedStrings;
     BrowserPermissionDeniedIOS: BrowserPermissionDeniedIOSStrings;
-    CameraAndMicrophoneDomainPermissionsCheck: DomainPermissionsStrings;
-    CameraAndMicrophoneDomainPermissionsDenied: DomainPermissionsStrings;
-    CameraAndMicrophoneDomainPermissionsDeniedSafari: DomainPermissionsStrings;
-    CameraAndMicrophoneDomainPermissionsRequest: DomainPermissionsStrings;
+    CameraAndMicrophoneSitePermissionsCheck: SitePermissionsStrings;
+    CameraAndMicrophoneSitePermissionsDenied: SitePermissionsStrings;
+    CameraAndMicrophoneSitePermissionsDeniedSafari: SitePermissionsStrings;
+    CameraAndMicrophoneSitePermissionsRequest: SitePermissionsStrings;
     cameraButton: CameraButtonStrings;
-    CameraDomainPermissionsCheck: DomainPermissionsStrings;
-    CameraDomainPermissionsDenied: DomainPermissionsStrings;
-    CameraDomainPermissionsDeniedSafari: DomainPermissionsStrings;
-    CameraDomainPermissionsRequest: DomainPermissionsStrings;
+    CameraSitePermissionsCheck: SitePermissionsStrings;
+    CameraSitePermissionsDenied: SitePermissionsStrings;
+    CameraSitePermissionsDeniedSafari: SitePermissionsStrings;
+    CameraSitePermissionsRequest: SitePermissionsStrings;
     devicesButton: DevicesButtonStrings;
     dialpad: DialpadStrings;
     endCallButton: EndCallButtonStrings;
@@ -1514,10 +1505,10 @@ export interface ComponentStrings {
     messageStatusIndicator: MessageStatusIndicatorStrings;
     messageThread: MessageThreadStrings;
     microphoneButton: MicrophoneButtonStrings;
-    MicrophoneDomainPermissionsCheck: DomainPermissionsStrings;
-    MicrophoneDomainPermissionsDenied: DomainPermissionsStrings;
-    MicrophoneDomainPermissionsDeniedSafari: DomainPermissionsStrings;
-    MicrophoneDomainPermissionsRequest: DomainPermissionsStrings;
+    MicrophoneSitePermissionsCheck: SitePermissionsStrings;
+    MicrophoneSitePermissionsDenied: SitePermissionsStrings;
+    MicrophoneSitePermissionsDeniedSafari: SitePermissionsStrings;
+    MicrophoneSitePermissionsRequest: SitePermissionsStrings;
     participantItem: ParticipantItemStrings;
     participantsButton: ParticipantsButtonStrings;
     screenShareButton: ScreenShareButtonStrings;
@@ -1641,7 +1632,7 @@ export interface ControlBarProps {
 }
 
 // @public
-export const createAzureCommunicationCallAdapter: ({ userId, displayName, credential, locator, alternateCallerId, options }: AzureCommunicationCallAdapterArgs) => Promise<CallAdapter>;
+export const createAzureCommunicationCallAdapter: ({ userId, displayName, credential, locator, alternateCallerId }: AzureCommunicationCallAdapterArgs) => Promise<CallAdapter>;
 
 // @public
 export const createAzureCommunicationCallAdapterFromClient: (callClient: StatefulCallClient, callAgent: CallAgent, locator: CallAdapterLocator, options?: AzureCommunicationCallAdapterOptions) => Promise<CallAdapter>;
@@ -1658,12 +1649,6 @@ export const createAzureCommunicationChatAdapter: ({ endpoint: endpointUrl, user
 // @public
 export const createAzureCommunicationChatAdapterFromClient: (chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient) => Promise<ChatAdapter>;
 
-// @beta (undocumented)
-export const createAzureCommunicationTeamsCallAdapter: ({ userId, credential, locator, alternateCallerId }: AzureCommunicationCallAdapterArgs) => Promise<TeamsCallAdapter>;
-
-// @beta
-export const createAzureCommunicationTeamsCallAdapterFromClient: (callClient: StatefulCallClient, callAgent: TeamsCallAgent, locator: CallAdapterLocator) => Promise<TeamsCallAdapter>;
-
 // @public
 export const createDefaultCallingHandlers: (callClient: StatefulCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined) => CallingHandlers;
 
@@ -1678,6 +1663,12 @@ export const createStatefulCallClient: (args: StatefulCallClientArgs, options?: 
 
 // @public
 export const createStatefulChatClient: (args: StatefulChatClientArgs, options?: StatefulChatClientOptions | undefined) => StatefulChatClient;
+
+// @beta (undocumented)
+export const createTeamsCallAdapter: ({ userId, credential, locator }: TeamsCallAdapterArgs) => Promise<TeamsCallAdapter>;
+
+// @beta
+export const createTeamsCallAdapterFromClient: (callClient: StatefulCallClient, callAgent: TeamsCallAgent, locator: CallAdapterLocator) => Promise<TeamsCallAdapter>;
 
 // @public
 export interface CreateVideoStreamViewResult {
@@ -1819,17 +1810,19 @@ export const DEFAULT_COMPONENT_ICONS: {
     SendBoxSendHovered: JSX.Element;
     VideoTileMicOff: JSX.Element;
     DialpadBackspace: JSX.Element;
-    DomainPermissionsSparkle: JSX.Element;
-    DomainPermissionCamera: JSX.Element;
-    DomainPermissionMic: JSX.Element;
-    DomainPermissionCameraDenied: JSX.Element;
-    DomainPermissionMicDenied: JSX.Element;
+    SitePermissionsSparkle: JSX.Element;
+    SitePermissionCamera: JSX.Element;
+    SitePermissionMic: JSX.Element;
+    SitePermissionCameraDenied: JSX.Element;
+    SitePermissionMicDenied: JSX.Element;
     UnsupportedEnvironmentWarning: JSX.Element;
     BrowserPermissionDeniedError: JSX.Element;
     VideoTilePinned: JSX.Element;
     VideoTileMoreOptions: JSX.Element;
     VideoTileScaleFit: JSX.Element;
     VideoTileScaleFill: JSX.Element;
+    PinParticipant: JSX.Element;
+    UnpinParticipant: JSX.Element;
 };
 
 // @public
@@ -1914,18 +1907,26 @@ export const DEFAULT_COMPOSITE_ICONS: {
     HoldCallButton: JSX.Element;
     ResumeCall: JSX.Element;
     DialpadBackspace: JSX.Element;
-    DomainPermissionsSparkle: JSX.Element;
-    DomainPermissionCamera: JSX.Element;
-    DomainPermissionMic: JSX.Element;
-    DomainPermissionCameraDenied: JSX.Element;
-    DomainPermissionMicDenied: JSX.Element;
+    SitePermissionsSparkle: JSX.Element;
+    SitePermissionCamera: JSX.Element;
+    SitePermissionMic: JSX.Element;
+    SitePermissionCameraDenied: JSX.Element;
+    SitePermissionMicDenied: JSX.Element;
     UnsupportedEnvironmentWarning: JSX.Element;
     BrowserPermissionDeniedError: JSX.Element;
     VideoTilePinned: JSX.Element;
     VideoTileMoreOptions: JSX.Element;
     VideoTileScaleFit: JSX.Element;
     VideoTileScaleFill: JSX.Element;
+    PinParticipant: JSX.Element;
+    UnpinParticipant: JSX.Element;
 };
+
+// @beta
+export interface DeviceCheckOptions {
+    camera: 'required' | 'optional' | 'doNotPrompt';
+    microphone: 'required' | 'optional' | 'doNotPrompt';
+}
 
 // @public
 export type DeviceManagerState = {
@@ -1939,33 +1940,6 @@ export type DeviceManagerState = {
     deviceAccess?: DeviceAccess;
     unparentedViews: LocalVideoStreamState[];
 };
-
-// @internal
-export const _DevicePermissionDropdown: (props: _DevicePermissionDropdownProps) => JSX.Element;
-
-// @internal
-export interface _DevicePermissionDropdownProps {
-    askDevicePermission?(constrain: _PermissionConstraints): Promise<void>;
-    constrain?: _PermissionConstraints;
-    icon?: JSX.Element;
-    onClick?: () => void;
-    options?: IDropdownOption[];
-    strings?: _DevicePermissionDropdownStrings;
-    styles?: Partial<IDropdownStyles>;
-}
-
-// @internal
-export interface _DevicePermissionDropdownStrings {
-    actionButtonContent?: string;
-    label?: string;
-    placeHolderText: string;
-}
-
-// @beta
-export interface DevicePermissionRestrictions {
-    camera: 'required' | 'optional' | 'doNotPrompt';
-    microphone: 'required' | 'optional' | 'doNotPrompt';
-}
 
 // @public
 export const DevicesButton: (props: DevicesButtonProps) => JSX.Element;
@@ -2076,21 +2050,6 @@ export type DisplayNameChangedListener = (event: {
 // @public
 export interface Disposable {
     dispose(): void;
-}
-
-// @beta
-export type DomainPermissionsStrings = {
-    primaryText?: string;
-    secondaryText?: string;
-    linkText?: string;
-    primaryButtonText?: string;
-    ariaLabel?: string;
-};
-
-// @beta
-export interface DomainPermissionsStyles extends BaseCustomStyles {
-    primaryButton?: IButtonStyles;
-    troubleshootingLink?: ILinkStyles;
 }
 
 // @beta
@@ -2246,7 +2205,7 @@ export interface FluentThemeProviderProps {
 export const fromFlatCommunicationIdentifier: (id: string) => CommunicationIdentifier;
 
 // @public
-export type GetCallingSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof VideoGallery> extends true ? VideoGallerySelector : AreEqual<Component, typeof DevicesButton> extends true ? DevicesButtonSelector : AreEqual<Component, typeof MicrophoneButton> extends true ? MicrophoneButtonSelector : AreEqual<Component, typeof CameraButton> extends true ? CameraButtonSelector : AreEqual<Component, typeof ScreenShareButton> extends true ? ScreenShareButtonSelector : AreEqual<Component, typeof ParticipantList> extends true ? ParticipantListSelector : AreEqual<Component, typeof ParticipantsButton> extends true ? ParticipantsButtonSelector : AreEqual<Component, typeof EndCallButton> extends true ? EmptySelector : AreEqual<Component, typeof ErrorBar> extends true ? CallErrorBarSelector : AreEqual<Component, typeof Dialpad> extends true ? EmptySelector : AreEqual<Component, typeof HoldButton> extends true ? HoldButtonSelector : AreEqual<Component, typeof _DevicePermissionDropdown> extends true ? EmptySelector : undefined;
+export type GetCallingSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof VideoGallery> extends true ? VideoGallerySelector : AreEqual<Component, typeof DevicesButton> extends true ? DevicesButtonSelector : AreEqual<Component, typeof MicrophoneButton> extends true ? MicrophoneButtonSelector : AreEqual<Component, typeof CameraButton> extends true ? CameraButtonSelector : AreEqual<Component, typeof ScreenShareButton> extends true ? ScreenShareButtonSelector : AreEqual<Component, typeof ParticipantList> extends true ? ParticipantListSelector : AreEqual<Component, typeof ParticipantsButton> extends true ? ParticipantsButtonSelector : AreEqual<Component, typeof EndCallButton> extends true ? EmptySelector : AreEqual<Component, typeof ErrorBar> extends true ? CallErrorBarSelector : AreEqual<Component, typeof Dialpad> extends true ? EmptySelector : AreEqual<Component, typeof HoldButton> extends true ? HoldButtonSelector : undefined;
 
 // @public
 export const getCallingSelector: <Component extends (props: any) => JSX.Element | undefined>(component: Component) => GetCallingSelector<Component>;
@@ -2623,16 +2582,16 @@ export interface MicrophoneButtonStyles extends ControlBarButtonStyles {
 }
 
 // @beta
-export const MicrophoneDomainPermissions: (props: MicrophoneDomainPermissionsProps) => JSX.Element;
+export const MicrophoneSitePermissions: (props: MicrophoneSitePermissionsProps) => JSX.Element;
 
 // @beta
-export interface MicrophoneDomainPermissionsProps extends CommonDomainPermissionsProps {
+export interface MicrophoneSitePermissionsProps extends CommonSitePermissionsProps {
     microphoneIconName?: string;
-    strings?: MicrophoneDomainPermissionsStrings;
+    strings?: MicrophoneSitePermissionsStrings;
 }
 
 // @beta
-export type MicrophoneDomainPermissionsStrings = DomainPermissionsStrings;
+export type MicrophoneSitePermissionsStrings = SitePermissionsStrings;
 
 // @public
 export type NetworkDiagnosticChangedEvent = NetworkDiagnosticChangedEventArgs & {
@@ -2826,12 +2785,6 @@ export type ParticipantsRemovedListener = (event: {
 // @public
 export type ParticipantState = 'Idle' | 'Connecting' | 'Ringing' | 'Connected' | 'Hold' | 'InLobby' | 'EarlyMedia' | 'Disconnected';
 
-// @internal
-export type _PermissionConstraints = {
-    audio: boolean;
-    video: boolean;
-};
-
 // @public
 export type ReadReceiptsBySenderId = {
     [key: string]: {
@@ -2954,6 +2907,21 @@ export interface SendBoxStylesProps extends BaseCustomStyles {
     textFieldContainer?: IStyle;
 }
 
+// @beta
+export type SitePermissionsStrings = {
+    primaryText?: string;
+    secondaryText?: string;
+    linkText?: string;
+    primaryButtonText?: string;
+    ariaLabel?: string;
+};
+
+// @beta
+export interface SitePermissionsStyles extends BaseCustomStyles {
+    primaryButton?: IButtonStyles;
+    troubleshootingLink?: ILinkStyles;
+}
+
 // @public
 export interface StatefulCallClient extends CallClient {
     createCallAgent(...args: Parameters<CallClient['createCallAgent']>): Promise<DeclarativeCallAgent>;
@@ -2966,7 +2934,7 @@ export interface StatefulCallClient extends CallClient {
 
 // @public
 export type StatefulCallClientArgs = {
-    userId: CommunicationUserIdentifier;
+    userId: CommunicationUserIdentifier | /* @conditional-compile-remove(teams-identity-support) */ MicrosoftTeamsUserIdentifier;
     alternateCallerId?: string;
 };
 
@@ -3032,6 +3000,13 @@ export interface TeamsCallAdapter extends CommonCallAdapter {
 }
 
 // @beta
+export type TeamsCallAdapterArgs = {
+    userId: MicrosoftTeamsUserIdentifier;
+    credential: CommunicationTokenCredential;
+    locator: TeamsMeetingLinkLocator;
+};
+
+// @beta
 export interface TeamsCallingHandlers extends CommonCallingHandlers {
     // (undocumented)
     onStartCall: (participants: CommunicationIdentifier[], options?: StartCallOptions) => undefined | /* @conditional-compile-remove(teams-identity-support) */ TeamsCall;
@@ -3095,7 +3070,7 @@ export const UnsupportedBrowser: (props: UnsupportedBrowserProps) => JSX.Element
 // @beta
 export interface UnsupportedBrowserProps {
     onTroubleshootingClick?: () => void;
-    strings: UnsupportedBrowserStrings;
+    strings?: UnsupportedBrowserStrings;
 }
 
 // @beta
@@ -3110,7 +3085,7 @@ export const UnsupportedBrowserVersion: (props: UnsupportedBrowserVersionProps) 
 
 // @beta
 export interface UnsupportedBrowserVersionProps {
-    onContinueClick?: () => void;
+    onContinueAnywayClick?: () => void;
     onTroubleshootingClick?: () => void;
     strings?: UnsupportedBrowserVersionStrings;
 }
@@ -3124,17 +3099,12 @@ export interface UnsupportedBrowserVersionStrings {
 }
 
 // @beta
-export type UnsupportedEnvironmentFeatures = {
-    unsupportedBrowserVersionAllowed?: boolean;
-};
-
-// @beta
 export const UnsupportedOperatingSystem: (props: UnsupportedOperatingSystemProps) => JSX.Element;
 
 // @beta
 export interface UnsupportedOperatingSystemProps {
     onTroubleshootingClick?: () => void;
-    strings: UnsupportedOperatingSystemStrings;
+    strings?: UnsupportedOperatingSystemStrings;
 }
 
 // @beta
@@ -3157,9 +3127,6 @@ export const useAzureCommunicationCallWithChatAdapter: (args: Partial<AzureCommu
 
 // @public
 export const useAzureCommunicationChatAdapter: (args: Partial<AzureCommunicationChatAdapterArgs>, afterCreate?: ((adapter: ChatAdapter) => Promise<ChatAdapter>) | undefined, beforeDispose?: ((adapter: ChatAdapter) => Promise<void>) | undefined) => ChatAdapter | undefined;
-
-// @beta
-export const useAzureCommunicationTeamsCallAdapter: (args: Partial<AzureCommunicationCallAdapterArgs>, afterCreate?: ((adapter: TeamsCallAdapter) => Promise<TeamsCallAdapter>) | undefined, beforeDispose?: ((adapter: TeamsCallAdapter) => Promise<void>) | undefined) => TeamsCallAdapter | undefined;
 
 // @public
 export const useCall: () => Call | undefined;
@@ -3187,6 +3154,9 @@ export const useSelector: <ParamT extends Selector | undefined>(selector: ParamT
 
 // @beta
 export const useTeamsCall: () => undefined | /* @conditional-compile-remove(teams-identity-support) */ TeamsCall;
+
+// @beta
+export const useTeamsCallAdapter: (args: Partial<TeamsCallAdapterArgs>, afterCreate?: ((adapter: TeamsCallAdapter) => Promise<TeamsCallAdapter>) | undefined, beforeDispose?: ((adapter: TeamsCallAdapter) => Promise<void>) | undefined) => TeamsCallAdapter | undefined;
 
 // @beta
 export const useTeamsCallAgent: () => undefined | /* @conditional-compile-remove(teams-identity-support) */ TeamsCallAgent;
@@ -3224,9 +3194,12 @@ export interface VideoGalleryProps {
     onCreateRemoteStreamView?: (userId: string, options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
     onDisposeLocalStreamView?: () => void;
     onDisposeRemoteStreamView?: (userId: string) => Promise<void>;
+    onPinParticipant?: (userId: string) => void;
     onRenderAvatar?: OnRenderAvatarCallback;
     onRenderLocalVideoTile?: (localParticipant: VideoGalleryLocalParticipant) => JSX.Element;
     onRenderRemoteVideoTile?: (remoteParticipant: VideoGalleryRemoteParticipant) => JSX.Element;
+    onUnpinParticipant?: (userId: string) => void;
+    pinnedParticipants?: string[];
     remoteParticipants?: VideoGalleryRemoteParticipant[];
     remoteVideoViewOptions?: VideoStreamOptions;
     showCameraSwitcherInLocalPreview?: boolean;
@@ -3271,8 +3244,10 @@ export interface VideoGalleryStrings {
     localVideoLabel: string;
     localVideoMovementLabel: string;
     localVideoSelectedDescription: string;
+    pinParticipantForMe: string;
     screenIsBeingSharedMessage: string;
     screenShareLoadingMessage: string;
+    unpinParticipantForMe: string;
 }
 
 // @public

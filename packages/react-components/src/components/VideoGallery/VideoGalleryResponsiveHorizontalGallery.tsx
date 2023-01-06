@@ -14,7 +14,9 @@ import {
 } from './styles/VideoGalleryResponsiveHorizontalGallery.styles';
 
 /**
- * A ResponsiveHorizontalGallery styled for the @link{VideoGallery}
+ * A ResponsiveHorizontalGallery styled for the {@link VideoGallery}
+ *
+ * @private
  */
 export const VideoGalleryResponsiveHorizontalGallery = (props: {
   shouldFloatLocalVideo?: boolean;

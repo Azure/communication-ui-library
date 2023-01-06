@@ -4,6 +4,7 @@
 import {
   CallerInfo,
   CreateViewOptions,
+  VideoStreamRenderer,
   VideoStreamRendererView,
   LocalVideoStream as SdkLocalVideoStream,
   RemoteVideoStream as SdkRemoteVideoStream,
@@ -471,5 +472,37 @@ describe('stream utils', () => {
     const views = context.getState().deviceManager.unparentedViews;
     expect(views.length).toBe(1);
     expect(views[0].view).toBeDefined();
+  });
+
+  test('context state correctly has startVideo error when unparentedView throws an error creating a video stream', async () => {
+    // Ensure that calling sdk's createView will throw an error for this test
+    const mockedVideoStreamRenderer = VideoStreamRenderer as jest.Mock;
+    mockedVideoStreamRenderer.mockImplementationOnce(() => {
+      return {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        createView: (_options?: CreateViewOptions) => {
+          throw new Error('MOCK ERROR THROWN FOR TESTING');
+        }
+      };
+    });
+    // initialize variables for test
+    const { context, internalContext } = createContexts();
+    const localVideoStream = {
+      source: { name: 'a', id: 'a', deviceType: 'Unknown' },
+      mediaStreamType: 'Video'
+    } as LocalVideoStreamState;
+
+    // ensure no errors we are testing for exist already
+    expect(context.getState().latestErrors['Call.startVideo']).toBeUndefined();
+
+    // Act
+    try {
+      await createView(context, internalContext, undefined, undefined, localVideoStream);
+    } catch (e) {
+      expect(e).toBeDefined();
+    }
+
+    // Assert
+    expect(context.getState().latestErrors['Call.startVideo']).toBeDefined();
   });
 });

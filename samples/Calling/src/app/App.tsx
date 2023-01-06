@@ -4,6 +4,10 @@
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(rooms) */
 import { Role } from '@azure/communication-react';
+/* @conditional-compile-remove(teams-identity-support) */
+import { fromFlatCommunicationIdentifier } from '@azure/communication-react';
+/* @conditional-compile-remove(teams-identity-support) */
+import { MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
 import { setLogLevel } from '@azure/logger';
 import { initializeIcons, Spinner } from '@fluentui/react';
 import { CallAdapterLocator } from '@azure/communication-react';
@@ -47,7 +51,9 @@ const App = (): JSX.Element => {
 
   // User credentials to join a call with - these are retrieved from the server
   const [token, setToken] = useState<string>();
-  const [userId, setUserId] = useState<CommunicationUserIdentifier>();
+  const [userId, setUserId] = useState<
+    CommunicationUserIdentifier | /* @conditional-compile-remove(teams-identity-support) */ MicrosoftTeamsUserIdentifier
+  >();
   const [userCredentialFetchError, setUserCredentialFetchError] = useState<boolean>(false);
 
   // Call details to join a call - these are collected from the user on the home screen
@@ -55,6 +61,9 @@ const App = (): JSX.Element => {
   const [displayName, setDisplayName] = useState<string>('');
   /* @conditional-compile-remove(rooms) */
   const [role, setRole] = useState<Role>();
+
+  /* @conditional-compile-remove(teams-identity-support) */
+  const [isTeamsCall, setIsTeamsCall] = useState<boolean>(false);
 
   /* @conditional-compile-remove(PSTN-calls) */
   const [alternateCallerId, setAlternateCallerId] = useState<string | undefined>();
@@ -133,7 +142,7 @@ const App = (): JSX.Element => {
 
             /* @conditional-compile-remove(rooms) */
             if ('roomId' in callLocator) {
-              if (userId) {
+              if (userId && 'communicationUserId' in userId) {
                 setRole(callDetails.role as Role);
                 await addUserToRoom(userId.communicationUserId, callLocator.roomId, callDetails.role as Role);
               } else {
@@ -146,7 +155,13 @@ const App = (): JSX.Element => {
             if (!joiningExistingCall) {
               window.history.pushState({}, document.title, window.location.origin + getJoinParams(callLocator));
             }
-
+            /* @conditional-compile-remove(teams-identity-support) */
+            setIsTeamsCall(!!callDetails.teamsToken);
+            /* @conditional-compile-remove(teams-identity-support) */
+            callDetails.teamsToken && setToken(callDetails.teamsToken);
+            /* @conditional-compile-remove(teams-identity-support) */
+            callDetails.teamsId &&
+              setUserId(fromFlatCommunicationIdentifier(callDetails.teamsId) as MicrosoftTeamsUserIdentifier);
             setPage('call');
           }}
         />
@@ -166,23 +181,30 @@ const App = (): JSX.Element => {
         );
       }
 
-      if (!token || !userId || !displayName || !callLocator) {
+      if (
+        !token ||
+        !userId ||
+        (!displayName && /* @conditional-compile-remove(teams-identity-support) */ !isTeamsCall) ||
+        !callLocator
+      ) {
         document.title = `credentials - ${WEB_APP_TITLE}`;
         return <Spinner label={'Getting user credentials from server'} ariaLive="assertive" labelPosition="top" />;
       }
       return (
-        <CallScreen
-          token={token}
-          userId={userId}
-          displayName={displayName}
-          callLocator={callLocator}
-          /* @conditional-compile-remove(PSTN-calls) */
-          alternateCallerId={alternateCallerId}
-          /* @conditional-compile-remove(rooms) */
-          roleHint={role}
-          /* @conditional-compile-remove(call-readiness) */
-          callReadinessOptedIn={true}
-        />
+        <React.StrictMode>
+          <CallScreen
+            token={token}
+            userId={userId}
+            displayName={displayName}
+            callLocator={callLocator}
+            /* @conditional-compile-remove(PSTN-calls) */
+            alternateCallerId={alternateCallerId}
+            /* @conditional-compile-remove(rooms) */
+            roleHint={role}
+            /* @conditional-compile-remove(teams-identity-support) */
+            isTeamsIdentityCall={isTeamsCall}
+          />
+        </React.StrictMode>
       );
     }
     default:

@@ -31,18 +31,9 @@ export const UnsupportedBrowserPage = (props: UnsupportedBrowserPageProps): JSX.
   /* @conditional-compile-remove(unsupported-browser) */
   const adapter = useAdapter();
   /* @conditional-compile-remove(unsupported-browser) */
-  const unsupportedEnvironmentFeature = adapter.getState().features?.unsupportedEnvironment;
-  /* @conditional-compile-remove(unsupported-browser) */
-  const onContinueClick =
-    unsupportedEnvironmentFeature === true
-      ? undefined
-      : unsupportedEnvironmentFeature === false || unsupportedEnvironmentFeature === undefined
-      ? undefined
-      : unsupportedEnvironmentFeature.unsupportedBrowserVersionAllowed
-      ? () => {
-          adapter.allowUnsupportedBrowserVersion();
-        }
-      : undefined;
+  const onContinueClick = (): void => {
+    adapter.allowUnsupportedBrowserVersion();
+  };
 
   /* @conditional-compile-remove(unsupported-browser) */
   const locale = useLocale();
@@ -71,7 +62,7 @@ export const UnsupportedBrowserPage = (props: UnsupportedBrowserPageProps): JSX.
       <UnsupportedBrowserVersion
         onTroubleshootingClick={onTroubleshootingClick}
         strings={unsupportedBrowserVersionStrings}
-        onContinueClick={onContinueClick}
+        onContinueAnywayClick={onContinueClick}
       />
     );
   } else {

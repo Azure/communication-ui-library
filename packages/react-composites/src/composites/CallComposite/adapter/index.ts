@@ -9,18 +9,18 @@ export {
 
 /* @conditional-compile-remove(teams-identity-support) */
 export {
-  createAzureCommunicationTeamsCallAdapter,
-  createAzureCommunicationTeamsCallAdapterFromClient,
-  useAzureCommunicationTeamsCallAdapter
+  createTeamsCallAdapter,
+  createTeamsCallAdapterFromClient,
+  useTeamsCallAdapter
 } from './AzureCommunicationCallAdapter';
+/* @conditional-compile-remove(teams-identity-support) */
+export type { TeamsCallAdapterArgs } from './AzureCommunicationCallAdapter';
 export type { AzureCommunicationCallAdapterArgs, CallAdapterLocator } from './AzureCommunicationCallAdapter';
 /* @conditional-compile-remove(rooms) */
 export type { AzureCommunicationCallAdapterOptions } from './AzureCommunicationCallAdapter';
 
 /* @conditional-compile-remove(teams-adhoc-call) */
 export type { CallParticipantsLocator } from './AzureCommunicationCallAdapter';
-
-export type { CallAdapterOptionalFeatures } from './CallAdapter';
 
 export type {
   CallAdapter,
@@ -49,6 +49,3 @@ export type {
 
 /* @conditional-compile-remove(teams-identity-support) */
 export type { TeamsCallAdapter } from './CallAdapter';
-
-/* @conditional-compile-remove(unsupported-browser) */
-export type { UnsupportedEnvironmentFeatures } from './CallAdapter';

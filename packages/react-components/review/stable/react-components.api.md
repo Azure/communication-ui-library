@@ -1188,6 +1188,10 @@ export const _RemoteVideoTile: React_2.MemoExoticComponent<(props: {
     strings?: VideoGalleryStrings | undefined;
     participantState?: ParticipantState | undefined;
     showRemoteVideoTileContextualMenu?: boolean | undefined;
+    drawerMenuHostId?: string | undefined;
+    onPinParticipant?: ((userId: string) => void) | undefined;
+    onUnpinParticipant?: ((userId: string) => void) | undefined;
+    isPinned?: boolean | undefined;
 }) => JSX.Element>;
 
 // @public
@@ -1333,7 +1337,7 @@ export const UnsupportedBrowser: (props: UnsupportedBrowserProps) => JSX.Element
 // @beta
 export interface UnsupportedBrowserProps {
     onTroubleshootingClick?: () => void;
-    strings: UnsupportedBrowserStrings;
+    strings?: UnsupportedBrowserStrings;
 }
 
 // @beta
@@ -1348,7 +1352,7 @@ export const UnsupportedBrowserVersion: (props: UnsupportedBrowserVersionProps) 
 
 // @beta
 export interface UnsupportedBrowserVersionProps {
-    onContinueClick?: () => void;
+    onContinueAnywayClick?: () => void;
     onTroubleshootingClick?: () => void;
     strings?: UnsupportedBrowserVersionStrings;
 }
@@ -1367,7 +1371,7 @@ export const UnsupportedOperatingSystem: (props: UnsupportedOperatingSystemProps
 // @beta
 export interface UnsupportedOperatingSystemProps {
     onTroubleshootingClick?: () => void;
-    strings: UnsupportedOperatingSystemStrings;
+    strings?: UnsupportedOperatingSystemStrings;
 }
 
 // @beta

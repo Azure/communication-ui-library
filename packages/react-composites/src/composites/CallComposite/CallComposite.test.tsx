@@ -77,7 +77,7 @@ describe('CallComposite device permission test for different roles', () => {
   });
 });
 
-describe('CallComposite device permission test for call readiness opted in/opted out', () => {
+describe('CallComposite device permission test for call readiness', () => {
   let audioDevicePermissionRequests = 0;
   let videoDevicePermissionRequests = 0;
 
@@ -106,13 +106,6 @@ describe('CallComposite device permission test for call readiness opted in/opted
 
   test('Audio and video device permission should be requested when no devicePermission prompt is set', async () => {
     mount(<CallComposite adapter={adapter} />);
-    expect(audioDevicePermissionRequests).toBe(1);
-    expect(videoDevicePermissionRequests).toBe(1);
-  });
-
-  /* @conditional-compile-remove(call-readiness) */
-  test('Audio and video device permission should still be requested when callreadiness option opted in', async () => {
-    mount(<CallComposite adapter={adapter} options={{ callReadinessOptedIn: true }} />);
     expect(audioDevicePermissionRequests).toBe(1);
     expect(videoDevicePermissionRequests).toBe(1);
   });

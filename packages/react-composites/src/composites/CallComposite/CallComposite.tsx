@@ -65,12 +65,12 @@ export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcon
 
 /* @conditional-compile-remove(call-readiness) */
 /**
- * Device Permission restrictions.
- * Be able to start a call depending on camera and microphone permission options.
+ * Device Checks.
+ * Choose whether or not to block starting a call depending on camera and microphone permission options.
  *
  * @beta
  */
-export interface DevicePermissionRestrictions {
+export interface DeviceCheckOptions {
   /**
    * Camera Permission prompts for your call.
    * 'required' - requires the permission to be allowed before permitting the user join the call.
@@ -107,16 +107,11 @@ export type CallCompositeOptions = {
   callControls?: boolean | CallControlOptions;
   /* @conditional-compile-remove(call-readiness) */
   /**
-   * Device permission restrictions for your call.
-   * Require device permissions to be set or have them as optional or not required to start a call
+   * Device permissions check options for your call.
+   * Here you can choose what device permissions you prompt the user for,
+   * as well as what device permissions must be accepted before starting a call.
    */
-  devicePermissions?: DevicePermissionRestrictions;
-  /* @conditional-compile-remove(call-readiness) */
-  /**
-   * Opt in call readiness feature for your call
-   * Setting this to `true` will add call readiness features to the call experience
-   */
-  callReadinessOptedIn?: boolean;
+  deviceChecks?: DeviceCheckOptions;
   /* @conditional-compile-remove(call-readiness) */
   /**
    * Callback you may provide to supply users with further steps to troubleshoot why they have been
@@ -168,7 +163,7 @@ export type CallCompositeOptions = {
 
 type MainScreenProps = {
   mobileView: boolean;
-  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
+  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) @conditional-compile-remove(call-readiness) */
   modalLayerHostId: string;
   onRenderAvatar?: OnRenderAvatarCallback;
   callInvitationUrl?: string;
@@ -222,13 +217,13 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
             adapter.joinCall();
           }}
           /* @conditional-compile-remove(call-readiness) */
-          devicePermissions={props.options?.devicePermissions}
+          modalLayerHostId={props.modalLayerHostId}
+          /* @conditional-compile-remove(call-readiness) */
+          deviceChecks={props.options?.deviceChecks}
           /* @conditional-compile-remove(call-readiness) */
           onPermissionsTroubleshootingClick={props.options?.onPermissionsTroubleshootingClick}
           /* @conditional-compile-remove(call-readiness) */
           onNetworkingTroubleShootingClick={props.options?.onNetworkingTroubleShootingClick}
-          /* @conditional-compile-remove(call-readiness) */
-          callReadinessOptedIn={props.options?.callReadinessOptedIn}
         />
       );
       break;
@@ -396,7 +391,7 @@ export const CallComposite = (props: CallCompositeProps): JSX.Element => {
             onFetchAvatarPersonaData={onFetchAvatarPersonaData}
             onFetchParticipantMenuItems={onFetchParticipantMenuItems}
             mobileView={mobileView}
-            /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
+            /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) @conditional-compile-remove(call-readiness) */
             modalLayerHostId={modalLayerHostId}
             options={options}
             /* @conditional-compile-remove(rooms) */
@@ -411,8 +406,8 @@ export const CallComposite = (props: CallCompositeProps): JSX.Element => {
             // Warning: this is fragile and works because the call arrangement page is only rendered after the call has connected and thus this
             // LayerHost will be guaranteed to have rendered (and subsequently mounted in the DOM). This ensures the DOM element will be available
             // before the call to `document.getElementById(modalLayerHostId)` is made.
-            /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
-            mobileView && <LayerHost id={modalLayerHostId} className={mergeStyles(modalLayerHostStyle)} />
+            /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) @conditional-compile-remove(call-readiness) */
+            <LayerHost id={modalLayerHostId} className={mergeStyles(modalLayerHostStyle)} />
           }
         </CallAdapterProvider>
       </BaseProvider>

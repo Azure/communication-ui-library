@@ -3,6 +3,7 @@
 
 import { _pxToRem } from '@internal/acs-ui-common';
 import React from 'react';
+import { ComponentLocale, useLocale } from '../localization';
 import { UnsupportedEnvironment } from './UnsupportedEnvironment';
 
 /**
@@ -32,7 +33,7 @@ export interface UnsupportedBrowserVersionProps {
   /** String overrides for the component */
   strings?: UnsupportedBrowserVersionStrings;
   /** Handler to allow user to continue into the call */
-  onContinueClick?: () => void;
+  onContinueAnywayClick?: () => void;
 }
 
 /**
@@ -42,12 +43,24 @@ export interface UnsupportedBrowserVersionProps {
  * @beta
  */
 export const UnsupportedBrowserVersion = (props: UnsupportedBrowserVersionProps): JSX.Element => {
-  const { onTroubleshootingClick, strings, onContinueClick } = props;
+  const { onTroubleshootingClick, strings, onContinueAnywayClick } = props;
+  const locale = useLocale();
   return (
     <UnsupportedEnvironment
       onTroubleshootingClick={onTroubleshootingClick}
-      strings={strings}
-      onContinueClick={onContinueClick}
+      strings={{ ...unsupportedBrowserVersionStringsTrampoline(locale), ...strings }}
+      onContinueAnywayClick={onContinueAnywayClick}
     />
   );
+};
+
+const unsupportedBrowserVersionStringsTrampoline = (locale: ComponentLocale): UnsupportedBrowserVersionStrings => {
+  /* @conditional-compile-remove(unsupported-browser) */
+  return locale.strings.UnsupportedBrowserVersion;
+  return {
+    primaryText: '',
+    secondaryText: '',
+    moreHelpLinkText: '',
+    continueAnywayButtonText: ''
+  };
 };
