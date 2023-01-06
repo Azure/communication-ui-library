@@ -2,10 +2,15 @@
 // Licensed under the MIT license.
 
 export { memoizeFnAll } from './memoizeFnAll';
-export { fromFlatCommunicationIdentifier, toFlatCommunicationIdentifier } from './identifier';
+export {
+  fromFlatCommunicationIdentifier,
+  toFlatCommunicationIdentifier,
+  _toCommunicationIdentifier
+} from './identifier';
 export { _getApplicationId } from './telemetry';
 export { _formatString } from './localizationUtils';
 export { _safeJSONStringify } from './safeStringify';
+export { _convertRemToPx, _preventDismissOnEvent } from './common';
 
 export type { Common, CommonProperties } from './commonProperties';
 export type { CallbackType, FunctionWithKey } from './memoizeFnAll';

@@ -17,9 +17,26 @@ import {
   TypingIndicatorStrings,
   VideoGalleryStrings
 } from '../components';
-/* @conditional-compile-remove(dialpad) */
+/* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+import { HoldButtonStrings } from '../components';
+/* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
 import { DialpadStrings } from '../components';
+/* @conditional-compile-remove(call-readiness) */
+import { SitePermissionsStrings } from '../components/DevicePermissions/SitePermissionsScaffolding';
+/* @conditional-compile-remove(call-readiness) */
+import { BrowserPermissionDeniedStrings } from '../components/DevicePermissions/BrowserPermissionDenied';
+/* @conditional-compile-remove(call-readiness) */
+import { BrowserPermissionDeniedIOSStrings } from '../components/DevicePermissions/BrowserPermissionDeniedIOS';
+/* @conditional-compile-remove(call-readiness) */ /* @conditional-compile-remove(unsupported-browser) */
+import { UnsupportedBrowserStrings } from '../components/UnsupportedBrowser';
+/* @conditional-compile-remove(one-to-n-calling) */
+// @conditional-compile-remove(PSTN-calls)
+import { VideoTileStrings } from '../components/VideoTile';
 import { COMPONENT_LOCALE_EN_US } from './locales';
+/* @conditional-compile-remove(unsupported-browser) */
+import { UnsupportedBrowserVersionStrings } from '../components/UnsupportedBrowserVersion';
+/* @conditional-compile-remove(unsupported-browser) */
+import { UnsupportedOperatingSystemStrings } from '../components/UnsupportedOperatingSystem';
 
 /**
  * Locale information for all components exported from this library.
@@ -69,9 +86,67 @@ export interface ComponentStrings {
   errorBar: ErrorBarStrings;
   /** Strings for VideoGallery */
   videoGallery: VideoGalleryStrings;
-  /* @conditional-compile-remove(dialpad) */
+  /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
   /** Strings for Dialpad */
   dialpad: DialpadStrings;
+  /* @conditional-compile-remove(one-to-n-calling) */
+  // @conditional-compile-remove(PSTN-calls)
+  /** Strings for VideoTile */
+  videoTile: VideoTileStrings;
+  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
+  /** Strings for HoldButton */
+  holdButton: HoldButtonStrings;
+  /* @conditional-compile-remove(call-readiness) */
+  /** Strings for a site's permission request prompt */
+  CameraAndMicrophoneSitePermissionsRequest: SitePermissionsStrings;
+  /* @conditional-compile-remove(call-readiness) */
+  /** Strings for a site's permission request prompt */
+  CameraSitePermissionsRequest: SitePermissionsStrings;
+  /* @conditional-compile-remove(call-readiness) */
+  /** Strings for a site's permission request prompt */
+  MicrophoneSitePermissionsRequest: SitePermissionsStrings;
+  /* @conditional-compile-remove(call-readiness) */
+  /** Strings for a site's permission generic checking prompt */
+  CameraAndMicrophoneSitePermissionsCheck: SitePermissionsStrings;
+  /* @conditional-compile-remove(call-readiness) */
+  /** Strings for a site's permission generic checking prompt */
+  CameraSitePermissionsCheck: SitePermissionsStrings;
+  /* @conditional-compile-remove(call-readiness) */
+  /** Strings for a site's permission generic checking prompt */
+  MicrophoneSitePermissionsCheck: SitePermissionsStrings;
+  /* @conditional-compile-remove(call-readiness) */
+  /** Strings for a site's permission denied prompt */
+  CameraAndMicrophoneSitePermissionsDenied: SitePermissionsStrings;
+  /* @conditional-compile-remove(call-readiness) */
+  /** Strings for a site's permission denied prompt for safari browsers*/
+  CameraAndMicrophoneSitePermissionsDeniedSafari: SitePermissionsStrings;
+  /* @conditional-compile-remove(call-readiness) */
+  /** Strings for a site's permission denied prompt */
+  CameraSitePermissionsDenied: SitePermissionsStrings;
+  /* @conditional-compile-remove(call-readiness) */
+  /** Strings for a site's permission denied prompt */
+  MicrophoneSitePermissionsDenied: SitePermissionsStrings;
+  /* @conditional-compile-remove(call-readiness) */
+  /** Strings for a site's permission denied prompt for safari browsers*/
+  CameraSitePermissionsDeniedSafari: SitePermissionsStrings;
+  /* @conditional-compile-remove(call-readiness) */
+  /** Strings for a site's permission denied prompt for safari browsers*/
+  MicrophoneSitePermissionsDeniedSafari: SitePermissionsStrings;
+  /* @conditional-compile-remove(unsupported-browser) */
+  /** Strings for unsupported browser UI */
+  UnsupportedBrowser: UnsupportedBrowserStrings;
+  /* @conditional-compile-remove(unsupported-browser) */
+  /** Strings for unsupported browser version UI */
+  UnsupportedBrowserVersion: UnsupportedBrowserVersionStrings;
+  /* @conditional-compile-remove(unsupported-browser) */
+  /** Strings for unsupported browser version UI */
+  UnsupportedOperatingSystem: UnsupportedOperatingSystemStrings;
+  /* @conditional-compile-remove(call-readiness) */
+  /** Strings for BrowserPemissionDenied */
+  BrowserPermissionDenied: BrowserPermissionDeniedStrings;
+  /* @conditional-compile-remove(call-readiness) */
+  /** Strings for BrowserPemissionDeniedIOS */
+  BrowserPermissionDeniedIOS: BrowserPermissionDeniedIOSStrings;
 }
 
 /**

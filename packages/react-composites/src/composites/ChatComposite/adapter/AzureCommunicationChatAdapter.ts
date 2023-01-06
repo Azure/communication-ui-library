@@ -39,6 +39,7 @@ import { useEffect, useRef, useState } from 'react';
 import { FileMetadata } from '@internal/react-components';
 /* @conditional-compile-remove(file-sharing) */
 import { FileUploadManager } from '../file-sharing';
+import { isValidIdentifier } from '../../CallComposite/utils/Utils';
 
 /**
  * Context of Chat, which is a centralized context for all state updates
@@ -228,7 +229,9 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   }
 
   async sendTypingIndicator(): Promise<void> {
-    await this.handlers.onTyping();
+    await this.asyncTeeErrorToEventEmitter(async () => {
+      await this.handlers.onTyping();
+    });
   }
 
   async removeParticipant(userId: string): Promise<void> {
@@ -382,7 +385,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     try {
       return await f();
     } catch (error) {
-      if (isChatError(error)) {
+      if (isChatError(error as Error)) {
         this.emitter.emit('error', error as AdapterError);
       }
       throw error;
@@ -440,6 +443,10 @@ export const createAzureCommunicationChatAdapter = async ({
   credential,
   threadId
 }: AzureCommunicationChatAdapterArgs): Promise<ChatAdapter> => {
+  if (!isValidIdentifier(userId)) {
+    throw new Error('Provided userId is invalid. Please provide valid identifier object.');
+  }
+
   const chatClient = createStatefulChatClient({
     userId,
     displayName,

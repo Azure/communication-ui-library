@@ -19,7 +19,7 @@ const getDocs: () => JSX.Element = () => {
   /* eslint-disable react/no-unescaped-entities */
   return (
     <>
-      <SingleLineBetaBanner />
+      <SingleLineBetaBanner version={'1.3.2-beta.1'} topOfPage={true} />
       <Title>Dialpad</Title>
       <Description>
         Component to render a Dialpad. This component allows numbers and +, *, # input by clicking on dialpad or using
@@ -31,10 +31,8 @@ const getDocs: () => JSX.Element = () => {
       </Canvas>
       <Heading>Example Dialpad with custom content</Heading>
       <Description>
-        On Dialpad button click, the corresponding dtmf tone, the index and value of the button clicked will be shown on
-        the screen. On Keyboard click, the corresponding keyboard input will be shown on the screen as well. This
-        example showcases how to customize the format for dialpad input, and how to add custom functions to textfield to
-        listen to keyboard changes and how to add extra functionality to dialpad buttons.
+        This example showcases how to customize the format for dialpad input using onChange, how to grab textfield
+        values using onChange and how to add extra functionality to dialpad buttons.
       </Description>
       <Canvas mdxSource={CustomDialpadText}>
         <CustomDialpadExample />

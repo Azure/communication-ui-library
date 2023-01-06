@@ -1,13 +1,24 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import { IContextualMenuProps, Layer, Stack } from '@fluentui/react';
 import React, { useMemo } from 'react';
-import { CreateVideoStreamViewResult, OnRenderAvatarCallback, VideoStreamOptions } from '../types';
-import { StreamMedia } from './StreamMedia';
 import {
-  useRemoteVideoStreamLifecycleMaintainer,
-  RemoteVideoStreamLifecycleMaintainerProps
+  CreateVideoStreamViewResult,
+  OnRenderAvatarCallback,
+  ParticipantState,
+  VideoGalleryRemoteParticipant,
+  VideoStreamOptions
+} from '../types';
+import { _DrawerMenu, _DrawerMenuItemProps } from './Drawer';
+import { StreamMedia } from './StreamMedia';
+import { VideoGalleryStrings } from './VideoGallery';
+import { drawerMenuWrapperStyles, remoteVideoTileWrapperStyle } from './VideoGallery/styles/RemoteVideoTile.styles';
+import {
+  RemoteVideoStreamLifecycleMaintainerProps,
+  useRemoteVideoStreamLifecycleMaintainer
 } from './VideoGallery/useVideoStreamLifecycleMaintainer';
+import { useVideoTileContextualMenuProps } from './VideoGallery/useVideoTileContextualMenuProps';
 import { VideoTile } from './VideoTile';
 
 /**
@@ -20,6 +31,7 @@ import { VideoTile } from './VideoTile';
 export const _RemoteVideoTile = React.memo(
   (props: {
     userId: string;
+    remoteParticipant: VideoGalleryRemoteParticipant;
     onCreateRemoteStreamView?: (
       userId: string,
       options?: VideoStreamOptions
@@ -27,31 +39,38 @@ export const _RemoteVideoTile = React.memo(
     onDisposeRemoteStreamView?: (userId: string) => Promise<void>;
     isAvailable?: boolean;
     isReceiving?: boolean;
-    isMuted?: boolean;
-    isSpeaking?: boolean;
     isScreenSharingOn?: boolean; // TODO: Remove this once onDisposeRemoteStreamView no longer disposes of screen share stream
     renderElement?: HTMLElement;
-    displayName?: string;
     remoteVideoViewOptions?: VideoStreamOptions;
     onRenderAvatar?: OnRenderAvatarCallback;
     showMuteIndicator?: boolean;
     showLabel?: boolean;
     personaMinSize?: number;
+    strings?: VideoGalleryStrings;
+    participantState?: ParticipantState;
+    showRemoteVideoTileContextualMenu?: boolean;
+    drawerMenuHostId?: string;
+    onPinParticipant?: (userId: string) => void;
+    onUnpinParticipant?: (userId: string) => void;
+    isPinned?: boolean;
   }) => {
     const {
       isAvailable,
       isReceiving = true, // default to true to prevent any breaking change
-      isMuted,
-      isSpeaking,
       isScreenSharingOn,
       onCreateRemoteStreamView,
       onDisposeRemoteStreamView,
       remoteVideoViewOptions,
       renderElement,
       userId,
-      displayName,
       onRenderAvatar,
-      showMuteIndicator
+      showMuteIndicator,
+      remoteParticipant,
+      participantState,
+      showRemoteVideoTileContextualMenu = true,
+      isPinned,
+      onPinParticipant,
+      onUnpinParticipant
     } = props;
 
     const remoteVideoStreamProps: RemoteVideoStreamLifecycleMaintainerProps = useMemo(
@@ -80,7 +99,28 @@ export const _RemoteVideoTile = React.memo(
     );
 
     // Handle creating, destroying and updating the video stream as necessary
-    useRemoteVideoStreamLifecycleMaintainer(remoteVideoStreamProps);
+    const createVideoStreamResult = useRemoteVideoStreamLifecycleMaintainer(remoteVideoStreamProps);
+
+    const contextualMenuProps = useVideoTileContextualMenuProps({
+      remoteParticipant,
+      view: createVideoStreamResult?.view,
+      /* @conditional-compile-remove(pinned-participants) */
+      strings: { ...props.strings },
+      isPinned,
+      onPinParticipant,
+      onUnpinParticipant
+    });
+
+    const videoTileContextualMenuProps = useMemo(() => {
+      if (!showRemoteVideoTileContextualMenu) {
+        return {};
+      }
+      return videoTileContextualMenuPropsTrampoline(contextualMenuProps);
+    }, [contextualMenuProps, showRemoteVideoTileContextualMenu]);
+
+    const showLoadingIndicator = isAvailable && isReceiving === false && participantState !== 'Disconnected';
+
+    const [drawerMenuItemProps, setDrawerMenuItemProps] = React.useState<_DrawerMenuItemProps[]>([]);
 
     const renderVideoStreamElement = useMemo(() => {
       // Checking if renderElement is well defined or not as calling SDK has a number of video streams limitation which
@@ -90,22 +130,81 @@ export const _RemoteVideoTile = React.memo(
         return undefined;
       }
 
-      return <StreamMedia videoStreamElement={renderElement} loadingState={isReceiving ? 'none' : 'loading'} />;
-    }, [renderElement, isReceiving]);
+      return (
+        <StreamMedia videoStreamElement={renderElement} loadingState={showLoadingIndicator ? 'loading' : 'none'} />
+      );
+    }, [renderElement, showLoadingIndicator]);
 
     return (
-      <VideoTile
-        key={userId}
-        userId={userId}
-        renderElement={renderVideoStreamElement}
-        displayName={displayName}
-        onRenderPlaceholder={onRenderAvatar}
-        isMuted={isMuted}
-        isSpeaking={isSpeaking}
-        showMuteIndicator={showMuteIndicator}
-        showLabel={props.showLabel}
-        personaMinSize={props.personaMinSize}
-      />
+      <Stack style={remoteVideoTileWrapperStyle}>
+        <VideoTile
+          key={userId}
+          userId={userId}
+          renderElement={renderVideoStreamElement}
+          displayName={remoteParticipant.displayName}
+          onRenderPlaceholder={onRenderAvatar}
+          isMuted={remoteParticipant.isMuted}
+          isSpeaking={remoteParticipant.isSpeaking}
+          showMuteIndicator={showMuteIndicator}
+          personaMinSize={props.personaMinSize}
+          showLabel={props.showLabel}
+          /* @conditional-compile-remove(one-to-n-calling) */
+          /* @conditional-compile-remove(PSTN-calls) */
+          participantState={participantState}
+          {...videoTileContextualMenuProps}
+          /* @conditional-compile-remove(pinned-participants) */
+          isPinned={props.isPinned}
+          /* @conditional-compile-remove(pinned-participants) */
+          onLongTouch={() =>
+            setDrawerMenuItemProps(
+              convertContextualMenuItemsToDrawerMenuItemProps(contextualMenuProps, () => setDrawerMenuItemProps([]))
+            )
+          }
+        />
+        {drawerMenuItemProps.length > 0 && (
+          <Layer hostId={props.drawerMenuHostId}>
+            <Stack styles={drawerMenuWrapperStyles}>
+              <_DrawerMenu onLightDismiss={() => setDrawerMenuItemProps([])} items={drawerMenuItemProps} />
+            </Stack>
+          </Layer>
+        )}
+      </Stack>
     );
   }
 );
+
+const videoTileContextualMenuPropsTrampoline = (
+  contextualMenuProps?: IContextualMenuProps
+): { contextualMenu?: IContextualMenuProps } => {
+  if (!contextualMenuProps) {
+    return {};
+  }
+  /* @conditional-compile-remove(pinned-participants) */
+  return {
+    contextualMenu: contextualMenuProps
+  };
+
+  return {};
+};
+
+/* @conditional-compile-remove(pinned-participants) */
+const convertContextualMenuItemsToDrawerMenuItemProps = (
+  contextualMenuProps?: IContextualMenuProps,
+  onLightDismiss?: () => void
+): _DrawerMenuItemProps[] => {
+  if (!contextualMenuProps) {
+    return [];
+  }
+  return contextualMenuProps.items.map((item) => {
+    return {
+      itemKey: item.key,
+      text: item.text,
+      iconProps: item.iconProps,
+      disabled: item.disabled,
+      onItemClick: () => {
+        item.onClick?.();
+        onLightDismiss?.();
+      }
+    };
+  });
+};

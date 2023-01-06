@@ -16,8 +16,6 @@ import { useLocale } from '../localization';
 import { useIdentifiers } from '../identifiers';
 import { InputBoxComponent } from './InputBoxComponent';
 import { VoiceOverButton } from './VoiceOverButton';
-
-/* @conditional-compile-remove(file-sharing) */
 import { SendBoxErrors } from './SendBoxErrors';
 /* @conditional-compile-remove(file-sharing) */
 import { _FileUploadCards } from './FileUploadCards';
@@ -225,13 +223,13 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
   const localeStrings = useLocale().strings.sendBox;
   const strings = { ...localeStrings, ...props.strings };
   const ids = useIdentifiers();
+  const activeFileUploads = activeFileUploadsTrampoline(props);
 
   const [textValue, setTextValue] = useState('');
   const [textValueOverflow, setTextValueOverflow] = useState(false);
 
   const sendTextFieldRef = React.useRef<ITextField>(null);
 
-  /* @conditional-compile-remove(file-sharing) */
   const [fileUploadsPendingError, setFileUploadsPendingError] = useState<SendBoxErrorBarError | undefined>(undefined);
 
   const sendMessageOnClick = (): void => {
@@ -241,10 +239,10 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     }
 
     // Don't send message until all files have been uploaded successfully
-    /* @conditional-compile-remove(file-sharing) */
     setFileUploadsPendingError(undefined);
-    /* @conditional-compile-remove(file-sharing) */
+
     if (hasIncompleteFileUploads(props)) {
+      /* @conditional-compile-remove(file-sharing) */
       setFileUploadsPendingError({ message: strings.fileUploadsPendingError, timestamp: Date.now() });
       return;
     }
@@ -309,25 +307,23 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     [mergedSendIconStyle, onRenderIcon, textValue]
   );
 
-  /* @conditional-compile-remove(file-sharing) */
   // Ensure that errors are cleared when there are no files in sendbox
   React.useEffect(() => {
-    if (!props.activeFileUploads?.filter((upload) => !upload.error).length) {
+    if (!activeFileUploads?.filter((upload) => !upload.error).length) {
       setFileUploadsPendingError(undefined);
     }
-  }, [props.activeFileUploads]);
+  }, [activeFileUploads]);
 
-  /* @conditional-compile-remove(file-sharing) */
   const sendBoxErrorsProps = useMemo(() => {
     return {
       fileUploadsPendingError: fileUploadsPendingError,
-      fileUploadError: props.activeFileUploads?.filter((fileUpload) => fileUpload.error).pop()?.error
+      fileUploadError: activeFileUploads?.filter((fileUpload) => fileUpload.error).pop()?.error
     };
-  }, [props.activeFileUploads, fileUploadsPendingError]);
+  }, [activeFileUploads, fileUploadsPendingError]);
 
   /* @conditional-compile-remove(file-sharing) */
   const onRenderFileUploads = useCallback(() => {
-    if (!props.activeFileUploads?.filter((upload) => !upload.error).length) {
+    if (!activeFileUploads?.filter((upload) => !upload.error).length) {
       return null;
     }
     return props.onRenderFileUploads ? (
@@ -335,7 +331,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     ) : (
       <Stack className={fileUploadCardsStyles}>
         <_FileUploadCards
-          activeFileUploads={props.activeFileUploads}
+          activeFileUploads={activeFileUploads}
           onCancelFileUpload={props.onCancelFileUpload}
           strings={{
             removeFile: props.strings?.removeFile ?? localeStrings.removeFile,
@@ -345,14 +341,11 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
         />
       </Stack>
     );
-  }, [props, localeStrings]);
+  }, [activeFileUploads, props, localeStrings]);
 
   return (
     <Stack className={mergeStyles(sendBoxWrapperStyles)}>
-      {
-        /* @conditional-compile-remove(file-sharing) */
-        <SendBoxErrors {...sendBoxErrorsProps} />
-      }
+      <SendBoxErrors {...sendBoxErrorsProps} />
       <Stack
         className={mergeStyles(
           borderAndBoxShadowStyle({
@@ -407,20 +400,20 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
   );
 };
 
-/* @conditional-compile-remove(file-sharing) */
 /**
  * @private
  */
 const hasIncompleteFileUploads = (props: SendBoxProps): boolean => {
+  const activeFileUploads = activeFileUploadsTrampoline(props);
   return !!(
-    props.activeFileUploads?.length &&
-    !props.activeFileUploads.filter((fileUpload) => !fileUpload.error).every((fileUpload) => fileUpload.uploadComplete)
+    activeFileUploads?.length &&
+    !activeFileUploads.filter((fileUpload) => !fileUpload.error).every((fileUpload) => fileUpload.uploadComplete)
   );
 };
 
 const hasFile = (props: SendBoxProps): boolean => {
-  /* @conditional-compile-remove(file-sharing) */
-  return !!props.activeFileUploads?.find((file) => !file.error);
+  const activeFileUploads = activeFileUploadsTrampoline(props);
+  return !!activeFileUploads?.find((file) => !file.error);
   return false;
 };
 
@@ -430,4 +423,10 @@ const sanitizeText = (message: string): string => {
   } else {
     return message;
   }
+};
+
+const activeFileUploadsTrampoline = (props: SendBoxProps): ActiveFileUpload[] | undefined => {
+  /* @conditional-compile-remove(file-sharing) */
+  return props.activeFileUploads;
+  return [];
 };

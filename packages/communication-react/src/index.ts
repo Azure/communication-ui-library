@@ -35,7 +35,8 @@ export type {
   CallProviderProps,
   GetCallingSelector,
   CallingHandlers,
-  CallingBaseSelectorProps
+  CallingBaseSelectorProps,
+  CommonCallingHandlers
 } from '../../calling-component-bindings/src';
 export type {
   ChatClientProviderProps,
@@ -56,6 +57,16 @@ export {
   getCallingSelector,
   createDefaultCallingHandlers
 } from '../../calling-component-bindings/src';
+
+/* @conditional-compile-remove(teams-identity-support) */
+export {
+  useTeamsCallAgent,
+  useTeamsCall,
+  createDefaultTeamsCallingHandlers
+} from '../../calling-component-bindings/src';
+
+/* @conditional-compile-remove(teams-identity-support) */
+export type { TeamsCallingHandlers } from '../../calling-component-bindings/src';
 
 export type {
   ScreenShareButtonSelector,
@@ -114,8 +125,27 @@ export {
 /* @conditional-compile-remove(PSTN-calls) */
 export { HoldButton } from '../../react-components/src';
 
-/* @conditional-compile-remove(dialpad) */
+/* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
 export { Dialpad } from '../../react-components/src';
+
+/* @conditional-compile-remove(call-readiness) */
+export {
+  CameraAndMicrophoneSitePermissions,
+  MicrophoneSitePermissions,
+  CameraSitePermissions
+} from '../../react-components/src';
+/* @conditional-compile-remove(call-readiness) */
+export type {
+  CameraAndMicrophoneSitePermissionsStrings,
+  CameraAndMicrophoneSitePermissionsProps,
+  CameraSitePermissionsStrings,
+  CameraSitePermissionsProps,
+  CommonSitePermissionsProps,
+  SitePermissionsStrings,
+  SitePermissionsStyles,
+  MicrophoneSitePermissionsStrings,
+  MicrophoneSitePermissionsProps
+} from '../../react-components/src';
 
 export type {
   _IdentifierProviderProps,
@@ -183,6 +213,7 @@ export type {
   ParticipantListStyles,
   ParticipantMenuItemsCallback,
   ParticipantRemovedSystemMessage,
+  ParticipantState,
   ParticipantsButtonContextualMenuStyles,
   ParticipantsButtonProps,
   ParticipantsButtonStrings,
@@ -216,14 +247,8 @@ export type {
 } from '../../react-components/src';
 /* @conditional-compile-remove(rooms) */
 export type { Role } from '../../react-components/src';
-/* @conditional-compile-remove(dialpad) */
-export type {
-  DialpadProps,
-  DialpadStrings,
-  DialpadStyles,
-  DialpadButtonProps,
-  DtmfTone
-} from '../../react-components/src';
+/* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
+export type { DialpadProps, DialpadStrings, DialpadStyles, DtmfTone } from '../../react-components/src';
 /* @conditional-compile-remove(file-sharing) */
 export type {
   ActiveFileUpload,
@@ -233,12 +258,19 @@ export type {
   FileMetadata
 } from '../../react-components/src';
 /* @conditional-compile-remove(PSTN-calls) */
-export type { HoldButtonProps, HoldButtonStrings } from '../../react-components/src';
-
+export type { HoldButtonProps, HoldButtonStrings, VideoTileStrings } from '../../react-components/src';
+/* @conditional-compile-remove(call-readiness) */
+export type { BrowserPermissionDeniedStrings, BrowserPermissionDeniedProps } from '../../react-components/src';
+/* @conditional-compile-remove(call-readiness) */
+export type {
+  BrowserPermissionDeniedIOSStrings,
+  BrowserPermissionDeniedStyles,
+  BrowserPermissionDeniedIOSProps
+} from '../../react-components/src';
 export * from '../../react-components/src/localization/locales';
 export * from '../../react-components/src/theming';
-
-export * from '../../calling-stateful-client/src';
+export * from '../../calling-stateful-client/src/index-public';
+/* @conditional-compile-remove(one-to-n-calling) */
 export type { DeclarativeCallAgent } from '../../calling-stateful-client/src';
 export { createStatefulChatClient } from '../../chat-stateful-client/src';
 export type {
@@ -255,3 +287,16 @@ export type {
 } from '../../chat-stateful-client/src';
 export * from '../../react-composites/src/index-public';
 export * from './mergedHooks';
+
+/* @conditional-compile-remove(unsupported-browser) */
+export { UnsupportedBrowser } from '../../react-components/src';
+/* @conditional-compile-remove(unsupported-browser) */
+export type { UnsupportedBrowserStrings, UnsupportedBrowserProps } from '../../react-components/src';
+/* @conditional-compile-remove(unsupported-browser) */
+export { UnsupportedBrowserVersion } from '../../react-components/src';
+/* @conditional-compile-remove(unsupported-browser) */
+export type { UnsupportedBrowserVersionStrings, UnsupportedBrowserVersionProps } from '../../react-components/src';
+/* @conditional-compile-remove(unsupported-browser) */
+export { UnsupportedOperatingSystem } from '../../react-components/src';
+/* @conditional-compile-remove(unsupported-browser) */
+export type { UnsupportedOperatingSystemStrings, UnsupportedOperatingSystemProps } from '../../react-components/src';

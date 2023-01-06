@@ -43,7 +43,7 @@ jobs:
       - name: Get datetime for alpha release name
         id: datetime
         run: |
-          echo "::set-output name=datetime::$(date +'%Y%m%d%H%M')"
+          echo "datetime=$(date +'%Y%m%d%H%M')" >> $GITHUB_OUTPUT
 
       # Bump alpha package versions
       - name: Bump alpha package versions
@@ -70,7 +70,7 @@ jobs:
         run: |
           ver=$(jq -r .version packages/communication-react/package.json)
           echo version: $ver
-          echo "::set-output name=version::$ver"
+          echo "version=$ver" >> $GITHUB_OUTPUT
 
       # Push git tags
       - name: Create and push git tags
@@ -93,14 +93,13 @@ jobs:
             az extension add --name storage-preview
             az storage azcopy blob upload -s "packages/communication-react/release/*" -c "drops/azure-communication-services/react/npm/${{ steps.version.outputs.version }}" --account-name azuresdkpartnerdrops
 
-      - name: Install github actions dependencies
-        run: npm ci
-        working-directory: ./.github/workflows/azure-pipeline-action-fork
-
       - name: Trigger alpha package release pipeline
-        uses: ./.github/workflows/azure-pipeline-action-fork
+        uses: Azure/pipelines@v1.2
         with:
           azure-devops-project-url: 'https://dev.azure.com/azure-sdk/internal'
           azure-pipeline-name: 'azuresdkpartnerdrops to npm'
           azure-devops-token: '${{ secrets.AZURE_SDK_RELEASE_PIPELINE_DEVOPS_TOKEN }}'
           azure-pipeline-variables: '{"accessLevel": "public", "BlobPath": "azure-communication-services/react/npm/${{ steps.version.outputs.version }}", "registry": "https://registry.npmjs.org/", "skipDiff": "False", "tag": "dev"}'
+
+      - name: Check if npm package published successfully
+        run: node common/scripts/poll-npm-package-published.mjs ${{ steps.version.outputs.version }}

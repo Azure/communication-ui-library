@@ -25,6 +25,20 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  job-inputs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set branch name
+        id: vars
+        run: echo ::set-output name=branch::${GITHUB_REF#refs/*/}
+
+      - name: job inputs summary
+        run: |
+          echo "### Job Inputs - Review before approving workflow" >> $GITHUB_STEP_SUMMARY
+          echo "This job has been triggered with the following inputs, review these are correct before approving the npm deployment." >> $GITHUB_STEP_SUMMARY
+          echo "- release branch: \`${{ steps.vars.outputs.branch }}"\` >> $GITHUB_STEP_SUMMARY
+          echo "- npm-tag: \`${{ inputs.npm-tag }}"\` >> $GITHUB_STEP_SUMMARY
+          echo "- release-flavor: \`${{ inputs.release-flavor }}"\` >> $GITHUB_STEP_SUMMARY
   publish:
     environment:
       name: npm
@@ -71,7 +85,7 @@ jobs:
         run: |
           ver=$(jq -r .version packages/communication-react/package.json)
           echo version: $ver
-          echo "::set-output name=version::$ver"
+          echo "version=$ver" >> $GITHUB_OUTPUT
 
       # Publish package
       - name: Package packages for release
@@ -88,17 +102,16 @@ jobs:
             az extension add --name storage-preview
             az storage azcopy blob upload -s "packages/communication-react/release/*" -c "drops/azure-communication-services/react/npm/${{ steps.version.outputs.version }}" --account-name azuresdkpartnerdrops
 
-      - name: Install github actions dependencies
-        run: npm ci
-        working-directory: ./.github/workflows/azure-pipeline-action-fork
-
       - name: Trigger package release pipeline
-        uses: ./.github/workflows/azure-pipeline-action-fork
+        uses: Azure/pipelines@v1.2
         with:
           azure-devops-project-url: 'https://dev.azure.com/azure-sdk/internal'
           azure-pipeline-name: 'azuresdkpartnerdrops to npm'
           azure-devops-token: '${{ secrets.AZURE_SDK_RELEASE_PIPELINE_DEVOPS_TOKEN }}'
           azure-pipeline-variables: '{"accessLevel": "public", "BlobPath": "azure-communication-services/react/npm/${{ steps.version.outputs.version }}", "registry": "https://registry.npmjs.org/", "skipDiff": "False", "tag": "${{ github.event.inputs.npm-tag }}"}'
+
+      - name: Check if npm package published successfully
+        run: node common/scripts/poll-npm-package-published.mjs ${{ steps.version.outputs.version }}
 
       # Push git tags
       - name: Create and push git tags

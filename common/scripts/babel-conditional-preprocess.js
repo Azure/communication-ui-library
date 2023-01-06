@@ -120,6 +120,7 @@ function Handle(path, featureSet, stabilizedFeatureSet, relaceWith=undefined) {
   if (!node.leadingComments) {
     return;
   }
+
   const removalInstructions = node.leadingComments.map((comment) => nodeRemovalInstruction(node, comment, featureSet, stabilizedFeatureSet));
   if (!shouldRemoveNode(removalInstructions)) {
     return;

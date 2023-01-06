@@ -2,14 +2,14 @@
 // Licensed under the MIT license.
 
 import { IDS } from './constants';
-import { ElementHandle, JSHandle, Page, PageScreenshotOptions, TestInfo } from '@playwright/test';
+import { ElementHandle, JSHandle, Locator, Page, PageScreenshotOptions, TestInfo } from '@playwright/test';
 import { ChatUserType, CallUserType, CallWithChatUserType } from './fixtureTypes';
 import { v1 as generateGUID } from 'uuid';
 
 // This timeout must be less than the global timeout
 const PER_STEP_TIMEOUT_MS = 5000;
 
-function perStepLocalTimeout(): number {
+export function perStepLocalTimeout(): number {
   if (process.env.LOCAL_DEBUG) {
     // Disable per-step timeouts for local debugging
     // so that developers can use the playwright inspector
@@ -22,7 +22,10 @@ function perStepLocalTimeout(): number {
 /** Selector string to get element by data-ui-id property */
 export const dataUiId = (id: string): string => `[data-ui-id="${id}"]`;
 
-async function screenshotOnFailure<T>(page: Page, fn: () => Promise<T>): Promise<T> {
+/**
+ * Wrapper function to take a screenshot if the provided callback fails.
+ */
+export async function screenshotOnFailure<T>(page: Page, fn: () => Promise<T>): Promise<T> {
   try {
     return await fn();
   } catch (e) {
@@ -43,7 +46,7 @@ async function screenshotOnFailure<T>(page: Page, fn: () => Promise<T>): Promise
  */
 export const pageClick = async (page: Page, selector: string): Promise<void> => {
   await page.bringToFront();
-  await screenshotOnFailure(page, async () => await page.click(selector, { timeout: PER_STEP_TIMEOUT_MS }));
+  await screenshotOnFailure(page, async () => await page.click(selector, { timeout: perStepLocalTimeout() }));
   // Move the mouse off the screen
   await page.mouse.move(-1, -1);
 };
@@ -55,7 +58,7 @@ export const pageClick = async (page: Page, selector: string): Promise<void> => 
 export const waitForSelector = async (
   page: Page,
   selector: string,
-  options?: { state?: 'visible' | 'attached' }
+  options?: { state?: 'visible' | 'attached'; timeout?: number }
 ): Promise<ElementHandle<SVGElement | HTMLElement>> => {
   await page.bringToFront();
   return await screenshotOnFailure(
@@ -65,17 +68,37 @@ export const waitForSelector = async (
 };
 
 /**
+ * Obtain a {@link Locator} for a given selector string and wait for the target element to enter given state.
+ *
+ * Use this instead of {@link page.locator} because this function takes a screenshot on time.
+ * Use this instead of {@link waitForSelector} because locators are the recommended way to obtain element handles:
+ *
+ * See https://playwright.dev/docs/locators
+ */
+export async function waitForLocator(
+  page: Page,
+  selector: string,
+  options?: { state?: 'visible' | 'attached'; timeout?: number }
+): Promise<Locator> {
+  await page.bringToFront();
+  const locator = page.locator(selector);
+  await screenshotOnFailure(page, async () => await locator.waitFor(options));
+  return locator;
+}
+
+/**
  * Page wait for function helper function - USE INSTEAD OF PAGE.WAITFORFUNCTION
  * Using this, when the wait for function fails, we get a screenshot showing why it failed.
  */
 export async function waitForFunction<R>(
   page: Page,
   pageFunction: PageFunction<R>,
-  arg?: unknown
+  arg?: unknown,
+  options?: { timeout?: number }
 ): Promise<SmartHandle<R>> {
   return await screenshotOnFailure(
     page,
-    async () => await page.waitForFunction(pageFunction, arg, { timeout: perStepLocalTimeout() })
+    async () => await page.waitForFunction(pageFunction, arg, { timeout: perStepLocalTimeout(), ...options })
   );
 }
 
@@ -85,7 +108,11 @@ export async function waitForFunction<R>(
  */
 export const waitForPageFontsLoaded = async (page: Page): Promise<void> => {
   await waitForFunction(page, async () => {
-    await document.fonts.ready;
+    // typescript libraries in Node define the type of `document` as
+    //     interface Document {}
+    // this breaks `tsc`, even though it works correctly in the browser.
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return await (document as any).fonts.ready;
   });
 };
 
@@ -114,7 +141,13 @@ export const waitForCallCompositeToLoad = async (page: Page): Promise<void> => {
   await page.bringToFront();
   await page.waitForLoadState('load');
   await waitForPageFontsLoaded(page);
-  const startCallButton = await waitForSelector(page, dataUiId('call-composite-start-call-button'));
+
+  // Tests often timeout at this point because call agent creation and device enumeration can take > 5 seconds.
+  // Extend the timeout here to trade flakiness for potentially longer test runtime.
+  // Test flake has a much larger impact on overall CI time than individual test runtime.
+  const startCallButton = await waitForSelector(page, dataUiId('call-composite-start-call-button'), {
+    timeout: 2 * perStepLocalTimeout()
+  });
   await startCallButton.waitForElementState('enabled');
 };
 
@@ -155,7 +188,7 @@ export const loadCallPage = async (pages: Page[]): Promise<void> => {
 };
 
 /**
- * Wait for the Composite CallPage page to fully load with video participant video feeds enabled.
+ * Load composite call page with participant video feeds fully rendered.
  */
 export const loadCallPageWithParticipantVideos = async (pages: Page[]): Promise<void> => {
   // Start local camera and start the call
@@ -163,12 +196,18 @@ export const loadCallPageWithParticipantVideos = async (pages: Page[]): Promise<
     await page.bringToFront();
     await pageClick(page, dataUiId('call-composite-local-device-settings-camera-button'));
     await pageClick(page, dataUiId('call-composite-start-call-button'));
-
-    // Wait for call page to load (i.e. wait for connecting screen to have passed)
     await waitForSelector(page, dataUiId('call-page'));
   }
 
-  // Wait for all participants cameras to have loaded
+  await waitForCallPageParticipantVideos(pages);
+};
+
+/**
+ * Wait for the Composite CallPage page to fully load with video participant video feeds enabled.
+ *
+ * @param expectedVideoCount If set, the number of video tiles to expect. Default is `pages.length`.
+ */
+export const waitForCallPageParticipantVideos = async (pages: Page[], expectedVideoCount?: number): Promise<void> => {
   for (const page of pages) {
     await page.bringToFront();
     await waitForFunction(
@@ -183,16 +222,33 @@ export const loadCallPageWithParticipantVideos = async (pages: Page[]): Promise<
         return correctNoOfVideos && allVideosLoaded;
       },
       {
-        expectedVideoCount: pages.length
-      }
+        expectedVideoCount: expectedVideoCount ?? pages.length
+      },
+      // The tests often timeout at this step because loading remote video streams can take > 5 seconds.
+      // Extend the timeout here to trade flakiness for potentially longer test runtime.
+      // Test flake has a much larger impact on overall CI time than individual test runtime.
+      //
+      // The extended timeout was determined by stress testing on CI.
+      { timeout: 10 * perStepLocalTimeout() }
     );
   }
 };
 
 /**
  * Wait for PiPiP it's videos to have loaded.
+ *
+ * By default checks for 2 video tiles in the PiPiP.
+ * Set `skipVideoCheck` for hermetic tests because the <HermeticApp /> fakes the video node with a <div/>.
  */
-export const waitForPiPiPToHaveLoaded = async (page: Page, videosEnabledCount: number): Promise<void> => {
+export const waitForPiPiPToHaveLoaded = async (
+  page: Page,
+  options?: {
+    videosEnabledCount?: number;
+    skipVideoCheck?: boolean;
+  }
+): Promise<void> => {
+  const { videosEnabledCount = 2, skipVideoCheck = false } = options ?? {};
+
   await page.bringToFront();
   await waitForFunction(
     page,
@@ -210,6 +266,10 @@ export const waitForPiPiPToHaveLoaded = async (page: Page, videosEnabledCount: n
         return false;
       }
 
+      if (args.skipVideoCheck) {
+        return true;
+      }
+
       // Check the videos are ready in each tile
       const allVideosLoaded = Array.from(tileNodes).every((tileNode) => {
         const videoNode = tileNode?.querySelector('video');
@@ -220,7 +280,8 @@ export const waitForPiPiPToHaveLoaded = async (page: Page, videosEnabledCount: n
     {
       pipipSelector: dataUiId('picture-in-picture-in-picture-root'),
       participantTileSelector: dataUiId('video-tile'),
-      expectedTileCount: videosEnabledCount
+      expectedTileCount: videosEnabledCount,
+      skipVideoCheck: skipVideoCheck
     }
   );
 };
@@ -321,29 +382,26 @@ type SmartHandle<T> = T extends Node ? ElementHandle<T> : JSHandle<T>;
  *  TestInfo comes from the playwright config which gives different information about what platform the
  *  test is being run on.
  * */
+export const isTestProfileMobile = (testInfo: TestInfo): boolean => !isTestProfileDesktop(testInfo);
+
+/**
+ *  Helper function to detect whether a test is for a mobile broswer or not.
+ *  TestInfo comes from the playwright config which gives different information about what platform the
+ *  test is being run on.
+ * */
 export const isTestProfileDesktop = (testInfo: TestInfo): boolean => {
   const testName = testInfo.project.name.toLowerCase();
   return testName.includes('desktop') ? true : false;
 };
 
-/**
- * Helper function to determine whether to skip a test for a beta feature in stable test run.
- */
-export const isTestProfileStableFlavor = (): boolean => {
-  const flavor = process.env?.['COMMUNICATION_REACT_FLAVOR'];
-  if (flavor === 'stable') {
-    return true;
-  } else if (flavor === 'beta') {
-    return false;
-  } else {
-    throw 'Faled to find Communication React Flavor env variable';
-  }
-};
-
 export interface StubOptions {
   /** Stub out all timestamps in the chat message thread. */
   stubMessageTimestamps?: boolean;
-  /** Disable tooltips on all buttons in the call control bar. */
+  /**
+   * Disable tooltips on all buttons in the call control bar.
+   *
+   * @defaultValue true.
+   */
   dismissTooltips?: boolean;
   /** Hide chat message actions icon button. */
   dismissChatMessageActions?: boolean;
@@ -355,6 +413,14 @@ export interface StubOptions {
    * @defaultValue true
    */
   hideVideoLoadingSpinner?: boolean;
+  /**
+   * In live tests, video stream quality can vary leading to video quality artifacts in the UI snapshots.
+   *
+   * Set this flag to mask out the video elements.
+   *
+   * @defaultValue true
+   */
+  maskVideos?: boolean;
 }
 
 /**
@@ -371,7 +437,7 @@ export async function stableScreenshot(
   if (stubOptions?.stubMessageTimestamps) {
     await stubMessageTimestamps(page);
   }
-  if (stubOptions?.dismissTooltips) {
+  if (stubOptions?.dismissTooltips !== false) {
     await disableTooltips(page);
   }
   if (stubOptions?.dismissChatMessageActions) {
@@ -383,10 +449,13 @@ export async function stableScreenshot(
   if (stubOptions?.awaitFileTypeIcon) {
     await awaitFileTypeIcon(page);
   }
+  if (stubOptions?.maskVideos !== false) {
+    await maskVideos(page);
+  }
   try {
     return await page.screenshot(screenshotOptions);
   } finally {
-    if (stubOptions?.dismissTooltips) {
+    if (stubOptions?.dismissTooltips !== false) {
       await enableTooltips(page);
     }
   }
@@ -417,6 +486,68 @@ const enableTooltips = async (page: Page): Promise<void> => {
 const hideVideoLoadingSpinner = async (page: Page): Promise<void> => {
   await page.addStyleTag({ content: '[data-ui-id="stream-media-loading-spinner"] {display: none}' });
 };
+
+const MASK_ATTRIB_KEY = 'data-ui-id';
+const MASK_ATTRIB_VALUE = 'stream-media-video-mask';
+const MASK_SELECTOR = `[${MASK_ATTRIB_KEY}="${MASK_ATTRIB_VALUE}"]`;
+
+/**
+ * Masks the video element in {@link VideoTile} by overlaying an opaque <div/>.
+ *
+ * Pixel-perfect UI snapshots of video frames are impossible -- there are many factors
+ * beyond our control (e.g. network bandwidth) that affect the video frames being rendered.
+ * This leads to trivial differences in the UI snapshots.
+ * As we aren't trying to validate the calling infrastructures ability to render the video, we
+ * mask it to get robust UI snapshots.
+ *
+ * This function is destructive: It changes the video tile's DOM irreversibly.
+ * This function is idempotent: It is safe to call this function multiple times.
+ */
+async function maskVideos(page: Page): Promise<void> {
+  await page.bringToFront();
+  await page.addStyleTag({ content: `${dataUiId('stream-media-container')} {position: relative}` });
+
+  // Can't use `waitForLocator` because we expect multiple video tiles.
+  // Also, it is assumed that the videos have already loaded by the time snapshot is taken.
+  const videos = page.locator(dataUiId('stream-media-container'));
+  await videos.evaluateAll(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (nodes: HTMLElement[], args: any) => {
+      const { mask_key, mask_value } = args;
+      nodes.forEach((node) => {
+        const children = Array.from(node.children ?? []) as HTMLElement[];
+        const masks = children.filter((child) => child.getAttribute(mask_key) === mask_value);
+        if (masks.length > 0) {
+          // Already have a mask. Nothing to do.
+          return;
+        }
+
+        const mask = document.createElement('div');
+        mask.setAttribute(mask_key, mask_value);
+        mask.setAttribute('style', 'position: absolute; height: 100%; width: 100%; background: green;');
+        node.appendChild(mask);
+      });
+    },
+    {
+      mask_key: MASK_ATTRIB_KEY,
+      mask_value: MASK_ATTRIB_VALUE
+    }
+  );
+
+  // Wait for all masks to have been added to the DOM.
+  await waitForFunction(
+    page,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (args: any) => {
+      const { selector, maskCount } = args;
+      return document.querySelectorAll(selector).length === maskCount;
+    },
+    {
+      selector: MASK_SELECTOR,
+      maskCount: await videos.evaluateAll((nodes: HTMLElement[]) => nodes.length)
+    }
+  );
+}
 
 /**
  * Helper function for waiting for file type icons. File type icons
@@ -454,3 +585,15 @@ export async function blockForMinutes(m: number): Promise<void> {
     setTimeout(() => resolve(), 1000 * 60 * m);
   });
 }
+
+/**
+ * Hides the PiPiP video tile.
+ * Useful when testing participant list on mobile devices
+ * where the content being tested is hidden behind the PiPiP video tile.
+ */
+export const hidePiPiP = async (page: Page): Promise<void> => {
+  const pipipId = dataUiId('picture-in-picture-in-picture-root');
+  await page.evaluate((pipipId) => {
+    document.querySelector(pipipId)?.remove();
+  }, pipipId);
+};

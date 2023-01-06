@@ -4,10 +4,11 @@
 import dotenv from 'dotenv';
 import path from 'path';
 
-dotenv.config({ path: path.join(__dirname, '..', '.env') });
+const ENV_FILE = path.join(__dirname, '..', '.env');
+dotenv.config({ path: ENV_FILE });
 
 if (!process.env.CONNECTION_STRING) {
-  throw new Error('No CONNECTION_STRING set in environment variable.');
+  throw new Error(`No CONNECTION_STRING set in ${ENV_FILE}`);
 }
 
 export const CONNECTION_STRING: string = process.env.CONNECTION_STRING;

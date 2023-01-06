@@ -44,6 +44,9 @@ export type {
   ParticipantMenuItemsCallback
 } from './ParticipantList';
 
+export { Announcer } from './Announcer';
+export type { AnnouncerProps } from './Announcer';
+
 export { VideoGallery } from './VideoGallery';
 export type { VideoGalleryProps, VideoGalleryStrings, VideoGalleryStyles, VideoGalleryLayout } from './VideoGallery';
 export type { HorizontalGalleryStyles } from './HorizontalGallery';
@@ -85,6 +88,40 @@ export type {
   DevicesButtonContextualMenuStyles
 } from './DevicesButton';
 
+/* @conditional-compile-remove(call-readiness) */
+export {
+  CameraAndMicrophoneSitePermissions,
+  MicrophoneSitePermissions,
+  CameraSitePermissions
+} from './DevicePermissions/SitePermissions';
+/* @conditional-compile-remove(call-readiness) */
+export type { SitePermissionsStrings, SitePermissionsStyles } from './DevicePermissions/SitePermissionsScaffolding';
+/* @conditional-compile-remove(call-readiness) */
+export type {
+  CameraAndMicrophoneSitePermissionsStrings,
+  CameraAndMicrophoneSitePermissionsProps,
+  CameraSitePermissionsStrings,
+  CameraSitePermissionsProps,
+  CommonSitePermissionsProps,
+  MicrophoneSitePermissionsStrings,
+  MicrophoneSitePermissionsProps
+} from './DevicePermissions/SitePermissions';
+/* @conditional-compile-remove(call-readiness) */
+export { BrowserPermissionDenied } from './DevicePermissions/BrowserPermissionDenied';
+/* @conditional-compile-remove(call-readiness) */
+export type {
+  BrowserPermissionDeniedStrings,
+  BrowserPermissionDeniedStyles,
+  BrowserPermissionDeniedProps
+} from './DevicePermissions/BrowserPermissionDenied';
+/* @conditional-compile-remove(call-readiness) */
+export { BrowserPermissionDeniedIOS } from './DevicePermissions/BrowserPermissionDeniedIOS';
+/* @conditional-compile-remove(call-readiness) */
+export type {
+  BrowserPermissionDeniedIOSStrings,
+  BrowserPermissionDeniedIOSProps
+} from './DevicePermissions/BrowserPermissionDeniedIOS';
+
 export { ParticipantsButton } from './ParticipantsButton';
 export type {
   ParticipantsButtonContextualMenuStyles,
@@ -98,6 +135,8 @@ export type { ScreenShareButtonProps, ScreenShareButtonStrings } from './ScreenS
 
 export { VideoTile } from './VideoTile';
 export type { VideoTileProps, VideoTileStylesProps } from './VideoTile';
+/* @conditional-compile-remove(PSTN-calls) */
+export type { VideoTileStrings } from './VideoTile';
 
 export { _PictureInPictureInPicture } from './PictureInPictureInPicture/PictureInPictureInPicture';
 export type {
@@ -122,10 +161,8 @@ export { _useContainerHeight, _useContainerWidth } from './utils/responsive';
 
 export { _ComplianceBanner } from './ComplianceBanner';
 export type { _ComplianceBannerProps, _ComplianceBannerStrings } from './ComplianceBanner';
-/* @conditional-compile-remove(dialpad) */
 export { Dialpad } from './Dialpad/Dialpad';
-/* @conditional-compile-remove(dialpad) */
-export type { DialpadProps, DialpadStrings, DialpadButtonProps, DialpadStyles, DtmfTone } from './Dialpad/Dialpad';
+export type { DialpadProps, DialpadStrings, DialpadStyles, DtmfTone } from './Dialpad/Dialpad';
 
 /* @conditional-compile-remove(PSTN-calls) */
 export { HoldButton } from './HoldButton';
@@ -134,3 +171,25 @@ export type { HoldButtonProps, HoldButtonStrings } from './HoldButton';
 
 export { _LocalVideoTile } from './LocalVideoTile';
 export { _RemoteVideoTile } from './RemoteVideoTile';
+export { _HighContrastAwareIcon } from './HighContrastAwareIcon';
+export type { _HighContrastAwareIconProps } from './HighContrastAwareIcon';
+
+export { UnsupportedBrowser } from './UnsupportedBrowser';
+export type { UnsupportedBrowserStrings, UnsupportedBrowserProps } from './UnsupportedBrowser';
+export { UnsupportedBrowserVersion } from './UnsupportedBrowserVersion';
+export type { UnsupportedBrowserVersionStrings, UnsupportedBrowserVersionProps } from './UnsupportedBrowserVersion';
+export { UnsupportedOperatingSystem } from './UnsupportedOperatingSystem';
+export type { UnsupportedOperatingSystemStrings, UnsupportedOperatingSystemProps } from './UnsupportedOperatingSystem';
+
+export { _TroubleshootingGuideErrorBar } from './TroubleshootingGuideErrorBar';
+export type {
+  _TroubleshootingGuideErrorBarStrings,
+  _TroubleshootingGuideErrorBarProps
+} from './TroubleshootingGuideErrorBar';
+
+export { _DevicePermissionDropdown } from './DevicePermissions/DevicePermissionDropdown';
+export type {
+  _DevicePermissionDropdownStrings,
+  _DevicePermissionDropdownProps,
+  _PermissionConstraints
+} from './DevicePermissions/DevicePermissionDropdown';

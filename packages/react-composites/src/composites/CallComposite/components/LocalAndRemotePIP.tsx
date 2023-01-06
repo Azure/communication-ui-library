@@ -78,6 +78,7 @@ export const LocalAndRemotePIP = (props: LocalAndRemotePIPProps): JSX.Element =>
       !dominantRemoteParticipant
         ? undefined
         : {
+            remoteParticipant: dominantRemoteParticipant,
             onCreateRemoteStreamView,
             onDisposeRemoteStreamView,
             remoteVideoViewOptions,

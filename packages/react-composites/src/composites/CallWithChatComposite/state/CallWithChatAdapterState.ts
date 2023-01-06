@@ -9,6 +9,8 @@ import { ChatAdapter, ChatAdapterState } from '../../ChatComposite';
 /* @conditional-compile-remove(file-sharing) */
 import { FileUploadsUiState } from '../../ChatComposite';
 import { AdapterErrors } from '../../common/adapters';
+/* @conditional-compile-remove(unsupported-browser) */
+import { EnvironmentInfo } from '@azure/communication-calling';
 
 /**
  * UI state pertaining to the {@link CallWithChatComposite}.
@@ -37,6 +39,15 @@ export interface CallWithChatAdapterUiState {
    * @beta
    */
   fileUploads?: FileUploadsUiState;
+  /* @conditional-compile-remove(unsupported-browser) */
+  /**
+   * State to track whether the end user has opted in to using a
+   * out of date version of a supported browser. Allows the user
+   * to start a call in this state.
+   *
+   * @beta
+   */
+  unsupportedBrowserVersionsAllowed?: boolean;
 }
 
 /**
@@ -61,6 +72,12 @@ export interface CallWithChatClientState {
   devices: DeviceManagerState;
   /** State of whether the active call is a Teams interop call */
   isTeamsCall: boolean;
+  /* @conditional-compile-remove(PSTN-calls) */
+  /** alternateCallerId for PSTN call */
+  alternateCallerId?: string | undefined;
+  /* @conditional-compile-remove(unsupported-browser) */
+  /** Environment information for system adapter is made on */
+  environmentInfo?: EnvironmentInfo;
 }
 
 /**
@@ -93,7 +110,11 @@ export function callWithChatAdapterStateFromBackingStates(
     latestCallErrors: callAdapterState.latestErrors,
     latestChatErrors: chatAdapterState.latestErrors,
     /* @conditional-compile-remove(file-sharing) */
-    fileUploads: chatAdapterState.fileUploads
+    fileUploads: chatAdapterState.fileUploads,
+    /* @conditional-compile-remove(PSTN-calls) */
+    alternateCallerId: callAdapterState.alternateCallerId,
+    /* @conditional-compile-remove(unsupported-browser) */
+    environmentInfo: callAdapterState.environmentInfo
   };
 }
 

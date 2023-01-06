@@ -1,6 +1,11 @@
-import { Stack } from '@fluentui/react';
+import { Image, Stack, Text } from '@fluentui/react';
 import { Meta } from '@storybook/addon-docs';
-import { overviewPageImagesStackStyle } from './constants';
+import {
+  overviewPageImagesStackStyle,
+  overviewPageUIArtifactTextStyle,
+  overviewPageUIArtifactImageStyle,
+  overviewPageUIArtifactsStackStyle
+} from './constants';
 
 <Meta id="overview" title="Overview" parameters={{ previewTabs: { canvas: { disable: true, hidden: true } } }} />
 
@@ -33,7 +38,11 @@ import { overviewPageImagesStackStyle } from './constants';
     </h1>
   </Stack.Item>
   <Stack.Item align="center">
-    <img src="images/hero.svg" alt="UI Library Hero Image" style={{ maxHeight: '18.75rem' }} />
+    <Image
+      src="images/hero.svg"
+      alt="UI Library Hero Image"
+      style={{ maxHeight: '18.75rem', height: 'auto', width: '100%' }}
+    />
   </Stack.Item>
 </Stack>
 
@@ -44,11 +53,62 @@ There are a lot of moving pieces including dynamic remote video galleries, local
 On top of that developers must worry about accessibility and localization for this experiences.
 **UI Library** is here to help!
 
+In some cases, you might additional customization and control over the overall communication experiences, for that we offer **UI Components**.
+These components can be composed together to build calling and chat experiences. For example, a [Video Gallery](./?path=/story/ui-components-videotile--video-tile) or a [Message Thread](./?path=/story/ui-components-messagethread--message-thread).
+
 If you just want an out of the box communications experiences that you can drop into your application, we offer **Composites**.
 It takes only a couple lines of code to add and configure.
 
-In some cases, you might additional customization and control over the overall communication experiences, for that we offer **UI Components**.
-These components can be composed together to build calling and chat experiences. For example, a [Video Gallery](./?path=/story/ui-components-videotile--video-tile) or a [Message Thread](./?path=/story/ui-components-messagethread--message-thread).
+<Stack horizontal tokens={{ childrenGap: '1rem' }} wrap style={{ margin: '2rem 0rem 2rem 0rem' }}>
+  <Stack.Item styles={{ root: { ':hover': { textDecoration: 'underline !important' } } }}>
+    <a style={overviewPageUIArtifactsStackStyle} href="/docs/quickstarts-composites--page">
+      <Stack tokens={{ childrenGap: '1rem' }}>
+        <Stack.Item style={overviewPageUIArtifactTextStyle}>
+          <Text block variant="mediumPlus" style={{ color: '#004578', fontWeight: 600 }}>
+            Composites →
+          </Text>
+          <Text block variant="medium">
+            End-to-end solutions ready to integrate into your existing experience.
+          </Text>
+        </Stack.Item>
+        <Stack.Item style={overviewPageUIArtifactImageStyle}>
+          <Image
+            style={{ width: '100%', height: 'auto' }}
+            height="10.5rem"
+            /* set an approximate default height to avoid reflow when the image loads */ src="images/composites-teaser.png"
+            alt="Learn more about UI Composites"
+          />
+        </Stack.Item>
+      </Stack>
+    </a>
+  </Stack.Item>
+  <Stack.Item
+    styles={{
+      root: { ':hover': { textDecoration: 'underline !important', textDecorationColor: '#004578 !important' } }
+    }}
+  >
+    <a style={overviewPageUIArtifactsStackStyle} href="/docs/overview-uicomponents--page">
+      <Stack tokens={{ childrenGap: '1rem' }}>
+        <Stack.Item style={overviewPageUIArtifactTextStyle}>
+          <Text block variant="mediumPlus" style={{ color: '#004578', fontWeight: 600 }}>
+            Components →
+          </Text>
+          <Text block variant="medium">
+            Flexible UI building blocks for custom voice, video calling, and chat solutions.
+          </Text>
+        </Stack.Item>
+        <Stack.Item style={overviewPageUIArtifactImageStyle}>
+          <Image
+            style={{ width: '100%', height: 'auto' }}
+            height="10.5rem"
+            /* set an approximate default height to avoid reflow when the image loads */ src="images/components-teaser.png"
+            alt="Learn more about UI Components"
+          />
+        </Stack.Item>
+      </Stack>
+    </a>
+  </Stack.Item>
+</Stack>
 
 These UI client libraries all use [Microsoft's Fluent design language](https://developer.microsoft.com/fluentui/) and assets. Fluent UI provides a foundational layer for the UI Library and is actively used across Microsoft products.
 
@@ -67,109 +127,6 @@ The same components and composites offered in the UI Library are available in th
 ```bash
 npm i @azure/communication-react
 ```
-
-## Composites Overview
-
-Composites are higher-level components composed of UI components that deliver turn-key solutions for common communication scenarios using Azure Communication Services.
-Developers can easily instantiate the Composite using an Azure Communication Services access token and the required configuration attributed for call or chat.
-
-### Call composite
-
-[CallComposite](./?path=/story/composites-call-basicexample--basic-example) is providing a calling experience that allows users to start or join a call. Inside the experience users can configure their
-devices, participate in the call with video and see other participants, including those with video turn on.
-
-Here are visual examples of Call composite where participants have their camera turned off, then some ahve them turned on.
-People speaking with microphone unmuted will have their tile appearing with a blue border.
-
-<Stack horizontal horizontalAlign="space-between" tokens={{ childrenGap: '2rem' }} style={overviewPageImagesStackStyle}>
-  <Stack.Item align="center">
-    <img
-      src="images/callComposite_CamerasOff.png"
-      alt="Call composite where all participants have their camera turned off"
-    />
-  </Stack.Item>
-  <Stack.Item align="center">
-    <img
-      src="images/callComposite_CamerasOn.png"
-      alt="Call composite where some participants have their camera turned on"
-    />
-  </Stack.Item>
-</Stack>
-
-When joining a Microsoft Teams call ([Teams Interop experience](./?path=/docs/examples-teamsinterop-compliancebanner--compliance-banner)), the
-Call Composite includes a lobby experience where the user is waiting to be admitted into the call.
-
-<Stack horizontal horizontalAlign="space-between" tokens={{ childrenGap: '3rem' }} style={overviewPageImagesStackStyle}>
-  <Stack.Item align="center">
-    <img
-      src="images/callComposite_TeamsInterop_WaitingLobby.png"
-      alt="Call composite waiting to be admitted in a Teams meeting"
-    />
-  </Stack.Item>
-  <Stack.Item align="center" tokens={{ childrenGap: '2rem' }}>
-    <p style={{ textAlign: 'center' }}>{'Popup appearing in Teams to admit ACS participant'}</p>
-    <img
-      src="images/callComposite_TeamsInterop_AdmissionFromTeams.png"
-      alt="Popup in Teams to admit ACS participants"
-    />
-  </Stack.Item>
-</Stack>
-
-### Chat composite
-
-[ChatComposite](./?path=/story/composites-chat-basicexample--basic-example) is providing a chat experience where user can send and receive
-messages. Message thread events such as typing indicators, whether the message has been successfully delivered or read, or participants entering
-and leaving the chat are displayed to the user as part of the chat thread.
-
-Here is a visual example of Chat composite.
-
-<Stack style={overviewPageImagesStackStyle}>
-  <Stack.Item align="center">
-    <img src="images/chatComposite_NoParticipantsList.png" alt="Chat composite with the participants list" />
-  </Stack.Item>
-</Stack>
-
-## UI Component Overview
-
-Pure UI Components that can be used by developers to compose communication experiences, from stitching video tiles into a grid to showcase remote participants, to organizing components to fit your applications specifications.
-UI Components support customization to give the components the right feel and look to match an applications branding and style.
-
-Following are lists of components that can be used for specific areas.
-
-### Main Components for Calling
-
-<Stack tokens={{ childrenGap: '3rem' }} style={overviewPageImagesStackStyle}>
-  <Stack.Item align="center">
-    <img src="images/components_calling.png" alt="example of components that can be used for calling" />
-  </Stack.Item>
-  <Stack.Item align="center">
-    <img src="images/components_common.png" alt="example of components that can be used for chat" />
-  </Stack.Item>
-</Stack>
-
-| Component                                                                          | Description                                                                                        |
-| ---------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
-| [Grid Layout](./?path=/story/ui-components-gridlayout--grid-layout)                | Grid component to organize Video Tiles into an NxN grid                                            |
-| [Video Tile](./?path=/story/ui-components-videotile--video-tile)                   | Component that displays video stream when available and a default static component when not        |
-| [Control Bar](./?path=/story/ui-components-controlbar--control-bar)                | Container to organize DefaultButtons to hook up to specific call actions like mute or share screen |
-| [Video Gallery](./?path=/story/ui-components-videogallery--video-gallery)          | Turn-key video gallery component which dynamically changes as participants are added               |
-| [Participant Item](./?path=/story/ui-components-participantitem--participant-item) | Common component to render a call or chat participant including avatar and display name            |
-| [Participant List](./?path=/story/ui-components-participantlist--participant-list) | Common component to render a call or chat participant list including avatar and display name       |
-
-### Main Components for Chat
-
-<Stack style={overviewPageImagesStackStyle}>
-  <Stack.Item align="center">
-    <img src="images/components_chat.png" alt="example of components that can be used for chat" />
-  </Stack.Item>
-</Stack>
-
-| Component                                                                                                 | Description                                                                   |
-| --------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
-| [Message Thread](./?path=/story/ui-components-messagethread--message-thread)                              | Container that renders chat messages, system messages, and custom messages    |
-| [Send Box](./?path=/story/ui-components-sendbox--send-box)                                                | Text input component with a discrete send button                              |
-| [Message Status Indicator](./?path=/story/ui-components-messagestatusindicator--message-status-indicator) | Multi-state message status indicator component to show status of sent message |
-| [Typing indicator](./?path=/story/ui-components-typingindicator--typing-indicator)                        | Text component to render the participants who are actively typing on a thread |
 
 ## What UI Artifact is Best for my Project?
 

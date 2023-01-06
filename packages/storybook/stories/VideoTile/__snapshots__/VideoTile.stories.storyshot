@@ -25,41 +25,31 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Tile Video Tile
         data-ui-id="video-tile"
       >
         <div
-          className="stub-classname"
-        />
-        <div
           className="ms-Stack stub-classname"
         >
           <div
             className="ms-Stack stub-classname"
           >
             <div
-              aria-label=""
-              className="ms-Persona ms-Persona--size48 stub-classname"
-              style={
-                Object {
-                  "height": 100,
-                  "minWidth": 100,
-                }
-              }
+              className="ms-Stack stub-classname"
             >
               <div
-                className="ms-Persona-coin ms-Persona--size48 stub-classname"
-                role="presentation"
+                aria-label=""
+                className="ms-Persona ms-Persona--size48 stub-classname"
+                style={
+                  Object {
+                    "height": 100,
+                    "minWidth": 100,
+                  }
+                }
               >
                 <div
-                  className="ms-Persona-imageArea stub-classname"
+                  className="ms-Persona-coin ms-Persona--size48 stub-classname"
                   role="presentation"
-                  style={
-                    Object {
-                      "height": 100,
-                      "width": 100,
-                    }
-                  }
                 >
                   <div
-                    aria-hidden="true"
-                    className="ms-Persona-initials stub-classname"
+                    className="ms-Persona-imageArea stub-classname"
+                    role="presentation"
                     style={
                       Object {
                         "height": 100,
@@ -67,9 +57,20 @@ exports[`storybook snapshot tests Storyshots UI Components/Video Tile Video Tile
                       }
                     }
                   >
-                    <span>
-                      JS
-                    </span>
+                    <div
+                      aria-hidden="true"
+                      className="ms-Persona-initials stub-classname"
+                      style={
+                        Object {
+                          "height": 100,
+                          "width": 100,
+                        }
+                      }
+                    >
+                      <span>
+                        JS
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>

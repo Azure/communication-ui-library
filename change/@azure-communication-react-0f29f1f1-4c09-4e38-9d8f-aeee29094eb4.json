@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add drawer menu for mobile devices to video gallery",
+  "packageName": "@azure/communication-react",
+  "email": "anjulgarg@live.com",
+  "dependentChangeType": "patch"
+}

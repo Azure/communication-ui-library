@@ -2,7 +2,13 @@
 // Licensed under the MIT license.
 
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { VideoGallery, VideoStreamOptions, OnRenderAvatarCallback } from '@internal/react-components';
+import {
+  VideoGallery,
+  VideoStreamOptions,
+  OnRenderAvatarCallback,
+  CustomAvatarOptions,
+  Announcer
+} from '@internal/react-components';
 import { usePropsFor } from '../hooks/usePropsFor';
 import { AvatarPersona, AvatarPersonaDataCallback } from '../../common/AvatarPersona';
 import { mergeStyles, Stack } from '@fluentui/react';
@@ -11,6 +17,8 @@ import { useHandlers } from '../hooks/useHandlers';
 import { useSelector } from '../hooks/useSelector';
 import { localVideoCameraCycleButtonSelector } from '../selectors/LocalVideoTileSelector';
 import { LocalVideoCameraCycleButton } from '@internal/react-components';
+import { _formatString } from '@internal/acs-ui-common';
+import { useParticipantChangedAnnouncement } from '../utils/MediaGalleryUtils';
 
 const VideoGalleryStyles = {
   root: {
@@ -39,6 +47,7 @@ export interface MediaGalleryProps {
   onRenderAvatar?: OnRenderAvatarCallback;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   isMobile?: boolean;
+  drawerMenuHostId?: string;
 }
 
 /**
@@ -48,6 +57,8 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
   const videoGalleryProps = usePropsFor(VideoGallery);
   const cameraSwitcherCameras = useSelector(localVideoCameraCycleButtonSelector);
   const cameraSwitcherCallback = useHandlers(LocalVideoCameraCycleButton);
+  const announcerString = useParticipantChangedAnnouncement();
+
   const cameraSwitcherProps = useMemo(() => {
     return {
       ...cameraSwitcherCallback,
@@ -56,11 +67,15 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
   }, [cameraSwitcherCallback, cameraSwitcherCameras]);
 
   const onRenderAvatar = useCallback(
-    (userId, options) => (
-      <Stack className={mergeStyles({ position: 'absolute', height: '100%', width: '100%' })}>
-        <AvatarPersona userId={userId} {...options} dataProvider={props.onFetchAvatarPersonaData} />
-      </Stack>
-    ),
+    (userId?: string, options?: CustomAvatarOptions) => {
+      return (
+        <Stack className={mergeStyles({ position: 'absolute', height: '100%', width: '100%' })}>
+          <Stack styles={{ root: { margin: 'auto', maxHeight: '100%' } }}>
+            <AvatarPersona userId={userId} {...options} dataProvider={props.onFetchAvatarPersonaData} />
+          </Stack>
+        </Stack>
+      );
+    },
     [props.onFetchAvatarPersonaData]
   );
 
@@ -76,11 +91,19 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
         showCameraSwitcherInLocalPreview={props.isMobile}
         localVideoCameraCycleButtonProps={cameraSwitcherProps}
         onRenderAvatar={onRenderAvatar}
+        /* @conditional-compile-remove(pinned-participants) */
+        showRemoteVideoTileContextualMenu={!props.isMobile}
+        // @TODO: Provide props.drawerMenuHostId to VideoGallery when VideoGallery props support it.
       />
     );
-  }, [videoGalleryProps, props.isMobile, onRenderAvatar, cameraSwitcherProps]);
+  }, [videoGalleryProps, props.isMobile, cameraSwitcherProps, onRenderAvatar]);
 
-  return VideoGalleryMemoized;
+  return (
+    <>
+      <Announcer announcementString={announcerString} ariaLive={'polite'} />
+      {VideoGalleryMemoized}
+    </>
+  );
 };
 
 /**

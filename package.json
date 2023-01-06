@@ -1,0 +1,11 @@
+{
+  "homepage": "https://azure.github.io/communication-ui-library/",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Azure/communication-ui-library.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Azure/communication-ui-library/issues/new/choose"
+  }
+}

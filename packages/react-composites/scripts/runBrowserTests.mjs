@@ -2,9 +2,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { exec } from './common.mjs';
-import child_process from 'child_process';
+import { exec, getBuildFlavor } from './common.mjs';
 import path from 'path';
+import fs from 'fs-extra';
 import { quote } from 'shell-quote';
 import { fileURLToPath } from 'url';
 import yargs from 'yargs/yargs';
@@ -13,18 +13,33 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const PACKLET_ROOT = path.join(__dirname, '..');
-const TEST_ROOT = path.join(PACKLET_ROOT, 'tests', 'browser');
-const TESTS = {
+const BABELRC = path.join(PACKLET_ROOT, '.babelrc.js');
+const BASE_OUTPUT_DIR = path.join(PACKLET_ROOT, 'test-results');
+
+const SRC_ROOT = path.join(PACKLET_ROOT, 'src');
+// The default root directory for Playright tests is the directory that
+// contains the Playwright configuraion file.
+const TEST_ROOT = path.join(PACKLET_ROOT);
+const PREPROCESSED_ROOT = path.join(PACKLET_ROOT, 'preprocessed');
+// For preprocessed tests, we specify a different root directory so that the
+// test snapshot path generation computes the the same relative path to the
+// test root.
+const PREPROCESSED_TEST_ROOT = path.join(PREPROCESSED_ROOT);
+const PREPROCESSED_SRC_ROOT = path.join(PREPROCESSED_ROOT, 'src');
+const TEST_PATH_RELATIVE = {
   hermetic: {
-    call: path.join(TEST_ROOT, 'call', 'hermetic'),
-    chat: path.join(TEST_ROOT, 'chat', 'hermetic')
+    call: path.join('tests', 'browser', 'call', 'hermetic'),
+    chat: path.join('tests', 'browser', 'chat', 'hermetic'),
+    callWithChat: path.join('tests', 'browser', 'callwithchat', 'hermetic')
   },
   live: {
-    call: path.join(TEST_ROOT, 'call', 'live'),
-    chat: path.join(TEST_ROOT, 'chat', 'live'),
-    callWithChat: path.join(TEST_ROOT, 'callWithChat')
+    call: path.join('tests', 'browser', 'call', 'live'),
+    chat: path.join('tests', 'browser', 'chat', 'live'),
+    callWithChat: path.join('tests', 'browser', 'callwithchat', 'live')
   }
 };
+const SNAPSHOT_ROOT = path.join(TEST_ROOT, 'tests', 'browser', 'snapshots');
+
 const PLAYWRIGHT_CONFIG = {
   hermetic: path.join(PACKLET_ROOT, 'playwright.config.hermetic.ts'),
   live: path.join(PACKLET_ROOT, 'playwright.config.live.ts')
@@ -36,19 +51,25 @@ const PLAYWRIGHT_PROJECT = {
 };
 
 async function main(argv) {
+  if (isStableBuild()) {
+    await preprocessTests();
+  }
+  const testRoot = isStableBuild() ? PREPROCESSED_TEST_ROOT : TEST_ROOT;
+
   const args = parseArgs(argv);
+  setup();
   if (args.stress) {
-    await runStress(args);
+    await runStress(testRoot, args);
   } else {
-    await runAll(args);
+    await runAll(testRoot, args);
   }
 }
 
-async function runStress(args) {
+async function runStress(testRoot, args) {
   let failureCount = 0;
   for (let i = 0; i < args.stress; i++) {
     try {
-      await runAll(args);
+      await runAll(testRoot, args);
     } catch (e) {
       failureCount += 1;
       console.log('Test failed with', e);
@@ -60,26 +81,49 @@ async function runStress(args) {
   }
 }
 
-async function runAll(args) {
+async function runAll(testRoot, args) {
+  let success = true;
   for (const composite of args.composites) {
-    await runOne(args, composite, 'hermetic');
+    try {
+      await runOne(testRoot, args, composite, 'hermetic');
+    } catch (e) {
+      if (args.failFast) {
+        throw e;
+      }
+      console.error(`Hermetic tests failed for ${composite} composite: `, e);
+      success = false;
+    }
   }
   if (!args.hermeticOnly) {
     for (const composite of args.composites) {
-      await runOne(args, composite, 'live');
+      try {
+        await runOne(testRoot, args, composite, 'live');
+      } catch (e) {
+        if (args.failFast) {
+          throw e;
+        }
+        console.error(`Live tests failed for ${composite} composite: `, e);
+        success = false;
+      }
     }
+  }
+  if (!success) {
+    throw new Error('Some tests failed!');
   }
 }
 
-async function runOne(args, composite, hermeticity) {
-  const test = TESTS[hermeticity][composite];
+async function runOne(testRoot, args, composite, hermeticity) {
+  const test = path.join(testRoot, TEST_PATH_RELATIVE[hermeticity][composite]);
   if (!test) {
     return;
   }
 
-  const env = {
-    ...process.env,
-    COMMUNICATION_REACT_FLAVOR: args.buildFlavor
+  const extraEnv = {
+    TEST_DIR: testRoot,
+    // Snapshots are always stored with the original test sources, even when the test root
+    // is different due to preprocessed test files.
+    SNAPSHOT_DIR: path.join(SNAPSHOT_ROOT, getBuildFlavor()),
+    PLAYWRIGHT_OUTPUT_DIR: path.join(BASE_OUTPUT_DIR, Date.now().toString())
   };
 
   const cmdArgs = ['npx', 'playwright', 'test', '-c', PLAYWRIGHT_CONFIG[hermeticity], test];
@@ -93,7 +137,10 @@ async function runOne(args, composite, hermeticity) {
   }
   if (args.debug) {
     cmdArgs.push('--debug');
-    env['LOCAL_DEBUG'] = true;
+    extraEnv['LOCAL_DEBUG'] = true;
+  }
+  if (args.failFast) {
+    cmdArgs.push('-x');
   }
   cmdArgs.push(...args['_']);
 
@@ -101,8 +148,48 @@ async function runOne(args, composite, hermeticity) {
   if (args.dryRun) {
     console.log(`DRYRUN: Would have run ${cmd}`);
   } else {
-    await exec(cmd, env);
+    await exec(cmd, extraEnv);
   }
+}
+
+function setup() {
+  console.log('Cleaning up output directory...');
+  fs.rmSync(BASE_OUTPUT_DIR, { recursive: true, force: true });
+}
+
+async function preprocessTests() {
+  fs.rmSync(PREPROCESSED_ROOT, { recursive: true, force: true });
+  await createTsconfigTrampoline();
+  await preprocessDir(SRC_ROOT, PREPROCESSED_SRC_ROOT);
+  await preprocessDir(path.join(TEST_ROOT, 'tests'), path.join(PREPROCESSED_TEST_ROOT, 'tests'));
+}
+
+async function createTsconfigTrampoline() {
+  fs.mkdirsSync(PREPROCESSED_ROOT);
+  fs.writeFileSync(path.join(PREPROCESSED_ROOT, 'tsconfig.json'), '{ "extends": "../tsconfig.preprocess.json" }');
+}
+
+async function preprocessDir(fromDir, toDir) {
+  console.log(`Preprocessing ${fromDir} to ${toDir}`);
+  fs.mkdirsSync(toDir);
+  fs.copySync(fromDir, toDir, { overwrite: true, preserveTimestamps: true });
+  await exec(
+    quote([
+      'npx',
+      'babel',
+      fromDir,
+      '--out-dir',
+      toDir,
+      '--extensions',
+      '.ts,.tsx',
+      '--config-file',
+      BABELRC,
+      '--keep-file-extension'
+    ]),
+    {
+      COMMUNICATION_REACT_FLAVOR: 'stable'
+    }
+  );
 }
 
 function parseArgs(argv) {
@@ -117,8 +204,8 @@ function parseArgs(argv) {
       ['$0 -l', 'Run only hermetic tests. Most useful for local development cycle.'],
       ['$0 -c call', 'Run only CallComposite tests. Used by CI to shard out tests by composite.'],
       [
-        '$0 -b stable',
-        'Run tests for stable flavor build. You can also set the COMMUNICATION_REACT_FLAVOR as is done by package.json invocations.'
+        'rush switch-flavor:stable && $0',
+        'Run tests for stable flavor build. This tool respects the build flavor set via `rush`.'
       ],
       [
         '$0 -- --debug',
@@ -130,15 +217,6 @@ function parseArgs(argv) {
       ]
     ])
     .options({
-      buildFlavor: {
-        alias: 'b',
-        type: 'string',
-        choices: ['beta', 'stable'],
-        describe:
-          'Run tests against the specified build flavor.' +
-          ' Default: `beta`' +
-          ' Overrides the COMMUNICATION_REACT_FLAVOR environment variable.\n'
-      },
       composites: {
         alias: 'c',
         type: 'array',
@@ -157,6 +235,11 @@ function parseArgs(argv) {
         alias: 'n',
         type: 'boolean',
         describe: 'Print what tests would be run without invoking test harness.'
+      },
+      failFast: {
+        alias: 'x',
+        type: 'boolean',
+        describe: 'Stop execution on first failure. Preferred over passing `-x` directly to playwright.'
       },
       hermeticOnly: {
         alias: 'l',
@@ -186,13 +269,14 @@ function parseArgs(argv) {
     })
     .parseSync();
 
-  if (!args.buildFlavor) {
-    args.buildFlavor = process.env['COMMUNICATION_REACT_FLAVOR'] || 'beta';
-  }
   if (!args.composites) {
     args.composites = ['call', 'chat', 'callWithChat'];
   }
   return args;
+}
+
+function isStableBuild() {
+  return getBuildFlavor() === 'stable';
 }
 
 await main(process.argv);

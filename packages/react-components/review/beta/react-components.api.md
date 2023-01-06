@@ -11,8 +11,12 @@ import { IButtonProps } from '@fluentui/react';
 import { IButtonStyles } from '@fluentui/react';
 import { IContextualMenuItem } from '@fluentui/react';
 import { IContextualMenuItemStyles } from '@fluentui/react';
+import { IContextualMenuProps } from '@fluentui/react';
 import { IContextualMenuStyles } from '@fluentui/react';
+import { IDropdownOption } from '@fluentui/react';
+import { IDropdownStyles } from '@fluentui/react';
 import { IIconProps } from '@fluentui/react';
+import { ILinkStyles } from '@fluentui/react';
 import { IMessageBarProps } from '@fluentui/react';
 import { IModalProps } from '@fluentui/react';
 import { IPersonaStyleProps } from '@fluentui/react';
@@ -46,9 +50,71 @@ export interface ActiveFileUpload {
     uploadComplete?: boolean;
 }
 
+// Warning: (ae-internal-missing-underscore) The name "Announcer" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal
+export const Announcer: (props: AnnouncerProps) => JSX.Element;
+
+// Warning: (ae-internal-missing-underscore) The name "AnnouncerProps" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal
+export type AnnouncerProps = {
+    announcementString?: string;
+    ariaLive: 'off' | 'polite' | 'assertive' | undefined;
+};
+
 // @public
 export interface BaseCustomStyles {
     root?: IStyle;
+}
+
+// @beta
+export const BrowserPermissionDenied: (props: BrowserPermissionDeniedProps) => JSX.Element;
+
+// @beta
+export const BrowserPermissionDeniedIOS: (props: BrowserPermissionDeniedIOSProps) => JSX.Element;
+
+// @beta
+export interface BrowserPermissionDeniedIOSProps extends BrowserPermissionDeniedProps {
+    imageSource?: string;
+    strings?: BrowserPermissionDeniedIOSStrings;
+}
+
+// @beta
+export interface BrowserPermissionDeniedIOSStrings extends BrowserPermissionDeniedStrings {
+    imageAltText: string;
+    primaryText: string;
+    secondaryText: string;
+    step1DigitText: string;
+    step1Text: string;
+    step2DigitText: string;
+    step2Text: string;
+    step3DigitText: string;
+    step3Text: string;
+    step4DigitText: string;
+    step4Text: string;
+}
+
+// @beta
+export interface BrowserPermissionDeniedProps {
+    onTroubleshootingClick?: () => void;
+    onTryAgainClick?: () => void;
+    strings?: BrowserPermissionDeniedStrings;
+    styles?: BrowserPermissionDeniedStyles;
+}
+
+// @beta
+export interface BrowserPermissionDeniedStrings {
+    linkText: string;
+    primaryButtonText: string;
+    primaryText: string;
+    secondaryText: string;
+}
+
+// @beta
+export interface BrowserPermissionDeniedStyles extends BaseCustomStyles {
+    primaryButton?: IButtonStyles;
+    troubleshootingLink?: ILinkStyles;
 }
 
 // @public
@@ -64,11 +130,26 @@ export interface CallingTheme {
 
 // @public
 export type CallParticipantListParticipant = ParticipantListParticipant & {
-    state: 'Idle' | 'Connecting' | 'Ringing' | 'Connected' | 'Hold' | 'InLobby' | 'EarlyMedia' | 'Disconnected';
+    state: ParticipantState;
     isScreenSharing?: boolean;
     isMuted?: boolean;
     isSpeaking?: boolean;
+    role?: Role;
 };
+
+// @beta
+export const CameraAndMicrophoneSitePermissions: (props: CameraAndMicrophoneSitePermissionsProps) => JSX.Element;
+
+// @beta
+export interface CameraAndMicrophoneSitePermissionsProps extends CommonSitePermissionsProps {
+    cameraIconName?: string;
+    connectorIconName?: string;
+    microphoneIconName?: string;
+    strings?: CameraAndMicrophoneSitePermissionsStrings;
+}
+
+// @beta
+export type CameraAndMicrophoneSitePermissionsStrings = SitePermissionsStrings;
 
 // @public
 export const CameraButton: (props: CameraButtonProps) => JSX.Element;
@@ -112,6 +193,18 @@ export interface CameraButtonStyles extends ControlBarButtonStyles {
     menuStyles?: Partial<CameraButtonContextualMenuStyles>;
 }
 
+// @beta
+export const CameraSitePermissions: (props: CameraSitePermissionsProps) => JSX.Element;
+
+// @beta
+export interface CameraSitePermissionsProps extends CommonSitePermissionsProps {
+    cameraIconName?: string;
+    strings?: CameraSitePermissionsStrings;
+}
+
+// @beta
+export type CameraSitePermissionsStrings = SitePermissionsStrings;
+
 // @public
 export interface ChatMessage extends MessageCommon {
     // (undocumented)
@@ -139,6 +232,16 @@ export interface ChatMessage extends MessageCommon {
     senderId?: string;
     // (undocumented)
     status?: MessageStatus;
+}
+
+// @beta
+export interface CommonSitePermissionsProps {
+    appName: string;
+    browserHint?: 'safari' | 'unset';
+    onContinueAnywayClick?: () => void;
+    onTroubleshootingClick?: () => void;
+    styles?: SitePermissionsStyles;
+    type: 'request' | 'denied' | 'check';
 }
 
 // @public
@@ -245,20 +348,39 @@ export interface ComponentLocale {
 
 // @public
 export interface ComponentStrings {
+    BrowserPermissionDenied: BrowserPermissionDeniedStrings;
+    BrowserPermissionDeniedIOS: BrowserPermissionDeniedIOSStrings;
+    CameraAndMicrophoneSitePermissionsCheck: SitePermissionsStrings;
+    CameraAndMicrophoneSitePermissionsDenied: SitePermissionsStrings;
+    CameraAndMicrophoneSitePermissionsDeniedSafari: SitePermissionsStrings;
+    CameraAndMicrophoneSitePermissionsRequest: SitePermissionsStrings;
     cameraButton: CameraButtonStrings;
+    CameraSitePermissionsCheck: SitePermissionsStrings;
+    CameraSitePermissionsDenied: SitePermissionsStrings;
+    CameraSitePermissionsDeniedSafari: SitePermissionsStrings;
+    CameraSitePermissionsRequest: SitePermissionsStrings;
     devicesButton: DevicesButtonStrings;
     dialpad: DialpadStrings;
     endCallButton: EndCallButtonStrings;
     errorBar: ErrorBarStrings;
+    holdButton: HoldButtonStrings;
     messageStatusIndicator: MessageStatusIndicatorStrings;
     messageThread: MessageThreadStrings;
     microphoneButton: MicrophoneButtonStrings;
+    MicrophoneSitePermissionsCheck: SitePermissionsStrings;
+    MicrophoneSitePermissionsDenied: SitePermissionsStrings;
+    MicrophoneSitePermissionsDeniedSafari: SitePermissionsStrings;
+    MicrophoneSitePermissionsRequest: SitePermissionsStrings;
     participantItem: ParticipantItemStrings;
     participantsButton: ParticipantsButtonStrings;
     screenShareButton: ScreenShareButtonStrings;
     sendBox: SendBoxStrings;
     typingIndicator: TypingIndicatorStrings;
+    UnsupportedBrowser: UnsupportedBrowserStrings;
+    UnsupportedBrowserVersion: UnsupportedBrowserVersionStrings;
+    UnsupportedOperatingSystem: UnsupportedOperatingSystemStrings;
     videoGallery: VideoGalleryStrings;
+    videoTile: VideoTileStrings;
 }
 
 // Warning: (ae-internal-missing-underscore) The name "consumerPermissions" should be prefixed with an underscore because the declaration is marked as @internal
@@ -332,6 +454,8 @@ export type CustomAvatarOptions = {
     size?: PersonaSize;
     styles?: IStyleFunctionOrObject<IPersonaStyleProps, IPersonaStyles>;
     text?: string;
+    participantState?: ParticipantState;
+    showUnknownPersonaCoin?: boolean;
 };
 
 // @public
@@ -355,6 +479,7 @@ export const DEFAULT_COMPONENT_ICONS: {
     ControlButtonMicOn: JSX.Element;
     ControlButtonOptions: JSX.Element;
     ControlButtonParticipants: JSX.Element;
+    ControlButtonParticipantsContextualMenuItem: JSX.Element;
     ControlButtonScreenShareStart: JSX.Element;
     ControlButtonScreenShareStop: JSX.Element;
     CancelFileUpload: JSX.Element;
@@ -391,13 +516,48 @@ export const DEFAULT_COMPONENT_ICONS: {
     ParticipantItemOptions: JSX.Element;
     ParticipantItemOptionsHovered: JSX.Element;
     ParticipantItemScreenShareStart: JSX.Element;
-    HoldCall: JSX.Element;
+    HoldCallContextualMenuItem: JSX.Element;
+    HoldCallButton: JSX.Element;
     ResumeCall: JSX.Element;
     SendBoxSend: JSX.Element;
     SendBoxSendHovered: JSX.Element;
     VideoTileMicOff: JSX.Element;
-    BackSpace: JSX.Element;
+    DialpadBackspace: JSX.Element;
+    SitePermissionsSparkle: JSX.Element;
+    SitePermissionCamera: JSX.Element;
+    SitePermissionMic: JSX.Element;
+    SitePermissionCameraDenied: JSX.Element;
+    SitePermissionMicDenied: JSX.Element;
+    UnsupportedEnvironmentWarning: JSX.Element;
+    BrowserPermissionDeniedError: JSX.Element;
+    VideoTilePinned: JSX.Element;
+    VideoTileMoreOptions: JSX.Element;
+    VideoTileScaleFit: JSX.Element;
+    VideoTileScaleFill: JSX.Element;
+    PinParticipant: JSX.Element;
+    UnpinParticipant: JSX.Element;
 };
+
+// @internal
+export const _DevicePermissionDropdown: (props: _DevicePermissionDropdownProps) => JSX.Element;
+
+// @internal
+export interface _DevicePermissionDropdownProps {
+    askDevicePermission?(constrain: _PermissionConstraints): Promise<void>;
+    constrain?: _PermissionConstraints;
+    icon?: JSX.Element;
+    onClick?: () => void;
+    options?: IDropdownOption[];
+    strings?: _DevicePermissionDropdownStrings;
+    styles?: Partial<IDropdownStyles>;
+}
+
+// @internal
+export interface _DevicePermissionDropdownStrings {
+    actionButtonContent?: string;
+    label?: string;
+    placeHolderText: string;
+}
 
 // @public
 export const DevicesButton: (props: DevicesButtonProps) => JSX.Element;
@@ -443,29 +603,23 @@ export interface DevicesButtonStyles extends ControlBarButtonStyles {
 export const Dialpad: (props: DialpadProps) => JSX.Element;
 
 // @beta
-export interface DialpadButtonProps {
-    // (undocumented)
-    primaryContent: string;
-    // (undocumented)
-    secondaryContent?: string;
-}
-
-// @beta
 export interface DialpadProps {
+    isMobile?: boolean;
     onChange?: (input: string) => void;
     onClickDialpadButton?: (buttonValue: string, buttonIndex: number) => void;
-    onDisplayDialpadInput?: (input: string) => string;
     onSendDtmfTone?: (dtmfTone: DtmfTone) => Promise<void>;
+    showDeleteButton?: boolean;
     // (undocumented)
     strings?: DialpadStrings;
     // (undocumented)
     styles?: DialpadStyles;
+    textFieldValue?: string;
 }
 
 // @beta
 export interface DialpadStrings {
     // (undocumented)
-    deleteButtonAriaLabel: string;
+    deleteButtonAriaLabel?: string;
     // (undocumented)
     placeholderText: string;
 }
@@ -477,11 +631,11 @@ export interface DialpadStyles {
     // (undocumented)
     deleteIcon?: IButtonStyles;
     // (undocumented)
-    primaryContent?: IStyle;
+    digit?: IStyle;
+    // (undocumented)
+    letter?: IStyle;
     // (undocumented)
     root?: IStyle;
-    // (undocumented)
-    secondaryContent?: IStyle;
     // (undocumented)
     textField?: Partial<ITextFieldStyles>;
 }
@@ -493,6 +647,7 @@ export const _DrawerMenu: (props: _DrawerMenuProps) => JSX.Element;
 export interface _DrawerMenuItemProps {
     disabled?: boolean;
     iconProps?: IIconProps;
+    id?: string;
     // (undocumented)
     itemKey: string;
     // (undocumented)
@@ -561,6 +716,7 @@ export const ErrorBar: (props: ErrorBarProps) => JSX.Element;
 // @public
 export interface ErrorBarProps extends IMessageBarProps {
     activeErrorMessages: ActiveErrorMessage[];
+    ignorePremountErrors?: boolean;
     strings?: ErrorBarStrings;
 }
 
@@ -568,12 +724,14 @@ export interface ErrorBarProps extends IMessageBarProps {
 export interface ErrorBarStrings {
     accessDenied: string;
     callCameraAccessDenied: string;
+    callCameraAccessDeniedSafari: string;
     callCameraAlreadyInUse: string;
     callLocalVideoFreeze: string;
     callMacOsCameraAccessDenied: string;
     callMacOsMicrophoneAccessDenied: string;
     callMacOsScreenShareAccessDenied: string;
     callMicrophoneAccessDenied: string;
+    callMicrophoneAccessDeniedSafari: string;
     callMicrophoneMutedBySystem: string;
     callMicrophoneUnmutedBySystem: string;
     callNetworkQualityLow: string;
@@ -696,6 +854,15 @@ export interface GridLayoutStyles extends BaseCustomStyles {
     children?: IStyle;
 }
 
+// @internal
+export const _HighContrastAwareIcon: (props: _HighContrastAwareIconProps) => JSX.Element;
+
+// @internal (undocumented)
+export interface _HighContrastAwareIconProps {
+    disabled?: boolean | undefined;
+    iconName: string;
+}
+
 // @beta
 export const HoldButton: (props: HoldButtonProps) => JSX.Element;
 
@@ -709,7 +876,7 @@ export interface HoldButtonProps extends ControlBarButtonProps {
 export interface HoldButtonStrings {
     offLabel: string;
     onLabel: string;
-    toolTipOffContent: string;
+    tooltipOffContent: string;
     tooltipOnContent: string;
 }
 
@@ -915,6 +1082,7 @@ export interface MessageThreadStrings {
     friday: string;
     liveAuthorIntro: string;
     messageContentAriaText: string;
+    messageContentMineAriaText: string;
     messageReadCount?: string;
     monday: string;
     newMessagesIndicator: string;
@@ -936,6 +1104,7 @@ export interface MessageThreadStyles extends BaseCustomStyles {
     chatContainer?: ComponentSlotStyle;
     chatItemMessageContainer?: ComponentSlotStyle;
     chatMessageContainer?: ComponentSlotStyle;
+    failedMyChatMessageContainer?: ComponentSlotStyle;
     loadPreviousMessagesButtonContainer?: IStyle;
     messageStatusContainer?: (mine: boolean) => IStyle;
     myChatItemMessageContainer?: ComponentSlotStyle;
@@ -989,6 +1158,18 @@ export interface MicrophoneButtonStyles extends ControlBarButtonStyles {
     menuStyles?: Partial<MicrophoneButtonContextualMenuStyles>;
 }
 
+// @beta
+export const MicrophoneSitePermissions: (props: MicrophoneSitePermissionsProps) => JSX.Element;
+
+// @beta
+export interface MicrophoneSitePermissionsProps extends CommonSitePermissionsProps {
+    microphoneIconName?: string;
+    strings?: MicrophoneSitePermissionsStrings;
+}
+
+// @beta
+export type MicrophoneSitePermissionsStrings = SitePermissionsStrings;
+
 // @internal (undocumented)
 export const _ModalClone: React_3.FunctionComponent<_ExtendedIModalProps>;
 
@@ -1022,6 +1203,7 @@ export interface ParticipantItemProps {
     onClick?: (props?: ParticipantItemProps) => void;
     onRenderAvatar?: OnRenderAvatarCallback;
     onRenderIcon?: (props?: ParticipantItemProps) => JSX.Element | null;
+    participantState?: ParticipantState;
     presence?: PersonaPresence;
     showParticipantOverflowTooltip?: boolean;
     strings?: Partial<ParticipantItemStrings>;
@@ -1035,6 +1217,9 @@ export interface ParticipantItemStrings {
     isMeText: string;
     menuTitle: string;
     mutedIconLabel: string;
+    participantStateConnecting?: string;
+    participantStateHold?: string;
+    participantStateRinging?: string;
     removeButtonLabel: string;
     sharingIconLabel: string;
 }
@@ -1118,6 +1303,7 @@ export interface ParticipantsButtonProps extends ControlBarButtonProps {
 
 // @public
 export interface ParticipantsButtonStrings {
+    copyInviteLinkActionedAriaLabel: string;
     copyInviteLinkButtonLabel: string;
     label: string;
     menuHeader: string;
@@ -1131,12 +1317,22 @@ export interface ParticipantsButtonStyles extends ControlBarButtonStyles {
     menuStyles?: Partial<ParticipantsButtonContextualMenuStyles>;
 }
 
+// @public
+export type ParticipantState = 'Idle' | 'Connecting' | 'Ringing' | 'Connected' | 'Hold' | 'InLobby' | 'EarlyMedia' | 'Disconnected';
+
+// @internal
+export type _PermissionConstraints = {
+    audio: boolean;
+    video: boolean;
+};
+
 // @internal (undocumented)
 export type _Permissions = {
     cameraButton: boolean;
     microphoneButton: boolean;
     screenShare: boolean;
-    participantList: boolean;
+    removeParticipantButton: boolean;
+    role?: Role;
 };
 
 // @internal (undocumented)
@@ -1188,24 +1384,29 @@ export type ReadReceiptsBySenderId = {
 // @internal
 export const _RemoteVideoTile: React_2.MemoExoticComponent<(props: {
     userId: string;
+    remoteParticipant: VideoGalleryRemoteParticipant;
     onCreateRemoteStreamView?: ((userId: string, options?: VideoStreamOptions | undefined) => Promise<void | CreateVideoStreamViewResult>) | undefined;
     onDisposeRemoteStreamView?: ((userId: string) => Promise<void>) | undefined;
     isAvailable?: boolean | undefined;
     isReceiving?: boolean | undefined;
-    isMuted?: boolean | undefined;
-    isSpeaking?: boolean | undefined;
     isScreenSharingOn?: boolean | undefined;
     renderElement?: HTMLElement | undefined;
-    displayName?: string | undefined;
     remoteVideoViewOptions?: VideoStreamOptions | undefined;
     onRenderAvatar?: OnRenderAvatarCallback | undefined;
     showMuteIndicator?: boolean | undefined;
     showLabel?: boolean | undefined;
     personaMinSize?: number | undefined;
+    strings?: VideoGalleryStrings | undefined;
+    participantState?: ParticipantState | undefined;
+    showRemoteVideoTileContextualMenu?: boolean | undefined;
+    drawerMenuHostId?: string | undefined;
+    onPinParticipant?: ((userId: string) => void) | undefined;
+    onUnpinParticipant?: ((userId: string) => void) | undefined;
+    isPinned?: boolean | undefined;
 }) => JSX.Element>;
 
-// @beta (undocumented)
-export type Role = 'Presenter' | 'Attendee' | 'Consumer';
+// @beta
+export type Role = 'Presenter' | 'Attendee' | 'Consumer' | 'Organizer';
 
 // @public
 export const ScreenShareButton: (props: ScreenShareButtonProps) => JSX.Element;
@@ -1274,6 +1475,21 @@ export interface SendBoxStylesProps extends BaseCustomStyles {
     textFieldContainer?: IStyle;
 }
 
+// @beta
+export type SitePermissionsStrings = {
+    primaryText?: string;
+    secondaryText?: string;
+    linkText?: string;
+    primaryButtonText?: string;
+    ariaLabel?: string;
+};
+
+// @beta
+export interface SitePermissionsStyles extends BaseCustomStyles {
+    primaryButton?: IButtonStyles;
+    troubleshootingLink?: ILinkStyles;
+}
+
 // @public
 export const StreamMedia: (props: StreamMediaProps) => JSX.Element;
 
@@ -1307,6 +1523,33 @@ export interface TopicUpdatedSystemMessage extends SystemMessageCommon {
     topic: string;
 }
 
+// @internal
+export const _TroubleshootingGuideErrorBar: (props: _TroubleshootingGuideErrorBarProps) => JSX.Element;
+
+// @internal
+export interface _TroubleshootingGuideErrorBarProps extends ErrorBarProps {
+    onNetworkingTroubleshootingClick?: () => void;
+    onPermissionsTroubleshootingClick?: (permissionsState: {
+        camera: PermissionState;
+        microphone: PermissionState;
+    }) => void;
+    permissionsState?: {
+        camera: PermissionState;
+        microphone: PermissionState;
+    };
+    troubleshootingGuideStrings: _TroubleshootingGuideErrorBarStrings;
+}
+
+// @internal
+export interface _TroubleshootingGuideErrorBarStrings {
+    // (undocumented)
+    devicePermissionLinkText?: string;
+    // (undocumented)
+    dismissButtonText?: string;
+    // (undocumented)
+    networkTroubleshootingLinkText?: string;
+}
+
 // @public
 export const TypingIndicator: (props: TypingIndicatorProps) => JSX.Element;
 
@@ -1331,6 +1574,56 @@ export interface TypingIndicatorStrings {
 export interface TypingIndicatorStylesProps extends BaseCustomStyles {
     typingString?: IStyle;
     typingUserDisplayName?: IStyle;
+}
+
+// @beta
+export const UnsupportedBrowser: (props: UnsupportedBrowserProps) => JSX.Element;
+
+// @beta
+export interface UnsupportedBrowserProps {
+    onTroubleshootingClick?: () => void;
+    strings?: UnsupportedBrowserStrings;
+}
+
+// @beta
+export interface UnsupportedBrowserStrings {
+    moreHelpLinkText: string;
+    primaryText: string;
+    secondaryText: string;
+}
+
+// @beta
+export const UnsupportedBrowserVersion: (props: UnsupportedBrowserVersionProps) => JSX.Element;
+
+// @beta
+export interface UnsupportedBrowserVersionProps {
+    onContinueAnywayClick?: () => void;
+    onTroubleshootingClick?: () => void;
+    strings?: UnsupportedBrowserVersionStrings;
+}
+
+// @beta
+export interface UnsupportedBrowserVersionStrings {
+    continueAnywayButtonText?: string;
+    moreHelpLinkText: string;
+    primaryText: string;
+    secondaryText: string;
+}
+
+// @beta
+export const UnsupportedOperatingSystem: (props: UnsupportedOperatingSystemProps) => JSX.Element;
+
+// @beta
+export interface UnsupportedOperatingSystemProps {
+    onTroubleshootingClick?: () => void;
+    strings?: UnsupportedOperatingSystemStrings;
+}
+
+// @beta
+export interface UnsupportedOperatingSystemStrings {
+    moreHelpLinkText: string;
+    primaryText: string;
+    secondaryText: string;
 }
 
 // @public
@@ -1380,13 +1673,17 @@ export interface VideoGalleryProps {
     onCreateRemoteStreamView?: (userId: string, options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
     onDisposeLocalStreamView?: () => void;
     onDisposeRemoteStreamView?: (userId: string) => Promise<void>;
+    onPinParticipant?: (userId: string) => void;
     onRenderAvatar?: OnRenderAvatarCallback;
     onRenderLocalVideoTile?: (localParticipant: VideoGalleryLocalParticipant) => JSX.Element;
     onRenderRemoteVideoTile?: (remoteParticipant: VideoGalleryRemoteParticipant) => JSX.Element;
+    onUnpinParticipant?: (userId: string) => void;
+    pinnedParticipants?: string[];
     remoteParticipants?: VideoGalleryRemoteParticipant[];
     remoteVideoViewOptions?: VideoStreamOptions;
     showCameraSwitcherInLocalPreview?: boolean;
     showMuteIndicator?: boolean;
+    showRemoteVideoTileContextualMenu?: boolean;
     strings?: Partial<VideoGalleryStrings>;
     styles?: VideoGalleryStyles;
 }
@@ -1395,6 +1692,8 @@ export interface VideoGalleryProps {
 export interface VideoGalleryRemoteParticipant extends VideoGalleryParticipant {
     isSpeaking?: boolean;
     screenShareStream?: VideoGalleryStream;
+    // @beta
+    state?: ParticipantState;
 }
 
 // @public
@@ -1404,17 +1703,22 @@ export interface VideoGalleryStream {
     isMirrored?: boolean;
     isReceiving?: boolean;
     renderElement?: HTMLElement;
+    scalingMode?: ViewScalingMode;
 }
 
 // @public
 export interface VideoGalleryStrings {
     displayNamePlaceholder: string;
+    fillRemoteParticipantFrame: string;
+    fitRemoteParticipantToFrame: string;
     localVideoCameraSwitcherLabel: string;
     localVideoLabel: string;
     localVideoMovementLabel: string;
     localVideoSelectedDescription: string;
+    pinParticipantForMe: string;
     screenIsBeingSharedMessage: string;
     screenShareLoadingMessage: string;
+    unpinParticipantForMe: string;
 }
 
 // @public
@@ -1436,20 +1740,36 @@ export const VideoTile: (props: VideoTileProps) => JSX.Element;
 // @public
 export interface VideoTileProps {
     children?: React_2.ReactNode;
+    contextualMenu?: IContextualMenuProps;
     displayName?: string;
     initialsName?: string;
     isMirrored?: boolean;
     isMuted?: boolean;
+    isPinned?: boolean;
     isSpeaking?: boolean;
     noVideoAvailableAriaLabel?: string;
+    onLongTouch?: () => void;
     onRenderPlaceholder?: OnRenderAvatarCallback;
+    participantState?: ParticipantState;
     personaMaxSize?: number;
     personaMinSize?: number;
     renderElement?: JSX.Element | null;
     showLabel?: boolean;
     showMuteIndicator?: boolean;
+    // (undocumented)
+    strings?: VideoTileStrings;
     styles?: VideoTileStylesProps;
     userId?: string;
+}
+
+// @beta
+export interface VideoTileStrings {
+    // (undocumented)
+    participantStateConnecting: string;
+    // (undocumented)
+    participantStateHold: string;
+    // (undocumented)
+    participantStateRinging: string;
 }
 
 // @public

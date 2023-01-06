@@ -49,9 +49,9 @@ jobs:
           echo Days since last commit: $days
 
           if [ $days = "0" ]; then
-            echo "::set-output name=hasChanged::true"
+            echo "hasChanged=true" >> $GITHUB_OUTPUT
           else
-            echo "::set-output name=hasChanged::false"
+            echo "hasChanged=false" >> $GITHUB_OUTPUT
           fi
 
   release:
@@ -88,7 +88,7 @@ jobs:
       - name: Get datetime for alpha release name
         id: datetime
         run: |
-          echo "::set-output name=datetime::$(date +'%Y%m%d%H%M')"
+          echo "datetime=$(date +'%Y%m%d%H%M')" >> $GITHUB_OUTPUT
 
       # Bump alpha package versions
       - name: Bump alpha package versions
@@ -115,7 +115,7 @@ jobs:
         run: |
           ver=$(jq -r .version packages/communication-react/package.json)
           echo version: $ver
-          echo "::set-output name=version::$ver"
+          echo "version=$ver" >> $GITHUB_OUTPUT
 
       # Push git tags
       - name: Create and push git tags
@@ -138,14 +138,35 @@ jobs:
             az extension add --name storage-preview
             az storage azcopy blob upload -s "packages/communication-react/release/*" -c "drops/azure-communication-services/react/npm/${{ steps.version.outputs.version }}" --account-name azuresdkpartnerdrops
 
-      - name: Install github actions dependencies
-        run: npm ci
-        working-directory: ./.github/workflows/azure-pipeline-action-fork
-
       - name: Trigger alpha package release pipeline
-        uses: ./.github/workflows/azure-pipeline-action-fork
+        uses: Azure/pipelines@v1.2
         with:
           azure-devops-project-url: 'https://dev.azure.com/azure-sdk/internal'
           azure-pipeline-name: 'azuresdkpartnerdrops to npm'
           azure-devops-token: '${{ secrets.AZURE_SDK_RELEASE_PIPELINE_DEVOPS_TOKEN }}'
           azure-pipeline-variables: '{"accessLevel": "public", "BlobPath": "azure-communication-services/react/npm/${{ steps.version.outputs.version }}", "registry": "https://registry.npmjs.org/", "skipDiff": "False", "tag": "dev"}'
+
+      - name: Check if npm package published successfully
+        run: node common/scripts/poll-npm-package-published.mjs ${{ steps.version.outputs.version }}
+
+  check_failure:
+    runs-on: ubuntu-latest
+    needs: release
+    if: failure()
+    name: Create GitHub issue on failure
+    steps:
+      # Failure of this action indicates a problem with our infrastructure.
+      # Always file a GitHub issue to alert the OCE of the problem.
+      - name: Create GitHub issue
+        id: create-issue
+        run: |
+          # check for an issue that is already open
+          curl -H "Accept: application/vnd.github.v3+json" https://api.github.com/search/issues?q=org:Azure+repo:communication-ui-library+label:NIGHTLY_CD_FAILURE+state:open > $HOME/open_issues.json
+          issue_count=$(jq -r '.total_count' $HOME/open_issues.json)
+          if [ $issue_count -gt 0 ]; then
+            echo "No need to create new issue, one already exists"
+          else
+            curl -X POST -H 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' https://api.github.com/repos/Azure/communication-ui-library/issues -d '{"title":"Nightly workflow to release alpha package failed", "body": "Please investigate: https://github.com/Azure/communication-ui-library/actions/runs/${{ github.run_id }}", "labels":["NIGHTLY_CD_FAILURE"]}'
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

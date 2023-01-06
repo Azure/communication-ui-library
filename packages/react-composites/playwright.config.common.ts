@@ -9,10 +9,18 @@ const DESKTOP_VIEWPORT = {
   height: 768
 };
 
-const TEST_ROOT = './tests/browser';
-const OUTPUT_DIR = './test-results';
-
-const buildFlavor: 'beta' | 'stable' = process.env['COMMUNICATION_REACT_FLAVOR'] === 'stable' ? 'stable' : 'beta';
+const testDir = process.env.TEST_DIR;
+if (!testDir) {
+  throw new Error('Environment variable TEST_DIR not set');
+}
+const snapshotDir = process.env.SNAPSHOT_DIR;
+if (!snapshotDir) {
+  throw new Error('Environment variable SNAPSHOT_DIR not set');
+}
+const outputDir = process.env.PLAYWRIGHT_OUTPUT_DIR;
+if (!outputDir) {
+  throw new Error('Environment variable PLAYWRIGHT_OUTPUT_DIR not set');
+}
 
 const chromeLaunchOptions = {
   channel: 'chrome',
@@ -33,14 +41,14 @@ const chromeLaunchOptions = {
   ]
 };
 
-const CI_REPORTERS: ReporterDescription[] = [['dot'], ['json', { outputFile: `${OUTPUT_DIR}/e2e-results.json` }]];
+const CI_REPORTERS: ReporterDescription[] = [['dot'], ['json', { outputFile: `${outputDir}/e2e-results.json` }]];
 const LOCAL_REPORTERS: ReporterDescription[] = [['list']];
 
 const SECOND = 1000;
 const MINUTE = 60 * SECOND;
 
 const config: PlaywrightTestConfig = {
-  outputDir: OUTPUT_DIR,
+  outputDir: outputDir,
   // Extend per-test timeout for local debugging so that developers can single-step through
   // the test in playwright inspector.
   timeout: process.env.LOCAL_DEBUG ? 10 * MINUTE : 1 * MINUTE,
@@ -59,14 +67,19 @@ const config: PlaywrightTestConfig = {
       name: 'Desktop Chrome',
       use: {
         viewport: DESKTOP_VIEWPORT,
-        launchOptions: { ...chromeLaunchOptions }
+        launchOptions: { ...chromeLaunchOptions },
+        contextOptions: {
+          userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0'
+        }
       }
     },
     {
       name: 'Mobile Android Portrait',
       use: {
         ...devices['Nexus 5'],
-        launchOptions: { ...chromeLaunchOptions }
+        launchOptions: { ...chromeLaunchOptions },
+        userAgent:
+          'Mozilla/5.0 (Linux; Android 12; SM-S901B) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.5359.125 Mobile Safari/537.36'
       }
     },
     {
@@ -74,7 +87,7 @@ const config: PlaywrightTestConfig = {
       use: {
         // Nexus 5 user agent string, taken from node_modules/.../playwright-core/.../deviceDescriptorsSource.json
         userAgent:
-          'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4641.0 Mobile Safari/537.36',
+          'Mozilla/5.0 (Linux; Android 12; SM-S901B) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.5359.125 Mobile Safari/537.36',
         // Support smallest supported mobile viewport (iPhone 5/SE) ({ width: 568, height: 320 })
         viewport: { width: 568, height: 320 },
         deviceScaleFactor: 2,
@@ -86,7 +99,8 @@ const config: PlaywrightTestConfig = {
     }
   ],
   reporter: process.env.CI ? CI_REPORTERS : LOCAL_REPORTERS,
-  snapshotDir: `${TEST_ROOT}/snapshots/${buildFlavor}`
+  testDir: testDir,
+  snapshotDir: snapshotDir
 };
 
 export default config;

@@ -217,13 +217,15 @@ async function createViewLocalVideo(
     return;
   }
 
+  // "Stopping" only happens if the stream was in "rendering" but `disposeView` was called.
+  // Now that `createView` has been re-called, we can flip the state back to "rendering".
   if (renderInfo.status === 'Stopping') {
     _logEvent(callingStatefulLogger, {
       name: EventNames.LOCAL_STREAM_STOPPING,
       level: 'warning',
-      message: 'LocalVideoStream is in the middle of stopping.'
+      message: 'LocalVideoStream was marked as stopping by dispose view. Resetting state to "Rendering".'
     });
-    console.warn('LocalVideoStream is in the middle of stopping');
+    internalContext.setLocalRenderInfo(callId, renderInfo.stream, 'Rendering', renderInfo.renderer);
     return;
   }
 
@@ -393,7 +395,7 @@ function disposeViewRemoteVideo(
   const streamLogInfo = { callId, participantKey, streamId };
 
   _logEvent(callingStatefulLogger, {
-    name: EventNames.START_DISPOSE_LOCAL_STREAM,
+    name: EventNames.START_DISPOSE_REMOTE_STREAM,
     level: 'info',
     message: 'Start disposing remote stream.',
     data: streamLogInfo
@@ -418,7 +420,7 @@ function disposeViewRemoteVideo(
   if (renderInfo.status === 'Rendering') {
     _logEvent(callingStatefulLogger, {
       name: EventNames.REMOTE_STREAM_STOPPING,
-      level: 'warning',
+      level: 'info',
       message: 'Remote stream is still rendering. Changing status to stopping.',
       data: streamLogInfo
     });
@@ -438,7 +440,7 @@ function disposeViewRemoteVideo(
   } else {
     _logEvent(callingStatefulLogger, {
       name: EventNames.REMOTE_RENDERER_NOT_FOUND,
-      level: 'warning',
+      level: 'error',
       message: 'Cannot find remote view renderer.',
       data: streamLogInfo
     });
@@ -446,24 +448,83 @@ function disposeViewRemoteVideo(
 }
 
 function disposeViewLocalVideo(context: CallContext, internalContext: InternalCallContext, callId: string): void {
+  const streamLogInfo = { callId };
+
+  _logEvent(callingStatefulLogger, {
+    name: EventNames.START_DISPOSE_LOCAL_STREAM,
+    level: 'info',
+    message: 'Start disposing local stream.',
+    data: streamLogInfo
+  });
+
   context.setLocalVideoStreamRendererView(callId, undefined);
 
   const renderInfo = internalContext.getLocalRenderInfo(callId);
   if (!renderInfo) {
+    _logEvent(callingStatefulLogger, {
+      name: EventNames.LOCAL_DISPOSE_INFO_NOT_FOUND,
+      level: 'error',
+      message: 'Cannot find render info when disposing local stream.',
+      data: streamLogInfo
+    });
     return;
   }
 
-  // Sets the status and also renderer. I think we need to always set renderer to undefined since in all status when
-  // cleaned up should have renderer as undefined. If the status is 'Rendered' and renderer is not defined it should
-  // be cleaned up below so we can set it to undefined here.
-  if (renderInfo.status === 'Rendering') {
-    internalContext.setLocalRenderInfo(callId, renderInfo.stream, 'Stopping', undefined);
-  } else {
-    internalContext.setLocalRenderInfo(callId, renderInfo.stream, 'NotRendered', undefined);
+  // Nothing to dispose of or clean up -- we can safely exit early here.
+  if (renderInfo.status === 'NotRendered') {
+    _logEvent(callingStatefulLogger, {
+      name: EventNames.LOCAL_STREAM_ALREADY_DISPOSED,
+      level: 'info',
+      message: 'LocalVideoStream is already disposed.'
+    });
+    return;
   }
 
+  // Status is already marked as "stopping" so we can exit early here. This is because stopping only occurs
+  // when the stream is being created in createView but hasn't been completed being created yet. The createView
+  // method will see the "stopping" status and perform the cleanup
+  if (renderInfo.status === 'Stopping') {
+    _logEvent(callingStatefulLogger, {
+      name: EventNames.LOCAL_STREAM_STOPPING,
+      level: 'info',
+      message: 'Local stream is already stopping.',
+      data: streamLogInfo
+    });
+    return;
+  }
+
+  // If the stream is in the middle of being rendered (i.e. has state "Rendering"), we need the status as
+  // "stopping" without performing any cleanup. This will tell the `createView` method that it should stop
+  // rendering and clean up the state once the view has finished being created.
+  if (renderInfo.status === 'Rendering') {
+    _logEvent(callingStatefulLogger, {
+      name: EventNames.REMOTE_STREAM_STOPPING,
+      level: 'info',
+      message: 'Remote stream is still rendering. Changing status to stopping.',
+      data: streamLogInfo
+    });
+    internalContext.setLocalRenderInfo(callId, renderInfo.stream, 'Stopping', renderInfo.renderer);
+    return;
+  }
+
+  // Else the state must be in the "Rendered" state, so we can dispose the renderer and clean up the state.
+  internalContext.setLocalRenderInfo(callId, renderInfo.stream, 'NotRendered', undefined);
+
   if (renderInfo.renderer) {
+    _logEvent(callingStatefulLogger, {
+      name: EventNames.DISPOSING_LOCAL_RENDERER,
+      level: 'info',
+      message: 'Disposing local view renderer.',
+      data: streamLogInfo
+    });
     renderInfo.renderer.dispose();
+  } else {
+    _logEvent(callingStatefulLogger, {
+      name: EventNames.LOCAL_RENDERER_NOT_FOUND,
+      level: 'error',
+      message: 'Cannot find renderer when disposing local stream.',
+      data: streamLogInfo
+    });
   }
 }
 
@@ -472,21 +533,48 @@ function disposeViewUnparentedVideo(
   internalContext: InternalCallContext,
   stream: LocalVideoStreamState
 ): void {
+  _logEvent(callingStatefulLogger, {
+    name: EventNames.START_DISPOSE_LOCAL_STREAM,
+    level: 'info',
+    message: 'Start disposing unparented local stream.'
+  });
+
   context.deleteDeviceManagerUnparentedView(stream);
 
   const renderInfo = internalContext.getUnparentedRenderInfo(stream);
   if (!renderInfo) {
+    _logEvent(callingStatefulLogger, {
+      name: EventNames.LOCAL_DISPOSE_INFO_NOT_FOUND,
+      level: 'error',
+      message: 'Cannot find render info when disposing unparented local stream.'
+    });
     return;
   }
 
   if (renderInfo.status === 'Rendering') {
+    _logEvent(callingStatefulLogger, {
+      name: EventNames.LOCAL_STREAM_STOPPING,
+      level: 'info',
+      message: 'Unparented local stream is still rendering. Changing status to stopping.'
+    });
     internalContext.setUnparentedRenderInfo(stream, renderInfo.stream, 'Stopping', undefined);
   } else {
     internalContext.deleteUnparentedRenderInfo(stream);
   }
 
   if (renderInfo.renderer) {
+    _logEvent(callingStatefulLogger, {
+      name: EventNames.DISPOSING_LOCAL_RENDERER,
+      level: 'info',
+      message: 'Disposing unparented local view renderer.'
+    });
     renderInfo.renderer.dispose();
+  } else {
+    _logEvent(callingStatefulLogger, {
+      name: EventNames.LOCAL_RENDERER_NOT_FOUND,
+      level: 'error',
+      message: 'Cannot find renderer when disposing unparented local stream.'
+    });
   }
 }
 
@@ -509,9 +597,18 @@ export function createView(
     return createViewLocalVideo(context, internalContext, callId, options);
   } else if (!('id' in stream) && !callId) {
     // Render LocalVideoStream that is not part of a Call
-    return createViewUnparentedVideo(context, internalContext, stream, options);
+    // Because it is not part of the call we don't tee errors to state naturally (e.g. via a Call Client function such as startVideo).
+    // We do not have a startLocalPreviewVideo function, so as a workaround we ensure any errors are propagated here.
+    return context.withAsyncErrorTeedToState(
+      async () => await createViewUnparentedVideo(context, internalContext, stream, options),
+      'Call.startVideo'
+    )();
   } else {
-    console.warn('Invalid combination of parameters');
+    _logEvent(callingStatefulLogger, {
+      name: EventNames.CREATE_STREAM_INVALID_PARAMS,
+      level: 'warning',
+      message: 'Create View invalid combination of parameters.'
+    });
     return Promise.resolve(undefined);
   }
 }
@@ -534,9 +631,18 @@ export function disposeView(
     disposeViewLocalVideo(context, internalContext, callId);
   } else if (!('id' in stream) && !callId) {
     // Stop rendering LocalVideoStream that is not part of a Call
-    disposeViewUnparentedVideo(context, internalContext, stream);
+    // Because it is not part of the call we don't tee errors to state naturally (e.g. via a Call Client function such as startVideo).
+    // We do not have a stopLocalPreviewVideo function, so as a workaround we ensure any errors are propagated here.
+    context.withErrorTeedToState(
+      () => disposeViewUnparentedVideo(context, internalContext, stream),
+      'Call.stopVideo'
+    )();
   } else {
-    console.warn('Invalid combination of parameters');
+    _logEvent(callingStatefulLogger, {
+      name: EventNames.DISPOSE_STREAM_INVALID_PARAMS,
+      level: 'warning',
+      message: 'Dispose View invalid combination of parameters.'
+    });
     return;
   }
 }

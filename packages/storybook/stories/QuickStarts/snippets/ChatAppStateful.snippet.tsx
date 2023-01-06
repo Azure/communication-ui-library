@@ -1,12 +1,13 @@
 import { ChatThreadClient } from '@azure/communication-chat';
 import { AzureCommunicationTokenCredential } from '@azure/communication-common';
 import { createStatefulChatClient, DEFAULT_COMPONENT_ICONS } from '@azure/communication-react';
-import { registerIcons } from '@fluentui/react';
+import { initializeIcons, registerIcons } from '@fluentui/react';
 import React from 'react';
 
-function App(): JSX.Element {
-  registerIcons({ icons: DEFAULT_COMPONENT_ICONS });
+initializeIcons();
+registerIcons({ icons: DEFAULT_COMPONENT_ICONS });
 
+function App(): JSX.Element {
   const endpointUrl = '<Azure Communication Services Resource Endpoint>';
   const userAccessToken = '<Azure Communication Services Resource Access Token>';
   const userId = '<User Id associated to the token>';

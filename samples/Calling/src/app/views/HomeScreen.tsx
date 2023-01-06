@@ -3,6 +3,8 @@
 
 import React, { useState } from 'react';
 import { Stack, PrimaryButton, Image, ChoiceGroup, IChoiceGroupOption, Text, TextField } from '@fluentui/react';
+/* @conditional-compile-remove(PSTN-calls) */
+import { registerIcons } from '@fluentui/react';
 import heroSVG from '../../assets/hero.svg';
 import {
   imgStyle,
@@ -15,23 +17,43 @@ import {
   containerTokens,
   headerStyle,
   teamsItemStyle,
-  buttonStyle,
-  outboundTextField
+  buttonStyle
 } from '../styles/HomeScreen.styles';
+/* @conditional-compile-remove(PSTN-calls) */
+import { outboundTextField, dialpadOptionStyles } from '../styles/HomeScreen.styles';
 import { ThemeSelector } from '../theming/ThemeSelector';
 import { localStorageAvailable } from '../utils/localStorage';
 import { getDisplayNameFromLocalStorage, saveDisplayNameToLocalStorage } from '../utils/localStorage';
 import { DisplayNameField } from './DisplayNameField';
 import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
+/* @conditional-compile-remove(rooms) */
+import { RoomLocator } from '@azure/communication-calling';
+/* @conditional-compile-remove(rooms) */
+import { getRoomIdFromUrl } from '../utils/AppUtils';
+/* @conditional-compile-remove(PSTN-calls) */
+import { Dialpad } from '@azure/communication-react';
+/* @conditional-compile-remove(PSTN-calls) */
+import { Backspace20Regular } from '@fluentui/react-icons';
+/* @conditional-compile-remove(PSTN-calls) */
+import { useIsMobile } from '../utils/useIsMobile';
 
 export interface HomeScreenProps {
   startCallHandler(callDetails: {
     displayName: string;
-    teamsLink?: TeamsMeetingLinkLocator;
+    /* @conditional-compile-remove(rooms) */
+    callLocator?: TeamsMeetingLinkLocator | RoomLocator;
+    /* @conditional-compile-remove(rooms) */
+    option?: string;
+    /* @conditional-compile-remove(rooms) */
+    role?: string;
     /* @conditional-compile-remove(PSTN-calls) */
     outboundParticipants?: string[];
     /* @conditional-compile-remove(PSTN-calls) */
     alternateCallerId?: string;
+    /* @conditional-compile-remove(teams-identity-support) */
+    teamsToken?: string;
+    /* @conditional-compile-remove(teams-identity-support) */
+    teamsId?: string;
   }): void;
   joiningExistingCall: boolean;
 }
@@ -43,9 +65,31 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   const buttonText = 'Next';
   const callOptions: IChoiceGroupOption[] = [
     { key: 'ACSCall', text: 'Start a call' },
-    { key: 'TeamsMeeting', text: 'Join a Teams meeting' },
+    /* @conditional-compile-remove(rooms) */
+    { key: 'StartRooms', text: 'Start a Rooms call' },
+    { key: 'TeamsMeeting', text: 'Join a Teams meeting using ACS identity' },
+    /* @conditional-compile-remove(rooms) */
+    { key: 'Rooms', text: 'Join a Rooms Call' },
+    /* @conditional-compile-remove(teams-identity-support) */
+    { key: 'TeamsIdentity', text: 'Join a Teams call using Teams identity' },
+    /* @conditional-compile-remove(one-to-n-calling) */
+    { key: '1:N', text: 'Start a 1:N ACS Call' },
     /* @conditional-compile-remove(PSTN-calls) */
-    { key: 'outboundCall', text: 'Start a PSTN or 1:N ACS call' }
+    { key: 'PSTN', text: 'Start a PSTN Call' }
+  ];
+  /* @conditional-compile-remove(rooms) */
+  const roomIdLabel = 'Room ID';
+  /* @conditional-compile-remove(teams-identity-support) */
+  const teamsTokenLabel = 'Enter a Teams token';
+  /* @conditional-compile-remove(teams-identity-support) */
+  const teamsIdLabel = 'Enter a Teams Id';
+  /* @conditional-compile-remove(rooms) */
+  const roomsRoleGroupLabel = 'Rooms Role';
+  /* @conditional-compile-remove(rooms) */
+  const roomRoleOptions: IChoiceGroupOption[] = [
+    { key: 'Consumer', text: 'Consumer' },
+    { key: 'Presenter', text: 'Presenter' },
+    { key: 'Attendee', text: 'Attendee' }
   ];
 
   // Get display name from local storage if available
@@ -53,18 +97,51 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   const [displayName, setDisplayName] = useState<string | undefined>(defaultDisplayName ?? undefined);
 
   const [chosenCallOption, setChosenCallOption] = useState<IChoiceGroupOption>(callOptions[0]);
-  const [teamsLink, setTeamsLink] = useState<TeamsMeetingLinkLocator>();
+  const [callLocator, setCallLocator] = useState<
+    TeamsMeetingLinkLocator | /* @conditional-compile-remove(rooms) */ RoomLocator
+  >();
+  /* @conditional-compile-remove(rooms) */
+  const [chosenRoomsRoleOption, setRoomsRoleOption] = useState<IChoiceGroupOption>(roomRoleOptions[1]);
   /* @conditional-compile-remove(PSTN-calls) */
   const [alternateCallerId, setAlternateCallerId] = useState<string>();
   /* @conditional-compile-remove(PSTN-calls) */
   const [outboundParticipants, setOutboundParticipants] = useState<string | undefined>();
-
-  const teamsCallChosen: boolean = chosenCallOption.key === 'TeamsMeeting';
   /* @conditional-compile-remove(PSTN-calls) */
-  const outBoundCallChosen: boolean = chosenCallOption.key === 'outboundCall';
-  const buttonEnabled = displayName && (!teamsCallChosen || teamsLink);
+  const [dialPadParticipant, setDialpadParticipant] = useState<string>();
+  /* @conditional-compile-remove(teams-identity-support) */
+  const [teamsToken, setTeamsToken] = useState<string>();
+  /* @conditional-compile-remove(teams-identity-support) */
+  const [teamsId, setTeamsId] = useState<string>();
 
-  console.log(outboundParticipants);
+  const startGroupCall: boolean = chosenCallOption.key === 'ACSCall';
+  const teamsCallChosen: boolean = chosenCallOption.key === 'TeamsMeeting';
+  /* @conditional-compile-remove(teams-identity-support) */
+  const teamsIdentityChosen = chosenCallOption.key === 'TeamsIdentity';
+  /* @conditional-compile-remove(PSTN-calls) */
+  const pstnCallChosen: boolean = chosenCallOption.key === 'PSTN';
+  /* @conditional-compile-remove(PSTN-calls) */
+  const acsCallChosen: boolean = chosenCallOption.key === '1:N';
+
+  const buttonEnabled =
+    (displayName || /* @conditional-compile-remove(teams-identity-support) */ teamsToken) &&
+    (startGroupCall ||
+      (teamsCallChosen && callLocator) ||
+      /* @conditional-compile-remove(rooms) */
+      (((chosenCallOption.key === 'Rooms' && callLocator) || chosenCallOption.key === 'StartRooms') &&
+        chosenRoomsRoleOption) ||
+      /* @conditional-compile-remove(PSTN-calls) */ (pstnCallChosen && dialPadParticipant && alternateCallerId) ||
+      /* @conditional-compile-remove(one-to-n-calling) */ (outboundParticipants && acsCallChosen) ||
+      /* @conditional-compile-remove(teams-identity-support) */ (teamsIdentityChosen &&
+        callLocator &&
+        teamsToken &&
+        teamsId));
+
+  /* @conditional-compile-remove(PSTN-calls) */
+  registerIcons({ icons: { DialpadBackspace: <Backspace20Regular /> } });
+
+  /* @conditional-compile-remove(PSTN-calls) */
+  const isMobileSession = useIsMobile();
+
   return (
     <Stack
       horizontal
@@ -91,49 +168,131 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                 onChange={(_, option) => option && setChosenCallOption(option)}
               />
             )}
-            {teamsCallChosen && (
+            {(teamsCallChosen || /* @conditional-compile-remove(teams-identity-support) */ teamsIdentityChosen) && (
               <TextField
                 className={teamsItemStyle}
                 iconProps={{ iconName: 'Link' }}
                 placeholder={'Enter a Teams meeting link'}
-                onChange={(_, newValue) => newValue && setTeamsLink({ meetingLink: newValue })}
+                onChange={(_, newValue) => newValue && setCallLocator({ meetingLink: newValue })}
               />
             )}
             {
-              /* @conditional-compile-remove(PSTN-calls) */ outBoundCallChosen && (
+              /* @conditional-compile-remove(teams-identity-support) */ chosenCallOption.key === 'TeamsIdentity' && (
+                <Stack>
+                  <TextField
+                    className={teamsItemStyle}
+                    label={teamsTokenLabel}
+                    placeholder={'Enter a Teams Token'}
+                    onChange={(_, newValue) => setTeamsToken(newValue)}
+                  />
+                </Stack>
+              )
+            }
+            {
+              /* @conditional-compile-remove(teams-identity-support) */ chosenCallOption.key === 'TeamsIdentity' && (
+                <Stack>
+                  <TextField
+                    className={teamsItemStyle}
+                    label={teamsIdLabel}
+                    placeholder={'Enter a Teams id'}
+                    onChange={(_, newValue) => setTeamsId(`8:orgid:${newValue}`)}
+                  />
+                </Stack>
+              )
+            }
+            {
+              /* @conditional-compile-remove(rooms) */ chosenCallOption.key === 'Rooms' && (
+                <Stack>
+                  <TextField
+                    className={teamsItemStyle}
+                    label={roomIdLabel}
+                    placeholder={'Enter a room ID'}
+                    onChange={(_, newValue) => setCallLocator(newValue ? { roomId: newValue } : undefined)}
+                  />
+                </Stack>
+              )
+            }
+            {
+              /* @conditional-compile-remove(rooms) */
+              (chosenCallOption.key === 'Rooms' || chosenCallOption.key === 'StartRooms' || getRoomIdFromUrl()) && (
+                <ChoiceGroup
+                  styles={callOptionsGroupStyles}
+                  label={roomsRoleGroupLabel}
+                  defaultSelectedKey="Presenter"
+                  options={roomRoleOptions}
+                  required={true}
+                  onChange={(_, option) => option && setRoomsRoleOption(option)}
+                />
+              )
+            }
+            {
+              /* @conditional-compile-remove(one-to-n-calling) */ acsCallChosen && (
                 <Stack>
                   <TextField
                     className={outboundTextField}
                     label={'Participants'}
-                    placeholder={"Comma seperated phone numbers or ACS ID's"}
-                    onChange={(_, newValue) => newValue && setOutboundParticipants(newValue)}
+                    placeholder={"Comma seperated ACS user ID's"}
+                    onChange={(_, newValue) => setOutboundParticipants(newValue)}
                   />
+                </Stack>
+              )
+            }
+            {
+              /* @conditional-compile-remove(PSTN-calls) */ pstnCallChosen && (
+                <Stack>
+                  <Stack styles={dialpadOptionStyles}>
+                    <Dialpad
+                      isMobile={isMobileSession}
+                      onChange={(newValue) => {
+                        /**
+                         * We need to pass in the formatting for the phone number string in the onChange handler
+                         * to make sure the phone number is in E.164 format.
+                         */
+                        const phoneNumber = '+' + newValue?.replace(/\D/g, '');
+                        setDialpadParticipant(phoneNumber);
+                      }}
+                    />
+                  </Stack>
                   <TextField
                     className={outboundTextField}
                     label={'ACS phone number for Caller ID'}
                     placeholder={'Enter your ACS aquired phone number for PSTN call'}
-                    onChange={(_, newValue) => newValue && setAlternateCallerId(newValue)}
+                    onChange={(_, newValue) => setAlternateCallerId(newValue)}
                   />
                 </Stack>
               )
             }
           </Stack>
-          <DisplayNameField defaultName={displayName} setName={setDisplayName} />
+          {chosenCallOption.key !== 'TeamsIdentity' && (
+            <DisplayNameField defaultName={displayName} setName={setDisplayName} />
+          )}
           <PrimaryButton
             disabled={!buttonEnabled}
             className={buttonStyle}
             text={buttonText}
             onClick={() => {
-              if (displayName) {
-                saveDisplayNameToLocalStorage(displayName);
-                const participantsToCall = parseParticipants(outboundParticipants);
+              if (displayName || /* @conditional-compile-remove(teams-identity-support) */ teamsIdentityChosen) {
+                displayName && saveDisplayNameToLocalStorage(displayName);
+                /* @conditional-compile-remove(one-to-n-calling) */
+                const acsParticipantsToCall = parseParticipants(outboundParticipants);
+                /* @conditional-compile-remove(PSTN-calls) */
+                const dialpadParticipantToCall = parseParticipants(dialPadParticipant);
                 props.startCallHandler({
-                  displayName,
-                  teamsLink,
+                  //TODO: This needs to be updated after we change arg types of TeamsCall
+                  displayName: !displayName ? 'Teams UserName PlaceHolder' : displayName,
+                  callLocator: callLocator,
+                  /* @conditional-compile-remove(rooms) */
+                  option: chosenCallOption.key,
+                  /* @conditional-compile-remove(rooms) */
+                  role: chosenRoomsRoleOption.key,
+                  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling)  */
+                  outboundParticipants: acsParticipantsToCall ? acsParticipantsToCall : dialpadParticipantToCall,
                   /* @conditional-compile-remove(PSTN-calls) */
-                  outboundParticipants: participantsToCall,
-                  /* @conditional-compile-remove(PSTN-calls) */
-                  alternateCallerId
+                  alternateCallerId,
+                  /* @conditional-compile-remove(teams-identity-support) */
+                  teamsToken,
+                  /* @conditional-compile-remove(teams-identity-support) */
+                  teamsId
                 });
               }
             }}
@@ -147,14 +306,13 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   );
 };
 
-/* @conditional-compile-remove(PSTN-calls) */
+/* @conditional-compile-remove(one-to-n-calling)  */ /* @conditional-compile-remove(PSTN-calls) */
 /**
  * splits the participant Id's so we can call multiple people.
- *
  */
 const parseParticipants = (participantsString?: string): string[] | undefined => {
   if (participantsString) {
-    return participantsString.replace(' ', '').split(',');
+    return participantsString.replaceAll(' ', '').split(',');
   } else {
     return undefined;
   }

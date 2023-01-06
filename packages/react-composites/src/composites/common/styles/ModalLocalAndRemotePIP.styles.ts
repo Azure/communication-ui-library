@@ -6,6 +6,7 @@ import {
   IModalStyleProps,
   IModalStyles,
   IStackStyles,
+  IStyle,
   IStyleFunctionOrObject,
   ITheme
 } from '@fluentui/react';
@@ -77,4 +78,21 @@ export const modalStyle: IStyleFunctionOrObject<IModalStyleProps, IModalStyles> 
     // pointer events for root Modal div set to none to make descendants interactive
     pointerEvents: 'none'
   }
+};
+
+/**
+ * Styles for layer host to bound the modal wrapping PiPiP in the mobile pane.
+ * @private
+ */
+export const modalLayerHostStyle: IStyle = {
+  display: 'flex',
+  position: 'absolute',
+  left: 0,
+  top: 0,
+  width: '100%',
+  height: '100%',
+  overflow: 'hidden',
+  zIndex: '100000',
+  // pointer events for layerHost set to none to make descendants interactive
+  pointerEvents: 'none'
 };

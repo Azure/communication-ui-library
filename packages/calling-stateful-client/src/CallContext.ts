@@ -2,7 +2,17 @@
 // Licensed under the MIT license.
 
 import { CommunicationIdentifierKind } from '@azure/communication-common';
-import { AudioDeviceInfo, DeviceAccess, DominantSpeakersInfo, VideoDeviceInfo } from '@azure/communication-calling';
+import {
+  AudioDeviceInfo,
+  DeviceAccess,
+  DominantSpeakersInfo,
+  ScalingMode,
+  VideoDeviceInfo
+} from '@azure/communication-calling';
+/* @conditional-compile-remove(unsupported-browser) */
+import { EnvironmentInfo } from '@azure/communication-calling';
+/* @conditional-compile-remove(rooms) */
+import { ParticipantRole } from '@azure/communication-calling';
 import { AzureLogger, createClientLogger, getLogLevel } from '@azure/logger';
 import EventEmitter from 'events';
 import { enableMapSet, enablePatches, Patch, produce } from 'immer';
@@ -68,6 +78,7 @@ export class CallContext {
       },
       callAgent: undefined,
       userId: userId,
+      /* @conditional-compile-remove(unsupported-browser) */ environmentInfo: undefined,
       /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId: alternateCallerId,
       latestErrors: {} as CallErrors
     };
@@ -134,6 +145,8 @@ export class CallContext {
         existingCall.remoteParticipants = call.remoteParticipants;
         existingCall.transcription.isTranscriptionActive = call.transcription.isTranscriptionActive;
         existingCall.recording.isRecordingActive = call.recording.isRecordingActive;
+        /* @conditional-compile-remove(rooms) */
+        existingCall.role = call.role;
         // We don't update the startTime and endTime if we are updating an existing active call
       } else {
         draft.calls[latestCallId] = call;
@@ -183,6 +196,13 @@ export class CallContext {
         delete draft.calls[oldCallId];
         draft.calls[newCallId] = call;
       }
+    });
+  }
+
+  /* @conditional-compile-remove(unsupported-browser) */
+  public setEnvironmentInfo(envInfo: EnvironmentInfo): void {
+    this.modifyState((draft: CallClientState) => {
+      draft.environmentInfo = envInfo;
     });
   }
 
@@ -245,6 +265,16 @@ export class CallContext {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
         call.isMuted = isMicrophoneMuted;
+      }
+    });
+  }
+
+  /* @conditional-compile-remove(rooms) */
+  public setRole(callId: string, role: ParticipantRole): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        call.role = role;
       }
     });
   }
@@ -315,6 +345,19 @@ export class CallContext {
         const participant = call.remoteParticipants[participantKey];
         if (participant) {
           participant.isMuted = muted;
+        }
+      }
+    });
+  }
+
+  /* @conditional-compile-remove(rooms) */
+  public setParticipantRole(callId: string, participantKey: string, role: ParticipantRole): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        const participant = call.remoteParticipants[participantKey];
+        if (participant) {
+          participant.role = role;
         }
       }
     });
@@ -454,6 +497,26 @@ export class CallContext {
           const stream = participant.videoStreams[streamId];
           if (stream) {
             stream.view = view;
+          }
+        }
+      }
+    });
+  }
+
+  public setRemoteVideoStreamViewScalingMode(
+    callId: string,
+    participantKey: string,
+    streamId: number,
+    scalingMode: ScalingMode
+  ): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        const participant = call.remoteParticipants[participantKey];
+        if (participant) {
+          const stream = participant.videoStreams[streamId];
+          if (stream && stream.view) {
+            stream.view.scalingMode = scalingMode;
           }
         }
       }

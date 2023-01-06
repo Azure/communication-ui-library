@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import { concatStyleSets, DefaultButton, IContextualMenuItem, PrimaryButton, Stack, useTheme } from '@fluentui/react';
+
+import { IContextualMenuItem, Stack } from '@fluentui/react';
 import {
   ParticipantList,
   ParticipantListParticipant,
@@ -8,48 +9,51 @@ import {
   ParticipantMenuItemsCallback,
   _DrawerMenuItemProps
 } from '@internal/react-components';
-import copy from 'copy-to-clipboard';
+/* @conditional-compile-remove(rooms) */
+import { _usePermissions } from '@internal/react-components';
 import React, { useMemo } from 'react';
 import { CallWithChatCompositeStrings } from '../CallWithChatComposite';
 import { usePropsFor } from '../CallComposite/hooks/usePropsFor';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
-import { CallWithChatCompositeIcon } from '../common/icons';
 import { ParticipantListWithHeading } from '../common/ParticipantContainer';
 import { peoplePaneContainerTokens } from '../common/styles/ParticipantContainer.styles';
-import {
-  copyLinkButtonStackStyles,
-  copyLinkButtonContainerStyles,
-  copyLinkButtonStyles,
-  linkIconStyles,
-  participantListContainerStyles,
-  peoplePaneContainerStyle
-} from './styles/PeoplePaneContent.styles';
-/* @conditional-compile-remove(one-to-n-calling) */
+import { participantListContainerStyles, peoplePaneContainerStyle } from './styles/PeoplePaneContent.styles';
+import { convertContextualMenuItemToDrawerMenuItem } from '../CallWithChatComposite/ConvertContextualMenuItemToDrawerMenuItem';
+/* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
 import { CallCompositeStrings } from '../CallComposite';
+import { AddPeopleButton } from './AddPeopleButton';
+/* @conditional-compile-remove(PSTN-calls) */
+import { PhoneNumberIdentifier } from '@azure/communication-common';
+/* @conditional-compile-remove(PSTN-calls) */
+import { AddPhoneNumberOptions } from '@azure/communication-calling';
 
 /**
  * @private
  */
 export const PeoplePaneContent = (props: {
+  active: boolean;
   inviteLink?: string;
   onRemoveParticipant: (participantId: string) => void;
+  /* @conditional-compile-remove(PSTN-calls) */
+  onAddParticipant: (participant: PhoneNumberIdentifier, options?: AddPhoneNumberOptions) => void;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
   strings: CallWithChatCompositeStrings | /* @conditional-compile-remove(one-to-n-calling) */ CallCompositeStrings;
   setDrawerMenuItems: (_DrawerMenuItemProps) => void;
   mobileView?: boolean;
+  /* @conditional-compile-remove(PSTN-calls) */
+  alternateCallerId?: string;
 }): JSX.Element => {
   const { inviteLink, onFetchParticipantMenuItems, setDrawerMenuItems, strings, onRemoveParticipant } = props;
-
   const participantListDefaultProps = usePropsFor(ParticipantList);
-
+  const removeButtonAllowed = hasRemoveParticipantsPermissionTrampoline();
   const setDrawerMenuItemsForParticipant: (participant?: ParticipantListParticipant) => void = useMemo(() => {
     return (participant?: ParticipantListParticipant) => {
       if (participant) {
         let contextualMenuItems: IContextualMenuItem[] = createDefaultContextualMenuItems(
           participant,
           strings,
-          participantListDefaultProps.onRemoveParticipant,
+          removeButtonAllowed && participant.isRemovable ? participantListDefaultProps.onRemoveParticipant : undefined,
           participantListDefaultProps.myUserId
         );
         if (onFetchParticipantMenuItems) {
@@ -69,6 +73,7 @@ export const PeoplePaneContent = (props: {
     strings,
     participantListDefaultProps.onRemoveParticipant,
     participantListDefaultProps.myUserId,
+    removeButtonAllowed,
     onFetchParticipantMenuItems,
     setDrawerMenuItems
   ]);
@@ -89,22 +94,9 @@ export const PeoplePaneContent = (props: {
       isMobile={props.mobileView}
       participantListProps={participantListProps}
       onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
-      onFetchParticipantMenuItems={props.onFetchParticipantMenuItems}
+      onFetchParticipantMenuItems={props.mobileView ? undefined : props.onFetchParticipantMenuItems}
       title={props.strings.peoplePaneSubTitle}
     />
-  );
-
-  const theme = useTheme();
-
-  const copyLinkButtonStylesThemed = useMemo(
-    () =>
-      concatStyleSets(copyLinkButtonStyles, {
-        root: {
-          minHeight: props.mobileView ? '3rem' : '2.5rem',
-          borderRadius: props.mobileView ? theme.effects.roundedCorner6 : theme.effects.roundedCorner4
-        }
-      }),
-    [props.mobileView, theme.effects.roundedCorner6, theme.effects.roundedCorner4]
   );
 
   if (props.mobileView) {
@@ -113,33 +105,34 @@ export const PeoplePaneContent = (props: {
         <Stack.Item grow styles={participantListContainerStyles}>
           {participantList}
         </Stack.Item>
-        {inviteLink && (
-          <Stack.Item styles={copyLinkButtonContainerStyles}>
-            <PrimaryButton
-              onClick={() => copy(inviteLink)}
-              styles={copyLinkButtonStylesThemed}
-              onRenderIcon={() => <CallWithChatCompositeIcon iconName="Link" style={linkIconStyles} />}
-              text={strings.copyInviteLinkButtonLabel}
-            />
-          </Stack.Item>
+
+        {props.active && (
+          <AddPeopleButton
+            inviteLink={inviteLink}
+            mobileView={props.mobileView}
+            participantList={participantList}
+            strings={strings}
+            /* @conditional-compile-remove(PSTN-calls) */
+            onAddParticipant={props.onAddParticipant}
+            /* @conditional-compile-remove(PSTN-calls) */
+            alternateCallerId={props.alternateCallerId}
+          />
         )}
       </Stack>
     );
   }
+
   return (
-    <Stack tokens={peoplePaneContainerTokens}>
-      {inviteLink && (
-        <Stack styles={copyLinkButtonStackStyles}>
-          <DefaultButton
-            text={strings.copyInviteLinkButtonLabel}
-            onRenderIcon={() => <CallWithChatCompositeIcon iconName="Link" style={linkIconStyles} />}
-            onClick={() => copy(inviteLink)}
-            styles={copyLinkButtonStylesThemed}
-          />
-        </Stack>
-      )}
-      {participantList}
-    </Stack>
+    <AddPeopleButton
+      inviteLink={inviteLink}
+      mobileView={props.mobileView}
+      participantList={participantList}
+      strings={strings}
+      /* @conditional-compile-remove(PSTN-calls) */
+      onAddParticipant={props.onAddParticipant}
+      /* @conditional-compile-remove(PSTN-calls) */
+      alternateCallerId={props.alternateCallerId}
+    />
   );
 };
 
@@ -153,12 +146,14 @@ export const PeoplePaneContent = (props: {
  */
 const createDefaultContextualMenuItems = (
   participant: ParticipantListParticipant,
-  strings: CallWithChatCompositeStrings | /* @conditional-compile-remove(one-to-n-calling) */ CallCompositeStrings,
-  onRemoveParticipant: (userId: string) => Promise<void>,
+  strings:
+    | CallWithChatCompositeStrings
+    | /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */ CallCompositeStrings,
+  onRemoveParticipant?: (userId: string) => Promise<void>,
   localParticipantUserId?: string
 ): IContextualMenuItem[] => {
   const menuItems: IContextualMenuItem[] = [];
-  if (participant?.userId !== localParticipantUserId) {
+  if (onRemoveParticipant && participant?.userId !== localParticipantUserId) {
     menuItems.push({
       key: 'remove',
       text: strings.removeMenuLabel,
@@ -169,31 +164,18 @@ const createDefaultContextualMenuItems = (
       },
       iconProps: {
         iconName: 'UserRemove'
-      },
-      disabled: !participant.isRemovable
+      }
     });
   }
   return menuItems;
 };
 
 /**
- * Convert IContextualMenuItem to _DrawerMenuItemProps
- * @param contextualMenu - IContextualMenuItem to convert
- * @param onDrawerMenuItemClick - callback to call when converted DrawerMenuItem is clicked
- * @returns DrawerMenuItem
+ * @private
  */
-const convertContextualMenuItemToDrawerMenuItem = (
-  contextualMenu: IContextualMenuItem,
-  onDrawerMenuItemClick: () => void
-): _DrawerMenuItemProps => {
-  return {
-    itemKey: contextualMenu.key,
-    onItemClick: () => {
-      contextualMenu.onClick?.();
-      onDrawerMenuItemClick();
-    },
-    iconProps: contextualMenu.iconProps,
-    text: contextualMenu.text,
-    disabled: contextualMenu.disabled
-  };
+const hasRemoveParticipantsPermissionTrampoline = (): boolean => {
+  /* @conditional-compile-remove(rooms) */
+  return _usePermissions().removeParticipantButton;
+  // Return true if stable.
+  return true;
 };

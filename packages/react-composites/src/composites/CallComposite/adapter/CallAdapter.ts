@@ -2,6 +2,8 @@
 // Licensed under the MIT license.
 
 import { CallState, DeviceManagerState } from '@internal/calling-stateful-client';
+/* @conditional-compile-remove(teams-identity-support) */
+import { EnvironmentInfo, TeamsCall } from '@azure/communication-calling';
 import type {
   AudioDeviceInfo,
   VideoDeviceInfo,
@@ -13,13 +15,19 @@ import type {
   NetworkDiagnosticChangedEventArgs,
   PropertyChangedEvent
 } from '@azure/communication-calling';
-/* @conditional-compile-remove(PSTN-calls) */
-import { AddPhoneNumberOptions } from '@azure/communication-calling';
-
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
+/* @conditional-compile-remove(rooms) */
+import { Role } from '@internal/react-components';
 import type { CommunicationIdentifierKind } from '@azure/communication-common';
 /* @conditional-compile-remove(PSTN-calls) */
-import { CommunicationIdentifier } from '@azure/communication-common';
+import { AddPhoneNumberOptions, DtmfTone } from '@azure/communication-calling';
+
+/* @conditional-compile-remove(PSTN-calls) */
+import type {
+  CommunicationIdentifier,
+  CommunicationUserIdentifier,
+  PhoneNumberIdentifier
+} from '@azure/communication-common';
 import type { AdapterState, Disposable, AdapterError, AdapterErrors } from '../../common/adapters';
 
 /**
@@ -31,23 +39,43 @@ export type CallCompositePage =
   | 'accessDeniedTeamsMeeting'
   | 'call'
   | 'configuration'
+  | /* @conditional-compile-remove(PSTN-calls) */ 'hold'
   | 'joinCallFailedDueToNoNetwork'
   | 'leftCall'
   | 'lobby'
-  | 'removedFromCall';
+  | /* @conditional-compile-remove(rooms) */ 'deniedPermissionToRoom'
+  | 'removedFromCall'
+  | /* @conditional-compile-remove(rooms) */ 'roomNotFound'
+  | /* @conditional-compile-remove(unsupported-browser) */ 'unsupportedEnvironment';
 
 /**
- * {@link CallAdapter} state for pure UI purposes.
+ * Subset of CallCompositePages that represent an end call state.
+ * @private
+ */
+export const END_CALL_PAGES: CallCompositePage[] = [
+  'accessDeniedTeamsMeeting',
+  'joinCallFailedDueToNoNetwork',
+  'leftCall',
+  /* @conditional-compile-remove(rooms) */ 'deniedPermissionToRoom',
+  'removedFromCall',
+  /* @conditional-compile-remove(rooms) */ 'roomNotFound',
+  /* @conditional-compile-remove(unsupported-browser) */ 'unsupportedEnvironment'
+];
+
+/**
+ * {@link CommonCallAdapter} state for pure UI purposes.
  *
  * @public
  */
 export type CallAdapterUiState = {
   isLocalPreviewMicrophoneEnabled: boolean;
   page: CallCompositePage;
+  /* @conditional-compile-remove(unsupported-browser) */
+  unsupportedBrowserVersionsAllowed?: boolean;
 };
 
 /**
- * {@link CallAdapter} state inferred from Azure Communication Services backend.
+ * {@link CommonCallAdapter} state inferred from Azure Communication Services backend.
  *
  * @public
  */
@@ -67,10 +95,22 @@ export type CallAdapterClientState = {
    * Azure communications Phone number to make PSTN calls with.
    */
   alternateCallerId?: string;
+  /* @conditional-compile-remove(unsupported-browser) */
+  /**
+   * Environment information about system the adapter is made on
+   */
+  environmentInfo?: EnvironmentInfo;
+  /* @conditional-compile-remove(rooms) */
+  /**
+   * Use this to hint the role of the user when the role is not available before a Rooms call is started. This value
+   * should be obtained using the Rooms API. This role will determine permissions in the configuration page of the
+   * {@link CallComposite}. The true role of the user will be synced with ACS services when a Rooms call starts.
+   */
+  roleHint?: Role;
 };
 
 /**
- * {@link CallAdapter} state.
+ * {@link CommonCallAdapter} state.
  *
  * @public
  */
@@ -132,11 +172,18 @@ export type DisplayNameChangedListener = (event: {
 }) => void;
 
 /**
+ * Payload for {@link CallEndedListener} containing details on the ended call.
+ *
+ * @public
+ */
+export type CallAdapterCallEndedEvent = { callId: string };
+
+/**
  * Callback for {@link CallAdapterSubscribers} 'callEnded' event.
  *
  * @public
  */
-export type CallEndedListener = (event: { callId: string }) => void;
+export type CallEndedListener = (event: CallAdapterCallEndedEvent) => void;
 
 /**
  * Payload for {@link DiagnosticChangedEventListner} where there is a change in a media diagnostic.
@@ -170,15 +217,7 @@ export type DiagnosticChangedEventListner = (
  *
  * @public
  */
-export interface CallAdapterCallManagement {
-  /**
-   * Join the call with microphone initially on/off.
-   *
-   * @param microphoneOn - Whether microphone is initially enabled
-   *
-   * @public
-   */
-  joinCall(microphoneOn?: boolean): Call | undefined;
+export interface CallAdapterCallOperations {
   /**
    * Leave the call
    *
@@ -216,14 +255,6 @@ export interface CallAdapterCallManagement {
    */
   unmute(): Promise<void>;
   /**
-   * Start the call.
-   *
-   * @param participants - An array of participant ids to join
-   *
-   * @public
-   */
-  startCall(participants: string[], options?: StartCallOptions): Call | undefined;
-  /**
    * Start sharing the screen during a call.
    *
    * @public
@@ -243,6 +274,13 @@ export interface CallAdapterCallManagement {
    * @public
    */
   removeParticipant(userId: string): Promise<void>;
+  /* @conditional-compile-remove(PSTN-calls) */
+  /**
+   * Remove a participant from the call.
+   * @param participant - {@link @azure/communication-common#CommunicationIdentifier} of the participant to be removed
+   * @beta
+   */
+  removeParticipant(participant: CommunicationIdentifier): Promise<void>;
   /**
    * Create the html view for a stream.
    *
@@ -287,7 +325,21 @@ export interface CallAdapterCallManagement {
    *
    * @beta
    */
-  addParticipant(participant: CommunicationIdentifier, options?: AddPhoneNumberOptions): Promise<void>;
+  addParticipant(participant: PhoneNumberIdentifier, options?: AddPhoneNumberOptions): Promise<void>;
+  /* @conditional-compile-remove(PSTN-calls) */
+  addParticipant(participant: CommunicationUserIdentifier): Promise<void>;
+  /* @conditional-compile-remove(PSTN-calls) */
+  /**
+   * send dtmf tone to another participant in a 1:1 PSTN call
+   *
+   * @beta
+   */
+  sendDtmfTone(dtmfTone: DtmfTone): Promise<void>;
+  /* @conditional-compile-remove(unsupported-browser) */
+  /**
+   * Continues into a call when the browser version is not supported.
+   */
+  allowUnsupportedBrowserVersion(): void;
 }
 
 /**
@@ -486,14 +538,134 @@ export interface CallAdapterSubscribers {
   off(event: 'error', listener: (e: AdapterError) => void): void;
 }
 
+// This type remains for non-breaking change reason
+/**
+ * Functionality for managing the current call or start a new call
+ * @deprecated CallAdapter interface will be flatten, consider using CallAdapter directly
+ * @public
+ */
+export interface CallAdapterCallManagement extends CallAdapterCallOperations {
+  /**
+   * Join the call with microphone initially on/off.
+   *
+   * @param microphoneOn - Whether microphone is initially enabled
+   *
+   * @public
+   */
+  joinCall(microphoneOn?: boolean): Call | undefined;
+  /**
+   * Start the call.
+   *
+   * @param participants - An array of participant ids to join
+   *
+   * @public
+   */
+  startCall(participants: string[], options?: StartCallOptions): Call | undefined;
+  /* @conditional-compile-remove(PSTN-calls) */
+  /**
+   * Start the call.
+   * @param participants - An array of {@link @azure/communication-common#CommunicationIdentifier} to be called
+   * @beta
+   */
+  startCall(participants: CommunicationIdentifier[], options?: StartCallOptions): Call | undefined;
+}
+
+// TODO: Flatten the adapter structure
 /**
  * {@link CallComposite} Adapter interface.
  *
  * @public
  */
-export interface CallAdapter
+export interface CommonCallAdapter
   extends AdapterState<CallAdapterState>,
     Disposable,
-    CallAdapterCallManagement,
+    CallAdapterCallOperations,
     CallAdapterDeviceManagement,
-    CallAdapterSubscribers {}
+    CallAdapterSubscribers {
+  /**
+   * Join the call with microphone initially on/off.
+   *
+   * @param microphoneOn - Whether microphone is initially enabled
+   *
+   * @public
+   */
+  joinCall(microphoneOn?: boolean): void;
+  /**
+   * Start the call.
+   *
+   * @param participants - An array of participant ids to join
+   *
+   * @public
+   */
+  startCall(participants: string[], options?: StartCallOptions): void;
+  /* @conditional-compile-remove(PSTN-calls) */
+  /**
+   * Start the call.
+   * @param participants - An array of {@link @azure/communication-common#CommunicationIdentifier} to be called
+   * @beta
+   */
+  startCall(participants: CommunicationIdentifier[], options?: StartCallOptions): void;
+}
+
+/**
+ *  An Adapter interface specific for Azure Communication identity which extends {@link CommonCallAdapter}.
+ *
+ * @public
+ */
+export interface CallAdapter extends CommonCallAdapter {
+  /**
+   * Join the call with microphone initially on/off.
+   *
+   * @param microphoneOn - Whether microphone is initially enabled
+   *
+   * @public
+   */
+  joinCall(microphoneOn?: boolean): Call | undefined;
+  /**
+   * Start the call.
+   *
+   * @param participants - An array of participant ids to join
+   *
+   * @public
+   */
+  startCall(participants: string[], options?: StartCallOptions): Call | undefined;
+  /* @conditional-compile-remove(PSTN-calls) */
+  /**
+   * Start the call.
+   * @param participants - An array of {@link @azure/communication-common#CommunicationIdentifier} to be called
+   * @beta
+   */
+  startCall(participants: CommunicationIdentifier[], options?: StartCallOptions): Call | undefined;
+}
+
+/* @conditional-compile-remove(teams-identity-support) */
+/**
+ * An Adapter interface specific for Teams identity which extends {@link CommonCallAdapter}.
+ *
+ * @beta
+ */
+export interface TeamsCallAdapter extends CommonCallAdapter {
+  /**
+   * Join the call with microphone initially on/off.
+   *
+   * @param microphoneOn - Whether microphone is initially enabled
+   *
+   * @beta
+   */
+  joinCall(microphoneOn?: boolean): TeamsCall | undefined;
+  /**
+   * Start the call.
+   *
+   * @param participants - An array of participant ids to join
+   *
+   * @beta
+   */
+  startCall(participants: string[], options?: StartCallOptions): TeamsCall | undefined;
+  /* @conditional-compile-remove(PSTN-calls) */
+  /**
+   * Start the call.
+   * @param participants - An array of {@link @azure/communication-common#CommunicationIdentifier} to be called
+   * @beta
+   */
+  startCall(participants: CommunicationIdentifier[], options?: StartCallOptions): TeamsCall | undefined;
+}

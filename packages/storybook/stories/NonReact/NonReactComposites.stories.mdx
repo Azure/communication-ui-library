@@ -8,7 +8,7 @@ import { Meta } from '@storybook/addon-docs';
 
 # Try Call and Chat Composites with vanilla javascript
 
-Investing in a full react application to try out the UI Library can be challenging. To help out some of our developers we have bundled the UI Library
+Investing in a full React Application to try out the UI Library can be challenging. To help out some of our developers we have bundled the UI Library
 as a set of javascript bundles. This will allow developers to try out the UI Library with just a `<script>` tag and few lines of code.
 
 Why you want to try out the composites via CDN experience:
@@ -27,15 +27,17 @@ _We suggest if you would like to continue to use this method of using the UI Lib
 
 ## Using Composites in your index.html
 
-The first step is to add a script tag
+The first step is to add a script tag:
 
-### Calling
+```html
+<!-- CallComposite -->
+<script src="https://github.com/Azure/communication-ui-library/releases/latest/download/callComposite.js"></script>
+```
 
-`<script src="https://github.com/Azure/communication-ui-library/releases/latest/download/callComposite.js"></script>`
-
-### Chat
-
-`<script src="https://github.com/Azure/communication-ui-library/releases/latest/download/chatComposite.js"></script>`
+```html
+<!-- ChatComposite -->
+<script src="https://github.com/Azure/communication-ui-library/releases/latest/download/chatComposite.js"></script>
+```
 
 _If you want to use both calling and chat, add both to your website_
 
@@ -43,7 +45,7 @@ You will be able to load load composites using `chatComposite.loadChatComposite`
 
 We use a pattern where we specify important arguments to launch the experience, followed by the DOM element to apply the UI into, followed by any additional properties.
 
-### Code to load the chat composite
+### Example loading the Chat Composite
 
 We start with our necessary arguments (displayName, threadId, endpoint, userId, token) followed by the html element that will contain our chat composite, and the
 any additional properties for the composite.
@@ -66,7 +68,7 @@ const chatAdapter = await chatComposite.loadChatComposite(
 
 _Check [Chat Composite Basic Example](./?path=/docs/composites-chat-basicexample--basic-example) for details on what additional properties you can apply to the chat composite_
 
-### Code to load the call composite
+### Example loading the Call Composite
 
 We start with our necessary arguments (displayName, groupId, userId, token) followed by the html element that will contain our chat composite, and the
 any additional properties for the composite.
@@ -80,6 +82,7 @@ const callAdapter = await callComposite.loadCallComposite(
     groupId: 'GROUPID', // string
     userId: 'USERID', // string
     token: 'ACCCESS_TOKEN' // string
+    locator: { groupId: groupId }, // provide a locator object to join a group call or a teams meeting interop call
   },
   containerElement, // container element
   props // Optional, Object contains all optional props for composite, check composite page for more details
@@ -176,6 +179,7 @@ Then you will be able to see 2 js bundle files:
 ```
 .\samples\StaticHtmlComposites\dist\chatComposite.js
 .\samples\StaticHtmlComposites\dist\callComposite.js
+.\samples\StaticHtmlComposites\dist\callWithChatComposite.js
 ```
 
 There is also an example html for how to use it, you might want to allocate your own acs token before you embed the code piece to your own web app, check [Create and manage Communication Services resources](https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-azp):
@@ -192,7 +196,9 @@ After finishing building the bundle, you can also try the sample
 
 2. Replace the `EndpointUrl` in the `samples/Server/appsettings.json` file with the endpoint from your Azure Communication Services resource, which is listed in the Azure Portal under _Keys_.
 
-3. Run this command to start the server:
+3. Replace the `AdminUserId` in the `samples/Server/appsettings.json` file with a user id minted with the above used Azure Communication Services resource.
+
+4. Run this command to start the server:
 
 ```bash
 rushx start

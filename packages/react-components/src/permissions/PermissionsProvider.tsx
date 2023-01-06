@@ -10,43 +10,57 @@ export type _Permissions = {
   cameraButton: boolean; // or 'disabled'/'hide'?
   microphoneButton: boolean;
   screenShare: boolean;
-  participantList: boolean;
+  removeParticipantButton: boolean;
+  role?: Role;
+};
+
+/**
+ * @internal
+ */
+export const defaultPermissions: _Permissions = {
+  cameraButton: true,
+  microphoneButton: true,
+  screenShare: true,
+  removeParticipantButton: true
 };
 
 /**
  * @internal
  */
 export const presenterPermissions: _Permissions = {
+  role: 'Presenter',
   cameraButton: true,
   microphoneButton: true,
   screenShare: true,
-  participantList: true
+  removeParticipantButton: true
 };
 
 /**
  * @internal
  */
 export const consumerPermissions: _Permissions = {
+  role: 'Consumer',
   cameraButton: false,
   microphoneButton: false,
   screenShare: false,
-  participantList: false
+  removeParticipantButton: false
 };
 
 /**
  * @internal
  */
 export const attendeePermissions: _Permissions = {
+  role: 'Attendee',
   cameraButton: true,
   microphoneButton: true,
   screenShare: false,
-  participantList: true
+  removeParticipantButton: false
 };
 
 /**
  * @internal
  */
-export const PermissionsContext = createContext<_Permissions>(presenterPermissions);
+export const PermissionsContext = createContext<_Permissions>(defaultPermissions);
 
 /**
  * Props for {@link _PermissionsProviderProps}.
@@ -76,8 +90,9 @@ export const _usePermissions = (): _Permissions => useContext(PermissionsContext
 
 /**
  * @beta
+ * The role of a call participant.
  */
-export type Role = 'Presenter' | 'Attendee' | 'Consumer';
+export type Role = 'Presenter' | 'Attendee' | 'Consumer' | 'Organizer';
 
 /**
  * @internal
@@ -87,7 +102,8 @@ export const _getPermissions = (role?: Role): _Permissions => {
     return consumerPermissions;
   } else if (role === 'Attendee') {
     return attendeePermissions;
-  } else {
+  } else if (role === 'Presenter') {
     return presenterPermissions;
   }
+  return defaultPermissions;
 };

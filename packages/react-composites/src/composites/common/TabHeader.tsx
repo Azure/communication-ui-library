@@ -3,7 +3,7 @@
 import { concatStyleSets, DefaultButton, Stack } from '@fluentui/react';
 import { useTheme } from '@internal/react-components';
 import React, { useMemo } from 'react';
-/* @conditional-compile-remove(one-to-n-calling) */
+/* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
 import { CallCompositeStrings } from '../CallComposite';
 import { CallWithChatCompositeStrings } from '../CallWithChatComposite';
 import { CallWithChatCompositeIcon } from '../common/icons';
@@ -24,7 +24,11 @@ type TabHeaderProps = {
   // If set, show a button to open people tab.
   onPeopleButtonClicked?: () => void;
   activeTab: TabHeaderTab;
-  strings: CallWithChatCompositeStrings | /* @conditional-compile-remove(one-to-n-calling) */ CallCompositeStrings;
+  strings:
+    | CallWithChatCompositeStrings
+    | /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */ CallCompositeStrings;
+  disableChatButton?: boolean;
+  disablePeopleButton?: boolean;
 };
 
 /**
@@ -73,6 +77,7 @@ export const TabHeader = (props: TabHeaderProps): JSX.Element => {
             styles={mobilePaneButtonStylesThemed}
             checked={activeTab === 'chat'}
             role={'tab'}
+            disabled={props.disableChatButton}
           >
             {strings.chatButtonLabel}
           </DefaultButton>
@@ -85,6 +90,7 @@ export const TabHeader = (props: TabHeaderProps): JSX.Element => {
             styles={mobilePaneButtonStylesThemed}
             checked={activeTab === 'people'}
             role={'tab'}
+            disabled={props.disablePeopleButton}
           >
             {strings.peopleButtonLabel}
           </DefaultButton>

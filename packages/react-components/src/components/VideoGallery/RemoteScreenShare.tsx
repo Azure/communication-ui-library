@@ -64,7 +64,7 @@ export const RemoteScreenShare = React.memo(
         isMuted={isMuted}
         renderElement={
           renderElement ? (
-            <StreamMedia videoStreamElement={renderElement} loadingState={isReceiving ? 'none' : 'loading'} />
+            <StreamMedia videoStreamElement={renderElement} loadingState={isReceiving === false ? 'loading' : 'none'} />
           ) : undefined
         }
         onRenderPlaceholder={() => <LoadingSpinner loadingMessage={loadingMessage} />}

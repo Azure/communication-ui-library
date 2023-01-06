@@ -32,7 +32,8 @@ import { WEB_APP_TITLE } from './utils/constants';
 import { useSecondaryInstanceCheck } from './utils/useSecondaryInstanceCheck';
 import { PageOpenInAnotherTab } from './views/PageOpenInAnotherTab';
 import { useIsMobile } from './utils/useIsMobile';
-import { CallParticipantsLocator } from '@internal/react-composites';
+/* @conditional-compilation-remove(PSTN-calls) */
+import { CallParticipantsLocator } from '@azure/communication-react';
 
 setLogLevel('warning');
 initializeIcons();
@@ -173,7 +174,7 @@ const callLocatorGen = (
 ): GroupCallLocator | /* @conditional-compilation-remove(PSTN-calls) */ CallParticipantsLocator => {
   /* @conditional-compile-remove(PSTN-calls) */
   if (outBoundParticipants) {
-    return { participantIDs: outBoundParticipants };
+    return { participantIds: outBoundParticipants };
   }
   const callLocator = getGroupIdFromUrl() || createGroupId();
   ensureJoinableCallLocatorPushedToUrl(callLocator);

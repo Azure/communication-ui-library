@@ -12,7 +12,7 @@ import { useHandlers } from '../hooks/useHandlers';
  * @private
  */
 export interface LobbyOverlayProps {
-  overlayIcon: JSX.Element;
+  overlayIcon?: JSX.Element;
   title: string;
   moreDetails?: string;
 }
@@ -50,7 +50,11 @@ export const LobbyTile = (props: LobbyTileProps): JSX.Element => {
             <Stack.Item className={mergeStyles(titleStyle(palette, isVideoReady))}>
               {props.overlayProps.overlayIcon}
             </Stack.Item>
-            <Text className={mergeStyles(titleStyle(palette, isVideoReady))} aria-live="assertive">
+            <Text
+              className={mergeStyles(titleStyle(palette, isVideoReady))}
+              aria-live="assertive"
+              data-ui-id="lobbyScreenTitle"
+            >
               {props.overlayProps.title}
             </Text>
             {props.overlayProps.moreDetails && (

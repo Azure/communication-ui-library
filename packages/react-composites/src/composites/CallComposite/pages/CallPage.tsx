@@ -2,6 +2,8 @@
 // Licensed under the MIT license.
 
 import { DiagnosticQuality } from '@azure/communication-calling';
+import { useId } from '@fluentui/react-hooks';
+import { _isInCall } from '@internal/calling-component-bindings';
 import { ErrorBar, OnRenderAvatarCallback, ParticipantMenuItemsCallback } from '@internal/react-components';
 import React from 'react';
 import { AvatarPersonaDataCallback } from '../../common/AvatarPersona';
@@ -25,6 +27,8 @@ import { reduceCallControlsForMobile } from '../utils';
  */
 export interface CallPageProps {
   mobileView: boolean;
+  /* @conditional-compile-remove(one-to-n-calling) */
+  modalLayerHostId: string;
   callInvitationURL?: string;
   onRenderAvatar?: OnRenderAvatarCallback;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
@@ -60,10 +64,14 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
   // Reduce the controls shown when mobile view is enabled.
   const callControlOptions = mobileView ? reduceCallControlsForMobile(options?.callControls) : options?.callControls;
 
+  const drawerMenuHostId = useId('drawerMenuHost');
+
   return (
     <CallArrangement
+      id={drawerMenuHostId}
       complianceBannerProps={{ ...complianceBannerProps, strings }}
-      errorBarProps={options?.errorBar !== false && { ...errorBarProps }}
+      // Ignore errors from before current call. This avoids old errors from showing up when a user re-joins a call.
+      errorBarProps={options?.errorBar !== false && { ...errorBarProps, ignorePremountErrors: true }}
       mutedNotificationProps={mutedNotificationProps}
       callControlProps={{
         callInvitationURL: callInvitationURL,
@@ -71,9 +79,13 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
         options: callControlOptions,
         increaseFlyoutItemSize: mobileView
       }}
+      /* @conditional-compile-remove(one-to-n-calling) */
+      onFetchAvatarPersonaData={onFetchAvatarPersonaData}
       mobileView={mobileView}
+      /* @conditional-compile-remove(one-to-n-calling) */
+      modalLayerHostId={props.modalLayerHostId}
       onRenderGalleryContent={() =>
-        callStatus === 'Connected' ? (
+        _isInCall(callStatus) ? (
           isNetworkHealthy(networkReconnectTileProps.networkReconnectValue) ? (
             <MediaGallery
               isMobile={mobileView}
@@ -81,6 +93,7 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
               {...mediaGalleryHandlers}
               onRenderAvatar={onRenderAvatar}
               onFetchAvatarPersonaData={onFetchAvatarPersonaData}
+              drawerMenuHostId={drawerMenuHostId}
             />
           ) : (
             <NetworkReconnectTile {...networkReconnectTileProps} />

@@ -3,14 +3,21 @@
 
 import { deviceManagerDeclaratify } from './DeviceManagerDeclarative';
 import { CallClient, CallClientOptions, CreateViewOptions, DeviceManager } from '@azure/communication-calling';
+/* @conditional-compile-remove(unsupported-browser) */
+import { Features } from '@azure/communication-calling';
 import { CallClientState, LocalVideoStreamState, RemoteVideoStreamState } from './CallClientState';
 import { CallContext } from './CallContext';
 import { callAgentDeclaratify, DeclarativeCallAgent } from './CallAgentDeclarative';
 import { InternalCallContext } from './InternalCallContext';
 import { createView, disposeView, CreateViewResult } from './StreamUtils';
 import { CommunicationIdentifier, CommunicationUserIdentifier, getIdentifierKind } from '@azure/communication-common';
-import { _getApplicationId } from '@internal/acs-ui-common';
+import { toFlatCommunicationIdentifier, _getApplicationId } from '@internal/acs-ui-common';
 import { callingStatefulLogger } from './Logger';
+/* @conditional-compile-remove(teams-identity-support) */
+import { DeclarativeTeamsCallAgent, teamsCallAgentDeclaratify } from './TeamsCallAgentDeclarative';
+/* @conditional-compile-remove(teams-identity-support) */
+import { MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
+import { videoStreamRendererViewDeclaratify } from './VideoStreamRendererViewDeclarative';
 
 /**
  * Defines the methods that allow CallClient {@link @azure/communication-calling#CallClient} to be used statefully.
@@ -128,6 +135,7 @@ export interface StatefulCallClient extends CallClient {
     stream: LocalVideoStreamState | RemoteVideoStreamState
   ): void;
 
+  /** @conditional-compile-remove(one-to-n-calling) */
   /**
    * The CallAgent is used to handle calls.
    * To create the CallAgent, pass a CommunicationTokenCredential object provided from SDK.
@@ -162,7 +170,10 @@ export type CallStateModifier = (state: CallClientState) => void;
 class ProxyCallClient implements ProxyHandler<CallClient> {
   private _context: CallContext;
   private _internalContext: InternalCallContext;
-  private _callAgent: DeclarativeCallAgent | undefined;
+  private _callAgent:
+    | DeclarativeCallAgent
+    | /* @conditional-compile-remove(teams-identity-support) */ DeclarativeTeamsCallAgent
+    | undefined;
   private _deviceManager: DeviceManager | undefined;
   private _sdkDeviceManager: DeviceManager | undefined;
 
@@ -189,6 +200,23 @@ class ProxyCallClient implements ProxyHandler<CallClient> {
           'CallClient.createCallAgent'
         );
       }
+      case 'createTeamsCallAgent': {
+        /* @conditional-compile-remove(teams-identity-support) */ return this._context.withAsyncErrorTeedToState(
+          async (...args: Parameters<CallClient['createTeamsCallAgent']>): Promise<DeclarativeTeamsCallAgent> => {
+            // createCallAgent will throw an exception if the previous callAgent was not disposed. If the previous
+            // callAgent was disposed then it would have unsubscribed to events so we can just create a new declarative
+            // callAgent if the createCallAgent succeeds.
+            const callAgent = await target.createTeamsCallAgent(...args);
+            this._callAgent = teamsCallAgentDeclaratify(callAgent, this._context, this._internalContext);
+            this._context.setCallAgent({
+              displayName: undefined
+            });
+            return this._callAgent;
+          },
+          'CallClient.createTeamsCallAgent'
+        );
+        return Reflect.get(target, prop);
+      }
       case 'getDeviceManager': {
         return this._context.withAsyncErrorTeedToState(async () => {
           // As of writing, the SDK always returns the same instance of DeviceManager so we keep a reference of
@@ -211,6 +239,26 @@ class ProxyCallClient implements ProxyHandler<CallClient> {
           return this._deviceManager;
         }, 'CallClient.getDeviceManager');
       }
+      case 'feature': {
+        /* @conditional-compile-remove(unsupported-browser) */
+        return this._context.withErrorTeedToState((...args: Parameters<CallClient['feature']>) => {
+          if (args[0] === Features.DebugInfo) {
+            const feature = target.feature(Features.DebugInfo);
+            /**
+             * add to this object if we want to proxy anything else off the DebugInfo feature object.
+             */
+            return {
+              ...feature,
+              getEnvironmentInfo: async () => {
+                const environmentInfo = await feature.getEnvironmentInfo();
+                this._context.setEnvironmentInfo(environmentInfo);
+                return environmentInfo;
+              }
+            };
+          }
+          return Reflect.get(target, prop);
+        }, 'CallClient.feature');
+      }
       default:
         return Reflect.get(target, prop);
     }
@@ -227,7 +275,9 @@ export type StatefulCallClientArgs = {
    * UserId from SDK. This is provided for developer convenience to easily access the userId from the
    * state. It is not used by StatefulCallClient.
    */
-  userId: CommunicationUserIdentifier;
+  userId:
+    | CommunicationUserIdentifier
+    | /* @conditional-compile-remove(teams-identity-support) */ MicrosoftTeamsUserIdentifier;
   /* @conditional-compile-remove(PSTN-calls) */
   /**
    * A phone number in E.164 format that will be used to represent the callers identity. This number is required
@@ -311,14 +361,20 @@ export const createStatefulCallClientWithDeps = (
   });
   Object.defineProperty(callClient, 'createView', {
     configurable: false,
-    value: (
+    value: async (
       callId: string | undefined,
       participantId: CommunicationIdentifier | undefined,
       stream: LocalVideoStreamState | RemoteVideoStreamState,
       options?: CreateViewOptions
     ): Promise<CreateViewResult | undefined> => {
       const participantIdKind = participantId ? getIdentifierKind(participantId) : undefined;
-      return createView(context, internalContext, callId, participantIdKind, stream, options);
+      const result = await createView(context, internalContext, callId, participantIdKind, stream, options);
+      // We only need to declaratify the VideoStreamRendererView object for remote participants. Because the updateScalingMode only needs to be called on remote participant stream views.
+      if ('id' in stream && callId && participantId && result) {
+        const participantKey = toFlatCommunicationIdentifier(participantId);
+        result.view = videoStreamRendererViewDeclaratify(result.view, context, callId, participantKey, stream.id);
+      }
+      return result;
     }
   });
   Object.defineProperty(callClient, 'disposeView', {

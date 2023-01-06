@@ -3,7 +3,7 @@
 
 import { ControlBarButton, ControlBarButtonProps } from './ControlBarButton';
 import React from 'react';
-import { HighContrastAwareIcon } from './HighContrastAwareIcon';
+import { _HighContrastAwareIcon } from './HighContrastAwareIcon';
 
 /**
  *@beta
@@ -40,7 +40,7 @@ export interface HoldButtonStrings {
   /**
    * Content for when button is unchecked
    */
-  toolTipOffContent: string;
+  tooltipOffContent: string;
 }
 
 /**
@@ -56,10 +56,10 @@ export const HoldButton = (props: HoldButtonProps): JSX.Element => {
   const { onToggleHold, strings } = props;
 
   const onRenderHoldIcon = (): JSX.Element => {
-    return <HighContrastAwareIcon disabled={props.disabled} iconName="HoldCall" />;
+    return <_HighContrastAwareIcon disabled={props.disabled} iconName="HoldCallButton" />;
   };
   const onRenderResumeIcon = (): JSX.Element => {
-    return <HighContrastAwareIcon disabled={props.disabled} iconName="ResumeCall" />;
+    return <_HighContrastAwareIcon disabled={props.disabled} iconName="ResumeCall" />;
   };
 
   return (

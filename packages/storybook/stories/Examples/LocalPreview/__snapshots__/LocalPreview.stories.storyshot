@@ -48,9 +48,6 @@ exports[`storybook snapshot tests Storyshots Examples/Local Preview Local Previe
                   data-ui-id="video-tile"
                 >
                   <div
-                    className="stub-classname"
-                  />
-                  <div
                     className="ms-Stack stub-classname"
                   >
                     <div
@@ -58,6 +55,7 @@ exports[`storybook snapshot tests Storyshots Examples/Local Preview Local Previe
                     >
                       <div
                         className="stub-classname"
+                        data-ui-id="stream-media-container"
                       />
                     </div>
                   </div>

@@ -5,7 +5,10 @@
     "removeButtonLabel": "Удалить",
     "sharingIconLabel": "Общий доступ",
     "mutedIconLabel": "Микрофон отключен",
-    "displayNamePlaceholder": "Участник без имени"
+    "displayNamePlaceholder": "Участник без имени",
+    "participantStateConnecting": "Выполняется вызов...",
+    "participantStateRinging": "Выполняется вызов...",
+    "participantStateHold": "На удержании"
   },
   "typingIndicator": {
     "singleUser": "{user} вводит текст...",
@@ -18,7 +21,10 @@
     "placeholderText": "Введите сообщение",
     "textTooLong": "Длина сообщения превышает максимально допустимую.",
     "sendButtonAriaLabel": "Отправить сообщение",
-    "fileUploadsPendingError": "Выполняется загрузка. Подождите..."
+    "fileUploadsPendingError": "Выполняется загрузка. Подождите...",
+    "removeFile": "Удалить файл",
+    "uploading": "Отправка",
+    "uploadCompleted": "Отправка завершена"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "Сообщение отправлено",
@@ -33,7 +39,7 @@
   },
   "endCallButton": {
     "label": "Выйти",
-    "tooltipContent": "Покинуть звонок"
+    "tooltipContent": "Покинуть вызов"
   },
   "cameraButton": {
     "onLabel": "Отключить",
@@ -43,7 +49,7 @@
     "tooltipOffContent": "Включить камеру",
     "tooltipVideoLoadingContent": "Видео загружается",
     "cameraMenuTitle": "Камера",
-    "cameraMenuTooltip": "Выбор камеры",
+    "cameraMenuTooltip": "Выбрать камеру",
     "cameraButtonSplitRoleDescription": "Разворачивающаяся кнопка",
     "onSplitButtonAriaLabel": "Отключить камеру и параметры камеры",
     "offSplitButtonAriaLabel": "Включить камеру и параметры камеры",
@@ -72,7 +78,7 @@
     "cameraMenuTitle": "Камера",
     "cameraMenuTooltip": "Выбрать камеру",
     "audioDeviceMenuTitle": "Звуковое устройство",
-    "audioDeviceMenuTooltip": "Выберите звуковое устройство",
+    "audioDeviceMenuTooltip": "Выбрать звуковое устройство",
     "microphoneMenuTitle": "Микрофон",
     "microphoneMenuTooltip": "Выбрать микрофон",
     "speakerMenuTitle": "Динамик",
@@ -110,6 +116,8 @@
     "failToSendTag": "Не удалось отправить",
     "editedTag": "Изменено",
     "liveAuthorIntro": "{author} говорит",
+    "messageContentAriaText": "{author} говорит {message}",
+    "messageContentMineAriaText": "Вы сказали {message}",
     "editBoxTextLimit": "Превышено предельное число символов в {limitNumber} сообщении",
     "editBoxPlaceholderText": "Отредактируйте сообщение",
     "newMessagesIndicator": "Новые сообщения",
@@ -117,7 +125,8 @@
     "editBoxCancelButton": "Отмена",
     "editBoxSubmitButton": "Отправить",
     "messageReadCount": "Прочитали: {messageReadByCount} из {remoteParticipantsCount}",
-    "actionMenuMoreOptions": "Дополнительные параметры"
+    "actionMenuMoreOptions": "Дополнительные параметры",
+    "downloadFile": "Скачать файл"
   },
   "errorBar": {
     "unableToReachChatService": "Вы не в сети",
@@ -138,10 +147,13 @@
     "callNoMicrophoneFound": "Микрофоны не найдены. Подключение звукового устройства ввода.",
     "callMicrophoneAccessDenied": "Не удается получить доступ к микрофону. Щелкните блокировку в адресной строке, чтобы предоставить разрешение на эту веб-страницу.",
     "callMicrophoneMutedBySystem": "Система отключила ваш микрофон.",
+    "callMicrophoneUnmutedBySystem": "Микрофон восстановлен, и система включила ваш звук.",
     "callMacOsMicrophoneAccessDenied": "Не удается получить доступ к микрофону. Предоставьте разрешение на доступ к микрофону в параметрах конфиденциальности macOS.",
     "callLocalVideoFreeze": "Низкая пропускная способность сети. Ваше видео может отображаться как приостановленное для других участников вызова.",
     "callCameraAccessDenied": "Не удается получить доступ к камере. Щелкните блокировку в адресной строке, чтобы предоставить разрешение на эту веб-страницу.",
     "callCameraAlreadyInUse": "Не удается получить доступ к камере. Возможно, оно уже используется другим приложением.",
+    "callVideoStoppedBySystem": "Воспроизведение видео остановлено системой.",
+    "callVideoRecoveredBySystem": "Воспроизведение видео возобновлено.",
     "callMacOsCameraAccessDenied": "MacOS блокирует доступ к камере. Обновите параметры конфиденциальности, чтобы разрешить этому браузеру доступ к камере.",
     "callMacOsScreenShareAccessDenied": "MacOS блокирует демонстрацию экрана. Обновите параметры конфиденциальности, чтобы разрешить этому браузеру записывать ваш экран.",
     "dismissButtonAriaLabel": "Закрыть",
@@ -158,12 +170,50 @@
     "displayNamePlaceholder": "Участник без имени"
   },
   "dialpad": {
-    "placeholderText": "Введите номер"
+    "placeholderText": "Введите номер телефона",
+    "deleteButtonAriaLabel": "Удалить"
   },
-  "HoldButton": {
+  "holdButton": {
     "onLabel": "Возобновить",
     "offLabel": "Удержать",
-    "toolTipOnContent": "Возобновить звонок",
-    "toolTipOffContent": "Поставить звонок на удержание"
+    "tooltipOnContent": "Возобновить звонок",
+    "tooltipOffContent": "Поставить звонок на удержание"
+  },
+  "videoTile": {
+    "participantStateConnecting": "Выполняется вызов...",
+    "participantStateRinging": "Выполняется вызов...",
+    "participantStateHold": "На удержании"
+  },
+  "SitePermissions": {
+    "primaryText": "Разрешить {appName} использовать камеру и микрофон",
+    "secondaryText": "Это необходимо для того, чтобы участники могли видеть и слышать вас.",
+    "linkText": "Нужна помощь? Получите справку по устранению неполадок",
+    "primaryButtonText": "Разрешить доступ"
+  },
+  "UnsupportedBrowser": {
+    "primaryText": "Браузер не поддерживается",
+    "secondaryText": "Присоединитесь к этому вызову с помощью совместимого браузера.",
+    "moreHelpLink": "Дополнительная помощь"
+  },
+  "BrowserPermissionDenied": {
+    "primaryText": "Не удается использовать камеру или микрофон",
+    "secondaryText": "Возможно, у вашего браузера нет доступа к камере или микрофону. Чтобы устранить эту проблему, откройте параметры системы.",
+    "primaryButtonText": "Повторить попытку",
+    "linkText": "Нужна помощь? Получите справку по устранению неполадок"
+  },
+  "BrowserPermissionDeniedIOS": {
+    "primaryText": "Разрешите доступ к микрофону, чтобы продолжить",
+    "secondaryText": "Таким образом, другие участники могут вас слышать.",
+    "primaryButtonText": "Повторить попытку",
+    "imageAltText": "Разрешение на доступ к микрофону и камере для iOS",
+    "linkText": "Нужна помощь? Получите справку по устранению неполадок",
+    "step1Text": "Перейдите в приложение \"Параметры\"",
+    "step2Text": "Прокрутите страницу вниз до параметров этого браузера",
+    "step3Text": "Включите микрофон (камера необязательна)",
+    "step4Text": "Попробуйте присоединиться к вызову еще раз",
+    "step1DigitText": "1",
+    "step2DigitText": "2",
+    "step3DigitText": "3",
+    "step4DigitText": "4"
   }
 }

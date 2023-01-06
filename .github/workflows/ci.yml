@@ -32,7 +32,7 @@ jobs:
         with:
           node-version: '14.x'
       - id: get-matrix
-        run: echo "::set-output name=matrix::$(node ./common/scripts/workflow-read-matrix.mjs)"
+        run: echo "matrix=$(node ./common/scripts/workflow-read-matrix.mjs)" >> $GITHUB_OUTPUT
 
   build_packages:
     needs: get_matrix
@@ -69,18 +69,24 @@ jobs:
       - name: Check result of flavor switch
         if: ${{ always() && steps.switch-flavor.outcome == 'failure' }}
         run: echo "Failed to switch to stable flavor, please make sure you run 'rush update:stable' if dependencies were updated." && exit 1
-      # Perform changelog check
+
       - name: Check the necessary change file has been submitted
-        run: rush changelog:check
+        if: ${{ github.event_name == 'pull_request' }}
+        # GitHub provides remote branch names as refs.
+        run: node common/scripts/changelog/check.mjs origin/${{ github.base_ref }} origin/${{ github.head_ref }}
+
       # Perform lint check
       - name: Run linter
         run: rush lint
-      # Type check test folder
-      - name: Type check test folder
-        run: cd packages/react-composites && rushx tsc:e2e
       # Builds
       - name: Build Packages
         run: rush build -t @azure/communication-react
+      # Type check test folder
+      # - must be run after building all packlets because it depends on compiled packlet dependencies
+      # - must be run only on beta flavor build because the browser test code is not conditional compiled
+      - name: Type check test folder
+        if: ${{ matrix.flavor == 'beta' }}
+        run: cd packages/react-composites && rushx tsc:e2e
       # Verify no uncommitted api extractor changes
       - name: API Extractor Check
         if: ${{ always() }}
@@ -117,35 +123,33 @@ jobs:
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      # Ensure node version is great enough
       - name: Use Node.js v14.x
         uses: actions/setup-node@v1
         with:
           node-version: '14.x'
-      # Try get node_modules from cache
       - name: Restore node_modules from cache
         uses: actions/cache@v2
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
-      # Install dependencies
       - name: Install rush
         run: npm install -g @microsoft/rush@5.47.0
       - name: Install dependencies
         run: rush install
-      # Switch flavor if necessary
       - name: Switch flavor for stable build
         if: ${{ matrix.flavor == 'stable' }}
         run: rush switch-flavor:stable
-      # Tests
       - name: Build Call Composite Test App
         run: |
           cd packages/react-composites
           rushx build:e2e:call
+      - name: Install packlets used by browser tests
+        run: |
+          cd packages/react-composites
+          rush build -t .
       - name: Call Composite Visual Regression Tests
         id: visualregressiontests
         run: |
@@ -158,7 +162,7 @@ jobs:
         if: ${{ always() }}
         with:
           name: e2e-results-${{ github.run_id }}-${{ github.run_attempt }}-${{ matrix.flavor }}-call.json
-          path: packages/react-composites/test-results/e2e-results.json
+          path: packages/react-composites/test-results/*/e2e-results.json
           if-no-files-found: error
       - name: Upload snapshot diff
         if: ${{ always() && steps.visualregressiontests.outcome == 'failure' }}
@@ -167,7 +171,7 @@ jobs:
           name: snapshots
           path: packages/react-composites/test-results
       - name: Comment on PR
-        if: ${{ github.event_name == 'pull_request' && always() && steps.visualregressiontests.outcome == 'failure' && !contains( github.event.pull_request.labels.*.name, 'ui change') }}
+        if: ${{ github.event_name == 'pull_request' && always() && steps.visualregressiontests.outcome == 'failure' && !contains( github.event.pull_request.labels.*.name, 'update_snapshots') }}
         uses: actions/github-script@v3
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
@@ -176,7 +180,7 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: 'Failed to pass the UI Test. If this PR is for UI change and the error is snapshot mismatch, please add "ui change" label to the PR for updating the snapshot.'
+              body: 'Failed to pass the UI Test. If this PR is for UI change and the error is snapshot mismatch, please add "update_snapshots" label to the PR for updating the snapshot.'
             })
 
   chat_composite_automation_test:
@@ -186,35 +190,33 @@ jobs:
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      # Ensure node version is great enough
       - name: Use Node.js v14.x
         uses: actions/setup-node@v1
         with:
           node-version: '14.x'
-      # Try get node_modules from cache
       - name: Restore node_modules from cache
         uses: actions/cache@v2
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
-      # Install dependencies
       - name: Install rush
         run: npm install -g @microsoft/rush@5.47.0
       - name: Install dependencies
         run: rush install
-      # Switch flavor if necessary
       - name: Switch flavor for stable build
         if: ${{ matrix.flavor == 'stable' }}
         run: rush switch-flavor:stable
-      # Tests
       - name: Build Chat Composite Test App
         run: |
           cd packages/react-composites
           rushx build:e2e:chat
+      - name: Install packlets used by browser tests
+        run: |
+          cd packages/react-composites
+          rush build -t .
       - name: Chat Composite Visual Regression Tests
         id: visualregressiontests
         run: |
@@ -227,7 +229,7 @@ jobs:
         if: ${{ always() }}
         with:
           name: e2e-results-${{ github.run_id }}-${{ github.run_attempt }}-${{ matrix.flavor }}-chat.json
-          path: packages/react-composites/test-results/e2e-results.json
+          path: packages/react-composites/test-results/*/e2e-results.json
           if-no-files-found: error
       - name: Upload snapshot diff
         if: ${{ always() && steps.visualregressiontests.outcome == 'failure' }}
@@ -236,7 +238,7 @@ jobs:
           name: snapshots
           path: packages/react-composites/test-results
       - name: Comment on PR
-        if: ${{ github.event_name == 'pull_request' && always() && steps.visualregressiontests.outcome == 'failure' && !contains( github.event.pull_request.labels.*.name, 'ui change') }}
+        if: ${{ github.event_name == 'pull_request' && always() && steps.visualregressiontests.outcome == 'failure' && !contains( github.event.pull_request.labels.*.name, 'update_snapshots') }}
         uses: actions/github-script@v3
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
@@ -245,7 +247,7 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: 'Failed to pass the UI Test. If this PR is for UI change and the error is snapshot mismatch, please add "ui change" label to the PR for updating the snapshot.'
+              body: 'Failed to pass the UI Test. If this PR is for UI change and the error is snapshot mismatch, please add "update_snapshots" label to the PR for updating the snapshot.'
             })
 
   call_with_chat_composite_automation_test:
@@ -255,35 +257,33 @@ jobs:
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      # Ensure node version is great enough
       - name: Use Node.js v14.x
         uses: actions/setup-node@v1
         with:
           node-version: '14.x'
-      # Try get node_modules from cache
       - name: Restore node_modules from cache
         uses: actions/cache@v2
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
-      # Install dependencies
       - name: Install rush
         run: npm install -g @microsoft/rush@5.47.0
       - name: Install dependencies
         run: rush install
-      # Switch flavor if necessary
       - name: Switch flavor for stable build
         if: ${{ matrix.flavor == 'stable' }}
         run: rush switch-flavor:stable
-      # Tests
       - name: Build CallWithChatComposite Test App
         run: |
           cd packages/react-composites
           rushx build:e2e:callwithchat
+      - name: Install packlets used by browser tests
+        run: |
+          cd packages/react-composites
+          rush build -t .
       - name: CallWithChatComposite Visual Regression Tests
         id: visualregressiontests
         run: |
@@ -296,7 +296,7 @@ jobs:
         if: ${{ always() }}
         with:
           name: e2e-results-${{ github.run_id }}-${{ github.run_attempt }}-${{ matrix.flavor }}-callwithchat.json
-          path: packages/react-composites/test-results/e2e-results.json
+          path: packages/react-composites/test-results/*/e2e-results.json
           if-no-files-found: error
       - name: Upload snapshot diff
         if: ${{ always() && steps.visualregressiontests.outcome == 'failure' }}
@@ -305,7 +305,7 @@ jobs:
           name: snapshots
           path: packages/react-composites/test-results
       - name: Comment on PR
-        if: ${{ github.event_name == 'pull_request' && always() && steps.visualregressiontests.outcome == 'failure' && !contains( github.event.pull_request.labels.*.name, 'ui change') }}
+        if: ${{ github.event_name == 'pull_request' && always() && steps.visualregressiontests.outcome == 'failure' && !contains( github.event.pull_request.labels.*.name, 'update_snapshots') }}
         uses: actions/github-script@v3
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
@@ -314,7 +314,7 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: 'Failed to pass the composite UI Test. If this PR is for UI change and the error is snapshot mismatch, please add "ui change" label to the PR for updating the snapshot.'
+              body: 'Failed to pass the composite UI Test. If this PR is for UI change and the error is snapshot mismatch, please add "update_snapshots" label to the PR for updating the snapshot.'
             })
 
   build_storybook:
@@ -495,7 +495,7 @@ jobs:
           name: snapshots
           path: samples/tests/test-results/ # or path/to/artifact
       - name: Comment on PR
-        if: ${{ github.event_name == 'pull_request' && always() && steps.visualregressiontests.outcome == 'failure' && !contains( github.event.pull_request.labels.*.name, 'ui change') }}
+        if: ${{ github.event_name == 'pull_request' && always() && steps.visualregressiontests.outcome == 'failure' && !contains( github.event.pull_request.labels.*.name, 'update_snapshots') }}
         uses: actions/github-script@v3
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
@@ -504,7 +504,7 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: 'Failed to pass the Static HTML UI Test. If this PR is for UI change and the error is snapshot mismatch, please add "ui change" label to the PR for updating the snapshot.'
+              body: 'Failed to pass the Static HTML UI Test. If this PR is for UI change and the error is snapshot mismatch, please add "update_snapshots" label to the PR for updating the snapshot.'
             })
 
   build_component_examples:
@@ -545,7 +545,7 @@ jobs:
           name: snapshots
           path: samples/tests/test-results/ # or path/to/artifact
       - name: Comment on PR
-        if: ${{ github.event_name == 'pull_request' && always() && steps.visualregressiontests.outcome == 'failure' && !contains( github.event.pull_request.labels.*.name, 'ui change') }}
+        if: ${{ github.event_name == 'pull_request' && always() && steps.visualregressiontests.outcome == 'failure' && !contains( github.event.pull_request.labels.*.name, 'update_snapshots') }}
         uses: actions/github-script@v3
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
@@ -554,7 +554,7 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: 'Failed to pass the component examples UI Test. If this PR is for UI change and the error is snapshot mismatch, please add "ui change" label to the PR for updating the snapshot.'
+              body: 'Failed to pass the component examples UI Test. If this PR is for UI change and the error is snapshot mismatch, please add "update_snapshots" label to the PR for updating the snapshot.'
             })
 
   compare_base_bundle_stats:
@@ -588,12 +588,12 @@ jobs:
         id: bundles
         run: |
           base_size=$(jq -r ".[0].parsedSize" base/report.json)
-          echo "::set-output name=base_size::${base_size}"
+          echo "base_size=${base_size}" >> $GITHUB_OUTPUT
           current_size=$(jq -r ".[0].parsedSize" current/report.json)
-          echo "::set-output name=current_size::${current_size}"
+          echo "current_size=${current_size}" >> $GITHUB_OUTPUT
           change=$([ $current_size -gt $base_size ] && echo "increased❗" || ([ $current_size = $base_size ] && echo "not changed" || echo "decreased✅"))
-          echo "::set-output name=change::${change}"
-          echo "::set-output name=diff::$(($current_size - $base_size))"
+          echo "change=${change}" >> $GITHUB_OUTPUT
+          echo "diff=$(($current_size - $base_size))" >> $GITHUB_OUTPUT
       - name: Find Comment
         uses: peter-evans/find-comment@v2
         id: fc
@@ -658,7 +658,7 @@ jobs:
           if [ $issue_count -gt 0 ]; then
             echo "No need to create new issue, one already exists"
           else
-            curl -X POST -H 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' https://api.github.com/repos/Azure/communication-ui-library/issues -d '{"title":"Main branch CI Failed", "body": "Main CI Pipeline has failed. Please investigate.", "labels":["CI_FAILURE"]}'
+            curl -X POST -H 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' https://api.github.com/repos/Azure/communication-ui-library/issues -d '{"title":"Main branch CI Failed", "body": "Main CI Pipeline has failed. Please investigate: https://github.com/Azure/communication-ui-library/actions/runs/${{ github.run_id }}", "labels":["CI_FAILURE"]}'
           fi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

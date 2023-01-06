@@ -15,12 +15,24 @@ export type CallWithChatExampleProps = {
   token: string;
   displayName: string;
   endpointUrl: string;
+  /**
+   * For CallWithChat you need to provide either a teams meeting locator or a CallAndChat locator
+   * for the composite
+   *
+   * CallAndChatLocator: This locator is comprised of a groupId call locator and a chat thread
+   * threadId for the session. See documentation on the {@link CallAndChatLocator} to see types of calls supported.
+   * {callLocator: ..., threadId: ...}
+   *
+   * TeamsMeetingLinkLocator: this is a special locator comprised of a Teams meeting link
+   * {meetingLink: ...}
+   */
   locator: TeamsMeetingLinkLocator | CallAndChatLocator;
 
   // Props to customize the CallWithChatComposite experience
   fluentTheme?: PartialTheme | Theme;
   compositeOptions?: CallWithChatCompositeOptions;
   callInvitationURL?: string;
+  formFactor?: 'desktop' | 'mobile';
 };
 
 export const CallWithChatExperience = (props: CallWithChatExampleProps): JSX.Element => {
@@ -44,5 +56,13 @@ export const CallWithChatExperience = (props: CallWithChatExampleProps): JSX.Ele
     return <Spinner label="Initializing..." />;
   }
 
-  return <CallWithChatComposite adapter={adapter} fluentTheme={props.fluentTheme} options={props.compositeOptions} />;
+  return (
+    <CallWithChatComposite
+      adapter={adapter}
+      fluentTheme={props.fluentTheme}
+      formFactor={props.formFactor}
+      joinInvitationURL={props.callInvitationURL}
+      options={props.compositeOptions}
+    />
+  );
 };

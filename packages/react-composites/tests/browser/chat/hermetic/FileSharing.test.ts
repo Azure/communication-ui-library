@@ -1,13 +1,12 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 import { expect } from '@playwright/test';
-import { sendMessage, waitForMessageDelivered, waitForTypingIndicatorHidden } from '../../common/chatTestHelpers';
-import { dataUiId, isTestProfileStableFlavor, stableScreenshot, waitForSelector } from '../../common/utils';
+import { sendMessage, waitForMessageDelivered } from '../../common/chatTestHelpers';
+import { dataUiId, stableScreenshot, waitForSelector } from '../../common/utils';
 import { buildUrlForChatAppUsingFakeAdapter, DEFAULT_FAKE_CHAT_ADAPTER_ARGS, test, TEST_PARTICIPANTS } from './fixture';
 
+/* @conditional-compile-remove(file-sharing) */
 test.describe('Filesharing Attach file icon', async () => {
-  test.skip(isTestProfileStableFlavor());
-
   test('is not visible if filesharing options are undefined', async ({ serverUrl, page }) => {
     await page.goto(buildUrlForChatAppUsingFakeAdapter(serverUrl, DEFAULT_FAKE_CHAT_ADAPTER_ARGS));
     expect(
@@ -25,8 +24,8 @@ test.describe('Filesharing Attach file icon', async () => {
   });
 });
 
+/* @conditional-compile-remove(file-sharing) */
 test.describe('Filesharing SendBox', async () => {
-  test.skip(isTestProfileStableFlavor());
   test('shows file cards for uploaded files', async ({ serverUrl, page }) => {
     await page.goto(
       buildUrlForChatAppUsingFakeAdapter(serverUrl, {
@@ -47,14 +46,17 @@ test.describe('Filesharing SendBox', async () => {
       })
     );
     expect(
-      await stableScreenshot(page, { stubMessageTimestamps: true, dismissChatMessageActions: true })
+      await stableScreenshot(page, {
+        stubMessageTimestamps: true,
+        dismissChatMessageActions: true,
+        awaitFileTypeIcon: true
+      })
     ).toMatchSnapshot('filesharing-sendbox-filecards.png');
   });
 });
 
+/* @conditional-compile-remove(file-sharing) */
 test.describe('Filesharing ProgressBar', async () => {
-  test.skip(isTestProfileStableFlavor());
-
   test('is visible if progress is between 0 and 1', async ({ serverUrl, page }) => {
     await page.goto(
       buildUrlForChatAppUsingFakeAdapter(serverUrl, {
@@ -146,9 +148,8 @@ test.describe('Filesharing ProgressBar', async () => {
   });
 });
 
+/* @conditional-compile-remove(file-sharing) */
 test.describe('Filesharing SendBox Errorbar', async () => {
-  test.skip(isTestProfileStableFlavor());
-
   test('shows file upload error', async ({ serverUrl, page }) => {
     await page.goto(
       buildUrlForChatAppUsingFakeAdapter(serverUrl, {
@@ -186,14 +187,17 @@ test.describe('Filesharing SendBox Errorbar', async () => {
     );
     await sendMessage(page, 'Hi');
     expect(
-      await stableScreenshot(page, { stubMessageTimestamps: true, dismissChatMessageActions: true })
+      await stableScreenshot(page, {
+        stubMessageTimestamps: true,
+        dismissChatMessageActions: true,
+        awaitFileTypeIcon: true
+      })
     ).toMatchSnapshot('filesharing-sendbox-file-upload-in-progress-error.png');
   });
 });
 
+/* @conditional-compile-remove(file-sharing) */
 test.describe('Filesharing Global Errorbar', async () => {
-  test.skip(isTestProfileStableFlavor());
-
   test('shows file download error', async ({ serverUrl, page }) => {
     await page.goto(
       buildUrlForChatAppUsingFakeAdapter(serverUrl, {
@@ -216,14 +220,17 @@ test.describe('Filesharing Global Errorbar', async () => {
 
     await page.locator(dataUiId('file-download-card-download-icon')).click();
     expect(
-      await stableScreenshot(page, { stubMessageTimestamps: true, dismissChatMessageActions: true })
+      await stableScreenshot(page, {
+        stubMessageTimestamps: true,
+        dismissChatMessageActions: true,
+        awaitFileTypeIcon: true
+      })
     ).toMatchSnapshot('filesharing-download-error.png');
   });
 });
 
+/* @conditional-compile-remove(file-sharing) */
 test.describe('Filesharing Message Thread', async () => {
-  test.skip(isTestProfileStableFlavor());
-
   test('contains File Download Card', async ({ serverUrl, page }) => {
     await page.goto(
       buildUrlForChatAppUsingFakeAdapter(serverUrl, {
@@ -245,7 +252,11 @@ test.describe('Filesharing Message Thread', async () => {
     await page.waitForSelector(dataUiId('file-download-card-group'));
 
     expect(
-      await stableScreenshot(page, { stubMessageTimestamps: true, dismissChatMessageActions: true })
+      await stableScreenshot(page, {
+        stubMessageTimestamps: true,
+        dismissChatMessageActions: true,
+        awaitFileTypeIcon: true
+      })
     ).toMatchSnapshot('filesharing-file-download-card-in-sent-messages.png');
   });
 
@@ -259,17 +270,19 @@ test.describe('Filesharing Message Thread', async () => {
         sendRemoteFileSharingMessage: true
       })
     );
-    await waitForTypingIndicatorHidden(page);
 
     expect(
-      await stableScreenshot(page, { stubMessageTimestamps: true, dismissChatMessageActions: true })
+      await stableScreenshot(page, {
+        stubMessageTimestamps: true,
+        dismissChatMessageActions: true,
+        awaitFileTypeIcon: true
+      })
     ).toMatchSnapshot('filesharing-file-download-card-in-received-messages.png');
   });
 });
 
+/* @conditional-compile-remove(file-sharing) */
 test.describe('Filesharing Edit Message', async () => {
-  test.skip(isTestProfileStableFlavor());
-
   test.beforeEach(async ({ serverUrl, page }) => {
     await page.goto(
       buildUrlForChatAppUsingFakeAdapter(serverUrl, {
@@ -300,7 +313,11 @@ test.describe('Filesharing Edit Message', async () => {
     await page.waitForSelector('[id="editbox"]');
 
     expect(
-      await stableScreenshot(page, { stubMessageTimestamps: true, dismissChatMessageActions: true })
+      await stableScreenshot(page, {
+        stubMessageTimestamps: true,
+        dismissChatMessageActions: true,
+        awaitFileTypeIcon: true
+      })
     ).toMatchSnapshot('filesharing-file-upload-card-while-editing-message.png');
   });
 });

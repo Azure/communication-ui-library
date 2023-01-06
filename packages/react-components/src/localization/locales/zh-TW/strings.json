@@ -5,7 +5,10 @@
     "removeButtonLabel": "移除",
     "sharingIconLabel": "分享",
     "mutedIconLabel": "已靜音",
-    "displayNamePlaceholder": "未命名的參與者"
+    "displayNamePlaceholder": "未命名的參與者",
+    "participantStateConnecting": "撥號中...",
+    "participantStateRinging": "撥號中...",
+    "participantStateHold": "電話保留"
   },
   "typingIndicator": {
     "singleUser": "{user} 正在輸入...",
@@ -18,7 +21,10 @@
     "placeholderText": "輸入訊息",
     "textTooLong": "您的訊息長度超過上限。",
     "sendButtonAriaLabel": "傳送訊息",
-    "fileUploadsPendingError": "正在上傳... 請稍候。"
+    "fileUploadsPendingError": "正在上傳... 請稍候。",
+    "removeFile": "移除檔案",
+    "uploading": "正在上傳",
+    "uploadCompleted": "上傳完成"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "訊息已傳送",
@@ -59,7 +65,7 @@
     "microphoneMenuTitle": "麥克風",
     "microphoneMenuTooltip": "選擇麥克風",
     "speakerMenuTitle": "揚聲器",
-    "speakerMenuTooltip": "選擇揚聲器",
+    "speakerMenuTooltip": "選擇喇叭",
     "microphoneButtonSplitRoleDescription": "[分割] 按鈕",
     "onSplitButtonAriaLabel": "將麥克風和音訊選項設為靜音",
     "offSplitButtonAriaLabel": "將麥克風和音訊選項取消靜音",
@@ -76,7 +82,7 @@
     "microphoneMenuTitle": "麥克風",
     "microphoneMenuTooltip": "選擇麥克風",
     "speakerMenuTitle": "演講者",
-    "speakerMenuTooltip": "選擇講者"
+    "speakerMenuTooltip": "選擇喇叭"
   },
   "participantsButton": {
     "label": "人員",
@@ -110,6 +116,8 @@
     "failToSendTag": "無法傳送",
     "editedTag": "已編輯",
     "liveAuthorIntro": "{author} 說",
+    "messageContentAriaText": "{author} 說 {message}",
+    "messageContentMineAriaText": "您說 {message}",
     "editBoxTextLimit": "您的訊息超過 {limitNumber} 個字元的限制",
     "editBoxPlaceholderText": "編輯您的訊息",
     "newMessagesIndicator": "新訊息",
@@ -117,7 +125,8 @@
     "editBoxCancelButton": "取消",
     "editBoxSubmitButton": "提交",
     "messageReadCount": "讀取者為 {messageReadByCount} / {remoteParticipantsCount}",
-    "actionMenuMoreOptions": "更多選項"
+    "actionMenuMoreOptions": "更多選項",
+    "downloadFile": "下載檔案"
   },
   "errorBar": {
     "unableToReachChatService": "您處於離線狀態",
@@ -138,10 +147,13 @@
     "callNoMicrophoneFound": "找不到麥克風。請連接音訊輸入裝置。",
     "callMicrophoneAccessDenied": "無法存取麥克風。按一下網址列中的鎖定以授與此網頁的許可權。",
     "callMicrophoneMutedBySystem": "系統已將您設為靜音。",
+    "callMicrophoneUnmutedBySystem": "您的麥克風已復原，系統已取消您的靜音。",
     "callMacOsMicrophoneAccessDenied": "無法存取麥克風。請在您的 MacOS 隱私權設定中授與麥克風權限。",
     "callLocalVideoFreeze": "網路頻寬不佳。通話中的其他人可能會暫停您的視訊。",
     "callCameraAccessDenied": "無法存取相機。按一下網址列中的鎖定以授與此網頁的許可權。",
     "callCameraAlreadyInUse": "無法存取相機。其他應用程式可能已在使用它。",
+    "callVideoStoppedBySystem": "您的影片已遭系統停止。",
+    "callVideoRecoveredBySystem": "您的影片已繼續。",
     "callMacOsCameraAccessDenied": "MacOS 已封鎖您的相機存取權限。請更新您的隱私權設定，允許此瀏覽器存取您的相機。",
     "callMacOsScreenShareAccessDenied": "MacOS 正在封鎖螢幕畫面分享。更新您的隱私權設定，以允許此瀏覽器錄製您的螢幕。",
     "dismissButtonAriaLabel": "關閉",
@@ -158,12 +170,50 @@
     "displayNamePlaceholder": "未命名的參與者"
   },
   "dialpad": {
-    "placeholderText": "輸入號碼"
+    "placeholderText": "輸入電話號碼",
+    "deleteButtonAriaLabel": "刪除"
   },
-  "HoldButton": {
+  "holdButton": {
     "onLabel": "繼續",
     "offLabel": "保留",
-    "toolTipOnContent": "繼續通話",
-    "toolTipOffContent": "保留通話"
+    "tooltipOnContent": "繼續通話",
+    "tooltipOffContent": "保留通話"
+  },
+  "videoTile": {
+    "participantStateConnecting": "撥號中...",
+    "participantStateRinging": "撥號中...",
+    "participantStateHold": "電話保留"
+  },
+  "SitePermissions": {
+    "primaryText": "允許 {appName} 使用您的相機和麥克風",
+    "secondaryText": "這樣參與者才能看到您並聽到您的聲音。",
+    "linkText": "需要協助嗎? 取得疑難排解說明",
+    "primaryButtonText": "允許存取"
+  },
+  "UnsupportedBrowser": {
+    "primaryText": "不支援瀏覽器",
+    "secondaryText": "請使用相容的瀏覽器加入此通話。",
+    "moreHelpLink": "更多協助資訊"
+  },
+  "BrowserPermissionDenied": {
+    "primaryText": "無法使用您的相機或麥克風",
+    "secondaryText": "您的瀏覽器可能無法存取您的相機或麥克風。若要修正此問題，請開啟 [系統喜好設定]。",
+    "primaryButtonText": "重試",
+    "linkText": "需要協助嗎? 取得疑難排解說明"
+  },
+  "BrowserPermissionDeniedIOS": {
+    "primaryText": "允許存取麥克風以繼續",
+    "secondaryText": "讓其他參與者可聽到您的聲音。",
+    "primaryButtonText": "重試",
+    "imageAltText": "iOS 的麥克風和相機裝置權限位置",
+    "linkText": "需要協助嗎? 取得疑難排解說明",
+    "step1Text": "移至 [設定] 應用程式",
+    "step2Text": "向下捲動到此瀏覽器的設定",
+    "step3Text": "開啟麥克風 (相機選用)",
+    "step4Text": "再次嘗試加入通話",
+    "step1DigitText": "1",
+    "step2DigitText": "2",
+    "step3DigitText": "3",
+    "step4DigitText": "4"
   }
 }

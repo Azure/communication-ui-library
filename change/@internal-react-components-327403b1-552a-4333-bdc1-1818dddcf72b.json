@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Make participant items tab navigable",
-  "packageName": "@internal/react-components",
-  "email": "edwardlee@microsoft.com",
-  "dependentChangeType": "patch"
-}

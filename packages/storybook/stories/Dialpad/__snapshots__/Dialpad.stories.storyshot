@@ -26,6 +26,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Dialpad Dialpad 1`] =
         <div
           className="stub-classname"
           data-test-id="dialpadContainer"
+          data-ui-id="dialpadContainer"
         >
           <div
             className="ms-TextField stub-classname"
@@ -46,7 +47,7 @@ exports[`storybook snapshot tests Storyshots UI Components/Dialpad Dialpad 1`] =
                   onChange={[Function]}
                   onFocus={[Function]}
                   onInput={[Function]}
-                  placeholder="Enter a number"
+                  placeholder="Enter phone number"
                   type="text"
                   value=""
                 />
@@ -77,6 +78,8 @@ exports[`storybook snapshot tests Storyshots UI Components/Dialpad Dialpad 1`] =
                 onKeyUp={[Function]}
                 onMouseDown={[Function]}
                 onMouseUp={[Function]}
+                onTouchEnd={[Function]}
+                onTouchStart={[Function]}
                 type="button"
               >
                 <span
@@ -109,6 +112,8 @@ exports[`storybook snapshot tests Storyshots UI Components/Dialpad Dialpad 1`] =
                 onKeyUp={[Function]}
                 onMouseDown={[Function]}
                 onMouseUp={[Function]}
+                onTouchEnd={[Function]}
+                onTouchStart={[Function]}
                 type="button"
               >
                 <span
@@ -141,6 +146,8 @@ exports[`storybook snapshot tests Storyshots UI Components/Dialpad Dialpad 1`] =
                 onKeyUp={[Function]}
                 onMouseDown={[Function]}
                 onMouseUp={[Function]}
+                onTouchEnd={[Function]}
+                onTouchStart={[Function]}
                 type="button"
               >
                 <span
@@ -177,6 +184,8 @@ exports[`storybook snapshot tests Storyshots UI Components/Dialpad Dialpad 1`] =
                 onKeyUp={[Function]}
                 onMouseDown={[Function]}
                 onMouseUp={[Function]}
+                onTouchEnd={[Function]}
+                onTouchStart={[Function]}
                 type="button"
               >
                 <span
@@ -209,6 +218,8 @@ exports[`storybook snapshot tests Storyshots UI Components/Dialpad Dialpad 1`] =
                 onKeyUp={[Function]}
                 onMouseDown={[Function]}
                 onMouseUp={[Function]}
+                onTouchEnd={[Function]}
+                onTouchStart={[Function]}
                 type="button"
               >
                 <span
@@ -241,6 +252,8 @@ exports[`storybook snapshot tests Storyshots UI Components/Dialpad Dialpad 1`] =
                 onKeyUp={[Function]}
                 onMouseDown={[Function]}
                 onMouseUp={[Function]}
+                onTouchEnd={[Function]}
+                onTouchStart={[Function]}
                 type="button"
               >
                 <span
@@ -277,6 +290,8 @@ exports[`storybook snapshot tests Storyshots UI Components/Dialpad Dialpad 1`] =
                 onKeyUp={[Function]}
                 onMouseDown={[Function]}
                 onMouseUp={[Function]}
+                onTouchEnd={[Function]}
+                onTouchStart={[Function]}
                 type="button"
               >
                 <span
@@ -309,6 +324,8 @@ exports[`storybook snapshot tests Storyshots UI Components/Dialpad Dialpad 1`] =
                 onKeyUp={[Function]}
                 onMouseDown={[Function]}
                 onMouseUp={[Function]}
+                onTouchEnd={[Function]}
+                onTouchStart={[Function]}
                 type="button"
               >
                 <span
@@ -341,6 +358,8 @@ exports[`storybook snapshot tests Storyshots UI Components/Dialpad Dialpad 1`] =
                 onKeyUp={[Function]}
                 onMouseDown={[Function]}
                 onMouseUp={[Function]}
+                onTouchEnd={[Function]}
+                onTouchStart={[Function]}
                 type="button"
               >
                 <span
@@ -377,6 +396,8 @@ exports[`storybook snapshot tests Storyshots UI Components/Dialpad Dialpad 1`] =
                 onKeyUp={[Function]}
                 onMouseDown={[Function]}
                 onMouseUp={[Function]}
+                onTouchEnd={[Function]}
+                onTouchStart={[Function]}
                 type="button"
               >
                 <span
@@ -409,6 +430,8 @@ exports[`storybook snapshot tests Storyshots UI Components/Dialpad Dialpad 1`] =
                 onKeyUp={[Function]}
                 onMouseDown={[Function]}
                 onMouseUp={[Function]}
+                onTouchEnd={[Function]}
+                onTouchStart={[Function]}
                 type="button"
               >
                 <span
@@ -441,6 +464,8 @@ exports[`storybook snapshot tests Storyshots UI Components/Dialpad Dialpad 1`] =
                 onKeyUp={[Function]}
                 onMouseDown={[Function]}
                 onMouseUp={[Function]}
+                onTouchEnd={[Function]}
+                onTouchStart={[Function]}
                 type="button"
               >
                 <span

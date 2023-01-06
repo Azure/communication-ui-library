@@ -22,5 +22,16 @@ export const IDS = {
   horizontalGalleryLeftNavButton: 'horizontal-gallery-left-nav-button',
   horizontalGalleryRightNavButton: 'horizontal-gallery-right-nav-button',
   readReceiptTooltip: 'chat-composite-message-tooltip',
-  fileTypeIcon: 'filetype-icon'
+  fileTypeIcon: 'filetype-icon',
+  deviceButton: 'calling-composite-devices-button',
+  resumeCallButton: 'hold-page-resume-call-button',
+  holdButton: 'hold-button',
+  holdPage: 'hold-page',
+  moreButton: 'call-with-chat-composite-more-button',
+  callPage: 'call-page',
+  unsupportedEnvironmentIcon: 'unsupported-environment-icon',
+  unsupportedEnvironmentLink: 'unsupported-environment-link',
+  lobbyScreenTitle: 'lobbyScreenTitle',
+  allowUnsupportedBrowserButton: 'allowUnsupportedBrowserButton',
+  configurationScreenDevicesButton: 'call-composite-local-device-settings-options-button'
 };

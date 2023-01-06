@@ -78,10 +78,6 @@ const webpackConfig = (sampleAppDir, env, babelConfig) => {
           target: 'http://[::1]:8080'
         },
         {
-          path: '/isValidThread/*',
-          target: 'http://[::1]:8080'
-        },
-        {
           path: '/createThread',
           target: 'http://[::1]:8080'
         },
@@ -95,6 +91,14 @@ const webpackConfig = (sampleAppDir, env, babelConfig) => {
         },
         {
           path: '/addUser/*',
+          target: 'http://[::1]:8080'
+        },
+        {
+          path: '/createRoom',
+          target: 'http://[::1]:8080'
+        },
+        {
+          path: '/addUserToRoom',
           target: 'http://[::1]:8080'
         }
       ]

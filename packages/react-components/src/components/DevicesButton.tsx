@@ -12,9 +12,9 @@ import {
 import React from 'react';
 import { useLocale } from '../localization';
 import { ControlBarButton, ControlBarButtonProps, ControlBarButtonStyles } from './ControlBarButton';
-import { HighContrastAwareIcon } from './HighContrastAwareIcon';
+import { _HighContrastAwareIcon } from './HighContrastAwareIcon';
 import { buttonFlyoutItemStyles } from './styles/ControlBar.styles';
-import { preventDismissOnEvent } from './utils/common';
+import { _preventDismissOnEvent as preventDismissOnEvent } from '@internal/acs-ui-common';
 
 /**
  * Styles for the {@link DevicesButton} menu.
@@ -232,7 +232,9 @@ export interface DeviceMenuStyles extends IContextualMenuStyles {
  */
 export const generateDefaultDeviceMenuProps = (
   props: DeviceMenuProps,
-  strings: DeviceMenuStrings
+  strings: DeviceMenuStrings,
+  isSelectCamAllowed = true,
+  isSelectMicAllowed = true
 ): { items: IContextualMenuItem[] } | undefined => {
   const {
     microphones,
@@ -264,7 +266,7 @@ export const generateDefaultDeviceMenuProps = (
 
   const menuItemStyles = merge(buttonFlyoutItemStyles, props.styles?.menuItemStyles ?? {});
 
-  if (cameras && selectedCamera && onSelectCamera) {
+  if (cameras && selectedCamera && onSelectCamera && isSelectCamAllowed) {
     defaultMenuProps.items.push({
       key: 'sectionCamera',
       title: strings.cameraMenuTooltip,
@@ -291,7 +293,7 @@ export const generateDefaultDeviceMenuProps = (
     });
   }
 
-  if (microphones && selectedMicrophone && onSelectMicrophone) {
+  if (microphones && selectedMicrophone && onSelectMicrophone && isSelectMicAllowed) {
     // Set props as Microphone if speakers can be enumerated else set as Audio Device
     const speakersAvailable = speakers && speakers.length > 0;
     const key = speakersAvailable ? 'sectionMicrophone' : 'sectionAudioDevice';
@@ -375,9 +377,9 @@ export const DevicesButton = (props: DevicesButtonProps): JSX.Element => {
   const devicesButtonMenu =
     props.menuProps ?? generateDefaultDeviceMenuProps({ ...props, styles: props.styles?.menuStyles }, strings);
 
-  const onRenderOptionsIcon = (): JSX.Element => (
-    <HighContrastAwareIcon disabled={props.disabled} iconName="ControlButtonOptions" />
-  );
+  const onRenderOptionsIcon = (): JSX.Element => {
+    return <_HighContrastAwareIcon disabled={props.disabled} iconName="ControlButtonOptions" />;
+  };
 
   return (
     <ControlBarButton

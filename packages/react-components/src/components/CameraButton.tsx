@@ -5,7 +5,7 @@ import React, { useCallback, useState } from 'react';
 import { useLocale } from '../localization';
 import { VideoStreamOptions } from '../types';
 import { ControlBarButton, ControlBarButtonProps } from './ControlBarButton';
-import { HighContrastAwareIcon } from './HighContrastAwareIcon';
+import { _HighContrastAwareIcon } from './HighContrastAwareIcon';
 
 import { IContextualMenuItemStyles, IContextualMenuStyles } from '@fluentui/react';
 import { ControlBarButtonStyles } from './ControlBarButton';
@@ -145,11 +145,14 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
   const localeStrings = useLocale().strings.cameraButton;
   const strings = { ...localeStrings, ...props.strings };
   const [announcerString, setAnnouncerString] = useState<string | undefined>(undefined);
+
+  const disabled = props.disabled || waitForCamera;
+
   const onRenderCameraOnIcon = (): JSX.Element => (
-    <HighContrastAwareIcon disabled={props.disabled || waitForCamera} iconName="ControlButtonCameraOn" />
+    <_HighContrastAwareIcon disabled={disabled} iconName="ControlButtonCameraOn" />
   );
   const onRenderCameraOffIcon = (): JSX.Element => (
-    <HighContrastAwareIcon disabled={props.disabled || waitForCamera} iconName="ControlButtonCameraOff" />
+    <_HighContrastAwareIcon disabled={disabled} iconName="ControlButtonCameraOff" />
   );
   if (waitForCamera && strings.tooltipVideoLoadingContent) {
     strings.tooltipDisabledContent = strings.tooltipVideoLoadingContent;
@@ -186,7 +189,7 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
       <Announcer announcementString={announcerString} ariaLive={'polite'} />
       <ControlBarButton
         {...props}
-        disabled={props.disabled || waitForCamera}
+        disabled={disabled}
         onClick={onToggleCamera ? onToggleClick : props.onClick}
         onRenderOnIcon={props.onRenderOnIcon ?? onRenderCameraOnIcon}
         onRenderOffIcon={props.onRenderOffIcon ?? onRenderCameraOffIcon}

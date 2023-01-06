@@ -4,7 +4,6 @@
 import { ErrorType } from '@azure/communication-react';
 import { PartialTheme } from '@fluentui/react';
 import { DefaultTheme, DarkTheme, TeamsTheme, WordTheme } from '@fluentui/theme-samples';
-import { COMPOSITE_STRING_CONNECTIONSTRING } from './CompositeStringUtils';
 import {
   mediaGalleryWidthDefault,
   mediaGalleryWidthOptions,
@@ -143,10 +142,39 @@ export const orientationArg = {
 };
 
 export const controlsToAdd = {
+  alternateCallerId: {
+    control: 'text',
+    description: 'added',
+    defaultValue: '',
+    name: 'Alternate CallerID',
+    type: { name: 'string', required: true }
+  },
+  appName: {
+    control: 'text',
+    defaultValue: 'Storybook',
+    name: 'App Name'
+  },
   avatarInitials: { control: 'text', defaultValue: 'A B', name: 'Avatar initials' },
   botAvatar: { control: 'radio', options: botAvatars, defaultValue: 'Default', name: 'Bot Avatar' },
-  botToken: { control: 'text', defaultValue: '', name: 'Valid token for bot' },
-  botUserId: { control: 'text', defaultValue: '', name: 'User identifier for bot' },
+  botToken: {
+    control: 'text',
+    defaultValue: '',
+    name: 'Valid token for bot',
+    type: { name: 'string', required: true }
+  },
+  botUserId: {
+    control: 'text',
+    defaultValue: '',
+    name: 'User identifier for bot',
+    type: { name: 'string', required: true }
+  },
+  calleeUserId: {
+    control: 'text',
+    defaultValue: '8:echo123',
+    name: "Callee's User identifier",
+    type: { name: 'string', required: true }
+  },
+  calleeToken: { control: 'text', defaultValue: '', name: "Callee's Valid token" },
   callerImages: { control: 'file', accept: '.jpeg, .jpg, .png', defaultValue: [], name: 'Avatar' },
   callerName: { control: 'text', defaultValue: 'Maximus Aurelius', name: 'Caller Name' },
   callerNameAlt: { control: 'text', defaultValue: '1st', name: 'Caller Name Alt' },
@@ -154,21 +182,31 @@ export const controlsToAdd = {
   callInvitationURL: {
     control: 'text',
     defaultValue: '',
-    name: 'Optional URL to invite other participants to the call'
+    name: 'URL to invite other participants to the call'
   },
   callLocator: {
     control: 'text',
     defaultValue: '',
     name: 'Call locator (ACS group ID, Teams meeting link, or Room ID)'
   },
+  callParticipantsLocator: {
+    control: 'array',
+    defaultValue: ['+###########'],
+    name: 'Call locator (participants phone numbers)',
+    type: { name: 'string', required: true }
+  },
   callModalAlertText: { control: 'text', defaultValue: 'Incoming Video Call', name: 'Alert Text' },
   callToastAlertText: { control: 'text', defaultValue: 'Incoming Call', name: 'Alert Text' },
   callStateText: { control: 'text', defaultValue: "You're in the lobby", name: 'Call State Text' },
   callStateSubText: { control: 'text', defaultValue: 'You should be admitted shortly', name: 'Call State Subtext' },
   cameras: { control: 'object', defaultValue: defaultControlsCameras, name: 'Cameras' },
-  chatThreadId: { control: 'text', defaultValue: '', name: 'Existing thread' },
+  chatThreadId: {
+    control: 'text',
+    defaultValue: '',
+    name: 'Existing thread',
+    type: { name: 'string', required: true }
+  },
   checked: { control: 'boolean', defaultValue: false, name: 'Is checked' },
-  connectionString: { control: 'text', defaultValue: '', name: COMPOSITE_STRING_CONNECTIONSTRING },
   controlBarDefaultIcons: {
     control: 'radio',
     options: ['airplane', 'bus', 'ship'],
@@ -181,10 +219,27 @@ export const controlsToAdd = {
     defaultValue: 'floatingBottom',
     name: 'Layout'
   },
+  siteDeviceRequest: {
+    control: 'select',
+    options: ['Camera and Microphone', 'Camera Only', 'Microphone Only'],
+    defaultValue: 'Camera and Microphone',
+    name: 'Device Request Type'
+  },
+  siteDeviceRequestStatus: {
+    control: 'select',
+    options: ['Request', 'Denied', 'Check'],
+    defaultValue: 'Request',
+    name: 'Request Status'
+  },
   disabled: { control: 'boolean', defaultValue: false, name: 'Disable component' },
   displayName: { control: 'text', defaultValue: 'John Smith', name: 'Display Name' },
   enableJumpToNewMessageButton: { control: 'boolean', defaultValue: true, name: 'Enable Jump To New Message' },
-  endpointUrl: { control: 'text', defaultValue: '', name: 'Azure Communication Services endpoint URL' },
+  endpointUrl: {
+    control: 'text',
+    defaultValue: '',
+    name: 'Azure Communication Services endpoint',
+    type: { name: 'string', required: true }
+  },
   errorTypes: {
     control: 'check',
     options: errorOptions,
@@ -253,7 +308,7 @@ export const controlsToAdd = {
     control: 'select',
     options: ['desktop', 'mobile'],
     defaultValue: 'desktop',
-    name: 'Form Factor'
+    name: 'Form factor'
   },
   participantItemMenuItemsStr: { control: 'text', defaultValue: 'Mute, Remove', name: 'Menu items (comma separated)' },
   participantNames: {
@@ -268,6 +323,12 @@ export const controlsToAdd = {
     name: 'Remote participants (comma separated)'
   },
   remoteParticipants: { control: 'object', defaultValue: defaultRemoteParticipants, name: 'Remote participants' },
+  requiredDisplayName: {
+    control: 'text',
+    defaultValue: 'John Smith',
+    name: 'Display name',
+    type: { required: true, name: 'string' }
+  },
   screenShareExperience: {
     control: 'select',
     options: ['none', 'presenter', 'viewer'],
@@ -283,15 +344,21 @@ export const controlsToAdd = {
   showChatTopic: { control: 'boolean', defaultValue: true, name: 'Show Topic' },
   showErrorBar: { control: 'boolean', defaultValue: true, name: 'Show ErrorBar' },
   showLabel: { control: 'boolean', defaultValue: false, name: 'Show label' },
+  showVideoTileLabel: { control: 'boolean', defaultValue: true, name: 'Show label' },
   showMessageDate: { control: 'boolean', defaultValue: true, name: 'Enable Message Date' },
   showMessageStatus: { control: 'boolean', defaultValue: true, name: 'Enable Message Status Indicator' },
   showMuteIndicator: { control: 'boolean', defaultValue: true, name: 'Show Mute/UnMute Indicator' },
   speakers: { control: 'object', defaultValue: defaultControlsSpeakers, name: 'Speakers' },
   teamsMeetingLink: { control: 'text', defaultValue: '', name: 'Teams meeting link' },
   theme: { control: 'radio', options: themeChoices, defaultValue: 'Default', name: 'Theme' },
-  token: { control: 'text', defaultValue: '', name: 'Valid token for user' },
+  token: { control: 'text', defaultValue: '', name: 'Valid token for user', type: { name: 'string', required: true } },
   typingUsers: { control: 'object', defaultValue: defaultTypingUsers, name: 'Typing users' },
-  userId: { control: 'text', defaultValue: '', name: 'User identifier for user' },
+  userId: {
+    control: 'text',
+    defaultValue: '',
+    name: 'User identifier for user',
+    type: { name: 'string', required: true }
+  },
   videoGallerylayout: {
     control: 'select',
     options: VIDEO_GALLERY_LAYOUTS,
@@ -308,9 +375,10 @@ export const controlsToAdd = {
       screenShareButton: true,
       devicesButton: true,
       peopleButton: true,
-      chatButton: true
+      chatButton: true,
+      displayType: 'default'
     },
-    name: 'CallWithChat Composite UI Controls'
+    name: 'Control Bar Customizations'
   }
 };
 
@@ -325,7 +393,9 @@ export const defaultCallCompositeHiddenControls = {
   onFetchAvatarPersonaData: hiddenControl,
   rtl: hiddenControl,
   options: hiddenControl,
-  callInvitationUrl: hiddenControl
+  callInvitationUrl: hiddenControl,
+  formFactor: hiddenControl, // formFactor is hidden by default and compositeFormFactor is used as a prop instead to workaround a bug where formFactor is not put in the correct order when the controls are generated
+  role: hiddenControl // TODO: once role work is complete this should be added as a drop down control
 };
 
 export const defaultChatCompositeHiddenControls = {
@@ -338,7 +408,8 @@ export const defaultChatCompositeHiddenControls = {
   identifiers: hiddenControl,
   locale: hiddenControl,
   onFetchAvatarPersonaData: hiddenControl,
-  rtl: hiddenControl
+  rtl: hiddenControl,
+  formFactor: hiddenControl // formFactor is hidden by default and compositeFormFactor is used as a prop instead to workaround a bug where formFactor is not put in the correct order when the controls are generated
 };
 
 export const defaultCallWithChatCompositeHiddenControls = {
@@ -347,5 +418,15 @@ export const defaultCallWithChatCompositeHiddenControls = {
   joinInvitationURL: hiddenControl,
   rtl: hiddenControl,
   options: hiddenControl,
-  formFactor: hiddenControl
+  formFactor: hiddenControl // formFactor is hidden by default and compositeFormFactor is used as a prop instead to workaround a bug where formFactor is not put in the correct order when the controls are generated
 };
+
+/**
+ * Helper function to get strongly typed storybook args.
+ *
+ * @remarks
+ * This only extracts the keys of the storybook control args and not the type of each control.
+ * This is because we cannot type infer between the storybook control and its output.
+ * Instead, for ease of use, we use `any`.
+ */
+export type ArgsFrom<TControlArgs> = Record<keyof TControlArgs, any>;
