@@ -1730,6 +1730,7 @@ export interface _Identifiers {
     typingIndicator: string;
     videoGallery: string;
     videoTile: string;
+    videoTileMoreOptionsButton: string;
 }
 
 // @public

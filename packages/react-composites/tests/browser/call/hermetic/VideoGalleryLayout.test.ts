@@ -14,7 +14,7 @@ import { IDS } from '../../common/constants';
 
 test.describe('VideoGalleryLayout tests', async () => {
   /* @conditional-compile-remove(pinned-participants) */
-  test.only('VideoTile contextual menu shows "Fit to frame" by default', async ({ page, serverUrl }, testInfo) => {
+  test('VideoTile contextual menu shows "Fit to frame" by default', async ({ page, serverUrl }, testInfo) => {
     test.skip(isTestProfileMobile(testInfo));
     const paul = defaultMockRemoteParticipant('Paul Bridges');
     addVideoStream(paul, true);
@@ -32,7 +32,7 @@ test.describe('VideoGalleryLayout tests', async () => {
     expect(await stableScreenshot(page)).toMatchSnapshot('video-tile-fit-to-frame.png');
   });
   /* @conditional-compile-remove(pinned-participants) */
-  test.only('VideoTile contextual menu shows "Fill frame" when scaling mode set to Fit', async ({
+  test('VideoTile contextual menu shows "Fill frame" when scaling mode set to Fit', async ({
     page,
     serverUrl
   }, testInfo) => {
