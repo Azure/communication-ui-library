@@ -162,13 +162,16 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
 
   const strings = { ...localeStrings, ...props.strings };
 
+  // For 'me' show empty name so avatar will get 'Person' icon, when there is no name
+  const meAvatarText = displayName?.trim() || '';
+
   const avatarOptions = {
-    text: displayName?.trim() || strings.displayNamePlaceholder,
+    text: me ? meAvatarText : displayName?.trim() || strings.displayNamePlaceholder,
     size: PersonaSize.size32,
     presence: presence,
     initialsTextColor: 'white',
     showOverflowTooltip: showParticipantOverflowTooltip,
-    showUnknownPersonaCoin: !displayName?.trim() || displayName === strings.displayNamePlaceholder
+    showUnknownPersonaCoin: !me && (!displayName?.trim() || displayName === strings.displayNamePlaceholder)
   };
 
   const avatar = onRenderAvatar ? (
