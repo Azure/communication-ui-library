@@ -302,7 +302,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       styles?.localVideo
     );
 
-    const initialsName = !localParticipant.displayName ? strings.displayNamePlaceholder : localParticipant.displayName;
+    const initialsName = !localParticipant.displayName ? '' : localParticipant.displayName;
 
     return (
       <Stack key="local-video-tile-key" tabIndex={0} aria-label={strings.localVideoMovementLabel} role={'dialog'}>
@@ -343,7 +343,6 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     strings.localVideoLabel,
     strings.localVideoMovementLabel,
     strings.localVideoSelectedDescription,
-    strings.displayNamePlaceholder,
     styles?.localVideo,
     theme.effects.roundedCorner4,
     /* @conditional-compile-remove(rooms) */ permissions.cameraButton
