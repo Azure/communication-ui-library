@@ -9,13 +9,9 @@ import {
   UnsupportedOperatingSystem
 } from '@internal/react-components';
 import React, { useState } from 'react';
-import { useLocale } from '../../../../../react-components/src/localization';
 import { MobilePreviewContainer } from '../../../MobileContainer';
 
 export const UnsupportedEnvironmentDrawers: () => JSX.Element = () => {
-  const unsupportedBrowserStrings = useLocale().strings.UnsupportedBrowser;
-  const unsupportedBrowserVersionStrings = useLocale().strings.UnsupportedBrowserVersion;
-  const unsupportedOperatingSystemStrings = useLocale().strings.UnsupportedOperatingSystem;
   const [unsupportedBrowserShowing, setUnsupportedBrowserShowing] = useState(false);
   const [unsupportedBrowserVersionShowing, setUnsupportedBrowserVersionShowing] = useState(false);
   const [unsupportedOperatingSystemShowing, setUnsupportedOperatingSystemShowing] = useState(false);
@@ -38,10 +34,7 @@ export const UnsupportedEnvironmentDrawers: () => JSX.Element = () => {
         )}
         {unsupportedBrowserShowing && (
           <_DrawerSurface onLightDismiss={onLightDismissTriggeredUnsupportedBrowser}>
-            <UnsupportedBrowser
-              onTroubleshootingClick={() => alert('clicked trouble shooting link')}
-              strings={unsupportedBrowserStrings}
-            />
+            <UnsupportedBrowser onTroubleshootingClick={() => alert('clicked trouble shooting link')} />
           </_DrawerSurface>
         )}
       </MobilePreviewContainer>
@@ -61,7 +54,6 @@ export const UnsupportedEnvironmentDrawers: () => JSX.Element = () => {
           <_DrawerSurface onLightDismiss={onLightDismissTriggeredUnsupportedBrowserVersion}>
             <UnsupportedBrowserVersion
               onTroubleshootingClick={() => alert('clicked compatibility link')}
-              strings={unsupportedBrowserVersionStrings}
               onContinueAnywayClick={() => alert('you are brave arent you?')}
             />
           </_DrawerSurface>
@@ -81,10 +73,7 @@ export const UnsupportedEnvironmentDrawers: () => JSX.Element = () => {
         )}
         {unsupportedOperatingSystemShowing && (
           <_DrawerSurface onLightDismiss={onLightDismissTriggeredUnsupportedOperatingSystem}>
-            <UnsupportedOperatingSystem
-              onTroubleshootingClick={() => alert('clicked compatibility link')}
-              strings={unsupportedOperatingSystemStrings}
-            />
+            <UnsupportedOperatingSystem onTroubleshootingClick={() => alert('clicked compatibility link')} />
           </_DrawerSurface>
         )}
       </MobilePreviewContainer>
