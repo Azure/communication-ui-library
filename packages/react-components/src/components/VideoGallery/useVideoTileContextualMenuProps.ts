@@ -87,8 +87,7 @@ export const useVideoTileContextualMenuProps = (props: {
             },
             onClick: () => {
               view?.updateScalingMode('Crop');
-            },
-            styles: {}
+            }
           });
         }
       }
