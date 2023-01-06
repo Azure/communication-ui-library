@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Fix empty string bug in createAnnouncmentString()",
+  "packageName": "@azure/communication-react",
+  "email": "jinan@microsoft.com",
+  "dependentChangeType": "patch"
+}
