@@ -192,12 +192,14 @@ const videoTileMoreMenuProps = {
 /* @conditional-compile-remove(pinned-participants) */
 const VideoTileMoreOptionsButton = (props: { contextualMenu?: IContextualMenuProps }): JSX.Element => {
   const { contextualMenu } = props;
+  const ids = useIdentifiers();
   if (!contextualMenu) {
     return <></>;
   }
   return (
     <IconButton
       styles={moreButtonStyles}
+      data-ui-id={ids.videoTileMoreOptionsButton}
       iconProps={videoTileMoreIconProps}
       menuIconProps={videoTileMoreMenuIconProps}
       menuProps={{ ...videoTileMoreMenuProps, ...contextualMenu }}
