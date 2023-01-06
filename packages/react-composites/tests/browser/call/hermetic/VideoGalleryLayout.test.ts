@@ -14,7 +14,7 @@ import { IDS } from '../../common/constants';
 
 test.describe('VideoGalleryLayout tests', async () => {
   /* @conditional-compile-remove(pinned-participants) */
-  test.only('VideoTile pin/unpin the remote participant', async ({ page, serverUrl }, testInfo) => {
+  test('VideoTile pin/unpin the remote participant', async ({ page, serverUrl }, testInfo) => {
     test.skip(isTestProfileMobile(testInfo));
     const paul = defaultMockRemoteParticipant('Paul Bridges');
     addVideoStream(paul, true);
