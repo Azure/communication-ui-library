@@ -1,6 +1,7 @@
 {
   "call": {
     "cameraLabel": "カメラ",
+    "noCamerasLabel": "カメラが見つかりません",
     "cameraPermissionDenied": "お使いのブラウザーがカメラへのアクセスをブロックしています",
     "cameraTurnedOff": "カメラはオフになっています",
     "chatButtonLabel": "チャット",
@@ -53,6 +54,8 @@
     "roomNotFoundDetails": "指定されたルーム ID が無効です。",
     "roomNotFoundTitle": "ルームが見つかりません",
     "soundLabel": "音声",
+    "noMicrophonesLabel": "マイクが見つかりません",
+    "noSpeakersLabel": "話者が見つかりません",
     "startCallButtonLabel": "通話を開始",
     "openDialpadButtonLabel": "電話番号をダイヤルする",
     "peoplePaneAddPeopleButtonLabel": "ユーザーの追加",
@@ -67,8 +70,19 @@
     "resumingCallButtonAriaLabel": "通話の再開",
     "holdScreenLabel": "保留中です",
     "openDtmfDialpadLabel": "ダイヤルパッドを表示",
-    "dtmfDialpadPlaceHolderText": "番号を入力してください",
-    "outboundCallingNoticeString": "呼び出し中。。。"
+    "dtmfDialpadPlaceholderText": "番号を入力してください",
+    "outboundCallingNoticeString": "呼び出し中。。。",
+    "participantJoinedNoticeString": "{displayName} が参加しました",
+    "twoParticipantJoinedNoticeString": "{displayName1} さんと {displayName2} さんが参加しました",
+    "threeParticipantJoinedNoticeString": "{displayName1} さん, {displayName2} さんと {displayName3} さんが参加しました",
+    "participantLeftNoticeString": "{displayName} さんが退出しました",
+    "twoParticipantLeftNoticeString": "{displayName1} さんと {displayName2} さんが退出しました",
+    "threeParticipantLeftNoticeString": "{displayName1} さん, {displayName2} さんと {displayName3} さんが退出しました",
+    "unnamedParticipantString": "名前のない参加者",
+    "manyUnnamedParticipantsJoined": "名前のない参加者と他の参加者 {numOfParticipants} 人が参加しました",
+    "manyUnnamedParticipantsLeft": "名前のない参加者と他の参加者 {numOfParticipants} 人が退出しました",
+    "manyParticipantsJoined": "{displayName1}、{displayName2}、{displayName3}、その他の参加者{numOfParticipants}参加しました",
+    "manyParticipantsLeft": "{displayName1}、{displayName2}、{displayName3}、その他の参加者{numOfParticipants}退出しました"
   },
   "chat": {
     "chatListHeader": "このチャット内",
@@ -105,6 +119,6 @@
     "dialpadModalAriaLabel": "ダイヤルパッド",
     "dialpadCloseModalButtonAriaLabel": "ダイヤルパッドを閉じる",
     "openDtmfDialpadLabel": "ダイヤルパッドを表示",
-    "dtmfDialpadPlaceHolderText": "番号を入力してください"
+    "dtmfDialpadPlaceholderText": "番号を入力してください"
   }
 }

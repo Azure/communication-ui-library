@@ -1,6 +1,7 @@
 {
   "call": {
     "cameraLabel": "Camera",
+    "noCamerasLabel": "Geen camera's gevonden",
     "cameraPermissionDenied": "Uw browser blokkeert de toegang tot uw camera",
     "cameraTurnedOff": "Camera is uitgeschakeld",
     "chatButtonLabel": "Chatten",
@@ -53,6 +54,8 @@
     "roomNotFoundDetails": "De opgegeven ruimte-id is niet geldig.",
     "roomNotFoundTitle": "Ruimte niet gevonden",
     "soundLabel": "Geluid",
+    "noMicrophonesLabel": "Geen microfoons gevonden",
+    "noSpeakersLabel": "Geen luidsprekers gevonden",
     "startCallButtonLabel": "Gesprek starten",
     "openDialpadButtonLabel": "Telefoonnummer kiezen",
     "peoplePaneAddPeopleButtonLabel": "Personen toevoegen",
@@ -67,8 +70,19 @@
     "resumingCallButtonAriaLabel": "Gesprek hervatten",
     "holdScreenLabel": "U staat in de wacht",
     "openDtmfDialpadLabel": "Toetsenblok weergeven",
-    "dtmfDialpadPlaceHolderText": "Nummer invoeren",
-    "outboundCallingNoticeString": "Bellen..."
+    "dtmfDialpadPlaceholderText": "Nummer invoeren",
+    "outboundCallingNoticeString": "Bellen...",
+    "participantJoinedNoticeString": "{displayName} neemt deel",
+    "twoParticipantJoinedNoticeString": "{displayName1} en {displayName2} nemen deel",
+    "threeParticipantJoinedNoticeString": "{displayName1}, {displayName2} en {displayName3} nemen deel",
+    "participantLeftNoticeString": "{displayName} is vertrokken",
+    "twoParticipantLeftNoticeString": "{displayName1} en {displayName2} zijn vertrokken",
+    "threeParticipantLeftNoticeString": "{displayName1}, {displayName2} en {displayName3} zijn vertrokken",
+    "unnamedParticipantString": "naamloze deelnemer",
+    "manyUnnamedParticipantsJoined": "naamloze deelnemer en {numOfParticipants} andere deelnemers nemen deel",
+    "manyUnnamedParticipantsLeft": "naamloze deelnemer en {numOfParticipants} andere deelnemers zijn vertrokken",
+    "manyParticipantsJoined": "{displayName1}, {displayName2}, {displayName3} en {numOfParticipants} andere deelnemers",
+    "manyParticipantsLeft": "{displayName1}, {displayName2}, {displayName3} en {numOfParticipants} andere deelnemers resterend"
   },
   "chat": {
     "chatListHeader": "In deze chat",
@@ -105,6 +119,6 @@
     "dialpadModalAriaLabel": "Telefoonkiezer",
     "dialpadCloseModalButtonAriaLabel": "Toetsenblok sluiten",
     "openDtmfDialpadLabel": "Toetsenblok weergeven",
-    "dtmfDialpadPlaceHolderText": "Nummer invoeren"
+    "dtmfDialpadPlaceholderText": "Nummer invoeren"
   }
 }

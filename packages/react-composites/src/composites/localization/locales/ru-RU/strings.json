@@ -1,6 +1,7 @@
 {
   "call": {
     "cameraLabel": "Камера",
+    "noCamerasLabel": "Камеры не найдены",
     "cameraPermissionDenied": "Браузер блокирует доступ к вашей камере",
     "cameraTurnedOff": "Камера выключена",
     "chatButtonLabel": "Чат",
@@ -53,6 +54,8 @@
     "roomNotFoundDetails": "Указан недопустимый идентификатор помещения.",
     "roomNotFoundTitle": "Помещение не найдено",
     "soundLabel": "Звук",
+    "noMicrophonesLabel": "Микрофоны не найдены",
+    "noSpeakersLabel": "Динамики не найдены",
     "startCallButtonLabel": "Начать звонок",
     "openDialpadButtonLabel": "Набрать номер телефона",
     "peoplePaneAddPeopleButtonLabel": "Добавить людей",
@@ -67,8 +70,19 @@
     "resumingCallButtonAriaLabel": "Возобновить вызов",
     "holdScreenLabel": "Ваш звонок на удержании",
     "openDtmfDialpadLabel": "Показать панель набора номера",
-    "dtmfDialpadPlaceHolderText": "Введите номер",
-    "outboundCallingNoticeString": "Выполняется вызов..."
+    "dtmfDialpadPlaceholderText": "Введите номер",
+    "outboundCallingNoticeString": "Выполняется вызов...",
+    "participantJoinedNoticeString": "Пользователь {displayName} присоединился",
+    "twoParticipantJoinedNoticeString": "{displayName1} и {displayName2} присоединились",
+    "threeParticipantJoinedNoticeString": "{displayName1}, {displayName2} и {displayName3} присоединились",
+    "participantLeftNoticeString": "Пользователь {displayName} ушел",
+    "twoParticipantLeftNoticeString": "{displayName1} и {displayName2} ушли",
+    "threeParticipantLeftNoticeString": "{displayName1}, {displayName2} и {displayName3} ушли",
+    "unnamedParticipantString": "участник без имени",
+    "manyUnnamedParticipantsJoined": "участник без имени и еще {numOfParticipants} участников присоединились",
+    "manyUnnamedParticipantsLeft": "участник без имени и еще {numOfParticipants} участников ушли",
+    "manyParticipantsJoined": "{displayName1}, {displayName2}, {displayName3} и {numOfParticipants} других участников",
+    "manyParticipantsLeft": "{displayName1}, {displayName2}, {displayName3} и {numOfParticipants} других участников"
   },
   "chat": {
     "chatListHeader": "В этом чате",
@@ -105,6 +119,6 @@
     "dialpadModalAriaLabel": "Панель набора номера",
     "dialpadCloseModalButtonAriaLabel": "Закрыть панель набора номера",
     "openDtmfDialpadLabel": "Показать панель набора номера",
-    "dtmfDialpadPlaceHolderText": "Введите номер"
+    "dtmfDialpadPlaceholderText": "Введите номер"
   }
 }

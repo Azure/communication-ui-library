@@ -1,6 +1,7 @@
 {
   "call": {
     "cameraLabel": "Cámara",
+    "noCamerasLabel": "No se han encontrado cámaras",
     "cameraPermissionDenied": "El explorador está bloqueando el acceso a la cámara",
     "cameraTurnedOff": "La cámara está apagada",
     "chatButtonLabel": "Chat",
@@ -53,6 +54,8 @@
     "roomNotFoundDetails": "El id. de sala proporcionado no es válido.",
     "roomNotFoundTitle": "No se ha encontrado la sala",
     "soundLabel": "Sonido",
+    "noMicrophonesLabel": "No se han encontrado micrófonos",
+    "noSpeakersLabel": "No se han encontrado altavoces",
     "startCallButtonLabel": "Iniciar llamada",
     "openDialpadButtonLabel": "Marcar número de teléfono",
     "peoplePaneAddPeopleButtonLabel": "Agregar contactos",
@@ -67,8 +70,19 @@
     "resumingCallButtonAriaLabel": "Reanudar llamada",
     "holdScreenLabel": "Está en espera",
     "openDtmfDialpadLabel": "Mostrar teclado de marcado",
-    "dtmfDialpadPlaceHolderText": "Introducir número",
-    "outboundCallingNoticeString": "Llamando..."
+    "dtmfDialpadPlaceholderText": "Introducir número",
+    "outboundCallingNoticeString": "Llamando...",
+    "participantJoinedNoticeString": "{displayName} unido",
+    "twoParticipantJoinedNoticeString": "{displayName1} y {displayName2} se han unido",
+    "threeParticipantJoinedNoticeString": "{displayName1}, {displayName2} y {displayName3} se han unido",
+    "participantLeftNoticeString": "{displayName} se ha retirado",
+    "twoParticipantLeftNoticeString": "{displayName1} y {displayName2} se han retirado",
+    "threeParticipantLeftNoticeString": "{displayName1}, {displayName2} y {displayName3} se han retirado",
+    "unnamedParticipantString": "participante sin nombre",
+    "manyUnnamedParticipantsJoined": "participante sin nombre y {numOfParticipants} participantes más se han unido",
+    "manyUnnamedParticipantsLeft": "participante sin nombre y {numOfParticipants} participantes más se han retirado",
+    "manyParticipantsJoined": "{displayName1}, {displayName2}, {displayName3} y {numOfParticipants} se han unido otros participantes",
+    "manyParticipantsLeft": "{displayName1}, {displayName2}, {displayName3} y {numOfParticipants} restantes"
   },
   "chat": {
     "chatListHeader": "En este chat",
@@ -105,6 +119,6 @@
     "dialpadModalAriaLabel": "Teclado de marcado",
     "dialpadCloseModalButtonAriaLabel": "Cerrar teclado de marcado",
     "openDtmfDialpadLabel": "Mostrar teclado de marcado",
-    "dtmfDialpadPlaceHolderText": "Introducir número"
+    "dtmfDialpadPlaceholderText": "Introducir número"
   }
 }

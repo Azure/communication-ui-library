@@ -1,6 +1,7 @@
 {
   "call": {
     "cameraLabel": "Fotocamera",
+    "noCamerasLabel": "Nessuna fotocamera trovata",
     "cameraPermissionDenied": "Il browser blocca l'accesso alla fotocamera",
     "cameraTurnedOff": "La videocamera è disabilitata",
     "chatButtonLabel": "Chat",
@@ -53,6 +54,8 @@
     "roomNotFoundDetails": "L'ID sala specificato non è valido.",
     "roomNotFoundTitle": "La stanza non è stata trovata",
     "soundLabel": "Suono",
+    "noMicrophonesLabel": "Nessun microfono trovato",
+    "noSpeakersLabel": "Nessun altoparlante trovato",
     "startCallButtonLabel": "Avvia chiamata",
     "openDialpadButtonLabel": "Componi il numero di telefono",
     "peoplePaneAddPeopleButtonLabel": "Aggiungi persone",
@@ -67,8 +70,19 @@
     "resumingCallButtonAriaLabel": "Riprendi chiamata",
     "holdScreenLabel": "In attesa.",
     "openDtmfDialpadLabel": "Mostra tastiera",
-    "dtmfDialpadPlaceHolderText": "Immetti il numero",
-    "outboundCallingNoticeString": "Chiamata in corso..."
+    "dtmfDialpadPlaceholderText": "Immetti il numero",
+    "outboundCallingNoticeString": "Chiamata in corso...",
+    "participantJoinedNoticeString": "{displayName} si è unito alla riunione",
+    "twoParticipantJoinedNoticeString": "{displayName1} e {displayName2} si sono uniti alla riunione",
+    "threeParticipantJoinedNoticeString": "{displayName1}, {displayName2} e {displayName3} si sono uniti alla riunione",
+    "participantLeftNoticeString": "{displayName} è uscito dalla riunione",
+    "twoParticipantLeftNoticeString": "{displayName1} e {displayName2} sono usciti dalla riunione",
+    "threeParticipantLeftNoticeString": "{displayName1}, {displayName2} e {displayName3} sono usciti dalla riunione",
+    "unnamedParticipantString": "partecipante senza nome",
+    "manyUnnamedParticipantsJoined": "partecipante senza nome e {numOfParticipants} altri partecipanti si sono uniti alla riunione",
+    "manyUnnamedParticipantsLeft": "partecipante senza nome e {numOfParticipants} altri partecipanti sono usciti dalla riunione",
+    "manyParticipantsJoined": "{displayName1}, {displayName2}, {displayName3} e {numOfParticipants} altri partecipanti si sono uniti",
+    "manyParticipantsLeft": "{displayName1}, {displayName2}, {displayName3} e {numOfParticipants} altri partecipanti rimasti"
   },
   "chat": {
     "chatListHeader": "In questa chat",
@@ -105,6 +119,6 @@
     "dialpadModalAriaLabel": "Tastiera",
     "dialpadCloseModalButtonAriaLabel": "Chiudi tastiera",
     "openDtmfDialpadLabel": "Mostra tastiera",
-    "dtmfDialpadPlaceHolderText": "Immetti il numero"
+    "dtmfDialpadPlaceholderText": "Immetti il numero"
   }
 }

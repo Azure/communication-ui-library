@@ -1,6 +1,7 @@
 {
   "call": {
     "cameraLabel": "Kamera",
+    "noCamerasLabel": "Kamera bulunamadı",
     "cameraPermissionDenied": "Tarayıcınız kameranıza erişimi engelliyor",
     "cameraTurnedOff": "Kameranız kapatıldı",
     "chatButtonLabel": "Sohbet",
@@ -53,6 +54,8 @@
     "roomNotFoundDetails": "Sağlanan oda kimliği geçerli değil.",
     "roomNotFoundTitle": "Oda bulunamadı",
     "soundLabel": "Ses",
+    "noMicrophonesLabel": "Mikrofon bulunamadı",
+    "noSpeakersLabel": "Hoparlör bulunamadı",
     "startCallButtonLabel": "Arama başlat",
     "openDialpadButtonLabel": "Telefon numarasını çevir",
     "peoplePaneAddPeopleButtonLabel": "Kişi Ekle",
@@ -67,8 +70,19 @@
     "resumingCallButtonAriaLabel": "Görüşmeye devam edin",
     "holdScreenLabel": "Beklemeye alındınız",
     "openDtmfDialpadLabel": "Tuş takımını göster",
-    "dtmfDialpadPlaceHolderText": "Numara girin",
-    "outboundCallingNoticeString": "Aranıyor..."
+    "dtmfDialpadPlaceholderText": "Numara girin",
+    "outboundCallingNoticeString": "Aranıyor...",
+    "participantJoinedNoticeString": "{displayName} katıldı",
+    "twoParticipantJoinedNoticeString": "{displayName1} ve {displayName2} katıldı",
+    "threeParticipantJoinedNoticeString": "{displayName1}, {displayName2} ve {displayName3} katıldı",
+    "participantLeftNoticeString": "{displayName} ayrıldı",
+    "twoParticipantLeftNoticeString": "{displayName1} ve {displayName2} ayrıldı",
+    "threeParticipantLeftNoticeString": "{displayName1}, {displayName2} ve {displayName3} ayrıldı",
+    "unnamedParticipantString": "adsız katılımcı",
+    "manyUnnamedParticipantsJoined": "adsız katılımcı ve {numOfParticipants} katılımcı katıldı",
+    "manyUnnamedParticipantsLeft": "adsız katılımcı ve {numOfParticipants} katılımcı ayrıldı",
+    "manyParticipantsJoined": "{displayName1}, {displayName2}, {displayName3} ve {numOfParticipants} katılımcı katıldı",
+    "manyParticipantsLeft": "{displayName1}, {displayName2}, {displayName3} ve {numOfParticipants} katılımcı kaldı"
   },
   "chat": {
     "chatListHeader": "Bu sohbette",
@@ -105,6 +119,6 @@
     "dialpadModalAriaLabel": "Tuş takımı",
     "dialpadCloseModalButtonAriaLabel": "Tuş takımını kapat",
     "openDtmfDialpadLabel": "Tuş takımını göster",
-    "dtmfDialpadPlaceHolderText": "Numara girin"
+    "dtmfDialpadPlaceholderText": "Numara girin"
   }
 }
