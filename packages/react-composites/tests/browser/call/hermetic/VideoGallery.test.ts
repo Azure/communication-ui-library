@@ -13,6 +13,27 @@ import { dataUiId, waitForSelector, stableScreenshot } from '../../common/utils'
 import { IDS } from '../../common/constants';
 
 test.describe('VideoGallery tests', async () => {
+  test('VideoGallery should show unnamed local and remote participant avatars using person icon instead of initials', async ({
+    page,
+    serverUrl
+  }) => {
+    const paul = defaultMockRemoteParticipant('');
+    paul.state = 'Connected';
+
+    const participants = [paul];
+    const initialState = defaultMockCallAdapterState(participants);
+
+    await page.goto(
+      buildUrlWithMockAdapter(serverUrl, {
+        ...initialState,
+        displayName: ''
+      })
+    );
+
+    await waitForSelector(page, dataUiId(IDS.videoGallery));
+    expect(await stableScreenshot(page)).toMatchSnapshot('video-avatar-with-person-icon-when-no-displayname.png');
+  });
+
   /* @conditional-compile-remove(PSTN-calls) */
   test('VideoGallery Should have 1 Audio participant and one PSTN participant', async ({ page, serverUrl }) => {
     const paul = defaultMockRemoteParticipant('Paul Bridges');
