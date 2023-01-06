@@ -14,10 +14,7 @@ import { IDS } from '../../common/constants';
 
 test.describe('VideoGalleryLayout tests', async () => {
   /* @conditional-compile-remove(pinned-participants) */
-  test.only('VideoTile Clicking Fit to frame should show the entire remote video stream in a video tile', async ({
-    page,
-    serverUrl
-  }, testInfo) => {
+  test.only('VideoTile contextual menu shows "Fit to frame" by default', async ({ page, serverUrl }, testInfo) => {
     test.skip(isTestProfileMobile(testInfo));
     const paul = defaultMockRemoteParticipant('Paul Bridges');
     addVideoStream(paul, true);
@@ -32,16 +29,26 @@ test.describe('VideoGalleryLayout tests', async () => {
     await waitForSelector(page, dataUiId(IDS.videoTileMoreOptionsButton));
     await pageClick(page, dataUiId(IDS.videoTileMoreOptionsButton));
 
-    await waitForSelector(page, dataUiId('video-tile-fit-to-frame'));
-    await pageClick(page, dataUiId('video-tile-fit-to-frame'));
-
     expect(await stableScreenshot(page)).toMatchSnapshot('video-tile-fit-to-frame.png');
+  });
+  /* @conditional-compile-remove(pinned-participants) */
+  test.only('VideoTile contextual menu shows "Fill frame" when scaling mode set to Fit', async ({
+    page,
+    serverUrl
+  }, testInfo) => {
+    test.skip(isTestProfileMobile(testInfo));
+    const paul = defaultMockRemoteParticipant('Paul Bridges');
+    addVideoStream(paul, true, 'Fit');
+
+    const participants = [paul];
+    const initialState = defaultMockCallAdapterState(participants);
+
+    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
+
+    await waitForSelector(page, dataUiId(IDS.videoGallery));
 
     await waitForSelector(page, dataUiId(IDS.videoTileMoreOptionsButton));
     await pageClick(page, dataUiId(IDS.videoTileMoreOptionsButton));
-
-    // await waitForSelector(page, dataUiId('video-tile-fill-frame'));
-    // await pageClick(page, dataUiId('video-tile-fill-frame'));
 
     expect(await stableScreenshot(page)).toMatchSnapshot('video-tile-fill-frame.png');
   });

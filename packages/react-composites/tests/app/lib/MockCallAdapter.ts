@@ -154,7 +154,7 @@ function populateViewTargets(state: MockCallAdapterState): CallAdapterState {
       if (s.dummyView) {
         s.view = {
           ...s.dummyView,
-          target: createMockHTMLElement(p.displayName)
+          target: createMockHTMLElement(p.displayName, 100, 100)
         };
       }
     }
@@ -164,7 +164,7 @@ function populateViewTargets(state: MockCallAdapterState): CallAdapterState {
       if (s.dummyView) {
         s.view = {
           ...s.dummyView,
-          target: createMockHTMLElement(p.displayName)
+          target: createMockHTMLElement(p.displayName, 100, 100)
         };
       }
     }
@@ -178,11 +178,11 @@ function populateViewTargets(state: MockCallAdapterState): CallAdapterState {
  * @param str - input string
  * @returns
  */
-const createMockHTMLElement = (str?: string): HTMLElement => {
+const createMockHTMLElement = (str?: string, widthPx?: number, heightPx?: number): HTMLElement => {
   const mockVideoElement = document.createElement('div');
   mockVideoElement.innerHTML = '<span />';
-  mockVideoElement.style.width = decodeURIComponent('100%25');
-  mockVideoElement.style.height = decodeURIComponent('100%25');
+  mockVideoElement.style.width = widthPx ? `${widthPx}` : decodeURIComponent('100%25');
+  mockVideoElement.style.height = heightPx ? `${heightPx}` : decodeURIComponent('100%25');
   mockVideoElement.style.background = stringToHexColor(str ?? '');
   mockVideoElement.style.backgroundPosition = 'center';
   mockVideoElement.style.backgroundRepeat = 'no-repeat';
