@@ -12,6 +12,8 @@ import type {
   MockRemoteParticipantState,
   MockVideoStreamRendererViewState
 } from '../../../common';
+/* @conditional-compile-remove(teams-identity-support) */
+import type { CallKind } from '@azure/communication-calling';
 
 const SERVER_URL = 'http://localhost';
 const APP_DIR = path.join(__dirname, '../../../app/call');
@@ -60,7 +62,7 @@ export function defaultMockCallAdapterState(participants?: MockRemoteParticipant
     call: {
       id: 'call1',
       /* @conditional-compile-remove(teams-identity-support) */
-      type: 'ACS',
+      kind: 'Call' as CallKind,
       callerInfo: { displayName: 'caller', identifier: { kind: 'communicationUser', communicationUserId: '1' } },
       direction: 'Incoming',
       transcription: { isTranscriptionActive: false },
