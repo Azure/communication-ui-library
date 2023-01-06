@@ -13,7 +13,7 @@ import type {
   MockVideoStreamRendererViewState
 } from '../../../common';
 /* @conditional-compile-remove(teams-identity-support) */
-import { CallKind } from '@azure/communication-calling';
+import type { CallKind } from '@azure/communication-calling';
 
 const SERVER_URL = 'http://localhost';
 const APP_DIR = path.join(__dirname, '../../../app/call');

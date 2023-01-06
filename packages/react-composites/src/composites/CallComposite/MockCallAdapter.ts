@@ -9,7 +9,7 @@ import { EnvironmentInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(rooms) */
 import { Role } from '@internal/react-components';
 import { EventEmitter } from 'stream';
-import { CallAdapter, CallAdapterState } from './adapter';
+import type { CallAdapter, CallAdapterState } from './adapter';
 
 /**
  * Temporary copy of the packages\react-composites\tests\browser\call\app\mocks\MockCallAdapter.ts
