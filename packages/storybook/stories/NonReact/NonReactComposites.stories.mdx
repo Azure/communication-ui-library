@@ -58,14 +58,14 @@ any additional properties for the composite.
 // The adapter returned allows you control composite externally.
 const chatAdapter = await chatComposite.loadChatComposite(
   {
-    displayName: 'DISPLAY_NAME', // string
-    threadId: 'THREAD_ID', // string
-    endpoint: 'ENDPOINT', // string
-    userId: 'USERID', //
-    token: 'TOKEN' // string
+    displayName: 'DISPLAY_NAME', /* string */
+    userId: { communicationUserId: 'UserID' /* string */ },
+    token: 'TOKEN' /* string */
+    threadId: 'THREAD_ID', /* string */
+    endpoint: 'ENDPOINT', /* string */
   },
-  containerElement, // Container element
-  props // Optional, Object contains all optional props for composite, check composite page for more details
+  containerElement, /* string. html container element */
+  props /* Optional. Object contains all optional props for composite, check composite page for more details. */
 );
 ```
 
@@ -73,7 +73,7 @@ _Check [Chat Composite Basic Example](./?path=/docs/composites-chat-basicexample
 
 ### Loading the Call Composite
 
-We start with our necessary arguments (displayName, groupId, userId, token) followed by the html element that will contain our chat composite, and the
+We start with our necessary arguments (displayName, userId, token, locator) followed by the html element that will contain our call composite, and the
 any additional properties for the composite.
 
 ```js
@@ -81,14 +81,13 @@ any additional properties for the composite.
 // The adapter returned allows you control composite externally.
 const callAdapter = await callComposite.loadCallComposite(
   {
-    displayName: 'DISPLAY_NAME', // string
-    groupId: 'GROUPID', // string
-    userId: 'USERID', // string
-    token: 'ACCCESS_TOKEN' // string
-    locator: { groupId: groupId }, // provide a locator object to join a group call or a teams meeting interop call
+    displayName: 'DISPLAY_NAME' /*string */,
+    userId: { communicationUserId: 'UserID' /*string */ },
+    token: 'ACCCESS_TOKEN' /*string */
+    locator: { groupId: 'GROUP_ID' /*string */ }, // If you are joining a Teams meeting, instead of groupId use meetingLink: `locator: { meetingLink: 'MEETING_LINK' /* string */ }`
   },
-  containerElement, // container element
-  props // Optional, Object contains all optional props for composite, check composite page for more details
+  containerElement, /* string. html container element */
+  props /* Optional. Object contains all optional props for composite, check composite page for more details. */
 );
 ```
 
@@ -96,19 +95,22 @@ _Check [Call Composite Basic Example](./?path=/docs/composites-call-basicexample
 
 ### Loading the Call with Chat Composite
 
+We start with our necessary arguments (displayName, userId, token, endpoint, locator) followed by the html element that will contain our call composite, and the
+any additional properties for the composite.
+
 ```js
 // `callWithChatComposite.loadCallWithChatComposite` function is exposed to the window object once you import composite bundle.
 // The adapter returned allows you control composite externally.
 const callWithChatAdapter = await callWithChatComposite.loadCallWithChatComposite(
   {
-    userId, // Object { communicationUserId: string }
-    token, // string
-    displayName, // string
-    endpoint: endpoint,
-    locator: { callLocator: { groupId: groupId }, chatThreadId: threadId } // UI callWithChat-specific locator
+    displayName: 'DISPLAY_NAME', /* string */
+    userId: { communicationUserId: 'UserID' /* string */ },
+    token: 'ACCCESS_TOKEN' /* string */
+    endpoint: 'ENDPOINT', /* string */
+    locator: { callLocator: { groupId: groupId /* string */ }, chatThreadId: threadId /* string */ } /* callWithChat-specific locator */
   },
-  elementToRender, // container element
-  props // Optional, Object contains all optional props for composite, check composite page for more details
+  containerElement, /* string. html container element */
+  props /* Optional. Object contains all optional props for composite, check composite page for more details. */
 );
 ```
 
@@ -129,11 +131,11 @@ Now we can take a look at how this all comes together.
 <script type="module">
   const chatAdapter = await chatComposite.loadChatComposite(
     {
-      displayName: 'DISPLAY_NAME', // string
-      threadId: 'THREAD_ID', // string
-      endpoint: 'ENDPOINT', // string
-      userId: 'USERID', //
-      token: 'TOKEN' // string
+      displayName: 'DISPLAY_NAME',
+      userId: { communicationUserId: 'UserID' },
+      token: 'TOKEN',
+      threadId: 'THREAD_ID',
+      endpoint: 'ENDPOINT'
     },
     document.getElementById('chat-container'),
     { key: new Date() }
@@ -154,10 +156,10 @@ Now we can take a look at how this all comes together.
 <script type="module">
   const callAdapter = await callComposite.loadCallComposite(
     {
-      displayName: 'DISPLAY_NAME', // string
-      groupId: 'GROUPID', // string
-      userId: 'USERID', // string
-      token: 'ACCCESS_TOKEN' // string
+      displayName: 'DISPLAY_NAME',
+      userId: 'USERID',
+      token: 'ACCCESS_TOKEN',
+      locator: { groupId: 'GROUPID' }
     },
     document.getElementById('call-container'),
     { key: new Date() }
@@ -173,7 +175,7 @@ Learn more about the [meta tag](https://developer.mozilla.org/en-US/docs/Learn/H
 ❗ If you having issues running the Call Composite on your index.html. It is because the underlying Calling SDK is checking to see if its from localhost or https traffic.
 We recommend deploying the index.html with your CallComposite changes onto a local server or to deploy it to an Azure App Service which will serve up the content as https.
 
-# Build your own composite js bundle files:
+# Build your own composite js bundle files
 
 ### git clone our repo
 
