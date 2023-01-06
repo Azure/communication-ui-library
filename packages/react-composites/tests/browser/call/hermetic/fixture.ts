@@ -62,7 +62,7 @@ export function defaultMockCallAdapterState(participants?: MockRemoteParticipant
     call: {
       id: 'call1',
       /* @conditional-compile-remove(teams-identity-support) */
-      kind: CallKind.Call,
+      kind: 'Call' as CallKind,
       callerInfo: { displayName: 'caller', identifier: { kind: 'communicationUser', communicationUserId: '1' } },
       direction: 'Incoming',
       transcription: { isTranscriptionActive: false },

@@ -148,7 +148,7 @@ const defaultCallAdapterState: CallAdapterState = {
   call: {
     id: 'call1',
     /* @conditional-compile-remove(teams-identity-support) */
-    kind: 'Call' as CallKind,
+    kind: CallKind.Call,
     callerInfo: { displayName: 'caller', identifier: { kind: 'communicationUser', communicationUserId: '1' } },
     direction: 'Incoming',
     transcription: { isTranscriptionActive: false },
