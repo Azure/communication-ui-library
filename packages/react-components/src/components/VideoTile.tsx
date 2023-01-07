@@ -283,7 +283,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
 
   const placeholderOptions = {
     userId,
-    text: initialsName || displayName,
+    text: initialsName ?? displayName,
     noVideoAvailableAriaLabel,
     coinSize: personaSize,
     styles: defaultPersonaStyles,
