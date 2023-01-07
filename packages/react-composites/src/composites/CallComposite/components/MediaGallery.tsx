@@ -19,6 +19,8 @@ import { localVideoCameraCycleButtonSelector } from '../selectors/LocalVideoTile
 import { LocalVideoCameraCycleButton } from '@internal/react-components';
 import { _formatString } from '@internal/acs-ui-common';
 import { useParticipantChangedAnnouncement } from '../utils/MediaGalleryUtils';
+/* @conditional-compile-remove(pinned-participants) */
+import { RemoteVideoTileMenuOptions } from '../CallComposite';
 
 const VideoGalleryStyles = {
   root: {
@@ -48,6 +50,8 @@ export interface MediaGalleryProps {
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   isMobile?: boolean;
   drawerMenuHostId?: string;
+  /* @conditional-compile-remove(pinned-participants) */
+  remoteVideoTileMenuOptions?: RemoteVideoTileMenuOptions;
 }
 
 /**
@@ -91,12 +95,20 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
         showCameraSwitcherInLocalPreview={props.isMobile}
         localVideoCameraCycleButtonProps={cameraSwitcherProps}
         onRenderAvatar={onRenderAvatar}
-        /* @conditional-compile-remove(pinned-participants) */
-        showRemoteVideoTileContextualMenu={!props.isMobile}
         // @TODO: Provide props.drawerMenuHostId to VideoGallery when VideoGallery props support it.
+        /* @conditional-compile-remove(pinned-participants) */
+        remoteVideoTileMenuOptions={
+          props.remoteVideoTileMenuOptions?.isHidden ? false : props.isMobile ? false : { kind: 'contextual' }
+        }
       />
     );
-  }, [videoGalleryProps, props.isMobile, cameraSwitcherProps, onRenderAvatar]);
+  }, [
+    videoGalleryProps,
+    props.isMobile,
+    onRenderAvatar,
+    cameraSwitcherProps,
+    /* @conditional-compile-remove(pinned-participants) */ props.remoteVideoTileMenuOptions
+  ]);
 
   return (
     <>
