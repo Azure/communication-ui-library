@@ -174,7 +174,7 @@
     "fitRemoteParticipantToFrame": "Fit to frame",
     "fillRemoteParticipantFrame": "Fill frame",
     "pinParticipantForMe": "Pin for me",
-    "pinParticipantForMeWhenLimitReached": "Pin (limit reached)",
+    "pinParticipantForMeLimitReached": "Pin (limit reached)",
     "unpinParticipantForMe": "Unpin for me"
   },
   "dialpad": {
