@@ -30,6 +30,7 @@ import { FloatingLocalVideoLayout } from './VideoGallery/FloatingLocalVideoLayou
 import { useIdentifiers } from '../identifiers';
 import { videoGalleryOuterDivStyle } from './styles/VideoGallery.styles';
 import { floatingLocalVideoTileStyle } from './VideoGallery/styles/FloatingLocalVideo.styles';
+/* @conditional-compile-remove(pinned-participants) */
 import { useId } from '@fluentui/react-hooks';
 /* @conditional-compile-remove(pinned-participants) */
 import { PinnedParticipantsLayout } from './VideoGallery/PinnedParticipantsLayout';
@@ -262,9 +263,13 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   const localeStrings = useLocale().strings.videoGallery;
   const strings = useMemo(() => ({ ...localeStrings, ...props.strings }), [localeStrings, props.strings]);
 
-  // @TODO: Provide a default value to this hook using the `drawerMenuHostId` value in the props when VideoGallery props have been updated.
-  // Example: `const drawerMenuHostId = useId('drawerMenuHost', props.drawerMenuHostId);`
-  const drawerMenuHostId = useId('drawerMenuHost');
+  /* @conditional-compile-remove(pinned-participants) */
+  const drawerMenuHostIdFromProp =
+    remoteVideoTileMenuOptions && remoteVideoTileMenuOptions.kind === 'drawer'
+      ? (remoteVideoTileMenuOptions as VideoTileDrawerMenuProps).hostId
+      : undefined;
+  /* @conditional-compile-remove(pinned-participants) */
+  const drawerMenuHostId = useId('drawerMenuHost', drawerMenuHostIdFromProp);
 
   const shouldFloatLocalVideo = !!(layout === 'floatingLocalVideo' && remoteParticipants.length > 0);
 
@@ -394,6 +399,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           showRemoteVideoTileContextualMenu={
             remoteVideoTileMenuOptions && remoteVideoTileMenuOptions.kind === 'contextual'
           }
+          /* @conditional-compile-remove(pinned-participants) */
           drawerMenuHostId={drawerMenuHostId}
           /* @conditional-compile-remove(pinned-participants) */
           onPinParticipant={onPinParticipant}
@@ -411,7 +417,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       onRenderAvatar,
       showMuteIndicator,
       strings,
-      drawerMenuHostId,
+      /* @conditional-compile-remove(pinned-participants) */ drawerMenuHostId,
       /* @conditional-compile-remove(pinned-participants) */ remoteVideoTileMenuOptions,
       /* @conditional-compile-remove(pinned-participants) */ pinnedParticipants,
       /* @conditional-compile-remove(pinned-participants) */ onPinParticipant,
@@ -484,7 +490,9 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
 
   return (
     <div
-      id={drawerMenuHostId}
+      /* @conditional-compile-remove(pinned-participants) */
+      // We don't assign an drawer menu host id to the VideoGallery when a drawerMenuHostId is assigned from props
+      id={drawerMenuHostIdFromProp ? undefined : drawerMenuHostId}
       data-ui-id={ids.videoGallery}
       ref={containerRef}
       className={mergeStyles(videoGalleryOuterDivStyle, styles?.root)}
