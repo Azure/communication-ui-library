@@ -9,6 +9,7 @@ import { GridLayout } from '../GridLayout';
 import { isNarrowWidth } from '../utils/responsive';
 import { FloatingLocalVideo } from './FloatingLocalVideo';
 import { LayoutProps } from './Layout';
+import { ScrollableHorizontalGallery } from './ScrollableHorizontalGallery';
 import {
   localVideoTileContainerStyle,
   localVideoTileWithControlsContainerStyle,
@@ -121,7 +122,7 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
   return (
     <Stack styles={rootLayoutStyle}>
       {wrappedLocalVideoComponent}
-      <Stack horizontal={false} styles={innerLayoutStyle}>
+      <Stack horizontal={false} styles={innerLayoutStyle} tokens={{ childrenGap: '0.5rem' }}>
         {screenShareComponent ? (
           screenShareComponent
         ) : (
@@ -129,14 +130,17 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
             {gridTiles}
           </GridLayout>
         )}
-        {horizontalGalleryTiles.length > 0 && (
-          <VideoGalleryResponsiveHorizontalGallery
-            isNarrow={isNarrow}
-            shouldFloatLocalVideo={true}
-            horizontalGalleryElements={horizontalGalleryTiles}
-            styles={styles?.horizontalGallery}
-          />
-        )}
+        {horizontalGalleryTiles.length > 0 &&
+          (isNarrow ? (
+            <ScrollableHorizontalGallery horizontalGalleryElements={horizontalGalleryTiles} />
+          ) : (
+            <VideoGalleryResponsiveHorizontalGallery
+              isNarrow={isNarrow}
+              shouldFloatLocalVideo={true}
+              horizontalGalleryElements={horizontalGalleryTiles}
+              styles={styles?.horizontalGallery}
+            />
+          ))}
         <LayerHost id={layerHostId} className={mergeStyles(layerHostStyle)} />
       </Stack>
     </Stack>

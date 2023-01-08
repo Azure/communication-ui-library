@@ -6,6 +6,7 @@ import React from 'react';
 import { GridLayout } from '../GridLayout';
 import { isNarrowWidth } from '../utils/responsive';
 import { LayoutProps } from './Layout';
+import { ScrollableHorizontalGallery } from './ScrollableHorizontalGallery';
 import { rootLayoutStyle } from './styles/DefaultLayout.styles';
 import { useFloatingLocalVideoLayout } from './utils/videoGalleryLayoutUtils';
 import { VideoGalleryResponsiveHorizontalGallery } from './VideoGalleryResponsiveHorizontalGallery';
@@ -69,7 +70,7 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
   }
 
   return (
-    <Stack horizontal={false} styles={rootLayoutStyle}>
+    <Stack horizontal={false} styles={rootLayoutStyle} tokens={{ childrenGap: '0.5rem' }}>
       {screenShareComponent ? (
         screenShareComponent
       ) : (
@@ -77,13 +78,17 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
           {gridTiles}
         </GridLayout>
       )}
-      {horizontalGalleryTiles.length > 0 && (
-        <VideoGalleryResponsiveHorizontalGallery
-          isNarrow={isNarrow}
-          horizontalGalleryElements={horizontalGalleryTiles}
-          styles={styles?.horizontalGallery}
-        />
-      )}
+      {horizontalGalleryTiles.length > 0 &&
+        (isNarrow ? (
+          <ScrollableHorizontalGallery horizontalGalleryElements={horizontalGalleryTiles} />
+        ) : (
+          <VideoGalleryResponsiveHorizontalGallery
+            isNarrow={isNarrow}
+            shouldFloatLocalVideo={true}
+            horizontalGalleryElements={horizontalGalleryTiles}
+            styles={styles?.horizontalGallery}
+          />
+        ))}
     </Stack>
   );
 };
