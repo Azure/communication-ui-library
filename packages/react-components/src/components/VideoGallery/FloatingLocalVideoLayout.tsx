@@ -121,7 +121,6 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
 
   return (
     <Stack styles={rootLayoutStyle}>
-      {wrappedLocalVideoComponent}
       <Stack horizontal={false} styles={innerLayoutStyle} tokens={{ childrenGap: '0.5rem' }}>
         {screenShareComponent ? (
           screenShareComponent
@@ -141,8 +140,9 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
               styles={styles?.horizontalGallery}
             />
           ))}
-        <LayerHost id={layerHostId} className={mergeStyles(layerHostStyle)} />
       </Stack>
+      {wrappedLocalVideoComponent}
+      <LayerHost id={layerHostId} className={mergeStyles(layerHostStyle)} />
     </Stack>
   );
 };
