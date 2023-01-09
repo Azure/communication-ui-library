@@ -185,11 +185,11 @@ class CallContext {
         devices: clientState.deviceManager,
         latestErrors: clientState.latestErrors,
         isCameraOn: this.state.call
-          ? clientState.calls[this.state.call.id]?.localVideoStreams.find((s) => s.mediaStreamType === 'Video') !==
-            undefined
-          : clientState.deviceManager.unparentedViews.find((s) => s.mediaStreamType === 'Video') !== undefined
+          ? !!clientState.calls[this.state.call.id]?.localVideoStreams.find((s) => s.mediaStreamType === 'Video')
+          : !!clientState.deviceManager.unparentedViews.find((s) => s.mediaStreamType === 'Video')
       });
     }
+    console.log(this.state.isCameraOn);
   }
 
   /* @conditional-compile-remove(unsupported-browser) */
