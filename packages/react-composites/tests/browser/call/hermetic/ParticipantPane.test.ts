@@ -186,6 +186,7 @@ test.describe('Participant pane tests', async () => {
     expect(await stableScreenshot(page)).toMatchSnapshot('participant-with-no-name-unknown-icon.png');
   });
 
+  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   test('ParticipantState string should be set correctly when idle to connecting desktop', async ({
     page,
     serverUrl
@@ -211,6 +212,7 @@ test.describe('Participant pane tests', async () => {
     expect(await stableScreenshot(page)).toMatchSnapshot('participant-list-connecting-participant-desktop.png');
   });
 
+  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   test.only('ParticipantState string should be set correctly when idle to connecting mobile', async ({
     page,
     serverUrl
