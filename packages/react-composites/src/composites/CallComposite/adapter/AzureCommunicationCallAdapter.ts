@@ -189,7 +189,6 @@ class CallContext {
           : !!clientState.deviceManager.unparentedViews.find((s) => s.mediaStreamType === 'Video')
       });
     }
-    console.log(this.state.isCameraOn);
   }
 
   /* @conditional-compile-remove(unsupported-browser) */
