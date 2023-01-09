@@ -49,6 +49,8 @@ export type { AnnouncerProps } from './Announcer';
 
 export { VideoGallery } from './VideoGallery';
 export type { VideoGalleryProps, VideoGalleryStrings, VideoGalleryStyles, VideoGalleryLayout } from './VideoGallery';
+/* @conditional-compile-remove(pinned-participants) */
+export type { VideoTileContextualMenuProps, VideoTileDrawerMenuProps } from './VideoGallery';
 export type { HorizontalGalleryStyles } from './HorizontalGallery';
 
 export { LocalVideoCameraCycleButton } from './LocalVideoCameraButton';
