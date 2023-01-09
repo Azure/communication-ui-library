@@ -105,7 +105,8 @@ class CallContext {
       /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId: clientState.alternateCallerId,
       /* @conditional-compile-remove(unsupported-browser) */ environmentInfo: clientState.environmentInfo,
       /* @conditional-compile-remove(unsupported-browser) */ unsupportedBrowserVersionsAllowed: false,
-      /* @conditional-compile-remove(rooms) */ roleHint: options?.roleHint
+      /* @conditional-compile-remove(rooms) */ roleHint: options?.roleHint,
+      isCameraOn: undefined
     };
     this.emitter.setMaxListeners(options?.maxListeners ?? 50);
     this.bindPublicMethods();
@@ -182,7 +183,10 @@ class CallContext {
         page: newPage,
         endedCall: latestEndedCall,
         devices: clientState.deviceManager,
-        latestErrors: clientState.latestErrors
+        latestErrors: clientState.latestErrors,
+        isCameraOn:
+          clientState.deviceManager.unparentedViews.find((s) => s.mediaStreamType === 'Video') !== undefined ||
+          this.getState().call?.localVideoStreams.find((s) => s.mediaStreamType === 'Video') !== undefined
       });
     }
   }

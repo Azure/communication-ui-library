@@ -107,6 +107,11 @@ export type CallAdapterClientState = {
    * {@link CallComposite}. The true role of the user will be synced with ACS services when a Rooms call starts.
    */
   roleHint?: Role;
+  /**
+   * State to track whether the local participant's camera is on. To be used when creating a custom
+   * control bar with the CallComposite.
+   */
+  isCameraOn?: boolean;
 };
 
 /**
