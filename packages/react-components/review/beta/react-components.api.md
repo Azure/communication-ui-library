@@ -1680,10 +1680,10 @@ export interface VideoGalleryProps {
     onUnpinParticipant?: (userId: string) => void;
     pinnedParticipants?: string[];
     remoteParticipants?: VideoGalleryRemoteParticipant[];
+    remoteVideoTileMenuOptions?: false | VideoTileContextualMenuProps | VideoTileDrawerMenuProps;
     remoteVideoViewOptions?: VideoStreamOptions;
     showCameraSwitcherInLocalPreview?: boolean;
     showMuteIndicator?: boolean;
-    showRemoteVideoTileContextualMenu?: boolean;
     strings?: Partial<VideoGalleryStrings>;
     styles?: VideoGalleryStyles;
 }
@@ -1736,6 +1736,17 @@ export interface VideoStreamOptions {
 
 // @public
 export const VideoTile: (props: VideoTileProps) => JSX.Element;
+
+// @beta
+export interface VideoTileContextualMenuProps {
+    kind: 'contextual';
+}
+
+// @beta
+export interface VideoTileDrawerMenuProps {
+    hostId?: string;
+    kind: 'drawer';
+}
 
 // @public
 export interface VideoTileProps {

@@ -16,6 +16,8 @@ import {
   ScalingMode,
   VideoDeviceInfo
 } from '@azure/communication-calling';
+/* @conditional-compile-remove(teams-identity-support) */
+import { CallKind } from '@azure/communication-calling';
 /* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(rooms) */
@@ -201,7 +203,7 @@ export interface CallState {
   /**
    * Type of the call.
    */
-  type: 'Teams' | 'ACS';
+  kind: CallKind;
   /**
    * Proxy of {@link @azure/communication-calling#Call.callerInfo}.
    */
