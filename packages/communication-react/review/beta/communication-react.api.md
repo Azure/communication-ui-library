@@ -478,6 +478,7 @@ export type CallCompositeOptions = {
     }) => void;
     onNetworkingTroubleShootingClick?: () => void;
     onEnvironmentInfoTroubleshootingClick?: () => void;
+    remoteVideoTileMenu?: RemoteVideoTileMenuOptions;
 };
 
 // @public
@@ -2824,6 +2825,11 @@ export interface RemoteVideoStreamState {
 }
 
 // @beta
+export interface RemoteVideoTileMenuOptions {
+    isHidden?: boolean;
+}
+
+// @beta
 export type Role = 'Presenter' | 'Attendee' | 'Consumer' | 'Organizer';
 
 // @public
@@ -3202,10 +3208,10 @@ export interface VideoGalleryProps {
     onUnpinParticipant?: (userId: string) => void;
     pinnedParticipants?: string[];
     remoteParticipants?: VideoGalleryRemoteParticipant[];
+    remoteVideoTileMenuOptions?: false | VideoTileContextualMenuProps | VideoTileDrawerMenuProps;
     remoteVideoViewOptions?: VideoStreamOptions;
     showCameraSwitcherInLocalPreview?: boolean;
     showMuteIndicator?: boolean;
-    showRemoteVideoTileContextualMenu?: boolean;
     strings?: Partial<VideoGalleryStrings>;
     styles?: VideoGalleryStyles;
 }
@@ -3273,6 +3279,17 @@ export interface VideoStreamRendererViewState {
 
 // @public
 export const VideoTile: (props: VideoTileProps) => JSX.Element;
+
+// @beta
+export interface VideoTileContextualMenuProps {
+    kind: 'contextual';
+}
+
+// @beta
+export interface VideoTileDrawerMenuProps {
+    hostId?: string;
+    kind: 'drawer';
+}
 
 // @public
 export interface VideoTileProps {
