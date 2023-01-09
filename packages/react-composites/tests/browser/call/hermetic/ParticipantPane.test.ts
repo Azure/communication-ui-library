@@ -185,4 +185,60 @@ test.describe('Participant pane tests', async () => {
     await waitForSelector(page, dataUiId('call-composite-people-pane'));
     expect(await stableScreenshot(page)).toMatchSnapshot('participant-with-no-name-unknown-icon.png');
   });
+
+  test('ParticipantState string should be set correctly when idle to connecting desktop', async ({
+    page,
+    serverUrl
+  }, testInfo) => {
+    test.skip(!isTestProfileDesktop(testInfo));
+    const idleRemoteParticipant = defaultMockRemoteParticipant('Joni Solberg');
+    idleRemoteParticipant.state = 'Idle';
+
+    const initialState = defaultMockCallAdapterState([idleRemoteParticipant]);
+    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
+
+    await waitForSelector(page, dataUiId('call-composite-participants-button'));
+    await pageClick(page, dataUiId('call-composite-participants-button'));
+
+    expect(await stableScreenshot(page)).toMatchSnapshot('participant-list-idle-participant-desktop.png');
+
+    idleRemoteParticipant.state = 'Connecting';
+    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
+
+    await waitForSelector(page, dataUiId('call-composite-participants-button'));
+    await pageClick(page, dataUiId('call-composite-participants-button'));
+
+    expect(await stableScreenshot(page)).toMatchSnapshot('participant-list-connecting-participant-desktop.png');
+  });
+
+  test.only('ParticipantState string should be set correctly when idle to connecting mobile', async ({
+    page,
+    serverUrl
+  }, testInfo) => {
+    test.skip(isTestProfileDesktop(testInfo));
+    const idleRemoteParticipant = defaultMockRemoteParticipant('Joni Solberg');
+    idleRemoteParticipant.state = 'Idle';
+
+    const initialState = defaultMockCallAdapterState([idleRemoteParticipant]);
+    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
+
+    await waitForSelector(page, dataUiId(IDS.moreButton));
+    await pageClick(page, dataUiId(IDS.moreButton));
+
+    await waitForSelector(page, dataUiId('call-composite-more-menu-people-button'));
+    await pageClick(page, dataUiId('call-composite-more-menu-people-button'));
+
+    expect(await stableScreenshot(page)).toMatchSnapshot('participant-list-idle-participant-mobile.png');
+
+    idleRemoteParticipant.state = 'Connecting';
+    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
+
+    await waitForSelector(page, dataUiId(IDS.moreButton));
+    await pageClick(page, dataUiId(IDS.moreButton));
+
+    await waitForSelector(page, dataUiId('call-composite-more-menu-people-button'));
+    await pageClick(page, dataUiId('call-composite-more-menu-people-button'));
+
+    expect(await stableScreenshot(page)).toMatchSnapshot('participant-list-connecting-participant-mobile.png');
+  });
 });

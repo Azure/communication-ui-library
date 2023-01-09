@@ -342,7 +342,10 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
             {renderElement}
           </Stack>
         ) : (
-          <Stack className={mergeStyles(videoContainerStyles)} style={{ opacity: participantStateString ? 0.4 : 1 }}>
+          <Stack
+            className={mergeStyles(videoContainerStyles)}
+            style={{ opacity: participantStateString || props.participantState === 'Idle' ? 0.4 : 1 }}
+          >
             {onRenderPlaceholder ? (
               onRenderPlaceholder(userId ?? '', placeholderOptions, DefaultPlaceholder)
             ) : (
@@ -403,7 +406,7 @@ const participantStateStringTrampoline = (props: VideoTileProps, locale: Compone
   const strings = { ...locale.strings.videoTile, ...props.strings };
   /* @conditional-compile-remove(one-to-n-calling) */
   /* @conditional-compile-remove(PSTN-calls) */
-  return props.participantState === 'Idle' || props.participantState === 'Connecting'
+  return props.participantState === 'Connecting'
     ? strings?.participantStateConnecting
     : props.participantState === 'EarlyMedia' || props.participantState === 'Ringing'
     ? strings?.participantStateRinging

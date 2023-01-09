@@ -149,8 +149,9 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
     styles,
     me,
     onClick,
-    showParticipantOverflowTooltip
+    showParticipantOverflowTooltip,
     /* @conditional-compile-remove(PSTN-calls) */
+    participantState
   } = props;
   const [itemHovered, setItemHovered] = useState<boolean>(false);
   const [itemFocused, setItemFocused] = useState<boolean>(false);
@@ -228,7 +229,7 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
     setMenuHidden(true);
   };
 
-  const participantStateString = participantStateStringTrampoline(props, strings);
+  const participantStateString = participantStateStringTrampoline(strings, participantState);
   return (
     <div
       ref={containerRef}
@@ -301,16 +302,16 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
 };
 
 const participantStateStringTrampoline = (
-  props: ParticipantItemProps,
-  strings: ParticipantItemStrings
+  strings: ParticipantItemStrings,
+  participantState?: ParticipantState
 ): string | undefined => {
   /* @conditional-compile-remove(one-to-n-calling) */
   /* @conditional-compile-remove(PSTN-calls) */
-  return props.participantState === 'Idle' || props.participantState === 'Connecting'
+  return participantState === 'Connecting'
     ? strings?.participantStateConnecting
-    : props.participantState === 'EarlyMedia' || props.participantState === 'Ringing'
+    : participantState === 'EarlyMedia' || participantState === 'Ringing'
     ? strings?.participantStateRinging
-    : props.participantState === 'Hold'
+    : participantState === 'Hold'
     ? strings?.participantStateHold
     : undefined;
 
