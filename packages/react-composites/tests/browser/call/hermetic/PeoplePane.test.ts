@@ -103,6 +103,39 @@ test.describe('Participant list side pane tests', () => {
     expect(await stableScreenshot(page)).toMatchSnapshot(`video-gallery-page-participants-flyout.png`);
   });
 
+  test('participant shows unnamed local participant as (you), remote unnamed participant as "Unnamed Participant"', async ({
+    page,
+    serverUrl
+  }, testInfo) => {
+    test.skip(!participantListShownAsSidePane(testInfo));
+    const initialState = participantListInitialState();
+
+    if (!initialState.call) {
+      throw new Error('Call state not set in initial state');
+    }
+
+    await page.goto(
+      buildUrlWithMockAdapter(
+        serverUrl,
+        {
+          ...initialState,
+          displayName: '',
+          call: {
+            ...initialState.call,
+            remoteParticipants: {
+              ...initialState.call?.remoteParticipants,
+              '': defaultMockRemoteParticipant('')
+            }
+          }
+        },
+        { callInvitationUrl: 'testUrl' }
+      )
+    );
+    await pageClick(page, dataUiId('call-composite-participants-button'));
+    await waitForSelector(page, dataUiId('call-composite-people-pane'));
+    expect(await stableScreenshot(page)).toMatchSnapshot(`video-gallery-page-participants-no-displayname.png`);
+  });
+
   test('participant list opens and displays ellipses if passing in custom icon', async ({
     page,
     serverUrl
