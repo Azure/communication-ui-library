@@ -10,7 +10,14 @@ import {
   test
 } from './fixture';
 import { expect } from '@playwright/test';
-import { dataUiId, pageClick, stableScreenshot, waitForSelector } from '../../common/utils';
+import {
+  dataUiId,
+  dragToRight,
+  isTestProfileMobile,
+  pageClick,
+  stableScreenshot,
+  waitForSelector
+} from '../../common/utils';
 import { IDS } from '../../common/constants';
 import type { MockCallState } from '../../../common';
 
@@ -48,7 +55,10 @@ test.describe('Screenshare tests', async () => {
     expect(await stableScreenshot(page)).toMatchSnapshot('local-screenshare.png');
   });
 
-  test('Remote screen share stream should be displayed in grid area of VideoGallery.', async ({ page, serverUrl }) => {
+  test('Remote screen share stream should be displayed in grid area of VideoGallery.', async ({
+    page,
+    serverUrl
+  }, testInfo) => {
     const reina = defaultMockRemoteParticipant('Reina Takizawa');
     reina.isSpeaking = true;
     const vasily = defaultMockRemoteParticipant('Vasily Podkolzin');
@@ -77,6 +87,15 @@ test.describe('Screenshare tests', async () => {
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
 
     await waitForSelector(page, dataUiId(IDS.videoGallery));
+
+    if (isTestProfileMobile(testInfo)) {
+      await dragToRight(page, dataUiId('scrollable-horizontal-gallery'));
+      expect(await stableScreenshot(page)).toMatchSnapshot(
+        'horizontal-gallery-with-many-audio-participants-dragged.png'
+      );
+      return;
+    }
+
     expect(await stableScreenshot(page)).toMatchSnapshot('remote-screenshare-horizontal-gallery-page-1.png');
     await waitForSelector(page, dataUiId(IDS.horizontalGalleryRightNavButton));
     await pageClick(page, dataUiId(IDS.horizontalGalleryRightNavButton));

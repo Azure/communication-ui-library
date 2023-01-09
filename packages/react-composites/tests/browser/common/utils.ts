@@ -597,3 +597,23 @@ export const hidePiPiP = async (page: Page): Promise<void> => {
     document.querySelector(pipipId)?.remove();
   }, pipipId);
 };
+
+/**
+ * Helper function to drag to the right of first element matching selector
+ */
+export const dragToRight = async (page: Page, selector: string): Promise<void> => {
+  const handle = await page.locator(selector).first();
+  const boundingBox = await handle.boundingBox();
+  if (!boundingBox) {
+    fail(`Bounding box for selector '${selector}' could not be found.`);
+  }
+  await handle.dragTo(handle, {
+    force: true,
+    targetPosition: {
+      // drag to the right of entire width
+      x: boundingBox.width,
+      y: 0
+    }
+  });
+  await screenshotOnFailure(page, async () => await page.click(selector, { timeout: perStepLocalTimeout() }));
+};

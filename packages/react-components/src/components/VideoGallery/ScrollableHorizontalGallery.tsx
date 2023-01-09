@@ -15,7 +15,12 @@ export const ScrollableHorizontalGallery = (props: { horizontalGalleryElements?:
   const { horizontalGalleryElements } = props;
 
   return (
-    <Stack horizontal={true} styles={scrollableHorizontalGalleryStyles} tokens={{ childrenGap: '0.5rem' }}>
+    <Stack
+      data-ui-id="scrollable-horizontal-gallery"
+      horizontal={true}
+      styles={scrollableHorizontalGalleryStyles}
+      tokens={{ childrenGap: '0.5rem' }}
+    >
       {horizontalGalleryElements}
     </Stack>
   );
