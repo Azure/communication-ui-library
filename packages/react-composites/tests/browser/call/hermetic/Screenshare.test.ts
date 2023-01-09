@@ -58,7 +58,7 @@ test.describe('Screenshare tests', async () => {
   test('Remote screen share stream should be displayed in grid area of VideoGallery.', async ({
     page,
     serverUrl
-  }, testInfo) => {
+  }, /* @conditional-compile-remove(pinned-participants) */ testInfo) => {
     const reina = defaultMockRemoteParticipant('Reina Takizawa');
     reina.isSpeaking = true;
     const vasily = defaultMockRemoteParticipant('Vasily Podkolzin');
@@ -88,6 +88,7 @@ test.describe('Screenshare tests', async () => {
 
     await waitForSelector(page, dataUiId(IDS.videoGallery));
 
+    /* @conditional-compile-remove(pinned-participants) */
     if (isTestProfileMobile(testInfo)) {
       await dragToRight(page, dataUiId('scrollable-horizontal-gallery'));
       expect(await stableScreenshot(page)).toMatchSnapshot(

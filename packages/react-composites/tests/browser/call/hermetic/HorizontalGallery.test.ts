@@ -40,7 +40,7 @@ test.describe('HorizontalGallery tests', async () => {
   test('HorizontalGallery should have multiple audio participants spanning multiple pages. Navigation buttons should work.', async ({
     page,
     serverUrl
-  }, testInfo) => {
+  }, /* @conditional-compile-remove(pinned-participants) */ testInfo) => {
     const paul = defaultMockRemoteParticipant('Paul Bridges');
     addVideoStream(paul, true);
     paul.isSpeaking = true;
@@ -70,6 +70,7 @@ test.describe('HorizontalGallery tests', async () => {
       'horizontal-gallery-with-many-audio-participants-on-page-1.png'
     );
 
+    /* @conditional-compile-remove(pinned-participants) */
     if (isTestProfileMobile(testInfo)) {
       await dragToRight(page, dataUiId('scrollable-horizontal-gallery'));
       expect(await stableScreenshot(page)).toMatchSnapshot(
@@ -131,11 +132,11 @@ test.describe('HorizontalGallery tests', async () => {
     );
   });
 
-  /* @conditional-compile-remove(PSTN-calls) */
+  /* @conditional-compile-remove(PSTN-calls) @conditional-compile-remove(pinned-participants) */
   test('HorizontalGallery should have multiple audio participants and 1 PSTN participant on second page', async ({
     page,
     serverUrl
-  }, testInfo) => {
+  }, /* @conditional-compile-remove(pinned-participants) */ testInfo) => {
     const paul = defaultMockRemoteParticipant('Paul Bridges');
     addVideoStream(paul, true);
     paul.isSpeaking = true;
@@ -162,6 +163,7 @@ test.describe('HorizontalGallery tests', async () => {
 
     await waitForSelector(page, dataUiId(IDS.videoGallery));
 
+    /* @conditional-compile-remove(pinned-participants) */
     if (isTestProfileMobile(testInfo)) {
       await dragToRight(page, dataUiId('scrollable-horizontal-gallery'));
       expect(await stableScreenshot(page)).toMatchSnapshot('horizontal-gallery-with-joining-participant-dragged.png');
