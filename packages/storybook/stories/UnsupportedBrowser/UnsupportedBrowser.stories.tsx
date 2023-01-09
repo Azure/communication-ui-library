@@ -6,9 +6,9 @@ import { UnsupportedBrowser as UnsupportedBrowserComponent } from '@internal/rea
 import { Canvas, Description, Heading, Props, Title } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
-import { useLocale } from '../../../../react-components/src/localization';
-import { SingleLineBetaBanner } from '../../BetaBanners/SingleLineBetaBanner';
-import { COMPONENT_FOLDER_PREFIX } from '../../constants';
+import { useLocale } from '../../../react-components/src/localization';
+import { SingleLineBetaBanner } from '../BetaBanners/SingleLineBetaBanner';
+import { COMPONENT_FOLDER_PREFIX } from '../constants';
 import { UnsupportedEnvironmentDrawers } from './snippets/UnsupportedEnvironmentDrawer.snippet';
 import { UnsupportedEnvironmentModals } from './snippets/UnsupportedEnvironmentModal.snippet';
 
@@ -58,8 +58,8 @@ const getDocs: () => JSX.Element = () => {
 export const UnsupportedBrowser = UnsupportedBrowserStory.bind({});
 
 export default {
-  id: `${COMPONENT_FOLDER_PREFIX}-internal-unsupported-browser`,
-  title: `${COMPONENT_FOLDER_PREFIX}/Internal/CallReadiness/Unsupported Browser`,
+  id: `${COMPONENT_FOLDER_PREFIX}-unsupported-browser`,
+  title: `${COMPONENT_FOLDER_PREFIX}/Unsupported Browser`,
   component: UnsupportedBrowserComponent,
   parameters: {
     docs: {

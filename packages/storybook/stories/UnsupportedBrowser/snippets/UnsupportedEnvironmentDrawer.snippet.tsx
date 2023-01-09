@@ -9,7 +9,7 @@ import {
   UnsupportedOperatingSystem
 } from '@internal/react-components';
 import React, { useState } from 'react';
-import { MobilePreviewContainer } from '../../../MobileContainer';
+import { MobilePreviewContainer } from '../../MobileContainer';
 
 export const UnsupportedEnvironmentDrawers: () => JSX.Element = () => {
   const [unsupportedBrowserShowing, setUnsupportedBrowserShowing] = useState(false);
