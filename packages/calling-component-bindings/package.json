@@ -28,10 +28,10 @@
     "_test:by-flavor": "(if-env COMMUNICATION_REACT_FLAVOR=stable && rushx preprocess || if-env COMMUNICATION_REACT_FLAVOR=beta && echo \"skip preprocess\") && jest"
   },
   "dependencies": {
-    "@azure/communication-common": "2.0.0",
     "@internal/acs-ui-common": "1.5.1-beta.0",
     "@internal/calling-stateful-client": "1.5.1-beta.0",
     "@internal/react-components": "1.5.1-beta.0",
+    "@azure/communication-common": "2.2.0"
     "memoize-one": "~5.2.1",
     "reselect": "~4.0.0"
   },
