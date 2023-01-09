@@ -605,15 +605,15 @@ export const dragToRight = async (page: Page, selector: string): Promise<void> =
   const handle = await page.locator(selector).first();
   const boundingBox = await handle.boundingBox();
   if (!boundingBox) {
+    page.screenshot({ path: `test-results/failure-screenshot-${generateGUID()}.png` });
     fail(`Bounding box for selector '${selector}' could not be found.`);
   }
   await handle.dragTo(handle, {
     force: true,
     targetPosition: {
-      // drag to the right of entire width
+      // drag to the right by the entire width of element
       x: boundingBox.width,
       y: 0
     }
   });
-  await screenshotOnFailure(page, async () => await page.click(selector, { timeout: perStepLocalTimeout() }));
 };
