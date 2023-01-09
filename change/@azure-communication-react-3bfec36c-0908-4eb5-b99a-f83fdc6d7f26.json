@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Disabling pin menu button on remote VideoTile of VideoGallery when max pinned remote video tiles is reached.",
+  "packageName": "@azure/communication-react",
+  "email": "miguelgamis@microsoft.com",
+  "dependentChangeType": "patch"
+}

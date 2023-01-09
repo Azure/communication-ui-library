@@ -9,7 +9,7 @@ import {
   test
 } from './fixture';
 import { expect } from '@playwright/test';
-import { dataUiId, waitForSelector, stableScreenshot } from '../../common/utils';
+import { dataUiId, waitForSelector, stableScreenshot, pageClick, isTestProfileMobile } from '../../common/utils';
 import { IDS } from '../../common/constants';
 
 test.describe('VideoGallery tests', async () => {
@@ -72,5 +72,32 @@ test.describe('VideoGallery tests', async () => {
     expect(await stableScreenshot(page)).toMatchSnapshot(
       'video-gallery-with-1-joining-1-hold-gridview-participant.png'
     );
+  });
+
+  /* @conditional-compile-remove(pinned-participants) */
+  test('Remote video tile pin menu button should be disabled when max remote video tiles are pinned', async ({
+    page,
+    serverUrl
+  }, testInfo) => {
+    // @TODO: Test that pin menu item is disabled when maximum remote VideoTiles are pinned in VideoGallery when
+    // drawer menu on long touch has been implemented
+    test.skip(isTestProfileMobile(testInfo));
+    const displayNames = ['Tony Hawk', 'Marie Curie', 'Gal Gadot', 'Margaret Atwood', 'Kobe Bryant', "Conan O'Brien"];
+    const participants = displayNames.map((name) => defaultMockRemoteParticipant(name));
+    const initialState = defaultMockCallAdapterState(participants);
+
+    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
+
+    // pin remote video tiles up to the max allowed in the call composite
+    for (let i = 0; i < 4; i++) {
+      // click the last 'more options' button on the page which is presumably on an unpinned remote video tile
+      await pageClick(page, dataUiId('video-tile-more-options-button') + ' >> nth=-1');
+      // click pin menu button in contextual menu
+      await pageClick(page, dataUiId('video-tile-pin-participant-button'));
+    }
+    // click the last more button on the page which is presumably on an unpinned remote video tile
+    await pageClick(page, dataUiId('video-tile-more-options-button') + ' >> nth=-1');
+    // take snapshot to verify pin button is disabled
+    expect(await stableScreenshot(page)).toMatchSnapshot('disabled-pin-menu-button.png');
   });
 });
