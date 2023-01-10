@@ -1,9 +1,9 @@
-import { Modal, PrimaryButton, Stack } from '@fluentui/react';
 import {
   CameraAndMicrophoneSitePermissions,
   CameraSitePermissions,
   MicrophoneSitePermissions
-} from '@internal/react-components';
+} from '@azure/communication-react';
+import { Modal, PrimaryButton, Stack } from '@fluentui/react';
 import React, { useState } from 'react';
 import { useLocale } from '../../../../react-components/src/localization';
 

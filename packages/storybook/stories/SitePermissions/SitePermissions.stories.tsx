@@ -1,39 +1,28 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Stack } from '@fluentui/react';
 import {
   CameraAndMicrophoneSitePermissions as CameraAndMicrophoneSitePermissionsComponent,
   CameraSitePermissions as CameraSitePermissionsComponent,
-  MicrophoneSitePermissions as MicrophoneSitePermissionsComponent,
-  _DrawerSurface
-} from '@internal/react-components';
+  MicrophoneSitePermissions as MicrophoneSitePermissionsComponent
+} from '@azure/communication-react';
+import { Stack } from '@fluentui/react';
 import { Canvas, Description, Heading, Props, Title } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 import { SingleLineBetaBanner } from '../BetaBanners/SingleLineBetaBanner';
 import { COMPONENT_FOLDER_PREFIX } from '../constants';
 import { ArgsFrom, controlsToAdd, hiddenControl } from '../controlsUtils';
-import { SitePermissionsCheckDrawer } from './snippets/SitePermissionsCheckDrawer.snippet';
 import { SitePermissionsCheckModal } from './snippets/SitePermissionsCheckModal.snippet';
-import { SitePermissionsDeniedDrawer } from './snippets/SitePermissionsDeniedDrawer.snippet';
 import { SitePermissionsDeniedModal } from './snippets/SitePermissionsDeniedModal.snippet';
-import { SitePermissionsRequestDrawer } from './snippets/SitePermissionsRequestDrawer.snippet';
 import { SitePermissionsRequestModal } from './snippets/SitePermissionsRequestModal.snippet';
 
-const SitePermissionsRequestModalExample =
-  require('!!raw-loader!./snippets/SitePermissionsRequestModal.snippet.tsx').default;
 const SitePermissionsCheckModalExample =
   require('!!raw-loader!./snippets/SitePermissionsCheckModal.snippet.tsx').default;
 const SitePermissionsDeniedModalExample =
   require('!!raw-loader!./snippets/SitePermissionsDeniedModal.snippet.tsx').default;
-
-const SitePermissionsRequestDrawerExample =
-  require('!!raw-loader!./snippets/SitePermissionsRequestDrawer.snippet.tsx').default;
-const SitePermissionsCheckDrawerExample =
-  require('!!raw-loader!./snippets/SitePermissionsCheckDrawer.snippet.tsx').default;
-const SitePermissionsDeniedDrawerExample =
-  require('!!raw-loader!./snippets/SitePermissionsDeniedDrawer.snippet.tsx').default;
+const SitePermissionsRequestModalExample =
+  require('!!raw-loader!./snippets/SitePermissionsRequestModal.snippet.tsx').default;
 
 const storyControls = {
   siteRequest: controlsToAdd.siteDeviceRequest,
@@ -80,41 +69,16 @@ const getDocs: () => JSX.Element = () => {
         Component to display information to the end user when their device permissions are not set appropriately
       </Description>
       <Heading>Request site permissions in a modal</Heading>
-      <Description>You can request for site permissions using a pop up modal</Description>
       <Canvas mdxSource={SitePermissionsRequestModalExample}>
         <SitePermissionsRequestModal />
       </Canvas>
       <Heading>Checking for site permissions in a modal</Heading>
-      <Description>
-        You can show the end users that you are checking for site permissions using a pop up modal
-      </Description>
       <Canvas mdxSource={SitePermissionsCheckModalExample}>
         <SitePermissionsCheckModal />
       </Canvas>
       <Heading>Site permissions denied in a modal</Heading>
-      <Description>You can show the end users that site permissions are denied using a pop up modal</Description>
       <Canvas mdxSource={SitePermissionsDeniedModalExample}>
         <SitePermissionsDeniedModal />
-      </Canvas>
-
-      <Heading>Request site permissions on mobile</Heading>
-      <Description>You can request for site permissions using a pop up drawer on mobile</Description>
-      <Canvas mdxSource={SitePermissionsRequestDrawerExample}>
-        <SitePermissionsRequestDrawer />
-      </Canvas>
-      <Heading>Checking for site permissions on mobile</Heading>
-      <Description>
-        You can show the end users that you are checking for site permissions using a pop up drawer on mobile
-      </Description>
-      <Canvas mdxSource={SitePermissionsCheckDrawerExample}>
-        <SitePermissionsCheckDrawer />
-      </Canvas>
-      <Heading>Site permissions denied on mobile</Heading>
-      <Description>
-        You can show the end users that site permissions are denied using a pop up drawer on mobile
-      </Description>
-      <Canvas mdxSource={SitePermissionsDeniedDrawerExample}>
-        <SitePermissionsDeniedDrawer />
       </Canvas>
       <Props of={CameraAndMicrophoneSitePermissionsComponent} />
     </Stack>
