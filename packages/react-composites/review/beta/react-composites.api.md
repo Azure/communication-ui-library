@@ -202,6 +202,7 @@ export type CallAdapterClientState = {
     alternateCallerId?: string;
     environmentInfo?: EnvironmentInfo;
     roleHint?: Role;
+    cameraStatus?: 'On' | 'Off';
 };
 
 // @public
