@@ -18,6 +18,7 @@ import { AvatarPersonaDataCallback } from './AvatarPersona';
 import { CallCompositeIcons, CallWithChatCompositeIcons, ChatCompositeIcons, DEFAULT_COMPOSITE_ICONS } from './icons';
 import { globalLayerHostStyle } from './styles/GlobalHostLayer.styles';
 import { useId } from '@fluentui/react-hooks';
+import { OnFetchProfileCallback } from './Profile';
 /**
  * Properties common to all composites exported from this library.
  *
@@ -56,6 +57,12 @@ export interface BaseCompositeProps<TIcons extends Record<string, JSX.Element>> 
    * will be what is provided to the adapter when the adapter is created.
    */
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
+
+  /**
+   * A callback function that can be used to provide custom data to a user profile including
+   * display name and avatar in Composite.
+   */
+  onFetchProfile?: OnFetchProfileCallback;
 
   /**
    * A callback function that can be used to provide custom menu items for a participant in

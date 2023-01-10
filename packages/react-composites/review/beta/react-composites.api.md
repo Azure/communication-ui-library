@@ -139,6 +139,7 @@ export interface BaseCompositeProps<TIcons extends Record<string, JSX.Element>> 
     locale?: CompositeLocale;
     onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
     onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
+    onFetchProfile?: OnFetchProfileCallback;
     rtl?: boolean;
 }
 
@@ -1248,6 +1249,9 @@ export type NetworkDiagnosticChangedEvent = NetworkDiagnosticChangedEventArgs & 
 };
 
 // @public
+export type OnFetchProfileCallback = (userId: string) => Promise<Profile | undefined>;
+
+// @public
 export type ParticipantsAddedListener = (event: {
     participantsAdded: ChatParticipant[];
     addedBy: ChatParticipant;
@@ -1268,6 +1272,12 @@ export type ParticipantsRemovedListener = (event: {
     participantsRemoved: ChatParticipant[];
     removedBy: ChatParticipant;
 }) => void;
+
+// @public
+export type Profile = {
+    displayName?: string;
+    avatarPersonaData?: AvatarPersonaData;
+};
 
 // @beta
 export interface TeamsCallAdapter extends CommonCallAdapter {

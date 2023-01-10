@@ -33,6 +33,7 @@ import { floatingLocalVideoTileStyle } from './VideoGallery/styles/FloatingLocal
 import { useId } from '@fluentui/react-hooks';
 /* @conditional-compile-remove(pinned-participants) */
 import { PinnedParticipantsLayout } from './VideoGallery/PinnedParticipantsLayout';
+import { _useUserProfile } from '../profile/ProfileProvider';
 
 /**
  * @private
@@ -261,7 +262,11 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       styles?.localVideo
     );
 
-    const initialsName = !localParticipant.displayName ? '' : localParticipant.displayName;
+    const profileDisplayName = localParticipant.userId
+      ? _useUserProfile(localParticipant.userId)?.displayName
+      : undefined;
+    const displayName = profileDisplayName ?? localParticipant.displayName;
+    const initialsName = !displayName ? '' : displayName;
 
     return (
       <Stack key="local-video-tile-key" tabIndex={0} aria-label={strings.localVideoMovementLabel} role={'dialog'}>

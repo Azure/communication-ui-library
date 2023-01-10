@@ -58,6 +58,9 @@ export const _logEvent: (logger: AzureLogger, event: TelemetryEvent) => void;
 export const _MAX_EVENT_LISTENERS = 50;
 
 // @public
+export const memoizeAllRet: <ArgsT extends unknown[], FnRetT>(fnToMemoize: (...args: ArgsT) => FnRetT) => (...args: ArgsT) => FnRetT;
+
+// @public
 export const memoizeFnAll: <KeyT, ArgsT extends unknown[], FnRetT, CallBackT extends CallbackType<KeyT, ArgsT, FnRetT>>(fnToMemoize: FunctionWithKey<KeyT, ArgsT, FnRetT>, shouldCacheUpdate?: (args1: unknown, args2: unknown) => boolean) => (callback: CallBackT) => FnRetT[];
 
 // @public

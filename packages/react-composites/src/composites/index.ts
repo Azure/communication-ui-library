@@ -8,6 +8,7 @@ export * from './CallComposite';
 export * from './CallWithChatComposite';
 
 export type { AvatarPersonaData, AvatarPersonaDataCallback } from './common/AvatarPersona';
+export type { OnFetchProfileCallback, Profile } from './common/Profile';
 export { COMPOSITE_ONLY_ICONS, DEFAULT_COMPOSITE_ICONS } from './common/icons';
 export type {
   CompositeIcons,
