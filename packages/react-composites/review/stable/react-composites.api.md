@@ -158,7 +158,7 @@ export type CallAdapterClientState = {
     endedCall?: CallState;
     isTeamsCall: boolean;
     latestErrors: AdapterErrors;
-    isCameraOn?: 'On' | 'Off';
+    cameraStatus?: 'On' | 'Off';
 };
 
 // @public
