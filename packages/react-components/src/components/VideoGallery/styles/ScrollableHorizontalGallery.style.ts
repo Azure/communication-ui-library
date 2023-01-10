@@ -14,11 +14,7 @@ export const scrollableHorizontalGalleryStyles: IStackStyles = {
   root: {
     width: '100%',
     minHeight: `${SMALL_HORIZONTAL_GALLERY_TILE_SIZE_REM.height}rem`,
-    overflow: 'scroll',
     paddingRight: '0.5rem',
-    '-ms-overflow-style': 'none',
-    'scrollbar-width': 'none',
-    '::-webkit-scrollbar': { display: 'none' },
     '> *': SMALL_HORIZONTAL_GALLERY_TILE_STYLE
   }
 };

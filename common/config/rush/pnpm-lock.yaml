@@ -15136,6 +15136,16 @@ packages:
       react-dom: '>=16.6.0'
     resolution:
       integrity: sha512-pZcd1MCJoiKiBR2NRxeCRg13uCXbydPnmB4EOeRrY7480qNWO8IIgQG6zlDkm6uRMsURXPuKq0GWtiM59a5Q6g==
+  /react-use-draggable-scroll/0.4.7_react@16.14.0:
+    dependencies:
+      react: 16.14.0
+    dev: false
+    engines:
+      node: '>=10'
+    peerDependencies:
+      react: '>=16'
+    resolution:
+      integrity: sha512-6gCxGPO9WV5dIsBaDrgUKBaac8CY07PkygcArfajijYSNDwAq0girDRjaBuF1+lRqQryoLFQfpVaV2u/Yh6CrQ==
   /react/16.14.0:
     dependencies:
       loose-envify: 1.4.0
@@ -19575,6 +19585,7 @@ packages:
       react-is: 17.0.2
       react-linkify: 1.0.0-alpha
       react-test-renderer: 16.14.0_react@16.14.0
+      react-use-draggable-scroll: 0.4.7_react@16.14.0
       regenerator-runtime: 0.13.11
       rimraf: 2.7.1
       rollup: 2.42.4
@@ -19590,7 +19601,7 @@ packages:
     dev: false
     name: '@rush-temp/react-components'
     resolution:
-      integrity: sha512-CWZZSModDBPublIKqo31QKminFg0SOcpAbzrzfSbub28ivBHJsb7zqbcgDYa8QgAOfZLpV5O6FWnfis4wCvXeQ==
+      integrity: sha512-Vw4+jPHGO81Hd+lvodbWbZqlrB7CwWzI6mxiMy1aNdHE6pm6SlosbI672JW9Oh3cTnBBKPSUKihJct6bUzK40g==
       tarball: file:projects/react-components.tgz
     version: 0.0.0
   file:projects/react-composites.tgz:
