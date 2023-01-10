@@ -124,7 +124,6 @@ export const PinnedParticipantsLayout = (props: PinnedParticipantsLayoutProps): 
 
   return (
     <Stack styles={rootLayoutStyle}>
-      {wrappedLocalVideoComponent}
       <Stack horizontal={false} styles={innerLayoutStyle} tokens={{ childrenGap: '0.5rem' }}>
         {screenShareComponent ? (
           screenShareComponent
@@ -144,8 +143,9 @@ export const PinnedParticipantsLayout = (props: PinnedParticipantsLayoutProps): 
               styles={styles?.horizontalGallery}
             />
           ))}
-        <LayerHost id={layerHostId} className={mergeStyles(layerHostStyle)} />
       </Stack>
+      {wrappedLocalVideoComponent}
+      <LayerHost id={layerHostId} className={mergeStyles(layerHostStyle)} />
     </Stack>
   );
 };
