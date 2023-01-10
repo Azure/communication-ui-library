@@ -19390,6 +19390,7 @@ packages:
       react-is: 17.0.2
       react-linkify: 1.0.0-alpha
       react-test-renderer: 16.14.0_react@16.14.0
+      react-use-draggable-scroll: 0.4.7_react@16.14.0
       regenerator-runtime: 0.13.11
       renamer: 4.0.0
       reselect: 4.0.0
@@ -19407,7 +19408,7 @@ packages:
     dev: false
     name: '@rush-temp/communication-react'
     resolution:
-      integrity: sha512-7IVJC2DI0WpxdoTjEVgxpwxGSzgmEfndri5qejQo+8Nq3F4DJLRFPfvPhwwjSxDmym8CGLqNtAR3GCu1YIib/A==
+      integrity: sha512-2wz6sbeGwfnF4CFSwsPj8ZqSZ/oLFOFTkeDImFXA0Z2WNHQmAxu5+eBpDFfz/tSd7zGAykfDGlJ34uJkFO3d3g==
       tarball: file:projects/communication-react.tgz
     version: 0.0.0
   file:projects/component-examples.tgz:
