@@ -184,9 +184,11 @@ class CallContext {
         endedCall: latestEndedCall,
         devices: clientState.deviceManager,
         latestErrors: clientState.latestErrors,
-        isCameraOn: this.state.call
-          ? !!clientState.calls[this.state.call.id]?.localVideoStreams.find((s) => s.mediaStreamType === 'Video')
-          : !!clientState.deviceManager.unparentedViews.find((s) => s.mediaStreamType === 'Video')
+        isCameraOn:
+          call?.localVideoStreams.find((s) => s.mediaStreamType === 'Video') ||
+          clientState.deviceManager.unparentedViews.find((s) => s.mediaStreamType === 'Video')
+            ? 'On'
+            : 'Off'
       });
     }
   }
