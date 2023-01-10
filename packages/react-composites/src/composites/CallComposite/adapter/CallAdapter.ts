@@ -111,7 +111,7 @@ export type CallAdapterClientState = {
    * State to track whether the local participant's camera is on. To be used when creating a custom
    * control bar with the CallComposite.
    */
-  isCameraOn?: 'On' | 'Off';
+  cameraStatus?: 'On' | 'Off';
 };
 
 /**

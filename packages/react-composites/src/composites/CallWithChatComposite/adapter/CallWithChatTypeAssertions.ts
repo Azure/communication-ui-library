@@ -91,7 +91,7 @@ type CallWithChatClientStateInternal = Omit<
   | /* @conditional-compile-remove(PSTN-calls) */ 'alternateCallerId'
   | /* @conditional-compile-remove(unsupported-browser) */ 'features'
   | /* @conditional-compile-remove(rooms) */ 'roleHint'
-  | 'isCameraOn'
+  | 'cameraStatus'
 >;
 
 const CallWithChatClientStateTypeAssertion = (value: CallWithChatClientState): CallWithChatClientStateInternal => value;
