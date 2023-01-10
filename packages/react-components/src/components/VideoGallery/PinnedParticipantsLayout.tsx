@@ -16,6 +16,7 @@ import {
   LOCAL_VIDEO_TILE_ZINDEX
 } from './styles/FloatingLocalVideo.styles';
 import { innerLayoutStyle, layerHostStyle, rootLayoutStyle } from './styles/FloatingLocalVideoLayout.styles';
+import { videoGalleryLayoutGap } from './styles/Layout.styles';
 import { usePinnedParticipantLayout } from './utils/videoGalleryLayoutUtils';
 import { VideoGalleryResponsiveHorizontalGallery } from './VideoGalleryResponsiveHorizontalGallery';
 
@@ -124,7 +125,7 @@ export const PinnedParticipantsLayout = (props: PinnedParticipantsLayoutProps): 
 
   return (
     <Stack styles={rootLayoutStyle}>
-      <Stack horizontal={false} styles={innerLayoutStyle} tokens={{ childrenGap: '0.5rem' }}>
+      <Stack horizontal={false} styles={innerLayoutStyle} tokens={videoGalleryLayoutGap}>
         {screenShareComponent ? (
           screenShareComponent
         ) : (

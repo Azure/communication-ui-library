@@ -9,6 +9,7 @@ import { LayoutProps } from './Layout';
 /* @conditional-compile-remove(pinned-participants) */
 import { ScrollableHorizontalGallery } from './ScrollableHorizontalGallery';
 import { rootLayoutStyle } from './styles/DefaultLayout.styles';
+import { videoGalleryLayoutGap } from './styles/Layout.styles';
 import { useFloatingLocalVideoLayout } from './utils/videoGalleryLayoutUtils';
 import { VideoGalleryResponsiveHorizontalGallery } from './VideoGalleryResponsiveHorizontalGallery';
 
@@ -89,7 +90,7 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
   }, [isNarrow, horizontalGalleryTiles, styles?.horizontalGallery]);
 
   return (
-    <Stack horizontal={false} styles={rootLayoutStyle} tokens={{ childrenGap: '0.5rem' }}>
+    <Stack horizontal={false} styles={rootLayoutStyle} tokens={videoGalleryLayoutGap}>
       {screenShareComponent ? (
         screenShareComponent
       ) : (
