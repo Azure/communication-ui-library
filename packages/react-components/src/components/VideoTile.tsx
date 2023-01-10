@@ -32,6 +32,7 @@ import { DirectionalHint, IContextualMenuProps } from '@fluentui/react';
 import useLongPress from './utils/useLongPress';
 /* @conditional-compile-remove(pinned-participants) */
 import { moreButtonStyles } from './styles/VideoTile.styles';
+import { _useUserProfile } from '../profile/ProfileProvider';
 
 /**
  * Strings of {@link VideoTile} that can be overridden.
@@ -303,7 +304,10 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
 
   const ids = useIdentifiers();
 
-  const canShowLabel = showLabel && (displayName || (showMuteIndicator && isMuted));
+  const profileDisplayName = userId ? _useUserProfile(userId)?.displayName : undefined;
+  const displayNameToRender = profileDisplayName ?? displayName;
+
+  const canShowLabel = (showLabel && displayNameToRender) || (showMuteIndicator && isMuted);
   const participantStateString = participantStateStringTrampoline(props, locale);
   return (
     <Stack
@@ -356,10 +360,10 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
               {canShowLabel && (
                 <Text
                   className={mergeStyles(displayNameStyle)}
-                  title={displayName}
+                  title={displayNameToRender}
                   style={{ color: participantStateString ? theme.palette.neutralSecondary : 'inherit' }}
                 >
-                  {displayName}
+                  {displayNameToRender}
                 </Text>
               )}
               {participantStateString && (

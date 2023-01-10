@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 
 export { memoizeFnAll } from './memoizeFnAll';
+export { memoizeAllRet } from './memoizeAllRet';
 export {
   fromFlatCommunicationIdentifier,
   toFlatCommunicationIdentifier,

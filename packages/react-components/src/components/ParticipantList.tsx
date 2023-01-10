@@ -15,6 +15,7 @@ import { useIdentifiers } from '../identifiers';
 import { useLocale } from '../localization';
 /* @conditional-compile-remove(rooms) */
 import { _usePermissions } from '../permissions';
+import { _useUserProfile } from '../profile/ProfileProvider';
 import {
   BaseCustomStyles,
   CallParticipantListParticipant,
@@ -108,6 +109,8 @@ const onRenderParticipantDefault = (
     }
   }
 
+  const profileDisplayName = participant.userId ? _useUserProfile(participant.userId)?.displayName : undefined;
+
   const menuItems = createParticipantMenuItems && createParticipantMenuItems(participant);
 
   const onRenderIcon =
@@ -133,7 +136,7 @@ const onRenderParticipantDefault = (
       styles={styles}
       key={participant.userId}
       userId={participant.userId}
-      displayName={participant.displayName}
+      displayName={profileDisplayName ?? participant.displayName}
       me={myUserId ? participant.userId === myUserId : false}
       menuItems={menuItems}
       presence={presence}

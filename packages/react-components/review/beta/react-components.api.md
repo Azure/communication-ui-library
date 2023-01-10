@@ -1640,6 +1640,23 @@ export const _useContainerWidth: (containerRef: RefObject<HTMLElement>) => numbe
 // @internal
 export const _usePermissions: () => _Permissions;
 
+// Warning: (ae-internal-missing-underscore) The name "UserProfile" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
+export type UserProfile = {
+    userId: string;
+    displayName?: string;
+};
+
+// @internal (undocumented)
+export const _UserProfileProvider: (props: _UserProfileProviderProps) => JSX.Element;
+
+// @internal
+export type _UserProfileProviderProps = {
+    onFetchProfile?: (userId: string) => Promise<UserProfile | undefined>;
+    children: React_2.ReactNode;
+};
+
 // @public
 export const useTheme: () => Theme;
 

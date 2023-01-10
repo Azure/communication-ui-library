@@ -3,6 +3,7 @@
 
 import { IContextualMenuProps, Layer, Stack } from '@fluentui/react';
 import React, { useMemo } from 'react';
+import { _useUserProfile } from '../profile/ProfileProvider';
 import {
   CreateVideoStreamViewResult,
   OnRenderAvatarCallback,
@@ -98,6 +99,8 @@ export const _RemoteVideoTile = React.memo(
       ]
     );
 
+    const profileDisplayName = _useUserProfile(userId)?.displayName;
+
     // Handle creating, destroying and updating the video stream as necessary
     const createVideoStreamResult = useRemoteVideoStreamLifecycleMaintainer(remoteVideoStreamProps);
 
@@ -141,7 +144,7 @@ export const _RemoteVideoTile = React.memo(
           key={userId}
           userId={userId}
           renderElement={renderVideoStreamElement}
-          displayName={remoteParticipant.displayName}
+          displayName={profileDisplayName ?? remoteParticipant.displayName}
           onRenderPlaceholder={onRenderAvatar}
           isMuted={remoteParticipant.isMuted}
           isSpeaking={remoteParticipant.isSpeaking}

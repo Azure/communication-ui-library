@@ -49,3 +49,7 @@ export type {
   VideoStreamOptions,
   ViewScalingMode
 } from './types';
+
+export { _UserProfileProvider } from './profile/ProfileProvider';
+
+export type { _UserProfileProviderProps, UserProfile } from './profile/ProfileProvider';
