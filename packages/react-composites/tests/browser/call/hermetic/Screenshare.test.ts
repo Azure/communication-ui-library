@@ -12,9 +12,9 @@ import {
 import { expect } from '@playwright/test';
 import {
   dataUiId,
-  dragToRight,
   isTestProfileMobile,
   pageClick,
+  pageDrag,
   stableScreenshot,
   waitForSelector
 } from '../../common/utils';
@@ -90,7 +90,8 @@ test.describe('Screenshare tests', async () => {
 
     /* @conditional-compile-remove(pinned-participants) */
     if (isTestProfileMobile(testInfo)) {
-      await dragToRight(page, dataUiId('scrollable-horizontal-gallery'));
+      // drag scrollable horizontal gallery 200px to the right
+      await pageDrag(page, dataUiId('scrollable-horizontal-gallery'), 200, 0);
       expect(await stableScreenshot(page)).toMatchSnapshot(
         'horizontal-gallery-with-many-audio-participants-dragged.png'
       );

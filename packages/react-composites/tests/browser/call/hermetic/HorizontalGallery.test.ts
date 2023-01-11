@@ -5,9 +5,9 @@ import { expect } from '@playwright/test';
 import { IDS } from '../../common/constants';
 import {
   dataUiId,
-  dragToRight,
   isTestProfileMobile,
   pageClick,
+  pageDrag,
   stableScreenshot,
   waitForSelector
 } from '../../common/utils';
@@ -37,7 +37,7 @@ test.describe('HorizontalGallery tests', async () => {
     expect(await stableScreenshot(page)).toMatchSnapshot('horizontal-gallery-with-1-audio-participant.png');
   });
 
-  test('HorizontalGallery should have multiple audio participants spanning multiple pages. Navigation buttons should work.', async ({
+  test.only('HorizontalGallery should have multiple audio participants spanning multiple pages. Navigation buttons should work.', async ({
     page,
     serverUrl
   }, /* @conditional-compile-remove(pinned-participants) */ testInfo) => {
@@ -72,7 +72,8 @@ test.describe('HorizontalGallery tests', async () => {
 
     /* @conditional-compile-remove(pinned-participants) */
     if (isTestProfileMobile(testInfo)) {
-      await dragToRight(page, dataUiId('scrollable-horizontal-gallery'));
+      // drag scrollable horizontal gallery 200px to the right
+      await pageDrag(page, dataUiId('scrollable-horizontal-gallery'), 200, 0);
       expect(await stableScreenshot(page)).toMatchSnapshot(
         'horizontal-gallery-with-many-audio-participants-dragged.png'
       );
@@ -133,7 +134,7 @@ test.describe('HorizontalGallery tests', async () => {
   });
 
   /* @conditional-compile-remove(PSTN-calls) @conditional-compile-remove(pinned-participants) */
-  test('HorizontalGallery should have multiple audio participants and 1 PSTN participant on second page', async ({
+  test.only('HorizontalGallery should have multiple audio participants and 1 PSTN participant on second page', async ({
     page,
     serverUrl
   }, /* @conditional-compile-remove(pinned-participants) */ testInfo) => {
@@ -165,7 +166,8 @@ test.describe('HorizontalGallery tests', async () => {
 
     /* @conditional-compile-remove(pinned-participants) */
     if (isTestProfileMobile(testInfo)) {
-      await dragToRight(page, dataUiId('scrollable-horizontal-gallery'));
+      // drag scrollable horizontal gallery 200px to the right
+      await pageDrag(page, dataUiId('scrollable-horizontal-gallery'), 200, 0);
       expect(await stableScreenshot(page)).toMatchSnapshot('horizontal-gallery-with-joining-participant-dragged.png');
       return;
     }

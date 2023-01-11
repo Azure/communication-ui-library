@@ -599,21 +599,20 @@ export const hidePiPiP = async (page: Page): Promise<void> => {
 };
 
 /**
- * Helper function to drag to the right of first element matching selector
+ * Helper function to drag the first element matching a given selector in a page
  */
-export const dragToRight = async (page: Page, selector: string): Promise<void> => {
-  const handle = await page.locator(selector).first();
-  const boundingBox = await handle.boundingBox();
-  if (!boundingBox) {
-    page.screenshot({ path: `test-results/failure-screenshot-${generateGUID()}.png` });
-    fail(`Bounding box for selector '${selector}' could not be found.`);
-  }
-  await handle.dragTo(handle, {
-    force: true,
-    targetPosition: {
-      // drag to the right by the entire width of element
-      x: boundingBox.width,
-      y: 0
-    }
-  });
+export const pageDrag = async (page: Page, selector: string, dx: number, dy: number): Promise<void> => {
+  const locator = await waitForLocator(page, selector);
+  const firstHandle = locator.first();
+  await screenshotOnFailure(
+    page,
+    async () =>
+      await firstHandle.dragTo(firstHandle, {
+        force: true,
+        targetPosition: {
+          x: dx,
+          y: dy
+        }
+      })
+  );
 };
