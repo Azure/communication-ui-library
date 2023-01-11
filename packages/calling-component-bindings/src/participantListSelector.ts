@@ -27,7 +27,10 @@ const convertRemoteParticipantsToParticipantListParticipants = (
       remoteParticipants
         // temporarily hiding lobby participants in ACS clients till we can admit users through ACS clients
         .filter((participant: RemoteParticipantState) => {
-          return participant.state !== 'InLobby';
+          return (
+            (participant.state !== 'InLobby' && participant.state !== 'Idle' && participant.state !== 'Connecting') ||
+            participant.identifier.kind === 'phoneNumber'
+          );
         })
         .map((participant: RemoteParticipantState) => {
           const isScreenSharing = Object.values(participant.videoStreams).some(

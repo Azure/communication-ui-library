@@ -344,7 +344,13 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
         ) : (
           <Stack
             className={mergeStyles(videoContainerStyles)}
-            style={{ opacity: participantStateString || props.participantState === 'Idle' ? 0.4 : 1 }}
+            style={{
+              opacity:
+                participantStateString ||
+                /* @conditional-compile-remove(PSTN-calls) */ props.participantState === 'Idle'
+                  ? 0.4
+                  : 1
+            }}
           >
             {onRenderPlaceholder ? (
               onRenderPlaceholder(userId ?? '', placeholderOptions, DefaultPlaceholder)
