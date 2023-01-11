@@ -37,7 +37,7 @@ test.describe('VideoGallery tests', async () => {
   /* @conditional-compile-remove(PSTN-calls) */
   test('VideoGallery Should have 1 Audio participant and one PSTN participant', async ({ page, serverUrl }) => {
     const paul = defaultMockRemoteParticipant('Paul Bridges');
-    const vasily = defaultMockRemoteParticipant('Vasily Podkolzin');
+    const vasily = defaultMockRemotePSTNParticipant('+15551236789');
     vasily.isMuted = true;
     vasily.state = 'Connecting';
 
