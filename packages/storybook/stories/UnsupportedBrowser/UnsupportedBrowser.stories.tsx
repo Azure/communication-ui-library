@@ -1,12 +1,14 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-
-import { UnsupportedBrowser as UnsupportedBrowserComponent } from '@azure/communication-react';
+import {
+  UnsupportedBrowser as UnsupportedBrowserComponent,
+  UnsupportedBrowserVersion,
+  UnsupportedOperatingSystem
+} from '@azure/communication-react';
 import { Stack } from '@fluentui/react';
 import { Canvas, Description, Props, Title } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
-import { useLocale } from '../../../react-components/src/localization';
 import { SingleLineBetaBanner } from '../BetaBanners/SingleLineBetaBanner';
 import { COMPONENT_FOLDER_PREFIX } from '../constants';
 import { UnsupportedEnvironmentModals } from './snippets/UnsupportedEnvironmentModal.snippet';
@@ -15,15 +17,30 @@ const UnsupportedBrowserModalExamples =
   require('!!raw-loader!./snippets/UnsupportedEnvironmentModal.snippet.tsx').default;
 
 const UnsupportedBrowserStory = (): JSX.Element => {
-  const locale = useLocale().strings.UnsupportedBrowser;
   return (
-    <Stack>
-      <UnsupportedBrowserComponent
-        strings={locale}
-        onTroubleshootingClick={() => {
-          alert('Clicked help link');
-        }}
-      />
+    <Stack horizontal wrap>
+      <Stack>
+        <UnsupportedBrowserComponent
+          onTroubleshootingClick={() => {
+            alert('clicked help link');
+          }}
+        />
+      </Stack>
+      <Stack>
+        <UnsupportedBrowserVersion
+          onTroubleshootingClick={() => {
+            alert('clicked help link');
+          }}
+          onContinueAnywayClick={() => alert('you are brave arent you?')}
+        />
+      </Stack>
+      <Stack>
+        <UnsupportedOperatingSystem
+          onTroubleshootingClick={() => {
+            alert('clicked help link');
+          }}
+        />
+      </Stack>
     </Stack>
   );
 };
