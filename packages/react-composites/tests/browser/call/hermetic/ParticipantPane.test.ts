@@ -250,6 +250,7 @@ test.describe('Participant pane tests', async () => {
     expect(await stableScreenshot(page)).toMatchSnapshot('pstn-participant-list-connecting-participant-mobile.png');
   });
 
+  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   test('Participant should be hidden when idle to connecting mobile', async ({ page, serverUrl }, testInfo) => {
     test.skip(isTestProfileDesktop(testInfo));
     const idleRemoteParticipant = defaultMockRemoteParticipant('Joni Solberg');
@@ -278,9 +279,10 @@ test.describe('Participant pane tests', async () => {
     expect(await stableScreenshot(page)).toMatchSnapshot('participant-list-connecting-participant-mobile.png');
   });
 
+  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   test('Participant should be hidden when idle to connecting desktop', async ({ page, serverUrl }, testInfo) => {
     test.skip(!isTestProfileDesktop(testInfo));
-    const idleRemoteParticipant = defaultMockRemotePSTNParticipant('15556781234');
+    const idleRemoteParticipant = defaultMockRemoteParticipant('Joni Solberg');
     idleRemoteParticipant.state = 'Idle';
 
     const initialState = defaultMockCallAdapterState([idleRemoteParticipant]);
