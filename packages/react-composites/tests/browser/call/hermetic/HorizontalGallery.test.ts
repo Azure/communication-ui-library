@@ -78,7 +78,7 @@ test.describe('HorizontalGallery tests', async () => {
   test('HorizontalGallery should have 1 PSTN participant in the horizontal gallery', async ({ page, serverUrl }) => {
     const paul = defaultMockRemoteParticipant('Paul Bridges');
     addVideoStream(paul, true);
-    const vasily = defaultMockRemoteParticipant('Vasily Podkolzin');
+    const vasily = defaultMockRemotePSTNParticipant('+15553334444');
     vasily.state = 'Connecting';
 
     const participants = [paul, vasily];

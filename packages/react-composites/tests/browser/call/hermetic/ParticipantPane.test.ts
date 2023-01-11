@@ -121,7 +121,7 @@ test.describe('Participant pane tests', async () => {
 
   /* @conditional-compile-remove(PSTN-calls) */
   test('callee participant is displayed with connection state', async ({ page, serverUrl }, testInfo) => {
-    const paul = defaultMockRemoteParticipant('Paul Bridges');
+    const paul = defaultMockRemotePSTNParticipant('+12324567890');
     paul.state = 'Connecting';
     const participants = [paul];
     const initialState = defaultMockCallAdapterState(participants);
@@ -146,7 +146,7 @@ test.describe('Participant pane tests', async () => {
     const longPaul = defaultMockRemoteParticipant(
       'I have a really really really really long name. Trust me you dont wanna know.'
     );
-    longPaul.state = 'Connecting';
+    longPaul.state = 'Ringing';
     const participants = [longPaul];
     const initialState = defaultMockCallAdapterState(participants);
     //PSTN call has alternate caller id
@@ -169,7 +169,7 @@ test.describe('Participant pane tests', async () => {
         el.textContent = 'Long Calling String...';
       }
     }, participantStringId);
-    expect(await stableScreenshot(page)).toMatchSnapshot('PSTN-participant-pane-callee-name-truncation.png');
+    expect(await stableScreenshot(page)).toMatchSnapshot('participant-pane-callee-name-truncation.png');
   });
 
   /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
