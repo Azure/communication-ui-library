@@ -323,8 +323,12 @@ export const getDevicePermissionState = async (
   setVideoState: (state: PermissionState | 'unsupported') => void,
   setAudioState: (state: PermissionState | 'unsupported') => void
 ): Promise<void> => {
-  setVideoState(await queryCameraPermissionFromPermissionsAPI());
-  setAudioState(await queryMicrophonePermissionFromPermissionsAPI());
+  const [cameraResult, microphoneResult] = await Promise.all([
+    queryCameraPermissionFromPermissionsAPI(),
+    queryMicrophonePermissionFromPermissionsAPI()
+  ]);
+  setVideoState(cameraResult);
+  setAudioState(microphoneResult);
 };
 /* @conditional-compile-remove(unsupported-browser) */
 const isUnsupportedEnvironment = (
