@@ -6,15 +6,27 @@ import {
   UnsupportedOperatingSystem
 } from '@azure/communication-react';
 import { Stack } from '@fluentui/react';
-import { Canvas, Description, Props, Title } from '@storybook/addon-docs';
+import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 import { SingleLineBetaBanner } from '../BetaBanners/SingleLineBetaBanner';
 import { COMPONENT_FOLDER_PREFIX } from '../constants';
+import { UnsupportedBrowserExamples as UnsupportedBrowserExamplesComponent } from './snippets/UnsupportedBrowserExamples.snippet';
 import { UnsupportedEnvironmentModals } from './snippets/UnsupportedEnvironmentModal.snippet';
 
+const UnsupportedBrowserExamples = require('!!raw-loader!./snippets/UnsupportedBrowserExamples.snippet.tsx').default;
 const UnsupportedBrowserModalExamples =
   require('!!raw-loader!./snippets/UnsupportedEnvironmentModal.snippet.tsx').default;
+
+const importStatement = `
+import {
+  UnsupportedBrowser,
+  UnsupportedBrowserVersion,
+  UnsupportedOperatingSystem,
+  UnsupportedBrowserProps,
+  UnsupportedBrowserVersionProps,
+  UnsupportedOperatingSystemProps
+} from '@azure/communication-react';`;
 
 const UnsupportedBrowserStory = (): JSX.Element => {
   return (
@@ -31,7 +43,7 @@ const UnsupportedBrowserStory = (): JSX.Element => {
           onTroubleshootingClick={() => {
             alert('clicked help link');
           }}
-          onContinueAnywayClick={() => alert('you are brave arent you?')}
+          onContinueAnywayClick={() => alert('clicked continue anyway')}
         />
       </Stack>
       <Stack>
@@ -51,8 +63,22 @@ const getDocs: () => JSX.Element = () => {
       <SingleLineBetaBanner />
       <Title>Unsupported Browser</Title>
       <Description>
-        Component to display help information when the app is loaded in an unsuppported environment. Shows different
-        screens based on the environment info the calling SDK is reporting.
+        Component to display help information when the app is loaded in an unsuppported environment.
+      </Description>
+
+      <Heading>Importing</Heading>
+      <Source code={importStatement} />
+
+      <Heading>Example</Heading>
+      <Canvas mdxSource={UnsupportedBrowserExamples}>
+        <UnsupportedBrowserExamplesComponent />
+      </Canvas>
+
+      <Heading>Hosting in a Fluent modal</Heading>
+      <Description>
+        The Unsupported Browser components can be hosted in a fluent modal, inside a fluent modal the components and be
+        displayed when the conditions are met and disappear when conditions are no longer valid. Click on the buttons
+        below to see the component
       </Description>
       <Canvas mdxSource={UnsupportedBrowserModalExamples}>
         <UnsupportedEnvironmentModals />

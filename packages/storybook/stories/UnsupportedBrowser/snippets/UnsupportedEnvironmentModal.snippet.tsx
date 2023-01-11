@@ -47,7 +47,7 @@ export const UnsupportedEnvironmentModals: () => JSX.Element = () => {
           onTroubleshootingClick={() => {
             alert('clicked help link');
           }}
-          onContinueAnywayClick={() => alert('you are brave arent you?')}
+          onContinueAnywayClick={() => alert('clicked continue anyway')}
         />
       </Modal>
       <Modal
