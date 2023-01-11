@@ -35,6 +35,8 @@ export interface _DrawerSurfaceProps {
    */
   onLightDismiss: () => void;
 
+  heading?: string;
+
   /** Styles for the {@link DrawerSurface} */
   styles?: _DrawerSurfaceStyles;
 }
@@ -61,7 +63,9 @@ export const _DrawerSurface = (props: _DrawerSurfaceProps): JSX.Element => {
         // Note: this still correctly captures keyboard focus, this just allows mouse click outside of the focus trap.
         isClickableOutsideFocusTrap={true}
       >
-        <DrawerContentContainer styles={props.styles?.drawerContentContainer}>{props.children}</DrawerContentContainer>
+        <DrawerContentContainer styles={props.styles?.drawerContentContainer} heading={props.heading}>
+          {props.children}
+        </DrawerContentContainer>
       </FocusTrapZone>
     </Stack>
   );

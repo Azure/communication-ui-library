@@ -663,6 +663,7 @@ export interface _DrawerMenuItemProps {
 
 // @internal
 export interface _DrawerMenuProps {
+    heading?: string;
     // (undocumented)
     items: _DrawerMenuItemProps[];
     onLightDismiss: () => void;
@@ -681,6 +682,8 @@ export const _DrawerSurface: (props: _DrawerSurfaceProps) => JSX.Element;
 // @internal
 export interface _DrawerSurfaceProps {
     children: React_2.ReactNode;
+    // (undocumented)
+    heading?: string;
     onLightDismiss: () => void;
     styles?: _DrawerSurfaceStyles;
 }

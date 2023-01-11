@@ -167,7 +167,11 @@ export const _RemoteVideoTile = React.memo(
         {drawerMenuItemProps.length > 0 && (
           <Layer hostId={props.drawerMenuHostId}>
             <Stack styles={drawerMenuWrapperStyles}>
-              <_DrawerMenu onLightDismiss={() => setDrawerMenuItemProps([])} items={drawerMenuItemProps} />
+              <_DrawerMenu
+                onLightDismiss={() => setDrawerMenuItemProps([])}
+                items={drawerMenuItemProps}
+                heading={remoteParticipant.displayName}
+              />
             </Stack>
           </Layer>
         )}
