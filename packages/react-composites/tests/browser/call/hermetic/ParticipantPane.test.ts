@@ -193,7 +193,7 @@ test.describe('Participant pane tests', async () => {
   });
 
   /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
-  test.only('PSTN ParticipantState string should be set correctly when idle to connecting desktop', async ({
+  test('PSTN ParticipantState string should be set correctly when idle to connecting desktop', async ({
     page,
     serverUrl
   }, testInfo) => {
@@ -219,7 +219,7 @@ test.describe('Participant pane tests', async () => {
   });
 
   /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
-  test.only('PSTN ParticipantState string should be set correctly when idle to connecting mobile', async ({
+  test('PSTN ParticipantState string should be set correctly when idle to connecting mobile', async ({
     page,
     serverUrl
   }, testInfo) => {
@@ -250,7 +250,7 @@ test.describe('Participant pane tests', async () => {
     expect(await stableScreenshot(page)).toMatchSnapshot('pstn-participant-list-connecting-participant-mobile.png');
   });
 
-  test.only('Participant should be hidden when idle to connecting mobile', async ({ page, serverUrl }, testInfo) => {
+  test('Participant should be hidden when idle to connecting mobile', async ({ page, serverUrl }, testInfo) => {
     test.skip(isTestProfileDesktop(testInfo));
     const idleRemoteParticipant = defaultMockRemoteParticipant('Joni Solberg');
     idleRemoteParticipant.state = 'Idle';
@@ -278,7 +278,7 @@ test.describe('Participant pane tests', async () => {
     expect(await stableScreenshot(page)).toMatchSnapshot('participant-list-connecting-participant-mobile.png');
   });
 
-  test.only('Participant should be hidden when idle to connecting desktop', async ({ page, serverUrl }, testInfo) => {
+  test('Participant should be hidden when idle to connecting desktop', async ({ page, serverUrl }, testInfo) => {
     test.skip(!isTestProfileDesktop(testInfo));
     const idleRemoteParticipant = defaultMockRemotePSTNParticipant('15556781234');
     idleRemoteParticipant.state = 'Idle';
@@ -289,7 +289,7 @@ test.describe('Participant pane tests', async () => {
     await waitForSelector(page, dataUiId('call-composite-participants-button'));
     await pageClick(page, dataUiId('call-composite-participants-button'));
 
-    expect(await stableScreenshot(page)).toMatchSnapshot('pstn-participant-list-idle-participant-desktop.png');
+    expect(await stableScreenshot(page)).toMatchSnapshot('participant-list-idle-participant-desktop.png');
 
     idleRemoteParticipant.state = 'Connecting';
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
@@ -297,6 +297,6 @@ test.describe('Participant pane tests', async () => {
     await waitForSelector(page, dataUiId('call-composite-participants-button'));
     await pageClick(page, dataUiId('call-composite-participants-button'));
 
-    expect(await stableScreenshot(page)).toMatchSnapshot('pstn-participant-list-connecting-participant-desktop.png');
+    expect(await stableScreenshot(page)).toMatchSnapshot('participant-list-connecting-participant-desktop.png');
   });
 });
