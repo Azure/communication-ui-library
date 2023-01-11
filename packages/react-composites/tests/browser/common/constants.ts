@@ -19,6 +19,7 @@ export const IDS = {
   typingIndicator: 'typing-indicator',
   videoGallery: 'video-gallery',
   videoTile: 'video-tile',
+  videoTileMoreOptionsButton: 'video-tile-more-options-button',
   horizontalGalleryLeftNavButton: 'horizontal-gallery-left-nav-button',
   horizontalGalleryRightNavButton: 'horizontal-gallery-right-nav-button',
   readReceiptTooltip: 'chat-composite-message-tooltip',
