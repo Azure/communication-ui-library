@@ -26,7 +26,10 @@ export const _videoGalleryRemoteParticipantsMemo = (
   return memoizedAllConvertRemoteParticipant((memoizedFn) => {
     return Object.values(remoteParticipants)
       .filter((participant: RemoteParticipantState) => {
-        return participant.state !== 'InLobby';
+        return (
+          (participant.state !== 'InLobby' && participant.state !== 'Idle' && participant.state !== 'Connecting') ||
+          participant.identifier.kind === 'phoneNumber'
+        );
       })
       .map((participant: RemoteParticipantState) => {
         return memoizedFn(
