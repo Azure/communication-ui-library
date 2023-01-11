@@ -35,6 +35,9 @@ export interface _DrawerSurfaceProps {
    */
   onLightDismiss: () => void;
 
+  /**
+   * String to show in heading of drawer surface
+   */
   heading?: string;
 
   /** Styles for the {@link DrawerSurface} */
