@@ -1,30 +1,47 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Stack } from '@fluentui/react';
 import {
   CameraAndMicrophoneSitePermissions as CameraAndMicrophoneSitePermissionsComponent,
   CameraSitePermissions as CameraSitePermissionsComponent,
-  MicrophoneSitePermissions as MicrophoneSitePermissionsComponent,
-  _DrawerSurface
-} from '@internal/react-components';
-import { Canvas, Description, Heading, Props, Title } from '@storybook/addon-docs';
+  MicrophoneSitePermissions as MicrophoneSitePermissionsComponent
+} from '@azure/communication-react';
+import { Stack } from '@fluentui/react';
+import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
-import { SingleLineBetaBanner } from '../../../BetaBanners/SingleLineBetaBanner';
-import { COMPONENT_FOLDER_PREFIX } from '../../../constants';
-import { ArgsFrom, controlsToAdd, hiddenControl } from '../../../controlsUtils';
-import { SitePermissionsDrawer } from './snippets/SitePermissionsDrawer.snippet';
-import { SitePermissionsModal } from './snippets/SitePermissionsModal.snippet';
+import { SingleLineBetaBanner } from '../BetaBanners/SingleLineBetaBanner';
+import { COMPONENT_FOLDER_PREFIX } from '../constants';
+import { ArgsFrom, controlsToAdd, hiddenControl } from '../controlsUtils';
+import { SitePermissionsCheckModal } from './snippets/SitePermissionsCheckModal.snippet';
+import { SitePermissionsDeniedModal } from './snippets/SitePermissionsDeniedModal.snippet';
+import { SitePermissionsExample as SitePermissionsExampleComponent } from './snippets/SitePermissionsExample.snippet';
+import { SitePermissionsRequestModal } from './snippets/SitePermissionsRequestModal.snippet';
 
-const SitePermissionsDrawerExample = require('!!raw-loader!./snippets/SitePermissionsDrawer.snippet.tsx').default;
-const SitePermissionsModalExample = require('!!raw-loader!./snippets/SitePermissionsModal.snippet.tsx').default;
+const SitePermissionsCheckModalExample =
+  require('!!raw-loader!./snippets/SitePermissionsCheckModal.snippet.tsx').default;
+const SitePermissionsDeniedModalExample =
+  require('!!raw-loader!./snippets/SitePermissionsDeniedModal.snippet.tsx').default;
+
+const SitePermissionsExample = require('!!raw-loader!./snippets/SitePermissionsExample.snippet.tsx').default;
+const SitePermissionsRequestModalExample =
+  require('!!raw-loader!./snippets/SitePermissionsRequestModal.snippet.tsx').default;
 
 const storyControls = {
   siteRequest: controlsToAdd.siteDeviceRequest,
   appName: controlsToAdd.appName,
   type: controlsToAdd.siteDeviceRequestStatus
 };
+
+const importStatement = `
+import {
+  CameraAndMicrophoneSitePermissions,
+  CameraSitePermissions,
+  MicrophoneSitePermissions,
+  CameraAndMicrophoneSitePermissionsProps,
+  CameraSitePermissionsProps,
+  MicrophoneSitePermissionsProps
+} from '@azure/communication-react';`;
 
 const SitePermissionsStory = (args: ArgsFrom<typeof storyControls>): JSX.Element => {
   return (
@@ -60,21 +77,37 @@ const getDocs: () => JSX.Element = () => {
   return (
     <Stack>
       <SingleLineBetaBanner />
+
       <Title>Site Permissions</Title>
       <Description>
         Component to display information to the end user when their device permissions are not set appropriately
       </Description>
-      <Heading>Using in a modal</Heading>
-      <Description>
-        you are able to hide the SitePermissions component in a Modal to show the help tile over your applications user
-        interface.
-      </Description>
-      <Canvas mdxSource={SitePermissionsModalExample}>
-        <SitePermissionsModal />
+
+      <Heading>Importing</Heading>
+      <Source code={importStatement} />
+
+      <Heading>Example</Heading>
+      <Canvas mdxSource={SitePermissionsExample}>
+        <SitePermissionsExampleComponent />
       </Canvas>
-      <Heading>Using on mobile</Heading>
-      <Canvas mdxSource={SitePermissionsDrawerExample}>
-        <SitePermissionsDrawer />
+
+      <Heading>Hosting in a Fluent modal</Heading>
+      <Description>
+        The Site Permissions components can be hosted in a fluent modal, inside a fluent modal the components and be
+        displayed when the conditions are met and disappear when conditions are no longer valid. Click on the buttons
+        below to see the component
+      </Description>
+      <Heading>Request site permissions</Heading>
+      <Canvas mdxSource={SitePermissionsRequestModalExample}>
+        <SitePermissionsRequestModal />
+      </Canvas>
+      <Heading>Checking for site permissions</Heading>
+      <Canvas mdxSource={SitePermissionsCheckModalExample}>
+        <SitePermissionsCheckModal />
+      </Canvas>
+      <Heading>Site permissions denied</Heading>
+      <Canvas mdxSource={SitePermissionsDeniedModalExample}>
+        <SitePermissionsDeniedModal />
       </Canvas>
       <Props of={CameraAndMicrophoneSitePermissionsComponent} />
     </Stack>
@@ -86,8 +119,8 @@ const getDocs: () => JSX.Element = () => {
 export const SitePermissions = SitePermissionsStory.bind({});
 
 export default {
-  id: `${COMPONENT_FOLDER_PREFIX}-internal-site-permissions`,
-  title: `${COMPONENT_FOLDER_PREFIX}/Internal/CallReadiness/Site Permissions`,
+  id: `${COMPONENT_FOLDER_PREFIX}-site-permissions`,
+  title: `${COMPONENT_FOLDER_PREFIX}/Site Permissions`,
   component: CameraAndMicrophoneSitePermissionsComponent,
   argTypes: {
     ...storyControls,
