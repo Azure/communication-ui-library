@@ -4,7 +4,7 @@ import {
   CallComposite,
   CallCompositeOptions,
   CompositeLocale,
-  useAzureCommunicationCallAdapter
+  useAzureTeamsCallAdapter
 } from '@azure/communication-react';
 import { PartialTheme, Theme } from '@fluentui/react';
 import React, { useMemo } from 'react';
@@ -32,10 +32,9 @@ export const ContosoCallContainer = (props: ContainerProps): JSX.Element => {
     }
   }, [props.token]);
 
-  const adapter = useAzureCommunicationCallAdapter(
+  const adapter = useAzureTeamsCallAdapter(
     {
       userId: props.userId,
-      displayName: props.displayName, // Max 256 Characters
       credential,
       locator: props.meetingUrl
         ? {

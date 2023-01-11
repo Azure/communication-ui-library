@@ -70,7 +70,7 @@ export const parameters = {
           'Troubleshooting',
           'Identity',
           'Rooms',
-          'Custom Teams Endpoint'
+          'Communication as a Teams user'
         ],
         EXAMPLES_FOLDER_PREFIX,
         STATEFUL_CLIENT_PREFIX,
