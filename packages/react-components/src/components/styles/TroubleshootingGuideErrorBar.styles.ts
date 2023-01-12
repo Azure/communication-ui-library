@@ -30,7 +30,8 @@ export const messageBarStyle = (theme: ITheme, errorType: MessageBarType): IMess
   },
   icon: {
     marginTop: '0.375rem',
-    marginBottom: '0.375rem'
+    marginBottom: '0.375rem',
+    paddingTop: '0.25rem'
   },
   content: {
     lineHeight: 'inherit'
