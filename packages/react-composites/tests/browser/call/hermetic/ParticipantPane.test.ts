@@ -122,7 +122,7 @@ test.describe('Participant pane tests', async () => {
   /* @conditional-compile-remove(PSTN-calls) */
   test('callee participant is displayed with connection state', async ({ page, serverUrl }, testInfo) => {
     const paul = defaultMockRemotePSTNParticipant('+12324567890');
-    paul.state = 'Connecting';
+    paul.state = 'Ringing';
     const participants = [paul];
     const initialState = defaultMockCallAdapterState(participants);
     //PSTN call has alternate caller id
@@ -209,7 +209,7 @@ test.describe('Participant pane tests', async () => {
 
     expect(await stableScreenshot(page)).toMatchSnapshot('pstn-participant-list-idle-participant-desktop.png');
 
-    idleRemoteParticipant.state = 'Connecting';
+    idleRemoteParticipant.state = 'Ringing';
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
 
     await waitForSelector(page, dataUiId('call-composite-participants-button'));
@@ -238,7 +238,7 @@ test.describe('Participant pane tests', async () => {
 
     expect(await stableScreenshot(page)).toMatchSnapshot('pstn-participant-list-idle-participant-mobile.png');
 
-    idleRemoteParticipant.state = 'Connecting';
+    idleRemoteParticipant.state = 'Ringing';
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
 
     await waitForSelector(page, dataUiId(IDS.moreButton));
@@ -267,7 +267,7 @@ test.describe('Participant pane tests', async () => {
 
     expect(await stableScreenshot(page)).toMatchSnapshot('participant-list-idle-participant-mobile.png');
 
-    idleRemoteParticipant.state = 'Connecting';
+    idleRemoteParticipant.state = 'Ringing';
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
 
     await waitForSelector(page, dataUiId(IDS.moreButton));
@@ -293,7 +293,7 @@ test.describe('Participant pane tests', async () => {
 
     expect(await stableScreenshot(page)).toMatchSnapshot('participant-list-idle-participant-desktop.png');
 
-    idleRemoteParticipant.state = 'Connecting';
+    idleRemoteParticipant.state = 'Ringing';
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
 
     await waitForSelector(page, dataUiId('call-composite-participants-button'));

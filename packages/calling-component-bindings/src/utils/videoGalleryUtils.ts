@@ -24,23 +24,30 @@ export const _videoGalleryRemoteParticipantsMemo = (
     return [];
   }
   return memoizedAllConvertRemoteParticipant((memoizedFn) => {
-    return Object.values(remoteParticipants)
-      .filter((participant: RemoteParticipantState) => {
-        return (
-          (participant.state !== 'InLobby' && participant.state !== 'Idle' && participant.state !== 'Connecting') ||
-          participant.identifier.kind === 'phoneNumber'
-        );
-      })
-      .map((participant: RemoteParticipantState) => {
-        return memoizedFn(
-          toFlatCommunicationIdentifier(participant.identifier),
-          participant.isMuted,
-          checkIsSpeaking(participant),
-          participant.videoStreams,
-          participant.state,
-          participant.displayName
-        );
-      });
+    return (
+      Object.values(remoteParticipants)
+        // hiding participants who are inLobby, idle, or connecting in ACS clients till we can admit users through ACS clients
+        .filter((participant: RemoteParticipantState) => {
+          return (
+            (participant.state !== 'InLobby' && participant.state !== 'Idle' && participant.state !== 'Connecting') ||
+            participant.identifier.kind === 'phoneNumber'
+          );
+        })
+        .map((participant: RemoteParticipantState) => {
+          const state =
+            participant.identifier.kind === 'phoneNumber' && participant.state === 'Connecting'
+              ? 'Ringing'
+              : participant.state;
+          return memoizedFn(
+            toFlatCommunicationIdentifier(participant.identifier),
+            participant.isMuted,
+            checkIsSpeaking(participant),
+            participant.videoStreams,
+            state,
+            participant.displayName
+          );
+        })
+    );
   });
 };
 

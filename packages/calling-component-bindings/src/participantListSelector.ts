@@ -25,7 +25,7 @@ const convertRemoteParticipantsToParticipantListParticipants = (
   const conversionCallback = (memoizeFn) => {
     return (
       remoteParticipants
-        // temporarily hiding lobby participants in ACS clients till we can admit users through ACS clients
+        // hiding participants who are inLobby, idle, or connecting in ACS clients till we can admit users through ACS clients
         .filter((participant: RemoteParticipantState) => {
           return (
             (participant.state !== 'InLobby' && participant.state !== 'Idle' && participant.state !== 'Connecting') ||
@@ -36,10 +36,14 @@ const convertRemoteParticipantsToParticipantListParticipants = (
           const isScreenSharing = Object.values(participant.videoStreams).some(
             (videoStream) => videoStream.mediaStreamType === 'ScreenSharing' && videoStream.isAvailable
           );
+          const state =
+            participant.identifier.kind === 'phoneNumber' && participant.state === 'Connecting'
+              ? 'Ringing'
+              : participant.state;
           return memoizeFn(
             toFlatCommunicationIdentifier(participant.identifier),
             participant.displayName,
-            participant.state,
+            state,
             participant.isMuted,
             isScreenSharing,
             participant.isSpeaking,
