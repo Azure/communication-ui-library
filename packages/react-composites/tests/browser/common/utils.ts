@@ -599,7 +599,15 @@ export const hidePiPiP = async (page: Page): Promise<void> => {
 };
 
 /**
- * Helper function to drag to the right of first element matching selector
+ * Helper function to check if there is an element with a matching selector in the page
+ */
+export const existsOnPage = async (page: Page, selector: string): Promise<boolean> => {
+  const handle = await page.waitForSelector(selector, { timeout: perStepLocalTimeout() });
+  return !!handle;
+};
+
+/**
+ * Helper function to drag element with matching selector in the page to the right by its width
  */
 export const dragToRight = async (page: Page, selector: string): Promise<void> => {
   const handle = await screenshotOnFailure(page, async () => await waitForLocator(page, selector));

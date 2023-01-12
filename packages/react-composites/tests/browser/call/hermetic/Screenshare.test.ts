@@ -10,14 +10,7 @@ import {
   test
 } from './fixture';
 import { expect } from '@playwright/test';
-import {
-  dataUiId,
-  dragToRight,
-  isTestProfileMobile,
-  pageClick,
-  stableScreenshot,
-  waitForSelector
-} from '../../common/utils';
+import { dataUiId, dragToRight, existsOnPage, pageClick, stableScreenshot, waitForSelector } from '../../common/utils';
 import { IDS } from '../../common/constants';
 import type { MockCallState } from '../../../common';
 
@@ -55,10 +48,7 @@ test.describe('Screenshare tests', async () => {
     expect(await stableScreenshot(page)).toMatchSnapshot('local-screenshare.png');
   });
 
-  test('Remote screen share stream should be displayed in grid area of VideoGallery.', async ({
-    page,
-    serverUrl
-  }, /* @conditional-compile-remove(pinned-participants) */ testInfo) => {
+  test('Remote screen share stream should be displayed in grid area of VideoGallery.', async ({ page, serverUrl }) => {
     const reina = defaultMockRemoteParticipant('Reina Takizawa');
     reina.isSpeaking = true;
     const vasily = defaultMockRemoteParticipant('Vasily Podkolzin');
@@ -91,9 +81,11 @@ test.describe('Screenshare tests', async () => {
     expect(await stableScreenshot(page)).toMatchSnapshot('remote-screenshare-horizontal-gallery-page-1.png');
 
     /* @conditional-compile-remove(pinned-participants) */
-    if (isTestProfileMobile(testInfo)) {
+    if (await existsOnPage(page, dataUiId('scrollable-horizontal-gallery'))) {
       await dragToRight(page, dataUiId('scrollable-horizontal-gallery'));
-      expect(await stableScreenshot(page)).toMatchSnapshot('remote-screenshare-horizontal-gallery-dragged.png');
+      expect(await stableScreenshot(page)).toMatchSnapshot(
+        'remote-screenshare-scrollable-horizontal-gallery-dragged.png'
+      );
       return;
     }
 

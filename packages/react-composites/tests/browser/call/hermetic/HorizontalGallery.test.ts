@@ -3,14 +3,7 @@
 
 import { expect } from '@playwright/test';
 import { IDS } from '../../common/constants';
-import {
-  dataUiId,
-  dragToRight,
-  isTestProfileMobile,
-  pageClick,
-  stableScreenshot,
-  waitForSelector
-} from '../../common/utils';
+import { dataUiId, dragToRight, existsOnPage, pageClick, stableScreenshot, waitForSelector } from '../../common/utils';
 import {
   addScreenshareStream,
   addVideoStream,
@@ -40,7 +33,7 @@ test.describe('HorizontalGallery tests', async () => {
   test('HorizontalGallery should have multiple audio participants spanning multiple pages. Navigation buttons should work.', async ({
     page,
     serverUrl
-  }, /* @conditional-compile-remove(pinned-participants) */ testInfo) => {
+  }) => {
     const paul = defaultMockRemoteParticipant('Paul Bridges');
     addVideoStream(paul, true);
     paul.isSpeaking = true;
@@ -71,10 +64,10 @@ test.describe('HorizontalGallery tests', async () => {
     );
 
     /* @conditional-compile-remove(pinned-participants) */
-    if (isTestProfileMobile(testInfo)) {
+    if (await existsOnPage(page, dataUiId('scrollable-horizontal-gallery'))) {
       await dragToRight(page, dataUiId('scrollable-horizontal-gallery'));
       expect(await stableScreenshot(page)).toMatchSnapshot(
-        'horizontal-gallery-with-many-audio-participants-dragged.png'
+        'scrollable-horizontal-gallery-with-many-audio-participants-dragged.png'
       );
       return;
     }
@@ -136,7 +129,7 @@ test.describe('HorizontalGallery tests', async () => {
   test('HorizontalGallery should have multiple audio participants and 1 PSTN participant on second page', async ({
     page,
     serverUrl
-  }, /* @conditional-compile-remove(pinned-participants) */ testInfo) => {
+  }) => {
     const paul = defaultMockRemoteParticipant('Paul Bridges');
     addVideoStream(paul, true);
     paul.isSpeaking = true;
@@ -164,9 +157,11 @@ test.describe('HorizontalGallery tests', async () => {
     await waitForSelector(page, dataUiId(IDS.videoGallery));
 
     /* @conditional-compile-remove(pinned-participants) */
-    if (isTestProfileMobile(testInfo)) {
+    if (await existsOnPage(page, dataUiId('scrollable-horizontal-gallery'))) {
       await dragToRight(page, dataUiId('scrollable-horizontal-gallery'));
-      expect(await stableScreenshot(page)).toMatchSnapshot('horizontal-gallery-with-joining-participant-dragged.png');
+      expect(await stableScreenshot(page)).toMatchSnapshot(
+        'scrollable-horizontal-gallery-with-joining-participant-dragged.png'
+      );
       return;
     }
 
