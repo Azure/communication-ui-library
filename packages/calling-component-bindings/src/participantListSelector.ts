@@ -25,7 +25,10 @@ const convertRemoteParticipantsToParticipantListParticipants = (
   const conversionCallback = (memoizeFn) => {
     return (
       remoteParticipants
-        // hiding participants who are inLobby, idle, or connecting in ACS clients till we can admit users through ACS clients
+        /**
+         * hiding participants who are inLobby, idle, or connecting in ACS clients till we can admit users through ACS clients.
+         * phone users will be in the connecting state until they are connected to the call.
+         */
         .filter((participant: RemoteParticipantState) => {
           return (
             (participant.state !== 'InLobby' && participant.state !== 'Idle' && participant.state !== 'Connecting') ||
