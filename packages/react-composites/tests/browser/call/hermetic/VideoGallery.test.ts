@@ -39,7 +39,7 @@ test.describe('VideoGallery tests', async () => {
     const paul = defaultMockRemoteParticipant('Paul Bridges');
     const vasily = defaultMockRemotePSTNParticipant('+15551236789');
     vasily.isMuted = true;
-    vasily.state = 'Connecting';
+    vasily.state = 'Ringing';
 
     const participants = [paul, vasily];
     const initialState = defaultMockCallAdapterState(participants);
@@ -66,7 +66,7 @@ test.describe('VideoGallery tests', async () => {
     const paul = defaultMockRemoteParticipant('Paul Bridges');
     paul.state = 'Ringing';
     const phoneUser = defaultMockRemotePSTNParticipant('+15555555555');
-    phoneUser.state = 'Connecting';
+    phoneUser.state = 'Ringing';
 
     const participants = [paul, phoneUser];
     const initialState = defaultMockCallAdapterState(participants);
@@ -82,7 +82,7 @@ test.describe('VideoGallery tests', async () => {
     const paul = defaultMockRemoteParticipant('Paul Bridges');
     paul.state = 'Hold';
     const phoneUser = defaultMockRemotePSTNParticipant('+15555555555');
-    phoneUser.state = 'Connecting';
+    phoneUser.state = 'Ringing';
 
     const participants = [paul, phoneUser];
     const initialState = defaultMockCallAdapterState(participants);

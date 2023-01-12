@@ -79,7 +79,7 @@ test.describe('HorizontalGallery tests', async () => {
     const paul = defaultMockRemoteParticipant('Paul Bridges');
     addVideoStream(paul, true);
     const vasily = defaultMockRemotePSTNParticipant('+15553334444');
-    vasily.state = 'Connecting';
+    vasily.state = 'Ringing';
 
     const participants = [paul, vasily];
     const initialState = defaultMockCallAdapterState(participants);
@@ -128,7 +128,7 @@ test.describe('HorizontalGallery tests', async () => {
     const reina = defaultMockRemoteParticipant('Reina Takizawa');
     reina.isSpeaking = true;
     const phoneUser = defaultMockRemotePSTNParticipant('+15555555555');
-    phoneUser.state = 'Connecting';
+    phoneUser.state = 'Ringing';
 
     const participants = [
       paul,
@@ -166,7 +166,7 @@ test.describe('HorizontalGallery tests', async () => {
     const reina = defaultMockRemoteParticipant('Reina Takizawa');
     reina.isSpeaking = true;
     const phoneUser = defaultMockRemotePSTNParticipant('+15555555555');
-    phoneUser.state = 'Connecting';
+    phoneUser.state = 'Ringing';
 
     const participants = [paul, fiona, reina, phoneUser];
     const initialState = defaultMockCallAdapterState(participants);
@@ -196,7 +196,7 @@ test.describe('HorizontalGallery tests', async () => {
     const paul = defaultMockRemoteParticipant('Paul Bridges');
     paul.state = 'Ringing';
     const phoneUser = defaultMockRemotePSTNParticipant('+15555555555');
-    phoneUser.state = 'Connecting';
+    phoneUser.state = 'Ringing';
     phoneUser.isMuted = false;
 
     const participants = [reina, paul, phoneUser];
@@ -213,7 +213,7 @@ test.describe('HorizontalGallery tests', async () => {
     const reina = defaultMockRemoteParticipant('Reina Takizawa');
     reina.state = 'Hold';
     const phoneUser = defaultMockRemotePSTNParticipant('+15555555555');
-    phoneUser.state = 'Connecting';
+    phoneUser.state = 'Ringing';
 
     const participants = [reina, phoneUser];
     const initialState = defaultMockCallAdapterState(participants);
