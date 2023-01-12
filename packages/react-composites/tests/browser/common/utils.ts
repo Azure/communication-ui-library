@@ -602,8 +602,12 @@ export const hidePiPiP = async (page: Page): Promise<void> => {
  * Helper function to check if there is an element with a matching selector in the page
  */
 export const existsOnPage = async (page: Page, selector: string): Promise<boolean> => {
-  const handle = await page.waitForSelector(selector, { timeout: perStepLocalTimeout() });
-  return !!handle;
+  try {
+    await page.waitForSelector(selector, { timeout: perStepLocalTimeout() });
+    return true;
+  } catch (e) {
+    return false;
+  }
 };
 
 /**
