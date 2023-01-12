@@ -88,16 +88,15 @@ test.describe('Screenshare tests', async () => {
 
     await waitForSelector(page, dataUiId(IDS.videoGallery));
 
+    expect(await stableScreenshot(page)).toMatchSnapshot('remote-screenshare-horizontal-gallery-page-1.png');
+
     /* @conditional-compile-remove(pinned-participants) */
     if (isTestProfileMobile(testInfo)) {
       await dragToRight(page, dataUiId('scrollable-horizontal-gallery'));
-      expect(await stableScreenshot(page)).toMatchSnapshot(
-        'horizontal-gallery-with-many-audio-participants-dragged.png'
-      );
+      expect(await stableScreenshot(page)).toMatchSnapshot('remote-screenshare-horizontal-gallery-dragged.png');
       return;
     }
 
-    expect(await stableScreenshot(page)).toMatchSnapshot('remote-screenshare-horizontal-gallery-page-1.png');
     await waitForSelector(page, dataUiId(IDS.horizontalGalleryRightNavButton));
     await pageClick(page, dataUiId(IDS.horizontalGalleryRightNavButton));
     expect(await stableScreenshot(page)).toMatchSnapshot('remote-screenshare-horizontal-gallery-page-2.png');
