@@ -37,7 +37,7 @@ test.describe('HorizontalGallery tests', async () => {
     expect(await stableScreenshot(page)).toMatchSnapshot('horizontal-gallery-with-1-audio-participant.png');
   });
 
-  test.only('HorizontalGallery should have multiple audio participants spanning multiple pages. Navigation buttons should work.', async ({
+  test('HorizontalGallery should have multiple audio participants spanning multiple pages. Navigation buttons should work.', async ({
     page,
     serverUrl
   }, /* @conditional-compile-remove(pinned-participants) */ testInfo) => {
@@ -134,7 +134,7 @@ test.describe('HorizontalGallery tests', async () => {
   });
 
   /* @conditional-compile-remove(PSTN-calls) @conditional-compile-remove(pinned-participants) */
-  test.only('HorizontalGallery should have multiple audio participants and 1 PSTN participant on second page', async ({
+  test('HorizontalGallery should have multiple audio participants and 1 PSTN participant on second page', async ({
     page,
     serverUrl
   }, /* @conditional-compile-remove(pinned-participants) */ testInfo) => {
