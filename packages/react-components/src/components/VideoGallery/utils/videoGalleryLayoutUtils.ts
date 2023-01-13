@@ -165,6 +165,10 @@ const usePinnedParticipantLayout = (props: LayoutArgs): LayoutResult => {
   };
 };
 
+/**
+ * Hook to determine which participants should be in grid and horizontal gallery and their order respectively
+ * @private
+ */
 export const useLayout = (args: LayoutArgs): LayoutResult => {
   /* @conditional-compile-remove(pinned-participants) */
   return usePinnedParticipantLayout(args);
