@@ -12,7 +12,7 @@ import {
   CallingBaseSelectorProps
 } from './baseSelectors';
 import { CallParticipantListParticipant } from '@internal/react-components';
-import { _updateUserDisplayNames } from './utils/callUtils';
+import { _isRingingPSTNParticipant, _updateUserDisplayNames } from './utils/callUtils';
 import { memoizedConvertAllremoteParticipants } from './utils/participantListSelectorUtils';
 /* @conditional-compile-remove(rooms) */
 import { memoizedConvertAllremoteParticipantsBeta } from './utils/participantListSelectorUtils';
@@ -39,10 +39,11 @@ const convertRemoteParticipantsToParticipantListParticipants = (
           const isScreenSharing = Object.values(participant.videoStreams).some(
             (videoStream) => videoStream.mediaStreamType === 'ScreenSharing' && videoStream.isAvailable
           );
-          const state =
-            participant.identifier.kind === 'phoneNumber' && participant.state === 'Connecting'
-              ? 'Ringing'
-              : participant.state;
+          /**
+           * We want to check the participant to see if they are a PSTN participant joining the call
+           * and mapping their state to be 'Ringing'
+           */
+          const state = _isRingingPSTNParticipant(participant);
           return memoizeFn(
             toFlatCommunicationIdentifier(participant.identifier),
             participant.displayName,

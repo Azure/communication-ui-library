@@ -9,6 +9,7 @@ import { memoizeFnAll, toFlatCommunicationIdentifier } from '@internal/acs-ui-co
 import { RemoteParticipantState, RemoteVideoStreamState } from '@internal/calling-stateful-client';
 import { VideoGalleryRemoteParticipant, VideoGalleryStream } from '@internal/react-components';
 import memoizeOne from 'memoize-one';
+import { _isRingingPSTNParticipant } from './callUtils';
 import { checkIsSpeaking } from './SelectorUtils';
 
 /** @internal */
@@ -37,10 +38,7 @@ export const _videoGalleryRemoteParticipantsMemo = (
           );
         })
         .map((participant: RemoteParticipantState) => {
-          const state =
-            participant.identifier.kind === 'phoneNumber' && participant.state === 'Connecting'
-              ? 'Ringing'
-              : participant.state;
+          const state = _isRingingPSTNParticipant(participant);
           return memoizedFn(
             toFlatCommunicationIdentifier(participant.identifier),
             participant.isMuted,
