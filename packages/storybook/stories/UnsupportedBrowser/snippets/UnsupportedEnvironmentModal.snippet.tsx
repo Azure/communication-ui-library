@@ -1,16 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import { UnsupportedBrowser, UnsupportedBrowserVersion, UnsupportedOperatingSystem } from '@azure/communication-react';
 import { Modal, PrimaryButton, Stack } from '@fluentui/react';
-import { UnsupportedBrowser, UnsupportedBrowserVersion, UnsupportedOperatingSystem } from '@internal/react-components';
 import React, { useState } from 'react';
 
-import { useLocale } from '../../../../../react-components/src/localization';
-
 export const UnsupportedEnvironmentModals: () => JSX.Element = () => {
-  const unsupportedBrowserStrings = useLocale().strings.UnsupportedBrowser;
-  const unsupportedBrowserVersionStrings = useLocale().strings.UnsupportedBrowserVersion;
-  const unsupportedBrowserOperatingSystem = useLocale().strings.UnsupportedOperatingSystem;
   const [unsupportedBrowserModalOpen, setUnsupportedBrowserModalOpen] = useState<boolean>(false);
   const [unsupportedBrowserVersionModalOpen, setUnsupportedBrowserVersionModalOpen] = useState<boolean>(false);
   const [unsupportedOperatingSystemModalOpen, setUnsupportedOperatingSystemModalOpen] = useState<boolean>(false);
@@ -42,7 +37,6 @@ export const UnsupportedEnvironmentModals: () => JSX.Element = () => {
       </PrimaryButton>
       <Modal isOpen={unsupportedBrowserModalOpen} onDismiss={() => setUnsupportedBrowserModalOpen(false)}>
         <UnsupportedBrowser
-          strings={unsupportedBrowserStrings}
           onTroubleshootingClick={() => {
             alert('clicked help link');
           }}
@@ -50,11 +44,10 @@ export const UnsupportedEnvironmentModals: () => JSX.Element = () => {
       </Modal>
       <Modal isOpen={unsupportedBrowserVersionModalOpen} onDismiss={() => setUnsupportedBrowserVersionModalOpen(false)}>
         <UnsupportedBrowserVersion
-          strings={unsupportedBrowserVersionStrings}
           onTroubleshootingClick={() => {
             alert('clicked help link');
           }}
-          onContinueAnywayClick={() => alert('you are brave arent you?')}
+          onContinueAnywayClick={() => alert('clicked continue anyway')}
         />
       </Modal>
       <Modal
@@ -62,7 +55,6 @@ export const UnsupportedEnvironmentModals: () => JSX.Element = () => {
         onDismiss={() => setUnsupportedOperatingSystemModalOpen(false)}
       >
         <UnsupportedOperatingSystem
-          strings={unsupportedBrowserOperatingSystem}
           onTroubleshootingClick={() => {
             alert('clicked help link');
           }}

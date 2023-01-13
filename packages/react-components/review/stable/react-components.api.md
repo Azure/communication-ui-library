@@ -515,6 +515,7 @@ export interface _DrawerMenuItemProps {
 
 // @internal
 export interface _DrawerMenuProps {
+    heading?: string;
     // (undocumented)
     items: _DrawerMenuItemProps[];
     onLightDismiss: () => void;
@@ -533,6 +534,7 @@ export const _DrawerSurface: (props: _DrawerSurfaceProps) => JSX.Element;
 // @internal
 export interface _DrawerSurfaceProps {
     children: React_2.ReactNode;
+    heading?: string;
     onLightDismiss: () => void;
     styles?: _DrawerSurfaceStyles;
 }
@@ -1192,6 +1194,7 @@ export const _RemoteVideoTile: React_2.MemoExoticComponent<(props: {
     onPinParticipant?: ((userId: string) => void) | undefined;
     onUnpinParticipant?: ((userId: string) => void) | undefined;
     isPinned?: boolean | undefined;
+    disablePinMenuItem?: boolean | undefined;
 }) => JSX.Element>;
 
 // @public
@@ -1337,7 +1340,7 @@ export const UnsupportedBrowser: (props: UnsupportedBrowserProps) => JSX.Element
 // @beta
 export interface UnsupportedBrowserProps {
     onTroubleshootingClick?: () => void;
-    strings: UnsupportedBrowserStrings;
+    strings?: UnsupportedBrowserStrings;
 }
 
 // @beta
@@ -1371,7 +1374,7 @@ export const UnsupportedOperatingSystem: (props: UnsupportedOperatingSystemProps
 // @beta
 export interface UnsupportedOperatingSystemProps {
     onTroubleshootingClick?: () => void;
-    strings: UnsupportedOperatingSystemStrings;
+    strings?: UnsupportedOperatingSystemStrings;
 }
 
 // @beta

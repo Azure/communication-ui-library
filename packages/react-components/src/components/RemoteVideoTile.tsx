@@ -53,6 +53,7 @@ export const _RemoteVideoTile = React.memo(
     onPinParticipant?: (userId: string) => void;
     onUnpinParticipant?: (userId: string) => void;
     isPinned?: boolean;
+    disablePinMenuItem?: boolean;
   }) => {
     const {
       isAvailable,
@@ -70,7 +71,8 @@ export const _RemoteVideoTile = React.memo(
       showRemoteVideoTileContextualMenu = true,
       isPinned,
       onPinParticipant,
-      onUnpinParticipant
+      onUnpinParticipant,
+      disablePinMenuItem
     } = props;
 
     const remoteVideoStreamProps: RemoteVideoStreamLifecycleMaintainerProps = useMemo(
@@ -108,7 +110,8 @@ export const _RemoteVideoTile = React.memo(
       strings: { ...props.strings },
       isPinned,
       onPinParticipant,
-      onUnpinParticipant
+      onUnpinParticipant,
+      disablePinMenuItem
     });
 
     const videoTileContextualMenuProps = useMemo(() => {
@@ -164,7 +167,11 @@ export const _RemoteVideoTile = React.memo(
         {drawerMenuItemProps.length > 0 && (
           <Layer hostId={props.drawerMenuHostId}>
             <Stack styles={drawerMenuWrapperStyles}>
-              <_DrawerMenu onLightDismiss={() => setDrawerMenuItemProps([])} items={drawerMenuItemProps} />
+              <_DrawerMenu
+                onLightDismiss={() => setDrawerMenuItemProps([])}
+                items={drawerMenuItemProps}
+                heading={remoteParticipant.displayName}
+              />
             </Stack>
           </Layer>
         )}
