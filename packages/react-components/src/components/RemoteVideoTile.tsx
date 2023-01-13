@@ -50,7 +50,7 @@ export const _RemoteVideoTile = React.memo(
     personaMinSize?: number;
     strings?: VideoGalleryStrings;
     participantState?: ParticipantState;
-    remoteVideoTileMenuKind?: 'contextual' | 'drawer';
+    menuKind?: 'contextual' | 'drawer';
     drawerMenuHostId?: string;
     onPinParticipant?: (userId: string) => void;
     onUnpinParticipant?: (userId: string) => void;
@@ -70,7 +70,7 @@ export const _RemoteVideoTile = React.memo(
       showMuteIndicator,
       remoteParticipant,
       participantState,
-      remoteVideoTileMenuKind = 'contextual',
+      menuKind = 'contextual',
       isPinned,
       onPinParticipant,
       onUnpinParticipant,
@@ -117,11 +117,11 @@ export const _RemoteVideoTile = React.memo(
     });
 
     const videoTileContextualMenuProps = useMemo(() => {
-      if (remoteVideoTileMenuKind !== 'contextual') {
+      if (menuKind !== 'contextual') {
         return {};
       }
       return videoTileContextualMenuPropsTrampoline(contextualMenuProps);
-    }, [contextualMenuProps, remoteVideoTileMenuKind]);
+    }, [contextualMenuProps, menuKind]);
 
     const showLoadingIndicator = isAvailable && isReceiving === false && participantState !== 'Disconnected';
 
@@ -155,9 +155,9 @@ export const _RemoteVideoTile = React.memo(
     return (
       <Stack
         /* @conditional-compile-remove(pinned-participants) */
-        tabIndex={remoteVideoTileMenuKind === 'drawer' ? 0 : undefined}
+        tabIndex={menuKind === 'drawer' ? 0 : undefined}
         /* @conditional-compile-remove(pinned-participants) */
-        onKeyDown={remoteVideoTileMenuKind === 'drawer' ? onKeyDown : undefined}
+        onKeyDown={menuKind === 'drawer' ? onKeyDown : undefined}
         style={remoteVideoTileWrapperStyle}
       >
         <VideoTile
