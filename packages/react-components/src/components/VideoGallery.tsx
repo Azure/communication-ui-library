@@ -481,7 +481,6 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       containerHeight,
       onRenderRemoteVideoTile,
       defaultOnRenderVideoTile,
-      layout,
       /* @conditional-compile-remove(pinned-participants) */ pinnedParticipants
     ]
   );
