@@ -10,9 +10,7 @@ import {
 } from './styles/ScrollableHorizontalGallery.style';
 
 /**
- * PinnedParticipantsLayout displays remote participants and a screen sharing component in
- * a grid and horizontal gallery while floating the local video
- *
+ * Component to display elements horizontally in a scrollable container
  * @private
  */
 export const ScrollableHorizontalGallery = (props: { horizontalGalleryElements?: JSX.Element[] }): JSX.Element => {
