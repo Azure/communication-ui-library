@@ -149,7 +149,7 @@ export const _RemoteVideoTile = React.memo(
           );
         }
       },
-      [setDrawerMenuItemProps, convertContextualMenuItemsToDrawerMenuItemProps, contextualMenuProps]
+      [setDrawerMenuItemProps, contextualMenuProps]
     );
 
     return (
