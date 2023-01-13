@@ -32,8 +32,6 @@ import { videoGalleryOuterDivStyle } from './styles/VideoGallery.styles';
 import { floatingLocalVideoTileStyle } from './VideoGallery/styles/FloatingLocalVideo.styles';
 /* @conditional-compile-remove(pinned-participants) */
 import { useId } from '@fluentui/react-hooks';
-/* @conditional-compile-remove(pinned-participants) */
-import { PinnedParticipantsLayout } from './VideoGallery/PinnedParticipantsLayout';
 
 /**
  * @private
@@ -460,7 +458,6 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   const layoutProps = useMemo(
     () => ({
       remoteParticipants,
-      /* @conditional-compile-remove(pinned-participants) */ pinnedParticipants,
       screenShareComponent,
       showCameraSwitcherInLocalPreview,
       maxRemoteVideoStreams,
@@ -470,7 +467,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       localVideoComponent: localVideoTile,
       parentWidth: containerWidth,
       parentHeight: containerHeight,
-      isLocalVideoFloating: layout === 'floatingLocalVideo'
+      /* @conditional-compile-remove(pinned-participants) */ pinnedParticipantUserIds: pinnedParticipants
     }),
     [
       remoteParticipants,
@@ -490,10 +487,6 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   );
 
   const videoGalleryLayout = useMemo(() => {
-    /* @conditional-compile-remove(pinned-participants) */
-    if (layoutProps.pinnedParticipants.length > 0) {
-      return <PinnedParticipantsLayout {...layoutProps} />;
-    }
     if (layout === 'floatingLocalVideo') {
       return <FloatingLocalVideoLayout {...layoutProps} />;
     }
