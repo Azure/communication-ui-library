@@ -69,10 +69,6 @@ export interface ParticipantItemStrings {
   displayNamePlaceholder?: string;
   /* @conditional-compile-remove(one-to-n-calling) */
   /* @conditional-compile-remove(PSTN-calls) */
-  /** String shown when `participantState` is `Connecting` */
-  participantStateConnecting?: string;
-  /* @conditional-compile-remove(one-to-n-calling) */
-  /* @conditional-compile-remove(PSTN-calls) */
   /** String shown when `participantState` is `Ringing` */
   participantStateRinging?: string;
   /* @conditional-compile-remove(one-to-n-calling) */
@@ -150,7 +146,6 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
     me,
     onClick,
     showParticipantOverflowTooltip
-    /* @conditional-compile-remove(PSTN-calls) */
   } = props;
   const [itemHovered, setItemHovered] = useState<boolean>(false);
   const [itemFocused, setItemFocused] = useState<boolean>(false);
@@ -306,9 +301,7 @@ const participantStateStringTrampoline = (
 ): string | undefined => {
   /* @conditional-compile-remove(one-to-n-calling) */
   /* @conditional-compile-remove(PSTN-calls) */
-  return props.participantState === 'Idle' || props.participantState === 'Connecting'
-    ? strings?.participantStateConnecting
-    : props.participantState === 'EarlyMedia' || props.participantState === 'Ringing'
+  return props.participantState === 'EarlyMedia' || props.participantState === 'Ringing'
     ? strings?.participantStateRinging
     : props.participantState === 'Hold'
     ? strings?.participantStateHold
