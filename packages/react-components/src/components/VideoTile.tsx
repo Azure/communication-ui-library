@@ -38,7 +38,6 @@ import { moreButtonStyles } from './styles/VideoTile.styles';
  * @beta
  */
 export interface VideoTileStrings {
-  participantStateConnecting: string;
   participantStateRinging: string;
   participantStateHold: string;
 }

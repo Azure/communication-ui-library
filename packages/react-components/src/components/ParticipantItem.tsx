@@ -69,10 +69,6 @@ export interface ParticipantItemStrings {
   displayNamePlaceholder?: string;
   /* @conditional-compile-remove(one-to-n-calling) */
   /* @conditional-compile-remove(PSTN-calls) */
-  /** String shown when `participantState` is `Connecting` */
-  participantStateConnecting?: string;
-  /* @conditional-compile-remove(one-to-n-calling) */
-  /* @conditional-compile-remove(PSTN-calls) */
   /** String shown when `participantState` is `Ringing` */
   participantStateRinging?: string;
   /* @conditional-compile-remove(one-to-n-calling) */
