@@ -20,7 +20,10 @@ const storyControls = {
   callInvitationURL: controlsToAdd.callInvitationURL
 };
 
-const JoinExistingCallWithCTEStory = (args: ArgsFrom<typeof storyControls>, context): JSX.Element => {
+const JoinExistingCallWithCommunicationAsTeamsUserStory = (
+  args: ArgsFrom<typeof storyControls>,
+  context
+): JSX.Element => {
   const {
     globals: { locale }
   } = context;
@@ -45,11 +48,11 @@ const JoinExistingCallWithCTEStory = (args: ArgsFrom<typeof storyControls>, cont
   );
 };
 
-export const JoinExistingCallWithCTE = JoinExistingCallWithCTEStory.bind({});
+export const JoinExistingCallWithCommunicationAsTeamsUser = JoinExistingCallWithCommunicationAsTeamsUserStory.bind({});
 
 export default {
-  id: `${COMPOSITE_FOLDER_PREFIX}-call-joinexistingcallwithcte`,
-  title: `${COMPOSITE_FOLDER_PREFIX}/CallComposite/Join Existing Call With CTE`,
+  id: `${COMPOSITE_FOLDER_PREFIX}-call-joinexistingcallwithCommunicationAsTeamsuser`,
+  title: `${COMPOSITE_FOLDER_PREFIX}/CallComposite/Join Existing Call With Communication As Teams User`,
   component: CallComposite,
   argTypes: {
     ...storyControls,
