@@ -18,6 +18,7 @@ export default function useLongPress(props: {
   onTouchEnd: () => void;
   onKeyDown: () => void;
   onKeyUp: () => void;
+  onTouchMove: () => void;
 } {
   const { onClick, onLongPress, touchEventsOnly = false } = props;
   const timerRef = useRef<ReturnType<typeof setTimeout>>();
@@ -92,6 +93,10 @@ export default function useLongPress(props: {
     timerRef.current && clearTimeout(timerRef.current);
   }, []);
 
+  const handleOnTouchMove = useCallback(() => {
+    timerRef.current && clearTimeout(timerRef.current);
+  }, []);
+
   return useMemo(
     () => ({
       onClick: handleOnClick,
@@ -100,7 +105,8 @@ export default function useLongPress(props: {
       onTouchStart: handleOnTouchStart,
       onTouchEnd: handleOnTouchEnd,
       onKeyDown: handleOnKeyDown,
-      onKeyUp: handleOnKeyUp
+      onKeyUp: handleOnKeyUp,
+      onTouchMove: handleOnTouchMove
     }),
     [
       handleOnClick,
@@ -109,7 +115,8 @@ export default function useLongPress(props: {
       handleOnMouseDown,
       handleOnMouseUp,
       handleOnTouchEnd,
-      handleOnTouchStart
+      handleOnTouchStart,
+      handleOnTouchMove
     ]
   );
 }
