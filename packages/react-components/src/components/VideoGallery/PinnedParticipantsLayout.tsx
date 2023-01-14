@@ -9,12 +9,14 @@ import { GridLayout } from '../GridLayout';
 import { isNarrowWidth } from '../utils/responsive';
 import { FloatingLocalVideo } from './FloatingLocalVideo';
 import { FloatingLocalVideoLayoutProps } from './FloatingLocalVideoLayout';
+import { ScrollableHorizontalGallery } from './ScrollableHorizontalGallery';
 import {
   localVideoTileContainerStyle,
   localVideoTileWithControlsContainerStyle,
   LOCAL_VIDEO_TILE_ZINDEX
 } from './styles/FloatingLocalVideo.styles';
 import { innerLayoutStyle, layerHostStyle, rootLayoutStyle } from './styles/FloatingLocalVideoLayout.styles';
+import { videoGalleryLayoutGap } from './styles/Layout.styles';
 import { usePinnedParticipantLayout } from './utils/videoGalleryLayoutUtils';
 import { VideoGalleryResponsiveHorizontalGallery } from './VideoGalleryResponsiveHorizontalGallery';
 
@@ -123,8 +125,7 @@ export const PinnedParticipantsLayout = (props: PinnedParticipantsLayoutProps): 
 
   return (
     <Stack styles={rootLayoutStyle}>
-      {wrappedLocalVideoComponent}
-      <Stack horizontal={false} styles={innerLayoutStyle}>
+      <Stack horizontal={false} styles={innerLayoutStyle} tokens={videoGalleryLayoutGap}>
         {screenShareComponent ? (
           screenShareComponent
         ) : (
@@ -132,16 +133,20 @@ export const PinnedParticipantsLayout = (props: PinnedParticipantsLayoutProps): 
             {gridTiles}
           </GridLayout>
         )}
-        {horizontalGalleryTiles.length > 0 && (
-          <VideoGalleryResponsiveHorizontalGallery
-            isNarrow={isNarrow}
-            shouldFloatLocalVideo={true}
-            horizontalGalleryElements={horizontalGalleryTiles}
-            styles={styles?.horizontalGallery}
-          />
-        )}
-        <LayerHost id={layerHostId} className={mergeStyles(layerHostStyle)} />
+        {horizontalGalleryTiles.length > 0 &&
+          (isNarrow ? (
+            <ScrollableHorizontalGallery horizontalGalleryElements={horizontalGalleryTiles} />
+          ) : (
+            <VideoGalleryResponsiveHorizontalGallery
+              isNarrow={isNarrow}
+              shouldFloatLocalVideo={true}
+              horizontalGalleryElements={horizontalGalleryTiles}
+              styles={styles?.horizontalGallery}
+            />
+          ))}
       </Stack>
+      {wrappedLocalVideoComponent}
+      <LayerHost id={layerHostId} className={mergeStyles(layerHostStyle)} />
     </Stack>
   );
 };

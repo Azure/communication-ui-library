@@ -3,7 +3,7 @@
 
 import { expect } from '@playwright/test';
 import { IDS } from '../../common/constants';
-import { dataUiId, pageClick, stableScreenshot, waitForSelector } from '../../common/utils';
+import { dataUiId, dragToRight, existsOnPage, pageClick, stableScreenshot, waitForSelector } from '../../common/utils';
 import {
   addScreenshareStream,
   addVideoStream,
@@ -62,6 +62,16 @@ test.describe('HorizontalGallery tests', async () => {
     expect(await stableScreenshot(page)).toMatchSnapshot(
       'horizontal-gallery-with-many-audio-participants-on-page-1.png'
     );
+
+    /* @conditional-compile-remove(pinned-participants) */
+    if (await existsOnPage(page, dataUiId('scrollable-horizontal-gallery'))) {
+      await dragToRight(page, dataUiId('scrollable-horizontal-gallery'));
+      expect(await stableScreenshot(page)).toMatchSnapshot(
+        'scrollable-horizontal-gallery-with-many-audio-participants-dragged.png'
+      );
+      return;
+    }
+
     await waitForSelector(page, dataUiId(IDS.horizontalGalleryRightNavButton));
     await pageClick(page, dataUiId(IDS.horizontalGalleryRightNavButton));
     expect(await stableScreenshot(page)).toMatchSnapshot(
@@ -115,7 +125,7 @@ test.describe('HorizontalGallery tests', async () => {
     );
   });
 
-  /* @conditional-compile-remove(PSTN-calls) */
+  /* @conditional-compile-remove(PSTN-calls) @conditional-compile-remove(pinned-participants) */
   test('HorizontalGallery should have multiple audio participants and 1 PSTN participant on second page', async ({
     page,
     serverUrl
@@ -145,6 +155,16 @@ test.describe('HorizontalGallery tests', async () => {
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
 
     await waitForSelector(page, dataUiId(IDS.videoGallery));
+
+    /* @conditional-compile-remove(pinned-participants) */
+    if (await existsOnPage(page, dataUiId('scrollable-horizontal-gallery'))) {
+      await dragToRight(page, dataUiId('scrollable-horizontal-gallery'));
+      expect(await stableScreenshot(page)).toMatchSnapshot(
+        'scrollable-horizontal-gallery-with-joining-participant-dragged.png'
+      );
+      return;
+    }
+
     await waitForSelector(page, dataUiId(IDS.horizontalGalleryRightNavButton));
     await pageClick(page, dataUiId(IDS.horizontalGalleryRightNavButton));
     expect(await stableScreenshot(page)).toMatchSnapshot(
