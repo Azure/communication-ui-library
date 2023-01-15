@@ -5,7 +5,11 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 import { v1 as createGUID } from 'uuid';
 import { VideoGalleryRemoteParticipant } from '../../../types';
-import { useLayout, LayoutArgs, LayoutResult } from './videoGalleryLayoutUtils';
+import {
+  useOrganizedParticipants,
+  OrganizedParticipantsArgs,
+  OrganizedParticipantsResult
+} from './videoGalleryLayoutUtils';
 
 describe('VideoGallery layout ordering and grouping tests', () => {
   test('4 video participants should be in grid starting with dominant speakers and the rest in horizontal gallery', () => {
@@ -169,10 +173,10 @@ const createRemoteParticipant = (attrs?: Partial<VideoGalleryRemoteParticipant>)
   };
 };
 
-const setup = (args: LayoutArgs): LayoutResult | undefined => {
-  let layout: LayoutResult | undefined = undefined;
+const setup = (args: OrganizedParticipantsArgs): OrganizedParticipantsResult | undefined => {
+  let layout: OrganizedParticipantsResult | undefined = undefined;
   const TestComponent = (): null => {
-    layout = useLayout(args);
+    layout = useOrganizedParticipants(args);
     return null;
   };
   renderer.create(<TestComponent />);

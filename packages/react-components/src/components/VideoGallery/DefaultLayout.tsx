@@ -7,7 +7,7 @@ import { GridLayout } from '../GridLayout';
 import { isNarrowWidth } from '../utils/responsive';
 import { LayoutProps } from './Layout';
 import { rootLayoutStyle } from './styles/DefaultLayout.styles';
-import { useLayout } from './utils/videoGalleryLayoutUtils';
+import { useOrganizedParticipants } from './utils/videoGalleryLayoutUtils';
 import { VideoGalleryResponsiveHorizontalGallery } from './VideoGalleryResponsiveHorizontalGallery';
 
 /**
@@ -38,7 +38,7 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
 
   const isNarrow = parentWidth ? isNarrowWidth(parentWidth) : false;
 
-  const layout = useLayout({
+  const { gridParticipants, horizontalGalleryParticipants } = useOrganizedParticipants({
     remoteParticipants,
     dominantSpeakers,
     maxRemoteVideoStreams,
@@ -48,7 +48,7 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
 
   let activeVideoStreams = 0;
 
-  const gridTiles = layout.gridParticipants.map((p) => {
+  const gridTiles = gridParticipants.map((p) => {
     return onRenderRemoteParticipant(
       p,
       maxRemoteVideoStreams && maxRemoteVideoStreams >= 0
@@ -57,7 +57,7 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
     );
   });
 
-  const horizontalGalleryTiles = layout.horizontalGalleryParticipants.map((p) => {
+  const horizontalGalleryTiles = horizontalGalleryParticipants.map((p) => {
     return onRenderRemoteParticipant(
       p,
       maxRemoteVideoStreams && maxRemoteVideoStreams >= 0

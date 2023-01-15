@@ -15,7 +15,7 @@ import {
   LOCAL_VIDEO_TILE_ZINDEX
 } from './styles/FloatingLocalVideo.styles';
 import { innerLayoutStyle, layerHostStyle, rootLayoutStyle } from './styles/FloatingLocalVideoLayout.styles';
-import { useLayout } from './utils/videoGalleryLayoutUtils';
+import { useOrganizedParticipants } from './utils/videoGalleryLayoutUtils';
 import { VideoGalleryResponsiveHorizontalGallery } from './VideoGalleryResponsiveHorizontalGallery';
 
 /**
@@ -59,7 +59,7 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
 
   const isNarrow = parentWidth ? isNarrowWidth(parentWidth) : false;
 
-  const layout = useLayout({
+  const { gridParticipants, horizontalGalleryParticipants } = useOrganizedParticipants({
     remoteParticipants,
     dominantSpeakers,
     maxRemoteVideoStreams,
@@ -69,7 +69,7 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
 
   let activeVideoStreams = 0;
 
-  const gridTiles = layout.gridParticipants.map((p) => {
+  const gridTiles = gridParticipants.map((p) => {
     return onRenderRemoteParticipant(
       p,
       maxRemoteVideoStreams && maxRemoteVideoStreams >= 0
@@ -84,7 +84,7 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
     gridTiles.push(localVideoComponent);
   }
 
-  const horizontalGalleryTiles = layout.horizontalGalleryParticipants.map((p) => {
+  const horizontalGalleryTiles = horizontalGalleryParticipants.map((p) => {
     return onRenderRemoteParticipant(
       p,
       maxRemoteVideoStreams && maxRemoteVideoStreams >= 0
