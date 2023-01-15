@@ -404,8 +404,12 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           /* @conditional-compile-remove(PSTN-calls) */
           participantState={participant.state}
           /* @conditional-compile-remove(pinned-participants) */
-          showRemoteVideoTileContextualMenu={
-            remoteVideoTileMenuOptions && remoteVideoTileMenuOptions.kind === 'contextual'
+          menuKind={
+            remoteVideoTileMenuOptions
+              ? remoteVideoTileMenuOptions.kind === 'drawer'
+                ? 'drawer'
+                : 'contextual'
+              : undefined
           }
           /* @conditional-compile-remove(pinned-participants) */
           drawerMenuHostId={drawerMenuHostId}

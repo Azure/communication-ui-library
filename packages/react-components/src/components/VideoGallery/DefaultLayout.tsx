@@ -2,11 +2,14 @@
 // Licensed under the MIT license.
 
 import { Stack } from '@fluentui/react';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { GridLayout } from '../GridLayout';
 import { isNarrowWidth } from '../utils/responsive';
 import { LayoutProps } from './Layout';
+/* @conditional-compile-remove(pinned-participants) */
+import { ScrollableHorizontalGallery } from './ScrollableHorizontalGallery';
 import { rootLayoutStyle } from './styles/DefaultLayout.styles';
+import { videoGalleryLayoutGap } from './styles/Layout.styles';
 import { useOrganizedParticipants } from './utils/videoGalleryLayoutUtils';
 import { VideoGalleryResponsiveHorizontalGallery } from './VideoGalleryResponsiveHorizontalGallery';
 
@@ -70,8 +73,26 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
     gridTiles.push(localVideoComponent);
   }
 
+  const horizontalGallery = useMemo(() => {
+    if (horizontalGalleryTiles.length === 0) {
+      return null;
+    }
+    /* @conditional-compile-remove(pinned-participants) */
+    if (isNarrow) {
+      return <ScrollableHorizontalGallery horizontalGalleryElements={horizontalGalleryTiles} />;
+    }
+    return (
+      <VideoGalleryResponsiveHorizontalGallery
+        isNarrow={isNarrow}
+        shouldFloatLocalVideo={true}
+        horizontalGalleryElements={horizontalGalleryTiles}
+        styles={styles?.horizontalGallery}
+      />
+    );
+  }, [isNarrow, horizontalGalleryTiles, styles?.horizontalGallery]);
+
   return (
-    <Stack horizontal={false} styles={rootLayoutStyle}>
+    <Stack horizontal={false} styles={rootLayoutStyle} tokens={videoGalleryLayoutGap}>
       {screenShareComponent ? (
         screenShareComponent
       ) : (
@@ -79,13 +100,7 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
           {gridTiles}
         </GridLayout>
       )}
-      {horizontalGalleryTiles.length > 0 && (
-        <VideoGalleryResponsiveHorizontalGallery
-          isNarrow={isNarrow}
-          horizontalGalleryElements={horizontalGalleryTiles}
-          styles={styles?.horizontalGallery}
-        />
-      )}
+      {horizontalGallery}
     </Stack>
   );
 };

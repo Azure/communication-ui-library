@@ -88,6 +88,8 @@ export const bannerNotificationStyles: IStackStyles = {
  */
 export const callArrangementContainerStyles: IStackStyles = {
   root: {
+    width: '100%',
+    height: '100%',
     flexDirection: 'column-reverse' // to allow first initial keyboard focus on ControlBar
   }
 };
