@@ -43,7 +43,8 @@
     "html-to-react": "~1.5.0",
     "react-aria-live": "^2.0.5",
     "react-linkify": "^1.0.0-alpha",
-    "uuid": "^8.1.0"
+    "uuid": "^8.1.0",
+    "react-use-draggable-scroll": "~0.4.7"
   },
   "peerDependencies": {
     "@types/react": ">=16.8.0 <18.0.0",

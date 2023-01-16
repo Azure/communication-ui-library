@@ -11,7 +11,13 @@ import {
   stableScreenshot,
   waitForSelector
 } from '../../common/utils';
-import { buildUrlWithMockAdapter, defaultMockCallAdapterState, defaultMockRemoteParticipant, test } from './fixture';
+import {
+  buildUrlWithMockAdapter,
+  defaultMockCallAdapterState,
+  defaultMockRemoteParticipant,
+  defaultMockRemotePSTNParticipant,
+  test
+} from './fixture';
 
 test.describe('Participant pane tests', async () => {
   /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
@@ -115,8 +121,8 @@ test.describe('Participant pane tests', async () => {
 
   /* @conditional-compile-remove(PSTN-calls) */
   test('callee participant is displayed with connection state', async ({ page, serverUrl }, testInfo) => {
-    const paul = defaultMockRemoteParticipant('Paul Bridges');
-    paul.state = 'Connecting';
+    const paul = defaultMockRemotePSTNParticipant('+12324567890');
+    paul.state = 'Ringing';
     const participants = [paul];
     const initialState = defaultMockCallAdapterState(participants);
     //PSTN call has alternate caller id
@@ -140,7 +146,7 @@ test.describe('Participant pane tests', async () => {
     const longPaul = defaultMockRemoteParticipant(
       'I have a really really really really long name. Trust me you dont wanna know.'
     );
-    longPaul.state = 'Connecting';
+    longPaul.state = 'Ringing';
     const participants = [longPaul];
     const initialState = defaultMockCallAdapterState(participants);
     //PSTN call has alternate caller id
@@ -163,7 +169,7 @@ test.describe('Participant pane tests', async () => {
         el.textContent = 'Long Calling String...';
       }
     }, participantStringId);
-    expect(await stableScreenshot(page)).toMatchSnapshot('PSTN-participant-pane-callee-name-truncation.png');
+    expect(await stableScreenshot(page)).toMatchSnapshot('participant-pane-callee-name-truncation.png');
   });
 
   /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
@@ -184,5 +190,115 @@ test.describe('Participant pane tests', async () => {
 
     await waitForSelector(page, dataUiId('call-composite-people-pane'));
     expect(await stableScreenshot(page)).toMatchSnapshot('participant-with-no-name-unknown-icon.png');
+  });
+
+  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
+  test('PSTN ParticipantState string should be set correctly when idle to connecting desktop', async ({
+    page,
+    serverUrl
+  }, testInfo) => {
+    test.skip(!isTestProfileDesktop(testInfo));
+    const idleRemoteParticipant = defaultMockRemotePSTNParticipant('15556781234');
+    idleRemoteParticipant.state = 'Idle';
+
+    const initialState = defaultMockCallAdapterState([idleRemoteParticipant]);
+    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
+
+    await waitForSelector(page, dataUiId('call-composite-participants-button'));
+    await pageClick(page, dataUiId('call-composite-participants-button'));
+
+    expect(await stableScreenshot(page)).toMatchSnapshot('pstn-participant-list-idle-participant-desktop.png');
+
+    idleRemoteParticipant.state = 'Ringing';
+    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
+
+    await waitForSelector(page, dataUiId('call-composite-participants-button'));
+    await pageClick(page, dataUiId('call-composite-participants-button'));
+
+    expect(await stableScreenshot(page)).toMatchSnapshot('pstn-participant-list-connecting-participant-desktop.png');
+  });
+
+  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
+  test('PSTN ParticipantState string should be set correctly when idle to connecting mobile', async ({
+    page,
+    serverUrl
+  }, testInfo) => {
+    test.skip(isTestProfileDesktop(testInfo));
+    const idleRemoteParticipant = defaultMockRemotePSTNParticipant('15556781234');
+    idleRemoteParticipant.state = 'Idle';
+
+    const initialState = defaultMockCallAdapterState([idleRemoteParticipant]);
+    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
+
+    await waitForSelector(page, dataUiId(IDS.moreButton));
+    await pageClick(page, dataUiId(IDS.moreButton));
+
+    await waitForSelector(page, dataUiId('call-composite-more-menu-people-button'));
+    await pageClick(page, dataUiId('call-composite-more-menu-people-button'));
+
+    expect(await stableScreenshot(page)).toMatchSnapshot('pstn-participant-list-idle-participant-mobile.png');
+
+    idleRemoteParticipant.state = 'Ringing';
+    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
+
+    await waitForSelector(page, dataUiId(IDS.moreButton));
+    await pageClick(page, dataUiId(IDS.moreButton));
+
+    await waitForSelector(page, dataUiId('call-composite-more-menu-people-button'));
+    await pageClick(page, dataUiId('call-composite-more-menu-people-button'));
+
+    expect(await stableScreenshot(page)).toMatchSnapshot('pstn-participant-list-connecting-participant-mobile.png');
+  });
+
+  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
+  test('Participant should be hidden when idle to connecting mobile', async ({ page, serverUrl }, testInfo) => {
+    test.skip(isTestProfileDesktop(testInfo));
+    const idleRemoteParticipant = defaultMockRemoteParticipant('Joni Solberg');
+    idleRemoteParticipant.state = 'Idle';
+
+    const initialState = defaultMockCallAdapterState([idleRemoteParticipant]);
+    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
+
+    await waitForSelector(page, dataUiId(IDS.moreButton));
+    await pageClick(page, dataUiId(IDS.moreButton));
+
+    await waitForSelector(page, dataUiId('call-composite-more-menu-people-button'));
+    await pageClick(page, dataUiId('call-composite-more-menu-people-button'));
+
+    expect(await stableScreenshot(page)).toMatchSnapshot('participant-list-idle-participant-mobile.png');
+
+    idleRemoteParticipant.state = 'Ringing';
+    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
+
+    await waitForSelector(page, dataUiId(IDS.moreButton));
+    await pageClick(page, dataUiId(IDS.moreButton));
+
+    await waitForSelector(page, dataUiId('call-composite-more-menu-people-button'));
+    await pageClick(page, dataUiId('call-composite-more-menu-people-button'));
+
+    expect(await stableScreenshot(page)).toMatchSnapshot('participant-list-connecting-participant-mobile.png');
+  });
+
+  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
+  test('Participant should be hidden when idle to connecting desktop', async ({ page, serverUrl }, testInfo) => {
+    test.skip(!isTestProfileDesktop(testInfo));
+    const idleRemoteParticipant = defaultMockRemoteParticipant('Joni Solberg');
+    idleRemoteParticipant.state = 'Idle';
+
+    const initialState = defaultMockCallAdapterState([idleRemoteParticipant]);
+    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
+
+    await waitForSelector(page, dataUiId('call-composite-participants-button'));
+    await pageClick(page, dataUiId('call-composite-participants-button'));
+
+    expect(await stableScreenshot(page)).toMatchSnapshot('participant-list-idle-participant-desktop.png');
+
+    idleRemoteParticipant.state = 'Ringing';
+    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
+
+    await waitForSelector(page, dataUiId('call-composite-participants-button'));
+    await pageClick(page, dataUiId('call-composite-participants-button'));
+
+    expect(await stableScreenshot(page)).toMatchSnapshot('participant-list-connecting-participant-desktop.png');
   });
 });

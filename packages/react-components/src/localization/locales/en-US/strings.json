@@ -6,7 +6,6 @@
     "sharingIconLabel": "Sharing",
     "mutedIconLabel": "Muted",
     "displayNamePlaceholder": "Unnamed participant",
-    "participantStateConnecting": "Calling...",
     "participantStateRinging": "Calling...",
     "participantStateHold": "On hold"
   },
@@ -188,7 +187,6 @@
     "tooltipOffContent": "Hold call"
   },
   "videoTile": {
-    "participantStateConnecting": "Calling...",
     "participantStateRinging": "Calling...",
     "participantStateHold": "On hold"
   },

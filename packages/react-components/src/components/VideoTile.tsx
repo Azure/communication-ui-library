@@ -38,7 +38,6 @@ import { moreButtonStyles } from './styles/VideoTile.styles';
  * @beta
  */
 export interface VideoTileStrings {
-  participantStateConnecting: string;
   participantStateRinging: string;
   participantStateHold: string;
 }
@@ -342,7 +341,15 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
             {renderElement}
           </Stack>
         ) : (
-          <Stack className={mergeStyles(videoContainerStyles)} style={{ opacity: participantStateString ? 0.4 : 1 }}>
+          <Stack
+            className={mergeStyles(videoContainerStyles, {
+              opacity:
+                participantStateString ||
+                /* @conditional-compile-remove(PSTN-calls) */ props.participantState === 'Idle'
+                  ? 0.4
+                  : 1
+            })}
+          >
             {onRenderPlaceholder ? (
               onRenderPlaceholder(userId ?? '', placeholderOptions, DefaultPlaceholder)
             ) : (
@@ -403,9 +410,7 @@ const participantStateStringTrampoline = (props: VideoTileProps, locale: Compone
   const strings = { ...locale.strings.videoTile, ...props.strings };
   /* @conditional-compile-remove(one-to-n-calling) */
   /* @conditional-compile-remove(PSTN-calls) */
-  return props.participantState === 'Idle' || props.participantState === 'Connecting'
-    ? strings?.participantStateConnecting
-    : props.participantState === 'EarlyMedia' || props.participantState === 'Ringing'
+  return props.participantState === 'EarlyMedia' || props.participantState === 'Ringing'
     ? strings?.participantStateRinging
     : props.participantState === 'Hold'
     ? strings?.participantStateHold
