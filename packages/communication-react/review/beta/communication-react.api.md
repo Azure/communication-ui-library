@@ -15,6 +15,7 @@ import { CallClientOptions } from '@azure/communication-calling';
 import { CallDirection } from '@azure/communication-calling';
 import { CallEndReason } from '@azure/communication-calling';
 import { CallerInfo } from '@azure/communication-calling';
+import { CallKind } from '@azure/communication-calling';
 import { CallState as CallState_2 } from '@azure/communication-calling';
 import { ChatClient } from '@azure/communication-chat';
 import { ChatClientOptions } from '@azure/communication-chat';
@@ -302,6 +303,7 @@ export type CallAdapterClientState = {
     alternateCallerId?: string;
     environmentInfo?: EnvironmentInfo;
     roleHint?: Role;
+    cameraStatus?: 'On' | 'Off';
 };
 
 // @public
@@ -477,6 +479,7 @@ export type CallCompositeOptions = {
     }) => void;
     onNetworkingTroubleShootingClick?: () => void;
     onEnvironmentInfoTroubleshootingClick?: () => void;
+    remoteVideoTileMenu?: RemoteVideoTileMenuOptions;
 };
 
 // @public
@@ -699,6 +702,7 @@ export interface CallState {
     id: string;
     isMuted: boolean;
     isScreenSharingOn: boolean;
+    kind: CallKind;
     localVideoStreams: LocalVideoStreamState[];
     recording: RecordingCallFeature;
     remoteParticipants: {
@@ -712,7 +716,6 @@ export interface CallState {
     startTime: Date;
     state: CallState_2;
     transcription: TranscriptionCallFeature;
-    type: 'Teams' | 'ACS';
 }
 
 // @public
@@ -2647,7 +2650,6 @@ export interface ParticipantItemStrings {
     isMeText: string;
     menuTitle: string;
     mutedIconLabel: string;
-    participantStateConnecting?: string;
     participantStateHold?: string;
     participantStateRinging?: string;
     removeButtonLabel: string;
@@ -2819,6 +2821,11 @@ export interface RemoteVideoStreamState {
     isReceiving: boolean;
     mediaStreamType: MediaStreamType;
     view?: VideoStreamRendererViewState;
+}
+
+// @beta
+export interface RemoteVideoTileMenuOptions {
+    isHidden?: boolean;
 }
 
 // @beta
@@ -3069,7 +3076,7 @@ export const UnsupportedBrowser: (props: UnsupportedBrowserProps) => JSX.Element
 // @beta
 export interface UnsupportedBrowserProps {
     onTroubleshootingClick?: () => void;
-    strings: UnsupportedBrowserStrings;
+    strings?: UnsupportedBrowserStrings;
 }
 
 // @beta
@@ -3103,7 +3110,7 @@ export const UnsupportedOperatingSystem: (props: UnsupportedOperatingSystemProps
 // @beta
 export interface UnsupportedOperatingSystemProps {
     onTroubleshootingClick?: () => void;
-    strings: UnsupportedOperatingSystemStrings;
+    strings?: UnsupportedOperatingSystemStrings;
 }
 
 // @beta
@@ -3200,10 +3207,10 @@ export interface VideoGalleryProps {
     onUnpinParticipant?: (userId: string) => void;
     pinnedParticipants?: string[];
     remoteParticipants?: VideoGalleryRemoteParticipant[];
+    remoteVideoTileMenuOptions?: false | VideoTileContextualMenuProps | VideoTileDrawerMenuProps;
     remoteVideoViewOptions?: VideoStreamOptions;
     showCameraSwitcherInLocalPreview?: boolean;
     showMuteIndicator?: boolean;
-    showRemoteVideoTileContextualMenu?: boolean;
     strings?: Partial<VideoGalleryStrings>;
     styles?: VideoGalleryStyles;
 }
@@ -3272,6 +3279,17 @@ export interface VideoStreamRendererViewState {
 // @public
 export const VideoTile: (props: VideoTileProps) => JSX.Element;
 
+// @beta
+export interface VideoTileContextualMenuProps {
+    kind: 'contextual';
+}
+
+// @beta
+export interface VideoTileDrawerMenuProps {
+    hostId?: string;
+    kind: 'drawer';
+}
+
 // @public
 export interface VideoTileProps {
     children?: React_2.ReactNode;
@@ -3299,8 +3317,6 @@ export interface VideoTileProps {
 
 // @beta
 export interface VideoTileStrings {
-    // (undocumented)
-    participantStateConnecting: string;
     // (undocumented)
     participantStateHold: string;
     // (undocumented)

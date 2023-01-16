@@ -6,7 +6,6 @@
     "sharingIconLabel": "Sharing",
     "mutedIconLabel": "Muted",
     "displayNamePlaceholder": "Unnamed participant",
-    "participantStateConnecting": "Calling...",
     "participantStateRinging": "Calling...",
     "participantStateHold": "On hold"
   },
@@ -174,6 +173,7 @@
     "fitRemoteParticipantToFrame": "Fit to frame",
     "fillRemoteParticipantFrame": "Fill frame",
     "pinParticipantForMe": "Pin for me",
+    "pinParticipantForMeLimitReached": "Pin (limit reached)",
     "unpinParticipantForMe": "Unpin for me"
   },
   "dialpad": {
@@ -187,7 +187,6 @@
     "tooltipOffContent": "Hold call"
   },
   "videoTile": {
-    "participantStateConnecting": "Calling...",
     "participantStateRinging": "Calling...",
     "participantStateHold": "On hold"
   },

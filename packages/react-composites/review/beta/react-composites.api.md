@@ -202,6 +202,7 @@ export type CallAdapterClientState = {
     alternateCallerId?: string;
     environmentInfo?: EnvironmentInfo;
     roleHint?: Role;
+    cameraStatus?: 'On' | 'Off';
 };
 
 // @public
@@ -328,6 +329,7 @@ export type CallCompositeOptions = {
     }) => void;
     onNetworkingTroubleShootingClick?: () => void;
     onEnvironmentInfoTroubleshootingClick?: () => void;
+    remoteVideoTileMenu?: RemoteVideoTileMenuOptions;
 };
 
 // @public
@@ -1268,6 +1270,11 @@ export type ParticipantsRemovedListener = (event: {
     participantsRemoved: ChatParticipant[];
     removedBy: ChatParticipant;
 }) => void;
+
+// @beta
+export interface RemoteVideoTileMenuOptions {
+    isHidden?: boolean;
+}
 
 // @beta
 export interface TeamsCallAdapter extends CommonCallAdapter {

@@ -12,7 +12,7 @@ import {
   CallingBaseSelectorProps
 } from './baseSelectors';
 import { CallParticipantListParticipant } from '@internal/react-components';
-import { _updateUserDisplayNames } from './utils/callUtils';
+import { _isRingingPSTNParticipant, _updateUserDisplayNames } from './utils/callUtils';
 import { memoizedConvertAllremoteParticipants } from './utils/participantListSelectorUtils';
 /* @conditional-compile-remove(rooms) */
 import { memoizedConvertAllremoteParticipantsBeta } from './utils/participantListSelectorUtils';
@@ -25,18 +25,29 @@ const convertRemoteParticipantsToParticipantListParticipants = (
   const conversionCallback = (memoizeFn) => {
     return (
       remoteParticipants
-        // temporarily hiding lobby participants in ACS clients till we can admit users through ACS clients
+        /**
+         * hiding participants who are inLobby, idle, or connecting in ACS clients till we can admit users through ACS clients.
+         * phone users will be in the connecting state until they are connected to the call.
+         */
         .filter((participant: RemoteParticipantState) => {
-          return participant.state !== 'InLobby';
+          return (
+            (participant.state !== 'InLobby' && participant.state !== 'Idle' && participant.state !== 'Connecting') ||
+            participant.identifier.kind === 'phoneNumber'
+          );
         })
         .map((participant: RemoteParticipantState) => {
           const isScreenSharing = Object.values(participant.videoStreams).some(
             (videoStream) => videoStream.mediaStreamType === 'ScreenSharing' && videoStream.isAvailable
           );
+          /**
+           * We want to check the participant to see if they are a PSTN participant joining the call
+           * and mapping their state to be 'Ringing'
+           */
+          const state = _isRingingPSTNParticipant(participant);
           return memoizeFn(
             toFlatCommunicationIdentifier(participant.identifier),
             participant.displayName,
-            participant.state,
+            state,
             participant.isMuted,
             isScreenSharing,
             participant.isSpeaking,
