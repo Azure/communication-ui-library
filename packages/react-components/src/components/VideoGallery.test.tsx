@@ -293,7 +293,7 @@ describe('VideoGallery layout fit/fill tests', () => {
     mockVideoGalleryInternalHelpers();
   });
 
-  test.only('should have video tiles with a fit to frame contextual menu item by default', () => {
+  test('should have video tiles with a fit to frame contextual menu item by default', () => {
     const localParticipant = createLocalParticipant({
       videoStream: { isAvailable: true, renderElement: createVideoDivElement() }
     });
@@ -616,6 +616,7 @@ const createRemoteParticipant = (attrs?: Partial<VideoGalleryRemoteParticipant>)
       isReceiving: attrs?.videoStream?.isReceiving ?? true,
       isMirrored: attrs?.videoStream?.isMirrored ?? false,
       renderElement: attrs?.videoStream?.renderElement ?? undefined,
+      /* @conditional-compile-remove(pinned-participants) */
       scalingMode: attrs?.videoStream?.scalingMode ?? 'Crop'
     },
     isScreenSharingOn: attrs?.isScreenSharingOn ?? false
