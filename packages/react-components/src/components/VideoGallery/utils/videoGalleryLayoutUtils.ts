@@ -143,7 +143,7 @@ const _useOrganizedParticipantsWithPinnedParticipants = (
   const pinnedParticipantUserIdSet = new Set(props.pinnedParticipantUserIds);
   const unpinnedParticipants = props.remoteParticipants.filter((p) => !pinnedParticipantUserIdSet.has(p.userId));
 
-  const floatingLocalVideoLayoutProps = {
+  const useOrganizedParticipantsProps = {
     ...props,
     // if there are pinned participants then we should only consider unpinned participants
     remoteParticipants: unpinnedParticipants,
@@ -153,17 +153,19 @@ const _useOrganizedParticipantsWithPinnedParticipants = (
       : undefined
   };
 
-  const floatingLocalVideoLayout = _useOrganizedParticipants(floatingLocalVideoLayoutProps);
+  const useOrganizedParticipantsResult = _useOrganizedParticipants(useOrganizedParticipantsProps);
 
   if (pinnedParticipants.length === 0) {
-    return floatingLocalVideoLayout;
+    return useOrganizedParticipantsResult;
   }
 
   return {
     gridParticipants: props.isScreenShareActive ? [] : pinnedParticipants,
     horizontalGalleryParticipants: props.isScreenShareActive
-      ? pinnedParticipants.concat(floatingLocalVideoLayout.horizontalGalleryParticipants)
-      : floatingLocalVideoLayout.gridParticipants.concat(floatingLocalVideoLayout.horizontalGalleryParticipants)
+      ? pinnedParticipants.concat(useOrganizedParticipantsResult.horizontalGalleryParticipants)
+      : useOrganizedParticipantsResult.gridParticipants.concat(
+          useOrganizedParticipantsResult.horizontalGalleryParticipants
+        )
   };
 };
 
