@@ -10,7 +10,7 @@ import { LayoutProps } from './Layout';
 import { ScrollableHorizontalGallery } from './ScrollableHorizontalGallery';
 import { rootLayoutStyle } from './styles/DefaultLayout.styles';
 import { videoGalleryLayoutGap } from './styles/Layout.styles';
-import { useFloatingLocalVideoLayout } from './utils/videoGalleryLayoutUtils';
+import { useOrganizedParticipants } from './utils/videoGalleryLayoutUtils';
 import { VideoGalleryResponsiveHorizontalGallery } from './VideoGalleryResponsiveHorizontalGallery';
 
 /**
@@ -35,21 +35,23 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
     onRenderRemoteParticipant,
     styles,
     maxRemoteVideoStreams,
-    parentWidth
+    parentWidth,
+    /* @conditional-compile-remove(pinned-participants) */ pinnedParticipantUserIds
   } = props;
 
   const isNarrow = parentWidth ? isNarrowWidth(parentWidth) : false;
 
-  const floatingLocalVideoLayout = useFloatingLocalVideoLayout({
+  const { gridParticipants, horizontalGalleryParticipants } = useOrganizedParticipants({
     remoteParticipants,
     dominantSpeakers,
     maxRemoteVideoStreams,
-    isScreenShareActive: !!screenShareComponent
+    isScreenShareActive: !!screenShareComponent,
+    /* @conditional-compile-remove(pinned-participants) */ pinnedParticipantUserIds
   });
 
   let activeVideoStreams = 0;
 
-  const gridTiles = floatingLocalVideoLayout.gridParticipants.map((p) => {
+  const gridTiles = gridParticipants.map((p) => {
     return onRenderRemoteParticipant(
       p,
       maxRemoteVideoStreams && maxRemoteVideoStreams >= 0
@@ -58,7 +60,7 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
     );
   });
 
-  const horizontalGalleryTiles = floatingLocalVideoLayout.horizontalGalleryParticipants.map((p) => {
+  const horizontalGalleryTiles = horizontalGalleryParticipants.map((p) => {
     return onRenderRemoteParticipant(
       p,
       maxRemoteVideoStreams && maxRemoteVideoStreams >= 0
