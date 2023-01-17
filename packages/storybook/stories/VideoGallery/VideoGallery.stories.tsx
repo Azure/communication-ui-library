@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { VideoGallery as VideoGalleryComponent } from '@azure/communication-react';
-import { Text } from '@fluentui/react';
+import { Image, Stack, Text } from '@fluentui/react';
 import { ArgsTable, Canvas, Description, Heading, Source, Subheading, Title } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
@@ -20,6 +20,10 @@ import { LocalCameraSwitcherExample } from './snippets/LocalCameraSwitcher.snipp
 import { ScreenSharingFromPresenterExample } from './snippets/ScreenSharingFromPresenter.snippet';
 import { ScreenSharingFromViewerExample } from './snippets/ScreenSharingFromViewer.snippet';
 import { WithHorizontalGalleryExample } from './snippets/WithHorizontalGallery.snippet';
+import { ManagedPinnedParticipantsExample } from './snippets/ManagedPinnedParticipants.snippet';
+import { PinnedParticipantsDisabledExample } from './snippets/PinnedParticipantsDisabled.snippet';
+import { MobileWrapper } from './snippets/MobileWrapper';
+import { PinnedParticipantsMobileExample } from './snippets/PinnedParticipantsMobile.snippet';
 
 const CustomAvatarVideoGalleryExampleText = require('!!raw-loader!./snippets/CustomAvatar.snippet.tsx').default;
 const CustomStyleVideoGalleryExampleText = require('!!raw-loader!./snippets/CustomStyle.snippet.tsx').default;
@@ -32,6 +36,12 @@ const ScreenSharingFromPresenterExampleText =
 const ScreenSharingFromViewerExampleText =
   require('!!raw-loader!./snippets/ScreenSharingFromViewer.snippet.tsx').default;
 const WithHorizontalGalleryExampleText = require('!!raw-loader!./snippets/WithHorizontalGallery.snippet.tsx').default;
+const ManagedPinnedParticipantsExampleText =
+  require('!!raw-loader!./snippets/ManagedPinnedParticipants.snippet.tsx').default;
+const PinnedParticipantsDisabledExampleText =
+  require('!!raw-loader!./snippets/PinnedParticipantsDisabled.snippet.tsx').default;
+const PinnedParticipantsMobileExampleText =
+  require('!!raw-loader!./snippets/PinnedParticipantsMobile.snippet.tsx').default;
 
 const importStatement = `import { VideoGallery } from '@azure/communication-react';`;
 
@@ -92,7 +102,7 @@ const getDocs: () => JSX.Element = () => {
       <Heading>Screen Sharing Experience</Heading>
       <Description>
         The screen shared is the only element placed in the GridLayout and all remote participants are placed in the
-        Horizontal Gallery in the lower section. To be able to view this screen share, the sharing participant should
+        horizontal gallery in the lower section. To be able to view this screen share, the sharing participant should
         have their `isScreenSharingOn` prop set to true as well as a defined `screenShareStream` prop (see
         `localParticipant` and `remoteParticipants` props).
       </Description>
@@ -128,7 +138,7 @@ const getDocs: () => JSX.Element = () => {
       <Heading>Local Video Camera Button</Heading>
       <DetailedBetaBanner />
       <Description>
-        The Video Gallery can take in customization to allow for the introduction of local camera controls where the
+        The VideoGallery can take in customization to allow for the introduction of local camera controls where the
         button will cycle through the different camera's in the users device. Typical usage is to enable this button on
         mobile devices. This button is enabled through the use of the `showCameraSwitcherInLocalPreview` prop.
       </Description>
@@ -139,6 +149,98 @@ const getDocs: () => JSX.Element = () => {
       </StorybookBanner>
       <Canvas mdxSource={LocalVideoCameraCycleButtonExampleText}>
         <LocalCameraSwitcherExample />
+      </Canvas>
+
+      <Heading>Pinning Participants</Heading>
+      <DetailedBetaBanner />
+      <Description>
+        The VideoGallery allows pinning of participants to the GridLayout. You can try it out in any of the Video
+        Gallery components on this page (except in the Disabling remote video tile options section). The VideoGallery
+        will have a menu button in each remote video tile.
+      </Description>
+      <Stack horizontal={true}>
+        <Image
+          style={{ width: '100%', height: 'auto' }}
+          src="images/pin-menu-item-video-gallery.png"
+          alt="Pin menu item in VideoGallery"
+        />
+        <Image
+          style={{ width: '100%', height: 'auto' }}
+          src="images/pinned-video-gallery.png"
+          alt="Pinned participant in VideoGallery"
+        />
+      </Stack>
+      <Description>
+        When screensharing is active, pinned participants are shown first in the order they are pinned in the horizontal
+        gallery as shown below.
+      </Description>
+      <Stack horizontal={true}>
+        <Image
+          style={{ width: '100%', height: 'auto' }}
+          src="images/pin-menu-item-video-gallery-with-screenshare.png"
+          alt="Pin menu item in VideoGallery with screenshare active"
+        />
+        <Image
+          style={{ width: '100%', height: 'auto' }}
+          src="images/pinned-video-gallery-with-screenshare.png"
+          alt="Pinned participant in VideoGallery with screenshare active"
+        />
+      </Stack>
+      <Description>
+        Pinned participants can be unpinned through the same menu button as shown in the following screenshots.
+      </Description>
+      <Stack horizontal={true}>
+        <Image
+          style={{ width: '100%', height: 'auto' }}
+          /* set an approximate default height to avoid reflow when the image loads */ src="images/unpin-menu-item-video-gallery.png"
+          alt="Unpin menu item in VideoGallery"
+        />
+        <Image
+          style={{ width: '100%', height: 'auto' }}
+          /* set an approximate default height to avoid reflow when the image loads */ src="images/unpin-menu-item-video-gallery-with-screenshare.png"
+          alt="Unpin menu item in VideoGallery with screenshare active"
+        />
+      </Stack>
+      <Description>
+        The maximum pinned participants is currently set to 4 for the VideoGallery. The pin menu item will be disabled
+        when this limit is reached as shown below.
+      </Description>
+      <Image
+        style={{ width: '50%', height: 'auto' }}
+        /* set an approximate default height to avoid reflow when the image loads */ src="images/pinned-limit-reached-video-gallery.png"
+        alt="Disabled pin menu item in VideoGallery when limit reached"
+      />
+      <Subheading>Disabling remote video tile options</Subheading>
+      <StorybookBanner palette={yellowBannerPalette}>
+        <Text style={{ display: 'inline-block' }}>
+          This feature is be enabled by default but can be disabled by setting the remoteVideoTileMenu prop to 'false'
+          like in the example below.
+        </Text>
+      </StorybookBanner>
+      <Canvas mdxSource={PinnedParticipantsDisabledExampleText}>
+        <PinnedParticipantsDisabledExample />
+      </Canvas>
+      <Subheading>Managing the pinned participants state</Subheading>
+      <Description>
+        The state of which remote participants are pinned can be managed by defining the value of the
+        `pinnedParticipants` prop. But the callback props `onPinParticipant` and `onUnpinParticipant` must be defined to
+        update the managed state. In the example below, the pinned participants state is managed using a `useState`
+        hook. The display names of the pinned participants are shown in text above the VideoGallery.
+      </Description>
+      <Canvas mdxSource={ManagedPinnedParticipantsExampleText}>
+        <ManagedPinnedParticipantsExample />
+      </Canvas>
+      <Subheading>Pinning participants via long touch for mobile</Subheading>
+      <Description>
+        The VideoGallery also caters to pinning participants on mobile by setting the prop `remoteVideoTileMenuOptions`
+        to object `&#123; kind: 'drawer' &#125;`. This changes the contextual menu to a drawer menu that is opened via
+        long touch. The result is demonstrated below where all mouse clicks are converted to touch to simulate mobile
+        browser. You can long clicking a remote video tile to see that a drawer menu will appear.
+      </Description>
+      <Canvas mdxSource={PinnedParticipantsMobileExampleText}>
+        <MobileWrapper>
+          <PinnedParticipantsMobileExample />
+        </MobileWrapper>
       </Canvas>
 
       <Heading>Props</Heading>
