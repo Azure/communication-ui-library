@@ -119,10 +119,7 @@ export interface BaseCompositeProps<TIcons extends Record<string, JSX.Element>> 
 }
 
 // @public
-export interface CallAdapter extends CommonCallAdapter {
-    joinCall(microphoneOn?: boolean): Call | undefined;
-    startCall(participants: string[], options?: StartCallOptions): Call | undefined;
-}
+export type CallAdapter = CommonCallAdapter<Call | undefined>;
 
 // @public
 export type CallAdapterCallEndedEvent = {
@@ -719,9 +716,9 @@ export interface ChatCompositeStrings {
 }
 
 // @public
-export interface CommonCallAdapter extends AdapterState<CallAdapterState>, Disposable, CallAdapterCallOperations, CallAdapterDeviceManagement, CallAdapterSubscribers {
-    joinCall(microphoneOn?: boolean): void;
-    startCall(participants: string[], options?: StartCallOptions): void;
+export interface CommonCallAdapter<T = void> extends AdapterState<CallAdapterState>, Disposable, CallAdapterCallOperations, CallAdapterDeviceManagement, CallAdapterSubscribers {
+    joinCall(microphoneOn?: boolean): T;
+    startCall(participants: string[], options?: StartCallOptions): T;
 }
 
 // @public
