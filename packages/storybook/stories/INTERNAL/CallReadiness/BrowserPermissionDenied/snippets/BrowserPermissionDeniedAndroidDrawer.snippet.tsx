@@ -32,7 +32,7 @@ export const BrowserPemissionDeniedAndroidDrawer: () => JSX.Element = () => {
               onTroubleshootingClick={() => alert('clicked troubleshooting link')}
               onContinueAnywayClick={() => alert('clicked Allow Access button')}
               strings={locale}
-              type={'request'}
+              kind={'request'}
             />
           </_DrawerSurface>
         )}
