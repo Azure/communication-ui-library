@@ -24,7 +24,9 @@ registerIcons({
     videotilemoreoptions: <></>,
     videotilepinned: <></>,
     pinparticipant: <></>,
-    unpinparticipant: <></>
+    unpinparticipant: <></>,
+    videotilescalefit: <></>,
+    videotilescalefill: <></>
   }
 });
 
@@ -286,6 +288,92 @@ describe('VideoGallery floating local video layout tests', () => {
 });
 
 /* @conditional-compile-remove(pinned-participants) */
+describe('VideoGallery layout fit/fill tests', () => {
+  beforeAll(() => {
+    mockVideoGalleryInternalHelpers();
+  });
+
+  test.only('should have video tiles with a fit to frame contextual menu item by default', () => {
+    const localParticipant = createLocalParticipant({
+      videoStream: { isAvailable: true, renderElement: createVideoDivElement() }
+    });
+    const root = mountVideoGalleryWithLocalParticipant({ localParticipant });
+
+    // 2 remote participants with their video on.
+    const remoteParticipants = [...Array(2).keys()].map((i) => {
+      return createRemoteParticipant({
+        userId: `${i}`,
+        videoStream: { isAvailable: true, renderElement: createVideoDivElement() }
+      });
+    });
+
+    act(() => {
+      root.setProps({
+        layout: 'floatingLocalVideo',
+        remoteParticipants
+      });
+    });
+
+    const remoteVideoTile = root.find(GridLayout).find(VideoTile).first();
+
+    // click more button of first remote video tile in grid layout
+    const videoTileMoreOptionsButton = remoteVideoTile.find('[data-ui-id="video-tile-more-options-button"]').at(0);
+    if (videoTileMoreOptionsButton) {
+      videoTileMoreOptionsButton.simulate('click');
+    }
+
+    expect(gridTileCount(root)).toBe(2);
+    expect(root.find(GridLayout).find(VideoTile).first().prop('userId')).toBe('0');
+    expect(root.find(GridLayout).find(VideoTile).first().find(StreamMedia).exists()).toBe(true);
+    expect(root.find(GridLayout).find(VideoTile).first().prop('style'));
+    expect(root.find(GridLayout).find(VideoTile).at(1).prop('userId')).toBe('1');
+    expect(root.find(GridLayout).find(VideoTile).at(1).find(StreamMedia).exists()).toBe(true);
+
+    const fitToFrameButton = root.find('[data-ui-id="video-tile-fit-to-frame"]').first();
+    expect(fitToFrameButton.prop('aria-disabled')).toBe(false);
+  });
+
+  test('should have video tiles with a fill frame contextual menu item when scaling mode is set to Fit', () => {
+    const localParticipant = createLocalParticipant({
+      videoStream: { isAvailable: true, renderElement: createVideoDivElement() }
+    });
+    const root = mountVideoGalleryWithLocalParticipant({ localParticipant });
+
+    // 2 remote participants with their video on.
+    const remoteParticipants = [...Array(2).keys()].map((i) => {
+      return createRemoteParticipant({
+        userId: `${i}`,
+        videoStream: { isAvailable: true, renderElement: createVideoDivElement(), scalingMode: 'Fit' }
+      });
+    });
+
+    act(() => {
+      root.setProps({
+        layout: 'floatingLocalVideo',
+        remoteParticipants
+      });
+    });
+
+    const remoteVideoTile = root.find(GridLayout).find(VideoTile).first();
+
+    // click more button of first remote video tile in grid layout
+    const videoTileMoreOptionsButton = remoteVideoTile.find('[data-ui-id="video-tile-more-options-button"]').at(0);
+    if (videoTileMoreOptionsButton) {
+      videoTileMoreOptionsButton.simulate('click');
+    }
+
+    expect(gridTileCount(root)).toBe(2);
+    expect(root.find(GridLayout).find(VideoTile).first().prop('userId')).toBe('0');
+    expect(root.find(GridLayout).find(VideoTile).first().find(StreamMedia).exists()).toBe(true);
+    expect(root.find(GridLayout).find(VideoTile).at(1).prop('userId')).toBe('1');
+    expect(root.find(GridLayout).find(VideoTile).at(1).find(StreamMedia).exists()).toBe(true);
+
+    const fillFrameButton = root.find('[data-ui-id="video-tile-fill-frame"]').first();
+    expect(fillFrameButton.prop('aria-disabled')).toBe(false);
+  });
+});
+
+/* @conditional-compile-remove(pinned-participants) */
 describe('VideoGallery pinned participants tests', () => {
   beforeAll(() => {
     mockVideoGalleryInternalHelpers();
@@ -527,7 +615,8 @@ const createRemoteParticipant = (attrs?: Partial<VideoGalleryRemoteParticipant>)
       isAvailable: attrs?.videoStream?.isAvailable ?? false,
       isReceiving: attrs?.videoStream?.isReceiving ?? true,
       isMirrored: attrs?.videoStream?.isMirrored ?? false,
-      renderElement: attrs?.videoStream?.renderElement ?? undefined
+      renderElement: attrs?.videoStream?.renderElement ?? undefined,
+      scalingMode: attrs?.videoStream?.scalingMode ?? 'Crop'
     },
     isScreenSharingOn: attrs?.isScreenSharingOn ?? false
   };
