@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "Make common adapter generic according to ARB",
+  "packageName": "@azure/communication-react",
+  "email": "jinan@microsoft.com",
+  "dependentChangeType": "patch"
+}
