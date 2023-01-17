@@ -18,7 +18,7 @@ import {
 } from './styles/FloatingLocalVideo.styles';
 import { innerLayoutStyle, layerHostStyle, rootLayoutStyle } from './styles/FloatingLocalVideoLayout.styles';
 import { videoGalleryLayoutGap } from './styles/Layout.styles';
-import { useFloatingLocalVideoLayout } from './utils/videoGalleryLayoutUtils';
+import { useOrganizedParticipants } from './utils/videoGalleryLayoutUtils';
 import { VideoGalleryResponsiveHorizontalGallery } from './VideoGalleryResponsiveHorizontalGallery';
 
 /**
@@ -54,23 +54,25 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
     maxRemoteVideoStreams,
     showCameraSwitcherInLocalPreview,
     parentWidth,
-    parentHeight
+    parentHeight,
+    /* @conditional-compile-remove(pinned-participants) */ pinnedParticipantUserIds
   } = props;
 
   const theme = useTheme();
 
   const isNarrow = parentWidth ? isNarrowWidth(parentWidth) : false;
 
-  const floatingLocalVideoLayout = useFloatingLocalVideoLayout({
+  const { gridParticipants, horizontalGalleryParticipants } = useOrganizedParticipants({
     remoteParticipants,
     dominantSpeakers,
     maxRemoteVideoStreams,
-    isScreenShareActive: !!screenShareComponent
+    isScreenShareActive: !!screenShareComponent,
+    /* @conditional-compile-remove(pinned-participants) */ pinnedParticipantUserIds
   });
 
   let activeVideoStreams = 0;
 
-  const gridTiles = floatingLocalVideoLayout.gridParticipants.map((p) => {
+  const gridTiles = gridParticipants.map((p) => {
     return onRenderRemoteParticipant(
       p,
       maxRemoteVideoStreams && maxRemoteVideoStreams >= 0
@@ -85,7 +87,7 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
     gridTiles.push(localVideoComponent);
   }
 
-  const horizontalGalleryTiles = floatingLocalVideoLayout.horizontalGalleryParticipants.map((p) => {
+  const horizontalGalleryTiles = horizontalGalleryParticipants.map((p) => {
     return onRenderRemoteParticipant(
       p,
       maxRemoteVideoStreams && maxRemoteVideoStreams >= 0
