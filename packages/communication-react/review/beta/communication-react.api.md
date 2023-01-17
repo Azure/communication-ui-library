@@ -303,6 +303,7 @@ export type CallAdapterClientState = {
     alternateCallerId?: string;
     environmentInfo?: EnvironmentInfo;
     roleHint?: Role;
+    cameraStatus?: 'On' | 'Off';
 };
 
 // @public
@@ -2649,7 +2650,6 @@ export interface ParticipantItemStrings {
     isMeText: string;
     menuTitle: string;
     mutedIconLabel: string;
-    participantStateConnecting?: string;
     participantStateHold?: string;
     participantStateRinging?: string;
     removeButtonLabel: string;
@@ -3317,8 +3317,6 @@ export interface VideoTileProps {
 
 // @beta
 export interface VideoTileStrings {
-    // (undocumented)
-    participantStateConnecting: string;
     // (undocumented)
     participantStateHold: string;
     // (undocumented)

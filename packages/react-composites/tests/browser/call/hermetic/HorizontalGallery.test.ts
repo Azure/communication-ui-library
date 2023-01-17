@@ -3,7 +3,7 @@
 
 import { expect } from '@playwright/test';
 import { IDS } from '../../common/constants';
-import { dataUiId, pageClick, stableScreenshot, waitForSelector } from '../../common/utils';
+import { dataUiId, dragToRight, existsOnPage, pageClick, stableScreenshot, waitForSelector } from '../../common/utils';
 import {
   addScreenshareStream,
   addVideoStream,
@@ -62,6 +62,16 @@ test.describe('HorizontalGallery tests', async () => {
     expect(await stableScreenshot(page)).toMatchSnapshot(
       'horizontal-gallery-with-many-audio-participants-on-page-1.png'
     );
+
+    /* @conditional-compile-remove(pinned-participants) */
+    if (await existsOnPage(page, dataUiId('scrollable-horizontal-gallery'))) {
+      await dragToRight(page, dataUiId('scrollable-horizontal-gallery'));
+      expect(await stableScreenshot(page)).toMatchSnapshot(
+        'scrollable-horizontal-gallery-with-many-audio-participants-dragged.png'
+      );
+      return;
+    }
+
     await waitForSelector(page, dataUiId(IDS.horizontalGalleryRightNavButton));
     await pageClick(page, dataUiId(IDS.horizontalGalleryRightNavButton));
     expect(await stableScreenshot(page)).toMatchSnapshot(
@@ -78,8 +88,8 @@ test.describe('HorizontalGallery tests', async () => {
   test('HorizontalGallery should have 1 PSTN participant in the horizontal gallery', async ({ page, serverUrl }) => {
     const paul = defaultMockRemoteParticipant('Paul Bridges');
     addVideoStream(paul, true);
-    const vasily = defaultMockRemoteParticipant('Vasily Podkolzin');
-    vasily.state = 'Connecting';
+    const vasily = defaultMockRemotePSTNParticipant('+15553334444');
+    vasily.state = 'Ringing';
 
     const participants = [paul, vasily];
     const initialState = defaultMockCallAdapterState(participants);
@@ -115,7 +125,7 @@ test.describe('HorizontalGallery tests', async () => {
     );
   });
 
-  /* @conditional-compile-remove(PSTN-calls) */
+  /* @conditional-compile-remove(PSTN-calls) @conditional-compile-remove(pinned-participants) */
   test('HorizontalGallery should have multiple audio participants and 1 PSTN participant on second page', async ({
     page,
     serverUrl
@@ -128,7 +138,7 @@ test.describe('HorizontalGallery tests', async () => {
     const reina = defaultMockRemoteParticipant('Reina Takizawa');
     reina.isSpeaking = true;
     const phoneUser = defaultMockRemotePSTNParticipant('+15555555555');
-    phoneUser.state = 'Connecting';
+    phoneUser.state = 'Ringing';
 
     const participants = [
       paul,
@@ -145,6 +155,16 @@ test.describe('HorizontalGallery tests', async () => {
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
 
     await waitForSelector(page, dataUiId(IDS.videoGallery));
+
+    /* @conditional-compile-remove(pinned-participants) */
+    if (await existsOnPage(page, dataUiId('scrollable-horizontal-gallery'))) {
+      await dragToRight(page, dataUiId('scrollable-horizontal-gallery'));
+      expect(await stableScreenshot(page)).toMatchSnapshot(
+        'scrollable-horizontal-gallery-with-joining-participant-dragged.png'
+      );
+      return;
+    }
+
     await waitForSelector(page, dataUiId(IDS.horizontalGalleryRightNavButton));
     await pageClick(page, dataUiId(IDS.horizontalGalleryRightNavButton));
     expect(await stableScreenshot(page)).toMatchSnapshot(
@@ -166,7 +186,7 @@ test.describe('HorizontalGallery tests', async () => {
     const reina = defaultMockRemoteParticipant('Reina Takizawa');
     reina.isSpeaking = true;
     const phoneUser = defaultMockRemotePSTNParticipant('+15555555555');
-    phoneUser.state = 'Connecting';
+    phoneUser.state = 'Ringing';
 
     const participants = [paul, fiona, reina, phoneUser];
     const initialState = defaultMockCallAdapterState(participants);
@@ -196,7 +216,7 @@ test.describe('HorizontalGallery tests', async () => {
     const paul = defaultMockRemoteParticipant('Paul Bridges');
     paul.state = 'Ringing';
     const phoneUser = defaultMockRemotePSTNParticipant('+15555555555');
-    phoneUser.state = 'Connecting';
+    phoneUser.state = 'Ringing';
     phoneUser.isMuted = false;
 
     const participants = [reina, paul, phoneUser];
@@ -213,7 +233,7 @@ test.describe('HorizontalGallery tests', async () => {
     const reina = defaultMockRemoteParticipant('Reina Takizawa');
     reina.state = 'Hold';
     const phoneUser = defaultMockRemotePSTNParticipant('+15555555555');
-    phoneUser.state = 'Connecting';
+    phoneUser.state = 'Ringing';
 
     const participants = [reina, phoneUser];
     const initialState = defaultMockCallAdapterState(participants);

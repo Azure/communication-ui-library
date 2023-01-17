@@ -663,6 +663,7 @@ export interface _DrawerMenuItemProps {
 
 // @internal
 export interface _DrawerMenuProps {
+    heading?: string;
     // (undocumented)
     items: _DrawerMenuItemProps[];
     onLightDismiss: () => void;
@@ -681,6 +682,7 @@ export const _DrawerSurface: (props: _DrawerSurfaceProps) => JSX.Element;
 // @internal
 export interface _DrawerSurfaceProps {
     children: React_2.ReactNode;
+    heading?: string;
     onLightDismiss: () => void;
     styles?: _DrawerSurfaceStyles;
 }
@@ -1217,7 +1219,6 @@ export interface ParticipantItemStrings {
     isMeText: string;
     menuTitle: string;
     mutedIconLabel: string;
-    participantStateConnecting?: string;
     participantStateHold?: string;
     participantStateRinging?: string;
     removeButtonLabel: string;
@@ -1398,7 +1399,7 @@ export const _RemoteVideoTile: React_2.MemoExoticComponent<(props: {
     personaMinSize?: number | undefined;
     strings?: VideoGalleryStrings | undefined;
     participantState?: ParticipantState | undefined;
-    showRemoteVideoTileContextualMenu?: boolean | undefined;
+    menuKind?: "contextual" | "drawer" | undefined;
     drawerMenuHostId?: string | undefined;
     onPinParticipant?: ((userId: string) => void) | undefined;
     onUnpinParticipant?: ((userId: string) => void) | undefined;
@@ -1776,8 +1777,6 @@ export interface VideoTileProps {
 
 // @beta
 export interface VideoTileStrings {
-    // (undocumented)
-    participantStateConnecting: string;
     // (undocumented)
     participantStateHold: string;
     // (undocumented)

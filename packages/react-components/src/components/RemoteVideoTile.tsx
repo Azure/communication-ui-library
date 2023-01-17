@@ -3,6 +3,8 @@
 
 import { IContextualMenuProps, Layer, Stack } from '@fluentui/react';
 import React, { useMemo } from 'react';
+/* @conditional-compile-remove(pinned-participants) */
+import { KeyboardEvent, useCallback } from 'react';
 import {
   CreateVideoStreamViewResult,
   OnRenderAvatarCallback,
@@ -48,7 +50,7 @@ export const _RemoteVideoTile = React.memo(
     personaMinSize?: number;
     strings?: VideoGalleryStrings;
     participantState?: ParticipantState;
-    showRemoteVideoTileContextualMenu?: boolean;
+    menuKind?: 'contextual' | 'drawer';
     drawerMenuHostId?: string;
     onPinParticipant?: (userId: string) => void;
     onUnpinParticipant?: (userId: string) => void;
@@ -68,7 +70,7 @@ export const _RemoteVideoTile = React.memo(
       showMuteIndicator,
       remoteParticipant,
       participantState,
-      showRemoteVideoTileContextualMenu = true,
+      menuKind = 'contextual',
       isPinned,
       onPinParticipant,
       onUnpinParticipant,
@@ -115,11 +117,11 @@ export const _RemoteVideoTile = React.memo(
     });
 
     const videoTileContextualMenuProps = useMemo(() => {
-      if (!showRemoteVideoTileContextualMenu) {
+      if (menuKind !== 'contextual') {
         return {};
       }
       return videoTileContextualMenuPropsTrampoline(contextualMenuProps);
-    }, [contextualMenuProps, showRemoteVideoTileContextualMenu]);
+    }, [contextualMenuProps, menuKind]);
 
     const showLoadingIndicator = isAvailable && isReceiving === false && participantState !== 'Disconnected';
 
@@ -138,8 +140,26 @@ export const _RemoteVideoTile = React.memo(
       );
     }, [renderElement, showLoadingIndicator]);
 
+    /* @conditional-compile-remove(pinned-participants) */
+    const onKeyDown = useCallback(
+      (e: KeyboardEvent) => {
+        if (e.key === 'Enter') {
+          setDrawerMenuItemProps(
+            convertContextualMenuItemsToDrawerMenuItemProps(contextualMenuProps, () => setDrawerMenuItemProps([]))
+          );
+        }
+      },
+      [setDrawerMenuItemProps, contextualMenuProps]
+    );
+
     return (
-      <Stack style={remoteVideoTileWrapperStyle}>
+      <Stack
+        /* @conditional-compile-remove(pinned-participants) */
+        tabIndex={menuKind === 'drawer' ? 0 : undefined}
+        /* @conditional-compile-remove(pinned-participants) */
+        onKeyDown={menuKind === 'drawer' ? onKeyDown : undefined}
+        style={remoteVideoTileWrapperStyle}
+      >
         <VideoTile
           key={userId}
           userId={userId}
@@ -167,7 +187,11 @@ export const _RemoteVideoTile = React.memo(
         {drawerMenuItemProps.length > 0 && (
           <Layer hostId={props.drawerMenuHostId}>
             <Stack styles={drawerMenuWrapperStyles}>
-              <_DrawerMenu onLightDismiss={() => setDrawerMenuItemProps([])} items={drawerMenuItemProps} />
+              <_DrawerMenu
+                onLightDismiss={() => setDrawerMenuItemProps([])}
+                items={drawerMenuItemProps}
+                heading={remoteParticipant.displayName}
+              />
             </Stack>
           </Layer>
         )}
