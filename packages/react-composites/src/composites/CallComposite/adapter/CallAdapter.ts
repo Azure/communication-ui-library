@@ -577,7 +577,7 @@ export interface CallAdapterCallManagement extends CallAdapterCallOperations {
 
 // TODO: Flatten the adapter structure
 /**
- * {@link CallComposite} Adapter interface. CallComposite requires no return types for all methods,
+ * {@link CallComposite} Adapter interface. CallComposite requires no return types when start/join a call,
  * Use generic type only for exposing call related object when adapter is called directly
  *
  * @public

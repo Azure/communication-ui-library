@@ -244,12 +244,7 @@ export interface BrowserPermissionDeniedStyles extends BaseCustomStyles {
 }
 
 // @public
-export interface CallAdapter extends CommonCallAdapter {
-    joinCall(microphoneOn?: boolean): Call | undefined;
-    startCall(participants: string[], options?: StartCallOptions): Call | undefined;
-    // @beta
-    startCall(participants: CommunicationIdentifier[], options?: StartCallOptions): Call | undefined;
-}
+export type CallAdapter = CommonCallAdapter<Call | undefined>;
 
 // @public
 export type CallAdapterCallEndedEvent = {
@@ -1355,11 +1350,11 @@ export type ClientState = CallClientState & ChatClientState;
 export type Common<A, B> = Pick<A, CommonProperties<A, B>>;
 
 // @public
-export interface CommonCallAdapter extends AdapterState<CallAdapterState>, Disposable, CallAdapterCallOperations, CallAdapterDeviceManagement, CallAdapterSubscribers {
-    joinCall(microphoneOn?: boolean): void;
-    startCall(participants: string[], options?: StartCallOptions): void;
+export interface CommonCallAdapter<T = void> extends AdapterState<CallAdapterState>, Disposable, CallAdapterCallOperations, CallAdapterDeviceManagement, CallAdapterSubscribers {
+    joinCall(microphoneOn?: boolean): T;
+    startCall(participants: string[], options?: StartCallOptions): T;
     // @beta
-    startCall(participants: CommunicationIdentifier[], options?: StartCallOptions): void;
+    startCall(participants: CommunicationIdentifier[], options?: StartCallOptions): T;
 }
 
 // @public
@@ -2999,11 +2994,7 @@ export interface SystemMessageCommon extends MessageCommon {
 }
 
 // @beta
-export interface TeamsCallAdapter extends CommonCallAdapter {
-    joinCall(microphoneOn?: boolean): TeamsCall | undefined;
-    startCall(participants: string[], options?: StartCallOptions): TeamsCall | undefined;
-    startCall(participants: CommunicationIdentifier[], options?: StartCallOptions): TeamsCall | undefined;
-}
+export type TeamsCallAdapter = CommonCallAdapter<TeamsCall | undefined>;
 
 // @beta
 export type TeamsCallAdapterArgs = {
