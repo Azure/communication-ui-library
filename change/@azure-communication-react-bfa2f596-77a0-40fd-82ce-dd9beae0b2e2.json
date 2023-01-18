@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Update samples to disable pull down to refresh in chat",
-  "packageName": "@azure/communication-react",
-  "email": "edwardlee@microsoft.com",
-  "dependentChangeType": "patch"
-}

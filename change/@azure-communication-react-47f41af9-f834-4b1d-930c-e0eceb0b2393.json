@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Tee errors to state when starting or stopping a local video preview outside of a call fails",
-  "packageName": "@azure/communication-react",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

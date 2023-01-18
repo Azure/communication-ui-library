@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Filter out devices with blank names",
-  "packageName": "@internal/calling-component-bindings",
-  "email": "miguelgamis@microsoft.com",
-  "dependentChangeType": "patch"
-}
