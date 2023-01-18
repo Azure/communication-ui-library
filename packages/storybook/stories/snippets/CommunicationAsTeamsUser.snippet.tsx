@@ -1,9 +1,9 @@
 import { AzureCommunicationTokenCredential, MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
 import {
-  CallAdapter,
   CallComposite,
   CallCompositeOptions,
   CompositeLocale,
+  TeamsCallAdapter,
   useTeamsCallAdapter
 } from '@azure/communication-react';
 import { PartialTheme, Theme } from '@fluentui/react';
@@ -70,7 +70,7 @@ export const ContosoCallContainer = (props: ContainerProps): JSX.Element => {
   return <>Initializing...</>;
 };
 
-const leaveCall = async (adapter: CallAdapter): Promise<void> => {
+const leaveCall = async (adapter: TeamsCallAdapter): Promise<void> => {
   await adapter.leaveCall().catch((e) => {
     console.error('Failed to leave call', e);
   });
