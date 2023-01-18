@@ -50,8 +50,7 @@ const MockRemoteParticipants = [
     displayName: 'Bruce Wayne',
     videoStream: {
       isAvailable: true,
-      renderElement: user5MockVideoElement,
-      scalingMode: 'Fit'
+      renderElement: user5MockVideoElement
     }
   },
   {
@@ -59,8 +58,7 @@ const MockRemoteParticipants = [
     displayName: 'Ororo Munroe',
     videoStream: {
       isAvailable: true,
-      renderElement: user6MockVideoElement,
-      scalingMode: 'Fit'
+      renderElement: user6MockVideoElement
     }
   }
 ];
