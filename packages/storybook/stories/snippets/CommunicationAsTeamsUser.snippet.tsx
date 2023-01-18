@@ -4,7 +4,7 @@ import {
   CallComposite,
   CallCompositeOptions,
   CompositeLocale,
-  createTeamsCallAdapter
+  useTeamsCallAdapter
 } from '@azure/communication-react';
 import { PartialTheme, Theme } from '@fluentui/react';
 import React, { useMemo } from 'react';
@@ -32,15 +32,19 @@ export const ContosoCallContainer = (props: ContainerProps): JSX.Element => {
     }
   }, [props.token]);
 
-  if (!credential || !props.meetingUrl) {
-    return <></>;
-  }
-
-  const adapter = createTeamsCallAdapter({
-    userId: props.userId,
-    credential,
-    locator: { meetingLink: props.meetingUrl }
-  });
+  const adapter = useTeamsCallAdapter(
+    {
+      userId: props.userId,
+      credential,
+      locator: props.meetingUrl
+        ? {
+            meetingLink: props.meetingUrl
+          }
+        : undefined
+    },
+    undefined,
+    leaveCall
+  );
 
   if (!props.meetingUrl) {
     return <>Teams meeting link is not provided.</>;
