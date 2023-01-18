@@ -235,6 +235,8 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
     contextualMenu
   } = props;
 
+  const [isHovered, setIsHovered] = useState<boolean>(false);
+  const [isFocused, setIsFocused] = useState<boolean>(false);
   const [personaSize, setPersonaSize] = useState(100);
   const videoTileRef = useRef<HTMLDivElement>(null);
 
@@ -305,6 +307,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
 
   const canShowLabel = showLabel && (displayName || (showMuteIndicator && isMuted));
   const participantStateString = participantStateStringTrampoline(props, locale);
+  const canShowContextMenuButton = isHovered || isFocused;
   return (
     <Stack
       data-ui-id={ids.videoTile}
@@ -312,7 +315,9 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
         rootStyles,
         {
           background: theme.palette.neutralLighter,
-          borderRadius: theme.effects.roundedCorner4
+          borderRadius: theme.effects.roundedCorner4,
+          // To ensure that the video tile is focusable when there is a floating video tile
+          zIndex: 1
         },
         isSpeaking && {
           '&::before': {
@@ -329,7 +334,14 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
       )}
       {...longPressHandlersTrampoline}
     >
-      <div ref={videoTileRef} style={{ width: '100%', height: '100%' }}>
+      <div
+        ref={videoTileRef}
+        style={{ width: '100%', height: '100%' }}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        onFocus={() => setIsFocused(true)}
+        onBlur={() => setIsFocused(false)}
+      >
         {isVideoRendered ? (
           <Stack
             className={mergeStyles(
@@ -382,7 +394,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
               )}
               {
                 /* @conditional-compile-remove(pinned-participants) */
-                <VideoTileMoreOptionsButton contextualMenu={contextualMenu} />
+                canShowContextMenuButton && <VideoTileMoreOptionsButton contextualMenu={contextualMenu} />
               }
               {
                 /* @conditional-compile-remove(pinned-participants) */
