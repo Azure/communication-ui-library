@@ -2,8 +2,9 @@
 // Licensed under the MIT license.
 
 import { concatStyleSets, IStyle, mergeStyles, Stack } from '@fluentui/react';
-import React, { useCallback, useMemo, useRef } from 'react';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { GridLayoutStyles } from '.';
+import { Announcer } from './Announcer';
 import { useLocale } from '../localization';
 import { useTheme } from '../theming';
 import {
@@ -92,6 +93,18 @@ export interface VideoGalleryStrings {
   /* @conditional-compile-remove(pinned-participants) */
   /** Menu text shown in Video Tile contextual menu for setting a remote participant's video tile */
   unpinParticipantForMe: string;
+  /* @conditional-compile-remove(pinned-participants) */
+  /** Aria label for pin participant menu item of remote participant's video tile */
+  pinParticipantMenuItemAriaLabel: string;
+  /* @conditional-compile-remove(pinned-participants) */
+  /** Aria label for unpin participant menu item of remote participant's video tile */
+  unpinParticipantMenuItemAriaLabel: string;
+  /* @conditional-compile-remove(pinned-participants) */
+  /** Aria label to announce when remote participant's video tile is pinned */
+  pinnedParticipantAnnouncementAriaLabel: string;
+  /* @conditional-compile-remove(pinned-participants) */
+  /** Aria label to announce when remote participant's video tile is unpinned */
+  unpinnedParticipantAnnouncementAriaLabel: string;
 }
 
 /**
@@ -423,6 +436,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           isPinned={isPinned}
           /* @conditional-compile-remove(pinned-participants) */
           disablePinMenuItem={pinnedParticipants.length >= MAX_PINNED_REMOTE_VIDEO_TILES}
+          /* @conditional-compile-remove(pinned-participants) */
+          toggleAnnouncerString={toggleAnnouncerString}
         />
       );
     },
@@ -504,6 +519,23 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     return <DefaultLayout {...layoutProps} />;
   }, [layout, layoutProps]);
 
+  const [pinAnnouncementString, setPinAnnouncementString] = useState<string>('');
+  /**
+   * sets the announcement string for VideoGallery actions
+   */
+  const toggleAnnouncerString = useCallback(
+    (announcement) => {
+      setPinAnnouncementString(announcement);
+      /**
+       * Clears the announcer string after VideoGallery action allowing it to be re-announced.
+       */
+      setTimeout(() => {
+        setPinAnnouncementString('');
+      }, 3000);
+    },
+    [setPinAnnouncementString]
+  );
+
   return (
     <div
       /* @conditional-compile-remove(pinned-participants) */
@@ -514,6 +546,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       className={mergeStyles(videoGalleryOuterDivStyle, styles?.root)}
     >
       {videoGalleryLayout}
+      <Announcer announcementString={pinAnnouncementString} ariaLive="polite" />
     </div>
   );
 };
