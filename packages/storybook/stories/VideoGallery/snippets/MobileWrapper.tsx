@@ -12,12 +12,12 @@ export const MobileWrapper = (props: { children: React.ReactNode }): JSX.Element
     if (wrapper) {
       mobileWrap(wrapper);
     }
-  }, []);
+  }, [wrapperId]);
 
   return <div id={wrapperId}>{props.children}</div>;
 };
 
-const mobileWrap = (element: HTMLElement | null) => {
+const mobileWrap = (element: HTMLElement | null): void => {
   if (element) {
     element.addEventListener('mousedown', mouseHandler, true);
     element.addEventListener('mousemove', mouseHandler, true);
@@ -25,16 +25,16 @@ const mobileWrap = (element: HTMLElement | null) => {
   }
 };
 
-const mouseHandler = (e) => {
+const mouseHandler = (e): void => {
   e.preventDefault();
-  let type = {
+  const type = {
     mousedown: 'touchstart',
     mousemove: 'touchmove',
     mouseup: 'touchend',
     click: 'touchend'
   }[e.type];
 
-  let touch = new Touch({
+  const touch = new Touch({
     identifier: e.button,
     clientX: e.clientX,
     clientY: e.clientY,
@@ -43,7 +43,7 @@ const mouseHandler = (e) => {
     target: e.target,
     touchType: 'direct'
   });
-  let te = new TouchEvent(type, {
+  const te = new TouchEvent(type, {
     bubbles: true,
     cancelable: true,
     touches: [touch],

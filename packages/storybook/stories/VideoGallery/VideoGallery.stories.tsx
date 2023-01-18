@@ -17,13 +17,13 @@ import { CustomStyleVideoGalleryExample } from './snippets/CustomStyle.snippet';
 import { DefaultVideoGalleryExample } from './snippets/Default.snippet';
 import { FloatingLocalVideoExample } from './snippets/FloatingLocalVideo.snippet';
 import { LocalCameraSwitcherExample } from './snippets/LocalCameraSwitcher.snippet';
+import { ManagedPinnedParticipantsExample } from './snippets/ManagedPinnedParticipants.snippet';
+import { MobileWrapper } from './snippets/MobileWrapper';
+import { PinnedParticipantsDisabledExample } from './snippets/PinnedParticipantsDisabled.snippet';
+import { PinnedParticipantsMobileExample } from './snippets/PinnedParticipantsMobile.snippet';
 import { ScreenSharingFromPresenterExample } from './snippets/ScreenSharingFromPresenter.snippet';
 import { ScreenSharingFromViewerExample } from './snippets/ScreenSharingFromViewer.snippet';
 import { WithHorizontalGalleryExample } from './snippets/WithHorizontalGallery.snippet';
-import { ManagedPinnedParticipantsExample } from './snippets/ManagedPinnedParticipants.snippet';
-import { PinnedParticipantsDisabledExample } from './snippets/PinnedParticipantsDisabled.snippet';
-import { MobileWrapper } from './snippets/MobileWrapper';
-import { PinnedParticipantsMobileExample } from './snippets/PinnedParticipantsMobile.snippet';
 
 const CustomAvatarVideoGalleryExampleText = require('!!raw-loader!./snippets/CustomAvatar.snippet.tsx').default;
 const CustomStyleVideoGalleryExampleText = require('!!raw-loader!./snippets/CustomStyle.snippet.tsx').default;
@@ -31,17 +31,17 @@ const DefaultVideoGalleryExampleText = require('!!raw-loader!./snippets/Default.
 const FloatingLocalVideoExampleText = require('!!raw-loader!./snippets/FloatingLocalVideo.snippet.tsx').default;
 const LocalVideoCameraCycleButtonExampleText =
   require('!!raw-loader!./snippets/LocalCameraSwitcher.snippet.tsx').default;
-const ScreenSharingFromPresenterExampleText =
-  require('!!raw-loader!./snippets/ScreenSharingFromPresenter.snippet.tsx').default;
-const ScreenSharingFromViewerExampleText =
-  require('!!raw-loader!./snippets/ScreenSharingFromViewer.snippet.tsx').default;
-const WithHorizontalGalleryExampleText = require('!!raw-loader!./snippets/WithHorizontalGallery.snippet.tsx').default;
 const ManagedPinnedParticipantsExampleText =
   require('!!raw-loader!./snippets/ManagedPinnedParticipants.snippet.tsx').default;
 const PinnedParticipantsDisabledExampleText =
   require('!!raw-loader!./snippets/PinnedParticipantsDisabled.snippet.tsx').default;
 const PinnedParticipantsMobileExampleText =
   require('!!raw-loader!./snippets/PinnedParticipantsMobile.snippet.tsx').default;
+const ScreenSharingFromPresenterExampleText =
+  require('!!raw-loader!./snippets/ScreenSharingFromPresenter.snippet.tsx').default;
+const ScreenSharingFromViewerExampleText =
+  require('!!raw-loader!./snippets/ScreenSharingFromViewer.snippet.tsx').default;
+const WithHorizontalGalleryExampleText = require('!!raw-loader!./snippets/WithHorizontalGallery.snippet.tsx').default;
 
 const importStatement = `import { VideoGallery } from '@azure/communication-react';`;
 
