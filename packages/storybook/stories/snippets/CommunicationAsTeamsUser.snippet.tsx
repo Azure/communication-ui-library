@@ -1,16 +1,20 @@
-import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
+import {
+  AzureCommunicationTokenCredential,
+  CommunicationUserIdentifier,
+  MicrosoftTeamsUserIdentifier
+} from '@azure/communication-common';
 import {
   CallAdapter,
   CallComposite,
   CallCompositeOptions,
   CompositeLocale,
-  useAzureTeamsCallAdapter
+  createTeamsCallAdapter
 } from '@azure/communication-react';
 import { PartialTheme, Theme } from '@fluentui/react';
 import React, { useMemo } from 'react';
 
 export type ContainerProps = {
-  userId: CommunicationUserIdentifier;
+  userId: MicrosoftTeamsUserIdentifier;
   token: string;
   locator: string;
   displayName: string;
@@ -32,19 +36,15 @@ export const ContosoCallContainer = (props: ContainerProps): JSX.Element => {
     }
   }, [props.token]);
 
-  const adapter = useAzureTeamsCallAdapter(
-    {
-      userId: props.userId,
-      credential,
-      locator: props.meetingUrl
-        ? {
-            meetingLink: props.meetingUrl
-          }
-        : undefined
-    },
-    undefined,
-    leaveCall
-  );
+  if (!credential || !props.meetingUrl) {
+    return <></>;
+  }
+
+  const adapter = createTeamsCallAdapter({
+    userId: props.userId,
+    credential,
+    locator: { meetingLink: props.meetingUrl }
+  });
 
   if (!props.meetingUrl) {
     return <>Teams meeting link is not provided.</>;
