@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add scalingMode to VideoGalleryStream type",
-  "packageName": "@azure/communication-react",
-  "email": "anjulgarg@live.com",
-  "dependentChangeType": "patch"
-}
