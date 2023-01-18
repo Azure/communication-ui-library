@@ -235,7 +235,9 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
     contextualMenu
   } = props;
 
+  /* @conditional-compile-remove(pinned-participants) */
   const [isHovered, setIsHovered] = useState<boolean>(false);
+  /* @conditional-compile-remove(pinned-participants) */
   const [isFocused, setIsFocused] = useState<boolean>(false);
   const [personaSize, setPersonaSize] = useState(100);
   const videoTileRef = useRef<HTMLDivElement>(null);
@@ -307,6 +309,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
 
   const canShowLabel = showLabel && (displayName || (showMuteIndicator && isMuted));
   const participantStateString = participantStateStringTrampoline(props, locale);
+  /* @conditional-compile-remove(pinned-participants) */
   const canShowContextMenuButton = isHovered || isFocused;
   return (
     <Stack
@@ -337,10 +340,10 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
       <div
         ref={videoTileRef}
         style={{ width: '100%', height: '100%' }}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-        onFocus={() => setIsFocused(true)}
-        onBlur={() => setIsFocused(false)}
+        /* @conditional-compile-remove(pinned-participants) */ onMouseEnter={() => setIsHovered(true)}
+        /* @conditional-compile-remove(pinned-participants) */ onMouseLeave={() => setIsHovered(false)}
+        /* @conditional-compile-remove(pinned-participants) */ onFocus={() => setIsFocused(true)}
+        /* @conditional-compile-remove(pinned-participants) */ onBlur={() => setIsFocused(false)}
       >
         {isVideoRendered ? (
           <Stack
