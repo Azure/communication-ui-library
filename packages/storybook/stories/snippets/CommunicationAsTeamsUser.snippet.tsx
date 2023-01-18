@@ -1,8 +1,4 @@
-import {
-  AzureCommunicationTokenCredential,
-  CommunicationUserIdentifier,
-  MicrosoftTeamsUserIdentifier
-} from '@azure/communication-common';
+import { AzureCommunicationTokenCredential, MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
 import {
   CallAdapter,
   CallComposite,
