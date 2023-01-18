@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Fix chat pane problem when no parent height is set",
-  "packageName": "@azure/communication-react",
-  "email": "jinan@microsoft.com",
-  "dependentChangeType": "patch"
-}

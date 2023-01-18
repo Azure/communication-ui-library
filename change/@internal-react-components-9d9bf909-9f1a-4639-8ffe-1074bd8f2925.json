@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add domain permission denied prompt pure UI component",
-  "packageName": "@internal/react-components",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
