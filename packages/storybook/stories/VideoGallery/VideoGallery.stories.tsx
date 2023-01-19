@@ -154,9 +154,9 @@ const getDocs: () => JSX.Element = () => {
       <Heading>Pinning Participants</Heading>
       <DetailedBetaBanner />
       <Description>
-        The VideoGallery allows pinning of participants to the GridLayout. You can try it out in any of the Video
-        Gallery components on this page (except in the Disabling remote video tile options section). The VideoGallery
-        will have a menu button in each remote video tile.
+        The VideoGallery allows pinning of participants to the GridLayout. You can try it out in any of the VideoGallery
+        components on this page (except in the Disabling remote video tile options section.) The VideoGallery will have
+        a menu button in each remote video tile.
       </Description>
       <Stack horizontal={true}>
         <Image
@@ -213,7 +213,7 @@ const getDocs: () => JSX.Element = () => {
       <Subheading>Disabling remote video tile options</Subheading>
       <StorybookBanner palette={yellowBannerPalette}>
         <Text style={{ display: 'inline-block' }}>
-          This feature is be enabled by default but can be disabled by setting the remoteVideoTileMenu prop to 'false'
+          This feature is be enabled by default but can be disabled by setting the `remoteVideoTileMenu` prop to 'false'
           like in the example below.
         </Text>
       </StorybookBanner>
@@ -234,7 +234,7 @@ const getDocs: () => JSX.Element = () => {
       <Description>
         The VideoGallery also caters to pinning participants on mobile by setting the prop `remoteVideoTileMenuOptions`
         to object `&#123; kind: 'drawer' &#125;`. This changes the contextual menu to a drawer menu that is opened via
-        long touch. The result is demonstrated below where all mouse clicks are converted to touch to simulate mobile
+        long touch. The result is demonstrated below where all mouse clicks are converted to touch to simulate a mobile
         browser. You can long clicking a remote video tile to see that a drawer menu will appear.
       </Description>
       <Canvas mdxSource={PinnedParticipantsMobileExampleText}>
