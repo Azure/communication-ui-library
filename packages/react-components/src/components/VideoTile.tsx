@@ -284,14 +284,15 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
     longPressHandlers
   ]);
 
-  /* @conditional-compile-remove(pinned-participants) */
   const hoverHandlers = useMemo(() => {
+    /* @conditional-compile-remove(pinned-participants) */
     return {
       onMouseEnter: () => setIsHovered(true),
       onMouseLeave: () => setIsHovered(false),
       onFocus: () => setIsFocused(true),
       onBlur: () => setIsFocused(false)
     };
+    return {};
   }, []);
 
   const placeholderOptions = {
@@ -347,13 +348,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
       )}
       {...longPressHandlersTrampoline}
     >
-      <div
-        ref={videoTileRef}
-        style={{ width: '100%', height: '100%' }}
-        {
-          /* @conditional-compile-remove(pinned-participants) */ ...hoverHandlers
-        }
-      >
+      <div ref={videoTileRef} style={{ width: '100%', height: '100%' }} {...hoverHandlers}>
         {isVideoRendered ? (
           <Stack
             className={mergeStyles(
