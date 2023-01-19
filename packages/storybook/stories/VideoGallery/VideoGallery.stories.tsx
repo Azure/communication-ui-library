@@ -173,8 +173,8 @@ const getDocs: () => JSX.Element = () => {
         />
       </Stack>
       <Description>
-        When screensharing is active, pinned participants are shown in the horizontal gallery instead as shown in the
-        two screenshots below.
+        When screensharing is active, pinned participants are shown in the horizontal gallery as shown in the two
+        screenshots below.
       </Description>
       <Stack horizontal={true} tokens={{ childrenGap: '0.5rem' }}>
         <Image
@@ -212,17 +212,6 @@ const getDocs: () => JSX.Element = () => {
         /* set an approximate default height to avoid reflow when the image loads */ src="images/pinned-limit-reached-video-gallery.png"
         alt="Disabled pin menu item in VideoGallery when limit reached"
       />
-      <Subheading>Managing the pinned participants state</Subheading>
-      <Description>
-        The state of which remote participants are pinned can be managed by defining the value of the
-        `pinnedParticipants` prop. But the callback props `onPinParticipant` and `onUnpinParticipant` must be defined to
-        update the managed state. In the example below, the pinned participants state is managed using a `useState` hook
-        outside of the VideoGallery component. The display names of the pinned participants are shown in text above the
-        VideoGallery.
-      </Description>
-      <Canvas mdxSource={ManagedPinnedParticipantsExampleText}>
-        <ManagedPinnedParticipantsExample />
-      </Canvas>
       <Subheading>Pinning participants via long touch for mobile</Subheading>
       <Description>
         The VideoGallery also caters to pinning participants on mobile by setting the prop `remoteVideoTileMenuOptions`
@@ -235,6 +224,17 @@ const getDocs: () => JSX.Element = () => {
         <MobileWrapper>
           <PinnedParticipantsMobileExample />
         </MobileWrapper>
+      </Canvas>
+      <Subheading>Managing the pinned participants state</Subheading>
+      <Description>
+        The state of which remote participants are pinned can be managed by defining the value of the
+        `pinnedParticipants` prop. But the callback props `onPinParticipant` and `onUnpinParticipant` must be defined to
+        update the managed state. In the example below, the pinned participants state is managed outside of the
+        VideoGallery component using a `useState` hook . The display names of the pinned participants are shown in text
+        above the VideoGallery.
+      </Description>
+      <Canvas mdxSource={ManagedPinnedParticipantsExampleText}>
+        <ManagedPinnedParticipantsExample />
       </Canvas>
 
       <Heading>Disabling remote video tile contextual menu</Heading>
