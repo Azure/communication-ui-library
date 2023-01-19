@@ -154,12 +154,13 @@ const getDocs: () => JSX.Element = () => {
       <Heading>Pinning Participants</Heading>
       <DetailedBetaBanner />
       <Description>
-        The VideoGallery will have a menu button in each remote video tile to open a contextual menu by default. the
-        contextual menu will have an menu item to pin a participants video tile such that only pinned participants are
-        in the GridLayout. This is shown in the two screenshots below. You can also try it out in any of the above
-        VideoGallery components on this Docs page. Pinned participants will be shown in the order that they are pinned.
+        The VideoGallery provides a contextual menu for each remote video tile by clicking menu button next to the
+        display name. The contextual menu will have a menu item to pin a participant's video tile such that only pinned
+        participants are shown in the GridLayout. This is shown in the two screenshots below. You can also try it out in
+        any of the above VideoGallery components on this Docs page. Pinned participants will be shown in the order that
+        they are pinned.
       </Description>
-      <Stack horizontal={true}>
+      <Stack horizontal={true} tokens={{ childrenGap: '0.5rem' }}>
         <Image
           style={{ width: '100%', height: 'auto' }}
           src="images/pin-menu-item-video-gallery.png"
@@ -175,7 +176,7 @@ const getDocs: () => JSX.Element = () => {
         When screensharing is active, pinned participants are shown in the horizontal gallery instead as shown in the
         two screenshots below.
       </Description>
-      <Stack horizontal={true}>
+      <Stack horizontal={true} tokens={{ childrenGap: '0.5rem' }}>
         <Image
           style={{ width: '100%', height: 'auto' }}
           src="images/pin-menu-item-video-gallery-with-screenshare.png"
@@ -190,7 +191,7 @@ const getDocs: () => JSX.Element = () => {
       <Description>
         Pinned participants can be unpinned through the contextual menu as shown in the two screenshots below.
       </Description>
-      <Stack horizontal={true}>
+      <Stack horizontal={true} tokens={{ childrenGap: '0.5rem' }}>
         <Image
           style={{ width: '100%', height: 'auto' }}
           /* set an approximate default height to avoid reflow when the image loads */ src="images/unpin-menu-item-video-gallery.png"
@@ -211,22 +212,13 @@ const getDocs: () => JSX.Element = () => {
         /* set an approximate default height to avoid reflow when the image loads */ src="images/pinned-limit-reached-video-gallery.png"
         alt="Disabled pin menu item in VideoGallery when limit reached"
       />
-      <Subheading>Disabling remote video tile options</Subheading>
-      <StorybookBanner palette={yellowBannerPalette}>
-        <Text style={{ display: 'inline-block' }}>
-          This feature is be enabled by default but can be disabled by setting the `remoteVideoTileMenu` prop to 'false'
-          like in the example below.
-        </Text>
-      </StorybookBanner>
-      <Canvas mdxSource={PinnedParticipantsDisabledExampleText}>
-        <PinnedParticipantsDisabledExample />
-      </Canvas>
       <Subheading>Managing the pinned participants state</Subheading>
       <Description>
         The state of which remote participants are pinned can be managed by defining the value of the
         `pinnedParticipants` prop. But the callback props `onPinParticipant` and `onUnpinParticipant` must be defined to
-        update the managed state. In the example below, the pinned participants state is managed using a `useState`
-        hook. The display names of the pinned participants are shown in text above the VideoGallery.
+        update the managed state. In the example below, the pinned participants state is managed using a `useState` hook
+        outside of the VideoGallery component. The display names of the pinned participants are shown in text above the
+        VideoGallery.
       </Description>
       <Canvas mdxSource={ManagedPinnedParticipantsExampleText}>
         <ManagedPinnedParticipantsExample />
@@ -235,13 +227,23 @@ const getDocs: () => JSX.Element = () => {
       <Description>
         The VideoGallery also caters to pinning participants on mobile by setting the prop `remoteVideoTileMenuOptions`
         to object `&#123; kind: 'drawer' &#125;`. This changes the contextual menu to a drawer menu that is opened via
-        long touch. The result is demonstrated below where all mouse clicks are converted to touch to simulate a mobile
-        browser. You can long clicking a remote video tile to see that a drawer menu will appear.
+        long touch. The result is demonstrated in the example below where all mouse clicks are converted to touch to
+        simulate a mobile browser. You can simulate a long touch by long clicking a remote video tile to see that a
+        drawer menu will appear.
       </Description>
       <Canvas mdxSource={PinnedParticipantsMobileExampleText}>
         <MobileWrapper>
           <PinnedParticipantsMobileExample />
         </MobileWrapper>
+      </Canvas>
+
+      <Heading>Disabling remote video tile contextual menu</Heading>
+      <Description>
+        Remote video tile contextual menu is be enabled by default but can be disabled by setting the
+        `remoteVideoTileMenu` prop to 'false' like in the example below.
+      </Description>
+      <Canvas mdxSource={PinnedParticipantsDisabledExampleText}>
+        <PinnedParticipantsDisabledExample />
       </Canvas>
 
       <Heading>Props</Heading>
