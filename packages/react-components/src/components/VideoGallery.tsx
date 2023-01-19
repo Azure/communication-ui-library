@@ -2,8 +2,9 @@
 // Licensed under the MIT license.
 
 import { concatStyleSets, IStyle, mergeStyles, Stack } from '@fluentui/react';
-import React, { useCallback, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useMemo, useRef } from 'react';
 import { GridLayoutStyles } from '.';
+/* @conditional-compile-remove(pinned-participants) */
 import { Announcer } from './Announcer';
 import { useLocale } from '../localization';
 import { useTheme } from '../theming';
@@ -395,21 +396,23 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     [pinnedParticipantsState, setPinnedParticipantsState, onUnpinParticipantHandler]
   );
 
-  const [pinAnnouncementString, setPinAnnouncementString] = useState<string>('');
+  /* @conditional-compile-remove(pinned-participants) */
+  const [announcementString, setAnnouncementString] = React.useState<string>('');
+  /* @conditional-compile-remove(pinned-participants) */
   /**
-   * sets the announcement string for VideoGallery actions
+   * sets the announcement string for VideoGallery actions so that the screenreader will trigger
    */
   const toggleAnnouncerString = useCallback(
     (announcement) => {
-      setPinAnnouncementString(announcement);
+      setAnnouncementString(announcement);
       /**
        * Clears the announcer string after VideoGallery action allowing it to be re-announced.
        */
       setTimeout(() => {
-        setPinAnnouncementString('');
+        setAnnouncementString('');
       }, 3000);
     },
-    [setPinAnnouncementString]
+    [setAnnouncementString]
   );
 
   const defaultOnRenderVideoTile = useCallback(
@@ -547,7 +550,10 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       className={mergeStyles(videoGalleryOuterDivStyle, styles?.root)}
     >
       {videoGalleryLayout}
-      <Announcer announcementString={pinAnnouncementString} ariaLive="polite" />
+      {
+        /* @conditional-compile-remove(pinned-participants) */
+        <Announcer announcementString={announcementString} ariaLive="polite" />
+      }
     </div>
   );
 };
