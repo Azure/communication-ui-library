@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Move icon register code to manager to avoid re-register warning on load",
-  "packageName": "@internal/storybook",
-  "email": "carolinecao@microsoft.com",
-  "dependentChangeType": "patch"
-}

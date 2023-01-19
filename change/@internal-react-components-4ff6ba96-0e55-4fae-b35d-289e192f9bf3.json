@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Add data ui id to device  permission component",
-  "packageName": "@internal/react-components",
-  "email": "carolinecao@microsoft.com",
-  "dependentChangeType": "none"
-}

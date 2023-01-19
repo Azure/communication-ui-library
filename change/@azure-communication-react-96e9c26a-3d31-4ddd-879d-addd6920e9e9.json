@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Fix tab order focus on Call Composite and CallWithChat Composite",
-  "packageName": "@azure/communication-react",
-  "email": "edwardlee@microsoft.com",
-  "dependentChangeType": "patch"
-}

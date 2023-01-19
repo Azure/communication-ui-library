@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fixed bug where on safari browser the device denied screen is not showing when don't allow is clicked ",
-  "packageName": "@azure/communication-react",
-  "email": "carolinecao@microsoft.com",
-  "dependentChangeType": "patch"
-}

@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Implement fall back UI for call readiness, this is displayed when permission api is not available",
-  "packageName": "@internal/react-composites",
-  "email": "carolinecao@microsoft.com",
-  "dependentChangeType": "patch"
-}
