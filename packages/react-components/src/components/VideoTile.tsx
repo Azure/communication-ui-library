@@ -284,6 +284,16 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
     longPressHandlers
   ]);
 
+  /* @conditional-compile-remove(pinned-participants) */
+  const hoverHandlers = useMemo(() => {
+    return {
+      onMouseEnter: () => setIsHovered(true),
+      onMouseLeave: () => setIsHovered(false),
+      onFocus: () => setIsFocused(true),
+      onBlur: () => setIsFocused(false)
+    };
+  }, []);
+
   const placeholderOptions = {
     userId,
     text: initialsName ?? displayName,
@@ -340,10 +350,9 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
       <div
         ref={videoTileRef}
         style={{ width: '100%', height: '100%' }}
-        /* @conditional-compile-remove(pinned-participants) */ onMouseEnter={() => setIsHovered(true)}
-        /* @conditional-compile-remove(pinned-participants) */ onMouseLeave={() => setIsHovered(false)}
-        /* @conditional-compile-remove(pinned-participants) */ onFocus={() => setIsFocused(true)}
-        /* @conditional-compile-remove(pinned-participants) */ onBlur={() => setIsFocused(false)}
+        {
+          /* @conditional-compile-remove(pinned-participants) */ ...hoverHandlers
+        }
       >
         {isVideoRendered ? (
           <Stack
