@@ -154,9 +154,10 @@ const getDocs: () => JSX.Element = () => {
       <Heading>Pinning Participants</Heading>
       <DetailedBetaBanner />
       <Description>
-        The VideoGallery allows pinning of participants to the GridLayout. You can try it out in any of the VideoGallery
-        components on this page (except in the Disabling remote video tile options section.) The VideoGallery will have
-        a menu button in each remote video tile.
+        The VideoGallery will have a menu button in each remote video tile to open a contextual menu by default. the
+        contextual menu will have an menu item to pin a participants video tile such that only pinned participants are
+        in the GridLayout. This is shown in the two screenshots below. You can also try it out in any of the above
+        VideoGallery components on this Docs page. Pinned participants will be shown in the order that they are pinned.
       </Description>
       <Stack horizontal={true}>
         <Image
@@ -171,8 +172,8 @@ const getDocs: () => JSX.Element = () => {
         />
       </Stack>
       <Description>
-        When screensharing is active, pinned participants are shown first in the order they are pinned in the horizontal
-        gallery as shown below.
+        When screensharing is active, pinned participants are shown in the horizontal gallery instead as shown in the
+        two screenshots below.
       </Description>
       <Stack horizontal={true}>
         <Image
@@ -187,7 +188,7 @@ const getDocs: () => JSX.Element = () => {
         />
       </Stack>
       <Description>
-        Pinned participants can be unpinned through the same menu button as shown in the following screenshots.
+        Pinned participants can be unpinned through the contextual menu as shown in the two screenshots below.
       </Description>
       <Stack horizontal={true}>
         <Image
@@ -203,7 +204,7 @@ const getDocs: () => JSX.Element = () => {
       </Stack>
       <Description>
         The maximum pinned participants is currently set to 4 for the VideoGallery. The pin menu item will be disabled
-        when this limit is reached as shown below.
+        when this limit is reached as shown in the screenshot below.
       </Description>
       <Image
         style={{ width: '50%', height: 'auto' }}
