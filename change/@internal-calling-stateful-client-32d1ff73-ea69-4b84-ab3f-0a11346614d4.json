@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add teams identity support to binding layer",
-  "packageName": "@internal/calling-stateful-client",
-  "email": "jinan@microsoft.com",
-  "dependentChangeType": "patch"
-}

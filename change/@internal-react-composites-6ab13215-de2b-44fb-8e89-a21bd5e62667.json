@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Add type cast to support latest lib.dom version",
-  "packageName": "@internal/react-composites",
-  "email": "jinan@microsoft.com",
-  "dependentChangeType": "none"
-}

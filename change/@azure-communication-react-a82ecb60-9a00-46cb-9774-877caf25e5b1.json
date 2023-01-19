@@ -1,7 +1,0 @@
-{
-  "type": "minor",
-  "comment": "Add narrator announcements to participant button copy link and peoplepane copylink button in CallWithChat composite.",
-  "packageName": "@azure/communication-react",
-  "email": "94866715+dmceachernmsft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

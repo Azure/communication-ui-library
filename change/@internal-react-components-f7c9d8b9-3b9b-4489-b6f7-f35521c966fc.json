@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add checking device permission prompt pure ui component",
-  "packageName": "@internal/react-components",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
