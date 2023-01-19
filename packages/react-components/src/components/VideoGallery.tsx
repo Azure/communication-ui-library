@@ -395,6 +395,23 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     [pinnedParticipantsState, setPinnedParticipantsState, onUnpinParticipantHandler]
   );
 
+  const [pinAnnouncementString, setPinAnnouncementString] = useState<string>('');
+  /**
+   * sets the announcement string for VideoGallery actions
+   */
+  const toggleAnnouncerString = useCallback(
+    (announcement) => {
+      setPinAnnouncementString(announcement);
+      /**
+       * Clears the announcer string after VideoGallery action allowing it to be re-announced.
+       */
+      setTimeout(() => {
+        setPinAnnouncementString('');
+      }, 3000);
+    },
+    [setPinAnnouncementString]
+  );
+
   const defaultOnRenderVideoTile = useCallback(
     (participant: VideoGalleryRemoteParticipant, isVideoParticipant?: boolean) => {
       const remoteVideoStream = participant.videoStream;
@@ -452,7 +469,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       /* @conditional-compile-remove(pinned-participants) */ remoteVideoTileMenuOptions,
       /* @conditional-compile-remove(pinned-participants) */ pinnedParticipants,
       /* @conditional-compile-remove(pinned-participants) */ onPinParticipant,
-      /* @conditional-compile-remove(pinned-participants) */ onUnpinParticipant
+      /* @conditional-compile-remove(pinned-participants) */ onUnpinParticipant,
+      /* @conditional-compile-remove(pinned-participants) */ toggleAnnouncerString
     ]
   );
 
@@ -518,23 +536,6 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     }
     return <DefaultLayout {...layoutProps} />;
   }, [layout, layoutProps]);
-
-  const [pinAnnouncementString, setPinAnnouncementString] = useState<string>('');
-  /**
-   * sets the announcement string for VideoGallery actions
-   */
-  const toggleAnnouncerString = useCallback(
-    (announcement) => {
-      setPinAnnouncementString(announcement);
-      /**
-       * Clears the announcer string after VideoGallery action allowing it to be re-announced.
-       */
-      setTimeout(() => {
-        setPinAnnouncementString('');
-      }, 3000);
-    },
-    [setPinAnnouncementString]
-  );
 
   return (
     <div

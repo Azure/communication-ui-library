@@ -29,7 +29,16 @@ export const useVideoTileContextualMenuProps = (props: {
   disablePinMenuItem?: boolean;
   toggleAnnouncerString?: (announcerString: string) => void;
 }): IContextualMenuProps | undefined => {
-  const { view, strings, isPinned, onPinParticipant, onUnpinParticipant, disablePinMenuItem } = props;
+  const {
+    remoteParticipant,
+    view,
+    strings,
+    isPinned,
+    onPinParticipant,
+    onUnpinParticipant,
+    disablePinMenuItem,
+    toggleAnnouncerString
+  } = props;
   const scalingMode = useMemo(() => {
     /* @conditional-compile-remove(pinned-participants) */
     return props.remoteParticipant.videoStream?.scalingMode;
@@ -52,24 +61,24 @@ export const useVideoTileContextualMenuProps = (props: {
             styles: { root: { lineHeight: '1rem', textAlign: 'center' } }
           },
           onClick: () => {
-            onUnpinParticipant(props.remoteParticipant.userId);
+            onUnpinParticipant(remoteParticipant.userId);
             if (
-              props.toggleAnnouncerString &&
+              toggleAnnouncerString &&
               strings.unpinnedParticipantAnnouncementAriaLabel &&
-              props.remoteParticipant.displayName
+              remoteParticipant.displayName
             ) {
-              props.toggleAnnouncerString(
+              toggleAnnouncerString(
                 _formatString(strings.unpinnedParticipantAnnouncementAriaLabel, {
-                  participantName: props.remoteParticipant.displayName
+                  participantName: remoteParticipant.displayName
                 })
               );
             }
           },
           'data-ui-id': 'video-tile-unpin-participant-button',
           ariaLabel:
-            strings?.unpinParticipantMenuItemAriaLabel && props.remoteParticipant.displayName
+            strings?.unpinParticipantMenuItemAriaLabel && remoteParticipant.displayName
               ? _formatString(strings.unpinParticipantMenuItemAriaLabel, {
-                  participantName: props.remoteParticipant.displayName
+                  participantName: remoteParticipant.displayName
                 })
               : undefined
         });
@@ -83,15 +92,15 @@ export const useVideoTileContextualMenuProps = (props: {
             styles: { root: { lineHeight: '1rem', textAlign: 'center' } }
           },
           onClick: () => {
-            onPinParticipant(props.remoteParticipant.userId);
+            onPinParticipant(remoteParticipant.userId);
             if (
-              props.toggleAnnouncerString &&
+              toggleAnnouncerString &&
               strings.pinnedParticipantAnnouncementAriaLabel &&
-              props.remoteParticipant.displayName
+              remoteParticipant.displayName
             ) {
-              props.toggleAnnouncerString(
+              toggleAnnouncerString(
                 _formatString(strings.pinnedParticipantAnnouncementAriaLabel, {
-                  participantName: props.remoteParticipant.displayName
+                  participantName: remoteParticipant.displayName
                 })
               );
             }
@@ -99,9 +108,9 @@ export const useVideoTileContextualMenuProps = (props: {
           'data-ui-id': 'video-tile-pin-participant-button',
           disabled: disablePinMenuItem,
           ariaLabel:
-            strings?.pinParticipantMenuItemAriaLabel && props.remoteParticipant.displayName
+            strings?.pinParticipantMenuItemAriaLabel && remoteParticipant.displayName
               ? _formatString(strings.pinParticipantMenuItemAriaLabel, {
-                  participantName: props.remoteParticipant.displayName
+                  participantName: remoteParticipant.displayName
                 })
               : undefined
         });
@@ -150,8 +159,10 @@ export const useVideoTileContextualMenuProps = (props: {
     isPinned,
     onPinParticipant,
     onUnpinParticipant,
-    props.remoteParticipant.userId,
-    disablePinMenuItem
+    remoteParticipant.userId,
+    remoteParticipant.displayName,
+    disablePinMenuItem,
+    toggleAnnouncerString
   ]);
 
   return contextualMenuProps;
