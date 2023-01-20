@@ -281,8 +281,7 @@ export const ErrorBar = (props: ErrorBarProps): JSX.Element => {
           {...props}
           styles={{
             innerText: {
-              alignSelf: 'center',
-              lineHeight: 'none'
+              alignSelf: 'center'
             },
             icon: {
               height: 0
