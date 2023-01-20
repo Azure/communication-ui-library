@@ -92,7 +92,7 @@ jobs:
 
       # Bump alpha package versions
       - name: Bump alpha package versions
-        run: node common/config/node_modules/beachball/bin/beachball canary --canary-name alpha-${{ steps.datetime.outputs.datetime }} --tag dev --no-publish
+        run: node common/scripts/bump-alpha-versions.js ${{ steps.datetime.outputs.datetime }}
 
       - name: Synchronize package version reported to telemetry
         run: node common/scripts/sync-telemetry-package-version
