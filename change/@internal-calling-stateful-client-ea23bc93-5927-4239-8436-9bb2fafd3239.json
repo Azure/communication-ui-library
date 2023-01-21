@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Introduce getEnvironmentInfo API from calling to stateful-client.",
-  "packageName": "@internal/calling-stateful-client",
-  "email": "94866715+dmceachernmsft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

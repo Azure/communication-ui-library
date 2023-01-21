@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Remove padding and margins from base dialpad component.",
-  "packageName": "@internal/react-components",
-  "email": "94866715+dmceachernmsft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

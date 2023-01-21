@@ -2,6 +2,27 @@
   "name": "@internal/acs-ui-common",
   "entries": [
     {
+      "date": "Wed, 04 Jan 2023 23:56:41 GMT",
+      "tag": "@internal/acs-ui-common_v1.5.0",
+      "version": "1.5.0",
+      "comments": {
+        "none": [
+          {
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "package": "@internal/acs-ui-common",
+            "commit": "c8e8d74de3f7804e0187538d696bbfe7a37e0248",
+            "comment": "Bumped"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/acs-ui-common",
+            "commit": "807c931ca9bdc6813b08c1e01bd60f4131be089e",
+            "comment": "Document template of the application ID used for telemetry"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 15 Nov 2022 21:12:22 GMT",
       "tag": "@internal/acs-ui-common_v1.4.1-beta.1",
       "version": "1.4.1-beta.1",

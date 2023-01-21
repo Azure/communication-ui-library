@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Update express, storybook, and cpy-cli dependencies",
-  "packageName": "@azure/communication-react",
-  "email": "edwardlee@microsoft.com",
-  "dependentChangeType": "patch"
-}

@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Display correct error text and guidance text for device permission errors on safari browser",
-  "packageName": "@azure/communication-react",
-  "email": "carolinecao@microsoft.com",
-  "dependentChangeType": "patch"
-}
