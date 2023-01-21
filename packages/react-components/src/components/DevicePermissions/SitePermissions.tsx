@@ -20,9 +20,9 @@ export interface CommonSitePermissionsProps {
    */
   appName: string;
   /**
-   * Type of the Site Permissions component.
+   * Kind of the Site Permissions component.
    */
-  type: 'request' | 'denied' | 'check';
+  kind: 'request' | 'denied' | 'check';
   /**
    * Type of the browser used, the Site permission component will show different guidance text based on the browser type
    */
@@ -76,11 +76,11 @@ export const CameraAndMicrophoneSitePermissions = (props: CameraAndMicrophoneSit
 
   /* @conditional-compile-remove(call-readiness) */
   const strings = useShallowMerge(
-    props.type === 'denied'
+    props.kind === 'denied'
       ? props.browserHint === 'safari'
         ? locale.CameraAndMicrophoneSitePermissionsDeniedSafari
         : locale.CameraAndMicrophoneSitePermissionsDenied
-      : props.type === 'request'
+      : props.kind === 'request'
       ? locale.CameraAndMicrophoneSitePermissionsRequest
       : locale.CameraAndMicrophoneSitePermissionsCheck,
     props.strings
@@ -88,10 +88,10 @@ export const CameraAndMicrophoneSitePermissions = (props: CameraAndMicrophoneSit
 
   /* @conditional-compile-remove(call-readiness) */
   const cameraIconName =
-    props.microphoneIconName ?? props.type === 'denied' ? 'SitePermissionCameraDenied' : 'SitePermissionCamera';
+    props.microphoneIconName ?? props.kind === 'denied' ? 'SitePermissionCameraDenied' : 'SitePermissionCamera';
   /* @conditional-compile-remove(call-readiness) */
   const microphoneIconName =
-    props.microphoneIconName ?? props.type === 'denied' ? 'SitePermissionMicDenied' : 'SitePermissionMic';
+    props.microphoneIconName ?? props.kind === 'denied' ? 'SitePermissionMicDenied' : 'SitePermissionMic';
   /* @conditional-compile-remove(call-readiness) */
   const connectorIconName = props.microphoneIconName ?? 'SitePermissionsSparkle';
 
@@ -138,11 +138,11 @@ export const MicrophoneSitePermissions = (props: MicrophoneSitePermissionsProps)
 
   /* @conditional-compile-remove(call-readiness) */
   const strings = useShallowMerge(
-    props.type === 'denied'
+    props.kind === 'denied'
       ? props.browserHint === 'safari'
         ? locale.MicrophoneSitePermissionsDeniedSafari
         : locale.MicrophoneSitePermissionsDenied
-      : props.type === 'request'
+      : props.kind === 'request'
       ? locale.MicrophoneSitePermissionsRequest
       : locale.MicrophoneSitePermissionsCheck,
     props.strings
@@ -150,7 +150,7 @@ export const MicrophoneSitePermissions = (props: MicrophoneSitePermissionsProps)
 
   /* @conditional-compile-remove(call-readiness) */
   const iconName =
-    props.microphoneIconName ?? props.type === 'denied' ? 'SitePermissionMicDenied' : 'SitePermissionMic';
+    props.microphoneIconName ?? props.kind === 'denied' ? 'SitePermissionMicDenied' : 'SitePermissionMic';
 
   /* @conditional-compile-remove(call-readiness) */
   return (
@@ -193,11 +193,11 @@ export const CameraSitePermissions = (props: CameraSitePermissionsProps): JSX.El
 
   /* @conditional-compile-remove(call-readiness) */
   const strings = useShallowMerge(
-    props.type === 'denied'
+    props.kind === 'denied'
       ? props.browserHint === 'safari'
         ? locale.CameraSitePermissionsDeniedSafari
         : locale.CameraSitePermissionsDenied
-      : props.type === 'request'
+      : props.kind === 'request'
       ? locale.CameraSitePermissionsRequest
       : locale.CameraSitePermissionsCheck,
     props.strings
@@ -205,7 +205,7 @@ export const CameraSitePermissions = (props: CameraSitePermissionsProps): JSX.El
 
   /* @conditional-compile-remove(call-readiness) */
   const iconName =
-    props.cameraIconName ?? props.type === 'denied' ? 'SitePermissionCameraDenied' : 'SitePermissionCamera';
+    props.cameraIconName ?? props.kind === 'denied' ? 'SitePermissionCameraDenied' : 'SitePermissionCamera';
 
   /* @conditional-compile-remove(call-readiness) */
   return (
