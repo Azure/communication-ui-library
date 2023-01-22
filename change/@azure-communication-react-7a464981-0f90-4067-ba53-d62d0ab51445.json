@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Use IContextualMenuProps for VideoTile menu items",
-  "packageName": "@azure/communication-react",
-  "email": "anjulgarg@live.com",
-  "dependentChangeType": "patch"
-}
