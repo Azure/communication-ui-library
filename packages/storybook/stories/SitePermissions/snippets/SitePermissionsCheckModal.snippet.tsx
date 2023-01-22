@@ -47,7 +47,7 @@ export const SitePermissionsCheckModal: () => JSX.Element = () => {
             alert('clicked trouble shooting');
           }}
           strings={micCameralocale}
-          type={'check'}
+          kind={'check'}
         />
       </Modal>
       <Modal isOpen={microphoneModalOpen} onDismiss={() => setMicrophoneModalOpen(false)}>
@@ -57,7 +57,7 @@ export const SitePermissionsCheckModal: () => JSX.Element = () => {
             alert('clicked trouble shooting');
           }}
           strings={microphoneLocale}
-          type={'check'}
+          kind={'check'}
         />
       </Modal>
       <Modal isOpen={cameraModalOpen} onDismiss={() => setCameraModalOpen(false)}>
@@ -70,7 +70,7 @@ export const SitePermissionsCheckModal: () => JSX.Element = () => {
             setCameraModalOpen(false);
           }}
           strings={cameraLocale}
-          type={'check'}
+          kind={'check'}
         />
       </Modal>
     </Stack>

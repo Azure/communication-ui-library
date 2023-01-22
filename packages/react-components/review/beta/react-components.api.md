@@ -238,10 +238,10 @@ export interface ChatMessage extends MessageCommon {
 export interface CommonSitePermissionsProps {
     appName: string;
     browserHint?: 'safari' | 'unset';
+    kind: 'request' | 'denied' | 'check';
     onContinueAnywayClick?: () => void;
     onTroubleshootingClick?: () => void;
     styles?: SitePermissionsStyles;
-    type: 'request' | 'denied' | 'check';
 }
 
 // @public
