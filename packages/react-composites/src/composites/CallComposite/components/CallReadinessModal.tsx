@@ -80,7 +80,7 @@ export const CallReadinessModal = (props: {
                     }
                   : undefined
               }
-              type="request"
+              kind="request"
             />
           );
         }
@@ -101,7 +101,7 @@ export const CallReadinessModal = (props: {
               onContinueAnywayClick={() => {
                 setIsPermissionsModalDismissed(false);
               }}
-              type="request"
+              kind="request"
             />
           );
         }
@@ -119,7 +119,7 @@ export const CallReadinessModal = (props: {
                     }
                   : undefined
               }
-              type="request"
+              kind="request"
             />
           );
         }
@@ -137,7 +137,7 @@ export const CallReadinessModal = (props: {
                     }
                   : undefined
               }
-              type="denied"
+              kind="denied"
             />
           );
         }
@@ -158,7 +158,7 @@ export const CallReadinessModal = (props: {
               onContinueAnywayClick={() => {
                 setIsPermissionsModalDismissed(false);
               }}
-              type="denied"
+              kind="denied"
             />
           );
         }
@@ -176,7 +176,7 @@ export const CallReadinessModal = (props: {
                     }
                   : undefined
               }
-              type="denied"
+              kind="denied"
             />
           );
         }
@@ -278,7 +278,7 @@ export const CallReadinessModalFallBack = (props: {
                     }
                   : undefined
               }
-              type="denied"
+              kind="denied"
             />
           );
         } else if (videoState === 'denied' && audioState === 'granted') {
@@ -297,7 +297,7 @@ export const CallReadinessModalFallBack = (props: {
               onContinueAnywayClick={() => {
                 setIsPermissionsModalDismissed(false);
               }}
-              type="denied"
+              kind="denied"
             />
           );
         } else {
@@ -313,7 +313,7 @@ export const CallReadinessModalFallBack = (props: {
                     }
                   : undefined
               }
-              type="denied"
+              kind="denied"
             />
           );
         }
@@ -335,7 +335,7 @@ export const CallReadinessModalFallBack = (props: {
                     }
                   : undefined
               }
-              type="check"
+              kind="check"
             />
           </_DrawerSurface>
         )}
@@ -374,7 +374,7 @@ export const CallReadinessModalFallBack = (props: {
                     }
                   : undefined
               }
-              type="check"
+              kind="check"
             />
           </_ModalClone>
         )}

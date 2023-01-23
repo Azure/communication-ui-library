@@ -1419,10 +1419,10 @@ export type CommonProperties<A, B> = {
 export interface CommonSitePermissionsProps {
     appName: string;
     browserHint?: 'safari' | 'unset';
+    kind: 'request' | 'denied' | 'check';
     onContinueAnywayClick?: () => void;
     onTroubleshootingClick?: () => void;
     styles?: SitePermissionsStyles;
-    type: 'request' | 'denied' | 'check';
 }
 
 // @public

@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add device permission drawer to calling mobile config screen",
-  "packageName": "@internal/react-composites",
-  "email": "carolinecao@microsoft.com",
-  "dependentChangeType": "patch"
-}

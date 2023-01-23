@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add pinnedParticipants prop to VideoGallery",
-  "packageName": "@azure/communication-react",
-  "email": "miguelgamis@microsoft.com",
-  "dependentChangeType": "patch"
-}
