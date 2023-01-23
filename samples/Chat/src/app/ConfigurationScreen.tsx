@@ -175,8 +175,10 @@ export default (props: ConfigurationScreenProps): JSX.Element => {
             {PROFILE_LABEL}
           </Text>
           <div className={largeAvatarContainerStyle(selectedAvatar)}>
-            <div aria-label={`${selectedAvatar} avatar`} className={largeAvatarStyle}>
-              {selectedAvatar}
+            <div aria-label={`${selectedAvatar} avatar selected`} aria-live="polite" className={largeAvatarStyle}>
+              <div aria-label="" aria-hidden="true">
+                {selectedAvatar}
+              </div>
             </div>
           </div>
           <Text className={namePreviewStyle(name !== '')}>{name !== '' ? name : NAME_DEFAULT}</Text>
