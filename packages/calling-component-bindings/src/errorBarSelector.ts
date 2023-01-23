@@ -134,6 +134,8 @@ export const errorBarSelector: ErrorBarSelector = createSelector(
       latestErrors['Call.startVideo']?.message === 'Call.startVideo: Video operation failure permissionDeniedError'
     ) {
       appendActiveErrorIfDefined(activeErrorMessages, latestErrors, 'Call.startVideo', 'callCameraAccessDenied');
+    } else {
+      appendActiveErrorIfDefined(activeErrorMessages, latestErrors, 'Call.startVideo', 'startVideoGeneric');
     }
 
     appendActiveErrorIfDefined(activeErrorMessages, latestErrors, 'Call.unmute', 'unmuteGeneric');
