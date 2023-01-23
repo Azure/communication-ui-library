@@ -53,6 +53,12 @@ export const useVideoTileContextualMenuProps = (props: {
 
     if (isPinned !== undefined) {
       if (isPinned && onUnpinParticipant && strings?.unpinParticipantForMe) {
+        let unpinActionString: string | undefined = undefined;
+        if (toggleAnnouncerString && strings.unpinParticipantMenuItemAriaLabel && remoteParticipant.displayName) {
+          unpinActionString = _formatString(strings?.unpinParticipantMenuItemAriaLabel, {
+            participantName: remoteParticipant.displayName
+          });
+        }
         items.push({
           key: 'unpin',
           text: strings.unpinParticipantForMe,
@@ -62,28 +68,19 @@ export const useVideoTileContextualMenuProps = (props: {
           },
           onClick: () => {
             onUnpinParticipant(remoteParticipant.userId);
-            if (
-              toggleAnnouncerString &&
-              strings.unpinnedParticipantAnnouncementAriaLabel &&
-              remoteParticipant.displayName
-            ) {
-              toggleAnnouncerString(
-                _formatString(strings.unpinnedParticipantAnnouncementAriaLabel, {
-                  participantName: remoteParticipant.displayName
-                })
-              );
-            }
+            unpinActionString && toggleAnnouncerString?.(unpinActionString);
           },
           'data-ui-id': 'video-tile-unpin-participant-button',
-          ariaLabel:
-            strings?.unpinParticipantMenuItemAriaLabel && remoteParticipant.displayName
-              ? _formatString(strings.unpinParticipantMenuItemAriaLabel, {
-                  participantName: remoteParticipant.displayName
-                })
-              : undefined
+          ariaLabel: unpinActionString
         });
       }
       if (!isPinned && onPinParticipant && strings?.pinParticipantForMe) {
+        let pinActionString: string | undefined = undefined;
+        if (toggleAnnouncerString && strings.pinnedParticipantAnnouncementAriaLabel && remoteParticipant.displayName) {
+          pinActionString = _formatString(strings?.pinnedParticipantAnnouncementAriaLabel, {
+            participantName: remoteParticipant.displayName
+          });
+        }
         items.push({
           key: 'pin',
           text: disablePinMenuItem ? strings.pinParticipantForMeLimitReached : strings.pinParticipantForMe,
@@ -93,26 +90,11 @@ export const useVideoTileContextualMenuProps = (props: {
           },
           onClick: () => {
             onPinParticipant(remoteParticipant.userId);
-            if (
-              toggleAnnouncerString &&
-              strings.pinnedParticipantAnnouncementAriaLabel &&
-              remoteParticipant.displayName
-            ) {
-              toggleAnnouncerString(
-                _formatString(strings.pinnedParticipantAnnouncementAriaLabel, {
-                  participantName: remoteParticipant.displayName
-                })
-              );
-            }
+            pinActionString && toggleAnnouncerString?.(pinActionString);
           },
           'data-ui-id': 'video-tile-pin-participant-button',
           disabled: disablePinMenuItem,
-          ariaLabel:
-            strings?.pinParticipantMenuItemAriaLabel && remoteParticipant.displayName
-              ? _formatString(strings.pinParticipantMenuItemAriaLabel, {
-                  participantName: remoteParticipant.displayName
-                })
-              : undefined
+          ariaLabel: pinActionString
         });
       }
     }
@@ -128,7 +110,8 @@ export const useVideoTileContextualMenuProps = (props: {
           onClick: () => {
             view?.updateScalingMode('Fit');
           },
-          'data-ui-id': 'video-tile-fit-to-frame'
+          'data-ui-id': 'video-tile-fit-to-frame',
+          ariaLabel: strings.fitRemoteParticipantToFrame
         });
       } else if (scalingMode === 'Fit' && strings?.fillRemoteParticipantFrame) {
         {
@@ -142,7 +125,8 @@ export const useVideoTileContextualMenuProps = (props: {
             onClick: () => {
               view?.updateScalingMode('Crop');
             },
-            'data-ui-id': 'video-tile-fill-frame'
+            'data-ui-id': 'video-tile-fill-frame',
+            ariaLabel: strings.fillRemoteParticipantFrame
           });
         }
       }
