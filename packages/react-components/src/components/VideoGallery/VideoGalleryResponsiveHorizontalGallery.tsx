@@ -5,6 +5,7 @@ import { concatStyleSets } from '@fluentui/react';
 import React, { useMemo } from 'react';
 import { HorizontalGalleryStyles } from '../HorizontalGallery';
 import { ResponsiveHorizontalGallery } from '../ResponsiveHorizontalGallery';
+import { ResponsiveVerticalGallery } from '../ResponsiveVerticalGallery';
 import { HORIZONTAL_GALLERY_BUTTON_WIDTH, HORIZONTAL_GALLERY_GAP } from '../styles/HorizontalGallery.styles';
 import {
   horizontalGalleryContainerStyle,
@@ -33,17 +34,19 @@ export const VideoGalleryResponsiveHorizontalGallery = (props: {
   const galleryStyles = useMemo(() => concatStyleSets(horizontalGalleryStyle(isNarrow), styles), [isNarrow, styles]);
 
   return (
-    <ResponsiveHorizontalGallery
-      key="responsive-horizontal-gallery"
-      containerStyles={containerStyles}
-      horizontalGalleryStyles={galleryStyles}
-      childWidthRem={
-        isNarrow ? SMALL_HORIZONTAL_GALLERY_TILE_SIZE_REM.width : LARGE_HORIZONTAL_GALLERY_TILE_SIZE_REM.width
-      }
-      buttonWidthRem={HORIZONTAL_GALLERY_BUTTON_WIDTH}
-      gapWidthRem={HORIZONTAL_GALLERY_GAP}
-    >
-      {horizontalGalleryElements}
-    </ResponsiveHorizontalGallery>
+    <>
+      <ResponsiveVerticalGallery
+        key="responsive-horizontal-gallery"
+        containerStyles={containerStyles}
+        verticalGalleryStyles={galleryStyles}
+        childHeightRem={
+          isNarrow ? SMALL_HORIZONTAL_GALLERY_TILE_SIZE_REM.height : LARGE_HORIZONTAL_GALLERY_TILE_SIZE_REM.height
+        }
+        buttonWidthRem={HORIZONTAL_GALLERY_BUTTON_WIDTH}
+        gapWidthRem={HORIZONTAL_GALLERY_GAP}
+      >
+        {horizontalGalleryElements}
+      </ResponsiveVerticalGallery>
+    </>
   );
 };

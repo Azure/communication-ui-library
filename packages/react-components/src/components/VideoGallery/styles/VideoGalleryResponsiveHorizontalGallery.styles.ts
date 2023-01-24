@@ -11,13 +11,13 @@ import { LARGE_FLOATING_MODAL_SIZE_PX, SMALL_FLOATING_MODAL_SIZE_PX } from './Fl
  */
 export const horizontalGalleryContainerStyle = (shouldFloatLocalVideo: boolean, isNarrow: boolean): IStyle => {
   return {
-    minHeight: isNarrow
-      ? `${SMALL_HORIZONTAL_GALLERY_TILE_SIZE_REM.height}rem`
-      : `${LARGE_HORIZONTAL_GALLERY_TILE_SIZE_REM.height}rem`,
-    width: shouldFloatLocalVideo
+    width: isNarrow
+      ? `${LARGE_VERTICAL_GALLERY_TILE_SIZE_REM.width}rem`
+      : `${LARGE_VERTICAL_GALLERY_TILE_SIZE_REM.width}rem`,
+    height: shouldFloatLocalVideo
       ? isNarrow
-        ? `calc(100% - ${_pxToRem(SMALL_FLOATING_MODAL_SIZE_PX.width)})`
-        : `calc(100% - ${_pxToRem(LARGE_FLOATING_MODAL_SIZE_PX.width)})`
+        ? `calc(100% - ${_pxToRem(SMALL_FLOATING_MODAL_SIZE_PX.height)})`
+        : `calc(100% - ${_pxToRem(LARGE_FLOATING_MODAL_SIZE_PX.height)})`
       : '100%',
     paddingRight: '0.5rem'
   };
@@ -28,7 +28,7 @@ export const horizontalGalleryContainerStyle = (shouldFloatLocalVideo: boolean, 
  */
 export const horizontalGalleryStyle = (isNarrow: boolean): HorizontalGalleryStyles => {
   return {
-    children: isNarrow ? SMALL_HORIZONTAL_GALLERY_TILE_STYLE : LARGE_HORIZONTAL_GALLERY_TILE_STYLE
+    children: isNarrow ? SMALL_HORIZONTAL_GALLERY_TILE_STYLE : LARGE_VERTICAL_GALLERY_TILE_STYLE
   };
 };
 
@@ -42,6 +42,12 @@ export const SMALL_HORIZONTAL_GALLERY_TILE_SIZE_REM = { height: 5.5, width: 5.5 
  * @private
  */
 export const LARGE_HORIZONTAL_GALLERY_TILE_SIZE_REM = { height: 7.5, width: 10 };
+
+/**
+ * VerticalGallery tile size in rem
+ * @private
+ */
+export const LARGE_VERTICAL_GALLERY_TILE_SIZE_REM = { height: 7.5, width: 13.4375 };
 
 /**
  * @private
@@ -60,4 +66,11 @@ export const LARGE_HORIZONTAL_GALLERY_TILE_STYLE = {
   minWidth: `${LARGE_HORIZONTAL_GALLERY_TILE_SIZE_REM.width}rem`,
   maxHeight: `${LARGE_HORIZONTAL_GALLERY_TILE_SIZE_REM.height}rem`,
   maxWidth: `${LARGE_HORIZONTAL_GALLERY_TILE_SIZE_REM.width}rem`
+};
+
+export const LARGE_VERTICAL_GALLERY_TILE_STYLE = {
+  minHeight: `${LARGE_VERTICAL_GALLERY_TILE_SIZE_REM.height}rem`,
+  minWidth: `${LARGE_VERTICAL_GALLERY_TILE_SIZE_REM.width}rem`,
+  maxHeight: `${LARGE_VERTICAL_GALLERY_TILE_SIZE_REM.height}rem`,
+  maxWidth: `${LARGE_VERTICAL_GALLERY_TILE_SIZE_REM.width}rem`
 };

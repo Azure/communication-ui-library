@@ -143,7 +143,7 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
 
   return (
     <Stack styles={rootLayoutStyle}>
-      <Stack horizontal={false} styles={innerLayoutStyle} tokens={videoGalleryLayoutGap}>
+      <Stack horizontal={true} styles={innerLayoutStyle} tokens={videoGalleryLayoutGap}>
         {screenShareComponent ? (
           screenShareComponent
         ) : (

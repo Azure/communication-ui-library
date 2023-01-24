@@ -75,7 +75,7 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
   const disableNextButton = page === lastPage;
 
   return (
-    <Stack horizontal className={mergeStyles(rootStyle, props.styles?.root)}>
+    <Stack className={mergeStyles(rootStyle, props.styles?.root)}>
       {showButtons && (
         <HorizontalGalleryNavigationButton
           key="previous-nav-button"
@@ -86,7 +86,7 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
           identifier={ids.horizontalGalleryLeftNavButton}
         />
       )}
-      <Stack horizontal className={mergeStyles(childrenContainerStyle, { '> *': props.styles?.children })}>
+      <Stack className={mergeStyles(childrenContainerStyle, { '> *': props.styles?.children })}>
         {childrenOnCurrentPage}
       </Stack>
       {showButtons && (
