@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "VideoGallery announces when participants are pinned and unpinned. Added aria labels for pin and unpin menu item",
+  "packageName": "@azure/communication-react",
+  "email": "79475487+mgamis-msft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
