@@ -279,6 +279,16 @@ export class CallContext {
     });
   }
 
+  /* @conditional-compile-remove(total-participant-count) */
+  public setTotalParticipantCount(callId: string, totalParticipantCount: number): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        call.totalParticipantCount = totalParticipantCount;
+      }
+    });
+  }
+
   public setCallDominantSpeakers(callId: string, dominantSpeakers: DominantSpeakersInfo): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
