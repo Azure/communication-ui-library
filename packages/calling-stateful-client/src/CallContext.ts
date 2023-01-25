@@ -147,6 +147,8 @@ export class CallContext {
         existingCall.recording.isRecordingActive = call.recording.isRecordingActive;
         /* @conditional-compile-remove(rooms) */
         existingCall.role = call.role;
+        /* @conditional-compile-remove(total-participant-count) */
+        existingCall.totalParticipantCount = call.totalParticipantCount;
         // We don't update the startTime and endTime if we are updating an existing active call
       } else {
         draft.calls[latestCallId] = call;
