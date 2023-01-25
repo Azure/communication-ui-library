@@ -68,6 +68,9 @@ export const LARGE_HORIZONTAL_GALLERY_TILE_STYLE = {
   maxWidth: `${LARGE_HORIZONTAL_GALLERY_TILE_SIZE_REM.width}rem`
 };
 
+/**
+ * @private
+ */
 export const LARGE_VERTICAL_GALLERY_TILE_STYLE = {
   minHeight: `${LARGE_VERTICAL_GALLERY_TILE_SIZE_REM.height}rem`,
   minWidth: `${LARGE_VERTICAL_GALLERY_TILE_SIZE_REM.width}rem`,
