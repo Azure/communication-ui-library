@@ -125,8 +125,8 @@ test.describe('VideoGallery tests', async () => {
       await pageClick(page, dataUiId('video-tile-pin-participant-button'));
       await page.mouse.move(-1, -1);
     }
-    // hover the last remote video tile on the page(skip local tile) which is presumably on an unpinned remote video tile
-    await page.hover(dataUiId(IDS.videoTile) + ' >> nth=-2');
+    // hover the fifth remote video tile which is presumably an unpinned remote video tile
+    await page.hover(dataUiId(IDS.videoTile) + ' >> nth=5');
     await waitForSelector(page, dataUiId(IDS.videoTileMoreOptionsButton));
     await screenshotOnFailure(
       page,
