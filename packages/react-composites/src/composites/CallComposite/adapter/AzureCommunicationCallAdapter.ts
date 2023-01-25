@@ -72,7 +72,7 @@ import {
   MicrosoftTeamsUserIdentifier
 } from '@azure/communication-common';
 import { ParticipantSubscriber } from './ParticipantSubcriber';
-import { AdapterError, AdapterState } from '../../common/adapters';
+import { AdapterError } from '../../common/adapters';
 import { DiagnosticsForwarder } from './DiagnosticsForwarder';
 import { useEffect, useRef, useState } from 'react';
 import { CallHandlersOf, createHandlers } from './createHandlers';
