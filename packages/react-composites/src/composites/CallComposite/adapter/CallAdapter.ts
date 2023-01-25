@@ -3,7 +3,9 @@
 
 import { CallState, DeviceManagerState } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(teams-identity-support) */
-import { EnvironmentInfo, TeamsCall } from '@azure/communication-calling';
+import { TeamsCall } from '@azure/communication-calling';
+/* @conditional-compile-remove(unsupported-browser) */
+import { EnvironmentInfo } from '@azure/communication-calling';
 import type {
   AudioDeviceInfo,
   VideoDeviceInfo,
