@@ -108,7 +108,19 @@ const TeamsCallScreen = (props: TeamsCallScreenProps): JSX.Element => {
     throw new Error('A MicrosoftTeamsUserIdentifier must be provided for Teams Identity Call.');
   }
 
-  const adapter = useTeamsCallAdapter({ ...adapterArgs, userId, locator }, afterCreate);
+  const adapter = useTeamsCallAdapter(
+    {
+      ...adapterArgs,
+      userId,
+      locator,
+      options: {
+        onFetchProfile: async () => {
+          return { displayName: 'test' };
+        }
+      }
+    },
+    afterCreate
+  );
   return <CallCompositeContainer {...props} adapter={adapter} />;
 };
 
