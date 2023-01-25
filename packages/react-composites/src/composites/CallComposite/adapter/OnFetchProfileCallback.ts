@@ -1,10 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { RemoteParticipantState } from '@internal/calling-stateful-client';
 import { CallAdapterState } from './CallAdapter';
-import { memoizeFnAll } from '@internal/acs-ui-common';
+import { RemoteParticipantState } from '@internal/calling-stateful-client';
 import { AdapterStateModifier } from './AzureCommunicationCallAdapter';
+import { createParticipantModifier } from '../utils';
 
 /**
  * Callback function used to provide custom data to build profile for a user.
@@ -34,25 +34,13 @@ export const createProfileStateModifier = (
   onFetchProfile: OnFetchProfileCallback,
   notifyUpdate: () => void
 ): AdapterStateModifier => {
-  let previousParticipantState:
-    | {
-        [keys: string]: RemoteParticipantState;
-      }
-    | undefined = undefined;
-  let newParticipants = {};
-
-  const modifiedParticipants: {
-    [id: string]: { originalRef: RemoteParticipantState; newParticipant: RemoteParticipantState };
-  } = {};
-
   const cachedDisplayName: {
     [id: string]: string;
   } = {};
 
   return (state: CallAdapterState) => {
     const originalParticipants = state.call?.remoteParticipants;
-
-    async () => {
+    (async () => {
       let shouldNotifyUpdates = false;
       for (const key in originalParticipants) {
         if (cachedDisplayName[key]) {
@@ -64,36 +52,19 @@ export const createProfileStateModifier = (
         }
         shouldNotifyUpdates = true;
       }
+      // notify update only when there is a change, which most likely will trigger modifier and setState again
       shouldNotifyUpdates && notifyUpdate();
-    };
+    })();
 
-    if (state.call?.remoteParticipants !== previousParticipantState) {
-      newParticipants = {};
-      for (const key in originalParticipants) {
-        if (cachedDisplayName[key] === undefined) {
-          newParticipants[key] = originalParticipants[key];
-          continue;
+    const participantsModifier = createParticipantModifier(
+      (id: string, participant: RemoteParticipantState): RemoteParticipantState | undefined => {
+        if (cachedDisplayName[id]) {
+          return { ...participant, displayName: cachedDisplayName[id] };
         }
-        if (modifiedParticipants[key].originalRef !== originalParticipants[key]) {
-          modifiedParticipants[key].newParticipant = {
-            ...originalParticipants[key],
-            displayName: cachedDisplayName[key]
-          };
-          modifiedParticipants[key].originalRef = originalParticipants[key];
-        }
-        newParticipants[key] = modifiedParticipants[key].newParticipant;
+        return undefined;
       }
+    );
 
-      previousParticipantState = state.call?.remoteParticipants;
-    }
-    return {
-      ...state,
-      call: state.call
-        ? {
-            ...state.call,
-            remoteParticipants: newParticipants
-          }
-        : undefined
-    };
+    return participantsModifier(state);
   };
 };
