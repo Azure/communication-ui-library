@@ -10,6 +10,8 @@ import {
 } from './fixture';
 import { expect } from '@playwright/test';
 import { dataUiId, waitForSelector, stableScreenshot, pageClick, isTestProfileMobile } from '../../common/utils';
+/* @conditional-compile-remove(pinned-participants) */
+import { screenshotOnFailure, perStepLocalTimeout } from '../../common/utils';
 import { IDS } from '../../common/constants';
 
 test.describe('VideoGallery tests', async () => {
@@ -110,14 +112,26 @@ test.describe('VideoGallery tests', async () => {
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
 
     // pin remote video tiles up to the max allowed in the call composite
-    for (let i = 0; i < 4; i++) {
-      // click the last 'more options' button on the page which is presumably on an unpinned remote video tile
-      await pageClick(page, dataUiId('video-tile-more-options-button') + ' >> nth=-1');
+    for (let i = 1; i < 5; i++) {
+      await waitForSelector(page, dataUiId(IDS.videoTile) + ` >> nth=${i}`);
+      await page.click(dataUiId(IDS.videoTile) + ` >> nth=${i}`);
+      await waitForSelector(page, dataUiId(IDS.videoTileMoreOptionsButton));
+      // click the next 'more options' button on the page which is presumably on an unpinned remote video tile
+      await screenshotOnFailure(
+        page,
+        async () => await page.click(dataUiId(IDS.videoTileMoreOptionsButton), { timeout: perStepLocalTimeout() })
+      );
       // click pin menu button in contextual menu
       await pageClick(page, dataUiId('video-tile-pin-participant-button'));
+      await page.mouse.move(-1, -1);
     }
-    // click the last more button on the page which is presumably on an unpinned remote video tile
-    await pageClick(page, dataUiId('video-tile-more-options-button') + ' >> nth=-1');
+    // hover the fifth remote video tile which is presumably an unpinned remote video tile
+    await page.hover(dataUiId(IDS.videoTile) + ' >> nth=5');
+    await waitForSelector(page, dataUiId(IDS.videoTileMoreOptionsButton));
+    await screenshotOnFailure(
+      page,
+      async () => await page.click(dataUiId(IDS.videoTileMoreOptionsButton), { timeout: perStepLocalTimeout() })
+    );
     // take snapshot to verify pin button is disabled
     expect(await stableScreenshot(page)).toMatchSnapshot('disabled-pin-menu-button.png');
   });
