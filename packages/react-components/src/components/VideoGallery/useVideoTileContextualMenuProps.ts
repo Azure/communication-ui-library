@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 
 import { IContextualMenuItem, IContextualMenuProps } from '@fluentui/react';
+import { _formatString } from '@internal/acs-ui-common';
 import { useMemo } from 'react';
 import { VideoGalleryRemoteParticipant, ViewScalingMode } from '../../types';
 
@@ -16,14 +17,28 @@ export const useVideoTileContextualMenuProps = (props: {
     pinParticipantForMe?: string;
     pinParticipantForMeLimitReached?: string;
     unpinParticipantForMe?: string;
+    pinParticipantMenuItemAriaLabel?: string;
+    unpinParticipantMenuItemAriaLabel?: string;
+    pinnedParticipantAnnouncementAriaLabel?: string;
+    unpinnedParticipantAnnouncementAriaLabel?: string;
   };
   view?: { updateScalingMode: (scalingMode: ViewScalingMode) => Promise<void> };
   isPinned?: boolean;
   onPinParticipant?: (userId: string) => void;
   onUnpinParticipant?: (userId: string) => void;
   disablePinMenuItem?: boolean;
+  toggleAnnouncerString?: (announcerString: string) => void;
 }): IContextualMenuProps | undefined => {
-  const { view, strings, isPinned, onPinParticipant, onUnpinParticipant, disablePinMenuItem } = props;
+  const {
+    remoteParticipant,
+    view,
+    strings,
+    isPinned,
+    onPinParticipant,
+    onUnpinParticipant,
+    disablePinMenuItem,
+    toggleAnnouncerString
+  } = props;
   const scalingMode = useMemo(() => {
     /* @conditional-compile-remove(pinned-participants) */
     return props.remoteParticipant.videoStream?.scalingMode;
@@ -38,6 +53,12 @@ export const useVideoTileContextualMenuProps = (props: {
 
     if (isPinned !== undefined) {
       if (isPinned && onUnpinParticipant && strings?.unpinParticipantForMe) {
+        let unpinActionString: string | undefined = undefined;
+        if (toggleAnnouncerString && strings.unpinParticipantMenuItemAriaLabel && remoteParticipant.displayName) {
+          unpinActionString = _formatString(strings?.unpinParticipantMenuItemAriaLabel, {
+            participantName: remoteParticipant.displayName
+          });
+        }
         items.push({
           key: 'unpin',
           text: strings.unpinParticipantForMe,
@@ -45,11 +66,21 @@ export const useVideoTileContextualMenuProps = (props: {
             iconName: 'UnpinParticipant',
             styles: { root: { lineHeight: '1rem', textAlign: 'center' } }
           },
-          onClick: () => onUnpinParticipant?.(props.remoteParticipant.userId),
-          'data-ui-id': 'video-tile-unpin-participant-button'
+          onClick: () => {
+            onUnpinParticipant(remoteParticipant.userId);
+            unpinActionString && toggleAnnouncerString?.(unpinActionString);
+          },
+          'data-ui-id': 'video-tile-unpin-participant-button',
+          ariaLabel: unpinActionString
         });
       }
       if (!isPinned && onPinParticipant && strings?.pinParticipantForMe) {
+        let pinActionString: string | undefined = undefined;
+        if (toggleAnnouncerString && strings.pinnedParticipantAnnouncementAriaLabel && remoteParticipant.displayName) {
+          pinActionString = _formatString(strings?.pinnedParticipantAnnouncementAriaLabel, {
+            participantName: remoteParticipant.displayName
+          });
+        }
         items.push({
           key: 'pin',
           text: disablePinMenuItem ? strings.pinParticipantForMeLimitReached : strings.pinParticipantForMe,
@@ -57,9 +88,13 @@ export const useVideoTileContextualMenuProps = (props: {
             iconName: 'PinParticipant',
             styles: { root: { lineHeight: '1rem', textAlign: 'center' } }
           },
-          onClick: () => onPinParticipant?.(props.remoteParticipant.userId),
+          onClick: () => {
+            onPinParticipant(remoteParticipant.userId);
+            pinActionString && toggleAnnouncerString?.(pinActionString);
+          },
           'data-ui-id': 'video-tile-pin-participant-button',
-          disabled: disablePinMenuItem
+          disabled: disablePinMenuItem,
+          ariaLabel: pinActionString
         });
       }
     }
@@ -75,7 +110,8 @@ export const useVideoTileContextualMenuProps = (props: {
           onClick: () => {
             view?.updateScalingMode('Fit');
           },
-          'data-ui-id': 'video-tile-fit-to-frame'
+          'data-ui-id': 'video-tile-fit-to-frame',
+          ariaLabel: strings.fitRemoteParticipantToFrame
         });
       } else if (scalingMode === 'Fit' && strings?.fillRemoteParticipantFrame) {
         {
@@ -89,7 +125,8 @@ export const useVideoTileContextualMenuProps = (props: {
             onClick: () => {
               view?.updateScalingMode('Crop');
             },
-            'data-ui-id': 'video-tile-fill-frame'
+            'data-ui-id': 'video-tile-fill-frame',
+            ariaLabel: strings.fillRemoteParticipantFrame
           });
         }
       }
@@ -106,8 +143,10 @@ export const useVideoTileContextualMenuProps = (props: {
     isPinned,
     onPinParticipant,
     onUnpinParticipant,
-    props.remoteParticipant.userId,
-    disablePinMenuItem
+    remoteParticipant.userId,
+    remoteParticipant.displayName,
+    disablePinMenuItem,
+    toggleAnnouncerString
   ]);
 
   return contextualMenuProps;

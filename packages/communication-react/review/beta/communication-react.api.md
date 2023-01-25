@@ -3264,10 +3264,14 @@ export interface VideoGalleryStrings {
     localVideoLabel: string;
     localVideoMovementLabel: string;
     localVideoSelectedDescription: string;
+    pinnedParticipantAnnouncementAriaLabel: string;
     pinParticipantForMe: string;
+    pinParticipantMenuItemAriaLabel: string;
     screenIsBeingSharedMessage: string;
     screenShareLoadingMessage: string;
+    unpinnedParticipantAnnouncementAriaLabel: string;
     unpinParticipantForMe: string;
+    unpinParticipantMenuItemAriaLabel: string;
 }
 
 // @public
