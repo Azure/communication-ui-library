@@ -174,7 +174,11 @@
     "fillRemoteParticipantFrame": "Fill frame",
     "pinParticipantForMe": "Pin for me",
     "pinParticipantForMeLimitReached": "Pin (limit reached)",
-    "unpinParticipantForMe": "Unpin for me"
+    "unpinParticipantForMe": "Unpin",
+    "pinParticipantMenuItemAriaLabel": "Pin {participantName}",
+    "unpinParticipantMenuItemAriaLabel": "Unpin {participantName}",
+    "pinnedParticipantAnnouncementAriaLabel": "Pinned {participantName}",
+    "unpinnedParticipantAnnouncementAriaLabel": "Unpinned {participantName}"
   },
   "dialpad": {
     "placeholderText": "Enter phone number",
