@@ -4,6 +4,8 @@
 import { concatStyleSets, IStyle, mergeStyles, Stack } from '@fluentui/react';
 import React, { useCallback, useMemo, useRef } from 'react';
 import { GridLayoutStyles } from '.';
+/* @conditional-compile-remove(pinned-participants) */
+import { Announcer } from './Announcer';
 import { useLocale } from '../localization';
 import { useTheme } from '../theming';
 import {
@@ -90,6 +92,18 @@ export interface VideoGalleryStrings {
   /* @conditional-compile-remove(pinned-participants) */
   /** Menu text shown in Video Tile contextual menu for setting a remote participant's video tile */
   unpinParticipantForMe: string;
+  /* @conditional-compile-remove(pinned-participants) */
+  /** Aria label for pin participant menu item of remote participant's video tile */
+  pinParticipantMenuItemAriaLabel: string;
+  /* @conditional-compile-remove(pinned-participants) */
+  /** Aria label for unpin participant menu item of remote participant's video tile */
+  unpinParticipantMenuItemAriaLabel: string;
+  /* @conditional-compile-remove(pinned-participants) */
+  /** Aria label to announce when remote participant's video tile is pinned */
+  pinnedParticipantAnnouncementAriaLabel: string;
+  /* @conditional-compile-remove(pinned-participants) */
+  /** Aria label to announce when remote participant's video tile is unpinned */
+  unpinnedParticipantAnnouncementAriaLabel: string;
 }
 
 /**
@@ -380,6 +394,25 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     [pinnedParticipantsState, setPinnedParticipantsState, onUnpinParticipantHandler]
   );
 
+  /* @conditional-compile-remove(pinned-participants) */
+  const [announcementString, setAnnouncementString] = React.useState<string>('');
+  /* @conditional-compile-remove(pinned-participants) */
+  /**
+   * sets the announcement string for VideoGallery actions so that the screenreader will trigger
+   */
+  const toggleAnnouncerString = useCallback(
+    (announcement) => {
+      setAnnouncementString(announcement);
+      /**
+       * Clears the announcer string after VideoGallery action allowing it to be re-announced.
+       */
+      setTimeout(() => {
+        setAnnouncementString('');
+      }, 3000);
+    },
+    [setAnnouncementString]
+  );
+
   const defaultOnRenderVideoTile = useCallback(
     (participant: VideoGalleryRemoteParticipant, isVideoParticipant?: boolean) => {
       const remoteVideoStream = participant.videoStream;
@@ -421,6 +454,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           isPinned={isPinned}
           /* @conditional-compile-remove(pinned-participants) */
           disablePinMenuItem={pinnedParticipants.length >= MAX_PINNED_REMOTE_VIDEO_TILES}
+          /* @conditional-compile-remove(pinned-participants) */
+          toggleAnnouncerString={toggleAnnouncerString}
         />
       );
     },
@@ -435,7 +470,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       /* @conditional-compile-remove(pinned-participants) */ remoteVideoTileMenuOptions,
       /* @conditional-compile-remove(pinned-participants) */ pinnedParticipants,
       /* @conditional-compile-remove(pinned-participants) */ onPinParticipant,
-      /* @conditional-compile-remove(pinned-participants) */ onUnpinParticipant
+      /* @conditional-compile-remove(pinned-participants) */ onUnpinParticipant,
+      /* @conditional-compile-remove(pinned-participants) */ toggleAnnouncerString
     ]
   );
 
@@ -506,6 +542,10 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       className={mergeStyles(videoGalleryOuterDivStyle, styles?.root)}
     >
       {videoGalleryLayout}
+      {
+        /* @conditional-compile-remove(pinned-participants) */
+        <Announcer announcementString={announcementString} ariaLive="polite" />
+      }
     </div>
   );
 };
