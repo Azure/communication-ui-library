@@ -26,8 +26,8 @@ test.describe('VideoGalleryLayout tests', async () => {
 
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
 
-    await waitForSelector(page, dataUiId(IDS.videoGallery));
-    await page.hover(dataUiId(IDS.videoGallery));
+    await waitForSelector(page, dataUiId(IDS.videoTile));
+    await page.hover(dataUiId(IDS.videoTile));
     await waitForSelector(page, dataUiId(IDS.videoTileMoreOptionsButton));
     // not using 'pageclick' method as it brings page to front and we need the focus on video tile
     await screenshotOnFailure(
@@ -51,8 +51,8 @@ test.describe('VideoGalleryLayout tests', async () => {
 
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
 
-    await waitForSelector(page, dataUiId(IDS.videoGallery));
-    await page.hover(dataUiId(IDS.videoGallery));
+    await waitForSelector(page, dataUiId(IDS.videoTile));
+    await page.hover(dataUiId(IDS.videoTile));
     await waitForSelector(page, dataUiId(IDS.videoTileMoreOptionsButton));
     await screenshotOnFailure(
       page,
@@ -72,8 +72,8 @@ test.describe('VideoGalleryLayout tests', async () => {
 
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
 
-    await waitForSelector(page, dataUiId(IDS.videoGallery));
-    await page.hover(dataUiId(IDS.videoGallery));
+    await waitForSelector(page, dataUiId(IDS.videoTile));
+    await page.hover(dataUiId(IDS.videoTile));
     await waitForSelector(page, dataUiId(IDS.videoTileMoreOptionsButton));
     await screenshotOnFailure(
       page,
@@ -85,7 +85,7 @@ test.describe('VideoGalleryLayout tests', async () => {
 
     expect(await stableScreenshot(page)).toMatchSnapshot('video-tile-pinned.png');
 
-    await page.hover(dataUiId(IDS.videoGallery));
+    await page.hover(dataUiId(IDS.videoTile));
     await waitForSelector(page, dataUiId(IDS.videoTileMoreOptionsButton));
     await screenshotOnFailure(
       page,
