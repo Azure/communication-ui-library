@@ -3,9 +3,10 @@
 
 import { IStyle, mergeStyles } from '@fluentui/react';
 import React, { useRef } from 'react';
-import { HorizontalGallery, HorizontalGalleryStyles } from './HorizontalGallery';
+import { HorizontalGalleryStyles } from './HorizontalGallery';
 import { _convertRemToPx as convertRemToPx } from '@internal/acs-ui-common';
 import { _useContainerHeight, _useContainerWidth } from './utils/responsive';
+import { VerticalGallery } from './VerticalGallery';
 
 /**
  * Wrapped HorizontalGallery that adjusts the number of items per page based on the
@@ -36,9 +37,9 @@ export const ResponsiveVerticalGallery = (props: {
 
   return (
     <div ref={containerRef} className={mergeStyles(props.containerStyles)}>
-      <HorizontalGallery childrenPerPage={childrenPerPage} styles={props.verticalGalleryStyles}>
+      <VerticalGallery childrenPerPage={childrenPerPage} styles={props.verticalGalleryStyles}>
         {props.children}
-      </HorizontalGallery>
+      </VerticalGallery>
     </div>
   );
 };
@@ -54,17 +55,12 @@ const calculateChildrenPerPage = (args: {
   gapWidthRem: number;
   buttonWidthRem: number;
 }): number => {
-  const { numberOfChildren, containerHeight, buttonWidthRem, childHeightRem, gapWidthRem } = args;
+  const { numberOfChildren, containerHeight, childHeightRem, gapWidthRem } = args;
 
   const childHeight = convertRemToPx(childHeightRem);
   const gapWidth = convertRemToPx(gapWidthRem);
 
   /** First check how many children can fit in containerHeight.
-   *    __________________________________
-   *   |                ||                |
-   *   |                ||                |
-   *   |________________||________________|
-   *   <-----------containerHeight--------->
    *    _________________
    *   |                |
    *   |                |
@@ -84,7 +80,8 @@ const calculateChildrenPerPage = (args: {
     return numberOfChildrenInContainer;
   }
 
-  const buttonWidth = convertRemToPx(buttonWidthRem);
+  // we want to maintain a height of 2rem for the button controls
+  const buttonBarHeight = convertRemToPx(2);
 
   /** We know we need to paginate. So we need to subtract the buttonWidth twice and gapWidth twice from
    * containerHeight to compute childrenSpace
@@ -95,7 +92,7 @@ const calculateChildrenPerPage = (args: {
    *   |_||_____________||_____________||_|
    *       <-------childrenSpace------>
    */
-  const childrenSpace = containerHeight - 2 * buttonWidth - 2 * gapWidth;
+  const childrenSpace = containerHeight - 2 * buttonBarHeight - 2 * gapWidth;
   // Now that we have childrenSpace width we can figure out how many children can fit in childrenSpace.
   // childrenSpace = n * childWidth + (n - 1) * gapWidth. Isolate n and take the floor.
   return Math.floor((childrenSpace + gapWidth) / (childHeight + gapWidth));

@@ -9,16 +9,16 @@ import { rootStyle, childrenContainerStyle, leftRightButtonStyles } from './styl
 import { useIdentifiers } from '../identifiers';
 
 /**
- * {@link HorizontalGallery} default children per page
+ * {@link VerticalGallery} default children per page
  */
 const DEFAULT_CHILDREN_PER_PAGE = 5;
 
 /**
- * {@link HorizontalGallery} Component Styles.
+ * {@link VerticalGallery} Component Styles.
  * @public
  */
-export interface HorizontalGalleryStyles extends BaseCustomStyles {
-  /** Styles for each child of {@link HorizontalGallery} */
+export interface VerticalGalleryStyles extends BaseCustomStyles {
+  /** Styles for each child of {@link VerticalGallery} */
   children?: IStyle;
   /** Styles for navigation button to go to previous page */
   previousButton?: IStyle;
@@ -27,14 +27,14 @@ export interface HorizontalGalleryStyles extends BaseCustomStyles {
 }
 
 /**
- * {@link HorizontalGallery} Component Props.
+ * {@link VerticalGallery} Component Props.
  */
-export interface HorizontalGalleryProps {
+export interface VerticalGalleryProps {
   children: React.ReactNode;
   /**
-   * Styles for HorizontalGallery
+   * Styles for VerticalGallery
    */
-  styles?: HorizontalGalleryStyles;
+  styles?: VerticalGalleryStyles;
   /**
    * Children shown per page
    * @defaultValue 5
@@ -43,11 +43,11 @@ export interface HorizontalGalleryProps {
 }
 
 /**
- * Renders a horizontal gallery that parents children horizontally. Handles pagination based on the childrenPerPage prop.
- * @param props - HorizontalGalleryProps {@link @azure/communication-react#HorizontalGalleryProps}
+ * Renders a Vertical gallery that parents children Vertically. Handles pagination based on the childrenPerPage prop.
+ * @param props - VerticalGalleryProps {@link @azure/communication-react#VerticalGalleryProps}
  * @returns
  */
-export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element => {
+export const VerticalGallery = (props: VerticalGalleryProps): JSX.Element => {
   const { children, childrenPerPage = DEFAULT_CHILDREN_PER_PAGE, styles } = props;
 
   const ids = useIdentifiers();
@@ -80,18 +80,18 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
         {childrenOnCurrentPage}
       </Stack>
       {showButtons && (
-        <Stack horizontal styles={{ root: { height: '2rem' } }}>
-          <HorizontalGalleryNavigationButton
+        <Stack horizontal>
+          <VerticalGalleryNavigationButton
             key="previous-nav-button"
-            icon={<Icon iconName="horizontalGalleryLeftButton" />}
+            icon={<Icon iconName="VerticalGalleryLeftButton" />}
             styles={styles?.previousButton}
             onClick={() => setPage(Math.max(0, Math.min(lastPage, page - 1)))}
             disabled={disablePreviousButton}
             identifier={ids.horizontalGalleryLeftNavButton}
           />
-          <HorizontalGalleryNavigationButton
+          <VerticalGalleryNavigationButton
             key="next-nav-button"
-            icon={<Icon iconName="horizontalGalleryRightButton" />}
+            icon={<Icon iconName="VerticalGalleryRightButton" />}
             styles={styles?.nextButton}
             onClick={() => setPage(Math.min(lastPage, page + 1))}
             disabled={disableNextButton}
@@ -103,7 +103,7 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
   );
 };
 
-const HorizontalGalleryNavigationButton = (props: {
+const VerticalGalleryNavigationButton = (props: {
   icon: JSX.Element;
   styles: IStyle;
   onClick?: () => void;
