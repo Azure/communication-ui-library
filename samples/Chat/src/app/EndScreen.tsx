@@ -15,10 +15,10 @@ import {
   upperStackTokens
 } from './styles/EndChat.styles';
 
+import { Announcer } from '../../../../packages/react-components/src/components/Announcer';
 import { Chat20Filled } from '@fluentui/react-icons';
 import { getExistingThreadIdFromURL } from './utils/getExistingThreadIdFromURL';
 import { joinThread } from './utils/joinThread';
-import { Announcer } from '@internal/react-components';
 
 export interface EndCallProps {
   userId: string;
