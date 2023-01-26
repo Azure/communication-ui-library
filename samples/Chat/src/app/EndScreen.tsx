@@ -18,6 +18,7 @@ import {
 import { Chat20Filled } from '@fluentui/react-icons';
 import { getExistingThreadIdFromURL } from './utils/getExistingThreadIdFromURL';
 import { joinThread } from './utils/joinThread';
+import { Announcer } from '@internal/react-components';
 
 export interface EndCallProps {
   userId: string;
@@ -70,6 +71,7 @@ export const EndScreen = (props: EndCallProps): JSX.Element => {
       className={endChatContainerStyle}
     >
       <Stack tokens={upperStackTokens}>
+        <Announcer announcementString={leftCall} ariaLive={'polite'} />
         <Text role={'heading'} aria-level={1} className={endChatTitleStyle}>
           {leftCall}
         </Text>
