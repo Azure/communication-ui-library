@@ -300,6 +300,12 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   /* @conditional-compile-remove(pinned-participants) */
   const [pinnedParticipantsState, setPinnedParticipantsState] = React.useState<string[]>([]);
   /* @conditional-compile-remove(pinned-participants) */
+  props.pinnedParticipants?.forEach((pinParticipant) => {
+    if (!props.remoteParticipants?.find((t) => t.userId === pinParticipant)) {
+      console.error('Invalid pinned participant UserId :' + pinParticipant);
+    }
+  });
+  /* @conditional-compile-remove(pinned-participants) */
   // Use pinnedParticipants from props but if it is not defined use the maintained state of pinned participants
   const pinnedParticipants = props.pinnedParticipants ?? pinnedParticipantsState;
 
