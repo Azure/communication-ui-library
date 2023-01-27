@@ -4,7 +4,7 @@
 import { IStyle, mergeStyles } from '@fluentui/react';
 import React, { useRef } from 'react';
 import { HorizontalGalleryStyles } from './HorizontalGallery';
-import { _convertRemToPx as convertRemToPx } from '@internal/acs-ui-common';
+import { _convertRemToPx as convertRemToPx, _pxToRem } from '@internal/acs-ui-common';
 import { _useContainerHeight, _useContainerWidth } from './utils/responsive';
 import { VerticalGallery } from './VerticalGallery';
 
@@ -35,6 +35,20 @@ export const ResponsiveVerticalGallery = (props: {
     buttonWidthRem
   });
 
+  const childSize = calculateChildrenSize({
+    parentHeight: containerHeight,
+    numberOfChildren: childrenPerPage,
+    gapWidth: 4
+  });
+
+  console.log(childSize);
+
+  if (childSize !== undefined) {
+    props.verticalGalleryStyles.children = mergeStyles(props.verticalGalleryStyles.children, {
+      height: _pxToRem(childSize)
+    });
+  }
+
   return (
     <div ref={containerRef} className={mergeStyles(props.containerStyles)}>
       <VerticalGallery
@@ -59,10 +73,9 @@ const calculateChildrenPerPage = (args: {
   gapWidthRem: number;
   buttonWidthRem: number;
 }): number => {
-  const { numberOfChildren, containerHeight, childHeightRem, gapWidthRem } = args;
+  const { numberOfChildren, containerHeight, gapWidthRem } = args;
 
   const childMinHeight = 90;
-  const childMaxHeight = 144;
   const gapWidth = convertRemToPx(gapWidthRem);
 
   const buttonHeightPx = 32;
@@ -77,8 +90,10 @@ const calculateChildrenPerPage = (args: {
    *   |                |
    *   |________________|
    *
+   * number of children = container height - (2* gap width + button height) / childMinHeight
    *
-   *
+   * we want to find the maximum number of children at the smallest size we can fit in the gallery and then resize them
+   * to fill in the space as much as possible
    */
   const numberOfChildrenInContainer = Math.floor((containerHeight - (2 * gapWidth + buttonHeightPx)) / childMinHeight);
   // If all children fit then return numberOfChildrenInContainer
@@ -102,4 +117,28 @@ const calculateChildrenPerPage = (args: {
   // Now that we have childrenSpace width we can figure out how many children can fit in childrenSpace.
   // childrenSpace = n * childHeightMin + (n - 1) * gapWidth. Isolate n and take the floor.
   return Math.floor((childrenSpace + gapWidth) / (childMinHeight + gapWidth));
+};
+
+const calculateChildrenSize = (args: {
+  parentHeight: number | undefined;
+  numberOfChildren: number;
+  gapWidth: number;
+}): number | undefined => {
+  const childMinHeight = 90;
+  const buttonHeightPx = 32;
+  if (!args.parentHeight || !args.numberOfChildren) {
+    return;
+  }
+  /**
+   * we want to find the size of the child tile based on the number of children and container size
+   * parentHeight = (n * childMinHeight) + (n-1 * gapSize) + buttonSize - x
+   *
+   * x = (n * childMinHeight) + (n-1 * gapSize) + buttonSize - parentHeight
+   */
+  return -(
+    args.numberOfChildren * childMinHeight +
+    (args.numberOfChildren - 1 * args.gapWidth) +
+    buttonHeightPx -
+    args.parentHeight
+  );
 };
