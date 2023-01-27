@@ -69,6 +69,8 @@ export class CallSubscriber {
     /* @conditional-compile-remove(rooms) */
     this._call.on('roleChanged', this.callRoleChangedHandler);
     this._call.feature(Features.DominantSpeakers).on('dominantSpeakersChanged', this.dominantSpeakersChanged);
+    /* @conditional-compile-remove(total-participant-count) */
+    this._call.on('totalParticipantCountChanged', this.totalParticipantCountChangedHandler);
 
     // At time of writing only one LocalVideoStream is supported by SDK.
     if (this._call.localVideoStreams.length > 0) {
@@ -102,6 +104,8 @@ export class CallSubscriber {
     this._call.off('isMutedChanged', this.isMuteChanged);
     /* @conditional-compile-remove(rooms) */
     this._call.off('roleChanged', this.callRoleChangedHandler);
+    /* @conditional-compile-remove(total-participant-count) */
+    this._call.off('totalParticipantCountChanged', this.totalParticipantCountChangedHandler);
 
     this._participantSubscribers.forEach((participantSubscriber: ParticipantSubscriber) => {
       participantSubscriber.unsubscribe();
@@ -166,6 +170,11 @@ export class CallSubscriber {
   /* @conditional-compile-remove(rooms) */
   private callRoleChangedHandler = (): void => {
     this._context.setRole(this._callIdRef.callId, this._call.role);
+  };
+
+  /* @conditional-compile-remove(total-participant-count) */
+  private totalParticipantCountChangedHandler = (): void => {
+    this._context.setTotalParticipantCount(this._callIdRef.callId, this._call.totalParticipantCount);
   };
 
   private remoteParticipantsUpdated = (event: { added: RemoteParticipant[]; removed: RemoteParticipant[] }): void => {

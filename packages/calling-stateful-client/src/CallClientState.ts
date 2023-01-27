@@ -288,6 +288,12 @@ export interface CallState {
    * Proxy of {@link @azure/communication-calling#Call.role}.
    */
   role?: ParticipantRole;
+
+  /* @conditional-compile-remove(total-participant-count) */
+  /**
+   * Proxy of {@link @azure/communication-calling#Call.totalParticipantCount}.
+   */
+  totalParticipantCount?: number;
 }
 
 /**
