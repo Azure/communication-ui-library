@@ -3,10 +3,9 @@
 
 import { IStyle, mergeStyles } from '@fluentui/react';
 import React, { useRef } from 'react';
-import { HorizontalGalleryStyles } from './HorizontalGallery';
 import { _convertRemToPx as convertRemToPx, _pxToRem } from '@internal/acs-ui-common';
 import { _useContainerHeight, _useContainerWidth } from './utils/responsive';
-import { VerticalGallery } from './VerticalGallery';
+import { VerticalGallery, VerticalGalleryStyles } from './VerticalGallery';
 
 /**
  * Wrapped HorizontalGallery that adjusts the number of items per page based on the
@@ -15,12 +14,11 @@ import { VerticalGallery } from './VerticalGallery';
 export const ResponsiveVerticalGallery = (props: {
   children: React.ReactNode;
   containerStyles: IStyle;
-  verticalGalleryStyles: HorizontalGalleryStyles;
-  childHeightRem: number;
+  verticalGalleryStyles: VerticalGalleryStyles;
   gapWidthRem: number;
   buttonWidthRem?: number;
 }): JSX.Element => {
-  const { childHeightRem, gapWidthRem, buttonWidthRem = 0 } = props;
+  const { gapWidthRem, buttonWidthRem = 0 } = props;
   const containerRef = useRef<HTMLDivElement>(null);
   const containerHeight = _useContainerHeight(containerRef);
 
@@ -30,7 +28,6 @@ export const ResponsiveVerticalGallery = (props: {
   const childrenPerPage = calculateChildrenPerPage({
     numberOfChildren: React.Children.count(props.children),
     containerHeight: (containerHeight ?? 0) - leftPadding - rightPadding,
-    childHeightRem,
     gapWidthRem,
     buttonWidthRem
   });
@@ -45,7 +42,7 @@ export const ResponsiveVerticalGallery = (props: {
 
   if (childSize !== undefined) {
     props.verticalGalleryStyles.children = mergeStyles(props.verticalGalleryStyles.children, {
-      height: _pxToRem(childSize)
+      height: childSize < 144 ? _pxToRem(childSize) : _pxToRem(144)
     });
   }
 
@@ -69,7 +66,6 @@ export const ResponsiveVerticalGallery = (props: {
 const calculateChildrenPerPage = (args: {
   numberOfChildren: number;
   containerHeight: number;
-  childHeightRem: number;
   gapWidthRem: number;
   buttonWidthRem: number;
 }): number => {
@@ -130,15 +126,22 @@ const calculateChildrenSize = (args: {
     return;
   }
   /**
-   * we want to find the size of the child tile based on the number of children and container size
-   * parentHeight = (n * childMinHeight) + (n-1 * gapSize) + buttonSize - x
+   * we want to find the size of the child tile based on the number of children and container size lets
+   * start with the left over space if we calculate for the min size
    *
-   * x = (n * childMinHeight) + (n-1 * gapSize) + buttonSize - parentHeight
+   * parentHeight = (n * childMinHeight) + (n-1 * gapSize) + buttonSize - leftOverSpace
+   *
+   * leftOverSpace = (n * childMinHeight) + (n-1 * gapSize) + buttonSize - parentHeight
+   *
    */
-  return -(
+  const leftOverSpace = -(
     args.numberOfChildren * childMinHeight +
     (args.numberOfChildren - 1 * args.gapWidth) +
     buttonHeightPx -
     args.parentHeight
   );
+  /**
+   * Then we divide the rest of the left over space to each child
+   */
+  return childMinHeight + leftOverSpace / args.numberOfChildren;
 };
