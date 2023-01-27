@@ -37,7 +37,11 @@ export const ResponsiveVerticalGallery = (props: {
 
   return (
     <div ref={containerRef} className={mergeStyles(props.containerStyles)}>
-      <VerticalGallery childrenPerPage={childrenPerPage} styles={props.verticalGalleryStyles}>
+      <VerticalGallery
+        childrenPerPage={childrenPerPage}
+        containerHeight={containerHeight}
+        styles={props.verticalGalleryStyles}
+      >
         {props.children}
       </VerticalGallery>
     </div>
@@ -57,8 +61,11 @@ const calculateChildrenPerPage = (args: {
 }): number => {
   const { numberOfChildren, containerHeight, childHeightRem, gapWidthRem } = args;
 
-  const childHeight = convertRemToPx(childHeightRem);
+  const childMinHeight = 90;
+  const childMaxHeight = 144;
   const gapWidth = convertRemToPx(gapWidthRem);
+
+  const buttonHeightPx = 32;
 
   /** First check how many children can fit in containerHeight.
    *    _________________
@@ -70,11 +77,10 @@ const calculateChildrenPerPage = (args: {
    *   |                |
    *   |________________|
    *
-   * containerHeight = n * childHeight + (n - 1) * gapWidth
    *
-   *  containerHeight = n * childWidth + (n - 1) * gapWidth. Isolate n and take the floor.
+   *
    */
-  const numberOfChildrenInContainer = Math.floor((containerHeight + gapWidth) / (childHeight + gapWidth));
+  const numberOfChildrenInContainer = Math.floor((containerHeight - (2 * gapWidth + buttonHeightPx)) / childMinHeight);
   // If all children fit then return numberOfChildrenInContainer
   if (numberOfChildren <= numberOfChildrenInContainer) {
     return numberOfChildrenInContainer;
@@ -94,6 +100,6 @@ const calculateChildrenPerPage = (args: {
    */
   const childrenSpace = containerHeight - 2 * buttonBarHeight - 2 * gapWidth;
   // Now that we have childrenSpace width we can figure out how many children can fit in childrenSpace.
-  // childrenSpace = n * childWidth + (n - 1) * gapWidth. Isolate n and take the floor.
-  return Math.floor((childrenSpace + gapWidth) / (childHeight + gapWidth));
+  // childrenSpace = n * childHeightMin + (n - 1) * gapWidth. Isolate n and take the floor.
+  return Math.floor((childrenSpace + gapWidth) / (childMinHeight + gapWidth));
 };

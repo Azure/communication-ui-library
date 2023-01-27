@@ -40,6 +40,7 @@ export interface VerticalGalleryProps {
    * @defaultValue 5
    */
   childrenPerPage?: number;
+  containerHeight?: number;
 }
 
 /**
