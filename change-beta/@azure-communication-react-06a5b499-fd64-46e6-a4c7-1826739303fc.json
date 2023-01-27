@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Bump `@azure/communication-calling` beta dependency to 1.10.0-beta.1",
+  "packageName": "@azure/communication-react",
+  "email": "carolinecao@microsoft.com",
+  "dependentChangeType": "patch"
+}
