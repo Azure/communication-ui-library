@@ -36,7 +36,7 @@ export const SMALL_FLOATING_MODAL_SIZE_PX = { width: 64, height: 88 };
  * Large floating modal width and height in rem for large screen
  * Aspect ratio: 16:9
  */
-export const LARGE_FLOATING_MODAL_SIZE_PX = { width: 215, height: 120 };
+export const LARGE_FLOATING_MODAL_SIZE_PX = { width: 144, height: 90 };
 
 /**
  * @private

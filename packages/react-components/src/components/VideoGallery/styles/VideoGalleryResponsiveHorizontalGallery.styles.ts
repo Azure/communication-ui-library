@@ -12,14 +12,13 @@ import { LARGE_FLOATING_MODAL_SIZE_PX, SMALL_FLOATING_MODAL_SIZE_PX } from './Fl
 export const horizontalGalleryContainerStyle = (shouldFloatLocalVideo: boolean, isNarrow: boolean): IStyle => {
   return {
     width: isNarrow
-      ? `${LARGE_VERTICAL_GALLERY_TILE_SIZE_REM.width}rem`
-      : `${LARGE_VERTICAL_GALLERY_TILE_SIZE_REM.width}rem`,
+      ? `${LARGE_VERTICAL_GALLERY_TILE_SIZE_REM.width + 1}rem`
+      : `${LARGE_VERTICAL_GALLERY_TILE_SIZE_REM.width + 1}rem`,
     height: shouldFloatLocalVideo
       ? isNarrow
         ? `calc(100% - ${_pxToRem(SMALL_FLOATING_MODAL_SIZE_PX.height)})`
         : `calc(100% - ${_pxToRem(LARGE_FLOATING_MODAL_SIZE_PX.height)})`
-      : '100%',
-    paddingRight: '0.5rem'
+      : '100%'
   };
 };
 
@@ -74,6 +73,8 @@ export const LARGE_HORIZONTAL_GALLERY_TILE_STYLE = {
 export const LARGE_VERTICAL_GALLERY_TILE_STYLE = {
   minHeight: `${LARGE_VERTICAL_GALLERY_TILE_SIZE_REM.minHeight}rem`,
   minWidth: `${LARGE_VERTICAL_GALLERY_TILE_SIZE_REM.width}rem`,
-  maxHeight: `${LARGE_VERTICAL_GALLERY_TILE_SIZE_REM.minHeight}rem`,
-  maxWidth: `${LARGE_VERTICAL_GALLERY_TILE_SIZE_REM.width}rem`
+  maxHeight: `${LARGE_VERTICAL_GALLERY_TILE_SIZE_REM.maxHeight}rem`,
+  maxWidth: `${LARGE_VERTICAL_GALLERY_TILE_SIZE_REM.width}rem`,
+  width: '100%',
+  height: '100%'
 };

@@ -38,20 +38,18 @@ export const ResponsiveVerticalGallery = (props: {
     gapWidth: 4
   });
 
-  console.log(childSize);
-
-  if (childSize !== undefined) {
-    props.verticalGalleryStyles.children = mergeStyles(props.verticalGalleryStyles.children, {
-      height: childSize < 144 ? _pxToRem(childSize) : _pxToRem(144)
-    });
-  }
+  // if (childSize !== undefined) {
+  //   props.verticalGalleryStyles.children = mergeStyles(props.verticalGalleryStyles.children, {
+  //     height: childSize < 144 ? _pxToRem(childSize) : _pxToRem(144)
+  //   });
+  // }
 
   return (
     <div ref={containerRef} className={mergeStyles(props.containerStyles)}>
       <VerticalGallery
         childrenPerPage={childrenPerPage}
-        containerHeight={containerHeight}
         styles={props.verticalGalleryStyles}
+        childHeight={childSize ?? 90}
       >
         {props.children}
       </VerticalGallery>
@@ -100,17 +98,14 @@ const calculateChildrenPerPage = (args: {
   // we want to maintain a height of 2rem for the button controls
   const buttonBarHeight = convertRemToPx(2);
 
-  /** We know we need to paginate. So we need to subtract the buttonWidth twice and gapWidth twice from
-   * containerHeight to compute childrenSpace
-   *   <-----------containerHeight--------->
-   *    __________________________________
-   *   | ||             ||             || |
-   *   |<||             ||             ||>|
-   *   |_||_____________||_____________||_|
-   *       <-------childrenSpace------>
+  /**
+   * For pagination we know the container height, the height of the button bar and the gapWidth from the last
+   * tile to the button bar so its
+   *
+   * space = height - buttons - gap
    */
-  const childrenSpace = containerHeight - 2 * buttonBarHeight - 2 * gapWidth;
-  // Now that we have childrenSpace width we can figure out how many children can fit in childrenSpace.
+  const childrenSpace = containerHeight - buttonBarHeight - gapWidth;
+  // Now that we have childrenSpace height we can figure out how many children can fit in childrenSpace.
   // childrenSpace = n * childHeightMin + (n - 1) * gapWidth. Isolate n and take the floor.
   return Math.floor((childrenSpace + gapWidth) / (childMinHeight + gapWidth));
 };
@@ -129,19 +124,16 @@ const calculateChildrenSize = (args: {
    * we want to find the size of the child tile based on the number of children and container size lets
    * start with the left over space if we calculate for the min size
    *
-   * parentHeight = (n * childMinHeight) + (n-1 * gapSize) + buttonSize - leftOverSpace
+   * parentHeight = (n * childMinHeight) + (n-1 * gapSize) + buttonSize + leftOverSpace
    *
-   * leftOverSpace = (n * childMinHeight) + (n-1 * gapSize) + buttonSize - parentHeight
-   *
+   * parentHeight - (n * childMinHeight) + (n-1 * gapSize) + buttonSize = leftOverSpace
    */
-  const leftOverSpace = -(
-    args.numberOfChildren * childMinHeight +
-    (args.numberOfChildren - 1 * args.gapWidth) +
-    buttonHeightPx -
-    args.parentHeight
-  );
+  const leftOverSpace =
+    args.parentHeight -
+    (args.numberOfChildren * childMinHeight + (args.numberOfChildren - 1 * args.gapWidth) + buttonHeightPx);
   /**
    * Then we divide the rest of the left over space to each child
    */
-  return childMinHeight + leftOverSpace / args.numberOfChildren;
+  const childHeight = childMinHeight + leftOverSpace / args.numberOfChildren;
+  return childHeight > 144 ? 144 : childHeight;
 };

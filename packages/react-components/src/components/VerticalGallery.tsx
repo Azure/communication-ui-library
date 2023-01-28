@@ -7,6 +7,7 @@ import { useTheme } from '../theming';
 import { BaseCustomStyles } from '../types';
 import { rootStyle, childrenContainerStyle, leftRightButtonStyles } from './styles/HorizontalGallery.styles';
 import { useIdentifiers } from '../identifiers';
+import { _pxToRem } from '@internal/acs-ui-common';
 
 /**
  * {@link VerticalGallery} default children per page
@@ -40,7 +41,10 @@ export interface VerticalGalleryProps {
    * @defaultValue 5
    */
   childrenPerPage?: number;
-  containerHeight?: number;
+  /**
+   * Height of each child
+   */
+  childHeight: number;
 }
 
 /**
@@ -49,7 +53,7 @@ export interface VerticalGalleryProps {
  * @returns
  */
 export const VerticalGallery = (props: VerticalGalleryProps): JSX.Element => {
-  const { children, childrenPerPage = DEFAULT_CHILDREN_PER_PAGE, styles } = props;
+  const { children, childrenPerPage = DEFAULT_CHILDREN_PER_PAGE, styles, childHeight } = props;
 
   const ids = useIdentifiers();
 
@@ -75,16 +79,25 @@ export const VerticalGallery = (props: VerticalGalleryProps): JSX.Element => {
   const disablePreviousButton = page === 0;
   const disableNextButton = page === lastPage;
 
+  console.log(childrenPerPage - childrenOnCurrentPage.length);
+
+  const calculatedChildrenStyles = mergeStyles(props.styles?.children, { maxHeight: _pxToRem(childHeight) });
+  console.log(calculatedChildrenStyles);
   return (
     <Stack className={mergeStyles(rootStyle, props.styles?.root)}>
-      <Stack className={mergeStyles(childrenContainerStyle, { '> *': props.styles?.children })}>
-        {childrenOnCurrentPage}
+      <Stack styles={{ root: childrenContainerStyle }}>
+        {childrenOnCurrentPage.map((child) => {
+          return <Stack.Item styles={{ root: props.styles?.children }}>{child}</Stack.Item>;
+        })}
+        {/* {Array.from({ length: childrenPerPage - childrenOnCurrentPage.length }).map(() => {
+          return <Stack.Item styles={{root: props.styles?.children}}><div></div></Stack.Item>
+        })} */}
       </Stack>
       {showButtons && (
-        <Stack horizontal>
+        <Stack horizontal style={{ height: '2rem', padding: '0.25rem' }} tokens={{ childrenGap: '5.625rem' }}>
           <VerticalGalleryNavigationButton
             key="previous-nav-button"
-            icon={<Icon iconName="VerticalGalleryLeftButton" />}
+            icon={<Icon iconName="horizontalGalleryLeftButton" />}
             styles={styles?.previousButton}
             onClick={() => setPage(Math.max(0, Math.min(lastPage, page - 1)))}
             disabled={disablePreviousButton}
@@ -92,7 +105,7 @@ export const VerticalGallery = (props: VerticalGalleryProps): JSX.Element => {
           />
           <VerticalGalleryNavigationButton
             key="next-nav-button"
-            icon={<Icon iconName="VerticalGalleryRightButton" />}
+            icon={<Icon iconName="horizontalGalleryRightButton" />}
             styles={styles?.nextButton}
             onClick={() => setPage(Math.min(lastPage, page + 1))}
             disabled={disableNextButton}
