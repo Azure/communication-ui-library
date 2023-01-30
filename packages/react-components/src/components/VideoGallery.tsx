@@ -302,7 +302,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   /* @conditional-compile-remove(pinned-participants) */
   props.pinnedParticipants?.forEach((pinParticipant) => {
     if (!props.remoteParticipants?.find((t) => t.userId === pinParticipant)) {
-      console.error('Invalid pinned participant UserId :' + pinParticipant);
+      throw new Error('Invalid pinned participant UserId :' + pinParticipant);
     }
   });
   /* @conditional-compile-remove(pinned-participants) */
