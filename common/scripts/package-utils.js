@@ -74,13 +74,20 @@ const updateAllDepVersions = (versionUpdater, deps/* dependency names to update 
  */
 const removeDepsFromAllPackages = (deps) => {
   const packagePaths = findAllPackageJSON(PACKAGES_DIR);
+
+  const removeDependencyByName = (dependencies, depName) => {
+    if (typeof dependencies === 'object') {
+      delete dependencies[depName];
+    }
+  }
+
   const packageProcessFunc = (packageJson) => {
     const result = { ...packageJson };
-    deps.forEach(depName => {
-      delete result.dependencies[depName];
-      delete result.devDependencies[depName];
-      delete result.peerDependencies[depName];
-    });
+    for (const depName of deps) {
+      removeDependencyByName(result.dependencies, depName);
+      removeDependencyByName(result.devDependencies, depName);
+      removeDependencyByName(result.peerDependencies, depName);
+    };
     return result;
   }
   overrideAllPackages(packagePaths, packageProcessFunc);

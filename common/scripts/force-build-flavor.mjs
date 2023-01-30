@@ -69,7 +69,7 @@ const chooseBetaVersion = (semver) => {
 
 function removeBetaOnlyDependencies(target) {
   if (target === 'stable') {
-    removeDepsFromAllPackages(removeBetaOnlyDependencies, BETA_ONLY_DEPS);
+    removeDepsFromAllPackages(BETA_ONLY_DEPS);
   }
 }
 
