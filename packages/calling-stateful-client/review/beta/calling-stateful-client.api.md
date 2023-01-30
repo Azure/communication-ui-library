@@ -116,6 +116,7 @@ export interface CallState {
     screenShareRemoteParticipant?: string;
     startTime: Date;
     state: CallState_2;
+    totalParticipantCount?: number;
     transcription: TranscriptionCallFeature;
 }
 
