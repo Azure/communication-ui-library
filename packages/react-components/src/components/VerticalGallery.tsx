@@ -89,9 +89,14 @@ export const VerticalGallery = (props: VerticalGalleryProps): JSX.Element => {
         {childrenOnCurrentPage.map((child) => {
           return <Stack.Item styles={{ root: props.styles?.children }}>{child}</Stack.Item>;
         })}
-        {/* {Array.from({ length: childrenPerPage - childrenOnCurrentPage.length }).map(() => {
-          return <Stack.Item styles={{root: props.styles?.children}}><div></div></Stack.Item>
-        })} */}
+        {window.location.search.includes('tile-same-size') &&
+          Array.from({ length: childrenPerPage - childrenOnCurrentPage.length }).map(() => {
+            return (
+              <Stack.Item styles={{ root: props.styles?.children }}>
+                <div></div>
+              </Stack.Item>
+            );
+          })}
       </Stack>
       {showButtons && (
         <Stack horizontal style={{ height: '2rem', padding: '0.25rem' }} tokens={{ childrenGap: '5.625rem' }}>
