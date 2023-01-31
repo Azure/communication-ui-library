@@ -58,6 +58,7 @@ export const errorBarSelector: ErrorBarSelector = createSelector(
       return environmentInfo?.environment.browser === 'safari';
       return /^((?!chrome|android|crios|fxios).)*safari/i.test(navigator.userAgent);
     };
+    console.log(environmentInfo);
 
     // Errors reported via diagnostics are more reliable than from API method failures, so process those first.
     if (
@@ -114,10 +115,24 @@ export const errorBarSelector: ErrorBarSelector = createSelector(
       }
     }
 
-    if (diagnostics?.media.latest.cameraPermissionDenied?.value === true) {
+    /* @conditional-compile-remove(unsupported-browser) */
+    /**
+     * show the Mac specific strings if the platform is detected as mac
+     */
+    if (
+      diagnostics?.media.latest.cameraPermissionDenied?.value === true &&
+      environmentInfo?.environment.platform === 'mac'
+    ) {
       activeErrorMessages.push({ type: 'callMacOsCameraAccessDenied' });
     }
-    if (diagnostics?.media.latest.screenshareRecordingDisabled?.value === true) {
+    /* @conditional-compile-remove(unsupported-browser) */
+    /**
+     * This UFD only works on mac still so we should only see it fire on mac.
+     */
+    if (
+      diagnostics?.media.latest.screenshareRecordingDisabled?.value === true &&
+      environmentInfo?.environment.platform === 'mac'
+    ) {
       activeErrorMessages.push({ type: 'callMacOsScreenShareAccessDenied' });
     }
 
