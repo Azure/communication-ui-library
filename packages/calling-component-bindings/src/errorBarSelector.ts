@@ -125,13 +125,13 @@ export const errorBarSelector: ErrorBarSelector = createSelector(
     ) {
       activeErrorMessages.push({ type: 'callMacOsCameraAccessDenied' });
     }
-    /* @conditional-compile-remove(unsupported-browser) */
+
     /**
      * This UFD only works on mac still so we should only see it fire on mac.
      */
     if (
       diagnostics?.media.latest.screenshareRecordingDisabled?.value === true &&
-      environmentInfo?.environment.platform === 'mac'
+      /* @conditional-compile-remove(unsupported-browser) */ environmentInfo?.environment.platform === 'mac'
     ) {
       activeErrorMessages.push({ type: 'callMacOsScreenShareAccessDenied' });
     }
