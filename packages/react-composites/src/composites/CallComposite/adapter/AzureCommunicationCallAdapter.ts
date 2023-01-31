@@ -850,9 +850,9 @@ export type AzureCommunicationCallAdapterArgs = {
  */
 export type TeamsAdapterOptions = {
   /**
-   * Use this to hint the role of the user when the role is not available before a Rooms call is started. This value
-   * should be obtained using the Rooms API. This role will determine permissions in the configuration page of the
-   * {@link CallComposite}. The true role of the user will be synced with ACS services when a Rooms call starts.
+   * Use this to fetch profile information which will override data in {@link CallAdapterState} like display name
+   * The onFetchProfile is fetch-and-forget one time action for each user, once a user profile is updated, the value will be cached
+   * and would not be updated again within the lifecycle of adapter.
    */
   onFetchProfile?: OnFetchProfileCallback;
 };
@@ -867,7 +867,7 @@ export type TeamsCallAdapterArgs = {
   credential: CommunicationTokenCredential;
   locator: TeamsMeetingLinkLocator;
   /**
-   * Optional parameters for the {@link AzureCommunicationCallAdapter} created
+   * Optional parameters for the {@link TeamsCallAdapter} created
    */
   options?: TeamsAdapterOptions;
 };
