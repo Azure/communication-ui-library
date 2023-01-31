@@ -4,11 +4,11 @@
 import { concatStyleSets } from '@fluentui/react';
 import React, { useMemo } from 'react';
 import { HorizontalGalleryStyles } from '../HorizontalGallery';
-import { ResponsiveHorizontalGallery } from '../ResponsiveHorizontalGallery';
+import { ResponsiveVerticalGallery } from '../ResponsiveVerticalGallery';
 import { HORIZONTAL_GALLERY_BUTTON_WIDTH, HORIZONTAL_GALLERY_GAP } from '../styles/HorizontalGallery.styles';
 import {
-  horizontalGalleryContainerStyle,
-  horizontalGalleryStyle
+  verticalGalleryContainerStyle,
+  verticalGalleryStyle
 } from './styles/VideoGalleryResponsiveHorizontalGallery.styles';
 
 /**
@@ -16,7 +16,7 @@ import {
  *
  * @private
  */
-export const VideoGalleryResponsiveHorizontalGallery = (props: {
+export const VideoGalleryResponsiveVerticalGallery = (props: {
   shouldFloatLocalVideo?: boolean;
   isNarrow?: boolean;
   horizontalGalleryElements?: JSX.Element[];
@@ -25,23 +25,22 @@ export const VideoGalleryResponsiveHorizontalGallery = (props: {
   const { shouldFloatLocalVideo = false, isNarrow = false, horizontalGalleryElements, styles } = props;
 
   const containerStyles = useMemo(
-    () => horizontalGalleryContainerStyle(shouldFloatLocalVideo, isNarrow),
+    () => verticalGalleryContainerStyle(shouldFloatLocalVideo, isNarrow),
     [shouldFloatLocalVideo, isNarrow]
   );
-  const galleryStyles = useMemo(() => concatStyleSets(horizontalGalleryStyle(isNarrow), styles), [isNarrow, styles]);
+  const galleryStyles = useMemo(() => concatStyleSets(verticalGalleryStyle(isNarrow), styles), [isNarrow, styles]);
 
   return (
     <>
-      <ResponsiveHorizontalGallery
+      <ResponsiveVerticalGallery
         key="responsive-horizontal-gallery"
         containerStyles={containerStyles}
-        horizontalGalleryStyles={galleryStyles}
+        verticalGalleryStyles={galleryStyles}
         buttonWidthRem={HORIZONTAL_GALLERY_BUTTON_WIDTH}
         gapWidthRem={HORIZONTAL_GALLERY_GAP}
-        childWidthRem={4}
       >
         {horizontalGalleryElements}
-      </ResponsiveHorizontalGallery>
+      </ResponsiveVerticalGallery>
     </>
   );
 };

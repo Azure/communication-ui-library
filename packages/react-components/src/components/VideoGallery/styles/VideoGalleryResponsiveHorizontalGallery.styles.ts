@@ -9,7 +9,7 @@ import { LARGE_FLOATING_MODAL_SIZE_PX, SMALL_FLOATING_MODAL_SIZE_PX } from './Fl
 /**
  * @private
  */
-export const horizontalGalleryContainerStyle = (shouldFloatLocalVideo: boolean, isNarrow: boolean): IStyle => {
+export const verticalGalleryContainerStyle = (shouldFloatLocalVideo: boolean, isNarrow: boolean): IStyle => {
   return {
     width: isNarrow
       ? `${LARGE_VERTICAL_GALLERY_TILE_SIZE_REM.width + 1}rem`
@@ -22,12 +22,32 @@ export const horizontalGalleryContainerStyle = (shouldFloatLocalVideo: boolean, 
   };
 };
 
+export const horizontalGalleryContainerStyle = (shouldFloatLocalVideo: boolean, isNarrow: boolean): IStyle => {
+  return {
+    minHeight: isNarrow
+      ? `${SMALL_HORIZONTAL_GALLERY_TILE_SIZE_REM.height}rem`
+      : `${LARGE_HORIZONTAL_GALLERY_TILE_SIZE_REM.height}rem`,
+    width: shouldFloatLocalVideo
+      ? isNarrow
+        ? `calc(100% - ${_pxToRem(SMALL_FLOATING_MODAL_SIZE_PX.width)})`
+        : `calc(100% - ${_pxToRem(LARGE_FLOATING_MODAL_SIZE_PX.width)})`
+      : '100%',
+    paddingRight: '0.5rem'
+  };
+};
+
 /**
  * @private
  */
-export const horizontalGalleryStyle = (isNarrow: boolean): HorizontalGalleryStyles => {
+export const verticalGalleryStyle = (isNarrow: boolean): HorizontalGalleryStyles => {
   return {
     children: isNarrow ? SMALL_HORIZONTAL_GALLERY_TILE_STYLE : LARGE_VERTICAL_GALLERY_TILE_STYLE
+  };
+};
+
+export const horizontalGalleryStyle = (isNarrow: boolean): HorizontalGalleryStyles => {
+  return {
+    children: isNarrow ? SMALL_HORIZONTAL_GALLERY_TILE_STYLE : LARGE_HORIZONTAL_GALLERY_TILE_STYLE
   };
 };
 

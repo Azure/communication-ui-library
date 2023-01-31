@@ -75,29 +75,29 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
   const disableNextButton = page === lastPage;
 
   return (
-    <Stack className={mergeStyles(rootStyle, props.styles?.root)}>
-      <Stack className={mergeStyles(childrenContainerStyle, { '> *': props.styles?.children })}>
+    <Stack horizontal className={mergeStyles(rootStyle, props.styles?.root)}>
+      {showButtons && (
+        <HorizontalGalleryNavigationButton
+          key="previous-nav-button"
+          icon={<Icon iconName="horizontalGalleryLeftButton" />}
+          styles={styles?.previousButton}
+          onClick={() => setPage(Math.max(0, Math.min(lastPage, page - 1)))}
+          disabled={disablePreviousButton}
+          identifier={ids.horizontalGalleryLeftNavButton}
+        />
+      )}
+      <Stack horizontal className={mergeStyles(childrenContainerStyle, { '> *': props.styles?.children })}>
         {childrenOnCurrentPage}
       </Stack>
       {showButtons && (
-        <Stack horizontal styles={{ root: { height: '2rem' } }}>
-          <HorizontalGalleryNavigationButton
-            key="previous-nav-button"
-            icon={<Icon iconName="horizontalGalleryLeftButton" />}
-            styles={styles?.previousButton}
-            onClick={() => setPage(Math.max(0, Math.min(lastPage, page - 1)))}
-            disabled={disablePreviousButton}
-            identifier={ids.horizontalGalleryLeftNavButton}
-          />
-          <HorizontalGalleryNavigationButton
-            key="next-nav-button"
-            icon={<Icon iconName="horizontalGalleryRightButton" />}
-            styles={styles?.nextButton}
-            onClick={() => setPage(Math.min(lastPage, page + 1))}
-            disabled={disableNextButton}
-            identifier={ids.horizontalGalleryRightNavButton}
-          />
-        </Stack>
+        <HorizontalGalleryNavigationButton
+          key="next-nav-button"
+          icon={<Icon iconName="horizontalGalleryRightButton" />}
+          styles={styles?.nextButton}
+          onClick={() => setPage(Math.min(lastPage, page + 1))}
+          disabled={disableNextButton}
+          identifier={ids.horizontalGalleryRightNavButton}
+        />
       )}
     </Stack>
   );

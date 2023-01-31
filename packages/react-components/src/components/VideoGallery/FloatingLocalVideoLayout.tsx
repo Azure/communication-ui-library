@@ -3,7 +3,7 @@
 
 import { LayerHost, mergeStyles, Stack } from '@fluentui/react';
 import { useId } from '@fluentui/react-hooks';
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useTheme } from '../../theming';
 import { GridLayout } from '../GridLayout';
 import { isNarrowWidth } from '../utils/responsive';
@@ -20,6 +20,7 @@ import { innerLayoutStyle, layerHostStyle, rootLayoutStyle } from './styles/Floa
 import { videoGalleryLayoutGap } from './styles/Layout.styles';
 import { useOrganizedParticipants } from './utils/videoGalleryLayoutUtils';
 import { VideoGalleryResponsiveHorizontalGallery } from './VideoGalleryResponsiveHorizontalGallery';
+import { VideoGalleryResponsiveVerticalGallery } from './VideoGalleryResponsiveVerticalGallery';
 
 /**
  * Props for {@link FloatingLocalVideoLayout}.
@@ -61,6 +62,16 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
   const theme = useTheme();
 
   const isNarrow = parentWidth ? isNarrowWidth(parentWidth) : false;
+
+  const [overflowGalleryPosition, setOverflowGalleryPosition] = useState<'vertical' | 'horizontal'>('vertical');
+
+  useEffect(() => {
+    if (parentWidth && parentHeight && parentWidth > parentHeight) {
+      setOverflowGalleryPosition('vertical');
+    } else {
+      setOverflowGalleryPosition('horizontal');
+    }
+  }, [parentWidth, parentHeight]);
 
   const { gridParticipants, horizontalGalleryParticipants } = useOrganizedParticipants({
     remoteParticipants,
@@ -131,19 +142,34 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
     if (isNarrow) {
       return <ScrollableHorizontalGallery horizontalGalleryElements={horizontalGalleryTiles} />;
     }
-    return (
-      <VideoGalleryResponsiveHorizontalGallery
-        isNarrow={isNarrow}
-        shouldFloatLocalVideo={true}
-        horizontalGalleryElements={horizontalGalleryTiles}
-        styles={styles?.horizontalGallery}
-      />
-    );
-  }, [isNarrow, horizontalGalleryTiles, styles?.horizontalGallery]);
+    if (overflowGalleryPosition === 'vertical') {
+      return (
+        <VideoGalleryResponsiveVerticalGallery
+          isNarrow={isNarrow}
+          shouldFloatLocalVideo={true}
+          horizontalGalleryElements={horizontalGalleryTiles}
+          styles={styles?.horizontalGallery}
+        />
+      );
+    } else {
+      return (
+        <VideoGalleryResponsiveHorizontalGallery
+          isNarrow={isNarrow}
+          shouldFloatLocalVideo={true}
+          horizontalGalleryElements={horizontalGalleryTiles}
+          styles={styles?.horizontalGallery}
+        />
+      );
+    }
+  }, [isNarrow, horizontalGalleryTiles, styles?.horizontalGallery, overflowGalleryPosition]);
 
   return (
     <Stack styles={rootLayoutStyle}>
-      <Stack horizontal={true} styles={innerLayoutStyle} tokens={videoGalleryLayoutGap}>
+      <Stack
+        horizontal={overflowGalleryPosition === 'vertical'}
+        styles={innerLayoutStyle}
+        tokens={videoGalleryLayoutGap}
+      >
         {screenShareComponent ? (
           screenShareComponent
         ) : (
