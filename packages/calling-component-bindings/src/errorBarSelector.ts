@@ -58,7 +58,6 @@ export const errorBarSelector: ErrorBarSelector = createSelector(
       return environmentInfo?.environment.browser === 'safari';
       return /^((?!chrome|android|crios|fxios).)*safari/i.test(navigator.userAgent);
     };
-    console.log(environmentInfo);
 
     // Errors reported via diagnostics are more reliable than from API method failures, so process those first.
     if (
