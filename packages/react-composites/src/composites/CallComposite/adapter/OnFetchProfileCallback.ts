@@ -16,7 +16,7 @@ export type OnFetchProfileCallback = (userId: string) => Promise<Profile | undef
 /**
  * The profile of a user.
  *
- * @public
+ * @beta
  */
 export type Profile = {
   /**
