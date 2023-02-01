@@ -25,7 +25,7 @@ function parsePackage(packagePath) {
 function overrideAllPackages(packagePaths, packageProcessFunc) {
   for (const path of packagePaths) {
     const packageJson = parsePackage(path);
-    newPackageJson = packageProcessFunc(packageJson);
+    const newPackageJson = packageProcessFunc(packageJson);
     require('fs').writeFileSync(path, JSON.stringify(newPackageJson, null, 2));
   }
 }
@@ -66,6 +66,33 @@ const updateAllDepVersions = (versionUpdater, deps/* dependency names to update 
   overrideAllPackages(packagePaths, packageProcessFunc);
 }
 
+/**
+ * Remove depedency by name from all packages (packlets, samples and tools) in the repo.
+ * This removes the dependency from dependencies, devDependencies and peerDependencies.
+ * @param {string[]} deps - the name of the dependencies to remove
+ * @internal
+ */
+const removeDepsFromAllPackages = (deps) => {
+  const packagePaths = findAllPackageJSON(PACKAGES_DIR);
+
+  const removeDependencyByName = (dependencies, depName) => {
+    if (typeof dependencies === 'object') {
+      delete dependencies[depName];
+    }
+  }
+
+  const packageProcessFunc = (packageJson) => {
+    const result = { ...packageJson };
+    for (const depName of deps) {
+      removeDependencyByName(result.dependencies, depName);
+      removeDependencyByName(result.devDependencies, depName);
+      removeDependencyByName(result.peerDependencies, depName);
+    };
+    return result;
+  }
+  overrideAllPackages(packagePaths, packageProcessFunc);
+}
+
 function getAllNames(packagePaths) {
   return packagePaths.map(path => parsePackage(path).name);
 }
@@ -74,5 +101,6 @@ module.exports = {
   updateAllVersions,
   updateAllDepVersions,
   findAllPackageJSON,
-  getAllNames
+  getAllNames,
+  removeDepsFromAllPackages
 }
