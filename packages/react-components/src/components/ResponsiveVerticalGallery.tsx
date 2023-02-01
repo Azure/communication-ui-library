@@ -84,7 +84,7 @@ const calculateChildrenPerPage = (args: {
    *   |                |
    *   |________________|
    *
-   * number of children = container height - (2* gap width + button height) / childMinHeight
+   * number of children = (container height - (2* gap width + button height)) / childMinHeight
    *
    * we want to find the maximum number of children at the smallest size we can fit in the gallery and then resize them
    * to fill in the space as much as possible

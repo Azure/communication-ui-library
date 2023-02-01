@@ -88,6 +88,9 @@ export const LARGE_HORIZONTAL_GALLERY_TILE_STYLE = {
 };
 
 /**
+ * Styles to maintain the tiles even size within the bounds:
+ * minHeight: 90px
+ * maxHeight: 144px
  * @private
  */
 export const LARGE_VERTICAL_GALLERY_TILE_STYLE = {
