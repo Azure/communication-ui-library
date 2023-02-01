@@ -15,7 +15,6 @@ import {
   upperStackTokens
 } from './styles/EndChat.styles';
 
-import { Announcer } from '../../../../packages/react-components/src/components/Announcer';
 import { Chat20Filled } from '@fluentui/react-icons';
 import { getExistingThreadIdFromURL } from './utils/getExistingThreadIdFromURL';
 import { joinThread } from './utils/joinThread';
@@ -71,8 +70,7 @@ export const EndScreen = (props: EndCallProps): JSX.Element => {
       className={endChatContainerStyle}
     >
       <Stack tokens={upperStackTokens}>
-        <Announcer announcementString={leftCall} ariaLive={'polite'} />
-        <Text role={'heading'} aria-level={1} className={endChatTitleStyle}>
+        <Text role={'heading'} aria-level={1} aria-label={leftCall} aria-live={'polite'} className={endChatTitleStyle}>
           {leftCall}
         </Text>
         <Stack horizontal wrap tokens={buttonsStackTokens}>
