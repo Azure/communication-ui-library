@@ -8,7 +8,9 @@ import { ResponsiveHorizontalGallery } from '../ResponsiveHorizontalGallery';
 import { HORIZONTAL_GALLERY_BUTTON_WIDTH, HORIZONTAL_GALLERY_GAP } from '../styles/HorizontalGallery.styles';
 import {
   horizontalGalleryContainerStyle,
-  horizontalGalleryStyle
+  horizontalGalleryStyle,
+  LARGE_HORIZONTAL_GALLERY_TILE_SIZE_REM,
+  SMALL_HORIZONTAL_GALLERY_TILE_SIZE_REM
 } from './styles/VideoGalleryResponsiveHorizontalGallery.styles';
 
 /**
@@ -38,7 +40,9 @@ export const VideoGalleryResponsiveHorizontalGallery = (props: {
         horizontalGalleryStyles={galleryStyles}
         buttonWidthRem={HORIZONTAL_GALLERY_BUTTON_WIDTH}
         gapWidthRem={HORIZONTAL_GALLERY_GAP}
-        childWidthRem={4}
+        childWidthRem={
+          isNarrow ? SMALL_HORIZONTAL_GALLERY_TILE_SIZE_REM.width : LARGE_HORIZONTAL_GALLERY_TILE_SIZE_REM.width
+        }
       >
         {horizontalGalleryElements}
       </ResponsiveHorizontalGallery>
