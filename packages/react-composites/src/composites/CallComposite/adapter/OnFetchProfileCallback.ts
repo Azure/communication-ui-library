@@ -14,7 +14,7 @@ import { createParticipantModifier } from '../utils';
 export type OnFetchProfileCallback = (userId: string) => Promise<Profile | undefined>;
 
 /**
- * Custom data attributes for displaying avatar for a user.
+ * The profile of a user.
  *
  * @public
  */
@@ -26,8 +26,6 @@ export type Profile = {
 };
 
 /**
- * Custom data attributes for displaying avatar for a user.
- *
  * @private
  */
 export const createProfileStateModifier = (
