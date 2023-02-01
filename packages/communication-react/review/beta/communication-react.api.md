@@ -715,6 +715,7 @@ export interface CallState {
     screenShareRemoteParticipant?: string;
     startTime: Date;
     state: CallState_2;
+    totalParticipantCount?: number;
     transcription: TranscriptionCallFeature;
 }
 
@@ -1419,10 +1420,10 @@ export type CommonProperties<A, B> = {
 export interface CommonSitePermissionsProps {
     appName: string;
     browserHint?: 'safari' | 'unset';
+    kind: 'request' | 'denied' | 'check';
     onContinueAnywayClick?: () => void;
     onTroubleshootingClick?: () => void;
     styles?: SitePermissionsStyles;
-    type: 'request' | 'denied' | 'check';
 }
 
 // @public
@@ -3250,10 +3251,14 @@ export interface VideoGalleryStrings {
     localVideoLabel: string;
     localVideoMovementLabel: string;
     localVideoSelectedDescription: string;
+    pinnedParticipantAnnouncementAriaLabel: string;
     pinParticipantForMe: string;
+    pinParticipantMenuItemAriaLabel: string;
     screenIsBeingSharedMessage: string;
     screenShareLoadingMessage: string;
+    unpinnedParticipantAnnouncementAriaLabel: string;
     unpinParticipantForMe: string;
+    unpinParticipantMenuItemAriaLabel: string;
 }
 
 // @public
