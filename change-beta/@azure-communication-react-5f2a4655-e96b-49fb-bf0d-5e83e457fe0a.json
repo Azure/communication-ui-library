@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add total participant count to stateful client",
-  "packageName": "@azure/communication-react",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

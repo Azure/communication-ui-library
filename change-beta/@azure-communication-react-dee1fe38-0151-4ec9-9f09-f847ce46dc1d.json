@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Introduce tests for validating allowWithUnsupportedBrowser button in unsupportedBrowserVersion UI.",
-  "packageName": "@azure/communication-react",
-  "email": "94866715+dmceachernmsft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

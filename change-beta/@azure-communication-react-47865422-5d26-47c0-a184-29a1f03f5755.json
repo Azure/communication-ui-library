@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Fix race condition where the remote video tile was not showing the participant's video",
-  "packageName": "@azure/communication-react",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

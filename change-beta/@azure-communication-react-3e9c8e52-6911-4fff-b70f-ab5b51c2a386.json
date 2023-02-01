@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "updated API.md files",
-  "packageName": "@azure/communication-react",
-  "email": "97124699+prabhjot-msft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

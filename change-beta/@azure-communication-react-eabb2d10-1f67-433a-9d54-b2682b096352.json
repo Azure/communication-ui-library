@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Update the different environment info modals so the strings are optional props. ",
-  "packageName": "@azure/communication-react",
-  "email": "94866715+dmceachernmsft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

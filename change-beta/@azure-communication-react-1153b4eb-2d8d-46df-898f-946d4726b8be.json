@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Bound CallReadiness screens to the boundaries of the app",
-  "packageName": "@azure/communication-react",
-  "email": "edwardlee@microsoft.com",
-  "dependentChangeType": "patch"
-}
