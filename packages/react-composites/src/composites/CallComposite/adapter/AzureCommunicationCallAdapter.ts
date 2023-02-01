@@ -994,6 +994,7 @@ const useAzureCommunicationCallAdapterGeneric = <
             throw new Error('Unreachable code, displayName already checked above.');
           }
           // This is just the type check to ensure that roleHint is defined.
+          /* @conditional-compile-remove(rooms) */
           if (options && !('roleHint' in options)) {
             throw new Error('Unreachable code, provided a options without roleHint.');
           }
@@ -1007,6 +1008,7 @@ const useAzureCommunicationCallAdapterGeneric = <
           })) as Adapter;
         } else if (adapterKind === 'Teams') {
           // This is just the type check to ensure that roleHint is defined.
+          /* @conditional-compile-remove(teams-identity-support)) */
           if (options && !('onFetchProfile' in options)) {
             throw new Error('Unreachable code, provided a options without roleHint.');
           }
