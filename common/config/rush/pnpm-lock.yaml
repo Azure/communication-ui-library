@@ -34,6 +34,13 @@ packages:
       node: '>=12.0.0'
     resolution:
       integrity: sha512-TrRLIoSQVzfAJX9H1JeFjzAoDGcoK1IYX1UImfceTZpsyYfWr09Ss1aHW1y5TrrR3iq6RZLBwJ3E24uwPhwahw==
+  /@azure/communication-calling-effects/1.0.0-beta.2:
+    dependencies:
+      '@azure/logger': 1.0.3
+      events: 3.3.0
+    dev: false
+    resolution:
+      integrity: sha512-S2WF9AQgHIyli0YxwNdO09v9YKdeJ1IDPAV04bRGjWHTHkTgzUpFgDUlwZIxIBGGHZ6yER1KJBdBwcwKp6a+rg==
   /@azure/communication-calling/1.10.0-beta.1:
     dependencies:
       '@azure/communication-common': 2.0.0
@@ -19715,6 +19722,7 @@ packages:
   file:projects/communication-react.tgz:
     dependencies:
       '@azure/communication-calling': 1.10.0-beta.1
+      '@azure/communication-calling-effects': 1.0.0-beta.2
       '@azure/communication-chat': 1.2.0
       '@azure/communication-common': 2.2.0
       '@azure/core-auth': 1.3.2
@@ -19797,7 +19805,7 @@ packages:
     dev: false
     name: '@rush-temp/communication-react'
     resolution:
-      integrity: sha512-7G0gLTWB/o5w5r04Avbp+YK4V/Ld8ihSBLoiAq7DO7qVJl/Xh4TVuHmKKofey5hMYdmg1/MVsV4Kuq+lSR9sIA==
+      integrity: sha512-fbMpbHJe3n92yC3qFWuYvyfBXxdpRaLVHmzbILZ39VK0VKCMCv9tjYVhE3xpBktT2b/puZX2vuen9rbS98uPng==
       tarball: file:projects/communication-react.tgz
     version: 0.0.0
   file:projects/component-examples.tgz:
@@ -19997,6 +20005,7 @@ packages:
   file:projects/react-composites.tgz:
     dependencies:
       '@azure/communication-calling': 1.10.0-beta.1
+      '@azure/communication-calling-effects': 1.0.0-beta.2
       '@azure/communication-chat': 1.2.0
       '@azure/communication-common': 2.2.0
       '@azure/communication-identity': 1.1.0
@@ -20101,7 +20110,7 @@ packages:
     dev: false
     name: '@rush-temp/react-composites'
     resolution:
-      integrity: sha512-eWV96Vhg50wNoUV+i2pEjqzQuzWbde6lI9jrq/YBHIHgwrhwk63VjuRa8l3L83XCt17P2lvbaohWaXP1KmpanA==
+      integrity: sha512-tDS9c093SOOjK/Lf/G9u1Gm2MEwEkrtIgjnDUDDyyj5IaGDoxngMYvj2iVwTHurkKQtyK/fN935pS2wGAfsyCQ==
       tarball: file:projects/react-composites.tgz
     version: 0.0.0
   file:projects/sample-automation-tests.tgz:
