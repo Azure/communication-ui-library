@@ -1274,7 +1274,7 @@ export type ParticipantsRemovedListener = (event: {
     removedBy: ChatParticipant;
 }) => void;
 
-// @public
+// @beta
 export type Profile = {
     displayName?: string;
 };
