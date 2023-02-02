@@ -276,8 +276,6 @@ export const DEFAULT_COMPONENT_ICONS = {
   /* @conditional-compile-remove(pinned-participants) */
   VideoTileMoreOptions: <MoreHorizontal20Filled />,
   /* @conditional-compile-remove(pinned-participants) */
-  VideoTileHideOptionsIcon: <></>,
-  /* @conditional-compile-remove(pinned-participants) */
   VideoTileScaleFit: <ScaleFit20Regular />,
   /* @conditional-compile-remove(pinned-participants) */
   VideoTileScaleFill: <ScaleFill20Regular />,

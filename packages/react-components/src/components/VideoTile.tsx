@@ -196,7 +196,7 @@ const VideoTileMoreOptionsButton = (props: {
     return <></>;
   }
 
-  const optionsIcon = canShowContextMenuButton ? 'VideoTileMoreOptions' : 'VideoTileHideOptionsIcon';
+  const optionsIcon = canShowContextMenuButton ? 'VideoTileMoreOptions' : undefined;
 
   return (
     <IconButton

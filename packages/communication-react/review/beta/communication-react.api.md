@@ -1822,7 +1822,6 @@ export const DEFAULT_COMPONENT_ICONS: {
     BrowserPermissionDeniedError: JSX.Element;
     VideoTilePinned: JSX.Element;
     VideoTileMoreOptions: JSX.Element;
-    VideoTileHideOptionsIcon: JSX.Element;
     VideoTileScaleFit: JSX.Element;
     VideoTileScaleFill: JSX.Element;
     PinParticipant: JSX.Element;
@@ -1920,7 +1919,6 @@ export const DEFAULT_COMPOSITE_ICONS: {
     BrowserPermissionDeniedError: JSX.Element;
     VideoTilePinned: JSX.Element;
     VideoTileMoreOptions: JSX.Element;
-    VideoTileHideOptionsIcon: JSX.Element;
     VideoTileScaleFit: JSX.Element;
     VideoTileScaleFill: JSX.Element;
     PinParticipant: JSX.Element;
