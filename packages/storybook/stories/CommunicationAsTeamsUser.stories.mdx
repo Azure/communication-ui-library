@@ -30,7 +30,7 @@ The UI Library helps Contoso build custom teams client experiences via a simplif
 and offering UI composites to reduce development time to production. The UI Library is able to offer all of these capabilities by taking
 in a Teams access token as input and using teams-specific calling functions for making calls as a Teams user.
 
-Note: The UI Library is not able to create teams access tokens or interact with your existing tenant.
+Note: The UI Library is not able to create teams access tokens and is not designed to help you configure your AAD application.
 
 ## Using UI Library in Communication as Teams user scenarios
 
@@ -47,7 +47,9 @@ like this experience so we can create an amazing experience when the feature wil
 
 ### If I have found any issues with the CallComposite when interacting with Communication as Teams user where can I go?
 
-Feel free to log a [Github issue](https://github.com/Azure/communication-ui-library/issues) and someone from our team can work with you on your issue.
+For general questions around UI Library and Communication as Teams user please ask at [Microsoft Q&A](https://learn.microsoft.com/en-us/search/?terms=Azure%20Communication%20Services&category=QnA)
+
+If you have an issue working with the code feel free to log an issue at [Github issue](https://github.com/Azure/communication-ui-library/issues) and someone from our team can work with you on your issue.
 
 ### If I want to learn more about the Communication as Teams user workflow where can I look?
 
@@ -56,3 +58,8 @@ You can check out our documentation in our Azure Documentation [here](https://le
 ### How do I get the Teams access token in code to try out the Communication as Teams user workflow?
 
 You can try out this quickstart to create a Teams access token [here](https://learn.microsoft.com/en-us/azure/communication-services/quickstarts/manage-teams-identity?pivots=programming-language-javascript)
+
+### Why do I need to pass in an identifier when using the UI Library with Azure Communication Services when I don't need to with the underlying SDKs?
+
+In order for us to create a better experience when using the UI Library, we need to know the local user's id so we can provide a better UX for the end user.
+We understand it is possible to pull the id from the access token claims however this could change and so we opted to explicitly ask for it.

@@ -1668,10 +1668,10 @@ export const createStatefulCallClient: (args: StatefulCallClientArgs, options?: 
 export const createStatefulChatClient: (args: StatefulChatClientArgs, options?: StatefulChatClientOptions | undefined) => StatefulChatClient;
 
 // @beta (undocumented)
-export const createTeamsCallAdapter: ({ userId, credential, locator }: TeamsCallAdapterArgs) => Promise<TeamsCallAdapter>;
+export const createTeamsCallAdapter: ({ userId, credential, locator, options }: TeamsCallAdapterArgs) => Promise<TeamsCallAdapter>;
 
 // @beta
-export const createTeamsCallAdapterFromClient: (callClient: StatefulCallClient, callAgent: TeamsCallAgent, locator: CallAdapterLocator) => Promise<TeamsCallAdapter>;
+export const createTeamsCallAdapterFromClient: (callClient: StatefulCallClient, callAgent: TeamsCallAgent, locator: CallAdapterLocator, options?: TeamsAdapterOptions | undefined) => Promise<TeamsCallAdapter>;
 
 // @public
 export interface CreateVideoStreamViewResult {
@@ -2609,6 +2609,9 @@ export interface NetworkDiagnosticsState {
     latest: LatestNetworkDiagnostics;
 }
 
+// @beta
+export type OnFetchProfileCallback = (userId: string) => Promise<Profile | undefined>;
+
 // @public
 export type OnRenderAvatarCallback = (
 userId?: string, options?: CustomAvatarOptions,
@@ -2788,6 +2791,11 @@ export type ParticipantsRemovedListener = (event: {
 
 // @public
 export type ParticipantState = 'Idle' | 'Connecting' | 'Ringing' | 'Connected' | 'Hold' | 'InLobby' | 'EarlyMedia' | 'Disconnected';
+
+// @beta
+export type Profile = {
+    displayName?: string;
+};
 
 // @public
 export type ReadReceiptsBySenderId = {
@@ -3002,6 +3010,11 @@ export interface SystemMessageCommon extends MessageCommon {
 }
 
 // @beta
+export type TeamsAdapterOptions = {
+    onFetchProfile?: OnFetchProfileCallback;
+};
+
+// @beta
 export interface TeamsCallAdapter extends CommonCallAdapter {
     joinCall(microphoneOn?: boolean): TeamsCall | undefined;
     startCall(participants: string[], options?: StartCallOptions): TeamsCall | undefined;
@@ -3013,6 +3026,7 @@ export type TeamsCallAdapterArgs = {
     userId: MicrosoftTeamsUserIdentifier;
     credential: CommunicationTokenCredential;
     locator: TeamsMeetingLinkLocator;
+    options?: TeamsAdapterOptions;
 };
 
 // @beta
