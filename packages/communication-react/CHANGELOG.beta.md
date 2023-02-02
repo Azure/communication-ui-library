@@ -9,6 +9,25 @@ This log was last generated on Wed, 01 Feb 2023 17:56:59 GMT and should not be m
 Wed, 01 Feb 2023 17:56:59 GMT 
 [Compare changes](https://github.com/azure/communication-ui-library/compare/1.5.0...1.5.1-beta.1)
 
+### Communications as Teams User - Public Preview
+ACS UI Library now enables developers to create a customized Teams experience leveraging communcation as a Teams user (beta).
+
+This feature includes:
+- Browser support on mobile devices
+- User interface (UI) cuztomization
+- Teams access token capabilities
+- Joining calls using M365 identity instead of an external user
+
+Read more about [Communication as Teams user](https://learn.microsoft.com/en-us/azure/communication-services/concepts/teams-endpoint) through Azure Communication Services.
+
+### Pinning Participants - Public Preview
+The VideoGallery now provides the ability to pin participants on the GridLayout.
+
+This feature includes:
+1. Contextual menu for each remote video tile
+2. Pinning and unpinning participants
+3. Change rendering options for remote video streams between fit-to-frame and fill frame
+
 ### Features
 - Teams identity support on adapter layer ([PR #2426](https://github.com/azure/communication-ui-library/pull/2426) by jinan@microsoft.com)
 - VideoTile provides a prop `onLongTouch` that allows users to trigger a custom callback when VideoTile is long touched ([PR #2556](https://github.com/azure/communication-ui-library/pull/2556) by anjulgarg@live.com)
