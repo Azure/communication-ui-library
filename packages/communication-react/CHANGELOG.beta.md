@@ -13,10 +13,9 @@ Wed, 01 Feb 2023 17:56:59 GMT
 ACS UI Library now enables developers to create a customized Teams experience leveraging communcation as a Teams user (beta).
 
 This feature includes:
+- Joining calls using Teams identity instead of an external user
 - Browser support on mobile devices
-- User interface (UI) cuztomization
-- Teams access token capabilities
-- Joining calls using M365 identity instead of an external user
+- Fetch and override display externally for participant 
 
 Read more about [Communication as Teams user](https://learn.microsoft.com/en-us/azure/communication-services/concepts/teams-endpoint) through Azure Communication Services.
 
