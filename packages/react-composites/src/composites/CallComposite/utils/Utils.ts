@@ -4,7 +4,7 @@
 import { CallAdapterState, CallCompositePage, END_CALL_PAGES } from '../adapter/CallAdapter';
 import { _isInCall, _isPreviewOn, _isInLobbyOrConnecting } from '@internal/calling-component-bindings';
 import { CallControlOptions } from '../types/CallControlOptions';
-import { CallState } from '@internal/calling-stateful-client';
+import { CallState, RemoteParticipantState } from '@internal/calling-stateful-client';
 import {
   CommunicationIdentifier,
   isCommunicationUserIdentifier,
@@ -14,6 +14,7 @@ import {
 } from '@azure/communication-common';
 /* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
+import { AdapterStateModifier } from '../adapter/AzureCommunicationCallAdapter';
 
 const ACCESS_DENIED_TEAMS_MEETING_SUB_CODE = 5854;
 const REMOTE_PSTN_USER_HUNG_UP = 560000;
@@ -368,4 +369,61 @@ export const _isSafari = (
   /* @conditional-compile-remove(unsupported-browser) */
   return environmentInfo?.environment.browser === 'safari';
   return /^((?!chrome|android|crios|fxios).)*safari/i.test(navigator.userAgent);
+};
+
+/**
+ * @private
+ * This is the util function to create a participant modifier for remote participantList
+ * It memoize previous original participant items and only update the changed participant
+ * It takes in one modifier function to generate one single participant object, it returns undefined if the object keeps unmodified
+ */
+export const createParticipantModifier = (
+  createModifiedParticipant: (id: string, participant: RemoteParticipantState) => RemoteParticipantState | undefined
+): AdapterStateModifier => {
+  let previousParticipantState:
+    | {
+        [keys: string]: RemoteParticipantState;
+      }
+    | undefined = undefined;
+  let modifiedParticipants = {};
+  const memoizedParticipants: {
+    [id: string]: { originalRef: RemoteParticipantState; newParticipant: RemoteParticipantState };
+  } = {};
+
+  return (state: CallAdapterState) => {
+    // if root state is the same, we don't need to update the participants
+    if (state.call?.remoteParticipants !== previousParticipantState) {
+      modifiedParticipants = {};
+      const originalParticipants = state.call?.remoteParticipants;
+      for (const key in originalParticipants) {
+        const modifiedParticipant = createModifiedParticipant(key, originalParticipants[key]);
+        if (modifiedParticipant === undefined) {
+          modifiedParticipants[key] = originalParticipants[key];
+          continue;
+        }
+        // Generate the new item if original cached item has been changed
+        if (memoizedParticipants[key]?.originalRef !== originalParticipants[key]) {
+          memoizedParticipants[key] = {
+            newParticipant: modifiedParticipant,
+            originalRef: originalParticipants[key]
+          };
+        }
+
+        // the modified participant is always coming from the memoized cache, whether is was refreshed
+        // from the previous closure or not
+        modifiedParticipants[key] = memoizedParticipants[key].newParticipant;
+      }
+
+      previousParticipantState = state.call?.remoteParticipants;
+    }
+    return {
+      ...state,
+      call: state.call
+        ? {
+            ...state.call,
+            remoteParticipants: modifiedParticipants
+          }
+        : undefined
+    };
+  };
 };

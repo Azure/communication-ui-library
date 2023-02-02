@@ -988,10 +988,10 @@ export const createAzureCommunicationChatAdapter: ({ endpoint: endpointUrl, user
 export const createAzureCommunicationChatAdapterFromClient: (chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient) => Promise<ChatAdapter>;
 
 // @beta (undocumented)
-export const createTeamsCallAdapter: ({ userId, credential, locator }: TeamsCallAdapterArgs) => Promise<TeamsCallAdapter>;
+export const createTeamsCallAdapter: ({ userId, credential, locator, options }: TeamsCallAdapterArgs) => Promise<TeamsCallAdapter>;
 
 // @beta
-export const createTeamsCallAdapterFromClient: (callClient: StatefulCallClient, callAgent: TeamsCallAgent, locator: CallAdapterLocator) => Promise<TeamsCallAdapter>;
+export const createTeamsCallAdapterFromClient: (callClient: StatefulCallClient, callAgent: TeamsCallAgent, locator: CallAdapterLocator, options?: TeamsAdapterOptions | undefined) => Promise<TeamsCallAdapter>;
 
 // @beta
 export type CustomCallControlButtonCallback = (args: CustomCallControlButtonCallbackArgs) => CustomCallControlButtonProps;
@@ -1249,6 +1249,9 @@ export type NetworkDiagnosticChangedEvent = NetworkDiagnosticChangedEventArgs & 
     type: 'network';
 };
 
+// @beta
+export type OnFetchProfileCallback = (userId: string) => Promise<Profile | undefined>;
+
 // @public
 export type ParticipantsAddedListener = (event: {
     participantsAdded: ChatParticipant[];
@@ -1272,9 +1275,19 @@ export type ParticipantsRemovedListener = (event: {
 }) => void;
 
 // @beta
+export type Profile = {
+    displayName?: string;
+};
+
+// @beta
 export interface RemoteVideoTileMenuOptions {
     isHidden?: boolean;
 }
+
+// @beta
+export type TeamsAdapterOptions = {
+    onFetchProfile?: OnFetchProfileCallback;
+};
 
 // @beta
 export interface TeamsCallAdapter extends CommonCallAdapter {
@@ -1288,6 +1301,7 @@ export type TeamsCallAdapterArgs = {
     userId: MicrosoftTeamsUserIdentifier;
     credential: CommunicationTokenCredential;
     locator: TeamsMeetingLinkLocator;
+    options?: TeamsAdapterOptions;
 };
 
 // @public
