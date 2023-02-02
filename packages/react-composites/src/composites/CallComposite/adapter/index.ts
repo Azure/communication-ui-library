@@ -14,7 +14,9 @@ export {
   useTeamsCallAdapter
 } from './AzureCommunicationCallAdapter';
 /* @conditional-compile-remove(teams-identity-support) */
-export type { TeamsCallAdapterArgs } from './AzureCommunicationCallAdapter';
+export type { TeamsCallAdapterArgs, TeamsAdapterOptions } from './AzureCommunicationCallAdapter';
+/* @conditional-compile-remove(teams-identity-support) */
+export type { OnFetchProfileCallback, Profile } from './OnFetchProfileCallback';
 export type { AzureCommunicationCallAdapterArgs, CallAdapterLocator } from './AzureCommunicationCallAdapter';
 /* @conditional-compile-remove(rooms) */
 export type { AzureCommunicationCallAdapterOptions } from './AzureCommunicationCallAdapter';
