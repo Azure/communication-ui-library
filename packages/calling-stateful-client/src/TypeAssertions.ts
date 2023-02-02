@@ -1,7 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Call, CallAgent, CallClient, DeviceManager, VideoEffectsFeature } from '@azure/communication-calling';
+import { Call, CallAgent, CallClient, DeviceManager } from '@azure/communication-calling';
+/* @conditional-compile-remove(video-background-effects) */
+import { VideoEffectsFeature } from '@azure/communication-calling';
 import { CallErrorTarget } from './CallClientState';
 import { IncomingCall } from '@azure/communication-calling';
 
