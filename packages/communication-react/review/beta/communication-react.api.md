@@ -2608,7 +2608,7 @@ export interface NetworkDiagnosticsState {
 }
 
 // @beta
-export type OnFetchProfileCallback = (userId: string) => Promise<Profile | undefined>;
+export type OnFetchProfileCallback = (userId: string, displayName?: string) => Promise<Profile | undefined>;
 
 // @public
 export type OnRenderAvatarCallback = (
