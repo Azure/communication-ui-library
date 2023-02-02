@@ -29,7 +29,13 @@ export {
 export { createTeamsCallAdapter, createTeamsCallAdapterFromClient, useTeamsCallAdapter } from './adapter';
 
 /* @conditional-compile-remove(teams-identity-support) */
-export type { TeamsCallAdapter, TeamsCallAdapterArgs } from './adapter';
+export type {
+  TeamsCallAdapter,
+  TeamsCallAdapterArgs,
+  TeamsAdapterOptions,
+  OnFetchProfileCallback,
+  Profile
+} from './adapter';
 
 export type {
   AzureCommunicationCallAdapterArgs,
