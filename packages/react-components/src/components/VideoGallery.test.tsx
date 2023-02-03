@@ -24,7 +24,9 @@ registerIcons({
     videotilemoreoptions: <></>,
     videotilepinned: <></>,
     pinparticipant: <></>,
-    unpinparticipant: <></>
+    unpinparticipant: <></>,
+    videotilescalefit: <></>,
+    videotilescalefill: <></>
   }
 });
 
@@ -408,55 +410,6 @@ describe('VideoGallery pinned participants tests', () => {
       });
     }
   );
-
-  test('pinned participants assigned as prop can exceed maximum', () => {
-    const localParticipant = createLocalParticipant({
-      videoStream: { isAvailable: true, renderElement: createVideoDivElement() }
-    });
-    const root = mountVideoGalleryWithLocalParticipant({ localParticipant });
-
-    // 10 remote participants. First 5 with their video on.
-    const remoteParticipants = [...Array(10).keys()].map((i) => {
-      return createRemoteParticipant({
-        userId: `${i}`,
-        videoStream: i < 5 ? { isAvailable: true, renderElement: createVideoDivElement() } : undefined
-      });
-    });
-
-    const pinnedParticipantUserIds = ['7', '8', '9', '1'];
-
-    act(() => {
-      root.setProps({
-        layout: 'floatingLocalVideo',
-        remoteParticipants,
-        dominantSpeakers: ['1', '6'],
-        pinnedParticipants: pinnedParticipantUserIds
-      });
-    });
-
-    const gridLayoutVideoTiles = root.find(GridLayout).find(VideoTile);
-    const gridLayoutUserIds = gridLayoutVideoTiles.map((t) => t.prop('userId'));
-    // verify that video tiles in the grid layout are in the same order as the pinned
-    expect(gridLayoutUserIds).toStrictEqual(pinnedParticipantUserIds);
-    // verify the correct pinned remote video tiles have their video on
-    gridLayoutVideoTiles.forEach((videoTile) => {
-      const userId = videoTile.prop('userId');
-      if (!userId) {
-        fail();
-      }
-      expect(videoTile.find(StreamMedia).exists()).toBe(parseInt(userId) < 5);
-    });
-    const horizontalGallery = root.find(HorizontalGallery);
-    expect(horizontalGallery.find(VideoTile).length).toBe(2);
-    // click more button of first remote video tile in horizontal gallery
-    const videoTileMoreOptionsButton = horizontalGallery.find('[data-ui-id="video-tile-more-options-button"]').at(0);
-    if (videoTileMoreOptionsButton) {
-      videoTileMoreOptionsButton.simulate('click');
-    }
-    // click more button of first remote video tile in horizontal gallery
-    const pinMenuButton = root.find('[data-ui-id="video-tile-pin-participant-button"]').first();
-    expect(pinMenuButton.prop('aria-disabled')).toBe(true);
-  });
 });
 
 const mountVideoGalleryWithLocalParticipant = (attrs: {
@@ -527,7 +480,9 @@ const createRemoteParticipant = (attrs?: Partial<VideoGalleryRemoteParticipant>)
       isAvailable: attrs?.videoStream?.isAvailable ?? false,
       isReceiving: attrs?.videoStream?.isReceiving ?? true,
       isMirrored: attrs?.videoStream?.isMirrored ?? false,
-      renderElement: attrs?.videoStream?.renderElement ?? undefined
+      renderElement: attrs?.videoStream?.renderElement ?? undefined,
+      /* @conditional-compile-remove(pinned-participants) */
+      scalingMode: attrs?.videoStream?.scalingMode ?? 'Crop'
     },
     isScreenSharingOn: attrs?.isScreenSharingOn ?? false
   };

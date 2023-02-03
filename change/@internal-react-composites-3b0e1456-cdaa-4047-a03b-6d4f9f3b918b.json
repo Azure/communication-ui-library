@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Exporting type AzureCommunicationCallAdapterOptions",
-  "packageName": "@internal/react-composites",
-  "email": "miguelgamis@microsoft.com",
-  "dependentChangeType": "patch"
-}
