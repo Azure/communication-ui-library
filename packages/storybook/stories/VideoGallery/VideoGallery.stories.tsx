@@ -164,7 +164,7 @@ const getDocs: () => JSX.Element = () => {
       <Subheading>Disabling remote video tile contextual menu</Subheading>
       <Description>
         Remote video tile contextual menu is be enabled by default but can be disabled by setting the
-        `remoteVideoTileMenu` prop to 'false' like in the example below.
+        `remoteVideoTileMenu` prop to false like in the example below.
       </Description>
       <Canvas mdxSource={PinnedParticipantsDisabledExampleText}>
         <PinnedParticipantsDisabledExample />
