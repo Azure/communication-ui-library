@@ -51,6 +51,7 @@ export const localVideoTileContainerStyle = (theme: Theme, isNarrow?: boolean): 
   return {
     minWidth: isNarrow ? _pxToRem(SMALL_FLOATING_MODAL_SIZE_PX.width) : _pxToRem(LARGE_FLOATING_MODAL_SIZE_PX.width),
     minHeight: isNarrow ? _pxToRem(SMALL_FLOATING_MODAL_SIZE_PX.height) : _pxToRem(LARGE_FLOATING_MODAL_SIZE_PX.height),
+    width: 'auto',
     position: 'absolute',
     bottom: _pxToRem(localVideoTileOuterPaddingPX),
     borderRadius: theme.effects.roundedCorner4,
@@ -108,8 +109,8 @@ export const floatingLocalVideoTileStyle: VideoTileStylesProps = {
   root: {
     position: 'absolute',
     zIndex: LOCAL_VIDEO_TILE_ZINDEX,
-    height: '100%',
-    width: '100%'
+    height: '100%'
+    // width: '100%'
   }
 };
 

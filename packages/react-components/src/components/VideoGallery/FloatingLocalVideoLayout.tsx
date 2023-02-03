@@ -55,9 +55,11 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
     showCameraSwitcherInLocalPreview,
     parentWidth,
     parentHeight,
-    /* @conditional-compile-remove(pinned-participants) */ pinnedParticipantUserIds
+    /* @conditional-compile-remove(pinned-participants) */ pinnedParticipantUserIds,
+    localTileWidth
   } = props;
 
+  console.log(localTileWidth);
   const theme = useTheme();
 
   const isNarrow = parentWidth ? isNarrowWidth(parentWidth) : false;

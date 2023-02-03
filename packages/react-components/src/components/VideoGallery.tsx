@@ -507,7 +507,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       localVideoComponent: localVideoTile,
       parentWidth: containerWidth,
       parentHeight: containerHeight,
-      /* @conditional-compile-remove(pinned-participants) */ pinnedParticipantUserIds: pinnedParticipants
+      /* @conditional-compile-remove(pinned-participants) */ pinnedParticipantUserIds: pinnedParticipants,
+      localTileWidth: localParticipant.videoStream?.renderElement?.clientWidth
     }),
     [
       remoteParticipants,
@@ -521,7 +522,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       containerHeight,
       onRenderRemoteVideoTile,
       defaultOnRenderVideoTile,
-      /* @conditional-compile-remove(pinned-participants) */ pinnedParticipants
+      /* @conditional-compile-remove(pinned-participants) */ pinnedParticipants,
+      localParticipant.videoStream?.renderElement?.clientWidth
     ]
   );
 

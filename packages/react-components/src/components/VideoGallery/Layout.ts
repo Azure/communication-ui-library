@@ -38,4 +38,8 @@ export interface LayoutProps {
    * List of pinned participant userIds
    */
   pinnedParticipantUserIds?: string[];
+  /**
+   * Width of the renderElement once it renders a stream.
+   */
+  localTileWidth?: number;
 }
