@@ -154,11 +154,12 @@ const getDocs: () => JSX.Element = () => {
       <Heading>Remote video tile contextual menu</Heading>
       <DetailedBetaBanner />
       <Description>
-        The VideoGallery provides a contextual menu for each remote video tile by clicking menu button next to the
-        participant display name. You can try it out in any of the above VideoGallery components on this Docs page. The
-        pin/unpin menu item will be available by default to allow pinning participants. To learn more about pinning
-        participants go to the Pinning Participants section below. Menu items to change remote video stream rendering
-        options are also available when the `useProps` hook is used to provide the props to VideoGallery.
+        The VideoGallery provides a contextual menu for each remote video tile which can be accessed by hovering the
+        remote video tile and clicking menu button next to the participant display name. You can try it out in any of
+        the above VideoGallery components on this Docs page. The pin/unpin menu item will be available by default to
+        allow pinning participants. To learn more about pinning participants go to the Pinning Participants section
+        below. Menu items to change remote video stream rendering options are also available when the `useProps` hook is
+        used to provide the props to VideoGallery.
       </Description>
       <Subheading>Disabling remote video tile contextual menu</Subheading>
       <Description>
