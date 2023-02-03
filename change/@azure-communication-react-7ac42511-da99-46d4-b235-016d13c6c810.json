@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "cherry-picking storybook improvements for communication as teams user documentation",
+  "packageName": "@azure/communication-react",
+  "email": "alkwa@microsoft.com",
+  "dependentChangeType": "none"
+}
