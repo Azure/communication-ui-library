@@ -59,7 +59,6 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
     localTileWidth
   } = props;
 
-  console.log(localTileWidth);
   const theme = useTheme();
 
   const isNarrow = parentWidth ? isNarrowWidth(parentWidth) : false;
@@ -105,7 +104,7 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
       // When we use showCameraSwitcherInLocalPreview it disables dragging to allow keyboard navigation.
       showCameraSwitcherInLocalPreview ? (
         <Stack
-          className={mergeStyles(localVideoTileWithControlsContainerStyle(theme, isNarrow), {
+          className={mergeStyles(localVideoTileWithControlsContainerStyle(theme, isNarrow, localTileWidth), {
             boxShadow: theme.effects.elevation8,
             zIndex: LOCAL_VIDEO_TILE_ZINDEX
           })}
@@ -113,7 +112,9 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
           {localVideoComponent}
         </Stack>
       ) : horizontalGalleryTiles.length > 0 ? (
-        <Stack className={mergeStyles(localVideoTileContainerStyle(theme, isNarrow))}>{localVideoComponent}</Stack>
+        <Stack className={mergeStyles(localVideoTileContainerStyle(theme, isNarrow, localTileWidth))}>
+          {localVideoComponent}
+        </Stack>
       ) : (
         <FloatingLocalVideo
           localVideoComponent={localVideoComponent}
@@ -121,6 +122,7 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
           isNarrow={isNarrow}
           parentWidth={parentWidth}
           parentHeight={parentHeight}
+          localTileWidth={localTileWidth}
         />
       )
     ) : undefined;

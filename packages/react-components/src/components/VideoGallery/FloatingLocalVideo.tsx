@@ -34,8 +34,9 @@ export const FloatingLocalVideo = (props: {
   isNarrow?: boolean;
   parentWidth?: number;
   parentHeight?: number;
+  localTileWidth?: number;
 }): JSX.Element => {
-  const { localVideoComponent, layerHostId, isNarrow, parentWidth, parentHeight } = props;
+  const { localVideoComponent, layerHostId, isNarrow, parentWidth, parentHeight, localTileWidth } = props;
 
   const theme = useTheme();
 
@@ -56,7 +57,10 @@ export const FloatingLocalVideo = (props: {
     [parentHeight, parentWidth, modalHeight, modalWidth]
   );
 
-  const modalStyles = useMemo(() => floatingLocalVideoModalStyle(theme, isNarrow), [theme, isNarrow]);
+  const modalStyles = useMemo(
+    () => floatingLocalVideoModalStyle(theme, isNarrow, localTileWidth),
+    [theme, isNarrow, localTileWidth]
+  );
   const layerProps = useMemo(() => ({ hostId: layerHostId }), [layerHostId]);
 
   return (

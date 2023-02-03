@@ -47,11 +47,16 @@ export const LOCAL_VIDEO_TILE_ZINDEX = 2;
 /**
  * @private
  */
-export const localVideoTileContainerStyle = (theme: Theme, isNarrow?: boolean): IStyle => {
+export const localVideoTileContainerStyle = (theme: Theme, isNarrow?: boolean, localStreamWidth?: number): IStyle => {
   return {
-    minWidth: isNarrow ? _pxToRem(SMALL_FLOATING_MODAL_SIZE_PX.width) : _pxToRem(LARGE_FLOATING_MODAL_SIZE_PX.width),
+    minWidth:
+      localStreamWidth && localStreamWidth > 0
+        ? _pxToRem(localStreamWidth)
+        : isNarrow
+        ? _pxToRem(SMALL_FLOATING_MODAL_SIZE_PX.width)
+        : _pxToRem(LARGE_FLOATING_MODAL_SIZE_PX.width),
     minHeight: isNarrow ? _pxToRem(SMALL_FLOATING_MODAL_SIZE_PX.height) : _pxToRem(LARGE_FLOATING_MODAL_SIZE_PX.height),
-    width: 'auto',
+    width: localStreamWidth ? _pxToRem(localStreamWidth) : 'auto',
     position: 'absolute',
     bottom: _pxToRem(localVideoTileOuterPaddingPX),
     borderRadius: theme.effects.roundedCorner4,
@@ -65,8 +70,12 @@ export const localVideoTileContainerStyle = (theme: Theme, isNarrow?: boolean): 
 /**
  * @private
  */
-export const localVideoTileWithControlsContainerStyle = (theme: Theme, isNarrow?: boolean): IStackStyles => {
-  return concatStyleSets(localVideoTileContainerStyle(theme, isNarrow), {
+export const localVideoTileWithControlsContainerStyle = (
+  theme: Theme,
+  isNarrow?: boolean,
+  localStreamWidth?: number
+): IStackStyles => {
+  return concatStyleSets(localVideoTileContainerStyle(theme, isNarrow, localStreamWidth), {
     root: { boxShadow: theme.effects.elevation8 }
   });
 };
@@ -76,11 +85,12 @@ export const localVideoTileWithControlsContainerStyle = (theme: Theme, isNarrow?
  */
 export const floatingLocalVideoModalStyle = (
   theme: Theme,
-  isNarrow?: boolean
+  isNarrow?: boolean,
+  localStreamWidth?: number
 ): IStyleFunctionOrObject<IModalStyleProps, IModalStyles> => {
   return concatStyleSets(
     {
-      main: localVideoTileContainerStyle(theme, isNarrow)
+      main: localVideoTileContainerStyle(theme, isNarrow, localStreamWidth)
     },
     {
       main: {
