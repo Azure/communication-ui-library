@@ -6,7 +6,7 @@ When adding a new dependency, you have to decide where to add it: `dependencies`
 
 `devDependencies` are the easiest -- any package only needed for development of our package (e.g. for unit tests), but
 not by an application that uses @azure/communication-react go here.
-See [official documentation from NPM](https://nodejs.dev/learn/npm-dependencies-and-devdependencies) for more details.
+See [official documentation from NPM](https://nodejs.dev/en/learn/an-introduction-to-the-npm-package-manager) for more details.
 
 `peerDependencies` are useful for two purposes.
 

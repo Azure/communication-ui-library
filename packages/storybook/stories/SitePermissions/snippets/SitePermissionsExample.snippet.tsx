@@ -33,7 +33,7 @@ export const SitePermissionsExample: () => JSX.Element = () => {
               alert('clicked trouble shooting');
             }}
             strings={micCameralocaleRequest}
-            type={'request'}
+            kind={'request'}
           />
         </Stack>
         <Stack>
@@ -43,7 +43,7 @@ export const SitePermissionsExample: () => JSX.Element = () => {
               alert('clicked trouble shooting');
             }}
             strings={microphoneLocaleRequest}
-            type={'request'}
+            kind={'request'}
           />
         </Stack>
         <Stack>
@@ -56,7 +56,7 @@ export const SitePermissionsExample: () => JSX.Element = () => {
               alert('clicked continuec anyway');
             }}
             strings={cameraLocaleRequest}
-            type={'request'}
+            kind={'request'}
           />
         </Stack>
       </Stack>
@@ -68,7 +68,7 @@ export const SitePermissionsExample: () => JSX.Element = () => {
               alert('clicked trouble shooting');
             }}
             strings={micCameralocaleDenied}
-            type={'denied'}
+            kind={'denied'}
           />
         </Stack>
         <Stack>
@@ -78,7 +78,7 @@ export const SitePermissionsExample: () => JSX.Element = () => {
               alert('clicked trouble shooting');
             }}
             strings={microphoneLocaleDenied}
-            type={'denied'}
+            kind={'denied'}
           />
         </Stack>
         <Stack>
@@ -91,7 +91,7 @@ export const SitePermissionsExample: () => JSX.Element = () => {
               alert('clicked continuec anyway');
             }}
             strings={cameraLocaleDenied}
-            type={'denied'}
+            kind={'denied'}
           />
         </Stack>
       </Stack>
@@ -103,7 +103,7 @@ export const SitePermissionsExample: () => JSX.Element = () => {
               alert('clicked trouble shooting');
             }}
             strings={micCameralocaleCheck}
-            type={'check'}
+            kind={'check'}
           />
         </Stack>
         <Stack>
@@ -113,7 +113,7 @@ export const SitePermissionsExample: () => JSX.Element = () => {
               alert('clicked trouble shooting');
             }}
             strings={microphoneLocaleCheck}
-            type={'check'}
+            kind={'check'}
           />
         </Stack>
         <Stack>
@@ -126,7 +126,7 @@ export const SitePermissionsExample: () => JSX.Element = () => {
               alert('clicked continuec anyway');
             }}
             strings={cameraLocaleCheck}
-            type={'check'}
+            kind={'check'}
           />
         </Stack>
       </Stack>

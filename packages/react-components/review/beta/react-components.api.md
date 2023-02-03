@@ -238,10 +238,10 @@ export interface ChatMessage extends MessageCommon {
 export interface CommonSitePermissionsProps {
     appName: string;
     browserHint?: 'safari' | 'unset';
+    kind: 'request' | 'denied' | 'check';
     onContinueAnywayClick?: () => void;
     onTroubleshootingClick?: () => void;
     styles?: SitePermissionsStyles;
-    type: 'request' | 'denied' | 'check';
 }
 
 // @public
@@ -748,6 +748,7 @@ export interface ErrorBarStrings {
     sendMessageGeneric: string;
     sendMessageNotInChatThread: string;
     startScreenShareGeneric: string;
+    startScreenSharingGeneric?: string;
     startVideoGeneric: string;
     stopScreenShareGeneric: string;
     stopVideoGeneric: string;
@@ -1405,6 +1406,7 @@ export const _RemoteVideoTile: React_2.MemoExoticComponent<(props: {
     onUnpinParticipant?: ((userId: string) => void) | undefined;
     isPinned?: boolean | undefined;
     disablePinMenuItem?: boolean | undefined;
+    toggleAnnouncerString?: ((announcerString: string) => void) | undefined;
 }) => JSX.Element>;
 
 // @beta
@@ -1717,10 +1719,14 @@ export interface VideoGalleryStrings {
     localVideoLabel: string;
     localVideoMovementLabel: string;
     localVideoSelectedDescription: string;
+    pinnedParticipantAnnouncementAriaLabel: string;
     pinParticipantForMe: string;
+    pinParticipantMenuItemAriaLabel: string;
     screenIsBeingSharedMessage: string;
     screenShareLoadingMessage: string;
+    unpinnedParticipantAnnouncementAriaLabel: string;
     unpinParticipantForMe: string;
+    unpinParticipantMenuItemAriaLabel: string;
 }
 
 // @public

@@ -30,7 +30,7 @@ const SitePermissionsRequestModalExample =
 const storyControls = {
   siteRequest: controlsToAdd.siteDeviceRequest,
   appName: controlsToAdd.appName,
-  type: controlsToAdd.siteDeviceRequestStatus
+  kind: controlsToAdd.siteDeviceRequestStatus
 };
 
 const importStatement = `
@@ -50,7 +50,7 @@ const SitePermissionsStory = (args: ArgsFrom<typeof storyControls>): JSX.Element
         <CameraAndMicrophoneSitePermissionsComponent
           appName={args.appName}
           onTroubleshootingClick={() => alert('you clicked the help text')}
-          type={(args.type as string).toLowerCase() as 'request' | 'denied' | 'check'}
+          kind={(args.kind as string).toLowerCase() as 'request' | 'denied' | 'check'}
         />
       )}
       {args.siteRequest === controlsToAdd.siteDeviceRequest.options[1] && (
@@ -58,14 +58,14 @@ const SitePermissionsStory = (args: ArgsFrom<typeof storyControls>): JSX.Element
           appName={args.appName}
           onTroubleshootingClick={() => alert('you clicked the help text')}
           onContinueAnywayClick={() => alert('you clicked the continue anyway button')}
-          type={(args.type as string).toLowerCase() as 'request' | 'denied' | 'check'}
+          kind={(args.kind as string).toLowerCase() as 'request' | 'denied' | 'check'}
         />
       )}
       {args.siteRequest === controlsToAdd.siteDeviceRequest.options[2] && (
         <MicrophoneSitePermissionsComponent
           appName={args.appName}
           onTroubleshootingClick={() => alert('you clicked the help text')}
-          type={(args.type as string).toLowerCase() as 'request' | 'denied' | 'check'}
+          kind={(args.kind as string).toLowerCase() as 'request' | 'denied' | 'check'}
         />
       )}
     </Stack>

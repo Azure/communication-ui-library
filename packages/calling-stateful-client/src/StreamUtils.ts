@@ -89,8 +89,22 @@ async function createViewRemoteVideo(
     return;
   }
 
+  // "Stopping" only happens if the stream was in "rendering" but `disposeView` was called.
+  // Now that `createView` has been re-called, we can flip the state back to "rendering".
   if (renderInfo.status === 'Stopping') {
-    console.warn('RemoteVideoStream is in the middle of stopping');
+    _logEvent(callingStatefulLogger, {
+      name: EventNames.REMOTE_STREAM_STOPPING,
+      level: 'warning',
+      message: 'RemoteVideoStream was marked as stopping by dispose view. Resetting state to "Rendering".'
+    });
+    internalContext.setRemoteRenderInfo(
+      callId,
+      participantKey,
+      streamId,
+      renderInfo.stream,
+      'Rendering',
+      renderInfo.renderer
+    );
     return;
   }
 
@@ -112,6 +126,8 @@ async function createViewRemoteVideo(
     throw e;
   }
 
+  // Since render could take some time, we need to check if the stream is still valid and if we received a signal to
+  // stop rendering.
   const refreshedRenderInfo = internalContext.getRemoteRenderInfoForParticipant(callId, participantKey, streamId);
   if (!refreshedRenderInfo) {
     // RenderInfo was removed. This should not happen unless stream was removed from the call so dispose the renderer
@@ -119,7 +135,7 @@ async function createViewRemoteVideo(
     _logEvent(callingStatefulLogger, {
       name: EventNames.REMOTE_RENDER_INFO_NOT_FOUND,
       level: 'error',
-      message: '`Cannot find remote render info after create the view.',
+      message: 'Cannot find remote render info after create the view.',
       data: streamLogInfo
     });
     renderer.dispose();
@@ -130,6 +146,12 @@ async function createViewRemoteVideo(
   if (refreshedRenderInfo.status === 'Stopping') {
     // Stop render was called on this stream after we had started rendering. We will dispose this view and do not
     // put the view into the state.
+    _logEvent(callingStatefulLogger, {
+      name: EventNames.REMOTE_CREATED_STREAM_STOPPING,
+      level: 'warning',
+      message: 'Render info status is stopping, dispose renderer.',
+      data: streamLogInfo
+    });
     renderer.dispose();
     internalContext.setRemoteRenderInfo(
       callId,
@@ -140,12 +162,6 @@ async function createViewRemoteVideo(
       undefined
     );
     context.setRemoteVideoStreamRendererView(callId, participantKey, streamId, undefined);
-    _logEvent(callingStatefulLogger, {
-      name: EventNames.REMOTE_VIEW_RENDER_SUCCEED,
-      level: 'info',
-      message: 'Successfully render the remote view.',
-      data: streamLogInfo
-    });
     return;
   }
 
@@ -165,6 +181,14 @@ async function createViewRemoteVideo(
     streamId,
     convertFromSDKToDeclarativeVideoStreamRendererView(view)
   );
+  _logEvent(callingStatefulLogger, {
+    name: EventNames.REMOTE_VIEW_RENDER_SUCCEED,
+    level: 'info',
+    message: `Successfully render the remote view.`,
+    data: {
+      streamLogInfo
+    }
+  });
 
   return {
     renderer,
@@ -274,7 +298,7 @@ async function createViewLocalVideo(
     _logEvent(callingStatefulLogger, {
       name: EventNames.LOCAL_CREATED_STREAM_STOPPING,
       level: 'warning',
-      message: 'Render info status is stopping, dispose renderer. ',
+      message: 'Render info status is stopping, dispose renderer.',
       data: {
         callId
       }
@@ -414,9 +438,33 @@ function disposeViewRemoteVideo(
     return;
   }
 
-  // Sets the status and also renderer. I think we need to always set renderer to undefined since in all status when
-  // cleaned up should have renderer as undefined. If the status is 'Rendered' and renderer is not defined it should
-  // be cleaned up below so we can set it to undefined here.
+  // Nothing to dispose of or clean up -- we can safely exit early here.
+  if (renderInfo.status === 'NotRendered') {
+    _logEvent(callingStatefulLogger, {
+      name: EventNames.REMOTE_STREAM_ALREADY_DISPOSED,
+      level: 'info',
+      message: 'RemoteVideoStream is already disposed.',
+      data: streamLogInfo
+    });
+    return;
+  }
+
+  // Status is already marked as "stopping" so we can exit early here. This is because stopping only occurs
+  // when the stream is being created in createView but hasn't been completed being created yet. The createView
+  // method will see the "stopping" status and perform the cleanup
+  if (renderInfo.status === 'Stopping') {
+    _logEvent(callingStatefulLogger, {
+      name: EventNames.REMOTE_STREAM_STOPPING,
+      level: 'info',
+      message: 'Remote stream is already stopping.',
+      data: streamLogInfo
+    });
+    return;
+  }
+
+  // If the stream is in the middle of being rendered (i.e. has state "Rendering"), we need the status as
+  // "stopping" without performing any cleanup. This will tell the `createView` method that it should stop
+  // rendering and clean up the state once the view has finished being created.
   if (renderInfo.status === 'Rendering') {
     _logEvent(callingStatefulLogger, {
       name: EventNames.REMOTE_STREAM_STOPPING,
@@ -425,9 +473,11 @@ function disposeViewRemoteVideo(
       data: streamLogInfo
     });
     internalContext.setRemoteRenderInfo(callId, participantKey, streamId, renderInfo.stream, 'Stopping', undefined);
-  } else {
-    internalContext.setRemoteRenderInfo(callId, participantKey, streamId, renderInfo.stream, 'NotRendered', undefined);
+    return;
   }
+
+  // Else the state must be in the "Rendered" state, so we can dispose the renderer and clean up the state.
+  internalContext.setRemoteRenderInfo(callId, participantKey, streamId, renderInfo.stream, 'NotRendered', undefined);
 
   if (renderInfo.renderer) {
     _logEvent(callingStatefulLogger, {
