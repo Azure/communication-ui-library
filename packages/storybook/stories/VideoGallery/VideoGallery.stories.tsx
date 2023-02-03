@@ -151,64 +151,56 @@ const getDocs: () => JSX.Element = () => {
         <LocalCameraSwitcherExample />
       </Canvas>
 
-      <Heading>Pinning Participants</Heading>
+      <Heading>Remote video tile contextual menu</Heading>
       <DetailedBetaBanner />
       <Description>
         The VideoGallery provides a contextual menu for each remote video tile by clicking menu button next to the
-        display name. The contextual menu will have a menu item to pin a participant's video tile such that only pinned
-        participants are shown in the GridLayout. This is shown in the two screenshots below. You can also try it out in
-        any of the above VideoGallery components on this Docs page. Pinned participants will be shown in the order that
-        they are pinned.
+        participant display name. You can try it out in any of the above VideoGallery components on this Docs page. The
+        pin/unpin menu item will be available by default to allow pinning participants. To learn more about pinning
+        participants go to the Pinning Participants section below. Menu items to change remote video stream rendering
+        options are also available when the `useProps` hook is used to provide the props to VideoGallery.
       </Description>
-      <Stack horizontal={true} tokens={{ childrenGap: '0.5rem' }}>
-        <Image
-          style={{ width: '100%', height: 'auto' }}
-          src="images/pin-menu-item-video-gallery.png"
-          alt="Pin menu item in VideoGallery"
-        />
-        <Image
-          style={{ width: '100%', height: 'auto' }}
-          src="images/pinned-video-gallery.png"
-          alt="Pinned participant in VideoGallery"
-        />
-      </Stack>
+      <Subheading>Disabling remote video tile contextual menu</Subheading>
       <Description>
-        When screensharing is active, pinned participants are shown in the horizontal gallery as shown in the two
-        screenshots below.
+        Remote video tile contextual menu is be enabled by default but can be disabled by setting the
+        `remoteVideoTileMenu` prop to 'false' like in the example below.
       </Description>
-      <Stack horizontal={true} tokens={{ childrenGap: '0.5rem' }}>
-        <Image
-          style={{ width: '100%', height: 'auto' }}
-          src="images/pin-menu-item-video-gallery-with-screenshare.png"
-          alt="Pin menu item in VideoGallery with screenshare active"
-        />
-        <Image
-          style={{ width: '100%', height: 'auto' }}
-          src="images/pinned-video-gallery-with-screenshare.png"
-          alt="Pinned participant in VideoGallery with screenshare active"
-        />
-      </Stack>
+      <Canvas mdxSource={PinnedParticipantsDisabledExampleText}>
+        <PinnedParticipantsDisabledExample />
+      </Canvas>
+
+      <Heading>Pinning Participants</Heading>
+      <DetailedBetaBanner />
       <Description>
-        Pinned participants can be unpinned through the contextual menu as shown in the two screenshots below.
+        The contextual menu will have a menu item to pin a participant's video tile such that only pinned participants
+        are shown in the GridLayout. This is shown in the video clip below. Pinned participants will be shown in the
+        order that they are pinned.
       </Description>
-      <Stack horizontal={true} tokens={{ childrenGap: '0.5rem' }}>
-        <Image
-          style={{ width: '100%', height: 'auto' }}
-          /* set an approximate default height to avoid reflow when the image loads */ src="images/unpin-menu-item-video-gallery.png"
-          alt="Unpin menu item in VideoGallery"
-        />
-        <Image
-          style={{ width: '100%', height: 'auto' }}
-          /* set an approximate default height to avoid reflow when the image loads */ src="images/unpin-menu-item-video-gallery-with-screenshare.png"
-          alt="Unpin menu item in VideoGallery with screenshare active"
-        />
-      </Stack>
+      <video width="90%" controls>
+        <source src="images/video-gallery-pinning.mp4" type="video/mp4" />
+        Your browser does not support the video element.
+      </video>
+      <Description>
+        When screensharing is active, pinned participants are placed first in the horizontal gallery as shown in video
+        clip below.
+      </Description>
+      <video width="90%" controls>
+        <source src="images/video-gallery-pinning-with-screenshare.mp4" type="video/mp4" />
+        Your browser does not support the video element.
+      </video>
+      <Description>
+        Pinned participants can be unpinned through the contextual menu as shown in the video clip below.
+      </Description>
+      <video width="90%" controls>
+        <source src="images/video-gallery-unpinning.mp4" type="video/mp4" />
+        Your browser does not support the video element.
+      </video>
       <Description>
         The maximum pinned participants is currently set to 4 for the VideoGallery. The pin menu item will be disabled
         when this limit is reached as shown in the screenshot below.
       </Description>
       <Image
-        style={{ width: '50%', height: 'auto' }}
+        style={{ width: '90%' }}
         /* set an approximate default height to avoid reflow when the image loads */ src="images/pinned-limit-reached-video-gallery.png"
         alt="Disabled pin menu item in VideoGallery when limit reached"
       />
@@ -217,8 +209,8 @@ const getDocs: () => JSX.Element = () => {
         The VideoGallery also caters to pinning participants on mobile by setting the prop `remoteVideoTileMenuOptions`
         to object `&#123; kind: 'drawer' &#125;`. This changes the contextual menu to a drawer menu that is opened via
         long touch. The result is demonstrated in the example below where all mouse clicks are converted to touch to
-        simulate a mobile browser. You can simulate a long touch by long clicking a remote video tile to see that a
-        drawer menu will appear.
+        simulate a mobile browser. You can simulate a long touch by long clicking a remote video tile below to see that
+        a drawer menu will appear.
       </Description>
       <Canvas mdxSource={PinnedParticipantsMobileExampleText}>
         <MobileWrapper>
@@ -235,15 +227,6 @@ const getDocs: () => JSX.Element = () => {
       </Description>
       <Canvas mdxSource={ManagedPinnedParticipantsExampleText}>
         <ManagedPinnedParticipantsExample />
-      </Canvas>
-
-      <Heading>Disabling remote video tile contextual menu</Heading>
-      <Description>
-        Remote video tile contextual menu is be enabled by default but can be disabled by setting the
-        `remoteVideoTileMenu` prop to 'false' like in the example below.
-      </Description>
-      <Canvas mdxSource={PinnedParticipantsDisabledExampleText}>
-        <PinnedParticipantsDisabledExample />
       </Canvas>
 
       <Heading>Props</Heading>
