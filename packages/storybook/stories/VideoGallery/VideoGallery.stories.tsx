@@ -177,7 +177,7 @@ const getDocs: () => JSX.Element = () => {
         order that they are pinned.
       </Description>
       <video width="90%" controls>
-        <source src="images/video-gallery-pinning.mp4" type="video/mp4" />
+        <source src="videos/video-gallery-pinning.mp4" type="video/mp4" />
         Your browser does not support the video element.
       </video>
       <Description>
@@ -185,14 +185,14 @@ const getDocs: () => JSX.Element = () => {
         clip below.
       </Description>
       <video width="90%" controls>
-        <source src="images/video-gallery-pinning-with-screenshare.mp4" type="video/mp4" />
+        <source src="videos/video-gallery-pinning-with-screenshare.mp4" type="video/mp4" />
         Your browser does not support the video element.
       </video>
       <Description>
         Pinned participants can be unpinned through the contextual menu as shown in the video clip below.
       </Description>
       <video width="90%" controls>
-        <source src="images/video-gallery-unpinning.mp4" type="video/mp4" />
+        <source src="videos/video-gallery-unpinning.mp4" type="video/mp4" />
         Your browser does not support the video element.
       </video>
       <Description>
