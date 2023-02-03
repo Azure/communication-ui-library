@@ -108,8 +108,14 @@ export interface LocalVideoStreamState {
  * @beta
  */
 export interface LocalVideoStreamVideoEffectsState {
+  /**
+   * State of the video background effect.
+   */
   isActive: boolean;
-  effectName: VideoEffectName;
+  /**
+   * Name of the effect if one is active.
+   */
+  effectName?: VideoEffectName;
 }
 
 /**

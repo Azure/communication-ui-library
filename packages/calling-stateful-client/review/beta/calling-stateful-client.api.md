@@ -195,9 +195,7 @@ export interface LocalVideoStreamState {
 
 // @beta
 export interface LocalVideoStreamVideoEffectsState {
-    // (undocumented)
-    effectName: VideoEffectName;
-    // (undocumented)
+    effectName?: VideoEffectName;
     isActive: boolean;
 }
 
