@@ -160,7 +160,8 @@
     "callMacOsScreenShareAccessDenied": "MacOS is blocking screen sharing. Update your privacy settings to allow this browser to record your screen.",
     "dismissButtonAriaLabel": "Close",
     "failedToJoinCallGeneric": "Failed to join call.",
-    "failedToJoinCallInvalidMeetingLink": "Unable to join Meeting. Invalid Link."
+    "failedToJoinCallInvalidMeetingLink": "Unable to join Meeting. Invalid Link.",
+    "startScreenSharingGeneric": "There was an issue starting screen share."
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "You are sharing your screen",
