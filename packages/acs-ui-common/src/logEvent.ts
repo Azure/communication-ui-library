@@ -12,6 +12,7 @@ export type TelemetryEvent = {
   message: string;
   level: AzureLogLevel;
   data?: Record<string, unknown>;
+  streamType?: string;
 };
 
 /**
