@@ -305,7 +305,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   useEffect(() => {
     props.pinnedParticipants?.forEach((pinParticipant) => {
       if (!props.remoteParticipants?.find((t) => t.userId === pinParticipant)) {
-        throw new Error('Invalid pinned participant UserId :' + pinParticipant);
+        // warning will be logged in the console when invalid participant id is passed in pinned participants
+        console.warn('Invalid pinned participant UserId :' + pinParticipant);
       }
     });
   }, [props.pinnedParticipants, props.remoteParticipants]);
