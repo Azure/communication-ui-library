@@ -63,7 +63,9 @@ const getDocs: () => JSX.Element = () => {
       <Description>
         A VideoTile component can have a contextual menu by assigning
         [IContextualMenuProps](https://developer.microsoft.com/en-us/fluentui#/controls/web/contextualmenu#IContextualMenuProps)
-        to the `contextualMenu` property.
+        to the `contextualMenu` property. The contextual menu items can be opened by hovering on the VideoTile and then
+        clicking on the menu button next to the display name. The menu button is also accessible by keyboard using the
+        tab button.
       </Description>
       <Canvas mdxSource={VideoTileMenuItemsExampleText}>
         <VideoTileMenuItemsExample />
