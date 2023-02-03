@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { VideoGallery as VideoGalleryComponent } from '@azure/communication-react';
-import { Image, Stack, Text } from '@fluentui/react';
+import { Image, Text } from '@fluentui/react';
 import { ArgsTable, Canvas, Description, Heading, Source, Subheading, Title } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
