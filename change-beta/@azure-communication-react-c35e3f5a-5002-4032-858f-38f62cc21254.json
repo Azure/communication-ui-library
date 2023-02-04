@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Thematically change hold icon color",
+  "packageName": "@azure/communication-react",
+  "email": "edwardlee@microsoft.com",
+  "dependentChangeType": "patch"
+}
