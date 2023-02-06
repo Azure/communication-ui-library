@@ -5,7 +5,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 
 import { CommonQueryArgs, HermeticQueryArgs, QueryArgs } from './QueryArgs';
 import { MockCallAdapter } from '../lib/MockCallAdapter';
-import { useFakeChatAdapters } from '../lib/useFakeChatAdapters';
+import { _useFakeChatAdapters } from '../../../src';
 import type { CallAdapter } from '../../../src';
 import { _createAzureCommunicationCallWithChatAdapterFromAdapters } from '../../../src';
 import { BaseApp } from './BaseApp';
@@ -47,7 +47,7 @@ function HermeticAppImpl(props: { queryArgs: HermeticQueryArgs & CommonQueryArgs
     })();
   }, [args.mockCallAdapterState]);
 
-  const chatAdapters = useFakeChatAdapters(args.fakeChatAdapterArgs);
+  const chatAdapters = _useFakeChatAdapters(args.fakeChatAdapterArgs);
   const callWithChatAdapter = useMemo(
     () =>
       !!callAdapter && !!chatAdapters?.local

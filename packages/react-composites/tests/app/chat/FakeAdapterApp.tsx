@@ -15,7 +15,7 @@ import {
 } from './CustomDataModel';
 import { FakeChatClient, Model } from '@internal/fake-backends';
 import { FakeChatAdapterArgs, FileUpload } from '../../common';
-import { useFakeChatAdapters } from '../lib/useFakeChatAdapters';
+import { _useFakeChatAdapters } from '../../../src';
 import { HiddenChatComposites } from '../lib/HiddenChatComposites';
 
 const urlSearchParams = new URLSearchParams(window.location.search);
@@ -32,7 +32,7 @@ export const FakeAdapterApp = (): JSX.Element => {
     throw new Error('fakeChatAdapterArgs not set');
   }
 
-  const fakeAdapters = useFakeChatAdapters(fakeChatAdapterArgs);
+  const fakeAdapters = _useFakeChatAdapters(fakeChatAdapterArgs);
 
   useEffect(() => {
     (async (): Promise<void> => {

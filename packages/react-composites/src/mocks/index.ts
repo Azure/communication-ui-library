@@ -7,3 +7,4 @@
 
 export * from './FakeChatAdapterArgs';
 export * from './MockCallAdapterState';
+export * from './useFakeChatAdapters';
