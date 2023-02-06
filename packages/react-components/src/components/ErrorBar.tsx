@@ -209,6 +209,10 @@ export interface ErrorBarStrings {
    * An error message when joining a call fails specifically due to an invalid meeting link.
    */
   failedToJoinCallInvalidMeetingLink?: string;
+  /**
+   * Generic message for when screen sharing fails
+   */
+  startScreenSharingGeneric?: string;
 }
 
 /**
