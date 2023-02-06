@@ -29,17 +29,23 @@ Before you get started make sure you have all the following prerequisites set up
 
 UI Library requires a React environment to be setup. Next we will do that.
 
-### Set Up React App
+### Set Up React App with Communication-react template
 
-We'll use the create-react-app typescript template for our application. For more information, see: [Get Started with React](https://reactjs.org/docs/create-a-new-react-app.html)
+We'll use our provided `communication-react` create-react-app template for our application. For more information on create-react-app, see: [Get Started with React](https://reactjs.org/docs/create-a-new-react-app.html).
+This will create a react application that is compatible with the AzureCommunications UI library.
 
 ```bash
 
-npx create-react-app your-ui-lib-application --template typescript
+npx create-react-app your-ui-lib-application --template communication-react
 
 cd your-ui-lib-application
 
 ```
+
+## Modifying an existing app to work with the UI library
+
+If you already have a react application that you would like to integrate the UI library into you will need to
+follow the following steps to make sure it is compatible with the UI library.
 
 ### Revert `index.tsx` to older version
 
