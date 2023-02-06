@@ -203,7 +203,7 @@ export const messageThreadSelector: MessageThreadSelector = createSelector(
     updateMessagesWithAttached(convertedMessages);
     return {
       userId,
-      showMessageStatus: false,
+      showMessageStatus: true,
       messages: convertedMessages,
       participantCount,
       readReceiptsBySenderId
