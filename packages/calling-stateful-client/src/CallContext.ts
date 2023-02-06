@@ -37,6 +37,12 @@ import {
 } from './CallClientState';
 import { callingStatefulLogger } from './Logger';
 import { CallIdHistory } from './CallIdHistory';
+/* @conditional-compile-remove(video-background-effects) */
+import { LocalVideoStreamVideoEffectsState } from './CallClientState';
+/* @conditional-compile-remove(video-background-effects) */
+import { LocalVideoStreamVideoEffectsSubscriber } from './LocalVideoStreamVideoEffectsSubscriber';
+/* @conditional-compile-remove(video-background-effects) */
+import { VideoEffectsFeature } from '@azure/communication-calling';
 
 enableMapSet();
 // Needed to generate state diff for verbose logging.
@@ -57,6 +63,8 @@ export class CallContext {
   private _emitter: EventEmitter;
   private _atomicId: number;
   private _callIdHistory: CallIdHistory = new CallIdHistory();
+  /* @conditional-compile-remove(video-background-effects) */
+  private _unparentedViewVideoEffectsSubscriber: LocalVideoStreamVideoEffectsSubscriber | undefined;
 
   constructor(
     userId: CommunicationIdentifierKind,
@@ -258,6 +266,26 @@ export class CallContext {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
         call.localVideoStreams = streams;
+      }
+    });
+  }
+
+  /* @conditional-compile-remove(video-background-effects) */
+  public setCallLocalVideoStreamVideoEffects(
+    callId: string,
+    localVideoStream: LocalVideoStreamState,
+    videoEffects: Partial<LocalVideoStreamVideoEffectsState>
+  ): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        const stream = call.localVideoStreams.find((stream) => stream === localVideoStream);
+        if (stream) {
+          stream.videoEffects = {
+            isActive: videoEffects.isActive ?? stream.videoEffects?.isActive ?? false,
+            effectName: videoEffects.effectName ?? stream.videoEffects?.effectName
+          };
+        }
       }
     });
   }
@@ -625,20 +653,36 @@ export class CallContext {
     });
   }
 
-  public setDeviceManagerUnparentedView(
-    localVideoStream: LocalVideoStreamState,
-    view: VideoStreamRendererViewState | undefined
-  ): void {
+  public setDeviceManagerUnparentedView(args: {
+    localVideoStream: LocalVideoStreamState;
+    view: VideoStreamRendererViewState | undefined;
+    /* @conditional-compile-remove(video-background-effects) */
+    localVideoSteamEffectsAPI: VideoEffectsFeature;
+  }): void {
+    /* @conditional-compile-remove(video-background-effects) */
+    {
+      this._unparentedViewVideoEffectsSubscriber?.unsubscribe();
+      this._unparentedViewVideoEffectsSubscriber = new LocalVideoStreamVideoEffectsSubscriber({
+        parent: 'unparented',
+        context: this,
+        localVideoSteam: args.localVideoStream,
+        localVideoSteamEffectsAPI: args.localVideoSteamEffectsAPI
+      });
+    }
+
     this.modifyState((draft: CallClientState) => {
       draft.deviceManager.unparentedViews.push({
-        source: localVideoStream.source,
-        mediaStreamType: localVideoStream.mediaStreamType,
-        view: view
+        source: args.localVideoStream.source,
+        mediaStreamType: args.localVideoStream.mediaStreamType,
+        view: args.view
       });
     });
   }
 
   public deleteDeviceManagerUnparentedView(localVideoStream: LocalVideoStreamState): void {
+    /* @conditional-compile-remove(video-background-effects) */
+    this._unparentedViewVideoEffectsSubscriber?.unsubscribe();
+
     this.modifyState((draft: CallClientState) => {
       const foundIndex = draft.deviceManager.unparentedViews.findIndex(
         (stream) =>
@@ -646,6 +690,26 @@ export class CallContext {
       );
       if (foundIndex !== -1) {
         draft.deviceManager.unparentedViews.splice(foundIndex, 1);
+      }
+    });
+  }
+
+  /* @conditional-compile-remove(video-background-effects) */
+  public setDeviceManagerUnparentedViewVideoEffects(
+    localVideoStream: LocalVideoStreamState,
+    videoEffects: LocalVideoStreamVideoEffectsState
+  ): void {
+    this.modifyState((draft: CallClientState) => {
+      const foundIndex = draft.deviceManager.unparentedViews.findIndex(
+        (stream) =>
+          stream.source.id === localVideoStream.source.id && stream.mediaStreamType === localVideoStream.mediaStreamType
+      );
+      if (foundIndex !== -1) {
+        const draftStream = draft.deviceManager.unparentedViews[foundIndex];
+        draftStream.videoEffects = {
+          isActive: videoEffects.isActive ?? draftStream.videoEffects?.isActive ?? false,
+          effectName: videoEffects.effectName ?? draftStream.videoEffects?.effectName
+        };
       }
     });
   }

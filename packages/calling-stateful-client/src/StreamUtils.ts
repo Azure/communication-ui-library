@@ -18,6 +18,8 @@ import {
 import { InternalCallContext } from './InternalCallContext';
 import { toFlatCommunicationIdentifier, _logEvent } from '@internal/acs-ui-common';
 import { callingStatefulLogger, EventNames } from './Logger';
+/* @conditional-compile-remove(video-background-effects) */
+import { Features } from '@azure/communication-calling';
 
 /**
  * Return result from {@link StatefulCallClient.createView}.
@@ -392,7 +394,12 @@ async function createViewUnparentedVideo(
   // Else the stream still exists and status is not telling us to stop rendering. Complete the render process by
   // updating the state.
   internalContext.setUnparentedRenderInfo(stream, localVideoStream, 'Rendered', renderer);
-  context.setDeviceManagerUnparentedView(stream, convertFromSDKToDeclarativeVideoStreamRendererView(view));
+  context.setDeviceManagerUnparentedView({
+    localVideoStream: stream,
+    view: convertFromSDKToDeclarativeVideoStreamRendererView(view),
+    /* @conditional-compile-remove(video-background-effects) */
+    localVideoSteamEffectsAPI: localVideoStream.feature(Features.VideoEffects)
+  });
 
   return {
     renderer,
