@@ -3,6 +3,7 @@
 
 import { ChatClient } from '@azure/communication-chat';
 import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
+import { ChatAdapter } from '@azure/communication-react';
 import React from 'react';
 
 import { CompositeConnectionParamsErrMessage } from '../../CompositeStringUtils';
@@ -45,6 +46,20 @@ const sendMessagesAsBot = async (
   setInterval(() => {
     if (index < messages.length) {
       threadClient.sendMessage({ content: messages[index++] });
+    }
+  }, 5000);
+};
+
+export const sendMessagesAsBotWithAdapter = async (adapter: ChatAdapter, messages: string[]): Promise<void> => {
+  let index = 0;
+  // Send first message immediately so users aren't staring at an empty chat thread.
+  if (messages.length > 0) {
+    adapter.sendMessage(messages[index++]);
+  }
+
+  setInterval(() => {
+    if (index < messages.length) {
+      adapter.sendMessage(messages[index++]);
     }
   }, 5000);
 };

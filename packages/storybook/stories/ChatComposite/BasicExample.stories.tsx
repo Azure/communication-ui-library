@@ -9,30 +9,21 @@ import { COMPOSITE_FOLDER_PREFIX, compositeExperienceContainerStyle } from '../c
 import { defaultChatCompositeHiddenControls, controlsToAdd, ArgsFrom } from '../controlsUtils';
 import { compositeLocale } from '../localizationUtils';
 import { getDocs } from './ChatCompositeDocs';
-import { ContosoChatContainer } from './snippets/Container.snippet';
-import {
-  ChatCompositeSetupProps,
-  ConfigHintBanner,
-  addParrotBotToThread,
-  createThreadAndAddUser
-} from './snippets/Utils';
+import { ContosoChatContainer, ContainerProps } from './snippets/Container.snippet';
 
 const messageArray = [
-  'Hello ACS!',
-  'Congratulations! You can see this message because you successfully passed in a connection string!',
-  'In production environment, it is recommended to issue tokens in server side.',
-  'You can also issue a token by creating your own server and input them in required tab below.',
+  'Hello, thanks for trying the ACS library!',
+  'This is an example of the Chat Composite in action, to try this out yourself, you need to do three things:',
+  '1. Generate a "Identity & Users Access Token" with `Chat` capability enabled from Communication Service in the Azure portal, or using SDK of your choice',
+  '2. Using SDK of your choice, create a chat thread as the generated user from the first step OR add the generated user to an existing chat thread',
+  '3. Pass the "userIdentifier", "token", "displayName", "endpointUrl", and "threadId" to the <ChatComposite ...> component in your application',
+  'Tip: In production environment, it is recommended to issue tokens on the server side',
   'Have fun!'
 ];
 
 const storyControls = {
-  userId: controlsToAdd.userId,
-  token: controlsToAdd.token,
-  botId: controlsToAdd.botUserId,
-  botToken: controlsToAdd.botToken,
-  endpointUrl: controlsToAdd.endpointUrl,
+  topic: controlsToAdd.botChatTopic,
   displayName: controlsToAdd.requiredDisplayName,
-  showErrorBar: controlsToAdd.showErrorBar,
   showParticipants: controlsToAdd.showChatParticipants,
   showTopic: controlsToAdd.showChatTopic,
   compositeFormFactor: controlsToAdd.formFactor
@@ -42,42 +33,27 @@ const BasicStory = (args: ArgsFrom<typeof storyControls>, context): JSX.Element 
   const {
     globals: { locale }
   } = context;
-  const [containerProps, setContainerProps] = useState<ChatCompositeSetupProps>();
+  const [containerProps, setContainerProps] = useState<ContainerProps>();
 
   useEffect(() => {
-    const fetchToken = async (): Promise<void> => {
-      if (args.userId && args.token && args.botId && args.botToken && args.endpointUrl && args.displayName) {
-        const newProps = await createThreadAndAddUser(args.userId, args.token, args.endpointUrl, args.displayName);
-        await addParrotBotToThread(
-          args.token,
-          args.botId,
-          args.botToken,
-          args.endpointUrl,
-          newProps.threadId,
-          messageArray
-        );
-        setContainerProps(newProps);
-      } else {
-        setContainerProps(undefined);
-      }
-    };
-    fetchToken();
-  }, [args.userId, args.token, args.botId, args.botToken, args.endpointUrl, args.displayName]);
+    setContainerProps({
+      displayName: args.displayName,
+      topic: args.topic,
+      messages: messageArray
+    });
+  }, [args.displayName, args.topic]);
 
   return (
     <Stack horizontalAlign="center" verticalAlign="center" styles={compositeExperienceContainerStyle}>
-      {containerProps ? (
+      {containerProps && (
         <ContosoChatContainer
           fluentTheme={context.theme}
           {...containerProps}
           locale={compositeLocale(locale)}
-          errorBar={args.showErrorBar}
-          participants={args.showParticipants}
-          topic={args.showTopic}
+          showParticipants={args.showParticipants}
+          showTopic={args.showTopic}
           formFactor={args.compositeFormFactor}
         />
-      ) : (
-        <ConfigHintBanner />
       )}
     </Stack>
   );
