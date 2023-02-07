@@ -115,11 +115,14 @@ test.describe('VideoGallery tests', async () => {
     for (let i = 1; i < 5; i++) {
       await waitForSelector(page, dataUiId(IDS.videoTile) + ` >> nth=${i}`);
       await page.click(dataUiId(IDS.videoTile) + ` >> nth=${i}`);
-      await waitForSelector(page, dataUiId(IDS.videoTileMoreOptionsButton));
+      await waitForSelector(page, dataUiId(IDS.videoTileMoreOptionsButton) + ` >> nth=${i}`);
       // click the next 'more options' button on the page which is presumably on an unpinned remote video tile
       await screenshotOnFailure(
         page,
-        async () => await page.click(dataUiId(IDS.videoTileMoreOptionsButton), { timeout: perStepLocalTimeout() })
+        async () =>
+          await page.click(dataUiId(IDS.videoTileMoreOptionsButton) + ` >> nth=${i}`, {
+            timeout: perStepLocalTimeout()
+          })
       );
       // click pin menu button in contextual menu
       await pageClick(page, dataUiId('video-tile-pin-participant-button'));
@@ -127,10 +130,11 @@ test.describe('VideoGallery tests', async () => {
     }
     // hover the fifth remote video tile which is presumably an unpinned remote video tile
     await page.hover(dataUiId(IDS.videoTile) + ' >> nth=5');
-    await waitForSelector(page, dataUiId(IDS.videoTileMoreOptionsButton));
+    await waitForSelector(page, dataUiId(IDS.videoTileMoreOptionsButton) + ` >> nth=5`);
     await screenshotOnFailure(
       page,
-      async () => await page.click(dataUiId(IDS.videoTileMoreOptionsButton), { timeout: perStepLocalTimeout() })
+      async () =>
+        await page.click(dataUiId(IDS.videoTileMoreOptionsButton) + ` >> nth=5`, { timeout: perStepLocalTimeout() })
     );
     // take snapshot to verify pin button is disabled
     expect(await stableScreenshot(page)).toMatchSnapshot('disabled-pin-menu-button.png');
