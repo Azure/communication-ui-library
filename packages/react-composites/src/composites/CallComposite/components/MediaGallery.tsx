@@ -9,6 +9,8 @@ import {
   CustomAvatarOptions,
   Announcer
 } from '@internal/react-components';
+/* @conditional-compile-remove(pinned-participants) */
+import { VideoTileContextualMenuProps, VideoTileDrawerMenuProps } from '@internal/react-components';
 import { usePropsFor } from '../hooks/usePropsFor';
 import { AvatarPersona, AvatarPersonaDataCallback } from '../../common/AvatarPersona';
 import { mergeStyles, Stack } from '@fluentui/react';
@@ -19,6 +21,8 @@ import { localVideoCameraCycleButtonSelector } from '../selectors/LocalVideoTile
 import { LocalVideoCameraCycleButton } from '@internal/react-components';
 import { _formatString } from '@internal/acs-ui-common';
 import { useParticipantChangedAnnouncement } from '../utils/MediaGalleryUtils';
+/* @conditional-compile-remove(pinned-participants) */
+import { RemoteVideoTileMenuOptions } from '../CallComposite';
 
 const VideoGalleryStyles = {
   root: {
@@ -48,6 +52,8 @@ export interface MediaGalleryProps {
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   isMobile?: boolean;
   drawerMenuHostId?: string;
+  /* @conditional-compile-remove(pinned-participants) */
+  remoteVideoTileMenuOptions?: RemoteVideoTileMenuOptions;
 }
 
 /**
@@ -80,6 +86,16 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
   );
 
   useLocalVideoStartTrigger(!!props.isVideoStreamOn);
+
+  /* @conditional-compile-remove(pinned-participants) */
+  const remoteVideoTileMenuOptions: false | VideoTileContextualMenuProps | VideoTileDrawerMenuProps = useMemo(() => {
+    return props.remoteVideoTileMenuOptions?.isHidden
+      ? false
+      : props.isMobile
+      ? { kind: 'drawer', hostId: props.drawerMenuHostId }
+      : { kind: 'contextual' };
+  }, [props.remoteVideoTileMenuOptions?.isHidden, props.isMobile, props.drawerMenuHostId]);
+
   const VideoGalleryMemoized = useMemo(() => {
     return (
       <VideoGallery
@@ -92,11 +108,16 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
         localVideoCameraCycleButtonProps={cameraSwitcherProps}
         onRenderAvatar={onRenderAvatar}
         /* @conditional-compile-remove(pinned-participants) */
-        showRemoteVideoTileContextualMenu={!props.isMobile}
-        // @TODO: Provide props.drawerMenuHostId to VideoGallery when VideoGallery props support it.
+        remoteVideoTileMenuOptions={remoteVideoTileMenuOptions}
       />
     );
-  }, [videoGalleryProps, props.isMobile, cameraSwitcherProps, onRenderAvatar]);
+  }, [
+    videoGalleryProps,
+    props.isMobile,
+    onRenderAvatar,
+    cameraSwitcherProps,
+    /* @conditional-compile-remove(pinned-participants) */ remoteVideoTileMenuOptions
+  ]);
 
   return (
     <>

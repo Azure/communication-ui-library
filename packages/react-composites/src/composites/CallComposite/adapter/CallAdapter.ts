@@ -3,7 +3,9 @@
 
 import { CallState, DeviceManagerState } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(teams-identity-support) */
-import { EnvironmentInfo, TeamsCall } from '@azure/communication-calling';
+import { TeamsCall } from '@azure/communication-calling';
+/* @conditional-compile-remove(unsupported-browser) */
+import { EnvironmentInfo } from '@azure/communication-calling';
 import type {
   AudioDeviceInfo,
   VideoDeviceInfo,
@@ -107,6 +109,11 @@ export type CallAdapterClientState = {
    * {@link CallComposite}. The true role of the user will be synced with ACS services when a Rooms call starts.
    */
   roleHint?: Role;
+  /**
+   * State to track whether the local participant's camera is on. To be used when creating a custom
+   * control bar with the CallComposite.
+   */
+  cameraStatus?: 'On' | 'Off';
 };
 
 /**

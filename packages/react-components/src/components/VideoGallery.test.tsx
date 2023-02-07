@@ -17,16 +17,21 @@ import { RemoteScreenShare } from './VideoGallery/RemoteScreenShare';
 import { act } from 'react-dom/test-utils';
 
 Enzyme.configure({ adapter: new Adapter() });
+registerIcons({
+  icons: {
+    horizontalgalleryleftbutton: <></>,
+    horizontalgalleryrightbutton: <></>,
+    videotilemoreoptions: <></>,
+    videotilepinned: <></>,
+    pinparticipant: <></>,
+    unpinparticipant: <></>,
+    videotilescalefit: <></>,
+    videotilescalefill: <></>
+  }
+});
 
 describe('VideoGallery default layout tests', () => {
   beforeAll(() => {
-    registerIcons({
-      icons: {
-        horizontalgalleryleftbutton: <></>,
-        horizontalgalleryrightbutton: <></>
-      }
-    });
-
     mockVideoGalleryInternalHelpers();
   });
 
@@ -161,15 +166,8 @@ describe('VideoGallery default layout tests', () => {
   });
 });
 
-describe('VideoGallery floating local video layout', () => {
+describe('VideoGallery floating local video layout tests', () => {
   beforeAll(() => {
-    registerIcons({
-      icons: {
-        horizontalgalleryleftbutton: <></>,
-        horizontalgalleryrightbutton: <></>
-      }
-    });
-
     mockVideoGalleryInternalHelpers();
   });
 
@@ -289,6 +287,131 @@ describe('VideoGallery floating local video layout', () => {
   });
 });
 
+/* @conditional-compile-remove(pinned-participants) */
+describe('VideoGallery pinned participants tests', () => {
+  beforeAll(() => {
+    mockVideoGalleryInternalHelpers();
+  });
+
+  test('should render pinned participants in grid layout', () => {
+    const localParticipant = createLocalParticipant({
+      videoStream: { isAvailable: true, renderElement: createVideoDivElement() }
+    });
+    const root = mountVideoGalleryWithLocalParticipant({ localParticipant });
+
+    // 10 remote participants. First 5 with their video on.
+    const remoteParticipants = [...Array(10).keys()].map((i) => {
+      return createRemoteParticipant({
+        userId: `${i}`,
+        videoStream: i < 5 ? { isAvailable: true, renderElement: createVideoDivElement() } : undefined
+      });
+    });
+
+    act(() => {
+      root.setProps({
+        layout: 'floatingLocalVideo',
+        remoteParticipants,
+        dominantSpeakers: ['1', '6'],
+        pinnedParticipants: ['7', '6']
+      });
+    });
+
+    expect(gridTileCount(root)).toBe(2);
+    expect(root.find(GridLayout).find(VideoTile).first().prop('userId')).toBe('7');
+    expect(root.find(GridLayout).find(VideoTile).first().find(StreamMedia).exists()).toBe(false);
+    expect(root.find(GridLayout).find(VideoTile).at(1).prop('userId')).toBe('6');
+    expect(root.find(GridLayout).find(VideoTile).at(1).find(StreamMedia).exists()).toBe(false);
+    expect(root.find(HorizontalGallery).find(VideoTile).length).toBe(2);
+    expect(root.find(HorizontalGallery).find(VideoTile).first().prop('userId')).toBe('1');
+    expect(root.find(HorizontalGallery).find(VideoTile).first().find(StreamMedia).exists()).toBe(true);
+    expect(root.find(HorizontalGallery).find(VideoTile).at(1).prop('userId')).toBe('0');
+    expect(root.find(HorizontalGallery).find(VideoTile).at(1).find(StreamMedia).exists()).toBe(true);
+  });
+
+  test('should render remote screenshare and render pinned remote participants in horizontal gallery', () => {
+    const localParticipant = createLocalParticipant({
+      videoStream: { isAvailable: true, renderElement: createVideoDivElement() }
+    });
+    const root = mountVideoGalleryWithLocalParticipant({ localParticipant });
+
+    // 10 remote participants. First 5 with their video on.
+    const remoteParticipants = [...Array(10).keys()].map((i) => {
+      return createRemoteParticipant({
+        userId: `${i}`,
+        videoStream: i < 5 ? { isAvailable: true, renderElement: createVideoDivElement() } : undefined
+      });
+    });
+
+    // 1 remote screen sharing participant
+    remoteParticipants.push(
+      createRemoteParticipant({
+        userId: 'remoteScreenSharingParticipant',
+        isScreenSharingOn: true,
+        screenShareStream: { isAvailable: true, renderElement: createVideoDivElement() }
+      })
+    );
+
+    act(() => {
+      root.setProps({
+        layout: 'floatingLocalVideo',
+        remoteParticipants,
+        dominantSpeakers: ['1', '6'],
+        pinnedParticipants: ['7', '6']
+      });
+    });
+
+    expect(root.find(RemoteScreenShare).length).toBe(1);
+    expect(root.find(HorizontalGallery).find(VideoTile).length).toBe(2);
+    expect(root.find(HorizontalGallery).find(VideoTile).first().prop('userId')).toBe('7');
+    expect(root.find(HorizontalGallery).find(VideoTile).first().find(StreamMedia).exists()).toBe(false);
+    expect(root.find(HorizontalGallery).find(VideoTile).at(1).prop('userId')).toBe('6');
+    expect(root.find(HorizontalGallery).find(VideoTile).at(1).find(StreamMedia).exists()).toBe(false);
+  });
+
+  test(
+    'number of pinned remote video tiles can exceed maxPinnedRemoteVideoTiles when pinnedParticipants is ' +
+      'assigned as prop',
+    () => {
+      const localParticipant = createLocalParticipant({
+        videoStream: { isAvailable: true, renderElement: createVideoDivElement() }
+      });
+      const root = mountVideoGalleryWithLocalParticipant({ localParticipant });
+
+      // 10 remote participants. First 5 with their video on.
+      const remoteParticipants = [...Array(10).keys()].map((i) => {
+        return createRemoteParticipant({
+          userId: `${i}`,
+          videoStream: i < 5 ? { isAvailable: true, renderElement: createVideoDivElement() } : undefined
+        });
+      });
+
+      const pinnedParticipantUserIds = ['7', '8', '9', '1', '2'];
+
+      act(() => {
+        root.setProps({
+          layout: 'floatingLocalVideo',
+          remoteParticipants,
+          dominantSpeakers: ['1', '6'],
+          pinnedParticipants: pinnedParticipantUserIds
+        });
+      });
+
+      const gridLayoutVideoTiles = root.find(GridLayout).find(VideoTile);
+      const gridLayoutUserIds = gridLayoutVideoTiles.map((t) => t.prop('userId'));
+      // verify that video tiles in the grid layout are in the same order as the pinned
+      expect(gridLayoutUserIds).toStrictEqual(pinnedParticipantUserIds);
+      // verify the correct pinned remote video tiles have their video on
+      gridLayoutVideoTiles.forEach((videoTile) => {
+        const userId = videoTile.prop('userId');
+        if (!userId) {
+          fail();
+        }
+        expect(videoTile.find(StreamMedia).exists()).toBe(parseInt(userId) < 5);
+      });
+    }
+  );
+});
+
 const mountVideoGalleryWithLocalParticipant = (attrs: {
   localParticipant: VideoGalleryLocalParticipant;
 }): ReactWrapper<VideoGalleryProps> => {
@@ -357,7 +480,9 @@ const createRemoteParticipant = (attrs?: Partial<VideoGalleryRemoteParticipant>)
       isAvailable: attrs?.videoStream?.isAvailable ?? false,
       isReceiving: attrs?.videoStream?.isReceiving ?? true,
       isMirrored: attrs?.videoStream?.isMirrored ?? false,
-      renderElement: attrs?.videoStream?.renderElement ?? undefined
+      renderElement: attrs?.videoStream?.renderElement ?? undefined,
+      /* @conditional-compile-remove(pinned-participants) */
+      scalingMode: attrs?.videoStream?.scalingMode ?? 'Crop'
     },
     isScreenSharingOn: attrs?.isScreenSharingOn ?? false
   };

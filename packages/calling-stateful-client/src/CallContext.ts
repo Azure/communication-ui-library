@@ -147,6 +147,8 @@ export class CallContext {
         existingCall.recording.isRecordingActive = call.recording.isRecordingActive;
         /* @conditional-compile-remove(rooms) */
         existingCall.role = call.role;
+        /* @conditional-compile-remove(total-participant-count) */
+        existingCall.totalParticipantCount = call.totalParticipantCount;
         // We don't update the startTime and endTime if we are updating an existing active call
       } else {
         draft.calls[latestCallId] = call;
@@ -275,6 +277,16 @@ export class CallContext {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
         call.role = role;
+      }
+    });
+  }
+
+  /* @conditional-compile-remove(total-participant-count) */
+  public setTotalParticipantCount(callId: string, totalParticipantCount: number): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        call.totalParticipantCount = totalParticipantCount;
       }
     });
   }

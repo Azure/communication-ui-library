@@ -238,10 +238,10 @@ export interface ChatMessage extends MessageCommon {
 export interface CommonSitePermissionsProps {
     appName: string;
     browserHint?: 'safari' | 'unset';
+    kind: 'request' | 'denied' | 'check';
     onContinueAnywayClick?: () => void;
     onTroubleshootingClick?: () => void;
     styles?: SitePermissionsStyles;
-    type: 'request' | 'denied' | 'check';
 }
 
 // @public
@@ -663,6 +663,7 @@ export interface _DrawerMenuItemProps {
 
 // @internal
 export interface _DrawerMenuProps {
+    heading?: string;
     // (undocumented)
     items: _DrawerMenuItemProps[];
     onLightDismiss: () => void;
@@ -681,6 +682,7 @@ export const _DrawerSurface: (props: _DrawerSurfaceProps) => JSX.Element;
 // @internal
 export interface _DrawerSurfaceProps {
     children: React_2.ReactNode;
+    heading?: string;
     onLightDismiss: () => void;
     styles?: _DrawerSurfaceStyles;
 }
@@ -746,6 +748,7 @@ export interface ErrorBarStrings {
     sendMessageGeneric: string;
     sendMessageNotInChatThread: string;
     startScreenShareGeneric: string;
+    startScreenSharingGeneric?: string;
     startVideoGeneric: string;
     stopScreenShareGeneric: string;
     stopVideoGeneric: string;
@@ -1218,7 +1221,6 @@ export interface ParticipantItemStrings {
     isMeText: string;
     menuTitle: string;
     mutedIconLabel: string;
-    participantStateConnecting?: string;
     participantStateHold?: string;
     participantStateRinging?: string;
     removeButtonLabel: string;
@@ -1401,11 +1403,13 @@ export const _RemoteVideoTile: React_2.MemoExoticComponent<(props: {
     personaMinSize?: number | undefined;
     strings?: VideoGalleryStrings | undefined;
     participantState?: ParticipantState | undefined;
-    showRemoteVideoTileContextualMenu?: boolean | undefined;
+    menuKind?: "contextual" | "drawer" | undefined;
     drawerMenuHostId?: string | undefined;
     onPinParticipant?: ((userId: string) => void) | undefined;
     onUnpinParticipant?: ((userId: string) => void) | undefined;
     isPinned?: boolean | undefined;
+    disablePinMenuItem?: boolean | undefined;
+    toggleAnnouncerString?: ((announcerString: string) => void) | undefined;
 }) => JSX.Element>;
 
 // @beta
@@ -1684,10 +1688,10 @@ export interface VideoGalleryProps {
     onUnpinParticipant?: (userId: string) => void;
     pinnedParticipants?: string[];
     remoteParticipants?: VideoGalleryRemoteParticipant[];
+    remoteVideoTileMenuOptions?: false | VideoTileContextualMenuProps | VideoTileDrawerMenuProps;
     remoteVideoViewOptions?: VideoStreamOptions;
     showCameraSwitcherInLocalPreview?: boolean;
     showMuteIndicator?: boolean;
-    showRemoteVideoTileContextualMenu?: boolean;
     strings?: Partial<VideoGalleryStrings>;
     styles?: VideoGalleryStyles;
 }
@@ -1719,10 +1723,14 @@ export interface VideoGalleryStrings {
     localVideoLabel: string;
     localVideoMovementLabel: string;
     localVideoSelectedDescription: string;
+    pinnedParticipantAnnouncementAriaLabel: string;
     pinParticipantForMe: string;
+    pinParticipantMenuItemAriaLabel: string;
     screenIsBeingSharedMessage: string;
     screenShareLoadingMessage: string;
+    unpinnedParticipantAnnouncementAriaLabel: string;
     unpinParticipantForMe: string;
+    unpinParticipantMenuItemAriaLabel: string;
 }
 
 // @public
@@ -1740,6 +1748,17 @@ export interface VideoStreamOptions {
 
 // @public
 export const VideoTile: (props: VideoTileProps) => JSX.Element;
+
+// @beta
+export interface VideoTileContextualMenuProps {
+    kind: 'contextual';
+}
+
+// @beta
+export interface VideoTileDrawerMenuProps {
+    hostId?: string;
+    kind: 'drawer';
+}
 
 // @public
 export interface VideoTileProps {
@@ -1769,8 +1788,6 @@ export interface VideoTileProps {
 
 // @beta
 export interface VideoTileStrings {
-    // (undocumented)
-    participantStateConnecting: string;
     // (undocumented)
     participantStateHold: string;
     // (undocumented)

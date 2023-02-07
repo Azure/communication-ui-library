@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Added remoteVideoTileMenuOptions prop and removed showRemoteVideoTileContextualMenu prop in VideoGallery. Added showRemoteVideoTileMenu prop to CallCompositeOptions.",
+  "packageName": "@azure/communication-react",
+  "email": "miguelgamis@microsoft.com",
+  "dependentChangeType": "patch"
+}

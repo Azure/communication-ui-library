@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Bugfix mute indicator color not matching display name",
-  "packageName": "@internal/react-components",
-  "email": "anjulgarg@live.com",
-  "dependentChangeType": "patch"
-}

@@ -6,30 +6,23 @@ import { smartDominantSpeakerParticipants } from '../../../gallery';
 import { VideoGalleryParticipant, VideoGalleryRemoteParticipant } from '../../../types';
 
 /**
- * Arguments for {@link useFloatingLocalVideoLayout } to determine grid participants and horizontal participants
+ * Arguments used to determine a {@link OrganizedParticipantsResult}
  * @private
  */
-export interface UseFloatingLocalVideoLayoutArgs {
+export interface OrganizedParticipantsArgs {
   remoteParticipants: VideoGalleryRemoteParticipant[];
   dominantSpeakers?: string[];
   maxRemoteVideoStreams?: number;
   maxAudioDominantSpeakers?: number;
   isScreenShareActive?: boolean;
+  /* @conditional-compile-remove(pinned-participants) */ pinnedParticipantUserIds?: string[];
 }
 
 /**
- * Arguments for {@link usePinnedParticipantLayout } to determine grid participants and horizontal participants
+ * A result that defines grid participants and horizontal participants in the VideoGallery
  * @private
  */
-export interface UsePinnedParticipantLayoutArgs extends UseFloatingLocalVideoLayoutArgs {
-  pinnedParticipantUserIds: string[];
-}
-
-/**
- * A layout result that defines grid participants and horizontal participants
- * @private
- */
-export interface LayoutResult {
+export interface OrganizedParticipantsResult {
   gridParticipants: VideoGalleryParticipant[];
   horizontalGalleryParticipants: VideoGalleryParticipant[];
 }
@@ -38,10 +31,7 @@ const DEFAULT_MAX_REMOTE_VIDEOSTREAMS = 4;
 
 const DEFAULT_MAX_AUDIO_DOMINANT_SPEAKERS = 6;
 
-/**
- * @private
- */
-export const useFloatingLocalVideoLayout = (props: UseFloatingLocalVideoLayoutArgs): LayoutResult => {
+const _useOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedParticipantsResult => {
   const visibleVideoParticipants = useRef<VideoGalleryRemoteParticipant[]>([]);
   const visibleAudioParticipants = useRef<VideoGalleryRemoteParticipant[]>([]);
 
@@ -124,10 +114,10 @@ export const useFloatingLocalVideoLayout = (props: UseFloatingLocalVideoLayoutAr
   return { gridParticipants, horizontalGalleryParticipants };
 };
 
-/**
- * @private
- */
-export const usePinnedParticipantLayout = (props: UsePinnedParticipantLayoutArgs): LayoutResult => {
+/* @conditional-compile-remove(pinned-participants) */
+const _useOrganizedParticipantsWithPinnedParticipants = (
+  props: OrganizedParticipantsArgs
+): OrganizedParticipantsResult => {
   // map remote participants by userId
   const remoteParticipantMap = props.remoteParticipants.reduce((map, remoteParticipant) => {
     map[remoteParticipant.userId] = remoteParticipant;
@@ -139,7 +129,7 @@ export const usePinnedParticipantLayout = (props: UsePinnedParticipantLayoutArgs
 
   // get pinned participants in the same order of pinned participant user ids using remoteParticipantMap
   const pinnedParticipants: VideoGalleryRemoteParticipant[] = [];
-  props.pinnedParticipantUserIds.forEach((id) => {
+  props.pinnedParticipantUserIds?.forEach((id) => {
     const pinnedParticipant = remoteParticipantMap[id];
     if (pinnedParticipant) {
       pinnedParticipants.push(pinnedParticipant);
@@ -153,7 +143,7 @@ export const usePinnedParticipantLayout = (props: UsePinnedParticipantLayoutArgs
   const pinnedParticipantUserIdSet = new Set(props.pinnedParticipantUserIds);
   const unpinnedParticipants = props.remoteParticipants.filter((p) => !pinnedParticipantUserIdSet.has(p.userId));
 
-  const floatingLocalVideoLayoutProps = {
+  const useOrganizedParticipantsProps = {
     ...props,
     // if there are pinned participants then we should only consider unpinned participants
     remoteParticipants: unpinnedParticipants,
@@ -163,16 +153,28 @@ export const usePinnedParticipantLayout = (props: UsePinnedParticipantLayoutArgs
       : undefined
   };
 
-  const floatingLocalVideoLayout = useFloatingLocalVideoLayout(floatingLocalVideoLayoutProps);
+  const useOrganizedParticipantsResult = _useOrganizedParticipants(useOrganizedParticipantsProps);
 
-  if (props.pinnedParticipantUserIds.length === 0) {
-    return floatingLocalVideoLayout;
+  if (pinnedParticipants.length === 0) {
+    return useOrganizedParticipantsResult;
   }
 
   return {
     gridParticipants: props.isScreenShareActive ? [] : pinnedParticipants,
     horizontalGalleryParticipants: props.isScreenShareActive
-      ? pinnedParticipants.concat(floatingLocalVideoLayout.horizontalGalleryParticipants)
-      : floatingLocalVideoLayout.gridParticipants.concat(floatingLocalVideoLayout.horizontalGalleryParticipants)
+      ? pinnedParticipants.concat(useOrganizedParticipantsResult.horizontalGalleryParticipants)
+      : useOrganizedParticipantsResult.gridParticipants.concat(
+          useOrganizedParticipantsResult.horizontalGalleryParticipants
+        )
   };
+};
+
+/**
+ * Hook to determine which participants should be in grid and horizontal gallery and their order respectively
+ * @private
+ */
+export const useOrganizedParticipants = (args: OrganizedParticipantsArgs): OrganizedParticipantsResult => {
+  /* @conditional-compile-remove(pinned-participants) */
+  return _useOrganizedParticipantsWithPinnedParticipants(args);
+  return _useOrganizedParticipants(args);
 };

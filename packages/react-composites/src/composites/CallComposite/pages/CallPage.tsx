@@ -93,6 +93,8 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
               {...mediaGalleryHandlers}
               onRenderAvatar={onRenderAvatar}
               onFetchAvatarPersonaData={onFetchAvatarPersonaData}
+              /* @conditional-compile-remove(pinned-participants) */
+              remoteVideoTileMenuOptions={options?.remoteVideoTileMenu}
               drawerMenuHostId={drawerMenuHostId}
             />
           ) : (

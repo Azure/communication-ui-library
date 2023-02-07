@@ -515,6 +515,7 @@ export interface _DrawerMenuItemProps {
 
 // @internal
 export interface _DrawerMenuProps {
+    heading?: string;
     // (undocumented)
     items: _DrawerMenuItemProps[];
     onLightDismiss: () => void;
@@ -533,6 +534,7 @@ export const _DrawerSurface: (props: _DrawerSurfaceProps) => JSX.Element;
 // @internal
 export interface _DrawerSurfaceProps {
     children: React_2.ReactNode;
+    heading?: string;
     onLightDismiss: () => void;
     styles?: _DrawerSurfaceStyles;
 }
@@ -598,6 +600,7 @@ export interface ErrorBarStrings {
     sendMessageGeneric: string;
     sendMessageNotInChatThread: string;
     startScreenShareGeneric: string;
+    startScreenSharingGeneric?: string;
     startVideoGeneric: string;
     stopScreenShareGeneric: string;
     stopVideoGeneric: string;
@@ -1187,11 +1190,13 @@ export const _RemoteVideoTile: React_2.MemoExoticComponent<(props: {
     personaMinSize?: number | undefined;
     strings?: VideoGalleryStrings | undefined;
     participantState?: ParticipantState | undefined;
-    showRemoteVideoTileContextualMenu?: boolean | undefined;
+    menuKind?: "contextual" | "drawer" | undefined;
     drawerMenuHostId?: string | undefined;
     onPinParticipant?: ((userId: string) => void) | undefined;
     onUnpinParticipant?: ((userId: string) => void) | undefined;
     isPinned?: boolean | undefined;
+    disablePinMenuItem?: boolean | undefined;
+    toggleAnnouncerString?: ((announcerString: string) => void) | undefined;
 }) => JSX.Element>;
 
 // @public

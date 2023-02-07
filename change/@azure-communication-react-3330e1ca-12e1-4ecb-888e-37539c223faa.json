@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "bump package versions after release",
-  "packageName": "@azure/communication-react",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "none"
-}

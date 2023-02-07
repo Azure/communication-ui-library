@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Bump `@azure/communication-calling` beta dependency to 1.9.1-beta.1",
-  "packageName": "@internal/react-composites",
-  "email": "94866715+dmceachernmsft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

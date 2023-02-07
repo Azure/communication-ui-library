@@ -14,6 +14,7 @@ import { CallCommon as CallCommon_2 } from '@azure/communication-calling';
 import { CallDirection } from '@azure/communication-calling';
 import { CallEndReason } from '@azure/communication-calling';
 import { CallerInfo } from '@azure/communication-calling';
+import { CallKind } from '@azure/communication-calling';
 import { CallState as CallState_2 } from '@azure/communication-calling';
 import { CommunicationIdentifier } from '@azure/communication-common';
 import { CommunicationIdentifierKind } from '@azure/communication-common';
@@ -102,6 +103,7 @@ export interface CallState {
     id: string;
     isMuted: boolean;
     isScreenSharingOn: boolean;
+    kind: CallKind;
     localVideoStreams: LocalVideoStreamState[];
     recording: RecordingCallFeature;
     remoteParticipants: {
@@ -114,8 +116,8 @@ export interface CallState {
     screenShareRemoteParticipant?: string;
     startTime: Date;
     state: CallState_2;
+    totalParticipantCount?: number;
     transcription: TranscriptionCallFeature;
-    type: 'Teams' | 'ACS';
 }
 
 // @public

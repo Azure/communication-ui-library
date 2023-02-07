@@ -1,0 +1,65 @@
+import { Meta, Source } from '@storybook/addon-docs';
+import { DetailedBetaBanner } from './BetaBanners/DetailedBetaBanner';
+import CommunicationAsTeamsUserSnippetText from '!!raw-loader!./snippets/CommunicationAsTeamsUser.snippet.tsx';
+
+<Meta
+  id="communicationAsTeamsUser"
+  title="Concepts/Communication as Teams user"
+  parameters={{ previewTabs: { canvas: { disable: true, hidden: true } } }}
+/>
+
+# Communication as Teams user
+
+<DetailedBetaBanner version={'1.5.1-beta.1'} />
+
+Communication as Teams user is a workflow where you can join an Azure Communications Service powered call as a Teams user.
+
+To learn more about the Communication as Teams user, click [here](https://learn.microsoft.com/en-us/azure/communication-services/concepts/teams-endpoint)
+
+## Examples
+
+Leveraging Communication as Teams user, enables developers to create customized Teams experiences:
+
+- Browser support on mobile devices
+- User interface (UI) customization
+- End users can join calls as their M365 user instead of an External user.
+
+## How does UI Library support Communication as Teams user?
+
+The UI Library helps Contoso build custom teams client experiences via a simplified API surface, providing a set of UI components,
+and offering UI composites to reduce development time to production. The UI Library is able to offer all of these capabilities by taking
+in a Teams access token as input and using teams-specific calling functions for making calls as a Teams user.
+
+Note: The UI Library is not able to create teams access tokens and is not designed to help you configure your AAD application.
+
+## Using UI Library in Communication as Teams user scenarios
+
+The following is a code snippet of how to try out Communication as Teams user with the CallComposite
+
+<Source code={CommunicationAsTeamsUserSnippetText} />
+
+## FAQs
+
+### Is Communication as Teams user ready for production loads?
+
+UI Library support for Communication as Teams user is currently in public preview. We definitely look forward to seeing how you
+like this experience so we can create an amazing experience when the feature will hit "General Availablility" in 2023.
+
+### If I have found any issues with the CallComposite when interacting with Communication as Teams user where can I go?
+
+For general questions around UI Library and Communication as Teams user please ask at [Microsoft Q&A](https://learn.microsoft.com/en-us/search/?terms=Azure%20Communication%20Services&category=QnA)
+
+If you have an issue working with the code feel free to log an issue at [Github issue](https://github.com/Azure/communication-ui-library/issues) and someone from our team can work with you on your issue.
+
+### If I want to learn more about the Communication as Teams user workflow where can I look?
+
+You can check out our documentation in our Azure Documentation [here](https://learn.microsoft.com/en-us/azure/communication-services/concepts/teams-endpoint)
+
+### How do I get the Teams access token in code to try out the Communication as Teams user workflow?
+
+You can try out this quickstart to create a Teams access token [here](https://learn.microsoft.com/en-us/azure/communication-services/quickstarts/manage-teams-identity?pivots=programming-language-javascript)
+
+### Why do I need to pass in an identifier when using the UI Library with Azure Communication Services when I don't need to with the underlying SDKs?
+
+In order for us to create a better experience when using the UI Library, we need to know the local user's id so we can provide a better UX for the end user.
+We understand it is possible to pull the id from the access token claims however this could change and so we opted to explicitly ask for it.
