@@ -31,7 +31,15 @@ import { chatToSignalingParticipant, pagedAsyncIterator } from './utils';
  * A public interface compatible stub for ChatThreadClient.
  */
 export class FakeChatThreadClient implements IChatThreadClient {
-  constructor(private model: Model, private userId: CommunicationIdentifier, public threadId: string) {}
+  private model: Model;
+  private userId: CommunicationIdentifier;
+  public threadId: string;
+
+  constructor(model: Model, userId: CommunicationIdentifier, threadId: string) {
+    this.model = model;
+    this.userId = userId;
+    this.threadId = threadId;
+  }
 
   getProperties(): Promise<ChatThreadProperties> {
     const thread = this.checkedGetThread();
