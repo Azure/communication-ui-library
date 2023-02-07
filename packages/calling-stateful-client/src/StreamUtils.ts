@@ -507,8 +507,6 @@ function disposeViewLocalVideo(context: CallContext, internalContext: InternalCa
     data: streamLogInfo
   });
 
-  context.setLocalVideoStreamRendererView(callId, undefined);
-
   const renderInfo = internalContext.getLocalRenderInfo(callId);
   if (!renderInfo) {
     _logEvent(callingStatefulLogger, {
@@ -557,9 +555,6 @@ function disposeViewLocalVideo(context: CallContext, internalContext: InternalCa
     return;
   }
 
-  // Else the state must be in the "Rendered" state, so we can dispose the renderer and clean up the state.
-  internalContext.setLocalRenderInfo(callId, renderInfo.stream, 'NotRendered', undefined);
-
   if (renderInfo.renderer) {
     _logEvent(callingStatefulLogger, {
       name: EventNames.DISPOSING_LOCAL_RENDERER,
@@ -568,6 +563,11 @@ function disposeViewLocalVideo(context: CallContext, internalContext: InternalCa
       data: streamLogInfo
     });
     renderInfo.renderer.dispose();
+
+    // Else the state must be in the "Rendered" state, so we can dispose the renderer and clean up the state.
+    internalContext.setLocalRenderInfo(callId, renderInfo.stream, 'NotRendered', undefined);
+
+    context.setLocalVideoStreamRendererView(callId, undefined);
   } else {
     _logEvent(callingStatefulLogger, {
       name: EventNames.LOCAL_RENDERER_NOT_FOUND,
