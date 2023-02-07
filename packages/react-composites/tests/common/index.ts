@@ -5,5 +5,4 @@
 // - the test applications in ../app/*
 // - the browser tests in ../browser/*
 
-export * from './FakeChatAdapterArgs';
 export * from './MockCallAdapterState';
