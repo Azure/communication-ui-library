@@ -564,9 +564,9 @@ function disposeViewLocalVideo(context: CallContext, internalContext: InternalCa
     });
     renderInfo.renderer.dispose();
 
-    // Else the state must be in the "Rendered" state, so we can dispose the renderer and clean up the state.
+    // We will after disposing of the renderer tell the internal context and context that the
+    // local view is gone so we need to update their states.
     internalContext.setLocalRenderInfo(callId, renderInfo.stream, 'NotRendered', undefined);
-
     context.setLocalVideoStreamRendererView(callId, undefined);
   } else {
     _logEvent(callingStatefulLogger, {
