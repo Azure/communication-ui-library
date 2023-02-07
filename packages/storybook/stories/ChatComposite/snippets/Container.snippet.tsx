@@ -1,8 +1,9 @@
 import { ChatParticipant } from '@azure/communication-chat';
 import { ChatComposite, CompositeLocale } from '@azure/communication-react';
 import { PartialTheme, Theme } from '@fluentui/react';
+// eslint-disable-next-line no-restricted-imports
+import { _useFakeChatAdapters } from '@internal/react-composites';
 import React, { useMemo, useEffect } from 'react';
-import { useFakeChatAdapters } from '../../../../react-composites/tests/app/lib/useFakeChatAdapters';
 import { sendMessagesAsBotWithAdapter } from './Utils';
 
 export type ContainerProps = {
@@ -35,7 +36,7 @@ export const ContosoChatContainer = (props: ContainerProps): JSX.Element => {
     };
   }, [props.displayName, props.topic]);
 
-  const fakeAdapter = useFakeChatAdapters(chatAdapterArgs);
+  const fakeAdapter = _useFakeChatAdapters(chatAdapterArgs);
 
   useEffect(() => {
     if (fakeAdapter?.remotes[0]) {
