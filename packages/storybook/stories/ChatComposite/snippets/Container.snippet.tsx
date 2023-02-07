@@ -1,4 +1,3 @@
-// import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 import { ChatParticipant } from '@azure/communication-chat';
 import { ChatComposite, CompositeLocale } from '@azure/communication-react';
 import { PartialTheme, Theme } from '@fluentui/react';
