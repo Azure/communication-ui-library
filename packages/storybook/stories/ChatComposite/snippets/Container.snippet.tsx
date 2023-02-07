@@ -1,64 +1,69 @@
-import { ChatParticipant } from '@azure/communication-chat';
-import { ChatComposite, CompositeLocale } from '@azure/communication-react';
+import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
+import {
+  ChatComposite,
+  CompositeLocale,
+  fromFlatCommunicationIdentifier,
+  useAzureCommunicationChatAdapter
+} from '@azure/communication-react';
 import { PartialTheme, Theme } from '@fluentui/react';
-// eslint-disable-next-line no-restricted-imports
-import { _useFakeChatAdapters } from '@internal/react-composites';
-import React, { useMemo, useEffect } from 'react';
-import { sendMessagesAsBotWithAdapter } from './Utils';
+import React, { useMemo } from 'react';
 
 export type ContainerProps = {
+  /** UserIdentifier is of type CommunicationUserIdentifier see below how to construct it from a string input */
+  userIdentifier: string;
+  token: string;
   displayName: string;
-  topic: string;
+  endpointUrl: string;
+  threadId: string;
   fluentTheme?: PartialTheme | Theme;
   errorBar?: boolean;
-  showParticipants?: boolean;
-  showTopic?: boolean;
+  participants?: boolean;
+  topic?: boolean;
   locale?: CompositeLocale;
   formFactor?: 'desktop' | 'mobile';
-  messages: string[];
 };
 
 export const ContosoChatContainer = (props: ContainerProps): JSX.Element => {
-  const chatAdapterArgs = useMemo(() => {
-    const localParticipant: ChatParticipant = {
-      id: { communicationUserId: 'localId' },
-      displayName: props.displayName
-    };
-    const botParticipant: ChatParticipant = {
-      id: { communicationUserId: 'remoteId' },
-      displayName: 'A simple bot'
-    };
-    return {
-      topic: props.topic,
-      localParticipant: localParticipant,
-      remoteParticipants: [botParticipant],
-      participantsWithHiddenComposites: [botParticipant]
-    };
-  }, [props.displayName, props.topic]);
-
-  const fakeAdapter = _useFakeChatAdapters(chatAdapterArgs);
-
-  useEffect(() => {
-    if (fakeAdapter?.remotes[0]) {
-      sendMessagesAsBotWithAdapter(fakeAdapter?.remotes[0], props.messages);
+  const credential = useMemo(() => {
+    try {
+      return new AzureCommunicationTokenCredential(props.token);
+    } catch {
+      console.error('Failed to construct token credential');
+      return undefined;
     }
-  }, [fakeAdapter?.remotes, props.messages]);
+  }, [props.token]);
 
-  if (fakeAdapter?.local && props.topic) {
+  const userId = useMemo(
+    () => fromFlatCommunicationIdentifier(props.userIdentifier) as CommunicationUserIdentifier,
+    [props.userIdentifier]
+  );
+
+  const adapter = useAzureCommunicationChatAdapter({
+    endpoint: props.endpointUrl,
+    userId,
+    displayName: props.displayName,
+    credential,
+    threadId: props.threadId
+  });
+
+  if (adapter) {
     return (
       <div style={{ height: '90vh', width: '90vw' }}>
         <ChatComposite
-          adapter={fakeAdapter.local}
+          adapter={adapter}
           fluentTheme={props.fluentTheme}
           options={{
-            topic: props.showTopic,
-            participantPane: props.showParticipants
+            errorBar: props.errorBar,
+            topic: props.topic
           }}
           locale={props.locale}
           formFactor={props.formFactor}
         />
       </div>
     );
+  }
+  if (credential === undefined) {
+    return <>Failed to construct credential. Provided token is malformed.</>;
   }
   return <>Initializing...</>;
 };
