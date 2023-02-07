@@ -178,7 +178,7 @@ export interface SendBoxProps {
   /* @conditional-compile-remove(file-sharing) */
   /**
    * Optional callback to render uploaded files in the SendBox. The sendbox will expand
-   * veritcally to accomodate the uploaded files. File uploads will
+   * vertically to accommodate the uploaded files. File uploads will
    * be rendered below the text area in sendbox.
    * @beta
    */

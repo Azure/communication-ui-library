@@ -2,15 +2,16 @@
 // Licensed under the MIT license.
 
 import { CommunicationParticipant, MessageRenderer, MessageProps } from '@internal/react-components';
-import React from 'react';
 import { BaseProvider, BaseCompositeProps } from '../common/BaseComposite';
 import { ChatCompositeIcons } from '../common/icons';
 import { ChatAdapter } from './adapter/ChatAdapter';
 import { ChatAdapterProvider } from './adapter/ChatAdapterProvider';
 import { chatScreenContainerStyle } from './styles/Chat.styles';
-import { ChatScreen } from './ChatScreen';
+import { ChatScreen, ChatScreenRefProps } from './ChatScreen';
+import { forwardRef } from 'react';
 /* @conditional-compile-remove(file-sharing) */
 import { FileSharingOptions } from './ChatScreen';
+import React from 'react';
 
 /**
  * Props for {@link ChatComposite}.
@@ -45,6 +46,8 @@ export interface ChatCompositeProps extends BaseCompositeProps<ChatCompositeIcon
    */
   formFactor?: 'desktop' | 'mobile';
 }
+
+export type ChatCompositeRefProps = ChatScreenRefProps;
 
 /**
  * Optional features of the {@link ChatComposite}.
@@ -93,46 +96,49 @@ export type ChatCompositeOptions = {
  *
  * @public
  */
-export const ChatComposite = (props: ChatCompositeProps): JSX.Element => {
-  const {
-    adapter,
-    options,
-    onFetchAvatarPersonaData,
-    onRenderTypingIndicator,
-    onRenderMessage,
-    onFetchParticipantMenuItems
-  } = props;
+export const ChatComposite = forwardRef<ChatCompositeRefProps, ChatCompositeProps>(
+  (props: ChatCompositeProps, ref): JSX.Element => {
+    const {
+      adapter,
+      options,
+      onFetchAvatarPersonaData,
+      onRenderTypingIndicator,
+      onRenderMessage,
+      onFetchParticipantMenuItems
+    } = props;
 
-  const formFactor = props['formFactor'] || 'desktop';
+    const formFactor = props['formFactor'] || 'desktop';
 
-  /**
-   * @TODO Remove this function and pass the props directly when file-sharing is promoted to stable.
-   * @private
-   */
-  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-  const fileSharingOptions = () => {
-    /* @conditional-compile-remove(file-sharing) */
-    return {
-      fileSharing: options?.fileSharing
+    /**
+     * @TODO Remove this function and pass the props directly when file-sharing is promoted to stable.
+     * @private
+     */
+    // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+    const fileSharingOptions = () => {
+      /* @conditional-compile-remove(file-sharing) */
+      return {
+        fileSharing: options?.fileSharing
+      };
+      return {};
     };
-    return {};
-  };
 
-  return (
-    <div className={chatScreenContainerStyle}>
-      <BaseProvider {...props}>
-        <ChatAdapterProvider adapter={adapter}>
-          <ChatScreen
-            formFactor={formFactor}
-            options={options}
-            onFetchAvatarPersonaData={onFetchAvatarPersonaData}
-            onRenderTypingIndicator={onRenderTypingIndicator}
-            onRenderMessage={onRenderMessage}
-            onFetchParticipantMenuItems={onFetchParticipantMenuItems}
-            {...fileSharingOptions()}
-          />
-        </ChatAdapterProvider>
-      </BaseProvider>
-    </div>
-  );
-};
+    return (
+      <div className={chatScreenContainerStyle}>
+        <BaseProvider {...props}>
+          <ChatAdapterProvider adapter={adapter}>
+            <ChatScreen
+              ref={ref}
+              formFactor={formFactor}
+              options={options}
+              onFetchAvatarPersonaData={onFetchAvatarPersonaData}
+              onRenderTypingIndicator={onRenderTypingIndicator}
+              onRenderMessage={onRenderMessage}
+              onFetchParticipantMenuItems={onFetchParticipantMenuItems}
+              {...fileSharingOptions()}
+            />
+          </ChatAdapterProvider>
+        </BaseProvider>
+      </div>
+    );
+  }
+);

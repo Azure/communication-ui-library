@@ -16,7 +16,7 @@ import {
   TypingIndicatorStylesProps,
   useTheme
 } from '@internal/react-components';
-import React, { useCallback, useEffect } from 'react';
+import React, { forwardRef, useCallback, useEffect, useImperativeHandle } from 'react';
 import { AvatarPersona, AvatarPersonaDataCallback } from '../common/AvatarPersona';
 
 import { useAdapter } from './adapter/ChatAdapterProvider';
@@ -63,6 +63,10 @@ export type ChatScreenProps = {
   formFactor?: 'desktop' | 'mobile';
 };
 
+export type ChatScreenRefProps = {
+  focus: (control: 'sendBoxTextField') => void;
+};
+
 /**
  * @private
  */
@@ -107,163 +111,172 @@ export interface FileSharingOptions {
 /**
  * @private
  */
-export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
-  const {
-    onFetchAvatarPersonaData,
-    onRenderMessage,
-    onRenderTypingIndicator,
-    options,
-    styles,
-    fileSharing,
-    formFactor
-  } = props;
+export const ChatScreen = forwardRef<ChatScreenRefProps, ChatScreenProps>(
+  (props: ChatScreenProps, ref): JSX.Element => {
+    const {
+      onFetchAvatarPersonaData,
+      onRenderMessage,
+      onRenderTypingIndicator,
+      options = {},
+      styles,
+      fileSharing,
+      formFactor
+    } = props;
 
-  const defaultNumberOfChatMessagesToReload = 5;
-  /* @conditional-compile-remove(file-sharing) */
-  const [downloadErrorMessage, setDownloadErrorMessage] = React.useState('');
+    const defaultNumberOfChatMessagesToReload = 5;
+    /* @conditional-compile-remove(file-sharing) */
+    const [downloadErrorMessage, setDownloadErrorMessage] = React.useState('');
+    const adapter = useAdapter();
+    const theme = useTheme();
 
-  const adapter = useAdapter();
-  const theme = useTheme();
+    useEffect(() => {
+      // Initial data should be always fetched by the composite(or external caller) instead of the adapter
+      adapter.fetchInitialData();
+    }, [adapter]);
 
-  useEffect(() => {
-    // Initial data should be always fetched by the composite(or external caller) instead of the adapter
-    adapter.fetchInitialData();
-  }, [adapter]);
+    useImperativeHandle(ref, () => ({
+      focus: (control: 'sendBoxTextField') => {
+        if (control === 'sendBoxTextField') {
+          options.autoFocus = 'sendBoxTextField';
+        }
+      }
+    }));
 
-  const messageThreadProps = usePropsFor(MessageThread);
-  const sendBoxProps = usePropsFor(SendBox);
-  const typingIndicatorProps = usePropsFor(TypingIndicator);
-  const headerProps = useAdaptedSelector(getHeaderProps);
-  const errorBarProps = usePropsFor(ErrorBar);
+    const messageThreadProps = usePropsFor(MessageThread);
+    const sendBoxProps = usePropsFor(SendBox);
+    const typingIndicatorProps = usePropsFor(TypingIndicator);
+    const headerProps = useAdaptedSelector(getHeaderProps);
+    const errorBarProps = usePropsFor(ErrorBar);
 
-  const onRenderAvatarCallback = useCallback(
-    (userId, defaultOptions) => {
-      return (
-        <AvatarPersona
+    const onRenderAvatarCallback = useCallback(
+      (userId, defaultOptions) => {
+        return (
+          <AvatarPersona
+            userId={userId}
+            hidePersonaDetails={true}
+            {...defaultOptions}
+            dataProvider={onFetchAvatarPersonaData}
+          />
+        );
+      },
+      [onFetchAvatarPersonaData]
+    );
+
+    const messageThreadStyles = Object.assign(
+      {},
+      messageThreadChatCompositeStyles(theme.semanticColors.bodyBackground),
+      styles?.messageThread
+    );
+    const typingIndicatorStyles = Object.assign({}, styles?.typingIndicator);
+    const sendBoxStyles = Object.assign({}, styles?.sendBox);
+    const userId = toFlatCommunicationIdentifier(adapter.getState().userId);
+
+    const fileUploadButtonOnChange = useCallback(
+      (files: FileList | null): void => {
+        if (!files) {
+          return;
+        }
+
+        /* @conditional-compile-remove(file-sharing) */
+        const fileUploads = adapter.registerActiveFileUploads(Array.from(files));
+        /* @conditional-compile-remove(file-sharing) */
+        fileSharing?.uploadHandler(userId, fileUploads);
+      },
+      [adapter, fileSharing, userId]
+    );
+
+    /* @conditional-compile-remove(file-sharing) */
+    const onRenderFileDownloads = useCallback(
+      (userId, message) => (
+        <_FileDownloadCards
           userId={userId}
-          hidePersonaDetails={true}
-          {...defaultOptions}
-          dataProvider={onFetchAvatarPersonaData}
+          fileMetadata={message.attachedFilesMetadata || []}
+          downloadHandler={fileSharing?.downloadHandler}
+          onDownloadErrorMessage={(errorMessage: string) => {
+            setDownloadErrorMessage(errorMessage);
+          }}
+        />
+      ),
+      [fileSharing?.downloadHandler]
+    );
+
+    const AttachFileButton = useCallback(() => {
+      if (!fileSharing?.uploadHandler) {
+        return null;
+      }
+      return (
+        <FileUploadButton
+          accept={fileSharing?.accept}
+          multiple={fileSharing?.multiple}
+          onChange={fileUploadButtonOnChange}
         />
       );
-    },
-    [onFetchAvatarPersonaData]
-  );
-
-  const messageThreadStyles = Object.assign(
-    {},
-    messageThreadChatCompositeStyles(theme.semanticColors.bodyBackground),
-    styles?.messageThread
-  );
-  const typingIndicatorStyles = Object.assign({}, styles?.typingIndicator);
-  const sendBoxStyles = Object.assign({}, styles?.sendBox);
-  const userId = toFlatCommunicationIdentifier(adapter.getState().userId);
-
-  const fileUploadButtonOnChange = useCallback(
-    (files: FileList | null): void => {
-      if (!files) {
-        return;
-      }
-
-      /* @conditional-compile-remove(file-sharing) */
-      const fileUploads = adapter.registerActiveFileUploads(Array.from(files));
-      /* @conditional-compile-remove(file-sharing) */
-      fileSharing?.uploadHandler(userId, fileUploads);
-    },
-    [adapter, fileSharing, userId]
-  );
-
-  /* @conditional-compile-remove(file-sharing) */
-  const onRenderFileDownloads = useCallback(
-    (userId, message) => (
-      <_FileDownloadCards
-        userId={userId}
-        fileMetadata={message.attachedFilesMetadata || []}
-        downloadHandler={fileSharing?.downloadHandler}
-        onDownloadErrorMessage={(errorMessage: string) => {
-          setDownloadErrorMessage(errorMessage);
-        }}
-      />
-    ),
-    [fileSharing?.downloadHandler]
-  );
-
-  const AttachFileButton = useCallback(() => {
-    if (!fileSharing?.uploadHandler) {
-      return null;
-    }
+    }, [fileSharing?.accept, fileSharing?.multiple, fileSharing?.uploadHandler, fileUploadButtonOnChange]);
     return (
-      <FileUploadButton
-        accept={fileSharing?.accept}
-        multiple={fileSharing?.multiple}
-        onChange={fileUploadButtonOnChange}
-      />
-    );
-  }, [fileSharing?.accept, fileSharing?.multiple, fileSharing?.uploadHandler, fileUploadButtonOnChange]);
-  return (
-    <Stack className={chatContainer} grow>
-      {options?.topic !== false && <ChatHeader {...headerProps} />}
-      <Stack className={chatArea} tokens={participantListContainerPadding} horizontal grow>
-        <Stack className={chatWrapper} grow>
-          {options?.errorBar !== false && <ErrorBar {...errorBarProps} />}
-          {
-            /* @conditional-compile-remove(file-sharing) */
-            <FileDownloadErrorBar
-              onDismissDownloadErrorMessage={useCallback(() => {
-                setDownloadErrorMessage('');
-              }, [])}
-              fileDownloadErrorMessage={downloadErrorMessage || ''}
+      <Stack className={chatContainer} grow>
+        {options?.topic !== false && <ChatHeader {...headerProps} />}
+        <Stack className={chatArea} tokens={participantListContainerPadding} horizontal grow>
+          <Stack className={chatWrapper} grow>
+            {options?.errorBar !== false && <ErrorBar {...errorBarProps} />}
+            {
+              /* @conditional-compile-remove(file-sharing) */
+              <FileDownloadErrorBar
+                onDismissDownloadErrorMessage={useCallback(() => {
+                  setDownloadErrorMessage('');
+                }, [])}
+                fileDownloadErrorMessage={downloadErrorMessage || ''}
+              />
+            }
+            <MessageThread
+              {...messageThreadProps}
+              onRenderAvatar={onRenderAvatarCallback}
+              onRenderMessage={onRenderMessage}
+              /* @conditional-compile-remove(file-sharing) */
+              onRenderFileDownloads={onRenderFileDownloads}
+              numberOfChatMessagesToReload={defaultNumberOfChatMessagesToReload}
+              styles={messageThreadStyles}
             />
-          }
-          <MessageThread
-            {...messageThreadProps}
-            onRenderAvatar={onRenderAvatarCallback}
-            onRenderMessage={onRenderMessage}
-            /* @conditional-compile-remove(file-sharing) */
-            onRenderFileDownloads={onRenderFileDownloads}
-            numberOfChatMessagesToReload={defaultNumberOfChatMessagesToReload}
-            styles={messageThreadStyles}
-          />
-          <Stack className={mergeStyles(sendboxContainerStyles)}>
-            <div className={mergeStyles(typingIndicatorContainerStyles)}>
-              {onRenderTypingIndicator ? (
-                onRenderTypingIndicator(typingIndicatorProps.typingUsers)
-              ) : (
-                <TypingIndicator {...typingIndicatorProps} styles={typingIndicatorStyles} />
-              )}
-            </div>
-            <Stack horizontal={formFactor === 'mobile'}>
-              {formFactor === 'mobile' && (
-                <Stack verticalAlign="center">
-                  <AttachFileButton />
+            <Stack className={mergeStyles(sendboxContainerStyles)}>
+              <div className={mergeStyles(typingIndicatorContainerStyles)}>
+                {onRenderTypingIndicator ? (
+                  onRenderTypingIndicator(typingIndicatorProps.typingUsers)
+                ) : (
+                  <TypingIndicator {...typingIndicatorProps} styles={typingIndicatorStyles} />
+                )}
+              </div>
+              <Stack horizontal={formFactor === 'mobile'}>
+                {formFactor === 'mobile' && (
+                  <Stack verticalAlign="center">
+                    <AttachFileButton />
+                  </Stack>
+                )}
+                <Stack grow>
+                  <SendBox
+                    {...sendBoxProps}
+                    autoFocus={options?.autoFocus}
+                    styles={sendBoxStyles}
+                    /* @conditional-compile-remove(file-sharing) */
+                    activeFileUploads={useSelector(fileUploadsSelector).files}
+                    /* @conditional-compile-remove(file-sharing) */
+                    onCancelFileUpload={adapter.cancelFileUpload}
+                  />
                 </Stack>
-              )}
-              <Stack grow>
-                <SendBox
-                  {...sendBoxProps}
-                  autoFocus={options?.autoFocus}
-                  styles={sendBoxStyles}
-                  /* @conditional-compile-remove(file-sharing) */
-                  activeFileUploads={useSelector(fileUploadsSelector).files}
-                  /* @conditional-compile-remove(file-sharing) */
-                  onCancelFileUpload={adapter.cancelFileUpload}
-                />
+                {formFactor !== 'mobile' && <AttachFileButton />}
               </Stack>
-              {formFactor !== 'mobile' && <AttachFileButton />}
             </Stack>
           </Stack>
+          {
+            /* @conditional-compile-remove(chat-composite-participant-pane) */
+            options?.participantPane === true && (
+              <ChatScreenPeoplePane
+                onFetchAvatarPersonaData={onFetchAvatarPersonaData}
+                onFetchParticipantMenuItems={props.onFetchParticipantMenuItems}
+                isMobile={formFactor === 'mobile'}
+              />
+            )
+          }
         </Stack>
-        {
-          /* @conditional-compile-remove(chat-composite-participant-pane) */
-          options?.participantPane === true && (
-            <ChatScreenPeoplePane
-              onFetchAvatarPersonaData={onFetchAvatarPersonaData}
-              onFetchParticipantMenuItems={props.onFetchParticipantMenuItems}
-              isMobile={formFactor === 'mobile'}
-            />
-          )
-        }
       </Stack>
-    </Stack>
-  );
-};
+    );
+  }
+);
