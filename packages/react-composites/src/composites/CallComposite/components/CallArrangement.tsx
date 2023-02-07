@@ -20,6 +20,7 @@ import { useCallback } from 'react';
 /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
 import { AvatarPersonaDataCallback } from '../../common/AvatarPersona';
 import { containerDivStyles } from '../../common/ContainerRectProps';
+import { OnFetchProfileCallback } from '../../common/Profile';
 /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
 import { useAdapter } from '../adapter/CallAdapterProvider';
 import { CallControls, CallControlsProps } from '../components/CallControls';
@@ -57,6 +58,7 @@ export interface CallArrangementProps {
   modalLayerHostId: string;
   /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
+  onFetchProfile?: OnFetchProfileCallback;
 }
 
 /**
@@ -106,6 +108,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
           callAdapter={adapter}
           onClose={closePane}
           onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
+          onFetchProfile={props.onFetchProfile}
           onFetchParticipantMenuItems={props.callControlProps?.onFetchParticipantMenuItems}
           onPeopleButtonClicked={
             showShowPeopleTabHeaderButton(props.callControlProps.options) ? openPeoplePane : undefined
@@ -122,15 +125,16 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     }
     return <></>;
   }, [
-    activePane,
     adapter,
+    activePane,
     closePane,
-    props.callControlProps.callInvitationURL,
+    props.onFetchAvatarPersonaData,
+    props.onFetchProfile,
     props.callControlProps?.onFetchParticipantMenuItems,
     props.callControlProps.options,
-    props.mobileView,
+    props.callControlProps.callInvitationURL,
     props.modalLayerHostId,
-    props.onFetchAvatarPersonaData,
+    props.mobileView,
     openPeoplePane
   ]);
 

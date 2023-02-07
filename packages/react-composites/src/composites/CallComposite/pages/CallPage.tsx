@@ -7,6 +7,7 @@ import { _isInCall } from '@internal/calling-component-bindings';
 import { ErrorBar, OnRenderAvatarCallback, ParticipantMenuItemsCallback } from '@internal/react-components';
 import React from 'react';
 import { AvatarPersonaDataCallback } from '../../common/AvatarPersona';
+import { OnFetchProfileCallback } from '../../common/Profile';
 import { useLocale } from '../../localization';
 import { CallCompositeOptions } from '../CallComposite';
 import { CallArrangement } from '../components/CallArrangement';
@@ -31,6 +32,7 @@ export interface CallPageProps {
   modalLayerHostId: string;
   callInvitationURL?: string;
   onRenderAvatar?: OnRenderAvatarCallback;
+  onFetchProfile?: OnFetchProfileCallback;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
   options?: CallCompositeOptions;
@@ -43,6 +45,7 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
   const {
     callInvitationURL,
     onRenderAvatar,
+    onFetchProfile,
     onFetchAvatarPersonaData,
     onFetchParticipantMenuItems,
     options,
@@ -81,6 +84,7 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
       }}
       /* @conditional-compile-remove(one-to-n-calling) */
       onFetchAvatarPersonaData={onFetchAvatarPersonaData}
+      onFetchProfile={onFetchProfile}
       mobileView={mobileView}
       /* @conditional-compile-remove(one-to-n-calling) */
       modalLayerHostId={props.modalLayerHostId}
@@ -92,6 +96,7 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
               {...mediaGalleryProps}
               {...mediaGalleryHandlers}
               onRenderAvatar={onRenderAvatar}
+              onFetchProfile={onFetchProfile}
               onFetchAvatarPersonaData={onFetchAvatarPersonaData}
               drawerMenuHostId={drawerMenuHostId}
             />

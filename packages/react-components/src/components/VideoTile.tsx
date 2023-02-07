@@ -32,7 +32,6 @@ import { DirectionalHint, IContextualMenuProps } from '@fluentui/react';
 import useLongPress from './utils/useLongPress';
 /* @conditional-compile-remove(pinned-participants) */
 import { moreButtonStyles } from './styles/VideoTile.styles';
-import { _useUserProfile } from '../profile/ProfileProvider';
 
 /**
  * Strings of {@link VideoTile} that can be overridden.
@@ -82,6 +81,8 @@ export interface VideoTileProps {
   isMirrored?: boolean;
   /** Custom render Component function for no video is available. Render a Persona Icon if undefined. */
   onRenderPlaceholder?: OnRenderAvatarCallback;
+  /** Custom render Component function for displayName. Render default display name string when undefined. */
+  onRenderDisplayName?: (userId: string, displayName: string) => JSX.Element;
   /**
    * Show label on the VideoTile
    * @defaultValue true
@@ -223,6 +224,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
     /* @conditional-compile-remove(pinned-participants) */
     isPinned,
     onRenderPlaceholder,
+    onRenderDisplayName,
     renderElement,
     showLabel = true,
     showMuteIndicator = true,
@@ -304,10 +306,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
 
   const ids = useIdentifiers();
 
-  const profileDisplayName = userId ? _useUserProfile(userId)?.displayName : undefined;
-  const displayNameToRender = profileDisplayName ?? displayName;
-
-  const canShowLabel = (showLabel && displayNameToRender) || (showMuteIndicator && isMuted);
+  const canShowLabel = showLabel && (displayName || (showMuteIndicator && isMuted));
   const participantStateString = participantStateStringTrampoline(props, locale);
   return (
     <Stack
@@ -360,10 +359,10 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
               {canShowLabel && (
                 <Text
                   className={mergeStyles(displayNameStyle)}
-                  title={displayNameToRender}
+                  title={displayName}
                   style={{ color: participantStateString ? theme.palette.neutralSecondary : 'inherit' }}
                 >
-                  {displayNameToRender}
+                  {onRenderDisplayName ? onRenderDisplayName(userId ?? '', displayName ?? '') : displayName}
                 </Text>
               )}
               {participantStateString && (

@@ -26,6 +26,7 @@ import { AddPeopleButton } from './AddPeopleButton';
 import { PhoneNumberIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
+import { OnFetchProfileCallback } from './Profile';
 
 /**
  * @private
@@ -36,6 +37,7 @@ export const PeoplePaneContent = (props: {
   onRemoveParticipant: (participantId: string) => void;
   /* @conditional-compile-remove(PSTN-calls) */
   onAddParticipant: (participant: PhoneNumberIdentifier, options?: AddPhoneNumberOptions) => void;
+  onFetchProfile?: OnFetchProfileCallback;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
   strings: CallWithChatCompositeStrings | /* @conditional-compile-remove(one-to-n-calling) */ CallCompositeStrings;
@@ -44,7 +46,8 @@ export const PeoplePaneContent = (props: {
   /* @conditional-compile-remove(PSTN-calls) */
   alternateCallerId?: string;
 }): JSX.Element => {
-  const { inviteLink, onFetchParticipantMenuItems, setDrawerMenuItems, strings, onRemoveParticipant } = props;
+  const { inviteLink, onFetchParticipantMenuItems, setDrawerMenuItems, strings, onRemoveParticipant, onFetchProfile } =
+    props;
   const participantListDefaultProps = usePropsFor(ParticipantList);
   const removeButtonAllowed = hasRemoveParticipantsPermissionTrampoline();
   const setDrawerMenuItemsForParticipant: (participant?: ParticipantListParticipant) => void = useMemo(() => {
@@ -94,6 +97,7 @@ export const PeoplePaneContent = (props: {
       isMobile={props.mobileView}
       participantListProps={participantListProps}
       onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
+      onFetchProfile={onFetchProfile}
       onFetchParticipantMenuItems={props.mobileView ? undefined : props.onFetchParticipantMenuItems}
       title={props.strings.peoplePaneSubTitle}
     />

@@ -3,6 +3,7 @@
 
 import { IPersonaProps, Persona, PersonaInitialsColor } from '@fluentui/react';
 import React, { useEffect, useState } from 'react';
+import { OnFetchProfileCallback } from './Profile';
 
 /**
  * Custom data attributes for displaying avatar for a user.
@@ -57,9 +58,13 @@ export interface AvatarPersonaProps extends IPersonaProps {
    */
   userId?: string;
   /**
-   * A function that returns a Promise that resolves to the data to be displayed.
+   * A function that returns a Promise that resolves to the avatar data to be displayed.
    */
   dataProvider?: AvatarPersonaDataCallback;
+  /**
+   * A function that returns a Promise that resolves to the profile data to be displayed.
+   */
+  onFetchProfile?: OnFetchProfileCallback;
 }
 
 /**
@@ -70,10 +75,20 @@ export interface AvatarPersonaProps extends IPersonaProps {
  * @private
  */
 export const AvatarPersona = (props: AvatarPersonaProps): JSX.Element => {
-  const { userId, dataProvider, text, imageUrl, imageInitials, initialsColor, initialsTextColor, showOverflowTooltip } =
-    props;
+  const {
+    userId,
+    dataProvider,
+    text,
+    imageUrl,
+    imageInitials,
+    initialsColor,
+    initialsTextColor,
+    showOverflowTooltip,
+    onFetchProfile
+  } = props;
 
   const [data, setData] = useState<AvatarPersonaData | undefined>();
+  const [displayName, setDisplayName] = useState<string | undefined>();
 
   useEffect(() => {
     (async () => {
@@ -86,10 +101,17 @@ export const AvatarPersona = (props: AvatarPersonaProps): JSX.Element => {
     })();
   }, [data, dataProvider, userId]);
 
+  useEffect(() => {
+    (async () => {
+      const profile = await onFetchProfile?.(userId ?? '');
+      setDisplayName(profile ? profile.displayName : data?.text);
+    })();
+  }, [data, dataProvider, onFetchProfile, userId]);
+
   return (
     <Persona
       {...props}
-      text={data?.text ?? text}
+      text={displayName ?? text}
       imageUrl={data?.imageUrl ?? imageUrl}
       imageInitials={data?.imageInitials ?? imageInitials}
       initialsColor={data?.initialsColor ?? initialsColor}

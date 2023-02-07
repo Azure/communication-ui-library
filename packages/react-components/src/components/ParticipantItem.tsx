@@ -14,7 +14,7 @@ import {
   Stack,
   Text
 } from '@fluentui/react';
-import React, { useMemo, useRef, useState } from 'react';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { useIdentifiers } from '../identifiers';
 import { useLocale } from '../localization';
 import { useTheme } from '../theming';
@@ -95,6 +95,8 @@ export interface ParticipantItemProps {
   me?: boolean;
   /** Optional callback returning a JSX element to override avatar. */
   onRenderAvatar?: OnRenderAvatarCallback;
+  /** Optional callback returning a JSX element to override display name. */
+  onRenderDisplayName?: (userId: string, displayName: string) => JSX.Element;
   /** Optional array of IContextualMenuItem for contextual menu. */
   menuItems?: IContextualMenuItem[];
   /** Optional callback returning a JSX element rendered on the right portion of the ParticipantItem. Intended for adding icons. */
@@ -143,6 +145,7 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
     userId,
     displayName,
     onRenderAvatar,
+    onRenderDisplayName,
     menuItems,
     onRenderIcon,
     presence,
@@ -174,6 +177,10 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
     showUnknownPersonaCoin: !me && (!displayName?.trim() || displayName === strings.displayNamePlaceholder)
   };
 
+  const onRenderAvatarText = useCallback(() => {
+    return onRenderDisplayName ? onRenderDisplayName(userId ?? '', displayName ?? '') : null;
+  }, [displayName, onRenderDisplayName, userId]);
+
   const avatar = onRenderAvatar ? (
     onRenderAvatar(userId ?? '', avatarOptions)
   ) : (
@@ -186,6 +193,7 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
         styles?.avatar
       )}
       {...avatarOptions}
+      onRenderPrimaryText={onRenderDisplayName ? onRenderAvatarText : undefined}
     />
   );
 

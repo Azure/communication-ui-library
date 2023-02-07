@@ -37,6 +37,7 @@ import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { useAdapter } from '../adapter/CallAdapterProvider';
 import { isDisabled } from '../utils';
 import { CallSidePaneOption } from '../hooks/useSidePaneState';
+import { OnFetchProfileCallback } from '../../common/Profile';
 
 /**
  * Pane that is used to store participants for Call composite
@@ -47,6 +48,7 @@ export const CallPane = (props: {
   callAdapter: CommonCallAdapter;
   onClose: () => void;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
+  onFetchProfile?: OnFetchProfileCallback;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
   onPeopleButtonClicked?: () => void;
   modalLayerHostId: string;

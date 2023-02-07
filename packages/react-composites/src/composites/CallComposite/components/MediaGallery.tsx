@@ -19,6 +19,8 @@ import { localVideoCameraCycleButtonSelector } from '../selectors/LocalVideoTile
 import { LocalVideoCameraCycleButton } from '@internal/react-components';
 import { _formatString } from '@internal/acs-ui-common';
 import { useParticipantChangedAnnouncement } from '../utils/MediaGalleryUtils';
+import { OnFetchProfileCallback } from '../../common/Profile';
+import { DisplayName } from '../../common/DisplayName';
 
 const VideoGalleryStyles = {
   root: {
@@ -45,6 +47,7 @@ export interface MediaGalleryProps {
   isMicrophoneChecked?: boolean;
   onStartLocalVideo: () => Promise<void>;
   onRenderAvatar?: OnRenderAvatarCallback;
+  onFetchProfile?: OnFetchProfileCallback;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   isMobile?: boolean;
   drawerMenuHostId?: string;
@@ -79,6 +82,13 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     [props.onFetchAvatarPersonaData]
   );
 
+  const onRenderDisplayName = useCallback(
+    (userId: string, displayName: string) => {
+      return <DisplayName userId={userId} displayName={displayName} onFetchProfile={props.onFetchProfile} />;
+    },
+    [props.onFetchProfile]
+  );
+
   useLocalVideoStartTrigger(!!props.isVideoStreamOn);
   const VideoGalleryMemoized = useMemo(() => {
     return (
@@ -91,12 +101,13 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
         showCameraSwitcherInLocalPreview={props.isMobile}
         localVideoCameraCycleButtonProps={cameraSwitcherProps}
         onRenderAvatar={onRenderAvatar}
+        onRenderDisplayName={onRenderDisplayName}
         /* @conditional-compile-remove(pinned-participants) */
         showRemoteVideoTileContextualMenu={!props.isMobile}
         // @TODO: Provide props.drawerMenuHostId to VideoGallery when VideoGallery props support it.
       />
     );
-  }, [videoGalleryProps, props.isMobile, cameraSwitcherProps, onRenderAvatar]);
+  }, [videoGalleryProps, props.isMobile, cameraSwitcherProps, onRenderAvatar, onRenderDisplayName]);
 
   return (
     <>

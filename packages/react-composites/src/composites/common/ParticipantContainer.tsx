@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import React, { useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import {
   participantListContainerStyle,
   participantListMobileStyle,
@@ -17,6 +17,8 @@ import {
 } from '@internal/react-components';
 import { FocusZone, Stack, Text, useTheme } from '@fluentui/react';
 import { AvatarPersona, AvatarPersonaDataCallback } from './AvatarPersona';
+import { OnFetchProfileCallback } from './Profile';
+import { DisplayName } from './DisplayName';
 
 type ParticipantContainerProps = {
   onRenderAvatar?: OnRenderAvatarCallback;
@@ -48,6 +50,7 @@ export const ParticipantListWithHeading = (props: {
   title?: string;
   isMobile?: boolean;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
+  onFetchProfile?: OnFetchProfileCallback;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
 }): JSX.Element => {
   const { onFetchAvatarPersonaData, onFetchParticipantMenuItems, title, participantListProps } = props;
@@ -63,6 +66,13 @@ export const ParticipantListWithHeading = (props: {
     [theme.palette.neutralSecondary, theme.fonts.smallPlus.fontSize, props.isMobile]
   );
 
+  const onRenderDisplayName = useCallback(
+    (userId: string, displayName: string) => {
+      return <DisplayName userId={userId} displayName={displayName} onFetchProfile={props.onFetchProfile} />;
+    },
+    [props.onFetchProfile]
+  );
+
   return (
     <Stack className={participantListStack}>
       <Stack.Item styles={subheadingStyleThemed}>{title}</Stack.Item>
@@ -73,6 +83,7 @@ export const ParticipantListWithHeading = (props: {
           onRenderAvatar={(userId, options) => (
             <>
               <AvatarPersona
+                onFetchProfile={props.onFetchProfile}
                 data-ui-id="chat-composite-participant-custom-avatar"
                 userId={userId}
                 {...options}
@@ -81,11 +92,12 @@ export const ParticipantListWithHeading = (props: {
               />
               {options?.text && (
                 <Text nowrap={true} styles={displayNameStyles}>
-                  {options?.text}
+                  {onRenderDisplayName ? onRenderDisplayName(userId ?? '', options?.text) : options?.text}
                 </Text>
               )}
             </>
           )}
+          onRenderDisplayName={onRenderDisplayName}
           onFetchParticipantMenuItems={onFetchParticipantMenuItems}
           showParticipantOverflowTooltip={!props.isMobile}
         />

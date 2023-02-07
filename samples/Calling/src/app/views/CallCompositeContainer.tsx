@@ -5,7 +5,7 @@ import { CommonCallAdapter, CallCompositeOptions, CallComposite } from '@azure/c
 import { Spinner } from '@fluentui/react';
 import { useSwitchableFluentTheme } from '../theming/SwitchableFluentThemeProvider';
 import { useIsMobile } from '../utils/useIsMobile';
-import React, { useMemo, useEffect } from 'react';
+import React, { useMemo, useEffect, useCallback } from 'react';
 import { CallScreenProps } from './CallScreen';
 
 export type CallCompositeContainerProps = CallScreenProps & { adapter?: CommonCallAdapter };
@@ -33,6 +33,10 @@ export const CallCompositeContainer = (props: CallCompositeContainerProps): JSX.
     return () => window.removeEventListener('beforeunload', disposeAdapter);
   }, [adapter]);
 
+  const onFetchProfile = useCallback(async () => {
+    return { displayName: 'Test User' };
+  }, []);
+
   if (!adapter) {
     return <Spinner label={'Creating adapter'} ariaLive="assertive" labelPosition="top" />;
   }
@@ -53,6 +57,7 @@ export const CallCompositeContainer = (props: CallCompositeContainerProps): JSX.
       formFactor={isMobileSession ? 'mobile' : 'desktop'}
       /* @conditional-compile-remove(call-readiness) */
       options={options}
+      onFetchProfile={onFetchProfile}
     />
   );
 };

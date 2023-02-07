@@ -15,7 +15,6 @@ import { useIdentifiers } from '../identifiers';
 import { useLocale } from '../localization';
 /* @conditional-compile-remove(rooms) */
 import { _usePermissions } from '../permissions';
-import { _useUserProfile } from '../profile/ProfileProvider';
 import {
   BaseCustomStyles,
   CallParticipantListParticipant,
@@ -76,6 +75,8 @@ export type ParticipantListProps = {
   onRenderParticipant?: (participant: ParticipantListParticipant) => JSX.Element | null;
   /** Optional callback to render the avatar for each participant. This property will have no effect if `onRenderParticipant` is assigned.  */
   onRenderAvatar?: OnRenderAvatarCallback;
+  /** Optional callback to render the displayName for each participant. This property will have no effect if `onRenderParticipant` is assigned.  */
+  onRenderDisplayName?: (userId: string, displayName: string) => JSX.Element;
   /** Optional callback to render the context menu for each participant  */
   onRemoveParticipant?: (userId: string) => void;
   /** Optional callback to render custom menu items for each participant. */
@@ -96,7 +97,8 @@ const onRenderParticipantDefault = (
   createParticipantMenuItems?: (participant: ParticipantListParticipant) => IContextualMenuItem[],
   styles?: ParticipantListItemStyles,
   onParticipantClick?: (participant?: ParticipantListParticipant) => void,
-  showParticipantOverflowTooltip?: boolean
+  showParticipantOverflowTooltip?: boolean,
+  onRenderDisplayName?: (userId: string, displayName: string) => JSX.Element
 ): JSX.Element | null => {
   const callingParticipant = participant as CallParticipantListParticipant;
 
@@ -108,8 +110,6 @@ const onRenderParticipantDefault = (
       presence = PersonaPresence.away;
     }
   }
-
-  const profileDisplayName = participant.userId ? _useUserProfile(participant.userId)?.displayName : undefined;
 
   const menuItems = createParticipantMenuItems && createParticipantMenuItems(participant);
 
@@ -136,11 +136,12 @@ const onRenderParticipantDefault = (
       styles={styles}
       key={participant.userId}
       userId={participant.userId}
-      displayName={profileDisplayName ?? participant.displayName}
+      displayName={participant.displayName}
       me={myUserId ? participant.userId === myUserId : false}
       menuItems={menuItems}
       presence={presence}
       onRenderIcon={onRenderIcon}
+      onRenderDisplayName={onRenderDisplayName}
       onRenderAvatar={onRenderAvatar}
       onClick={() => onParticipantClick?.(participant)}
       showParticipantOverflowTooltip={showParticipantOverflowTooltip}
@@ -186,6 +187,7 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
     participants,
     onRemoveParticipant,
     onRenderAvatar,
+    onRenderDisplayName,
     onRenderParticipant,
     onFetchParticipantMenuItems,
     showParticipantOverflowTooltip
@@ -249,7 +251,8 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
               createParticipantMenuItems,
               participantItemStyles,
               props.onParticipantClick,
-              showParticipantOverflowTooltip
+              showParticipantOverflowTooltip,
+              onRenderDisplayName
             )
       )}
     </Stack>

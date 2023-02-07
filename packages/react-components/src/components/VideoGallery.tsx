@@ -33,7 +33,6 @@ import { floatingLocalVideoTileStyle } from './VideoGallery/styles/FloatingLocal
 import { useId } from '@fluentui/react-hooks';
 /* @conditional-compile-remove(pinned-participants) */
 import { PinnedParticipantsLayout } from './VideoGallery/PinnedParticipantsLayout';
-import { _useUserProfile } from '../profile/ProfileProvider';
 
 /**
  * @private
@@ -140,8 +139,10 @@ export interface VideoGalleryProps {
   onRenderRemoteVideoTile?: (remoteParticipant: VideoGalleryRemoteParticipant) => JSX.Element;
   /** Callback to dispose a remote video stream view */
   onDisposeRemoteStreamView?: (userId: string) => Promise<void>;
-  /** Callback to render a particpant avatar */
+  /** Callback to render a participant avatar */
   onRenderAvatar?: OnRenderAvatarCallback;
+  /** Callback to render a participant display name */
+  onRenderDisplayName?: (userId: string, displayName: string) => JSX.Element;
   /**
    * Whether to display the local video camera switcher button
    */
@@ -207,6 +208,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     styles,
     layout,
     onRenderAvatar,
+    onRenderDisplayName,
     showMuteIndicator,
     maxRemoteVideoStreams = DEFAULT_MAX_REMOTE_VIDEO_STREAMS,
     showCameraSwitcherInLocalPreview,
@@ -262,11 +264,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       styles?.localVideo
     );
 
-    const profileDisplayName = localParticipant.userId
-      ? _useUserProfile(localParticipant.userId)?.displayName
-      : undefined;
-    const displayName = profileDisplayName ?? localParticipant.displayName;
-    const initialsName = !displayName ? '' : displayName;
+    const initialsName = !localParticipant.displayName ? '' : localParticipant.displayName;
 
     return (
       <Stack key="local-video-tile-key" tabIndex={0} aria-label={strings.localVideoMovementLabel} role={'dialog'}>
@@ -350,6 +348,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           renderElement={isVideoParticipant ? remoteVideoStream?.renderElement : undefined}
           remoteVideoViewOptions={isVideoParticipant ? remoteVideoViewOptions : undefined}
           onRenderAvatar={onRenderAvatar}
+          onRenderDisplayName={onRenderDisplayName}
           showMuteIndicator={showMuteIndicator}
           strings={strings}
           /* @conditional-compile-remove(PSTN-calls) */

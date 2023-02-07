@@ -44,6 +44,7 @@ export const _RemoteVideoTile = React.memo(
     renderElement?: HTMLElement;
     remoteVideoViewOptions?: VideoStreamOptions;
     onRenderAvatar?: OnRenderAvatarCallback;
+    onRenderDisplayName?: (userId: string, displayName: string) => JSX.Element;
     showMuteIndicator?: boolean;
     showLabel?: boolean;
     personaMinSize?: number;
@@ -99,8 +100,6 @@ export const _RemoteVideoTile = React.memo(
       ]
     );
 
-    const profileDisplayName = _useUserProfile(userId)?.displayName;
-
     // Handle creating, destroying and updating the video stream as necessary
     const createVideoStreamResult = useRemoteVideoStreamLifecycleMaintainer(remoteVideoStreamProps);
 
@@ -144,7 +143,7 @@ export const _RemoteVideoTile = React.memo(
           key={userId}
           userId={userId}
           renderElement={renderVideoStreamElement}
-          displayName={profileDisplayName ?? remoteParticipant.displayName}
+          displayName={remoteParticipant.displayName}
           onRenderPlaceholder={onRenderAvatar}
           isMuted={remoteParticipant.isMuted}
           isSpeaking={remoteParticipant.isSpeaking}
@@ -163,6 +162,7 @@ export const _RemoteVideoTile = React.memo(
               convertContextualMenuItemsToDrawerMenuItemProps(contextualMenuProps, () => setDrawerMenuItemProps([]))
             )
           }
+          onRenderDisplayName={props.onRenderDisplayName}
         />
         {drawerMenuItemProps.length > 0 && (
           <Layer hostId={props.drawerMenuHostId}>
