@@ -6,8 +6,9 @@ import path from 'path';
 import { createTestServer } from '../../common/server';
 import { loadNewPageWithPermissionsForCalls } from '../../common/fixtureHelpers';
 import { dataUiId, encodeQueryData, waitForPageFontsLoaded, waitForSelector } from '../../common/utils';
-import type { FakeChatAdapterArgs, MockCallAdapterState, MockRemoteParticipantState } from '../../../common';
+import type { MockCallAdapterState, MockRemoteParticipantState } from '../../../common';
 import type { ChatParticipant } from '@azure/communication-chat';
+import type { _FakeChatAdapterArgs } from '../../../../src';
 
 const SERVER_URL = 'http://localhost';
 const APP_DIR = path.join(__dirname, '../../../app/callwithchat');
@@ -33,7 +34,7 @@ export const APP_UNDER_TEST_ROOT_SELECTOR = '#app-under-test-root';
 export const buildUrlForApp = (
   serverUrl: string,
   mockCallAdapterState: MockCallAdapterState,
-  fakeChatAdapterArgs: FakeChatAdapterArgs,
+  fakeChatAdapterArgs: _FakeChatAdapterArgs,
   qArgs?: { [key: string]: string }
 ): string => {
   return `${serverUrl}?${encodeQueryData({
@@ -86,7 +87,7 @@ export async function loadCallPage(
 /**
  * Construct {@link FakeChatAdapterArgs} from a prepopulated {@link MockCallAdapterState}.
  */
-function fakeChatAdapterArgsForCallAdapterState(state: MockCallAdapterState): FakeChatAdapterArgs {
+function fakeChatAdapterArgsForCallAdapterState(state: MockCallAdapterState): _FakeChatAdapterArgs {
   const remoteParticipants = Object.values(state.call?.remoteParticipants ?? {}).map(chatParticipantFor);
   return {
     localParticipant: {

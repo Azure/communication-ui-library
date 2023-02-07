@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Allow use of fake adapters outside of the react-composites packlet",
+  "packageName": "@azure/communication-react",
+  "email": "2684369+JamesBurnside@users.noreply.github.com",
+  "dependentChangeType": "none"
+}

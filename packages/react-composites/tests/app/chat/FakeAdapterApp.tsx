@@ -5,7 +5,14 @@ import { ChatParticipant } from '@azure/communication-chat';
 import { _createStatefulChatClientWithDeps } from '@internal/chat-stateful-client';
 import { _IdentifierProvider, FileDownloadError, FileDownloadHandler } from '@internal/react-components';
 import React, { useEffect } from 'react';
-import { ChatAdapter, ChatComposite, COMPOSITE_LOCALE_FR_FR } from '../../../src';
+import {
+  ChatAdapter,
+  ChatComposite,
+  COMPOSITE_LOCALE_FR_FR,
+  _FakeChatAdapterArgs,
+  _useFakeChatAdapters,
+  _MockFileUpload
+} from '../../../src';
 // eslint-disable-next-line no-restricted-imports
 import { IDS } from '../../browser/common/constants';
 import {
@@ -14,14 +21,12 @@ import {
   customOnRenderTypingIndicator
 } from './CustomDataModel';
 import { FakeChatClient, Model } from '@internal/fake-backends';
-import { FakeChatAdapterArgs, FileUpload } from '../../common';
-import { useFakeChatAdapters } from '../lib/useFakeChatAdapters';
 import { HiddenChatComposites } from '../lib/HiddenChatComposites';
 
 const urlSearchParams = new URLSearchParams(window.location.search);
 const params = Object.fromEntries(urlSearchParams.entries());
 const fakeChatAdapterArgs = params.fakeChatAdapterArgs
-  ? (JSON.parse(params.fakeChatAdapterArgs) as FakeChatAdapterArgs)
+  ? (JSON.parse(params.fakeChatAdapterArgs) as _FakeChatAdapterArgs)
   : undefined;
 
 /**
@@ -32,7 +37,7 @@ export const FakeAdapterApp = (): JSX.Element => {
     throw new Error('fakeChatAdapterArgs not set');
   }
 
-  const fakeAdapters = useFakeChatAdapters(fakeChatAdapterArgs);
+  const fakeAdapters = _useFakeChatAdapters(fakeChatAdapterArgs);
 
   useEffect(() => {
     (async (): Promise<void> => {
@@ -102,7 +107,7 @@ export const FakeAdapterApp = (): JSX.Element => {
   );
 };
 
-const handleFileUploads = (adapter: ChatAdapter, fileUploads: FileUpload[]): void => {
+const handleFileUploads = (adapter: ChatAdapter, fileUploads: _MockFileUpload[]): void => {
   fileUploads.forEach((file) => {
     if (file.uploadComplete) {
       const fileUploads = adapter.registerActiveFileUploads([new File([], file.name)]);

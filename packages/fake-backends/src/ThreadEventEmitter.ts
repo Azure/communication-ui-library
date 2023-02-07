@@ -21,8 +21,11 @@ import { NetworkEventModel, Thread } from './types';
 export class ThreadEventEmitter {
   private emitters: { [key: string]: EventEmitter } = {};
   private eventQueue: EventPayload[] = [];
+  private networkModel: NetworkEventModel;
 
-  constructor(private networkModel: NetworkEventModel) {}
+  constructor(networkModel: NetworkEventModel) {
+    this.networkModel = networkModel;
+  }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   on(userId: CommunicationIdentifier, event: string, listener: (...args: any[]) => void): void {
