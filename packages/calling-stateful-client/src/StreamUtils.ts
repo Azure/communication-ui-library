@@ -506,8 +506,6 @@ function disposeViewRemoteVideo(
 }
 
 function disposeViewLocalVideo(context: CallContext, internalContext: InternalCallContext, callId: string): void {
-  context.setLocalVideoStreamRendererView(callId, undefined);
-
   const renderInfo = internalContext.getLocalRenderInfo(callId);
   const streamType = renderInfo?.stream.mediaStreamType;
   const streamLogInfo = { callId, streamType };
@@ -518,7 +516,6 @@ function disposeViewLocalVideo(context: CallContext, internalContext: InternalCa
     message: 'Start disposing local stream.',
     data: streamLogInfo
   });
-
 
   if (!renderInfo) {
     _logEvent(callingStatefulLogger, {
