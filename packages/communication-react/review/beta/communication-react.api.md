@@ -2632,6 +2632,7 @@ export interface ParticipantItemProps {
     menuItems?: IContextualMenuItem[];
     onClick?: (props?: ParticipantItemProps) => void;
     onRenderAvatar?: OnRenderAvatarCallback;
+    onRenderDisplayName?: (userId: string, displayName: string) => JSX.Element;
     onRenderIcon?: (props?: ParticipantItemProps) => JSX.Element | null;
     participantState?: ParticipantState;
     presence?: PersonaPresence;
@@ -2682,6 +2683,7 @@ export type ParticipantListProps = {
     excludeMe?: boolean;
     onRenderParticipant?: (participant: ParticipantListParticipant) => JSX.Element | null;
     onRenderAvatar?: OnRenderAvatarCallback;
+    onRenderDisplayName?: (userId: string, displayName: string) => JSX.Element;
     onRemoveParticipant?: (userId: string) => void;
     onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
     onParticipantClick?: (participant?: ParticipantListParticipant) => void;
@@ -3195,6 +3197,7 @@ export interface VideoGalleryProps {
     onDisposeRemoteStreamView?: (userId: string) => Promise<void>;
     onPinParticipant?: (userId: string) => void;
     onRenderAvatar?: OnRenderAvatarCallback;
+    onRenderDisplayName?: (userId: string, displayName: string) => JSX.Element;
     onRenderLocalVideoTile?: (localParticipant: VideoGalleryLocalParticipant) => JSX.Element;
     onRenderRemoteVideoTile?: (remoteParticipant: VideoGalleryRemoteParticipant) => JSX.Element;
     onUnpinParticipant?: (userId: string) => void;
@@ -3284,6 +3287,7 @@ export interface VideoTileProps {
     isSpeaking?: boolean;
     noVideoAvailableAriaLabel?: string;
     onLongTouch?: () => void;
+    onRenderDisplayName?: (userId: string, displayName: string) => JSX.Element;
     onRenderPlaceholder?: OnRenderAvatarCallback;
     participantState?: ParticipantState;
     personaMaxSize?: number;
