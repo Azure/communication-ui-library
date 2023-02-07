@@ -43,6 +43,7 @@ export const _RemoteVideoTile = React.memo(
     renderElement?: HTMLElement;
     remoteVideoViewOptions?: VideoStreamOptions;
     onRenderAvatar?: OnRenderAvatarCallback;
+    onRenderDisplayName?: (userId: string, displayName: string) => JSX.Element;
     showMuteIndicator?: boolean;
     showLabel?: boolean;
     personaMinSize?: number;
@@ -160,6 +161,7 @@ export const _RemoteVideoTile = React.memo(
               convertContextualMenuItemsToDrawerMenuItemProps(contextualMenuProps, () => setDrawerMenuItemProps([]))
             )
           }
+          onRenderDisplayName={props.onRenderDisplayName}
         />
         {drawerMenuItemProps.length > 0 && (
           <Layer hostId={props.drawerMenuHostId}>

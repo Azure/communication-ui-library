@@ -139,8 +139,10 @@ export interface VideoGalleryProps {
   onRenderRemoteVideoTile?: (remoteParticipant: VideoGalleryRemoteParticipant) => JSX.Element;
   /** Callback to dispose a remote video stream view */
   onDisposeRemoteStreamView?: (userId: string) => Promise<void>;
-  /** Callback to render a particpant avatar */
+  /** Callback to render a participant avatar */
   onRenderAvatar?: OnRenderAvatarCallback;
+  /** Callback to render a participant display name */
+  onRenderDisplayName?: (userId: string, displayName: string) => JSX.Element;
   /**
    * Whether to display the local video camera switcher button
    */
@@ -206,6 +208,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     styles,
     layout,
     onRenderAvatar,
+    onRenderDisplayName,
     showMuteIndicator,
     maxRemoteVideoStreams = DEFAULT_MAX_REMOTE_VIDEO_STREAMS,
     showCameraSwitcherInLocalPreview,
@@ -345,6 +348,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           renderElement={isVideoParticipant ? remoteVideoStream?.renderElement : undefined}
           remoteVideoViewOptions={isVideoParticipant ? remoteVideoViewOptions : undefined}
           onRenderAvatar={onRenderAvatar}
+          onRenderDisplayName={onRenderDisplayName}
           showMuteIndicator={showMuteIndicator}
           strings={strings}
           /* @conditional-compile-remove(PSTN-calls) */

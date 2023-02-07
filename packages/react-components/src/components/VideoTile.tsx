@@ -81,6 +81,8 @@ export interface VideoTileProps {
   isMirrored?: boolean;
   /** Custom render Component function for no video is available. Render a Persona Icon if undefined. */
   onRenderPlaceholder?: OnRenderAvatarCallback;
+  /** Custom render Component function for displayName. Render default display name string when undefined. */
+  onRenderDisplayName?: (userId: string, displayName: string) => JSX.Element;
   /**
    * Show label on the VideoTile
    * @defaultValue true
@@ -222,6 +224,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
     /* @conditional-compile-remove(pinned-participants) */
     isPinned,
     onRenderPlaceholder,
+    onRenderDisplayName,
     renderElement,
     showLabel = true,
     showMuteIndicator = true,
@@ -303,7 +306,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
 
   const ids = useIdentifiers();
 
-  const canShowLabel = showLabel && (displayName || (showMuteIndicator && isMuted));
+  const canShowLabel = showLabel && (displayName || onRenderDisplayName || (showMuteIndicator && isMuted));
   const participantStateString = participantStateStringTrampoline(props, locale);
   return (
     <Stack
@@ -359,7 +362,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
                   title={displayName}
                   style={{ color: participantStateString ? theme.palette.neutralSecondary : 'inherit' }}
                 >
-                  {displayName}
+                  {onRenderDisplayName ? onRenderDisplayName(userId ?? '', displayName ?? '') : displayName}
                 </Text>
               )}
               {participantStateString && (

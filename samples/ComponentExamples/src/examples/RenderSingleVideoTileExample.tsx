@@ -13,6 +13,7 @@ import { StreamMedia } from '@azure/communication-react';
 import { VideoTile } from '@azure/communication-react';
 import { useCall } from '@azure/communication-react';
 import React, { useCallback, useEffect } from 'react';
+import { DisplayNameOverrideExample } from './DisplayNameOverrideExample';
 
 const videoTileContainerStyle = {
   height: '8rem',
@@ -73,6 +74,18 @@ export const RenderVideoTileExample = (): JSX.Element => {
     <StreamMedia videoStreamElement={localStreamState.view.target} />
   );
 
+  const onRenderDisplayName = useCallback((userId: string, displayName: string) => {
+    return (
+      <DisplayNameOverrideExample
+        userId={userId}
+        displayName={displayName}
+        onFetchProfile={async () => {
+          return { displayName: 'CustomDisplayName' };
+        }}
+      />
+    );
+  }, []);
+
   return (
     <>
       <h3> Render single video stream in your own component </h3>
@@ -83,7 +96,7 @@ export const RenderVideoTileExample = (): JSX.Element => {
       <span>Click camera button to see what happens:</span>
       <CameraButton {...cameraButtonProps} id="camera-button" />
       <div style={videoTileContainerStyle}>
-        <VideoTile renderElement={mediaStreamComponent} />
+        <VideoTile showLabel renderElement={mediaStreamComponent} onRenderDisplayName={onRenderDisplayName} />
       </div>
       <span>Or you can try custom logic to start local video: </span>
       <button data-ui-id="custom-start-button" onClick={onStartLocalVideo}>
