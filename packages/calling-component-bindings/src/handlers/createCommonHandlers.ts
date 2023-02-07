@@ -115,10 +115,6 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       }
       if (call && call.localVideoStreams.find((s) => areStreamsEqual(s, stream))) {
         await call.stopVideo(stream);
-        await callClient.disposeView(callId, undefined, {
-          source: stream.source,
-          mediaStreamType: stream.mediaStreamType
-        });
       }
     };
 
