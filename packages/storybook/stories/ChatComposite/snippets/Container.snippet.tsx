@@ -1,10 +1,8 @@
 import { ChatParticipant } from '@azure/communication-chat';
 import { ChatComposite, CompositeLocale } from '@azure/communication-react';
 import { PartialTheme, Theme } from '@fluentui/react';
-// eslint-disable-next-line no-restricted-imports
-import { useFakeChatAdapters } from '@internal/react-composites/../tests/app/lib/useFakeChatAdapters';
 import React, { useMemo, useEffect } from 'react';
-// import { useFakeChatAdapters } from '../../../../react-composites/tests/app/lib/useFakeChatAdapters';
+import { useFakeChatAdapters } from '../../../../react-composites/tests/app/lib/useFakeChatAdapters';
 import { sendMessagesAsBotWithAdapter } from './Utils';
 
 export type ContainerProps = {
