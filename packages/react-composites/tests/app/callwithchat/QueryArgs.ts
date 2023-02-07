@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import type { CallWithChatCompositeOptions } from '../../../src';
-import type { FakeChatAdapterArgs, MockCallAdapterState } from '../../common';
+import type { CallWithChatCompositeOptions, _FakeChatAdapterArgs } from '../../../src';
+import type { MockCallAdapterState } from '../../common';
 
 /**
  * Arguments specific to the <LiveApp />
@@ -24,7 +24,7 @@ export interface LiveQueryArgs {
  * @private
  */
 export interface HermeticQueryArgs {
-  fakeChatAdapterArgs: FakeChatAdapterArgs;
+  fakeChatAdapterArgs: _FakeChatAdapterArgs;
   mockCallAdapterState: MockCallAdapterState;
 }
 
