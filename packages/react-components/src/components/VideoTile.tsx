@@ -333,15 +333,12 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
         rootStyles,
         {
           background: theme.palette.neutralLighter,
-          borderRadius: theme.effects.roundedCorner4,
-          // To ensure that the video tile is focusable when there is a floating video tile
-          zIndex: 1
+          borderRadius: theme.effects.roundedCorner4
         },
         isSpeaking && {
           '&::before': {
             content: `''`,
             position: 'absolute',
-            zIndex: 1,
             border: `0.25rem solid ${theme.palette.themePrimary}`,
             borderRadius: theme.effects.roundedCorner4,
             width: '100%',
