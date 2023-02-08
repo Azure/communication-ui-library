@@ -85,21 +85,20 @@ export const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
   let videoStream: VideoGalleryStream | undefined = undefined;
   let screenShareStream: VideoGalleryStream | undefined = undefined;
 
-  if (rawVideoStreamsArray[0]) {
-    if (rawVideoStreamsArray[0].mediaStreamType === 'Video') {
-      videoStream = convertRemoteVideoStreamToVideoGalleryStream(rawVideoStreamsArray[0]);
-    } else {
-      screenShareStream = convertRemoteVideoStreamToVideoGalleryStream(rawVideoStreamsArray[0]);
-    }
+  const sdkRemoteVideoStream =
+    Object.values(rawVideoStreamsArray).find((i) => i.mediaStreamType === 'Video' && i.isAvailable) ||
+    Object.values(rawVideoStreamsArray).find((i) => i.mediaStreamType === 'Video');
+
+  const sdkScreenShareStream =
+    Object.values(rawVideoStreamsArray).find((i) => i.mediaStreamType === 'ScreenSharing' && i.isAvailable) ||
+    Object.values(rawVideoStreamsArray).find((i) => i.mediaStreamType === 'ScreenSharing');
+
+  if (!sdkRemoteVideoStream || !sdkScreenShareStream) {
+    throw new Error('Video stream or screen share stream is undefined');
   }
 
-  if (rawVideoStreamsArray[1]) {
-    if (rawVideoStreamsArray[1].mediaStreamType === 'ScreenSharing') {
-      screenShareStream = convertRemoteVideoStreamToVideoGalleryStream(rawVideoStreamsArray[1]);
-    } else {
-      videoStream = convertRemoteVideoStreamToVideoGalleryStream(rawVideoStreamsArray[1]);
-    }
-  }
+  videoStream = convertRemoteVideoStreamToVideoGalleryStream(sdkRemoteVideoStream);
+  screenShareStream = convertRemoteVideoStreamToVideoGalleryStream(sdkScreenShareStream);
 
   return {
     userId,
