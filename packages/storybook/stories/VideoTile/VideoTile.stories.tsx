@@ -11,10 +11,12 @@ import { controlsToAdd, hiddenControl } from '../controlsUtils';
 import { VideoTileExample as VideoTileStylineExample } from '../Styling/snippets/StylingVideoTile.snippet';
 import { useVideoStreams } from '../utils';
 import { VideoTileExample } from './snippets/VideoTile.snippet';
+import { VideoTileMenuItemsExample } from './snippets/VideoTileMenuItems.snippet';
 import { VideoTilePlaceholderExample } from './snippets/VideoTilePlaceholder.snippet';
 
 const VideoTileStylineExampleText = require('!!raw-loader!../Styling/snippets/StylingVideoTile.snippet').default;
 const VideoTileExampleText = require('!!raw-loader!./snippets/VideoTile.snippet').default;
+const VideoTileMenuItemsExampleText = require('!!raw-loader!./snippets/VideoTileMenuItems.snippet').default;
 const VideoTilePlaceholderText = require('!!raw-loader!./snippets/VideoTilePlaceholder.snippet').default;
 
 const importStatement = `import { VideoTile } from '@azure/communication-react';`;
@@ -55,6 +57,18 @@ const getDocs: () => JSX.Element = () => {
       </Description>
       <Canvas mdxSource={VideoTileStylineExampleText}>
         <VideoTileStylineExample />
+      </Canvas>
+
+      <Heading>Contextual menu items</Heading>
+      <Description>
+        A VideoTile component can have a contextual menu by assigning
+        [IContextualMenuProps](https://developer.microsoft.com/en-us/fluentui#/controls/web/contextualmenu#IContextualMenuProps)
+        to the `contextualMenu` property. The contextual menu items can be opened by hovering on the VideoTile and then
+        clicking on the menu button next to the display name. The menu button is also accessible by keyboard using the
+        tab button.
+      </Description>
+      <Canvas mdxSource={VideoTileMenuItemsExampleText}>
+        <VideoTileMenuItemsExample />
       </Canvas>
 
       <Heading>Props</Heading>
