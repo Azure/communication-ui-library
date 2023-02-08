@@ -59,7 +59,8 @@ module.exports = {
       '@internal/chat-component-bindings': path.resolve(__dirname, '../../chat-component-bindings/src'),
       '@internal/calling-stateful-client': path.resolve(__dirname, '../../calling-stateful-client/src'),
       '@internal/calling-component-bindings': path.resolve(__dirname, '../../calling-component-bindings/src'),
-      '@internal/acs-ui-common': path.resolve(__dirname, '../../acs-ui-common/src')
+      '@internal/acs-ui-common': path.resolve(__dirname, '../../acs-ui-common/src'),
+      '@internal/fake-backends': path.resolve(__dirname, '../../fake-backends/src')
     };
 
     return config;
@@ -74,7 +75,8 @@ module.exports = {
       '@internal/chat-component-bindings': path.resolve(__dirname, '../../chat-component-bindings/src'),
       '@internal/calling-stateful-client': path.resolve(__dirname, '../../calling-stateful-client/src'),
       '@internal/calling-component-bindings': path.resolve(__dirname, '../../calling-component-bindings/src'),
-      '@internal/acs-ui-common': path.resolve(__dirname, '../../acs-ui-common/src')
+      '@internal/acs-ui-common': path.resolve(__dirname, '../../acs-ui-common/src'),
+      '@internal/fake-backends': path.resolve(__dirname, '../../fake-backends/src')
     };
 
     config.plugins.push(
