@@ -29,6 +29,9 @@ export type {
 
 export type { CallWithChatCompositeStrings } from './Strings';
 
+/* @conditional-compile-remove(chat-reference-support) */
+export type { CallWithChatCompositeRefProps } from './CallWithChatComposite';
+
 /* @conditional-compile-remove(control-bar-button-injection) */
 export type {
   CustomCallWithChatControlButtonPlacement,

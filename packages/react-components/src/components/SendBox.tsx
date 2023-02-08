@@ -247,7 +247,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
       return;
     }
 
-    // we dont want to send empty messages including spaces, newlines, tabs
+    // we don't want to send empty messages including spaces, newlines, tabs
     // Message can be empty if there is a valid file upload
     if (!EMPTY_MESSAGE_REGEX.test(textValue) || hasFile(props)) {
       onSendMessage && onSendMessage(sanitizeText(textValue));

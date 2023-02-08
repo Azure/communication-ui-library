@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React, { useCallback, useState, useMemo, useEffect, useRef } from 'react';
+import React, { useCallback, useState, useMemo, useEffect, useRef, forwardRef } from 'react';
 import { LayerHost, mergeStyles, PartialTheme, Stack, Theme } from '@fluentui/react';
 import { CallComposite, CallCompositePage, CallControlDisplayType } from '../CallComposite';
 import { CallAdapterProvider } from '../CallComposite/adapter/CallAdapterProvider';
@@ -17,6 +17,8 @@ import { CallWithChatBackedCallAdapter } from './adapter/CallWithChatBackedCallA
 import { CallWithChatBackedChatAdapter } from './adapter/CallWithChatBackedChatAdapter';
 import { CallAdapter } from '../CallComposite';
 import { ChatCompositeProps } from '../ChatComposite';
+/* @conditional-compile-remove(chat-reference-support) */
+import { ChatScreenRefProps } from '../ChatComposite';
 import { BaseProvider, BaseCompositeProps } from '../common/BaseComposite';
 import { CallWithChatCompositeIcons } from '../common/icons';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
@@ -69,6 +71,13 @@ export interface CallWithChatCompositeProps extends BaseCompositeProps<CallWithC
    */
   options?: CallWithChatCompositeOptions;
 }
+
+/* @conditional-compile-remove(chat-reference-support) */
+/**
+ * Reference properties for the {@link CallWithChatComposite}.
+ * @beta
+ */
+export type CallWithChatCompositeRefProps = CallWithChatScreenRefProps;
 
 /**
  * Optional features of the {@link CallWithChatComposite}.
@@ -233,310 +242,318 @@ type CallWithChatScreenProps = {
   onEnvironmentInfoTroubleshootingClick?: () => void;
 };
 
-const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
-  const { callWithChatAdapter, fluentTheme, formFactor = 'desktop' } = props;
-  const mobileView = formFactor === 'mobile';
+/* @conditional-compile-remove(chat-reference-support) */
+export type CallWithChatScreenRefProps = ChatScreenRefProps;
 
-  if (!callWithChatAdapter) {
-    throw new Error('CallWithChatAdapter is undefined');
-  }
+const CallWithChatScreen = forwardRef<CallWithChatScreenRefProps, CallWithChatScreenProps>(
+  (props: CallWithChatScreenProps, ref): JSX.Element => {
+    const { callWithChatAdapter, fluentTheme, formFactor = 'desktop' } = props;
+    const mobileView = formFactor === 'mobile';
 
-  const callAdapter: CallAdapter = useMemo(
-    () => new CallWithChatBackedCallAdapter(callWithChatAdapter),
-    [callWithChatAdapter]
-  );
+    if (!callWithChatAdapter) {
+      throw new Error('CallWithChatAdapter is undefined');
+    }
 
-  const [currentCallState, setCurrentCallState] = useState<CallState>();
-  const [currentPage, setCurrentPage] = useState<CallCompositePage>();
-  const [activePane, setActivePane] = useState<CallWithChatPaneOption>('none');
+    const callAdapter: CallAdapter = useMemo(
+      () => new CallWithChatBackedCallAdapter(callWithChatAdapter),
+      [callWithChatAdapter]
+    );
 
-  const containerRef = useRef<HTMLDivElement>(null);
-  const containerWidth = _useContainerWidth(containerRef);
-  const containerHeight = _useContainerHeight(containerRef);
+    const [currentCallState, setCurrentCallState] = useState<CallState>();
+    const [currentPage, setCurrentPage] = useState<CallCompositePage>();
+    const [activePane, setActivePane] = useState<CallWithChatPaneOption>('none');
 
-  useEffect(() => {
-    const updateCallWithChatPage = (newState: CallWithChatAdapterState): void => {
-      setCurrentPage(newState.page);
-      setCurrentCallState(newState.call?.state);
-    };
-    updateCallWithChatPage(callWithChatAdapter.getState());
-    callWithChatAdapter.onStateChange(updateCallWithChatPage);
-    return () => {
-      callWithChatAdapter.offStateChange(updateCallWithChatPage);
-    };
-  }, [callWithChatAdapter]);
+    const containerRef = useRef<HTMLDivElement>(null);
+    const containerWidth = _useContainerWidth(containerRef);
+    const containerHeight = _useContainerHeight(containerRef);
 
-  const closePane = useCallback(() => {
-    setActivePane('none');
-  }, [setActivePane]);
+    useEffect(() => {
+      const updateCallWithChatPage = (newState: CallWithChatAdapterState): void => {
+        setCurrentPage(newState.page);
+        setCurrentCallState(newState.call?.state);
+      };
+      updateCallWithChatPage(callWithChatAdapter.getState());
+      callWithChatAdapter.onStateChange(updateCallWithChatPage);
+      return () => {
+        callWithChatAdapter.offStateChange(updateCallWithChatPage);
+      };
+    }, [callWithChatAdapter]);
 
-  const chatProps: ChatCompositeProps = useMemo(() => {
-    return {
-      adapter: new CallWithChatBackedChatAdapter(callWithChatAdapter)
-    };
-  }, [callWithChatAdapter]);
-
-  const modalLayerHostId = useId('modalLayerhost');
-
-  const isInLobbyOrConnecting = currentPage === 'lobby';
-  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
-  const isInLocalHold = currentPage === 'hold';
-  const hasJoinedCall = !!(currentPage && hasJoinedCallFn(currentPage, currentCallState ?? 'None'));
-  const showControlBar = isInLobbyOrConnecting || hasJoinedCall;
-  const isMobileWithActivePane = mobileView && hasJoinedCall && activePane !== 'none';
-
-  /** Constant setting of id for the parent stack of the composite */
-  const compositeParentDivId = useId('callWithChatCompositeParentDiv-internal');
-
-  const toggleChat = useCallback(() => {
-    if (activePane === 'chat' || !hasJoinedCall) {
+    const closePane = useCallback(() => {
       setActivePane('none');
-    } else {
-      setActivePane('chat');
-      // timeout is required to give the window time to render the sendbox so we have something to send focus to.
-      // TODO: Selecting elements in the DOM via attributes is not stable. We should expose an API from ChatComposite to be able to focus on the sendbox.
-      const chatFocusTimeout = setInterval(() => {
-        const callWithChatCompositeRootDiv = document.querySelector(`[id="${compositeParentDivId}"]`);
-        const sendbox = callWithChatCompositeRootDiv?.querySelector(`[id="sendbox"]`) as HTMLTextAreaElement;
-        if (sendbox !== null) {
-          sendbox.focus();
+    }, [setActivePane]);
+
+    const chatProps: ChatCompositeProps = useMemo(() => {
+      return {
+        adapter: new CallWithChatBackedChatAdapter(callWithChatAdapter)
+      };
+    }, [callWithChatAdapter]);
+
+    const modalLayerHostId = useId('modalLayerhost');
+
+    const isInLobbyOrConnecting = currentPage === 'lobby';
+    /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+    const isInLocalHold = currentPage === 'hold';
+    const hasJoinedCall = !!(currentPage && hasJoinedCallFn(currentPage, currentCallState ?? 'None'));
+    const showControlBar = isInLobbyOrConnecting || hasJoinedCall;
+    const isMobileWithActivePane = mobileView && hasJoinedCall && activePane !== 'none';
+
+    /** Constant setting of id for the parent stack of the composite */
+    const compositeParentDivId = useId('callWithChatCompositeParentDiv-internal');
+
+    const toggleChat = useCallback(() => {
+      if (activePane === 'chat' || !hasJoinedCall) {
+        setActivePane('none');
+      } else {
+        setActivePane('chat');
+        // timeout is required to give the window time to render the sendbox so we have something to send focus to.
+        // TODO: Selecting elements in the DOM via attributes is not stable. We should expose an API from ChatComposite to be able to focus on the sendbox.
+        const chatFocusTimeout = setInterval(() => {
+          const callWithChatCompositeRootDiv = document.querySelector(`[id="${compositeParentDivId}"]`);
+          const sendbox = callWithChatCompositeRootDiv?.querySelector(`[id="sendbox"]`) as HTMLTextAreaElement;
+          if (sendbox !== null) {
+            sendbox.focus();
+            clearInterval(chatFocusTimeout);
+          }
+        }, 3);
+        setTimeout(() => {
           clearInterval(chatFocusTimeout);
-        }
-      }, 3);
-      setTimeout(() => {
-        clearInterval(chatFocusTimeout);
-      }, 300);
-    }
-  }, [activePane, setActivePane, compositeParentDivId, hasJoinedCall]);
+        }, 300);
+      }
+    }, [activePane, setActivePane, compositeParentDivId, hasJoinedCall]);
 
-  const togglePeople = useCallback(() => {
-    if (activePane === 'people' || !hasJoinedCall) {
-      setActivePane('none');
-    } else {
-      setActivePane('people');
-    }
-  }, [activePane, setActivePane, hasJoinedCall]);
+    const togglePeople = useCallback(() => {
+      if (activePane === 'people' || !hasJoinedCall) {
+        setActivePane('none');
+      } else {
+        setActivePane('people');
+      }
+    }, [activePane, setActivePane, hasJoinedCall]);
 
-  const selectChat = useCallback(() => {
-    if (hasJoinedCall) {
-      setActivePane('chat');
-    }
-  }, [setActivePane, hasJoinedCall]);
+    const selectChat = useCallback(() => {
+      if (hasJoinedCall) {
+        setActivePane('chat');
+      }
+    }, [setActivePane, hasJoinedCall]);
 
-  const selectPeople = useCallback(() => {
-    if (hasJoinedCall) {
-      setActivePane('people');
-    }
-  }, [setActivePane, hasJoinedCall]);
+    const selectPeople = useCallback(() => {
+      if (hasJoinedCall) {
+        setActivePane('people');
+      }
+    }, [setActivePane, hasJoinedCall]);
 
-  const [showDrawer, setShowDrawer] = useState(false);
-  const onMoreButtonClicked = useCallback(() => {
-    closePane();
-    setShowDrawer(true);
-  }, [closePane]);
-  const closeDrawer = useCallback(() => {
-    setShowDrawer(false);
-  }, []);
-  const onMoreDrawerPeopleClicked = useCallback(() => {
-    setShowDrawer(false);
-    togglePeople();
-  }, [togglePeople]);
+    const [showDrawer, setShowDrawer] = useState(false);
+    const onMoreButtonClicked = useCallback(() => {
+      closePane();
+      setShowDrawer(true);
+    }, [closePane]);
+    const closeDrawer = useCallback(() => {
+      setShowDrawer(false);
+    }, []);
+    const onMoreDrawerPeopleClicked = useCallback(() => {
+      setShowDrawer(false);
+      togglePeople();
+    }, [togglePeople]);
 
-  // On mobile, when there is an active call and some side pane is active,
-  // we hide the call composite via CSS to show only the pane.
-  // We only set `display` to `none` instead of unmounting the call composite component tree
-  // to avoid the performance cost of rerendering video streams when we later show the composite again.
-  const callCompositeContainerCSS = useMemo(() => {
-    return { display: isMobileWithActivePane ? 'none' : 'flex' };
-  }, [isMobileWithActivePane]);
+    // On mobile, when there is an active call and some side pane is active,
+    // we hide the call composite via CSS to show only the pane.
+    // We only set `display` to `none` instead of unmounting the call composite component tree
+    // to avoid the performance cost of rerendering video streams when we later show the composite again.
+    const callCompositeContainerCSS = useMemo(() => {
+      return { display: isMobileWithActivePane ? 'none' : 'flex' };
+    }, [isMobileWithActivePane]);
 
-  /* @conditional-compile-remove(PSTN-calls) */
-  const [showDtmfDialpad, setShowDtmfDialpad] = useState(false);
+    /* @conditional-compile-remove(PSTN-calls) */
+    const [showDtmfDialpad, setShowDtmfDialpad] = useState(false);
 
-  /* @conditional-compile-remove(PSTN-calls) */
-  const onDismissDtmfDialpad = (): void => {
-    setShowDtmfDialpad(false);
-  };
+    /* @conditional-compile-remove(PSTN-calls) */
+    const onDismissDtmfDialpad = (): void => {
+      setShowDtmfDialpad(false);
+    };
 
-  /* @conditional-compile-remove(PSTN-calls) */
-  const onClickShowDialpad = (): void => {
-    setShowDtmfDialpad(true);
-  };
+    /* @conditional-compile-remove(PSTN-calls) */
+    const onClickShowDialpad = (): void => {
+      setShowDtmfDialpad(true);
+    };
 
-  /* @conditional-compile-remove(PSTN-calls) */
-  const callWithChatStrings = useCallWithChatCompositeStrings();
+    /* @conditional-compile-remove(PSTN-calls) */
+    const callWithChatStrings = useCallWithChatCompositeStrings();
 
-  /* @conditional-compile-remove(PSTN-calls) */
-  const dialpadStrings = useMemo(
-    () => ({
-      dialpadModalAriaLabel: callWithChatStrings.dialpadModalAriaLabel,
-      dialpadCloseModalButtonAriaLabel: callWithChatStrings.dialpadCloseModalButtonAriaLabel,
-      placeholderText: callWithChatStrings.dtmfDialpadPlaceholderText
-    }),
-    [callWithChatStrings]
-  );
+    /* @conditional-compile-remove(PSTN-calls) */
+    const dialpadStrings = useMemo(
+      () => ({
+        dialpadModalAriaLabel: callWithChatStrings.dialpadModalAriaLabel,
+        dialpadCloseModalButtonAriaLabel: callWithChatStrings.dialpadCloseModalButtonAriaLabel,
+        placeholderText: callWithChatStrings.dtmfDialpadPlaceholderText
+      }),
+      [callWithChatStrings]
+    );
 
-  /* @conditional-compile-remove(PSTN-calls) */
-  const alternateCallerId = callAdapter.getState().alternateCallerId;
+    /* @conditional-compile-remove(PSTN-calls) */
+    const alternateCallerId = callAdapter.getState().alternateCallerId;
 
-  const callCompositeOptions: CallCompositeOptions = useMemo(
-    () => ({
-      callControls: false,
-      /* @conditional-compile-remove(call-readiness) */
-      deviceChecks: props.deviceChecks,
-      /* @conditional-compile-remove(call-readiness) */
-      onNetworkingTroubleShootingClick: props.onNetworkingTroubleShootingClick,
-      /* @conditional-compile-remove(call-readiness) */
-      onPermissionsTroubleshootingClick: props.onPermissionsTroubleshootingClick,
-      /* @conditional-compile-remove(unsupported-browser) */
-      onEnvironmentInfoTroubleshootingClick: props.onEnvironmentInfoTroubleshootingClick
-    }),
-    [
-      /* @conditional-compile-remove(call-readiness) */
-      props.deviceChecks,
-      /* @conditional-compile-remove(unsupported-browser) */
-      props.onEnvironmentInfoTroubleshootingClick,
-      /* @conditional-compile-remove(call-readiness) */
-      props.onNetworkingTroubleShootingClick,
-      /* @conditional-compile-remove(call-readiness) */
-      props.onPermissionsTroubleshootingClick
-    ]
-  );
+    const callCompositeOptions: CallCompositeOptions = useMemo(
+      () => ({
+        callControls: false,
+        /* @conditional-compile-remove(call-readiness) */
+        deviceChecks: props.deviceChecks,
+        /* @conditional-compile-remove(call-readiness) */
+        onNetworkingTroubleShootingClick: props.onNetworkingTroubleShootingClick,
+        /* @conditional-compile-remove(call-readiness) */
+        onPermissionsTroubleshootingClick: props.onPermissionsTroubleshootingClick,
+        /* @conditional-compile-remove(unsupported-browser) */
+        onEnvironmentInfoTroubleshootingClick: props.onEnvironmentInfoTroubleshootingClick
+      }),
+      [
+        /* @conditional-compile-remove(call-readiness) */
+        props.deviceChecks,
+        /* @conditional-compile-remove(unsupported-browser) */
+        props.onEnvironmentInfoTroubleshootingClick,
+        /* @conditional-compile-remove(call-readiness) */
+        props.onNetworkingTroubleShootingClick,
+        /* @conditional-compile-remove(call-readiness) */
+        props.onPermissionsTroubleshootingClick
+      ]
+    );
 
-  return (
-    <div ref={containerRef} className={mergeStyles(containerDivStyles)}>
-      <Stack verticalFill grow styles={compositeOuterContainerStyles} id={compositeParentDivId}>
-        <Stack horizontal grow>
-          <Stack.Item
-            grow
-            styles={callCompositeContainerStyles}
-            // Perf: Instead of removing the video gallery from DOM, we hide it to prevent re-renders.
-            style={callCompositeContainerCSS}
-          >
-            <CallComposite
-              {...props}
-              formFactor={formFactor}
-              options={callCompositeOptions}
-              adapter={callAdapter}
-              fluentTheme={fluentTheme}
-            />
-          </Stack.Item>
-
-          {chatProps.adapter && callAdapter && hasJoinedCall && (
-            <CallWithChatPane
-              chatCompositeProps={chatProps}
-              inviteLink={props.joinInvitationURL}
-              onClose={closePane}
-              chatAdapter={chatProps.adapter}
-              callAdapter={callAdapter}
-              onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
-              onFetchParticipantMenuItems={props.onFetchParticipantMenuItems}
-              onChatButtonClicked={showShowChatTabHeaderButton(props.callControls) ? selectChat : undefined}
-              onPeopleButtonClicked={showShowPeopleTabHeaderButton(props.callControls) ? selectPeople : undefined}
-              modalLayerHostId={modalLayerHostId}
-              mobileView={mobileView}
-              activePane={activePane}
-              /* @conditional-compile-remove(file-sharing) */
-              fileSharing={props.fileSharing}
-              rtl={props.rtl}
-              callControls={typeof props.callControls !== 'boolean' ? props.callControls : undefined}
-            />
-          )}
-        </Stack>
-        {showControlBar && !isMobileWithActivePane && (
-          <ChatAdapterProvider adapter={chatProps.adapter}>
-            <Stack.Item styles={controlBarContainerStyles}>
-              <CallWithChatControlBar
-                callAdapter={callAdapter}
-                chatAdapter={chatProps.adapter}
-                chatButtonChecked={activePane === 'chat'}
-                onChatButtonClicked={toggleChat}
-                peopleButtonChecked={activePane === 'people'}
-                onPeopleButtonClicked={togglePeople}
-                onMoreButtonClicked={onMoreButtonClicked}
-                mobileView={mobileView}
-                disableButtonsForLobbyPage={isInLobbyOrConnecting}
-                /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
-                disableButtonsForHoldScreen={isInLocalHold}
-                callControls={props.callControls}
-                containerHeight={containerHeight}
-                containerWidth={containerWidth}
-                /* @conditional-compile-remove(PSTN-calls) */
-                onClickShowDialpad={alternateCallerId ? onClickShowDialpad : undefined}
+    return (
+      <div ref={containerRef} className={mergeStyles(containerDivStyles)}>
+        <Stack verticalFill grow styles={compositeOuterContainerStyles} id={compositeParentDivId}>
+          <Stack horizontal grow>
+            <Stack.Item
+              grow
+              styles={callCompositeContainerStyles}
+              // Perf: Instead of removing the video gallery from DOM, we hide it to prevent re-renders.
+              style={callCompositeContainerCSS}
+            >
+              <CallComposite
+                {...props}
+                formFactor={formFactor}
+                options={callCompositeOptions}
+                adapter={callAdapter}
+                fluentTheme={fluentTheme}
               />
             </Stack.Item>
-          </ChatAdapterProvider>
-        )}
-        {showControlBar && showDrawer && (
-          <ChatAdapterProvider adapter={chatProps.adapter}>
-            <CallAdapterProvider adapter={callAdapter}>
-              <Stack styles={drawerContainerStyles()}>
-                <PreparedMoreDrawer
-                  callControls={props.callControls}
-                  onLightDismiss={closeDrawer}
-                  onPeopleButtonClicked={onMoreDrawerPeopleClicked}
-                  /* @conditional-compile-remove(PSTN-calls) */
-                  onClickShowDialpad={alternateCallerId ? onClickShowDialpad : undefined}
+
+            {chatProps.adapter && callAdapter && hasJoinedCall && (
+              <CallWithChatPane
+                chatCompositeProps={chatProps}
+                inviteLink={props.joinInvitationURL}
+                onClose={closePane}
+                chatAdapter={chatProps.adapter}
+                callAdapter={callAdapter}
+                onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
+                onFetchParticipantMenuItems={props.onFetchParticipantMenuItems}
+                onChatButtonClicked={showShowChatTabHeaderButton(props.callControls) ? selectChat : undefined}
+                onPeopleButtonClicked={showShowPeopleTabHeaderButton(props.callControls) ? selectPeople : undefined}
+                modalLayerHostId={modalLayerHostId}
+                mobileView={mobileView}
+                activePane={activePane}
+                /* @conditional-compile-remove(file-sharing) */
+                fileSharing={props.fileSharing}
+                rtl={props.rtl}
+                callControls={typeof props.callControls !== 'boolean' ? props.callControls : undefined}
+              />
+            )}
+          </Stack>
+          {showControlBar && !isMobileWithActivePane && (
+            <ChatAdapterProvider adapter={chatProps.adapter}>
+              <Stack.Item styles={controlBarContainerStyles}>
+                <CallWithChatControlBar
+                  callAdapter={callAdapter}
+                  chatAdapter={chatProps.adapter}
+                  chatButtonChecked={activePane === 'chat'}
+                  onChatButtonClicked={toggleChat}
+                  peopleButtonChecked={activePane === 'people'}
+                  onPeopleButtonClicked={togglePeople}
+                  onMoreButtonClicked={onMoreButtonClicked}
+                  mobileView={mobileView}
+                  disableButtonsForLobbyPage={isInLobbyOrConnecting}
                   /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
                   disableButtonsForHoldScreen={isInLocalHold}
+                  callControls={props.callControls}
+                  containerHeight={containerHeight}
+                  containerWidth={containerWidth}
+                  /* @conditional-compile-remove(PSTN-calls) */
+                  onClickShowDialpad={alternateCallerId ? onClickShowDialpad : undefined}
                 />
-              </Stack>
-            </CallAdapterProvider>
-          </ChatAdapterProvider>
-        )}
-
-        {
-          /* @conditional-compile-remove(PSTN-calls) */
-          showControlBar && showDtmfDialpad && (
+              </Stack.Item>
+            </ChatAdapterProvider>
+          )}
+          {showControlBar && showDrawer && (
             <ChatAdapterProvider adapter={chatProps.adapter}>
               <CallAdapterProvider adapter={callAdapter}>
                 <Stack styles={drawerContainerStyles()}>
-                  <SendDtmfDialpad
-                    isMobile={mobileView}
-                    strings={dialpadStrings}
-                    showDialpad={showDtmfDialpad}
-                    onDismissDialpad={onDismissDtmfDialpad}
+                  <PreparedMoreDrawer
+                    callControls={props.callControls}
+                    onLightDismiss={closeDrawer}
+                    onPeopleButtonClicked={onMoreDrawerPeopleClicked}
+                    /* @conditional-compile-remove(PSTN-calls) */
+                    onClickShowDialpad={alternateCallerId ? onClickShowDialpad : undefined}
+                    /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+                    disableButtonsForHoldScreen={isInLocalHold}
                   />
                 </Stack>
               </CallAdapterProvider>
             </ChatAdapterProvider>
-          )
-        }
-        {
-          // This layer host is for ModalLocalAndRemotePIP in CallWithChatPane. This LayerHost cannot be inside the CallWithChatPane
-          // because when the CallWithChatPane is hidden, ie. style property display is 'none', it takes up no space. This causes problems when dragging
-          // the Modal because the draggable bounds thinks it has no space and will always return to its initial position after dragging.
-          mobileView && <LayerHost id={modalLayerHostId} className={mergeStyles(modalLayerHostStyle)} />
-        }
-      </Stack>
-    </div>
-  );
-};
+          )}
+
+          {
+            /* @conditional-compile-remove(PSTN-calls) */
+            showControlBar && showDtmfDialpad && (
+              <ChatAdapterProvider adapter={chatProps.adapter}>
+                <CallAdapterProvider adapter={callAdapter}>
+                  <Stack styles={drawerContainerStyles()}>
+                    <SendDtmfDialpad
+                      isMobile={mobileView}
+                      strings={dialpadStrings}
+                      showDialpad={showDtmfDialpad}
+                      onDismissDialpad={onDismissDtmfDialpad}
+                    />
+                  </Stack>
+                </CallAdapterProvider>
+              </ChatAdapterProvider>
+            )
+          }
+          {
+            // This layer host is for ModalLocalAndRemotePIP in CallWithChatPane. This LayerHost cannot be inside the CallWithChatPane
+            // because when the CallWithChatPane is hidden, ie. style property display is 'none', it takes up no space. This causes problems when dragging
+            // the Modal because the draggable bounds thinks it has no space and will always return to its initial position after dragging.
+            mobileView && <LayerHost id={modalLayerHostId} className={mergeStyles(modalLayerHostStyle)} />
+          }
+        </Stack>
+      </div>
+    );
+  }
+);
 
 /**
  * CallWithChatComposite brings together key components to provide a full call with chat experience out of the box.
  *
  * @public
  */
-export const CallWithChatComposite = (props: CallWithChatCompositeProps): JSX.Element => {
-  const { adapter, fluentTheme, rtl, formFactor, joinInvitationURL, options } = props;
-  return (
-    <BaseProvider fluentTheme={fluentTheme} rtl={rtl} locale={props.locale} icons={props.icons}>
-      <CallWithChatScreen
-        {...props}
-        /* @conditional-compile-remove(call-readiness) */
-        deviceChecks={options?.deviceChecks}
-        callWithChatAdapter={adapter}
-        formFactor={formFactor}
-        callControls={options?.callControls}
-        joinInvitationURL={joinInvitationURL}
-        fluentTheme={fluentTheme}
-        /* @conditional-compile-remove(file-sharing) */
-        fileSharing={options?.fileSharing}
-      />
-    </BaseProvider>
-  );
-};
+export const CallWithChatComposite = forwardRef<CallWithChatCompositeRefProps, CallWithChatCompositeProps>(
+  (props: CallWithChatCompositeProps, ref): JSX.Element => {
+    const { adapter, fluentTheme, rtl, formFactor, joinInvitationURL, options } = props;
+    return (
+      <BaseProvider fluentTheme={fluentTheme} rtl={rtl} locale={props.locale} icons={props.icons}>
+        <CallWithChatScreen
+          ref={ref}
+          {...props}
+          /* @conditional-compile-remove(call-readiness) */
+          deviceChecks={options?.deviceChecks}
+          callWithChatAdapter={adapter}
+          formFactor={formFactor}
+          callControls={options?.callControls}
+          joinInvitationURL={joinInvitationURL}
+          fluentTheme={fluentTheme}
+          /* @conditional-compile-remove(file-sharing) */
+          fileSharing={options?.fileSharing}
+        />
+      </BaseProvider>
+    );
+  }
+);
 
 const hasJoinedCallFn = (page: CallCompositePage, callStatus: CallState): boolean => {
   /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(one-to-n-calling) */

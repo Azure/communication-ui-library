@@ -9,7 +9,8 @@ import {
   CallAndChatLocator,
   CallWithChatAdapterState,
   CallWithChatComposite,
-  CallWithChatAdapter
+  CallWithChatAdapter,
+  CallWithChatCompositeRefProps
 } from '@azure/communication-react';
 import { Spinner } from '@fluentui/react';
 import React, { useCallback, useEffect, useMemo, useRef } from 'react';
@@ -36,6 +37,11 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     locator,
     /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId
   } = props;
+
+  const compositeRef = useRef<CallWithChatCompositeRefProps>(null);
+  useEffect(() => {
+    compositeRef.current?.focus('sendBoxTextField');
+  }, [compositeRef]);
 
   // Disables pull down to refresh. Prevents accidental page refresh when scrolling through chat messages
   // Another alternative: set body style touch-action to 'none'. Achieves same result.
@@ -108,6 +114,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
 
   return (
     <CallWithChatComposite
+      ref={compositeRef}
       adapter={adapter}
       fluentTheme={currentTheme.theme}
       rtl={currentRtl}

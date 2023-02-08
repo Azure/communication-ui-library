@@ -9,7 +9,9 @@ export {
 export type { AzureCommunicationChatAdapterArgs } from './adapter/AzureCommunicationChatAdapter';
 
 export { ChatComposite } from './ChatComposite';
-export type { ChatCompositeProps, ChatCompositeRefProps, ChatCompositeOptions } from './ChatComposite';
+export type { ChatCompositeProps, ChatCompositeOptions } from './ChatComposite';
+/* @conditional-compile-remove(chat-reference-support) */
+export type { ChatCompositeRefProps } from './ChatComposite';
 
 export type {
   ChatAdapter,
@@ -31,6 +33,7 @@ export * from './Strings';
 /* @conditional-compile-remove(file-sharing) */
 export type { FileUploadHandler, FileUploadManager, FileUploadState, FileUploadError } from './file-sharing';
 
+/* @conditional-compile-remove(chat-reference-support) */
 export type { ChatScreenRefProps } from './ChatScreen';
 
 /* @conditional-compile-remove(file-sharing) */

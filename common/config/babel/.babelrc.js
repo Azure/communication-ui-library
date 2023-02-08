@@ -40,7 +40,9 @@ process.env['COMMUNICATION_REACT_FLAVOR'] === 'stable' &&
         // Support Calling SDK isReceiving flag, shows a loading spinner on the video tile when isAvailable is true but isReceiving is false
         'video-stream-is-receiving-flag',
         // Pinned Participants
-        'pinned-participants'
+        'pinned-participants',
+        // React reference support on chat composites
+        'chat-reference-support',
       ],
       // A list of stabilized features.
       // These features can be listed in the conditional compilation directives without

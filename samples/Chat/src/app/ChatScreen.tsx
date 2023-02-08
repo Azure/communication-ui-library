@@ -6,11 +6,13 @@ import {
   AvatarPersonaData,
   ChatAdapter,
   ChatComposite,
-  ChatCompositeRefProps,
   fromFlatCommunicationIdentifier,
   toFlatCommunicationIdentifier,
   useAzureCommunicationChatAdapter
 } from '@azure/communication-react';
+/* @conditional-compile-remove(chat-reference-support) */
+import { ChatCompositeRefProps } from '@azure/communication-react';
+
 import { Stack } from '@fluentui/react';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
@@ -34,6 +36,7 @@ interface ChatScreenProps {
 export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const { displayName, endpointUrl, threadId, token, userId, endChatHandler } = props;
 
+  /* @conditional-compile-remove(chat-reference-support) */
   const compositeRef = useRef<ChatCompositeRefProps>(null);
 
   // Disables pull down to refresh. Prevents accidental page refresh when scrolling through chat messages
@@ -86,6 +89,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     return () => window.removeEventListener('beforeunload', disposeAdapter);
   }, [adapter]);
 
+  /* @conditional-compile-remove(chat-reference-support) */
   useEffect(() => {
     compositeRef.current?.focus('sendBoxTextField');
   }, [compositeRef]);
@@ -105,6 +109,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
       <Stack className={chatScreenContainerStyle}>
         <Stack.Item className={chatCompositeContainerStyle} role="main">
           <ChatComposite
+            /* @conditional-compile-remove(chat-reference-support) */
             ref={compositeRef}
             adapter={adapter}
             fluentTheme={currentTheme.theme}
