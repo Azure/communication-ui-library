@@ -57,7 +57,6 @@ export const ContosoChatContainer = (props: ContainerProps): JSX.Element => {
             topic: props.topic
           }}
           locale={props.locale}
-          formFactor={props.formFactor}
         />
       </div>
     );
