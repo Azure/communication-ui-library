@@ -234,8 +234,8 @@ export class CallSubscriber {
           new LocalVideoStreamVideoEffectsSubscriber({
             parent: this._callIdRef,
             context: this._context,
-            localVideoSteam: this._call.localVideoStreams[0],
-            localVideoSteamEffectsAPI: this._call.localVideoStreams[0].feature(Features.VideoEffects)
+            localVideoStream: this._call.localVideoStreams[0],
+            localVideoStreamEffectsAPI: this._call.localVideoStreams[0].feature(Features.VideoEffects)
           })
         );
       }

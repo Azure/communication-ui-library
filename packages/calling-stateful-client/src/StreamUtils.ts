@@ -406,7 +406,7 @@ async function createViewUnparentedVideo(
     localVideoStream: stream,
     view: convertFromSDKToDeclarativeVideoStreamRendererView(view),
     /* @conditional-compile-remove(video-background-effects) */
-    localVideoSteamEffectsAPI: localVideoStream.feature(Features.VideoEffects)
+    localVideoStreamEffectsAPI: localVideoStream.feature(Features.VideoEffects)
   });
 
   return {

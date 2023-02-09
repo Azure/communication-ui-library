@@ -279,7 +279,7 @@ export class CallContext {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
-        const stream = call.localVideoStreams.find((stream) => stream === localVideoStream);
+        const stream = call.localVideoStreams?.find((i) => i.mediaStreamType === 'Video');
         if (stream) {
           stream.videoEffects = {
             isActive: videoEffects.isActive ?? stream.videoEffects?.isActive ?? false,
@@ -657,7 +657,7 @@ export class CallContext {
     localVideoStream: LocalVideoStreamState;
     view: VideoStreamRendererViewState | undefined;
     /* @conditional-compile-remove(video-background-effects) */
-    localVideoSteamEffectsAPI: VideoEffectsFeature;
+    localVideoStreamEffectsAPI: VideoEffectsFeature;
   }): void {
     /* @conditional-compile-remove(video-background-effects) */
     {
@@ -665,8 +665,8 @@ export class CallContext {
       this._unparentedViewVideoEffectsSubscriber = new LocalVideoStreamVideoEffectsSubscriber({
         parent: 'unparented',
         context: this,
-        localVideoSteam: args.localVideoStream,
-        localVideoSteamEffectsAPI: args.localVideoSteamEffectsAPI
+        localVideoStream: args.localVideoStream,
+        localVideoStreamEffectsAPI: args.localVideoStreamEffectsAPI
       });
     }
 
