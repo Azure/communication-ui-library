@@ -26,8 +26,13 @@ import { getThreadEventTargets } from './ThreadEventEmitter';
 export class FakeChatClient implements IChatClient {
   private realtimeNotificationsEnabled = false;
   private threadClients: FakeChatThreadClient[] = [];
+  private model: Model;
+  private userId: CommunicationIdentifier;
 
-  constructor(private model: Model, private userId: CommunicationIdentifier) {}
+  constructor(model: Model, userId: CommunicationIdentifier) {
+    this.model = model;
+    this.userId = userId;
+  }
 
   getChatThreadClient(threadId: string): ChatThreadClient {
     this.model.checkedGetThread(this.userId, threadId);
