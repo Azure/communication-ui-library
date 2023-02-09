@@ -37,6 +37,7 @@ export const horizontalGalleryStyle = (isNarrow: boolean): HorizontalGalleryStyl
  * @private
  */
 export const SMALL_HORIZONTAL_GALLERY_TILE_SIZE_REM = { height: 6.5, width: 6.5 };
+
 /**
  * Large horizontal gallery tile size in rem
  * @private
