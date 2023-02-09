@@ -1,7 +1,15 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-export * from './CallWithChatComposite';
+export { CallWithChatComposite } from './CallWithChatComposite';
+export type {
+  CallWithChatCompositeProps,
+  CallWithChatCompositeOptions,
+  CallWithChatControlOptions
+} from './CallWithChatComposite';
+
+/* @conditional-compile-remove(chat-reference-support) */
+export type { CallWithChatCompositeRefProps } from './CallWithChatComposite';
 
 export type {
   CallWithChatAdapter,
@@ -28,9 +36,6 @@ export type {
 } from './state/CallWithChatAdapterState';
 
 export type { CallWithChatCompositeStrings } from './Strings';
-
-/* @conditional-compile-remove(chat-reference-support) */
-export type { CallWithChatCompositeRefProps } from './CallWithChatComposite';
 
 /* @conditional-compile-remove(control-bar-button-injection) */
 export type {

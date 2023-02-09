@@ -63,6 +63,10 @@ export type ChatScreenProps = {
   formFactor?: 'desktop' | 'mobile';
 };
 
+/**
+ * Type for the ChatScreen ref props.
+ * @beta
+ */
 export type ChatScreenRefProps = {
   focus: (control: 'sendBoxTextField') => void;
 };

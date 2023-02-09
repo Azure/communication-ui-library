@@ -973,11 +973,16 @@ export type CallWithChatCompositeOptions = {
 export interface CallWithChatCompositeProps extends BaseCompositeProps<CallWithChatCompositeIcons> {
     // (undocumented)
     adapter: CallWithChatAdapter;
+    // @beta
+    compositeRef?: (ref: CallWithChatCompositeRefProps) => void;
     fluentTheme?: PartialTheme | Theme;
     formFactor?: 'desktop' | 'mobile';
     joinInvitationURL?: string;
     options?: CallWithChatCompositeOptions;
 }
+
+// @beta
+export type CallWithChatCompositeRefProps = ChatScreenRefProps;
 
 // @public
 export interface CallWithChatCompositeStrings {
@@ -1229,11 +1234,16 @@ export type ChatCompositeOptions = {
 // @public
 export interface ChatCompositeProps extends BaseCompositeProps<ChatCompositeIcons> {
     adapter: ChatAdapter;
+    // @beta
+    compositeRef?: (ref: ChatCompositeRefProps) => void;
     formFactor?: 'desktop' | 'mobile';
     onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: MessageRenderer) => JSX.Element;
     onRenderTypingIndicator?: (typingUsers: CommunicationParticipant[]) => JSX.Element;
     options?: ChatCompositeOptions;
 }
+
+// @beta
+export type ChatCompositeRefProps = ChatScreenRefProps;
 
 // @public
 export interface ChatCompositeStrings {
@@ -1319,6 +1329,11 @@ export type ChatParticipantListSelector = (state: ChatClientState, props: ChatBa
 
 // @public
 export type ChatReturnProps<Component extends (props: any) => JSX.Element> = GetChatSelector<Component> extends (state: ChatClientState, props: any) => any ? ReturnType<GetChatSelector<Component>> & Common<ChatHandlers, Parameters<Component>[0]> : never;
+
+// @beta
+export type ChatScreenRefProps = {
+    focus: (control: 'sendBoxTextField') => void;
+};
 
 // @public
 export const ChatThreadClientProvider: (props: ChatThreadClientProviderProps) => JSX.Element;

@@ -14,7 +14,7 @@ import {
 import { ChatCompositeRefProps } from '@azure/communication-react';
 
 import { Stack } from '@fluentui/react';
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { ChatHeader } from './ChatHeader';
 import { chatCompositeContainerStyle, chatScreenContainerStyle } from './styles/ChatScreen.styles';
@@ -37,7 +37,9 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const { displayName, endpointUrl, threadId, token, userId, endChatHandler } = props;
 
   /* @conditional-compile-remove(chat-reference-support) */
-  const compositeRef = useRef<ChatCompositeRefProps>(null);
+  const compositeRef = useCallback((ref: ChatCompositeRefProps) => {
+    ref?.focus('sendBoxTextField');
+  }, []);
 
   // Disables pull down to refresh. Prevents accidental page refresh when scrolling through chat messages
   // Another alternative: set body style touch-action to 'none'. Achieves same result.
@@ -89,11 +91,6 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     return () => window.removeEventListener('beforeunload', disposeAdapter);
   }, [adapter]);
 
-  /* @conditional-compile-remove(chat-reference-support) */
-  useEffect(() => {
-    compositeRef.current?.focus('sendBoxTextField');
-  }, [compositeRef]);
-
   if (adapter) {
     const onFetchAvatarPersonaData = (userId): Promise<AvatarPersonaData> =>
       fetchEmojiForUser(userId).then(
@@ -110,7 +107,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
         <Stack.Item className={chatCompositeContainerStyle} role="main">
           <ChatComposite
             /* @conditional-compile-remove(chat-reference-support) */
-            ref={compositeRef}
+            compositeRef={compositeRef}
             adapter={adapter}
             fluentTheme={currentTheme.theme}
             options={{

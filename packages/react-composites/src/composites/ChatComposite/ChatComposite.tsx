@@ -2,16 +2,18 @@
 // Licensed under the MIT license.
 
 import { CommunicationParticipant, MessageRenderer, MessageProps } from '@internal/react-components';
+import React from 'react';
+/* @conditional-compile-remove(chat-reference-support) */
+import { useImperativeHandle } from 'react';
 import { BaseProvider, BaseCompositeProps } from '../common/BaseComposite';
 import { ChatCompositeIcons } from '../common/icons';
 import { ChatAdapter } from './adapter/ChatAdapter';
 import { ChatAdapterProvider } from './adapter/ChatAdapterProvider';
 import { chatScreenContainerStyle } from './styles/Chat.styles';
 import { ChatScreen, ChatScreenRefProps } from './ChatScreen';
-import { forwardRef } from 'react';
+
 /* @conditional-compile-remove(file-sharing) */
 import { FileSharingOptions } from './ChatScreen';
-import React from 'react';
 
 /**
  * Props for {@link ChatComposite}.
@@ -45,8 +47,19 @@ export interface ChatCompositeProps extends BaseCompositeProps<ChatCompositeIcon
    * @defaultValue 'desktop'
    */
   formFactor?: 'desktop' | 'mobile';
+
+  /* @conditional-compile-remove(chat-reference-support) */
+  /**
+   * A callback to use as a reference to the composite.
+   * @beta
+   */
+  compositeRef?: (ref: ChatCompositeRefProps) => void;
 }
 
+/**
+ * Type for the ChatComposite ref props
+ * @beta
+ */
 export type ChatCompositeRefProps = ChatScreenRefProps;
 
 /**
@@ -89,6 +102,62 @@ export type ChatCompositeOptions = {
   fileSharing?: FileSharingOptions;
 };
 
+const CompositeConstructor = (props: ChatCompositeProps): JSX.Element => {
+  const {
+    adapter,
+    options = {},
+    onFetchAvatarPersonaData,
+    onRenderTypingIndicator,
+    onRenderMessage,
+    onFetchParticipantMenuItems,
+    /* @conditional-compile-remove(chat-reference-support) */
+    compositeRef
+  } = props;
+
+  const formFactor = props['formFactor'] || 'desktop';
+
+  /**
+   * @TODO Remove this function and pass the props directly when file-sharing is promoted to stable.
+   * @private
+   */
+  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+  const fileSharingOptions = () => {
+    /* @conditional-compile-remove(file-sharing) */
+    return {
+      fileSharing: options?.fileSharing
+    };
+    return {};
+  };
+
+  /* @conditional-compile-remove(chat-reference-support) */
+  useImperativeHandle(compositeRef, () => {
+    return {
+      focus: (control: 'sendBoxTextField') => {
+        if (control === 'sendBoxTextField') {
+          options.autoFocus = 'sendBoxTextField';
+        }
+      }
+    };
+  });
+
+  return (
+    <div className={chatScreenContainerStyle}>
+      <BaseProvider {...props}>
+        <ChatAdapterProvider adapter={adapter}>
+          <ChatScreen
+            formFactor={formFactor}
+            options={options}
+            onFetchAvatarPersonaData={onFetchAvatarPersonaData}
+            onRenderTypingIndicator={onRenderTypingIndicator}
+            onRenderMessage={onRenderMessage}
+            onFetchParticipantMenuItems={onFetchParticipantMenuItems}
+            {...fileSharingOptions()}
+          />
+        </ChatAdapterProvider>
+      </BaseProvider>
+    </div>
+  );
+};
 /**
  * A customizable UI composite for the chat experience.
  *
@@ -96,49 +165,6 @@ export type ChatCompositeOptions = {
  *
  * @public
  */
-export const ChatComposite = forwardRef<ChatCompositeRefProps, ChatCompositeProps>(
-  (props: ChatCompositeProps, ref): JSX.Element => {
-    const {
-      adapter,
-      options,
-      onFetchAvatarPersonaData,
-      onRenderTypingIndicator,
-      onRenderMessage,
-      onFetchParticipantMenuItems
-    } = props;
-
-    const formFactor = props['formFactor'] || 'desktop';
-
-    /**
-     * @TODO Remove this function and pass the props directly when file-sharing is promoted to stable.
-     * @private
-     */
-    // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-    const fileSharingOptions = () => {
-      /* @conditional-compile-remove(file-sharing) */
-      return {
-        fileSharing: options?.fileSharing
-      };
-      return {};
-    };
-
-    return (
-      <div className={chatScreenContainerStyle}>
-        <BaseProvider {...props}>
-          <ChatAdapterProvider adapter={adapter}>
-            <ChatScreen
-              ref={ref}
-              formFactor={formFactor}
-              options={options}
-              onFetchAvatarPersonaData={onFetchAvatarPersonaData}
-              onRenderTypingIndicator={onRenderTypingIndicator}
-              onRenderMessage={onRenderMessage}
-              onFetchParticipantMenuItems={onFetchParticipantMenuItems}
-              {...fileSharingOptions()}
-            />
-          </ChatAdapterProvider>
-        </BaseProvider>
-      </div>
-    );
-  }
-);
+export const ChatComposite = (props: ChatCompositeProps): JSX.Element => {
+  return <CompositeConstructor {...props} />;
+};

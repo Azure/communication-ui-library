@@ -46,9 +46,9 @@ process.env['COMMUNICATION_REACT_FLAVOR'] === 'stable' &&
         // feature for tracking environment info API different than unsupported browser. stable use of environment info affects other components possibly sooner
         'calling-environment-info',
         // feature for blurred background and replace background effects
-        'video-background-effects'
+        'video-background-effects',
         // React reference support on chat composites
-        'chat-reference-support',
+        'chat-reference-support'
       ],
       // A list of stabilized features.
       // These features can be listed in the conditional compilation directives without
