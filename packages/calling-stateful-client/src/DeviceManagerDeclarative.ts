@@ -1,16 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import {
-  AudioDeviceInfo,
-  DeviceAccess,
-  DeviceManager,
-  LocalVideoStream,
-  VideoDeviceInfo
-} from '@azure/communication-calling';
+import { AudioDeviceInfo, DeviceAccess, DeviceManager, VideoDeviceInfo } from '@azure/communication-calling';
 import { CallContext } from './CallContext';
-/* @conditional-compile-remove(video-background-effects) */
 import { InternalCallContext } from './InternalCallContext';
+/* @conditional-compile-remove(video-background-effects) */
+import { LocalVideoStream } from '@azure/communication-calling';
 
 /**
  * Defines the additional methods added by the stateful on top of {@link @azure/communication-calling#DeviceManager}.
