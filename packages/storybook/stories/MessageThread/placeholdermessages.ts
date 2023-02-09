@@ -52,8 +52,8 @@ export const GenerateMockNewChatMessage = (): ChatMessage => {
     createdOn: new Date('2020-04-13T00:00:00.000+07:01'),
     mine: true,
     attached: false,
-    status: 'seen' as MessageStatus,
-    contentType: 'text'
+    contentType: 'text',
+    status: 'seen' as MessageStatus
   };
 };
 
@@ -102,7 +102,8 @@ export const GenerateMockHistoryChatMessages = (): ChatMessage[] => {
       createdOn: new Date('2019-04-13T00:00:00.000+08:10'),
       mine: true,
       attached: false,
-      contentType: 'text'
+      contentType: 'text',
+      status: 'seen' as MessageStatus
     },
     {
       messageType: 'chat',
@@ -139,7 +140,8 @@ export const GenerateMockChatMessages = (): ChatMessage[] => {
       createdOn: new Date('2020-04-13T00:00:00.000+08:10'),
       mine: true,
       attached: false,
-      contentType: 'text'
+      contentType: 'text',
+      status: 'seen' as MessageStatus
     },
     {
       messageType: 'chat',
@@ -169,7 +171,8 @@ export const GenerateMockChatMessages = (): ChatMessage[] => {
       createdOn: new Date('2020-04-13T00:00:00.000+08:07'),
       mine: true,
       attached: false,
-      contentType: 'text'
+      contentType: 'text',
+      status: 'seen' as MessageStatus
     },
     {
       messageType: 'chat',
@@ -229,8 +232,8 @@ export const GenerateMockChatMessages = (): ChatMessage[] => {
       createdOn: new Date('2020-04-13T00:00:00.000+08:02'),
       mine: true,
       attached: false,
-      status: 'seen' as MessageStatus,
-      contentType: 'text'
+      contentType: 'text',
+      status: 'seen' as MessageStatus
     },
     {
       messageType: 'chat',
