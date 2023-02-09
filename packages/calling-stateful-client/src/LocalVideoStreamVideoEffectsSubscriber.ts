@@ -67,7 +67,7 @@ export class LocalVideoStreamVideoEffectsSubscriber {
     this.updateEffectsState({
       isActive: false
     });
-    // TODO: future PR will tee error to state
+    // TODO [video-background-effects]: future PR will tee error to state
     console.error(
       `LocalVideoStreamVideoEffectsSubscriber effectError: Method not fully implemented. Error needs teed to state. ${error}`
     );
