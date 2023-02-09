@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "tee video effects errors to state",
+  "packageName": "@azure/communication-react",
+  "email": "2684369+JamesBurnside@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
