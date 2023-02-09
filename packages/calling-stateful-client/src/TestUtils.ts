@@ -17,7 +17,9 @@ import {
   RemoteVideoStream,
   TranscriptionCallFeature,
   CallFeatureFactory,
-  CallFeature
+  CallFeature,
+  VideoDeviceInfo,
+  VideoEffectsFeature
 } from '@azure/communication-calling';
 import { CollectionUpdatedEvent, RecordingInfo } from '@azure/communication-calling';
 import { CommunicationTokenCredential } from '@azure/communication-common';
@@ -263,6 +265,31 @@ export function createMockIncomingCall(mockCallId: string): MockIncomingCall {
   const mockIncomingCall = { id: mockCallId } as MockIncomingCall;
   return addMockEmitter(mockIncomingCall);
 }
+
+const createMockVideoEffectsAPI = (): VideoEffectsFeature =>
+  addMockEmitter({
+    name: 'MockVideoEffect',
+    startEffects: () => Promise.resolve(),
+    stopEffects: () => Promise.resolve(),
+    dispose: () => Promise.resolve()
+  });
+
+/** @private */
+export const createMockLocalVideoStream = (): LocalVideoStream => {
+  const mockSource: VideoDeviceInfo = {
+    id: 'mockSource',
+    name: 'mockSource',
+    deviceType: 'Unknown'
+  };
+  return {
+    source: mockSource,
+    mediaStreamType: 'Video',
+    switchSource: () => {
+      return Promise.resolve();
+    },
+    feature: () => createMockVideoEffectsAPI()
+  } as unknown as LocalVideoStream;
+};
 
 /**
  * @private
