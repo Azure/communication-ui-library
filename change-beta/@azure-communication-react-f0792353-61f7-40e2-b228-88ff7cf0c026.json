@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Update communication-chat version from fixed version to compatible with version",
+  "packageName": "@azure/communication-react",
+  "email": "edwardlee@microsoft.com",
+  "dependentChangeType": "patch"
+}
