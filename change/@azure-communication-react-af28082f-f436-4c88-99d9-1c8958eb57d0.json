@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Set all empty/undefined displayName to unnamed",
+  "packageName": "@azure/communication-react",
+  "email": "jinan@microsoft.com",
+  "dependentChangeType": "patch"
+}
