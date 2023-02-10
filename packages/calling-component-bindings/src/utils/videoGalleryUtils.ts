@@ -93,12 +93,12 @@ export const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
     Object.values(rawVideoStreamsArray).find((i) => i.mediaStreamType === 'ScreenSharing' && i.isAvailable) ||
     Object.values(rawVideoStreamsArray).find((i) => i.mediaStreamType === 'ScreenSharing');
 
-  if (!sdkRemoteVideoStream || !sdkScreenShareStream) {
-    throw new Error('Video stream or screen share stream is undefined');
+  if (sdkRemoteVideoStream) {
+    videoStream = convertRemoteVideoStreamToVideoGalleryStream(sdkRemoteVideoStream);
   }
-
-  videoStream = convertRemoteVideoStreamToVideoGalleryStream(sdkRemoteVideoStream);
-  screenShareStream = convertRemoteVideoStreamToVideoGalleryStream(sdkScreenShareStream);
+  if (sdkScreenShareStream) {
+    screenShareStream = convertRemoteVideoStreamToVideoGalleryStream(sdkScreenShareStream);
+  }
 
   return {
     userId,
