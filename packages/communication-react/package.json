@@ -49,7 +49,7 @@
   "peerDependencies": {
     "@azure/communication-calling": "1.10.0-beta.1 || >=1.4.4",
     "@azure/communication-calling-effects": "1.0.0-beta.2",
-    "@azure/communication-chat": "1.2.0",
+    "@azure/communication-chat": ">=1.2.0",
     "@types/react": ">=16.8.0 <18.0.0",
     "@types/react-dom": ">=16.8.0 <18.0.0",
     "react": ">=16.8.0 <18.0.0",
