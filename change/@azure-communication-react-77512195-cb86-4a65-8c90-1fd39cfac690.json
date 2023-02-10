@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fix PSTN id parsing and add unit test to validate E.164 format numbers.",
+  "packageName": "@azure/communication-react",
+  "email": "94866715+dmceachernmsft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
