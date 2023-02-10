@@ -76,7 +76,8 @@ export const _RemoteVideoTile = React.memo(
       onPinParticipant,
       onUnpinParticipant,
       disablePinMenuItem,
-      toggleAnnouncerString
+      toggleAnnouncerString,
+      strings
     } = props;
 
     const remoteVideoStreamProps: RemoteVideoStreamLifecycleMaintainerProps = useMemo(
@@ -166,8 +167,9 @@ export const _RemoteVideoTile = React.memo(
         <VideoTile
           key={userId}
           userId={userId}
+          initialsName={remoteParticipant.displayName ?? ''}
           renderElement={renderVideoStreamElement}
-          displayName={remoteParticipant.displayName}
+          displayName={remoteParticipant.displayName || strings?.displayNamePlaceholder}
           onRenderPlaceholder={onRenderAvatar}
           isMuted={remoteParticipant.isMuted}
           isSpeaking={remoteParticipant.isSpeaking}
