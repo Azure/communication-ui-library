@@ -41,7 +41,7 @@ export const _isInCall = (callStatus?: CallStatus): boolean =>
  * @internal
  */
 export const _isInLobbyOrConnecting = (callStatus: CallStatus | undefined): boolean =>
-  !!callStatus && ['Connecting', 'Ringing', 'InLobby'].includes(callStatus);
+  !!callStatus && ['Connecting', 'Ringing', 'InLobby', 'EarlyMedia'].includes(callStatus);
 
 /**
  * Check if the device manager local video is on when not part of a call
