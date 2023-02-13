@@ -91,7 +91,12 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
 
   /* @conditional-compile-remove(control-bar-button-injection) */
   customDrawerButtons['overflow']?.props.children.forEach((element) => {
-    moreButtonContextualMenuItems.push(element);
+    moreButtonContextualMenuItems.push({
+      itemProps: {
+        styles: buttonFlyoutIncreasedSizeStyles
+      },
+      ...element
+    });
   });
 
   return (
