@@ -15,11 +15,17 @@ import { buttonFlyoutIncreasedSizeStyles } from '../../CallComposite/styles/Butt
 import { MoreButton } from '../../common/MoreButton';
 /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
 import { useLocale } from '../../localization';
+/* @conditional-compile-remove(control-bar-button-injection) */
+import { CallWithChatControlOptions } from '../CallWithChatComposite';
+/* @conditional-compile-remove(control-bar-button-injection) */
+import { generateCustomCallWithChatDrawerButtons, onFetchCustomButtonPropsTrampoline } from '../CustomButton';
 
 /** @private */
 export interface DesktopMoreButtonProps extends ControlBarButtonProps {
   disableButtonsForHoldScreen?: boolean;
   onClickShowDialpad?: () => void;
+  /* @conditional-compile-remove(control-bar-button-injection) */
+  callControls?: boolean | CallWithChatControlOptions;
 }
 
 /**
@@ -41,41 +47,57 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
     [localeStrings]
   );
 
-  const moreButtonContextualMenuItems = (): IContextualMenuItem[] => {
-    const items: IContextualMenuItem[] = [];
+  const moreButtonContextualMenuItems: IContextualMenuItem[] = [];
 
-    /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
-    items.push({
-      key: 'holdButtonKey',
-      text: localeStrings.component.strings.holdButton.tooltipOffContent,
+  /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+  moreButtonContextualMenuItems.push({
+    key: 'holdButtonKey',
+    text: localeStrings.component.strings.holdButton.tooltipOffContent,
+    onClick: () => {
+      holdButtonProps.onToggleHold();
+    },
+    iconProps: { iconName: 'HoldCallContextualMenuItem', styles: { root: { lineHeight: 0 } } },
+    itemProps: {
+      styles: buttonFlyoutIncreasedSizeStyles
+    },
+    disabled: props.disableButtonsForHoldScreen
+  });
+
+  /*@conditional-compile-remove(PSTN-calls) */
+  if (props.onClickShowDialpad) {
+    moreButtonContextualMenuItems.push({
+      key: 'showDialpadKey',
+      text: localeStrings.strings.callWithChat.openDtmfDialpadLabel,
       onClick: () => {
-        holdButtonProps.onToggleHold();
+        props.onClickShowDialpad && props.onClickShowDialpad();
       },
-      iconProps: { iconName: 'HoldCallContextualMenuItem', styles: { root: { lineHeight: 0 } } },
+      iconProps: { iconName: 'Dialpad', styles: { root: { lineHeight: 0 } } },
       itemProps: {
         styles: buttonFlyoutIncreasedSizeStyles
       },
       disabled: props.disableButtonsForHoldScreen
     });
+  }
 
-    /*@conditional-compile-remove(PSTN-calls) */
-    if (props.onClickShowDialpad) {
-      items.push({
-        key: 'showDialpadKey',
-        text: localeStrings.strings.callWithChat.openDtmfDialpadLabel,
-        onClick: () => {
-          props.onClickShowDialpad && props.onClickShowDialpad();
-        },
-        iconProps: { iconName: 'Dialpad', styles: { root: { lineHeight: 0 } } },
-        itemProps: {
-          styles: buttonFlyoutIncreasedSizeStyles
-        },
-        disabled: props.disableButtonsForHoldScreen
-      });
-    }
+  /* @conditional-compile-remove(control-bar-button-injection) */
+  const customDrawerButtons = useMemo(
+    () =>
+      generateCustomCallWithChatDrawerButtons(
+        onFetchCustomButtonPropsTrampoline(typeof props.callControls === 'object' ? props.callControls : undefined),
+        typeof props.callControls === 'object' ? props.callControls.displayType : undefined
+      ),
+    [props.callControls]
+  );
 
-    return items;
-  };
+  /* @conditional-compile-remove(control-bar-button-injection) */
+  customDrawerButtons['overflow']?.props.children.forEach((element) => {
+    moreButtonContextualMenuItems.push({
+      itemProps: {
+        styles: buttonFlyoutIncreasedSizeStyles
+      },
+      ...element
+    });
+  });
 
   return (
     <MoreButton
@@ -84,7 +106,7 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
       /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
       strings={moreButtonStrings}
       menuIconProps={{ hidden: true }}
-      menuProps={{ items: moreButtonContextualMenuItems() }}
+      menuProps={{ items: moreButtonContextualMenuItems }}
     />
   );
 };
