@@ -241,6 +241,8 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps & Cont
                         disableButtonsForHoldScreen={props.disableButtonsForHoldScreen}
                         styles={commonButtonStyles}
                         onClickShowDialpad={props.onClickShowDialpad}
+                        /* @conditional-compile-remove(control-bar-button-injection) */
+                        callControls={props.callControls}
                       />
                     )
                 }
