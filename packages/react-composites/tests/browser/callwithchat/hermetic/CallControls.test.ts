@@ -3,7 +3,7 @@
 
 import { loadCallPage, test } from './fixture';
 import { expect } from '@playwright/test';
-import { dataUiId, pageClick, stableScreenshot } from '../../common/utils';
+import { dataUiId, isTestProfileDesktop, pageClick, stableScreenshot } from '../../common/utils';
 import type { CallWithChatCompositeOptions } from '../../../../src';
 import { defaultMockCallAdapterState, defaultMockRemoteParticipant } from '../../call/hermetic/fixture';
 
@@ -32,7 +32,9 @@ test.describe('Custom call control options tests', () => {
     expect(await stableScreenshot(page)).toMatchSnapshot(`user-set-control-bar-button-options.png`);
   });
 
-  test('Control bar custom buttons render correctly', async ({ page, serverUrl }) => {
+  test('Control bar custom buttons render correctly', async ({ page, serverUrl }, testInfo) => {
+    test.skip(isTestProfileDesktop(testInfo), 'There is no custom button injection in stable');
+
     const callState = defaultMockCallAdapterState([defaultMockRemoteParticipant('Paul Bridges')]);
     await loadCallPage(page, serverUrl, callState, {
       injectCustomButtons: 'true',
