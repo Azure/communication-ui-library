@@ -41,9 +41,10 @@ test.describe('CallWithChat Composite CallWithChat Page Tests', () => {
 
     await sendMessageFromHiddenChatComposite(page, chatRemoteParticipant, 'I agree!');
 
+    await waitForAndHideTypingIndicator(page, APP_UNDER_TEST_ROOT_SELECTOR);
     // Local participant has both a sent message and a received message.
     await waitForNMessages(page, 2, APP_UNDER_TEST_ROOT_SELECTOR);
-    await waitForAndHideTypingIndicator(page, APP_UNDER_TEST_ROOT_SELECTOR);
+   
 
     if (isTestProfileMobile(testInfo)) {
       await waitForPiPiPToHaveLoaded(page, { skipVideoCheck: true });
