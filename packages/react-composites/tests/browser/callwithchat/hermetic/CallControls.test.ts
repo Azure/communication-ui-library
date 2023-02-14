@@ -3,7 +3,7 @@
 
 import { loadCallPage, test } from './fixture';
 import { expect } from '@playwright/test';
-import { dataUiId, isTestProfileDesktop, pageClick, stableScreenshot } from '../../common/utils';
+import { dataUiId, pageClick, stableScreenshot } from '../../common/utils';
 import type { CallWithChatCompositeOptions } from '../../../../src';
 import { defaultMockCallAdapterState, defaultMockRemoteParticipant } from '../../call/hermetic/fixture';
 
