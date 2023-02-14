@@ -30,7 +30,7 @@ export const videoGalleryContainerStyle: IStackStyles = {
 /**
  * Small floating modal width and height in rem for small screen
  */
-export const SMALL_FLOATING_MODAL_SIZE_PX = { width: 64, height: 88 };
+export const SMALL_FLOATING_MODAL_SIZE_PX = { width: 58, height: 104 };
 
 /**
  * Large floating modal width and height in rem for large screen

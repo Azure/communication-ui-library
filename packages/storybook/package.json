@@ -25,7 +25,7 @@
     "@azure/communication-react": "1.5.1-beta.0",
     "@fluentui/react-file-type-icons": "~8.5.8",
     "@fluentui/react-hooks": "~8.6.12",
-    "@fluentui/react-icons": "~1.1.145",
+    "@fluentui/react-icons": "~2.0.194",
     "@fluentui/react-northstar": "0.61.0",
     "@fluentui/react": "~8.98.3",
     "@fluentui/theme-samples": "8.1.5",
