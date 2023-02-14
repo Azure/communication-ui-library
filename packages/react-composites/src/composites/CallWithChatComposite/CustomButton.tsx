@@ -98,6 +98,7 @@ export const generateCustomCallWithChatDrawerButtons = (
             id: buttonProps.id,
             iconProps: { iconName: buttonProps.iconName },
             itemKey: buttonProps.key ?? `${buttonProps.placement}_${i}`,
+            key: buttonProps.key ?? `${buttonProps.placement}_${i}`,
             onItemClick: buttonProps.onItemClick,
             text: buttonProps.text
           }))}
