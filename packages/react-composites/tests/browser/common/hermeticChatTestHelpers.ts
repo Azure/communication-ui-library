@@ -58,6 +58,7 @@ export async function sendMessageFromHiddenChatComposite(
     await page.type(`${hiddenCompositeSelector(participant)} ${dataUiId(IDS.sendboxTextField)}`, message, {
       timeout: perStepLocalTimeout()
     });
+    await page.keyboard.press('Space');
     await page.keyboard.press('Enter');
   });
 }
