@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 // eslint-disable-next-line no-restricted-imports
-import { Icon, IContextualMenuItem, merge, mergeStyleSets } from '@fluentui/react';
+import { Icon, IContextualMenuItem, mergeStyleSets } from '@fluentui/react';
 import { ControlBarButton, _DrawerMenuItemProps } from '@internal/react-components';
 import React from 'react';
 import {
