@@ -26,7 +26,7 @@ export function BaseApp(props: { queryArgs: CommonQueryArgs; adapter?: CallWithC
     typeof props.queryArgs.customCompositeOptions?.callControls === 'object'
       ? {
           ...props.queryArgs.customCompositeOptions.callControls,
-          onFetchCustomButtonProps: props.queryArgs.injectCustomButtons ? custonButtonsForInjection : undefined
+          onFetchCustomButtonProps: props.queryArgs.injectCustomButtons ? customButtonsForInjection : undefined
         }
       : props.queryArgs.customCompositeOptions?.callControls;
 
@@ -47,7 +47,7 @@ export function BaseApp(props: { queryArgs: CommonQueryArgs; adapter?: CallWithC
   );
 }
 
-const custonButtonsForInjection: CustomCallWithChatControlButtonCallback[] = [
+const customButtonsForInjection: CustomCallWithChatControlButtonCallback[] = [
   () => ({
     placement: 'primary',
     iconName: 'MessageEdit',
