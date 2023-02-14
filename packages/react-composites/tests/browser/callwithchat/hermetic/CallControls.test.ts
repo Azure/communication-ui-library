@@ -33,7 +33,6 @@ test.describe('Custom call control options tests', () => {
   });
 
   test('Control bar custom buttons render correctly', async ({ page, serverUrl }) => {
-    const paul = defaultMockRemoteParticipant('Paul Bridges');
     const testOptions: CallWithChatCompositeOptions = {
       callControls: {
         cameraButton: false,
@@ -47,9 +46,6 @@ test.describe('Custom call control options tests', () => {
             iconName: 'MessageEdit',
             text: 'Primary Btn 1',
             key: 'primary-button-1',
-            onItemClick: () => {
-              alert('Primary button 1 clicked!');
-            },
             styles: {
               root: {
                 background: '#ff6600'
@@ -61,20 +57,14 @@ test.describe('Custom call control options tests', () => {
             iconName: 'MessageEdit',
             text: 'Primary Btn 2',
             key: 'primary-button-2',
-            disabled: true,
-            onItemClick: () => {
-              alert('Primary button 2 clicked!');
-            }
+            disabled: true
           }),
           () => ({
             placement: 'primary',
             iconName: 'MessageEdit',
             text: 'Primary Btn 3',
             key: 'primary-button-3',
-            showLabel: false,
-            onItemClick: () => {
-              alert('Primary button 3 clicked!');
-            }
+            showLabel: false
           }),
           () => ({
             placement: 'primary',
@@ -82,10 +72,7 @@ test.describe('Custom call control options tests', () => {
             text: 'Primary Btn 4',
             key: 'primary-button-4',
             disabled: false,
-            showLabel: false,
-            onItemClick: () => {
-              alert('Primary button 4 clicked!');
-            }
+            showLabel: false
           }),
           () => ({
             placement: 'primary',
@@ -93,10 +80,7 @@ test.describe('Custom call control options tests', () => {
             text: 'Primary Btn 5',
             key: 'primary-button-5',
             disabled: true,
-            showLabel: false,
-            onItemClick: () => {
-              alert('Primary button 4 clicked!');
-            }
+            showLabel: false
           }),
           () => ({
             placement: 'secondary',
@@ -104,10 +88,7 @@ test.describe('Custom call control options tests', () => {
             text: 'Secondary Btn 1',
             key: 'secondary-button-1',
             disabled: true,
-            showLabel: true,
-            onItemClick: () => {
-              alert('Secondary button 1 clicked!');
-            }
+            showLabel: true
           }),
           () => ({
             placement: 'secondary',
@@ -115,10 +96,7 @@ test.describe('Custom call control options tests', () => {
             text: 'Secondary Btn 2',
             key: 'secondary-button-2',
             disabled: false,
-            showLabel: false,
-            onItemClick: () => {
-              alert('Secondary button 2 clicked!');
-            }
+            showLabel: false
           }),
           () => ({
             placement: 'secondary',
@@ -126,10 +104,7 @@ test.describe('Custom call control options tests', () => {
             text: 'Secondary Btn 3',
             key: 'secondary-button-3',
             disabled: false,
-            showLabel: false,
-            onItemClick: () => {
-              alert('Secondary button 3 clicked!');
-            }
+            showLabel: false
           }),
           () => ({
             placement: 'overflow',
@@ -137,10 +112,7 @@ test.describe('Custom call control options tests', () => {
             text: 'Overflow Btn 1',
             key: 'overflow-button-1',
             disabled: false,
-            showLabel: false,
-            onItemClick: () => {
-              alert('Overflow button 1 clicked!');
-            }
+            showLabel: false
           }),
           () => ({
             placement: 'overflow',
@@ -148,20 +120,18 @@ test.describe('Custom call control options tests', () => {
             text: 'Overflow Btn 2',
             key: 'overflow-button-2',
             disabled: false,
-            showLabel: false,
-            onItemClick: () => {
-              alert('Overflow button 2 clicked!');
-            }
+            showLabel: false
           })
         ]
       }
     };
-    const callState = defaultMockCallAdapterState([paul]);
+    const callState = defaultMockCallAdapterState([defaultMockRemoteParticipant('Paul Bridges')]);
     await loadCallPage(page, serverUrl, callState, {
       customCompositeOptions: JSON.stringify(testOptions)
     });
 
     await pageClick(page, dataUiId('call-with-chat-composite-more-button'));
-    expect(await stableScreenshot(page)).toMatchSnapshot(`user-set-control-bar-button-options.png`);
+
+    expect(await stableScreenshot(page)).toMatchSnapshot(`call-with-chat-custom-buttons.png`);
   });
 });
