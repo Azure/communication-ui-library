@@ -150,6 +150,10 @@ export class InternalCallContext {
     return this._unparentedRenderInfos.get(localVideoStream.source.id);
   }
 
+  public getUnparentedRenderInfos(): LocalVideoStream[] {
+    return [...this._unparentedRenderInfos].map(([, renderInfo]) => renderInfo.stream);
+  }
+
   public setUnparentedRenderInfo(
     statefulStream: LocalVideoStreamState,
     stream: LocalVideoStream,
