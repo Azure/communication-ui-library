@@ -89,6 +89,7 @@ export async function stopTypingAndSendMessageFromHiddenChatComposite(
   participant: ChatParticipant
 ): Promise<void> {
   await withHiddenChatCompositeInForeground(page, participant, async () => {
+    await page.focus(`${hiddenCompositeSelector(participant)} ${dataUiId(IDS.sendboxTextField)}`)
     await page.keyboard.press('Enter');
   });
 }
