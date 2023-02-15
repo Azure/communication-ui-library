@@ -3,6 +3,8 @@
 
 import {
   sendMessageFromHiddenChatComposite,
+  startTypeMessageFromHiddenChatComposite,
+  stopTypingAndSendMessageFromHiddenChatComposite,
   temporarilyShowHiddenChatComposite
 } from '../../common/hermeticChatTestHelpers';
 import { defaultMockCallAdapterState, defaultMockRemoteParticipant } from '../../call/hermetic/fixture';
@@ -39,9 +41,13 @@ test.describe('CallWithChat Composite CallWithChat Page Tests', () => {
     await temporarilyShowHiddenChatComposite(page, chatRemoteParticipant);
     await waitForMessageSeen(page);
 
-    await sendMessageFromHiddenChatComposite(page, chatRemoteParticipant, 'I agree!');
-
+    // Start typing a message
+    await startTypeMessageFromHiddenChatComposite(page, chatRemoteParticipant, 'I agree!');
+    // Wait for indicator to show up
     await waitForAndHideTypingIndicator(page, APP_UNDER_TEST_ROOT_SELECTOR);
+    // Stop typing and send a message
+    await stopTypingAndSendMessageFromHiddenChatComposite(page, chatRemoteParticipant);
+
     // Local participant has both a sent message and a received message.
     await waitForNMessages(page, 2, APP_UNDER_TEST_ROOT_SELECTOR);
 
