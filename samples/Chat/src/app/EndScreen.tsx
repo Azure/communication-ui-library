@@ -16,7 +16,7 @@ import {
 } from './styles/EndChat.styles';
 
 import { Chat20Filled } from '@fluentui/react-icons';
-import { getExistingThreadIdFromURL } from './utils/getExistingThreadIdFromURL';
+import { getExistingThreadIdFromURL } from './utils/getParamsFromURL';
 import { joinThread } from './utils/joinThread';
 
 export interface EndCallProps {

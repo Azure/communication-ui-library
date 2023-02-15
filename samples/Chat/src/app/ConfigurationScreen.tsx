@@ -33,11 +33,13 @@ import { Chat20Filled } from '@fluentui/react-icons';
 import { DisplayNameField } from './DisplayNameField';
 import { sendEmojiRequest } from './utils/setEmoji';
 import { getToken } from './utils/getToken';
-import { getExistingDisplayNameFromURL } from './utils/getExistingDisplayNameFromURL';
-import { getExistingEndpointURLFromURL } from './utils/getExistingEndpointURLFromURL';
-import { getExistingThreadIdFromURL } from './utils/getExistingThreadIdFromURL';
-import { getExistingTokenFromURL } from './utils/getExistingTokenFromURL';
-import { getExistingUserIdFromURL } from './utils/getExistingUserIdFromURL';
+import {
+  getExistingDisplayNameFromURL,
+  getExistingEndpointURLFromURL,
+  getExistingThreadIdFromURL,
+  getExistingTokenFromURL,
+  getExistingUserIdFromURL
+} from './utils/getParamsFromURL';
 import { joinThread } from './utils/joinThread';
 import { getEndpointUrl } from './utils/getEndpointUrl';
 
@@ -60,11 +62,7 @@ const CONFIGURATIONSCREEN_SHOWING_SPINNER_INITIALIZE_CHAT = 4;
 const AVATAR_LABEL = 'Avatar';
 const ERROR_TEXT_THREAD_INVALID = 'Thread Id is not valid, please revisit home page to create a new thread';
 const ERROR_TEXT_THREAD_NOT_RECORDED = 'Thread id is not recorded in server';
-const ERROR_TEXT_TOKEN_NULL = 'Token is null';
-const ERROR_TEXT_USERID_NULL = 'User id is null';
-const ERROR_TEXT_DISPLAYNAME_NULL = 'Display name is null';
 const ERROR_TEXT_THREAD_NULL = 'Thread id is null';
-const ERROR_TEXT_ENDPOINTURL_NULL = 'Endpoint url is null';
 const INITIALIZE_CHAT_SPINNER_LABEL = 'Initializing chat client...';
 const JOIN_BUTTON_TEXT = 'Join chat';
 const LOADING_SPINNER_LABEL = 'Loading...';
@@ -124,30 +122,8 @@ export default (props: ConfigurationScreenProps): JSX.Element => {
     internalSetupAndJoinChatThread();
   }, [name, joinChatHandler, selectedAvatar, setDisplayName, setEndpointUrl, setThreadId, setToken, setUserId]);
 
-  const joinChatThreadWithExistingUser = useCallback(() => {
-    const internalSetupAndJoinChatThread = async (): Promise<void> => {
-      const token = getExistingTokenFromURL();
-      const userId = getExistingUserIdFromURL();
-      const displayName = getExistingDisplayNameFromURL();
-      const threadId = getExistingThreadIdFromURL();
-      const endpointUrl = getExistingEndpointURLFromURL(); 
-
-      if (!token) {
-        throw new Error(ERROR_TEXT_TOKEN_NULL);
-      }
-      if (!userId) {
-        throw new Error(ERROR_TEXT_USERID_NULL);
-      }
-      if (!displayName) {
-        throw new Error(ERROR_TEXT_DISPLAYNAME_NULL);
-      }
-      if (!threadId) {
-        throw new Error(ERROR_TEXT_THREAD_NULL);
-      }
-      if (!endpointUrl) {
-        throw new Error(ERROR_TEXT_ENDPOINTURL_NULL);
-      }
-
+  const joinChatThreadWithExistingUser = useCallback(
+    (token: string, userId: string, displayName: string, threadId: string, endpointUrl: string) => {
       setToken(token);
       setUserId(userId);
       setDisplayName(displayName);
@@ -157,9 +133,9 @@ export default (props: ConfigurationScreenProps): JSX.Element => {
       setEmptyWarning(false);
       setConfigurationScreenState(CONFIGURATIONSCREEN_SHOWING_SPINNER_INITIALIZE_CHAT);
       joinChatHandler();
-    };
-    internalSetupAndJoinChatThread();
-  }, [name, joinChatHandler, selectedAvatar, setDisplayName, setEndpointUrl, setThreadId, setToken, setUserId]);
+    },
+    [joinChatHandler, setDisplayName, setEndpointUrl, setThreadId, setToken, setUserId]
+  );
 
   useEffect(() => {
     if (configurationScreenState === CONFIGURATIONSCREEN_SHOWING_SPINNER_LOADING) {
@@ -175,14 +151,15 @@ export default (props: ConfigurationScreenProps): JSX.Element => {
         }
         setConfigurationScreenState(CONFIGURATIONSCREEN_SHOWING_JOIN_CHAT);
 
-        // Join with URL Parameters 
+        // Join with URL Parameters
+        const threadId = getExistingThreadIdFromURL();
         const token = getExistingTokenFromURL();
         const userId = getExistingUserIdFromURL();
         const displayName = getExistingDisplayNameFromURL();
-        const endpointUrl = getExistingEndpointURLFromURL(); 
+        const endpointUrl = getExistingEndpointURLFromURL();
 
-        if (token && userId && displayName && endpointUrl) {
-          joinChatThreadWithExistingUser();
+        if (token && userId && displayName && threadId && endpointUrl) {
+          joinChatThreadWithExistingUser(token, userId, displayName, threadId, endpointUrl);
         }
       };
       setScreenState();

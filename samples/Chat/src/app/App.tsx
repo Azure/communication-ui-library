@@ -9,7 +9,7 @@ import ConfigurationScreen from './ConfigurationScreen';
 import { EndScreen } from './EndScreen';
 import { ErrorScreen } from './ErrorScreen';
 import HomeScreen from './HomeScreen';
-import { getExistingThreadIdFromURL } from './utils/getExistingThreadIdFromURL';
+import { getExistingThreadIdFromURL } from './utils/getParamsFromURL';
 import { getBuildTime, getChatSDKVersion, getCommnicationReactSDKVersion } from './utils/utils';
 import { initializeFileTypeIcons } from '@fluentui/react-file-type-icons';
 
