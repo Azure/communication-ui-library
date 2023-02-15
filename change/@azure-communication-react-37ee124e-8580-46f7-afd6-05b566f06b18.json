@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add support for overflow button in desktop callwithchat",
+  "packageName": "@azure/communication-react",
+  "email": "2684369+JamesBurnside@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

@@ -20,7 +20,8 @@ export const callCompositeContainerStyles: IStackStyles = {
   root: {
     // Start a new stacking context so that any `position:absolute` elements
     // inside the call composite do not compete with its siblings.
-    position: 'relative'
+    position: 'relative',
+    width: '100%'
   }
 };
 
