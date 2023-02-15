@@ -202,20 +202,18 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps & Cont
                 )}
                 {
                   /* @conditional-compile-remove(control-bar-button-injection) */
-                  customButtons['primary']?.props.children
-                    .slice(
+                  customButtons['primary']
+                    ?.slice(
                       0,
                       props.mobileView
                         ? CUSTOM_BUTTON_OPTIONS.MAX_PRIMARY_MOBILE_CUSTOM_BUTTONS
                         : CUSTOM_BUTTON_OPTIONS.MAX_PRIMARY_DESKTOP_CUSTOM_BUTTONS
                     )
-                    .map((element) => {
+                    .map((CustomButton, i) => {
                       return (
-                        <element.type
-                          {...element.props}
-                          key={element.props.strings.label}
+                        <CustomButton
+                          key={`primary-custom-button-${i}`}
                           styles={commonButtonStyles}
-                          displayType={options.displayType}
                           showLabel={options.displayType !== 'compact'}
                         />
                       );
@@ -241,6 +239,8 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps & Cont
                         disableButtonsForHoldScreen={props.disableButtonsForHoldScreen}
                         styles={commonButtonStyles}
                         onClickShowDialpad={props.onClickShowDialpad}
+                        /* @conditional-compile-remove(control-bar-button-injection) */
+                        callControls={props.callControls}
                       />
                     )
                 }
@@ -254,15 +254,13 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps & Cont
         <Stack horizontal className={!props.mobileView ? mergeStyles(desktopButtonContainerStyle) : undefined}>
           {
             /* @conditional-compile-remove(control-bar-button-injection) */
-            customButtons['secondary']?.props.children
-              .slice(0, CUSTOM_BUTTON_OPTIONS.MAX_SECONDARY_DESKTOP_CUSTOM_BUTTONS)
-              .map((element) => {
+            customButtons['secondary']
+              ?.slice(0, CUSTOM_BUTTON_OPTIONS.MAX_SECONDARY_DESKTOP_CUSTOM_BUTTONS)
+              .map((CustomButton, i) => {
                 return (
-                  <element.type
-                    {...element.props}
-                    key={element.props.key}
+                  <CustomButton
+                    key={`secondary-custom-button-${i}`}
                     styles={commonButtonStyles}
-                    displayType={options.displayType}
                     showLabel={options.displayType !== 'compact'}
                   />
                 );

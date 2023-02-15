@@ -3,6 +3,9 @@
 
 import { AudioDeviceInfo, DeviceAccess, DeviceManager, VideoDeviceInfo } from '@azure/communication-calling';
 import { CallContext } from './CallContext';
+import { InternalCallContext } from './InternalCallContext';
+/* @conditional-compile-remove(video-background-effects) */
+import { LocalVideoStream } from '@azure/communication-calling';
 
 /**
  * Defines the additional methods added by the stateful on top of {@link @azure/communication-calling#DeviceManager}.
@@ -16,6 +19,16 @@ export interface StatefulDeviceManager extends DeviceManager {
    * {@link StatefulDeviceManager}. See also {@link DeviceManagerState.selectedCamera}.
    */
   selectCamera: (VideoDeviceInfo) => void;
+
+  /* @conditional-compile-remove(video-background-effects) */
+  /**
+   * Gets the list of unparented video streams. This is a list of video streams that have not been added to a
+   * {@link @azure/communication-calling#Call}. This is useful for developers who want to interact with rendered
+   * video streams before they have started a call. See also {@link @azure/communication-react#CallClient.createView}.
+   *
+   * @beta
+   */
+  getUnparentedVideoStreams: LocalVideoStream[];
 }
 
 /**
@@ -179,8 +192,14 @@ const dedupeById = <T extends { id: string }>(devices: T[]): T[] => {
  *
  * @param deviceManager - DeviceManager from SDK
  * @param context - CallContext from StatefulCallClient
+ *
+ * @private
  */
-export const deviceManagerDeclaratify = (deviceManager: DeviceManager, context: CallContext): DeviceManager => {
+export const deviceManagerDeclaratify = (
+  deviceManager: DeviceManager,
+  context: CallContext,
+  internalContext: InternalCallContext
+): DeviceManager => {
   const proxyDeviceManager = new ProxyDeviceManager(deviceManager, context);
   Object.defineProperty(deviceManager, 'unsubscribe', {
     configurable: false,
@@ -189,6 +208,11 @@ export const deviceManagerDeclaratify = (deviceManager: DeviceManager, context: 
   Object.defineProperty(deviceManager, 'selectCamera', {
     configurable: false,
     value: (videoDeviceInfo: VideoDeviceInfo) => proxyDeviceManager.selectCamera(videoDeviceInfo)
+  });
+  /* @conditional-compile-remove(video-background-effects) */
+  Object.defineProperty(deviceManager, 'getUnparentedViews', {
+    configurable: false,
+    value: (): LocalVideoStream[] => internalContext.getUnparentedRenderInfos()
   });
   return new Proxy(deviceManager, proxyDeviceManager) as StatefulDeviceManager;
 };

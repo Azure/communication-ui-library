@@ -2,6 +2,8 @@
 // Licensed under the MIT license.
 
 import { Call, CallAgent, CallClient, DeviceManager } from '@azure/communication-calling';
+/* @conditional-compile-remove(video-background-effects) */
+import { VideoEffectsFeature } from '@azure/communication-calling';
 import { CallErrorTarget } from './CallClientState';
 import { IncomingCall } from '@azure/communication-calling';
 
@@ -26,6 +28,10 @@ type InferredCallErrorTargets =
   | CallObjectMethodNames<'DeviceManager', DeviceManager>
   | CallObjectMethodNames<'Call', Call>
   | CallObjectMethodNames<'IncomingCall', Pick<IncomingCall, 'accept' | 'reject'>>
+  | /* @conditional-compile-remove(video-background-effects) */ CallObjectMethodNames<
+      'VideoEffectsFeature',
+      Pick<VideoEffectsFeature, 'startEffects'>
+    >
   /* Need to explicitly add these because we incorrectly added them to exported type before it was
    * stabilized in @azure/commmunication-calling.
    * TODO: Remove this hack once 'CallAgent.feature' becomes part of stable @azure/communication-calling.
