@@ -34,6 +34,7 @@ Both hermetic and live tests use [playwright](https://playwright.dev/) test fram
   ```sh
   rush build -t .
   ```
+  (if there were some build failures, run `rush update` or `rush update -p`)
 * Build the test applications.
   ```sh
   rushx build:e2e
