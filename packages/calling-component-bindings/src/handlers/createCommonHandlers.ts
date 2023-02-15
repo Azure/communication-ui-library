@@ -278,10 +278,14 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
         return;
       }
 
-      const remoteVideoStream = Object.values(participant.videoStreams).find((i) => i.mediaStreamType === 'Video');
-      const screenShareStream = Object.values(participant.videoStreams).find(
-        (i) => i.mediaStreamType === 'ScreenSharing'
-      );
+      // Find the first available stream, if there is none, then get the first stream
+      const remoteVideoStream =
+        Object.values(participant.videoStreams).find((i) => i.mediaStreamType === 'Video' && i.isAvailable) ||
+        Object.values(participant.videoStreams).find((i) => i.mediaStreamType === 'Video');
+
+      const screenShareStream =
+        Object.values(participant.videoStreams).find((i) => i.mediaStreamType === 'ScreenSharing' && i.isAvailable) ||
+        Object.values(participant.videoStreams).find((i) => i.mediaStreamType === 'ScreenSharing');
 
       let createViewResult: CreateViewResult | undefined = undefined;
       if (remoteVideoStream && remoteVideoStream.isAvailable && !remoteVideoStream.view) {

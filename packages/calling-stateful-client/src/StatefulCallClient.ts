@@ -235,7 +235,7 @@ class ProxyCallClient implements ProxyHandler<CallClient> {
           } else {
             this._sdkDeviceManager = deviceManager;
           }
-          this._deviceManager = deviceManagerDeclaratify(deviceManager, this._context);
+          this._deviceManager = deviceManagerDeclaratify(deviceManager, this._context, this._internalContext);
           return this._deviceManager;
         }, 'CallClient.getDeviceManager');
       }
