@@ -234,8 +234,7 @@ export function _logCreateLocalStreamEvent(
  */
 export function _logCreateRemoteStreamEvent(
   eventName: string,
-  streamLogInfo: { callId?: string; participantKey?: any; streamId?: number; streamType?: MediaStreamType },
-  error?: unknown
+  streamLogInfo: { callId?: string; participantKey?: any; streamId?: number; streamType?: MediaStreamType }
 ): void {
   switch (eventName) {
     case EventNames.CREATING_REMOTE_VIEW:
