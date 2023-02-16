@@ -474,11 +474,7 @@ export function createView(
   const streamType = stream.mediaStreamType;
 
   if (callId) {
-    // Render RemoteVideoStream that is part of a Call
     return createViewVideo(context, internalContext, callId, stream, participantId, options);
-    // } else if (!('id' in stream) && callId) {
-    //   // Render LocalVideoStream that is part of a Call
-    //   return createViewLocalVideo(context, internalContext, callId, options);
   } else if (!('id' in stream) && !callId) {
     // Render LocalVideoStream that is not part of a Call
     // Because it is not part of the call we don't tee errors to state naturally (e.g. via a Call Client function such as startVideo).
