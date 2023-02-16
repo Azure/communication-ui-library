@@ -164,7 +164,7 @@ export default (props: ConfigurationScreenProps): JSX.Element => {
       };
       setScreenState();
     }
-  }, [configurationScreenState]);
+  }, [configurationScreenState, joinChatThreadWithExistingUser]);
 
   const smallAvatarContainerClassName = useCallback(
     (avatar: string) => {
