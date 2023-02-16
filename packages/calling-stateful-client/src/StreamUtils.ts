@@ -364,12 +364,11 @@ function disposeViewRemoteVideo(
     return;
   }
 
-  // Else the state must be in the "Rendered" state, so we can dispose the renderer and clean up the state.
-  internalContext.setRemoteRenderInfo(callId, participantKey, streamId, renderInfo.stream, 'NotRendered', undefined);
-
   if (renderInfo.renderer) {
     _logDisposeStreamEvent(EventNames.DISPOSING_REMOTE_RENDERER, streamLogInfo);
     renderInfo.renderer.dispose();
+    // Else the state must be in the "Rendered" state, so we can dispose the renderer and clean up the state.
+    internalContext.setRemoteRenderInfo(callId, participantKey, streamId, renderInfo.stream, 'NotRendered', undefined);
   } else {
     _logDisposeStreamEvent(EventNames.REMOTE_RENDERER_NOT_FOUND, streamLogInfo);
   }
