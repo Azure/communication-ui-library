@@ -234,7 +234,7 @@ async function createViewVideo(
       convertFromSDKToDeclarativeVideoStreamRendererView(view)
     );
     _logCreateRemoteStreamEvent(EventNames.REMOTE_VIEW_RENDER_SUCCEED, streamLogInfo);
-  } else if (createViewType == 'local') {
+  } else if (createViewType === 'local') {
     internalContext.setLocalRenderInfo(callId, refreshedRenderInfo.stream as LocalVideoStream, 'Rendered', renderer);
     context.setLocalVideoStreamRendererView(callId, convertFromSDKToDeclarativeVideoStreamRendererView(view));
     _logCreateLocalStreamEvent(EventNames.LOCAL_VIEW_RENDER_SUCCEED, streamLogInfo);
