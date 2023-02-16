@@ -54,7 +54,7 @@ async function createViewVideo(
     // TODO update for when unparented view.
     createViewType = 'local';
   }
-  console.log(createViewType);
+
   if (stream) {
     streamType = stream.mediaStreamType;
     if (createViewType === 'remote') {
