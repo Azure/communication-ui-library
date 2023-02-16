@@ -39,7 +39,7 @@ import {
   getExistingThreadIdFromURL,
   getExistingTokenFromURL,
   getExistingUserIdFromURL
-} from './utils/getParamsFromURL';
+} from './utils/getParametersFromURL';
 import { joinThread } from './utils/joinThread';
 import { getEndpointUrl } from './utils/getEndpointUrl';
 
