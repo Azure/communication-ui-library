@@ -59,8 +59,6 @@ export class CallContext {
   private _emitter: EventEmitter;
   private _atomicId: number;
   private _callIdHistory: CallIdHistory = new CallIdHistory();
-  /* @conditional-compile-remove(video-background-effects) */
-  private _unparentedViewVideoEffectsSubscriber: LocalVideoStreamVideoEffectsSubscriber | undefined;
 
   constructor(
     userId: CommunicationIdentifierKind,
@@ -662,9 +660,6 @@ export class CallContext {
   }
 
   public deleteDeviceManagerUnparentedView(localVideoStream: LocalVideoStreamState): void {
-    /* @conditional-compile-remove(video-background-effects) */
-    this._unparentedViewVideoEffectsSubscriber?.unsubscribe();
-
     this.modifyState((draft: CallClientState) => {
       const foundIndex = draft.deviceManager.unparentedViews.findIndex(
         (stream) =>
