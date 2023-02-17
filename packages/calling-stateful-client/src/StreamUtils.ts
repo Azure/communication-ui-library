@@ -18,8 +18,6 @@ import {
 import { InternalCallContext } from './InternalCallContext';
 import { toFlatCommunicationIdentifier, _logEvent } from '@internal/acs-ui-common';
 import { callingStatefulLogger, EventNames } from './Logger';
-/* @conditional-compile-remove(video-background-effects) */
-import { Features } from '@azure/communication-calling';
 
 /**
  * Return result from {@link StatefulCallClient.createView}.
