@@ -35,6 +35,7 @@ export interface HermeticQueryArgs {
  */
 export interface CommonQueryArgs {
   customCompositeOptions?: CallWithChatCompositeOptions;
+  injectCustomButtons?: boolean;
 }
 
 /**
@@ -58,6 +59,7 @@ export function parseQueryArgs(): QueryArgs {
     fakeChatAdapterArgs: params.fakeChatAdapterArgs ? JSON.parse(params.fakeChatAdapterArgs) : undefined,
     mockCallAdapterState: params.mockCallAdapterState ? JSON.parse(params.mockCallAdapterState) : undefined,
 
-    customCompositeOptions: params.customCompositeOptions ? JSON.parse(params.customCompositeOptions) : undefined
+    customCompositeOptions: params.customCompositeOptions ? JSON.parse(params.customCompositeOptions) : undefined,
+    injectCustomButtons: params.injectCustomButtons === 'true'
   };
 }

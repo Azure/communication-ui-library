@@ -74,7 +74,7 @@ export class LocalVideoStreamVideoEffectsSubscriber {
     if (this._parent === 'unparented') {
       this._context.setDeviceManagerUnparentedViewVideoEffects(this._localVideoStream, newEffectsState);
     } else {
-      this._context.setCallLocalVideoStreamVideoEffects(this._parent.callId, this._localVideoStream, newEffectsState);
+      this._context.setCallLocalVideoStreamVideoEffects(this._parent.callId, newEffectsState);
     }
   };
 }

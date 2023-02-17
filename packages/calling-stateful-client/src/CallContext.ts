@@ -39,10 +39,6 @@ import { callingStatefulLogger } from './Logger';
 import { CallIdHistory } from './CallIdHistory';
 /* @conditional-compile-remove(video-background-effects) */
 import { LocalVideoStreamVideoEffectsState } from './CallClientState';
-/* @conditional-compile-remove(video-background-effects) */
-import { LocalVideoStreamVideoEffectsSubscriber } from './LocalVideoStreamVideoEffectsSubscriber';
-/* @conditional-compile-remove(video-background-effects) */
-import { VideoEffectsFeature } from '@azure/communication-calling';
 
 enableMapSet();
 // Needed to generate state diff for verbose logging.
@@ -273,7 +269,6 @@ export class CallContext {
   /* @conditional-compile-remove(video-background-effects) */
   public setCallLocalVideoStreamVideoEffects(
     callId: string,
-    localVideoStream: LocalVideoStreamState,
     videoEffects: Partial<LocalVideoStreamVideoEffectsState>
   ): void {
     this.modifyState((draft: CallClientState) => {
@@ -653,28 +648,15 @@ export class CallContext {
     });
   }
 
-  public setDeviceManagerUnparentedView(args: {
-    localVideoStream: LocalVideoStreamState;
-    view: VideoStreamRendererViewState | undefined;
-    /* @conditional-compile-remove(video-background-effects) */
-    localVideoStreamEffectsAPI: VideoEffectsFeature;
-  }): void {
-    /* @conditional-compile-remove(video-background-effects) */
-    {
-      this._unparentedViewVideoEffectsSubscriber?.unsubscribe();
-      this._unparentedViewVideoEffectsSubscriber = new LocalVideoStreamVideoEffectsSubscriber({
-        parent: 'unparented',
-        context: this,
-        localVideoStream: args.localVideoStream,
-        localVideoStreamEffectsAPI: args.localVideoStreamEffectsAPI
-      });
-    }
-
+  public setDeviceManagerUnparentedView(
+    localVideoStream: LocalVideoStreamState,
+    view: VideoStreamRendererViewState | undefined
+  ): void {
     this.modifyState((draft: CallClientState) => {
       draft.deviceManager.unparentedViews.push({
-        source: args.localVideoStream.source,
-        mediaStreamType: args.localVideoStream.mediaStreamType,
-        view: args.view
+        source: localVideoStream.source,
+        mediaStreamType: localVideoStream.mediaStreamType,
+        view: view
       });
     });
   }

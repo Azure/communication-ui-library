@@ -195,7 +195,7 @@ const MessageThreadStory = (args): JSX.Element => {
     // We dont want to render the status for previous messages
     existingChatMessages.forEach((message) => {
       if (message.messageType === 'chat') {
-        message.status = undefined;
+        message.status = 'seen';
       }
     });
     setChatMessages([...existingChatMessages, GenerateMockNewChatMessage()]);

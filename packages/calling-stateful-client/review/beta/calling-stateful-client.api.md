@@ -29,6 +29,7 @@ import { IncomingCall } from '@azure/communication-calling';
 import { IncomingCallCommon as IncomingCallCommon_2 } from '@azure/communication-calling';
 import { LatestMediaDiagnostics } from '@azure/communication-calling';
 import { LatestNetworkDiagnostics } from '@azure/communication-calling';
+import { LocalVideoStream } from '@azure/communication-calling';
 import { MediaStreamType } from '@azure/communication-calling';
 import { MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
 import { MicrosoftTeamsUserKind } from '@azure/communication-common';
@@ -264,6 +265,8 @@ export type StatefulCallClientOptions = {
 
 // @public
 export interface StatefulDeviceManager extends DeviceManager {
+    // @beta
+    getUnparentedVideoStreams: LocalVideoStream[];
     selectCamera: (VideoDeviceInfo: any) => void;
 }
 

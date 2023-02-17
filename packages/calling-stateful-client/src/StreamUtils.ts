@@ -398,16 +398,11 @@ async function createViewUnparentedVideo(
     context.deleteDeviceManagerUnparentedView(stream);
     return;
   }
-
   // Else the stream still exists and status is not telling us to stop rendering. Complete the render process by
   // updating the state.
   internalContext.setUnparentedRenderInfo(stream, localVideoStream, 'Rendered', renderer);
-  context.setDeviceManagerUnparentedView({
-    localVideoStream: stream,
-    view: convertFromSDKToDeclarativeVideoStreamRendererView(view),
-    /* @conditional-compile-remove(video-background-effects) */
-    localVideoStreamEffectsAPI: localVideoStream.feature(Features.VideoEffects)
-  });
+  internalContext.subscribeToUnparentedViewVideoEffects(localVideoStream, context);
+  context.setDeviceManagerUnparentedView(stream, convertFromSDKToDeclarativeVideoStreamRendererView(view));
 
   return {
     renderer,
