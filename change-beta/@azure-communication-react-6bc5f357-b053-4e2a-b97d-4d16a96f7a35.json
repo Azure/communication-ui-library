@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "updating calling dependencies for ui lib",
+  "packageName": "@azure/communication-react",
+  "email": "alkwa@microsoft.com",
+  "dependentChangeType": "patch"
+}
