@@ -744,6 +744,21 @@ export class CallContext {
     };
   }
 
+  /**
+   * Tees direct errors to state.
+   * @remarks
+   * This is typically used for errors that are caught and intended to be shown to the user.
+   *
+   * @param error The raw error to report.
+   * @param target The error target to tee error to.
+   *
+   * @private
+   */
+  public teeErrorToState = (error: Error, target: CallErrorTarget): void => {
+    const callError = toCallError(target, error);
+    this.setLatestError(target, callError);
+  };
+
   private setLatestError(target: CallErrorTarget, error: CallError): void {
     this.modifyState((draft: CallClientState) => {
       draft.latestErrors[target] = error;
