@@ -46,7 +46,7 @@ async function createViewVideo(
   let streamId;
   let streamType;
 
-  if (participantId && stream) {
+  if (participantId) {
     createViewType = 'remote';
   } else if (callId) {
     createViewType = 'local';
