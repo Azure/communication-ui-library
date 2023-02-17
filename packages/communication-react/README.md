@@ -24,7 +24,7 @@ you can most consistently use the API from the core libraries in your applicatio
 
 
 ```bash
-npm i @azure/communication-calling@1.4.4
+npm i @azure/communication-calling@1.10.1
 npm i @azure/communication-chat@1.1.0
 ```
 

@@ -2,7 +2,7 @@
  * This configuration file specifies NPM dependency version selections that affect all projects
  * in a Rush repo.  For full documentation, please see https://rushjs.io
  */
-{
+ {
   "$schema": "https://developer.microsoft.com/json-schemas/rush/v5/common-versions.schema.json",
 
   /**
@@ -25,7 +25,7 @@
      */
     // "some-library": "1.2.3"
     // This is the version for stable build (please also update allowedAlternativeVersions below)
-    "@azure/communication-calling": "1.4.4",
+    "@azure/communication-calling": "1.10.1",
     "@azure/communication-chat": "1.2.0"
   },
 
@@ -55,7 +55,7 @@
    */
   "allowedAlternativeVersions": {
     // This is the version for stable build (please also update preferredVersions above)
-    "@azure/communication-calling": ["1.4.4"],
+    "@azure/communication-calling": ["1.10.1"],
     "@azure/communication-chat": ["1.2.0"],
     "webpack": [
       // All projects should use this version by default
