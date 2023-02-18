@@ -19,7 +19,7 @@ import {
 import { InternalCallContext } from './InternalCallContext';
 import { toFlatCommunicationIdentifier, _logEvent } from '@internal/acs-ui-common';
 import { EventNames } from './Logger';
-import { _logCreateLocalStreamEvent, _logCreateRemoteStreamEvent, _logDisposeStreamEvent } from './StreamUtilsLogging';
+import { _logStreamEvent } from './StreamUtilsLogging';
 
 /**
  * Return result from {@link StatefulCallClient.createView}.
@@ -334,21 +334,21 @@ function disposeViewRemoteVideo(
     participantKey = toFlatCommunicationIdentifier(participantId);
   }
 
-  const streamLogInfo = { callId, participantKey, streamId, streamType };
+  const streamLogInfo = { callId, participantKey, streamId, streamType, streamEventType: 'disposeViewRemote' };
 
-  _logDisposeStreamEvent(EventNames.START_DISPOSE_REMOTE_STREAM, streamLogInfo);
+  _logStreamEvent(EventNames.START_DISPOSE_STREAM, streamLogInfo);
 
   context.setRemoteVideoStreamRendererView(callId, participantKey, streamId, undefined);
 
   const renderInfo = internalContext.getRemoteRenderInfoForParticipant(callId, participantKey, streamId);
   if (!renderInfo) {
-    _logDisposeStreamEvent(EventNames.REMOTE_DISPOSE_INFO_NOT_FOUND, streamLogInfo);
+    _logStreamEvent(EventNames.DISPOSE_INFO_NOT_FOUND, streamLogInfo);
     return;
   }
 
   // Nothing to dispose of or clean up -- we can safely exit early here.
   if (renderInfo.status === 'NotRendered') {
-    _logDisposeStreamEvent(EventNames.REMOTE_STREAM_ALREADY_DISPOSED, streamLogInfo);
+    _logStreamEvent(EventNames.STREAM_ALREADY_DISPOSED, streamLogInfo);
     return;
   }
 
@@ -356,7 +356,7 @@ function disposeViewRemoteVideo(
   // when the stream is being created in createView but hasn't been completed being created yet. The createView
   // method will see the "stopping" status and perform the cleanup
   if (renderInfo.status === 'Stopping') {
-    _logDisposeStreamEvent(EventNames.REMOTE_STREAM_STOPPING, streamLogInfo);
+    _logStreamEvent(EventNames.STREAM_STOPPING, streamLogInfo);
     return;
   }
 
@@ -364,36 +364,36 @@ function disposeViewRemoteVideo(
   // "stopping" without performing any cleanup. This will tell the `createView` method that it should stop
   // rendering and clean up the state once the view has finished being created.
   if (renderInfo.status === 'Rendering') {
-    _logDisposeStreamEvent(EventNames.REMOTE_STREAM_STOPPING, streamLogInfo);
+    _logStreamEvent(EventNames.STREAM_STOPPING, streamLogInfo);
     internalContext.setRemoteRenderInfo(callId, participantKey, streamId, renderInfo.stream, 'Stopping', undefined);
     return;
   }
 
   if (renderInfo.renderer) {
-    _logDisposeStreamEvent(EventNames.DISPOSING_REMOTE_RENDERER, streamLogInfo);
+    _logStreamEvent(EventNames.DISPOSING_RENDERER, streamLogInfo);
     renderInfo.renderer.dispose();
     // Else the state must be in the "Rendered" state, so we can dispose the renderer and clean up the state.
     internalContext.setRemoteRenderInfo(callId, participantKey, streamId, renderInfo.stream, 'NotRendered', undefined);
   } else {
-    _logDisposeStreamEvent(EventNames.REMOTE_RENDERER_NOT_FOUND, streamLogInfo);
+    _logStreamEvent(EventNames.RENDERER_NOT_FOUND, streamLogInfo);
   }
 }
 
 function disposeViewLocalVideo(context: CallContext, internalContext: InternalCallContext, callId: string): void {
   const renderInfo = internalContext.getLocalRenderInfo(callId);
   const streamType = renderInfo?.stream.mediaStreamType;
-  const streamLogInfo = { callId, streamType };
+  const streamLogInfo = { callId, streamType, streamEventType: 'disposeViewLocal' };
 
-  _logDisposeStreamEvent(EventNames.START_DISPOSE_LOCAL_STREAM, streamLogInfo);
+  _logStreamEvent(EventNames.START_DISPOSE_STREAM, streamLogInfo);
 
   if (!renderInfo) {
-    _logDisposeStreamEvent(EventNames.LOCAL_DISPOSE_INFO_NOT_FOUND, streamLogInfo);
+    _logStreamEvent(EventNames.DISPOSE_INFO_NOT_FOUND, streamLogInfo);
     return;
   }
 
   // Nothing to dispose of or clean up -- we can safely exit early here.
   if (renderInfo.status === 'NotRendered') {
-    _logDisposeStreamEvent(EventNames.LOCAL_STREAM_ALREADY_DISPOSED, streamLogInfo);
+    _logStreamEvent(EventNames.STREAM_ALREADY_DISPOSED, streamLogInfo);
     return;
   }
 
@@ -401,7 +401,7 @@ function disposeViewLocalVideo(context: CallContext, internalContext: InternalCa
   // when the stream is being created in createView but hasn't been completed being created yet. The createView
   // method will see the "stopping" status and perform the cleanup
   if (renderInfo.status === 'Stopping') {
-    _logDisposeStreamEvent(EventNames.LOCAL_STREAM_STOPPING, streamLogInfo);
+    _logStreamEvent(EventNames.STREAM_STOPPING, streamLogInfo);
     return;
   }
 
@@ -409,13 +409,13 @@ function disposeViewLocalVideo(context: CallContext, internalContext: InternalCa
   // "stopping" without performing any cleanup. This will tell the `createView` method that it should stop
   // rendering and clean up the state once the view has finished being created.
   if (renderInfo.status === 'Rendering') {
-    _logDisposeStreamEvent(EventNames.LOCAL_STREAM_STOPPING, streamLogInfo);
+    _logStreamEvent(EventNames.STREAM_STOPPING, streamLogInfo);
     internalContext.setLocalRenderInfo(callId, renderInfo.stream, 'Stopping', renderInfo.renderer);
     return;
   }
 
   if (renderInfo.renderer) {
-    _logDisposeStreamEvent(EventNames.DISPOSING_LOCAL_RENDERER, streamLogInfo);
+    _logStreamEvent(EventNames.DISPOSING_RENDERER, streamLogInfo);
     renderInfo.renderer.dispose();
 
     // We will after disposing of the renderer tell the internal context and context that the
@@ -423,7 +423,7 @@ function disposeViewLocalVideo(context: CallContext, internalContext: InternalCa
     internalContext.setLocalRenderInfo(callId, renderInfo.stream, 'NotRendered', undefined);
     context.setLocalVideoStreamRendererView(callId, undefined);
   } else {
-    _logDisposeStreamEvent(EventNames.LOCAL_RENDERER_NOT_FOUND, streamLogInfo);
+    _logStreamEvent(EventNames.RENDERER_NOT_FOUND, streamLogInfo);
   }
 }
 
@@ -433,30 +433,30 @@ function disposeViewUnparentedVideo(
   stream: LocalVideoStreamState
 ): void {
   const streamType = stream.mediaStreamType;
-  const streamLogInfo = { streamType };
+  const streamLogInfo = { streamType, streamEventType: 'disposeViewUnparented' };
 
-  _logDisposeStreamEvent(EventNames.START_DISPOSE_LOCAL_STREAM, streamLogInfo);
+  _logStreamEvent(EventNames.START_DISPOSE_STREAM, streamLogInfo);
 
   context.deleteDeviceManagerUnparentedView(stream);
 
   const renderInfo = internalContext.getUnparentedRenderInfo(stream);
   if (!renderInfo) {
-    _logDisposeStreamEvent(EventNames.LOCAL_DISPOSE_INFO_NOT_FOUND, streamLogInfo);
+    _logStreamEvent(EventNames.DISPOSE_INFO_NOT_FOUND, streamLogInfo);
     return;
   }
 
   if (renderInfo.status === 'Rendering') {
-    _logDisposeStreamEvent(EventNames.LOCAL_STREAM_STOPPING, streamLogInfo);
+    _logStreamEvent(EventNames.STREAM_STOPPING, streamLogInfo);
     internalContext.setUnparentedRenderInfo(stream, renderInfo.stream, 'Stopping', undefined);
   } else {
     internalContext.deleteUnparentedRenderInfo(stream);
   }
 
   if (renderInfo.renderer) {
-    _logDisposeStreamEvent(EventNames.DISPOSING_LOCAL_RENDERER, streamLogInfo);
+    _logStreamEvent(EventNames.DISPOSING_RENDERER, streamLogInfo);
     renderInfo.renderer.dispose();
   } else {
-    _logDisposeStreamEvent(EventNames.LOCAL_RENDERER_NOT_FOUND, streamLogInfo);
+    _logStreamEvent(EventNames.RENDERER_NOT_FOUND, streamLogInfo);
   }
 }
 
@@ -484,7 +484,7 @@ export function createView(
       'Call.startVideo'
     )();
   } else {
-    _logCreateLocalStreamEvent(EventNames.CREATE_STREAM_INVALID_PARAMS, { streamType });
+    _logStreamEvent(EventNames.CREATE_STREAM_INVALID_PARAMS, { streamType });
     return Promise.resolve(undefined);
   }
 }
@@ -515,7 +515,7 @@ export function disposeView(
       'Call.stopVideo'
     )();
   } else {
-    _logDisposeStreamEvent(EventNames.DISPOSE_STREAM_INVALID_PARAMS, { streamType });
+    _logStreamEvent(EventNames.DISPOSE_STREAM_INVALID_PARAMS, { streamType });
     return;
   }
 }
