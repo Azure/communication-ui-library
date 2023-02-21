@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IStyle } from '@fluentui/react';
-import React from 'react';
+import { IStyle, Stack } from '@fluentui/react';
+import React, { useMemo, useState } from 'react';
 import { BaseCustomStyles } from '../types';
 
 export interface VerticalGalleryStyles extends BaseCustomStyles {
@@ -34,10 +34,10 @@ export interface VerticalGalleryControlBarStyles extends BaseCustomStyles {
 export interface VerticalGalleryProps {
   /** Video tiles for the remote participants in the vertical gallery */
   children: React.ReactNode;
+  /** Max number of children per page in the vertical Gallery */
+  childrenPerPage: number;
   /** Styles to customize the vertical gallery */
   styles?: VerticalGalleryStyles;
-  /** Max number of children per page in the vertical Gallery */
-  childrenPerPage?: number;
 }
 
 interface VerticalGalleryControlBarProps {
@@ -55,9 +55,39 @@ interface VerticalGalleryControlBarProps {
  * @beta
  */
 export const VerticalGallery = (props: VerticalGalleryProps): JSX.Element => {
-  return <></>;
+  const { children, styles, childrenPerPage } = props;
+
+  const [page, setPage] = useState(0);
+
+  const numberOfChildren = React.Children.count(children);
+  const lastPage = Math.ceil(numberOfChildren / childrenPerPage) - 1;
+
+  const paginatedChildren: React.ReactNode[][] = useMemo(() => {
+    return bucketize(React.Children.toArray(children), childrenPerPage);
+  }, [children, childrenPerPage]);
+
+  return (
+    <Stack>
+      <Stack>{children}</Stack>
+      <VerticalGalleryControlBar></VerticalGalleryControlBar>
+    </Stack>
+  );
 };
 
 const VerticalGalleryControlBar = (props: VerticalGalleryControlBarProps): JSX.Element => {
   return <></>;
 };
+
+function bucketize<T>(arr: T[], bucketSize: number): T[][] {
+  const bucketArray: T[][] = [];
+
+  if (bucketSize <= 0) {
+    return bucketArray;
+  }
+
+  for (let i = 0; i < arr.length; i += bucketSize) {
+    bucketArray.push(arr.slice(i, i + bucketSize));
+  }
+
+  return bucketArray;
+}
