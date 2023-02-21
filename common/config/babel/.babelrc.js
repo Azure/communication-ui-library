@@ -46,7 +46,9 @@ process.env['COMMUNICATION_REACT_FLAVOR'] === 'stable' &&
         // feature for tracking environment info API different than unsupported browser. stable use of environment info affects other components possibly sooner
         'calling-environment-info',
         // feature for blurred background and replace background effects
-        'video-background-effects'
+        'video-background-effects',
+        // feature for new vertical gallery layouts in videoGallery
+        'vertical-gallery'
       ],
       // A list of stabilized features.
       // These features can be listed in the conditional compilation directives without

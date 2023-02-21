@@ -1,9 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IStyle, Stack } from '@fluentui/react';
+import { DefaultButton, IStyle, mergeStyles, Stack, Text } from '@fluentui/react';
 import React, { useMemo, useState } from 'react';
 import { BaseCustomStyles } from '../types';
+import { childrenContainerStyle } from './styles/VerticalGallery.styles';
 
 export interface VerticalGalleryStyles extends BaseCustomStyles {
   /** Styles for each video tile in the vertical gallery */
@@ -68,14 +69,20 @@ export const VerticalGallery = (props: VerticalGalleryProps): JSX.Element => {
 
   return (
     <Stack>
-      <Stack>{children}</Stack>
+      <Stack className={mergeStyles(childrenContainerStyle, { '> *': props.styles?.children })}>{children}</Stack>
       <VerticalGalleryControlBar></VerticalGalleryControlBar>
     </Stack>
   );
 };
 
 const VerticalGalleryControlBar = (props: VerticalGalleryControlBarProps): JSX.Element => {
-  return <></>;
+  return (
+    <Stack horizontal>
+      <DefaultButton></DefaultButton>
+      <Text></Text>
+      <DefaultButton></DefaultButton>
+    </Stack>
+  );
 };
 
 function bucketize<T>(arr: T[], bucketSize: number): T[][] {
