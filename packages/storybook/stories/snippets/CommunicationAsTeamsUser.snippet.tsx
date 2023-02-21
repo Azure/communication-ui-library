@@ -8,7 +8,7 @@ import {
   Profile
 } from '@azure/communication-react';
 import { PartialTheme, Theme } from '@fluentui/react';
-import React, { useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 
 export type ContainerProps = {
   userId: MicrosoftTeamsUserIdentifier;
@@ -33,16 +33,23 @@ export const ContosoCallContainer = (props: ContainerProps): JSX.Element => {
     }
   }, [props.token]);
 
-  // For multiple Azure Communication apps joining using teams identity,
+  // For multiple Azure Communication apps joining teh same Teams meeting,
   // you will need to provide displayName for other participants joining using Teams Identity,
   // otherwise "Unnamed Participant" would be shown as their default names.
-  const onFetchProfile = async (userId: string, defaultProfile?: Profile): Promise<Profile> => {
+  const onFetchProfile = useCallback(async (userId: string, defaultProfile?: Profile): Promise<Profile> => {
     if (defaultProfile?.displayName) {
       return defaultProfile;
     }
     // You can fetch the display name from GraphAPI or your backend service using userId
     return { displayName: 'Unnamed Teams User' };
-  };
+  }, []);
+
+  const options = useMemo(
+    () => ({
+      onFetchProfile
+    }),
+    [onFetchProfile]
+  );
 
   const adapter = useTeamsCallAdapter(
     {
@@ -53,9 +60,7 @@ export const ContosoCallContainer = (props: ContainerProps): JSX.Element => {
             meetingLink: props.meetingUrl
           }
         : undefined,
-      options: {
-        onFetchProfile
-      }
+      options
     },
     undefined,
     leaveCall
