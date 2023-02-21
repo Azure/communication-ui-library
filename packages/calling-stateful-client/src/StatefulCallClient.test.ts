@@ -6,7 +6,6 @@ import {
   DeviceManager,
   UserFacingDiagnosticsFeature,
   Features,
-  LocalVideoStream,
   RecordingCallFeature,
   TranscriptionCallFeature,
   VideoStreamRendererView,
@@ -25,6 +24,7 @@ import {
   createMockCall,
   createMockCallAgent,
   createMockCallClient,
+  createMockLocalVideoStream,
   createMockRemoteParticipant,
   createMockRemoteScreenshareStream,
   createMockRemoteVideoStream,
@@ -237,7 +237,7 @@ describe('Stateful call client', () => {
 
     {
       const listener = new StateChangeListener(client);
-      call.testHelperPushLocalVideoStream({} as LocalVideoStream);
+      call.testHelperPushLocalVideoStream(createMockLocalVideoStream());
       expect(await waitWithBreakCondition(() => client.getState().calls[callId]?.localVideoStreams.length !== 0)).toBe(
         true
       );
@@ -346,7 +346,7 @@ describe('Stateful call client', () => {
     const participantKey = toFlatCommunicationIdentifier(participant.identifier);
 
     // Add a local video stream as well.
-    call.testHelperPushLocalVideoStream({} as LocalVideoStream);
+    call.testHelperPushLocalVideoStream(createMockLocalVideoStream());
     expect(await waitWithBreakCondition(() => client.getState().calls[callId]?.localVideoStreams.length !== 0)).toBe(
       true
     );
@@ -638,7 +638,7 @@ describe('errors should be reported correctly from Call when', () => {
 
     {
       const listener = new StateChangeListener(client);
-      await expect(call.startVideo({} as LocalVideoStream)).rejects.toThrow(
+      await expect(call.startVideo(createMockLocalVideoStream())).rejects.toThrow(
         new CallError('Call.startVideo', new Error('startVideo: injected error'))
       );
       expect(listener.onChangeCalledCount).toBe(1);
@@ -646,7 +646,7 @@ describe('errors should be reported correctly from Call when', () => {
     }
     {
       const listener = new StateChangeListener(client);
-      await expect(call.stopVideo({} as LocalVideoStream)).rejects.toThrow(
+      await expect(call.stopVideo(createMockLocalVideoStream())).rejects.toThrow(
         new CallError('Call.stopVideo', new Error('stopVideo: injected error'))
       );
       expect(listener.onChangeCalledCount).toBe(1);
@@ -715,7 +715,7 @@ const prepareCall = async (): Promise<PreparedCall> => {
 const prepareCallWithLocalVideoStream = async (): Promise<PreparedCall> => {
   const prepared = await prepareCall();
   const { client, callId, call } = prepared;
-  call.testHelperPushLocalVideoStream({} as LocalVideoStream);
+  call.testHelperPushLocalVideoStream(createMockLocalVideoStream());
   expect(await waitWithBreakCondition(() => client.getState().calls[callId]?.localVideoStreams.length !== 0)).toBe(
     true
   );

@@ -6,6 +6,8 @@ import React, { useCallback, useMemo, useRef } from 'react';
 import { GridLayoutStyles } from '.';
 /* @conditional-compile-remove(pinned-participants) */
 import { Announcer } from './Announcer';
+/* @conditional-compile-remove(pinned-participants) */
+import { useEffect } from 'react';
 import { useLocale } from '../localization';
 import { useTheme } from '../theming';
 import {
@@ -299,6 +301,15 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
 
   /* @conditional-compile-remove(pinned-participants) */
   const [pinnedParticipantsState, setPinnedParticipantsState] = React.useState<string[]>([]);
+  /* @conditional-compile-remove(pinned-participants) */
+  useEffect(() => {
+    props.pinnedParticipants?.forEach((pinParticipant) => {
+      if (!props.remoteParticipants?.find((t) => t.userId === pinParticipant)) {
+        // warning will be logged in the console when invalid participant id is passed in pinned participants
+        console.warn('Invalid pinned participant UserId :' + pinParticipant);
+      }
+    });
+  }, [props.pinnedParticipants, props.remoteParticipants]);
   /* @conditional-compile-remove(pinned-participants) */
   // Use pinnedParticipants from props but if it is not defined use the maintained state of pinned participants
   const pinnedParticipants = props.pinnedParticipants ?? pinnedParticipantsState;

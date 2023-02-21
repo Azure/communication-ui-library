@@ -10,8 +10,8 @@ import process from "process";
  * @example node ./poll-npm-package-published.js 1.3.0
  */
 
-const POLL_INTERVAL_MS = 5000; // 5 seconds in millis
-const TIMEOUT_TIME_MS = 5 * 60 * 1000; // 5 minutes in millis
+const POLL_INTERVAL_MS = 30000; // 30 seconds in millis
+const TIMEOUT_TIME_MS = 15 * 60 * 1000; // 15 minutes in millis
 const GET_REQUEST_TIMEOUT_MS = 5000;
 
 const GET_REQUEST_OPTIONS = {

@@ -70,7 +70,7 @@ export const EndScreen = (props: EndCallProps): JSX.Element => {
       className={endChatContainerStyle}
     >
       <Stack tokens={upperStackTokens}>
-        <Text role={'heading'} aria-level={1} className={endChatTitleStyle}>
+        <Text role={'heading'} aria-level={1} aria-label={leftCall} aria-live={'polite'} className={endChatTitleStyle}>
           {leftCall}
         </Text>
         <Stack horizontal wrap tokens={buttonsStackTokens}>

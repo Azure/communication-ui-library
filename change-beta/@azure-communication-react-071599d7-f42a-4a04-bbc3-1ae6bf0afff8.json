@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Added stream type in stream logs",
+  "packageName": "@azure/communication-react",
+  "email": "carolinecao@microsoft.com",
+  "dependentChangeType": "patch"
+}

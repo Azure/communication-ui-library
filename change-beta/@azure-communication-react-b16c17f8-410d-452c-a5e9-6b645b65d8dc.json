@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Remove emoji from testing that causes failures when emojis update.",
+  "packageName": "@azure/communication-react",
+  "email": "94866715+dmceachernmsft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
