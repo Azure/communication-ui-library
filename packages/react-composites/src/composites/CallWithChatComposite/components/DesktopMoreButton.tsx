@@ -18,7 +18,11 @@ import { useLocale } from '../../localization';
 /* @conditional-compile-remove(control-bar-button-injection) */
 import { CallWithChatControlOptions } from '../CallWithChatComposite';
 /* @conditional-compile-remove(control-bar-button-injection) */
-import { generateCustomCallWithChatDrawerButtons, onFetchCustomButtonPropsTrampoline } from '../CustomButton';
+import {
+  CUSTOM_BUTTON_OPTIONS,
+  generateCustomCallWithChatDesktopOverflowButtons,
+  onFetchCustomButtonPropsTrampoline
+} from '../CustomButton';
 
 /** @private */
 export interface DesktopMoreButtonProps extends ControlBarButtonProps {
@@ -82,7 +86,7 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
   /* @conditional-compile-remove(control-bar-button-injection) */
   const customDrawerButtons = useMemo(
     () =>
-      generateCustomCallWithChatDrawerButtons(
+      generateCustomCallWithChatDesktopOverflowButtons(
         onFetchCustomButtonPropsTrampoline(typeof props.callControls === 'object' ? props.callControls : undefined),
         typeof props.callControls === 'object' ? props.callControls.displayType : undefined
       ),
@@ -90,7 +94,28 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
   );
 
   /* @conditional-compile-remove(control-bar-button-injection) */
-  customDrawerButtons['overflow']?.props.children.forEach((element) => {
+  customDrawerButtons['primary'].slice(CUSTOM_BUTTON_OPTIONS.MAX_PRIMARY_DESKTOP_CUSTOM_BUTTONS).forEach((element) => {
+    moreButtonContextualMenuItems.push({
+      itemProps: {
+        styles: buttonFlyoutIncreasedSizeStyles
+      },
+      ...element
+    });
+  });
+  /* @conditional-compile-remove(control-bar-button-injection) */
+  customDrawerButtons['secondary']
+    .slice(CUSTOM_BUTTON_OPTIONS.MAX_SECONDARY_DESKTOP_CUSTOM_BUTTONS)
+    .forEach((element) => {
+      moreButtonContextualMenuItems.push({
+        itemProps: {
+          styles: buttonFlyoutIncreasedSizeStyles
+        },
+        ...element
+      });
+    });
+
+  /* @conditional-compile-remove(control-bar-button-injection) */
+  customDrawerButtons['overflow'].forEach((element) => {
     moreButtonContextualMenuItems.push({
       itemProps: {
         styles: buttonFlyoutIncreasedSizeStyles
