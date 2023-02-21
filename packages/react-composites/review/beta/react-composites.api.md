@@ -1295,7 +1295,7 @@ export type NetworkDiagnosticChangedEvent = NetworkDiagnosticChangedEventArgs & 
 };
 
 // @beta
-export type OnFetchProfileCallback = (userId: string) => Promise<Profile | undefined>;
+export type OnFetchProfileCallback = (userId: string, defaultProfile?: Profile) => Promise<Profile | undefined>;
 
 // @public
 export type ParticipantsAddedListener = (event: {
