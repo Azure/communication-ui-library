@@ -1,10 +1,16 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { DefaultButton, IStyle, mergeStyles, Stack, Text } from '@fluentui/react';
-import React, { useMemo, useState } from 'react';
+import { DefaultButton, Icon, IStyle, mergeStyles, Stack, Text } from '@fluentui/react';
+import React, { useEffect, useMemo, useState } from 'react';
+import { useTheme } from '../theming';
 import { BaseCustomStyles } from '../types';
-import { childrenContainerStyle } from './styles/VerticalGallery.styles';
+import {
+  childrenContainerStyle,
+  controlBarContainerStyle,
+  leftRightButtonStyles,
+  rootStyle
+} from './styles/VerticalGallery.styles';
 
 export interface VerticalGalleryStyles extends BaseCustomStyles {
   /** Styles for each video tile in the vertical gallery */
@@ -42,10 +48,11 @@ export interface VerticalGalleryProps {
 }
 
 interface VerticalGalleryControlBarProps {
-  onNextButtonClick?: () => void;
-  onPreviousButtonClick?: () => void;
-  buttonsDisabled?: { next: boolean; previous: boolean };
-  totalPages?: number;
+  onNextButtonClick: () => void;
+  onPreviousButtonClick: () => void;
+  buttonsDisabled: { next: boolean; previous: boolean };
+  totalPages: number;
+  currentPage: number;
   styles?: VerticalGalleryControlBarStyles;
 }
 
@@ -59,6 +66,7 @@ export const VerticalGallery = (props: VerticalGalleryProps): JSX.Element => {
   const { children, styles, childrenPerPage } = props;
 
   const [page, setPage] = useState(0);
+  const [buttonState, setButtonState] = useState<{ previous: boolean; next: boolean }>({ previous: true, next: true });
 
   const numberOfChildren = React.Children.count(children);
   const lastPage = Math.ceil(numberOfChildren / childrenPerPage) - 1;
@@ -67,20 +75,76 @@ export const VerticalGallery = (props: VerticalGalleryProps): JSX.Element => {
     return bucketize(React.Children.toArray(children), childrenPerPage);
   }, [children, childrenPerPage]);
 
+  if (childrenPerPage <= 0) {
+    return <></>;
+  }
+
+  const firstIndexOfCurrentPage = page * childrenPerPage;
+  const clippedPage = firstIndexOfCurrentPage < numberOfChildren - 1 ? page : lastPage;
+  const childrenOnCurrentPage = paginatedChildren[clippedPage];
+
+  const showButtons = numberOfChildren > childrenPerPage;
+
+  const onPreviousButtonClick = () => {
+    setPage(page - 1);
+  };
+  const onNextButtonClick = () => {
+    setPage(page + 1);
+  };
+
+  useEffect(() => {
+    if (page > 0 && page < lastPage && showButtons) {
+      // we are somewhere in between first and last pages.
+      setButtonState({ previous: false, next: false });
+    } else if (page === 0 && showButtons) {
+      // we are on the first page.
+      setButtonState({ previous: true, next: false });
+    } else if (page === lastPage && showButtons) {
+      // we are on the last page.
+      setButtonState({ previous: false, next: true });
+    }
+  }, [page]);
+
   return (
-    <Stack>
-      <Stack className={mergeStyles(childrenContainerStyle, { '> *': props.styles?.children })}>{children}</Stack>
-      <VerticalGalleryControlBar></VerticalGalleryControlBar>
+    <Stack className={mergeStyles(rootStyle, styles?.root)}>
+      <Stack className={mergeStyles(childrenContainerStyle, { '> *': styles?.children })}>
+        {childrenOnCurrentPage}
+      </Stack>
+      {showButtons && (
+        <VerticalGalleryControlBar
+          buttonsDisabled={buttonState}
+          onPreviousButtonClick={onPreviousButtonClick}
+          onNextButtonClick={onNextButtonClick}
+          totalPages={lastPage}
+          currentPage={page}
+        />
+      )}
     </Stack>
   );
 };
 
 const VerticalGalleryControlBar = (props: VerticalGalleryControlBarProps): JSX.Element => {
+  const { onNextButtonClick, onPreviousButtonClick, buttonsDisabled, currentPage, totalPages, styles } = props;
+  const theme = useTheme();
   return (
-    <Stack horizontal>
-      <DefaultButton></DefaultButton>
-      <Text></Text>
-      <DefaultButton></DefaultButton>
+    <Stack horizontal className={mergeStyles(controlBarContainerStyle, styles?.root)}>
+      <DefaultButton
+        className={mergeStyles(leftRightButtonStyles(theme), styles?.previousButton)}
+        onClick={onPreviousButtonClick}
+        disabled={buttonsDisabled?.previous}
+        styles={{ root: styles?.previousButton }}
+      >
+        <Icon iconName="VerticalGalleryLeftButton" />
+      </DefaultButton>
+      <Text>{`${currentPage} / ${totalPages}`}</Text>
+      <DefaultButton
+        className={mergeStyles(leftRightButtonStyles(theme), styles?.nextButton)}
+        onClick={onNextButtonClick}
+        disabled={buttonsDisabled?.next}
+        styles={{ root: styles?.nextButton }}
+      >
+        <Icon iconName="VerticalGalleryRightButton" />
+      </DefaultButton>
     </Stack>
   );
 };
