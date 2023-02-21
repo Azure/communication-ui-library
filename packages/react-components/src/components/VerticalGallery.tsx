@@ -104,7 +104,7 @@ export const VerticalGallery = (props: VerticalGalleryProps): JSX.Element => {
       // we are on the last page.
       setButtonState({ previous: false, next: true });
     }
-  }, [page]);
+  }, [page, numberOfChildren]);
 
   return (
     <Stack className={mergeStyles(rootStyle, styles?.root)}>
