@@ -11,7 +11,7 @@ import { createParticipantModifier } from '../utils';
  *
  * @beta
  */
-export type OnFetchProfileCallback = (userId: string, displayName?: string) => Promise<Profile | undefined>;
+export type OnFetchProfileCallback = (userId: string, defaultProfile?: Profile) => Promise<Profile | undefined>;
 
 /**
  * The profile of a user.
@@ -44,7 +44,7 @@ export const createProfileStateModifier = (
         if (cachedDisplayName[key]) {
           continue;
         }
-        const profile = await onFetchProfile(key, originalParticipants[key].displayName);
+        const profile = await onFetchProfile(key, { displayName: originalParticipants[key].displayName });
         if (profile?.displayName && originalParticipants[key].displayName !== profile?.displayName) {
           cachedDisplayName[key] = profile?.displayName;
         }
