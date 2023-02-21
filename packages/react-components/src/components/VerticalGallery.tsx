@@ -11,11 +11,12 @@ import {
   leftRightButtonStyles,
   rootStyle
 } from './styles/VerticalGallery.styles';
+import { bucketize } from './utils/overFlowGalleriesUtils';
 
 export interface VerticalGalleryStyles extends BaseCustomStyles {
   /** Styles for each video tile in the vertical gallery */
   children?: IStyle;
-  /** Styles for the previous button in the verticalGallery control bar */
+  /** Styles for the verticalGallery control bar */
   controlBar?: VerticalGalleryControlBarStyles;
 }
 
@@ -148,17 +149,3 @@ const VerticalGalleryControlBar = (props: VerticalGalleryControlBarProps): JSX.E
     </Stack>
   );
 };
-
-function bucketize<T>(arr: T[], bucketSize: number): T[][] {
-  const bucketArray: T[][] = [];
-
-  if (bucketSize <= 0) {
-    return bucketArray;
-  }
-
-  for (let i = 0; i < arr.length; i += bucketSize) {
-    bucketArray.push(arr.slice(i, i + bucketSize));
-  }
-
-  return bucketArray;
-}
