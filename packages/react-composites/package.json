@@ -51,7 +51,7 @@
     "@azure/core-rest-pipeline": "~1.9.2",
     "@fluentui/react-file-type-icons": "~8.5.8",
     "@fluentui/react-hooks": "~8.6.12",
-    "@fluentui/react-icons": "~1.1.145",
+    "@fluentui/react-icons": "~2.0.194",
     "@fluentui/react": "~8.98.3",
     "@internal/acs-ui-common": "1.5.1-beta.0",
     "@internal/calling-component-bindings": "1.5.1-beta.0",

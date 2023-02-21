@@ -2,10 +2,9 @@
 // Licensed under the MIT license.
 
 // eslint-disable-next-line no-restricted-imports
-import { Icon } from '@fluentui/react';
-import { ControlBarButton } from '@internal/react-components';
+import { Icon, IContextualMenuItem, mergeStyleSets } from '@fluentui/react';
+import { ControlBarButton, _DrawerMenuItemProps } from '@internal/react-components';
 import React from 'react';
-import { generateCustomControlBarButtonStrings } from '../CallComposite/components/buttons/Custom';
 import {
   CallControlDisplayType,
   CustomCallControlButtonCallbackArgs,
@@ -27,85 +26,122 @@ export const CUSTOM_BUTTON_OPTIONS = {
 };
 
 /** @private */
-export type CustomButtons = { [key in CustomCallWithChatControlButtonPlacement]: JSX.Element | undefined };
+export type CustomButtons = {
+  [key in CustomCallWithChatControlButtonPlacement]: typeof ControlBarButton[] | undefined;
+};
 
 /** @private */
 export const generateCustomCallWithChatControlBarButton = (
   onFetchCustomButtonProps?: CustomCallWithChatControlButtonCallback[],
   displayType?: CallControlDisplayType
 ): CustomButtons => {
-  const response = {
-    primary: undefined,
-    secondary: undefined,
-    overflow: undefined
+  const allButtonProps = onFetchCustomButtonProps?.map((callback) => callback({ displayType }));
+
+  return {
+    primary: generateCustomControlBarButtons('primary', allButtonProps),
+    secondary: generateCustomControlBarButtons('secondary', allButtonProps),
+    overflow: generateCustomControlBarButtons('overflow', allButtonProps)
   };
+};
 
-  if (!onFetchCustomButtonProps) {
-    return response;
-  }
+/** @private */
+const generateCustomControlBarButtons = (
+  placement: CustomCallWithChatControlButtonPlacement,
+  customButtons?: CustomCallWithChatControlButtonProps[]
+): typeof ControlBarButton[] =>
+  customButtons
+    ? customButtons
+        .filter((buttonProps) => buttonProps.placement === placement)
+        .map((buttonProps, i) => (internalProps) => (
+          <ControlBarButton
+            ariaDescription={buttonProps.ariaDescription ?? internalProps.ariaDescription}
+            ariaLabel={buttonProps.ariaLabel ?? internalProps.ariaLabel}
+            disabled={buttonProps.disabled ?? internalProps.disabled}
+            id={buttonProps.id ?? internalProps.id}
+            key={buttonProps.key ?? `${buttonProps.placement}_${i}`}
+            onClick={buttonProps.onItemClick ?? internalProps.onClick}
+            onRenderIcon={() => (
+              <Icon iconName={buttonProps.iconName ?? internalProps.iconProps?.iconName ?? 'ControlButtonOptions'} />
+            )}
+            showLabel={buttonProps.showLabel ?? internalProps.showLabel}
+            text={buttonProps.text ?? internalProps.text}
+            styles={mergeStyleSets(internalProps.styles, buttonProps.styles)}
+          />
+        ))
+    : [];
 
-  const allButtonProps = onFetchCustomButtonProps.map((f) => f({ displayType }));
+/** @private */
+const generateCustomDrawerButtons = (
+  placement: CustomCallWithChatControlButtonPlacement,
+  customButtons?: CustomCallWithChatControlButtonProps[]
+): _DrawerMenuItemProps[] =>
+  customButtons
+    ? customButtons
+        .filter((buttonProps) => buttonProps.placement === placement)
+        .map(
+          (buttonProps, i): _DrawerMenuItemProps => ({
+            ...buttonProps,
+            disabled: buttonProps.disabled,
+            iconProps: { iconName: buttonProps.iconName },
+            id: buttonProps.id,
+            itemKey: buttonProps.key ? '' + buttonProps.key : `${buttonProps.placement}_${i}`,
+            onItemClick: buttonProps.onItemClick,
+            text: buttonProps.text
+          })
+        )
+    : [];
 
-  for (const key in response) {
-    response[key] = (
-      <>
-        {allButtonProps
-          .filter((buttonProps) => buttonProps.placement === key)
-          .map((buttonProps, i) => (
-            <ControlBarButton
-              ariaDescription={buttonProps.ariaDescription}
-              ariaLabel={buttonProps.ariaLabel}
-              disabled={buttonProps.disabled}
-              id={buttonProps.id}
-              key={buttonProps.key ?? `${buttonProps.placement}_${i}`}
-              onClick={buttonProps.onItemClick}
-              onRenderIcon={() => <Icon iconName={buttonProps.iconName ?? 'ControlButtonOptions'} />}
-              showLabel={buttonProps.showLabel}
-              strings={generateCustomControlBarButtonStrings(buttonProps.text)}
-              styles={buttonProps.styles}
-            />
-          ))}
-      </>
-    );
-  }
-  return response;
+/** @private */
+export type CustomDrawerButtons = {
+  [key in CustomCallWithChatControlButtonPlacement]: _DrawerMenuItemProps[];
 };
 
 /** @private */
 export const generateCustomCallWithChatDrawerButtons = (
   onFetchCustomButtonProps?: CustomCallWithChatControlButtonCallback[],
   displayType?: CallControlDisplayType
-): CustomButtons => {
-  const response = {
-    primary: undefined,
-    secondary: undefined,
-    overflow: undefined
+): CustomDrawerButtons => {
+  const customButtons = onFetchCustomButtonProps?.map((callback) => callback({ displayType }));
+  return {
+    primary: generateCustomDrawerButtons('primary', customButtons),
+    secondary: generateCustomDrawerButtons('secondary', customButtons),
+    overflow: generateCustomDrawerButtons('overflow', customButtons)
   };
-
-  if (!onFetchCustomButtonProps) {
-    return response;
-  }
-
-  const allButtonProps = onFetchCustomButtonProps.map((f) => f({ displayType }));
-
-  for (const key in response) {
-    response[key] = (
-      <>
-        {allButtonProps
-          .filter((buttonProps) => buttonProps.placement === key)
-          .map((buttonProps, i) => ({
-            disabled: buttonProps.disabled,
-            id: buttonProps.id,
-            iconProps: { iconName: buttonProps.iconName },
-            itemKey: buttonProps.key ?? `${buttonProps.placement}_${i}`,
-            onItemClick: buttonProps.onItemClick,
-            text: buttonProps.text
-          }))}
-      </>
-    );
-  }
-  return response;
 };
+
+/** @private */
+export type CustomDesktopOverflowButtons = {
+  [key in CustomCallWithChatControlButtonPlacement]: IContextualMenuItem[];
+};
+
+/** @private */
+export const generateCustomCallWithChatDesktopOverflowButtons = (
+  onFetchCustomButtonProps?: CustomCallWithChatControlButtonCallback[],
+  displayType?: CallControlDisplayType
+): CustomDesktopOverflowButtons => {
+  const customButtons = onFetchCustomButtonProps?.map((callback) => callback({ displayType }));
+  return {
+    primary: generateCustomDrawerButtons('primary', customButtons).map(drawerMenuItemToContextualMenuItem),
+    secondary: generateCustomDrawerButtons('secondary', customButtons).map(drawerMenuItemToContextualMenuItem),
+    overflow: generateCustomDrawerButtons('overflow', customButtons).map(drawerMenuItemToContextualMenuItem)
+  };
+};
+
+/** @private */
+export const drawerMenuItemToContextualMenuItem = (item: _DrawerMenuItemProps): IContextualMenuItem => ({
+  ...item,
+  key: item.itemKey,
+  onClick: item.onItemClick
+    ? (ev) => {
+        item.onItemClick?.(ev);
+      }
+    : undefined,
+  subMenuProps: item.subMenuProps
+    ? {
+        items: item.subMenuProps.map(drawerMenuItemToContextualMenuItem)
+      }
+    : undefined
+});
 
 /**
  * A callback that returns the props to render a custom {@link ControlBarButton} and {@link DrawerMenuItem}.
