@@ -33,8 +33,8 @@ export const ContosoCallContainer = (props: ContainerProps): JSX.Element => {
     }
   }, [props.token]);
 
-  // For multiple Azure Communication apps joining teh same Teams meeting,
-  // you will need to provide displayName for other participants joining using Teams Identity,
+  // For multiple Azure Communication apps joining the same Teams meeting,
+  // you will need to provide a displayName for other participants joining using Teams Identity,
   // otherwise "Unnamed Participant" would be shown as their default names.
   const onFetchProfile = useCallback(async (userId: string, defaultProfile?: Profile): Promise<Profile> => {
     if (defaultProfile?.displayName) {
