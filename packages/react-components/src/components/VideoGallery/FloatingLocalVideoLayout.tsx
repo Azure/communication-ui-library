@@ -66,7 +66,7 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
   const [overflowGalleryPosition, setOverflowGalleryPosition] = useState<'vertical' | 'horizontal'>('vertical');
 
   useEffect(() => {
-    if (parentWidth && parentHeight && parentWidth > parentHeight) {
+    if (parentWidth && parentHeight && parentWidth / parentHeight > 1.7775) {
       setOverflowGalleryPosition('vertical');
     } else {
       setOverflowGalleryPosition('horizontal');
