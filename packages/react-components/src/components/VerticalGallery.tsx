@@ -13,6 +13,9 @@ import {
 } from './styles/VerticalGallery.styles';
 import { bucketize } from './utils/overFlowGalleriesUtils';
 
+/**
+ * Styles for the VerticalGallery component
+ */
 export interface VerticalGalleryStyles extends BaseCustomStyles {
   /** Styles for each video tile in the vertical gallery */
   children?: IStyle;
@@ -20,6 +23,9 @@ export interface VerticalGalleryStyles extends BaseCustomStyles {
   controlBar?: VerticalGalleryControlBarStyles;
 }
 
+/**
+ * Styles for the control bar inside the VerticalGallery component
+ */
 export interface VerticalGalleryControlBarStyles extends BaseCustomStyles {
   /**
    * styles for the next button in the VerticalGalleryControlBar
@@ -76,20 +82,16 @@ export const VerticalGallery = (props: VerticalGalleryProps): JSX.Element => {
     return bucketize(React.Children.toArray(children), childrenPerPage);
   }, [children, childrenPerPage]);
 
-  if (childrenPerPage <= 0) {
-    return <></>;
-  }
-
   const firstIndexOfCurrentPage = page * childrenPerPage;
   const clippedPage = firstIndexOfCurrentPage < numberOfChildren - 1 ? page : lastPage;
   const childrenOnCurrentPage = paginatedChildren[clippedPage];
 
   const showButtons = numberOfChildren > childrenPerPage;
 
-  const onPreviousButtonClick = () => {
+  const onPreviousButtonClick = (): void => {
     setPage(page - 1);
   };
-  const onNextButtonClick = () => {
+  const onNextButtonClick = (): void => {
     setPage(page + 1);
   };
 
@@ -104,7 +106,11 @@ export const VerticalGallery = (props: VerticalGalleryProps): JSX.Element => {
       // we are on the last page.
       setButtonState({ previous: false, next: true });
     }
-  }, [page, numberOfChildren]);
+  }, [page, numberOfChildren, lastPage, showButtons]);
+
+  if (childrenPerPage <= 0) {
+    return <></>;
+  }
 
   return (
     <Stack className={mergeStyles(rootStyle, styles?.root)}>
