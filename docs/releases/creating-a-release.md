@@ -37,7 +37,7 @@ Use the [create-prerelease-branch](https://github.com/Azure/communication-ui-lib
 This section describes what the workflow above does. Understanding the workflow actions is useful in case the workflow fails.
 
 1. Create a `prerelease/<release-tag>` branch, bump the package version for `@azure/communication-react` as appropriate and collect all change files into a changelog.
-1. Creates another branch for manually summarizing the changes collected in the changelog and ~~opens a Pull Request into the `prerelease/<release-tag>`~~ per [security policy](https://aka.ms/opensource/actions-changes-230217) you must open a PR manually of this new branch (`groom-changelog/<release-tag>`) into the prerelease branch (`prerelease/<release-tag>`). **Merge this PR before going to step 1.2**.
+1. Creates another branch for manually summarizing the changes collected in the changelog and ~~opens a Pull Request into the `prerelease/<release-tag>`~~ per [security policy](https://aka.ms/opensource/actions-changes-230217) you must open a PR manually of this new branch (`groom-changelog/<release-tag>`) into the prerelease branch (`prerelease/<release-tag>`). **Merge this PR before going to `Step 1.2: Create release branch`**.
     1. This step will also create a file called `GROOMME.md` which should be deleted when completing the PR back into the pre-release branch to signify that the changelog has been manually groomed.
     1. See [tips for how to prune the generated changelog](./pruning-a-changelog.md) into a readable summary of the release.
 
