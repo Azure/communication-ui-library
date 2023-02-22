@@ -19,7 +19,7 @@ import {
 
 const messageArray = [
   'Hello ACS!',
-  'Congratulations! You can see this message because you successfully passed in a connection string!',
+  'Congratulations! You can see this message because you successfully passed in the Identity & User Tokens!',
   'In production environment, it is recommended to issue tokens in server side.',
   'You can also issue a token by creating your own server and input them in required tab below.',
   'Have fun!'
