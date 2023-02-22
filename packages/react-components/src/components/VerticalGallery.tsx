@@ -114,8 +114,10 @@ export const VerticalGallery = (props: VerticalGalleryProps): JSX.Element => {
 
   return (
     <Stack className={mergeStyles(rootStyle, styles?.root)}>
-      <Stack className={mergeStyles(childrenContainerStyle, { '> *': styles?.children })}>
-        {childrenOnCurrentPage}
+      <Stack styles={{ root: childrenContainerStyle }}>
+        {childrenOnCurrentPage.map((child) => {
+          return <Stack.Item styles={{ root: styles?.children }}>{child}</Stack.Item>;
+        })}
       </Stack>
       {showButtons && (
         <VerticalGalleryControlBar
