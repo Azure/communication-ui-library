@@ -48,7 +48,7 @@ export function _useFakeChatAdapters(args: _FakeChatAdapterArgs): _FakeChatAdapt
         args.localParticipantPosition
       );
       const chatClient = new FakeChatClient(chatClientModel, args.localParticipant.id);
-      const thread = await chatClient.createChatThread({ topic: 'Cowabunga' }, { participants });
+      const thread = await chatClient.createChatThread({ topic: args.topic ?? 'Cowabunga' }, { participants });
       const threadId = thread?.chatThread?.id ?? '';
       const chatThreadClient = chatClient.getChatThreadClient(threadId);
       const adapter = await initializeAdapter(
