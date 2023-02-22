@@ -25,6 +25,9 @@ export const rootStyle: IStyle = {
   gap: `${VERTICAL_GALLERY_GAP}rem`
 };
 
+/**
+ * @private
+ */
 export const controlBarContainerStyle: IStyle = {
   height: '2rem'
 };
