@@ -79,8 +79,9 @@ function _logDisposeStreamEvent(
         data: streamLogInfo
       });
       return;
+    default:
+      return;
   }
-  return;
 }
 
 /**
@@ -194,8 +195,9 @@ function _logCreateStreamEvent(
         data: streamLogInfo
       });
       return;
+    default:
+      return;
   }
-  return;
 }
 
 /**
