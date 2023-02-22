@@ -136,12 +136,9 @@ jobs:
           git commit -m 'Create groom me file for groom changelog branch'
           git push -u origin ${{ steps.groombranch.outputs.groombranch }}
 
-      # Create a PR from the changes
-      - name: Create PR
+      - name: REMOVED - DO THIS MANUALLY! Create PR of changelog branch to pre-release branch
         run: |
-          curl \
-            -X POST \
-            -H 'Accept: application/vnd.github.v3+json' \
-            -H 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
-            https://api.github.com/repos/Azure/communication-ui-library/pulls \
-            -d '{ "title":"${{ steps.version.outputs.version }} groom branch -> pre-release branch", "head":"${{ steps.groombranch.outputs.groombranch }}", "base":"${{ steps.prereleasebranch.outputs.prereleasebranch }}", "body":"Groom pre-release branch for ${{ steps.version.outputs.version }} Please groom CHANGELOG.md in this branch. Created by the `${{ github.event.inputs.bump_type }} pre-release branch - create` GitHub action. Please review." }'
+          echo "Creating pull requests by GitHub Action is no longer supported per Microsoft Open Source Security Policy."
+          echo "Please create a pull request manually from ${{ steps.groombranch.outputs.groombranch }} to ${{ steps.prereleasebranch.outputs.prereleasebranch }}."
+          echo "In the PR description please include the following text: `Please groom CHANGELOG.md in this branch`."
+          echo "See example: https://github.com/Azure/communication-ui-library/pull/2694"
