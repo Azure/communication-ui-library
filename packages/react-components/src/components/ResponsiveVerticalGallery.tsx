@@ -7,11 +7,21 @@ import React, { useRef } from 'react';
 import { _useContainerHeight } from './utils/responsive';
 import { VerticalGallery, VerticalGalleryStyles } from './VerticalGallery';
 
+/**
+ * Props for the Responsive wrapper of the VerticalGallery component
+ *
+ * @beta
+ */
 export interface ResponsiveVerticalGalleryProps {
+  /** Video tiles to be rendered in the Vertical Gallery */
   children: React.ReactNode;
+  /** Styles for the Children space container */
   containerStyles: IStyle;
+  /** Styles for the VerticalGallery component */
   verticalGalleryStyles: VerticalGalleryStyles;
+  /** Height of the gap in between the video tiles */
   gapHeightRem: number;
+  /** Height of the control bar for navigating pages */
   controlBarHeightRem?: number;
 }
 

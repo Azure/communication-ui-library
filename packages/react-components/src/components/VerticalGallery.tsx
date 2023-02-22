@@ -116,7 +116,11 @@ export const VerticalGallery = (props: VerticalGalleryProps): JSX.Element => {
     <Stack className={mergeStyles(rootStyle, styles?.root)}>
       <Stack styles={{ root: childrenContainerStyle }}>
         {childrenOnCurrentPage.map((child) => {
-          return <Stack.Item styles={{ root: styles?.children }}>{child}</Stack.Item>;
+          return (
+            <Stack.Item key={childrenOnCurrentPage.indexOf(child)} styles={{ root: styles?.children }}>
+              {child}
+            </Stack.Item>
+          );
         })}
       </Stack>
       {showButtons && (
