@@ -73,7 +73,7 @@ const calculateChildrenPerPage = (args: {
    *
    *      <   n/m   >
    *
-   * number of children = container height - (2* gap width + button height) / childMinHeight
+   * number of children = container height - (2* gap height + button height) / childMinHeight
    *
    * we want to find the maximum number of children at the smallest size we can fit in the gallery and then resize them
    * to fill in the space as much as possible
@@ -96,7 +96,7 @@ const calculateChildrenPerPage = (args: {
   const childSpace = containerHeight - controlBarHeightPx - 2 * gapHeightPx;
   /**
    * Now that we have the childrenSpace height we can figure out how many Children can fir in the childrenSpace.
-   * childrenSpace = n * childHeightMin + (n - 1) * gapWidth. isolate n and take the floor.
+   * childrenSpace = n * childHeightMin + (n - 1) * gapHeight. isolate n and take the floor.
    */
   return Math.floor((childSpace + gapHeightPx) / (childMinHeightPx + gapHeightPx));
 };
