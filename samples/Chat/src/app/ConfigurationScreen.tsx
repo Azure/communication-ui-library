@@ -149,9 +149,7 @@ export default (props: ConfigurationScreenProps): JSX.Element => {
           setConfigurationScreenState(CONFIGURATIONSCREEN_SHOWING_INVALID_THREAD);
           return;
         }
-        setConfigurationScreenState(CONFIGURATIONSCREEN_SHOWING_JOIN_CHAT);
-
-        // Join with URL Parameters
+        // Check if we have all the required parameters supplied as query search params.
         const threadId = getExistingThreadIdFromURL();
         const token = getExistingTokenFromURL();
         const userId = getExistingUserIdFromURL();
@@ -160,7 +158,11 @@ export default (props: ConfigurationScreenProps): JSX.Element => {
 
         if (token && userId && displayName && threadId && endpointUrl) {
           joinChatThreadWithExistingUser(token, userId, displayName, threadId, endpointUrl);
+          return;
         }
+        
+        // Else show the join chat screen where a user enters there display name and the other args are collected from the server
+        setConfigurationScreenState(CONFIGURATIONSCREEN_SHOWING_JOIN_CHAT);
       };
       setScreenState();
     }
