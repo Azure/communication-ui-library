@@ -187,6 +187,7 @@ function _logCreateStreamEvent(
         message: `Successfully render the view.`,
         data: streamLogInfo
       });
+      return;
     case EventNames.CREATING_VIEW:
       _logEvent(callingStatefulLogger, {
         name: EventNames.CREATING_VIEW,
