@@ -88,14 +88,14 @@ const calculateChildrenPerPage = (args: {
    *
    * we want to find the maximum number of children at the smallest size we can fit in the gallery and then resize them
    * to fill in the space as much as possible
+   *
+   * First we will find the max number of children without any controls we can fit.
    */
 
-  const numberOfChildrenInContainer = Math.floor(
-    (containerHeight - (2 * gapHeightPx + controlBarHeightPx)) / childMinHeightPx
-  );
+  const maxNumberOfChildrenInContainer = Math.floor((containerHeight + gapHeightPx) / (childMinHeightPx + gapHeightPx));
   // if all of the children fit in the container just return the number of children
-  if (numberOfChildren <= numberOfChildrenInContainer) {
-    return numberOfChildrenInContainer;
+  if (numberOfChildren <= maxNumberOfChildrenInContainer) {
+    return maxNumberOfChildrenInContainer;
   }
 
   /**
