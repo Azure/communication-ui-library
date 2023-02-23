@@ -160,7 +160,7 @@ export default (props: ConfigurationScreenProps): JSX.Element => {
           joinChatThreadWithExistingUser(token, userId, displayName, threadId, endpointUrl);
           return;
         }
-        
+
         // Else show the join chat screen where a user enters there display name and the other args are collected from the server
         setConfigurationScreenState(CONFIGURATIONSCREEN_SHOWING_JOIN_CHAT);
       };
