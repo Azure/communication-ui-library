@@ -107,14 +107,11 @@ jobs:
       - name: Hop back to pre-release branch
         run: git checkout ${{ github.event.inputs.branch }}
 
-      - name: Create pull request for pre-release back to main
+      - name: REMOVED - DO THIS MANUALLY! Create pull request for pre-release back to main
         run: |
-          curl \
-            -X POST \
-            -H 'Accept: application/vnd.github.v3+json' \
-            -H 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
-            https://api.github.com/repos/Azure/communication-ui-library/pulls \
-            -d '{ "title":"${{ steps.version.outputs.version }} pre-release branch", "head":"${{ github.event.inputs.branch }}", "base":"main", "body":"Merge prerelease branch back into main. Version: ${{ steps.version.outputs.version }}. Created by the `Create release branch - create` GitHub action. Please review." }'
+          echo "Creating pull requests by GitHub Action is no longer supported per Microsoft Open Source Security Policy."
+          echo "Please create a pull request manually from ${{ github.event.inputs.branch }} to main."
+          echo "See example: https://github.com/Azure/communication-ui-library/pull/2631"
 
       # if a stable release bump the package versions to beta.0 numbers for next beta release
       - name: Bump versions for pre-release branch if stable release

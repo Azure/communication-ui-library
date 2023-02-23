@@ -65,7 +65,9 @@ export const ParticipantListWithHeading = (props: {
 
   return (
     <Stack className={participantListStack}>
-      <Stack.Item styles={subheadingStyleThemed}>{title}</Stack.Item>
+      <Stack.Item styles={subheadingStyleThemed} aria-label={title}>
+        {title}
+      </Stack.Item>
       <FocusZone className={participantListContainerStyle} shouldFocusOnMount={true}>
         <ParticipantList
           {...participantListProps}

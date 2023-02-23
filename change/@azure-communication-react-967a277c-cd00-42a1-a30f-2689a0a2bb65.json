@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Update nightly alpha package workflow",
+  "packageName": "@azure/communication-react",
+  "email": "94866715+dmceachernmsft@users.noreply.github.com",
+  "dependentChangeType": "none"
+}

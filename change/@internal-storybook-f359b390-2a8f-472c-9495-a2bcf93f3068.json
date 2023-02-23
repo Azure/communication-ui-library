@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Add documentation for minimum typescript and webpack versions.",
-  "packageName": "@internal/storybook",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

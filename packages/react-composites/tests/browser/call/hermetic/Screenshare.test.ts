@@ -10,7 +10,7 @@ import {
   test
 } from './fixture';
 import { expect } from '@playwright/test';
-import { dataUiId, pageClick, stableScreenshot, waitForSelector } from '../../common/utils';
+import { dataUiId, dragToRight, existsOnPage, pageClick, stableScreenshot, waitForSelector } from '../../common/utils';
 import { IDS } from '../../common/constants';
 import type { MockCallState } from '../../../common';
 
@@ -77,7 +77,18 @@ test.describe('Screenshare tests', async () => {
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
 
     await waitForSelector(page, dataUiId(IDS.videoGallery));
+
     expect(await stableScreenshot(page)).toMatchSnapshot('remote-screenshare-horizontal-gallery-page-1.png');
+
+    /* @conditional-compile-remove(pinned-participants) */
+    if (await existsOnPage(page, dataUiId('scrollable-horizontal-gallery'))) {
+      await dragToRight(page, dataUiId('scrollable-horizontal-gallery'));
+      expect(await stableScreenshot(page)).toMatchSnapshot(
+        'remote-screenshare-scrollable-horizontal-gallery-dragged.png'
+      );
+      return;
+    }
+
     await waitForSelector(page, dataUiId(IDS.horizontalGalleryRightNavButton));
     await pageClick(page, dataUiId(IDS.horizontalGalleryRightNavButton));
     expect(await stableScreenshot(page)).toMatchSnapshot('remote-screenshare-horizontal-gallery-page-2.png');

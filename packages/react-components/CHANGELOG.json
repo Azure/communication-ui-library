@@ -2,6 +2,165 @@
   "name": "@internal/react-components",
   "entries": [
     {
+      "date": "Wed, 04 Jan 2023 23:56:42 GMT",
+      "tag": "@internal/react-components_v1.5.0",
+      "version": "1.5.0",
+      "comments": {
+        "minor": [
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "7244e8add398513a81398441c90b8a07f43ba309",
+            "comment": "Update html-to-react dependency. Note: This change requires Webpack > 4."
+          }
+        ],
+        "none": [
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "7a94ca460e7e64a3779025825c1d35aeda8946f1",
+            "comment": "Add missing PSTN conditional compilation"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "467ea946e9d58b3accebc4821466afd754eabd7e",
+            "comment": "Create a device ermissions sub directory"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "020102df6028cc4ea61f9c9cfd44839d53b4f14f",
+            "comment": "Add data ui id to device  permission component"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "3421272897067d1e196176deec2f04a4c530d66e",
+            "comment": "Add ability to style a failed chat message (fixes #2257)"
+          },
+          {
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "c8e8d74de3f7804e0187538d696bbfe7a37e0248",
+            "comment": "Bumped"
+          }
+        ],
+        "patch": [
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "29cecd954712376ed4b9a4fe4ed9300f4112672d",
+            "comment": "setting icon definition to undefined if icon is already defined by fluent"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "5e75267b651935b673dba3955878c3bf6231be22",
+            "comment": "Refresh string translations"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "41f8e688e1f277a644a26b8aaef30ac3ffd5798c",
+            "comment": "Bump dependencies to get closer to react 18 support"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/react-components",
+            "comment": "Bump @internal/acs-ui-common to v1.5.0",
+            "commit": "080bf87c8847f154b37cda856978bc00aa4fe5df"
+          }
+        ],
+        "prerelease": [
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "7b0e29772ac2e4a8111572fefb43624919e842a9",
+            "comment": "change device permission component string prop to optional"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "e0980acef6249da5f751954e68fb167a27e08127",
+            "comment": "Updated styling in unsupported browser component to better support CallWIthChat composite unsupportedBrowser screen."
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "a4885ef50b259dc13f864cade5203c8eb2225544",
+            "comment": "Fix dtmf dialpad behavior to allow constant visibility of tone sent last."
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "1b91cc5a3b775c3db0bedd577defeb62e0075a1e",
+            "comment": "Remove padding and margins from base dialpad component."
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "d614a2b2c8f2a7a9a7174f1d7981fde443c986b1",
+            "comment": "Make components string optional"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "2a279a14cc990a9716c96a582931a8b277bbfa34",
+            "comment": "Fix dark mode text for TroubleshootingGuideErrorBar messages"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "363401bdd3c81c42cf776243734740ea8d25390c",
+            "comment": "Add domain permission denied prompt pure UI component"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "3aab73e61303d02385497dfe6116f4d5f03b4f94",
+            "comment": "New individual camera and microphone permission modals"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "d5c6baf76a616d8c3556e0e479da975b6a366305",
+            "comment": "Enabled troubleshooting guide error bar to display network error guide/device error guide based on error type "
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/react-components",
+            "commit": "1b49a7e17ef1d7c18d2322d01da28b9116074fc3",
+            "comment": "Bugfix mute indicator color not matching display name"
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "40d5101942d87036ad44d5b3dc53373b8521b460",
+            "comment": "Add a new prop 'menuItems' that allows developers to inject contextual menu items in Video Tile"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "3d491b8aa403a607549999607b789da7c13c503f",
+            "comment": "Added role to CallParticipantListParticipant type"
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "2b44fdc3728a002dd0ac5823e90c6719e91c2c17",
+            "comment": "Add a prop 'isPinned' to the VideoTile component for toggling the pin icon"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "c5efaf6677c46c017e3297a003a1df905f4044f1",
+            "comment": "Add checking device permission prompt pure ui component"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 15 Nov 2022 21:12:23 GMT",
       "tag": "@internal/react-components_v1.4.1-beta.1",
       "version": "1.4.1-beta.1",

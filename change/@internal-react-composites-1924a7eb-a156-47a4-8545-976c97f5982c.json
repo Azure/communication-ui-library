@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Update pro based on newer api (no functional change)",
-  "packageName": "@internal/react-composites",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "none"
-}

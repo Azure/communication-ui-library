@@ -33,6 +33,15 @@ interface ChatScreenProps {
 export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const { displayName, endpointUrl, threadId, token, userId, endChatHandler } = props;
 
+  // Disables pull down to refresh. Prevents accidental page refresh when scrolling through chat messages
+  // Another alternative: set body style touch-action to 'none'. Achieves same result.
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = 'null';
+    };
+  }, []);
+
   /* @conditional-compile-remove(chat-composite-participant-pane) */
   const [hideParticipants, setHideParticipants] = useState<boolean>(false);
 

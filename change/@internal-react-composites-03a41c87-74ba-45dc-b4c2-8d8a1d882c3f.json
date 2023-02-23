@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Enable the browser check for the call composite to alert users they are using a unsupported browser.",
-  "packageName": "@internal/react-composites",
-  "email": "94866715+dmceachernmsft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

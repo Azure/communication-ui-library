@@ -17,6 +17,16 @@ import {
 } from '@azure/communication-common';
 import { memoizeFnAll, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 
+type ParticipantConnectionState =
+  | 'Idle'
+  | 'Connecting'
+  | 'Ringing'
+  | 'Connected'
+  | 'Hold'
+  | 'InLobby'
+  | 'EarlyMedia'
+  | 'Disconnected';
+
 /**
  * Check if the call state represents being in the call
  *
@@ -31,7 +41,7 @@ export const _isInCall = (callStatus?: CallStatus): boolean =>
  * @internal
  */
 export const _isInLobbyOrConnecting = (callStatus: CallStatus | undefined): boolean =>
-  !!callStatus && ['Connecting', 'Ringing', 'InLobby'].includes(callStatus);
+  !!callStatus && ['Connecting', 'Ringing', 'InLobby', 'EarlyMedia'].includes(callStatus);
 
 /**
  * Check if the device manager local video is on when not part of a call
@@ -116,4 +126,14 @@ export const isACSCallParticipants = (
   participants: CommunicationIdentifier[]
 ): participants is (PhoneNumberIdentifier | CommunicationUserIdentifier | UnknownIdentifier)[] => {
   return participants.every((p) => !isMicrosoftTeamsUserIdentifier(p));
+};
+
+/**
+ * @private
+ * Checks whether the user is a 'Ringing' PSTN user.
+ */
+export const _isRingingPSTNParticipant = (participant: RemoteParticipantState): ParticipantConnectionState => {
+  return participant.identifier.kind === 'phoneNumber' && participant.state === 'Connecting'
+    ? 'Ringing'
+    : participant.state;
 };

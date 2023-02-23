@@ -36,8 +36,9 @@ import { modalLayerHostStyle } from '../common/styles/ModalLocalAndRemotePIP.sty
 import { SendDtmfDialpad } from '../common/SendDtmfDialpad';
 /* @conditional-compile-remove(PSTN-calls) */
 import { useCallWithChatCompositeStrings } from './hooks/useCallWithChatCompositeStrings';
+import { CallCompositeOptions } from '../CallComposite/CallComposite';
 /* @conditional-compile-remove(call-readiness) */
-import { DevicePermissionRestrictions } from '../CallComposite/CallComposite';
+import { DeviceCheckOptions } from '../CallComposite/CallComposite';
 import { drawerContainerStyles } from '../CallComposite/styles/CallComposite.styles';
 
 /**
@@ -89,10 +90,11 @@ export type CallWithChatCompositeOptions = {
   fileSharing?: FileSharingOptions;
   /* @conditional-compile-remove(call-readiness) */
   /**
-   * Device permission restrictions for your call.
-   * Require device permissions to be set or have them as optional or not required to start a call
+   * Device permissions check options for your call.
+   * Here you can choose what device permissions you prompt the user for,
+   * as well as what device permissions must be accepted before starting a call.
    */
-  devicePermissions?: DevicePermissionRestrictions;
+  deviceChecks?: DeviceCheckOptions;
   /* @conditional-compile-remove(call-readiness) */
   /**
    * Callback you may provide to supply users with further steps to troubleshoot why they have been
@@ -126,12 +128,20 @@ export type CallWithChatCompositeOptions = {
    * if this is not supplied, the composite will not show a 'network troubleshooting' link.
    */
   onNetworkingTroubleShootingClick?: () => void;
-  /* @conditional-compile-remove(call-readiness) */
+  /* @conditional-compile-remove(unsupported-browser) */
   /**
-   * Opt in call readiness feature for your call
-   * setting this to True will add call readiness feature in call experience
+   * Callback you may provide to supply users with a provided page to showcase supported browsers by ACS.
+   *
+   * @example
+   * ```ts
+   * onBrowserTroubleShootingClick?: () =>
+   *  window.open('https://contoso.com/browser-troubleshooting', '_blank');
+   * ```
+   *
+   * @remarks
+   * if this is not supplied, the composite will not show a unsupported browser page.
    */
-  callReadinessOptedIn?: boolean;
+  onEnvironmentInfoTroubleshootingClick?: () => void;
 };
 
 /**
@@ -211,9 +221,16 @@ type CallWithChatScreenProps = {
   fileSharing?: FileSharingOptions;
   rtl?: boolean;
   /* @conditional-compile-remove(call-readiness) */
-  devicePermissions?: DevicePermissionRestrictions;
+  deviceChecks?: DeviceCheckOptions;
   /* @conditional-compile-remove(call-readiness) */
-  callReadinessOptedIn?: boolean;
+  onPermissionsTroubleshootingClick?: (permissionsState: {
+    camera: PermissionState;
+    microphone: PermissionState;
+  }) => void;
+  /* @conditional-compile-remove(call-readiness) */
+  onNetworkingTroubleShootingClick?: () => void;
+  /* @conditional-compile-remove(unsupported-browser) */
+  onEnvironmentInfoTroubleshootingClick?: () => void;
 };
 
 const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
@@ -362,6 +379,30 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
   /* @conditional-compile-remove(PSTN-calls) */
   const alternateCallerId = callAdapter.getState().alternateCallerId;
 
+  const callCompositeOptions: CallCompositeOptions = useMemo(
+    () => ({
+      callControls: false,
+      /* @conditional-compile-remove(call-readiness) */
+      deviceChecks: props.deviceChecks,
+      /* @conditional-compile-remove(call-readiness) */
+      onNetworkingTroubleShootingClick: props.onNetworkingTroubleShootingClick,
+      /* @conditional-compile-remove(call-readiness) */
+      onPermissionsTroubleshootingClick: props.onPermissionsTroubleshootingClick,
+      /* @conditional-compile-remove(unsupported-browser) */
+      onEnvironmentInfoTroubleshootingClick: props.onEnvironmentInfoTroubleshootingClick
+    }),
+    [
+      /* @conditional-compile-remove(call-readiness) */
+      props.deviceChecks,
+      /* @conditional-compile-remove(unsupported-browser) */
+      props.onEnvironmentInfoTroubleshootingClick,
+      /* @conditional-compile-remove(call-readiness) */
+      props.onNetworkingTroubleShootingClick,
+      /* @conditional-compile-remove(call-readiness) */
+      props.onPermissionsTroubleshootingClick
+    ]
+  );
+
   return (
     <div ref={containerRef} className={mergeStyles(containerDivStyles)}>
       <Stack verticalFill grow styles={compositeOuterContainerStyles} id={compositeParentDivId}>
@@ -375,13 +416,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
             <CallComposite
               {...props}
               formFactor={formFactor}
-              options={{
-                callControls: false,
-                /* @conditional-compile-remove(call-readiness) */
-                devicePermissions: props.devicePermissions,
-                /* @conditional-compile-remove(call-readiness) */
-                callReadinessOptedIn: props.callReadinessOptedIn
-              }}
+              options={callCompositeOptions}
               adapter={callAdapter}
               fluentTheme={fluentTheme}
             />
@@ -490,9 +525,7 @@ export const CallWithChatComposite = (props: CallWithChatCompositeProps): JSX.El
       <CallWithChatScreen
         {...props}
         /* @conditional-compile-remove(call-readiness) */
-        devicePermissions={options?.devicePermissions}
-        /* @conditional-compile-remove(call-readiness) */
-        callReadinessOptedIn={options?.callReadinessOptedIn}
+        deviceChecks={options?.deviceChecks}
         callWithChatAdapter={adapter}
         formFactor={formFactor}
         callControls={options?.callControls}

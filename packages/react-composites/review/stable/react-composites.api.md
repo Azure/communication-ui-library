@@ -11,7 +11,7 @@ import { Call } from '@azure/communication-calling';
 import { CallAgent } from '@azure/communication-calling';
 import { CallState } from '@internal/calling-stateful-client';
 import type { ChatMessage } from '@azure/communication-chat';
-import type { ChatParticipant } from '@azure/communication-chat';
+import { ChatParticipant } from '@azure/communication-chat';
 import { ChatThreadClient } from '@azure/communication-chat';
 import { ChatThreadClientState } from '@internal/chat-stateful-client';
 import { CommunicationIdentifierKind } from '@azure/communication-common';
@@ -22,10 +22,12 @@ import type { CommunicationUserKind } from '@azure/communication-common';
 import { ComponentLocale } from '@internal/react-components';
 import { CreateVideoStreamViewResult } from '@internal/react-components';
 import { DeviceManagerState } from '@internal/calling-stateful-client';
+import type { FileMetadata } from '@internal/react-components';
 import { GroupCallLocator } from '@azure/communication-calling';
 import type { MediaDiagnosticChangedEventArgs } from '@azure/communication-calling';
 import { MessageProps } from '@internal/react-components';
 import { MessageRenderer } from '@internal/react-components';
+import { Model } from '@internal/fake-backends';
 import type { NetworkDiagnosticChangedEventArgs } from '@azure/communication-calling';
 import { PartialTheme } from '@fluentui/react';
 import { ParticipantMenuItemsCallback } from '@internal/react-components';
@@ -158,6 +160,7 @@ export type CallAdapterClientState = {
     endedCall?: CallState;
     isTeamsCall: boolean;
     latestErrors: AdapterErrors;
+    cameraStatus?: 'On' | 'Off';
 };
 
 // @public
@@ -717,6 +720,13 @@ export interface ChatCompositeStrings {
     chatListHeader: string;
 }
 
+// @internal (undocumented)
+export type _ChatThreadRestError = {
+    message: string;
+    code?: string;
+    statusCode?: number;
+};
+
 // @public
 export interface CommonCallAdapter extends AdapterState<CallAdapterState>, Disposable, CallAdapterCallOperations, CallAdapterDeviceManagement, CallAdapterSubscribers {
     joinCall(microphoneOn?: boolean): void;
@@ -892,6 +902,36 @@ export interface Disposable {
     dispose(): void;
 }
 
+// @internal
+export type _FakeChatAdapterArgs = {
+    localParticipant: ChatParticipant;
+    remoteParticipants: ChatParticipant[];
+    topic?: string;
+    localParticipantPosition?: number;
+    fileSharingEnabled?: boolean;
+    fileUploads?: _MockFileUpload[];
+    failFileDownload?: boolean;
+    sendRemoteFileSharingMessage?: boolean;
+    frenchLocaleEnabled?: boolean;
+    showParticipantPane?: boolean;
+    participantsWithHiddenComposites?: ChatParticipant[];
+    customDataModelEnabled?: boolean;
+    chatThreadClientMethodErrors?: Partial<Record<keyof ChatThreadClient, _ChatThreadRestError>>;
+};
+
+// @internal
+export interface _FakeChatAdapters {
+    // (undocumented)
+    local: ChatAdapter;
+    // (undocumented)
+    remotes: ChatAdapter[];
+    // (undocumented)
+    service: {
+        model: Model;
+        threadId: string;
+    };
+}
+
 // @public
 export type IsLocalScreenSharingActiveChangedListener = (event: {
     isScreenSharingOn: boolean;
@@ -927,6 +967,13 @@ export type MessageReceivedListener = (event: {
 
 // @public
 export type MessageSentListener = MessageReceivedListener;
+
+// @internal
+export type _MockFileUpload = FileMetadata & {
+    uploadComplete?: boolean;
+    error?: string;
+    progress?: number;
+};
 
 // @public
 export type NetworkDiagnosticChangedEvent = NetworkDiagnosticChangedEventArgs & {
@@ -971,6 +1018,9 @@ export const useAzureCommunicationChatAdapter: (args: Partial<AzureCommunication
 
 // @internal
 export const _useCompositeLocale: () => CompositeLocale;
+
+// @internal
+export function _useFakeChatAdapters(args: _FakeChatAdapterArgs): _FakeChatAdapters | undefined;
 
 // (No @packageDocumentation comment for this package)
 

@@ -26,6 +26,7 @@ import { CallControls, CallControlsProps } from '../components/CallControls';
 /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
 import { useSidePaneState } from '../hooks/useSidePaneState';
 import {
+  callArrangementContainerStyles,
   callControlsContainerStyles,
   notificationsContainerStyles,
   containerStyleDesktop,
@@ -44,6 +45,7 @@ import { MutedNotification, MutedNotificationProps } from './MutedNotification';
  * @private
  */
 export interface CallArrangementProps {
+  id?: string;
   complianceBannerProps: _ComplianceBannerProps;
   errorBarProps: ErrorBarProps | false;
   mutedNotificationProps?: MutedNotificationProps;
@@ -85,7 +87,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
 
   /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   const callCompositeContainerCSS = useMemo(() => {
-    return { display: isMobileWithActivePane ? 'none' : 'flex' };
+    return { display: isMobileWithActivePane ? 'none' : 'flex', width: '100%', height: '100%' };
   }, [isMobileWithActivePane]);
 
   // To be removed once feature is out of beta, replace with callCompositeContainerCSS
@@ -93,7 +95,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   const callCompositeContainerFlex = () => {
     /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
     return callCompositeContainerCSS;
-    return { display: 'flex' };
+    return { display: 'flex', width: '100%', height: '100%' };
   };
 
   /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
@@ -153,9 +155,9 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   }
 
   return (
-    <div ref={containerRef} className={mergeStyles(containerDivStyles)}>
+    <div ref={containerRef} className={mergeStyles(containerDivStyles)} id={props.id}>
       <Stack verticalFill horizontalAlign="stretch" className={containerClassName} data-ui-id={props.dataUiId}>
-        <Stack horizontal grow>
+        <Stack grow styles={callArrangementContainerStyles}>
           <Stack.Item styles={notificationsContainerStyles}>
             <Stack styles={bannerNotificationStyles}>
               <_ComplianceBanner {...props.complianceBannerProps} />
@@ -167,36 +169,38 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
             )}
             {canUnmute && !!props.mutedNotificationProps && <MutedNotification {...props.mutedNotificationProps} />}
           </Stack.Item>
-          <Stack.Item grow style={callCompositeContainerFlex()}>
-            <Stack.Item styles={callGalleryStyles} grow>
-              {props.onRenderGalleryContent && (
-                <Stack verticalFill styles={mediaGalleryContainerStyles}>
-                  {props.onRenderGalleryContent()}
-                </Stack>
-              )}
-            </Stack.Item>
-          </Stack.Item>
-          {
+          {props.callControlProps?.options !== false &&
             /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
-            callPaneContent()
-          }
-        </Stack>
-        {props.callControlProps?.options !== false &&
-          /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
-          !isMobileWithActivePane && (
-            <Stack.Item className={callControlsContainerStyles}>
-              <CallControls
-                {...props.callControlProps}
-                containerWidth={containerWidth}
-                containerHeight={containerHeight}
-                isMobile={props.mobileView}
-                /* @conditional-compile-remove(one-to-n-calling) */
-                peopleButtonChecked={activePane === 'people'}
-                /* @conditional-compile-remove(one-to-n-calling) */
-                onPeopleButtonClicked={togglePeoplePane}
-              />
+            !isMobileWithActivePane && (
+              <Stack.Item className={callControlsContainerStyles}>
+                <CallControls
+                  {...props.callControlProps}
+                  containerWidth={containerWidth}
+                  containerHeight={containerHeight}
+                  isMobile={props.mobileView}
+                  /* @conditional-compile-remove(one-to-n-calling) */
+                  peopleButtonChecked={activePane === 'people'}
+                  /* @conditional-compile-remove(one-to-n-calling) */
+                  onPeopleButtonClicked={togglePeoplePane}
+                />
+              </Stack.Item>
+            )}
+          <Stack horizontal grow>
+            <Stack.Item grow style={callCompositeContainerFlex()}>
+              <Stack.Item styles={callGalleryStyles} grow>
+                {props.onRenderGalleryContent && (
+                  <Stack verticalFill styles={mediaGalleryContainerStyles}>
+                    {props.onRenderGalleryContent()}
+                  </Stack>
+                )}
+              </Stack.Item>
             </Stack.Item>
-          )}
+            {
+              /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
+              callPaneContent()
+            }
+          </Stack>
+        </Stack>
       </Stack>
     </div>
   );

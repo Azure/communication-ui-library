@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "setting icon definition to undefined if icon is already defined by fluent",
-  "packageName": "@internal/react-composites",
-  "email": "carolinecao@microsoft.com",
-  "dependentChangeType": "patch"
-}

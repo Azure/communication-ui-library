@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Fix a string name and restrict it to beta builds",
-  "packageName": "@internal/react-composites",
-  "email": "82062616+prprabhu-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

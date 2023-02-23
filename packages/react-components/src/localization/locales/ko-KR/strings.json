@@ -184,7 +184,7 @@
     "participantStateRinging": "전화 거는 중...",
     "participantStateHold": "대기 중"
   },
-  "DomainPermissions": {
+  "SitePermissions": {
     "primaryText": "{appName} 님이 카메라와 마이크를 사용하도록 허용",
     "secondaryText": "참가자가 사용자를 보고 들을 수 있도록 합니다.",
     "linkText": "도움이 필요하신가요? 문제 해결 도움말 보기",

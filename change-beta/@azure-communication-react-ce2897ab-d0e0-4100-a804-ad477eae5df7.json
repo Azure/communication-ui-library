@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Utilize `CommunicationIdentifier` (de)serialization logic from `@azure/communication-common`",
+  "packageName": "@azure/communication-react",
+  "email": "petrsvihlik@microsoft.com",
+  "dependentChangeType": "patch"
+}

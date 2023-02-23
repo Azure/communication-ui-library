@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Config page local preview does not show a black screen when camera devices are removed.",
-  "packageName": "@internal/react-composites",
-  "email": "anjulgarg@live.com",
-  "dependentChangeType": "patch"
-}

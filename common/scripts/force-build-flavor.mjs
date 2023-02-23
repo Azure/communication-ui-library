@@ -3,7 +3,7 @@
 // Licensed under the MIT license.
 
 import { REPO_ROOT } from './lib/index.mjs';
-import {updateAllDepVersions} from './package-utils.js';
+import { removeDepsFromAllPackages, updateAllDepVersions } from './package-utils.js';
 import { readFileSync, writeFileSync } from 'fs';
 import path from 'path';
 
@@ -24,7 +24,8 @@ function main(args) {
   }
 
   restrictBuildFlavorForWorkflows(target);
-  chooseSdkDep(target);
+  removeBetaOnlyDependencies(target);
+  chooseSdkDependencies(target);
 }
 
 function restrictBuildFlavorForWorkflows(target) {
@@ -34,9 +35,12 @@ function restrictBuildFlavorForWorkflows(target) {
     writeFileSync(MATRIX_JSON, JSON.stringify(data, null, 2), 'utf8');
 }
 
+// Dependencies to choose the right version for beta and stable
 const SDK_DEPS = ["@azure/communication-calling", "@azure/communication-chat"]
+// Depencies that are beta only and should be removed from stable packages
+const BETA_ONLY_DEPS = ["@azure/communication-calling-effects"]
 
-function chooseSdkDep(target) {
+function chooseSdkDependencies(target) {
   const action = target === 'stable' ? chooseStableVersion : chooseBetaVersion;
   updateAllDepVersions(action, SDK_DEPS);
 }
@@ -61,6 +65,12 @@ const chooseBetaVersion = (semver) => {
     if(version.includes('beta')) return version;
   }
   throw 'can\'t find the right version for beta!';
+}
+
+function removeBetaOnlyDependencies(target) {
+  if (target === 'stable') {
+    removeDepsFromAllPackages(BETA_ONLY_DEPS);
+  }
 }
 
 main(process.argv);

@@ -16,6 +16,10 @@ import {
   ScalingMode,
   VideoDeviceInfo
 } from '@azure/communication-calling';
+/* @conditional-compile-remove(video-background-effects) */
+import { VideoEffectName } from '@azure/communication-calling';
+/* @conditional-compile-remove(teams-identity-support) */
+import { CallKind } from '@azure/communication-calling';
 /* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(rooms) */
@@ -89,6 +93,29 @@ export interface LocalVideoStreamState {
    * API. This can be undefined if the stream has not yet been rendered and defined after createView creates the view.
    */
   view?: VideoStreamRendererViewState;
+  /* @conditional-compile-remove(video-background-effects) */
+  /**
+   * Stores the state of the video effects.
+   * @beta
+   */
+  videoEffects?: LocalVideoStreamVideoEffectsState;
+}
+
+/* @conditional-compile-remove(video-background-effects) */
+/**
+ * State only version of a LocalVideoStream's {@link @azure/communication-calling#VideoEffectsFeature}.
+ *
+ * @beta
+ */
+export interface LocalVideoStreamVideoEffectsState {
+  /**
+   * State of the video background effect.
+   */
+  isActive: boolean;
+  /**
+   * Name of the effect if one is active.
+   */
+  effectName?: VideoEffectName;
 }
 
 /**
@@ -201,7 +228,7 @@ export interface CallState {
   /**
    * Type of the call.
    */
-  type: 'Teams' | 'ACS';
+  kind: CallKind;
   /**
    * Proxy of {@link @azure/communication-calling#Call.callerInfo}.
    */
@@ -286,6 +313,12 @@ export interface CallState {
    * Proxy of {@link @azure/communication-calling#Call.role}.
    */
   role?: ParticipantRole;
+
+  /* @conditional-compile-remove(total-participant-count) */
+  /**
+   * Proxy of {@link @azure/communication-calling#Call.totalParticipantCount}.
+   */
+  totalParticipantCount?: number;
 }
 
 /**
@@ -538,7 +571,8 @@ export type CallErrorTarget =
   | 'DeviceManager.selectSpeaker'
   | 'IncomingCall.accept'
   | 'IncomingCall.reject'
-  | /* @conditional-compile-remove(calling-beta-sdk) */ /* @conditional-compile-remove(teams-identity-support) */ 'TeamsCall.addParticipant';
+  | /* @conditional-compile-remove(calling-beta-sdk) */ /* @conditional-compile-remove(teams-identity-support) */ 'TeamsCall.addParticipant'
+  | /* @conditional-compile-remove(video-background-effects) */ 'VideoEffectsFeature.startEffects';
 
 /**
  * State only proxy for {@link @azure/communication-calling#DiagnosticsCallFeature}.

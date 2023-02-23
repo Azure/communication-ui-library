@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Stable release branch hotfix: Fix camera turning back on when turned off on connecting screen (#2458)",
-  "packageName": "@internal/calling-component-bindings",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "none"
-}

@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Filter out camera devices with blank name when declarative device manager is used.",
-  "packageName": "@internal/calling-stateful-client",
-  "email": "anjulgarg@live.com",
-  "dependentChangeType": "patch"
-}

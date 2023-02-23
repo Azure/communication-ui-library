@@ -15,6 +15,8 @@ import { toFlatCommunicationIdentifier, _getApplicationId } from '@internal/acs-
 import { callingStatefulLogger } from './Logger';
 /* @conditional-compile-remove(teams-identity-support) */
 import { DeclarativeTeamsCallAgent, teamsCallAgentDeclaratify } from './TeamsCallAgentDeclarative';
+/* @conditional-compile-remove(teams-identity-support) */
+import { MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
 import { videoStreamRendererViewDeclaratify } from './VideoStreamRendererViewDeclarative';
 
 /**
@@ -233,7 +235,7 @@ class ProxyCallClient implements ProxyHandler<CallClient> {
           } else {
             this._sdkDeviceManager = deviceManager;
           }
-          this._deviceManager = deviceManagerDeclaratify(deviceManager, this._context);
+          this._deviceManager = deviceManagerDeclaratify(deviceManager, this._context, this._internalContext);
           return this._deviceManager;
         }, 'CallClient.getDeviceManager');
       }
@@ -273,7 +275,9 @@ export type StatefulCallClientArgs = {
    * UserId from SDK. This is provided for developer convenience to easily access the userId from the
    * state. It is not used by StatefulCallClient.
    */
-  userId: CommunicationUserIdentifier;
+  userId:
+    | CommunicationUserIdentifier
+    | /* @conditional-compile-remove(teams-identity-support) */ MicrosoftTeamsUserIdentifier;
   /* @conditional-compile-remove(PSTN-calls) */
   /**
    * A phone number in E.164 format that will be used to represent the callers identity. This number is required

@@ -597,3 +597,39 @@ export const hidePiPiP = async (page: Page): Promise<void> => {
     document.querySelector(pipipId)?.remove();
   }, pipipId);
 };
+
+/**
+ * Helper function to check if there is an element with a matching selector in the page
+ */
+export const existsOnPage = async (page: Page, selector: string): Promise<boolean> => {
+  try {
+    await page.waitForSelector(selector, { timeout: perStepLocalTimeout() });
+    return true;
+  } catch (e) {
+    return false;
+  }
+};
+
+/**
+ * Helper function to drag element with matching selector in the page to the right by its width
+ */
+export const dragToRight = async (page: Page, selector: string): Promise<void> => {
+  const handle = await screenshotOnFailure(page, async () => await waitForLocator(page, selector));
+  const boundingBox = await handle.boundingBox();
+  if (!boundingBox) {
+    page.screenshot({ path: `test-results/failure-screenshot-${generateGUID()}.png` });
+    fail(`Bounding box for selector '${selector}' could not be found.`);
+  }
+  await screenshotOnFailure(
+    page,
+    async () =>
+      await handle.dragTo(handle, {
+        force: true,
+        targetPosition: {
+          // drag to the right by the entire width of element
+          x: boundingBox.width,
+          y: 0
+        }
+      })
+  );
+};

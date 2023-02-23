@@ -2,6 +2,285 @@
   "name": "@internal/react-composites",
   "entries": [
     {
+      "date": "Wed, 04 Jan 2023 23:56:34 GMT",
+      "tag": "@internal/react-composites_v1.5.0",
+      "version": "1.5.0",
+      "comments": {
+        "none": [
+          {
+            "author": "jinan@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "c4fb6aa86817aa302b84094898fc029108d42b32",
+            "comment": "Add TeamsCall and TeamsCallAgent to StatefulClient"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "363401bdd3c81c42cf776243734740ea8d25390c",
+            "comment": "Update pro based on newer api (no functional change)"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "7a94ca460e7e64a3779025825c1d35aeda8946f1",
+            "comment": "Add missing PSTN conditional compilation"
+          },
+          {
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "c8e8d74de3f7804e0187538d696bbfe7a37e0248",
+            "comment": "Bumped"
+          },
+          {
+            "author": "jinan@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "c2045bf3c9c4464c57bdff774f130756af8ebe28",
+            "comment": "Add type cast to support latest lib.dom version"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "d00af9f75b8341762abd708e7b5dd5d043e84b19",
+            "comment": "Add support for conditionally compiled browser tests"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "60540a73e437a99f7af3910e2282b534c37b79a9",
+            "comment": "browser tests: drop runtime test for build flavor environment variable"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "3aab73e61303d02385497dfe6116f4d5f03b4f94",
+            "comment": "Update names"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "6602f6b063057bc3a194d899d3f7b4b192a37615",
+            "comment": "Use permission API to get device permissions "
+          },
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@internal/react-composites",
+            "commit": "3a8a36f9e5c4432e8d5746f4a296b38af920ac5c",
+            "comment": "Add step to validate identifier"
+          }
+        ],
+        "prerelease": [
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "517ee3ddd100d9dfde03db5aff6436278ea496c5",
+            "comment": "Exporting type AzureCommunicationCallAdapterOptions"
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "2b44fdc3728a002dd0ac5823e90c6719e91c2c17",
+            "comment": "API.md changes"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "d075433a363565a25612db2a26088253fbe3c340",
+            "comment": "Add enable call readiness option for Call and CallWithChat composite"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "a867bc56b414cc2e87bcfbd4139f10c2f9a962a1",
+            "comment": "Bump `@azure/communication-calling` beta dependency to 1.9.1-beta.1"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "b2aa36a5d2dc931fd2b9a50d7757946752888c62",
+            "comment": "Auto prompt for device access and show different modals based on device permission state when call readiness is turned on"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "0b60aba0f6c7fe265ac415ce0b077cc52796746a",
+            "comment": "Moved roleHint prop of CallComposite to CallAdapter state."
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "cbde9d2aa633d732f80a0df855d8e4d6ea7cc595",
+            "comment": "Access role from stateful call client in CallComposite and changed CallComposite prop name from role to roleHint."
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "adb2a443098f13b37cdc7bcc032dad0f63224638",
+            "comment": "Introduce e2e tests for lobby screen in calling composite to validate experience for different call types."
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "1886edefa8d3421057ef3b5f72df8b8b1306b209",
+            "comment": "Implement fall back UI for call readiness, this is displayed when permission api is not available"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "d5c6baf76a616d8c3556e0e479da975b6a366305",
+            "comment": "Add troubleshooting error bar to call composite config "
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "a4885ef50b259dc13f864cade5203c8eb2225544",
+            "comment": "Fix dtmf dialpad behavior to allow constant visibility of tone sent last."
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "3d491b8aa403a607549999607b789da7c13c503f",
+            "comment": "Added getRole selector"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "d614a2b2c8f2a7a9a7174f1d7981fde443c986b1",
+            "comment": "Add allow access modal to configuration screen"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "7b0e29772ac2e4a8111572fefb43624919e842a9",
+            "comment": "Add device permission drawer to calling mobile config screen"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "5e9aa8e455df220373fdfc07059e21116b89cda1",
+            "comment": "Enable the browser check for the call composite to alert users they are using a unsupported browser."
+          }
+        ],
+        "patch": [
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "d303892227d0a98faad54a2cec790800e37f1c77",
+            "comment": "Fix remove participant logic for teams user. Make sure to enforce isRemovable property on participantList participant."
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "d7293fca758edb5927f520f36471bd863dc69bb9",
+            "comment": "Focus on participant list when opening people pane"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "8cb67542c822c72db69c77e223747d55fe5b4d54",
+            "comment": "Allow a range of communication services dependency packages"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/react-composites",
+            "commit": "713f8fffeaf64b3f2ed08ccd86f0b473f5c376d3",
+            "comment": "Config page local preview does not show a black screen when camera devices are removed."
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "4a670785567b2de58b3d78df8aeea77aa1f6173e",
+            "comment": "Fix issue where typingIndicator errors were not being caught by the ChatAdapter"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "41f8e688e1f277a644a26b8aaef30ac3ffd5798c",
+            "comment": "Bump dependencies to get closer to react 18 support"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "08765a2c32ab5384156bcf706a5939a2808b55c2",
+            "comment": "Fix CallWithChatPane drawer menu that stays open after switching mobile tabs"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "29cecd954712376ed4b9a4fe4ed9300f4112672d",
+            "comment": "setting icon definition to undefined if icon is already defined by fluent"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "5e75267b651935b673dba3955878c3bf6231be22",
+            "comment": "Refresh string translations"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "fe8ac93f7d7404fc1ab2d37b084758aaee3151ba",
+            "comment": "Increase max listener limit to remove warning in console"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "f77ff8331775565f18d85e7d7a317cada2b78e3a",
+            "comment": "Fix a string name and restrict it to beta builds"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/react-composites",
+            "comment": "Bump @internal/acs-ui-common to v1.5.0",
+            "commit": "080bf87c8847f154b37cda856978bc00aa4fe5df"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/react-composites",
+            "comment": "Bump @internal/calling-component-bindings to v1.5.0",
+            "commit": "080bf87c8847f154b37cda856978bc00aa4fe5df"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/react-composites",
+            "comment": "Bump @internal/calling-stateful-client to v1.5.0",
+            "commit": "080bf87c8847f154b37cda856978bc00aa4fe5df"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/react-composites",
+            "comment": "Bump @internal/chat-component-bindings to v1.5.0",
+            "commit": "080bf87c8847f154b37cda856978bc00aa4fe5df"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/react-composites",
+            "comment": "Bump @internal/chat-stateful-client to v1.5.0",
+            "commit": "080bf87c8847f154b37cda856978bc00aa4fe5df"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/react-composites",
+            "comment": "Bump @internal/react-components to v1.5.0",
+            "commit": "080bf87c8847f154b37cda856978bc00aa4fe5df"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/react-composites",
+            "comment": "Bump @internal/fake-backends to v1.5.0",
+            "commit": "080bf87c8847f154b37cda856978bc00aa4fe5df"
+          }
+        ],
+        "minor": [
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "1ebf2f2e306113c14b59da615a5b2a3ef493e5a4",
+            "comment": "Revert breaking API change in `CallEndedListener` callback"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 15 Nov 2022 21:12:24 GMT",
       "tag": "@internal/react-composites_v1.4.1-beta.1",
       "version": "1.4.1-beta.1",

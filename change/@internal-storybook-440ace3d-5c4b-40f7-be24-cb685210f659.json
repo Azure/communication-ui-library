@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Update domain permissions story to have checking device permissions type",
-  "packageName": "@internal/storybook",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "none"
-}

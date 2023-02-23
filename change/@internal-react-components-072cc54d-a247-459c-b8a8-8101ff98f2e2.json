@@ -1,7 +1,0 @@
-{
-  "type": "minor",
-  "comment": "Update html-to-react dependency. Note: This change requires Webpack > 4.",
-  "packageName": "@internal/react-components",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

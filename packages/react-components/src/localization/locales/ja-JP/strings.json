@@ -184,7 +184,7 @@
     "participantStateRinging": "呼び出し中...",
     "participantStateHold": "保留中"
   },
-  "DomainPermissions": {
+  "SitePermissions": {
     "primaryText": "{appName}にカメラとマイクの使用を許可する",
     "secondaryText": "これは、参加者があなたのことを見たり聞いたりできるようにするものです。",
     "linkText": "ヘルプが必要ですか? トラブルシューティングのヘルプを表示",

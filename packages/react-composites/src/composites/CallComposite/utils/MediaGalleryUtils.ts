@@ -71,10 +71,10 @@ export const useParticipantChangedAnnouncement = (): string => {
       (p) => !currentIds.includes(toFlatCommunicationIdentifier(p.identifier))
     );
     if (whoJoined.length > 0) {
-      resetAnnoucement(createAnnouncmentString('joined', whoJoined, strings));
+      resetAnnoucement(createAnnouncementString('joined', whoJoined, strings));
     }
     if (whoLeft.length > 0) {
-      resetAnnoucement(createAnnouncmentString('left', whoLeft, strings));
+      resetAnnoucement(createAnnouncementString('left', whoLeft, strings));
     }
     // Update cached value at the end.
     previousParticipants.current = currentParticipants;
@@ -85,7 +85,7 @@ export const useParticipantChangedAnnouncement = (): string => {
 /**
  * Generates the announcement string for when a participant joins or leaves a call.
  */
-export const createAnnouncmentString = (
+export const createAnnouncementString = (
   direction: 'joined' | 'left',
   participants: RemoteParticipantState[],
   strings: ParticipantChangedAnnouncmentStrings
@@ -100,7 +100,7 @@ export const createAnnouncmentString = (
    * Filter participants into two arrays to put all the unnamed participants at the back of the
    * names being announced.
    */
-  const unnamedParticipants = participants.filter((p) => p.displayName === undefined);
+  const unnamedParticipants = participants.filter((p) => !p.displayName);
   const namedParicipants = participants.filter((p) => p.displayName);
   const sortedParticipants = namedParicipants.concat(unnamedParticipants);
 

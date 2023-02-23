@@ -12,6 +12,8 @@ import type {
   MockRemoteParticipantState,
   MockVideoStreamRendererViewState
 } from '../../../common';
+/* @conditional-compile-remove(teams-identity-support) */
+import type { CallKind } from '@azure/communication-calling';
 
 const SERVER_URL = 'http://localhost';
 const APP_DIR = path.join(__dirname, '../../../app/call');
@@ -60,7 +62,7 @@ export function defaultMockCallAdapterState(participants?: MockRemoteParticipant
     call: {
       id: 'call1',
       /* @conditional-compile-remove(teams-identity-support) */
-      type: 'ACS',
+      kind: 'Call' as CallKind,
       callerInfo: { displayName: 'caller', identifier: { kind: 'communicationUser', communicationUserId: '1' } },
       direction: 'Incoming',
       transcription: { isTranscriptionActive: false },
@@ -169,12 +171,16 @@ export function addDefaultMockLocalVideoStreamState(state: MockCallAdapterState)
  *
  * Use to add video to participant created via {@link defaultMockRemoteParticipant}.
  */
-export function addVideoStream(participant: MockRemoteParticipantState, isReceiving: boolean): void {
+export function addVideoStream(
+  participant: MockRemoteParticipantState,
+  isReceiving: boolean,
+  scalingMode?: 'Stretch' | 'Crop' | 'Fit'
+): void {
   const streams = Object.values(participant.videoStreams).filter((s) => s.mediaStreamType === 'Video');
   if (streams.length !== 1) {
     throw new Error(`Expected 1 video stream for ${participant.displayName}, got ${streams.length}`);
   }
-  addDummyView(streams[0], isReceiving);
+  addDummyView(streams[0], isReceiving, scalingMode);
 }
 
 /**
@@ -182,12 +188,16 @@ export function addVideoStream(participant: MockRemoteParticipantState, isReceiv
  *
  * Use to add video to participant created via {@link defaultMockRemoteParticipant}.
  */
-export function addScreenshareStream(participant: MockRemoteParticipantState, isReceiving: boolean): void {
+export function addScreenshareStream(
+  participant: MockRemoteParticipantState,
+  isReceiving: boolean,
+  scalingMode?: 'Stretch' | 'Crop' | 'Fit'
+): void {
   const streams = Object.values(participant.videoStreams).filter((s) => s.mediaStreamType === 'ScreenSharing');
   if (streams.length !== 1) {
     throw new Error(`Expected 1 screenshare stream for ${participant.displayName}, got ${streams.length}`);
   }
-  addDummyView(streams[0], isReceiving);
+  addDummyView(streams[0], isReceiving, scalingMode);
 }
 
 /**
@@ -197,11 +207,12 @@ export function addScreenshareStream(participant: MockRemoteParticipantState, is
  */
 export function addDummyView(
   stream: { isAvailable?: boolean; isReceiving?: boolean; dummyView?: MockVideoStreamRendererViewState },
-  isReceiving: boolean
+  isReceiving: boolean,
+  scalingMode?: 'Stretch' | 'Crop' | 'Fit'
 ): void {
   stream.isAvailable = true;
   stream.isReceiving = isReceiving;
-  stream.dummyView = { scalingMode: 'Crop', isMirrored: false };
+  stream.dummyView = { scalingMode: scalingMode ?? 'Crop', isMirrored: false };
 }
 
 /**

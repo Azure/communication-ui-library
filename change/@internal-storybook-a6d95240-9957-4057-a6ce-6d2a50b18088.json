@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "initializeIcons() in 1:N and PSTN quickstarts",
-  "packageName": "@internal/storybook",
-  "email": "82062616+prprabhu-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

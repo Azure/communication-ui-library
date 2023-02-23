@@ -132,3 +132,10 @@ export const getEnvironmentInfo = (
   return state.environmentInfo;
   return undefined;
 };
+
+/** @private */
+export const getParticipantCount = (state: CallClientState, props: CallingBaseSelectorProps): number | undefined => {
+  /* @conditional-compile-remove(total-participant-count) */
+  return state.calls[props.callId]?.totalParticipantCount;
+  return undefined;
+};

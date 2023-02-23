@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Fix issue where typingIndicator errors were not being caught by the ChatAdapter.",
-  "packageName": "@internal/chat-stateful-client",
-  "email": "94866715+dmceachernmsft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

@@ -4,7 +4,6 @@
 import { Icon, IStyle, mergeStyles, Persona, Stack, Text } from '@fluentui/react';
 /* @conditional-compile-remove(pinned-participants) */
 import { IconButton } from '@fluentui/react';
-import { Ref } from '@fluentui/react-northstar';
 import React, { useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { useIdentifiers } from '../identifiers';
 import { ComponentLocale, useLocale } from '../localization';
@@ -39,7 +38,6 @@ import { moreButtonStyles } from './styles/VideoTile.styles';
  * @beta
  */
 export interface VideoTileStrings {
-  participantStateConnecting: string;
   participantStateRinging: string;
   participantStateHold: string;
 }
@@ -181,8 +179,6 @@ const DefaultPlaceholder = (props: CustomAvatarOptions): JSX.Element => {
 const defaultPersonaStyles = { root: { margin: 'auto', maxHeight: '100%' } };
 
 /* @conditional-compile-remove(pinned-participants) */
-const videoTileMoreIconProps = { iconName: 'VideoTileMoreOptions' };
-/* @conditional-compile-remove(pinned-participants) */
 const videoTileMoreMenuIconProps = { iconName: undefined, style: { display: 'none' } };
 /* @conditional-compile-remove(pinned-participants) */
 const videoTileMoreMenuProps = {
@@ -191,17 +187,24 @@ const videoTileMoreMenuProps = {
   styles: { container: { maxWidth: '8rem' } }
 };
 /* @conditional-compile-remove(pinned-participants) */
-const VideoTileMoreOptionsButton = (props: { contextualMenu?: IContextualMenuProps }): JSX.Element => {
-  const { contextualMenu } = props;
+const VideoTileMoreOptionsButton = (props: {
+  contextualMenu?: IContextualMenuProps;
+  canShowContextMenuButton: boolean;
+}): JSX.Element => {
+  const { contextualMenu, canShowContextMenuButton } = props;
   if (!contextualMenu) {
     return <></>;
   }
+
+  const optionsIcon = canShowContextMenuButton ? 'VideoTileMoreOptions' : undefined;
+
   return (
     <IconButton
+      data-ui-id="video-tile-more-options-button"
       styles={moreButtonStyles}
-      iconProps={videoTileMoreIconProps}
       menuIconProps={videoTileMoreMenuIconProps}
       menuProps={{ ...videoTileMoreMenuProps, ...contextualMenu }}
+      iconProps={{ iconName: optionsIcon }}
     />
   );
 };
@@ -236,8 +239,12 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
     contextualMenu
   } = props;
 
+  /* @conditional-compile-remove(pinned-participants) */
+  const [isHovered, setIsHovered] = useState<boolean>(false);
+  /* @conditional-compile-remove(pinned-participants) */
+  const [isFocused, setIsFocused] = useState<boolean>(false);
   const [personaSize, setPersonaSize] = useState(100);
-  const videoTileRef = useRef<HTMLElement>(null);
+  const videoTileRef = useRef<HTMLDivElement>(null);
 
   const locale = useLocale();
   const theme = useTheme();
@@ -281,9 +288,20 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
     longPressHandlers
   ]);
 
+  const hoverHandlers = useMemo(() => {
+    /* @conditional-compile-remove(pinned-participants) */
+    return {
+      onMouseEnter: () => setIsHovered(true),
+      onMouseLeave: () => setIsHovered(false),
+      onFocus: () => setIsFocused(true),
+      onBlur: () => setIsFocused(false)
+    };
+    return {};
+  }, []);
+
   const placeholderOptions = {
     userId,
-    text: initialsName || displayName,
+    text: initialsName ?? displayName,
     noVideoAvailableAriaLabel,
     coinSize: personaSize,
     styles: defaultPersonaStyles,
@@ -306,31 +324,33 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
 
   const canShowLabel = showLabel && (displayName || (showMuteIndicator && isMuted));
   const participantStateString = participantStateStringTrampoline(props, locale);
+  /* @conditional-compile-remove(pinned-participants) */
+  const canShowContextMenuButton = isHovered || isFocused;
   return (
-    <Ref innerRef={videoTileRef}>
-      <Stack
-        data-ui-id={ids.videoTile}
-        className={mergeStyles(
-          rootStyles,
-          {
-            background: theme.palette.neutralLighter,
-            borderRadius: theme.effects.roundedCorner4
-          },
-          isSpeaking && {
-            '&::before': {
-              content: `''`,
-              position: 'absolute',
-              zIndex: 1,
-              border: `0.25rem solid ${theme.palette.themePrimary}`,
-              borderRadius: theme.effects.roundedCorner4,
-              width: '100%',
-              height: '100%'
-            }
-          },
-          styles?.root
-        )}
-        {...longPressHandlersTrampoline}
-      >
+    <Stack
+      data-ui-id={ids.videoTile}
+      className={mergeStyles(
+        rootStyles,
+        {
+          background: theme.palette.neutralLighter,
+          borderRadius: theme.effects.roundedCorner4
+        },
+        isSpeaking && {
+          '&::after': {
+            content: `''`,
+            position: 'absolute',
+            border: `0.25rem solid ${theme.palette.themePrimary}`,
+            borderRadius: theme.effects.roundedCorner4,
+            width: '100%',
+            height: '100%',
+            pointerEvents: 'none'
+          }
+        },
+        styles?.root
+      )}
+      {...longPressHandlersTrampoline}
+    >
+      <div ref={videoTileRef} style={{ width: '100%', height: '100%' }} {...hoverHandlers} data-is-focusable={true}>
         {isVideoRendered ? (
           <Stack
             className={mergeStyles(
@@ -342,7 +362,15 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
             {renderElement}
           </Stack>
         ) : (
-          <Stack className={mergeStyles(videoContainerStyles)} style={{ opacity: participantStateString ? 0.4 : 1 }}>
+          <Stack
+            className={mergeStyles(videoContainerStyles, {
+              opacity:
+                participantStateString ||
+                /* @conditional-compile-remove(PSTN-calls) */ props.participantState === 'Idle'
+                  ? 0.4
+                  : 1
+            })}
+          >
             {onRenderPlaceholder ? (
               onRenderPlaceholder(userId ?? '', placeholderOptions, DefaultPlaceholder)
             ) : (
@@ -375,7 +403,10 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
               )}
               {
                 /* @conditional-compile-remove(pinned-participants) */
-                <VideoTileMoreOptionsButton contextualMenu={contextualMenu} />
+                <VideoTileMoreOptionsButton
+                  contextualMenu={contextualMenu}
+                  canShowContextMenuButton={canShowContextMenuButton}
+                />
               }
               {
                 /* @conditional-compile-remove(pinned-participants) */
@@ -392,8 +423,8 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
         {children && (
           <Stack className={mergeStyles(overlayContainerStyles, styles?.overlayContainer)}>{children}</Stack>
         )}
-      </Stack>
-    </Ref>
+      </div>
+    </Stack>
   );
 };
 
@@ -403,9 +434,7 @@ const participantStateStringTrampoline = (props: VideoTileProps, locale: Compone
   const strings = { ...locale.strings.videoTile, ...props.strings };
   /* @conditional-compile-remove(one-to-n-calling) */
   /* @conditional-compile-remove(PSTN-calls) */
-  return props.participantState === 'Idle' || props.participantState === 'Connecting'
-    ? strings?.participantStateConnecting
-    : props.participantState === 'EarlyMedia' || props.participantState === 'Ringing'
+  return props.participantState === 'EarlyMedia' || props.participantState === 'Ringing'
     ? strings?.participantStateRinging
     : props.participantState === 'Hold'
     ? strings?.participantStateHold

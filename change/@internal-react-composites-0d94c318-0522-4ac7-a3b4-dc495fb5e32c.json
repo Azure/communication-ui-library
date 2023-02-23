@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Add TeamsCall and TeamsCallAgent to StatefulClient",
-  "packageName": "@internal/react-composites",
-  "email": "jinan@microsoft.com",
-  "dependentChangeType": "none"
-}

@@ -2,6 +2,1053 @@
   "name": "@azure/communication-react",
   "entries": [
     {
+      "date": "Wed, 04 Jan 2023 23:56:34 GMT",
+      "tag": "@azure/communication-react_v1.5.0",
+      "version": "1.5.0",
+      "comments": {
+        "none": [
+          {
+            "author": "jinan@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "c4fb6aa86817aa302b84094898fc029108d42b32",
+            "comment": "Add TeamsCall and TeamsCallAgent to StatefulClient"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "363401bdd3c81c42cf776243734740ea8d25390c",
+            "comment": "Update pro based on newer api (no functional change)"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "7a94ca460e7e64a3779025825c1d35aeda8946f1",
+            "comment": "Add missing PSTN conditional compilation"
+          },
+          {
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "c8e8d74de3f7804e0187538d696bbfe7a37e0248",
+            "comment": "Bumped"
+          },
+          {
+            "author": "jinan@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "c2045bf3c9c4464c57bdff774f130756af8ebe28",
+            "comment": "Add type cast to support latest lib.dom version"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "d00af9f75b8341762abd708e7b5dd5d043e84b19",
+            "comment": "Add support for conditionally compiled browser tests"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "60540a73e437a99f7af3910e2282b534c37b79a9",
+            "comment": "browser tests: drop runtime test for build flavor environment variable"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "3aab73e61303d02385497dfe6116f4d5f03b4f94",
+            "comment": "Update names"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "6602f6b063057bc3a194d899d3f7b4b192a37615",
+            "comment": "Use permission API to get device permissions "
+          },
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@internal/react-composites",
+            "commit": "3a8a36f9e5c4432e8d5746f4a296b38af920ac5c",
+            "comment": "Add step to validate identifier"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "1e0f9b6bb5d2e5c98fc1076160b5b25d03cf3695",
+            "comment": "Clean up storybook quickstart setup page"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "c5efaf6677c46c017e3297a003a1df905f4044f1",
+            "comment": "Update domain permissions story to have checking device permissions type"
+          },
+          {
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "c8e8d74de3f7804e0187538d696bbfe7a37e0248",
+            "comment": "Bumped"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "363401bdd3c81c42cf776243734740ea8d25390c",
+            "comment": "Update internal story to have denied vs request domain permission skus"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "3aab73e61303d02385497dfe6116f4d5f03b4f94",
+            "comment": "Add stories for individual camera and mic permission modals in internal folder"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@azure/communication-react",
+            "commit": "598e741fd722bdcb6f2e252cea7fbf5c3c055ca9",
+            "comment": "Change displayNamePlaceholder"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "e7b12c4e724d5a1930aae93d8c5dd3ed7997b909",
+            "comment": "FloatingLocalVideoLayout component added to refactor VideoGallery"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "368c4cefaea1ee51d11c7e4b2e6f8555442a6989",
+            "comment": "Rewire tooling to generate changefiles and changelogs"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "0572ff1f9bcdb3d06f68965e3fa7ceda42988576",
+            "comment": "DefaultLayout component added to refactor VideoGallery"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "b059bcf5d62a57662c4ed4d07cd0f2eb0c66ec80",
+            "comment": "bump package versions after release"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@azure/communication-react",
+            "commit": "ef3773b431cf9cb57bb9dfe2a76add8f2a850cc7",
+            "comment": "Remove custom end call screen from calling sample"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "eefc3df0b19ed631050f3f2cef731fb04a593e6b",
+            "comment": "Add architectural overview doc"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "64ee8ce91eb7a7ccbd146818ffe415c6964b93e9",
+            "comment": "Added VideoGallery default layout enzyme test"
+          },
+          {
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "32e88496bd18bf57c6f26cee1152dc193ab5e3c9",
+            "comment": "Bumped"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "ad4d4c8caca1fd793b59944a1b1c72f6c49fe8c3",
+            "comment": "Print inputs on npm-release workflow"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "e8009754bb4027160355ccf68a8ecbdb682c6afe",
+            "comment": "rename continueButton to continueAnywayButton"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "6a808aaf215f81cf173bf574e5de56bf95a16e6d",
+            "comment": "Document CI setup"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "ff7e73ff8d0a3dd4424959128b486f452dbbf37f",
+            "comment": "Add beta version option for beta banners in Storybook"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "9e63bbb22648a7d4ca8260688c49f985b805d273",
+            "comment": "Added VideoGallery 'floatingLocalVideo' layout enzyme tests"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@azure/communication-react",
+            "commit": "aa360625dc37eaa7ef536d29bbe5832853e86955",
+            "comment": "Making VideoStreamRendererView declarative"
+          },
+          {
+            "author": "jinan@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "ba391fd4d745927a50897348c372af6574462c7c",
+            "comment": "Add conditional build to callWithChat"
+          },
+          {
+            "author": "jinan@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "513702c4f8e2009be43d02c52a6e6955fd38921a",
+            "comment": "Revert \"[bugfix] Resolve Mute/Unmute Icon tooltip showing up immediately after the call is joined  (#2587)\""
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@azure/communication-react",
+            "commit": "7e15597cf89b4cf1237d2278e1f2d1a0103438ff",
+            "comment": "Updating documentation around alternateCallerId"
+          },
+          {
+            "author": "jinan@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "39e724bb9a817863cfeb6e6f17318e1d20c97e92",
+            "comment": "Add inlineSources to common config"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "3deeee19948cd9b6fe90d2ec94263be100368005",
+            "comment": "enable call readiness for samples"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "42a56ea56b5a665ce3af459aa4fba5135e53a986",
+            "comment": "Remove leaked internal type from API"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "0387d92b89530ca635abdf2ee7402edf5151616a",
+            "comment": "Document change-log tooling"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "62ceb6ea9b1feb8abe8e6d150fc23dfbc0ced282",
+            "comment": "Make sure call readiness displays properly on landscape"
+          },
+          {
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "package": "@internal/acs-ui-common",
+            "commit": "c8e8d74de3f7804e0187538d696bbfe7a37e0248",
+            "comment": "Bumped"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/acs-ui-common",
+            "commit": "807c931ca9bdc6813b08c1e01bd60f4131be089e",
+            "comment": "Document template of the application ID used for telemetry"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "6b4049475e182608504163b25d62692a6f781e7f",
+            "comment": "Stable release branch hotfix: Fix camera turning back on when turned off on connecting screen (#2458)"
+          },
+          {
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "c8e8d74de3f7804e0187538d696bbfe7a37e0248",
+            "comment": "Bumped"
+          },
+          {
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "package": "@internal/calling-stateful-client",
+            "commit": "c8e8d74de3f7804e0187538d696bbfe7a37e0248",
+            "comment": "Bumped"
+          },
+          {
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "package": "@internal/chat-component-bindings",
+            "commit": "c8e8d74de3f7804e0187538d696bbfe7a37e0248",
+            "comment": "Bumped"
+          },
+          {
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "package": "@internal/chat-stateful-client",
+            "commit": "c8e8d74de3f7804e0187538d696bbfe7a37e0248",
+            "comment": "Bumped"
+          },
+          {
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "package": "@internal/fake-backends",
+            "commit": "c8e8d74de3f7804e0187538d696bbfe7a37e0248",
+            "comment": "Bumped"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "7a94ca460e7e64a3779025825c1d35aeda8946f1",
+            "comment": "Add missing PSTN conditional compilation"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "467ea946e9d58b3accebc4821466afd754eabd7e",
+            "comment": "Create a device ermissions sub directory"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "020102df6028cc4ea61f9c9cfd44839d53b4f14f",
+            "comment": "Add data ui id to device  permission component"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "3421272897067d1e196176deec2f04a4c530d66e",
+            "comment": "Add ability to style a failed chat message (fixes #2257)"
+          },
+          {
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "c8e8d74de3f7804e0187538d696bbfe7a37e0248",
+            "comment": "Bumped"
+          }
+        ],
+        "prerelease": [
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "517ee3ddd100d9dfde03db5aff6436278ea496c5",
+            "comment": "Exporting type AzureCommunicationCallAdapterOptions"
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "2b44fdc3728a002dd0ac5823e90c6719e91c2c17",
+            "comment": "API.md changes"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "d075433a363565a25612db2a26088253fbe3c340",
+            "comment": "Add enable call readiness option for Call and CallWithChat composite"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "a867bc56b414cc2e87bcfbd4139f10c2f9a962a1",
+            "comment": "Bump `@azure/communication-calling` beta dependency to 1.9.1-beta.1"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "b2aa36a5d2dc931fd2b9a50d7757946752888c62",
+            "comment": "Auto prompt for device access and show different modals based on device permission state when call readiness is turned on"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "0b60aba0f6c7fe265ac415ce0b077cc52796746a",
+            "comment": "Moved roleHint prop of CallComposite to CallAdapter state."
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "cbde9d2aa633d732f80a0df855d8e4d6ea7cc595",
+            "comment": "Access role from stateful call client in CallComposite and changed CallComposite prop name from role to roleHint."
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "adb2a443098f13b37cdc7bcc032dad0f63224638",
+            "comment": "Introduce e2e tests for lobby screen in calling composite to validate experience for different call types."
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "1886edefa8d3421057ef3b5f72df8b8b1306b209",
+            "comment": "Implement fall back UI for call readiness, this is displayed when permission api is not available"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "d5c6baf76a616d8c3556e0e479da975b6a366305",
+            "comment": "Add troubleshooting error bar to call composite config "
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "a4885ef50b259dc13f864cade5203c8eb2225544",
+            "comment": "Fix dtmf dialpad behavior to allow constant visibility of tone sent last."
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "3d491b8aa403a607549999607b789da7c13c503f",
+            "comment": "Added getRole selector"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "d614a2b2c8f2a7a9a7174f1d7981fde443c986b1",
+            "comment": "Add allow access modal to configuration screen"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "7b0e29772ac2e4a8111572fefb43624919e842a9",
+            "comment": "Add device permission drawer to calling mobile config screen"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "5e9aa8e455df220373fdfc07059e21116b89cda1",
+            "comment": "Enable the browser check for the call composite to alert users they are using a unsupported browser."
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/storybook",
+            "commit": "d5c6baf76a616d8c3556e0e479da975b6a366305",
+            "comment": "Updated troubleshooting error bar storybook "
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "5e9aa8e455df220373fdfc07059e21116b89cda1",
+            "comment": "Bump Calling version to new beta"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "a867bc56b414cc2e87bcfbd4139f10c2f9a962a1",
+            "comment": "Bump `@azure/communication-calling` beta dependency to 1.9.1-beta.1"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "a85305c823be1f5601c2979694f27f82e6eabc9b",
+            "comment": "initializeIcons() in 1:N and PSTN quickstarts"
+          },
+          {
+            "author": "79329532+alkwa-msft@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "0b16287d6ddb7104fdba7eee25bb10fb285bfa81",
+            "comment": "updating storybook documentation to all note there is a callWithChat composite js bundle"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "b3eb013be390e5dd3895fccb995b1950b1a93693",
+            "comment": "Introduce UI to inform the user that their browser version is out of date."
+          },
+          {
+            "author": "jinan@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "fcf77063e731488a3b4e1cac13b0a4d37caf5089",
+            "comment": "Fix unreachable bug when use stable sdk with beta"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@azure/communication-react",
+            "commit": "6210bfaeed2155c7b13966d06a7c65b3a9856260",
+            "comment": "Add drawer menu for mobile devices to video gallery"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "b328788adc9374c26d3b2f9c512f5ea080839d74",
+            "comment": "rename DomainPermissions to SitePermissions"
+          },
+          {
+            "author": "jinan@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "1dd84a18e631058448f42bfdeb47fa0d199a2af5",
+            "comment": "Change args type to teams specific"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "bc1c17d2e96eaf1f0450368623a86de19af9b02e",
+            "comment": "Introduce unsupported browser version ability to let old browser into call in composites"
+          },
+          {
+            "author": "79329532+alkwa-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "127382346275755db46e25aaef96ebd69a52077d",
+            "comment": "simplifying chat server requiring adminUserId"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "a973cbd8a4c677e438513af1647bc8925dedc74e",
+            "comment": "turn call readiness alwayson"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "7eef60be7a76b135f07c71375e5673c18cd7c55c",
+            "comment": "Correctly propagate callbacks, add missing callback to callwithchat and memoize callcomposite options"
+          },
+          {
+            "author": "jinan@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "78c04a3432f4488e889c40b0d057e1f1187bb296",
+            "comment": "Add Teams identity support to adapter layer"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "e9d8ea2cbe65603a2c4b97613d6f823ac7d475ff",
+            "comment": "Added onPinParticipant and onUnpinParticipant props to VideoGallery. Added pin/unpin menu items to remote VideoTile components in VideoGallery."
+          },
+          {
+            "author": "jinan@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "2b88ca3a97079073d4dc97e78222ae5b1e3e37cf",
+            "comment": "Add teams identity option to sample"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "4cf3804b0075bed218d832de5e737e6a214b7d1f",
+            "comment": "Introduce UI to inform the user that they are using a unsupported operating system to join a call."
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@azure/communication-react",
+            "commit": "598e741fd722bdcb6f2e252cea7fbf5c3c055ca9",
+            "comment": "AvatarPersona now exposes showUnknownPersonaCoin prop similar to Persona component"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@azure/communication-react",
+            "commit": "8c7b746378a4e6f0d5fd99dfe50f2a486b550794",
+            "comment": "Add scalingMode to VideoGalleryStream type"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@azure/communication-react",
+            "commit": "f9f9f8c9c4fc6c5971ad803019db909d5d5f9903",
+            "comment": "Use IContextualMenuProps for VideoTile menu items"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@azure/communication-react",
+            "commit": "49a7d79a0deb0bc628a4d16d695917dba83bf692",
+            "comment": "Add fit/fill options to VideoGallery video tiles"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "0816af856af75433c55176376cb57f174717aebe",
+            "comment": "remove opt in feature for the unsuppoted browser experience in the Call and CallWithChat composites"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "6dd143c08bf67f599bfe3d2b96367caadddd2895",
+            "comment": "Change domain Permission prop isSafari to browserHint: 'safari' | 'unset' to allow further customization for other browsers"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "06b3cc52f6d2ed4a72ad0787a73ff9bafeccc4f8",
+            "comment": "Fixed bug where on safari browser the device denied screen is not showing when don't allow is clicked "
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "c4903a59d3dc1d25379a324cf9bfe177999082ba",
+            "comment": "Add pinnedParticipants prop to VideoGallery"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "38fb673d5a562b4043c0710bea42076aa21988f0",
+            "comment": "Introduce tests for validating allowWithUnsupportedBrowser button in unsupportedBrowserVersion UI."
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "cf357fae7550754d4362bead2dbdd68a333f7227",
+            "comment": "Introduce E2E tests for new unsupported environment UI."
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "a46116ffc9dd2f7590f763ed7189f4933943a8e2",
+            "comment": "Fix permissions issue on older iOS devices to cover unsupported permissions API call."
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "827aa4fbc6c649f8dec5b445e51b5b9705c7b0d8",
+            "comment": "Rename DevicePermissions to DeviceChecks"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@azure/communication-react",
+            "commit": "78e82747c09ebef2f5bb365153f4a1f4cb6eb1bb",
+            "comment": "VideoTile provides a prop `onLongTouch` that allows users to trigger a custom callback when VideoTile is long touched"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "3d491b8aa403a607549999607b789da7c13c503f",
+            "comment": "Added role to selectors"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "5e9aa8e455df220373fdfc07059e21116b89cda1",
+            "comment": "Introduce getEnvironmentInfo API from calling to stateful-client."
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "a867bc56b414cc2e87bcfbd4139f10c2f9a962a1",
+            "comment": "Bump `@azure/communication-calling` beta dependency to 1.9.1-beta.1"
+          },
+          {
+            "author": "jinan@microsoft.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "c2045bf3c9c4464c57bdff774f130756af8ebe28",
+            "comment": "Add teams identity support to binding layer"
+          },
+          {
+            "author": "jinan@microsoft.com",
+            "package": "@internal/calling-stateful-client",
+            "commit": "c2045bf3c9c4464c57bdff774f130756af8ebe28",
+            "comment": "Add teams identity support to binding layer"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/calling-stateful-client",
+            "commit": "a867bc56b414cc2e87bcfbd4139f10c2f9a962a1",
+            "comment": "Bump `@azure/communication-calling` beta dependency to 1.9.1-beta.1"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/calling-stateful-client",
+            "commit": "6d2b3839dbdd03864de1921dcb541cd610e331f6",
+            "comment": "Add rooms role into calling stateful client"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/calling-stateful-client",
+            "commit": "fbfe38ebecbb97f70b8ac17a99da7ae29fd94a29",
+            "comment": "Only export DeclarativeCallAgent in beta build"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/calling-stateful-client",
+            "commit": "5e9aa8e455df220373fdfc07059e21116b89cda1",
+            "comment": "Introduce getEnvironmentInfo API from calling to stateful-client."
+          },
+          {
+            "author": "jinan@microsoft.com",
+            "package": "@internal/calling-stateful-client",
+            "commit": "c4fb6aa86817aa302b84094898fc029108d42b32",
+            "comment": "Add TeamsCall and TeamsCallAgent to StatefulClient"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "7b0e29772ac2e4a8111572fefb43624919e842a9",
+            "comment": "change device permission component string prop to optional"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "e0980acef6249da5f751954e68fb167a27e08127",
+            "comment": "Updated styling in unsupported browser component to better support CallWIthChat composite unsupportedBrowser screen."
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "a4885ef50b259dc13f864cade5203c8eb2225544",
+            "comment": "Fix dtmf dialpad behavior to allow constant visibility of tone sent last."
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "1b91cc5a3b775c3db0bedd577defeb62e0075a1e",
+            "comment": "Remove padding and margins from base dialpad component."
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "d614a2b2c8f2a7a9a7174f1d7981fde443c986b1",
+            "comment": "Make components string optional"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "2a279a14cc990a9716c96a582931a8b277bbfa34",
+            "comment": "Fix dark mode text for TroubleshootingGuideErrorBar messages"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "363401bdd3c81c42cf776243734740ea8d25390c",
+            "comment": "Add domain permission denied prompt pure UI component"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "3aab73e61303d02385497dfe6116f4d5f03b4f94",
+            "comment": "New individual camera and microphone permission modals"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "d5c6baf76a616d8c3556e0e479da975b6a366305",
+            "comment": "Enabled troubleshooting guide error bar to display network error guide/device error guide based on error type "
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/react-components",
+            "commit": "1b49a7e17ef1d7c18d2322d01da28b9116074fc3",
+            "comment": "Bugfix mute indicator color not matching display name"
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "40d5101942d87036ad44d5b3dc53373b8521b460",
+            "comment": "Add a new prop 'menuItems' that allows developers to inject contextual menu items in Video Tile"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "3d491b8aa403a607549999607b789da7c13c503f",
+            "comment": "Added role to CallParticipantListParticipant type"
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "2b44fdc3728a002dd0ac5823e90c6719e91c2c17",
+            "comment": "Add a prop 'isPinned' to the VideoTile component for toggling the pin icon"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "c5efaf6677c46c017e3297a003a1df905f4044f1",
+            "comment": "Add checking device permission prompt pure ui component"
+          }
+        ],
+        "patch": [
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "d303892227d0a98faad54a2cec790800e37f1c77",
+            "comment": "Fix remove participant logic for teams user. Make sure to enforce isRemovable property on participantList participant."
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "d7293fca758edb5927f520f36471bd863dc69bb9",
+            "comment": "Focus on participant list when opening people pane"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "8cb67542c822c72db69c77e223747d55fe5b4d54",
+            "comment": "Allow a range of communication services dependency packages"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/react-composites",
+            "commit": "713f8fffeaf64b3f2ed08ccd86f0b473f5c376d3",
+            "comment": "Config page local preview does not show a black screen when camera devices are removed."
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "4a670785567b2de58b3d78df8aeea77aa1f6173e",
+            "comment": "Fix issue where typingIndicator errors were not being caught by the ChatAdapter"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "41f8e688e1f277a644a26b8aaef30ac3ffd5798c",
+            "comment": "Bump dependencies to get closer to react 18 support"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "08765a2c32ab5384156bcf706a5939a2808b55c2",
+            "comment": "Fix CallWithChatPane drawer menu that stays open after switching mobile tabs"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "29cecd954712376ed4b9a4fe4ed9300f4112672d",
+            "comment": "setting icon definition to undefined if icon is already defined by fluent"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "5e75267b651935b673dba3955878c3bf6231be22",
+            "comment": "Refresh string translations"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/react-composites",
+            "commit": "fe8ac93f7d7404fc1ab2d37b084758aaee3151ba",
+            "comment": "Increase max listener limit to remove warning in console"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "f77ff8331775565f18d85e7d7a317cada2b78e3a",
+            "comment": "Fix a string name and restrict it to beta builds"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "41f8e688e1f277a644a26b8aaef30ac3ffd5798c",
+            "comment": "Bump dependencies to get closer to react 18 support"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/storybook",
+            "commit": "29cecd954712376ed4b9a4fe4ed9300f4112672d",
+            "comment": "Move icon register code to manager to avoid re-register warning on load"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "8cb67542c822c72db69c77e223747d55fe5b4d54",
+            "comment": "Allow a range of communication services dependency packages"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "7244e8add398513a81398441c90b8a07f43ba309",
+            "comment": "Add documentation for minimum typescript and webpack versions."
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "98aa510d8af2585cc8b59be8717fb48251e57114",
+            "comment": "Fix spacing for local Camera switcher button when in localVideoTile."
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "f05183f007655005e197097d0e4153d84c0e6278",
+            "comment": "update webpack version."
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "d7cafbd647c995269d6cf6c47cca9ccb8865128f",
+            "comment": "Add anouncement strings to the composites so the narrator will announce when someone joins or leaves"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "c79b587ca20d4f38bfec7bff1155b69bc77e767c",
+            "comment": "Tee errors to state when starting or stopping a local video preview outside of a call fails"
+          },
+          {
+            "author": "jinan@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "bbe605cabff800b4579b420427d45ed40926c131",
+            "comment": "Fix chat pane problem when no parent height is set"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "b658baf369772b77c517c0efe172edb2c6fc55d7",
+            "comment": "Display correct error text and guidance text for device permission errors on safari browser"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@azure/communication-react",
+            "commit": "efb0bc97560d9668936220e58fd77b9dff73240d",
+            "comment": "Bugfix disableEditing not working in MessageThread."
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "a1fd00b4f1cf29c73c31db9f9bef8592cd1f1c68",
+            "comment": "Ignore errors from previous call when surfacing errors to composite UI"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "d153271c5e6f966497112e1ae4a22f1f652873b3",
+            "comment": "Fix tab order focus on Call Composite and CallWithChat Composite"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "1340bd70495dd18f070d6d2a182ca4a90be2088a",
+            "comment": "Update express, storybook, and cpy-cli dependencies"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "d7d036e2d316fdc8081c3858b5a2a0bbf9db7b1b",
+            "comment": "Update samples to disable pull down to refresh in chat"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "8a626bf44df7b488431b896f1c57b3c6f1698a2a",
+            "comment": "Change aspect ratio for local video tile to capture full camera view"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "bc9563e8b92b7f9ce2bb4fc001993e6a0673b32a",
+            "comment": "Memoize local participant in video gallery selector"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "028b7ce5348f47387d2954cc9a70581088144a26",
+            "comment": "Move cursor to the end of input when clicking on dialpad text field"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "d7cafbd647c995269d6cf6c47cca9ccb8865128f",
+            "comment": "Introduces announcements for when participants come and go from a call."
+          },
+          {
+            "author": "79329532+alkwa-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "f5bc06bcd7faba5a3512edd595ece852cae38dc3",
+            "comment": "Fixing an issue if hitting back in the browser  when pulling in new messages"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "b55e231d8bfcbf7f9acc7b27032cab50ce016380",
+            "comment": "Bugfix microphone tooltip opening on initial mount"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "ee2e6eb5fb3e5b2beef157488f6caf69f043fb09",
+            "comment": "Fix component styles to bring components back in line with designs after fluent updates."
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "4bc76af77fc4f4e108de10b8a6e4227348b82cdb",
+            "comment": "Filter out devices with blank names"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "8cb67542c822c72db69c77e223747d55fe5b4d54",
+            "comment": "Allow a range of communication services dependency packages"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/calling-stateful-client",
+            "commit": "8cb67542c822c72db69c77e223747d55fe5b4d54",
+            "comment": "Allow a range of communication services dependency packages"
+          },
+          {
+            "author": "anjulgarg@live.com",
+            "package": "@internal/calling-stateful-client",
+            "commit": "713f8fffeaf64b3f2ed08ccd86f0b473f5c376d3",
+            "comment": "Filter out camera devices with blank name when declarative device manager is used."
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/calling-stateful-client",
+            "commit": "5c061a95044751fd8e0f4618cd02a0e63d3027dd",
+            "comment": "Remove DeclarativeCallAgent from stable API"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/chat-component-bindings",
+            "commit": "8cb67542c822c72db69c77e223747d55fe5b4d54",
+            "comment": "Allow a range of communication services dependency packages"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/chat-stateful-client",
+            "commit": "8cb67542c822c72db69c77e223747d55fe5b4d54",
+            "comment": "Allow a range of communication services dependency packages"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/chat-stateful-client",
+            "commit": "4a670785567b2de58b3d78df8aeea77aa1f6173e",
+            "comment": "Fix issue where typingIndicator errors were not being caught by the ChatAdapter."
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/fake-backends",
+            "commit": "8cb67542c822c72db69c77e223747d55fe5b4d54",
+            "comment": "Allow a range of communication services dependency packages"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/react-components",
+            "commit": "29cecd954712376ed4b9a4fe4ed9300f4112672d",
+            "comment": "setting icon definition to undefined if icon is already defined by fluent"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "5e75267b651935b673dba3955878c3bf6231be22",
+            "comment": "Refresh string translations"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "41f8e688e1f277a644a26b8aaef30ac3ffd5798c",
+            "comment": "Bump dependencies to get closer to react 18 support"
+          }
+        ],
+        "minor": [
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/react-composites",
+            "commit": "1ebf2f2e306113c14b59da615a5b2a3ef493e5a4",
+            "comment": "Revert breaking API change in `CallEndedListener` callback"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "fce25f070db98a57d17ad6748bd21a781a903ed1",
+            "comment": "Update Composite dropdown behavior to correctly notify the user that they have no devices."
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "2e995fc7b1aadecdc84ce90285a893d2fe6d80b1",
+            "comment": "Add narrator announcements to participant button copy link and peoplepane copylink button in CallWithChat composite."
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "08aac1eeea846cd1bfdd703997f43219c58b07e2",
+            "comment": "Update useAdaptedSelector in composites layer to retrieve the new client state variables for environmentInfo and alternateCallerId."
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "a1fd00b4f1cf29c73c31db9f9bef8592cd1f1c68",
+            "comment": "Add a prop to ErrorBar component to ignore old errors"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/react-components",
+            "commit": "7244e8add398513a81398441c90b8a07f43ba309",
+            "comment": "Update html-to-react dependency. Note: This change requires Webpack > 4."
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 15 Nov 2022 21:12:22 GMT",
       "tag": "@azure/communication-react_v1.4.1-beta.1",
       "version": "1.4.1-beta.1",

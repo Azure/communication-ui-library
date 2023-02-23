@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Allow NodeJS 16 with rush",
+  "packageName": "@azure/communication-react",
+  "email": "3941071+emlynmac@users.noreply.github.com",
+  "dependentChangeType": "none"
+}

@@ -37,6 +37,8 @@ import {
 } from './CallClientState';
 import { callingStatefulLogger } from './Logger';
 import { CallIdHistory } from './CallIdHistory';
+/* @conditional-compile-remove(video-background-effects) */
+import { LocalVideoStreamVideoEffectsState } from './CallClientState';
 
 enableMapSet();
 // Needed to generate state diff for verbose logging.
@@ -147,6 +149,8 @@ export class CallContext {
         existingCall.recording.isRecordingActive = call.recording.isRecordingActive;
         /* @conditional-compile-remove(rooms) */
         existingCall.role = call.role;
+        /* @conditional-compile-remove(total-participant-count) */
+        existingCall.totalParticipantCount = call.totalParticipantCount;
         // We don't update the startTime and endTime if we are updating an existing active call
       } else {
         draft.calls[latestCallId] = call;
@@ -260,6 +264,25 @@ export class CallContext {
     });
   }
 
+  /* @conditional-compile-remove(video-background-effects) */
+  public setCallLocalVideoStreamVideoEffects(
+    callId: string,
+    videoEffects: Partial<LocalVideoStreamVideoEffectsState>
+  ): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        const stream = call.localVideoStreams?.find((i) => i.mediaStreamType === 'Video');
+        if (stream) {
+          stream.videoEffects = {
+            isActive: videoEffects.isActive ?? stream.videoEffects?.isActive ?? false,
+            effectName: videoEffects.effectName ?? stream.videoEffects?.effectName
+          };
+        }
+      }
+    });
+  }
+
   public setCallIsMicrophoneMuted(callId: string, isMicrophoneMuted: boolean): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
@@ -275,6 +298,16 @@ export class CallContext {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
         call.role = role;
+      }
+    });
+  }
+
+  /* @conditional-compile-remove(total-participant-count) */
+  public setTotalParticipantCount(callId: string, totalParticipantCount: number): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        call.totalParticipantCount = totalParticipantCount;
       }
     });
   }
@@ -638,6 +671,26 @@ export class CallContext {
     });
   }
 
+  /* @conditional-compile-remove(video-background-effects) */
+  public setDeviceManagerUnparentedViewVideoEffects(
+    localVideoStream: LocalVideoStreamState,
+    videoEffects: LocalVideoStreamVideoEffectsState
+  ): void {
+    this.modifyState((draft: CallClientState) => {
+      const foundIndex = draft.deviceManager.unparentedViews.findIndex(
+        (stream) =>
+          stream.source.id === localVideoStream.source.id && stream.mediaStreamType === localVideoStream.mediaStreamType
+      );
+      if (foundIndex !== -1) {
+        const draftStream = draft.deviceManager.unparentedViews[foundIndex];
+        draftStream.videoEffects = {
+          isActive: videoEffects.isActive ?? draftStream.videoEffects?.isActive ?? false,
+          effectName: videoEffects.effectName ?? draftStream.videoEffects?.effectName
+        };
+      }
+    });
+  }
+
   public getAndIncrementAtomicId(): number {
     const id = this._atomicId;
     this._atomicId++;
@@ -690,6 +743,21 @@ export class CallContext {
       }
     };
   }
+
+  /**
+   * Tees direct errors to state.
+   * @remarks
+   * This is typically used for errors that are caught and intended to be shown to the user.
+   *
+   * @param error The raw error to report.
+   * @param target The error target to tee error to.
+   *
+   * @private
+   */
+  public teeErrorToState = (error: Error, target: CallErrorTarget): void => {
+    const callError = toCallError(target, error);
+    this.setLatestError(target, callError);
+  };
 
   private setLatestError(target: CallErrorTarget, error: CallError): void {
     this.modifyState((draft: CallClientState) => {

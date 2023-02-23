@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix dtmf dialpad behavior to allow constant visibility of tone sent last.",
-  "packageName": "@internal/react-components",
-  "email": "94866715+dmceachernmsft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

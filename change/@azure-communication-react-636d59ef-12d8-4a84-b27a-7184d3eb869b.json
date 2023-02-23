@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "AvatarPersona now exposes showUnknownPersonaCoin prop similar to Persona component",
-  "packageName": "@azure/communication-react",
-  "email": "anjulgarg@live.com",
-  "dependentChangeType": "patch"
-}

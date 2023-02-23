@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Add missing PSTN conditional compilation",
-  "packageName": "@internal/react-components",
-  "email": "edwardlee@microsoft.com",
-  "dependentChangeType": "none"
-}

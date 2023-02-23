@@ -77,7 +77,7 @@ import { StatefulChatClient } from '@internal/chat-stateful-client';
 import { ChatThreadClient } from '@azure/communication-chat';
 import { useEffect, useRef, useState } from 'react';
 import { _toCommunicationIdentifier } from '@internal/acs-ui-common';
-/* @conditional-compile-remove(unsupported-browser) */
+/* @conditional-compile-remove(rooms) */
 import { AzureCommunicationCallAdapterOptions } from '../../CallComposite/adapter/AzureCommunicationCallAdapter';
 
 type CallWithChatAdapterStateChangedHandler = (newState: CallWithChatAdapterState) => void;
@@ -596,7 +596,7 @@ export type AzureCommunicationCallWithChatAdapterArgs = {
   locator: CallAndChatLocator | TeamsMeetingLinkLocator;
   /* @conditional-compile-remove(PSTN-calls) */
   alternateCallerId?: string;
-  /* @conditional-compile-remove(unsupported-browser) */
+  /* @conditional-compile-remove(rooms) */
   callAdapterOptions?: AzureCommunicationCallAdapterOptions;
 };
 
@@ -613,7 +613,7 @@ export const createAzureCommunicationCallWithChatAdapter = async ({
   endpoint,
   locator,
   /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
-  /* @conditional-compile-remove(unsupported-browser) */ callAdapterOptions
+  /* @conditional-compile-remove(rooms) */ callAdapterOptions
 }: AzureCommunicationCallWithChatAdapterArgs): Promise<CallWithChatAdapter> => {
   const callAdapterLocator = isTeamsMeetingLinkLocator(locator) ? locator : locator.callLocator;
   const createCallAdapterPromise = createAzureCommunicationCallAdapter({
@@ -622,7 +622,7 @@ export const createAzureCommunicationCallWithChatAdapter = async ({
     credential,
     locator: callAdapterLocator,
     /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
-    /* @conditional-compile-remove(unsupported-browser) */ options: callAdapterOptions
+    /* @conditional-compile-remove(rooms) */ options: callAdapterOptions
   });
 
   const threadId = isTeamsMeetingLinkLocator(locator)
@@ -682,7 +682,7 @@ export const useAzureCommunicationCallWithChatAdapter = (
     locator,
     userId,
     /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
-    /* @conditional-compile-remove(unsupported-browser) */ callAdapterOptions
+    /* @conditional-compile-remove(rooms) */ callAdapterOptions
   } = args;
 
   // State update needed to rerender the parent component when a new adapter is created.
@@ -727,7 +727,7 @@ export const useAzureCommunicationCallWithChatAdapter = (
           locator,
           userId,
           /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
-          /* @conditional-compile-remove(unsupported-browser) */ callAdapterOptions
+          /* @conditional-compile-remove(rooms) */ callAdapterOptions
         });
         if (afterCreateRef.current) {
           newAdapter = await afterCreateRef.current(newAdapter);
@@ -747,7 +747,7 @@ export const useAzureCommunicationCallWithChatAdapter = (
       endpoint,
       locator,
       userId,
-      /* @conditional-compile-remove(unsupported-browser) */ callAdapterOptions
+      /* @conditional-compile-remove(rooms) */ callAdapterOptions
     ]
   );
 

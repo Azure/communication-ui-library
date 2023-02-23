@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Added role to CallParticipantListParticipant type",
-  "packageName": "@internal/react-components",
-  "email": "miguelgamis@microsoft.com",
-  "dependentChangeType": "patch"
-}

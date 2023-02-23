@@ -11,6 +11,8 @@ import {
   convertSdkParticipantToDeclarativeParticipant
 } from './Converter';
 import { InternalCallContext } from './InternalCallContext';
+/* @conditional-compile-remove(video-background-effects) */
+import { LocalVideoStreamVideoEffectsSubscriber } from './LocalVideoStreamVideoEffectsSubscriber';
 import { ParticipantSubscriber } from './ParticipantSubscriber';
 import { RecordingSubscriber } from './RecordingSubscriber';
 import { disposeView } from './StreamUtils';
@@ -32,6 +34,8 @@ export class CallSubscriber {
   private _participantSubscribers: Map<string, ParticipantSubscriber>;
   private _recordingSubscriber: RecordingSubscriber;
   private _transcriptionSubscriber: TranscriptionSubscriber;
+  /* @conditional-compile-remove(video-background-effects) */
+  private _localVideoStreamVideoEffectsSubscribers: Map<string, LocalVideoStreamVideoEffectsSubscriber>;
 
   constructor(call: CallCommon, context: CallContext, internalContext: InternalCallContext) {
     this._call = call;
@@ -55,6 +59,8 @@ export class CallSubscriber {
       this._context,
       this._call.feature(Features.Transcription)
     );
+    /* @conditional-compile-remove(video-background-effects) */
+    this._localVideoStreamVideoEffectsSubscribers = new Map();
 
     this.subscribe();
   }
@@ -69,6 +75,8 @@ export class CallSubscriber {
     /* @conditional-compile-remove(rooms) */
     this._call.on('roleChanged', this.callRoleChangedHandler);
     this._call.feature(Features.DominantSpeakers).on('dominantSpeakersChanged', this.dominantSpeakersChanged);
+    /* @conditional-compile-remove(total-participant-count) */
+    this._call.on('totalParticipantCountChanged', this.totalParticipantCountChangedHandler);
 
     // At time of writing only one LocalVideoStream is supported by SDK.
     if (this._call.localVideoStreams.length > 0) {
@@ -102,6 +110,8 @@ export class CallSubscriber {
     this._call.off('isMutedChanged', this.isMuteChanged);
     /* @conditional-compile-remove(rooms) */
     this._call.off('roleChanged', this.callRoleChangedHandler);
+    /* @conditional-compile-remove(total-participant-count) */
+    this._call.off('totalParticipantCountChanged', this.totalParticipantCountChangedHandler);
 
     this._participantSubscribers.forEach((participantSubscriber: ParticipantSubscriber) => {
       participantSubscriber.unsubscribe();
@@ -168,6 +178,11 @@ export class CallSubscriber {
     this._context.setRole(this._callIdRef.callId, this._call.role);
   };
 
+  /* @conditional-compile-remove(total-participant-count) */
+  private totalParticipantCountChangedHandler = (): void => {
+    this._context.setTotalParticipantCount(this._callIdRef.callId, this._call.totalParticipantCount);
+  };
+
   private remoteParticipantsUpdated = (event: { added: RemoteParticipant[]; removed: RemoteParticipant[] }): void => {
     event.added.forEach((participant: RemoteParticipant) => {
       this.addParticipantListener(participant);
@@ -209,8 +224,28 @@ export class CallSubscriber {
         undefined
       );
       this._context.setCallLocalVideoStream(this._callIdRef.callId, [...localVideoStreams]);
+
+      /* @conditional-compile-remove(video-background-effects) */
+      {
+        const localVideoStreamKey = event.added[0].source.id;
+        this._localVideoStreamVideoEffectsSubscribers.get(localVideoStreamKey)?.unsubscribe();
+        this._localVideoStreamVideoEffectsSubscribers.set(
+          localVideoStreamKey,
+          new LocalVideoStreamVideoEffectsSubscriber({
+            parent: this._callIdRef,
+            context: this._context,
+            localVideoStream: this._call.localVideoStreams[0],
+            localVideoStreamEffectsAPI: this._call.localVideoStreams[0].feature(Features.VideoEffects)
+          })
+        );
+      }
     }
     if (event.removed.length > 0) {
+      /* @conditional-compile-remove(video-background-effects) */
+      {
+        const localVideoStreamKey = event.removed[0].source.id;
+        this._localVideoStreamVideoEffectsSubscribers.get(localVideoStreamKey)?.unsubscribe();
+      }
       disposeView(
         this._context,
         this._internalContext,

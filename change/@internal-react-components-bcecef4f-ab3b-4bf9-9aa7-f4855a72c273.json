@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "New individual camera and microphone permission modals",
-  "packageName": "@internal/react-components",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

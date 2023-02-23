@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Enabled troubleshooting guide error bar to display network error guide/device error guide based on error type ",
-  "packageName": "@internal/react-components",
-  "email": "carolinecao@microsoft.com",
-  "dependentChangeType": "patch"
-}

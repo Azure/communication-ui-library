@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Add support for conditionally compiled browser tests",
-  "packageName": "@internal/react-composites",
-  "email": "82062616+prprabhu-ms@users.noreply.github.com",
-  "dependentChangeType": "none"
-}

@@ -7,7 +7,8 @@ import {
   LocalVideoStream as SdkLocalVideoStream,
   VideoStreamRendererView
 } from '@azure/communication-calling';
-
+/* @conditional-compile-remove(teams-identity-support) */
+import { CallKind } from '@azure/communication-calling';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import {
   CallState,
@@ -31,6 +32,7 @@ export function convertSdkLocalStreamToDeclarativeLocalStream(
     source: stream.source,
     mediaStreamType: stream.mediaStreamType,
     view: undefined
+    // TODO [video-background-effects]: Add video effects state when it is added to the SDK
   };
 }
 
@@ -85,7 +87,7 @@ export function convertSdkCallToDeclarativeCall(call: CallCommon): CallState {
   return {
     id: call.id,
     /* @conditional-compile-remove(teams-identity-support) */
-    type: _isACSCall(call) ? 'ACS' : 'Teams',
+    kind: _isACSCall(call) ? ('Call' as CallKind) : ('TeamsCall' as CallKind),
     callerInfo: call.callerInfo,
     state: call.state,
     callEndReason: call.callEndReason,

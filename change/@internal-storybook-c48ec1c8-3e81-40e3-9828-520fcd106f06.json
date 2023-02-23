@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Add stories for individual camera and mic permission modals in internal folder",
-  "packageName": "@internal/storybook",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "none"
-}

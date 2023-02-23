@@ -156,6 +156,12 @@ export const controlsToAdd = {
   },
   avatarInitials: { control: 'text', defaultValue: 'A B', name: 'Avatar initials' },
   botAvatar: { control: 'radio', options: botAvatars, defaultValue: 'Default', name: 'Bot Avatar' },
+  botChatTopic: {
+    control: 'text',
+    defaultValue: 'Chat with a friendly bot',
+    name: 'Chat Topic',
+    type: { name: 'string', required: true }
+  },
   botToken: {
     control: 'text',
     defaultValue: '',
@@ -219,13 +225,13 @@ export const controlsToAdd = {
     defaultValue: 'floatingBottom',
     name: 'Layout'
   },
-  domainDeviceRequest: {
+  siteDeviceRequest: {
     control: 'select',
     options: ['Camera and Microphone', 'Camera Only', 'Microphone Only'],
     defaultValue: 'Camera and Microphone',
     name: 'Device Request Type'
   },
-  domainDeviceRequestStatus: {
+  siteDeviceRequestStatus: {
     control: 'select',
     options: ['Request', 'Denied', 'Check'],
     defaultValue: 'Request',

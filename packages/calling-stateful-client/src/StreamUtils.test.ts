@@ -10,12 +10,14 @@ import {
   RemoteVideoStream as SdkRemoteVideoStream,
   VideoDeviceInfo
 } from '@azure/communication-calling';
+/* @conditional-compile-remove(teams-identity-support) */
+import { CallKind } from '@azure/communication-calling';
 import { CommunicationUserKind } from '@azure/communication-common';
 import { CallState, LocalVideoStreamState, RemoteParticipantState, RemoteVideoStreamState } from './CallClientState';
 import { CallContext } from './CallContext';
 import { InternalCallContext } from './InternalCallContext';
 import { createView, disposeView, disposeAllViewsFromCall, disposeAllViews } from './StreamUtils';
-import { createMockRemoteVideoStream } from './TestUtils';
+import { createMockLocalVideoStream, createMockRemoteVideoStream } from './TestUtils';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 
 jest.mock('@azure/communication-calling', () => {
@@ -25,18 +27,7 @@ jest.mock('@azure/communication-calling', () => {
     }),
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     LocalVideoStream: jest.fn().mockImplementation((info: VideoDeviceInfo) => {
-      return {
-        source: () => {
-          return {} as VideoDeviceInfo;
-        },
-        mediaStreamType: () => {
-          return 'Video';
-        },
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        switchSource: (videoDeviceInfo: VideoDeviceInfo) => {
-          return Promise.resolve();
-        }
-      };
+      return createMockLocalVideoStream();
     }),
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     VideoStreamRenderer: jest.fn().mockImplementation((videoStream: SdkLocalVideoStream | SdkRemoteVideoStream) => {
@@ -48,7 +39,10 @@ jest.mock('@azure/communication-calling', () => {
         // eslint-disable-next-line @typescript-eslint/no-empty-function
         dispose: () => {}
       };
-    })
+    }),
+    Features: {
+      VideoEffects: undefined
+    }
   };
 });
 
@@ -73,7 +67,7 @@ interface TestData {
 function createMockCall(mockCallId: string): CallState {
   const call: CallState = {
     /* @conditional-compile-remove(teams-identity-support) */
-    type: 'ACS',
+    kind: 'Call' as CallKind,
     id: mockCallId,
     callerInfo: {} as CallerInfo,
     state: 'None',

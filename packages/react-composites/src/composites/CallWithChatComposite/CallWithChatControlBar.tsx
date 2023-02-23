@@ -29,6 +29,7 @@ import {
 /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
 import { DesktopMoreButton } from './components/DesktopMoreButton';
 import { isDisabled } from '../CallComposite/utils';
+import { HiddenFocusStartPoint } from '../common/HiddenFocusStartPoint';
 
 /**
  * @private
@@ -156,6 +157,12 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps & Cont
       <Stack.Item grow>
         <CallAdapterProvider adapter={props.callAdapter}>
           <Stack horizontalAlign="center">
+            {/*
+              HiddenFocusStartPoint is a util component used when we can't ensure the initial element for first
+              tab focus is at the top of dom tree. It moves the first-tab focus to the next interact-able element
+              immediately after it in the dom tree.
+              */}
+            <HiddenFocusStartPoint />
             <Stack.Item>
               {/*
                   Note: We use the layout="horizontal" instead of dockedBottom because of how we position the
@@ -195,20 +202,18 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps & Cont
                 )}
                 {
                   /* @conditional-compile-remove(control-bar-button-injection) */
-                  customButtons['primary']?.props.children
-                    .slice(
+                  customButtons['primary']
+                    ?.slice(
                       0,
                       props.mobileView
                         ? CUSTOM_BUTTON_OPTIONS.MAX_PRIMARY_MOBILE_CUSTOM_BUTTONS
                         : CUSTOM_BUTTON_OPTIONS.MAX_PRIMARY_DESKTOP_CUSTOM_BUTTONS
                     )
-                    .map((element) => {
+                    .map((CustomButton, i) => {
                       return (
-                        <element.type
-                          {...element.props}
-                          key={element.props.strings.label}
+                        <CustomButton
+                          key={`primary-custom-button-${i}`}
                           styles={commonButtonStyles}
-                          displayType={options.displayType}
                           showLabel={options.displayType !== 'compact'}
                         />
                       );
@@ -234,6 +239,8 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps & Cont
                         disableButtonsForHoldScreen={props.disableButtonsForHoldScreen}
                         styles={commonButtonStyles}
                         onClickShowDialpad={props.onClickShowDialpad}
+                        /* @conditional-compile-remove(control-bar-button-injection) */
+                        callControls={props.callControls}
                       />
                     )
                 }
@@ -247,15 +254,13 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps & Cont
         <Stack horizontal className={!props.mobileView ? mergeStyles(desktopButtonContainerStyle) : undefined}>
           {
             /* @conditional-compile-remove(control-bar-button-injection) */
-            customButtons['secondary']?.props.children
-              .slice(0, CUSTOM_BUTTON_OPTIONS.MAX_SECONDARY_DESKTOP_CUSTOM_BUTTONS)
-              .map((element) => {
+            customButtons['secondary']
+              ?.slice(0, CUSTOM_BUTTON_OPTIONS.MAX_SECONDARY_DESKTOP_CUSTOM_BUTTONS)
+              .map((CustomButton, i) => {
                 return (
-                  <element.type
-                    {...element.props}
-                    key={element.props.key}
+                  <CustomButton
+                    key={`secondary-custom-button-${i}`}
                     styles={commonButtonStyles}
-                    displayType={options.displayType}
                     showLabel={options.displayType !== 'compact'}
                   />
                 );

@@ -3,14 +3,14 @@
 
 import React from 'react';
 /* @conditional-compile-remove(call-readiness) */
-import { Modal } from '@fluentui/react';
-/* @conditional-compile-remove(call-readiness) */
 import {
-  CameraAndMicrophoneDomainPermissions,
-  CameraDomainPermissions,
-  MicrophoneDomainPermissions,
+  CameraAndMicrophoneSitePermissions,
+  CameraSitePermissions,
+  MicrophoneSitePermissions,
   _DrawerSurface
 } from '@internal/react-components';
+/* @conditional-compile-remove(call-readiness) */
+import { _ModalClone } from '@internal/react-components';
 /* @conditional-compile-remove(call-readiness) */
 import { drawerContainerStyles } from '../styles/CallComposite.styles';
 /* @conditional-compile-remove(unsupported-browser) */
@@ -27,6 +27,7 @@ const DRAWER_HIGH_Z_BAND = 99; // setting z index to  99 so that it sit above al
  */
 export const CallReadinessModal = (props: {
   mobileView: boolean;
+  modalLayerHostId: string;
   permissionsState: {
     camera: PermissionState;
     microphone: PermissionState;
@@ -68,7 +69,7 @@ export const CallReadinessModal = (props: {
         // if both video and audio permission are not set
         if (videoState === 'prompt' && audioState === 'prompt') {
           return (
-            <CameraAndMicrophoneDomainPermissions
+            <CameraAndMicrophoneSitePermissions
               appName={'app'}
               /* @conditional-compile-remove(unsupported-browser) */
               browserHint={isSafari ? 'safari' : 'unset'}
@@ -79,14 +80,14 @@ export const CallReadinessModal = (props: {
                     }
                   : undefined
               }
-              type="request"
+              kind="request"
             />
           );
         }
         // if audio permission is set up but video is not
         else if (videoState === 'prompt') {
           return (
-            <CameraDomainPermissions
+            <CameraSitePermissions
               appName={'app'}
               /* @conditional-compile-remove(unsupported-browser) */
               browserHint={isSafari ? 'safari' : 'unset'}
@@ -100,14 +101,14 @@ export const CallReadinessModal = (props: {
               onContinueAnywayClick={() => {
                 setIsPermissionsModalDismissed(false);
               }}
-              type="request"
+              kind="request"
             />
           );
         }
         // if video permission is set up but audio is not
         else if (audioState === 'prompt') {
           return (
-            <MicrophoneDomainPermissions
+            <MicrophoneSitePermissions
               appName={'app'}
               /* @conditional-compile-remove(unsupported-browser) */
               browserHint={isSafari ? 'safari' : 'unset'}
@@ -118,14 +119,14 @@ export const CallReadinessModal = (props: {
                     }
                   : undefined
               }
-              type="request"
+              kind="request"
             />
           );
         }
         // if both video and audio are denied
         else if (videoState === 'denied' && audioState === 'denied') {
           return (
-            <CameraAndMicrophoneDomainPermissions
+            <CameraAndMicrophoneSitePermissions
               appName={'app'}
               /* @conditional-compile-remove(unsupported-browser) */
               browserHint={isSafari ? 'safari' : 'unset'}
@@ -136,14 +137,14 @@ export const CallReadinessModal = (props: {
                     }
                   : undefined
               }
-              type="denied"
+              kind="denied"
             />
           );
         }
         // if only video is denied
         else if (videoState === 'denied') {
           return (
-            <CameraDomainPermissions
+            <CameraSitePermissions
               appName={'app'}
               /* @conditional-compile-remove(unsupported-browser) */
               browserHint={isSafari ? 'safari' : 'unset'}
@@ -157,14 +158,14 @@ export const CallReadinessModal = (props: {
               onContinueAnywayClick={() => {
                 setIsPermissionsModalDismissed(false);
               }}
-              type="denied"
+              kind="denied"
             />
           );
         }
         // if only audio is denied
         else {
           return (
-            <MicrophoneDomainPermissions
+            <MicrophoneSitePermissions
               appName={'app'}
               /* @conditional-compile-remove(unsupported-browser) */
               browserHint={isSafari ? 'safari' : 'unset'}
@@ -175,7 +176,7 @@ export const CallReadinessModal = (props: {
                     }
                   : undefined
               }
-              type="denied"
+              kind="denied"
             />
           );
         }
@@ -193,7 +194,12 @@ export const CallReadinessModal = (props: {
     );
   } else if (!mobileView && modal !== undefined) {
     return (
-      <Modal
+      <_ModalClone
+        styles={{
+          root: { position: 'unset' },
+          main: { position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%, -50%)' }
+        }}
+        layerProps={{ hostId: props.modalLayerHostId }}
         isOpen={isPermissionsModalDismissed}
         isBlocking={false}
         onDismiss={() => {
@@ -202,7 +208,7 @@ export const CallReadinessModal = (props: {
         overlay={{ styles: { root: { background: 'rgba(0,0,0,0.9)' } } }}
       >
         {modal()}
-      </Modal>
+      </_ModalClone>
     );
   } else {
     return <></>;
@@ -222,6 +228,7 @@ export const CallReadinessModalFallBack = (props: {
     camera: PermissionState;
     microphone: PermissionState;
   };
+  modalLayerHostId: string;
   /* @conditional-compile-remove(unsupported-browser) */
   environmentInfo?: EnvironmentInfo;
   isPermissionsModalDismissed: boolean;
@@ -260,7 +267,7 @@ export const CallReadinessModalFallBack = (props: {
     : () => {
         if (videoState === 'denied' && audioState === 'denied') {
           return (
-            <CameraAndMicrophoneDomainPermissions
+            <CameraAndMicrophoneSitePermissions
               appName={'app'}
               /* @conditional-compile-remove(unsupported-browser) */
               browserHint={isSafari ? 'safari' : 'unset'}
@@ -271,12 +278,12 @@ export const CallReadinessModalFallBack = (props: {
                     }
                   : undefined
               }
-              type="denied"
+              kind="denied"
             />
           );
         } else if (videoState === 'denied' && audioState === 'granted') {
           return (
-            <CameraDomainPermissions
+            <CameraSitePermissions
               appName={'app'}
               /* @conditional-compile-remove(unsupported-browser) */
               browserHint={isSafari ? 'safari' : 'unset'}
@@ -290,12 +297,12 @@ export const CallReadinessModalFallBack = (props: {
               onContinueAnywayClick={() => {
                 setIsPermissionsModalDismissed(false);
               }}
-              type="denied"
+              kind="denied"
             />
           );
         } else {
           return (
-            <MicrophoneDomainPermissions
+            <MicrophoneSitePermissions
               appName={'app'}
               /* @conditional-compile-remove(unsupported-browser) */
               browserHint={isSafari ? 'safari' : 'unset'}
@@ -306,7 +313,7 @@ export const CallReadinessModalFallBack = (props: {
                     }
                   : undefined
               }
-              type="denied"
+              kind="denied"
             />
           );
         }
@@ -317,7 +324,7 @@ export const CallReadinessModalFallBack = (props: {
       <>
         {(checkPermissionModalShowing || audioState === 'prompt' || videoState === 'prompt') && (
           <_DrawerSurface onLightDismiss={onLightDismissTriggered} styles={drawerContainerStyles(DRAWER_HIGH_Z_BAND)}>
-            <CameraAndMicrophoneDomainPermissions
+            <CameraAndMicrophoneSitePermissions
               appName={'app'}
               /* @conditional-compile-remove(unsupported-browser) */
               browserHint={isSafari ? 'safari' : 'unset'}
@@ -328,7 +335,7 @@ export const CallReadinessModalFallBack = (props: {
                     }
                   : undefined
               }
-              type="check"
+              kind="check"
             />
           </_DrawerSurface>
         )}
@@ -343,7 +350,12 @@ export const CallReadinessModalFallBack = (props: {
     return (
       <>
         {(checkPermissionModalShowing || audioState === 'prompt' || videoState === 'prompt') && (
-          <Modal
+          <_ModalClone
+            styles={{
+              root: { position: 'unset' },
+              main: { position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%, -50%)' }
+            }}
+            layerProps={{ hostId: props.modalLayerHostId }}
             isOpen={isPermissionsModalDismissed}
             isBlocking={false}
             onDismiss={() => {
@@ -351,7 +363,7 @@ export const CallReadinessModalFallBack = (props: {
             }}
             overlay={{ styles: { root: { background: 'rgba(0,0,0,0.9)' } } }}
           >
-            <CameraAndMicrophoneDomainPermissions
+            <CameraAndMicrophoneSitePermissions
               appName={'app'}
               /* @conditional-compile-remove(unsupported-browser) */
               browserHint={isSafari ? 'safari' : 'unset'}
@@ -362,13 +374,18 @@ export const CallReadinessModalFallBack = (props: {
                     }
                   : undefined
               }
-              type="check"
+              kind="check"
             />
-          </Modal>
+          </_ModalClone>
         )}
 
         {!checkPermissionModalShowing && modal !== undefined && (
-          <Modal
+          <_ModalClone
+            styles={{
+              root: { position: 'unset' },
+              main: { position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%, -50%)' }
+            }}
+            layerProps={{ hostId: props.modalLayerHostId }}
             isOpen={isPermissionsModalDismissed}
             isBlocking={false}
             onDismiss={() => {
@@ -377,7 +394,7 @@ export const CallReadinessModalFallBack = (props: {
             overlay={{ styles: { root: { background: 'rgba(0,0,0,0.9)' } } }}
           >
             {modal()}
-          </Modal>
+          </_ModalClone>
         )}
       </>
     );

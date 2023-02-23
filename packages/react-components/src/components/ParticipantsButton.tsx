@@ -285,6 +285,7 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
   const defaultMenuProps = useMemo((): IContextualMenuProps => {
     const menuProps: IContextualMenuProps = {
       title: strings.menuHeader,
+      ariaLabel: strings.menuHeader,
       styles: merge(participantsButtonMenuPropsStyle, styles?.menuStyles),
       items: [],
       calloutProps: {

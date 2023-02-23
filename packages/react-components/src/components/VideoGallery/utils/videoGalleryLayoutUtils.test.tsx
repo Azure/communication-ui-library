@@ -5,9 +5,77 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 import { v1 as createGUID } from 'uuid';
 import { VideoGalleryRemoteParticipant } from '../../../types';
-import { LayoutResult, usePinnedParticipantLayout, UsePinnedParticipantLayoutArgs } from './videoGalleryLayoutUtils';
+import {
+  useOrganizedParticipants,
+  OrganizedParticipantsArgs,
+  OrganizedParticipantsResult
+} from './videoGalleryLayoutUtils';
 
-describe('VideoGallery pinned participants layout ordering and grouping tests', () => {
+describe('VideoGallery layout ordering and grouping tests', () => {
+  test('4 video participants should be in grid starting with dominant speakers and the rest in horizontal gallery', () => {
+    // 10 remote participants. First 5 with their video on.
+    const remoteParticipants = [...Array(10).keys()].map((i) => {
+      return createRemoteParticipant({
+        userId: `${i}`,
+        videoStream: i < 5 ? { isAvailable: true, renderElement: createVideoDivElement() } : undefined
+      });
+    });
+
+    const pinnedParticipantsLayout = setup({
+      remoteParticipants,
+      dominantSpeakers: ['3', '4'],
+      maxRemoteVideoStreams: 4
+    });
+
+    expect(pinnedParticipantsLayout?.gridParticipants.map((p) => p.userId)).toStrictEqual(['3', '4', '0', '1']);
+    expect(pinnedParticipantsLayout?.horizontalGalleryParticipants.map((p) => p.userId)).toStrictEqual([
+      '2',
+      '5',
+      '6',
+      '7',
+      '8',
+      '9'
+    ]);
+  });
+
+  test(
+    'no participants should be in grid because of screenshare and horizontal gallery should start with ' +
+      'video participants then audio participants',
+    () => {
+      // 10 remote participants. First 5 with their video on.
+      const remoteParticipants = [...Array(10).keys()].map((i) => {
+        return createRemoteParticipant({
+          userId: `${i}`,
+          videoStream: i < 5 ? { isAvailable: true, renderElement: createVideoDivElement() } : undefined
+        });
+      });
+
+      const pinnedParticipantsLayout = setup({
+        remoteParticipants,
+        dominantSpeakers: ['3', '4'],
+        maxRemoteVideoStreams: 4,
+        isScreenShareActive: true
+      });
+
+      expect(pinnedParticipantsLayout?.gridParticipants.map((p) => p.userId)).toStrictEqual([]);
+      expect(pinnedParticipantsLayout?.horizontalGalleryParticipants.map((p) => p.userId)).toStrictEqual([
+        '3',
+        '4',
+        '0',
+        '1',
+        '2',
+        '5',
+        '6',
+        '7',
+        '8',
+        '9'
+      ]);
+    }
+  );
+});
+
+/* @conditional-compile-remove(pinned-participants) */
+describe('VideoGallery layout ordering and grouping tests with pinned participants', () => {
   test('pinned participants should in grid and video participants should be at the start of horizontal gallery', () => {
     // 10 remote participants. First 5 with their video on.
     const remoteParticipants = [...Array(10).keys()].map((i) => {
@@ -38,8 +106,8 @@ describe('VideoGallery pinned participants layout ordering and grouping tests', 
   });
 
   test(
-    'no participants should be in grid because of screenshare and pinned participants followed by video participants ' +
-      'should at the start of horizontal gallery',
+    'no participants should be in grid because of screenshare and horizontal gallery should start with ' +
+      'pinned participants followed by video participants and then audio participants',
     () => {
       // 10 remote participants. First 5 with their video on.
       const remoteParticipants = [...Array(10).keys()].map((i) => {
@@ -105,10 +173,10 @@ const createRemoteParticipant = (attrs?: Partial<VideoGalleryRemoteParticipant>)
   };
 };
 
-const setup = (args: UsePinnedParticipantLayoutArgs): LayoutResult | undefined => {
-  let layout: LayoutResult | undefined = undefined;
+const setup = (args: OrganizedParticipantsArgs): OrganizedParticipantsResult | undefined => {
+  let layout: OrganizedParticipantsResult | undefined = undefined;
   const TestComponent = (): null => {
-    layout = usePinnedParticipantLayout(args);
+    layout = useOrganizedParticipants(args);
     return null;
   };
   renderer.create(<TestComponent />);

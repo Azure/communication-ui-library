@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Made sure error bar innerText always centered ",
+  "packageName": "@azure/communication-react",
+  "email": "carolinecao@microsoft.com",
+  "dependentChangeType": "patch"
+}

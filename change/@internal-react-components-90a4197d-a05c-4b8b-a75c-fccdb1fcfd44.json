@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix dark mode text for TroubleshootingGuideErrorBar messages",
-  "packageName": "@internal/react-components",
-  "email": "edwardlee@microsoft.com",
-  "dependentChangeType": "patch"
-}

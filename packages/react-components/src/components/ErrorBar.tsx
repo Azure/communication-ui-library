@@ -209,6 +209,10 @@ export interface ErrorBarStrings {
    * An error message when joining a call fails specifically due to an invalid meeting link.
    */
   failedToJoinCallInvalidMeetingLink?: string;
+  /**
+   * Generic message for when screen sharing fails
+   */
+  startScreenSharingGeneric?: string;
 }
 
 /**
@@ -281,8 +285,7 @@ export const ErrorBar = (props: ErrorBarProps): JSX.Element => {
           {...props}
           styles={{
             innerText: {
-              paddingTop: messageBarType(error.type) === 5 ? '0.15rem' : '0.1rem', // to move the inner text of the message bar down to be centered
-              lineHeight: 'none'
+              alignSelf: 'center'
             },
             icon: {
               height: 0

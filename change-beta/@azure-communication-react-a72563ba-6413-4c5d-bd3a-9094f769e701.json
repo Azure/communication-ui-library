@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Video tile ellipsis should only appear on hover",
+  "packageName": "@azure/communication-react",
+  "email": "97124699+prabhjot-msft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

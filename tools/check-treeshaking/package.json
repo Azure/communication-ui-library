@@ -18,12 +18,12 @@
     "lint:quiet": "rushx lint -- --quiet"
   },
   "dependencies": {
-    "@internal/acs-ui-common": "1.4.2-beta.0",
-    "@internal/react-components": "1.4.2-beta.0",
-    "@internal/chat-stateful-client": "1.4.2-beta.0",
-    "@internal/calling-stateful-client": "1.4.2-beta.0",
-    "@internal/chat-component-bindings": "1.4.2-beta.0",
-    "@internal/calling-component-bindings": "1.4.2-beta.0"
+    "@internal/acs-ui-common": "1.5.1-beta.0",
+    "@internal/react-components": "1.5.1-beta.0",
+    "@internal/chat-stateful-client": "1.5.1-beta.0",
+    "@internal/calling-stateful-client": "1.5.1-beta.0",
+    "@internal/chat-component-bindings": "1.5.1-beta.0",
+    "@internal/calling-component-bindings": "1.5.1-beta.0"
   },
   "devDependencies": {
     "@babel/core": "~7.16.0",
@@ -36,7 +36,7 @@
     "eslint-plugin-import": "~2.22.1",
     "prettier": "2.3.1",
     "rimraf": "^2.6.2",
-    "webpack": "5.38.1",
+    "webpack": "5.61.0",
     "webpack-cli": "~4.10.0"
   }
 }

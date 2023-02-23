@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add a prop 'isPinned' to the VideoTile component for toggling the pin icon",
-  "packageName": "@internal/react-components",
-  "email": "97124699+prabhjot-msft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

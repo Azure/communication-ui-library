@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Add ability to style a failed chat message (fixes #2257)",
-  "packageName": "@internal/react-components",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "none"
-}

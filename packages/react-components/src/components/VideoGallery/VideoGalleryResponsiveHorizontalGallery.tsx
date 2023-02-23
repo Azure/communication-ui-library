@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { concatStyleSets, Stack } from '@fluentui/react';
+import { concatStyleSets } from '@fluentui/react';
 import React, { useMemo } from 'react';
 import { HorizontalGalleryStyles } from '../HorizontalGallery';
 import { ResponsiveHorizontalGallery } from '../ResponsiveHorizontalGallery';
@@ -33,19 +33,17 @@ export const VideoGalleryResponsiveHorizontalGallery = (props: {
   const galleryStyles = useMemo(() => concatStyleSets(horizontalGalleryStyle(isNarrow), styles), [isNarrow, styles]);
 
   return (
-    <Stack styles={{ root: { paddingTop: '0.5rem' } }}>
-      <ResponsiveHorizontalGallery
-        key="responsive-horizontal-gallery"
-        containerStyles={containerStyles}
-        horizontalGalleryStyles={galleryStyles}
-        childWidthRem={
-          isNarrow ? SMALL_HORIZONTAL_GALLERY_TILE_SIZE_REM.width : LARGE_HORIZONTAL_GALLERY_TILE_SIZE_REM.width
-        }
-        buttonWidthRem={HORIZONTAL_GALLERY_BUTTON_WIDTH}
-        gapWidthRem={HORIZONTAL_GALLERY_GAP}
-      >
-        {horizontalGalleryElements}
-      </ResponsiveHorizontalGallery>
-    </Stack>
+    <ResponsiveHorizontalGallery
+      key="responsive-horizontal-gallery"
+      containerStyles={containerStyles}
+      horizontalGalleryStyles={galleryStyles}
+      childWidthRem={
+        isNarrow ? SMALL_HORIZONTAL_GALLERY_TILE_SIZE_REM.width : LARGE_HORIZONTAL_GALLERY_TILE_SIZE_REM.width
+      }
+      buttonWidthRem={HORIZONTAL_GALLERY_BUTTON_WIDTH}
+      gapWidthRem={HORIZONTAL_GALLERY_GAP}
+    >
+      {horizontalGalleryElements}
+    </ResponsiveHorizontalGallery>
   );
 };

@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Auto prompt for device access and show different modals based on device permission state when call readiness is turned on",
-  "packageName": "@internal/react-composites",
-  "email": "carolinecao@microsoft.com",
-  "dependentChangeType": "patch"
-}

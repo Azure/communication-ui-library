@@ -184,7 +184,7 @@
     "participantStateRinging": "正在呼叫...",
     "participantStateHold": "待机音乐"
   },
-  "DomainPermissions": {
+  "SitePermissions": {
     "primaryText": "允许{appName}使用你的相机和麦克风",
     "secondaryText": "这样参与者就可以看到并听到你的声音。",
     "linkText": "需要帮助? 获取疑难解答帮助",

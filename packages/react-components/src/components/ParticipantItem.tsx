@@ -69,10 +69,6 @@ export interface ParticipantItemStrings {
   displayNamePlaceholder?: string;
   /* @conditional-compile-remove(one-to-n-calling) */
   /* @conditional-compile-remove(PSTN-calls) */
-  /** String shown when `participantState` is `Connecting` */
-  participantStateConnecting?: string;
-  /* @conditional-compile-remove(one-to-n-calling) */
-  /* @conditional-compile-remove(PSTN-calls) */
   /** String shown when `participantState` is `Ringing` */
   participantStateRinging?: string;
   /* @conditional-compile-remove(one-to-n-calling) */
@@ -150,7 +146,6 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
     me,
     onClick,
     showParticipantOverflowTooltip
-    /* @conditional-compile-remove(PSTN-calls) */
   } = props;
   const [itemHovered, setItemHovered] = useState<boolean>(false);
   const [itemFocused, setItemFocused] = useState<boolean>(false);
@@ -162,13 +157,16 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
 
   const strings = { ...localeStrings, ...props.strings };
 
+  // For 'me' show empty name so avatar will get 'Person' icon, when there is no name
+  const meAvatarText = displayName?.trim() || '';
+
   const avatarOptions = {
-    text: displayName?.trim() || strings.displayNamePlaceholder,
+    text: me ? meAvatarText : displayName?.trim() || strings.displayNamePlaceholder,
     size: PersonaSize.size32,
     presence: presence,
     initialsTextColor: 'white',
     showOverflowTooltip: showParticipantOverflowTooltip,
-    showUnknownPersonaCoin: !displayName?.trim() || displayName === strings.displayNamePlaceholder
+    showUnknownPersonaCoin: !me && (!displayName?.trim() || displayName === strings.displayNamePlaceholder)
   };
 
   const avatar = onRenderAvatar ? (
@@ -303,9 +301,7 @@ const participantStateStringTrampoline = (
 ): string | undefined => {
   /* @conditional-compile-remove(one-to-n-calling) */
   /* @conditional-compile-remove(PSTN-calls) */
-  return props.participantState === 'Idle' || props.participantState === 'Connecting'
-    ? strings?.participantStateConnecting
-    : props.participantState === 'EarlyMedia' || props.participantState === 'Ringing'
+  return props.participantState === 'EarlyMedia' || props.participantState === 'Ringing'
     ? strings?.participantStateRinging
     : props.participantState === 'Hold'
     ? strings?.participantStateHold

@@ -2,6 +2,109 @@
   "name": "@internal/storybook",
   "entries": [
     {
+      "date": "Wed, 04 Jan 2023 23:56:36 GMT",
+      "tag": "@internal/storybook_v1.5.0",
+      "version": "1.5.0",
+      "comments": {
+        "none": [
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "1e0f9b6bb5d2e5c98fc1076160b5b25d03cf3695",
+            "comment": "Clean up storybook quickstart setup page"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "c5efaf6677c46c017e3297a003a1df905f4044f1",
+            "comment": "Update domain permissions story to have checking device permissions type"
+          },
+          {
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "c8e8d74de3f7804e0187538d696bbfe7a37e0248",
+            "comment": "Bumped"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "363401bdd3c81c42cf776243734740ea8d25390c",
+            "comment": "Update internal story to have denied vs request domain permission skus"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "3aab73e61303d02385497dfe6116f4d5f03b4f94",
+            "comment": "Add stories for individual camera and mic permission modals in internal folder"
+          }
+        ],
+        "patch": [
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "41f8e688e1f277a644a26b8aaef30ac3ffd5798c",
+            "comment": "Bump dependencies to get closer to react 18 support"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/storybook",
+            "commit": "29cecd954712376ed4b9a4fe4ed9300f4112672d",
+            "comment": "Move icon register code to manager to avoid re-register warning on load"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "8cb67542c822c72db69c77e223747d55fe5b4d54",
+            "comment": "Allow a range of communication services dependency packages"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "7244e8add398513a81398441c90b8a07f43ba309",
+            "comment": "Add documentation for minimum typescript and webpack versions."
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/storybook",
+            "comment": "Bump @azure/communication-react to v1.5.0",
+            "commit": "080bf87c8847f154b37cda856978bc00aa4fe5df"
+          }
+        ],
+        "prerelease": [
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@internal/storybook",
+            "commit": "d5c6baf76a616d8c3556e0e479da975b6a366305",
+            "comment": "Updated troubleshooting error bar storybook "
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "5e9aa8e455df220373fdfc07059e21116b89cda1",
+            "comment": "Bump Calling version to new beta"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "a867bc56b414cc2e87bcfbd4139f10c2f9a962a1",
+            "comment": "Bump `@azure/communication-calling` beta dependency to 1.9.1-beta.1"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "a85305c823be1f5601c2979694f27f82e6eabc9b",
+            "comment": "initializeIcons() in 1:N and PSTN quickstarts"
+          },
+          {
+            "author": "79329532+alkwa-msft@users.noreply.github.com",
+            "package": "@internal/storybook",
+            "commit": "0b16287d6ddb7104fdba7eee25bb10fb285bfa81",
+            "comment": "updating storybook documentation to all note there is a callWithChat composite js bundle"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 15 Nov 2022 21:12:26 GMT",
       "tag": "@internal/storybook_v1.4.1-beta.1",
       "version": "1.4.1-beta.1",

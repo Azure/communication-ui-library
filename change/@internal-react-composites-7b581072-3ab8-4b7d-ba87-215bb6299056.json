@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "browser tests: drop runtime test for build flavor environment variable",
-  "packageName": "@internal/react-composites",
-  "email": "82062616+prprabhu-ms@users.noreply.github.com",
-  "dependentChangeType": "none"
-}

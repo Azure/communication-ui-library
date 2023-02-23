@@ -49,6 +49,8 @@ export type { AnnouncerProps } from './Announcer';
 
 export { VideoGallery } from './VideoGallery';
 export type { VideoGalleryProps, VideoGalleryStrings, VideoGalleryStyles, VideoGalleryLayout } from './VideoGallery';
+/* @conditional-compile-remove(pinned-participants) */
+export type { VideoTileContextualMenuProps, VideoTileDrawerMenuProps } from './VideoGallery';
 export type { HorizontalGalleryStyles } from './HorizontalGallery';
 
 export { LocalVideoCameraCycleButton } from './LocalVideoCameraButton';
@@ -90,25 +92,22 @@ export type {
 
 /* @conditional-compile-remove(call-readiness) */
 export {
-  CameraAndMicrophoneDomainPermissions,
-  MicrophoneDomainPermissions,
-  CameraDomainPermissions
-} from './DevicePermissions/DomainPermissions';
+  CameraAndMicrophoneSitePermissions,
+  MicrophoneSitePermissions,
+  CameraSitePermissions
+} from './DevicePermissions/SitePermissions';
+/* @conditional-compile-remove(call-readiness) */
+export type { SitePermissionsStrings, SitePermissionsStyles } from './DevicePermissions/SitePermissionsScaffolding';
 /* @conditional-compile-remove(call-readiness) */
 export type {
-  DomainPermissionsStrings,
-  DomainPermissionsStyles
-} from './DevicePermissions/DomainPermissionsScaffolding';
-/* @conditional-compile-remove(call-readiness) */
-export type {
-  CameraAndMicrophoneDomainPermissionsStrings,
-  CameraAndMicrophoneDomainPermissionsProps,
-  CameraDomainPermissionsStrings,
-  CameraDomainPermissionsProps,
-  CommonDomainPermissionsProps,
-  MicrophoneDomainPermissionsStrings,
-  MicrophoneDomainPermissionsProps
-} from './DevicePermissions/DomainPermissions';
+  CameraAndMicrophoneSitePermissionsStrings,
+  CameraAndMicrophoneSitePermissionsProps,
+  CameraSitePermissionsStrings,
+  CameraSitePermissionsProps,
+  CommonSitePermissionsProps,
+  MicrophoneSitePermissionsStrings,
+  MicrophoneSitePermissionsProps
+} from './DevicePermissions/SitePermissions';
 /* @conditional-compile-remove(call-readiness) */
 export { BrowserPermissionDenied } from './DevicePermissions/BrowserPermissionDenied';
 /* @conditional-compile-remove(call-readiness) */

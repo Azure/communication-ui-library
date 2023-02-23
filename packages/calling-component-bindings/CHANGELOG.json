@@ -2,6 +2,85 @@
   "name": "@internal/calling-component-bindings",
   "entries": [
     {
+      "date": "Wed, 04 Jan 2023 23:56:41 GMT",
+      "tag": "@internal/calling-component-bindings_v1.5.0",
+      "version": "1.5.0",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "3d491b8aa403a607549999607b789da7c13c503f",
+            "comment": "Added role to selectors"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "5e9aa8e455df220373fdfc07059e21116b89cda1",
+            "comment": "Introduce getEnvironmentInfo API from calling to stateful-client."
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "a867bc56b414cc2e87bcfbd4139f10c2f9a962a1",
+            "comment": "Bump `@azure/communication-calling` beta dependency to 1.9.1-beta.1"
+          },
+          {
+            "author": "jinan@microsoft.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "c2045bf3c9c4464c57bdff774f130756af8ebe28",
+            "comment": "Add teams identity support to binding layer"
+          }
+        ],
+        "none": [
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "6b4049475e182608504163b25d62692a6f781e7f",
+            "comment": "Stable release branch hotfix: Fix camera turning back on when turned off on connecting screen (#2458)"
+          },
+          {
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "c8e8d74de3f7804e0187538d696bbfe7a37e0248",
+            "comment": "Bumped"
+          }
+        ],
+        "patch": [
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "4bc76af77fc4f4e108de10b8a6e4227348b82cdb",
+            "comment": "Filter out devices with blank names"
+          },
+          {
+            "author": "82062616+prprabhu-ms@users.noreply.github.com",
+            "package": "@internal/calling-component-bindings",
+            "commit": "8cb67542c822c72db69c77e223747d55fe5b4d54",
+            "comment": "Allow a range of communication services dependency packages"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/calling-component-bindings",
+            "comment": "Bump @internal/acs-ui-common to v1.5.0",
+            "commit": "080bf87c8847f154b37cda856978bc00aa4fe5df"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/calling-component-bindings",
+            "comment": "Bump @internal/calling-stateful-client to v1.5.0",
+            "commit": "080bf87c8847f154b37cda856978bc00aa4fe5df"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/calling-component-bindings",
+            "comment": "Bump @internal/react-components to v1.5.0",
+            "commit": "080bf87c8847f154b37cda856978bc00aa4fe5df"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 15 Nov 2022 21:12:22 GMT",
       "tag": "@internal/calling-component-bindings_v1.4.1-beta.1",
       "version": "1.4.1-beta.1",

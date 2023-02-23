@@ -130,21 +130,21 @@ export { Dialpad } from '../../react-components/src';
 
 /* @conditional-compile-remove(call-readiness) */
 export {
-  CameraAndMicrophoneDomainPermissions,
-  MicrophoneDomainPermissions,
-  CameraDomainPermissions
+  CameraAndMicrophoneSitePermissions,
+  MicrophoneSitePermissions,
+  CameraSitePermissions
 } from '../../react-components/src';
 /* @conditional-compile-remove(call-readiness) */
 export type {
-  CameraAndMicrophoneDomainPermissionsStrings,
-  CameraAndMicrophoneDomainPermissionsProps,
-  CameraDomainPermissionsStrings,
-  CameraDomainPermissionsProps,
-  CommonDomainPermissionsProps,
-  DomainPermissionsStrings,
-  DomainPermissionsStyles,
-  MicrophoneDomainPermissionsStrings,
-  MicrophoneDomainPermissionsProps
+  CameraAndMicrophoneSitePermissionsStrings,
+  CameraAndMicrophoneSitePermissionsProps,
+  CameraSitePermissionsStrings,
+  CameraSitePermissionsProps,
+  CommonSitePermissionsProps,
+  SitePermissionsStrings,
+  SitePermissionsStyles,
+  MicrophoneSitePermissionsStrings,
+  MicrophoneSitePermissionsProps
 } from '../../react-components/src';
 
 export type {
@@ -267,6 +267,8 @@ export type {
   BrowserPermissionDeniedStyles,
   BrowserPermissionDeniedIOSProps
 } from '../../react-components/src';
+/* @conditional-compile-remove(pinned-participants) */
+export type { VideoTileContextualMenuProps, VideoTileDrawerMenuProps } from '../../react-components/src';
 export * from '../../react-components/src/localization/locales';
 export * from '../../react-components/src/theming';
 export * from '../../calling-stateful-client/src/index-public';
@@ -300,11 +302,3 @@ export type { UnsupportedBrowserVersionStrings, UnsupportedBrowserVersionProps }
 export { UnsupportedOperatingSystem } from '../../react-components/src';
 /* @conditional-compile-remove(unsupported-browser) */
 export type { UnsupportedOperatingSystemStrings, UnsupportedOperatingSystemProps } from '../../react-components/src';
-/* @conditional-compile-remove(call-readiness) */
-export { _DevicePermissionDropdown } from '../../react-components/src';
-/* @conditional-compile-remove(call-readiness) */
-export type {
-  _DevicePermissionDropdownStrings,
-  _DevicePermissionDropdownProps,
-  _PermissionConstraints
-} from '../../react-components/src';

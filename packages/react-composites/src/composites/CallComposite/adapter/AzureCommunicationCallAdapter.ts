@@ -68,13 +68,15 @@ import {
   isPhoneNumberIdentifier,
   UnknownIdentifier,
   PhoneNumberIdentifier,
-  CommunicationIdentifier
+  CommunicationIdentifier,
+  MicrosoftTeamsUserIdentifier
 } from '@azure/communication-common';
 import { ParticipantSubscriber } from './ParticipantSubcriber';
 import { AdapterError } from '../../common/adapters';
 import { DiagnosticsForwarder } from './DiagnosticsForwarder';
 import { useEffect, useRef, useState } from 'react';
 import { CallHandlersOf, createHandlers } from './createHandlers';
+import { createProfileStateModifier, OnFetchProfileCallback } from './OnFetchProfileCallback';
 
 type CallTypeOf<AgentType extends CallAgent | BetaTeamsCallAgent> = AgentType extends CallAgent ? Call : TeamsCall;
 
@@ -83,6 +85,7 @@ class CallContext {
   private emitter: EventEmitter = new EventEmitter();
   private state: CallAdapterState;
   private callId: string | undefined;
+  private displayNameModifier: AdapterStateModifier | undefined;
 
   constructor(
     clientState: CallClientState,
@@ -90,6 +93,7 @@ class CallContext {
     options?: {
       /* @conditional-compile-remove(rooms) */ roleHint?: Role;
       maxListeners?: number;
+      onFetchProfile?: OnFetchProfileCallback;
     }
   ) {
     this.state = {
@@ -104,10 +108,16 @@ class CallContext {
       /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId: clientState.alternateCallerId,
       /* @conditional-compile-remove(unsupported-browser) */ environmentInfo: clientState.environmentInfo,
       /* @conditional-compile-remove(unsupported-browser) */ unsupportedBrowserVersionsAllowed: false,
-      /* @conditional-compile-remove(rooms) */ roleHint: options?.roleHint
+      /* @conditional-compile-remove(rooms) */ roleHint: options?.roleHint,
+      cameraStatus: undefined
     };
     this.emitter.setMaxListeners(options?.maxListeners ?? 50);
     this.bindPublicMethods();
+    this.displayNameModifier = options?.onFetchProfile
+      ? createProfileStateModifier(options.onFetchProfile, () => {
+          this.setState(this.getState());
+        })
+      : undefined;
   }
 
   private bindPublicMethods(): void {
@@ -124,7 +134,7 @@ class CallContext {
   }
 
   public setState(state: CallAdapterState): void {
-    this.state = state;
+    this.state = this.displayNameModifier ? this.displayNameModifier(state) : state;
     this.emitter.emit('stateChanged', this.state);
   }
 
@@ -181,7 +191,12 @@ class CallContext {
         page: newPage,
         endedCall: latestEndedCall,
         devices: clientState.deviceManager,
-        latestErrors: clientState.latestErrors
+        latestErrors: clientState.latestErrors,
+        cameraStatus:
+          call?.localVideoStreams.find((s) => s.mediaStreamType === 'Video') ||
+          clientState.deviceManager.unparentedViews.find((s) => s.mediaStreamType === 'Video')
+            ? 'On'
+            : 'Off'
       });
     }
   }
@@ -205,6 +220,11 @@ const findLatestEndedCall = (calls: { [key: string]: CallState }): CallState | u
   }
   return latestCall;
 };
+
+/**
+ * @private
+ */
+export type AdapterStateModifier = (state: CallAdapterState) => CallAdapterState;
 
 /**
  * @private
@@ -240,7 +260,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     locator: CallAdapterLocator,
     callAgent: AgentType,
     deviceManager: StatefulDeviceManager,
-    options?: AzureCommunicationCallAdapterOptions
+    options?: AzureCommunicationCallAdapterOptions & TeamsAdapterOptions
   ) {
     this.bindPublicMethods();
     this.callClient = callClient;
@@ -824,6 +844,35 @@ export type AzureCommunicationCallAdapterArgs = {
 };
 
 /**
+ * Optional parameters to create {@link AzureCommunicationCallAdapter}
+ *
+ * @beta
+ */
+export type TeamsAdapterOptions = {
+  /**
+   * Use this to fetch profile information which will override data in {@link CallAdapterState} like display name
+   * The onFetchProfile is fetch-and-forget one time action for each user, once a user profile is updated, the value will be cached
+   * and would not be updated again within the lifecycle of adapter.
+   */
+  onFetchProfile?: OnFetchProfileCallback;
+};
+
+/**
+ * Arguments for creating the Azure Communication Services implementation of {@link TeamsCallAdapter}.
+ *
+ * @beta
+ */
+export type TeamsCallAdapterArgs = {
+  userId: MicrosoftTeamsUserIdentifier;
+  credential: CommunicationTokenCredential;
+  locator: TeamsMeetingLinkLocator;
+  /**
+   * Optional parameters for the {@link TeamsCallAdapter} created
+   */
+  options?: TeamsAdapterOptions;
+};
+
+/**
  * Create a {@link CallAdapter} backed by Azure Communication Services.
  *
  * This is the default implementation of {@link CallAdapter} provided by this library.
@@ -837,8 +886,7 @@ export const createAzureCommunicationCallAdapter = async ({
   displayName,
   credential,
   locator,
-  /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
-  /* @conditional-compile-remove(rooms) */ options
+  /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId
 }: AzureCommunicationCallAdapterArgs): Promise<CallAdapter> => {
   if (!isValidIdentifier(userId)) {
     throw new Error('Invalid identifier. Please provide valid identifier object.');
@@ -851,12 +899,7 @@ export const createAzureCommunicationCallAdapter = async ({
   const callAgent = await callClient.createCallAgent(credential, {
     displayName
   });
-  const adapter = createAzureCommunicationCallAdapterFromClient(
-    callClient,
-    callAgent,
-    locator,
-    /* @conditional-compile-remove(rooms) */ options
-  );
+  const adapter = createAzureCommunicationCallAdapterFromClient(callClient, callAgent, locator);
   return adapter;
 };
 
@@ -864,50 +907,56 @@ export const createAzureCommunicationCallAdapter = async ({
 /**
  * @beta
  */
-export const createAzureCommunicationTeamsCallAdapter = async ({
+export const createTeamsCallAdapter = async ({
   userId,
   credential,
   locator,
-  /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId
-}: AzureCommunicationCallAdapterArgs): Promise<TeamsCallAdapter> => {
+  options
+}: TeamsCallAdapterArgs): Promise<TeamsCallAdapter> => {
   const callClient = createStatefulCallClient({
-    userId,
-    /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId
+    userId
   });
   const callAgent = await callClient.createTeamsCallAgent(credential, {
     undefined
   });
-  const adapter = createAzureCommunicationTeamsCallAdapterFromClient(callClient, callAgent, locator);
+  const adapter = createTeamsCallAdapterFromClient(callClient, callAgent, locator, options);
   return adapter;
 };
+
+type PartialArgsType<Adapter> = Adapter extends CallAdapter
+  ? Partial<AzureCommunicationCallAdapterArgs>
+  : Partial<TeamsCallAdapterArgs>;
+
+type AdapterOf<AdapterKind extends 'AzureCommunication' | 'Teams'> = AdapterKind extends 'AzureCommunication'
+  ? CallAdapter
+  : never | /* @conditional-compile-remove(teams-identity-support) */ TeamsCallAdapter;
 
 /**
  * @private
  */
 const useAzureCommunicationCallAdapterGeneric = <
-  AdapterType extends CallAdapter | /* @conditional-compile-remove(teams-identity-support) */ TeamsCallAdapter
+  AdapterKind extends 'AzureCommunication' | 'Teams',
+  Adapter extends AdapterOf<AdapterKind>
 >(
-  args: Partial<AzureCommunicationCallAdapterArgs>,
-  createAzureCommunicationCallAdapter: (args: AzureCommunicationCallAdapterArgs) => Promise<AdapterType>,
-  afterCreate?: (adapter: AdapterType) => Promise<AdapterType>,
-  beforeDispose?: (adapter: AdapterType) => Promise<void>
-): AdapterType | undefined => {
-  const {
-    credential,
-    displayName,
-    locator,
-    userId,
-    /*@conditional-compile-remove(PSTN-calls) */ alternateCallerId,
-    /*@conditional-compile-remove(rooms) */ options
-  } = args;
+  args: PartialArgsType<Adapter>,
+  afterCreate?: (adapter: Adapter) => Promise<Adapter>,
+  beforeDispose?: (adapter: Adapter) => Promise<void>,
+  adapterKind: AdapterKind = 'AzureCommunication' as AdapterKind
+): Adapter | undefined => {
+  const { credential, locator, userId } = args;
+  const displayName = 'displayName' in args ? args.displayName : undefined;
+  /* @conditional-compile-remove(PSTN-calls) */
+  const alternateCallerId = 'alternateCallerId' in args ? args.alternateCallerId : undefined;
+  /* @conditional-compile-remove(rooms) */
+  const options = 'options' in args ? args.options : undefined;
 
   // State update needed to rerender the parent component when a new adapter is created.
-  const [adapter, setAdapter] = useState<AdapterType | undefined>(undefined);
+  const [adapter, setAdapter] = useState<Adapter | undefined>(undefined);
   // Ref needed for cleanup to access the old adapter created asynchronously.
-  const adapterRef = useRef<AdapterType | undefined>(undefined);
+  const adapterRef = useRef<Adapter | undefined>(undefined);
 
-  const afterCreateRef = useRef<((adapter: AdapterType) => Promise<AdapterType>) | undefined>(undefined);
-  const beforeDisposeRef = useRef<((adapter: AdapterType) => Promise<void>) | undefined>(undefined);
+  const afterCreateRef = useRef<((adapter: Adapter) => Promise<Adapter>) | undefined>(undefined);
+  const beforeDisposeRef = useRef<((adapter: Adapter) => Promise<void>) | undefined>(undefined);
   // These refs are updated on *each* render, so that the latest values
   // are used in the `useEffect` closures below.
   // Using a Ref ensures that new values for the callbacks do not trigger the
@@ -917,7 +966,11 @@ const useAzureCommunicationCallAdapterGeneric = <
 
   useEffect(
     () => {
-      if (!credential || !displayName || !locator || !userId) {
+      if (!credential || !locator || !userId) {
+        return;
+      }
+
+      if (adapterKind === 'AzureCommunication' && !displayName) {
         return;
       }
       (async () => {
@@ -934,14 +987,46 @@ const useAzureCommunicationCallAdapterGeneric = <
           adapterRef.current = undefined;
         }
 
-        let newAdapter = await createAzureCommunicationCallAdapter({
-          credential,
-          displayName,
-          locator,
-          userId,
-          /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
-          /* @conditional-compile-remove(rooms) */ options
-        });
+        let newAdapter: Adapter | undefined = undefined;
+        if (adapterKind === 'AzureCommunication') {
+          // This is just the type check to ensure that displayName is defined.
+          if (!displayName) {
+            throw new Error('Unreachable code, displayName already checked above.');
+          }
+          // This is just the type check to ensure that roleHint is defined.
+          /* @conditional-compile-remove(rooms) */
+          if (options && !('roleHint' in options)) {
+            throw new Error('Unreachable code, provided a options without roleHint.');
+          }
+          newAdapter = (await createAzureCommunicationCallAdapter({
+            credential,
+            displayName: displayName,
+            locator,
+            userId: userId as CommunicationUserIdentifier,
+            /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
+            /* @conditional-compile-remove(rooms) */ options
+          })) as Adapter;
+        } else if (adapterKind === 'Teams') {
+          // This is just the type check to ensure that roleHint is defined.
+          /* @conditional-compile-remove(teams-identity-support)) */
+          if (options && !('onFetchProfile' in options)) {
+            throw new Error('Unreachable code, provided a options without roleHint.');
+          }
+          /* @conditional-compile-remove(teams-identity-support) */
+          newAdapter = (await createTeamsCallAdapter({
+            credential,
+            locator: locator as TeamsMeetingLinkLocator,
+            userId: userId as MicrosoftTeamsUserIdentifier,
+            options
+          })) as Adapter;
+        } else {
+          throw new Error('Unreachable code, unknown adapterKind');
+        }
+
+        if (!newAdapter) {
+          throw Error('Unreachable code! Get undefined adapter');
+        }
+
         if (afterCreateRef.current) {
           newAdapter = await afterCreateRef.current(newAdapter);
         }
@@ -953,14 +1038,17 @@ const useAzureCommunicationCallAdapterGeneric = <
     [
       adapterRef,
       afterCreateRef,
-      /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
       beforeDisposeRef,
-      createAzureCommunicationCallAdapter,
       credential,
-      displayName,
       locator,
-      /* @conditional-compile-remove(rooms) */ options,
-      userId
+      adapterKind,
+      userId,
+      displayName,
+      /* @conditional-compile-remove(PSTN-calls) */
+      alternateCallerId,
+      /* @conditional-compile-remove(rooms) */
+      /* @conditional-compile-remove(teams-identity-support) */
+      options
     ]
   );
 
@@ -1017,7 +1105,7 @@ export const useAzureCommunicationCallAdapter = (
    */
   beforeDispose?: (adapter: CallAdapter) => Promise<void>
 ): CallAdapter | undefined => {
-  return useAzureCommunicationCallAdapterGeneric(args, createAzureCommunicationCallAdapter, afterCreate, beforeDispose);
+  return useAzureCommunicationCallAdapterGeneric(args, afterCreate, beforeDispose, 'AzureCommunication');
 };
 
 /* @conditional-compile-remove(teams-identity-support) */
@@ -1035,14 +1123,14 @@ export const useAzureCommunicationCallAdapter = (
  *
  * @beta
  */
-export const useAzureCommunicationTeamsCallAdapter = (
+export const useTeamsCallAdapter = (
   /**
    * Arguments to be passed to {@link createAzureCommunicationCallAdapter}.
    *
    * Allows arguments to be undefined so that you can respect the rule-of-hooks and pass in arguments
    * as they are created. The adapter is only created when all arguments are defined.
    */
-  args: Partial<AzureCommunicationCallAdapterArgs>,
+  args: Partial<TeamsCallAdapterArgs>,
   /**
    * Optional callback to modify the adapter once it is created.
    *
@@ -1056,12 +1144,7 @@ export const useAzureCommunicationTeamsCallAdapter = (
    */
   beforeDispose?: (adapter: TeamsCallAdapter) => Promise<void>
 ): TeamsCallAdapter | undefined => {
-  return useAzureCommunicationCallAdapterGeneric(
-    args,
-    createAzureCommunicationTeamsCallAdapter,
-    afterCreate,
-    beforeDispose
-  );
+  return useAzureCommunicationCallAdapterGeneric(args, afterCreate, beforeDispose, 'Teams');
 };
 
 /**
@@ -1104,15 +1187,16 @@ export const createAzureCommunicationCallAdapterFromClient: (
  *
  * @beta
  */
-export const createAzureCommunicationTeamsCallAdapterFromClient = async (
+export const createTeamsCallAdapterFromClient = async (
   callClient: StatefulCallClient,
   callAgent: TeamsCallAgent,
-  locator: CallAdapterLocator
+  locator: CallAdapterLocator,
+  options?: TeamsAdapterOptions
 ): Promise<TeamsCallAdapter> => {
   const deviceManager = (await callClient.getDeviceManager()) as StatefulDeviceManager;
   /* @conditional-compile-remove(unsupported-browser) */
   await callClient.feature(Features.DebugInfo).getEnvironmentInfo();
-  return new AzureCommunicationCallAdapter(callClient, locator, callAgent, deviceManager);
+  return new AzureCommunicationCallAdapter(callClient, locator, callAgent, deviceManager, options);
 };
 
 const isCallError = (e: Error): e is CallError => {

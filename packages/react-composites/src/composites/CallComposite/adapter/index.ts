@@ -9,10 +9,14 @@ export {
 
 /* @conditional-compile-remove(teams-identity-support) */
 export {
-  createAzureCommunicationTeamsCallAdapter,
-  createAzureCommunicationTeamsCallAdapterFromClient,
-  useAzureCommunicationTeamsCallAdapter
+  createTeamsCallAdapter,
+  createTeamsCallAdapterFromClient,
+  useTeamsCallAdapter
 } from './AzureCommunicationCallAdapter';
+/* @conditional-compile-remove(teams-identity-support) */
+export type { TeamsCallAdapterArgs, TeamsAdapterOptions } from './AzureCommunicationCallAdapter';
+/* @conditional-compile-remove(teams-identity-support) */
+export type { OnFetchProfileCallback, Profile } from './OnFetchProfileCallback';
 export type { AzureCommunicationCallAdapterArgs, CallAdapterLocator } from './AzureCommunicationCallAdapter';
 /* @conditional-compile-remove(rooms) */
 export type { AzureCommunicationCallAdapterOptions } from './AzureCommunicationCallAdapter';

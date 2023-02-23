@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add teams identity option to sample",
+  "packageName": "@azure/communication-react",
+  "email": "jinan@microsoft.com",
+  "dependentChangeType": "patch"
+}

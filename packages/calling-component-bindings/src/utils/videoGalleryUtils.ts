@@ -9,6 +9,7 @@ import { memoizeFnAll, toFlatCommunicationIdentifier } from '@internal/acs-ui-co
 import { RemoteParticipantState, RemoteVideoStreamState } from '@internal/calling-stateful-client';
 import { VideoGalleryRemoteParticipant, VideoGalleryStream } from '@internal/react-components';
 import memoizeOne from 'memoize-one';
+import { _isRingingPSTNParticipant } from './callUtils';
 import { checkIsSpeaking } from './SelectorUtils';
 
 /** @internal */
@@ -24,20 +25,30 @@ export const _videoGalleryRemoteParticipantsMemo = (
     return [];
   }
   return memoizedAllConvertRemoteParticipant((memoizedFn) => {
-    return Object.values(remoteParticipants)
-      .filter((participant: RemoteParticipantState) => {
-        return participant.state !== 'InLobby';
-      })
-      .map((participant: RemoteParticipantState) => {
-        return memoizedFn(
-          toFlatCommunicationIdentifier(participant.identifier),
-          participant.isMuted,
-          checkIsSpeaking(participant),
-          participant.videoStreams,
-          participant.state,
-          participant.displayName
-        );
-      });
+    return (
+      Object.values(remoteParticipants)
+        /**
+         * hiding participants who are inLobby, idle, or connecting in ACS clients till we can admit users through ACS clients.
+         * phone users will be in the connecting state until they are connected to the call.
+         */
+        .filter((participant: RemoteParticipantState) => {
+          return (
+            (participant.state !== 'InLobby' && participant.state !== 'Idle' && participant.state !== 'Connecting') ||
+            participant.identifier.kind === 'phoneNumber'
+          );
+        })
+        .map((participant: RemoteParticipantState) => {
+          const state = _isRingingPSTNParticipant(participant);
+          return memoizedFn(
+            toFlatCommunicationIdentifier(participant.identifier),
+            participant.isMuted,
+            checkIsSpeaking(participant),
+            participant.videoStreams,
+            state,
+            participant.displayName
+          );
+        })
+    );
   });
 };
 
@@ -74,20 +85,19 @@ export const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
   let videoStream: VideoGalleryStream | undefined = undefined;
   let screenShareStream: VideoGalleryStream | undefined = undefined;
 
-  if (rawVideoStreamsArray[0]) {
-    if (rawVideoStreamsArray[0].mediaStreamType === 'Video') {
-      videoStream = convertRemoteVideoStreamToVideoGalleryStream(rawVideoStreamsArray[0]);
-    } else {
-      screenShareStream = convertRemoteVideoStreamToVideoGalleryStream(rawVideoStreamsArray[0]);
-    }
-  }
+  const sdkRemoteVideoStream =
+    Object.values(rawVideoStreamsArray).find((i) => i.mediaStreamType === 'Video' && i.isAvailable) ||
+    Object.values(rawVideoStreamsArray).find((i) => i.mediaStreamType === 'Video');
 
-  if (rawVideoStreamsArray[1]) {
-    if (rawVideoStreamsArray[1].mediaStreamType === 'ScreenSharing') {
-      screenShareStream = convertRemoteVideoStreamToVideoGalleryStream(rawVideoStreamsArray[1]);
-    } else {
-      videoStream = convertRemoteVideoStreamToVideoGalleryStream(rawVideoStreamsArray[1]);
-    }
+  const sdkScreenShareStream =
+    Object.values(rawVideoStreamsArray).find((i) => i.mediaStreamType === 'ScreenSharing' && i.isAvailable) ||
+    Object.values(rawVideoStreamsArray).find((i) => i.mediaStreamType === 'ScreenSharing');
+
+  if (sdkRemoteVideoStream) {
+    videoStream = convertRemoteVideoStreamToVideoGalleryStream(sdkRemoteVideoStream);
+  }
+  if (sdkScreenShareStream) {
+    screenShareStream = convertRemoteVideoStreamToVideoGalleryStream(sdkScreenShareStream);
   }
 
   return {
