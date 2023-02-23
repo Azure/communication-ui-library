@@ -18,6 +18,8 @@ export const LARGE_VERTICAL_GALLERY_TILE_SIZE_REM = { minHeight: 5.625, maxHeigh
 /**
  * Styles for the VerticalGallery's container set in parent.
  *
+ * width is being increased by 1rem to account for the gap width desired for the VerticalGallery.
+ *
  * @param shouldFloatLocalVideo whether rendered in floating layout or not
  * @param isNarrow is being rendered with narrow tile settings.
  * @returns Style set for VerticalGallery container.
