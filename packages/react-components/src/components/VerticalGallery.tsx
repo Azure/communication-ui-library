@@ -110,7 +110,7 @@ export const VerticalGallery = (props: VerticalGalleryProps): JSX.Element => {
 
   const childContainerStyle = useMemo(() => {
     return { root: childrenContainerStyle };
-  }, [childrenContainerStyle]);
+  }, []);
 
   const childrenStyles = useMemo(() => {
     return { root: styles?.children };
