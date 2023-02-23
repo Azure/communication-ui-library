@@ -5,8 +5,7 @@
     "removeButtonLabel": "Remover",
     "sharingIconLabel": "Compartilhamento",
     "mutedIconLabel": "Silenciado",
-    "displayNamePlaceholder": "Participante Sem Nome",
-    "participantStateConnecting": "Chamando...",
+    "displayNamePlaceholder": "Participante sem nome",
     "participantStateRinging": "Chamando...",
     "participantStateHold": "Em espera"
   },
@@ -90,7 +89,8 @@
     "menuHeader": "Nesta chamada",
     "participantsListButtonLabel": "{numParticipants} pessoas",
     "muteAllButtonLabel": "Silenciar todos",
-    "copyInviteLinkButtonLabel": "Copiar o link de convite"
+    "copyInviteLinkButtonLabel": "Copiar o link de convite",
+    "copyInviteLinkActionedAriaLabel": "Link de convite copiado"
   },
   "screenShareButton": {
     "onLabel": "Interromper apresentação",
@@ -146,11 +146,13 @@
     "callNoSpeakerFound": "Nenhum alto-falante ou fone de ouvido encontrado. Conecte um dispositivo de áudio para ouvir a chamada.",
     "callNoMicrophoneFound": "Nenhum microfone encontrado. Conecte um dispositivo de entrada de áudio.",
     "callMicrophoneAccessDenied": "Não é possível acessar o microfone. Clique no bloqueio na barra de endereços para conceder permissão a esta página da Web.",
+    "callMicrophoneAccessDeniedSafari": "Não é possível acessar o microfone. Atualize a página para permitir permissões ou verifique as configurações deste navegador e verifique se as permissões estão habilitadas para este site.",
     "callMicrophoneMutedBySystem": "Você está com as notificações desativada pelo sistema.",
     "callMicrophoneUnmutedBySystem": "Seu microfone se recuperou e você foi desativado pelo sistema.",
     "callMacOsMicrophoneAccessDenied": "Não é possível acessar o microfone. Conceda permissão ao microfone nas configurações de privacidade do macOS.",
     "callLocalVideoFreeze": "A largura de banda da rede é ruim. Seu vídeo pode aparecer em pausa para outras pessoas na chamada.",
     "callCameraAccessDenied": "Não é possível acessar a câmera. Clique no bloqueio na barra de endereços para conceder permissão a esta página da Web.",
+    "callCameraAccessDeniedSafari": "Não é possível acessar a câmera. Atualize a página para permitir permissões ou verifique as configurações deste navegador e verifique se as permissões estão habilitadas para este site.",
     "callCameraAlreadyInUse": "Não é possível acessar a câmera. Talvez ele já esteja em uso por outro aplicativo.",
     "callVideoStoppedBySystem": "Seu vídeo foi interrompido pelo sistema.",
     "callVideoRecoveredBySystem": "Seu vídeo foi retomado.",
@@ -158,7 +160,8 @@
     "callMacOsScreenShareAccessDenied": "O MacOS está bloqueando o compartilhamento de tela. Atualize suas configurações de privacidade para permitir que este navegador grave sua tela.",
     "dismissButtonAriaLabel": "Fechar",
     "failedToJoinCallGeneric": "Ocorreu um erro ao ingressar na chamada.",
-    "failedToJoinCallInvalidMeetingLink": "Não é possível ingressar na Reunião. Link Inválido."
+    "failedToJoinCallInvalidMeetingLink": "Não é possível ingressar na Reunião. Link Inválido.",
+    "startScreenSharingGeneric": "Ocorreu um problema ao iniciar o compartilhamento de tela."
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "Você está compartilhando sua tela",
@@ -167,7 +170,16 @@
     "localVideoCameraSwitcherLabel": "Alternar câmera",
     "localVideoMovementLabel": "Bloco de Vídeo Local Removível",
     "localVideoSelectedDescription": "{cameraName} selecionado",
-    "displayNamePlaceholder": "Participante Sem Nome"
+    "displayNamePlaceholder": "Participante sem nome",
+    "fitRemoteParticipantToFrame": "Ajustar ao quadro",
+    "fillRemoteParticipantFrame": "Preencher quadro",
+    "pinParticipantForMe": "Fixar para mim",
+    "pinParticipantForMeLimitReached": "PIN (limite alcançado)",
+    "unpinParticipantForMe": "Desafixar",
+    "pinParticipantMenuItemAriaLabel": "Fixar {participantName}",
+    "unpinParticipantMenuItemAriaLabel": "Desafixar {participantName}",
+    "pinnedParticipantAnnouncementAriaLabel": "Fixado {participantName}",
+    "unpinnedParticipantAnnouncementAriaLabel": "Desafixado {participantName}"
   },
   "dialpad": {
     "placeholderText": "Inserir o número do telefone",
@@ -180,20 +192,102 @@
     "tooltipOffContent": "Manter chamada em espera"
   },
   "videoTile": {
-    "participantStateConnecting": "Chamando...",
     "participantStateRinging": "Chamando...",
     "participantStateHold": "Em espera"
   },
-  "SitePermissions": {
+  "CameraAndMicrophoneSitePermissionsRequest": {
     "primaryText": "Permitir {appName} usar a câmera e o microfone",
     "secondaryText": "Isso é para que os participantes possam ver e ouvir você.",
     "linkText": "Preciso de ajuda? Obtenha ajuda para solução de problemas",
-    "primaryButtonText": "Permitir Acesso"
+    "primaryButtonText": "Continuar sem câmera e microfone",
+    "ariaLabel": "Permitir acesso à câmera e ao microfone"
+  },
+  "CameraSitePermissionsRequest": {
+    "primaryText": "Permitir que {appName} use a câmera",
+    "secondaryText": "Isso é para que os participantes possam ver você.",
+    "linkText": "Preciso de ajuda? Obtenha ajuda para solução de problemas",
+    "primaryButtonText": "Continuar sem a câmera",
+    "ariaLabel": "Permitir acesso à câmera"
+  },
+  "MicrophoneSitePermissionsRequest": {
+    "primaryText": "Permitir que {appName} use o microfone",
+    "secondaryText": "Isso é para que os participantes possam ouvir você.",
+    "linkText": "Preciso de ajuda? Obtenha ajuda para solução de problemas",
+    "primaryButtonText": "Continuar sem o microfone",
+    "ariaLabel": "Permitir acesso ao microfone"
+  },
+  "CameraAndMicrophoneSitePermissionsCheck": {
+    "primaryText": "Verificando o acesso à câmera e ao microfone",
+    "secondaryText": "Permitir acesso, se solicitado. Isso é para que os participantes possam ver e ouvir você.",
+    "linkText": "Preciso de ajuda? Obtenha ajuda para solução de problemas",
+    "primaryButtonText": "Continuar sem câmera e microfone",
+    "ariaLabel": "Verificando o acesso à câmera e ao microfone. Permitir o acesso se solicitado."
+  },
+  "CameraSitePermissionsCheck": {
+    "primaryText": "Verificando o acesso à câmera",
+    "secondaryText": "Permitir acesso, se solicitado. Isso é para que os participantes possam ver você.",
+    "linkText": "Preciso de ajuda? Obtenha ajuda para solução de problemas",
+    "primaryButtonText": "Continuar sem câmera",
+    "ariaLabel": "Verificando o acesso à câmera. Permitir o acesso se solicitado."
+  },
+  "MicrophoneSitePermissionsCheck": {
+    "primaryText": "Verificando o acesso ao microfone",
+    "secondaryText": "Permitir acesso, se solicitado. Isso é para que os participantes possam ouvir você.",
+    "linkText": "Preciso de ajuda? Obtenha ajuda para solução de problemas",
+    "primaryButtonText": "Continuar sem microfone",
+    "ariaLabel": "Verificando acesso ao microfone. Permitir o acesso se solicitado."
+  },
+  "CameraAndMicrophoneSitePermissionsDenied": {
+    "primaryText": "Não é possível acessar a câmera e o microfone",
+    "secondaryText": "Clique no ícone de bloqueio na barra de endereços para conceder permissões de microfone a esta página da Web. Uma atualização de página pode ser necessária.",
+    "primaryButtonText": "Continuar sem câmera e microfone",
+    "linkText": "Preciso de ajuda? Obtenha ajuda para solução de problemas"
+  },
+  "CameraAndMicrophoneSitePermissionsDeniedSafari": {
+    "primaryText": "Não é possível acessar a câmera e o microfone",
+    "secondaryText": "Atualize a página para permitir permissões ou verifique as configurações deste navegador e verifique se as permissões estão habilitadas para este site.",
+    "primaryButtonText": "Continuar sem câmera e microfone",
+    "linkText": "Preciso de ajuda? Obtenha ajuda para solução de problemas"
+  },
+  "CameraSitePermissionsDenied": {
+    "primaryText": "Não é possível acessar a câmera",
+    "secondaryText": "Clique no ícone de bloqueio na barra de endereços para conceder permissões de câmera a esta página da Web. Uma atualização de página pode ser necessária.",
+    "primaryButtonText": "Continuar sem a câmera",
+    "linkText": "Preciso de ajuda? Obtenha ajuda para solução de problemas"
+  },
+  "MicrophoneSitePermissionsDenied": {
+    "primaryText": "Não é possível acessar o microfone",
+    "secondaryText": "Clique no ícone de bloqueio na barra de endereços para conceder permissões de microfone a esta página da Web. Uma atualização de página pode ser necessária.",
+    "primaryButtonText": "Continuar sem microfone",
+    "linkText": "Preciso de ajuda? Obtenha ajuda para solução de problemas"
+  },
+  "CameraSitePermissionsDeniedSafari": {
+    "primaryText": "Não é possível acessar a câmera",
+    "secondaryText": "Atualize a página para permitir permissões ou verifique as configurações deste navegador e verifique se as permissões estão habilitadas para este site.",
+    "primaryButtonText": "Continuar sem câmera",
+    "linkText": "Preciso de ajuda? Obtenha ajuda para solução de problemas"
+  },
+  "MicrophoneSitePermissionsDeniedSafari": {
+    "primaryText": "Não é possível acessar o microfone",
+    "secondaryText": "Atualize a página para permitir permissões ou verifique as configurações deste navegador e verifique se as permissões estão habilitadas para este site.",
+    "primaryButtonText": "Continuar sem o microfone",
+    "linkText": "Preciso de ajuda? Obtenha ajuda para solução de problemas"
   },
   "UnsupportedBrowser": {
     "primaryText": "Navegador sem suporte",
     "secondaryText": "Ingresse nesta chamada usando um navegador compatível.",
-    "moreHelpLink": "Mais ajuda"
+    "moreHelpLinkText": "Consulte os requisitos de compatibilidade"
+  },
+  "UnsupportedBrowserVersion": {
+    "primaryText": "Atualização do navegador necessária",
+    "secondaryText": "Para garantir a melhor chamada possível, atualize o navegador e tente ingressar na chamada novamente.",
+    "moreHelpLinkText": "Consulte os requisitos de compatibilidade",
+    "continueAnywayButtonText": "Iniciar chamada sem atualizar"
+  },
+  "UnsupportedOperatingSystem": {
+    "primaryText": "Sistema operacional sem suporte",
+    "secondaryText": "Ingresse nesta chamada usando um dispositivo com um sistema operacional compatível.",
+    "moreHelpLinkText": "Consulte os requisitos de compatibilidade"
   },
   "BrowserPermissionDenied": {
     "primaryText": "Não é possível usar sua câmera ou microfone",
