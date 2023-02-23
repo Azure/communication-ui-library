@@ -99,7 +99,7 @@ const calculateChildrenPerPage = (args: {
   }
 
   /**
-   * For the paginastion we know the container height, the height of the button bar and the 2 times the gap
+   * For the pagination we know the container height, the height of the button bar and the 2 times the gap
    * height, top tile and bottom tile above control bar. So the child space is calculated as:
    *
    *      space = height - controlbar - (2 * gap)
