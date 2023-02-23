@@ -6,6 +6,7 @@ import { _convertRemToPx } from '@internal/acs-ui-common';
 import React, { useRef } from 'react';
 import { _useContainerHeight } from './utils/responsive';
 import { VerticalGallery, VerticalGalleryStyles } from './VerticalGallery';
+import { LARGE_VERTICAL_GALLERY_TILE_SIZE_REM } from './VideoGallery/styles/VideoGalleryResponsiveVerticalGallery.styles';
 
 /**
  * Props for the Responsive wrapper of the VerticalGallery component
@@ -66,7 +67,7 @@ const calculateChildrenPerPage = (args: {
 }): number => {
   const { numberOfChildren, containerHeight, gapHeightRem, controlBarHeight } = args;
 
-  const childMinHeightPx = 90;
+  const childMinHeightPx = _convertRemToPx(LARGE_VERTICAL_GALLERY_TILE_SIZE_REM.minHeight);
   const gapHeightPx = _convertRemToPx(gapHeightRem);
   const controlBarHeightPx = _convertRemToPx(controlBarHeight);
 
