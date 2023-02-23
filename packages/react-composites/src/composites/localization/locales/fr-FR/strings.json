@@ -1,6 +1,7 @@
 {
   "call": {
     "cameraLabel": "Appareil photo",
+    "noCamerasLabel": "Aucune caméra trouvée",
     "cameraPermissionDenied": "Votre navigateur bloque l’accès à votre caméra",
     "cameraTurnedOff": "Votre caméra est désactivée",
     "chatButtonLabel": "Conversation",
@@ -53,6 +54,8 @@
     "roomNotFoundDetails": "L’ID de salle fourni n’est pas valide.",
     "roomNotFoundTitle": "Salle introuvable",
     "soundLabel": "Son",
+    "noMicrophonesLabel": "Aucun microphone trouvé",
+    "noSpeakersLabel": "Aucun haut-parleur trouvé",
     "startCallButtonLabel": "Lancer l'appel",
     "openDialpadButtonLabel": "Composer le numéro de téléphone",
     "peoplePaneAddPeopleButtonLabel": "Ajouter des personnes",
@@ -67,8 +70,19 @@
     "resumingCallButtonAriaLabel": "Reprendre l’appel",
     "holdScreenLabel": "Vous avez été mis(e) en attente.",
     "openDtmfDialpadLabel": "Afficher le pavé numérique",
-    "dtmfDialpadPlaceHolderText": "Saisir un numéro",
-    "outboundCallingNoticeString": "Appel en cours..."
+    "dtmfDialpadPlaceholderText": "Saisir un numéro",
+    "outboundCallingNoticeString": "Appel en cours...",
+    "participantJoinedNoticeString": "{displayName} a rejoint",
+    "twoParticipantJoinedNoticeString": "{displayName1} et {displayName2} ont rejoint",
+    "threeParticipantJoinedNoticeString": "{displayName1}, {displayName2} et {displayName3} ont rejoint",
+    "participantLeftNoticeString": "{displayName} a quitté",
+    "twoParticipantLeftNoticeString": "{displayName1} et {displayName2} sont partis",
+    "threeParticipantLeftNoticeString": "{displayName1}, {displayName2} et {displayName3} ont quitté",
+    "unnamedParticipantString": "participant sans nom",
+    "manyUnnamedParticipantsJoined": "participant sans nom et {numOfParticipants} autres participants ont rejoint",
+    "manyUnnamedParticipantsLeft": "participant sans nom et {numOfParticipants} autres participants ont quitté",
+    "manyParticipantsJoined": "{displayName1}, {displayName2}, {displayName3} et {numOfParticipants} autres participants ont rejoint",
+    "manyParticipantsLeft": "{displayName1}, {displayName2}, {displayName3} et {numOfParticipants} autres participants restants"
   },
   "chat": {
     "chatListHeader": "Dans cette conversation",
@@ -105,6 +119,6 @@
     "dialpadModalAriaLabel": "Pavé numérique",
     "dialpadCloseModalButtonAriaLabel": "Fermer le pavé numérique",
     "openDtmfDialpadLabel": "Afficher le pavé numérique",
-    "dtmfDialpadPlaceHolderText": "Saisir un numéro"
+    "dtmfDialpadPlaceholderText": "Saisir un numéro"
   }
 }
