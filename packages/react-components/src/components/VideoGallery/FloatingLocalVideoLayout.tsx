@@ -55,7 +55,8 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
     showCameraSwitcherInLocalPreview,
     parentWidth,
     parentHeight,
-    /* @conditional-compile-remove(pinned-participants) */ pinnedParticipantUserIds
+    /* @conditional-compile-remove(pinned-participants) */ pinnedParticipantUserIds,
+    /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryLayout = 'HorizontalBottom'
   } = props;
 
   const theme = useTheme();
@@ -123,7 +124,7 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
       )
     ) : undefined;
 
-  const horizontalGallery = useMemo(() => {
+  const overflowGallery = useMemo(() => {
     if (horizontalGalleryTiles.length === 0) {
       return null;
     }
@@ -137,15 +138,27 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
         shouldFloatLocalVideo={true}
         horizontalGalleryElements={horizontalGalleryTiles}
         styles={styles?.horizontalGallery}
+        /* @conditional-compile-remove(vertical-gallery) */
+        overflowGalleryLayout={overflowGalleryLayout}
       />
     );
-  }, [isNarrow, horizontalGalleryTiles, styles?.horizontalGallery]);
+  }, [
+    isNarrow,
+    horizontalGalleryTiles,
+    styles?.horizontalGallery,
+    /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryLayout
+  ]);
 
   return (
     <Stack styles={rootLayoutStyle}>
       {wrappedLocalVideoComponent}
       <LayerHost id={layerHostId} className={mergeStyles(layerHostStyle)} />
-      <Stack horizontal={false} styles={innerLayoutStyle} tokens={videoGalleryLayoutGap}>
+      <Stack
+        /* @conditional-compile-remove(vertical-gallery) */
+        horizontal={overflowGalleryLayout === 'VerticalRight'}
+        styles={innerLayoutStyle}
+        tokens={videoGalleryLayoutGap}
+      >
         {screenShareComponent ? (
           screenShareComponent
         ) : (
@@ -153,7 +166,7 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
             {gridTiles}
           </GridLayout>
         )}
-        {horizontalGallery}
+        {overflowGallery}
       </Stack>
     </Stack>
   );

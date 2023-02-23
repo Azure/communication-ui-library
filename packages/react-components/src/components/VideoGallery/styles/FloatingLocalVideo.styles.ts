@@ -39,6 +39,12 @@ export const SMALL_FLOATING_MODAL_SIZE_PX = { width: 58, height: 104 };
 export const LARGE_FLOATING_MODAL_SIZE_PX = { width: 215, height: 120 };
 
 /**
+ * Vertical gallery floating modal width and height in rem
+ * Aspect ratio: 16:9
+ */
+export const VERTICAL_GALLERY_FLOATING_MODAL_SIZE_PX = { width: 144, height: 81 };
+
+/**
  * @private
  * z-index to ensure that the local video tile is above the video gallery.
  */

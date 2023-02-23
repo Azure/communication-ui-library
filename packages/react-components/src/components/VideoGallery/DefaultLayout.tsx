@@ -36,7 +36,8 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
     styles,
     maxRemoteVideoStreams,
     parentWidth,
-    /* @conditional-compile-remove(pinned-participants) */ pinnedParticipantUserIds
+    /* @conditional-compile-remove(pinned-participants) */ pinnedParticipantUserIds,
+    /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryLayout = 'HorizontalBottom'
   } = props;
 
   const isNarrow = parentWidth ? isNarrowWidth(parentWidth) : false;
@@ -73,7 +74,7 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
     gridTiles.push(localVideoComponent);
   }
 
-  const horizontalGallery = useMemo(() => {
+  const overflowGallery = useMemo(() => {
     if (horizontalGalleryTiles.length === 0) {
       return null;
     }
@@ -84,15 +85,27 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
     return (
       <VideoGalleryResponsiveHorizontalGallery
         isNarrow={isNarrow}
-        shouldFloatLocalVideo={true}
+        shouldFloatLocalVideo={false}
         horizontalGalleryElements={horizontalGalleryTiles}
         styles={styles?.horizontalGallery}
+        /* @conditional-compile-remove(pinned-participants) */
+        overflowGalleryLayout={overflowGalleryLayout}
       />
     );
-  }, [isNarrow, horizontalGalleryTiles, styles?.horizontalGallery]);
+  }, [
+    isNarrow,
+    horizontalGalleryTiles,
+    styles?.horizontalGallery,
+    /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryLayout
+  ]);
 
   return (
-    <Stack horizontal={false} styles={rootLayoutStyle} tokens={videoGalleryLayoutGap}>
+    <Stack
+      /* @conditional-compile-remove(vertical-gallery) */
+      horizontal={overflowGalleryLayout === 'VerticalRight'}
+      styles={rootLayoutStyle}
+      tokens={videoGalleryLayoutGap}
+    >
       {screenShareComponent ? (
         screenShareComponent
       ) : (
@@ -100,7 +113,7 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
           {gridTiles}
         </GridLayout>
       )}
-      {horizontalGallery}
+      {overflowGallery}
     </Stack>
   );
 };
