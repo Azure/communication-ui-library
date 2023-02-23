@@ -4,7 +4,9 @@
 import { IStyle, Theme } from '@fluentui/react';
 
 /**
- * Horizontal Gallery gap size in rem between tiles and buttons
+ * Vertical Gallery gap size in rem between tiles and buttons
+ *
+ * @private
  */
 export const VERTICAL_GALLERY_GAP = 0.5;
 
