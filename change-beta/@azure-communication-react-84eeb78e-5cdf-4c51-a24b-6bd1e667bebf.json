@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Merge release back to main, updating changelog",
+  "packageName": "@azure/communication-react",
+  "email": "edwardlee@microsoft.com",
+  "dependentChangeType": "none"
+}
