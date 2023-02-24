@@ -292,7 +292,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     /* @conditional-compile-remove(pinned-participants) */
     remoteVideoTileMenuOptions = DEFAULT_REMOTE_VIDEO_TILE_MENU_OPTIONS,
     /* @conditional-compile-remove(vertical-gallery) */
-    overflowGalleryLayout = 'VerticalRight'
+    overflowGalleryLayout = 'HorizontalBottom'
   } = props;
 
   const ids = useIdentifiers();
