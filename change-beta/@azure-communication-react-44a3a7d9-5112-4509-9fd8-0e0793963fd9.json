@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Remove custom end call screen from calling sample",
-  "packageName": "@azure/communication-react",
-  "email": "anjulgarg@live.com",
-  "dependentChangeType": "none"
-}

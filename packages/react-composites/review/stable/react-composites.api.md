@@ -906,6 +906,7 @@ export interface Disposable {
 export type _FakeChatAdapterArgs = {
     localParticipant: ChatParticipant;
     remoteParticipants: ChatParticipant[];
+    topic?: string;
     localParticipantPosition?: number;
     fileSharingEnabled?: boolean;
     fileUploads?: _MockFileUpload[];
