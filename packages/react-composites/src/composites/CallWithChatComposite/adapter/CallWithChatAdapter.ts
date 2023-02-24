@@ -43,6 +43,12 @@ import { FileUploadManager } from '../../ChatComposite';
 import { CommunicationUserIdentifier, PhoneNumberIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(PSTN-calls) */
 import { CommunicationIdentifier } from '@azure/communication-common';
+/* @conditional-compile-remove(video-background-effects) */
+import {
+  BackgroundImage,
+  VideoBackgroundBlurEffect,
+  VideoBackgroundReplacementEffect
+} from '../../CallComposite/adapter/CallAdapter';
 
 /**
  * Functionality for managing the current call with chat.
@@ -338,6 +344,43 @@ export interface CallWithChatAdapterManagement {
    * Continues into a call when the browser version is not supported.
    */
   allowUnsupportedBrowserVersion(): void;
+  /* @conditional-compile-remove(video-background-effects) */
+  /**
+   * Start the video background effect.
+   *
+   * @param videoBackgroundEffect - Contains details about the type of effect blur/custom.
+   *
+   * @beta
+   */
+  startVideoBackgroundEffect(
+    videoBackgroundEffect: VideoBackgroundBlurEffect | VideoBackgroundReplacementEffect
+  ): Promise<void>;
+  /* @conditional-compile-remove(video-background-effects) */
+  /**
+   * Stop the video background effect.
+   *
+   * @beta
+   */
+  stopVideoBackgroundEffect(): Promise<void>;
+  /* @conditional-compile-remove(video-background-effects) */
+  /**
+   * Set the default background images for background replacement effect.
+   *
+   * @param backgroundImages - Array of custom background images.
+   *
+   * @beta
+   */
+  setCustomBackgroundImages(backgroundImages: BackgroundImage[]): void;
+  /* @conditional-compile-remove(video-background-effects) */
+  /**
+   * Select the uploaded background image for background replacement effect and
+   * add the image to default background images set.
+   *
+   * @param backgroundImage - Contains the attibutes of a background image like url, name etc.
+   *
+   * @beta
+   */
+  selectUploadedBackground(backgroundImage: BackgroundImage): void;
 }
 
 /**

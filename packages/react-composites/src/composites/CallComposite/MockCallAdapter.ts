@@ -10,6 +10,8 @@ import { EnvironmentInfo } from '@azure/communication-calling';
 import { Role } from '@internal/react-components';
 import { EventEmitter } from 'stream';
 import type { CallAdapter, CallAdapterState } from './adapter';
+/* @conditional-compile-remove(video-background-effects) */
+import { VideoBackgroundBlurEffect, VideoBackgroundReplacementEffect, BackgroundImage } from './adapter/CallAdapter';
 
 /**
  * Temporary copy of the packages\react-composites\tests\browser\call\app\mocks\MockCallAdapter.ts
@@ -135,6 +137,31 @@ export class MockCallAdapter implements CallAdapter {
   /* @conditional-compile-remove(PSTN-calls) */
   getEnvironmentInfo(): Promise<EnvironmentInfo> {
     throw Error('getEnvironmentInfo not implemented');
+  }
+  /* @conditional-compile-remove(video-background-effects) */
+  startVideoBackgroundEffect(
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    videoBackgroundEffect: VideoBackgroundBlurEffect | VideoBackgroundReplacementEffect
+  ): Promise<void> {
+    throw new Error('startVideoBackgroundEffect not implemented.');
+  }
+  /* @conditional-compile-remove(video-background-effects) */
+  stopVideoBackgroundEffect(): Promise<void> {
+    throw new Error('stopVideoBackgroundEffect not implemented.');
+  }
+  /* @conditional-compile-remove(video-background-effects) */
+  setCustomBackgroundImages(
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    backgroundImages: BackgroundImage[]
+  ): void {
+    throw new Error('setCustomBackgroundImages not implemented.');
+  }
+  /* @conditional-compile-remove(video-background-effects) */
+  selectUploadedBackground(
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    backgroundImage: BackgroundImage
+  ): void {
+    throw new Error('selectUploadedBackground not implemented.');
   }
 }
 

@@ -22,6 +22,12 @@ import {
   PhoneNumberIdentifier
 } from '@azure/communication-common';
 import { _toCommunicationIdentifier } from '@internal/acs-ui-common';
+/* @conditional-compile-remove(video-background-effects) */
+import {
+  VideoBackgroundBlurEffect,
+  VideoBackgroundReplacementEffect,
+  BackgroundImage
+} from '../../CallComposite/adapter/CallAdapter';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
@@ -41,6 +47,7 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
   constructor(callWithChatAdapter: CallWithChatAdapter) {
     this.callWithChatAdapter = callWithChatAdapter;
   }
+
   public on = (event: any, listener: any): void => {
     switch (event) {
       case 'error':
@@ -158,6 +165,31 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
   public sendDtmfTone = async (dtmfTone: DtmfTone): Promise<void> => {
     await this.callWithChatAdapter.sendDtmfTone(dtmfTone);
   };
+  /* @conditional-compile-remove(video-background-effects) */
+  public startVideoBackgroundEffect(
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    videoBackgroundEffect: VideoBackgroundBlurEffect | VideoBackgroundReplacementEffect
+  ): Promise<void> {
+    throw new Error('startVideoBackgroundEffect not implemented.');
+  }
+  /* @conditional-compile-remove(video-background-effects) */
+  public stopVideoBackgroundEffect(): Promise<void> {
+    throw new Error('stopVideoBackgroundEffect not implemented.');
+  }
+  /* @conditional-compile-remove(video-background-effects) */
+  public setCustomBackgroundImages(
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    backgroundImages: BackgroundImage[]
+  ): void {
+    throw new Error('setCustomBackgroundImages not implemented.');
+  }
+  /* @conditional-compile-remove(video-background-effects) */
+  public selectUploadedBackground(
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    backgroundImage: BackgroundImage
+  ): void {
+    throw new Error('selectUploadedBackground not implemented.');
+  }
 }
 
 function callAdapterStateFromCallWithChatAdapterState(

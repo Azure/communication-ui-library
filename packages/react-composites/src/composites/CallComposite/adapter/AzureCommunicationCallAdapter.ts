@@ -54,6 +54,8 @@ import {
   CallAdapterCallEndedEvent,
   CallAdapter
 } from './CallAdapter';
+/* @conditional-compile-remove(video-background-effects) */
+import { BackgroundImage, VideoBackgroundBlurEffect, VideoBackgroundReplacementEffect } from './CallAdapter';
 /* @conditional-compile-remove(teams-identity-support) */
 import { TeamsCallAdapter } from './CallAdapter';
 import { getCallCompositePage, IsCallEndedPage, isCameraOn, isValidIdentifier } from '../utils';
@@ -346,6 +348,14 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     this.sendDtmfTone.bind(this);
     /* @conditional-compile-remove(unsupported-browser) */
     this.allowUnsupportedBrowserVersion.bind(this);
+    /* @conditional-compile-remove(video-background-effects) */
+    this.startVideoBackgroundEffect.bind(this);
+    /* @conditional-compile-remove(video-background-effects) */
+    this.stopVideoBackgroundEffect.bind(this);
+    /* @conditional-compile-remove(video-background-effects) */
+    this.setCustomBackgroundImages.bind(this);
+    /* @conditional-compile-remove(video-background-effects) */
+    this.selectUploadedBackground.bind(this);
   }
 
   public dispose(): void {
@@ -541,6 +551,35 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   public allowUnsupportedBrowserVersion(): void {
     this.context.setAllowedUnsupportedBrowser();
     this.context.updateClientState(this.callClient.getState());
+  }
+
+  /* @conditional-compile-remove(video-background-effects) */
+  public startVideoBackgroundEffect(
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    videoBackgroundEffect: VideoBackgroundBlurEffect | VideoBackgroundReplacementEffect
+  ): Promise<void> {
+    throw new Error('startVideoBackgroundEffect not implemented.');
+  }
+
+  /* @conditional-compile-remove(video-background-effects) */
+  public stopVideoBackgroundEffect(): Promise<void> {
+    throw new Error('stopVideoBackgroundEffect not implemented.');
+  }
+
+  /* @conditional-compile-remove(video-background-effects) */
+  public setCustomBackgroundImages(
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    backgroundImages: BackgroundImage[]
+  ): void {
+    throw new Error('setCustomBackgroundImages not implemented.');
+  }
+
+  /* @conditional-compile-remove(video-background-effects) */
+  public selectUploadedBackground(
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    backgroundImage: BackgroundImage
+  ): void {
+    throw new Error('selectUploadedBackground not implemented.');
   }
 
   public startCall(
