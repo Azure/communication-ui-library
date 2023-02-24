@@ -106,7 +106,8 @@ export class EventSubscriber {
     this.fetchLastParticipantMessage(event.threadId, 'participantAdded');
   };
 
-  // This is a hot fix that no participant message is received for onChatMessageReceived event, which should be handled by JS SDK
+  // This is a temporary fix that no participant message is received for onChatMessageReceived event, which should be handled by JS SDK.
+  // Without the temporary fix, there are missing 'participant joined' and 'participant left' system messages in the chat thread.
   private fetchLastParticipantMessage = async (
     threadId: string,
     actionType: 'participantAdded' | 'participantRemoved'
