@@ -130,7 +130,8 @@ export class EventSubscriber {
     // If the current user is removed from the thread, do not fetch the last participant message
     // as they no longer have access to the thread.
     const currentUserId = toFlatCommunicationIdentifier(this.chatContext.getState().userId);
-    if (!participantIds.find((id) => toFlatCommunicationIdentifier(id) === currentUserId)) {
+    const wasCurrentUserRemoved = participantIds.find((id) => toFlatCommunicationIdentifier(id) === currentUserId);
+    if (!wasCurrentUserRemoved) {
       this.fetchLastParticipantMessage(event.threadId, 'participantRemoved');
     }
   };
