@@ -43,8 +43,6 @@ async function createViewVideo(
   let streamEventType: 'createViewLocal' | 'createViewRemote' | 'createViewUnparented';
 
   // we will reuse these for local as well but we need to make sure the remote stream is passed in like before.
-  let streamId;
-  let streamType;
 
   if (participantId) {
     streamEventType = 'createViewRemote';
@@ -56,20 +54,16 @@ async function createViewVideo(
     streamEventType = 'createViewUnparented';
   }
 
-  if (stream) {
-    streamType = stream.mediaStreamType;
-    streamId = (stream as RemoteVideoStream).id;
-  }
+  const streamType = stream?.mediaStreamType;
+  const streamId = (stream as RemoteVideoStream).id;
 
   // we want to check to see if there is a participantId this will tell us whether its a local stream or a remote one.
-  let participantKey;
-  if (streamEventType === 'createViewRemote' && participantId) {
-    if (typeof participantId === 'string') {
-      participantKey = participantId;
-    } else {
-      participantKey = toFlatCommunicationIdentifier(participantId);
-    }
-  }
+  const participantKey =
+    streamEventType === 'createViewRemote' && participantId
+      ? typeof participantId === 'string'
+        ? participantId
+        : toFlatCommunicationIdentifier(participantId)
+      : undefined;
 
   const streamLogInfo = { callId, participantKey, streamId, streamType, streamEventType };
 
@@ -78,7 +72,7 @@ async function createViewVideo(
 
   // if we have a participant Id and a stream get the remote info, else get the local render info from state.
   const renderInfo =
-    streamEventType === 'createViewRemote'
+    streamEventType === 'createViewRemote' && participantKey
       ? internalContext.getRemoteRenderInfoForParticipant(callId, participantKey, streamId)
       : internalContext.getLocalRenderInfo(callId);
 
@@ -102,7 +96,7 @@ async function createViewVideo(
   // "Stopping" only happens if the stream was in "rendering" but `disposeView` was called.
   // Now that `createView` has been re-called, we can flip the state back to "rendering".
   if (renderInfo.status === 'Stopping') {
-    if (streamEventType === 'createViewRemote') {
+    if (streamEventType === 'createViewRemote' && participantKey) {
       _logStreamEvent(EventNames.STREAM_STOPPING, streamLogInfo);
       internalContext.setRemoteRenderInfo(
         callId,
@@ -126,7 +120,7 @@ async function createViewVideo(
 
   const renderer = new VideoStreamRenderer(renderInfo.stream);
 
-  streamEventType === 'createViewRemote'
+  streamEventType === 'createViewRemote' && participantKey
     ? internalContext.setRemoteRenderInfo(
         callId,
         participantKey,
@@ -141,7 +135,7 @@ async function createViewVideo(
   try {
     view = await renderer.createView(options);
   } catch (e) {
-    if (streamEventType === 'createViewRemote') {
+    if (streamEventType === 'createViewRemote' && participantKey) {
       _logStreamEvent(EventNames.CREATE_STREAM_FAIL, streamLogInfo);
       internalContext.setRemoteRenderInfo(
         callId,
@@ -161,7 +155,7 @@ async function createViewVideo(
   // Since render could take some time, we need to check if the stream is still valid and if we received a signal to
   // stop rendering.
   const refreshedRenderInfo =
-    streamEventType === 'createViewRemote'
+    streamEventType === 'createViewRemote' && participantKey
       ? internalContext.getRemoteRenderInfoForParticipant(callId, participantKey, streamId)
       : internalContext.getLocalRenderInfo(callId);
 
@@ -170,7 +164,7 @@ async function createViewVideo(
     // and clean up the state.
     _logStreamEvent(EventNames.RENDER_INFO_NOT_FOUND, streamLogInfo);
     renderer.dispose();
-    streamEventType === 'createViewRemote'
+    streamEventType === 'createViewRemote' && participantKey
       ? context.setRemoteVideoStreamRendererView(callId, participantKey, streamId, undefined)
       : context.setLocalVideoStreamRendererView(callId, undefined);
     return;
@@ -182,7 +176,7 @@ async function createViewVideo(
     streamEventType === 'createViewRemote';
     _logStreamEvent(EventNames.CREATED_STREAM_STOPPING, streamLogInfo);
     renderer.dispose();
-    if (streamEventType === 'createViewRemote') {
+    if (streamEventType === 'createViewRemote' && participantKey) {
       internalContext.setRemoteRenderInfo(
         callId,
         participantKey,
@@ -206,7 +200,7 @@ async function createViewVideo(
 
   // Else the stream still exists and status is not telling us to stop rendering. Complete the render process by
   // updating the state.
-  if (streamEventType === 'createViewRemote') {
+  if (streamEventType === 'createViewRemote' && participantKey) {
     internalContext.setRemoteRenderInfo(
       callId,
       participantKey,
