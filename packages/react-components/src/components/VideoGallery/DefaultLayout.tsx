@@ -6,8 +6,6 @@ import React, { useMemo } from 'react';
 import { GridLayout } from '../GridLayout';
 import { isNarrowWidth } from '../utils/responsive';
 import { LayoutProps } from './Layout';
-/* @conditional-compile-remove(pinned-participants) */
-import { ScrollableHorizontalGallery } from './ScrollableHorizontalGallery';
 import { rootLayoutStyle } from './styles/DefaultLayout.styles';
 import { videoGalleryLayoutGap } from './styles/Layout.styles';
 import { useOrganizedParticipants } from './utils/videoGalleryLayoutUtils';
@@ -77,10 +75,6 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
   const overflowGallery = useMemo(() => {
     if (horizontalGalleryTiles.length === 0) {
       return null;
-    }
-    /* @conditional-compile-remove(pinned-participants) */
-    if (isNarrow) {
-      return <ScrollableHorizontalGallery horizontalGalleryElements={horizontalGalleryTiles} />;
     }
     return (
       <OverflowGallery
