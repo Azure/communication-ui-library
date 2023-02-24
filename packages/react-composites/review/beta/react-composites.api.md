@@ -1138,6 +1138,8 @@ export const DEFAULT_COMPOSITE_ICONS: {
     VideoTileScaleFill: JSX.Element;
     PinParticipant: JSX.Element;
     UnpinParticipant: JSX.Element;
+    VerticalGalleryLeftButton: JSX.Element;
+    VerticalGalleryRightButton: JSX.Element;
 };
 
 // @beta
