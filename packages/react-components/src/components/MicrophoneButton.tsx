@@ -210,11 +210,11 @@ export const MicrophoneButton = (props: MicrophoneButtonProps): JSX.Element => {
     title: 'toggle mic',
     itemType: ContextualMenuItemType.Section,
     sectionProps: {
-      title: 'Use mic',
+      title: 'Use Microphone',
       items: [
         {
           key: 'microphonePrimaryAction',
-          text: props.checked ? 'Mute mic' : 'Unmute mic',
+          text: props.checked ? 'Mute Microphone' : 'Unmute Micriphone',
           onClick: () => {
             onToggleClick();
           },

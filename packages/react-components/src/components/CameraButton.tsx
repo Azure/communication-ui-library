@@ -198,7 +198,7 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
       items: [
         {
           key: 'cameraPrimaryAction',
-          text: props.checked ? 'Turn off camera' : 'Turn on Camera',
+          text: props.checked ? 'Turn off Camera' : 'Turn on Camera',
           onClick: () => {
             onToggleClick();
           },
