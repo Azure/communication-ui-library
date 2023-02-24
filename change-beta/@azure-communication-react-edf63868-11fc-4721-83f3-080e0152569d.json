@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix permissions issue on older iOS devices to cover unsupported permissions API call.",
-  "packageName": "@azure/communication-react",
-  "email": "94866715+dmceachernmsft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

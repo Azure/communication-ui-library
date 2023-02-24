@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Change args type to teams specific",
-  "packageName": "@azure/communication-react",
-  "email": "jinan@microsoft.com",
-  "dependentChangeType": "patch"
-}

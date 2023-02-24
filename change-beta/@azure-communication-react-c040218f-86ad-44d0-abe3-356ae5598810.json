@@ -1,7 +1,0 @@
-{
-  "type": "minor",
-  "comment": "Update useAdaptedSelector in composites layer to retrieve the new client state variables for environmentInfo and alternateCallerId.",
-  "packageName": "@azure/communication-react",
-  "email": "94866715+dmceachernmsft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
