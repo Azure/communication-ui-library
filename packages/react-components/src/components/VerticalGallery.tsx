@@ -151,7 +151,7 @@ const VerticalGalleryControlBar = (props: VerticalGalleryControlBarProps): JSX.E
   return (
     <Stack
       horizontalAlign="center"
-      tokens={{ childrenGap: '1.5rem' }}
+      tokens={{ childrenGap: '1rem' }}
       horizontal
       className={mergeStyles(controlBarContainerStyle, styles?.root)}
     >

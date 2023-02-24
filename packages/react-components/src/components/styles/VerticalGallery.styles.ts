@@ -53,5 +53,7 @@ export const leftRightButtonStyles = (theme: Theme): IStyle => {
  * @private
  */
 export const counterStyles: IStyle = {
-  lineHeight: '2'
+  lineHeight: '2',
+  width: '100%',
+  textAlign: 'center'
 };
