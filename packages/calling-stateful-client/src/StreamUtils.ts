@@ -311,8 +311,6 @@ function disposeViewVideo(
   let streamEventType: 'disposeViewLocal' | 'disposeViewRemote' | 'disposeViewUnparented';
 
   // we will reuse these for local as well but we need to make sure the remote stream is passed in like before.
-  let streamId;
-  let streamType;
 
   if (participantId) {
     streamEventType = 'disposeViewRemote';
@@ -323,30 +321,26 @@ function disposeViewVideo(
     streamEventType = 'disposeViewUnparented';
   }
 
-  if (stream) {
-    streamType = stream.mediaStreamType;
-    streamId = (stream as RemoteVideoStream).id;
-  }
+  const streamType = stream.mediaStreamType;
+  const streamId = (stream as RemoteVideoStream).id;
 
   // we want to check to see if there is a participantId this will tell us whether its a local stream or a remote one.
-  let participantKey;
-  if (streamEventType === 'disposeViewRemote' && participantId) {
-    if (typeof participantId === 'string') {
-      participantKey = participantId;
-    } else {
-      participantKey = toFlatCommunicationIdentifier(participantId);
-    }
-  }
+  const participantKey =
+    streamEventType === 'disposeViewRemote' && participantId
+      ? typeof participantId === 'string'
+        ? participantId
+        : toFlatCommunicationIdentifier(participantId)
+      : undefined;
   const streamLogInfo = { callId, participantKey, streamId, streamType };
 
   _logStreamEvent(EventNames.START_DISPOSE_STREAM, streamLogInfo);
 
-  if (streamEventType === 'disposeViewRemote') {
+  if (streamEventType === 'disposeViewRemote' && participantKey) {
     context.setRemoteVideoStreamRendererView(callId, participantKey, streamId, undefined);
   }
 
   const renderInfo =
-    streamEventType === 'disposeViewRemote'
+    streamEventType === 'disposeViewRemote' && participantKey
       ? internalContext.getRemoteRenderInfoForParticipant(callId, participantKey, streamId)
       : internalContext.getLocalRenderInfo(callId);
 
@@ -374,7 +368,7 @@ function disposeViewVideo(
   // rendering and clean up the state once the view has finished being created.
   if (renderInfo.status === 'Rendering') {
     _logStreamEvent(EventNames.STREAM_STOPPING, streamLogInfo);
-    streamEventType === 'disposeViewRemote'
+    streamEventType === 'disposeViewRemote' && participantKey
       ? internalContext.setRemoteRenderInfo(
           callId,
           participantKey,
@@ -396,7 +390,7 @@ function disposeViewVideo(
     _logStreamEvent(EventNames.DISPOSING_RENDERER, streamLogInfo);
     renderInfo.renderer.dispose();
     // Else the state must be in the "Rendered" state, so we can dispose the renderer and clean up the state.
-    if (streamEventType === 'disposeViewRemote') {
+    if (streamEventType === 'disposeViewRemote' && participantKey) {
       internalContext.setRemoteRenderInfo(
         callId,
         participantKey,
