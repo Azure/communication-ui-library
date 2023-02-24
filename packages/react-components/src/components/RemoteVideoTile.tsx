@@ -71,7 +71,7 @@ export const _RemoteVideoTile = React.memo(
       showMuteIndicator,
       remoteParticipant,
       participantState,
-      menuKind = 'contextual',
+      menuKind,
       isPinned,
       onPinParticipant,
       onUnpinParticipant,

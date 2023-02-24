@@ -90,7 +90,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
           new Promise((resolve) => {
             return resolve({
               imageInitials: emoji,
-              initialsColor: getBackgroundColor(emoji)?.backgroundColor
+              initialsColor: emoji ? getBackgroundColor(emoji)?.backgroundColor : undefined
             });
           })
       );

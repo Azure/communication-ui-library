@@ -8,7 +8,7 @@ import path from 'path';
 import { createTestServer } from '../../common/server';
 import { TEST_PARTICIPANTS_CHAT } from '../../common/constants';
 import { loadNewPage } from '../../common/fixtureHelpers';
-import type { FakeChatAdapterArgs } from '../../../common';
+import type { _FakeChatAdapterArgs } from '../../../../src';
 
 const SERVER_URL = 'http://localhost';
 const APP_DIR = path.join(__dirname, '../../../app/chat');
@@ -26,7 +26,7 @@ interface WorkerFixture {
  */
 export const buildUrlForChatAppUsingFakeAdapter = (
   serverUrl: string,
-  fakeChatAdapterArgs: FakeChatAdapterArgs
+  fakeChatAdapterArgs: _FakeChatAdapterArgs
 ): string => {
   return `${serverUrl}?fakeChatAdapterArgs=${JSON.stringify(fakeChatAdapterArgs)}`;
 };

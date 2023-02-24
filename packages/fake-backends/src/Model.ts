@@ -10,8 +10,11 @@ import { NetworkEventModel, Thread } from './types';
 
 export class Model {
   private threadMap: Record<string, { thread: Thread; eventEmitter: ThreadEventEmitter }> = {};
+  private networkEventModel: NetworkEventModel;
 
-  constructor(private networkEventModel: NetworkEventModel) {}
+  constructor(networkEventModel: NetworkEventModel) {
+    this.networkEventModel = networkEventModel;
+  }
 
   public addThread(thread: Thread): void {
     this.threadMap[thread.id] = { thread, eventEmitter: new ThreadEventEmitter(this.networkEventModel) };
@@ -39,7 +42,7 @@ export class Model {
     return this.threadMap[threadId].eventEmitter;
   }
 
-  public modifyThreadForUser(userId: CommunicationIdentifier, threadId: string, action: (t: Thread) => void) {
+  public modifyThreadForUser(userId: CommunicationIdentifier, threadId: string, action: (t: Thread) => void): void {
     const thread = this.checkedGetThread(userId, threadId);
     const newThread = produce(thread, (draft: Thread) => action(draft));
     if (thread !== newThread) {
