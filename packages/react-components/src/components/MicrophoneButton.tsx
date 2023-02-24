@@ -226,14 +226,14 @@ export const MicrophoneButton = (props: MicrophoneButtonProps): JSX.Element => {
       items: [
         {
           key: 'microphonePrimaryAction',
-          text: props.checked ? 'Mute Microphone' : 'Unmute Micriphone',
+          text: props.checked
+            ? strings.onSplitButtonMicrophonePrimaryAction
+            : strings.offSplitButtonMicrophonePrimaryAction,
           onClick: () => {
             onToggleClick();
           },
           iconProps: {
-            iconName: props.checked
-              ? strings.onSplitButtonMicrophonePrimaryAction
-              : strings.offSplitButtonMicrophonePrimaryAction,
+            iconName: props.checked ? 'SplitButtonPrimaryActionMicUnmuted' : 'SplitButtonPrimaryActionMicMuted',
             styles: { root: { lineHeight: 0 } }
           }
         }

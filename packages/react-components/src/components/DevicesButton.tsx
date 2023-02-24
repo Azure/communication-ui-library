@@ -356,9 +356,9 @@ export const generateDefaultDeviceMenuProps = (
         }))
       }
     });
-    if (microphones && selectedMicrophone && onSelectMicrophone && isSelectMicAllowed && primaryActionItem) {
-      defaultMenuProps.items.push(primaryActionItem);
-    }
+  }
+  if (microphones && selectedMicrophone && onSelectMicrophone && isSelectMicAllowed && primaryActionItem) {
+    defaultMenuProps.items.push(primaryActionItem);
   }
 
   if (defaultMenuProps.items.length === 0) {
