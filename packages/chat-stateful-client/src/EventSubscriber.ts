@@ -14,6 +14,7 @@ import {
   ReadReceiptReceivedEvent,
   TypingIndicatorReceivedEvent
 } from '@azure/communication-chat';
+import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { ChatContext } from './ChatContext';
 import { convertChatMessage } from './convertChatMessage';
 import { ChatMessageWithStatus } from './types/ChatMessageWithStatus';
@@ -124,7 +125,13 @@ export class EventSubscriber {
       return participant.id;
     });
     this.chatContext.deleteParticipants(event.threadId, participantIds);
-    this.fetchLastParticipantMessage(event.threadId, 'participantRemoved');
+
+    // If the current user is removed from the thread, do not fetch the last participant message
+    // as they no longer have access to the thread.
+    const myId = toFlatCommunicationIdentifier(this.chatContext.getState().userId);
+    if (!participantIds.find((id) => toFlatCommunicationIdentifier(id) === myId)) {
+      this.fetchLastParticipantMessage(event.threadId, 'participantRemoved');
+    }
   };
 
   private onReadReceiptReceived = (event: ReadReceiptReceivedEvent): void => {
