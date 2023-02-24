@@ -8,6 +8,7 @@ import { BaseCustomStyles } from '../types';
 import {
   childrenContainerStyle,
   controlBarContainerStyle,
+  counterStyles,
   leftRightButtonStyles,
   rootStyle
 } from './styles/VerticalGallery.styles';
@@ -148,21 +149,24 @@ const VerticalGalleryControlBar = (props: VerticalGalleryControlBarProps): JSX.E
   const { onNextButtonClick, onPreviousButtonClick, buttonsDisabled, currentPage, totalPages, styles } = props;
   const theme = useTheme();
   return (
-    <Stack horizontal className={mergeStyles(controlBarContainerStyle, styles?.root)}>
+    <Stack
+      horizontalAlign="center"
+      tokens={{ childrenGap: '1.5rem' }}
+      horizontal
+      className={mergeStyles(controlBarContainerStyle, styles?.root)}
+    >
       <DefaultButton
         className={mergeStyles(leftRightButtonStyles(theme), styles?.previousButton)}
         onClick={onPreviousButtonClick}
         disabled={buttonsDisabled?.previous}
-        styles={{ root: styles?.previousButton }}
       >
         <Icon iconName="VerticalGalleryLeftButton" />
       </DefaultButton>
-      <Text>{`${currentPage} / ${totalPages}`}</Text>
+      <Text className={mergeStyles(counterStyles, styles?.counter)}>{`${currentPage} / ${totalPages}`}</Text>
       <DefaultButton
         className={mergeStyles(leftRightButtonStyles(theme), styles?.nextButton)}
         onClick={onNextButtonClick}
         disabled={buttonsDisabled?.next}
-        styles={{ root: styles?.nextButton }}
       >
         <Icon iconName="VerticalGalleryRightButton" />
       </DefaultButton>

@@ -31,7 +31,8 @@ export const rootStyle: IStyle = {
  * @private
  */
 export const controlBarContainerStyle: IStyle = {
-  height: '2rem'
+  height: '2rem',
+  width: '100%'
 };
 
 /**
@@ -42,7 +43,15 @@ export const leftRightButtonStyles = (theme: Theme): IStyle => {
     background: 'none',
     padding: 0,
     height: 'auto',
-    border: `1px solid ${theme.palette.neutralLight}`,
-    borderRadius: theme.effects.roundedCorner4
+    borderRadius: theme.effects.roundedCorner4,
+    border: 'none',
+    minWidth: '2rem'
   };
+};
+
+/**
+ * @private
+ */
+export const counterStyles: IStyle = {
+  lineHeight: '2'
 };
