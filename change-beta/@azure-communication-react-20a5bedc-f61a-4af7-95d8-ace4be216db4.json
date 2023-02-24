@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "add conditional compile flag for video background effects",
+  "packageName": "@azure/communication-react",
+  "email": "2684369+JamesBurnside@users.noreply.github.com",
+  "dependentChangeType": "none"
+}

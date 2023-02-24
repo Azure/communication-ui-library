@@ -6,13 +6,15 @@ import type { FileMetadata } from '@internal/react-components';
 
 /**
  * Type to represent a file upload the local participant will perform.
+ * @internal
  */
-export type FileUpload = FileMetadata & { uploadComplete?: boolean; error?: string; progress?: number };
+export type _MockFileUpload = FileMetadata & { uploadComplete?: boolean; error?: string; progress?: number };
 
 /**
  * Arguments to pass via query argument to app with a Chat composite using a fake chat adapter.
+ * @internal
  */
-export type FakeChatAdapterArgs = {
+export type _FakeChatAdapterArgs = {
   /**
    * Local participant of chat
    */
@@ -21,6 +23,10 @@ export type FakeChatAdapterArgs = {
    * Remote participants of chat. The order of the remote participants will be preserved in the call.
    */
   remoteParticipants: ChatParticipant[];
+  /**
+   * Topic of the chat thread.
+   */
+  topic?: string;
   /**
    * The position of the local participant among all participants in chat thread. Defaults to 0 i.e. the
    * first participant in chat thread. If `localParticipantPosition` given is below 0 or greater than the
@@ -35,7 +41,7 @@ export type FakeChatAdapterArgs = {
    * Array of {@link FileUpload} the local participant will perform when. Property `fileSharingEnabled`
    * needs to be enabled.
    */
-  fileUploads?: FileUpload[];
+  fileUploads?: _MockFileUpload[];
   /**
    * Determines if array of {@link FileUpload} the local participant will perform in property `fileUploads`
    * will fail. Property `fileSharingEnabled` needs to be enabled.
@@ -65,7 +71,8 @@ export type FakeChatAdapterArgs = {
   /*
    * Record of rest errors to throw when methods of interface ChatThreadClient are called
    */
-  chatThreadClientMethodErrors?: Partial<Record<keyof ChatThreadClient, ChatThreadRestError>>;
+  chatThreadClientMethodErrors?: Partial<Record<keyof ChatThreadClient, _ChatThreadRestError>>;
 };
 
-export type ChatThreadRestError = { message: string; code?: string; statusCode?: number };
+/** @internal */
+export type _ChatThreadRestError = { message: string; code?: string; statusCode?: number };

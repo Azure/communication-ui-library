@@ -53,6 +53,7 @@ import { IStyleFunctionOrObject } from '@fluentui/react';
 import { ITextFieldStyles } from '@fluentui/react';
 import { LatestMediaDiagnostics } from '@azure/communication-calling';
 import { LatestNetworkDiagnostics } from '@azure/communication-calling';
+import { LocalVideoStream } from '@azure/communication-calling';
 import type { MediaDiagnosticChangedEventArgs } from '@azure/communication-calling';
 import { MediaStreamType } from '@azure/communication-calling';
 import { MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
@@ -82,6 +83,7 @@ import { TypingIndicatorReceivedEvent } from '@azure/communication-chat';
 import { UnknownIdentifier } from '@azure/communication-common';
 import { UnknownIdentifierKind } from '@azure/communication-common';
 import { VideoDeviceInfo } from '@azure/communication-calling';
+import { VideoEffectName } from '@azure/communication-calling';
 import { VideoStreamRenderer } from '@azure/communication-calling';
 import { VideoStreamRendererView } from '@azure/communication-calling';
 
@@ -634,7 +636,7 @@ export type CallErrors = {
 };
 
 // @public
-export type CallErrorTarget = 'Call.addParticipant' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.dispose' | 'Call.feature' | 'Call.hangUp' | 'Call.hold' | 'Call.mute' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.muteIncomingAudio' | 'Call.off' | 'Call.on' | 'Call.removeParticipant' | 'Call.resume' | 'Call.sendDtmf' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.startAudio' | 'Call.startScreenSharing' | 'Call.startVideo' | 'Call.stopScreenSharing' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.stopAudio' | 'Call.stopVideo' | 'Call.unmute' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.unmuteIncomingAudio' | 'CallAgent.dispose' | 'CallAgent.feature' | 'CallAgent.join' | 'CallAgent.off' | 'CallAgent.on' | 'CallAgent.startCall' | 'CallClient.createCallAgent' | /* @conditional-compile-remove(calling-beta-sdk) */ /* @conditional-compile-remove(teams-identity-support) */ 'CallClient.createTeamsCallAgent' | 'CallClient.feature' | 'CallClient.getDeviceManager' | /* @conditional-compile-remove(calling-beta-sdk) */ 'CallClient.getEnvironmentInfo' | 'DeviceManager.askDevicePermission' | 'DeviceManager.getCameras' | 'DeviceManager.getMicrophones' | 'DeviceManager.getSpeakers' | 'DeviceManager.off' | 'DeviceManager.on' | 'DeviceManager.selectMicrophone' | 'DeviceManager.selectSpeaker' | 'IncomingCall.accept' | 'IncomingCall.reject' | /* @conditional-compile-remove(calling-beta-sdk) */ /* @conditional-compile-remove(teams-identity-support) */ 'TeamsCall.addParticipant';
+export type CallErrorTarget = 'Call.addParticipant' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.dispose' | 'Call.feature' | 'Call.hangUp' | 'Call.hold' | 'Call.mute' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.muteIncomingAudio' | 'Call.off' | 'Call.on' | 'Call.removeParticipant' | 'Call.resume' | 'Call.sendDtmf' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.startAudio' | 'Call.startScreenSharing' | 'Call.startVideo' | 'Call.stopScreenSharing' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.stopAudio' | 'Call.stopVideo' | 'Call.unmute' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.unmuteIncomingAudio' | 'CallAgent.dispose' | 'CallAgent.feature' | 'CallAgent.join' | 'CallAgent.off' | 'CallAgent.on' | 'CallAgent.startCall' | 'CallClient.createCallAgent' | /* @conditional-compile-remove(calling-beta-sdk) */ /* @conditional-compile-remove(teams-identity-support) */ 'CallClient.createTeamsCallAgent' | 'CallClient.feature' | 'CallClient.getDeviceManager' | /* @conditional-compile-remove(calling-beta-sdk) */ 'CallClient.getEnvironmentInfo' | 'DeviceManager.askDevicePermission' | 'DeviceManager.getCameras' | 'DeviceManager.getMicrophones' | 'DeviceManager.getSpeakers' | 'DeviceManager.off' | 'DeviceManager.on' | 'DeviceManager.selectMicrophone' | 'DeviceManager.selectSpeaker' | 'IncomingCall.accept' | 'IncomingCall.reject' | /* @conditional-compile-remove(calling-beta-sdk) */ /* @conditional-compile-remove(teams-identity-support) */ 'TeamsCall.addParticipant' | /* @conditional-compile-remove(video-background-effects) */ 'VideoEffectsFeature.startEffects';
 
 // @public
 export type CallIdChangedListener = (event: {
@@ -1668,10 +1670,10 @@ export const createStatefulCallClient: (args: StatefulCallClientArgs, options?: 
 export const createStatefulChatClient: (args: StatefulChatClientArgs, options?: StatefulChatClientOptions | undefined) => StatefulChatClient;
 
 // @beta (undocumented)
-export const createTeamsCallAdapter: ({ userId, credential, locator }: TeamsCallAdapterArgs) => Promise<TeamsCallAdapter>;
+export const createTeamsCallAdapter: ({ userId, credential, locator, options }: TeamsCallAdapterArgs) => Promise<TeamsCallAdapter>;
 
 // @beta
-export const createTeamsCallAdapterFromClient: (callClient: StatefulCallClient, callAgent: TeamsCallAgent, locator: CallAdapterLocator) => Promise<TeamsCallAdapter>;
+export const createTeamsCallAdapterFromClient: (callClient: StatefulCallClient, callAgent: TeamsCallAgent, locator: CallAdapterLocator, options?: TeamsAdapterOptions | undefined) => Promise<TeamsCallAdapter>;
 
 // @public
 export interface CreateVideoStreamViewResult {
@@ -1826,6 +1828,8 @@ export const DEFAULT_COMPONENT_ICONS: {
     VideoTileScaleFill: JSX.Element;
     PinParticipant: JSX.Element;
     UnpinParticipant: JSX.Element;
+    VerticalGalleryLeftButton: JSX.Element;
+    VerticalGalleryRightButton: JSX.Element;
 };
 
 // @public
@@ -1923,6 +1927,8 @@ export const DEFAULT_COMPOSITE_ICONS: {
     VideoTileScaleFill: JSX.Element;
     PinParticipant: JSX.Element;
     UnpinParticipant: JSX.Element;
+    VerticalGalleryLeftButton: JSX.Element;
+    VerticalGalleryRightButton: JSX.Element;
 };
 
 // @beta
@@ -2112,6 +2118,7 @@ export interface ErrorBarStrings {
     sendMessageGeneric: string;
     sendMessageNotInChatThread: string;
     startScreenShareGeneric: string;
+    startScreenSharingGeneric?: string;
     startVideoGeneric: string;
     stopScreenShareGeneric: string;
     stopVideoGeneric: string;
@@ -2356,7 +2363,15 @@ export interface LocalVideoCameraCycleButtonProps {
 export interface LocalVideoStreamState {
     mediaStreamType: MediaStreamType;
     source: VideoDeviceInfo;
+    // @beta
+    videoEffects?: LocalVideoStreamVideoEffectsState;
     view?: VideoStreamRendererViewState;
+}
+
+// @beta
+export interface LocalVideoStreamVideoEffectsState {
+    effectName?: VideoEffectName;
+    isActive: boolean;
 }
 
 // @public
@@ -2607,6 +2622,9 @@ export interface NetworkDiagnosticsState {
     latest: LatestNetworkDiagnostics;
 }
 
+// @beta
+export type OnFetchProfileCallback = (userId: string, defaultProfile?: Profile) => Promise<Profile | undefined>;
+
 // @public
 export type OnRenderAvatarCallback = (
 userId?: string, options?: CustomAvatarOptions,
@@ -2786,6 +2804,11 @@ export type ParticipantsRemovedListener = (event: {
 
 // @public
 export type ParticipantState = 'Idle' | 'Connecting' | 'Ringing' | 'Connected' | 'Hold' | 'InLobby' | 'EarlyMedia' | 'Disconnected';
+
+// @beta
+export type Profile = {
+    displayName?: string;
+};
 
 // @public
 export type ReadReceiptsBySenderId = {
@@ -2974,6 +2997,8 @@ export type StatefulChatClientOptions = {
 
 // @public
 export interface StatefulDeviceManager extends DeviceManager {
+    // @beta
+    getUnparentedVideoStreams: LocalVideoStream[];
     selectCamera: (VideoDeviceInfo: any) => void;
 }
 
@@ -3000,6 +3025,11 @@ export interface SystemMessageCommon extends MessageCommon {
 }
 
 // @beta
+export type TeamsAdapterOptions = {
+    onFetchProfile?: OnFetchProfileCallback;
+};
+
+// @beta
 export interface TeamsCallAdapter extends CommonCallAdapter {
     joinCall(microphoneOn?: boolean): TeamsCall | undefined;
     startCall(participants: string[], options?: StartCallOptions): TeamsCall | undefined;
@@ -3011,6 +3041,7 @@ export type TeamsCallAdapterArgs = {
     userId: MicrosoftTeamsUserIdentifier;
     credential: CommunicationTokenCredential;
     locator: TeamsMeetingLinkLocator;
+    options?: TeamsAdapterOptions;
 };
 
 // @beta

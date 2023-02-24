@@ -1,9 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { ChatThreadRestError, FakeChatAdapterArgs } from '../../common';
-import { createAzureCommunicationChatAdapterFromClient } from '../../../src';
-import type { ChatAdapter } from '../../../src';
+import { _ChatThreadRestError, _FakeChatAdapterArgs } from './FakeChatAdapterArgs';
+import { createAzureCommunicationChatAdapterFromClient } from '../composites/ChatComposite/adapter/AzureCommunicationChatAdapter';
+import type { ChatAdapter } from '../composites/ChatComposite/adapter/ChatAdapter';
 
 import { FakeChatClient, IChatClient, Model } from '@internal/fake-backends';
 
@@ -16,8 +16,9 @@ import { RestError } from '@azure/core-rest-pipeline';
 
 /**
  * Fake adapters and data structures for in-memory fake-backend for chat.
+ * @internal
  */
-export interface FakeAdapters {
+export interface _FakeChatAdapters {
   local: ChatAdapter;
   remotes: ChatAdapter[];
   service: {
@@ -28,9 +29,10 @@ export interface FakeAdapters {
 
 /**
  * Create chat adapters using an in-memory fake-backend for chat.
+ * @internal
  */
-export function useFakeChatAdapters(args: FakeChatAdapterArgs): FakeAdapters | undefined {
-  const [fakeAdapters, setFakeAdapters] = useState<FakeAdapters>();
+export function _useFakeChatAdapters(args: _FakeChatAdapterArgs): _FakeChatAdapters | undefined {
+  const [fakeAdapters, setFakeAdapters] = useState<_FakeChatAdapters>();
   useEffect(() => {
     (async (): Promise<void> => {
       if (!args.localParticipant.displayName) {
@@ -46,7 +48,7 @@ export function useFakeChatAdapters(args: FakeChatAdapterArgs): FakeAdapters | u
         args.localParticipantPosition
       );
       const chatClient = new FakeChatClient(chatClientModel, args.localParticipant.id);
-      const thread = await chatClient.createChatThread({ topic: 'Cowabunga' }, { participants });
+      const thread = await chatClient.createChatThread({ topic: args.topic ?? 'Cowabunga' }, { participants });
       const threadId = thread?.chatThread?.id ?? '';
       const chatThreadClient = chatClient.getChatThreadClient(threadId);
       const adapter = await initializeAdapter(
@@ -58,7 +60,7 @@ export function useFakeChatAdapters(args: FakeChatAdapterArgs): FakeAdapters | u
         },
         args.chatThreadClientMethodErrors
       );
-      const newFakeAdapters: FakeAdapters = {
+      const newFakeAdapters: _FakeChatAdapters = {
         local: adapter,
         remotes: [],
         service: {
@@ -104,7 +106,7 @@ const initializeAdapters = async (
 
 const initializeAdapter = async (
   adapterInfo: AdapterInfo,
-  chatThreadClientMethodErrors?: Partial<Record<keyof ChatThreadClient, ChatThreadRestError>>
+  chatThreadClientMethodErrors?: Partial<Record<keyof ChatThreadClient, _ChatThreadRestError>>
 ): Promise<ChatAdapter> => {
   const statefulChatClient = _createStatefulChatClientWithDeps(adapterInfo.chatClient, {
     userId: adapterInfo.userId as CommunicationUserIdentifier,
@@ -147,7 +149,7 @@ const orderParticipants = (
 
 const registerChatThreadClientMethodErrors = (
   chatThreadClient: ChatThreadClient,
-  chatThreadClientMethodErrors?: Partial<Record<keyof ChatThreadClient, ChatThreadRestError>>
+  chatThreadClientMethodErrors?: Partial<Record<keyof ChatThreadClient, _ChatThreadRestError>>
 ): void => {
   for (const k in chatThreadClientMethodErrors) {
     chatThreadClient[k] = () => {

@@ -42,7 +42,13 @@ process.env['COMMUNICATION_REACT_FLAVOR'] === 'stable' &&
         // Pinned Participants
         'pinned-participants',
         // Feature to show the total number of participants in a call (currently in beta in calling SDK, hence this must be conditionally compiled)
-        'total-participant-count'
+        'total-participant-count',
+        // feature for tracking environment info API different than unsupported browser. stable use of environment info affects other components possibly sooner
+        'calling-environment-info',
+        // feature for blurred background and replace background effects
+        'video-background-effects',
+        // feature for vertical gallery layouts in VideoGallery
+        'vertical-gallery'
       ],
       // A list of stabilized features.
       // These features can be listed in the conditional compilation directives without

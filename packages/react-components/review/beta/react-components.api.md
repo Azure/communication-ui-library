@@ -536,6 +536,8 @@ export const DEFAULT_COMPONENT_ICONS: {
     VideoTileScaleFill: JSX.Element;
     PinParticipant: JSX.Element;
     UnpinParticipant: JSX.Element;
+    VerticalGalleryLeftButton: JSX.Element;
+    VerticalGalleryRightButton: JSX.Element;
 };
 
 // @internal
@@ -748,6 +750,7 @@ export interface ErrorBarStrings {
     sendMessageGeneric: string;
     sendMessageNotInChatThread: string;
     startScreenShareGeneric: string;
+    startScreenSharingGeneric?: string;
     startVideoGeneric: string;
     stopScreenShareGeneric: string;
     stopVideoGeneric: string;

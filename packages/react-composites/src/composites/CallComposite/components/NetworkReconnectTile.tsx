@@ -49,7 +49,10 @@ export const NetworkReconnectTile = (props: NetworkReconnectTileProps): JSX.Elem
           aria-atomic
         >
           <Stack horizontal className={mergeStyles(titleContainerStyle)}>
-            <CallCompositeIcon iconName="NetworkReconnectIcon" className={mergeStyles(titleStyle)} />
+            <CallCompositeIcon
+              iconName="NetworkReconnectIcon"
+              className={mergeStyles(titleStyle(palette, isVideoReady))}
+            />
             <Text className={mergeStyles(titleStyle(palette, isVideoReady))} aria-live={'assertive'}>
               {strings.networkReconnectTitle}
             </Text>

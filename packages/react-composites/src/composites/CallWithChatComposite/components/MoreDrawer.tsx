@@ -240,17 +240,15 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
   );
 
   /* @conditional-compile-remove(control-bar-button-injection) */
-  customDrawerButtons['overflow']?.props.children.forEach((element) => {
+  customDrawerButtons['primary'].slice(CUSTOM_BUTTON_OPTIONS.MAX_PRIMARY_MOBILE_CUSTOM_BUTTONS).forEach((element) => {
     drawerMenuItems.push(element);
   });
   /* @conditional-compile-remove(control-bar-button-injection) */
-  customDrawerButtons['primary']?.props.children
-    .slice(CUSTOM_BUTTON_OPTIONS.MAX_PRIMARY_MOBILE_CUSTOM_BUTTONS)
-    .forEach((element) => {
-      drawerMenuItems.push(element);
-    });
+  customDrawerButtons['secondary'].forEach((element) => {
+    drawerMenuItems.push(element);
+  });
   /* @conditional-compile-remove(control-bar-button-injection) */
-  customDrawerButtons['secondary']?.props.children.forEach((element) => {
+  customDrawerButtons['overflow'].forEach((element) => {
     drawerMenuItems.push(element);
   });
 
