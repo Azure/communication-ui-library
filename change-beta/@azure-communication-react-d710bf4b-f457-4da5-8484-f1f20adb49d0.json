@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Revert \"[bugfix] Resolve Mute/Unmute Icon tooltip showing up immediately after the call is joined  (#2587)\"",
-  "packageName": "@azure/communication-react",
-  "email": "jinan@microsoft.com",
-  "dependentChangeType": "none"
-}

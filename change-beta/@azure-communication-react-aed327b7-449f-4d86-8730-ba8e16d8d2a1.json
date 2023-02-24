@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Add beta version option for beta banners in Storybook",
-  "packageName": "@azure/communication-react",
-  "email": "edwardlee@microsoft.com",
-  "dependentChangeType": "none"
-}

@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Introduce UI to inform the user that they are using a unsupported operating system to join a call.",
-  "packageName": "@azure/communication-react",
-  "email": "94866715+dmceachernmsft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
