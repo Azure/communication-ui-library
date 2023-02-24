@@ -13,7 +13,7 @@ import { callingStatefulLogger, EventNames } from './Logger';
  * @returns
  */
 function _logDisposeStreamEvent(
-  eventName: string,
+  eventName: EventNames,
   streamLogInfo: {
     callId?: string;
     participantKey?: any;
