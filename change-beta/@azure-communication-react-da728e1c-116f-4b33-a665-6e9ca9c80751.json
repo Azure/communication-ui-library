@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Update beta version of @azure/communication-calling to 1.11.0-beta.1",
+  "packageName": "@azure/communication-react",
+  "email": "2684369+JamesBurnside@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
