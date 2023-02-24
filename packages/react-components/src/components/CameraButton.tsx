@@ -68,6 +68,18 @@ export interface CameraButtonStrings {
    * Camera action turned off string for announcer
    */
   cameraActionTurnedOffAnnouncement?: string;
+  /**
+   * Primary action for when the camera is turned off
+   */
+  offSplitButtonPrimaryActionCamera?: string;
+  /**
+   * Primary action for when the camera is on
+   */
+  onSplitButtonPrimaryActionCamera?: string;
+  /**
+   * Title for primary action section of split button
+   */
+  cameraPrimaryActionSplitButtonTitle?: string;
 }
 
 /**
@@ -194,11 +206,11 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
     title: 'toggle camera',
     itemType: ContextualMenuItemType.Section,
     sectionProps: {
-      title: 'Use camera',
+      title: strings.cameraPrimaryActionSplitButtonTitle,
       items: [
         {
           key: 'cameraPrimaryAction',
-          text: props.checked ? 'Turn off Camera' : 'Turn on Camera',
+          text: props.checked ? strings.onSplitButtonPrimaryActionCamera : strings.offSplitButtonPrimaryActionCamera,
           onClick: () => {
             onToggleClick();
           },

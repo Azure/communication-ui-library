@@ -53,7 +53,10 @@
     "onSplitButtonAriaLabel": "Turn off camera and camera options",
     "offSplitButtonAriaLabel": "Turn on camera and camera options",
     "cameraActionTurnedOnAnnouncement": "Your camera has been turned on",
-    "cameraActionTurnedOffAnnouncement": "Your camera has been turned off"
+    "cameraActionTurnedOffAnnouncement": "Your camera has been turned off",
+    "onSplitButtonPrimaryActionCamera": "Turn off camera",
+    "offSplitButtonPrimaryActionCamera": "Turn on camera",
+    "cameraPrimaryActionSplitButtonTitle": "Use camera"
   },
   "microphoneButton": {
     "onLabel": "Mute",
@@ -69,7 +72,10 @@
     "onSplitButtonAriaLabel": "Mute microphone and audio options",
     "offSplitButtonAriaLabel": "Unmute microphone and audio options",
     "microphoneActionTurnedOnAnnouncement": "Your microphone has been turned on",
-    "microphoneActionTurnedOffAnnouncement": "Your microphone has been turned off"
+    "microphoneActionTurnedOffAnnouncement": "Your microphone has been turned off",
+    "offSplitButtonMicrophonePrimaryAction": "Unmute microphone",
+    "onSplitButtonMicrophonePrimaryAction": "Mute microphone",
+    "micPrimaryActionSplitButtonTitle": "Use Microphone"
   },
   "devicesButton": {
     "label": "Devices",

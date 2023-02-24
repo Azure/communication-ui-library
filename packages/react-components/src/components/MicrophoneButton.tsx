@@ -68,6 +68,18 @@ export interface MicrophoneButtonStrings {
    * Microphone action turned off string for announcer
    */
   microphoneActionTurnedOffAnnouncement?: string;
+  /**
+   * Primary action for the microphone when microphone is live.
+   */
+  onSplitButtonMicrophonePrimaryAction?: string;
+  /**
+   * Primary action for the microphone when the microphone is muted.
+   */
+  offSplitButtonMicrophonePrimaryAction?: string;
+  /**
+   * Title for primary action section of split button
+   */
+  micPrimaryActionSplitButtonTitle?: string;
 }
 
 /**
@@ -210,7 +222,7 @@ export const MicrophoneButton = (props: MicrophoneButtonProps): JSX.Element => {
     title: 'toggle mic',
     itemType: ContextualMenuItemType.Section,
     sectionProps: {
-      title: 'Use Microphone',
+      title: strings.micPrimaryActionSplitButtonTitle,
       items: [
         {
           key: 'microphonePrimaryAction',
@@ -219,7 +231,9 @@ export const MicrophoneButton = (props: MicrophoneButtonProps): JSX.Element => {
             onToggleClick();
           },
           iconProps: {
-            iconName: props.checked ? 'SplitButtonPrimaryActionMicUnmuted' : 'SplitButtonPrimaryActionMicMuted',
+            iconName: props.checked
+              ? strings.onSplitButtonMicrophonePrimaryAction
+              : strings.offSplitButtonMicrophonePrimaryAction,
             styles: { root: { lineHeight: 0 } }
           }
         }
