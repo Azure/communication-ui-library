@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Add more url parameters for chat sample",
+  "packageName": "@azure/communication-react",
+  "email": "palatter@microsoft.com",
+  "dependentChangeType": "none"
+}
