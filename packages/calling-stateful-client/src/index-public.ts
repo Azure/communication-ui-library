@@ -30,3 +30,4 @@ export type { DeclarativeCallAgent, IncomingCallManagement } from './CallAgentDe
 export type { DeclarativeIncomingCall } from './IncomingCallDeclarative';
 /* @conditional-compile-remove(video-background-effects) */
 export type { LocalVideoStreamVideoEffectsState } from './CallClientState';
+export type { CaptionsCallFeatureState, CaptionInfoState } from './CallClientState';

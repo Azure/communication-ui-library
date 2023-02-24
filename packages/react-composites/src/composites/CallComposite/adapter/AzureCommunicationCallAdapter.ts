@@ -582,6 +582,9 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     this.call = call;
     this.context.setCurrentCallId(call.id);
 
+    // REMOVE THIS< TEST PURPOSES ONLY
+    call.feature(Features.AcsCaptions).startCaptions();
+
     // Resync state after callId is set
     this.context.updateClientState(this.callClient.getState());
     this.handlers = createHandlers(this.callClient, this.callAgent, this.deviceManager, this.call);

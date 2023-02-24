@@ -3,10 +3,13 @@
 
 import { CommunicationIdentifierKind } from '@azure/communication-common';
 import {
+  AcsCaptionsInfo,
   AudioDeviceInfo,
   DeviceAccess,
   DominantSpeakersInfo,
+  ResultType,
   ScalingMode,
+  TeamsCaptionsInfo,
   VideoDeviceInfo
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(unsupported-browser) */
@@ -33,12 +36,14 @@ import {
   CallAgentState,
   CallErrors,
   CallErrorTarget,
-  CallError
+  CallError,
+  CaptionInfoState
 } from './CallClientState';
 import { callingStatefulLogger } from './Logger';
 import { CallIdHistory } from './CallIdHistory';
 /* @conditional-compile-remove(video-background-effects) */
 import { LocalVideoStreamVideoEffectsState } from './CallClientState';
+import { convertFromSDKToCaptionInfoState } from './Converter';
 
 enableMapSet();
 // Needed to generate state diff for verbose logging.
@@ -695,6 +700,81 @@ export class CallContext {
     const id = this._atomicId;
     this._atomicId++;
     return id;
+  }
+
+  private processNewCaption(captions: CaptionInfoState[], captionInfo: CaptionInfoState): void {
+    // Check if the incoming caption is a replacement for the latest one
+    const latestCaption = captions[captions.length - 1];
+    if (
+      latestCaption &&
+      latestCaption.resultType !== ResultType.Final &&
+      latestCaption.timestamp.getTime() === captionInfo.timestamp.getTime() &&
+      toFlatCommunicationIdentifier(latestCaption.speaker.identifier) ===
+        toFlatCommunicationIdentifier(captionInfo.speaker.identifier)
+    ) {
+      captions.pop();
+    }
+
+    captions.push(captionInfo);
+
+    // If the array length exceeds 50, remove the oldest caption
+    if (captions.length > 50) {
+      captions.shift();
+    }
+  }
+
+  public addCaption(callId: string, caption: AcsCaptionsInfo | TeamsCaptionsInfo): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        this.processNewCaption(call.captionsFeature.captions, convertFromSDKToCaptionInfoState(caption));
+      }
+    });
+  }
+
+  setIsCaptionActive(callId: string, isCaptionsActive: boolean): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        call.captionsFeature.isActive = isCaptionsActive;
+      }
+    });
+  }
+
+  setSelectedSpokenLanguage(callId: string, spokenLanguage: string): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        call.captionsFeature.selectedSpokenLanguage = spokenLanguage;
+      }
+    });
+  }
+
+  setSelectedSubtitleLanguage(callId: string, subtitleLanguage: string): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        call.captionsFeature.selectedSubtitleLanguage = subtitleLanguage;
+      }
+    });
+  }
+
+  setAvailableSubtitleLanguages(callId: string, subtitleLanguages: string[]): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        call.captionsFeature.availableSubtitleLanguages = subtitleLanguages;
+      }
+    });
+  }
+
+  setAvailableSpokenLanguages(callId: string, spokenLanguages: string[]): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        call.captionsFeature.availableSpokenLanguages = spokenLanguages;
+      }
+    });
   }
 
   /**
