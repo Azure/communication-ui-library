@@ -483,11 +483,6 @@ export function disposeView(
   const streamType = stream.mediaStreamType;
   if (callId) {
     disposeViewVideo(context, internalContext, callId, stream, participantId);
-    //   // Stop rendering RemoteVideoStream that is part of a Call
-    //   disposeViewRemoteVideo(context, internalContext, callId, participantId, stream);
-    // } else if (!('id' in stream) && callId) {
-    //   // Stop rendering LocalVideoStream that is part of a Call
-    //   disposeViewLocalVideo(context, internalContext, callId);
   } else if (!('id' in stream) && !callId) {
     // Stop rendering LocalVideoStream that is not part of a Call
     // Because it is not part of the call we don't tee errors to state naturally (e.g. via a Call Client function such as startVideo).
