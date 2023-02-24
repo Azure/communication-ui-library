@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Introduces announcements for when participants come and go from a call.",
-  "packageName": "@azure/communication-react",
-  "email": "94866715+dmceachernmsft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

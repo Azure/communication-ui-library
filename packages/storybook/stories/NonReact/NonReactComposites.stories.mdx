@@ -1,129 +1,85 @@
 import { Meta } from '@storybook/addon-docs';
 
 <Meta
-  id="try-with-vanilla-js"
-  title="Composites/Try with VanillaJS"
+  id="use-composite-in-non-react-environment"
+  title="Composites/Cross-Framework Support"
   parameters={{ previewTabs: { canvas: { disable: true, hidden: true } } }}
 />
 
-# Try Call and Chat Composites with vanilla javascript
+# Use UI Composites inside JavaScript-based Applications
 
-Investing in a full React Application to try out the UI Library can be challenging. To help out some of our developers we have bundled the UI Library
-as a set of javascript bundles. This will allow developers to try out the UI Library with just a `<script>` tag and few lines of code.
+If you are not using React, you can still add a UI composite into your html page with a simple `<script>` tag and several lines of code like:
 
-Why you want to try out the composites via CDN experience:
+You can easily find prebuilt bundles from:
 
-- Great for early prototyping
-- Ability to jump into a call/chat thread with minimal engineering investment
-- Don't need to complicate your engineering environment with React and Webpack
+[The latest bundles for chat composite](https://github.com/Azure/communication-ui-library/releases/latest/download/chatComposite.js)
 
-Why you want to use our React offerings for production workloads:
+[The latest bundles for call composite](https://github.com/Azure/communication-ui-library/releases/latest/download/callComposite.js)
 
-- Ability to apply performance optimizations (e.g tree-shaking)
-- In-depth visual customization and theming
-- Leverage modern engineering tooling with capabilities such as type-checking
+[The latest bundles for callWithChat composite](https://github.com/Azure/communication-ui-library/releases/latest/download/callWithChatComposite.js)
 
-_We suggest if you would like to continue to use this method of using the UI Library to host the bundled script experience in your own CDN (Content Delivery Networks)_
+For development and prototyping purpose, import these 2 urls with `<script>` tags will be the fastest way. In production environment, we recommend that serving composite files on your own CDN will help with performance.
 
-## Using Composites in your index.html
+## Use Composites in html
 
-The first step is to add a script tag:
+After importing UI bundle, you are able to load composites using these 2 code snippets:
 
-```html
-<!-- ChatComposite -->
-<script src="https://github.com/Azure/communication-ui-library/releases/latest/download/chatComposite.js"></script>
-```
-
-```html
-<!-- CallComposite -->
-<script src="https://github.com/Azure/communication-ui-library/releases/latest/download/callComposite.js"></script>
-```
-
-```html
-<!-- CallWithChatComposite -->
-<script src="https://github.com/Azure/communication-ui-library/releases/latest/download/callWithChatComposite.js"></script>
-```
-
-You will be able to load load composites using `chatComposite.loadChatComposite` and `callComposite.loadCallComposite`.
-
-We use a pattern where we specify important arguments to launch the experience, followed by the DOM element to apply the UI into, followed by any additional properties.
-
-### Loading the Chat Composite
-
-We start with our necessary arguments (displayName, threadId, endpoint, userId, token) followed by the html element that will contain our chat composite, and the
-any additional properties for the composite.
-
-```js
-// `chatComposite.loadChatComposite` function is exposed to window object once you import composite bundle.
-// The adapter returned allows you control composite externally.
+```tsx
 const chatAdapter = await chatComposite.loadChatComposite(
+  //The for composite which allows you control composite externally,
+  // This function will be exposed to window.chatComposite once you import composite bundle
   {
-    displayName: 'DISPLAY_NAME', /* string */
-    userId: { communicationUserId: 'UserID' /* string */ },
-    token: 'TOKEN' /* string */
-    threadId: 'THREAD_ID', /* string */
-    endpoint: 'ENDPOINT', /* string */
+    displayName, // string
+    threadId, // string
+    endpoint, // string
+    userId, // Object { communicationUserId: string }
+    token // string
   },
-  containerElement, /* string. html container element */
-  props /* Optional. Object contains all optional props for composite, check composite page for more details. */
+  elementToRender, // Container element
+  props // Optional, Object contains all optional props for composite, check composite page for more details
 );
 ```
 
-_Check [Chat Composite Basic Example](./?path=/docs/composites-chat-basicexample--basic-example) for details on what additional properties you can apply to the chat composite_
-
-### Loading the Call Composite
-
-We start with our necessary arguments (displayName, userId, token, locator) followed by the html element that will contain our call composite, and the
-any additional properties for the composite.
-
-```js
-// `callComposite.loadCallComposite` function is exposed to the window object once you import composite bundle.
-// The adapter returned allows you control composite externally.
+```tsx
 const callAdapter = await callComposite.loadCallComposite(
+  //The for composite which allows you control composite externally,
+  // This function will be exposed to window.callComposite once you import composite bundle
   {
-    displayName: 'DISPLAY_NAME' /*string */,
-    userId: { communicationUserId: 'UserID' /*string */ },
-    token: 'ACCCESS_TOKEN' /*string */
-    locator: { groupId: 'GROUP_ID' /*string */ }, // If you are joining a Teams meeting, instead of groupId use meetingLink: `locator: { meetingLink: 'MEETING_LINK' /* string */ }`
+    locator: { groupId: groupId }, // provide a locator object to join a group call or a teams meeting interop call
+    displayName, // string
+    userId, // Object { communicationUserId: string }
+    token // string
   },
-  containerElement, /* string. html container element */
-  props /* Optional. Object contains all optional props for composite, check composite page for more details. */
+  elementToRender, // container element
+  props // Optional, Object contains all optional props for composite, check composite page for more details
 );
 ```
 
-_Check [Call Composite Basic Example](./?path=/docs/composites-call-basicexample--basic-example) for details on what additional properties you can apply to the call composite_
-
-### Loading the Call with Chat Composite
-
-We start with our necessary arguments (displayName, userId, token, endpoint, locator) followed by the html element that will contain our call composite, and the
-any additional properties for the composite.
-
-```js
-// `callWithChatComposite.loadCallWithChatComposite` function is exposed to the window object once you import composite bundle.
-// The adapter returned allows you control composite externally.
+```tsx
 const callWithChatAdapter = await callWithChatComposite.loadCallWithChatComposite(
+  //The for composite which allows you control composite externally,
+  // This function will be exposed to window.callWithChatComposite once you import composite bundle
   {
-    displayName: 'DISPLAY_NAME', /* string */
-    userId: { communicationUserId: 'UserID' /* string */ },
-    token: 'ACCCESS_TOKEN' /* string */
-    endpoint: 'ENDPOINT', /* string */
-    locator: { callLocator: { groupId: groupId /* string */ }, chatThreadId: threadId /* string */ } /* callWithChat-specific locator */
+    userId, // Object { communicationUserId: string }
+    token, // string
+    displayName, // string
+    endpoint: endpoint,
+    locator: { callLocator: { groupId: groupId }, chatThreadId: threadId } // UI callWithChat-specific locator
   },
-  containerElement, /* string. html container element */
-  props /* Optional. Object contains all optional props for composite, check composite page for more details. */
+  elementToRender, // container element
+  props // Optional, Object contains all optional props for composite, check composite page for more details
 );
 ```
 
-## Examples
+Check [Chat Composite Basic Example](./?path=/docs/composites-chat-basicexample--basic-example), [Call Composite Basic Example](./?path=/docs/composites-call-basicexample--basic-example), and [CallWithChat Composite Basic Example](./?path=/docs/composites-call-with-chat-basicexample--basic-example) to see optional props of composites
 
-Now we can take a look at how this all comes together.
+For more details of adapter, check [Adapters for Composites](./?path=/story/composite-adapters--page)
 
-### Chat example
+## Example html code
 
-`index.html`
+Check [Example](https://github.com/Azure/communication-ui-library/blob/PublicPreview/1.0.0-beta.3/samples/StaticHtmlComposites/index.html) for more detailed example of using calling/chat composites
 
 ```html
-<meta charset="utf-8" />
 <!-- Replace this url with your own CDN in production environment -->
 <script src="https://github.com/Azure/communication-ui-library/releases/latest/download/chatComposite.js"></script>
 <!-- height need to be set for composite to fit the layout -->
@@ -131,11 +87,11 @@ Now we can take a look at how this all comes together.
 <script type="module">
   const chatAdapter = await chatComposite.loadChatComposite(
     {
-      displayName: 'DISPLAY_NAME',
-      userId: { communicationUserId: 'UserID' },
-      token: 'TOKEN',
-      threadId: 'THREAD_ID',
-      endpoint: 'ENDPOINT'
+      displayName: displayName,
+      threadId: threadId,
+      endpoint: endpoint,
+      userId: user,
+      token: token
     },
     document.getElementById('chat-container'),
     { key: new Date() }
@@ -143,39 +99,7 @@ Now we can take a look at how this all comes together.
 </script>
 ```
 
-### Calling example
-
-`index.html`
-
-```html
-<meta charset="utf-8" />
-<!-- Replace this url with your own CDN in production environment -->
-<script src="https://github.com/Azure/communication-ui-library/releases/latest/download/callComposite.js"></script>
-<!-- height need to be set for composite to fit the layout -->
-<div id="call-container" style="height: 50vh"></div>
-<script type="module">
-  const callAdapter = await callComposite.loadCallComposite(
-    {
-      displayName: 'DISPLAY_NAME',
-      userId: 'USERID',
-      token: 'ACCCESS_TOKEN',
-      locator: { groupId: 'GROUPID' }
-    },
-    document.getElementById('call-container'),
-    { key: new Date() }
-  );
-</script>
-```
-
-These examples are also available on [Github](https://github.com/Azure/communication-ui-library/blob/main/samples/StaticHtmlComposites/index.html).
-
-❗ If you are getting a syntax error at runtime. Don't forget to add the **`<meta charset="utf-8">`** tag in the header of your html code.
-Learn more about the [meta tag](https://developer.mozilla.org/en-US/docs/Learn/HTML/Introduction_to_HTML/The_head_metadata_in_HTML#specifying_your_documents_character_encoding).
-
-❗ If you having issues running the Call Composite on your index.html. It is because the underlying Calling SDK is checking to see if its from localhost or https traffic.
-We recommend deploying the index.html with your CallComposite changes onto a local server or to deploy it to an Azure App Service which will serve up the content as https.
-
-# Build your own composite js bundle files
+# Build your own composite js bundle files:
 
 ### git clone our repo
 
@@ -196,7 +120,7 @@ npm install -g @microsoft/rush
 ### Install packages and build js bundles
 
 ```bash
-cd communication-ui-library/samples/StaticHtmlComposites
+cd communication-ui-library\samples\StaticHtmlComposites\
 rush install
 rush build
 ```
@@ -204,15 +128,15 @@ rush build
 Then you will be able to see 2 js bundle files:
 
 ```
-./samples/StaticHtmlComposites/dist/chatComposite.js
-./samples/StaticHtmlComposites/dist/callComposite.js
-./samples/StaticHtmlComposites/dist/callWithChatComposite.js
+.\samples\StaticHtmlComposites\dist\chatComposite.js
+.\samples\StaticHtmlComposites\dist\callComposite.js
+.\samples\StaticHtmlComposites\dist\callWithChatComposite.js
 ```
 
 There is also an example html for how to use it, you might want to allocate your own acs token before you embed the code piece to your own web app, check [Create and manage Communication Services resources](https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-azp):
 
 ```
-./samples/StaticHtmlComposites/index.html
+.\samples\StaticHtmlComposites\index.html
 ```
 
 ### Try it the sample

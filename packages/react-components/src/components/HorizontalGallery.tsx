@@ -7,6 +7,7 @@ import { useTheme } from '../theming';
 import { BaseCustomStyles } from '../types';
 import { rootStyle, childrenContainerStyle, leftRightButtonStyles } from './styles/HorizontalGallery.styles';
 import { useIdentifiers } from '../identifiers';
+import { bucketize } from './utils/overFlowGalleriesUtils';
 
 /**
  * {@link HorizontalGallery} default children per page
@@ -122,17 +123,3 @@ const HorizontalGalleryNavigationButton = (props: {
     </DefaultButton>
   );
 };
-
-function bucketize<T>(arr: T[], bucketSize: number): T[][] {
-  const bucketArray: T[][] = [];
-
-  if (bucketSize <= 0) {
-    return bucketArray;
-  }
-
-  for (let i = 0; i < arr.length; i += bucketSize) {
-    bucketArray.push(arr.slice(i, i + bucketSize));
-  }
-
-  return bucketArray;
-}
