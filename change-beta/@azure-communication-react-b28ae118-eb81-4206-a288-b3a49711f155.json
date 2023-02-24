@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Update making a change doc to include note about update_snapshots label bugs.",
+  "packageName": "@azure/communication-react",
+  "email": "94866715+dmceachernmsft@users.noreply.github.com",
+  "dependentChangeType": "none"
+}
