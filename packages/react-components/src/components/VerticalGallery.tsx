@@ -108,14 +108,28 @@ export const VerticalGallery = (props: VerticalGalleryProps): JSX.Element => {
     }
   }, [page, numberOfChildren, lastPage, showButtons]);
 
+  const childContainerStyle = useMemo(() => {
+    return { root: childrenContainerStyle };
+  }, []);
+
+  const childrenStyles = useMemo(() => {
+    return { root: styles?.children };
+  }, [styles?.children]);
+
   if (childrenPerPage <= 0) {
     return <></>;
   }
 
   return (
     <Stack className={mergeStyles(rootStyle, styles?.root)}>
-      <Stack className={mergeStyles(childrenContainerStyle, { '> *': styles?.children })}>
-        {childrenOnCurrentPage}
+      <Stack styles={childContainerStyle}>
+        {childrenOnCurrentPage.map((child, i) => {
+          return (
+            <Stack.Item key={i} styles={childrenStyles}>
+              {child}
+            </Stack.Item>
+          );
+        })}
       </Stack>
       {showButtons && (
         <VerticalGalleryControlBar
