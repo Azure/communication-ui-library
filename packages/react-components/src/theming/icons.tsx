@@ -289,4 +289,8 @@ export const DEFAULT_COMPONENT_ICONS = {
   SplitButtonPrimaryActionCameraOff: <VideoOff20Filled />,
   SplitButtonPrimaryActionMicUnmuted: <Mic20Filled />,
   SplitButtonPrimaryActionMicMuted: <MicOff20Filled />
+  /* @conditional-compile-remove(vertical-gallery) */
+  VerticalGalleryLeftButton: <ChevronLeft20Regular />,
+  /* @conditional-compile-remove(vertical-gallery) */
+  VerticalGalleryRightButton: <ChevronRight20Regular />
 };
