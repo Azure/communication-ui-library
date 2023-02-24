@@ -47,7 +47,7 @@ process.env['COMMUNICATION_REACT_FLAVOR'] === 'stable' &&
         'calling-environment-info',
         // feature for blurred background and replace background effects
         'video-background-effects',
-        // feature for new vertical gallery layouts in videoGallery
+        // feature for vertical gallery layouts in VideoGallery
         'vertical-gallery'
       ],
       // A list of stabilized features.
