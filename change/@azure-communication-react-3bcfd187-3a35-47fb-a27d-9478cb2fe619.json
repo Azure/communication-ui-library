@@ -1,7 +1,7 @@
 {
   "type": "none",
-  "comment": "Updating cte documentation in storybook",
+  "comment": "Add more url parameters for chat sample",
   "packageName": "@azure/communication-react",
-  "email": "alkwa@microsoft.com",
+  "email": "palatter@microsoft.com",
   "dependentChangeType": "none"
 }
