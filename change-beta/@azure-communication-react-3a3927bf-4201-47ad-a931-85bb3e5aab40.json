@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Correctly propagate callbacks, add missing callback to callwithchat and memoize callcomposite options",
-  "packageName": "@azure/communication-react",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

@@ -1,7 +1,7 @@
 {
   "type": "none",
-  "comment": "Remove custom end call screen from calling sample",
+  "comment": "Add more url parameters for chat sample",
   "packageName": "@azure/communication-react",
-  "email": "anjulgarg@live.com",
+  "email": "palatter@microsoft.com",
   "dependentChangeType": "none"
 }
