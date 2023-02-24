@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add hermetic tests for no displayname cases",
-  "packageName": "@azure/communication-react",
-  "email": "jinan@microsoft.com",
-  "dependentChangeType": "patch"
-}
