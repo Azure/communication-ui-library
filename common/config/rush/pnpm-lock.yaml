@@ -19343,6 +19343,16 @@ packages:
     dev: false
     resolution:
       integrity: sha512-V50KMwwzqJV0NpZIZFwfOD5/lyny3WlSzRiXgA0G7VUnRlqttta1L6UQIHzd6EuBY/cHGfwTIck7w1yH6Q5zUw==
+  file:../../libs/skype-spool-sdk-1.0.0.tgz:
+    dependencies:
+      '@azure/communication-common': 2.0.0
+      '@azure/logger': 1.0.3
+    dev: false
+    name: '@skype/spool-sdk'
+    resolution:
+      integrity: sha512-/KXYP94TMCWuC27sKX98ctB8+2EOnj/+BT5ZEHVQp+I95200+92WQHCb92kimVPga++CqPB+TtBI81vpVSzFSA==
+      tarball: file:../../libs/skype-spool-sdk-1.0.0.tgz
+    version: 1.0.0
   file:projects/acs-ui-common.tgz:
     dependencies:
       '@azure/communication-common': 2.2.0
@@ -19429,6 +19439,7 @@ packages:
       '@babel/core': 7.16.12
       '@microsoft/api-documenter': 7.12.22
       '@microsoft/api-extractor': 7.18.21
+      '@skype/spool-sdk': file:../../libs/skype-spool-sdk-1.0.0.tgz
       '@types/jest': 26.0.24
       '@types/react': 16.14.35
       '@typescript-eslint/eslint-plugin': 4.33.0_d212f40a84a592446cd1718bfda08a13
@@ -19456,7 +19467,7 @@ packages:
     dev: false
     name: '@rush-temp/calling-stateful-client'
     resolution:
-      integrity: sha512-kqITCgC6c1Ik7d71/b6CEyi+vFjacRsHj4wA1e03tjQ9KKLniaCzgyfsITI+6D8LdBbtNF83Vwn7EWf1Ro3wtA==
+      integrity: sha512-gaNdegiHBw+1iTzre5hDeSA9rZvte/GF0s4PD0fU9vD9nBDWTij3L8u6+ydLBaWm4kWof55xRvrmMJL/fL319g==
       tarball: file:projects/calling-stateful-client.tgz
     version: 0.0.0
   file:projects/calling.tgz:
@@ -19654,6 +19665,7 @@ packages:
       '@babel/core': 7.16.12
       '@microsoft/api-documenter': 7.12.22
       '@microsoft/api-extractor': 7.18.21
+      '@skype/spool-sdk': file:../../libs/skype-spool-sdk-1.0.0.tgz
       '@types/jest': 26.0.24
       '@types/react': 16.14.35
       '@typescript-eslint/eslint-plugin': 4.33.0_d212f40a84a592446cd1718bfda08a13

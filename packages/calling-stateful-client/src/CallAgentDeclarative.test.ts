@@ -65,6 +65,9 @@ const mockRemoteParticipantId = 'a';
 const mockCallId = 'b';
 
 class MockCallAgent implements CallAgent {
+  handlePushNotification(): Promise<void> {
+    throw new Error('Method not implemented.');
+  }
   calls: MockCall[] = [];
   displayName = undefined;
   /* @conditional-compile-remove(teams-identity-support) */
