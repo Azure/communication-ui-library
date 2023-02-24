@@ -40,7 +40,9 @@ import {
   WifiWarning20Filled,
   SpeakerMute16Filled,
   MicProhibited16Filled,
-  VideoProhibited16Filled
+  VideoProhibited16Filled,
+  Camera20Regular,
+  CameraOff20Regular
 } from '@fluentui/react-icons';
 /* @conditional-compile-remove(call-readiness) */
 import { Important20Filled } from '@fluentui/react-icons';
@@ -282,5 +284,9 @@ export const DEFAULT_COMPONENT_ICONS = {
   /* @conditional-compile-remove(pinned-participants) */
   PinParticipant: <Pin16Regular />,
   /* @conditional-compile-remove(pinned-participants) */
-  UnpinParticipant: <PinOff16Regular />
+  UnpinParticipant: <PinOff16Regular />,
+  SplitButtonPrimaryActionCameraOn: <Video20Filled />,
+  SplitButtonPrimaryActionCameraOff: <VideoOff20Filled />,
+  SplitButtonPrimaryActionMicUnmuted: <Mic20Filled />,
+  SplitButtonPrimaryActionMicMuted: <MicOff20Filled />
 };

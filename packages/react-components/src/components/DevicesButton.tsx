@@ -233,6 +233,7 @@ export interface DeviceMenuStyles extends IContextualMenuStyles {
 export const generateDefaultDeviceMenuProps = (
   props: DeviceMenuProps,
   strings: DeviceMenuStrings,
+  primaryActionItem?: IContextualMenuItem,
   isSelectCamAllowed = true,
   isSelectMicAllowed = true
 ): { items: IContextualMenuItem[] } | undefined => {
@@ -291,6 +292,9 @@ export const generateDefaultDeviceMenuProps = (
         }))
       }
     });
+    if (primaryActionItem) {
+      defaultMenuProps.items.push(primaryActionItem);
+    }
   }
 
   if (microphones && selectedMicrophone && onSelectMicrophone && isSelectMicAllowed) {
@@ -352,6 +356,9 @@ export const generateDefaultDeviceMenuProps = (
         }))
       }
     });
+    if (microphones && selectedMicrophone && onSelectMicrophone && isSelectMicAllowed && primaryActionItem) {
+      defaultMenuProps.items.push(primaryActionItem);
+    }
   }
 
   if (defaultMenuProps.items.length === 0) {
