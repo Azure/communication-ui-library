@@ -29,7 +29,7 @@
     "@fluentui/react-northstar": "0.61.0",
     "@fluentui/react": "~8.98.3",
     "@fluentui/theme-samples": "8.1.5",
-    "@internal/fake-backends": "1.5.1-beta.0",
+    "@internal/fake-backends": "1.5.1-beta.1",
     "@microsoft/applicationinsights-react-js": "~3.0.5",
     "@microsoft/applicationinsights-web": "~2.6.2",
     "copy-to-clipboard": "~3.3.1",
