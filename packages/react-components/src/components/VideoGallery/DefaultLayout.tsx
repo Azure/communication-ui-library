@@ -11,7 +11,7 @@ import { ScrollableHorizontalGallery } from './ScrollableHorizontalGallery';
 import { rootLayoutStyle } from './styles/DefaultLayout.styles';
 import { videoGalleryLayoutGap } from './styles/Layout.styles';
 import { useOrganizedParticipants } from './utils/videoGalleryLayoutUtils';
-import { VideoGalleryResponsiveHorizontalGallery } from './VideoGalleryResponsiveHorizontalGallery';
+import { OverflowGallery } from './OverflowGallery';
 
 /**
  * Props for {@link DefaultLayout}.
@@ -83,10 +83,10 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
       return <ScrollableHorizontalGallery horizontalGalleryElements={horizontalGalleryTiles} />;
     }
     return (
-      <VideoGalleryResponsiveHorizontalGallery
+      <OverflowGallery
         isNarrow={isNarrow}
         shouldFloatLocalVideo={false}
-        horizontalGalleryElements={horizontalGalleryTiles}
+        overflowGalleryElements={horizontalGalleryTiles}
         styles={styles?.horizontalGallery}
         /* @conditional-compile-remove(pinned-participants) */
         overflowGalleryLayout={overflowGalleryLayout}

@@ -9,20 +9,19 @@ import { GridLayout } from '../GridLayout';
 import { isNarrowWidth } from '../utils/responsive';
 import { FloatingLocalVideo } from './FloatingLocalVideo';
 import { LayoutProps } from './Layout';
-/* @conditional-compile-remove(pinned-participants) */
-import { ScrollableHorizontalGallery } from './ScrollableHorizontalGallery';
 import {
   LARGE_FLOATING_MODAL_SIZE_PX,
   localVideoTileContainerStyle,
   localVideoTileWithControlsContainerStyle,
   LOCAL_VIDEO_TILE_ZINDEX,
-  SMALL_FLOATING_MODAL_SIZE_PX,
-  VERTICAL_GALLERY_FLOATING_MODAL_SIZE_PX
+  SMALL_FLOATING_MODAL_SIZE_PX
 } from './styles/FloatingLocalVideo.styles';
+/* @conditional-compile-remove(vertical-gallery) */
+import { VERTICAL_GALLERY_FLOATING_MODAL_SIZE_PX } from './styles/FloatingLocalVideo.styles';
 import { innerLayoutStyle, layerHostStyle, rootLayoutStyle } from './styles/FloatingLocalVideoLayout.styles';
 import { videoGalleryLayoutGap } from './styles/Layout.styles';
 import { useOrganizedParticipants } from './utils/videoGalleryLayoutUtils';
-import { VideoGalleryResponsiveHorizontalGallery } from './VideoGalleryResponsiveHorizontalGallery';
+import { OverflowGallery } from './OverflowGallery';
 
 /**
  * Props for {@link FloatingLocalVideoLayout}.
@@ -142,15 +141,11 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
     if (horizontalGalleryTiles.length === 0) {
       return null;
     }
-    /* @conditional-compile-remove(pinned-participants) */
-    if (isNarrow) {
-      return <ScrollableHorizontalGallery horizontalGalleryElements={horizontalGalleryTiles} />;
-    }
     return (
-      <VideoGalleryResponsiveHorizontalGallery
+      <OverflowGallery
         isNarrow={isNarrow}
         shouldFloatLocalVideo={true}
-        horizontalGalleryElements={horizontalGalleryTiles}
+        overflowGalleryElements={horizontalGalleryTiles}
         styles={styles?.horizontalGallery}
         /* @conditional-compile-remove(vertical-gallery) */
         overflowGalleryLayout={overflowGalleryLayout}

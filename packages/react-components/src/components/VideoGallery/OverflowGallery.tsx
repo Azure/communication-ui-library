@@ -10,6 +10,8 @@ import { ResponsiveVerticalGallery } from '../ResponsiveVerticalGallery';
 import { HORIZONTAL_GALLERY_BUTTON_WIDTH, HORIZONTAL_GALLERY_GAP } from '../styles/HorizontalGallery.styles';
 /* @conditional-compile-remove(vertical-gallery) */
 import { OverflowGalleryLayout } from '../VideoGallery';
+/* @conditional-compile-remove(pinned-participants) */
+import { ScrollableHorizontalGallery } from './ScrollableHorizontalGallery';
 import {
   horizontalGalleryContainerStyle,
   horizontalGalleryStyle,
@@ -27,10 +29,10 @@ import {
  *
  * @private
  */
-export const VideoGalleryResponsiveHorizontalGallery = (props: {
+export const OverflowGallery = (props: {
   shouldFloatLocalVideo?: boolean;
   isNarrow?: boolean;
-  horizontalGalleryElements?: JSX.Element[];
+  overflowGalleryElements?: JSX.Element[];
   styles?: HorizontalGalleryStyles;
   /* @conditional-compile-remove(vertical-gallery) */
   overflowGalleryLayout?: OverflowGalleryLayout;
@@ -38,7 +40,7 @@ export const VideoGalleryResponsiveHorizontalGallery = (props: {
   const {
     shouldFloatLocalVideo = false,
     isNarrow = false,
-    horizontalGalleryElements,
+    overflowGalleryElements,
     styles,
     /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryLayout = 'HorizontalBottom'
   } = props;
@@ -50,7 +52,7 @@ export const VideoGalleryResponsiveHorizontalGallery = (props: {
     }
     return horizontalGalleryContainerStyle(shouldFloatLocalVideo, isNarrow);
   }, [shouldFloatLocalVideo, isNarrow, /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryLayout]);
-  
+
   const galleryStyles = useMemo(() => {
     /* @conditional-compile-remove(vertical-gallery) */
     if (overflowGalleryLayout === 'VerticalRight') {
@@ -69,9 +71,14 @@ export const VideoGalleryResponsiveHorizontalGallery = (props: {
         controlBarHeightRem={HORIZONTAL_GALLERY_BUTTON_WIDTH}
         gapHeightRem={HORIZONTAL_GALLERY_GAP}
       >
-        {horizontalGalleryElements}
+        {overflowGalleryElements}
       </ResponsiveVerticalGallery>
     );
+  }
+
+  /* @conditional-compile-remove(pinned-participants) */
+  if (isNarrow) {
+    return <ScrollableHorizontalGallery horizontalGalleryElements={overflowGalleryElements} />;
   }
 
   return (
@@ -85,7 +92,7 @@ export const VideoGalleryResponsiveHorizontalGallery = (props: {
       buttonWidthRem={HORIZONTAL_GALLERY_BUTTON_WIDTH}
       gapWidthRem={HORIZONTAL_GALLERY_GAP}
     >
-      {horizontalGalleryElements}
+      {overflowGalleryElements}
     </ResponsiveHorizontalGallery>
   );
 };
