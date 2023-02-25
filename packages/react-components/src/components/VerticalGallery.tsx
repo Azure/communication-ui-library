@@ -8,7 +8,7 @@ import { BaseCustomStyles } from '../types';
 import {
   childrenContainerStyle,
   controlBarContainerStyle,
-  counterStyles,
+  participantPageCounter,
   leftRightButtonStyles,
   navIconStyles,
   rootStyle
@@ -159,7 +159,7 @@ const VerticalGalleryControlBar = (props: VerticalGalleryControlBarProps): JSX.E
   }, [styles?.previousButton]);
 
   const pageCounterStyles = useMemo(() => {
-    return mergeStyles(counterStyles, styles?.counter);
+    return mergeStyles(participantPageCounter, styles?.counter);
   }, [styles?.counter]);
 
   const nextButtonsStyles = useMemo(() => {

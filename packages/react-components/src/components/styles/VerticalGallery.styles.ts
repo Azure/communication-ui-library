@@ -55,7 +55,7 @@ export const leftRightButtonStyles = (theme: Theme): IStyle => {
 /**
  * @private
  */
-export const counterStyles: IStyle = {
+export const participantPageCounter: IStyle = {
   lineHeight: '2.3',
   width: '100%',
   textAlign: 'center'
