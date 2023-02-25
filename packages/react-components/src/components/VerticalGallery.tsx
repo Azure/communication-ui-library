@@ -149,26 +149,39 @@ export const VerticalGallery = (props: VerticalGalleryProps): JSX.Element => {
 const VerticalGalleryControlBar = (props: VerticalGalleryControlBarProps): JSX.Element => {
   const { onNextButtonClick, onPreviousButtonClick, buttonsDisabled, currentPage, totalPages, styles } = props;
   const theme = useTheme();
+
+  const pageCounterContainerStyles = useMemo(() => {
+    return mergeStyles(controlBarContainerStyle, styles?.root);
+  }, [styles]);
+
+  const previousButtonSyles = useMemo(() => {
+    return mergeStyles(leftRightButtonStyles(theme), styles?.previousButton);
+  }, [styles?.previousButton]);
+
+  const pageCounterStyles = useMemo(() => {
+    return mergeStyles(counterStyles, styles?.counter);
+  }, [styles?.counter]);
+
+  const nextButtonsStyles = useMemo(() => {
+    return mergeStyles(leftRightButtonStyles(theme), styles?.nextButton);
+  }, [styles?.nextButton]);
+
   return (
     <Stack
       horizontalAlign="center"
       tokens={{ childrenGap: '0.5rem' }}
       horizontal
-      className={mergeStyles(controlBarContainerStyle, styles?.root)}
+      className={pageCounterContainerStyles}
     >
       <DefaultButton
-        className={mergeStyles(leftRightButtonStyles(theme), styles?.previousButton)}
+        className={previousButtonSyles}
         onClick={onPreviousButtonClick}
         disabled={buttonsDisabled?.previous}
       >
         <Icon iconName="VerticalGalleryLeftButton" styles={navIconStyles} />
       </DefaultButton>
-      <Text className={mergeStyles(counterStyles, styles?.counter)}>{`${currentPage} / ${totalPages}`}</Text>
-      <DefaultButton
-        className={mergeStyles(leftRightButtonStyles(theme), styles?.nextButton)}
-        onClick={onNextButtonClick}
-        disabled={buttonsDisabled?.next}
-      >
+      <Text className={pageCounterStyles}>{`${currentPage} / ${totalPages}`}</Text>
+      <DefaultButton className={nextButtonsStyles} onClick={onNextButtonClick} disabled={buttonsDisabled?.next}>
         <Icon iconName="VerticalGalleryRightButton" styles={navIconStyles} />
       </DefaultButton>
     </Stack>
