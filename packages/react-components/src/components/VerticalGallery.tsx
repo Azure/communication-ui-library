@@ -156,7 +156,7 @@ const VerticalGalleryControlBar = (props: VerticalGalleryControlBarProps): JSX.E
 
   const previousButtonSyles = useMemo(() => {
     return mergeStyles(leftRightButtonStyles(theme), styles?.previousButton);
-  }, [styles?.previousButton]);
+  }, [styles?.previousButton, theme]);
 
   const pageCounterStyles = useMemo(() => {
     return mergeStyles(participantPageCounter, styles?.counter);
@@ -164,7 +164,7 @@ const VerticalGalleryControlBar = (props: VerticalGalleryControlBarProps): JSX.E
 
   const nextButtonsStyles = useMemo(() => {
     return mergeStyles(leftRightButtonStyles(theme), styles?.nextButton);
-  }, [styles?.nextButton]);
+  }, [styles?.nextButton, theme]);
 
   return (
     <Stack
