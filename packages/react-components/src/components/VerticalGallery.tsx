@@ -10,6 +10,7 @@ import {
   controlBarContainerStyle,
   counterStyles,
   leftRightButtonStyles,
+  navIconStyles,
   rootStyle
 } from './styles/VerticalGallery.styles';
 import { bucketize } from './utils/overFlowGalleriesUtils';
@@ -151,7 +152,7 @@ const VerticalGalleryControlBar = (props: VerticalGalleryControlBarProps): JSX.E
   return (
     <Stack
       horizontalAlign="center"
-      tokens={{ childrenGap: '1rem' }}
+      tokens={{ childrenGap: '0.5rem' }}
       horizontal
       className={mergeStyles(controlBarContainerStyle, styles?.root)}
     >
@@ -160,7 +161,7 @@ const VerticalGalleryControlBar = (props: VerticalGalleryControlBarProps): JSX.E
         onClick={onPreviousButtonClick}
         disabled={buttonsDisabled?.previous}
       >
-        <Icon iconName="VerticalGalleryLeftButton" />
+        <Icon iconName="VerticalGalleryLeftButton" styles={navIconStyles} />
       </DefaultButton>
       <Text className={mergeStyles(counterStyles, styles?.counter)}>{`${currentPage} / ${totalPages}`}</Text>
       <DefaultButton
@@ -168,7 +169,7 @@ const VerticalGalleryControlBar = (props: VerticalGalleryControlBarProps): JSX.E
         onClick={onNextButtonClick}
         disabled={buttonsDisabled?.next}
       >
-        <Icon iconName="VerticalGalleryRightButton" />
+        <Icon iconName="VerticalGalleryRightButton" styles={navIconStyles} />
       </DefaultButton>
     </Stack>
   );

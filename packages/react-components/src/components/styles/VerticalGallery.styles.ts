@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IStyle, Theme } from '@fluentui/react';
+import { IIconStyles, IStyle, Theme } from '@fluentui/react';
 
 /**
  * Vertical Gallery gap size in rem between tiles and buttons
@@ -24,7 +24,8 @@ export const childrenContainerStyle: IStyle = {
 export const rootStyle: IStyle = {
   height: '100%',
   width: '100%',
-  gap: `${VERTICAL_GALLERY_GAP}rem`
+  gap: `${VERTICAL_GALLERY_GAP}rem`,
+  position: 'relative'
 };
 
 /**
@@ -32,7 +33,9 @@ export const rootStyle: IStyle = {
  */
 export const controlBarContainerStyle: IStyle = {
   height: '2rem',
-  width: '100%'
+  width: '100%',
+  position: 'absolute',
+  bottom: '0'
 };
 
 /**
@@ -53,7 +56,16 @@ export const leftRightButtonStyles = (theme: Theme): IStyle => {
  * @private
  */
 export const counterStyles: IStyle = {
-  lineHeight: '2',
+  lineHeight: '2.3',
   width: '100%',
   textAlign: 'center'
+};
+
+/**
+ * @private
+ */
+export const navIconStyles: IIconStyles = {
+  root: {
+    lineHeight: '0'
+  }
 };
