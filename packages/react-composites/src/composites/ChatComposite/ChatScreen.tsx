@@ -127,7 +127,13 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
 
   useEffect(() => {
     // Initial data should be always fetched by the composite(or external caller) instead of the adapter
-    adapter.fetchInitialData();
+    const fetchData: () => Promise<void> = async () => {
+      // Fetch initial data for adapter
+      await adapter.fetchInitialData();
+      // Fetch initial set of messages
+      await adapter.loadPreviousChatMessages(defaultNumberOfChatMessagesToReload);
+    };
+    fetchData();
   }, [adapter]);
 
   const messageThreadProps = usePropsFor(MessageThread);
