@@ -74,11 +74,11 @@ interface VerticalGalleryControlBarProps {
 export const VerticalGallery = (props: VerticalGalleryProps): JSX.Element => {
   const { children, styles, childrenPerPage } = props;
 
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(1);
   const [buttonState, setButtonState] = useState<{ previous: boolean; next: boolean }>({ previous: true, next: true });
 
   const numberOfChildren = React.Children.count(children);
-  const lastPage = Math.ceil(numberOfChildren / childrenPerPage) - 1;
+  const lastPage = Math.ceil(numberOfChildren / childrenPerPage);
 
   const paginatedChildren: React.ReactNode[][] = useMemo(() => {
     return bucketize(React.Children.toArray(children), childrenPerPage);
@@ -86,7 +86,7 @@ export const VerticalGallery = (props: VerticalGalleryProps): JSX.Element => {
 
   const firstIndexOfCurrentPage = page * childrenPerPage;
   const clippedPage = firstIndexOfCurrentPage < numberOfChildren - 1 ? page : lastPage;
-  const childrenOnCurrentPage = paginatedChildren[clippedPage];
+  const childrenOnCurrentPage = paginatedChildren[clippedPage - 1];
 
   const showButtons = numberOfChildren > childrenPerPage;
 
@@ -98,10 +98,10 @@ export const VerticalGallery = (props: VerticalGalleryProps): JSX.Element => {
   };
 
   useEffect(() => {
-    if (page > 0 && page < lastPage && showButtons) {
+    if (page > 1 && page < lastPage && showButtons) {
       // we are somewhere in between first and last pages.
       setButtonState({ previous: false, next: false });
-    } else if (page === 0 && showButtons) {
+    } else if (page === 1 && showButtons) {
       // we are on the first page.
       setButtonState({ previous: true, next: false });
     } else if (page === lastPage && showButtons) {
