@@ -26,7 +26,7 @@ export const VERTICAL_GALLERY_TILE_SIZE_REM = { minHeight: 5.625, maxHeight: 9, 
  */
 export const verticalGalleryContainerStyle = (shouldFloatLocalVideo: boolean): IStyle => {
   return {
-    width: `${VERTICAL_GALLERY_TILE_SIZE_REM.width}rem`,
+    minWidth: `${VERTICAL_GALLERY_TILE_SIZE_REM.width}rem`,
     height: shouldFloatLocalVideo ? `calc(100% - ${_pxToRem(VERTICAL_GALLERY_FLOATING_MODAL_SIZE_PX.height)})` : '100%',
     paddingBottom: '0.5rem'
   };
