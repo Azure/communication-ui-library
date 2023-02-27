@@ -1,7 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { CSSProperties, useCallback, useEffect, useMemo, useState } from 'react';
+/* @conditional-compile-remove(vertical-gallery) */
+import { useRef } from 'react';
 import {
   VideoGallery,
   VideoStreamOptions,
@@ -9,6 +11,8 @@ import {
   CustomAvatarOptions,
   Announcer
 } from '@internal/react-components';
+/* @conditional-compile-remove(vertical-gallery) */
+import { _useContainerWidth, _useContainerHeight } from '@internal/react-components';
 /* @conditional-compile-remove(pinned-participants) */
 import { VideoTileContextualMenuProps, VideoTileDrawerMenuProps } from '@internal/react-components';
 import { usePropsFor } from '../hooks/usePropsFor';
@@ -65,6 +69,13 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
   const cameraSwitcherCallback = useHandlers(LocalVideoCameraCycleButton);
   const announcerString = useParticipantChangedAnnouncement();
 
+  /* @conditional-compile-remove(vertical-gallery) */
+  const containerRef = useRef<HTMLDivElement>(null);
+  /* @conditional-compile-remove(vertical-gallery) */
+  const containerWidth = _useContainerWidth(containerRef);
+  /* @conditional-compile-remove(vertical-gallery) */
+  const containerHeight = _useContainerHeight(containerRef);
+
   const cameraSwitcherProps = useMemo(() => {
     return {
       ...cameraSwitcherCallback,
@@ -96,6 +107,15 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
       : { kind: 'contextual' };
   }, [props.remoteVideoTileMenuOptions?.isHidden, props.isMobile, props.drawerMenuHostId]);
 
+  /* @conditional-compile-remove(vertical-gallery) */
+  const overflowGalleryLayout = useMemo(
+    () =>
+      containerWidth && containerHeight && containerWidth / containerHeight > 16 / 9
+        ? 'VerticalRight'
+        : 'HorizontalBottom',
+    [containerWidth, containerHeight]
+  );
+
   const VideoGalleryMemoized = useMemo(() => {
     return (
       <VideoGallery
@@ -109,6 +129,8 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
         onRenderAvatar={onRenderAvatar}
         /* @conditional-compile-remove(pinned-participants) */
         remoteVideoTileMenuOptions={remoteVideoTileMenuOptions}
+        /* @conditional-compile-remove(vertical-gallery) */
+        overflowGalleryLayout={overflowGalleryLayout}
       />
     );
   }, [
@@ -116,14 +138,15 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     props.isMobile,
     onRenderAvatar,
     cameraSwitcherProps,
-    /* @conditional-compile-remove(pinned-participants) */ remoteVideoTileMenuOptions
+    /* @conditional-compile-remove(pinned-participants) */ remoteVideoTileMenuOptions,
+    /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryLayout
   ]);
 
   return (
-    <>
+    <div /* @conditional-compile-remove(vertical-gallery) */ ref={containerRef} style={mediaGalleryContainerStyles}>
       <Announcer announcementString={announcerString} ariaLive={'polite'} />
       {VideoGalleryMemoized}
-    </>
+    </div>
   );
 };
 
@@ -153,3 +176,5 @@ export const useLocalVideoStartTrigger = (isLocalVideoAvailable: boolean, should
     }
   }, [shouldTransition, isButtonStatusSynced, isPreviewCameraOn, isLocalVideoAvailable, mediaGalleryHandlers]);
 };
+
+const mediaGalleryContainerStyles: CSSProperties = { width: '100%', height: '100%' };
