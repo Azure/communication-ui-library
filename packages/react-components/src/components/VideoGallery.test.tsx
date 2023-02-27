@@ -83,7 +83,7 @@ describe('VideoGallery default layout tests', () => {
     expect(root.find(_ModalClone).exists()).toBe(false);
   });
 
-  test('should render all video tiles in the grid ', () => {
+  test('should render all video tiles in the grid', () => {
     const localParticipant = createLocalParticipant({
       videoStream: { isAvailable: false }
     });
@@ -422,6 +422,32 @@ describe('VideoGallery with vertical overflow gallery tests', () => {
     mockVideoGalleryInternalHelpers();
   });
 
+  test('should render participants with video stream available in the grid', () => {
+    const localParticipant = createLocalParticipant({
+      videoStream: { isAvailable: false }
+    });
+
+    const root = mountVideoGalleryWithLocalParticipant({ localParticipant });
+
+    const remoteParticipants = Array.from({ length: 10 }, () =>
+      createRemoteParticipant({
+        videoStream: { isAvailable: false, renderElement: createVideoDivElement() }
+      })
+    );
+    remoteParticipants.push(
+      createRemoteParticipant({
+        videoStream: { isAvailable: true, renderElement: createVideoDivElement() }
+      })
+    );
+
+    act(() => {
+      root.setProps({ layout: 'floatingLocalVideo', overflowGalleryLayout: 'VerticalRight', remoteParticipants });
+    });
+    expect(gridTileCount(root)).toBe(1);
+    expect(root.find(VerticalGallery).exists()).toBe(true);
+    expect(root.find(VerticalGallery).find(VideoTile).length).toBe(4);
+  });
+
   test('should render remote screenshare and render dominant speaking remote participants in vertical gallery', () => {
     const localParticipant = createLocalParticipant({
       videoStream: { isAvailable: true, renderElement: createVideoDivElement() }
@@ -449,6 +475,7 @@ describe('VideoGallery with vertical overflow gallery tests', () => {
     act(() => {
       root.setProps({
         layout: 'floatingLocalVideo',
+        overflowGalleryLayout: 'VerticalRight',
         remoteParticipants,
         dominantSpeakers: ['remoteScreenSharingParticipant', 'remoteVideoParticipant']
       });
