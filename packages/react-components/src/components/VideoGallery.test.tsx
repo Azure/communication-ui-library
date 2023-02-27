@@ -15,6 +15,7 @@ import * as responsive from './utils/responsive';
 import * as acs_ui_common from '@internal/acs-ui-common';
 import { RemoteScreenShare } from './VideoGallery/RemoteScreenShare';
 import { act } from 'react-dom/test-utils';
+/* @conditional-compile-remove(vertical-gallery) */
 import { VerticalGallery } from './VerticalGallery';
 
 Enzyme.configure({ adapter: new Adapter() });
