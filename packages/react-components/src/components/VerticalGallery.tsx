@@ -111,7 +111,7 @@ export const VerticalGallery = (props: VerticalGalleryProps): JSX.Element => {
   }, [page, numberOfChildren, lastPage, showButtons]);
 
   const childContainerStyle = useMemo(() => {
-    return { root: childrenContainerStyle };
+    return { root: childrenContainerStyle(2) };
   }, []);
 
   const childrenStyles = useMemo(() => {
