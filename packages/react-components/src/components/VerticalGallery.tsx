@@ -7,7 +7,7 @@ import { useTheme } from '../theming';
 import { BaseCustomStyles } from '../types';
 import {
   childrenContainerStyle,
-  controlBarContainerStyle,
+  pageNavigationControlBarContainerStyle,
   participantPageCounter,
   leftRightButtonStyles,
   navIconStyles,
@@ -151,8 +151,8 @@ const VerticalGalleryControlBar = (props: VerticalGalleryControlBarProps): JSX.E
   const theme = useTheme();
 
   const pageCounterContainerStyles = useMemo(() => {
-    return mergeStyles(controlBarContainerStyle, styles?.root);
-  }, [styles]);
+    return mergeStyles(pageNavigationControlBarContainerStyle, styles?.root);
+  }, [styles?.root]);
 
   const previousButtonSyles = useMemo(() => {
     return mergeStyles(leftRightButtonStyles(theme), styles?.previousButton);
@@ -166,13 +166,10 @@ const VerticalGalleryControlBar = (props: VerticalGalleryControlBarProps): JSX.E
     return mergeStyles(leftRightButtonStyles(theme), styles?.nextButton);
   }, [styles?.nextButton, theme]);
 
+  const controlBarSpacing = { childrenGap: '0.5rem' };
+
   return (
-    <Stack
-      horizontalAlign="center"
-      tokens={{ childrenGap: '0.5rem' }}
-      horizontal
-      className={pageCounterContainerStyles}
-    >
+    <Stack horizontalAlign="center" tokens={controlBarSpacing} horizontal className={pageCounterContainerStyles}>
       <DefaultButton
         className={previousButtonSyles}
         onClick={onPreviousButtonClick}

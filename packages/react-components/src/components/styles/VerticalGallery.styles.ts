@@ -31,7 +31,7 @@ export const rootStyle: IStyle = {
 /**
  * @private
  */
-export const controlBarContainerStyle: IStyle = {
+export const pageNavigationControlBarContainerStyle: IStyle = {
   height: '2rem',
   width: '100%',
   position: 'absolute',
@@ -56,7 +56,7 @@ export const leftRightButtonStyles = (theme: Theme): IStyle => {
  * @private
  */
 export const participantPageCounter: IStyle = {
-  lineHeight: '2.3',
+  lineHeight: '2rem',
   width: '100%',
   textAlign: 'center'
 };
