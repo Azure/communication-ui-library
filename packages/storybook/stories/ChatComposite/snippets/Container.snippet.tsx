@@ -43,7 +43,7 @@ export const ContosoChatContainer = (props: ContainerProps): JSX.Element => {
   useEffect(() => {
     const handle = setTimeout(() => {
       setDisplayName(props.displayName);
-    }, 1000);
+    }, 500);
     return () => clearTimeout(handle);
   }, [props.displayName]);
 
