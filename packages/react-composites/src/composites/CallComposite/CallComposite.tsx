@@ -8,7 +8,9 @@ import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { BaseProvider, BaseCompositeProps } from '../common/BaseComposite';
 import { CallCompositeIcons } from '../common/icons';
 import { useLocale } from '../localization';
-import { BackgroundImage, CommonCallAdapter } from './adapter/CallAdapter';
+import { CommonCallAdapter } from './adapter/CallAdapter';
+/* @conditional-compile-remove(video-background-effects) */
+import { BackgroundImage } from './adapter/CallAdapter';
 import { CallAdapterProvider, useAdapter } from './adapter/CallAdapterProvider';
 import { CallPage } from './pages/CallPage';
 import { ConfigurationPage } from './pages/ConfigurationPage';

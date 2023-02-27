@@ -36,7 +36,9 @@ import { modalLayerHostStyle } from '../common/styles/ModalLocalAndRemotePIP.sty
 import { SendDtmfDialpad } from '../common/SendDtmfDialpad';
 /* @conditional-compile-remove(PSTN-calls) */
 import { useCallWithChatCompositeStrings } from './hooks/useCallWithChatCompositeStrings';
-import { CallCompositeOptions, VideoBackgroundEffectsOptions } from '../CallComposite/CallComposite';
+import { CallCompositeOptions } from '../CallComposite/CallComposite';
+/* @conditional-compile-remove(video-background-effects) */
+import { VideoBackgroundEffectsOptions } from '../CallComposite/CallComposite';
 /* @conditional-compile-remove(call-readiness) */
 import { DeviceCheckOptions } from '../CallComposite/CallComposite';
 import { drawerContainerStyles } from '../CallComposite/styles/CallComposite.styles';
