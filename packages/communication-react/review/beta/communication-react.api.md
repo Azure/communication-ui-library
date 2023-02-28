@@ -2650,6 +2650,9 @@ export interface OptionsDevice {
     name: string;
 }
 
+// @beta
+export type OverflowGalleryLayout = 'HorizontalBottom' | 'VerticalRight';
+
 // @public
 export interface ParticipantAddedSystemMessage extends SystemMessageCommon {
     // (undocumented)
@@ -3251,6 +3254,7 @@ export interface VideoGalleryProps {
     onRenderLocalVideoTile?: (localParticipant: VideoGalleryLocalParticipant) => JSX.Element;
     onRenderRemoteVideoTile?: (remoteParticipant: VideoGalleryRemoteParticipant) => JSX.Element;
     onUnpinParticipant?: (userId: string) => void;
+    overflowGalleryLayout?: OverflowGalleryLayout;
     pinnedParticipants?: string[];
     remoteParticipants?: VideoGalleryRemoteParticipant[];
     remoteVideoTileMenuOptions?: false | VideoTileContextualMenuProps | VideoTileDrawerMenuProps;

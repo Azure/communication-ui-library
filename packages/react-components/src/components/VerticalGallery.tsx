@@ -7,8 +7,10 @@ import { useTheme } from '../theming';
 import { BaseCustomStyles } from '../types';
 import {
   childrenContainerStyle,
-  controlBarContainerStyle,
+  pageNavigationControlBarContainerStyle,
+  participantPageCounter,
   leftRightButtonStyles,
+  navIconStyles,
   rootStyle
 } from './styles/VerticalGallery.styles';
 import { bucketize } from './utils/overFlowGalleriesUtils';
@@ -147,24 +149,37 @@ export const VerticalGallery = (props: VerticalGalleryProps): JSX.Element => {
 const VerticalGalleryControlBar = (props: VerticalGalleryControlBarProps): JSX.Element => {
   const { onNextButtonClick, onPreviousButtonClick, buttonsDisabled, currentPage, totalPages, styles } = props;
   const theme = useTheme();
+
+  const pageCounterContainerStyles = useMemo(() => {
+    return mergeStyles(pageNavigationControlBarContainerStyle, styles?.root);
+  }, [styles?.root]);
+
+  const previousButtonSyles = useMemo(() => {
+    return mergeStyles(leftRightButtonStyles(theme), styles?.previousButton);
+  }, [styles?.previousButton, theme]);
+
+  const pageCounterStyles = useMemo(() => {
+    return mergeStyles(participantPageCounter, styles?.counter);
+  }, [styles?.counter]);
+
+  const nextButtonsStyles = useMemo(() => {
+    return mergeStyles(leftRightButtonStyles(theme), styles?.nextButton);
+  }, [styles?.nextButton, theme]);
+
+  const controlBarSpacing = { childrenGap: '0.5rem' };
+
   return (
-    <Stack horizontal className={mergeStyles(controlBarContainerStyle, styles?.root)}>
+    <Stack horizontalAlign="center" tokens={controlBarSpacing} horizontal className={pageCounterContainerStyles}>
       <DefaultButton
-        className={mergeStyles(leftRightButtonStyles(theme), styles?.previousButton)}
+        className={previousButtonSyles}
         onClick={onPreviousButtonClick}
         disabled={buttonsDisabled?.previous}
-        styles={{ root: styles?.previousButton }}
       >
-        <Icon iconName="VerticalGalleryLeftButton" />
+        <Icon iconName="VerticalGalleryLeftButton" styles={navIconStyles} />
       </DefaultButton>
-      <Text>{`${currentPage} / ${totalPages}`}</Text>
-      <DefaultButton
-        className={mergeStyles(leftRightButtonStyles(theme), styles?.nextButton)}
-        onClick={onNextButtonClick}
-        disabled={buttonsDisabled?.next}
-        styles={{ root: styles?.nextButton }}
-      >
-        <Icon iconName="VerticalGalleryRightButton" />
+      <Text className={pageCounterStyles}>{`${currentPage} / ${totalPages}`}</Text>
+      <DefaultButton className={nextButtonsStyles} onClick={onNextButtonClick} disabled={buttonsDisabled?.next}>
+        <Icon iconName="VerticalGalleryRightButton" styles={navIconStyles} />
       </DefaultButton>
     </Stack>
   );
