@@ -3,6 +3,8 @@
 
 import { VideoGalleryRemoteParticipant } from '../../types';
 import { VideoGalleryStyles } from '../VideoGallery';
+/* @conditional-compile-remove(vertical-gallery) */
+import { OverflowGalleryLayout } from '../VideoGallery';
 
 /**
  * Props for a layout component
@@ -38,4 +40,10 @@ export interface LayoutProps {
    * List of pinned participant userIds
    */
   pinnedParticipantUserIds?: string[];
+  /* @conditional-compile-remove(vertical-gallery) */
+  /**
+   * Determines the layout of the overflowGallery.
+   * @defaultValue 'HorizontalBottom'
+   */
+  overflowGalleryLayout?: OverflowGalleryLayout;
 }
