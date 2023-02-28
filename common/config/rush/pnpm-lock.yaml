@@ -1933,6 +1933,12 @@ packages:
     dev: false
     resolution:
       integrity: sha512-c+B+mdEgj0B6fhYIjznesGi8Al1rTpdFNudpNmFoVjlhCle5qj5RBtM4WaT8XygdzAVQq7oHSXom0vd32+zAZg==
+  /@fluentui/keyboard-keys/9.0.1:
+    dependencies:
+      tslib: 2.5.0
+    dev: false
+    resolution:
+      integrity: sha512-I22XoRFvVHSfJ4xiaYRQensHODhPel9KDn4t0FxHPvBH1u04vNYOXIimqSHgIVMRUdOb6221IOcv4XsKBBiG6w==
   /@fluentui/merge-styles/8.5.6:
     dependencies:
       '@fluentui/set-version': 8.2.5
@@ -2153,6 +2159,26 @@ packages:
       react: '>=16.8.0 <19.0.0'
     resolution:
       integrity: sha512-qw2lmkxZ2TmgC0pB2dvFyrzVffxBdpCx1BdWRaF+MRGUlTxRtqfybSx3Edsqa6NMewc3J0ThLMFdVFBQ5Yafqw==
+  /@fluentui/react-portal/9.1.9_a7bdd48369ae75c5a64d923333c2ed7c:
+    dependencies:
+      '@fluentui/react-shared-contexts': 9.2.0_77a551dfef9b18d75efcc1f22e8728ee
+      '@fluentui/react-tabster': 9.5.3_a7bdd48369ae75c5a64d923333c2ed7c
+      '@fluentui/react-utilities': 9.6.0_77a551dfef9b18d75efcc1f22e8728ee
+      '@griffel/react': 1.5.4_react@16.14.0
+      '@types/react': 16.14.35
+      '@types/react-dom': 16.9.17
+      react: 16.14.0
+      react-dom: 16.13.1_react@16.14.0
+      tslib: 2.5.0
+      use-disposable: 1.0.1_a7bdd48369ae75c5a64d923333c2ed7c
+    dev: false
+    peerDependencies:
+      '@types/react': '>=16.8.0 <19.0.0'
+      '@types/react-dom': '>=16.8.0 <19.0.0'
+      react: '>=16.8.0 <19.0.0'
+      react-dom: '>=16.8.0 <19.0.0'
+    resolution:
+      integrity: sha512-o7Ldgk66/xe7I89/vDXm1BLRyzJRhdAAGQxdTzODjIXE+iEkZnSxL3Cxx5T2qCS1eYuAYXnqDlrW56B4XzuAqg==
   /@fluentui/react-proptypes/0.61.0:
     dependencies:
       '@babel/runtime': 7.20.13
@@ -2161,6 +2187,58 @@ packages:
     dev: false
     resolution:
       integrity: sha512-PnVWc6xg3ryGQ2p/pQ3Y9/W8dOktx3vin+DtmvikTkpaBko00XSvS/Tyz/zzq0sjABPMAU98uDmwgx2pU3zvbg==
+  /@fluentui/react-shared-contexts/9.2.0_77a551dfef9b18d75efcc1f22e8728ee:
+    dependencies:
+      '@fluentui/react-theme': 9.1.5
+      '@types/react': 16.14.35
+      react: 16.14.0
+      tslib: 2.5.0
+    dev: false
+    peerDependencies:
+      '@types/react': '>=16.8.0 <19.0.0'
+      react: '>=16.8.0 <19.0.0'
+    resolution:
+      integrity: sha512-4ldaMEs/ZWXJen8Q/6ughfe1ubl42npRVutwD0diaq69l+kkb65GIIA2G0vTHMhLCq37Ne01qjvrD+42ut5qPg==
+  /@fluentui/react-tabster/9.5.3_a7bdd48369ae75c5a64d923333c2ed7c:
+    dependencies:
+      '@fluentui/react-shared-contexts': 9.2.0_77a551dfef9b18d75efcc1f22e8728ee
+      '@fluentui/react-theme': 9.1.5
+      '@fluentui/react-utilities': 9.6.0_77a551dfef9b18d75efcc1f22e8728ee
+      '@griffel/react': 1.5.4_react@16.14.0
+      '@types/react': 16.14.35
+      '@types/react-dom': 16.9.17
+      keyborg: 2.0.0
+      react: 16.14.0
+      react-dom: 16.13.1_react@16.14.0
+      tabster: 4.1.2
+      tslib: 2.5.0
+    dev: false
+    peerDependencies:
+      '@types/react': '>=16.8.0 <19.0.0'
+      '@types/react-dom': '>=16.8.0 <19.0.0'
+      react: '>=16.8.0 <19.0.0'
+      react-dom: '>=16.8.0 <19.0.0'
+    resolution:
+      integrity: sha512-P1BXdxR+8LPy0hXvV1F69IDViWIXckFUfLIVgS0fSoRwHqGvV/kfoT3+DYTAWsfrsF1gYAvJzpz86EAPN8ZmVQ==
+  /@fluentui/react-theme/9.1.5:
+    dependencies:
+      '@fluentui/tokens': 1.0.0-alpha.2
+      tslib: 2.5.0
+    dev: false
+    resolution:
+      integrity: sha512-VOvPOM2IY2M9MpvA0voGIsDMdVxjTfakqu9ReNtaOrH/1pbUy5A+Z7ycHSo7eh7jVDj8W7KG79v0Q8kFPjymQQ==
+  /@fluentui/react-utilities/9.6.0_77a551dfef9b18d75efcc1f22e8728ee:
+    dependencies:
+      '@fluentui/keyboard-keys': 9.0.1
+      '@types/react': 16.14.35
+      react: 16.14.0
+      tslib: 2.5.0
+    dev: false
+    peerDependencies:
+      '@types/react': '>=16.8.0 <19.0.0'
+      react: '>=16.8.0 <19.0.0'
+    resolution:
+      integrity: sha512-nj/kV5wJoC4Rw7yXl4Zdjb4Sl+d9kpfi1eeak5TiyEXSAt8LOegTYO7k44/QxWOqbU4VXU3derYVnTLbBAu6nA==
   /@fluentui/react-window-provider/2.2.6_77a551dfef9b18d75efcc1f22e8728ee:
     dependencies:
       '@fluentui/set-version': 8.2.5
@@ -2274,6 +2352,12 @@ packages:
       react: '>=16.8.0 <19.0.0'
     resolution:
       integrity: sha512-Pw8WBGeASqDHR7EliJUL26x07pASFnU5QsRBSBg6ahUxGVXRuOtROhQ3jIKXldK8/HnAIzVEPZqeTwM0yWGBVA==
+  /@fluentui/tokens/1.0.0-alpha.2:
+    dependencies:
+      tslib: 2.5.0
+    dev: false
+    resolution:
+      integrity: sha512-Rd3xFE+ynAjpTgXwOWQnbw1jLqRrRvCgFTPtlqFlXK31lkNOz28f4HAHkNSXsFF95r/pM6EvJ+GtEoBhzfkdSw==
   /@fluentui/utilities/8.13.6_77a551dfef9b18d75efcc1f22e8728ee:
     dependencies:
       '@fluentui/dom-utilities': 2.2.5
@@ -12926,6 +13010,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-UfpWE/VZn0iP50d8cz9NrZLM9lSWhcJ+0Gt/nm4by88UL+J1SiKN8/5dkjMmbEzwL2CAe+67GsegCbIKtbp75A==
+  /keyborg/2.0.0:
+    dev: false
+    resolution:
+      integrity: sha512-RWY8nWrzRkwTQLaKyDtbTu5SOb5L4B20UzAsBHlQDFZqVY/+Mid0bQ7MVTC8vbOTrWY2xkkzj8gZF9Ua7re4xA==
   /kind-of/3.2.2:
     dependencies:
       is-buffer: 1.1.6
@@ -17359,6 +17447,13 @@ packages:
       node: '>=10.0.0'
     resolution:
       integrity: sha512-Y4X9zqrCftUhMeH2EptSSERdVKt/nEdijTOacGD/97EKjhQ/Qs8RTlEGABSJNNN8lac9kheH+af7yAkEWlgneA==
+  /tabster/4.1.2:
+    dependencies:
+      keyborg: 2.0.0
+      tslib: 2.5.0
+    dev: false
+    resolution:
+      integrity: sha512-Tu+10TObWPOmcgqfFh4NPhKSExGsk8KkHHlQndEjYFBEe3+KIOQ1hSbcWBPpbA6y0PrhroQyx+IIcqRDkEYFLg==
   /tapable/1.1.3:
     dev: false
     engines:
@@ -18282,6 +18377,20 @@ packages:
     dev: false
     resolution:
       integrity: sha512-kbailJa29QrtXnxgq+DdCEGlbTeYM2eJUxsz6vjZavrCYPMIFHMKQmSKYAIuUK2i7hgPm28a8piX5NTUtM/LKQ==
+  /use-disposable/1.0.1_a7bdd48369ae75c5a64d923333c2ed7c:
+    dependencies:
+      '@types/react': 16.14.35
+      '@types/react-dom': 16.9.17
+      react: 16.14.0
+      react-dom: 16.13.1_react@16.14.0
+    dev: false
+    peerDependencies:
+      '@types/react': '>=16.8.0 <19.0.0'
+      '@types/react-dom': '>=16.8.0 <19.0.0'
+      react: '>=16.8.0 <19.0.0'
+      react-dom: '>=16.8.0 <19.0.0'
+    resolution:
+      integrity: sha512-5Sle1XEmK3lw3xyGqeIY7UKkiUgF+TxwUty7fTsqM5D5AxfQfo2ft+LY9xKCA+W5YbaBFbOkWfQsZY/y5JhInA==
   /use/3.1.1:
     dev: false
     engines:
@@ -19558,7 +19667,10 @@ packages:
       '@babel/preset-env': 7.13.10_@babel+core@7.16.12
       '@babel/preset-react': 7.18.6_@babel+core@7.16.12
       '@fluentui/react': 8.98.8_a7bdd48369ae75c5a64d923333c2ed7c
+      '@fluentui/react-hooks': 8.6.16_77a551dfef9b18d75efcc1f22e8728ee
       '@fluentui/react-icons': 2.0.194_react@16.14.0
+      '@fluentui/react-portal': 9.1.9_a7bdd48369ae75c5a64d923333c2ed7c
+      '@fluentui/react-window-provider': 2.2.6_77a551dfef9b18d75efcc1f22e8728ee
       '@testing-library/react-hooks': 3.7.0_98e0eb37a9f7280a1c5a6c886619f5b4
       '@types/jest': 26.0.24
       '@types/node': 14.18.36
@@ -19615,7 +19727,7 @@ packages:
     dev: false
     name: '@rush-temp/callwithchat'
     resolution:
-      integrity: sha512-d9DvDhvMizEnWF33zy1OjLZVIamHlnGgOvNArcmy7iCJeJ3IQircYlxd0DKLOssj1xCImvyCxr6zrD8Iy+vcbw==
+      integrity: sha512-uW10028ZlFp5taOEe1lkL4ruSKzxu+rp03XnOj9g1UIAA7w7u5PDTlykJbaIEX4GrWNoEBxaR0vj0HB0qf8ZUQ==
       tarball: file:projects/callwithchat.tgz
     version: 0.0.0
   file:projects/chat-component-bindings.tgz:
@@ -20309,6 +20421,7 @@ packages:
       '@fluentui/react-hooks': 8.6.16_77a551dfef9b18d75efcc1f22e8728ee
       '@fluentui/react-icons': 2.0.194_react@16.14.0
       '@fluentui/react-northstar': 0.61.0_ff91c428c72a3c836e2237d996904cc4
+      '@fluentui/react-portal': 9.1.9_a7bdd48369ae75c5a64d923333c2ed7c
       '@fluentui/theme-samples': 8.1.5_a7bdd48369ae75c5a64d923333c2ed7c
       '@mdx-js/react': 1.6.22_react@16.14.0
       '@microsoft/api-documenter': 7.12.22
@@ -20394,7 +20507,7 @@ packages:
     dev: false
     name: '@rush-temp/storybook'
     resolution:
-      integrity: sha512-ndX+7USzhvcFcmotDWuQjXvgdcI5qWDtm/xlb6v5MhMyWtbYyBhXRssHBvfkPZe+e5yx/CeMQVshVyM6YwbrAQ==
+      integrity: sha512-KUkzBBxHWJeSuFvq408Hvjw5WF2CDqrYzXcVxGNS6k8Gxz17/JlF7rykxPRSO+R/yg/dBLLFSgOsZ9g/FwrJEg==
       tarball: file:projects/storybook.tgz
     version: 0.0.0
 specifiers:

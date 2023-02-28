@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
+import { CallState, TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 import {
   toFlatCommunicationIdentifier,
@@ -9,7 +9,9 @@ import {
   CallAndChatLocator,
   CallWithChatAdapterState,
   CallWithChatComposite,
-  CallWithChatAdapter
+  CallWithChatAdapter,
+  FluentThemeProvider,
+  CallCompositePage
 } from '@azure/communication-react';
 import { Spinner } from '@fluentui/react';
 import React, { useCallback, useEffect, useMemo, useRef } from 'react';
@@ -17,6 +19,8 @@ import { useSwitchableFluentTheme } from '../theming/SwitchableFluentThemeProvid
 import { createAutoRefreshingCredential } from '../utils/credential';
 import { WEB_APP_TITLE } from '../utils/constants';
 import { useIsMobile } from '../utils/useIsMobile';
+import { Portal } from '@fluentui/react-portal';
+import { WindowProvider, useWindow } from '@fluentui/react-window-provider';
 
 export interface CallScreenProps {
   token: string;
@@ -55,6 +59,9 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     [userId, token]
   );
 
+  const [callState, setCallState] = React.useState<CallState | undefined>(undefined);
+  const [compositePage, setCompositePage] = React.useState<CallCompositePage>();
+
   const afterAdapterCreate = useCallback(
     async (adapter: CallWithChatAdapter): Promise<CallWithChatAdapter> => {
       adapter.on('callError', (e) => {
@@ -75,6 +82,9 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
           callIdRef.current = state?.call?.id;
           console.log(`Call Id: ${callIdRef.current}`);
         }
+
+        setCallState(state.call?.state);
+        setCompositePage(state.page);
       });
       return adapter;
     },
@@ -107,13 +117,46 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
   }
 
   return (
-    <CallWithChatComposite
-      adapter={adapter}
-      fluentTheme={currentTheme.theme}
-      rtl={currentRtl}
-      joinInvitationURL={window.location.href}
-      formFactor={isMobileSession ? 'mobile' : 'desktop'}
-    />
+    <>
+      Call in progress.
+      <br />
+      Composite Page: {compositePage}.<br />
+      Current CallState: {callState ?? 'Not started'}.
+      <NewWindow>
+        <FluentThemeProvider>
+          <CallWithChatComposite
+            adapter={adapter}
+            fluentTheme={currentTheme.theme}
+            rtl={currentRtl}
+            joinInvitationURL={window.location.href}
+            formFactor={isMobileSession ? 'mobile' : 'desktop'}
+          />
+        </FluentThemeProvider>
+      </NewWindow>
+    </>
+  );
+};
+
+const NewWindow = (props: { children: React.ReactChild; close?: () => void }): JSX.Element => {
+  const newWindow = useMemo(
+    () =>
+      window.open(
+        'about:blank',
+        'newWin',
+        `width=400,height=300,left=${window.screen.availWidth / 2 - 200},top=${window.screen.availHeight / 2 - 150}`
+      ),
+    []
+  );
+
+  if (!newWindow || !props.children) {
+    console.log('Could not render in new window', newWindow, props.children);
+    return <>Err: Could not render in new window</>;
+  }
+
+  return (
+    <Portal mountNode={newWindow.document.body}>
+      <WindowProvider window={newWindow}>{props.children}</WindowProvider>
+    </Portal>
   );
 };
 
