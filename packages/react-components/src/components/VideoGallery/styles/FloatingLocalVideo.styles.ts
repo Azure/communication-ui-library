@@ -45,6 +45,11 @@ export const LARGE_FLOATING_MODAL_SIZE_PX = { width: 215, height: 120 };
 export const VERTICAL_GALLERY_FLOATING_MODAL_SIZE_PX = { width: 144, height: 81 };
 
 /**
+ * aspect ratio 9:16 for mobile portrait devices.
+ */
+export const VERTICAL_GALLERY_SMALL_FLOATING_MODAL_SIZE_PX = { width: 144, height: 255 };
+
+/**
  * @private
  * z-index to ensure that the local video tile is above the video gallery.
  */

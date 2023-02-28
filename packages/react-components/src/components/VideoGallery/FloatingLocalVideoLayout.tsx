@@ -14,7 +14,8 @@ import {
   localVideoTileContainerStyle,
   localVideoTileWithControlsContainerStyle,
   LOCAL_VIDEO_TILE_ZINDEX,
-  SMALL_FLOATING_MODAL_SIZE_PX
+  SMALL_FLOATING_MODAL_SIZE_PX,
+  VERTICAL_GALLERY_SMALL_FLOATING_MODAL_SIZE_PX
 } from './styles/FloatingLocalVideo.styles';
 /* @conditional-compile-remove(vertical-gallery) */
 import { VERTICAL_GALLERY_FLOATING_MODAL_SIZE_PX } from './styles/FloatingLocalVideo.styles';
@@ -107,7 +108,13 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
   }
   /* @conditional-compile-remove(vertical-gallery) */
   if (overflowGalleryLayout === 'VerticalRight') {
-    localVideoSize = VERTICAL_GALLERY_FLOATING_MODAL_SIZE_PX;
+    if (isNarrow) {
+      horizontalGalleryTiles.length > 0
+        ? (localVideoSize = VERTICAL_GALLERY_SMALL_FLOATING_MODAL_SIZE_PX)
+        : SMALL_FLOATING_MODAL_SIZE_PX;
+    } else {
+      localVideoSize = VERTICAL_GALLERY_FLOATING_MODAL_SIZE_PX;
+    }
   }
 
   const wrappedLocalVideoComponent =
