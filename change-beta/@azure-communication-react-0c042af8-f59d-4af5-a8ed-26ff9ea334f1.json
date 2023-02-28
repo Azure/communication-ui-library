@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Introduce UI to inform the user that their browser version is out of date.",
-  "packageName": "@azure/communication-react",
-  "email": "94866715+dmceachernmsft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

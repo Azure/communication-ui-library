@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Update storybook to include call readiness public components",
-  "packageName": "@azure/communication-react",
-  "email": "carolinecao@microsoft.com",
-  "dependentChangeType": "patch"
-}
