@@ -110,7 +110,7 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
   /* @conditional-compile-remove(vertical-gallery) */
   const overflowGalleryLayout = useMemo(
     () =>
-      containerWidth && containerHeight && containerWidth / containerHeight > 16 / 9
+      containerWidth && containerHeight && containerWidth / containerHeight >= 16 / 9
         ? 'VerticalRight'
         : 'HorizontalBottom',
     [containerWidth, containerHeight]
