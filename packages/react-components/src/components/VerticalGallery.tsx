@@ -84,7 +84,7 @@ export const VerticalGallery = (props: VerticalGalleryProps): JSX.Element => {
     return bucketize(React.Children.toArray(children), childrenPerPage);
   }, [children, childrenPerPage]);
 
-  const firstIndexOfCurrentPage = page * childrenPerPage;
+  const firstIndexOfCurrentPage = (page - 1) * childrenPerPage;
   const clippedPage = firstIndexOfCurrentPage < numberOfChildren - 1 ? page : lastPage;
   const childrenOnCurrentPage = paginatedChildren[clippedPage - 1];
 
@@ -96,6 +96,10 @@ export const VerticalGallery = (props: VerticalGalleryProps): JSX.Element => {
   const onNextButtonClick = (): void => {
     setPage(page + 1);
   };
+
+  if (page > lastPage && lastPage > 0) {
+    setPage(lastPage);
+  }
 
   useEffect(() => {
     if (page > 1 && page < lastPage && showButtons) {
