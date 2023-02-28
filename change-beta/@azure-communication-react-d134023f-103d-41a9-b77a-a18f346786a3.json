@@ -1,7 +1,0 @@
-{
-  "type": "minor",
-  "comment": "Add a prop to ErrorBar component to ignore old errors",
-  "packageName": "@azure/communication-react",
-  "email": "82062616+prprabhu-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

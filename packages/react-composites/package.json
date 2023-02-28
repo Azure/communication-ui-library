@@ -1,6 +1,6 @@
 {
   "name": "@internal/react-composites",
-  "version": "1.5.1-beta.0",
+  "version": "1.5.1-beta.1",
   "description": "Complete Azure Communication Services experiences",
   "module": "dist/dist-esm/index.js",
   "main": "dist/dist-cjs/index.js",
@@ -53,12 +53,12 @@
     "@fluentui/react-hooks": "~8.6.12",
     "@fluentui/react-icons": "~2.0.194",
     "@fluentui/react": "~8.98.3",
-    "@internal/acs-ui-common": "1.5.1-beta.0",
-    "@internal/calling-component-bindings": "1.5.1-beta.0",
-    "@internal/calling-stateful-client": "1.5.1-beta.0",
-    "@internal/chat-component-bindings": "1.5.1-beta.0",
-    "@internal/chat-stateful-client": "1.5.1-beta.0",
-    "@internal/react-components": "1.5.1-beta.0",
+    "@internal/acs-ui-common": "1.5.1-beta.1",
+    "@internal/calling-component-bindings": "1.5.1-beta.1",
+    "@internal/calling-stateful-client": "1.5.1-beta.1",
+    "@internal/chat-component-bindings": "1.5.1-beta.1",
+    "@internal/chat-stateful-client": "1.5.1-beta.1",
+    "@internal/react-components": "1.5.1-beta.1",
     "copy-to-clipboard": "~3.3.1",
     "events": "~3.3.0",
     "immer": "9.0.6",
@@ -70,7 +70,7 @@
     "uuid": "^8.1.0"
   },
   "peerDependencies": {
-    "@azure/communication-calling": "1.10.0-beta.1 || >=1.4.4",
+    "@azure/communication-calling": "1.11.0-beta.1 || >=1.4.4",
     "@azure/communication-calling-effects": "1.0.0-beta.2",
     "@azure/communication-chat": ">=1.2.0",
     "@types/react": ">=16.8.0 <18.0.0",
@@ -79,7 +79,7 @@
     "react-dom": ">=16.8.0 <18.0.0"
   },
   "devDependencies": {
-    "@azure/communication-calling": "1.10.0-beta.1 || >=1.4.4",
+    "@azure/communication-calling": "1.11.0-beta.1 || >=1.4.4",
     "@azure/communication-calling-effects": "1.0.0-beta.2",
     "@azure/communication-chat": ">=1.2.0",
     "@azure/communication-identity": "~1.1.0",
@@ -87,7 +87,7 @@
     "@babel/cli": "~7.16.0",
     "@babel/core": "~7.16.0",
     "@babel/preset-env": "7.13.10",
-    "@internal/fake-backends": "1.5.1-beta.0",
+    "@internal/fake-backends": "1.5.1-beta.1",
     "@microsoft/api-documenter": "~7.12.11",
     "@microsoft/api-extractor": "~7.18.0",
     "@playwright/test": "~1.22.2",

@@ -14,6 +14,7 @@ import {
   ReadReceiptReceivedEvent,
   TypingIndicatorReceivedEvent
 } from '@azure/communication-chat';
+import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { ChatContext } from './ChatContext';
 import { convertChatMessage } from './convertChatMessage';
 import { ChatMessageWithStatus } from './types/ChatMessageWithStatus';
@@ -105,7 +106,8 @@ export class EventSubscriber {
     this.fetchLastParticipantMessage(event.threadId, 'participantAdded');
   };
 
-  // This is a hot fix that no participant message is received for onChatMessageReceived event, which should be handled by JS SDK
+  // This is a temporary fix that no participant message is received for onChatMessageReceived event, which should be handled by JS SDK.
+  // Without the temporary fix, there are missing 'participant joined' and 'participant left' system messages in the chat thread.
   private fetchLastParticipantMessage = async (
     threadId: string,
     actionType: 'participantAdded' | 'participantRemoved'
@@ -124,7 +126,14 @@ export class EventSubscriber {
       return participant.id;
     });
     this.chatContext.deleteParticipants(event.threadId, participantIds);
-    this.fetchLastParticipantMessage(event.threadId, 'participantRemoved');
+
+    // If the current user is removed from the thread, do not fetch the last participant message
+    // as they no longer have access to the thread.
+    const currentUserId = toFlatCommunicationIdentifier(this.chatContext.getState().userId);
+    const wasCurrentUserRemoved = participantIds.find((id) => toFlatCommunicationIdentifier(id) === currentUserId);
+    if (!wasCurrentUserRemoved) {
+      this.fetchLastParticipantMessage(event.threadId, 'participantRemoved');
+    }
   };
 
   private onReadReceiptReceived = (event: ReadReceiptReceivedEvent): void => {
