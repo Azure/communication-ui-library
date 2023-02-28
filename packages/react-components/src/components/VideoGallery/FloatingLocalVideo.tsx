@@ -23,13 +23,26 @@ const modalMaxDragPosition = { x: localVideoTileOuterPaddingPX, y: localVideoTil
 /**
  * @private
  */
-export const FloatingLocalVideo = (props: {
+export interface FloatingLocalVideoProps {
+  // Local video component to make draggable
   localVideoComponent: JSX.Element;
+  // Element id of layer host to constrain the dragging of local video
   layerHostId: string;
+  // Parent component width in px
   parentWidth?: number;
+  // Parent component height in px
   parentHeight?: number;
-  localVideoSize: { width: number; height: number };
-}): JSX.Element => {
+  // Local video width and height in px
+  localVideoSize: {
+    width: number;
+    height: number;
+  };
+}
+
+/**
+ * @private
+ */
+export const FloatingLocalVideo = (props: FloatingLocalVideoProps): JSX.Element => {
   const { localVideoComponent, layerHostId, localVideoSize, parentWidth, parentHeight } = props;
 
   const theme = useTheme();
