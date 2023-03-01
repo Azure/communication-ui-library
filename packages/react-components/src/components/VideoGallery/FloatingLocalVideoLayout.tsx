@@ -101,7 +101,7 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
 
   const layerHostId = useId('layerhost');
 
-  let localVideoSize = useMemo(() => {
+  const localVideoSize = useMemo(() => {
     if (horizontalGalleryTiles.length > 0) {
       if (isNarrow) {
         return SMALL_FLOATING_MODAL_SIZE_PX;
