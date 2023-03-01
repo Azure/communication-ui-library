@@ -109,6 +109,8 @@ const calculateChildrenPerPage = (args: {
   /**
    * Now that we have the childrenSpace height we can figure out how many Children can fir in the childrenSpace.
    * childrenSpace = n * childHeightMin + (n - 1) * gapHeight. isolate n and take the floor.
+   *
+   * We want to always return at least one video tile if there are children present.So we take the max.
    */
-  return Math.floor((childSpace + gapHeightPx) / (childMinHeightPx + gapHeightPx));
+  return Math.max(Math.floor((childSpace + gapHeightPx) / (childMinHeightPx + gapHeightPx)), 1);
 };
