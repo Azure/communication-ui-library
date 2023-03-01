@@ -30,9 +30,18 @@ export const SelectableVideoEffects = (): JSX.Element => {
   return (
     <Stack tokens={{ childrenGap: '1rem' }}>
       <Stack horizontal tokens={{ childrenGap: '1rem' }}>
-        <_VideoEffectsItemNone isSelected={selectedEffect === 'none'} onSelect={() => setSelectedEffect('none')} />
-        <_VideoEffectsItemBlur isSelected={selectedEffect === 'blur'} onSelect={() => setSelectedEffect('blur')} />
+        <_VideoEffectsItemNone
+          isSelected={selectedEffect === 'none'}
+          onSelect={() => setSelectedEffect('none')}
+          key={'none'}
+        />
+        <_VideoEffectsItemBlur
+          isSelected={selectedEffect === 'blur'}
+          onSelect={() => setSelectedEffect('blur')}
+          key={'blur'}
+        />
         <_VideoEffectsItemAddImage
+          key={'addImage'}
           isSelected={selectedEffect === 'addImage'}
           onSelect={() => setSelectedEffect('addImage')}
           disabled
@@ -41,7 +50,7 @@ export const SelectableVideoEffects = (): JSX.Element => {
       <Stack horizontal tokens={{ childrenGap: '1rem' }}>
         {sampleBackgrounds.slice(0, 3).map((url, index) => (
           <_VideoEffectsItem
-            key={index}
+            key={`customBackground${index}`}
             isSelected={selectedEffect === `bg${index}`}
             onSelect={() => setSelectedEffect(`bg${index}`)}
             backgroundProps={{ url }}
