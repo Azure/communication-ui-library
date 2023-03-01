@@ -205,3 +205,10 @@ export {
   _VideoEffectsItemBlur,
   _VideoEffectsItemAddImage
 } from './VideoEffects/PresetVideoEffectsItems';
+
+export { _VideoBackgroundEffectsPicker } from './VideoEffects/VideoBackgroundEffectsPicker';
+export type {
+  _VideoBackgroundEffectsPickerProps,
+  _VideoBackgroundEffectChoiceOption,
+  _VideoBackgroundEffectsPickerStyles
+} from './VideoEffects/VideoBackgroundEffectsPicker';
