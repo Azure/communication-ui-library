@@ -3,7 +3,8 @@
 
 import { IStyle } from '@fluentui/react';
 import { _pxToRem } from '@internal/acs-ui-common';
-import { LARGE_FLOATING_MODAL_SIZE_PX, SMALL_FLOATING_MODAL_SIZE_PX } from './FloatingLocalVideo.styles';
+import { VerticalGalleryStyles } from '../../VerticalGallery';
+import { VERTICAL_GALLERY_FLOATING_MODAL_SIZE_PX } from './FloatingLocalVideo.styles';
 
 /**
  * VerticalGallery tile size in rem:
@@ -13,7 +14,7 @@ import { LARGE_FLOATING_MODAL_SIZE_PX, SMALL_FLOATING_MODAL_SIZE_PX } from './Fl
  *
  * @private
  */
-export const LARGE_VERTICAL_GALLERY_TILE_SIZE_REM = { minHeight: 5.625, maxHeight: 9, width: 9 };
+export const VERTICAL_GALLERY_TILE_SIZE_REM = { minHeight: 5.625, maxHeight: 9, width: 9 };
 
 /**
  * Styles for the VerticalGallery's container set in parent.
@@ -21,16 +22,28 @@ export const LARGE_VERTICAL_GALLERY_TILE_SIZE_REM = { minHeight: 5.625, maxHeigh
  * width is being increased by 1rem to account for the gap width desired for the VerticalGallery.
  *
  * @param shouldFloatLocalVideo whether rendered in floating layout or not
- * @param isNarrow is being rendered with narrow tile settings.
  * @returns Style set for VerticalGallery container.
  */
-export const verticalGalleryContainerStyle = (shouldFloatLocalVideo: boolean, isNarrow: boolean): IStyle => {
+export const verticalGalleryContainerStyle = (shouldFloatLocalVideo: boolean): IStyle => {
   return {
-    width: `${LARGE_VERTICAL_GALLERY_TILE_SIZE_REM.width + 1}rem`,
-    height: shouldFloatLocalVideo
-      ? isNarrow
-        ? `calc(100% - ${_pxToRem(SMALL_FLOATING_MODAL_SIZE_PX.height)})`
-        : `calc(100% - ${_pxToRem(LARGE_FLOATING_MODAL_SIZE_PX.height)})`
-      : '100%'
+    width: `${VERTICAL_GALLERY_TILE_SIZE_REM.width}rem`,
+    height: shouldFloatLocalVideo ? `calc(100% - ${_pxToRem(VERTICAL_GALLERY_FLOATING_MODAL_SIZE_PX.height)})` : '100%',
+    paddingBottom: '0.5rem'
   };
+};
+
+/**
+ * @private
+ */
+export const VERTICAL_GALLERY_TILE_STYLE = {
+  minHeight: `${VERTICAL_GALLERY_TILE_SIZE_REM.minHeight}rem`,
+  minWidth: `${VERTICAL_GALLERY_TILE_SIZE_REM.width}rem`,
+  maxHeight: `${VERTICAL_GALLERY_TILE_SIZE_REM.maxHeight}rem`,
+  maxWidth: `${VERTICAL_GALLERY_TILE_SIZE_REM.width}rem`
+};
+/**
+ * @private
+ */
+export const verticalGalleryStyle: VerticalGalleryStyles = {
+  children: VERTICAL_GALLERY_TILE_STYLE
 };
