@@ -32,6 +32,7 @@ export function convertSdkLocalStreamToDeclarativeLocalStream(
     source: stream.source,
     mediaStreamType: stream.mediaStreamType,
     view: undefined
+    // TODO [video-background-effects]: Add video effects state when it is added to the SDK
   };
 }
 
