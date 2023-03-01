@@ -15,6 +15,8 @@ import * as responsive from './utils/responsive';
 import * as acs_ui_common from '@internal/acs-ui-common';
 import { RemoteScreenShare } from './VideoGallery/RemoteScreenShare';
 import { act } from 'react-dom/test-utils';
+/* @conditional-compile-remove(vertical-gallery) */
+import { VerticalGallery } from './VerticalGallery';
 
 Enzyme.configure({ adapter: new Adapter() });
 registerIcons({
@@ -26,7 +28,9 @@ registerIcons({
     pinparticipant: <></>,
     unpinparticipant: <></>,
     videotilescalefit: <></>,
-    videotilescalefill: <></>
+    videotilescalefill: <></>,
+    verticalgalleryleftbutton: <></>,
+    verticalgalleryrightbutton: <></>
   }
 });
 
@@ -79,7 +83,7 @@ describe('VideoGallery default layout tests', () => {
     expect(root.find(_ModalClone).exists()).toBe(false);
   });
 
-  test('should render all video tiles in the grid ', () => {
+  test('should render all video tiles in the grid', () => {
     const localParticipant = createLocalParticipant({
       videoStream: { isAvailable: false }
     });
@@ -198,7 +202,7 @@ describe('VideoGallery floating local video layout tests', () => {
     ).toBe(false);
   });
 
-  test('should render all remote video tiles in the grid', () => {
+  test('should render all remote video tiles in the grid and others to horizontal gallery', () => {
     const localParticipant = createLocalParticipant({
       videoStream: { isAvailable: false }
     });
@@ -412,6 +416,119 @@ describe('VideoGallery pinned participants tests', () => {
   );
 });
 
+/* @conditional-compile-remove(vertical-gallery) */
+describe('VideoGallery with vertical overflow gallery tests', () => {
+  beforeAll(() => {
+    mockVideoGalleryInternalHelpers();
+  });
+
+  test('should render participants with video stream available in the grid', () => {
+    const localParticipant = createLocalParticipant({
+      videoStream: { isAvailable: false }
+    });
+
+    const root = mountVideoGalleryWithLocalParticipant({ localParticipant });
+
+    const remoteParticipants = Array.from({ length: 10 }, () =>
+      createRemoteParticipant({
+        videoStream: { isAvailable: false, renderElement: createVideoDivElement() }
+      })
+    );
+    remoteParticipants.push(
+      createRemoteParticipant({
+        videoStream: { isAvailable: true, renderElement: createVideoDivElement() }
+      })
+    );
+
+    act(() => {
+      root.setProps({ layout: 'floatingLocalVideo', overflowGalleryLayout: 'VerticalRight', remoteParticipants });
+    });
+    expect(gridTileCount(root)).toBe(1);
+    expect(root.find(VerticalGallery).exists()).toBe(true);
+    expect(root.find(VerticalGallery).find(VideoTile).length).toBe(4);
+  });
+
+  test('should render remote screenshare and render dominant speaking remote participants in vertical gallery', () => {
+    const localParticipant = createLocalParticipant({
+      videoStream: { isAvailable: true, renderElement: createVideoDivElement() }
+    });
+    const root = mountVideoGalleryWithLocalParticipant({ localParticipant });
+
+    // 8 remote audio participants
+    const remoteParticipants = Array.from({ length: 8 }, () => createRemoteParticipant());
+    // 1 remote video participant
+    remoteParticipants.push(
+      createRemoteParticipant({
+        userId: 'remoteVideoParticipant',
+        videoStream: { isAvailable: true, renderElement: createVideoDivElement() }
+      })
+    );
+    // 1 remote screen sharing participants
+    remoteParticipants.push(
+      createRemoteParticipant({
+        userId: 'remoteScreenSharingParticipant',
+        isScreenSharingOn: true,
+        screenShareStream: { isAvailable: true, renderElement: createVideoDivElement() }
+      })
+    );
+
+    act(() => {
+      root.setProps({
+        layout: 'floatingLocalVideo',
+        overflowGalleryLayout: 'VerticalRight',
+        remoteParticipants,
+        dominantSpeakers: ['remoteScreenSharingParticipant', 'remoteVideoParticipant']
+      });
+    });
+
+    expect(root.find(RemoteScreenShare).length).toBe(1);
+    expect(root.find(VerticalGallery).find(VideoTile).length).toBe(4);
+    expect(root.find(VerticalGallery).find(StreamMedia).length).toBe(1);
+    expect(root.find(VerticalGallery).find(VideoTile).first().prop('userId')).toBe('remoteVideoParticipant');
+    expect(root.find(VerticalGallery).find(VideoTile).first().find(StreamMedia).exists()).toBe(true);
+    expect(root.find(VerticalGallery).find(VideoTile).at(1).prop('userId')).toBe('remoteScreenSharingParticipant');
+    expect(root.find(VerticalGallery).find(VideoTile).at(1).find(StreamMedia).exists()).toBe(false);
+  });
+
+  /* @conditional-compile-remove(pinned-participants) */
+  test('should render pinned participants in grid layout and others to vertical gallery', () => {
+    const localParticipant = createLocalParticipant({
+      videoStream: { isAvailable: true, renderElement: createVideoDivElement() }
+    });
+    const root = mountVideoGalleryWithLocalParticipant({ localParticipant });
+
+    // 10 remote participants. First 5 with their video on.
+    const remoteParticipants = [...Array(10).keys()].map((i) => {
+      return createRemoteParticipant({
+        userId: `${i}`,
+        videoStream: i < 5 ? { isAvailable: true, renderElement: createVideoDivElement() } : undefined
+      });
+    });
+
+    act(() => {
+      root.setProps({
+        layout: 'floatingLocalVideo',
+        overflowGalleryLayout: 'VerticalRight',
+        remoteParticipants,
+        dominantSpeakers: ['1', '6'],
+        pinnedParticipants: ['7', '6']
+      });
+    });
+
+    expect(gridTileCount(root)).toBe(2);
+    expect(root.find(GridLayout).find(VideoTile).first().prop('userId')).toBe('7');
+    expect(root.find(GridLayout).find(VideoTile).first().find(StreamMedia).exists()).toBe(false);
+    expect(root.find(GridLayout).find(VideoTile).at(1).prop('userId')).toBe('6');
+    expect(root.find(GridLayout).find(VideoTile).at(1).find(StreamMedia).exists()).toBe(false);
+    expect(root.find(VerticalGallery).length).toBe(1);
+    expect(root.find(VerticalGallery).find(VideoTile).length).toBe(4);
+    expect(root.find(VerticalGallery).find(VideoTile).first().prop('userId')).toBe('1');
+    expect(root.find(VerticalGallery).find(VideoTile).first().find(StreamMedia).exists()).toBe(true);
+    expect(root.find(VerticalGallery).find(VideoTile).at(1).prop('userId')).toBe('0');
+    expect(root.find(VerticalGallery).find(VideoTile).at(1).find(StreamMedia).exists()).toBe(true);
+  });
+});
+
 const mountVideoGalleryWithLocalParticipant = (attrs: {
   localParticipant: VideoGalleryLocalParticipant;
 }): ReactWrapper<VideoGalleryProps> => {
@@ -497,4 +614,7 @@ const mockVideoGalleryInternalHelpers = (): void => {
   // Need to mock hook _useContainerWidth because the returned width is used by HorizontalGallery to decide
   // how many tiles to show per page
   jest.spyOn(responsive, '_useContainerWidth').mockImplementation(() => 500);
+  // Need to mock hook _useContainerWidth because the returned width is used by HorizontalGallery to decide
+  // how many tiles to show per page
+  jest.spyOn(responsive, '_useContainerHeight').mockImplementation(() => 500);
 };
