@@ -36,6 +36,7 @@ import { videoGalleryOuterDivStyle } from './styles/VideoGallery.styles';
 import { floatingLocalVideoTileStyle } from './VideoGallery/styles/FloatingLocalVideo.styles';
 /* @conditional-compile-remove(pinned-participants) */
 import { useId } from '@fluentui/react-hooks';
+import { useVideoGalleryLayoutLogger } from './VideoGallery/logging/TileLogs';
 
 /**
  * @private
@@ -542,6 +543,52 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     }
     return <DefaultLayout {...layoutProps} />;
   }, [layout, layoutProps]);
+
+  // reduced set of remote participant properties for logging
+  const remoteParticipantsForLogging = useMemo(() => {
+    const participants = remoteParticipants.map((participant) => ({
+      userId: participant.userId,
+      isMuted: !!participant.isMuted,
+      isSpeaking: !!participant.isSpeaking,
+      isScreenSharing: !!participant.isScreenSharingOn,
+      isVideoAvailable: !!participant.videoStream?.isAvailable,
+      isVideoReceiving: !!participant.videoStream?.isReceiving,
+      hasVideoElement: !!participant.videoStream?.renderElement,
+      isScreenShareAvailable: !!participant.screenShareStream?.isAvailable,
+      isScreenShareReceiving: !!participant.screenShareStream?.isReceiving,
+      hasScreenShareElement: !!participant.screenShareStream?.renderElement,
+      participantState: participant.state
+    }));
+    return participants;
+  }, [remoteParticipants]);
+
+  const localParticipantForLogging = useMemo(() => {
+    return {
+      userId: localParticipant.userId,
+      isMuted: !!localParticipant.isMuted,
+      isScreenSharing: !!localParticipant.isScreenSharingOn,
+      isVideoAvailable: !!localParticipant.videoStream?.isAvailable,
+      isVideoReceiving: !!localParticipant.videoStream?.isReceiving,
+      hasVideoElement: !!localParticipant.videoStream?.renderElement
+    };
+  }, [localParticipant]);
+
+  // if (containerRef.current) {
+  // }
+
+  useVideoGalleryLayoutLogger({
+    layout: layout ?? 'default',
+    overflowLayout: 'HorizontalBottom',
+    isNarrow,
+    dominantSpeakers: dominantSpeakers,
+    pinnedParticipants: pinnedParticipants,
+    remoteParticipants: remoteParticipantsForLogging,
+    localParticipant: localParticipantForLogging,
+    gridTiles: undefined,
+    horizontalTiles: undefined,
+    verticalTiles: undefined,
+    floatingTile: undefined
+  });
 
   return (
     <div

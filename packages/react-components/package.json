@@ -32,6 +32,7 @@
     "_test:by-flavor": "(if-env COMMUNICATION_REACT_FLAVOR=stable && rushx preprocess || if-env COMMUNICATION_REACT_FLAVOR=beta && echo \"skip preprocess\") && jest"
   },
   "dependencies": {
+    "@azure/logger": "1.0.3",
     "@fluentui/react-file-type-icons": "~8.5.8",
     "@fluentui/react-hooks": "~8.6.12",
     "@fluentui/react-icons": "~2.0.194",
