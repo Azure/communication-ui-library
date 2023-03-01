@@ -102,14 +102,12 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
   const layerHostId = useId('layerhost');
 
   const localVideoSize = useMemo(() => {
-    if (horizontalGalleryTiles.length > 0) {
-      if (isNarrow) {
-        return SMALL_FLOATING_MODAL_SIZE_PX;
-      }
-      /* @conditional-compile-remove(vertical-gallery) */
-      if (overflowGalleryLayout === 'VerticalRight') {
-        return VERTICAL_GALLERY_FLOATING_MODAL_SIZE_PX;
-      }
+    if (isNarrow) {
+      return SMALL_FLOATING_MODAL_SIZE_PX;
+    }
+    /* @conditional-compile-remove(vertical-gallery) */
+    if (horizontalGalleryTiles.length > 0 && overflowGalleryLayout === 'VerticalRight') {
+      return isNarrow ? SMALL_FLOATING_MODAL_SIZE_PX : VERTICAL_GALLERY_FLOATING_MODAL_SIZE_PX;
     }
     return LARGE_FLOATING_MODAL_SIZE_PX;
   }, [

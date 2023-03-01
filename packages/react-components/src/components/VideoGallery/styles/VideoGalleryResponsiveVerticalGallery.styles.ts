@@ -4,7 +4,7 @@
 import { IStyle } from '@fluentui/react';
 import { _pxToRem } from '@internal/acs-ui-common';
 import { VerticalGalleryStyles } from '../../VerticalGallery';
-import { VERTICAL_GALLERY_FLOATING_MODAL_SIZE_PX } from './FloatingLocalVideo.styles';
+import { SMALL_FLOATING_MODAL_SIZE_PX, VERTICAL_GALLERY_FLOATING_MODAL_SIZE_PX } from './FloatingLocalVideo.styles';
 
 /**
  * VerticalGallery tile size in rem:
@@ -24,12 +24,20 @@ export const VERTICAL_GALLERY_TILE_SIZE_REM = { minHeight: 5.625, maxHeight: 9, 
  * @param shouldFloatLocalVideo whether rendered in floating layout or not
  * @returns Style set for VerticalGallery container.
  */
-export const verticalGalleryContainerStyle = (shouldFloatLocalVideo: boolean): IStyle => {
-  return {
-    width: `${VERTICAL_GALLERY_TILE_SIZE_REM.width}rem`,
-    height: shouldFloatLocalVideo ? `calc(100% - ${_pxToRem(VERTICAL_GALLERY_FLOATING_MODAL_SIZE_PX.height)})` : '100%',
-    paddingBottom: '0.5rem'
-  };
+export const verticalGalleryContainerStyle = (shouldFloatLocalVideo: boolean, isNarrow: boolean): IStyle => {
+  return isNarrow
+    ? {
+        width: `${VERTICAL_GALLERY_TILE_SIZE_REM.width}rem`,
+        height: shouldFloatLocalVideo ? `calc(100% - ${_pxToRem(SMALL_FLOATING_MODAL_SIZE_PX.height)})` : '100%',
+        paddingBottom: '0.5rem'
+      }
+    : {
+        width: `${VERTICAL_GALLERY_TILE_SIZE_REM.width}rem`,
+        height: shouldFloatLocalVideo
+          ? `calc(100% - ${_pxToRem(VERTICAL_GALLERY_FLOATING_MODAL_SIZE_PX.height)})`
+          : '100%',
+        paddingBottom: '0.5rem'
+      };
 };
 
 /**
