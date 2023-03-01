@@ -15,6 +15,11 @@ import {
 } from './fixture';
 
 test.describe('HorizontalGallery tests', async () => {
+  // set view port to 1:1 aspect ratio to ensure 'HorizontalBottom' overflowGalleryLayout is used for VideoGallery
+  test.beforeEach(async ({ page }) => {
+    page.setViewportSize({ width: 900, height: 900 });
+  });
+
   test('HorizontalGallery should have 1 audio participant', async ({ page, serverUrl }) => {
     const paul = defaultMockRemoteParticipant('Paul Bridges');
     addVideoStream(paul, true);
