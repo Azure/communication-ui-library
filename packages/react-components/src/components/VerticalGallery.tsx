@@ -74,19 +74,19 @@ interface VerticalGalleryControlBarProps {
 export const VerticalGallery = (props: VerticalGalleryProps): JSX.Element => {
   const { children, styles, childrenPerPage } = props;
 
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(1);
   const [buttonState, setButtonState] = useState<{ previous: boolean; next: boolean }>({ previous: true, next: true });
 
   const numberOfChildren = React.Children.count(children);
-  const lastPage = Math.ceil(numberOfChildren / childrenPerPage) - 1;
+  const lastPage = Math.ceil(numberOfChildren / childrenPerPage);
 
   const paginatedChildren: React.ReactNode[][] = useMemo(() => {
     return bucketize(React.Children.toArray(children), childrenPerPage);
   }, [children, childrenPerPage]);
 
-  const firstIndexOfCurrentPage = page * childrenPerPage;
+  const firstIndexOfCurrentPage = (page - 1) * childrenPerPage;
   const clippedPage = firstIndexOfCurrentPage < numberOfChildren - 1 ? page : lastPage;
-  const childrenOnCurrentPage = paginatedChildren[clippedPage];
+  const childrenOnCurrentPage = paginatedChildren[clippedPage - 1];
 
   const showButtons = numberOfChildren > childrenPerPage;
 
@@ -97,11 +97,15 @@ export const VerticalGallery = (props: VerticalGalleryProps): JSX.Element => {
     setPage(page + 1);
   };
 
+  if (page > lastPage && lastPage > 0) {
+    setPage(lastPage);
+  }
+
   useEffect(() => {
-    if (page > 0 && page < lastPage && showButtons) {
+    if (page > 1 && page < lastPage && showButtons) {
       // we are somewhere in between first and last pages.
       setButtonState({ previous: false, next: false });
-    } else if (page === 0 && showButtons) {
+    } else if (page === 1 && showButtons) {
       // we are on the first page.
       setButtonState({ previous: true, next: false });
     } else if (page === lastPage && showButtons) {
@@ -111,7 +115,7 @@ export const VerticalGallery = (props: VerticalGalleryProps): JSX.Element => {
   }, [page, numberOfChildren, lastPage, showButtons]);
 
   const childContainerStyle = useMemo(() => {
-    return { root: childrenContainerStyle };
+    return { root: childrenContainerStyle(2) };
   }, []);
 
   const childrenStyles = useMemo(() => {
