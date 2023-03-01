@@ -23,6 +23,14 @@ import React, { useCallback } from 'react';
  */
 export interface _VideoEffectsItemProps {
   /**
+   * The key of the Video Background Effect.
+   * This is used to identify the Video Background Effect and is returned in the onChange event.
+   * It must be unique within the set of options.
+   * @example 'blur'
+   */
+  key: string;
+
+  /**
    * The text to display for the Video effects item.
    */
   title?: string;
@@ -36,7 +44,7 @@ export interface _VideoEffectsItemProps {
   /**
    * Callback to invoke when the Video effects item is selected.
    */
-  onSelect?: () => void;
+  onSelect?: (key: string) => void;
 
   /**
    * Whether the Video effects item is disabled.
@@ -138,16 +146,18 @@ export const _VideoEffectsItem = (props: _VideoEffectsItemProps): JSX.Element =>
   return (
     <TooltipHost {...props.tooltipProps}>
       <Stack
+        key={props.key}
+        className={mergeStyles(props.styles?.root)}
         verticalAlign="center"
         horizontalAlign="center"
         styles={containerStyles}
-        onClick={disabled ? undefined : props.onSelect}
+        onClick={disabled ? undefined : () => props.onSelect?.(props.key)}
         onKeyDown={
           disabled
             ? undefined
             : (e) => {
                 if (e.key === 'Enter' || e.key === ' ') {
-                  props.onSelect?.();
+                  props.onSelect?.(props.key);
                 }
               }
         }
