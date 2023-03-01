@@ -47,7 +47,9 @@ export const VERTICAL_GALLERY_TILE_STYLE = {
   minHeight: `${VERTICAL_GALLERY_TILE_SIZE_REM.minHeight}rem`,
   minWidth: `${VERTICAL_GALLERY_TILE_SIZE_REM.width}rem`,
   maxHeight: `${VERTICAL_GALLERY_TILE_SIZE_REM.maxHeight}rem`,
-  maxWidth: `${VERTICAL_GALLERY_TILE_SIZE_REM.width}rem`
+  maxWidth: `${VERTICAL_GALLERY_TILE_SIZE_REM.width}rem`,
+  width: '100%',
+  height: '100%'
 };
 /**
  * @private
