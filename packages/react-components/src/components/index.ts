@@ -197,3 +197,11 @@ export type {
   _DevicePermissionDropdownProps,
   _PermissionConstraints
 } from './DevicePermissions/DevicePermissionDropdown';
+
+export { _VideoEffectsItem } from './VideoEffects/VideoEffectsItem';
+export type { _VideoEffectsItemProps, _VideoEffectsItemStyles } from './VideoEffects/VideoEffectsItem';
+export {
+  _VideoEffectsItemNone,
+  _VideoEffectsItemBlur,
+  _VideoEffectsItemAddImage
+} from './VideoEffects/PresetVideoEffectsItems';
