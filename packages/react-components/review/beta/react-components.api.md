@@ -25,6 +25,7 @@ import { IRenderFunction } from '@fluentui/react';
 import { IStyle } from '@fluentui/react';
 import { IStyleFunctionOrObject } from '@fluentui/react';
 import { ITextFieldStyles } from '@fluentui/react';
+import { ITooltipHostProps } from '@fluentui/react';
 import { MessageStatus } from '@internal/acs-ui-common';
 import { PartialTheme } from '@fluentui/react';
 import { PersonaPresence } from '@fluentui/react';
@@ -1651,6 +1652,42 @@ export const _usePermissions: () => _Permissions;
 
 // @public
 export const useTheme: () => Theme;
+
+// @internal
+export const _VideoEffectsItem: (props: _VideoEffectsItemProps) => JSX.Element;
+
+// @internal
+export const _VideoEffectsItemAddImage: (props: _VideoEffectsItemProps) => JSX.Element;
+
+// @internal
+export const _VideoEffectsItemBlur: (props: _VideoEffectsItemProps) => JSX.Element;
+
+// @internal
+export const _VideoEffectsItemNone: (props: _VideoEffectsItemProps) => JSX.Element;
+
+// @internal
+export interface _VideoEffectsItemProps {
+    backgroundProps?: {
+        url: string;
+        position?: string;
+        size?: string;
+    };
+    disabled?: boolean;
+    iconProps?: IIconProps;
+    isSelected?: boolean;
+    key: string;
+    onSelect?: (key: string) => void;
+    styles?: _VideoEffectsItemStyles;
+    title?: string;
+    tooltipProps?: ITooltipHostProps;
+}
+
+// @internal
+export interface _VideoEffectsItemStyles {
+    iconContainer: IStyle;
+    root: IStyle;
+    textContainer: IStyle;
+}
 
 // @public
 export const VideoGallery: (props: VideoGalleryProps) => JSX.Element;
