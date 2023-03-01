@@ -13,9 +13,12 @@ export const VERTICAL_GALLERY_GAP = 0.5;
 /**
  * @private
  */
-export const childrenContainerStyle: IStyle = {
-  width: '100%',
-  gap: `${VERTICAL_GALLERY_GAP}rem`
+export const childrenContainerStyle = (pageControlBarHeight: number): IStyle => {
+  return {
+    width: '100%',
+    height: `calc(100% - ${pageControlBarHeight + VERTICAL_GALLERY_GAP}rem)`,
+    gap: `${VERTICAL_GALLERY_GAP}rem`
+  };
 };
 
 /**
