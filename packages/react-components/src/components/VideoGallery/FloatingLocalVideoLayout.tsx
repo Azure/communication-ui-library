@@ -101,14 +101,22 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
 
   const layerHostId = useId('layerhost');
 
-  let localVideoSize = LARGE_FLOATING_MODAL_SIZE_PX;
-  if (isNarrow) {
-    localVideoSize = SMALL_FLOATING_MODAL_SIZE_PX;
-  }
-  /* @conditional-compile-remove(vertical-gallery) */
-  if (overflowGalleryLayout === 'VerticalRight') {
-    localVideoSize = VERTICAL_GALLERY_FLOATING_MODAL_SIZE_PX;
-  }
+  let localVideoSize = useMemo(() => {
+    if (horizontalGalleryTiles.length > 0) {
+      if (isNarrow) {
+        return SMALL_FLOATING_MODAL_SIZE_PX;
+      }
+      /* @conditional-compile-remove(vertical-gallery) */
+      if (overflowGalleryLayout === 'VerticalRight') {
+        return VERTICAL_GALLERY_FLOATING_MODAL_SIZE_PX;
+      }
+    }
+    return LARGE_FLOATING_MODAL_SIZE_PX;
+  }, [
+    horizontalGalleryTiles.length,
+    isNarrow,
+    /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryLayout
+  ]);
 
   const wrappedLocalVideoComponent =
     localVideoComponent && shouldFloatLocalVideo ? (
