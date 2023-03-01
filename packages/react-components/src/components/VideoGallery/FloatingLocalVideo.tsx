@@ -5,12 +5,7 @@ import { ContextualMenu, IDragOptions } from '@fluentui/react';
 import React, { useMemo } from 'react';
 import { useTheme } from '../../theming';
 import { _ICoordinates, _ModalClone } from '../ModalClone/ModalClone';
-import {
-  floatingLocalVideoModalStyle,
-  LARGE_FLOATING_MODAL_SIZE_PX,
-  localVideoTileOuterPaddingPX,
-  SMALL_FLOATING_MODAL_SIZE_PX
-} from './styles/FloatingLocalVideo.styles';
+import { floatingLocalVideoModalStyle, localVideoTileOuterPaddingPX } from './styles/FloatingLocalVideo.styles';
 
 const DRAG_OPTIONS: IDragOptions = {
   moveMenuItemText: 'Move',
@@ -28,19 +23,30 @@ const modalMaxDragPosition = { x: localVideoTileOuterPaddingPX, y: localVideoTil
 /**
  * @private
  */
-export const FloatingLocalVideo = (props: {
+export interface FloatingLocalVideoProps {
+  // Local video component to make draggable
   localVideoComponent: JSX.Element;
+  // Element id of layer host to constrain the dragging of local video
   layerHostId: string;
-  isNarrow?: boolean;
+  // Parent component width in px
   parentWidth?: number;
+  // Parent component height in px
   parentHeight?: number;
-}): JSX.Element => {
-  const { localVideoComponent, layerHostId, isNarrow, parentWidth, parentHeight } = props;
+  // Local video width and height in px
+  localVideoSize: {
+    width: number;
+    height: number;
+  };
+}
+
+/**
+ * @private
+ */
+export const FloatingLocalVideo = (props: FloatingLocalVideoProps): JSX.Element => {
+  const { localVideoComponent, layerHostId, localVideoSize, parentWidth, parentHeight } = props;
 
   const theme = useTheme();
 
-  const modalWidth = isNarrow ? SMALL_FLOATING_MODAL_SIZE_PX.width : LARGE_FLOATING_MODAL_SIZE_PX.width;
-  const modalHeight = isNarrow ? SMALL_FLOATING_MODAL_SIZE_PX.height : LARGE_FLOATING_MODAL_SIZE_PX.height;
   // The minimum drag position is the top left of the video gallery. i.e. the modal (PiP) should not be able
   // to be dragged offscreen and these are the top and left bounds of that calculation.
   const modalMinDragPosition: _ICoordinates | undefined = useMemo(
@@ -49,14 +55,14 @@ export const FloatingLocalVideo = (props: {
         ? {
             // We use -parentWidth/Height because our modal is positioned to start in the bottom right,
             // hence (0,0) is the bottom right of the video gallery.
-            x: -parentWidth + modalWidth + localVideoTileOuterPaddingPX,
-            y: -parentHeight + modalHeight + localVideoTileOuterPaddingPX
+            x: -parentWidth + localVideoSize.width + localVideoTileOuterPaddingPX,
+            y: -parentHeight + localVideoSize.height + localVideoTileOuterPaddingPX
           }
         : undefined,
-    [parentHeight, parentWidth, modalHeight, modalWidth]
+    [parentHeight, parentWidth, localVideoSize.width, localVideoSize.height]
   );
 
-  const modalStyles = useMemo(() => floatingLocalVideoModalStyle(theme, isNarrow), [theme, isNarrow]);
+  const modalStyles = useMemo(() => floatingLocalVideoModalStyle(theme, localVideoSize), [theme, localVideoSize]);
   const layerProps = useMemo(() => ({ hostId: layerHostId }), [layerHostId]);
 
   return (

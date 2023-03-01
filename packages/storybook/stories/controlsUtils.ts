@@ -134,6 +134,7 @@ export const getControlledTheme = (choice: string): PartialTheme => {
 };
 
 const VIDEO_GALLERY_LAYOUTS = ['default', 'floatingLocalVideo'] as const;
+const OVERFLOW_GALLERY_LAYOUTS = ['HorizontalBottom', 'VerticalRight'] as const;
 
 export const orientationArg = {
   options: ['landscape', 'portrait'],
@@ -369,7 +370,13 @@ export const controlsToAdd = {
     control: 'select',
     options: VIDEO_GALLERY_LAYOUTS,
     defaultValue: 'floatingLocalVideo',
-    name: 'Layout'
+    name: 'VideoGallery Layout'
+  },
+  overflowGalleryLayout: {
+    control: 'select',
+    options: OVERFLOW_GALLERY_LAYOUTS,
+    defaultValue: 'HorizontalBottom',
+    name: 'Overflow Gallery Layout'
   },
   videoTileHeight: { control: { type: 'range', min: 80, max: 800, step: 10 }, defaultValue: 300, name: 'Height (px)' },
   videoTileWidth: { control: { type: 'range', min: 100, max: 1200, step: 10 }, defaultValue: 400, name: 'Width (px)' },

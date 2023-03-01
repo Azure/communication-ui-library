@@ -39,6 +39,12 @@ export const SMALL_FLOATING_MODAL_SIZE_PX = { width: 58, height: 104 };
 export const LARGE_FLOATING_MODAL_SIZE_PX = { width: 215, height: 120 };
 
 /**
+ * Vertical gallery floating modal width and height in rem
+ * Aspect ratio: 16:9
+ */
+export const VERTICAL_GALLERY_FLOATING_MODAL_SIZE_PX = { width: 144, height: 81 };
+
+/**
  * @private
  * z-index to ensure that the local video tile is above the video gallery.
  */
@@ -47,10 +53,13 @@ export const LOCAL_VIDEO_TILE_ZINDEX = 2;
 /**
  * @private
  */
-export const localVideoTileContainerStyle = (theme: Theme, isNarrow?: boolean): IStyle => {
+export const localVideoTileContainerStyle = (
+  theme: Theme,
+  localVideoTileSize: { width: number; height: number }
+): IStyle => {
   return {
-    minWidth: isNarrow ? _pxToRem(SMALL_FLOATING_MODAL_SIZE_PX.width) : _pxToRem(LARGE_FLOATING_MODAL_SIZE_PX.width),
-    minHeight: isNarrow ? _pxToRem(SMALL_FLOATING_MODAL_SIZE_PX.height) : _pxToRem(LARGE_FLOATING_MODAL_SIZE_PX.height),
+    minWidth: _pxToRem(localVideoTileSize.width),
+    minHeight: _pxToRem(localVideoTileSize.height),
     position: 'absolute',
     bottom: _pxToRem(localVideoTileOuterPaddingPX),
     borderRadius: theme.effects.roundedCorner4,
@@ -64,8 +73,11 @@ export const localVideoTileContainerStyle = (theme: Theme, isNarrow?: boolean): 
 /**
  * @private
  */
-export const localVideoTileWithControlsContainerStyle = (theme: Theme, isNarrow?: boolean): IStackStyles => {
-  return concatStyleSets(localVideoTileContainerStyle(theme, isNarrow), {
+export const localVideoTileWithControlsContainerStyle = (
+  theme: Theme,
+  localVideoTileSize: { width: number; height: number }
+): IStackStyles => {
+  return concatStyleSets(localVideoTileContainerStyle(theme, localVideoTileSize), {
     root: { boxShadow: theme.effects.elevation8 }
   });
 };
@@ -75,11 +87,11 @@ export const localVideoTileWithControlsContainerStyle = (theme: Theme, isNarrow?
  */
 export const floatingLocalVideoModalStyle = (
   theme: Theme,
-  isNarrow?: boolean
+  modalSize: { width: number; height: number }
 ): IStyleFunctionOrObject<IModalStyleProps, IModalStyles> => {
   return concatStyleSets(
     {
-      main: localVideoTileContainerStyle(theme, isNarrow)
+      main: localVideoTileContainerStyle(theme, modalSize)
     },
     {
       main: {
