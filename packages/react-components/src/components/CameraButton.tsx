@@ -206,7 +206,7 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
     title: 'toggle camera',
     itemType: ContextualMenuItemType.Section,
     sectionProps: {
-      title: strings.cameraPrimaryActionSplitButtonTitle,
+      topDivider: true,
       items: [
         {
           key: 'cameraPrimaryAction',

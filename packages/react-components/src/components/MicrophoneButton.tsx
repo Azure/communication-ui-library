@@ -222,7 +222,7 @@ export const MicrophoneButton = (props: MicrophoneButtonProps): JSX.Element => {
     title: 'toggle mic',
     itemType: ContextualMenuItemType.Section,
     sectionProps: {
-      title: strings.micPrimaryActionSplitButtonTitle,
+      topDivider: true,
       items: [
         {
           key: 'microphonePrimaryAction',
