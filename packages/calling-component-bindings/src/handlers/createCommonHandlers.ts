@@ -4,6 +4,7 @@
 import {
   AudioDeviceInfo,
   Call,
+  Features,
   LocalVideoStream,
   StartCallOptions,
   VideoDeviceInfo
@@ -22,6 +23,13 @@ import { disposeAllLocalPreviewViews, _isInCall, _isInLobbyOrConnecting, _isPrev
 import { CommunicationUserIdentifier, PhoneNumberIdentifier, UnknownIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(PSTN-calls) */
 import { CommunicationIdentifier } from '@azure/communication-common';
+/* @conditional-compile-remove(video-background-effects) */
+import {
+  BackgroundBlurConfig,
+  BackgroundBlurEffect,
+  BackgroundReplacementConfig,
+  BackgroundReplacementEffect
+} from '@azure/communication-calling-effects';
 
 /**
  * Object containing all the handlers required for calling components.
@@ -66,6 +74,12 @@ export interface CommonCallingHandlers {
     participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[],
     options?: StartCallOptions
   ) => void;
+  /* @conditional-compile-remove(video-background-effects) */
+  onRemoveVideoBackgroundEffects: () => Promise<void>;
+  /* @conditional-compile-remove(video-background-effects) */
+  onBlurVideoBackground: (bgBlurConfig: BackgroundBlurConfig) => Promise<void>;
+  /* @conditional-compile-remove(video-background-effects) */
+  onReplaceVideoBackground: (bgReplacementConfig: BackgroundReplacementConfig) => Promise<void>;
 }
 
 /**
@@ -363,6 +377,36 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       }
     };
 
+    /* @conditional-compile-remove(video-background-effects) */
+    const onRemoveVideoBackgroundEffects = async (): Promise<void> => {
+      const stream =
+        call?.localVideoStreams.find((stream) => stream.mediaStreamType === 'Video') ||
+        deviceManager?.getUnparentedVideoStreams().find((stream) => stream.mediaStreamType === 'Video');
+      if (stream) {
+        return stream.feature(Features.VideoEffects).stopEffects();
+      }
+    };
+
+    /* @conditional-compile-remove(video-background-effects) */
+    const onBlurVideoBackground = async (bgBlurConfig: BackgroundBlurConfig): Promise<void> => {
+      const stream =
+        call?.localVideoStreams.find((stream) => stream.mediaStreamType === 'Video') ||
+        deviceManager?.getUnparentedVideoStreams().find((stream) => stream.mediaStreamType === 'Video');
+      if (stream) {
+        return stream.feature(Features.VideoEffects).startEffects(new BackgroundBlurEffect(bgBlurConfig));
+      }
+    };
+
+    /* @conditional-compile-remove(video-background-effects) */
+    const onReplaceVideoBackground = async (bgReplacementConfig: BackgroundReplacementConfig): Promise<void> => {
+      const stream =
+        call?.localVideoStreams.find((stream) => stream.mediaStreamType === 'Video') ||
+        deviceManager?.getUnparentedVideoStreams().find((stream) => stream.mediaStreamType === 'Video');
+      if (stream) {
+        return stream.feature(Features.VideoEffects).startEffects(new BackgroundReplacementEffect(bgReplacementConfig));
+      }
+    };
+
     return {
       onHangUp,
       /* @conditional-compile-remove(PSTN-calls) */
@@ -386,7 +430,13 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       onStartCall: notImplemented,
       /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */ onSendDtmfTone,
       /* @conditional-compile-remove(call-readiness) */
-      askDevicePermission
+      askDevicePermission,
+      /* @conditional-compile-remove(video-background-effects) */
+      onRemoveVideoBackgroundEffects,
+      /* @conditional-compile-remove(video-background-effects) */
+      onBlurVideoBackground,
+      /* @conditional-compile-remove(video-background-effects) */
+      onReplaceVideoBackground
     };
   }
 );
