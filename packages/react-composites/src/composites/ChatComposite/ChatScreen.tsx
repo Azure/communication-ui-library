@@ -131,7 +131,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
       // Fetch initial data for adapter
       await adapter.fetchInitialData();
       // Fetch initial set of messages
-      await adapter.loadPreviousChatMessages(defaultNumberOfChatMessagesToReload);
+      // Fetch initial set of messages. Without fetching messages here, if the Composite's adapter is changed the message thread does not load new messages.
     };
     fetchData();
   }, [adapter]);
