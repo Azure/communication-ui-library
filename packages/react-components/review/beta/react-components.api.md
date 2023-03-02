@@ -923,7 +923,9 @@ export interface _Identifiers {
     sendboxTextField: string;
     typingIndicator: string;
     verticalGalleryLeftButton: string;
+    verticalGalleryPageCounter: string;
     verticalGalleryRightButton: string;
+    verticalGalleryVideoTile: string;
     videoGallery: string;
     videoTile: string;
 }

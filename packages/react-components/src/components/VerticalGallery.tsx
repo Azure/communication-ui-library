@@ -78,6 +78,8 @@ export const VerticalGallery = (props: VerticalGalleryProps): JSX.Element => {
   const [page, setPage] = useState(1);
   const [buttonState, setButtonState] = useState<{ previous: boolean; next: boolean }>({ previous: true, next: true });
 
+  const ids = useIdentifiers();
+
   const numberOfChildren = React.Children.count(children);
   const lastPage = Math.ceil(numberOfChildren / childrenPerPage);
 
@@ -132,7 +134,7 @@ export const VerticalGallery = (props: VerticalGalleryProps): JSX.Element => {
       <Stack styles={childContainerStyle}>
         {childrenOnCurrentPage.map((child, i) => {
           return (
-            <Stack.Item key={i} styles={childrenStyles}>
+            <Stack.Item key={i} styles={childrenStyles} data-ui-id={ids.verticalGalleryVideoTile}>
               {child}
             </Stack.Item>
           );
