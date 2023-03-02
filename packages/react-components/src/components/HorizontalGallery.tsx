@@ -84,7 +84,7 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
           styles={styles?.previousButton}
           onClick={() => setPage(Math.max(0, Math.min(lastPage, page - 1)))}
           disabled={disablePreviousButton}
-          identifier={ids.horizontalGalleryLeftNavButton}
+          identifier={ids.overflowGalleryLeftNavButton}
         />
       )}
       <Stack horizontal className={mergeStyles(childrenContainerStyle, { '> *': props.styles?.children })}>
@@ -97,7 +97,7 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
           styles={styles?.nextButton}
           onClick={() => setPage(Math.min(lastPage, page + 1))}
           disabled={disableNextButton}
-          identifier={ids.horizontalGalleryRightNavButton}
+          identifier={ids.overflowGalleryRightNavButton}
         />
       )}
     </Stack>
