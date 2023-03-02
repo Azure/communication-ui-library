@@ -4,7 +4,6 @@
 import {
   AudioDeviceInfo,
   Call,
-  Features,
   LocalVideoStream,
   StartCallOptions,
   VideoDeviceInfo
@@ -30,6 +29,8 @@ import {
   BackgroundReplacementConfig,
   BackgroundReplacementEffect
 } from '@azure/communication-calling-effects';
+/* @conditional-compile-remove(video-background-effects) */
+import { Features } from '@azure/communication-calling';
 
 /**
  * Object containing all the handlers required for calling components.
