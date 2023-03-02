@@ -24,7 +24,7 @@ import {
 
 test.describe('HorizontalGallery tests', async () => {
   // set view port to 1:1 aspect ratio to ensure 'HorizontalBottom' overflowGalleryLayout is used for VideoGallery on Desktop
-  test.beforeEach(async ({ page }, testInfo) => {
+  test.beforeEach(async ({}, testInfo) => {
     if (isTestProfileDesktop(testInfo)) {
       test.use({ viewport: { width: 900, height: 900 } });
     }
