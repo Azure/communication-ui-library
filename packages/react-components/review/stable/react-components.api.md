@@ -1409,10 +1409,11 @@ export const _VideoEffectsItemAddImage: (props: _VideoEffectsItemProps) => JSX.E
 export const _VideoEffectsItemBlur: (props: _VideoEffectsItemProps) => JSX.Element;
 
 // @internal
-export const _VideoEffectsItemNone: (props: _VideoEffectsItemProps) => JSX.Element;
+export const _VideoEffectsItemNoBackground: (props: _VideoEffectsItemProps) => JSX.Element;
 
 // @internal
 export interface _VideoEffectsItemProps {
+    ariaLabel?: string;
     backgroundProps?: {
         url: string;
         position?: string;

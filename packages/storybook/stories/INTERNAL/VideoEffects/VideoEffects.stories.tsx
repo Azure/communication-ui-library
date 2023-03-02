@@ -3,7 +3,11 @@
 
 import { registerIcons, Stack } from '@fluentui/react';
 import { ImageAdd20Regular, VideoBackgroundEffect20Regular, VideoPerson20Filled } from '@fluentui/react-icons';
-import { _VideoEffectsItemNone, _VideoEffectsItemBlur, _VideoEffectsItemAddImage } from '@internal/react-components';
+import {
+  _VideoEffectsItemNoBackground,
+  _VideoEffectsItemBlur,
+  _VideoEffectsItemAddImage
+} from '@internal/react-components';
 import { Canvas, Description, Heading, Title } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';

@@ -4,7 +4,7 @@
 import { registerIcons, Stack } from '@fluentui/react';
 import { ImageAdd20Regular, VideoBackgroundEffect20Regular, VideoPerson20Filled } from '@fluentui/react-icons';
 import {
-  _VideoEffectsItemNone,
+  _VideoEffectsItemNoBackground,
   _VideoEffectsItemBlur,
   _VideoEffectsItemAddImage,
   _VideoEffectsItem
@@ -30,7 +30,7 @@ export const SelectableVideoEffects = (): JSX.Element => {
   return (
     <Stack tokens={{ childrenGap: '1rem' }}>
       <Stack horizontal tokens={{ childrenGap: '1rem' }}>
-        <_VideoEffectsItemNone
+        <_VideoEffectsItemNoBackground
           isSelected={selectedEffect === 'none'}
           onSelect={() => setSelectedEffect('none')}
           key={'none'}
