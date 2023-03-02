@@ -3,15 +3,7 @@
 
 import { expect } from '@playwright/test';
 import { IDS } from '../../common/constants';
-import {
-  dataUiId,
-  dragToRight,
-  existsOnPage,
-  isTestProfileDesktop,
-  pageClick,
-  stableScreenshot,
-  waitForSelector
-} from '../../common/utils';
+import { dataUiId, dragToRight, existsOnPage, pageClick, stableScreenshot, waitForSelector } from '../../common/utils';
 import {
   addScreenshareStream,
   addVideoStream,
@@ -23,14 +15,6 @@ import {
 } from './fixture';
 
 test.describe('HorizontalGallery tests', async () => {
-  // set view port to 1:1 aspect ratio to ensure 'HorizontalBottom' overflowGalleryLayout is used for VideoGallery on Desktop
-  // eslint-disable-next-line no-empty-pattern
-  test.beforeEach(async ({}, testInfo) => {
-    if (isTestProfileDesktop(testInfo)) {
-      test.use({ viewport: { width: 900, height: 900 } });
-    }
-  });
-
   test('HorizontalGallery should have 1 audio participant', async ({ page, serverUrl }) => {
     const paul = defaultMockRemoteParticipant('Paul Bridges');
     addVideoStream(paul, true);
