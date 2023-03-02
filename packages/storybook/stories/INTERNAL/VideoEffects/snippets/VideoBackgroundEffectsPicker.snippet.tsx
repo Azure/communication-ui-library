@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { registerIcons, Stack } from '@fluentui/react';
+import { registerIcons } from '@fluentui/react';
 import { ImageAdd20Regular, VideoBackgroundEffect20Regular, VideoPerson20Filled } from '@fluentui/react-icons';
 import {
   _VideoEffectsItemNone,
