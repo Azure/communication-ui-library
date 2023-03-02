@@ -69,6 +69,17 @@ const config: PlaywrightTestConfig = {
 
   projects: [
     {
+      name: 'Desktop Chrome',
+      use: {
+        viewport: DESKTOP_4_TO_3_VIEWPORT,
+        launchOptions: { ...chromeLaunchOptions },
+        contextOptions: {
+          userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0'
+        }
+      },
+      testIgnore: ['HorizontalGallery.test.ts']
+    },
+    {
       name: 'Desktop Chrome 1:1 viewport',
       use: {
         viewport: DESKTOP_1_TO_1_VIEWPORT,
@@ -76,17 +87,8 @@ const config: PlaywrightTestConfig = {
         contextOptions: {
           userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0'
         }
-      }
-    },
-    {
-      name: 'Desktop Chrome 4:3 viewport',
-      use: {
-        viewport: DESKTOP_4_TO_3_VIEWPORT,
-        launchOptions: { ...chromeLaunchOptions },
-        contextOptions: {
-          userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0'
-        }
-      }
+      },
+      testMatch: ['HorizontalGallery.test.ts']
     },
     {
       name: 'Mobile Android Portrait',
