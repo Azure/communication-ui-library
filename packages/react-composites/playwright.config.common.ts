@@ -80,7 +80,7 @@ const config: PlaywrightTestConfig = {
       testIgnore: ['HorizontalGallery.test.ts']
     },
     {
-      name: 'Desktop Chrome 1:1 viewport',
+      name: 'Desktop Chrome 1:1',
       use: {
         viewport: DESKTOP_1_TO_1_VIEWPORT,
         launchOptions: { ...chromeLaunchOptions },
