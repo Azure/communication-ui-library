@@ -3,6 +3,7 @@
 
 import { DefaultButton, Icon, IStyle, mergeStyles, Stack, Text } from '@fluentui/react';
 import React, { useEffect, useMemo, useState } from 'react';
+import { useIdentifiers } from '../identifiers';
 import { useTheme } from '../theming';
 import { BaseCustomStyles } from '../types';
 import {
@@ -153,6 +154,7 @@ export const VerticalGallery = (props: VerticalGalleryProps): JSX.Element => {
 const VerticalGalleryControlBar = (props: VerticalGalleryControlBarProps): JSX.Element => {
   const { onNextButtonClick, onPreviousButtonClick, buttonsDisabled, currentPage, totalPages, styles } = props;
   const theme = useTheme();
+  const ids = useIdentifiers();
 
   const pageCounterContainerStyles = useMemo(() => {
     return mergeStyles(pageNavigationControlBarContainerStyle, styles?.root);
@@ -178,11 +180,17 @@ const VerticalGalleryControlBar = (props: VerticalGalleryControlBarProps): JSX.E
         className={previousButtonSyles}
         onClick={onPreviousButtonClick}
         disabled={buttonsDisabled?.previous}
+        data-ui-id={ids.verticalGalleryLeftButton}
       >
         <Icon iconName="VerticalGalleryLeftButton" styles={navIconStyles} />
       </DefaultButton>
       <Text className={pageCounterStyles}>{`${currentPage} / ${totalPages}`}</Text>
-      <DefaultButton className={nextButtonsStyles} onClick={onNextButtonClick} disabled={buttonsDisabled?.next}>
+      <DefaultButton
+        className={nextButtonsStyles}
+        onClick={onNextButtonClick}
+        disabled={buttonsDisabled?.next}
+        data-ui-id={ids.verticalGalleryRightButton}
+      >
         <Icon iconName="VerticalGalleryRightButton" styles={navIconStyles} />
       </DefaultButton>
     </Stack>

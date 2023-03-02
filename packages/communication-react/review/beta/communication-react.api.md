@@ -2294,6 +2294,8 @@ export interface _Identifiers {
     participantListRemoveParticipantButton: string;
     sendboxTextField: string;
     typingIndicator: string;
+    verticalGalleryLeftButton: string;
+    verticalGalleryRightButton: string;
     videoGallery: string;
     videoTile: string;
 }

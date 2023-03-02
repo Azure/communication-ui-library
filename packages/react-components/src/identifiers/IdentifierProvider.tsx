@@ -43,6 +43,10 @@ export interface _Identifiers {
   horizontalGalleryLeftNavButton: string;
   /** `data-ui-id` value for `HorizontalGallery` Component's right navigation button */
   horizontalGalleryRightNavButton: string;
+  /** `data-ui-id` value for `VerticalGallery` Component's left navigation button */
+  verticalGalleryLeftButton: string;
+  /** `data-ui-id` value for `VerticalGallery` Component's right navigation button */
+  verticalGalleryRightButton: string;
 }
 
 const defaultIdentifiers: _Identifiers = {
@@ -58,7 +62,9 @@ const defaultIdentifiers: _Identifiers = {
   videoGallery: 'video-gallery',
   videoTile: 'video-tile',
   horizontalGalleryLeftNavButton: 'horizontal-gallery-left-nav-button',
-  horizontalGalleryRightNavButton: 'horizontal-gallery-right-nav-button'
+  horizontalGalleryRightNavButton: 'horizontal-gallery-right-nav-button',
+  verticalGalleryLeftButton: 'vertical-gallery-left-nav-button',
+  verticalGalleryRightButton: 'vertical-gallery-right-nav-button'
 };
 
 /**
