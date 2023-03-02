@@ -78,7 +78,7 @@ export interface CommonCallingHandlers {
   /* @conditional-compile-remove(video-background-effects) */
   onRemoveVideoBackgroundEffects: () => Promise<void>;
   /* @conditional-compile-remove(video-background-effects) */
-  onBlurVideoBackground: (bgBlurConfig: BackgroundBlurConfig) => Promise<void>;
+  onBlurVideoBackground: (bgBlurConfig?: BackgroundBlurConfig) => Promise<void>;
   /* @conditional-compile-remove(video-background-effects) */
   onReplaceVideoBackground: (bgReplacementConfig: BackgroundReplacementConfig) => Promise<void>;
 }
@@ -389,7 +389,7 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
     };
 
     /* @conditional-compile-remove(video-background-effects) */
-    const onBlurVideoBackground = async (bgBlurConfig: BackgroundBlurConfig): Promise<void> => {
+    const onBlurVideoBackground = async (bgBlurConfig?: BackgroundBlurConfig): Promise<void> => {
       const stream =
         call?.localVideoStreams.find((stream) => stream.mediaStreamType === 'Video') ||
         deviceManager?.getUnparentedVideoStreams().find((stream) => stream.mediaStreamType === 'Video');

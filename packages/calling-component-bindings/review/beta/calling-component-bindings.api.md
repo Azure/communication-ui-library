@@ -116,7 +116,7 @@ export interface CommonCallingHandlers {
     // (undocumented)
     onAddParticipant(participant: PhoneNumberIdentifier, options: AddPhoneNumberOptions): Promise<void>;
     // (undocumented)
-    onBlurVideoBackground: (bgBlurConfig: BackgroundBlurConfig) => Promise<void>;
+    onBlurVideoBackground: (bgBlurConfig?: BackgroundBlurConfig) => Promise<void>;
     // (undocumented)
     onCreateLocalStreamView: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
     // (undocumented)
