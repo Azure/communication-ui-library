@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Update storybook custom data model calling example to wrap userId as an identifier",
+  "packageName": "@azure/communication-react",
+  "email": "edwardlee@microsoft.com",
+  "dependentChangeType": "patch"
+}
