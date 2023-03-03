@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 
 import { IStyle, Label, mergeStyles, Stack } from '@fluentui/react';
+import { useWarnings } from '@fluentui/react-hooks';
 import React from 'react';
 import { chunk } from '../utils';
 import { _VideoEffectsItem, _VideoEffectsItemProps } from './VideoEffectsItem';
@@ -27,6 +28,13 @@ export interface _VideoBackgroundEffectsPickerProps {
    * @param effectKey - The key of the Video Background Effect that was selected.
    */
   onChange?: (effectKey: string) => void;
+
+  /**
+   * The key of the Video Background Effect that is initially selected.
+   * Only provide this if the picker is an uncontrolled component;
+   * otherwise, use the `selectedEffectKey` property.
+   */
+  defaultSelectedEffectKey?: string;
 
   /**
    * The label to display for the picker.
@@ -83,7 +91,18 @@ export interface _VideoBackgroundEffectsPickerStyles {
 export const _VideoBackgroundEffectsPicker = (props: _VideoBackgroundEffectsPickerProps): JSX.Element => {
   const [componentControlledSelectedEffectKey, setComponentControlledSelectedEffectKey] = React.useState<
     string | undefined
-  >(props.selectedEffectKey);
+  >(props.defaultSelectedEffectKey);
+
+  // Warn the developer if they use the component in an incorrect controlled way.
+  useWarnings({
+    name: 'VideoBackgroundEffectsPicker',
+    props,
+    controlledUsage: {
+      onChangeProp: 'onChange',
+      valueProp: 'selectedEffectKey',
+      defaultValueProp: 'defaultSelectedEffectKey'
+    }
+  });
 
   const selectedEffect = props.selectedEffectKey ?? componentControlledSelectedEffectKey;
   const setSelectedEffect = (selectedEffectKey: string): void => {

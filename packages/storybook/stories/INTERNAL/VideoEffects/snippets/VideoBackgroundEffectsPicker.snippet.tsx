@@ -22,7 +22,13 @@ registerIcons({
 });
 
 export const VideoBackgroundEffectsPicker = (): JSX.Element => {
-  return <_VideoBackgroundEffectsPicker options={selectableVideoEffects} label={'Background'} />;
+  return (
+    <_VideoBackgroundEffectsPicker
+      options={selectableVideoEffects}
+      label={'Background'}
+      defaultSelectedEffectKey={'blur'}
+    />
+  );
 };
 
 const selectableVideoEffects: _VideoEffectsItemProps[] = [
