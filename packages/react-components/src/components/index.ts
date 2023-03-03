@@ -199,3 +199,5 @@ export type {
 } from './DevicePermissions/DevicePermissionDropdown';
 
 export type { VerticalGalleryStyles, VerticalGalleryStrings, VerticalGalleryControlBarStyles } from './VerticalGallery';
+
+export * from './Caption';
