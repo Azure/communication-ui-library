@@ -39,13 +39,16 @@ export interface _Identifiers {
   videoGallery: string;
   /** `data-ui-id` value for `VideoTile` Component */
   videoTile: string;
-  /** `data-ui-id` value for `HorizontalGallery` Component's left navigation button */
-  horizontalGalleryLeftNavButton: string;
-  /** `data-ui-id` value for `HorizontalGallery` Component's right navigation button */
-  horizontalGalleryRightNavButton: string;
+  /** `data-ui-id` value for overflow gallery component's left navigation button */
+  overflowGalleryLeftNavButton: string;
+  /** `data-ui-id` value for overflow gallery component's right navigation button */
+  overflowGalleryRightNavButton: string;
   /* @conditional-compile-remove(vertical-gallery) */
   /** `data-ui-id` value for `VerticalGallery` Component's children video tiles */
   verticalGalleryVideoTile: string;
+  /* @conditional-compile-remove(vertical-gallery) */
+  /** `data-ui-id` value for `VerticalGallery` Component's page counter */
+  verticalGalleryPageCounter: string;
 }
 
 const defaultIdentifiers: _Identifiers = {
@@ -60,10 +63,12 @@ const defaultIdentifiers: _Identifiers = {
   typingIndicator: 'typing-indicator',
   videoGallery: 'video-gallery',
   videoTile: 'video-tile',
-  horizontalGalleryLeftNavButton: 'horizontal-gallery-left-nav-button',
-  horizontalGalleryRightNavButton: 'horizontal-gallery-right-nav-button',
+  overflowGalleryLeftNavButton: 'overflow-gallery-left-nav-button',
+  overflowGalleryRightNavButton: 'overflow-gallery-right-nav-button',
   /* @conditional-compile-remove(vertical-gallery) */
-  verticalGalleryVideoTile: 'vertical-gallery-video-tile'
+  verticalGalleryVideoTile: 'vertical-gallery-video-tile',
+  /* @conditional-compile-remove(vertical-gallery) */
+  verticalGalleryPageCounter: 'vertical-gallery-page-counter'
 };
 
 /**

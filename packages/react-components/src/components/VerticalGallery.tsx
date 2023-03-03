@@ -162,6 +162,7 @@ export const VerticalGallery = (props: VerticalGalleryProps): JSX.Element => {
 const VerticalGalleryControlBar = (props: VerticalGalleryControlBarProps): JSX.Element => {
   const { onNextButtonClick, onPreviousButtonClick, buttonsDisabled, currentPage, totalPages, styles } = props;
   const theme = useTheme();
+  const ids = useIdentifiers();
 
   const pageCounterContainerStyles = useMemo(() => {
     return mergeStyles(pageNavigationControlBarContainerStyle, styles?.root);
@@ -187,19 +188,19 @@ const VerticalGalleryControlBar = (props: VerticalGalleryControlBarProps): JSX.E
         className={previousButtonSyles}
         onClick={onPreviousButtonClick}
         disabled={buttonsDisabled?.previous}
-        data-ui-id={'vertical-gallery-left-nav-button'}
+        data-ui-id={ids.overflowGalleryLeftNavButton}
       >
         <Icon iconName="VerticalGalleryLeftButton" styles={navIconStyles} />
       </DefaultButton>
       <Text
-        data-ui-id={'vertical-gallery-page-counter'}
+        data-ui-id={ids.verticalGalleryPageCounter}
         className={pageCounterStyles}
       >{`${currentPage} / ${totalPages}`}</Text>
       <DefaultButton
         className={nextButtonsStyles}
         onClick={onNextButtonClick}
         disabled={buttonsDisabled?.next}
-        data-ui-id={'vertical-gallery-right-nav-button'}
+        data-ui-id={ids.overflowGalleryRightNavButton}
       >
         <Icon iconName="VerticalGalleryRightButton" styles={navIconStyles} />
       </DefaultButton>

@@ -205,6 +205,20 @@ export interface CameraSitePermissionsProps extends CommonSitePermissionsProps {
 // @beta
 export type CameraSitePermissionsStrings = SitePermissionsStrings;
 
+// @internal
+export const _Caption: (props: _CaptionProps) => JSX.Element;
+
+// @internal
+export interface _CaptionProps {
+    // (undocumented)
+    caption: string;
+    // (undocumented)
+    displayName: string;
+    onRenderAvatar?: OnRenderAvatarCallback;
+    // (undocumented)
+    userId?: string;
+}
+
 // @public
 export interface ChatMessage extends MessageCommon {
     // (undocumented)
@@ -911,10 +925,10 @@ export interface _IdentifierProviderProps {
 
 // @internal
 export interface _Identifiers {
-    horizontalGalleryLeftNavButton: string;
-    horizontalGalleryRightNavButton: string;
     messageContent: string;
     messageTimestamp: string;
+    overflowGalleryLeftNavButton: string;
+    overflowGalleryRightNavButton: string;
     participantButtonPeopleMenuItem: string;
     participantItemMenuButton: string;
     participantList: string;
