@@ -36,6 +36,7 @@ export const OverflowGallery = (props: {
   isNarrow?: boolean;
   overflowGalleryElements?: JSX.Element[];
   horizontalGalleryStyles?: HorizontalGalleryStyles;
+  /* @conditional-compile-remove(vertical-gallery) */
   veritcalGalleryStyles?: VerticalGalleryStyles;
   /* @conditional-compile-remove(vertical-gallery) */
   overflowGalleryLayout?: OverflowGalleryLayout;

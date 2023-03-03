@@ -140,7 +140,7 @@ export interface VideoGalleryStyles extends BaseCustomStyles {
   localVideo?: IStyle;
   /* @conditional-compile-remove(vertical-gallery) */
   /** Styles for the vertical gallery */
-  verticalGalleryStyles?: VerticalGalleryStyles;
+  verticalGallery?: VerticalGalleryStyles;
 }
 
 /* @conditional-compile-remove(vertical-gallery) */

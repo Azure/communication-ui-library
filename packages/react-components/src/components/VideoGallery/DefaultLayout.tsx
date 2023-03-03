@@ -81,7 +81,9 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
         isNarrow={isNarrow}
         shouldFloatLocalVideo={false}
         overflowGalleryElements={horizontalGalleryTiles}
-        styles={styles?.horizontalGallery}
+        horizontalGalleryStyles={styles?.horizontalGallery}
+        /* @conditional-compile-remove(vertical-gallery) */
+        veritcalGalleryStyles={styles?.verticalGallery}
         /* @conditional-compile-remove(pinned-participants) */
         overflowGalleryLayout={overflowGalleryLayout}
       />
