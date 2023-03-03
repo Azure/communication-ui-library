@@ -92,7 +92,8 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
     isNarrow,
     horizontalGalleryTiles,
     styles?.horizontalGallery,
-    /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryLayout
+    /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryLayout,
+    /* @conditional-compile-remove(vertical-gallery) */ styles?.verticalGallery
   ]);
 
   return (

@@ -157,7 +157,8 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
     isNarrow,
     horizontalGalleryTiles,
     styles?.horizontalGallery,
-    /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryLayout
+    /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryLayout,
+    /* @conditional-compile-remove(vertical-gallery) */ styles?.verticalGallery
   ]);
 
   return (
