@@ -49,7 +49,7 @@ test.describe('Vertical gallery resizing tests', async () => {
     const initialState = defaultMockCallAdapterState(participants);
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
     // set the initial viewPort size to activate the verticalGallery.
-    page.setViewportSize({ width: 1200, height: 500 });
+    await page.setViewportSize({ width: 1200, height: 500 });
     // wait for the tiles to load
     const verticalTiles = await waitForSelector(page, dataUiId(IDS.verticalGalleryVideoTile));
 
@@ -58,7 +58,7 @@ test.describe('Vertical gallery resizing tests', async () => {
     expect(await verticalTiles.evaluate((e) => (e as HTMLDivElement).clientHeight)).toBeLessThanOrEqual(144);
 
     // resize the window.
-    page.setViewportSize({ width: 1200, height: 600 });
+    await page.setViewportSize({ width: 1200, height: 600 });
 
     // verify that the sizes are still within the correct boundaries.
     expect(await verticalTiles.evaluate((e) => (e as HTMLDivElement).clientHeight)).toBeGreaterThanOrEqual(90);
@@ -89,7 +89,7 @@ test.describe('Vertical gallery resizing tests', async () => {
     const initialState = defaultMockCallAdapterState(participants);
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
     // set the initial viewPort size to activate the verticalGallery.
-    page.setViewportSize({ width: 1200, height: 500 });
+    await page.setViewportSize({ width: 1200, height: 500 });
     // wait for the tiles to load
     await waitForSelector(page, dataUiId(IDS.verticalGalleryVideoTile));
 
@@ -97,14 +97,49 @@ test.describe('Vertical gallery resizing tests', async () => {
     expect(await page.locator(dataUiId(IDS.verticalGalleryVideoTile)).count()).toBe(2);
 
     // resize the window.
-    page.setViewportSize({ width: 1200, height: 600 });
+    await page.setViewportSize({ width: 1200, height: 600 });
 
     // verify that we added a tile with the extra spacing.
     expect(await page.locator(dataUiId(IDS.verticalGalleryVideoTile)).count()).toBe(3);
   });
-  test('resize should appropriately remove tiles if needed', async ({ page, serverUrl }, testInfo) => {
+  test.only('resize should appropriately remove tiles if needed', async ({ page, serverUrl }, testInfo) => {
     test.skip(isTestProfileMobile(testInfo));
+
+    const paul = defaultMockRemoteParticipant('Paul Bridges');
+    addVideoStream(paul, true);
+    const fiona = defaultMockRemoteParticipant('Fiona Harper');
+    addVideoStream(fiona, true);
+    const reina = defaultMockRemoteParticipant('Reina Takizawa');
+    const vasily = defaultMockRemoteParticipant('Vasily Podkolzin');
+
+    const participants = [
+      paul,
+      defaultMockRemoteParticipant('Eryka Klein'),
+      fiona,
+      defaultMockRemoteParticipant('Pardeep Singh'),
+      reina,
+      vasily,
+      defaultMockRemoteParticipant('Luciana Rodriguez'),
+      defaultMockRemoteParticipant('Antonie van Leeuwenhoek'),
+      defaultMockRemoteParticipant('Gerald Ho')
+    ];
+
+    const initialState = defaultMockCallAdapterState(participants);
+    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
+    // set the initial viewPort size to activate the verticalGallery.
+    await page.setViewportSize({ width: 1200, height: 600 });
     console.error(await page.locator(dataUiId(IDS.verticalGalleryVideoTile)).count());
+    // wait for the tiles to load
+    await waitForSelector(page, dataUiId(IDS.verticalGalleryVideoTile));
+
+    // check initial tile number to be correct.
+    expect(await page.locator(dataUiId(IDS.verticalGalleryVideoTile)).count()).toBe(3);
+
+    // resize the window.
+    await page.setViewportSize({ width: 1200, height: 500 });
+    console.error(await page.locator(dataUiId(IDS.verticalGalleryVideoTile)).count());
+    // verify that we added a tile with the extra spacing.
+    expect(await page.locator(dataUiId(IDS.verticalGalleryVideoTile)).count()).toBe(2);
   });
   test('resize should remove pages appropriately', async ({ page, serverUrl }, testInfo) => {
     test.skip(isTestProfileMobile(testInfo));
@@ -114,5 +149,29 @@ test.describe('Vertical gallery resizing tests', async () => {
   });
   test('single user on last page should use largest size', async ({ page, serverUrl }, testInfo) => {
     test.skip(isTestProfileMobile(testInfo));
+
+    const paul = defaultMockRemoteParticipant('Paul Bridges');
+    addVideoStream(paul, true);
+    const fiona = defaultMockRemoteParticipant('Fiona Harper');
+    addVideoStream(fiona, true);
+    const reina = defaultMockRemoteParticipant('Reina Takizawa');
+    const vasily = defaultMockRemoteParticipant('Vasily Podkolzin');
+
+    const participants = [
+      paul,
+      defaultMockRemoteParticipant('Eryka Klein'),
+      fiona,
+      defaultMockRemoteParticipant('Pardeep Singh'),
+      reina,
+      vasily,
+      defaultMockRemoteParticipant('Luciana Rodriguez'),
+      defaultMockRemoteParticipant('Antonie van Leeuwenhoek'),
+      defaultMockRemoteParticipant('Gerald Ho')
+    ];
+
+    const initialState = defaultMockCallAdapterState(participants);
+    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
+
+    await page.setViewportSize({ width: 1200, height: 600 });
   });
 });
