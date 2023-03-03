@@ -3,14 +3,7 @@
 
 import { registerIcons } from '@fluentui/react';
 import { ImageAdd20Regular, VideoBackgroundEffect20Regular, VideoPerson20Filled } from '@fluentui/react-icons';
-import {
-  _VideoEffectsItemNone,
-  _VideoEffectsItemBlur,
-  _VideoEffectsItemAddImage,
-  _VideoEffectsItem,
-  _VideoBackgroundEffectsPicker,
-  _VideoEffectsItemProps
-} from '@internal/react-components';
+import { _VideoBackgroundEffectsPicker, _VideoBackgroundEffectChoiceOption } from '@internal/react-components';
 import React from 'react';
 
 registerIcons({
@@ -31,7 +24,7 @@ export const VideoBackgroundEffectsPicker = (): JSX.Element => {
   );
 };
 
-const selectableVideoEffects: _VideoEffectsItemProps[] = [
+const selectableVideoEffects: _VideoBackgroundEffectChoiceOption[] = [
   {
     key: 'none',
     iconProps: {
