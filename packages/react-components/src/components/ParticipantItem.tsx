@@ -185,8 +185,8 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
   );
 
   const meTextStyle = useMemo(
-    () => mergeStyles(meContainerStyle, { color: theme.palette.neutralSecondary }, styles?.me),
-    [theme.palette.neutralSecondary, styles?.me]
+    () => mergeStyles(meContainerStyle, { color: theme.palette.neutralTertiary }, styles?.me),
+    [theme.palette.neutralTertiary, styles?.me]
   );
   const contextualMenuStyle = useMemo(
     () => mergeStyles({ background: theme.palette.neutralLighterAlt }, styles?.menu),
