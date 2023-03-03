@@ -146,7 +146,9 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
         isNarrow={isNarrow}
         shouldFloatLocalVideo={true}
         overflowGalleryElements={horizontalGalleryTiles}
-        styles={styles?.horizontalGallery}
+        horizontalGalleryStyles={styles?.horizontalGallery}
+        /* @conditional-compile-remove(vertical-gallery) */
+        veritcalGalleryStyles={styles?.verticalGalleryStyles}
         /* @conditional-compile-remove(vertical-gallery) */
         overflowGalleryLayout={overflowGalleryLayout}
       />

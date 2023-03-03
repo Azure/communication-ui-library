@@ -9,6 +9,8 @@ import { ResponsiveHorizontalGallery } from '../ResponsiveHorizontalGallery';
 import { ResponsiveVerticalGallery } from '../ResponsiveVerticalGallery';
 import { HORIZONTAL_GALLERY_BUTTON_WIDTH, HORIZONTAL_GALLERY_GAP } from '../styles/HorizontalGallery.styles';
 /* @conditional-compile-remove(vertical-gallery) */
+import { VerticalGalleryStyles } from '../VerticalGallery';
+/* @conditional-compile-remove(vertical-gallery) */
 import { OverflowGalleryLayout } from '../VideoGallery';
 /* @conditional-compile-remove(pinned-participants) */
 import { ScrollableHorizontalGallery } from './ScrollableHorizontalGallery';
@@ -33,7 +35,8 @@ export const OverflowGallery = (props: {
   shouldFloatLocalVideo?: boolean;
   isNarrow?: boolean;
   overflowGalleryElements?: JSX.Element[];
-  styles?: HorizontalGalleryStyles;
+  horizontalGalleryStyles?: HorizontalGalleryStyles;
+  veritcalGalleryStyles?: VerticalGalleryStyles;
   /* @conditional-compile-remove(vertical-gallery) */
   overflowGalleryLayout?: OverflowGalleryLayout;
 }): JSX.Element => {
@@ -41,8 +44,9 @@ export const OverflowGallery = (props: {
     shouldFloatLocalVideo = false,
     isNarrow = false,
     overflowGalleryElements,
-    styles,
-    /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryLayout = 'HorizontalBottom'
+    horizontalGalleryStyles,
+    /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryLayout = 'HorizontalBottom',
+    /* @conditional-compile-remove(vertical-gallery) */ veritcalGalleryStyles
   } = props;
 
   const containerStyles = useMemo(() => {
@@ -56,10 +60,15 @@ export const OverflowGallery = (props: {
   const galleryStyles = useMemo(() => {
     /* @conditional-compile-remove(vertical-gallery) */
     if (overflowGalleryLayout === 'VerticalRight') {
-      return concatStyleSets(verticalGalleryStyle, styles);
+      return concatStyleSets(verticalGalleryStyle, veritcalGalleryStyles);
     }
-    return concatStyleSets(horizontalGalleryStyle(isNarrow), styles);
-  }, [isNarrow, styles, /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryLayout]);
+    return concatStyleSets(horizontalGalleryStyle(isNarrow), horizontalGalleryStyles);
+  }, [
+    isNarrow,
+    horizontalGalleryStyles,
+    /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryLayout,
+    /* @conditional-compile-remove(vertical-gallery) */ veritcalGalleryStyles
+  ]);
 
   /* @conditional-compile-remove(vertical-gallery) */
   if (overflowGalleryLayout === 'VerticalRight') {
@@ -67,7 +76,7 @@ export const OverflowGallery = (props: {
       <ResponsiveVerticalGallery
         key="responsive-vertical-gallery"
         containerStyles={containerStyles}
-        verticalGalleryStyles={galleryStyles}
+        verticalGalleryStyles={galleryStyles as VerticalGalleryStyles}
         controlBarHeightRem={HORIZONTAL_GALLERY_BUTTON_WIDTH}
         gapHeightRem={HORIZONTAL_GALLERY_GAP}
       >
