@@ -162,6 +162,7 @@ export const VerticalGallery = (props: VerticalGalleryProps): JSX.Element => {
 const VerticalGalleryControlBar = (props: VerticalGalleryControlBarProps): JSX.Element => {
   const { onNextButtonClick, onPreviousButtonClick, buttonsDisabled, currentPage, totalPages, styles } = props;
   const theme = useTheme();
+  /* @conditional-compile-remove(vertical-gallery) */
   const ids = useIdentifiers();
 
   const pageCounterContainerStyles = useMemo(() => {
@@ -188,11 +189,13 @@ const VerticalGalleryControlBar = (props: VerticalGalleryControlBarProps): JSX.E
         className={previousButtonSyles}
         onClick={onPreviousButtonClick}
         disabled={buttonsDisabled?.previous}
+        /* @conditional-compile-remove(vertical-gallery) */
         data-ui-id={ids.overflowGalleryLeftNavButton}
       >
         <Icon iconName="VerticalGalleryLeftButton" styles={navIconStyles} />
       </DefaultButton>
       <Text
+        /* @conditional-compile-remove(vertical-gallery) */
         data-ui-id={ids.verticalGalleryPageCounter}
         className={pageCounterStyles}
       >{`${currentPage} / ${totalPages}`}</Text>
@@ -200,6 +203,7 @@ const VerticalGalleryControlBar = (props: VerticalGalleryControlBarProps): JSX.E
         className={nextButtonsStyles}
         onClick={onNextButtonClick}
         disabled={buttonsDisabled?.next}
+        /* @conditional-compile-remove(vertical-gallery) */
         data-ui-id={ids.overflowGalleryRightNavButton}
       >
         <Icon iconName="VerticalGalleryRightButton" styles={navIconStyles} />
