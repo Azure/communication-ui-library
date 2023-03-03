@@ -238,10 +238,10 @@ test.describe('Vertical gallery resizing tests', async () => {
 
     await page.setViewportSize({ width: 1200, height: 500 });
 
-    await waitForSelector(page, dataUiId(IDS.verticalGalleryRightNavButton));
+    await waitForSelector(page, dataUiId(IDS.overflowGalleryRightNavButton));
     // since we know that we have 2 tiles per page in this view port gerald will be the last participant.
-    await pageClick(page, dataUiId(IDS.verticalGalleryRightNavButton));
-    await pageClick(page, dataUiId(IDS.verticalGalleryRightNavButton));
+    await pageClick(page, dataUiId(IDS.overflowGalleryRightNavButton));
+    await pageClick(page, dataUiId(IDS.overflowGalleryRightNavButton));
 
     const verticalTiles = await waitForSelector(page, dataUiId(IDS.verticalGalleryVideoTile));
 
