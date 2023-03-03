@@ -1661,6 +1661,7 @@ export const _VideoBackgroundEffectsPicker: (props: _VideoBackgroundEffectsPicke
 
 // @internal
 export interface _VideoBackgroundEffectsPickerProps {
+    defaultSelectedEffectKey?: string;
     itemsPerRow?: 'wrap' | number;
     label?: string;
     onChange?: (effectKey: string) => void;
