@@ -43,12 +43,7 @@ export interface _Identifiers {
   horizontalGalleryLeftNavButton: string;
   /** `data-ui-id` value for `HorizontalGallery` Component's right navigation button */
   horizontalGalleryRightNavButton: string;
-  /** `data-ui-id` value for `VerticalGallery` Component's left navigation button */
-  verticalGalleryLeftButton: string;
-  /** `data-ui-id` value for `VerticalGallery` Component's right navigation button */
-  verticalGalleryRightButton: string;
-  /** `data-ui-id` value for `VerticalGallery` Component's page counter */
-  verticalGalleryPageCounter: string;
+  /* @conditional-compile-remove(vertical-gallery) */
   /** `data-ui-id` value for `VerticalGallery` Component's children video tiles */
   verticalGalleryVideoTile: string;
 }
@@ -67,9 +62,7 @@ const defaultIdentifiers: _Identifiers = {
   videoTile: 'video-tile',
   horizontalGalleryLeftNavButton: 'horizontal-gallery-left-nav-button',
   horizontalGalleryRightNavButton: 'horizontal-gallery-right-nav-button',
-  verticalGalleryLeftButton: 'vertical-gallery-left-nav-button',
-  verticalGalleryRightButton: 'vertical-gallery-right-nav-button',
-  verticalGalleryPageCounter: 'vertical-gallery-page-counter',
+  /* @conditional-compile-remove(vertical-gallery) */
   verticalGalleryVideoTile: 'vertical-gallery-video-tile'
 };
 

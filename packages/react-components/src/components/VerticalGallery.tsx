@@ -3,6 +3,7 @@
 
 import { DefaultButton, Icon, IStyle, mergeStyles, Stack, Text } from '@fluentui/react';
 import React, { useEffect, useMemo, useState } from 'react';
+/* @conditional-compile-remove(vertical-gallery) */
 import { useIdentifiers } from '../identifiers';
 import { useTheme } from '../theming';
 import { BaseCustomStyles } from '../types';
@@ -78,6 +79,7 @@ export const VerticalGallery = (props: VerticalGalleryProps): JSX.Element => {
   const [page, setPage] = useState(1);
   const [buttonState, setButtonState] = useState<{ previous: boolean; next: boolean }>({ previous: true, next: true });
 
+  /* @conditional-compile-remove(vertical-gallery) */
   const ids = useIdentifiers();
 
   const numberOfChildren = React.Children.count(children);
@@ -134,7 +136,11 @@ export const VerticalGallery = (props: VerticalGalleryProps): JSX.Element => {
       <Stack styles={childContainerStyle}>
         {childrenOnCurrentPage.map((child, i) => {
           return (
-            <Stack.Item key={i} styles={childrenStyles} data-ui-id={ids.verticalGalleryVideoTile}>
+            <Stack.Item
+              key={i}
+              styles={childrenStyles}
+              /* @conditional-compile-remove(vertical-gallery) */ data-ui-id={ids.verticalGalleryVideoTile}
+            >
               {child}
             </Stack.Item>
           );
@@ -156,7 +162,6 @@ export const VerticalGallery = (props: VerticalGalleryProps): JSX.Element => {
 const VerticalGalleryControlBar = (props: VerticalGalleryControlBarProps): JSX.Element => {
   const { onNextButtonClick, onPreviousButtonClick, buttonsDisabled, currentPage, totalPages, styles } = props;
   const theme = useTheme();
-  const ids = useIdentifiers();
 
   const pageCounterContainerStyles = useMemo(() => {
     return mergeStyles(pageNavigationControlBarContainerStyle, styles?.root);
@@ -182,16 +187,19 @@ const VerticalGalleryControlBar = (props: VerticalGalleryControlBarProps): JSX.E
         className={previousButtonSyles}
         onClick={onPreviousButtonClick}
         disabled={buttonsDisabled?.previous}
-        data-ui-id={ids.verticalGalleryLeftButton}
+        data-ui-id={'vertical-gallery-left-nav-button'}
       >
         <Icon iconName="VerticalGalleryLeftButton" styles={navIconStyles} />
       </DefaultButton>
-      <Text className={pageCounterStyles}>{`${currentPage} / ${totalPages}`}</Text>
+      <Text
+        data-ui-id={'vertical-gallery-page-counter'}
+        className={pageCounterStyles}
+      >{`${currentPage} / ${totalPages}`}</Text>
       <DefaultButton
         className={nextButtonsStyles}
         onClick={onNextButtonClick}
         disabled={buttonsDisabled?.next}
-        data-ui-id={ids.verticalGalleryRightButton}
+        data-ui-id={'vertical-gallery-right-nav-button'}
       >
         <Icon iconName="VerticalGalleryRightButton" styles={navIconStyles} />
       </DefaultButton>

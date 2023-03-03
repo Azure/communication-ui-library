@@ -36,7 +36,7 @@ export const IDS = {
   allowUnsupportedBrowserButton: 'allowUnsupportedBrowserButton',
   configurationScreenDevicesButton: 'call-composite-local-device-settings-options-button',
   verticalGalleryLeftNavButton: 'vertical-gallery-left-nav-button',
-  verticalGalleryRightNaveButton: 'vertical-gallery-right-nav-button',
+  verticalGalleryRightNavButton: 'vertical-gallery-right-nav-button',
   verticalGalleryPageCounter: 'vertical-gallery-page-counter',
   verticalGalleryVideoTile: 'vertical-gallery-video-tile'
 };
