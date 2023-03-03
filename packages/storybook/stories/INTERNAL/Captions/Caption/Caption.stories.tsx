@@ -8,7 +8,7 @@ import { COMPONENT_FOLDER_PREFIX } from '../../../constants';
 import { hiddenControl } from '../../../controlsUtils';
 
 const CaptionStory = (args): JSX.Element => {
-  return <_Caption userId={args.userId} userName={args.userName} caption={args.caption} />;
+  return <_Caption userId={args.userId} displayName={args.displayName} caption={args.caption} />;
 };
 
 // This must be the only named export from this module, and must be named to match the storybook path suffix.
@@ -21,7 +21,7 @@ export default {
   component: _Caption,
   argTypes: {
     userId: { control: 'text', defaultValue: 'abcd' },
-    userName: { control: 'text', defaultValue: 'Caroline' },
+    displayName: { control: 'text', defaultValue: 'Caroline' },
     caption: { control: 'text', defaultValue: 'Hello there' },
     onRenderAvatar: hiddenControl
   }

@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import { IPersona, Persona, Stack, useTheme, PersonaSize, Text, IStackTokens, mergeStyles } from '@fluentui/react';
+import { IPersona, Persona, Stack, PersonaSize, Text, IStackTokens, mergeStyles } from '@fluentui/react';
 import React from 'react';
 import { _pxToRem } from '@internal/acs-ui-common';
 import { _FileUploadCardsStrings } from './FileUploadCards';
@@ -11,9 +11,9 @@ import { OnRenderAvatarCallback } from '../types';
  * _Caption Component Props.
  */
 export interface _CaptionProps {
-  userId: string;
-  userName: string;
+  displayName: string;
   caption: string;
+  userId?: string;
   /**
    * Optional callback to override render of the avatar.
    *
@@ -24,15 +24,15 @@ export interface _CaptionProps {
 
 /**
  * @internal
- * A component for displaying a caption with user icon, username and caption text.
+ * A component for displaying a caption with user icon, displayName and caption text.
  */
 export const _Caption = (props: _CaptionProps): JSX.Element => {
-  const { userId, userName, caption, onRenderAvatar } = props;
+  const { userId, displayName, caption, onRenderAvatar } = props;
 
   const personaOptions: IPersona = {
     hidePersonaDetails: true,
     size: PersonaSize.size24,
-    text: userName,
+    text: displayName,
     showOverflowTooltip: false,
     styles: {
       root: {
@@ -47,7 +47,7 @@ export const _Caption = (props: _CaptionProps): JSX.Element => {
     padding: 10
   };
 
-  const userNameClassName = mergeStyles({
+  const displayNameClassName = mergeStyles({
     fontWeight: 600,
     fontSize: _pxToRem(12),
     lineHeight: _pxToRem(16)
@@ -64,7 +64,7 @@ export const _Caption = (props: _CaptionProps): JSX.Element => {
       <Stack horizontal verticalAlign="center" tokens={spacingStackTokens}>
         <Stack horizontal verticalAlign="center">
           <span>{userIcon}</span>
-          <Text className={userNameClassName}>{userName}</Text>
+          <Text className={displayNameClassName}>{displayName}</Text>
         </Stack>
 
         <span>
