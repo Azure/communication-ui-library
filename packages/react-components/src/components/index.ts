@@ -201,7 +201,7 @@ export type {
 export { _VideoEffectsItem } from './VideoEffects/VideoEffectsItem';
 export type { _VideoEffectsItemProps, _VideoEffectsItemStyles } from './VideoEffects/VideoEffectsItem';
 export {
-  _VideoEffectsItemNone,
+  _VideoEffectsItemNoBackground,
   _VideoEffectsItemBlur,
   _VideoEffectsItemAddImage
 } from './VideoEffects/PresetVideoEffectsItems';

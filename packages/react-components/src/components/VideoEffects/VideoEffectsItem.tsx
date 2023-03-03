@@ -65,6 +65,11 @@ export interface _VideoEffectsItemProps {
   tooltipProps?: ITooltipHostProps;
 
   /**
+   * Aria label for the Video effects item.
+   */
+  ariaLabel?: string;
+
+  /**
    * Background to display for the Video effects item.
    * @default undefined (no background image)
    */
@@ -162,8 +167,9 @@ export const _VideoEffectsItem = (props: _VideoEffectsItemProps): JSX.Element =>
               }
         }
         tabIndex={props.disabled ? -1 : 0}
-        aria-label={props.title}
+        aria-label={props.ariaLabel}
         aria-disabled={props.disabled}
+        role="button"
       >
         {props.iconProps && (
           <Stack.Item styles={{ root: props.styles?.iconContainer }}>
