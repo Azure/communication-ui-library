@@ -197,3 +197,5 @@ export type {
   _DevicePermissionDropdownProps,
   _PermissionConstraints
 } from './DevicePermissions/DevicePermissionDropdown';
+
+export * from './Caption';
