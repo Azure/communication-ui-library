@@ -925,10 +925,10 @@ export interface _IdentifierProviderProps {
 
 // @internal
 export interface _Identifiers {
-    horizontalGalleryLeftNavButton: string;
-    horizontalGalleryRightNavButton: string;
     messageContent: string;
     messageTimestamp: string;
+    overflowGalleryLeftNavButton: string;
+    overflowGalleryRightNavButton: string;
     participantButtonPeopleMenuItem: string;
     participantItemMenuButton: string;
     participantList: string;
