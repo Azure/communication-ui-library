@@ -179,4 +179,6 @@ As well you will need to also use the flags `... -c call` and `... -c chat` to r
 
 ## Troubleshooting
 
-1. "ERROR: ENOENT: no such file or directory: node_modules/ts-node/dist/bin.js'" or "react-use-draggable-scroll.js doesn't exist" - you need run `rush update -p` under `/packages/react-composites`
+- **react-use-draggable-scroll.js doesn't exist**
+  
+  You need run `rush update -p` under `/packages/react-composites`
