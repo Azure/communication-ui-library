@@ -5,6 +5,7 @@ import { DefaultButton, Icon, IStyle, mergeStyles, Stack, Text } from '@fluentui
 import React, { useEffect, useMemo, useState } from 'react';
 /* @conditional-compile-remove(vertical-gallery) */
 import { useLocale } from '../localization';
+import { useIdentifiers } from '../identifiers';
 import { useTheme } from '../theming';
 import { BaseCustomStyles } from '../types';
 import {
@@ -171,6 +172,7 @@ export const VerticalGallery = (props: VerticalGalleryProps): JSX.Element => {
 const VerticalGalleryControlBar = (props: VerticalGalleryControlBarProps): JSX.Element => {
   const { onNextButtonClick, onPreviousButtonClick, buttonsDisabled, currentPage, totalPages, styles } = props;
   const theme = useTheme();
+  const ids = useIdentifiers();
 
   /* @conditional-compile-remove(vertical-gallery) */
   const strings = useLocale().strings.VerticalGallery;
@@ -201,6 +203,7 @@ const VerticalGalleryControlBar = (props: VerticalGalleryControlBarProps): JSX.E
         disabled={buttonsDisabled?.previous}
         /* @conditional-compile-remove(vertical-gallery) */
         ariaLabel={strings.leftNavButtonAriaLabel}
+        data-ui-id={ids.overflowGalleryLeftNavButton}
       >
         <Icon iconName="VerticalGalleryLeftButton" styles={navIconStyles} />
       </DefaultButton>
@@ -211,6 +214,7 @@ const VerticalGalleryControlBar = (props: VerticalGalleryControlBarProps): JSX.E
         disabled={buttonsDisabled?.next}
         /* @conditional-compile-remove(vertical-gallery) */
         ariaLabel={strings.rightNavButtonAriaLabel}
+        data-ui-id={ids.overflowGalleryRightNavButton}
       >
         <Icon iconName="VerticalGalleryRightButton" styles={navIconStyles} />
       </DefaultButton>

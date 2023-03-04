@@ -53,7 +53,7 @@ export const OverflowGallery = (props: {
   const containerStyles = useMemo(() => {
     /* @conditional-compile-remove(vertical-gallery) */
     if (overflowGalleryLayout === 'VerticalRight') {
-      return verticalGalleryContainerStyle(shouldFloatLocalVideo);
+      return verticalGalleryContainerStyle(shouldFloatLocalVideo, isNarrow);
     }
     return horizontalGalleryContainerStyle(shouldFloatLocalVideo, isNarrow);
   }, [shouldFloatLocalVideo, isNarrow, /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryLayout]);
