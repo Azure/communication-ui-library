@@ -25,7 +25,7 @@ Both hermetic and live tests use [playwright](https://playwright.dev/) test fram
 * [../playwright.config.live.ts](../playwright.config.live.ts) for live tests
 
 ## Setup
-* Create `.env` file under `packages/react-composites/tests/broswer` and in this file, make sure you have defined:
+* Create `.env` file under `packages/react-composites/tests/browser` and in this file, make sure you have defined:
      *  CONNECTION_STRING
      *  TEST_DIR
      *  SNAPSHOT_DIR
