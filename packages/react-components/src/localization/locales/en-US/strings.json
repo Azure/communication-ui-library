@@ -309,5 +309,9 @@
     "step2DigitText": "2",
     "step3DigitText": "3",
     "step4DigitText": "4"
+  },
+  "VerticalGallery": {
+    "leftNavButtonAriaLabel": "previous page",
+    "rightNavButtonAriaLabel": "next page"
   }
 }
