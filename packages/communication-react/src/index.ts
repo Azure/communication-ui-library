@@ -304,3 +304,9 @@ export type { UnsupportedBrowserVersionStrings, UnsupportedBrowserVersionProps }
 export { UnsupportedOperatingSystem } from '../../react-components/src';
 /* @conditional-compile-remove(unsupported-browser) */
 export type { UnsupportedOperatingSystemStrings, UnsupportedOperatingSystemProps } from '../../react-components/src';
+/* @conditional-compile-remove(vertical-gallery) */
+export type {
+  VerticalGalleryStyles,
+  VerticalGalleryStrings,
+  VerticalGalleryControlBarStyles
+} from '../../react-components/src';
