@@ -18,6 +18,7 @@ export interface QueryArgs {
   customCallCompositeOptions?: CallCompositeOptions;
   useEnvironmentInfoTroubleshootingOptions?: boolean;
   usePermissionTroubleshootingActions?: boolean;
+  rtl?: false;
 
   // These are only set for live tests.
   // TODO: Separate the args out better.

@@ -27,6 +27,7 @@ export function BaseApp(props: { queryArgs: QueryArgs; callAdapter?: CallAdapter
   console.log(`Loaded test app with args ${JSON.stringify(queryArgs)}`);
 
   const locale = queryArgs.useFrLocale ? COMPOSITE_LOCALE_FR_FR : COMPOSITE_LOCALE_EN_US;
+  const rtl = !!queryArgs.rtl;
   if (queryArgs.showCallDescription) {
     locale.strings.call.configurationPageCallDetails =
       'Some details about the call that span more than one line - many, many lines in fact. Who would want fewer lines than many, many lines? Could you even imagine?! 😲';
@@ -64,6 +65,7 @@ export function BaseApp(props: { queryArgs: QueryArgs; callAdapter?: CallAdapter
               onFetchParticipantMenuItems={
                 queryArgs.injectParticipantMenuItems ? onFetchParticipantMenuItems : undefined
               }
+              fluentTheme={{ rtl }}
               options={
                 customCallCompositeOptions !== undefined
                   ? customCallCompositeOptions
