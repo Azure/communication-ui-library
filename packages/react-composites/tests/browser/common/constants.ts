@@ -34,5 +34,7 @@ export const IDS = {
   unsupportedEnvironmentLink: 'unsupported-environment-link',
   lobbyScreenTitle: 'lobbyScreenTitle',
   allowUnsupportedBrowserButton: 'allowUnsupportedBrowserButton',
-  configurationScreenDevicesButton: 'call-composite-local-device-settings-options-button'
+  configurationScreenDevicesButton: 'call-composite-local-device-settings-options-button',
+  verticalGalleryPageCounter: 'vertical-gallery-page-counter',
+  verticalGalleryVideoTile: 'vertical-gallery-video-tile'
 };
