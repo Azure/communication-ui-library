@@ -109,18 +109,70 @@ const getDocs: () => JSX.Element = () => {
       <Subheading>Best Practices</Subheading>
       <Description>
         Overflow gallery is used best in different ways depending on the applications environment. The goal of
-        OverflowGallery is to help manage the vertical space of the applications VideoGallery. Should your application
-        most often be running in a window or container that has a narrow aspect ratio, horiztontal gallery will be
-        useful for maintaining the best aspect ratio of your video tiles in the grid view.
+        OverflowGallery is to help manage the vertical space of the applications VideoGallery. If your application runs
+        in a window or container that has a narrow aspect ratio, horiztontal gallery will be useful for maintaining the
+        best aspect ratio of your video tiles in the grid view.
       </Description>
-      <Description>include images here maybe a table</Description>
+      <Stack horizontalAlign="center" horizontal={true} tokens={{ childrenGap: '0.5rem' }}>
+        <Stack horizontalAlign="center">
+          <Image
+            style={{ width: '100%', height: 'auto' }}
+            src="images/narrow-horiztonal-gallery.png"
+            alt="Fill frame in VideoGallery"
+          />
+          <Description>✅ Narrow video tile experience with horizontal gallery</Description>
+        </Stack>
+        <Stack horizontalAlign="center">
+          <Image
+            style={{ width: '100%', height: 'auto' }}
+            src="images/narrow-vertical-gallery.png"
+            alt="Fit to frame menu item in VideoGallery"
+          />
+          <Description>❌ Narrow video tile experience with vertical gallery</Description>
+        </Stack>
+      </Stack>
+      <Stack horizontal={true} tokens={{ childrenGap: '0.5rem' }}>
+        <Stack horizontalAlign="center">
+          <Image
+            style={{ width: '100%', height: 'auto' }}
+            src="images/short-gallery.png"
+            alt="Fill frame in VideoGallery"
+          />
+          <Description>❌ Wide video tile experience with horizontal gallery</Description>
+        </Stack>
+        <Stack horizontalAlign="center">
+          <Image
+            style={{ width: '100%', height: 'auto' }}
+            src="images/short-gallery-vertical.png"
+            alt="Fit to frame menu item in VideoGallery"
+          />
+          <Description>✅ Wide video tile experience with vertical gallery</Description>
+        </Stack>
+      </Stack>
       <Description>
-        Vertical Galleries however can be most useful when the application is running a very wide environment. Like for
+        The vertical gallery can be most useful when the application is running a very wide environment. Like for
         example a mobile device in landscape. The wide aspect ratio of the device is useful for when a participant is
         watching a screen share on a phone so in this situation the Vertical Gallery can help the stream be more
         visible.
       </Description>
-      <Description>insert images here, maybe a table</Description>
+      <Stack horizontal={true} tokens={{ childrenGap: '0.5rem' }}>
+        <Stack horizontalAlign="center">
+          <Image
+            style={{ width: '100%', height: 'auto' }}
+            src="images/short-screen-share.png"
+            alt="Fill to frame in VideoGallery"
+          />
+          <Description>❌ Wide screen share appearence horiztonal gallery</Description>
+        </Stack>
+        <Stack horizontalAlign="center">
+          <Image
+            style={{ width: '100%', height: 'auto' }}
+            src="images/short-screen-share-vertical.png"
+            alt="Fill frame menu item in VideoGallery"
+          />
+          <Description>✅ Wide screen share appearence vertical gallery</Description>
+        </Stack>
+      </Stack>
 
       <Heading>Local Video Tile</Heading>
       <Description>
