@@ -36,12 +36,26 @@ import { videoGalleryOuterDivStyle } from './styles/VideoGallery.styles';
 import { floatingLocalVideoTileStyle } from './VideoGallery/styles/FloatingLocalVideo.styles';
 /* @conditional-compile-remove(pinned-participants) */
 import { useId } from '@fluentui/react-hooks';
+/* @conditional-compile-remove(vertical-gallery) */
+import { VerticalGalleryStyles } from './VerticalGallery';
 
 /**
  * @private
  * Currently the Calling JS SDK supports up to 4 remote video streams
  */
 export const DEFAULT_MAX_REMOTE_VIDEO_STREAMS = 4;
+
+/**
+ * @private
+ * Styles to disable the selectivity of a text in video gallery
+ */
+export const unselectable = {
+  '-webkit-user-select': 'none',
+  '-webkit-touch-callout': 'none',
+  '-moz-user-select': 'none',
+  '-ms-user-select': 'none',
+  'user-select': 'none'
+};
 /**
  * @private
  * Set aside only 6 dominant speakers for remaining audio participants
@@ -124,6 +138,9 @@ export interface VideoGalleryStyles extends BaseCustomStyles {
   horizontalGallery?: HorizontalGalleryStyles;
   /** Styles for the local video  */
   localVideo?: IStyle;
+  /* @conditional-compile-remove(vertical-gallery) */
+  /** Styles for the vertical gallery */
+  verticalGallery?: VerticalGalleryStyles;
 }
 
 /* @conditional-compile-remove(vertical-gallery) */
@@ -568,7 +585,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       id={drawerMenuHostIdFromProp ? undefined : drawerMenuHostId}
       data-ui-id={ids.videoGallery}
       ref={containerRef}
-      className={mergeStyles(videoGalleryOuterDivStyle, styles?.root)}
+      className={mergeStyles(videoGalleryOuterDivStyle, styles?.root, unselectable)}
     >
       {videoGalleryLayout}
       {
