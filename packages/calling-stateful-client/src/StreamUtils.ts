@@ -300,29 +300,50 @@ async function createViewUnparentedVideo(
   };
 }
 
-function disposeViewRemoteVideo(
+function disposeViewVideo(
   context: CallContext,
   internalContext: InternalCallContext,
   callId: string,
-  participantId: CommunicationIdentifierKind | string,
-  stream: RemoteVideoStreamState
+  stream: RemoteVideoStreamState | LocalVideoStreamState,
+  participantId?: CommunicationIdentifierKind | string
 ): void {
-  const streamId = stream.id;
-  const streamType = stream.mediaStreamType;
-  let participantKey;
-  if (typeof participantId === 'string') {
-    participantKey = participantId;
+  // we can only have 3 types of createView
+  let streamEventType: 'disposeViewLocal' | 'disposeViewRemote' | 'disposeViewUnparented';
+
+  // we will reuse these for local as well but we need to make sure the remote stream is passed in like before.
+
+  if (participantId) {
+    streamEventType = 'disposeViewRemote';
+  } else if (callId) {
+    streamEventType = 'disposeViewLocal';
   } else {
-    participantKey = toFlatCommunicationIdentifier(participantId);
+    // TODO update for when unparented view.
+    streamEventType = 'disposeViewUnparented';
   }
 
-  const streamLogInfo = { callId, participantKey, streamId, streamType, streamEventType: 'disposeViewRemote' };
+  const streamType = stream.mediaStreamType;
+  const streamId = (stream as RemoteVideoStream).id;
+
+  // we want to check to see if there is a participantId this will tell us whether its a local stream or a remote one.
+  const participantKey =
+    streamEventType === 'disposeViewRemote' && participantId
+      ? typeof participantId === 'string'
+        ? participantId
+        : toFlatCommunicationIdentifier(participantId)
+      : undefined;
+  const streamLogInfo = { callId, participantKey, streamId, streamType };
 
   _logStreamEvent(EventNames.START_DISPOSE_STREAM, streamLogInfo);
 
-  context.setRemoteVideoStreamRendererView(callId, participantKey, streamId, undefined);
+  if (streamEventType === 'disposeViewRemote' && participantKey) {
+    context.setRemoteVideoStreamRendererView(callId, participantKey, streamId, undefined);
+  }
 
-  const renderInfo = internalContext.getRemoteRenderInfoForParticipant(callId, participantKey, streamId);
+  const renderInfo =
+    streamEventType === 'disposeViewRemote' && participantKey
+      ? internalContext.getRemoteRenderInfoForParticipant(callId, participantKey, streamId)
+      : internalContext.getLocalRenderInfo(callId);
+
   if (!renderInfo) {
     _logStreamEvent(EventNames.DISPOSE_INFO_NOT_FOUND, streamLogInfo);
     return;
@@ -347,7 +368,21 @@ function disposeViewRemoteVideo(
   // rendering and clean up the state once the view has finished being created.
   if (renderInfo.status === 'Rendering') {
     _logStreamEvent(EventNames.STREAM_STOPPING, streamLogInfo);
-    internalContext.setRemoteRenderInfo(callId, participantKey, streamId, renderInfo.stream, 'Stopping', undefined);
+    streamEventType === 'disposeViewRemote' && participantKey
+      ? internalContext.setRemoteRenderInfo(
+          callId,
+          participantKey,
+          streamId,
+          renderInfo.stream as RemoteVideoStream,
+          'Stopping',
+          undefined
+        )
+      : internalContext.setLocalRenderInfo(
+          callId,
+          renderInfo.stream as LocalVideoStream,
+          'Stopping',
+          renderInfo.renderer
+        );
     return;
   }
 
@@ -355,55 +390,19 @@ function disposeViewRemoteVideo(
     _logStreamEvent(EventNames.DISPOSING_RENDERER, streamLogInfo);
     renderInfo.renderer.dispose();
     // Else the state must be in the "Rendered" state, so we can dispose the renderer and clean up the state.
-    internalContext.setRemoteRenderInfo(callId, participantKey, streamId, renderInfo.stream, 'NotRendered', undefined);
-  } else {
-    _logStreamEvent(EventNames.RENDERER_NOT_FOUND, streamLogInfo);
-  }
-}
-
-function disposeViewLocalVideo(context: CallContext, internalContext: InternalCallContext, callId: string): void {
-  const renderInfo = internalContext.getLocalRenderInfo(callId);
-  const streamType = renderInfo?.stream.mediaStreamType;
-  const streamLogInfo = { callId, streamType, streamEventType: 'disposeViewLocal' };
-
-  _logStreamEvent(EventNames.START_DISPOSE_STREAM, streamLogInfo);
-
-  if (!renderInfo) {
-    _logStreamEvent(EventNames.DISPOSE_INFO_NOT_FOUND, streamLogInfo);
-    return;
-  }
-
-  // Nothing to dispose of or clean up -- we can safely exit early here.
-  if (renderInfo.status === 'NotRendered') {
-    _logStreamEvent(EventNames.STREAM_ALREADY_DISPOSED, streamLogInfo);
-    return;
-  }
-
-  // Status is already marked as "stopping" so we can exit early here. This is because stopping only occurs
-  // when the stream is being created in createView but hasn't been completed being created yet. The createView
-  // method will see the "stopping" status and perform the cleanup
-  if (renderInfo.status === 'Stopping') {
-    _logStreamEvent(EventNames.STREAM_STOPPING, streamLogInfo);
-    return;
-  }
-
-  // If the stream is in the middle of being rendered (i.e. has state "Rendering"), we need the status as
-  // "stopping" without performing any cleanup. This will tell the `createView` method that it should stop
-  // rendering and clean up the state once the view has finished being created.
-  if (renderInfo.status === 'Rendering') {
-    _logStreamEvent(EventNames.STREAM_STOPPING, streamLogInfo);
-    internalContext.setLocalRenderInfo(callId, renderInfo.stream, 'Stopping', renderInfo.renderer);
-    return;
-  }
-
-  if (renderInfo.renderer) {
-    _logStreamEvent(EventNames.DISPOSING_RENDERER, streamLogInfo);
-    renderInfo.renderer.dispose();
-
-    // We will after disposing of the renderer tell the internal context and context that the
-    // local view is gone so we need to update their states.
-    internalContext.setLocalRenderInfo(callId, renderInfo.stream, 'NotRendered', undefined);
-    context.setLocalVideoStreamRendererView(callId, undefined);
+    if (streamEventType === 'disposeViewRemote' && participantKey) {
+      internalContext.setRemoteRenderInfo(
+        callId,
+        participantKey,
+        streamId,
+        renderInfo.stream as RemoteVideoStream,
+        'NotRendered',
+        undefined
+      );
+    } else if (streamEventType === 'disposeViewLocal') {
+      internalContext.setLocalRenderInfo(callId, renderInfo.stream as LocalVideoStream, 'NotRendered', undefined);
+      context.setLocalVideoStreamRendererView(callId, undefined);
+    }
   } else {
     _logStreamEvent(EventNames.RENDERER_NOT_FOUND, streamLogInfo);
   }
@@ -482,12 +481,8 @@ export function disposeView(
   stream: LocalVideoStreamState | RemoteVideoStreamState
 ): void {
   const streamType = stream.mediaStreamType;
-  if ('id' in stream && callId && participantId) {
-    // Stop rendering RemoteVideoStream that is part of a Call
-    disposeViewRemoteVideo(context, internalContext, callId, participantId, stream);
-  } else if (!('id' in stream) && callId) {
-    // Stop rendering LocalVideoStream that is part of a Call
-    disposeViewLocalVideo(context, internalContext, callId);
+  if (callId) {
+    disposeViewVideo(context, internalContext, callId, stream, participantId);
   } else if (!('id' in stream) && !callId) {
     // Stop rendering LocalVideoStream that is not part of a Call
     // Because it is not part of the call we don't tee errors to state naturally (e.g. via a Call Client function such as startVideo).
