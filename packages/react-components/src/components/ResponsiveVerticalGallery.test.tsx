@@ -39,7 +39,7 @@ describe('ResponsiveVerticalGallery tests', () => {
     expect(root.find(VideoTile).length).toBe(4);
   });
 
-  test('should render 9 video tile if container height of ResponsiveVerticalGallery is 1000', () => {
+  test('should render 10 video tile if container height of ResponsiveVerticalGallery is 1000', () => {
     mockResponsiveVerticalGalleryContainerHeight(1000);
     const remoteParticipants = Array.from({ length: 10 }, () =>
       createRemoteParticipant({
@@ -48,7 +48,7 @@ describe('ResponsiveVerticalGallery tests', () => {
     );
 
     const root = mountResponsiveVerticalGallery({ remoteParticipants });
-    expect(root.find(VideoTile).length).toBe(9);
+    expect(root.find(VideoTile).length).toBe(10);
   });
 
   test('should render 1 video tile if container height of ResponsiveVerticalGallery is 0', () => {
@@ -92,7 +92,7 @@ const mockResponsiveVerticalGalleryContainerHeight = (containerHeight?: number):
   jest.spyOn(acs_ui_common, '_convertRemToPx').mockImplementation((rem: number) => {
     return rem * 16;
   });
-  // Need to mock hook _useContainerWidth because the returned width is used by HorizontalGallery to decide
+  // Need to mock hook _useContainerWidth because the returned width is used by ResponsiveVerticalGallery to decide
   // how many tiles to show per page
   jest.spyOn(responsive, '_useContainerHeight').mockImplementation(() => containerHeight ?? 500);
 };
