@@ -4,6 +4,8 @@
 import { DefaultButton, Icon, IStyle, mergeStyles, Stack, Text } from '@fluentui/react';
 import React, { useEffect, useMemo, useState } from 'react';
 /* @conditional-compile-remove(vertical-gallery) */
+import { useLocale } from '../localization';
+/* @conditional-compile-remove(vertical-gallery) */
 import { useIdentifiers } from '../identifiers';
 import { useTheme } from '../theming';
 import { BaseCustomStyles } from '../types';
@@ -19,6 +21,8 @@ import { bucketize } from './utils/overFlowGalleriesUtils';
 
 /**
  * Styles for the VerticalGallery component
+ *
+ * @beta
  */
 export interface VerticalGalleryStyles extends BaseCustomStyles {
   /** Styles for each video tile in the vertical gallery */
@@ -28,7 +32,21 @@ export interface VerticalGalleryStyles extends BaseCustomStyles {
 }
 
 /**
+ * Strings for localization of the vertical gallery.
+ *
+ * @beta
+ */
+export interface VerticalGalleryStrings {
+  /** Aria label for the left page navigation button */
+  leftNavButtonAriaLabel?: string;
+  /** Aria label for the right page navigation button */
+  rightNavButtonAriaLabel?: string;
+}
+
+/**
  * Styles for the control bar inside the VerticalGallery component
+ *
+ * @beta
  */
 export interface VerticalGalleryControlBarStyles extends BaseCustomStyles {
   /**
@@ -165,6 +183,9 @@ const VerticalGalleryControlBar = (props: VerticalGalleryControlBarProps): JSX.E
   /* @conditional-compile-remove(vertical-gallery) */
   const ids = useIdentifiers();
 
+  /* @conditional-compile-remove(vertical-gallery) */
+  const strings = useLocale().strings.VerticalGallery;
+
   const pageCounterContainerStyles = useMemo(() => {
     return mergeStyles(pageNavigationControlBarContainerStyle, styles?.root);
   }, [styles?.root]);
@@ -190,6 +211,8 @@ const VerticalGalleryControlBar = (props: VerticalGalleryControlBarProps): JSX.E
         onClick={onPreviousButtonClick}
         disabled={buttonsDisabled?.previous}
         /* @conditional-compile-remove(vertical-gallery) */
+        ariaLabel={strings.leftNavButtonAriaLabel}
+        /* @conditional-compile-remove(vertical-gallery) */
         data-ui-id={ids.overflowGalleryLeftNavButton}
       >
         <Icon iconName="VerticalGalleryLeftButton" styles={navIconStyles} />
@@ -203,6 +226,8 @@ const VerticalGalleryControlBar = (props: VerticalGalleryControlBarProps): JSX.E
         className={nextButtonsStyles}
         onClick={onNextButtonClick}
         disabled={buttonsDisabled?.next}
+        /* @conditional-compile-remove(vertical-gallery) */
+        ariaLabel={strings.rightNavButtonAriaLabel}
         /* @conditional-compile-remove(vertical-gallery) */
         data-ui-id={ids.overflowGalleryRightNavButton}
       >

@@ -152,7 +152,9 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
         isNarrow={isNarrow}
         shouldFloatLocalVideo={true}
         overflowGalleryElements={horizontalGalleryTiles}
-        styles={styles?.horizontalGallery}
+        horizontalGalleryStyles={styles?.horizontalGallery}
+        /* @conditional-compile-remove(vertical-gallery) */
+        veritcalGalleryStyles={styles?.verticalGallery}
         /* @conditional-compile-remove(vertical-gallery) */
         overflowGalleryLayout={overflowGalleryLayout}
       />
@@ -161,7 +163,8 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
     isNarrow,
     horizontalGalleryTiles,
     styles?.horizontalGallery,
-    /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryLayout
+    /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryLayout,
+    /* @conditional-compile-remove(vertical-gallery) */ styles?.verticalGallery
   ]);
 
   return (

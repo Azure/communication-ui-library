@@ -36,6 +36,8 @@ import { videoGalleryOuterDivStyle } from './styles/VideoGallery.styles';
 import { floatingLocalVideoTileStyle } from './VideoGallery/styles/FloatingLocalVideo.styles';
 /* @conditional-compile-remove(pinned-participants) */
 import { useId } from '@fluentui/react-hooks';
+/* @conditional-compile-remove(vertical-gallery) */
+import { VerticalGalleryStyles } from './VerticalGallery';
 
 /**
  * @private
@@ -136,6 +138,9 @@ export interface VideoGalleryStyles extends BaseCustomStyles {
   horizontalGallery?: HorizontalGalleryStyles;
   /** Styles for the local video  */
   localVideo?: IStyle;
+  /* @conditional-compile-remove(vertical-gallery) */
+  /** Styles for the vertical gallery */
+  verticalGallery?: VerticalGalleryStyles;
 }
 
 /* @conditional-compile-remove(vertical-gallery) */
