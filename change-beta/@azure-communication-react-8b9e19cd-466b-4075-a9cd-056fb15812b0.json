@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add fit/fill options to VideoGallery video tiles",
-  "packageName": "@azure/communication-react",
-  "email": "anjulgarg@live.com",
-  "dependentChangeType": "patch"
-}

@@ -1,0 +1,6 @@
+{
+  "before-after-diff-checker.destPath": "preprocessed",
+  "before-after-diff-checker.compileCommand": "rushx _by-flavor \"rushx preprocess\" && npx eslint $PROCESSED_FILE --fix",
+  "before-after-diff-checker.srcPath": "src",
+  "before-after-diff-checker.enableOnSave": false
+}

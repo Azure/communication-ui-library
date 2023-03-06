@@ -1522,6 +1522,7 @@ export interface ComponentStrings {
     UnsupportedBrowser: UnsupportedBrowserStrings;
     UnsupportedBrowserVersion: UnsupportedBrowserVersionStrings;
     UnsupportedOperatingSystem: UnsupportedOperatingSystemStrings;
+    VerticalGallery: VerticalGalleryStrings;
     videoGallery: VideoGalleryStrings;
     videoTile: VideoTileStrings;
 }
@@ -1828,6 +1829,8 @@ export const DEFAULT_COMPONENT_ICONS: {
     VideoTileScaleFill: JSX.Element;
     PinParticipant: JSX.Element;
     UnpinParticipant: JSX.Element;
+    VerticalGalleryLeftButton: JSX.Element;
+    VerticalGalleryRightButton: JSX.Element;
 };
 
 // @public
@@ -1925,6 +1928,8 @@ export const DEFAULT_COMPOSITE_ICONS: {
     VideoTileScaleFill: JSX.Element;
     PinParticipant: JSX.Element;
     UnpinParticipant: JSX.Element;
+    VerticalGalleryLeftButton: JSX.Element;
+    VerticalGalleryRightButton: JSX.Element;
 };
 
 // @beta
@@ -2279,10 +2284,10 @@ export interface _IdentifierProviderProps {
 
 // @internal
 export interface _Identifiers {
-    horizontalGalleryLeftNavButton: string;
-    horizontalGalleryRightNavButton: string;
     messageContent: string;
     messageTimestamp: string;
+    overflowGalleryLeftNavButton: string;
+    overflowGalleryRightNavButton: string;
     participantButtonPeopleMenuItem: string;
     participantItemMenuButton: string;
     participantList: string;
@@ -2290,6 +2295,8 @@ export interface _Identifiers {
     participantListRemoveParticipantButton: string;
     sendboxTextField: string;
     typingIndicator: string;
+    verticalGalleryPageCounter: string;
+    verticalGalleryVideoTile: string;
     videoGallery: string;
     videoTile: string;
 }
@@ -2631,6 +2638,9 @@ export interface OptionsDevice {
     id: string;
     name: string;
 }
+
+// @beta
+export type OverflowGalleryLayout = 'HorizontalBottom' | 'VerticalRight';
 
 // @public
 export interface ParticipantAddedSystemMessage extends SystemMessageCommon {
@@ -3198,6 +3208,25 @@ export const useTeamsCallAgent: () => undefined | /* @conditional-compile-remove
 // @public
 export const useTheme: () => Theme;
 
+// @beta
+export interface VerticalGalleryControlBarStyles extends BaseCustomStyles {
+    counter?: IStyle;
+    nextButton?: IStyle;
+    previousButton?: IStyle;
+}
+
+// @beta
+export interface VerticalGalleryStrings {
+    leftNavButtonAriaLabel?: string;
+    rightNavButtonAriaLabel?: string;
+}
+
+// @beta
+export interface VerticalGalleryStyles extends BaseCustomStyles {
+    children?: IStyle;
+    controlBar?: VerticalGalleryControlBarStyles;
+}
+
 // @public
 export const VideoGallery: (props: VideoGalleryProps) => JSX.Element;
 
@@ -3233,6 +3262,7 @@ export interface VideoGalleryProps {
     onRenderLocalVideoTile?: (localParticipant: VideoGalleryLocalParticipant) => JSX.Element;
     onRenderRemoteVideoTile?: (remoteParticipant: VideoGalleryRemoteParticipant) => JSX.Element;
     onUnpinParticipant?: (userId: string) => void;
+    overflowGalleryLayout?: OverflowGalleryLayout;
     pinnedParticipants?: string[];
     remoteParticipants?: VideoGalleryRemoteParticipant[];
     remoteVideoTileMenuOptions?: false | VideoTileContextualMenuProps | VideoTileDrawerMenuProps;
@@ -3293,6 +3323,7 @@ export interface VideoGalleryStyles extends BaseCustomStyles {
     gridLayout?: GridLayoutStyles;
     horizontalGallery?: HorizontalGalleryStyles;
     localVideo?: IStyle;
+    verticalGallery?: VerticalGalleryStyles;
 }
 
 // @public

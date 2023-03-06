@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Make sure call readiness displays properly on landscape",
-  "packageName": "@azure/communication-react",
-  "email": "carolinecao@microsoft.com",
-  "dependentChangeType": "none"
-}

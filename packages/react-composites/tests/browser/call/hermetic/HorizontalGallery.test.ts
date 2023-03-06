@@ -72,13 +72,13 @@ test.describe('HorizontalGallery tests', async () => {
       return;
     }
 
-    await waitForSelector(page, dataUiId(IDS.horizontalGalleryRightNavButton));
-    await pageClick(page, dataUiId(IDS.horizontalGalleryRightNavButton));
+    await waitForSelector(page, dataUiId(IDS.overflowGalleryRightNavButton));
+    await pageClick(page, dataUiId(IDS.overflowGalleryRightNavButton));
     expect(await stableScreenshot(page)).toMatchSnapshot(
       'horizontal-gallery-with-many-audio-participants-on-page-2.png'
     );
-    await waitForSelector(page, dataUiId(IDS.horizontalGalleryLeftNavButton));
-    await pageClick(page, dataUiId(IDS.horizontalGalleryLeftNavButton));
+    await waitForSelector(page, dataUiId(IDS.overflowGalleryLeftNavButton));
+    await pageClick(page, dataUiId(IDS.overflowGalleryLeftNavButton));
     expect(await stableScreenshot(page)).toMatchSnapshot(
       'horizontal-gallery-with-many-audio-participants-on-page-1.png'
     );
@@ -165,8 +165,8 @@ test.describe('HorizontalGallery tests', async () => {
       return;
     }
 
-    await waitForSelector(page, dataUiId(IDS.horizontalGalleryRightNavButton));
-    await pageClick(page, dataUiId(IDS.horizontalGalleryRightNavButton));
+    await waitForSelector(page, dataUiId(IDS.overflowGalleryRightNavButton));
+    await pageClick(page, dataUiId(IDS.overflowGalleryRightNavButton));
     expect(await stableScreenshot(page)).toMatchSnapshot(
       'horizontal-gallery-with-joining-participant-with-multi-page.png'
     );
