@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Move logging from StreamUtils to be managed in seperate file.",
+  "packageName": "@azure/communication-react",
+  "email": "94866715+dmceachernmsft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
