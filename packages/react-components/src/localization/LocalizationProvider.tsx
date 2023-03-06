@@ -37,6 +37,8 @@ import { COMPONENT_LOCALE_EN_US } from './locales';
 import { UnsupportedBrowserVersionStrings } from '../components/UnsupportedBrowserVersion';
 /* @conditional-compile-remove(unsupported-browser) */
 import { UnsupportedOperatingSystemStrings } from '../components/UnsupportedOperatingSystem';
+/* @conditional-compile-remove(vertical-gallery) */
+import { VerticalGalleryStrings } from '../components/VerticalGallery';
 
 /**
  * Locale information for all components exported from this library.
@@ -147,6 +149,11 @@ export interface ComponentStrings {
   /* @conditional-compile-remove(call-readiness) */
   /** Strings for BrowserPemissionDeniedIOS */
   BrowserPermissionDeniedIOS: BrowserPermissionDeniedIOSStrings;
+  /* @conditional-compile-remove(vertical-gallery) */
+  /**
+   * Strings for the VerticalGallery.
+   */
+  VerticalGallery: VerticalGalleryStrings;
 }
 
 /**
