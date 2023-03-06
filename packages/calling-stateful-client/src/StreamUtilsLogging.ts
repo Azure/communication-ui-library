@@ -209,7 +209,7 @@ function _logCreateStreamEvent(
  * @param error if any errors present will be added to message in logging
  */
 export function _logStreamEvent(
-  eventName: string,
+  eventName: EventNames,
   streamLogInfo: {
     callId?: string;
     participantKey?: any;
