@@ -269,6 +269,8 @@ export type {
 } from '../../react-components/src';
 /* @conditional-compile-remove(pinned-participants) */
 export type { VideoTileContextualMenuProps, VideoTileDrawerMenuProps } from '../../react-components/src';
+/* @conditional-compile-remove(vertical-gallery) */
+export type { OverflowGalleryLayout } from '../../react-components/src';
 export * from '../../react-components/src/localization/locales';
 export * from '../../react-components/src/theming';
 export * from '../../calling-stateful-client/src/index-public';
@@ -302,3 +304,9 @@ export type { UnsupportedBrowserVersionStrings, UnsupportedBrowserVersionProps }
 export { UnsupportedOperatingSystem } from '../../react-components/src';
 /* @conditional-compile-remove(unsupported-browser) */
 export type { UnsupportedOperatingSystemStrings, UnsupportedOperatingSystemProps } from '../../react-components/src';
+/* @conditional-compile-remove(vertical-gallery) */
+export type {
+  VerticalGalleryStyles,
+  VerticalGalleryStrings,
+  VerticalGalleryControlBarStyles
+} from '../../react-components/src';

@@ -30,7 +30,7 @@ const CustomDataModelStory = (args: ArgsFrom<typeof storyControls>, context): JS
   const containerProps = useMemo(() => {
     if (args.userId && args.token) {
       const containerProps = {
-        userId: args.userId,
+        userId: { communicationUserId: args.userId },
         token: args.token,
         locator: createGUID()
       };

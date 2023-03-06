@@ -51,6 +51,8 @@ export { VideoGallery } from './VideoGallery';
 export type { VideoGalleryProps, VideoGalleryStrings, VideoGalleryStyles, VideoGalleryLayout } from './VideoGallery';
 /* @conditional-compile-remove(pinned-participants) */
 export type { VideoTileContextualMenuProps, VideoTileDrawerMenuProps } from './VideoGallery';
+/* @conditional-compile-remove(vertical-gallery) */
+export type { OverflowGalleryLayout } from './VideoGallery';
 export type { HorizontalGalleryStyles } from './HorizontalGallery';
 
 export { LocalVideoCameraCycleButton } from './LocalVideoCameraButton';
@@ -195,3 +197,7 @@ export type {
   _DevicePermissionDropdownProps,
   _PermissionConstraints
 } from './DevicePermissions/DevicePermissionDropdown';
+
+export type { VerticalGalleryStyles, VerticalGalleryStrings, VerticalGalleryControlBarStyles } from './VerticalGallery';
+
+export * from './Caption';
