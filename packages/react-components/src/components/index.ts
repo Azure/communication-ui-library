@@ -198,4 +198,6 @@ export type {
   _PermissionConstraints
 } from './DevicePermissions/DevicePermissionDropdown';
 
+export type { VerticalGalleryStyles, VerticalGalleryStrings, VerticalGalleryControlBarStyles } from './VerticalGallery';
+
 export * from './Caption';

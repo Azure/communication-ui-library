@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Introduce hermetic tests to verify tile size behavior and gallery behavior when resizing window.",
+  "packageName": "@azure/communication-react",
+  "email": "94866715+dmceachernmsft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
