@@ -65,7 +65,7 @@ export function BaseApp(props: { queryArgs: QueryArgs; callAdapter?: CallAdapter
               onFetchParticipantMenuItems={
                 queryArgs.injectParticipantMenuItems ? onFetchParticipantMenuItems : undefined
               }
-              fluentTheme={{ rtl }}
+              rtl={rtl}
               options={
                 customCallCompositeOptions !== undefined
                   ? customCallCompositeOptions

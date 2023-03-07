@@ -18,7 +18,7 @@ export interface QueryArgs {
   customCallCompositeOptions?: CallCompositeOptions;
   useEnvironmentInfoTroubleshootingOptions?: boolean;
   usePermissionTroubleshootingActions?: boolean;
-  rtl?: false;
+  rtl?: boolean;
 
   // These are only set for live tests.
   // TODO: Separate the args out better.
@@ -46,6 +46,7 @@ export function parseQueryArgs(): QueryArgs {
     token: params.token ?? '',
     displayName: params.displayName ?? '',
     role: (params.role as Role) ?? undefined,
+    rtl: Boolean(params.rtl),
     callInvitationUrl: params.callInvitationUrl,
     customCallCompositeOptions: params.customCallCompositeOptions
       ? JSON.parse(params.customCallCompositeOptions)
