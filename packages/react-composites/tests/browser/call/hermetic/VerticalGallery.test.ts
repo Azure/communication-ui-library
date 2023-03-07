@@ -1,19 +1,29 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+/* @conditional-compile-remove(vertical-gallery) */
 import { expect } from '@playwright/test';
+/* @conditional-compile-remove(vertical-gallery) */
 import { IDS } from '../../common/constants';
+/* @conditional-compile-remove(vertical-gallery) */
 import { dataUiId, pageClick, stableScreenshot, waitForSelector } from '../../common/utils';
+/* @conditional-compile-remove(vertical-gallery) */
 import {
   addScreenshareStream,
   addVideoStream,
   buildUrlWithMockAdapter,
   defaultMockCallAdapterState,
   defaultMockRemoteParticipant,
-  defaultMockRemotePSTNParticipant,
-  test
+  defaultMockRemotePSTNParticipant
 } from './fixture';
+import { test } from './fixture';
 
+// eslint-disable-next-line no-empty-pattern
+test('Empty placeholder test for stable', async ({}) => {
+  test.skip();
+});
+
+/* @conditional-compile-remove(vertical-gallery) */
 test.describe('VerticalGallery tests', async () => {
   test('VerticalGallery should have 1 audio participant', async ({ page, serverUrl }) => {
     const paul = defaultMockRemoteParticipant('Paul Bridges');
