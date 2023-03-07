@@ -51,7 +51,7 @@ export const OverflowGallery = (props: {
     /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryLayout = 'HorizontalBottom',
     /* @conditional-compile-remove(vertical-gallery) */ veritcalGalleryStyles
   } = props;
-  console.log(isShort);
+
   const containerStyles = useMemo(() => {
     /* @conditional-compile-remove(vertical-gallery) */
     if (overflowGalleryLayout === 'VerticalRight') {
