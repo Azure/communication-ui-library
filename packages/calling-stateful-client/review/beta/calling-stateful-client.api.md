@@ -266,7 +266,7 @@ export type StatefulCallClientOptions = {
 // @public
 export interface StatefulDeviceManager extends DeviceManager {
     // @beta
-    getUnparentedVideoStreams: LocalVideoStream[];
+    getUnparentedVideoStreams: () => LocalVideoStream[];
     selectCamera: (VideoDeviceInfo: any) => void;
 }
 

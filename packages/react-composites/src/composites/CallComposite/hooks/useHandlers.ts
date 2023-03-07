@@ -92,6 +92,18 @@ const createCompositeHandlers = memoizeOne(
     /* @conditional-compile-remove(call-readiness) */
     askDevicePermission: async (constrain) => {
       return adapter.askDevicePermission(constrain);
+    },
+    /* @conditional-compile-remove(video-background-effects) */
+    onRemoveVideoBackgroundEffects: async () => {
+      throw new Error('Not implemented');
+    },
+    /* @conditional-compile-remove(video-background-effects) */
+    onBlurVideoBackground: async () => {
+      throw new Error('Not implemented');
+    },
+    /* @conditional-compile-remove(video-background-effects) */
+    onReplaceVideoBackground: async () => {
+      throw new Error('Not implemented');
     }
   })
 );
