@@ -78,20 +78,6 @@ export interface _VideoEffectsItemProps {
      * The URL of the background image.
      */
     url: string;
-
-    /**
-     * The position of the background image.
-     * @default 'center'
-     * @see https://developer.mozilla.org/en-US/docs/Web/CSS/background-position
-     */
-    position?: string;
-
-    /**
-     * The size of the background image.
-     * @default 'cover'
-     * @see https://developer.mozilla.org/en-US/docs/Web/CSS/background-size
-     */
-    size?: string;
   };
 
   /**
@@ -132,8 +118,6 @@ export const _VideoEffectsItem = (props: _VideoEffectsItemProps): JSX.Element =>
   const isSelected = props.isSelected ?? false;
   const disabled = props.disabled ?? false;
   const backgroundImage = props.backgroundProps?.url;
-  const backgroundPosition = props.backgroundProps?.position ?? 'center';
-  const backgroundSize = props.backgroundProps?.size ?? 'cover';
 
   const containerStyles = useCallback(
     () =>
@@ -145,7 +129,7 @@ export const _VideoEffectsItem = (props: _VideoEffectsItemProps): JSX.Element =>
         backgroundPosition,
         backgroundSize
       }),
-    [backgroundImage, backgroundPosition, backgroundSize, disabled, isSelected, theme]
+    [backgroundImage, disabled, isSelected, theme]
   );
 
   return (
@@ -185,6 +169,9 @@ export const _VideoEffectsItem = (props: _VideoEffectsItemProps): JSX.Element =>
     </TooltipHost>
   );
 };
+
+const backgroundPosition = 'center';
+const backgroundSize = 'cover';
 
 const videoEffectsItemContainerStyles = (args: {
   theme: ITheme;

@@ -753,6 +753,13 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   const [readCountForHoveredIndicator, setReadCountForHoveredIndicator] = useState<number | undefined>(undefined);
 
   const isAllChatMessagesLoadedRef = useRef(false);
+  // isAllChatMessagesLoadedRef needs to be updated every time when a new adapter is set in order to display correct data
+  // onLoadPreviousChatMessages is updated when a new adapter is set
+  useEffect(() => {
+    if (onLoadPreviousChatMessages) {
+      isAllChatMessagesLoadedRef.current = false;
+    }
+  }, [onLoadPreviousChatMessages]);
 
   const previousTopRef = useRef<number>(-1);
   const previousHeightRef = useRef<number>(-1);
@@ -851,16 +858,20 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     if (!isLoadingChatMessagesRef.current) {
       if (onLoadPreviousChatMessages) {
         isLoadingChatMessagesRef.current = true;
-        // Fetch message until scrollTop reach the threshold for fetching new message
-        while (
-          !isAllChatMessagesLoadedRef.current &&
-          chatScrollDivRef.current &&
-          chatScrollDivRef.current.scrollTop <= 500
-        ) {
-          isAllChatMessagesLoadedRef.current = await onLoadPreviousChatMessages(numberOfChatMessagesToReload);
-          await delay(200);
+        try {
+          // Fetch message until scrollTop reach the threshold for fetching new message
+          while (
+            !isAllChatMessagesLoadedRef.current &&
+            chatScrollDivRef.current &&
+            chatScrollDivRef.current.scrollTop <= 500
+          ) {
+            isAllChatMessagesLoadedRef.current = await onLoadPreviousChatMessages(numberOfChatMessagesToReload);
+            await delay(200);
+          }
+        } finally {
+          // Set isLoadingChatMessagesRef to false after messages are fetched
+          isLoadingChatMessagesRef.current = false;
         }
-        isLoadingChatMessagesRef.current = false;
       }
     }
   }, [numberOfChatMessagesToReload, onLoadPreviousChatMessages]);
