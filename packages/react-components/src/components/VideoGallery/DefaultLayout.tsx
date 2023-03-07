@@ -4,7 +4,7 @@
 import { Stack } from '@fluentui/react';
 import React, { useMemo } from 'react';
 import { GridLayout } from '../GridLayout';
-import { isNarrowWidth } from '../utils/responsive';
+import { isNarrowWidth, isShortHeight } from '../utils/responsive';
 import { LayoutProps } from './Layout';
 import { rootLayoutStyle } from './styles/DefaultLayout.styles';
 import { videoGalleryLayoutGap } from './styles/Layout.styles';
@@ -34,11 +34,14 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
     styles,
     maxRemoteVideoStreams,
     parentWidth,
+    parentHeight,
     /* @conditional-compile-remove(pinned-participants) */ pinnedParticipantUserIds,
     /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryLayout = 'HorizontalBottom'
   } = props;
 
   const isNarrow = parentWidth ? isNarrowWidth(parentWidth) : false;
+
+  const isShort = parentHeight ? isShortHeight(parentHeight) : false;
 
   const { gridParticipants, horizontalGalleryParticipants } = useOrganizedParticipants({
     remoteParticipants,
@@ -79,6 +82,7 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
     return (
       <OverflowGallery
         isNarrow={isNarrow}
+        isShort={isShort}
         shouldFloatLocalVideo={false}
         overflowGalleryElements={horizontalGalleryTiles}
         horizontalGalleryStyles={styles?.horizontalGallery}

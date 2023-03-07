@@ -6,7 +6,7 @@ import { useId } from '@fluentui/react-hooks';
 import React, { useMemo } from 'react';
 import { useTheme } from '../../theming';
 import { GridLayout } from '../GridLayout';
-import { isNarrowWidth } from '../utils/responsive';
+import { isNarrowWidth, isShortHeight } from '../utils/responsive';
 import { FloatingLocalVideo } from './FloatingLocalVideo';
 import { LayoutProps } from './Layout';
 import {
@@ -64,6 +64,8 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
   const theme = useTheme();
 
   const isNarrow = parentWidth ? isNarrowWidth(parentWidth) : false;
+
+  const isShort = parentHeight ? isShortHeight(parentHeight) : false;
 
   const { gridParticipants, horizontalGalleryParticipants } = useOrganizedParticipants({
     remoteParticipants,
@@ -149,6 +151,7 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
     }
     return (
       <OverflowGallery
+        isShort={isShort}
         isNarrow={isNarrow}
         shouldFloatLocalVideo={true}
         overflowGalleryElements={horizontalGalleryTiles}

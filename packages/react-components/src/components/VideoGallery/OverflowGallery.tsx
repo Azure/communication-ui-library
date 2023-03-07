@@ -34,6 +34,7 @@ import {
 export const OverflowGallery = (props: {
   shouldFloatLocalVideo?: boolean;
   isNarrow?: boolean;
+  isShort?: boolean;
   overflowGalleryElements?: JSX.Element[];
   horizontalGalleryStyles?: HorizontalGalleryStyles;
   /* @conditional-compile-remove(vertical-gallery) */
