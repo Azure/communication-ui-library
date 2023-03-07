@@ -94,6 +94,7 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
     );
   }, [
     isNarrow,
+    /* @conditional-compile-remove(vertical-gallery) */ isShort,
     horizontalGalleryTiles,
     styles?.horizontalGallery,
     /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryLayout,
