@@ -8,6 +8,8 @@
 
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { AudioDeviceInfo } from '@azure/communication-calling';
+import { BackgroundBlurConfig } from '@azure/communication-calling-effects';
+import { BackgroundReplacementConfig } from '@azure/communication-calling-effects';
 import { Call } from '@azure/communication-calling';
 import { CallAgent } from '@azure/communication-calling';
 import { CallClient } from '@azure/communication-calling';
@@ -1402,6 +1404,8 @@ export interface CommonCallingHandlers {
     // (undocumented)
     onAddParticipant(participant: PhoneNumberIdentifier, options: AddPhoneNumberOptions): Promise<void>;
     // (undocumented)
+    onBlurVideoBackground: (bgBlurConfig?: BackgroundBlurConfig) => Promise<void>;
+    // (undocumented)
     onCreateLocalStreamView: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
     // (undocumented)
     onCreateRemoteStreamView: (userId: string, options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
@@ -1415,6 +1419,10 @@ export interface CommonCallingHandlers {
     onRemoveParticipant(userId: string): Promise<void>;
     // (undocumented)
     onRemoveParticipant(participant: CommunicationIdentifier): Promise<void>;
+    // (undocumented)
+    onRemoveVideoBackgroundEffects: () => Promise<void>;
+    // (undocumented)
+    onReplaceVideoBackground: (bgReplacementConfig: BackgroundReplacementConfig) => Promise<void>;
     // (undocumented)
     onSelectCamera: (device: VideoDeviceInfo, options?: VideoStreamOptions) => Promise<void>;
     // (undocumented)
@@ -1550,6 +1558,7 @@ export interface ComponentStrings {
     UnsupportedBrowser: UnsupportedBrowserStrings;
     UnsupportedBrowserVersion: UnsupportedBrowserVersionStrings;
     UnsupportedOperatingSystem: UnsupportedOperatingSystemStrings;
+    VerticalGallery: VerticalGalleryStrings;
     videoGallery: VideoGalleryStrings;
     videoTile: VideoTileStrings;
 }
@@ -2317,10 +2326,10 @@ export interface _IdentifierProviderProps {
 
 // @internal
 export interface _Identifiers {
-    horizontalGalleryLeftNavButton: string;
-    horizontalGalleryRightNavButton: string;
     messageContent: string;
     messageTimestamp: string;
+    overflowGalleryLeftNavButton: string;
+    overflowGalleryRightNavButton: string;
     participantButtonPeopleMenuItem: string;
     participantItemMenuButton: string;
     participantList: string;
@@ -2328,6 +2337,8 @@ export interface _Identifiers {
     participantListRemoveParticipantButton: string;
     sendboxTextField: string;
     typingIndicator: string;
+    verticalGalleryPageCounter: string;
+    verticalGalleryVideoTile: string;
     videoGallery: string;
     videoTile: string;
 }
@@ -2669,6 +2680,9 @@ export interface OptionsDevice {
     id: string;
     name: string;
 }
+
+// @beta
+export type OverflowGalleryLayout = 'HorizontalBottom' | 'VerticalRight';
 
 // @public
 export interface ParticipantAddedSystemMessage extends SystemMessageCommon {
@@ -3032,7 +3046,7 @@ export type StatefulChatClientOptions = {
 // @public
 export interface StatefulDeviceManager extends DeviceManager {
     // @beta
-    getUnparentedVideoStreams: LocalVideoStream[];
+    getUnparentedVideoStreams: () => LocalVideoStream[];
     selectCamera: (VideoDeviceInfo: any) => void;
 }
 
@@ -3236,6 +3250,25 @@ export const useTeamsCallAgent: () => undefined | /* @conditional-compile-remove
 // @public
 export const useTheme: () => Theme;
 
+// @beta
+export interface VerticalGalleryControlBarStyles extends BaseCustomStyles {
+    counter?: IStyle;
+    nextButton?: IStyle;
+    previousButton?: IStyle;
+}
+
+// @beta
+export interface VerticalGalleryStrings {
+    leftNavButtonAriaLabel?: string;
+    rightNavButtonAriaLabel?: string;
+}
+
+// @beta
+export interface VerticalGalleryStyles extends BaseCustomStyles {
+    children?: IStyle;
+    controlBar?: VerticalGalleryControlBarStyles;
+}
+
 // @public
 export interface VideoBackgroundBlurEffect {
     // (undocumented)
@@ -3292,6 +3325,7 @@ export interface VideoGalleryProps {
     onRenderLocalVideoTile?: (localParticipant: VideoGalleryLocalParticipant) => JSX.Element;
     onRenderRemoteVideoTile?: (remoteParticipant: VideoGalleryRemoteParticipant) => JSX.Element;
     onUnpinParticipant?: (userId: string) => void;
+    overflowGalleryLayout?: OverflowGalleryLayout;
     pinnedParticipants?: string[];
     remoteParticipants?: VideoGalleryRemoteParticipant[];
     remoteVideoTileMenuOptions?: false | VideoTileContextualMenuProps | VideoTileDrawerMenuProps;
@@ -3352,6 +3386,7 @@ export interface VideoGalleryStyles extends BaseCustomStyles {
     gridLayout?: GridLayoutStyles;
     horizontalGallery?: HorizontalGalleryStyles;
     localVideo?: IStyle;
+    verticalGallery?: VerticalGalleryStyles;
 }
 
 // @public

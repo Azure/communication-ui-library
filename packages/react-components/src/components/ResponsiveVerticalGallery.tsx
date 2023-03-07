@@ -6,7 +6,7 @@ import { _convertRemToPx } from '@internal/acs-ui-common';
 import React, { useRef } from 'react';
 import { _useContainerHeight } from './utils/responsive';
 import { VerticalGallery, VerticalGalleryStyles } from './VerticalGallery';
-import { LARGE_VERTICAL_GALLERY_TILE_SIZE_REM } from './VideoGallery/styles/VideoGalleryResponsiveVerticalGallery.styles';
+import { VERTICAL_GALLERY_TILE_SIZE_REM } from './VideoGallery/styles/VideoGalleryResponsiveVerticalGallery.styles';
 
 /**
  * Props for the Responsive wrapper of the VerticalGallery component
@@ -67,7 +67,7 @@ const calculateChildrenPerPage = (args: {
 }): number => {
   const { numberOfChildren, containerHeight, gapHeightRem, controlBarHeight } = args;
 
-  const childMinHeightPx = _convertRemToPx(LARGE_VERTICAL_GALLERY_TILE_SIZE_REM.minHeight);
+  const childMinHeightPx = _convertRemToPx(VERTICAL_GALLERY_TILE_SIZE_REM.minHeight);
   const gapHeightPx = _convertRemToPx(gapHeightRem);
   const controlBarHeightPx = _convertRemToPx(controlBarHeight);
 
@@ -105,9 +105,12 @@ const calculateChildrenPerPage = (args: {
    *      space = height - controlbar - (2 * gap)
    */
   const childSpace = containerHeight - controlBarHeightPx - 2 * gapHeightPx;
+
   /**
    * Now that we have the childrenSpace height we can figure out how many Children can fir in the childrenSpace.
    * childrenSpace = n * childHeightMin + (n - 1) * gapHeight. isolate n and take the floor.
+   *
+   * We want to always return at least one video tile if there are children present.So we take the max.
    */
-  return Math.floor((childSpace + gapHeightPx) / (childMinHeightPx + gapHeightPx));
+  return Math.max(Math.floor((childSpace + gapHeightPx) / (childMinHeightPx + gapHeightPx)), 1);
 };

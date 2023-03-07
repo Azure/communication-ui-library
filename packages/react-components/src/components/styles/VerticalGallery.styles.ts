@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IStyle, Theme } from '@fluentui/react';
+import { IIconStyles, IStyle, Theme } from '@fluentui/react';
 
 /**
  * Vertical Gallery gap size in rem between tiles and buttons
@@ -13,9 +13,12 @@ export const VERTICAL_GALLERY_GAP = 0.5;
 /**
  * @private
  */
-export const childrenContainerStyle: IStyle = {
-  width: '100%',
-  gap: `${VERTICAL_GALLERY_GAP}rem`
+export const childrenContainerStyle = (pageControlBarHeight: number): IStyle => {
+  return {
+    width: '100%',
+    height: `calc(100% - ${pageControlBarHeight + VERTICAL_GALLERY_GAP}rem)`,
+    gap: `${VERTICAL_GALLERY_GAP}rem`
+  };
 };
 
 /**
@@ -24,14 +27,18 @@ export const childrenContainerStyle: IStyle = {
 export const rootStyle: IStyle = {
   height: '100%',
   width: '100%',
-  gap: `${VERTICAL_GALLERY_GAP}rem`
+  gap: `${VERTICAL_GALLERY_GAP}rem`,
+  position: 'relative'
 };
 
 /**
  * @private
  */
-export const controlBarContainerStyle: IStyle = {
-  height: '2rem'
+export const pageNavigationControlBarContainerStyle: IStyle = {
+  height: '2rem',
+  width: '100%',
+  position: 'absolute',
+  bottom: '0'
 };
 
 /**
@@ -42,7 +49,26 @@ export const leftRightButtonStyles = (theme: Theme): IStyle => {
     background: 'none',
     padding: 0,
     height: 'auto',
-    border: `1px solid ${theme.palette.neutralLight}`,
-    borderRadius: theme.effects.roundedCorner4
+    borderRadius: theme.effects.roundedCorner4,
+    border: 'none',
+    minWidth: '2rem'
   };
+};
+
+/**
+ * @private
+ */
+export const participantPageCounter: IStyle = {
+  lineHeight: '2rem',
+  width: '100%',
+  textAlign: 'center'
+};
+
+/**
+ * @private
+ */
+export const navIconStyles: IIconStyles = {
+  root: {
+    lineHeight: '0'
+  }
 };
