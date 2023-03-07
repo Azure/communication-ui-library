@@ -1670,43 +1670,6 @@ export const _usePermissions: () => _Permissions;
 // @public
 export const useTheme: () => Theme;
 
-// @internal
-export const _VideoEffectsItem: (props: _VideoEffectsItemProps) => JSX.Element;
-
-// @internal
-export const _VideoEffectsItemAddImage: (props: _VideoEffectsItemProps) => JSX.Element;
-
-// @internal
-export const _VideoEffectsItemBlur: (props: _VideoEffectsItemProps) => JSX.Element;
-
-// @internal
-export const _VideoEffectsItemNoBackground: (props: _VideoEffectsItemProps) => JSX.Element;
-
-// @internal
-export interface _VideoEffectsItemProps {
-    ariaLabel?: string;
-    backgroundProps?: {
-        url: string;
-        position?: string;
-        size?: string;
-    };
-    disabled?: boolean;
-    iconProps?: IIconProps;
-    isSelected?: boolean;
-    key: string;
-    onSelect?: (key: string) => void;
-    styles?: _VideoEffectsItemStyles;
-    title?: string;
-    tooltipProps?: ITooltipHostProps;
-}
-
-// @internal
-export interface _VideoEffectsItemStyles {
-    iconContainer: IStyle;
-    root: IStyle;
-    textContainer: IStyle;
-}
-
 // @beta
 export interface VerticalGalleryControlBarStyles extends BaseCustomStyles {
     counter?: IStyle;
@@ -1724,6 +1687,41 @@ export interface VerticalGalleryStrings {
 export interface VerticalGalleryStyles extends BaseCustomStyles {
     children?: IStyle;
     controlBar?: VerticalGalleryControlBarStyles;
+}
+
+// @internal
+export const _VideoEffectsItem: (props: _VideoEffectsItemProps) => JSX.Element;
+
+// @internal
+export const _VideoEffectsItemAddImage: (props: _VideoEffectsItemProps) => JSX.Element;
+
+// @internal
+export const _VideoEffectsItemBlur: (props: _VideoEffectsItemProps) => JSX.Element;
+
+// @internal
+export const _VideoEffectsItemNoBackground: (props: _VideoEffectsItemProps) => JSX.Element;
+
+// @internal
+export interface _VideoEffectsItemProps {
+    ariaLabel?: string;
+    backgroundProps?: {
+        url: string;
+    };
+    disabled?: boolean;
+    iconProps?: IIconProps;
+    isSelected?: boolean;
+    key: string;
+    onSelect?: (key: string) => void;
+    styles?: _VideoEffectsItemStyles;
+    title?: string;
+    tooltipProps?: ITooltipHostProps;
+}
+
+// @internal
+export interface _VideoEffectsItemStyles {
+    iconContainer: IStyle;
+    root: IStyle;
+    textContainer: IStyle;
 }
 
 // @public
