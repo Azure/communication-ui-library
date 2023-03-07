@@ -97,7 +97,8 @@ const config: PlaywrightTestConfig = {
         launchOptions: { ...chromeLaunchOptions },
         userAgent:
           'Mozilla/5.0 (Linux; Android 12; SM-S901B) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.5359.125 Mobile Safari/537.36'
-      }
+      },
+      testIgnore: ['VerticalGallery.test.ts']
     },
     {
       name: 'Mobile Android Landscape',
