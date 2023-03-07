@@ -1416,8 +1416,6 @@ export interface _VideoEffectsItemProps {
     ariaLabel?: string;
     backgroundProps?: {
         url: string;
-        position?: string;
-        size?: string;
     };
     disabled?: boolean;
     iconProps?: IIconProps;
