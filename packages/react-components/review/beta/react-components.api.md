@@ -1670,6 +1670,25 @@ export const _usePermissions: () => _Permissions;
 // @public
 export const useTheme: () => Theme;
 
+// @beta
+export interface VerticalGalleryControlBarStyles extends BaseCustomStyles {
+    counter?: IStyle;
+    nextButton?: IStyle;
+    previousButton?: IStyle;
+}
+
+// @beta
+export interface VerticalGalleryStrings {
+    leftNavButtonAriaLabel?: string;
+    rightNavButtonAriaLabel?: string;
+}
+
+// @beta
+export interface VerticalGalleryStyles extends BaseCustomStyles {
+    children?: IStyle;
+    controlBar?: VerticalGalleryControlBarStyles;
+}
+
 // @internal
 export type _VideoBackgroundEffectChoiceOption = _VideoEffectsItemProps;
 
@@ -1692,62 +1711,6 @@ export interface _VideoBackgroundEffectsPickerStyles {
     label?: IStyle;
     root?: IStyle;
     rowRoot?: IStyle;
-}
-
-// @internal
-export const _VideoEffectsItem: (props: _VideoEffectsItemProps) => JSX.Element;
-
-// @internal
-export const _VideoEffectsItemAddImage: (props: _VideoEffectsItemProps) => JSX.Element;
-
-// @internal
-export const _VideoEffectsItemBlur: (props: _VideoEffectsItemProps) => JSX.Element;
-
-// @internal
-export const _VideoEffectsItemNoBackground: (props: _VideoEffectsItemProps) => JSX.Element;
-
-// @internal
-export interface _VideoEffectsItemProps {
-    ariaLabel?: string;
-    backgroundProps?: {
-        url: string;
-        position?: string;
-        size?: string;
-    };
-    disabled?: boolean;
-    iconProps?: IIconProps;
-    isSelected?: boolean;
-    key: string;
-    onSelect?: (key: string) => void;
-    styles?: _VideoEffectsItemStyles;
-    title?: string;
-    tooltipProps?: ITooltipHostProps;
-}
-
-// @internal
-export interface _VideoEffectsItemStyles {
-    iconContainer: IStyle;
-    root: IStyle;
-    textContainer: IStyle;
-}
-
-// @beta
-export interface VerticalGalleryControlBarStyles extends BaseCustomStyles {
-    counter?: IStyle;
-    nextButton?: IStyle;
-    previousButton?: IStyle;
-}
-
-// @beta
-export interface VerticalGalleryStrings {
-    leftNavButtonAriaLabel?: string;
-    rightNavButtonAriaLabel?: string;
-}
-
-// @beta
-export interface VerticalGalleryStyles extends BaseCustomStyles {
-    children?: IStyle;
-    controlBar?: VerticalGalleryControlBarStyles;
 }
 
 // @internal
