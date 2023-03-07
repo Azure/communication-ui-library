@@ -205,3 +205,7 @@ export {
   _VideoEffectsItemBlur,
   _VideoEffectsItemAddImage
 } from './VideoEffects/PresetVideoEffectsItems';
+
+export type { VerticalGalleryStyles, VerticalGalleryStrings, VerticalGalleryControlBarStyles } from './VerticalGallery';
+
+export * from './Caption';

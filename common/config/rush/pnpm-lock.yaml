@@ -19395,6 +19395,7 @@ packages:
   file:projects/calling-component-bindings.tgz:
     dependencies:
       '@azure/communication-calling': 1.11.0-beta.1
+      '@azure/communication-calling-effects': 1.0.0-beta.2
       '@azure/communication-common': 2.2.0
       '@babel/cli': 7.16.8_@babel+core@7.16.12
       '@babel/core': 7.16.12
@@ -19428,7 +19429,7 @@ packages:
     dev: false
     name: '@rush-temp/calling-component-bindings'
     resolution:
-      integrity: sha512-d/LqYyVNe937BElcbIFSPFRRG8R0Vyq3k48DJXeNXyGkhJwtw3tQ2wszLI52+Cd0OEhkg2khjxm+hA1Mx5oS/w==
+      integrity: sha512-UHH0c3v160Vjq/fMfDhnyfOAxvyrAPYHwdvKM0Z4e83iT/cvUFAfxk3FN1F+Anofg33IcMzG79QUP1UQ70mWNw==
       tarball: file:projects/calling-component-bindings.tgz
     version: 0.0.0
   file:projects/calling-stateful-client.tgz:

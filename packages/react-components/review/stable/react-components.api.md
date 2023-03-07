@@ -119,6 +119,20 @@ export interface CameraButtonStyles extends ControlBarButtonStyles {
     menuStyles?: Partial<CameraButtonContextualMenuStyles>;
 }
 
+// @internal
+export const _Caption: (props: _CaptionProps) => JSX.Element;
+
+// @internal
+export interface _CaptionProps {
+    // (undocumented)
+    caption: string;
+    // (undocumented)
+    displayName: string;
+    onRenderAvatar?: OnRenderAvatarCallback;
+    // (undocumented)
+    userId?: string;
+}
+
 // @public
 export interface ChatMessage extends MessageCommon {
     // (undocumented)
@@ -742,10 +756,10 @@ export interface _IdentifierProviderProps {
 
 // @internal
 export interface _Identifiers {
-    horizontalGalleryLeftNavButton: string;
-    horizontalGalleryRightNavButton: string;
     messageContent: string;
     messageTimestamp: string;
+    overflowGalleryLeftNavButton: string;
+    overflowGalleryRightNavButton: string;
     participantButtonPeopleMenuItem: string;
     participantItemMenuButton: string;
     participantList: string;
@@ -1398,6 +1412,25 @@ export const _useContainerWidth: (containerRef: RefObject<HTMLElement>) => numbe
 
 // @public
 export const useTheme: () => Theme;
+
+// @beta
+export interface VerticalGalleryControlBarStyles extends BaseCustomStyles {
+    counter?: IStyle;
+    nextButton?: IStyle;
+    previousButton?: IStyle;
+}
+
+// @beta
+export interface VerticalGalleryStrings {
+    leftNavButtonAriaLabel?: string;
+    rightNavButtonAriaLabel?: string;
+}
+
+// @beta
+export interface VerticalGalleryStyles extends BaseCustomStyles {
+    children?: IStyle;
+    controlBar?: VerticalGalleryControlBarStyles;
+}
 
 // @internal
 export const _VideoEffectsItem: (props: _VideoEffectsItemProps) => JSX.Element;

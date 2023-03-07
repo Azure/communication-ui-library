@@ -193,7 +193,9 @@ describe('stream utils', () => {
     context.setCall(call);
     addSdkLocalStream(internalContext, mockCallId);
 
-    await createView(context, internalContext, mockCallId, mockParticipantIdentifier, {} as LocalVideoStreamState);
+    // participantId is undefined since when createView is invoked without a participant Id
+    // it is supposed to be creating the view for the local participant.
+    await createView(context, internalContext, mockCallId, undefined, {} as LocalVideoStreamState);
 
     expect(internalContext.getLocalRenderInfo(mockCallId)).toBeDefined();
     expect(internalContext.getLocalRenderInfo(mockCallId)?.stream).toBeDefined();
