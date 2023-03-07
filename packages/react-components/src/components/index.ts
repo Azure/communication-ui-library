@@ -198,6 +198,14 @@ export type {
   _PermissionConstraints
 } from './DevicePermissions/DevicePermissionDropdown';
 
+export { _VideoEffectsItem } from './VideoEffects/VideoEffectsItem';
+export type { _VideoEffectsItemProps, _VideoEffectsItemStyles } from './VideoEffects/VideoEffectsItem';
+export {
+  _VideoEffectsItemNoBackground,
+  _VideoEffectsItemBlur,
+  _VideoEffectsItemAddImage
+} from './VideoEffects/PresetVideoEffectsItems';
+
 export type { VerticalGalleryStyles, VerticalGalleryStrings, VerticalGalleryControlBarStyles } from './VerticalGallery';
 
 export * from './Caption';
