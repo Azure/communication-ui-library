@@ -22,6 +22,15 @@ import { disposeAllLocalPreviewViews, _isInCall, _isInLobbyOrConnecting, _isPrev
 import { CommunicationUserIdentifier, PhoneNumberIdentifier, UnknownIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(PSTN-calls) */
 import { CommunicationIdentifier } from '@azure/communication-common';
+/* @conditional-compile-remove(video-background-effects) */
+import {
+  BackgroundBlurConfig,
+  BackgroundBlurEffect,
+  BackgroundReplacementConfig,
+  BackgroundReplacementEffect
+} from '@azure/communication-calling-effects';
+/* @conditional-compile-remove(video-background-effects) */
+import { Features } from '@azure/communication-calling';
 
 /**
  * Object containing all the handlers required for calling components.
@@ -66,6 +75,12 @@ export interface CommonCallingHandlers {
     participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[],
     options?: StartCallOptions
   ) => void;
+  /* @conditional-compile-remove(video-background-effects) */
+  onRemoveVideoBackgroundEffects: () => Promise<void>;
+  /* @conditional-compile-remove(video-background-effects) */
+  onBlurVideoBackground: (bgBlurConfig?: BackgroundBlurConfig) => Promise<void>;
+  /* @conditional-compile-remove(video-background-effects) */
+  onReplaceVideoBackground: (bgReplacementConfig: BackgroundReplacementConfig) => Promise<void>;
 }
 
 /**
@@ -115,10 +130,6 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       }
       if (call && call.localVideoStreams.find((s) => areStreamsEqual(s, stream))) {
         await call.stopVideo(stream);
-        await callClient.disposeView(callId, undefined, {
-          source: stream.source,
-          mediaStreamType: stream.mediaStreamType
-        });
       }
     };
 
@@ -282,10 +293,14 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
         return;
       }
 
-      const remoteVideoStream = Object.values(participant.videoStreams).find((i) => i.mediaStreamType === 'Video');
-      const screenShareStream = Object.values(participant.videoStreams).find(
-        (i) => i.mediaStreamType === 'ScreenSharing'
-      );
+      // Find the first available stream, if there is none, then get the first stream
+      const remoteVideoStream =
+        Object.values(participant.videoStreams).find((i) => i.mediaStreamType === 'Video' && i.isAvailable) ||
+        Object.values(participant.videoStreams).find((i) => i.mediaStreamType === 'Video');
+
+      const screenShareStream =
+        Object.values(participant.videoStreams).find((i) => i.mediaStreamType === 'ScreenSharing' && i.isAvailable) ||
+        Object.values(participant.videoStreams).find((i) => i.mediaStreamType === 'ScreenSharing');
 
       let createViewResult: CreateViewResult | undefined = undefined;
       if (remoteVideoStream && remoteVideoStream.isAvailable && !remoteVideoStream.view) {
@@ -363,6 +378,36 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       }
     };
 
+    /* @conditional-compile-remove(video-background-effects) */
+    const onRemoveVideoBackgroundEffects = async (): Promise<void> => {
+      const stream =
+        call?.localVideoStreams.find((stream) => stream.mediaStreamType === 'Video') ||
+        deviceManager?.getUnparentedVideoStreams().find((stream) => stream.mediaStreamType === 'Video');
+      if (stream) {
+        return stream.feature(Features.VideoEffects).stopEffects();
+      }
+    };
+
+    /* @conditional-compile-remove(video-background-effects) */
+    const onBlurVideoBackground = async (bgBlurConfig?: BackgroundBlurConfig): Promise<void> => {
+      const stream =
+        call?.localVideoStreams.find((stream) => stream.mediaStreamType === 'Video') ||
+        deviceManager?.getUnparentedVideoStreams().find((stream) => stream.mediaStreamType === 'Video');
+      if (stream) {
+        return stream.feature(Features.VideoEffects).startEffects(new BackgroundBlurEffect(bgBlurConfig));
+      }
+    };
+
+    /* @conditional-compile-remove(video-background-effects) */
+    const onReplaceVideoBackground = async (bgReplacementConfig: BackgroundReplacementConfig): Promise<void> => {
+      const stream =
+        call?.localVideoStreams.find((stream) => stream.mediaStreamType === 'Video') ||
+        deviceManager?.getUnparentedVideoStreams().find((stream) => stream.mediaStreamType === 'Video');
+      if (stream) {
+        return stream.feature(Features.VideoEffects).startEffects(new BackgroundReplacementEffect(bgReplacementConfig));
+      }
+    };
+
     return {
       onHangUp,
       /* @conditional-compile-remove(PSTN-calls) */
@@ -386,7 +431,13 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       onStartCall: notImplemented,
       /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */ onSendDtmfTone,
       /* @conditional-compile-remove(call-readiness) */
-      askDevicePermission
+      askDevicePermission,
+      /* @conditional-compile-remove(video-background-effects) */
+      onRemoveVideoBackgroundEffects,
+      /* @conditional-compile-remove(video-background-effects) */
+      onBlurVideoBackground,
+      /* @conditional-compile-remove(video-background-effects) */
+      onReplaceVideoBackground
     };
   }
 );

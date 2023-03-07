@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Change domain Permission prop isSafari to browserHint: 'safari' | 'unset' to allow further customization for other browsers",
-  "packageName": "@azure/communication-react",
-  "email": "carolinecao@microsoft.com",
-  "dependentChangeType": "patch"
-}

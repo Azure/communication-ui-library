@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Changed horizontal gallery to be scrollable when VideoGallery width is narrow.",
-  "packageName": "@azure/communication-react",
-  "email": "79475487+mgamis-msft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { VideoGallery as VideoGalleryComponent } from '@azure/communication-react';
-import { Image, Text } from '@fluentui/react';
+import { Image, Stack, Text } from '@fluentui/react';
 import { ArgsTable, Canvas, Description, Heading, Source, Subheading, Title } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
@@ -230,11 +230,93 @@ const getDocs: () => JSX.Element = () => {
         <ManagedPinnedParticipantsExample />
       </Canvas>
 
+      <Heading>Remote video stream rendering options</Heading>
+      <DetailedBetaBanner />
+      <Description>
+        When `useProps` hook is used to provide the props to VideoGallery from the [stateful
+        client](./?path=/docs/statefulclient-overview--page), prop `remoteParticipants` will contain information on the
+        video streams of each remote participant and props `onCreateRemoteStreamView` and `onDisposeRemoteStreamView`
+        handle the creation and disposal of these video streams. The VideoGallery component will have a menu item in the
+        contextual menu of remote video tiles to change the rendering option of active remote video streams to either
+        fill-frame or fit-to-frame. Below are screenshots to demonstrate this feature.
+      </Description>
+      <Stack horizontal={true} tokens={{ childrenGap: '0.5rem' }}>
+        <Stack horizontalAlign="center">
+          <Image
+            style={{ width: '100%', height: 'auto' }}
+            src="images/fill-frame-video-gallery.png"
+            alt="Fill frame in VideoGallery"
+          />
+          <Description>Remote video stream rendered to fill frame</Description>
+        </Stack>
+        <Stack horizontalAlign="center">
+          <Image
+            style={{ width: '100%', height: 'auto' }}
+            src="images/fit-to-frame-menu-item-video-gallery.png"
+            alt="Fit to frame menu item in VideoGallery"
+          />
+          <Description>Option to change rendering to fit-to-frame</Description>
+        </Stack>
+      </Stack>
+      <Stack horizontal={true} tokens={{ childrenGap: '0.5rem' }}>
+        <Stack horizontalAlign="center">
+          <Image
+            style={{ width: '100%', height: 'auto' }}
+            src="images/fit-to-frame-video-gallery.png"
+            alt="Fill to frame in VideoGallery"
+          />
+          <Description>Remote video stream rendered to fit-to-frame</Description>
+        </Stack>
+        <Stack horizontalAlign="center">
+          <Image
+            style={{ width: '100%', height: 'auto' }}
+            src="images/fill-frame-menu-item-video-gallery.png"
+            alt="Fill frame menu item in VideoGallery"
+          />
+          <Description>Option to change rendering to fill frame</Description>
+        </Stack>
+      </Stack>
+      <Subheading>Assigning the default rendering options</Subheading>
+      <Description>
+        The default rendering options can be set for remote video streams as well as the local video stream through
+        VideoGallery props `remoteVideoViewOptions` and `localVideoViewOptions`. To set the remote video streams to fill
+        frame set the scalingMode to 'Crop' like in the code snippet. To set it to fit-to-frame set scalingMode to
+        'Fit'.
+      </Description>
+      <Source code={renderingOptionsDefault} />
+
       <Heading>Props</Heading>
       <ArgsTable of={VideoGalleryComponent} />
     </>
   );
 };
+
+const renderingOptionsDefault = `
+import { VideoGallery, VideoStreamOptions } from '@internal/react-components';
+
+const ViewOptionsDefault = (): JSX.Element => {
+  const localVideoViewOptions = {
+    scalingMode: 'Crop',
+    isMirrored: true
+  } as VideoStreamOptions;
+
+  const remoteVideoViewOptions = {
+    scalingMode: 'Crop',
+    isMirrored: true
+  } as VideoStreamOptions;
+
+  return (
+    <VideoGallery
+      layout="floatingLocalVideo"
+      localParticipant={MockLocalParticipant}
+      remoteParticipants={MockRemoteParticipants}
+      localVideoViewOptions={localVideoViewOptions}
+      remoteVideoViewOptions={remoteVideoViewOptions}
+    />
+  );
+};
+}
+`;
 
 const MockLocalParticipant = {
   userId: 'user1',
@@ -283,7 +365,8 @@ const VideoGalleryStory = (args): JSX.Element => {
 
   return (
     <VideoGalleryComponent
-      layout={args.layout}
+      layout={args.videoGalleryLayout}
+      overflowGalleryLayout={args.overflowGalleryLayout}
       localParticipant={MockLocalParticipant}
       remoteParticipants={remoteParticipants}
     />
@@ -300,7 +383,8 @@ export default {
   component: VideoGalleryComponent,
   argTypes: {
     remoteParticipants: controlsToAdd.remoteParticipantNames,
-    layout: controlsToAdd.videoGallerylayout,
+    videoGalleryLayout: controlsToAdd.videoGallerylayout,
+    overflowGalleryLayout: controlsToAdd.overflowGalleryLayout,
     screenShareExperience: controlsToAdd.screenShareExperience,
     // Hiding auto-generated controls
     styles: hiddenControl,

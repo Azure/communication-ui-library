@@ -179,8 +179,6 @@ const DefaultPlaceholder = (props: CustomAvatarOptions): JSX.Element => {
 const defaultPersonaStyles = { root: { margin: 'auto', maxHeight: '100%' } };
 
 /* @conditional-compile-remove(pinned-participants) */
-const videoTileMoreIconProps = { iconName: 'VideoTileMoreOptions' };
-/* @conditional-compile-remove(pinned-participants) */
 const videoTileMoreMenuIconProps = { iconName: undefined, style: { display: 'none' } };
 /* @conditional-compile-remove(pinned-participants) */
 const videoTileMoreMenuProps = {
@@ -189,18 +187,24 @@ const videoTileMoreMenuProps = {
   styles: { container: { maxWidth: '8rem' } }
 };
 /* @conditional-compile-remove(pinned-participants) */
-const VideoTileMoreOptionsButton = (props: { contextualMenu?: IContextualMenuProps }): JSX.Element => {
-  const { contextualMenu } = props;
+const VideoTileMoreOptionsButton = (props: {
+  contextualMenu?: IContextualMenuProps;
+  canShowContextMenuButton: boolean;
+}): JSX.Element => {
+  const { contextualMenu, canShowContextMenuButton } = props;
   if (!contextualMenu) {
     return <></>;
   }
+
+  const optionsIcon = canShowContextMenuButton ? 'VideoTileMoreOptions' : undefined;
+
   return (
     <IconButton
       data-ui-id="video-tile-more-options-button"
       styles={moreButtonStyles}
-      iconProps={videoTileMoreIconProps}
       menuIconProps={videoTileMoreMenuIconProps}
       menuProps={{ ...videoTileMoreMenuProps, ...contextualMenu }}
+      iconProps={{ iconName: optionsIcon }}
     />
   );
 };
@@ -329,26 +333,24 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
         rootStyles,
         {
           background: theme.palette.neutralLighter,
-          borderRadius: theme.effects.roundedCorner4,
-          // To ensure that the video tile is focusable when there is a floating video tile
-          zIndex: 1
+          borderRadius: theme.effects.roundedCorner4
         },
         isSpeaking && {
-          '&::before': {
+          '&::after': {
             content: `''`,
             position: 'absolute',
-            zIndex: 1,
             border: `0.25rem solid ${theme.palette.themePrimary}`,
             borderRadius: theme.effects.roundedCorner4,
             width: '100%',
-            height: '100%'
+            height: '100%',
+            pointerEvents: 'none'
           }
         },
         styles?.root
       )}
       {...longPressHandlersTrampoline}
     >
-      <div ref={videoTileRef} style={{ width: '100%', height: '100%' }} {...hoverHandlers}>
+      <div ref={videoTileRef} style={{ width: '100%', height: '100%' }} {...hoverHandlers} data-is-focusable={true}>
         {isVideoRendered ? (
           <Stack
             className={mergeStyles(
@@ -401,7 +403,10 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
               )}
               {
                 /* @conditional-compile-remove(pinned-participants) */
-                canShowContextMenuButton && <VideoTileMoreOptionsButton contextualMenu={contextualMenu} />
+                <VideoTileMoreOptionsButton
+                  contextualMenu={contextualMenu}
+                  canShowContextMenuButton={canShowContextMenuButton}
+                />
               }
               {
                 /* @conditional-compile-remove(pinned-participants) */

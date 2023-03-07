@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "VideoTile provides a prop `onLongTouch` that allows users to trigger a custom callback when VideoTile is long touched",
-  "packageName": "@azure/communication-react",
-  "email": "anjulgarg@live.com",
-  "dependentChangeType": "patch"
-}
