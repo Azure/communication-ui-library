@@ -48,7 +48,9 @@ process.env['COMMUNICATION_REACT_FLAVOR'] === 'stable' &&
         // feature for blurred background and replace background effects
         'video-background-effects',
         // feature for vertical gallery layouts in VideoGallery
-        'vertical-gallery'
+        'vertical-gallery',
+        // Data loss prevention feature
+        'dlp'
       ],
       // A list of stabilized features.
       // These features can be listed in the conditional compilation directives without

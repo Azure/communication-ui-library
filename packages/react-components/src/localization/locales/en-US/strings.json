@@ -126,7 +126,9 @@
     "editBoxSubmitButton": "Submit",
     "messageReadCount": "Read by {messageReadByCount} of {remoteParticipantsCount}",
     "actionMenuMoreOptions": "More Options",
-    "downloadFile": "Download file"
+    "downloadFile": "Download file",
+    "policyViolationText": "This message deleted by policy. ",
+    "policyViolationLinkText": "Details"
   },
   "errorBar": {
     "unableToReachChatService": "You are offline",

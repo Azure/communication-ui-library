@@ -8,15 +8,21 @@ import Linkify from 'react-linkify';
 import { ChatMessage } from '../../types/ChatMessage';
 import { LiveMessage } from 'react-aria-live';
 import { Link } from '@fluentui/react';
+import { MessageThreadStrings } from '../MessageThread';
 
 type ChatMessageContentProps = {
   message: ChatMessage;
   liveAuthorIntro: string;
   messageContentAriaText?: string;
+  strings: MessageThreadStrings;
 };
 
 /** @private */
 export const ChatMessageContent = (props: ChatMessageContentProps): JSX.Element => {
+  /* @conditional-compile-remove(dlp) */
+  if (props.message.policyViolation) {
+    return MessageContentAsDLP(props);
+  }
   switch (props.message.contentType) {
     case 'text':
       return MessageContentAsText(props);
@@ -60,6 +66,28 @@ const MessageContentAsText = (props: ChatMessageContentProps): JSX.Element => {
       >
         {props.message.content}
       </Linkify>
+    </div>
+  );
+};
+
+/* @conditional-compile-remove(dlp) */
+const MessageContentAsDLP = (props: ChatMessageContentProps): JSX.Element => {
+  const livePolicyViolationText = `${props.message.mine ? '' : props.message.senderDisplayName} ${
+    props.strings.policyViolationText
+  }`;
+  return (
+    <div data-ui-status={props.message.status} role="text" aria-label={livePolicyViolationText}>
+      <LiveMessage message={livePolicyViolationText} aria-live="polite" />
+      <p style={{ fontStyle: 'italic', color: 'red' }}>
+        {props.strings.policyViolationText}
+        <Link
+          href={'https://go.microsoft.com/fwlink/?LinkId=2132837'}
+          target={'_blank'}
+          style={{ fontStyle: 'normal', color: 'blue', textDecoration: 'none' }}
+        >
+          {props.strings.policyViolationLinkText}
+        </Link>
+      </p>
     </div>
   );
 };

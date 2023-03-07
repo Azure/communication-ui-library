@@ -223,6 +223,12 @@ export interface MessageThreadStrings {
   /* @conditional-compile-remove(file-sharing) */
   /** String for download file button in file card */
   downloadFile: string;
+  /* @conditional-compile-remove(dlp) */
+  /** String for policy violation message removal */
+  policyViolationText: string;
+  /* @conditional-compile-remove(dlp) */
+  /** String for policy violation message removal details link */
+  policyViolationLinkText: string;
 }
 
 /**

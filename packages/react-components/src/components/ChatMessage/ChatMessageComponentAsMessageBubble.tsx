@@ -179,6 +179,19 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     ]
   );
 
+  const getMessageDetails = (): JSX.Element | undefined => {
+    if (messageStatus === 'failed') {
+      return <div className={chatMessageFailedTagStyle(theme)}>{strings.failToSendTag}</div>;
+    } else if (message.editedOn) {
+      /* @conditional-compile-remove(dlp) */
+      if (message.policyViolation) {
+        return undefined;
+      }
+      return <div className={chatMessageEditedTagStyle(theme)}>{strings.editedTag}</div>;
+    }
+    return undefined;
+  };
+
   const messageContentAriaText = props.message.content
     ? props.message.mine
       ? _formatString(strings.messageContentMineAriaText, {
@@ -203,6 +216,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
                 message={message}
                 liveAuthorIntro={strings.liveAuthorIntro}
                 messageContentAriaText={messageContentAriaText}
+                strings={strings}
               />
               {props.onRenderFileDownloads
                 ? props.onRenderFileDownloads(userId, message)
@@ -212,13 +226,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
           author={<Text className={chatMessageDateStyle}>{message.senderDisplayName}</Text>}
           mine={message.mine}
           timestamp={<Text data-ui-id={ids.messageTimestamp}>{formattedTimestamp}</Text>}
-          details={
-            messageStatus === 'failed' ? (
-              <div className={chatMessageFailedTagStyle(theme)}>{strings.failToSendTag}</div>
-            ) : message.editedOn ? (
-              <div className={chatMessageEditedTagStyle(theme)}>{strings.editedTag}</div>
-            ) : undefined
-          }
+          details={getMessageDetails()}
           positionActionMenu={false}
           actionMenu={actionMenuProps}
           onTouchStart={() => setWasInteractionByTouch(true)}

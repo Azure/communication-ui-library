@@ -241,6 +241,8 @@ export interface ChatMessage extends MessageCommon {
     // (undocumented)
     mine?: boolean;
     // (undocumented)
+    policyViolation?: boolean;
+    // (undocumented)
     senderDisplayName?: string;
     // (undocumented)
     senderId?: string;
@@ -1111,6 +1113,8 @@ export interface MessageThreadStrings {
     noDisplayNameSub: string;
     participantJoined: string;
     participantLeft: string;
+    policyViolationLinkText: string;
+    policyViolationText: string;
     removeMessage: string;
     resendMessage?: string;
     saturday: string;

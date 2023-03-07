@@ -15,4 +15,6 @@ import { MessageStatus } from '@internal/acs-ui-common';
 export type ChatMessageWithStatus = ChatMessage & {
   clientMessageId?: string;
   status: MessageStatus;
+  /* @conditional-compile-remove(dlp) */
+  policyViolation?: boolean;
 };

@@ -60,6 +60,8 @@ export interface ChatMessage extends MessageCommon {
   status?: MessageStatus;
   attached?: MessageAttachedStatus;
   mine?: boolean;
+  /* @conditional-compile-remove(dlp) */
+  policyViolation?: boolean;
   clientMessageId?: string;
   contentType: MessageContentType;
   /**
