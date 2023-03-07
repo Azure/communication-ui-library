@@ -1750,6 +1750,41 @@ export interface VerticalGalleryStyles extends BaseCustomStyles {
     controlBar?: VerticalGalleryControlBarStyles;
 }
 
+// @internal
+export const _VideoEffectsItem: (props: _VideoEffectsItemProps) => JSX.Element;
+
+// @internal
+export const _VideoEffectsItemAddImage: (props: _VideoEffectsItemProps) => JSX.Element;
+
+// @internal
+export const _VideoEffectsItemBlur: (props: _VideoEffectsItemProps) => JSX.Element;
+
+// @internal
+export const _VideoEffectsItemNoBackground: (props: _VideoEffectsItemProps) => JSX.Element;
+
+// @internal
+export interface _VideoEffectsItemProps {
+    ariaLabel?: string;
+    backgroundProps?: {
+        url: string;
+    };
+    disabled?: boolean;
+    iconProps?: IIconProps;
+    isSelected?: boolean;
+    key: string;
+    onSelect?: (key: string) => void;
+    styles?: _VideoEffectsItemStyles;
+    title?: string;
+    tooltipProps?: ITooltipHostProps;
+}
+
+// @internal
+export interface _VideoEffectsItemStyles {
+    iconContainer: IStyle;
+    root: IStyle;
+    textContainer: IStyle;
+}
+
 // @public
 export const VideoGallery: (props: VideoGalleryProps) => JSX.Element;
 
