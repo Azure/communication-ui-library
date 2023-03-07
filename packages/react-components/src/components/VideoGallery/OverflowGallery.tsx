@@ -45,28 +45,35 @@ export const OverflowGallery = (props: {
   const {
     shouldFloatLocalVideo = false,
     isNarrow = false,
+    isShort = false,
     overflowGalleryElements,
     horizontalGalleryStyles,
     /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryLayout = 'HorizontalBottom',
     /* @conditional-compile-remove(vertical-gallery) */ veritcalGalleryStyles
   } = props;
-
+  console.log(isShort);
   const containerStyles = useMemo(() => {
     /* @conditional-compile-remove(vertical-gallery) */
     if (overflowGalleryLayout === 'VerticalRight') {
-      return verticalGalleryContainerStyle(shouldFloatLocalVideo, isNarrow);
+      return verticalGalleryContainerStyle(shouldFloatLocalVideo, isNarrow, isShort);
     }
     return horizontalGalleryContainerStyle(shouldFloatLocalVideo, isNarrow);
-  }, [shouldFloatLocalVideo, isNarrow, /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryLayout]);
+  }, [
+    shouldFloatLocalVideo,
+    /* @conditional-compile-remove(vertical-gallery) */ isShort,
+    isNarrow,
+    /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryLayout
+  ]);
 
   const galleryStyles = useMemo(() => {
     /* @conditional-compile-remove(vertical-gallery) */
     if (overflowGalleryLayout === 'VerticalRight') {
-      return concatStyleSets(verticalGalleryStyle, veritcalGalleryStyles);
+      return concatStyleSets(verticalGalleryStyle(isShort), veritcalGalleryStyles);
     }
     return concatStyleSets(horizontalGalleryStyle(isNarrow), horizontalGalleryStyles);
   }, [
     isNarrow,
+    /* @conditional-compile-remove(vertical-gallery) */ isShort,
     horizontalGalleryStyles,
     /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryLayout,
     /* @conditional-compile-remove(vertical-gallery) */ veritcalGalleryStyles
@@ -81,6 +88,7 @@ export const OverflowGallery = (props: {
         verticalGalleryStyles={galleryStyles as VerticalGalleryStyles}
         controlBarHeightRem={HORIZONTAL_GALLERY_BUTTON_WIDTH}
         gapHeightRem={HORIZONTAL_GALLERY_GAP}
+        isShort={isShort}
       >
         {overflowGalleryElements}
       </ResponsiveVerticalGallery>

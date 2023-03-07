@@ -17,7 +17,10 @@ import {
   SMALL_FLOATING_MODAL_SIZE_PX
 } from './styles/FloatingLocalVideo.styles';
 /* @conditional-compile-remove(vertical-gallery) */
-import { VERTICAL_GALLERY_FLOATING_MODAL_SIZE_PX } from './styles/FloatingLocalVideo.styles';
+import {
+  SHORT_VERTICAL_GALLERY_FLOATING_MODAL_SIZE_PX,
+  VERTICAL_GALLERY_FLOATING_MODAL_SIZE_PX
+} from './styles/FloatingLocalVideo.styles';
 import { innerLayoutStyle, layerHostStyle, rootLayoutStyle } from './styles/FloatingLocalVideoLayout.styles';
 import { videoGalleryLayoutGap } from './styles/Layout.styles';
 import { useOrganizedParticipants } from './utils/videoGalleryLayoutUtils';
@@ -109,12 +112,17 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
     }
     /* @conditional-compile-remove(vertical-gallery) */
     if (horizontalGalleryTiles.length > 0 && overflowGalleryLayout === 'VerticalRight') {
-      return isNarrow ? SMALL_FLOATING_MODAL_SIZE_PX : VERTICAL_GALLERY_FLOATING_MODAL_SIZE_PX;
+      return isNarrow
+        ? SMALL_FLOATING_MODAL_SIZE_PX
+        : isShort
+        ? SHORT_VERTICAL_GALLERY_FLOATING_MODAL_SIZE_PX
+        : VERTICAL_GALLERY_FLOATING_MODAL_SIZE_PX;
     }
     return LARGE_FLOATING_MODAL_SIZE_PX;
   }, [
     horizontalGalleryTiles.length,
     isNarrow,
+    /* @conditional-compile-remove(vertical-gallery) */ isShort,
     /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryLayout
   ]);
 
