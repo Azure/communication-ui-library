@@ -30,7 +30,7 @@ test.describe('VerticalGallery tests', async () => {
     expect(await stableScreenshot(page)).toMatchSnapshot('vertical-gallery-with-1-audio-participant.png');
   });
 
-  test.only('VerticalGallery should work in right-to-left', async ({ page, serverUrl }) => {
+  test('VerticalGallery should work in right-to-left', async ({ page, serverUrl }) => {
     const paul = defaultMockRemoteParticipant('Paul Bridges');
     addVideoStream(paul, true);
     paul.isSpeaking = true;
