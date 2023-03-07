@@ -72,7 +72,6 @@ test.describe('VerticalGallery tests', async () => {
     ];
     const initialState = defaultMockCallAdapterState(participants);
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
-    await page.setViewportSize({ width: 800, height: 440 });
 
     await waitForSelector(page, dataUiId(IDS.videoGallery));
     expect(await stableScreenshot(page)).toMatchSnapshot('vertical-gallery-with-many-audio-participants-on-page-1.png');
