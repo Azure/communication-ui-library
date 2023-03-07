@@ -14,7 +14,7 @@ import {
 
 /* @conditional-compile-remove(vertical-gallery) */
 test.describe('Vertical gallery resizing tests', async () => {
-  test.only('resize should have the tiles all change to the same size within expected bounds', async ({
+  test('resize should have the tiles all change to the same size within expected bounds', async ({
     page,
     serverUrl
   }, testInfo) => {
@@ -57,7 +57,7 @@ test.describe('Vertical gallery resizing tests', async () => {
     expect(await verticalTiles.evaluate((e) => (e as HTMLDivElement).clientHeight)).toBeGreaterThanOrEqual(108);
     expect(await verticalTiles.evaluate((e) => (e as HTMLDivElement).clientHeight)).toBeLessThanOrEqual(176);
   });
-  test.only('resize should appropriately add tiles if room', async ({ page, serverUrl }, testInfo) => {
+  test('resize should appropriately add tiles if room', async ({ page, serverUrl }, testInfo) => {
     test.skip(isTestProfileMobile(testInfo));
 
     const paul = defaultMockRemoteParticipant('Paul Bridges');
@@ -99,7 +99,7 @@ test.describe('Vertical gallery resizing tests', async () => {
     // verify that we added a tile with the extra spacing.
     expect(await page.locator(dataUiId(IDS.verticalGalleryVideoTile)).count()).toBe(3);
   });
-  test.only('resize should appropriately remove tiles if needed', async ({ page, serverUrl }, testInfo) => {
+  test('resize should appropriately remove tiles if needed', async ({ page, serverUrl }, testInfo) => {
     test.skip(isTestProfileMobile(testInfo));
 
     const paul = defaultMockRemoteParticipant('Paul Bridges');
@@ -138,7 +138,7 @@ test.describe('Vertical gallery resizing tests', async () => {
     // verify that we added a tile with the extra spacing.
     expect(await page.locator(dataUiId(IDS.verticalGalleryVideoTile)).count()).toBe(2);
   });
-  test.only('resize should remove pages appropriately', async ({ page, serverUrl }, testInfo) => {
+  test('resize should remove pages appropriately', async ({ page, serverUrl }, testInfo) => {
     test.skip(isTestProfileMobile(testInfo));
 
     const paul = defaultMockRemoteParticipant('Paul Bridges');
@@ -178,7 +178,7 @@ test.describe('Vertical gallery resizing tests', async () => {
 
     expect(await pageCounter.evaluate((e) => (e as HTMLDivElement).innerText)).toBe('1 / 2');
   });
-  test.only('resize should add pages appropriatly', async ({ page, serverUrl }, testInfo) => {
+  test('resize should add pages appropriatly', async ({ page, serverUrl }, testInfo) => {
     test.skip(isTestProfileMobile(testInfo));
 
     const paul = defaultMockRemoteParticipant('Paul Bridges');
@@ -218,7 +218,7 @@ test.describe('Vertical gallery resizing tests', async () => {
 
     expect(await pageCounter.evaluate((e) => (e as HTMLDivElement).innerText)).toBe('1 / 3');
   });
-  test.only('single user on last page should use largest size', async ({ page, serverUrl }, testInfo) => {
+  test('single user on last page should use largest size', async ({ page, serverUrl }, testInfo) => {
     test.skip(isTestProfileMobile(testInfo));
 
     const paul = defaultMockRemoteParticipant('Paul Bridges');
