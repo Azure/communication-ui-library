@@ -8,9 +8,9 @@ import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { BaseProvider, BaseCompositeProps } from '../common/BaseComposite';
 import { CallCompositeIcons } from '../common/icons';
 import { useLocale } from '../localization';
-import { CommonCallAdapter } from './adapter/CallAdapter';
 /* @conditional-compile-remove(video-background-effects) */
-import { BackgroundImage } from './adapter/CallAdapter';
+import { VideoBackgroundImage } from './adapter/CallAdapter';
+import { CommonCallAdapter } from './adapter/CallAdapter';
 import { CallAdapterProvider, useAdapter } from './adapter/CallAdapterProvider';
 import { CallPage } from './pages/CallPage';
 import { ConfigurationPage } from './pages/ConfigurationPage';
@@ -110,7 +110,7 @@ export interface RemoteVideoTileMenuOptions {
  * Callback function to handle new custom background upload.
  *
  */
-export type BackgroundUploadHandler = (image: File) => void;
+export type BackgroundUploadHandler = (image: File) => VideoBackgroundImage;
 
 /* @conditional-compile-remove(video-background-effects) */
 /**
@@ -129,10 +129,6 @@ export interface VideoBackgroundEffectsOptions {
    *  A function of type {@link BackgroundUploadHandler} for handling custom image uploads.
    */
   backgroundUploadHandler?: BackgroundUploadHandler;
-  /**
-   * Default set of background images for background replacement effect.
-   */
-  backgroundImages?: BackgroundImage[];
 }
 
 /**

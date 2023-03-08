@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 import { AudioDeviceInfo, Call, EnvironmentInfo, VideoDeviceInfo } from '@azure/communication-calling';
 import type {
-  BackgroundImage,
+  VideoBackgroundImage,
   CallAdapter,
   CallAdapterState,
   VideoBackgroundBlurEffect,
@@ -153,16 +153,16 @@ export class MockCallAdapter implements CallAdapter {
 
   setCustomBackgroundImages(
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    backgroundImages: BackgroundImage[]
+    backgroundImages: VideoBackgroundImage[]
   ): void {
     throw new Error('setCustomBackgroundImages not implemented.');
   }
 
-  selectUploadedBackground(
+  selectCustomBackground(
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    backgroundImage: BackgroundImage
+    backgroundImage: VideoBackgroundImage
   ): void {
-    throw new Error('selectUploadedBackground not implemented.');
+    throw new Error('selectCustomBackground not implemented.');
   }
 }
 

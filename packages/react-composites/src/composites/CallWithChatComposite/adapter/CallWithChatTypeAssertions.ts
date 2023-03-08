@@ -91,6 +91,7 @@ type CallWithChatClientStateInternal = Omit<
   | /* @conditional-compile-remove(PSTN-calls) */ 'alternateCallerId'
   | /* @conditional-compile-remove(unsupported-browser) */ 'features'
   | /* @conditional-compile-remove(rooms) */ 'roleHint'
+  | /* @conditional-compile-remove(video-background-effects) */ 'videoBackgroundImages'
   | 'cameraStatus'
 >;
 

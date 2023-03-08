@@ -189,15 +189,8 @@ export type AzureCommunicationChatAdapterArgs = {
     threadId: string;
 };
 
-// @public
-export interface BackgroundImage {
-    extension?: string;
-    name?: string;
-    url: string;
-}
-
 // @beta
-export type BackgroundUploadHandler = (image: File) => void;
+export type BackgroundUploadHandler = (image: File) => VideoBackgroundImage;
 
 // @public
 export interface BaseCompositeProps<TIcons extends Record<string, JSX.Element>> {
@@ -297,11 +290,11 @@ export interface CallAdapterCallOperations {
     // @beta
     resumeCall(): Promise<void>;
     // @beta
-    selectUploadedBackground(backgroundImage: BackgroundImage): void;
+    selectCustomBackground(backgroundImage: VideoBackgroundImage): void;
     // @beta
     sendDtmfTone(dtmfTone: DtmfTone_2): Promise<void>;
     // @beta
-    setCustomBackgroundImages(backgroundImages: BackgroundImage[]): void;
+    setCustomBackgroundImages(backgroundImages: VideoBackgroundImage[]): void;
     startCamera(options?: VideoStreamOptions): Promise<void>;
     startScreenShare(): Promise<void>;
     // @beta
@@ -326,6 +319,7 @@ export type CallAdapterClientState = {
     environmentInfo?: EnvironmentInfo;
     roleHint?: Role;
     cameraStatus?: 'On' | 'Off';
+    videoBackgroundImages?: VideoBackgroundImage[];
 };
 
 // @public
@@ -781,7 +775,7 @@ export interface CallWithChatAdapterManagement {
     // @beta
     resumeCall: () => Promise<void>;
     // @beta
-    selectUploadedBackground(backgroundImage: BackgroundImage): void;
+    selectCustomBackground(backgroundImage: VideoBackgroundImage): void;
     // @beta
     sendDtmfTone: (dtmfTone: DtmfTone_2) => Promise<void>;
     sendMessage(content: string, options?: SendMessageOptions): Promise<void>;
@@ -789,7 +783,7 @@ export interface CallWithChatAdapterManagement {
     sendTypingIndicator(): Promise<void>;
     setCamera(sourceInfo: VideoDeviceInfo, options?: VideoStreamOptions): Promise<void>;
     // @beta
-    setCustomBackgroundImages(backgroundImages: BackgroundImage[]): void;
+    setCustomBackgroundImages(backgroundImages: VideoBackgroundImage[]): void;
     setMicrophone(sourceInfo: AudioDeviceInfo): Promise<void>;
     setSpeaker(sourceInfo: AudioDeviceInfo): Promise<void>;
     startCall(participants: string[], options?: StartCallOptions): Call | undefined;
@@ -1741,7 +1735,7 @@ export type CustomAvatarOptions = {
 
 // @public
 export interface CustomBackground {
-    backgroundImage: BackgroundImage;
+    backgroundImage: VideoBackgroundImage;
     id: string;
 }
 
@@ -3277,9 +3271,14 @@ export interface VideoBackgroundBlurEffect {
 
 // @beta
 export interface VideoBackgroundEffectsOptions {
-    backgroundImages?: BackgroundImage[];
     backgroundUploadHandler?: BackgroundUploadHandler;
     disableVideoEffects?: boolean;
+}
+
+// @public
+export interface VideoBackgroundImage {
+    displayName?: string;
+    url: string;
 }
 
 // @public

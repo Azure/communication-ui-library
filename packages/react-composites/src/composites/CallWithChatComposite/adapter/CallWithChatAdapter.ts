@@ -45,7 +45,7 @@ import { CommunicationUserIdentifier, PhoneNumberIdentifier } from '@azure/commu
 import { CommunicationIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(video-background-effects) */
 import {
-  BackgroundImage,
+  VideoBackgroundImage,
   VideoBackgroundBlurEffect,
   VideoBackgroundReplacementEffect
 } from '../../CallComposite/adapter/CallAdapter';
@@ -370,7 +370,7 @@ export interface CallWithChatAdapterManagement {
    *
    * @beta
    */
-  setCustomBackgroundImages(backgroundImages: BackgroundImage[]): void;
+  setCustomBackgroundImages(backgroundImages: VideoBackgroundImage[]): void;
   /* @conditional-compile-remove(video-background-effects) */
   /**
    * Select the uploaded background image for background replacement effect and
@@ -380,7 +380,7 @@ export interface CallWithChatAdapterManagement {
    *
    * @beta
    */
-  selectUploadedBackground(backgroundImage: BackgroundImage): void;
+  selectCustomBackground(backgroundImage: VideoBackgroundImage): void;
 }
 
 /**

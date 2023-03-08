@@ -114,6 +114,11 @@ export type CallAdapterClientState = {
    * control bar with the CallComposite.
    */
   cameraStatus?: 'On' | 'Off';
+  /* @conditional-compile-remove(video-background-effects) */
+  /**
+   * Default set of background images for background replacement effect.
+   */
+  videoBackgroundImages?: VideoBackgroundImage[];
 };
 
 /**
@@ -253,9 +258,9 @@ export interface CustomBackground {
    */
   id: string;
   /**
-   * Image data {@link BackgroundImage} containing information about the custom background image.
+   * Image data {@link VideoBackgroundImage} containing information about the custom background image.
    */
-  backgroundImage: BackgroundImage;
+  backgroundImage: VideoBackgroundImage;
 }
 
 /* @conditional-compile-remove(video-background-effects) */
@@ -264,7 +269,7 @@ export interface CustomBackground {
  *
  * @public
  */
-export interface BackgroundImage {
+export interface VideoBackgroundImage {
   /**
    * URL of the uploaded background image.
    */
@@ -272,11 +277,7 @@ export interface BackgroundImage {
   /**
    * Image name to be displayed.
    */
-  name?: string;
-  /**
-   * Extension of the image, Example: `jpeg`, `png`.
-   */
-  extension?: string;
+  displayName?: string;
 }
 
 /**
@@ -433,7 +434,7 @@ export interface CallAdapterCallOperations {
    *
    * @beta
    */
-  setCustomBackgroundImages(backgroundImages: BackgroundImage[]): void;
+  setCustomBackgroundImages(backgroundImages: VideoBackgroundImage[]): void;
   /* @conditional-compile-remove(video-background-effects) */
   /**
    * Select the uploaded background image for background replacement effect and
@@ -443,7 +444,7 @@ export interface CallAdapterCallOperations {
    *
    * @beta
    */
-  selectUploadedBackground(backgroundImage: BackgroundImage): void;
+  selectCustomBackground(backgroundImage: VideoBackgroundImage): void;
 }
 
 /**

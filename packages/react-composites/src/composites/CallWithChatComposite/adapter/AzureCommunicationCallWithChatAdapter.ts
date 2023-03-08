@@ -81,7 +81,7 @@ import { _toCommunicationIdentifier } from '@internal/acs-ui-common';
 import { AzureCommunicationCallAdapterOptions } from '../../CallComposite/adapter/AzureCommunicationCallAdapter';
 /* @conditional-compile-remove(video-background-effects) */
 import {
-  BackgroundImage,
+  VideoBackgroundImage,
   VideoBackgroundBlurEffect,
   VideoBackgroundReplacementEffect
 } from '../../CallComposite/adapter/CallAdapter';
@@ -222,7 +222,7 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     /* @conditional-compile-remove(video-background-effects) */
     this.setCustomBackgroundImages.bind(this);
     /* @conditional-compile-remove(video-background-effects) */
-    this.selectUploadedBackground.bind(this);
+    this.selectCustomBackground.bind(this);
   }
 
   /** Join existing Call. */
@@ -446,17 +446,17 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   /* @conditional-compile-remove(video-background-effects) */
   public setCustomBackgroundImages(
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    backgroundImages: BackgroundImage[]
+    backgroundImages: VideoBackgroundImage[]
   ): void {
     throw new Error('setCustomBackgroundImages not implemented.');
   }
 
   /* @conditional-compile-remove(video-background-effects) */
-  public selectUploadedBackground(
+  public selectCustomBackground(
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    backgroundImage: BackgroundImage
+    backgroundImage: VideoBackgroundImage
   ): void {
-    throw new Error('selectUploadedBackground not implemented.');
+    throw new Error('selectCustomBackground not implemented.');
   }
 
   on(event: 'callParticipantsJoined', listener: ParticipantsJoinedListener): void;

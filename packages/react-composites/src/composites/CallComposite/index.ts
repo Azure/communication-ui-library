@@ -54,7 +54,7 @@ export type { CallParticipantsLocator } from './adapter';
 
 /* @conditional-compile-remove(video-background-effects) */
 export type {
-  BackgroundImage,
+  VideoBackgroundImage,
   VideoBackgroundBlurEffect,
   VideoBackgroundReplacementEffect,
   CustomBackground
