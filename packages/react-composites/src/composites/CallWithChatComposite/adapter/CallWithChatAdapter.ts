@@ -373,8 +373,8 @@ export interface CallWithChatAdapterManagement {
   setCustomBackgroundImages(backgroundImages: VideoBackgroundImage[]): void;
   /* @conditional-compile-remove(video-background-effects) */
   /**
-   * Select the uploaded background image for background replacement effect and
-   * add the image to default background images set.
+   * Select the custom background image for background replacement effect and
+   * apply if the camera is on.
    *
    * @param backgroundImage - Contains the attibutes of a background image like url, name etc.
    *
