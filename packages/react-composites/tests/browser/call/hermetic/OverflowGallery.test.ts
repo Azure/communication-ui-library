@@ -14,8 +14,8 @@ import {
   test
 } from './fixture';
 
-test.describe('HorizontalGallery tests', async () => {
-  test('HorizontalGallery should have 1 audio participant', async ({ page, serverUrl }) => {
+test.describe('Overflow gallery tests', async () => {
+  test('Overflow gallery should have 1 audio participant', async ({ page, serverUrl }) => {
     const paul = defaultMockRemoteParticipant('Paul Bridges');
     addVideoStream(paul, true);
     paul.isSpeaking = true;
@@ -27,10 +27,10 @@ test.describe('HorizontalGallery tests', async () => {
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
 
     await waitForSelector(page, dataUiId(IDS.videoGallery));
-    expect(await stableScreenshot(page)).toMatchSnapshot('horizontal-gallery-with-1-audio-participant.png');
+    expect(await stableScreenshot(page)).toMatchSnapshot('overflow-gallery-with-1-audio-participant.png');
   });
 
-  test('HorizontalGallery should have multiple audio participants spanning multiple pages. Navigation buttons should work.', async ({
+  test('Overflow gallery should have multiple audio participants spanning multiple pages. Navigation buttons should work.', async ({
     page,
     serverUrl
   }) => {
@@ -59,9 +59,7 @@ test.describe('HorizontalGallery tests', async () => {
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
 
     await waitForSelector(page, dataUiId(IDS.videoGallery));
-    expect(await stableScreenshot(page)).toMatchSnapshot(
-      'horizontal-gallery-with-many-audio-participants-on-page-1.png'
-    );
+    expect(await stableScreenshot(page)).toMatchSnapshot('overflow-gallery-with-many-audio-participants-on-page-1.png');
 
     /* @conditional-compile-remove(pinned-participants) */
     if (await existsOnPage(page, dataUiId('scrollable-horizontal-gallery'))) {
@@ -74,18 +72,14 @@ test.describe('HorizontalGallery tests', async () => {
 
     await waitForSelector(page, dataUiId(IDS.overflowGalleryRightNavButton));
     await pageClick(page, dataUiId(IDS.overflowGalleryRightNavButton));
-    expect(await stableScreenshot(page)).toMatchSnapshot(
-      'horizontal-gallery-with-many-audio-participants-on-page-2.png'
-    );
+    expect(await stableScreenshot(page)).toMatchSnapshot('overflow-gallery-with-many-audio-participants-on-page-2.png');
     await waitForSelector(page, dataUiId(IDS.overflowGalleryLeftNavButton));
     await pageClick(page, dataUiId(IDS.overflowGalleryLeftNavButton));
-    expect(await stableScreenshot(page)).toMatchSnapshot(
-      'horizontal-gallery-with-many-audio-participants-on-page-1.png'
-    );
+    expect(await stableScreenshot(page)).toMatchSnapshot('overflow-gallery-with-many-audio-participants-on-page-1.png');
   });
 
   /* @conditional-compile-remove(PSTN-calls) */
-  test('HorizontalGallery should have 1 PSTN participant in the horizontal gallery', async ({ page, serverUrl }) => {
+  test('Overflow gallery should have 1 PSTN participant', async ({ page, serverUrl }) => {
     const paul = defaultMockRemoteParticipant('Paul Bridges');
     addVideoStream(paul, true);
     const vasily = defaultMockRemotePSTNParticipant('+15553334444');
@@ -97,11 +91,11 @@ test.describe('HorizontalGallery tests', async () => {
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
 
     await waitForSelector(page, dataUiId(IDS.videoGallery));
-    expect(await stableScreenshot(page)).toMatchSnapshot('horizontal-gallery-with-joining-participant.png');
+    expect(await stableScreenshot(page)).toMatchSnapshot('overflow-gallery-with-joining-participant.png');
   });
 
   /* @conditional-compile-remove(PSTN-calls) */
-  test('HorizontalGallery should have multiple audio participants and 1 PSTN participant', async ({
+  test('Overflow gallery should have multiple audio participants and 1 PSTN participant', async ({
     page,
     serverUrl
   }) => {
@@ -121,12 +115,12 @@ test.describe('HorizontalGallery tests', async () => {
 
     await waitForSelector(page, dataUiId(IDS.videoGallery));
     expect(await stableScreenshot(page)).toMatchSnapshot(
-      'horizontal-gallery-with-joining-participant-with-audio-participants.png'
+      'overflow-gallery-with-joining-participant-with-audio-participants.png'
     );
   });
 
   /* @conditional-compile-remove(PSTN-calls) @conditional-compile-remove(pinned-participants) */
-  test('HorizontalGallery should have multiple audio participants and 1 PSTN participant on second page', async ({
+  test('Overflow gallery should have multiple audio participants and 1 PSTN participant on second page', async ({
     page,
     serverUrl
   }) => {
@@ -168,12 +162,12 @@ test.describe('HorizontalGallery tests', async () => {
     await waitForSelector(page, dataUiId(IDS.overflowGalleryRightNavButton));
     await pageClick(page, dataUiId(IDS.overflowGalleryRightNavButton));
     expect(await stableScreenshot(page)).toMatchSnapshot(
-      'horizontal-gallery-with-joining-participant-with-multi-page.png'
+      'overflow-gallery-with-joining-participant-with-multi-page.png'
     );
   });
 
   /* @conditional-compile-remove(PSTN-calls) */
-  test('HorizontalGallery should have 2 video participants during screenshare and 1 PSTN participant', async ({
+  test('Overflow gallery should have 2 video participants during screenshare and 1 PSTN participant', async ({
     page,
     serverUrl
   }) => {
@@ -195,7 +189,7 @@ test.describe('HorizontalGallery tests', async () => {
 
     await waitForSelector(page, dataUiId(IDS.videoGallery));
     expect(await stableScreenshot(page)).toMatchSnapshot(
-      'horizontal-gallery-with-joining-participant-with-screen-share-and-video.png'
+      'overflow-gallery-with-joining-participant-with-screen-share-and-video.png'
     );
   });
 
@@ -210,7 +204,7 @@ test.describe('HorizontalGallery tests', async () => {
 
     @conditional-compile-remove(PSTN-calls) @conditional-compile-remove(one-to-n-calling)
   */
-  test('Horizontal gallery Should have 1 PSTN and 1 1-N participants', async ({ page, serverUrl }) => {
+  test('Overflow gallery should have 1 PSTN and 1 1-N participants', async ({ page, serverUrl }) => {
     const reina = defaultMockRemoteParticipant('Reina Takizawa');
     addVideoStream(reina, true);
     const paul = defaultMockRemoteParticipant('Paul Bridges');
@@ -225,11 +219,11 @@ test.describe('HorizontalGallery tests', async () => {
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
 
     await waitForSelector(page, dataUiId(IDS.videoGallery));
-    expect(await stableScreenshot(page)).toMatchSnapshot('horizontal-gallery-with-2-joining-participants.png');
+    expect(await stableScreenshot(page)).toMatchSnapshot('overflow-gallery-with-2-joining-participants.png');
   });
 
   /* @conditional-compile-remove(PSTN-calls) */
-  test('Horizontal gallery Should have 1 PSTN and 1 On Hold participant', async ({ page, serverUrl }) => {
+  test('Overflow gallery should have 1 PSTN and 1 On Hold participant', async ({ page, serverUrl }) => {
     const reina = defaultMockRemoteParticipant('Reina Takizawa');
     reina.state = 'Hold';
     const phoneUser = defaultMockRemotePSTNParticipant('+15555555555');
@@ -241,6 +235,6 @@ test.describe('HorizontalGallery tests', async () => {
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
 
     await waitForSelector(page, dataUiId(IDS.videoGallery));
-    expect(await stableScreenshot(page)).toMatchSnapshot('horizontal-gallery-with-1-joining-1-hold-participants.png');
+    expect(await stableScreenshot(page)).toMatchSnapshot('overflow-gallery-with-1-joining-1-hold-participants.png');
   });
 });

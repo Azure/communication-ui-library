@@ -9,9 +9,9 @@ const DESKTOP_4_TO_3_VIEWPORT = {
   height: 768
 };
 
-const DESKTOP_1_TO_1_VIEWPORT = {
-  width: 900,
-  height: 900
+const DESKTOP_16_TO_9_VIEWPORT = {
+  width: 1024,
+  height: 576
 };
 
 const testDir = process.env.TEST_DIR;
@@ -76,19 +76,18 @@ const config: PlaywrightTestConfig = {
         contextOptions: {
           userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0'
         }
-      },
-      testIgnore: ['HorizontalGallery.test.ts']
+      }
     },
     {
-      name: 'Desktop Chrome 1:1',
+      name: 'Desktop Chrome 16:9',
       use: {
-        viewport: DESKTOP_1_TO_1_VIEWPORT,
+        viewport: DESKTOP_16_TO_9_VIEWPORT,
         launchOptions: { ...chromeLaunchOptions },
         contextOptions: {
           userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0'
         }
       },
-      testMatch: ['HorizontalGallery.test.ts']
+      testMatch: ['OverflowGallery.test.ts']
     },
     {
       name: 'Mobile Android Portrait',
@@ -97,8 +96,7 @@ const config: PlaywrightTestConfig = {
         launchOptions: { ...chromeLaunchOptions },
         userAgent:
           'Mozilla/5.0 (Linux; Android 12; SM-S901B) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.5359.125 Mobile Safari/537.36'
-      },
-      testIgnore: ['VerticalGallery.test.ts']
+      }
     },
     {
       name: 'Mobile Android Landscape',
