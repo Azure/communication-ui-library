@@ -7,7 +7,7 @@ import { IDS } from '../../common/constants';
 import { dataUiId, isTestProfileDesktop, pageClick, stableScreenshot, waitForSelector } from '../../common/utils';
 import { loadCallPage, test } from './fixture';
 
-test.describe.only('Overflow gallery tests', async () => {
+test.describe('Overflow gallery tests', async () => {
   test('Overflow gallery should be present when people or chat pane are open', async ({
     page,
     serverUrl
