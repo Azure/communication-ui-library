@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { expect } from '@playwright/test';
-import { MockCallAdapterState } from 'common';
+import { MockCallAdapterState } from '../../../common';
 import { addVideoStream, defaultMockCallAdapterState, defaultMockRemoteParticipant } from '../../call/hermetic/fixture';
 import { IDS } from '../../common/constants';
 import { dataUiId, isTestProfileDesktop, pageClick, stableScreenshot, waitForSelector } from '../../common/utils';
