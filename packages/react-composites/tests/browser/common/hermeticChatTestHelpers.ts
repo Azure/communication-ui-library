@@ -63,6 +63,37 @@ export async function sendMessageFromHiddenChatComposite(
 }
 
 /**
+ * Start Type a message from one of the hidden chat composites
+ *
+ * @private
+ */
+export async function startTypeMessageFromHiddenChatComposite(
+  page: Page,
+  participant: ChatParticipant,
+  message: string
+): Promise<void> {
+  await withHiddenChatCompositeInForeground(page, participant, async () => {
+    await page.type(`${hiddenCompositeSelector(participant)} ${dataUiId(IDS.sendboxTextField)}`, message, {
+      timeout: perStepLocalTimeout()
+    });
+  });
+}
+
+/**
+ * Stop typing and send the message from one of the hidden chat composites.
+ *
+ * @private
+ */
+export async function stopTypingAndSendMessageFromHiddenChatComposite(
+  page: Page,
+  participant: ChatParticipant
+): Promise<void> {
+  await withHiddenChatCompositeInForeground(page, participant, async () => {
+    await page.focus(`${hiddenCompositeSelector(participant)} ${dataUiId(IDS.sendboxTextField)}`);
+    await page.keyboard.press('Enter');
+  });
+}
+/**
  * Selects the root node of the hidden chat composite for a participant.
  *
  * @private
