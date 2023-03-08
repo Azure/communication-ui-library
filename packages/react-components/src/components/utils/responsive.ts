@@ -66,7 +66,7 @@ export const _useContainerHeight = (containerRef: RefObject<HTMLElement>): numbe
 
 const NARROW_WIDTH_REM = 30;
 
-const SHORT_HEIGHT_REM = 30;
+const SHORT_HEIGHT_REM = 23.75;
 
 /**
  * Utility function to determine if container width is narrow
