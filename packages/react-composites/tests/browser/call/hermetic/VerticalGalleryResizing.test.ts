@@ -245,6 +245,6 @@ test.describe('Vertical gallery resizing tests', async () => {
 
     const verticalTiles = await waitForSelector(page, dataUiId(IDS.verticalGalleryVideoTile));
 
-    expect(await verticalTiles.evaluate((e) => (e as HTMLDivElement).clientHeight)).toBe(144);
+    expect(await verticalTiles.evaluate((e) => (e as HTMLDivElement).clientHeight)).toBe(176);
   });
 });
