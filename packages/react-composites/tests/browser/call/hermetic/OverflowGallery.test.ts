@@ -30,6 +30,21 @@ test.describe('Overflow gallery tests', async () => {
     expect(await stableScreenshot(page)).toMatchSnapshot('overflow-gallery-with-1-audio-participant.png');
   });
 
+  test('Overflow gallery should work in right-to-left', async ({ page, serverUrl }) => {
+    const paul = defaultMockRemoteParticipant('Paul Bridges');
+    addVideoStream(paul, true);
+    paul.isSpeaking = true;
+    const fiona = defaultMockRemoteParticipant('Fiona Harper');
+    addVideoStream(fiona, true);
+
+    const participants = [paul, defaultMockRemoteParticipant('Eryka Klein'), fiona];
+    const initialState = defaultMockCallAdapterState(participants);
+    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { rtl: 'true' }));
+
+    await waitForSelector(page, dataUiId(IDS.videoGallery));
+    expect(await stableScreenshot(page)).toMatchSnapshot('overflow-gallery-in-rtl-with-1-audio-participant.png');
+  });
+
   test('Overflow gallery should have multiple audio participants spanning multiple pages. Navigation buttons should work.', async ({
     page,
     serverUrl
