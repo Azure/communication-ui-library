@@ -2,13 +2,12 @@
 // Licensed under the MIT license.
 
 import { expect } from '@playwright/test';
-import { MockCallAdapterState } from '../../../common';
 import { addVideoStream, defaultMockCallAdapterState, defaultMockRemoteParticipant } from '../../call/hermetic/fixture';
 import { IDS } from '../../common/constants';
 import { dataUiId, isTestProfileMobile, pageClick, stableScreenshot, waitForSelector } from '../../common/utils';
 import { loadCallPage, test } from './fixture';
 
-test.describe.only('Overflow gallery tests', async () => {
+test.describe('Overflow gallery tests', async () => {
   test('Overflow gallery should be present when people or chat pane are open', async ({
     page,
     serverUrl
@@ -52,7 +51,8 @@ test.describe.only('Overflow gallery tests', async () => {
   });
 });
 
-const createInitialStateWithManyAudioParticipants = (): MockCallAdapterState => {
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
+const createInitialStateWithManyAudioParticipants = () => {
   const paul = defaultMockRemoteParticipant('Paul Bridges');
   addVideoStream(paul, true);
   paul.isSpeaking = true;
