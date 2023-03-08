@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Bugfix microphone tooltip opening on initial mount",
-  "packageName": "@azure/communication-react",
-  "email": "edwardlee@microsoft.com",
-  "dependentChangeType": "patch"
-}

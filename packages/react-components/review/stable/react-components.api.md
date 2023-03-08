@@ -23,6 +23,7 @@ import { IRenderFunction } from '@fluentui/react';
 import { IStyle } from '@fluentui/react';
 import { IStyleFunctionOrObject } from '@fluentui/react';
 import { ITextFieldStyles } from '@fluentui/react';
+import { ITooltipHostProps } from '@fluentui/react';
 import { MessageStatus } from '@internal/acs-ui-common';
 import { PartialTheme } from '@fluentui/react';
 import { PersonaPresence } from '@fluentui/react';
@@ -116,6 +117,20 @@ export interface CameraButtonStrings {
 // @public
 export interface CameraButtonStyles extends ControlBarButtonStyles {
     menuStyles?: Partial<CameraButtonContextualMenuStyles>;
+}
+
+// @internal
+export const _Caption: (props: _CaptionProps) => JSX.Element;
+
+// @internal
+export interface _CaptionProps {
+    // (undocumented)
+    caption: string;
+    // (undocumented)
+    displayName: string;
+    onRenderAvatar?: OnRenderAvatarCallback;
+    // (undocumented)
+    userId?: string;
 }
 
 // @public
@@ -741,10 +756,10 @@ export interface _IdentifierProviderProps {
 
 // @internal
 export interface _Identifiers {
-    horizontalGalleryLeftNavButton: string;
-    horizontalGalleryRightNavButton: string;
     messageContent: string;
     messageTimestamp: string;
+    overflowGalleryLeftNavButton: string;
+    overflowGalleryRightNavButton: string;
     participantButtonPeopleMenuItem: string;
     participantItemMenuButton: string;
     participantList: string;
@@ -1397,6 +1412,60 @@ export const _useContainerWidth: (containerRef: RefObject<HTMLElement>) => numbe
 
 // @public
 export const useTheme: () => Theme;
+
+// @beta
+export interface VerticalGalleryControlBarStyles extends BaseCustomStyles {
+    counter?: IStyle;
+    nextButton?: IStyle;
+    previousButton?: IStyle;
+}
+
+// @beta
+export interface VerticalGalleryStrings {
+    leftNavButtonAriaLabel?: string;
+    rightNavButtonAriaLabel?: string;
+}
+
+// @beta
+export interface VerticalGalleryStyles extends BaseCustomStyles {
+    children?: IStyle;
+    controlBar?: VerticalGalleryControlBarStyles;
+}
+
+// @internal
+export const _VideoEffectsItem: (props: _VideoEffectsItemProps) => JSX.Element;
+
+// @internal
+export const _VideoEffectsItemAddImage: (props: _VideoEffectsItemProps) => JSX.Element;
+
+// @internal
+export const _VideoEffectsItemBlur: (props: _VideoEffectsItemProps) => JSX.Element;
+
+// @internal
+export const _VideoEffectsItemNoBackground: (props: _VideoEffectsItemProps) => JSX.Element;
+
+// @internal
+export interface _VideoEffectsItemProps {
+    ariaLabel?: string;
+    backgroundProps?: {
+        url: string;
+    };
+    disabled?: boolean;
+    iconProps?: IIconProps;
+    isSelected?: boolean;
+    key: string;
+    onSelect?: (key: string) => void;
+    styles?: _VideoEffectsItemStyles;
+    title?: string;
+    tooltipProps?: ITooltipHostProps;
+}
+
+// @internal
+export interface _VideoEffectsItemStyles {
+    iconContainer: IStyle;
+    root: IStyle;
+    textContainer: IStyle;
+}
 
 // @public
 export const VideoGallery: (props: VideoGalleryProps) => JSX.Element;

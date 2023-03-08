@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Fix spacing for local Camera switcher button when in localVideoTile.",
-  "packageName": "@azure/communication-react",
-  "email": "94866715+dmceachernmsft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
