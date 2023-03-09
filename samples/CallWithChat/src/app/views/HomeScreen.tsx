@@ -167,7 +167,6 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                     <Stack styles={dialpadOptionStyles}>
                       <Dialpad
                         isMobile={isMobileSession}
-                        strings={{ placeholderText: '1xxxxxxxxxx' }}
                         onChange={(newValue) => {
                           /**
                            * We need to pass in the formatting for the phone number string in the onChange handler
@@ -185,7 +184,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                       className={outboundTextField}
                       required={true}
                       label={'ACS phone number for Caller ID'}
-                      placeholder={'+1xxxxxxxxxx'}
+                      placeholder={'Enter your ACS aquired phone number for PSTN call'}
                       onChange={(_, newValue) => setAlternateCallerId(newValue)}
                       onFocus={() => setAlternateCallerIdCalloutVisible(true)}
                     />
