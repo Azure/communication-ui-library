@@ -28,7 +28,7 @@ export interface StatefulDeviceManager extends DeviceManager {
    *
    * @beta
    */
-  getUnparentedVideoStreams: LocalVideoStream[];
+  getUnparentedVideoStreams: () => LocalVideoStream[];
 }
 
 /**
@@ -210,7 +210,7 @@ export const deviceManagerDeclaratify = (
     value: (videoDeviceInfo: VideoDeviceInfo) => proxyDeviceManager.selectCamera(videoDeviceInfo)
   });
   /* @conditional-compile-remove(video-background-effects) */
-  Object.defineProperty(deviceManager, 'getUnparentedViews', {
+  Object.defineProperty(deviceManager, 'getUnparentedVideoStreams', {
     configurable: false,
     value: (): LocalVideoStream[] => internalContext.getUnparentedRenderInfos()
   });
