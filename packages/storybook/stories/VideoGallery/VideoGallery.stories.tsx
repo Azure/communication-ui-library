@@ -83,9 +83,11 @@ const getDocs: () => JSX.Element = () => {
       <Heading>Overflow Gallery</Heading>
       <DetailedBetaBanner></DetailedBetaBanner>
       <Description>
-        In our video gallery we will show participants who are not to be prioritized in the grid view of the video
-        gallery in the OverflowGallery. This gallery is controlled on the VideoGallery with the `overflowGalleryLayout`
-        property. This will either render a `HorizontalGallery` on the bottom, or a `VerticalGallery` on the side.
+        In the video gallery, participants who are not prioritized in the grid view are placed in an overflow gallery.
+        The overflow gallery can be placed on the bottom of the VideoGallery displaying participants horizontally by
+        assigning the overflowGalleryLayout to 'HorizontalBottom'. This is the default. Conversely, the overflow gallery
+        can placed on the right displaying participants vertically by assigning the overflowGalleryLayout to
+        'VerticalRight'.
       </Description>
       <Subheading>Horizontal Gallery</Subheading>
       <Description>
