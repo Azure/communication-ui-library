@@ -192,17 +192,6 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     return undefined;
   };
 
-  const messageContentAriaText = props.message.content
-    ? props.message.mine
-      ? _formatString(strings.messageContentMineAriaText, {
-          message: props.message.content
-        })
-      : _formatString(strings.messageContentAriaText, {
-          author: `${props.message.senderDisplayName}`,
-          message: props.message.content
-        })
-    : undefined;
-
   const chatMessage = (
     <>
       <div ref={messageRef}>
@@ -212,12 +201,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
           styles={messageContainerStyle}
           content={
             <div tabIndex={0}>
-              <ChatMessageContent
-                message={message}
-                liveAuthorIntro={strings.liveAuthorIntro}
-                messageContentAriaText={messageContentAriaText}
-                strings={strings}
-              />
+              <ChatMessageContent message={message} strings={strings} />
               {props.onRenderFileDownloads
                 ? props.onRenderFileDownloads(userId, message)
                 : defaultOnRenderFileDownloads()}

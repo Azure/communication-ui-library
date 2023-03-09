@@ -12,8 +12,6 @@ import { MessageThreadStrings } from '../MessageThread';
 
 type ChatMessageContentProps = {
   message: ChatMessage;
-  liveAuthorIntro: string;
-  messageContentAriaText?: string;
   strings: MessageThreadStrings;
 };
 
@@ -21,7 +19,7 @@ type ChatMessageContentProps = {
 export const ChatMessageContent = (props: ChatMessageContentProps): JSX.Element => {
   /* @conditional-compile-remove(dlp) */
   if (props.message.policyViolation) {
-    return MessageContentAsDLP(props);
+    return MessageContentAsDataLossPrevention(props);
   }
   switch (props.message.contentType) {
     case 'text':
@@ -38,9 +36,9 @@ export const ChatMessageContent = (props: ChatMessageContentProps): JSX.Element 
 
 const MessageContentAsRichTextHTML = (props: ChatMessageContentProps): JSX.Element => {
   const htmlToReactParser = new Parser();
-  const liveAuthor = _formatString(props.liveAuthorIntro, { author: `${props.message.senderDisplayName}` });
+  const liveAuthor = _formatString(props.strings.liveAuthorIntro, { author: `${props.message.senderDisplayName}` });
   return (
-    <div data-ui-status={props.message.status} role="text" aria-label={props.messageContentAriaText}>
+    <div data-ui-status={props.message.status} role="text" aria-label={messageContentAriaText(props)}>
       <LiveMessage
         message={`${props.message.mine ? '' : liveAuthor} ${extractContent(props.message.content || '')}`}
         aria-live="polite"
@@ -51,9 +49,9 @@ const MessageContentAsRichTextHTML = (props: ChatMessageContentProps): JSX.Eleme
 };
 
 const MessageContentAsText = (props: ChatMessageContentProps): JSX.Element => {
-  const liveAuthor = _formatString(props.liveAuthorIntro, { author: `${props.message.senderDisplayName}` });
+  const liveAuthor = _formatString(props.strings.liveAuthorIntro, { author: `${props.message.senderDisplayName}` });
   return (
-    <div data-ui-status={props.message.status} role="text" aria-label={props.messageContentAriaText}>
+    <div data-ui-status={props.message.status} role="text" aria-label={messageContentAriaText(props)}>
       <LiveMessage message={`${props.message.mine ? '' : liveAuthor} ${props.message.content}`} aria-live="polite" />
       <Linkify
         componentDecorator={(decoratedHref: string, decoratedText: string, key: number) => {
@@ -71,7 +69,7 @@ const MessageContentAsText = (props: ChatMessageContentProps): JSX.Element => {
 };
 
 /* @conditional-compile-remove(dlp) */
-const MessageContentAsDLP = (props: ChatMessageContentProps): JSX.Element => {
+const MessageContentAsDataLossPrevention = (props: ChatMessageContentProps): JSX.Element => {
   const livePolicyViolationText = `${props.message.mine ? '' : props.message.senderDisplayName} ${
     props.strings.policyViolationText
   }`;
@@ -97,4 +95,17 @@ const extractContent = (s: string): string => {
   const span = document.createElement('span');
   span.innerHTML = s;
   return span.textContent || span.innerText;
+};
+
+const messageContentAriaText = (props: ChatMessageContentProps): string | undefined => {
+  return props.message.content
+    ? props.message.mine
+      ? _formatString(props.strings.messageContentMineAriaText, {
+          message: props.message.content
+        })
+      : _formatString(props.strings.messageContentAriaText, {
+          author: `${props.message.senderDisplayName}`,
+          message: props.message.content
+        })
+    : undefined;
 };
