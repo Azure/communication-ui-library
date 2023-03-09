@@ -117,7 +117,7 @@ const getDocs: () => JSX.Element = () => {
         <Stack horizontalAlign="center">
           <Image
             style={{ width: '100%', height: 'auto' }}
-            src="images/narrow-horiztonal-gallery.png"
+            src="images/narrow-horizontal-gallery.png"
             alt="Fill frame in VideoGallery"
           />
           <Description>✅ Narrow video tile experience with horizontal gallery</Description>
