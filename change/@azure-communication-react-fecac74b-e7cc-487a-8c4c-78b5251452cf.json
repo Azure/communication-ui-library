@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Switch video seamlessly from different devices",
+  "packageName": "@azure/communication-react",
+  "email": "jinan@microsoft.com",
+  "dependentChangeType": "patch"
+}

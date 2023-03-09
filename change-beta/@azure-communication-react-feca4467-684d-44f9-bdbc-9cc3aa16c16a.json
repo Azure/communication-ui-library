@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Fix component styles to bring components back in line with designs after fluent updates.",
-  "packageName": "@azure/communication-react",
-  "email": "94866715+dmceachernmsft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

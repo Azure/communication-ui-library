@@ -15,13 +15,13 @@ import {
   Dismiss16Regular,
   Edit20Regular,
   ErrorCircle16Regular,
-  EyeShow16Regular,
+  Eye16Regular,
   MicOff16Filled,
   MicOff16Regular,
   MicOff20Filled,
-  MicOn16Filled,
-  MicOn20Filled,
-  MicOn20Regular,
+  Mic16Filled,
+  Mic20Filled,
+  Mic20Regular,
   MoreHorizontal20Filled,
   MoreHorizontal20Regular,
   People20Filled,
@@ -106,7 +106,7 @@ const SitePermissionMic20Filled = (): JSX.Element => {
   return (
     <Stack horizontalAlign={'center'} styles={sitePermissionIconBackgroundStyle(theme)}>
       <div className={mergeStyles(scaledIconStyles(theme))}>
-        <MicOn20Filled />
+        <Mic20Filled />
       </div>
     </Stack>
   );
@@ -203,7 +203,7 @@ export const DEFAULT_COMPONENT_ICONS = {
   ControlButtonCameraOn: <Video20Filled />,
   ControlButtonEndCall: <CallEnd20Filled />,
   ControlButtonMicOff: <MicOff20Filled />,
-  ControlButtonMicOn: <MicOn20Filled />,
+  ControlButtonMicOn: <Mic20Filled />,
   ControlButtonOptions: <Settings20Filled />,
   ControlButtonParticipants: <People20Filled />,
   /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
@@ -223,7 +223,7 @@ export const DEFAULT_COMPONENT_ICONS = {
   ErrorBarCallMacOsMicrophoneAccessDenied: <MicProhibited16Filled />,
   ErrorBarCallMicrophoneAccessDenied: <MicProhibited16Filled />,
   ErrorBarCallMicrophoneMutedBySystem: <MicOff16Filled />,
-  ErrorBarCallMicrophoneUnmutedBySystem: <MicOn16Filled />,
+  ErrorBarCallMicrophoneUnmutedBySystem: <Mic16Filled />,
   ErrorBarCallNetworkQualityLow: <WifiWarning16Filled />,
   ErrorBarCallNoMicrophoneFound: <MicProhibited16Filled />,
   ErrorBarCallNoSpeakerFound: <SpeakerMute16Filled />,
@@ -237,10 +237,10 @@ export const DEFAULT_COMPONENT_ICONS = {
   MessageFailed: <ErrorCircle16Regular />,
   MessageRemove: <Delete20Regular />,
   MessageResend: <ArrowClockwise16Regular />,
-  MessageSeen: <EyeShow16Regular />,
+  MessageSeen: <Eye16Regular />,
   MessageSending: <Circle16Regular />,
   OptionsCamera: <Video20Regular />,
-  OptionsMic: <MicOn20Regular />,
+  OptionsMic: <Mic20Regular />,
   OptionsSpeaker: <Speaker220Regular />,
   ParticipantItemMicOff: <MicOff16Regular />,
   ParticipantItemOptions: <></>,
@@ -282,5 +282,9 @@ export const DEFAULT_COMPONENT_ICONS = {
   /* @conditional-compile-remove(pinned-participants) */
   PinParticipant: <Pin16Regular />,
   /* @conditional-compile-remove(pinned-participants) */
-  UnpinParticipant: <PinOff16Regular />
+  UnpinParticipant: <PinOff16Regular />,
+  /* @conditional-compile-remove(vertical-gallery) */
+  VerticalGalleryLeftButton: <ChevronLeft20Regular />,
+  /* @conditional-compile-remove(vertical-gallery) */
+  VerticalGalleryRightButton: <ChevronRight20Regular />
 };

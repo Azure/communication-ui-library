@@ -3,7 +3,13 @@
 
 import { LocalVideoStream, RemoteVideoStream, VideoStreamRenderer } from '@azure/communication-calling';
 import { LocalVideoStreamState } from './CallClientState';
+import type { CallContext } from './CallContext';
 import { CallIdHistory } from './CallIdHistory';
+
+/* @conditional-compile-remove(video-background-effects) */
+import { LocalVideoStreamVideoEffectsSubscriber } from './LocalVideoStreamVideoEffectsSubscriber';
+/* @conditional-compile-remove(video-background-effects) */
+import { Features } from '@azure/communication-calling';
 
 /**
  * Internally tracked render status. Stores the status of a video render of a stream as rendering could take a long
@@ -52,6 +58,11 @@ export class InternalCallContext {
   // The key is the stream ID. We assume each stream ID to only have one owning render info
   private _unparentedRenderInfos = new Map<string, LocalRenderInfo>();
   private _callIdHistory = new CallIdHistory();
+
+  // Used for keeping track of video effects subscribers that are not part of a Call.
+  // The key is the stream ID. We assume each stream ID
+  /* @conditional-compile-remove(video-background-effects) */
+  private _unparentedViewVideoEffectsSubscriber = new Map<string, LocalVideoStreamVideoEffectsSubscriber | undefined>();
 
   public setCallId(newCallId: string, oldCallId: string): void {
     this._callIdHistory.updateCallIdHistory(newCallId, oldCallId);
@@ -150,6 +161,10 @@ export class InternalCallContext {
     return this._unparentedRenderInfos.get(localVideoStream.source.id);
   }
 
+  public getUnparentedRenderInfos(): LocalVideoStream[] {
+    return [...this._unparentedRenderInfos].map(([, renderInfo]) => renderInfo.stream);
+  }
+
   public setUnparentedRenderInfo(
     statefulStream: LocalVideoStreamState,
     stream: LocalVideoStream,
@@ -160,7 +175,27 @@ export class InternalCallContext {
   }
 
   public deleteUnparentedRenderInfo(localVideoStream: LocalVideoStreamState): void {
+    /* @conditional-compile-remove(video-background-effects) */
+    this._unparentedViewVideoEffectsSubscriber.get(localVideoStream.source.id)?.unsubscribe();
+
     this._unparentedRenderInfos.delete(localVideoStream.source.id);
+  }
+
+  public subscribeToUnparentedViewVideoEffects(localVideoStream: LocalVideoStream, callContext: CallContext): void {
+    /* @conditional-compile-remove(video-background-effects) */
+    {
+      // Ensure we aren't setting multiple subscriptions
+      this._unparentedViewVideoEffectsSubscriber.get(localVideoStream.source.id)?.unsubscribe();
+      this._unparentedViewVideoEffectsSubscriber.set(
+        localVideoStream.source.id,
+        new LocalVideoStreamVideoEffectsSubscriber({
+          parent: 'unparented',
+          context: callContext,
+          localVideoStream: localVideoStream,
+          localVideoStreamEffectsAPI: localVideoStream.feature(Features.VideoEffects)
+        })
+      );
+    }
   }
 
   // UnparentedRenderInfos are not cleared as they are not part of the Call state.

@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add video background effect choice items for upcoming background picker",
+  "packageName": "@azure/communication-react",
+  "email": "2684369+JamesBurnside@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

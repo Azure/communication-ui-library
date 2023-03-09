@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "remove opt in feature for the unsuppoted browser experience in the Call and CallWithChat composites",
-  "packageName": "@azure/communication-react",
-  "email": "94866715+dmceachernmsft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
