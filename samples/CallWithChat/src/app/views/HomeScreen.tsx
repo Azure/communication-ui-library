@@ -2,7 +2,18 @@
 // Licensed under the MIT license.
 
 import React, { useState } from 'react';
-import { Stack, PrimaryButton, Image, ChoiceGroup, IChoiceGroupOption, Text, TextField } from '@fluentui/react';
+import {
+  Stack,
+  PrimaryButton,
+  Image,
+  ChoiceGroup,
+  IChoiceGroupOption,
+  Text,
+  TextField,
+  Link,
+  Callout,
+  mergeStyles
+} from '@fluentui/react';
 /* @conditional-compile-remove(PSTN-calls) */
 import { registerIcons } from '@fluentui/react';
 import heroSVG from '../../assets/hero.svg';
@@ -18,7 +29,10 @@ import {
   headerStyle,
   teamsItemStyle,
   buttonStyle,
-  dialpadOptionStyles
+  dialpadOptionStyles,
+  alternateCallerIdCalloutStyles,
+  alternateCallerIdCalloutTitleStyles,
+  alternateCallerIdCalloutLinkStyles
 } from '../styles/HomeScreen.styles';
 /* @conditional-compile-remove(PSTN-calls) */
 import { outboundTextField } from '../styles/HomeScreen.styles';
@@ -74,6 +88,9 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   const [outboundParticipants, setOutboundParticipants] = useState<string>();
   /* @conditional-compile-remove(PSTN-calls) */
   const [dialpadParticipant, setDialpadParticipant] = useState<string>();
+
+  /* @conditional-compile-remove(PSTN-calls) */
+  const [alternateCallerIdCalloutVisible, setAlternateCallerIdCalloutVisible] = useState<boolean>(false);
 
   const teamsCallChosen: boolean = chosenCallOption.key === 'TeamsMeeting';
   const startGroupCall: boolean = chosenCallOption.key === 'ACSCallWithChat';
@@ -144,9 +161,11 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
               /* @conditional-compile-remove(PSTN-calls) */ pstnCallChosen && (
                 <Stack>
                   <Stack>
+                    <Text style={{ paddingBottom: '0.5rem' }}>Please dial the number you wish to call.</Text>
                     <Stack styles={dialpadOptionStyles}>
                       <Dialpad
                         isMobile={isMobileSession}
+                        strings={{ placeholderText: '1xxxxxxxxxx' }}
                         onChange={(newValue) => {
                           /**
                            * We need to pass in the formatting for the phone number string in the onChange handler
@@ -160,11 +179,39 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                       />
                     </Stack>
                     <TextField
+                      id={'alternateCallerId-input'}
                       className={outboundTextField}
+                      required={true}
                       label={'ACS phone number for Caller ID'}
-                      placeholder={'Enter your ACS aquired phone number for PSTN call'}
+                      placeholder={'+1xxxxxxxxxx'}
                       onChange={(_, newValue) => setAlternateCallerId(newValue)}
+                      onFocus={() => setAlternateCallerIdCalloutVisible(true)}
                     />
+                    {alternateCallerIdCalloutVisible && (
+                      <Callout
+                        role="dialog"
+                        gapSpace={0}
+                        target={document.getElementById('alternateCallerId-input')}
+                        className={mergeStyles(alternateCallerIdCalloutStyles)}
+                        onDismiss={() => setAlternateCallerIdCalloutVisible(false)}
+                      >
+                        <Text block className={mergeStyles(alternateCallerIdCalloutTitleStyles)} variant="large">
+                          AlternateCallerId
+                        </Text>
+                        <Text block>
+                          Please provide a Azure Communication Services aquired phone number to use to make the call.
+                          This number will act as your caller id when no display name is provided. Must be from same ACS
+                          resource as the user making the call.
+                        </Text>
+                        <Link
+                          className={mergeStyles(alternateCallerIdCalloutLinkStyles)}
+                          target="_blank"
+                          href="https://learn.microsoft.com/en-us/azure/communication-services/concepts/telephony/plan-solution"
+                        >
+                          Learn more about phone numbers and ACS.
+                        </Link>
+                      </Callout>
+                    )}
                   </Stack>
                 </Stack>
               )
