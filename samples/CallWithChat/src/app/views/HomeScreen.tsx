@@ -29,13 +29,15 @@ import {
   headerStyle,
   teamsItemStyle,
   buttonStyle,
-  dialpadOptionStyles,
+  dialpadOptionStyles
+} from '../styles/HomeScreen.styles';
+/* @conditional-compile-remove(PSTN-calls) */
+import {
+  outboundTextField,
   alternateCallerIdCalloutStyles,
   alternateCallerIdCalloutTitleStyles,
   alternateCallerIdCalloutLinkStyles
 } from '../styles/HomeScreen.styles';
-/* @conditional-compile-remove(PSTN-calls) */
-import { outboundTextField } from '../styles/HomeScreen.styles';
 import { ThemeSelector } from '../theming/ThemeSelector';
 import { localStorageAvailable } from '../utils/localStorage';
 import { getDisplayNameFromLocalStorage, saveDisplayNameToLocalStorage } from '../utils/localStorage';
