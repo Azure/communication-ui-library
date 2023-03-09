@@ -69,9 +69,7 @@ export const localVideoTileContainerStyle = (
     bottom: _pxToRem(localVideoTileOuterPaddingPX),
     borderRadius: theme.effects.roundedCorner4,
     overflow: 'hidden',
-    ...(theme.rtl
-      ? { left: _pxToRem(localVideoTileOuterPaddingPX) }
-      : { right: _pxToRem(localVideoTileOuterPaddingPX) })
+    right: _pxToRem(localVideoTileOuterPaddingPX)
   };
 };
 
