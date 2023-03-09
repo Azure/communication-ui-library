@@ -28,12 +28,12 @@ import {
   containerTokens,
   headerStyle,
   teamsItemStyle,
-  buttonStyle,
-  dialpadOptionStyles
+  buttonStyle
 } from '../styles/HomeScreen.styles';
 /* @conditional-compile-remove(PSTN-calls) */
 import {
   outboundTextField,
+  dialpadOptionStyles,
   alternateCallerIdCalloutStyles,
   alternateCallerIdCalloutTitleStyles,
   alternateCallerIdCalloutLinkStyles
