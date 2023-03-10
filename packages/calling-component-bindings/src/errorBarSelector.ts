@@ -88,7 +88,7 @@ export const errorBarSelector: ErrorBarSelector = createSelector(
     if (diagnostics?.media.latest.microphonePermissionDenied?.value === true && isMacOS()) {
       activeErrorMessages.push({ type: 'callMacOsMicrophoneAccessDenied' });
     } else if (diagnostics?.media.latest.microphonePermissionDenied?.value === true) {
-      activeErrorMessages.push({ type: 'callMicrophoneAccessDenied' });
+      activeErrorMessages.push({ type: 'cameraFrozenForRemoteParticipants' });
     }
 
     const microphoneMuteUnexpectedlyDiagnostic =
