@@ -98,7 +98,8 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
     onRenderRemoteParticipant,
     activeVideoStreams,
     /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryLayout,
-    /* @conditional-compile-remove(vertical-gallery) */ styles?.verticalGallery
+    /* @conditional-compile-remove(vertical-gallery) */ styles?.verticalGallery,
+    maxRemoteVideoStreams
   ]);
 
   return (

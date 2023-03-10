@@ -176,7 +176,8 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
     horizontalGalleryParticipants,
     styles?.horizontalGallery,
     /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryLayout,
-    /* @conditional-compile-remove(vertical-gallery) */ styles?.verticalGallery
+    /* @conditional-compile-remove(vertical-gallery) */ styles?.verticalGallery,
+    maxRemoteVideoStreams
   ]);
 
   return (
