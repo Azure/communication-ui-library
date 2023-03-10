@@ -6,20 +6,30 @@ import React, { useRef } from 'react';
 import { HorizontalGallery, HorizontalGalleryStyles } from './HorizontalGallery';
 import { _convertRemToPx as convertRemToPx } from '@internal/acs-ui-common';
 import { _useContainerWidth } from './utils/responsive';
+import { VideoGalleryRemoteParticipant } from '../types';
 
 /**
  * Wrapped HorizontalGallery that adjusts the number of items per page based on the
  * available width obtained from a ResizeObserver, width per child, gap width, and button width
  */
 export const ResponsiveHorizontalGallery = (props: {
-  children: React.ReactNode;
+  galleryParticipants: VideoGalleryRemoteParticipant[];
   containerStyles: IStyle;
   horizontalGalleryStyles: HorizontalGalleryStyles;
   childWidthRem: number;
   gapWidthRem: number;
   buttonWidthRem?: number;
+  onRenderRemoteParticipant: (participant: VideoGalleryRemoteParticipant, isVideoParticipant?: boolean) => JSX.Element;
+  maxRemoteVideoStreams?: number;
 }): JSX.Element => {
-  const { childWidthRem, gapWidthRem, buttonWidthRem = 0 } = props;
+  const {
+    childWidthRem,
+    gapWidthRem,
+    buttonWidthRem = 0,
+    galleryParticipants,
+    maxRemoteVideoStreams,
+    onRenderRemoteParticipant
+  } = props;
   const containerRef = useRef<HTMLDivElement>(null);
   const containerWidth = _useContainerWidth(containerRef);
 
@@ -27,7 +37,7 @@ export const ResponsiveHorizontalGallery = (props: {
   const rightPadding = containerRef.current ? parseFloat(getComputedStyle(containerRef.current).paddingRight) : 0;
 
   const childrenPerPage = calculateChildrenPerPage({
-    numberOfChildren: React.Children.count(props.children),
+    numberOfChildren: galleryParticipants.length,
     containerWidth: (containerWidth ?? 0) - leftPadding - rightPadding,
     childWidthRem,
     gapWidthRem,
@@ -36,9 +46,13 @@ export const ResponsiveHorizontalGallery = (props: {
 
   return (
     <div ref={containerRef} className={mergeStyles(props.containerStyles)}>
-      <HorizontalGallery childrenPerPage={childrenPerPage} styles={props.horizontalGalleryStyles}>
-        {props.children}
-      </HorizontalGallery>
+      <HorizontalGallery
+        childrenPerPage={childrenPerPage}
+        galleryParticipants={galleryParticipants}
+        onRenderRemoteParticipant={onRenderRemoteParticipant}
+        maxRemoteVideoStreams={maxRemoteVideoStreams}
+        styles={props.horizontalGalleryStyles}
+      />
     </div>
   );
 };

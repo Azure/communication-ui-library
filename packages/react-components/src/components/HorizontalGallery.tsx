@@ -4,7 +4,7 @@
 import { DefaultButton, Icon, IStyle, Stack, mergeStyles } from '@fluentui/react';
 import React, { useMemo, useState } from 'react';
 import { useTheme } from '../theming';
-import { BaseCustomStyles } from '../types';
+import { BaseCustomStyles, VideoGalleryRemoteParticipant } from '../types';
 import { rootStyle, childrenContainerStyle, leftRightButtonStyles } from './styles/HorizontalGallery.styles';
 import { useIdentifiers } from '../identifiers';
 import { bucketize } from './utils/overFlowGalleriesUtils';
@@ -31,7 +31,9 @@ export interface HorizontalGalleryStyles extends BaseCustomStyles {
  * {@link HorizontalGallery} Component Props.
  */
 export interface HorizontalGalleryProps {
-  children: React.ReactNode;
+  galleryParticipants: VideoGalleryRemoteParticipant[];
+  onRenderRemoteParticipant: (participant: VideoGalleryRemoteParticipant, isVideoParticipant?: boolean) => JSX.Element;
+  maxRemoteVideoStreams?: number;
   /**
    * Styles for HorizontalGallery
    */
@@ -49,18 +51,26 @@ export interface HorizontalGalleryProps {
  * @returns
  */
 export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element => {
-  const { children, childrenPerPage = DEFAULT_CHILDREN_PER_PAGE, styles } = props;
+  const {
+    galleryParticipants,
+    childrenPerPage = DEFAULT_CHILDREN_PER_PAGE,
+    styles,
+    onRenderRemoteParticipant,
+    maxRemoteVideoStreams
+  } = props;
 
   const ids = useIdentifiers();
 
   const [page, setPage] = useState(0);
 
-  const numberOfChildren = React.Children.count(children);
+  let activeVideoStreams = 0;
+
+  const numberOfChildren = galleryParticipants.length;
   const lastPage = Math.ceil(numberOfChildren / childrenPerPage) - 1;
 
-  const paginatedChildren: React.ReactNode[][] = useMemo(() => {
-    return bucketize(React.Children.toArray(children), childrenPerPage);
-  }, [children, childrenPerPage]);
+  const paginatedChildren: VideoGalleryRemoteParticipant[][] = useMemo(() => {
+    return bucketize(galleryParticipants, childrenPerPage);
+  }, [galleryParticipants, childrenPerPage]);
 
   // If children per page is 0 or less return empty element
   if (childrenPerPage <= 0) {
@@ -70,6 +80,17 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
   const firstIndexOfCurrentPage = page * childrenPerPage;
   const clippedPage = firstIndexOfCurrentPage < numberOfChildren - 1 ? page : lastPage;
   const childrenOnCurrentPage = paginatedChildren[clippedPage];
+
+  const overflowGalleryTiles =
+    childrenOnCurrentPage &&
+    childrenOnCurrentPage.map((p) => {
+      return onRenderRemoteParticipant(
+        p,
+        maxRemoteVideoStreams && maxRemoteVideoStreams >= 0
+          ? p.videoStream?.isAvailable && activeVideoStreams++ < maxRemoteVideoStreams
+          : p.videoStream?.isAvailable
+      );
+    });
 
   const showButtons = numberOfChildren > childrenPerPage;
   const disablePreviousButton = page === 0;
@@ -88,7 +109,7 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
         />
       )}
       <Stack horizontal className={mergeStyles(childrenContainerStyle, { '> *': props.styles?.children })}>
-        {childrenOnCurrentPage}
+        {overflowGalleryTiles}
       </Stack>
       {showButtons && (
         <HorizontalGalleryNavigationButton

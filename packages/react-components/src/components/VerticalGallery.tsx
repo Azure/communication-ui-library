@@ -113,8 +113,6 @@ export const VerticalGallery = (props: VerticalGalleryProps): JSX.Element => {
     return bucketize(galleryParticipants, childrenPerPage);
   }, [galleryParticipants, childrenPerPage]);
 
-  console.log(paginatedChildren);
-
   const firstIndexOfCurrentPage = (page - 1) * childrenPerPage;
   const clippedPage = firstIndexOfCurrentPage < numberOfChildren - 1 ? page : lastPage;
   const childrenOnCurrentPage = paginatedChildren[clippedPage - 1];

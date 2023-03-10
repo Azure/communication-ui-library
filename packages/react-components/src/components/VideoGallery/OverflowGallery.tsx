@@ -133,8 +133,9 @@ export const OverflowGallery = (props: {
       }
       buttonWidthRem={HORIZONTAL_GALLERY_BUTTON_WIDTH}
       gapWidthRem={HORIZONTAL_GALLERY_GAP}
-    >
-      {overflowGalleryTiles}
-    </ResponsiveHorizontalGallery>
+      galleryParticipants={remoteParticipants}
+      onRenderRemoteParticipant={onRenderRemoteParticipant}
+      maxRemoteVideoStreams={maxRemoteVideoStreams}
+    />
   );
 };

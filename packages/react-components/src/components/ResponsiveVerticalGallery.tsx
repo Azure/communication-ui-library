@@ -67,7 +67,7 @@ export const ResponsiveVerticalGallery = (props: ResponsiveVerticalGalleryProps)
     controlBarHeight: controlBarHeightRem ?? 2,
     isShort: isShort ?? false
   });
-  console.log(childrenPerPage);
+
   return (
     <div ref={containerRef} className={mergeStyles(containerStyles)}>
       <VerticalGallery
