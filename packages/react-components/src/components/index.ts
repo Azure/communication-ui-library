@@ -206,6 +206,13 @@ export {
   _VideoEffectsItemAddImage
 } from './VideoEffects/PresetVideoEffectsItems';
 
+export { _VideoBackgroundEffectsPicker } from './VideoEffects/VideoBackgroundEffectsPicker';
+export type {
+  _VideoBackgroundEffectsPickerProps,
+  _VideoBackgroundEffectChoiceOption,
+  _VideoBackgroundEffectsPickerStyles
+} from './VideoEffects/VideoBackgroundEffectsPicker';
+
 export type { VerticalGalleryStyles, VerticalGalleryStrings, VerticalGalleryControlBarStyles } from './VerticalGallery';
 
 export * from './Caption';
