@@ -3,6 +3,7 @@
 
 import { concatStyleSets } from '@fluentui/react';
 import React, { useMemo } from 'react';
+import { VideoGalleryRemoteParticipant } from '../../types';
 import { HorizontalGalleryStyles } from '../HorizontalGallery';
 import { ResponsiveHorizontalGallery } from '../ResponsiveHorizontalGallery';
 /* @conditional-compile-remove(vertical-gallery) */
@@ -32,11 +33,14 @@ import {
  * @private
  */
 export const OverflowGallery = (props: {
+  onRenderRemoteParticipant: (participant: VideoGalleryRemoteParticipant, isVideoParticipant?: boolean) => JSX.Element;
   shouldFloatLocalVideo?: boolean;
   isNarrow?: boolean;
   /* @conditional-compile-remove(vertical-gallery) */
   isShort?: boolean;
-  overflowGalleryElements?: JSX.Element[];
+  remoteParticipants: VideoGalleryRemoteParticipant[];
+  maxRemoteVideoStreams?: number;
+  // overflowGalleryElements?: JSX.Element[];
   horizontalGalleryStyles?: HorizontalGalleryStyles;
   /* @conditional-compile-remove(vertical-gallery) */
   veritcalGalleryStyles?: VerticalGalleryStyles;
@@ -44,15 +48,20 @@ export const OverflowGallery = (props: {
   overflowGalleryLayout?: OverflowGalleryLayout;
 }): JSX.Element => {
   const {
+    onRenderRemoteParticipant,
     shouldFloatLocalVideo = false,
     isNarrow = false,
     /* @conditional-compile-remove(vertical-gallery) */
     isShort = false,
-    overflowGalleryElements,
+    // overflowGalleryElements,
+    remoteParticipants,
+    maxRemoteVideoStreams,
     horizontalGalleryStyles,
     /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryLayout = 'HorizontalBottom',
     /* @conditional-compile-remove(vertical-gallery) */ veritcalGalleryStyles
   } = props;
+
+  let activeVideoStreams = 0;
 
   const containerStyles = useMemo(() => {
     /* @conditional-compile-remove(vertical-gallery) */
@@ -66,6 +75,17 @@ export const OverflowGallery = (props: {
     isNarrow,
     /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryLayout
   ]);
+
+  const overflowGalleryTiles =
+    remoteParticipants &&
+    remoteParticipants.map((p) => {
+      return onRenderRemoteParticipant(
+        p,
+        maxRemoteVideoStreams && maxRemoteVideoStreams >= 0
+          ? p.videoStream?.isAvailable && activeVideoStreams++ < maxRemoteVideoStreams
+          : p.videoStream?.isAvailable
+      );
+    });
 
   const galleryStyles = useMemo(() => {
     /* @conditional-compile-remove(vertical-gallery) */
@@ -82,7 +102,7 @@ export const OverflowGallery = (props: {
   ]);
 
   /* @conditional-compile-remove(vertical-gallery) */
-  if (overflowGalleryLayout === 'VerticalRight') {
+  if (overflowGalleryLayout === 'VerticalRight' && remoteParticipants) {
     return (
       <ResponsiveVerticalGallery
         key="responsive-vertical-gallery"
@@ -91,15 +111,16 @@ export const OverflowGallery = (props: {
         controlBarHeightRem={HORIZONTAL_GALLERY_BUTTON_WIDTH}
         gapHeightRem={HORIZONTAL_GALLERY_GAP}
         isShort={isShort}
-      >
-        {overflowGalleryElements}
-      </ResponsiveVerticalGallery>
+        galleryParticipants={remoteParticipants}
+        onRenderRemoteParticipant={onRenderRemoteParticipant}
+        maxRemoteVideoStreams={maxRemoteVideoStreams}
+      />
     );
   }
 
   /* @conditional-compile-remove(pinned-participants) */
   if (isNarrow) {
-    return <ScrollableHorizontalGallery horizontalGalleryElements={overflowGalleryElements} />;
+    return <ScrollableHorizontalGallery horizontalGalleryElements={overflowGalleryTiles} />;
   }
 
   return (
@@ -113,7 +134,7 @@ export const OverflowGallery = (props: {
       buttonWidthRem={HORIZONTAL_GALLERY_BUTTON_WIDTH}
       gapWidthRem={HORIZONTAL_GALLERY_GAP}
     >
-      {overflowGalleryElements}
+      {overflowGalleryTiles}
     </ResponsiveHorizontalGallery>
   );
 };

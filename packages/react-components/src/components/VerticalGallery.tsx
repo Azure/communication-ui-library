@@ -8,7 +8,7 @@ import { useLocale } from '../localization';
 /* @conditional-compile-remove(vertical-gallery) */
 import { useIdentifiers } from '../identifiers';
 import { useTheme } from '../theming';
-import { BaseCustomStyles } from '../types';
+import { BaseCustomStyles, VideoGalleryRemoteParticipant } from '../types';
 import {
   childrenContainerStyle,
   pageNavigationControlBarContainerStyle,
@@ -68,12 +68,16 @@ export interface VerticalGalleryControlBarStyles extends BaseCustomStyles {
  * @beta
  */
 export interface VerticalGalleryProps {
-  /** Video tiles for the remote participants in the vertical gallery */
-  children: React.ReactNode;
+  /** Remote participants in the vertical gallery */
+  galleryParticipants: VideoGalleryRemoteParticipant[];
   /** Max number of children per page in the vertical Gallery */
   childrenPerPage: number;
   /** Styles to customize the vertical gallery */
   styles?: VerticalGalleryStyles;
+  /** Max number of video streams allowed in the VerticalGallery */
+  maxRemoteVideoStreams?: number;
+  /** Render function for the video tiles */
+  onRenderRemoteParticipant: (participant: VideoGalleryRemoteParticipant, isVideoParticipant?: boolean) => JSX.Element;
 }
 
 interface VerticalGalleryControlBarProps {
@@ -92,7 +96,7 @@ interface VerticalGalleryControlBarProps {
  * @beta
  */
 export const VerticalGallery = (props: VerticalGalleryProps): JSX.Element => {
-  const { children, styles, childrenPerPage } = props;
+  const { styles, childrenPerPage, galleryParticipants, onRenderRemoteParticipant, maxRemoteVideoStreams } = props;
 
   const [page, setPage] = useState(1);
   const [buttonState, setButtonState] = useState<{ previous: boolean; next: boolean }>({ previous: true, next: true });
@@ -100,16 +104,31 @@ export const VerticalGallery = (props: VerticalGalleryProps): JSX.Element => {
   /* @conditional-compile-remove(vertical-gallery) */
   const ids = useIdentifiers();
 
-  const numberOfChildren = React.Children.count(children);
+  let activeVideoStreams = 0;
+
+  const numberOfChildren = galleryParticipants.length;
   const lastPage = Math.ceil(numberOfChildren / childrenPerPage);
 
-  const paginatedChildren: React.ReactNode[][] = useMemo(() => {
-    return bucketize(React.Children.toArray(children), childrenPerPage);
-  }, [children, childrenPerPage]);
+  const paginatedChildren: VideoGalleryRemoteParticipant[][] = useMemo(() => {
+    return bucketize(galleryParticipants, childrenPerPage);
+  }, [galleryParticipants, childrenPerPage]);
+
+  console.log(paginatedChildren);
 
   const firstIndexOfCurrentPage = (page - 1) * childrenPerPage;
   const clippedPage = firstIndexOfCurrentPage < numberOfChildren - 1 ? page : lastPage;
   const childrenOnCurrentPage = paginatedChildren[clippedPage - 1];
+
+  const overflowGalleryTiles =
+    childrenOnCurrentPage &&
+    childrenOnCurrentPage.map((p) => {
+      return onRenderRemoteParticipant(
+        p,
+        maxRemoteVideoStreams && maxRemoteVideoStreams >= 0
+          ? p.videoStream?.isAvailable && activeVideoStreams++ < maxRemoteVideoStreams
+          : p.videoStream?.isAvailable
+      );
+    });
 
   const showButtons = numberOfChildren > childrenPerPage;
 
@@ -152,7 +171,7 @@ export const VerticalGallery = (props: VerticalGalleryProps): JSX.Element => {
   return (
     <Stack className={mergeStyles(rootStyle, styles?.root)}>
       <Stack styles={childContainerStyle}>
-        {childrenOnCurrentPage.map((child, i) => {
+        {overflowGalleryTiles.map((child, i) => {
           return (
             <Stack.Item
               key={i}

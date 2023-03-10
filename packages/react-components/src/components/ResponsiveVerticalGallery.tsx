@@ -4,6 +4,7 @@
 import { IStyle, mergeStyles } from '@fluentui/react';
 import { _convertRemToPx } from '@internal/acs-ui-common';
 import React, { useRef } from 'react';
+import { VideoGalleryRemoteParticipant } from '../types';
 import { _useContainerHeight } from './utils/responsive';
 import { VerticalGallery, VerticalGalleryStyles } from './VerticalGallery';
 import {
@@ -18,7 +19,7 @@ import {
  */
 export interface ResponsiveVerticalGalleryProps {
   /** Video tiles to be rendered in the Vertical Gallery */
-  children: React.ReactNode;
+  galleryParticipants: VideoGalleryRemoteParticipant[];
   /** Styles for the Children space container */
   containerStyles: IStyle;
   /** Styles for the VerticalGallery component */
@@ -29,6 +30,10 @@ export interface ResponsiveVerticalGalleryProps {
   controlBarHeightRem?: number;
   /** container is shorter than 480 px. */
   isShort?: boolean;
+  /** Maximum number of video streams allowed based on amount left from grid view */
+  maxRemoteVideoStreams?: number;
+  /** Render function for the video tiles */
+  onRenderRemoteParticipant: (participant: VideoGalleryRemoteParticipant, isVideoParticipant?: boolean) => JSX.Element;
 }
 
 /**
@@ -39,7 +44,16 @@ export interface ResponsiveVerticalGalleryProps {
  * @beta
  */
 export const ResponsiveVerticalGallery = (props: ResponsiveVerticalGalleryProps): JSX.Element => {
-  const { children, containerStyles, verticalGalleryStyles, gapHeightRem, controlBarHeightRem, isShort } = props;
+  const {
+    containerStyles,
+    verticalGalleryStyles,
+    gapHeightRem,
+    controlBarHeightRem,
+    isShort,
+    galleryParticipants,
+    onRenderRemoteParticipant,
+    maxRemoteVideoStreams
+  } = props;
   const containerRef = useRef<HTMLDivElement>(null);
   const containerHeight = _useContainerHeight(containerRef);
 
@@ -47,17 +61,22 @@ export const ResponsiveVerticalGallery = (props: ResponsiveVerticalGalleryProps)
   const bottomPadding = containerRef.current ? parseFloat(getComputedStyle(containerRef.current).paddingBottom) : 0;
 
   const childrenPerPage = calculateChildrenPerPage({
-    numberOfChildren: React.Children.count(children),
+    numberOfChildren: galleryParticipants.length,
     containerHeight: (containerHeight ?? 0) - topPadding - bottomPadding,
     gapHeightRem,
     controlBarHeight: controlBarHeightRem ?? 2,
     isShort: isShort ?? false
   });
+  console.log(childrenPerPage);
   return (
     <div ref={containerRef} className={mergeStyles(containerStyles)}>
-      <VerticalGallery childrenPerPage={childrenPerPage} styles={verticalGalleryStyles}>
-        {children}
-      </VerticalGallery>
+      <VerticalGallery
+        galleryParticipants={galleryParticipants}
+        onRenderRemoteParticipant={onRenderRemoteParticipant}
+        childrenPerPage={childrenPerPage}
+        styles={verticalGalleryStyles}
+        maxRemoteVideoStreams={maxRemoteVideoStreams}
+      />
     </div>
   );
 };
