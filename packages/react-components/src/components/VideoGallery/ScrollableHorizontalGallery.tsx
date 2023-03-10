@@ -32,7 +32,7 @@ export const ScrollableHorizontalGallery = (props: {
         p,
         maxRemoteVideoStreams && maxRemoteVideoStreams >= 0
           ? p.videoStream?.isAvailable && activeVideoStreams++ < maxRemoteVideoStreams
-          : p.videoStream?.isAvailable
+          : false
       );
     });
 

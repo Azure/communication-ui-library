@@ -39,7 +39,7 @@ export const OverflowGallery = (props: {
   /* @conditional-compile-remove(vertical-gallery) */
   isShort?: boolean;
   remoteParticipants: VideoGalleryRemoteParticipant[];
-  maxRemoteVideoStreams?: number;
+  maxRemoteVideoStreams: number;
   // overflowGalleryElements?: JSX.Element[];
   horizontalGalleryStyles?: HorizontalGalleryStyles;
   /* @conditional-compile-remove(vertical-gallery) */

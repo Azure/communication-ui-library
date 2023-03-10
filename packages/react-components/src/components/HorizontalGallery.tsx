@@ -88,7 +88,7 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
         p,
         maxRemoteVideoStreams && maxRemoteVideoStreams >= 0
           ? p.videoStream?.isAvailable && activeVideoStreams++ < maxRemoteVideoStreams
-          : p.videoStream?.isAvailable
+          : false
       );
     });
 
