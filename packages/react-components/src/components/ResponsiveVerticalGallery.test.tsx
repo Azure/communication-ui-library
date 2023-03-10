@@ -25,10 +25,8 @@ registerIcons({
 });
 
 describe('ResponsiveVerticalGallery tests', () => {
-  beforeAll(() => {
-    mockResponsiveVerticalGalleryContainerHeight();
-  });
-  test('should render 4 video tiles if container height of ResponsiveVerticalGallery is 500', () => {
+  test('should render 3 video tiles if container height of ResponsiveVerticalGallery is 500', () => {
+    mockResponsiveVerticalGalleryContainerHeight(500);
     const remoteParticipants = Array.from({ length: 10 }, () =>
       createRemoteParticipant({
         videoStream: { isAvailable: false }
@@ -39,7 +37,7 @@ describe('ResponsiveVerticalGallery tests', () => {
     expect(root.find(VideoTile).length).toBe(4);
   });
 
-  test('should render 10 video tile if container height of ResponsiveVerticalGallery is 1000', () => {
+  test('should render 8 video tile if container height of ResponsiveVerticalGallery is 1000', () => {
     mockResponsiveVerticalGalleryContainerHeight(1000);
     const remoteParticipants = Array.from({ length: 10 }, () =>
       createRemoteParticipant({
@@ -62,18 +60,56 @@ describe('ResponsiveVerticalGallery tests', () => {
     const root = mountResponsiveVerticalGallery({ remoteParticipants });
     expect(root.find(VideoTile).length).toBe(1);
   });
+
+  test('should render 4 video tiles if container height of ResponsiveVerticalGallery is 500 and prop isShort is true', () => {
+    mockResponsiveVerticalGalleryContainerHeight(500);
+    const remoteParticipants = Array.from({ length: 10 }, () =>
+      createRemoteParticipant({
+        videoStream: { isAvailable: false }
+      })
+    );
+
+    const root = mountResponsiveVerticalGallery({ remoteParticipants, isShort: true });
+    expect(root.find(VideoTile).length).toBe(4);
+  });
+
+  test('should render 10 video tile if container height of ResponsiveVerticalGallery is 1000 and prop isShort is true', () => {
+    mockResponsiveVerticalGalleryContainerHeight(1000);
+    const remoteParticipants = Array.from({ length: 10 }, () =>
+      createRemoteParticipant({
+        videoStream: { isAvailable: false }
+      })
+    );
+
+    const root = mountResponsiveVerticalGallery({ remoteParticipants, isShort: true });
+    expect(root.find(VideoTile).length).toBe(10);
+  });
+
+  test('should render 1 video tile if container height of ResponsiveVerticalGallery is 0 and prop isShort is true', () => {
+    mockResponsiveVerticalGalleryContainerHeight(0);
+    const remoteParticipants = Array.from({ length: 10 }, () =>
+      createRemoteParticipant({
+        videoStream: { isAvailable: false }
+      })
+    );
+
+    const root = mountResponsiveVerticalGallery({ remoteParticipants, isShort: true });
+    expect(root.find(VideoTile).length).toBe(1);
+  });
 });
 
 const mountResponsiveVerticalGallery = (attrs: {
   remoteParticipants: VideoGalleryRemoteParticipant[];
+  isShort?: boolean;
 }): ReactWrapper<ResponsiveVerticalGalleryProps> => {
-  const { remoteParticipants } = attrs;
+  const { remoteParticipants, isShort } = attrs;
   const tiles = remoteParticipants.map((p) => <VideoTile key={p.userId}></VideoTile>);
   return mount(
     <ResponsiveVerticalGallery
-      containerStyles={verticalGalleryContainerStyle(true, false)}
+      containerStyles={verticalGalleryContainerStyle(true, false, !!isShort)}
       verticalGalleryStyles={{ children: LARGE_HORIZONTAL_GALLERY_TILE_STYLE }}
       gapHeightRem={HORIZONTAL_GALLERY_GAP}
+      isShort
     >
       {tiles}
     </ResponsiveVerticalGallery>
