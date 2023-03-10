@@ -4,6 +4,7 @@
 import { Stack } from '@fluentui/react';
 import React, { useRef } from 'react';
 import { useDraggable } from 'react-use-draggable-scroll';
+import { VideoGalleryRemoteParticipant } from '../../types';
 import {
   scrollableHorizontalGalleryContainerStyles,
   scrollableHorizontalGalleryStyles
@@ -13,11 +14,27 @@ import {
  * Component to display elements horizontally in a scrollable container
  * @private
  */
-export const ScrollableHorizontalGallery = (props: { horizontalGalleryElements?: JSX.Element[] }): JSX.Element => {
-  const { horizontalGalleryElements } = props;
+export const ScrollableHorizontalGallery = (props: {
+  galleryparticipants: VideoGalleryRemoteParticipant[];
+  onRenderRemoteParticipant: (participant: VideoGalleryRemoteParticipant, isVideoParticipant?: boolean) => JSX.Element;
+  maxRemoteVideoStreams?: number;
+}): JSX.Element => {
+  const { galleryparticipants, onRenderRemoteParticipant, maxRemoteVideoStreams } = props;
 
   const ref = useRef<HTMLDivElement>() as React.MutableRefObject<HTMLInputElement>;
   const { events: dragabbleEvents } = useDraggable(ref);
+  let activeVideoStreams = 0;
+
+  const overflowGalleryTiles =
+    galleryparticipants &&
+    galleryparticipants.map((p) => {
+      return onRenderRemoteParticipant(
+        p,
+        maxRemoteVideoStreams && maxRemoteVideoStreams >= 0
+          ? p.videoStream?.isAvailable && activeVideoStreams++ < maxRemoteVideoStreams
+          : p.videoStream?.isAvailable
+      );
+    });
 
   return (
     <div ref={ref} {...dragabbleEvents} className={scrollableHorizontalGalleryContainerStyles}>
@@ -27,7 +44,7 @@ export const ScrollableHorizontalGallery = (props: { horizontalGalleryElements?:
         styles={scrollableHorizontalGalleryStyles}
         tokens={{ childrenGap: '0.5rem' }}
       >
-        {horizontalGalleryElements}
+        {overflowGalleryTiles}
       </Stack>
     </div>
   );
