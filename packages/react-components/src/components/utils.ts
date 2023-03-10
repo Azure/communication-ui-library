@@ -196,3 +196,23 @@ export const customIconName: Partial<{ [key in ErrorType]: string }> = {
 export const isValidString = (string: string | undefined): string is string => {
   return !!string && string.length > 0;
 };
+
+/**
+ * Chunk an array into rows of a given size.
+ * @private
+ */
+export function chunk<T>(options: T[], itemsPerRow: number): T[][] {
+  const rows: T[][] = [];
+  let currentRow: T[] = [];
+  for (const option of options) {
+    currentRow.push(option);
+    if (currentRow.length === itemsPerRow) {
+      rows.push(currentRow);
+      currentRow = [];
+    }
+  }
+  if (currentRow.length > 0) {
+    rows.push(currentRow);
+  }
+  return rows;
+}
