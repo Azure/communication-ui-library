@@ -58,7 +58,7 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
     screenShareComponent,
     onRenderRemoteParticipant,
     styles,
-    maxRemoteVideoStreams = 4,
+    maxRemoteVideoStreams,
     showCameraSwitcherInLocalPreview,
     parentWidth,
     parentHeight,
@@ -171,7 +171,7 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
   }, [
     onRenderRemoteParticipant,
     isNarrow,
-    maxRemoteVideoStreams,
+    activeVideoStreams,
     /* @conditional-compile-remove(vertical-gallery) */ isShort,
     horizontalGalleryParticipants,
     styles?.horizontalGallery,

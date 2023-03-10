@@ -66,21 +66,12 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
     );
   });
 
-  const horizontalGalleryTiles = horizontalGalleryParticipants.map((p) => {
-    return onRenderRemoteParticipant(
-      p,
-      maxRemoteVideoStreams && maxRemoteVideoStreams >= 0
-        ? p.videoStream?.isAvailable && activeVideoStreams++ < maxRemoteVideoStreams
-        : p.videoStream?.isAvailable
-    );
-  });
-
   if (localVideoComponent) {
     gridTiles.push(localVideoComponent);
   }
 
   const overflowGallery = useMemo(() => {
-    if (horizontalGalleryTiles.length === 0) {
+    if (horizontalGalleryParticipants.length === 0) {
       return null;
     }
     return (
@@ -89,7 +80,9 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
         /* @conditional-compile-remove(vertical-gallery) */
         isShort={isShort}
         shouldFloatLocalVideo={false}
-        overflowGalleryElements={horizontalGalleryTiles}
+        remoteParticipants={horizontalGalleryParticipants}
+        onRenderRemoteParticipant={onRenderRemoteParticipant}
+        maxRemoteVideoStreams={maxRemoteVideoStreams - activeVideoStreams}
         horizontalGalleryStyles={styles?.horizontalGallery}
         /* @conditional-compile-remove(vertical-gallery) */
         veritcalGalleryStyles={styles?.verticalGallery}
@@ -100,8 +93,10 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
   }, [
     isNarrow,
     /* @conditional-compile-remove(vertical-gallery) */ isShort,
-    horizontalGalleryTiles,
     styles?.horizontalGallery,
+    horizontalGalleryParticipants,
+    onRenderRemoteParticipant,
+    activeVideoStreams,
     /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryLayout,
     /* @conditional-compile-remove(vertical-gallery) */ styles?.verticalGallery
   ]);
