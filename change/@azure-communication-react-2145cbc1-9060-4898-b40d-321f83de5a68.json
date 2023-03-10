@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Update overflow gallery to render video tiles on multiple pages if video participants present.",
+  "packageName": "@azure/communication-react",
+  "email": "94866715+dmceachernmsft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
