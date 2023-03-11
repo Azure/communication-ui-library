@@ -127,7 +127,7 @@
     "messageReadCount": "Read by {messageReadByCount} of {remoteParticipantsCount}",
     "actionMenuMoreOptions": "More Options",
     "downloadFile": "Download file",
-    "policyViolationText": "This message deleted by policy. ",
+    "policyViolationText": "This message was deleted due to organizational policy. ",
     "policyViolationLinkText": "Details"
   },
   "errorBar": {

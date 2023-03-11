@@ -65,6 +65,9 @@ import { ArrowDownload16Regular } from '@fluentui/react-icons';
 /* @conditional-compile-remove(PSTN-calls) */
 import { CallPause20Regular, CallPause20Filled, Play20Regular, People20Regular } from '@fluentui/react-icons';
 
+/* @conditional-compile-remove(dlp) */
+import { Prohibited16Regular } from '@fluentui/react-icons';
+
 /* @conditional-compile-remove(unsupported-browser) */
 import { Warning20Filled } from '@fluentui/react-icons';
 import { _pxToRem } from '@internal/acs-ui-common';
@@ -190,6 +193,12 @@ const BrowserPermissionDenied20Filled = (): JSX.Element => {
   );
 };
 
+/* @conditional-compile-remove(dlp) */
+const DataLossPreventionProhibited16Regular = (): JSX.Element => {
+  // const theme = useTheme();
+  return <Prohibited16Regular />;
+};
+
 /**
  * The default set of icons that are available to use in the UI components.
  *
@@ -214,6 +223,8 @@ export const DEFAULT_COMPONENT_ICONS = {
   CancelFileUpload: <Dismiss16Regular />,
   /* @conditional-compile-remove(file-sharing) */
   DownloadFile: <ArrowDownload16Regular />,
+  /* @conditional-compile-remove(dlp) */
+  DataLossPreventionProhibited: <DataLossPreventionProhibited16Regular />,
   EditBoxCancel: <Dismiss20Regular />,
   EditBoxSubmit: <Checkmark20Regular />,
   ErrorBarCallCameraAccessDenied: <VideoProhibited16Filled />,

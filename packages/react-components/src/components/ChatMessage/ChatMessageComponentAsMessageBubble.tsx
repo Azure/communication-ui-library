@@ -201,7 +201,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
           styles={messageContainerStyle}
           content={
             <div tabIndex={0}>
-              <ChatMessageContent message={message} strings={strings} />
+              <ChatMessageContent message={message} theme={theme} strings={strings} />
               {props.onRenderFileDownloads
                 ? props.onRenderFileDownloads(userId, message)
                 : defaultOnRenderFileDownloads()}

@@ -69,6 +69,31 @@ export const chatMessageFailedTagStyle = (theme: Theme): string =>
 /**
  * @private
  */
+export const chatMessageDateLossPreventionProhibitedIconStyle = (theme: Theme): string =>
+  mergeStyles({
+    color: theme.palette.neutralSecondary,
+    paddingTop: '0.125rem'
+  });
+
+/**
+ * @private
+ */
+export const chatMessageDateLossPreventionTextStyle = (theme: Theme): string =>
+  mergeStyles({ fontStyle: 'italic', color: theme.palette.neutralSecondary });
+
+/**
+ * @private
+ */
+export const chatMessageDateLossPreventionLinkStyle = (theme: Theme): string =>
+  mergeStyles({
+    fontStyle: 'normal',
+    color: theme.palette.themePrimary,
+    textDecoration: 'none'
+  });
+
+/**
+ * @private
+ */
 export const chatMessageMenuStyle = mergeStyles({
   minWidth: '8.5rem',
   height: 'max-content',

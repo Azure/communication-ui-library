@@ -7,11 +7,18 @@ import { Parser } from 'html-to-react';
 import Linkify from 'react-linkify';
 import { ChatMessage } from '../../types/ChatMessage';
 import { LiveMessage } from 'react-aria-live';
-import { Link } from '@fluentui/react';
+import { Icon, Link, Stack, Theme } from '@fluentui/react';
 import { MessageThreadStrings } from '../MessageThread';
+import { Text } from '@fluentui/react-northstar';
+import {
+  chatMessageDateLossPreventionProhibitedIconStyle,
+  chatMessageDateLossPreventionTextStyle,
+  chatMessageDateLossPreventionLinkStyle
+} from '../styles/ChatMessageComponent.styles';
 
 type ChatMessageContentProps = {
   message: ChatMessage;
+  theme: Theme;
   strings: MessageThreadStrings;
 };
 
@@ -19,7 +26,7 @@ type ChatMessageContentProps = {
 export const ChatMessageContent = (props: ChatMessageContentProps): JSX.Element => {
   /* @conditional-compile-remove(dlp) */
   if (props.message.policyViolation) {
-    return MessageContentAsDataLossPrevention(props);
+    return DataLossPreventionMessageContent(props);
   }
   switch (props.message.contentType) {
     case 'text':
@@ -69,23 +76,29 @@ const MessageContentAsText = (props: ChatMessageContentProps): JSX.Element => {
 };
 
 /* @conditional-compile-remove(dlp) */
-const MessageContentAsDataLossPrevention = (props: ChatMessageContentProps): JSX.Element => {
+const DataLossPreventionMessageContent = (props: ChatMessageContentProps): JSX.Element => {
   const livePolicyViolationText = `${props.message.mine ? '' : props.message.senderDisplayName} ${
     props.strings.policyViolationText
-  }`;
+  } ${props.strings.policyViolationLinkText}`;
   return (
     <div data-ui-status={props.message.status} role="text" aria-label={livePolicyViolationText}>
       <LiveMessage message={livePolicyViolationText} aria-live="polite" />
-      <p style={{ fontStyle: 'italic', color: 'red' }}>
-        {props.strings.policyViolationText}
-        <Link
-          href={'https://go.microsoft.com/fwlink/?LinkId=2132837'}
-          target={'_blank'}
-          style={{ fontStyle: 'normal', color: 'blue', textDecoration: 'none' }}
-        >
-          {props.strings.policyViolationLinkText}
-        </Link>
-      </p>
+      <Stack horizontal>
+        <Icon
+          iconName={'DataLossPreventionProhibited'}
+          className={chatMessageDateLossPreventionProhibitedIconStyle(props.theme)}
+        />
+        <Text className={chatMessageDateLossPreventionTextStyle(props.theme)}>
+          {props.strings.policyViolationText}
+          <Link
+            className={chatMessageDateLossPreventionLinkStyle(props.theme)}
+            target={'_blank'}
+            href={'https://go.microsoft.com/fwlink/?LinkId=2132837'}
+          >
+            {props.strings.policyViolationLinkText}
+          </Link>
+        </Text>
+      </Stack>
     </div>
   );
 };
