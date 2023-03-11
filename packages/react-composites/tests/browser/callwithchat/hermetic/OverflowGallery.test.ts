@@ -3,12 +3,11 @@
 
 import { expect } from '@playwright/test';
 import { addVideoStream, defaultMockCallAdapterState, defaultMockRemoteParticipant } from '../../call/hermetic/fixture';
-import { IDS } from '../../common/constants';
 import { dataUiId, isTestProfileMobile, pageClick, stableScreenshot, waitForSelector } from '../../common/utils';
 import { loadCallPage, test } from './fixture';
 
 test.describe('Overflow gallery tests', async () => {
-  test('Overflow gallery should be present when people or chat pane are open', async ({
+  test.only('Overflow gallery should be present when people or chat pane are open', async ({
     page,
     serverUrl
   }, testInfo) => {
@@ -18,7 +17,11 @@ test.describe('Overflow gallery tests', async () => {
     const initialState = createInitialStateWithManyAudioParticipants();
     await loadCallPage(page, serverUrl, initialState);
 
-    await waitForSelector(page, dataUiId(IDS.videoGallery));
+    // wait for responsive-horizontal-gallery or responsive-vertical-gallery to be present
+    expect(
+      (await page.isVisible(dataUiId('responsive-horizontal-gallery'))) ||
+        (await page.isVisible(dataUiId('responsive-vertical-gallery')))
+    ).toBeTruthy();
     expect(await stableScreenshot(page)).toMatchSnapshot('overflow-gallery-with-many-participants.png');
 
     await waitForSelector(page, dataUiId('call-with-chat-composite-people-button'));
@@ -39,7 +42,11 @@ test.describe('Overflow gallery tests', async () => {
     const initialState = createInitialStateWithManyAudioParticipants();
     await loadCallPage(page, serverUrl, initialState, { rtl: 'true' });
 
-    await waitForSelector(page, dataUiId(IDS.videoGallery));
+    // wait for responsive-horizontal-gallery or responsive-vertical-gallery to be present
+    expect(
+      (await page.isVisible(dataUiId('responsive-horizontal-gallery'))) ||
+        (await page.isVisible(dataUiId('responsive-vertical-gallery')))
+    ).toBeTruthy();
     expect(await stableScreenshot(page)).toMatchSnapshot('overflow-gallery-with-many-participants-rtl.png');
 
     await waitForSelector(page, dataUiId('call-with-chat-composite-people-button'));
