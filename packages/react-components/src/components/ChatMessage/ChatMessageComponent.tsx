@@ -25,7 +25,7 @@ type ChatMessageComponentProps = {
     }
   ) => Promise<void>;
   /**
-   * Callback to delete a message. Also called when resending a message that failed to send.
+   * Callback to delete a message. Also called before resending a message that failed to send.
    * @param messageId ID of the message to delete
    */
   onDeleteMessage?: (messageId: string) => Promise<void>;
