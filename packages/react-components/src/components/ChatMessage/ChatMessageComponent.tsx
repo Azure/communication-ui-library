@@ -75,7 +75,7 @@ export const ChatMessageComponent = (props: ChatMessageComponentProps): JSX.Elem
 
   const onEditClick = useCallback(() => setIsEditing(true), [setIsEditing]);
 
-  const { onDeleteMessage, onSendMessage, message } = props;
+  const { onDeleteMessage, onUpdateMessage, onSendMessage, message } = props;
   const onRemoveClick = useCallback(() => {
     if (onDeleteMessage && message.messageId) {
       onDeleteMessage(message.messageId);
@@ -86,9 +86,15 @@ export const ChatMessageComponent = (props: ChatMessageComponentProps): JSX.Elem
     }
   }, [message.messageId, message.clientMessageId, onDeleteMessage]);
   const onResendClick = useCallback(() => {
-    onDeleteMessage && message.clientMessageId && onDeleteMessage(message.clientMessageId);
-    onSendMessage && onSendMessage(message.content ?? '');
-  }, [message.clientMessageId, message.content, onSendMessage, onDeleteMessage]);
+    if (onUpdateMessage && message.messageId) {
+      // if the message has an ID, then it has been sent and so we need to update the existing,
+      // rather than the delete / send again flow
+      onUpdateMessage(message.messageId, message.content ?? '', message.metadata);
+    } else if (onDeleteMessage && onSendMessage && message.clientMessageId) {
+      onDeleteMessage(message.clientMessageId);
+      onSendMessage(message.content ?? message.clientMessageId ?? '');
+    }
+  }, [message.clientMessageId, message.content, onSendMessage, onDeleteMessage, onUpdateMessage]);
 
   if (props.message.messageType !== 'chat') {
     return <></>;
