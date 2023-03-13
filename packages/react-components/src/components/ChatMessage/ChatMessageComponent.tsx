@@ -24,9 +24,14 @@ type ChatMessageComponentProps = {
       attachedFilesMetadata?: FileMetadata[];
     }
   ) => Promise<void>;
+  /**
+   * Callback to delete a message. Also called when resending a message that failed to send.
+   * @param messageId ID of the message to delete
+   */
   onDeleteMessage?: (messageId: string) => Promise<void>;
   /**
-   * Optional callback called when message is sent
+   * Callback to send a message
+   * @param content The message content to send
    */
   onSendMessage?: (content: string) => Promise<void>;
   strings: MessageThreadStrings;
@@ -75,7 +80,7 @@ export const ChatMessageComponent = (props: ChatMessageComponentProps): JSX.Elem
 
   const onEditClick = useCallback(() => setIsEditing(true), [setIsEditing]);
 
-  const { onDeleteMessage, onUpdateMessage, onSendMessage, message } = props;
+  const { onDeleteMessage, onSendMessage, message } = props;
   const onRemoveClick = useCallback(() => {
     if (onDeleteMessage && message.messageId) {
       onDeleteMessage(message.messageId);
@@ -86,15 +91,9 @@ export const ChatMessageComponent = (props: ChatMessageComponentProps): JSX.Elem
     }
   }, [message.messageId, message.clientMessageId, onDeleteMessage]);
   const onResendClick = useCallback(() => {
-    if (onUpdateMessage && message.messageId) {
-      // if the message has an ID, then it has been sent and so we need to update the existing,
-      // rather than the delete / send again flow
-      onUpdateMessage(message.messageId, message.content ?? '', message.metadata);
-    } else if (onDeleteMessage && onSendMessage && message.clientMessageId) {
-      onDeleteMessage(message.clientMessageId);
-      onSendMessage(message.content ?? message.clientMessageId ?? '');
-    }
-  }, [message.clientMessageId, message.content, onSendMessage, onDeleteMessage, onUpdateMessage]);
+    onDeleteMessage && message.clientMessageId && onDeleteMessage(message.clientMessageId);
+    onSendMessage && onSendMessage(message.content ?? '');
+  }, [message.clientMessageId, message.content, onSendMessage, onDeleteMessage]);
 
   if (props.message.messageType !== 'chat') {
     return <></>;
