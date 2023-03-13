@@ -103,16 +103,15 @@ const mountResponsiveVerticalGallery = (attrs: {
   isShort?: boolean;
 }): ReactWrapper<ResponsiveVerticalGalleryProps> => {
   const { remoteParticipants, isShort } = attrs;
-  const tiles = remoteParticipants.map((p) => <VideoTile key={p.userId}></VideoTile>);
   return mount(
     <ResponsiveVerticalGallery
+      onRenderRemoteParticipant={(p) => <VideoTile key={p.userId}></VideoTile>}
+      galleryParticipants={remoteParticipants}
       containerStyles={verticalGalleryContainerStyle(true, false, !!isShort)}
       verticalGalleryStyles={{ children: LARGE_HORIZONTAL_GALLERY_TILE_STYLE }}
       gapHeightRem={HORIZONTAL_GALLERY_GAP}
       isShort
-    >
-      {tiles}
-    </ResponsiveVerticalGallery>
+    />
   );
 };
 
