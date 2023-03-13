@@ -6,7 +6,10 @@ import { _convertRemToPx } from '@internal/acs-ui-common';
 import React, { useRef } from 'react';
 import { _useContainerHeight } from './utils/responsive';
 import { VerticalGallery, VerticalGalleryStyles } from './VerticalGallery';
-import { VERTICAL_GALLERY_TILE_SIZE_REM } from './VideoGallery/styles/VideoGalleryResponsiveVerticalGallery.styles';
+import {
+  SHORT_VERTICAL_GALLERY_TILE_SIZE_REM,
+  VERTICAL_GALLERY_TILE_SIZE_REM
+} from './VideoGallery/styles/VideoGalleryResponsiveVerticalGallery.styles';
 
 /**
  * Props for the Responsive wrapper of the VerticalGallery component
@@ -24,6 +27,8 @@ export interface ResponsiveVerticalGalleryProps {
   gapHeightRem: number;
   /** Height of the control bar for navigating pages */
   controlBarHeightRem?: number;
+  /** container is shorter than 480 px. */
+  isShort?: boolean;
 }
 
 /**
@@ -34,7 +39,7 @@ export interface ResponsiveVerticalGalleryProps {
  * @beta
  */
 export const ResponsiveVerticalGallery = (props: ResponsiveVerticalGalleryProps): JSX.Element => {
-  const { children, containerStyles, verticalGalleryStyles, gapHeightRem, controlBarHeightRem } = props;
+  const { children, containerStyles, verticalGalleryStyles, gapHeightRem, controlBarHeightRem, isShort } = props;
   const containerRef = useRef<HTMLDivElement>(null);
   const containerHeight = _useContainerHeight(containerRef);
 
@@ -45,10 +50,11 @@ export const ResponsiveVerticalGallery = (props: ResponsiveVerticalGalleryProps)
     numberOfChildren: React.Children.count(children),
     containerHeight: (containerHeight ?? 0) - topPadding - bottomPadding,
     gapHeightRem,
-    controlBarHeight: controlBarHeightRem ?? 2
+    controlBarHeight: controlBarHeightRem ?? 2,
+    isShort: isShort ?? false
   });
   return (
-    <div ref={containerRef} className={mergeStyles(containerStyles)}>
+    <div data-ui-id="responsive-vertical-gallery" ref={containerRef} className={mergeStyles(containerStyles)}>
       <VerticalGallery childrenPerPage={childrenPerPage} styles={verticalGalleryStyles}>
         {children}
       </VerticalGallery>
@@ -64,10 +70,13 @@ const calculateChildrenPerPage = (args: {
   containerHeight: number;
   gapHeightRem: number;
   controlBarHeight: number;
+  isShort: boolean;
 }): number => {
-  const { numberOfChildren, containerHeight, gapHeightRem, controlBarHeight } = args;
+  const { numberOfChildren, containerHeight, gapHeightRem, controlBarHeight, isShort } = args;
 
-  const childMinHeightPx = _convertRemToPx(VERTICAL_GALLERY_TILE_SIZE_REM.minHeight);
+  const childMinHeightPx = _convertRemToPx(
+    isShort ? SHORT_VERTICAL_GALLERY_TILE_SIZE_REM.minHeight : VERTICAL_GALLERY_TILE_SIZE_REM.minHeight
+  );
   const gapHeightPx = _convertRemToPx(gapHeightRem);
   const controlBarHeightPx = _convertRemToPx(controlBarHeight);
 
