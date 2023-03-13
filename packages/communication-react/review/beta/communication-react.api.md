@@ -8,6 +8,8 @@
 
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { AudioDeviceInfo } from '@azure/communication-calling';
+import { BackgroundBlurConfig } from '@azure/communication-calling-effects';
+import { BackgroundReplacementConfig } from '@azure/communication-calling-effects';
 import { Call } from '@azure/communication-calling';
 import { CallAgent } from '@azure/communication-calling';
 import { CallClient } from '@azure/communication-calling';
@@ -53,6 +55,7 @@ import { IStyleFunctionOrObject } from '@fluentui/react';
 import { ITextFieldStyles } from '@fluentui/react';
 import { LatestMediaDiagnostics } from '@azure/communication-calling';
 import { LatestNetworkDiagnostics } from '@azure/communication-calling';
+import { LocalVideoStream } from '@azure/communication-calling';
 import type { MediaDiagnosticChangedEventArgs } from '@azure/communication-calling';
 import { MediaStreamType } from '@azure/communication-calling';
 import { MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
@@ -82,6 +85,7 @@ import { TypingIndicatorReceivedEvent } from '@azure/communication-chat';
 import { UnknownIdentifier } from '@azure/communication-common';
 import { UnknownIdentifierKind } from '@azure/communication-common';
 import { VideoDeviceInfo } from '@azure/communication-calling';
+import { VideoEffectName } from '@azure/communication-calling';
 import { VideoStreamRenderer } from '@azure/communication-calling';
 import { VideoStreamRendererView } from '@azure/communication-calling';
 
@@ -634,7 +638,7 @@ export type CallErrors = {
 };
 
 // @public
-export type CallErrorTarget = 'Call.addParticipant' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.dispose' | 'Call.feature' | 'Call.hangUp' | 'Call.hold' | 'Call.mute' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.muteIncomingAudio' | 'Call.off' | 'Call.on' | 'Call.removeParticipant' | 'Call.resume' | 'Call.sendDtmf' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.startAudio' | 'Call.startScreenSharing' | 'Call.startVideo' | 'Call.stopScreenSharing' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.stopAudio' | 'Call.stopVideo' | 'Call.unmute' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.unmuteIncomingAudio' | 'CallAgent.dispose' | 'CallAgent.feature' | 'CallAgent.join' | 'CallAgent.off' | 'CallAgent.on' | 'CallAgent.startCall' | 'CallClient.createCallAgent' | /* @conditional-compile-remove(calling-beta-sdk) */ /* @conditional-compile-remove(teams-identity-support) */ 'CallClient.createTeamsCallAgent' | 'CallClient.feature' | 'CallClient.getDeviceManager' | /* @conditional-compile-remove(calling-beta-sdk) */ 'CallClient.getEnvironmentInfo' | 'DeviceManager.askDevicePermission' | 'DeviceManager.getCameras' | 'DeviceManager.getMicrophones' | 'DeviceManager.getSpeakers' | 'DeviceManager.off' | 'DeviceManager.on' | 'DeviceManager.selectMicrophone' | 'DeviceManager.selectSpeaker' | 'IncomingCall.accept' | 'IncomingCall.reject' | /* @conditional-compile-remove(calling-beta-sdk) */ /* @conditional-compile-remove(teams-identity-support) */ 'TeamsCall.addParticipant';
+export type CallErrorTarget = 'Call.addParticipant' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.dispose' | 'Call.feature' | 'Call.hangUp' | 'Call.hold' | 'Call.mute' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.muteIncomingAudio' | 'Call.off' | 'Call.on' | 'Call.removeParticipant' | 'Call.resume' | 'Call.sendDtmf' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.startAudio' | 'Call.startScreenSharing' | 'Call.startVideo' | 'Call.stopScreenSharing' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.stopAudio' | 'Call.stopVideo' | 'Call.unmute' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.unmuteIncomingAudio' | 'CallAgent.dispose' | 'CallAgent.feature' | 'CallAgent.join' | 'CallAgent.off' | 'CallAgent.on' | 'CallAgent.startCall' | 'CallClient.createCallAgent' | /* @conditional-compile-remove(calling-beta-sdk) */ /* @conditional-compile-remove(teams-identity-support) */ 'CallClient.createTeamsCallAgent' | 'CallClient.feature' | 'CallClient.getDeviceManager' | /* @conditional-compile-remove(calling-beta-sdk) */ 'CallClient.getEnvironmentInfo' | 'DeviceManager.askDevicePermission' | 'DeviceManager.getCameras' | 'DeviceManager.getMicrophones' | 'DeviceManager.getSpeakers' | 'DeviceManager.off' | 'DeviceManager.on' | 'DeviceManager.selectMicrophone' | 'DeviceManager.selectSpeaker' | 'IncomingCall.accept' | 'IncomingCall.reject' | /* @conditional-compile-remove(calling-beta-sdk) */ /* @conditional-compile-remove(teams-identity-support) */ 'TeamsCall.addParticipant' | /* @conditional-compile-remove(video-background-effects) */ 'VideoEffectsFeature.startEffects';
 
 // @public
 export type CallIdChangedListener = (event: {
@@ -1372,6 +1376,8 @@ export interface CommonCallingHandlers {
     // (undocumented)
     onAddParticipant(participant: PhoneNumberIdentifier, options: AddPhoneNumberOptions): Promise<void>;
     // (undocumented)
+    onBlurVideoBackground: (bgBlurConfig?: BackgroundBlurConfig) => Promise<void>;
+    // (undocumented)
     onCreateLocalStreamView: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
     // (undocumented)
     onCreateRemoteStreamView: (userId: string, options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
@@ -1385,6 +1391,10 @@ export interface CommonCallingHandlers {
     onRemoveParticipant(userId: string): Promise<void>;
     // (undocumented)
     onRemoveParticipant(participant: CommunicationIdentifier): Promise<void>;
+    // (undocumented)
+    onRemoveVideoBackgroundEffects: () => Promise<void>;
+    // (undocumented)
+    onReplaceVideoBackground: (bgReplacementConfig: BackgroundReplacementConfig) => Promise<void>;
     // (undocumented)
     onSelectCamera: (device: VideoDeviceInfo, options?: VideoStreamOptions) => Promise<void>;
     // (undocumented)
@@ -1520,6 +1530,7 @@ export interface ComponentStrings {
     UnsupportedBrowser: UnsupportedBrowserStrings;
     UnsupportedBrowserVersion: UnsupportedBrowserVersionStrings;
     UnsupportedOperatingSystem: UnsupportedOperatingSystemStrings;
+    VerticalGallery: VerticalGalleryStrings;
     videoGallery: VideoGalleryStrings;
     videoTile: VideoTileStrings;
 }
@@ -1826,6 +1837,8 @@ export const DEFAULT_COMPONENT_ICONS: {
     VideoTileScaleFill: JSX.Element;
     PinParticipant: JSX.Element;
     UnpinParticipant: JSX.Element;
+    VerticalGalleryLeftButton: JSX.Element;
+    VerticalGalleryRightButton: JSX.Element;
 };
 
 // @public
@@ -1923,6 +1936,8 @@ export const DEFAULT_COMPOSITE_ICONS: {
     VideoTileScaleFill: JSX.Element;
     PinParticipant: JSX.Element;
     UnpinParticipant: JSX.Element;
+    VerticalGalleryLeftButton: JSX.Element;
+    VerticalGalleryRightButton: JSX.Element;
 };
 
 // @beta
@@ -2277,10 +2292,10 @@ export interface _IdentifierProviderProps {
 
 // @internal
 export interface _Identifiers {
-    horizontalGalleryLeftNavButton: string;
-    horizontalGalleryRightNavButton: string;
     messageContent: string;
     messageTimestamp: string;
+    overflowGalleryLeftNavButton: string;
+    overflowGalleryRightNavButton: string;
     participantButtonPeopleMenuItem: string;
     participantItemMenuButton: string;
     participantList: string;
@@ -2288,6 +2303,8 @@ export interface _Identifiers {
     participantListRemoveParticipantButton: string;
     sendboxTextField: string;
     typingIndicator: string;
+    verticalGalleryPageCounter: string;
+    verticalGalleryVideoTile: string;
     videoGallery: string;
     videoTile: string;
 }
@@ -2357,7 +2374,15 @@ export interface LocalVideoCameraCycleButtonProps {
 export interface LocalVideoStreamState {
     mediaStreamType: MediaStreamType;
     source: VideoDeviceInfo;
+    // @beta
+    videoEffects?: LocalVideoStreamVideoEffectsState;
     view?: VideoStreamRendererViewState;
+}
+
+// @beta
+export interface LocalVideoStreamVideoEffectsState {
+    effectName?: VideoEffectName;
+    isActive: boolean;
 }
 
 // @public
@@ -2609,7 +2634,7 @@ export interface NetworkDiagnosticsState {
 }
 
 // @beta
-export type OnFetchProfileCallback = (userId: string) => Promise<Profile | undefined>;
+export type OnFetchProfileCallback = (userId: string, defaultProfile?: Profile) => Promise<Profile | undefined>;
 
 // @public
 export type OnRenderAvatarCallback = (
@@ -2621,6 +2646,9 @@ export interface OptionsDevice {
     id: string;
     name: string;
 }
+
+// @beta
+export type OverflowGalleryLayout = 'HorizontalBottom' | 'VerticalRight';
 
 // @public
 export interface ParticipantAddedSystemMessage extends SystemMessageCommon {
@@ -2983,6 +3011,8 @@ export type StatefulChatClientOptions = {
 
 // @public
 export interface StatefulDeviceManager extends DeviceManager {
+    // @beta
+    getUnparentedVideoStreams: () => LocalVideoStream[];
     selectCamera: (VideoDeviceInfo: any) => void;
 }
 
@@ -3186,6 +3216,25 @@ export const useTeamsCallAgent: () => undefined | /* @conditional-compile-remove
 // @public
 export const useTheme: () => Theme;
 
+// @beta
+export interface VerticalGalleryControlBarStyles extends BaseCustomStyles {
+    counter?: IStyle;
+    nextButton?: IStyle;
+    previousButton?: IStyle;
+}
+
+// @beta
+export interface VerticalGalleryStrings {
+    leftNavButtonAriaLabel?: string;
+    rightNavButtonAriaLabel?: string;
+}
+
+// @beta
+export interface VerticalGalleryStyles extends BaseCustomStyles {
+    children?: IStyle;
+    controlBar?: VerticalGalleryControlBarStyles;
+}
+
 // @public
 export const VideoGallery: (props: VideoGalleryProps) => JSX.Element;
 
@@ -3221,6 +3270,7 @@ export interface VideoGalleryProps {
     onRenderLocalVideoTile?: (localParticipant: VideoGalleryLocalParticipant) => JSX.Element;
     onRenderRemoteVideoTile?: (remoteParticipant: VideoGalleryRemoteParticipant) => JSX.Element;
     onUnpinParticipant?: (userId: string) => void;
+    overflowGalleryLayout?: OverflowGalleryLayout;
     pinnedParticipants?: string[];
     remoteParticipants?: VideoGalleryRemoteParticipant[];
     remoteVideoTileMenuOptions?: false | VideoTileContextualMenuProps | VideoTileDrawerMenuProps;
@@ -3281,6 +3331,7 @@ export interface VideoGalleryStyles extends BaseCustomStyles {
     gridLayout?: GridLayoutStyles;
     horizontalGallery?: HorizontalGalleryStyles;
     localVideo?: IStyle;
+    verticalGallery?: VerticalGalleryStyles;
 }
 
 // @public

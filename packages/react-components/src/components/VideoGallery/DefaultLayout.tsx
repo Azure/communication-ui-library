@@ -5,13 +5,13 @@ import { Stack } from '@fluentui/react';
 import React, { useMemo } from 'react';
 import { GridLayout } from '../GridLayout';
 import { isNarrowWidth } from '../utils/responsive';
+/* @conditional-compile-remove(vertical-gallery) */
+import { isShortHeight } from '../utils/responsive';
 import { LayoutProps } from './Layout';
-/* @conditional-compile-remove(pinned-participants) */
-import { ScrollableHorizontalGallery } from './ScrollableHorizontalGallery';
 import { rootLayoutStyle } from './styles/DefaultLayout.styles';
 import { videoGalleryLayoutGap } from './styles/Layout.styles';
 import { useOrganizedParticipants } from './utils/videoGalleryLayoutUtils';
-import { VideoGalleryResponsiveHorizontalGallery } from './VideoGalleryResponsiveHorizontalGallery';
+import { OverflowGallery } from './OverflowGallery';
 
 /**
  * Props for {@link DefaultLayout}.
@@ -36,10 +36,16 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
     styles,
     maxRemoteVideoStreams,
     parentWidth,
-    /* @conditional-compile-remove(pinned-participants) */ pinnedParticipantUserIds
+    /* @conditional-compile-remove(vertical-gallery) */
+    parentHeight,
+    /* @conditional-compile-remove(pinned-participants) */ pinnedParticipantUserIds,
+    /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryLayout = 'HorizontalBottom'
   } = props;
 
   const isNarrow = parentWidth ? isNarrowWidth(parentWidth) : false;
+
+  /* @conditional-compile-remove(vertical-gallery) */
+  const isShort = parentHeight ? isShortHeight(parentHeight) : false;
 
   const { gridParticipants, horizontalGalleryParticipants } = useOrganizedParticipants({
     remoteParticipants,
@@ -73,26 +79,40 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
     gridTiles.push(localVideoComponent);
   }
 
-  const horizontalGallery = useMemo(() => {
+  const overflowGallery = useMemo(() => {
     if (horizontalGalleryTiles.length === 0) {
       return null;
     }
-    /* @conditional-compile-remove(pinned-participants) */
-    if (isNarrow) {
-      return <ScrollableHorizontalGallery horizontalGalleryElements={horizontalGalleryTiles} />;
-    }
     return (
-      <VideoGalleryResponsiveHorizontalGallery
+      <OverflowGallery
         isNarrow={isNarrow}
-        shouldFloatLocalVideo={true}
-        horizontalGalleryElements={horizontalGalleryTiles}
-        styles={styles?.horizontalGallery}
+        /* @conditional-compile-remove(vertical-gallery) */
+        isShort={isShort}
+        shouldFloatLocalVideo={false}
+        overflowGalleryElements={horizontalGalleryTiles}
+        horizontalGalleryStyles={styles?.horizontalGallery}
+        /* @conditional-compile-remove(vertical-gallery) */
+        veritcalGalleryStyles={styles?.verticalGallery}
+        /* @conditional-compile-remove(pinned-participants) */
+        overflowGalleryLayout={overflowGalleryLayout}
       />
     );
-  }, [isNarrow, horizontalGalleryTiles, styles?.horizontalGallery]);
+  }, [
+    isNarrow,
+    /* @conditional-compile-remove(vertical-gallery) */ isShort,
+    horizontalGalleryTiles,
+    styles?.horizontalGallery,
+    /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryLayout,
+    /* @conditional-compile-remove(vertical-gallery) */ styles?.verticalGallery
+  ]);
 
   return (
-    <Stack horizontal={false} styles={rootLayoutStyle} tokens={videoGalleryLayoutGap}>
+    <Stack
+      /* @conditional-compile-remove(vertical-gallery) */
+      horizontal={overflowGalleryLayout === 'VerticalRight'}
+      styles={rootLayoutStyle}
+      tokens={videoGalleryLayoutGap}
+    >
       {screenShareComponent ? (
         screenShareComponent
       ) : (
@@ -100,7 +120,7 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
           {gridTiles}
         </GridLayout>
       )}
-      {horizontalGallery}
+      {overflowGallery}
     </Stack>
   );
 };

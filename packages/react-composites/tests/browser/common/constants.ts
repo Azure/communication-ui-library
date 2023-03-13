@@ -20,8 +20,8 @@ export const IDS = {
   videoGallery: 'video-gallery',
   videoTile: 'video-tile',
   videoTileMoreOptionsButton: 'video-tile-more-options-button',
-  horizontalGalleryLeftNavButton: 'horizontal-gallery-left-nav-button',
-  horizontalGalleryRightNavButton: 'horizontal-gallery-right-nav-button',
+  overflowGalleryLeftNavButton: 'overflow-gallery-left-nav-button',
+  overflowGalleryRightNavButton: 'overflow-gallery-right-nav-button',
   readReceiptTooltip: 'chat-composite-message-tooltip',
   fileTypeIcon: 'filetype-icon',
   deviceButton: 'calling-composite-devices-button',
@@ -34,5 +34,7 @@ export const IDS = {
   unsupportedEnvironmentLink: 'unsupported-environment-link',
   lobbyScreenTitle: 'lobbyScreenTitle',
   allowUnsupportedBrowserButton: 'allowUnsupportedBrowserButton',
-  configurationScreenDevicesButton: 'call-composite-local-device-settings-options-button'
+  configurationScreenDevicesButton: 'call-composite-local-device-settings-options-button',
+  verticalGalleryPageCounter: 'vertical-gallery-page-counter',
+  verticalGalleryVideoTile: 'vertical-gallery-video-tile'
 };
