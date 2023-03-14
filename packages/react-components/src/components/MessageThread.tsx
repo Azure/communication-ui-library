@@ -601,10 +601,10 @@ export type MessageThreadProps = {
   /**
    * Optional callback to send a message.
    *
-   * @param messageId - message id from chatClient
+   * @param content - message body to send
    *
    */
-  onSendMessage?: (messageId: string) => Promise<void>;
+  onSendMessage?: (content: string) => Promise<void>;
 
   /**
   /**
