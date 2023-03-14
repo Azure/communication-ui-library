@@ -278,8 +278,8 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                     required={true}
                     id={'alternateCallerId-input'}
                     className={outboundTextField}
-                    label={'ACS phone number for Caller ID'}
-                    placeholder={'Enter your ACS aquired phone number for PSTN call'}
+                    label={'Azure Communication Services phone number for caller ID'}
+                    placeholder={'Please enter phone number'}
                     onChange={(_, newValue) => setAlternateCallerId(newValue)}
                     onFocus={() => setAlternateCallerIdCalloutVisible(true)}
                   />
@@ -294,17 +294,16 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                       <Text block className={mergeStyles(alternateCallerIdCalloutTitleStyles)} variant="large">
                         AlternateCallerId
                       </Text>
-                      <Text block>
-                        Please provide a Azure Communication Services aquired phone number to use to make the call. This
-                        number will act as your caller id when no display name is provided. Must be from same ACS
-                        resource as the user making the call.
-                      </Text>
+                      <ul>
+                        <li>This number will act as your caller id when no display name is provided.</li>
+                        <li>Must be from same Azure Communication Services resource as the user making the call.</li>
+                      </ul>
                       <Link
                         className={mergeStyles(alternateCallerIdCalloutLinkStyles)}
                         target="_blank"
                         href="https://learn.microsoft.com/en-us/azure/communication-services/concepts/telephony/plan-solution"
                       >
-                        Learn more about phone numbers and ACS.
+                        Learn more about phone numbers and Azure Communication Services.
                       </Link>
                     </Callout>
                   )}
