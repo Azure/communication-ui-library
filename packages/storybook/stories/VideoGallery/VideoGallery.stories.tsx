@@ -80,39 +80,41 @@ const getDocs: () => JSX.Element = () => {
         will be prioritized. Furthermore, the VideoGallery is designed to limit the re-ordering when the
         `dominantSpeakers` prop is changed.
       </Description>
-      <Heading>Overflow Gallery</Heading>
+      <Heading>Overflow Layout</Heading>
       <DetailedBetaBanner></DetailedBetaBanner>
       <Description>
-        In the video gallery, participants who are not prioritized in the grid view are placed in an overflow gallery.
-        The overflow gallery can be placed on the bottom of the VideoGallery displaying participants horizontally by
-        assigning the overflowGalleryLayout to 'HorizontalBottom'. This is the default. Conversely, the overflow gallery
-        can placed on the right displaying participants vertically by assigning the overflowGalleryLayout to
+        In the VideoGallery, when there are participants who are not to be prioritized in the grid view, the
+        VideoGallery will enter a new layout called Overflow Layout. When in this mode, the VideoGallery will create a
+        sub-gallery that can be placed on the bottom of the VideoGallery displaying participants horizontally by
+        assigning the overflowGalleryLayout to 'HorizontalBottom'. This is the default. Conversely, this sub-gallery can
+        placed on the right displaying participants vertically by assigning the overflowGalleryLayout to
         'VerticalRight'.
       </Description>
       <Subheading>Horizontal Gallery</Subheading>
       <Description>
-        The remote participants not in the Grid Layout are placed in a OverflowGallery in the lower section. A gif
-        element is used to simulate a remote video stream to move the other remote participants to the Horizontal
-        Gallery in the example below. This is the default behavior for the VideoGallery, but can also be used by setting
-        the `overflowGalleryLayout` property to `HoriztonalBottom`.
+        The remote participants not in the Grid Layout are placed in a sub-gallery called the Horizontal Gallery in the
+        lower section. A gif element is used to simulate a remote video stream to move the other remote participants to
+        the Horizontal Gallery in the example below. This is the default behavior for the VideoGallery, but can also be
+        used by setting the `overflowGalleryLayout` property to 'HorizontalBottom'.
       </Description>
       <Canvas mdxSource={WithHorizontalGalleryExampleText}>
         <WithHorizontalGalleryExample />
       </Canvas>
       <Subheading>Vertical Gallery</Subheading>
       <Description>
-        The remote participants not in the Grid Layout are placed in a OverflowGallery in the lower section. A gif
-        element is used to simulate a remote video stream to move the other remote participants to the Vertical Gallery
-        in the example below. This is used by setting the `overflowGalleryLayout` property to `VerticalRight`.
+        The remote participants not in the Grid Layout are placed in a sub-gallery called the Vertical Gallery on the
+        right side. A gif element is used to simulate a remote video stream to move the other remote participants to the
+        Vertical Gallery in the example below. This is used by setting the `overflowGalleryLayout` property to
+        'VerticalRight'.
       </Description>
       <Canvas mdxSource={WithVerticalGalleryExampleText}>
         <WithVerticalGalleryExample />
       </Canvas>
       <Subheading>Best Practices</Subheading>
       <Description>
-        Overflow gallery is used best in different ways depending on the applications environment. The goal of
-        OverflowGallery is to help manage the vertical space of the applications VideoGallery. If your application runs
-        in a window or container that has a narrow aspect ratio, horiztontal gallery will be useful for maintaining the
+        The Overflow Layout is used best in different ways depending on the applications environment. The goal of The
+        Overflow Layout is to help manage the vertical space of the applications VideoGallery. If your application runs
+        in a window or container that has a narrow aspect ratio, horizontal gallery will be useful for maintaining the
         best aspect ratio of your video tiles in the grid view.
       </Description>
       <Stack horizontalAlign="center" horizontal={true} tokens={{ childrenGap: '0.5rem' }}>
