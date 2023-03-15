@@ -104,10 +104,13 @@ export interface CameraButtonStrings {
     cameraButtonSplitRoleDescription?: string;
     cameraMenuTitle: string;
     cameraMenuTooltip: string;
+    cameraPrimaryActionSplitButtonTitle?: string;
     offLabel: string;
     offSplitButtonAriaLabel?: string;
+    offSplitButtonPrimaryActionCamera?: string;
     onLabel: string;
     onSplitButtonAriaLabel?: string;
+    onSplitButtonPrimaryActionCamera?: string;
     tooltipDisabledContent?: string;
     tooltipOffContent?: string;
     tooltipOnContent?: string;
@@ -408,6 +411,10 @@ export const DEFAULT_COMPONENT_ICONS: {
     SendBoxSend: JSX.Element;
     SendBoxSendHovered: JSX.Element;
     VideoTileMicOff: JSX.Element;
+    SplitButtonPrimaryActionCameraOn: JSX.Element;
+    SplitButtonPrimaryActionCameraOff: JSX.Element;
+    SplitButtonPrimaryActionMicUnmuted: JSX.Element;
+    SplitButtonPrimaryActionMicMuted: JSX.Element;
 };
 
 // @internal
@@ -989,6 +996,7 @@ export interface MicrophoneButtonProps extends ControlBarButtonProps {
 
 // @public
 export interface MicrophoneButtonStrings {
+    micPrimaryActionSplitButtonTitle?: string;
     microphoneActionTurnedOffAnnouncement?: string;
     microphoneActionTurnedOnAnnouncement?: string;
     microphoneButtonSplitRoleDescription?: string;
@@ -996,8 +1004,10 @@ export interface MicrophoneButtonStrings {
     microphoneMenuTooltip?: string;
     offLabel: string;
     offSplitButtonAriaLabel?: string;
+    offSplitButtonMicrophonePrimaryAction?: string;
     onLabel: string;
     onSplitButtonAriaLabel?: string;
+    onSplitButtonMicrophonePrimaryAction?: string;
     speakerMenuTitle?: string;
     speakerMenuTooltip?: string;
     tooltipDisabledContent?: string;
