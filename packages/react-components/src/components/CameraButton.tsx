@@ -7,7 +7,12 @@ import { VideoStreamOptions } from '../types';
 import { ControlBarButton, ControlBarButtonProps } from './ControlBarButton';
 import { _HighContrastAwareIcon } from './HighContrastAwareIcon';
 
-import { IContextualMenuItemStyles, IContextualMenuStyles } from '@fluentui/react';
+import {
+  ContextualMenuItemType,
+  IContextualMenuItem,
+  IContextualMenuItemStyles,
+  IContextualMenuStyles
+} from '@fluentui/react';
 import { ControlBarButtonStyles } from './ControlBarButton';
 import { OptionsDevice, generateDefaultDeviceMenuProps } from './DevicesButton';
 import { Announcer } from './Announcer';
@@ -63,6 +68,18 @@ export interface CameraButtonStrings {
    * Camera action turned off string for announcer
    */
   cameraActionTurnedOffAnnouncement?: string;
+  /**
+   * Primary action for when the camera is turned off
+   */
+  offSplitButtonPrimaryActionCamera?: string;
+  /**
+   * Primary action for when the camera is on
+   */
+  onSplitButtonPrimaryActionCamera?: string;
+  /**
+   * Title for primary action section of split button
+   */
+  cameraPrimaryActionSplitButtonTitle?: string;
 }
 
 /**
@@ -184,6 +201,28 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
     }
   }, [cameraOn, localVideoViewOptions, onToggleCamera, toggleAnnouncerString]);
 
+  const splitButtonPrimaryAction: IContextualMenuItem = {
+    key: 'primaryAction',
+    title: 'toggle camera',
+    itemType: ContextualMenuItemType.Section,
+    sectionProps: {
+      topDivider: true,
+      items: [
+        {
+          key: 'cameraPrimaryAction',
+          text: props.checked ? strings.onSplitButtonPrimaryActionCamera : strings.offSplitButtonPrimaryActionCamera,
+          onClick: () => {
+            onToggleClick();
+          },
+          iconProps: {
+            iconName: props.checked ? 'SplitButtonPrimaryActionCameraOn' : 'SplitButtonPrimaryActionCameraOff',
+            styles: { root: { lineHeight: 0 } }
+          }
+        }
+      ]
+    }
+  };
+
   return (
     <>
       <Announcer announcementString={announcerString} ariaLive={'polite'} />
@@ -198,7 +237,11 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
         menuProps={
           props.menuProps ??
           (props.enableDeviceSelectionMenu
-            ? generateDefaultDeviceMenuProps({ ...props, styles: props.styles?.menuStyles }, strings)
+            ? generateDefaultDeviceMenuProps(
+                { ...props, styles: props.styles?.menuStyles },
+                strings,
+                splitButtonPrimaryAction
+              )
             : undefined)
         }
         menuIconProps={props.menuIconProps ?? !props.enableDeviceSelectionMenu ? { hidden: true } : undefined}
