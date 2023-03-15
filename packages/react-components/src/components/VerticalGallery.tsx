@@ -106,10 +106,15 @@ export const VerticalGallery = (props: VerticalGalleryProps): JSX.Element => {
   const lastPage = Math.ceil(numberOfChildren / childrenPerPage);
   const childrenArray = React.Children.toArray(children);
 
-  const indexesArray: number[][] = bucketize([...Array(numberOfChildren).keys()], childrenPerPage);
-  if (setTilesToRender) {
-    setTilesToRender(indexesArray[page - 1]);
-  }
+  const indexesArray: number[][] = useMemo(() => {
+    return bucketize([...Array(numberOfChildren).keys()], childrenPerPage);
+  }, [numberOfChildren, childrenPerPage]);
+
+  useEffect(() => {
+    if (setTilesToRender && indexesArray) {
+      setTilesToRender(indexesArray[page - 1]);
+    }
+  }, [indexesArray, setTilesToRender, page]);
 
   const paginatedChildren: React.ReactNode[][] = useMemo(() => {
     return bucketize(childrenArray, childrenPerPage);

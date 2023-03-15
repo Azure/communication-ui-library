@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { DefaultButton, Icon, IStyle, Stack, mergeStyles } from '@fluentui/react';
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useTheme } from '../theming';
 import { BaseCustomStyles } from '../types';
 import { rootStyle, childrenContainerStyle, leftRightButtonStyles } from './styles/HorizontalGallery.styles';
@@ -41,6 +41,10 @@ export interface HorizontalGalleryProps {
    * @defaultValue 5
    */
   childrenPerPage?: number;
+  /**
+   * helper function to choose which tiles to give video to.
+   */
+  setTilesToRender?: (indexes: number[]) => void;
 }
 
 /**
@@ -49,7 +53,7 @@ export interface HorizontalGalleryProps {
  * @returns
  */
 export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element => {
-  const { children, childrenPerPage = DEFAULT_CHILDREN_PER_PAGE, styles } = props;
+  const { children, childrenPerPage = DEFAULT_CHILDREN_PER_PAGE, styles, setTilesToRender } = props;
 
   const ids = useIdentifiers();
 
@@ -58,14 +62,19 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
   const numberOfChildren = React.Children.count(children);
   const lastPage = Math.ceil(numberOfChildren / childrenPerPage) - 1;
 
+  const indexesArray: number[][] = useMemo(() => {
+    return bucketize([...Array(numberOfChildren).keys()], childrenPerPage);
+  }, [numberOfChildren, childrenPerPage]);
+
+  useEffect(() => {
+    if (setTilesToRender && indexesArray) {
+      setTilesToRender(indexesArray[page]);
+    }
+  }, [indexesArray, setTilesToRender, page]);
+
   const paginatedChildren: React.ReactNode[][] = useMemo(() => {
     return bucketize(React.Children.toArray(children), childrenPerPage);
   }, [children, childrenPerPage]);
-
-  // If children per page is 0 or less return empty element
-  if (childrenPerPage <= 0) {
-    return <></>;
-  }
 
   const firstIndexOfCurrentPage = page * childrenPerPage;
   const clippedPage = firstIndexOfCurrentPage < numberOfChildren - 1 ? page : lastPage;
@@ -74,6 +83,11 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
   const showButtons = numberOfChildren > childrenPerPage;
   const disablePreviousButton = page === 0;
   const disableNextButton = page === lastPage;
+
+  // If children per page is 0 or less return empty element
+  if (childrenPerPage <= 0) {
+    return <></>;
+  }
 
   return (
     <Stack horizontal className={mergeStyles(rootStyle, props.styles?.root)}>

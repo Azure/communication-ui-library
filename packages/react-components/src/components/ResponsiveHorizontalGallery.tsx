@@ -18,8 +18,9 @@ export const ResponsiveHorizontalGallery = (props: {
   childWidthRem: number;
   gapWidthRem: number;
   buttonWidthRem?: number;
+  setTilesToRender?: (indexes: number[]) => void;
 }): JSX.Element => {
-  const { childWidthRem, gapWidthRem, buttonWidthRem = 0 } = props;
+  const { childWidthRem, gapWidthRem, buttonWidthRem = 0, setTilesToRender } = props;
   const containerRef = useRef<HTMLDivElement>(null);
   const containerWidth = _useContainerWidth(containerRef);
 
@@ -36,7 +37,11 @@ export const ResponsiveHorizontalGallery = (props: {
 
   return (
     <div ref={containerRef} className={mergeStyles(props.containerStyles)}>
-      <HorizontalGallery childrenPerPage={childrenPerPage} styles={props.horizontalGalleryStyles}>
+      <HorizontalGallery
+        childrenPerPage={childrenPerPage}
+        styles={props.horizontalGalleryStyles}
+        setTilesToRender={setTilesToRender}
+      >
         {props.children}
       </HorizontalGallery>
     </div>
@@ -87,5 +92,5 @@ const calculateChildrenPerPage = (args: {
   const childrenSpace = containerWidth - 2 * buttonWidth - 2 * gapWidth;
   // Now that we have childrenSpace width we can figure out how many children can fit in childrenSpace.
   // childrenSpace = n * childWidth + (n - 1) * gapWidth. Isolate n and take the floor.
-  return Math.floor((childrenSpace + gapWidth) / (childWidth + gapWidth));
+  return Math.max(Math.floor((childrenSpace + gapWidth) / (childWidth + gapWidth)), 1);
 };

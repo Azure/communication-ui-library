@@ -109,6 +109,7 @@ export const OverflowGallery = (props: {
     <ResponsiveHorizontalGallery
       key="responsive-horizontal-gallery"
       containerStyles={containerStyles}
+      setTilesToRender={setTilesToRender}
       horizontalGalleryStyles={galleryStyles}
       childWidthRem={
         isNarrow ? SMALL_HORIZONTAL_GALLERY_TILE_SIZE_REM.width : LARGE_HORIZONTAL_GALLERY_TILE_SIZE_REM.width
