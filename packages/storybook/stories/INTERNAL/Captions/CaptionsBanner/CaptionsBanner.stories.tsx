@@ -29,6 +29,11 @@ const CaptionsBannerStory = (): JSX.Element => {
     setCaptions([...captions, GenerateMockNewCaptionWithLongName()]);
   };
 
+  const extendLastCaption = (): void => {
+    captions[captions.length - 1].caption = `${captions[captions.length - 1].caption} hello`;
+    setCaptions([...captions]);
+  };
+
   const containerStyles = {
     width: '100%',
     height: '100%',
@@ -39,13 +44,10 @@ const CaptionsBannerStory = (): JSX.Element => {
     <Stack verticalFill tokens={{ childrenGap: '1rem' }} style={containerStyles}>
       <_CaptionsBanner captions={captions} />
 
-      <PrimaryButton text="Add new captions" onClick={addNewCaption} style={{ width: '100px' }} />
-      <PrimaryButton text="Add new short captions" onClick={addNewShortCaption} style={{ width: '100px' }} />
-      <PrimaryButton
-        text="Add new captions with long name"
-        onClick={addNewLongNameCaption}
-        style={{ width: '100px' }}
-      />
+      <PrimaryButton text="Add new captions" onClick={addNewCaption} />
+      <PrimaryButton text="Add new short captions" onClick={addNewShortCaption} />
+      <PrimaryButton text="Add new captions with long name" onClick={addNewLongNameCaption} />
+      <PrimaryButton text="Extend last caption" onClick={extendLastCaption} />
     </Stack>
   );
 };
