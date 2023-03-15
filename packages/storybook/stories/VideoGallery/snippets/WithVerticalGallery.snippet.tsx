@@ -16,7 +16,7 @@ const mockVideoElement = document.createElement('div');
 mockVideoElement.innerHTML = '<span />';
 mockVideoElement.style.width = decodeURIComponent('100%25');
 mockVideoElement.style.height = decodeURIComponent('100%25');
-mockVideoElement.style.background = 'url(https://media.giphy.com/media/QvMUP3619500qb6mtw/giphy.gif)';
+mockVideoElement.style.background = 'url(https://media.giphy.com/media/SwImQhtiNA7io/giphy.gif)';
 mockVideoElement.style.backgroundPosition = 'center';
 mockVideoElement.style.backgroundRepeat = 'no-repeat';
 
@@ -40,19 +40,47 @@ const MockRemoteParticipants = [
       isAvailable: true,
       renderElement: mockVideoElement
     }
+  },
+  {
+    userId: 'user6',
+    displayName: 'Tess'
+  },
+  {
+    userId: 'user7',
+    displayName: 'Joel'
+  },
+  {
+    userId: 'user8',
+    displayName: 'Tommy'
+  },
+  {
+    userId: 'user9',
+    displayName: 'Ellie'
+  },
+  {
+    userId: 'user10',
+    displayName: 'Dina'
+  },
+  {
+    userId: 'user11',
+    displayName: 'Maria'
+  },
+  {
+    userId: 'user12',
+    displayName: 'Abbey'
   }
 ];
 
 // This must be the only named export from this module, and must be named to match the storybook path suffix.
 // This ensures that storybook hoists the story instead of creating a folder with a single entry.
-export const WithHorizontalGalleryExample: () => JSX.Element = () => {
-  const containerStyle = { height: '50vh' };
+export const WithVerticalGalleryExample: () => JSX.Element = () => {
+  const containerStyle = { height: '40vh' };
   return (
     <Stack style={containerStyle}>
       <VideoGallery
         localParticipant={MockLocalParticipant}
         remoteParticipants={MockRemoteParticipants}
-        overflowGalleryLayout={'HorizontalBottom'}
+        overflowGalleryLayout={'VerticalRight'}
       />
     </Stack>
   );
