@@ -54,7 +54,7 @@ export const ResponsiveVerticalGallery = (props: ResponsiveVerticalGalleryProps)
     isShort: isShort ?? false
   });
   return (
-    <div ref={containerRef} className={mergeStyles(containerStyles)}>
+    <div data-ui-id="responsive-vertical-gallery" ref={containerRef} className={mergeStyles(containerStyles)}>
       <VerticalGallery childrenPerPage={childrenPerPage} styles={verticalGalleryStyles}>
         {children}
       </VerticalGallery>

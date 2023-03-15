@@ -36,6 +36,7 @@ export interface HermeticQueryArgs {
 export interface CommonQueryArgs {
   customCompositeOptions?: CallWithChatCompositeOptions;
   injectCustomButtons?: boolean;
+  rtl?: boolean;
 }
 
 /**
@@ -60,6 +61,7 @@ export function parseQueryArgs(): QueryArgs {
     mockCallAdapterState: params.mockCallAdapterState ? JSON.parse(params.mockCallAdapterState) : undefined,
 
     customCompositeOptions: params.customCompositeOptions ? JSON.parse(params.customCompositeOptions) : undefined,
-    injectCustomButtons: params.injectCustomButtons === 'true'
+    injectCustomButtons: params.injectCustomButtons === 'true',
+    rtl: Boolean(params.rtl)
   };
 }
