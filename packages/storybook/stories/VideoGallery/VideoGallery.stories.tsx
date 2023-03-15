@@ -24,6 +24,7 @@ import { PinnedParticipantsMobileExample } from './snippets/PinnedParticipantsMo
 import { ScreenSharingFromPresenterExample } from './snippets/ScreenSharingFromPresenter.snippet';
 import { ScreenSharingFromViewerExample } from './snippets/ScreenSharingFromViewer.snippet';
 import { WithHorizontalGalleryExample } from './snippets/WithHorizontalGallery.snippet';
+import { WithVerticalGalleryExample } from './snippets/WithVerticalGallery.snippet';
 
 const CustomAvatarVideoGalleryExampleText = require('!!raw-loader!./snippets/CustomAvatar.snippet.tsx').default;
 const CustomStyleVideoGalleryExampleText = require('!!raw-loader!./snippets/CustomStyle.snippet.tsx').default;
@@ -42,6 +43,7 @@ const ScreenSharingFromPresenterExampleText =
 const ScreenSharingFromViewerExampleText =
   require('!!raw-loader!./snippets/ScreenSharingFromViewer.snippet.tsx').default;
 const WithHorizontalGalleryExampleText = require('!!raw-loader!./snippets/WithHorizontalGallery.snippet.tsx').default;
+const WithVerticalGalleryExampleText = require('!!raw-loader!./snippets/WithVerticalGallery.snippet.tsx').default;
 
 const importStatement = `import { VideoGallery } from '@azure/communication-react';`;
 
@@ -78,16 +80,103 @@ const getDocs: () => JSX.Element = () => {
         will be prioritized. Furthermore, the VideoGallery is designed to limit the re-ordering when the
         `dominantSpeakers` prop is changed.
       </Description>
-
-      <Heading>Horizontal Gallery</Heading>
+      <Heading>Overflow Layout</Heading>
+      <DetailedBetaBanner></DetailedBetaBanner>
       <Description>
-        The remote participants not in the Grid Layout are placed in a Horizontal Gallery in the lower section. A gif
-        element is used to simulate a remote video stream to move the other remote participants to the Horizontal
-        Gallery in the example below.
+        In the VideoGallery, when there are participants who are not to be prioritized in the grid view, the
+        VideoGallery will enter a new layout called Overflow Layout. When in this mode, the VideoGallery will create a
+        sub-gallery that can be placed on the bottom of the VideoGallery displaying participants horizontally by
+        assigning the overflowGalleryLayout to 'HorizontalBottom'. This is the default. Conversely, this sub-gallery can
+        placed on the right displaying participants vertically by assigning the overflowGalleryLayout to
+        'VerticalRight'.
+      </Description>
+      <Subheading>Horizontal Gallery</Subheading>
+      <Description>
+        The remote participants not in the Grid Layout are placed in a sub-gallery called the Horizontal Gallery in the
+        lower section. A gif element is used to simulate a remote video stream to move the other remote participants to
+        the Horizontal Gallery in the example below. This is the default behavior for the VideoGallery, but can also be
+        used by setting the `overflowGalleryLayout` property to 'HorizontalBottom'.
       </Description>
       <Canvas mdxSource={WithHorizontalGalleryExampleText}>
         <WithHorizontalGalleryExample />
       </Canvas>
+      <Subheading>Vertical Gallery</Subheading>
+      <Description>
+        The remote participants not in the Grid Layout are placed in a sub-gallery called the Vertical Gallery on the
+        right side. A gif element is used to simulate a remote video stream to move the other remote participants to the
+        Vertical Gallery in the example below. This is used by setting the `overflowGalleryLayout` property to
+        'VerticalRight'.
+      </Description>
+      <Canvas mdxSource={WithVerticalGalleryExampleText}>
+        <WithVerticalGalleryExample />
+      </Canvas>
+      <Subheading>Best Practices</Subheading>
+      <Description>
+        The Overflow Layout is used best in different ways depending on the applications environment. The goal of The
+        Overflow Layout is to help manage the vertical space of the applications VideoGallery. If your application runs
+        in a window or container that has a narrow aspect ratio, horizontal gallery will be useful for maintaining the
+        best aspect ratio of your video tiles in the grid view.
+      </Description>
+      <Stack horizontalAlign="center" horizontal={true} tokens={{ childrenGap: '0.5rem' }}>
+        <Stack horizontalAlign="center">
+          <Image
+            style={{ width: '100%', height: 'auto' }}
+            src="images/narrow-horizontal-gallery.png"
+            alt="Fill frame in VideoGallery"
+          />
+          <Description>✅ Narrow video tile experience with horizontal gallery</Description>
+        </Stack>
+        <Stack horizontalAlign="center">
+          <Image
+            style={{ width: '100%', height: 'auto' }}
+            src="images/narrow-vertical-gallery.png"
+            alt="Fit to frame menu item in VideoGallery"
+          />
+          <Description>❌ Narrow video tile experience with vertical gallery</Description>
+        </Stack>
+      </Stack>
+      <Stack horizontal={true} tokens={{ childrenGap: '0.5rem' }}>
+        <Stack horizontalAlign="center">
+          <Image
+            style={{ width: '100%', height: 'auto' }}
+            src="images/short-gallery.png"
+            alt="Fill frame in VideoGallery"
+          />
+          <Description>❌ Wide video tile experience with horizontal gallery</Description>
+        </Stack>
+        <Stack horizontalAlign="center">
+          <Image
+            style={{ width: '100%', height: 'auto' }}
+            src="images/short-gallery-vertical.png"
+            alt="Fit to frame menu item in VideoGallery"
+          />
+          <Description>✅ Wide video tile experience with vertical gallery</Description>
+        </Stack>
+      </Stack>
+      <Description>
+        The vertical gallery can be most useful when the application is running a very wide environment. Like for
+        example a mobile device in landscape. The wide aspect ratio of the device is useful for when a participant is
+        watching a screen share on a phone so in this situation the Vertical Gallery can help the stream be more
+        visible.
+      </Description>
+      <Stack horizontal={true} tokens={{ childrenGap: '0.5rem' }}>
+        <Stack horizontalAlign="center">
+          <Image
+            style={{ width: '100%', height: 'auto' }}
+            src="images/short-screen-share.png"
+            alt="Fill to frame in VideoGallery"
+          />
+          <Description>❌ Wide screen share appearence horiztonal gallery</Description>
+        </Stack>
+        <Stack horizontalAlign="center">
+          <Image
+            style={{ width: '100%', height: 'auto' }}
+            src="images/short-screen-share-vertical.png"
+            alt="Fill frame menu item in VideoGallery"
+          />
+          <Description>✅ Wide screen share appearence vertical gallery</Description>
+        </Stack>
+      </Stack>
 
       <Heading>Local Video Tile</Heading>
       <Description>
