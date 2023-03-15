@@ -74,6 +74,8 @@ export interface VerticalGalleryProps {
   childrenPerPage: number;
   /** Styles to customize the vertical gallery */
   styles?: VerticalGalleryStyles;
+  /** helper function to choose which tiles to give video to. */
+  setTilesToRender?: (indexes: number[]) => void;
 }
 
 interface VerticalGalleryControlBarProps {
@@ -92,7 +94,7 @@ interface VerticalGalleryControlBarProps {
  * @beta
  */
 export const VerticalGallery = (props: VerticalGalleryProps): JSX.Element => {
-  const { children, styles, childrenPerPage } = props;
+  const { children, styles, childrenPerPage, setTilesToRender } = props;
 
   const [page, setPage] = useState(1);
   const [buttonState, setButtonState] = useState<{ previous: boolean; next: boolean }>({ previous: true, next: true });
@@ -102,9 +104,15 @@ export const VerticalGallery = (props: VerticalGalleryProps): JSX.Element => {
 
   const numberOfChildren = React.Children.count(children);
   const lastPage = Math.ceil(numberOfChildren / childrenPerPage);
+  const childrenArray = React.Children.toArray(children);
+
+  const indexesArray: number[][] = bucketize([...Array(numberOfChildren).keys()], childrenPerPage);
+  if (setTilesToRender) {
+    setTilesToRender(indexesArray[page - 1]);
+  }
 
   const paginatedChildren: React.ReactNode[][] = useMemo(() => {
-    return bucketize(React.Children.toArray(children), childrenPerPage);
+    return bucketize(childrenArray, childrenPerPage);
   }, [children, childrenPerPage]);
 
   const firstIndexOfCurrentPage = (page - 1) * childrenPerPage;

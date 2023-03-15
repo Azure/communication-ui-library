@@ -29,6 +29,8 @@ export interface ResponsiveVerticalGalleryProps {
   controlBarHeightRem?: number;
   /** container is shorter than 480 px. */
   isShort?: boolean;
+  /** Function to set which tiles to give video to in the children. */
+  setTilesToRender?: (indexes: number[]) => void;
 }
 
 /**
@@ -39,7 +41,15 @@ export interface ResponsiveVerticalGalleryProps {
  * @beta
  */
 export const ResponsiveVerticalGallery = (props: ResponsiveVerticalGalleryProps): JSX.Element => {
-  const { children, containerStyles, verticalGalleryStyles, gapHeightRem, controlBarHeightRem, isShort } = props;
+  const {
+    children,
+    containerStyles,
+    verticalGalleryStyles,
+    gapHeightRem,
+    controlBarHeightRem,
+    isShort,
+    setTilesToRender
+  } = props;
   const containerRef = useRef<HTMLDivElement>(null);
   const containerHeight = _useContainerHeight(containerRef);
 
@@ -55,7 +65,11 @@ export const ResponsiveVerticalGallery = (props: ResponsiveVerticalGalleryProps)
   });
   return (
     <div ref={containerRef} className={mergeStyles(containerStyles)}>
-      <VerticalGallery childrenPerPage={childrenPerPage} styles={verticalGalleryStyles}>
+      <VerticalGallery
+        childrenPerPage={childrenPerPage}
+        styles={verticalGalleryStyles}
+        setTilesToRender={setTilesToRender}
+      >
         {children}
       </VerticalGallery>
     </div>
