@@ -88,7 +88,7 @@ export const errorBarSelector: ErrorBarSelector = createSelector(
     if (diagnostics?.media.latest.microphonePermissionDenied?.value === true && isMacOS()) {
       activeErrorMessages.push({ type: 'callMacOsMicrophoneAccessDenied' });
     } else if (diagnostics?.media.latest.microphonePermissionDenied?.value === true) {
-      activeErrorMessages.push({ type: 'cameraFrozenForRemoteParticipants' });
+      activeErrorMessages.push({ type: 'callMicrophoneAccessDenied' });
     }
 
     const microphoneMuteUnexpectedlyDiagnostic =
@@ -119,7 +119,7 @@ export const errorBarSelector: ErrorBarSelector = createSelector(
       activeErrorMessages.push({ type: 'callCameraAccessDenied' });
     } else {
       if (diagnostics?.media.latest.cameraFreeze?.value === true) {
-        activeErrorMessages.push({ type: 'callCameraAlreadyInUse' });
+        activeErrorMessages.push({ type: 'cameraFrozenForRemoteParticipants' });
       }
     }
 
