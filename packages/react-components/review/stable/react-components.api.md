@@ -119,18 +119,23 @@ export interface CameraButtonStyles extends ControlBarButtonStyles {
     menuStyles?: Partial<CameraButtonContextualMenuStyles>;
 }
 
+// Warning: (ae-internal-missing-underscore) The name "CaptionInfo" should be prefixed with an underscore because the declaration is marked as @internal
+//
 // @internal
-export const _Caption: (props: _CaptionProps) => JSX.Element;
+export type CaptionInfo = {
+    displayName: string;
+    caption: string;
+    userId?: string;
+};
 
 // @internal
-export interface _CaptionProps {
+export const _CaptionsBanner: (props: _CaptionsBannerProps) => JSX.Element;
+
+// @internal
+export interface _CaptionsBannerProps {
     // (undocumented)
-    caption: string;
-    // (undocumented)
-    displayName: string;
+    captions: CaptionInfo[];
     onRenderAvatar?: OnRenderAvatarCallback;
-    // (undocumented)
-    userId?: string;
 }
 
 // @public
