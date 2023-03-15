@@ -35,7 +35,7 @@ export const ResponsiveHorizontalGallery = (props: {
   });
 
   return (
-    <div ref={containerRef} className={mergeStyles(props.containerStyles)}>
+    <div data-ui-id="responsive-horizontal-gallery" ref={containerRef} className={mergeStyles(props.containerStyles)}>
       <HorizontalGallery childrenPerPage={childrenPerPage} styles={props.horizontalGalleryStyles}>
         {props.children}
       </HorizontalGallery>
