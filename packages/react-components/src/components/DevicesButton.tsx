@@ -233,6 +233,7 @@ export interface DeviceMenuStyles extends IContextualMenuStyles {
 export const generateDefaultDeviceMenuProps = (
   props: DeviceMenuProps,
   strings: DeviceMenuStrings,
+  primaryActionItem?: IContextualMenuItem,
   isSelectCamAllowed = true,
   isSelectMicAllowed = true
 ): { items: IContextualMenuItem[] } | undefined => {
@@ -268,29 +269,39 @@ export const generateDefaultDeviceMenuProps = (
 
   if (cameras && selectedCamera && onSelectCamera && isSelectCamAllowed) {
     defaultMenuProps.items.push({
-      key: 'sectionCamera',
-      title: strings.cameraMenuTooltip,
+      key: 'cameras',
       itemType: ContextualMenuItemType.Section,
       sectionProps: {
         title: strings.cameraMenuTitle,
-        items: cameras.map((camera) => ({
-          key: camera.id,
-          text: camera.name,
-          title: camera.name,
-          iconProps: { iconName: 'OptionsCamera', styles: { root: { lineHeight: 0 } } },
-          itemProps: {
-            styles: menuItemStyles
-          },
-          canCheck: true,
-          isChecked: camera.id === selectedCamera?.id,
-          onClick: () => {
-            if (camera.id !== selectedCamera?.id) {
-              onSelectCamera(camera);
-            }
+        items: [
+          {
+            key: 'sectionCamera',
+            title: strings.cameraMenuTooltip,
+            subMenuProps: {
+              items: cameras.map((camera) => ({
+                key: camera.id,
+                text: camera.name,
+                title: camera.name,
+                itemProps: {
+                  styles: menuItemStyles
+                },
+                canCheck: true,
+                isChecked: camera.id === selectedCamera?.id,
+                onClick: () => {
+                  if (camera.id !== selectedCamera?.id) {
+                    onSelectCamera(camera);
+                  }
+                }
+              }))
+            },
+            text: selectedCamera.name
           }
-        }))
+        ]
       }
     });
+    if (primaryActionItem) {
+      defaultMenuProps.items.push(primaryActionItem);
+    }
   }
 
   if (microphones && selectedMicrophone && onSelectMicrophone && isSelectMicAllowed) {
@@ -298,60 +309,74 @@ export const generateDefaultDeviceMenuProps = (
     const speakersAvailable = speakers && speakers.length > 0;
     const key = speakersAvailable ? 'sectionMicrophone' : 'sectionAudioDevice';
     const title = speakersAvailable ? strings.microphoneMenuTooltip : strings.audioDeviceMenuTooltip;
-    const sectionPropsTitle = speakersAvailable ? strings.microphoneMenuTitle : strings.audioDeviceMenuTitle;
-    const iconName = speakersAvailable ? 'OptionsMic' : 'OptionsSpeaker';
 
     defaultMenuProps.items.push({
-      key: key,
-      title: title,
+      key: 'microphones',
       itemType: ContextualMenuItemType.Section,
       sectionProps: {
-        title: sectionPropsTitle,
-        items: microphones.map((microphone) => ({
-          key: microphone.id,
-          text: microphone.name,
-          title: microphone.name,
-          iconProps: { iconName: iconName, styles: { root: { lineHeight: 0 } } },
-          itemProps: {
-            styles: menuItemStyles
-          },
-          canCheck: true,
-          isChecked: microphone.id === selectedMicrophone?.id,
-          onClick: () => {
-            if (microphone.id !== selectedMicrophone?.id) {
-              onSelectMicrophone(microphone);
-            }
+        title: strings.microphoneMenuTitle,
+        items: [
+          {
+            key: key,
+            title: title,
+            subMenuProps: {
+              items: microphones.map((microphone) => ({
+                key: microphone.id,
+                text: microphone.name,
+                title: microphone.name,
+                itemProps: {
+                  styles: menuItemStyles
+                },
+                canCheck: true,
+                isChecked: microphone.id === selectedMicrophone?.id,
+                onClick: () => {
+                  if (microphone.id !== selectedMicrophone?.id) {
+                    onSelectMicrophone(microphone);
+                  }
+                }
+              }))
+            },
+            text: selectedMicrophone.name
           }
-        }))
+        ]
       }
     });
   }
 
   if (speakers && selectedSpeaker && onSelectSpeaker) {
     defaultMenuProps.items.push({
-      key: 'sectionSpeaker',
-      title: strings.speakerMenuTooltip,
+      key: 'speakers',
       itemType: ContextualMenuItemType.Section,
       sectionProps: {
         title: strings.speakerMenuTitle,
-        items: speakers.map((speaker) => ({
-          key: speaker.id,
-          text: speaker.name,
-          title: speaker.name,
-          iconProps: { iconName: 'OptionsSpeaker', styles: { root: { lineHeight: 0 } } },
-          itemProps: {
-            styles: menuItemStyles
-          },
-          canCheck: true,
-          isChecked: speaker.id === selectedSpeaker?.id,
-          onClick: () => {
-            if (speaker.id !== selectedSpeaker?.id) {
-              onSelectSpeaker(speaker);
-            }
+        items: [
+          {
+            key: 'sectionSpeaker',
+            subMenuProps: {
+              items: speakers.map((speaker) => ({
+                key: speaker.id,
+                text: speaker.name,
+                title: speaker.name,
+                itemProps: {
+                  styles: menuItemStyles
+                },
+                canCheck: true,
+                isChecked: speaker.id === selectedSpeaker?.id,
+                onClick: () => {
+                  if (speaker.id !== selectedSpeaker?.id) {
+                    onSelectSpeaker(speaker);
+                  }
+                }
+              }))
+            },
+            text: selectedSpeaker.name
           }
-        }))
+        ]
       }
     });
+  }
+  if (microphones && selectedMicrophone && onSelectMicrophone && isSelectMicAllowed && primaryActionItem) {
+    defaultMenuProps.items.push(primaryActionItem);
   }
 
   if (defaultMenuProps.items.length === 0) {
