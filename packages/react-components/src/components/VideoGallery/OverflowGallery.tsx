@@ -99,7 +99,12 @@ export const OverflowGallery = (props: {
 
   /* @conditional-compile-remove(pinned-participants) */
   if (isNarrow) {
-    return <ScrollableHorizontalGallery horizontalGalleryElements={overflowGalleryElements} />;
+    return (
+      <ScrollableHorizontalGallery
+        key="scrollable-horizontal-gallery"
+        horizontalGalleryElements={overflowGalleryElements}
+      />
+    );
   }
 
   return (
