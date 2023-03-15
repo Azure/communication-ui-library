@@ -24,9 +24,14 @@ type ChatMessageComponentProps = {
       attachedFilesMetadata?: FileMetadata[];
     }
   ) => Promise<void>;
+  /**
+   * Callback to delete a message. Also called before resending a message that failed to send.
+   * @param messageId ID of the message to delete
+   */
   onDeleteMessage?: (messageId: string) => Promise<void>;
   /**
-   * Optional callback called when message is sent
+   * Callback to send a message
+   * @param content The message content to send
    */
   onSendMessage?: (content: string) => Promise<void>;
   strings: MessageThreadStrings;
