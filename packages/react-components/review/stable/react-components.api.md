@@ -910,7 +910,7 @@ export type MessageThreadProps = {
     onRenderMessage?: (messageProps: MessageProps, messageRenderer?: MessageRenderer) => JSX.Element;
     onUpdateMessage?: UpdateMessageCallback;
     onDeleteMessage?: (messageId: string) => Promise<void>;
-    onSendMessage?: (messageId: string) => Promise<void>;
+    onSendMessage?: (content: string) => Promise<void>;
     disableEditing?: boolean;
     strings?: Partial<MessageThreadStrings>;
 };
@@ -1430,6 +1430,30 @@ export interface VerticalGalleryStrings {
 export interface VerticalGalleryStyles extends BaseCustomStyles {
     children?: IStyle;
     controlBar?: VerticalGalleryControlBarStyles;
+}
+
+// @internal
+export type _VideoBackgroundEffectChoiceOption = _VideoEffectsItemProps;
+
+// @internal
+export const _VideoBackgroundEffectsPicker: (props: _VideoBackgroundEffectsPickerProps) => JSX.Element;
+
+// @internal
+export interface _VideoBackgroundEffectsPickerProps {
+    defaultSelectedEffectKey?: string;
+    itemsPerRow?: 'wrap' | number;
+    label?: string;
+    onChange?: (effectKey: string) => void;
+    options: _VideoBackgroundEffectChoiceOption[];
+    selectedEffectKey?: string;
+    styles?: _VideoBackgroundEffectsPickerStyles;
+}
+
+// @internal
+export interface _VideoBackgroundEffectsPickerStyles {
+    label?: IStyle;
+    root?: IStyle;
+    rowRoot?: IStyle;
 }
 
 // @internal
