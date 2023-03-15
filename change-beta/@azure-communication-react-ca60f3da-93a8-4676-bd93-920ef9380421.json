@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Add error string for when your remote video feed is frozen for others in the call.",
+  "packageName": "@azure/communication-react",
+  "email": "94866715+dmceachernmsft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

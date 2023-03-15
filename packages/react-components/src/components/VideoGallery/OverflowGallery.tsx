@@ -106,6 +106,7 @@ export const OverflowGallery = (props: {
       <ScrollableHorizontalGallery
         horizontalGalleryElements={overflowGalleryElements}
         setTilesToRender={setTilesToRender}
+        key="scrollable-horizontal-gallery"
       />
     );
   }

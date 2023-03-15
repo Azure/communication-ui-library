@@ -49,7 +49,11 @@ export const WithHorizontalGalleryExample: () => JSX.Element = () => {
   const containerStyle = { height: '50vh' };
   return (
     <Stack style={containerStyle}>
-      <VideoGallery localParticipant={MockLocalParticipant} remoteParticipants={MockRemoteParticipants} />
+      <VideoGallery
+        localParticipant={MockLocalParticipant}
+        remoteParticipants={MockRemoteParticipants}
+        overflowGalleryLayout={'HorizontalBottom'}
+      />
     </Stack>
   );
 };

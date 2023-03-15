@@ -152,6 +152,7 @@ export const messageBarType = (errorType: ErrorType): MessageBarType => {
     case 'callMacOsCameraAccessDenied':
     case 'callMacOsScreenShareAccessDenied':
     case 'startScreenSharingGeneric':
+    case 'cameraFrozenForRemoteParticipants':
       return MessageBarType.warning;
     default:
       return MessageBarType.error;
