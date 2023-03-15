@@ -181,4 +181,4 @@ As well you will need to also use the flags `... -c call` and `... -c chat` to r
 
 - **react-use-draggable-scroll.js doesn't exist**
   
-  You need run `rush update -p` under `/packages/react-composites`
+  You need run `rush update -p`
