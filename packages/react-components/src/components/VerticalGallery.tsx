@@ -118,7 +118,7 @@ export const VerticalGallery = (props: VerticalGalleryProps): JSX.Element => {
 
   const paginatedChildren: React.ReactNode[][] = useMemo(() => {
     return bucketize(childrenArray, childrenPerPage);
-  }, [children, childrenPerPage]);
+  }, [childrenArray, childrenPerPage]);
 
   const firstIndexOfCurrentPage = (page - 1) * childrenPerPage;
   const clippedPage = firstIndexOfCurrentPage < numberOfChildren - 1 ? page : lastPage;
