@@ -1,11 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 import { IPersona, Persona, Stack, PersonaSize, Text, mergeStyles } from '@fluentui/react';
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { _pxToRem } from '@internal/acs-ui-common';
 import { _FileUploadCardsStrings } from './FileUploadCards';
 import { OnRenderAvatarCallback } from '../types';
-import { pxToRem } from '@fluentui/react-northstar';
+import { Ref } from '@fluentui/react-northstar';
 
 /**
  * @internal
@@ -33,29 +33,21 @@ export interface _CaptionsBannerProps {
 
 /**
  * @internal
- * A component for displaying a CaptionsBanner with user icon, displayName and CaptionsBanner text.
+ * A component for displaying a CaptionsBanner with user icon, displayName and captions text.
  */
 export const _CaptionsBanner = (props: _CaptionsBannerProps): JSX.Element => {
   const { captions, onRenderAvatar } = props;
-  const containerClassName = mergeStyles({
+
+  const gridContainerClassName = mergeStyles({
     overflowY: 'scroll',
     overflowX: 'hidden',
     width: '100%',
     height: _pxToRem(60),
-    // this line makes sure when container is loaded, scroll bar is sitting at the bottom
-    transform:
-      'rotateX(180deg); -moz-transform:rotateX(180deg); /* Mozilla */ -webkit-transform:rotateX(180deg); /* Safari and Chrome */ -ms-transform:rotateX(180deg); /* IE 9+ */ -o-transform:rotateX(180deg); /* Opera */'
-  });
-
-  const gridContainerClassName = mergeStyles({
     display: 'grid',
     gridTemplateColumns: '20% 80%',
     alignItems: 'stretch',
     columnGap: _pxToRem(16),
-    padding: _pxToRem(8),
-    // this line makes sure when container is loaded, scroll bar is sitting at the bottom
-    transform:
-      'rotateX(180deg); -moz-transform:rotateX(180deg); /* Mozilla */ -webkit-transform:rotateX(180deg); /* Safari and Chrome */ -ms-transform:rotateX(180deg); /* IE 9+ */ -o-transform:rotateX(180deg); /* Opera */'
+    padding: _pxToRem(8)
   });
 
   const displayNameClassName = mergeStyles({
@@ -70,8 +62,19 @@ export const _CaptionsBanner = (props: _CaptionsBannerProps): JSX.Element => {
     lineHeight: _pxToRem(30)
   });
 
+  const captionsScrollDivRef = useRef<HTMLElement>(null);
+  const scrollToBottom = (): void => {
+    if (captionsScrollDivRef.current) {
+      captionsScrollDivRef.current.scrollTop = captionsScrollDivRef.current.scrollHeight;
+    }
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [captions]);
+
   return (
-    <div className={containerClassName}>
+    <Ref innerRef={captionsScrollDivRef}>
       <div data-is-focusable={true} className={gridContainerClassName}>
         {captions.map((caption) => {
           const personaOptions: IPersona = {
@@ -109,6 +112,6 @@ export const _CaptionsBanner = (props: _CaptionsBannerProps): JSX.Element => {
           );
         })}
       </div>
-    </div>
+    </Ref>
   );
 };

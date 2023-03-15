@@ -1,12 +1,12 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import { PrimaryButton, Stack } from '@fluentui/react';
 import { CaptionInfo, _CaptionsBanner } from '@internal/react-components';
 import { Meta } from '@storybook/react/types-6-0';
 import React, { useState } from 'react';
 import { COMPONENT_FOLDER_PREFIX } from '../../../constants';
 import { hiddenControl } from '../../../controlsUtils';
-import { PrimaryButton, Stack } from '@fluentui/react';
 import {
   GenerateMockNewCaption,
   GenerateMockNewCaptions,
@@ -61,6 +61,7 @@ export default {
   title: `${COMPONENT_FOLDER_PREFIX}/Internal/CaptionsBanners/CaptionsBanner`,
   component: _CaptionsBanner,
   argTypes: {
-    captions: hiddenControl
+    captions: hiddenControl,
+    onRenderAvatar: hiddenControl
   }
 } as Meta;
