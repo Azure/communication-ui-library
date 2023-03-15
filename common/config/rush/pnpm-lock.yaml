@@ -7087,7 +7087,7 @@ packages:
   /browserslist/4.20.4:
     dependencies:
       caniuse-lite: 1.0.30001466
-      electron-to-chromium: 1.4.329
+      electron-to-chromium: 1.4.330
       escalade: 3.1.1
       node-releases: 2.0.10
       picocolors: 1.0.0
@@ -7100,7 +7100,7 @@ packages:
   /browserslist/4.21.5:
     dependencies:
       caniuse-lite: 1.0.30001466
-      electron-to-chromium: 1.4.329
+      electron-to-chromium: 1.4.330
       node-releases: 2.0.10
       update-browserslist-db: 1.0.10_browserslist@4.21.5
     dev: false
@@ -8825,10 +8825,10 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-rC+QVNMJWv+MtPgkt0y+0rVEIdbtxVADApW9JXrUVlzHetgcyczP/E7DJmWJ4fJCZF2cPcBk0laWO9ZHMG3DmQ==
-  /electron-to-chromium/1.4.329:
+  /electron-to-chromium/1.4.330:
     dev: false
     resolution:
-      integrity: sha512-dcwPzNUG4+reo5z+wHnrl2eZMu4kz+nLQEeepxLEDTLDC7Mi7AVTM4NXWct1TZyu3G4oQgygaAfbByaBtPqw2Q==
+      integrity: sha512-PqyefhybrVdjAJ45HaPLtuVaehiSw7C3ya0aad+rvmV53IVyXmYRk3pwIOb2TxTDTnmgQdn46NjMMaysx79/6Q==
   /elliptic/6.5.4:
     dependencies:
       bn.js: 4.12.0
