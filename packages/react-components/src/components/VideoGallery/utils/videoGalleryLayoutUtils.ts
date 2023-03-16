@@ -29,7 +29,7 @@ export interface OrganizedParticipantsResult {
 
 const DEFAULT_MAX_REMOTE_VIDEOSTREAMS = 4;
 
-const DEFAULT_MAX_AUDIO_DOMINANT_SPEAKERS = 6;
+const DEFAULT_MAX_HORIZONTAL_GALLERY_DOMINANT_SPEAKERS = 6;
 
 const _useOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedParticipantsResult => {
   const visibleGridParticipants = useRef<VideoGalleryRemoteParticipant[]>([]);
@@ -37,18 +37,20 @@ const _useOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedP
 
   const {
     remoteParticipants = [],
-    dominantSpeakers,
+    dominantSpeakers = [],
     maxRemoteVideoStreams = DEFAULT_MAX_REMOTE_VIDEOSTREAMS,
-    maxHorizontalGalleryDominantSpeakers: maxAudioDominantSpeakers = DEFAULT_MAX_AUDIO_DOMINANT_SPEAKERS,
+    maxHorizontalGalleryDominantSpeakers = DEFAULT_MAX_HORIZONTAL_GALLERY_DOMINANT_SPEAKERS,
     isScreenShareActive = false,
     pinnedParticipantUserIds = []
   } = props;
+
+  const videoParticipants = remoteParticipants.filter((p) => p.videoStream?.isAvailable);
 
   visibleGridParticipants.current =
     pinnedParticipantUserIds.length > 0 || isScreenShareActive
       ? []
       : smartDominantSpeakerParticipants({
-          participants: remoteParticipants.filter((p) => p.videoStream?.isAvailable),
+          participants: videoParticipants,
           dominantSpeakers,
           lastVisibleParticipants: visibleGridParticipants.current,
           maxDominantSpeakers: maxRemoteVideoStreams
@@ -62,17 +64,17 @@ const _useOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedP
   const callingParticipantsSet = new Set(callingParticipants.map((p) => p.userId));
 
   visibleHorizontalGalleryParticipants.current = smartDominantSpeakerParticipants({
-    participants:
-      remoteParticipants?.filter(
-        (p) =>
-          !visibleGridParticipantsSet.has(p.userId) &&
-          /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ !callingParticipantsSet.has(
-            p.userId
-          )
-      ) ?? [],
-    dominantSpeakers,
+    participants: remoteParticipants.filter(
+      (p) =>
+        !visibleGridParticipantsSet.has(p.userId) &&
+        /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ !callingParticipantsSet.has(
+          p.userId
+        )
+    ),
+    //appending video participants in the end in case there are not enough dominant speakers
+    dominantSpeakers: dominantSpeakers.concat(videoParticipants.map((p) => p.userId)),
     lastVisibleParticipants: visibleHorizontalGalleryParticipants.current,
-    maxDominantSpeakers: maxAudioDominantSpeakers
+    maxDominantSpeakers: maxHorizontalGalleryDominantSpeakers
   });
 
   const getGridParticipants = useCallback((): VideoGalleryRemoteParticipant[] => {
