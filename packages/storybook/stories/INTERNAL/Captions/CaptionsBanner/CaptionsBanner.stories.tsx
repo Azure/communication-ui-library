@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { PrimaryButton, Stack } from '@fluentui/react';
-import { CaptionInfo, _CaptionsBanner } from '@internal/react-components';
+import { _CaptionsInfo, _CaptionsBanner } from '@internal/react-components';
 import { Meta } from '@storybook/react/types-6-0';
 import React, { useState } from 'react';
 import { COMPONENT_FOLDER_PREFIX } from '../../../constants';
@@ -15,7 +15,7 @@ import {
 } from './mockCaptions';
 
 const CaptionsBannerStory = (): JSX.Element => {
-  const [captions, setCaptions] = useState<CaptionInfo[]>(GenerateMockNewCaptions());
+  const [captions, setCaptions] = useState<_CaptionsInfo[]>(GenerateMockNewCaptions());
 
   const addNewCaption = (): void => {
     setCaptions([...captions, GenerateMockNewCaption()]);
@@ -30,7 +30,7 @@ const CaptionsBannerStory = (): JSX.Element => {
   };
 
   const extendLastCaption = (): void => {
-    captions[captions.length - 1].caption = `${captions[captions.length - 1].caption} hello`;
+    captions[captions.length - 1].captionText = `${captions[captions.length - 1].captionText} hello`;
     setCaptions([...captions]);
   };
 
@@ -58,7 +58,7 @@ export const CaptionsBanner = CaptionsBannerStory.bind({});
 
 export default {
   id: `${COMPONENT_FOLDER_PREFIX}-internal-CaptionsBanner`,
-  title: `${COMPONENT_FOLDER_PREFIX}/Internal/CaptionsBanners/CaptionsBanner`,
+  title: `${COMPONENT_FOLDER_PREFIX}/Internal/CaptionsBanner/CaptionsBanner`,
   component: _CaptionsBanner,
   argTypes: {
     captions: hiddenControl,
