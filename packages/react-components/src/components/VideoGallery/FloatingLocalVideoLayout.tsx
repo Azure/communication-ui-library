@@ -3,7 +3,7 @@
 
 import { LayerHost, mergeStyles, Stack } from '@fluentui/react';
 import { useId } from '@fluentui/react-hooks';
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useTheme } from '../../theming';
 import { GridLayout } from '../GridLayout';
 import { isNarrowWidth } from '../utils/responsive';
@@ -100,13 +100,6 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
 
   const [indexesToRender, setIndexesToRender] = useState<number[]>([0]);
 
-  const updateIndexes = useCallback(
-    (indexes: number[]): void => {
-      setIndexesToRender(indexes);
-    },
-    [setIndexesToRender]
-  );
-
   const horizontalGalleryTiles = horizontalGalleryParticipants.map((p, i) => {
     return onRenderRemoteParticipant(
       p,
@@ -173,7 +166,7 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
       <OverflowGallery
         /* @conditional-compile-remove(vertical-gallery) */
         isShort={isShort}
-        onFetchTilesToRender={updateIndexes}
+        onFetchTilesToRender={setIndexesToRender}
         isNarrow={isNarrow}
         shouldFloatLocalVideo={true}
         overflowGalleryElements={horizontalGalleryTiles}
@@ -189,7 +182,7 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
     /* @conditional-compile-remove(vertical-gallery) */ isShort,
     horizontalGalleryTiles,
     styles?.horizontalGallery,
-    updateIndexes,
+    setIndexesToRender,
     /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryLayout,
     /* @conditional-compile-remove(vertical-gallery) */ styles?.verticalGallery
   ]);

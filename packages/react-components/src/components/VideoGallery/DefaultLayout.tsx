@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { Stack } from '@fluentui/react';
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { GridLayout } from '../GridLayout';
 import { isNarrowWidth } from '../utils/responsive';
 /* @conditional-compile-remove(vertical-gallery) */
@@ -68,13 +68,6 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
 
   const [indexesToRender, setIndexesToRender] = useState<number[]>([0]);
 
-  const updateIndexes = useCallback(
-    (indexes: number[]): void => {
-      setIndexesToRender(indexes);
-    },
-    [setIndexesToRender]
-  );
-
   const horizontalGalleryTiles = horizontalGalleryParticipants.map((p, i) => {
     return onRenderRemoteParticipant(
       p,
@@ -104,7 +97,7 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
         veritcalGalleryStyles={styles?.verticalGallery}
         /* @conditional-compile-remove(pinned-participants) */
         overflowGalleryLayout={overflowGalleryLayout}
-        onFetchTilesToRender={updateIndexes}
+        onFetchTilesToRender={setIndexesToRender}
       />
     );
   }, [
@@ -112,7 +105,7 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
     /* @conditional-compile-remove(vertical-gallery) */ isShort,
     horizontalGalleryTiles,
     styles?.horizontalGallery,
-    updateIndexes,
+    setIndexesToRender,
     /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryLayout,
     /* @conditional-compile-remove(vertical-gallery) */ styles?.verticalGallery
   ]);
