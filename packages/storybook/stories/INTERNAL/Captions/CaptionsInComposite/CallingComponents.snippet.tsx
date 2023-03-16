@@ -20,12 +20,14 @@ export const CallingComponents = (): JSX.Element => {
   const screenShareProps = usePropsFor(ScreenShareButton);
   const endCallProps = usePropsFor(EndCallButton);
 
+  const [captions, setCaptions] = useState<_CaptionsInfo[]>(GenerateMockNewCaptions());
+
   const call = useCall();
 
   if (call?.state === 'Disconnected') {
     return <CallEnded />;
   }
-  const [captions, setCaptions] = useState<_CaptionsInfo[]>(GenerateMockNewCaptions());
+
   const addNewCaption = (): void => {
     setCaptions([...captions, GenerateMockNewCaption()]);
   };

@@ -1,10 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Meta } from '@storybook/react/types-6-0';
-import { v1 as createGUID } from 'uuid';
-import { COMPONENT_FOLDER_PREFIX } from '../../../constants';
-import { ArgsFrom, controlsToAdd } from '../../../controlsUtils';
+import { Call, CallAgent } from '@azure/communication-calling';
 import { AzureCommunicationTokenCredential } from '@azure/communication-common';
 import {
   FluentThemeProvider,
@@ -14,11 +11,14 @@ import {
   createStatefulCallClient,
   StatefulCallClient
 } from '@azure/communication-react';
-import React, { useEffect, useState, useMemo } from 'react';
-import { Call, CallAgent } from '@azure/communication-calling';
-import CallingComponents from './CallingComponents.snippet';
-import { Description, Title } from '@storybook/addon-docs';
 import { Stack } from '@fluentui/react';
+import { Description, Title } from '@storybook/addon-docs';
+import { Meta } from '@storybook/react/types-6-0';
+import React, { useEffect, useState, useMemo } from 'react';
+import { v1 as createGUID } from 'uuid';
+import { COMPONENT_FOLDER_PREFIX } from '../../../constants';
+import { ArgsFrom, controlsToAdd } from '../../../controlsUtils';
+import CallingComponents from './CallingComponents.snippet';
 
 const storyControls = {
   userId: controlsToAdd.userId,
@@ -58,7 +58,7 @@ const CaptionsInCompositeStory = (args: ArgsFrom<typeof storyControls>): JSX.Ele
     if (containerProps) {
       const tokenCredential = new AzureCommunicationTokenCredential(containerProps?.token);
       if (callAgent === undefined && statefulCallClient && containerProps?.displayName) {
-        const createUserAgent = async () => {
+        const createUserAgent = async (): Promise<void> => {
           setCallAgent(
             await statefulCallClient.createCallAgent(tokenCredential, {
               displayName: containerProps?.displayName
