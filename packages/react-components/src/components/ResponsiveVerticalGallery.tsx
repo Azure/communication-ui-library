@@ -29,6 +29,8 @@ export interface ResponsiveVerticalGalleryProps {
   controlBarHeightRem?: number;
   /** container is shorter than 480 px. */
   isShort?: boolean;
+  /** event to listen for children per page changes */
+  onChildrenPerPageChange?: (childrenPerPage: number) => void;
 }
 
 /**
@@ -39,7 +41,15 @@ export interface ResponsiveVerticalGalleryProps {
  * @beta
  */
 export const ResponsiveVerticalGallery = (props: ResponsiveVerticalGalleryProps): JSX.Element => {
-  const { children, containerStyles, verticalGalleryStyles, gapHeightRem, controlBarHeightRem, isShort } = props;
+  const {
+    children,
+    containerStyles,
+    verticalGalleryStyles,
+    gapHeightRem,
+    controlBarHeightRem,
+    isShort,
+    onChildrenPerPageChange
+  } = props;
   const containerRef = useRef<HTMLDivElement>(null);
   const containerHeight = _useContainerHeight(containerRef);
 
@@ -53,6 +63,7 @@ export const ResponsiveVerticalGallery = (props: ResponsiveVerticalGalleryProps)
     controlBarHeight: controlBarHeightRem ?? 2,
     isShort: isShort ?? false
   });
+  onChildrenPerPageChange?.(childrenPerPage);
   return (
     <div data-ui-id="responsive-vertical-gallery" ref={containerRef} className={mergeStyles(containerStyles)}>
       <VerticalGallery childrenPerPage={childrenPerPage} styles={verticalGalleryStyles}>

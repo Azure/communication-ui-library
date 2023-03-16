@@ -3,7 +3,7 @@
 
 import { LayerHost, mergeStyles, Stack } from '@fluentui/react';
 import { useId } from '@fluentui/react-hooks';
-import React, { useMemo } from 'react';
+import React, { useMemo, useRef } from 'react';
 import { useTheme } from '../../theming';
 import { GridLayout } from '../GridLayout';
 import { isNarrowWidth } from '../utils/responsive';
@@ -73,11 +73,13 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
   /* @conditional-compile-remove(vertical-gallery) */
   const isShort = parentHeight ? isShortHeight(parentHeight) : false;
 
+  const childrenPerPage = useRef(0);
   const { gridParticipants, horizontalGalleryParticipants } = useOrganizedParticipants({
     remoteParticipants,
     dominantSpeakers,
     maxRemoteVideoStreams,
     isScreenShareActive: !!screenShareComponent,
+    maxHorizontalGalleryDominantSpeakers: childrenPerPage.current,
     /* @conditional-compile-remove(pinned-participants) */ pinnedParticipantUserIds
   });
 
@@ -172,6 +174,9 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
         veritcalGalleryStyles={styles?.verticalGallery}
         /* @conditional-compile-remove(vertical-gallery) */
         overflowGalleryLayout={overflowGalleryLayout}
+        onChildrenPerPageChange={(n: number) => {
+          childrenPerPage.current = n;
+        }}
       />
     );
   }, [

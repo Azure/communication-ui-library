@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { Stack } from '@fluentui/react';
-import React, { useMemo } from 'react';
+import React, { useMemo, useRef } from 'react';
 import { GridLayout } from '../GridLayout';
 import { isNarrowWidth } from '../utils/responsive';
 /* @conditional-compile-remove(vertical-gallery) */
@@ -47,11 +47,13 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
   /* @conditional-compile-remove(vertical-gallery) */
   const isShort = parentHeight ? isShortHeight(parentHeight) : false;
 
+  const childrenPerPage = useRef(0);
   const { gridParticipants, horizontalGalleryParticipants } = useOrganizedParticipants({
     remoteParticipants,
     dominantSpeakers,
     maxRemoteVideoStreams,
     isScreenShareActive: !!screenShareComponent,
+    maxHorizontalGalleryDominantSpeakers: childrenPerPage.current,
     /* @conditional-compile-remove(pinned-participants) */ pinnedParticipantUserIds
   });
 
@@ -95,6 +97,9 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
         veritcalGalleryStyles={styles?.verticalGallery}
         /* @conditional-compile-remove(pinned-participants) */
         overflowGalleryLayout={overflowGalleryLayout}
+        onChildrenPerPageChange={(n: number) => {
+          childrenPerPage.current = n;
+        }}
       />
     );
   }, [

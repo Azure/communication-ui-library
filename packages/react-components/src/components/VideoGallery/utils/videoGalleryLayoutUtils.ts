@@ -13,9 +13,9 @@ export interface OrganizedParticipantsArgs {
   remoteParticipants: VideoGalleryRemoteParticipant[];
   dominantSpeakers?: string[];
   maxRemoteVideoStreams?: number;
-  maxAudioDominantSpeakers?: number;
+  maxHorizontalGalleryDominantSpeakers?: number;
   isScreenShareActive?: boolean;
-  /* @conditional-compile-remove(pinned-participants) */ pinnedParticipantUserIds?: string[];
+  pinnedParticipantUserIds?: string[];
 }
 
 /**
@@ -32,42 +32,46 @@ const DEFAULT_MAX_REMOTE_VIDEOSTREAMS = 4;
 const DEFAULT_MAX_AUDIO_DOMINANT_SPEAKERS = 6;
 
 const _useOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedParticipantsResult => {
-  const visibleVideoParticipants = useRef<VideoGalleryRemoteParticipant[]>([]);
-  const visibleAudioParticipants = useRef<VideoGalleryRemoteParticipant[]>([]);
+  const visibleGridParticipants = useRef<VideoGalleryRemoteParticipant[]>([]);
+  const visibleHorizontalGalleryParticipants = useRef<VideoGalleryRemoteParticipant[]>([]);
 
   const {
-    remoteParticipants,
+    remoteParticipants = [],
     dominantSpeakers,
     maxRemoteVideoStreams = DEFAULT_MAX_REMOTE_VIDEOSTREAMS,
-    maxAudioDominantSpeakers = DEFAULT_MAX_AUDIO_DOMINANT_SPEAKERS,
-    isScreenShareActive = false
+    maxHorizontalGalleryDominantSpeakers: maxAudioDominantSpeakers = DEFAULT_MAX_AUDIO_DOMINANT_SPEAKERS,
+    isScreenShareActive = false,
+    pinnedParticipantUserIds = []
   } = props;
 
-  visibleVideoParticipants.current = smartDominantSpeakerParticipants({
-    participants: remoteParticipants?.filter((p) => p.videoStream?.isAvailable) ?? [],
-    dominantSpeakers,
-    lastVisibleParticipants: visibleVideoParticipants.current,
-    maxDominantSpeakers: maxRemoteVideoStreams
-  }).slice(0, maxRemoteVideoStreams);
+  visibleGridParticipants.current =
+    pinnedParticipantUserIds.length > 0 || isScreenShareActive
+      ? []
+      : smartDominantSpeakerParticipants({
+          participants: remoteParticipants.filter((p) => p.videoStream?.isAvailable),
+          dominantSpeakers,
+          lastVisibleParticipants: visibleGridParticipants.current,
+          maxDominantSpeakers: maxRemoteVideoStreams
+        }).slice(0, maxRemoteVideoStreams);
 
-  const visibleVideoParticipantsSet = new Set(visibleVideoParticipants.current.map((p) => p.userId));
+  const visibleGridParticipantsSet = new Set(visibleGridParticipants.current.map((p) => p.userId));
 
   /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
   const callingParticipants = remoteParticipants.filter((p) => p.state === ('Connecting' || 'Ringing'));
   /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
   const callingParticipantsSet = new Set(callingParticipants.map((p) => p.userId));
 
-  visibleAudioParticipants.current = smartDominantSpeakerParticipants({
+  visibleHorizontalGalleryParticipants.current = smartDominantSpeakerParticipants({
     participants:
       remoteParticipants?.filter(
         (p) =>
-          !visibleVideoParticipantsSet.has(p.userId) &&
+          !visibleGridParticipantsSet.has(p.userId) &&
           /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ !callingParticipantsSet.has(
             p.userId
           )
       ) ?? [],
     dominantSpeakers,
-    lastVisibleParticipants: visibleAudioParticipants.current,
+    lastVisibleParticipants: visibleHorizontalGalleryParticipants.current,
     maxDominantSpeakers: maxAudioDominantSpeakers
   });
 
@@ -76,12 +80,12 @@ const _useOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedP
       return [];
     }
     /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
-    return visibleVideoParticipants.current.length > 0
-      ? visibleVideoParticipants.current
-      : visibleAudioParticipants.current.concat(callingParticipants);
-    return visibleVideoParticipants.current.length > 0
-      ? visibleVideoParticipants.current
-      : visibleAudioParticipants.current;
+    return visibleGridParticipants.current.length > 0
+      ? visibleGridParticipants.current
+      : visibleHorizontalGalleryParticipants.current.concat(callingParticipants);
+    return visibleGridParticipants.current.length > 0
+      ? visibleGridParticipants.current
+      : visibleHorizontalGalleryParticipants.current;
   }, [
     /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ callingParticipants,
     isScreenShareActive
@@ -93,16 +97,18 @@ const _useOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedP
     if (isScreenShareActive) {
       // If screen sharing is active, assign video and audio participants as horizontal gallery participants
       /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
-      return visibleVideoParticipants.current.concat(visibleAudioParticipants.current.concat(callingParticipants));
-      return visibleVideoParticipants.current.concat(visibleAudioParticipants.current);
+      return visibleGridParticipants.current.concat(
+        visibleHorizontalGalleryParticipants.current.concat(callingParticipants)
+      );
+      return visibleGridParticipants.current.concat(visibleHorizontalGalleryParticipants.current);
     } else {
       // If screen sharing is not active, then assign all video tiles as grid tiles.
       // If there are no video tiles, then assign audio tiles as grid tiles.
       /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
-      return visibleVideoParticipants.current.length > 0
-        ? visibleAudioParticipants.current.concat(callingParticipants)
+      return visibleGridParticipants.current.length > 0
+        ? visibleHorizontalGalleryParticipants.current.concat(callingParticipants)
         : [];
-      return visibleVideoParticipants.current.length > 0 ? visibleAudioParticipants.current : [];
+      return visibleGridParticipants.current.length > 0 ? visibleHorizontalGalleryParticipants.current : [];
     }
   }, [
     /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ callingParticipants,
@@ -124,18 +130,12 @@ const _useOrganizedParticipantsWithPinnedParticipants = (
     return map;
   }, {});
 
-  // count pinned participants with video
-  let pinnedParticipantsWithVideoOnCount = 0;
-
   // get pinned participants in the same order of pinned participant user ids using remoteParticipantMap
   const pinnedParticipants: VideoGalleryRemoteParticipant[] = [];
   props.pinnedParticipantUserIds?.forEach((id) => {
     const pinnedParticipant = remoteParticipantMap[id];
     if (pinnedParticipant) {
       pinnedParticipants.push(pinnedParticipant);
-      if (pinnedParticipant.videoStream?.isAvailable) {
-        pinnedParticipantsWithVideoOnCount++;
-      }
     }
   });
 
@@ -146,11 +146,7 @@ const _useOrganizedParticipantsWithPinnedParticipants = (
   const useOrganizedParticipantsProps = {
     ...props,
     // if there are pinned participants then we should only consider unpinned participants
-    remoteParticipants: unpinnedParticipants,
-    // if there is a maximum of remote video streams we need to subtract pinned participants with video
-    maxRemoteVideoStreams: props.maxRemoteVideoStreams
-      ? props.maxRemoteVideoStreams - pinnedParticipantsWithVideoOnCount
-      : undefined
+    remoteParticipants: unpinnedParticipants
   };
 
   const useOrganizedParticipantsResult = _useOrganizedParticipants(useOrganizedParticipantsProps);

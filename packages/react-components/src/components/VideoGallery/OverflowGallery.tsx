@@ -42,6 +42,7 @@ export const OverflowGallery = (props: {
   veritcalGalleryStyles?: VerticalGalleryStyles;
   /* @conditional-compile-remove(vertical-gallery) */
   overflowGalleryLayout?: OverflowGalleryLayout;
+  onChildrenPerPageChange?: (childrenPerPage: number) => void;
 }): JSX.Element => {
   const {
     shouldFloatLocalVideo = false,
@@ -51,7 +52,8 @@ export const OverflowGallery = (props: {
     overflowGalleryElements,
     horizontalGalleryStyles,
     /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryLayout = 'HorizontalBottom',
-    /* @conditional-compile-remove(vertical-gallery) */ veritcalGalleryStyles
+    /* @conditional-compile-remove(vertical-gallery) */ veritcalGalleryStyles,
+    onChildrenPerPageChange
   } = props;
 
   const containerStyles = useMemo(() => {
@@ -91,6 +93,7 @@ export const OverflowGallery = (props: {
         controlBarHeightRem={HORIZONTAL_GALLERY_BUTTON_WIDTH}
         gapHeightRem={HORIZONTAL_GALLERY_GAP}
         isShort={isShort}
+        onChildrenPerPageChange={onChildrenPerPageChange}
       >
         {overflowGalleryElements}
       </ResponsiveVerticalGallery>
@@ -99,6 +102,9 @@ export const OverflowGallery = (props: {
 
   /* @conditional-compile-remove(pinned-participants) */
   if (isNarrow) {
+    // There are no pages for ScrollableHorizontalGallery so we will approximate the first 3 remote
+    // participant tiles are visible
+    onChildrenPerPageChange?.(3);
     return (
       <ScrollableHorizontalGallery
         key="scrollable-horizontal-gallery"
@@ -117,6 +123,7 @@ export const OverflowGallery = (props: {
       }
       buttonWidthRem={HORIZONTAL_GALLERY_BUTTON_WIDTH}
       gapWidthRem={HORIZONTAL_GALLERY_GAP}
+      onChildrenPerPageChange={onChildrenPerPageChange}
     >
       {overflowGalleryElements}
     </ResponsiveHorizontalGallery>
