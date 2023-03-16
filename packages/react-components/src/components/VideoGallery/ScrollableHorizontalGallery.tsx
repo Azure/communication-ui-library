@@ -15,16 +15,16 @@ import {
  */
 export const ScrollableHorizontalGallery = (props: {
   horizontalGalleryElements?: JSX.Element[];
-  setTilesToRender?: (indexes: number[]) => void;
+  onFetchTilesToRender?: (indexes: number[]) => void;
 }): JSX.Element => {
-  const { horizontalGalleryElements, setTilesToRender } = props;
+  const { horizontalGalleryElements, onFetchTilesToRender } = props;
 
   useEffect(() => {
     const indexesArray = [...Array(horizontalGalleryElements?.length).keys()];
-    if (setTilesToRender && indexesArray) {
-      setTilesToRender(indexesArray);
+    if (onFetchTilesToRender && indexesArray) {
+      onFetchTilesToRender(indexesArray);
     }
-  }, [setTilesToRender, horizontalGalleryElements?.length]);
+  }, [onFetchTilesToRender, horizontalGalleryElements?.length]);
 
   const ref = useRef<HTMLDivElement>() as React.MutableRefObject<HTMLInputElement>;
   const { events: dragabbleEvents } = useDraggable(ref);

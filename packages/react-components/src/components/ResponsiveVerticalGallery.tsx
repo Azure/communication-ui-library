@@ -30,7 +30,7 @@ export interface ResponsiveVerticalGalleryProps {
   /** container is shorter than 480 px. */
   isShort?: boolean;
   /** Function to set which tiles to give video to in the children. */
-  setTilesToRender?: (indexes: number[]) => void;
+  onFetchTilesToRender?: (indexes: number[]) => void;
 }
 
 /**
@@ -48,7 +48,7 @@ export const ResponsiveVerticalGallery = (props: ResponsiveVerticalGalleryProps)
     gapHeightRem,
     controlBarHeightRem,
     isShort,
-    setTilesToRender
+    onFetchTilesToRender
   } = props;
   const containerRef = useRef<HTMLDivElement>(null);
   const containerHeight = _useContainerHeight(containerRef);
@@ -68,7 +68,7 @@ export const ResponsiveVerticalGallery = (props: ResponsiveVerticalGalleryProps)
       <VerticalGallery
         childrenPerPage={childrenPerPage}
         styles={verticalGalleryStyles}
-        setTilesToRender={setTilesToRender}
+        onFetchTilesToRender={onFetchTilesToRender}
       >
         {children}
       </VerticalGallery>

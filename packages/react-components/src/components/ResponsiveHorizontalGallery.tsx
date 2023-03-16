@@ -18,9 +18,9 @@ export const ResponsiveHorizontalGallery = (props: {
   childWidthRem: number;
   gapWidthRem: number;
   buttonWidthRem?: number;
-  setTilesToRender?: (indexes: number[]) => void;
+  onFetchTilesToRender?: (indexes: number[]) => void;
 }): JSX.Element => {
-  const { childWidthRem, gapWidthRem, buttonWidthRem = 0, setTilesToRender } = props;
+  const { childWidthRem, gapWidthRem, buttonWidthRem = 0, onFetchTilesToRender } = props;
   const containerRef = useRef<HTMLDivElement>(null);
   const containerWidth = _useContainerWidth(containerRef);
 
@@ -40,7 +40,7 @@ export const ResponsiveHorizontalGallery = (props: {
       <HorizontalGallery
         childrenPerPage={childrenPerPage}
         styles={props.horizontalGalleryStyles}
-        setTilesToRender={setTilesToRender}
+        onFetchTilesToRender={onFetchTilesToRender}
       >
         {props.children}
       </HorizontalGallery>

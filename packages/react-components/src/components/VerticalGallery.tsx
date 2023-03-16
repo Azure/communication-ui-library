@@ -75,7 +75,7 @@ export interface VerticalGalleryProps {
   /** Styles to customize the vertical gallery */
   styles?: VerticalGalleryStyles;
   /** helper function to choose which tiles to give video to. */
-  setTilesToRender?: (indexes: number[]) => void;
+  onFetchTilesToRender?: (indexes: number[]) => void;
 }
 
 interface VerticalGalleryControlBarProps {
@@ -94,7 +94,7 @@ interface VerticalGalleryControlBarProps {
  * @beta
  */
 export const VerticalGallery = (props: VerticalGalleryProps): JSX.Element => {
-  const { children, styles, childrenPerPage, setTilesToRender } = props;
+  const { children, styles, childrenPerPage, onFetchTilesToRender } = props;
 
   const [page, setPage] = useState(1);
   const [buttonState, setButtonState] = useState<{ previous: boolean; next: boolean }>({ previous: true, next: true });
@@ -104,25 +104,24 @@ export const VerticalGallery = (props: VerticalGalleryProps): JSX.Element => {
 
   const numberOfChildren = React.Children.count(children);
   const lastPage = Math.ceil(numberOfChildren / childrenPerPage);
-  const childrenArray = React.Children.toArray(children);
 
   const indexesArray: number[][] = useMemo(() => {
     return bucketize([...Array(numberOfChildren).keys()], childrenPerPage);
   }, [numberOfChildren, childrenPerPage]);
 
   useEffect(() => {
-    if (setTilesToRender && indexesArray) {
-      setTilesToRender(indexesArray[page - 1]);
+    if (onFetchTilesToRender && indexesArray) {
+      onFetchTilesToRender(indexesArray[page - 1]);
     }
-  }, [indexesArray, setTilesToRender, page]);
-
-  const paginatedChildren: React.ReactNode[][] = useMemo(() => {
-    return bucketize(childrenArray, childrenPerPage);
-  }, [childrenArray, childrenPerPage]);
+  }, [indexesArray, onFetchTilesToRender, page]);
 
   const firstIndexOfCurrentPage = (page - 1) * childrenPerPage;
   const clippedPage = firstIndexOfCurrentPage < numberOfChildren - 1 ? page : lastPage;
-  const childrenOnCurrentPage = paginatedChildren[clippedPage - 1];
+  const childrenOnCurrentPage = useMemo(() => {
+    return indexesArray[clippedPage - 1].map((index) => {
+      return React.Children.toArray(children)[index];
+    });
+  }, [indexesArray, clippedPage, children]);
 
   const showButtons = numberOfChildren > childrenPerPage;
 

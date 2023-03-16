@@ -104,7 +104,7 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
         veritcalGalleryStyles={styles?.verticalGallery}
         /* @conditional-compile-remove(pinned-participants) */
         overflowGalleryLayout={overflowGalleryLayout}
-        setTilesToRender={updateIndexes}
+        onFetchTilesToRender={updateIndexes}
       />
     );
   }, [

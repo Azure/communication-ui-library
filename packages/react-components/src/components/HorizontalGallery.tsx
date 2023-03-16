@@ -44,7 +44,7 @@ export interface HorizontalGalleryProps {
   /**
    * helper function to choose which tiles to give video to.
    */
-  setTilesToRender?: (indexes: number[]) => void;
+  onFetchTilesToRender?: (indexes: number[]) => void;
 }
 
 /**
@@ -53,7 +53,7 @@ export interface HorizontalGalleryProps {
  * @returns
  */
 export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element => {
-  const { children, childrenPerPage = DEFAULT_CHILDREN_PER_PAGE, styles, setTilesToRender } = props;
+  const { children, childrenPerPage = DEFAULT_CHILDREN_PER_PAGE, styles, onFetchTilesToRender } = props;
 
   const ids = useIdentifiers();
 
@@ -67,18 +67,19 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
   }, [numberOfChildren, childrenPerPage]);
 
   useEffect(() => {
-    if (setTilesToRender && indexesArray) {
-      setTilesToRender(indexesArray[page]);
+    if (onFetchTilesToRender && indexesArray) {
+      onFetchTilesToRender(indexesArray[page]);
     }
-  }, [indexesArray, setTilesToRender, page]);
-
-  const paginatedChildren: React.ReactNode[][] = useMemo(() => {
-    return bucketize(React.Children.toArray(children), childrenPerPage);
-  }, [children, childrenPerPage]);
+  }, [indexesArray, onFetchTilesToRender, page]);
 
   const firstIndexOfCurrentPage = page * childrenPerPage;
   const clippedPage = firstIndexOfCurrentPage < numberOfChildren - 1 ? page : lastPage;
-  const childrenOnCurrentPage = paginatedChildren[clippedPage];
+
+  const childrenOnCurrentPage = useMemo(() => {
+    return indexesArray[clippedPage].map((index) => {
+      return React.Children.toArray(children)[index];
+    });
+  }, [indexesArray, clippedPage, children]);
 
   const showButtons = numberOfChildren > childrenPerPage;
   const disablePreviousButton = page === 0;
