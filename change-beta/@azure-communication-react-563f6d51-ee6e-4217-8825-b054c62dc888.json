@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Internal storybook page for captions inside composite",
+  "packageName": "@azure/communication-react",
+  "email": "carolinecao@microsoft.com",
+  "dependentChangeType": "none"
+}
