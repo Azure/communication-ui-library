@@ -209,24 +209,22 @@ export interface CameraSitePermissionsProps extends CommonSitePermissionsProps {
 // @beta
 export type CameraSitePermissionsStrings = SitePermissionsStrings;
 
-// Warning: (ae-internal-missing-underscore) The name "CaptionInfo" should be prefixed with an underscore because the declaration is marked as @internal
-//
-// @internal
-export type CaptionInfo = {
-    displayName: string;
-    caption: string;
-    userId?: string;
-};
-
 // @internal
 export const _CaptionsBanner: (props: _CaptionsBannerProps) => JSX.Element;
 
 // @internal
 export interface _CaptionsBannerProps {
     // (undocumented)
-    captions: CaptionInfo[];
+    captions: _CaptionsInfo[];
     onRenderAvatar?: OnRenderAvatarCallback;
 }
+
+// @internal
+export type _CaptionsInfo = {
+    displayName: string;
+    captionText: string;
+    userId?: string;
+};
 
 // @public
 export interface ChatMessage extends MessageCommon {
