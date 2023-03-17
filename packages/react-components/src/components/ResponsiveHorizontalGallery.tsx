@@ -24,9 +24,18 @@ export const ResponsiveHorizontalGallery = (props: {
   const containerRef = useRef<HTMLDivElement>(null);
   const containerWidth = _useContainerWidth(containerRef);
 
-  const leftPadding = containerRef.current ? parseFloat(getComputedStyle(containerRef.current).paddingLeft) : 0;
-  const rightPadding = containerRef.current ? parseFloat(getComputedStyle(containerRef.current).paddingRight) : 0;
-
+  const leftPadding = containerRef.current
+    ? !isNaN(parseFloat(getComputedStyle(containerRef.current).paddingLeft))
+      ? parseFloat(getComputedStyle(containerRef.current).paddingLeft)
+      : 0
+    : 0;
+  const rightPadding = containerRef.current
+    ? !isNaN(parseFloat(getComputedStyle(containerRef.current).paddingRight))
+      ? parseFloat(getComputedStyle(containerRef.current).paddingRight)
+      : 0
+    : 0;
+  console.log(leftPadding);
+  console.log(rightPadding);
   const childrenPerPage = calculateChildrenPerPage({
     numberOfChildren: React.Children.count(props.children),
     containerWidth: (containerWidth ?? 0) - leftPadding - rightPadding,

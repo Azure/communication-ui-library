@@ -53,8 +53,16 @@ export const ResponsiveVerticalGallery = (props: ResponsiveVerticalGalleryProps)
   const containerRef = useRef<HTMLDivElement>(null);
   const containerHeight = _useContainerHeight(containerRef);
 
-  const topPadding = containerRef.current ? parseFloat(getComputedStyle(containerRef.current).paddingTop) : 0;
-  const bottomPadding = containerRef.current ? parseFloat(getComputedStyle(containerRef.current).paddingBottom) : 0;
+  const topPadding = containerRef.current
+    ? !isNaN(parseFloat(getComputedStyle(containerRef.current).paddingTop))
+      ? parseFloat(getComputedStyle(containerRef.current).paddingTop)
+      : 0
+    : 0;
+  const bottomPadding = containerRef.current
+    ? !isNaN(parseFloat(getComputedStyle(containerRef.current).paddingBottom))
+      ? parseFloat(getComputedStyle(containerRef.current).paddingBottom)
+      : 0
+    : 0;
 
   const childrenPerPage = calculateChildrenPerPage({
     numberOfChildren: React.Children.count(children),
