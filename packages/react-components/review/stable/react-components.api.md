@@ -104,10 +104,13 @@ export interface CameraButtonStrings {
     cameraButtonSplitRoleDescription?: string;
     cameraMenuTitle: string;
     cameraMenuTooltip: string;
+    cameraPrimaryActionSplitButtonTitle?: string;
     offLabel: string;
     offSplitButtonAriaLabel?: string;
+    offSplitButtonPrimaryActionCamera?: string;
     onLabel: string;
     onSplitButtonAriaLabel?: string;
+    onSplitButtonPrimaryActionCamera?: string;
     tooltipDisabledContent?: string;
     tooltipOffContent?: string;
     tooltipOnContent?: string;
@@ -119,18 +122,23 @@ export interface CameraButtonStyles extends ControlBarButtonStyles {
     menuStyles?: Partial<CameraButtonContextualMenuStyles>;
 }
 
+// Warning: (ae-internal-missing-underscore) The name "CaptionInfo" should be prefixed with an underscore because the declaration is marked as @internal
+//
 // @internal
-export const _Caption: (props: _CaptionProps) => JSX.Element;
+export type CaptionInfo = {
+    displayName: string;
+    caption: string;
+    userId?: string;
+};
 
 // @internal
-export interface _CaptionProps {
+export const _CaptionsBanner: (props: _CaptionsBannerProps) => JSX.Element;
+
+// @internal
+export interface _CaptionsBannerProps {
     // (undocumented)
-    caption: string;
-    // (undocumented)
-    displayName: string;
+    captions: CaptionInfo[];
     onRenderAvatar?: OnRenderAvatarCallback;
-    // (undocumented)
-    userId?: string;
 }
 
 // @public
@@ -403,6 +411,10 @@ export const DEFAULT_COMPONENT_ICONS: {
     SendBoxSend: JSX.Element;
     SendBoxSendHovered: JSX.Element;
     VideoTileMicOff: JSX.Element;
+    SplitButtonPrimaryActionCameraOn: JSX.Element;
+    SplitButtonPrimaryActionCameraOff: JSX.Element;
+    SplitButtonPrimaryActionMicUnmuted: JSX.Element;
+    SplitButtonPrimaryActionMicMuted: JSX.Element;
 };
 
 // @internal
@@ -984,6 +996,7 @@ export interface MicrophoneButtonProps extends ControlBarButtonProps {
 
 // @public
 export interface MicrophoneButtonStrings {
+    micPrimaryActionSplitButtonTitle?: string;
     microphoneActionTurnedOffAnnouncement?: string;
     microphoneActionTurnedOnAnnouncement?: string;
     microphoneButtonSplitRoleDescription?: string;
@@ -991,8 +1004,10 @@ export interface MicrophoneButtonStrings {
     microphoneMenuTooltip?: string;
     offLabel: string;
     offSplitButtonAriaLabel?: string;
+    offSplitButtonMicrophonePrimaryAction?: string;
     onLabel: string;
     onSplitButtonAriaLabel?: string;
+    onSplitButtonMicrophonePrimaryAction?: string;
     speakerMenuTitle?: string;
     speakerMenuTooltip?: string;
     tooltipDisabledContent?: string;

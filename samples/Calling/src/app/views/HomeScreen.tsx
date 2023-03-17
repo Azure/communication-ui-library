@@ -2,7 +2,18 @@
 // Licensed under the MIT license.
 
 import React, { useState } from 'react';
-import { Stack, PrimaryButton, Image, ChoiceGroup, IChoiceGroupOption, Text, TextField } from '@fluentui/react';
+import {
+  Stack,
+  PrimaryButton,
+  Image,
+  ChoiceGroup,
+  IChoiceGroupOption,
+  Text,
+  TextField,
+  Callout,
+  mergeStyles,
+  Link
+} from '@fluentui/react';
 /* @conditional-compile-remove(PSTN-calls) */
 import { registerIcons } from '@fluentui/react';
 import heroSVG from '../../assets/hero.svg';
@@ -20,7 +31,13 @@ import {
   buttonStyle
 } from '../styles/HomeScreen.styles';
 /* @conditional-compile-remove(PSTN-calls) */
-import { outboundTextField, dialpadOptionStyles } from '../styles/HomeScreen.styles';
+import {
+  outboundTextField,
+  dialpadOptionStyles,
+  alternateCallerIdCalloutStyles,
+  alternateCallerIdCalloutTitleStyles,
+  alternateCallerIdCalloutLinkStyles
+} from '../styles/HomeScreen.styles';
 import { ThemeSelector } from '../theming/ThemeSelector';
 import { localStorageAvailable } from '../utils/localStorage';
 import { getDisplayNameFromLocalStorage, saveDisplayNameToLocalStorage } from '../utils/localStorage';
@@ -112,6 +129,9 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   const [teamsToken, setTeamsToken] = useState<string>();
   /* @conditional-compile-remove(teams-identity-support) */
   const [teamsId, setTeamsId] = useState<string>();
+
+  /* @conditional-compile-remove(PSTN-calls) */
+  const [alternateCallerIdCalloutVisible, setAlternateCallerIdCalloutVisible] = useState<boolean>(false);
 
   const startGroupCall: boolean = chosenCallOption.key === 'ACSCall';
   const teamsCallChosen: boolean = chosenCallOption.key === 'TeamsMeeting';
@@ -240,6 +260,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
             {
               /* @conditional-compile-remove(PSTN-calls) */ pstnCallChosen && (
                 <Stack>
+                  <Text style={{ paddingBottom: '0.5rem' }}>Please dial the number you wish to call.</Text>
                   <Stack styles={dialpadOptionStyles}>
                     <Dialpad
                       isMobile={isMobileSession}
@@ -254,11 +275,38 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                     />
                   </Stack>
                   <TextField
+                    required={true}
+                    id={'alternateCallerId-input'}
                     className={outboundTextField}
-                    label={'ACS phone number for Caller ID'}
-                    placeholder={'Enter your ACS aquired phone number for PSTN call'}
+                    label={'Azure Communication Services phone number for caller ID'}
+                    placeholder={'Please enter phone number'}
                     onChange={(_, newValue) => setAlternateCallerId(newValue)}
+                    onFocus={() => setAlternateCallerIdCalloutVisible(true)}
                   />
+                  {alternateCallerIdCalloutVisible && (
+                    <Callout
+                      role="dialog"
+                      gapSpace={0}
+                      target={document.getElementById('alternateCallerId-input')}
+                      className={mergeStyles(alternateCallerIdCalloutStyles)}
+                      onDismiss={() => setAlternateCallerIdCalloutVisible(false)}
+                    >
+                      <Text block className={mergeStyles(alternateCallerIdCalloutTitleStyles)} variant="large">
+                        AlternateCallerId
+                      </Text>
+                      <ul>
+                        <li>This number will act as your caller id when no display name is provided.</li>
+                        <li>Must be from same Azure Communication Services resource as the user making the call.</li>
+                      </ul>
+                      <Link
+                        className={mergeStyles(alternateCallerIdCalloutLinkStyles)}
+                        target="_blank"
+                        href="https://learn.microsoft.com/en-us/azure/communication-services/concepts/telephony/plan-solution"
+                      >
+                        Learn more about phone numbers and Azure Communication Services.
+                      </Link>
+                    </Callout>
+                  )}
                 </Stack>
               )
             }
