@@ -69,6 +69,39 @@ export interface BaseCustomStyles {
     root?: IStyle;
 }
 
+// @public
+export interface BlockedMessage extends MessageCommon {
+    // (undocumented)
+    attached?: MessageAttachedStatus;
+    // (undocumented)
+    clientMessageId?: string;
+    // (undocumented)
+    content?: string | false;
+    // (undocumented)
+    contentType: MessageContentType;
+    // (undocumented)
+    deletedOn?: Date;
+    // (undocumented)
+    editedOn?: Date;
+    // (undocumented)
+    iconName?: string | false;
+    // (undocumented)
+    link?: string;
+    // (undocumented)
+    linkText?: string;
+    // (undocumented)
+    messageType: 'blocked';
+    metadata?: Record<string, string>;
+    // (undocumented)
+    mine?: boolean;
+    // (undocumented)
+    senderDisplayName?: string;
+    // (undocumented)
+    senderId?: string;
+    // (undocumented)
+    status?: MessageStatus;
+}
+
 // @beta
 export const BrowserPermissionDenied: (props: BrowserPermissionDeniedProps) => JSX.Element;
 
@@ -241,8 +274,6 @@ export interface ChatMessage extends MessageCommon {
     metadata?: Record<string, string>;
     // (undocumented)
     mine?: boolean;
-    // (undocumented)
-    policyViolation?: boolean;
     // (undocumented)
     senderDisplayName?: string;
     // (undocumented)
@@ -502,6 +533,7 @@ export const DEFAULT_COMPONENT_ICONS: {
     ControlButtonScreenShareStop: JSX.Element;
     CancelFileUpload: JSX.Element;
     DownloadFile: JSX.Element;
+    DataLossPreventionProhibited: JSX.Element;
     EditBoxCancel: JSX.Element;
     EditBoxSubmit: JSX.Element;
     ErrorBarCallCameraAccessDenied: JSX.Element;
@@ -1004,7 +1036,7 @@ export const _LocalVideoTile: React_2.MemoExoticComponent<(props: {
 }) => JSX.Element>;
 
 // @public
-export type Message = ChatMessage | SystemMessage | CustomMessage;
+export type Message = ChatMessage | SystemMessage | BlockedMessage | CustomMessage;
 
 // @public
 export type MessageAttachedStatus = 'bottom' | 'top' | boolean;
@@ -1069,7 +1101,7 @@ export const MessageThread: (props: MessageThreadProps) => JSX.Element;
 // @public
 export type MessageThreadProps = {
     userId: string;
-    messages: (ChatMessage | SystemMessage | CustomMessage)[];
+    messages: (ChatMessage | SystemMessage | BlockedMessage | CustomMessage)[];
     participantCount?: number;
     readReceiptsBySenderId?: ReadReceiptsBySenderId;
     styles?: MessageThreadStyles;
@@ -1096,6 +1128,8 @@ export type MessageThreadProps = {
 // @public
 export interface MessageThreadStrings {
     actionMenuMoreOptions?: string;
+    blockedContentLinkText: string;
+    blockedContentText: string;
     downloadFile: string;
     editBoxCancelButton: string;
     editBoxPlaceholderText: string;
@@ -1114,8 +1148,6 @@ export interface MessageThreadStrings {
     noDisplayNameSub: string;
     participantJoined: string;
     participantLeft: string;
-    policyViolationLinkText: string;
-    policyViolationText: string;
     removeMessage: string;
     resendMessage?: string;
     saturday: string;
@@ -1128,6 +1160,7 @@ export interface MessageThreadStrings {
 
 // @public
 export interface MessageThreadStyles extends BaseCustomStyles {
+    blockedMessageContainer?: ComponentSlotStyle;
     chatContainer?: ComponentSlotStyle;
     chatItemMessageContainer?: ComponentSlotStyle;
     chatMessageContainer?: ComponentSlotStyle;

@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import { ChatMessage, ReadReceiptsBySenderId } from '../..';
+import { BlockedMessage, ChatMessage, ReadReceiptsBySenderId } from '../..';
 
 /**
  * @private
@@ -17,7 +17,7 @@ import { ChatMessage, ReadReceiptsBySenderId } from '../..';
  * if MessageId of B is larger than message Id of A, then B is created after A
  * if the last read message is created after the message A is sent, then user should have read message A as well */
 export const getParticipantsWhoHaveReadMessage = (
-  message: ChatMessage,
+  message: ChatMessage | BlockedMessage,
   readReceiptsBySenderId: ReadReceiptsBySenderId
 ): { id: string; displayName: string }[] => {
   return (

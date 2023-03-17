@@ -4,7 +4,7 @@
 import { IStyle, mergeStyles } from '@fluentui/react';
 import { Chat, Text, ComponentSlotStyle } from '@fluentui/react-northstar';
 import { _formatString } from '@internal/acs-ui-common';
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
 import {
   chatMessageEditedTagStyle,
   chatMessageDateStyle,
@@ -15,15 +15,17 @@ import { useIdentifiers } from '../../identifiers/IdentifierProvider';
 import { useTheme } from '../../theming';
 import { ChatMessageActionFlyout } from './ChatMessageActionsFlyout';
 import { ChatMessageContent } from './ChatMessageContent';
-import { ChatMessage } from '../../types/ChatMessage';
+import { ChatMessage, BlockedMessage } from '../../types/ChatMessage';
 import { MessageThreadStrings } from '../MessageThread';
 import { chatMessageActionMenuProps } from './ChatMessageActionMenu';
 import { OnRenderAvatarCallback } from '../../types';
 import { _FileDownloadCards, FileDownloadHandler } from '../FileDownloadCards';
 import { ComponentLocale, useLocale } from '../../localization';
+import { BlockedMessageContent } from '../BlockedMessage';
+import { defaultBlockedMessageStyleContainer } from '../styles/MessageThread.styles';
 
 type ChatMessageComponentAsMessageBubbleProps = {
-  message: ChatMessage;
+  message: ChatMessage | BlockedMessage;
   messageContainerStyle?: ComponentSlotStyle;
   showDate?: boolean;
   disableEditing?: boolean;
@@ -146,8 +148,10 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
         // Force show the action button while the flyout is open (otherwise this will dismiss when the pointer is hovered over the flyout)
         forceShow: chatMessageActionFlyoutTarget === messageActionButtonRef,
         onActionButtonClick: () => {
-          props.onActionButtonClick(message, setMessageReadBy);
-          setChatMessageActionFlyoutTarget(messageActionButtonRef);
+          if (message.messageType === 'chat') {
+            props.onActionButtonClick(message, setMessageReadBy);
+            setChatMessageActionFlyoutTarget(messageActionButtonRef);
+          }
         },
         theme
       });
@@ -184,7 +188,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
       return <div className={chatMessageFailedTagStyle(theme)}>{strings.failToSendTag}</div>;
     } else if (message.editedOn) {
       /* @conditional-compile-remove(dlp) */
-      if (message.policyViolation) {
+      if (message.messageType === 'blocked') {
         return undefined;
       }
       return <div className={chatMessageEditedTagStyle(theme)}>{strings.editedTag}</div>;
@@ -192,20 +196,32 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     return undefined;
   };
 
+  const bubbleStyle = useMemo(() => {
+    return message.messageType === 'blocked'
+      ? mergeStyles(defaultBlockedMessageStyleContainer(theme) as IStyle, messageContainerStyle as IStyle)
+      : messageContainerStyle;
+  }, [message.messageType, messageContainerStyle, theme]);
+
   const chatMessage = (
     <>
       <div ref={messageRef}>
         <Chat.Message
           data-ui-id="chat-composite-message"
-          className={mergeStyles(messageContainerStyle as IStyle)}
+          className={mergeStyles(bubbleStyle as IStyle)}
           styles={messageContainerStyle}
           content={
-            <div tabIndex={0}>
-              <ChatMessageContent message={message} theme={theme} strings={strings} />
-              {props.onRenderFileDownloads
-                ? props.onRenderFileDownloads(userId, message)
-                : defaultOnRenderFileDownloads()}
-            </div>
+            message.messageType === 'blocked' ? (
+              <div tabIndex={0}>
+                <BlockedMessageContent message={message} strings={strings} />
+              </div>
+            ) : (
+              <div tabIndex={0}>
+                <ChatMessageContent message={message} theme={theme} strings={strings} />
+                {props.onRenderFileDownloads
+                  ? props.onRenderFileDownloads(userId, message)
+                  : defaultOnRenderFileDownloads()}
+              </div>
+            )
           }
           author={<Text className={chatMessageDateStyle}>{message.senderDisplayName}</Text>}
           mine={message.mine}
@@ -227,7 +243,9 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
             // In doing so here we set the target of the flyout to be the message and
             // not the 3-dot menu button to position the flyout correctly.
             setChatMessageActionFlyoutTarget(messageRef);
-            props.onActionButtonClick(message, setMessageReadBy);
+            if (message.messageType === 'chat') {
+              props.onActionButtonClick(message, setMessageReadBy);
+            }
           }}
         />
       </div>

@@ -29,7 +29,7 @@ export type MessageContentType = 'text' | 'html' | 'richtext/html' | 'unknown';
  *
  * @public
  */
-export type Message = ChatMessage | SystemMessage | CustomMessage;
+export type Message = ChatMessage | SystemMessage | BlockedMessage | CustomMessage;
 
 /**
  * Discriminated union of all system messages.
@@ -60,8 +60,6 @@ export interface ChatMessage extends MessageCommon {
   status?: MessageStatus;
   attached?: MessageAttachedStatus;
   mine?: boolean;
-  /* @conditional-compile-remove(dlp) */
-  policyViolation?: boolean;
   clientMessageId?: string;
   contentType: MessageContentType;
   /**
@@ -119,6 +117,36 @@ export interface ContentSystemMessage extends SystemMessageCommon {
   systemMessageType: 'content';
 
   content: string;
+}
+
+/**
+ * Content blocked message type.
+ *
+ * Content blocked messages will rendered default value, but applications can provide custom strings and icon to renderers.
+ *
+ * @public
+ */
+export interface BlockedMessage extends MessageCommon {
+  messageType: 'blocked';
+
+  content?: string | false;
+  iconName?: string | false;
+  linkText?: string;
+  link?: string;
+  editedOn?: Date;
+  deletedOn?: Date;
+  senderId?: string;
+  senderDisplayName?: string;
+  status?: MessageStatus;
+  attached?: MessageAttachedStatus;
+  mine?: boolean;
+  clientMessageId?: string;
+  contentType: MessageContentType;
+  /**
+   * A metadata field for the message.
+   * {@link @azure/communication-chat#ChatMessage.metadata}
+   */
+  metadata?: Record<string, string>;
 }
 
 /**

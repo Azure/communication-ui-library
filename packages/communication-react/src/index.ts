@@ -152,6 +152,7 @@ export type {
   _Identifiers,
   ActiveErrorMessage,
   BaseCustomStyles,
+  BlockedMessage,
   CallParticipantListParticipant,
   CameraButtonContextualMenuStyles,
   CameraButtonProps,

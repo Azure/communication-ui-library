@@ -18,6 +18,7 @@ import {
   Message,
   CommunicationParticipant,
   SystemMessage,
+  BlockedMessage,
   MessageContentType,
   ReadReceiptsBySenderId
 } from '@internal/react-components';
@@ -37,7 +38,9 @@ const memoizedAllConvertChatMessage = memoizeFnAll(
     isLargeGroup: boolean
   ): Message => {
     const messageType = chatMessage.type.toLowerCase();
-    if (
+    if (chatMessage.policyViolation) {
+      return convertToUiBlockedMessage(chatMessage, userId, isSeen, isLargeGroup);
+    } else if (
       messageType === ACSKnownMessageType.text ||
       messageType === ACSKnownMessageType.richtextHtml ||
       messageType === ACSKnownMessageType.html
@@ -63,6 +66,30 @@ const extractAttachedFilesMetadata = (metadata: Record<string, string>): FileMet
   }
 };
 
+const convertToUiBlockedMessage = (
+  message: ChatMessageWithStatus,
+  userId: string,
+  isSeen: boolean,
+  isLargeGroup: boolean
+): BlockedMessage => {
+  const messageSenderId = message.sender !== undefined ? toFlatCommunicationIdentifier(message.sender) : userId;
+  return {
+    messageType: 'blocked',
+    createdOn: message.createdOn,
+    content: message.content?.message,
+    contentType: sanitizedMessageContentType(message.type),
+    status: !isLargeGroup && message.status === 'delivered' && isSeen ? 'seen' : message.status,
+    senderDisplayName: message.senderDisplayName,
+    senderId: messageSenderId,
+    messageId: message.id,
+    clientMessageId: message.clientMessageId,
+    editedOn: message.editedOn,
+    deletedOn: message.deletedOn,
+    mine: messageSenderId === userId,
+    metadata: message.metadata
+  };
+};
+
 const convertToUiChatMessage = (
   message: ChatMessageWithStatus,
   userId: string,
@@ -83,8 +110,6 @@ const convertToUiChatMessage = (
     editedOn: message.editedOn,
     deletedOn: message.deletedOn,
     mine: messageSenderId === userId,
-    /* @conditional-compile-remove(dlp) */
-    policyViolation: message.policyViolation,
     metadata: message.metadata,
     /* @conditional-compile-remove(file-sharing) */
     attachedFilesMetadata: extractAttachedFilesMetadata(message.metadata || {})

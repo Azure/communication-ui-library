@@ -22,6 +22,7 @@ export type { _Permissions, _PermissionsProviderProps, Role } from './permission
 
 export type {
   BaseCustomStyles,
+  BlockedMessage,
   CallParticipantListParticipant,
   ChatMessage,
   CommunicationParticipant,

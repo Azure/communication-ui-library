@@ -42,6 +42,7 @@ import { LiveAnnouncer } from 'react-aria-live';
 import { delay } from './utils/delay';
 import {
   BaseCustomStyles,
+  BlockedMessage,
   ChatMessage,
   CustomMessage,
   SystemMessage,
@@ -80,7 +81,9 @@ const isMessageSame = (first: ChatMessage, second: ChatMessage): boolean => {
  *
  * @param messages
  */
-const getLatestChatMessage = (messages: (ChatMessage | SystemMessage | CustomMessage)[]): ChatMessage | undefined => {
+const getLatestChatMessage = (
+  messages: (ChatMessage | SystemMessage | BlockedMessage | CustomMessage)[]
+): ChatMessage | undefined => {
   for (let i = messages.length - 1; i >= 0; i--) {
     const message = messages[i];
     if (message.messageType === 'chat' && !!message.createdOn) {
@@ -158,6 +161,8 @@ export interface MessageThreadStyles extends BaseCustomStyles {
   chatMessageContainer?: ComponentSlotStyle;
   /** Styles for system message container. */
   systemMessageContainer?: ComponentSlotStyle;
+  /** Styles for blocked message container. */
+  blockedMessageContainer?: ComponentSlotStyle;
   /** Styles for message status indicator container. */
   messageStatusContainer?: (mine: boolean) => IStyle;
 }
@@ -225,10 +230,10 @@ export interface MessageThreadStrings {
   downloadFile: string;
   /* @conditional-compile-remove(dlp) */
   /** String for policy violation message removal */
-  policyViolationText: string;
+  blockedContentText: string;
   /* @conditional-compile-remove(dlp) */
   /** String for policy violation message removal details link */
-  policyViolationLinkText: string;
+  blockedContentLinkText: string;
 }
 
 /**
@@ -339,7 +344,7 @@ const memoizeAllMessages = memoizeFnAll(
       | ((messageStatusIndicatorProps: MessageStatusIndicatorProps) => JSX.Element | null)
       | undefined,
     defaultStatusRenderer: (
-      message: ChatMessage,
+      message: ChatMessage | BlockedMessage,
       status: MessageStatus,
       participantCount: number,
       readCount: number
@@ -365,15 +370,21 @@ const memoizeAllMessages = memoizeFnAll(
       onSendMessage,
       disableEditing
     };
-
     switch (message.messageType) {
+      case 'blocked':
       case 'chat': {
         const myChatMessageStyle =
           message.status === 'failed'
             ? styles?.failedMyChatMessageContainer ?? styles?.myChatMessageContainer ?? FailedMyChatMessageContainer
             : styles?.myChatMessageContainer ?? defaultMyChatMessageContainer;
         const chatMessageStyle = styles?.chatMessageContainer ?? defaultChatMessageContainer;
-        messageProps.messageContainerStyle = message.mine ? myChatMessageStyle : chatMessageStyle;
+        const blockedMessageStyle = styles?.blockedMessageContainer;
+
+        messageProps.messageContainerStyle = message.mine
+          ? myChatMessageStyle
+          : message.messageType === 'blocked'
+          ? blockedMessageStyle
+          : chatMessageStyle;
 
         const chatMessageComponent =
           onRenderMessage === undefined
@@ -497,9 +508,9 @@ export type MessageThreadProps = {
    */
   userId: string;
   /**
-   * Messages to render in message thread. A message can be of type `ChatMessage`, `SystemMessage` or `CustomMessage`.
+   * Messages to render in message thread. A message can be of type `ChatMessage`, `SystemMessage`, `BlockedMessage` or `CustomMessage`.
    */
-  messages: (ChatMessage | SystemMessage | CustomMessage)[];
+  messages: (ChatMessage | SystemMessage | BlockedMessage | CustomMessage)[];
   /**
    * number of participants in the thread
    */
@@ -653,7 +664,7 @@ export type MessageThreadProps = {
  */
 export type MessageProps = {
   /**
-   * Message to render. It can type `ChatMessage` or `SystemMessage` or `CustomMessage`.
+   * Message to render. It can type `ChatMessage` or `SystemMessage`, `BlockedMessage` or `CustomMessage`.
    */
   message: Message;
   /**
@@ -739,7 +750,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   } = props;
   const onRenderFileDownloads = onRenderFileDownloadsTrampoline(props);
 
-  const [messages, setMessages] = useState<(ChatMessage | SystemMessage | CustomMessage)[]>([]);
+  const [messages, setMessages] = useState<(ChatMessage | SystemMessage | BlockedMessage | CustomMessage)[]>([]);
   // We need this state to wait for one tick and scroll to bottom after messages have been initialized.
   // Otherwise chatScrollDivRef.current.clientHeight is wrong if we scroll to bottom before messages are initialized.
   const [chatMessagesInitialized, setChatMessagesInitialized] = useState<boolean>(false);
@@ -783,7 +794,9 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   const isNarrow = chatThreadWidth ? isNarrowWidth(chatThreadWidth) : false;
 
   const messagesRef = useRef(messages);
-  const setMessagesRef = (messagesWithAttachedValue: (ChatMessage | SystemMessage | CustomMessage)[]): void => {
+  const setMessagesRef = (
+    messagesWithAttachedValue: (ChatMessage | SystemMessage | BlockedMessage | CustomMessage)[]
+  ): void => {
     messagesRef.current = messagesWithAttachedValue;
     setMessages(messagesWithAttachedValue);
   };
@@ -999,7 +1012,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   // To rerender the defaultChatMessageRenderer if app running across days(every new day chat time stamp need to be regenerated)
   const defaultChatMessageRenderer = useCallback(
     (messageProps: MessageProps) => {
-      if (messageProps.message.messageType === 'chat') {
+      if (messageProps.message.messageType === 'chat' || messageProps.message.messageType === 'blocked') {
         return (
           <ChatMessageComponent
             {...messageProps}
@@ -1037,7 +1050,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   );
 
   const defaultStatusRenderer = useCallback(
-    (message: ChatMessage, status: MessageStatus, participantCount: number, readCount: number) => {
+    (message: ChatMessage | BlockedMessage, status: MessageStatus, participantCount: number, readCount: number) => {
       const onToggleToolTip = (isToggled: boolean): void => {
         if (isToggled && readReceiptsBySenderIdRef.current) {
           setReadCountForHoveredIndicator(
@@ -1067,7 +1080,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
           let key: string | undefined = message.messageId;
           let statusToRender: MessageStatus | undefined = undefined;
 
-          if (message.messageType === 'chat') {
+          if (message.messageType === 'chat' || message.messageType === 'blocked') {
             if (!message.messageId || message.messageId === '') {
               key = message.clientMessageId;
             }
@@ -1106,7 +1119,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
             strings,
             // Temporary solution to make sure we re-render if attach attribute is changed.
             // The proper fix should be in selector.
-            message.messageType === 'chat' ? message.attached : undefined,
+            message.messageType === 'chat' || message.messageType === 'blocked' ? message.attached : undefined,
             statusToRender,
             participantCount,
             readCountForHoveredIndicator,
