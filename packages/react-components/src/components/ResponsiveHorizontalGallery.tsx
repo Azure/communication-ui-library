@@ -34,8 +34,7 @@ export const ResponsiveHorizontalGallery = (props: {
       ? parseFloat(getComputedStyle(containerRef.current).paddingRight)
       : 0
     : 0;
-  console.log(leftPadding);
-  console.log(rightPadding);
+
   const childrenPerPage = calculateChildrenPerPage({
     numberOfChildren: React.Children.count(props.children),
     containerWidth: (containerWidth ?? 0) - leftPadding - rightPadding,
