@@ -27,6 +27,7 @@ import { innerLayoutStyle, layerHostStyle, rootLayoutStyle } from './styles/Floa
 import { videoGalleryLayoutGap } from './styles/Layout.styles';
 import { useOrganizedParticipants } from './utils/videoGalleryLayoutUtils';
 import { OverflowGallery } from './OverflowGallery';
+import { DEFAULT_MAX_REMOTE_VIDEO_STREAMS } from '../VideoGallery';
 
 /**
  * Props for {@link FloatingLocalVideoLayout}.
@@ -58,7 +59,7 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
     screenShareComponent,
     onRenderRemoteParticipant,
     styles,
-    maxRemoteVideoStreams,
+    maxRemoteVideoStreams = DEFAULT_MAX_REMOTE_VIDEO_STREAMS,
     showCameraSwitcherInLocalPreview,
     parentWidth,
     parentHeight,
@@ -98,7 +99,10 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
     gridTiles.push(localVideoComponent);
   }
 
-  const [indexesToRender, setIndexesToRender] = useState<number[]>([0]);
+  /** instantiate indexes available to render with indexes available that would be on first page */
+  const [indexesToRender, setIndexesToRender] = useState<number[]>([
+    ...Array(maxRemoteVideoStreams - activeVideoStreams).keys()
+  ]);
 
   const horizontalGalleryTiles = horizontalGalleryParticipants.map((p, i) => {
     return onRenderRemoteParticipant(

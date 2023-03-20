@@ -12,6 +12,7 @@ import { rootLayoutStyle } from './styles/DefaultLayout.styles';
 import { videoGalleryLayoutGap } from './styles/Layout.styles';
 import { useOrganizedParticipants } from './utils/videoGalleryLayoutUtils';
 import { OverflowGallery } from './OverflowGallery';
+import { DEFAULT_MAX_REMOTE_VIDEO_STREAMS } from '../VideoGallery';
 
 /**
  * Props for {@link DefaultLayout}.
@@ -34,7 +35,7 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
     screenShareComponent,
     onRenderRemoteParticipant,
     styles,
-    maxRemoteVideoStreams,
+    maxRemoteVideoStreams = DEFAULT_MAX_REMOTE_VIDEO_STREAMS,
     parentWidth,
     /* @conditional-compile-remove(vertical-gallery) */
     parentHeight,
@@ -66,7 +67,10 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
     );
   });
 
-  const [indexesToRender, setIndexesToRender] = useState<number[]>([0]);
+  /** instantiate indexes available to render with indexes available that would be on first page */
+  const [indexesToRender, setIndexesToRender] = useState<number[]>([
+    ...Array(maxRemoteVideoStreams - activeVideoStreams).keys()
+  ]);
 
   const horizontalGalleryTiles = horizontalGalleryParticipants.map((p, i) => {
     return onRenderRemoteParticipant(
