@@ -612,32 +612,30 @@ const mockVideoGalleryInternalHelpers = (): void => {
   jest.spyOn(acs_ui_common, '_convertRemToPx').mockImplementation((rem: number) => {
     return rem * 16;
   });
-  jest
-    .spyOn(childrenCalculations, 'calculateHorizontalChildrenPerPage')
-    .mockImplementation(
-      (args: {
-        numberOfChildren: number;
-        containerWidth: number;
-        childWidthRem: number;
-        gapWidthRem: number;
-        buttonWidthRem: number;
-      }) => {
-        return 2;
-      }
-    );
-  jest
-    .spyOn(childrenCalculations, 'calculateVerticalChildrenPerPage')
-    .mockImplementation(
-      (args: {
-        numberOfChildren: number;
-        containerHeight: number;
-        gapHeightRem: number;
-        controlBarHeight: number;
-        isShort: boolean;
-      }) => {
-        return 4;
-      }
-    );
+  jest.spyOn(childrenCalculations, 'calculateHorizontalChildrenPerPage').mockImplementation(
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    (args: {
+      numberOfChildren: number;
+      containerWidth: number;
+      childWidthRem: number;
+      gapWidthRem: number;
+      buttonWidthRem: number;
+    }) => {
+      return 2;
+    }
+  );
+  jest.spyOn(childrenCalculations, 'calculateVerticalChildrenPerPage').mockImplementation(
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    (args: {
+      numberOfChildren: number;
+      containerHeight: number;
+      gapHeightRem: number;
+      controlBarHeight: number;
+      isShort: boolean;
+    }) => {
+      return 4;
+    }
+  );
   // Need to mock hook _useContainerWidth because the returned width is used by HorizontalGallery to decide
   // how many tiles to show per page
   jest.spyOn(responsive, '_useContainerWidth').mockImplementation(() => 500);
