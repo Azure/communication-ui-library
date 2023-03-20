@@ -12,7 +12,6 @@ import { rootLayoutStyle } from './styles/DefaultLayout.styles';
 import { videoGalleryLayoutGap } from './styles/Layout.styles';
 import { useOrganizedParticipants } from './utils/videoGalleryLayoutUtils';
 import { OverflowGallery } from './OverflowGallery';
-import { DEFAULT_MAX_REMOTE_VIDEO_STREAMS } from '../VideoGallery';
 
 /**
  * Props for {@link DefaultLayout}.
@@ -35,7 +34,7 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
     screenShareComponent,
     onRenderRemoteParticipant,
     styles,
-    maxRemoteVideoStreams = DEFAULT_MAX_REMOTE_VIDEO_STREAMS,
+    maxRemoteVideoStreams,
     parentWidth,
     /* @conditional-compile-remove(vertical-gallery) */
     parentHeight,

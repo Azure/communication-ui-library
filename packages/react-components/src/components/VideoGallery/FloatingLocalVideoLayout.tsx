@@ -27,7 +27,6 @@ import { innerLayoutStyle, layerHostStyle, rootLayoutStyle } from './styles/Floa
 import { videoGalleryLayoutGap } from './styles/Layout.styles';
 import { useOrganizedParticipants } from './utils/videoGalleryLayoutUtils';
 import { OverflowGallery } from './OverflowGallery';
-import { DEFAULT_MAX_REMOTE_VIDEO_STREAMS } from '../VideoGallery';
 
 /**
  * Props for {@link FloatingLocalVideoLayout}.
@@ -59,7 +58,7 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
     screenShareComponent,
     onRenderRemoteParticipant,
     styles,
-    maxRemoteVideoStreams = DEFAULT_MAX_REMOTE_VIDEO_STREAMS,
+    maxRemoteVideoStreams,
     showCameraSwitcherInLocalPreview,
     parentWidth,
     parentHeight,
