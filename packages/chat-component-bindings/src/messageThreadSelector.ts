@@ -234,7 +234,7 @@ export const messageThreadSelector: MessageThreadSelector = createSelector(
     updateMessagesWithAttached(convertedMessages);
     return {
       userId,
-      showMessageStatus: !isLargeGroup,
+      showMessageStatus: true,
       messages: convertedMessages,
       participantCount,
       readReceiptsBySenderId

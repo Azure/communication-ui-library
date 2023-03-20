@@ -1139,6 +1139,10 @@ export const DEFAULT_COMPOSITE_ICONS: {
     VideoTileScaleFill: JSX.Element;
     PinParticipant: JSX.Element;
     UnpinParticipant: JSX.Element;
+    SplitButtonPrimaryActionCameraOn: JSX.Element;
+    SplitButtonPrimaryActionCameraOff: JSX.Element;
+    SplitButtonPrimaryActionMicUnmuted: JSX.Element;
+    SplitButtonPrimaryActionMicMuted: JSX.Element;
     VerticalGalleryLeftButton: JSX.Element;
     VerticalGalleryRightButton: JSX.Element;
 };

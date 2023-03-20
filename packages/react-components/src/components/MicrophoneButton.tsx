@@ -6,7 +6,12 @@ import { useLocale } from '../localization';
 import { ControlBarButton, ControlBarButtonProps } from './ControlBarButton';
 import { _HighContrastAwareIcon } from './HighContrastAwareIcon';
 
-import { IContextualMenuItemStyles, IContextualMenuStyles } from '@fluentui/react';
+import {
+  ContextualMenuItemType,
+  IContextualMenuItem,
+  IContextualMenuItemStyles,
+  IContextualMenuStyles
+} from '@fluentui/react';
 import { ControlBarButtonStyles } from './ControlBarButton';
 import { OptionsDevice, generateDefaultDeviceMenuProps } from './DevicesButton';
 import { Announcer } from './Announcer';
@@ -63,6 +68,18 @@ export interface MicrophoneButtonStrings {
    * Microphone action turned off string for announcer
    */
   microphoneActionTurnedOffAnnouncement?: string;
+  /**
+   * Primary action for the microphone when microphone is live.
+   */
+  onSplitButtonMicrophonePrimaryAction?: string;
+  /**
+   * Primary action for the microphone when the microphone is muted.
+   */
+  offSplitButtonMicrophonePrimaryAction?: string;
+  /**
+   * Title for primary action section of split button
+   */
+  micPrimaryActionSplitButtonTitle?: string;
 }
 
 /**
@@ -196,6 +213,34 @@ export const MicrophoneButton = (props: MicrophoneButtonProps): JSX.Element => {
     }
   }, [isMicOn, onToggleMicrophone, toggleAnnouncerString]);
 
+  /**
+   * We need to also include the primary action of the button to the
+   * split button for mobile devices.
+   */
+  const splitButtonPrimaryAction: IContextualMenuItem = {
+    key: 'primaryAction',
+    title: 'toggle mic',
+    itemType: ContextualMenuItemType.Section,
+    sectionProps: {
+      topDivider: true,
+      items: [
+        {
+          key: 'microphonePrimaryAction',
+          text: props.checked
+            ? strings.onSplitButtonMicrophonePrimaryAction
+            : strings.offSplitButtonMicrophonePrimaryAction,
+          onClick: () => {
+            onToggleClick();
+          },
+          iconProps: {
+            iconName: props.checked ? 'SplitButtonPrimaryActionMicUnmuted' : 'SplitButtonPrimaryActionMicMuted',
+            styles: { root: { lineHeight: 0 } }
+          }
+        }
+      ]
+    }
+  };
+
   return (
     <>
       <Announcer announcementString={announcerString} ariaLive={'polite'} />
@@ -209,7 +254,11 @@ export const MicrophoneButton = (props: MicrophoneButtonProps): JSX.Element => {
         menuProps={
           props.menuProps ??
           (props.enableDeviceSelectionMenu
-            ? generateDefaultDeviceMenuProps({ ...props, styles: props.styles?.menuStyles }, strings)
+            ? generateDefaultDeviceMenuProps(
+                { ...props, styles: props.styles?.menuStyles },
+                strings,
+                splitButtonPrimaryAction
+              )
             : undefined)
         }
         menuIconProps={props.menuIconProps ?? !props.enableDeviceSelectionMenu ? { hidden: true } : undefined}

@@ -213,6 +213,10 @@ export interface ErrorBarStrings {
    * Generic message for when screen sharing fails
    */
   startScreenSharingGeneric?: string;
+  /**
+   * Error bar string letting you know remote participants see a frozen stream for you.
+   */
+  cameraFrozenForRemoteParticipants?: string;
 }
 
 /**

@@ -119,7 +119,7 @@ export const errorBarSelector: ErrorBarSelector = createSelector(
       activeErrorMessages.push({ type: 'callCameraAccessDenied' });
     } else {
       if (diagnostics?.media.latest.cameraFreeze?.value === true) {
-        activeErrorMessages.push({ type: 'callCameraAlreadyInUse' });
+        activeErrorMessages.push({ type: 'cameraFrozenForRemoteParticipants' });
       }
     }
 
