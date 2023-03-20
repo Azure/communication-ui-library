@@ -63,7 +63,7 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
     parentWidth,
     parentHeight,
     /* @conditional-compile-remove(pinned-participants) */ pinnedParticipantUserIds,
-    /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryLayout = 'HorizontalBottom'
+    /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryPosition = 'HorizontalBottom'
   } = props;
 
   const theme = useTheme();
@@ -114,7 +114,7 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
       return SMALL_FLOATING_MODAL_SIZE_PX;
     }
     /* @conditional-compile-remove(vertical-gallery) */
-    if (horizontalGalleryTiles.length > 0 && overflowGalleryLayout === 'VerticalRight') {
+    if (horizontalGalleryTiles.length > 0 && overflowGalleryPosition === 'VerticalRight') {
       return isNarrow
         ? SMALL_FLOATING_MODAL_SIZE_PX
         : isShort
@@ -126,7 +126,7 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
     horizontalGalleryTiles.length,
     isNarrow,
     /* @conditional-compile-remove(vertical-gallery) */ isShort,
-    /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryLayout
+    /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryPosition
   ]);
 
   const wrappedLocalVideoComponent =
@@ -171,7 +171,7 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
         /* @conditional-compile-remove(vertical-gallery) */
         veritcalGalleryStyles={styles?.verticalGallery}
         /* @conditional-compile-remove(vertical-gallery) */
-        overflowGalleryLayout={overflowGalleryLayout}
+        overflowGalleryPosition={overflowGalleryPosition}
       />
     );
   }, [
@@ -179,7 +179,7 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
     /* @conditional-compile-remove(vertical-gallery) */ isShort,
     horizontalGalleryTiles,
     styles?.horizontalGallery,
-    /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryLayout,
+    /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryPosition,
     /* @conditional-compile-remove(vertical-gallery) */ styles?.verticalGallery
   ]);
 
@@ -189,7 +189,7 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
       <LayerHost id={layerHostId} className={mergeStyles(layerHostStyle)} />
       <Stack
         /* @conditional-compile-remove(vertical-gallery) */
-        horizontal={overflowGalleryLayout === 'VerticalRight'}
+        horizontal={overflowGalleryPosition === 'VerticalRight'}
         styles={innerLayoutStyle}
         tokens={videoGalleryLayoutGap}
       >

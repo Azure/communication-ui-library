@@ -39,7 +39,7 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
     /* @conditional-compile-remove(vertical-gallery) */
     parentHeight,
     /* @conditional-compile-remove(pinned-participants) */ pinnedParticipantUserIds,
-    /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryLayout = 'HorizontalBottom'
+    /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryPosition = 'HorizontalBottom'
   } = props;
 
   const isNarrow = parentWidth ? isNarrowWidth(parentWidth) : false;
@@ -94,7 +94,7 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
         /* @conditional-compile-remove(vertical-gallery) */
         veritcalGalleryStyles={styles?.verticalGallery}
         /* @conditional-compile-remove(pinned-participants) */
-        overflowGalleryLayout={overflowGalleryLayout}
+        overflowGalleryPosition={overflowGalleryPosition}
       />
     );
   }, [
@@ -102,14 +102,14 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
     /* @conditional-compile-remove(vertical-gallery) */ isShort,
     horizontalGalleryTiles,
     styles?.horizontalGallery,
-    /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryLayout,
+    /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryPosition,
     /* @conditional-compile-remove(vertical-gallery) */ styles?.verticalGallery
   ]);
 
   return (
     <Stack
       /* @conditional-compile-remove(vertical-gallery) */
-      horizontal={overflowGalleryLayout === 'VerticalRight'}
+      horizontal={overflowGalleryPosition === 'VerticalRight'}
       styles={rootLayoutStyle}
       tokens={videoGalleryLayoutGap}
     >

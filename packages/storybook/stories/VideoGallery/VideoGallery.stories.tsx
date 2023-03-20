@@ -455,7 +455,7 @@ const VideoGalleryStory = (args): JSX.Element => {
   return (
     <VideoGalleryComponent
       layout={args.videoGalleryLayout}
-      overflowGalleryLayout={args.overflowGalleryLayout}
+      overflowGalleryPosition={args.overflowGalleryPosition}
       localParticipant={MockLocalParticipant}
       remoteParticipants={remoteParticipants}
     />
@@ -473,7 +473,7 @@ export default {
   argTypes: {
     remoteParticipants: controlsToAdd.remoteParticipantNames,
     videoGalleryLayout: controlsToAdd.videoGallerylayout,
-    overflowGalleryLayout: controlsToAdd.overflowGalleryLayout,
+    overflowGalleryPosition: controlsToAdd.overflowGalleryPosition,
     screenShareExperience: controlsToAdd.screenShareExperience,
     // Hiding auto-generated controls
     styles: hiddenControl,

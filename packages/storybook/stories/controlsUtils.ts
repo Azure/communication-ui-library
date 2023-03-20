@@ -372,7 +372,7 @@ export const controlsToAdd = {
     defaultValue: 'floatingLocalVideo',
     name: 'VideoGallery Layout'
   },
-  overflowGalleryLayout: {
+  overflowGalleryPosition: {
     control: 'select',
     options: OVERFLOW_GALLERY_LAYOUTS,
     defaultValue: 'HorizontalBottom',
