@@ -13,6 +13,7 @@ import { VideoTile } from './VideoTile';
 import { v1 as createGUID } from 'uuid';
 import * as responsive from './utils/responsive';
 import * as acs_ui_common from '@internal/acs-ui-common';
+import * as childrenCalculations from './VideoGallery/utils/OverflowGalleryUtils';
 import { RemoteScreenShare } from './VideoGallery/RemoteScreenShare';
 import { act } from 'react-dom/test-utils';
 /* @conditional-compile-remove(vertical-gallery) */
@@ -611,6 +612,32 @@ const mockVideoGalleryInternalHelpers = (): void => {
   jest.spyOn(acs_ui_common, '_convertRemToPx').mockImplementation((rem: number) => {
     return rem * 16;
   });
+  jest
+    .spyOn(childrenCalculations, 'calculateHorizontalChildrenPerPage')
+    .mockImplementation(
+      (args: {
+        numberOfChildren: number;
+        containerWidth: number;
+        childWidthRem: number;
+        gapWidthRem: number;
+        buttonWidthRem: number;
+      }) => {
+        return 2;
+      }
+    );
+  jest
+    .spyOn(childrenCalculations, 'calculateVerticalChildrenPerPage')
+    .mockImplementation(
+      (args: {
+        numberOfChildren: number;
+        containerHeight: number;
+        gapHeightRem: number;
+        controlBarHeight: number;
+        isShort: boolean;
+      }) => {
+        return 4;
+      }
+    );
   // Need to mock hook _useContainerWidth because the returned width is used by HorizontalGallery to decide
   // how many tiles to show per page
   jest.spyOn(responsive, '_useContainerWidth').mockImplementation(() => 500);
