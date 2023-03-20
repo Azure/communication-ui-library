@@ -8,7 +8,6 @@ import {
 } from '@azure/communication-react';
 import { Divider } from '@fluentui/react-northstar';
 import React from 'react';
-import { GetHistoryChatMessages } from './placeholdermessages';
 
 export const MessageThreadWithCustoBlockedmMessageContainerExample: () => JSX.Element = () => {
   const messageThreadStyle: MessageThreadStyles = {
@@ -24,10 +23,10 @@ export const MessageThreadWithCustoBlockedmMessageContainerExample: () => JSX.El
     return defaultOnRender ? defaultOnRender(messageProps) : <></>;
   };
 
-  const messages = [
-    ...GetHistoryChatMessages(),
+  const messages: BlockedMessage[] = [
     {
       messageType: 'blocked',
+      link: 'https://go.microsoft.com/fwlink/?LinkId=2132837',
       senderId: 'user2',
       senderDisplayName: 'Robert Tolbert',
       messageId: Math.random().toString(),
@@ -35,26 +34,23 @@ export const MessageThreadWithCustoBlockedmMessageContainerExample: () => JSX.El
       mine: false,
       attached: false,
       contentType: 'text'
-    } as BlockedMessage,
+    },
     {
       messageType: 'blocked',
       senderId: 'user2',
-      iconName: 'CancelFileUpload',
-      content: 'This is custom blocked conten, with different icon and without link',
-      linkText: '',
+      content: 'This is custom blocked content, with different icon and without link',
       senderDisplayName: 'Robert Tolbert',
       messageId: Math.random().toString(),
       createdOn: new Date('2019-04-13T00:00:00.000+08:09'),
       mine: false,
       attached: false,
       contentType: 'text'
-    } as BlockedMessage,
+    },
     {
       messageType: 'blocked',
       senderId: 'user2',
       content: false,
-      iconName: false,
-      linkText: 'This is custom blocked content, with no icon and link only (microsoft.com)',
+      linkText: 'This is custom blocked content, link only (microsoft.com)',
       link: 'https://microsoft.com',
       senderDisplayName: 'Robert Tolbert',
       messageId: Math.random().toString(),
@@ -62,7 +58,7 @@ export const MessageThreadWithCustoBlockedmMessageContainerExample: () => JSX.El
       mine: false,
       attached: false,
       contentType: 'text'
-    } as BlockedMessage,
+    },
     {
       messageType: 'blocked',
       senderId: 'user3',
@@ -72,7 +68,7 @@ export const MessageThreadWithCustoBlockedmMessageContainerExample: () => JSX.El
       mine: false,
       attached: false,
       contentType: 'text'
-    } as BlockedMessage
+    }
   ];
 
   return (

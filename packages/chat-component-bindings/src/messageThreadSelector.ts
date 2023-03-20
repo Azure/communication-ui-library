@@ -18,10 +18,11 @@ import {
   Message,
   CommunicationParticipant,
   SystemMessage,
-  BlockedMessage,
   MessageContentType,
   ReadReceiptsBySenderId
 } from '@internal/react-components';
+/* @conditional-compile-remove(dlp) */
+import { BlockedMessage } from '@internal/react-components';
 import { createSelector } from 'reselect';
 import { ACSKnownMessageType } from './utils/constants';
 import { updateMessagesWithAttached } from './utils/updateMessagesWithAttached';
@@ -38,9 +39,11 @@ const memoizedAllConvertChatMessage = memoizeFnAll(
     isLargeGroup: boolean
   ): Message => {
     const messageType = chatMessage.type.toLowerCase();
+    /* @conditional-compile-remove(dlp) */
     if (chatMessage.policyViolation) {
       return convertToUiBlockedMessage(chatMessage, userId, isSeen, isLargeGroup);
-    } else if (
+    }
+    if (
       messageType === ACSKnownMessageType.text ||
       messageType === ACSKnownMessageType.richtextHtml ||
       messageType === ACSKnownMessageType.html
@@ -66,15 +69,42 @@ const extractAttachedFilesMetadata = (metadata: Record<string, string>): FileMet
   }
 };
 
+/* @conditional-compile-remove(dlp) */
 const convertToUiBlockedMessage = (
   message: ChatMessageWithStatus,
   userId: string,
   isSeen: boolean,
   isLargeGroup: boolean
 ): BlockedMessage => {
-  const messageSenderId = message.sender !== undefined ? toFlatCommunicationIdentifier(message.sender) : userId;
   return {
     messageType: 'blocked',
+    ...convertToUIMessageHelper(message, userId, isSeen, isLargeGroup),
+    link: 'https://go.microsoft.com/fwlink/?LinkId=2132837'
+  };
+};
+
+const convertToUiChatMessage = (
+  message: ChatMessageWithStatus,
+  userId: string,
+  isSeen: boolean,
+  isLargeGroup: boolean
+): ChatMessage => {
+  return {
+    messageType: 'chat',
+    ...convertToUIMessageHelper(message, userId, isSeen, isLargeGroup),
+    /* @conditional-compile-remove(file-sharing) */
+    attachedFilesMetadata: extractAttachedFilesMetadata(message.metadata || {})
+  };
+};
+
+const convertToUIMessageHelper = (
+  message: ChatMessageWithStatus,
+  userId: string,
+  isSeen: boolean,
+  isLargeGroup: boolean
+) => {
+  const messageSenderId = message.sender !== undefined ? toFlatCommunicationIdentifier(message.sender) : userId;
+  return {
     createdOn: message.createdOn,
     content: message.content?.message,
     contentType: sanitizedMessageContentType(message.type),
@@ -87,32 +117,6 @@ const convertToUiBlockedMessage = (
     deletedOn: message.deletedOn,
     mine: messageSenderId === userId,
     metadata: message.metadata
-  };
-};
-
-const convertToUiChatMessage = (
-  message: ChatMessageWithStatus,
-  userId: string,
-  isSeen: boolean,
-  isLargeGroup: boolean
-): ChatMessage => {
-  const messageSenderId = message.sender !== undefined ? toFlatCommunicationIdentifier(message.sender) : userId;
-  return {
-    messageType: 'chat',
-    createdOn: message.createdOn,
-    content: message.content?.message,
-    contentType: sanitizedMessageContentType(message.type),
-    status: !isLargeGroup && message.status === 'delivered' && isSeen ? 'seen' : message.status,
-    senderDisplayName: message.senderDisplayName,
-    senderId: messageSenderId,
-    messageId: message.id,
-    clientMessageId: message.clientMessageId,
-    editedOn: message.editedOn,
-    deletedOn: message.deletedOn,
-    mine: messageSenderId === userId,
-    metadata: message.metadata,
-    /* @conditional-compile-remove(file-sharing) */
-    attachedFilesMetadata: extractAttachedFilesMetadata(message.metadata || {})
   };
 };
 

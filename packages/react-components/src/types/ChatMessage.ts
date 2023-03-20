@@ -29,7 +29,11 @@ export type MessageContentType = 'text' | 'html' | 'richtext/html' | 'unknown';
  *
  * @public
  */
-export type Message = ChatMessage | SystemMessage | BlockedMessage | CustomMessage;
+export type Message =
+  | ChatMessage
+  | SystemMessage
+  | CustomMessage
+  | /* @conditional-compile-remove(dlp) */ BlockedMessage;
 
 /**
  * Discriminated union of all system messages.
@@ -119,6 +123,7 @@ export interface ContentSystemMessage extends SystemMessageCommon {
   content: string;
 }
 
+/* @conditional-compile-remove(dlp) */
 /**
  * Content blocked message type.
  *
@@ -130,7 +135,6 @@ export interface BlockedMessage extends MessageCommon {
   messageType: 'blocked';
 
   content?: string | false;
-  iconName?: string | false;
   linkText?: string;
   link?: string;
   editedOn?: Date;

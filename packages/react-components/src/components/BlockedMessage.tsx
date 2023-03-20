@@ -1,13 +1,22 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+/* @conditional-compile-remove(dlp) */
 import { IStyle, FontIcon, mergeStyles, Stack, Link } from '@fluentui/react';
+/* @conditional-compile-remove(dlp) */
 import { ComponentSlotStyle } from '@fluentui/react-northstar';
+/* @conditional-compile-remove(dlp) */
 import React from 'react';
+/* @conditional-compile-remove(dlp) */
 import { LiveMessage } from 'react-aria-live';
-import { BlockedMessage, OnRenderAvatarCallback } from '../types';
+/* @conditional-compile-remove(dlp) */
+import { OnRenderAvatarCallback } from '../types';
+/* @conditional-compile-remove(dlp) */
+import { BlockedMessage } from '../types';
+/* @conditional-compile-remove(dlp) */
 import { MessageThreadStrings } from './MessageThread';
 
+/* @conditional-compile-remove(dlp) */
 /**
  * @private
  */
@@ -43,24 +52,23 @@ export type BlockedMessageProps = {
   onDisplayDateTimeString?: (messageDate: Date) => string;
 };
 
+/* @conditional-compile-remove(dlp) */
 /**
  * @private
  */
 export const BlockedMessageContent = (props: BlockedMessageProps): JSX.Element => {
-  const Icon: JSX.Element =
-    props.message.iconName === false ? (
-      <></>
-    ) : (
-      <FontIcon iconName={props.message.iconName ?? 'DataLossPreventionProhibited'} />
-    );
+  const Icon: JSX.Element = <FontIcon iconName={'DataLossPreventionProhibited'} />;
   const blockedMessage =
     props.message.content === false
       ? ''
       : props.message.content === '' || props.message.content === undefined
       ? props.strings.blockedContentText
       : props.message.content;
-  const blockedMessageLinkText = props.message.linkText ?? props.strings.blockedContentLinkText;
-  const blockedMessageLink = props.message.link ?? 'https://go.microsoft.com/fwlink/?LinkId=2132837';
+  const blockedMessageLink = props.message.link;
+  const blockedMessageLinkText = blockedMessageLink
+    ? props.message.linkText ?? props.strings.blockedContentLinkText
+    : '';
+
   const liveBlockedContentText = `${
     props.message.mine ? '' : props.message.senderDisplayName
   } ${blockedMessage} ${blockedMessageLinkText}`;
@@ -70,10 +78,14 @@ export const BlockedMessageContent = (props: BlockedMessageProps): JSX.Element =
       <Stack className={mergeStyles(props?.messageContainerStyle as IStyle)} horizontal wrap>
         {Icon}
         {blockedMessage && <p>{blockedMessage}</p>}
-        <Link target={'_blank'} href={blockedMessageLink}>
-          {blockedMessageLinkText}
-        </Link>
+        {blockedMessageLink && (
+          <Link target={'_blank'} href={blockedMessageLink}>
+            {blockedMessageLinkText}
+          </Link>
+        )}
       </Stack>
     </div>
   );
 };
+
+export {};

@@ -22,7 +22,6 @@ export type { _Permissions, _PermissionsProviderProps, Role } from './permission
 
 export type {
   BaseCustomStyles,
-  BlockedMessage,
   CallParticipantListParticipant,
   ChatMessage,
   CommunicationParticipant,
@@ -50,3 +49,6 @@ export type {
   VideoStreamOptions,
   ViewScalingMode
 } from './types';
+
+/* @conditional-compile-remove(dlp) */
+export type { BlockedMessage } from './types';

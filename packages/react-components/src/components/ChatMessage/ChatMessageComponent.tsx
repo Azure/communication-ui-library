@@ -6,12 +6,14 @@ import { _formatString } from '@internal/acs-ui-common';
 import React, { useCallback, useState } from 'react';
 import { ChatMessageComponentAsEditBox } from './ChatMessageComponentAsEditBox';
 import { MessageThreadStrings } from '../MessageThread';
-import { ChatMessage, OnRenderAvatarCallback, BlockedMessage } from '../../types';
+import { ChatMessage, OnRenderAvatarCallback } from '../../types';
+/* @conditional-compile-remove(dlp) */
+import { BlockedMessage } from '../../types';
 import { ChatMessageComponentAsMessageBubble } from './ChatMessageComponentAsMessageBubble';
 import { FileDownloadHandler, FileMetadata } from '../FileDownloadCards';
 
 type ChatMessageComponentProps = {
-  message: ChatMessage | BlockedMessage;
+  message: ChatMessage | /* @conditional-compile-remove(dlp) */ BlockedMessage;
   userId: string;
   messageContainerStyle?: ComponentSlotStyle;
   showDate?: boolean;
@@ -87,7 +89,12 @@ export const ChatMessageComponent = (props: ChatMessageComponentProps): JSX.Elem
   }, [message.messageId, message.clientMessageId, onDeleteMessage]);
   const onResendClick = useCallback(() => {
     onDeleteMessage && message.clientMessageId && onDeleteMessage(message.clientMessageId);
-    onSendMessage && onSendMessage(message.content !== undefined && message.content !== false ? message.content : '');
+    onSendMessage &&
+      onSendMessage(
+        message.content !== undefined && /* @conditional-compile-remove(dlp) */ message.content !== false
+          ? message.content
+          : ''
+      );
   }, [message.clientMessageId, message.content, onSendMessage, onDeleteMessage]);
 
   if (isEditing && props.message.messageType === 'chat') {

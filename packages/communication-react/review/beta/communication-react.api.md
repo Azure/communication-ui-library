@@ -219,8 +219,6 @@ export interface BlockedMessage extends MessageCommon {
     // (undocumented)
     editedOn?: Date;
     // (undocumented)
-    iconName?: string | false;
-    // (undocumented)
     link?: string;
     // (undocumented)
     linkText?: string;
@@ -2433,7 +2431,7 @@ export interface MediaDiagnosticsState {
 }
 
 // @public
-export type Message = ChatMessage | SystemMessage | BlockedMessage | CustomMessage;
+export type Message = ChatMessage | SystemMessage | CustomMessage | /* @conditional-compile-remove(dlp) */ BlockedMessage;
 
 // @public
 export type MessageAttachedStatus = 'bottom' | 'top' | boolean;
@@ -2515,7 +2513,7 @@ export const MessageThread: (props: MessageThreadProps) => JSX.Element;
 // @public
 export type MessageThreadProps = {
     userId: string;
-    messages: (ChatMessage | SystemMessage | BlockedMessage | CustomMessage)[];
+    messages: (ChatMessage | SystemMessage | CustomMessage | /* @conditional-compile-remove(dlp) */ BlockedMessage)[];
     participantCount?: number;
     readReceiptsBySenderId?: ReadReceiptsBySenderId;
     styles?: MessageThreadStyles;

@@ -152,7 +152,6 @@ export type {
   _Identifiers,
   ActiveErrorMessage,
   BaseCustomStyles,
-  BlockedMessage,
   CallParticipantListParticipant,
   CameraButtonContextualMenuStyles,
   CameraButtonProps,
@@ -246,6 +245,8 @@ export type {
   VideoTileStylesProps,
   ViewScalingMode
 } from '../../react-components/src';
+/* @conditional-compile-remove(dlp) */
+export type { BlockedMessage } from '../../react-components/src';
 /* @conditional-compile-remove(rooms) */
 export type { Role } from '../../react-components/src';
 /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */

@@ -15,17 +15,21 @@ import { useIdentifiers } from '../../identifiers/IdentifierProvider';
 import { useTheme } from '../../theming';
 import { ChatMessageActionFlyout } from './ChatMessageActionsFlyout';
 import { ChatMessageContent } from './ChatMessageContent';
-import { ChatMessage, BlockedMessage } from '../../types/ChatMessage';
+import { ChatMessage } from '../../types/ChatMessage';
+/* @conditional-compile-remove(dlp) */
+import { BlockedMessage } from '../../types/ChatMessage';
 import { MessageThreadStrings } from '../MessageThread';
 import { chatMessageActionMenuProps } from './ChatMessageActionMenu';
 import { OnRenderAvatarCallback } from '../../types';
 import { _FileDownloadCards, FileDownloadHandler } from '../FileDownloadCards';
 import { ComponentLocale, useLocale } from '../../localization';
+/* @conditional-compile-remove(dlp) */
 import { BlockedMessageContent } from '../BlockedMessage';
+/* @conditional-compile-remove(dlp) */
 import { defaultBlockedMessageStyleContainer } from '../styles/MessageThread.styles';
 
 type ChatMessageComponentAsMessageBubbleProps = {
-  message: ChatMessage | BlockedMessage;
+  message: ChatMessage | /* @conditional-compile-remove(dlp) */ BlockedMessage;
   messageContainerStyle?: ComponentSlotStyle;
   showDate?: boolean;
   disableEditing?: boolean;
@@ -197,10 +201,29 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
   };
 
   const bubbleStyle = useMemo(() => {
-    return message.messageType === 'blocked'
-      ? mergeStyles(defaultBlockedMessageStyleContainer(theme) as IStyle, messageContainerStyle as IStyle)
-      : messageContainerStyle;
+    /* @conditional-compile-remove(dlp) */
+    if (message.messageType === 'blocked') {
+      return mergeStyles(defaultBlockedMessageStyleContainer(theme) as IStyle, messageContainerStyle as IStyle);
+    }
+    return messageContainerStyle;
   }, [message.messageType, messageContainerStyle, theme]);
+
+  const getContent = (): React.ReactNode => {
+    /* @conditional-compile-remove(dlp) */
+    if (message.messageType === 'blocked') {
+      return (
+        <div tabIndex={0}>
+          <BlockedMessageContent message={message} strings={strings} />
+        </div>
+      );
+    }
+    return (
+      <div tabIndex={0}>
+        <ChatMessageContent message={message} theme={theme} strings={strings} />
+        {props.onRenderFileDownloads ? props.onRenderFileDownloads(userId, message) : defaultOnRenderFileDownloads()}
+      </div>
+    );
+  };
 
   const chatMessage = (
     <>
@@ -209,20 +232,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
           data-ui-id="chat-composite-message"
           className={mergeStyles(bubbleStyle as IStyle)}
           styles={messageContainerStyle}
-          content={
-            message.messageType === 'blocked' ? (
-              <div tabIndex={0}>
-                <BlockedMessageContent message={message} strings={strings} />
-              </div>
-            ) : (
-              <div tabIndex={0}>
-                <ChatMessageContent message={message} theme={theme} strings={strings} />
-                {props.onRenderFileDownloads
-                  ? props.onRenderFileDownloads(userId, message)
-                  : defaultOnRenderFileDownloads()}
-              </div>
-            )
-          }
+          content={getContent()}
           author={<Text className={chatMessageDateStyle}>{message.senderDisplayName}</Text>}
           mine={message.mine}
           timestamp={<Text data-ui-id={ids.messageTimestamp}>{formattedTimestamp}</Text>}
