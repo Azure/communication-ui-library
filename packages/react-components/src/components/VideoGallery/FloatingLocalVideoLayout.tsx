@@ -101,7 +101,7 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
   /**
    * instantiate indexes available to render with indexes available that would be on first page
    *
-   * For some interesting components which doesn't strictly follow the order of the array, we might
+   * For some components which do not strictly follow the order of the array, we might
    * re-render the initial tiles -> dispose them -> create new tiles, we need to take care of
    * this case when those components are here
    */
