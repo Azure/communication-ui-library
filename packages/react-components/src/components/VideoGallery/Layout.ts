@@ -30,7 +30,7 @@ export interface LayoutProps {
    * Maximum number of participant remote video streams that is rendered.
    * @defaultValue 4
    */
-  maxRemoteVideoStreams?: number;
+  maxRemoteVideoStreams: number;
   /**
    * Width of parent element
    */

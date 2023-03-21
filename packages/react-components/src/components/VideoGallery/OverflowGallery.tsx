@@ -33,6 +33,7 @@ import {
  */
 export const OverflowGallery = (props: {
   shouldFloatLocalVideo?: boolean;
+  onFetchTilesToRender?: (indexes: number[]) => void;
   isNarrow?: boolean;
   /* @conditional-compile-remove(vertical-gallery) */
   isShort?: boolean;
@@ -46,6 +47,7 @@ export const OverflowGallery = (props: {
 }): JSX.Element => {
   const {
     shouldFloatLocalVideo = false,
+    onFetchTilesToRender,
     isNarrow = false,
     /* @conditional-compile-remove(vertical-gallery) */
     isShort = false,
@@ -93,6 +95,7 @@ export const OverflowGallery = (props: {
         controlBarHeightRem={HORIZONTAL_GALLERY_BUTTON_WIDTH}
         gapHeightRem={HORIZONTAL_GALLERY_GAP}
         isShort={isShort}
+        onFetchTilesToRender={onFetchTilesToRender}
         onChildrenPerPageChange={onChildrenPerPageChange}
       >
         {overflowGalleryElements}
@@ -107,8 +110,9 @@ export const OverflowGallery = (props: {
     onChildrenPerPageChange?.(3);
     return (
       <ScrollableHorizontalGallery
-        key="scrollable-horizontal-gallery"
         horizontalGalleryElements={overflowGalleryElements}
+        onFetchTilesToRender={onFetchTilesToRender}
+        key="scrollable-horizontal-gallery"
       />
     );
   }
@@ -117,6 +121,7 @@ export const OverflowGallery = (props: {
     <ResponsiveHorizontalGallery
       key="responsive-horizontal-gallery"
       containerStyles={containerStyles}
+      onFetchTilesToRender={onFetchTilesToRender}
       horizontalGalleryStyles={galleryStyles}
       childWidthRem={
         isNarrow ? SMALL_HORIZONTAL_GALLERY_TILE_SIZE_REM.width : LARGE_HORIZONTAL_GALLERY_TILE_SIZE_REM.width
