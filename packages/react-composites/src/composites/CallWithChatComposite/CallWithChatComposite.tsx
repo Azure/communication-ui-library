@@ -243,8 +243,8 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
 
   /* @conditional-compile-remove(video-background-effects) */
   const setShowVideoEffectsPane = useCallback(
-    (showPanel: boolean): void => {
-      setVideoEffectsPane(showPanel);
+    (showVideoEffectsOptions: boolean): void => {
+      setVideoEffectsPane(showVideoEffectsOptions);
     },
     [setVideoEffectsPane]
   );
@@ -434,7 +434,10 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
           </Stack.Item>
           {
             /* @conditional-compile-remove(video-background-effects) */
-            <VideoEffectsPane showPanel={showVideoEffectsPane} setShowPanel={setShowVideoEffectsPane} />
+            <VideoEffectsPane
+              showVideoEffectsOptions={showVideoEffectsPane}
+              setshowVideoEffectsOptions={setShowVideoEffectsPane}
+            />
           }
           {chatProps.adapter && callAdapter && hasJoinedCall && (
             <CallWithChatPane
@@ -478,7 +481,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
                 /* @conditional-compile-remove(PSTN-calls) */
                 onClickShowDialpad={alternateCallerId ? onClickShowDialpad : undefined}
                 /* @conditional-compile-remove(video-background-effects) */
-                onClickVideoEffectsButton={setShowVideoEffectsPane}
+                onShowVideoEffectsOptions={setShowVideoEffectsPane}
               />
             </Stack.Item>
           </ChatAdapterProvider>

@@ -10,19 +10,22 @@ import { Panel } from '@fluentui/react';
  */
 /** @beta */
 export const VideoEffectsPane = (props: {
-  showPanel: boolean;
-  setShowPanel: (showPane: boolean) => void;
+  showVideoEffectsOptions: boolean;
+  setshowVideoEffectsOptions: (showVideoEffectsOptions: boolean) => void;
 }): JSX.Element => {
-  return VideoEffectsPaneTrampoline(props.showPanel, props.setShowPanel);
+  return VideoEffectsPaneTrampoline(props.showVideoEffectsOptions, props.setshowVideoEffectsOptions);
 };
 
-const VideoEffectsPaneTrampoline = (showPanel: boolean, setShowPanel: (showPane: boolean) => void): JSX.Element => {
+const VideoEffectsPaneTrampoline = (
+  showVideoEffectsOptions: boolean,
+  setshowVideoEffectsOptions: (showVideoEffectsOptions: boolean) => void
+): JSX.Element => {
   /* @conditional-compile-remove(video-background-effects) */
   return (
     <Panel
       headerText="Effects"
-      isOpen={showPanel}
-      onDismiss={() => setShowPanel(false)}
+      isOpen={showVideoEffectsOptions}
+      onDismiss={() => setshowVideoEffectsOptions(false)}
       hasCloseButton={true}
       closeButtonAriaLabel="Close"
       isLightDismiss={true}
