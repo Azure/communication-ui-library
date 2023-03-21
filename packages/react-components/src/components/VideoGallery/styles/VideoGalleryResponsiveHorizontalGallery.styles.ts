@@ -42,7 +42,7 @@ export const SMALL_HORIZONTAL_GALLERY_TILE_SIZE_REM = { height: 6.5, width: 6.5 
  * Large horizontal gallery tile size in rem
  * @private
  */
-export const LARGE_HORIZONTAL_GALLERY_TILE_SIZE_REM = { height: 7.5, width: 10 };
+export const LARGE_HORIZONTAL_GALLERY_TILE_SIZE_REM = { height: 7.5, minWidth: 7.5, maxWidth: 13.4 };
 
 /**
  * @private
@@ -58,7 +58,9 @@ export const SMALL_HORIZONTAL_GALLERY_TILE_STYLE = {
  */
 export const LARGE_HORIZONTAL_GALLERY_TILE_STYLE = {
   minHeight: `${LARGE_HORIZONTAL_GALLERY_TILE_SIZE_REM.height}rem`,
-  minWidth: `${LARGE_HORIZONTAL_GALLERY_TILE_SIZE_REM.width}rem`,
+  minWidth: `${LARGE_HORIZONTAL_GALLERY_TILE_SIZE_REM.minWidth}rem`,
   maxHeight: `${LARGE_HORIZONTAL_GALLERY_TILE_SIZE_REM.height}rem`,
-  maxWidth: `${LARGE_HORIZONTAL_GALLERY_TILE_SIZE_REM.width}rem`
+  maxWidth: `${LARGE_HORIZONTAL_GALLERY_TILE_SIZE_REM.maxWidth}rem`,
+  width: '100%',
+  height: '100%'
 };
