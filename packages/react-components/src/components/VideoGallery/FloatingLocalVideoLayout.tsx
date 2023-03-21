@@ -3,7 +3,7 @@
 
 import { LayerHost, mergeStyles, Stack } from '@fluentui/react';
 import { useId } from '@fluentui/react-hooks';
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useTheme } from '../../theming';
 import { GridLayout } from '../GridLayout';
 import { isNarrowWidth } from '../utils/responsive';
@@ -92,17 +92,28 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
     );
   });
 
-  const shouldFloatLocalVideo = remoteParticipants.length > 0;
+  const shouldFloatLocalVideo = remoteParticipants.length > 0 || !!screenShareComponent;
 
   if (!shouldFloatLocalVideo && localVideoComponent) {
     gridTiles.push(localVideoComponent);
   }
 
-  const horizontalGalleryTiles = horizontalGalleryParticipants.map((p) => {
+  /**
+   * instantiate indexes available to render with indexes available that would be on first page
+   *
+   * For some components which do not strictly follow the order of the array, we might
+   * re-render the initial tiles -> dispose them -> create new tiles, we need to take care of
+   * this case when those components are here
+   */
+  const [indexesToRender, setIndexesToRender] = useState<number[]>([
+    ...Array(maxRemoteVideoStreams - activeVideoStreams).keys()
+  ]);
+
+  const horizontalGalleryTiles = horizontalGalleryParticipants.map((p, i) => {
     return onRenderRemoteParticipant(
       p,
       maxRemoteVideoStreams && maxRemoteVideoStreams >= 0
-        ? p.videoStream?.isAvailable && activeVideoStreams++ < maxRemoteVideoStreams
+        ? p.videoStream?.isAvailable && indexesToRender.includes(i) && activeVideoStreams++ < maxRemoteVideoStreams
         : p.videoStream?.isAvailable
     );
   });
@@ -114,7 +125,7 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
       return SMALL_FLOATING_MODAL_SIZE_PX;
     }
     /* @conditional-compile-remove(vertical-gallery) */
-    if (horizontalGalleryTiles.length > 0 && overflowGalleryLayout === 'VerticalRight') {
+    if ((horizontalGalleryTiles.length > 0 || !!screenShareComponent) && overflowGalleryLayout === 'VerticalRight') {
       return isNarrow
         ? SMALL_FLOATING_MODAL_SIZE_PX
         : isShort
@@ -126,7 +137,8 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
     horizontalGalleryTiles.length,
     isNarrow,
     /* @conditional-compile-remove(vertical-gallery) */ isShort,
-    /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryLayout
+    /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryLayout,
+    /* @conditional-compile-remove(vertical-gallery) */ screenShareComponent
   ]);
 
   const wrappedLocalVideoComponent =
@@ -141,7 +153,7 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
         >
           {localVideoComponent}
         </Stack>
-      ) : horizontalGalleryTiles.length > 0 ? (
+      ) : horizontalGalleryTiles.length > 0 || !!screenShareComponent ? (
         <Stack className={mergeStyles(localVideoTileContainerStyle(theme, localVideoSize))}>
           {localVideoComponent}
         </Stack>
@@ -157,13 +169,14 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
     ) : undefined;
 
   const overflowGallery = useMemo(() => {
-    if (horizontalGalleryTiles.length === 0) {
+    if (horizontalGalleryTiles.length === 0 && !screenShareComponent) {
       return null;
     }
     return (
       <OverflowGallery
         /* @conditional-compile-remove(vertical-gallery) */
         isShort={isShort}
+        onFetchTilesToRender={setIndexesToRender}
         isNarrow={isNarrow}
         shouldFloatLocalVideo={true}
         overflowGalleryElements={horizontalGalleryTiles}
@@ -179,6 +192,8 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
     /* @conditional-compile-remove(vertical-gallery) */ isShort,
     horizontalGalleryTiles,
     styles?.horizontalGallery,
+    setIndexesToRender,
+    screenShareComponent,
     /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryLayout,
     /* @conditional-compile-remove(vertical-gallery) */ styles?.verticalGallery
   ]);

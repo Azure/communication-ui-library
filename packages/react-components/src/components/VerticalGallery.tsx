@@ -74,6 +74,8 @@ export interface VerticalGalleryProps {
   childrenPerPage: number;
   /** Styles to customize the vertical gallery */
   styles?: VerticalGalleryStyles;
+  /** helper function to choose which tiles to give video to. */
+  onFetchTilesToRender?: (indexes: number[]) => void;
 }
 
 interface VerticalGalleryControlBarProps {
@@ -92,7 +94,7 @@ interface VerticalGalleryControlBarProps {
  * @beta
  */
 export const VerticalGallery = (props: VerticalGalleryProps): JSX.Element => {
-  const { children, styles, childrenPerPage } = props;
+  const { children, styles, childrenPerPage, onFetchTilesToRender } = props;
 
   const [page, setPage] = useState(1);
   const [buttonState, setButtonState] = useState<{ previous: boolean; next: boolean }>({ previous: true, next: true });
@@ -103,13 +105,23 @@ export const VerticalGallery = (props: VerticalGalleryProps): JSX.Element => {
   const numberOfChildren = React.Children.count(children);
   const lastPage = Math.ceil(numberOfChildren / childrenPerPage);
 
-  const paginatedChildren: React.ReactNode[][] = useMemo(() => {
-    return bucketize(React.Children.toArray(children), childrenPerPage);
-  }, [children, childrenPerPage]);
+  const indexesArray: number[][] = useMemo(() => {
+    return bucketize([...Array(numberOfChildren).keys()], childrenPerPage);
+  }, [numberOfChildren, childrenPerPage]);
+
+  useEffect(() => {
+    if (onFetchTilesToRender && indexesArray) {
+      onFetchTilesToRender(indexesArray[page - 1]);
+    }
+  }, [indexesArray, onFetchTilesToRender, page]);
 
   const firstIndexOfCurrentPage = (page - 1) * childrenPerPage;
   const clippedPage = firstIndexOfCurrentPage < numberOfChildren - 1 ? page : lastPage;
-  const childrenOnCurrentPage = paginatedChildren[clippedPage - 1];
+  const childrenOnCurrentPage = useMemo(() => {
+    return indexesArray[clippedPage - 1].map((index) => {
+      return React.Children.toArray(children)[index];
+    });
+  }, [indexesArray, clippedPage, children]);
 
   const showButtons = numberOfChildren > childrenPerPage;
 
@@ -152,7 +164,7 @@ export const VerticalGallery = (props: VerticalGalleryProps): JSX.Element => {
   return (
     <Stack className={mergeStyles(rootStyle, styles?.root)}>
       <Stack styles={childContainerStyle}>
-        {childrenOnCurrentPage.map((child, i) => {
+        {childrenOnCurrentPage?.map((child, i) => {
           return (
             <Stack.Item
               key={i}
