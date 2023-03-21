@@ -48,6 +48,8 @@ export interface CallWithChatControlBarProps {
   disableButtonsForHoldScreen?: boolean;
   /* @conditional-compile-remove(PSTN-calls) */
   onClickShowDialpad?: () => void;
+  /* @conditional-compile-remove(video-background-effects) */
+  onClickVideoEffects?: (showPanel: boolean) => void;
 }
 
 const inferCallWithChatControlOptions = (
@@ -188,6 +190,8 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps & Cont
                     splitButtonsForDeviceSelection={!props.mobileView}
                     /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
                     disabled={props.disableButtonsForHoldScreen || isDisabled(options.cameraButton)}
+                    /* @conditional-compile-remove(video-background-effects) */
+                    onClickVideoEffects={props.onClickVideoEffects}
                   />
                 )}
                 {props.mobileView && isEnabled(options?.chatButton) && chatButton}
