@@ -12,7 +12,6 @@ import {
   LatestMediaDiagnostics,
   LatestNetworkDiagnostics,
   MediaStreamType,
-  ParticipantInfo,
   RemoteParticipantState as RemoteParticipantStatus,
   CaptionsResultType,
   ScalingMode,
