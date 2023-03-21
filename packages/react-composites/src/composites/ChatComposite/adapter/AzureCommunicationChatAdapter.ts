@@ -40,6 +40,7 @@ import { FileMetadata } from '@internal/react-components';
 /* @conditional-compile-remove(file-sharing) */
 import { FileUploadManager } from '../file-sharing';
 import { isValidIdentifier } from '../../CallComposite/utils/Utils';
+import { ACSAttachmentContext, ACSAttachmentManager } from './AzureCommunicationAttachmentManager';
 
 /**
  * Context of Chat, which is a centralized context for all state updates
@@ -114,6 +115,8 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   private context: ChatContext;
   /* @conditional-compile-remove(file-sharing) */
   private fileUploadAdapter: FileUploadAdapter;
+  /* @conditional-compile-remove(teams-inline-images) */
+  private attachmentManager: ACSAttachmentManager;
   private handlers: ChatHandlers;
   private emitter: EventEmitter = new EventEmitter();
 
@@ -124,6 +127,8 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     this.context = new ChatContext(chatClient.getState(), chatThreadClient.threadId);
     /* @conditional-compile-remove(file-sharing) */
     this.fileUploadAdapter = new AzureCommunicationFileUploadAdapter(this.context);
+    /* @conditional-compile-remove(teams-inline-images) */
+    this.attachmentManager = new ACSAttachmentContext();
     const onStateChange = (clientState: ChatClientState): void => {
       // unsubscribe when the instance gets disposed
       if (!this) {
@@ -169,6 +174,8 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     this.updateFileUploadErrorMessage = this.updateFileUploadErrorMessage.bind(this);
     /* @conditional-compile-remove(file-sharing) */
     this.updateFileUploadMetadata = this.updateFileUploadMetadata.bind(this);
+    /* @conditional-compile-remove(teams-inline-images) */
+    this.fetchAttachments = this.fetchAttachments.bind(this);
   }
 
   dispose(): void {
@@ -306,6 +313,11 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   /* @conditional-compile-remove(file-sharing) */
   updateFileUploadMetadata(id: string, metadata: FileMetadata): void {
     this.fileUploadAdapter.updateFileUploadMetadata(id, metadata);
+  }
+
+  /* @conditional-compile-remove(teams-inline-images) */
+  async fetchAttachments(attachement: ChatAttachment): Promise<string> {
+    return await this.attachmentManager.downloadInlineAttachment(attachement);
   }
 
   private messageReceivedListener(event: ChatMessageReceivedEvent): void {
