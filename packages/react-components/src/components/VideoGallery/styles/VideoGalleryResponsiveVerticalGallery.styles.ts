@@ -35,6 +35,8 @@ export const VERTICAL_GALLERY_TILE_SIZE_REM = { minHeight: 6.75, maxHeight: 11, 
  *
  * width is being increased by 1rem to account for the gap width desired for the VerticalGallery.
  *
+ * Add 1.5 rem on width to account for horizontal padding
+ *
  * @param shouldFloatLocalVideo whether rendered in floating layout or not
  * @returns Style set for VerticalGallery container.
  */
@@ -45,20 +47,20 @@ export const verticalGalleryContainerStyle = (
 ): IStyle => {
   return isNarrow && isShort
     ? {
-        width: `${SHORT_VERTICAL_GALLERY_TILE_SIZE_REM.width}rem`,
+        width: `${SHORT_VERTICAL_GALLERY_TILE_SIZE_REM.width + 1.5}rem`,
         height: shouldFloatLocalVideo ? `calc(100% - ${_pxToRem(SMALL_FLOATING_MODAL_SIZE_PX.height)})` : '100%',
         paddingBottom: '0.5rem'
       }
     : !isNarrow && isShort
     ? {
-        width: `${SHORT_VERTICAL_GALLERY_TILE_SIZE_REM.width}rem`,
+        width: `${SHORT_VERTICAL_GALLERY_TILE_SIZE_REM.width + 1.5}rem`,
         height: shouldFloatLocalVideo
           ? `calc(100% - ${_pxToRem(SHORT_VERTICAL_GALLERY_FLOATING_MODAL_SIZE_PX.height)})`
           : '100%',
         paddingBottom: '0.5rem'
       }
     : {
-        width: `${VERTICAL_GALLERY_TILE_SIZE_REM.width}rem`,
+        width: `${VERTICAL_GALLERY_TILE_SIZE_REM.width + 1.5}rem`,
         height: shouldFloatLocalVideo
           ? `calc(100% - ${_pxToRem(VERTICAL_GALLERY_FLOATING_MODAL_SIZE_PX.height)})`
           : '100%',

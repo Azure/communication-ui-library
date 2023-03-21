@@ -92,7 +92,7 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
     );
   });
 
-  const shouldFloatLocalVideo = remoteParticipants.length > 0;
+  const shouldFloatLocalVideo = remoteParticipants.length > 0 || !!screenShareComponent;
 
   if (!shouldFloatLocalVideo && localVideoComponent) {
     gridTiles.push(localVideoComponent);
@@ -116,7 +116,7 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
       return SMALL_FLOATING_MODAL_SIZE_PX;
     }
     /* @conditional-compile-remove(vertical-gallery) */
-    if (horizontalGalleryTiles.length > 0 && overflowGalleryLayout === 'VerticalRight') {
+    if ((horizontalGalleryTiles.length > 0 || !!screenShareComponent) && overflowGalleryLayout === 'VerticalRight') {
       return isNarrow
         ? SMALL_FLOATING_MODAL_SIZE_PX
         : isShort
@@ -128,7 +128,8 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
     horizontalGalleryTiles.length,
     isNarrow,
     /* @conditional-compile-remove(vertical-gallery) */ isShort,
-    /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryLayout
+    /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryLayout,
+    /* @conditional-compile-remove(vertical-gallery) */ screenShareComponent
   ]);
 
   const wrappedLocalVideoComponent =
@@ -143,7 +144,7 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
         >
           {localVideoComponent}
         </Stack>
-      ) : horizontalGalleryTiles.length > 0 ? (
+      ) : horizontalGalleryTiles.length > 0 || !!screenShareComponent ? (
         <Stack className={mergeStyles(localVideoTileContainerStyle(theme, localVideoSize))}>
           {localVideoComponent}
         </Stack>
@@ -159,7 +160,7 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
     ) : undefined;
 
   const overflowGallery = useMemo(() => {
-    if (horizontalGalleryTiles.length === 0) {
+    if (horizontalGalleryTiles.length === 0 && !screenShareComponent) {
       return null;
     }
     return (
@@ -183,6 +184,7 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
     horizontalGalleryTiles,
     styles?.horizontalGallery,
     setIndexesToRender,
+    screenShareComponent,
     /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryLayout,
     /* @conditional-compile-remove(vertical-gallery) */ styles?.verticalGallery
   ]);
