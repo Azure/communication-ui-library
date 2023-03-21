@@ -62,6 +62,7 @@ export const ThemeToolTipWithPanel = (props: { active: boolean }): JSX.Element =
     })
   )
   themeOptions.push({ id: 'Custom', title: 'Custom', onClick: () => setShowPanel(true), active: globals['theme'] === 'Custom' });
+
   return (
     <WithTooltip placement="top" trigger="click" closeOnClick={true} tooltip={<TooltipLinkList links={themeOptions} />}>
       <IconButton key="background" title="Change the background of the preview" active={props.active}>
