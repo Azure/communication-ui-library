@@ -5,7 +5,9 @@ import {
   RemoteParticipant as SdkRemoteParticipant,
   RemoteVideoStream as SdkRemoteVideoStream,
   LocalVideoStream as SdkLocalVideoStream,
-  VideoStreamRendererView
+  VideoStreamRendererView,
+  AcsCaptionsInfo,
+  TeamsCaptionsInfo
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-identity-support) */
 import { CallKind } from '@azure/communication-calling';
@@ -16,7 +18,8 @@ import {
   RemoteVideoStreamState as DeclarativeRemoteVideoStream,
   LocalVideoStreamState as DeclarativeLocalVideoStream,
   IncomingCallState as DeclarativeIncomingCall,
-  VideoStreamRendererViewState as DeclarativeVideoStreamRendererView
+  VideoStreamRendererViewState as DeclarativeVideoStreamRendererView,
+  CaptionInfoState
 } from './CallClientState';
 /* @conditional-compile-remove(teams-identity-support) */
 import { _isACSCall } from './TypeGuards';
@@ -111,7 +114,14 @@ export function convertSdkCallToDeclarativeCall(call: CallCommon): CallState {
     startTime: new Date(),
     endTime: undefined,
     /* @conditional-compile-remove(rooms) */
-    role: call.role
+    role: call.role,
+    captionsFeature: {
+      captions: [],
+      availableSpokenLanguages: [],
+      selectedSpokenLanguage: undefined,
+      selectedSubtitleLanguage: undefined,
+      isActive: false
+    }
   };
 }
 
@@ -137,5 +147,14 @@ export function convertFromSDKToDeclarativeVideoStreamRendererView(
     scalingMode: view.scalingMode,
     isMirrored: view.isMirrored,
     target: view.target
+  };
+}
+
+/**
+ * @private
+ */
+export function convertFromSDKToCaptionInfoState(caption: AcsCaptionsInfo | TeamsCaptionsInfo): CaptionInfoState {
+  return {
+    ...caption
   };
 }

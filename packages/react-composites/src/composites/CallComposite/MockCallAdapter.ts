@@ -161,7 +161,12 @@ const defaultCallAdapterState: CallAdapterState = {
     isMuted: false,
     isScreenSharingOn: false,
     remoteParticipants: {},
-    remoteParticipantsEnded: {}
+    remoteParticipantsEnded: {},
+    captionsFeature: {
+      isActive: false,
+      captions: [],
+      availableSpokenLanguages: []
+    }
   },
   userId: { kind: 'communicationUser', communicationUserId: '1' },
   devices: {

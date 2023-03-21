@@ -12,7 +12,9 @@ import {
   LatestMediaDiagnostics,
   LatestNetworkDiagnostics,
   MediaStreamType,
+  ParticipantInfo,
   RemoteParticipantState as RemoteParticipantStatus,
+  ResultType,
   ScalingMode,
   VideoDeviceInfo
 } from '@azure/communication-calling';
@@ -45,6 +47,53 @@ export interface CallAgentState {
    * Proxy of {@link @azure/communication-calling#CallAgent.displayName}.
    */
   displayName?: string;
+}
+
+/**
+ * @beta
+ */
+export interface CaptionInfoState {
+  /**
+   * The state in which this caption data can be classified.
+   */
+  resultType: ResultType;
+  /**
+   * The information of the call participant who spoke the captioned text.
+   */
+  speaker: ParticipantInfo;
+  /**
+   * The language that the spoken words were interpretted as. Corresponds to the language specified in startCaptions / selectLanguage.
+   */
+  spokenLanguage: string;
+  /**
+   * The caption text.
+   */
+  text: string;
+  /**
+   * Timestamp of when the captioned words were initially spoken.
+   */
+  timestamp: Date;
+  /**
+   * The language that the captions are presented in. Corresponds to the subtitleLanguage specified in startCaptions / selectLanguage.
+   */
+  subtitleLanguage?: string;
+  /**
+   * The original spoken caption text prior to translating to subtitle language
+   */
+  originalText?: string;
+}
+
+/**
+ *
+ * @beta
+ */
+export interface CaptionsCallFeatureState {
+  captions: CaptionInfoState[];
+  selectedSpokenLanguage?: string;
+  selectedSubtitleLanguage?: string;
+  availableSpokenLanguages: string[];
+  availableSubtitleLanguages?: string[];
+  isActive: boolean;
 }
 
 /**
@@ -279,6 +328,10 @@ export interface CallState {
    * Proxy of {@link @azure/communication-calling#TranscriptionCallFeature}.
    */
   transcription: TranscriptionCallFeatureState;
+  /**
+   * Proxy of {@link @azure/communication-calling#TranscriptionCallFeature}.
+   */
+  captionsFeature: CaptionsCallFeatureState;
   /**
    * Proxy of {@link @azure/communication-calling#RecordingCallFeature}.
    */
@@ -572,7 +625,8 @@ export type CallErrorTarget =
   | 'IncomingCall.accept'
   | 'IncomingCall.reject'
   | /* @conditional-compile-remove(calling-beta-sdk) */ /* @conditional-compile-remove(teams-identity-support) */ 'TeamsCall.addParticipant'
-  | /* @conditional-compile-remove(video-background-effects) */ 'VideoEffectsFeature.startEffects';
+  | /* @conditional-compile-remove(video-background-effects) */ 'VideoEffectsFeature.startEffects'
+  | /* @conditional-compile-remove(calling-beta-sdk) */ 'CallAgent.handlePushNotification';
 
 /**
  * State only proxy for {@link @azure/communication-calling#DiagnosticsCallFeature}.

@@ -90,7 +90,12 @@ function createMockCall(mockCallId: string): CallState {
     screenShareRemoteParticipant: undefined,
     startTime: new Date(),
     endTime: undefined,
-    dominantSpeakers: undefined
+    dominantSpeakers: undefined,
+    captionsFeature: {
+      isActive: false,
+      availableSpokenLanguages: [],
+      captions: []
+    }
   };
   return call;
 }
