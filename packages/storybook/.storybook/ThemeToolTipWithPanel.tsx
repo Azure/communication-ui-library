@@ -10,7 +10,7 @@ import { THEMES } from '../stories/themes';
 export const ThemeToolTipWithPanel = (props: { active: boolean }): JSX.Element => {
   const [globals, updateGlobals] = useGlobals();
   const [textValue, setTextValue] = useState('');
-  const [showVideoEffectsOptions, setshowVideoEffectsOptions] = useState(false);
+  const [showPanel, setShowPanel] = useState(false);
   const [error, setError] = useState('');
 
   const validateThenUpdate = () => {
@@ -36,7 +36,7 @@ export const ThemeToolTipWithPanel = (props: { active: boolean }): JSX.Element =
       // Invokes Storybook's addon API method (with the FORCE_RE_RENDER) event to trigger a UI refresh
       addons.getChannel().emit(FORCE_RE_RENDER);
       setTextValue(themeJson);
-      setshowVideoEffectsOptions(false);
+      setShowPanel(false);
     } catch (e) {
       setError(e.toString());
     }
@@ -53,7 +53,7 @@ export const ThemeToolTipWithPanel = (props: { active: boolean }): JSX.Element =
       id: theme,
       title: theme,
       onClick: () => {
-        setshowVideoEffectsOptions(false);
+        setShowPanel(false);
         updateGlobals({ ['theme']: theme, ['customTheme']: '' });
         // Invokes Storybook's addon API method (with the FORCE_RE_RENDER) event to trigger a UI refresh
         addons.getChannel().emit(FORCE_RE_RENDER);
@@ -61,8 +61,7 @@ export const ThemeToolTipWithPanel = (props: { active: boolean }): JSX.Element =
       active: globals['theme'] === theme
     })
   )
-  themeOptions.push({ id: 'Custom', title: 'Custom', onClick: () => setshowVideoEffectsOptions(true), active: globals['theme'] === 'Custom' });
-
+  themeOptions.push({ id: 'Custom', title: 'Custom', onClick: () => setShowPanel(true), active: globals['theme'] === 'Custom' });
   return (
     <WithTooltip placement="top" trigger="click" closeOnClick={true} tooltip={<TooltipLinkList links={themeOptions} />}>
       <IconButton key="background" title="Change the background of the preview" active={props.active}>
@@ -70,8 +69,8 @@ export const ThemeToolTipWithPanel = (props: { active: boolean }): JSX.Element =
       </IconButton>
       <Panel
         headerText="Apply a custom theme"
-        isOpen={showVideoEffectsOptions}
-        onDismiss={() => setshowVideoEffectsOptions(false)}
+        isOpen={showPanel}
+        onDismiss={() => setShowPanel(false)}
         hasCloseButton={true}
         closeButtonAriaLabel="Close"
         isLightDismiss={true}
