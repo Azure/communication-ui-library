@@ -73,7 +73,9 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
   /* @conditional-compile-remove(vertical-gallery) */
   const isShort = parentHeight ? isShortHeight(parentHeight) : false;
 
-  const childrenPerPage = useRef(0);
+  // This is for tracking the number of children in the first page of horizontal gallery.
+  // This number will be used for the maxHorizontalDominantSpeakers when organizing the remote participants.
+  const childrenPerPage = useRef(4);
   const { gridParticipants, horizontalGalleryParticipants } = useOrganizedParticipants({
     remoteParticipants,
     dominantSpeakers,
