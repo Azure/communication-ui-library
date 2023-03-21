@@ -66,7 +66,16 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
     );
   });
 
-  const [indexesToRender, setIndexesToRender] = useState<number[]>([0]);
+  /**
+   * instantiate indexes available to render with indexes available that would be on first page
+   *
+   * For some components which do not strictly follow the order of the array, we might
+   * re-render the initial tiles -> dispose them -> create new tiles, we need to take care of
+   * this case when those components are here
+   */
+  const [indexesToRender, setIndexesToRender] = useState<number[]>([
+    ...Array(maxRemoteVideoStreams - activeVideoStreams).keys()
+  ]);
 
   const horizontalGalleryTiles = horizontalGalleryParticipants.map((p, i) => {
     return onRenderRemoteParticipant(
