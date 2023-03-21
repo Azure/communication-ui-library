@@ -70,6 +70,19 @@ export const GenerateMockNewChatMessageFromOthers = (): ChatMessage => {
   };
 };
 
+export const GenerateMockNewChatMessageWithInlineImage = (): ChatMessage => {
+  return {
+    messageType: 'chat',
+    ...UserThree,
+    messageId: Math.random().toString(),
+    content: 'Check out this image I just sent!',
+    createdOn: new Date('2020-04-13T00:00:00.000+07:01'),
+    mine: false,
+    attached: false,
+    contentType: 'text'
+  };
+};
+
 export const GenerateMockSystemMessage = (): SystemMessage => {
   return {
     messageType: 'system',
