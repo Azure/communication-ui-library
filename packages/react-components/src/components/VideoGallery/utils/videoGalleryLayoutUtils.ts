@@ -58,21 +58,22 @@ const _useOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedP
 
   const visibleGridParticipantsSet = new Set(visibleGridParticipants.current.map((p) => p.userId));
 
+  const remoteParticipantsOrdered = putVideoParticipantsFirst(remoteParticipants);
+
   /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
-  const callingParticipants = remoteParticipants.filter((p) => p.state === ('Connecting' || 'Ringing'));
+  const callingParticipants = remoteParticipantsOrdered.filter((p) => p.state === ('Connecting' || 'Ringing'));
   /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
   const callingParticipantsSet = new Set(callingParticipants.map((p) => p.userId));
 
   visibleHorizontalGalleryParticipants.current = smartDominantSpeakerParticipants({
-    participants: remoteParticipants.filter(
+    participants: remoteParticipantsOrdered.filter(
       (p) =>
         !visibleGridParticipantsSet.has(p.userId) &&
         /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ !callingParticipantsSet.has(
           p.userId
         )
     ),
-    //appending video participants in the end in case there are not enough dominant speakers
-    dominantSpeakers: dominantSpeakers.concat(videoParticipants.map((p) => p.userId)),
+    dominantSpeakers: dominantSpeakers,
     lastVisibleParticipants: visibleHorizontalGalleryParticipants.current,
     maxDominantSpeakers: maxHorizontalGalleryDominantSpeakers
   });
@@ -165,6 +166,22 @@ const _useOrganizedParticipantsWithPinnedParticipants = (
           useOrganizedParticipantsResult.horizontalGalleryParticipants
         )
   };
+};
+
+const putVideoParticipantsFirst = (
+  remoteParticipants: VideoGalleryRemoteParticipant[]
+): VideoGalleryRemoteParticipant[] => {
+  const videoParticipants: VideoGalleryRemoteParticipant[] = [];
+  const audioParticipants: VideoGalleryRemoteParticipant[] = [];
+  remoteParticipants.forEach((p) => {
+    if (p.videoStream?.isAvailable) {
+      videoParticipants.push(p);
+    } else {
+      audioParticipants.push(p);
+    }
+  });
+  const remoteParticipantSortedByVideo = videoParticipants.concat(audioParticipants);
+  return remoteParticipantSortedByVideo;
 };
 
 /**

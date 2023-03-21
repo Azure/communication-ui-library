@@ -62,7 +62,7 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
     showCameraSwitcherInLocalPreview,
     parentWidth,
     parentHeight,
-    /* @conditional-compile-remove(pinned-participants) */ pinnedParticipantUserIds = [],
+    pinnedParticipantUserIds = [],
     /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryLayout = 'HorizontalBottom'
   } = props;
 

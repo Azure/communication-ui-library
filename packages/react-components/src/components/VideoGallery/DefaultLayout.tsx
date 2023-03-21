@@ -38,7 +38,7 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
     parentWidth,
     /* @conditional-compile-remove(vertical-gallery) */
     parentHeight,
-    /* @conditional-compile-remove(pinned-participants) */ pinnedParticipantUserIds = [],
+    pinnedParticipantUserIds = [],
     /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryLayout = 'HorizontalBottom'
   } = props;
 
