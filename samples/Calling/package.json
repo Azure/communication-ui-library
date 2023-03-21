@@ -28,7 +28,7 @@
     "@azure/abort-controller": "^1.0.0",
     "@azure/communication-identity": "~1.1.0",
     "@azure/communication-calling": "file:../../libs/skype-spool-sdk-1.0.0.tgz",
-    "@azure/communication-react": "1.5.1-beta.0",
+    "@azure/communication-react": "1.5.1-beta.1",
     "@azure/communication-common": "2.2.0",
     "@azure/logger": "1.0.3",
     "@babel/preset-react": "^7.12.7",

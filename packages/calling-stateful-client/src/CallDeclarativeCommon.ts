@@ -3,7 +3,7 @@
 
 import { CallContext } from './CallContext';
 import { CallCommon } from './BetaToStableTypes';
-import { AcsCaptionsCallFeature, Features, TeamsCaptionsCallFeature } from '@azure/communication-calling';
+import { Features, TeamsCaptionsCallFeature } from '@azure/communication-calling';
 
 /**
  * @private
@@ -74,22 +74,7 @@ export abstract class ProxyCallCommon implements ProxyHandler<CallCommon> {
       case 'feature': {
         // these are mini version of Proxy object - if it grows too big, a real Proxy object should be used.
         return this._context.withErrorTeedToState((...args: Parameters<CallCommon['feature']>) => {
-          if (args[0] === Features.AcsCaptions) {
-            const captionsFeature = target.feature(Features.AcsCaptions);
-            return {
-              ...captionsFeature,
-              startCaptions: async (...args: Parameters<AcsCaptionsCallFeature['startCaptions']>) => {
-                const ret = await captionsFeature.startCaptions(...args);
-                this._context.setIsCaptionActive(target.id, true);
-                return ret;
-              },
-              selectSpokenLanguage: async (...args: Parameters<TeamsCaptionsCallFeature['selectSpokenLanguage']>) => {
-                const ret = await captionsFeature.selectSpokenLanguage(...args);
-                this._context.setSelectedSpokenLanguage(target.id, args[0]);
-                return ret;
-              }
-            };
-          } else if (args[0] === Features.TeamsCaptions) {
+          if (args[0] === Features.TeamsCaptions) {
             const captionsFeature = target.feature(Features.TeamsCaptions);
             return {
               ...captionsFeature,
@@ -98,23 +83,26 @@ export abstract class ProxyCallCommon implements ProxyHandler<CallCommon> {
                 this._context.setIsCaptionActive(target.id, true);
                 return ret;
               },
-              selectSpokenLanguage: async (...args: Parameters<TeamsCaptionsCallFeature['selectSpokenLanguage']>) => {
-                const ret = await captionsFeature.selectSpokenLanguage(...args);
+              stopCaptions: async () => {
+                const ret = await captionsFeature.stopCaptions();
+                this._context.setIsCaptionActive(target.id, false);
+                return ret;
+              },
+              setSpokenLanguage: async (...args: Parameters<TeamsCaptionsCallFeature['setSpokenLanguage']>) => {
+                const ret = await captionsFeature.setSpokenLanguage(...args);
                 this._context.setSelectedSpokenLanguage(target.id, args[0]);
                 return ret;
               },
-              selectSubtitleLanguage: async (
-                ...args: Parameters<TeamsCaptionsCallFeature['selectSubtitleLanguage']>
-              ) => {
-                const ret = await captionsFeature.selectSubtitleLanguage(...args);
-                this._context.setSelectedSubtitleLanguage(target.id, args[0]);
+              setCaptionLanguage: async (...args: Parameters<TeamsCaptionsCallFeature['setCaptionLanguage']>) => {
+                const ret = await captionsFeature.setCaptionLanguage(...args);
+                this._context.setSelectedCaptionLanguage(target.id, args[0]);
                 return ret;
               }
             };
           } else {
             return target.feature(...args);
           }
-        }, 'Call.resume');
+        }, 'Call.feature');
       }
       default:
         return Reflect.get(target, prop);

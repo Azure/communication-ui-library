@@ -10,7 +10,8 @@ import {
   StatefulCallClient,
   StatefulDeviceManager,
   TeamsCall,
-  TeamsCallAgent as BetaTeamsCallAgent
+  TeamsCallAgent as BetaTeamsCallAgent,
+  _isTeamsCall
 } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(teams-identity-support) */
 import { _isTeamsCallAgent } from '@internal/calling-stateful-client';
@@ -583,7 +584,9 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     this.context.setCurrentCallId(call.id);
 
     // REMOVE THIS< TEST PURPOSES ONLY
-    call.feature(Features.AcsCaptions).startCaptions();
+    if (_isTeamsCall(call)) {
+      call.feature(Features.TeamsCaptions).startCaptions();
+    }
 
     // Resync state after callId is set
     this.context.updateClientState(this.callClient.getState());

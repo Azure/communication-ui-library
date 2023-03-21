@@ -3,14 +3,13 @@
 
 import { CommunicationIdentifierKind } from '@azure/communication-common';
 import {
-  AcsCaptionsInfo,
   AudioDeviceInfo,
   DeviceAccess,
   DominantSpeakersInfo,
   ResultType,
   ScalingMode,
-  TeamsCaptionsInfo,
-  VideoDeviceInfo
+  VideoDeviceInfo,
+  TeamsCaptionsInfo
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
@@ -37,7 +36,7 @@ import {
   CallErrors,
   CallErrorTarget,
   CallError,
-  CaptionInfoState
+  CaptionsInfo
 } from './CallClientState';
 import { callingStatefulLogger } from './Logger';
 import { CallIdHistory } from './CallIdHistory';
@@ -702,20 +701,19 @@ export class CallContext {
     return id;
   }
 
-  private processNewCaption(captions: CaptionInfoState[], captionInfo: CaptionInfoState): void {
+  private processNewCaption(captions: CaptionsInfo[], newCaption: CaptionsInfo): void {
     // Check if the incoming caption is a replacement for the latest one
     const latestCaption = captions[captions.length - 1];
     if (
       latestCaption &&
       latestCaption.resultType !== ResultType.Final &&
-      latestCaption.timestamp.getTime() === captionInfo.timestamp.getTime() &&
-      toFlatCommunicationIdentifier(latestCaption.speaker.identifier) ===
-        toFlatCommunicationIdentifier(captionInfo.speaker.identifier)
+      latestCaption.timestamp.getTime() === newCaption.timestamp.getTime() &&
+      latestCaption.speaker.identifier === newCaption.speaker.identifier
     ) {
       captions.pop();
     }
 
-    captions.push(captionInfo);
+    captions.push(newCaption);
 
     // If the array length exceeds 50, remove the oldest caption
     if (captions.length > 50) {
@@ -723,7 +721,7 @@ export class CallContext {
     }
   }
 
-  public addCaption(callId: string, caption: AcsCaptionsInfo | TeamsCaptionsInfo): void {
+  public addCaption(callId: string, caption: TeamsCaptionsInfo): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
@@ -736,7 +734,7 @@ export class CallContext {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
-        call.captionsFeature.isActive = isCaptionsActive;
+        call.captionsFeature.isCaptionsFeatureActive = isCaptionsActive;
       }
     });
   }
@@ -745,25 +743,25 @@ export class CallContext {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
-        call.captionsFeature.selectedSpokenLanguage = spokenLanguage;
+        call.captionsFeature.currentSpokenLanguage = spokenLanguage;
       }
     });
   }
 
-  setSelectedSubtitleLanguage(callId: string, subtitleLanguage: string): void {
+  setSelectedCaptionLanguage(callId: string, captionLanguage: string): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
-        call.captionsFeature.selectedSubtitleLanguage = subtitleLanguage;
+        call.captionsFeature.currentCaptionLanguage = captionLanguage;
       }
     });
   }
 
-  setAvailableSubtitleLanguages(callId: string, subtitleLanguages: string[]): void {
+  setAvailableCaptionLanguages(callId: string, captionLanguages: string[]): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
-        call.captionsFeature.availableSubtitleLanguages = subtitleLanguages;
+        call.captionsFeature.supportedCaptionLanguages = captionLanguages;
       }
     });
   }
@@ -772,7 +770,7 @@ export class CallContext {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
-        call.captionsFeature.availableSpokenLanguages = spokenLanguages;
+        call.captionsFeature.supportedSpokenLangauges = spokenLanguages;
       }
     });
   }

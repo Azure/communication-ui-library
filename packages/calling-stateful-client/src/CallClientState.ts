@@ -12,9 +12,8 @@ import {
   LatestMediaDiagnostics,
   LatestNetworkDiagnostics,
   MediaStreamType,
-  ParticipantInfo,
   RemoteParticipantState as RemoteParticipantStatus,
-  ResultType,
+  CaptionsResultType,
   ScalingMode,
   VideoDeviceInfo
 } from '@azure/communication-calling';
@@ -52,35 +51,35 @@ export interface CallAgentState {
 /**
  * @beta
  */
-export interface CaptionInfoState {
+export interface CaptionsInfo {
   /**
    * The state in which this caption data can be classified.
    */
-  resultType: ResultType;
+  resultType: CaptionsResultType;
   /**
    * The information of the call participant who spoke the captioned text.
    */
-  speaker: ParticipantInfo;
+  speaker: CallerInfo;
   /**
-   * The language that the spoken words were interpretted as. Corresponds to the language specified in startCaptions / selectLanguage.
+   * The language that the spoken words were interpretted as. Corresponds to the language specified in startCaptions / setSpokenLanguage.
    */
   spokenLanguage: string;
   /**
    * The caption text.
    */
-  text: string;
+  captionText: string;
   /**
    * Timestamp of when the captioned words were initially spoken.
    */
   timestamp: Date;
   /**
-   * The language that the captions are presented in. Corresponds to the subtitleLanguage specified in startCaptions / selectLanguage.
+   * The language that the captions are presented in. Corresponds to the captionLanguage specified in startCaptions / setCaptionLanguage.
    */
-  subtitleLanguage?: string;
+  captionLanguage?: string;
   /**
    * The original spoken caption text prior to translating to subtitle language
    */
-  originalText?: string;
+  spokenText?: string;
 }
 
 /**
@@ -88,12 +87,30 @@ export interface CaptionInfoState {
  * @beta
  */
 export interface CaptionsCallFeatureState {
-  captions: CaptionInfoState[];
-  selectedSpokenLanguage?: string;
-  selectedSubtitleLanguage?: string;
-  availableSpokenLanguages: string[];
-  availableSubtitleLanguages?: string[];
-  isActive: boolean;
+  /**
+   * supported spoken languages
+   */
+  supportedSpokenLangauges: string[];
+  /**
+   * array of received captions
+   */
+  captions: CaptionsInfo[];
+  /**
+   * whether captions is on/off
+   */
+  isCaptionsFeatureActive: boolean;
+  /**
+   * supported caption languages
+   */
+  supportedCaptionLanguages: string[];
+  /**
+   * current spoken language
+   */
+  currentSpokenLanguage: string;
+  /**
+   * current caption language
+   */
+  currentCaptionLanguage: string;
 }
 
 /**

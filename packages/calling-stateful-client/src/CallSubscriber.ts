@@ -65,9 +65,7 @@ export class CallSubscriber {
     this._captionsSubscriber = new CaptionsSubscriber(
       this._callIdRef,
       this._context,
-      _isTeamsMeetingCall(this._call)
-        ? this._call.feature(Features.TeamsCaptions)
-        : this._call.feature(Features.AcsCaptions)
+      this._call.feature(Features.TeamsCaptions)
     );
     /* @conditional-compile-remove(video-background-effects) */
     this._localVideoStreamVideoEffectsSubscribers = new Map();
