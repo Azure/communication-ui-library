@@ -62,7 +62,7 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
     showCameraSwitcherInLocalPreview,
     parentWidth,
     parentHeight,
-    /* @conditional-compile-remove(pinned-participants) */ pinnedParticipantUserIds,
+    /* @conditional-compile-remove(pinned-participants) */ pinnedParticipantUserIds = [],
     /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryLayout = 'HorizontalBottom'
   } = props;
 
@@ -79,7 +79,9 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
     dominantSpeakers,
     maxRemoteVideoStreams,
     isScreenShareActive: !!screenShareComponent,
-    maxHorizontalGalleryDominantSpeakers: childrenPerPage.current,
+    maxHorizontalGalleryDominantSpeakers: screenShareComponent
+      ? childrenPerPage.current - (pinnedParticipantUserIds.length % childrenPerPage.current)
+      : childrenPerPage.current,
     /* @conditional-compile-remove(pinned-participants) */ pinnedParticipantUserIds
   });
 

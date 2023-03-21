@@ -38,7 +38,7 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
     parentWidth,
     /* @conditional-compile-remove(vertical-gallery) */
     parentHeight,
-    /* @conditional-compile-remove(pinned-participants) */ pinnedParticipantUserIds,
+    /* @conditional-compile-remove(pinned-participants) */ pinnedParticipantUserIds = [],
     /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryLayout = 'HorizontalBottom'
   } = props;
 
@@ -53,7 +53,9 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
     dominantSpeakers,
     maxRemoteVideoStreams,
     isScreenShareActive: !!screenShareComponent,
-    maxHorizontalGalleryDominantSpeakers: childrenPerPage.current,
+    maxHorizontalGalleryDominantSpeakers: screenShareComponent
+      ? childrenPerPage.current - (pinnedParticipantUserIds.length % childrenPerPage.current)
+      : childrenPerPage.current,
     /* @conditional-compile-remove(pinned-participants) */ pinnedParticipantUserIds
   });
 
