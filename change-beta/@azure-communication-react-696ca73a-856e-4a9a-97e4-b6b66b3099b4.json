@@ -1,9 +1,6 @@
 {
-  "type": "minor",
-  "comment": {
-    "title": "",
-    "value": ""
-  },
+  "type": "pre-release",
+  "comment": "Video Effects Button and Pane",
   "packageName": "@azure/communication-react",
   "email": "97124699+prabhjot-msft@users.noreply.github.com",
   "dependentChangeType": "patch"

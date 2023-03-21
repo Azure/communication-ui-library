@@ -1,5 +1,5 @@
 {
-  "type": "minor",
+  "type": "pre-release",
   "comment": "Video Effects Button and Pane",
   "packageName": "@azure/communication-react",
   "email": "97124699+prabhjot-msft@users.noreply.github.com",

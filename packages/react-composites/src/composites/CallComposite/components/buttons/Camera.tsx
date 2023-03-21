@@ -16,7 +16,7 @@ export const Camera = (props: {
   splitButtonsForDeviceSelection?: boolean;
   disabled?: boolean;
   /* @conditional-compile-remove(video-background-effects) */
-  onClickVideoEffects?: (showPanel: boolean) => void;
+  onClickVideoEffectsButton?: (showPanel: boolean) => void;
 }): JSX.Element => {
   const cameraButtonProps = usePropsFor(CameraButton);
   const styles = useMemo(() => concatButtonBaseStyles(props.styles ?? {}), [props.styles]);
@@ -29,7 +29,7 @@ export const Camera = (props: {
       enableDeviceSelectionMenu={props.splitButtonsForDeviceSelection}
       disabled={cameraButtonProps.disabled || props.disabled}
       /* @conditional-compile-remove(video-background-effects) */
-      onClickVideoEffects={props.onClickVideoEffects}
+      onClickVideoEffectsButton={props.onClickVideoEffectsButton}
     />
   );
 };
