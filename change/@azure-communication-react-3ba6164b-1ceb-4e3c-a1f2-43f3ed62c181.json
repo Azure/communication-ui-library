@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Update video gallery storybook page for better context of layouts and galleries. update API for better naming",
+  "packageName": "@azure/communication-react",
+  "email": "94866715+dmceachernmsft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
