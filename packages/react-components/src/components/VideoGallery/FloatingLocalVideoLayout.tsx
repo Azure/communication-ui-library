@@ -98,7 +98,13 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
     gridTiles.push(localVideoComponent);
   }
 
-  /** instantiate indexes available to render with indexes available that would be on first page */
+  /**
+   * instantiate indexes available to render with indexes available that would be on first page
+   *
+   * For some interesting components which doesn't strictly follow the order of the array, we might
+   * re-render the initial tiles -> dispose them -> create new tiles, we need to take care of
+   * this case when those components are here
+   */
   const [indexesToRender, setIndexesToRender] = useState<number[]>([
     ...Array(maxRemoteVideoStreams - activeVideoStreams).keys()
   ]);
