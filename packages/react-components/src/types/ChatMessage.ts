@@ -74,6 +74,32 @@ export interface ChatMessage extends MessageCommon {
    * {@link FileMetadata}
    */
   attachedFilesMetadata?: FileMetadata[];
+  /* @conditional-compile-remove(teams-inline-images) */
+  /**
+   * @internal
+   * A list of atachements message needs to make a request to download.
+   */
+
+  attachments?: ChatAttachment[];
+}
+/**
+ * @internal
+ * Status of a chat attachment.
+ */
+export type ChatAttachmentStatus = 'downloading' | 'completed' | 'failed' | 'none';
+
+/**
+ * A chat attachment object that holds data needed to download an attachment.
+ *
+ * @internal
+ */
+export interface ChatAttachment {
+  id: string;
+  attachmentType: string;
+  status: ChatAttachmentStatus;
+  name?: string;
+  url: string;
+  previewUrl?: string;
 }
 /**
  * A system message notifying that a participant was added to the chat thread.

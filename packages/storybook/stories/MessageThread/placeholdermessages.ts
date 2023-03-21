@@ -8,6 +8,7 @@ import {
   CustomMessage,
   SystemMessage
 } from '@azure/communication-react';
+import { ChatAttachment } from '../../../react-components/src/types';
 
 export const MessageThreadStoryContainerStyles = {
   width: '100%',
@@ -79,7 +80,18 @@ export const GenerateMockNewChatMessageWithInlineImage = (): ChatMessage => {
     createdOn: new Date('2020-04-13T00:00:00.000+07:01'),
     mine: false,
     attached: false,
-    contentType: 'text'
+    contentType: 'text',
+    attachments: [GenerateMockMessageAttachment()]
+  };
+};
+
+export const GenerateMockMessageAttachment = (): ChatAttachment => {
+  return {
+    id: 'SomeImageId',
+    attachmentType: 'png',
+    status: 'completed',
+    url: 'images/github.png',
+    previewUrl: 'images/github.png'
   };
 };
 
