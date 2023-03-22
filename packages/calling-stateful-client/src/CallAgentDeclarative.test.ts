@@ -84,7 +84,7 @@ class MockCallAgent implements CallAgent {
     return call;
   }
   handlePushNotification(data: PushNotificationData): Promise<void> {
-    console.error('handlePushNotification not implemented');
+    console.error('handlePushNotification not implemented, data: ', data);
     return Promise.resolve();
   }
   join(groupLocator: GroupLocator, options?: JoinCallOptions): Call;
