@@ -228,12 +228,33 @@ export interface _CaptionsBannerProps {
     onRenderAvatar?: OnRenderAvatarCallback;
 }
 
+// @beta
+export interface ChatAttachment {
+    // (undocumented)
+    attachmentType: string;
+    // (undocumented)
+    id: string;
+    // (undocumented)
+    name?: string;
+    // (undocumented)
+    previewUrl?: string;
+    // (undocumented)
+    status: ChatAttachmentStatus;
+    // (undocumented)
+    url: string;
+}
+
+// @beta
+export type ChatAttachmentStatus = 'downloading' | 'completed' | 'failed' | 'none';
+
 // @public
 export interface ChatMessage extends MessageCommon {
     // (undocumented)
     attached?: MessageAttachedStatus;
     // @beta
     attachedFilesMetadata?: FileMetadata[];
+    // @beta
+    attachments?: ChatAttachment[];
     // (undocumented)
     clientMessageId?: string;
     // (undocumented)
