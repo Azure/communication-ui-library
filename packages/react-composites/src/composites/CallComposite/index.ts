@@ -5,6 +5,8 @@ export { CallComposite } from './CallComposite';
 export type { CallCompositeOptions, CallCompositeProps } from './CallComposite';
 /* @conditional-compile-remove(call-readiness) */
 export type { DeviceCheckOptions } from './CallComposite';
+/* @conditional-compile-remove(video-background-effects) */
+export type { VideoBackgroundEffectsOptions, BackgroundUploadHandler } from './CallComposite';
 /* @conditional-compile-remove(pinned-participants) */
 export type { RemoteVideoTileMenuOptions } from './CallComposite';
 export type { CallControlDisplayType, CallControlOptions } from './types/CallControlOptions';
@@ -49,6 +51,14 @@ export type { AzureCommunicationCallAdapterOptions } from './adapter';
 
 /* @conditional-compile-remove(teams-adhoc-call) */
 export type { CallParticipantsLocator } from './adapter';
+
+/* @conditional-compile-remove(video-background-effects) */
+export type {
+  VideoBackgroundImage,
+  VideoBackgroundBlurEffect,
+  VideoBackgroundReplacementEffect,
+  CustomBackground
+} from './adapter/CallAdapter';
 
 export type {
   CallAdapter,

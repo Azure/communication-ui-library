@@ -37,6 +37,8 @@ import { SendDtmfDialpad } from '../common/SendDtmfDialpad';
 /* @conditional-compile-remove(PSTN-calls) */
 import { useCallWithChatCompositeStrings } from './hooks/useCallWithChatCompositeStrings';
 import { CallCompositeOptions } from '../CallComposite/CallComposite';
+/* @conditional-compile-remove(video-background-effects) */
+import { VideoBackgroundEffectsOptions } from '../CallComposite/CallComposite';
 /* @conditional-compile-remove(call-readiness) */
 import { DeviceCheckOptions } from '../CallComposite/CallComposite';
 import { drawerContainerStyles } from '../CallComposite/styles/CallComposite.styles';
@@ -207,6 +209,11 @@ export interface CallWithChatControlOptions {
    * Show or hide the hold button in the bottom sheet drawer
    */
   holdButton?: boolean | { disabled: boolean };
+  /* @conditional-compile-remove(video-background-effects) */
+  /**
+   * Properties for configuring the video background effects.
+   */
+  videoBackgroundEffects?: VideoBackgroundEffectsOptions;
 }
 
 type CallWithChatScreenProps = {

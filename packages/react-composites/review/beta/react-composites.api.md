@@ -133,6 +133,9 @@ export type AzureCommunicationChatAdapterArgs = {
     threadId: string;
 };
 
+// @beta
+export type BackgroundUploadHandler = (image: File) => VideoBackgroundImage;
+
 // @public
 export interface BaseCompositeProps<TIcons extends Record<string, JSX.Element>> {
     fluentTheme?: PartialTheme | Theme;
@@ -183,11 +186,19 @@ export interface CallAdapterCallOperations {
     // @beta
     resumeCall(): Promise<void>;
     // @beta
+    selectCustomBackground(backgroundImage: VideoBackgroundImage): void;
+    // @beta
     sendDtmfTone(dtmfTone: DtmfTone): Promise<void>;
+    // @beta
+    setCustomBackgroundImages(backgroundImages: VideoBackgroundImage[]): void;
     startCamera(options?: VideoStreamOptions): Promise<void>;
     startScreenShare(): Promise<void>;
+    // @beta
+    startVideoBackgroundEffect(videoBackgroundEffect: VideoBackgroundBlurEffect | VideoBackgroundReplacementEffect): Promise<void>;
     stopCamera(): Promise<void>;
     stopScreenShare(): Promise<void>;
+    // @beta
+    stopVideoBackgroundEffect(): Promise<void>;
     unmute(): Promise<void>;
 }
 
@@ -204,6 +215,7 @@ export type CallAdapterClientState = {
     environmentInfo?: EnvironmentInfo;
     roleHint?: Role;
     cameraStatus?: 'On' | 'Off';
+    videoBackgroundImages?: VideoBackgroundImage[];
 };
 
 // @public
@@ -331,6 +343,7 @@ export type CallCompositeOptions = {
     onNetworkingTroubleShootingClick?: () => void;
     onEnvironmentInfoTroubleshootingClick?: () => void;
     remoteVideoTileMenu?: RemoteVideoTileMenuOptions;
+    videoBackgroundEffects?: VideoBackgroundEffectsOptions;
 };
 
 // @public
@@ -515,11 +528,15 @@ export interface CallWithChatAdapterManagement {
     // @beta
     resumeCall: () => Promise<void>;
     // @beta
+    selectCustomBackground(backgroundImage: VideoBackgroundImage): void;
+    // @beta
     sendDtmfTone: (dtmfTone: DtmfTone) => Promise<void>;
     sendMessage(content: string, options?: SendMessageOptions): Promise<void>;
     sendReadReceipt(chatMessageId: string): Promise<void>;
     sendTypingIndicator(): Promise<void>;
     setCamera(sourceInfo: VideoDeviceInfo, options?: VideoStreamOptions): Promise<void>;
+    // @beta
+    setCustomBackgroundImages(backgroundImages: VideoBackgroundImage[]): void;
     setMicrophone(sourceInfo: AudioDeviceInfo): Promise<void>;
     setSpeaker(sourceInfo: AudioDeviceInfo): Promise<void>;
     startCall(participants: string[], options?: StartCallOptions): Call | undefined;
@@ -527,8 +544,12 @@ export interface CallWithChatAdapterManagement {
     startCall(participants: CommunicationIdentifier[], options?: StartCallOptions): Call | undefined;
     startCamera(options?: VideoStreamOptions): Promise<void>;
     startScreenShare(): Promise<void>;
+    // @beta
+    startVideoBackgroundEffect(videoBackgroundEffect: VideoBackgroundBlurEffect | VideoBackgroundReplacementEffect): Promise<void>;
     stopCamera(): Promise<void>;
     stopScreenShare(): Promise<void>;
+    // @beta
+    stopVideoBackgroundEffect(): Promise<void>;
     unmute(): Promise<void>;
     // @beta (undocumented)
     updateFileUploadErrorMessage: (id: string, errorMessage: string) => void;
@@ -796,6 +817,7 @@ export interface CallWithChatControlOptions {
     screenShareButton?: boolean | {
         disabled: boolean;
     };
+    videoBackgroundEffects?: VideoBackgroundEffectsOptions;
 }
 
 // @public
@@ -1000,6 +1022,12 @@ export const createTeamsCallAdapter: ({ userId, credential, locator, options }: 
 
 // @beta
 export const createTeamsCallAdapterFromClient: (callClient: StatefulCallClient, callAgent: TeamsCallAgent, locator: CallAdapterLocator, options?: TeamsAdapterOptions | undefined) => Promise<TeamsCallAdapter>;
+
+// @public
+export interface CustomBackground {
+    backgroundImage: VideoBackgroundImage;
+    id: string;
+}
 
 // @beta
 export type CustomCallControlButtonCallback = (args: CustomCallControlButtonCallbackArgs) => CustomCallControlButtonProps;
@@ -1377,6 +1405,32 @@ export function _useFakeChatAdapters(args: _FakeChatAdapterArgs): _FakeChatAdapt
 
 // @beta
 export const useTeamsCallAdapter: (args: Partial<TeamsCallAdapterArgs>, afterCreate?: ((adapter: TeamsCallAdapter) => Promise<TeamsCallAdapter>) | undefined, beforeDispose?: ((adapter: TeamsCallAdapter) => Promise<void>) | undefined) => TeamsCallAdapter | undefined;
+
+// @public
+export interface VideoBackgroundBlurEffect {
+    // (undocumented)
+    effectType: 'Blur';
+}
+
+// @beta
+export interface VideoBackgroundEffectsOptions {
+    backgroundUploadHandler?: BackgroundUploadHandler;
+    disableVideoEffects?: boolean;
+}
+
+// @public
+export interface VideoBackgroundImage {
+    displayName?: string;
+    url: string;
+}
+
+// @public
+export interface VideoBackgroundReplacementEffect {
+    // (undocumented)
+    customBackground: CustomBackground;
+    // (undocumented)
+    effectType: 'Custom';
+}
 
 // (No @packageDocumentation comment for this package)
 

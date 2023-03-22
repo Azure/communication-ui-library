@@ -1,7 +1,13 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 import { AudioDeviceInfo, Call, EnvironmentInfo, VideoDeviceInfo } from '@azure/communication-calling';
-import type { CallAdapter, CallAdapterState } from '../../../src';
+import type {
+  VideoBackgroundImage,
+  CallAdapter,
+  CallAdapterState,
+  VideoBackgroundBlurEffect,
+  VideoBackgroundReplacementEffect
+} from '../../../src';
 import type { MockCallAdapterState } from '../../common';
 import { produce } from 'immer';
 import EventEmitter from 'events';
@@ -132,6 +138,31 @@ export class MockCallAdapter implements CallAdapter {
     if (this._state !== prior) {
       this._emitter.emit('stateChanged', this._state);
     }
+  }
+
+  startVideoBackgroundEffect(
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    videoBackgroundEffect: VideoBackgroundBlurEffect | VideoBackgroundReplacementEffect
+  ): Promise<void> {
+    throw new Error('startVideoBackgroundEffect not implemented.');
+  }
+
+  stopVideoBackgroundEffect(): Promise<void> {
+    throw new Error('stopVideoBackgroundEffect not implemented.');
+  }
+
+  setCustomBackgroundImages(
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    backgroundImages: VideoBackgroundImage[]
+  ): void {
+    throw new Error('setCustomBackgroundImages not implemented.');
+  }
+
+  selectCustomBackground(
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    backgroundImage: VideoBackgroundImage
+  ): void {
+    throw new Error('selectCustomBackground not implemented.');
   }
 }
 
