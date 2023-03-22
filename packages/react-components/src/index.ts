@@ -25,6 +25,7 @@ export type {
   CallParticipantListParticipant,
   ChatMessage,
   ChatAttachment,
+  ChatAttachmentStatus,
   CommunicationParticipant,
   ContentSystemMessage,
   CreateVideoStreamViewResult,
