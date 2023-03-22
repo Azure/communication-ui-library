@@ -44,7 +44,8 @@ import {
 } from '@fluentui/react-icons';
 /* @conditional-compile-remove(call-readiness) */
 import { Important20Filled } from '@fluentui/react-icons';
-
+/* @conditional-compile-remove(video-background-effects) */
+import { VideoBackgroundEffect20Regular } from '@fluentui/react-icons';
 /* @conditional-compile-remove(pinned-participants) */
 import {
   Pin16Filled,
@@ -290,5 +291,7 @@ export const DEFAULT_COMPONENT_ICONS = {
   /* @conditional-compile-remove(vertical-gallery) */
   VerticalGalleryLeftButton: <ChevronLeft20Regular />,
   /* @conditional-compile-remove(vertical-gallery) */
-  VerticalGalleryRightButton: <ChevronRight20Regular />
+  VerticalGalleryRightButton: <ChevronRight20Regular />,
+  /* @conditional-compile-remove(video-background-effects) */
+  OptionsVideoBackgroundEffect: <VideoBackgroundEffect20Regular />
 };
