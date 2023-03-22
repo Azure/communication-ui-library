@@ -4,9 +4,14 @@
 import { PlaywrightTestConfig, devices, ReporterDescription } from '@playwright/test';
 import path from 'path';
 
-const DESKTOP_VIEWPORT = {
+const DESKTOP_4_TO_3_VIEWPORT = {
   width: 1024,
   height: 768
+};
+
+const DESKTOP_16_TO_9_VIEWPORT = {
+  width: 1024,
+  height: 576
 };
 
 const testDir = process.env.TEST_DIR;
@@ -66,12 +71,23 @@ const config: PlaywrightTestConfig = {
     {
       name: 'Desktop Chrome',
       use: {
-        viewport: DESKTOP_VIEWPORT,
+        viewport: DESKTOP_4_TO_3_VIEWPORT,
         launchOptions: { ...chromeLaunchOptions },
         contextOptions: {
           userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0'
         }
       }
+    },
+    {
+      name: 'Desktop Chrome 16:9',
+      use: {
+        viewport: DESKTOP_16_TO_9_VIEWPORT,
+        launchOptions: { ...chromeLaunchOptions },
+        contextOptions: {
+          userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0'
+        }
+      },
+      testMatch: ['OverflowGallery.test.ts']
     },
     {
       name: 'Mobile Android Portrait',

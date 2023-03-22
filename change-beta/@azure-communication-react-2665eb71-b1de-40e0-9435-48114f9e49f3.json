@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Introduce unsupported browser version ability to let old browser into call in composites",
-  "packageName": "@azure/communication-react",
-  "email": "94866715+dmceachernmsft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

@@ -1,6 +1,6 @@
 {
   "name": "@internal/calling-component-bindings",
-  "version": "1.5.1-beta.0",
+  "version": "1.5.1-beta.1",
   "description": "Component bindings specific to components that integrate with the Azure Communication Services Calling JavaScript SDK",
   "module": "dist/dist-esm/index.js",
   "main": "dist/dist-cjs/index.js",
@@ -28,20 +28,22 @@
     "_test:by-flavor": "(if-env COMMUNICATION_REACT_FLAVOR=stable && rushx preprocess || if-env COMMUNICATION_REACT_FLAVOR=beta && echo \"skip preprocess\") && jest"
   },
   "dependencies": {
-    "@internal/acs-ui-common": "1.5.1-beta.0",
-    "@internal/calling-stateful-client": "1.5.1-beta.0",
-    "@internal/react-components": "1.5.1-beta.0",
+    "@internal/acs-ui-common": "1.5.1-beta.1",
+    "@internal/calling-stateful-client": "1.5.1-beta.1",
+    "@internal/react-components": "1.5.1-beta.1",
     "@azure/communication-common": "2.2.0",
     "memoize-one": "~5.2.1",
     "reselect": "~4.0.0"
   },
   "peerDependencies": {
     "@azure/communication-calling": "file:../../libs/skype-spool-sdk-1.0.0.tgz",
+    "@azure/communication-calling-effects": "1.0.0-beta.2",
     "@types/react": ">=16.8.0 <18.0.0",
     "react": ">=16.8.0 <18.0.0"
   },
   "devDependencies": {
     "@azure/communication-calling": "file:../../libs/skype-spool-sdk-1.0.0.tgz",
+    "@azure/communication-calling-effects": "1.0.0-beta.2",
     "@babel/cli": "~7.16.0",
     "@babel/core": "~7.16.0",
     "@microsoft/api-documenter": "~7.12.11",

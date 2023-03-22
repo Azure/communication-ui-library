@@ -51,6 +51,8 @@ export { VideoGallery } from './VideoGallery';
 export type { VideoGalleryProps, VideoGalleryStrings, VideoGalleryStyles, VideoGalleryLayout } from './VideoGallery';
 /* @conditional-compile-remove(pinned-participants) */
 export type { VideoTileContextualMenuProps, VideoTileDrawerMenuProps } from './VideoGallery';
+/* @conditional-compile-remove(vertical-gallery) */
+export type { OverflowGalleryLayout } from './VideoGallery';
 export type { HorizontalGalleryStyles } from './HorizontalGallery';
 
 export { LocalVideoCameraCycleButton } from './LocalVideoCameraButton';
@@ -195,3 +197,22 @@ export type {
   _DevicePermissionDropdownProps,
   _PermissionConstraints
 } from './DevicePermissions/DevicePermissionDropdown';
+
+export { _VideoEffectsItem } from './VideoEffects/VideoEffectsItem';
+export type { _VideoEffectsItemProps, _VideoEffectsItemStyles } from './VideoEffects/VideoEffectsItem';
+export {
+  _VideoEffectsItemNoBackground,
+  _VideoEffectsItemBlur,
+  _VideoEffectsItemAddImage
+} from './VideoEffects/PresetVideoEffectsItems';
+
+export { _VideoBackgroundEffectsPicker } from './VideoEffects/VideoBackgroundEffectsPicker';
+export type {
+  _VideoBackgroundEffectsPickerProps,
+  _VideoBackgroundEffectChoiceOption,
+  _VideoBackgroundEffectsPickerStyles
+} from './VideoEffects/VideoBackgroundEffectsPicker';
+
+export type { VerticalGalleryStyles, VerticalGalleryStrings, VerticalGalleryControlBarStyles } from './VerticalGallery';
+
+export * from './CaptionsBanner';

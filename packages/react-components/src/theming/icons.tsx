@@ -282,5 +282,13 @@ export const DEFAULT_COMPONENT_ICONS = {
   /* @conditional-compile-remove(pinned-participants) */
   PinParticipant: <Pin16Regular />,
   /* @conditional-compile-remove(pinned-participants) */
-  UnpinParticipant: <PinOff16Regular />
+  UnpinParticipant: <PinOff16Regular />,
+  SplitButtonPrimaryActionCameraOn: <Video20Filled />,
+  SplitButtonPrimaryActionCameraOff: <VideoOff20Filled />,
+  SplitButtonPrimaryActionMicUnmuted: <Mic20Filled />,
+  SplitButtonPrimaryActionMicMuted: <MicOff20Filled />,
+  /* @conditional-compile-remove(vertical-gallery) */
+  VerticalGalleryLeftButton: <ChevronLeft20Regular />,
+  /* @conditional-compile-remove(vertical-gallery) */
+  VerticalGalleryRightButton: <ChevronRight20Regular />
 };

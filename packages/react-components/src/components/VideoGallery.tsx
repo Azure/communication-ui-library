@@ -36,12 +36,26 @@ import { videoGalleryOuterDivStyle } from './styles/VideoGallery.styles';
 import { floatingLocalVideoTileStyle } from './VideoGallery/styles/FloatingLocalVideo.styles';
 /* @conditional-compile-remove(pinned-participants) */
 import { useId } from '@fluentui/react-hooks';
+/* @conditional-compile-remove(vertical-gallery) */
+import { VerticalGalleryStyles } from './VerticalGallery';
 
 /**
  * @private
  * Currently the Calling JS SDK supports up to 4 remote video streams
  */
 export const DEFAULT_MAX_REMOTE_VIDEO_STREAMS = 4;
+
+/**
+ * @private
+ * Styles to disable the selectivity of a text in video gallery
+ */
+export const unselectable = {
+  '-webkit-user-select': 'none',
+  '-webkit-touch-callout': 'none',
+  '-moz-user-select': 'none',
+  '-ms-user-select': 'none',
+  'user-select': 'none'
+};
 /**
  * @private
  * Set aside only 6 dominant speakers for remaining audio participants
@@ -124,7 +138,18 @@ export interface VideoGalleryStyles extends BaseCustomStyles {
   horizontalGallery?: HorizontalGalleryStyles;
   /** Styles for the local video  */
   localVideo?: IStyle;
+  /* @conditional-compile-remove(vertical-gallery) */
+  /** Styles for the vertical gallery */
+  verticalGallery?: VerticalGalleryStyles;
 }
+
+/* @conditional-compile-remove(vertical-gallery) */
+/**
+ * Different modes and positions of the overflow gallery in the VideoGallery
+ *
+ * @beta
+ */
+export type OverflowGalleryLayout = 'HorizontalBottom' | 'VerticalRight';
 
 /**
  * Props for {@link VideoGallery}.
@@ -212,6 +237,12 @@ export interface VideoGalleryProps {
    * @defaultValue \{ kind: 'contextual' \}
    */
   remoteVideoTileMenuOptions?: false | VideoTileContextualMenuProps | VideoTileDrawerMenuProps;
+  /* @conditional-compile-remove(vertical-gallery) */
+  /**
+   * Determines the layout of the overflowGallery inside the VideoGallery.
+   * @defaultValue 'HorizontalBottom'
+   */
+  overflowGalleryLayout?: OverflowGalleryLayout;
 }
 
 /* @conditional-compile-remove(pinned-participants) */
@@ -276,7 +307,9 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     /* @conditional-compile-remove(pinned-participants) */
     onUnpinParticipant: onUnpinParticipantHandler,
     /* @conditional-compile-remove(pinned-participants) */
-    remoteVideoTileMenuOptions = DEFAULT_REMOTE_VIDEO_TILE_MENU_OPTIONS
+    remoteVideoTileMenuOptions = DEFAULT_REMOTE_VIDEO_TILE_MENU_OPTIONS,
+    /* @conditional-compile-remove(vertical-gallery) */
+    overflowGalleryLayout = 'HorizontalBottom'
   } = props;
 
   const ids = useIdentifiers();
@@ -292,7 +325,10 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   /* @conditional-compile-remove(pinned-participants) */
   const drawerMenuHostId = useId('drawerMenuHost', drawerMenuHostIdFromProp);
 
-  const shouldFloatLocalVideo = !!(layout === 'floatingLocalVideo' && remoteParticipants.length > 0);
+  const shouldFloatLocalVideo = !!(
+    (layout === 'floatingLocalVideo' && remoteParticipants.length > 0) ||
+    localParticipant.isScreenSharingOn
+  );
 
   const containerRef = useRef<HTMLDivElement>(null);
   const containerWidth = _useContainerWidth(containerRef);
@@ -518,7 +554,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       localVideoComponent: localVideoTile,
       parentWidth: containerWidth,
       parentHeight: containerHeight,
-      /* @conditional-compile-remove(pinned-participants) */ pinnedParticipantUserIds: pinnedParticipants
+      /* @conditional-compile-remove(pinned-participants) */ pinnedParticipantUserIds: pinnedParticipants,
+      /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryLayout
     }),
     [
       remoteParticipants,
@@ -532,7 +569,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       containerHeight,
       onRenderRemoteVideoTile,
       defaultOnRenderVideoTile,
-      /* @conditional-compile-remove(pinned-participants) */ pinnedParticipants
+      /* @conditional-compile-remove(pinned-participants) */ pinnedParticipants,
+      /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryLayout
     ]
   );
 
@@ -550,7 +588,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       id={drawerMenuHostIdFromProp ? undefined : drawerMenuHostId}
       data-ui-id={ids.videoGallery}
       ref={containerRef}
-      className={mergeStyles(videoGalleryOuterDivStyle, styles?.root)}
+      className={mergeStyles(videoGalleryOuterDivStyle, styles?.root, unselectable)}
     >
       {videoGalleryLayout}
       {

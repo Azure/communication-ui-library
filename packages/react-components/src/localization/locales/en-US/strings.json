@@ -53,7 +53,10 @@
     "onSplitButtonAriaLabel": "Turn off camera and camera options",
     "offSplitButtonAriaLabel": "Turn on camera and camera options",
     "cameraActionTurnedOnAnnouncement": "Your camera has been turned on",
-    "cameraActionTurnedOffAnnouncement": "Your camera has been turned off"
+    "cameraActionTurnedOffAnnouncement": "Your camera has been turned off",
+    "onSplitButtonPrimaryActionCamera": "Turn off camera",
+    "offSplitButtonPrimaryActionCamera": "Turn on camera",
+    "cameraPrimaryActionSplitButtonTitle": "Use camera"
   },
   "microphoneButton": {
     "onLabel": "Mute",
@@ -69,7 +72,10 @@
     "onSplitButtonAriaLabel": "Mute microphone and audio options",
     "offSplitButtonAriaLabel": "Unmute microphone and audio options",
     "microphoneActionTurnedOnAnnouncement": "Your microphone has been turned on",
-    "microphoneActionTurnedOffAnnouncement": "Your microphone has been turned off"
+    "microphoneActionTurnedOffAnnouncement": "Your microphone has been turned off",
+    "offSplitButtonMicrophonePrimaryAction": "Unmute microphone",
+    "onSplitButtonMicrophonePrimaryAction": "Mute microphone",
+    "micPrimaryActionSplitButtonTitle": "Use microphone"
   },
   "devicesButton": {
     "label": "Devices",
@@ -161,7 +167,8 @@
     "dismissButtonAriaLabel": "Close",
     "failedToJoinCallGeneric": "Failed to join call.",
     "failedToJoinCallInvalidMeetingLink": "Unable to join Meeting. Invalid Link.",
-    "startScreenSharingGeneric": "There was an issue starting screen share."
+    "startScreenSharingGeneric": "There was an issue starting screen share.",
+    "cameraFrozenForRemoteParticipants": "Users in the call are having issues seeing your video. Please check your devices and network."
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "You are sharing your screen",
@@ -309,5 +316,9 @@
     "step2DigitText": "2",
     "step3DigitText": "3",
     "step4DigitText": "4"
+  },
+  "VerticalGallery": {
+    "leftNavButtonAriaLabel": "previous page",
+    "rightNavButtonAriaLabel": "next page"
   }
 }

@@ -2,11 +2,12 @@
 // Licensed under the MIT license.
 
 import { DefaultButton, Icon, IStyle, Stack, mergeStyles } from '@fluentui/react';
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useTheme } from '../theming';
 import { BaseCustomStyles } from '../types';
 import { rootStyle, childrenContainerStyle, leftRightButtonStyles } from './styles/HorizontalGallery.styles';
 import { useIdentifiers } from '../identifiers';
+import { bucketize } from './utils/overFlowGalleriesUtils';
 
 /**
  * {@link HorizontalGallery} default children per page
@@ -40,6 +41,10 @@ export interface HorizontalGalleryProps {
    * @defaultValue 5
    */
   childrenPerPage?: number;
+  /**
+   * helper function to choose which tiles to give video to.
+   */
+  onFetchTilesToRender?: (indexes: number[]) => void;
 }
 
 /**
@@ -48,7 +53,7 @@ export interface HorizontalGalleryProps {
  * @returns
  */
 export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element => {
-  const { children, childrenPerPage = DEFAULT_CHILDREN_PER_PAGE, styles } = props;
+  const { children, childrenPerPage = DEFAULT_CHILDREN_PER_PAGE, styles, onFetchTilesToRender } = props;
 
   const ids = useIdentifiers();
 
@@ -57,22 +62,33 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
   const numberOfChildren = React.Children.count(children);
   const lastPage = Math.ceil(numberOfChildren / childrenPerPage) - 1;
 
-  const paginatedChildren: React.ReactNode[][] = useMemo(() => {
-    return bucketize(React.Children.toArray(children), childrenPerPage);
-  }, [children, childrenPerPage]);
+  const indexesArray: number[][] = useMemo(() => {
+    return bucketize([...Array(numberOfChildren).keys()], childrenPerPage);
+  }, [numberOfChildren, childrenPerPage]);
+
+  useEffect(() => {
+    if (onFetchTilesToRender && indexesArray) {
+      onFetchTilesToRender(indexesArray[page]);
+    }
+  }, [indexesArray, onFetchTilesToRender, page]);
+
+  const firstIndexOfCurrentPage = page * childrenPerPage;
+  const clippedPage = firstIndexOfCurrentPage < numberOfChildren - 1 ? page : lastPage;
+
+  const childrenOnCurrentPage = useMemo(() => {
+    return indexesArray[clippedPage].map((index) => {
+      return React.Children.toArray(children)[index];
+    });
+  }, [indexesArray, clippedPage, children]);
+
+  const showButtons = numberOfChildren > childrenPerPage;
+  const disablePreviousButton = page === 0;
+  const disableNextButton = page === lastPage;
 
   // If children per page is 0 or less return empty element
   if (childrenPerPage <= 0) {
     return <></>;
   }
-
-  const firstIndexOfCurrentPage = page * childrenPerPage;
-  const clippedPage = firstIndexOfCurrentPage < numberOfChildren - 1 ? page : lastPage;
-  const childrenOnCurrentPage = paginatedChildren[clippedPage];
-
-  const showButtons = numberOfChildren > childrenPerPage;
-  const disablePreviousButton = page === 0;
-  const disableNextButton = page === lastPage;
 
   return (
     <Stack horizontal className={mergeStyles(rootStyle, props.styles?.root)}>
@@ -83,7 +99,7 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
           styles={styles?.previousButton}
           onClick={() => setPage(Math.max(0, Math.min(lastPage, page - 1)))}
           disabled={disablePreviousButton}
-          identifier={ids.horizontalGalleryLeftNavButton}
+          identifier={ids.overflowGalleryLeftNavButton}
         />
       )}
       <Stack horizontal className={mergeStyles(childrenContainerStyle, { '> *': props.styles?.children })}>
@@ -96,7 +112,7 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
           styles={styles?.nextButton}
           onClick={() => setPage(Math.min(lastPage, page + 1))}
           disabled={disableNextButton}
-          identifier={ids.horizontalGalleryRightNavButton}
+          identifier={ids.overflowGalleryRightNavButton}
         />
       )}
     </Stack>
@@ -122,17 +138,3 @@ const HorizontalGalleryNavigationButton = (props: {
     </DefaultButton>
   );
 };
-
-function bucketize<T>(arr: T[], bucketSize: number): T[][] {
-  const bucketArray: T[][] = [];
-
-  if (bucketSize <= 0) {
-    return bucketArray;
-  }
-
-  for (let i = 0; i < arr.length; i += bucketSize) {
-    bucketArray.push(arr.slice(i, i + bucketSize));
-  }
-
-  return bucketArray;
-}

@@ -6,7 +6,7 @@ import {
   useAzureCommunicationChatAdapter
 } from '@azure/communication-react';
 import { PartialTheme, Theme } from '@fluentui/react';
-import React, { useMemo } from 'react';
+import React, { useMemo, useEffect, useState } from 'react';
 
 export type ContainerProps = {
   /** UserIdentifier is of type CommunicationUserIdentifier see below how to construct it from a string input */
@@ -38,10 +38,19 @@ export const ContosoChatContainer = (props: ContainerProps): JSX.Element => {
     [props.userIdentifier]
   );
 
+  // Add throttling for setting display name during typing
+  const [displayName, setDisplayName] = useState<string | undefined>(undefined);
+  useEffect(() => {
+    const handle = setTimeout(() => {
+      setDisplayName(props.displayName);
+    }, 500);
+    return () => clearTimeout(handle);
+  }, [props.displayName]);
+
   const adapter = useAzureCommunicationChatAdapter({
     endpoint: props.endpointUrl,
     userId,
-    displayName: props.displayName,
+    displayName,
     credential,
     threadId: props.threadId
   });
@@ -58,7 +67,6 @@ export const ContosoChatContainer = (props: ContainerProps): JSX.Element => {
             topic: props.topic
           }}
           locale={props.locale}
-          formFactor={props.formFactor}
         />
       </div>
     );

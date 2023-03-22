@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Remove leaked internal type from API",
-  "packageName": "@azure/communication-react",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "none"
-}

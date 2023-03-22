@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Fix issue where local video would be not showing to the user whilst it was broadcasting to everyone else on the call. This happened in a race condition if the local video tile unmounted and remounted in quick succession multiple times.",
-  "packageName": "@azure/communication-react",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
