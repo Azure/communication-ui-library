@@ -147,6 +147,11 @@ export interface CameraButtonProps extends ControlBarButtonProps {
    * Styles for {@link CameraButton} and the device selection flyout.
    */
   styles?: Partial<CameraButtonStyles>;
+  /* @conditional-compile-remove(video-background-effects) */
+  /**
+   * Callback when a effects is clicked
+   */
+  onShowVideoEffectsPicker?: (showVideoEffectsOptions: boolean) => void;
 }
 
 /**
@@ -217,6 +222,18 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
           iconProps: {
             iconName: props.checked ? 'SplitButtonPrimaryActionCameraOn' : 'SplitButtonPrimaryActionCameraOff',
             styles: { root: { lineHeight: 0 } }
+          }
+        },
+        /* @conditional-compile-remove(video-background-effects) */
+        {
+          key: 'effects',
+          text: 'Effects',
+          title: 'Video Effects',
+          iconProps: { iconName: 'OptionsVideoBackgroundEffect', styles: { root: { lineHeight: 0 } } },
+          onClick: () => {
+            if (props.onShowVideoEffectsPicker) {
+              props.onShowVideoEffectsPicker(true);
+            }
           }
         }
       ]
