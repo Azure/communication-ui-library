@@ -12,7 +12,7 @@ import {
 } from './videoGalleryLayoutUtils';
 
 describe('useOrganizedParticipants hook tests', () => {
-  test('4 video participants should be in grid starting with dominant speakers and the rest in horizontal gallery', () => {
+  test('4 video participants should be in grid starting with dominant speakers and the rest in overflow gallery', () => {
     // 10 remote participants. First 5 with their video on.
     const remoteParticipants = [...Array(10).keys()].map((i) => {
       return createRemoteParticipant({
@@ -28,7 +28,7 @@ describe('useOrganizedParticipants hook tests', () => {
     });
 
     expect(pinnedParticipantsLayout?.gridParticipants.map((p) => p.userId)).toStrictEqual(['3', '4', '0', '1']);
-    expect(pinnedParticipantsLayout?.horizontalGalleryParticipants.map((p) => p.userId)).toStrictEqual([
+    expect(pinnedParticipantsLayout?.overflowGalleryParticipants.map((p) => p.userId)).toStrictEqual([
       '2',
       '5',
       '6',
@@ -56,7 +56,7 @@ describe('useOrganizedParticipants hook tests', () => {
     );
 
     expect(pinnedParticipantsLayout?.gridParticipants.map((p) => p.userId)).toStrictEqual(['5v', '2v', '3v', '4v']);
-    expect(pinnedParticipantsLayout?.horizontalGalleryParticipants.map((p) => p.userId)).toStrictEqual([
+    expect(pinnedParticipantsLayout?.overflowGalleryParticipants.map((p) => p.userId)).toStrictEqual([
       '1v',
       '1',
       '2',
@@ -67,7 +67,7 @@ describe('useOrganizedParticipants hook tests', () => {
   });
 
   test(
-    'no participants should be in grid because of screenshare and horizontal gallery should start with ' +
+    'no participants should be in grid because of screenshare and overflow gallery should start with ' +
       'video participants then audio participants',
     () => {
       // 10 remote participants. First 5 with their video on.
@@ -86,7 +86,7 @@ describe('useOrganizedParticipants hook tests', () => {
       });
 
       expect(pinnedParticipantsLayout?.gridParticipants.map((p) => p.userId)).toStrictEqual([]);
-      expect(pinnedParticipantsLayout?.horizontalGalleryParticipants.map((p) => p.userId)).toStrictEqual([
+      expect(pinnedParticipantsLayout?.overflowGalleryParticipants.map((p) => p.userId)).toStrictEqual([
         '3',
         '4',
         '0',
@@ -101,7 +101,7 @@ describe('useOrganizedParticipants hook tests', () => {
     }
   );
 
-  test('audio participant should be first of horizontal gallery if they are the only dominant speaker', () => {
+  test('audio participant should be first of overflow gallery if they are the only dominant speaker', () => {
     // 10 remote participants. First 5 with their video on ('1v', '2v', '3v', '4v' and '5v').
     // Last 5 with their video off ('1', '2', '3', '4' and '5').
     const remoteParticipants = createTestRemoteParticipants();
@@ -110,20 +110,20 @@ describe('useOrganizedParticipants hook tests', () => {
       {
         remoteParticipants,
         maxRemoteVideoStreams: 4,
-        maxHorizontalGalleryDominantSpeakers: 3,
+        maxOverflowGalleryDominantSpeakers: 3,
         isScreenShareActive: true
       },
       {
         remoteParticipants,
         dominantSpeakers: ['3'],
         maxRemoteVideoStreams: 4,
-        maxHorizontalGalleryDominantSpeakers: 3,
+        maxOverflowGalleryDominantSpeakers: 3,
         isScreenShareActive: true
       }
     );
 
     expect(layout?.gridParticipants.map((p) => p.userId)).toStrictEqual([]);
-    expect(layout?.horizontalGalleryParticipants.map((p) => p.userId)).toStrictEqual([
+    expect(layout?.overflowGalleryParticipants.map((p) => p.userId)).toStrictEqual([
       '3',
       '2v',
       '3v',
@@ -140,7 +140,7 @@ describe('useOrganizedParticipants hook tests', () => {
 
 /* @conditional-compile-remove(pinned-participants) */
 describe('useOrganizedParticipants hook tests with pinned participants', () => {
-  test('pinned participants should in grid and video participants should be at the start of horizontal gallery', () => {
+  test('pinned participants should in grid and video participants should be at the start of overflow gallery', () => {
     // 10 remote participants. First 5 with their video on.
     const remoteParticipants = [...Array(10).keys()].map((i) => {
       return createRemoteParticipant({
@@ -157,7 +157,7 @@ describe('useOrganizedParticipants hook tests with pinned participants', () => {
     });
 
     expect(pinnedParticipantsLayout?.gridParticipants.map((p) => p.userId)).toStrictEqual(['0', '6']);
-    expect(pinnedParticipantsLayout?.horizontalGalleryParticipants.map((p) => p.userId)).toStrictEqual([
+    expect(pinnedParticipantsLayout?.overflowGalleryParticipants.map((p) => p.userId)).toStrictEqual([
       '3',
       '4',
       '1',
@@ -170,7 +170,7 @@ describe('useOrganizedParticipants hook tests with pinned participants', () => {
   });
 
   test(
-    'no participants should be in grid because of screenshare and horizontal gallery should start with ' +
+    'no participants should be in grid because of screenshare and overflow gallery should start with ' +
       'pinned participants followed by video participants and then audio participants',
     () => {
       // 10 remote participants. First 5 with their video on.
@@ -190,7 +190,7 @@ describe('useOrganizedParticipants hook tests with pinned participants', () => {
       });
 
       expect(pinnedParticipantsLayout?.gridParticipants.map((p) => p.userId)).toStrictEqual([]);
-      expect(pinnedParticipantsLayout?.horizontalGalleryParticipants.map((p) => p.userId)).toStrictEqual([
+      expect(pinnedParticipantsLayout?.overflowGalleryParticipants.map((p) => p.userId)).toStrictEqual([
         '0',
         '6',
         '3',
@@ -205,7 +205,7 @@ describe('useOrganizedParticipants hook tests with pinned participants', () => {
     }
   );
 
-  test.only('pinning a participant should keep dominant speakers in the front of horizontal gallery', () => {
+  test.only('pinning a participant should keep dominant speakers in the front of overflow gallery', () => {
     // 10 remote participants. First 5 with their video on ('1v', '2v', '3v', '4v' and '5v').
     // Last 5 with their video off ('1', '2', '3', '4' and '5').
     const remoteParticipants = createTestRemoteParticipants();
@@ -215,19 +215,19 @@ describe('useOrganizedParticipants hook tests with pinned participants', () => {
         remoteParticipants,
         dominantSpeakers: ['3v', '4v'],
         maxRemoteVideoStreams: 4,
-        maxHorizontalGalleryDominantSpeakers: 3
+        maxOverflowGalleryDominantSpeakers: 3
       },
       {
         remoteParticipants,
         dominantSpeakers: ['3v', '4v'],
         maxRemoteVideoStreams: 4,
-        maxHorizontalGalleryDominantSpeakers: 3,
+        maxOverflowGalleryDominantSpeakers: 3,
         pinnedParticipantUserIds: ['1']
       }
     );
 
     expect(pinnedParticipantsLayout?.gridParticipants.map((p) => p.userId)).toStrictEqual(['1']);
-    expect(pinnedParticipantsLayout?.horizontalGalleryParticipants.map((p) => p.userId)).toStrictEqual([
+    expect(pinnedParticipantsLayout?.overflowGalleryParticipants.map((p) => p.userId)).toStrictEqual([
       '3v',
       '4v',
       '2',
@@ -250,21 +250,21 @@ describe('useOrganizedParticipants hook tests with pinned participants', () => {
         remoteParticipants,
         pinnedParticipantUserIds: ['1'],
         maxRemoteVideoStreams: 4,
-        maxHorizontalGalleryDominantSpeakers: 3,
+        maxOverflowGalleryDominantSpeakers: 3,
         isScreenShareActive: true
       },
       {
         remoteParticipants,
         pinnedParticipantUserIds: ['1'],
         maxRemoteVideoStreams: 4,
-        maxHorizontalGalleryDominantSpeakers: 3,
+        maxOverflowGalleryDominantSpeakers: 3,
         isScreenShareActive: true,
         dominantSpeakers: ['3v', '4v']
       }
     );
 
     expect(pinnedParticipantsLayout?.gridParticipants.map((p) => p.userId)).toStrictEqual([]);
-    expect(pinnedParticipantsLayout?.horizontalGalleryParticipants.map((p) => p.userId)).toStrictEqual([
+    expect(pinnedParticipantsLayout?.overflowGalleryParticipants.map((p) => p.userId)).toStrictEqual([
       '1',
       '4v',
       '2v',
