@@ -173,8 +173,8 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
     throw new Error('startVideoBackgroundEffect not implemented.');
   }
   /* @conditional-compile-remove(video-background-effects) */
-  public stopVideoBackgroundEffect(): Promise<void> {
-    throw new Error('stopVideoBackgroundEffect not implemented.');
+  public async stopVideoBackgroundEffect(): Promise<void> {
+    await this.callWithChatAdapter.stopVideoBackgroundEffect();
   }
   /* @conditional-compile-remove(video-background-effects) */
   public setCustomBackgroundImages(

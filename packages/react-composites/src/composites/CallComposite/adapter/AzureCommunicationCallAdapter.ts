@@ -564,8 +564,8 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   }
 
   /* @conditional-compile-remove(video-background-effects) */
-  public stopVideoBackgroundEffect(): Promise<void> {
-    throw new Error('stopVideoBackgroundEffect not implemented.');
+  public async stopVideoBackgroundEffect(): Promise<void> {
+    await this.handlers.onRemoveVideoBackgroundEffects();
   }
 
   /* @conditional-compile-remove(video-background-effects) */

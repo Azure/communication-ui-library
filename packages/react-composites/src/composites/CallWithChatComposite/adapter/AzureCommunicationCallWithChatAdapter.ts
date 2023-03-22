@@ -439,8 +439,8 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   }
 
   /* @conditional-compile-remove(video-background-effects) */
-  public stopVideoBackgroundEffect(): Promise<void> {
-    throw new Error('stopVideoBackgroundEffect not implemented.');
+  public async stopVideoBackgroundEffect(): Promise<void> {
+    throw this.callAdapter.stopVideoBackgroundEffect();
   }
 
   /* @conditional-compile-remove(video-background-effects) */
