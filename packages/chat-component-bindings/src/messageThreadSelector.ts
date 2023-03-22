@@ -76,35 +76,9 @@ const convertToUiBlockedMessage = (
   isSeen: boolean,
   isLargeGroup: boolean
 ): BlockedMessage => {
-  return {
-    messageType: 'blocked',
-    ...convertToUIMessageHelper(message, userId, isSeen, isLargeGroup),
-    link: 'https://go.microsoft.com/fwlink/?LinkId=2132837'
-  };
-};
-
-const convertToUiChatMessage = (
-  message: ChatMessageWithStatus,
-  userId: string,
-  isSeen: boolean,
-  isLargeGroup: boolean
-): ChatMessage => {
-  return {
-    messageType: 'chat',
-    ...convertToUIMessageHelper(message, userId, isSeen, isLargeGroup),
-    /* @conditional-compile-remove(file-sharing) */
-    attachedFilesMetadata: extractAttachedFilesMetadata(message.metadata || {})
-  };
-};
-
-const convertToUIMessageHelper = (
-  message: ChatMessageWithStatus,
-  userId: string,
-  isSeen: boolean,
-  isLargeGroup: boolean
-): Object => {
   const messageSenderId = message.sender !== undefined ? toFlatCommunicationIdentifier(message.sender) : userId;
   return {
+    messageType: 'blocked',
     createdOn: message.createdOn,
     content: message.content?.message,
     contentType: sanitizedMessageContentType(message.type),
@@ -116,7 +90,34 @@ const convertToUIMessageHelper = (
     editedOn: message.editedOn,
     deletedOn: message.deletedOn,
     mine: messageSenderId === userId,
-    metadata: message.metadata
+    metadata: message.metadata,
+    link: 'https://go.microsoft.com/fwlink/?LinkId=2132837'
+  };
+};
+
+const convertToUiChatMessage = (
+  message: ChatMessageWithStatus,
+  userId: string,
+  isSeen: boolean,
+  isLargeGroup: boolean
+): ChatMessage => {
+  const messageSenderId = message.sender !== undefined ? toFlatCommunicationIdentifier(message.sender) : userId;
+  return {
+    messageType: 'chat',
+    createdOn: message.createdOn,
+    content: message.content?.message,
+    contentType: sanitizedMessageContentType(message.type),
+    status: !isLargeGroup && message.status === 'delivered' && isSeen ? 'seen' : message.status,
+    senderDisplayName: message.senderDisplayName,
+    senderId: messageSenderId,
+    messageId: message.id,
+    clientMessageId: message.clientMessageId,
+    editedOn: message.editedOn,
+    deletedOn: message.deletedOn,
+    mine: messageSenderId === userId,
+    metadata: message.metadata,
+    /* @conditional-compile-remove(file-sharing) */
+    attachedFilesMetadata: extractAttachedFilesMetadata(message.metadata || {})
   };
 };
 
