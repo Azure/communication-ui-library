@@ -247,10 +247,20 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
               /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */
               <People
                 checked={props.peopleButtonChecked}
+                ariaLabel={peopleButtonStrings?.label}
                 showLabel={options?.displayType !== 'compact'}
                 onClick={props.onPeopleButtonClicked}
                 data-ui-id="call-composite-people-button"
                 strings={peopleButtonStrings}
+                score
+                controls
+                in
+                that
+                particular
+                call
+                check
+                control
+                bar
                 disabled={isDisabled(options?.participantsButton)}
               />
             )}
