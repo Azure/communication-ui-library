@@ -1,9 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { ChatMessage, CustomMessage, MessageStatus, SystemMessage } from '@azure/communication-react';
-/* @conditional-compile-remove(dlp) */
-import { BlockedMessage } from '@azure/communication-react';
+import { BlockedMessage, ChatMessage, CustomMessage, MessageStatus, SystemMessage } from '@azure/communication-react';
 
 // This is some mock messages for example purposes.
 // For actual projects, you can get chat messages from declarative/selectors for ACS.
@@ -71,32 +69,6 @@ export const GetHistoryWithCustomMessages = (): (CustomMessage | ChatMessage)[] 
       content: 'Today'
     },
     ...GetHistoryChatMessages()
-  ];
-};
-
-export const GetHistoryWithBlockedMessages = (): (BlockedMessage | ChatMessage)[] => {
-  return [
-    ...GetHistoryChatMessages(),
-    {
-      messageType: 'blocked',
-      senderId: 'user3',
-      senderDisplayName: 'Carole Poland',
-      messageId: Math.random().toString(),
-      createdOn: new Date('2019-04-13T00:00:00.000+08:09'),
-      mine: false,
-      attached: false,
-      contentType: 'text'
-    },
-    {
-      messageType: 'blocked',
-      senderId: 'user2',
-      senderDisplayName: 'Robert Tolbert',
-      messageId: Math.random().toString(),
-      createdOn: new Date('2019-04-13T00:00:00.000+08:09'),
-      mine: false,
-      attached: false,
-      contentType: 'text'
-    }
   ];
 };
 

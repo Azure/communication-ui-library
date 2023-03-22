@@ -102,7 +102,7 @@ const convertToUIMessageHelper = (
   userId: string,
   isSeen: boolean,
   isLargeGroup: boolean
-) => {
+): Object => {
   const messageSenderId = message.sender !== undefined ? toFlatCommunicationIdentifier(message.sender) : userId;
   return {
     createdOn: message.createdOn,
