@@ -151,7 +151,7 @@ export interface CameraButtonProps extends ControlBarButtonProps {
   /**
    * Callback when a effects is clicked
    */
-  onShowVideoEffectsOptions?: (showVideoEffectsOptions: boolean) => void;
+  onShowVideoEffectsPicker?: (showVideoEffectsOptions: boolean) => void;
 }
 
 /**
@@ -231,8 +231,8 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
           title: 'Video Effects',
           iconProps: { iconName: 'OptionsVideoBackgroundEffect', styles: { root: { lineHeight: 0 } } },
           onClick: () => {
-            if (props.onShowVideoEffectsOptions) {
-              props.onShowVideoEffectsOptions(true);
+            if (props.onShowVideoEffectsPicker) {
+              props.onShowVideoEffectsPicker(true);
             }
           }
         }

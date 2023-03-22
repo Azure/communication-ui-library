@@ -481,7 +481,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
                 /* @conditional-compile-remove(PSTN-calls) */
                 onClickShowDialpad={alternateCallerId ? onClickShowDialpad : undefined}
                 /* @conditional-compile-remove(video-background-effects) */
-                onShowVideoEffectsOptions={setShowVideoEffectsPane}
+                onShowVideoEffectsPicker={setShowVideoEffectsPane}
               />
             </Stack.Item>
           </ChatAdapterProvider>
