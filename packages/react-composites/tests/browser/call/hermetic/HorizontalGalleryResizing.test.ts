@@ -40,18 +40,18 @@ test.describe('Height gallery resizing tests', async () => {
     ];
 
     const initialState = defaultMockCallAdapterState(participants);
-    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
     // set the initial viewPort size to activate the verticalGallery.
-    await page.setViewportSize({ width: 800, height: 500 });
+    await page.setViewportSize({ width: 500, height: 500 });
+    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
     // wait for the tiles to load
-    const horiztonalTiles = await waitForSelector(page, dataUiId(IDS.verticalGalleryVideoTile));
-
+    const horiztonalTiles = await waitForSelector(page, dataUiId(IDS.horizontalGalleryVideoTile));
+    console.log(await horiztonalTiles.evaluate((e) => (e as HTMLDivElement).clientWidth));
     // check that the initial sizes are correct for the vertical tiles.
     expect(await horiztonalTiles.evaluate((e) => (e as HTMLDivElement).clientWidth)).toBeGreaterThanOrEqual(120);
     expect(await horiztonalTiles.evaluate((e) => (e as HTMLDivElement).clientWidth)).toBeLessThanOrEqual(215);
 
     // resize the window.
-    await page.setViewportSize({ width: 800, height: 500 });
+    await page.setViewportSize({ width: 600, height: 500 });
 
     // verify that the sizes are still within the correct boundaries.
     expect(await horiztonalTiles.evaluate((e) => (e as HTMLDivElement).clientWidth)).toBeGreaterThanOrEqual(120);
@@ -82,22 +82,18 @@ test.describe('Height gallery resizing tests', async () => {
     const initialState = defaultMockCallAdapterState(participants);
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
     // set the initial viewPort size to activate the verticalGallery.
-    await page.setViewportSize({ width: 800, height: 500 });
+    await page.setViewportSize({ width: 600, height: 600 });
     // wait for the tiles to load
-    await waitForSelector(page, dataUiId(IDS.verticalGalleryVideoTile));
+    await waitForSelector(page, dataUiId(IDS.horizontalGalleryVideoTile));
 
     // check initial tile number to be correct.
-    expect(await page.locator(dataUiId(IDS.verticalGalleryVideoTile)).count()).toBe(2);
+    expect(await page.locator(dataUiId(IDS.horizontalGalleryVideoTile)).count()).toBe(2);
 
     // resize the window.
     await page.setViewportSize({ width: 800, height: 600 });
 
-    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
-    // wait for the tiles to load
-    await waitForSelector(page, dataUiId(IDS.verticalGalleryVideoTile));
-
     // verify that we added a tile with the extra spacing.
-    expect(await page.locator(dataUiId(IDS.verticalGalleryVideoTile)).count()).toBe(3);
+    expect(await page.locator(dataUiId(IDS.horizontalGalleryVideoTile)).count()).toBe(3);
   });
   test('resize should appropriately remove tiles if needed', async ({ page, serverUrl }, testInfo) => {
     test.skip(isTestProfileMobile(testInfo));
@@ -126,97 +122,16 @@ test.describe('Height gallery resizing tests', async () => {
     // set the initial viewPort size to activate the verticalGallery.
     await page.setViewportSize({ width: 800, height: 600 });
     // wait for the tiles to load
-    await waitForSelector(page, dataUiId(IDS.verticalGalleryVideoTile));
+    await waitForSelector(page, dataUiId(IDS.horizontalGalleryVideoTile));
 
     // check initial tile number to be correct.
-    expect(await page.locator(dataUiId(IDS.verticalGalleryVideoTile)).count()).toBe(3);
+    expect(await page.locator(dataUiId(IDS.horizontalGalleryVideoTile)).count()).toBe(3);
 
     // resize the window.
-    await page.setViewportSize({ width: 800, height: 500 });
+    await page.setViewportSize({ width: 600, height: 600 });
 
-    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
     // verify that we added a tile with the extra spacing.
-    expect(await page.locator(dataUiId(IDS.verticalGalleryVideoTile)).count()).toBe(2);
-  });
-  test('resize should remove pages appropriately', async ({ page, serverUrl }, testInfo) => {
-    test.skip(isTestProfileMobile(testInfo));
-
-    const paul = defaultMockRemoteParticipant('Paul Bridges');
-    addVideoStream(paul, true);
-    const fiona = defaultMockRemoteParticipant('Fiona Harper');
-    addVideoStream(fiona, true);
-    const reina = defaultMockRemoteParticipant('Reina Takizawa');
-    const vasily = defaultMockRemoteParticipant('Vasily Podkolzin');
-
-    const participants = [
-      paul,
-      defaultMockRemoteParticipant('Eryka Klein'),
-      fiona,
-      defaultMockRemoteParticipant('Pardeep Singh'),
-      reina,
-      vasily,
-      defaultMockRemoteParticipant('Luciana Rodriguez'),
-      defaultMockRemoteParticipant('Antonie van Leeuwenhoek'),
-      defaultMockRemoteParticipant('Gerald Ho')
-    ];
-
-    const initialState = defaultMockCallAdapterState(participants);
-    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
-
-    // set the initial viewPort size to activate the verticalGallery.
-    await page.setViewportSize({ width: 800, height: 600 });
-
-    let pageCounter = await waitForSelector(page, dataUiId(IDS.verticalGalleryPageCounter));
-
-    expect(await pageCounter.evaluate((e) => (e as HTMLDivElement).innerText)).toBe('1 / 3');
-
-    // increase the page size to remove a page
-    await page.setViewportSize({ width: 800, height: 700 });
-    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
-
-    pageCounter = await waitForSelector(page, dataUiId(IDS.verticalGalleryPageCounter));
-
-    expect(await pageCounter.evaluate((e) => (e as HTMLDivElement).innerText)).toBe('1 / 2');
-  });
-  test('resize should add pages appropriatly', async ({ page, serverUrl }, testInfo) => {
-    test.skip(isTestProfileMobile(testInfo));
-
-    const paul = defaultMockRemoteParticipant('Paul Bridges');
-    addVideoStream(paul, true);
-    const fiona = defaultMockRemoteParticipant('Fiona Harper');
-    addVideoStream(fiona, true);
-    const reina = defaultMockRemoteParticipant('Reina Takizawa');
-    const vasily = defaultMockRemoteParticipant('Vasily Podkolzin');
-
-    const participants = [
-      paul,
-      defaultMockRemoteParticipant('Eryka Klein'),
-      fiona,
-      defaultMockRemoteParticipant('Pardeep Singh'),
-      reina,
-      vasily,
-      defaultMockRemoteParticipant('Luciana Rodriguez'),
-      defaultMockRemoteParticipant('Antonie van Leeuwenhoek'),
-      defaultMockRemoteParticipant('Gerald Ho')
-    ];
-
-    const initialState = defaultMockCallAdapterState(participants);
-    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
-
-    // set the initial viewPort size to activate the verticalGallery.
-    await page.setViewportSize({ width: 800, height: 700 });
-
-    let pageCounter = await waitForSelector(page, dataUiId(IDS.verticalGalleryPageCounter));
-
-    expect(await pageCounter.evaluate((e) => (e as HTMLDivElement).innerText)).toBe('1 / 2');
-
-    // increase the page size to remove a page
-    await page.setViewportSize({ width: 800, height: 600 });
-    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
-
-    pageCounter = await waitForSelector(page, dataUiId(IDS.verticalGalleryPageCounter));
-
-    expect(await pageCounter.evaluate((e) => (e as HTMLDivElement).innerText)).toBe('1 / 3');
+    expect(await page.locator(dataUiId(IDS.horizontalGalleryVideoTile)).count()).toBe(2);
   });
   test('single user on last page should use largest size', async ({ page, serverUrl }, testInfo) => {
     test.skip(isTestProfileMobile(testInfo));
@@ -236,14 +151,14 @@ test.describe('Height gallery resizing tests', async () => {
     const initialState = defaultMockCallAdapterState(participants);
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
 
-    await page.setViewportSize({ width: 800, height: 500 });
+    await page.setViewportSize({ width: 600, height: 600 });
 
     await waitForSelector(page, dataUiId(IDS.overflowGalleryRightNavButton));
     // since we know that we have 2 tiles per page in this view port gerald will be the last participant.
     await pageClick(page, dataUiId(IDS.overflowGalleryRightNavButton));
     await pageClick(page, dataUiId(IDS.overflowGalleryRightNavButton));
 
-    const horiztonalTiles = await waitForSelector(page, dataUiId(IDS.verticalGalleryVideoTile));
+    const horiztonalTiles = await waitForSelector(page, dataUiId(IDS.horizontalGalleryVideoTile));
 
     expect(await horiztonalTiles.evaluate((e) => (e as HTMLDivElement).clientWidth)).toBe(215);
   });
