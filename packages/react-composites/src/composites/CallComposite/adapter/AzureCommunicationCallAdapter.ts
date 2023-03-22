@@ -11,6 +11,7 @@ import {
   StatefulDeviceManager,
   TeamsCall,
   TeamsCallAgent as BetaTeamsCallAgent,
+  _isACSCall,
   _isTeamsCall
 } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(teams-identity-support) */
@@ -584,7 +585,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     this.context.setCurrentCallId(call.id);
 
     // REMOVE THIS< TEST PURPOSES ONLY
-    if (_isTeamsCall(call)) {
+    if (_isTeamsCall(call) || (_isACSCall(call) && !call.info.groupId && !call.info.roomId)) {
       call.feature(Features.TeamsCaptions).startCaptions();
     }
 
