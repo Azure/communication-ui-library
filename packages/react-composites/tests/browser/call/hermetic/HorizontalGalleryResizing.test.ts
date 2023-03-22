@@ -40,7 +40,7 @@ test.describe('Height gallery resizing tests', async () => {
     ];
 
     const initialState = defaultMockCallAdapterState(participants);
-    // set the initial viewPort size to activate the verticalGallery.
+    // set the initial viewPort size to activate the horizontalGallery.
     await page.setViewportSize({ width: 500, height: 500 });
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
     // wait for the tiles to load
@@ -81,7 +81,7 @@ test.describe('Height gallery resizing tests', async () => {
 
     const initialState = defaultMockCallAdapterState(participants);
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
-    // set the initial viewPort size to activate the verticalGallery.
+    // set the initial viewPort size to activate the horizontalGallery.
     await page.setViewportSize({ width: 600, height: 600 });
     // wait for the tiles to load
     await waitForSelector(page, dataUiId(IDS.horizontalGalleryVideoTile));
@@ -119,7 +119,7 @@ test.describe('Height gallery resizing tests', async () => {
 
     const initialState = defaultMockCallAdapterState(participants);
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
-    // set the initial viewPort size to activate the verticalGallery.
+    // set the initial viewPort size to activate the horizontalGallery.
     await page.setViewportSize({ width: 800, height: 600 });
     // wait for the tiles to load
     await waitForSelector(page, dataUiId(IDS.horizontalGalleryVideoTile));
