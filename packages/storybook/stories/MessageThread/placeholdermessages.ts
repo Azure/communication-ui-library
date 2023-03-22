@@ -5,10 +5,10 @@ import {
   MessageStatus,
   MessageAttachedStatus,
   ChatMessage,
+  ChatAttachment,
   CustomMessage,
   SystemMessage
 } from '@azure/communication-react';
-import { ChatAttachment } from '../../../react-components/src/types';
 
 export const MessageThreadStoryContainerStyles = {
   width: '100%',

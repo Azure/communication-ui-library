@@ -24,6 +24,7 @@ export type {
   BaseCustomStyles,
   CallParticipantListParticipant,
   ChatMessage,
+  ChatAttachment,
   CommunicationParticipant,
   ContentSystemMessage,
   CreateVideoStreamViewResult,

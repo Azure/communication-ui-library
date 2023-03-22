@@ -245,6 +245,8 @@ export type {
   VideoTileStylesProps,
   ViewScalingMode
 } from '../../react-components/src';
+/* @conditional-compile-remove(teams-inline-images) */
+export type { ChatAttachment } from '../../react-components/src';
 /* @conditional-compile-remove(rooms) */
 export type { Role } from '../../react-components/src';
 /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
