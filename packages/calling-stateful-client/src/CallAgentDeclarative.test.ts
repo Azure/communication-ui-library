@@ -13,7 +13,8 @@ import {
   RecordingCallFeature,
   TranscriptionCallFeature,
   CallFeatureFactory,
-  StartCallOptions
+  StartCallOptions,
+  PushNotificationData
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-identity-support) */
 import { CallAgentKind } from '@azure/communication-calling';
@@ -81,6 +82,10 @@ class MockCallAgent implements CallAgent {
     const call = createMockCall(mockCallId);
     call.remoteParticipants = [remoteParticipant];
     return call;
+  }
+  handlePushNotification(data: PushNotificationData): Promise<void> {
+    console.error('handlePushNotification not implemented');
+    return Promise.resolve();
   }
   join(groupLocator: GroupLocator, options?: JoinCallOptions): Call;
   /* @conditional-compile-remove(calling-beta-sdk) */
