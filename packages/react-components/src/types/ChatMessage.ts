@@ -76,22 +76,24 @@ export interface ChatMessage extends MessageCommon {
   attachedFilesMetadata?: FileMetadata[];
   /* @conditional-compile-remove(teams-inline-images) */
   /**
-   * @internal
+   * @beta
    * A list of atachements message needs to make a request to download.
    */
 
   attachments?: ChatAttachment[];
 }
+/* @conditional-compile-remove(teams-inline-images) */
 /**
- * @internal
+ * @beta
  * Status of a chat attachment.
  */
 export type ChatAttachmentStatus = 'downloading' | 'completed' | 'failed' | 'none';
 
+/* @conditional-compile-remove(teams-inline-images) */
 /**
  * A chat attachment object that holds data needed to download an attachment.
  *
- * @internal
+ * @beta
  */
 export interface ChatAttachment {
   id: string;
