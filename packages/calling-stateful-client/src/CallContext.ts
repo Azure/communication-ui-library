@@ -6,7 +6,6 @@ import {
   AudioDeviceInfo,
   DeviceAccess,
   DominantSpeakersInfo,
-  ResultType,
   ScalingMode,
   VideoDeviceInfo,
   TeamsCaptionsInfo
@@ -706,7 +705,7 @@ export class CallContext {
     const latestCaption = captions[captions.length - 1];
     if (
       latestCaption &&
-      latestCaption.resultType !== ResultType.Final &&
+      latestCaption.resultType !== 'Final' &&
       latestCaption.timestamp.getTime() === newCaption.timestamp.getTime() &&
       latestCaption.speaker.identifier === newCaption.speaker.identifier
     ) {
