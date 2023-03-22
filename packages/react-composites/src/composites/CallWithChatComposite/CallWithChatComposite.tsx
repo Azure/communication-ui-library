@@ -42,6 +42,8 @@ import { VideoBackgroundEffectsOptions } from '../CallComposite/CallComposite';
 /* @conditional-compile-remove(call-readiness) */
 import { DeviceCheckOptions } from '../CallComposite/CallComposite';
 import { drawerContainerStyles } from '../CallComposite/styles/CallComposite.styles';
+/* @conditional-compile-remove(video-background-effects) */
+import { VideoEffectsPane } from '../common/VideoEffectsPane';
 
 /**
  * Props required for the {@link CallWithChatComposite}
@@ -243,7 +245,16 @@ type CallWithChatScreenProps = {
 const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
   const { callWithChatAdapter, fluentTheme, formFactor = 'desktop' } = props;
   const mobileView = formFactor === 'mobile';
+  /* @conditional-compile-remove(video-background-effects) */
+  const [showVideoEffectsPane, setVideoEffectsPane] = useState(false);
 
+  /* @conditional-compile-remove(video-background-effects) */
+  const setShowVideoEffectsPane = useCallback(
+    (showVideoEffectsOptions: boolean): void => {
+      setVideoEffectsPane(showVideoEffectsOptions);
+    },
+    [setVideoEffectsPane]
+  );
   if (!callWithChatAdapter) {
     throw new Error('CallWithChatAdapter is undefined');
   }
@@ -428,7 +439,13 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
               fluentTheme={fluentTheme}
             />
           </Stack.Item>
-
+          {
+            /* @conditional-compile-remove(video-background-effects) */
+            <VideoEffectsPane
+              showVideoEffectsOptions={showVideoEffectsPane}
+              setshowVideoEffectsOptions={setShowVideoEffectsPane}
+            />
+          }
           {chatProps.adapter && callAdapter && hasJoinedCall && (
             <CallWithChatPane
               chatCompositeProps={chatProps}
@@ -470,6 +487,8 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
                 containerWidth={containerWidth}
                 /* @conditional-compile-remove(PSTN-calls) */
                 onClickShowDialpad={alternateCallerId ? onClickShowDialpad : undefined}
+                /* @conditional-compile-remove(video-background-effects) */
+                onShowVideoEffectsPicker={setShowVideoEffectsPane}
               />
             </Stack.Item>
           </ChatAdapterProvider>
