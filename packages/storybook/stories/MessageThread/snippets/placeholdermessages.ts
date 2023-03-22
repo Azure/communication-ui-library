@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { BlockedMessage, ChatMessage, CustomMessage, MessageStatus, SystemMessage } from '@azure/communication-react';
+import { ChatMessage, CustomMessage, MessageStatus, SystemMessage } from '@azure/communication-react';
 
 // This is some mock messages for example purposes.
 // For actual projects, you can get chat messages from declarative/selectors for ACS.
