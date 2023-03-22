@@ -273,6 +273,7 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps & Cont
           {isEnabled(options?.peopleButton) && (
             <PeopleButton
               checked={props.peopleButtonChecked}
+              ariaLabel={peopleButtonStrings?.label}
               showLabel={options.displayType !== 'compact'}
               onClick={props.onPeopleButtonClicked}
               data-ui-id="call-with-chat-composite-people-button"
