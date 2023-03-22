@@ -26,6 +26,8 @@ export interface ResponsiveVerticalGalleryProps {
   controlBarHeightRem?: number;
   /** container is shorter than 480 px. */
   isShort?: boolean;
+  /** Function to set which tiles to give video to in the children. */
+  onFetchTilesToRender?: (indexes: number[]) => void;
 }
 
 /**
@@ -60,7 +62,6 @@ export const ResponsiveVerticalGallery = (props: ResponsiveVerticalGalleryProps)
   });
   return (
     <div data-ui-id="responsive-vertical-gallery" ref={containerRef} className={mergeStyles(containerStyles)}>
-
       <VerticalGallery
         childrenPerPage={childrenPerPage}
         styles={verticalGalleryStyles}

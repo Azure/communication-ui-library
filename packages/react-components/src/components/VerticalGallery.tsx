@@ -74,6 +74,8 @@ export interface VerticalGalleryProps {
   childrenPerPage: number;
   /** Styles to customize the vertical gallery */
   styles?: VerticalGalleryStyles;
+  /** helper function to choose which tiles to give video to. */
+  onFetchTilesToRender?: (indexes: number[]) => void;
 }
 
 interface VerticalGalleryControlBarProps {
@@ -92,7 +94,6 @@ interface VerticalGalleryControlBarProps {
  * @beta
  */
 export const VerticalGallery = (props: VerticalGalleryProps): JSX.Element => {
-
   const { children, styles, childrenPerPage, onFetchTilesToRender } = props;
 
   const [page, setPage] = useState(1);
