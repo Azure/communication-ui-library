@@ -83,6 +83,7 @@ class MockCallAgent implements CallAgent {
     call.remoteParticipants = [remoteParticipant];
     return call;
   }
+  /* @conditional-compile-remove(calling-beta-sdk) */
   handlePushNotification(data: PushNotificationData): Promise<void> {
     console.error('handlePushNotification not implemented, data: ', data);
     return Promise.resolve();
