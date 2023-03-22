@@ -1,6 +1,11 @@
 {
+<<<<<<<< HEAD:change-beta/@azure-communication-react-696ca73a-856e-4a9a-97e4-b6b66b3099b4.json
   "type": "prerelease",
   "comment": "Video Effects Button and Pane",
+========
+  "type": "patch",
+  "comment": "disable the selectivity of a text in video gallery for long touch to function properly",
+>>>>>>>> 56e2f5118 (Merge main into captions feature  (#2829)):change-beta/@azure-communication-react-b3573c06-f7c3-42a4-a963-9a49eeb23b0c.json
   "packageName": "@azure/communication-react",
   "email": "97124699+prabhjot-msft@users.noreply.github.com",
   "dependentChangeType": "patch"

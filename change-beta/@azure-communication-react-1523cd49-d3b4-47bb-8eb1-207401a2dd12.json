@@ -1,6 +1,10 @@
 {
   "type": "none",
+<<<<<<<< HEAD:change-beta/@azure-communication-react-1523cd49-d3b4-47bb-8eb1-207401a2dd12.json
   "comment": "Update to Calling 1.12.0-beta.2 for beta dependency.",
+========
+  "comment": "update storybook for vertical and horiztonal galleries.",
+>>>>>>>> 56e2f5118 (Merge main into captions feature  (#2829)):change-beta/@azure-communication-react-d2c7a4e9-f875-4f35-aba3-d3b21c48da9e.json
   "packageName": "@azure/communication-react",
   "email": "94866715+dmceachernmsft@users.noreply.github.com",
   "dependentChangeType": "none"

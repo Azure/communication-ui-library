@@ -1,7 +1,11 @@
 {
   "type": "patch",
+<<<<<<<< HEAD:change-beta/@azure-communication-react-950465c0-b477-49dc-b8be-bd8ce7ab27a6.json
   "comment": "Add heading role and aria level for start a call config heading",
+========
+  "comment": "Update code owners",
+>>>>>>>> 56e2f5118 (Merge main into captions feature  (#2829)):change-beta/@azure-communication-react-1faf7350-f284-44da-996c-d758743a9c8c.json
   "packageName": "@azure/communication-react",
-  "email": "edwardlee@microsoft.com",
+  "email": "joshlai@microsoft.com",
   "dependentChangeType": "patch"
 }

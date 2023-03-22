@@ -1,7 +1,12 @@
 {
+<<<<<<<< HEAD:change/@azure-communication-react-973784c8-e783-4c99-9881-338f2b28706a.json
   "type": "minor",
   "comment": "Draft API for video background effects",
+========
+  "type": "none",
+  "comment": "Update webpack to 5.76.0",
+>>>>>>>> 56e2f5118 (Merge main into captions feature  (#2829)):change/@azure-communication-react-192606e0-d24f-4e3b-b695-b917f75ac285.json
   "packageName": "@azure/communication-react",
   "email": "97124699+prabhjot-msft@users.noreply.github.com",
-  "dependentChangeType": "patch"
+  "dependentChangeType": "none"
 }
