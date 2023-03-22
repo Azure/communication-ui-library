@@ -24,7 +24,8 @@ export const messageTemplate: ChatMessageWithStatus = {
   type: 'text',
   sequenceId: '',
   version: '',
-  status: 'delivered'
+  status: 'delivered',
+  policyViolation: false
 };
 
 /**
