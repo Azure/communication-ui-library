@@ -15,7 +15,7 @@ import { useIdentifiers } from '../../identifiers/IdentifierProvider';
 import { useTheme } from '../../theming';
 import { ChatMessageActionFlyout } from './ChatMessageActionsFlyout';
 import { ChatMessageContent } from './ChatMessageContent';
-import { ChatMessage } from '../../types/ChatMessage';
+import { ChatAttachment, ChatMessage } from '../../types/ChatMessage';
 import { MessageThreadStrings } from '../MessageThread';
 import { chatMessageActionMenuProps } from './ChatMessageActionMenu';
 import { OnRenderAvatarCallback } from '../../types';
@@ -62,6 +62,18 @@ type ChatMessageComponentAsMessageBubbleProps = {
    * @beta
    */
   onDisplayDateTimeString?: (messageDate: Date) => string;
+  /* @conditional-compile-remove(teams-inline-images) */
+  /**
+   * Optional function to fetch attachments.
+   * @beta
+   */
+  onFetchAttachments?: (attachment: ChatAttachment) => Promise<void>;
+  /* @conditional-compile-remove(teams-inline-images) */
+  /**
+   * Optional map of attachment ids to blob urls.
+   * @beta
+   */
+  attachmentsMap?: Record<string, string>;
 };
 
 const generateDefaultTimestamp = (
@@ -203,6 +215,8 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
                 message={message}
                 liveAuthorIntro={strings.liveAuthorIntro}
                 messageContentAriaText={messageContentAriaText}
+                onFetchAttachment={props.onFetchAttachments}
+                attachmentsMap={props.attachmentsMap}
               />
               {props.onRenderFileDownloads
                 ? props.onRenderFileDownloads(userId, message)

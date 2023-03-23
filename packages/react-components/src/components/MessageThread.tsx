@@ -43,6 +43,7 @@ import { delay } from './utils/delay';
 import {
   BaseCustomStyles,
   ChatMessage,
+  ChatAttachment,
   CustomMessage,
   SystemMessage,
   CommunicationParticipant,
@@ -581,6 +582,13 @@ export type MessageThreadProps = {
    * @beta
    */
   onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
+  /* @conditional-compile-remove(teams-inline-images) */
+  /**
+   * Optional callback to retrieve the inline image in a message.
+   * @param attachment - ChatAttachment object we want to render
+   * @beta
+   */
+  onFetchAttachments?: (attachment: ChatAttachment) => Promise<string>;
   /**
    * Optional callback to edit a message.
    *
@@ -729,7 +737,9 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     onDeleteMessage,
     onSendMessage,
     /* @conditional-compile-remove(date-time-customization) */
-    onDisplayDateTimeString
+    onDisplayDateTimeString,
+    /* @conditional-compile-remove(teams-inline-images) */
+    onFetchAttachments
   } = props;
   const onRenderFileDownloads = onRenderFileDownloadsTrampoline(props);
 
@@ -751,6 +761,22 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
 
   // readCount and participantCount will only need to be updated on-fly when user hover on an indicator
   const [readCountForHoveredIndicator, setReadCountForHoveredIndicator] = useState<number | undefined>(undefined);
+
+  const [inlineAttachments, setInlineAttachments] = useState<Record<string, string>>({});
+  const onFetchInlineAttachment = useCallback(
+    async (attachment: ChatAttachment): Promise<void> => {
+      if (!onFetchAttachments) {
+        return;
+      }
+
+      const url = await onFetchAttachments(attachment);
+      if (inlineAttachments[attachment.id] === url) {
+        return;
+      }
+      setInlineAttachments((prev) => ({ ...prev, [attachment.id]: url }));
+    },
+    [inlineAttachments, onFetchAttachments]
+  );
 
   const isAllChatMessagesLoadedRef = useRef(false);
   // isAllChatMessagesLoadedRef needs to be updated every time when a new adapter is set in order to display correct data
@@ -1010,6 +1036,10 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
             onActionButtonClick={onActionButtonClickMemo}
             /* @conditional-compile-remove(date-time-customization) */
             onDisplayDateTimeString={onDisplayDateTimeString}
+            /* @conditional-compile-remove(teams-inline-images) */
+            onFetchAttachments={onFetchInlineAttachment}
+            /* @conditional-compile-remove(teams-inline-images) */
+            attachmentsMap={inlineAttachments}
           />
         );
       }
@@ -1026,7 +1056,11 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
       showMessageStatus,
       onActionButtonClickMemo,
       /* @conditional-compile-remove(date-time-customization) */
-      onDisplayDateTimeString
+      onDisplayDateTimeString,
+      /* @conditional-compile-remove(teams-inline-images) */
+      onFetchInlineAttachment,
+      /* @conditional-compile-remove(teams-inline-images) */
+      inlineAttachments
     ]
   );
 

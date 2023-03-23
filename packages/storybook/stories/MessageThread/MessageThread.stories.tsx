@@ -7,7 +7,8 @@ import {
   ChatMessage,
   CustomMessage,
   SystemMessage,
-  MessageRenderer
+  MessageRenderer,
+  ChatAttachment
 } from '@azure/communication-react';
 import { Persona, PersonaPresence, PersonaSize, PrimaryButton, Stack } from '@fluentui/react';
 import { Divider } from '@fluentui/react-northstar';
@@ -232,6 +233,10 @@ const MessageThreadStory = (args): JSX.Element => {
     return defaultOnRender ? defaultOnRender(messageProps) : <></>;
   };
 
+  const onFetchAttachment = async (attachment: ChatAttachment): Promise<string> => {
+    return attachment.previewUrl ?? '';
+  };
+
   return (
     <Stack verticalFill style={MessageThreadStoryContainerStyles} tokens={{ childrenGap: '1rem' }}>
       <MessageThreadComponent
@@ -242,6 +247,7 @@ const MessageThreadStory = (args): JSX.Element => {
         disableJumpToNewMessageButton={!args.enableJumpToNewMessageButton}
         onLoadPreviousChatMessages={onLoadPreviousMessages}
         onRenderMessage={onRenderMessage}
+        onFetchAttachments={onFetchAttachment}
         onRenderAvatar={(userId?: string) => {
           return (
             <Persona

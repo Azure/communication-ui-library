@@ -6,7 +6,7 @@ import { _formatString } from '@internal/acs-ui-common';
 import React, { useCallback, useState } from 'react';
 import { ChatMessageComponentAsEditBox } from './ChatMessageComponentAsEditBox';
 import { MessageThreadStrings } from '../MessageThread';
-import { ChatMessage, OnRenderAvatarCallback } from '../../types';
+import { ChatAttachment, ChatMessage, OnRenderAvatarCallback } from '../../types';
 import { ChatMessageComponentAsMessageBubble } from './ChatMessageComponentAsMessageBubble';
 import { FileDownloadHandler, FileMetadata } from '../FileDownloadCards';
 
@@ -70,6 +70,18 @@ type ChatMessageComponentProps = {
    * @beta
    */
   onDisplayDateTimeString?: (messageDate: Date) => string;
+  /* @conditional-compile-remove(teams-inline-images) */
+  /**
+   * Optional function to fetch attachments.
+   * @beta
+   */
+  onFetchAttachments?: (attachment: ChatAttachment) => Promise<void>;
+  /* @conditional-compile-remove(teams-inline-images) */
+  /**
+   * Optional map of attachment ids to blob urls.
+   * @beta
+   */
+  attachmentsMap?: Record<string, string>;
 };
 
 /**
@@ -125,6 +137,10 @@ export const ChatMessageComponent = (props: ChatMessageComponentProps): JSX.Elem
         /* @conditional-compile-remove(date-time-customization) */
         onDisplayDateTimeString={props.onDisplayDateTimeString}
         strings={props.strings}
+        /* @conditional-compile-remove(teams-inline-images) */
+        onFetchAttachments={props.onFetchAttachments}
+        /* @conditional-compile-remove(teams-inline-images) */
+        attachmentsMap={props.attachmentsMap}
       />
     );
   }

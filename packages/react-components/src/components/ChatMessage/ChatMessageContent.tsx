@@ -5,7 +5,7 @@ import React from 'react';
 import { _formatString } from '@internal/acs-ui-common';
 import { Parser } from 'html-to-react';
 import Linkify from 'react-linkify';
-import { ChatMessage } from '../../types/ChatMessage';
+import { ChatAttachment, ChatMessage } from '../../types/ChatMessage';
 import { LiveMessage } from 'react-aria-live';
 import { Link } from '@fluentui/react';
 
@@ -13,6 +13,8 @@ type ChatMessageContentProps = {
   message: ChatMessage;
   liveAuthorIntro: string;
   messageContentAriaText?: string;
+  onFetchAttachment?: (attachment: ChatAttachment) => Promise<void>;
+  attachmentsMap?: Record<string, string>;
 };
 
 /** @private */
