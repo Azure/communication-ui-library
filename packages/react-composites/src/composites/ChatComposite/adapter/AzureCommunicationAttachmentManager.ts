@@ -1,6 +1,5 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-/* @conditional-compile-remove(teams-inline-images) */
 /**
  * A method to fetch the attachment content, passing in authentication token into the header.
  * @internal
@@ -8,7 +7,7 @@
 export interface ACSAttachmentManager {
   downloadInlineAttachment: (attachmentUrl: string) => Promise<string>;
 }
-/* @conditional-compile-remove(teams-inline-images) */
+
 /**
  * @internal
  */

@@ -40,6 +40,7 @@ import { FileMetadata } from '@internal/react-components';
 /* @conditional-compile-remove(file-sharing) */
 import { FileUploadManager } from '../file-sharing';
 import { isValidIdentifier } from '../../CallComposite/utils/Utils';
+/* @conditional-compile-remove(teams-inline-images) */
 import { ACSAttachmentContext, ACSAttachmentManager } from './AzureCommunicationAttachmentManager';
 
 /**
