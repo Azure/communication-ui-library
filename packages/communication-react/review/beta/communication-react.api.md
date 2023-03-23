@@ -2341,6 +2341,7 @@ export interface _IdentifierProviderProps {
 
 // @internal
 export interface _Identifiers {
+    horizontalGalleryVideoTile: string;
     messageContent: string;
     messageTimestamp: string;
     overflowGalleryLeftNavButton: string;

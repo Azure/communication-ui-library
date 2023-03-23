@@ -42,5 +42,6 @@ export const rootStyle: IStyle = {
  */
 export const childrenContainerStyle: IStyle = {
   height: '100%',
+  width: '100%',
   gap: `${HORIZONTAL_GALLERY_GAP}rem`
 };
