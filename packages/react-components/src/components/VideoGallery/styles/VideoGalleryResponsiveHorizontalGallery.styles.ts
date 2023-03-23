@@ -2,9 +2,8 @@
 // Licensed under the MIT license.
 
 import { IStyle } from '@fluentui/react';
-import { _pxToRem } from '@internal/acs-ui-common';
 import { HorizontalGalleryStyles } from '../../HorizontalGallery';
-import { LARGE_FLOATING_MODAL_SIZE_PX, SMALL_FLOATING_MODAL_SIZE_PX } from './FloatingLocalVideo.styles';
+import { LARGE_FLOATING_MODAL_SIZE_REM, SMALL_FLOATING_MODAL_SIZE_REM } from './FloatingLocalVideo.styles';
 
 /**
  * @private
@@ -16,8 +15,8 @@ export const horizontalGalleryContainerStyle = (shouldFloatLocalVideo: boolean, 
       : `${LARGE_HORIZONTAL_GALLERY_TILE_SIZE_REM.height}rem`,
     width: shouldFloatLocalVideo
       ? isNarrow
-        ? `calc(100% - ${_pxToRem(SMALL_FLOATING_MODAL_SIZE_PX.width)})`
-        : `calc(100% - ${_pxToRem(LARGE_FLOATING_MODAL_SIZE_PX.width)})`
+        ? `calc(100% - ${SMALL_FLOATING_MODAL_SIZE_REM.width}rem)`
+        : `calc(100% - ${LARGE_FLOATING_MODAL_SIZE_REM.width}rem)`
       : '100%',
     paddingRight: '0.5rem'
   };

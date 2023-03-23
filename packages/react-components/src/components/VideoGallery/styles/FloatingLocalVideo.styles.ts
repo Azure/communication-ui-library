@@ -30,25 +30,25 @@ export const videoGalleryContainerStyle: IStackStyles = {
 /**
  * Small floating modal width and height in rem for small screen
  */
-export const SMALL_FLOATING_MODAL_SIZE_PX = { width: 58, height: 104 };
+export const SMALL_FLOATING_MODAL_SIZE_REM = { width: 3.625, height: 6.5 };
 
 /**
  * Large floating modal width and height in rem for large screen
  * Aspect ratio: 16:9
  */
-export const LARGE_FLOATING_MODAL_SIZE_PX = { width: 215, height: 120 };
+export const LARGE_FLOATING_MODAL_SIZE_REM = { width: 13.438, height: 7.5 };
 
 /**
  * Vertical gallery floating modal width and height in rem
  * Aspect ratio: 16:9
  */
-export const SHORT_VERTICAL_GALLERY_FLOATING_MODAL_SIZE_PX = { width: 144, height: 81 };
+export const SHORT_VERTICAL_GALLERY_FLOATING_MODAL_SIZE_REM = { width: 9, height: 5.063 };
 
 /**
  * Vertical gallery floating modal width and height in rem
  * Aspect ratio: 16:9
  */
-export const VERTICAL_GALLERY_FLOATING_MODAL_SIZE_PX = { width: 176, height: 100 };
+export const VERTICAL_GALLERY_FLOATING_MODAL_SIZE_REM = { width: 11, height: 6.25 };
 /**
  * @private
  * z-index to ensure that the local video tile is above the video gallery.
@@ -60,16 +60,16 @@ export const LOCAL_VIDEO_TILE_ZINDEX = 2;
  */
 export const localVideoTileContainerStyle = (
   theme: Theme,
-  localVideoTileSize: { width: number; height: number }
+  localVideoTileSizeRem: { width: number; height: number }
 ): IStyle => {
   return {
-    minWidth: _pxToRem(localVideoTileSize.width),
-    minHeight: _pxToRem(localVideoTileSize.height),
+    minWidth: `${localVideoTileSizeRem.width}rem`,
+    minHeight: `${localVideoTileSizeRem.height}rem`,
     position: 'absolute',
-    bottom: _pxToRem(localVideoTileOuterPaddingPX),
+    bottom: `${localVideoTileOuterPaddingRem}rem`,
     borderRadius: theme.effects.roundedCorner4,
     overflow: 'hidden',
-    right: _pxToRem(localVideoTileOuterPaddingPX)
+    right: `${localVideoTileOuterPaddingRem}rem`
   };
 };
 
@@ -78,9 +78,9 @@ export const localVideoTileContainerStyle = (
  */
 export const localVideoTileWithControlsContainerStyle = (
   theme: Theme,
-  localVideoTileSize: { width: number; height: number }
+  localVideoTileSizeRem: { width: number; height: number }
 ): IStackStyles => {
-  return concatStyleSets(localVideoTileContainerStyle(theme, localVideoTileSize), {
+  return concatStyleSets(localVideoTileContainerStyle(theme, localVideoTileSizeRem), {
     root: { boxShadow: theme.effects.elevation8 }
   });
 };
@@ -90,11 +90,11 @@ export const localVideoTileWithControlsContainerStyle = (
  */
 export const floatingLocalVideoModalStyle = (
   theme: Theme,
-  modalSize: { width: number; height: number }
+  modalSizeRem: { width: number; height: number }
 ): IStyleFunctionOrObject<IModalStyleProps, IModalStyles> => {
   return concatStyleSets(
     {
-      main: localVideoTileContainerStyle(theme, modalSize)
+      main: localVideoTileContainerStyle(theme, modalSizeRem)
     },
     {
       main: {
@@ -111,10 +111,10 @@ export const floatingLocalVideoModalStyle = (
 
 /**
  * Padding equal to the amount the modal should stay inside the bounds of the container.
- * i.e. if this is 8px, the modal should always be at least 8px inside the container at all times on all sides.
+ * i.e. if this is 0.5rem, the modal should always be at least 0.5rem inside the container at all times on all sides.
  * @private
  */
-export const localVideoTileOuterPaddingPX = 8;
+export const localVideoTileOuterPaddingRem = 0.5;
 
 /**
  * @private
