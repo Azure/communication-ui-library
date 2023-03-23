@@ -707,7 +707,10 @@ export class CallContext {
       latestCaption &&
       latestCaption.resultType !== 'Final' &&
       latestCaption.timestamp.getTime() === newCaption.timestamp.getTime() &&
-      latestCaption.speaker.identifier === newCaption.speaker.identifier
+      latestCaption.speaker.identifier &&
+      newCaption.speaker.identifier &&
+      toFlatCommunicationIdentifier(latestCaption.speaker.identifier) ===
+        toFlatCommunicationIdentifier(newCaption.speaker.identifier)
     ) {
       captions.pop();
     }
