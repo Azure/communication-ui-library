@@ -4,6 +4,8 @@
 import { CallState, DeviceManagerState } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(teams-identity-support) */
 import { TeamsCall } from '@azure/communication-calling';
+/* @conditional-compile-remove(video-background-effects) */
+import { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/communication-calling';
 /* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
 import type {
@@ -226,50 +228,12 @@ export type DiagnosticChangedEventListner = (
 
 /* @conditional-compile-remove(video-background-effects) */
 /**
- * Contains type of the effect to activate blur background effect.
- *
- * @public
- */
-export interface VideoBackgroundBlurEffect {
-  effectType: 'Blur';
-}
-
-/* @conditional-compile-remove(video-background-effects) */
-/**
- * Contains type and Custom Background information {@link CustomBackground} to
- * activate background replacement effect.
- *
- * @public
- */
-export interface VideoBackgroundReplacementEffect {
-  effectType: 'Custom';
-  customBackground: CustomBackground;
-}
-
-/* @conditional-compile-remove(video-background-effects) */
-/**
- * Contains the attibutes of a custom background.
- *
- * @public
- */
-export interface CustomBackground {
-  /**
-   * Unique identifier for the custom background.
-   */
-  id: string;
-  /**
-   * Image data {@link VideoBackgroundImage} containing information about the custom background image.
-   */
-  backgroundImage: VideoBackgroundImage;
-}
-
-/* @conditional-compile-remove(video-background-effects) */
-/**
  * Contains the attibutes of a background image like url, name etc.
  *
  * @public
  */
 export interface VideoBackgroundImage {
+  key: string;
   /**
    * URL of the uploaded background image.
    */
@@ -277,7 +241,7 @@ export interface VideoBackgroundImage {
   /**
    * Image name to be displayed.
    */
-  displayName?: string;
+  tooltipText?: string;
 }
 
 /**
@@ -410,15 +374,18 @@ export interface CallAdapterCallOperations {
   allowUnsupportedBrowserVersion(): void;
   /* @conditional-compile-remove(video-background-effects) */
   /**
-   * Start the video background effect.
-   *
-   * @param videoBackgroundEffect - Contains details about the type of effect blur/custom.
+   * Start the blur video background effect.
    *
    * @beta
    */
-  startVideoBackgroundEffect(
-    videoBackgroundEffect: VideoBackgroundBlurEffect | VideoBackgroundReplacementEffect
-  ): Promise<void>;
+  blurVideoBackground(bgBlurConfig?: BackgroundBlurConfig): Promise<void>;
+  /* @conditional-compile-remove(video-background-effects) */
+  /**
+   * Start the blur video background effect.
+   *
+   * @beta
+   */
+  replaceVideoBackground(bgReplacementConfig: BackgroundReplacementConfig): Promise<void>;
   /* @conditional-compile-remove(video-background-effects) */
   /**
    * Stop the video background effect.
@@ -434,7 +401,7 @@ export interface CallAdapterCallOperations {
    *
    * @beta
    */
-  setCustomBackgroundImages(backgroundImages: VideoBackgroundImage[]): void;
+  updateBackgroundPickerImages(backgroundImages: VideoBackgroundImage[]): void;
   /* @conditional-compile-remove(video-background-effects) */
   /**
    * Select the custom background image for background replacement effect and

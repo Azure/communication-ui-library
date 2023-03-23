@@ -8,6 +8,8 @@
 
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { AudioDeviceInfo } from '@azure/communication-calling';
+import { BackgroundBlurConfig } from '@azure/communication-calling';
+import { BackgroundReplacementConfig } from '@azure/communication-calling';
 import { BaseCustomStyles } from '@internal/react-components';
 import { Call } from '@azure/communication-calling';
 import { CallAgent } from '@azure/communication-calling';
@@ -174,6 +176,8 @@ export interface CallAdapterCallOperations {
     // (undocumented)
     addParticipant(participant: CommunicationUserIdentifier): Promise<void>;
     allowUnsupportedBrowserVersion(): void;
+    // @beta
+    blurVideoBackground(bgBlurConfig?: BackgroundBlurConfig): Promise<void>;
     createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void | CreateVideoStreamViewResult>;
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
     // @beta
@@ -184,22 +188,22 @@ export interface CallAdapterCallOperations {
     // @beta
     removeParticipant(participant: CommunicationIdentifier): Promise<void>;
     // @beta
+    replaceVideoBackground(bgReplacementConfig: BackgroundReplacementConfig): Promise<void>;
+    // @beta
     resumeCall(): Promise<void>;
     // @beta
     selectCustomBackground(backgroundImage: VideoBackgroundImage): void;
     // @beta
     sendDtmfTone(dtmfTone: DtmfTone): Promise<void>;
-    // @beta
-    setCustomBackgroundImages(backgroundImages: VideoBackgroundImage[]): void;
     startCamera(options?: VideoStreamOptions): Promise<void>;
     startScreenShare(): Promise<void>;
-    // @beta
-    startVideoBackgroundEffect(videoBackgroundEffect: VideoBackgroundBlurEffect | VideoBackgroundReplacementEffect): Promise<void>;
     stopCamera(): Promise<void>;
     stopScreenShare(): Promise<void>;
     // @beta
     stopVideoBackgroundEffect(): Promise<void>;
     unmute(): Promise<void>;
+    // @beta
+    updateBackgroundPickerImages(backgroundImages: VideoBackgroundImage[]): void;
 }
 
 // @public
@@ -501,6 +505,8 @@ export interface CallWithChatAdapterManagement {
     addParticipant(participant: CommunicationUserIdentifier): Promise<void>;
     allowUnsupportedBrowserVersion(): void;
     askDevicePermission(constrain: PermissionConstraints): Promise<void>;
+    // @beta
+    blurVideoBackground(bgBlurConfig?: BackgroundBlurConfig): Promise<void>;
     // @beta (undocumented)
     cancelFileUpload: (id: string) => void;
     // @beta (undocumented)
@@ -526,6 +532,8 @@ export interface CallWithChatAdapterManagement {
     // @beta
     removeParticipant(participant: CommunicationIdentifier): Promise<void>;
     // @beta
+    replaceVideoBackground(bgReplacementConfig: BackgroundReplacementConfig): Promise<void>;
+    // @beta
     resumeCall: () => Promise<void>;
     // @beta
     selectCustomBackground(backgroundImage: VideoBackgroundImage): void;
@@ -535,8 +543,6 @@ export interface CallWithChatAdapterManagement {
     sendReadReceipt(chatMessageId: string): Promise<void>;
     sendTypingIndicator(): Promise<void>;
     setCamera(sourceInfo: VideoDeviceInfo, options?: VideoStreamOptions): Promise<void>;
-    // @beta
-    setCustomBackgroundImages(backgroundImages: VideoBackgroundImage[]): void;
     setMicrophone(sourceInfo: AudioDeviceInfo): Promise<void>;
     setSpeaker(sourceInfo: AudioDeviceInfo): Promise<void>;
     startCall(participants: string[], options?: StartCallOptions): Call | undefined;
@@ -544,13 +550,13 @@ export interface CallWithChatAdapterManagement {
     startCall(participants: CommunicationIdentifier[], options?: StartCallOptions): Call | undefined;
     startCamera(options?: VideoStreamOptions): Promise<void>;
     startScreenShare(): Promise<void>;
-    // @beta
-    startVideoBackgroundEffect(videoBackgroundEffect: VideoBackgroundBlurEffect | VideoBackgroundReplacementEffect): Promise<void>;
     stopCamera(): Promise<void>;
     stopScreenShare(): Promise<void>;
     // @beta
     stopVideoBackgroundEffect(): Promise<void>;
     unmute(): Promise<void>;
+    // @beta
+    updateBackgroundPickerImages(backgroundImages: VideoBackgroundImage[]): void;
     // @beta (undocumented)
     updateFileUploadErrorMessage: (id: string, errorMessage: string) => void;
     // @beta (undocumented)
@@ -1023,12 +1029,6 @@ export const createTeamsCallAdapter: ({ userId, credential, locator, options }: 
 // @beta
 export const createTeamsCallAdapterFromClient: (callClient: StatefulCallClient, callAgent: TeamsCallAgent, locator: CallAdapterLocator, options?: TeamsAdapterOptions | undefined) => Promise<TeamsCallAdapter>;
 
-// @public
-export interface CustomBackground {
-    backgroundImage: VideoBackgroundImage;
-    id: string;
-}
-
 // @beta
 export type CustomCallControlButtonCallback = (args: CustomCallControlButtonCallbackArgs) => CustomCallControlButtonProps;
 
@@ -1407,12 +1407,6 @@ export function _useFakeChatAdapters(args: _FakeChatAdapterArgs): _FakeChatAdapt
 // @beta
 export const useTeamsCallAdapter: (args: Partial<TeamsCallAdapterArgs>, afterCreate?: ((adapter: TeamsCallAdapter) => Promise<TeamsCallAdapter>) | undefined, beforeDispose?: ((adapter: TeamsCallAdapter) => Promise<void>) | undefined) => TeamsCallAdapter | undefined;
 
-// @public
-export interface VideoBackgroundBlurEffect {
-    // (undocumented)
-    effectType: 'Blur';
-}
-
 // @beta
 export interface VideoBackgroundEffectsOptions {
     backgroundUploadHandler?: BackgroundUploadHandler;
@@ -1421,16 +1415,10 @@ export interface VideoBackgroundEffectsOptions {
 
 // @public
 export interface VideoBackgroundImage {
-    displayName?: string;
+    // (undocumented)
+    key: string;
+    tooltipText?: string;
     url: string;
-}
-
-// @public
-export interface VideoBackgroundReplacementEffect {
-    // (undocumented)
-    customBackground: CustomBackground;
-    // (undocumented)
-    effectType: 'Custom';
 }
 
 // (No @packageDocumentation comment for this package)

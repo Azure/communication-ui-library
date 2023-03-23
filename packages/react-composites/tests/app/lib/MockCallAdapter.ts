@@ -1,16 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 import { AudioDeviceInfo, Call, EnvironmentInfo, VideoDeviceInfo } from '@azure/communication-calling';
-import type {
-  VideoBackgroundImage,
-  CallAdapter,
-  CallAdapterState,
-  VideoBackgroundBlurEffect,
-  VideoBackgroundReplacementEffect
-} from '../../../src';
+import type { VideoBackgroundImage, CallAdapter, CallAdapterState } from '../../../src';
 import type { MockCallAdapterState } from '../../common';
 import { produce } from 'immer';
 import EventEmitter from 'events';
+import { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/communication-calling';
 
 /**
  * Mock class that implements CallAdapter interface for UI snapshot tests. The handler implementation is currently limited so
@@ -140,22 +135,25 @@ export class MockCallAdapter implements CallAdapter {
     }
   }
 
-  startVideoBackgroundEffect(
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    videoBackgroundEffect: VideoBackgroundBlurEffect | VideoBackgroundReplacementEffect
-  ): Promise<void> {
-    throw new Error('startVideoBackgroundEffect not implemented.');
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  blurVideoBackground(bgBlurConfig?: BackgroundBlurConfig): Promise<void> {
+    throw new Error('blurVideoBackground not implemented.');
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  replaceVideoBackground(bgReplacementConfig: BackgroundReplacementConfig): Promise<void> {
+    throw new Error('replaceVideoBackground not implemented.');
   }
 
   stopVideoBackgroundEffect(): Promise<void> {
     throw new Error('stopVideoBackgroundEffect not implemented.');
   }
 
-  setCustomBackgroundImages(
+  updateBackgroundPickerImages(
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     backgroundImages: VideoBackgroundImage[]
   ): void {
-    throw new Error('setCustomBackgroundImages not implemented.');
+    throw new Error('updateBackgroundPickerImages not implemented.');
   }
 
   selectCustomBackground(

@@ -80,11 +80,9 @@ import { _toCommunicationIdentifier } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(rooms) */
 import { AzureCommunicationCallAdapterOptions } from '../../CallComposite/adapter/AzureCommunicationCallAdapter';
 /* @conditional-compile-remove(video-background-effects) */
-import {
-  VideoBackgroundImage,
-  VideoBackgroundBlurEffect,
-  VideoBackgroundReplacementEffect
-} from '../../CallComposite/adapter/CallAdapter';
+import { VideoBackgroundImage } from '../../CallComposite/adapter/CallAdapter';
+/* @conditional-compile-remove(video-background-effects) */
+import { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/communication-calling';
 
 type CallWithChatAdapterStateChangedHandler = (newState: CallWithChatAdapterState) => void;
 
@@ -216,11 +214,13 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     /* @conditional-compile-remove(unsupported-browser) */
     this.allowUnsupportedBrowserVersion.bind(this);
     /* @conditional-compile-remove(video-background-effects) */
-    this.startVideoBackgroundEffect.bind(this);
+    this.blurVideoBackground.bind(this);
+    /* @conditional-compile-remove(video-background-effects) */
+    this.replaceVideoBackground.bind(this);
     /* @conditional-compile-remove(video-background-effects) */
     this.stopVideoBackgroundEffect.bind(this);
     /* @conditional-compile-remove(video-background-effects) */
-    this.setCustomBackgroundImages.bind(this);
+    this.updateBackgroundPickerImages.bind(this);
     /* @conditional-compile-remove(video-background-effects) */
     this.selectCustomBackground.bind(this);
   }
@@ -431,24 +431,25 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   }
 
   /* @conditional-compile-remove(video-background-effects) */
-  public startVideoBackgroundEffect(
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    videoBackgroundEffect: VideoBackgroundBlurEffect | VideoBackgroundReplacementEffect
-  ): Promise<void> {
-    throw new Error('startVideoBackgroundEffect not implemented.');
+  public async blurVideoBackground(bgBlurConfig?: BackgroundBlurConfig): Promise<void> {
+    await this.callAdapter.blurVideoBackground(bgBlurConfig);
+  }
+  /* @conditional-compile-remove(video-background-effects) */
+  public async replaceVideoBackground(bgReplacementConfig: BackgroundReplacementConfig): Promise<void> {
+    await this.callAdapter.replaceVideoBackground(bgReplacementConfig);
   }
 
   /* @conditional-compile-remove(video-background-effects) */
   public async stopVideoBackgroundEffect(): Promise<void> {
-    throw this.callAdapter.stopVideoBackgroundEffect();
+    return await this.callAdapter.stopVideoBackgroundEffect();
   }
 
   /* @conditional-compile-remove(video-background-effects) */
-  public setCustomBackgroundImages(
+  public updateBackgroundPickerImages(
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     backgroundImages: VideoBackgroundImage[]
   ): void {
-    throw new Error('setCustomBackgroundImages not implemented.');
+    throw new Error('updateBackgroundPickerImages not implemented.');
   }
 
   /* @conditional-compile-remove(video-background-effects) */

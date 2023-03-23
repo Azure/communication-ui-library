@@ -103,34 +103,6 @@ export interface RemoteVideoTileMenuOptions {
    */
   isHidden?: boolean;
 }
-
-/* @conditional-compile-remove(video-background-effects) */
-/**
- * @beta
- * Callback function to handle new custom background upload.
- *
- */
-export type BackgroundUploadHandler = (image: File) => VideoBackgroundImage;
-
-/* @conditional-compile-remove(video-background-effects) */
-/**
- * Properties for configuring the video background effects.
- *
- * @beta
- */
-export interface VideoBackgroundEffectsOptions {
-  /**
-   * If set to true, video effects will be disabled.
-   *
-   * @defaultValue false
-   */
-  disableVideoEffects?: boolean;
-  /**
-   *  A function of type {@link BackgroundUploadHandler} for handling custom image uploads.
-   */
-  backgroundUploadHandler?: BackgroundUploadHandler;
-}
-
 /**
  * Optional features of the {@link CallComposite}.
  *

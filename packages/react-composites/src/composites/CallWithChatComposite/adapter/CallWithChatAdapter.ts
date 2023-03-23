@@ -44,11 +44,9 @@ import { CommunicationUserIdentifier, PhoneNumberIdentifier } from '@azure/commu
 /* @conditional-compile-remove(PSTN-calls) */
 import { CommunicationIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(video-background-effects) */
-import {
-  VideoBackgroundImage,
-  VideoBackgroundBlurEffect,
-  VideoBackgroundReplacementEffect
-} from '../../CallComposite/adapter/CallAdapter';
+import { VideoBackgroundImage } from '../../CallComposite/adapter/CallAdapter';
+/* @conditional-compile-remove(video-background-effects) */
+import { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/communication-calling';
 
 /**
  * Functionality for managing the current call with chat.
@@ -346,15 +344,18 @@ export interface CallWithChatAdapterManagement {
   allowUnsupportedBrowserVersion(): void;
   /* @conditional-compile-remove(video-background-effects) */
   /**
-   * Start the video background effect.
-   *
-   * @param videoBackgroundEffect - Contains details about the type of effect blur/custom.
+   * Start the blur video background effect.
    *
    * @beta
    */
-  startVideoBackgroundEffect(
-    videoBackgroundEffect: VideoBackgroundBlurEffect | VideoBackgroundReplacementEffect
-  ): Promise<void>;
+  blurVideoBackground(bgBlurConfig?: BackgroundBlurConfig): Promise<void>;
+  /* @conditional-compile-remove(video-background-effects) */
+  /**
+   * Start the blur video background effect.
+   *
+   * @beta
+   */
+  replaceVideoBackground(bgReplacementConfig: BackgroundReplacementConfig): Promise<void>;
   /* @conditional-compile-remove(video-background-effects) */
   /**
    * Stop the video background effect.
@@ -370,7 +371,7 @@ export interface CallWithChatAdapterManagement {
    *
    * @beta
    */
-  setCustomBackgroundImages(backgroundImages: VideoBackgroundImage[]): void;
+  updateBackgroundPickerImages(backgroundImages: VideoBackgroundImage[]): void;
   /* @conditional-compile-remove(video-background-effects) */
   /**
    * Select the custom background image for background replacement effect and

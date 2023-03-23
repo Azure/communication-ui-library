@@ -53,12 +53,7 @@ export type { AzureCommunicationCallAdapterOptions } from './adapter';
 export type { CallParticipantsLocator } from './adapter';
 
 /* @conditional-compile-remove(video-background-effects) */
-export type {
-  VideoBackgroundImage,
-  VideoBackgroundBlurEffect,
-  VideoBackgroundReplacementEffect,
-  CustomBackground
-} from './adapter/CallAdapter';
+export type { VideoBackgroundImage } from './adapter/CallAdapter';
 
 export type {
   CallAdapter,

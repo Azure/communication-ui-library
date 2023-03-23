@@ -30,6 +30,8 @@ import {
   VideoOptions,
   Call
 } from '@azure/communication-calling';
+/* @conditional-compile-remove(video-background-effects) */
+import { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-identity-support)) */
 import { TeamsCallAgent } from '@azure/communication-calling';
 /* @conditional-compile-remove(rooms) */
@@ -55,7 +57,7 @@ import {
   CallAdapter
 } from './CallAdapter';
 /* @conditional-compile-remove(video-background-effects) */
-import { VideoBackgroundImage, VideoBackgroundBlurEffect, VideoBackgroundReplacementEffect } from './CallAdapter';
+import { VideoBackgroundImage } from './CallAdapter';
 /* @conditional-compile-remove(teams-identity-support) */
 import { TeamsCallAdapter } from './CallAdapter';
 import { getCallCompositePage, IsCallEndedPage, isCameraOn, isValidIdentifier } from '../utils';
@@ -351,11 +353,13 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     /* @conditional-compile-remove(unsupported-browser) */
     this.allowUnsupportedBrowserVersion.bind(this);
     /* @conditional-compile-remove(video-background-effects) */
-    this.startVideoBackgroundEffect.bind(this);
+    this.blurVideoBackground.bind(this);
+    /* @conditional-compile-remove(video-background-effects) */
+    this.replaceVideoBackground.bind(this);
     /* @conditional-compile-remove(video-background-effects) */
     this.stopVideoBackgroundEffect.bind(this);
     /* @conditional-compile-remove(video-background-effects) */
-    this.setCustomBackgroundImages.bind(this);
+    this.updateBackgroundPickerImages.bind(this);
     /* @conditional-compile-remove(video-background-effects) */
     this.selectCustomBackground.bind(this);
   }
@@ -556,11 +560,12 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   }
 
   /* @conditional-compile-remove(video-background-effects) */
-  public startVideoBackgroundEffect(
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    videoBackgroundEffect: VideoBackgroundBlurEffect | VideoBackgroundReplacementEffect
-  ): Promise<void> {
-    throw new Error('startVideoBackgroundEffect not implemented.');
+  public async blurVideoBackground(bgBlurConfig?: BackgroundBlurConfig): Promise<void> {
+    await this.handlers.onBlurVideoBackground(bgBlurConfig);
+  }
+  /* @conditional-compile-remove(video-background-effects) */
+  public async replaceVideoBackground(bgReplacementConfig: BackgroundReplacementConfig): Promise<void> {
+    await this.handlers.onReplaceVideoBackground(bgReplacementConfig);
   }
 
   /* @conditional-compile-remove(video-background-effects) */
@@ -569,11 +574,11 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   }
 
   /* @conditional-compile-remove(video-background-effects) */
-  public setCustomBackgroundImages(
+  public updateBackgroundPickerImages(
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     backgroundImages: VideoBackgroundImage[]
   ): void {
-    throw new Error('setCustomBackgroundImages not implemented.');
+    throw new Error('updateBackgroundPickerImages not implemented.');
   }
 
   /* @conditional-compile-remove(video-background-effects) */

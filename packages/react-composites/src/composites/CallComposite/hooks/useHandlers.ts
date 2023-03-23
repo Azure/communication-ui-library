@@ -10,6 +10,8 @@ import { useAdapter } from '../adapter/CallAdapterProvider';
 import { isCameraOn } from '../utils';
 /* @conditional-compile-remove(PSTN-calls) */
 import { DtmfTone } from '@azure/communication-calling';
+/* @conditional-compile-remove(video-background-effects) */
+import { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/communication-calling';
 
 /**
  * @private
@@ -95,15 +97,15 @@ const createCompositeHandlers = memoizeOne(
     },
     /* @conditional-compile-remove(video-background-effects) */
     onRemoveVideoBackgroundEffects: async () => {
-      throw new Error('Not implemented');
+      return await adapter.stopVideoBackgroundEffect();
     },
     /* @conditional-compile-remove(video-background-effects) */
-    onBlurVideoBackground: async () => {
-      throw new Error('Not implemented');
+    onBlurVideoBackground: async (bgBlurConfig?: BackgroundBlurConfig) => {
+      return await adapter.blurVideoBackground(bgBlurConfig);
     },
     /* @conditional-compile-remove(video-background-effects) */
-    onReplaceVideoBackground: async () => {
-      throw new Error('Not implemented');
+    onReplaceVideoBackground: async (bgReplacementConfig: BackgroundReplacementConfig) => {
+      return await adapter.replaceVideoBackground(bgReplacementConfig);
     }
   })
 );

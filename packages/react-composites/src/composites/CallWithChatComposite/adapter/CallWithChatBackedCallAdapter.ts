@@ -23,11 +23,9 @@ import {
 } from '@azure/communication-common';
 import { _toCommunicationIdentifier } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(video-background-effects) */
-import {
-  VideoBackgroundBlurEffect,
-  VideoBackgroundReplacementEffect,
-  VideoBackgroundImage
-} from '../../CallComposite/adapter/CallAdapter';
+import { VideoBackgroundImage } from '../../CallComposite/adapter/CallAdapter';
+/* @conditional-compile-remove(video-background-effects) */
+import { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/communication-calling';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
@@ -166,22 +164,23 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
     await this.callWithChatAdapter.sendDtmfTone(dtmfTone);
   };
   /* @conditional-compile-remove(video-background-effects) */
-  public startVideoBackgroundEffect(
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    videoBackgroundEffect: VideoBackgroundBlurEffect | VideoBackgroundReplacementEffect
-  ): Promise<void> {
-    throw new Error('startVideoBackgroundEffect not implemented.');
+  public async blurVideoBackground(bgBlurConfig?: BackgroundBlurConfig): Promise<void> {
+    await this.callWithChatAdapter.blurVideoBackground(bgBlurConfig);
+  }
+  /* @conditional-compile-remove(video-background-effects) */
+  public async replaceVideoBackground(bgReplacementConfig: BackgroundReplacementConfig): Promise<void> {
+    await this.callWithChatAdapter.replaceVideoBackground(bgReplacementConfig);
   }
   /* @conditional-compile-remove(video-background-effects) */
   public async stopVideoBackgroundEffect(): Promise<void> {
     await this.callWithChatAdapter.stopVideoBackgroundEffect();
   }
   /* @conditional-compile-remove(video-background-effects) */
-  public setCustomBackgroundImages(
+  public updateBackgroundPickerImages(
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     backgroundImages: VideoBackgroundImage[]
   ): void {
-    throw new Error('setCustomBackgroundImages not implemented.');
+    throw new Error('updateBackgroundPickerImages not implemented.');
   }
   /* @conditional-compile-remove(video-background-effects) */
   public selectCustomBackground(
