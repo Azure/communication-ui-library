@@ -614,13 +614,7 @@ const mockVideoGalleryInternalHelpers = (): void => {
   });
   jest.spyOn(childrenCalculations, 'calculateHorizontalChildrenPerPage').mockImplementation(
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    (args: {
-      numberOfChildren: number;
-      containerWidth: number;
-      childWidthRem: number;
-      gapWidthRem: number;
-      buttonWidthRem: number;
-    }) => {
+    (args: { numberOfChildren: number; containerWidth: number; gapWidthRem: number; buttonWidthRem: number }) => {
       return 2;
     }
   );

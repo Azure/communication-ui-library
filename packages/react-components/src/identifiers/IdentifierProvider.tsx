@@ -43,6 +43,8 @@ export interface _Identifiers {
   overflowGalleryLeftNavButton: string;
   /** `data-ui-id` value for overflow gallery component's right navigation button */
   overflowGalleryRightNavButton: string;
+  /** `data-ui-id` value for the video tiles in the horizontal gallery */
+  horizontalGalleryVideoTile: string;
   /* @conditional-compile-remove(vertical-gallery) */
   /** `data-ui-id` value for `VerticalGallery` Component's children video tiles */
   verticalGalleryVideoTile: string;
@@ -67,6 +69,7 @@ const defaultIdentifiers: _Identifiers = {
   overflowGalleryRightNavButton: 'overflow-gallery-right-nav-button',
   /* @conditional-compile-remove(vertical-gallery) */
   verticalGalleryVideoTile: 'vertical-gallery-video-tile',
+  horizontalGalleryVideoTile: 'horizontal-gallery-video-tile',
   /* @conditional-compile-remove(vertical-gallery) */
   verticalGalleryPageCounter: 'vertical-gallery-page-counter'
 };
