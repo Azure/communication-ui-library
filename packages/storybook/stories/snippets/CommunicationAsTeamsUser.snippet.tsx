@@ -13,8 +13,6 @@ import React, { useCallback, useMemo } from 'react';
 export type ContainerProps = {
   userId: MicrosoftTeamsUserIdentifier;
   token: string;
-  locator: string;
-  displayName: string;
   formFactor?: 'desktop' | 'mobile';
   fluentTheme?: PartialTheme | Theme;
   callInvitationURL?: string;
@@ -51,8 +49,8 @@ export const ContosoCallContainer = (props: ContainerProps): JSX.Element => {
     [onFetchProfile]
   );
 
-  const adapter = useTeamsCallAdapter(
-    {
+  const teamsCallAdapterArgs = useMemo(
+    () => ({
       userId: props.userId,
       credential,
       locator: props.meetingUrl
@@ -61,10 +59,11 @@ export const ContosoCallContainer = (props: ContainerProps): JSX.Element => {
           }
         : undefined,
       options
-    },
-    undefined,
-    leaveCall
+    }),
+    [props.userId, credential]
   );
+
+  const adapter = useTeamsCallAdapter(teamsCallAdapterArgs, undefined, leaveCall);
 
   if (!props.meetingUrl) {
     return <>Teams meeting link is not provided.</>;
