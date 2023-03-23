@@ -60,7 +60,7 @@ export const ContosoCallContainer = (props: ContainerProps): JSX.Element => {
         : undefined,
       options
     }),
-    [props.userId, credential]
+    [props.userId, credential, props.meetingUrl]
   );
 
   const adapter = useTeamsCallAdapter(teamsCallAdapterArgs, undefined, leaveCall);
