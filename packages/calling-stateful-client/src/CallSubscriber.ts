@@ -36,7 +36,7 @@ export class CallSubscriber {
   private _participantSubscribers: Map<string, ParticipantSubscriber>;
   private _recordingSubscriber: RecordingSubscriber;
   private _transcriptionSubscriber: TranscriptionSubscriber;
-  private _captionsSubscriber: CaptionsSubscriber;
+  private _captionsSubscriber?: CaptionsSubscriber;
   /* @conditional-compile-remove(video-background-effects) */
   private _localVideoStreamVideoEffectsSubscribers: Map<string, LocalVideoStreamVideoEffectsSubscriber>;
 
@@ -62,11 +62,13 @@ export class CallSubscriber {
       this._context,
       this._call.feature(Features.Transcription)
     );
-    this._captionsSubscriber = new CaptionsSubscriber(
-      this._callIdRef,
-      this._context,
-      this._call.feature(Features.TeamsCaptions)
-    );
+    if (_isTeamsMeetingCall(this._call)) {
+      this._captionsSubscriber = new CaptionsSubscriber(
+        this._callIdRef,
+        this._context,
+        this._call.feature(Features.TeamsCaptions)
+      );
+    }
     /* @conditional-compile-remove(video-background-effects) */
     this._localVideoStreamVideoEffectsSubscribers = new Map();
 
@@ -143,7 +145,7 @@ export class CallSubscriber {
     this._diagnosticsSubscriber.unsubscribe();
     this._recordingSubscriber.unsubscribe();
     this._transcriptionSubscriber.unsubscribe();
-    this._captionsSubscriber.unsubscribe();
+    this._captionsSubscriber?.unsubscribe();
   };
 
   private addParticipantListener(participant: RemoteParticipant): void {
