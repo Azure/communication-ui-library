@@ -19,6 +19,7 @@ import { CallEndReason } from '@azure/communication-calling';
 import { CallerInfo } from '@azure/communication-calling';
 import { CallKind } from '@azure/communication-calling';
 import { CallState as CallState_2 } from '@azure/communication-calling';
+import { CaptionsResultType } from '@azure/communication-calling';
 import { ChatClient } from '@azure/communication-chat';
 import { ChatClientOptions } from '@azure/communication-chat';
 import { ChatMessage as ChatMessage_2 } from '@azure/communication-chat';
@@ -62,7 +63,6 @@ import { MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
 import { MicrosoftTeamsUserKind } from '@azure/communication-common';
 import type { NetworkDiagnosticChangedEventArgs } from '@azure/communication-calling';
 import { PartialTheme } from '@fluentui/react';
-import { ParticipantInfo } from '@azure/communication-calling';
 import { ParticipantRole } from '@azure/communication-calling';
 import { PermissionConstraints } from '@azure/communication-calling';
 import { PersonaInitialsColor } from '@fluentui/react';
@@ -74,7 +74,6 @@ import { PropertyChangedEvent } from '@azure/communication-calling';
 import { default as React_2 } from 'react';
 import type { RemoteParticipant } from '@azure/communication-calling';
 import { RemoteParticipantState as RemoteParticipantState_2 } from '@azure/communication-calling';
-import { ResultType } from '@azure/communication-calling';
 import { RoomCallLocator } from '@azure/communication-calling';
 import { ScalingMode } from '@azure/communication-calling';
 import { SendMessageOptions } from '@azure/communication-chat';
@@ -1131,30 +1130,24 @@ export interface CameraSitePermissionsProps extends CommonSitePermissionsProps {
 export type CameraSitePermissionsStrings = SitePermissionsStrings;
 
 // @beta (undocumented)
-export interface CaptionInfoState {
-    originalText?: string;
-    resultType: ResultType;
-    speaker: ParticipantInfo;
-    spokenLanguage: string;
-    subtitleLanguage?: string;
-    text: string;
-    timestamp: Date;
+export interface CaptionsCallFeatureState {
+    captions: CaptionsInfo[];
+    currentCaptionLanguage: string;
+    currentSpokenLanguage: string;
+    isCaptionsFeatureActive: boolean;
+    supportedCaptionLanguages: string[];
+    supportedSpokenLangauges: string[];
 }
 
 // @beta (undocumented)
-export interface CaptionsCallFeatureState {
-    // (undocumented)
-    availableSpokenLanguages: string[];
-    // (undocumented)
-    availableSubtitleLanguages?: string[];
-    // (undocumented)
-    captions: CaptionInfoState[];
-    // (undocumented)
-    isActive: boolean;
-    // (undocumented)
-    selectedSpokenLanguage?: string;
-    // (undocumented)
-    selectedSubtitleLanguage?: string;
+export interface CaptionsInfo {
+    captionLanguage?: string;
+    captionText: string;
+    resultType: CaptionsResultType;
+    speaker: CallerInfo;
+    spokenLanguage: string;
+    spokenText?: string;
+    timestamp: Date;
 }
 
 // @public

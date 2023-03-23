@@ -92,9 +92,12 @@ function createMockCall(mockCallId: string): CallState {
     endTime: undefined,
     dominantSpeakers: undefined,
     captionsFeature: {
-      isActive: false,
-      availableSpokenLanguages: [],
-      captions: []
+      captions: [],
+      supportedSpokenLangauges: [],
+      supportedCaptionLanguages: [],
+      currentCaptionLanguage: '',
+      currentSpokenLanguage: '',
+      isCaptionsFeatureActive: false
     }
   };
   return call;

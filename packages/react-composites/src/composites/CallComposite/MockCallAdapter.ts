@@ -163,9 +163,12 @@ const defaultCallAdapterState: CallAdapterState = {
     remoteParticipants: {},
     remoteParticipantsEnded: {},
     captionsFeature: {
-      isActive: false,
       captions: [],
-      availableSpokenLanguages: []
+      supportedSpokenLangauges: [],
+      supportedCaptionLanguages: [],
+      currentCaptionLanguage: '',
+      currentSpokenLanguage: '',
+      isCaptionsFeatureActive: false
     }
   },
   userId: { kind: 'communicationUser', communicationUserId: '1' },
