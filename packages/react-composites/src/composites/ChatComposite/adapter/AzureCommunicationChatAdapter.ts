@@ -316,8 +316,8 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   }
 
   /* @conditional-compile-remove(teams-inline-images) */
-  async fetchAttachments(attachment: ChatAttachment): Promise<string> {
-    return await this.attachmentManager.downloadInlineAttachment(attachment);
+  async fetchAttachments(attachmentUrl: string): Promise<string> {
+    return await this.attachmentManager.downloadInlineAttachment(attachmentUrl);
   }
 
   private messageReceivedListener(event: ChatMessageReceivedEvent): void {
