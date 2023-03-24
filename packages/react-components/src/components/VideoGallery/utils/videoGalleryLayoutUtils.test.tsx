@@ -205,7 +205,7 @@ describe('useOrganizedParticipants hook tests with pinned participants', () => {
     }
   );
 
-  test.only('pinning a participant should keep dominant speakers in the front of overflow gallery', () => {
+  test('pinning a participant should keep dominant speakers in the front of overflow gallery', () => {
     // 10 remote participants. First 5 with their video on ('1v', '2v', '3v', '4v' and '5v').
     // Last 5 with their video off ('1', '2', '3', '4' and '5').
     const remoteParticipants = createTestRemoteParticipants();
