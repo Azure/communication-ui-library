@@ -40,8 +40,6 @@ import { FileMetadata } from '@internal/react-components';
 /* @conditional-compile-remove(file-sharing) */
 import { FileUploadManager } from '../file-sharing';
 import { isValidIdentifier } from '../../CallComposite/utils/Utils';
-/* @conditional-compile-remove(teams-inline-images) */
-import { ACSAttachmentContext, ACSAttachmentManager } from './AzureCommunicationAttachmentManager';
 
 /**
  * Context of Chat, which is a centralized context for all state updates
@@ -114,10 +112,8 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   private chatClient: StatefulChatClient;
   private chatThreadClient: ChatThreadClient;
   private context: ChatContext;
-  /* @conditional-compile-remove(file-sharing) */
+  /* @conditional-compile-remove(file-sharing) */ /* @conditional-compile-remove(teams-inline-images) */
   private fileUploadAdapter: FileUploadAdapter;
-  /* @conditional-compile-remove(teams-inline-images) */
-  private attachmentManager: ACSAttachmentManager;
   private handlers: ChatHandlers;
   private emitter: EventEmitter = new EventEmitter();
 
@@ -128,8 +124,6 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     this.context = new ChatContext(chatClient.getState(), chatThreadClient.threadId);
     /* @conditional-compile-remove(file-sharing) */
     this.fileUploadAdapter = new AzureCommunicationFileUploadAdapter(this.context);
-    /* @conditional-compile-remove(teams-inline-images) */
-    this.attachmentManager = new ACSAttachmentContext();
     const onStateChange = (clientState: ChatClientState): void => {
       // unsubscribe when the instance gets disposed
       if (!this) {
@@ -176,7 +170,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     /* @conditional-compile-remove(file-sharing) */
     this.updateFileUploadMetadata = this.updateFileUploadMetadata.bind(this);
     /* @conditional-compile-remove(teams-inline-images) */
-    this.fetchAttachments = this.fetchAttachments.bind(this);
+    this.downloadAuthenticatedAttachment = this.downloadAuthenticatedAttachment.bind(this);
   }
 
   dispose(): void {
@@ -317,8 +311,8 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   }
 
   /* @conditional-compile-remove(teams-inline-images) */
-  async fetchAttachments(attachmentUrl: string): Promise<string> {
-    return await this.attachmentManager.downloadInlineAttachment(attachmentUrl);
+  async downloadAuthenticatedAttachment(attachmentUrl: string): Promise<string> {
+    return await this.fileUploadAdapter.downloadAuthenticatedAttachment(attachmentUrl);
   }
 
   private messageReceivedListener(event: ChatMessageReceivedEvent): void {
