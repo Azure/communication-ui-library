@@ -42,11 +42,8 @@ export const smartDominantSpeakerParticipants = (
   const participantsMap = participantsById(participants);
 
   // Only use the Max allowed dominant speakers that exist in participants
-  const dominantSpeakerIds = Array.from(new Set(dominantSpeakers).values())
-    .filter((id) => !!participantsMap[id])
-    .slice(0, maxDominantSpeakers);
+  const dominantSpeakerIds = dominantSpeakers.filter((id) => !!participantsMap[id]).slice(0, maxDominantSpeakers);
 
-  const lastVisibleParticipantIds = lastVisibleParticipants.map((p) => p.userId);
   const newVisibleParticipantIds = lastVisibleParticipants.map((p) => p.userId).slice(0, maxDominantSpeakers);
   const newDominantSpeakerIds = dominantSpeakerIds.filter((id) => !newVisibleParticipantIds.includes(id));
 
@@ -62,20 +59,14 @@ export const smartDominantSpeakerParticipants = (
     }
   }
 
-  const removedVisibleParticipantIds = lastVisibleParticipantIds.filter((p) => !newVisibleParticipantIds.includes(p));
-  removedVisibleParticipantIds.forEach((p) => newVisibleParticipantIds.push(p));
-
-  const newVisibleParticipantIdSet = new Set(newVisibleParticipantIds);
-
-  const leftoverParticipants = participants.filter((p) => !newVisibleParticipantIdSet.has(p.userId));
-  leftoverParticipants.forEach((p) => {
-    newVisibleParticipantIds.push(p.userId);
-  });
-
-  // newVisibleParticipantIds can contain identifiers for participants that are no longer in the call. So we ignore those IDs.
-  const newVisibleParticipants = newVisibleParticipantIds
+  let newVisibleParticipants = newVisibleParticipantIds
     .map((participantId) => participantsMap[participantId])
-    .filter((p) => !!p);
+    .filter((p) => p !== undefined);
+
+  const newVisibleParticipantIdsSet = new Set(newVisibleParticipantIds);
+  const remainingParticipants = participants.filter((p) => !newVisibleParticipantIdsSet.has(p.userId));
+
+  newVisibleParticipants = newVisibleParticipants.concat(remainingParticipants);
 
   return newVisibleParticipants;
 };
