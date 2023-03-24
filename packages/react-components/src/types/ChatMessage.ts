@@ -129,7 +129,7 @@ export interface ContentSystemMessage extends SystemMessageCommon {
  *
  * Content blocked messages will rendered default value, but applications can provide custom strings and icon to renderers.
  *
- * @public
+ * @beta
  */
 export interface BlockedMessage extends MessageCommon {
   messageType: 'blocked';

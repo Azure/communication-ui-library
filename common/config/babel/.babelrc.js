@@ -24,6 +24,8 @@ process.env['COMMUNICATION_REACT_FLAVOR'] === 'stable' &&
         'demo',
         // dialpad
         'dialpad',
+        // Data loss prevention feature
+        'dlp',
         // Ability to upload/download files in message thread.
         'file-sharing',
         // 1 to N Calling feature.
@@ -48,9 +50,7 @@ process.env['COMMUNICATION_REACT_FLAVOR'] === 'stable' &&
         // feature for blurred background and replace background effects
         'video-background-effects',
         // feature for vertical gallery layouts in VideoGallery
-        'vertical-gallery',
-        // Data loss prevention feature
-        'dlp'
+        'vertical-gallery'
       ],
       // A list of stabilized features.
       // These features can be listed in the conditional compilation directives without

@@ -69,7 +69,7 @@ export interface BaseCustomStyles {
     root?: IStyle;
 }
 
-// @public
+// @beta
 export interface BlockedMessage extends MessageCommon {
     // (undocumented)
     attached?: MessageAttachedStatus;
