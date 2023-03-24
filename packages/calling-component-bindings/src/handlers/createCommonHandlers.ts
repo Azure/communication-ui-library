@@ -81,7 +81,20 @@ export interface CommonCallingHandlers {
   onBlurVideoBackground: (bgBlurConfig?: BackgroundBlurConfig) => Promise<void>;
   /* @conditional-compile-remove(video-background-effects) */
   onReplaceVideoBackground: (bgReplacementConfig: BackgroundReplacementConfig) => Promise<void>;
+  OnStartCaptions: (captionsOptions?: captionsOptions) => Promise<void>;
+  OnStopCaptions: () => Promise<void>;
+  OnSetSpokenLanguage: (language: string) => Promise<void>;
+  OnSetCaptionLanguage: (language: string) => Promise<void>;
 }
+
+/**
+ * options bag to start captions
+ *
+ * @public
+ */
+export type captionsOptions = {
+  spokenLanguage: string;
+};
 
 /**
  * @private
@@ -408,6 +421,20 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       }
     };
 
+    const OnStartCaptions = async (captionsOptions?: captionsOptions): Promise<void> => {
+      await call?.feature(Features.TeamsCaptions).startCaptions(captionsOptions);
+    };
+    const OnStopCaptions = async (): Promise<void> => {
+      await call?.feature(Features.TeamsCaptions).stopCaptions();
+    };
+    const OnSetSpokenLanguage = async (language: string): Promise<void> => {
+      await call?.feature(Features.TeamsCaptions).setSpokenLanguage(language);
+    };
+
+    const OnSetCaptionLanguage = async (language: string): Promise<void> => {
+      await call?.feature(Features.TeamsCaptions).setCaptionLanguage(language);
+    };
+
     return {
       onHangUp,
       /* @conditional-compile-remove(PSTN-calls) */
@@ -437,7 +464,11 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       /* @conditional-compile-remove(video-background-effects) */
       onBlurVideoBackground,
       /* @conditional-compile-remove(video-background-effects) */
-      onReplaceVideoBackground
+      onReplaceVideoBackground,
+      OnStartCaptions,
+      OnStopCaptions,
+      OnSetCaptionLanguage,
+      OnSetSpokenLanguage
     };
   }
 );

@@ -36,7 +36,8 @@ export type {
   GetCallingSelector,
   CallingHandlers,
   CallingBaseSelectorProps,
-  CommonCallingHandlers
+  CommonCallingHandlers,
+  captionsOptions
 } from '../../calling-component-bindings/src';
 export type {
   ChatClientProviderProps,
