@@ -8,6 +8,7 @@ import { EnvironmentInfo } from '@azure/communication-calling';
 import { ParticipantRole } from '@azure/communication-calling';
 import {
   CallState,
+  CaptionsInfo,
   DeviceManagerState,
   DiagnosticsCallFeatureState,
   LocalVideoStreamState,
@@ -112,3 +113,33 @@ export const getRemoteParticipants = (
  * @private
  */
 export const getEnvironmentInfo = (state: CallAdapterState): EnvironmentInfo | undefined => state.environmentInfo;
+
+/** @private */
+export const getCaptions = (state: CallAdapterState): CaptionsInfo[] | undefined => {
+  return state.call?.captionsFeature.captions;
+};
+
+/** @private */
+export const getCaptionsStatus = (state: CallAdapterState): boolean | undefined => {
+  return state.call?.captionsFeature.isCaptionsFeatureActive;
+};
+
+/** @private */
+export const getCurrentCaptionLanguage = (state: CallAdapterState): string | undefined => {
+  return state.call?.captionsFeature.currentCaptionLanguage;
+};
+
+/** @private */
+export const getCurrentSpokenLanguage = (state: CallAdapterState): string | undefined => {
+  return state.call?.captionsFeature.currentSpokenLanguage;
+};
+
+/** @private */
+export const getSupportedCaptionLanguages = (state: CallAdapterState): string[] | undefined => {
+  return state.call?.captionsFeature.supportedCaptionLanguages;
+};
+
+/** @private */
+export const getSupportedSpokenLanguages = (state: CallAdapterState): string[] | undefined => {
+  return state.call?.captionsFeature.supportedSpokenLangauges;
+};

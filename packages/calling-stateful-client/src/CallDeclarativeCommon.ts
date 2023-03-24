@@ -79,12 +79,7 @@ export abstract class ProxyCallCommon implements ProxyHandler<CallCommon> {
             return {
               ...captionsFeature,
               startCaptions: async (...args: Parameters<TeamsCaptionsCallFeature['startCaptions']>) => {
-                let ret;
-                if (args) {
-                  ret = await captionsFeature.startCaptions(...args);
-                } else {
-                  ret = await captionsFeature.startCaptions();
-                }
+                const ret = await captionsFeature.startCaptions(...args);
 
                 this._context.setIsCaptionActive(target.id, true);
                 return ret;

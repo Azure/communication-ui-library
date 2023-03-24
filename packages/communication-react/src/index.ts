@@ -36,7 +36,8 @@ export type {
   GetCallingSelector,
   CallingHandlers,
   CallingBaseSelectorProps,
-  CommonCallingHandlers
+  CommonCallingHandlers,
+  captionsOptions
 } from '../../calling-component-bindings/src';
 export type {
   ChatClientProviderProps,
@@ -77,7 +78,8 @@ export type {
   ErrorBarSelector as CallErrorBarSelector,
   ParticipantListSelector,
   MicrophoneButtonSelector,
-  ParticipantsButtonSelector
+  ParticipantsButtonSelector,
+  CaptionsSelector
 } from '../../calling-component-bindings/src';
 /* @conditional-compile-remove(PSTN-calls) */
 export type { HoldButtonSelector } from '../../calling-component-bindings/src';
@@ -310,3 +312,6 @@ export type {
   VerticalGalleryStrings,
   VerticalGalleryControlBarStyles
 } from '../../react-components/src';
+
+export { _CaptionsBanner } from '../../react-components/src';
+export type { _CaptionsBannerProps, CaptionInfo } from '../../react-components/src';
