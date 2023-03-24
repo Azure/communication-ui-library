@@ -3,7 +3,7 @@
 
 import { LayerHost, mergeStyles, Stack } from '@fluentui/react';
 import { useId } from '@fluentui/react-hooks';
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 import { useTheme } from '../../theming';
 import { GridLayout } from '../GridLayout';
 import { isNarrowWidth } from '../utils/responsive';
@@ -12,16 +12,16 @@ import { isShortHeight } from '../utils/responsive';
 import { FloatingLocalVideo } from './FloatingLocalVideo';
 import { LayoutProps } from './Layout';
 import {
-  LARGE_FLOATING_MODAL_SIZE_PX,
+  LARGE_FLOATING_MODAL_SIZE_REM,
   localVideoTileContainerStyle,
   localVideoTileWithControlsContainerStyle,
   LOCAL_VIDEO_TILE_ZINDEX,
-  SMALL_FLOATING_MODAL_SIZE_PX
+  SMALL_FLOATING_MODAL_SIZE_REM
 } from './styles/FloatingLocalVideo.styles';
 /* @conditional-compile-remove(vertical-gallery) */
 import {
-  SHORT_VERTICAL_GALLERY_FLOATING_MODAL_SIZE_PX,
-  VERTICAL_GALLERY_FLOATING_MODAL_SIZE_PX
+  SHORT_VERTICAL_GALLERY_FLOATING_MODAL_SIZE_REM,
+  VERTICAL_GALLERY_FLOATING_MODAL_SIZE_REM
 } from './styles/FloatingLocalVideo.styles';
 import { innerLayoutStyle, layerHostStyle, rootLayoutStyle } from './styles/FloatingLocalVideoLayout.styles';
 import { videoGalleryLayoutGap } from './styles/Layout.styles';
@@ -62,7 +62,7 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
     showCameraSwitcherInLocalPreview,
     parentWidth,
     parentHeight,
-    /* @conditional-compile-remove(pinned-participants) */ pinnedParticipantUserIds,
+    pinnedParticipantUserIds = [],
     /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryLayout = 'HorizontalBottom'
   } = props;
 
@@ -73,11 +73,17 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
   /* @conditional-compile-remove(vertical-gallery) */
   const isShort = parentHeight ? isShortHeight(parentHeight) : false;
 
+  // This is for tracking the number of children in the first page of horizontal gallery.
+  // This number will be used for the maxHorizontalDominantSpeakers when organizing the remote participants.
+  const childrenPerPage = useRef(4);
   const { gridParticipants, horizontalGalleryParticipants } = useOrganizedParticipants({
     remoteParticipants,
     dominantSpeakers,
     maxRemoteVideoStreams,
     isScreenShareActive: !!screenShareComponent,
+    maxHorizontalGalleryDominantSpeakers: screenShareComponent
+      ? childrenPerPage.current - (pinnedParticipantUserIds.length % childrenPerPage.current)
+      : childrenPerPage.current,
     /* @conditional-compile-remove(pinned-participants) */ pinnedParticipantUserIds
   });
 
@@ -120,19 +126,19 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
 
   const layerHostId = useId('layerhost');
 
-  const localVideoSize = useMemo(() => {
+  const localVideoSizeRem = useMemo(() => {
     if (isNarrow) {
-      return SMALL_FLOATING_MODAL_SIZE_PX;
+      return SMALL_FLOATING_MODAL_SIZE_REM;
     }
     /* @conditional-compile-remove(vertical-gallery) */
     if ((horizontalGalleryTiles.length > 0 || !!screenShareComponent) && overflowGalleryLayout === 'VerticalRight') {
       return isNarrow
-        ? SMALL_FLOATING_MODAL_SIZE_PX
+        ? SMALL_FLOATING_MODAL_SIZE_REM
         : isShort
-        ? SHORT_VERTICAL_GALLERY_FLOATING_MODAL_SIZE_PX
-        : VERTICAL_GALLERY_FLOATING_MODAL_SIZE_PX;
+        ? SHORT_VERTICAL_GALLERY_FLOATING_MODAL_SIZE_REM
+        : VERTICAL_GALLERY_FLOATING_MODAL_SIZE_REM;
     }
-    return LARGE_FLOATING_MODAL_SIZE_PX;
+    return LARGE_FLOATING_MODAL_SIZE_REM;
   }, [
     horizontalGalleryTiles.length,
     isNarrow,
@@ -146,7 +152,7 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
       // When we use showCameraSwitcherInLocalPreview it disables dragging to allow keyboard navigation.
       showCameraSwitcherInLocalPreview ? (
         <Stack
-          className={mergeStyles(localVideoTileWithControlsContainerStyle(theme, localVideoSize), {
+          className={mergeStyles(localVideoTileWithControlsContainerStyle(theme, localVideoSizeRem), {
             boxShadow: theme.effects.elevation8,
             zIndex: LOCAL_VIDEO_TILE_ZINDEX
           })}
@@ -154,14 +160,14 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
           {localVideoComponent}
         </Stack>
       ) : horizontalGalleryTiles.length > 0 || !!screenShareComponent ? (
-        <Stack className={mergeStyles(localVideoTileContainerStyle(theme, localVideoSize))}>
+        <Stack className={mergeStyles(localVideoTileContainerStyle(theme, localVideoSizeRem))}>
           {localVideoComponent}
         </Stack>
       ) : (
         <FloatingLocalVideo
           localVideoComponent={localVideoComponent}
           layerHostId={layerHostId}
-          localVideoSize={localVideoSize}
+          localVideoSizeRem={localVideoSizeRem}
           parentWidth={parentWidth}
           parentHeight={parentHeight}
         />
@@ -185,6 +191,9 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
         veritcalGalleryStyles={styles?.verticalGallery}
         /* @conditional-compile-remove(vertical-gallery) */
         overflowGalleryLayout={overflowGalleryLayout}
+        onChildrenPerPageChange={(n: number) => {
+          childrenPerPage.current = n;
+        }}
       />
     );
   }, [

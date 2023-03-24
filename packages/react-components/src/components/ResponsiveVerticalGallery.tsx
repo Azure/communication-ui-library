@@ -28,6 +28,8 @@ export interface ResponsiveVerticalGalleryProps {
   isShort?: boolean;
   /** Function to set which tiles to give video to in the children. */
   onFetchTilesToRender?: (indexes: number[]) => void;
+  /** event to listen for children per page changes */
+  onChildrenPerPageChange?: (childrenPerPage: number) => void;
 }
 
 /**
@@ -45,7 +47,8 @@ export const ResponsiveVerticalGallery = (props: ResponsiveVerticalGalleryProps)
     gapHeightRem,
     controlBarHeightRem,
     isShort,
-    onFetchTilesToRender
+    onFetchTilesToRender,
+    onChildrenPerPageChange
   } = props;
   const containerRef = useRef<HTMLDivElement>(null);
   const containerHeight = _useContainerHeight(containerRef);
@@ -60,6 +63,7 @@ export const ResponsiveVerticalGallery = (props: ResponsiveVerticalGalleryProps)
     controlBarHeight: controlBarHeightRem ?? 2,
     isShort: isShort ?? false
   });
+  onChildrenPerPageChange?.(childrenPerPage);
   return (
     <div data-ui-id="responsive-vertical-gallery" ref={containerRef} className={mergeStyles(containerStyles)}>
       <VerticalGallery
