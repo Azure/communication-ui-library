@@ -13,6 +13,13 @@ export type { ErrorBarSelector } from './errorBarSelector';
 /* @conditional-compile-remove(PSTN-calls) */
 export type { HoldButtonSelector } from './callControlSelectors';
 
+export type {
+  StartCaptionsButtonSelector,
+  ChangeCaptionLanguageButtonSelector,
+  ChangeSpokenLanguageButtonSelector,
+  CaptionsSelector
+} from './captionsSelector';
+
 export type { CallingHandlers } from './handlers/createHandlers';
 /* @conditional-compile-remove(teams-identity-support) */
 export type { TeamsCallingHandlers } from './handlers/createTeamsCallHandlers';
