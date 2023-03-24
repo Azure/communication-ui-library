@@ -46,7 +46,8 @@ export type {
   MediaDiagnosticChangedEvent,
   NetworkDiagnosticChangedEvent,
   ParticipantsJoinedListener,
-  ParticipantsLeftListener
+  ParticipantsLeftListener,
+  CaptionsReceivedListener
 } from './CallAdapter';
 
 /* @conditional-compile-remove(teams-identity-support) */

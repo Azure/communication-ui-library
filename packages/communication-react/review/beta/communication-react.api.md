@@ -78,6 +78,7 @@ import { RoomCallLocator } from '@azure/communication-calling';
 import { ScalingMode } from '@azure/communication-calling';
 import { SendMessageOptions } from '@azure/communication-chat';
 import { StartCallOptions } from '@azure/communication-calling';
+import { StartCaptionsOptions } from '@azure/communication-calling';
 import { TeamsCall } from '@azure/communication-calling';
 import { TeamsCallAgent } from '@azure/communication-calling';
 import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
@@ -289,9 +290,13 @@ export interface CallAdapterCallOperations {
     resumeCall(): Promise<void>;
     // @beta
     sendDtmfTone(dtmfTone: DtmfTone_2): Promise<void>;
+    setCaptionLanguage(language: string): Promise<void>;
+    setSpokenLanguage(language: string): Promise<void>;
     startCamera(options?: VideoStreamOptions): Promise<void>;
+    startCaptions(startCaptionsOptions?: StartCaptionsOptions): Promise<void>;
     startScreenShare(): Promise<void>;
     stopCamera(): Promise<void>;
+    stopCaptions(): Promise<void>;
     stopScreenShare(): Promise<void>;
     unmute(): Promise<void>;
 }
@@ -342,6 +347,8 @@ export interface CallAdapterSubscribers {
     off(event: 'selectedMicrophoneChanged', listener: PropertyChangedEvent): void;
     off(event: 'selectedSpeakerChanged', listener: PropertyChangedEvent): void;
     off(event: 'error', listener: (e: AdapterError) => void): void;
+    off(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
+    off(event: 'captionsPropertyChanged', listener: PropertyChangedEvent): void;
     on(event: 'participantsJoined', listener: ParticipantsJoinedListener): void;
     on(event: 'participantsLeft', listener: ParticipantsLeftListener): void;
     on(event: 'isMutedChanged', listener: IsMutedChangedListener): void;
@@ -354,6 +361,8 @@ export interface CallAdapterSubscribers {
     on(event: 'selectedMicrophoneChanged', listener: PropertyChangedEvent): void;
     on(event: 'selectedSpeakerChanged', listener: PropertyChangedEvent): void;
     on(event: 'error', listener: (e: AdapterError) => void): void;
+    on(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
+    on(event: 'captionsPropertyChanged', listener: PropertyChangedEvent): void;
 }
 
 // @public
@@ -769,14 +778,18 @@ export interface CallWithChatAdapterManagement {
     sendReadReceipt(chatMessageId: string): Promise<void>;
     sendTypingIndicator(): Promise<void>;
     setCamera(sourceInfo: VideoDeviceInfo, options?: VideoStreamOptions): Promise<void>;
+    setCaptionLanguage(language: string): Promise<void>;
     setMicrophone(sourceInfo: AudioDeviceInfo): Promise<void>;
     setSpeaker(sourceInfo: AudioDeviceInfo): Promise<void>;
+    setSpokenLanguage(language: string): Promise<void>;
     startCall(participants: string[], options?: StartCallOptions): Call | undefined;
     // @beta
     startCall(participants: CommunicationIdentifier[], options?: StartCallOptions): Call | undefined;
     startCamera(options?: VideoStreamOptions): Promise<void>;
+    startCaptions(startCaptionsOptions?: StartCaptionsOptions): Promise<void>;
     startScreenShare(): Promise<void>;
     stopCamera(): Promise<void>;
+    stopCaptions(): Promise<void>;
     stopScreenShare(): Promise<void>;
     unmute(): Promise<void>;
     // @beta (undocumented)
@@ -817,6 +830,10 @@ export interface CallWithChatAdapterSubscriptions {
     // (undocumented)
     off(event: 'callError', listener: (e: AdapterError) => void): void;
     // (undocumented)
+    off(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
+    // (undocumented)
+    off(event: 'captionsPropertyChanged', listener: PropertyChangedEvent): void;
+    // (undocumented)
     off(event: 'messageReceived', listener: MessageReceivedListener): void;
     // (undocumented)
     off(event: 'messageSent', listener: MessageSentListener): void;
@@ -850,6 +867,10 @@ export interface CallWithChatAdapterSubscriptions {
     on(event: 'selectedSpeakerChanged', listener: PropertyChangedEvent): void;
     // (undocumented)
     on(event: 'callError', listener: (e: AdapterError) => void): void;
+    // (undocumented)
+    on(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
+    // (undocumented)
+    on(event: 'captionsPropertyChanged', listener: PropertyChangedEvent): void;
     // (undocumented)
     on(event: 'messageReceived', listener: MessageReceivedListener): void;
     // (undocumented)
@@ -1048,7 +1069,7 @@ export interface CallWithChatControlOptions {
 }
 
 // @public
-export type CallWithChatEvent = 'callError' | 'chatError' | 'callEnded' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'callParticipantsJoined' | 'callParticipantsLeft' | 'selectedMicrophoneChanged' | 'selectedSpeakerChanged' | 'messageReceived' | 'messageSent' | 'messageRead' | 'chatParticipantsAdded' | 'chatParticipantsRemoved';
+export type CallWithChatEvent = 'callError' | 'chatError' | 'callEnded' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'callParticipantsJoined' | 'callParticipantsLeft' | 'selectedMicrophoneChanged' | 'selectedSpeakerChanged' | 'captionsPropertyChanged' | 'captionsReceived' | 'messageReceived' | 'messageSent' | 'messageRead' | 'chatParticipantsAdded' | 'chatParticipantsRemoved';
 
 // @beta
 export const CameraAndMicrophoneSitePermissions: (props: CameraAndMicrophoneSitePermissionsProps) => JSX.Element;
@@ -1168,6 +1189,16 @@ export interface CaptionsInfo {
     spokenText?: string;
     timestamp: Date;
 }
+
+// @public
+export type captionsOptions = {
+    spokenLanguage: string;
+};
+
+// @public
+export type CaptionsReceivedListener = (event: {
+    data: CaptionsInfo;
+}) => void;
 
 // @public
 export type CaptionsSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
@@ -1454,11 +1485,19 @@ export interface CommonCallingHandlers {
     // (undocumented)
     onSendDtmfTone: (dtmfTone: DtmfTone_2) => Promise<void>;
     // (undocumented)
+    OnSetCaptionLanguage: (language: string) => Promise<void>;
+    // (undocumented)
+    OnSetSpokenLanguage: (language: string) => Promise<void>;
+    // (undocumented)
     onStartCall: (participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[], options?: StartCallOptions) => void;
+    // (undocumented)
+    OnStartCaptions: (captionsOptions?: captionsOptions) => Promise<void>;
     // (undocumented)
     onStartLocalVideo: () => Promise<void>;
     // (undocumented)
     onStartScreenShare: () => Promise<void>;
+    // (undocumented)
+    OnStopCaptions: () => Promise<void>;
     // (undocumented)
     onStopScreenShare: () => Promise<void>;
     // (undocumented)

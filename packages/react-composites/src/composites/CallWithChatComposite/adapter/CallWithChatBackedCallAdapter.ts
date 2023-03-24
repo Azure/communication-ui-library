@@ -9,7 +9,8 @@ import {
   VideoDeviceInfo,
   Call,
   PermissionConstraints,
-  StartCallOptions
+  StartCallOptions,
+  StartCaptionsOptions
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions, DtmfTone } from '@azure/communication-calling';
@@ -158,6 +159,20 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
   public sendDtmfTone = async (dtmfTone: DtmfTone): Promise<void> => {
     await this.callWithChatAdapter.sendDtmfTone(dtmfTone);
   };
+
+  public async startCaptions(startCaptionsOptions?: StartCaptionsOptions): Promise<void> {
+    this.callWithChatAdapter.startCaptions(startCaptionsOptions);
+  }
+
+  public async stopCaptions(): Promise<void> {
+    this.callWithChatAdapter.stopCaptions();
+  }
+  public async setCaptionLanguage(language: string): Promise<void> {
+    this.callWithChatAdapter.setCaptionLanguage(language);
+  }
+  public async setSpokenLanguage(language: string): Promise<void> {
+    this.callWithChatAdapter.setSpokenLanguage(language);
+  }
 }
 
 function callAdapterStateFromCallWithChatAdapterState(

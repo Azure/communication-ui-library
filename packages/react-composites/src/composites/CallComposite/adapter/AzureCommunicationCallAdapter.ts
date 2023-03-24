@@ -30,7 +30,8 @@ import {
   PropertyChangedEvent,
   StartCallOptions,
   VideoOptions,
-  Call
+  Call,
+  StartCaptionsOptions
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-identity-support)) */
 import { TeamsCallAgent } from '@azure/communication-calling';
@@ -54,7 +55,8 @@ import {
   ParticipantsLeftListener,
   DiagnosticChangedEventListner,
   CallAdapterCallEndedEvent,
-  CallAdapter
+  CallAdapter,
+  CaptionsReceivedListener
 } from './CallAdapter';
 /* @conditional-compile-remove(teams-identity-support) */
 import { TeamsCallAdapter } from './CallAdapter';
@@ -247,6 +249,8 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   private participantSubscribers = new Map<string, ParticipantSubscriber>();
   private emitter: EventEmitter = new EventEmitter();
   private onClientStateChange: (clientState: CallClientState) => void;
+  // REMOVE THIS< TEST PURPOSES ONLY
+  private isCaptionsOn: boolean;
 
   private get call(): CallCommon | undefined {
     return this._call;
@@ -274,6 +278,9 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
 
     this.context.onCallEnded((endCallData) => this.emitter.emit('callEnded', endCallData));
 
+    // REMOVE THIS< TEST PURPOSES ONLY
+    this.isCaptionsOn = false;
+
     const onStateChange = (clientState: CallClientState): void => {
       // unsubscribe when the instance gets disposed
       if (!this) {
@@ -290,6 +297,16 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
         this.context.setCurrentCallId(this.call.id);
       }
       this.context.updateClientState(clientState);
+
+      // REMOVE THIS< TEST PURPOSES ONLY
+      if (this.call?.state === 'Connected') {
+        if (_isTeamsCall(this.call) || (_isACSCall(this.call) && !this.call.info.groupId && !this.call.info.roomId)) {
+          if (!this.isCaptionsOn) {
+            this.call.feature(Features.TeamsCaptions).startCaptions();
+            this.isCaptionsOn = true;
+          }
+        }
+      }
     };
 
     this.handlers = createHandlers(callClient, callAgent, deviceManager, undefined);
@@ -348,6 +365,11 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     this.sendDtmfTone.bind(this);
     /* @conditional-compile-remove(unsupported-browser) */
     this.allowUnsupportedBrowserVersion.bind(this);
+
+    this.startCaptions.bind(this);
+    this.stopCaptions.bind(this);
+    this.setSpokenLanguage.bind(this);
+    this.setCaptionLanguage.bind(this);
   }
 
   public dispose(): void {
@@ -584,11 +606,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     this.call = call;
     this.context.setCurrentCallId(call.id);
 
-    // REMOVE THIS< TEST PURPOSES ONLY
-    if (_isTeamsCall(call) || (_isACSCall(call) && !call.info.groupId && !call.info.roomId)) {
-      call.feature(Features.TeamsCaptions).startCaptions();
-    }
-
     // Resync state after callId is set
     this.context.updateClientState(this.callClient.getState());
     this.handlers = createHandlers(this.callClient, this.callAgent, this.deviceManager, this.call);
@@ -639,6 +656,20 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     this.handlers.onSendDtmfTone(dtmfTone);
   }
 
+  public async startCaptions(startCaptionsOptions?: StartCaptionsOptions): Promise<void> {
+    this.handlers.OnStartCaptions(startCaptionsOptions);
+  }
+
+  public async stopCaptions(): Promise<void> {
+    this.handlers.OnStopCaptions();
+  }
+  public async setCaptionLanguage(language: string): Promise<void> {
+    this.handlers.OnSetCaptionLanguage(language);
+  }
+  public async setSpokenLanguage(language: string): Promise<void> {
+    this.handlers.OnSetSpokenLanguage(language);
+  }
+
   public getState(): CallAdapterState {
     return this.context.getState();
   }
@@ -663,6 +694,8 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   on(event: 'selectedMicrophoneChanged', listener: PropertyChangedEvent): void;
   on(event: 'selectedSpeakerChanged', listener: PropertyChangedEvent): void;
   on(event: 'error', errorHandler: (e: AdapterError) => void): void;
+  on(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
+  on(event: 'captionsPropertyChanged', listener: PropertyChangedEvent): void;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public on(event: string, listener: (e: any) => void): void {
@@ -751,6 +784,8 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   off(event: 'selectedMicrophoneChanged', listener: PropertyChangedEvent): void;
   off(event: 'selectedSpeakerChanged', listener: PropertyChangedEvent): void;
   off(event: 'error', errorHandler: (e: AdapterError) => void): void;
+  off(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
+  off(event: 'captionsPropertyChanged', listener: PropertyChangedEvent): void;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public off(event: string, listener: (e: any) => void): void {

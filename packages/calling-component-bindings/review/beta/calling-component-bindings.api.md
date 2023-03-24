@@ -110,6 +110,11 @@ export type CameraButtonSelector = (state: CallClientState, props: CallingBaseSe
 export const cameraButtonSelector: CameraButtonSelector;
 
 // @public
+export type captionsOptions = {
+    spokenLanguage: string;
+};
+
+// @public
 export type CaptionsSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
     captions: CaptionInfo[];
 };
@@ -163,11 +168,19 @@ export interface CommonCallingHandlers {
     // (undocumented)
     onSendDtmfTone: (dtmfTone: DtmfTone) => Promise<void>;
     // (undocumented)
+    OnSetCaptionLanguage: (language: string) => Promise<void>;
+    // (undocumented)
+    OnSetSpokenLanguage: (language: string) => Promise<void>;
+    // (undocumented)
     onStartCall: (participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[], options?: StartCallOptions) => void;
+    // (undocumented)
+    OnStartCaptions: (captionsOptions?: captionsOptions) => Promise<void>;
     // (undocumented)
     onStartLocalVideo: () => Promise<void>;
     // (undocumented)
     onStartScreenShare: () => Promise<void>;
+    // (undocumented)
+    OnStopCaptions: () => Promise<void>;
     // (undocumented)
     onStopScreenShare: () => Promise<void>;
     // (undocumented)

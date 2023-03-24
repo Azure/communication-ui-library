@@ -1,6 +1,12 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import { AudioDeviceInfo, Call, EnvironmentInfo, VideoDeviceInfo } from '@azure/communication-calling';
+import {
+  AudioDeviceInfo,
+  Call,
+  EnvironmentInfo,
+  StartCaptionsOptions,
+  VideoDeviceInfo
+} from '@azure/communication-calling';
 import type { CallAdapter, CallAdapterState } from '../../../src';
 import type { MockCallAdapterState } from '../../common';
 import { produce } from 'immer';
@@ -103,6 +109,22 @@ export class MockCallAdapter implements CallAdapter {
   }
   getEnvironmentInfo(): Promise<EnvironmentInfo> {
     throw Error('getEnvironmentInfo not implemented');
+  }
+
+  startCaptions(startCaptionsOptions?: StartCaptionsOptions | undefined): Promise<void> {
+    throw Error('startCaptions not implemented');
+  }
+
+  stopCaptions(): Promise<void> {
+    throw Error('stopCaptions not implemented');
+  }
+
+  setCaptionLanguage(language: string): Promise<void> {
+    throw Error('setCaptionLanguage not implemented');
+  }
+
+  setSpokenLanguage(language: string): Promise<void> {
+    throw Error('setSpokenLanguage not implemented');
   }
   async setCamera(sourceInfo: VideoDeviceInfo): Promise<void> {
     this.modifyState((draft: CallAdapterState) => {

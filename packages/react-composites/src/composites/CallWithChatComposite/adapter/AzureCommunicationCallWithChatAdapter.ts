@@ -13,7 +13,8 @@ import {
   PropertyChangedEvent,
   TeamsMeetingLinkLocator,
   StartCallOptions,
-  VideoDeviceInfo
+  VideoDeviceInfo,
+  StartCaptionsOptions
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions, DtmfTone } from '@azure/communication-calling';
@@ -79,6 +80,7 @@ import { useEffect, useRef, useState } from 'react';
 import { _toCommunicationIdentifier } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(rooms) */
 import { AzureCommunicationCallAdapterOptions } from '../../CallComposite/adapter/AzureCommunicationCallAdapter';
+import { CaptionsReceivedListener } from '../../CallComposite/adapter/CallAdapter';
 
 type CallWithChatAdapterStateChangedHandler = (newState: CallWithChatAdapterState) => void;
 
@@ -209,6 +211,10 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     this.sendDtmfTone.bind(this);
     /* @conditional-compile-remove(unsupported-browser) */
     this.allowUnsupportedBrowserVersion.bind(this);
+    this.startCaptions.bind(this);
+    this.stopCaptions.bind(this);
+    this.setSpokenLanguage.bind(this);
+    this.setCaptionLanguage.bind(this);
   }
 
   /** Join existing Call. */
@@ -416,6 +422,20 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     return this.callAdapter.allowUnsupportedBrowserVersion();
   }
 
+  public async startCaptions(startCaptionsOptions?: StartCaptionsOptions): Promise<void> {
+    this.callAdapter.startCaptions(startCaptionsOptions);
+  }
+
+  public async stopCaptions(): Promise<void> {
+    this.callAdapter.stopCaptions();
+  }
+  public async setCaptionLanguage(language: string): Promise<void> {
+    this.callAdapter.setCaptionLanguage(language);
+  }
+  public async setSpokenLanguage(language: string): Promise<void> {
+    this.callAdapter.setSpokenLanguage(language);
+  }
+
   on(event: 'callParticipantsJoined', listener: ParticipantsJoinedListener): void;
   on(event: 'callParticipantsLeft', listener: ParticipantsLeftListener): void;
   on(event: 'callEnded', listener: CallEndedListener): void;
@@ -433,6 +453,8 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   on(event: 'selectedMicrophoneChanged', listener: PropertyChangedEvent): void;
   on(event: 'selectedSpeakerChanged', listener: PropertyChangedEvent): void;
   on(event: 'chatError', listener: (e: AdapterError) => void): void;
+  on(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
+  on(event: 'captionsPropertyChanged', listener: PropertyChangedEvent): void;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   on(event: CallWithChatEvent, listener: any): void {
@@ -467,6 +489,12 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
       case 'selectedSpeakerChanged':
         this.callAdapter.on('selectedSpeakerChanged', listener);
         break;
+      case 'captionsReceived':
+        this.callAdapter.on('captionsReceived', listener);
+        break;
+      case 'captionsPropertyChanged':
+        this.callAdapter.on('captionsPropertyChanged', listener);
+        break;
       case 'messageReceived':
         this.chatAdapter.on('messageReceived', listener);
         break;
@@ -488,6 +516,7 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
       case 'chatError':
         this.chatAdapter.on('error', listener);
         break;
+
       default:
         throw `Unknown AzureCommunicationCallWithChatAdapter Event: ${event}`;
     }
@@ -510,6 +539,8 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   off(event: 'chatParticipantsAdded', listener: ParticipantsAddedListener): void;
   off(event: 'chatParticipantsRemoved', listener: ParticipantsRemovedListener): void;
   off(event: 'chatError', listener: (e: AdapterError) => void): void;
+  off(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
+  off(event: 'captionsPropertyChanged', listener: PropertyChangedEvent): void;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   off(event: CallWithChatEvent, listener: any): void {
@@ -543,6 +574,13 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
         break;
       case 'selectedSpeakerChanged':
         this.callAdapter.off('selectedSpeakerChanged', listener);
+        break;
+
+      case 'captionsReceived':
+        this.callAdapter.off('captionsReceived', listener);
+        break;
+      case 'captionsPropertyChanged':
+        this.callAdapter.off('captionsPropertyChanged', listener);
         break;
       case 'messageReceived':
         this.chatAdapter.off('messageReceived', listener);
