@@ -312,6 +312,10 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
 
   /* @conditional-compile-remove(teams-inline-images) */
   async downloadAuthenticatedAttachment(attachmentUrl: string): Promise<string> {
+    if (!this.fileUploadAdapter.downloadAuthenticatedAttachment) {
+      return '';
+    }
+
     return await this.fileUploadAdapter.downloadAuthenticatedAttachment(attachmentUrl);
   }
 
