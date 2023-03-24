@@ -3,7 +3,7 @@
 
 import { LayerHost, mergeStyles, Stack } from '@fluentui/react';
 import { useId } from '@fluentui/react-hooks';
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 import { useTheme } from '../../theming';
 import { GridLayout } from '../GridLayout';
 import { isNarrowWidth } from '../utils/responsive';
@@ -62,7 +62,7 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
     showCameraSwitcherInLocalPreview,
     parentWidth,
     parentHeight,
-    /* @conditional-compile-remove(pinned-participants) */ pinnedParticipantUserIds,
+    pinnedParticipantUserIds = [],
     /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryLayout = 'HorizontalBottom'
   } = props;
 
@@ -73,11 +73,17 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
   /* @conditional-compile-remove(vertical-gallery) */
   const isShort = parentHeight ? isShortHeight(parentHeight) : false;
 
+  // This is for tracking the number of children in the first page of horizontal gallery.
+  // This number will be used for the maxHorizontalDominantSpeakers when organizing the remote participants.
+  const childrenPerPage = useRef(4);
   const { gridParticipants, horizontalGalleryParticipants } = useOrganizedParticipants({
     remoteParticipants,
     dominantSpeakers,
     maxRemoteVideoStreams,
     isScreenShareActive: !!screenShareComponent,
+    maxHorizontalGalleryDominantSpeakers: screenShareComponent
+      ? childrenPerPage.current - (pinnedParticipantUserIds.length % childrenPerPage.current)
+      : childrenPerPage.current,
     /* @conditional-compile-remove(pinned-participants) */ pinnedParticipantUserIds
   });
 
@@ -185,6 +191,9 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
         veritcalGalleryStyles={styles?.verticalGallery}
         /* @conditional-compile-remove(vertical-gallery) */
         overflowGalleryLayout={overflowGalleryLayout}
+        onChildrenPerPageChange={(n: number) => {
+          childrenPerPage.current = n;
+        }}
       />
     );
   }, [
