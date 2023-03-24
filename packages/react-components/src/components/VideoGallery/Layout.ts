@@ -39,7 +39,6 @@ export interface LayoutProps {
    * Height of parent element
    */
   parentHeight?: number;
-  /* @conditional-compile-remove(pinned-participants) */
   /**
    * List of pinned participant userIds
    */
