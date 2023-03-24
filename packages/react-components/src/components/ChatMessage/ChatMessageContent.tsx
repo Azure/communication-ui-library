@@ -23,13 +23,36 @@ export const ChatMessageContent = (props: ChatMessageContentProps): JSX.Element 
     case 'text':
       return MessageContentAsText(props);
     case 'html':
-      return MessageContentAsRichTextHTML(props);
+      if (props.message.attachments && props.message.attachments.length > 0) {
+        return MessageContentWithInlineImages(props);
+      } else {
+        return MessageContentAsRichTextHTML(props);
+      }
     case 'richtext/html':
-      return MessageContentAsRichTextHTML(props);
+      if (props.message.attachments && props.message.attachments.length > 0) {
+        return MessageContentWithInlineImages(props);
+      } else {
+        return MessageContentAsRichTextHTML(props);
+      }
     default:
       console.warn('unknown message content type');
       return <></>;
   }
+};
+
+const MessageContentWithInlineImages = (props: ChatMessageContentProps): JSX.Element => {
+  const htmlToReactParser = new Parser();
+  console.log('MessageContentWithInlineImages--------', htmlToReactParser.parse(props.message.content));
+  const liveAuthor = _formatString(props.liveAuthorIntro, { author: `${props.message.senderDisplayName}` });
+  return (
+    <div data-ui-status={props.message.status} role="text" aria-label={props.messageContentAriaText}>
+      <LiveMessage
+        message={`${props.message.mine ? '' : liveAuthor} ${extractContent(props.message.content || '')}`}
+        aria-live="polite"
+      />
+      {htmlToReactParser.parse(props.message.content)}
+    </div>
+  );
 };
 
 const MessageContentAsRichTextHTML = (props: ChatMessageContentProps): JSX.Element => {
