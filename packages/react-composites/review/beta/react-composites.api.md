@@ -135,9 +135,6 @@ export type AzureCommunicationChatAdapterArgs = {
     threadId: string;
 };
 
-// @beta
-export type BackgroundUploadHandler = (image: File) => VideoBackgroundImage;
-
 // @public
 export interface BaseCompositeProps<TIcons extends Record<string, JSX.Element>> {
     fluentTheme?: PartialTheme | Theme;
@@ -347,7 +344,6 @@ export type CallCompositeOptions = {
     onNetworkingTroubleShootingClick?: () => void;
     onEnvironmentInfoTroubleshootingClick?: () => void;
     remoteVideoTileMenu?: RemoteVideoTileMenuOptions;
-    videoBackgroundEffects?: VideoBackgroundEffectsOptions;
 };
 
 // @public
@@ -823,7 +819,6 @@ export interface CallWithChatControlOptions {
     screenShareButton?: boolean | {
         disabled: boolean;
     };
-    videoBackgroundEffects?: VideoBackgroundEffectsOptions;
 }
 
 // @public
@@ -1406,12 +1401,6 @@ export function _useFakeChatAdapters(args: _FakeChatAdapterArgs): _FakeChatAdapt
 
 // @beta
 export const useTeamsCallAdapter: (args: Partial<TeamsCallAdapterArgs>, afterCreate?: ((adapter: TeamsCallAdapter) => Promise<TeamsCallAdapter>) | undefined, beforeDispose?: ((adapter: TeamsCallAdapter) => Promise<void>) | undefined) => TeamsCallAdapter | undefined;
-
-// @beta
-export interface VideoBackgroundEffectsOptions {
-    backgroundUploadHandler?: BackgroundUploadHandler;
-    disableVideoEffects?: boolean;
-}
 
 // @public
 export interface VideoBackgroundImage {

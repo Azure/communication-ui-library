@@ -191,9 +191,6 @@ export type AzureCommunicationChatAdapterArgs = {
     threadId: string;
 };
 
-// @beta
-export type BackgroundUploadHandler = (image: File) => VideoBackgroundImage;
-
 // @public
 export interface BaseCompositeProps<TIcons extends Record<string, JSX.Element>> {
     fluentTheme?: PartialTheme | Theme;
@@ -500,7 +497,6 @@ export type CallCompositeOptions = {
     onNetworkingTroubleShootingClick?: () => void;
     onEnvironmentInfoTroubleshootingClick?: () => void;
     remoteVideoTileMenu?: RemoteVideoTileMenuOptions;
-    videoBackgroundEffects?: VideoBackgroundEffectsOptions;
 };
 
 // @public
@@ -1070,7 +1066,6 @@ export interface CallWithChatControlOptions {
     screenShareButton?: boolean | {
         disabled: boolean;
     };
-    videoBackgroundEffects?: VideoBackgroundEffectsOptions;
 }
 
 // @public
@@ -3280,12 +3275,6 @@ export interface VerticalGalleryStrings {
 export interface VerticalGalleryStyles extends BaseCustomStyles {
     children?: IStyle;
     controlBar?: VerticalGalleryControlBarStyles;
-}
-
-// @beta
-export interface VideoBackgroundEffectsOptions {
-    backgroundUploadHandler?: BackgroundUploadHandler;
-    disableVideoEffects?: boolean;
 }
 
 // @public

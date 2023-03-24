@@ -8,8 +8,6 @@ import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { BaseProvider, BaseCompositeProps } from '../common/BaseComposite';
 import { CallCompositeIcons } from '../common/icons';
 import { useLocale } from '../localization';
-/* @conditional-compile-remove(video-background-effects) */
-import { VideoBackgroundImage } from './adapter/CallAdapter';
 import { CommonCallAdapter } from './adapter/CallAdapter';
 import { CallAdapterProvider, useAdapter } from './adapter/CallAdapterProvider';
 import { CallPage } from './pages/CallPage';
@@ -180,11 +178,6 @@ export type CallCompositeOptions = {
    * Remote participant video tile menu options
    */
   remoteVideoTileMenu?: RemoteVideoTileMenuOptions;
-  /* @conditional-compile-remove(video-background-effects) */
-  /**
-   * Properties for configuring the video background effects.
-   */
-  videoBackgroundEffects?: VideoBackgroundEffectsOptions;
 };
 
 type MainScreenProps = {
