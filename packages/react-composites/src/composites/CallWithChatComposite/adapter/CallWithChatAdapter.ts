@@ -305,6 +305,8 @@ export interface CallWithChatAdapterManagement {
   /* @conditional-compile-remove(file-sharing) */
   /** @beta */
   updateFileUploadMetadata: (id: string, metadata: FileMetadata) => void;
+  /* @conditional-compile-remove(teams-inline-images) */
+  downloadAuthenticatedAttachment?: (attachmentUrl: string) => Promise<string>;
   /* @conditional-compile-remove(PSTN-calls) */
   /**
    * Puts the Call in a Localhold.
