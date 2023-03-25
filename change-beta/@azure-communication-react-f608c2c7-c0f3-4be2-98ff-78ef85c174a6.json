@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "[MessageThread.stories] Introduce new button to present message with inline image",
-  "packageName": "@azure/communication-react",
-  "email": "joshlai@microsoft.com",
-  "dependentChangeType": "none"
-}
