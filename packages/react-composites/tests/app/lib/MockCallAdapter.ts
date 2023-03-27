@@ -1,11 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 import { AudioDeviceInfo, Call, EnvironmentInfo, VideoDeviceInfo } from '@azure/communication-calling';
-import type { VideoBackgroundImage, CallAdapter, CallAdapterState } from '../../../src';
+import type { CallAdapter, CallAdapterState } from '../../../src';
 import type { MockCallAdapterState } from '../../common';
 import { produce } from 'immer';
 import EventEmitter from 'events';
-import { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/communication-calling';
+import { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/communication-calling-effects';
 
 /**
  * Mock class that implements CallAdapter interface for UI snapshot tests. The handler implementation is currently limited so
@@ -147,20 +147,6 @@ export class MockCallAdapter implements CallAdapter {
 
   stopVideoBackgroundEffect(): Promise<void> {
     throw new Error('stopVideoBackgroundEffect not implemented.');
-  }
-
-  updateBackgroundPickerImages(
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    backgroundImages: VideoBackgroundImage[]
-  ): void {
-    throw new Error('updateBackgroundPickerImages not implemented.');
-  }
-
-  selectCustomBackground(
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    backgroundImage: VideoBackgroundImage
-  ): void {
-    throw new Error('selectCustomBackground not implemented.');
   }
 }
 

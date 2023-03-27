@@ -23,9 +23,7 @@ import {
 } from '@azure/communication-common';
 import { _toCommunicationIdentifier } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(video-background-effects) */
-import { VideoBackgroundImage } from '../../CallComposite/adapter/CallAdapter';
-/* @conditional-compile-remove(video-background-effects) */
-import { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/communication-calling';
+import { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/communication-calling-effects';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
@@ -174,20 +172,6 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
   /* @conditional-compile-remove(video-background-effects) */
   public async stopVideoBackgroundEffect(): Promise<void> {
     await this.callWithChatAdapter.stopVideoBackgroundEffect();
-  }
-  /* @conditional-compile-remove(video-background-effects) */
-  public updateBackgroundPickerImages(
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    backgroundImages: VideoBackgroundImage[]
-  ): void {
-    throw new Error('updateBackgroundPickerImages not implemented.');
-  }
-  /* @conditional-compile-remove(video-background-effects) */
-  public selectCustomBackground(
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    backgroundImage: VideoBackgroundImage
-  ): void {
-    throw new Error('selectCustomBackground not implemented.');
   }
 }
 

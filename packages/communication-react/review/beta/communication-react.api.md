@@ -9,9 +9,7 @@
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { AudioDeviceInfo } from '@azure/communication-calling';
 import { BackgroundBlurConfig } from '@azure/communication-calling-effects';
-import { BackgroundBlurConfig as BackgroundBlurConfig_2 } from '@azure/communication-calling';
 import { BackgroundReplacementConfig } from '@azure/communication-calling-effects';
-import { BackgroundReplacementConfig as BackgroundReplacementConfig_2 } from '@azure/communication-calling';
 import { Call } from '@azure/communication-calling';
 import { CallAgent } from '@azure/communication-calling';
 import { CallClient } from '@azure/communication-calling';
@@ -278,7 +276,7 @@ export interface CallAdapterCallOperations {
     addParticipant(participant: CommunicationUserIdentifier): Promise<void>;
     allowUnsupportedBrowserVersion(): void;
     // @beta
-    blurVideoBackground(bgBlurConfig?: BackgroundBlurConfig_2): Promise<void>;
+    blurVideoBackground(bgBlurConfig?: BackgroundBlurConfig): Promise<void>;
     createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void | CreateVideoStreamViewResult>;
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
     // @beta
@@ -289,11 +287,9 @@ export interface CallAdapterCallOperations {
     // @beta
     removeParticipant(participant: CommunicationIdentifier): Promise<void>;
     // @beta
-    replaceVideoBackground(bgReplacementConfig: BackgroundReplacementConfig_2): Promise<void>;
+    replaceVideoBackground(bgReplacementConfig: BackgroundReplacementConfig): Promise<void>;
     // @beta
     resumeCall(): Promise<void>;
-    // @beta
-    selectCustomBackground(backgroundImage: VideoBackgroundImage): void;
     // @beta
     sendDtmfTone(dtmfTone: DtmfTone_2): Promise<void>;
     startCamera(options?: VideoStreamOptions): Promise<void>;
@@ -303,8 +299,6 @@ export interface CallAdapterCallOperations {
     // @beta
     stopVideoBackgroundEffect(): Promise<void>;
     unmute(): Promise<void>;
-    // @beta
-    updateBackgroundPickerImages(backgroundImages: VideoBackgroundImage[]): void;
 }
 
 // @public
@@ -749,7 +743,7 @@ export interface CallWithChatAdapterManagement {
     allowUnsupportedBrowserVersion(): void;
     askDevicePermission(constrain: PermissionConstraints): Promise<void>;
     // @beta
-    blurVideoBackground(bgBlurConfig?: BackgroundBlurConfig_2): Promise<void>;
+    blurVideoBackground(bgBlurConfig?: BackgroundBlurConfig): Promise<void>;
     // @beta (undocumented)
     cancelFileUpload: (id: string) => void;
     // @beta (undocumented)
@@ -777,11 +771,9 @@ export interface CallWithChatAdapterManagement {
     // @beta
     removeParticipant(participant: CommunicationIdentifier): Promise<void>;
     // @beta
-    replaceVideoBackground(bgReplacementConfig: BackgroundReplacementConfig_2): Promise<void>;
+    replaceVideoBackground(bgReplacementConfig: BackgroundReplacementConfig): Promise<void>;
     // @beta
     resumeCall: () => Promise<void>;
-    // @beta
-    selectCustomBackground(backgroundImage: VideoBackgroundImage): void;
     // @beta
     sendDtmfTone: (dtmfTone: DtmfTone_2) => Promise<void>;
     sendMessage(content: string, options?: SendMessageOptions): Promise<void>;
@@ -800,8 +792,6 @@ export interface CallWithChatAdapterManagement {
     // @beta
     stopVideoBackgroundEffect(): Promise<void>;
     unmute(): Promise<void>;
-    // @beta
-    updateBackgroundPickerImages(backgroundImages: VideoBackgroundImage[]): void;
     // @beta (undocumented)
     updateFileUploadErrorMessage: (id: string, errorMessage: string) => void;
     // @beta (undocumented)

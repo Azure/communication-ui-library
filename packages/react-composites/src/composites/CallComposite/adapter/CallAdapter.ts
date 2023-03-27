@@ -5,7 +5,7 @@ import { CallState, DeviceManagerState } from '@internal/calling-stateful-client
 /* @conditional-compile-remove(teams-identity-support) */
 import { TeamsCall } from '@azure/communication-calling';
 /* @conditional-compile-remove(video-background-effects) */
-import { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/communication-calling';
+import { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/communication-calling-effects';
 /* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
 import type {
@@ -393,25 +393,6 @@ export interface CallAdapterCallOperations {
    * @beta
    */
   stopVideoBackgroundEffect(): Promise<void>;
-  /* @conditional-compile-remove(video-background-effects) */
-  /**
-   * Set the default background images for background replacement effect.
-   *
-   * @param backgroundImages - Array of custom background images.
-   *
-   * @beta
-   */
-  updateBackgroundPickerImages(backgroundImages: VideoBackgroundImage[]): void;
-  /* @conditional-compile-remove(video-background-effects) */
-  /**
-   * Select the custom background image for background replacement effect and
-   * apply if the camera is on.
-   *
-   * @param backgroundImage - Contains the attibutes of a background image like url, name etc.
-   *
-   * @beta
-   */
-  selectCustomBackground(backgroundImage: VideoBackgroundImage): void;
 }
 
 /**

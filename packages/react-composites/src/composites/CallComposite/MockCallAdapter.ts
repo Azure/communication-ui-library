@@ -10,10 +10,6 @@ import { EnvironmentInfo } from '@azure/communication-calling';
 import { Role } from '@internal/react-components';
 import { EventEmitter } from 'stream';
 import type { CallAdapter, CallAdapterState } from './adapter';
-/* @conditional-compile-remove(video-background-effects) */
-import { VideoBackgroundImage } from './adapter/CallAdapter';
-/* @conditional-compile-remove(video-background-effects) */
-import { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/communication-calling';
 
 /**
  * Temporary copy of the packages\react-composites\tests\browser\call\app\mocks\MockCallAdapter.ts
@@ -141,33 +137,16 @@ export class MockCallAdapter implements CallAdapter {
     throw Error('getEnvironmentInfo not implemented');
   }
   /* @conditional-compile-remove(video-background-effects) */
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  blurVideoBackground(bgBlurConfig?: BackgroundBlurConfig): Promise<void> {
+  blurVideoBackground(): Promise<void> {
     throw new Error('blurVideoBackground not implemented.');
   }
   /* @conditional-compile-remove(video-background-effects) */
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  replaceVideoBackground(bgReplacementConfig: BackgroundReplacementConfig): Promise<void> {
+  replaceVideoBackground(): Promise<void> {
     throw new Error('replaceVideoBackground not implemented.');
   }
   /* @conditional-compile-remove(video-background-effects) */
-  /* @conditional-compile-remove(video-background-effects) */
   stopVideoBackgroundEffect(): Promise<void> {
     throw new Error('stopVideoBackgroundEffect not implemented.');
-  }
-  /* @conditional-compile-remove(video-background-effects) */
-  updateBackgroundPickerImages(
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    backgroundImages: VideoBackgroundImage[]
-  ): void {
-    throw new Error('updateBackgroundPickerImages not implemented.');
-  }
-  /* @conditional-compile-remove(video-background-effects) */
-  selectCustomBackground(
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    backgroundImage: VideoBackgroundImage
-  ): void {
-    throw new Error('selectCustomBackground not implemented.');
   }
 }
 

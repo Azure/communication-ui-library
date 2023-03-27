@@ -44,9 +44,7 @@ import { CommunicationUserIdentifier, PhoneNumberIdentifier } from '@azure/commu
 /* @conditional-compile-remove(PSTN-calls) */
 import { CommunicationIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(video-background-effects) */
-import { VideoBackgroundImage } from '../../CallComposite/adapter/CallAdapter';
-/* @conditional-compile-remove(video-background-effects) */
-import { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/communication-calling';
+import { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/communication-calling-effects';
 
 /**
  * Functionality for managing the current call with chat.
@@ -365,25 +363,6 @@ export interface CallWithChatAdapterManagement {
    * @beta
    */
   stopVideoBackgroundEffect(): Promise<void>;
-  /* @conditional-compile-remove(video-background-effects) */
-  /**
-   * Set the default background images for background replacement effect.
-   *
-   * @param backgroundImages - Array of custom background images.
-   *
-   * @beta
-   */
-  updateBackgroundPickerImages(backgroundImages: VideoBackgroundImage[]): void;
-  /* @conditional-compile-remove(video-background-effects) */
-  /**
-   * Select the custom background image for background replacement effect and
-   * apply if the camera is on.
-   *
-   * @param backgroundImage - Contains the attibutes of a background image like url, name etc.
-   *
-   * @beta
-   */
-  selectCustomBackground(backgroundImage: VideoBackgroundImage): void;
 }
 
 /**

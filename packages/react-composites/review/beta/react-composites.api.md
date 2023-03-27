@@ -8,8 +8,8 @@
 
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { AudioDeviceInfo } from '@azure/communication-calling';
-import { BackgroundBlurConfig } from '@azure/communication-calling';
-import { BackgroundReplacementConfig } from '@azure/communication-calling';
+import { BackgroundBlurConfig } from '@azure/communication-calling-effects';
+import { BackgroundReplacementConfig } from '@azure/communication-calling-effects';
 import { BaseCustomStyles } from '@internal/react-components';
 import { Call } from '@azure/communication-calling';
 import { CallAgent } from '@azure/communication-calling';
@@ -189,8 +189,6 @@ export interface CallAdapterCallOperations {
     // @beta
     resumeCall(): Promise<void>;
     // @beta
-    selectCustomBackground(backgroundImage: VideoBackgroundImage): void;
-    // @beta
     sendDtmfTone(dtmfTone: DtmfTone): Promise<void>;
     startCamera(options?: VideoStreamOptions): Promise<void>;
     startScreenShare(): Promise<void>;
@@ -199,8 +197,6 @@ export interface CallAdapterCallOperations {
     // @beta
     stopVideoBackgroundEffect(): Promise<void>;
     unmute(): Promise<void>;
-    // @beta
-    updateBackgroundPickerImages(backgroundImages: VideoBackgroundImage[]): void;
 }
 
 // @public
@@ -534,8 +530,6 @@ export interface CallWithChatAdapterManagement {
     // @beta
     resumeCall: () => Promise<void>;
     // @beta
-    selectCustomBackground(backgroundImage: VideoBackgroundImage): void;
-    // @beta
     sendDtmfTone: (dtmfTone: DtmfTone) => Promise<void>;
     sendMessage(content: string, options?: SendMessageOptions): Promise<void>;
     sendReadReceipt(chatMessageId: string): Promise<void>;
@@ -553,8 +547,6 @@ export interface CallWithChatAdapterManagement {
     // @beta
     stopVideoBackgroundEffect(): Promise<void>;
     unmute(): Promise<void>;
-    // @beta
-    updateBackgroundPickerImages(backgroundImages: VideoBackgroundImage[]): void;
     // @beta (undocumented)
     updateFileUploadErrorMessage: (id: string, errorMessage: string) => void;
     // @beta (undocumented)

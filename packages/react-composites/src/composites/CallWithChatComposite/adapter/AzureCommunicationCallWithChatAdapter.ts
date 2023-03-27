@@ -80,9 +80,7 @@ import { _toCommunicationIdentifier } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(rooms) */
 import { AzureCommunicationCallAdapterOptions } from '../../CallComposite/adapter/AzureCommunicationCallAdapter';
 /* @conditional-compile-remove(video-background-effects) */
-import { VideoBackgroundImage } from '../../CallComposite/adapter/CallAdapter';
-/* @conditional-compile-remove(video-background-effects) */
-import { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/communication-calling';
+import { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/communication-calling-effects';
 
 type CallWithChatAdapterStateChangedHandler = (newState: CallWithChatAdapterState) => void;
 
@@ -219,10 +217,6 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     this.replaceVideoBackground.bind(this);
     /* @conditional-compile-remove(video-background-effects) */
     this.stopVideoBackgroundEffect.bind(this);
-    /* @conditional-compile-remove(video-background-effects) */
-    this.updateBackgroundPickerImages.bind(this);
-    /* @conditional-compile-remove(video-background-effects) */
-    this.selectCustomBackground.bind(this);
   }
 
   /** Join existing Call. */
@@ -442,22 +436,6 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   /* @conditional-compile-remove(video-background-effects) */
   public async stopVideoBackgroundEffect(): Promise<void> {
     return await this.callAdapter.stopVideoBackgroundEffect();
-  }
-
-  /* @conditional-compile-remove(video-background-effects) */
-  public updateBackgroundPickerImages(
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    backgroundImages: VideoBackgroundImage[]
-  ): void {
-    throw new Error('updateBackgroundPickerImages not implemented.');
-  }
-
-  /* @conditional-compile-remove(video-background-effects) */
-  public selectCustomBackground(
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    backgroundImage: VideoBackgroundImage
-  ): void {
-    throw new Error('selectCustomBackground not implemented.');
   }
 
   on(event: 'callParticipantsJoined', listener: ParticipantsJoinedListener): void;
