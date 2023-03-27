@@ -36,7 +36,8 @@ export type {
   GetCallingSelector,
   CallingHandlers,
   CallingBaseSelectorProps,
-  CommonCallingHandlers
+  CommonCallingHandlers,
+  captionsOptions
 } from '../../calling-component-bindings/src';
 export type {
   ChatClientProviderProps,
@@ -78,7 +79,7 @@ export type {
   ParticipantListSelector,
   MicrophoneButtonSelector,
   ParticipantsButtonSelector,
-  CaptionsSelector
+  _CaptionsSelector
 } from '../../calling-component-bindings/src';
 /* @conditional-compile-remove(PSTN-calls) */
 export type { HoldButtonSelector } from '../../calling-component-bindings/src';

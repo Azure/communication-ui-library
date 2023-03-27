@@ -14,17 +14,17 @@ export type { ErrorBarSelector } from './errorBarSelector';
 export type { HoldButtonSelector } from './callControlSelectors';
 
 export type {
-  StartCaptionsButtonSelector,
-  ChangeCaptionLanguageButtonSelector,
-  ChangeSpokenLanguageButtonSelector,
-  CaptionsSelector
+  _StartCaptionsButtonSelector,
+  _ChangeCaptionLanguageButtonSelector,
+  _ChangeSpokenLanguageButtonSelector,
+  _CaptionsSelector
 } from './captionsSelector';
 
 export type { CallingHandlers } from './handlers/createHandlers';
 /* @conditional-compile-remove(teams-identity-support) */
 export type { TeamsCallingHandlers } from './handlers/createTeamsCallHandlers';
 export type { CommonCallingHandlers } from './handlers/createCommonHandlers';
-
+export type { captionsOptions } from './handlers/createCommonHandlers';
 /* @conditional-compile-remove(teams-identity-support) */
 export { useTeamsCall, useTeamsCallAgent } from './providers';
 

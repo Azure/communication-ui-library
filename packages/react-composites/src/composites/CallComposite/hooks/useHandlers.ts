@@ -104,6 +104,20 @@ const createCompositeHandlers = memoizeOne(
     /* @conditional-compile-remove(video-background-effects) */
     onReplaceVideoBackground: async () => {
       throw new Error('Not implemented');
+    },
+    OnStartCaptions: async (captionsOptions) => {
+      await adapter.startCaptions(captionsOptions);
+    },
+
+    OnStopCaptions: async () => {
+      await adapter.stopCaptions();
+    },
+
+    OnSetSpokenLanguage: async (language) => {
+      await adapter.setSpokenLanguage(language);
+    },
+    OnSetCaptionLanguage: async (language) => {
+      await adapter.setCaptionLanguage(language);
     }
   })
 );

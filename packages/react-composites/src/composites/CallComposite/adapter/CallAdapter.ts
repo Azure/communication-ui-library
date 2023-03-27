@@ -1,9 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { CallState, DeviceManagerState } from '@internal/calling-stateful-client';
+import { CallState, CaptionsInfo, DeviceManagerState } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(teams-identity-support) */
-import { TeamsCall } from '@azure/communication-calling';
+import { StartCaptionsOptions, TeamsCall } from '@azure/communication-calling';
 /* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
 import type {
@@ -220,6 +220,13 @@ export type DiagnosticChangedEventListner = (
 ) => void;
 
 /**
+ * Callback for {@link CallAdapterSubscribers} 'captionsReceived' event.
+ *
+ * @public
+ */
+export type CaptionsReceivedListener = (event: { data: CaptionsInfo }) => void;
+
+/**
  * Functionality for managing the current call.
  *
  * @public
@@ -347,6 +354,26 @@ export interface CallAdapterCallOperations {
    * Continues into a call when the browser version is not supported.
    */
   allowUnsupportedBrowserVersion(): void;
+
+  /**
+   * Function to Start captions
+   * @param startCaptionsOptions - options for start captions
+   */
+  startCaptions(startCaptionsOptions?: StartCaptionsOptions): Promise<void>;
+  /**
+   * Function to set caption language
+   * @param language - language set for caption
+   */
+  setCaptionLanguage(language: string): Promise<void>;
+  /**
+   * Function to set spoken language
+   * @param language - spoken language
+   */
+  setSpokenLanguage(language: string): Promise<void>;
+  /**
+   * Funtion to stop captions
+   */
+  stopCaptions(): Promise<void>;
 }
 
 /**
@@ -543,6 +570,22 @@ export interface CallAdapterSubscribers {
    * Unsubscribe function for 'error' event.
    */
   off(event: 'error', listener: (e: AdapterError) => void): void;
+  /**
+   * Subscribe function for 'captionsReceived' event.
+   */
+  on(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
+  /**
+   * Unsubscribe function for 'captionsReceived' event.
+   */
+  off(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
+  /**
+   * Subscribe function for 'captionsPropertyChanged' event.
+   */
+  on(event: 'captionsPropertyChanged', listener: PropertyChangedEvent): void;
+  /**
+   * Unsubscribe function for 'captionsPropertyChanged' event.
+   */
+  off(event: 'captionsPropertyChanged', listener: PropertyChangedEvent): void;
 }
 
 // This type remains for non-breaking change reason

@@ -29,6 +29,7 @@ import {
   PermissionConstraints,
   PropertyChangedEvent,
   StartCallOptions,
+  StartCaptionsOptions,
   VideoDeviceInfo
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
@@ -43,6 +44,7 @@ import { FileUploadManager } from '../../ChatComposite';
 import { CommunicationUserIdentifier, PhoneNumberIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(PSTN-calls) */
 import { CommunicationIdentifier } from '@azure/communication-common';
+import { CaptionsReceivedListener } from '../../CallComposite/adapter/CallAdapter';
 
 /**
  * Functionality for managing the current call with chat.
@@ -338,6 +340,26 @@ export interface CallWithChatAdapterManagement {
    * Continues into a call when the browser version is not supported.
    */
   allowUnsupportedBrowserVersion(): void;
+
+  /**
+   * Function to Start captions
+   * @param startCaptionsOptions - options for start captions
+   */
+  startCaptions(startCaptionsOptions?: StartCaptionsOptions): Promise<void>;
+  /**
+   * Function to set caption language
+   * @param language - language set for caption
+   */
+  setCaptionLanguage(language: string): Promise<void>;
+  /**
+   * Function to set spoken language
+   * @param language - spoken language
+   */
+  setSpokenLanguage(language: string): Promise<void>;
+  /**
+   * Funtion to stop captions
+   */
+  stopCaptions(): Promise<void>;
 }
 
 /**
@@ -357,6 +379,8 @@ export interface CallWithChatAdapterSubscriptions {
   on(event: 'selectedMicrophoneChanged', listener: PropertyChangedEvent): void;
   on(event: 'selectedSpeakerChanged', listener: PropertyChangedEvent): void;
   on(event: 'callError', listener: (e: AdapterError) => void): void;
+  on(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
+  on(event: 'captionsPropertyChanged', listener: PropertyChangedEvent): void;
 
   off(event: 'callEnded', listener: CallEndedListener): void;
   off(event: 'isMutedChanged', listener: IsMutedChangedListener): void;
@@ -369,6 +393,8 @@ export interface CallWithChatAdapterSubscriptions {
   off(event: 'selectedMicrophoneChanged', listener: PropertyChangedEvent): void;
   off(event: 'selectedSpeakerChanged', listener: PropertyChangedEvent): void;
   off(event: 'callError', listener: (e: AdapterError) => void): void;
+  off(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
+  off(event: 'captionsPropertyChanged', listener: PropertyChangedEvent): void;
 
   // Chat subscriptions
   on(event: 'messageReceived', listener: MessageReceivedListener): void;
@@ -415,6 +441,8 @@ export type CallWithChatEvent =
   | 'callParticipantsLeft'
   | 'selectedMicrophoneChanged'
   | 'selectedSpeakerChanged'
+  | 'captionsPropertyChanged'
+  | 'captionsReceived'
   | 'messageReceived'
   | 'messageSent'
   | 'messageRead'
