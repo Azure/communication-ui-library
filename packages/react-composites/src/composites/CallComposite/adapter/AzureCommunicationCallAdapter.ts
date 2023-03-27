@@ -30,6 +30,8 @@ import {
   VideoOptions,
   Call
 } from '@azure/communication-calling';
+/* @conditional-compile-remove(video-background-effects) */
+import { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/communication-calling-effects';
 /* @conditional-compile-remove(teams-identity-support)) */
 import { TeamsCallAgent } from '@azure/communication-calling';
 /* @conditional-compile-remove(rooms) */
@@ -54,6 +56,8 @@ import {
   CallAdapterCallEndedEvent,
   CallAdapter
 } from './CallAdapter';
+/* @conditional-compile-remove(video-background-effects) */
+import { VideoBackgroundImage } from './CallAdapter';
 /* @conditional-compile-remove(teams-identity-support) */
 import { TeamsCallAdapter } from './CallAdapter';
 import { getCallCompositePage, IsCallEndedPage, isCameraOn, isValidIdentifier } from '../utils';
@@ -94,6 +98,7 @@ class CallContext {
       /* @conditional-compile-remove(rooms) */ roleHint?: Role;
       maxListeners?: number;
       onFetchProfile?: OnFetchProfileCallback;
+      /* @conditional-compile-remove(video-background-effects) */ videoBackgroundImages?: VideoBackgroundImage[];
     }
   ) {
     this.state = {
@@ -109,6 +114,7 @@ class CallContext {
       /* @conditional-compile-remove(unsupported-browser) */ environmentInfo: clientState.environmentInfo,
       /* @conditional-compile-remove(unsupported-browser) */ unsupportedBrowserVersionsAllowed: false,
       /* @conditional-compile-remove(rooms) */ roleHint: options?.roleHint,
+      /* @conditional-compile-remove(video-background-effects) */ videoBackgroundImages: options?.videoBackgroundImages,
       cameraStatus: undefined
     };
     this.emitter.setMaxListeners(options?.maxListeners ?? 50);
@@ -346,6 +352,12 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     this.sendDtmfTone.bind(this);
     /* @conditional-compile-remove(unsupported-browser) */
     this.allowUnsupportedBrowserVersion.bind(this);
+    /* @conditional-compile-remove(video-background-effects) */
+    this.blurVideoBackground.bind(this);
+    /* @conditional-compile-remove(video-background-effects) */
+    this.replaceVideoBackground.bind(this);
+    /* @conditional-compile-remove(video-background-effects) */
+    this.stopVideoBackgroundEffect.bind(this);
   }
 
   public dispose(): void {
@@ -541,6 +553,20 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   public allowUnsupportedBrowserVersion(): void {
     this.context.setAllowedUnsupportedBrowser();
     this.context.updateClientState(this.callClient.getState());
+  }
+
+  /* @conditional-compile-remove(video-background-effects) */
+  public async blurVideoBackground(bgBlurConfig?: BackgroundBlurConfig): Promise<void> {
+    await this.handlers.onBlurVideoBackground(bgBlurConfig);
+  }
+  /* @conditional-compile-remove(video-background-effects) */
+  public async replaceVideoBackground(bgReplacementConfig: BackgroundReplacementConfig): Promise<void> {
+    await this.handlers.onReplaceVideoBackground(bgReplacementConfig);
+  }
+
+  /* @conditional-compile-remove(video-background-effects) */
+  public async stopVideoBackgroundEffect(): Promise<void> {
+    await this.handlers.onRemoveVideoBackgroundEffects();
   }
 
   public startCall(
