@@ -10,7 +10,8 @@ import {
   _useContainerWidth,
   ErrorBar,
   ErrorBarProps,
-  useTheme
+  useTheme,
+  _CaptionsBanner
 } from '@internal/react-components';
 /* @conditional-compile-remove(rooms) */
 import { _usePermissions } from '@internal/react-components';
@@ -23,6 +24,7 @@ import { containerDivStyles } from '../../common/ContainerRectProps';
 /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
 import { useAdapter } from '../adapter/CallAdapterProvider';
 import { CallControls, CallControlsProps } from '../components/CallControls';
+import { usePropsFor } from '../hooks/usePropsFor';
 /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
 import { useSidePaneState } from '../hooks/useSidePaneState';
 import {
@@ -154,6 +156,8 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     };
   }
 
+  const captionsBannerProps = usePropsFor(_CaptionsBanner);
+
   return (
     <div ref={containerRef} className={mergeStyles(containerDivStyles)} id={props.id}>
       <Stack verticalFill horizontalAlign="stretch" className={containerClassName} data-ui-id={props.dataUiId}>
@@ -169,6 +173,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
             )}
             {canUnmute && !!props.mutedNotificationProps && <MutedNotification {...props.mutedNotificationProps} />}
           </Stack.Item>
+
           {props.callControlProps?.options !== false &&
             /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
             !isMobileWithActivePane && (
@@ -185,6 +190,15 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                 />
               </Stack.Item>
             )}
+          <Stack.Item>
+            {captionsBannerProps.captions.length > 0 && (
+              <Stack horizontalAlign="center">
+                <Stack.Item style={{ width: '50%' }}>
+                  <_CaptionsBanner {...captionsBannerProps} />
+                </Stack.Item>
+              </Stack>
+            )}
+          </Stack.Item>
           <Stack horizontal grow>
             <Stack.Item grow style={callCompositeContainerFlex()}>
               <Stack.Item styles={callGalleryStyles} grow>

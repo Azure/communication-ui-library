@@ -40,6 +40,7 @@ import { CallCompositeOptions } from '../CallComposite/CallComposite';
 /* @conditional-compile-remove(call-readiness) */
 import { DeviceCheckOptions } from '../CallComposite/CallComposite';
 import { drawerContainerStyles } from '../CallComposite/styles/CallComposite.styles';
+import { CaptionsBanner } from '../common/CaptionsBanner';
 
 /**
  * Props required for the {@link CallWithChatComposite}
@@ -443,6 +444,13 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
             />
           )}
         </Stack>
+        {showControlBar && (
+          <ChatAdapterProvider adapter={chatProps.adapter}>
+            <CallAdapterProvider adapter={callAdapter}>
+              <CaptionsBanner />
+            </CallAdapterProvider>
+          </ChatAdapterProvider>
+        )}
         {showControlBar && !isMobileWithActivePane && (
           <ChatAdapterProvider adapter={chatProps.adapter}>
             <Stack.Item styles={controlBarContainerStyles}>
