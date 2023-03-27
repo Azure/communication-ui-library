@@ -5,7 +5,6 @@ import type { CallAdapter, CallAdapterState } from '../../../src';
 import type { MockCallAdapterState } from '../../common';
 import { produce } from 'immer';
 import EventEmitter from 'events';
-import { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/communication-calling-effects';
 
 /**
  * Mock class that implements CallAdapter interface for UI snapshot tests. The handler implementation is currently limited so
@@ -135,13 +134,11 @@ export class MockCallAdapter implements CallAdapter {
     }
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  blurVideoBackground(bgBlurConfig?: BackgroundBlurConfig): Promise<void> {
+  blurVideoBackground(): Promise<void> {
     throw new Error('blurVideoBackground not implemented.');
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  replaceVideoBackground(bgReplacementConfig: BackgroundReplacementConfig): Promise<void> {
+  replaceVideoBackground(): Promise<void> {
     throw new Error('replaceVideoBackground not implemented.');
   }
 

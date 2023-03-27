@@ -351,7 +351,7 @@ export interface CallWithChatAdapterManagement {
   blurVideoBackground(bgBlurConfig?: BackgroundBlurConfig): Promise<void>;
   /* @conditional-compile-remove(video-background-effects) */
   /**
-   * Start the blur video background effect.
+   * Start the video background replacement effect.
    *
    * @beta
    */

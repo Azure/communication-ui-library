@@ -3271,9 +3271,8 @@ export interface VerticalGalleryStyles extends BaseCustomStyles {
     controlBar?: VerticalGalleryControlBarStyles;
 }
 
-// @public
+// @beta
 export interface VideoBackgroundImage {
-    // (undocumented)
     key: string;
     tooltipText?: string;
     url: string;

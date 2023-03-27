@@ -230,9 +230,12 @@ export type DiagnosticChangedEventListner = (
 /**
  * Contains the attibutes of a background image like url, name etc.
  *
- * @public
+ * @beta
  */
 export interface VideoBackgroundImage {
+  /**
+   * key for unique identification of the custom background
+   */
   key: string;
   /**
    * URL of the uploaded background image.
@@ -381,7 +384,7 @@ export interface CallAdapterCallOperations {
   blurVideoBackground(bgBlurConfig?: BackgroundBlurConfig): Promise<void>;
   /* @conditional-compile-remove(video-background-effects) */
   /**
-   * Start the blur video background effect.
+   * Start the video background replacement effect.
    *
    * @beta
    */
