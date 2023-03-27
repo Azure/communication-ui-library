@@ -20,9 +20,6 @@ export {
 /* @conditional-compile-remove(rooms) */
 export type { _Permissions, _PermissionsProviderProps, Role } from './permissions';
 
-/* @conditional-compile-remove(teams-inline-images) */
-export type { ChatAttachment, ChatAttachmentStatus } from './types';
-
 export type {
   BaseCustomStyles,
   CallParticipantListParticipant,

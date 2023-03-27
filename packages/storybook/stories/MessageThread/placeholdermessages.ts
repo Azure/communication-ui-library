@@ -5,9 +5,9 @@ import {
   MessageStatus,
   MessageAttachedStatus,
   ChatMessage,
-  ChatAttachment,
   CustomMessage,
-  SystemMessage
+  SystemMessage,
+  FileMetadata
 } from '@azure/communication-react';
 
 export const MessageThreadStoryContainerStyles = {
@@ -82,15 +82,16 @@ export const GenerateMockNewChatMessageWithInlineImage = (): ChatMessage => {
     mine: false,
     attached: false,
     contentType: 'html',
-    attachments: [GenerateMockMessageAttachment()]
+    attachedFilesMetadata: [GenerateMockMessageAttachment()]
   };
 };
 
-const GenerateMockMessageAttachment = (): ChatAttachment => {
+const GenerateMockMessageAttachment = (): FileMetadata => {
   return {
+    attachmentType: 'teamsInlineImage',
     id: 'SomeImageId',
-    attachmentType: 'png',
-    status: 'completed',
+    name: 'SomeImageId.png',
+    extension: 'png',
     url: 'images/github.png',
     previewUrl: 'images/github.png'
   };

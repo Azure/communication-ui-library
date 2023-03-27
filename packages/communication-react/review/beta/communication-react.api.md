@@ -1175,25 +1175,6 @@ export type ChatAdapterUiState = {
     fileUploads?: FileUploadsUiState;
 };
 
-// @beta
-export interface ChatAttachment {
-    // (undocumented)
-    attachmentType: string;
-    // (undocumented)
-    id: string;
-    // (undocumented)
-    name?: string;
-    // (undocumented)
-    previewUrl?: string;
-    // (undocumented)
-    status: ChatAttachmentStatus;
-    // (undocumented)
-    url: string;
-}
-
-// @beta
-export type ChatAttachmentStatus = 'downloading' | 'completed' | 'failed' | 'none';
-
 // @public
 export type ChatBaseSelectorProps = {
     threadId: string;
@@ -1311,8 +1292,6 @@ export interface ChatMessage extends MessageCommon {
     attached?: MessageAttachedStatus;
     // @beta
     attachedFilesMetadata?: FileMetadata[];
-    // @beta
-    attachments?: ChatAttachment[];
     // (undocumented)
     clientMessageId?: string;
     // (undocumented)
@@ -2187,10 +2166,18 @@ export type FileDownloadHandler = (userId: string, fileMetadata: FileMetadata) =
 
 // @beta
 export interface FileMetadata {
+    // (undocumented)
+    attachmentType: FileMetadataAttachmentType;
     extension: string;
+    id: string;
     name: string;
+    // (undocumented)
+    previewUrl?: string;
     url: string;
 }
+
+// @beta (undocumented)
+export type FileMetadataAttachmentType = 'fileSharing' | /* @conditional-compile-remove(teams-inline-images) */ 'teamsInlineImage' | 'unknown';
 
 // @beta
 export interface FileSharingOptions {

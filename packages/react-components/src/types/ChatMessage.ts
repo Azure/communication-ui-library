@@ -67,42 +67,15 @@ export interface ChatMessage extends MessageCommon {
    * {@link @azure/communication-chat#ChatMessage.metadata}
    */
   metadata?: Record<string, string>;
-  /* @conditional-compile-remove(file-sharing) */
+  /* @conditional-compile-remove(file-sharing) */ /* @conditional-compile-remove(teams-inline-images) */
   /**
    * @beta
    * A list of files attached to the message.
    * {@link FileMetadata}
    */
   attachedFilesMetadata?: FileMetadata[];
-  /* @conditional-compile-remove(teams-inline-images) */
-  /**
-   * @beta
-   * A list of atachements message needs to make a request to download.
-   */
-
-  attachments?: ChatAttachment[];
 }
-/* @conditional-compile-remove(teams-inline-images) */
-/**
- * @beta
- * Status of a chat attachment.
- */
-export type ChatAttachmentStatus = 'downloading' | 'completed' | 'failed' | 'none';
 
-/* @conditional-compile-remove(teams-inline-images) */
-/**
- * A chat attachment object that holds data needed to download an attachment.
- *
- * @beta
- */
-export interface ChatAttachment {
-  id: string;
-  attachmentType: string;
-  status: ChatAttachmentStatus;
-  name?: string;
-  url: string;
-  previewUrl?: string;
-}
 /**
  * A system message notifying that a participant was added to the chat thread.
  *

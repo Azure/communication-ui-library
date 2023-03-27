@@ -10,10 +10,23 @@ import { _FileCardGroup } from './FileCardGroup';
 import { iconButtonClassName } from './styles/IconButton.styles';
 
 /**
+ * @beta
+ */
+export type FileMetadataAttachmentType =
+  | 'fileSharing'
+  | /* @conditional-compile-remove(teams-inline-images) */ 'teamsInlineImage'
+  | 'unknown';
+
+/**
  * Meta Data containing information about the uploaded file.
  * @beta
  */
 export interface FileMetadata {
+  attachmentType: FileMetadataAttachmentType;
+  /**
+   * Unique ID of the file.
+   */
+  id: string;
   /**
    * File name to be displayed.
    */
@@ -28,6 +41,7 @@ export interface FileMetadata {
    * Download URL for the file.
    */
   url: string;
+  previewUrl?: string;
 }
 
 /**
@@ -155,7 +169,7 @@ export const _FileDownloadCards = (props: _FileDownloadCards): JSX.Element => {
     [props]
   );
 
-  if (!fileMetadata || fileMetadata.length === 0) {
+  if (!fileMetadata || fileMetadata.length === 0 || fileMetadata[0].attachmentType !== 'fileSharing') {
     return <></>;
   }
 
