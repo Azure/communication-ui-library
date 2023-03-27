@@ -82,14 +82,7 @@ const isMessageSame = (first: ChatMessage, second: ChatMessage): boolean => {
  *
  * @param messages
  */
-const getLatestChatMessage = (
-  messages: (
-    | ChatMessage
-    | SystemMessage
-    | CustomMessage
-    | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage
-  )[]
-): ChatMessage | undefined => {
+const getLatestChatMessage = (messages: Message[]): ChatMessage | undefined => {
   for (let i = messages.length - 1; i >= 0; i--) {
     const message = messages[i];
     if (message.messageType === 'chat' && !!message.createdOn) {
@@ -894,14 +887,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   const isNarrow = chatThreadWidth ? isNarrowWidth(chatThreadWidth) : false;
 
   const messagesRef = useRef(messages);
-  const setMessagesRef = (
-    messagesWithAttachedValue: (
-      | ChatMessage
-      | SystemMessage
-      | CustomMessage
-      | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage
-    )[]
-  ): void => {
+  const setMessagesRef = (messagesWithAttachedValue: Message[]): void => {
     messagesRef.current = messagesWithAttachedValue;
     setMessages(messagesWithAttachedValue);
   };
