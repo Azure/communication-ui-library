@@ -7,13 +7,13 @@ import React, { useCallback, useState } from 'react';
 import { ChatMessageComponentAsEditBox } from './ChatMessageComponentAsEditBox';
 import { MessageThreadStrings } from '../MessageThread';
 import { ChatMessage, OnRenderAvatarCallback } from '../../types';
-/* @conditional-compile-remove(dlp) */
+/* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessage } from '../../types';
 import { ChatMessageComponentAsMessageBubble } from './ChatMessageComponentAsMessageBubble';
 import { FileDownloadHandler, FileMetadata } from '../FileDownloadCards';
 
 type ChatMessageComponentProps = {
-  message: ChatMessage | /* @conditional-compile-remove(dlp) */ BlockedMessage;
+  message: ChatMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage;
   userId: string;
   messageContainerStyle?: ComponentSlotStyle;
   showDate?: boolean;
@@ -96,7 +96,8 @@ export const ChatMessageComponent = (props: ChatMessageComponentProps): JSX.Elem
     onDeleteMessage && message.clientMessageId && onDeleteMessage(message.clientMessageId);
     onSendMessage &&
       onSendMessage(
-        message.content !== undefined && /* @conditional-compile-remove(dlp) */ message.content !== false
+        message.content !== undefined &&
+          /* @conditional-compile-remove(data-loss-prevention) */ message.content !== false
           ? message.content
           : ''
       );

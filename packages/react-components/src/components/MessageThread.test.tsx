@@ -4,12 +4,12 @@
 import React from 'react';
 import { MessageThread } from './MessageThread';
 import { ChatMessage } from '../types';
-/* @conditional-compile-remove(dlp) */
+/* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessage } from '../types';
 import Enzyme from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import { mountWithLocalization, createTestLocale } from './utils/testUtils';
-/* @conditional-compile-remove(date-time-customization) @conditional-compile-remove(dlp) */
+/* @conditional-compile-remove(date-time-customization) @conditional-compile-remove(data-loss-prevention) */
 import { COMPONENT_LOCALE_EN_US } from '../localization/locales';
 
 Enzyme.configure({ adapter: new Adapter() });
@@ -125,7 +125,7 @@ describe('onDisplayDateTimeString passed through messagethread should overwrite 
   });
 });
 
-/* @conditional-compile-remove(dlp) */
+/* @conditional-compile-remove(data-loss-prevention) */
 describe('Message blocked should display default blocked text correctly', () => {
   test('Should locale string for default message blocked by policy"', async () => {
     const testLocale = createTestLocale({ messageThread: { yesterday: Math.random().toString() } });

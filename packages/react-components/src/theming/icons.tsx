@@ -66,7 +66,7 @@ import { ArrowDownload16Regular } from '@fluentui/react-icons';
 /* @conditional-compile-remove(PSTN-calls) */
 import { CallPause20Regular, CallPause20Filled, Play20Regular, People20Regular } from '@fluentui/react-icons';
 
-/* @conditional-compile-remove(dlp) */
+/* @conditional-compile-remove(data-loss-prevention) */
 import { Prohibited16Regular } from '@fluentui/react-icons';
 
 /* @conditional-compile-remove(unsupported-browser) */
@@ -194,7 +194,7 @@ const BrowserPermissionDenied20Filled = (): JSX.Element => {
   );
 };
 
-/* @conditional-compile-remove(dlp) */
+/* @conditional-compile-remove(data-loss-prevention) */
 const DataLossPreventionProhibited16Regular = (): JSX.Element => {
   // const theme = useTheme();
   return <Prohibited16Regular />;
@@ -224,7 +224,7 @@ export const DEFAULT_COMPONENT_ICONS = {
   CancelFileUpload: <Dismiss16Regular />,
   /* @conditional-compile-remove(file-sharing) */
   DownloadFile: <ArrowDownload16Regular />,
-  /* @conditional-compile-remove(dlp) */
+  /* @conditional-compile-remove(data-loss-prevention) */
   DataLossPreventionProhibited: <DataLossPreventionProhibited16Regular />,
   EditBoxCancel: <Dismiss20Regular />,
   EditBoxSubmit: <Checkmark20Regular />,

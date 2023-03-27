@@ -33,7 +33,7 @@ export type Message =
   | ChatMessage
   | SystemMessage
   | CustomMessage
-  | /* @conditional-compile-remove(dlp) */ BlockedMessage;
+  | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage;
 
 /**
  * Discriminated union of all system messages.
@@ -123,7 +123,7 @@ export interface ContentSystemMessage extends SystemMessageCommon {
   content: string;
 }
 
-/* @conditional-compile-remove(dlp) */
+/* @conditional-compile-remove(data-loss-prevention) */
 /**
  * Content blocked message type.
  *
@@ -146,11 +146,6 @@ export interface BlockedMessage extends MessageCommon {
   mine?: boolean;
   clientMessageId?: string;
   contentType: MessageContentType;
-  /**
-   * A metadata field for the message.
-   * {@link @azure/communication-chat#ChatMessage.metadata}
-   */
-  metadata?: Record<string, string>;
 }
 
 /**

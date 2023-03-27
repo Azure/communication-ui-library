@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { IButtonStyles, mergeStyles } from '@fluentui/react';
-/* @conditional-compile-remove(dlp) */
+/* @conditional-compile-remove(data-loss-prevention) */
 import { Theme } from '@fluentui/react';
 import { ComponentSlotStyle } from '@fluentui/react-northstar';
 import { CSSProperties } from 'react';
@@ -138,7 +138,7 @@ export const defaultChatMessageContainer: ComponentSlotStyle = {
 
 /**
  * @private
- * @conditional-compile-remove(dlp)
+ * @conditional-compile-remove(data-loss-prevention)
  */
 export const defaultBlockedMessageStyleContainer = (theme: Theme): ComponentSlotStyle => ({
   maxWidth: '100%',

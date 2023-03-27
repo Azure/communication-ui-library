@@ -11,7 +11,10 @@ export const updateMessagesWithAttached = (chatMessagesWithStatus: Message[]): v
   chatMessagesWithStatus.sort(compareMessages);
 
   chatMessagesWithStatus.forEach((message, index, messages) => {
-    if (message.messageType === 'chat' || /* @conditional-compile-remove(dlp) */ message.messageType === 'blocked') {
+    if (
+      message.messageType === 'chat' ||
+      /* @conditional-compile-remove(data-loss-prevention) */ message.messageType === 'blocked'
+    ) {
       /**
        * Attached === true means it is within a group of messages in the current order
        * Attached === top/bottom means it is on the top/bottom boundary
@@ -24,12 +27,12 @@ export const updateMessagesWithAttached = (chatMessagesWithStatus: Message[]): v
 
       const previousSenderId =
         previousMessage?.messageType === 'chat' ||
-        /* @conditional-compile-remove(dlp) */ previousMessage?.messageType === 'blocked'
+        /* @conditional-compile-remove(data-loss-prevention) */ previousMessage?.messageType === 'blocked'
           ? previousMessage.senderId
           : undefined;
       const nextSenderId =
         nextMessage?.messageType === 'chat' ||
-        /* @conditional-compile-remove(dlp) */ nextMessage?.messageType === 'blocked'
+        /* @conditional-compile-remove(data-loss-prevention) */ nextMessage?.messageType === 'blocked'
           ? nextMessage.senderId
           : undefined;
 

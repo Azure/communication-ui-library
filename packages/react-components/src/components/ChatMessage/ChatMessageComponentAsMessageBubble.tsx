@@ -16,20 +16,20 @@ import { useTheme } from '../../theming';
 import { ChatMessageActionFlyout } from './ChatMessageActionsFlyout';
 import { ChatMessageContent } from './ChatMessageContent';
 import { ChatMessage } from '../../types/ChatMessage';
-/* @conditional-compile-remove(dlp) */
+/* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessage } from '../../types/ChatMessage';
 import { MessageThreadStrings } from '../MessageThread';
 import { chatMessageActionMenuProps } from './ChatMessageActionMenu';
 import { OnRenderAvatarCallback } from '../../types';
 import { _FileDownloadCards, FileDownloadHandler } from '../FileDownloadCards';
 import { ComponentLocale, useLocale } from '../../localization';
-/* @conditional-compile-remove(dlp) */
+/* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessageContent } from '../BlockedMessage';
-/* @conditional-compile-remove(dlp) */
+/* @conditional-compile-remove(data-loss-prevention) */
 import { defaultBlockedMessageStyleContainer } from '../styles/MessageThread.styles';
 
 type ChatMessageComponentAsMessageBubbleProps = {
-  message: ChatMessage | /* @conditional-compile-remove(dlp) */ BlockedMessage;
+  message: ChatMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage;
   messageContainerStyle?: ComponentSlotStyle;
   showDate?: boolean;
   disableEditing?: boolean;
@@ -191,7 +191,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     if (messageStatus === 'failed') {
       return <div className={chatMessageFailedTagStyle(theme)}>{strings.failToSendTag}</div>;
     } else if (message.editedOn) {
-      /* @conditional-compile-remove(dlp) */
+      /* @conditional-compile-remove(data-loss-prevention) */
       if (message.messageType === 'blocked') {
         return undefined;
       }
@@ -201,7 +201,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
   };
 
   const bubbleStyle = useMemo(() => {
-    /* @conditional-compile-remove(dlp) */
+    /* @conditional-compile-remove(data-loss-prevention) */
     if (message.messageType === 'blocked') {
       return mergeStyles(defaultBlockedMessageStyleContainer(theme) as IStyle, messageContainerStyle as IStyle);
     }
@@ -209,7 +209,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
   }, [message.messageType, messageContainerStyle, theme]);
 
   const getContent = (): React.ReactNode => {
-    /* @conditional-compile-remove(dlp) */
+    /* @conditional-compile-remove(data-loss-prevention) */
     if (message.messageType === 'blocked') {
       return (
         <div tabIndex={0}>

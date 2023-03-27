@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 import { ChatMessage, ReadReceiptsBySenderId } from '../..';
 
-/* @conditional-compile-remove(dlp) */
+/* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessage } from '../..';
 
 /**
@@ -20,7 +20,7 @@ import { BlockedMessage } from '../..';
  * if MessageId of B is larger than message Id of A, then B is created after A
  * if the last read message is created after the message A is sent, then user should have read message A as well */
 export const getParticipantsWhoHaveReadMessage = (
-  message: ChatMessage | /* @conditional-compile-remove(dlp) */ BlockedMessage,
+  message: ChatMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage,
   readReceiptsBySenderId: ReadReceiptsBySenderId
 ): { id: string; displayName: string }[] => {
   return (

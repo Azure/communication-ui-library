@@ -1,22 +1,22 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-/* @conditional-compile-remove(dlp) */
+/* @conditional-compile-remove(data-loss-prevention) */
 import { IStyle, FontIcon, mergeStyles, Stack, Link } from '@fluentui/react';
-/* @conditional-compile-remove(dlp) */
+/* @conditional-compile-remove(data-loss-prevention) */
 import { ComponentSlotStyle } from '@fluentui/react-northstar';
-/* @conditional-compile-remove(dlp) */
+/* @conditional-compile-remove(data-loss-prevention) */
 import React from 'react';
-/* @conditional-compile-remove(dlp) */
+/* @conditional-compile-remove(data-loss-prevention) */
 import { LiveMessage } from 'react-aria-live';
-/* @conditional-compile-remove(dlp) */
+/* @conditional-compile-remove(data-loss-prevention) */
 import { OnRenderAvatarCallback } from '../types';
-/* @conditional-compile-remove(dlp) */
+/* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessage } from '../types';
-/* @conditional-compile-remove(dlp) */
+/* @conditional-compile-remove(data-loss-prevention) */
 import { MessageThreadStrings } from './MessageThread';
 
-/* @conditional-compile-remove(dlp) */
+/* @conditional-compile-remove(data-loss-prevention) */
 /**
  * @private
  */
@@ -52,7 +52,7 @@ export type BlockedMessageProps = {
   onDisplayDateTimeString?: (messageDate: Date) => string;
 };
 
-/* @conditional-compile-remove(dlp) */
+/* @conditional-compile-remove(data-loss-prevention) */
 /**
  * @private
  */

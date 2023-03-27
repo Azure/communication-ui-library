@@ -25,7 +25,7 @@ export const messageTemplate: ChatMessageWithStatus = {
   sequenceId: '',
   version: '',
   status: 'delivered',
-  /* @conditional-compile-remove(dlp) */
+  /* @conditional-compile-remove(data-loss-prevention) */
   policyViolation: false
 };
 

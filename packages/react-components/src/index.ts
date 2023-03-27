@@ -50,5 +50,5 @@ export type {
   ViewScalingMode
 } from './types';
 
-/* @conditional-compile-remove(dlp) */
+/* @conditional-compile-remove(data-loss-prevention) */
 export type { BlockedMessage } from './types';

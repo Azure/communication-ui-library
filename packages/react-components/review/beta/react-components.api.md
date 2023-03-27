@@ -89,7 +89,6 @@ export interface BlockedMessage extends MessageCommon {
     linkText?: string;
     // (undocumented)
     messageType: 'blocked';
-    metadata?: Record<string, string>;
     // (undocumented)
     mine?: boolean;
     // (undocumented)
@@ -1050,7 +1049,7 @@ export const _LocalVideoTile: React_2.MemoExoticComponent<(props: {
 }) => JSX.Element>;
 
 // @public
-export type Message = ChatMessage | SystemMessage | CustomMessage | /* @conditional-compile-remove(dlp) */ BlockedMessage;
+export type Message = ChatMessage | SystemMessage | CustomMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage;
 
 // @public
 export type MessageAttachedStatus = 'bottom' | 'top' | boolean;
@@ -1115,7 +1114,7 @@ export const MessageThread: (props: MessageThreadProps) => JSX.Element;
 // @public
 export type MessageThreadProps = {
     userId: string;
-    messages: (ChatMessage | SystemMessage | CustomMessage | /* @conditional-compile-remove(dlp) */ BlockedMessage)[];
+    messages: (ChatMessage | SystemMessage | CustomMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage)[];
     participantCount?: number;
     readReceiptsBySenderId?: ReadReceiptsBySenderId;
     styles?: MessageThreadStyles;

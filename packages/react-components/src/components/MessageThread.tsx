@@ -52,7 +52,7 @@ import {
   Message,
   ReadReceiptsBySenderId
 } from '../types';
-/* @conditional-compile-remove(dlp) */
+/* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessage } from '../types';
 import { MessageStatusIndicator, MessageStatusIndicatorProps } from './MessageStatusIndicator';
 import { memoizeFnAll, MessageStatus } from '@internal/acs-ui-common';
@@ -83,7 +83,12 @@ const isMessageSame = (first: ChatMessage, second: ChatMessage): boolean => {
  * @param messages
  */
 const getLatestChatMessage = (
-  messages: (ChatMessage | SystemMessage | CustomMessage | /* @conditional-compile-remove(dlp) */ BlockedMessage)[]
+  messages: (
+    | ChatMessage
+    | SystemMessage
+    | CustomMessage
+    | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage
+  )[]
 ): ChatMessage | undefined => {
   for (let i = messages.length - 1; i >= 0; i--) {
     const message = messages[i];
@@ -163,7 +168,7 @@ export interface MessageThreadStyles extends BaseCustomStyles {
   /** Styles for system message container. */
   systemMessageContainer?: ComponentSlotStyle;
   /** Styles for blocked message container. */
-  /* @conditional-compile-remove(dlp) */
+  /* @conditional-compile-remove(data-loss-prevention) */
   blockedMessageContainer?: ComponentSlotStyle;
   /** Styles for message status indicator container. */
   messageStatusContainer?: (mine: boolean) => IStyle;
@@ -230,10 +235,10 @@ export interface MessageThreadStrings {
   /* @conditional-compile-remove(file-sharing) */
   /** String for download file button in file card */
   downloadFile: string;
-  /* @conditional-compile-remove(dlp) */
+  /* @conditional-compile-remove(data-loss-prevention) */
   /** String for policy violation message removal */
   blockedContentText: string;
-  /* @conditional-compile-remove(dlp) */
+  /* @conditional-compile-remove(data-loss-prevention) */
   /** String for policy violation message removal details link */
   blockedContentLinkText: string;
 }
@@ -346,7 +351,7 @@ const memoizeAllMessages = memoizeFnAll(
       | ((messageStatusIndicatorProps: MessageStatusIndicatorProps) => JSX.Element | null)
       | undefined,
     defaultStatusRenderer: (
-      message: ChatMessage | /* @conditional-compile-remove(dlp) */ BlockedMessage,
+      message: ChatMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage,
       status: MessageStatus,
       participantCount: number,
       readCount: number
@@ -373,7 +378,7 @@ const memoizeAllMessages = memoizeFnAll(
       disableEditing
     };
 
-    /* @conditional-compile-remove(dlp) */
+    /* @conditional-compile-remove(data-loss-prevention) */
     // Same logic as switch statement, if statement for conditional compile
     if (message.messageType === 'blocked') {
       const myChatMessageStyle =
@@ -381,13 +386,13 @@ const memoizeAllMessages = memoizeFnAll(
           ? styles?.failedMyChatMessageContainer ?? styles?.myChatMessageContainer ?? FailedMyChatMessageContainer
           : styles?.myChatMessageContainer ?? defaultMyChatMessageContainer;
       const chatMessageStyle = styles?.chatMessageContainer ?? defaultChatMessageContainer;
-      /* @conditional-compile-remove(dlp) */
+      /* @conditional-compile-remove(data-loss-prevention) */
       const blockedMessageStyle = styles?.blockedMessageContainer;
       if (message.mine) {
         messageProps.messageContainerStyle = myChatMessageStyle;
       } else {
         messageProps.messageContainerStyle = chatMessageStyle;
-        /* @conditional-compile-remove(dlp) */
+        /* @conditional-compile-remove(data-loss-prevention) */
         if (message.messageType === 'blocked') {
           messageProps.messageContainerStyle = blockedMessageStyle;
         }
@@ -461,14 +466,14 @@ const memoizeAllMessages = memoizeFnAll(
             ? styles?.failedMyChatMessageContainer ?? styles?.myChatMessageContainer ?? FailedMyChatMessageContainer
             : styles?.myChatMessageContainer ?? defaultMyChatMessageContainer;
         const chatMessageStyle = styles?.chatMessageContainer ?? defaultChatMessageContainer;
-        /* @conditional-compile-remove(dlp) */
+        /* @conditional-compile-remove(data-loss-prevention) */
         const blockedMessageStyle = styles?.blockedMessageContainer;
 
         if (message.mine) {
           messageProps.messageContainerStyle = myChatMessageStyle;
         } else {
           messageProps.messageContainerStyle = chatMessageStyle;
-          /* @conditional-compile-remove(dlp) */
+          /* @conditional-compile-remove(data-loss-prevention) */
           // change to === 'blocked' when in stable
           if (message.messageType !== 'chat') {
             messageProps.messageContainerStyle = blockedMessageStyle;
@@ -599,7 +604,12 @@ export type MessageThreadProps = {
   /**
    * Messages to render in message thread. A message can be of type `ChatMessage`, `SystemMessage`, `BlockedMessage` or `CustomMessage`.
    */
-  messages: (ChatMessage | SystemMessage | CustomMessage | /* @conditional-compile-remove(dlp) */ BlockedMessage)[];
+  messages: (
+    | ChatMessage
+    | SystemMessage
+    | CustomMessage
+    | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage
+  )[];
   /**
    * number of participants in the thread
    */
@@ -840,7 +850,12 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   const onRenderFileDownloads = onRenderFileDownloadsTrampoline(props);
 
   const [messages, setMessages] = useState<
-    (ChatMessage | SystemMessage | CustomMessage | /* @conditional-compile-remove(dlp) */ BlockedMessage)[]
+    (
+      | ChatMessage
+      | SystemMessage
+      | CustomMessage
+      | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage
+    )[]
   >([]);
   // We need this state to wait for one tick and scroll to bottom after messages have been initialized.
   // Otherwise chatScrollDivRef.current.clientHeight is wrong if we scroll to bottom before messages are initialized.
@@ -890,7 +905,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
       | ChatMessage
       | SystemMessage
       | CustomMessage
-      | /* @conditional-compile-remove(dlp) */ BlockedMessage
+      | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage
     )[]
   ): void => {
     messagesRef.current = messagesWithAttachedValue;
@@ -1110,7 +1125,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     (messageProps: MessageProps) => {
       if (
         messageProps.message.messageType === 'chat' ||
-        /* @conditional-compile-remove(dlp) */ messageProps.message.messageType === 'blocked'
+        /* @conditional-compile-remove(data-loss-prevention) */ messageProps.message.messageType === 'blocked'
       ) {
         return (
           <ChatMessageComponent
@@ -1150,7 +1165,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
 
   const defaultStatusRenderer = useCallback(
     (
-      message: ChatMessage | /* @conditional-compile-remove(dlp) */ BlockedMessage,
+      message: ChatMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage,
       status: MessageStatus,
       participantCount: number,
       readCount: number
@@ -1186,7 +1201,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
 
           if (
             message.messageType === 'chat' ||
-            /* @conditional-compile-remove(dlp) */ message.messageType === 'blocked'
+            /* @conditional-compile-remove(data-loss-prevention) */ message.messageType === 'blocked'
           ) {
             if (!message.messageId || message.messageId === '') {
               key = message.clientMessageId;
@@ -1226,7 +1241,8 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
             strings,
             // Temporary solution to make sure we re-render if attach attribute is changed.
             // The proper fix should be in selector.
-            message.messageType === 'chat' || /* @conditional-compile-remove(dlp) */ message.messageType === 'blocked'
+            message.messageType === 'chat' ||
+              /* @conditional-compile-remove(data-loss-prevention) */ message.messageType === 'blocked'
               ? message.attached
               : undefined,
             statusToRender,

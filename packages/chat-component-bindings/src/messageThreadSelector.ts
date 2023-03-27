@@ -21,7 +21,7 @@ import {
   MessageContentType,
   ReadReceiptsBySenderId
 } from '@internal/react-components';
-/* @conditional-compile-remove(dlp) */
+/* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessage } from '@internal/react-components';
 import { createSelector } from 'reselect';
 import { ACSKnownMessageType } from './utils/constants';
@@ -39,7 +39,7 @@ const memoizedAllConvertChatMessage = memoizeFnAll(
     isLargeGroup: boolean
   ): Message => {
     const messageType = chatMessage.type.toLowerCase();
-    /* @conditional-compile-remove(dlp) */
+    /* @conditional-compile-remove(data-loss-prevention) */
     if (chatMessage.policyViolation) {
       return convertToUiBlockedMessage(chatMessage, userId, isSeen, isLargeGroup);
     }
@@ -69,7 +69,7 @@ const extractAttachedFilesMetadata = (metadata: Record<string, string>): FileMet
   }
 };
 
-/* @conditional-compile-remove(dlp) */
+/* @conditional-compile-remove(data-loss-prevention) */
 const convertToUiBlockedMessage = (
   message: ChatMessageWithStatus,
   userId: string,
@@ -90,7 +90,6 @@ const convertToUiBlockedMessage = (
     editedOn: message.editedOn,
     deletedOn: message.deletedOn,
     mine: messageSenderId === userId,
-    metadata: message.metadata,
     link: 'https://go.microsoft.com/fwlink/?LinkId=2132837'
   };
 };
@@ -220,7 +219,7 @@ export const messageThreadSelector: MessageThreadSelector = createSelector(
             // message.type === ACSKnownMessageType.topicUpdated ||
             message.clientMessageId !== undefined
         )
-        .filter(messagesWithContentOrFileSharingMetadata)
+        .filter(isMessageValidToRender)
         .map((message) => {
           return memoizedFn(
             message.id ?? message.clientMessageId,
@@ -250,14 +249,14 @@ const sanitizedMessageContentType = (type: string): MessageContentType => {
     : 'unknown';
 };
 
-const messagesWithContentOrFileSharingMetadata = (message: ChatMessageWithStatus): boolean => {
+const isMessageValidToRender = (message: ChatMessageWithStatus): boolean => {
   if (message.deletedOn) {
     return false;
   }
   if (message.metadata?.['fileSharingMetadata']) {
     return true;
   }
-  /* @conditional-compile-remove(dlp) */
+  /* @conditional-compile-remove(data-loss-prevention) */
   if (message.policyViolation) {
     return true;
   }
