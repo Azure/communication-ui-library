@@ -47,6 +47,7 @@ import { CommunicationIdentifier } from '@azure/communication-common';
 import { CaptionsReceivedListener } from '../../CallComposite/adapter/CallAdapter';
 /* @conditional-compile-remove(video-background-effects) */
 import { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/communication-calling-effects';
+import { CaptionsReceivedListener } from '../../CallComposite/adapter/CallAdapter';
 
 /**
  * Functionality for managing the current call with chat.
@@ -385,6 +386,26 @@ export interface CallWithChatAdapterManagement {
    * @beta
    */
   stopVideoBackgroundEffect(): Promise<void>;
+
+  /**
+   * Function to Start captions
+   * @param startCaptionsOptions - options for start captions
+   */
+  startCaptions(startCaptionsOptions?: StartCaptionsOptions): Promise<void>;
+  /**
+   * Function to set caption language
+   * @param language - language set for caption
+   */
+  setCaptionLanguage(language: string): Promise<void>;
+  /**
+   * Function to set spoken language
+   * @param language - spoken language
+   */
+  setSpokenLanguage(language: string): Promise<void>;
+  /**
+   * Funtion to stop captions
+   */
+  stopCaptions(): Promise<void>;
 }
 
 /**

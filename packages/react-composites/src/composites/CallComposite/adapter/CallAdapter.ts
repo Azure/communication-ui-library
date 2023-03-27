@@ -5,6 +5,7 @@ import { CallState, CaptionsInfo, DeviceManagerState } from '@internal/calling-s
 import { StartCaptionsOptions, TeamsCall } from '@azure/communication-calling';
 /* @conditional-compile-remove(video-background-effects) */
 import { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/communication-calling-effects';
+import { StartCaptionsOptions, TeamsCall } from '@azure/communication-calling';
 /* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
 import type {
@@ -422,6 +423,26 @@ export interface CallAdapterCallOperations {
    * @beta
    */
   stopVideoBackgroundEffect(): Promise<void>;
+
+  /**
+   * Function to Start captions
+   * @param startCaptionsOptions - options for start captions
+   */
+  startCaptions(startCaptionsOptions?: StartCaptionsOptions): Promise<void>;
+  /**
+   * Function to set caption language
+   * @param language - language set for caption
+   */
+  setCaptionLanguage(language: string): Promise<void>;
+  /**
+   * Function to set spoken language
+   * @param language - spoken language
+   */
+  setSpokenLanguage(language: string): Promise<void>;
+  /**
+   * Funtion to stop captions
+   */
+  stopCaptions(): Promise<void>;
 }
 
 /**

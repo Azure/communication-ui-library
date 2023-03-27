@@ -382,6 +382,11 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     this.replaceVideoBackground.bind(this);
     /* @conditional-compile-remove(video-background-effects) */
     this.stopVideoBackgroundEffect.bind(this);
+
+    this.startCaptions.bind(this);
+    this.stopCaptions.bind(this);
+    this.setSpokenLanguage.bind(this);
+    this.setCaptionLanguage.bind(this);
   }
 
   public dispose(): void {

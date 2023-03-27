@@ -191,6 +191,22 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
   public async stopVideoBackgroundEffect(): Promise<void> {
     await this.callWithChatAdapter.stopVideoBackgroundEffect();
   }
+  
+  public async startCaptions(startCaptionsOptions?: StartCaptionsOptions): Promise<void> {
+    this.callWithChatAdapter.startCaptions(startCaptionsOptions);
+  }
+
+  public async stopCaptions(): Promise<void> {
+    this.callWithChatAdapter.stopCaptions();
+  }
+
+  public async setCaptionLanguage(language: string): Promise<void> {
+    this.callWithChatAdapter.setCaptionLanguage(language);
+  }
+
+  public async setSpokenLanguage(language: string): Promise<void> {
+    this.callWithChatAdapter.setSpokenLanguage(language);
+  }
 }
 
 function callAdapterStateFromCallWithChatAdapterState(
