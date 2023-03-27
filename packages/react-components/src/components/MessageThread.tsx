@@ -386,7 +386,7 @@ const memoizeAllMessages = memoizeFnAll(
         message.status === 'failed'
           ? styles?.failedMyChatMessageContainer ?? styles?.myChatMessageContainer ?? FailedMyChatMessageContainer
           : styles?.myChatMessageContainer ?? defaultMyChatMessageContainer;
-      const chatMessageStyle = styles?.chatMessageContainer ?? defaultChatMessageContainer;
+      const chatMessageStyle = styles?.chatMessageContainer ?? defaultChatMessageContainer(theme);
       /* @conditional-compile-remove(data-loss-prevention) */
       const blockedMessageStyle = styles?.blockedMessageContainer;
       if (message.mine) {
