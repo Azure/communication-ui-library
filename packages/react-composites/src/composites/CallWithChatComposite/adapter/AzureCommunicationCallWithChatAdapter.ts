@@ -81,6 +81,8 @@ import { _toCommunicationIdentifier } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(rooms) */
 import { AzureCommunicationCallAdapterOptions } from '../../CallComposite/adapter/AzureCommunicationCallAdapter';
 import { CaptionsReceivedListener } from '../../CallComposite/adapter/CallAdapter';
+/* @conditional-compile-remove(video-background-effects) */
+import { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/communication-calling-effects';
 
 type CallWithChatAdapterStateChangedHandler = (newState: CallWithChatAdapterState) => void;
 
@@ -215,6 +217,12 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     this.stopCaptions.bind(this);
     this.setSpokenLanguage.bind(this);
     this.setCaptionLanguage.bind(this);
+    /* @conditional-compile-remove(video-background-effects) */
+    this.blurVideoBackground.bind(this);
+    /* @conditional-compile-remove(video-background-effects) */
+    this.replaceVideoBackground.bind(this);
+    /* @conditional-compile-remove(video-background-effects) */
+    this.stopVideoBackgroundEffect.bind(this);
   }
 
   /** Join existing Call. */
@@ -434,6 +442,20 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   }
   public async setSpokenLanguage(language: string): Promise<void> {
     await this.callAdapter.setSpokenLanguage(language);
+  }
+  
+  /* @conditional-compile-remove(video-background-effects) */
+  public async blurVideoBackground(bgBlurConfig?: BackgroundBlurConfig): Promise<void> {
+    await this.callAdapter.blurVideoBackground(bgBlurConfig);
+  }
+  /* @conditional-compile-remove(video-background-effects) */
+  public async replaceVideoBackground(bgReplacementConfig: BackgroundReplacementConfig): Promise<void> {
+    await this.callAdapter.replaceVideoBackground(bgReplacementConfig);
+  }
+
+  /* @conditional-compile-remove(video-background-effects) */
+  public async stopVideoBackgroundEffect(): Promise<void> {
+    return await this.callAdapter.stopVideoBackgroundEffect();
   }
 
   on(event: 'callParticipantsJoined', listener: ParticipantsJoinedListener): void;
