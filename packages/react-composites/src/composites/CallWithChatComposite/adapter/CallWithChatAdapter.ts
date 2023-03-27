@@ -43,6 +43,8 @@ import { FileUploadManager } from '../../ChatComposite';
 import { CommunicationUserIdentifier, PhoneNumberIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(PSTN-calls) */
 import { CommunicationIdentifier } from '@azure/communication-common';
+/* @conditional-compile-remove(video-background-effects) */
+import { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/communication-calling-effects';
 
 /**
  * Functionality for managing the current call with chat.
@@ -340,6 +342,27 @@ export interface CallWithChatAdapterManagement {
    * Continues into a call when the browser version is not supported.
    */
   allowUnsupportedBrowserVersion(): void;
+  /* @conditional-compile-remove(video-background-effects) */
+  /**
+   * Start the blur video background effect.
+   *
+   * @beta
+   */
+  blurVideoBackground(bgBlurConfig?: BackgroundBlurConfig): Promise<void>;
+  /* @conditional-compile-remove(video-background-effects) */
+  /**
+   * Start the video background replacement effect.
+   *
+   * @beta
+   */
+  replaceVideoBackground(bgReplacementConfig: BackgroundReplacementConfig): Promise<void>;
+  /* @conditional-compile-remove(video-background-effects) */
+  /**
+   * Stop the video background effect.
+   *
+   * @beta
+   */
+  stopVideoBackgroundEffect(): Promise<void>;
 }
 
 /**

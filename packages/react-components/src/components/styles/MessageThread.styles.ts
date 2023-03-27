@@ -1,9 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IButtonStyles, mergeStyles } from '@fluentui/react';
-/* @conditional-compile-remove(data-loss-prevention) */
-import { Theme } from '@fluentui/react';
+import { IButtonStyles, mergeStyles, Theme } from '@fluentui/react';
 import { ComponentSlotStyle } from '@fluentui/react-northstar';
 import { CSSProperties } from 'react';
 import { MESSAGE_STATUS_INDICATOR_SIZE_REM } from './MessageStatusIndicator.styles';
@@ -119,7 +117,7 @@ export const FailedMyChatMessageContainer: ComponentSlotStyle = {
 /**
  * @private
  */
-export const defaultChatMessageContainer: ComponentSlotStyle = {
+export const defaultChatMessageContainer = (theme: Theme): ComponentSlotStyle => ({
   maxWidth: '100%',
   minWidth: `${CHAT_MESSAGE_CONTAINER_MIN_WIDTH_REM}rem`,
   marginRight: '0rem',
@@ -132,9 +130,39 @@ export const defaultChatMessageContainer: ComponentSlotStyle = {
     // For more info see https://github.com/Azure/communication-ui-library/pull/1507
     marginBlock: '0.125rem'
   },
+  '& blockquote': {
+    backgroundColor: theme.palette.white,
+    clear: 'left',
+    minHeight: '2.25rem',
+    width: 'fit-content',
+    margin: '7px 0px',
+    padding: '7px 15px',
+    border: 'solid',
+    borderRadius: '4px',
+    borderWidth: '1px',
+    borderColor: theme.palette.neutralQuaternary,
+    borderLeftWidth: '4px'
+  },
+  '& table': {
+    backgroundColor: theme.palette.white,
+    border: theme.palette.neutralQuaternary,
+    borderCollapse: 'collapse',
+    tableLayout: 'auto',
+    width: '100%',
+
+    '& tr': {
+      border: `1px solid ${theme.palette.neutralQuaternary}`,
+
+      '& td': {
+        border: `1px solid ${theme.palette.neutralQuaternary}`,
+        wordBreak: 'normal',
+        padding: '0px 5px'
+      }
+    }
+  },
   // This makes message bubble show border in high contrast mode making each message distinguishable
   border: '1px solid transparent'
-};
+});
 
 /**
  * @private
