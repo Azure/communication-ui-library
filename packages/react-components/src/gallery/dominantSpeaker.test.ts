@@ -170,7 +170,7 @@ describe('Test smartDominantSpeakerParticipants function', () => {
       lastVisibleParticipants: [{ userId: '3' }, { userId: '5' }, { userId: '8' }, { userId: '4' }, { userId: '1' }],
       maxDominantSpeakers: 3
     });
-    expect(result.map((p) => p.userId)).toEqual(['7', '5', '8', '3', '4', '1', '2', '6']);
+    expect(result.map((p) => p.userId)).toEqual(['7', '5', '8', '1', '2', '3', '4', '6']);
 
     result = smartDominantSpeakerParticipants({
       participants,
@@ -178,7 +178,7 @@ describe('Test smartDominantSpeakerParticipants function', () => {
       lastVisibleParticipants: result,
       maxDominantSpeakers: 3
     });
-    expect(result.map((p) => p.userId)).toEqual(['7', '5', '8', '3', '4', '1', '2', '6']);
+    expect(result.map((p) => p.userId)).toEqual(['7', '5', '8', '1', '2', '3', '4', '6']);
   });
 
   test('complicated scenario #1. 1 dominant speaker and 2 last visible participant not in participants should return all existing dominant speakers.', () => {
