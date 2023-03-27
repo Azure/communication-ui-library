@@ -137,15 +137,15 @@ export interface BlockedMessage extends MessageCommon {
   content?: string | false;
   linkText?: string;
   link?: string;
-  editedOn?: Date;
+  // editedOn?: Date;
   deletedOn?: Date;
   senderId?: string;
   senderDisplayName?: string;
   status?: MessageStatus;
   attached?: MessageAttachedStatus;
   mine?: boolean;
-  clientMessageId?: string;
-  contentType: MessageContentType;
+  // clientMessageId?: string;
+  // contentType: MessageContentType;
 }
 
 /**

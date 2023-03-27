@@ -849,14 +849,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   } = props;
   const onRenderFileDownloads = onRenderFileDownloadsTrampoline(props);
 
-  const [messages, setMessages] = useState<
-    (
-      | ChatMessage
-      | SystemMessage
-      | CustomMessage
-      | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage
-    )[]
-  >([]);
+  const [messages, setMessages] = useState<Message[]>([]);
   // We need this state to wait for one tick and scroll to bottom after messages have been initialized.
   // Otherwise chatScrollDivRef.current.clientHeight is wrong if we scroll to bottom before messages are initialized.
   const [chatMessagesInitialized, setChatMessagesInitialized] = useState<boolean>(false);
@@ -1203,7 +1196,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
             message.messageType === 'chat' ||
             /* @conditional-compile-remove(data-loss-prevention) */ message.messageType === 'blocked'
           ) {
-            if (!message.messageId || message.messageId === '') {
+            if ((!message.messageId || message.messageId === '') && 'clientMessageId' in message) {
               key = message.clientMessageId;
             }
             if (showMessageStatus && message.mine) {

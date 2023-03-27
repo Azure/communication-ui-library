@@ -15,6 +15,8 @@ import { useIdentifiers } from '../../identifiers/IdentifierProvider';
 import { useTheme } from '../../theming';
 import { ChatMessageActionFlyout } from './ChatMessageActionsFlyout';
 import { ChatMessageContent } from './ChatMessageContent';
+/* @conditional-compile-remove(data-loss-prevention) */
+import { BlockedMessageContent } from './ChatMessageContent';
 import { ChatMessage } from '../../types/ChatMessage';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessage } from '../../types/ChatMessage';
@@ -23,8 +25,6 @@ import { chatMessageActionMenuProps } from './ChatMessageActionMenu';
 import { OnRenderAvatarCallback } from '../../types';
 import { _FileDownloadCards, FileDownloadHandler } from '../FileDownloadCards';
 import { ComponentLocale, useLocale } from '../../localization';
-/* @conditional-compile-remove(data-loss-prevention) */
-import { BlockedMessageContent } from '../BlockedMessage';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { defaultBlockedMessageStyleContainer } from '../styles/MessageThread.styles';
 
@@ -187,18 +187,15 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     ]
   );
 
-  const getMessageDetails = (): JSX.Element | undefined => {
+  const editedOn = 'editedOn' in message ? message.editedOn : undefined;
+  const getMessageDetails = useCallback(() => {
     if (messageStatus === 'failed') {
       return <div className={chatMessageFailedTagStyle(theme)}>{strings.failToSendTag}</div>;
-    } else if (message.editedOn) {
-      /* @conditional-compile-remove(data-loss-prevention) */
-      if (message.messageType === 'blocked') {
-        return undefined;
-      }
+    } else if (message.messageType === 'chat' && editedOn) {
       return <div className={chatMessageEditedTagStyle(theme)}>{strings.editedTag}</div>;
     }
     return undefined;
-  };
+  }, [editedOn, message.messageType, messageStatus, strings.editedTag, strings.failToSendTag, theme]);
 
   const bubbleStyle = useMemo(() => {
     /* @conditional-compile-remove(data-loss-prevention) */
@@ -208,12 +205,17 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     return messageContainerStyle;
   }, [message.messageType, messageContainerStyle, theme]);
 
-  const getContent = (): React.ReactNode => {
+  const getContent = useCallback(() => {
     /* @conditional-compile-remove(data-loss-prevention) */
     if (message.messageType === 'blocked') {
       return (
         <div tabIndex={0}>
-          <BlockedMessageContent message={message} strings={strings} />
+          <BlockedMessageContent
+            message={message}
+            theme={theme}
+            strings={strings}
+            messageContainerStyle={props.messageContainerStyle}
+          />
         </div>
       );
     }
@@ -223,7 +225,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
         {props.onRenderFileDownloads ? props.onRenderFileDownloads(userId, message) : defaultOnRenderFileDownloads()}
       </div>
     );
-  };
+  }, [defaultOnRenderFileDownloads, message, props, strings, theme, userId]);
 
   const chatMessage = (
     <>

@@ -209,15 +209,9 @@ export interface BlockedMessage extends MessageCommon {
     // (undocumented)
     attached?: MessageAttachedStatus;
     // (undocumented)
-    clientMessageId?: string;
-    // (undocumented)
     content?: string | false;
     // (undocumented)
-    contentType: MessageContentType;
-    // (undocumented)
     deletedOn?: Date;
-    // (undocumented)
-    editedOn?: Date;
     // (undocumented)
     link?: string;
     // (undocumented)

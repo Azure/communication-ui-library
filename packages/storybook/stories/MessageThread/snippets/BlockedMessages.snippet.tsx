@@ -13,8 +13,7 @@ export const MessageThreadWithBlockedMessagesExample: () => JSX.Element = () => 
       messageId: Math.random().toString(),
       createdOn: new Date('2019-04-13T00:00:00.000+08:09'),
       mine: false,
-      attached: false,
-      contentType: 'text'
+      attached: false
     }
   ];
 

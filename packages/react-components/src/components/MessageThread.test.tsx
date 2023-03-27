@@ -137,8 +137,7 @@ describe('Message blocked should display default blocked text correctly', () => 
       messageId: Math.random().toString(),
       createdOn: twentyFourHoursAgo(),
       mine: false,
-      attached: false,
-      contentType: 'text'
+      attached: false
     };
     const component = mountWithLocalization(
       <MessageThread userId="user1" messages={[sampleMessage]} showMessageDate={true} />,

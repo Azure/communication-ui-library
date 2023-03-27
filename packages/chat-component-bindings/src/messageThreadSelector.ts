@@ -81,13 +81,10 @@ const convertToUiBlockedMessage = (
     messageType: 'blocked',
     createdOn: message.createdOn,
     content: message.content?.message,
-    contentType: sanitizedMessageContentType(message.type),
     status: !isLargeGroup && message.status === 'delivered' && isSeen ? 'seen' : message.status,
     senderDisplayName: message.senderDisplayName,
     senderId: messageSenderId,
     messageId: message.id,
-    clientMessageId: message.clientMessageId,
-    editedOn: message.editedOn,
     deletedOn: message.deletedOn,
     mine: messageSenderId === userId,
     link: 'https://go.microsoft.com/fwlink/?LinkId=2132837'

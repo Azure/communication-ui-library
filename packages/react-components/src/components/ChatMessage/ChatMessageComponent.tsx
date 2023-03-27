@@ -83,17 +83,18 @@ export const ChatMessageComponent = (props: ChatMessageComponentProps): JSX.Elem
   const onEditClick = useCallback(() => setIsEditing(true), [setIsEditing]);
 
   const { onDeleteMessage, onSendMessage, message } = props;
+  const clientMessageId = 'clientMessageId' in message ? message.clientMessageId : undefined;
   const onRemoveClick = useCallback(() => {
     if (onDeleteMessage && message.messageId) {
       onDeleteMessage(message.messageId);
     }
     // when fail to send, message does not have message id, delete message using clientmessageid
-    else if (onDeleteMessage && message.clientMessageId) {
-      onDeleteMessage(message.clientMessageId);
+    else if (onDeleteMessage && message.messageType === 'chat' && clientMessageId) {
+      onDeleteMessage(clientMessageId);
     }
-  }, [message.messageId, message.clientMessageId, onDeleteMessage]);
+  }, [onDeleteMessage, message.messageId, message.messageType, clientMessageId]);
   const onResendClick = useCallback(() => {
-    onDeleteMessage && message.clientMessageId && onDeleteMessage(message.clientMessageId);
+    onDeleteMessage && clientMessageId && onDeleteMessage(clientMessageId);
     onSendMessage &&
       onSendMessage(
         message.content !== undefined &&
@@ -101,18 +102,18 @@ export const ChatMessageComponent = (props: ChatMessageComponentProps): JSX.Elem
           ? message.content
           : ''
       );
-  }, [message.clientMessageId, message.content, onSendMessage, onDeleteMessage]);
+  }, [clientMessageId, message.content, onSendMessage, onDeleteMessage]);
 
-  if (isEditing && props.message.messageType === 'chat') {
+  if (isEditing && message.messageType === 'chat') {
     return (
       <ChatMessageComponentAsEditBox
-        message={message as ChatMessage}
+        message={message}
         inlineEditButtons={props.inlineAcceptRejectEditButtons}
         strings={props.strings}
         onSubmit={async (text, metadata, options) => {
           props.onUpdateMessage &&
-            props.message.messageId &&
-            (await props.onUpdateMessage(props.message.messageId, text, metadata, options));
+            message.messageId &&
+            (await props.onUpdateMessage(message.messageId, text, metadata, options));
           setIsEditing(false);
         }}
         onCancel={() => {
