@@ -155,6 +155,7 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
   public allowUnsupportedBrowserVersion(): void {
     return this.callWithChatAdapter.allowUnsupportedBrowserVersion();
   }
+
   /* @conditional-compile-remove(PSTN-calls) */
   public sendDtmfTone = async (dtmfTone: DtmfTone): Promise<void> => {
     await this.callWithChatAdapter.sendDtmfTone(dtmfTone);
@@ -167,9 +168,11 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
   public async stopCaptions(): Promise<void> {
     this.callWithChatAdapter.stopCaptions();
   }
+
   public async setCaptionLanguage(language: string): Promise<void> {
     this.callWithChatAdapter.setCaptionLanguage(language);
   }
+
   public async setSpokenLanguage(language: string): Promise<void> {
     this.callWithChatAdapter.setSpokenLanguage(language);
   }

@@ -423,17 +423,17 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   }
 
   public async startCaptions(startCaptionsOptions?: StartCaptionsOptions): Promise<void> {
-    this.callAdapter.startCaptions(startCaptionsOptions);
+    await this.callAdapter.startCaptions(startCaptionsOptions);
   }
 
   public async stopCaptions(): Promise<void> {
-    this.callAdapter.stopCaptions();
+    await this.callAdapter.stopCaptions();
   }
   public async setCaptionLanguage(language: string): Promise<void> {
-    this.callAdapter.setCaptionLanguage(language);
+    await this.callAdapter.setCaptionLanguage(language);
   }
   public async setSpokenLanguage(language: string): Promise<void> {
-    this.callAdapter.setSpokenLanguage(language);
+    await this.callAdapter.setSpokenLanguage(language);
   }
 
   on(event: 'callParticipantsJoined', listener: ParticipantsJoinedListener): void;

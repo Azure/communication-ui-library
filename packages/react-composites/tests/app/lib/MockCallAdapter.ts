@@ -126,6 +126,7 @@ export class MockCallAdapter implements CallAdapter {
   setSpokenLanguage(language: string): Promise<void> {
     throw Error('setSpokenLanguage not implemented');
   }
+
   async setCamera(sourceInfo: VideoDeviceInfo): Promise<void> {
     this.modifyState((draft: CallAdapterState) => {
       draft.devices.selectedCamera = findDevice(this._state.devices.cameras, sourceInfo);

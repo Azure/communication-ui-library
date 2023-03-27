@@ -148,6 +148,7 @@ export class MockCallAdapter implements CallAdapter {
   setSpokenLanguage(language: string): Promise<void> {
     throw Error('setSpokenLanguage not implemented');
   }
+
   stopCaptions(): Promise<void> {
     throw Error('stopCaptions not implemented');
   }

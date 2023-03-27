@@ -14,10 +14,10 @@ export type { ErrorBarSelector } from './errorBarSelector';
 export type { HoldButtonSelector } from './callControlSelectors';
 
 export type {
-  StartCaptionsButtonSelector,
-  ChangeCaptionLanguageButtonSelector,
-  ChangeSpokenLanguageButtonSelector,
-  CaptionsSelector
+  _StartCaptionsButtonSelector,
+  _ChangeCaptionLanguageButtonSelector,
+  _ChangeSpokenLanguageButtonSelector,
+  _CaptionsSelector
 } from './captionsSelector';
 
 export type { CallingHandlers } from './handlers/createHandlers';
