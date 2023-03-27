@@ -37,17 +37,23 @@ const CaptionsBannerStory = (): JSX.Element => {
   const containerStyles = {
     width: '100%',
     height: '100%',
-    padding: '1rem'
+    padding: '2rem'
   };
 
   return (
-    <Stack verticalFill tokens={{ childrenGap: '1rem' }} style={containerStyles}>
-      <_CaptionsBanner captions={captions} />
+    <Stack verticalFill tokens={{ childrenGap: '5rem' }} style={containerStyles} verticalAlign="space-between">
+      <Stack style={{ border: 'solid grey 0.1rem' }} horizontalAlign="center">
+        <Stack.Item style={{ width: '60%' }}>
+          <_CaptionsBanner captions={captions} />
+        </Stack.Item>
+      </Stack>
 
-      <PrimaryButton text="Add new captions" onClick={addNewCaption} />
-      <PrimaryButton text="Add new short captions" onClick={addNewShortCaption} />
-      <PrimaryButton text="Add new captions with long name" onClick={addNewLongNameCaption} />
-      <PrimaryButton text="Extend last caption" onClick={extendLastCaption} />
+      <Stack horizontal horizontalAlign="space-between">
+        <PrimaryButton text="Add new captions" onClick={addNewCaption} />
+        <PrimaryButton text="Add new short captions" onClick={addNewShortCaption} />
+        <PrimaryButton text="Add new captions with long name" onClick={addNewLongNameCaption} />
+        <PrimaryButton text="Extend last caption" onClick={extendLastCaption} />
+      </Stack>
     </Stack>
   );
 };

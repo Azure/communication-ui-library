@@ -13,7 +13,7 @@ export const gridContainerClassName = mergeStyles({
   width: '100%',
   height: _pxToRem(60),
   display: 'grid',
-  gridTemplateColumns: '20% 80%',
+  gridTemplateColumns: 'auto 1fr',
   alignItems: 'stretch',
   columnGap: _pxToRem(16),
   padding: _pxToRem(8)
