@@ -25,7 +25,7 @@ process.env['COMMUNICATION_REACT_FLAVOR'] === 'stable' &&
         // dialpad
         'dialpad',
         // Data loss prevention feature
-        'dlp',
+        'data-loss-prevention',
         // Ability to upload/download files in message thread.
         'file-sharing',
         // 1 to N Calling feature.
