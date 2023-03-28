@@ -164,10 +164,10 @@ describe('VideoGallery default layout tests', () => {
     expect(root.find(RemoteScreenShare).length).toBe(1);
     expect(root.find(HorizontalGallery).find(VideoTile).length).toBe(2);
     expect(root.find(HorizontalGallery).find(StreamMedia).length).toBe(1);
-    expect(root.find(HorizontalGallery).find(VideoTile).first().prop('userId')).toBe('remoteVideoParticipant');
-    expect(root.find(HorizontalGallery).find(VideoTile).first().find(StreamMedia).exists()).toBe(true);
-    expect(root.find(HorizontalGallery).find(VideoTile).at(1).prop('userId')).toBe('remoteScreenSharingParticipant');
-    expect(root.find(HorizontalGallery).find(VideoTile).at(1).find(StreamMedia).exists()).toBe(false);
+    expect(root.find(HorizontalGallery).find(VideoTile).first().prop('userId')).toBe('remoteScreenSharingParticipant');
+    expect(root.find(HorizontalGallery).find(VideoTile).first().find(StreamMedia).exists()).toBe(false);
+    expect(root.find(HorizontalGallery).find(VideoTile).at(1).prop('userId')).toBe('remoteVideoParticipant');
+    expect(root.find(HorizontalGallery).find(VideoTile).at(1).find(StreamMedia).exists()).toBe(true);
   });
 });
 
@@ -285,10 +285,10 @@ describe('VideoGallery floating local video layout tests', () => {
     expect(root.find(RemoteScreenShare).length).toBe(1);
     expect(root.find(HorizontalGallery).find(VideoTile).length).toBe(2);
     expect(root.find(HorizontalGallery).find(StreamMedia).length).toBe(1);
-    expect(root.find(HorizontalGallery).find(VideoTile).first().prop('userId')).toBe('remoteVideoParticipant');
-    expect(root.find(HorizontalGallery).find(VideoTile).first().find(StreamMedia).exists()).toBe(true);
-    expect(root.find(HorizontalGallery).find(VideoTile).at(1).prop('userId')).toBe('remoteScreenSharingParticipant');
-    expect(root.find(HorizontalGallery).find(VideoTile).at(1).find(StreamMedia).exists()).toBe(false);
+    expect(root.find(HorizontalGallery).find(VideoTile).first().prop('userId')).toBe('remoteScreenSharingParticipant');
+    expect(root.find(HorizontalGallery).find(VideoTile).first().find(StreamMedia).exists()).toBe(false);
+    expect(root.find(HorizontalGallery).find(VideoTile).at(1).prop('userId')).toBe('remoteVideoParticipant');
+    expect(root.find(HorizontalGallery).find(VideoTile).at(1).find(StreamMedia).exists()).toBe(true);
   });
 });
 
@@ -485,10 +485,10 @@ describe('VideoGallery with vertical overflow gallery tests', () => {
     expect(root.find(RemoteScreenShare).length).toBe(1);
     expect(root.find(VerticalGallery).find(VideoTile).length).toBe(4);
     expect(root.find(VerticalGallery).find(StreamMedia).length).toBe(1);
-    expect(root.find(VerticalGallery).find(VideoTile).first().prop('userId')).toBe('remoteVideoParticipant');
-    expect(root.find(VerticalGallery).find(VideoTile).first().find(StreamMedia).exists()).toBe(true);
-    expect(root.find(VerticalGallery).find(VideoTile).at(1).prop('userId')).toBe('remoteScreenSharingParticipant');
-    expect(root.find(VerticalGallery).find(VideoTile).at(1).find(StreamMedia).exists()).toBe(false);
+    expect(root.find(VerticalGallery).find(VideoTile).first().prop('userId')).toBe('remoteScreenSharingParticipant');
+    expect(root.find(VerticalGallery).find(VideoTile).first().find(StreamMedia).exists()).toBe(false);
+    expect(root.find(VerticalGallery).find(VideoTile).at(1).prop('userId')).toBe('remoteVideoParticipant');
+    expect(root.find(VerticalGallery).find(VideoTile).at(1).find(StreamMedia).exists()).toBe(true);
   });
 
   /* @conditional-compile-remove(pinned-participants) */

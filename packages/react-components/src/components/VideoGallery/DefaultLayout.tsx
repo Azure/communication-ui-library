@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { Stack } from '@fluentui/react';
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState, useRef } from 'react';
 import { GridLayout } from '../GridLayout';
 import { isNarrowWidth } from '../utils/responsive';
 /* @conditional-compile-remove(vertical-gallery) */
@@ -38,7 +38,7 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
     parentWidth,
     /* @conditional-compile-remove(vertical-gallery) */
     parentHeight,
-    /* @conditional-compile-remove(pinned-participants) */ pinnedParticipantUserIds,
+    pinnedParticipantUserIds = [],
     /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryPosition = 'HorizontalBottom'
   } = props;
 
@@ -47,11 +47,17 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
   /* @conditional-compile-remove(vertical-gallery) */
   const isShort = parentHeight ? isShortHeight(parentHeight) : false;
 
+  // This is for tracking the number of children in the first page of horizontal gallery.
+  // This number will be used for the maxHorizontalDominantSpeakers when organizing the remote participants.
+  const childrenPerPage = useRef(4);
   const { gridParticipants, horizontalGalleryParticipants } = useOrganizedParticipants({
     remoteParticipants,
     dominantSpeakers,
     maxRemoteVideoStreams,
     isScreenShareActive: !!screenShareComponent,
+    maxHorizontalGalleryDominantSpeakers: screenShareComponent
+      ? childrenPerPage.current - (pinnedParticipantUserIds.length % childrenPerPage.current)
+      : childrenPerPage.current,
     /* @conditional-compile-remove(pinned-participants) */ pinnedParticipantUserIds
   });
 
@@ -107,6 +113,9 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
         /* @conditional-compile-remove(pinned-participants) */
         overflowGalleryPosition={overflowGalleryPosition}
         onFetchTilesToRender={setIndexesToRender}
+        onChildrenPerPageChange={(n: number) => {
+          childrenPerPage.current = n;
+        }}
       />
     );
   }, [

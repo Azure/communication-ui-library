@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { IStackStyles, mergeStyles } from '@fluentui/react';
-import { SMALL_FLOATING_MODAL_SIZE_PX } from './FloatingLocalVideo.styles';
+import { SMALL_FLOATING_MODAL_SIZE_REM } from './FloatingLocalVideo.styles';
 import {
   SMALL_HORIZONTAL_GALLERY_TILE_SIZE_REM,
   SMALL_HORIZONTAL_GALLERY_TILE_STYLE
@@ -25,7 +25,7 @@ export const scrollableHorizontalGalleryStyles: IStackStyles = {
  */
 export const scrollableHorizontalGalleryContainerStyles = mergeStyles({
   display: 'flex',
-  width: `calc(100% - ${SMALL_FLOATING_MODAL_SIZE_PX.width}px)`,
+  width: `calc(100% - ${SMALL_FLOATING_MODAL_SIZE_REM.width}rem)`,
   minHeight: `${SMALL_HORIZONTAL_GALLERY_TILE_SIZE_REM.height}rem`,
   overflow: 'scroll',
   '-ms-overflow-style': 'none',
