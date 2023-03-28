@@ -13,7 +13,7 @@ import {
 } from './baseSelectors';
 import * as reselect from 'reselect';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
-import { CaptionInfo } from '@internal/react-components';
+import { _CaptionsInfo } from '@internal/react-components';
 
 /**
  * Selector type for the {@link StartCaptionsButton} component.
@@ -106,7 +106,7 @@ export type _CaptionsSelector = (
   state: CallClientState,
   props: CallingBaseSelectorProps
 ) => {
-  captions: CaptionInfo[];
+  captions: _CaptionsInfo[];
 };
 
 /**
@@ -118,7 +118,7 @@ export const captionsSelector: _CaptionsSelector = reselect.createSelector([getC
   const captionsInfo = captions?.map((c) => {
     return {
       displayName: c.speaker.displayName ?? '',
-      caption: c.captionText ?? '',
+      captionText: c.captionText ?? '',
       userId: c.speaker.identifier ? toFlatCommunicationIdentifier(c.speaker.identifier) : ''
     };
   });

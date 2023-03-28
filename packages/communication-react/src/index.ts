@@ -314,4 +314,4 @@ export type {
 } from '../../react-components/src';
 
 export { _CaptionsBanner } from '../../react-components/src';
-export type { _CaptionsBannerProps, CaptionInfo } from '../../react-components/src';
+export type { _CaptionsBannerProps, _CaptionsInfo } from '../../react-components/src';
