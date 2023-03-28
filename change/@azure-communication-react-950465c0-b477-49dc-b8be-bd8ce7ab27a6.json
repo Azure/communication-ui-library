@@ -1,10 +1,6 @@
 {
   "type": "patch",
-<<<<<<<< HEAD:change/@azure-communication-react-950465c0-b477-49dc-b8be-bd8ce7ab27a6.json
   "comment": "Add heading role and aria level for start a call config heading",
-========
-  "comment": "Update storybook custom data model calling example to wrap userId as an identifier",
->>>>>>>> 56e2f5118 (Merge main into captions feature  (#2829)):change/@azure-communication-react-b53e8f77-e59f-44cc-a569-fb73e3f4c750.json
   "packageName": "@azure/communication-react",
   "email": "edwardlee@microsoft.com",
   "dependentChangeType": "patch"

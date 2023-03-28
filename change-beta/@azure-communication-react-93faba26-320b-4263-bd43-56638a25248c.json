@@ -1,10 +1,6 @@
 {
   "type": "patch",
-<<<<<<<< HEAD:change-beta/@azure-communication-react-93faba26-320b-4263-bd43-56638a25248c.json
   "comment": "Allow horizontal gallery tiles to resize to allow for better use of space.",
-========
-  "comment": "Update stream utils to have general createView function for both remote and local.",
->>>>>>>> 56e2f5118 (Merge main into captions feature  (#2829)):change-beta/@azure-communication-react-76a64b59-8be1-4bb5-b5c1-d644f265a9f7.json
   "packageName": "@azure/communication-react",
   "email": "94866715+dmceachernmsft@users.noreply.github.com",
   "dependentChangeType": "patch"
