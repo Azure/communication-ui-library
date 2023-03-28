@@ -162,11 +162,6 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
             <Stack styles={bannerNotificationStyles}>
               <_ComplianceBanner {...props.complianceBannerProps} />
             </Stack>
-            {errorBarProps !== false && (
-              <Stack styles={bannerNotificationStyles}>
-                <ErrorBar {...errorBarProps} />
-              </Stack>
-            )}
             {canUnmute && !!props.mutedNotificationProps && <MutedNotification {...props.mutedNotificationProps} />}
           </Stack.Item>
           {props.callControlProps?.options !== false &&
@@ -188,11 +183,14 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
           <Stack horizontal grow>
             <Stack.Item grow style={callCompositeContainerFlex()}>
               <Stack.Item styles={callGalleryStyles} grow>
-                {props.onRenderGalleryContent && (
-                  <Stack verticalFill styles={mediaGalleryContainerStyles}>
-                    {props.onRenderGalleryContent()}
-                  </Stack>
-                )}
+                <Stack verticalFill styles={mediaGalleryContainerStyles}>
+                  {errorBarProps !== false && (
+                    <Stack styles={bannerNotificationStyles}>
+                      <ErrorBar {...errorBarProps} />
+                    </Stack>
+                  )}
+                  {props.onRenderGalleryContent && <>{props.onRenderGalleryContent()}</>}
+                </Stack>
               </Stack.Item>
             </Stack.Item>
             {
