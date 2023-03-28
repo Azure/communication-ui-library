@@ -1,7 +1,7 @@
 {
   "type": "patch",
-  "comment": "Update code owners",
+  "comment": "Update Codeowners",
   "packageName": "@azure/communication-react",
-  "email": "joshlai@microsoft.com",
+  "email": "edwardlee@microsoft.com",
   "dependentChangeType": "patch"
 }
