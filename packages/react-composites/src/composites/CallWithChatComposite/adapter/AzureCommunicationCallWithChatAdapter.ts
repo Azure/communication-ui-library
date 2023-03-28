@@ -224,10 +224,6 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     this.replaceVideoBackground.bind(this);
     /* @conditional-compile-remove(video-background-effects) */
     this.stopVideoBackgroundEffect.bind(this);
-    this.startCaptions.bind(this);
-    this.stopCaptions.bind(this);
-    this.setSpokenLanguage.bind(this);
-    this.setCaptionLanguage.bind(this);
   }
 
   /** Join existing Call. */
@@ -448,7 +444,7 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   public async setSpokenLanguage(language: string): Promise<void> {
     await this.callAdapter.setSpokenLanguage(language);
   }
-  
+
   /* @conditional-compile-remove(video-background-effects) */
   public async blurVideoBackground(bgBlurConfig?: BackgroundBlurConfig): Promise<void> {
     await this.callAdapter.blurVideoBackground(bgBlurConfig);
@@ -461,20 +457,6 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   /* @conditional-compile-remove(video-background-effects) */
   public async stopVideoBackgroundEffect(): Promise<void> {
     return await this.callAdapter.stopVideoBackgroundEffect();
-  }
-  
-  public async startCaptions(startCaptionsOptions?: StartCaptionsOptions): Promise<void> {
-    await this.callAdapter.startCaptions(startCaptionsOptions);
-  }
-
-  public async stopCaptions(): Promise<void> {
-    await this.callAdapter.stopCaptions();
-  }
-  public async setCaptionLanguage(language: string): Promise<void> {
-    await this.callAdapter.setCaptionLanguage(language);
-  }
-  public async setSpokenLanguage(language: string): Promise<void> {
-    await this.callAdapter.setSpokenLanguage(language);
   }
 
   on(event: 'callParticipantsJoined', listener: ParticipantsJoinedListener): void;

@@ -164,22 +164,6 @@ export class MockCallAdapter implements CallAdapter {
   stopVideoBackgroundEffect(): Promise<void> {
     throw new Error('stopVideoBackgroundEffect not implemented.');
   }
-  
-  startCaptions(): Promise<void> {
-    throw Error('start captions not implemented');
-  }
-
-  setCaptionLanguage(language: string): Promise<void> {
-    throw Error('setCaptionLanguage not implemented');
-  }
-
-  setSpokenLanguage(language: string): Promise<void> {
-    throw Error('setSpokenLanguage not implemented');
-  }
-
-  stopCaptions(): Promise<void> {
-    throw Error('stopCaptions not implemented');
-  }
 }
 
 /**

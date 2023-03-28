@@ -423,26 +423,6 @@ export interface CallAdapterCallOperations {
    * @beta
    */
   stopVideoBackgroundEffect(): Promise<void>;
-
-  /**
-   * Function to Start captions
-   * @param startCaptionsOptions - options for start captions
-   */
-  startCaptions(startCaptionsOptions?: StartCaptionsOptions): Promise<void>;
-  /**
-   * Function to set caption language
-   * @param language - language set for caption
-   */
-  setCaptionLanguage(language: string): Promise<void>;
-  /**
-   * Function to set spoken language
-   * @param language - spoken language
-   */
-  setSpokenLanguage(language: string): Promise<void>;
-  /**
-   * Funtion to stop captions
-   */
-  stopCaptions(): Promise<void>;
 }
 
 /**

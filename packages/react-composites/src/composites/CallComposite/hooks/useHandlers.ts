@@ -120,24 +120,9 @@ const createCompositeHandlers = memoizeOne(
     },
     OnSetCaptionLanguage: async (language) => {
       await adapter.setCaptionLanguage(language);
-    }
+    },
     onReplaceVideoBackground: async (bgReplacementConfig: BackgroundReplacementConfig) => {
       return await adapter.replaceVideoBackground(bgReplacementConfig);
-    },
-    
-    OnStartCaptions: async (captionsOptions) => {
-      await adapter.startCaptions(captionsOptions);
-    },
-
-    OnStopCaptions: async () => {
-      await adapter.stopCaptions();
-    },
-
-    OnSetSpokenLanguage: async (language) => {
-      await adapter.setSpokenLanguage(language);
-    },
-    OnSetCaptionLanguage: async (language) => {
-      await adapter.setCaptionLanguage(language);
     }
   })
 );
