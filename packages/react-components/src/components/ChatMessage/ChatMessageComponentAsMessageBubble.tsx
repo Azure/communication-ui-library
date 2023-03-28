@@ -4,7 +4,7 @@
 import { IStyle, mergeStyles } from '@fluentui/react';
 import { Chat, Text, ComponentSlotStyle } from '@fluentui/react-northstar';
 import { _formatString } from '@internal/acs-ui-common';
-import React, { useCallback, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import {
   chatMessageEditedTagStyle,
   chatMessageDateStyle,
@@ -25,8 +25,6 @@ import { chatMessageActionMenuProps } from './ChatMessageActionMenu';
 import { OnRenderAvatarCallback } from '../../types';
 import { _FileDownloadCards, FileDownloadHandler } from '../FileDownloadCards';
 import { ComponentLocale, useLocale } from '../../localization';
-/* @conditional-compile-remove(data-loss-prevention) */
-import { defaultBlockedMessageStyleContainer } from '../styles/MessageThread.styles';
 
 type ChatMessageComponentAsMessageBubbleProps = {
   message: ChatMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage;
