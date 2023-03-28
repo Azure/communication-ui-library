@@ -2,6 +2,6 @@
   "type": "patch",
   "comment": "Add heading role and aria level for start a call config heading",
   "packageName": "@azure/communication-react",
-  "email": "joshlai@microsoft.com",
+  "email": "edwardlee@microsoft.com",
   "dependentChangeType": "patch"
 }
