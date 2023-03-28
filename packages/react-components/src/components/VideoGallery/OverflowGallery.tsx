@@ -38,7 +38,7 @@ export const OverflowGallery = (props: {
   overflowGalleryElements?: JSX.Element[];
   horizontalGalleryStyles?: HorizontalGalleryStyles;
   /* @conditional-compile-remove(vertical-gallery) */
-  veritcalGalleryStyles?: VerticalGalleryStyles;
+  verticalGalleryStyles?: VerticalGalleryStyles;
   /* @conditional-compile-remove(vertical-gallery) */
   overflowGalleryPosition?: OverflowGalleryPosition;
   onChildrenPerPageChange?: (childrenPerPage: number) => void;
@@ -52,7 +52,7 @@ export const OverflowGallery = (props: {
     overflowGalleryElements,
     horizontalGalleryStyles,
     /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryPosition = 'HorizontalBottom',
-    /* @conditional-compile-remove(vertical-gallery) */ veritcalGalleryStyles,
+    /* @conditional-compile-remove(vertical-gallery) */ verticalGalleryStyles,
     onChildrenPerPageChange
   } = props;
 
@@ -72,7 +72,7 @@ export const OverflowGallery = (props: {
   const galleryStyles = useMemo(() => {
     /* @conditional-compile-remove(vertical-gallery) */
     if (overflowGalleryPosition === 'VerticalRight') {
-      return concatStyleSets(verticalGalleryStyle(isShort), veritcalGalleryStyles);
+      return concatStyleSets(verticalGalleryStyle(isShort), verticalGalleryStyles);
     }
     return concatStyleSets(horizontalGalleryStyle(isNarrow), horizontalGalleryStyles);
   }, [
@@ -80,7 +80,7 @@ export const OverflowGallery = (props: {
     /* @conditional-compile-remove(vertical-gallery) */ isShort,
     horizontalGalleryStyles,
     /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryPosition,
-    /* @conditional-compile-remove(vertical-gallery) */ veritcalGalleryStyles
+    /* @conditional-compile-remove(vertical-gallery) */ verticalGalleryStyles
   ]);
 
   /* @conditional-compile-remove(vertical-gallery) */

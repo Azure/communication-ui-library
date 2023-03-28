@@ -721,10 +721,10 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     removed: RemoteParticipant[];
   }): void {
     if (added && added.length > 0) {
-      this.emitter.emit('participantsJoined', added);
+      this.emitter.emit('participantsJoined', { joined: added });
     }
     if (removed && removed.length > 0) {
-      this.emitter.emit('participantsLeft', removed);
+      this.emitter.emit('participantsLeft', { removed: removed });
     }
 
     added.forEach((participant) => {
