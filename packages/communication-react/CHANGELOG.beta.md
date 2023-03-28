@@ -9,12 +9,24 @@ This log was last generated on Tue, 28 Mar 2023 16:00:31 GMT and should not be m
 Tue, 28 Mar 2023 16:00:31 GMT 
 [Compare changes](https://github.com/azure/communication-ui-library/compare/@azure/communication-react_v1.5.1-beta.1...@azure/communication-react_v1.5.1-beta.2)
 
-### Minor changes
+### Vertical Gallery
+We are now introducing new overflow gallery experiences to our VideoGallery component!
+
+- These new experiences include the new vertical experience. This new overflow gallery will allow developers to better utilize the vertical space in their calling experiences
+- The horizontal experience is also seeing improvements to space utilized by its video tiles
+- Also in these new experiences are enhancements to our dominant speaker ordering and video tile rendering in the overflow galleries.
+
+### Features
 
 - `@azure/communication-react`
   - Update @fluentui/react-icons to 2.0.194 ([PR #2749](https://github.com/azure/communication-ui-library/pull/2749) by 2684369+JamesBurnside@users.noreply.github.com)
+  - Added overflowGalleryLayout prop to VideoGallery to control component for overflow participants ([PR #2774](https://github.com/azure/communication-ui-library/pull/2774) by 79475487+mgamis-msft@users.noreply.github.com)
+  - Allow horizontal gallery tiles to resize to allow for better use of space. ([PR #2830](https://github.com/azure/communication-ui-library/pull/2830) by 94866715+dmceachernmsft@users.noreply.github.com)
+  - VideoGallery in call composite will use a vertical overflow gallery when its aspect ratio is 16:9 or greater. ([PR #2786](https://github.com/azure/communication-ui-library/pull/2786) by 79475487+mgamis-msft@users.noreply.github.com)
+  - Update overflow gallery logic to allow more video participants to render video streams if available on different pages. ([PR #2818](https://github.com/azure/communication-ui-library/pull/2818) by 94866715+dmceachernmsft@users.noreply.github.com)
+  - Create styles for verticalGallery controls and position. ([PR #2781](https://github.com/azure/communication-ui-library/pull/2781) by 94866715+dmceachernmsft@users.noreply.github.com)
 
-### Patches
+### Bug fixes
 
 - `@azure/communication-react`
   - disable the selectivity of a text in video gallery for long touch to function properly ([PR #2790](https://github.com/azure/communication-ui-library/pull/2790) by 97124699+prabhjot-msft@users.noreply.github.com)
@@ -22,24 +34,17 @@ Tue, 28 Mar 2023 16:00:31 GMT
   - Thematically change hold icon color ([PR #2706](https://github.com/azure/communication-ui-library/pull/2706) by edwardlee@microsoft.com)
   - Add error string for when your remote video feed is frozen for others in the call. ([PR #2808](https://github.com/azure/communication-ui-library/pull/2808) by 94866715+dmceachernmsft@users.noreply.github.com)
   - Update Aria labels for people button to allow for voice access controls on windows. ([PR #2833](https://github.com/azure/communication-ui-library/pull/2833) by 94866715+dmceachernmsft@users.noreply.github.com)
-  - Add Try ChatComposite page to storybook that uses fake adapters ([PR #2710](https://github.com/azure/communication-ui-library/pull/2710) by 77021369+jimchou-dev@users.noreply.github.com)
   - Update communication-chat version from fixed version to compatible with version ([PR #2727](https://github.com/azure/communication-ui-library/pull/2727) by edwardlee@microsoft.com)
   - Switch video seamlessly from different devices ([PR #2726](https://github.com/azure/communication-ui-library/pull/2726) by jinan@microsoft.com)
-  - Added stream type in stream logs ([PR #2705](https://github.com/azure/communication-ui-library/pull/2705) by carolinecao@microsoft.com)
   - Fix VideoTile to show menu button on hover when isSpeaking prop is true ([PR #2721](https://github.com/azure/communication-ui-library/pull/2721) by 79475487+mgamis-msft@users.noreply.github.com)
   - Fix sending/delivered/failed message status not showing in large group ([PR #2707](https://github.com/azure/communication-ui-library/pull/2707) by 107075081+Leah-Xia-Microsoft@users.noreply.github.com)
-  - Update code owners ([PR #2737](https://github.com/azure/communication-ui-library/pull/2737) by joshlai@microsoft.com)
-  - Update overflow gallery logic to allow more video participants to render video streams if available on different pages. ([PR #2818](https://github.com/azure/communication-ui-library/pull/2818) by 94866715+dmceachernmsft@users.noreply.github.com)
   - Announce by Screen Reader after leaving chat ([PR #2681](https://github.com/azure/communication-ui-library/pull/2681) by 107075081+Leah-Xia-Microsoft@users.noreply.github.com)
   - Added empty icon render for tab navigation of video tile ([PR #2693](https://github.com/azure/communication-ui-library/pull/2693) by 97124699+prabhjot-msft@users.noreply.github.com)
   - Split buttons now hold primary action for toggling camera and mic on touch devices. ([PR #2773](https://github.com/azure/communication-ui-library/pull/2773) by 94866715+dmceachernmsft@users.noreply.github.com)
-  - Fixed richtext css for blockquote and table ([PR #2839](https://github.com/azure/communication-ui-library/pull/2839) by 77021369+jimchou-dev@users.noreply.github.com)
   - Fix CallAdapter participants joined and left events to show correct participants in event array. ([PR #2837](https://github.com/azure/communication-ui-library/pull/2837) by 94866715+dmceachernmsft@users.noreply.github.com)
   - Correct MessageThread API definition ([PR #2812](https://github.com/azure/communication-ui-library/pull/2812) by 3941071+emlynmac@users.noreply.github.com)
-  - Update internal dispose view logic to be under one utility function for remote and local streams. ([PR #2758](https://github.com/azure/communication-ui-library/pull/2758) by 94866715+dmceachernmsft@users.noreply.github.com)
   - Fix dominant speaker ordering to best keep dominant speakers on the first page of overflow gallery. ([PR #2819](https://github.com/azure/communication-ui-library/pull/2819) by miguelgamis@microsoft.com)
   - make sure message status in storybook is defined to avoid 'try send again' showing up ([PR #2732](https://github.com/azure/communication-ui-library/pull/2732) by carolinecao@microsoft.com)
-  - Update Codeowners ([PR #2737](https://github.com/azure/communication-ui-library/pull/2737) by joshlai@microsoft.com)
   - Internal RemoteVideoTile should not default to having contextual menu options. ([PR #2653](https://github.com/azure/communication-ui-library/pull/2653) by 79475487+mgamis-msft@users.noreply.github.com)
   - Fix: Permission Error in Chat after leaving a Teams Interop meeting ([PR #2777](https://github.com/azure/communication-ui-library/pull/2777) by 2684369+JamesBurnside@users.noreply.github.com)
   - Show local video and vertical/horizontal gallery when screensharing with no participants ([PR #2822](https://github.com/azure/communication-ui-library/pull/2822) by carolinecao@microsoft.com)
@@ -49,14 +54,12 @@ Tue, 28 Mar 2023 16:00:31 GMT
   - update the Errorbar selector to check environmentInfo for mac specific warnings. ([PR #2691](https://github.com/azure/communication-ui-library/pull/2691) by 94866715+dmceachernmsft@users.noreply.github.com)
   - Move logging from StreamUtils to be managed in seperate file. ([PR #2753](https://github.com/azure/communication-ui-library/pull/2753) by 94866715+dmceachernmsft@users.noreply.github.com)
   - Fix messages thread loading issue when an adapter is updated ([PR #2784](https://github.com/azure/communication-ui-library/pull/2784) by 98852890+vhuseinova-msft@users.noreply.github.com)
-  - Allow horizontal gallery tiles to resize to allow for better use of space. ([PR #2830](https://github.com/azure/communication-ui-library/pull/2830) by 94866715+dmceachernmsft@users.noreply.github.com)
   - Add heading role and aria level for start a call config heading ([PR #2845](https://github.com/azure/communication-ui-library/pull/2845) by edwardlee@microsoft.com)
   - Remove emoji from testing that causes failures when emojis update. ([PR #2759](https://github.com/azure/communication-ui-library/pull/2759) by 94866715+dmceachernmsft@users.noreply.github.com)
 
-### Changes
+### Improvements
 
 - `@azure/communication-react`
-  - Create styles for verticalGallery controls and position. ([PR #2781](https://github.com/azure/communication-ui-library/pull/2781) by 94866715+dmceachernmsft@users.noreply.github.com)
   - Add parameter to hint displayName from SDK ([PR #2697](https://github.com/azure/communication-ui-library/pull/2697) by jinan@microsoft.com)
   - Draft API for video background effects ([PR #2836](https://github.com/azure/communication-ui-library/pull/2836) by 97124699+prabhjot-msft@users.noreply.github.com)
   - Update beta version of @azure/communication-calling to 1.11.0-beta.1 ([PR #2763](https://github.com/azure/communication-ui-library/pull/2763) by 2684369+JamesBurnside@users.noreply.github.com)
@@ -80,13 +83,14 @@ Tue, 28 Mar 2023 16:00:31 GMT
   - Video Effects Button and Pane ([PR #2825](https://github.com/azure/communication-ui-library/pull/2825) by 97124699+prabhjot-msft@users.noreply.github.com)
   - Introduce new base component for VerticalGalleries feature. ([PR #2764](https://github.com/azure/communication-ui-library/pull/2764) by 94866715+dmceachernmsft@users.noreply.github.com)
   - Update FileUploadAdapter to include the download of authenticated attachments ([PR #2827](https://github.com/azure/communication-ui-library/pull/2827) by joshlai@microsoft.com)
-  - Added overflowGalleryLayout prop to VideoGallery to control component for overflow participants ([PR #2774](https://github.com/azure/communication-ui-library/pull/2774) by 79475487+mgamis-msft@users.noreply.github.com)
   - Fix PSTN id parsing and add unit test to validate E.164 format numbers. ([PR #2739](https://github.com/azure/communication-ui-library/pull/2739) by 94866715+dmceachernmsft@users.noreply.github.com)
   - Updates LocalVideo tile to be 9:16 aspect ratio to show whole feed. fixes CallWithChat flashing issue with scrollable gallery. ([PR #2734](https://github.com/azure/communication-ui-library/pull/2734) by 94866715+dmceachernmsft@users.noreply.github.com)
   - Draft API for video background effects ([PR #2836](https://github.com/azure/communication-ui-library/pull/2836) by 97124699+prabhjot-msft@users.noreply.github.com)
-  - VideoGallery in call composite will use a vertical overflow gallery when its aspect ratio is 16:9 or greater. ([PR #2786](https://github.com/azure/communication-ui-library/pull/2786) by 79475487+mgamis-msft@users.noreply.github.com)
   - Add onFetchProfile to adapter ([PR #2680](https://github.com/azure/communication-ui-library/pull/2680) by jiangnanhello@live.com)
   - Set all empty/undefined displayName to unnamed ([PR #2720](https://github.com/azure/communication-ui-library/pull/2720) by jinan@microsoft.com)
+  - Add 'Try ChatComposite' page to storybook that uses fake adapters ([PR #2710](https://github.com/azure/communication-ui-library/pull/2710) by 77021369+jimchou-dev@users.noreply.github.com)
+  - Fixed richtext css for blockquote and table ([PR #2839](https://github.com/azure/communication-ui-library/pull/2839) by 77021369+jimchou-dev@users.noreply.github.com)
+  - Added stream type in stream logs ([PR #2705](https://github.com/azure/communication-ui-library/pull/2705) by carolinecao@microsoft.com)
 
 ## [1.5.1-beta.1](https://github.com/azure/communication-ui-library/tree/1.5.1-beta.1)
 
