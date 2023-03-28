@@ -570,6 +570,15 @@ export interface CallAdapterSubscribers {
    * Subscribe function for 'error' event.
    */
   on(event: 'error', listener: (e: AdapterError) => void): void;
+  /**
+   * Subscribe function for 'captionsReceived' event.
+   */
+  on(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
+
+  /**
+   * Subscribe function for 'captionsPropertyChanged' event.
+   */
+  on(event: 'captionsPropertyChanged', listener: PropertyChangedEvent): void;
 
   /**
    * Unsubscribe function for 'participantsJoined' event.
@@ -620,17 +629,9 @@ export interface CallAdapterSubscribers {
    */
   off(event: 'error', listener: (e: AdapterError) => void): void;
   /**
-   * Subscribe function for 'captionsReceived' event.
-   */
-  on(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
-  /**
    * Unsubscribe function for 'captionsReceived' event.
    */
   off(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
-  /**
-   * Subscribe function for 'captionsPropertyChanged' event.
-   */
-  on(event: 'captionsPropertyChanged', listener: PropertyChangedEvent): void;
   /**
    * Unsubscribe function for 'captionsPropertyChanged' event.
    */
