@@ -108,7 +108,7 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
   }, [props.remoteVideoTileMenuOptions?.isHidden, props.isMobile, props.drawerMenuHostId]);
 
   /* @conditional-compile-remove(vertical-gallery) */
-  const overflowGalleryLayout = useMemo(
+  const overflowGalleryPosition = useMemo(
     () =>
       containerWidth && containerHeight && containerWidth / containerHeight >= 16 / 9
         ? 'VerticalRight'
@@ -130,7 +130,7 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
         /* @conditional-compile-remove(pinned-participants) */
         remoteVideoTileMenuOptions={remoteVideoTileMenuOptions}
         /* @conditional-compile-remove(vertical-gallery) */
-        overflowGalleryLayout={overflowGalleryLayout}
+        overflowGalleryPosition={overflowGalleryPosition}
       />
     );
   }, [
@@ -139,7 +139,7 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     onRenderAvatar,
     cameraSwitcherProps,
     /* @conditional-compile-remove(pinned-participants) */ remoteVideoTileMenuOptions,
-    /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryLayout
+    /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryPosition
   ]);
 
   return (
