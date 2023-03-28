@@ -46,7 +46,7 @@ export interface FloatingLocalVideoLayoutProps extends LayoutProps {
 
 /**
  * FloatingLocalVideoLayout displays remote participants and a screen sharing component in
- * a grid and horizontal gallery while floating the local video
+ * a grid and overflow gallery while floating the local video
  *
  * @private
  */
@@ -73,15 +73,15 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
   /* @conditional-compile-remove(vertical-gallery) */
   const isShort = parentHeight ? isShortHeight(parentHeight) : false;
 
-  // This is for tracking the number of children in the first page of horizontal gallery.
-  // This number will be used for the maxHorizontalDominantSpeakers when organizing the remote participants.
+  // This is for tracking the number of children in the first page of overflow gallery.
+  // This number will be used for the maxOverflowGalleryDominantSpeakers when organizing the remote participants.
   const childrenPerPage = useRef(4);
-  const { gridParticipants, horizontalGalleryParticipants } = useOrganizedParticipants({
+  const { gridParticipants, overflowGalleryParticipants } = useOrganizedParticipants({
     remoteParticipants,
     dominantSpeakers,
     maxRemoteVideoStreams,
     isScreenShareActive: !!screenShareComponent,
-    maxHorizontalGalleryDominantSpeakers: screenShareComponent
+    maxOverflowGalleryDominantSpeakers: screenShareComponent
       ? childrenPerPage.current - (pinnedParticipantUserIds.length % childrenPerPage.current)
       : childrenPerPage.current,
     /* @conditional-compile-remove(pinned-participants) */ pinnedParticipantUserIds
@@ -115,7 +115,7 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
     ...Array(maxRemoteVideoStreams - activeVideoStreams).keys()
   ]);
 
-  const horizontalGalleryTiles = horizontalGalleryParticipants.map((p, i) => {
+  const overflowGalleryTiles = overflowGalleryParticipants.map((p, i) => {
     return onRenderRemoteParticipant(
       p,
       maxRemoteVideoStreams && maxRemoteVideoStreams >= 0
@@ -131,7 +131,7 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
       return SMALL_FLOATING_MODAL_SIZE_REM;
     }
     /* @conditional-compile-remove(vertical-gallery) */
-    if ((horizontalGalleryTiles.length > 0 || !!screenShareComponent) && overflowGalleryLayout === 'VerticalRight') {
+    if ((overflowGalleryTiles.length > 0 || !!screenShareComponent) && overflowGalleryLayout === 'VerticalRight') {
       return isNarrow
         ? SMALL_FLOATING_MODAL_SIZE_REM
         : isShort
@@ -140,7 +140,7 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
     }
     return LARGE_FLOATING_MODAL_SIZE_REM;
   }, [
-    horizontalGalleryTiles.length,
+    overflowGalleryTiles.length,
     isNarrow,
     /* @conditional-compile-remove(vertical-gallery) */ isShort,
     /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryLayout,
@@ -159,7 +159,7 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
         >
           {localVideoComponent}
         </Stack>
-      ) : horizontalGalleryTiles.length > 0 || !!screenShareComponent ? (
+      ) : overflowGalleryTiles.length > 0 || !!screenShareComponent ? (
         <Stack className={mergeStyles(localVideoTileContainerStyle(theme, localVideoSizeRem))}>
           {localVideoComponent}
         </Stack>
@@ -175,7 +175,7 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
     ) : undefined;
 
   const overflowGallery = useMemo(() => {
-    if (horizontalGalleryTiles.length === 0 && !screenShareComponent) {
+    if (overflowGalleryTiles.length === 0 && !screenShareComponent) {
       return null;
     }
     return (
@@ -185,10 +185,10 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
         onFetchTilesToRender={setIndexesToRender}
         isNarrow={isNarrow}
         shouldFloatLocalVideo={true}
-        overflowGalleryElements={horizontalGalleryTiles}
+        overflowGalleryElements={overflowGalleryTiles}
         horizontalGalleryStyles={styles?.horizontalGallery}
         /* @conditional-compile-remove(vertical-gallery) */
-        veritcalGalleryStyles={styles?.verticalGallery}
+        verticalGalleryStyles={styles?.verticalGallery}
         /* @conditional-compile-remove(vertical-gallery) */
         overflowGalleryLayout={overflowGalleryLayout}
         onChildrenPerPageChange={(n: number) => {
@@ -199,7 +199,7 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
   }, [
     isNarrow,
     /* @conditional-compile-remove(vertical-gallery) */ isShort,
-    horizontalGalleryTiles,
+    overflowGalleryTiles,
     styles?.horizontalGallery,
     setIndexesToRender,
     screenShareComponent,
