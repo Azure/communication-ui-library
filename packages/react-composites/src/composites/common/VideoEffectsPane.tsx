@@ -3,6 +3,8 @@
 import React from 'react';
 /* @conditional-compile-remove(video-background-effects) */
 import { Panel } from '@fluentui/react';
+/* @conditional-compile-remove(video-background-effects) */
+import { useLocale } from '../localization';
 
 /**
  * Pane that is used to show video effects button
@@ -21,9 +23,11 @@ const VideoEffectsPaneTrampoline = (
   setshowVideoEffectsOptions: (showVideoEffectsOptions: boolean) => void
 ): JSX.Element => {
   /* @conditional-compile-remove(video-background-effects) */
+  const locale = useLocale();
+  /* @conditional-compile-remove(video-background-effects) */
   return (
     <Panel
-      headerText="Effects"
+      headerText={locale.strings.call.effects}
       isOpen={showVideoEffectsOptions}
       onDismiss={() => setshowVideoEffectsOptions(false)}
       hasCloseButton={true}
