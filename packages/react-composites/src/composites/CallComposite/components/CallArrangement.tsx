@@ -10,7 +10,8 @@ import {
   _useContainerWidth,
   ErrorBar,
   ErrorBarProps,
-  useTheme
+  useTheme,
+  _CaptionsBanner
 } from '@internal/react-components';
 /* @conditional-compile-remove(rooms) */
 import { _usePermissions } from '@internal/react-components';
@@ -19,6 +20,7 @@ import React, { useMemo, useRef } from 'react';
 import { useCallback } from 'react';
 /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
 import { AvatarPersonaDataCallback } from '../../common/AvatarPersona';
+import { CaptionsBanner } from '../../common/CaptionsBanner';
 import { containerDivStyles } from '../../common/ContainerRectProps';
 /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
 import { useAdapter } from '../adapter/CallAdapterProvider';
@@ -169,6 +171,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
             )}
             {canUnmute && !!props.mutedNotificationProps && <MutedNotification {...props.mutedNotificationProps} />}
           </Stack.Item>
+
           {props.callControlProps?.options !== false &&
             /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
             !isMobileWithActivePane && (
@@ -185,14 +188,14 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                 />
               </Stack.Item>
             )}
+
           <Stack horizontal grow>
             <Stack.Item grow style={callCompositeContainerFlex()}>
               <Stack.Item styles={callGalleryStyles} grow>
-                {props.onRenderGalleryContent && (
-                  <Stack verticalFill styles={mediaGalleryContainerStyles}>
-                    {props.onRenderGalleryContent()}
-                  </Stack>
-                )}
+                <Stack verticalFill styles={mediaGalleryContainerStyles}>
+                  {props.onRenderGalleryContent && props.onRenderGalleryContent()}
+                  <CaptionsBanner />
+                </Stack>
               </Stack.Item>
             </Stack.Item>
             {
