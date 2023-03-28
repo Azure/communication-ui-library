@@ -155,8 +155,17 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps & Cont
   );
 
   return (
-    <Stack horizontal className={mergeStyles(callControlsContainerStyles, controlBarContainerStyles)}>
-      <Stack.Item grow>
+    <Stack
+      horizontal
+      reversed
+      horizontalAlign="space-between"
+      className={mergeStyles(callControlsContainerStyles, controlBarContainerStyles, { position: 'relative' })}
+    >
+      {/*
+          Styling here to ensure the control bar buttons stay in the center of the parent component (control Container) regardless of its siblings
+          Need to add 'reversed' to parent container because the styling here reverse the position of the two stack items 
+              */}
+      <Stack.Item grow style={{ position: 'absolute', left: '50%', transform: 'translate(-50%, 0)' }}>
         <CallAdapterProvider adapter={props.callAdapter}>
           <Stack horizontalAlign="center">
             {/*
@@ -255,35 +264,37 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps & Cont
         </CallAdapterProvider>
       </Stack.Item>
       {!props.mobileView && (
-        <Stack horizontal className={!props.mobileView ? mergeStyles(desktopButtonContainerStyle) : undefined}>
-          {
-            /* @conditional-compile-remove(control-bar-button-injection) */
-            customButtons['secondary']
-              ?.slice(0, CUSTOM_BUTTON_OPTIONS.MAX_SECONDARY_DESKTOP_CUSTOM_BUTTONS)
-              .map((CustomButton, i) => {
-                return (
-                  <CustomButton
-                    key={`secondary-custom-button-${i}`}
-                    styles={commonButtonStyles}
-                    showLabel={options.displayType !== 'compact'}
-                  />
-                );
-              })
-          }
-          {isEnabled(options?.peopleButton) && (
-            <PeopleButton
-              checked={props.peopleButtonChecked}
-              ariaLabel={peopleButtonStrings?.label}
-              showLabel={options.displayType !== 'compact'}
-              onClick={props.onPeopleButtonClicked}
-              data-ui-id="call-with-chat-composite-people-button"
-              disabled={props.disableButtonsForLobbyPage || isDisabled(options.peopleButton)}
-              strings={peopleButtonStrings}
-              styles={commonButtonStyles}
-            />
-          )}
-          {isEnabled(options?.chatButton) && chatButton}
-        </Stack>
+        <Stack.Item>
+          <Stack horizontal className={!props.mobileView ? mergeStyles(desktopButtonContainerStyle) : undefined}>
+            {
+              /* @conditional-compile-remove(control-bar-button-injection) */
+              customButtons['secondary']
+                ?.slice(0, CUSTOM_BUTTON_OPTIONS.MAX_SECONDARY_DESKTOP_CUSTOM_BUTTONS)
+                .map((CustomButton, i) => {
+                  return (
+                    <CustomButton
+                      key={`secondary-custom-button-${i}`}
+                      styles={commonButtonStyles}
+                      showLabel={options.displayType !== 'compact'}
+                    />
+                  );
+                })
+            }
+            {isEnabled(options?.peopleButton) && (
+              <PeopleButton
+                checked={props.peopleButtonChecked}
+                ariaLabel={peopleButtonStrings?.label}
+                showLabel={options.displayType !== 'compact'}
+                onClick={props.onPeopleButtonClicked}
+                data-ui-id="call-with-chat-composite-people-button"
+                disabled={props.disableButtonsForLobbyPage || isDisabled(options.peopleButton)}
+                strings={peopleButtonStrings}
+                styles={commonButtonStyles}
+              />
+            )}
+            {isEnabled(options?.chatButton) && chatButton}
+          </Stack>
+        </Stack.Item>
       )}
     </Stack>
   );
