@@ -69,10 +69,6 @@ export const _CaptionsBanner = (props: _CaptionsBannerProps): JSX.Element => {
           ) : (
             <Persona {...personaOptions} />
           );
-          // if display name is too long, replace with ...
-          if (caption.displayName.length > 15) {
-            caption.displayName = `${caption.displayName.substring(0, 16)}...`;
-          }
 
           return (
             <>
