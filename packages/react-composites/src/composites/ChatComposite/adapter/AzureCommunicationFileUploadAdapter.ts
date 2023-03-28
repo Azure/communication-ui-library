@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 
 import { FileMetadata } from '@internal/react-components';
+import { CommunicationTokenCredential } from '@azure/communication-common';
 import { FileUploadManager, FileUploadState } from '../file-sharing';
 /* @conditional-compile-remove(file-sharing) */
 import produce from 'immer';
@@ -96,12 +97,12 @@ class FileUploadContext {
  */
 export class AzureCommunicationFileUploadAdapter implements FileUploadAdapter {
   private context: FileUploadContext;
-  private getAuthToken?: () => Promise<string>;
+  private credential?: CommunicationTokenCredential;
   private fileUploads: FileUpload[] = [];
 
-  constructor(chatContext: ChatContext, getAuthToken?: () => Promise<string>) {
+  constructor(chatContext: ChatContext, credential?: CommunicationTokenCredential) {
     this.context = new FileUploadContext(chatContext);
-    this.getAuthToken = getAuthToken;
+    this.credential = credential;
   }
 
   private findFileUpload(id: string): FileUpload | undefined {
@@ -182,11 +183,11 @@ export class AzureCommunicationFileUploadAdapter implements FileUploadAdapter {
       headers.append('Authorization', `Bearer ${token}`);
       return fetch(url, { headers });
     }
-    if (!this.getAuthToken) {
+    if (!this.credential) {
       return '';
     }
     // ToDo InlineAttachments: If GET fails might need to send failure up to contoso
-    const token = await this.getAuthToken();
+    const token = await (await this.credential.getToken()).token;
     const response = await fetchWithAuthentication(attachmentUrl ?? '', token);
     const blob = await response.blob();
     return URL.createObjectURL(blob);

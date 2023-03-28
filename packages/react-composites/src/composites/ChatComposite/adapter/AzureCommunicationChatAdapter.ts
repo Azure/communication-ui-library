@@ -117,7 +117,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   private handlers: ChatHandlers;
   private emitter: EventEmitter = new EventEmitter();
 
-  constructor(chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient) {
+  constructor(chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient, options?: ChatAdapterOptions) {
     this.bindAllPublicMethods();
     this.chatClient = chatClient;
     this.chatThreadClient = chatThreadClient;
@@ -428,6 +428,14 @@ const convertEventType = (type: string): ChatMessageType => {
 };
 
 /**
+ * Option bag to include when creating AzureCommunicationChatAdapter.
+ * @beta
+ */
+export type ChatAdapterOptions = {
+  credential?: CommunicationTokenCredential;
+};
+
+/**
  * Arguments for creating the Azure Communication Services implementation of {@link ChatAdapter}.
  *
  * @public
@@ -467,7 +475,8 @@ export const createAzureCommunicationChatAdapter = async ({
   const chatThreadClient = await chatClient.getChatThreadClient(threadId);
   await chatClient.startRealtimeNotifications();
 
-  const adapter = await createAzureCommunicationChatAdapterFromClient(chatClient, chatThreadClient);
+  const options = { credential: credential };
+  const adapter = await createAzureCommunicationChatAdapterFromClient(chatClient, chatThreadClient, options);
 
   return adapter;
 };
@@ -588,9 +597,10 @@ export const useAzureCommunicationChatAdapter = (
  */
 export const createAzureCommunicationChatAdapterFromClient = async (
   chatClient: StatefulChatClient,
-  chatThreadClient: ChatThreadClient
+  chatThreadClient: ChatThreadClient,
+  options?: ChatAdapterOptions
 ): Promise<ChatAdapter> => {
-  return new AzureCommunicationChatAdapter(chatClient, chatThreadClient);
+  return new AzureCommunicationChatAdapter(chatClient, chatThreadClient, options);
 };
 
 const isChatError = (e: Error): e is ChatError => {

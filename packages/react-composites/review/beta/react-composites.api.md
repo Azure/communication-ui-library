@@ -821,6 +821,11 @@ export type CallWithChatEvent = 'callError' | 'chatError' | 'callEnded' | 'isMut
 // @public
 export type ChatAdapter = ChatAdapterThreadManagement & AdapterState<ChatAdapterState> & Disposable & ChatAdapterSubscribers & FileUploadAdapter;
 
+// @beta
+export type ChatAdapterOptions = {
+    credential?: CommunicationTokenCredential;
+};
+
 // @public
 export type ChatAdapterState = ChatAdapterUiState & ChatCompositeClientState;
 
@@ -1010,7 +1015,7 @@ export const createAzureCommunicationCallWithChatAdapterFromClients: ({ callClie
 export const createAzureCommunicationChatAdapter: ({ endpoint: endpointUrl, userId, displayName, credential, threadId }: AzureCommunicationChatAdapterArgs) => Promise<ChatAdapter>;
 
 // @public
-export const createAzureCommunicationChatAdapterFromClient: (chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient) => Promise<ChatAdapter>;
+export const createAzureCommunicationChatAdapterFromClient: (chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient, options?: ChatAdapterOptions | undefined) => Promise<ChatAdapter>;
 
 // @beta (undocumented)
 export const createTeamsCallAdapter: ({ userId, credential, locator, options }: TeamsCallAdapterArgs) => Promise<TeamsCallAdapter>;
