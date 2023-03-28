@@ -39,7 +39,7 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
     /* @conditional-compile-remove(vertical-gallery) */
     parentHeight,
     pinnedParticipantUserIds = [],
-    /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryLayout = 'HorizontalBottom'
+    /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryPosition = 'HorizontalBottom'
   } = props;
 
   const isNarrow = parentWidth ? isNarrowWidth(parentWidth) : false;
@@ -111,7 +111,7 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
         /* @conditional-compile-remove(vertical-gallery) */
         verticalGalleryStyles={styles?.verticalGallery}
         /* @conditional-compile-remove(pinned-participants) */
-        overflowGalleryLayout={overflowGalleryLayout}
+        overflowGalleryPosition={overflowGalleryPosition}
         onFetchTilesToRender={setIndexesToRender}
         onChildrenPerPageChange={(n: number) => {
           childrenPerPage.current = n;
@@ -123,15 +123,15 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
     /* @conditional-compile-remove(vertical-gallery) */ isShort,
     overflowGalleryTiles,
     styles?.horizontalGallery,
+    /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryPosition,
     setIndexesToRender,
-    /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryLayout,
     /* @conditional-compile-remove(vertical-gallery) */ styles?.verticalGallery
   ]);
 
   return (
     <Stack
       /* @conditional-compile-remove(vertical-gallery) */
-      horizontal={overflowGalleryLayout === 'VerticalRight'}
+      horizontal={overflowGalleryPosition === 'VerticalRight'}
       styles={rootLayoutStyle}
       tokens={videoGalleryLayoutGap}
     >
