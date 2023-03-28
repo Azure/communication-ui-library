@@ -11,7 +11,7 @@ import { isCameraOn } from '../utils';
 /* @conditional-compile-remove(PSTN-calls) */
 import { DtmfTone } from '@azure/communication-calling';
 /* @conditional-compile-remove(video-background-effects) */
-import { BackgroundBlurConfig } from '@azure/communication-calling-effects';
+import { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/communication-calling-effects';
 
 /**
  * @private
@@ -120,6 +120,6 @@ const createCompositeHandlers = memoizeOne(
     },
     OnSetCaptionLanguage: async (language) => {
       await adapter.setCaptionLanguage(language);
-     }
+    }
   })
 );
