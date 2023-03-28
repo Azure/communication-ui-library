@@ -152,6 +152,7 @@ export class MockCallAdapter implements CallAdapter {
   stopCaptions(): Promise<void> {
     throw Error('stopCaptions not implemented');
   }
+  
   /* @conditional-compile-remove(video-background-effects) */
   blurVideoBackground(): Promise<void> {
     throw new Error('blurVideoBackground not implemented.');

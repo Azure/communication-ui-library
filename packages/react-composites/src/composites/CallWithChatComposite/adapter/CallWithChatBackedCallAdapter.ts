@@ -179,6 +179,7 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
   public async setSpokenLanguage(language: string): Promise<void> {
     this.callWithChatAdapter.setSpokenLanguage(language);
   }
+
   /* @conditional-compile-remove(video-background-effects) */
   public async blurVideoBackground(bgBlurConfig?: BackgroundBlurConfig): Promise<void> {
     await this.callWithChatAdapter.blurVideoBackground(bgBlurConfig);

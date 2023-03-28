@@ -312,6 +312,5 @@ export type {
   VerticalGalleryStrings,
   VerticalGalleryControlBarStyles
 } from '../../react-components/src';
-
 export { _CaptionsBanner } from '../../react-components/src';
 export type { _CaptionsBannerProps, _CaptionsInfo } from '../../react-components/src';

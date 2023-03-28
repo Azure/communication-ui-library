@@ -401,6 +401,7 @@ export interface CallAdapterCallOperations {
    * Funtion to stop captions
    */
   stopCaptions(): Promise<void>;
+
   /* @conditional-compile-remove(video-background-effects) */
   /**
    * Start the blur video background effect.

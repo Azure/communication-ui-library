@@ -371,7 +371,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     this.sendDtmfTone.bind(this);
     /* @conditional-compile-remove(unsupported-browser) */
     this.allowUnsupportedBrowserVersion.bind(this);
-
     this.startCaptions.bind(this);
     this.stopCaptions.bind(this);
     this.setSpokenLanguage.bind(this);
