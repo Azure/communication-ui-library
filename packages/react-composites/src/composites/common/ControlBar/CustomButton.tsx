@@ -5,13 +5,10 @@
 import { Icon, IContextualMenuItem, mergeStyleSets } from '@fluentui/react';
 import { ControlBarButton, _DrawerMenuItemProps } from '@internal/react-components';
 import React from 'react';
-import {
-  CallControlDisplayType,
-  CustomCallControlButtonCallbackArgs,
-  CustomControlButtonProps
-} from '../CallComposite/types/CallControlOptions';
+import { CustomCallControlButtonCallbackArgs, CustomControlButtonProps } from '../types/CommonCallControlOptions';
+import { CallControlDisplayType } from '../types/CommonCallControlOptions';
 /* @conditional-compile-remove(control-bar-button-injection) */
-import { CallWithChatControlOptions } from './CallWithChatComposite';
+import { CommonCallControlOptions } from '../types/CommonCallControlOptions';
 
 /**
  * Max number of Custom Buttons in primary and secondary ControlBar
@@ -27,12 +24,12 @@ export const CUSTOM_BUTTON_OPTIONS = {
 
 /** @private */
 export type CustomButtons = {
-  [key in CustomCallWithChatControlButtonPlacement]: typeof ControlBarButton[] | undefined;
+  [key in CustomCallControlButtonPlacement]: typeof ControlBarButton[] | undefined;
 };
 
 /** @private */
-export const generateCustomCallWithChatControlBarButton = (
-  onFetchCustomButtonProps?: CustomCallWithChatControlButtonCallback[],
+export const generateCustomCallControlBarButton = (
+  onFetchCustomButtonProps?: CustomCallControlButtonCallback[],
   displayType?: CallControlDisplayType
 ): CustomButtons => {
   const allButtonProps = onFetchCustomButtonProps?.map((callback) => callback({ displayType }));
@@ -46,8 +43,8 @@ export const generateCustomCallWithChatControlBarButton = (
 
 /** @private */
 const generateCustomControlBarButtons = (
-  placement: CustomCallWithChatControlButtonPlacement,
-  customButtons?: CustomCallWithChatControlButtonProps[]
+  placement: CustomCallControlButtonPlacement,
+  customButtons?: CustomCallControlButtonProps[]
 ): typeof ControlBarButton[] =>
   customButtons
     ? customButtons
@@ -72,8 +69,8 @@ const generateCustomControlBarButtons = (
 
 /** @private */
 const generateCustomDrawerButtons = (
-  placement: CustomCallWithChatControlButtonPlacement,
-  customButtons?: CustomCallWithChatControlButtonProps[]
+  placement: CustomCallControlButtonPlacement,
+  customButtons?: CustomCallControlButtonProps[]
 ): _DrawerMenuItemProps[] =>
   customButtons
     ? customButtons
@@ -93,12 +90,12 @@ const generateCustomDrawerButtons = (
 
 /** @private */
 export type CustomDrawerButtons = {
-  [key in CustomCallWithChatControlButtonPlacement]: _DrawerMenuItemProps[];
+  [key in CustomCallControlButtonPlacement]: _DrawerMenuItemProps[];
 };
 
 /** @private */
-export const generateCustomCallWithChatDrawerButtons = (
-  onFetchCustomButtonProps?: CustomCallWithChatControlButtonCallback[],
+export const generateCustomCallDrawerButtons = (
+  onFetchCustomButtonProps?: CustomCallControlButtonCallback[],
   displayType?: CallControlDisplayType
 ): CustomDrawerButtons => {
   const customButtons = onFetchCustomButtonProps?.map((callback) => callback({ displayType }));
@@ -111,12 +108,12 @@ export const generateCustomCallWithChatDrawerButtons = (
 
 /** @private */
 export type CustomDesktopOverflowButtons = {
-  [key in CustomCallWithChatControlButtonPlacement]: IContextualMenuItem[];
+  [key in CustomCallControlButtonPlacement]: IContextualMenuItem[];
 };
 
 /** @private */
-export const generateCustomCallWithChatDesktopOverflowButtons = (
-  onFetchCustomButtonProps?: CustomCallWithChatControlButtonCallback[],
+export const generateCustomCallDesktopOverflowButtons = (
+  onFetchCustomButtonProps?: CustomCallControlButtonCallback[],
   displayType?: CallControlDisplayType
 ): CustomDesktopOverflowButtons => {
   const customButtons = onFetchCustomButtonProps?.map((callback) => callback({ displayType }));
@@ -151,12 +148,12 @@ export const drawerMenuItemToContextualMenuItem = (item: _DrawerMenuItemProps): 
  * Performance tip: This callback is only called when either the callback or its arguments change.
  * @beta
  */
-export type CustomCallWithChatControlButtonCallback = (
+export type CustomCallControlButtonCallback = (
   args: CustomCallControlButtonCallbackArgs
-) => CustomCallWithChatControlButtonProps;
+) => CustomCallControlButtonProps;
 
 /**
- * Placement for a custom button injected in the {@link CallWithChatControlBar}.
+ * Placement for a custom button injected in the {@link CommonCallControlBar}.
  *
  * 'primary': Place the button(s) on the right end of the center control bar but before the EndCallButton (left end in rtl mode).
  * 'overflow': Place the buttons(s) on the end of the overflow Menu.
@@ -168,21 +165,21 @@ export type CustomCallWithChatControlButtonCallback = (
  *
  * @beta
  */
-export type CustomCallWithChatControlButtonPlacement = 'primary' | 'overflow' | 'secondary';
+export type CustomCallControlButtonPlacement = 'primary' | 'overflow' | 'secondary';
 
 /**
- * Response from {@link CustomCallWithChatControlButtonCallback}.
+ * Response from {@link CustomCallControlButtonCallback}.
  *
  * Includes the icon and placement prop necessary to indicate where to place the
  * {@link ControlBarButton} and a {@link DrawerMenuItem}
  *
  * @beta
  */
-export interface CustomCallWithChatControlButtonProps extends CustomControlButtonProps {
+export interface CustomCallControlButtonProps extends CustomControlButtonProps {
   /**
    * Where to place the custom button relative to other buttons.
    */
-  placement: CustomCallWithChatControlButtonPlacement;
+  placement: CustomCallControlButtonPlacement;
   /**
    * Icon to render. Icon is a non-default icon name that needs to be registered as a
    * custom icon using registerIcons through fluentui. Examples include icons from the fluentui library
@@ -193,9 +190,9 @@ export interface CustomCallWithChatControlButtonProps extends CustomControlButto
 /* @conditional-compile-remove(control-bar-button-injection) */
 /** @private */
 export const onFetchCustomButtonPropsTrampoline = (
-  options?: CallWithChatControlOptions
-): CustomCallWithChatControlButtonCallback[] | undefined => {
-  let response: CustomCallWithChatControlButtonCallback[] | undefined = undefined;
+  options?: CommonCallControlOptions
+): CustomCallControlButtonCallback[] | undefined => {
+  let response: CustomCallControlButtonCallback[] | undefined = undefined;
   response = options?.onFetchCustomButtonProps;
   return response;
 };

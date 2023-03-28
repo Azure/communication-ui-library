@@ -2,18 +2,18 @@
 // Licensed under the MIT license.
 
 import React, { useMemo } from 'react';
-import { useCallWithChatCompositeStrings } from './hooks/useCallWithChatCompositeStrings';
-import { MoreDrawer, MoreDrawerStrings } from './components/MoreDrawer';
-import { moreDrawerSelector } from './selectors/moreDrawerSelector';
-import { useSelector } from '../CallComposite/hooks/useSelector';
-import { useHandlers } from '../CallComposite/hooks/useHandlers';
-import { CallWithChatControlOptions } from './CallWithChatComposite';
+import { useCallWithChatCompositeStrings } from '../../CallWithChatComposite/hooks/useCallWithChatCompositeStrings';
+import { MoreDrawer, MoreDrawerStrings } from './MoreDrawer';
+import { moreDrawerSelector } from '../../CallWithChatComposite/selectors/moreDrawerSelector';
+import { useSelector } from '../../CallComposite/hooks/useSelector';
+import { useHandlers } from '../../CallComposite/hooks/useHandlers';
+import { CommonCallControlOptions } from '../types/CommonCallControlOptions';
 
 /** @private */
 export interface PreparedMoreDrawerProps {
   onLightDismiss: () => void;
   onPeopleButtonClicked: () => void;
-  callControls?: boolean | CallWithChatControlOptions;
+  callControls?: boolean | CommonCallControlOptions;
   /* @conditional-compile-remove(PSTN-calls) */
   onClickShowDialpad?: () => void;
   disableButtonsForHoldScreen?: boolean;

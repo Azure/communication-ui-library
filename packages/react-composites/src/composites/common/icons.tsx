@@ -134,6 +134,7 @@ export const ChatCompositeIcon = (props: CompositeIconProps<ChatCompositeIcons>)
  * @public
  */
 export type CallCompositeIcons = {
+  ControlBarPeopleButton?: JSX.Element;
   ControlButtonCameraOff?: JSX.Element;
   ControlButtonCameraOn?: JSX.Element;
   ControlButtonEndCall?: JSX.Element;
