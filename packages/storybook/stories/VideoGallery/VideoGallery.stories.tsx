@@ -98,7 +98,7 @@ const getDocs: () => JSX.Element = () => {
         VideoGallery will enter a new layout called Overflow Layout. When in this mode, the VideoGallery will create a
         sub-gallery that can be placed on the bottom of the VideoGallery displaying participants horizontally by
         assigning the `overflowGalleryPosition` to 'HorizontalBottom'. This is the default. Conversely, this sub-gallery
-        can placed on the right displaying participants vertically by assigning the `overflowGalleryPosition` to
+        can be placed on the right displaying participants vertically by assigning the `overflowGalleryPosition` to
         'VerticalRight'.
       </Description>
       <Subheading>Horizontal Gallery</Subheading>
