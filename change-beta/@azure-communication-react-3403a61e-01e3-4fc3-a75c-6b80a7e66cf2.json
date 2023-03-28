@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Update displayName code snippet for cte",
-  "packageName": "@azure/communication-react",
-  "email": "jinan@microsoft.com",
-  "dependentChangeType": "patch"
-}
