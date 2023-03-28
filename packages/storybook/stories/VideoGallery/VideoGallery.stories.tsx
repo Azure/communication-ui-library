@@ -63,7 +63,8 @@ const getDocs: () => JSX.Element = () => {
       <Heading>Importing</Heading>
       <Source code={importStatement} />
 
-      <Heading>Grid Layout</Heading>
+      <Heading>Layouts</Heading>
+      <Subheading>Default Layout</Subheading>
       <Description>
         If there are no remote video streams on, all participants are placed in the [Grid
         Layout](./?path=/docs/ui-components-gridlayout--grid-layout) including the local user. Otherwise, only remote
@@ -80,14 +81,24 @@ const getDocs: () => JSX.Element = () => {
         will be prioritized. Furthermore, the VideoGallery is designed to limit the re-ordering when the
         `dominantSpeakers` prop is changed.
       </Description>
-      <Heading>Overflow Layout</Heading>
+      <Subheading>Floating Local Video Layout</Subheading>
+      <Description>
+        By default, the local video tile is placed in the Grid Layout. But the local video tile can be placed in a
+        floating and draggable video tile in the bottom right corner by setting the `layout` prop to
+        &apos;floatingLocalVideo&apos;.
+      </Description>
+      <Canvas mdxSource={FloatingLocalVideoExampleText}>
+        <FloatingLocalVideoExample />
+      </Canvas>
+
+      <Heading>Overflow Gallery</Heading>
       <DetailedBetaBanner></DetailedBetaBanner>
       <Description>
         In the VideoGallery, when there are participants who are not to be prioritized in the grid view, the
         VideoGallery will enter a new layout called Overflow Layout. When in this mode, the VideoGallery will create a
         sub-gallery that can be placed on the bottom of the VideoGallery displaying participants horizontally by
-        assigning the overflowGalleryLayout to 'HorizontalBottom'. This is the default. Conversely, this sub-gallery can
-        placed on the right displaying participants vertically by assigning the overflowGalleryLayout to
+        assigning the `overflowGalleryPosition` to 'HorizontalBottom'. This is the default. Conversely, this sub-gallery
+        can be placed on the right displaying participants vertically by assigning the `overflowGalleryPosition` to
         'VerticalRight'.
       </Description>
       <Subheading>Horizontal Gallery</Subheading>
@@ -95,7 +106,7 @@ const getDocs: () => JSX.Element = () => {
         The remote participants not in the Grid Layout are placed in a sub-gallery called the Horizontal Gallery in the
         lower section. A gif element is used to simulate a remote video stream to move the other remote participants to
         the Horizontal Gallery in the example below. This is the default behavior for the VideoGallery, but can also be
-        used by setting the `overflowGalleryLayout` property to 'HorizontalBottom'.
+        used by setting the `overflowGalleryPosition` property to 'HorizontalBottom'.
       </Description>
       <Canvas mdxSource={WithHorizontalGalleryExampleText}>
         <WithHorizontalGalleryExample />
@@ -104,7 +115,7 @@ const getDocs: () => JSX.Element = () => {
       <Description>
         The remote participants not in the Grid Layout are placed in a sub-gallery called the Vertical Gallery on the
         right side. A gif element is used to simulate a remote video stream to move the other remote participants to the
-        Vertical Gallery in the example below. This is used by setting the `overflowGalleryLayout` property to
+        Vertical Gallery in the example below. This is used by setting the `overflowGalleryPosition` property to
         'VerticalRight'.
       </Description>
       <Canvas mdxSource={WithVerticalGalleryExampleText}>
@@ -177,17 +188,6 @@ const getDocs: () => JSX.Element = () => {
           <Description>✅ Wide screen share appearence vertical gallery</Description>
         </Stack>
       </Stack>
-
-      <Heading>Local Video Tile</Heading>
-      <Description>
-        By default, the local video tile is placed in the Grid Layout. But the local video tile can be placed in a
-        floating and draggable video tile in the bottom right corner by setting the `layout` prop to
-        &apos;floatingLocalVideo&apos;.
-      </Description>
-      <Canvas mdxSource={FloatingLocalVideoExampleText}>
-        <FloatingLocalVideoExample />
-      </Canvas>
-
       <Heading>Screen Sharing Experience</Heading>
       <Description>
         The screen shared is the only element placed in the GridLayout and all remote participants are placed in the
@@ -455,7 +455,7 @@ const VideoGalleryStory = (args): JSX.Element => {
   return (
     <VideoGalleryComponent
       layout={args.videoGalleryLayout}
-      overflowGalleryLayout={args.overflowGalleryLayout}
+      overflowGalleryPosition={args.overflowGalleryPosition}
       localParticipant={MockLocalParticipant}
       remoteParticipants={remoteParticipants}
     />
@@ -473,7 +473,7 @@ export default {
   argTypes: {
     remoteParticipants: controlsToAdd.remoteParticipantNames,
     videoGalleryLayout: controlsToAdd.videoGallerylayout,
-    overflowGalleryLayout: controlsToAdd.overflowGalleryLayout,
+    overflowGalleryPosition: controlsToAdd.overflowGalleryPosition,
     screenShareExperience: controlsToAdd.screenShareExperience,
     // Hiding auto-generated controls
     styles: hiddenControl,
