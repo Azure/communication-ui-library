@@ -442,7 +442,7 @@ describe('VideoGallery with vertical overflow gallery tests', () => {
     );
 
     act(() => {
-      root.setProps({ layout: 'floatingLocalVideo', overflowGalleryLayout: 'VerticalRight', remoteParticipants });
+      root.setProps({ layout: 'floatingLocalVideo', overflowGalleryPosition: 'VerticalRight', remoteParticipants });
     });
     expect(gridTileCount(root)).toBe(1);
     expect(root.find(VerticalGallery).exists()).toBe(true);
@@ -476,7 +476,7 @@ describe('VideoGallery with vertical overflow gallery tests', () => {
     act(() => {
       root.setProps({
         layout: 'floatingLocalVideo',
-        overflowGalleryLayout: 'VerticalRight',
+        overflowGalleryPosition: 'VerticalRight',
         remoteParticipants,
         dominantSpeakers: ['remoteScreenSharingParticipant', 'remoteVideoParticipant']
       });
@@ -509,7 +509,7 @@ describe('VideoGallery with vertical overflow gallery tests', () => {
     act(() => {
       root.setProps({
         layout: 'floatingLocalVideo',
-        overflowGalleryLayout: 'VerticalRight',
+        overflowGalleryPosition: 'VerticalRight',
         remoteParticipants,
         dominantSpeakers: ['1', '6'],
         pinnedParticipants: ['7', '6']

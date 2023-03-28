@@ -13,33 +13,33 @@ export interface OrganizedParticipantsArgs {
   remoteParticipants: VideoGalleryRemoteParticipant[];
   dominantSpeakers?: string[];
   maxRemoteVideoStreams?: number;
-  maxHorizontalGalleryDominantSpeakers?: number;
+  maxOverflowGalleryDominantSpeakers?: number;
   isScreenShareActive?: boolean;
   pinnedParticipantUserIds?: string[];
 }
 
 /**
- * A result that defines grid participants and horizontal participants in the VideoGallery
+ * A result that defines grid participants and overflow gallery participants in the VideoGallery
  * @private
  */
 export interface OrganizedParticipantsResult {
   gridParticipants: VideoGalleryParticipant[];
-  horizontalGalleryParticipants: VideoGalleryParticipant[];
+  overflowGalleryParticipants: VideoGalleryParticipant[];
 }
 
 const DEFAULT_MAX_REMOTE_VIDEOSTREAMS = 4;
 
-const DEFAULT_MAX_HORIZONTAL_GALLERY_DOMINANT_SPEAKERS = 6;
+const DEFAULT_MAX_OVERFLOW_GALLERY_DOMINANT_SPEAKERS = 6;
 
 const _useOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedParticipantsResult => {
   const visibleGridParticipants = useRef<VideoGalleryRemoteParticipant[]>([]);
-  const visibleHorizontalGalleryParticipants = useRef<VideoGalleryRemoteParticipant[]>([]);
+  const visibleOverflowGalleryParticipants = useRef<VideoGalleryRemoteParticipant[]>([]);
 
   const {
     remoteParticipants = [],
     dominantSpeakers = [],
     maxRemoteVideoStreams = DEFAULT_MAX_REMOTE_VIDEOSTREAMS,
-    maxHorizontalGalleryDominantSpeakers = DEFAULT_MAX_HORIZONTAL_GALLERY_DOMINANT_SPEAKERS,
+    maxOverflowGalleryDominantSpeakers = DEFAULT_MAX_OVERFLOW_GALLERY_DOMINANT_SPEAKERS,
     isScreenShareActive = false,
     pinnedParticipantUserIds = []
   } = props;
@@ -65,7 +65,7 @@ const _useOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedP
   /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
   const callingParticipantsSet = new Set(callingParticipants.map((p) => p.userId));
 
-  visibleHorizontalGalleryParticipants.current = smartDominantSpeakerParticipants({
+  visibleOverflowGalleryParticipants.current = smartDominantSpeakerParticipants({
     participants: remoteParticipantsOrdered.filter(
       (p) =>
         !visibleGridParticipantsSet.has(p.userId) &&
@@ -74,8 +74,8 @@ const _useOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedP
         )
     ),
     dominantSpeakers: dominantSpeakers,
-    lastVisibleParticipants: visibleHorizontalGalleryParticipants.current,
-    maxDominantSpeakers: maxHorizontalGalleryDominantSpeakers
+    lastVisibleParticipants: visibleOverflowGalleryParticipants.current,
+    maxDominantSpeakers: maxOverflowGalleryDominantSpeakers
   });
 
   const getGridParticipants = useCallback((): VideoGalleryRemoteParticipant[] => {
@@ -85,10 +85,10 @@ const _useOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedP
     /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
     return visibleGridParticipants.current.length > 0
       ? visibleGridParticipants.current
-      : visibleHorizontalGalleryParticipants.current.concat(callingParticipants);
+      : visibleOverflowGalleryParticipants.current.concat(callingParticipants);
     return visibleGridParticipants.current.length > 0
       ? visibleGridParticipants.current
-      : visibleHorizontalGalleryParticipants.current;
+      : visibleOverflowGalleryParticipants.current;
   }, [
     /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ callingParticipants,
     isScreenShareActive
@@ -96,31 +96,31 @@ const _useOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedP
 
   const gridParticipants = getGridParticipants();
 
-  const getHorizontalGalleryRemoteParticipants = useCallback((): VideoGalleryRemoteParticipant[] => {
+  const getOverflowGalleryRemoteParticipants = useCallback((): VideoGalleryRemoteParticipant[] => {
     if (isScreenShareActive) {
-      // If screen sharing is active, assign video and audio participants as horizontal gallery participants
+      // If screen sharing is active, assign video and audio participants as overflow gallery participants
       /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
       return visibleGridParticipants.current.concat(
-        visibleHorizontalGalleryParticipants.current.concat(callingParticipants)
+        visibleOverflowGalleryParticipants.current.concat(callingParticipants)
       );
-      return visibleGridParticipants.current.concat(visibleHorizontalGalleryParticipants.current);
+      return visibleGridParticipants.current.concat(visibleOverflowGalleryParticipants.current);
     } else {
       // If screen sharing is not active, then assign all video tiles as grid tiles.
       // If there are no video tiles, then assign audio tiles as grid tiles.
       /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
       return visibleGridParticipants.current.length > 0
-        ? visibleHorizontalGalleryParticipants.current.concat(callingParticipants)
+        ? visibleOverflowGalleryParticipants.current.concat(callingParticipants)
         : [];
-      return visibleGridParticipants.current.length > 0 ? visibleHorizontalGalleryParticipants.current : [];
+      return visibleGridParticipants.current.length > 0 ? visibleOverflowGalleryParticipants.current : [];
     }
   }, [
     /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ callingParticipants,
     isScreenShareActive
   ]);
 
-  const horizontalGalleryParticipants = getHorizontalGalleryRemoteParticipants();
+  const overflowGalleryParticipants = getOverflowGalleryRemoteParticipants();
 
-  return { gridParticipants, horizontalGalleryParticipants };
+  return { gridParticipants, overflowGalleryParticipants: overflowGalleryParticipants };
 };
 
 /* @conditional-compile-remove(pinned-participants) */
@@ -160,10 +160,10 @@ const _useOrganizedParticipantsWithPinnedParticipants = (
 
   return {
     gridParticipants: props.isScreenShareActive ? [] : pinnedParticipants,
-    horizontalGalleryParticipants: props.isScreenShareActive
-      ? pinnedParticipants.concat(useOrganizedParticipantsResult.horizontalGalleryParticipants)
+    overflowGalleryParticipants: props.isScreenShareActive
+      ? pinnedParticipants.concat(useOrganizedParticipantsResult.overflowGalleryParticipants)
       : useOrganizedParticipantsResult.gridParticipants.concat(
-          useOrganizedParticipantsResult.horizontalGalleryParticipants
+          useOrganizedParticipantsResult.overflowGalleryParticipants
         )
   };
 };
@@ -185,7 +185,7 @@ const putVideoParticipantsFirst = (
 };
 
 /**
- * Hook to determine which participants should be in grid and horizontal gallery and their order respectively
+ * Hook to determine which participants should be in grid and overflow gallery and their order respectively
  * @private
  */
 export const useOrganizedParticipants = (args: OrganizedParticipantsArgs): OrganizedParticipantsResult => {
