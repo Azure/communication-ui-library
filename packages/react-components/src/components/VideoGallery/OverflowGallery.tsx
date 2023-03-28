@@ -16,9 +16,7 @@ import { OverflowGalleryLayout } from '../VideoGallery';
 import { ScrollableHorizontalGallery } from './ScrollableHorizontalGallery';
 import {
   horizontalGalleryContainerStyle,
-  horizontalGalleryStyle,
-  LARGE_HORIZONTAL_GALLERY_TILE_SIZE_REM,
-  SMALL_HORIZONTAL_GALLERY_TILE_SIZE_REM
+  horizontalGalleryStyle
 } from './styles/VideoGalleryResponsiveHorizontalGallery.styles';
 /* @conditional-compile-remove(vertical-gallery) */
 import {
@@ -43,6 +41,7 @@ export const OverflowGallery = (props: {
   veritcalGalleryStyles?: VerticalGalleryStyles;
   /* @conditional-compile-remove(vertical-gallery) */
   overflowGalleryLayout?: OverflowGalleryLayout;
+  onChildrenPerPageChange?: (childrenPerPage: number) => void;
 }): JSX.Element => {
   const {
     shouldFloatLocalVideo = false,
@@ -53,7 +52,8 @@ export const OverflowGallery = (props: {
     overflowGalleryElements,
     horizontalGalleryStyles,
     /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryLayout = 'HorizontalBottom',
-    /* @conditional-compile-remove(vertical-gallery) */ veritcalGalleryStyles
+    /* @conditional-compile-remove(vertical-gallery) */ veritcalGalleryStyles,
+    onChildrenPerPageChange
   } = props;
 
   const containerStyles = useMemo(() => {
@@ -94,6 +94,7 @@ export const OverflowGallery = (props: {
         gapHeightRem={HORIZONTAL_GALLERY_GAP}
         isShort={isShort}
         onFetchTilesToRender={onFetchTilesToRender}
+        onChildrenPerPageChange={onChildrenPerPageChange}
       >
         {overflowGalleryElements}
       </ResponsiveVerticalGallery>
@@ -102,6 +103,9 @@ export const OverflowGallery = (props: {
 
   /* @conditional-compile-remove(pinned-participants) */
   if (isNarrow) {
+    // There are no pages for ScrollableHorizontalGallery so we will approximate the first 3 remote
+    // participant tiles are visible
+    onChildrenPerPageChange?.(3);
     return (
       <ScrollableHorizontalGallery
         horizontalGalleryElements={overflowGalleryElements}
@@ -117,11 +121,9 @@ export const OverflowGallery = (props: {
       containerStyles={containerStyles}
       onFetchTilesToRender={onFetchTilesToRender}
       horizontalGalleryStyles={galleryStyles}
-      childWidthRem={
-        isNarrow ? SMALL_HORIZONTAL_GALLERY_TILE_SIZE_REM.width : LARGE_HORIZONTAL_GALLERY_TILE_SIZE_REM.width
-      }
       buttonWidthRem={HORIZONTAL_GALLERY_BUTTON_WIDTH}
       gapWidthRem={HORIZONTAL_GALLERY_GAP}
+      onChildrenPerPageChange={onChildrenPerPageChange}
     >
       {overflowGalleryElements}
     </ResponsiveHorizontalGallery>

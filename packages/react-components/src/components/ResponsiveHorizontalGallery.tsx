@@ -15,12 +15,13 @@ export const ResponsiveHorizontalGallery = (props: {
   children: React.ReactNode;
   containerStyles: IStyle;
   horizontalGalleryStyles: HorizontalGalleryStyles;
-  childWidthRem: number;
   gapWidthRem: number;
   buttonWidthRem?: number;
   onFetchTilesToRender?: (indexes: number[]) => void;
+  /** event to listen for children per page changes */
+  onChildrenPerPageChange?: (childrenPerPage: number) => void;
 }): JSX.Element => {
-  const { childWidthRem, gapWidthRem, buttonWidthRem = 0, onFetchTilesToRender } = props;
+  const { gapWidthRem, buttonWidthRem = 0, onFetchTilesToRender, onChildrenPerPageChange } = props;
   const containerRef = useRef<HTMLDivElement>(null);
   const containerWidth = _useContainerWidth(containerRef);
 
@@ -30,10 +31,10 @@ export const ResponsiveHorizontalGallery = (props: {
   const childrenPerPage = calculateHorizontalChildrenPerPage({
     numberOfChildren: React.Children.count(props.children),
     containerWidth: (containerWidth ?? 0) - leftPadding - rightPadding,
-    childWidthRem,
     gapWidthRem,
     buttonWidthRem
   });
+  onChildrenPerPageChange?.(childrenPerPage);
 
   return (
     <div data-ui-id="responsive-horizontal-gallery" ref={containerRef} className={mergeStyles(props.containerStyles)}>
