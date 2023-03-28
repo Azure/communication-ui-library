@@ -47,7 +47,6 @@ import { CommunicationIdentifier } from '@azure/communication-common';
 import { CaptionsReceivedListener } from '../../CallComposite/adapter/CallAdapter';
 /* @conditional-compile-remove(video-background-effects) */
 import { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/communication-calling-effects';
-import { CaptionsReceivedListener } from '../../CallComposite/adapter/CallAdapter';
 
 /**
  * Functionality for managing the current call with chat.

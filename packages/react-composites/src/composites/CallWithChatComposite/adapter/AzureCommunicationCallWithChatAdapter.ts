@@ -83,7 +83,6 @@ import { AzureCommunicationCallAdapterOptions } from '../../CallComposite/adapte
 import { CaptionsReceivedListener } from '../../CallComposite/adapter/CallAdapter';
 /* @conditional-compile-remove(video-background-effects) */
 import { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/communication-calling-effects';
-import { CaptionsReceivedListener } from '../../CallComposite/adapter/CallAdapter';
 
 type CallWithChatAdapterStateChangedHandler = (newState: CallWithChatAdapterState) => void;
 

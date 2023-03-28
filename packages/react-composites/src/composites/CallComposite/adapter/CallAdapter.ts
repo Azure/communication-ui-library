@@ -2,7 +2,6 @@
 // Licensed under the MIT license.
 
 import { CallState, CaptionsInfo, DeviceManagerState } from '@internal/calling-stateful-client';
-import { StartCaptionsOptions, TeamsCall } from '@azure/communication-calling';
 /* @conditional-compile-remove(video-background-effects) */
 import { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/communication-calling-effects';
 import { StartCaptionsOptions, TeamsCall } from '@azure/communication-calling';
