@@ -197,42 +197,29 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     return undefined;
   }, [editedOn, message.messageType, messageStatus, strings.editedTag, strings.failToSendTag, theme]);
 
-  const bubbleStyle = useMemo(() => {
-    /* @conditional-compile-remove(data-loss-prevention) */
-    if (message.messageType === 'blocked') {
-      return mergeStyles(defaultBlockedMessageStyleContainer(theme) as IStyle, messageContainerStyle as IStyle);
-    }
-    return messageContainerStyle;
-  }, [message.messageType, messageContainerStyle, theme]);
-
   const getContent = useCallback(() => {
     /* @conditional-compile-remove(data-loss-prevention) */
     if (message.messageType === 'blocked') {
       return (
         <div tabIndex={0}>
-          <BlockedMessageContent
-            message={message}
-            theme={theme}
-            strings={strings}
-            messageContainerStyle={props.messageContainerStyle}
-          />
+          <BlockedMessageContent message={message} strings={strings} />
         </div>
       );
     }
     return (
       <div tabIndex={0}>
-        <ChatMessageContent message={message} theme={theme} strings={strings} />
+        <ChatMessageContent message={message} strings={strings} />
         {props.onRenderFileDownloads ? props.onRenderFileDownloads(userId, message) : defaultOnRenderFileDownloads()}
       </div>
     );
-  }, [defaultOnRenderFileDownloads, message, props, strings, theme, userId]);
+  }, [defaultOnRenderFileDownloads, message, props, strings, userId]);
 
   const chatMessage = (
     <>
       <div ref={messageRef}>
         <Chat.Message
           data-ui-id="chat-composite-message"
-          className={mergeStyles(bubbleStyle as IStyle)}
+          className={mergeStyles(messageContainerStyle as IStyle)}
           styles={messageContainerStyle}
           content={getContent()}
           author={<Text className={chatMessageDateStyle}>{message.senderDisplayName}</Text>}

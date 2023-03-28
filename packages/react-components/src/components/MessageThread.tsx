@@ -24,7 +24,8 @@ import {
   defaultChatMessageContainer,
   gutterWithAvatar,
   gutterWithHiddenAvatar,
-  FailedMyChatMessageContainer
+  FailedMyChatMessageContainer,
+  defaultBlockedMessageStyleContainer
 } from './styles/MessageThread.styles';
 import {
   Icon,
@@ -381,7 +382,7 @@ const memoizeAllMessages = memoizeFnAll(
           : styles?.myChatMessageContainer ?? defaultMyChatMessageContainer;
       const chatMessageStyle = styles?.chatMessageContainer ?? defaultChatMessageContainer(theme);
       /* @conditional-compile-remove(data-loss-prevention) */
-      const blockedMessageStyle = styles?.blockedMessageContainer;
+      const blockedMessageStyle = styles?.blockedMessageContainer ?? defaultBlockedMessageStyleContainer(theme);
       if (message.mine) {
         messageProps.messageContainerStyle = myChatMessageStyle;
       } else {

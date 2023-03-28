@@ -6,32 +6,27 @@ import { _formatString } from '@internal/acs-ui-common';
 import { Parser } from 'html-to-react';
 import Linkify from 'react-linkify';
 import { ChatMessage } from '../../types/ChatMessage';
-/* @conditional-compoile-remove(data-loss-prevention) */
+/* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessage } from '../../types/ChatMessage';
 import { LiveMessage } from 'react-aria-live';
-import { Link, Theme } from '@fluentui/react';
+import { Link } from '@fluentui/react';
 /* @conditional-compile-remove(data-loss-prevention) */
-import { IStyle, FontIcon, mergeStyles, Stack } from '@fluentui/react';
+import { FontIcon, Stack } from '@fluentui/react';
 import { MessageThreadStrings } from '../MessageThread';
-/* @conditional-compile-remove(data-loss-prevention) */
-import { ComponentSlotStyle } from '@fluentui/react-northstar';
 
 type ChatMessageContentProps = {
   message: ChatMessage;
-  theme: Theme;
   strings: MessageThreadStrings;
 };
 
-/* @conditional-compoile-remove(data-loss-prevention) */
+/* @conditional-compile-remove(data-loss-prevention) */
 type BlockedMessageContentProps = {
   message: BlockedMessage;
-  theme: Theme;
   strings: MessageThreadStrings;
-  messageContainerStyle?: ComponentSlotStyle;
 };
 
 type MessageContentWithLiveAriaProps = {
-  message: ChatMessage | /* @conditional-compoile-remove(data-loss-prevention) */ BlockedMessage;
+  message: ChatMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage;
   liveMessage: string;
   ariaLabel?: string;
   content: JSX.Element;
@@ -124,7 +119,7 @@ export const BlockedMessageContent = (props: BlockedMessageContentProps): JSX.El
       liveMessage={liveBlockedContentText}
       ariaLabel={liveBlockedContentText}
       content={
-        <Stack className={mergeStyles(props?.messageContainerStyle as IStyle)} horizontal wrap>
+        <Stack horizontal wrap>
           {Icon}
           {blockedMessage && <p>{blockedMessage}</p>}
           {blockedMessageLink && (
