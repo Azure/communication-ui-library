@@ -188,17 +188,14 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                 />
               </Stack.Item>
             )}
-          <Stack.Item>
-            <CaptionsBanner />
-          </Stack.Item>
+
           <Stack horizontal grow>
             <Stack.Item grow style={callCompositeContainerFlex()}>
               <Stack.Item styles={callGalleryStyles} grow>
-                {props.onRenderGalleryContent && (
-                  <Stack verticalFill styles={mediaGalleryContainerStyles}>
-                    {props.onRenderGalleryContent()}
-                  </Stack>
-                )}
+                <Stack verticalFill styles={mediaGalleryContainerStyles}>
+                  {props.onRenderGalleryContent && <>{props.onRenderGalleryContent()}</>}
+                  <CaptionsBanner />
+                </Stack>
               </Stack.Item>
             </Stack.Item>
             {
