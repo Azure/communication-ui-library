@@ -24,9 +24,10 @@ import {
   defaultChatMessageContainer,
   gutterWithAvatar,
   gutterWithHiddenAvatar,
-  FailedMyChatMessageContainer,
-  defaultBlockedMessageStyleContainer
+  FailedMyChatMessageContainer
 } from './styles/MessageThread.styles';
+/* @conditional-compile-remove(data-loss-prevention) */
+import { defaultBlockedMessageStyleContainer } from './styles/MessageThread.styles';
 import {
   Icon,
   IStyle,
