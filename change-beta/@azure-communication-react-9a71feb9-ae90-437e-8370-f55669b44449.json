@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "Merge remote-tracking branch 'origin' into prabhjot/config-video-effects",
+  "comment": "Support background effects in config screen",
   "packageName": "@azure/communication-react",
   "email": "97124699+prabhjot-msft@users.noreply.github.com",
   "dependentChangeType": "patch"

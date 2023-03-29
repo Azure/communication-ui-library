@@ -128,7 +128,6 @@ export const startCallButtonStyleMobile = mergeStyles({
   maxWidth: 'unset'
 });
 
-/* @conditional-compile-remove(video-background-effects) */
 /**
  * @private
  */
