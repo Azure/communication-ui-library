@@ -253,6 +253,7 @@ export interface VideoBackgroundImage {
  */
 export type CaptionsReceivedListener = (event: { data: CaptionsInfo }) => void;
 
+
 /**
  * Functionality for managing the current call.
  *
@@ -381,7 +382,6 @@ export interface CallAdapterCallOperations {
    * Continues into a call when the browser version is not supported.
    */
   allowUnsupportedBrowserVersion(): void;
-
   /**
    * Function to Start captions
    * @param startCaptionsOptions - options for start captions

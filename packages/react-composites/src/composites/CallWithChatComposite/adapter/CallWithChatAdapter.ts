@@ -344,7 +344,6 @@ export interface CallWithChatAdapterManagement {
    * Continues into a call when the browser version is not supported.
    */
   allowUnsupportedBrowserVersion(): void;
-
   /**
    * Function to Start captions
    * @param startCaptionsOptions - options for start captions
