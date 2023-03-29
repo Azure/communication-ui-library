@@ -253,7 +253,6 @@ export interface VideoBackgroundImage {
  */
 export type CaptionsReceivedListener = (event: { data: CaptionsInfo }) => void;
 
-
 /**
  * Functionality for managing the current call.
  *
