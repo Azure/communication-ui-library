@@ -26,6 +26,8 @@ process.env['COMMUNICATION_REACT_FLAVOR'] === 'stable' &&
         'dialpad',
         // Ability to upload/download files in message thread.
         'file-sharing',
+        // At mention feature
+        'at-mention',
         // 1 to N Calling feature.
         'one-to-n-calling',
         // PSTN calls 

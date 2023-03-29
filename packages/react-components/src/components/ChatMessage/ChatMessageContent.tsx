@@ -8,11 +8,15 @@ import Linkify from 'react-linkify';
 import { ChatMessage } from '../../types/ChatMessage';
 import { LiveMessage } from 'react-aria-live';
 import { Link } from '@fluentui/react';
+/* @conditional-compile-remove(at-mention) */
+import { AtMentionDisplayOptions } from '../AtMentionFlyout';
 
 type ChatMessageContentProps = {
   message: ChatMessage;
   liveAuthorIntro: string;
   messageContentAriaText?: string;
+  /* @conditional-compile-remove(at-mention) */
+  atMentionDisplayOptions?: AtMentionDisplayOptions;
 };
 
 /** @private */
