@@ -49,6 +49,7 @@ import { SendDtmfDialpad } from '../../common/SendDtmfDialpad';
 import { useCallWithChatCompositeStrings } from '../../CallWithChatComposite/hooks/useCallWithChatCompositeStrings';
 /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
 import { getPage } from '../selectors/baseSelectors';
+import { drawerContainerStyles } from '../styles/CallComposite.styles';
 
 /**
  * @private
@@ -151,7 +152,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     setShowDtmfDialpad(true);
   };
 
-  const drawerContainerStyles = useMemo(() => drawerContainerStyles(10), []);
+  const drawerContainerStylesValue = useMemo(() => drawerContainerStyles(10), []);
 
   // To be removed once feature is out of beta, replace with callCompositeContainerCSS
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
@@ -262,7 +263,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
             )}
 
           {props.callControlProps?.options !== false && showDrawer && (
-            <Stack styles={drawerContainerStyles}>
+            <Stack styles={drawerContainerStylesValue}>
               <PreparedMoreDrawer
                 callControls={props.callControlProps.options}
                 onLightDismiss={closeDrawer}
@@ -278,7 +279,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
           {
             /* @conditional-compile-remove(PSTN-calls) */
             props.callControlProps?.options !== false && showDtmfDialpad && (
-              <Stack styles={drawerContainerStyles}>
+              <Stack styles={drawerContainerStylesValue}>
                 <SendDtmfDialpad
                   isMobile={props.mobileView}
                   strings={dialpadStrings}
