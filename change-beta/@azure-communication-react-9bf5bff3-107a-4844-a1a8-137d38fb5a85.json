@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Created components,selectors,handlers for captions feature composite experience",
+  "packageName": "@azure/communication-react",
+  "email": "carolinecao@microsoft.com",
+  "dependentChangeType": "patch"
+}
