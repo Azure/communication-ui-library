@@ -572,7 +572,8 @@ export type CallErrorTarget =
   | 'IncomingCall.accept'
   | 'IncomingCall.reject'
   | /* @conditional-compile-remove(calling-beta-sdk) */ /* @conditional-compile-remove(teams-identity-support) */ 'TeamsCall.addParticipant'
-  | /* @conditional-compile-remove(video-background-effects) */ 'VideoEffectsFeature.startEffects';
+  | /* @conditional-compile-remove(video-background-effects) */ 'VideoEffectsFeature.startEffects'
+  | /* @conditional-compile-remove(calling-beta-sdk) */ 'CallAgent.handlePushNotification';
 
 /**
  * State only proxy for {@link @azure/communication-calling#DiagnosticsCallFeature}.
