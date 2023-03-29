@@ -50,6 +50,7 @@ export interface CallWithChatControlBarProps {
   onClickShowDialpad?: () => void;
   /* @conditional-compile-remove(video-background-effects) */
   onShowVideoEffectsPicker?: (showVideoEffectsOptions: boolean) => void;
+  rtl?: boolean;
 }
 
 const inferCallWithChatControlOptions = (
@@ -127,8 +128,8 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps & Cont
   );
 
   const controlBarWrapperDesktopStyles: IStyle = useMemo(
-    () => (!props.mobileView ? wrapperDesktopStyles : {}),
-    [props.mobileView]
+    () => (!props.mobileView ? (props.rtl ? wrapperDesktopRtlStyles : wrapperDesktopStyles) : {}),
+    [props.mobileView, props.rtl]
   );
 
   const controlBarDesktopContainerStyles: IStyle = useMemo(
@@ -325,6 +326,12 @@ const desktopControlBarStyles: BaseCustomStyles = {
 const wrapperDesktopStyles: IStyle = {
   position: 'absolute',
   left: '50%',
+  transform: 'translate(-50%, 0)'
+};
+
+const wrapperDesktopRtlStyles: IStyle = {
+  position: 'absolute',
+  right: '50%',
   transform: 'translate(-50%, 0)'
 };
 
