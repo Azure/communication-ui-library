@@ -125,6 +125,17 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps & Cont
     () => (!props.mobileView ? getDesktopEndCallButtonStyles(theme) : undefined),
     [props.mobileView, theme]
   );
+
+  const controlBarWrapperDesktopStyles = useMemo(
+    () => (!props.mobileView ? wrapperDesktopStyles : undefined),
+    [props.mobileView]
+  );
+
+  const controlBarDesktopContainerStyles = useMemo(
+    () => (!props.mobileView ? { position: 'relative' } : undefined),
+    [props.mobileView]
+  );
+
   /* @conditional-compile-remove(control-bar-button-injection) */
   const customButtons = useMemo(
     () =>
@@ -157,15 +168,11 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps & Cont
   return (
     <Stack
       horizontal
-      reversed
+      reversed={!props.mobileView}
       horizontalAlign="space-between"
-      className={mergeStyles(callControlsContainerStyles, controlBarContainerStyles, { position: 'relative' })}
+      className={mergeStyles(callControlsContainerStyles, controlBarContainerStyles, controlBarDesktopContainerStyles)}
     >
-      {/*
-          Styling here to ensure the control bar buttons stay in the center of the parent component (control Container) regardless of its siblings
-          Need to add 'reversed' to parent container because the styling here reverse the position of the two stack items 
-              */}
-      <Stack.Item grow style={{ position: 'absolute', left: '50%', transform: 'translate(-50%, 0)' }}>
+      <Stack.Item grow className={mergeStyles(controlBarWrapperDesktopStyles)}>
         <CallAdapterProvider adapter={props.callAdapter}>
           <Stack horizontalAlign="center">
             {/*
@@ -307,6 +314,18 @@ const desktopButtonContainerStyle: IStyle = {
 
 const desktopControlBarStyles: BaseCustomStyles = {
   root: desktopButtonContainerStyle
+};
+
+{
+  /*
+    Styling here to ensure the control bar buttons stay in the center of the parent component (control Container) regardless of its siblings
+    Need to add 'reversed' to parent container because the styling here reverse the position of the two stack items 
+  */
+}
+const wrapperDesktopStyles: IStyle = {
+  position: 'absolute',
+  left: '50%',
+  transform: 'translate(-50%, 0)'
 };
 
 const getDesktopCommonButtonStyles = (theme: ITheme): ControlBarButtonStyles => ({
