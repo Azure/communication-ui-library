@@ -1,9 +1,15 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IStackItemStyles, IStackStyles, IStackTokens, IStyle, mergeStyles } from '@fluentui/react';
-/* @conditional-compile-remove(video-background-effects) */
-import { IButtonStyles, Theme } from '@fluentui/react';
+import {
+  IStackItemStyles,
+  IStackStyles,
+  IStackTokens,
+  IStyle,
+  mergeStyles,
+  IButtonStyles,
+  Theme
+} from '@fluentui/react';
 
 /**
  * @private
