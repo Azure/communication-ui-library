@@ -62,7 +62,7 @@ import { SystemMessage as SystemMessageComponent, SystemMessageIconTypes } from 
 import { ChatMessageComponent } from './ChatMessage/ChatMessageComponent';
 import { useLocale } from '../localization/LocalizationProvider';
 import { isNarrowWidth, _useContainerWidth } from './utils/responsive';
-import { getParticipantsWhoHaveReadMessage } from './utils/getParticipantsWhoHaveReadMessage';
+import getParticipantsWhoHaveReadMessage from './utils/getParticipantsWhoHaveReadMessage';
 /* @conditional-compile-remove(file-sharing) */
 import { FileDownloadHandler, FileMetadata } from './FileDownloadCards';
 import { useTheme } from '../theming';
@@ -232,10 +232,10 @@ export interface MessageThreadStrings {
   downloadFile: string;
   /* @conditional-compile-remove(data-loss-prevention) */
   /** String for policy violation message removal */
-  blockedContentText: string;
+  blockedWarningText: string;
   /* @conditional-compile-remove(data-loss-prevention) */
   /** String for policy violation message removal details link */
-  blockedContentLinkText: string;
+  blockedWarningLinkText: string;
 }
 
 /**
@@ -374,26 +374,10 @@ const memoizeAllMessages = memoizeFnAll(
       disableEditing
     };
 
-    /* @conditional-compile-remove(data-loss-prevention) */
-    // Same logic as switch statement, if statement for conditional compile
-    if (message.messageType === 'blocked') {
-      const myChatMessageStyle =
-        message.status === 'failed'
-          ? styles?.failedMyChatMessageContainer ?? styles?.myChatMessageContainer ?? FailedMyChatMessageContainer
-          : styles?.myChatMessageContainer ?? defaultMyChatMessageContainer;
-      const chatMessageStyle = styles?.chatMessageContainer ?? defaultChatMessageContainer(theme);
-      /* @conditional-compile-remove(data-loss-prevention) */
-      const blockedMessageStyle = styles?.blockedMessageContainer ?? defaultBlockedMessageStyleContainer(theme);
-      if (message.mine) {
-        messageProps.messageContainerStyle = myChatMessageStyle;
-      } else {
-        messageProps.messageContainerStyle = chatMessageStyle;
-        /* @conditional-compile-remove(data-loss-prevention) */
-        if (message.messageType === 'blocked') {
-          messageProps.messageContainerStyle = blockedMessageStyle;
-        }
-      }
-
+    const chatMessageItemProps = (
+      message: ChatMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage,
+      messageProps: MessageProps
+    ): ShorthandValue<ChatItemProps> => {
       const chatMessageComponent =
         onRenderMessage === undefined
           ? defaultChatMessageRenderer(messageProps)
@@ -452,88 +436,30 @@ const memoizeAllMessages = memoizeFnAll(
         attached: message.attached,
         key: _messageKey
       };
+    };
+
+    /* @conditional-compile-remove(data-loss-prevention) */
+    // Similar logic as switch statement case 'chat', if statement for conditional compile
+    if (message.messageType === 'blocked') {
+      const myChatMessageStyle =
+        message.status === 'failed'
+          ? styles?.failedMyChatMessageContainer ?? styles?.myChatMessageContainer ?? FailedMyChatMessageContainer
+          : styles?.myChatMessageContainer ?? defaultMyChatMessageContainer;
+      const blockedMessageStyle = styles?.blockedMessageContainer ?? defaultBlockedMessageStyleContainer(theme);
+      messageProps.messageContainerStyle = message.mine ? myChatMessageStyle : blockedMessageStyle;
+      return chatMessageItemProps(message, messageProps);
     }
 
     switch (message.messageType) {
-      // case 'blocked':
       case 'chat': {
         const myChatMessageStyle =
           message.status === 'failed'
             ? styles?.failedMyChatMessageContainer ?? styles?.myChatMessageContainer ?? FailedMyChatMessageContainer
             : styles?.myChatMessageContainer ?? defaultMyChatMessageContainer;
         const chatMessageStyle = styles?.chatMessageContainer ?? defaultChatMessageContainer(theme);
-        /* @conditional-compile-remove(data-loss-prevention) */
-        const blockedMessageStyle = styles?.blockedMessageContainer;
+        messageProps.messageContainerStyle = message.mine ? myChatMessageStyle : chatMessageStyle;
 
-        if (message.mine) {
-          messageProps.messageContainerStyle = myChatMessageStyle;
-        } else {
-          messageProps.messageContainerStyle = chatMessageStyle;
-          /* @conditional-compile-remove(data-loss-prevention) */
-          // change to === 'blocked' when in stable
-          if (message.messageType !== 'chat') {
-            messageProps.messageContainerStyle = blockedMessageStyle;
-          }
-        }
-
-        const chatMessageComponent =
-          onRenderMessage === undefined
-            ? defaultChatMessageRenderer(messageProps)
-            : onRenderMessage(messageProps, defaultChatMessageRenderer);
-
-        const personaOptions: IPersona = {
-          hidePersonaDetails: true,
-          size: PersonaSize.size32,
-          text: message.senderDisplayName,
-          showOverflowTooltip: false
-        };
-
-        const chatItemMessageStyle =
-          (message.mine ? styles?.myChatItemMessageContainer : styles?.chatItemMessageContainer) ||
-          defaultChatItemMessageContainer(shouldOverlapAvatarAndMessage);
-
-        const chatGutterStyles =
-          message.attached === 'top' || message.attached === false ? gutterWithAvatar : gutterWithHiddenAvatar;
-
-        return {
-          gutter: {
-            styles: chatGutterStyles,
-            content: message.mine ? (
-              ''
-            ) : onRenderAvatar ? (
-              onRenderAvatar(message.senderId ?? '', personaOptions)
-            ) : (
-              <Persona {...personaOptions} />
-            )
-          },
-          contentPosition: message.mine ? 'end' : 'start',
-          message: {
-            styles: chatItemMessageStyle,
-            content: (
-              <Flex hAlign={message.mine ? 'end' : undefined} vAlign="end">
-                {chatMessageComponent}
-                <div
-                  className={mergeStyles(
-                    messageStatusContainerStyle(message.mine ?? false),
-                    styles?.messageStatusContainer ? styles.messageStatusContainer(message.mine ?? false) : ''
-                  )}
-                >
-                  {showMessageStatus && statusToRender ? (
-                    onRenderMessageStatus ? (
-                      onRenderMessageStatus({ status: statusToRender })
-                    ) : (
-                      defaultStatusRenderer(message, statusToRender, participantCount ?? 0, readCount ?? 0)
-                    )
-                  ) : (
-                    <div className={mergeStyles(noMessageStatusStyle)} />
-                  )}
-                </div>
-              </Flex>
-            )
-          },
-          attached: message.attached,
-          key: _messageKey
-        };
+        return chatMessageItemProps(message, messageProps);
       }
 
       case 'system': {

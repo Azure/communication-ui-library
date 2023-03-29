@@ -209,8 +209,6 @@ export interface BlockedMessage extends MessageCommon {
     // (undocumented)
     attached?: MessageAttachedStatus;
     // (undocumented)
-    content?: string | false;
-    // (undocumented)
     deletedOn?: Date;
     // (undocumented)
     link?: string;
@@ -226,6 +224,8 @@ export interface BlockedMessage extends MessageCommon {
     senderId?: string;
     // (undocumented)
     status?: MessageStatus;
+    // (undocumented)
+    warningText?: string | false;
 }
 
 // @beta
@@ -2573,8 +2573,8 @@ export type MessageThreadSelector = (state: ChatClientState, props: ChatBaseSele
 // @public
 export interface MessageThreadStrings {
     actionMenuMoreOptions?: string;
-    blockedContentLinkText: string;
-    blockedContentText: string;
+    blockedWarningLinkText: string;
+    blockedWarningText: string;
     downloadFile: string;
     editBoxCancelButton: string;
     editBoxPlaceholderText: string;

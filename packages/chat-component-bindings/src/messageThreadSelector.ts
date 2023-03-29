@@ -25,6 +25,8 @@ import {
 import { BlockedMessage } from '@internal/react-components';
 import { createSelector } from 'reselect';
 import { ACSKnownMessageType } from './utils/constants';
+/* @conditional-compile-remove(data-loss-prevention) */
+import { DEFAULT_DATA_LOSS_PREVENTION_POLICY_URL } from './utils/constants';
 import { updateMessagesWithAttached } from './utils/updateMessagesWithAttached';
 
 /* @conditional-compile-remove(file-sharing) */
@@ -80,14 +82,14 @@ const convertToUiBlockedMessage = (
   return {
     messageType: 'blocked',
     createdOn: message.createdOn,
-    content: message.content?.message,
+    warningText: message.content?.message,
     status: !isLargeGroup && message.status === 'delivered' && isSeen ? 'seen' : message.status,
     senderDisplayName: message.senderDisplayName,
     senderId: messageSenderId,
     messageId: message.id,
     deletedOn: message.deletedOn,
     mine: messageSenderId === userId,
-    link: 'https://go.microsoft.com/fwlink/?LinkId=2132837'
+    link: DEFAULT_DATA_LOSS_PREVENTION_POLICY_URL
   };
 };
 

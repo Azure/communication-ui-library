@@ -133,8 +133,8 @@
     "messageReadCount": "Read by {messageReadByCount} of {remoteParticipantsCount}",
     "actionMenuMoreOptions": "More Options",
     "downloadFile": "Download file",
-    "blockedContentText": "This message was deleted due to organizational policy.",
-    "blockedContentLinkText": "Details"
+    "blockedWarningText": "This message was deleted due to organizational policy.",
+    "blockedWarningLinkText": "Details"
   },
   "errorBar": {
     "unableToReachChatService": "You are offline",

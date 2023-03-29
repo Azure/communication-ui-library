@@ -84,6 +84,7 @@ export const ChatMessageComponent = (props: ChatMessageComponentProps): JSX.Elem
 
   const { onDeleteMessage, onSendMessage, message } = props;
   const clientMessageId = 'clientMessageId' in message ? message.clientMessageId : undefined;
+  const content = 'content' in message ? message.content : undefined;
   const onRemoveClick = useCallback(() => {
     if (onDeleteMessage && message.messageId) {
       onDeleteMessage(message.messageId);
@@ -95,14 +96,8 @@ export const ChatMessageComponent = (props: ChatMessageComponentProps): JSX.Elem
   }, [onDeleteMessage, message.messageId, message.messageType, clientMessageId]);
   const onResendClick = useCallback(() => {
     onDeleteMessage && clientMessageId && onDeleteMessage(clientMessageId);
-    onSendMessage &&
-      onSendMessage(
-        message.content !== undefined &&
-          /* @conditional-compile-remove(data-loss-prevention) */ message.content !== false
-          ? message.content
-          : ''
-      );
-  }, [clientMessageId, message.content, onSendMessage, onDeleteMessage]);
+    onSendMessage && onSendMessage(content !== undefined ? content : '');
+  }, [clientMessageId, content, onSendMessage, onDeleteMessage]);
 
   if (isEditing && message.messageType === 'chat') {
     return (

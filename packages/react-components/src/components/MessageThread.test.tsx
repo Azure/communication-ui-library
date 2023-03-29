@@ -143,6 +143,6 @@ describe('Message blocked should display default blocked text correctly', () => 
       <MessageThread userId="user1" messages={[sampleMessage]} showMessageDate={true} />,
       testLocale
     );
-    expect(component.text()).toContain(testLocale.strings.messageThread.blockedContentText);
+    expect(component.text()).toContain(testLocale.strings.messageThread.blockedWarningText);
   });
 });

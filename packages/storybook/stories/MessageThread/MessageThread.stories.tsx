@@ -156,7 +156,7 @@ const getDocs: () => JSX.Element = () => {
 
       <Heading>Messages with Customized Blocked message Container</Heading>
       <Description>
-        The example below shows how to render a `blocked` message with custom `content`, with
+        The example below shows how to render a `blocked` message with custom `warningText`, with
         `styles.blockedMessageContainer` for styling, and rendering your own JSX.Element with with `onRenderMessage` in
         `MessageThread`
       </Description>

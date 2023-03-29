@@ -55,7 +55,6 @@ export type SystemMessage =
  */
 export interface ChatMessage extends MessageCommon {
   messageType: 'chat';
-
   content?: string;
   editedOn?: Date;
   deletedOn?: Date;
@@ -133,19 +132,15 @@ export interface ContentSystemMessage extends SystemMessageCommon {
  */
 export interface BlockedMessage extends MessageCommon {
   messageType: 'blocked';
-
-  content?: string | false;
+  warningText?: string | false;
   linkText?: string;
   link?: string;
-  // editedOn?: Date;
   deletedOn?: Date;
   senderId?: string;
   senderDisplayName?: string;
   status?: MessageStatus;
   attached?: MessageAttachedStatus;
   mine?: boolean;
-  // clientMessageId?: string;
-  // contentType: MessageContentType;
 }
 
 /**

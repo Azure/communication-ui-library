@@ -27,7 +27,7 @@ export const MessageThreadWithCustoBlockedmMessageContainerExample: () => JSX.El
     {
       messageType: 'blocked',
       senderId: 'user2',
-      content: 'This is custom blocked message without hyperlink',
+      warningText: 'This is custom blocked message without hyperlink',
       senderDisplayName: 'Robert Tolbert',
       messageId: Math.random().toString(),
       createdOn: new Date('2019-04-13T00:00:00.000+08:09'),
@@ -37,7 +37,7 @@ export const MessageThreadWithCustoBlockedmMessageContainerExample: () => JSX.El
     {
       messageType: 'blocked',
       senderId: 'user2',
-      content: false,
+      warningText: false,
       linkText: 'This is custom blocked content with hyperlink only (microsoft.com)',
       link: 'https://microsoft.com',
       senderDisplayName: 'Robert Tolbert',

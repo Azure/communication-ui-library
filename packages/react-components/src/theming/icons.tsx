@@ -196,7 +196,6 @@ const BrowserPermissionDenied20Filled = (): JSX.Element => {
 
 /* @conditional-compile-remove(data-loss-prevention) */
 const DataLossPreventionProhibited16Regular = (): JSX.Element => {
-  // const theme = useTheme();
   return <Prohibited16Regular />;
 };
 

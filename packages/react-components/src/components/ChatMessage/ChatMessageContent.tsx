@@ -100,24 +100,24 @@ const MessageContentAsText = (props: ChatMessageContentProps): JSX.Element => {
 export const BlockedMessageContent = (props: BlockedMessageContentProps): JSX.Element => {
   const Icon: JSX.Element = <FontIcon iconName={'DataLossPreventionProhibited'} />;
   const blockedMessage =
-    props.message.content === false
+    props.message.warningText === false
       ? ''
-      : props.message.content === '' || props.message.content === undefined
-      ? props.strings.blockedContentText
-      : props.message.content;
+      : props.message.warningText === '' || props.message.warningText === undefined
+      ? props.strings.blockedWarningText
+      : props.message.warningText;
   const blockedMessageLink = props.message.link;
   const blockedMessageLinkText = blockedMessageLink
-    ? props.message.linkText ?? props.strings.blockedContentLinkText
+    ? props.message.linkText ?? props.strings.blockedWarningLinkText
     : '';
 
   const liveAuthor =
     props.message.mine || props.message.senderDisplayName === undefined ? '' : props.message.senderDisplayName;
-  const liveBlockedContentText = `${liveAuthor} ${blockedMessage} ${blockedMessageLinkText}`;
+  const liveBlockedWarningText = `${liveAuthor} ${blockedMessage} ${blockedMessageLinkText}`;
   return (
     <MessageContentWithLiveAria
       message={props.message}
-      liveMessage={liveBlockedContentText}
-      ariaLabel={liveBlockedContentText}
+      liveMessage={liveBlockedWarningText}
+      ariaLabel={liveBlockedWarningText}
       content={
         <Stack horizontal wrap>
           {Icon}

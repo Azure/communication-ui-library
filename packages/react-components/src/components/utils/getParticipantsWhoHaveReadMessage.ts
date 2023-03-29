@@ -3,7 +3,7 @@
 import { ChatMessage, ReadReceiptsBySenderId } from '../..';
 
 /* @conditional-compile-remove(data-loss-prevention) */
-import { BlockedMessage } from '../..';
+import { BlockedMessage } from '../../types/ChatMessage';
 
 /**
  * @private
@@ -19,7 +19,7 @@ import { BlockedMessage } from '../..';
  *
  * if MessageId of B is larger than message Id of A, then B is created after A
  * if the last read message is created after the message A is sent, then user should have read message A as well */
-export const getParticipantsWhoHaveReadMessage = (
+export default (
   message: ChatMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage,
   readReceiptsBySenderId: ReadReceiptsBySenderId
 ): { id: string; displayName: string }[] => {
