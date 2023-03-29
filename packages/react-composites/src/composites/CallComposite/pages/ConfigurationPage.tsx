@@ -294,7 +294,7 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
               {
                 /* @conditional-compile-remove(video-background-effects) */
                 <DefaultButton
-                  iconProps={{ iconName: 'OptionsVideoBackgroundEffect', styles: { root: { lineHeight: 0 } } }}
+                  iconProps={{ iconName: 'OptionsVideoBackgroundEffect' }}
                   styles={effectsButtonStyles(theme)}
                   onClick={() => {
                     if (showVideoEffectsPane) {
