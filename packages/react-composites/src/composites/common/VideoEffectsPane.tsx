@@ -54,7 +54,7 @@ export const VideoEffectsPane = (props: {
   const onEffectChange = useCallback(
     async (effectKey: string) => {
       if (effectKey === 'blur') {
-        adapter.blurVideoBackground({});
+        adapter.blurVideoBackground();
       } else if (effectKey === 'none') {
         adapter.stopVideoBackgroundEffect();
       }
