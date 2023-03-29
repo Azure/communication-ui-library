@@ -166,6 +166,7 @@ export interface CameraButtonProps extends ControlBarButtonProps {
     enableDeviceSelectionMenu?: boolean;
     localVideoViewOptions?: VideoStreamOptions;
     onSelectCamera?: (device: OptionsDevice) => Promise<void>;
+    onShowVideoEffectsPicker?: (showVideoEffectsOptions: boolean) => void;
     onToggleCamera?: (options?: VideoStreamOptions) => Promise<void>;
     selectedCamera?: OptionsDevice;
     strings?: Partial<CameraButtonStrings>;
@@ -209,24 +210,22 @@ export interface CameraSitePermissionsProps extends CommonSitePermissionsProps {
 // @beta
 export type CameraSitePermissionsStrings = SitePermissionsStrings;
 
-// Warning: (ae-internal-missing-underscore) The name "CaptionInfo" should be prefixed with an underscore because the declaration is marked as @internal
-//
-// @internal
-export type CaptionInfo = {
-    displayName: string;
-    caption: string;
-    userId?: string;
-};
-
 // @internal
 export const _CaptionsBanner: (props: _CaptionsBannerProps) => JSX.Element;
 
 // @internal
 export interface _CaptionsBannerProps {
     // (undocumented)
-    captions: CaptionInfo[];
+    captions: _CaptionsInfo[];
     onRenderAvatar?: OnRenderAvatarCallback;
 }
+
+// @internal
+export type _CaptionsInfo = {
+    displayName: string;
+    captionText: string;
+    userId?: string;
+};
 
 // @public
 export interface ChatMessage extends MessageCommon {
@@ -566,6 +565,7 @@ export const DEFAULT_COMPONENT_ICONS: {
     SplitButtonPrimaryActionMicMuted: JSX.Element;
     VerticalGalleryLeftButton: JSX.Element;
     VerticalGalleryRightButton: JSX.Element;
+    OptionsVideoBackgroundEffect: JSX.Element;
 };
 
 // @internal
@@ -940,6 +940,7 @@ export interface _IdentifierProviderProps {
 
 // @internal
 export interface _Identifiers {
+    horizontalGalleryVideoTile: string;
     messageContent: string;
     messageTimestamp: string;
     overflowGalleryLeftNavButton: string;
@@ -1224,7 +1225,7 @@ export interface OptionsDevice {
 }
 
 // @beta
-export type OverflowGalleryLayout = 'HorizontalBottom' | 'VerticalRight';
+export type OverflowGalleryPosition = 'HorizontalBottom' | 'VerticalRight';
 
 // @public
 export interface ParticipantAddedSystemMessage extends SystemMessageCommon {
@@ -1799,7 +1800,7 @@ export interface VideoGalleryProps {
     onRenderLocalVideoTile?: (localParticipant: VideoGalleryLocalParticipant) => JSX.Element;
     onRenderRemoteVideoTile?: (remoteParticipant: VideoGalleryRemoteParticipant) => JSX.Element;
     onUnpinParticipant?: (userId: string) => void;
-    overflowGalleryLayout?: OverflowGalleryLayout;
+    overflowGalleryPosition?: OverflowGalleryPosition;
     pinnedParticipants?: string[];
     remoteParticipants?: VideoGalleryRemoteParticipant[];
     remoteVideoTileMenuOptions?: false | VideoTileContextualMenuProps | VideoTileDrawerMenuProps;

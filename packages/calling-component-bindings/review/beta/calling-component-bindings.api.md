@@ -18,8 +18,8 @@ import { CallClientState } from '@internal/calling-stateful-client';
 import { CallParticipantListParticipant } from '@internal/react-components';
 import { CallState } from '@azure/communication-calling';
 import { CameraButton } from '@internal/react-components';
-import { CaptionInfo } from '@internal/react-components';
 import { _CaptionsBanner } from '@internal/react-components';
+import { _CaptionsInfo } from '@internal/react-components';
 import { Common } from '@internal/acs-ui-common';
 import { CommunicationIdentifier } from '@azure/communication-common';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
@@ -116,7 +116,7 @@ export type captionsOptions = {
 
 // @internal
 export type _CaptionsSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
-    captions: CaptionInfo[];
+    captions: _CaptionsInfo[];
 };
 
 // @internal

@@ -18,7 +18,7 @@ import {
 /* @conditional-compile-remove(teams-identity-support) */
 import { CallAgentKind } from '@azure/communication-calling';
 /* @conditional-compile-remove(calling-beta-sdk) */
-import { GroupChatCallLocator, MeetingLocator, RoomLocator } from '@azure/communication-calling';
+import { GroupChatCallLocator, MeetingLocator, RoomLocator, PushNotificationData } from '@azure/communication-calling';
 import { CommunicationUserIdentifier, PhoneNumberIdentifier, UnknownIdentifier } from '@azure/communication-common';
 import EventEmitter from 'events';
 import { callAgentDeclaratify } from './CallAgentDeclarative';
@@ -65,9 +65,6 @@ const mockRemoteParticipantId = 'a';
 const mockCallId = 'b';
 
 class MockCallAgent implements CallAgent {
-  handlePushNotification(): Promise<void> {
-    throw new Error('Method not implemented.');
-  }
   calls: MockCall[] = [];
   displayName = undefined;
   /* @conditional-compile-remove(teams-identity-support) */
@@ -84,6 +81,11 @@ class MockCallAgent implements CallAgent {
     const call = createMockCall(mockCallId);
     call.remoteParticipants = [remoteParticipant];
     return call;
+  }
+  /* @conditional-compile-remove(calling-beta-sdk) */
+  handlePushNotification(data: PushNotificationData): Promise<void> {
+    console.error('handlePushNotification not implemented, data: ', data);
+    return Promise.resolve();
   }
   join(groupLocator: GroupLocator, options?: JoinCallOptions): Call;
   /* @conditional-compile-remove(calling-beta-sdk) */

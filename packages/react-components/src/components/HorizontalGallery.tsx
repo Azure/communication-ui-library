@@ -85,6 +85,10 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
   const disablePreviousButton = page === 0;
   const disableNextButton = page === lastPage;
 
+  const childrenStyles = useMemo(() => {
+    return { root: styles?.children };
+  }, [styles?.children]);
+
   // If children per page is 0 or less return empty element
   if (childrenPerPage <= 0) {
     return <></>;
@@ -102,8 +106,14 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
           identifier={ids.overflowGalleryLeftNavButton}
         />
       )}
-      <Stack horizontal className={mergeStyles(childrenContainerStyle, { '> *': props.styles?.children })}>
-        {childrenOnCurrentPage}
+      <Stack horizontal className={mergeStyles(childrenContainerStyle)}>
+        {childrenOnCurrentPage.map((child, i) => {
+          return (
+            <Stack.Item styles={childrenStyles} key={i} data-ui-id={ids.horizontalGalleryVideoTile}>
+              {child}
+            </Stack.Item>
+          );
+        })}
       </Stack>
       {showButtons && (
         <HorizontalGalleryNavigationButton

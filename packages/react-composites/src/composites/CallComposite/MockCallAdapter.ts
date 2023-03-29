@@ -141,16 +141,31 @@ export class MockCallAdapter implements CallAdapter {
     throw Error('start captions not implemented');
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   setCaptionLanguage(language: string): Promise<void> {
     throw Error('setCaptionLanguage not implemented');
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   setSpokenLanguage(language: string): Promise<void> {
     throw Error('setSpokenLanguage not implemented');
   }
 
   stopCaptions(): Promise<void> {
     throw Error('stopCaptions not implemented');
+  }
+
+  /* @conditional-compile-remove(video-background-effects) */
+  blurVideoBackground(): Promise<void> {
+    throw new Error('blurVideoBackground not implemented.');
+  }
+  /* @conditional-compile-remove(video-background-effects) */
+  replaceVideoBackground(): Promise<void> {
+    throw new Error('replaceVideoBackground not implemented.');
+  }
+  /* @conditional-compile-remove(video-background-effects) */
+  stopVideoBackgroundEffect(): Promise<void> {
+    throw new Error('stopVideoBackgroundEffect not implemented.');
   }
 }
 

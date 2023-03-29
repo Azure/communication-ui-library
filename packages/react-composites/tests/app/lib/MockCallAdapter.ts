@@ -1,12 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import {
-  AudioDeviceInfo,
-  Call,
-  EnvironmentInfo,
-  StartCaptionsOptions,
-  VideoDeviceInfo
-} from '@azure/communication-calling';
+import { AudioDeviceInfo, Call, EnvironmentInfo, VideoDeviceInfo } from '@azure/communication-calling';
 import type { CallAdapter, CallAdapterState } from '../../../src';
 import type { MockCallAdapterState } from '../../common';
 import { produce } from 'immer';
@@ -111,18 +105,18 @@ export class MockCallAdapter implements CallAdapter {
     throw Error('getEnvironmentInfo not implemented');
   }
 
-  startCaptions(startCaptionsOptions?: StartCaptionsOptions | undefined): Promise<void> {
+  startCaptions(): Promise<void> {
     throw Error('startCaptions not implemented');
   }
 
   stopCaptions(): Promise<void> {
     throw Error('stopCaptions not implemented');
   }
-
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   setCaptionLanguage(language: string): Promise<void> {
     throw Error('setCaptionLanguage not implemented');
   }
-
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   setSpokenLanguage(language: string): Promise<void> {
     throw Error('setSpokenLanguage not implemented');
   }
@@ -155,6 +149,18 @@ export class MockCallAdapter implements CallAdapter {
     if (this._state !== prior) {
       this._emitter.emit('stateChanged', this._state);
     }
+  }
+
+  blurVideoBackground(): Promise<void> {
+    throw new Error('blurVideoBackground not implemented.');
+  }
+
+  replaceVideoBackground(): Promise<void> {
+    throw new Error('replaceVideoBackground not implemented.');
+  }
+
+  stopVideoBackgroundEffect(): Promise<void> {
+    throw new Error('stopVideoBackgroundEffect not implemented.');
   }
 }
 

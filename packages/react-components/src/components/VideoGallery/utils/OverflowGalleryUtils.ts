@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 
 import { _convertRemToPx as convertRemToPx } from '@internal/acs-ui-common';
+import { LARGE_HORIZONTAL_GALLERY_TILE_SIZE_REM } from '../styles/VideoGalleryResponsiveHorizontalGallery.styles';
 import {
   SHORT_VERTICAL_GALLERY_TILE_SIZE_REM,
   VERTICAL_GALLERY_TILE_SIZE_REM
@@ -16,13 +17,12 @@ import {
 export const calculateHorizontalChildrenPerPage = (args: {
   numberOfChildren: number;
   containerWidth: number;
-  childWidthRem: number;
   gapWidthRem: number;
   buttonWidthRem: number;
 }): number => {
-  const { numberOfChildren, containerWidth, buttonWidthRem, childWidthRem, gapWidthRem } = args;
+  const { numberOfChildren, containerWidth, buttonWidthRem, gapWidthRem } = args;
 
-  const childWidth = convertRemToPx(childWidthRem);
+  const childMinWidth = convertRemToPx(LARGE_HORIZONTAL_GALLERY_TILE_SIZE_REM.minWidth);
   const gapWidth = convertRemToPx(gapWidthRem);
 
   /** First check how many children can fit in containerWidth.
@@ -33,7 +33,7 @@ export const calculateHorizontalChildrenPerPage = (args: {
    *   <-----------containerWidth--------->
    *  containerWidth = n * childWidth + (n - 1) * gapWidth. Isolate n and take the floor.
    */
-  const numberOfChildrenInContainer = Math.floor((containerWidth + gapWidth) / (childWidth + gapWidth));
+  const numberOfChildrenInContainer = Math.floor((containerWidth + gapWidth) / (childMinWidth + gapWidth));
   // If all children fit then return numberOfChildrenInContainer
   if (numberOfChildren <= numberOfChildrenInContainer) {
     return numberOfChildrenInContainer;
@@ -53,7 +53,7 @@ export const calculateHorizontalChildrenPerPage = (args: {
   const childrenSpace = containerWidth - 2 * buttonWidth - 2 * gapWidth;
   // Now that we have childrenSpace width we can figure out how many children can fit in childrenSpace.
   // childrenSpace = n * childWidth + (n - 1) * gapWidth. Isolate n and take the floor.
-  return Math.max(Math.floor((childrenSpace + gapWidth) / (childWidth + gapWidth)), 1);
+  return Math.max(Math.floor((childrenSpace + gapWidth) / (childMinWidth + gapWidth)), 1);
 };
 
 /**

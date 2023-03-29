@@ -277,6 +277,8 @@ export interface CallAdapterCallOperations {
     // (undocumented)
     addParticipant(participant: CommunicationUserIdentifier): Promise<void>;
     allowUnsupportedBrowserVersion(): void;
+    // @beta
+    blurVideoBackground(bgBlurConfig?: BackgroundBlurConfig): Promise<void>;
     createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void | CreateVideoStreamViewResult>;
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
     // @beta
@@ -286,6 +288,8 @@ export interface CallAdapterCallOperations {
     removeParticipant(userId: string): Promise<void>;
     // @beta
     removeParticipant(participant: CommunicationIdentifier): Promise<void>;
+    // @beta
+    replaceVideoBackground(bgReplacementConfig: BackgroundReplacementConfig): Promise<void>;
     // @beta
     resumeCall(): Promise<void>;
     // @beta
@@ -298,6 +302,8 @@ export interface CallAdapterCallOperations {
     stopCamera(): Promise<void>;
     stopCaptions(): Promise<void>;
     stopScreenShare(): Promise<void>;
+    // @beta
+    stopVideoBackgroundEffect(): Promise<void>;
     unmute(): Promise<void>;
 }
 
@@ -314,6 +320,7 @@ export type CallAdapterClientState = {
     environmentInfo?: EnvironmentInfo;
     roleHint?: Role;
     cameraStatus?: 'On' | 'Off';
+    videoBackgroundImages?: VideoBackgroundImage[];
 };
 
 // @public
@@ -746,6 +753,8 @@ export interface CallWithChatAdapterManagement {
     addParticipant(participant: CommunicationUserIdentifier): Promise<void>;
     allowUnsupportedBrowserVersion(): void;
     askDevicePermission(constrain: PermissionConstraints): Promise<void>;
+    // @beta
+    blurVideoBackground(bgBlurConfig?: BackgroundBlurConfig): Promise<void>;
     // @beta (undocumented)
     cancelFileUpload: (id: string) => void;
     // @beta (undocumented)
@@ -753,6 +762,8 @@ export interface CallWithChatAdapterManagement {
     createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void | CreateVideoStreamViewResult>;
     deleteMessage(messageId: string): Promise<void>;
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
+    // (undocumented)
+    downloadAuthenticatedAttachment?: (attachmentUrl: string) => Promise<string>;
     fetchInitialData(): Promise<void>;
     // @beta
     holdCall: () => Promise<void>;
@@ -770,6 +781,8 @@ export interface CallWithChatAdapterManagement {
     removeParticipant(userId: string): Promise<void>;
     // @beta
     removeParticipant(participant: CommunicationIdentifier): Promise<void>;
+    // @beta
+    replaceVideoBackground(bgReplacementConfig: BackgroundReplacementConfig): Promise<void>;
     // @beta
     resumeCall: () => Promise<void>;
     // @beta
@@ -791,6 +804,8 @@ export interface CallWithChatAdapterManagement {
     stopCamera(): Promise<void>;
     stopCaptions(): Promise<void>;
     stopScreenShare(): Promise<void>;
+    // @beta
+    stopVideoBackgroundEffect(): Promise<void>;
     unmute(): Promise<void>;
     // @beta (undocumented)
     updateFileUploadErrorMessage: (id: string, errorMessage: string) => void;
@@ -1099,6 +1114,7 @@ export interface CameraButtonProps extends ControlBarButtonProps {
     enableDeviceSelectionMenu?: boolean;
     localVideoViewOptions?: VideoStreamOptions;
     onSelectCamera?: (device: OptionsDevice) => Promise<void>;
+    onShowVideoEffectsPicker?: (showVideoEffectsOptions: boolean) => void;
     onToggleCamera?: (options?: VideoStreamOptions) => Promise<void>;
     selectedCamera?: OptionsDevice;
     strings?: Partial<CameraButtonStrings>;
@@ -1150,22 +1166,13 @@ export interface CameraSitePermissionsProps extends CommonSitePermissionsProps {
 // @beta
 export type CameraSitePermissionsStrings = SitePermissionsStrings;
 
-// Warning: (ae-internal-missing-underscore) The name "CaptionInfo" should be prefixed with an underscore because the declaration is marked as @internal
-//
-// @internal
-export type CaptionInfo = {
-    displayName: string;
-    caption: string;
-    userId?: string;
-};
-
 // @internal
 export const _CaptionsBanner: (props: _CaptionsBannerProps) => JSX.Element;
 
 // @internal
 export interface _CaptionsBannerProps {
     // (undocumented)
-    captions: CaptionInfo[];
+    captions: _CaptionsInfo[];
     onRenderAvatar?: OnRenderAvatarCallback;
 }
 
@@ -1190,6 +1197,13 @@ export interface CaptionsInfo {
     timestamp: Date;
 }
 
+// @internal
+export type _CaptionsInfo = {
+    displayName: string;
+    captionText: string;
+    userId?: string;
+};
+
 // @public
 export type captionsOptions = {
     spokenLanguage: string;
@@ -1202,7 +1216,7 @@ export type CaptionsReceivedListener = (event: {
 
 // @internal
 export type _CaptionsSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
-    captions: CaptionInfo[];
+    captions: _CaptionsInfo[];
 };
 
 // @public
@@ -1932,6 +1946,7 @@ export const DEFAULT_COMPONENT_ICONS: {
     SplitButtonPrimaryActionMicMuted: JSX.Element;
     VerticalGalleryLeftButton: JSX.Element;
     VerticalGalleryRightButton: JSX.Element;
+    OptionsVideoBackgroundEffect: JSX.Element;
 };
 
 // @public
@@ -2035,6 +2050,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     SplitButtonPrimaryActionMicMuted: JSX.Element;
     VerticalGalleryLeftButton: JSX.Element;
     VerticalGalleryRightButton: JSX.Element;
+    OptionsVideoBackgroundEffect: JSX.Element;
 };
 
 // @beta
@@ -2267,6 +2283,8 @@ export interface FileUploadAdapter {
     // (undocumented)
     clearFileUploads: () => void;
     // (undocumented)
+    downloadAuthenticatedAttachment?: (attachmentUrl: string) => Promise<string>;
+    // (undocumented)
     registerActiveFileUploads: (files: File[]) => FileUploadManager[];
     // (undocumented)
     registerCompletedFileUploads: (metadata: FileMetadata[]) => FileUploadManager[];
@@ -2390,6 +2408,7 @@ export interface _IdentifierProviderProps {
 
 // @internal
 export interface _Identifiers {
+    horizontalGalleryVideoTile: string;
     messageContent: string;
     messageTimestamp: string;
     overflowGalleryLeftNavButton: string;
@@ -2749,7 +2768,7 @@ export interface OptionsDevice {
 }
 
 // @beta
-export type OverflowGalleryLayout = 'HorizontalBottom' | 'VerticalRight';
+export type OverflowGalleryPosition = 'HorizontalBottom' | 'VerticalRight';
 
 // @public
 export interface ParticipantAddedSystemMessage extends SystemMessageCommon {
@@ -3336,6 +3355,13 @@ export interface VerticalGalleryStyles extends BaseCustomStyles {
     controlBar?: VerticalGalleryControlBarStyles;
 }
 
+// @beta
+export interface VideoBackgroundImage {
+    key: string;
+    tooltipText?: string;
+    url: string;
+}
+
 // @public
 export const VideoGallery: (props: VideoGalleryProps) => JSX.Element;
 
@@ -3371,7 +3397,7 @@ export interface VideoGalleryProps {
     onRenderLocalVideoTile?: (localParticipant: VideoGalleryLocalParticipant) => JSX.Element;
     onRenderRemoteVideoTile?: (remoteParticipant: VideoGalleryRemoteParticipant) => JSX.Element;
     onUnpinParticipant?: (userId: string) => void;
-    overflowGalleryLayout?: OverflowGalleryLayout;
+    overflowGalleryPosition?: OverflowGalleryPosition;
     pinnedParticipants?: string[];
     remoteParticipants?: VideoGalleryRemoteParticipant[];
     remoteVideoTileMenuOptions?: false | VideoTileContextualMenuProps | VideoTileDrawerMenuProps;

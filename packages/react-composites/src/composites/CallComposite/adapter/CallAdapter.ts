@@ -2,7 +2,8 @@
 // Licensed under the MIT license.
 
 import { CallState, CaptionsInfo, DeviceManagerState } from '@internal/calling-stateful-client';
-/* @conditional-compile-remove(teams-identity-support) */
+/* @conditional-compile-remove(video-background-effects) */
+import { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/communication-calling-effects';
 import { StartCaptionsOptions, TeamsCall } from '@azure/communication-calling';
 /* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
@@ -114,6 +115,11 @@ export type CallAdapterClientState = {
    * control bar with the CallComposite.
    */
   cameraStatus?: 'On' | 'Off';
+  /* @conditional-compile-remove(video-background-effects) */
+  /**
+   * Default set of background images for background replacement effect.
+   */
+  videoBackgroundImages?: VideoBackgroundImage[];
 };
 
 /**
@@ -218,6 +224,27 @@ export type NetworkDiagnosticChangedEvent = NetworkDiagnosticChangedEventArgs & 
 export type DiagnosticChangedEventListner = (
   event: MediaDiagnosticChangedEvent | NetworkDiagnosticChangedEvent
 ) => void;
+
+/* @conditional-compile-remove(video-background-effects) */
+/**
+ * Contains the attibutes of a background image like url, name etc.
+ *
+ * @beta
+ */
+export interface VideoBackgroundImage {
+  /**
+   * key for unique identification of the custom background
+   */
+  key: string;
+  /**
+   * URL of the uploaded background image.
+   */
+  url: string;
+  /**
+   * Image name to be displayed.
+   */
+  tooltipText?: string;
+}
 
 /**
  * Callback for {@link CallAdapterSubscribers} 'captionsReceived' event.
@@ -374,6 +401,28 @@ export interface CallAdapterCallOperations {
    * Funtion to stop captions
    */
   stopCaptions(): Promise<void>;
+
+  /* @conditional-compile-remove(video-background-effects) */
+  /**
+   * Start the blur video background effect.
+   *
+   * @beta
+   */
+  blurVideoBackground(bgBlurConfig?: BackgroundBlurConfig): Promise<void>;
+  /* @conditional-compile-remove(video-background-effects) */
+  /**
+   * Start the video background replacement effect.
+   *
+   * @beta
+   */
+  replaceVideoBackground(bgReplacementConfig: BackgroundReplacementConfig): Promise<void>;
+  /* @conditional-compile-remove(video-background-effects) */
+  /**
+   * Stop the video background effect.
+   *
+   * @beta
+   */
+  stopVideoBackgroundEffect(): Promise<void>;
 }
 
 /**
@@ -521,6 +570,15 @@ export interface CallAdapterSubscribers {
    * Subscribe function for 'error' event.
    */
   on(event: 'error', listener: (e: AdapterError) => void): void;
+  /**
+   * Subscribe function for 'captionsReceived' event.
+   */
+  on(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
+
+  /**
+   * Subscribe function for 'captionsPropertyChanged' event.
+   */
+  on(event: 'captionsPropertyChanged', listener: PropertyChangedEvent): void;
 
   /**
    * Unsubscribe function for 'participantsJoined' event.
@@ -571,17 +629,9 @@ export interface CallAdapterSubscribers {
    */
   off(event: 'error', listener: (e: AdapterError) => void): void;
   /**
-   * Subscribe function for 'captionsReceived' event.
-   */
-  on(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
-  /**
    * Unsubscribe function for 'captionsReceived' event.
    */
   off(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
-  /**
-   * Subscribe function for 'captionsPropertyChanged' event.
-   */
-  on(event: 'captionsPropertyChanged', listener: PropertyChangedEvent): void;
   /**
    * Unsubscribe function for 'captionsPropertyChanged' event.
    */

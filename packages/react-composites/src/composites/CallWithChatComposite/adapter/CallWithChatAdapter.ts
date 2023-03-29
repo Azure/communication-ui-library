@@ -45,6 +45,8 @@ import { CommunicationUserIdentifier, PhoneNumberIdentifier } from '@azure/commu
 /* @conditional-compile-remove(PSTN-calls) */
 import { CommunicationIdentifier } from '@azure/communication-common';
 import { CaptionsReceivedListener } from '../../CallComposite/adapter/CallAdapter';
+/* @conditional-compile-remove(video-background-effects) */
+import { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/communication-calling-effects';
 
 /**
  * Functionality for managing the current call with chat.
@@ -305,6 +307,8 @@ export interface CallWithChatAdapterManagement {
   /* @conditional-compile-remove(file-sharing) */
   /** @beta */
   updateFileUploadMetadata: (id: string, metadata: FileMetadata) => void;
+  /* @conditional-compile-remove(teams-inline-images) */
+  downloadAuthenticatedAttachment?: (attachmentUrl: string) => Promise<string>;
   /* @conditional-compile-remove(PSTN-calls) */
   /**
    * Puts the Call in a Localhold.
@@ -360,6 +364,28 @@ export interface CallWithChatAdapterManagement {
    * Funtion to stop captions
    */
   stopCaptions(): Promise<void>;
+
+  /* @conditional-compile-remove(video-background-effects) */
+  /**
+   * Start the blur video background effect.
+   *
+   * @beta
+   */
+  blurVideoBackground(bgBlurConfig?: BackgroundBlurConfig): Promise<void>;
+  /* @conditional-compile-remove(video-background-effects) */
+  /**
+   * Start the video background replacement effect.
+   *
+   * @beta
+   */
+  replaceVideoBackground(bgReplacementConfig: BackgroundReplacementConfig): Promise<void>;
+  /* @conditional-compile-remove(video-background-effects) */
+  /**
+   * Stop the video background effect.
+   *
+   * @beta
+   */
+  stopVideoBackgroundEffect(): Promise<void>;
 }
 
 /**
