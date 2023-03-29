@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React, { useMemo } from 'react';
+import React, { useMemo, useRef, useEffect, useState } from 'react';
 import { CallAdapterProvider } from '../CallComposite/adapter/CallAdapterProvider';
 import { CallAdapter } from '../CallComposite';
 import { PeopleButton } from './PeopleButton';
@@ -79,8 +79,35 @@ const inferCallWithChatControlOptions = (
  */
 export const CallWithChatControlBar = (props: CallWithChatControlBarProps & ContainerRectProps): JSX.Element => {
   const theme = useTheme();
+
+  const controlBarButtonsRef = useRef<HTMLHeadingElement>(null);
+  const panelsButtonsRef = useRef<HTMLHeadingElement>(null);
+  const controlBarContainerRef = useRef<HTMLHeadingElement>(null);
+
+  const [controlBarButtonsWidth, setControlBarButtonsWidth] = useState(0);
+  const [panelsButtonsWidth, setPanelsButtonsWidth] = useState(0);
+  const [totalButtonsWidth, setTotalButtonsWidth] = useState(0);
+  const [controlBarContainerWidth, setControlBarContainerWidth] = useState(0);
+  const [isOutOfSpace, setIsOutOfSpace] = useState(false);
+
   const callWithChatStrings = useCallWithChatCompositeStrings();
   const options = inferCallWithChatControlOptions(props.mobileView, props.callControls);
+
+  /* get the current width of control bar buttons and panel control buttons
+     if the total width of those buttons exceed container width, do not center the control bar buttons based on parent container width
+    Instead let them take up the remaining white space on the left */
+  useEffect(() => {
+    const handleResize = (): void => {
+      setControlBarButtonsWidth(controlBarButtonsRef.current ? controlBarButtonsRef.current.offsetWidth : 0);
+      setPanelsButtonsWidth(panelsButtonsRef.current ? panelsButtonsRef.current.offsetWidth : 0);
+      setControlBarContainerWidth(controlBarContainerRef.current ? controlBarContainerRef.current.offsetWidth : 0);
+      setTotalButtonsWidth(panelsButtonsWidth + controlBarButtonsWidth);
+      setIsOutOfSpace(totalButtonsWidth >= controlBarContainerWidth);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [controlBarButtonsRef.current, panelsButtonsRef.current, controlBarContainerRef.current]);
+
   const chatButtonStrings = useMemo(
     () => ({
       label: callWithChatStrings.chatButtonLabel,
@@ -128,13 +155,15 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps & Cont
   );
 
   const controlBarWrapperDesktopStyles: IStyle = useMemo(
-    () => (!props.mobileView ? (props.rtl ? wrapperDesktopRtlStyles : wrapperDesktopStyles) : {}),
-    [props.mobileView, props.rtl]
+    // only center control bar buttons based on parent container if there are enough space on the screen and not mobile
+    () => (!props.mobileView && !isOutOfSpace ? (props.rtl ? wrapperDesktopRtlStyles : wrapperDesktopStyles) : {}),
+    [props.mobileView, props.rtl, isOutOfSpace]
   );
 
+  // only center control bar buttons based on parent container if there are enough space on the screen and not mobile
   const controlBarDesktopContainerStyles: IStyle = useMemo(
-    () => (!props.mobileView ? { position: 'relative' } : {}),
-    [props.mobileView]
+    () => (!props.mobileView && !isOutOfSpace ? { position: 'relative' } : {}),
+    [props.mobileView, isOutOfSpace]
   );
 
   /* @conditional-compile-remove(control-bar-button-injection) */
@@ -167,144 +196,154 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps & Cont
   );
 
   return (
-    <Stack
-      horizontal
-      reversed={!props.mobileView}
-      horizontalAlign="space-between"
-      className={mergeStyles(callControlsContainerStyles, controlBarContainerStyles, controlBarDesktopContainerStyles)}
-    >
-      <Stack.Item grow className={mergeStyles(controlBarWrapperDesktopStyles)}>
-        <CallAdapterProvider adapter={props.callAdapter}>
-          <Stack horizontalAlign="center">
-            {/*
+    <div ref={controlBarContainerRef}>
+      <Stack
+        horizontal
+        reversed={!props.mobileView && !isOutOfSpace}
+        horizontalAlign="space-between"
+        className={mergeStyles(
+          callControlsContainerStyles,
+          controlBarContainerStyles,
+          controlBarDesktopContainerStyles
+        )}
+      >
+        <Stack.Item grow className={mergeStyles(controlBarWrapperDesktopStyles)}>
+          <div ref={controlBarButtonsRef}>
+            <CallAdapterProvider adapter={props.callAdapter}>
+              <Stack horizontalAlign="center">
+                {/*
               HiddenFocusStartPoint is a util component used when we can't ensure the initial element for first
               tab focus is at the top of dom tree. It moves the first-tab focus to the next interact-able element
               immediately after it in the dom tree.
               */}
-            <HiddenFocusStartPoint />
-            <Stack.Item>
-              {/*
+                <HiddenFocusStartPoint />
+                <Stack.Item>
+                  {/*
                   Note: We use the layout="horizontal" instead of dockedBottom because of how we position the
                   control bar. The control bar exists in a Stack below the MediaGallery. The MediaGallery is
                   set to grow and fill the remaining space not taken up by the ControlBar. If we were to use
                   dockedBottom it has position absolute and would therefore float on top of the media gallery,
                   occluding some of its content.
                 */}
-              <ControlBar layout="horizontal" styles={centerContainerStyles}>
-                {isEnabled(options.microphoneButton) && (
-                  <Microphone
-                    displayType={options.displayType}
-                    styles={commonButtonStyles}
-                    splitButtonsForDeviceSelection={!props.mobileView}
-                    /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
-                    disabled={props.disableButtonsForHoldScreen || isDisabled(options.microphoneButton)}
-                  />
-                )}
-                {isEnabled(options.cameraButton) && (
-                  <Camera
-                    displayType={options.displayType}
-                    styles={commonButtonStyles}
-                    splitButtonsForDeviceSelection={!props.mobileView}
-                    /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
-                    disabled={props.disableButtonsForHoldScreen || isDisabled(options.cameraButton)}
-                    /* @conditional-compile-remove(video-background-effects) */
-                    onShowVideoEffectsPicker={props.onShowVideoEffectsPicker}
-                  />
-                )}
-                {props.mobileView && isEnabled(options?.chatButton) && chatButton}
-                {isEnabled(options.screenShareButton) && (
-                  <ScreenShare
-                    option={options.screenShareButton}
-                    displayType={options.displayType}
-                    styles={screenShareButtonStyles}
-                    /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
-                    disabled={props.disableButtonsForHoldScreen || isDisabled(options.screenShareButton)}
-                  />
-                )}
+                  <ControlBar layout="horizontal" styles={centerContainerStyles}>
+                    {isEnabled(options.microphoneButton) && (
+                      <Microphone
+                        displayType={options.displayType}
+                        styles={commonButtonStyles}
+                        splitButtonsForDeviceSelection={!props.mobileView}
+                        /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+                        disabled={props.disableButtonsForHoldScreen || isDisabled(options.microphoneButton)}
+                      />
+                    )}
+                    {isEnabled(options.cameraButton) && (
+                      <Camera
+                        displayType={options.displayType}
+                        styles={commonButtonStyles}
+                        splitButtonsForDeviceSelection={!props.mobileView}
+                        /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+                        disabled={props.disableButtonsForHoldScreen || isDisabled(options.cameraButton)}
+                        /* @conditional-compile-remove(video-background-effects) */
+                        onShowVideoEffectsPicker={props.onShowVideoEffectsPicker}
+                      />
+                    )}
+                    {props.mobileView && isEnabled(options?.chatButton) && chatButton}
+                    {isEnabled(options.screenShareButton) && (
+                      <ScreenShare
+                        option={options.screenShareButton}
+                        displayType={options.displayType}
+                        styles={screenShareButtonStyles}
+                        /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+                        disabled={props.disableButtonsForHoldScreen || isDisabled(options.screenShareButton)}
+                      />
+                    )}
+                    {
+                      /* @conditional-compile-remove(control-bar-button-injection) */
+                      customButtons['primary']
+                        ?.slice(
+                          0,
+                          props.mobileView
+                            ? CUSTOM_BUTTON_OPTIONS.MAX_PRIMARY_MOBILE_CUSTOM_BUTTONS
+                            : CUSTOM_BUTTON_OPTIONS.MAX_PRIMARY_DESKTOP_CUSTOM_BUTTONS
+                        )
+                        .map((CustomButton, i) => {
+                          return (
+                            <CustomButton
+                              key={`primary-custom-button-${i}`}
+                              styles={commonButtonStyles}
+                              showLabel={options.displayType !== 'compact'}
+                            />
+                          );
+                        })
+                    }
+                    {props.mobileView && (
+                      <MoreButton
+                        data-ui-id="call-with-chat-composite-more-button"
+                        strings={moreButtonStrings}
+                        onClick={props.onMoreButtonClicked}
+                        disabled={props.disableButtonsForLobbyPage}
+                      />
+                    )}
+                    {
+                      /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ isEnabled(
+                        options?.moreButton
+                      ) &&
+                        /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ isEnabled(
+                          options?.holdButton
+                        ) &&
+                        !props.mobileView && (
+                          <DesktopMoreButton
+                            disableButtonsForHoldScreen={props.disableButtonsForHoldScreen}
+                            styles={commonButtonStyles}
+                            onClickShowDialpad={props.onClickShowDialpad}
+                            /* @conditional-compile-remove(control-bar-button-injection) */
+                            callControls={props.callControls}
+                          />
+                        )
+                    }
+                    <EndCall displayType="compact" styles={endCallButtonStyles} />
+                  </ControlBar>
+                </Stack.Item>
+              </Stack>
+            </CallAdapterProvider>
+          </div>
+        </Stack.Item>
+        {!props.mobileView && (
+          <Stack.Item>
+            <div ref={panelsButtonsRef}>
+              <Stack horizontal className={!props.mobileView ? mergeStyles(desktopButtonContainerStyle) : undefined}>
                 {
                   /* @conditional-compile-remove(control-bar-button-injection) */
-                  customButtons['primary']
-                    ?.slice(
-                      0,
-                      props.mobileView
-                        ? CUSTOM_BUTTON_OPTIONS.MAX_PRIMARY_MOBILE_CUSTOM_BUTTONS
-                        : CUSTOM_BUTTON_OPTIONS.MAX_PRIMARY_DESKTOP_CUSTOM_BUTTONS
-                    )
+                  customButtons['secondary']
+                    ?.slice(0, CUSTOM_BUTTON_OPTIONS.MAX_SECONDARY_DESKTOP_CUSTOM_BUTTONS)
                     .map((CustomButton, i) => {
                       return (
                         <CustomButton
-                          key={`primary-custom-button-${i}`}
+                          key={`secondary-custom-button-${i}`}
                           styles={commonButtonStyles}
                           showLabel={options.displayType !== 'compact'}
                         />
                       );
                     })
                 }
-                {props.mobileView && (
-                  <MoreButton
-                    data-ui-id="call-with-chat-composite-more-button"
-                    strings={moreButtonStrings}
-                    onClick={props.onMoreButtonClicked}
-                    disabled={props.disableButtonsForLobbyPage}
+                {isEnabled(options?.peopleButton) && (
+                  <PeopleButton
+                    checked={props.peopleButtonChecked}
+                    ariaLabel={peopleButtonStrings?.label}
+                    showLabel={options.displayType !== 'compact'}
+                    onClick={props.onPeopleButtonClicked}
+                    data-ui-id="call-with-chat-composite-people-button"
+                    disabled={props.disableButtonsForLobbyPage || isDisabled(options.peopleButton)}
+                    strings={peopleButtonStrings}
+                    styles={commonButtonStyles}
                   />
                 )}
-                {
-                  /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ isEnabled(
-                    options?.moreButton
-                  ) &&
-                    /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ isEnabled(
-                      options?.holdButton
-                    ) &&
-                    !props.mobileView && (
-                      <DesktopMoreButton
-                        disableButtonsForHoldScreen={props.disableButtonsForHoldScreen}
-                        styles={commonButtonStyles}
-                        onClickShowDialpad={props.onClickShowDialpad}
-                        /* @conditional-compile-remove(control-bar-button-injection) */
-                        callControls={props.callControls}
-                      />
-                    )
-                }
-                <EndCall displayType="compact" styles={endCallButtonStyles} />
-              </ControlBar>
-            </Stack.Item>
-          </Stack>
-        </CallAdapterProvider>
-      </Stack.Item>
-      {!props.mobileView && (
-        <Stack.Item>
-          <Stack horizontal className={!props.mobileView ? mergeStyles(desktopButtonContainerStyle) : undefined}>
-            {
-              /* @conditional-compile-remove(control-bar-button-injection) */
-              customButtons['secondary']
-                ?.slice(0, CUSTOM_BUTTON_OPTIONS.MAX_SECONDARY_DESKTOP_CUSTOM_BUTTONS)
-                .map((CustomButton, i) => {
-                  return (
-                    <CustomButton
-                      key={`secondary-custom-button-${i}`}
-                      styles={commonButtonStyles}
-                      showLabel={options.displayType !== 'compact'}
-                    />
-                  );
-                })
-            }
-            {isEnabled(options?.peopleButton) && (
-              <PeopleButton
-                checked={props.peopleButtonChecked}
-                ariaLabel={peopleButtonStrings?.label}
-                showLabel={options.displayType !== 'compact'}
-                onClick={props.onPeopleButtonClicked}
-                data-ui-id="call-with-chat-composite-people-button"
-                disabled={props.disableButtonsForLobbyPage || isDisabled(options.peopleButton)}
-                strings={peopleButtonStrings}
-                styles={commonButtonStyles}
-              />
-            )}
-            {isEnabled(options?.chatButton) && chatButton}
-          </Stack>
-        </Stack.Item>
-      )}
-    </Stack>
+                {isEnabled(options?.chatButton) && chatButton}
+              </Stack>
+            </div>
+          </Stack.Item>
+        )}
+      </Stack>
+    </div>
   );
 };
 
