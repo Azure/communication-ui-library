@@ -126,13 +126,13 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps & Cont
     [props.mobileView, theme]
   );
 
-  const controlBarWrapperDesktopStyles = useMemo(
-    () => (!props.mobileView ? wrapperDesktopStyles : undefined),
+  const controlBarWrapperDesktopStyles: IStyle = useMemo(
+    () => (!props.mobileView ? wrapperDesktopStyles : {}),
     [props.mobileView]
   );
 
-  const controlBarDesktopContainerStyles = useMemo(
-    () => (!props.mobileView ? { position: 'relative' } : undefined),
+  const controlBarDesktopContainerStyles: IStyle = useMemo(
+    () => (!props.mobileView ? { position: 'relative' } : {}),
     [props.mobileView]
   );
 
