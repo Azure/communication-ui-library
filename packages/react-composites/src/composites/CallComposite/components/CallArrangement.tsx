@@ -106,7 +106,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
 
   /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   const callCompositeContainerCSS = useMemo(() => {
-    return { display: isMobileWithActivePane ? 'none' : 'flex', width: '100%', height: '100%' };
+    return { display: isMobileWithActivePane ? 'none' : 'flex', minWidth: 0, width: '100%', height: '100%' };
   }, [isMobileWithActivePane]);
 
   /* @conditional-compile-remove(PSTN-calls) */

@@ -275,6 +275,8 @@ export interface CallAdapterCallOperations {
     // (undocumented)
     addParticipant(participant: CommunicationUserIdentifier): Promise<void>;
     allowUnsupportedBrowserVersion(): void;
+    // @beta
+    blurVideoBackground(bgBlurConfig?: BackgroundBlurConfig): Promise<void>;
     createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void | CreateVideoStreamViewResult>;
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
     // @beta
@@ -285,6 +287,8 @@ export interface CallAdapterCallOperations {
     // @beta
     removeParticipant(participant: CommunicationIdentifier): Promise<void>;
     // @beta
+    replaceVideoBackground(bgReplacementConfig: BackgroundReplacementConfig): Promise<void>;
+    // @beta
     resumeCall(): Promise<void>;
     // @beta
     sendDtmfTone(dtmfTone: DtmfTone_2): Promise<void>;
@@ -292,6 +296,8 @@ export interface CallAdapterCallOperations {
     startScreenShare(): Promise<void>;
     stopCamera(): Promise<void>;
     stopScreenShare(): Promise<void>;
+    // @beta
+    stopVideoBackgroundEffect(): Promise<void>;
     unmute(): Promise<void>;
 }
 
@@ -308,6 +314,7 @@ export type CallAdapterClientState = {
     environmentInfo?: EnvironmentInfo;
     roleHint?: Role;
     cameraStatus?: 'On' | 'Off';
+    videoBackgroundImages?: VideoBackgroundImage[];
 };
 
 // @public
@@ -638,7 +645,7 @@ export type CallErrors = {
 };
 
 // @public
-export type CallErrorTarget = 'Call.addParticipant' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.dispose' | 'Call.feature' | 'Call.hangUp' | 'Call.hold' | 'Call.mute' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.muteIncomingAudio' | 'Call.off' | 'Call.on' | 'Call.removeParticipant' | 'Call.resume' | 'Call.sendDtmf' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.startAudio' | 'Call.startScreenSharing' | 'Call.startVideo' | 'Call.stopScreenSharing' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.stopAudio' | 'Call.stopVideo' | 'Call.unmute' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.unmuteIncomingAudio' | 'CallAgent.dispose' | 'CallAgent.feature' | 'CallAgent.join' | 'CallAgent.off' | 'CallAgent.on' | 'CallAgent.startCall' | 'CallClient.createCallAgent' | /* @conditional-compile-remove(calling-beta-sdk) */ /* @conditional-compile-remove(teams-identity-support) */ 'CallClient.createTeamsCallAgent' | 'CallClient.feature' | 'CallClient.getDeviceManager' | /* @conditional-compile-remove(calling-beta-sdk) */ 'CallClient.getEnvironmentInfo' | 'DeviceManager.askDevicePermission' | 'DeviceManager.getCameras' | 'DeviceManager.getMicrophones' | 'DeviceManager.getSpeakers' | 'DeviceManager.off' | 'DeviceManager.on' | 'DeviceManager.selectMicrophone' | 'DeviceManager.selectSpeaker' | 'IncomingCall.accept' | 'IncomingCall.reject' | /* @conditional-compile-remove(calling-beta-sdk) */ /* @conditional-compile-remove(teams-identity-support) */ 'TeamsCall.addParticipant' | /* @conditional-compile-remove(video-background-effects) */ 'VideoEffectsFeature.startEffects';
+export type CallErrorTarget = 'Call.addParticipant' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.dispose' | 'Call.feature' | 'Call.hangUp' | 'Call.hold' | 'Call.mute' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.muteIncomingAudio' | 'Call.off' | 'Call.on' | 'Call.removeParticipant' | 'Call.resume' | 'Call.sendDtmf' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.startAudio' | 'Call.startScreenSharing' | 'Call.startVideo' | 'Call.stopScreenSharing' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.stopAudio' | 'Call.stopVideo' | 'Call.unmute' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.unmuteIncomingAudio' | 'CallAgent.dispose' | 'CallAgent.feature' | 'CallAgent.join' | 'CallAgent.off' | 'CallAgent.on' | 'CallAgent.startCall' | 'CallClient.createCallAgent' | /* @conditional-compile-remove(calling-beta-sdk) */ /* @conditional-compile-remove(teams-identity-support) */ 'CallClient.createTeamsCallAgent' | 'CallClient.feature' | 'CallClient.getDeviceManager' | /* @conditional-compile-remove(calling-beta-sdk) */ 'CallClient.getEnvironmentInfo' | 'DeviceManager.askDevicePermission' | 'DeviceManager.getCameras' | 'DeviceManager.getMicrophones' | 'DeviceManager.getSpeakers' | 'DeviceManager.off' | 'DeviceManager.on' | 'DeviceManager.selectMicrophone' | 'DeviceManager.selectSpeaker' | 'IncomingCall.accept' | 'IncomingCall.reject' | /* @conditional-compile-remove(calling-beta-sdk) */ /* @conditional-compile-remove(teams-identity-support) */ 'TeamsCall.addParticipant' | /* @conditional-compile-remove(video-background-effects) */ 'VideoEffectsFeature.startEffects' | /* @conditional-compile-remove(calling-beta-sdk) */ 'CallAgent.handlePushNotification';
 
 // @public
 export type CallIdChangedListener = (event: {
@@ -735,6 +742,8 @@ export interface CallWithChatAdapterManagement {
     addParticipant(participant: CommunicationUserIdentifier): Promise<void>;
     allowUnsupportedBrowserVersion(): void;
     askDevicePermission(constrain: PermissionConstraints): Promise<void>;
+    // @beta
+    blurVideoBackground(bgBlurConfig?: BackgroundBlurConfig): Promise<void>;
     // @beta (undocumented)
     cancelFileUpload: (id: string) => void;
     // @beta (undocumented)
@@ -742,6 +751,8 @@ export interface CallWithChatAdapterManagement {
     createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void | CreateVideoStreamViewResult>;
     deleteMessage(messageId: string): Promise<void>;
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
+    // (undocumented)
+    downloadAuthenticatedAttachment?: (attachmentUrl: string) => Promise<string>;
     fetchInitialData(): Promise<void>;
     // @beta
     holdCall: () => Promise<void>;
@@ -760,6 +771,8 @@ export interface CallWithChatAdapterManagement {
     // @beta
     removeParticipant(participant: CommunicationIdentifier): Promise<void>;
     // @beta
+    replaceVideoBackground(bgReplacementConfig: BackgroundReplacementConfig): Promise<void>;
+    // @beta
     resumeCall: () => Promise<void>;
     // @beta
     sendDtmfTone: (dtmfTone: DtmfTone_2) => Promise<void>;
@@ -776,6 +789,8 @@ export interface CallWithChatAdapterManagement {
     startScreenShare(): Promise<void>;
     stopCamera(): Promise<void>;
     stopScreenShare(): Promise<void>;
+    // @beta
+    stopVideoBackgroundEffect(): Promise<void>;
     unmute(): Promise<void>;
     // @beta (undocumented)
     updateFileUploadErrorMessage: (id: string, errorMessage: string) => void;
@@ -2184,6 +2199,8 @@ export interface FileUploadAdapter {
     // (undocumented)
     clearFileUploads: () => void;
     // (undocumented)
+    downloadAuthenticatedAttachment?: (attachmentUrl: string) => Promise<string>;
+    // (undocumented)
     registerActiveFileUploads: (files: File[]) => FileUploadManager[];
     // (undocumented)
     registerCompletedFileUploads: (metadata: FileMetadata[]) => FileUploadManager[];
@@ -2667,7 +2684,7 @@ export interface OptionsDevice {
 }
 
 // @beta
-export type OverflowGalleryLayout = 'HorizontalBottom' | 'VerticalRight';
+export type OverflowGalleryPosition = 'HorizontalBottom' | 'VerticalRight';
 
 // @public
 export interface ParticipantAddedSystemMessage extends SystemMessageCommon {
@@ -3254,6 +3271,13 @@ export interface VerticalGalleryStyles extends BaseCustomStyles {
     controlBar?: VerticalGalleryControlBarStyles;
 }
 
+// @beta
+export interface VideoBackgroundImage {
+    key: string;
+    tooltipText?: string;
+    url: string;
+}
+
 // @public
 export const VideoGallery: (props: VideoGalleryProps) => JSX.Element;
 
@@ -3289,7 +3313,7 @@ export interface VideoGalleryProps {
     onRenderLocalVideoTile?: (localParticipant: VideoGalleryLocalParticipant) => JSX.Element;
     onRenderRemoteVideoTile?: (remoteParticipant: VideoGalleryRemoteParticipant) => JSX.Element;
     onUnpinParticipant?: (userId: string) => void;
-    overflowGalleryLayout?: OverflowGalleryLayout;
+    overflowGalleryPosition?: OverflowGalleryPosition;
     pinnedParticipants?: string[];
     remoteParticipants?: VideoGalleryRemoteParticipant[];
     remoteVideoTileMenuOptions?: false | VideoTileContextualMenuProps | VideoTileDrawerMenuProps;
