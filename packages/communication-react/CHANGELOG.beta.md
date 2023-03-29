@@ -9,7 +9,7 @@ This log was last generated on Tue, 28 Mar 2023 16:00:31 GMT and should not be m
 Tue, 28 Mar 2023 16:00:31 GMT 
 [Compare changes](https://github.com/azure/communication-ui-library/compare/@azure/communication-react_v1.5.1-beta.1...@azure/communication-react_v1.5.1-beta.2)
 
-### Vertical Gallery
+### Vertical Gallery - Public Preview
 We are now introducing new overflow gallery experiences to our VideoGallery component!
 
 - These new experiences include the new vertical experience. This new overflow gallery will allow developers to better utilize the vertical space in their calling experiences
