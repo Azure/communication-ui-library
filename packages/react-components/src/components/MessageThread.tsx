@@ -439,7 +439,7 @@ const memoizeAllMessages = memoizeFnAll(
     };
 
     /* @conditional-compile-remove(data-loss-prevention) */
-    // Similar logic as switch statement case 'chat', if statement for conditional compile
+    // Similar logic as switch statement case 'chat', if statement for conditional compile (merge logic to switch case when stablize)
     if (message.messageType === 'blocked') {
       const myChatMessageStyle =
         message.status === 'failed'
