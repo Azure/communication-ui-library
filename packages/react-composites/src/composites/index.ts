@@ -7,6 +7,8 @@ export * from './ChatComposite';
 export * from './CallComposite';
 export * from './CallWithChatComposite';
 
+export type { CallControlDisplayType, CommonCallControlOptions } from './common/types/CommonCallControlOptions';
+
 export type { AvatarPersonaData, AvatarPersonaDataCallback } from './common/AvatarPersona';
 export { COMPOSITE_ONLY_ICONS, DEFAULT_COMPOSITE_ICONS } from './common/icons';
 export type {

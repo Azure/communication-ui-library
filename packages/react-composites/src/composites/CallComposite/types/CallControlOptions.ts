@@ -10,7 +10,13 @@ import { CallControlDisplayType, CommonCallControlOptions } from '../../common/t
  * @public
  */
 export type CallControlOptions =
-  | CommonCallControlOptions & /* @conditional-compile-remove(new-call-control-bar) */ {
+  | CommonCallControlOptions & {
+      /**
+       * Show, Hide or Disable participants button during a call.
+       * @defaultValue true
+       */
+      participantsButton?: boolean | { disabled: boolean };
+      /* @conditional-compile-remove(new-call-control-bar) */
       legacyControlBarExperience?: boolean;
     };
 

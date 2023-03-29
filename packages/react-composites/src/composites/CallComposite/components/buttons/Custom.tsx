@@ -5,11 +5,8 @@
 import { Icon } from '@fluentui/react';
 import { ControlBarButton, _DrawerMenuItemProps } from '@internal/react-components';
 import React from 'react';
-import {
-  CallControlDisplayType,
-  CustomCallControlButtonCallback,
-  CustomCallControlButtonPlacement
-} from '../../types/CallControlOptions';
+import { CallControlDisplayType } from '../../../common/types/CommonCallControlOptions';
+import { CustomCallControlButtonCallback, CustomCallControlButtonPlacement } from '../../types/CallControlOptions';
 /* @conditional-compile-remove(control-bar-button-injection) */
 import { CallControlOptions } from '../../types/CallControlOptions';
 

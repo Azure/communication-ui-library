@@ -15,17 +15,13 @@ import {
 /* @conditional-compile-remove(rooms) */
 import { _usePermissions } from '@internal/react-components';
 import React, { useMemo, useRef, useState } from 'react';
-/* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
 import { useCallback } from 'react';
 /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
 import { AvatarPersonaDataCallback } from '../../common/AvatarPersona';
 import { containerDivStyles } from '../../common/ContainerRectProps';
-/* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
 import { useAdapter } from '../adapter/CallAdapterProvider';
 import { CallControls, CallControlsProps } from '../components/CallControls';
-/* @conditional-compile-remove(new-call-control-bar) */
 import { CommonCallControlBar } from '../../common/ControlBar/CommonCallControlBar';
-/* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
 import { useSidePaneState } from '../hooks/useSidePaneState';
 import {
   callArrangementContainerStyles,
@@ -47,7 +43,9 @@ import { useSelector } from '../hooks/useSelector';
 import { callStatusSelector } from '../selectors/callStatusSelector';
 import { CallControlOptions } from '../types/CallControlOptions';
 import { PreparedMoreDrawer } from '../../common/Drawer/PreparedMoreDrawer';
+/* @conditional-compile-remove(PSTN-calls) */
 import { SendDtmfDialpad } from '../../common/SendDtmfDialpad';
+/* @conditional-compile-remove(PSTN-calls) */
 import { useCallWithChatCompositeStrings } from '../../CallWithChatComposite/hooks/useCallWithChatCompositeStrings';
 /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
 import { getPage } from '../selectors/baseSelectors';
@@ -93,10 +91,15 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
   const isInLocalHold = useSelector(getPage) === 'hold';
 
-  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   const adapter = useAdapter();
-  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
-  const { activePane, closePane, openPeoplePane, togglePeoplePane } = useSidePaneState();
+
+  const {
+    activePane,
+    closePane,
+    /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
+    openPeoplePane,
+    togglePeoplePane
+  } = useSidePaneState();
 
   /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   const isMobileWithActivePane = props.mobileView && activePane;
@@ -250,9 +253,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                     callAdapter={adapter as CallAdapter}
                     mobileView={props.mobileView}
                     disableButtonsForLobbyPage={isInLobby}
-                    /* @conditional-compile-remove(one-to-n-calling) */
                     peopleButtonChecked={activePane === 'people'}
-                    /* @conditional-compile-remove(one-to-n-calling) */
                     onPeopleButtonClicked={togglePeoplePane}
                     onMoreButtonClicked={onMoreButtonClicked}
                   />
