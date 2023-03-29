@@ -326,6 +326,8 @@ export type CallCompositeIcons = {
     PeoplePaneOpenDialpad?: JSX.Element;
     DialpadStartCall?: JSX.Element;
     NoticePageInvalidRoom?: JSX.Element;
+    BlurVideoBackground?: JSX.Element;
+    RemoveVideoBackgroundEffect?: JSX.Element;
 };
 
 // @public
@@ -355,6 +357,8 @@ export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcon
 
 // @public
 export interface CallCompositeStrings {
+    blurBackgroundEffect?: string;
+    blurBackgroundTooltip?: string;
     cameraLabel: string;
     cameraPermissionDenied: string;
     cameraTurnedOff: string;
@@ -423,6 +427,8 @@ export interface CallCompositeStrings {
     peoplePaneTitle: string;
     privacyPolicy: string;
     rejoinCallButtonLabel: string;
+    removeBackgroundEffect?: string;
+    removeBackgroundTooltip?: string;
     removedFromCallMoreDetails?: string;
     removedFromCallTitle: string;
     removeMenuLabel: string;
@@ -1121,6 +1127,8 @@ export const DEFAULT_COMPOSITE_ICONS: {
     PeoplePaneOpenDialpad?: JSX.Element | undefined;
     DialpadStartCall?: JSX.Element | undefined;
     NoticePageInvalidRoom?: JSX.Element | undefined;
+    BlurVideoBackground?: JSX.Element | undefined;
+    RemoveVideoBackgroundEffect?: JSX.Element | undefined;
     ChevronLeft?: JSX.Element | undefined;
     ControlBarChatButtonActive?: JSX.Element | undefined;
     ControlBarChatButtonInactive?: JSX.Element | undefined;
