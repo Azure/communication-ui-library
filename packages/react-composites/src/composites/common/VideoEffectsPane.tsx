@@ -21,7 +21,7 @@ export const VideoEffectsPane = (props: {
   setshowVideoEffectsOptions: (showVideoEffectsOptions: boolean) => void;
   adapter: CallAdapter | CommonCallAdapter;
 }): JSX.Element => {
-  const { showVideoEffectsOptions, setshowVideoEffectsOptions, adapter } = props;
+  const { showVideoEffectsOptions, setshowVideoEffectsOptions } = props;
   /* @conditional-compile-remove(video-background-effects) */
   const locale = useLocale();
   /* @conditional-compile-remove(video-background-effects) */
@@ -54,12 +54,12 @@ export const VideoEffectsPane = (props: {
   const onEffectChange = useCallback(
     async (effectKey: string) => {
       if (effectKey === 'blur') {
-        adapter.blurVideoBackground();
+        props.adapter.blurVideoBackground();
       } else if (effectKey === 'none') {
-        adapter.stopVideoBackgroundEffect();
+        props.adapter.stopVideoBackgroundEffect();
       }
     },
-    [adapter]
+    [props.adapter]
   );
   return VideoEffectsPaneTrampoline(
     showVideoEffectsOptions,
