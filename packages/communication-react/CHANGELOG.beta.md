@@ -13,9 +13,10 @@ Tue, 28 Mar 2023 16:00:31 GMT
 We are now introducing a new overflow gallery for remote particants VideoGallery component as well as other improvements!
 
 This feature includes:
-- Ability to control overflow gallery to be positioned to vertically on the right by assigning the overflowGalleryPostion property to 'VerticalRight' to better utilize the vertical space in your calling experience. The overflow gallery will still be positioned horizontally at the bottom by default.
+- The ability to position the overflow gallery on the right, this allows better utilisation of the vertical space in your calling experience.
+- The overflow gallery will still be positioned horizontally at the bottom of the VideoGallery by default.
 - VideoGallery in the Call composite and CallWithChat composite are responsive to switch to the vertical gallery at aspect ratios greater than or equal to 16:9.
-- Improvements to space utilized by the video tiles of the horizonal overflow gallery.
+- Improvements to space utilized by the video tiles of the horizontal overflow gallery.
 - Enhancements to dominant speaker ordering and video tile rendering of remote participants in the overflow gallery.
 
 ### Features
