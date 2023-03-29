@@ -166,6 +166,38 @@ export const defaultChatMessageContainer = (theme: Theme): ComponentSlotStyle =>
 
 /**
  * @private
+ * @conditional-compile-remove(data-loss-prevention)
+ */
+export const defaultBlockedMessageStyleContainer = (theme: Theme): ComponentSlotStyle => ({
+  maxWidth: '100%',
+  minWidth: `${CHAT_MESSAGE_CONTAINER_MIN_WIDTH_REM}rem`,
+  marginRight: '0rem',
+  color: theme.palette.neutralSecondary,
+
+  '& i': {
+    paddingTop: '0.25rem'
+  },
+
+  '& p': {
+    // Deal with awkward padding seen in messages from Teams.
+    // For more info see https://github.com/Azure/communication-ui-library/pull/1507
+    marginBlock: '0.125rem',
+    paddingRight: '0.75rem',
+    fontStyle: 'italic'
+  },
+
+  '& a': {
+    marginBlock: '0.125rem',
+    fontStyle: 'normal',
+    color: theme.palette.themePrimary,
+    textDecoration: 'none'
+  },
+  // This makes message bubble show border in high contrast mode making each message distinguishable
+  border: '1px solid transparent'
+});
+
+/**
+ * @private
  */
 export const gutterWithAvatar: ComponentSlotStyle = {
   width: `${AVATAR_WIDTH_REM}`,
