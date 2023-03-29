@@ -10,11 +10,13 @@ Tue, 28 Mar 2023 16:00:31 GMT
 [Compare changes](https://github.com/azure/communication-ui-library/compare/@azure/communication-react_v1.5.1-beta.1...@azure/communication-react_v1.5.1-beta.2)
 
 ### Vertical Gallery - Public Preview
-We are now introducing new overflow gallery experiences to our VideoGallery component!
+We are now introducing a new overflow gallery for remote particants VideoGallery component as well as other improvements!
 
-- These new experiences include the new vertical experience. This new overflow gallery will allow developers to better utilize the vertical space in their calling experiences
-- The horizontal experience is also seeing improvements to space utilized by its video tiles
-- Also in these new experiences are enhancements to our dominant speaker ordering and video tile rendering in the overflow galleries.
+This feature includes:
+- Ability to control overflow gallery to be positioned to vertically on the right by assigning the overflowGalleryPostion property to 'VerticalRight' to better utilize the vertical space in your calling experience. The overflow gallery will still be position horizontally at the bottom by default
+- VideoGallery in the Call composite and CallWithChat composite are responsive to switch to the vertical gallery at aspect ratios greater than or equal to 16:9
+- Improvements to space utilized by the video tiles of the horizonal overflow gallery
+- Enhancements to dominant speaker ordering and video tile rendering of remote participants in the overflow gallery
 
 ### Features
 
