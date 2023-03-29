@@ -34,6 +34,8 @@ jobs:
         run: rush install
 
       - name: Build Storybook
+        env:
+          NODE_OPTIONS: '--max_old_space_size=4096'
         run: rush build -o storybook
 
       - name: Run Storybook tests
