@@ -139,7 +139,10 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
   >(undefined);
 
   const chatActionsEnabled =
-    !disableEditing && message.status !== 'sending' && message.messageType !== 'blocked' && !!message.mine;
+    !disableEditing &&
+    message.status !== 'sending' &&
+    !!message.mine &&
+    /* @conditional-compile-remove(data-loss-prevention) */ message.messageType !== 'blocked';
   const [messageReadBy, setMessageReadBy] = useState<{ id: string; displayName: string }[]>([]);
 
   const actionMenuProps = wasInteractionByTouch
