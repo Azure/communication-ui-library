@@ -112,7 +112,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   private chatClient: StatefulChatClient;
   private chatThreadClient: ChatThreadClient;
   private context: ChatContext;
-  /* @conditional-compile-remove(file-sharing) */
+  /* @conditional-compile-remove(file-sharing) */ /* @conditional-compile-remove(teams-inline-images) */
   private fileUploadAdapter: FileUploadAdapter;
   private handlers: ChatHandlers;
   private emitter: EventEmitter = new EventEmitter();
@@ -169,6 +169,8 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     this.updateFileUploadErrorMessage = this.updateFileUploadErrorMessage.bind(this);
     /* @conditional-compile-remove(file-sharing) */
     this.updateFileUploadMetadata = this.updateFileUploadMetadata.bind(this);
+    /* @conditional-compile-remove(teams-inline-images) */
+    this.downloadAuthenticatedAttachment = this.downloadAuthenticatedAttachment.bind(this);
   }
 
   dispose(): void {
@@ -306,6 +308,15 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   /* @conditional-compile-remove(file-sharing) */
   updateFileUploadMetadata(id: string, metadata: FileMetadata): void {
     this.fileUploadAdapter.updateFileUploadMetadata(id, metadata);
+  }
+
+  /* @conditional-compile-remove(teams-inline-images) */
+  async downloadAuthenticatedAttachment(attachmentUrl: string): Promise<string> {
+    if (!this.fileUploadAdapter.downloadAuthenticatedAttachment) {
+      return '';
+    }
+
+    return await this.fileUploadAdapter.downloadAuthenticatedAttachment(attachmentUrl);
   }
 
   private messageReceivedListener(event: ChatMessageReceivedEvent): void {
