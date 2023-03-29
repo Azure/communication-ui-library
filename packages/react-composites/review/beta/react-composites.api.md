@@ -821,7 +821,7 @@ export type CallWithChatEvent = 'callError' | 'chatError' | 'callEnded' | 'isMut
 // @public
 export type ChatAdapter = ChatAdapterThreadManagement & AdapterState<ChatAdapterState> & Disposable & ChatAdapterSubscribers & FileUploadAdapter;
 
-// @beta
+// @public
 export type ChatAdapterOptions = {
     credential?: CommunicationTokenCredential;
 };
