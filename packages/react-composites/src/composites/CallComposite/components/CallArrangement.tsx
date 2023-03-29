@@ -191,7 +191,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                       <MutedNotification {...props.mutedNotificationProps} />
                     )}
                   </Stack.Item>
-                  {props.onRenderGalleryContent && <>{props.onRenderGalleryContent()}</>}
+                  {props.onRenderGalleryContent && props.onRenderGalleryContent()}
                 </Stack>
               </Stack.Item>
             </Stack.Item>
