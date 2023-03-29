@@ -32,9 +32,9 @@ Both hermetic and live tests use [playwright](https://playwright.dev/) test fram
      *  PLAYWRIGHT_OUTPUT_DIR
 * Build all dependencies. Inside `packages/react-composite`, run
   ```sh
-  rush build -t .
+  rush update; rush build -t .
   ```
-  (if there were some build failures, run `rush update` or `rush update -p`)
+  (if there were some build failures, run `rush update -p`)
 * Build the test applications.
   ```sh
   rushx build:e2e
