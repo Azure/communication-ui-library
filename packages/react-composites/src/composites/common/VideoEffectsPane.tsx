@@ -7,8 +7,9 @@ import { useCallback } from 'react';
 import { Panel } from '@fluentui/react';
 /* @conditional-compile-remove(video-background-effects) */
 import { useLocale } from '../localization';
+import { _VideoEffectsItemProps } from '@internal/react-components';
 /* @conditional-compile-remove(video-background-effects) */
-import { _VideoBackgroundEffectsPicker, _VideoEffectsItemProps } from '@internal/react-components';
+import { _VideoBackgroundEffectsPicker } from '@internal/react-components';
 import { CallAdapter, CommonCallAdapter } from '../CallComposite';
 
 /**
