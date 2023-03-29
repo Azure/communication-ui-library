@@ -117,11 +117,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   private handlers: ChatHandlers;
   private emitter: EventEmitter = new EventEmitter();
 
-  constructor(
-    chatClient: StatefulChatClient,
-    chatThreadClient: ChatThreadClient,
-    /* @conditional-compile-remove(teams-inline-images) */ options?: ChatAdapterOptions
-  ) {
+  constructor(chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient, options?: ChatAdapterOptions) {
     this.bindAllPublicMethods();
     this.chatClient = chatClient;
     this.chatThreadClient = chatThreadClient;
@@ -430,10 +426,10 @@ const convertEventType = (type: string): ChatMessageType => {
     return 'text';
   }
 };
-/* @conditional-compile-remove(teams-inline-images) */
+
 /**
  * Option bag to include when creating AzureCommunicationChatAdapter.
- * @beta
+ * @public
  */
 export type ChatAdapterOptions = {
   credential?: CommunicationTokenCredential;
@@ -602,7 +598,6 @@ export const useAzureCommunicationChatAdapter = (
 export const createAzureCommunicationChatAdapterFromClient = async (
   chatClient: StatefulChatClient,
   chatThreadClient: ChatThreadClient,
-  /* @conditional-compile-remove(teams-inline-images) */
   options?: ChatAdapterOptions
 ): Promise<ChatAdapter> => {
   return new AzureCommunicationChatAdapter(chatClient, chatThreadClient, options);

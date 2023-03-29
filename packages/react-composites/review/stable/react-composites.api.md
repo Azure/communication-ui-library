@@ -635,6 +635,11 @@ export type CallWithChatEvent = 'callError' | 'chatError' | 'callEnded' | 'isMut
 export type ChatAdapter = ChatAdapterThreadManagement & AdapterState<ChatAdapterState> & Disposable & ChatAdapterSubscribers;
 
 // @public
+export type ChatAdapterOptions = {
+    credential?: CommunicationTokenCredential;
+};
+
+// @public
 export type ChatAdapterState = ChatAdapterUiState & ChatCompositeClientState;
 
 // @public
@@ -813,7 +818,7 @@ export const createAzureCommunicationCallWithChatAdapterFromClients: ({ callClie
 export const createAzureCommunicationChatAdapter: ({ endpoint: endpointUrl, userId, displayName, credential, threadId }: AzureCommunicationChatAdapterArgs) => Promise<ChatAdapter>;
 
 // @public
-export const createAzureCommunicationChatAdapterFromClient: (chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient) => Promise<ChatAdapter>;
+export const createAzureCommunicationChatAdapterFromClient: (chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient, options?: ChatAdapterOptions | undefined) => Promise<ChatAdapter>;
 
 // @public
 export const DEFAULT_COMPOSITE_ICONS: {
