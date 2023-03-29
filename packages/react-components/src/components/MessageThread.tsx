@@ -444,7 +444,7 @@ const memoizeAllMessages = memoizeFnAll(
       const myChatMessageStyle =
         message.status === 'failed'
           ? styles?.failedMyChatMessageContainer ?? styles?.myChatMessageContainer ?? FailedMyChatMessageContainer
-          : styles?.myChatMessageContainer ?? defaultMyChatMessageContainer;
+          : styles?.myChatMessageContainer ?? defaultBlockedMessageStyleContainer(theme);
       const blockedMessageStyle = styles?.blockedMessageContainer ?? defaultBlockedMessageStyleContainer(theme);
       messageProps.messageContainerStyle = message.mine ? myChatMessageStyle : blockedMessageStyle;
       return chatMessageItemProps(message, messageProps);

@@ -10,7 +10,13 @@ import React from 'react';
 
 export const MessageThreadWithCustoBlockedmMessageContainerExample: () => JSX.Element = () => {
   const messageThreadStyle: MessageThreadStyles = {
-    blockedMessageContainer: { '& p': { color: 'red' }, '& svg': { color: 'red' }, border: 'double green' }
+    blockedMessageContainer: {
+      '& i': { paddingTop: '0.25rem' },
+      '& p': { color: 'red', marginBlock: '0.125rem' },
+      '& a': { marginBlock: '0.125rem' },
+      '& svg': { color: 'red' },
+      border: 'double green'
+    }
   };
 
   const onRenderMessage = (messageProps: MessageProps, defaultOnRender?: MessageRenderer): JSX.Element => {
@@ -53,6 +59,15 @@ export const MessageThreadWithCustoBlockedmMessageContainerExample: () => JSX.El
       messageId: Math.random().toString(),
       createdOn: new Date('2019-04-13T00:00:00.000+08:11'),
       mine: false,
+      attached: false
+    },
+    {
+      messageType: 'blocked',
+      senderId: 'user1',
+      senderDisplayName: 'Elliot Woodward',
+      messageId: Math.random().toString(),
+      createdOn: new Date('2019-04-13T00:00:00.000+08:11'),
+      mine: true,
       attached: false
     }
   ];

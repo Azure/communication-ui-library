@@ -138,7 +138,8 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     React.MutableRefObject<HTMLElement | null> | undefined
   >(undefined);
 
-  const chatActionsEnabled = !disableEditing && message.status !== 'sending' && !!message.mine;
+  const chatActionsEnabled =
+    !disableEditing && message.status !== 'sending' && message.messageType !== 'blocked' && !!message.mine;
   const [messageReadBy, setMessageReadBy] = useState<{ id: string; displayName: string }[]>([]);
 
   const actionMenuProps = wasInteractionByTouch
