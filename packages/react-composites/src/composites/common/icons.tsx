@@ -27,6 +27,8 @@ import React from 'react';
 import { FontIcon, IIconProps, mergeStyles, Text } from '@fluentui/react';
 /* @conditional-compile-remove(file-sharing) */
 import { Attach20Regular } from '@fluentui/react-icons';
+/* @conditional-compile-remove(video-background-effects) */
+import { VideoBackgroundEffect20Regular, VideoPerson20Filled } from '@fluentui/react-icons';
 
 const CoffeeIcon = (): JSX.Element => (
   <Text className={mergeStyles(coffeeIconStyle)} aria-hidden={true}>
@@ -79,7 +81,11 @@ export const COMPOSITE_ONLY_ICONS: CompositeIcons = {
   /* @conditional-compile-remove(PSTN-calls) */
   DialpadStartCall: <Call20Regular />,
   /* @conditional-compile-remove(rooms) */
-  NoticePageInvalidRoom: <Info20Filled />
+  NoticePageInvalidRoom: <Info20Filled />,
+  /* @conditional-compile-remove(video-background-effects) */
+  BlurVideoBackground: <VideoBackgroundEffect20Regular />,
+  /* @conditional-compile-remove(video-background-effects) */
+  RemoveVideoBackgroundEffect: <VideoPerson20Filled />
 };
 
 /**
@@ -187,6 +193,10 @@ export type CallCompositeIcons = {
   DialpadStartCall?: JSX.Element;
   /* @conditional-compile-remove(rooms) */
   NoticePageInvalidRoom?: JSX.Element;
+  /* @conditional-compile-remove(video-background-effects) */
+  BlurVideoBackground?: JSX.Element;
+  /* @conditional-compile-remove(video-background-effects) */
+  RemoveVideoBackgroundEffect?: JSX.Element;
 };
 
 /**
