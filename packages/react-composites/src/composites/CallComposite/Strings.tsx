@@ -319,6 +319,25 @@ export interface CallCompositeStrings {
    * Label for the button to open effects and title of the effects
    */
   effects?: string;
+  /**
+   * Label for the blur video background effect item
+   */
+  blurBackgroundEffectButtonLabel?: string;
+  /* @conditional-compile-remove(video-background-effects) */
+  /**
+   * Tooltip text for the blur video background effect item
+   */
+  blurBackgroundTooltip?: string;
+  /* @conditional-compile-remove(video-background-effects) */
+  /**
+   * Label for the remove video background effect item
+   */
+  removeBackgroundEffectButtonLabel?: string;
+  /* @conditional-compile-remove(video-background-effects) */
+  /**
+   * Tooltip text for the blur video background effect item
+   */
+  removeBackgroundTooltip?: string;
   /* @conditional-compile-remove(rooms) */
   /**
    * Title text of the page shown to the user when the user attempts to join a room to which they are not invited.
