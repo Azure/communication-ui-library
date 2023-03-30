@@ -45,6 +45,7 @@ export type ChatErrorTarget = 'ChatClient.createChatThread' | 'ChatClient.delete
 export type ChatMessageWithStatus = ChatMessage & {
     clientMessageId?: string;
     status: MessageStatus;
+    policyViolation?: boolean;
 };
 
 // @public

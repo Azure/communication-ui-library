@@ -18,6 +18,11 @@ export const MINUTE_IN_MS = 1000 * 60;
 
 /**
  * @private
+ */
+export const DEFAULT_DATA_LOSS_PREVENTION_POLICY_URL = 'https://go.microsoft.com/fwlink/?LinkId=2132837';
+
+/**
+ * @private
  *
  * TODO: Import enum from @azure/communication-chat when ChatMessageType shows up in new release version
  * (or define our type to decouple)
