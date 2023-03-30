@@ -46,11 +46,7 @@ export function BaseApp(props: { queryArgs: QueryArgs; callAdapter?: CallAdapter
   if (queryArgs.usePermissionTroubleshootingActions) {
     customCallCompositeOptions = {
       ...customCallCompositeOptions,
-      onPermissionsTroubleshootingClick: onPermissionsTroubleshootingClick,
-      callControls: {
-        ...(customCallCompositeOptions?.callControls instanceof Object ? customCallCompositeOptions?.callControls : {}),
-        legacyControlBarExperience: true
-      }
+      onPermissionsTroubleshootingClick: onPermissionsTroubleshootingClick
     };
   }
 
