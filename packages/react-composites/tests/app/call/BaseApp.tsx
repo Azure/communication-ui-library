@@ -43,11 +43,14 @@ export function BaseApp(props: { queryArgs: QueryArgs; callAdapter?: CallAdapter
       onEnvironmentInfoTroubleshootingClick: onEnvironmentInfoTroubleshootingClick
     };
   }
-
   if (queryArgs.usePermissionTroubleshootingActions) {
     customCallCompositeOptions = {
       ...customCallCompositeOptions,
-      onPermissionsTroubleshootingClick: onPermissionsTroubleshootingClick
+      onPermissionsTroubleshootingClick: onPermissionsTroubleshootingClick,
+      callControls: {
+        ...(customCallCompositeOptions?.callControls instanceof Object ? customCallCompositeOptions?.callControls : {}),
+        legacyControlBarExperience: true
+      }
     };
   }
 
@@ -79,7 +82,11 @@ export function BaseApp(props: { queryArgs: QueryArgs; callAdapter?: CallAdapter
                         endCallButton: false
                       }
                     }
-                  : undefined
+                  : {
+                      callControls: {
+                        legacyControlBarExperience: true
+                      }
+                    }
               }
               callInvitationUrl={queryArgs.callInvitationUrl}
             />
