@@ -17,7 +17,7 @@ const DefaultButtonExampleText = require('!!raw-loader!./snippets/Default.snippe
 const ButtonWithLabelExampleText = require('!!raw-loader!./snippets/WithLabel.snippet.tsx').default;
 
 const importStatement = `
-import { ScreenShareButton } from '@azure/communication-ui';
+import { ScreenShareButton } from '@azure/communication-react';
 `;
 
 const getDocs: () => JSX.Element = () => {
