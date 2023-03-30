@@ -50,8 +50,6 @@ import { getDevicePermissionState } from '../utils';
 import { CallReadinessModal, CallReadinessModalFallBack } from '../components/CallReadinessModal';
 /* @conditional-compile-remove(video-background-effects) */
 import { VideoEffectsPane } from '../../common/VideoEffectsPane';
-/* @conditional-compile-remove(video-background-effects) */
-import { useCallback } from 'react';
 
 /**
  * @private
@@ -87,13 +85,6 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
 
   /* @conditional-compile-remove(video-background-effects) */
   const [showVideoEffectsPane, setVideoEffectsPane] = useState(false);
-  /* @conditional-compile-remove(video-background-effects) */
-  const setShowVideoEffectsPane = useCallback(
-    (showVideoEffectsOptions: boolean): void => {
-      setVideoEffectsPane(showVideoEffectsOptions);
-    },
-    [setVideoEffectsPane]
-  );
   const options = useAdaptedSelector(getCallingSelector(DevicesButton));
   const localDeviceSettingsHandlers = useHandlers(LocalDeviceSettings);
   const { video: cameraPermissionGranted, audio: microphonePermissionGranted } = useSelector(devicePermissionSelector);
@@ -297,11 +288,7 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
                   iconProps={{ iconName: 'OptionsVideoBackgroundEffect' }}
                   styles={effectsButtonStyles(theme)}
                   onClick={() => {
-                    if (showVideoEffectsPane) {
-                      setShowVideoEffectsPane(false);
-                    } else {
-                      setShowVideoEffectsPane(true);
-                    }
+                    setVideoEffectsPane(!showVideoEffectsPane);
                   }}
                 >
                   {locale.strings.call.effects}
@@ -340,7 +327,8 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
         /* @conditional-compile-remove(video-background-effects) */
         <VideoEffectsPane
           showVideoEffectsOptions={showVideoEffectsPane}
-          setshowVideoEffectsOptions={setShowVideoEffectsPane}
+          setshowVideoEffectsOptions={setVideoEffectsPane}
+          adapter={adapter}
         />
       }
     </Stack>
