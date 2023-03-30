@@ -1135,6 +1135,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     ControlButtonParticipantsContextualMenuItem: JSX.Element;
     CancelFileUpload: JSX.Element;
     DownloadFile: JSX.Element;
+    DataLossPreventionProhibited: JSX.Element;
     ErrorBarCallVideoRecoveredBySystem: JSX.Element;
     ErrorBarCallVideoStoppedBySystem: JSX.Element;
     MessageResend: JSX.Element;
