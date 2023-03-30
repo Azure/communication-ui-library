@@ -49,3 +49,6 @@ export type {
   VideoStreamOptions,
   ViewScalingMode
 } from './types';
+
+/* @conditional-compile-remove(data-loss-prevention) */
+export type { BlockedMessage } from './types';
