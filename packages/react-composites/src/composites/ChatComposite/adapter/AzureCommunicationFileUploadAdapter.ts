@@ -98,12 +98,12 @@ class FileUploadContext {
  */
 export class AzureCommunicationFileUploadAdapter implements FileUploadAdapter {
   private context: FileUploadContext;
-  private credential?: CommunicationTokenCredential;
+  private getAuthToken?: () => Promise<string>;
   private fileUploads: FileUpload[] = [];
 
-  constructor(chatContext: ChatContext, credential?: CommunicationTokenCredential) {
+  constructor(chatContext: ChatContext, getAuthToken?: () => Promise<string>) {
     this.context = new FileUploadContext(chatContext);
-    this.credential = credential;
+    this.getAuthToken = getAuthToken;
   }
 
   private findFileUpload(id: string): FileUpload | undefined {
@@ -184,11 +184,11 @@ export class AzureCommunicationFileUploadAdapter implements FileUploadAdapter {
       headers.append('Authorization', `Bearer ${token}`);
       return fetch(url, { headers });
     }
-    if (!this.credential) {
+    if (!this.getAuthToken) {
       return '';
     }
     // ToDo InlineAttachments: If GET fails might need to send failure up to contoso
-    const token = await (await this.credential.getToken()).token;
+    const token = await this.getAuthToken();
     const response = await fetchWithAuthentication(attachmentUrl ?? '', token);
     const blob = await response.blob();
     return URL.createObjectURL(blob);

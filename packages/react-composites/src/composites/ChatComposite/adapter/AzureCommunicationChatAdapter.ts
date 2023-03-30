@@ -122,8 +122,19 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     this.chatClient = chatClient;
     this.chatThreadClient = chatThreadClient;
     this.context = new ChatContext(chatClient.getState(), chatThreadClient.threadId);
-    /* @conditional-compile-remove(file-sharing) */
-    this.fileUploadAdapter = new AzureCommunicationFileUploadAdapter(this.context, options?.credential);
+    const credential = options?.credential;
+    if (credential) {
+      const getAuthToken: () => Promise<string> = async () => {
+        const accessToken = await credential.getToken();
+        return accessToken.token;
+      };
+      /* @conditional-compile-remove(teams-inline-images) */
+      this.fileUploadAdapter = new AzureCommunicationFileUploadAdapter(this.context, getAuthToken);
+    } else {
+      /* @conditional-compile-remove(file-sharing) */
+      this.fileUploadAdapter = new AzureCommunicationFileUploadAdapter(this.context);
+    }
+
     const onStateChange = (clientState: ChatClientState): void => {
       // unsubscribe when the instance gets disposed
       if (!this) {
