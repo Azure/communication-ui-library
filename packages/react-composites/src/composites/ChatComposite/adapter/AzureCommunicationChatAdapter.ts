@@ -124,6 +124,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     this.context = new ChatContext(chatClient.getState(), chatThreadClient.threadId);
     const credential = options?.credential;
     if (credential) {
+      /* @conditional-compile-remove(teams-inline-images) */
       const getAuthToken: () => Promise<string> = async () => {
         const accessToken = await credential.getToken();
         return accessToken.token;
