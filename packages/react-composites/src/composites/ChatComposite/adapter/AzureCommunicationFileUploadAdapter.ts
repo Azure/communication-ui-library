@@ -2,8 +2,6 @@
 // Licensed under the MIT license.
 
 import { FileMetadata } from '@internal/react-components';
-/* @conditional-compile-remove(teams-inline-images) */
-import { CommunicationTokenCredential } from '@azure/communication-common';
 import { FileUploadManager, FileUploadState } from '../file-sharing';
 /* @conditional-compile-remove(file-sharing) */
 import produce from 'immer';
