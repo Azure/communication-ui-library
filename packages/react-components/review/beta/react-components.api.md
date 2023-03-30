@@ -235,13 +235,20 @@ export interface CameraSitePermissionsProps extends CommonSitePermissionsProps {
 export type CameraSitePermissionsStrings = SitePermissionsStrings;
 
 // @internal
+export const _Caption: (props: _CaptionProps) => JSX.Element;
+
+// @internal
+export interface _CaptionProps extends _CaptionsInfo {
+    onRenderAvatar?: OnRenderAvatarCallback;
+}
+
+// @internal
 export const _CaptionsBanner: (props: _CaptionsBannerProps) => JSX.Element;
 
 // @internal
 export interface _CaptionsBannerProps {
     // (undocumented)
-    captions: _CaptionsInfo[];
-    onRenderAvatar?: OnRenderAvatarCallback;
+    captions: _CaptionProps[];
 }
 
 // @internal
