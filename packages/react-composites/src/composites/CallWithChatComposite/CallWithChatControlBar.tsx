@@ -86,27 +86,45 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps & Cont
 
   const [controlBarButtonsWidth, setControlBarButtonsWidth] = useState(0);
   const [panelsButtonsWidth, setPanelsButtonsWidth] = useState(0);
-  const [totalButtonsWidth, setTotalButtonsWidth] = useState(0);
   const [controlBarContainerWidth, setControlBarContainerWidth] = useState(0);
+
+  const [totalButtonsWidth, setTotalButtonsWidth] = useState(0);
   const [isOutOfSpace, setIsOutOfSpace] = useState(false);
 
   const callWithChatStrings = useCallWithChatCompositeStrings();
   const options = inferCallWithChatControlOptions(props.mobileView, props.callControls);
 
-  /* get the current width of control bar buttons and panel control buttons
-     if the total width of those buttons exceed container width, do not center the control bar buttons based on parent container width
-    Instead let them take up the remaining white space on the left */
+  // on load set inital width
+  useEffect(() => {
+    setControlBarButtonsWidth(controlBarButtonsRef.current ? controlBarButtonsRef.current.offsetWidth : 0);
+    setPanelsButtonsWidth(panelsButtonsRef.current ? panelsButtonsRef.current.offsetWidth : 0);
+    setControlBarContainerWidth(controlBarContainerRef.current ? controlBarContainerRef.current.offsetWidth : 0);
+  }, []);
+
+  // get the current width of control bar buttons and panel control buttons when browser size change
   useEffect(() => {
     const handleResize = (): void => {
       setControlBarButtonsWidth(controlBarButtonsRef.current ? controlBarButtonsRef.current.offsetWidth : 0);
       setPanelsButtonsWidth(panelsButtonsRef.current ? panelsButtonsRef.current.offsetWidth : 0);
       setControlBarContainerWidth(controlBarContainerRef.current ? controlBarContainerRef.current.offsetWidth : 0);
-      setTotalButtonsWidth(panelsButtonsWidth + controlBarButtonsWidth);
-      setIsOutOfSpace(totalButtonsWidth >= controlBarContainerWidth);
     };
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
-  }, [controlBarButtonsRef.current, panelsButtonsRef.current, controlBarContainerRef.current]);
+  }, []);
+
+  /* when size change, reset total buttons width and compare with the control bar container width
+  if the total width of those buttons exceed container width, do not center the control bar buttons based on parent container width
+  Instead let them take up the remaining white space on the left */
+  useEffect(() => {
+    // white space on the left when control bar buttons are centered based on container width + control bar buttons width + panel control buttons width
+    setTotalButtonsWidth(
+      (controlBarContainerWidth - controlBarButtonsWidth) / 2 + controlBarButtonsWidth + panelsButtonsWidth
+    );
+  }, [controlBarButtonsWidth, panelsButtonsWidth, controlBarContainerWidth]);
+
+  useEffect(() => {
+    setIsOutOfSpace(totalButtonsWidth > controlBarContainerWidth);
+  }, [totalButtonsWidth, controlBarContainerWidth]);
 
   const chatButtonStrings = useMemo(
     () => ({
@@ -208,23 +226,23 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps & Cont
         )}
       >
         <Stack.Item grow className={mergeStyles(controlBarWrapperDesktopStyles)}>
-          <div ref={controlBarButtonsRef}>
-            <CallAdapterProvider adapter={props.callAdapter}>
-              <Stack horizontalAlign="center">
-                {/*
+          <CallAdapterProvider adapter={props.callAdapter}>
+            <Stack horizontalAlign="center">
+              {/*
               HiddenFocusStartPoint is a util component used when we can't ensure the initial element for first
               tab focus is at the top of dom tree. It moves the first-tab focus to the next interact-able element
               immediately after it in the dom tree.
               */}
-                <HiddenFocusStartPoint />
-                <Stack.Item>
-                  {/*
+              <HiddenFocusStartPoint />
+              <Stack.Item>
+                {/*
                   Note: We use the layout="horizontal" instead of dockedBottom because of how we position the
                   control bar. The control bar exists in a Stack below the MediaGallery. The MediaGallery is
                   set to grow and fill the remaining space not taken up by the ControlBar. If we were to use
                   dockedBottom it has position absolute and would therefore float on top of the media gallery,
                   occluding some of its content.
                 */}
+                <div ref={controlBarButtonsRef}>
                   <ControlBar layout="horizontal" styles={centerContainerStyles}>
                     {isEnabled(options.microphoneButton) && (
                       <Microphone
@@ -302,10 +320,10 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps & Cont
                     }
                     <EndCall displayType="compact" styles={endCallButtonStyles} />
                   </ControlBar>
-                </Stack.Item>
-              </Stack>
-            </CallAdapterProvider>
-          </div>
+                </div>
+              </Stack.Item>
+            </Stack>
+          </CallAdapterProvider>
         </Stack.Item>
         {!props.mobileView && (
           <Stack.Item>
