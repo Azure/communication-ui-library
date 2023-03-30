@@ -7,11 +7,13 @@ import React, { useCallback, useState } from 'react';
 import { ChatMessageComponentAsEditBox } from './ChatMessageComponentAsEditBox';
 import { MessageThreadStrings } from '../MessageThread';
 import { ChatMessage, OnRenderAvatarCallback } from '../../types';
+/* @conditional-compile-remove(data-loss-prevention) */
+import { BlockedMessage } from '../../types';
 import { ChatMessageComponentAsMessageBubble } from './ChatMessageComponentAsMessageBubble';
 import { FileDownloadHandler, FileMetadata } from '../FileDownloadCards';
 
 type ChatMessageComponentProps = {
-  message: ChatMessage;
+  message: ChatMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage;
   userId: string;
   messageContainerStyle?: ComponentSlotStyle;
   showDate?: boolean;
@@ -81,23 +83,23 @@ export const ChatMessageComponent = (props: ChatMessageComponentProps): JSX.Elem
   const onEditClick = useCallback(() => setIsEditing(true), [setIsEditing]);
 
   const { onDeleteMessage, onSendMessage, message } = props;
+  const clientMessageId = 'clientMessageId' in message ? message.clientMessageId : undefined;
+  const content = 'content' in message ? message.content : undefined;
   const onRemoveClick = useCallback(() => {
     if (onDeleteMessage && message.messageId) {
       onDeleteMessage(message.messageId);
     }
     // when fail to send, message does not have message id, delete message using clientmessageid
-    else if (onDeleteMessage && message.clientMessageId) {
-      onDeleteMessage(message.clientMessageId);
+    else if (onDeleteMessage && message.messageType === 'chat' && clientMessageId) {
+      onDeleteMessage(clientMessageId);
     }
-  }, [message.messageId, message.clientMessageId, onDeleteMessage]);
+  }, [onDeleteMessage, message.messageId, message.messageType, clientMessageId]);
   const onResendClick = useCallback(() => {
-    onDeleteMessage && message.clientMessageId && onDeleteMessage(message.clientMessageId);
-    onSendMessage && onSendMessage(message.content ?? '');
-  }, [message.clientMessageId, message.content, onSendMessage, onDeleteMessage]);
+    onDeleteMessage && clientMessageId && onDeleteMessage(clientMessageId);
+    onSendMessage && onSendMessage(content !== undefined ? content : '');
+  }, [clientMessageId, content, onSendMessage, onDeleteMessage]);
 
-  if (props.message.messageType !== 'chat') {
-    return <></>;
-  } else if (isEditing) {
+  if (isEditing && message.messageType === 'chat') {
     return (
       <ChatMessageComponentAsEditBox
         message={message}
@@ -105,8 +107,8 @@ export const ChatMessageComponent = (props: ChatMessageComponentProps): JSX.Elem
         strings={props.strings}
         onSubmit={async (text, metadata, options) => {
           props.onUpdateMessage &&
-            props.message.messageId &&
-            (await props.onUpdateMessage(props.message.messageId, text, metadata, options));
+            message.messageId &&
+            (await props.onUpdateMessage(message.messageId, text, metadata, options));
           setIsEditing(false);
         }}
         onCancel={() => {
