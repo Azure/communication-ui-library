@@ -6,7 +6,6 @@
     "sharingIconLabel": "Общий доступ",
     "mutedIconLabel": "Микрофон отключен",
     "displayNamePlaceholder": "Участник без имени",
-    "participantStateConnecting": "Выполняется вызов...",
     "participantStateRinging": "Выполняется вызов...",
     "participantStateHold": "На удержании"
   },
@@ -54,7 +53,10 @@
     "onSplitButtonAriaLabel": "Отключить камеру и параметры камеры",
     "offSplitButtonAriaLabel": "Включить камеру и параметры камеры",
     "cameraActionTurnedOnAnnouncement": "Камера включена",
-    "cameraActionTurnedOffAnnouncement": "Камера отключена"
+    "cameraActionTurnedOffAnnouncement": "Камера отключена",
+    "onSplitButtonPrimaryActionCamera": "Выключить камеру",
+    "offSplitButtonPrimaryActionCamera": "Включить камеру",
+    "cameraPrimaryActionSplitButtonTitle": "Использовать камеру"
   },
   "microphoneButton": {
     "onLabel": "Отключить звук",
@@ -70,7 +72,10 @@
     "onSplitButtonAriaLabel": "Отключить микрофон и параметры звука",
     "offSplitButtonAriaLabel": "Включить микрофон и параметры звука",
     "microphoneActionTurnedOnAnnouncement": "Ваш микрофон включен",
-    "microphoneActionTurnedOffAnnouncement": "Ваш микрофон отключен"
+    "microphoneActionTurnedOffAnnouncement": "Ваш микрофон отключен",
+    "offSplitButtonMicrophonePrimaryAction": "Включить микрофон",
+    "onSplitButtonMicrophonePrimaryAction": "Отключить микрофон",
+    "micPrimaryActionSplitButtonTitle": "Использовать микрофон"
   },
   "devicesButton": {
     "label": "Устройства",
@@ -90,7 +95,8 @@
     "menuHeader": "В этом звонке",
     "participantsListButtonLabel": "Пользователей: {numParticipants}",
     "muteAllButtonLabel": "Отключить все микрофоны",
-    "copyInviteLinkButtonLabel": "Копировать ссылку с приглашением"
+    "copyInviteLinkButtonLabel": "Копировать ссылку с приглашением",
+    "copyInviteLinkActionedAriaLabel": "Ссылка на приглашение скопирована"
   },
   "screenShareButton": {
     "onLabel": "Остановить демонстрацию",
@@ -146,11 +152,13 @@
     "callNoSpeakerFound": "Динамики и наушники не найдены. Подключите звуковое устройство, чтобы услышать звонок.",
     "callNoMicrophoneFound": "Микрофоны не найдены. Подключение звукового устройства ввода.",
     "callMicrophoneAccessDenied": "Не удается получить доступ к микрофону. Щелкните блокировку в адресной строке, чтобы предоставить разрешение на эту веб-страницу.",
+    "callMicrophoneAccessDeniedSafari": "Не удается получить доступ к микрофону. Обновите страницу, чтобы разрешить разрешения, или проверьте параметры браузера и убедитесь, что для этого веб-сайта включены разрешения.",
     "callMicrophoneMutedBySystem": "Система отключила ваш микрофон.",
     "callMicrophoneUnmutedBySystem": "Микрофон восстановлен, и система включила ваш звук.",
     "callMacOsMicrophoneAccessDenied": "Не удается получить доступ к микрофону. Предоставьте разрешение на доступ к микрофону в параметрах конфиденциальности macOS.",
     "callLocalVideoFreeze": "Низкая пропускная способность сети. Ваше видео может отображаться как приостановленное для других участников вызова.",
     "callCameraAccessDenied": "Не удается получить доступ к камере. Щелкните блокировку в адресной строке, чтобы предоставить разрешение на эту веб-страницу.",
+    "callCameraAccessDeniedSafari": "Не удается получить доступ к камере. Обновите страницу, чтобы разрешить разрешения, или проверьте параметры браузера и убедитесь, что для этого веб-сайта включены разрешения.",
     "callCameraAlreadyInUse": "Не удается получить доступ к камере. Возможно, оно уже используется другим приложением.",
     "callVideoStoppedBySystem": "Воспроизведение видео остановлено системой.",
     "callVideoRecoveredBySystem": "Воспроизведение видео возобновлено.",
@@ -158,7 +166,9 @@
     "callMacOsScreenShareAccessDenied": "MacOS блокирует демонстрацию экрана. Обновите параметры конфиденциальности, чтобы разрешить этому браузеру записывать ваш экран.",
     "dismissButtonAriaLabel": "Закрыть",
     "failedToJoinCallGeneric": "Не удалось присоединиться к звонку.",
-    "failedToJoinCallInvalidMeetingLink": "Не удалось присоединиться к собранию. Недопустимая ссылка."
+    "failedToJoinCallInvalidMeetingLink": "Не удалось присоединиться к собранию. Недопустимая ссылка.",
+    "startScreenSharingGeneric": "Возникла проблема с запуском демонстрации экрана.",
+    "cameraFrozenForRemoteParticipants": "У участников звонка возникают проблемы с просмотром вашего видео. Проверьте свои устройства и сеть."
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "Вы демонстрируете свой экран",
@@ -167,7 +177,16 @@
     "localVideoCameraSwitcherLabel": "Переключить камеру",
     "localVideoMovementLabel": "Перемещаемая локальная плитка видео",
     "localVideoSelectedDescription": "Выбрана камера {cameraName}",
-    "displayNamePlaceholder": "Участник без имени"
+    "displayNamePlaceholder": "Участник без имени",
+    "fitRemoteParticipantToFrame": "Вписать в кадр",
+    "fillRemoteParticipantFrame": "Заполнить кадр",
+    "pinParticipantForMe": "Закрепить для меня",
+    "pinParticipantForMeLimitReached": "Закрепить (достигнуто ограничение)",
+    "unpinParticipantForMe": "Открепить",
+    "pinParticipantMenuItemAriaLabel": "Закрепить участника {participantName}",
+    "unpinParticipantMenuItemAriaLabel": "Открепить участника {participantName}",
+    "pinnedParticipantAnnouncementAriaLabel": "Участник {participantName} закреплен",
+    "unpinnedParticipantAnnouncementAriaLabel": "Участник {participantName} откреплен"
   },
   "dialpad": {
     "placeholderText": "Введите номер телефона",
@@ -180,20 +199,102 @@
     "tooltipOffContent": "Поставить звонок на удержание"
   },
   "videoTile": {
-    "participantStateConnecting": "Выполняется вызов...",
     "participantStateRinging": "Выполняется вызов...",
     "participantStateHold": "На удержании"
   },
-  "SitePermissions": {
+  "CameraAndMicrophoneSitePermissionsRequest": {
     "primaryText": "Разрешить {appName} использовать камеру и микрофон",
     "secondaryText": "Это необходимо для того, чтобы участники могли видеть и слышать вас.",
     "linkText": "Нужна помощь? Получите справку по устранению неполадок",
-    "primaryButtonText": "Разрешить доступ"
+    "primaryButtonText": "Продолжить без камеры и микрофона",
+    "ariaLabel": "Разрешить доступ к камере и микрофону"
+  },
+  "CameraSitePermissionsRequest": {
+    "primaryText": "Разрешите приложению {appName} использовать камеру",
+    "secondaryText": "Это необходимо для того, чтобы участники могли вас видеть.",
+    "linkText": "Нужна помощь? Получите справку по устранению неполадок",
+    "primaryButtonText": "Продолжить без камеры",
+    "ariaLabel": "Разрешить доступ к камере"
+  },
+  "MicrophoneSitePermissionsRequest": {
+    "primaryText": "Разрешите приложению {appName} использовать микрофон",
+    "secondaryText": "Это делается для того, чтобы участники могли вас слышать.",
+    "linkText": "Нужна помощь? Получите справку по устранению неполадок",
+    "primaryButtonText": "Продолжить без микрофона",
+    "ariaLabel": "Разрешить доступ к микрофону"
+  },
+  "CameraAndMicrophoneSitePermissionsCheck": {
+    "primaryText": "Проверка доступа к камере и микрофону",
+    "secondaryText": "Разрешить доступ при запросе. Это делается для того, чтобы участники могли вас видеть и слышать.",
+    "linkText": "Нужна помощь? Получите справку по устранению неполадок",
+    "primaryButtonText": "Продолжить без камеры и микрофона",
+    "ariaLabel": "Проверка доступа к камере и микрофону. Разрешить доступ при запросе."
+  },
+  "CameraSitePermissionsCheck": {
+    "primaryText": "Проверка доступа к камере",
+    "secondaryText": "Разрешить доступ при запросе. Это необходимо для того, чтобы участники могли вас видеть.",
+    "linkText": "Нужна помощь? Получите справку по устранению неполадок",
+    "primaryButtonText": "Продолжить без камеры",
+    "ariaLabel": "Проверка доступа к камере. Разрешить доступ при запросе."
+  },
+  "MicrophoneSitePermissionsCheck": {
+    "primaryText": "Проверка доступа к микрофону",
+    "secondaryText": "Разрешить доступ при запросе. Это делается для того, чтобы участники могли вас слышать.",
+    "linkText": "Нужна помощь? Получите справку по устранению неполадок",
+    "primaryButtonText": "Продолжить без микрофона",
+    "ariaLabel": "Проверка доступа к микрофону. Разрешить доступ при запросе."
+  },
+  "CameraAndMicrophoneSitePermissionsDenied": {
+    "primaryText": "Не удается получить доступ к камере и микрофону",
+    "secondaryText": "Щелкните значок блокировки в адресной строке, чтобы предоставить разрешение на доступ к микрофону для этой веб-страницы. Может потребоваться обновление страницы.",
+    "primaryButtonText": "Продолжить без камеры и микрофона",
+    "linkText": "Нужна помощь? Получите справку по устранению неполадок"
+  },
+  "CameraAndMicrophoneSitePermissionsDeniedSafari": {
+    "primaryText": "Не удается получить доступ к камере и микрофону",
+    "secondaryText": "Обновите страницу, чтобы предоставить разрешения, или проверьте параметры браузера и включите разрешения для этого веб-сайта.",
+    "primaryButtonText": "Продолжить без камеры и микрофона",
+    "linkText": "Нужна помощь? Получите справку по устранению неполадок"
+  },
+  "CameraSitePermissionsDenied": {
+    "primaryText": "Не удается получить доступ к камере",
+    "secondaryText": "Щелкните значок блокировки в адресной строке, чтобы предоставить разрешения камеры для этой веб-страницы. Может потребоваться обновить страницу.",
+    "primaryButtonText": "Продолжить без камеры",
+    "linkText": "Нужна помощь? Получите справку по устранению неполадок"
+  },
+  "MicrophoneSitePermissionsDenied": {
+    "primaryText": "Не удается получить доступ к микрофону",
+    "secondaryText": "Щелкните значок блокировки в адресной строке, чтобы предоставить разрешение на доступ к микрофону для этой веб-страницы. Может потребоваться обновление страницы.",
+    "primaryButtonText": "Продолжить без микрофона",
+    "linkText": "Нужна помощь? Получите справку по устранению неполадок"
+  },
+  "CameraSitePermissionsDeniedSafari": {
+    "primaryText": "Не удается получить доступ к камере",
+    "secondaryText": "Обновите страницу, чтобы предоставить разрешения, или проверьте параметры браузера и включите разрешения для этого веб-сайта.",
+    "primaryButtonText": "Продолжить без камеры",
+    "linkText": "Нужна помощь? Получите справку по устранению неполадок"
+  },
+  "MicrophoneSitePermissionsDeniedSafari": {
+    "primaryText": "Не удается получить доступ к микрофону",
+    "secondaryText": "Обновите страницу, чтобы предоставить разрешения, или проверьте параметры браузера и включите разрешения для этого веб-сайта.",
+    "primaryButtonText": "Продолжить без микрофона",
+    "linkText": "Нужна помощь? Получите справку по устранению неполадок"
   },
   "UnsupportedBrowser": {
     "primaryText": "Браузер не поддерживается",
     "secondaryText": "Присоединитесь к этому вызову с помощью совместимого браузера.",
-    "moreHelpLink": "Дополнительная помощь"
+    "moreHelpLinkText": "См. требования к совместимости"
+  },
+  "UnsupportedBrowserVersion": {
+    "primaryText": "Необходимо обновление браузера",
+    "secondaryText": "Чтобы обеспечить наилучший возможный звонок, обновите браузер и попробуйте присоединиться к звонку еще раз.",
+    "moreHelpLinkText": "См. требования к совместимости",
+    "continueAnywayButtonText": "Начать звонок без обновления"
+  },
+  "UnsupportedOperatingSystem": {
+    "primaryText": "Операционная система не поддерживается",
+    "secondaryText": "Присоединитесь к этому вызову, используя устройство с совместимой операционной системой.",
+    "moreHelpLinkText": "См. требования к совместимости"
   },
   "BrowserPermissionDenied": {
     "primaryText": "Не удается использовать камеру или микрофон",
@@ -215,5 +316,9 @@
     "step2DigitText": "2",
     "step3DigitText": "3",
     "step4DigitText": "4"
+  },
+  "VerticalGallery": {
+    "leftNavButtonAriaLabel": "предыдущая страница",
+    "rightNavButtonAriaLabel": "следующая страница"
   }
 }

@@ -5,8 +5,7 @@
     "removeButtonLabel": "Kaldır",
     "sharingIconLabel": "Paylaşım",
     "mutedIconLabel": "Ses kapatıldı",
-    "displayNamePlaceholder": "Adsız Katılımcı",
-    "participantStateConnecting": "Aranıyor...",
+    "displayNamePlaceholder": "Adsız katılımcı",
     "participantStateRinging": "Arıyor...",
     "participantStateHold": "Beklemede"
   },
@@ -54,7 +53,10 @@
     "onSplitButtonAriaLabel": "Kamerayı ve kamera seçeneklerini devre dışı bırak",
     "offSplitButtonAriaLabel": "Kamerayı ve kamera seçeneklerini etkinleştir",
     "cameraActionTurnedOnAnnouncement": "Kameranız açıldı",
-    "cameraActionTurnedOffAnnouncement": "Kameranız kapatıldı"
+    "cameraActionTurnedOffAnnouncement": "Kameranız kapatıldı",
+    "onSplitButtonPrimaryActionCamera": "Kamerayı kapat",
+    "offSplitButtonPrimaryActionCamera": "Kamerayı aç",
+    "cameraPrimaryActionSplitButtonTitle": "Kamerayı kullan"
   },
   "microphoneButton": {
     "onLabel": "Sesi kapat",
@@ -70,7 +72,10 @@
     "onSplitButtonAriaLabel": "Mikrofonun ve ses seçeneklerinin sesini kapat",
     "offSplitButtonAriaLabel": "Mikrofonun ve ses seçeneklerinin sesini aç",
     "microphoneActionTurnedOnAnnouncement": "Mikrofonunuz açıldı",
-    "microphoneActionTurnedOffAnnouncement": "Mikrofonunuz kapatıldı"
+    "microphoneActionTurnedOffAnnouncement": "Mikrofonunuz kapatıldı",
+    "offSplitButtonMicrophonePrimaryAction": "Mikrofonun sesini aç",
+    "onSplitButtonMicrophonePrimaryAction": "Mikrofonun sesini kapat",
+    "micPrimaryActionSplitButtonTitle": "Mikrofonu kullan"
   },
   "devicesButton": {
     "label": "Cihazlar",
@@ -90,7 +95,8 @@
     "menuHeader": "Bu aramada",
     "participantsListButtonLabel": "{numParticipants} kişiler",
     "muteAllButtonLabel": "Tümünün sesini kapat",
-    "copyInviteLinkButtonLabel": "Davet bağlantısını kopyala"
+    "copyInviteLinkButtonLabel": "Davet bağlantısını kopyala",
+    "copyInviteLinkActionedAriaLabel": "Davet bağlantısı kopyalandı"
   },
   "screenShareButton": {
     "onLabel": "Sunumu Durdur",
@@ -146,11 +152,13 @@
     "callNoSpeakerFound": "Hoparlör veya kulaklık bulunamadı. Aramayı dinlemek için bir ses aygıtı bağlayın.",
     "callNoMicrophoneFound": "Mikrofon bulunamadı. Ses giriş cihazı bağlan.",
     "callMicrophoneAccessDenied": "Mikrofona erişemiyor. Bu web sayfası için izin vermek için adres çubuğundaki kilidi tıklatın.",
+    "callMicrophoneAccessDeniedSafari": "Mikrofona erişemiyor. İzin vermek için sayfayı yenileyin veya bu tarayıcının ayarlarını denetleyin ve bu web sitesi için izinlerin etkinleştirildiğinden emin olun.",
     "callMicrophoneMutedBySystem": "Sisteminiz tarafından sessize alındınız.",
     "callMicrophoneUnmutedBySystem": "Mikrofonunuz kurtarıldı ve sisteminiz tarafından sesiniz açıldı.",
     "callMacOsMicrophoneAccessDenied": "Mikrofona erişilemiyor. macOS gizlilik ayarlarınızda mikrofon izni verin.",
     "callLocalVideoFreeze": "Ağ bant genişliği düşük. Görüntülü aramada başkaları için duraklatılmış görünüyor olabilir.",
     "callCameraAccessDenied": "Kameraya erişemiyor. Bu web sayfası için izin vermek için adres çubuğundaki kilidi tıklatın.",
+    "callCameraAccessDeniedSafari": "Kameraya erişemiyor. İzin vermek için sayfayı yenileyin veya bu tarayıcının ayarlarını denetleyin ve bu web sitesi için izinlerin etkinleştirildiğinden emin olun.",
     "callCameraAlreadyInUse": "Kameraya erişemiyor. Başka bir uygulama tarafından zaten kullanılıyor olabilir.",
     "callVideoStoppedBySystem": "Videonuz sisteminiz tarafından durduruldu.",
     "callVideoRecoveredBySystem": "Videonuz devam ediyor.",
@@ -158,7 +166,9 @@
     "callMacOsScreenShareAccessDenied": "MacOS ekran paylaşımını engelliyor. Bu tarayıcının ekranınızı kaydetmesini izin vermek için gizlilik ayarlarınızı güncelleştirin.",
     "dismissButtonAriaLabel": "Kapat",
     "failedToJoinCallGeneric": "Aramaya katılınamadı.",
-    "failedToJoinCallInvalidMeetingLink": "Toplantıya katılınamıyor. Geçersiz Bağlantı."
+    "failedToJoinCallInvalidMeetingLink": "Toplantıya katılınamıyor. Geçersiz Bağlantı.",
+    "startScreenSharingGeneric": "Ekran paylaşımı başlatılırken bir sorun oluştu.",
+    "cameraFrozenForRemoteParticipants": "Aramadaki kullanıcılar videonuzu görmekte sorun yaşıyor. Lütfen cihazlarınızı ve ağlarınızı kontrol edin."
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "Ekranınızı paylaşıyorsunuz.",
@@ -167,7 +177,16 @@
     "localVideoCameraSwitcherLabel": "Kamerayı değiştir",
     "localVideoMovementLabel": "Taşınabilir Yerel Video Kutucuğu",
     "localVideoSelectedDescription": "{cameraName} seçildi",
-    "displayNamePlaceholder": "Adsız Katılımcı"
+    "displayNamePlaceholder": "Adsız katılımcı",
+    "fitRemoteParticipantToFrame": "Çerçeveye sığdır",
+    "fillRemoteParticipantFrame": "Çerçeveyi doldur",
+    "pinParticipantForMe": "Benim için sabitle",
+    "pinParticipantForMeLimitReached": "Sabitleme (sınıra ulaşıldı)",
+    "unpinParticipantForMe": "Sabitlemeyi kaldır",
+    "pinParticipantMenuItemAriaLabel": "{participantName} adlı katılımcıyı sabitle",
+    "unpinParticipantMenuItemAriaLabel": "{participantName} adlı katılımcının sabitlemesini kaldır",
+    "pinnedParticipantAnnouncementAriaLabel": "{participantName} adlı katılımcı sabitlendi",
+    "unpinnedParticipantAnnouncementAriaLabel": "{participantName} adlı katılımcının sabitlemesi kaldırıldı"
   },
   "dialpad": {
     "placeholderText": "Telefon numarası gir",
@@ -180,20 +199,102 @@
     "tooltipOffContent": "Aramayı bekletme"
   },
   "videoTile": {
-    "participantStateConnecting": "Aranıyor...",
     "participantStateRinging": "Aranıyor...",
     "participantStateHold": "Beklemede"
   },
-  "SitePermissions": {
+  "CameraAndMicrophoneSitePermissionsRequest": {
     "primaryText": "{appName} uygulamasının kameranızı ve mikrofonunuzu kullanmasına izin verin",
     "secondaryText": "Bu, katılımcıların sizi görebilmesi ve duyabilmesi içindir.",
     "linkText": "Yardıma mı ihtiyacınız var? Sorun giderme yardımı alın",
-    "primaryButtonText": "Erişime İzin Ver"
+    "primaryButtonText": "Kamera ve mikrofon olmadan devam et",
+    "ariaLabel": "Kamera ve mikrofon erişimine izin ver"
+  },
+  "CameraSitePermissionsRequest": {
+    "primaryText": "{appName} uygulamasının kameranızı kullanmasına izin verin",
+    "secondaryText": "Bu, katılımcıların sizi görebilmesi içindir.",
+    "linkText": "Yardıma mı ihtiyacınız var? Sorun giderme yardımı alın",
+    "primaryButtonText": "Kamera olmadan devam et",
+    "ariaLabel": "Kamera erişimine izin ver"
+  },
+  "MicrophoneSitePermissionsRequest": {
+    "primaryText": "{appName} uygulamasının mikrofonunuzu kullanmasına izin verin",
+    "secondaryText": "Bu, katılımcıların sizi duyabilmesi içindir.",
+    "linkText": "Yardıma mı ihtiyacınız var? Sorun giderme yardımı alın",
+    "primaryButtonText": "Mikrofon olmadan devam et",
+    "ariaLabel": "Mikrofon erişimine izin ver"
+  },
+  "CameraAndMicrophoneSitePermissionsCheck": {
+    "primaryText": "Kamera ve mikrofon erişimi denetleniyor",
+    "secondaryText": "İstenirse erişime izin verin. Bu, katılımcıların sizi görebilmesi ve duyabilmesi içindir.",
+    "linkText": "Yardıma mı ihtiyacınız var? Sorun giderme yardımı alın",
+    "primaryButtonText": "Kamera ve mikrofon olmadan devam et",
+    "ariaLabel": "Kamera ve mikrofon erişimi denetleniyor. İstenirse erişime izin verin."
+  },
+  "CameraSitePermissionsCheck": {
+    "primaryText": "Kamera erişimi denetleniyor",
+    "secondaryText": "İstenirse erişime izin verin. Bu, katılımcıların sizi görebilmesi içindir.",
+    "linkText": "Yardıma mı ihtiyacınız var? Sorun giderme yardımı alın",
+    "primaryButtonText": "Kamera olmadan devam et",
+    "ariaLabel": "Kamera erişimi denetleniyor. İstenirse erişime izin verin."
+  },
+  "MicrophoneSitePermissionsCheck": {
+    "primaryText": "Mikrofon erişimi denetleniyor",
+    "secondaryText": "İstenirse erişime izin verin. Bu, katılımcıların sizi duyabilmesi içindir.",
+    "linkText": "Yardıma mı ihtiyacınız var? Sorun giderme yardımı alın",
+    "primaryButtonText": "Mikrofon olmadan devam et",
+    "ariaLabel": "Mikrofon erişimi denetleniyor. İstenirse erişime izin verin."
+  },
+  "CameraAndMicrophoneSitePermissionsDenied": {
+    "primaryText": "Kamera ve mikrofona erişemiyor",
+    "secondaryText": "Bu web sayfası için mikrofon izinleri vermek için adres çubuğundaki kilit simgesine tıklayın. Sayfa yenilemesi gerekebilir.",
+    "primaryButtonText": "Kamera ve mikrofon olmadan devam et",
+    "linkText": "Yardıma mı ihtiyacınız var? Sorun giderme yardımı alın"
+  },
+  "CameraAndMicrophoneSitePermissionsDeniedSafari": {
+    "primaryText": "Kamera ve mikrofona erişemiyor",
+    "secondaryText": "İzin vermek için sayfayı yenileyin veya bu tarayıcının ayarlarını denetleyin ve bu web sitesi için izinlerin etkinleştirildiğinden emin olun.",
+    "primaryButtonText": "Kamera ve mikrofon olmadan devam et",
+    "linkText": "Yardıma mı ihtiyacınız var? Sorun giderme yardımı alın"
+  },
+  "CameraSitePermissionsDenied": {
+    "primaryText": "Kameraya erişilemiyor",
+    "secondaryText": "Bu web sayfasında kamera izinleri vermek için adres çubuğundaki kilit simgesine tıklayın. Sayfa yenilemesi gerekebilir.",
+    "primaryButtonText": "Kamera olmadan devam et",
+    "linkText": "Yardıma mı ihtiyacınız var? Sorun giderme yardımı alın"
+  },
+  "MicrophoneSitePermissionsDenied": {
+    "primaryText": "Mikrofona erişilemiyor",
+    "secondaryText": "Bu web sayfası için mikrofon izinleri vermek için adres çubuğundaki kilit simgesine tıklayın. Sayfa yenilemesi gerekebilir.",
+    "primaryButtonText": "Mikrofon olmadan devam et",
+    "linkText": "Yardıma mı ihtiyacınız var? Sorun giderme yardımı alın"
+  },
+  "CameraSitePermissionsDeniedSafari": {
+    "primaryText": "Kameraya erişilemiyor",
+    "secondaryText": "İzin vermek için sayfayı yenileyin veya bu tarayıcının ayarlarını denetleyin ve bu web sitesi için izinlerin etkinleştirildiğinden emin olun.",
+    "primaryButtonText": "Kamera olmadan devam et",
+    "linkText": "Yardıma mı ihtiyacınız var? Sorun giderme yardımı alın"
+  },
+  "MicrophoneSitePermissionsDeniedSafari": {
+    "primaryText": "Mikrofona erişilemiyor",
+    "secondaryText": "İzin vermek için sayfayı yenileyin veya bu tarayıcının ayarlarını denetleyin ve bu web sitesi için izinlerin etkinleştirildiğinden emin olun.",
+    "primaryButtonText": "Mikrofon olmadan devam et",
+    "linkText": "Yardıma mı ihtiyacınız var? Sorun giderme yardımı alın"
   },
   "UnsupportedBrowser": {
     "primaryText": "Tarayıcı desteklenmiyor",
     "secondaryText": "Lütfen uyumlu bir tarayıcı kullanarak bu aramaya katılın.",
-    "moreHelpLink": "Daha fazla yardım"
+    "moreHelpLinkText": "Uyumluluk gereksinimlerini görüntüleyin"
+  },
+  "UnsupportedBrowserVersion": {
+    "primaryText": "Tarayıcı güncelleştirmesi gerekiyor",
+    "secondaryText": "Mümkün olan en iyi arama deneyimi için lütfen tarayıcınızı güncelleştirin ve aramaya yeniden katılmayı deneyin.",
+    "moreHelpLinkText": "Uyumluluk gereksinimlerini görüntüleyin",
+    "continueAnywayButtonText": "Güncelleştirmeden arama başlat"
+  },
+  "UnsupportedOperatingSystem": {
+    "primaryText": "İşletim sistemi desteklenmiyor",
+    "secondaryText": "Lütfen uyumlu bir işletim sistemine sahip bir cihaz kullanarak bu çağrıya katılın.",
+    "moreHelpLinkText": "Uyumluluk gereksinimlerini görüntüleyin"
   },
   "BrowserPermissionDenied": {
     "primaryText": "Kameranızı veya mikrofonunuzu kullanamazsınız",
@@ -215,5 +316,9 @@
     "step2DigitText": "2",
     "step3DigitText": "3",
     "step4DigitText": "4"
+  },
+  "VerticalGallery": {
+    "leftNavButtonAriaLabel": "önceki sayfa",
+    "rightNavButtonAriaLabel": "sonraki sayfa"
   }
 }

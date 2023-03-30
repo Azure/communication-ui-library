@@ -6,7 +6,6 @@
     "sharingIconLabel": "共享",
     "mutedIconLabel": "已静音",
     "displayNamePlaceholder": "未命名的参与者",
-    "participantStateConnecting": "正在呼叫...",
     "participantStateRinging": "正在呼叫...",
     "participantStateHold": "待机音乐"
   },
@@ -54,7 +53,10 @@
     "onSplitButtonAriaLabel": "关闭照相机和照相机选项",
     "offSplitButtonAriaLabel": "打开照相机和照相机选项",
     "cameraActionTurnedOnAnnouncement": "你的相机已打开",
-    "cameraActionTurnedOffAnnouncement": "你的相机已关闭"
+    "cameraActionTurnedOffAnnouncement": "你的相机已关闭",
+    "onSplitButtonPrimaryActionCamera": "关闭摄像头",
+    "offSplitButtonPrimaryActionCamera": "打开摄像头",
+    "cameraPrimaryActionSplitButtonTitle": "使用照相机"
   },
   "microphoneButton": {
     "onLabel": "静音",
@@ -70,7 +72,10 @@
     "onSplitButtonAriaLabel": "将麦克风和音频选项静音",
     "offSplitButtonAriaLabel": "取消麦克风和音频选项的静音",
     "microphoneActionTurnedOnAnnouncement": "你的麦克风已打开",
-    "microphoneActionTurnedOffAnnouncement": "你的麦克风已关闭"
+    "microphoneActionTurnedOffAnnouncement": "你的麦克风已关闭",
+    "offSplitButtonMicrophonePrimaryAction": "取消麦克风静音",
+    "onSplitButtonMicrophonePrimaryAction": "将麦克风静音",
+    "micPrimaryActionSplitButtonTitle": "使用麦克风"
   },
   "devicesButton": {
     "label": "设备",
@@ -90,7 +95,8 @@
     "menuHeader": "在此通话中",
     "participantsListButtonLabel": "{numParticipants} 人",
     "muteAllButtonLabel": "全部静音",
-    "copyInviteLinkButtonLabel": "复制邀请链接"
+    "copyInviteLinkButtonLabel": "复制邀请链接",
+    "copyInviteLinkActionedAriaLabel": "已复制邀请链接"
   },
   "screenShareButton": {
     "onLabel": "停止演示",
@@ -146,11 +152,13 @@
     "callNoSpeakerFound": "找不到扬声器或耳机。连接音频设备以收听呼叫。",
     "callNoMicrophoneFound": "找不到麦克风。连接音频输入设备。",
     "callMicrophoneAccessDenied": "无法访问麦克风。单击地址栏中的锁定以授予对此网页的权限。",
+    "callMicrophoneAccessDeniedSafari": "无法访问麦克风。刷新页面以允许权限，或检查此浏览器的设置并验证是否为此网站启用了权限。",
     "callMicrophoneMutedBySystem": "系统已将你设为静音。",
     "callMicrophoneUnmutedBySystem": "你的麦克风已恢复，系统已取消静音。",
     "callMacOsMicrophoneAccessDenied": "无法访问麦克风。在 macOS 隐私设置中授予麦克风权限。",
     "callLocalVideoFreeze": "网络带宽较差。你的视频可能会在通话中为其他人暂停。",
     "callCameraAccessDenied": "无法访问照相机。单击地址栏中的锁定以授予对此网页的权限。",
+    "callCameraAccessDeniedSafari": "无法访问照相机。刷新页面以允许权限，或检查此浏览器的设置并验证是否为此网站启用了权限。",
     "callCameraAlreadyInUse": "无法访问照相机。它可能已被其他应用程序使用。",
     "callVideoStoppedBySystem": "你的系统已停止你的视频。",
     "callVideoRecoveredBySystem": "你的视频已恢复。",
@@ -158,7 +166,9 @@
     "callMacOsScreenShareAccessDenied": "MacOS 正在阻止屏幕共享。更新你的隐私设置以允许此浏览器录制你的屏幕。",
     "dismissButtonAriaLabel": "关闭",
     "failedToJoinCallGeneric": "未能加入通话。",
-    "failedToJoinCallInvalidMeetingLink": "无法加入会议。无效的链接。"
+    "failedToJoinCallInvalidMeetingLink": "无法加入会议。无效的链接。",
+    "startScreenSharingGeneric": "启动屏幕共享时出现问题。",
+    "cameraFrozenForRemoteParticipants": "通话中的用户在查看视频时遇到问题。请检查你的设备和网络。"
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "你正在共享你的屏幕",
@@ -167,7 +177,16 @@
     "localVideoCameraSwitcherLabel": "切换相机",
     "localVideoMovementLabel": "可移动本地视频磁贴",
     "localVideoSelectedDescription": "已选择 {cameraName}",
-    "displayNamePlaceholder": "未命名的参与者"
+    "displayNamePlaceholder": "未命名的参与者",
+    "fitRemoteParticipantToFrame": "适应帧大小",
+    "fillRemoteParticipantFrame": "填充帧",
+    "pinParticipantForMe": "为我固定",
+    "pinParticipantForMeLimitReached": "固定(已达到上限)",
+    "unpinParticipantForMe": "取消固定",
+    "pinParticipantMenuItemAriaLabel": "固定 {participantName}",
+    "unpinParticipantMenuItemAriaLabel": "取消固定 {participantName}",
+    "pinnedParticipantAnnouncementAriaLabel": "已固定 {participantName}",
+    "unpinnedParticipantAnnouncementAriaLabel": "已取消固定 {participantName}"
   },
   "dialpad": {
     "placeholderText": "输入电话号码",
@@ -180,20 +199,102 @@
     "tooltipOffContent": "保持呼叫"
   },
   "videoTile": {
-    "participantStateConnecting": "正在呼叫...",
     "participantStateRinging": "正在呼叫...",
     "participantStateHold": "待机音乐"
   },
-  "SitePermissions": {
+  "CameraAndMicrophoneSitePermissionsRequest": {
     "primaryText": "允许{appName}使用你的相机和麦克风",
     "secondaryText": "这样参与者就可以看到并听到你的声音。",
     "linkText": "需要帮助? 获取疑难解答帮助",
-    "primaryButtonText": "允许访问"
+    "primaryButtonText": "不使用相机和麦克风继续",
+    "ariaLabel": "允许相机和麦克风访问权限"
+  },
+  "CameraSitePermissionsRequest": {
+    "primaryText": "允许 {appName} 使用你的相机",
+    "secondaryText": "这样参与者就可以看到你了。",
+    "linkText": "需要帮助? 获取疑难解答帮助",
+    "primaryButtonText": "不使用摄像头继续",
+    "ariaLabel": "允许相机访问权限"
+  },
+  "MicrophoneSitePermissionsRequest": {
+    "primaryText": "允许 {appName} 使用你的麦克风",
+    "secondaryText": "这样参与者就可以听到你的声音。",
+    "linkText": "需要帮助? 获取疑难解答帮助",
+    "primaryButtonText": "不使用麦克风继续",
+    "ariaLabel": "允许麦克风访问权限"
+  },
+  "CameraAndMicrophoneSitePermissionsCheck": {
+    "primaryText": "检查摄像头和麦克风访问权限",
+    "secondaryText": "如果出现提示，请允许访问。这样参与者就可以看到并听到你的声音。",
+    "linkText": "需要帮助? 获取疑难解答帮助",
+    "primaryButtonText": "不使用相机和麦克风继续",
+    "ariaLabel": "正在检查摄像头和麦克风访问权限。如果出现提示，请允许访问。"
+  },
+  "CameraSitePermissionsCheck": {
+    "primaryText": "检查摄像头访问权限",
+    "secondaryText": "如果出现提示，请允许访问。这样参与者就可以看到你了。",
+    "linkText": "需要帮助? 获取疑难解答帮助",
+    "primaryButtonText": "不使用相机继续",
+    "ariaLabel": "正在检查摄像头访问权限。如果出现提示，请允许访问。"
+  },
+  "MicrophoneSitePermissionsCheck": {
+    "primaryText": "正在检查麦克风访问权限",
+    "secondaryText": "如果出现提示，请允许访问。这样参与者就可以听到你的声音。",
+    "linkText": "需要帮助? 获取疑难解答帮助",
+    "primaryButtonText": "不使用麦克风继续",
+    "ariaLabel": "正在检查麦克风访问权限。如果出现提示，请允许访问。"
+  },
+  "CameraAndMicrophoneSitePermissionsDenied": {
+    "primaryText": "无法访问相机和麦克风",
+    "secondaryText": "单击地址栏中的锁图标以向此网页授予麦克风权限。可能需要页面刷新。",
+    "primaryButtonText": "不使用摄像头和麦克风继续",
+    "linkText": "需要帮助? 获取疑难解答帮助"
+  },
+  "CameraAndMicrophoneSitePermissionsDeniedSafari": {
+    "primaryText": "无法访问相机和麦克风",
+    "secondaryText": "刷新页面以允许权限，或检查此浏览器的设置并验证是否为此网站启用了权限。",
+    "primaryButtonText": "不使用摄像头和麦克风继续",
+    "linkText": "需要帮助? 获取疑难解答帮助"
+  },
+  "CameraSitePermissionsDenied": {
+    "primaryText": "无法访问摄像头",
+    "secondaryText": "单击地址栏中的锁图标以向此网页授予相机权限。可能需要页面刷新。",
+    "primaryButtonText": "不使用摄像头继续",
+    "linkText": "需要帮助? 获取疑难解答帮助"
+  },
+  "MicrophoneSitePermissionsDenied": {
+    "primaryText": "无法访问麦克风",
+    "secondaryText": "单击地址栏中的锁图标以向此网页授予麦克风权限。可能需要页面刷新。",
+    "primaryButtonText": "不使用麦克风继续",
+    "linkText": "需要帮助? 获取疑难解答帮助"
+  },
+  "CameraSitePermissionsDeniedSafari": {
+    "primaryText": "无法访问相机",
+    "secondaryText": "刷新页面以允许权限，或检查此浏览器的设置并验证是否为此网站启用了权限。",
+    "primaryButtonText": "不使用相机继续",
+    "linkText": "需要帮助? 获取疑难解答帮助"
+  },
+  "MicrophoneSitePermissionsDeniedSafari": {
+    "primaryText": "无法访问麦克风",
+    "secondaryText": "刷新页面以允许权限，或检查此浏览器的设置并验证是否为此网站启用了权限。",
+    "primaryButtonText": "不使用麦克风继续",
+    "linkText": "需要帮助? 获取疑难解答帮助"
   },
   "UnsupportedBrowser": {
     "primaryText": "浏览器不受支持",
     "secondaryText": "请使用兼容的浏览器加入此通话。",
-    "moreHelpLink": "更多帮助"
+    "moreHelpLinkText": "查看兼容性要求"
+  },
+  "UnsupportedBrowserVersion": {
+    "primaryText": "需要浏览器更新",
+    "secondaryText": "为确保通话达到最佳效果，请更新浏览器，然后再次尝试加入呼叫。",
+    "moreHelpLinkText": "查看兼容性要求",
+    "continueAnywayButtonText": "在不更新的情况下启动呼叫"
+  },
+  "UnsupportedOperatingSystem": {
+    "primaryText": "不支持操作系统",
+    "secondaryText": "请使用具有兼容的操作系统的设备加入此通话。",
+    "moreHelpLinkText": "查看兼容性要求"
   },
   "BrowserPermissionDenied": {
     "primaryText": "无法使用摄像头或麦克风",
@@ -215,5 +316,9 @@
     "step2DigitText": "2",
     "step3DigitText": "3",
     "step4DigitText": "4"
+  },
+  "VerticalGallery": {
+    "leftNavButtonAriaLabel": "上一页",
+    "rightNavButtonAriaLabel": "下一页"
   }
 }
