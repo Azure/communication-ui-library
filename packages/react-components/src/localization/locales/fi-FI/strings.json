@@ -1,0 +1,324 @@
+{
+  "participantItem": {
+    "isMeText": "(sinä)",
+    "menuTitle": "Lisää vaihtoehtoja",
+    "removeButtonLabel": "Poista",
+    "sharingIconLabel": "Jakaminen",
+    "mutedIconLabel": "Mykistetty",
+    "displayNamePlaceholder": "Nimetön osallistuja",
+    "participantStateRinging": "Soitetaan...",
+    "participantStateHold": "Pidossa"
+  },
+  "typingIndicator": {
+    "singleUser": "{user} käyttäjä kirjoittaa parhaillaan...",
+    "multipleUsers": "{users} käyttäjää kirjoittaa parhaillaan...",
+    "multipleUsersAbbreviateOne": "{users} ja yksi muu käyttäjä kirjoittaa parhaillaan...",
+    "multipleUsersAbbreviateMany": "{users} ja {numOthers} muuta käyttäjää kirjoittaa parhaillaan...",
+    "delimiter": ", "
+  },
+  "sendBox": {
+    "placeholderText": "Kirjoita viesti",
+    "textTooLong": "Viestin pituus ylittää enimmäispituuden.",
+    "sendButtonAriaLabel": "Lähetä viesti",
+    "fileUploadsPendingError": "Ladataan palvelimeen... Odota hetki.",
+    "removeFile": "Poista tiedosto",
+    "uploading": "Ladataan palvelimeen",
+    "uploadCompleted": "Ladattu palvelimeen"
+  },
+  "messageStatusIndicator": {
+    "deliveredAriaLabel": "Viesti on lähetetty",
+    "deliveredTooltipText": "Lähetetty",
+    "seenAriaLabel": "Muut ovat nähneet viestin",
+    "seenTooltipText": "Nähty",
+    "readByTooltipText": "{messageThreadReadCount}/{remoteParticipantsCount} osallistujaa on lukenut viestin",
+    "sendingAriaLabel": "Viestiä lähetetään",
+    "sendingTooltipText": "Lähetetään",
+    "failedToSendAriaLabel": "Viestin lähettäminen epäonnistui",
+    "failedToSendTooltipText": "Lähettäminen epäonnistui"
+  },
+  "endCallButton": {
+    "label": "Poistu",
+    "tooltipContent": "Poistu puhelusta"
+  },
+  "cameraButton": {
+    "onLabel": "Poista käytöstä",
+    "offLabel": "Ota käyttöön",
+    "tooltipDisabledContent": "Kamera on poissa käytöstä",
+    "tooltipOnContent": "Poista kamera käytöstä",
+    "tooltipOffContent": "Käynnistä kamera",
+    "tooltipVideoLoadingContent": "Videota ladataan",
+    "cameraMenuTitle": "Kamera",
+    "cameraMenuTooltip": "Valitse kamera",
+    "cameraButtonSplitRoleDescription": "Jaettu painike",
+    "onSplitButtonAriaLabel": "Kameran ja sen käytöstä poistamisen asetukset",
+    "offSplitButtonAriaLabel": "Kameran ja sen käyttöön ottamisen asetukset",
+    "cameraActionTurnedOnAnnouncement": "Kamerasi on otettu käyttöön",
+    "cameraActionTurnedOffAnnouncement": "Kamerasi on poistettu käytöstä",
+    "onSplitButtonPrimaryActionCamera": "Poista kamera käytöstä",
+    "offSplitButtonPrimaryActionCamera": "Käynnistä kamera",
+    "cameraPrimaryActionSplitButtonTitle": "Käytä kameraa"
+  },
+  "microphoneButton": {
+    "onLabel": "Mykistä",
+    "offLabel": "Poista mykistys",
+    "tooltipDisabledContent": "Mikrofoni on poissa käytöstä",
+    "tooltipOnContent": "Mykistä mikrofoni",
+    "tooltipOffContent": "Poista mikrofonin mykistys",
+    "microphoneMenuTitle": "Mikrofoni",
+    "microphoneMenuTooltip": "Valitse mikrofoni",
+    "speakerMenuTitle": "Kaiutin",
+    "speakerMenuTooltip": "Valitse kaiutin",
+    "microphoneButtonSplitRoleDescription": "Jaettu painike",
+    "onSplitButtonAriaLabel": "Äänen ja mikrofonin mykistyksen asetukset",
+    "offSplitButtonAriaLabel": "Äänen ja mikrofonin mykistyksen poistamisen asetukset",
+    "microphoneActionTurnedOnAnnouncement": "Mikrofonisi on otettu käyttöön",
+    "microphoneActionTurnedOffAnnouncement": "Mikrofonisi on poistettu käytöstä",
+    "offSplitButtonMicrophonePrimaryAction": "Poista mikrofonin mykistys",
+    "onSplitButtonMicrophonePrimaryAction": "Mykistä mikrofoni",
+    "micPrimaryActionSplitButtonTitle": "Käytä mikrofonia"
+  },
+  "devicesButton": {
+    "label": "Laitteet",
+    "tooltipContent": "Hallitse laitteita",
+    "cameraMenuTitle": "Kamera",
+    "cameraMenuTooltip": "Valitse kamera",
+    "audioDeviceMenuTitle": "Äänilaite",
+    "audioDeviceMenuTooltip": "Valitse äänilaite",
+    "microphoneMenuTitle": "Mikrofoni",
+    "microphoneMenuTooltip": "Valitse mikrofoni",
+    "speakerMenuTitle": "Kaiutin",
+    "speakerMenuTooltip": "Valitse kaiutin"
+  },
+  "participantsButton": {
+    "label": "Ihmiset",
+    "tooltipContent": "Näytä osallistujat",
+    "menuHeader": "Tässä puhelussa",
+    "participantsListButtonLabel": "{numParticipants} henkilöä",
+    "muteAllButtonLabel": "Mykistä kaikki",
+    "copyInviteLinkButtonLabel": "Kopioi kutsulinkki",
+    "copyInviteLinkActionedAriaLabel": "Kutsulinkki kopioitu"
+  },
+  "screenShareButton": {
+    "onLabel": "Lopeta esitys",
+    "offLabel": "Esitä",
+    "tooltipDisabledContent": "Näytön jakaminen on poissa käytöstä",
+    "tooltipOnContent": "Näyttösi näytetään muille osallistujille",
+    "tooltipOffContent": "Näytä oma näyttösi"
+  },
+  "messageThread": {
+    "yesterday": "eilen",
+    "sunday": "sunnuntaina",
+    "monday": "maanantaina",
+    "tuesday": "tiistaina",
+    "wednesday": "keskiviikkona",
+    "thursday": "torstaina",
+    "friday": "perjantaina",
+    "saturday": "lauantaina",
+    "participantJoined": "liittyi keskusteluun.",
+    "participantLeft": "poistui keskustelusta.",
+    "editMessage": "Muokkaa",
+    "removeMessage": "Poista",
+    "resendMessage": "Yritä lähettää viesti uudelleen",
+    "failToSendTag": "Lähettäminen epäonnistui",
+    "editedTag": "Muokattu",
+    "liveAuthorIntro": "{author} sanoo",
+    "messageContentAriaText": "{author} sanoi {message}",
+    "messageContentMineAriaText": "Sanoit {message}",
+    "editBoxTextLimit": "Viesti ylittää {limitNumber} merkin rajan",
+    "editBoxPlaceholderText": "Muokkaa viestiäsi",
+    "newMessagesIndicator": "Uudet viestit",
+    "noDisplayNameSub": "Ei nimeä",
+    "editBoxCancelButton": "Peruuta",
+    "editBoxSubmitButton": "Lähetä",
+    "messageReadCount": "{messageReadByCount}/{remoteParticipantsCount} osallistujaa on lukenut viestin",
+    "actionMenuMoreOptions": "Lisää vaihtoehtoja",
+    "downloadFile": "Lataa tiedosto"
+  },
+  "errorBar": {
+    "unableToReachChatService": "Olet offline-tilassa",
+    "accessDenied": "Keskustelupalveluihin ei saada yhteyttä – tarkista annetut käyttäjän tunnistetiedot",
+    "userNotInChatThread": "Et ole enää mukana tässä keskusteluketjussa",
+    "sendMessageNotInChatThread": "Viestin lähettäminen epäonnistui, koska et ole enää tässä keskusteluketjussa",
+    "sendMessageGeneric": "Viestin lähettäminen epäonnistui",
+    "callingNetworkFailure": "Puhelun yhdistämisessä on ongelma. Vaikutat olevan offline-tilassa",
+    "startVideoGeneric": "Videon käynnistäminen epäonnistui",
+    "stopVideoGeneric": "Videon pysäyttäminen epäonnistui",
+    "muteGeneric": "Mikrofonin mykistäminen epäonnistui",
+    "unmuteGeneric": "Mikrofonin mykistyksen poistaminen epäonnistui",
+    "speakingWhileMuted": "Mikrofonisi on mykistetty",
+    "startScreenShareGeneric": "Näytön jakamisen aloittaminen epäonnistui",
+    "stopScreenShareGeneric": "Näytön jakamisen lopettaminen epäonnistui",
+    "callNetworkQualityLow": "Verkkoyhteyden laatu on huono.",
+    "callNoSpeakerFound": "Kaiuttimia tai kuulokkeita ei löytynyt. Yhdistä äänilaite voidaksesi kuulla puhelun.",
+    "callNoMicrophoneFound": "Mikrofoneja ei löytynyt. Yhdistä äänitulolaite.",
+    "callMicrophoneAccessDenied": "Mikrofonia ei voi käyttää. Myönnä käyttöoikeus tälle verkkosivulle napsauttamalla osoiterivin lukitusta.",
+    "callMicrophoneAccessDeniedSafari": "Mikrofonia ei voi käyttää. Salli käyttöoikeudet päivittämällä sivu tai tarkista tämän selaimen asetukset ja varmista, että käyttöoikeudet on otettu käyttöön tässä sivustossa.",
+    "callMicrophoneMutedBySystem": "Järjestelmäasetuksen perusteella sinut on mykistetty.",
+    "callMicrophoneUnmutedBySystem": "Mikrofonisi palautui käyttöön ja järjestelmä on poistanut sen mykistyksen.",
+    "callMacOsMicrophoneAccessDenied": "Mikrofonia ei voi käyttää. Salli mikrofonin käyttö macOS:in tietosuoja-asetuksissa.",
+    "callLocalVideoFreeze": "Verkon kaistanleveys on heikko. Videokuvasi saattaa näkyä keskeytettynä puhelun muille osallistujille.",
+    "callCameraAccessDenied": "Kameraa ei voi käyttää. Myönnä käyttöoikeus tälle verkkosivulle napsauttamalla osoiterivin lukitusta.",
+    "callCameraAccessDeniedSafari": "Kameraa ei voi käyttää. Salli käyttöoikeudet päivittämällä sivu tai tarkista tämän selaimen asetukset ja varmista, että käyttöoikeudet on otettu käyttöön tässä sivustossa.",
+    "callCameraAlreadyInUse": "Kameraa ei voi käyttää. Toinen sovellus saattaa jo käyttää sitä.",
+    "callVideoStoppedBySystem": "Järjestelmä on pysäyttänyt videosi.",
+    "callVideoRecoveredBySystem": "Videosi näytetään jälleen.",
+    "callMacOsCameraAccessDenied": "MacOS estää kameran käytön. Päivitä tietosuoja-asetukset, jotta selain voi käyttää kameraasi.",
+    "callMacOsScreenShareAccessDenied": "MacOS estää näytön jakamisen. Päivitä tietosuoja-asetukset, jotta selain voi tallentaa, mitä näytölläsi tapahtuu.",
+    "dismissButtonAriaLabel": "Sulje",
+    "failedToJoinCallGeneric": "Puheluun liittyminen epäonnistui.",
+    "failedToJoinCallInvalidMeetingLink": "Kokoukseen liittyminen ei onnistu. Linkki on virheellinen.",
+    "startScreenSharingGeneric": "Näytön jakamisen aloittamisessa ilmeni ongelma.",
+    "cameraFrozenForRemoteParticipants": "Puhelun käyttäjillä on videokuvan näkymiseen liittyviä ongelmia. Tarkista laitteesi ja verkkosi."
+  },
+  "videoGallery": {
+    "screenIsBeingSharedMessage": "Näyttösi jaetaan parhaillaan",
+    "screenShareLoadingMessage": "Ladataan käyttäjän {participant} näyttöä",
+    "localVideoLabel": "Sinä",
+    "localVideoCameraSwitcherLabel": "Vaihda kameraa",
+    "localVideoMovementLabel": "Siirrettävä paikallisen videon ruutu",
+    "localVideoSelectedDescription": "{cameraName} on valittu",
+    "displayNamePlaceholder": "Nimetön osallistuja",
+    "fitRemoteParticipantToFrame": "Sovita kehykseen",
+    "fillRemoteParticipantFrame": "Täytä kehys",
+    "pinParticipantForMe": "Kiinnitä minulle",
+    "pinParticipantForMeLimitReached": "Kiinnitys (enimmäisraja saavutettu)",
+    "unpinParticipantForMe": "Poista kiinnitys",
+    "pinParticipantMenuItemAriaLabel": "Kiinnitä {participantName}",
+    "unpinParticipantMenuItemAriaLabel": "Poista henkilön {participantName} kiinnitys",
+    "pinnedParticipantAnnouncementAriaLabel": "Kiinnitetty {participantName}",
+    "unpinnedParticipantAnnouncementAriaLabel": "Poistettu henkilön {participantName} kiinnitys"
+  },
+  "dialpad": {
+    "placeholderText": "Anna puhelinnumero",
+    "deleteButtonAriaLabel": "Poista"
+  },
+  "holdButton": {
+    "onLabel": "Jatka",
+    "offLabel": "Pito",
+    "tooltipOnContent": "Jatka puhelua",
+    "tooltipOffContent": "Aseta puhelu pitoon"
+  },
+  "videoTile": {
+    "participantStateRinging": "Soitetaan...",
+    "participantStateHold": "Pidossa"
+  },
+  "CameraAndMicrophoneSitePermissionsRequest": {
+    "primaryText": "Salli {appName} käyttää kameraa ja mikrofonia",
+    "secondaryText": "Näin osallistujat voivat nähdä ja kuulla sinua.",
+    "linkText": "Tarvitsetko apua? Hae vianmääritysohjeita",
+    "primaryButtonText": "Jatka ilman kameraa ja mikrofonia",
+    "ariaLabel": "Salli kameran ja mikrofonin käyttö"
+  },
+  "CameraSitePermissionsRequest": {
+    "primaryText": "Salli sovelluksen {appName} käyttää kameraasi",
+    "secondaryText": "Tätä tarvitaan, jotta muut osallistujat näkevät sinut.",
+    "linkText": "Tarvitsetko apua? Hae vianmääritysohjeita",
+    "primaryButtonText": "Jatka ilman kameraa",
+    "ariaLabel": "Salli kameran käyttö"
+  },
+  "MicrophoneSitePermissionsRequest": {
+    "primaryText": "Salli sovelluksen {appName} käyttää mikrofoniasi",
+    "secondaryText": "Tätä tarvitaan, jotta muut osallistujat kuulevat sinut.",
+    "linkText": "Tarvitsetko apua? Hae vianmääritysohjeita",
+    "primaryButtonText": "Jatka ilman mikrofonia",
+    "ariaLabel": "Salli mikrofonin käyttö"
+  },
+  "CameraAndMicrophoneSitePermissionsCheck": {
+    "primaryText": "Tarkistetaan kameran ja mikrofonin käyttöoikeutta",
+    "secondaryText": "Salli käyttö, jos niin kehotetaan tekemään. Näin osallistujat voivat nähdä ja kuulla sinua.",
+    "linkText": "Tarvitsetko apua? Hae vianmääritysohjeita",
+    "primaryButtonText": "Jatka ilman kameraa ja mikrofonia",
+    "ariaLabel": "Tarkistetaan kameran ja mikrofonin käyttöoikeutta. Salli käyttö pyydettäessä."
+  },
+  "CameraSitePermissionsCheck": {
+    "primaryText": "Tarkistetaan kameran käyttöoikeutta",
+    "secondaryText": "Salli käyttö, jos niin kehotetaan tekemään. Osallistujat näkevät sinut tässä.",
+    "linkText": "Tarvitsetko apua? Hae vianmääritysohjeita",
+    "primaryButtonText": "Jatka ilman kameraa",
+    "ariaLabel": "Tarkistetaan kameran käyttöoikeutta. Salli käyttö pyydettäessä."
+  },
+  "MicrophoneSitePermissionsCheck": {
+    "primaryText": "Tarkistetaan mikrofonin käyttöoikeutta",
+    "secondaryText": "Salli käyttö pyydettäessä. Tätä tarvitaan, jotta muut osallistujat kuulevat sinut.",
+    "linkText": "Tarvitsetko apua? Hae vianmääritysohjeita",
+    "primaryButtonText": "Jatka ilman mikrofonia",
+    "ariaLabel": "Tarkistetaan mikrofonin käyttöoikeutta. Salli käyttö pyydettäessä."
+  },
+  "CameraAndMicrophoneSitePermissionsDenied": {
+    "primaryText": "Kameraa ja mikrofonia ei voi käyttää",
+    "secondaryText": "Myönnä mikrofonin käyttöoikeudet tälle verkkosivulle napsauttamalla osoiterivin lukkokuvaketta. Sivun päivitys saattaa olla pakollinen.",
+    "primaryButtonText": "Jatka ilman kameraa ja mikrofonia",
+    "linkText": "Tarvitsetko apua? Hae vianmääritysohjeita"
+  },
+  "CameraAndMicrophoneSitePermissionsDeniedSafari": {
+    "primaryText": "Kameraa ja mikrofonia ei voi käyttää",
+    "secondaryText": "Salli käyttöoikeudet päivittämällä sivu tai tarkista tämän selaimen asetukset ja varmista, että käyttöoikeudet on otettu käyttöön tässä sivustossa.",
+    "primaryButtonText": "Jatka ilman kameraa ja mikrofonia",
+    "linkText": "Tarvitsetko apua? Hae vianmääritysohjeita"
+  },
+  "CameraSitePermissionsDenied": {
+    "primaryText": "Kameraa ei voi käyttää",
+    "secondaryText": "Myönnä kameran käyttöoikeudet tälle verkkosivulle napsauttamalla osoiterivin lukkokuvaketta. Sivun päivitys saattaa olla pakollinen.",
+    "primaryButtonText": "Jatka ilman kameraa",
+    "linkText": "Tarvitsetko apua? Hae vianmääritysohjeita"
+  },
+  "MicrophoneSitePermissionsDenied": {
+    "primaryText": "Mikrofonia ei voi käyttää",
+    "secondaryText": "Myönnä mikrofonin käyttöoikeudet tälle verkkosivulle napsauttamalla osoiterivin lukkokuvaketta. Sivun päivitys saattaa olla pakollinen.",
+    "primaryButtonText": "Jatka ilman mikrofonia",
+    "linkText": "Tarvitsetko apua? Hae vianmääritysohjeita"
+  },
+  "CameraSitePermissionsDeniedSafari": {
+    "primaryText": "Kameraa ei voi käyttää",
+    "secondaryText": "Salli käyttöoikeudet päivittämällä sivu tai tarkista tämän selaimen asetukset ja varmista, että käyttöoikeudet on otettu käyttöön tässä sivustossa.",
+    "primaryButtonText": "Jatka ilman kameraa",
+    "linkText": "Tarvitsetko apua? Hae vianmääritysohjeita"
+  },
+  "MicrophoneSitePermissionsDeniedSafari": {
+    "primaryText": "Mikrofonia ei voi käyttää",
+    "secondaryText": "Salli käyttöoikeudet päivittämällä sivu tai tarkista tämän selaimen asetukset ja varmista, että käyttöoikeudet on otettu käyttöön tässä sivustossa.",
+    "primaryButtonText": "Jatka ilman mikrofonia",
+    "linkText": "Tarvitsetko apua? Hae vianmääritysohjeita"
+  },
+  "UnsupportedBrowser": {
+    "primaryText": "Selainta ei tueta",
+    "secondaryText": "Liity tähän puheluun käyttämällä yhteensopivaa selainta.",
+    "moreHelpLinkText": "Näytä yhteensopivuusvaatimukset"
+  },
+  "UnsupportedBrowserVersion": {
+    "primaryText": "Selain on päivitettävä",
+    "secondaryText": "Jotta puhelu olisi paras mahdollinen, päivitä selain ja yritä liittyä puheluun uudelleen.",
+    "moreHelpLinkText": "Näytä yhteensopivuusvaatimukset",
+    "continueAnywayButtonText": "Aloita puhelu päivittämättä"
+  },
+  "UnsupportedOperatingSystem": {
+    "primaryText": "Käyttöjärjestelmää ei tueta",
+    "secondaryText": "Liity tähän puheluun käyttämällä laitetta, jossa on yhteensopiva käyttöjärjestelmä.",
+    "moreHelpLinkText": "Näytä yhteensopivuusvaatimukset"
+  },
+  "BrowserPermissionDenied": {
+    "primaryText": "Kamerasi tai mikrofonisi käyttäminen ei onnistu",
+    "secondaryText": "Selaimesi ei ehkä voi käyttää kameraasi tai mikrofoniasi. Voit korjata tämän avaamalla Järjestelmäasetukset.",
+    "primaryButtonText": "Yritä uudelleen",
+    "linkText": "Tarvitsetko apua? Hae vianmääritysohjeita"
+  },
+  "BrowserPermissionDeniedIOS": {
+    "primaryText": "Jatka sallimalla mikrofonin käyttö",
+    "secondaryText": "Tarvitaan, jotta muut osallistujat kuulevat sinut.",
+    "primaryButtonText": "Yritä uudelleen",
+    "imageAltText": "Kohta, josta mikrofonin ja kameran käyttöoikeus löytyy iOS:issa",
+    "linkText": "Tarvitsetko apua? Hae vianmääritysohjeita",
+    "step1Text": "Siirry asetussovellukseen.",
+    "step2Text": "Vieritä alaspäin tämän selaimen asetuksiin",
+    "step3Text": "Ota mikrofoni käyttöön (kameran käyttö on valinnaista)",
+    "step4Text": "Yritä liittyä puheluun uudelleen",
+    "step1DigitText": "1",
+    "step2DigitText": "2",
+    "step3DigitText": "3",
+    "step4DigitText": "4"
+  },
+  "VerticalGallery": {
+    "leftNavButtonAriaLabel": "edellinen sivu",
+    "rightNavButtonAriaLabel": "seuraava sivu"
+  }
+}

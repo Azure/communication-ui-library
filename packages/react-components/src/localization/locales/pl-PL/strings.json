@@ -1,0 +1,324 @@
+{
+  "participantItem": {
+    "isMeText": "(Ty)",
+    "menuTitle": "Więcej opcji",
+    "removeButtonLabel": "Usuń",
+    "sharingIconLabel": "Udostępnianie",
+    "mutedIconLabel": "Wyciszono",
+    "displayNamePlaceholder": "Uczestnik bez nazwy",
+    "participantStateRinging": "Trwa łączenie…",
+    "participantStateHold": "Zawieszony"
+  },
+  "typingIndicator": {
+    "singleUser": "Użytkownik {user} pisze...",
+    "multipleUsers": "{users} piszą...",
+    "multipleUsersAbbreviateOne": "{users} i 1 inny użytkownik piszą...",
+    "multipleUsersAbbreviateMany": "{users} i {numOthers} innych użytkowników piszą...",
+    "delimiter": ", "
+  },
+  "sendBox": {
+    "placeholderText": "Wprowadź wiadomość",
+    "textTooLong": "Długość wiadomości przekracza maksymalny limit.",
+    "sendButtonAriaLabel": "Wyślij wiadomość",
+    "fileUploadsPendingError": "Trwa przekazywanie... Czekaj.",
+    "removeFile": "Usuwanie pliku",
+    "uploading": "Przekazywanie",
+    "uploadCompleted": "Zakończono przekazywanie"
+  },
+  "messageStatusIndicator": {
+    "deliveredAriaLabel": "Wiadomość została wysłana",
+    "deliveredTooltipText": "Wysłano",
+    "seenAriaLabel": "Wiadomość widziana przez inne osoby",
+    "seenTooltipText": "Wyświetlono",
+    "readByTooltipText": "Przeczytane przez {messageThreadReadCount} z {remoteParticipantsCount}",
+    "sendingAriaLabel": "Wysyłanie wiadomości",
+    "sendingTooltipText": "Wysyłanie",
+    "failedToSendAriaLabel": "Nie udało się wysłać wiadomości",
+    "failedToSendTooltipText": "Nie udało się wysłać"
+  },
+  "endCallButton": {
+    "label": "Wyjdź",
+    "tooltipContent": "Opuść rozmowę"
+  },
+  "cameraButton": {
+    "onLabel": "Wyłącz",
+    "offLabel": "Włącz",
+    "tooltipDisabledContent": "Kamera jest wyłączona",
+    "tooltipOnContent": "Wyłącz kamerę",
+    "tooltipOffContent": "Włącz kamerę",
+    "tooltipVideoLoadingContent": "Ładowanie wideo w toku",
+    "cameraMenuTitle": "Kamera",
+    "cameraMenuTooltip": "Wybierz kamerę",
+    "cameraButtonSplitRoleDescription": "Przycisk podziału",
+    "onSplitButtonAriaLabel": "Wyłącz kamerę i jej opcje",
+    "offSplitButtonAriaLabel": "Włącz kamerę i jej opcje",
+    "cameraActionTurnedOnAnnouncement": "Kamera została włączona",
+    "cameraActionTurnedOffAnnouncement": "Kamera została wyłączona",
+    "onSplitButtonPrimaryActionCamera": "Wyłącz kamerę",
+    "offSplitButtonPrimaryActionCamera": "Włącz kamerę",
+    "cameraPrimaryActionSplitButtonTitle": "Użyj kamery"
+  },
+  "microphoneButton": {
+    "onLabel": "Wycisz",
+    "offLabel": "Wyłącz wyciszenie",
+    "tooltipDisabledContent": "Mikrofon jest wyłączony",
+    "tooltipOnContent": "Wycisz mikrofon",
+    "tooltipOffContent": "Wyłącz wyciszenie mikrofonu",
+    "microphoneMenuTitle": "Mikrofon",
+    "microphoneMenuTooltip": "Wybierz mikrofon",
+    "speakerMenuTitle": "Głośnik",
+    "speakerMenuTooltip": "Wybierz głośnik",
+    "microphoneButtonSplitRoleDescription": "Przycisk podziału",
+    "onSplitButtonAriaLabel": "Wyciszenie mikrofonu i opcji dźwięku",
+    "offSplitButtonAriaLabel": "Wyłącz wyciszenie mikrofonu i opcji dźwięku",
+    "microphoneActionTurnedOnAnnouncement": "Mikrofon został włączony",
+    "microphoneActionTurnedOffAnnouncement": "Mikrofon został wyłączony",
+    "offSplitButtonMicrophonePrimaryAction": "Wyłącz wyciszenie mikrofonu",
+    "onSplitButtonMicrophonePrimaryAction": "Wycisz mikrofon",
+    "micPrimaryActionSplitButtonTitle": "Użyj mikrofonu"
+  },
+  "devicesButton": {
+    "label": "Urządzenia",
+    "tooltipContent": "Zarządzaj urządzeniami",
+    "cameraMenuTitle": "Kamera",
+    "cameraMenuTooltip": "Wybierz kamerę",
+    "audioDeviceMenuTitle": "Urządzenie audio",
+    "audioDeviceMenuTooltip": "Wybierz urządzenie audio",
+    "microphoneMenuTitle": "Mikrofon",
+    "microphoneMenuTooltip": "Wybierz mikrofon",
+    "speakerMenuTitle": "Głośnik",
+    "speakerMenuTooltip": "Wybierz głośnik"
+  },
+  "participantsButton": {
+    "label": "Osoby",
+    "tooltipContent": "Pokaż uczestników",
+    "menuHeader": "W tej rozmowie",
+    "participantsListButtonLabel": "Liczba osób: {numParticipants}",
+    "muteAllButtonLabel": "Wycisz wszystkich",
+    "copyInviteLinkButtonLabel": "Kopiuj link do zaproszenia",
+    "copyInviteLinkActionedAriaLabel": "Skopiowano link do zaproszenia"
+  },
+  "screenShareButton": {
+    "onLabel": "Zakończ prezentację",
+    "offLabel": "Obecne",
+    "tooltipDisabledContent": "Prezentowanie jest wyłączone",
+    "tooltipOnContent": "Prezentowanie ekranu",
+    "tooltipOffContent": "Prezentuj swój ekran"
+  },
+  "messageThread": {
+    "yesterday": "Wczoraj",
+    "sunday": "Niedziela",
+    "monday": "Poniedziałek",
+    "tuesday": "Wtorek",
+    "wednesday": "Środa",
+    "thursday": "Czwartek",
+    "friday": "Piątek",
+    "saturday": "Sobota",
+    "participantJoined": "dołączył do czatu.",
+    "participantLeft": "opuścił czat.",
+    "editMessage": "Edytuj",
+    "removeMessage": "Usuń",
+    "resendMessage": "Spróbuj wysłać ponownie",
+    "failToSendTag": "Nie udało się wysłać",
+    "editedTag": "Edytowane",
+    "liveAuthorIntro": "Autor {author} mówi",
+    "messageContentAriaText": "Użytkownik {author} powiedział: {message}",
+    "messageContentMineAriaText": "Wypowiedziano: {message}",
+    "editBoxTextLimit": "Twoja wiadomość przekracza limit {limitNumber} znaków",
+    "editBoxPlaceholderText": "Edytuj wiadomość",
+    "newMessagesIndicator": "Nowe wiadomości",
+    "noDisplayNameSub": "Bez nazwy",
+    "editBoxCancelButton": "Anuluj",
+    "editBoxSubmitButton": "Prześlij",
+    "messageReadCount": "Przeczytane przez {messageReadByCount} z {remoteParticipantsCount}",
+    "actionMenuMoreOptions": "Więcej opcji",
+    "downloadFile": "Pobierz plik"
+  },
+  "errorBar": {
+    "unableToReachChatService": "Jesteś w trybie offline",
+    "accessDenied": "Nie można uzyskać dostępu do usług czatu — sprawdź podane poświadczenia użytkownika",
+    "userNotInChatThread": "Nie jesteś już w tym wątku czatu",
+    "sendMessageNotInChatThread": "Nie można wysłać wiadomości, ponieważ nie jesteś już w tym wątku czatu",
+    "sendMessageGeneric": "Nie udało się wysłać wiadomości",
+    "callingNetworkFailure": "Problem z nawiązaniem połączenia — wygląda na to, że jesteś w trybie offline",
+    "startVideoGeneric": "Nie można uruchomić wideo",
+    "stopVideoGeneric": "Nie można zatrzymać wideo",
+    "muteGeneric": "Nie można wyciszyć mikrofonu",
+    "unmuteGeneric": "Nie można wyłączyć wyciszenia mikrofonu",
+    "speakingWhileMuted": "Mikrofon jest wyciszony",
+    "startScreenShareGeneric": "Nie można uruchomić udostępniania ekranu",
+    "stopScreenShareGeneric": "Nie można zatrzymać udostępniania ekranu",
+    "callNetworkQualityLow": "Niska jakość sieci.",
+    "callNoSpeakerFound": "Nie znaleziono głośników ani słuchawek. Podłącz urządzenie audio, aby słyszeć rozmowę.",
+    "callNoMicrophoneFound": "Nie znaleziono mikrofonów. Podłącz urządzenie wejściowe audio.",
+    "callMicrophoneAccessDenied": "Nie można uzyskać dostępu do mikrofonu. Kliknij blokadę na pasku adresu, aby udzielić uprawnienia do tej strony sieci Web.",
+    "callMicrophoneAccessDeniedSafari": "Nie można uzyskać dostępu do mikrofonu. Odśwież stronę, aby zezwolić na uprawnienia, lub sprawdź ustawienia tej przeglądarki i sprawdź, czy uprawnienia są włączone dla tej witryny internetowej.",
+    "callMicrophoneMutedBySystem": "System wyciszył Cię.",
+    "callMicrophoneUnmutedBySystem": "Mikrofon został odzyskany i system wyłączył wyciszenie.",
+    "callMacOsMicrophoneAccessDenied": "Nie można uzyskać dostępu do mikrofonu. Udziel uprawnienia do mikrofonu w ustawieniach prywatności systemu macOS.",
+    "callLocalVideoFreeze": "Przepustowość sieci jest słaba. Twoje wideo może być wstrzymane dla innych osób podczas rozmowy.",
+    "callCameraAccessDenied": "Nie można uzyskać dostępu do kamery. Kliknij blokadę na pasku adresu, aby udzielić uprawnienia do tej strony sieci Web.",
+    "callCameraAccessDeniedSafari": "Nie można uzyskać dostępu do kamery. Odśwież stronę, aby zezwolić na uprawnienia, lub sprawdź ustawienia tej przeglądarki i sprawdź, czy uprawnienia są włączone dla tej witryny internetowej.",
+    "callCameraAlreadyInUse": "Nie można uzyskać dostępu do kamery. Być może jest już używany przez inną aplikację.",
+    "callVideoStoppedBySystem": "Wideo zostało zatrzymane przez system.",
+    "callVideoRecoveredBySystem": "Wideo zostało wznowione.",
+    "callMacOsCameraAccessDenied": "System MacOS blokuje dostęp do kamery. Zaktualizuj ustawienia prywatności, aby zezwolić tej przeglądarce na dostęp do kamery.",
+    "callMacOsScreenShareAccessDenied": "System MacOS blokuje udostępnianie ekranu. Zaktualizuj ustawienia prywatności, aby zezwolić tej przeglądarce na rejestrowanie ekranu.",
+    "dismissButtonAriaLabel": "Zamknij",
+    "failedToJoinCallGeneric": "Nie można dołączyć do rozmowy.",
+    "failedToJoinCallInvalidMeetingLink": "Nie można dołączyć do spotkania. Nieprawidłowy link.",
+    "startScreenSharingGeneric": "Wystąpił problem podczas uruchamiania udostępniania ekranu.",
+    "cameraFrozenForRemoteParticipants": "Użytkownicy w trakcie rozmowy mają problemy z wyświetleniem Twojego wideo. Sprawdź urządzenia i sieć."
+  },
+  "videoGallery": {
+    "screenIsBeingSharedMessage": "Udostępniasz ekran",
+    "screenShareLoadingMessage": "Ładowanie ekranu uczestnika {participant}",
+    "localVideoLabel": "Ty",
+    "localVideoCameraSwitcherLabel": "Przełącz kamerę",
+    "localVideoMovementLabel": "Ruchomy lokalny kafelek wideo",
+    "localVideoSelectedDescription": "Wybrano kamerę {cameraName}",
+    "displayNamePlaceholder": "Uczestnik bez nazwy",
+    "fitRemoteParticipantToFrame": "Dopasuj do ramki",
+    "fillRemoteParticipantFrame": "Wypełnij ramkę",
+    "pinParticipantForMe": "Przypnij dla mnie",
+    "pinParticipantForMeLimitReached": "Przypięcie (osiągnięto limit)",
+    "unpinParticipantForMe": "Odepnij",
+    "pinParticipantMenuItemAriaLabel": "Przypnij uczestnika {participantName}",
+    "unpinParticipantMenuItemAriaLabel": "Odepnij uczestnika {participantName}",
+    "pinnedParticipantAnnouncementAriaLabel": "Przypięty uczestnik {participantName}",
+    "unpinnedParticipantAnnouncementAriaLabel": "Odpięty uczestnik {participantName}"
+  },
+  "dialpad": {
+    "placeholderText": "Wprowadź numer telefonu",
+    "deleteButtonAriaLabel": "Usuń"
+  },
+  "holdButton": {
+    "onLabel": "Wznów",
+    "offLabel": "Zawieś",
+    "tooltipOnContent": "Wznów połączenie",
+    "tooltipOffContent": "Zawieś połączenie"
+  },
+  "videoTile": {
+    "participantStateRinging": "Trwa łączenie…",
+    "participantStateHold": "Zawieszony"
+  },
+  "CameraAndMicrophoneSitePermissionsRequest": {
+    "primaryText": "Zezwalaj {appName} na używanie kamery i mikrofonu",
+    "secondaryText": "Dzięki temu uczestnicy będą mogli Cię zobaczyć i usłyszeć.",
+    "linkText": "Potrzebujesz pomocy? Uzyskaj pomoc dotyczącą rozwiązywania problemów",
+    "primaryButtonText": "Kontynuuj bez kamery i mikrofonu",
+    "ariaLabel": "Zezwalaj na dostęp do kamery i mikrofonu"
+  },
+  "CameraSitePermissionsRequest": {
+    "primaryText": "Zezwalaj aplikacji {appName} na korzystanie z kamery",
+    "secondaryText": "Dzięki temu uczestnicy będą mogli Cię zobaczyć.",
+    "linkText": "Potrzebujesz pomocy? Uzyskaj pomoc dotyczącą rozwiązywania problemów",
+    "primaryButtonText": "Kontynuuj bez kamery",
+    "ariaLabel": "Zezwalaj na dostęp do kamery"
+  },
+  "MicrophoneSitePermissionsRequest": {
+    "primaryText": "Zezwalaj aplikacji {appName} na używanie mikrofonu",
+    "secondaryText": "Dzięki temu uczestnicy będą mogli Cię usłyszeć.",
+    "linkText": "Potrzebujesz pomocy? Uzyskaj pomoc dotyczącą rozwiązywania problemów",
+    "primaryButtonText": "Kontynuuj bez mikrofonu",
+    "ariaLabel": "Zezwalaj na dostęp do mikrofonu"
+  },
+  "CameraAndMicrophoneSitePermissionsCheck": {
+    "primaryText": "Sprawdzanie dostępu do kamery i mikrofonu",
+    "secondaryText": "Zezwalaj na dostęp, jeśli zostanie wyświetlony monit. Dzięki temu uczestnicy będą mogli Cię zobaczyć i usłyszeć.",
+    "linkText": "Potrzebujesz pomocy? Uzyskaj pomoc dotyczącą rozwiązywania problemów",
+    "primaryButtonText": "Kontynuuj bez kamery i mikrofonu",
+    "ariaLabel": "Sprawdzanie dostępu do kamery i mikrofonu. Zezwalaj na dostęp, jeśli zostanie wyświetlony monit."
+  },
+  "CameraSitePermissionsCheck": {
+    "primaryText": "Sprawdzanie dostępu do kamery",
+    "secondaryText": "Zezwalaj na dostęp, jeśli zostanie wyświetlony monit. Dzięki temu uczestnicy będą mogli Cię zobaczyć.",
+    "linkText": "Potrzebujesz pomocy? Uzyskaj pomoc dotyczącą rozwiązywania problemów",
+    "primaryButtonText": "Kontynuuj bez kamery",
+    "ariaLabel": "Sprawdzanie dostępu do kamery. Zezwalaj na dostęp, jeśli zostanie wyświetlony monit."
+  },
+  "MicrophoneSitePermissionsCheck": {
+    "primaryText": "Sprawdzanie dostępu do mikrofonu",
+    "secondaryText": "Zezwalaj na dostęp, jeśli zostanie wyświetlony monit. Dzięki temu uczestnicy będą mogli Cię usłyszeć.",
+    "linkText": "Potrzebujesz pomocy? Uzyskaj pomoc dotyczącą rozwiązywania problemów",
+    "primaryButtonText": "Kontynuuj bez mikrofonu",
+    "ariaLabel": "Sprawdzanie dostępu do mikrofonu. Zezwalaj na dostęp, jeśli zostanie wyświetlony monit."
+  },
+  "CameraAndMicrophoneSitePermissionsDenied": {
+    "primaryText": "Brak dostępu do kamery i mikrofonu",
+    "secondaryText": "Kliknij ikonę blokady na pasku adresu, aby udzielić uprawnień mikrofonu do tej strony sieci Web. Odświeżenie strony może być wymagane.",
+    "primaryButtonText": "Kontynuuj bez kamery i mikrofonu",
+    "linkText": "Potrzebujesz pomocy? Uzyskaj pomoc dotyczącą rozwiązywania problemów"
+  },
+  "CameraAndMicrophoneSitePermissionsDeniedSafari": {
+    "primaryText": "Brak dostępu do kamery i mikrofonu",
+    "secondaryText": "Odśwież stronę, aby zezwolić na uprawnienia, lub sprawdź ustawienia tej przeglądarki i sprawdź, czy uprawnienia są włączone dla tej witryny internetowej.",
+    "primaryButtonText": "Kontynuuj bez kamery i mikrofonu",
+    "linkText": "Potrzebujesz pomocy? Uzyskaj pomoc dotyczącą rozwiązywania problemów"
+  },
+  "CameraSitePermissionsDenied": {
+    "primaryText": "Brak dostępu do kamery",
+    "secondaryText": "Kliknij ikonę blokady na pasku adresu, aby udzielić uprawnień kamery do tej strony sieci Web. Odświeżenie strony może być wymagane.",
+    "primaryButtonText": "Kontynuuj bez kamery",
+    "linkText": "Potrzebujesz pomocy? Uzyskaj pomoc dotyczącą rozwiązywania problemów"
+  },
+  "MicrophoneSitePermissionsDenied": {
+    "primaryText": "Brak dostępu do mikrofonu",
+    "secondaryText": "Kliknij ikonę blokady na pasku adresu, aby udzielić uprawnień mikrofonu do tej strony sieci Web. Odświeżenie strony może być wymagane.",
+    "primaryButtonText": "Kontynuuj bez mikrofonu",
+    "linkText": "Potrzebujesz pomocy? Uzyskaj pomoc dotyczącą rozwiązywania problemów"
+  },
+  "CameraSitePermissionsDeniedSafari": {
+    "primaryText": "Brak dostępu do kamery",
+    "secondaryText": "Odśwież stronę, aby zezwolić na uprawnienia, lub sprawdź ustawienia tej przeglądarki i sprawdź, czy uprawnienia są włączone dla tej witryny internetowej.",
+    "primaryButtonText": "Kontynuuj bez kamery",
+    "linkText": "Potrzebujesz pomocy? Uzyskaj pomoc dotyczącą rozwiązywania problemów"
+  },
+  "MicrophoneSitePermissionsDeniedSafari": {
+    "primaryText": "Brak dostępu do mikrofonu",
+    "secondaryText": "Odśwież stronę, aby zezwolić na uprawnienia, lub sprawdź ustawienia tej przeglądarki i sprawdź, czy uprawnienia są włączone dla tej witryny internetowej.",
+    "primaryButtonText": "Kontynuuj bez mikrofonu",
+    "linkText": "Potrzebujesz pomocy? Uzyskaj pomoc dotyczącą rozwiązywania problemów"
+  },
+  "UnsupportedBrowser": {
+    "primaryText": "Nieobsługiwana przeglądarka",
+    "secondaryText": "Dołącz do tej rozmowy przy użyciu zgodnej przeglądarki.",
+    "moreHelpLinkText": "Zobacz wymagania dotyczące zgodności"
+  },
+  "UnsupportedBrowserVersion": {
+    "primaryText": "Wymagana aktualizacja przeglądarki",
+    "secondaryText": "Aby zapewnić najlepszą możliwą rozmowę, zaktualizuj przeglądarkę, a następnie spróbuj ponownie dołączyć do rozmowy.",
+    "moreHelpLinkText": "Zobacz wymagania dotyczące zgodności",
+    "continueAnywayButtonText": "Rozpocznij rozmowę bez aktualizowania"
+  },
+  "UnsupportedOperatingSystem": {
+    "primaryText": "System operacyjny nie jest obsługiwany",
+    "secondaryText": "Dołącz do tej rozmowy przy użyciu urządzenia ze zgodnym systemem operacyjnym.",
+    "moreHelpLinkText": "Zobacz wymagania dotyczące zgodności"
+  },
+  "BrowserPermissionDenied": {
+    "primaryText": "Nie można użyć kamery lub mikrofonu",
+    "secondaryText": "Twoja przeglądarka może nie mieć dostępu do kamery lub mikrofonu. Aby rozwiązać ten problem, otwórz okno Preferencje systemowe.",
+    "primaryButtonText": "Spróbuj ponownie",
+    "linkText": "Potrzebujesz pomocy? Uzyskaj pomoc dotyczącą rozwiązywania problemów"
+  },
+  "BrowserPermissionDeniedIOS": {
+    "primaryText": "Zezwalaj na dostęp do mikrofonu, aby kontynuować",
+    "secondaryText": "Inni uczestnicy będą mogli Cię usłyszeć.",
+    "primaryButtonText": "Spróbuj ponownie",
+    "imageAltText": "Lokalizacja uprawnień urządzenia z mikrofonem i kamerą dla systemu iOS",
+    "linkText": "Potrzebujesz pomocy? Uzyskaj pomoc dotyczącą rozwiązywania problemów",
+    "step1Text": "Przejdź do aplikacji Ustawienia",
+    "step2Text": "Przewiń w dół do ustawień dla tej przeglądarki",
+    "step3Text": "Włącz mikrofon (opcjonalnie kamerę)",
+    "step4Text": "Spróbuj ponownie dołączyć do rozmowy",
+    "step1DigitText": "1",
+    "step2DigitText": "2",
+    "step3DigitText": "3",
+    "step4DigitText": "4"
+  },
+  "VerticalGallery": {
+    "leftNavButtonAriaLabel": "poprzednia strona",
+    "rightNavButtonAriaLabel": "następna strona"
+  }
+}
