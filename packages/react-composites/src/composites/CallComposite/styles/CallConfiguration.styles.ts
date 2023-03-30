@@ -1,7 +1,15 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IStackItemStyles, IStackStyles, IStackTokens, IStyle, mergeStyles } from '@fluentui/react';
+import {
+  IStackItemStyles,
+  IStackStyles,
+  IStackTokens,
+  IStyle,
+  mergeStyles,
+  IButtonStyles,
+  Theme
+} from '@fluentui/react';
 
 /**
  * @private
@@ -125,3 +133,24 @@ export const startCallButtonStyleMobile = mergeStyles({
   width: '100%',
   maxWidth: 'unset'
 });
+
+/**
+ * @private
+ */
+export const effectsButtonStyles = (theme: Theme): IButtonStyles => {
+  return {
+    root: {
+      background: 'transparent',
+      border: 'none',
+      color: theme.palette.blue,
+      width: '40%',
+      alignSelf: 'end',
+      ':hover, :focus': {
+        color: theme.palette.blue
+      }
+    },
+    rootChecked: {
+      color: theme.palette.blue
+    }
+  };
+};
