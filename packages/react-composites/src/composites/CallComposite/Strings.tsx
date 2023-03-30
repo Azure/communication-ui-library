@@ -318,7 +318,7 @@ export interface CallCompositeStrings {
   /**
    * Label for the blur video background effect item
    */
-  blurBackgroundEffect?: string;
+  blurBackgroundEffectButtonLabel?: string;
   /* @conditional-compile-remove(video-background-effects) */
   /**
    * Tooltip text for the blur video background effect item
@@ -328,7 +328,7 @@ export interface CallCompositeStrings {
   /**
    * Label for the remove video background effect item
    */
-  removeBackgroundEffect?: string;
+  removeBackgroundEffectButtonLabel?: string;
   /* @conditional-compile-remove(video-background-effects) */
   /**
    * Tooltip text for the blur video background effect item

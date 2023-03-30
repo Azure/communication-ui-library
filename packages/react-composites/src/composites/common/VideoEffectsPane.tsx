@@ -34,7 +34,7 @@ export const VideoEffectsPane = (props: {
       iconProps: {
         iconName: 'RemoveVideoBackgroundEffect'
       },
-      title: strings.removeBackgroundEffect,
+      title: strings.removeBackgroundEffectButtonLabel,
       tooltipProps: {
         content: strings.removeBackgroundTooltip
       }
@@ -44,7 +44,7 @@ export const VideoEffectsPane = (props: {
       iconProps: {
         iconName: 'BlurVideoBackground'
       },
-      title: strings.blurBackgroundEffect,
+      title: strings.blurBackgroundEffectButtonLabel,
       tooltipProps: {
         content: strings.blurBackgroundTooltip
       }
