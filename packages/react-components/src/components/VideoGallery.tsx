@@ -149,7 +149,7 @@ export interface VideoGalleryStyles extends BaseCustomStyles {
  *
  * @beta
  */
-export type OverflowGalleryLayout = 'HorizontalBottom' | 'VerticalRight';
+export type OverflowGalleryPosition = 'HorizontalBottom' | 'VerticalRight';
 
 /**
  * Props for {@link VideoGallery}.
@@ -242,7 +242,7 @@ export interface VideoGalleryProps {
    * Determines the layout of the overflowGallery inside the VideoGallery.
    * @defaultValue 'HorizontalBottom'
    */
-  overflowGalleryLayout?: OverflowGalleryLayout;
+  overflowGalleryPosition?: OverflowGalleryPosition;
 }
 
 /* @conditional-compile-remove(pinned-participants) */
@@ -309,7 +309,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     /* @conditional-compile-remove(pinned-participants) */
     remoteVideoTileMenuOptions = DEFAULT_REMOTE_VIDEO_TILE_MENU_OPTIONS,
     /* @conditional-compile-remove(vertical-gallery) */
-    overflowGalleryLayout = 'HorizontalBottom'
+    overflowGalleryPosition = 'HorizontalBottom'
   } = props;
 
   const ids = useIdentifiers();
@@ -555,7 +555,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       parentWidth: containerWidth,
       parentHeight: containerHeight,
       /* @conditional-compile-remove(pinned-participants) */ pinnedParticipantUserIds: pinnedParticipants,
-      /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryLayout
+      /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryPosition
     }),
     [
       remoteParticipants,
@@ -570,7 +570,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       onRenderRemoteVideoTile,
       defaultOnRenderVideoTile,
       /* @conditional-compile-remove(pinned-participants) */ pinnedParticipants,
-      /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryLayout
+      /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryPosition
     ]
   );
 

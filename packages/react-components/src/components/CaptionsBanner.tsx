@@ -1,19 +1,19 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import { IPersona, Persona, Stack, PersonaSize, Text, mergeStyles } from '@fluentui/react';
+import { IPersona, Persona, Stack, PersonaSize, Text } from '@fluentui/react';
 import React, { useEffect, useRef } from 'react';
-import { _pxToRem } from '@internal/acs-ui-common';
 import { _FileUploadCardsStrings } from './FileUploadCards';
 import { OnRenderAvatarCallback } from '../types';
 import { Ref } from '@fluentui/react-northstar';
+import { captionClassName, displayNameClassName, gridContainerClassName } from './styles/CaptionsBanner.style';
 
 /**
  * @internal
  * information required for each line of caption
  */
-export type CaptionInfo = {
+export type _CaptionsInfo = {
   displayName: string;
-  caption: string;
+  captionText: string;
   userId?: string;
 };
 
@@ -22,7 +22,7 @@ export type CaptionInfo = {
  * _CaptionsBanner Component Props.
  */
 export interface _CaptionsBannerProps {
-  captions: CaptionInfo[];
+  captions: _CaptionsInfo[];
   /**
    * Optional callback to override render of the avatar.
    *
@@ -37,31 +37,6 @@ export interface _CaptionsBannerProps {
  */
 export const _CaptionsBanner = (props: _CaptionsBannerProps): JSX.Element => {
   const { captions, onRenderAvatar } = props;
-
-  const gridContainerClassName = mergeStyles({
-    overflowY: 'scroll',
-    overflowX: 'hidden',
-    width: '100%',
-    height: _pxToRem(60),
-    display: 'grid',
-    gridTemplateColumns: '20% 80%',
-    alignItems: 'stretch',
-    columnGap: _pxToRem(16),
-    padding: _pxToRem(8)
-  });
-
-  const displayNameClassName = mergeStyles({
-    fontWeight: 600,
-    fontSize: _pxToRem(12),
-    lineHeight: _pxToRem(30)
-  });
-
-  const captionClassName = mergeStyles({
-    fontWeight: 400,
-    fontSize: _pxToRem(16),
-    lineHeight: _pxToRem(30)
-  });
-
   const captionsScrollDivRef = useRef<HTMLElement>(null);
   const scrollToBottom = (): void => {
     if (captionsScrollDivRef.current) {
@@ -76,7 +51,7 @@ export const _CaptionsBanner = (props: _CaptionsBannerProps): JSX.Element => {
   return (
     <Ref innerRef={captionsScrollDivRef}>
       <div data-is-focusable={true} className={gridContainerClassName}>
-        {captions.map((caption) => {
+        {captions.map((caption, key) => {
           const personaOptions: IPersona = {
             hidePersonaDetails: true,
             size: PersonaSize.size24,
@@ -97,15 +72,15 @@ export const _CaptionsBanner = (props: _CaptionsBannerProps): JSX.Element => {
 
           return (
             <>
-              <div>
+              <div key={`username_${key}`}>
                 <Stack horizontal verticalAlign="center" horizontalAlign="end">
                   <span>{userIcon}</span>
                   <Text className={displayNameClassName}>{caption.displayName}</Text>
                 </Stack>
               </div>
-              <div>
+              <div key={`captionText_${key}`}>
                 <span>
-                  <Text className={captionClassName}>{caption.caption}</Text>
+                  <Text className={captionClassName}>{caption.captionText}</Text>
                 </span>
               </div>
             </>

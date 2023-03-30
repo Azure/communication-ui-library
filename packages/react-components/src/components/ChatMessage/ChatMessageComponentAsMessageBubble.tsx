@@ -15,7 +15,12 @@ import { useIdentifiers } from '../../identifiers/IdentifierProvider';
 import { useTheme } from '../../theming';
 import { ChatMessageActionFlyout } from './ChatMessageActionsFlyout';
 import { ChatMessageContent } from './ChatMessageContent';
-import { ChatAttachment, ChatMessage } from '../../types/ChatMessage';
+import { ChatMessage } from '../../types/ChatMessage';
+import { FileMetadata } from '../FileDownloadCards';
+/* @conditional-compile-remove(data-loss-prevention) */
+import { BlockedMessageContent } from './ChatMessageContent';
+/* @conditional-compile-remove(data-loss-prevention) */
+import { BlockedMessage } from '../../types/ChatMessage';
 import { MessageThreadStrings } from '../MessageThread';
 import { chatMessageActionMenuProps } from './ChatMessageActionMenu';
 import { OnRenderAvatarCallback } from '../../types';
@@ -23,7 +28,7 @@ import { _FileDownloadCards, FileDownloadHandler } from '../FileDownloadCards';
 import { ComponentLocale, useLocale } from '../../localization';
 
 type ChatMessageComponentAsMessageBubbleProps = {
-  message: ChatMessage;
+  message: ChatMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage;
   messageContainerStyle?: ComponentSlotStyle;
   showDate?: boolean;
   disableEditing?: boolean;
@@ -67,7 +72,7 @@ type ChatMessageComponentAsMessageBubbleProps = {
    * Optional function to fetch attachments.
    * @beta
    */
-  onFetchAttachments?: (attachment: ChatAttachment) => Promise<void>;
+  onFetchAttachments?: (attachment: FileMetadata) => Promise<void>;
   /* @conditional-compile-remove(teams-inline-images) */
   /**
    * Optional map of attachment ids to blob urls.
@@ -146,7 +151,11 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     React.MutableRefObject<HTMLElement | null> | undefined
   >(undefined);
 
-  const chatActionsEnabled = !disableEditing && message.status !== 'sending' && !!message.mine;
+  const chatActionsEnabled =
+    !disableEditing &&
+    message.status !== 'sending' &&
+    !!message.mine &&
+    /* @conditional-compile-remove(data-loss-prevention) */ message.messageType !== 'blocked';
   const [messageReadBy, setMessageReadBy] = useState<{ id: string; displayName: string }[]>([]);
 
   const actionMenuProps = wasInteractionByTouch
@@ -158,8 +167,10 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
         // Force show the action button while the flyout is open (otherwise this will dismiss when the pointer is hovered over the flyout)
         forceShow: chatMessageActionFlyoutTarget === messageActionButtonRef,
         onActionButtonClick: () => {
-          props.onActionButtonClick(message, setMessageReadBy);
-          setChatMessageActionFlyoutTarget(messageActionButtonRef);
+          if (message.messageType === 'chat') {
+            props.onActionButtonClick(message, setMessageReadBy);
+            setChatMessageActionFlyoutTarget(messageActionButtonRef);
+          }
         },
         theme
       });
@@ -191,16 +202,37 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     ]
   );
 
-  const messageContentAriaText = props.message.content
-    ? props.message.mine
-      ? _formatString(strings.messageContentMineAriaText, {
-          message: props.message.content
-        })
-      : _formatString(strings.messageContentAriaText, {
-          author: `${props.message.senderDisplayName}`,
-          message: props.message.content
-        })
-    : undefined;
+  const editedOn = 'editedOn' in message ? message.editedOn : undefined;
+  const getMessageDetails = useCallback(() => {
+    if (messageStatus === 'failed') {
+      return <div className={chatMessageFailedTagStyle(theme)}>{strings.failToSendTag}</div>;
+    } else if (message.messageType === 'chat' && editedOn) {
+      return <div className={chatMessageEditedTagStyle(theme)}>{strings.editedTag}</div>;
+    }
+    return undefined;
+  }, [editedOn, message.messageType, messageStatus, strings.editedTag, strings.failToSendTag, theme]);
+
+  const getContent = useCallback(() => {
+    /* @conditional-compile-remove(data-loss-prevention) */
+    if (message.messageType === 'blocked') {
+      return (
+        <div tabIndex={0}>
+          <BlockedMessageContent message={message} strings={strings} />
+        </div>
+      );
+    }
+    return (
+      <div tabIndex={0}>
+        <ChatMessageContent
+          message={message}
+          strings={strings}
+          onFetchAttachment={props.onFetchAttachments}
+          attachmentsMap={props.attachmentsMap}
+        />
+        {props.onRenderFileDownloads ? props.onRenderFileDownloads(userId, message) : defaultOnRenderFileDownloads()}
+      </div>
+    );
+  }, [defaultOnRenderFileDownloads, message, props, strings, userId]);
 
   const chatMessage = (
     <>
@@ -209,30 +241,11 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
           data-ui-id="chat-composite-message"
           className={mergeStyles(messageContainerStyle as IStyle)}
           styles={messageContainerStyle}
-          content={
-            <div tabIndex={0}>
-              <ChatMessageContent
-                message={message}
-                liveAuthorIntro={strings.liveAuthorIntro}
-                messageContentAriaText={messageContentAriaText}
-                onFetchAttachment={props.onFetchAttachments}
-                attachmentsMap={props.attachmentsMap}
-              />
-              {props.onRenderFileDownloads
-                ? props.onRenderFileDownloads(userId, message)
-                : defaultOnRenderFileDownloads()}
-            </div>
-          }
+          content={getContent()}
           author={<Text className={chatMessageDateStyle}>{message.senderDisplayName}</Text>}
           mine={message.mine}
           timestamp={<Text data-ui-id={ids.messageTimestamp}>{formattedTimestamp}</Text>}
-          details={
-            messageStatus === 'failed' ? (
-              <div className={chatMessageFailedTagStyle(theme)}>{strings.failToSendTag}</div>
-            ) : message.editedOn ? (
-              <div className={chatMessageEditedTagStyle(theme)}>{strings.editedTag}</div>
-            ) : undefined
-          }
+          details={getMessageDetails()}
           positionActionMenu={false}
           actionMenu={actionMenuProps}
           onTouchStart={() => setWasInteractionByTouch(true)}
@@ -249,7 +262,9 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
             // In doing so here we set the target of the flyout to be the message and
             // not the 3-dot menu button to position the flyout correctly.
             setChatMessageActionFlyoutTarget(messageRef);
-            props.onActionButtonClick(message, setMessageReadBy);
+            if (message.messageType === 'chat') {
+              props.onActionButtonClick(message, setMessageReadBy);
+            }
           }}
         />
       </div>
