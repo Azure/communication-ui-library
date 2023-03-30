@@ -29,6 +29,7 @@ export type {
   CustomCallControlButtonProps
 } from './common/types/CommonCallControlOptions';
 
+/* @conditional-compile-remove(control-bar-button-injection) */
 export type {
   CustomCallControlButtonCallback,
   CustomCallControlButtonPlacement
