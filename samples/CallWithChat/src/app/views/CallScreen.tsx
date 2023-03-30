@@ -9,7 +9,8 @@ import {
   CallAndChatLocator,
   CallWithChatAdapterState,
   CallWithChatComposite,
-  CallWithChatAdapter
+  CallWithChatAdapter,
+  AzureCommunicationCallAdapterOptions
 } from '@azure/communication-react';
 import { Spinner } from '@fluentui/react';
 import React, { useCallback, useEffect, useMemo, useRef } from 'react';
@@ -17,6 +18,8 @@ import { useSwitchableFluentTheme } from '../theming/SwitchableFluentThemeProvid
 import { createAutoRefreshingCredential } from '../utils/credential';
 import { WEB_APP_TITLE } from '../utils/constants';
 import { useIsMobile } from '../utils/useIsMobile';
+// // eslint-disable-next-line no-restricted-imports
+// import { VideoBackgroundImage } from '@internal/react-composites';
 
 export interface CallScreenProps {
   token: string;
@@ -49,6 +52,19 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
   const callIdRef = useRef<string>();
   const { currentTheme, currentRtl } = useSwitchableFluentTheme();
   const isMobileSession = useIsMobile();
+
+  const callAdapterOptions: AzureCommunicationCallAdapterOptions = useMemo(() => {
+    const videoBackgroundImages = {
+      videoBackgroundImages: [
+        {
+          key: 'customBackground1',
+          url: '/images/bg1.jpg',
+          tooltipText: 'customBackground1'
+        }
+      ]
+    };
+    return videoBackgroundImages;
+  }, []);
 
   const credential = useMemo(
     () => createAutoRefreshingCredential(toFlatCommunicationIdentifier(userId), token),
@@ -88,7 +104,9 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
       credential,
       endpoint,
       locator,
-      /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId
+      /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
+      /* @conditional-compile-remove(video-background-effects) */
+      callAdapterOptions
     },
     afterAdapterCreate
   );

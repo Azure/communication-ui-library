@@ -104,6 +104,7 @@ export type AzureCommunicationCallAdapterArgs = {
 // @beta
 export type AzureCommunicationCallAdapterOptions = {
     roleHint?: Role;
+    videoBackgroundImages?: VideoBackgroundImage[];
 };
 
 // @public
@@ -197,6 +198,8 @@ export interface CallAdapterCallOperations {
     // @beta
     stopVideoBackgroundEffect(): Promise<void>;
     unmute(): Promise<void>;
+    // @beta
+    updateBackgroundPickerImages(backgroundImages: VideoBackgroundImage[]): void;
 }
 
 // @public
@@ -547,6 +550,8 @@ export interface CallWithChatAdapterManagement {
     // @beta
     stopVideoBackgroundEffect(): Promise<void>;
     unmute(): Promise<void>;
+    // @beta
+    updateBackgroundPickerImages(backgroundImages: VideoBackgroundImage[]): void;
     // @beta (undocumented)
     updateFileUploadErrorMessage: (id: string, errorMessage: string) => void;
     // @beta (undocumented)

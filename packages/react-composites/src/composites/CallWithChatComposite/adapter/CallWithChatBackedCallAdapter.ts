@@ -3,6 +3,8 @@
 
 import { CallWithChatAdapter } from './CallWithChatAdapter';
 import { CallAdapter, CallAdapterState } from '../../CallComposite';
+/* @conditional-compile-remove(video-background-effects) */
+import { VideoBackgroundImage } from '../../CallComposite';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 import {
   AudioDeviceInfo,
@@ -172,6 +174,10 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
   /* @conditional-compile-remove(video-background-effects) */
   public async stopVideoBackgroundEffect(): Promise<void> {
     await this.callWithChatAdapter.stopVideoBackgroundEffect();
+  }
+  /* @conditional-compile-remove(video-background-effects) */
+  public updateBackgroundPickerImages(backgroundImages: VideoBackgroundImage[]): void {
+    return this.callWithChatAdapter.updateBackgroundPickerImages(backgroundImages);
   }
 }
 
