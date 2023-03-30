@@ -372,11 +372,11 @@ export const controlsToAdd = {
     defaultValue: 'floatingLocalVideo',
     name: 'VideoGallery Layout'
   },
-  overflowGalleryLayout: {
+  overflowGalleryPosition: {
     control: 'select',
     options: OVERFLOW_GALLERY_LAYOUTS,
     defaultValue: 'HorizontalBottom',
-    name: 'Overflow Gallery Layout'
+    name: 'Overflow Gallery Position'
   },
   videoTileHeight: { control: { type: 'range', min: 80, max: 800, step: 10 }, defaultValue: 300, name: 'Height (px)' },
   videoTileWidth: { control: { type: 'range', min: 100, max: 1200, step: 10 }, defaultValue: 400, name: 'Width (px)' },

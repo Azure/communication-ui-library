@@ -31,7 +31,9 @@ import {
   GetAvatarUrlByUserId,
   GenerateMockNewChatMessageWithInlineImage
 } from './placeholdermessages';
+import { MessageThreadWithBlockedMessagesExample } from './snippets/BlockedMessages.snippet';
 import { MessageThreadWithCustomAvatarExample } from './snippets/CustomAvatar.snippet';
+import { MessageThreadWithCustoBlockedmMessageContainerExample } from './snippets/CustomBlockedMessage.snippet';
 import { MessageThreadWithCustomChatContainerExample } from './snippets/CustomChatContainer.snippet';
 import { MessageThreadWithCustomMessageContainerExample } from './snippets/CustomMessageContainer.snippet';
 import { MessageThreadWithCustomMessagesExample } from './snippets/CustomMessages.snippet';
@@ -43,7 +45,11 @@ import { MessageWithFile } from './snippets/MessageWithFile.snippet';
 import { MessageThreadWithSystemMessagesExample } from './snippets/SystemMessages.snippet';
 import { MessageThreadWithMessageDateExample } from './snippets/WithMessageDate.snippet';
 
+const MessageThreadWithBlockedMessagesExampleText =
+  require('!!raw-loader!./snippets/BlockedMessages.snippet.tsx').default;
 const MessageThreadWithCustomAvatarExampleText = require('!!raw-loader!./snippets/CustomAvatar.snippet.tsx').default;
+const MessageThreadWithCustoBlockedmMessageContainerExampleText =
+  require('!!raw-loader!./snippets/CustomBlockedMessage.snippet.tsx').default;
 const MessageThreadWithCustomChatContainerExampleText =
   require('!!raw-loader!./snippets/CustomChatContainer.snippet.tsx').default;
 const MessageThreadWithCustomMessageContainerExampleText =
@@ -111,6 +117,15 @@ const getDocs: () => JSX.Element = () => {
         <MessageThreadWithSystemMessagesExample />
       </Canvas>
 
+      <Heading>Blocked Message</Heading>
+      <Description>
+        The example below shows a message thread with a blocked message. If `link` is not provided, it will omit the
+        hyperlink.
+      </Description>
+      <Canvas mdxSource={MessageThreadWithBlockedMessagesExampleText}>
+        <MessageThreadWithBlockedMessagesExample />
+      </Canvas>
+
       <Heading>Custom Message</Heading>
       <Description>
         The example below shows how to render a `custom` message with `onRenderMessage` in `MessageThread`
@@ -138,6 +153,16 @@ const getDocs: () => JSX.Element = () => {
       </Description>
       <Canvas mdxSource={MessageThreadWithCustomMessageContainerExampleText}>
         <MessageThreadWithCustomMessageContainerExample />
+      </Canvas>
+
+      <Heading>Messages with Customized Blocked message Container</Heading>
+      <Description>
+        The example below shows how to render a `blocked` message with custom `warningText`, with
+        `styles.blockedMessageContainer` for styling, and rendering your own JSX.Element with with `onRenderMessage` in
+        `MessageThread`
+      </Description>
+      <Canvas mdxSource={MessageThreadWithCustoBlockedmMessageContainerExampleText}>
+        <MessageThreadWithCustoBlockedmMessageContainerExample />
       </Canvas>
 
       <Heading>Default Message Status Indicator</Heading>

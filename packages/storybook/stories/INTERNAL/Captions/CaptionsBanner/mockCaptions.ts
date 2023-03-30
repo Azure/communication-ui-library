@@ -1,53 +1,53 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { CaptionInfo } from '@internal/react-components';
+import { _CaptionsInfo } from '@internal/react-components';
 
-export const GenerateMockNewCaption = (): CaptionInfo => {
+export const GenerateMockNewCaption = (): _CaptionsInfo => {
   return {
     displayName: 'SpongeBob',
-    caption:
+    captionText:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
   };
 };
 
-export const GenerateMockNewShortCaption = (): CaptionInfo => {
+export const GenerateMockNewShortCaption = (): _CaptionsInfo => {
   return {
     displayName: 'SpongeBob Patrick',
-    caption: 'Lorem ipsum dolor sit amet'
+    captionText: 'Lorem ipsum dolor sit amet'
   };
 };
 
-export const GenerateMockNewCaptionWithLongName = (): CaptionInfo => {
+export const GenerateMockNewCaptionWithLongName = (): _CaptionsInfo => {
   return {
     displayName: 'SpongeBob Patrick Robert',
-    caption: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt'
+    captionText: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt'
   };
 };
 
-export const GenerateMockNewCaptions = (): CaptionInfo[] => {
+export const GenerateMockNewCaptions = (): _CaptionsInfo[] => {
   return [
     {
       displayName: 'Caroline',
-      caption: 'Hello there'
+      captionText: 'Hello there'
     },
     {
       displayName: 'Mike',
-      caption: 'Hi welcome'
+      captionText: 'Hi welcome'
     },
     {
       displayName: 'SpongeBob Patrick Robert',
-      caption:
+      captionText:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
     },
     {
       displayName: 'Patrick',
-      caption:
+      captionText:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.'
     },
     {
       displayName: 'Sandy',
-      caption: 'Lorem ipsum dolor sit amet'
+      captionText: 'Lorem ipsum dolor sit amet'
     }
   ];
 };
