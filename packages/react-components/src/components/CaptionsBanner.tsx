@@ -55,7 +55,7 @@ export const _CaptionsBanner = (props: _CaptionsBannerProps): JSX.Element => {
     if (isAtBottomOfScroll) {
       scrollToBottom();
     }
-  }, [captions]);
+  }, [captions, isAtBottomOfScroll]);
 
   return (
     <div data-is-focusable={true}>
