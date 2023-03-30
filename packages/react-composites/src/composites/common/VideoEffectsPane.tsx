@@ -79,9 +79,11 @@ const VideoEffectsPaneTrampoline = (
   onEffectChange?: (effectKey: string) => Promise<void>
 ): JSX.Element => {
   /* @conditional-compile-remove(video-background-effects) */
+  const locale = useLocale();
+  /* @conditional-compile-remove(video-background-effects) */
   return (
     <Panel
-      headerText="Effects"
+      headerText={locale.strings.call.effects}
       isOpen={showVideoEffectsOptions}
       onDismiss={() => setshowVideoEffectsOptions(false)}
       hasCloseButton={true}
