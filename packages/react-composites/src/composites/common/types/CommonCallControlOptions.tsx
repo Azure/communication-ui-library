@@ -2,7 +2,9 @@
 // Licensed under the MIT license.
 
 import { BaseCustomStyles, ControlBarButtonStyles } from '@internal/react-components';
-import { CustomCallControlButtonCallback, CustomCallControlButtonPlacement } from '../ControlBar/CustomButton';
+import { CustomCallControlButtonPlacement } from '../ControlBar/CustomButton';
+/* @conditional-compile-remove(control-bar-button-injection) */
+import { CustomCallControlButtonCallback } from '../ControlBar/CustomButton';
 
 /**
  * Control bar display type for {@link CallComposite}.
