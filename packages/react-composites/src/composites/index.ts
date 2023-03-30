@@ -26,7 +26,10 @@ export type { BaseCompositeProps } from './common/BaseComposite';
 export type {
   CustomCallControlButtonCallbackArgs,
   CustomControlButtonProps,
-  CustomCallControlButtonCallback,
-  CustomCallControlButtonProps,
-  CustomCallControlButtonPlacement
+  CustomCallControlButtonProps
 } from './common/types/CommonCallControlOptions';
+
+export type {
+  CustomCallControlButtonCallback,
+  CustomCallControlButtonPlacement
+} from './common/ControlBar/CustomButton';

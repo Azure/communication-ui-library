@@ -163,6 +163,8 @@ export type CustomCallControlButtonCallback = (
  * E.g., if two buttons are placed in 'secondary', they'll both appear on the left end (right end in rtl mode)
  * in the order provided.
  *
+ * Only 'primary' placement works when legacy call control is enabled in call composite
+ *
  * @beta
  */
 export type CustomCallControlButtonPlacement = 'primary' | 'overflow' | 'secondary';

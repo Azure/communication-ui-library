@@ -1011,7 +1011,9 @@ export const createTeamsCallAdapter: ({ userId, credential, locator, options }: 
 export const createTeamsCallAdapterFromClient: (callClient: StatefulCallClient, callAgent: TeamsCallAgent, locator: CallAdapterLocator, options?: TeamsAdapterOptions | undefined) => Promise<TeamsCallAdapter>;
 
 // @beta
-export type CustomCallControlButtonCallback = (args: CustomCallControlButtonCallbackArgs) => CustomCallControlButtonProps;
+type CustomCallControlButtonCallback = (args: CustomCallControlButtonCallbackArgs) => CustomCallWithChatControlButtonProps;
+export { CustomCallControlButtonCallback }
+export { CustomCallControlButtonCallback as CustomCallWithChatControlButtonCallback }
 
 // @beta
 export interface CustomCallControlButtonCallbackArgs {
@@ -1019,7 +1021,9 @@ export interface CustomCallControlButtonCallbackArgs {
 }
 
 // @beta
-export type CustomCallControlButtonPlacement = 'primary';
+type CustomCallControlButtonPlacement = 'primary' | 'overflow' | 'secondary';
+export { CustomCallControlButtonPlacement }
+export { CustomCallControlButtonPlacement as CustomCallWithChatControlButtonPlacement }
 
 // @beta
 export interface CustomCallControlButtonProps extends CustomControlButtonProps {
@@ -1028,15 +1032,9 @@ export interface CustomCallControlButtonProps extends CustomControlButtonProps {
 }
 
 // @beta
-export type CustomCallWithChatControlButtonCallback = (args: CustomCallControlButtonCallbackArgs) => CustomCallWithChatControlButtonProps;
-
-// @beta
-export type CustomCallWithChatControlButtonPlacement = 'primary' | 'overflow' | 'secondary';
-
-// @beta
 export interface CustomCallWithChatControlButtonProps extends CustomControlButtonProps {
     iconName?: string;
-    placement: CustomCallWithChatControlButtonPlacement;
+    placement: CustomCallControlButtonPlacement;
 }
 
 // @beta

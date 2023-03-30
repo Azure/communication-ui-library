@@ -10,8 +10,6 @@ export type { RemoteVideoTileMenuOptions } from './CallComposite';
 export type { CallControlOptions } from './types/CallControlOptions';
 /* @conditional-compile-remove(control-bar-button-injection) */
 export type {
-  CustomCallControlButtonPlacement,
-  CustomCallControlButtonCallback,
   CustomCallControlButtonCallbackArgs,
   CustomCallControlButtonProps,
   CustomControlButtonProps

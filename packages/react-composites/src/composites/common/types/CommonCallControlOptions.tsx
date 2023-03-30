@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 
 import { BaseCustomStyles, ControlBarButtonStyles } from '@internal/react-components';
+import { CustomCallControlButtonCallback, CustomCallControlButtonPlacement } from '../ControlBar/CustomButton';
 
 /**
  * Control bar display type for {@link CallComposite}.
@@ -90,32 +91,6 @@ export type CommonCallControlOptions = {
    */
   peopleButton?: boolean | /* @conditional-compile-remove(PSTN-calls) */ { disabled: boolean };
 };
-
-/**
- * Placement for a custom button injected in the {@link CallControls}.
- *
- * 'primary': Place the button(s) on the right end of the center control bar but before the EndCallButton (left end in rtl mode).
- *
- * Multiple buttons assigned the same placement are appended in order.
- * E.g., if two buttons are placed in 'primary', they'll both appear on the right end (left end in rtl mode)
- * before the EndCallButton in the order provided.
- *
- * @beta
- */
-export type CustomCallControlButtonPlacement = 'primary';
-
-/**
- * A callback that returns the props to render a custom {@link ControlBarButton}.
- *
- * The response indicates where the custom button should be placed.
- *
- * Performance tip: This callback is only called when either the callback or its arguments change.
- *
- * @beta
- */
-export type CustomCallControlButtonCallback = (
-  args: CustomCallControlButtonCallbackArgs
-) => CustomCallControlButtonProps;
 
 /**
  * Arguments for {@link CustomCallControlButtonCallback}.
