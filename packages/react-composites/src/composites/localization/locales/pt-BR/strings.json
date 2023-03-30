@@ -1,6 +1,7 @@
 {
   "call": {
     "cameraLabel": "Câmera",
+    "noCamerasLabel": "Nenhuma câmera encontrada",
     "cameraPermissionDenied": "Seu navegador está bloqueando o acesso à câmera",
     "cameraTurnedOff": "Sua câmera está desativada",
     "chatButtonLabel": "Chat",
@@ -53,6 +54,8 @@
     "roomNotFoundDetails": "A ID da sala fornecida não é válida.",
     "roomNotFoundTitle": "Sala não encontrada",
     "soundLabel": "Som",
+    "noMicrophonesLabel": "Nenhum microfone encontrado",
+    "noSpeakersLabel": "Nenhum alto-falante encontrado",
     "startCallButtonLabel": "Iniciar chamada",
     "openDialpadButtonLabel": "Número de telefone de discagem",
     "peoplePaneAddPeopleButtonLabel": "Adicionar Pessoas",
@@ -67,8 +70,19 @@
     "resumingCallButtonAriaLabel": "Retomar chamada",
     "holdScreenLabel": "Você está em espera",
     "openDtmfDialpadLabel": "Mostrar teclado de discagem",
-    "dtmfDialpadPlaceHolderText": "Digite o número",
-    "outboundCallingNoticeString": "Chamando..."
+    "dtmfDialpadPlaceholderText": "Digite o número",
+    "outboundCallingNoticeString": "Chamando...",
+    "participantJoinedNoticeString": "{displayName} ingressou",
+    "twoParticipantJoinedNoticeString": "{displayName1} e {displayName2} ingressaram",
+    "threeParticipantJoinedNoticeString": "{displayName1}, {displayName2} e {displayName3} ingressaram",
+    "participantLeftNoticeString": "{displayName} saiu",
+    "twoParticipantLeftNoticeString": "{displayName1} e {displayName2} saíram",
+    "threeParticipantLeftNoticeString": "{displayName1}, {displayName2} e {displayName3} saíram",
+    "unnamedParticipantString": "participante sem nome",
+    "manyUnnamedParticipantsJoined": "participante sem nome e outros {numOfParticipants} participantes ingressaram",
+    "manyUnnamedParticipantsLeft": "participante sem nome e outros {numOfParticipants} participantes saíram",
+    "manyParticipantsJoined": "{displayName1}, {displayName2}, {displayName3} e {numOfParticipants} outros participantes ingressaram",
+    "manyParticipantsLeft": "{displayName1}, {displayName2}, {displayName3} e {numOfParticipants} outros participantes saíram"
   },
   "chat": {
     "chatListHeader": "Neste chat",
@@ -105,6 +119,6 @@
     "dialpadModalAriaLabel": "Teclado de discagem",
     "dialpadCloseModalButtonAriaLabel": "Fechar teclado",
     "openDtmfDialpadLabel": "Mostrar teclado de discagem",
-    "dtmfDialpadPlaceHolderText": "Digite o número"
+    "dtmfDialpadPlaceholderText": "Digite o número"
   }
 }

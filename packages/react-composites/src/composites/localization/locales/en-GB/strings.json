@@ -1,6 +1,7 @@
 {
   "call": {
     "cameraLabel": "Camera",
+    "noCamerasLabel": "No cameras found",
     "cameraPermissionDenied": "Your browser is blocking access to your camera",
     "cameraTurnedOff": "Your camera is turned off",
     "chatButtonLabel": "Chat",
@@ -53,6 +54,8 @@
     "roomNotFoundDetails": "Room ID provided is not valid.",
     "roomNotFoundTitle": "Room not found",
     "soundLabel": "Sound",
+    "noMicrophonesLabel": "No microphones found",
+    "noSpeakersLabel": "No speakers found",
     "startCallButtonLabel": "Start call",
     "openDialpadButtonLabel": "Dial phone number",
     "peoplePaneAddPeopleButtonLabel": "Add People",
@@ -67,8 +70,19 @@
     "resumingCallButtonAriaLabel": "Resume call",
     "holdScreenLabel": "You're on hold",
     "openDtmfDialpadLabel": "Show dialpad",
-    "dtmfDialpadPlaceHolderText": "Enter number",
-    "outboundCallingNoticeString": "Calling..."
+    "dtmfDialpadPlaceholderText": "Enter number",
+    "outboundCallingNoticeString": "Calling...",
+    "participantJoinedNoticeString": "{displayName} joined",
+    "twoParticipantJoinedNoticeString": "{displayName1} and {displayName2} have joined",
+    "threeParticipantJoinedNoticeString": "{displayName1}, {displayName2} and {displayName3} have joined",
+    "participantLeftNoticeString": "{displayName} left",
+    "twoParticipantLeftNoticeString": "{displayName1} and {displayName2} have left",
+    "threeParticipantLeftNoticeString": "{displayName1}, {displayName2} and {displayName3} have left",
+    "unnamedParticipantString": "unnamed participant",
+    "manyUnnamedParticipantsJoined": "unnamed participant and {numOfParticipants} other participants joined",
+    "manyUnnamedParticipantsLeft": "unnamed participant and {numOfParticipants} other participants left",
+    "manyParticipantsJoined": "{displayName1}, {displayName2}, {displayName3} and {numOfParticipants} other participants joined",
+    "manyParticipantsLeft": "{displayName1}, {displayName2}, {displayName3} and {numOfParticipants} other participants left"
   },
   "chat": {
     "chatListHeader": "In this chat",
@@ -105,6 +119,6 @@
     "dialpadModalAriaLabel": "Dialpad",
     "dialpadCloseModalButtonAriaLabel": "Close dialpad",
     "openDtmfDialpadLabel": "Show dialpad",
-    "dtmfDialpadPlaceHolderText": "Enter number"
+    "dtmfDialpadPlaceholderText": "Enter number"
   }
 }

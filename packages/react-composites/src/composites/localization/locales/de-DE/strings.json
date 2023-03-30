@@ -1,6 +1,7 @@
 {
   "call": {
     "cameraLabel": "Kamera",
+    "noCamerasLabel": "Keine Kameras gefunden",
     "cameraPermissionDenied": "Ihr Browser blockiert den Zugriff auf Ihre Kamera.",
     "cameraTurnedOff": "Ihre Kamera ist deaktiviert.",
     "chatButtonLabel": "Chat",
@@ -53,6 +54,8 @@
     "roomNotFoundDetails": "Die angegebene Raum-ID ist ungültig.",
     "roomNotFoundTitle": "Raum nicht gefunden",
     "soundLabel": "Sound",
+    "noMicrophonesLabel": "Keine Mikrofone gefunden",
+    "noSpeakersLabel": "Keine Lautsprecher gefunden",
     "startCallButtonLabel": "Anruf beginnen",
     "openDialpadButtonLabel": "Telefonnummer wählen",
     "peoplePaneAddPeopleButtonLabel": "Personen hinzufügen",
@@ -67,8 +70,19 @@
     "resumingCallButtonAriaLabel": "Anruf fortsetzen",
     "holdScreenLabel": "Sie sind in der Warteschleife.",
     "openDtmfDialpadLabel": "Wähltastatur anzeigen",
-    "dtmfDialpadPlaceHolderText": "Nummer eingeben",
-    "outboundCallingNoticeString": "Anrufen..."
+    "dtmfDialpadPlaceholderText": "Nummer eingeben",
+    "outboundCallingNoticeString": "Anrufen...",
+    "participantJoinedNoticeString": "{displayName} ist beigetreten.",
+    "twoParticipantJoinedNoticeString": "{displayName1} und {displayName2} sind beigetreten.",
+    "threeParticipantJoinedNoticeString": "{displayName1}, {displayName2} und {displayName3} sind beigetreten.",
+    "participantLeftNoticeString": "{displayName} ist gegangen.",
+    "twoParticipantLeftNoticeString": "{displayName1} und {displayName2} sind gegangen.",
+    "threeParticipantLeftNoticeString": "{displayName1}, {displayName2} und {displayName3} sind gegangen.",
+    "unnamedParticipantString": "unbenannter Teilnehmer",
+    "manyUnnamedParticipantsJoined": "unbenannter Teilnehmer und {numOfParticipants} weitere Teilnehmer sind beigetreten.",
+    "manyUnnamedParticipantsLeft": "unbenannter Teilnehmer und {numOfParticipants} weitere Teilnehmer sind gegangen.",
+    "manyParticipantsJoined": "{displayName1}, {displayName2}, {displayName3} und {numOfParticipants} anderen Teilnehmern sind beigetreten.",
+    "manyParticipantsLeft": "{displayName1}, {displayName2}, {displayName3} und {numOfParticipants} anderen Teilnehmer verlassen"
   },
   "chat": {
     "chatListHeader": "In diesem Chat",
@@ -105,6 +119,6 @@
     "dialpadModalAriaLabel": "Wähltastatur",
     "dialpadCloseModalButtonAriaLabel": "Wähltastatur schließen",
     "openDtmfDialpadLabel": "Wähltastatur anzeigen",
-    "dtmfDialpadPlaceHolderText": "Nummer eingeben"
+    "dtmfDialpadPlaceholderText": "Nummer eingeben"
   }
 }

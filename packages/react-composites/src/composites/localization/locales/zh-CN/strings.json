@@ -1,6 +1,7 @@
 {
   "call": {
     "cameraLabel": "照相机",
+    "noCamerasLabel": "未找到摄像头",
     "cameraPermissionDenied": "你的浏览器正在阻止对相机的访问",
     "cameraTurnedOff": "你的相机已关闭",
     "chatButtonLabel": "聊天",
@@ -53,6 +54,8 @@
     "roomNotFoundDetails": "提供的会议室 ID 无效。",
     "roomNotFoundTitle": "未找到会议室。",
     "soundLabel": "声音",
+    "noMicrophonesLabel": "未找到麦克风",
+    "noSpeakersLabel": "未找到扬声器",
     "startCallButtonLabel": "开始通话",
     "openDialpadButtonLabel": "拨打电话号码",
     "peoplePaneAddPeopleButtonLabel": "添加人员",
@@ -67,8 +70,19 @@
     "resumingCallButtonAriaLabel": "继续通话",
     "holdScreenLabel": "你的通话处于保留状态",
     "openDtmfDialpadLabel": "显示拨号盘",
-    "dtmfDialpadPlaceHolderText": "输入号码",
-    "outboundCallingNoticeString": "正在呼叫..."
+    "dtmfDialpadPlaceholderText": "输入号码",
+    "outboundCallingNoticeString": "正在呼叫...",
+    "participantJoinedNoticeString": "{displayName} 已加入",
+    "twoParticipantJoinedNoticeString": "{displayName1} 和 {displayName2} 已加入",
+    "threeParticipantJoinedNoticeString": "{displayName1}、{displayName2} 和 {displayName3} 已加入",
+    "participantLeftNoticeString": "{displayName} 已离开",
+    "twoParticipantLeftNoticeString": "{displayName1} 和 {displayName2} 已离开",
+    "threeParticipantLeftNoticeString": "{displayName1}、{displayName2} 和 {displayName3} 已离开",
+    "unnamedParticipantString": "未命名的参与者",
+    "manyUnnamedParticipantsJoined": "未命名的参与者和其他 {numOfParticipants} 名参与者已加入",
+    "manyUnnamedParticipantsLeft": "未命名的参与者和其他 {numOfParticipants} 名参与者已离开",
+    "manyParticipantsJoined": "{displayName1}、{displayName2}、{displayName3}和其他{numOfParticipants}位参与者已加入",
+    "manyParticipantsLeft": "{displayName1}、{displayName2}、{displayName3}和其他{numOfParticipants}位参与者已离开"
   },
   "chat": {
     "chatListHeader": "在此聊天中",
@@ -105,6 +119,6 @@
     "dialpadModalAriaLabel": "拨号盘",
     "dialpadCloseModalButtonAriaLabel": "关闭拨号盘",
     "openDtmfDialpadLabel": "显示拨号盘",
-    "dtmfDialpadPlaceHolderText": "输入号码"
+    "dtmfDialpadPlaceholderText": "输入号码"
   }
 }
