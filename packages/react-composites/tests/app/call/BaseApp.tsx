@@ -43,7 +43,6 @@ export function BaseApp(props: { queryArgs: QueryArgs; callAdapter?: CallAdapter
       onEnvironmentInfoTroubleshootingClick: onEnvironmentInfoTroubleshootingClick
     };
   }
-
   if (queryArgs.usePermissionTroubleshootingActions) {
     customCallCompositeOptions = {
       ...customCallCompositeOptions,
@@ -72,13 +71,18 @@ export function BaseApp(props: { queryArgs: QueryArgs; callAdapter?: CallAdapter
                   : queryArgs.injectCustomButtons
                   ? {
                       callControls: {
+                        legacyControlBarExperience: true,
                         onFetchCustomButtonProps,
                         // Hide some buttons to keep the mobile-view control bar narrow
                         devicesButton: false,
                         endCallButton: false
                       }
                     }
-                  : undefined
+                  : {
+                      callControls: {
+                        legacyControlBarExperience: true
+                      }
+                    }
               }
               callInvitationUrl={queryArgs.callInvitationUrl}
             />

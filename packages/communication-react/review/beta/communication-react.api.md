@@ -453,6 +453,7 @@ export const CallComposite: (props: CallCompositeProps) => JSX.Element;
 
 // @public
 export type CallCompositeIcons = {
+    ControlBarPeopleButton?: JSX.Element;
     ControlButtonCameraOff?: JSX.Element;
     ControlButtonCameraOn?: JSX.Element;
     ControlButtonEndCall?: JSX.Element;
@@ -629,29 +630,11 @@ export interface CallCompositeStrings {
 export type CallControlDisplayType = 'default' | 'compact';
 
 // @public
-export type CallControlOptions = {
-    displayType?: CallControlDisplayType;
-    cameraButton?: boolean | /* @conditional-compile-remove(PSTN-calls) */ {
-        disabled: boolean;
-    };
-    endCallButton?: boolean;
-    microphoneButton?: boolean | /* @conditional-compile-remove(PSTN-calls) */ {
-        disabled: boolean;
-    };
-    devicesButton?: boolean | /* @conditional-compile-remove(PSTN-calls) */ {
-        disabled: boolean;
-    };
+export type CallControlOptions = CommonCallControlOptions & {
     participantsButton?: boolean | {
         disabled: boolean;
     };
-    screenShareButton?: boolean | {
-        disabled: boolean;
-    };
-    moreButton?: boolean;
-    onFetchCustomButtonProps?: CustomCallControlButtonCallback[];
-    holdButton?: boolean | {
-        disabled: boolean;
-    };
+    legacyControlBarExperience?: boolean;
 };
 
 // @public
@@ -1065,28 +1048,8 @@ export interface CallWithChatCompositeStrings {
 }
 
 // @public
-export interface CallWithChatControlOptions {
-    cameraButton?: boolean | /* @conditional-compile-remove(PSTN-calls) */ {
-        disabled: boolean;
-    };
+export interface CallWithChatControlOptions extends CommonCallControlOptions {
     chatButton?: boolean | /* @conditional-compile-remove(PSTN-calls) */ {
-        disabled: boolean;
-    };
-    displayType?: CallControlDisplayType;
-    endCallButton?: boolean;
-    holdButton?: boolean | {
-        disabled: boolean;
-    };
-    microphoneButton?: boolean | /* @conditional-compile-remove(PSTN-calls) */ {
-        disabled: boolean;
-    };
-    moreButton?: boolean;
-    // @beta
-    onFetchCustomButtonProps?: CustomCallWithChatControlButtonCallback[];
-    peopleButton?: boolean | /* @conditional-compile-remove(PSTN-calls) */ {
-        disabled: boolean;
-    };
-    screenShareButton?: boolean | {
         disabled: boolean;
     };
 }
@@ -1417,6 +1380,35 @@ export interface CommonCallAdapter extends AdapterState<CallAdapterState>, Dispo
     // @beta
     startCall(participants: CommunicationIdentifier[], options?: StartCallOptions): void;
 }
+
+// @public
+export type CommonCallControlOptions = {
+    displayType?: CallControlDisplayType;
+    cameraButton?: boolean | /* @conditional-compile-remove(PSTN-calls) */ {
+        disabled: boolean;
+    };
+    endCallButton?: boolean;
+    microphoneButton?: boolean | /* @conditional-compile-remove(PSTN-calls) */ {
+        disabled: boolean;
+    };
+    devicesButton?: boolean | /* @conditional-compile-remove(PSTN-calls) */ {
+        disabled: boolean;
+    };
+    participantsButton?: boolean | {
+        disabled: boolean;
+    };
+    screenShareButton?: boolean | {
+        disabled: boolean;
+    };
+    moreButton?: boolean;
+    onFetchCustomButtonProps?: CustomCallControlButtonCallback[];
+    holdButton?: boolean | {
+        disabled: boolean;
+    };
+    peopleButton?: boolean | /* @conditional-compile-remove(PSTN-calls) */ {
+        disabled: boolean;
+    };
+};
 
 // @public
 export interface CommonCallingHandlers {
@@ -1763,7 +1755,9 @@ export type CustomAvatarOptions = {
 };
 
 // @beta
-export type CustomCallControlButtonCallback = (args: CustomCallControlButtonCallbackArgs) => CustomCallControlButtonProps;
+type CustomCallControlButtonCallback = (args: CustomCallControlButtonCallbackArgs) => CustomCallWithChatControlButtonProps;
+export { CustomCallControlButtonCallback }
+export { CustomCallControlButtonCallback as CustomCallWithChatControlButtonCallback }
 
 // @beta
 export interface CustomCallControlButtonCallbackArgs {
@@ -1771,7 +1765,9 @@ export interface CustomCallControlButtonCallbackArgs {
 }
 
 // @beta
-export type CustomCallControlButtonPlacement = 'primary';
+type CustomCallControlButtonPlacement = 'primary' | 'overflow' | 'secondary';
+export { CustomCallControlButtonPlacement }
+export { CustomCallControlButtonPlacement as CustomCallWithChatControlButtonPlacement }
 
 // @beta
 export interface CustomCallControlButtonProps extends CustomControlButtonProps {
@@ -1780,15 +1776,9 @@ export interface CustomCallControlButtonProps extends CustomControlButtonProps {
 }
 
 // @beta
-export type CustomCallWithChatControlButtonCallback = (args: CustomCallControlButtonCallbackArgs) => CustomCallWithChatControlButtonProps;
-
-// @beta
-export type CustomCallWithChatControlButtonPlacement = 'primary' | 'overflow' | 'secondary';
-
-// @beta
 export interface CustomCallWithChatControlButtonProps extends CustomControlButtonProps {
     iconName?: string;
-    placement: CustomCallWithChatControlButtonPlacement;
+    placement: CustomCallControlButtonPlacement;
 }
 
 // @beta
@@ -1913,6 +1903,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     SendBoxSend: JSX.Element;
     SendBoxSendHovered: JSX.Element;
     SendBoxAttachFile?: JSX.Element | undefined;
+    ControlBarPeopleButton?: JSX.Element | undefined;
     ControlButtonCameraOff: JSX.Element;
     ControlButtonCameraOn: JSX.Element;
     ControlButtonEndCall: JSX.Element;
@@ -1964,7 +1955,6 @@ export const DEFAULT_COMPOSITE_ICONS: {
     ChevronLeft?: JSX.Element | undefined;
     ControlBarChatButtonActive?: JSX.Element | undefined;
     ControlBarChatButtonInactive?: JSX.Element | undefined;
-    ControlBarPeopleButton?: JSX.Element | undefined;
     Link?: JSX.Element | undefined;
     MoreDrawerMicrophones?: JSX.Element | undefined;
     MoreDrawerPeople?: JSX.Element | undefined;
