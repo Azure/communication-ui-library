@@ -316,6 +316,11 @@ export interface CallCompositeStrings {
   roomNotFoundDetails?: string;
   /* @conditional-compile-remove(video-background-effects) */
   /**
+   * Label for the button to open effects and title of the effects
+   */
+  effects?: string;
+  /* @conditional-compile-remove(video-background-effects) */
+  /**
    * Label for the blur video background effect item
    */
   blurBackgroundEffectButtonLabel?: string;
