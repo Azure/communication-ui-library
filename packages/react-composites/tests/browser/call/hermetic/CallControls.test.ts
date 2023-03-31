@@ -89,7 +89,7 @@ test.describe('New call control bar renders correctly', () => {
       buildUrlWithMockAdapter(serverUrl, callState, {
         injectCustomButtons: 'true',
         customCallCompositeOptions: JSON.stringify({
-          callControls: {}
+          callControls: { microphoneButton: true }
         })
       })
     );
@@ -105,7 +105,7 @@ test.describe('New call control bar renders correctly', () => {
       buildUrlWithMockAdapter(serverUrl, callState, {
         injectCustomButtons: 'true',
         customCallCompositeOptions: JSON.stringify({
-          callControls: {}
+          callControls: { microphoneButton: true }
         })
       })
     );
