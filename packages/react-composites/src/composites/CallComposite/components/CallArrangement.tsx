@@ -20,7 +20,7 @@ import { useCallback } from 'react';
 /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
 import { AvatarPersonaDataCallback } from '../../common/AvatarPersona';
 import { containerDivStyles } from '../../common/ContainerRectProps';
-import { galleryCompositeMinWidthRem } from '../../common/styles/Composite.styles';
+import { compositeMinWidthRem } from '../../common/styles/Composite.styles';
 /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
 import { useAdapter } from '../adapter/CallAdapterProvider';
 import { CallControls, CallControlsProps } from '../components/CallControls';
@@ -90,7 +90,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   const callCompositeContainerCSS = useMemo(() => {
     return {
       display: isMobileWithActivePane ? 'none' : 'flex',
-      minWidth: `${galleryCompositeMinWidthRem}rem`,
+      minWidth: `${compositeMinWidthRem}rem`,
       width: '100%',
       height: '100%'
     };
