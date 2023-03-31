@@ -396,6 +396,15 @@ export interface CallAdapterCallOperations {
    * @beta
    */
   stopVideoBackgroundEffect(): Promise<void>;
+  /* @conditional-compile-remove(video-background-effects) */
+  /**
+   * Override the background picker images for background replacement effect.
+   *
+   * @param backgroundImages - Array of custom background images.
+   *
+   * @beta
+   */
+  updateBackgroundPickerImages(backgroundImages: VideoBackgroundImage[]): void;
 }
 
 /**
