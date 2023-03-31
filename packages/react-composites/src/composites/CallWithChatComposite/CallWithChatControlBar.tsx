@@ -111,7 +111,7 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps & Cont
   useEffect(() => {
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
-  }, []);
+  }, [handleResize]);
 
   /* when size change, reset total buttons width and compare with the control bar container width
   if the total width of those buttons exceed container width, do not center the control bar buttons based on parent container width
