@@ -101,7 +101,6 @@ export interface RemoteVideoTileMenuOptions {
    */
   isHidden?: boolean;
 }
-
 /**
  * Optional features of the {@link CallComposite}.
  *

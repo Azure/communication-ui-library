@@ -8,6 +8,8 @@
 
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { AudioDeviceInfo } from '@azure/communication-calling';
+import { BackgroundBlurConfig } from '@azure/communication-calling-effects';
+import { BackgroundReplacementConfig } from '@azure/communication-calling-effects';
 import { BaseCustomStyles } from '@internal/react-components';
 import { Call } from '@azure/communication-calling';
 import { CallAgent } from '@azure/communication-calling';
@@ -171,6 +173,8 @@ export interface CallAdapterCallOperations {
     // (undocumented)
     addParticipant(participant: CommunicationUserIdentifier): Promise<void>;
     allowUnsupportedBrowserVersion(): void;
+    // @beta
+    blurVideoBackground(bgBlurConfig?: BackgroundBlurConfig): Promise<void>;
     createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void | CreateVideoStreamViewResult>;
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
     // @beta
@@ -181,6 +185,8 @@ export interface CallAdapterCallOperations {
     // @beta
     removeParticipant(participant: CommunicationIdentifier): Promise<void>;
     // @beta
+    replaceVideoBackground(bgReplacementConfig: BackgroundReplacementConfig): Promise<void>;
+    // @beta
     resumeCall(): Promise<void>;
     // @beta
     sendDtmfTone(dtmfTone: DtmfTone): Promise<void>;
@@ -188,6 +194,8 @@ export interface CallAdapterCallOperations {
     startScreenShare(): Promise<void>;
     stopCamera(): Promise<void>;
     stopScreenShare(): Promise<void>;
+    // @beta
+    stopVideoBackgroundEffect(): Promise<void>;
     unmute(): Promise<void>;
 }
 
@@ -204,6 +212,7 @@ export type CallAdapterClientState = {
     environmentInfo?: EnvironmentInfo;
     roleHint?: Role;
     cameraStatus?: 'On' | 'Off';
+    videoBackgroundImages?: VideoBackgroundImage[];
 };
 
 // @public
@@ -317,6 +326,8 @@ export type CallCompositeIcons = {
     PeoplePaneOpenDialpad?: JSX.Element;
     DialpadStartCall?: JSX.Element;
     NoticePageInvalidRoom?: JSX.Element;
+    BlurVideoBackground?: JSX.Element;
+    RemoveVideoBackgroundEffect?: JSX.Element;
 };
 
 // @public
@@ -346,6 +357,8 @@ export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcon
 
 // @public
 export interface CallCompositeStrings {
+    blurBackgroundEffectButtonLabel?: string;
+    blurBackgroundTooltip?: string;
     cameraLabel: string;
     cameraPermissionDenied: string;
     cameraTurnedOff: string;
@@ -376,6 +389,7 @@ export interface CallCompositeStrings {
     dialpadStartCallButtonLabel: string;
     dismissSidePaneButtonLabel?: string;
     dtmfDialpadPlaceholderText: string;
+    effects?: string;
     failedToJoinCallDueToNoNetworkMoreDetails?: string;
     failedToJoinCallDueToNoNetworkTitle: string;
     failedToJoinTeamsMeetingReasonAccessDeniedMoreDetails?: string;
@@ -414,6 +428,8 @@ export interface CallCompositeStrings {
     peoplePaneTitle: string;
     privacyPolicy: string;
     rejoinCallButtonLabel: string;
+    removeBackgroundEffectButtonLabel?: string;
+    removeBackgroundTooltip?: string;
     removedFromCallMoreDetails?: string;
     removedFromCallTitle: string;
     removeMenuLabel: string;
@@ -488,6 +504,8 @@ export interface CallWithChatAdapterManagement {
     addParticipant(participant: CommunicationUserIdentifier): Promise<void>;
     allowUnsupportedBrowserVersion(): void;
     askDevicePermission(constrain: PermissionConstraints): Promise<void>;
+    // @beta
+    blurVideoBackground(bgBlurConfig?: BackgroundBlurConfig): Promise<void>;
     // @beta (undocumented)
     cancelFileUpload: (id: string) => void;
     // @beta (undocumented)
@@ -495,6 +513,8 @@ export interface CallWithChatAdapterManagement {
     createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void | CreateVideoStreamViewResult>;
     deleteMessage(messageId: string): Promise<void>;
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
+    // (undocumented)
+    downloadAuthenticatedAttachment?: (attachmentUrl: string) => Promise<string>;
     fetchInitialData(): Promise<void>;
     // @beta
     holdCall: () => Promise<void>;
@@ -513,6 +533,8 @@ export interface CallWithChatAdapterManagement {
     // @beta
     removeParticipant(participant: CommunicationIdentifier): Promise<void>;
     // @beta
+    replaceVideoBackground(bgReplacementConfig: BackgroundReplacementConfig): Promise<void>;
+    // @beta
     resumeCall: () => Promise<void>;
     // @beta
     sendDtmfTone: (dtmfTone: DtmfTone) => Promise<void>;
@@ -529,6 +551,8 @@ export interface CallWithChatAdapterManagement {
     startScreenShare(): Promise<void>;
     stopCamera(): Promise<void>;
     stopScreenShare(): Promise<void>;
+    // @beta
+    stopVideoBackgroundEffect(): Promise<void>;
     unmute(): Promise<void>;
     // @beta (undocumented)
     updateFileUploadErrorMessage: (id: string, errorMessage: string) => void;
@@ -1104,6 +1128,8 @@ export const DEFAULT_COMPOSITE_ICONS: {
     PeoplePaneOpenDialpad?: JSX.Element | undefined;
     DialpadStartCall?: JSX.Element | undefined;
     NoticePageInvalidRoom?: JSX.Element | undefined;
+    BlurVideoBackground?: JSX.Element | undefined;
+    RemoveVideoBackgroundEffect?: JSX.Element | undefined;
     ChevronLeft?: JSX.Element | undefined;
     ControlBarChatButtonActive?: JSX.Element | undefined;
     ControlBarChatButtonInactive?: JSX.Element | undefined;
@@ -1118,6 +1144,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     ControlButtonParticipantsContextualMenuItem: JSX.Element;
     CancelFileUpload: JSX.Element;
     DownloadFile: JSX.Element;
+    DataLossPreventionProhibited: JSX.Element;
     ErrorBarCallVideoRecoveredBySystem: JSX.Element;
     ErrorBarCallVideoStoppedBySystem: JSX.Element;
     MessageResend: JSX.Element;
@@ -1211,6 +1238,8 @@ export interface FileUploadAdapter {
     cancelFileUpload: (id: string) => void;
     // (undocumented)
     clearFileUploads: () => void;
+    // (undocumented)
+    downloadAuthenticatedAttachment?: (attachmentUrl: string) => Promise<string>;
     // (undocumented)
     registerActiveFileUploads: (files: File[]) => FileUploadManager[];
     // (undocumented)
@@ -1378,6 +1407,13 @@ export function _useFakeChatAdapters(args: _FakeChatAdapterArgs): _FakeChatAdapt
 
 // @beta
 export const useTeamsCallAdapter: (args: Partial<TeamsCallAdapterArgs>, afterCreate?: ((adapter: TeamsCallAdapter) => Promise<TeamsCallAdapter>) | undefined, beforeDispose?: ((adapter: TeamsCallAdapter) => Promise<void>) | undefined) => TeamsCallAdapter | undefined;
+
+// @beta
+export interface VideoBackgroundImage {
+    key: string;
+    tooltipText?: string;
+    url: string;
+}
 
 // (No @packageDocumentation comment for this package)
 

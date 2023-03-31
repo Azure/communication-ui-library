@@ -5,9 +5,9 @@ import { IStyle } from '@fluentui/react';
 import { _pxToRem } from '@internal/acs-ui-common';
 import { VerticalGalleryStyles } from '../../VerticalGallery';
 import {
-  SHORT_VERTICAL_GALLERY_FLOATING_MODAL_SIZE_PX,
-  SMALL_FLOATING_MODAL_SIZE_PX,
-  VERTICAL_GALLERY_FLOATING_MODAL_SIZE_PX
+  SHORT_VERTICAL_GALLERY_FLOATING_MODAL_SIZE_REM,
+  SMALL_FLOATING_MODAL_SIZE_REM,
+  VERTICAL_GALLERY_FLOATING_MODAL_SIZE_REM
 } from './FloatingLocalVideo.styles';
 
 /**
@@ -35,8 +35,6 @@ export const VERTICAL_GALLERY_TILE_SIZE_REM = { minHeight: 6.75, maxHeight: 11, 
  *
  * width is being increased by 1rem to account for the gap width desired for the VerticalGallery.
  *
- * Add 1.5 rem on width to account for horizontal padding
- *
  * @param shouldFloatLocalVideo whether rendered in floating layout or not
  * @returns Style set for VerticalGallery container.
  */
@@ -47,23 +45,21 @@ export const verticalGalleryContainerStyle = (
 ): IStyle => {
   return isNarrow && isShort
     ? {
-        width: `${SHORT_VERTICAL_GALLERY_TILE_SIZE_REM.width + 1.5}rem`,
-        height: shouldFloatLocalVideo ? `calc(100% - ${_pxToRem(SMALL_FLOATING_MODAL_SIZE_PX.height)})` : '100%',
+        width: `${SHORT_VERTICAL_GALLERY_TILE_SIZE_REM.width}rem`,
+        height: shouldFloatLocalVideo ? `calc(100% - ${SMALL_FLOATING_MODAL_SIZE_REM.height}rem)` : '100%',
         paddingBottom: '0.5rem'
       }
     : !isNarrow && isShort
     ? {
-        width: `${SHORT_VERTICAL_GALLERY_TILE_SIZE_REM.width + 1.5}rem`,
+        width: `${SHORT_VERTICAL_GALLERY_TILE_SIZE_REM.width}rem`,
         height: shouldFloatLocalVideo
-          ? `calc(100% - ${_pxToRem(SHORT_VERTICAL_GALLERY_FLOATING_MODAL_SIZE_PX.height)})`
+          ? `calc(100% - ${SHORT_VERTICAL_GALLERY_FLOATING_MODAL_SIZE_REM.height}rem)`
           : '100%',
         paddingBottom: '0.5rem'
       }
     : {
-        width: `${VERTICAL_GALLERY_TILE_SIZE_REM.width + 1.5}rem`,
-        height: shouldFloatLocalVideo
-          ? `calc(100% - ${_pxToRem(VERTICAL_GALLERY_FLOATING_MODAL_SIZE_PX.height)})`
-          : '100%',
+        width: `${VERTICAL_GALLERY_TILE_SIZE_REM.width}rem`,
+        height: shouldFloatLocalVideo ? `calc(100% - ${VERTICAL_GALLERY_FLOATING_MODAL_SIZE_REM.height}rem)` : '100%',
         paddingBottom: '0.5rem'
       };
 };

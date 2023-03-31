@@ -2,9 +2,8 @@
 // Licensed under the MIT license.
 
 import { IStyle } from '@fluentui/react';
-import { _pxToRem } from '@internal/acs-ui-common';
 import { HorizontalGalleryStyles } from '../../HorizontalGallery';
-import { LARGE_FLOATING_MODAL_SIZE_PX, SMALL_FLOATING_MODAL_SIZE_PX } from './FloatingLocalVideo.styles';
+import { LARGE_FLOATING_MODAL_SIZE_REM, SMALL_FLOATING_MODAL_SIZE_REM } from './FloatingLocalVideo.styles';
 
 /**
  * @private
@@ -16,8 +15,8 @@ export const horizontalGalleryContainerStyle = (shouldFloatLocalVideo: boolean, 
       : `${LARGE_HORIZONTAL_GALLERY_TILE_SIZE_REM.height}rem`,
     width: shouldFloatLocalVideo
       ? isNarrow
-        ? `calc(100% - ${_pxToRem(SMALL_FLOATING_MODAL_SIZE_PX.width)})`
-        : `calc(100% - ${_pxToRem(LARGE_FLOATING_MODAL_SIZE_PX.width)})`
+        ? `calc(100% - ${SMALL_FLOATING_MODAL_SIZE_REM.width}rem)`
+        : `calc(100% - ${LARGE_FLOATING_MODAL_SIZE_REM.width}rem)`
       : '100%',
     paddingRight: '0.5rem'
   };
@@ -42,7 +41,7 @@ export const SMALL_HORIZONTAL_GALLERY_TILE_SIZE_REM = { height: 6.5, width: 6.5 
  * Large horizontal gallery tile size in rem
  * @private
  */
-export const LARGE_HORIZONTAL_GALLERY_TILE_SIZE_REM = { height: 7.5, width: 10 };
+export const LARGE_HORIZONTAL_GALLERY_TILE_SIZE_REM = { height: 7.5, minWidth: 7.5, maxWidth: 13.43 };
 
 /**
  * @private
@@ -58,7 +57,9 @@ export const SMALL_HORIZONTAL_GALLERY_TILE_STYLE = {
  */
 export const LARGE_HORIZONTAL_GALLERY_TILE_STYLE = {
   minHeight: `${LARGE_HORIZONTAL_GALLERY_TILE_SIZE_REM.height}rem`,
-  minWidth: `${LARGE_HORIZONTAL_GALLERY_TILE_SIZE_REM.width}rem`,
+  minWidth: `${LARGE_HORIZONTAL_GALLERY_TILE_SIZE_REM.minWidth}rem`,
   maxHeight: `${LARGE_HORIZONTAL_GALLERY_TILE_SIZE_REM.height}rem`,
-  maxWidth: `${LARGE_HORIZONTAL_GALLERY_TILE_SIZE_REM.width}rem`
+  maxWidth: `${LARGE_HORIZONTAL_GALLERY_TILE_SIZE_REM.maxWidth}rem`,
+  width: '100%',
+  height: '100%'
 };

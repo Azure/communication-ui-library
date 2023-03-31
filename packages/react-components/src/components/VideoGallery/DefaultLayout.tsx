@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { Stack } from '@fluentui/react';
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState, useRef } from 'react';
 import { GridLayout } from '../GridLayout';
 import { isNarrowWidth } from '../utils/responsive';
 /* @conditional-compile-remove(vertical-gallery) */
@@ -22,7 +22,7 @@ export type DefaultLayoutProps = LayoutProps;
 
 /**
  * DefaultLayout displays remote participants, local video component, and screen sharing component in
- * a grid and horizontal gallery.
+ * a grid an overflow gallery.
  *
  * @private
  */
@@ -38,8 +38,8 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
     parentWidth,
     /* @conditional-compile-remove(vertical-gallery) */
     parentHeight,
-    /* @conditional-compile-remove(pinned-participants) */ pinnedParticipantUserIds,
-    /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryLayout = 'HorizontalBottom'
+    pinnedParticipantUserIds = [],
+    /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryPosition = 'HorizontalBottom'
   } = props;
 
   const isNarrow = parentWidth ? isNarrowWidth(parentWidth) : false;
@@ -47,11 +47,17 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
   /* @conditional-compile-remove(vertical-gallery) */
   const isShort = parentHeight ? isShortHeight(parentHeight) : false;
 
-  const { gridParticipants, horizontalGalleryParticipants } = useOrganizedParticipants({
+  // This is for tracking the number of children in the first page of overflow gallery.
+  // This number will be used for the maxOverflowGalleryDominantSpeakers when organizing the remote participants.
+  const childrenPerPage = useRef(4);
+  const { gridParticipants, overflowGalleryParticipants } = useOrganizedParticipants({
     remoteParticipants,
     dominantSpeakers,
     maxRemoteVideoStreams,
     isScreenShareActive: !!screenShareComponent,
+    maxOverflowGalleryDominantSpeakers: screenShareComponent
+      ? childrenPerPage.current - (pinnedParticipantUserIds.length % childrenPerPage.current)
+      : childrenPerPage.current,
     /* @conditional-compile-remove(pinned-participants) */ pinnedParticipantUserIds
   });
 
@@ -77,7 +83,7 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
     ...Array(maxRemoteVideoStreams - activeVideoStreams).keys()
   ]);
 
-  const horizontalGalleryTiles = horizontalGalleryParticipants.map((p, i) => {
+  const overflowGalleryTiles = overflowGalleryParticipants.map((p, i) => {
     return onRenderRemoteParticipant(
       p,
       maxRemoteVideoStreams && maxRemoteVideoStreams >= 0
@@ -91,7 +97,7 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
   }
 
   const overflowGallery = useMemo(() => {
-    if (horizontalGalleryTiles.length === 0) {
+    if (overflowGalleryTiles.length === 0) {
       return null;
     }
     return (
@@ -100,29 +106,32 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
         /* @conditional-compile-remove(vertical-gallery) */
         isShort={isShort}
         shouldFloatLocalVideo={false}
-        overflowGalleryElements={horizontalGalleryTiles}
+        overflowGalleryElements={overflowGalleryTiles}
         horizontalGalleryStyles={styles?.horizontalGallery}
         /* @conditional-compile-remove(vertical-gallery) */
-        veritcalGalleryStyles={styles?.verticalGallery}
+        verticalGalleryStyles={styles?.verticalGallery}
         /* @conditional-compile-remove(pinned-participants) */
-        overflowGalleryLayout={overflowGalleryLayout}
+        overflowGalleryPosition={overflowGalleryPosition}
         onFetchTilesToRender={setIndexesToRender}
+        onChildrenPerPageChange={(n: number) => {
+          childrenPerPage.current = n;
+        }}
       />
     );
   }, [
     isNarrow,
     /* @conditional-compile-remove(vertical-gallery) */ isShort,
-    horizontalGalleryTiles,
+    overflowGalleryTiles,
     styles?.horizontalGallery,
+    /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryPosition,
     setIndexesToRender,
-    /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryLayout,
     /* @conditional-compile-remove(vertical-gallery) */ styles?.verticalGallery
   ]);
 
   return (
     <Stack
       /* @conditional-compile-remove(vertical-gallery) */
-      horizontal={overflowGalleryLayout === 'VerticalRight'}
+      horizontal={overflowGalleryPosition === 'VerticalRight'}
       styles={rootLayoutStyle}
       tokens={videoGalleryLayoutGap}
     >

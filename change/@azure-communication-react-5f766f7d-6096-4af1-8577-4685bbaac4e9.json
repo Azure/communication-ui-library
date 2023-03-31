@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Memoize Teams call adapter args for CTE storybook sample code.",
+  "packageName": "@azure/communication-react",
+  "email": "miguelgamis@microsoft.com",
+  "dependentChangeType": "patch"
+}
