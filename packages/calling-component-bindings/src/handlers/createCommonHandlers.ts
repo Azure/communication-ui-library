@@ -78,9 +78,9 @@ export interface CommonCallingHandlers {
   /* @conditional-compile-remove(video-background-effects) */
   onRemoveVideoBackgroundEffects: () => Promise<void>;
   /* @conditional-compile-remove(video-background-effects) */
-  onBlurVideoBackground: (bgBlurConfig?: BackgroundBlurConfig) => Promise<void>;
+  onBlurVideoBackground: (backgroundBlurConfig?: BackgroundBlurConfig) => Promise<void>;
   /* @conditional-compile-remove(video-background-effects) */
-  onReplaceVideoBackground: (bgReplacementConfig: BackgroundReplacementConfig) => Promise<void>;
+  onReplaceVideoBackground: (backgroundReplacementConfig: BackgroundReplacementConfig) => Promise<void>;
 }
 
 /**
@@ -389,22 +389,26 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
     };
 
     /* @conditional-compile-remove(video-background-effects) */
-    const onBlurVideoBackground = async (bgBlurConfig?: BackgroundBlurConfig): Promise<void> => {
+    const onBlurVideoBackground = async (backgroundBlurConfig?: BackgroundBlurConfig): Promise<void> => {
       const stream =
         call?.localVideoStreams.find((stream) => stream.mediaStreamType === 'Video') ||
         deviceManager?.getUnparentedVideoStreams().find((stream) => stream.mediaStreamType === 'Video');
       if (stream) {
-        return stream.feature(Features.VideoEffects).startEffects(new BackgroundBlurEffect(bgBlurConfig));
+        return stream.feature(Features.VideoEffects).startEffects(new BackgroundBlurEffect(backgroundBlurConfig));
       }
     };
 
     /* @conditional-compile-remove(video-background-effects) */
-    const onReplaceVideoBackground = async (bgReplacementConfig: BackgroundReplacementConfig): Promise<void> => {
+    const onReplaceVideoBackground = async (
+      backgroundReplacementConfig: BackgroundReplacementConfig
+    ): Promise<void> => {
       const stream =
         call?.localVideoStreams.find((stream) => stream.mediaStreamType === 'Video') ||
         deviceManager?.getUnparentedVideoStreams().find((stream) => stream.mediaStreamType === 'Video');
       if (stream) {
-        return stream.feature(Features.VideoEffects).startEffects(new BackgroundReplacementEffect(bgReplacementConfig));
+        return stream
+          .feature(Features.VideoEffects)
+          .startEffects(new BackgroundReplacementEffect(backgroundReplacementConfig));
       }
     };
 

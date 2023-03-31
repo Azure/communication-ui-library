@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { mergeStyles, Stack } from '@fluentui/react';
-import { _isInCall } from '@internal/calling-component-bindings';
+import { _isInCall, _isInLobbyOrConnecting } from '@internal/calling-component-bindings';
 import {
   _ComplianceBanner,
   _ComplianceBannerProps,
@@ -14,16 +14,14 @@ import {
 } from '@internal/react-components';
 /* @conditional-compile-remove(rooms) */
 import { _usePermissions } from '@internal/react-components';
-import React, { useMemo, useRef } from 'react';
-/* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
+import React, { useMemo, useRef, useState } from 'react';
 import { useCallback } from 'react';
 /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
 import { AvatarPersonaDataCallback } from '../../common/AvatarPersona';
 import { containerDivStyles } from '../../common/ContainerRectProps';
-/* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
 import { useAdapter } from '../adapter/CallAdapterProvider';
 import { CallControls, CallControlsProps } from '../components/CallControls';
-/* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
+import { CommonCallControlBar } from '../../common/ControlBar/CommonCallControlBar';
 import { useSidePaneState } from '../hooks/useSidePaneState';
 import {
   callArrangementContainerStyles,
@@ -36,10 +34,22 @@ import {
   bannerNotificationStyles
 } from '../styles/CallPage.styles';
 /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
-import { CallControlOptions } from '../types/CallControlOptions';
+import { CommonCallControlOptions } from '../../common/types/CommonCallControlOptions';
 /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
 import { CallPane } from './CallPane';
 import { MutedNotification, MutedNotificationProps } from './MutedNotification';
+import { CallAdapter } from '../adapter';
+import { useSelector } from '../hooks/useSelector';
+import { callStatusSelector } from '../selectors/callStatusSelector';
+import { CallControlOptions } from '../types/CallControlOptions';
+import { PreparedMoreDrawer } from '../../common/Drawer/PreparedMoreDrawer';
+/* @conditional-compile-remove(PSTN-calls) */
+import { SendDtmfDialpad } from '../../common/SendDtmfDialpad';
+/* @conditional-compile-remove(PSTN-calls) */
+import { useCallWithChatCompositeStrings } from '../../CallWithChatComposite/hooks/useCallWithChatCompositeStrings';
+/* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+import { getPage } from '../selectors/baseSelectors';
+import { drawerContainerStyles } from '../styles/CallComposite.styles';
 
 /**
  * @private
@@ -77,10 +87,20 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   const containerWidth = _useContainerWidth(containerRef);
   const containerHeight = _useContainerHeight(containerRef);
 
-  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
+  const isInLobby = _isInLobbyOrConnecting(useSelector(callStatusSelector).callStatus);
+
+  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+  const isInLocalHold = useSelector(getPage) === 'hold';
+
   const adapter = useAdapter();
-  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
-  const { activePane, closePane, openPeoplePane, togglePeoplePane } = useSidePaneState();
+
+  const {
+    activePane,
+    closePane,
+    /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
+    openPeoplePane,
+    togglePeoplePane
+  } = useSidePaneState();
 
   /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   const isMobileWithActivePane = props.mobileView && activePane;
@@ -89,6 +109,50 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   const callCompositeContainerCSS = useMemo(() => {
     return { display: isMobileWithActivePane ? 'none' : 'flex', minWidth: 0, width: '100%', height: '100%' };
   }, [isMobileWithActivePane]);
+
+  /* @conditional-compile-remove(PSTN-calls) */
+  const callWithChatStrings = useCallWithChatCompositeStrings();
+
+  /* @conditional-compile-remove(PSTN-calls) */
+  const dialpadStrings = useMemo(
+    () => ({
+      dialpadModalAriaLabel: callWithChatStrings.dialpadModalAriaLabel,
+      dialpadCloseModalButtonAriaLabel: callWithChatStrings.dialpadCloseModalButtonAriaLabel,
+      placeholderText: callWithChatStrings.dtmfDialpadPlaceholderText
+    }),
+    [callWithChatStrings]
+  );
+
+  const [showDrawer, setShowDrawer] = useState(false);
+  const onMoreButtonClicked = useCallback(() => {
+    closePane();
+    setShowDrawer(true);
+  }, [closePane]);
+  const closeDrawer = useCallback(() => {
+    setShowDrawer(false);
+  }, []);
+  const onMoreDrawerPeopleClicked = useCallback(() => {
+    setShowDrawer(false);
+    togglePeoplePane();
+  }, [togglePeoplePane]);
+
+  /* @conditional-compile-remove(PSTN-calls) */
+  const alternateCallerId = useAdapter().getState().alternateCallerId;
+
+  /* @conditional-compile-remove(PSTN-calls) */
+  const [showDtmfDialpad, setShowDtmfDialpad] = useState(false);
+
+  /* @conditional-compile-remove(PSTN-calls) */
+  const onDismissDtmfDialpad = (): void => {
+    setShowDtmfDialpad(false);
+  };
+
+  /* @conditional-compile-remove(PSTN-calls) */
+  const onClickShowDialpad = (): void => {
+    setShowDtmfDialpad(true);
+  };
+
+  const drawerContainerStylesValue = useMemo(() => drawerContainerStyles(10), []);
 
   // To be removed once feature is out of beta, replace with callCompositeContainerCSS
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
@@ -158,41 +222,81 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     <div ref={containerRef} className={mergeStyles(containerDivStyles)} id={props.id}>
       <Stack verticalFill horizontalAlign="stretch" className={containerClassName} data-ui-id={props.dataUiId}>
         <Stack grow styles={callArrangementContainerStyles}>
-          <Stack.Item styles={notificationsContainerStyles}>
-            <Stack styles={bannerNotificationStyles}>
-              <_ComplianceBanner {...props.complianceBannerProps} />
-            </Stack>
-            {errorBarProps !== false && (
-              <Stack styles={bannerNotificationStyles}>
-                <ErrorBar {...errorBarProps} />
-              </Stack>
-            )}
-            {canUnmute && !!props.mutedNotificationProps && <MutedNotification {...props.mutedNotificationProps} />}
-          </Stack.Item>
           {props.callControlProps?.options !== false &&
             /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
             !isMobileWithActivePane && (
               <Stack.Item className={callControlsContainerStyles}>
-                <CallControls
-                  {...props.callControlProps}
-                  containerWidth={containerWidth}
-                  containerHeight={containerHeight}
-                  isMobile={props.mobileView}
-                  /* @conditional-compile-remove(one-to-n-calling) */
-                  peopleButtonChecked={activePane === 'people'}
-                  /* @conditional-compile-remove(one-to-n-calling) */
-                  onPeopleButtonClicked={togglePeoplePane}
-                />
+                {isLegacyCallControlEnabled(props.callControlProps?.options) ? (
+                  <CallControls
+                    {...props.callControlProps}
+                    containerWidth={containerWidth}
+                    containerHeight={containerHeight}
+                    isMobile={props.mobileView}
+                    /* @conditional-compile-remove(one-to-n-calling) */
+                    peopleButtonChecked={activePane === 'people'}
+                    /* @conditional-compile-remove(one-to-n-calling) */
+                    onPeopleButtonClicked={togglePeoplePane}
+                  />
+                ) : (
+                  <CommonCallControlBar
+                    {...props.callControlProps}
+                    callAdapter={adapter as CallAdapter}
+                    mobileView={props.mobileView}
+                    disableButtonsForLobbyPage={isInLobby}
+                    peopleButtonChecked={activePane === 'people'}
+                    onPeopleButtonClicked={togglePeoplePane}
+                    onMoreButtonClicked={onMoreButtonClicked}
+                  />
+                )}
               </Stack.Item>
             )}
+
+          {props.callControlProps?.options !== false && showDrawer && (
+            <Stack styles={drawerContainerStylesValue}>
+              <PreparedMoreDrawer
+                callControls={props.callControlProps.options}
+                onLightDismiss={closeDrawer}
+                onPeopleButtonClicked={onMoreDrawerPeopleClicked}
+                /* @conditional-compile-remove(PSTN-calls) */
+                onClickShowDialpad={alternateCallerId ? onClickShowDialpad : undefined}
+                /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+                disableButtonsForHoldScreen={isInLocalHold}
+              />
+            </Stack>
+          )}
+
+          {
+            /* @conditional-compile-remove(PSTN-calls) */
+            props.callControlProps?.options !== false && showDtmfDialpad && (
+              <Stack styles={drawerContainerStylesValue}>
+                <SendDtmfDialpad
+                  isMobile={props.mobileView}
+                  strings={dialpadStrings}
+                  showDialpad={showDtmfDialpad}
+                  onDismissDialpad={onDismissDtmfDialpad}
+                />
+              </Stack>
+            )
+          }
           <Stack horizontal grow>
             <Stack.Item grow style={callCompositeContainerFlex()}>
               <Stack.Item styles={callGalleryStyles} grow>
-                {props.onRenderGalleryContent && (
-                  <Stack verticalFill styles={mediaGalleryContainerStyles}>
-                    {props.onRenderGalleryContent()}
-                  </Stack>
-                )}
+                <Stack verticalFill styles={mediaGalleryContainerStyles}>
+                  <Stack.Item styles={notificationsContainerStyles}>
+                    <Stack styles={bannerNotificationStyles}>
+                      <_ComplianceBanner {...props.complianceBannerProps} />
+                    </Stack>
+                    {errorBarProps !== false && (
+                      <Stack styles={bannerNotificationStyles}>
+                        <ErrorBar {...errorBarProps} />
+                      </Stack>
+                    )}
+                    {canUnmute && !!props.mutedNotificationProps && (
+                      <MutedNotification {...props.mutedNotificationProps} />
+                    )}
+                  </Stack.Item>
+                  {props.onRenderGalleryContent && props.onRenderGalleryContent()}
+                </Stack>
               </Stack.Item>
             </Stack.Item>
             {
@@ -207,7 +311,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
 };
 
 /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
-const showShowPeopleTabHeaderButton = (callControls?: boolean | CallControlOptions): boolean => {
+const showShowPeopleTabHeaderButton = (callControls?: boolean | CommonCallControlOptions): boolean => {
   if (callControls === undefined || callControls === true) {
     return true;
   }
@@ -215,4 +319,10 @@ const showShowPeopleTabHeaderButton = (callControls?: boolean | CallControlOptio
     return false;
   }
   return callControls.participantsButton !== false;
+};
+
+const isLegacyCallControlEnabled = (options?: boolean | CallControlOptions): boolean => {
+  /* @conditional-compile-remove(new-call-control-bar) */
+  return !!options && options !== true && !!options?.legacyControlBarExperience;
+  return true;
 };

@@ -381,14 +381,14 @@ export interface CallAdapterCallOperations {
    *
    * @beta
    */
-  blurVideoBackground(bgBlurConfig?: BackgroundBlurConfig): Promise<void>;
+  blurVideoBackground(backgroundBlurConfig?: BackgroundBlurConfig): Promise<void>;
   /* @conditional-compile-remove(video-background-effects) */
   /**
    * Start the video background replacement effect.
    *
    * @beta
    */
-  replaceVideoBackground(bgReplacementConfig: BackgroundReplacementConfig): Promise<void>;
+  replaceVideoBackground(backgroundReplacementConfig: BackgroundReplacementConfig): Promise<void>;
   /* @conditional-compile-remove(video-background-effects) */
   /**
    * Stop the video background effect.
@@ -396,6 +396,15 @@ export interface CallAdapterCallOperations {
    * @beta
    */
   stopVideoBackgroundEffect(): Promise<void>;
+  /* @conditional-compile-remove(video-background-effects) */
+  /**
+   * Override the background picker images for background replacement effect.
+   *
+   * @param backgroundImages - Array of custom background images.
+   *
+   * @beta
+   */
+  updateBackgroundPickerImages(backgroundImages: VideoBackgroundImage[]): void;
 }
 
 /**

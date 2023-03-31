@@ -81,6 +81,8 @@ import { _toCommunicationIdentifier } from '@internal/acs-ui-common';
 import { AzureCommunicationCallAdapterOptions } from '../../CallComposite/adapter/AzureCommunicationCallAdapter';
 /* @conditional-compile-remove(video-background-effects) */
 import { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/communication-calling-effects';
+/* @conditional-compile-remove(video-background-effects) */
+import { VideoBackgroundImage } from '../../CallComposite';
 
 type CallWithChatAdapterStateChangedHandler = (newState: CallWithChatAdapterState) => void;
 
@@ -217,6 +219,8 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     this.replaceVideoBackground.bind(this);
     /* @conditional-compile-remove(video-background-effects) */
     this.stopVideoBackgroundEffect.bind(this);
+    /* @conditional-compile-remove(video-background-effects) */
+    this.updateBackgroundPickerImages.bind(this);
   }
 
   /** Join existing Call. */
@@ -425,17 +429,22 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   }
 
   /* @conditional-compile-remove(video-background-effects) */
-  public async blurVideoBackground(bgBlurConfig?: BackgroundBlurConfig): Promise<void> {
-    await this.callAdapter.blurVideoBackground(bgBlurConfig);
+  public async blurVideoBackground(backgroundBlurConfig?: BackgroundBlurConfig): Promise<void> {
+    await this.callAdapter.blurVideoBackground(backgroundBlurConfig);
   }
   /* @conditional-compile-remove(video-background-effects) */
-  public async replaceVideoBackground(bgReplacementConfig: BackgroundReplacementConfig): Promise<void> {
-    await this.callAdapter.replaceVideoBackground(bgReplacementConfig);
+  public async replaceVideoBackground(backgroundReplacementConfig: BackgroundReplacementConfig): Promise<void> {
+    await this.callAdapter.replaceVideoBackground(backgroundReplacementConfig);
   }
 
   /* @conditional-compile-remove(video-background-effects) */
   public async stopVideoBackgroundEffect(): Promise<void> {
     return await this.callAdapter.stopVideoBackgroundEffect();
+  }
+
+  /* @conditional-compile-remove(video-background-effects) */
+  public updateBackgroundPickerImages(backgroundImages: VideoBackgroundImage[]): void {
+    return this.callAdapter.updateBackgroundPickerImages(backgroundImages);
   }
 
   on(event: 'callParticipantsJoined', listener: ParticipantsJoinedListener): void;
@@ -635,7 +644,7 @@ export const createAzureCommunicationCallWithChatAdapter = async ({
   endpoint,
   locator,
   /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
-  /* @conditional-compile-remove(rooms) */ callAdapterOptions
+  /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(video-background-effects) */ callAdapterOptions
 }: AzureCommunicationCallWithChatAdapterArgs): Promise<CallWithChatAdapter> => {
   const callAdapterLocator = isTeamsMeetingLinkLocator(locator) ? locator : locator.callLocator;
   const createCallAdapterPromise = createAzureCommunicationCallAdapter({

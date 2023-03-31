@@ -5,6 +5,8 @@ import { CommunicationIdentifierKind } from '@azure/communication-common';
 import { CallState, DeviceManagerState } from '@internal/calling-stateful-client';
 import { ChatThreadClientState } from '@internal/chat-stateful-client';
 import { CallAdapter, CallAdapterState, CallCompositePage } from '../../CallComposite';
+/* @conditional-compile-remove(video-background-effects) */
+import { VideoBackgroundImage } from '../../CallComposite';
 import { ChatAdapter, ChatAdapterState } from '../../ChatComposite';
 /* @conditional-compile-remove(file-sharing) */
 import { FileUploadsUiState } from '../../ChatComposite';
@@ -78,6 +80,9 @@ export interface CallWithChatClientState {
   /* @conditional-compile-remove(unsupported-browser) */
   /** Environment information for system adapter is made on */
   environmentInfo?: EnvironmentInfo;
+  /* @conditional-compile-remove(video-background-effects) */
+  /** Default set of background images for background replacement effect */
+  videoBackgroundImages?: VideoBackgroundImage[];
 }
 
 /**
@@ -114,7 +119,9 @@ export function callWithChatAdapterStateFromBackingStates(
     /* @conditional-compile-remove(PSTN-calls) */
     alternateCallerId: callAdapterState.alternateCallerId,
     /* @conditional-compile-remove(unsupported-browser) */
-    environmentInfo: callAdapterState.environmentInfo
+    environmentInfo: callAdapterState.environmentInfo,
+    /* @conditional-compile-remove(video-background-effects) */
+    videoBackgroundImages: callAdapterState.videoBackgroundImages
   };
 }
 
@@ -150,6 +157,8 @@ export function mergeCallAdapterStateIntoCallWithChatAdapterState(
     call: callAdapterState.call,
     isLocalPreviewMicrophoneEnabled: callAdapterState.isLocalPreviewMicrophoneEnabled,
     isTeamsCall: callAdapterState.isTeamsCall,
-    latestCallErrors: callAdapterState.latestErrors
+    latestCallErrors: callAdapterState.latestErrors,
+    /* @conditional-compile-remove(video-background-effects) */
+    videoBackgroundImages: callAdapterState.videoBackgroundImages
   };
 }
