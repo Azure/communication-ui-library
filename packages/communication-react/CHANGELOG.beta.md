@@ -72,7 +72,6 @@ This feature includes:
   - Add Video background effects picker component ([PR #2792](https://github.com/azure/communication-ui-library/pull/2792) by 2684369+JamesBurnside@users.noreply.github.com)
   - Add announcer labels for nav buttons in vertical gallery and allow for style updates through props ([PR #2796](https://github.com/azure/communication-ui-library/pull/2796) by 94866715+dmceachernmsft@users.noreply.github.com)
   - Video Effects Button and Pane ([PR #2825](https://github.com/azure/communication-ui-library/pull/2825) by 97124699+prabhjot-msft@users.noreply.github.com)
-  - Update FileUploadAdapter to include the download of authenticated attachments ([PR #2827](https://github.com/azure/communication-ui-library/pull/2827) by joshlai@microsoft.com)
   - Update LocalVideo tile to be 9:16 aspect ratio to show whole feed and fix CallWithChat flashing issue with scrollable gallery ([PR #2734](https://github.com/azure/communication-ui-library/pull/2734) by 94866715+dmceachernmsft@users.noreply.github.com)
   - Add onFetchProfile to Teams call adapter ([PR #2680](https://github.com/azure/communication-ui-library/pull/2680) by jiangnanhello@live.com)
   - Set all empty/undefined displayName to unnamed ([PR #2720](https://github.com/azure/communication-ui-library/pull/2720) by jinan@microsoft.com)
