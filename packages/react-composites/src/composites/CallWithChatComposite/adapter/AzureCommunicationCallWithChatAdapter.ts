@@ -425,12 +425,12 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   }
 
   /* @conditional-compile-remove(video-background-effects) */
-  public async blurVideoBackground(bgBlurConfig?: BackgroundBlurConfig): Promise<void> {
-    await this.callAdapter.blurVideoBackground(bgBlurConfig);
+  public async blurVideoBackground(backgroundBlurConfig?: BackgroundBlurConfig): Promise<void> {
+    await this.callAdapter.blurVideoBackground(backgroundBlurConfig);
   }
   /* @conditional-compile-remove(video-background-effects) */
-  public async replaceVideoBackground(bgReplacementConfig: BackgroundReplacementConfig): Promise<void> {
-    await this.callAdapter.replaceVideoBackground(bgReplacementConfig);
+  public async replaceVideoBackground(backgroundReplacementConfig: BackgroundReplacementConfig): Promise<void> {
+    await this.callAdapter.replaceVideoBackground(backgroundReplacementConfig);
   }
 
   /* @conditional-compile-remove(video-background-effects) */
