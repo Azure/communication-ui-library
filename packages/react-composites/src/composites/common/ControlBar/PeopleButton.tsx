@@ -4,9 +4,9 @@
 import React, { useMemo } from 'react';
 import { ControlBarButton, ControlBarButtonProps, ControlBarButtonStyles, useTheme } from '@internal/react-components';
 import { concatStyleSets } from '@fluentui/react';
-import { CallWithChatCompositeIcon } from '../common/icons';
+import { CallCompositeIcon } from '../icons';
 
-const icon = (): JSX.Element => <CallWithChatCompositeIcon iconName={'ControlBarPeopleButton'} />;
+const icon = (): JSX.Element => <CallCompositeIcon iconName={'ControlBarPeopleButton'} />;
 
 /**
  * @private
