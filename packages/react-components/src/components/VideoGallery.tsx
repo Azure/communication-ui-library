@@ -325,10 +325,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   /* @conditional-compile-remove(pinned-participants) */
   const drawerMenuHostId = useId('drawerMenuHost', drawerMenuHostIdFromProp);
 
-  const shouldFloatLocalVideo = !!(
-    (layout === 'floatingLocalVideo' && remoteParticipants.length > 0) ||
-    localParticipant.isScreenSharingOn
-  );
+  const shouldFloatLocalVideo = !!(layout === 'floatingLocalVideo' && remoteParticipants.length > 0);
 
   const containerRef = useRef<HTMLDivElement>(null);
   const containerWidth = _useContainerWidth(containerRef);
