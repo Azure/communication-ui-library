@@ -12,24 +12,24 @@ import { useMemo } from 'react';
 import { usePropsFor } from '../../CallComposite/hooks/usePropsFor';
 /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
 import { buttonFlyoutIncreasedSizeStyles } from '../../CallComposite/styles/Buttons.styles';
-import { MoreButton } from '../../common/MoreButton';
+import { MoreButton } from '../MoreButton';
 /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
 import { useLocale } from '../../localization';
 /* @conditional-compile-remove(control-bar-button-injection) */
-import { CallWithChatControlOptions } from '../CallWithChatComposite';
+import { CommonCallControlOptions } from '../types/CommonCallControlOptions';
 /* @conditional-compile-remove(control-bar-button-injection) */
 import {
   CUSTOM_BUTTON_OPTIONS,
-  generateCustomCallWithChatDesktopOverflowButtons,
+  generateCustomCallDesktopOverflowButtons,
   onFetchCustomButtonPropsTrampoline
-} from '../CustomButton';
+} from './CustomButton';
 
 /** @private */
 export interface DesktopMoreButtonProps extends ControlBarButtonProps {
   disableButtonsForHoldScreen?: boolean;
   onClickShowDialpad?: () => void;
   /* @conditional-compile-remove(control-bar-button-injection) */
-  callControls?: boolean | CallWithChatControlOptions;
+  callControls?: boolean | CommonCallControlOptions;
 }
 
 /**
@@ -86,7 +86,7 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
   /* @conditional-compile-remove(control-bar-button-injection) */
   const customDrawerButtons = useMemo(
     () =>
-      generateCustomCallWithChatDesktopOverflowButtons(
+      generateCustomCallDesktopOverflowButtons(
         onFetchCustomButtonPropsTrampoline(typeof props.callControls === 'object' ? props.callControls : undefined),
         typeof props.callControls === 'object' ? props.callControls.displayType : undefined
       ),

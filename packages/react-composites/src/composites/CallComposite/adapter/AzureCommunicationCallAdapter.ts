@@ -563,12 +563,12 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   }
 
   /* @conditional-compile-remove(video-background-effects) */
-  public async blurVideoBackground(bgBlurConfig?: BackgroundBlurConfig): Promise<void> {
-    await this.handlers.onBlurVideoBackground(bgBlurConfig);
+  public async blurVideoBackground(backgroundBlurConfig?: BackgroundBlurConfig): Promise<void> {
+    await this.handlers.onBlurVideoBackground(backgroundBlurConfig);
   }
   /* @conditional-compile-remove(video-background-effects) */
-  public async replaceVideoBackground(bgReplacementConfig: BackgroundReplacementConfig): Promise<void> {
-    await this.handlers.onReplaceVideoBackground(bgReplacementConfig);
+  public async replaceVideoBackground(backgroundReplacementConfig: BackgroundReplacementConfig): Promise<void> {
+    await this.handlers.onReplaceVideoBackground(backgroundReplacementConfig);
   }
 
   /* @conditional-compile-remove(video-background-effects) */
