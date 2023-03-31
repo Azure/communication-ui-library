@@ -254,7 +254,9 @@ export const disableCallControls = (
     return false;
   }
   // Ensure we clone the prop if it is an object to ensure we do not mutate the original prop.
-  let newOptions = (callControlOptions instanceof Object ? { ...callControlOptions } : callControlOptions) ?? {};
+  let newOptions =
+    (callControlOptions instanceof Object ? ({ ...callControlOptions } as CallControlOptions) : callControlOptions) ??
+    {};
   if (newOptions === true || newOptions === undefined) {
     newOptions = disabledControls.reduce((acc, key) => {
       acc[key] = { disabled: true };

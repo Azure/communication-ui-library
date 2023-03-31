@@ -19,7 +19,10 @@ export const CallCompositeContainer = (props: CallCompositeContainerProps): JSX.
   const options: CallCompositeOptions = useMemo(
     () => ({
       onPermissionsTroubleshootingClick,
-      onNetworkingTroubleShootingClick
+      onNetworkingTroubleShootingClick,
+      callControls: {
+        legacyControlBarExperience: false
+      }
     }),
     []
   );
