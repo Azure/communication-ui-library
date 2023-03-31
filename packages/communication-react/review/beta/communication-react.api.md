@@ -276,7 +276,7 @@ export interface CallAdapterCallOperations {
     addParticipant(participant: CommunicationUserIdentifier): Promise<void>;
     allowUnsupportedBrowserVersion(): void;
     // @beta
-    blurVideoBackground(bgBlurConfig?: BackgroundBlurConfig): Promise<void>;
+    blurVideoBackground(backgroundBlurConfig?: BackgroundBlurConfig): Promise<void>;
     createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void | CreateVideoStreamViewResult>;
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
     // @beta
@@ -287,7 +287,7 @@ export interface CallAdapterCallOperations {
     // @beta
     removeParticipant(participant: CommunicationIdentifier): Promise<void>;
     // @beta
-    replaceVideoBackground(bgReplacementConfig: BackgroundReplacementConfig): Promise<void>;
+    replaceVideoBackground(backgroundReplacementConfig: BackgroundReplacementConfig): Promise<void>;
     // @beta
     resumeCall(): Promise<void>;
     // @beta
@@ -743,7 +743,7 @@ export interface CallWithChatAdapterManagement {
     allowUnsupportedBrowserVersion(): void;
     askDevicePermission(constrain: PermissionConstraints): Promise<void>;
     // @beta
-    blurVideoBackground(bgBlurConfig?: BackgroundBlurConfig): Promise<void>;
+    blurVideoBackground(backgroundBlurConfig?: BackgroundBlurConfig): Promise<void>;
     // @beta (undocumented)
     cancelFileUpload: (id: string) => void;
     // @beta (undocumented)
@@ -769,7 +769,7 @@ export interface CallWithChatAdapterManagement {
     // @beta
     removeParticipant(participant: CommunicationIdentifier): Promise<void>;
     // @beta
-    replaceVideoBackground(bgReplacementConfig: BackgroundReplacementConfig): Promise<void>;
+    replaceVideoBackground(backgroundReplacementConfig: BackgroundReplacementConfig): Promise<void>;
     // @beta
     resumeCall: () => Promise<void>;
     // @beta
@@ -1393,7 +1393,7 @@ export interface CommonCallingHandlers {
     // (undocumented)
     onAddParticipant(participant: PhoneNumberIdentifier, options: AddPhoneNumberOptions): Promise<void>;
     // (undocumented)
-    onBlurVideoBackground: (bgBlurConfig?: BackgroundBlurConfig) => Promise<void>;
+    onBlurVideoBackground: (backgroundBlurConfig?: BackgroundBlurConfig) => Promise<void>;
     // (undocumented)
     onCreateLocalStreamView: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
     // (undocumented)
@@ -1411,7 +1411,7 @@ export interface CommonCallingHandlers {
     // (undocumented)
     onRemoveVideoBackgroundEffects: () => Promise<void>;
     // (undocumented)
-    onReplaceVideoBackground: (bgReplacementConfig: BackgroundReplacementConfig) => Promise<void>;
+    onReplaceVideoBackground: (backgroundReplacementConfig: BackgroundReplacementConfig) => Promise<void>;
     // (undocumented)
     onSelectCamera: (device: VideoDeviceInfo, options?: VideoStreamOptions) => Promise<void>;
     // (undocumented)
