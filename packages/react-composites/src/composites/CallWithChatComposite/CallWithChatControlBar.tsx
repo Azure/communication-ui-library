@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React, { useMemo, useRef, useEffect, useState } from 'react';
+import React, { useMemo, useRef, useEffect, useState, useCallback } from 'react';
 import { CallAdapterProvider } from '../CallComposite/adapter/CallAdapterProvider';
 import { CallAdapter } from '../CallComposite';
 import { PeopleButton } from './PeopleButton';
@@ -80,9 +80,9 @@ const inferCallWithChatControlOptions = (
 export const CallWithChatControlBar = (props: CallWithChatControlBarProps & ContainerRectProps): JSX.Element => {
   const theme = useTheme();
 
-  const controlBarButtonsRef = useRef<HTMLHeadingElement>(null);
-  const panelsButtonsRef = useRef<HTMLHeadingElement>(null);
   const controlBarContainerRef = useRef<HTMLHeadingElement>(null);
+  const sidepaneControlsRef = useRef<HTMLHeadingElement>(null);
+  const controlBarSizeRef = useRef<HTMLHeadingElement>(null);
 
   const [controlBarButtonsWidth, setControlBarButtonsWidth] = useState(0);
   const [panelsButtonsWidth, setPanelsButtonsWidth] = useState(0);
@@ -94,20 +94,21 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps & Cont
   const callWithChatStrings = useCallWithChatCompositeStrings();
   const options = inferCallWithChatControlOptions(props.mobileView, props.callControls);
 
+  const handleResize = useCallback((): void => {
+    setControlBarButtonsWidth(controlBarContainerRef.current ? controlBarContainerRef.current.offsetWidth : 0);
+    setPanelsButtonsWidth(sidepaneControlsRef.current ? sidepaneControlsRef.current.offsetWidth : 0);
+    setControlBarContainerWidth(controlBarSizeRef.current ? controlBarSizeRef.current.offsetWidth : 0);
+  }, []);
+
   // on load set inital width
   useEffect(() => {
-    setControlBarButtonsWidth(controlBarButtonsRef.current ? controlBarButtonsRef.current.offsetWidth : 0);
-    setPanelsButtonsWidth(panelsButtonsRef.current ? panelsButtonsRef.current.offsetWidth : 0);
-    setControlBarContainerWidth(controlBarContainerRef.current ? controlBarContainerRef.current.offsetWidth : 0);
+    setControlBarButtonsWidth(controlBarContainerRef.current ? controlBarContainerRef.current.offsetWidth : 0);
+    setPanelsButtonsWidth(sidepaneControlsRef.current ? sidepaneControlsRef.current.offsetWidth : 0);
+    setControlBarContainerWidth(controlBarSizeRef.current ? controlBarSizeRef.current.offsetWidth : 0);
   }, []);
 
   // get the current width of control bar buttons and panel control buttons when browser size change
   useEffect(() => {
-    const handleResize = (): void => {
-      setControlBarButtonsWidth(controlBarButtonsRef.current ? controlBarButtonsRef.current.offsetWidth : 0);
-      setPanelsButtonsWidth(panelsButtonsRef.current ? panelsButtonsRef.current.offsetWidth : 0);
-      setControlBarContainerWidth(controlBarContainerRef.current ? controlBarContainerRef.current.offsetWidth : 0);
-    };
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
@@ -214,7 +215,7 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps & Cont
   );
 
   return (
-    <div ref={controlBarContainerRef}>
+    <div ref={controlBarSizeRef}>
       <Stack
         horizontal
         reversed={!props.mobileView && !isOutOfSpace}
@@ -242,7 +243,7 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps & Cont
                   dockedBottom it has position absolute and would therefore float on top of the media gallery,
                   occluding some of its content.
                 */}
-                <div ref={controlBarButtonsRef}>
+                <div ref={controlBarContainerRef}>
                   <ControlBar layout="horizontal" styles={centerContainerStyles}>
                     {isEnabled(options.microphoneButton) && (
                       <Microphone
@@ -327,7 +328,7 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps & Cont
         </Stack.Item>
         {!props.mobileView && (
           <Stack.Item>
-            <div ref={panelsButtonsRef}>
+            <div ref={sidepaneControlsRef}>
               <Stack horizontal className={!props.mobileView ? mergeStyles(desktopButtonContainerStyle) : undefined}>
                 {
                   /* @conditional-compile-remove(control-bar-button-injection) */
