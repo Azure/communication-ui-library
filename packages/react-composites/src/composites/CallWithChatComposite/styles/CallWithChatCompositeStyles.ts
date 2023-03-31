@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 
 import { IStackStyles } from '@fluentui/react';
+import { galleryCompositeMinWidthRem } from '../../common/styles/Composite.styles';
 
 /**
  * @private
@@ -22,7 +23,7 @@ export const callCompositeContainerStyles: IStackStyles = {
     // inside the call composite do not compete with its siblings.
     position: 'relative',
     width: '100%',
-    minWidth: 0
+    minWidth: `${galleryCompositeMinWidthRem}rem`
   }
 };
 
