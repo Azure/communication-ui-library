@@ -19,6 +19,8 @@ import { useCallback } from 'react';
 /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
 import { AvatarPersonaDataCallback } from '../../common/AvatarPersona';
 import { containerDivStyles } from '../../common/ContainerRectProps';
+/* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
+import { compositeMinWidthRem } from '../../common/styles/Composite.styles';
 import { useAdapter } from '../adapter/CallAdapterProvider';
 import { CallControls, CallControlsProps } from '../components/CallControls';
 import { CommonCallControlBar } from '../../common/ControlBar/CommonCallControlBar';
@@ -107,8 +109,13 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
 
   /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   const callCompositeContainerCSS = useMemo(() => {
-    return { display: isMobileWithActivePane ? 'none' : 'flex', minWidth: 0, width: '100%', height: '100%' };
-  }, [isMobileWithActivePane]);
+    return {
+      display: isMobileWithActivePane ? 'none' : 'flex',
+      minWidth: props.mobileView ? 'unset' : `${compositeMinWidthRem}rem`,
+      width: '100%',
+      height: '100%'
+    };
+  }, [isMobileWithActivePane, props.mobileView]);
 
   /* @conditional-compile-remove(PSTN-calls) */
   const callWithChatStrings = useCallWithChatCompositeStrings();
