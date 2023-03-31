@@ -506,8 +506,6 @@ export interface CallWithChatAdapterManagement {
     createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void | CreateVideoStreamViewResult>;
     deleteMessage(messageId: string): Promise<void>;
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
-    // (undocumented)
-    downloadAuthenticatedAttachment?: (attachmentUrl: string) => Promise<string>;
     fetchInitialData(): Promise<void>;
     // @beta
     holdCall: () => Promise<void>;
@@ -1228,8 +1226,6 @@ export interface FileUploadAdapter {
     cancelFileUpload: (id: string) => void;
     // (undocumented)
     clearFileUploads: () => void;
-    // (undocumented)
-    downloadAuthenticatedAttachment?: (attachmentUrl: string) => Promise<string>;
     // (undocumented)
     registerActiveFileUploads: (files: File[]) => FileUploadManager[];
     // (undocumented)
