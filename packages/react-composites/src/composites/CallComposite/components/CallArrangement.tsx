@@ -101,7 +101,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   const callCompositeContainerFlex = () => {
     /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
     return callCompositeContainerCSS;
-    return { display: 'flex', width: '100%', height: '100%' };
+    return { display: 'flex', minWidth: `${compositeMinWidthRem}rem`, width: '100%', height: '100%' };
   };
 
   /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
