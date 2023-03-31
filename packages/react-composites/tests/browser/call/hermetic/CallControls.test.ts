@@ -87,7 +87,6 @@ test.describe('New call control bar renders correctly', () => {
     const callState = defaultMockCallAdapterState([defaultMockRemoteParticipant('Paul Bridges')]);
     await page.goto(
       buildUrlWithMockAdapter(serverUrl, callState, {
-        injectCustomButtons: 'true',
         customCallCompositeOptions: JSON.stringify({
           callControls: { microphoneButton: true }
         })
@@ -99,11 +98,10 @@ test.describe('New call control bar renders correctly', () => {
     expect(await stableScreenshot(page)).toMatchSnapshot(`call-control-new-experience-custom-button.png`);
   });
 
-  test('Control bar custom buttons render correctly', async ({ page, serverUrl }) => {
+  test('Control bar people buttons behaves correctly', async ({ page, serverUrl }) => {
     const callState = defaultMockCallAdapterState([defaultMockRemoteParticipant('Paul Bridges')]);
     await page.goto(
       buildUrlWithMockAdapter(serverUrl, callState, {
-        injectCustomButtons: 'true',
         customCallCompositeOptions: JSON.stringify({
           callControls: { microphoneButton: true }
         })
