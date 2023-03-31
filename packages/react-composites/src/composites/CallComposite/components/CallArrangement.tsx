@@ -90,18 +90,18 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   const callCompositeContainerCSS = useMemo(() => {
     return {
       display: isMobileWithActivePane ? 'none' : 'flex',
-      minWidth: `${compositeMinWidthRem}rem`,
+      minWidth: props.mobileView ? 'unset' : `${compositeMinWidthRem}rem`,
       width: '100%',
       height: '100%'
     };
-  }, [isMobileWithActivePane]);
+  }, [isMobileWithActivePane, props.mobileView]);
 
   // To be removed once feature is out of beta, replace with callCompositeContainerCSS
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   const callCompositeContainerFlex = () => {
     /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
     return callCompositeContainerCSS;
-    return { display: 'flex', minWidth: `${compositeMinWidthRem}rem`, width: '100%', height: '100%' };
+    return { display: 'flex', width: '100%', height: '100%' };
   };
 
   /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */

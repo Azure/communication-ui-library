@@ -420,7 +420,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
         <Stack horizontal grow>
           <Stack.Item
             grow
-            styles={callCompositeContainerStyles}
+            styles={callCompositeContainerStyles(mobileView)}
             // Perf: Instead of removing the video gallery from DOM, we hide it to prevent re-renders.
             style={callCompositeContainerCSS}
           >
