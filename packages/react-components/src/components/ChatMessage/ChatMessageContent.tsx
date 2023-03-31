@@ -3,7 +3,7 @@
 
 import React from 'react';
 import { _formatString } from '@internal/acs-ui-common';
-import { Parser } from 'html-to-react';
+import { Parser, ProcessNodeDefinitions, ProcessingInstructions } from 'html-to-react';
 import Linkify from 'react-linkify';
 import { ChatMessage } from '../../types/ChatMessage';
 /* @conditional-compile-remove(data-loss-prevention) */
@@ -13,13 +13,16 @@ import { Link } from '@fluentui/react';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { FontIcon, Stack } from '@fluentui/react';
 import { MessageThreadStrings } from '../MessageThread';
+/* @conditional-compile-remove(teams-inline-images) */
 import { FileMetadata } from '../FileDownloadCards';
 
 type ChatMessageContentProps = {
   message: ChatMessage;
-  onFetchAttachment?: (attachment: FileMetadata) => Promise<void>;
-  attachmentsMap?: Record<string, string>;
   strings: MessageThreadStrings;
+  /* @conditional-compile-remove(teams-inline-images) */
+  attachmentsMap?: Record<string, string>;
+  /* @conditional-compile-remove(teams-inline-images) */
+  onFetchAttachment?: (attachment: FileMetadata) => Promise<void>;
 };
 
 /* @conditional-compile-remove(data-loss-prevention) */
@@ -34,6 +37,9 @@ type MessageContentWithLiveAriaProps = {
   ariaLabel?: string;
   content: JSX.Element;
 };
+
+const processNodeDefinitions: ProcessNodeDefinitions = new ProcessNodeDefinitions(React);
+const isValidNode = (): boolean => true;
 
 /** @private */
 export const ChatMessageContent = (props: ChatMessageContentProps): JSX.Element => {
@@ -60,14 +66,13 @@ const MessageContentWithLiveAria = (props: MessageContentWithLiveAriaProps): JSX
 };
 
 const MessageContentAsRichTextHTML = (props: ChatMessageContentProps): JSX.Element => {
-  const htmlToReactParser = new Parser();
   const liveAuthor = _formatString(props.strings.liveAuthorIntro, { author: `${props.message.senderDisplayName}` });
   return (
     <MessageContentWithLiveAria
       message={props.message}
       liveMessage={`${props.message.mine ? '' : liveAuthor} ${extractContent(props.message.content || '')}`}
       ariaLabel={messageContentAriaText(props)}
-      content={htmlToReactParser.parse(props.message.content)}
+      content={processHtmlToReact(props)}
     />
   );
 };
@@ -154,4 +159,71 @@ const messageContentAriaText = (props: ChatMessageContentProps): string | undefi
           message: props.message.content
         })
     : undefined;
+};
+
+type NodeProcessInstruction = {
+  shouldProcessNode: unknown;
+  processNode: unknown;
+};
+
+const processHtmlToReact = (props: ChatMessageContentProps): JSX.Element => {
+  const htmlToReactParser = new Parser();
+
+  /* @conditional-compile-remove(teams-inline-images) */
+  const processInlineImage: NodeProcessInstruction = {
+    // Custom <img> processing
+    shouldProcessNode: (node): boolean => {
+      // Process img node with id in attachments list
+      // if (node.name === 'img') {
+      //   console.log(node);
+      // }
+      return (
+        node.name &&
+        node.name === 'img' &&
+        node.attribs &&
+        node.attribs.id &&
+        (props.message.attachedFilesMetadata?.find((f) => f.id === node.attribs.id) ||
+          // node.attribs.id === 'x_0-canarycus-d3-5a1e3a4bcbb83a46f16e203810175fc5' ||
+          false)
+      );
+    },
+    processNode: (node, children, index): HTMLElement => {
+      // logic to check id in map/list
+      const fileMetadata = props.message.attachedFilesMetadata?.find((f) => f.id === node.attribs.id);
+      // if in cache, early return
+      if (props.attachmentsMap && node.attribs.id in props.attachmentsMap) {
+        node.attribs = { ...node.attribs, src: props.attachmentsMap[node.attribs.id] };
+        return processNodeDefinitions.processDefaultNode(node, children, index);
+      }
+      // not yet in cache
+      if (fileMetadata && props.onFetchAttachment) {
+        props.onFetchAttachment(fileMetadata);
+        node.attribs = { ...node.attribs, src: fileMetadata.previewUrl };
+      }
+      // for testing:
+      // if (node.attribs.id === 'x_0-canarycus-d3-5a1e3a4bcbb83a46f16e203810175fc5') {
+      //   node.attribs = { ...node.attribs, src: `https://www.gstatic.com/webp/gallery3/1_webp_a.png` };
+      // }
+      return processNodeDefinitions.processDefaultNode(node, children, index);
+    }
+  };
+
+  const addProcessingStep = (): NodeProcessInstruction[] => {
+    const steps: NodeProcessInstruction[] = [];
+    /* @conditional-compile-remove(teams-inline-images) */
+    steps.push(processInlineImage);
+    return steps;
+  };
+
+  const processingInstructions: ProcessingInstructions = [
+    ...addProcessingStep(),
+    {
+      shouldProcessNode: (): boolean => {
+        return true;
+      },
+      processNode: processNodeDefinitions.processDefaultNode
+    }
+  ];
+
+  return htmlToReactParser.parseWithInstructions(props.message.content, isValidNode, processingInstructions);
 };

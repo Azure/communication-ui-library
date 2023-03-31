@@ -77,24 +77,34 @@ export const GenerateMockNewChatMessageWithInlineImage = (): ChatMessage => {
     ...UserThree,
     messageId: Math.random().toString(),
     content:
-      '<p>Check out this image:&nbsp;</p>\r\n<p><img alt="image" src="" itemscope="png" width="250" height="250" id="SomeImageId" style="vertical-align:bottom"></p>\r\n<p>&nbsp;</p>\r\n',
+      '<p>Check out this image:&nbsp;</p>\r\n<p><img alt="image" src="" itemscope="png" width="250" height="250" id="SomeImageId" style="vertical-align:bottom"></p>\r\n<p><img alt="image" src="" itemscope="png" width="500" height="500" id="SomeImageId2" style="vertical-align:bottom"></p><p>&nbsp;</p>\r\n',
     createdOn: new Date('2020-04-13T00:00:00.000+07:01'),
     mine: false,
     attached: false,
     contentType: 'html',
-    attachedFilesMetadata: [GenerateMockMessageAttachment()]
+    attachedFilesMetadata: GenerateMockMessageAttachments()
   };
 };
 
-const GenerateMockMessageAttachment = (): FileMetadata => {
-  return {
-    attachmentType: 'teamsInlineImage',
-    id: 'SomeImageId',
-    name: 'SomeImageId.png',
-    extension: 'png',
-    url: 'images/github.png',
-    previewUrl: 'images/github.png'
-  };
+const GenerateMockMessageAttachments = (): FileMetadata[] => {
+  return [
+    {
+      id: 'SomeImageId',
+      name: 'SomeImageId',
+      attachmentType: 'teamsInlineImage',
+      extension: 'png',
+      url: 'images/github.png',
+      previewUrl: 'images/github.png'
+    },
+    {
+      id: 'SomeImageId2',
+      name: 'SomeImageId2',
+      attachmentType: 'teamsInlineImage',
+      extension: 'png',
+      url: 'https://www.gstatic.com/webp/gallery3/1_webp_a.png',
+      previewUrl: 'https://www.gstatic.com/webp/gallery3/1_webp_a.png'
+    }
+  ];
 };
 
 export const GenerateMockSystemMessage = (): SystemMessage => {

@@ -799,17 +799,15 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   // readCount and participantCount will only need to be updated on-fly when user hover on an indicator
   const [readCountForHoveredIndicator, setReadCountForHoveredIndicator] = useState<number | undefined>(undefined);
 
+  /* @conditional-compile-remove(teams-inline-images) */
   const [inlineAttachments, setInlineAttachments] = useState<Record<string, string>>({});
+  /* @conditional-compile-remove(teams-inline-images) */
   const onFetchInlineAttachment = useCallback(
     async (attachment: FileMetadata): Promise<void> => {
-      if (!onFetchAttachments) {
+      if (!onFetchAttachments || attachment.id in inlineAttachments) {
         return;
       }
-
       const url = await onFetchAttachments(attachment);
-      if (inlineAttachments[attachment.id] === url) {
-        return;
-      }
       setInlineAttachments((prev) => ({ ...prev, [attachment.id]: url }));
     },
     [inlineAttachments, onFetchAttachments]
