@@ -21,6 +21,7 @@ import { useCallback } from 'react';
 import { AvatarPersonaDataCallback } from '../../common/AvatarPersona';
 import { containerDivStyles } from '../../common/ContainerRectProps';
 /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
+import { compositeMinWidthRem } from '../../common/styles/Composite.styles';
 import { useAdapter } from '../adapter/CallAdapterProvider';
 import { CallControls, CallControlsProps } from '../components/CallControls';
 /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
@@ -87,8 +88,13 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
 
   /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   const callCompositeContainerCSS = useMemo(() => {
-    return { display: isMobileWithActivePane ? 'none' : 'flex', minWidth: 0, width: '100%', height: '100%' };
-  }, [isMobileWithActivePane]);
+    return {
+      display: isMobileWithActivePane ? 'none' : 'flex',
+      minWidth: props.mobileView ? 'unset' : `${compositeMinWidthRem}rem`,
+      width: '100%',
+      height: '100%'
+    };
+  }, [isMobileWithActivePane, props.mobileView]);
 
   // To be removed once feature is out of beta, replace with callCompositeContainerCSS
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
