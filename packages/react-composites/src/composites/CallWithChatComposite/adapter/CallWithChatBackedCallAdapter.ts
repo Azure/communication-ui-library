@@ -196,6 +196,8 @@ function callAdapterStateFromCallWithChatAdapterState(
     /* @conditional-compile-remove(PSTN-calls) */
     alternateCallerId: callWithChatAdapterState.alternateCallerId,
     /* @conditional-compile-remove(unsupported-browser) */
-    environmentInfo: callWithChatAdapterState.environmentInfo
+    environmentInfo: callWithChatAdapterState.environmentInfo,
+    /* @conditional-compile-remove(video-background-effects) */
+    videoBackgroundImages: callWithChatAdapterState.videoBackgroundImages
   };
 }
