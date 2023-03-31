@@ -13,7 +13,7 @@ import { CallControlDisplayType, CommonCallControlOptions } from '../../common/t
 export type CallControlOptions =
   | CommonCallControlOptions & {
       /**
-       * Show, Hide or Disable participants button during a call.
+       * Show, Hide or Disable participants button during a call. This is the option only work for legacyControl bar.
        * @defaultValue true
        */
       participantsButton?: boolean | { disabled: boolean };
