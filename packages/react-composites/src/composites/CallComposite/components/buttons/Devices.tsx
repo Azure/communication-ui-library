@@ -6,11 +6,11 @@ import { ControlBarButtonStyles, DevicesButton } from '@internal/react-component
 import { _usePermissions, _Permissions, DevicesButtonStrings } from '@internal/react-components';
 import React, { useMemo } from 'react';
 import { usePropsFor } from '../../hooks/usePropsFor';
-import { CallControlDisplayType } from '../../types/CallControlOptions';
 import { concatButtonBaseStyles, devicesButtonWithIncreasedTouchTargets } from '../../styles/Buttons.styles';
 /* @conditional-compile-remove(rooms) */
 import { CompositeLocale, useLocale } from '../../../localization';
 import { _HighContrastAwareIcon } from '@internal/react-components';
+import { CallControlDisplayType } from '../../../common/types/CommonCallControlOptions';
 
 /** @private */
 export const Devices = (props: {

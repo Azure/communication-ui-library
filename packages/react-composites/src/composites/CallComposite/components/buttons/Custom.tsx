@@ -6,10 +6,10 @@ import { Icon } from '@fluentui/react';
 import { ControlBarButton, _DrawerMenuItemProps } from '@internal/react-components';
 import React from 'react';
 import {
-  CallControlDisplayType,
   CustomCallControlButtonCallback,
   CustomCallControlButtonPlacement
-} from '../../types/CallControlOptions';
+} from '../../../common/ControlBar/CustomButton';
+import { CallControlDisplayType } from '../../../common/types/CommonCallControlOptions';
 /* @conditional-compile-remove(control-bar-button-injection) */
 import { CallControlOptions } from '../../types/CallControlOptions';
 
@@ -22,7 +22,9 @@ export const generateCustomControlBarButtons = (
   displayType?: CallControlDisplayType
 ): CustomButtons => {
   const response = {
-    primary: undefined
+    primary: undefined,
+    overflow: undefined,
+    secondary: undefined
   };
 
   if (!onFetchCustomButtonProps) {

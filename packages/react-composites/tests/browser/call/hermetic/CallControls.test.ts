@@ -47,7 +47,8 @@ test.describe('Call composite custom call control options tests', () => {
         },
         microphoneButton: true,
         endCallButton: false,
-        devicesButton: undefined
+        devicesButton: undefined,
+        legacyControlBarExperience: true
       }
     };
     await page.goto(
