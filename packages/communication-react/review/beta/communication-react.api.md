@@ -1146,7 +1146,7 @@ export type CameraSitePermissionsStrings = SitePermissionsStrings;
 // @public
 export type ChatAdapter = ChatAdapterThreadManagement & AdapterState<ChatAdapterState> & Disposable & ChatAdapterSubscribers & FileUploadAdapter;
 
-// @public
+// @beta
 export type ChatAdapterOptions = {
     credential?: CommunicationTokenCredential;
 };

@@ -117,24 +117,29 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   private handlers: ChatHandlers;
   private emitter: EventEmitter = new EventEmitter();
 
-  constructor(chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient, options?: ChatAdapterOptions) {
+  constructor(
+    chatClient: StatefulChatClient,
+    chatThreadClient: ChatThreadClient,
+    /* @conditional-compile-remove(teams-inline-images) */ options?: {
+      credential?: CommunicationTokenCredential;
+    }
+  ) {
     this.bindAllPublicMethods();
     this.chatClient = chatClient;
     this.chatThreadClient = chatThreadClient;
     this.context = new ChatContext(chatClient.getState(), chatThreadClient.threadId);
     const credential = options?.credential;
+    /* @conditional-compile-remove(file-sharing) */ /* @conditional-compile-remove(teams-inline-images) */
+    let getAuthToken: (() => Promise<string>) | undefined = undefined;
     if (credential) {
       /* @conditional-compile-remove(teams-inline-images) */
-      const getAuthToken: () => Promise<string> = async () => {
+      getAuthToken = async () => {
         const accessToken = await credential.getToken();
         return accessToken.token;
       };
-      /* @conditional-compile-remove(teams-inline-images) */
-      this.fileUploadAdapter = new AzureCommunicationFileUploadAdapter(this.context, getAuthToken);
-    } else {
-      /* @conditional-compile-remove(file-sharing) */
-      this.fileUploadAdapter = new AzureCommunicationFileUploadAdapter(this.context);
     }
+    /* @conditional-compile-remove(file-sharing) */ /* @conditional-compile-remove(teams-inline-images) */
+    this.fileUploadAdapter = new AzureCommunicationFileUploadAdapter(this.context, getAuthToken);
 
     const onStateChange = (clientState: ChatClientState): void => {
       // unsubscribe when the instance gets disposed
@@ -439,9 +444,10 @@ const convertEventType = (type: string): ChatMessageType => {
   }
 };
 
+/* @conditional-compile-remove(teams-inline-images) */
 /**
- * Option bag to include when creating AzureCommunicationChatAdapter.
- * @public
+ * Configuration options to include when creating AzureCommunicationChatAdapter.
+ * @beta
  */
 export type ChatAdapterOptions = {
   credential?: CommunicationTokenCredential;
@@ -610,7 +616,10 @@ export const useAzureCommunicationChatAdapter = (
 export const createAzureCommunicationChatAdapterFromClient = async (
   chatClient: StatefulChatClient,
   chatThreadClient: ChatThreadClient,
-  options?: ChatAdapterOptions
+  /* @conditional-compile-remove(teams-inline-images) */
+  options?: {
+    credential?: CommunicationTokenCredential;
+  }
 ): Promise<ChatAdapter> => {
   return new AzureCommunicationChatAdapter(chatClient, chatThreadClient, options);
 };
