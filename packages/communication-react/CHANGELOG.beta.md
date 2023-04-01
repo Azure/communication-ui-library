@@ -55,6 +55,7 @@ This feature includes:
   - Fix CallWithChat overflow buttons onClick not working, styles not being fully applied and and showLabel: false not hiding the button label ([PR #2750](https://github.com/azure/communication-ui-library/pull/2750) by 2684369+JamesBurnside@users.noreply.github.com)
   - Fix PSTN id parsing and add unit test to validate E.164 format numbers ([PR #2739](https://github.com/azure/communication-ui-library/pull/2739) by 94866715+dmceachernmsft@users.noreply.github.com)
   - Prevent overflow of VideoGallery when scrollable horizontal gallery is present and side pane is open ([PR #2850](https://github.com/Azure/communication-ui-library/pull/2850)by 79475487+mgamis-msft@users.noreply.github.com)
+  - Prevent overlap of side pane in Call and CallWithChat composites when window is narrow ([PR #2864](https://github.com/Azure/communication-ui-library/pull/2864)by 79475487+mgamis-msft@users.noreply.github.com)
 
 ### Improvements
 
