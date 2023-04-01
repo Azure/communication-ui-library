@@ -90,6 +90,21 @@ test.describe('New call control bar renders correctly', () => {
     expect(await stableScreenshot(page)).toMatchSnapshot(`new-call-control-experience.png`);
   });
 
+  /* @conditional-compile-remove(control-bar-button-injection) */
+  test('injected buttons appear', async ({ page, serverUrl }) => {
+    const initialState = defaultMockCallAdapterState([defaultMockRemoteParticipant('Paul Bridges')]);
+    await page.goto(
+      buildUrlWithMockAdapter(serverUrl, initialState, {
+        injectCustomButtons: 'true',
+        newControlBarExperience: 'true'
+      })
+    );
+
+    await pageClick(page, dataUiId('common-call-composite-more-button'));
+
+    expect(await stableScreenshot(page)).toMatchSnapshot(`custom-buttons.png`);
+  });
+
   test('Control bar custom buttons render correctly', async ({ page, serverUrl }) => {
     const callState = defaultMockCallAdapterState([defaultMockRemoteParticipant('Paul Bridges')]);
     await page.goto(

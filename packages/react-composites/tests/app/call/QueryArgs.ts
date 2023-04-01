@@ -12,6 +12,7 @@ export interface QueryArgs {
   showCallDescription: boolean;
   injectParticipantMenuItems: boolean;
   injectCustomButtons: boolean;
+  newControlBarExperience?: boolean;
   role?: Role;
   callInvitationUrl?: string;
   showParticipantItemIcon: boolean;
