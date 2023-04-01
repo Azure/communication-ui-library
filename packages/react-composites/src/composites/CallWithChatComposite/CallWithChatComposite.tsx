@@ -430,6 +430,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
                 onClickShowDialpad={alternateCallerId ? onClickShowDialpad : undefined}
                 /* @conditional-compile-remove(video-background-effects) */
                 onShowVideoEffectsPicker={setShowVideoEffectsPane}
+                rtl={props.rtl}
               />
             </Stack.Item>
           </ChatAdapterProvider>
