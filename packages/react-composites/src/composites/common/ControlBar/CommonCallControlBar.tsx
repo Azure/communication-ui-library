@@ -354,7 +354,7 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                     ariaLabel={peopleButtonStrings?.label}
                     showLabel={options.displayType !== 'compact'}
                     onClick={props.onPeopleButtonClicked}
-                    data-ui-id="call-with-chat-composite-people-button"
+                    data-ui-id="common-call-composite-people-button"
                     disabled={props.disableButtonsForLobbyPage || isDisabled(options.peopleButton)}
                     strings={peopleButtonStrings}
                     styles={commonButtonStyles}
