@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 import React from 'react';
 /* @conditional-compile-remove(video-background-effects) */
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 /* @conditional-compile-remove(video-background-effects) */
 import { Panel } from '@fluentui/react';
 /* @conditional-compile-remove(video-background-effects) */
@@ -10,6 +10,8 @@ import { useLocale } from '../localization';
 import { _VideoEffectsItemProps } from '@internal/react-components';
 /* @conditional-compile-remove(video-background-effects) */
 import { _VideoBackgroundEffectsPicker } from '@internal/react-components';
+/* @conditional-compile-remove(video-background-effects) */
+import { VideoBackgroundImage } from '../CallComposite';
 import { CallAdapter, CommonCallAdapter } from '../CallComposite';
 
 /**
@@ -28,39 +30,65 @@ export const VideoEffectsPane = (props: {
   /* @conditional-compile-remove(video-background-effects) */
   const strings = locale.strings.call;
   /* @conditional-compile-remove(video-background-effects) */
-  const selectableVideoEffects: _VideoEffectsItemProps[] = [
-    {
-      key: 'none',
-      iconProps: {
-        iconName: 'RemoveVideoBackgroundEffect'
+  const selectableVideoEffects: _VideoEffectsItemProps[] = useMemo(() => {
+    const videoEffects: _VideoEffectsItemProps[] = [
+      {
+        key: 'none',
+        iconProps: {
+          iconName: 'RemoveVideoBackgroundEffect'
+        },
+        title: strings.removeBackgroundEffectButtonLabel,
+        tooltipProps: {
+          content: strings.removeBackgroundTooltip
+        }
       },
-      title: strings.removeBackgroundEffectButtonLabel,
-      tooltipProps: {
-        content: strings.removeBackgroundTooltip
+      {
+        key: 'blur',
+        iconProps: {
+          iconName: 'BlurVideoBackground'
+        },
+        title: strings.blurBackgroundEffectButtonLabel,
+        tooltipProps: {
+          content: strings.blurBackgroundTooltip
+        }
       }
-    },
-    {
-      key: 'blur',
-      iconProps: {
-        iconName: 'BlurVideoBackground'
-      },
-      title: strings.blurBackgroundEffectButtonLabel,
-      tooltipProps: {
-        content: strings.blurBackgroundTooltip
-      }
+    ];
+    const videoEffectImages = props.adapter.getState().videoBackgroundImages;
+
+    if (videoEffectImages) {
+      videoEffectImages.forEach((img: VideoBackgroundImage) => {
+        videoEffects.push({
+          key: img.key,
+          backgroundProps: {
+            url: img.url
+          },
+          tooltipProps: {
+            content: img.tooltipText ?? ''
+          }
+        });
+      });
     }
-  ];
+    return videoEffects;
+  }, [strings, props.adapter]);
 
   /* @conditional-compile-remove(video-background-effects) */
   const onEffectChange = useCallback(
     async (effectKey: string) => {
+      console.log(props.adapter.getState());
       if (effectKey === 'blur') {
         props.adapter.blurVideoBackground();
       } else if (effectKey === 'none') {
         props.adapter.stopVideoBackgroundEffect();
+      } else {
+        const backgroundImg = selectableVideoEffects.find((effect) => {
+          return effect.key === effectKey;
+        });
+        if (backgroundImg && backgroundImg.backgroundProps) {
+          props.adapter.replaceVideoBackground({ backgroundImageUrl: backgroundImg.backgroundProps.url });
+        }
       }
     },
-    [props.adapter]
+    [props.adapter, selectableVideoEffects]
   );
   return VideoEffectsPaneTrampoline(
     showVideoEffectsOptions,
