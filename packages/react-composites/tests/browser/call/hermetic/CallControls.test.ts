@@ -3,7 +3,14 @@
 
 import { buildUrlWithMockAdapter, defaultMockCallAdapterState, defaultMockRemoteParticipant, test } from './fixture';
 import { expect } from '@playwright/test';
-import { dataUiId, pageClick, stableScreenshot, waitForSelector } from '../../common/utils';
+import {
+  dataUiId,
+  isTestProfileDesktop,
+  isTestProfileMobile,
+  pageClick,
+  stableScreenshot,
+  waitForSelector
+} from '../../common/utils';
 import { IDS } from '../../common/constants';
 import type { CallCompositeOptions } from '../../../../src';
 
@@ -98,7 +105,7 @@ test.describe('New call control bar renders correctly', () => {
     expect(await stableScreenshot(page)).toMatchSnapshot(`call-control-new-experience-custom-button.png`);
   });
 
-  test('Control bar people buttons behaves correctly', async ({ page, serverUrl }) => {
+  test('Control bar people buttons behaves correctly', async ({ page, serverUrl }, testInfo) => {
     const callState = defaultMockCallAdapterState([defaultMockRemoteParticipant('Paul Bridges')]);
     await page.goto(
       buildUrlWithMockAdapter(serverUrl, callState, {
@@ -108,7 +115,12 @@ test.describe('New call control bar renders correctly', () => {
       })
     );
 
-    await pageClick(page, dataUiId('common-call-composite-people-button'));
+    if (isTestProfileDesktop(testInfo)) {
+      await pageClick(page, dataUiId('common-call-composite-people-button'));
+    } else if (isTestProfileMobile(testInfo)) {
+      await pageClick(page, dataUiId('common-call-composite-more-button'));
+      await pageClick(page, `[id="call-composite-drawer-people-button"]`);
+    }
 
     expect(await stableScreenshot(page)).toMatchSnapshot(`call-control-new-experience-people-button.png`);
   });
