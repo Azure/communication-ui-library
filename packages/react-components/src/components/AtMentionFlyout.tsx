@@ -116,6 +116,13 @@ export interface AtMentionSuggestion {
  * @internal
  */
 export const _AtMentionFlyout = (props: _AtMentionFlyoutProps): JSX.Element => {
+  // Temporary implementation for AtMentionFlyout's position.
+  interface Position {
+    top: number;
+    right: number;
+    bottom: number;
+    left: number;
+  }
   const { title = 'Suggestions', query, target, atMentionLookupOptions } = props;
   const { onQueryUpdated, suggestionItemRenderer, onSuggestionSelected } = atMentionLookupOptions ?? {};
   const theme = useTheme();
@@ -123,7 +130,7 @@ export const _AtMentionFlyout = (props: _AtMentionFlyoutProps): JSX.Element => {
   const localeStrings = useLocale().strings.participantItem;
 
   const [suggestions, setSuggestions] = useState<AtMentionSuggestion[]>([]);
-  const [refRect, setRefRect] = useState<DOMRect | undefined>(undefined);
+  const [position, setPosition] = useState<Position>({ top: 0, right: 0, bottom: 0, left: 0 });
 
   useEffect(() => {
     async function fetchData(): Promise<void> {
@@ -137,7 +144,10 @@ export const _AtMentionFlyout = (props: _AtMentionFlyoutProps): JSX.Element => {
 
   useEffect(() => {
     const rect = target?.current?.getBoundingClientRect();
-    setRefRect(rect);
+    const { top = 0, left = 0, right = 0, bottom = 0, height = 0 } = rect ?? {};
+    const flyoutHeight = 212;
+    const flyoutTop = top - flyoutHeight - height - 24;
+    setPosition({ top: flyoutTop, left, right, bottom });
   }, [target]);
 
   const personaRenderer = (displayName?: string): JSX.Element => {
@@ -168,7 +178,7 @@ export const _AtMentionFlyout = (props: _AtMentionFlyoutProps): JSX.Element => {
   };
 
   return (
-    <Stack className={atMentionFlyoutContainer(theme, refRect)}>
+    <Stack className={atMentionFlyoutContainer(theme, position.left, position.top)}>
       <Stack.Item styles={headerStyleThemed(theme)} aria-label={title}>
         {title} {/* TODO: Localization  */}
       </Stack.Item>
