@@ -13,18 +13,18 @@ import {
 /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
 import { HoldButton } from '@internal/react-components';
 import { AudioDeviceInfo } from '@azure/communication-calling';
-import { CallWithChatControlOptions } from '../CallWithChatComposite';
 /* @conditional-compile-remove(control-bar-button-injection) */
 import {
   CUSTOM_BUTTON_OPTIONS,
-  generateCustomCallWithChatDrawerButtons,
+  generateCustomCallDrawerButtons,
   onFetchCustomButtonPropsTrampoline
-} from '../CustomButton';
+} from '../ControlBar/CustomButton';
 /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
 import { usePropsFor } from '../../CallComposite/hooks/usePropsFor';
 /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
 import { useLocale } from '../../localization';
 import { isDisabled } from '../../CallComposite/utils';
+import { CommonCallControlOptions } from '../types/CommonCallControlOptions';
 
 /** @private */
 export interface MoreDrawerStrings {
@@ -87,15 +87,15 @@ export interface MoreDrawerDevicesMenuProps {
 export interface MoreDrawerProps extends MoreDrawerDevicesMenuProps {
   onLightDismiss: () => void;
   onPeopleButtonClicked: () => void;
-  callControls?: boolean | CallWithChatControlOptions;
+  callControls?: boolean | CommonCallControlOptions;
   onClickShowDialpad?: () => void;
   strings: MoreDrawerStrings;
   disableButtonsForHoldScreen?: boolean;
 }
 
 const inferCallWithChatControlOptions = (
-  callWithChatControls?: boolean | CallWithChatControlOptions
-): CallWithChatControlOptions | false => {
+  callWithChatControls?: boolean | CommonCallControlOptions
+): CommonCallControlOptions | false => {
   if (callWithChatControls === false) {
     return false;
   }
@@ -196,7 +196,7 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
       text: props.strings.peopleButtonLabel,
       iconProps: { iconName: 'MoreDrawerPeople' },
       onItemClick: props.onPeopleButtonClicked,
-      disabled: drawerSelectionOptions !== false ? isDisabled(drawerSelectionOptions.peopleButton) : undefined
+      disabled: isDisabled(drawerSelectionOptions.peopleButton)
     });
   }
 
@@ -204,9 +204,7 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
   if (drawerSelectionOptions !== false && isEnabled(drawerSelectionOptions?.holdButton)) {
     drawerMenuItems.push({
       itemKey: 'holdButtonKey',
-      disabled:
-        props.disableButtonsForHoldScreen ||
-        (drawerSelectionOptions !== false ? isDisabled(drawerSelectionOptions.holdButton) : undefined),
+      disabled: props.disableButtonsForHoldScreen || isDisabled(drawerSelectionOptions.holdButton),
       text: localeStrings.component.strings.holdButton.tooltipOffContent,
       onItemClick: () => {
         holdButtonProps.onToggleHold();
@@ -232,7 +230,7 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
   /* @conditional-compile-remove(control-bar-button-injection) */
   const customDrawerButtons = useMemo(
     () =>
-      generateCustomCallWithChatDrawerButtons(
+      generateCustomCallDrawerButtons(
         onFetchCustomButtonPropsTrampoline(drawerSelectionOptions !== false ? drawerSelectionOptions : undefined),
         drawerSelectionOptions !== false ? drawerSelectionOptions?.displayType : undefined
       ),

@@ -6,45 +6,46 @@ import { CallAdapterProvider } from '../CallComposite/adapter/CallAdapterProvide
 import { CallAdapter } from '../CallComposite';
 import { PeopleButton } from './PeopleButton';
 import { concatStyleSets, IStyle, ITheme, mergeStyles, mergeStyleSets, Stack, useTheme } from '@fluentui/react';
-import { controlBarContainerStyles } from '../CallComposite/styles/CallControls.styles';
-import { callControlsContainerStyles } from '../CallComposite/styles/CallPage.styles';
-import { useCallWithChatCompositeStrings } from './hooks/useCallWithChatCompositeStrings';
-import { ChatAdapter } from '../ChatComposite';
-import { ChatButtonWithUnreadMessagesBadge } from './ChatButtonWithUnreadMessagesBadge';
+import { controlBarContainerStyles } from '../../CallComposite/styles/CallControls.styles';
+import { callControlsContainerStyles } from '../../CallComposite/styles/CallPage.styles';
+import { useCallWithChatCompositeStrings } from '../../CallWithChatComposite/hooks/useCallWithChatCompositeStrings';
+import { ChatAdapter } from '../../ChatComposite';
+import { ChatButtonWithUnreadMessagesBadge } from '../../CallWithChatComposite/ChatButtonWithUnreadMessagesBadge';
 import { BaseCustomStyles, ControlBarButtonStyles } from '@internal/react-components';
 import { ControlBar } from '@internal/react-components';
-import { Microphone } from '../CallComposite/components/buttons/Microphone';
-import { Camera } from '../CallComposite/components/buttons/Camera';
-import { ScreenShare } from '../CallComposite/components/buttons/ScreenShare';
-import { EndCall } from '../CallComposite/components/buttons/EndCall';
-import { MoreButton } from '../common/MoreButton';
-import { CallWithChatControlOptions } from './CallWithChatComposite';
-import { ContainerRectProps } from '../common/ContainerRectProps';
+import { Microphone } from '../../CallComposite/components/buttons/Microphone';
+import { Camera } from '../../CallComposite/components/buttons/Camera';
+import { ScreenShare } from '../../CallComposite/components/buttons/ScreenShare';
+import { EndCall } from '../../CallComposite/components/buttons/EndCall';
+import { MoreButton } from '../MoreButton';
+import { ContainerRectProps } from '../ContainerRectProps';
 /* @conditional-compile-remove(control-bar-button-injection) */
 import {
   CUSTOM_BUTTON_OPTIONS,
-  generateCustomCallWithChatControlBarButton,
+  generateCustomCallControlBarButton,
   onFetchCustomButtonPropsTrampoline
 } from './CustomButton';
 /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
-import { DesktopMoreButton } from './components/DesktopMoreButton';
-import { isDisabled } from '../CallComposite/utils';
-import { HiddenFocusStartPoint } from '../common/HiddenFocusStartPoint';
+import { DesktopMoreButton } from './DesktopMoreButton';
+import { isDisabled } from '../../CallComposite/utils';
+import { HiddenFocusStartPoint } from '../HiddenFocusStartPoint';
+import { CallWithChatControlOptions } from '../../CallWithChatComposite';
+import { CommonCallControlOptions } from '../types/CommonCallControlOptions';
 
 /**
  * @private
  */
-export interface CallWithChatControlBarProps {
+export interface CommonCallControlBarProps {
   callAdapter: CallAdapter;
-  chatButtonChecked: boolean;
+  chatButtonChecked?: boolean;
   peopleButtonChecked: boolean;
-  onChatButtonClicked: () => void;
+  onChatButtonClicked?: () => void;
   onPeopleButtonClicked: () => void;
-  onMoreButtonClicked: () => void;
+  onMoreButtonClicked?: () => void;
   mobileView: boolean;
   disableButtonsForLobbyPage: boolean;
-  callControls?: boolean | CallWithChatControlOptions;
-  chatAdapter: ChatAdapter;
+  callControls?: boolean | CommonCallControlOptions | CallWithChatControlOptions;
+  chatAdapter?: ChatAdapter;
   disableButtonsForHoldScreen?: boolean;
   /* @conditional-compile-remove(PSTN-calls) */
   onClickShowDialpad?: () => void;
@@ -53,15 +54,16 @@ export interface CallWithChatControlBarProps {
   rtl?: boolean;
 }
 
-const inferCallWithChatControlOptions = (
+const inferCommonCallControlOptions = (
   mobileView: boolean,
-  callWithChatControls?: boolean | CallWithChatControlOptions
+  commonCallControlOptions?: boolean | CallWithChatControlOptions
 ): CallWithChatControlOptions | false => {
-  if (callWithChatControls === false) {
+  if (commonCallControlOptions === false) {
     return false;
   }
 
-  const options = callWithChatControls === true || callWithChatControls === undefined ? {} : callWithChatControls;
+  const options =
+    commonCallControlOptions === true || commonCallControlOptions === undefined ? {} : commonCallControlOptions;
   if (mobileView) {
     // Set to compressed mode when composite is optimized for mobile
     options.displayType = 'compact';
@@ -77,7 +79,7 @@ const inferCallWithChatControlOptions = (
 /**
  * @private
  */
-export const CallWithChatControlBar = (props: CallWithChatControlBarProps & ContainerRectProps): JSX.Element => {
+export const CommonCallControlBar = (props: CommonCallControlBarProps & ContainerRectProps): JSX.Element => {
   const theme = useTheme();
 
   const controlBarContainerRef = useRef<HTMLHeadingElement>(null);
@@ -92,7 +94,7 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps & Cont
   const [isOutOfSpace, setIsOutOfSpace] = useState(false);
 
   const callWithChatStrings = useCallWithChatCompositeStrings();
-  const options = inferCallWithChatControlOptions(props.mobileView, props.callControls);
+  const options = inferCommonCallControlOptions(props.mobileView, props.callControls);
 
   const handleResize = useCallback((): void => {
     setControlBarButtonsWidth(controlBarContainerRef.current ? controlBarContainerRef.current.offsetWidth : 0);
@@ -188,7 +190,7 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps & Cont
   /* @conditional-compile-remove(control-bar-button-injection) */
   const customButtons = useMemo(
     () =>
-      generateCustomCallWithChatControlBarButton(
+      generateCustomCallControlBarButton(
         onFetchCustomButtonPropsTrampoline(options !== false ? options : undefined),
         options !== false ? options?.displayType : undefined
       ),
@@ -200,18 +202,20 @@ export const CallWithChatControlBar = (props: CallWithChatControlBarProps & Cont
     return <></>;
   }
 
-  const chatButton = (
+  const chatButton = props.chatAdapter ? (
     <ChatButtonWithUnreadMessagesBadge
       chatAdapter={props.chatAdapter}
       checked={props.chatButtonChecked}
       showLabel={options.displayType !== 'compact'}
-      isChatPaneVisible={props.chatButtonChecked}
+      isChatPaneVisible={props.chatButtonChecked ?? false}
       onClick={props.onChatButtonClicked}
       disabled={props.disableButtonsForLobbyPage || isDisabled(options.chatButton)}
       strings={chatButtonStrings}
       styles={commonButtonStyles}
       newMessageLabel={callWithChatStrings.chatButtonNewMessageNotificationLabel}
     />
+  ) : (
+    <></>
   );
 
   return (
