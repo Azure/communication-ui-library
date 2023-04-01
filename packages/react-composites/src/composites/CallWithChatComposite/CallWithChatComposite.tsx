@@ -337,6 +337,8 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
   /* @conditional-compile-remove(PSTN-calls) */
   const alternateCallerId = callAdapter.getState().alternateCallerId;
 
+  const isTeamsCall = callAdapter.getState().isTeamsCall;
+
   const callCompositeOptions: CallCompositeOptions = useMemo(
     () => ({
       callControls: false,
@@ -428,6 +430,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
                 containerWidth={containerWidth}
                 /* @conditional-compile-remove(PSTN-calls) */
                 onClickShowDialpad={alternateCallerId ? onClickShowDialpad : undefined}
+                isCaptionsSupported={isTeamsCall && hasJoinedCall}
                 /* @conditional-compile-remove(video-background-effects) */
                 onShowVideoEffectsPicker={setShowVideoEffectsPane}
                 rtl={props.rtl}
@@ -447,6 +450,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
                   onClickShowDialpad={alternateCallerId ? onClickShowDialpad : undefined}
                   /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
                   disableButtonsForHoldScreen={isInLocalHold}
+                  isCaptionsSupported={isTeamsCall && hasJoinedCall}
                 />
               </Stack>
             </CallAdapterProvider>

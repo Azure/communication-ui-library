@@ -408,4 +408,8 @@ export interface CallCompositeStrings {
    * string to be used to announce when multiple unnamed participants have left at the same time.
    */
   manyUnnamedParticipantsLeft: string;
+  /**
+   * string to be used to open live captions contextual menu
+   */
+  liveCaptionsLabel: string;
 }

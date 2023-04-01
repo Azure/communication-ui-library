@@ -87,7 +87,8 @@
     "manyUnnamedParticipantsJoined": "unnamed participant and {numOfParticipants} other participants joined",
     "manyUnnamedParticipantsLeft": "unnamed participant and {numOfParticipants} other participants left",
     "manyParticipantsJoined": "{displayName1}, {displayName2}, {displayName3} and {numOfParticipants} other participants joined",
-    "manyParticipantsLeft": "{displayName1}, {displayName2}, {displayName3} and {numOfParticipants} other participants left"
+    "manyParticipantsLeft": "{displayName1}, {displayName2}, {displayName3} and {numOfParticipants} other participants left",
+    "liveCaptionsLabel": "Live captions"
   },
   "chat": {
     "chatListHeader": "In this chat",

@@ -249,6 +249,8 @@ export const _CaptionsBanner: (props: _CaptionsBannerProps) => JSX.Element;
 export interface _CaptionsBannerProps {
     // (undocumented)
     captions: _CaptionsInfo[];
+    // (undocumented)
+    isCaptionsOn?: boolean;
     onRenderAvatar?: OnRenderAvatarCallback;
 }
 
@@ -257,6 +259,11 @@ export type _CaptionsInfo = {
     displayName: string;
     captionText: string;
     userId?: string;
+};
+
+// @internal
+export type _captionsOptions = {
+    spokenLanguage: string;
 };
 
 // @public
@@ -429,6 +436,7 @@ export interface ComponentStrings {
     participantsButton: ParticipantsButtonStrings;
     screenShareButton: ScreenShareButtonStrings;
     sendBox: SendBoxStrings;
+    startCaptionsButton: _StartCaptionsButtonStrings;
     typingIndicator: TypingIndicatorStrings;
     UnsupportedBrowser: UnsupportedBrowserStrings;
     UnsupportedBrowserVersion: UnsupportedBrowserVersionStrings;
@@ -599,6 +607,8 @@ export const DEFAULT_COMPONENT_ICONS: {
     VerticalGalleryLeftButton: JSX.Element;
     VerticalGalleryRightButton: JSX.Element;
     OptionsVideoBackgroundEffect: JSX.Element;
+    CaptionsIcon: JSX.Element;
+    CaptionsOffIcon: JSX.Element;
 };
 
 // @internal
@@ -1568,6 +1578,25 @@ export type SitePermissionsStrings = {
 export interface SitePermissionsStyles extends BaseCustomStyles {
     primaryButton?: IButtonStyles;
     troubleshootingLink?: ILinkStyles;
+}
+
+// @internal
+export const _StartCaptionsButton: (props: _StartCaptionsButtonProps) => JSX.Element;
+
+// @internal (undocumented)
+export interface _StartCaptionsButtonProps extends ControlBarButtonProps {
+    currentSpokenLanguage?: string;
+    onStartCaptions: (captionsOptions?: _captionsOptions) => Promise<void>;
+    onStopCaptions: () => Promise<void>;
+    strings?: _StartCaptionsButtonStrings;
+}
+
+// @internal
+export interface _StartCaptionsButtonStrings {
+    offLabel: string;
+    onLabel: string;
+    tooltipOffContent: string;
+    tooltipOnContent: string;
 }
 
 // @public

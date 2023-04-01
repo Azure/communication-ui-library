@@ -322,5 +322,11 @@
   "VerticalGallery": {
     "leftNavButtonAriaLabel": "previous page",
     "rightNavButtonAriaLabel": "next page"
+  },
+  "startCaptionsButton": {
+    "onLabel": "Turn on captions",
+    "offLabel": "Turn off captions",
+    "tooltipOnContent": "Turn off captions",
+    "tooltipOffContent": "Turn on captions"
   }
 }

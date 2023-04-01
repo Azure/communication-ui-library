@@ -81,10 +81,10 @@ export interface CommonCallingHandlers {
   onBlurVideoBackground: (backgroundBlurConfig?: BackgroundBlurConfig) => Promise<void>;
   /* @conditional-compile-remove(video-background-effects) */
   onReplaceVideoBackground: (backgroundReplacementConfig: BackgroundReplacementConfig) => Promise<void>;
-  OnStartCaptions: (captionsOptions?: captionsOptions) => Promise<void>;
-  OnStopCaptions: () => Promise<void>;
-  OnSetSpokenLanguage: (language: string) => Promise<void>;
-  OnSetCaptionLanguage: (language: string) => Promise<void>;
+  onStartCaptions: (captionsOptions?: captionsOptions) => Promise<void>;
+  onStopCaptions: () => Promise<void>;
+  onSetSpokenLanguage: (language: string) => Promise<void>;
+  onSetCaptionLanguage: (language: string) => Promise<void>;
 }
 
 /**
@@ -425,17 +425,17 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       }
     };
 
-    const OnStartCaptions = async (captionsOptions?: captionsOptions): Promise<void> => {
+    const onStartCaptions = async (captionsOptions?: captionsOptions): Promise<void> => {
       await call?.feature(Features.TeamsCaptions).startCaptions(captionsOptions);
     };
-    const OnStopCaptions = async (): Promise<void> => {
+    const onStopCaptions = async (): Promise<void> => {
       await call?.feature(Features.TeamsCaptions).stopCaptions();
     };
-    const OnSetSpokenLanguage = async (language: string): Promise<void> => {
+    const onSetSpokenLanguage = async (language: string): Promise<void> => {
       await call?.feature(Features.TeamsCaptions).setSpokenLanguage(language);
     };
 
-    const OnSetCaptionLanguage = async (language: string): Promise<void> => {
+    const onSetCaptionLanguage = async (language: string): Promise<void> => {
       await call?.feature(Features.TeamsCaptions).setCaptionLanguage(language);
     };
 
@@ -469,10 +469,10 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       onBlurVideoBackground,
       /* @conditional-compile-remove(video-background-effects) */
       onReplaceVideoBackground,
-      OnStartCaptions,
-      OnStopCaptions,
-      OnSetCaptionLanguage,
-      OnSetSpokenLanguage
+      onStartCaptions,
+      onStopCaptions,
+      onSetCaptionLanguage,
+      onSetSpokenLanguage
     };
   }
 );

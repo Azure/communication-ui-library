@@ -12,7 +12,7 @@ export const CaptionsBanner = (): JSX.Element => {
 
   return (
     <>
-      {captionsBannerProps.captions.length > 0 && (
+      {captionsBannerProps.captions.length > 0 && captionsBannerProps.isCaptionsOn && (
         <Stack horizontalAlign="center">
           <Stack.Item style={{ width: '50%' }}>
             <_CaptionsBanner {...captionsBannerProps} />

@@ -16,6 +16,7 @@ export interface PreparedMoreDrawerProps {
   callControls?: boolean | CommonCallControlOptions;
   /* @conditional-compile-remove(PSTN-calls) */
   onClickShowDialpad?: () => void;
+  isCaptionsSupported?: boolean;
   disableButtonsForHoldScreen?: boolean;
 }
 

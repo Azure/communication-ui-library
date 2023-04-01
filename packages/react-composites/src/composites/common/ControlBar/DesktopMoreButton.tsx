@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { IContextualMenuItem } from '@fluentui/react';
-import { ControlBarButtonProps } from '@internal/react-components';
+import { ControlBarButtonProps, _StartCaptionsButton } from '@internal/react-components';
 /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
 import { HoldButton } from '@internal/react-components';
 import React from 'react';
@@ -28,6 +28,7 @@ import {
 export interface DesktopMoreButtonProps extends ControlBarButtonProps {
   disableButtonsForHoldScreen?: boolean;
   onClickShowDialpad?: () => void;
+  isCaptionsSupported?: boolean;
   /* @conditional-compile-remove(control-bar-button-injection) */
   callControls?: boolean | CommonCallControlOptions;
 }
@@ -66,6 +67,61 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
     },
     disabled: props.disableButtonsForHoldScreen
   });
+
+  // is captions feature is active
+  if (props.isCaptionsSupported) {
+    const startCaptionsButtonProps = usePropsFor(_StartCaptionsButton);
+
+    const captionsContextualMenuItems: IContextualMenuItem[] = [];
+
+    const menuSubIconStyleSet = {
+      root: {
+        height: 'unset',
+        lineHeight: '100%',
+        width: '1.25rem'
+      }
+    };
+
+    moreButtonContextualMenuItems.push({
+      key: 'liveCaptionsKey',
+      text: localeStrings.strings.call.liveCaptionsLabel,
+      iconProps: { iconName: 'CaptionsIcon', styles: { root: { lineHeight: 0 } } },
+      itemProps: {
+        styles: buttonFlyoutIncreasedSizeStyles
+      },
+      disabled: props.disableButtonsForHoldScreen,
+      subMenuProps: {
+        id: 'captions-contextual-menu',
+        items: captionsContextualMenuItems
+      },
+      submenuIconProps: {
+        iconName: 'HorizontalGalleryRightButton',
+        styles: menuSubIconStyleSet
+      }
+    });
+
+    captionsContextualMenuItems.push({
+      key: 'ToggleCaptionsKey',
+      text: startCaptionsButtonProps.checked
+        ? localeStrings.component.strings.startCaptionsButton.tooltipOnContent
+        : localeStrings.component.strings.startCaptionsButton.tooltipOffContent,
+      onClick: () => {
+        startCaptionsButtonProps.checked
+          ? startCaptionsButtonProps.onStopCaptions()
+          : startCaptionsButtonProps.onStartCaptions({
+              spokenLanguage: startCaptionsButtonProps.currentSpokenLanguage ?? 'en-us'
+            });
+      },
+      iconProps: {
+        iconName: startCaptionsButtonProps.checked ? 'CaptionsOffIcon' : 'CaptionsIcon',
+        styles: { root: { lineHeight: 0 } }
+      },
+      itemProps: {
+        styles: buttonFlyoutIncreasedSizeStyles
+      },
+      disabled: props.disableButtonsForHoldScreen
+    });
+  }
 
   /*@conditional-compile-remove(PSTN-calls) */
   if (props.onClickShowDialpad) {

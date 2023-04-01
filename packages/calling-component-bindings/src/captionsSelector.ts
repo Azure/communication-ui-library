@@ -23,9 +23,9 @@ export type _StartCaptionsButtonSelector = (
   state: CallClientState,
   props: CallingBaseSelectorProps
 ) => {
-  isCaptionsFeatureActive: boolean;
+  checked: boolean;
   currentCaptionLanguage: string;
-  currentSpokenLanguage: string;
+  currentSpokenLanguage: string | undefined;
 };
 
 /**
@@ -37,9 +37,9 @@ export const startCaptionsButtonSelector: _StartCaptionsButtonSelector = reselec
   [getCaptionsStatus, getCurrentCaptionLanguage, getCurrentSpokenLanguage],
   (isCaptionsFeatureActive, currentCaptionLanguage, currentSpokenLanguage) => {
     return {
-      isCaptionsFeatureActive: isCaptionsFeatureActive ?? false,
+      checked: isCaptionsFeatureActive ?? false,
       currentCaptionLanguage: currentCaptionLanguage ?? 'en-us',
-      currentSpokenLanguage: currentSpokenLanguage ?? 'en-us'
+      currentSpokenLanguage: currentSpokenLanguage
     };
   }
 );
@@ -107,6 +107,7 @@ export type _CaptionsSelector = (
   props: CallingBaseSelectorProps
 ) => {
   captions: _CaptionsInfo[];
+  isCaptionsOn: boolean;
 };
 
 /**
@@ -114,15 +115,19 @@ export type _CaptionsSelector = (
  *
  * @private
  */
-export const captionsSelector: _CaptionsSelector = reselect.createSelector([getCaptions], (captions) => {
-  const captionsInfo = captions?.map((c) => {
+export const captionsSelector: _CaptionsSelector = reselect.createSelector(
+  [getCaptions, getCaptionsStatus],
+  (captions, isCaptionsFeatureActive) => {
+    const captionsInfo = captions?.map((c) => {
+      return {
+        displayName: c.speaker.displayName ?? '',
+        captionText: c.captionText ?? '',
+        userId: c.speaker.identifier ? toFlatCommunicationIdentifier(c.speaker.identifier) : ''
+      };
+    });
     return {
-      displayName: c.speaker.displayName ?? '',
-      captionText: c.captionText ?? '',
-      userId: c.speaker.identifier ? toFlatCommunicationIdentifier(c.speaker.identifier) : ''
+      captions: captionsInfo ?? [],
+      isCaptionsOn: isCaptionsFeatureActive ?? false
     };
-  });
-  return {
-    captions: captionsInfo ?? []
-  };
-});
+  }
+);

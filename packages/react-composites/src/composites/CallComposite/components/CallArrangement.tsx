@@ -227,6 +227,9 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     };
   }
 
+  const isTeamsCall = adapter.getState().isTeamsCall;
+  const hasJoinedCall = adapter.getState().call?.state === 'Connected';
+
   return (
     <div ref={containerRef} className={mergeStyles(containerDivStyles)} id={props.id}>
       <Stack verticalFill horizontalAlign="stretch" className={containerClassName} data-ui-id={props.dataUiId}>
@@ -255,6 +258,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                     peopleButtonChecked={activePane === 'people'}
                     onPeopleButtonClicked={togglePeoplePane}
                     onMoreButtonClicked={onMoreButtonClicked}
+                    isCaptionsSupported={isTeamsCall && hasJoinedCall}
                   />
                 )}
               </Stack.Item>
@@ -269,6 +273,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                 onClickShowDialpad={alternateCallerId ? onClickShowDialpad : undefined}
                 /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
                 disableButtonsForHoldScreen={isInLocalHold}
+                isCaptionsSupported={isTeamsCall && hasJoinedCall}
               />
             </Stack>
           )}
