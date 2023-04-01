@@ -4,15 +4,32 @@ import { Stack } from '@fluentui/react';
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { _FileUploadCardsStrings } from './FileUploadCards';
 import { Ref } from '@fluentui/react-northstar';
-import { _Caption, _CaptionProps, _CaptionsInfo } from './Caption';
+import { _Caption } from './Caption';
 import { captionContainerClassName, captionsBannerClassName } from './styles/Captions.style';
+import { OnRenderAvatarCallback } from '../types';
+
+/**
+ * @internal
+ * information required for each line of caption
+ */
+export type _CaptionsInfo = {
+  displayName: string;
+  captionText: string;
+  userId?: string;
+};
 
 /**
  * @internal
  * _CaptionsBanner Component Props.
  */
 export interface _CaptionsBannerProps {
-  captions: _CaptionProps[];
+  captions: _CaptionsInfo[];
+  /**
+   * Optional callback to override render of the avatar.
+   *
+   * @param userId - user Id
+   */
+  onRenderAvatar?: OnRenderAvatarCallback;
 }
 
 /**
@@ -20,7 +37,7 @@ export interface _CaptionsBannerProps {
  * A component for displaying a CaptionsBanner with user icon, displayName and captions text.
  */
 export const _CaptionsBanner = (props: _CaptionsBannerProps): JSX.Element => {
-  const { captions } = props;
+  const { captions, onRenderAvatar } = props;
   const captionsScrollDivRef = useRef<HTMLElement>(null);
   const [isAtBottomOfScroll, setIsAtBottomOfScroll] = useState<boolean>(true);
 
@@ -64,7 +81,7 @@ export const _CaptionsBanner = (props: _CaptionsBannerProps): JSX.Element => {
           {captions.map((caption, key) => {
             return (
               <div key={key} className={captionContainerClassName}>
-                <_Caption {...caption} />
+                <_Caption {...caption} onRenderAvatar={onRenderAvatar} />
               </div>
             );
           })}

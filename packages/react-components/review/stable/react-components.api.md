@@ -136,7 +136,8 @@ export const _CaptionsBanner: (props: _CaptionsBannerProps) => JSX.Element;
 // @internal
 export interface _CaptionsBannerProps {
     // (undocumented)
-    captions: _CaptionProps[];
+    captions: _CaptionsInfo[];
+    onRenderAvatar?: OnRenderAvatarCallback;
 }
 
 // @internal

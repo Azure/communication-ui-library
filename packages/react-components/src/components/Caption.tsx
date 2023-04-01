@@ -5,16 +5,7 @@ import React from 'react';
 import { _FileUploadCardsStrings } from './FileUploadCards';
 import { OnRenderAvatarCallback } from '../types';
 import { captionClassName, displayNameClassName, iconClassName } from './styles/Captions.style';
-
-/**
- * @internal
- * information required for each line of caption
- */
-export type _CaptionsInfo = {
-  displayName: string;
-  captionText: string;
-  userId?: string;
-};
+import { _CaptionsInfo } from './CaptionsBanner';
 
 /**
  * @internal
