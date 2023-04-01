@@ -24,7 +24,6 @@ export const atMentionFlyoutContainer = (theme: Theme, left: number, top: number
     // zIndex to set the atMentionFlyout above the chat container
     zIndex: CHAT_CONTAINER_ZINDEX + 1
   });
-
 /**
  * @private
  */
