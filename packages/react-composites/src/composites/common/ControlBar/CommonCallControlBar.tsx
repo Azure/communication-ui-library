@@ -2,8 +2,8 @@
 // Licensed under the MIT license.
 
 import React, { useMemo, useRef, useEffect, useState, useCallback } from 'react';
-import { CallAdapterProvider } from '../CallComposite/adapter/CallAdapterProvider';
-import { CallAdapter } from '../CallComposite';
+import { CallAdapterProvider } from '../../CallComposite/adapter/CallAdapterProvider';
+import { CallAdapter } from '../../CallComposite';
 import { PeopleButton } from './PeopleButton';
 import { concatStyleSets, IStyle, ITheme, mergeStyles, mergeStyleSets, Stack, useTheme } from '@fluentui/react';
 import { controlBarContainerStyles } from '../../CallComposite/styles/CallControls.styles';
