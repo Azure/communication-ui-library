@@ -1,6 +1,16 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { FocusZone, Persona, PersonaSize, Stack, useTheme } from '@fluentui/react';
+import {
+  atMentionFlyoutContainer,
+  headerStyleThemed,
+  suggestionListStyle,
+  suggestionListContainerStyle,
+  suggestionItemStackStyle
+} from './styles/AtMentionFlyout.style';
+import { useIdentifiers } from '../identifiers';
+import { useLocale } from '../localization';
 
 /* @conditional-compile-remove(at-mention) */
 /**
@@ -9,6 +19,11 @@ import React from 'react';
  * @internal
  */
 export interface _AtMentionFlyoutProps {
+  /**
+   * Optional string used as at mention flyout's title.
+   * @defaultValue `Suggestions`
+   */
+  title?: string;
   /**
    * Optional string used as a query to search for mentioned participants.
    */
@@ -101,5 +116,69 @@ export interface AtMentionSuggestion {
  * @internal
  */
 export const _AtMentionFlyout = (props: _AtMentionFlyoutProps): JSX.Element => {
-  return <></>;
+  const { title = 'Suggestions', query, target, atMentionLookupOptions } = props;
+  const { onQueryUpdated, suggestionItemRenderer, onSuggestionSelected } = atMentionLookupOptions ?? {};
+  const theme = useTheme();
+  const ids = useIdentifiers();
+  const localeStrings = useLocale().strings.participantItem;
+
+  const [suggestions, setSuggestions] = useState<AtMentionSuggestion[]>([]);
+  const [refRect, setRefRect] = useState<DOMRect | undefined>(undefined);
+
+  useEffect(() => {
+    async function fetchData(): Promise<void> {
+      if (query && onQueryUpdated) {
+        const list = (await onQueryUpdated(query)) || [];
+        setSuggestions(list);
+      }
+    }
+    fetchData();
+  }, [onQueryUpdated, query]);
+
+  useEffect(() => {
+    const rect = target?.current?.getBoundingClientRect();
+    setRefRect(rect);
+  }, [target]);
+
+  const personaRenderer = (displayName?: string): JSX.Element => {
+    const avatarOptions = {
+      text: displayName?.trim() || localeStrings.displayNamePlaceholder,
+      size: PersonaSize.size28,
+      initialsColor: theme.palette.neutralLight,
+      initialsTextColor: theme.palette.neutralSecondary,
+      showOverflowTooltip: false,
+      showUnknownPersonaCoin: !displayName?.trim() || displayName === localeStrings.displayNamePlaceholder
+    };
+
+    return <Persona {...avatarOptions} />;
+  };
+
+  const defaultSuggestionItemRenderer = (suggestion: AtMentionSuggestion): JSX.Element => {
+    return (
+      <div
+        data-is-focusable={true}
+        data-ui-id={ids.atMentionSuggestionItem}
+        onClick={() => onSuggestionSelected && onSuggestionSelected(suggestion)}
+      >
+        <Stack horizontal className={suggestionItemStackStyle}>
+          {personaRenderer(suggestion.displayName)}
+        </Stack>
+      </div>
+    );
+  };
+
+  return (
+    <Stack className={atMentionFlyoutContainer(theme, refRect)}>
+      <Stack.Item styles={headerStyleThemed(theme)} aria-label={title}>
+        {title} {/* TODO: Localization  */}
+      </Stack.Item>
+      <FocusZone className={suggestionListContainerStyle} shouldFocusOnMount={true}>
+        <Stack data-ui-id={ids.atMentionSuggestionList} className={suggestionListStyle}>
+          {suggestions.map((suggestion) =>
+            suggestionItemRenderer ? suggestionItemRenderer(suggestion) : defaultSuggestionItemRenderer(suggestion)
+          )}
+        </Stack>
+      </FocusZone>
+    </Stack>
+  );
 };
