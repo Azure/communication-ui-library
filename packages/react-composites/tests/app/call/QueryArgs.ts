@@ -39,6 +39,7 @@ export function parseQueryArgs(): QueryArgs {
     showCallDescription: Boolean(params.showCallDescription),
     injectParticipantMenuItems: Boolean(params.injectParticipantMenuItems),
     injectCustomButtons: Boolean(params.injectCustomButtons),
+    newControlBarExperience: Boolean(params.newControlBarExperience),
     showParticipantItemIcon: Boolean(params.showParticipantItemIcon),
     useEnvironmentInfoTroubleshootingOptions: Boolean(params.useEnvironmentInfoTroubleshootingOptions),
     usePermissionTroubleshootingActions: Boolean(params.usePermissionTroubleshootingActions),

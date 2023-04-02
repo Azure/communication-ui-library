@@ -102,7 +102,7 @@ test.describe('New call control bar renders correctly', () => {
 
     await pageClick(page, dataUiId('common-call-composite-more-button'));
 
-    expect(await stableScreenshot(page)).toMatchSnapshot(`custom-buttons.png`);
+    expect(await stableScreenshot(page)).toMatchSnapshot(`call-control-new-experience-injected-buttons.png`);
   });
 
   test('Control bar custom buttons render correctly', async ({ page, serverUrl }) => {
@@ -110,7 +110,7 @@ test.describe('New call control bar renders correctly', () => {
     await page.goto(
       buildUrlWithMockAdapter(serverUrl, callState, {
         customCallCompositeOptions: JSON.stringify({
-          callControls: { microphoneButton: true }
+          callControls: { microphoneButton: false }
         })
       })
     );
