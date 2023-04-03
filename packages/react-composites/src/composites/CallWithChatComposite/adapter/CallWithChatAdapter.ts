@@ -45,6 +45,8 @@ import { CommunicationUserIdentifier, PhoneNumberIdentifier } from '@azure/commu
 import { CommunicationIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(video-background-effects) */
 import { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/communication-calling-effects';
+/* @conditional-compile-remove(video-background-effects) */
+import { VideoBackgroundImage } from '../../CallComposite';
 
 /**
  * Functionality for managing the current call with chat.
@@ -348,14 +350,14 @@ export interface CallWithChatAdapterManagement {
    *
    * @beta
    */
-  blurVideoBackground(bgBlurConfig?: BackgroundBlurConfig): Promise<void>;
+  blurVideoBackground(backgroundBlurConfig?: BackgroundBlurConfig): Promise<void>;
   /* @conditional-compile-remove(video-background-effects) */
   /**
    * Start the video background replacement effect.
    *
    * @beta
    */
-  replaceVideoBackground(bgReplacementConfig: BackgroundReplacementConfig): Promise<void>;
+  replaceVideoBackground(backgroundReplacementConfig: BackgroundReplacementConfig): Promise<void>;
   /* @conditional-compile-remove(video-background-effects) */
   /**
    * Stop the video background effect.
@@ -363,6 +365,15 @@ export interface CallWithChatAdapterManagement {
    * @beta
    */
   stopVideoBackgroundEffect(): Promise<void>;
+  /* @conditional-compile-remove(video-background-effects) */
+  /**
+   * Override the background picker images for background replacement effect.
+   *
+   * @param backgroundImages - Array of custom background images.
+   *
+   * @beta
+   */
+  updateBackgroundPickerImages(backgroundImages: VideoBackgroundImage[]): void;
 }
 
 /**

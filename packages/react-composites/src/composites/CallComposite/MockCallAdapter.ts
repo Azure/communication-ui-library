@@ -148,6 +148,10 @@ export class MockCallAdapter implements CallAdapter {
   stopVideoBackgroundEffect(): Promise<void> {
     throw new Error('stopVideoBackgroundEffect not implemented.');
   }
+  /* @conditional-compile-remove(video-background-effects) */
+  updateBackgroundPickerImages(): void {
+    throw new Error('updateBackgroundPickerImages not implemented.');
+  }
 }
 
 /**

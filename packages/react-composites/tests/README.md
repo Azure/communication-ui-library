@@ -25,11 +25,16 @@ Both hermetic and live tests use [playwright](https://playwright.dev/) test fram
 * [../playwright.config.live.ts](../playwright.config.live.ts) for live tests
 
 ## Setup
-
+* Create `.env` file under `packages/react-composites/tests/browser` and in this file, make sure you have defined:
+     *  CONNECTION_STRING
+     *  TEST_DIR
+     *  SNAPSHOT_DIR
+     *  PLAYWRIGHT_OUTPUT_DIR
 * Build all dependencies. Inside `packages/react-composite`, run
   ```sh
-  rush build -t .
+  rush update; rush build -t .
   ```
+  (if there were some build failures, run `rush update -p`)
 * Build the test applications.
   ```sh
   rushx build:e2e
@@ -171,3 +176,9 @@ To debug a particular test,
 When working on a specific hermetic test be sure to use `node scripts/runBrowserTests.mjs -l`. This should be used because all of the live tests will be run after even though you are using `test.only(...)`. This happens because the wrapper script calls playwright multiple times depending on which flags are given.
 
 As well you will need to also use the flags `... -c call` and `... -c chat` to run just the composite tests that you are writing tests for.
+
+## Troubleshooting
+
+- **react-use-draggable-scroll.js doesn't exist**
+  
+  You need run `rush update -p`

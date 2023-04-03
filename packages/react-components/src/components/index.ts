@@ -226,3 +226,4 @@ export type {
 export type { VerticalGalleryStyles, VerticalGalleryStrings, VerticalGalleryControlBarStyles } from './VerticalGallery';
 
 export * from './CaptionsBanner';
+export * from './Caption';
