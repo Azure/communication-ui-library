@@ -88,12 +88,6 @@ export interface AtMentionDisplayOptions {
   atMentionSuggestionRenderer?: (suggestion: AtMentionSuggestion) => JSX.Element;
 }
 
-// /** @beta */
-// export interface AtMentionDisplayOptions {
-//   onAtMentionSuggestionClicked?: (suggestion: AtMentionSuggestion, mentionedSuggestionTarget: Target) => void;
-//   onAtMentionSuggestionHovered?: (suggestion: AtMentionSuggestion, mentionedSuggestionTarget: Target) => void;
-// }
-
 /* @conditional-compile-remove(at-mention) */
 /**
  * At mention suggestion's state, as reflected in the UI.
@@ -142,6 +136,7 @@ export const _AtMentionFlyout = (props: _AtMentionFlyoutProps): JSX.Element => {
     fetchData();
   }, [onQueryUpdated, query]);
 
+  // Temporary implementation for AtMentionFlyout's position.
   useEffect(() => {
     const rect = target?.current?.getBoundingClientRect();
     const { top = 0, left = 0, right = 0, bottom = 0, height = 0 } = rect ?? {};
