@@ -49,6 +49,7 @@ export const suggestionListContainerStyle = mergeStyles({
   overflowX: 'hidden'
 });
 
+/* @conditional-compile-remove(at-mention) */
 /**
  * @private
  */
