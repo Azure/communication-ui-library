@@ -16,7 +16,7 @@ This feature includes:
 - The ability to position the overflow gallery on the right, this allows better utilisation of the vertical space in your calling experience.
 - VideoGallery is now responsive in the composites, switching between the vertical gallery and horizontal gallery.
 - Improvements to space utilized by the video tiles of the horizontal overflow gallery.
-- Ensuring dominant speakers always placed in the first page of overflow gallery and maximum number of remote participants' videos are rendered when navigating pages of overflow gallery.
+- Ensuring dominant speakers are always placed in the first page of overflow gallery and maximum number of remote participants' videos are rendered when navigating pages of overflow gallery.
 
 ### Features
 
