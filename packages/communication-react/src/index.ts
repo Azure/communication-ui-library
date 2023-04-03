@@ -252,15 +252,7 @@ export type {
   VideoStreamOptions,
   VideoTileProps,
   VideoTileStylesProps,
-  ViewScalingMode,
-  /* @conditional-compile-remove(at-mention) */
-  _AtMentionFlyoutProps,
-  /* @conditional-compile-remove(at-mention) */
-  AtMentionDisplayOptions,
-  /* @conditional-compile-remove(at-mention) */
-  AtMentionLookupOptions,
-  /* @conditional-compile-remove(at-mention) */
-  AtMentionSuggestion
+  ViewScalingMode
 } from '../../react-components/src';
 /* @conditional-compile-remove(data-loss-prevention) */
 export type { BlockedMessage } from '../../react-components/src';
