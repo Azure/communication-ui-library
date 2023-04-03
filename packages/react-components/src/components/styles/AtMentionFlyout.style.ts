@@ -25,7 +25,6 @@ export const atMentionFlyoutContainer = (theme: Theme, left: number, top: number
     zIndex: CHAT_CONTAINER_ZINDEX + 1
   });
 
-/* @conditional-compile-remove(at-mention) */
 /**
  * @private
  */
@@ -39,7 +38,6 @@ export const headerStyleThemed = (theme: Theme): IStackStyles => {
   };
 };
 
-/* @conditional-compile-remove(at-mention) */
 /**
  * @private
  */
@@ -49,7 +47,6 @@ export const suggestionListContainerStyle = mergeStyles({
   overflowX: 'hidden'
 });
 
-/* @conditional-compile-remove(at-mention) */
 /**
  * @private
  */
@@ -62,7 +59,6 @@ export const suggestionListStyle = mergeStyles({
   }
 });
 
-/* @conditional-compile-remove(at-mention) */
 /**
  * @private
  */

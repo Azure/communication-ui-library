@@ -775,6 +775,8 @@ export interface _IdentifierProviderProps {
 
 // @internal
 export interface _Identifiers {
+    atMentionSuggestionItem: string;
+    atMentionSuggestionList: string;
     horizontalGalleryVideoTile: string;
     messageContent: string;
     messageTimestamp: string;

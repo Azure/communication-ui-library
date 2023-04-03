@@ -12,7 +12,6 @@ import {
 import { useIdentifiers } from '../identifiers';
 import { useLocale } from '../localization';
 
-/* @conditional-compile-remove(at-mention) */
 /**
  * Props for {@link _AtMentionFlyout}.
  *
@@ -42,7 +41,6 @@ export interface _AtMentionFlyoutProps {
   atMentionLookupOptions?: AtMentionLookupOptions;
 }
 
-/* @conditional-compile-remove(at-mention) */
 /**
  * Options to lookup suggestions in the at mention scenario.
  *
@@ -75,7 +73,6 @@ export interface AtMentionLookupOptions {
   isMobile?: boolean;
 }
 
-/* @conditional-compile-remove(at-mention) */
 /**
  * Options to display suggestions in the at mention scenario.
  *
@@ -88,7 +85,6 @@ export interface AtMentionDisplayOptions {
   atMentionSuggestionRenderer?: (suggestion: AtMentionSuggestion) => JSX.Element;
 }
 
-/* @conditional-compile-remove(at-mention) */
 /**
  * At mention suggestion's state, as reflected in the UI.
  *
@@ -103,7 +99,6 @@ export interface AtMentionSuggestion {
   displayName?: string;
 }
 
-/* @conditional-compile-remove(at-mention) */
 /**
  * Component to render at mention suggestions.
  *

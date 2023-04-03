@@ -143,7 +143,7 @@ export interface SendBoxProps {
   onSendMessage?: (content: string) => Promise<void>;
   /* @conditional-compile-remove(at-mention) */
   /**
-   * Optional props needed to lookup suggestions in the @mention scenario.
+   * Optional props needed to lookup suggestions in the at mention scenario.
    * @beta
    */
   atMentionLookupOptions?: AtMentionLookupOptions;
