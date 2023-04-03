@@ -884,6 +884,7 @@ export interface FileMetadata {
     // (undocumented)
     attachmentType: FileMetadataAttachmentType;
     extension: string;
+    // (undocumented)
     id: string;
     name: string;
     // (undocumented)
