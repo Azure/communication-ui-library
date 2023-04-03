@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Fixed bug when panel is open, error bar is overlayed on top",
+  "packageName": "@azure/communication-react",
+  "email": "carolinecao@microsoft.com",
+  "dependentChangeType": "patch"
+}
