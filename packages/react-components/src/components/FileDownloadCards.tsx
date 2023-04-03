@@ -9,6 +9,7 @@ import { _FileCard } from './FileCard';
 import { _FileCardGroup } from './FileCardGroup';
 import { iconButtonClassName } from './styles/IconButton.styles';
 
+/* @conditional-compile-remove(teams-inline-images) */
 /**
  * @beta
  */
@@ -22,8 +23,14 @@ export type FileMetadataAttachmentType =
  * @beta
  */
 export interface FileMetadata {
+  /* @conditional-compile-remove(teams-inline-images) */
+  /*
+   * Attachment type of the file.
+   * Possible values {@link FileDownloadHandler}.
+   */
   attachmentType: FileMetadataAttachmentType;
-  /**
+  /* @conditional-compile-remove(teams-inline-images) */
+  /*
    * Unique ID of the file.
    */
   id: string;
@@ -41,6 +48,11 @@ export interface FileMetadata {
    * Download URL for the file.
    */
   url: string;
+  /* @conditional-compile-remove(teams-inline-images) */
+  /*
+   * Preview URL for the file.
+   * Used in the message bubble for inline images.
+   */
   previewUrl?: string;
 }
 
@@ -168,8 +180,13 @@ export const _FileDownloadCards = (props: _FileDownloadCards): JSX.Element => {
     },
     [props]
   );
-
-  if (!fileMetadata || fileMetadata.length === 0 || fileMetadata[0].attachmentType !== 'fileSharing') {
+  // Its safe to assume that if the first item in the fileMetadata is not a fileSharing type we don't want to display the FileDownloadCard.
+  // Since you can't have both fileSharing and teamsInlineImage in the same message.
+  if (
+    !fileMetadata ||
+    fileMetadata.length === 0 ||
+    /* @conditional-compile-remove(teams-inline-images) */ fileMetadata[0].attachmentType !== 'fileSharing'
+  ) {
     return <></>;
   }
 

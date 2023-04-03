@@ -703,18 +703,10 @@ export type FileDownloadHandler = (userId: string, fileMetadata: FileMetadata) =
 
 // @beta
 export interface FileMetadata {
-    // (undocumented)
-    attachmentType: FileMetadataAttachmentType;
     extension: string;
-    id: string;
     name: string;
-    // (undocumented)
-    previewUrl?: string;
     url: string;
 }
-
-// @beta (undocumented)
-export type FileMetadataAttachmentType = 'fileSharing' | 'unknown';
 
 // @internal
 export interface _FileUploadCardsStrings {
