@@ -13,6 +13,7 @@ import { borderAndBoxShadowStyle } from '../styles/SendBox.styles';
 import { ChatMessage } from '../../types';
 import { _FileUploadCards } from '../FileUploadCards';
 import { FileMetadata } from '../FileDownloadCards';
+import { chatMessageFailedTagStyle } from '../styles/ChatMessageComponent.styles';
 
 const MAXIMUM_LENGTH_OF_MESSAGE = 8000;
 
@@ -43,6 +44,10 @@ export type ChatMessageComponentAsEditBoxProps = {
    * Setting to false will mean they are on a new line inside the editable chat message.
    */
   inlineEditButtons: boolean;
+  /**
+   * Show an error message in this context if needed.
+   */
+  errorMessage?: string;
 };
 
 type MessageState = 'OK' | 'too short' | 'too long';
@@ -51,7 +56,7 @@ type MessageState = 'OK' | 'too short' | 'too long';
  * @private
  */
 export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditBoxProps): JSX.Element => {
-  const { onCancel, onSubmit, strings, message } = props;
+  const { onCancel, onSubmit, strings, message, errorMessage } = props;
   const [textValue, setTextValue] = useState<string>(message.content || '');
 
   const [attachedFilesMetadata, setAttachedFilesMetadata] = React.useState(getMessageAttachedFilesMetadata(message));
@@ -114,7 +119,7 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
       className={mergeStyles(
         borderAndBoxShadowStyle({
           theme,
-          hasErrorMessage: false,
+          hasErrorMessage: errorMessage !== undefined,
           disabled: false
         })
       )}
@@ -163,6 +168,9 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
           id={'submitIconWrapper'}
         />
       </InputBoxComponent>
+      {errorMessage && (
+        <div className={mergeStyles(chatMessageFailedTagStyle(theme), { padding: '0.5rem' })}>{errorMessage}</div>
+      )}
       {onRenderFileUploads()}
     </Stack>
   );
