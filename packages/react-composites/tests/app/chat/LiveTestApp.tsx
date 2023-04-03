@@ -62,7 +62,9 @@ export const LiveTestApp = (): JSX.Element => {
           fileUploads[0].notifyUploadCompleted({
             name: file.name,
             extension: file.extension,
-            url: file.url
+            url: file.url,
+            attachmentType: 'fileSharing',
+            id: ''
           });
         } else if (file.error) {
           const fileUploads = adapter.registerActiveFileUploads([new File([], file.name)]);
