@@ -14,7 +14,7 @@ export const CHAT_CONTAINER_ZINDEX = 1;
  */
 export const atMentionFlyoutContainer = (theme: Theme, left: number, top: number): string =>
   mergeStyles({
-    width: '9.7rem',
+    width: '10rem',
     height: '13.25rem',
     position: 'absolute',
     left: left,
@@ -66,7 +66,7 @@ export const suggestionListStyle = mergeStyles({
  * @private
  */
 export const suggestionItemStackStyle = mergeStyles({
-  width: '9.7rem',
+  width: '10rem',
   alignItems: 'center',
   height: '36px',
   padding: '0 0.75rem'
