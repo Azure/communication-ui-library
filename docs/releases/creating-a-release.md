@@ -87,10 +87,7 @@ graph LR
   prerelease -.-o|Create Pull Request| main
 ```
 
-After running the action there are two manual steps you must do:
-
-- Create a PR of `release/<release-tag>` into `main` to merge the release branch back into `main`. This PR should be merged after the release is complete.
-- Disable the beta checks on the CI if this is a stable release, or the stable checks if this is a beta relase. This is to ensure that any cherry pick PR's going into release dont run against the wrong build flavor in CI causing failures. Editing the [CI workflow](../../.github/workflows/ci.yml): Modify the output `JSON` string to remove the `beta` flavor for `stable` releases / `stable` flavor for `beta` releases.
+After running the action, you must disable the beta checks on the CI if this is a stable release, or the stable checks if this is a beta relase. This is to ensure that any cherry pick PR's going into release dont run against the wrong build flavor in CI causing failures. Editing the [CI workflow](../../.github/workflows/ci.yml): Modify the output `JSON` string to remove the `beta` flavor for `stable` releases / `stable` flavor for `beta` releases.
 
 ## Step 2: Prepare for release
 
