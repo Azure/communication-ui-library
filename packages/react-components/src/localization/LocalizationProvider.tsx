@@ -16,7 +16,8 @@ import {
   SendBoxStrings,
   TypingIndicatorStrings,
   VideoGalleryStrings,
-  _StartCaptionsButtonStrings
+  _StartCaptionsButtonStrings,
+  _CaptionsSettingModalStrings
 } from '../components';
 /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
 import { HoldButtonStrings } from '../components';
@@ -157,6 +158,8 @@ export interface ComponentStrings {
   VerticalGallery: VerticalGalleryStrings;
   /** Strings for Start Captions Button */
   startCaptionsButton: _StartCaptionsButtonStrings;
+  /** Strings for Captions Setting Modal */
+  captionsSettingModal: _CaptionsSettingModalStrings;
 }
 
 /**

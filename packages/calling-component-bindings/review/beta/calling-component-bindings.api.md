@@ -20,6 +20,7 @@ import { CallState } from '@azure/communication-calling';
 import { CameraButton } from '@internal/react-components';
 import { _CaptionsBanner } from '@internal/react-components';
 import { _CaptionsInfo } from '@internal/react-components';
+import { _CaptionsSettingModal } from '@internal/react-components';
 import { Common } from '@internal/acs-ui-common';
 import { CommunicationIdentifier } from '@azure/communication-common';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
@@ -122,15 +123,10 @@ export type _CaptionsSelector = (state: CallClientState, props: CallingBaseSelec
 };
 
 // @internal
-export type _ChangeCaptionLanguageButtonSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
-    supportedCaptionLanguages: string[];
-    currentCaptionLanguage: string;
-};
-
-// @internal
-export type _ChangeSpokenLanguageButtonSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
+export type _ChangeSpokenLanguageSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
     supportedSpokenLanguages: string[];
     currentSpokenLanguage: string;
+    isCaptionsFeatureActive: boolean;
 };
 
 // @public
@@ -226,7 +222,7 @@ export type ErrorBarSelector = (state: CallClientState, props: CallingBaseSelect
 };
 
 // @public
-export type GetCallingSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof VideoGallery> extends true ? VideoGallerySelector : AreEqual<Component, typeof DevicesButton> extends true ? DevicesButtonSelector : AreEqual<Component, typeof MicrophoneButton> extends true ? MicrophoneButtonSelector : AreEqual<Component, typeof CameraButton> extends true ? CameraButtonSelector : AreEqual<Component, typeof ScreenShareButton> extends true ? ScreenShareButtonSelector : AreEqual<Component, typeof ParticipantList> extends true ? ParticipantListSelector : AreEqual<Component, typeof ParticipantsButton> extends true ? ParticipantsButtonSelector : AreEqual<Component, typeof EndCallButton> extends true ? EmptySelector : AreEqual<Component, typeof ErrorBar> extends true ? ErrorBarSelector : AreEqual<Component, typeof Dialpad> extends true ? EmptySelector : AreEqual<Component, typeof HoldButton> extends true ? HoldButtonSelector : AreEqual<Component, typeof _CaptionsBanner> extends true ? _CaptionsSelector : AreEqual<Component, typeof _StartCaptionsButton> extends true ? _StartCaptionsButtonSelector : undefined;
+export type GetCallingSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof VideoGallery> extends true ? VideoGallerySelector : AreEqual<Component, typeof DevicesButton> extends true ? DevicesButtonSelector : AreEqual<Component, typeof MicrophoneButton> extends true ? MicrophoneButtonSelector : AreEqual<Component, typeof CameraButton> extends true ? CameraButtonSelector : AreEqual<Component, typeof ScreenShareButton> extends true ? ScreenShareButtonSelector : AreEqual<Component, typeof ParticipantList> extends true ? ParticipantListSelector : AreEqual<Component, typeof ParticipantsButton> extends true ? ParticipantsButtonSelector : AreEqual<Component, typeof EndCallButton> extends true ? EmptySelector : AreEqual<Component, typeof ErrorBar> extends true ? ErrorBarSelector : AreEqual<Component, typeof Dialpad> extends true ? EmptySelector : AreEqual<Component, typeof HoldButton> extends true ? HoldButtonSelector : AreEqual<Component, typeof _CaptionsBanner> extends true ? _CaptionsSelector : AreEqual<Component, typeof _StartCaptionsButton> extends true ? _StartCaptionsButtonSelector : AreEqual<Component, typeof _CaptionsSettingModal> extends true ? _ChangeSpokenLanguageSelector : undefined;
 
 // @public
 export const getCallingSelector: <Component extends (props: any) => JSX.Element | undefined>(component: Component) => GetCallingSelector<Component>;

@@ -42,7 +42,8 @@ import {
   MicProhibited16Filled,
   VideoProhibited16Filled,
   ClosedCaption20Regular,
-  ClosedCaptionOff20Regular
+  ClosedCaptionOff20Regular,
+  Settings20Regular
 } from '@fluentui/react-icons';
 /* @conditional-compile-remove(call-readiness) */
 import { Important20Filled } from '@fluentui/react-icons';
@@ -307,5 +308,6 @@ export const DEFAULT_COMPONENT_ICONS = {
   /* @conditional-compile-remove(video-background-effects) */
   OptionsVideoBackgroundEffect: <VideoBackgroundEffect20Regular />,
   CaptionsIcon: <ClosedCaption20Regular />,
-  CaptionsOffIcon: <ClosedCaptionOff20Regular />
+  CaptionsOffIcon: <ClosedCaptionOff20Regular />,
+  SettingsIcon: <Settings20Regular />
 };

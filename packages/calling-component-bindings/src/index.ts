@@ -15,8 +15,7 @@ export type { HoldButtonSelector } from './callControlSelectors';
 
 export type {
   _StartCaptionsButtonSelector,
-  _ChangeCaptionLanguageButtonSelector,
-  _ChangeSpokenLanguageButtonSelector,
+  _ChangeSpokenLanguageSelector,
   _CaptionsSelector
 } from './captionsSelector';
 

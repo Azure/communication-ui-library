@@ -10,7 +10,8 @@ import {
   ParticipantList,
   ScreenShareButton,
   VideoGallery,
-  _CaptionsBanner
+  _CaptionsBanner,
+  _CaptionsSettingModal
 } from '@internal/react-components';
 /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
 import { Dialpad } from '@internal/react-components';
@@ -41,9 +42,11 @@ import { ErrorBarSelector, errorBarSelector } from '../errorBarSelector';
 import { CommonCallingHandlers } from '../handlers/createCommonHandlers';
 import {
   captionsSelector,
+  changeSpokenLanguageSelector,
   startCaptionsButtonSelector,
   _CaptionsSelector,
-  _StartCaptionsButtonSelector
+  _StartCaptionsButtonSelector,
+  _ChangeSpokenLanguageSelector
 } from '../captionsSelector';
 
 /**
@@ -123,6 +126,8 @@ export type GetSelector<Component extends (props: any) => JSX.Element | undefine
   ? _CaptionsSelector
   : AreEqual<Component, typeof _StartCaptionsButton> extends true
   ? _StartCaptionsButtonSelector
+  : AreEqual<Component, typeof _CaptionsSettingModal> extends true
+  ? _ChangeSpokenLanguageSelector
   : undefined;
 
 /**
@@ -174,6 +179,8 @@ const findSelector = (component: (props: any) => JSX.Element | undefined): any =
       return captionsSelector;
     case _StartCaptionsButton:
       return startCaptionsButtonSelector;
+    case _CaptionsSettingModal:
+      return changeSpokenLanguageSelector;
   }
   return undefined;
 };

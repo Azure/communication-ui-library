@@ -266,6 +266,46 @@ export type _captionsOptions = {
     spokenLanguage: string;
 };
 
+// @internal
+export const _CaptionsSettingModal: (props: _CaptionsSettingModalProps) => JSX.Element;
+
+// @internal
+export interface _CaptionsSettingModalProps {
+    // (undocumented)
+    currentSpokenLanguage: string;
+    // (undocumented)
+    isCaptionsFeatureActive?: boolean;
+    // (undocumented)
+    onDismissCaptionsSetting?: () => void;
+    // (undocumented)
+    onSetSpokenLanguage: (language: string) => Promise<void>;
+    onStartCaptions: (captionsOptions?: _captionsOptions) => Promise<void>;
+    // (undocumented)
+    showModal?: boolean;
+    // (undocumented)
+    strings?: _CaptionsSettingModalStrings;
+    // (undocumented)
+    supportedSpokenLanguages: string[];
+}
+
+// @internal
+export interface _CaptionsSettingModalStrings {
+    // (undocumented)
+    captionsSettingCancelButtonLabel: string;
+    // (undocumented)
+    captionsSettingCloseModalButtonAriaLabel: string;
+    // (undocumented)
+    captionsSettingConfirmButtonLabel: string;
+    // (undocumented)
+    captionsSettingDropdownInfoText: string;
+    // (undocumented)
+    captionsSettingDropdownLabel: string;
+    // (undocumented)
+    captionsSettingModalAriaLabel: string;
+    // (undocumented)
+    captionsSettingModalTitle: string;
+}
+
 // @public
 export interface ChatMessage extends MessageCommon {
     // (undocumented)
@@ -420,6 +460,7 @@ export interface ComponentStrings {
     CameraSitePermissionsDenied: SitePermissionsStrings;
     CameraSitePermissionsDeniedSafari: SitePermissionsStrings;
     CameraSitePermissionsRequest: SitePermissionsStrings;
+    captionsSettingModal: _CaptionsSettingModalStrings;
     devicesButton: DevicesButtonStrings;
     dialpad: DialpadStrings;
     endCallButton: EndCallButtonStrings;
@@ -609,6 +650,7 @@ export const DEFAULT_COMPONENT_ICONS: {
     OptionsVideoBackgroundEffect: JSX.Element;
     CaptionsIcon: JSX.Element;
     CaptionsOffIcon: JSX.Element;
+    SettingsIcon: JSX.Element;
 };
 
 // @internal

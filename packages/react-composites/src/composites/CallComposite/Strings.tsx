@@ -412,4 +412,8 @@ export interface CallCompositeStrings {
    * string to be used to open live captions contextual menu
    */
   liveCaptionsLabel: string;
+  /**
+   * label for opening captions setting modal
+   */
+  captionsSettingLabel: string;
 }

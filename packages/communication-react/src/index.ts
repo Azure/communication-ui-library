@@ -80,7 +80,8 @@ export type {
   MicrophoneButtonSelector,
   ParticipantsButtonSelector,
   _CaptionsSelector,
-  _StartCaptionsButtonSelector
+  _StartCaptionsButtonSelector,
+  _ChangeSpokenLanguageSelector
 } from '../../calling-component-bindings/src';
 /* @conditional-compile-remove(PSTN-calls) */
 export type { HoldButtonSelector } from '../../calling-component-bindings/src';
@@ -323,3 +324,6 @@ export type {
   _StartCaptionsButtonStrings,
   _captionsOptions
 } from '../../react-components/src';
+
+export { _CaptionsSettingModal } from '../../react-components/src';
+export type { _CaptionsSettingModalProps, _CaptionsSettingModalStrings } from '../../react-components/src';

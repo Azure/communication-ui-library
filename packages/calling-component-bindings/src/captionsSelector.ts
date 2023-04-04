@@ -8,7 +8,6 @@ import {
   getCaptionsStatus,
   getCurrentCaptionLanguage,
   getCurrentSpokenLanguage,
-  getSupportedCaptionLanguages,
   getSupportedSpokenLanguages
 } from './baseSelectors';
 import * as reselect from 'reselect';
@@ -45,15 +44,16 @@ export const startCaptionsButtonSelector: _StartCaptionsButtonSelector = reselec
 );
 
 /**
- * Selector type for the {@link ChangeSpokenLanguageButton} component.
+ * Selector type for components for Changing spoken language
  * @internal
  */
-export type _ChangeSpokenLanguageButtonSelector = (
+export type _ChangeSpokenLanguageSelector = (
   state: CallClientState,
   props: CallingBaseSelectorProps
 ) => {
   supportedSpokenLanguages: string[];
   currentSpokenLanguage: string;
+  isCaptionsFeatureActive: boolean;
 };
 
 /**
@@ -61,39 +61,13 @@ export type _ChangeSpokenLanguageButtonSelector = (
  *
  * @private
  */
-export const changeSpokenLanguageButtonSelector: _ChangeSpokenLanguageButtonSelector = reselect.createSelector(
-  [getSupportedSpokenLanguages, getCurrentSpokenLanguage],
-  (supportedSpokenLanguages, currentSpokenLanguage) => {
+export const changeSpokenLanguageSelector: _ChangeSpokenLanguageSelector = reselect.createSelector(
+  [getSupportedSpokenLanguages, getCurrentSpokenLanguage, getCaptionsStatus],
+  (supportedSpokenLanguages, currentSpokenLanguage, isCaptionsFeatureActive) => {
     return {
       supportedSpokenLanguages: supportedSpokenLanguages ?? ['en-us'],
-      currentSpokenLanguage: currentSpokenLanguage ?? 'en-us'
-    };
-  }
-);
-
-/**
- * Selector type for the {@link ChangeCaptionLanguageButton} component.
- * @internal
- */
-export type _ChangeCaptionLanguageButtonSelector = (
-  state: CallClientState,
-  props: CallingBaseSelectorProps
-) => {
-  supportedCaptionLanguages: string[];
-  currentCaptionLanguage: string;
-};
-
-/**
- * Selector for {@link ChangeCaptionLanguageButton} component.
- *
- * @private
- */
-export const changeCaptionLanguageButtonSelector: _ChangeCaptionLanguageButtonSelector = reselect.createSelector(
-  [getSupportedCaptionLanguages, getCurrentCaptionLanguage],
-  (supportedCaptionLanguages, currentCaptionLanguage) => {
-    return {
-      supportedCaptionLanguages: supportedCaptionLanguages ?? ['en-us'],
-      currentCaptionLanguage: currentCaptionLanguage ?? 'en-us'
+      currentSpokenLanguage: currentSpokenLanguage ?? 'en-us',
+      isCaptionsFeatureActive: isCaptionsFeatureActive ?? false
     };
   }
 );

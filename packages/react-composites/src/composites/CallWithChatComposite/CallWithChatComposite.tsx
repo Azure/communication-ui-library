@@ -41,6 +41,7 @@ import { drawerContainerStyles } from '../CallComposite/styles/CallComposite.sty
 /* @conditional-compile-remove(video-background-effects) */
 import { VideoEffectsPane } from '../common/VideoEffectsPane';
 import { CommonCallControlOptions } from '../common/types/CommonCallControlOptions';
+import { CaptionsSettingModal } from '../common/CaptionsSettingModal';
 
 /**
  * Props required for the {@link CallWithChatComposite}
@@ -363,6 +364,16 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
     ]
   );
 
+  const [showCaptionsSettingModal, setShowCaptionsSettingModal] = useState(false);
+
+  const openCaptionsSettingModal = (): void => {
+    setShowCaptionsSettingModal(true);
+  };
+
+  const onDismissCaptionsSetting = (): void => {
+    setShowCaptionsSettingModal(false);
+  };
+
   return (
     <div ref={containerRef} className={mergeStyles(containerDivStyles)}>
       <Stack verticalFill grow styles={compositeOuterContainerStyles} id={compositeParentDivId}>
@@ -434,6 +445,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
                 /* @conditional-compile-remove(video-background-effects) */
                 onShowVideoEffectsPicker={setShowVideoEffectsPane}
                 rtl={props.rtl}
+                onCaptionsSettingsClick={openCaptionsSettingModal}
               />
             </Stack.Item>
           </ChatAdapterProvider>
@@ -455,6 +467,15 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
               </Stack>
             </CallAdapterProvider>
           </ChatAdapterProvider>
+        )}
+
+        {showControlBar && showCaptionsSettingModal && (
+          <CallAdapterProvider adapter={callAdapter}>
+            <CaptionsSettingModal
+              showCaptionsSettingModal={showCaptionsSettingModal}
+              onDismissCaptionsSetting={onDismissCaptionsSetting}
+            />
+          </CallAdapterProvider>
         )}
 
         {

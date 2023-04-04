@@ -219,3 +219,5 @@ export * from './CaptionsBanner';
 export * from './Caption';
 
 export * from './StartCaptionsButton';
+
+export * from './CaptionsSettingModal';
