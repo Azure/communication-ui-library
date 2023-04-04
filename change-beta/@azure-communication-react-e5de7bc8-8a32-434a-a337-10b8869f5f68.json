@@ -1,6 +1,6 @@
 {
   "type": "none",
-  "comment": "Add setting file for extension",
+  "comment": "Update cc plugin for array and classMethod params",
   "packageName": "@azure/communication-react",
   "email": "jiangnanhello@live.com",
   "dependentChangeType": "none"

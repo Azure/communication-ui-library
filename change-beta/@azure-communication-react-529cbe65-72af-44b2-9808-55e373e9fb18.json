@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "make sure message status in storybook is defined to avoid 'try send again' showing up",
-  "packageName": "@azure/communication-react",
-  "email": "carolinecao@microsoft.com",
-  "dependentChangeType": "patch"
-}
