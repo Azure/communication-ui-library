@@ -84,7 +84,7 @@ export const _StartCaptionsButton = (props: _StartCaptionsButtonProps): JSX.Elem
     spokenLanguage: currentSpokenLanguage ?? 'en-us'
   };
 
-  const onToggleStartCaptions = () => {
+  const onToggleStartCaptions = (): void => {
     if (props.checked) {
       onStopCaptions();
     } else {

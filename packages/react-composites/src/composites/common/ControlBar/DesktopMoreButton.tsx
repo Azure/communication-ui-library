@@ -43,6 +43,8 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
   /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
   const holdButtonProps = usePropsFor(HoldButton);
 
+  const startCaptionsButtonProps = usePropsFor(_StartCaptionsButton);
+
   /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
   const moreButtonStrings = useMemo(
     () => ({
@@ -70,8 +72,6 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
 
   // is captions feature is active
   if (props.isCaptionsSupported) {
-    const startCaptionsButtonProps = usePropsFor(_StartCaptionsButton);
-
     const captionsContextualMenuItems: IContextualMenuItem[] = [];
 
     const menuSubIconStyleSet = {
