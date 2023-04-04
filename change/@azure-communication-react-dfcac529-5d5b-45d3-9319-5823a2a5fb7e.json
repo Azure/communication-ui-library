@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "Update FileUploadAdapter to include the download of authenticated attachments",
+  "comment": "[Storybook] Introduce new button for message thread with inline images mock",
   "packageName": "@azure/communication-react",
   "email": "joshlai@microsoft.com",
   "dependentChangeType": "patch"

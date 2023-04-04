@@ -35,12 +35,16 @@ test.describe('Filesharing SendBox', async () => {
           {
             name: 'SampleFile.pdf',
             extension: 'pdf',
-            url: 'https://sample.com/SampleFile.pdf'
+            url: 'https://sample.com/SampleFile.pdf',
+            attachmentType: 'fileSharing',
+            id: ''
           },
           {
             name: 'SampleXlsLoooongName.xlsx',
             extension: 'xslx',
-            url: 'https://sample.com/SampleXls.xlsx'
+            url: 'https://sample.com/SampleXls.xlsx',
+            attachmentType: 'fileSharing',
+            id: ''
           }
         ]
       })
@@ -67,13 +71,17 @@ test.describe('Filesharing ProgressBar', async () => {
             name: 'SampleFile.pdf',
             extension: 'pdf',
             url: 'https://sample.com/SampleFile.pdf',
-            progress: 0.5
+            progress: 0.5,
+            attachmentType: 'fileSharing',
+            id: ''
           },
           {
             name: 'SampleXlsLoooongName.xlsx',
             extension: 'xslx',
             url: 'https://sample.com/SampleXls.xlsx',
-            progress: 0.8
+            progress: 0.8,
+            attachmentType: 'fileSharing',
+            id: ''
           }
         ]
       })
@@ -97,13 +105,17 @@ test.describe('Filesharing ProgressBar', async () => {
             name: 'SampleFile.pdf',
             extension: 'pdf',
             url: 'https://sample.com/SampleFile.pdf',
-            progress: 0
+            progress: 0,
+            attachmentType: 'fileSharing',
+            id: ''
           },
           {
             name: 'SampleXlsLoooongName.xlsx',
             extension: 'xslx',
             url: 'https://sample.com/SampleXls.xlsx',
-            progress: -1
+            progress: -1,
+            attachmentType: 'fileSharing',
+            id: ''
           }
         ]
       })
@@ -127,13 +139,17 @@ test.describe('Filesharing ProgressBar', async () => {
             name: 'SampleFile.pdf',
             extension: 'pdf',
             url: 'https://sample.com/SampleFile.pdf',
-            progress: 1
+            progress: 1,
+            attachmentType: 'fileSharing',
+            id: ''
           },
           {
             name: 'SampleXlsLoooongName.xlsx',
             extension: 'xslx',
             url: 'https://sample.com/SampleXls.xlsx',
-            progress: 10
+            progress: 10,
+            attachmentType: 'fileSharing',
+            id: ''
           }
         ]
       })
@@ -160,7 +176,9 @@ test.describe('Filesharing SendBox Errorbar', async () => {
             name: 'SampleFile.pdf',
             extension: 'pdf',
             url: 'https://sample.com/SampleFile.pdf',
-            error: 'File too big. Select a file under 99 MB.'
+            error: 'File too big. Select a file under 99 MB.',
+            attachmentType: 'fileSharing',
+            id: ''
           }
         ]
       })
@@ -180,7 +198,9 @@ test.describe('Filesharing SendBox Errorbar', async () => {
             name: 'SampleFile.pdf',
             extension: 'pdf',
             url: 'https://sample.com/SampleFile.pdf',
-            progress: 0.5
+            progress: 0.5,
+            attachmentType: 'fileSharing',
+            id: ''
           }
         ]
       })
@@ -207,7 +227,9 @@ test.describe('Filesharing Global Errorbar', async () => {
           {
             name: 'Sample.pdf',
             extension: 'pdf',
-            url: 'https://sample.com/SampleFile.pdf'
+            url: 'https://sample.com/SampleFile.pdf',
+            attachmentType: 'fileSharing',
+            id: ''
           }
         ],
         failFileDownload: true
@@ -241,7 +263,9 @@ test.describe('Filesharing Message Thread', async () => {
             name: 'SampleFile1.pdf',
             extension: 'pdf',
             url: 'https://sample.com/SampleFile.pdf',
-            uploadComplete: true
+            uploadComplete: true,
+            attachmentType: 'fileSharing',
+            id: ''
           }
         ]
       })
@@ -293,7 +317,9 @@ test.describe('Filesharing Edit Message', async () => {
             name: 'SampleFile1.pdf',
             extension: 'pdf',
             url: 'https://sample.com/SampleFile.pdf',
-            uploadComplete: true
+            uploadComplete: true,
+            attachmentType: 'fileSharing',
+            id: ''
           }
         ]
       })
