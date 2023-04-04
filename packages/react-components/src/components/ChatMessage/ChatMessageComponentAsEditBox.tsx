@@ -29,7 +29,13 @@ const onRenderSubmitIcon = (color: string): JSX.Element => {
 
 /** @private */
 export type ChatMessageComponentAsEditBoxProps = {
-  onCancel?: () => void;
+  onCancel?: (
+    messageId: string,
+    metadata?: Record<string, string>,
+    options?: {
+      attachedFilesMetadata?: FileMetadata[];
+    }
+  ) => void;
   onSubmit: (
     text: string,
     metadata?: Record<string, string>,
@@ -44,10 +50,6 @@ export type ChatMessageComponentAsEditBoxProps = {
    * Setting to false will mean they are on a new line inside the editable chat message.
    */
   inlineEditButtons: boolean;
-  /**
-   * Show an error message in this context if needed.
-   */
-  errorMessage?: string;
 };
 
 type MessageState = 'OK' | 'too short' | 'too long';
@@ -56,7 +58,7 @@ type MessageState = 'OK' | 'too short' | 'too long';
  * @private
  */
 export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditBoxProps): JSX.Element => {
-  const { onCancel, onSubmit, strings, message, errorMessage } = props;
+  const { onCancel, onSubmit, strings, message } = props;
   const [textValue, setTextValue] = useState<string>(message.content || '');
 
   const [attachedFilesMetadata, setAttachedFilesMetadata] = React.useState(getMessageAttachedFilesMetadata(message));
@@ -119,7 +121,7 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
       className={mergeStyles(
         borderAndBoxShadowStyle({
           theme,
-          hasErrorMessage: errorMessage !== undefined,
+          hasErrorMessage: message.failureReason !== undefined,
           disabled: false
         })
       )}
@@ -149,7 +151,7 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
           tooltipContent={strings.editBoxCancelButton}
           onRenderIcon={onRenderThemedCancelIcon}
           onClick={() => {
-            onCancel && onCancel();
+            onCancel && onCancel(message.messageId, message.metadata, { attachedFilesMetadata });
           }}
           id={'dismissIconWrapper'}
         />
@@ -168,8 +170,10 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
           id={'submitIconWrapper'}
         />
       </InputBoxComponent>
-      {errorMessage && (
-        <div className={mergeStyles(chatMessageFailedTagStyle(theme), { padding: '0.5rem' })}>{errorMessage}</div>
+      {message.failureReason && (
+        <div className={mergeStyles(chatMessageFailedTagStyle(theme), { padding: '0.5rem' })}>
+          {message.failureReason}
+        </div>
       )}
       {onRenderFileUploads()}
     </Stack>
