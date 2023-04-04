@@ -15,10 +15,14 @@ import {
   CallFeatureFactory,
   StartCallOptions
 } from '@azure/communication-calling';
-/* @conditional-compile-remove(teams-identity-support) */
-import { CallAgentKind } from '@azure/communication-calling';
 /* @conditional-compile-remove(calling-beta-sdk) */
-import { GroupChatCallLocator, MeetingLocator, RoomLocator, PushNotificationData } from '@azure/communication-calling';
+import {
+  CallAgentKind,
+  GroupChatCallLocator,
+  MeetingLocator,
+  RoomLocator,
+  PushNotificationData
+} from '@azure/communication-calling';
 import { CommunicationUserIdentifier, PhoneNumberIdentifier, UnknownIdentifier } from '@azure/communication-common';
 import EventEmitter from 'events';
 import { callAgentDeclaratify } from './CallAgentDeclarative';
@@ -67,7 +71,6 @@ const mockCallId = 'b';
 class MockCallAgent implements CallAgent {
   calls: MockCall[] = [];
   displayName = undefined;
-  /* @conditional-compile-remove(teams-identity-support) */
   kind = 'CallAgent' as CallAgentKind;
   emitter = new EventEmitter();
   feature;
