@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "[Storybook] Introduce new button for message thread with inline images mock",
+  "packageName": "@azure/communication-react",
+  "email": "joshlai@microsoft.com",
+  "dependentChangeType": "patch"
+}

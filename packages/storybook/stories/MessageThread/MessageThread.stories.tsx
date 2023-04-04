@@ -28,7 +28,8 @@ import {
   MessageThreadStoryContainerStyles,
   GenerateMockSystemMessage,
   GenerateMockCustomMessage,
-  GetAvatarUrlByUserId
+  GetAvatarUrlByUserId,
+  GenerateMockNewChatMessageWithInlineImage
 } from './placeholdermessages';
 import { MessageThreadWithBlockedMessagesExample } from './snippets/BlockedMessages.snippet';
 import { MessageThreadWithCustomAvatarExample } from './snippets/CustomAvatar.snippet';
@@ -230,6 +231,9 @@ const MessageThreadStory = (args): JSX.Element => {
     setChatMessages([...chatMessages, GenerateMockNewChatMessageFromOthers()]);
   };
 
+  const onSendNewMessageWithInlineImage = (): void => {
+    setChatMessages([...chatMessages, GenerateMockNewChatMessageWithInlineImage()]);
+  };
   const onLoadPreviousMessages = async (): Promise<boolean> => {
     return new Promise((resolve) => {
       setChatMessages([...GenerateMockHistoryChatMessages(), ...chatMessages]);
@@ -281,6 +285,7 @@ const MessageThreadStory = (args): JSX.Element => {
       <Stack horizontal horizontalAlign="space-between" tokens={{ childrenGap: '1rem' }}>
         <PrimaryButton text="Send new message from others" onClick={onSendNewMessageFromOthers} />
         <PrimaryButton text="Send new message" onClick={onSendNewMessage} />
+        <PrimaryButton text="Send new message with inline image" onClick={onSendNewMessageWithInlineImage} />
         <PrimaryButton text="Send new system message" onClick={onSendNewSystemMessage} />
         <PrimaryButton text="Send new custom message" onClick={onSendCustomMessage} />
       </Stack>
