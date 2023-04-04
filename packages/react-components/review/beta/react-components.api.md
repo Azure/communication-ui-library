@@ -279,6 +279,7 @@ export interface _CaptionsSettingModalProps {
     onDismissCaptionsSetting?: () => void;
     // (undocumented)
     onSetSpokenLanguage: (language: string) => Promise<void>;
+    // (undocumented)
     onStartCaptions: (captionsOptions?: _captionsOptions) => Promise<void>;
     // (undocumented)
     showModal?: boolean;
