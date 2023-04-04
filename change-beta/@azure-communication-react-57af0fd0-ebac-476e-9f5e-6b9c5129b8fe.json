@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Fix: Permission Error in Chat after leaving a Teams Interop meeting",
-  "packageName": "@azure/communication-react",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

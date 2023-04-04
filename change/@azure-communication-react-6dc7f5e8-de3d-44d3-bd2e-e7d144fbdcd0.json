@@ -1,7 +1,7 @@
 {
   "type": "none",
-  "comment": "reverting storybook update to the vanillajs page",
+  "comment": "Bumped",
   "packageName": "@azure/communication-react",
-  "email": "alkwa@microsoft.com",
+  "email": "41898282+github-actions[bot]@users.noreply.github.com",
   "dependentChangeType": "none"
 }
