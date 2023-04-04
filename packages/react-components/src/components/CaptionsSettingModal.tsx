@@ -99,6 +99,7 @@ export const _CaptionsSettingModal = (props: _CaptionsSettingModalProps): JSX.El
     return { key: language, text: language };
   });
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onChange = (event: React.FormEvent<HTMLDivElement>, option: IDropdownOption<any> | undefined): void => {
     if (option) {
       setSelectedItem(option);
