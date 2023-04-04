@@ -32,7 +32,7 @@ export interface _AtMentionFlyoutProps {
    */
   target?: React.RefObject<Element>;
   /**
-   * Callback to invoke when the error bar is dismissed
+   * Callback to invoke when the at mention flyout is dismissed
    */
   onDismiss?: () => void;
   /**
