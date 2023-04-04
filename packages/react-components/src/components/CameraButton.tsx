@@ -206,37 +206,41 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
     }
   }, [cameraOn, localVideoViewOptions, onToggleCamera, toggleAnnouncerString]);
 
+  const splitButtonMenuItems: IContextualMenuItem[] = [
+    {
+      key: 'cameraPrimaryAction',
+      text: props.checked ? strings.onSplitButtonPrimaryActionCamera : strings.offSplitButtonPrimaryActionCamera,
+      onClick: () => {
+        onToggleClick();
+      },
+      iconProps: {
+        iconName: props.checked ? 'SplitButtonPrimaryActionCameraOn' : 'SplitButtonPrimaryActionCameraOff',
+        styles: { root: { lineHeight: 0 } }
+      }
+    }
+  ];
+  /* @conditional-compile-remove(video-background-effects) */
+  if (props.onShowVideoEffectsPicker) {
+    splitButtonMenuItems.push({
+      key: 'effects',
+      text: 'Effects',
+      title: 'Video Effects',
+      iconProps: { iconName: 'OptionsVideoBackgroundEffect', styles: { root: { lineHeight: 0 } } },
+      onClick: () => {
+        if (props.onShowVideoEffectsPicker) {
+          props.onShowVideoEffectsPicker(true);
+        }
+      }
+    });
+  }
+
   const splitButtonPrimaryAction: IContextualMenuItem = {
     key: 'primaryAction',
     title: 'toggle camera',
     itemType: ContextualMenuItemType.Section,
     sectionProps: {
       topDivider: true,
-      items: [
-        {
-          key: 'cameraPrimaryAction',
-          text: props.checked ? strings.onSplitButtonPrimaryActionCamera : strings.offSplitButtonPrimaryActionCamera,
-          onClick: () => {
-            onToggleClick();
-          },
-          iconProps: {
-            iconName: props.checked ? 'SplitButtonPrimaryActionCameraOn' : 'SplitButtonPrimaryActionCameraOff',
-            styles: { root: { lineHeight: 0 } }
-          }
-        },
-        /* @conditional-compile-remove(video-background-effects) */
-        {
-          key: 'effects',
-          text: 'Effects',
-          title: 'Video Effects',
-          iconProps: { iconName: 'OptionsVideoBackgroundEffect', styles: { root: { lineHeight: 0 } } },
-          onClick: () => {
-            if (props.onShowVideoEffectsPicker) {
-              props.onShowVideoEffectsPicker(true);
-            }
-          }
-        }
-      ]
+      items: splitButtonMenuItems
     }
   };
 

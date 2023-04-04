@@ -23,7 +23,9 @@ export const MessageWithFile: () => JSX.Element = () => {
               {
                 name: 'RouterConfig.xlsx',
                 extension: 'xlsx',
-                url: 'https://www.example.com/files/RouterConfig.xlsx'
+                url: 'https://www.example.com/files/RouterConfig.xlsx',
+                attachmentType: 'fileSharing',
+                id: ''
               }
             ]
           },
