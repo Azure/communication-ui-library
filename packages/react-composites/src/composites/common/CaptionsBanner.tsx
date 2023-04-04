@@ -5,8 +5,8 @@ import { _CaptionsBanner } from '@internal/react-components';
 import { _DrawerMenu, _DrawerMenuItemProps, _DrawerSurface } from '@internal/react-components';
 import { mergeStyles, Stack } from '@fluentui/react';
 import { usePropsFor } from '../CallComposite/hooks/usePropsFor';
-import { CaptionsBannerMoreButton } from './captionsBannerMoreButton';
 import { CaptionsSettingModal } from './CaptionsSettingModal';
+import { CaptionsBannerMoreButton } from './CaptionsBannerMoreButton';
 
 /** @private */
 export const CaptionsBanner = (): JSX.Element => {
