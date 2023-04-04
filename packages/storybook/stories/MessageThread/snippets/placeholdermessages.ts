@@ -51,7 +51,8 @@ export const GetHistoryChatMessages = (): ChatMessage[] => {
       mine: true,
       attached: false,
       contentType: 'text',
-      status: 'failed' as MessageStatus
+      status: 'failed' as MessageStatus,
+      failureReason: 'Edit failed, try again'
     }
   ];
 };

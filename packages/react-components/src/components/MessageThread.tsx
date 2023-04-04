@@ -519,14 +519,14 @@ export type UpdateMessageCallback = (
  * Callback function run when a message edit is cancelled.
  */
 export type CancelEditCallback = (
-    messageId: string,
-    /* @conditional-compile-remove(file-sharing) */
-    metadata?: Record<string, string>,
-    /* @conditional-compile-remove(file-sharing) */
-    options?: {
-      attachedFilesMetadata?: FileMetadata[];
+  messageId: string,
+  /* @conditional-compile-remove(file-sharing) */
+  metadata?: Record<string, string>,
+  /* @conditional-compile-remove(file-sharing) */
+  options?: {
+    attachedFilesMetadata?: FileMetadata[];
   }
-) => void
+) => void;
 
 /**
  * Props for {@link MessageThread}.
@@ -645,7 +645,7 @@ export type MessageThreadProps = {
 
   /**
    * Optional callback for when a message edit is cancelled.
-   * 
+   *
    * @param messageId - message id from chatClient
    */
   onCancelMessageEdit?: CancelEditCallback;
@@ -741,6 +741,8 @@ export type MessageProps = {
 
   /**
    * Optional callback for when a message edit is cancelled.
+   *
+   * @param messageId - message id from chatClient
    */
   onCancelMessageEdit?: CancelEditCallback;
   /**
