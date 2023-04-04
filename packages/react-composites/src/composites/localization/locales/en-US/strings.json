@@ -110,6 +110,8 @@
     "moreDrawerButtonTooltip": "More options",
     "moreDrawerMicrophoneMenuTitle": "Microphone",
     "moreDrawerSpeakerMenuTitle": "Speaker",
+    "moreDrawerCaptionsMenuTitle": "Live captions",
+    "moreDrawerSpokenLanguageMenuTitle": "Spoken language",
     "peopleButtonLabel": "People",
     "peopleButtonTooltipOpen": "Show participants",
     "peopleButtonTooltipClose": "Hide participants",

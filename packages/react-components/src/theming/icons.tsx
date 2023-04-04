@@ -43,7 +43,8 @@ import {
   VideoProhibited16Filled,
   ClosedCaption20Regular,
   ClosedCaptionOff20Regular,
-  Settings20Regular
+  Settings20Regular,
+  PersonVoice20Regular
 } from '@fluentui/react-icons';
 /* @conditional-compile-remove(call-readiness) */
 import { Important20Filled } from '@fluentui/react-icons';
@@ -309,5 +310,6 @@ export const DEFAULT_COMPONENT_ICONS = {
   OptionsVideoBackgroundEffect: <VideoBackgroundEffect20Regular />,
   CaptionsIcon: <ClosedCaption20Regular />,
   CaptionsOffIcon: <ClosedCaptionOff20Regular />,
-  SettingsIcon: <Settings20Regular />
+  SettingsIcon: <Settings20Regular />,
+  PersonIcon: <PersonVoice20Regular />
 };

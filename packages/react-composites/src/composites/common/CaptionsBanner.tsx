@@ -9,7 +9,7 @@ import { CaptionsSettingModal } from './CaptionsSettingModal';
 import { CaptionsBannerMoreButton } from './CaptionsBannerMoreButton';
 
 /** @private */
-export const CaptionsBanner = (): JSX.Element => {
+export const CaptionsBanner = (props: { isMobile: boolean }): JSX.Element => {
   const captionsBannerProps = usePropsFor(_CaptionsBanner);
   const [isCaptionsSettingOpen, setIsCaptionsSettingOpen] = useState<boolean>(false);
   const onClickCaptionsSettings = (): void => {
@@ -41,13 +41,15 @@ export const CaptionsBanner = (): JSX.Element => {
       {captionsBannerProps.captions.length > 0 && captionsBannerProps.isCaptionsOn && (
         <div className={containerClassName}>
           <Stack horizontalAlign="center">
-            <Stack.Item style={{ width: '50%' }}>
+            <Stack.Item style={{ width: props.isMobile ? '90%' : '50%' }}>
               <_CaptionsBanner {...captionsBannerProps} />
             </Stack.Item>
           </Stack>
-          <div className={floatingChildClassName}>
-            <CaptionsBannerMoreButton onCaptionsSettingsClick={onClickCaptionsSettings} />
-          </div>
+          {!props.isMobile && (
+            <div className={floatingChildClassName}>
+              <CaptionsBannerMoreButton onCaptionsSettingsClick={onClickCaptionsSettings} />
+            </div>
+          )}
         </div>
       )}
     </>

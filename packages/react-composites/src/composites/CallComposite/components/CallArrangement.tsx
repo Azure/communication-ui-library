@@ -323,7 +323,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                     )}
                   </Stack.Item>
                   {props.onRenderGalleryContent && props.onRenderGalleryContent()}
-                  <CaptionsBanner />
+                  <CaptionsBanner isMobile={props.mobileView} />
                 </Stack>
               </Stack.Item>
             </Stack.Item>

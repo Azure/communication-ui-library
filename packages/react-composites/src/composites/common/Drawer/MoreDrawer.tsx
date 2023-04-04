@@ -1,14 +1,16 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 /* @conditional-compile-remove(control-bar-button-injection) */
 import { useMemo } from 'react';
 import {
   OptionsDevice,
   _DrawerMenu as DrawerMenu,
   _DrawerMenuItemProps as DrawerMenuItemProps,
-  _DrawerMenuItemProps
+  _StartCaptionsButton,
+  _CaptionsSettingModal,
+  _DrawerMenuStyles
 } from '@internal/react-components';
 /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
 import { HoldButton } from '@internal/react-components';
@@ -25,6 +27,8 @@ import { usePropsFor } from '../../CallComposite/hooks/usePropsFor';
 import { useLocale } from '../../localization';
 import { isDisabled } from '../../CallComposite/utils';
 import { CommonCallControlOptions } from '../types/CommonCallControlOptions';
+import { IToggleStyles, Stack, Theme, Toggle, useTheme } from '@fluentui/react';
+import { _pxToRem } from '@internal/acs-ui-common';
 
 /** @private */
 export interface MoreDrawerStrings {
@@ -53,6 +57,18 @@ export interface MoreDrawerStrings {
    *
    */
   speakerMenuTitle: string;
+  /**
+   * Label for captions drawerMenuItem
+   *
+   * @remarks Only displayed when in Teams call
+   */
+  captionsMenuTitle: string;
+  /**
+   * Label for spokenLanguage drawerMenuItem
+   *
+   * @remarks Only displayed when in Teams call, disabled until captions is on
+   */
+  spokenLanguageMenuTitle: string;
 }
 
 /** @private */
@@ -106,6 +122,7 @@ const inferCallWithChatControlOptions = (
 
 /** @private */
 export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
+  const theme = useTheme();
   const drawerMenuItems: DrawerMenuItemProps[] = [];
 
   const { speakers, onSelectSpeaker, onLightDismiss } = props;
@@ -228,6 +245,128 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
     });
   }
 
+  //Captions drawer menu
+  const startCaptionsButtonProps = usePropsFor(_StartCaptionsButton);
+  const changeSpokenLanguageProps = usePropsFor(_CaptionsSettingModal);
+  const [isSpokenLanguageDrawerOpen, setIsSpokenLanguageDrawerOpen] = useState<boolean>(false);
+  const [currentSpokenLanguage, setCurrentSpokenLanguage] = useState<string>(
+    !startCaptionsButtonProps.currentSpokenLanguage || startCaptionsButtonProps.currentSpokenLanguage === ''
+      ? 'en-us'
+      : startCaptionsButtonProps.currentSpokenLanguage
+  );
+
+  const spokenLanguageDrawerItems: DrawerMenuItemProps[] | undefined = props.isCaptionsSupported
+    ? changeSpokenLanguageProps?.supportedSpokenLanguages?.map((language) => ({
+        itemKey: language,
+        text: language,
+        onItemClick: () => {
+          setCurrentSpokenLanguage(language);
+        },
+        secondaryIconProps: currentSpokenLanguage === language ? { iconName: 'Accept' } : undefined
+      }))
+    : undefined;
+
+  const spokenLanguageDrawerStyles: _DrawerMenuStyles | undefined = props.isCaptionsSupported
+    ? {
+        root: {
+          height: _pxToRem(300),
+          overflow: 'scroll'
+        },
+        drawerSurfaceStyles: {
+          drawerContentContainer: {
+            root: {
+              span: {
+                fontWeight: 600,
+                fontSize: _pxToRem(17),
+                lineHeight: _pxToRem(22),
+                color: theme.palette.neutralDark
+              }
+            }
+          }
+        }
+      }
+    : undefined;
+
+  if (props.isCaptionsSupported) {
+    const captionsDrawerItems: DrawerMenuItemProps[] = [];
+
+    const themedToggleButtonStyle = (theme: Theme, checked: boolean): Partial<IToggleStyles> => {
+      if (checked) {
+        return {
+          root: {
+            margin: 0
+          },
+          pill: {
+            backgroundColor: `${theme.palette.themePrimary} !important`
+          },
+          thumb: {
+            backgroundColor: `${theme.palette.white} !important`
+          }
+        };
+      }
+      return {
+        root: {
+          margin: 0
+        }
+      };
+    };
+
+    drawerMenuItems.push({
+      itemKey: 'captions',
+      disabled: props.disableButtonsForHoldScreen,
+      text: props.strings.captionsMenuTitle,
+      iconProps: { iconName: 'CaptionsIcon' },
+      subMenuProps: captionsDrawerItems
+    });
+
+    captionsDrawerItems.push({
+      itemKey: 'ToggleCaptionsKey',
+      text: startCaptionsButtonProps.checked
+        ? localeStrings.component.strings.startCaptionsButton.tooltipOnContent
+        : localeStrings.component.strings.startCaptionsButton.tooltipOffContent,
+      iconProps: {
+        iconName: startCaptionsButtonProps.checked ? 'CaptionsOffIcon' : 'CaptionsIcon',
+        styles: { root: { lineHeight: 0 } }
+      },
+      disabled: props.disableButtonsForHoldScreen,
+      secondaryComponent: (
+        <Stack verticalFill verticalAlign="center">
+          <Toggle
+            checked={startCaptionsButtonProps.checked}
+            styles={themedToggleButtonStyle(theme, startCaptionsButtonProps.checked)}
+            onChange={() => {
+              if (!startCaptionsButtonProps.checked) {
+                startCaptionsButtonProps.onStartCaptions({
+                  spokenLanguage: currentSpokenLanguage
+                });
+              } else {
+                startCaptionsButtonProps.onStopCaptions();
+              }
+            }}
+          />
+        </Stack>
+      )
+    });
+
+    captionsDrawerItems.push({
+      itemKey: 'ChangeSpokenLanguage',
+      text: props.strings.spokenLanguageMenuTitle,
+      secondaryText: currentSpokenLanguage,
+      iconProps: {
+        iconName: 'PersonIcon',
+        styles: { root: { lineHeight: 0 } }
+      },
+      disabled: props.disableButtonsForHoldScreen || !startCaptionsButtonProps.checked,
+      onItemClick: () => {
+        setIsSpokenLanguageDrawerOpen(true);
+      },
+      secondaryIconProps: {
+        iconName: 'ChevronRight',
+        styles: { root: { lineHeight: 0 } }
+      }
+    });
+  }
+
   /* @conditional-compile-remove(control-bar-button-injection) */
   const customDrawerButtons = useMemo(
     () =>
@@ -251,7 +390,22 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
     drawerMenuItems.push(element);
   });
 
-  return <DrawerMenu items={drawerMenuItems} onLightDismiss={props.onLightDismiss} />;
+  return (
+    <>
+      {isSpokenLanguageDrawerOpen && props.isCaptionsSupported && (
+        <DrawerMenu
+          heading={props.strings.spokenLanguageMenuTitle}
+          items={spokenLanguageDrawerItems ?? []}
+          onLightDismiss={() => {
+            changeSpokenLanguageProps.onSetSpokenLanguage(currentSpokenLanguage);
+            props.onLightDismiss();
+          }}
+          styles={spokenLanguageDrawerStyles}
+        />
+      )}
+      {!isSpokenLanguageDrawerOpen && <DrawerMenu items={drawerMenuItems} onLightDismiss={props.onLightDismiss} />}
+    </>
+  );
 };
 
 const isDeviceSelected = (speaker: OptionsDevice, selectedSpeaker?: OptionsDevice): boolean =>

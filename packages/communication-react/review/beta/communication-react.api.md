@@ -1062,8 +1062,10 @@ export interface CallWithChatCompositeStrings {
     moreDrawerAudioDeviceMenuTitle?: string;
     moreDrawerButtonLabel: string;
     moreDrawerButtonTooltip: string;
+    moreDrawerCaptionsMenuTitle: string;
     moreDrawerMicrophoneMenuTitle: string;
     moreDrawerSpeakerMenuTitle: string;
+    moreDrawerSpokenLanguageMenuTitle: string;
     openDialpadButtonLabel: string;
     openDtmfDialpadLabel: string;
     peopleButtonLabel: string;
@@ -1242,6 +1244,7 @@ export interface _CaptionsSettingModalProps {
     onDismissCaptionsSetting?: () => void;
     // (undocumented)
     onSetSpokenLanguage: (language: string) => Promise<void>;
+    // (undocumented)
     onStartCaptions: (captionsOptions?: _captionsOptions) => Promise<void>;
     // (undocumented)
     showModal?: boolean;
@@ -2038,6 +2041,7 @@ export const DEFAULT_COMPONENT_ICONS: {
     CaptionsIcon: JSX.Element;
     CaptionsOffIcon: JSX.Element;
     SettingsIcon: JSX.Element;
+    PersonIcon: JSX.Element;
 };
 
 // @public
@@ -2148,6 +2152,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     CaptionsIcon: JSX.Element;
     CaptionsOffIcon: JSX.Element;
     SettingsIcon: JSX.Element;
+    PersonIcon: JSX.Element;
 };
 
 // @beta

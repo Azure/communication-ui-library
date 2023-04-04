@@ -652,6 +652,7 @@ export const DEFAULT_COMPONENT_ICONS: {
     CaptionsIcon: JSX.Element;
     CaptionsOffIcon: JSX.Element;
     SettingsIcon: JSX.Element;
+    PersonIcon: JSX.Element;
 };
 
 // @internal
@@ -768,6 +769,7 @@ export interface _DrawerMenuItemProps {
     itemKey: string;
     // (undocumented)
     onItemClick?: (ev?: React_2.MouseEvent<HTMLElement> | React_2.KeyboardEvent<HTMLElement>, itemKey?: string) => void;
+    secondaryComponent?: JSX.Element;
     secondaryIconProps?: IIconProps;
     secondaryText?: string;
     // (undocumented)
