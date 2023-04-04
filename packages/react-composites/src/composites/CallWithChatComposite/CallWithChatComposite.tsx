@@ -41,7 +41,6 @@ import { drawerContainerStyles } from '../CallComposite/styles/CallComposite.sty
 /* @conditional-compile-remove(video-background-effects) */
 import { VideoEffectsPane } from '../common/VideoEffectsPane';
 import { CommonCallControlOptions } from '../common/types/CommonCallControlOptions';
-import { CaptionsSettingModal } from '../common/CaptionsSettingModal';
 
 /**
  * Props required for the {@link CallWithChatComposite}
@@ -364,16 +363,6 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
     ]
   );
 
-  const [showCaptionsSettingModal, setShowCaptionsSettingModal] = useState(false);
-
-  const openCaptionsSettingModal = (): void => {
-    setShowCaptionsSettingModal(true);
-  };
-
-  const onDismissCaptionsSetting = (): void => {
-    setShowCaptionsSettingModal(false);
-  };
-
   return (
     <div ref={containerRef} className={mergeStyles(containerDivStyles)}>
       <Stack verticalFill grow styles={compositeOuterContainerStyles} id={compositeParentDivId}>
@@ -423,31 +412,32 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
         </Stack>
         {showControlBar && !isMobileWithActivePane && (
           <ChatAdapterProvider adapter={chatProps.adapter}>
-            <Stack.Item styles={controlBarContainerStyles}>
-              <CommonCallControlBar
-                callAdapter={callAdapter}
-                chatAdapter={chatProps.adapter}
-                chatButtonChecked={activePane === 'chat'}
-                onChatButtonClicked={toggleChat}
-                peopleButtonChecked={activePane === 'people'}
-                onPeopleButtonClicked={togglePeople}
-                onMoreButtonClicked={onMoreButtonClicked}
-                mobileView={mobileView}
-                disableButtonsForLobbyPage={isInLobbyOrConnecting}
-                /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
-                disableButtonsForHoldScreen={isInLocalHold}
-                callControls={props.callControls}
-                containerHeight={containerHeight}
-                containerWidth={containerWidth}
-                /* @conditional-compile-remove(PSTN-calls) */
-                onClickShowDialpad={alternateCallerId ? onClickShowDialpad : undefined}
-                isCaptionsSupported={isTeamsCall && hasJoinedCall}
-                /* @conditional-compile-remove(video-background-effects) */
-                onShowVideoEffectsPicker={setShowVideoEffectsPane}
-                rtl={props.rtl}
-                onCaptionsSettingsClick={openCaptionsSettingModal}
-              />
-            </Stack.Item>
+            <CallAdapterProvider adapter={callAdapter}>
+              <Stack.Item styles={controlBarContainerStyles}>
+                <CommonCallControlBar
+                  callAdapter={callAdapter}
+                  chatAdapter={chatProps.adapter}
+                  chatButtonChecked={activePane === 'chat'}
+                  onChatButtonClicked={toggleChat}
+                  peopleButtonChecked={activePane === 'people'}
+                  onPeopleButtonClicked={togglePeople}
+                  onMoreButtonClicked={onMoreButtonClicked}
+                  mobileView={mobileView}
+                  disableButtonsForLobbyPage={isInLobbyOrConnecting}
+                  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+                  disableButtonsForHoldScreen={isInLocalHold}
+                  callControls={props.callControls}
+                  containerHeight={containerHeight}
+                  containerWidth={containerWidth}
+                  /* @conditional-compile-remove(PSTN-calls) */
+                  onClickShowDialpad={alternateCallerId ? onClickShowDialpad : undefined}
+                  isCaptionsSupported={isTeamsCall && hasJoinedCall}
+                  /* @conditional-compile-remove(video-background-effects) */
+                  onShowVideoEffectsPicker={setShowVideoEffectsPane}
+                  rtl={props.rtl}
+                />
+              </Stack.Item>
+            </CallAdapterProvider>
           </ChatAdapterProvider>
         )}
         {showControlBar && showDrawer && (
@@ -467,15 +457,6 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
               </Stack>
             </CallAdapterProvider>
           </ChatAdapterProvider>
-        )}
-
-        {showControlBar && showCaptionsSettingModal && (
-          <CallAdapterProvider adapter={callAdapter}>
-            <CaptionsSettingModal
-              showCaptionsSettingModal={showCaptionsSettingModal}
-              onDismissCaptionsSetting={onDismissCaptionsSetting}
-            />
-          </CallAdapterProvider>
         )}
 
         {
