@@ -706,7 +706,6 @@ export class CallContext {
     if (
       latestCaption &&
       latestCaption.resultType !== 'Final' &&
-      latestCaption.timestamp.getTime() === newCaption.timestamp.getTime() &&
       latestCaption.speaker.identifier &&
       newCaption.speaker.identifier &&
       toFlatCommunicationIdentifier(latestCaption.speaker.identifier) ===
