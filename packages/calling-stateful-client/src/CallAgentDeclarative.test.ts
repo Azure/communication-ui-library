@@ -4,6 +4,7 @@
 import {
   Call,
   CallAgent,
+  CallAgentKind,
   CollectionUpdatedEvent,
   UserFacingDiagnosticsFeature,
   GroupLocator,
@@ -16,13 +17,7 @@ import {
   StartCallOptions
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(calling-beta-sdk) */
-import {
-  CallAgentKind,
-  GroupChatCallLocator,
-  MeetingLocator,
-  RoomLocator,
-  PushNotificationData
-} from '@azure/communication-calling';
+import { GroupChatCallLocator, MeetingLocator, RoomLocator, PushNotificationData } from '@azure/communication-calling';
 import { CommunicationUserIdentifier, PhoneNumberIdentifier, UnknownIdentifier } from '@azure/communication-common';
 import EventEmitter from 'events';
 import { callAgentDeclaratify } from './CallAgentDeclarative';
