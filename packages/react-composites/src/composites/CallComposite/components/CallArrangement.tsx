@@ -53,7 +53,6 @@ import { useCallWithChatCompositeStrings } from '../../CallWithChatComposite/hoo
 /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
 import { getPage } from '../selectors/baseSelectors';
 import { drawerContainerStyles } from '../styles/CallComposite.styles';
-import { CaptionsSettingModal } from '../../common/CaptionsSettingModal';
 /* @conditional-compile-remove(video-background-effects) */
 import { VideoEffectsPane } from '../../common/VideoEffectsPane';
 
@@ -174,16 +173,6 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     setShowDtmfDialpad(true);
   };
 
-  const [showCaptionsSettingModal, setShowCaptionsSettingModal] = useState(false);
-
-  const openCaptionsSettingModal = (): void => {
-    setShowCaptionsSettingModal(true);
-  };
-
-  const onDismissCaptionsSetting = (): void => {
-    setShowCaptionsSettingModal(false);
-  };
-
   const drawerContainerStylesValue = useMemo(() => drawerContainerStyles(10), []);
 
   // To be removed once feature is out of beta, replace with callCompositeContainerCSS
@@ -256,12 +245,6 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   return (
     <div ref={containerRef} className={mergeStyles(containerDivStyles)} id={props.id}>
       <Stack verticalFill horizontalAlign="stretch" className={containerClassName} data-ui-id={props.dataUiId}>
-        {props.callControlProps?.options !== false && showCaptionsSettingModal && (
-          <CaptionsSettingModal
-            showCaptionsSettingModal={showCaptionsSettingModal}
-            onDismissCaptionsSetting={onDismissCaptionsSetting}
-          />
-        )}
         <Stack grow styles={callArrangementContainerStyles}>
           {props.callControlProps?.options !== false &&
             /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
@@ -288,7 +271,6 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                     onPeopleButtonClicked={togglePeoplePane}
                     onMoreButtonClicked={onMoreButtonClicked}
                     isCaptionsSupported={isTeamsCall && hasJoinedCall}
-                    onCaptionsSettingsClick={openCaptionsSettingModal}
                     /* @conditional-compile-remove(video-background-effects) */
                     onShowVideoEffectsPicker={setShowVideoEffectsPane}
                   />

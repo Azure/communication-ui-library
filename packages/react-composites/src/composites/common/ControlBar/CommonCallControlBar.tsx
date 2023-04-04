@@ -31,6 +31,7 @@ import { isDisabled } from '../../CallComposite/utils';
 import { HiddenFocusStartPoint } from '../HiddenFocusStartPoint';
 import { CallWithChatControlOptions } from '../../CallWithChatComposite';
 import { CommonCallControlOptions } from '../types/CommonCallControlOptions';
+import { CaptionsSettingModal } from '../CaptionsSettingModal';
 
 /**
  * @private
@@ -51,7 +52,6 @@ export interface CommonCallControlBarProps {
   onClickShowDialpad?: () => void;
   /* @conditional-compile-remove(video-background-effects) */
   onShowVideoEffectsPicker?: (showVideoEffectsOptions: boolean) => void;
-  onCaptionsSettingsClick?: () => void;
   rtl?: boolean;
   isCaptionsSupported?: boolean;
 }
@@ -97,6 +97,8 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
 
   const callWithChatStrings = useCallWithChatCompositeStrings();
   const options = inferCommonCallControlOptions(props.mobileView, props.callControls);
+
+  const [showCaptionsSettingModal, setShowCaptionsSettingModal] = useState(false);
 
   const handleResize = useCallback((): void => {
     setControlBarButtonsWidth(controlBarContainerRef.current ? controlBarContainerRef.current.offsetWidth : 0);
@@ -220,8 +222,22 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
     <></>
   );
 
+  const openCaptionsSettingModal = (): void => {
+    setShowCaptionsSettingModal(true);
+  };
+
+  const onDismissCaptionsSetting = (): void => {
+    setShowCaptionsSettingModal(false);
+  };
+
   return (
     <div ref={controlBarSizeRef}>
+      {showCaptionsSettingModal && (
+        <CaptionsSettingModal
+          showCaptionsSettingModal={showCaptionsSettingModal}
+          onDismissCaptionsSetting={onDismissCaptionsSetting}
+        />
+      )}
       <Stack
         horizontal
         reversed={!props.mobileView && !isOutOfSpace}
@@ -323,7 +339,7 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                             /* @conditional-compile-remove(control-bar-button-injection) */
                             callControls={props.callControls}
                             isCaptionsSupported={props.isCaptionsSupported}
-                            onCaptionsSettingsClick={props.onCaptionsSettingsClick}
+                            onCaptionsSettingsClick={openCaptionsSettingModal}
                           />
                         )
                     }
