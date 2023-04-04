@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Add internal captions component and storybook page",
-  "packageName": "@azure/communication-react",
-  "email": "carolinecao@microsoft.com",
-  "dependentChangeType": "none"
-}
