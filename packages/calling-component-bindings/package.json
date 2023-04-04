@@ -42,7 +42,7 @@
     "react": ">=16.8.0 <18.0.0"
   },
   "devDependencies": {
-    "@azure/communication-calling": "1.12.0-beta.2 || >=1.4.4",
+    "@azure/communication-calling": "1.12.0-beta.2 || >=1.11.1",
     "@azure/communication-calling-effects": "1.0.0-beta.2",
     "@babel/cli": "~7.16.0",
     "@babel/core": "~7.16.0",
