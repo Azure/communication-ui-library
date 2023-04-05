@@ -67,7 +67,6 @@ export interface _StartCaptionsButtonStrings {
  * Can be used with {@link ControlBar}
  *
  * @param props - properties for the start captions button.
- * @returns
  * @internal
  */
 export const _StartCaptionsButton = (props: _StartCaptionsButtonProps): JSX.Element => {
