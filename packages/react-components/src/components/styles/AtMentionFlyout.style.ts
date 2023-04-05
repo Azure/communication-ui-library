@@ -25,7 +25,6 @@ export const atMentionFlyoutContainer = (theme: Theme, left: number, top: number
     zIndex: CHAT_CONTAINER_ZINDEX + 1
   });
 
-/* @conditional-compile-remove(at-mention) */
 /**
  * @private
  */
@@ -33,13 +32,12 @@ export const headerStyleThemed = (theme: Theme): IStackStyles => {
   return {
     root: {
       color: theme.palette.neutralSecondary,
-      margin: '0.5rem 1rem',
+      margin: '0.5rem 1rem 0.25rem',
       fontSize: theme.fonts.smallPlus.fontSize
     }
   };
 };
 
-/* @conditional-compile-remove(at-mention) */
 /**
  * @private
  */
@@ -49,26 +47,34 @@ export const suggestionListContainerStyle = mergeStyles({
   overflowX: 'hidden'
 });
 
-/* @conditional-compile-remove(at-mention) */
 /**
  * @private
  */
 export const suggestionListStyle = mergeStyles({
-  root: { padding: '0rem' },
-  participantItemStyles: {
-    root: {
-      padding: '0.5rem'
-    }
-  }
+  padding: '0.25rem 0rem 0'
 });
 
-/* @conditional-compile-remove(at-mention) */
 /**
  * @private
  */
-export const suggestionItemStackStyle = mergeStyles({
-  width: '10rem',
-  alignItems: 'center',
-  height: '36px',
-  padding: '0 0.75rem'
-});
+export const suggestionItemWrapperStyle = (theme: Theme): string => {
+  return mergeStyles({
+    margin: '0.05rem 0.1rem',
+    '&:focus-visible': {
+      outline: `${theme.palette.black} solid 0.1rem`
+    }
+  });
+};
+
+/**
+ * @private
+ */
+export const suggestionItemStackStyle = (theme: Theme, isSuggestionHovered: boolean): string => {
+  return mergeStyles({
+    width: '10rem',
+    alignItems: 'center',
+    height: '36px',
+    padding: '0 0.75rem',
+    background: isSuggestionHovered ? theme.palette.neutralLight : theme.palette.white
+  });
+};

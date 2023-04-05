@@ -132,6 +132,35 @@ export type AreParamEqual<A extends (props: any) => JSX.Element | undefined, B e
 // @public
 export type AreTypeEqual<A, B> = A extends B ? (B extends A ? true : false) : false;
 
+// @beta
+export interface AtMentionDisplayOptions {
+    atMentionSuggestionRenderer?: (suggestion: AtMentionSuggestion) => JSX.Element;
+}
+
+// @internal
+export interface _AtMentionFlyoutProps {
+    onDismiss?: () => void;
+    onSuggestionSelected?: (suggestion: AtMentionSuggestion) => void;
+    suggestionItemRenderer?: (suggestion: AtMentionSuggestion, onSuggestionSelected?: (suggestion: AtMentionSuggestion) => void) => JSX.Element;
+    suggestions: AtMentionSuggestion[];
+    target?: React_2.RefObject<Element>;
+    title?: string;
+}
+
+// @beta
+export interface AtMentionLookupOptions {
+    onQueryUpdated?: (query: string) => Promise<AtMentionSuggestion[]>;
+    suggestionItemRenderer?: (suggestion: AtMentionSuggestion, onSuggestionSelected?: (suggestion: AtMentionSuggestion) => void) => JSX.Element;
+    trigger?: string;
+}
+
+// @beta
+export interface AtMentionSuggestion {
+    displayName: string;
+    suggestionType: string;
+    userId: string;
+}
+
 // @public
 export type AvatarPersonaData = {
     text?: string;
@@ -2356,6 +2385,8 @@ export interface _IdentifierProviderProps {
 
 // @internal
 export interface _Identifiers {
+    atMentionSuggestionItem: string;
+    atMentionSuggestionList: string;
     horizontalGalleryVideoTile: string;
     messageContent: string;
     messageTimestamp: string;
@@ -2566,6 +2597,8 @@ export type MessageThreadProps = {
     strings?: Partial<MessageThreadStrings>;
     fileDownloadHandler?: FileDownloadHandler;
     onDisplayDateTimeString?: (messageDate: Date) => string;
+    atMentionLookupOptions?: AtMentionLookupOptions;
+    atMentionDisplayOptions?: AtMentionDisplayOptions;
 };
 
 // @public
@@ -2980,6 +3013,8 @@ export interface SendBoxErrorBarError {
 export interface SendBoxProps {
     // @beta
     activeFileUploads?: ActiveFileUpload[];
+    // @beta
+    atMentionLookupOptions?: AtMentionLookupOptions;
     autoFocus?: 'sendBoxTextField';
     disabled?: boolean;
     // @beta

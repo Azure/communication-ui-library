@@ -7,12 +7,12 @@ import {
   headerStyleThemed,
   suggestionListStyle,
   suggestionListContainerStyle,
-  suggestionItemStackStyle
+  suggestionItemStackStyle,
+  suggestionItemWrapperStyle
 } from './styles/AtMentionFlyout.style';
 import { useIdentifiers } from '../identifiers';
 import { useLocale } from '../localization';
 
-/* @conditional-compile-remove(at-mention) */
 /**
  * Props for {@link _AtMentionFlyout}.
  *
@@ -20,29 +20,35 @@ import { useLocale } from '../localization';
  */
 export interface _AtMentionFlyoutProps {
   /**
+   * Array of at mention suggestions used to populate the suggestion list
+   */
+  suggestions: AtMentionSuggestion[];
+  /**
    * Optional string used as at mention flyout's title.
    * @defaultValue `Suggestions`
    */
   title?: string;
   /**
-   * Optional string used as a query to search for mentioned participants.
-   */
-  query?: string;
-  /**
    * Optional RefObject used as a reference to position AtMentionFlyout.
    */
   target?: React.RefObject<Element>;
   /**
-   * Callback to invoke when the error bar is dismissed
+   * Optional callback called when a atMention suggestion is selected.
+   */
+  onSuggestionSelected?: (suggestion: AtMentionSuggestion) => void;
+  /**
+   * Callback to invoke when the at mention flyout is dismissed
    */
   onDismiss?: () => void;
   /**
-   * Optional props needed to lookup suggestions in the at mention scenario.
+   * Optional callback to render an item of the atMention suggestions list.
    */
-  atMentionLookupOptions?: AtMentionLookupOptions;
+  suggestionItemRenderer?: (
+    suggestion: AtMentionSuggestion,
+    onSuggestionSelected?: (suggestion: AtMentionSuggestion) => void
+  ) => JSX.Element;
 }
 
-/* @conditional-compile-remove(at-mention) */
 /**
  * Options to lookup suggestions in the at mention scenario.
  *
@@ -62,20 +68,12 @@ export interface AtMentionLookupOptions {
   /**
    * Optional callback to render an item of the atMention suggestions list.
    */
-  suggestionItemRenderer?: (suggestion: AtMentionSuggestion) => JSX.Element;
-  /**
-   * Optional callback called when a atMention suggestion is selected.
-   */
-  onSuggestionSelected?: (suggestion: AtMentionSuggestion) => void;
-  /**
-   * Optional boolean to determine if currently in mobile view.
-   *
-   * @defaultValue `false`
-   */
-  isMobile?: boolean;
+  suggestionItemRenderer?: (
+    suggestion: AtMentionSuggestion,
+    onSuggestionSelected?: (suggestion: AtMentionSuggestion) => void
+  ) => JSX.Element;
 }
 
-/* @conditional-compile-remove(at-mention) */
 /**
  * Options to display suggestions in the at mention scenario.
  *
@@ -88,7 +86,6 @@ export interface AtMentionDisplayOptions {
   atMentionSuggestionRenderer?: (suggestion: AtMentionSuggestion) => JSX.Element;
 }
 
-/* @conditional-compile-remove(at-mention) */
 /**
  * At mention suggestion's state, as reflected in the UI.
  *
@@ -100,10 +97,9 @@ export interface AtMentionSuggestion {
   /** Type of an at mention suggestion */
   suggestionType: string;
   /** Display name of a mentioned participant */
-  displayName?: string;
+  displayName: string;
 }
 
-/* @conditional-compile-remove(at-mention) */
 /**
  * Component to render at mention suggestions.
  *
@@ -117,24 +113,13 @@ export const _AtMentionFlyout = (props: _AtMentionFlyoutProps): JSX.Element => {
     bottom: number;
     left: number;
   }
-  const { title = 'Suggestions', query, target, atMentionLookupOptions } = props;
-  const { onQueryUpdated, suggestionItemRenderer, onSuggestionSelected } = atMentionLookupOptions ?? {};
+  const { suggestions, title = 'Suggestions', target, suggestionItemRenderer, onSuggestionSelected } = props;
   const theme = useTheme();
   const ids = useIdentifiers();
   const localeStrings = useLocale().strings.participantItem;
 
-  const [suggestions, setSuggestions] = useState<AtMentionSuggestion[]>([]);
   const [position, setPosition] = useState<Position>({ top: 0, right: 0, bottom: 0, left: 0 });
-
-  useEffect(() => {
-    async function fetchData(): Promise<void> {
-      if (query && onQueryUpdated) {
-        const list = (await onQueryUpdated(query)) || [];
-        setSuggestions(list);
-      }
-    }
-    fetchData();
-  }, [onQueryUpdated, query]);
+  const [hoveredSuggestion, setHoveredSuggestion] = useState<AtMentionSuggestion | undefined>(undefined);
 
   // Temporary implementation for AtMentionFlyout's position.
   useEffect(() => {
@@ -142,7 +127,7 @@ export const _AtMentionFlyout = (props: _AtMentionFlyoutProps): JSX.Element => {
     const { top = 0, left = 0, right = 0, bottom = 0, height = 0 } = rect ?? {};
     const flyoutHeight = 212;
     const flyoutTop = top - flyoutHeight - height - 24;
-    setPosition({ top: flyoutTop, left, right, bottom });
+    setPosition({ top: flyoutTop > 0 ? flyoutTop : 0, left, right, bottom });
   }, [target]);
 
   const personaRenderer = (displayName?: string): JSX.Element => {
@@ -159,13 +144,18 @@ export const _AtMentionFlyout = (props: _AtMentionFlyoutProps): JSX.Element => {
   };
 
   const defaultSuggestionItemRenderer = (suggestion: AtMentionSuggestion): JSX.Element => {
+    const isSuggestionHovered = hoveredSuggestion?.userId === suggestion.userId;
     return (
       <div
         data-is-focusable={true}
         data-ui-id={ids.atMentionSuggestionItem}
+        key={suggestion.userId}
         onClick={() => onSuggestionSelected && onSuggestionSelected(suggestion)}
+        onMouseEnter={() => setHoveredSuggestion(suggestion)}
+        onMouseLeave={() => setHoveredSuggestion(undefined)}
+        className={suggestionItemWrapperStyle(theme)}
       >
-        <Stack horizontal className={suggestionItemStackStyle}>
+        <Stack horizontal className={suggestionItemStackStyle(theme, isSuggestionHovered)}>
           {personaRenderer(suggestion.displayName)}
         </Stack>
       </div>

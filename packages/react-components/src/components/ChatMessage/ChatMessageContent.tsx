@@ -10,6 +10,7 @@ import { ChatMessage } from '../../types/ChatMessage';
 import { BlockedMessage } from '../../types/ChatMessage';
 import { LiveMessage } from 'react-aria-live';
 import { Link } from '@fluentui/react';
+/* @conditional-compile-remove(at-mention) */
 import { AtMentionDisplayOptions } from '../AtMentionFlyout';
 
 /* @conditional-compile-remove(data-loss-prevention) */
