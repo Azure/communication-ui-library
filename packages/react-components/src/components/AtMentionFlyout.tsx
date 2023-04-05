@@ -7,7 +7,8 @@ import {
   headerStyleThemed,
   suggestionListStyle,
   suggestionListContainerStyle,
-  suggestionItemStackStyle
+  suggestionItemStackStyle,
+  suggestionItemWrapperStyle
 } from './styles/AtMentionFlyout.style';
 import { useIdentifiers } from '../identifiers';
 import { useLocale } from '../localization';
@@ -31,6 +32,10 @@ export interface _AtMentionFlyoutProps {
    * Optional RefObject used as a reference to position AtMentionFlyout.
    */
   target?: React.RefObject<Element>;
+  /**
+   * Optional callback called when a atMention suggestion is selected.
+   */
+  onSuggestionSelected?: (suggestion: AtMentionSuggestion) => void;
   /**
    * Callback to invoke when the at mention flyout is dismissed
    */
@@ -60,17 +65,10 @@ export interface AtMentionLookupOptions {
   /**
    * Optional callback to render an item of the atMention suggestions list.
    */
-  suggestionItemRenderer?: (suggestion: AtMentionSuggestion) => JSX.Element;
-  /**
-   * Optional callback called when a atMention suggestion is selected.
-   */
-  onSuggestionSelected?: (suggestion: AtMentionSuggestion) => void;
-  /**
-   * Optional boolean to determine if currently in mobile view.
-   *
-   * @defaultValue `false`
-   */
-  isMobile?: boolean;
+  suggestionItemRenderer?: (
+    suggestion: AtMentionSuggestion,
+    onSuggestionSelected?: (suggestion: AtMentionSuggestion) => void
+  ) => JSX.Element;
 }
 
 /**
@@ -112,14 +110,15 @@ export const _AtMentionFlyout = (props: _AtMentionFlyoutProps): JSX.Element => {
     bottom: number;
     left: number;
   }
-  const { title = 'Suggestions', query, target, atMentionLookupOptions } = props;
-  const { onQueryUpdated, suggestionItemRenderer, onSuggestionSelected } = atMentionLookupOptions ?? {};
+  const { title = 'Suggestions', query, target, atMentionLookupOptions, onSuggestionSelected } = props;
+  const { onQueryUpdated, suggestionItemRenderer } = atMentionLookupOptions ?? {};
   const theme = useTheme();
   const ids = useIdentifiers();
   const localeStrings = useLocale().strings.participantItem;
 
   const [suggestions, setSuggestions] = useState<AtMentionSuggestion[]>([]);
   const [position, setPosition] = useState<Position>({ top: 0, right: 0, bottom: 0, left: 0 });
+  const [hoveredSuggestion, setHoveredSuggestion] = useState<AtMentionSuggestion | undefined>(undefined);
 
   useEffect(() => {
     async function fetchData(): Promise<void> {
@@ -137,7 +136,7 @@ export const _AtMentionFlyout = (props: _AtMentionFlyoutProps): JSX.Element => {
     const { top = 0, left = 0, right = 0, bottom = 0, height = 0 } = rect ?? {};
     const flyoutHeight = 212;
     const flyoutTop = top - flyoutHeight - height - 24;
-    setPosition({ top: flyoutTop, left, right, bottom });
+    setPosition({ top: flyoutTop > 0 ? flyoutTop : 0, left, right, bottom });
   }, [target]);
 
   const personaRenderer = (displayName?: string): JSX.Element => {
@@ -153,14 +152,127 @@ export const _AtMentionFlyout = (props: _AtMentionFlyoutProps): JSX.Element => {
     return <Persona {...avatarOptions} />;
   };
 
+  const fakeData: AtMentionSuggestion[] = [
+    {
+      userId: '1',
+      suggestionType: 'person',
+      displayName: ''
+    },
+    {
+      userId: '2',
+      suggestionType: 'person',
+      displayName: 'Patricia Adams'
+    },
+    {
+      userId: '3',
+      suggestionType: 'person',
+      displayName: '1'
+    },
+    {
+      userId: '4',
+      suggestionType: 'person',
+      displayName: '2'
+    },
+    {
+      userId: '5',
+      suggestionType: 'person',
+      displayName: '1'
+    },
+    {
+      userId: '6',
+      suggestionType: 'person',
+      displayName: '2'
+    },
+    {
+      userId: '7',
+      suggestionType: 'person',
+      displayName: '1'
+    },
+    {
+      userId: '8',
+      suggestionType: 'person',
+      displayName: '2'
+    },
+    {
+      userId: '9',
+      suggestionType: 'person',
+      displayName: '1'
+    },
+    {
+      userId: '10',
+      suggestionType: 'person',
+      displayName: '10'
+    },
+    {
+      userId: '11',
+      suggestionType: 'person',
+      displayName: '11'
+    },
+    {
+      userId: '12',
+      suggestionType: 'person',
+      displayName: '12'
+    },
+    {
+      userId: '13',
+      suggestionType: 'person',
+      displayName: '13'
+    },
+    {
+      userId: '14',
+      suggestionType: 'person',
+      displayName: '14'
+    },
+    {
+      userId: '15',
+      suggestionType: 'person',
+      displayName: '1'
+    },
+    {
+      userId: '16',
+      suggestionType: 'person',
+      displayName: '2'
+    },
+    {
+      userId: '17',
+      suggestionType: 'person',
+      displayName: '1'
+    },
+    {
+      userId: '18',
+      suggestionType: 'person',
+      displayName: '10'
+    },
+    {
+      userId: '19',
+      suggestionType: 'person',
+      displayName: '11'
+    },
+    {
+      userId: '20',
+      suggestionType: 'person',
+      displayName: '12'
+    },
+    {
+      userId: '21',
+      suggestionType: 'person',
+      displayName: '20'
+    }
+  ];
+
   const defaultSuggestionItemRenderer = (suggestion: AtMentionSuggestion): JSX.Element => {
+    const isSuggestionHovered = hoveredSuggestion?.userId === suggestion.userId;
     return (
       <div
         data-is-focusable={true}
         data-ui-id={ids.atMentionSuggestionItem}
+        key={suggestion.userId}
         onClick={() => onSuggestionSelected && onSuggestionSelected(suggestion)}
+        onMouseEnter={() => setHoveredSuggestion(suggestion)}
+        onMouseLeave={() => setHoveredSuggestion(undefined)}
+        className={suggestionItemWrapperStyle(theme)}
       >
-        <Stack horizontal className={suggestionItemStackStyle}>
+        <Stack horizontal className={suggestionItemStackStyle(theme, isSuggestionHovered)}>
           {personaRenderer(suggestion.displayName)}
         </Stack>
       </div>
