@@ -257,11 +257,14 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
       return;
     }
 
-    // we dont want to send empty messages including spaces, newlines, tabs
+    const message = htmlValue || textValue;
+    // we don't want to send empty messages including spaces, newlines, tabs
     // Message can be empty if there is a valid file upload
-    if (!EMPTY_MESSAGE_REGEX.test(textValue) || hasFile(props)) {
-      onSendMessage && onSendMessage(sanitizeText(textValue));
+    if (!EMPTY_MESSAGE_REGEX.test(message) || hasFile(props)) {
+      onSendMessage && onSendMessage(sanitizeText(message));
+      console.log(sanitizeText(message));
       setTextValue('');
+      setHTMLValue(undefined);
     }
     sendTextFieldRef.current?.focus();
   };
@@ -277,6 +280,15 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
       setTextValueOverflow(false);
     }
     setTextValue(newValue);
+  };
+
+  const setHTMLText = (newValue?: string | undefined): void => {
+    if (newValue !== undefined && newValue.length > MAXIMUM_LENGTH_OF_MESSAGE) {
+      setTextValueOverflow(true);
+    } else {
+      setTextValueOverflow(false);
+    }
+    setHTMLValue(newValue);
   };
 
   const textTooLongMessage = textValueOverflow ? strings.textTooLong : undefined;
@@ -389,7 +401,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
           maxLength={MAXIMUM_LENGTH_OF_MESSAGE}
           onMentionAdd={(newTextValue, newHTMLValue) => {
             setText(newTextValue);
-            setHTMLValue(newHTMLValue);
+            setHTMLText(newHTMLValue);
           }}
         >
           <VoiceOverButton
