@@ -199,14 +199,12 @@ const getDocs: () => JSX.Element = () => {
       <Canvas mdxSource={MessageThreadWithCustomTimestampExampleText}>
         <MessageThreadWithCustomTimestampExample />
       </Canvas>
-
       <Heading>Display Inline Image with Messages</Heading>
       <SingleLineBetaBanner />
       <Description>
-        MessageThread component provides UI for displaying inline image attachments in a message. Developers can write
-        their own inline image downloading logic and image will be displayed in the MessageThread. ??? Clicking on the
-        image opens it in a larger image in a new browser tab. Developers can override this behavior as well using
-        MessageThread props ???.
+        MessageThread component provides UI for displaying inline image attachments in a message. If an image is
+        protected by header-based authentication, developers can write there own HTTP call to get the image so you can
+        provide the applicable headers. By default the `previewUrl` is displayed in the message bubble.
       </Description>
       <Canvas mdxSource={MessageThreadWithInlineImageExampleText}>
         <MessageThreadWithInlineImageExample />
