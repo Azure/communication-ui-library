@@ -701,18 +701,20 @@ export class CallContext {
   }
 
   private processNewCaption(captions: CaptionsInfo[], newCaption: CaptionsInfo): void {
-    // Check if the incoming caption is a replacement for the latest one
-    const latestCaption = captions[captions.length - 1];
-    if (
-      latestCaption &&
-      latestCaption.resultType !== 'Final' &&
-      latestCaption.timestamp.getTime() === newCaption.timestamp.getTime() &&
-      latestCaption.speaker.identifier &&
-      newCaption.speaker.identifier &&
-      toFlatCommunicationIdentifier(latestCaption.speaker.identifier) ===
-        toFlatCommunicationIdentifier(newCaption.speaker.identifier)
-    ) {
-      captions.pop();
+    // going through current captions to find the last caption said by the same speaker, remove that caption if it's partial and replace with the new caption
+    for (let index = captions.length - 1; index >= 0; index--) {
+      const currentCaption = captions[index];
+      if (
+        currentCaption &&
+        currentCaption.resultType !== 'Final' &&
+        currentCaption.speaker.identifier &&
+        newCaption.speaker.identifier &&
+        toFlatCommunicationIdentifier(currentCaption.speaker.identifier) ===
+          toFlatCommunicationIdentifier(newCaption.speaker.identifier)
+      ) {
+        captions.splice(index, 1);
+        break;
+      }
     }
 
     captions.push(newCaption);
