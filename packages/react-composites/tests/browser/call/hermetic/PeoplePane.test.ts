@@ -181,7 +181,7 @@ test.describe('Participant list full screen pane with drawer tests', () => {
     await page.goto(
       buildUrlWithMockAdapter(serverUrl, participantListInitialState(), { callInvitationUrl: 'testUrl' })
     );
-    await pageClick(page, dataUiId('call-with-chat-composite-more-button'));
+    await pageClick(page, dataUiId('common-call-composite-more-button'));
     const drawerPeopleMenuDiv = await page.$('div[role="menu"] >> text=People');
     await drawerPeopleMenuDiv?.click();
 
@@ -203,7 +203,7 @@ test.describe('Participant list full screen pane with drawer tests', () => {
         callInvitationUrl: 'testUrl'
       })
     );
-    await pageClick(page, dataUiId('call-with-chat-composite-more-button'));
+    await pageClick(page, dataUiId('common-call-composite-more-button'));
     const drawerPeopleMenuDiv = await page.$('div[role="menu"] >> text=People');
     await drawerPeopleMenuDiv?.click();
 
@@ -224,7 +224,7 @@ test.describe('Participant list full screen pane with drawer tests', () => {
     );
     await waitForSelector(page, dataUiId(IDS.videoGallery));
 
-    await pageClick(page, dataUiId('call-with-chat-composite-more-button'));
+    await pageClick(page, dataUiId('common-call-composite-more-button'));
     const drawerPeopleMenuDiv = await page.$('div[role="menu"] >> text=People');
     await drawerPeopleMenuDiv?.click();
     // click the first participant
