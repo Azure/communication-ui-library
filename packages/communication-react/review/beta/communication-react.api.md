@@ -3325,7 +3325,7 @@ export interface VerticalGalleryStyles extends BaseCustomStyles {
 
 // @beta
 export interface VideoBackgroundEffect {
-    type: 'Blur' | 'Replacement';
+    type: 'Blur' | 'Replacement' | 'None';
     videoEffectConfig?: BackgroundBlurConfig | BackgroundReplacementConfig;
 }
 

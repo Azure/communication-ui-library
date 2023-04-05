@@ -1414,7 +1414,7 @@ export const useTeamsCallAdapter: (args: Partial<TeamsCallAdapterArgs>, afterCre
 
 // @beta
 export interface VideoBackgroundEffect {
-    type: 'Blur' | 'Replacement';
+    type: 'Blur' | 'Replacement' | 'None';
     videoEffectConfig?: BackgroundBlurConfig | BackgroundReplacementConfig;
 }
 
