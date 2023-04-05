@@ -44,6 +44,7 @@ import { DefaultMessageThreadExample } from './snippets/Default.snippet';
 import { MessageThreadWithMessageStatusIndicatorExample } from './snippets/MessageStatusIndicator.snippet';
 import { MessageWithFile } from './snippets/MessageWithFile.snippet';
 import { MessageThreadWithSystemMessagesExample } from './snippets/SystemMessages.snippet';
+import { MessageThreadWithInlineImageExample } from './snippets/WithInlineImageMessage.snippet';
 import { MessageThreadWithMessageDateExample } from './snippets/WithMessageDate.snippet';
 
 const MessageThreadWithBlockedMessagesExampleText =
@@ -68,6 +69,8 @@ const MessageWithFileText = require('!!raw-loader!./snippets/MessageWithFile.sni
 const ExampleConstantsText = require('!!raw-loader!./snippets/placeholdermessages.ts').default;
 const MessageThreadWithSystemMessagesExampleText =
   require('!!raw-loader!./snippets/SystemMessages.snippet.tsx').default;
+const MessageThreadWithInlineImageExampleText =
+  require('!!raw-loader!./snippets/WithInlineImageMessage.snippet.tsx').default;
 const MessageThreadWithMessageDateExampleText = require('!!raw-loader!./snippets/WithMessageDate.snippet.tsx').default;
 
 const importStatement = `
@@ -119,6 +122,7 @@ const getDocs: () => JSX.Element = () => {
       </Canvas>
 
       <Heading>Blocked Message</Heading>
+      <SingleLineBetaBanner />
       <Description>
         The example below shows a message thread with a blocked message. If `link` is not provided, it will omit the
         hyperlink.
@@ -157,6 +161,7 @@ const getDocs: () => JSX.Element = () => {
       </Canvas>
 
       <Heading>Messages with Customized Blocked message Container</Heading>
+      <SingleLineBetaBanner />
       <Description>
         The example below shows how to render a `blocked` message with custom `warningText`, with
         `styles.blockedMessageContainer` for styling, and rendering your own JSX.Element with with `onRenderMessage` in
@@ -194,6 +199,19 @@ const getDocs: () => JSX.Element = () => {
       <Canvas mdxSource={MessageThreadWithCustomTimestampExampleText}>
         <MessageThreadWithCustomTimestampExample />
       </Canvas>
+
+      <Heading>Display Inline Image with Messages</Heading>
+      <SingleLineBetaBanner />
+      <Description>
+        MessageThread component provides UI for displaying inline image attachments in a message. Developers can write
+        their own inline image downloading logic and image will be displayed in the MessageThread. ??? Clicking on the
+        image opens it in a larger image in a new browser tab. Developers can override this behavior as well using
+        MessageThread props ???.
+      </Description>
+      <Canvas mdxSource={MessageThreadWithInlineImageExampleText}>
+        <MessageThreadWithInlineImageExample />
+      </Canvas>
+
       <Heading>Display File Attachments with Messages</Heading>
       <DetailedBetaBanner />
       <Description>
@@ -259,7 +277,11 @@ const MessageThreadStory = (args): JSX.Element => {
   };
 
   const onFetchAttachment = async (attachment: FileMetadata): Promise<string> => {
-    return attachment.previewUrl ?? '';
+    // Mocking promise
+    const delay = (): Promise<void> => new Promise((resolve) => setTimeout(resolve, 3000));
+    return await delay().then(() => {
+      return attachment.previewUrl ?? '';
+    });
   };
 
   return (

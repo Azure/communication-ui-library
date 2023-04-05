@@ -174,17 +174,12 @@ const processHtmlToReact = (props: ChatMessageContentProps): JSX.Element => {
     // Custom <img> processing
     shouldProcessNode: (node): boolean => {
       // Process img node with id in attachments list
-      // if (node.name === 'img') {
-      //   console.log(node);
-      // }
       return (
         node.name &&
         node.name === 'img' &&
         node.attribs &&
         node.attribs.id &&
-        (props.message.attachedFilesMetadata?.find((f) => f.id === node.attribs.id) ||
-          // node.attribs.id === 'x_0-canarycus-d3-5a1e3a4bcbb83a46f16e203810175fc5' ||
-          false)
+        props.message.attachedFilesMetadata?.find((f) => f.id === node.attribs.id)
       );
     },
     processNode: (node, children, index): HTMLElement => {
@@ -196,14 +191,12 @@ const processHtmlToReact = (props: ChatMessageContentProps): JSX.Element => {
         return processNodeDefinitions.processDefaultNode(node, children, index);
       }
       // not yet in cache
-      if (fileMetadata && props.onFetchAttachment) {
+      if (fileMetadata && props.onFetchAttachment && props.attachmentsMap) {
         props.onFetchAttachment(fileMetadata);
-        node.attribs = { ...node.attribs, src: fileMetadata.previewUrl };
+        if (node.attribs.id in props.attachmentsMap) {
+          node.attribs = { ...node.attribs, src: props.attachmentsMap[node.attribs.id] };
+        }
       }
-      // for testing:
-      // if (node.attribs.id === 'x_0-canarycus-d3-5a1e3a4bcbb83a46f16e203810175fc5') {
-      //   node.attribs = { ...node.attribs, src: `https://www.gstatic.com/webp/gallery3/1_webp_a.png` };
-      // }
       return processNodeDefinitions.processDefaultNode(node, children, index);
     }
   };
