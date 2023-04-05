@@ -701,6 +701,7 @@ export class CallContext {
   }
 
   private processNewCaption(captions: CaptionsInfo[], newCaption: CaptionsInfo): void {
+    // going through current captions to find the last caption said by the same speaker, remove that caption if it's partial and replace with the new caption
     for (let index = captions.length - 1; index >= 0; index--) {
       const currentCaption = captions[index];
       if (
