@@ -25,7 +25,7 @@ export type _StartCaptionsButtonSelector = (
 ) => {
   checked: boolean;
   currentCaptionLanguage: string;
-  currentSpokenLanguage: string | undefined;
+  currentSpokenLanguage?: string;
 };
 
 /**
