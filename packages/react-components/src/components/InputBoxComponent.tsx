@@ -130,8 +130,6 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
   const onSuggestionSelected = useCallback(
     (suggestion: AtMentionSuggestion) => {
       //add default value for a trigger
-      const onSuggestionSelected = atMentionLookupOptions?.onSuggestionSelected;
-      onSuggestionSelected && onSuggestionSelected(suggestion);
       const trigger = atMentionLookupOptions?.trigger || '';
       const mentionQuery = atMentionQuery || '';
       const mention = trigger + mentionQuery;
@@ -161,15 +159,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       //set focus back to text field
       textFieldRef?.current?.focus();
     },
-    [
-      atMentionLookupOptions?.onSuggestionSelected,
-      atMentionLookupOptions?.trigger,
-      atMentionQuery,
-      htmlValue,
-      onMentionAdd,
-      textFieldRef,
-      textValue
-    ]
+    [atMentionLookupOptions?.trigger, atMentionQuery, htmlValue, onMentionAdd, textFieldRef, textValue]
   );
 
   const getMentionHTMLValue = (suggestion: AtMentionSuggestion): string => {
@@ -200,10 +190,32 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     onChange && onChange(event, newValue);
   };
 
-  const atMentionLookupOptionsValue = { ...atMentionLookupOptions, onSuggestionSelected };
+  const fakeData: AtMentionSuggestion[] = [
+    {
+      userId: '1',
+      suggestionType: 'person',
+      displayName: ''
+    },
+    {
+      userId: '2',
+      suggestionType: 'person',
+      displayName: 'Patricia Adams'
+    },
+    {
+      userId: '3',
+      suggestionType: 'person',
+      displayName: '1'
+    },
+    {
+      userId: '4',
+      suggestionType: 'person',
+      displayName: '2'
+    }
+  ];
+
   return (
     <Stack className={mergedRootStyle}>
-      <_AtMentionFlyout query={textValue} target={inputBoxRef} atMentionLookupOptions={atMentionLookupOptionsValue} />
+      <_AtMentionFlyout suggestions={fakeData} target={inputBoxRef} onSuggestionSelected={onSuggestionSelected} />
       <div className={mergedTextContainerStyle}>
         <TextField
           autoFocus={props.autoFocus === 'sendBoxTextField'}
