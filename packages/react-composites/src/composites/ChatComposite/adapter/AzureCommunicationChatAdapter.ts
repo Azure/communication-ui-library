@@ -620,20 +620,20 @@ export const useAzureCommunicationChatAdapter = (
  *
  * @public
  */
-export const createAzureCommunicationChatAdapterFromClient = async (
+export async function createAzureCommunicationChatAdapterFromClient(
   chatClient: StatefulChatClient,
   chatThreadClient: ChatThreadClient,
   /* @conditional-compile-remove(teams-inline-images) */
   options?: {
     credential?: CommunicationTokenCredential;
   }
-): Promise<ChatAdapter> => {
+): Promise<ChatAdapter> {
   return new AzureCommunicationChatAdapter(
     chatClient,
     chatThreadClient,
     /* @conditional-compile-remove(teams-inline-images) */ options
   );
-};
+}
 
 const isChatError = (e: Error): e is ChatError => {
   return e['target'] !== undefined && e['innerError'] !== undefined;
