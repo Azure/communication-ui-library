@@ -123,6 +123,14 @@ export interface CameraButtonStyles extends ControlBarButtonStyles {
 }
 
 // @internal
+export const _Caption: (props: _CaptionProps) => JSX.Element;
+
+// @internal
+export interface _CaptionProps extends _CaptionsInfo {
+    onRenderAvatar?: OnRenderAvatarCallback;
+}
+
+// @internal
 export const _CaptionsBanner: (props: _CaptionsBannerProps) => JSX.Element;
 
 // @internal
@@ -695,18 +703,10 @@ export type FileDownloadHandler = (userId: string, fileMetadata: FileMetadata) =
 
 // @beta
 export interface FileMetadata {
-    // (undocumented)
-    attachmentType: FileMetadataAttachmentType;
     extension: string;
-    id: string;
     name: string;
-    // (undocumented)
-    previewUrl?: string;
     url: string;
 }
-
-// @beta (undocumented)
-export type FileMetadataAttachmentType = 'fileSharing' | 'unknown';
 
 // @internal
 export interface _FileUploadCardsStrings {

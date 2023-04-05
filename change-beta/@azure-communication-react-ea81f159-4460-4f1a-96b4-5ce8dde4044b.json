@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Update Aria labels for people button to allow for voice access controls on windows.",
-  "packageName": "@azure/communication-react",
-  "email": "94866715+dmceachernmsft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

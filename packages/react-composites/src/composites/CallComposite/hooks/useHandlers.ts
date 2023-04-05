@@ -100,12 +100,12 @@ const createCompositeHandlers = memoizeOne(
       return await adapter.stopVideoBackgroundEffect();
     },
     /* @conditional-compile-remove(video-background-effects) */
-    onBlurVideoBackground: async (bgBlurConfig?: BackgroundBlurConfig) => {
-      return await adapter.blurVideoBackground(bgBlurConfig);
+    onBlurVideoBackground: async (backgroundBlurConfig?: BackgroundBlurConfig) => {
+      return await adapter.blurVideoBackground(backgroundBlurConfig);
     },
     /* @conditional-compile-remove(video-background-effects) */
-    onReplaceVideoBackground: async (bgReplacementConfig: BackgroundReplacementConfig) => {
-      return await adapter.replaceVideoBackground(bgReplacementConfig);
+    onReplaceVideoBackground: async (backgroundReplacementConfig: BackgroundReplacementConfig) => {
+      return await adapter.replaceVideoBackground(backgroundReplacementConfig);
     }
   })
 );

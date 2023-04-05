@@ -95,14 +95,6 @@ const GenerateMockMessageAttachments = (): FileMetadata[] => {
       extension: 'png',
       url: 'images/github.png',
       previewUrl: 'images/github.png'
-    },
-    {
-      id: 'SomeImageId2',
-      name: 'SomeImageId2',
-      attachmentType: 'teamsInlineImage',
-      extension: 'png',
-      url: 'https://www.gstatic.com/webp/gallery3/1_webp_a.png',
-      previewUrl: 'https://www.gstatic.com/webp/gallery3/1_webp_a.png'
     }
   ];
 };
