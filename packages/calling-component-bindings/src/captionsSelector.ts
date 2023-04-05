@@ -120,7 +120,7 @@ export const captionsSelector: _CaptionsSelector = reselect.createSelector(
   (captions, isCaptionsFeatureActive) => {
     const captionsInfo = captions?.map((c) => {
       return {
-        displayName: c.speaker.displayName ?? '',
+        displayName: c.speaker.displayName ?? 'Unnamed Participant',
         captionText: c.captionText ?? '',
         userId: c.speaker.identifier ? toFlatCommunicationIdentifier(c.speaker.identifier) : ''
       };
