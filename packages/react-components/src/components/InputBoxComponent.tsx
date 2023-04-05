@@ -54,6 +54,7 @@ type InputBoxComponentProps = {
   'data-ui-id'?: string;
   id?: string;
   textValue: string;
+  htmlValue?: string;
   onChange: (event: FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string | undefined) => void;
   textFieldRef?: React.RefObject<ITextField>;
   inputClassName?: string;
@@ -81,6 +82,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     id,
     'data-ui-id': dataUiId,
     textValue,
+    htmlValue,
     onChange,
     textFieldRef,
     placeholderText,
@@ -95,7 +97,6 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     onMentionAdd
   } = props;
   const inputBoxRef = useRef(null);
-  const [atMentionQueryEndIndex, setAtMentionQueryEndIndex] = useState<number | undefined>(undefined);
   const [atMentionQuery, setAtMentionQuery] = useState<string | undefined>(undefined);
 
   const mergedRootStyle = mergeStyles(inputBoxWrapperStyle, styles?.root);
@@ -143,24 +144,43 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
         } else if (selectionEnd > textValue.length) {
           selectionEnd = textValue.length;
         }
-        console.log(mention.length);
         const updatedTextValue =
           textValue.substring(0, selectionEnd - mention.length) + updatedMention + textValue.substring(selectionEnd);
-        onMentionAdd(updatedTextValue, updatedTextValue);
+        let newHTMLValue: string | undefined;
+        if (htmlValue !== undefined) {
+          console.log('Not implemented');
+        } else {
+          newHTMLValue =
+            textValue.substring(0, selectionEnd - mention.length) +
+            getMentionHTMLValue(suggestion) +
+            textValue.substring(selectionEnd);
+        }
+        onMentionAdd(updatedTextValue, newHTMLValue);
       }
       setAtMentionQuery(undefined);
-      setAtMentionQueryEndIndex(undefined);
+      //set focus back to text field
       textFieldRef?.current?.focus();
     },
     [
       atMentionLookupOptions?.onSuggestionSelected,
       atMentionLookupOptions?.trigger,
       atMentionQuery,
+      htmlValue,
       onMentionAdd,
       textFieldRef,
       textValue
     ]
   );
+
+  const getMentionHTMLValue = (suggestion: AtMentionSuggestion): string => {
+    const userIdHTML = ' userId ="' + suggestion.userId + '"';
+    const displayName = suggestion.displayName || '';
+    const displayNameHTML = ' displayName ="' + displayName + '"';
+    const suggestionTypeHTML = ' suggestionType ="' + suggestion.suggestionType + '"';
+    return (
+      '<msft-at-mention' + userIdHTML + displayNameHTML + suggestionTypeHTML + '>' + displayName + '</msft-at-mention>'
+    );
+  };
 
   // Temporary implementation for AtMentionFlyout's position.
   const handleOnChange = (
