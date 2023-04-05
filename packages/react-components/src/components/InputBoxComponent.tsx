@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React, { useState, ReactNode, FormEvent, useCallback } from 'react';
+import React, { useState, ReactNode, FormEvent, useCallback, useRef } from 'react';
 import {
   Stack,
   TextField,
@@ -29,7 +29,7 @@ import {
 import { isDarkThemed } from '../theming/themeUtils';
 import { useTheme } from '../theming';
 /* @conditional-compile-remove(at-mention) */
-import { AtMentionLookupOptions } from './AtMentionFlyout';
+import { AtMentionLookupOptions, _AtMentionFlyout, AtMentionSuggestion } from './AtMentionFlyout';
 
 /**
  * @private
@@ -68,6 +68,8 @@ type InputBoxComponentProps = {
   autoFocus?: 'sendBoxTextField';
   /* @conditional-compile-remove(at-mention) */
   atMentionLookupOptions?: AtMentionLookupOptions;
+  /* @conditional-compile-remove(at-mention) */
+  onMentionAdd: (newTextValue?: string | undefined, newHTMLValue?: string | undefined) => void;
 };
 
 /**
@@ -88,8 +90,13 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     inputClassName,
     errorMessage,
     disabled,
-    children
+    children,
+    atMentionLookupOptions,
+    onMentionAdd
   } = props;
+  const inputBoxRef = useRef(null);
+  const [atMentionQueryEndIndex, setAtMentionQueryEndIndex] = useState<number | undefined>(undefined);
+  const [atMentionQuery, setAtMentionQuery] = useState<string | undefined>(undefined);
 
   const mergedRootStyle = mergeStyles(inputBoxWrapperStyle, styles?.root);
   const mergedTextFiledStyle = mergeStyles(
@@ -119,8 +126,64 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     [onEnterKeyDown, onKeyDown, supportNewline]
   );
 
+  const onSuggestionSelected = useCallback(
+    (suggestion: AtMentionSuggestion) => {
+      //add default value for a trigger
+      const onSuggestionSelected = atMentionLookupOptions?.onSuggestionSelected;
+      onSuggestionSelected && onSuggestionSelected(suggestion);
+      const trigger = atMentionLookupOptions?.trigger || '';
+      const mentionQuery = atMentionQuery || '';
+      const mention = trigger + mentionQuery;
+      if (mention !== '' && suggestion.displayName !== undefined) {
+        const displayName = suggestion.displayName || '';
+        const updatedMention = trigger + displayName;
+        let selectionEnd = textFieldRef?.current?.selectionEnd || 0;
+        if (selectionEnd < 0) {
+          selectionEnd = 0;
+        } else if (selectionEnd > textValue.length) {
+          selectionEnd = textValue.length;
+        }
+        console.log(mention.length);
+        const updatedTextValue =
+          textValue.substring(0, selectionEnd - mention.length) + updatedMention + textValue.substring(selectionEnd);
+        onMentionAdd(updatedTextValue, updatedTextValue);
+      }
+      setAtMentionQuery(undefined);
+      setAtMentionQueryEndIndex(undefined);
+      textFieldRef?.current?.focus();
+    },
+    [
+      atMentionLookupOptions?.onSuggestionSelected,
+      atMentionLookupOptions?.trigger,
+      atMentionQuery,
+      onMentionAdd,
+      textFieldRef,
+      textValue
+    ]
+  );
+
+  // Temporary implementation for AtMentionFlyout's position.
+  const handleOnChange = (
+    event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>,
+    newValue?: string | undefined
+  ): void => {
+    // !isMentioning && last char is trigger
+    // if (!isMentioning) {
+    //   setIsMentioning(true);
+    //   setAtMentionQuery(newValue);
+    // } else if (isMentioning) {
+    //   setIsMentioning(false);
+    //   setAtMentionQuery(undefined);
+    // }
+    // setAtMentionQuery(newValue);
+    setAtMentionQuery('Pa');
+    onChange && onChange(event, newValue);
+  };
+
+  const atMentionLookupOptionsValue = { ...atMentionLookupOptions, onSuggestionSelected };
   return (
     <Stack className={mergedRootStyle}>
+      <_AtMentionFlyout query={textValue} target={inputBoxRef} atMentionLookupOptions={atMentionLookupOptionsValue} />
       <div className={mergedTextContainerStyle}>
         <TextField
           autoFocus={props.autoFocus === 'sendBoxTextField'}
@@ -134,12 +197,13 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
           inputClassName={mergedTextFiledStyle}
           placeholder={placeholderText}
           value={textValue}
-          onChange={onChange}
+          onChange={handleOnChange}
           autoComplete="off"
           onKeyDown={onTexFieldKeyDown}
           styles={mergedTextFieldStyle}
           disabled={disabled}
           errorMessage={errorMessage}
+          elementRef={inputBoxRef}
         />
         <Stack
           horizontal

@@ -265,10 +265,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     sendTextFieldRef.current?.focus();
   };
 
-  const setText = (
-    event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>,
-    newValue?: string | undefined
-  ): void => {
+  const setText = (newValue?: string | undefined): void => {
     if (newValue === undefined) {
       return;
     }
@@ -375,7 +372,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
           inputClassName={sendBoxStyle}
           placeholderText={strings.placeholderText}
           textValue={textValue}
-          onChange={setText}
+          onChange={(_, newValue) => setText(newValue)}
           onKeyDown={(ev) => {
             const keyWasSendingMessage = ev.key === 'Enter' && (ev.shiftKey === false || !supportNewline);
             if (!keyWasSendingMessage) {
@@ -388,6 +385,9 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
           styles={mergedStyles}
           supportNewline={supportNewline}
           maxLength={MAXIMUM_LENGTH_OF_MESSAGE}
+          onMentionAdd={(newTextValue, newHTMLValue) => {
+            setText(newTextValue);
+          }}
         >
           <VoiceOverButton
             onRenderIcon={onRenderSendIcon}
