@@ -139,25 +139,24 @@ export interface AtMentionDisplayOptions {
 
 // @internal
 export interface _AtMentionFlyoutProps {
-    atMentionLookupOptions?: AtMentionLookupOptions;
     onDismiss?: () => void;
-    query?: string;
+    onSuggestionSelected?: (suggestion: AtMentionSuggestion) => void;
+    suggestionItemRenderer?: (suggestion: AtMentionSuggestion, onSuggestionSelected?: (suggestion: AtMentionSuggestion) => void) => JSX.Element;
+    suggestions: AtMentionSuggestion[];
     target?: React_2.RefObject<Element>;
     title?: string;
 }
 
 // @beta
 export interface AtMentionLookupOptions {
-    isMobile?: boolean;
     onQueryUpdated?: (query: string) => Promise<AtMentionSuggestion[]>;
-    onSuggestionSelected?: (suggestion: AtMentionSuggestion) => void;
-    suggestionItemRenderer?: (suggestion: AtMentionSuggestion) => JSX.Element;
+    suggestionItemRenderer?: (suggestion: AtMentionSuggestion, onSuggestionSelected?: (suggestion: AtMentionSuggestion) => void) => JSX.Element;
     trigger?: string;
 }
 
 // @beta
 export interface AtMentionSuggestion {
-    displayName?: string;
+    displayName: string;
     suggestionType: string;
     userId: string;
 }

@@ -20,14 +20,14 @@ import { useLocale } from '../localization';
  */
 export interface _AtMentionFlyoutProps {
   /**
+   * Array of at mention suggestions used to populate the suggestion list
+   */
+  suggestions: AtMentionSuggestion[];
+  /**
    * Optional string used as at mention flyout's title.
    * @defaultValue `Suggestions`
    */
   title?: string;
-  /**
-   * Optional string used as a query to search for mentioned participants.
-   */
-  query?: string;
   /**
    * Optional RefObject used as a reference to position AtMentionFlyout.
    */
@@ -41,9 +41,12 @@ export interface _AtMentionFlyoutProps {
    */
   onDismiss?: () => void;
   /**
-   * Optional props needed to lookup suggestions in the at mention scenario.
+   * Optional callback to render an item of the atMention suggestions list.
    */
-  atMentionLookupOptions?: AtMentionLookupOptions;
+  suggestionItemRenderer?: (
+    suggestion: AtMentionSuggestion,
+    onSuggestionSelected?: (suggestion: AtMentionSuggestion) => void
+  ) => JSX.Element;
 }
 
 /**
@@ -94,7 +97,7 @@ export interface AtMentionSuggestion {
   /** Type of an at mention suggestion */
   suggestionType: string;
   /** Display name of a mentioned participant */
-  displayName?: string;
+  displayName: string;
 }
 
 /**
@@ -110,25 +113,13 @@ export const _AtMentionFlyout = (props: _AtMentionFlyoutProps): JSX.Element => {
     bottom: number;
     left: number;
   }
-  const { title = 'Suggestions', query, target, atMentionLookupOptions, onSuggestionSelected } = props;
-  const { onQueryUpdated, suggestionItemRenderer } = atMentionLookupOptions ?? {};
+  const { suggestions, title = 'Suggestions', target, suggestionItemRenderer, onSuggestionSelected } = props;
   const theme = useTheme();
   const ids = useIdentifiers();
   const localeStrings = useLocale().strings.participantItem;
 
-  const [suggestions, setSuggestions] = useState<AtMentionSuggestion[]>([]);
   const [position, setPosition] = useState<Position>({ top: 0, right: 0, bottom: 0, left: 0 });
   const [hoveredSuggestion, setHoveredSuggestion] = useState<AtMentionSuggestion | undefined>(undefined);
-
-  useEffect(() => {
-    async function fetchData(): Promise<void> {
-      if (query && onQueryUpdated) {
-        const list = (await onQueryUpdated(query)) || [];
-        setSuggestions(list);
-      }
-    }
-    fetchData();
-  }, [onQueryUpdated, query]);
 
   // Temporary implementation for AtMentionFlyout's position.
   useEffect(() => {
@@ -151,114 +142,6 @@ export const _AtMentionFlyout = (props: _AtMentionFlyoutProps): JSX.Element => {
 
     return <Persona {...avatarOptions} />;
   };
-
-  const fakeData: AtMentionSuggestion[] = [
-    {
-      userId: '1',
-      suggestionType: 'person',
-      displayName: ''
-    },
-    {
-      userId: '2',
-      suggestionType: 'person',
-      displayName: 'Patricia Adams'
-    },
-    {
-      userId: '3',
-      suggestionType: 'person',
-      displayName: '1'
-    },
-    {
-      userId: '4',
-      suggestionType: 'person',
-      displayName: '2'
-    },
-    {
-      userId: '5',
-      suggestionType: 'person',
-      displayName: '1'
-    },
-    {
-      userId: '6',
-      suggestionType: 'person',
-      displayName: '2'
-    },
-    {
-      userId: '7',
-      suggestionType: 'person',
-      displayName: '1'
-    },
-    {
-      userId: '8',
-      suggestionType: 'person',
-      displayName: '2'
-    },
-    {
-      userId: '9',
-      suggestionType: 'person',
-      displayName: '1'
-    },
-    {
-      userId: '10',
-      suggestionType: 'person',
-      displayName: '10'
-    },
-    {
-      userId: '11',
-      suggestionType: 'person',
-      displayName: '11'
-    },
-    {
-      userId: '12',
-      suggestionType: 'person',
-      displayName: '12'
-    },
-    {
-      userId: '13',
-      suggestionType: 'person',
-      displayName: '13'
-    },
-    {
-      userId: '14',
-      suggestionType: 'person',
-      displayName: '14'
-    },
-    {
-      userId: '15',
-      suggestionType: 'person',
-      displayName: '1'
-    },
-    {
-      userId: '16',
-      suggestionType: 'person',
-      displayName: '2'
-    },
-    {
-      userId: '17',
-      suggestionType: 'person',
-      displayName: '1'
-    },
-    {
-      userId: '18',
-      suggestionType: 'person',
-      displayName: '10'
-    },
-    {
-      userId: '19',
-      suggestionType: 'person',
-      displayName: '11'
-    },
-    {
-      userId: '20',
-      suggestionType: 'person',
-      displayName: '12'
-    },
-    {
-      userId: '21',
-      suggestionType: 'person',
-      displayName: '20'
-    }
-  ];
 
   const defaultSuggestionItemRenderer = (suggestion: AtMentionSuggestion): JSX.Element => {
     const isSuggestionHovered = hoveredSuggestion?.userId === suggestion.userId;
