@@ -15,7 +15,7 @@ test.describe('CallWithChat Composite CallWithChat Page Tests', () => {
   test('More Drawer menu opens and displays correctly on mobile', async ({ page, serverUrl }) => {
     const callState = defaultMockCallAdapterState([defaultMockRemoteParticipant('Paul Bridges')]);
     await loadCallPage(page, serverUrl, callState);
-    await pageClick(page, dataUiId('call-with-chat-composite-more-button'));
+    await pageClick(page, dataUiId('common-call-composite-more-button'));
     expect(await stableScreenshot(page)).toMatchSnapshot(`call-with-chat-more-drawer-screen.png`);
   });
 
@@ -30,14 +30,14 @@ test.describe('CallWithChat Composite CallWithChat Page Tests', () => {
     };
     await loadCallPage(page, serverUrl, callState);
 
-    await pageClick(page, dataUiId('call-with-chat-composite-more-button'));
+    await pageClick(page, dataUiId('common-call-composite-more-button'));
     await pageClick(page, 'div[role="menu"] >> text=Speaker');
     expect(await stableScreenshot(page)).toMatchSnapshot(`call-with-chat-more-drawer-submenu-speaker-screen.png`);
 
     await pageClick(page, 'div[role="menu"] >> text="2nd Speaker"');
 
     // Need to open again because submenu is dismissed automatically after selection
-    await pageClick(page, dataUiId('call-with-chat-composite-more-button'));
+    await pageClick(page, dataUiId('common-call-composite-more-button'));
     expect(await stableScreenshot(page)).toMatchSnapshot(`call-with-chat-more-drawer-new-selected-speaker-screen.png`);
 
     await pageClick(page, 'div[role="menu"] >> text=Speaker');
@@ -55,14 +55,14 @@ test.describe('CallWithChat Composite CallWithChat Page Tests', () => {
     };
     await loadCallPage(page, serverUrl, callState);
 
-    await pageClick(page, dataUiId('call-with-chat-composite-more-button'));
+    await pageClick(page, dataUiId('common-call-composite-more-button'));
     await pageClick(page, 'div[role="menu"] >> text=Microphone');
     expect(await stableScreenshot(page)).toMatchSnapshot(`call-with-chat-more-drawer-submenu-microphone-screen.png`);
 
     await pageClick(page, 'div[role="menu"] >> text="2nd Microphone"');
 
     // Need to open again because submenu is dismissed automatically after selection
-    await pageClick(page, dataUiId('call-with-chat-composite-more-button'));
+    await pageClick(page, dataUiId('common-call-composite-more-button'));
     expect(await stableScreenshot(page)).toMatchSnapshot(
       `call-with-chat-more-drawer-new-selected-microphone-screen.png`
     );
