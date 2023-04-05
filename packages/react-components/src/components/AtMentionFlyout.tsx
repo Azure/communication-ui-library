@@ -170,7 +170,9 @@ export const _AtMentionFlyout = (props: _AtMentionFlyoutProps): JSX.Element => {
       <FocusZone className={suggestionListContainerStyle} shouldFocusOnMount={true}>
         <Stack data-ui-id={ids.atMentionSuggestionList} className={suggestionListStyle}>
           {suggestions.map((suggestion) =>
-            suggestionItemRenderer ? suggestionItemRenderer(suggestion) : defaultSuggestionItemRenderer(suggestion)
+            suggestionItemRenderer
+              ? suggestionItemRenderer(suggestion, onSuggestionSelected)
+              : defaultSuggestionItemRenderer(suggestion)
           )}
         </Stack>
       </FocusZone>
