@@ -235,6 +235,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
   const activeFileUploads = activeFileUploadsTrampoline(props);
 
   const [textValue, setTextValue] = useState('');
+  const [htmlValue, setHTMLValue] = useState<string | undefined>(undefined);
   const [textValueOverflow, setTextValueOverflow] = useState(false);
 
   const sendTextFieldRef = React.useRef<ITextField>(null);
@@ -372,6 +373,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
           inputClassName={sendBoxStyle}
           placeholderText={strings.placeholderText}
           textValue={textValue}
+          htmlValue={htmlValue}
           onChange={(_, newValue) => setText(newValue)}
           onKeyDown={(ev) => {
             const keyWasSendingMessage = ev.key === 'Enter' && (ev.shiftKey === false || !supportNewline);
@@ -387,6 +389,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
           maxLength={MAXIMUM_LENGTH_OF_MESSAGE}
           onMentionAdd={(newTextValue, newHTMLValue) => {
             setText(newTextValue);
+            setHTMLValue(newHTMLValue);
           }}
         >
           <VoiceOverButton
