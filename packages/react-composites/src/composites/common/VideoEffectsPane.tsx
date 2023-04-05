@@ -74,7 +74,6 @@ export const VideoEffectsPane = (props: {
   /* @conditional-compile-remove(video-background-effects) */
   const onEffectChange = useCallback(
     async (effectKey: string) => {
-      console.log(props.adapter.getState());
       if (effectKey === 'blur') {
         props.adapter.blurVideoBackground();
       } else if (effectKey === 'none') {

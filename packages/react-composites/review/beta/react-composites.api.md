@@ -216,6 +216,7 @@ export type CallAdapterClientState = {
     roleHint?: Role;
     cameraStatus?: 'On' | 'Off';
     videoBackgroundImages?: VideoBackgroundImage[];
+    selectedVideoBackgroundEffect?: VideoBackgroundEffect;
 };
 
 // @public
@@ -1410,6 +1411,12 @@ export function _useFakeChatAdapters(args: _FakeChatAdapterArgs): _FakeChatAdapt
 
 // @beta
 export const useTeamsCallAdapter: (args: Partial<TeamsCallAdapterArgs>, afterCreate?: ((adapter: TeamsCallAdapter) => Promise<TeamsCallAdapter>) | undefined, beforeDispose?: ((adapter: TeamsCallAdapter) => Promise<void>) | undefined) => TeamsCallAdapter | undefined;
+
+// @beta
+export interface VideoBackgroundEffect {
+    type: 'Blur' | 'Replacement';
+    videoEffectConfig?: BackgroundBlurConfig | BackgroundReplacementConfig;
+}
 
 // @beta
 export interface VideoBackgroundImage {

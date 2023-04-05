@@ -342,6 +342,7 @@ export type CallAdapterClientState = {
     roleHint?: Role;
     cameraStatus?: 'On' | 'Off';
     videoBackgroundImages?: VideoBackgroundImage[];
+    selectedVideoBackgroundEffect?: VideoBackgroundEffect;
 };
 
 // @public
@@ -3320,6 +3321,12 @@ export interface VerticalGalleryStrings {
 export interface VerticalGalleryStyles extends BaseCustomStyles {
     children?: IStyle;
     controlBar?: VerticalGalleryControlBarStyles;
+}
+
+// @beta
+export interface VideoBackgroundEffect {
+    type: 'Blur' | 'Replacement';
+    videoEffectConfig?: BackgroundBlurConfig | BackgroundReplacementConfig;
 }
 
 // @beta

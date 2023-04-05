@@ -2,6 +2,8 @@
 // Licensed under the MIT license.
 
 import { CallAdapterState, CallCompositePage, END_CALL_PAGES } from '../adapter/CallAdapter';
+/* @conditional-compile-remove(video-background-effects) */
+import { CommonCallAdapter } from '../adapter/CallAdapter';
 import { _isInCall, _isPreviewOn, _isInLobbyOrConnecting } from '@internal/calling-component-bindings';
 import { CallControlOptions } from '../types/CallControlOptions';
 import { CallState, RemoteParticipantState } from '@internal/calling-stateful-client';
@@ -38,6 +40,27 @@ export const isCameraOn = (state: CallAdapterState): boolean => {
     }
   }
   return false;
+};
+
+/* @conditional-compile-remove(video-background-effects) */
+/**
+ * @private
+ */
+export const startSelectedVideoEffect = async (adapter: CommonCallAdapter): Promise<void> => {
+  if (adapter.getState().selectedVideoBackgroundEffect) {
+    const selectedVideoBackgroundEffect = adapter.getState().selectedVideoBackgroundEffect;
+    if (selectedVideoBackgroundEffect?.type === 'Blur') {
+      await adapter.blurVideoBackground(selectedVideoBackgroundEffect.videoEffectConfig);
+    } else if (selectedVideoBackgroundEffect?.type === 'None') {
+      await adapter.stopVideoBackgroundEffect();
+    } else {
+      if (selectedVideoBackgroundEffect?.type === 'Replacement' && selectedVideoBackgroundEffect.videoEffectConfig) {
+        if ('backgroundImageUrl' in selectedVideoBackgroundEffect.videoEffectConfig) {
+          adapter.replaceVideoBackground(selectedVideoBackgroundEffect.videoEffectConfig);
+        }
+      }
+    }
+  }
 };
 
 /**

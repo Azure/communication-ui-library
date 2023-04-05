@@ -121,6 +121,11 @@ export type CallAdapterClientState = {
    * Default set of background images for background replacement effect.
    */
   videoBackgroundImages?: VideoBackgroundImage[];
+  /* @conditional-compile-remove(video-background-effects) */
+  /**
+   * Default set of background images for background replacement effect.
+   */
+  selectedVideoBackgroundEffect?: VideoBackgroundEffect;
 };
 
 /**
@@ -245,6 +250,23 @@ export interface VideoBackgroundImage {
    * Image name to be displayed.
    */
   tooltipText?: string;
+}
+
+/* @conditional-compile-remove(video-background-effects) */
+/**
+ * Contains the attibutes of a selected video background effect
+ *
+ * @beta
+ */
+export interface VideoBackgroundEffect {
+  /**
+   * Type of video background effect, can be Blur, Replacement or None.
+   */
+  type: 'Blur' | 'Replacement' | 'None';
+  /**
+   * Configuration details of selected video background effect.
+   */
+  videoEffectConfig?: BackgroundBlurConfig | BackgroundReplacementConfig;
 }
 
 /**

@@ -54,13 +54,16 @@ import {
   ParticipantsLeftListener,
   DiagnosticChangedEventListner,
   CallAdapterCallEndedEvent,
-  CallAdapter
+  CallAdapter,
+  VideoBackgroundEffect
 } from './CallAdapter';
 /* @conditional-compile-remove(video-background-effects) */
 import { VideoBackgroundImage } from './CallAdapter';
 /* @conditional-compile-remove(teams-identity-support) */
 import { TeamsCallAdapter } from './CallAdapter';
 import { getCallCompositePage, IsCallEndedPage, isCameraOn, isValidIdentifier } from '../utils';
+/* @conditional-compile-remove(video-background-effects) */
+import { startSelectedVideoEffect } from '../utils';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 /* @conditional-compile-remove(rooms) */
 import { Role } from '@internal/react-components';
@@ -115,6 +118,7 @@ class CallContext {
       /* @conditional-compile-remove(unsupported-browser) */ unsupportedBrowserVersionsAllowed: false,
       /* @conditional-compile-remove(rooms) */ roleHint: options?.roleHint,
       /* @conditional-compile-remove(video-background-effects) */ videoBackgroundImages: options?.videoBackgroundImages,
+      /* @conditional-compile-remove(video-background-effects) */ selectedVideoBackgroundEffect: undefined,
       cameraStatus: undefined
     };
     this.emitter.setMaxListeners(options?.maxListeners ?? 50);
@@ -215,6 +219,11 @@ class CallContext {
   /* @conditional-compile-remove(video-background-effects) */
   public setBackroundPickerImages(videoBackgroundImages: VideoBackgroundImage[]): void {
     this.setState({ ...this.state, videoBackgroundImages });
+  }
+
+  /* @conditional-compile-remove(video-background-effects) */
+  public setSelectedVideoBackgroundEffect(selectedVideoBackgroundEffect?: VideoBackgroundEffect): void {
+    this.setState({ ...this.state, selectedVideoBackgroundEffect });
   }
 }
 
@@ -510,6 +519,8 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     return await this.asyncTeeErrorToEventEmitter(async () => {
       if (!isCameraOn(this.getState())) {
         await this.handlers.onToggleCamera(options);
+        /* @conditional-compile-remove(video-background-effects) */
+        await startSelectedVideoEffect(this);
       }
     });
   }
@@ -564,15 +575,26 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
 
   /* @conditional-compile-remove(video-background-effects) */
   public async blurVideoBackground(backgroundBlurConfig?: BackgroundBlurConfig): Promise<void> {
+    this.context.setSelectedVideoBackgroundEffect({
+      type: 'Blur',
+      videoEffectConfig: backgroundBlurConfig
+    });
     await this.handlers.onBlurVideoBackground(backgroundBlurConfig);
   }
   /* @conditional-compile-remove(video-background-effects) */
   public async replaceVideoBackground(backgroundReplacementConfig: BackgroundReplacementConfig): Promise<void> {
+    this.context.setSelectedVideoBackgroundEffect({
+      type: 'Replacement',
+      videoEffectConfig: backgroundReplacementConfig
+    });
     await this.handlers.onReplaceVideoBackground(backgroundReplacementConfig);
   }
 
   /* @conditional-compile-remove(video-background-effects) */
   public async stopVideoBackgroundEffect(): Promise<void> {
+    this.context.setSelectedVideoBackgroundEffect({
+      type: 'None'
+    });
     await this.handlers.onRemoveVideoBackgroundEffects();
   }
   /* @conditional-compile-remove(video-background-effects) */
