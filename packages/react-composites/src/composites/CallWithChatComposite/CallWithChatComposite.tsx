@@ -3,9 +3,9 @@
 
 import React, { useCallback, useState, useMemo, useEffect, useRef } from 'react';
 import { LayerHost, mergeStyles, PartialTheme, Stack, Theme } from '@fluentui/react';
-import { CallComposite, CallCompositePage, CallControlDisplayType } from '../CallComposite';
+import { CallComposite, CallCompositePage } from '../CallComposite';
 import { CallAdapterProvider } from '../CallComposite/adapter/CallAdapterProvider';
-import { CallWithChatControlBar } from './CallWithChatControlBar';
+import { CommonCallControlBar } from '../common/ControlBar/CommonCallControlBar';
 import { CallState } from '@azure/communication-calling';
 import {
   callCompositeContainerStyles,
@@ -22,15 +22,13 @@ import { CallWithChatCompositeIcons } from '../common/icons';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { ChatAdapterProvider } from '../ChatComposite/adapter/ChatAdapterProvider';
 import { CallWithChatAdapterState } from './state/CallWithChatAdapterState';
-import { PreparedMoreDrawer } from './PreparedMoreDrawer';
+import { PreparedMoreDrawer } from '../common/Drawer/PreparedMoreDrawer';
 import { ParticipantMenuItemsCallback, _useContainerHeight, _useContainerWidth } from '@internal/react-components';
 import { useId } from '@fluentui/react-hooks';
 import { CallWithChatPane, CallWithChatPaneOption } from './CallWithChatPane';
 /* @conditional-compile-remove(file-sharing) */
 import { FileSharingOptions } from '../ChatComposite';
 import { containerDivStyles } from '../common/ContainerRectProps';
-/* @conditional-compile-remove(control-bar-button-injection) */
-import { CustomCallWithChatControlButtonCallback } from './CustomButton';
 import { modalLayerHostStyle } from '../common/styles/ModalLocalAndRemotePIP.styles';
 /* @conditional-compile-remove(PSTN-calls) */
 import { SendDtmfDialpad } from '../common/SendDtmfDialpad';
@@ -40,6 +38,9 @@ import { CallCompositeOptions } from '../CallComposite/CallComposite';
 /* @conditional-compile-remove(call-readiness) */
 import { DeviceCheckOptions } from '../CallComposite/CallComposite';
 import { drawerContainerStyles } from '../CallComposite/styles/CallComposite.styles';
+/* @conditional-compile-remove(video-background-effects) */
+import { VideoEffectsPane } from '../common/VideoEffectsPane';
+import { CommonCallControlOptions } from '../common/types/CommonCallControlOptions';
 
 /**
  * Props required for the {@link CallWithChatComposite}
@@ -68,6 +69,19 @@ export interface CallWithChatCompositeProps extends BaseCompositeProps<CallWithC
    * Flags to enable/disable or customize UI elements of the {@link CallWithChatComposite}
    */
   options?: CallWithChatCompositeOptions;
+}
+
+/**
+ * Customization options for the control bar in calling with chat experience.
+ *
+ * @public
+ */
+export interface CallWithChatControlOptions extends CommonCallControlOptions {
+  /**
+   * Show or hide the chat button in the call-with-chat composite control bar.
+   * @defaultValue true
+   */
+  chatButton?: boolean | /* @conditional-compile-remove(PSTN-calls) */ { disabled: boolean };
 }
 
 /**
@@ -144,71 +158,6 @@ export type CallWithChatCompositeOptions = {
   onEnvironmentInfoTroubleshootingClick?: () => void;
 };
 
-/**
- * {@link CallWithChatComposite} Call controls to show or hide buttons on the calling control bar.
- *
- * @public
- */
-export interface CallWithChatControlOptions {
-  /**
-   * {@link CallControlDisplayType} to change how the call controls are displayed.
-   * `'compact'` display type will decreases the size of buttons and hide the labels.
-   *
-   * @remarks
-   * If the composite `formFactor` is set to `'mobile'`, the control bar will always use compact view.
-   *
-   * @defaultValue 'default'
-   */
-  displayType?: CallControlDisplayType;
-  /**
-   * Show or Hide Microphone button during a call.
-   * @defaultValue true
-   */
-  microphoneButton?: boolean | /* @conditional-compile-remove(PSTN-calls) */ { disabled: boolean };
-  /**
-   * Show or Hide Camera Button during a call
-   * @defaultValue true
-   */
-  cameraButton?: boolean | /* @conditional-compile-remove(PSTN-calls) */ { disabled: boolean };
-  /**
-   * Show, Hide or Disable the screen share button during a call.
-   * @defaultValue true
-   */
-  screenShareButton?: boolean | { disabled: boolean };
-  /**
-   * Show or Hide EndCall button during a call.
-   * @defaultValue true
-   */
-  endCallButton?: boolean;
-  /**
-   * Show or hide the chat button in the call-with-chat composite control bar.
-   * @defaultValue true
-   */
-  chatButton?: boolean | /* @conditional-compile-remove(PSTN-calls) */ { disabled: boolean };
-  /**
-   * Show or hide the people button in the call-with-chat composite control bar.
-   * @defaultValue true
-   */
-  peopleButton?: boolean | /* @conditional-compile-remove(PSTN-calls) */ { disabled: boolean };
-  /* @conditional-compile-remove(control-bar-button-injection) */
-  /**
-   * Inject custom buttons in the call controls.
-   *
-   * @beta
-   */
-  onFetchCustomButtonProps?: CustomCallWithChatControlButtonCallback[];
-  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
-  /**
-   * Show or hide the more button in the call-with-chat control bar.
-   */
-  moreButton?: boolean;
-  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
-  /**
-   * Show or hide the hold button in the bottom sheet drawer
-   */
-  holdButton?: boolean | { disabled: boolean };
-}
-
 type CallWithChatScreenProps = {
   callWithChatAdapter: CallWithChatAdapter;
   fluentTheme?: PartialTheme | Theme;
@@ -236,7 +185,16 @@ type CallWithChatScreenProps = {
 const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
   const { callWithChatAdapter, fluentTheme, formFactor = 'desktop' } = props;
   const mobileView = formFactor === 'mobile';
+  /* @conditional-compile-remove(video-background-effects) */
+  const [showVideoEffectsPane, setVideoEffectsPane] = useState(false);
 
+  /* @conditional-compile-remove(video-background-effects) */
+  const setShowVideoEffectsPane = useCallback(
+    (showVideoEffectsOptions: boolean): void => {
+      setVideoEffectsPane(showVideoEffectsOptions);
+    },
+    [setVideoEffectsPane]
+  );
   if (!callWithChatAdapter) {
     throw new Error('CallWithChatAdapter is undefined');
   }
@@ -409,7 +367,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
         <Stack horizontal grow>
           <Stack.Item
             grow
-            styles={callCompositeContainerStyles}
+            styles={callCompositeContainerStyles(mobileView)}
             // Perf: Instead of removing the video gallery from DOM, we hide it to prevent re-renders.
             style={callCompositeContainerCSS}
           >
@@ -421,7 +379,14 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
               fluentTheme={fluentTheme}
             />
           </Stack.Item>
-
+          {
+            /* @conditional-compile-remove(video-background-effects) */
+            <VideoEffectsPane
+              showVideoEffectsOptions={showVideoEffectsPane}
+              setshowVideoEffectsOptions={setShowVideoEffectsPane}
+              adapter={callAdapter}
+            />
+          }
           {chatProps.adapter && callAdapter && hasJoinedCall && (
             <CallWithChatPane
               chatCompositeProps={chatProps}
@@ -446,7 +411,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
         {showControlBar && !isMobileWithActivePane && (
           <ChatAdapterProvider adapter={chatProps.adapter}>
             <Stack.Item styles={controlBarContainerStyles}>
-              <CallWithChatControlBar
+              <CommonCallControlBar
                 callAdapter={callAdapter}
                 chatAdapter={chatProps.adapter}
                 chatButtonChecked={activePane === 'chat'}
@@ -463,6 +428,9 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
                 containerWidth={containerWidth}
                 /* @conditional-compile-remove(PSTN-calls) */
                 onClickShowDialpad={alternateCallerId ? onClickShowDialpad : undefined}
+                /* @conditional-compile-remove(video-background-effects) */
+                onShowVideoEffectsPicker={setShowVideoEffectsPane}
+                rtl={props.rtl}
               />
             </Stack.Item>
           </ChatAdapterProvider>

@@ -26,7 +26,8 @@ export type {
   MessageThreadStyles,
   JumpToNewMessageButtonProps,
   MessageRenderer,
-  UpdateMessageCallback
+  UpdateMessageCallback,
+  CancelEditCallback
 } from './MessageThread';
 
 export { StreamMedia } from './StreamMedia';
@@ -52,7 +53,7 @@ export type { VideoGalleryProps, VideoGalleryStrings, VideoGalleryStyles, VideoG
 /* @conditional-compile-remove(pinned-participants) */
 export type { VideoTileContextualMenuProps, VideoTileDrawerMenuProps } from './VideoGallery';
 /* @conditional-compile-remove(vertical-gallery) */
-export type { OverflowGalleryLayout } from './VideoGallery';
+export type { OverflowGalleryPosition } from './VideoGallery';
 export type { HorizontalGalleryStyles } from './HorizontalGallery';
 
 export { LocalVideoCameraCycleButton } from './LocalVideoCameraButton';
@@ -215,4 +216,5 @@ export type {
 
 export type { VerticalGalleryStyles, VerticalGalleryStrings, VerticalGalleryControlBarStyles } from './VerticalGallery';
 
+export * from './CaptionsBanner';
 export * from './Caption';

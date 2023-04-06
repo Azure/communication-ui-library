@@ -79,6 +79,10 @@ import { useEffect, useRef, useState } from 'react';
 import { _toCommunicationIdentifier } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(rooms) */
 import { AzureCommunicationCallAdapterOptions } from '../../CallComposite/adapter/AzureCommunicationCallAdapter';
+/* @conditional-compile-remove(video-background-effects) */
+import { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/communication-calling-effects';
+/* @conditional-compile-remove(video-background-effects) */
+import { VideoBackgroundImage } from '../../CallComposite';
 
 type CallWithChatAdapterStateChangedHandler = (newState: CallWithChatAdapterState) => void;
 
@@ -209,6 +213,14 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     this.sendDtmfTone.bind(this);
     /* @conditional-compile-remove(unsupported-browser) */
     this.allowUnsupportedBrowserVersion.bind(this);
+    /* @conditional-compile-remove(video-background-effects) */
+    this.blurVideoBackground.bind(this);
+    /* @conditional-compile-remove(video-background-effects) */
+    this.replaceVideoBackground.bind(this);
+    /* @conditional-compile-remove(video-background-effects) */
+    this.stopVideoBackgroundEffect.bind(this);
+    /* @conditional-compile-remove(video-background-effects) */
+    this.updateBackgroundPickerImages.bind(this);
   }
 
   /** Join existing Call. */
@@ -416,6 +428,25 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     return this.callAdapter.allowUnsupportedBrowserVersion();
   }
 
+  /* @conditional-compile-remove(video-background-effects) */
+  public async blurVideoBackground(backgroundBlurConfig?: BackgroundBlurConfig): Promise<void> {
+    await this.callAdapter.blurVideoBackground(backgroundBlurConfig);
+  }
+  /* @conditional-compile-remove(video-background-effects) */
+  public async replaceVideoBackground(backgroundReplacementConfig: BackgroundReplacementConfig): Promise<void> {
+    await this.callAdapter.replaceVideoBackground(backgroundReplacementConfig);
+  }
+
+  /* @conditional-compile-remove(video-background-effects) */
+  public async stopVideoBackgroundEffect(): Promise<void> {
+    return await this.callAdapter.stopVideoBackgroundEffect();
+  }
+
+  /* @conditional-compile-remove(video-background-effects) */
+  public updateBackgroundPickerImages(backgroundImages: VideoBackgroundImage[]): void {
+    return this.callAdapter.updateBackgroundPickerImages(backgroundImages);
+  }
+
   on(event: 'callParticipantsJoined', listener: ParticipantsJoinedListener): void;
   on(event: 'callParticipantsLeft', listener: ParticipantsLeftListener): void;
   on(event: 'callEnded', listener: CallEndedListener): void;
@@ -613,7 +644,7 @@ export const createAzureCommunicationCallWithChatAdapter = async ({
   endpoint,
   locator,
   /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
-  /* @conditional-compile-remove(rooms) */ callAdapterOptions
+  /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(video-background-effects) */ callAdapterOptions
 }: AzureCommunicationCallWithChatAdapterArgs): Promise<CallWithChatAdapter> => {
   const callAdapterLocator = isTeamsMeetingLinkLocator(locator) ? locator : locator.callLocator;
   const createCallAdapterPromise = createAzureCommunicationCallAdapter({

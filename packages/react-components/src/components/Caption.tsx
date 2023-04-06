@@ -1,19 +1,17 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import { IPersona, Persona, Stack, PersonaSize, Text, IStackTokens, mergeStyles } from '@fluentui/react';
+import { IPersona, Persona, Stack, PersonaSize, Text } from '@fluentui/react';
 import React from 'react';
-import { _pxToRem } from '@internal/acs-ui-common';
 import { _FileUploadCardsStrings } from './FileUploadCards';
 import { OnRenderAvatarCallback } from '../types';
+import { captionClassName, displayNameClassName, iconClassName } from './styles/Captions.style';
+import { _CaptionsInfo } from './CaptionsBanner';
 
 /**
  * @internal
- * _Caption Component Props.
+ * Props for a single line of caption.
  */
-export interface _CaptionProps {
-  displayName: string;
-  caption: string;
-  userId?: string;
+export interface _CaptionProps extends _CaptionsInfo {
   /**
    * Optional callback to override render of the avatar.
    *
@@ -24,14 +22,14 @@ export interface _CaptionProps {
 
 /**
  * @internal
- * A component for displaying a caption with user icon, displayName and caption text.
+ * A component for displaying a single line of caption
  */
 export const _Caption = (props: _CaptionProps): JSX.Element => {
-  const { userId, displayName, caption, onRenderAvatar } = props;
+  const { displayName, userId, captionText, onRenderAvatar } = props;
 
   const personaOptions: IPersona = {
     hidePersonaDetails: true,
-    size: PersonaSize.size24,
+    size: PersonaSize.size32,
     text: displayName,
     showOverflowTooltip: false,
     styles: {
@@ -42,35 +40,19 @@ export const _Caption = (props: _CaptionProps): JSX.Element => {
   };
 
   const userIcon = onRenderAvatar ? onRenderAvatar(userId ?? '', personaOptions) : <Persona {...personaOptions} />;
-  const spacingStackTokens: IStackTokens = {
-    childrenGap: 10,
-    padding: 10
-  };
-
-  const displayNameClassName = mergeStyles({
-    fontWeight: 600,
-    fontSize: _pxToRem(12),
-    lineHeight: _pxToRem(16)
-  });
-
-  const captionClassName = mergeStyles({
-    fontWeight: 400,
-    fontSize: _pxToRem(16),
-    lineHeight: _pxToRem(20)
-  });
 
   return (
-    <div data-is-focusable={true}>
-      <Stack horizontal verticalAlign="center" tokens={spacingStackTokens}>
-        <Stack horizontal verticalAlign="center">
-          <span>{userIcon}</span>
-          <Text className={displayNameClassName}>{displayName}</Text>
-        </Stack>
+    <Stack horizontal verticalAlign="start" horizontalAlign="start">
+      <Stack.Item className={iconClassName}>{userIcon}</Stack.Item>
 
-        <span>
-          <Text className={captionClassName}>{caption}</Text>
-        </span>
+      <Stack verticalAlign="start">
+        <Stack.Item>
+          <Text className={displayNameClassName}>{displayName}</Text>
+        </Stack.Item>
+        <Stack.Item>
+          <Text className={captionClassName}>{captionText}</Text>
+        </Stack.Item>
       </Stack>
-    </div>
+    </Stack>
   );
 };

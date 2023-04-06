@@ -24,8 +24,12 @@ process.env['COMMUNICATION_REACT_FLAVOR'] === 'stable' &&
         'demo',
         // dialpad
         'dialpad',
+        // Data loss prevention feature
+        'data-loss-prevention',
         // Ability to upload/download files in message thread.
         'file-sharing',
+        // feature for enabling new call control bar in CallComposite
+        'new-call-control-bar',
         // 1 to N Calling feature.
         'one-to-n-calling',
         // PSTN calls 
@@ -36,6 +40,8 @@ process.env['COMMUNICATION_REACT_FLAVOR'] === 'stable' &&
         'teams-adhoc-call',
         // Joining calls using teams token
         'teams-identity-support',
+        // Chat teams interop to display images in chat messages
+        'teams-inline-images',
         'unsupported-browser',
         // Support Calling SDK isReceiving flag, shows a loading spinner on the video tile when isAvailable is true but isReceiving is false
         'video-stream-is-receiving-flag',

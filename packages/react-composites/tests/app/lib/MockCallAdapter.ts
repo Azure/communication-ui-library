@@ -133,6 +133,22 @@ export class MockCallAdapter implements CallAdapter {
       this._emitter.emit('stateChanged', this._state);
     }
   }
+
+  blurVideoBackground(): Promise<void> {
+    throw new Error('blurVideoBackground not implemented.');
+  }
+
+  replaceVideoBackground(): Promise<void> {
+    throw new Error('replaceVideoBackground not implemented.');
+  }
+
+  stopVideoBackgroundEffect(): Promise<void> {
+    throw new Error('stopVideoBackgroundEffect not implemented.');
+  }
+
+  updateBackgroundPickerImages(): void {
+    throw new Error('updateBackgroundPickerImages not implemented.');
+  }
 }
 
 function populateViewTargets(state: MockCallAdapterState): CallAdapterState {

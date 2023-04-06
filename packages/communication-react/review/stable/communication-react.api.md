@@ -320,6 +320,7 @@ export const CallComposite: (props: CallCompositeProps) => JSX.Element;
 
 // @public
 export type CallCompositeIcons = {
+    ControlBarPeopleButton?: JSX.Element;
     ControlButtonCameraOff?: JSX.Element;
     ControlButtonCameraOn?: JSX.Element;
     ControlButtonEndCall?: JSX.Element;
@@ -447,19 +448,11 @@ export interface CallCompositeStrings {
 export type CallControlDisplayType = 'default' | 'compact';
 
 // @public
-export type CallControlOptions = {
-    displayType?: CallControlDisplayType;
-    cameraButton?: boolean;
-    endCallButton?: boolean;
-    microphoneButton?: boolean;
-    devicesButton?: boolean;
+export type CallControlOptions = (CommonCallControlOptions & {
     participantsButton?: boolean | {
         disabled: boolean;
     };
-    screenShareButton?: boolean | {
-        disabled: boolean;
-    };
-};
+});
 
 // @public
 export type CallEndedListener = (event: CallAdapterCallEndedEvent) => void;
@@ -483,7 +476,7 @@ export type CallErrors = {
 };
 
 // @public
-export type CallErrorTarget = 'Call.addParticipant' | 'Call.feature' | 'Call.hangUp' | 'Call.hold' | 'Call.mute' | 'Call.off' | 'Call.on' | 'Call.removeParticipant' | 'Call.resume' | 'Call.sendDtmf' | 'Call.startScreenSharing' | 'Call.startVideo' | 'Call.stopScreenSharing' | 'Call.stopVideo' | 'Call.unmute' | 'CallAgent.dispose' | 'CallAgent.feature' | 'CallAgent.join' | 'CallAgent.off' | 'CallAgent.on' | 'CallAgent.startCall' | 'CallClient.createCallAgent' | 'CallClient.feature' | 'CallClient.getDeviceManager' | 'DeviceManager.askDevicePermission' | 'DeviceManager.getCameras' | 'DeviceManager.getMicrophones' | 'DeviceManager.getSpeakers' | 'DeviceManager.off' | 'DeviceManager.on' | 'DeviceManager.selectMicrophone' | 'DeviceManager.selectSpeaker' | 'IncomingCall.accept' | 'IncomingCall.reject';
+export type CallErrorTarget = 'Call.addParticipant' | 'Call.dispose' | 'Call.feature' | 'Call.hangUp' | 'Call.hold' | 'Call.mute' | 'Call.off' | 'Call.on' | 'Call.removeParticipant' | 'Call.resume' | 'Call.sendDtmf' | 'Call.startScreenSharing' | 'Call.startVideo' | 'Call.stopScreenSharing' | 'Call.stopVideo' | 'Call.unmute' | 'CallAgent.dispose' | 'CallAgent.feature' | 'CallAgent.join' | 'CallAgent.off' | 'CallAgent.on' | 'CallAgent.startCall' | 'CallClient.createCallAgent' | 'CallClient.createTeamsCallAgent' | 'CallClient.feature' | 'CallClient.getDeviceManager' | 'DeviceManager.askDevicePermission' | 'DeviceManager.getCameras' | 'DeviceManager.getMicrophones' | 'DeviceManager.getSpeakers' | 'DeviceManager.off' | 'DeviceManager.on' | 'DeviceManager.selectMicrophone' | 'DeviceManager.selectSpeaker' | 'IncomingCall.accept' | 'IncomingCall.reject';
 
 // @public
 export type CallIdChangedListener = (event: {
@@ -801,16 +794,8 @@ export interface CallWithChatCompositeStrings {
 }
 
 // @public
-export interface CallWithChatControlOptions {
-    cameraButton?: boolean;
+export interface CallWithChatControlOptions extends CommonCallControlOptions {
     chatButton?: boolean;
-    displayType?: CallControlDisplayType;
-    endCallButton?: boolean;
-    microphoneButton?: boolean;
-    peopleButton?: boolean;
-    screenShareButton?: boolean | {
-        disabled: boolean;
-    };
 }
 
 // @public
@@ -851,10 +836,13 @@ export interface CameraButtonStrings {
     cameraButtonSplitRoleDescription?: string;
     cameraMenuTitle: string;
     cameraMenuTooltip: string;
+    cameraPrimaryActionSplitButtonTitle?: string;
     offLabel: string;
     offSplitButtonAriaLabel?: string;
+    offSplitButtonPrimaryActionCamera?: string;
     onLabel: string;
     onSplitButtonAriaLabel?: string;
+    onSplitButtonPrimaryActionCamera?: string;
     tooltipDisabledContent?: string;
     tooltipOffContent?: string;
     tooltipOnContent?: string;
@@ -865,6 +853,9 @@ export interface CameraButtonStrings {
 export interface CameraButtonStyles extends ControlBarButtonStyles {
     menuStyles?: Partial<CameraButtonContextualMenuStyles>;
 }
+
+// @public
+export type CancelEditCallback = (messageId: string) => void;
 
 // @public
 export type ChatAdapter = ChatAdapterThreadManagement & AdapterState<ChatAdapterState> & Disposable & ChatAdapterSubscribers;
@@ -1027,6 +1018,8 @@ export interface ChatMessage extends MessageCommon {
     // (undocumented)
     editedOn?: Date;
     // (undocumented)
+    failureReason?: string;
+    // (undocumented)
     messageType: 'chat';
     metadata?: Record<string, string>;
     // (undocumented)
@@ -1094,6 +1087,22 @@ export interface CommonCallAdapter extends AdapterState<CallAdapterState>, Dispo
     joinCall(microphoneOn?: boolean): void;
     startCall(participants: string[], options?: StartCallOptions): void;
 }
+
+// @public
+export type CommonCallControlOptions = {
+    displayType?: CallControlDisplayType;
+    cameraButton?: boolean;
+    endCallButton?: boolean;
+    microphoneButton?: boolean;
+    devicesButton?: boolean;
+    participantsButton?: boolean | {
+        disabled: boolean;
+    };
+    screenShareButton?: boolean | {
+        disabled: boolean;
+    };
+    peopleButton?: boolean;
+};
 
 // @public
 export interface CommonCallingHandlers {
@@ -1338,7 +1347,7 @@ export const createAzureCommunicationCallWithChatAdapterFromClients: ({ callClie
 export const createAzureCommunicationChatAdapter: ({ endpoint: endpointUrl, userId, displayName, credential, threadId }: AzureCommunicationChatAdapterArgs) => Promise<ChatAdapter>;
 
 // @public
-export const createAzureCommunicationChatAdapterFromClient: (chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient) => Promise<ChatAdapter>;
+export function createAzureCommunicationChatAdapterFromClient(chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient): Promise<ChatAdapter>;
 
 // @public
 export const createDefaultCallingHandlers: (callClient: StatefulCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined) => CallingHandlers;
@@ -1435,6 +1444,10 @@ export const DEFAULT_COMPONENT_ICONS: {
     SendBoxSend: JSX.Element;
     SendBoxSendHovered: JSX.Element;
     VideoTileMicOff: JSX.Element;
+    SplitButtonPrimaryActionCameraOn: JSX.Element;
+    SplitButtonPrimaryActionCameraOff: JSX.Element;
+    SplitButtonPrimaryActionMicUnmuted: JSX.Element;
+    SplitButtonPrimaryActionMicMuted: JSX.Element;
 };
 
 // @public
@@ -1451,6 +1464,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     ParticipantItemOptionsHovered: JSX.Element;
     SendBoxSend: JSX.Element;
     SendBoxSendHovered: JSX.Element;
+    ControlBarPeopleButton?: JSX.Element | undefined;
     ControlButtonCameraOff: JSX.Element;
     ControlButtonCameraOn: JSX.Element;
     ControlButtonEndCall: JSX.Element;
@@ -1496,7 +1510,6 @@ export const DEFAULT_COMPOSITE_ICONS: {
     ChevronLeft?: JSX.Element | undefined;
     ControlBarChatButtonActive?: JSX.Element | undefined;
     ControlBarChatButtonInactive?: JSX.Element | undefined;
-    ControlBarPeopleButton?: JSX.Element | undefined;
     Link?: JSX.Element | undefined;
     MoreDrawerMicrophones?: JSX.Element | undefined;
     MoreDrawerPeople?: JSX.Element | undefined;
@@ -1508,6 +1521,10 @@ export const DEFAULT_COMPOSITE_ICONS: {
     ErrorBarCallVideoRecoveredBySystem: JSX.Element;
     ErrorBarCallVideoStoppedBySystem: JSX.Element;
     MessageResend: JSX.Element;
+    SplitButtonPrimaryActionCameraOn: JSX.Element;
+    SplitButtonPrimaryActionCameraOff: JSX.Element;
+    SplitButtonPrimaryActionMicUnmuted: JSX.Element;
+    SplitButtonPrimaryActionMicMuted: JSX.Element;
 };
 
 // @public
@@ -1640,6 +1657,7 @@ export interface ErrorBarStrings {
     callNoSpeakerFound: string;
     callVideoRecoveredBySystem: string;
     callVideoStoppedBySystem: string;
+    cameraFrozenForRemoteParticipants?: string;
     dismissButtonAriaLabel?: string;
     failedToJoinCallGeneric?: string;
     failedToJoinCallInvalidMeetingLink?: string;
@@ -1719,6 +1737,7 @@ export interface _IdentifierProviderProps {
 
 // @internal
 export interface _Identifiers {
+    horizontalGalleryVideoTile: string;
     messageContent: string;
     messageTimestamp: string;
     overflowGalleryLeftNavButton: string;
@@ -1833,6 +1852,7 @@ export type MessageProps = {
     showDate?: boolean;
     disableEditing?: boolean;
     onUpdateMessage?: UpdateMessageCallback;
+    onCancelMessageEdit?: CancelEditCallback;
     onDeleteMessage?: (messageId: string) => Promise<void>;
     onSendMessage?: (messageId: string) => Promise<void>;
 };
@@ -1906,8 +1926,9 @@ export type MessageThreadProps = {
     onLoadPreviousChatMessages?: (messagesToLoad: number) => Promise<boolean>;
     onRenderMessage?: (messageProps: MessageProps, messageRenderer?: MessageRenderer) => JSX.Element;
     onUpdateMessage?: UpdateMessageCallback;
+    onCancelMessageEdit?: CancelEditCallback;
     onDeleteMessage?: (messageId: string) => Promise<void>;
-    onSendMessage?: (messageId: string) => Promise<void>;
+    onSendMessage?: (content: string) => Promise<void>;
     disableEditing?: boolean;
     strings?: Partial<MessageThreadStrings>;
 };
@@ -1997,6 +2018,7 @@ export type MicrophoneButtonSelector = (state: CallClientState, props: CallingBa
 
 // @public
 export interface MicrophoneButtonStrings {
+    micPrimaryActionSplitButtonTitle?: string;
     microphoneActionTurnedOffAnnouncement?: string;
     microphoneActionTurnedOnAnnouncement?: string;
     microphoneButtonSplitRoleDescription?: string;
@@ -2004,8 +2026,10 @@ export interface MicrophoneButtonStrings {
     microphoneMenuTooltip?: string;
     offLabel: string;
     offSplitButtonAriaLabel?: string;
+    offSplitButtonMicrophonePrimaryAction?: string;
     onLabel: string;
     onSplitButtonAriaLabel?: string;
+    onSplitButtonMicrophonePrimaryAction?: string;
     speakerMenuTitle?: string;
     speakerMenuTooltip?: string;
     tooltipDisabledContent?: string;

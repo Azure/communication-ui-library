@@ -37,6 +37,7 @@ export function BaseApp(props: { queryArgs: CommonQueryArgs; adapter?: CallWithC
           adapter={adapter}
           formFactor={isMobile() ? 'mobile' : 'desktop'}
           joinInvitationURL={window.location.href}
+          rtl={props.queryArgs.rtl}
           options={{
             ...props.queryArgs.customCompositeOptions,
             callControls: callControlOptions

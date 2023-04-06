@@ -13,6 +13,7 @@ import { VideoTile } from './VideoTile';
 import { v1 as createGUID } from 'uuid';
 import * as responsive from './utils/responsive';
 import * as acs_ui_common from '@internal/acs-ui-common';
+import * as childrenCalculations from './VideoGallery/utils/OverflowGalleryUtils';
 import { RemoteScreenShare } from './VideoGallery/RemoteScreenShare';
 import { act } from 'react-dom/test-utils';
 /* @conditional-compile-remove(vertical-gallery) */
@@ -163,10 +164,10 @@ describe('VideoGallery default layout tests', () => {
     expect(root.find(RemoteScreenShare).length).toBe(1);
     expect(root.find(HorizontalGallery).find(VideoTile).length).toBe(2);
     expect(root.find(HorizontalGallery).find(StreamMedia).length).toBe(1);
-    expect(root.find(HorizontalGallery).find(VideoTile).first().prop('userId')).toBe('remoteVideoParticipant');
-    expect(root.find(HorizontalGallery).find(VideoTile).first().find(StreamMedia).exists()).toBe(true);
-    expect(root.find(HorizontalGallery).find(VideoTile).at(1).prop('userId')).toBe('remoteScreenSharingParticipant');
-    expect(root.find(HorizontalGallery).find(VideoTile).at(1).find(StreamMedia).exists()).toBe(false);
+    expect(root.find(HorizontalGallery).find(VideoTile).first().prop('userId')).toBe('remoteScreenSharingParticipant');
+    expect(root.find(HorizontalGallery).find(VideoTile).first().find(StreamMedia).exists()).toBe(false);
+    expect(root.find(HorizontalGallery).find(VideoTile).at(1).prop('userId')).toBe('remoteVideoParticipant');
+    expect(root.find(HorizontalGallery).find(VideoTile).at(1).find(StreamMedia).exists()).toBe(true);
   });
 });
 
@@ -284,10 +285,10 @@ describe('VideoGallery floating local video layout tests', () => {
     expect(root.find(RemoteScreenShare).length).toBe(1);
     expect(root.find(HorizontalGallery).find(VideoTile).length).toBe(2);
     expect(root.find(HorizontalGallery).find(StreamMedia).length).toBe(1);
-    expect(root.find(HorizontalGallery).find(VideoTile).first().prop('userId')).toBe('remoteVideoParticipant');
-    expect(root.find(HorizontalGallery).find(VideoTile).first().find(StreamMedia).exists()).toBe(true);
-    expect(root.find(HorizontalGallery).find(VideoTile).at(1).prop('userId')).toBe('remoteScreenSharingParticipant');
-    expect(root.find(HorizontalGallery).find(VideoTile).at(1).find(StreamMedia).exists()).toBe(false);
+    expect(root.find(HorizontalGallery).find(VideoTile).first().prop('userId')).toBe('remoteScreenSharingParticipant');
+    expect(root.find(HorizontalGallery).find(VideoTile).first().find(StreamMedia).exists()).toBe(false);
+    expect(root.find(HorizontalGallery).find(VideoTile).at(1).prop('userId')).toBe('remoteVideoParticipant');
+    expect(root.find(HorizontalGallery).find(VideoTile).at(1).find(StreamMedia).exists()).toBe(true);
   });
 });
 
@@ -441,7 +442,7 @@ describe('VideoGallery with vertical overflow gallery tests', () => {
     );
 
     act(() => {
-      root.setProps({ layout: 'floatingLocalVideo', overflowGalleryLayout: 'VerticalRight', remoteParticipants });
+      root.setProps({ layout: 'floatingLocalVideo', overflowGalleryPosition: 'VerticalRight', remoteParticipants });
     });
     expect(gridTileCount(root)).toBe(1);
     expect(root.find(VerticalGallery).exists()).toBe(true);
@@ -475,7 +476,7 @@ describe('VideoGallery with vertical overflow gallery tests', () => {
     act(() => {
       root.setProps({
         layout: 'floatingLocalVideo',
-        overflowGalleryLayout: 'VerticalRight',
+        overflowGalleryPosition: 'VerticalRight',
         remoteParticipants,
         dominantSpeakers: ['remoteScreenSharingParticipant', 'remoteVideoParticipant']
       });
@@ -484,10 +485,10 @@ describe('VideoGallery with vertical overflow gallery tests', () => {
     expect(root.find(RemoteScreenShare).length).toBe(1);
     expect(root.find(VerticalGallery).find(VideoTile).length).toBe(4);
     expect(root.find(VerticalGallery).find(StreamMedia).length).toBe(1);
-    expect(root.find(VerticalGallery).find(VideoTile).first().prop('userId')).toBe('remoteVideoParticipant');
-    expect(root.find(VerticalGallery).find(VideoTile).first().find(StreamMedia).exists()).toBe(true);
-    expect(root.find(VerticalGallery).find(VideoTile).at(1).prop('userId')).toBe('remoteScreenSharingParticipant');
-    expect(root.find(VerticalGallery).find(VideoTile).at(1).find(StreamMedia).exists()).toBe(false);
+    expect(root.find(VerticalGallery).find(VideoTile).first().prop('userId')).toBe('remoteScreenSharingParticipant');
+    expect(root.find(VerticalGallery).find(VideoTile).first().find(StreamMedia).exists()).toBe(false);
+    expect(root.find(VerticalGallery).find(VideoTile).at(1).prop('userId')).toBe('remoteVideoParticipant');
+    expect(root.find(VerticalGallery).find(VideoTile).at(1).find(StreamMedia).exists()).toBe(true);
   });
 
   /* @conditional-compile-remove(pinned-participants) */
@@ -508,7 +509,7 @@ describe('VideoGallery with vertical overflow gallery tests', () => {
     act(() => {
       root.setProps({
         layout: 'floatingLocalVideo',
-        overflowGalleryLayout: 'VerticalRight',
+        overflowGalleryPosition: 'VerticalRight',
         remoteParticipants,
         dominantSpeakers: ['1', '6'],
         pinnedParticipants: ['7', '6']
@@ -611,6 +612,24 @@ const mockVideoGalleryInternalHelpers = (): void => {
   jest.spyOn(acs_ui_common, '_convertRemToPx').mockImplementation((rem: number) => {
     return rem * 16;
   });
+  jest.spyOn(childrenCalculations, 'calculateHorizontalChildrenPerPage').mockImplementation(
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    (args: { numberOfChildren: number; containerWidth: number; gapWidthRem: number; buttonWidthRem: number }) => {
+      return 2;
+    }
+  );
+  jest.spyOn(childrenCalculations, 'calculateVerticalChildrenPerPage').mockImplementation(
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    (args: {
+      numberOfChildren: number;
+      containerHeight: number;
+      gapHeightRem: number;
+      controlBarHeight: number;
+      isShort: boolean;
+    }) => {
+      return 4;
+    }
+  );
   // Need to mock hook _useContainerWidth because the returned width is used by HorizontalGallery to decide
   // how many tiles to show per page
   jest.spyOn(responsive, '_useContainerWidth').mockImplementation(() => 500);

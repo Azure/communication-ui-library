@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Update caption component UI and make sure captions banner auto scroll only happens when user is scrolled to bottom",
+  "packageName": "@azure/communication-react",
+  "email": "carolinecao@microsoft.com",
+  "dependentChangeType": "none"
+}

@@ -531,7 +531,7 @@ export class CallError extends Error {
  */
 export type CallErrorTarget =
   | 'Call.addParticipant'
-  | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.dispose'
+  | 'Call.dispose'
   | 'Call.feature'
   | 'Call.hangUp'
   | 'Call.hold'
@@ -557,7 +557,7 @@ export type CallErrorTarget =
   | 'CallAgent.on'
   | 'CallAgent.startCall'
   | 'CallClient.createCallAgent'
-  | /* @conditional-compile-remove(calling-beta-sdk) */ /* @conditional-compile-remove(teams-identity-support) */ 'CallClient.createTeamsCallAgent'
+  | 'CallClient.createTeamsCallAgent'
   | 'CallClient.feature'
   | 'CallClient.getDeviceManager'
   | /* @conditional-compile-remove(calling-beta-sdk) */ 'CallClient.getEnvironmentInfo'
@@ -572,7 +572,8 @@ export type CallErrorTarget =
   | 'IncomingCall.accept'
   | 'IncomingCall.reject'
   | /* @conditional-compile-remove(calling-beta-sdk) */ /* @conditional-compile-remove(teams-identity-support) */ 'TeamsCall.addParticipant'
-  | /* @conditional-compile-remove(video-background-effects) */ 'VideoEffectsFeature.startEffects';
+  | /* @conditional-compile-remove(video-background-effects) */ 'VideoEffectsFeature.startEffects'
+  | /* @conditional-compile-remove(calling-beta-sdk) */ 'CallAgent.handlePushNotification';
 
 /**
  * State only proxy for {@link @azure/communication-calling#DiagnosticsCallFeature}.

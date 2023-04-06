@@ -28,9 +28,12 @@ import {
   MessageThreadStoryContainerStyles,
   GenerateMockSystemMessage,
   GenerateMockCustomMessage,
-  GetAvatarUrlByUserId
+  GetAvatarUrlByUserId,
+  GenerateMockNewChatMessageWithInlineImage
 } from './placeholdermessages';
+import { MessageThreadWithBlockedMessagesExample } from './snippets/BlockedMessages.snippet';
 import { MessageThreadWithCustomAvatarExample } from './snippets/CustomAvatar.snippet';
+import { MessageThreadWithCustoBlockedmMessageContainerExample } from './snippets/CustomBlockedMessage.snippet';
 import { MessageThreadWithCustomChatContainerExample } from './snippets/CustomChatContainer.snippet';
 import { MessageThreadWithCustomMessageContainerExample } from './snippets/CustomMessageContainer.snippet';
 import { MessageThreadWithCustomMessagesExample } from './snippets/CustomMessages.snippet';
@@ -42,7 +45,11 @@ import { MessageWithFile } from './snippets/MessageWithFile.snippet';
 import { MessageThreadWithSystemMessagesExample } from './snippets/SystemMessages.snippet';
 import { MessageThreadWithMessageDateExample } from './snippets/WithMessageDate.snippet';
 
+const MessageThreadWithBlockedMessagesExampleText =
+  require('!!raw-loader!./snippets/BlockedMessages.snippet.tsx').default;
 const MessageThreadWithCustomAvatarExampleText = require('!!raw-loader!./snippets/CustomAvatar.snippet.tsx').default;
+const MessageThreadWithCustoBlockedmMessageContainerExampleText =
+  require('!!raw-loader!./snippets/CustomBlockedMessage.snippet.tsx').default;
 const MessageThreadWithCustomChatContainerExampleText =
   require('!!raw-loader!./snippets/CustomChatContainer.snippet.tsx').default;
 const MessageThreadWithCustomMessageContainerExampleText =
@@ -110,6 +117,15 @@ const getDocs: () => JSX.Element = () => {
         <MessageThreadWithSystemMessagesExample />
       </Canvas>
 
+      <Heading>Blocked Message</Heading>
+      <Description>
+        The example below shows a message thread with a blocked message. If `link` is not provided, it will omit the
+        hyperlink.
+      </Description>
+      <Canvas mdxSource={MessageThreadWithBlockedMessagesExampleText}>
+        <MessageThreadWithBlockedMessagesExample />
+      </Canvas>
+
       <Heading>Custom Message</Heading>
       <Description>
         The example below shows how to render a `custom` message with `onRenderMessage` in `MessageThread`
@@ -139,12 +155,22 @@ const getDocs: () => JSX.Element = () => {
         <MessageThreadWithCustomMessageContainerExample />
       </Canvas>
 
+      <Heading>Messages with Customized Blocked message Container</Heading>
+      <Description>
+        The example below shows how to render a `blocked` message with custom `warningText`, with
+        `styles.blockedMessageContainer` for styling, and rendering your own JSX.Element with with `onRenderMessage` in
+        `MessageThread`
+      </Description>
+      <Canvas mdxSource={MessageThreadWithCustoBlockedmMessageContainerExampleText}>
+        <MessageThreadWithCustoBlockedmMessageContainerExample />
+      </Canvas>
+
       <Heading>Default Message Status Indicator</Heading>
       <Canvas mdxSource={MessageThreadWithMessageStatusIndicatorExampleText}>
         <MessageThreadWithMessageStatusIndicatorExample />
       </Canvas>
 
-      <Heading>Cutom Message Status Indicator</Heading>
+      <Heading>Custom Message Status Indicator</Heading>
       <Description>
         The example below shows how to render a `custom` message status indicator with `onRenderMessageStatus` in
         `MessageThread`
@@ -192,7 +218,7 @@ const MessageThreadStory = (args): JSX.Element => {
 
   const onSendNewMessage = (): void => {
     const existingChatMessages = chatMessages;
-    // We dont want to render the status for previous messages
+    // We don't want to render the status for previous messages
     existingChatMessages.forEach((message) => {
       if (message.messageType === 'chat') {
         message.status = 'seen';
@@ -205,6 +231,9 @@ const MessageThreadStory = (args): JSX.Element => {
     setChatMessages([...chatMessages, GenerateMockNewChatMessageFromOthers()]);
   };
 
+  const onSendNewMessageWithInlineImage = (): void => {
+    setChatMessages([...chatMessages, GenerateMockNewChatMessageWithInlineImage()]);
+  };
   const onLoadPreviousMessages = async (): Promise<boolean> => {
     return new Promise((resolve) => {
       setChatMessages([...GenerateMockHistoryChatMessages(), ...chatMessages]);
@@ -256,6 +285,7 @@ const MessageThreadStory = (args): JSX.Element => {
       <Stack horizontal horizontalAlign="space-between" tokens={{ childrenGap: '1rem' }}>
         <PrimaryButton text="Send new message from others" onClick={onSendNewMessageFromOthers} />
         <PrimaryButton text="Send new message" onClick={onSendNewMessage} />
+        <PrimaryButton text="Send new message with inline image" onClick={onSendNewMessageWithInlineImage} />
         <PrimaryButton text="Send new system message" onClick={onSendNewSystemMessage} />
         <PrimaryButton text="Send new custom message" onClick={onSendCustomMessage} />
       </Stack>

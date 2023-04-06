@@ -4,6 +4,8 @@
 import { CallState, DeviceManagerState } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(teams-identity-support) */
 import { TeamsCall } from '@azure/communication-calling';
+/* @conditional-compile-remove(video-background-effects) */
+import { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/communication-calling-effects';
 /* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
 import type {
@@ -114,6 +116,11 @@ export type CallAdapterClientState = {
    * control bar with the CallComposite.
    */
   cameraStatus?: 'On' | 'Off';
+  /* @conditional-compile-remove(video-background-effects) */
+  /**
+   * Default set of background images for background replacement effect.
+   */
+  videoBackgroundImages?: VideoBackgroundImage[];
 };
 
 /**
@@ -218,6 +225,27 @@ export type NetworkDiagnosticChangedEvent = NetworkDiagnosticChangedEventArgs & 
 export type DiagnosticChangedEventListner = (
   event: MediaDiagnosticChangedEvent | NetworkDiagnosticChangedEvent
 ) => void;
+
+/* @conditional-compile-remove(video-background-effects) */
+/**
+ * Contains the attibutes of a background image like url, name etc.
+ *
+ * @beta
+ */
+export interface VideoBackgroundImage {
+  /**
+   * key for unique identification of the custom background
+   */
+  key: string;
+  /**
+   * URL of the uploaded background image.
+   */
+  url: string;
+  /**
+   * Image name to be displayed.
+   */
+  tooltipText?: string;
+}
 
 /**
  * Functionality for managing the current call.
@@ -347,6 +375,36 @@ export interface CallAdapterCallOperations {
    * Continues into a call when the browser version is not supported.
    */
   allowUnsupportedBrowserVersion(): void;
+  /* @conditional-compile-remove(video-background-effects) */
+  /**
+   * Start the blur video background effect.
+   *
+   * @beta
+   */
+  blurVideoBackground(backgroundBlurConfig?: BackgroundBlurConfig): Promise<void>;
+  /* @conditional-compile-remove(video-background-effects) */
+  /**
+   * Start the video background replacement effect.
+   *
+   * @beta
+   */
+  replaceVideoBackground(backgroundReplacementConfig: BackgroundReplacementConfig): Promise<void>;
+  /* @conditional-compile-remove(video-background-effects) */
+  /**
+   * Stop the video background effect.
+   *
+   * @beta
+   */
+  stopVideoBackgroundEffect(): Promise<void>;
+  /* @conditional-compile-remove(video-background-effects) */
+  /**
+   * Override the background picker images for background replacement effect.
+   *
+   * @param backgroundImages - Array of custom background images.
+   *
+   * @beta
+   */
+  updateBackgroundPickerImages(backgroundImages: VideoBackgroundImage[]): void;
 }
 
 /**

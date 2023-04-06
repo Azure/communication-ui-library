@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { ChatMessage } from '../..';
-import { getParticipantsWhoHaveReadMessage } from './getParticipantsWhoHaveReadMessage';
+import getParticipantsWhoHaveReadMessage from './getParticipantsWhoHaveReadMessage';
 
 const chatMessage = (messageID: string): ChatMessage => ({
   messageId: messageID,

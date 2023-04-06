@@ -44,7 +44,8 @@ import {
 } from '@fluentui/react-icons';
 /* @conditional-compile-remove(call-readiness) */
 import { Important20Filled } from '@fluentui/react-icons';
-
+/* @conditional-compile-remove(video-background-effects) */
+import { VideoBackgroundEffect20Regular } from '@fluentui/react-icons';
 /* @conditional-compile-remove(pinned-participants) */
 import {
   Pin16Filled,
@@ -64,6 +65,9 @@ import { Sparkle20Filled, VideoProhibited20Filled, MicProhibited20Filled } from 
 import { ArrowDownload16Regular } from '@fluentui/react-icons';
 /* @conditional-compile-remove(PSTN-calls) */
 import { CallPause20Regular, CallPause20Filled, Play20Regular, People20Regular } from '@fluentui/react-icons';
+
+/* @conditional-compile-remove(data-loss-prevention) */
+import { Prohibited16Regular } from '@fluentui/react-icons';
 
 /* @conditional-compile-remove(unsupported-browser) */
 import { Warning20Filled } from '@fluentui/react-icons';
@@ -190,6 +194,11 @@ const BrowserPermissionDenied20Filled = (): JSX.Element => {
   );
 };
 
+/* @conditional-compile-remove(data-loss-prevention) */
+const DataLossPreventionProhibited16Regular = (): JSX.Element => {
+  return <Prohibited16Regular />;
+};
+
 /**
  * The default set of icons that are available to use in the UI components.
  *
@@ -214,6 +223,8 @@ export const DEFAULT_COMPONENT_ICONS = {
   CancelFileUpload: <Dismiss16Regular />,
   /* @conditional-compile-remove(file-sharing) */
   DownloadFile: <ArrowDownload16Regular />,
+  /* @conditional-compile-remove(data-loss-prevention) */
+  DataLossPreventionProhibited: <DataLossPreventionProhibited16Regular />,
   EditBoxCancel: <Dismiss20Regular />,
   EditBoxSubmit: <Checkmark20Regular />,
   ErrorBarCallCameraAccessDenied: <VideoProhibited16Filled />,
@@ -283,8 +294,14 @@ export const DEFAULT_COMPONENT_ICONS = {
   PinParticipant: <Pin16Regular />,
   /* @conditional-compile-remove(pinned-participants) */
   UnpinParticipant: <PinOff16Regular />,
+  SplitButtonPrimaryActionCameraOn: <Video20Filled />,
+  SplitButtonPrimaryActionCameraOff: <VideoOff20Filled />,
+  SplitButtonPrimaryActionMicUnmuted: <Mic20Filled />,
+  SplitButtonPrimaryActionMicMuted: <MicOff20Filled />,
   /* @conditional-compile-remove(vertical-gallery) */
   VerticalGalleryLeftButton: <ChevronLeft20Regular />,
   /* @conditional-compile-remove(vertical-gallery) */
-  VerticalGalleryRightButton: <ChevronRight20Regular />
+  VerticalGalleryRightButton: <ChevronRight20Regular />,
+  /* @conditional-compile-remove(video-background-effects) */
+  OptionsVideoBackgroundEffect: <VideoBackgroundEffect20Regular />
 };
