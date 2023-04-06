@@ -3101,7 +3101,7 @@ export interface RemoteVideoTileMenuOptions {
 }
 
 // @beta
-export type Role = 'Presenter' | 'Attendee' | 'Consumer' | 'Organizer';
+export type Role = 'Presenter' | 'Attendee' | 'Consumer' | 'Organizer' | 'Co-organizer';
 
 // @public
 export const ScreenShareButton: (props: ScreenShareButtonProps) => JSX.Element;
