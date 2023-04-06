@@ -153,6 +153,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
         let newHTMLValue: string | undefined;
         if (htmlValue !== undefined) {
           console.log('Not implemented');
+          console.log(htmlValue);
         } else {
           newHTMLValue =
             textValue.substring(0, selectionEnd - mention.length) +
