@@ -57,6 +57,11 @@ jobs:
         env:
           NODE_OPTIONS: '--max_old_space_size=4096'
         run: rush build -t chat
+  
+      - name: Build All Projects
+        env:
+          NODE_OPTIONS: '--max_old_space_size=4096'
+        run: rush build
 
       - name: Package Calling Sample Artifact
         run: rushx package
