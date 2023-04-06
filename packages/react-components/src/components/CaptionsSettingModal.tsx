@@ -46,10 +46,10 @@ export interface _CaptionsSettingModalStrings {
  */
 export interface _CaptionsSettingModalProps {
   supportedSpokenLanguages: string[];
-  currentSpokenLanguage: string;
   onSetSpokenLanguage: (language: string) => Promise<void>;
   onStartCaptions: (captionsOptions?: _captionsOptions) => Promise<void>;
   isCaptionsFeatureActive?: boolean;
+  currentSpokenLanguage?: string;
   strings?: _CaptionsSettingModalStrings;
   showModal?: boolean;
   onDismissCaptionsSetting?: () => void;
@@ -73,8 +73,8 @@ export const _CaptionsSettingModal = (props: _CaptionsSettingModalProps): JSX.El
   const theme = useTheme();
 
   const [selectedItem, setSelectedItem] = useState<IDropdownOption>({
-    key: currentSpokenLanguage !== '' ? currentSpokenLanguage : 'en-us',
-    text: currentSpokenLanguage !== '' ? currentSpokenLanguage : 'en-us'
+    key: currentSpokenLanguage && currentSpokenLanguage !== '' ? currentSpokenLanguage : 'en-us',
+    text: currentSpokenLanguage && currentSpokenLanguage !== '' ? currentSpokenLanguage : 'en-us'
   });
 
   const localeStrings = useLocale().strings.captionsSettingModal;

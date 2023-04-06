@@ -272,7 +272,7 @@ export const _CaptionsSettingModal: (props: _CaptionsSettingModalProps) => JSX.E
 // @internal
 export interface _CaptionsSettingModalProps {
     // (undocumented)
-    currentSpokenLanguage: string;
+    currentSpokenLanguage?: string;
     // (undocumented)
     isCaptionsFeatureActive?: boolean;
     // (undocumented)

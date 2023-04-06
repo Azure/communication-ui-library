@@ -125,7 +125,7 @@ export type _CaptionsSelector = (state: CallClientState, props: CallingBaseSelec
 // @internal
 export type _ChangeSpokenLanguageSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
     supportedSpokenLanguages: string[];
-    currentSpokenLanguage: string;
+    currentSpokenLanguage: string | undefined;
     isCaptionsFeatureActive: boolean;
 };
 
@@ -284,7 +284,7 @@ export const screenShareButtonSelector: ScreenShareButtonSelector;
 // @internal
 export type _StartCaptionsButtonSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
     checked: boolean;
-    currentCaptionLanguage: string;
+    currentCaptionLanguage: string | undefined;
     currentSpokenLanguage: string | undefined;
 };
 
