@@ -1,8 +1,8 @@
-import { FluentThemeProvider, useTheme } from '@internal/react-components';
+import { AtMentionSuggestion, FluentThemeProvider, useTheme } from '@internal/react-components';
 import { ITextField, Stack, mergeStyles } from '@fluentui/react';
 import { controlsToAdd, hiddenControl } from '../../controlsUtils';
 import { InputBoxComponent } from '../../../../react-components/src/components/InputBoxComponent';
-import { Title, Description, Props, Heading, Source, Canvas } from '@storybook/addon-docs';
+import { Title, Description, Props, Heading, Canvas } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React, { useState } from 'react';
 import { COMPONENT_FOLDER_PREFIX } from '../../constants';
@@ -30,6 +30,28 @@ const InputBoxStory = (args): JSX.Element => {
   const [textValue, setTextValue] = useState('');
   const [htmlValue, setHTMLValue] = useState<string | undefined>(undefined);
 
+  const suggestions: AtMentionSuggestion[] = [
+    {
+      userId: '1',
+      suggestionType: 'person',
+      displayName: ''
+    },
+    {
+      userId: '2',
+      suggestionType: 'person',
+      displayName: 'Patricia Adams'
+    },
+    {
+      userId: '3',
+      suggestionType: 'person',
+      displayName: '1'
+    },
+    {
+      userId: '4',
+      suggestionType: 'person',
+      displayName: '2'
+    }
+  ];
   return (
     <FluentThemeProvider>
       <div style={{ width: '31.25rem', height: '20rem' }}>
@@ -52,10 +74,20 @@ const InputBoxStory = (args): JSX.Element => {
             onChange={(event, newValue) => {
               setTextValue(newValue ?? '');
             }}
-            maxLength={0}
+            atMentionLookupOptions={{
+              trigger: '@',
+              onQueryUpdated: async (query: string) => {
+                console.log('onQueryUpdated: ', query);
+                const filtered = suggestions.filter((suggestion) => {
+                  suggestion.displayName.startsWith(query);
+                });
+                return Promise.resolve(filtered);
+              }
+            }}
             onMentionAdd={(suggestion) => {
               console.log(suggestion);
             }}
+            maxLength={0}
           />
         </Stack>
       </div>

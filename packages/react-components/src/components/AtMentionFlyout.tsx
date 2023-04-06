@@ -64,7 +64,7 @@ export interface AtMentionLookupOptions {
   /**
    * Optional callback to fetch a list of at mention suggestions base on the query.
    */
-  onQueryUpdated?: (query: string) => Promise<AtMentionSuggestion[]>;
+  onQueryUpdated: (query: string) => Promise<AtMentionSuggestion[]>;
   /**
    * Optional callback to render an item of the atMention suggestions list.
    */
