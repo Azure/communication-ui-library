@@ -43,10 +43,20 @@ jobs:
         if: ${{ !contains(github.ref, 'beta') }}
         run: rush switch-flavor:stable
 
-      - name: Build Projects
+      - name: Build Calling Project
         env:
           NODE_OPTIONS: '--max_old_space_size=4096'
-        run: rush build
+        run: rush build -t calling
+        
+      - name: Build CallWithChat Project
+        env:
+          NODE_OPTIONS: '--max_old_space_size=4096'
+        run: rush build -t callwithchat
+        
+      - name: Build Chat Project
+        env:
+          NODE_OPTIONS: '--max_old_space_size=4096'
+        run: rush build -t chat
 
       - name: Package Calling Sample Artifact
         run: rushx package
