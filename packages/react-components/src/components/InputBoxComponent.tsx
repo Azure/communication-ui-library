@@ -186,7 +186,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     // If we are enabled for lookups,
     if (!!atMentionLookupOptions) {
       // Go see if there's a trigger character in the text, from the end of the string
-      const lastTagIndex = (newValue && newValue.lastIndexOf(atMentionLookupOptions?.trigger ?? '@')) ?? -1;
+      const lastTagIndex = newValue?.lastIndexOf(atMentionLookupOptions?.trigger ?? '@') ?? -1;
 
       if (!!atMentionTagIndex && !!lastTagIndex) {
         setAtMentionTagIndex(lastTagIndex);
@@ -199,7 +199,6 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
             // This might want to be changed to not include the lookup tag. Currently it does.
             const query = newValue?.slice(lastTagIndex);
             if (!!query) {
-              console.log(query);
               const suggestions = (await atMentionLookupOptions?.onQueryUpdated(query)) ?? [];
               setAtMentionSuggestions(suggestions);
             }
