@@ -167,7 +167,7 @@ export const _AtMentionFlyout = (props: _AtMentionFlyoutProps): JSX.Element => {
       <Stack.Item styles={headerStyleThemed(theme)} aria-label={title}>
         {title} {/* TODO: Localization  */}
       </Stack.Item>
-      <FocusZone className={suggestionListContainerStyle} shouldFocusOnMount={true}>
+      <FocusZone className={suggestionListContainerStyle} shouldFocusOnMount={false}>
         <Stack data-ui-id={ids.atMentionSuggestionList} className={suggestionListStyle}>
           {suggestions.map((suggestion) =>
             suggestionItemRenderer

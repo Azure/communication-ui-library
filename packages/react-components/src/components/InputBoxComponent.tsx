@@ -164,7 +164,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       setAtMentionQuery(undefined);
 
       //set focus back to text field
-      textFieldRef?.current?.focus();
+      // textFieldRef?.current?.focus();
     },
     [atMentionLookupOptions?.trigger, atMentionQuery, htmlValue, onMentionAdd, textFieldRef, textValue]
   );
@@ -194,6 +194,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
         // In the middle of a @mention lookup
         if (lastTagIndex === -1) {
           setAtMentionTagIndex(undefined);
+          setAtMentionSuggestions([]);
         } else {
           if (lastTagIndex > -1) {
             // This might want to be changed to not include the lookup tag. Currently it does.

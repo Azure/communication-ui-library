@@ -79,9 +79,6 @@ const InputBoxStory = (args): JSX.Element => {
               onQueryUpdated: async (query: string) => {
                 // Trigger is at the start currently, so remove it.
                 const filterText = query.slice(trigger.length);
-                if (!filterText) {
-                  return Promise.resolve([]);
-                }
                 const filtered = suggestions.filter((suggestion) => {
                   return suggestion.displayName.toLocaleLowerCase().startsWith(filterText.toLocaleLowerCase());
                 });
