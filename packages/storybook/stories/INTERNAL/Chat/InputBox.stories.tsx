@@ -1,11 +1,12 @@
-import { FluentThemeProvider } from '@internal/react-components';
-import { ITextField } from '@fluentui/react';
+import { FluentThemeProvider, useTheme } from '@internal/react-components';
+import { ITextField, Stack, mergeStyles } from '@fluentui/react';
 import { controlsToAdd, hiddenControl } from '../../controlsUtils';
 import { InputBoxComponent } from '../../../../react-components/src/components/InputBoxComponent';
 import { Title, Description, Props, Heading, Source, Canvas } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React, { useState } from 'react';
 import { COMPONENT_FOLDER_PREFIX } from '../../constants';
+import { borderAndBoxShadowStyle } from '../../../../react-components/src/components/styles/SendBox.styles';
 
 const getDocs: () => JSX.Element = () => {
   return (
@@ -25,26 +26,38 @@ const getDocs: () => JSX.Element = () => {
 
 const InputBoxStory = (args): JSX.Element => {
   const sendTextFieldRef = React.useRef<ITextField>(null);
+  const theme = useTheme();
   const [textValue, setTextValue] = useState('');
   const [htmlValue, setHTMLValue] = useState<string | undefined>(undefined);
 
   return (
     <FluentThemeProvider>
-      <div style={{ width: '31.25rem' }}>
-        <InputBoxComponent
-          textFieldRef={sendTextFieldRef}
-          children={undefined}
-          inlineChildren={true}
-          textValue={textValue}
-          htmlValue={htmlValue}
-          onChange={(event, newValue) => {
-            setTextValue(newValue ?? '');
-          }}
-          maxLength={0}
-          onMentionAdd={(suggestion) => {
-            console.log(suggestion);
-          }}
-        />
+      <div style={{ width: '31.25rem', height: '20rem' }}>
+        <Stack
+          className={mergeStyles(
+            borderAndBoxShadowStyle({
+              theme,
+              hasErrorMessage: false,
+              disabled: false
+            })
+          )}
+        >
+          <InputBoxComponent
+            textFieldRef={sendTextFieldRef}
+            children={undefined}
+            inlineChildren={true}
+            textValue={textValue}
+            htmlValue={htmlValue}
+            placeholderText="Type a message..."
+            onChange={(event, newValue) => {
+              setTextValue(newValue ?? '');
+            }}
+            maxLength={0}
+            onMentionAdd={(suggestion) => {
+              console.log(suggestion);
+            }}
+          />
+        </Stack>
       </div>
     </FluentThemeProvider>
   );
