@@ -29,7 +29,7 @@ const InputBoxStory = (args): JSX.Element => {
   const theme = useTheme();
   const [textValue, setTextValue] = useState('');
   const [htmlValue, setHTMLValue] = useState<string | undefined>(undefined);
-
+  const trigger = '@';
   const suggestions: AtMentionSuggestion[] = [
     {
       userId: '1',
@@ -75,11 +75,15 @@ const InputBoxStory = (args): JSX.Element => {
               setTextValue(newValue ?? '');
             }}
             atMentionLookupOptions={{
-              trigger: '@',
+              trigger,
               onQueryUpdated: async (query: string) => {
-                console.log('onQueryUpdated: ', query);
+                // Trigger is at the start currently, so remove it.
+                const filterText = query.slice(trigger.length);
+                if (!filterText) {
+                  return Promise.resolve([]);
+                }
                 const filtered = suggestions.filter((suggestion) => {
-                  suggestion.displayName.startsWith(query);
+                  return suggestion.displayName.toLocaleLowerCase().startsWith(filterText.toLocaleLowerCase());
                 });
                 return Promise.resolve(filtered);
               }
