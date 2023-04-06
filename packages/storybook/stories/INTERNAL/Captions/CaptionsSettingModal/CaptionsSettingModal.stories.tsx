@@ -33,15 +33,15 @@ const CaptionsSettingModalStory = (args): JSX.Element => {
   ];
   const currentSpokenLanguage = 'English';
   const [showModal, setShowModal] = useState<boolean>(true);
-  const onDismissCaptionsSetting = () => {
+  const onDismissCaptionsSetting = (): void => {
     setShowModal(false);
   };
-  const onSetSpokenLanguage = (language) => {
+  const onSetSpokenLanguage = (language): Promise<void> => {
     alert(`Selected ${language}`);
     return Promise.resolve();
   };
 
-  const onStartCaptions = () => {
+  const onStartCaptions = (): Promise<void> => {
     alert(`Start Captions with selected language`);
     return Promise.resolve();
   };
