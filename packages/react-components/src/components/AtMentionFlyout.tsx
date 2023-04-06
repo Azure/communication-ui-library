@@ -33,11 +33,11 @@ export interface _AtMentionFlyoutProps {
    */
   target?: React.RefObject<Element>;
   /**
-   * Optional callback called when a atMention suggestion is selected.
+   * Callback called when a mention suggestion is selected.
    */
-  onSuggestionSelected?: (suggestion: AtMentionSuggestion) => void;
+  onSuggestionSelected: (suggestion: AtMentionSuggestion) => void;
   /**
-   * Callback to invoke when the at mention flyout is dismissed
+   * Callback to invoke when the flyout is dismissed
    */
   onDismiss?: () => void;
   /**
@@ -70,7 +70,7 @@ export interface AtMentionLookupOptions {
    */
   suggestionItemRenderer?: (
     suggestion: AtMentionSuggestion,
-    onSuggestionSelected?: (suggestion: AtMentionSuggestion) => void
+    onSuggestionSelected: (suggestion: AtMentionSuggestion) => void
   ) => JSX.Element;
 }
 
@@ -150,7 +150,7 @@ export const _AtMentionFlyout = (props: _AtMentionFlyoutProps): JSX.Element => {
         data-is-focusable={true}
         data-ui-id={ids.atMentionSuggestionItem}
         key={suggestion.userId}
-        onClick={() => onSuggestionSelected && onSuggestionSelected(suggestion)}
+        onClick={() => onSuggestionSelected(suggestion)}
         onMouseEnter={() => setHoveredSuggestion(suggestion)}
         onMouseLeave={() => setHoveredSuggestion(undefined)}
         className={suggestionItemWrapperStyle(theme)}
