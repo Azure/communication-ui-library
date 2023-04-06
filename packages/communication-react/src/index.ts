@@ -232,6 +232,7 @@ export type {
   TypingIndicatorStrings,
   TypingIndicatorStylesProps,
   UpdateMessageCallback,
+  CancelEditCallback,
   VideoGalleryLayout,
   VideoGalleryLocalParticipant,
   VideoGalleryParticipant,
