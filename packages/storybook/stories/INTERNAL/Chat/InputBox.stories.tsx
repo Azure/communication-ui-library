@@ -29,8 +29,7 @@ const InputBoxStory = (args): JSX.Element => {
     "<p>Hi <msft-at-mention userId='2' suggestionType='person'>Patricia Adams</msft-at-mention>!</p>";
   const sendTextFieldRef = React.useRef<ITextField>(null);
   const theme = useTheme();
-  const [textValue, setTextValue] = useState('');
-  const [htmlValue, setHTMLValue] = useState<string | undefined>(exampleHtmlMessage);
+  const [textValue, setTextValue] = useState<string>(exampleHtmlMessage);
   const trigger = '@';
   const suggestions: AtMentionSuggestion[] = [
     {
@@ -71,7 +70,6 @@ const InputBoxStory = (args): JSX.Element => {
             children={undefined}
             inlineChildren={true}
             textValue={textValue}
-            htmlValue={htmlValue}
             placeholderText="Type a message..."
             onChange={(event, newValue) => {
               setTextValue(newValue ?? '');
