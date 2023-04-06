@@ -25,10 +25,12 @@ const getDocs: () => JSX.Element = () => {
 };
 
 const InputBoxStory = (args): JSX.Element => {
+  const exampleHtmlMessage =
+    "<p>Hi <msft-at-mention userId='2' suggestionType='person'>Patricia Adams</msft-at-mention>!</p>";
   const sendTextFieldRef = React.useRef<ITextField>(null);
   const theme = useTheme();
   const [textValue, setTextValue] = useState('');
-  const [htmlValue, setHTMLValue] = useState<string | undefined>(undefined);
+  const [htmlValue, setHTMLValue] = useState<string | undefined>(exampleHtmlMessage);
   const trigger = '@';
   const suggestions: AtMentionSuggestion[] = [
     {

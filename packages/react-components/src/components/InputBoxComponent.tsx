@@ -98,12 +98,12 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
   } = props;
   const inputBoxRef = useRef(null);
 
-  // Current @mention query to pass to the callback - DOES THIS NEED TO BE STATE?
-  const [atMentionQuery, setAtMentionQuery] = useState<string | undefined>(undefined);
+  // Current @mention query to pass to the callback
+  const [mentionQuery, setMentionQuery] = useState<string | undefined>(undefined);
   // Current suggestion list, provided by the callback
-  const [atMentionSuggestions, setAtMentionSuggestions] = useState<AtMentionSuggestion[]>([]);
+  const [mentionSuggestions, setMentionSuggestions] = useState<AtMentionSuggestion[]>([]);
   // Index of the current trigger character in the text field
-  const [atMentionTagIndex, setAtMentionTagIndex] = useState<number | undefined>(undefined);
+  const [currentTagIndex, setCurrentTagIndex] = useState<number | undefined>(undefined);
 
   const mergedRootStyle = mergeStyles(inputBoxWrapperStyle, styles?.root);
   const mergedTextFiledStyle = mergeStyles(
@@ -137,8 +137,8 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     (suggestion: AtMentionSuggestion) => {
       //add default value for a trigger
       const trigger = atMentionLookupOptions?.trigger || '';
-      const mentionQuery = atMentionQuery || '';
-      const mention = trigger + mentionQuery;
+      const queryString = mentionQuery || '';
+      const mention = trigger + queryString;
       if (mention !== '') {
         const displayName = suggestion.displayName;
         const updatedMention = trigger + displayName;
@@ -156,20 +156,20 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
         } else {
           newHTMLValue =
             textValue.substring(0, selectionEnd - mention.length) +
-            getMentionHTMLValue(suggestion) +
+            htmlStringForMentionSuggestion(suggestion) +
             textValue.substring(selectionEnd);
         }
         onMentionAdd(updatedTextValue, newHTMLValue);
       }
-      setAtMentionQuery(undefined);
+      setMentionQuery(undefined);
 
       //set focus back to text field
       // textFieldRef?.current?.focus();
     },
-    [atMentionLookupOptions?.trigger, atMentionQuery, htmlValue, onMentionAdd, textFieldRef, textValue]
+    [atMentionLookupOptions?.trigger, mentionQuery, htmlValue, onMentionAdd, textFieldRef, textValue]
   );
 
-  const getMentionHTMLValue = (suggestion: AtMentionSuggestion): string => {
+  const htmlStringForMentionSuggestion = (suggestion: AtMentionSuggestion): string => {
     const userIdHTML = ' userId ="' + suggestion.userId + '"';
     const displayName = suggestion.displayName || '';
     const displayNameHTML = ' displayName ="' + displayName + '"';
@@ -188,34 +188,33 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       // Go see if there's a trigger character in the text, from the end of the string
       const lastTagIndex = newValue?.lastIndexOf(atMentionLookupOptions?.trigger ?? '@') ?? -1;
 
-      if (!!atMentionTagIndex && !!lastTagIndex) {
-        setAtMentionTagIndex(lastTagIndex);
+      if (!!currentTagIndex && !!lastTagIndex) {
+        setCurrentTagIndex(lastTagIndex);
       } else {
         // In the middle of a @mention lookup
         if (lastTagIndex === -1) {
-          setAtMentionTagIndex(undefined);
-          setAtMentionSuggestions([]);
+          setCurrentTagIndex(undefined);
+          setMentionSuggestions([]);
         } else {
           if (lastTagIndex > -1) {
             // This might want to be changed to not include the lookup tag. Currently it does.
             const query = newValue?.slice(lastTagIndex);
             if (!!query) {
               const suggestions = (await atMentionLookupOptions?.onQueryUpdated(query)) ?? [];
-              setAtMentionSuggestions(suggestions);
+              setMentionSuggestions(suggestions);
             }
           }
         }
       }
     }
-
     onChange && onChange(event, newValue);
   };
 
   return (
     <Stack className={mergedRootStyle}>
-      {atMentionSuggestions.length > 0 && (
+      {mentionSuggestions.length > 0 && (
         <_AtMentionFlyout
-          suggestions={atMentionSuggestions}
+          suggestions={mentionSuggestions}
           target={inputBoxRef}
           onSuggestionSelected={onSuggestionSelected}
         />
