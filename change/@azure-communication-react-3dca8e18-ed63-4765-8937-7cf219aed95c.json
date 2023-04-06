@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Created controlbar buttons and modals to start captions and change spoken language",
+  "packageName": "@azure/communication-react",
+  "email": "carolinecao@microsoft.com",
+  "dependentChangeType": "patch"
+}
