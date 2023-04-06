@@ -47,7 +47,8 @@ export type {
   VideoGalleryRemoteParticipant,
   VideoGalleryStream,
   VideoStreamOptions,
-  ViewScalingMode
+  ViewScalingMode,
+  _CaptionsAvailableLanguageStrings
 } from './types';
 
 /* @conditional-compile-remove(data-loss-prevention) */

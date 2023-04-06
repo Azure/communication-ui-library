@@ -247,7 +247,8 @@ export type {
   VideoStreamOptions,
   VideoTileProps,
   VideoTileStylesProps,
-  ViewScalingMode
+  ViewScalingMode,
+  _CaptionsAvailableLanguageStrings
 } from '../../react-components/src';
 /* @conditional-compile-remove(data-loss-prevention) */
 export type { BlockedMessage } from '../../react-components/src';
