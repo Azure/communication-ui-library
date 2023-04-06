@@ -186,3 +186,16 @@ async function createAzureCommunicationCallAdapter(args: AzureCommunicationChatA
 | **`credential`**  | [`CommunicationTokenCredential`](https://docs.microsoft.com/en-us/javascript/api/@azure/communication-common/azurecommunicationtokencredential) |
 | **`endpoint`**    | `string`                                                                                                                                        |
 | **`threadId`**    | `string`                                                                                                                                        |
+
+### createAzureCommunicationChatAdapterFromClient
+
+```ts
+async function createAzureCommunicationChatAdapterFromClient(
+  chatClient: StatefulChatClient,
+  chatThreadClient: ChatThreadClient,
+  options?: {
+    credential?: CommunicationTokenCredential;
+  }
+)
+```
+Noting that there's an optional field for `CommunicationTokenCredential` which is required for adding inline image support. To learn more about this, go to our storybook.
