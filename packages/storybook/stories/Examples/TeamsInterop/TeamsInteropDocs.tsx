@@ -5,6 +5,8 @@ import React from 'react';
 const CallComponentText = require('!!raw-loader!./snippets/CallComponent.snippet.tsx').default;
 const ComplianceBannerText = require('!!raw-loader!./snippets/ComplianceBanner.snippet.tsx').default;
 const LobbyComponentText = require('!!raw-loader!./snippets/Lobby.snippet.tsx').default;
+const InlineImageText = require('!!raw-loader!./snippets/InlineImage.snippet.tsx').default;
+
 
 export const getDocs: () => JSX.Element = () => {
   return (
@@ -27,6 +29,10 @@ export const getDocs: () => JSX.Element = () => {
       <Description>The Lobby component can be used for scenarios where the call is in a waiting state.</Description>
       <Heading>Create a Lobby Component</Heading>
       <Source code={LobbyComponentText} />
+      <Title>Inline Image Support</Title>
+      <Description>In the Chat scenarios where Teams user sends inline image to ACS user, there are few additional setup needed.</Description>
+      <Heading>Enable Inline Image Support</Heading>
+      <Source code={InlineImageText} />
     </>
   );
 };
