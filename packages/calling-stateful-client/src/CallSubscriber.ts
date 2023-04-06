@@ -62,13 +62,6 @@ export class CallSubscriber {
       this._context,
       this._call.feature(Features.Transcription)
     );
-    if (_isTeamsMeetingCall(this._call)) {
-      this._captionsSubscriber = new CaptionsSubscriber(
-        this._callIdRef,
-        this._context,
-        this._call.feature(Features.TeamsCaptions)
-      );
-    }
     /* @conditional-compile-remove(video-background-effects) */
     this._localVideoStreamVideoEffectsSubscribers = new Map();
 
@@ -168,6 +161,15 @@ export class CallSubscriber {
 
   private stateChanged = (): void => {
     this._context.setCallState(this._callIdRef.callId, this._call.state);
+
+    // subscribe to captions here so that we don't call captions when call is not initialized
+    if (_isTeamsMeetingCall(this._call) && this._call.state === 'Connected') {
+      this._captionsSubscriber = new CaptionsSubscriber(
+        this._callIdRef,
+        this._context,
+        this._call.feature(Features.TeamsCaptions)
+      );
+    }
   };
 
   private idChanged = (): void => {

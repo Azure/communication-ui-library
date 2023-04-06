@@ -23,8 +23,8 @@ export type _StartCaptionsButtonSelector = (
   props: CallingBaseSelectorProps
 ) => {
   checked: boolean;
-  currentCaptionLanguage: string;
-  currentSpokenLanguage?: string;
+  currentCaptionLanguage: string | undefined;
+  currentSpokenLanguage: string | undefined;
 };
 
 /**
@@ -37,7 +37,7 @@ export const startCaptionsButtonSelector: _StartCaptionsButtonSelector = reselec
   (isCaptionsFeatureActive, currentCaptionLanguage, currentSpokenLanguage) => {
     return {
       checked: isCaptionsFeatureActive ?? false,
-      currentCaptionLanguage: currentCaptionLanguage ?? 'en-us',
+      currentCaptionLanguage: currentCaptionLanguage,
       currentSpokenLanguage: currentSpokenLanguage
     };
   }
@@ -52,7 +52,7 @@ export type _ChangeSpokenLanguageSelector = (
   props: CallingBaseSelectorProps
 ) => {
   supportedSpokenLanguages: string[];
-  currentSpokenLanguage: string;
+  currentSpokenLanguage: string | undefined;
   isCaptionsFeatureActive: boolean;
 };
 
@@ -66,7 +66,7 @@ export const changeSpokenLanguageSelector: _ChangeSpokenLanguageSelector = resel
   (supportedSpokenLanguages, currentSpokenLanguage, isCaptionsFeatureActive) => {
     return {
       supportedSpokenLanguages: supportedSpokenLanguages ?? ['en-us'],
-      currentSpokenLanguage: currentSpokenLanguage ?? 'en-us',
+      currentSpokenLanguage: currentSpokenLanguage,
       isCaptionsFeatureActive: isCaptionsFeatureActive ?? false
     };
   }

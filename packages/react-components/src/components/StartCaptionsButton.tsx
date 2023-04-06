@@ -80,7 +80,7 @@ export const _StartCaptionsButton = (props: _StartCaptionsButtonProps): JSX.Elem
   };
 
   const captionsOptions: _captionsOptions = {
-    spokenLanguage: currentSpokenLanguage ?? 'en-us'
+    spokenLanguage: !currentSpokenLanguage || currentSpokenLanguage === '' ? 'en-us' : currentSpokenLanguage
   };
 
   const onToggleStartCaptions = (): void => {

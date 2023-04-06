@@ -47,6 +47,8 @@ export class CaptionsSubscriber {
 
   private onCaptionsReceived: TeamsCaptionsHandler = (caption: TeamsCaptionsInfo): void => {
     this._context.addCaption(this._callIdRef.callId, caption);
+    this._context.setSelectedSpokenLanguage(this._callIdRef.callId, caption.spokenLanguage);
+    this._context.setSelectedCaptionLanguage(this._callIdRef.callId, caption.spokenLanguage);
   };
 
   private isCaptionsActiveChanged: PropertyChangedEvent = (): void => {
