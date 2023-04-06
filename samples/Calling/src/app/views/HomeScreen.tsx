@@ -71,6 +71,8 @@ export interface HomeScreenProps {
     teamsToken?: string;
     /* @conditional-compile-remove(teams-identity-support) */
     teamsId?: string;
+    /* @conditional-compile-remove(teams-adhoc-call) */
+    teamsIds?: string[];
   }): void;
   joiningExistingCall: boolean;
 }
@@ -92,7 +94,9 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
     /* @conditional-compile-remove(one-to-n-calling) */
     { key: '1:N', text: 'Start a 1:N ACS Call' },
     /* @conditional-compile-remove(PSTN-calls) */
-    { key: 'PSTN', text: 'Start a PSTN Call' }
+    { key: 'PSTN', text: 'Start a PSTN Call' },
+    /* @conditional-compile-remove(teams-adhoc-call) */
+    { key: 'TeamsAdhoc', text: 'Call Teams User(s)' }
   ];
   /* @conditional-compile-remove(rooms) */
   const roomIdLabel = 'Room ID';
@@ -129,6 +133,8 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   const [teamsToken, setTeamsToken] = useState<string>();
   /* @conditional-compile-remove(teams-identity-support) */
   const [teamsId, setTeamsId] = useState<string>();
+  /* @conditional-compile-remove(teams-adhoc-call) */
+  const [teamsIds, setTeamsIds] = useState<string | undefined>();
 
   /* @conditional-compile-remove(PSTN-calls) */
   const [alternateCallerIdCalloutVisible, setAlternateCallerIdCalloutVisible] = useState<boolean>(false);
@@ -141,6 +147,8 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   const pstnCallChosen: boolean = chosenCallOption.key === 'PSTN';
   /* @conditional-compile-remove(PSTN-calls) */
   const acsCallChosen: boolean = chosenCallOption.key === '1:N';
+  /* @conditional-compile-remove(teams-adhoc-call) */
+  const teamsAdhocChosen: boolean = chosenCallOption.key === 'TeamsAdhoc';
 
   const buttonEnabled =
     (displayName || /* @conditional-compile-remove(teams-identity-support) */ teamsToken) &&
@@ -150,6 +158,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
       (((chosenCallOption.key === 'Rooms' && callLocator) || chosenCallOption.key === 'StartRooms') &&
         chosenRoomsRoleOption) ||
       /* @conditional-compile-remove(PSTN-calls) */ (pstnCallChosen && dialPadParticipant && alternateCallerId) ||
+      /* @conditional-compile-remove(teams-adhoc-call) */ (teamsAdhocChosen && teamsIds) ||
       /* @conditional-compile-remove(one-to-n-calling) */ (outboundParticipants && acsCallChosen) ||
       /* @conditional-compile-remove(teams-identity-support) */ (teamsIdentityChosen &&
         callLocator &&
@@ -258,6 +267,18 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
               )
             }
             {
+              /* @conditional-compile-remove(teams-adhoc-call) */ teamsAdhocChosen && (
+                <Stack>
+                  <TextField
+                    className={outboundTextField}
+                    label={"Teams ID's"}
+                    placeholder={"Comma seperated Teams ID's"}
+                    onChange={(_, newValue) => setTeamsIds(newValue)}
+                  />
+                </Stack>
+              )
+            }
+            {
               /* @conditional-compile-remove(PSTN-calls) */ pstnCallChosen && (
                 <Stack>
                   <Text style={{ paddingBottom: '0.5rem' }}>Please dial the number you wish to call.</Text>
@@ -323,6 +344,8 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                 displayName && saveDisplayNameToLocalStorage(displayName);
                 /* @conditional-compile-remove(one-to-n-calling) */
                 const acsParticipantsToCall = parseParticipants(outboundParticipants);
+                /* @conditional-compile-remove(teams-adhoc-call) */
+                const teamsParticipantsToCall = parseParticipants(teamsIds);
                 /* @conditional-compile-remove(PSTN-calls) */
                 const dialpadParticipantToCall = parseParticipants(dialPadParticipant);
                 props.startCallHandler({
@@ -340,7 +363,9 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                   /* @conditional-compile-remove(teams-identity-support) */
                   teamsToken,
                   /* @conditional-compile-remove(teams-identity-support) */
-                  teamsId
+                  teamsId,
+                  /* @conditional-compile-remove(teams-identity-support) */
+                  teamsIds: teamsParticipantsToCall
                 });
               }
             }}

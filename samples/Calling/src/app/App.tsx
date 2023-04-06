@@ -125,6 +125,9 @@ const App = (): JSX.Element => {
             /* @conditional-compile-remove(PSTN-calls) */
             callLocator = callLocator || getOutboundParticipants(callDetails.outboundParticipants);
 
+            /* @conditional-compile-remove(teams-adhoc-call) */
+            callLocator = callLocator || getOutboundParticipants(callDetails.teamsIds);
+
             callLocator = callLocator || createGroupId();
 
             /* @conditional-compile-remove(rooms) */
