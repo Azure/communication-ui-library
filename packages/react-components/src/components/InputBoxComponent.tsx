@@ -69,7 +69,7 @@ type InputBoxComponentProps = {
   /* @conditional-compile-remove(at-mention) */
   atMentionLookupOptions?: AtMentionLookupOptions;
   /* @conditional-compile-remove(at-mention) */
-  onMentionAdd: (newTextValue?: string | undefined, newHTMLValue?: string | undefined) => void;
+  onMentionAdd: (newTextValue?: string) => void;
 };
 
 /**
@@ -100,16 +100,31 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
   const [mentionQuery, setMentionQuery] = useState<string | undefined>(undefined);
   // Current suggestion list, provided by the callback
   const [mentionSuggestions, setMentionSuggestions] = useState<AtMentionSuggestion[]>([]);
+
   // Index of the current trigger character in the text field
   const [currentTagIndex, setCurrentTagIndex] = useState<number | undefined>(undefined);
-
   const [inputTextValue, setInputTextValue] = useState<string>('');
-  const [htmlValue, setHtmlValue] = useState<string | undefined>(undefined);
 
-  // This is a workaround for the fact that the TextField component does not support HTML input.
+  // Parse the text and look for <msft-at-mention> tags.
   useEffect(() => {
     // Get a plain text version to display in the input box, resetting state
-    console.log('Not implemented');
+    console.log('Need to parse input text and set the html versions if needed');
+    parseStringForMentions(textValue);
+    // Parse the text and look for <msft-at-mention> tags.
+    // Store the index and range of the tags.
+    // Store the details in an ordered array.
+    // [ {
+    //   tagType: string,
+    //   htmlOpenTagStartIndex: number,
+    //   openTagLength: number,
+    //   htmlCloseTagStartIndex: number, // Might not have a close tag
+    //   closeTagLength: number,        // Might not have a close tag
+    //   }
+    // ]
+    //
+    // Provide the plain text string to the inputTextValue
+    // setInputTextValue(parsedText)
+    //
   }, [textValue]);
 
   const mergedRootStyle = mergeStyles(inputBoxWrapperStyle, styles?.root);
@@ -142,10 +157,10 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
 
   const onSuggestionSelected = useCallback(
     (suggestion: AtMentionSuggestion) => {
-      //add default value for a trigger
       const trigger = atMentionLookupOptions?.trigger || '';
       const queryString = mentionQuery || '';
       const mention = trigger + queryString;
+
       if (mention !== '') {
         const displayName = suggestion.displayName;
         const updatedMention = trigger + displayName;
@@ -155,39 +170,29 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
         } else if (selectionEnd > inputTextValue.length) {
           selectionEnd = inputTextValue.length;
         }
-        const updatedTextValue =
+        // Grab the display name from the suggestion and add it to the
+        // input text value.
+        const updatedTextBoxValue =
           inputTextValue.substring(0, selectionEnd - mention.length) +
           updatedMention +
           inputTextValue.substring(selectionEnd);
-        let newHTMLValue: string | undefined;
-        if (htmlValue !== undefined) {
-          console.log('Not implemented');
-          console.log(htmlValue);
-        } else {
-          newHTMLValue =
-            inputTextValue.substring(0, selectionEnd - mention.length) +
-            htmlStringForMentionSuggestion(suggestion) +
-            inputTextValue.substring(selectionEnd);
-        }
-        onMentionAdd(updatedTextValue, newHTMLValue);
+
+        // Set the pass the new value back to the caller
+        let newHTMLValue =
+          inputTextValue.substring(0, selectionEnd - mention.length) +
+          htmlStringForMentionSuggestion(suggestion) +
+          inputTextValue.substring(selectionEnd);
+
+        setInputTextValue(updatedTextBoxValue);
+        onMentionAdd(newHTMLValue);
       }
       setMentionQuery(undefined);
 
       //set focus back to text field
       // textFieldRef?.current?.focus();
     },
-    [atMentionLookupOptions?.trigger, mentionQuery, htmlValue, onMentionAdd, textFieldRef, textValue]
+    [atMentionLookupOptions?.trigger, mentionQuery, onMentionAdd, textFieldRef, textValue]
   );
-
-  const htmlStringForMentionSuggestion = (suggestion: AtMentionSuggestion): string => {
-    const userIdHTML = ' userId ="' + suggestion.userId + '"';
-    const displayName = suggestion.displayName || '';
-    const displayNameHTML = ' displayName ="' + displayName + '"';
-    const suggestionTypeHTML = ' suggestionType ="' + suggestion.suggestionType + '"';
-    return (
-      '<msft-at-mention' + userIdHTML + displayNameHTML + suggestionTypeHTML + '>' + displayName + '</msft-at-mention>'
-    );
-  };
 
   const handleOnChange = async (
     event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -313,5 +318,105 @@ export const InputBoxButton = (props: InputBoxButtonProps): JSX.Element => {
         onRenderIcon={() => onRenderIcon(isHover)}
       />
     </TooltipHost>
+  );
+};
+
+/**
+ * @private
+ */
+type ParsedTag = {
+  tagType: string;
+  htmlOpenTagStartIndex: number;
+  openTagLength: number;
+  htmlCloseTagStartIndex?: number; // Might not have a close tag
+  closeTagLength?: number; // Might not have a close tag
+};
+
+/**
+ * Go through the text and parse out the tags
+ * This should be only <msft-at-mention> tags for now...
+ * We do need to remove all other HTML tags though...
+ *
+ * @private
+ */
+const parseStringForMentions = (text: string): ParsedTag[] => {
+  let index = 0;
+  let tags: ParsedTag[] = [];
+  let previousLetter = '';
+  console.log(text);
+  let currentOpenTagIndex = -1;
+  let currentTagStack: ParsedTag[] = [];
+
+  while (index < text.length) {
+    const letter = text[index];
+    if (letter == '<') {
+      if (currentOpenTagIndex === -1) {
+        // This is the start of a tag
+        currentOpenTagIndex = index;
+      } else {
+        console.error('Found a second open tag before a close tag!');
+        break;
+      }
+    } else if (letter == '>') {
+      if (currentOpenTagIndex === -1) {
+        console.error('Found a close tag before an open tag!');
+        break;
+      } else {
+        // This is the end of a tag
+        const tagBody = text.slice(currentOpenTagIndex + 1, index);
+        console.log('Tag body is ' + tagBody);
+
+        if (tagBody[tagBody.length - 1] === '/') {
+          // It's a self closing tag)
+        } else if (tagBody[0] === '/') {
+          // It's a close tag
+          let currentTag = currentTagStack.pop();
+          if (currentTag) {
+            currentTag.htmlCloseTagStartIndex = currentOpenTagIndex;
+            currentTag.closeTagLength = index - currentOpenTagIndex + 1;
+            tags.push(currentTag);
+            currentTag = undefined;
+          } else {
+            console.error('Should have an existing tag to complete!');
+          }
+        } else {
+          // It's an open tag
+          const tagElements = tagBody.split(' ');
+          const tagType = tagElements[0];
+          console.log(tagElements);
+
+          let currentTag = {
+            htmlOpenTagStartIndex: currentOpenTagIndex,
+            openTagLength: index - currentOpenTagIndex + 1,
+            tagType: tagType
+          };
+          currentTagStack.push(currentTag);
+        }
+        currentOpenTagIndex = -1;
+      }
+    }
+
+    previousLetter = letter;
+    index++;
+  }
+  return tags;
+};
+
+/**
+ * Given the text and the parsed tags, return the plain text to render in the input box
+ *
+ * @private
+ */
+const plainTextFromParsedTags = (textBlock: string, parsedTags: ParsedTag[]): string => {
+  return '';
+};
+
+const htmlStringForMentionSuggestion = (suggestion: AtMentionSuggestion): string => {
+  const userIdHTML = ' userId ="' + suggestion.userId + '"';
+  const displayName = suggestion.displayName || '';
+  const displayNameHTML = ' displayName ="' + displayName + '"';
+  const suggestionTypeHTML = ' suggestionType ="' + suggestion.suggestionType + '"';
+  return (
+    '<msft-at-mention' + userIdHTML + displayNameHTML + suggestionTypeHTML + '>' + displayName + '</msft-at-mention>'
   );
 };
