@@ -91,7 +91,7 @@ export const _CaptionsSettingModal = (props: _CaptionsSettingModalProps): JSX.El
     if (isCaptionsFeatureActive) {
       onSetSpokenLanguage(language);
     } else {
-      onStartCaptions({ spokenLanguage: selectedItem.text });
+      onStartCaptions({ spokenLanguage: language });
     }
     onDismissTriggered();
   };
@@ -154,7 +154,7 @@ export const _CaptionsSettingModal = (props: _CaptionsSettingModalProps): JSX.El
             <DefaultButton
               styles={buttonStyles(theme)}
               onClick={() => {
-                onClickConfirm(selectedItem.text);
+                onClickConfirm(selectedItem.key.toString());
               }}
             >
               <span>{strings.captionsSettingConfirmButtonLabel}</span>

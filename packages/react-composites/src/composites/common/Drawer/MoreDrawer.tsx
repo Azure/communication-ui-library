@@ -246,6 +246,7 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
   }
 
   //Captions drawer menu
+  const supportedLanguageStrings = useLocale().component.strings.captionsAvailableLanguages;
   const startCaptionsButtonProps = usePropsFor(_StartCaptionsButton);
   const changeSpokenLanguageProps = usePropsFor(_CaptionsSettingModal);
   const [isSpokenLanguageDrawerOpen, setIsSpokenLanguageDrawerOpen] = useState<boolean>(false);
@@ -258,7 +259,7 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
   const spokenLanguageDrawerItems: DrawerMenuItemProps[] | undefined = props.isCaptionsSupported
     ? changeSpokenLanguageProps?.supportedSpokenLanguages?.map((language) => ({
         itemKey: language,
-        text: language,
+        text: supportedLanguageStrings[language],
         onItemClick: () => {
           setCurrentSpokenLanguage(language);
         },
@@ -351,7 +352,7 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
     captionsDrawerItems.push({
       itemKey: 'ChangeSpokenLanguage',
       text: props.strings.spokenLanguageMenuTitle,
-      secondaryText: currentSpokenLanguage,
+      secondaryText: supportedLanguageStrings[currentSpokenLanguage],
       iconProps: {
         iconName: 'PersonIcon',
         styles: { root: { lineHeight: 0 } }
