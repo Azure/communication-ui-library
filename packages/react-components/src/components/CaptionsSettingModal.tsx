@@ -78,6 +78,7 @@ export const _CaptionsSettingModal = (props: _CaptionsSettingModalProps): JSX.El
   });
 
   const localeStrings = useLocale().strings.captionsSettingModal;
+  const supportedLanguageStrings = useLocale().strings.captionsAvailableLanguages;
   const strings = props.strings ?? localeStrings;
 
   const onDismissTriggered = (): void => {
@@ -96,7 +97,7 @@ export const _CaptionsSettingModal = (props: _CaptionsSettingModalProps): JSX.El
   };
 
   const dropdownOptions: IDropdownOption[] = supportedSpokenLanguages.map((language) => {
-    return { key: language, text: language };
+    return { key: language, text: supportedLanguageStrings[language] };
   });
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

@@ -41,6 +41,7 @@ import { UnsupportedBrowserVersionStrings } from '../components/UnsupportedBrows
 import { UnsupportedOperatingSystemStrings } from '../components/UnsupportedOperatingSystem';
 /* @conditional-compile-remove(vertical-gallery) */
 import { VerticalGalleryStrings } from '../components/VerticalGallery';
+import { _CaptionsAvailableLanguageStrings } from '../types/CaptionsAvailableLanguageStrings';
 
 /**
  * Locale information for all components exported from this library.
@@ -160,6 +161,7 @@ export interface ComponentStrings {
   startCaptionsButton: _StartCaptionsButtonStrings;
   /** Strings for Captions Setting Modal */
   captionsSettingModal: _CaptionsSettingModalStrings;
+  captionsAvailableLanguages: _CaptionsAvailableLanguageStrings;
 }
 
 /**
