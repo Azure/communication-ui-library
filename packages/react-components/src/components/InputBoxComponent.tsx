@@ -97,7 +97,13 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     onMentionAdd
   } = props;
   const inputBoxRef = useRef(null);
+
+  // Current @mention query to pass to the callback - DOES THIS NEED TO BE STATE?
   const [atMentionQuery, setAtMentionQuery] = useState<string | undefined>(undefined);
+  // Current suggestion list, provided by the callback
+  const [atMentionSuggestions, setAtMentionSuggestions] = useState<AtMentionSuggestion[]>([]);
+  // Index of the current trigger character in the text field
+  const [atMentionTagIndex, setAtMentionTagIndex] = useState<number | undefined>(undefined);
 
   const mergedRootStyle = mergeStyles(inputBoxWrapperStyle, styles?.root);
   const mergedTextFiledStyle = mergeStyles(
@@ -133,8 +139,8 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       const trigger = atMentionLookupOptions?.trigger || '';
       const mentionQuery = atMentionQuery || '';
       const mention = trigger + mentionQuery;
-      if (mention !== '' && suggestion.displayName !== undefined) {
-        const displayName = suggestion.displayName || '';
+      if (mention !== '') {
+        const displayName = suggestion.displayName;
         const updatedMention = trigger + displayName;
         let selectionEnd = textFieldRef?.current?.selectionEnd || 0;
         if (selectionEnd < 0) {
@@ -156,6 +162,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
         onMentionAdd(updatedTextValue, newHTMLValue);
       }
       setAtMentionQuery(undefined);
+
       //set focus back to text field
       textFieldRef?.current?.focus();
     },
@@ -172,50 +179,47 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     );
   };
 
-  // Temporary implementation for AtMentionFlyout's position.
-  const handleOnChange = (
+  const handleOnChange = async (
     event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>,
     newValue?: string | undefined
-  ): void => {
-    // !isMentioning && last char is trigger
-    // if (!isMentioning) {
-    //   setIsMentioning(true);
-    //   setAtMentionQuery(newValue);
-    // } else if (isMentioning) {
-    //   setIsMentioning(false);
-    //   setAtMentionQuery(undefined);
-    // }
-    // setAtMentionQuery(newValue);
-    setAtMentionQuery('Pa');
+  ): Promise<void> => {
+    // If we are enabled for lookups,
+    if (!!atMentionLookupOptions) {
+      // Go see if there's a trigger character in the text, from the end of the string
+      const lastTagIndex = (newValue && newValue.lastIndexOf(atMentionLookupOptions?.trigger ?? '@')) ?? -1;
+
+      if (!!atMentionTagIndex && !!lastTagIndex) {
+        setAtMentionTagIndex(lastTagIndex);
+      } else {
+        // In the middle of a @mention lookup
+        if (lastTagIndex === -1) {
+          setAtMentionTagIndex(undefined);
+        } else {
+          if (lastTagIndex > -1) {
+            // This might want to be changed to not include the lookup tag. Currently it does.
+            const query = newValue?.slice(lastTagIndex);
+            if (!!query) {
+              console.log(query);
+              const suggestions = (await atMentionLookupOptions?.onQueryUpdated(query)) ?? [];
+              setAtMentionSuggestions(suggestions);
+            }
+          }
+        }
+      }
+    }
+
     onChange && onChange(event, newValue);
   };
 
-  const fakeData: AtMentionSuggestion[] = [
-    {
-      userId: '1',
-      suggestionType: 'person',
-      displayName: ''
-    },
-    {
-      userId: '2',
-      suggestionType: 'person',
-      displayName: 'Patricia Adams'
-    },
-    {
-      userId: '3',
-      suggestionType: 'person',
-      displayName: '1'
-    },
-    {
-      userId: '4',
-      suggestionType: 'person',
-      displayName: '2'
-    }
-  ];
-
   return (
     <Stack className={mergedRootStyle}>
-      <_AtMentionFlyout suggestions={fakeData} target={inputBoxRef} onSuggestionSelected={onSuggestionSelected} />
+      {atMentionSuggestions.length > 0 && (
+        <_AtMentionFlyout
+          suggestions={atMentionSuggestions}
+          target={inputBoxRef}
+          onSuggestionSelected={onSuggestionSelected}
+        />
+      )}
       <div className={mergedTextContainerStyle}>
         <TextField
           autoFocus={props.autoFocus === 'sendBoxTextField'}
