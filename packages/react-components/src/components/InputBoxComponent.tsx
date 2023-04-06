@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React, { useState, ReactNode, FormEvent, useCallback, useRef } from 'react';
+import React, { useState, ReactNode, FormEvent, useCallback, useEffect, useRef } from 'react';
 import {
   Stack,
   TextField,
@@ -53,8 +53,7 @@ type InputBoxComponentProps = {
   inlineChildren: boolean;
   'data-ui-id'?: string;
   id?: string;
-  textValue: string;
-  htmlValue?: string;
+  textValue: string; // This could be plain text or HTML.
   onChange: (event: FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string | undefined) => void;
   textFieldRef?: React.RefObject<ITextField>;
   inputClassName?: string;
@@ -82,7 +81,6 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     id,
     'data-ui-id': dataUiId,
     textValue,
-    htmlValue,
     onChange,
     textFieldRef,
     placeholderText,
@@ -105,6 +103,15 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
   // Index of the current trigger character in the text field
   const [currentTagIndex, setCurrentTagIndex] = useState<number | undefined>(undefined);
 
+  const [inputTextValue, setInputTextValue] = useState<string>('');
+  const [htmlValue, setHtmlValue] = useState<string | undefined>(undefined);
+
+  // This is a workaround for the fact that the TextField component does not support HTML input.
+  useEffect(() => {
+    // Get a plain text version to display in the input box, resetting state
+    console.log('Not implemented');
+  }, [textValue]);
+
   const mergedRootStyle = mergeStyles(inputBoxWrapperStyle, styles?.root);
   const mergedTextFiledStyle = mergeStyles(
     inputBoxStyle,
@@ -118,7 +125,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     errorMessage: styles?.systemMessage
   });
 
-  const onTexFieldKeyDown = useCallback(
+  const onTextFieldKeyDown = useCallback(
     (ev: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       // Uses KeyCode 229 and which code 229 to determine if the press of the enter key is from a composition session or not (Safari only)
       if (ev.nativeEvent.isComposing || ev.nativeEvent.keyCode === 229 || ev.nativeEvent.which === 229) {
@@ -145,20 +152,22 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
         let selectionEnd = textFieldRef?.current?.selectionEnd || 0;
         if (selectionEnd < 0) {
           selectionEnd = 0;
-        } else if (selectionEnd > textValue.length) {
-          selectionEnd = textValue.length;
+        } else if (selectionEnd > inputTextValue.length) {
+          selectionEnd = inputTextValue.length;
         }
         const updatedTextValue =
-          textValue.substring(0, selectionEnd - mention.length) + updatedMention + textValue.substring(selectionEnd);
+          inputTextValue.substring(0, selectionEnd - mention.length) +
+          updatedMention +
+          inputTextValue.substring(selectionEnd);
         let newHTMLValue: string | undefined;
         if (htmlValue !== undefined) {
           console.log('Not implemented');
           console.log(htmlValue);
         } else {
           newHTMLValue =
-            textValue.substring(0, selectionEnd - mention.length) +
+            inputTextValue.substring(0, selectionEnd - mention.length) +
             htmlStringForMentionSuggestion(suggestion) +
-            textValue.substring(selectionEnd);
+            inputTextValue.substring(selectionEnd);
         }
         onMentionAdd(updatedTextValue, newHTMLValue);
       }
@@ -208,6 +217,8 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
         }
       }
     }
+    // TODO: filter the call back to the parent only after setting the text with HTML where
+    // appropriate.
     onChange && onChange(event, newValue);
   };
 
@@ -232,10 +243,13 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
           id={id}
           inputClassName={mergedTextFiledStyle}
           placeholder={placeholderText}
-          value={textValue}
-          onChange={handleOnChange}
+          value={inputTextValue}
+          onChange={(e, newValue) => {
+            setInputTextValue(newValue ?? '');
+            handleOnChange(e, newValue);
+          }}
           autoComplete="off"
-          onKeyDown={onTexFieldKeyDown}
+          onKeyDown={onTextFieldKeyDown}
           styles={mergedTextFieldStyle}
           disabled={disabled}
           errorMessage={errorMessage}
