@@ -123,9 +123,9 @@ export type CallAdapterClientState = {
   videoBackgroundImages?: VideoBackgroundImage[];
   /* @conditional-compile-remove(video-background-effects) */
   /**
-   * Default set of background images for background replacement effect.
+   * State to track the selected video background effect.
    */
-  selectedVideoBackgroundEffect?: VideoBackgroundEffect;
+  selectedVideoBackgroundEffect?: SelectedVideoBackgroundEffect;
 };
 
 /**
@@ -258,15 +258,40 @@ export interface VideoBackgroundImage {
  *
  * @beta
  */
-export interface VideoBackgroundEffect {
-  /**
-   * Type of video background effect, can be Blur, Replacement or None.
-   */
-  type: 'Blur' | 'Replacement' | 'None';
-  /**
-   * Configuration details of selected video background effect.
-   */
-  videoEffectConfig?: BackgroundBlurConfig | BackgroundReplacementConfig;
+export type SelectedVideoBackgroundEffect =
+  | VideoBackgroundNoneEffect
+  | VideoBackgroundBlurEffect
+  | VideoBackgroundReplacementEffect;
+
+/* @conditional-compile-remove(video-background-effects) */
+/**
+ * Contains the attibutes to remove video background effect
+ *
+ * @beta
+ */
+export interface VideoBackgroundNoneEffect {
+  effectKey: 'none';
+}
+
+/* @conditional-compile-remove(video-background-effects) */
+/**
+ * Contains the attibutes of the blur video background effect
+ *
+ * @beta
+ */
+export interface VideoBackgroundBlurEffect {
+  effectKey: 'blur';
+}
+
+/* @conditional-compile-remove(video-background-effects) */
+/**
+ * Contains the attibutes of a selected replacement video background effect
+ *
+ * @beta
+ */
+export interface VideoBackgroundReplacementEffect {
+  effectKey: string;
+  backgroundImageUrl: string;
 }
 
 /**
@@ -427,6 +452,13 @@ export interface CallAdapterCallOperations {
    * @beta
    */
   updateBackgroundPickerImages(backgroundImages: VideoBackgroundImage[]): void;
+  /* @conditional-compile-remove(video-background-effects) */
+  /**
+   * Update the selected video background effect.
+   *
+   * @beta
+   */
+  updateSelectedVideoBackgroundEffect(selectedVideoBackground: SelectedVideoBackgroundEffect): void;
 }
 
 /**

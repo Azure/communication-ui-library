@@ -57,7 +57,7 @@ import {
   CallAdapter
 } from './CallAdapter';
 /* @conditional-compile-remove(video-background-effects) */
-import { VideoBackgroundImage, VideoBackgroundEffect } from './CallAdapter';
+import { VideoBackgroundImage, SelectedVideoBackgroundEffect } from './CallAdapter';
 /* @conditional-compile-remove(teams-identity-support) */
 import { TeamsCallAdapter } from './CallAdapter';
 import { getCallCompositePage, IsCallEndedPage, isCameraOn, isValidIdentifier } from '../utils';
@@ -221,7 +221,7 @@ class CallContext {
   }
 
   /* @conditional-compile-remove(video-background-effects) */
-  public setSelectedVideoBackgroundEffect(selectedVideoBackgroundEffect?: VideoBackgroundEffect): void {
+  public setSelectedVideoBackgroundEffect(selectedVideoBackgroundEffect?: SelectedVideoBackgroundEffect): void {
     this.setState({ ...this.state, selectedVideoBackgroundEffect });
   }
 }
@@ -574,31 +574,24 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
 
   /* @conditional-compile-remove(video-background-effects) */
   public async blurVideoBackground(backgroundBlurConfig?: BackgroundBlurConfig): Promise<void> {
-    this.context.setSelectedVideoBackgroundEffect({
-      type: 'Blur',
-      videoEffectConfig: backgroundBlurConfig
-    });
     await this.handlers.onBlurVideoBackground(backgroundBlurConfig);
   }
   /* @conditional-compile-remove(video-background-effects) */
   public async replaceVideoBackground(backgroundReplacementConfig: BackgroundReplacementConfig): Promise<void> {
-    this.context.setSelectedVideoBackgroundEffect({
-      type: 'Replacement',
-      videoEffectConfig: backgroundReplacementConfig
-    });
     await this.handlers.onReplaceVideoBackground(backgroundReplacementConfig);
   }
 
   /* @conditional-compile-remove(video-background-effects) */
   public async stopVideoBackgroundEffect(): Promise<void> {
-    this.context.setSelectedVideoBackgroundEffect({
-      type: 'None'
-    });
     await this.handlers.onRemoveVideoBackgroundEffects();
   }
   /* @conditional-compile-remove(video-background-effects) */
   public updateBackgroundPickerImages(backgroundImages: VideoBackgroundImage[]): void {
     this.context.setBackroundPickerImages(backgroundImages);
+  }
+  /* @conditional-compile-remove(video-background-effects) */
+  public updateSelectedVideoBackgroundEffect(selectedVideoBackground: SelectedVideoBackgroundEffect): void {
+    this.context.setSelectedVideoBackgroundEffect(selectedVideoBackground);
   }
 
   public startCall(

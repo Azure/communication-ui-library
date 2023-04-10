@@ -11,7 +11,12 @@ import { _VideoEffectsItemProps } from '@internal/react-components';
 /* @conditional-compile-remove(video-background-effects) */
 import { _VideoBackgroundEffectsPicker } from '@internal/react-components';
 /* @conditional-compile-remove(video-background-effects) */
-import { VideoBackgroundImage } from '../CallComposite';
+import {
+  VideoBackgroundImage,
+  VideoBackgroundBlurEffect,
+  VideoBackgroundNoneEffect,
+  VideoBackgroundReplacementEffect
+} from '../CallComposite';
 import { CallAdapter, CommonCallAdapter } from '../CallComposite';
 
 /**
@@ -76,14 +81,27 @@ export const VideoEffectsPane = (props: {
     async (effectKey: string) => {
       if (effectKey === 'blur') {
         props.adapter.blurVideoBackground();
+        const blurEffect: VideoBackgroundBlurEffect = {
+          effectKey
+        };
+        props.adapter.updateSelectedVideoBackgroundEffect(blurEffect);
       } else if (effectKey === 'none') {
         props.adapter.stopVideoBackgroundEffect();
+        const noneEffect: VideoBackgroundNoneEffect = {
+          effectKey
+        };
+        props.adapter.updateSelectedVideoBackgroundEffect(noneEffect);
       } else {
         const backgroundImg = selectableVideoEffects.find((effect) => {
           return effect.key === effectKey;
         });
         if (backgroundImg && backgroundImg.backgroundProps) {
           props.adapter.replaceVideoBackground({ backgroundImageUrl: backgroundImg.backgroundProps.url });
+          const replaceEffect: VideoBackgroundReplacementEffect = {
+            effectKey,
+            backgroundImageUrl: backgroundImg.backgroundProps.url
+          };
+          props.adapter.updateSelectedVideoBackgroundEffect(replaceEffect);
         }
       }
     },
