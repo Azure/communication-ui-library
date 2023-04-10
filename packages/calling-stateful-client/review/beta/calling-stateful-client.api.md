@@ -131,7 +131,7 @@ export interface CaptionsCallFeatureState {
     currentSpokenLanguage: string;
     isCaptionsFeatureActive: boolean;
     supportedCaptionLanguages: string[];
-    supportedSpokenLangauges: string[];
+    supportedSpokenLanguages: string[];
 }
 
 // @beta (undocumented)

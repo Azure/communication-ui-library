@@ -13,10 +13,11 @@ import {
   LatestNetworkDiagnostics,
   MediaStreamType,
   RemoteParticipantState as RemoteParticipantStatus,
-  CaptionsResultType,
   ScalingMode,
   VideoDeviceInfo
 } from '@azure/communication-calling';
+/* @conditional-compile-remove(close-captions) */
+import { CaptionsResultType } from '@azure/communication-calling';
 /* @conditional-compile-remove(video-background-effects) */
 import { VideoEffectName } from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-identity-support) */
@@ -48,6 +49,7 @@ export interface CallAgentState {
   displayName?: string;
 }
 
+/* @conditional-compile-remove(close-captions) */
 /**
  * @beta
  */
@@ -82,15 +84,15 @@ export interface CaptionsInfo {
   spokenText?: string;
 }
 
+/* @conditional-compile-remove(close-captions) */
 /**
- *
  * @beta
  */
 export interface CaptionsCallFeatureState {
   /**
    * supported spoken languages
    */
-  supportedSpokenLangauges: string[];
+  supportedSpokenLanguages: string[];
   /**
    * array of received captions
    */
@@ -345,6 +347,7 @@ export interface CallState {
    * Proxy of {@link @azure/communication-calling#TranscriptionCallFeature}.
    */
   transcription: TranscriptionCallFeatureState;
+  /* @conditional-compile-remove(close-captions) */
   /**
    * Proxy of {@link @azure/communication-calling#TranscriptionCallFeature}.
    */
