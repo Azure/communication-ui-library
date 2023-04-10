@@ -81,16 +81,20 @@ export interface CommonCallingHandlers {
   onBlurVideoBackground: (backgroundBlurConfig?: BackgroundBlurConfig) => Promise<void>;
   /* @conditional-compile-remove(video-background-effects) */
   onReplaceVideoBackground: (backgroundReplacementConfig: BackgroundReplacementConfig) => Promise<void>;
-  OnStartCaptions: (captionsOptions?: captionsOptions) => Promise<void>;
-  OnStopCaptions: () => Promise<void>;
-  OnSetSpokenLanguage: (language: string) => Promise<void>;
-  OnSetCaptionLanguage: (language: string) => Promise<void>;
+  /* @conditional-compile-remove(close-captions) */
+  onStartCaptions: (captionsOptions?: captionsOptions) => Promise<void>;
+  /* @conditional-compile-remove(close-captions) */
+  onStopCaptions: () => Promise<void>;
+  /* @conditional-compile-remove(close-captions) */
+  onSetSpokenLanguage: (language: string) => Promise<void>;
+  /* @conditional-compile-remove(close-captions) */
+  onSetCaptionLanguage: (language: string) => Promise<void>;
 }
 
 /**
  * options bag to start captions
  *
- * @public
+ * @beta
  */
 export type captionsOptions = {
   spokenLanguage: string;
@@ -424,18 +428,20 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
           .startEffects(new BackgroundReplacementEffect(backgroundReplacementConfig));
       }
     };
-
-    const OnStartCaptions = async (captionsOptions?: captionsOptions): Promise<void> => {
+    /* @conditional-compile-remove(close-captions) */
+    const onStartCaptions = async (captionsOptions?: captionsOptions): Promise<void> => {
       await call?.feature(Features.TeamsCaptions).startCaptions(captionsOptions);
     };
-    const OnStopCaptions = async (): Promise<void> => {
+    /* @conditional-compile-remove(close-captions) */
+    const onStopCaptions = async (): Promise<void> => {
       await call?.feature(Features.TeamsCaptions).stopCaptions();
     };
-    const OnSetSpokenLanguage = async (language: string): Promise<void> => {
+    /* @conditional-compile-remove(close-captions) */
+    const onSetSpokenLanguage = async (language: string): Promise<void> => {
       await call?.feature(Features.TeamsCaptions).setSpokenLanguage(language);
     };
-
-    const OnSetCaptionLanguage = async (language: string): Promise<void> => {
+    /* @conditional-compile-remove(close-captions) */
+    const onSetCaptionLanguage = async (language: string): Promise<void> => {
       await call?.feature(Features.TeamsCaptions).setCaptionLanguage(language);
     };
 
@@ -469,10 +475,14 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       onBlurVideoBackground,
       /* @conditional-compile-remove(video-background-effects) */
       onReplaceVideoBackground,
-      OnStartCaptions,
-      OnStopCaptions,
-      OnSetCaptionLanguage,
-      OnSetSpokenLanguage
+      /* @conditional-compile-remove(close-captions) */
+      onStartCaptions,
+      /* @conditional-compile-remove(close-captions) */
+      onStopCaptions,
+      /* @conditional-compile-remove(close-captions) */
+      onSetCaptionLanguage,
+      /* @conditional-compile-remove(close-captions) */
+      onSetSpokenLanguage
     };
   }
 );

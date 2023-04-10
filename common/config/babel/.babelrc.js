@@ -14,6 +14,8 @@ process.env['COMMUNICATION_REACT_FLAVOR'] === 'stable' &&
         'calling-beta-sdk',
         // Participant pane in the `ChatComposite`.
         'chat-composite-participant-pane',
+        // Close captions feature
+        'close-captions',
         // API for injecting custom buttons in he control bar for
         // `CallComposite` and `CallWithChatComposite`.
         'control-bar-button-injection',

@@ -40,6 +40,7 @@ export const _isTeamsCallAgent = (callAgent: CallAgentCommon): callAgent is Team
   return false;
 };
 
+/* @conditional-compile-remove(close-captions) */
 /**
  * @private
  * Determine whether a call is:
