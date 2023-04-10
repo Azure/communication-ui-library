@@ -91,6 +91,7 @@ export abstract class ProxyCallCommon implements ProxyHandler<CallCommon> {
   }
 }
 
+/* @conditional-compile-remove(close-captions) */
 /**
  * @private
  */
