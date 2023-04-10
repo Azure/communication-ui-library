@@ -52,6 +52,8 @@ import { useCallWithChatCompositeStrings } from '../../CallWithChatComposite/hoo
 /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
 import { getPage } from '../selectors/baseSelectors';
 import { drawerContainerStyles } from '../styles/CallComposite.styles';
+/* @conditional-compile-remove(video-background-effects) */
+import { VideoEffectsPane } from '../../common/VideoEffectsPane';
 
 /**
  * @private
@@ -128,6 +130,17 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
       placeholderText: callWithChatStrings.dtmfDialpadPlaceholderText
     }),
     [callWithChatStrings]
+  );
+
+  /* @conditional-compile-remove(video-background-effects) */
+  const [showVideoEffectsPane, setVideoEffectsPane] = useState(false);
+
+  /* @conditional-compile-remove(video-background-effects) */
+  const setShowVideoEffectsPane = useCallback(
+    (showVideoEffectsOptions: boolean): void => {
+      setVideoEffectsPane(showVideoEffectsOptions);
+    },
+    [setVideoEffectsPane]
   );
 
   const [showDrawer, setShowDrawer] = useState(false);
@@ -247,12 +260,15 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                 ) : (
                   <CommonCallControlBar
                     {...props.callControlProps}
+                    callControls={props.callControlProps.options}
                     callAdapter={adapter as CallAdapter}
                     mobileView={props.mobileView}
                     disableButtonsForLobbyPage={isInLobby}
                     peopleButtonChecked={activePane === 'people'}
                     onPeopleButtonClicked={togglePeoplePane}
                     onMoreButtonClicked={onMoreButtonClicked}
+                    /* @conditional-compile-remove(video-background-effects) */
+                    onShowVideoEffectsPicker={setShowVideoEffectsPane}
                   />
                 )}
               </Stack.Item>
@@ -311,6 +327,14 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
               callPaneContent()
             }
           </Stack>
+          {
+            /* @conditional-compile-remove(video-background-effects) */
+            <VideoEffectsPane
+              showVideoEffectsOptions={showVideoEffectsPane}
+              setshowVideoEffectsOptions={setShowVideoEffectsPane}
+              adapter={adapter}
+            />
+          }
         </Stack>
       </Stack>
     </div>
