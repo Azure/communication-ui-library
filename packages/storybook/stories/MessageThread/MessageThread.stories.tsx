@@ -176,7 +176,7 @@ const getDocs: () => JSX.Element = () => {
         <MessageThreadWithMessageStatusIndicatorExample />
       </Canvas>
 
-      <Heading>Cutom Message Status Indicator</Heading>
+      <Heading>Custom Message Status Indicator</Heading>
       <Description>
         The example below shows how to render a `custom` message status indicator with `onRenderMessageStatus` in
         `MessageThread`
@@ -235,7 +235,7 @@ const MessageThreadStory = (args): JSX.Element => {
 
   const onSendNewMessage = (): void => {
     const existingChatMessages = chatMessages;
-    // We dont want to render the status for previous messages
+    // We don't want to render the status for previous messages
     existingChatMessages.forEach((message) => {
       if (message.messageType === 'chat') {
         message.status = 'seen';

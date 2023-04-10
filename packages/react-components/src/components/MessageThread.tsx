@@ -360,6 +360,7 @@ const memoizeAllMessages = memoizeFnAll(
     readCount?: number,
     onRenderMessage?: (message: MessageProps, defaultOnRender?: MessageRenderer) => JSX.Element,
     onUpdateMessage?: UpdateMessageCallback,
+    onCancelMessageEdit?: CancelEditCallback,
     onDeleteMessage?: (messageId: string) => Promise<void>,
     onSendMessage?: (content: string) => Promise<void>,
     disableEditing?: boolean
@@ -369,6 +370,7 @@ const memoizeAllMessages = memoizeFnAll(
       strings,
       showDate: showMessageDate,
       onUpdateMessage,
+      onCancelMessageEdit,
       onDeleteMessage,
       onSendMessage,
       disableEditing
@@ -512,6 +514,19 @@ export type UpdateMessageCallback = (
     attachedFilesMetadata?: FileMetadata[];
   }
 ) => Promise<void>;
+/**
+ * @public
+ * Callback function run when a message edit is cancelled.
+ */
+export type CancelEditCallback = (
+  messageId: string,
+  /* @conditional-compile-remove(file-sharing) */
+  metadata?: Record<string, string>,
+  /* @conditional-compile-remove(file-sharing) */
+  options?: {
+    attachedFilesMetadata?: FileMetadata[];
+  }
+) => void;
 
 /**
  * Props for {@link MessageThread}.
@@ -636,6 +651,12 @@ export type MessageThreadProps = {
   onUpdateMessage?: UpdateMessageCallback;
 
   /**
+   * Optional callback for when a message edit is cancelled.
+   *
+   * @param messageId - message id from chatClient
+   */
+  onCancelMessageEdit?: CancelEditCallback;
+  /**
    * Optional callback to delete a message.
    *
    * @param messageId - message id from chatClient
@@ -726,6 +747,12 @@ export type MessageProps = {
   onUpdateMessage?: UpdateMessageCallback;
 
   /**
+   * Optional callback for when a message edit is cancelled.
+   *
+   * @param messageId - message id from chatClient
+   */
+  onCancelMessageEdit?: CancelEditCallback;
+  /**
    * Optional callback to delete a message.
    *
    * @param messageId - message id from chatClient
@@ -771,6 +798,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     onRenderJumpToNewMessageButton,
     onRenderMessage,
     onUpdateMessage,
+    onCancelMessageEdit,
     onDeleteMessage,
     onSendMessage,
     /* @conditional-compile-remove(date-time-customization) */
@@ -1016,7 +1044,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   }, [newMessages]);
 
   /**
-   * This needs to run after messages are rendererd so we can manipulate the scroll bar.
+   * This needs to run after messages are rendered so we can manipulate the scroll bar.
    */
   useEffect(() => {
     // If user just sent the latest message then we assume we can move user to bottom of scroll.
@@ -1192,6 +1220,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
             readCountForHoveredIndicator,
             onRenderMessage,
             onUpdateMessage,
+            onCancelMessageEdit,
             onDeleteMessage,
             onSendMessage,
             props.disableEditing
@@ -1214,6 +1243,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
       readCountForHoveredIndicator,
       onRenderMessage,
       onUpdateMessage,
+      onCancelMessageEdit,
       onDeleteMessage,
       onSendMessage,
       lastSeenChatMessage,
