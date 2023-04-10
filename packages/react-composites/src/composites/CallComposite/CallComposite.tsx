@@ -311,16 +311,10 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
       );
       break;
     /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
-    case holdPageTrampoline():
+    case 'hold':
       pageElement = (
         <>
-          {
-            /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ <HoldPage
-              mobileView={props.mobileView}
-              modalLayerHostId={props.modalLayerHostId}
-              options={props.options}
-            />
-          }
+          {<HoldPage mobileView={props.mobileView} modalLayerHostId={props.modalLayerHostId} options={props.options} />}
         </>
       );
       break;
@@ -432,13 +426,6 @@ export const CallComposite = (props: CallCompositeProps): JSX.Element => {
       </BaseProvider>
     </div>
   );
-};
-
-const holdPageTrampoline = (): string => {
-  /* @conditional-compile-remove(one-to-n-calling) */
-  /* @conditional-compile-remove(PSTN-calls) */
-  return 'hold';
-  return 'call';
 };
 
 const getQueryOptions = (options: { /* @conditional-compile-remove(rooms) */ role?: Role }): PermissionConstraints => {
