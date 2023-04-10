@@ -100,6 +100,10 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
 
   const [showCaptionsSettingModal, setShowCaptionsSettingModal] = useState(false);
 
+  const onDismissCaptionsSetting = useCallback((): void => {
+    setShowCaptionsSettingModal(false);
+  }, []);
+
   const handleResize = useCallback((): void => {
     setControlBarButtonsWidth(controlBarContainerRef.current ? controlBarContainerRef.current.offsetWidth : 0);
     setPanelsButtonsWidth(sidepaneControlsRef.current ? sidepaneControlsRef.current.offsetWidth : 0);
@@ -224,10 +228,6 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
 
   const openCaptionsSettingModal = (): void => {
     setShowCaptionsSettingModal(true);
-  };
-
-  const onDismissCaptionsSetting = (): void => {
-    setShowCaptionsSettingModal(false);
   };
 
   return (

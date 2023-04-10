@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 import React from 'react';
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useCallback } from 'react';
 import {
   IModalStyles,
   Modal,
@@ -26,6 +26,7 @@ import {
 } from './styles/CaptionsSettingModal.styles';
 import { useLocale } from '../localization';
 import { _captionsOptions } from './StartCaptionsButton';
+import { _preventDismissOnEvent } from '@internal/acs-ui-common';
 /**
  * @internal
  * strings for captions setting modal
@@ -80,27 +81,37 @@ export const _CaptionsSettingModal = (props: _CaptionsSettingModalProps): JSX.El
   const localeStrings = useLocale().strings.captionsSettingModal;
   const strings = props.strings ?? localeStrings;
 
-  const onDismissTriggered = (): void => {
+  const onDismissTriggered = useCallback((): void => {
     if (onDismissCaptionsSetting) {
       onDismissCaptionsSetting();
     }
-  };
+  }, [onDismissCaptionsSetting]);
 
-  const onClickConfirm = (language: string): void => {
-    if (isCaptionsFeatureActive) {
-      onSetSpokenLanguage(language);
-    } else {
-      onStartCaptions({ spokenLanguage: selectedItem.text });
-    }
-    onDismissTriggered();
-  };
+  const onClickConfirm = useCallback(
+    (language: string): void => {
+      if (isCaptionsFeatureActive) {
+        onSetSpokenLanguage(language);
+      } else {
+        onStartCaptions({ spokenLanguage: selectedItem.text });
+      }
+      onDismissTriggered();
+    },
+    [isCaptionsFeatureActive, onDismissTriggered, onSetSpokenLanguage, onStartCaptions, selectedItem.text]
+  );
 
-  const dropdownOptions: IDropdownOption[] = supportedSpokenLanguages.map((language) => {
-    return { key: language, text: language };
-  });
+  const dropdownOptions: IDropdownOption[] = useMemo(
+    () =>
+      supportedSpokenLanguages.map((language) => {
+        return { key: language, text: language };
+      }),
+    [supportedSpokenLanguages]
+  );
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const onChange = (event: React.FormEvent<HTMLDivElement>, option: IDropdownOption<any> | undefined): void => {
+  const calloutProps = useMemo(() => {
+    _preventDismissOnEvent;
+  }, []);
+
+  const onChange = (event: React.FormEvent<HTMLDivElement>, option: IDropdownOption | undefined): void => {
     if (option) {
       setSelectedItem(option);
     }
@@ -117,6 +128,7 @@ export const _CaptionsSettingModal = (props: _CaptionsSettingModalProps): JSX.El
           placeholder={currentSpokenLanguage !== '' ? currentSpokenLanguage : 'en-us'}
           options={dropdownOptions}
           styles={dropdownStyles}
+          calloutProps={calloutProps}
         />
         <Text className={dropdownInfoTextStyle(theme)}>{strings.captionsSettingDropdownInfoText}</Text>
       </Stack>

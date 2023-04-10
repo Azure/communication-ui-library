@@ -23,6 +23,7 @@ import {
   generateCustomCallDesktopOverflowButtons,
   onFetchCustomButtonPropsTrampoline
 } from './CustomButton';
+import { _preventDismissOnEvent } from '@internal/acs-ui-common';
 
 /** @private */
 export interface DesktopMoreButtonProps extends ControlBarButtonProps {
@@ -206,7 +207,12 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
       /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
       strings={moreButtonStrings}
       menuIconProps={{ hidden: true }}
-      menuProps={{ items: moreButtonContextualMenuItems }}
+      menuProps={{
+        items: moreButtonContextualMenuItems,
+        calloutProps: {
+          preventDismissOnEvent: _preventDismissOnEvent
+        }
+      }}
     />
   );
 };

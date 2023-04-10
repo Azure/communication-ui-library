@@ -9,6 +9,7 @@ import { usePropsFor } from '../CallComposite/hooks/usePropsFor';
 import { buttonFlyoutIncreasedSizeStyles } from '../CallComposite/styles/Buttons.styles';
 import { useLocale } from '../localization';
 import { MoreButton } from './MoreButton';
+import { _preventDismissOnEvent } from '@internal/acs-ui-common';
 
 /** @private */
 export interface CaptionsBannerMoreButtonProps extends ControlBarButtonProps {
@@ -79,7 +80,12 @@ export const CaptionsBannerMoreButton = (props: CaptionsBannerMoreButtonProps): 
       data-ui-id="captions-banner-more-button"
       strings={moreButtonStrings}
       menuIconProps={{ hidden: true }}
-      menuProps={{ items: moreButtonContextualMenuItems }}
+      menuProps={{
+        items: moreButtonContextualMenuItems,
+        calloutProps: {
+          preventDismissOnEvent: _preventDismissOnEvent
+        }
+      }}
     />
   );
 };
