@@ -154,8 +154,8 @@ describe('Message blocked should display default blocked text correctly', () => 
 });
 
 /* @conditional-compile-remove(teams-inline-images) */
-describe.only('Message should display inline image correctly', () => {
-  test.only('Message richtext/html img src should be correct', async () => {
+describe('Message should display inline image correctly', () => {
+  test('Message richtext/html img src should be correct', async () => {
     const expectedImgSrc = 'someImgSrcUrl';
     const sampleMessage: ChatMessage = {
       messageType: 'chat',
