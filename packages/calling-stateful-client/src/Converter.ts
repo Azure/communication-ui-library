@@ -5,9 +5,10 @@ import {
   RemoteParticipant as SdkRemoteParticipant,
   RemoteVideoStream as SdkRemoteVideoStream,
   LocalVideoStream as SdkLocalVideoStream,
-  VideoStreamRendererView,
-  TeamsCaptionsInfo
+  VideoStreamRendererView
 } from '@azure/communication-calling';
+/* @conditional-compile-remove(close-captions) */
+import { TeamsCaptionsInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-identity-support) */
 import { CallKind } from '@azure/communication-calling';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
@@ -17,9 +18,11 @@ import {
   RemoteVideoStreamState as DeclarativeRemoteVideoStream,
   LocalVideoStreamState as DeclarativeLocalVideoStream,
   IncomingCallState as DeclarativeIncomingCall,
-  VideoStreamRendererViewState as DeclarativeVideoStreamRendererView,
-  CaptionsInfo
+  VideoStreamRendererViewState as DeclarativeVideoStreamRendererView
 } from './CallClientState';
+/* @conditional-compile-remove(close-captions) */
+import { CaptionsInfo } from './CallClientState';
+
 /* @conditional-compile-remove(teams-identity-support) */
 import { _isACSCall } from './TypeGuards';
 import { CallCommon, IncomingCallCommon } from './BetaToStableTypes';
@@ -114,9 +117,10 @@ export function convertSdkCallToDeclarativeCall(call: CallCommon): CallState {
     endTime: undefined,
     /* @conditional-compile-remove(rooms) */
     role: call.role,
+    /* @conditional-compile-remove(close-captions) */
     captionsFeature: {
       captions: [],
-      supportedSpokenLangauges: [],
+      supportedSpokenLanguages: [],
       supportedCaptionLanguages: [],
       currentCaptionLanguage: '',
       currentSpokenLanguage: '',
@@ -150,6 +154,7 @@ export function convertFromSDKToDeclarativeVideoStreamRendererView(
   };
 }
 
+/* @conditional-compile-remove(close-captions) */
 /**
  * @private
  */

@@ -320,6 +320,7 @@ export const CallComposite: (props: CallCompositeProps) => JSX.Element;
 
 // @public
 export type CallCompositeIcons = {
+    ControlBarPeopleButton?: JSX.Element;
     ControlButtonCameraOff?: JSX.Element;
     ControlButtonCameraOn?: JSX.Element;
     ControlButtonEndCall?: JSX.Element;
@@ -447,19 +448,11 @@ export interface CallCompositeStrings {
 export type CallControlDisplayType = 'default' | 'compact';
 
 // @public
-export type CallControlOptions = {
-    displayType?: CallControlDisplayType;
-    cameraButton?: boolean;
-    endCallButton?: boolean;
-    microphoneButton?: boolean;
-    devicesButton?: boolean;
+export type CallControlOptions = (CommonCallControlOptions & {
     participantsButton?: boolean | {
         disabled: boolean;
     };
-    screenShareButton?: boolean | {
-        disabled: boolean;
-    };
-};
+});
 
 // @public
 export type CallEndedListener = (event: CallAdapterCallEndedEvent) => void;
@@ -801,16 +794,8 @@ export interface CallWithChatCompositeStrings {
 }
 
 // @public
-export interface CallWithChatControlOptions {
-    cameraButton?: boolean;
+export interface CallWithChatControlOptions extends CommonCallControlOptions {
     chatButton?: boolean;
-    displayType?: CallControlDisplayType;
-    endCallButton?: boolean;
-    microphoneButton?: boolean;
-    peopleButton?: boolean;
-    screenShareButton?: boolean | {
-        disabled: boolean;
-    };
 }
 
 // @public
@@ -1097,6 +1082,22 @@ export interface CommonCallAdapter extends AdapterState<CallAdapterState>, Dispo
     joinCall(microphoneOn?: boolean): void;
     startCall(participants: string[], options?: StartCallOptions): void;
 }
+
+// @public
+export type CommonCallControlOptions = {
+    displayType?: CallControlDisplayType;
+    cameraButton?: boolean;
+    endCallButton?: boolean;
+    microphoneButton?: boolean;
+    devicesButton?: boolean;
+    participantsButton?: boolean | {
+        disabled: boolean;
+    };
+    screenShareButton?: boolean | {
+        disabled: boolean;
+    };
+    peopleButton?: boolean;
+};
 
 // @public
 export interface CommonCallingHandlers {
@@ -1458,6 +1459,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     ParticipantItemOptionsHovered: JSX.Element;
     SendBoxSend: JSX.Element;
     SendBoxSendHovered: JSX.Element;
+    ControlBarPeopleButton?: JSX.Element | undefined;
     ControlButtonCameraOff: JSX.Element;
     ControlButtonCameraOn: JSX.Element;
     ControlButtonEndCall: JSX.Element;
@@ -1503,7 +1505,6 @@ export const DEFAULT_COMPOSITE_ICONS: {
     ChevronLeft?: JSX.Element | undefined;
     ControlBarChatButtonActive?: JSX.Element | undefined;
     ControlBarChatButtonInactive?: JSX.Element | undefined;
-    ControlBarPeopleButton?: JSX.Element | undefined;
     Link?: JSX.Element | undefined;
     MoreDrawerMicrophones?: JSX.Element | undefined;
     MoreDrawerPeople?: JSX.Element | undefined;

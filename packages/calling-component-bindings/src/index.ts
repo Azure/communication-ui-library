@@ -17,8 +17,11 @@ export type {
   _StartCaptionsButtonSelector,
   _ChangeCaptionLanguageButtonSelector,
   _ChangeSpokenLanguageButtonSelector,
-  _CaptionsSelector
+  _CaptionsBannerSelector
 } from './captionsSelector';
+
+/* @conditional-compile-remove(close-captions) */
+export { _captionsBannerSelector } from './captionsSelector';
 
 export type { CallingHandlers } from './handlers/createHandlers';
 /* @conditional-compile-remove(teams-identity-support) */

@@ -3,8 +3,10 @@
 
 import { CallContext } from './CallContext';
 import { CallCommon } from './BetaToStableTypes';
-import { Features, TeamsCaptionsCallFeature } from '@azure/communication-calling';
-
+/* @conditional-compile-remove(close-captions) */
+import { Features } from '@azure/communication-calling';
+/* @conditional-compile-remove(close-captions) */
+import { TeamsCaptionsCallFeature } from '@azure/communication-calling';
 /**
  * @private
  */
@@ -74,13 +76,13 @@ export abstract class ProxyCallCommon implements ProxyHandler<CallCommon> {
       case 'feature': {
         // these are mini version of Proxy object - if it grows too big, a real Proxy object should be used.
         return this._context.withErrorTeedToState((...args: Parameters<CallCommon['feature']>) => {
+          /* @conditional-compile-remove(close-captions) */
           if (args[0] === Features.TeamsCaptions) {
             const captionsFeature = target.feature(Features.TeamsCaptions);
             const proxyFeature = new ProxyTeamsCaptionsFeature(this._context, target);
             return new Proxy(captionsFeature, proxyFeature);
-          } else {
-            return target.feature(...args);
           }
+          return target.feature(...args);
         }, 'Call.feature');
       }
       default:

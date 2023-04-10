@@ -14,6 +14,8 @@ process.env['COMMUNICATION_REACT_FLAVOR'] === 'stable' &&
         'calling-beta-sdk',
         // Participant pane in the `ChatComposite`.
         'chat-composite-participant-pane',
+        // Close captions feature
+        'close-captions',
         // API for injecting custom buttons in he control bar for
         // `CallComposite` and `CallWithChatComposite`.
         'control-bar-button-injection',
@@ -28,6 +30,8 @@ process.env['COMMUNICATION_REACT_FLAVOR'] === 'stable' &&
         'data-loss-prevention',
         // Ability to upload/download files in message thread.
         'file-sharing',
+        // feature for enabling new call control bar in CallComposite
+        'new-call-control-bar',
         // 1 to N Calling feature.
         'one-to-n-calling',
         // PSTN calls 

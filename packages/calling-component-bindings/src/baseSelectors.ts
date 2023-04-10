@@ -12,9 +12,10 @@ import {
   RemoteParticipantState,
   LocalVideoStreamState,
   CallErrors,
-  DiagnosticsCallFeatureState,
-  CaptionsInfo
+  DiagnosticsCallFeatureState
 } from '@internal/calling-stateful-client';
+/* @conditional-compile-remove(close-captions) */
+import { CaptionsInfo } from '@internal/calling-stateful-client';
 
 /**
  * Common props used to reference calling declarative client state.
@@ -134,6 +135,7 @@ export const getEnvironmentInfo = (
   return undefined;
 };
 
+/* @conditional-compile-remove(close-captions) */
 /** @private */
 export const getParticipantCount = (state: CallClientState, props: CallingBaseSelectorProps): number | undefined => {
   /* @conditional-compile-remove(total-participant-count) */
@@ -141,18 +143,21 @@ export const getParticipantCount = (state: CallClientState, props: CallingBaseSe
   return undefined;
 };
 
+/* @conditional-compile-remove(close-captions) */
 /** @private */
 export const getCaptions = (state: CallClientState, props: CallingBaseSelectorProps): CaptionsInfo[] | undefined => {
   return state.calls[props.callId]?.captionsFeature.captions;
   return undefined;
 };
 
+/* @conditional-compile-remove(close-captions) */
 /** @private */
 export const getCaptionsStatus = (state: CallClientState, props: CallingBaseSelectorProps): boolean | undefined => {
   return state.calls[props.callId]?.captionsFeature.isCaptionsFeatureActive;
   return undefined;
 };
 
+/* @conditional-compile-remove(close-captions) */
 /** @private */
 export const getCurrentCaptionLanguage = (
   state: CallClientState,
@@ -162,6 +167,7 @@ export const getCurrentCaptionLanguage = (
   return undefined;
 };
 
+/* @conditional-compile-remove(close-captions) */
 /** @private */
 export const getCurrentSpokenLanguage = (
   state: CallClientState,
@@ -171,6 +177,7 @@ export const getCurrentSpokenLanguage = (
   return undefined;
 };
 
+/* @conditional-compile-remove(close-captions) */
 /** @private */
 export const getSupportedCaptionLanguages = (
   state: CallClientState,
@@ -180,11 +187,12 @@ export const getSupportedCaptionLanguages = (
   return undefined;
 };
 
+/* @conditional-compile-remove(close-captions) */
 /** @private */
 export const getSupportedSpokenLanguages = (
   state: CallClientState,
   props: CallingBaseSelectorProps
 ): string[] | undefined => {
-  return state.calls[props.callId]?.captionsFeature.supportedSpokenLangauges;
+  return state.calls[props.callId]?.captionsFeature.supportedSpokenLanguages;
   return undefined;
 };

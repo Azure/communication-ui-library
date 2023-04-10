@@ -100,25 +100,27 @@ const createCompositeHandlers = memoizeOne(
       return await adapter.stopVideoBackgroundEffect();
     },
     /* @conditional-compile-remove(video-background-effects) */
-    onBlurVideoBackground: async (bgBlurConfig?: BackgroundBlurConfig) => {
-      return await adapter.blurVideoBackground(bgBlurConfig);
+    onBlurVideoBackground: async (backgroundBlurConfig?: BackgroundBlurConfig) => {
+      return await adapter.blurVideoBackground(backgroundBlurConfig);
     },
     /* @conditional-compile-remove(video-background-effects) */
-    onReplaceVideoBackground: async (bgReplacementConfig: BackgroundReplacementConfig) => {
-      return await adapter.replaceVideoBackground(bgReplacementConfig);
+    onReplaceVideoBackground: async (backgroundReplacementConfig: BackgroundReplacementConfig) => {
+      return await adapter.replaceVideoBackground(backgroundReplacementConfig);
     },
-    OnStartCaptions: async (captionsOptions) => {
+    /* @conditional-compile-remove(close-captions) */
+    onStartCaptions: async (captionsOptions) => {
       await adapter.startCaptions(captionsOptions);
     },
-
-    OnStopCaptions: async () => {
+    /* @conditional-compile-remove(close-captions) */
+    onStopCaptions: async () => {
       await adapter.stopCaptions();
     },
-
-    OnSetSpokenLanguage: async (language) => {
+    /* @conditional-compile-remove(close-captions) */
+    onSetSpokenLanguage: async (language) => {
       await adapter.setSpokenLanguage(language);
     },
-    OnSetCaptionLanguage: async (language) => {
+    /* @conditional-compile-remove(close-captions) */
+    onSetCaptionLanguage: async (language) => {
       await adapter.setCaptionLanguage(language);
     }
   })

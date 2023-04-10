@@ -160,6 +160,7 @@ export type AzureCommunicationCallAdapterArgs = {
 // @beta
 export type AzureCommunicationCallAdapterOptions = {
     roleHint?: Role;
+    videoBackgroundImages?: VideoBackgroundImage[];
 };
 
 // @public
@@ -302,7 +303,7 @@ export interface CallAdapterCallOperations {
     addParticipant(participant: CommunicationUserIdentifier): Promise<void>;
     allowUnsupportedBrowserVersion(): void;
     // @beta
-    blurVideoBackground(bgBlurConfig?: BackgroundBlurConfig): Promise<void>;
+    blurVideoBackground(backgroundBlurConfig?: BackgroundBlurConfig): Promise<void>;
     createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void | CreateVideoStreamViewResult>;
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
     // @beta
@@ -313,7 +314,7 @@ export interface CallAdapterCallOperations {
     // @beta
     removeParticipant(participant: CommunicationIdentifier): Promise<void>;
     // @beta
-    replaceVideoBackground(bgReplacementConfig: BackgroundReplacementConfig): Promise<void>;
+    replaceVideoBackground(backgroundReplacementConfig: BackgroundReplacementConfig): Promise<void>;
     // @beta
     resumeCall(): Promise<void>;
     // @beta
@@ -329,6 +330,8 @@ export interface CallAdapterCallOperations {
     // @beta
     stopVideoBackgroundEffect(): Promise<void>;
     unmute(): Promise<void>;
+    // @beta
+    updateBackgroundPickerImages(backgroundImages: VideoBackgroundImage[]): void;
 }
 
 // @public
@@ -463,6 +466,7 @@ export const CallComposite: (props: CallCompositeProps) => JSX.Element;
 
 // @public
 export type CallCompositeIcons = {
+    ControlBarPeopleButton?: JSX.Element;
     ControlButtonCameraOff?: JSX.Element;
     ControlButtonCameraOn?: JSX.Element;
     ControlButtonEndCall?: JSX.Element;
@@ -639,29 +643,11 @@ export interface CallCompositeStrings {
 export type CallControlDisplayType = 'default' | 'compact';
 
 // @public
-export type CallControlOptions = {
-    displayType?: CallControlDisplayType;
-    cameraButton?: boolean | /* @conditional-compile-remove(PSTN-calls) */ {
-        disabled: boolean;
-    };
-    endCallButton?: boolean;
-    microphoneButton?: boolean | /* @conditional-compile-remove(PSTN-calls) */ {
-        disabled: boolean;
-    };
-    devicesButton?: boolean | /* @conditional-compile-remove(PSTN-calls) */ {
-        disabled: boolean;
-    };
+export type CallControlOptions = CommonCallControlOptions & {
     participantsButton?: boolean | {
         disabled: boolean;
     };
-    screenShareButton?: boolean | {
-        disabled: boolean;
-    };
-    moreButton?: boolean;
-    onFetchCustomButtonProps?: CustomCallControlButtonCallback[];
-    holdButton?: boolean | {
-        disabled: boolean;
-    };
+    legacyControlBarExperience?: boolean;
 };
 
 // @public
@@ -785,7 +771,7 @@ export interface CallWithChatAdapterManagement {
     allowUnsupportedBrowserVersion(): void;
     askDevicePermission(constrain: PermissionConstraints): Promise<void>;
     // @beta
-    blurVideoBackground(bgBlurConfig?: BackgroundBlurConfig): Promise<void>;
+    blurVideoBackground(backgroundBlurConfig?: BackgroundBlurConfig): Promise<void>;
     // @beta (undocumented)
     cancelFileUpload: (id: string) => void;
     // @beta (undocumented)
@@ -813,7 +799,7 @@ export interface CallWithChatAdapterManagement {
     // @beta
     removeParticipant(participant: CommunicationIdentifier): Promise<void>;
     // @beta
-    replaceVideoBackground(bgReplacementConfig: BackgroundReplacementConfig): Promise<void>;
+    replaceVideoBackground(backgroundReplacementConfig: BackgroundReplacementConfig): Promise<void>;
     // @beta
     resumeCall: () => Promise<void>;
     // @beta
@@ -838,6 +824,8 @@ export interface CallWithChatAdapterManagement {
     // @beta
     stopVideoBackgroundEffect(): Promise<void>;
     unmute(): Promise<void>;
+    // @beta
+    updateBackgroundPickerImages(backgroundImages: VideoBackgroundImage[]): void;
     // @beta (undocumented)
     updateFileUploadErrorMessage: (id: string, errorMessage: string) => void;
     // @beta (undocumented)
@@ -953,6 +941,7 @@ export interface CallWithChatClientState {
     latestCallErrors: AdapterErrors;
     latestChatErrors: AdapterErrors;
     userId: CommunicationIdentifierKind;
+    videoBackgroundImages?: VideoBackgroundImage[];
 }
 
 // @public
@@ -1088,34 +1077,14 @@ export interface CallWithChatCompositeStrings {
 }
 
 // @public
-export interface CallWithChatControlOptions {
-    cameraButton?: boolean | /* @conditional-compile-remove(PSTN-calls) */ {
-        disabled: boolean;
-    };
+export interface CallWithChatControlOptions extends CommonCallControlOptions {
     chatButton?: boolean | /* @conditional-compile-remove(PSTN-calls) */ {
-        disabled: boolean;
-    };
-    displayType?: CallControlDisplayType;
-    endCallButton?: boolean;
-    holdButton?: boolean | {
-        disabled: boolean;
-    };
-    microphoneButton?: boolean | /* @conditional-compile-remove(PSTN-calls) */ {
-        disabled: boolean;
-    };
-    moreButton?: boolean;
-    // @beta
-    onFetchCustomButtonProps?: CustomCallWithChatControlButtonCallback[];
-    peopleButton?: boolean | /* @conditional-compile-remove(PSTN-calls) */ {
-        disabled: boolean;
-    };
-    screenShareButton?: boolean | {
         disabled: boolean;
     };
 }
 
 // @public
-export type CallWithChatEvent = 'callError' | 'chatError' | 'callEnded' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'callParticipantsJoined' | 'callParticipantsLeft' | 'selectedMicrophoneChanged' | 'selectedSpeakerChanged' | 'captionsPropertyChanged' | 'captionsReceived' | 'messageReceived' | 'messageSent' | 'messageRead' | 'chatParticipantsAdded' | 'chatParticipantsRemoved';
+export type CallWithChatEvent = 'callError' | 'chatError' | 'callEnded' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'callParticipantsJoined' | 'callParticipantsLeft' | 'selectedMicrophoneChanged' | 'selectedSpeakerChanged' | /* @conditional-compile-remove(close-captions) */ 'captionsPropertyChanged' | /* @conditional-compile-remove(close-captions) */ 'captionsReceived' | 'messageReceived' | 'messageSent' | 'messageRead' | 'chatParticipantsAdded' | 'chatParticipantsRemoved';
 
 // @beta
 export const CameraAndMicrophoneSitePermissions: (props: CameraAndMicrophoneSitePermissionsProps) => JSX.Element;
@@ -1197,16 +1166,6 @@ export interface CameraSitePermissionsProps extends CommonSitePermissionsProps {
 // @beta
 export type CameraSitePermissionsStrings = SitePermissionsStrings;
 
-// @internal
-export const _CaptionsBanner: (props: _CaptionsBannerProps) => JSX.Element;
-
-// @internal
-export interface _CaptionsBannerProps {
-    // (undocumented)
-    captions: _CaptionsInfo[];
-    onRenderAvatar?: OnRenderAvatarCallback;
-}
-
 // @beta (undocumented)
 export interface CaptionsCallFeatureState {
     captions: CaptionsInfo[];
@@ -1214,7 +1173,7 @@ export interface CaptionsCallFeatureState {
     currentSpokenLanguage: string;
     isCaptionsFeatureActive: boolean;
     supportedCaptionLanguages: string[];
-    supportedSpokenLangauges: string[];
+    supportedSpokenLanguages: string[];
 }
 
 // @beta (undocumented)
@@ -1228,27 +1187,15 @@ export interface CaptionsInfo {
     timestamp: Date;
 }
 
-// @internal
-export type _CaptionsInfo = {
-    displayName: string;
-    captionText: string;
-    userId?: string;
-};
-
-// @public
+// @beta
 export type captionsOptions = {
     spokenLanguage: string;
 };
 
-// @public
+// @beta
 export type CaptionsReceivedListener = (event: {
     data: CaptionsInfo;
 }) => void;
-
-// @internal
-export type _CaptionsSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
-    captions: _CaptionsInfo[];
-};
 
 // @public
 export type ChatAdapter = ChatAdapterThreadManagement & AdapterState<ChatAdapterState> & Disposable & ChatAdapterSubscribers & FileUploadAdapter;
@@ -1495,6 +1442,35 @@ export interface CommonCallAdapter extends AdapterState<CallAdapterState>, Dispo
 }
 
 // @public
+export type CommonCallControlOptions = {
+    displayType?: CallControlDisplayType;
+    cameraButton?: boolean | /* @conditional-compile-remove(PSTN-calls) */ {
+        disabled: boolean;
+    };
+    endCallButton?: boolean;
+    microphoneButton?: boolean | /* @conditional-compile-remove(PSTN-calls) */ {
+        disabled: boolean;
+    };
+    devicesButton?: boolean | /* @conditional-compile-remove(PSTN-calls) */ {
+        disabled: boolean;
+    };
+    participantsButton?: boolean | {
+        disabled: boolean;
+    };
+    screenShareButton?: boolean | {
+        disabled: boolean;
+    };
+    moreButton?: boolean;
+    onFetchCustomButtonProps?: CustomCallControlButtonCallback[];
+    holdButton?: boolean | {
+        disabled: boolean;
+    };
+    peopleButton?: boolean | /* @conditional-compile-remove(PSTN-calls) */ {
+        disabled: boolean;
+    };
+};
+
+// @public
 export interface CommonCallingHandlers {
     // (undocumented)
     askDevicePermission: (constrain: PermissionConstraints) => Promise<void>;
@@ -1503,7 +1479,7 @@ export interface CommonCallingHandlers {
     // (undocumented)
     onAddParticipant(participant: PhoneNumberIdentifier, options: AddPhoneNumberOptions): Promise<void>;
     // (undocumented)
-    onBlurVideoBackground: (bgBlurConfig?: BackgroundBlurConfig) => Promise<void>;
+    onBlurVideoBackground: (backgroundBlurConfig?: BackgroundBlurConfig) => Promise<void>;
     // (undocumented)
     onCreateLocalStreamView: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
     // (undocumented)
@@ -1521,7 +1497,7 @@ export interface CommonCallingHandlers {
     // (undocumented)
     onRemoveVideoBackgroundEffects: () => Promise<void>;
     // (undocumented)
-    onReplaceVideoBackground: (bgReplacementConfig: BackgroundReplacementConfig) => Promise<void>;
+    onReplaceVideoBackground: (backgroundReplacementConfig: BackgroundReplacementConfig) => Promise<void>;
     // (undocumented)
     onSelectCamera: (device: VideoDeviceInfo, options?: VideoStreamOptions) => Promise<void>;
     // (undocumented)
@@ -1531,19 +1507,19 @@ export interface CommonCallingHandlers {
     // (undocumented)
     onSendDtmfTone: (dtmfTone: DtmfTone_2) => Promise<void>;
     // (undocumented)
-    OnSetCaptionLanguage: (language: string) => Promise<void>;
+    onSetCaptionLanguage: (language: string) => Promise<void>;
     // (undocumented)
-    OnSetSpokenLanguage: (language: string) => Promise<void>;
+    onSetSpokenLanguage: (language: string) => Promise<void>;
     // (undocumented)
     onStartCall: (participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[], options?: StartCallOptions) => void;
     // (undocumented)
-    OnStartCaptions: (captionsOptions?: captionsOptions) => Promise<void>;
+    onStartCaptions: (captionsOptions?: captionsOptions) => Promise<void>;
     // (undocumented)
     onStartLocalVideo: () => Promise<void>;
     // (undocumented)
     onStartScreenShare: () => Promise<void>;
     // (undocumented)
-    OnStopCaptions: () => Promise<void>;
+    onStopCaptions: () => Promise<void>;
     // (undocumented)
     onStopScreenShare: () => Promise<void>;
     // (undocumented)
@@ -1781,7 +1757,7 @@ export interface ControlBarProps {
 }
 
 // @public
-export const createAzureCommunicationCallAdapter: ({ userId, displayName, credential, locator, alternateCallerId }: AzureCommunicationCallAdapterArgs) => Promise<CallAdapter>;
+export const createAzureCommunicationCallAdapter: ({ userId, displayName, credential, locator, alternateCallerId, options }: AzureCommunicationCallAdapterArgs) => Promise<CallAdapter>;
 
 // @public
 export const createAzureCommunicationCallAdapterFromClient: (callClient: StatefulCallClient, callAgent: CallAgent, locator: CallAdapterLocator, options?: AzureCommunicationCallAdapterOptions) => Promise<CallAdapter>;
@@ -1847,7 +1823,9 @@ export type CustomAvatarOptions = {
 };
 
 // @beta
-export type CustomCallControlButtonCallback = (args: CustomCallControlButtonCallbackArgs) => CustomCallControlButtonProps;
+type CustomCallControlButtonCallback = (args: CustomCallControlButtonCallbackArgs) => CustomCallWithChatControlButtonProps;
+export { CustomCallControlButtonCallback }
+export { CustomCallControlButtonCallback as CustomCallWithChatControlButtonCallback }
 
 // @beta
 export interface CustomCallControlButtonCallbackArgs {
@@ -1855,7 +1833,9 @@ export interface CustomCallControlButtonCallbackArgs {
 }
 
 // @beta
-export type CustomCallControlButtonPlacement = 'primary';
+type CustomCallControlButtonPlacement = 'primary' | 'overflow' | 'secondary';
+export { CustomCallControlButtonPlacement }
+export { CustomCallControlButtonPlacement as CustomCallWithChatControlButtonPlacement }
 
 // @beta
 export interface CustomCallControlButtonProps extends CustomControlButtonProps {
@@ -1864,15 +1844,9 @@ export interface CustomCallControlButtonProps extends CustomControlButtonProps {
 }
 
 // @beta
-export type CustomCallWithChatControlButtonCallback = (args: CustomCallControlButtonCallbackArgs) => CustomCallWithChatControlButtonProps;
-
-// @beta
-export type CustomCallWithChatControlButtonPlacement = 'primary' | 'overflow' | 'secondary';
-
-// @beta
 export interface CustomCallWithChatControlButtonProps extends CustomControlButtonProps {
     iconName?: string;
-    placement: CustomCallWithChatControlButtonPlacement;
+    placement: CustomCallControlButtonPlacement;
 }
 
 // @beta
@@ -1997,6 +1971,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     SendBoxSend: JSX.Element;
     SendBoxSendHovered: JSX.Element;
     SendBoxAttachFile?: JSX.Element | undefined;
+    ControlBarPeopleButton?: JSX.Element | undefined;
     ControlButtonCameraOff: JSX.Element;
     ControlButtonCameraOn: JSX.Element;
     ControlButtonEndCall: JSX.Element;
@@ -2048,7 +2023,6 @@ export const DEFAULT_COMPOSITE_ICONS: {
     ChevronLeft?: JSX.Element | undefined;
     ControlBarChatButtonActive?: JSX.Element | undefined;
     ControlBarChatButtonInactive?: JSX.Element | undefined;
-    ControlBarPeopleButton?: JSX.Element | undefined;
     Link?: JSX.Element | undefined;
     MoreDrawerMicrophones?: JSX.Element | undefined;
     MoreDrawerPeople?: JSX.Element | undefined;
@@ -2299,10 +2273,19 @@ export type FileDownloadHandler = (userId: string, fileMetadata: FileMetadata) =
 
 // @beta
 export interface FileMetadata {
+    // (undocumented)
+    attachmentType: FileMetadataAttachmentType;
     extension: string;
+    // (undocumented)
+    id: string;
     name: string;
+    // (undocumented)
+    previewUrl?: string;
     url: string;
 }
+
+// @beta (undocumented)
+export type FileMetadataAttachmentType = 'fileSharing' | /* @conditional-compile-remove(teams-inline-images) */ 'teamsInlineImage' | 'unknown';
 
 // @beta
 export interface FileSharingOptions {
@@ -2376,7 +2359,7 @@ export interface FluentThemeProviderProps {
 export const fromFlatCommunicationIdentifier: (id: string) => CommunicationIdentifier;
 
 // @public
-export type GetCallingSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof VideoGallery> extends true ? VideoGallerySelector : AreEqual<Component, typeof DevicesButton> extends true ? DevicesButtonSelector : AreEqual<Component, typeof MicrophoneButton> extends true ? MicrophoneButtonSelector : AreEqual<Component, typeof CameraButton> extends true ? CameraButtonSelector : AreEqual<Component, typeof ScreenShareButton> extends true ? ScreenShareButtonSelector : AreEqual<Component, typeof ParticipantList> extends true ? ParticipantListSelector : AreEqual<Component, typeof ParticipantsButton> extends true ? ParticipantsButtonSelector : AreEqual<Component, typeof EndCallButton> extends true ? EmptySelector : AreEqual<Component, typeof ErrorBar> extends true ? CallErrorBarSelector : AreEqual<Component, typeof Dialpad> extends true ? EmptySelector : AreEqual<Component, typeof HoldButton> extends true ? HoldButtonSelector : AreEqual<Component, typeof _CaptionsBanner> extends true ? _CaptionsSelector : undefined;
+export type GetCallingSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof VideoGallery> extends true ? VideoGallerySelector : AreEqual<Component, typeof DevicesButton> extends true ? DevicesButtonSelector : AreEqual<Component, typeof MicrophoneButton> extends true ? MicrophoneButtonSelector : AreEqual<Component, typeof CameraButton> extends true ? CameraButtonSelector : AreEqual<Component, typeof ScreenShareButton> extends true ? ScreenShareButtonSelector : AreEqual<Component, typeof ParticipantList> extends true ? ParticipantListSelector : AreEqual<Component, typeof ParticipantsButton> extends true ? ParticipantsButtonSelector : AreEqual<Component, typeof EndCallButton> extends true ? EmptySelector : AreEqual<Component, typeof ErrorBar> extends true ? CallErrorBarSelector : AreEqual<Component, typeof Dialpad> extends true ? EmptySelector : AreEqual<Component, typeof HoldButton> extends true ? HoldButtonSelector : undefined;
 
 // @public
 export const getCallingSelector: <Component extends (props: any) => JSX.Element | undefined>(component: Component) => GetCallingSelector<Component>;

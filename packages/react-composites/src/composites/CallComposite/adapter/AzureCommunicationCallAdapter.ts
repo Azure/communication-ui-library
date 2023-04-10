@@ -30,9 +30,10 @@ import {
   PropertyChangedEvent,
   StartCallOptions,
   VideoOptions,
-  Call,
-  StartCaptionsOptions
+  Call
 } from '@azure/communication-calling';
+/* @conditional-compile-remove(close-captions) */
+import { StartCaptionsOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(video-background-effects) */
 import { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/communication-calling-effects';
 /* @conditional-compile-remove(teams-identity-support)) */
@@ -57,9 +58,10 @@ import {
   ParticipantsLeftListener,
   DiagnosticChangedEventListner,
   CallAdapterCallEndedEvent,
-  CallAdapter,
-  CaptionsReceivedListener
+  CallAdapter
 } from './CallAdapter';
+/* @conditional-compile-remove(close-captions) */
+import { CaptionsReceivedListener } from './CallAdapter';
 /* @conditional-compile-remove(video-background-effects) */
 import { VideoBackgroundImage } from './CallAdapter';
 /* @conditional-compile-remove(teams-identity-support) */
@@ -215,6 +217,11 @@ class CallContext {
   public setAllowedUnsupportedBrowser(): void {
     this.setState({ ...this.state, unsupportedBrowserVersionsAllowed: true });
   }
+
+  /* @conditional-compile-remove(video-background-effects) */
+  public setBackroundPickerImages(videoBackgroundImages: VideoBackgroundImage[]): void {
+    this.setState({ ...this.state, videoBackgroundImages });
+  }
 }
 
 const findLatestEndedCall = (calls: { [key: string]: CallState }): CallState | undefined => {
@@ -255,6 +262,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   private participantSubscribers = new Map<string, ParticipantSubscriber>();
   private emitter: EventEmitter = new EventEmitter();
   private onClientStateChange: (clientState: CallClientState) => void;
+  /* @conditional-compile-remove(close-captions) */
   // REMOVE THIS< TEST PURPOSES ONLY
   private isCaptionsOn: boolean;
 
@@ -284,6 +292,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
 
     this.context.onCallEnded((endCallData) => this.emitter.emit('callEnded', endCallData));
 
+    /* @conditional-compile-remove(close-captions) */
     // REMOVE THIS< TEST PURPOSES ONLY
     this.isCaptionsOn = false;
 
@@ -304,6 +313,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
       }
       this.context.updateClientState(clientState);
 
+      /* @conditional-compile-remove(close-captions) */
       // REMOVE THIS< TEST PURPOSES ONLY
       if (this.call?.state === 'Connected') {
         if (_isTeamsCall(this.call) || (_isACSCall(this.call) && !this.call.info.groupId && !this.call.info.roomId)) {
@@ -371,16 +381,21 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     this.sendDtmfTone.bind(this);
     /* @conditional-compile-remove(unsupported-browser) */
     this.allowUnsupportedBrowserVersion.bind(this);
-    this.startCaptions.bind(this);
-    this.stopCaptions.bind(this);
-    this.setSpokenLanguage.bind(this);
-    this.setCaptionLanguage.bind(this);
+    /* @conditional-compile-remove(close-captions) */
+    {
+      this.startCaptions.bind(this);
+      this.stopCaptions.bind(this);
+      this.setSpokenLanguage.bind(this);
+      this.setCaptionLanguage.bind(this);
+    }
     /* @conditional-compile-remove(video-background-effects) */
     this.blurVideoBackground.bind(this);
     /* @conditional-compile-remove(video-background-effects) */
     this.replaceVideoBackground.bind(this);
     /* @conditional-compile-remove(video-background-effects) */
     this.stopVideoBackgroundEffect.bind(this);
+    /* @conditional-compile-remove(video-background-effects) */
+    this.updateBackgroundPickerImages.bind(this);
   }
 
   public dispose(): void {
@@ -579,17 +594,21 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   }
 
   /* @conditional-compile-remove(video-background-effects) */
-  public async blurVideoBackground(bgBlurConfig?: BackgroundBlurConfig): Promise<void> {
-    await this.handlers.onBlurVideoBackground(bgBlurConfig);
+  public async blurVideoBackground(backgroundBlurConfig?: BackgroundBlurConfig): Promise<void> {
+    await this.handlers.onBlurVideoBackground(backgroundBlurConfig);
   }
   /* @conditional-compile-remove(video-background-effects) */
-  public async replaceVideoBackground(bgReplacementConfig: BackgroundReplacementConfig): Promise<void> {
-    await this.handlers.onReplaceVideoBackground(bgReplacementConfig);
+  public async replaceVideoBackground(backgroundReplacementConfig: BackgroundReplacementConfig): Promise<void> {
+    await this.handlers.onReplaceVideoBackground(backgroundReplacementConfig);
   }
 
   /* @conditional-compile-remove(video-background-effects) */
   public async stopVideoBackgroundEffect(): Promise<void> {
     await this.handlers.onRemoveVideoBackgroundEffects();
+  }
+  /* @conditional-compile-remove(video-background-effects) */
+  public updateBackgroundPickerImages(backgroundImages: VideoBackgroundImage[]): void {
+    this.context.setBackroundPickerImages(backgroundImages);
   }
 
   public startCall(
@@ -681,18 +700,24 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     this.handlers.onSendDtmfTone(dtmfTone);
   }
 
+  /* @conditional-compile-remove(close-captions) */
   public async startCaptions(startCaptionsOptions?: StartCaptionsOptions): Promise<void> {
-    this.handlers.OnStartCaptions(startCaptionsOptions);
+    this.handlers.onStartCaptions(startCaptionsOptions);
   }
 
+  /* @conditional-compile-remove(close-captions) */
   public async stopCaptions(): Promise<void> {
-    this.handlers.OnStopCaptions();
+    this.handlers.onStopCaptions();
   }
+
+  /* @conditional-compile-remove(close-captions) */
   public async setCaptionLanguage(language: string): Promise<void> {
-    this.handlers.OnSetCaptionLanguage(language);
+    this.handlers.onSetCaptionLanguage(language);
   }
+
+  /* @conditional-compile-remove(close-captions) */
   public async setSpokenLanguage(language: string): Promise<void> {
-    this.handlers.OnSetSpokenLanguage(language);
+    this.handlers.onSetSpokenLanguage(language);
   }
 
   public getState(): CallAdapterState {
@@ -719,7 +744,9 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   on(event: 'selectedMicrophoneChanged', listener: PropertyChangedEvent): void;
   on(event: 'selectedSpeakerChanged', listener: PropertyChangedEvent): void;
   on(event: 'error', errorHandler: (e: AdapterError) => void): void;
+  /* @conditional-compile-remove(close-captions) */
   on(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
+  /* @conditional-compile-remove(close-captions) */
   on(event: 'captionsPropertyChanged', listener: PropertyChangedEvent): void;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -809,7 +836,9 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   off(event: 'selectedMicrophoneChanged', listener: PropertyChangedEvent): void;
   off(event: 'selectedSpeakerChanged', listener: PropertyChangedEvent): void;
   off(event: 'error', errorHandler: (e: AdapterError) => void): void;
+  /* @conditional-compile-remove(close-captions) */
   off(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
+  /* @conditional-compile-remove(close-captions) */
   off(event: 'captionsPropertyChanged', listener: PropertyChangedEvent): void;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -883,6 +912,11 @@ export type AzureCommunicationCallAdapterOptions = {
    * {@link CallComposite}. The true role of the user will be synced with ACS services when a Rooms call starts.
    */
   roleHint?: Role;
+  /* @conditional-compile-remove(video-background-effects) */
+  /**
+   * Default set of background images for background image picker.
+   */
+  videoBackgroundImages?: VideoBackgroundImage[];
 };
 
 /**
@@ -903,7 +937,7 @@ export type AzureCommunicationCallAdapterArgs = {
    * E.164 numbers are formatted as [+] [country code] [phone number including area code]. For example, +14255550123 for a US phone number.
    */
   alternateCallerId?: string;
-  /* @conditional-compile-remove(rooms) */
+  /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(video-background-effects) */
   /**
    * Optional parameters for the {@link AzureCommunicationCallAdapter} created
    */
@@ -953,7 +987,8 @@ export const createAzureCommunicationCallAdapter = async ({
   displayName,
   credential,
   locator,
-  /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId
+  /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
+  /* @conditional-compile-remove(video-background-effects) */ options
 }: AzureCommunicationCallAdapterArgs): Promise<CallAdapter> => {
   if (!isValidIdentifier(userId)) {
     throw new Error('Invalid identifier. Please provide valid identifier object.');
@@ -966,7 +1001,12 @@ export const createAzureCommunicationCallAdapter = async ({
   const callAgent = await callClient.createCallAgent(credential, {
     displayName
   });
-  const adapter = createAzureCommunicationCallAdapterFromClient(callClient, callAgent, locator);
+  const adapter = createAzureCommunicationCallAdapterFromClient(
+    callClient,
+    callAgent,
+    locator,
+    /* @conditional-compile-remove(video-background-effects) */ options
+  );
   return adapter;
 };
 
@@ -1226,7 +1266,7 @@ export const createAzureCommunicationCallAdapterFromClient: (
   callClient: StatefulCallClient,
   callAgent: CallAgent,
   locator: CallAdapterLocator,
-  /* @conditional-compile-remove(rooms) */ options?: AzureCommunicationCallAdapterOptions
+  /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(video-background-effects) */ options?: AzureCommunicationCallAdapterOptions
 ) => Promise<CallAdapter> = async (
   callClient: StatefulCallClient,
   callAgent: CallAgent,

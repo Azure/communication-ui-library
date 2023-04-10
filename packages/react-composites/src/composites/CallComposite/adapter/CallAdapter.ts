@@ -1,10 +1,15 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { CallState, CaptionsInfo, DeviceManagerState } from '@internal/calling-stateful-client';
+import { CallState, DeviceManagerState } from '@internal/calling-stateful-client';
+/* @conditional-compile-remove(close-captions) */
+import { CaptionsInfo } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(video-background-effects) */
 import { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/communication-calling-effects';
-import { StartCaptionsOptions, TeamsCall } from '@azure/communication-calling';
+/* @conditional-compile-remove(teams-identity-support) */
+import { TeamsCall } from '@azure/communication-calling';
+/* @conditional-compile-remove(close-captions) */
+import { StartCaptionsOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
 import type {
@@ -246,10 +251,11 @@ export interface VideoBackgroundImage {
   tooltipText?: string;
 }
 
+/* @conditional-compile-remove(close-captions) */
 /**
  * Callback for {@link CallAdapterSubscribers} 'captionsReceived' event.
  *
- * @public
+ * @beta
  */
 export type CaptionsReceivedListener = (event: { data: CaptionsInfo }) => void;
 
@@ -381,21 +387,25 @@ export interface CallAdapterCallOperations {
    * Continues into a call when the browser version is not supported.
    */
   allowUnsupportedBrowserVersion(): void;
+  /* @conditional-compile-remove(close-captions) */
   /**
    * Function to Start captions
    * @param startCaptionsOptions - options for start captions
    */
   startCaptions(startCaptionsOptions?: StartCaptionsOptions): Promise<void>;
+  /* @conditional-compile-remove(close-captions) */
   /**
    * Function to set caption language
    * @param language - language set for caption
    */
   setCaptionLanguage(language: string): Promise<void>;
+  /* @conditional-compile-remove(close-captions) */
   /**
    * Function to set spoken language
    * @param language - spoken language
    */
   setSpokenLanguage(language: string): Promise<void>;
+  /* @conditional-compile-remove(close-captions) */
   /**
    * Funtion to stop captions
    */
@@ -407,14 +417,14 @@ export interface CallAdapterCallOperations {
    *
    * @beta
    */
-  blurVideoBackground(bgBlurConfig?: BackgroundBlurConfig): Promise<void>;
+  blurVideoBackground(backgroundBlurConfig?: BackgroundBlurConfig): Promise<void>;
   /* @conditional-compile-remove(video-background-effects) */
   /**
    * Start the video background replacement effect.
    *
    * @beta
    */
-  replaceVideoBackground(bgReplacementConfig: BackgroundReplacementConfig): Promise<void>;
+  replaceVideoBackground(backgroundReplacementConfig: BackgroundReplacementConfig): Promise<void>;
   /* @conditional-compile-remove(video-background-effects) */
   /**
    * Stop the video background effect.
@@ -422,6 +432,15 @@ export interface CallAdapterCallOperations {
    * @beta
    */
   stopVideoBackgroundEffect(): Promise<void>;
+  /* @conditional-compile-remove(video-background-effects) */
+  /**
+   * Override the background picker images for background replacement effect.
+   *
+   * @param backgroundImages - Array of custom background images.
+   *
+   * @beta
+   */
+  updateBackgroundPickerImages(backgroundImages: VideoBackgroundImage[]): void;
 }
 
 /**
@@ -569,11 +588,12 @@ export interface CallAdapterSubscribers {
    * Subscribe function for 'error' event.
    */
   on(event: 'error', listener: (e: AdapterError) => void): void;
+  /* @conditional-compile-remove(close-captions) */
   /**
    * Subscribe function for 'captionsReceived' event.
    */
   on(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
-
+  /* @conditional-compile-remove(close-captions) */
   /**
    * Subscribe function for 'captionsPropertyChanged' event.
    */
@@ -627,10 +647,12 @@ export interface CallAdapterSubscribers {
    * Unsubscribe function for 'error' event.
    */
   off(event: 'error', listener: (e: AdapterError) => void): void;
+  /* @conditional-compile-remove(close-captions) */
   /**
    * Unsubscribe function for 'captionsReceived' event.
    */
   off(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
+  /* @conditional-compile-remove(close-captions) */
   /**
    * Unsubscribe function for 'captionsPropertyChanged' event.
    */

@@ -18,7 +18,6 @@ import { CallClientState } from '@internal/calling-stateful-client';
 import { CallParticipantListParticipant } from '@internal/react-components';
 import { CallState } from '@azure/communication-calling';
 import { CameraButton } from '@internal/react-components';
-import { _CaptionsBanner } from '@internal/react-components';
 import { _CaptionsInfo } from '@internal/react-components';
 import { Common } from '@internal/acs-ui-common';
 import { CommunicationIdentifier } from '@azure/communication-common';
@@ -109,14 +108,17 @@ export type CameraButtonSelector = (state: CallClientState, props: CallingBaseSe
 // @public
 export const cameraButtonSelector: CameraButtonSelector;
 
-// @public
-export type captionsOptions = {
-    spokenLanguage: string;
+// @internal
+export type _CaptionsBannerSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
+    captions: _CaptionsInfo[];
 };
 
 // @internal
-export type _CaptionsSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
-    captions: _CaptionsInfo[];
+export const _captionsBannerSelector: _CaptionsBannerSelector;
+
+// @beta
+export type captionsOptions = {
+    spokenLanguage: string;
 };
 
 // @internal
@@ -140,7 +142,7 @@ export interface CommonCallingHandlers {
     // (undocumented)
     onAddParticipant(participant: PhoneNumberIdentifier, options: AddPhoneNumberOptions): Promise<void>;
     // (undocumented)
-    onBlurVideoBackground: (bgBlurConfig?: BackgroundBlurConfig) => Promise<void>;
+    onBlurVideoBackground: (backgroundBlurConfig?: BackgroundBlurConfig) => Promise<void>;
     // (undocumented)
     onCreateLocalStreamView: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
     // (undocumented)
@@ -158,7 +160,7 @@ export interface CommonCallingHandlers {
     // (undocumented)
     onRemoveVideoBackgroundEffects: () => Promise<void>;
     // (undocumented)
-    onReplaceVideoBackground: (bgReplacementConfig: BackgroundReplacementConfig) => Promise<void>;
+    onReplaceVideoBackground: (backgroundReplacementConfig: BackgroundReplacementConfig) => Promise<void>;
     // (undocumented)
     onSelectCamera: (device: VideoDeviceInfo, options?: VideoStreamOptions) => Promise<void>;
     // (undocumented)
@@ -168,19 +170,19 @@ export interface CommonCallingHandlers {
     // (undocumented)
     onSendDtmfTone: (dtmfTone: DtmfTone) => Promise<void>;
     // (undocumented)
-    OnSetCaptionLanguage: (language: string) => Promise<void>;
+    onSetCaptionLanguage: (language: string) => Promise<void>;
     // (undocumented)
-    OnSetSpokenLanguage: (language: string) => Promise<void>;
+    onSetSpokenLanguage: (language: string) => Promise<void>;
     // (undocumented)
     onStartCall: (participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[], options?: StartCallOptions) => void;
     // (undocumented)
-    OnStartCaptions: (captionsOptions?: captionsOptions) => Promise<void>;
+    onStartCaptions: (captionsOptions?: captionsOptions) => Promise<void>;
     // (undocumented)
     onStartLocalVideo: () => Promise<void>;
     // (undocumented)
     onStartScreenShare: () => Promise<void>;
     // (undocumented)
-    OnStopCaptions: () => Promise<void>;
+    onStopCaptions: () => Promise<void>;
     // (undocumented)
     onStopScreenShare: () => Promise<void>;
     // (undocumented)
@@ -224,7 +226,7 @@ export type ErrorBarSelector = (state: CallClientState, props: CallingBaseSelect
 };
 
 // @public
-export type GetCallingSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof VideoGallery> extends true ? VideoGallerySelector : AreEqual<Component, typeof DevicesButton> extends true ? DevicesButtonSelector : AreEqual<Component, typeof MicrophoneButton> extends true ? MicrophoneButtonSelector : AreEqual<Component, typeof CameraButton> extends true ? CameraButtonSelector : AreEqual<Component, typeof ScreenShareButton> extends true ? ScreenShareButtonSelector : AreEqual<Component, typeof ParticipantList> extends true ? ParticipantListSelector : AreEqual<Component, typeof ParticipantsButton> extends true ? ParticipantsButtonSelector : AreEqual<Component, typeof EndCallButton> extends true ? EmptySelector : AreEqual<Component, typeof ErrorBar> extends true ? ErrorBarSelector : AreEqual<Component, typeof Dialpad> extends true ? EmptySelector : AreEqual<Component, typeof HoldButton> extends true ? HoldButtonSelector : AreEqual<Component, typeof _CaptionsBanner> extends true ? _CaptionsSelector : undefined;
+export type GetCallingSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof VideoGallery> extends true ? VideoGallerySelector : AreEqual<Component, typeof DevicesButton> extends true ? DevicesButtonSelector : AreEqual<Component, typeof MicrophoneButton> extends true ? MicrophoneButtonSelector : AreEqual<Component, typeof CameraButton> extends true ? CameraButtonSelector : AreEqual<Component, typeof ScreenShareButton> extends true ? ScreenShareButtonSelector : AreEqual<Component, typeof ParticipantList> extends true ? ParticipantListSelector : AreEqual<Component, typeof ParticipantsButton> extends true ? ParticipantsButtonSelector : AreEqual<Component, typeof EndCallButton> extends true ? EmptySelector : AreEqual<Component, typeof ErrorBar> extends true ? ErrorBarSelector : AreEqual<Component, typeof Dialpad> extends true ? EmptySelector : AreEqual<Component, typeof HoldButton> extends true ? HoldButtonSelector : undefined;
 
 // @public
 export const getCallingSelector: <Component extends (props: any) => JSX.Element | undefined>(component: Component) => GetCallingSelector<Component>;
