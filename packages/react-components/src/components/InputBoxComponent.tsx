@@ -109,7 +109,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
   useEffect(() => {
     // Get a plain text version to display in the input box, resetting state
     console.log('Need to parse input text and set the html versions if needed');
-    parseStringForMentions(textValue);
+    parseStringForMentions(textValue, atMentionLookupOptions?.trigger);
     // Parse the text and look for <msft-at-mention> tags.
     // Store the index and range of the tags.
     // Store the details in an ordered array.
@@ -125,7 +125,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     // Provide the plain text string to the inputTextValue
     // setInputTextValue(parsedText)
     //
-  }, [textValue]);
+  }, [textValue, atMentionLookupOptions?.trigger]);
 
   const mergedRootStyle = mergeStyles(inputBoxWrapperStyle, styles?.root);
   const mergedTextFiledStyle = mergeStyles(
@@ -339,7 +339,7 @@ type ParsedTag = {
  *
  * @private
  */
-const parseStringForMentions = (text: string): ParsedTag[] => {
+const parseStringForMentions = (text: string, trigger: string = '@'): ParsedTag[] => {
   let index = 0;
   let tags: ParsedTag[] = [];
   let previousLetter = '';
@@ -399,6 +399,9 @@ const parseStringForMentions = (text: string): ParsedTag[] => {
     previousLetter = letter;
     index++;
   }
+
+  const plainText = plainTextFromParsedTags(text, tags, trigger);
+  console.log(plainText);
   return tags;
 };
 
@@ -407,8 +410,38 @@ const parseStringForMentions = (text: string): ParsedTag[] => {
  *
  * @private
  */
-const plainTextFromParsedTags = (textBlock: string, parsedTags: ParsedTag[]): string => {
-  return '';
+const plainTextFromParsedTags = (textBlock: string, tags: ParsedTag[], trigger: string): string => {
+  let text = '';
+  let textBlockIndex = 0;
+  let currentTagIndex = 0;
+
+  while (textBlockIndex < textBlock.length) {
+    if (currentTagIndex < tags.length) {
+      // Grab the tag body text up to the next tag start or current tag close
+
+      const tag = tags[currentTagIndex];
+
+      // Have to consider nesting tags
+      const nextTagStart = tags[currentTagIndex + 1]?.htmlOpenTagStartIndex ?? tag.htmlCloseTagStartIndex;
+      console.log(nextTagStart, tag.htmlOpenTagStartIndex);
+      // Start of contents = end of open tag
+      const tagText = textBlock.slice(tag.htmlOpenTagStartIndex + tag.openTagLength, nextTagStart);
+      console.log(tag.htmlOpenTagStartIndex, nextTagStart, tagText);
+    }
+    textBlockIndex++;
+  }
+
+  // for (const tag of tags) {
+  //   console.log(tag);
+  //   if (tag.tagType == 'msft-at-mention') {
+  //     text += trigger;
+  //     text += textBlock.slice(tag.htmlOpenTagStartIndex + tag.openTagLength,
+  //                             tag.htmlCloseTagStartIndex);
+  //   } else {
+  //     // Any other tag, grab the text
+  //   }
+  // }
+  return text;
 };
 
 const htmlStringForMentionSuggestion = (suggestion: AtMentionSuggestion): string => {
