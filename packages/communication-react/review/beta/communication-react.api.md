@@ -132,6 +132,12 @@ export type AreParamEqual<A extends (props: any) => JSX.Element | undefined, B e
 // @public
 export type AreTypeEqual<A, B> = A extends B ? (B extends A ? true : false) : false;
 
+// @beta (undocumented)
+export interface AttachmentDownloadResult {
+    // (undocumented)
+    blobUrl: string;
+}
+
 // @public
 export type AvatarPersonaData = {
     text?: string;
@@ -2583,7 +2589,7 @@ export type MessageThreadProps = {
     onLoadPreviousChatMessages?: (messagesToLoad: number) => Promise<boolean>;
     onRenderMessage?: (messageProps: MessageProps, messageRenderer?: MessageRenderer) => JSX.Element;
     onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
-    onFetchAttachments?: (attachment: FileMetadata) => Promise<string>;
+    onFetchAttachments?: (attachment: FileMetadata) => Promise<AttachmentDownloadResult>;
     onUpdateMessage?: UpdateMessageCallback;
     onCancelMessageEdit?: CancelEditCallback;
     onDeleteMessage?: (messageId: string) => Promise<void>;

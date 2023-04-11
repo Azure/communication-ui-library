@@ -8,7 +8,8 @@ import {
   CustomMessage,
   SystemMessage,
   MessageRenderer,
-  FileMetadata
+  FileMetadata,
+  AttachmentDownloadResult
 } from '@azure/communication-react';
 import { Persona, PersonaPresence, PersonaSize, PrimaryButton, Stack } from '@fluentui/react';
 import { Divider } from '@fluentui/react-northstar';
@@ -274,11 +275,13 @@ const MessageThreadStory = (args): JSX.Element => {
     return defaultOnRender ? defaultOnRender(messageProps) : <></>;
   };
 
-  const onFetchAttachment = async (attachment: FileMetadata): Promise<string> => {
+  const onFetchAttachment = async (attachment: FileMetadata): Promise<AttachmentDownloadResult> => {
     // Mocking promise
     const delay = (): Promise<void> => new Promise((resolve) => setTimeout(resolve, 3000));
     return await delay().then(() => {
-      return attachment.previewUrl ?? '';
+      return {
+        blobUrl: attachment.previewUrl ?? ''
+      };
     });
   };
 

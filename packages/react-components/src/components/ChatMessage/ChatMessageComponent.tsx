@@ -92,7 +92,6 @@ type ChatMessageComponentProps = {
   /* @conditional-compile-remove(teams-inline-images) */
   /**
    * Optional map of attachment ids to blob urls.
-   * @beta
    */
   attachmentsMap?: Record<string, string>;
 };

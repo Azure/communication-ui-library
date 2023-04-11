@@ -1,15 +1,23 @@
-import { FluentThemeProvider, MessageThread, Message, FileMetadata } from '@azure/communication-react';
+import {
+  FluentThemeProvider,
+  MessageThread,
+  Message,
+  FileMetadata,
+  AttachmentDownloadResult
+} from '@azure/communication-react';
 import React from 'react';
 
 export const MessageThreadWithInlineImageExample: () => JSX.Element = () => {
-  const onFetchAttachment = async (attachment: FileMetadata): Promise<string> => {
+  const onFetchAttachment = async (attachment: FileMetadata): Promise<AttachmentDownloadResult> => {
     // * Your custom function to fetch image behind authenticated blob storage/server
     // const response = await fetchImage(attachment.previewUrl ?? '', token);
     // const blob = await response.blob();
 
     // * Create a blob url as <img> src
-    // return URL.createObjectURL(blob);
-    return attachment.previewUrl ?? '';
+    return {
+      // blobUrl: URL.createObjectURL(blob);
+      blobUrl: attachment.previewUrl ?? ''
+    };
   };
 
   const messages: Message[] = [

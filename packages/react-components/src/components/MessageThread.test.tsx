@@ -7,7 +7,7 @@ import { ChatMessage } from '../types';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessage } from '../types';
 /* @conditional-compile-remove(teams-inline-images) */
-import { FileMetadata } from './FileDownloadCards';
+import { AttachmentDownloadResult, FileMetadata } from './FileDownloadCards';
 /* @conditional-compile-remove(teams-inline-images) */
 import { act } from 'react-dom/test-utils';
 import Enzyme from 'enzyme';
@@ -156,12 +156,12 @@ describe('Message blocked should display default blocked text correctly', () => 
 /* @conditional-compile-remove(teams-inline-images) */
 describe('Message should display inline image correctly', () => {
   test('Message richtext/html img src should be correct', async () => {
+    const expectedBeforeImgSrc = 'urlBeforeSrcReplacement';
     const expectedImgSrc = 'someImgSrcUrl';
     const sampleMessage: ChatMessage = {
       messageType: 'chat',
       senderId: 'user3',
-      content:
-        '<p>Test</p><p><img alt="image" src="" itemscope="png" width="166.5625" height="250" id="SomeImageId1" style="vertical-align:bottom"></p><p>&nbsp;</p>',
+      content: `<p>Test</p><p><img alt="image" src="${expectedBeforeImgSrc}" itemscope="png" width="166.5625" height="250" id="SomeImageId1" style="vertical-align:bottom"></p><p>&nbsp;</p>`,
       senderDisplayName: 'Miguel Garcia',
       messageId: Math.random().toString(),
       createdOn: new Date('2019-04-13T00:00:00.000+08:09'),
@@ -179,13 +179,16 @@ describe('Message should display inline image correctly', () => {
         }
       ]
     };
-    const onFetchAttachment = async (attachment: FileMetadata): Promise<string> => {
-      return attachment.previewUrl ?? '';
+    const onFetchAttachment = async (attachment: FileMetadata): Promise<AttachmentDownloadResult> => {
+      return {
+        blobUrl: attachment.previewUrl ?? ''
+      };
     };
     const component = mount(
       <MessageThread userId="user1" messages={[sampleMessage]} onFetchAttachments={onFetchAttachment} />
     );
     await act(async () => {
+      expect(component.find('img').prop('src')).toEqual(expectedBeforeImgSrc);
       await new Promise((resolve) => setTimeout(resolve, 0));
       component.update();
 

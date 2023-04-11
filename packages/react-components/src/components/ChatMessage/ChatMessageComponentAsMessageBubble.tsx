@@ -71,13 +71,11 @@ type ChatMessageComponentAsMessageBubbleProps = {
   /* @conditional-compile-remove(teams-inline-images) */
   /**
    * Optional function to fetch attachments.
-   * @beta
    */
   onFetchAttachments?: (attachment: FileMetadata) => Promise<void>;
   /* @conditional-compile-remove(teams-inline-images) */
   /**
    * Optional map of attachment ids to blob urls.
-   * @beta
    */
   attachmentsMap?: Record<string, string>;
 };

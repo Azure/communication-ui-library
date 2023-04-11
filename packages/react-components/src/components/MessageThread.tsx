@@ -65,6 +65,8 @@ import { isNarrowWidth, _useContainerWidth } from './utils/responsive';
 import getParticipantsWhoHaveReadMessage from './utils/getParticipantsWhoHaveReadMessage';
 /* @conditional-compile-remove(file-sharing) */
 import { FileDownloadHandler, FileMetadata } from './FileDownloadCards';
+/* @conditional-compile-remove(teams-inline-images) */
+import { AttachmentDownloadResult } from './FileDownloadCards';
 import { useTheme } from '../theming';
 
 const isMessageSame = (first: ChatMessage, second: ChatMessage): boolean => {
@@ -640,7 +642,7 @@ export type MessageThreadProps = {
    * @param attachment - FileMetadata object we want to render
    * @beta
    */
-  onFetchAttachments?: (attachment: FileMetadata) => Promise<string>;
+  onFetchAttachments?: (attachment: FileMetadata) => Promise<AttachmentDownloadResult>;
   /**
    * Optional callback to edit a message.
    *
@@ -835,8 +837,8 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
       if (!onFetchAttachments || attachment.id in inlineAttachments) {
         return;
       }
-      const url = await onFetchAttachments(attachment);
-      setInlineAttachments((prev) => ({ ...prev, [attachment.id]: url }));
+      const attachmentDownloadResult = await onFetchAttachments(attachment);
+      setInlineAttachments((prev) => ({ ...prev, [attachment.id]: attachmentDownloadResult.blobUrl }));
     },
     [inlineAttachments, onFetchAttachments]
   );
