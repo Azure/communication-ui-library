@@ -112,6 +112,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   private chatClient: StatefulChatClient;
   private chatThreadClient: ChatThreadClient;
   private context: ChatContext;
+  private credential?: CommunicationTokenCredential = undefined;
   /* @conditional-compile-remove(file-sharing) */ /* @conditional-compile-remove(teams-inline-images) */
   private fileUploadAdapter: FileUploadAdapter;
   private handlers: ChatHandlers;
@@ -129,19 +130,11 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     this.chatThreadClient = chatThreadClient;
     this.context = new ChatContext(chatClient.getState(), chatThreadClient.threadId);
     /* @conditional-compile-remove(teams-inline-images) */
-    const credential = options?.credential;
-    /* @conditional-compile-remove(file-sharing) */ /* @conditional-compile-remove(teams-inline-images) */
-    let getAuthToken: (() => Promise<string>) | undefined = undefined;
-    /* @conditional-compile-remove(teams-inline-images) */
-    if (credential) {
-      /* @conditional-compile-remove(teams-inline-images) */
-      getAuthToken = async () => {
-        const accessToken = await credential.getToken();
-        return accessToken.token;
-      };
+    if (options && options.credential) {
+      this.credential = options.credential;
     }
     /* @conditional-compile-remove(file-sharing) */ /* @conditional-compile-remove(teams-inline-images) */
-    this.fileUploadAdapter = new AzureCommunicationFileUploadAdapter(this.context, getAuthToken);
+    this.fileUploadAdapter = new AzureCommunicationFileUploadAdapter(this.context);
 
     const onStateChange = (clientState: ChatClientState): void => {
       // unsubscribe when the instance gets disposed
@@ -331,11 +324,38 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
 
   /* @conditional-compile-remove(teams-inline-images) */
   async downloadAuthenticatedAttachment(attachmentUrl: string): Promise<string> {
-    if (!this.fileUploadAdapter.downloadAuthenticatedAttachment) {
-      return '';
-    }
+    return this.asyncTeeErrorToEventEmitter(async () => {
+      if (this.credential === undefined) {
+        const e = new Error();
+        e['target'] = 'ChatThreadClient.getMessage';
+        e['innerError'] = new Error('AccessToken is null');
+        throw e;
+      }
+      const accessToken = await this.credential.getToken();
+      if (!accessToken) {
+        const e = new Error();
+        e['target'] = 'ChatThreadClient.getMessage';
+        e['innerError'] = new Error('AccessToken is null');
+        throw e;
+      }
 
-    return await this.fileUploadAdapter.downloadAuthenticatedAttachment(attachmentUrl);
+      async function fetchWithAuthentication(url: string, token: string): Promise<Response> {
+        const headers = new Headers();
+        headers.append('Authorization', `Bearer ${token}`);
+        try {
+          return await fetch(url, { headers });
+        } catch (err) {
+          const e = new Error();
+          e['target'] = 'ChatThreadClient.getMessage';
+          e['innerError'] = err;
+          throw e;
+        }
+      }
+
+      const response = await fetchWithAuthentication(attachmentUrl, accessToken.token);
+      const blob = await response.blob();
+      return URL.createObjectURL(blob);
+    });
   }
 
   private messageReceivedListener(event: ChatMessageReceivedEvent): void {
