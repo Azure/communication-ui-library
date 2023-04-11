@@ -41,7 +41,7 @@
   },
   "devDependencies": {
     "@azure/communication-chat": ">=1.2.0",
-    "@azure/communication-signaling": "1.0.0-beta.13",
+    "@azure/communication-signaling": "1.0.0-beta.17",
     "@babel/cli": "~7.16.0",
     "@babel/core": "~7.16.0",
     "@microsoft/api-documenter": "~7.12.11",
