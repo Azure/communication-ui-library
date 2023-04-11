@@ -42,7 +42,6 @@ import { ReactElement } from 'react';
 import { RemoteParticipantState } from '@internal/calling-stateful-client';
 import { ScreenShareButton } from '@internal/react-components';
 import { StartCallOptions } from '@azure/communication-calling';
-import { _StartCaptionsButton } from '@internal/react-components';
 import { StatefulCallClient } from '@internal/calling-stateful-client';
 import { StatefulDeviceManager } from '@internal/calling-stateful-client';
 import { TeamsCall } from '@azure/communication-calling';
@@ -112,6 +111,7 @@ export const cameraButtonSelector: CameraButtonSelector;
 // @internal
 export type _CaptionsBannerSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
     captions: _CaptionsInfo[];
+    isCaptionsOn: boolean;
 };
 
 // @internal
@@ -290,8 +290,11 @@ export const screenShareButtonSelector: ScreenShareButtonSelector;
 export type _StartCaptionsButtonSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
     checked: boolean;
     currentCaptionLanguage: string;
-    currentSpokenLanguage: string | undefined;
+    currentSpokenLanguage?: string;
 };
+
+// @internal
+export const _startCaptionsButtonSelector: _StartCaptionsButtonSelector;
 
 // @beta
 export interface TeamsCallingHandlers extends CommonCallingHandlers {

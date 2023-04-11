@@ -633,6 +633,10 @@ export interface CallCompositeStrings {
     roomNotFoundTitle: string;
     soundLabel: string;
     startCallButtonLabel: string;
+    startCaptionsButtonOffLabel: string;
+    startCaptionsButtonOnLabel: string;
+    startCaptionsButtonTooltipOffContent: string;
+    startCaptionsButtonTooltipOnContent: string;
     threeParticipantJoinedNoticeString: string;
     threeParticipantLeftNoticeString: string;
     twoParticipantJoinedNoticeString: string;
@@ -1638,7 +1642,6 @@ export interface ComponentStrings {
     participantsButton: ParticipantsButtonStrings;
     screenShareButton: ScreenShareButtonStrings;
     sendBox: SendBoxStrings;
-    startCaptionsButton: _StartCaptionsButtonStrings;
     typingIndicator: TypingIndicatorStrings;
     UnsupportedBrowser: UnsupportedBrowserStrings;
     UnsupportedBrowserVersion: UnsupportedBrowserVersionStrings;
@@ -3112,32 +3115,6 @@ export type SitePermissionsStrings = {
 export interface SitePermissionsStyles extends BaseCustomStyles {
     primaryButton?: IButtonStyles;
     troubleshootingLink?: ILinkStyles;
-}
-
-// @internal
-export const _StartCaptionsButton: (props: _StartCaptionsButtonProps) => JSX.Element;
-
-// @internal (undocumented)
-export interface _StartCaptionsButtonProps extends ControlBarButtonProps {
-    currentSpokenLanguage?: string;
-    onStartCaptions: (captionsOptions?: _captionsOptions) => Promise<void>;
-    onStopCaptions: () => Promise<void>;
-    strings?: _StartCaptionsButtonStrings;
-}
-
-// @internal
-export type _StartCaptionsButtonSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
-    checked: boolean;
-    currentCaptionLanguage: string;
-    currentSpokenLanguage: string | undefined;
-};
-
-// @internal
-export interface _StartCaptionsButtonStrings {
-    offLabel: string;
-    onLabel: string;
-    tooltipOffContent: string;
-    tooltipOnContent: string;
 }
 
 // @public

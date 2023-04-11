@@ -40,10 +40,10 @@ import {
   WifiWarning20Filled,
   SpeakerMute16Filled,
   MicProhibited16Filled,
-  VideoProhibited16Filled,
-  ClosedCaption20Regular,
-  ClosedCaptionOff20Regular
+  VideoProhibited16Filled
 } from '@fluentui/react-icons';
+/* @conditional-compile-remove(close-captions) */
+import { ClosedCaption20Regular, ClosedCaptionOff20Regular } from '@fluentui/react-icons';
 /* @conditional-compile-remove(call-readiness) */
 import { Important20Filled } from '@fluentui/react-icons';
 /* @conditional-compile-remove(video-background-effects) */
@@ -306,6 +306,8 @@ export const DEFAULT_COMPONENT_ICONS = {
   VerticalGalleryRightButton: <ChevronRight20Regular />,
   /* @conditional-compile-remove(video-background-effects) */
   OptionsVideoBackgroundEffect: <VideoBackgroundEffect20Regular />,
+  /* @conditional-compile-remove(close-captions) */
   CaptionsIcon: <ClosedCaption20Regular />,
+  /* @conditional-compile-remove(close-captions) */
   CaptionsOffIcon: <ClosedCaptionOff20Regular />
 };

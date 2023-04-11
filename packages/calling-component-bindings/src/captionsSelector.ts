@@ -35,9 +35,9 @@ export type _StartCaptionsButtonSelector = (
 /**
  * Selector for {@link StartCaptionsButton} component.
  *
- * @private
+ * @internal
  */
-export const startCaptionsButtonSelector: _StartCaptionsButtonSelector = reselect.createSelector(
+export const _startCaptionsButtonSelector: _StartCaptionsButtonSelector = reselect.createSelector(
   [getCaptionsStatus, getCurrentCaptionLanguage, getCurrentSpokenLanguage],
   (isCaptionsFeatureActive, currentCaptionLanguage, currentSpokenLanguage) => {
     return {
@@ -64,9 +64,9 @@ export type _ChangeSpokenLanguageButtonSelector = (
 /**
  * Selector for {@link ChangeSpokenLanguageButton} component.
  *
- * @private
+ * @internal
  */
-export const changeSpokenLanguageButtonSelector: _ChangeSpokenLanguageButtonSelector = reselect.createSelector(
+export const _changeSpokenLanguageButtonSelector: _ChangeSpokenLanguageButtonSelector = reselect.createSelector(
   [getSupportedSpokenLanguages, getCurrentSpokenLanguage],
   (supportedSpokenLanguages, currentSpokenLanguage) => {
     return {
@@ -92,9 +92,9 @@ export type _ChangeCaptionLanguageButtonSelector = (
 /**
  * Selector for {@link ChangeCaptionLanguageButton} component.
  *
- * @private
+ * @internal
  */
-export const changeCaptionLanguageButtonSelector: _ChangeCaptionLanguageButtonSelector = reselect.createSelector(
+export const _changeCaptionLanguageButtonSelector: _ChangeCaptionLanguageButtonSelector = reselect.createSelector(
   [getSupportedCaptionLanguages, getCurrentCaptionLanguage],
   (supportedCaptionLanguages, currentCaptionLanguage) => {
     return {

@@ -15,7 +15,7 @@ import { _captionsBannerSelector } from '@internal/calling-component-bindings';
 /** @private */
 export const CaptionsBanner = (): JSX.Element => {
   /* @conditional-compile-remove(close-captions) */
-  const captionBannerProps = useAdaptedSelector(_captionsBannerSelector);
+  const captionsBannerProps = useAdaptedSelector(_captionsBannerSelector);
   /* @conditional-compile-remove(close-captions) */
   const handlers = useHandlers(_CaptionsBanner);
 
@@ -26,7 +26,7 @@ export const CaptionsBanner = (): JSX.Element => {
           captionsBannerProps.isCaptionsOn && (
             <Stack horizontalAlign="center">
               <Stack.Item style={{ width: '50%' }}>
-                <_CaptionsBanner {...captionBannerProps} {...handlers} />
+                <_CaptionsBanner {...captionsBannerProps} {...handlers} />
               </Stack.Item>
             </Stack>
           )

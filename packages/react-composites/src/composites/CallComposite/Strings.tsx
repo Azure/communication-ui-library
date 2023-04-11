@@ -408,8 +408,29 @@ export interface CallCompositeStrings {
    * string to be used to announce when multiple unnamed participants have left at the same time.
    */
   manyUnnamedParticipantsLeft: string;
+  /* @conditional-compile-remove(close-captions) */
   /**
    * string to be used to open live captions contextual menu
    */
   liveCaptionsLabel: string;
+  /* @conditional-compile-remove(close-captions) */
+  /**
+   * string to be used to start captions
+   */
+  startCaptionsButtonOnLabel: string;
+  /* @conditional-compile-remove(close-captions) */
+  /**
+   * string to be used to stop captions
+   */
+  startCaptionsButtonOffLabel: string;
+  /* @conditional-compile-remove(close-captions) */
+  /**
+   * tooltip string to be used to show captions is on
+   */
+  startCaptionsButtonTooltipOnContent: string;
+  /* @conditional-compile-remove(close-captions) */
+  /**
+   *tooltip string to be used to show captions is off
+   */
+  startCaptionsButtonTooltipOffContent: string;
 }

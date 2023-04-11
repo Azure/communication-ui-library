@@ -88,7 +88,12 @@
     "manyUnnamedParticipantsLeft": "unnamed participant and {numOfParticipants} other participants left",
     "manyParticipantsJoined": "{displayName1}, {displayName2}, {displayName3} and {numOfParticipants} other participants joined",
     "manyParticipantsLeft": "{displayName1}, {displayName2}, {displayName3} and {numOfParticipants} other participants left",
-    "liveCaptionsLabel": "Live captions"
+    "liveCaptionsLabel": "Live captions",
+
+    "startCaptionsButtonOnLabel": "Turn on captions",
+    "startCaptionsButtonOffLabel": "Turn off captions",
+    "startCaptionsButtonTooltipOnContent": "Turn off captions",
+    "startCaptionsButtonTooltipOffContent": "Turn on captions"
   },
   "chat": {
     "chatListHeader": "In this chat",
