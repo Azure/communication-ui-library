@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-/* @conditional-compile-remove(close-captions) */
+
 import React from 'react';
 /* @conditional-compile-remove(close-captions) */
 import { _CaptionsSettingModal, _CaptionsSettingModalStrings } from '@internal/react-components';

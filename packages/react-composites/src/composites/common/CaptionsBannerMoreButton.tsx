@@ -1,11 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
+import React from 'react';
+import { ControlBarButtonProps } from '@internal/react-components';
 /* @conditional-compile-remove(close-captions) */
 import { IContextualMenuItem } from '@fluentui/react';
 /* @conditional-compile-remove(close-captions) */
-import { ControlBarButtonProps, _StartCaptionsButton } from '@internal/react-components';
-/* @conditional-compile-remove(close-captions) */
-import React from 'react';
+import { _StartCaptionsButton } from '@internal/react-components';
 /* @conditional-compile-remove(close-captions) */
 import { useMemo } from 'react';
 /* @conditional-compile-remove(close-captions) */
