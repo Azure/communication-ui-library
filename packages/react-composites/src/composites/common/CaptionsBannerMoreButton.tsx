@@ -21,24 +21,23 @@ import { MoreButton } from './MoreButton';
 /* @conditional-compile-remove(close-captions) */
 import { _startCaptionsButtonSelector } from '@internal/calling-component-bindings';
 
-/* @conditional-compile-remove(close-captions) */
 /** @private */
 export interface CaptionsBannerMoreButtonProps extends ControlBarButtonProps {
   onCaptionsSettingsClick?: () => void;
 }
 
-/* @conditional-compile-remove(close-captions) */
 /**
  *
  * @private
  */
 export const CaptionsBannerMoreButton = (props: CaptionsBannerMoreButtonProps): JSX.Element => {
+  /* @conditional-compile-remove(close-captions) */
   const localeStrings = useLocale();
-
+  /* @conditional-compile-remove(close-captions) */
   const startCaptionsButtonProps = useAdaptedSelector(_startCaptionsButtonSelector);
-
+  /* @conditional-compile-remove(close-captions) */
   const startCaptionsButtonHandlers = useHandlers(_StartCaptionsButton);
-
+  /* @conditional-compile-remove(close-captions) */
   const moreButtonStrings = useMemo(
     () => ({
       label: localeStrings.strings.call.moreButtonCallingLabel,
@@ -46,9 +45,9 @@ export const CaptionsBannerMoreButton = (props: CaptionsBannerMoreButtonProps): 
     }),
     [localeStrings]
   );
-
+  /* @conditional-compile-remove(close-captions) */
   const moreButtonContextualMenuItems: IContextualMenuItem[] = [];
-
+  /* @conditional-compile-remove(close-captions) */
   moreButtonContextualMenuItems.push({
     key: 'ToggleCaptionsKey',
     text: startCaptionsButtonProps.checked
@@ -71,7 +70,7 @@ export const CaptionsBannerMoreButton = (props: CaptionsBannerMoreButtonProps): 
       styles: buttonFlyoutIncreasedSizeStyles
     }
   });
-
+  /* @conditional-compile-remove(close-captions) */
   if (props.onCaptionsSettingsClick) {
     moreButtonContextualMenuItems.push({
       key: 'openCaptionsSettingKey',
@@ -87,7 +86,7 @@ export const CaptionsBannerMoreButton = (props: CaptionsBannerMoreButtonProps): 
       disabled: !startCaptionsButtonProps.checked
     });
   }
-
+  /* @conditional-compile-remove(close-captions) */
   return (
     <MoreButton
       {...props}
@@ -97,7 +96,5 @@ export const CaptionsBannerMoreButton = (props: CaptionsBannerMoreButtonProps): 
       menuProps={{ items: moreButtonContextualMenuItems }}
     />
   );
+  return <></>;
 };
-
-// This is a placeholder to bypass CC of "close-captions", remove when move the feature to stable
-export {};

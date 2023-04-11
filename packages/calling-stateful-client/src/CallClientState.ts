@@ -647,9 +647,9 @@ export type CallErrorTarget =
   | /* @conditional-compile-remove(calling-beta-sdk) */ /* @conditional-compile-remove(teams-identity-support) */ 'TeamsCall.addParticipant'
   | /* @conditional-compile-remove(video-background-effects) */ 'VideoEffectsFeature.startEffects'
   | /* @conditional-compile-remove(calling-beta-sdk) */ 'CallAgent.handlePushNotification'
-  | 'Call.admit'
-  | 'Call.rejectParticipant'
-  | 'Call.admitAll';
+  | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.admit'
+  | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.rejectParticipant'
+  | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.admitAll';
 
 /**
  * State only proxy for {@link @azure/communication-calling#DiagnosticsCallFeature}.
