@@ -140,6 +140,8 @@ export const _CaptionsBanner: (props: _CaptionsBannerProps) => JSX.Element;
 export interface _CaptionsBannerProps {
     // (undocumented)
     captions: _CaptionsInfo[];
+    // (undocumented)
+    isCaptionsOn?: boolean;
     onRenderAvatar?: OnRenderAvatarCallback;
 }
 
@@ -148,6 +150,11 @@ export type _CaptionsInfo = {
     displayName: string;
     captionText: string;
     userId?: string;
+};
+
+// @internal
+export type _captionsOptions = {
+    spokenLanguage: string;
 };
 
 // @public
@@ -1293,6 +1300,25 @@ export interface SendBoxStylesProps extends BaseCustomStyles {
     systemMessage?: IStyle;
     textField?: IStyle;
     textFieldContainer?: IStyle;
+}
+
+// @internal
+export const _StartCaptionsButton: (props: _StartCaptionsButtonProps) => JSX.Element;
+
+// @internal (undocumented)
+export interface _StartCaptionsButtonProps extends ControlBarButtonProps {
+    currentSpokenLanguage?: string;
+    onStartCaptions: (captionsOptions?: _captionsOptions) => Promise<void>;
+    onStopCaptions: () => Promise<void>;
+    strings?: _StartCaptionsButtonStrings;
+}
+
+// @internal
+export interface _StartCaptionsButtonStrings {
+    offLabel: string;
+    onLabel: string;
+    tooltipOffContent: string;
+    tooltipOnContent: string;
 }
 
 // @public

@@ -3,6 +3,8 @@
 
 import { IContextualMenuItem } from '@fluentui/react';
 import { ControlBarButtonProps } from '@internal/react-components';
+/* @conditional-compile-remove(close-captions) */
+import { _StartCaptionsButton } from '@internal/react-components';
 /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
 import { HoldButton } from '@internal/react-components';
 import React from 'react';
@@ -23,11 +25,19 @@ import {
   generateCustomCallDesktopOverflowButtons,
   onFetchCustomButtonPropsTrampoline
 } from './CustomButton';
+/* @conditional-compile-remove(close-captions) */
+import { useHandlers } from '../../CallComposite/hooks/useHandlers';
+/* @conditional-compile-remove(close-captions) */
+import { _startCaptionsButtonSelector } from '@internal/calling-component-bindings';
+/* @conditional-compile-remove(close-captions) */
+import { useAdaptedSelector } from '../../CallComposite/hooks/useAdaptedSelector';
 
 /** @private */
 export interface DesktopMoreButtonProps extends ControlBarButtonProps {
   disableButtonsForHoldScreen?: boolean;
   onClickShowDialpad?: () => void;
+  /* @conditional-compile-remove(close-captions) */
+  isCaptionsSupported?: boolean;
   /* @conditional-compile-remove(control-bar-button-injection) */
   callControls?: boolean | CommonCallControlOptions;
 }
@@ -41,6 +51,10 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
   const localeStrings = useLocale();
   /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
   const holdButtonProps = usePropsFor(HoldButton);
+  /* @conditional-compile-remove(close-captions) */
+  const startCaptionsButtonProps = useAdaptedSelector(_startCaptionsButtonSelector);
+  /* @conditional-compile-remove(close-captions) */
+  const startCaptionsButtonHandlers = useHandlers(_StartCaptionsButton);
 
   /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
   const moreButtonStrings = useMemo(
@@ -66,6 +80,60 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
     },
     disabled: props.disableButtonsForHoldScreen
   });
+
+  // is captions feature is active
+  /* @conditional-compile-remove(close-captions) */
+  if (props.isCaptionsSupported) {
+    const captionsContextualMenuItems: IContextualMenuItem[] = [];
+
+    const menuSubIconStyleSet = {
+      root: {
+        height: 'unset',
+        lineHeight: '100%',
+        width: '1.25rem'
+      }
+    };
+
+    moreButtonContextualMenuItems.push({
+      key: 'liveCaptionsKey',
+      text: localeStrings.strings.call.liveCaptionsLabel,
+      iconProps: { iconName: 'CaptionsIcon', styles: { root: { lineHeight: 0 } } },
+      itemProps: {
+        styles: buttonFlyoutIncreasedSizeStyles
+      },
+      disabled: props.disableButtonsForHoldScreen,
+      subMenuProps: {
+        id: 'captions-contextual-menu',
+        items: captionsContextualMenuItems
+      },
+      submenuIconProps: {
+        iconName: 'HorizontalGalleryRightButton',
+        styles: menuSubIconStyleSet
+      }
+    });
+
+    captionsContextualMenuItems.push({
+      key: 'ToggleCaptionsKey',
+      text: startCaptionsButtonProps.checked
+        ? localeStrings.strings.call.startCaptionsButtonTooltipOnContent
+        : localeStrings.strings.call.startCaptionsButtonTooltipOffContent,
+      onClick: () => {
+        startCaptionsButtonProps.checked
+          ? startCaptionsButtonHandlers.onStopCaptions()
+          : startCaptionsButtonHandlers.onStartCaptions({
+              spokenLanguage: startCaptionsButtonProps.currentSpokenLanguage ?? 'en-us'
+            });
+      },
+      iconProps: {
+        iconName: startCaptionsButtonProps.checked ? 'CaptionsOffIcon' : 'CaptionsIcon',
+        styles: { root: { lineHeight: 0 } }
+      },
+      itemProps: {
+        styles: buttonFlyoutIncreasedSizeStyles
+      },
+      disabled: props.disableButtonsForHoldScreen
+    });
+  }
 
   /*@conditional-compile-remove(PSTN-calls) */
   if (props.onClickShowDialpad) {

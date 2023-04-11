@@ -412,6 +412,7 @@ export interface CallCompositeStrings {
     learnMore: string;
     leftCallMoreDetails?: string;
     leftCallTitle: string;
+    liveCaptionsLabel: string;
     lobbyScreenConnectingToCallMoreDetails?: string;
     lobbyScreenConnectingToCallTitle: string;
     lobbyScreenWaitingToBeAdmittedMoreDetails?: string;
@@ -457,6 +458,10 @@ export interface CallCompositeStrings {
     roomNotFoundTitle: string;
     soundLabel: string;
     startCallButtonLabel: string;
+    startCaptionsButtonOffLabel: string;
+    startCaptionsButtonOnLabel: string;
+    startCaptionsButtonTooltipOffContent: string;
+    startCaptionsButtonTooltipOnContent: string;
     threeParticipantJoinedNoticeString: string;
     threeParticipantLeftNoticeString: string;
     twoParticipantJoinedNoticeString: string;
@@ -1202,6 +1207,8 @@ export const DEFAULT_COMPOSITE_ICONS: {
     VerticalGalleryLeftButton: JSX.Element;
     VerticalGalleryRightButton: JSX.Element;
     OptionsVideoBackgroundEffect: JSX.Element;
+    CaptionsIcon: JSX.Element;
+    CaptionsOffIcon: JSX.Element;
 };
 
 // @beta

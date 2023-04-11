@@ -89,6 +89,8 @@ export interface MoreDrawerProps extends MoreDrawerDevicesMenuProps {
   onPeopleButtonClicked: () => void;
   callControls?: boolean | CommonCallControlOptions;
   onClickShowDialpad?: () => void;
+  /* @conditional-compile-remove(close-captions) */
+  isCaptionsSupported?: boolean;
   strings: MoreDrawerStrings;
   disableButtonsForHoldScreen?: boolean;
 }

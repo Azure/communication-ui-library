@@ -111,6 +111,7 @@ export const cameraButtonSelector: CameraButtonSelector;
 // @internal
 export type _CaptionsBannerSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
     captions: _CaptionsInfo[];
+    isCaptionsOn: boolean;
 };
 
 // @internal
@@ -287,10 +288,13 @@ export const screenShareButtonSelector: ScreenShareButtonSelector;
 
 // @internal
 export type _StartCaptionsButtonSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
-    isCaptionsFeatureActive: boolean;
+    checked: boolean;
     currentCaptionLanguage: string;
-    currentSpokenLanguage: string;
+    currentSpokenLanguage?: string;
 };
+
+// @internal
+export const _startCaptionsButtonSelector: _StartCaptionsButtonSelector;
 
 // @beta
 export interface TeamsCallingHandlers extends CommonCallingHandlers {

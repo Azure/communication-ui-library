@@ -52,6 +52,8 @@ export interface CommonCallControlBarProps {
   /* @conditional-compile-remove(video-background-effects) */
   onShowVideoEffectsPicker?: (showVideoEffectsOptions: boolean) => void;
   rtl?: boolean;
+  /* @conditional-compile-remove(close-captions) */
+  isCaptionsSupported?: boolean;
 }
 
 const inferCommonCallControlOptions = (
@@ -320,6 +322,8 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                             onClickShowDialpad={props.onClickShowDialpad}
                             /* @conditional-compile-remove(control-bar-button-injection) */
                             callControls={props.callControls}
+                            /* @conditional-compile-remove(close-captions) */
+                            isCaptionsSupported={props.isCaptionsSupported}
                           />
                         )
                     }

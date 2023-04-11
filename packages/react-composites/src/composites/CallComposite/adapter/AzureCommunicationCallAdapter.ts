@@ -262,9 +262,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   private participantSubscribers = new Map<string, ParticipantSubscriber>();
   private emitter: EventEmitter = new EventEmitter();
   private onClientStateChange: (clientState: CallClientState) => void;
-  /* @conditional-compile-remove(close-captions) */
-  // REMOVE THIS< TEST PURPOSES ONLY
-  private isCaptionsOn: boolean;
 
   private get call(): CallCommon | undefined {
     return this._call;
@@ -292,10 +289,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
 
     this.context.onCallEnded((endCallData) => this.emitter.emit('callEnded', endCallData));
 
-    /* @conditional-compile-remove(close-captions) */
-    // REMOVE THIS< TEST PURPOSES ONLY
-    this.isCaptionsOn = false;
-
     const onStateChange = (clientState: CallClientState): void => {
       // unsubscribe when the instance gets disposed
       if (!this) {
@@ -312,17 +305,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
         this.context.setCurrentCallId(this.call.id);
       }
       this.context.updateClientState(clientState);
-
-      /* @conditional-compile-remove(close-captions) */
-      // REMOVE THIS< TEST PURPOSES ONLY
-      if (this.call?.state === 'Connected') {
-        if (_isTeamsCall(this.call) || (_isACSCall(this.call) && !this.call.info.groupId && !this.call.info.roomId)) {
-          if (!this.isCaptionsOn) {
-            this.call.feature(Features.TeamsCaptions).startCaptions();
-            this.isCaptionsOn = true;
-          }
-        }
-      }
     };
 
     this.handlers = createHandlers(callClient, callAgent, deviceManager, undefined);

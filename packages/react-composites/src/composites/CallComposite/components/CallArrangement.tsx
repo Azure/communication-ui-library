@@ -239,6 +239,10 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
       )
     };
   }
+  /* @conditional-compile-remove(close-captions) */
+  const isTeamsCall = adapter.getState().isTeamsCall;
+  /* @conditional-compile-remove(close-captions) */
+  const hasJoinedCall = adapter.getState().call?.state === 'Connected';
 
   return (
     <div ref={containerRef} className={mergeStyles(containerDivStyles)} id={props.id}>
@@ -269,6 +273,8 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                     peopleButtonChecked={activePane === 'people'}
                     onPeopleButtonClicked={togglePeoplePane}
                     onMoreButtonClicked={onMoreButtonClicked}
+                    /* @conditional-compile-remove(close-captions) */
+                    isCaptionsSupported={isTeamsCall && hasJoinedCall}
                     /* @conditional-compile-remove(video-background-effects) */
                     onShowVideoEffectsPicker={setShowVideoEffectsPane}
                   />
@@ -285,6 +291,8 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                 onClickShowDialpad={alternateCallerId ? onClickShowDialpad : undefined}
                 /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
                 disableButtonsForHoldScreen={isInLocalHold}
+                /* @conditional-compile-remove(close-captions) */
+                isCaptionsSupported={isTeamsCall && hasJoinedCall}
               />
             </Stack>
           )}

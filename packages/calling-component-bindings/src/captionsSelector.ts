@@ -26,24 +26,24 @@ export type _StartCaptionsButtonSelector = (
   state: CallClientState,
   props: CallingBaseSelectorProps
 ) => {
-  isCaptionsFeatureActive: boolean;
+  checked: boolean;
   currentCaptionLanguage: string;
-  currentSpokenLanguage: string;
+  currentSpokenLanguage?: string;
 };
 
 /* @conditional-compile-remove(close-captions) */
 /**
  * Selector for {@link StartCaptionsButton} component.
  *
- * @private
+ * @internal
  */
-export const startCaptionsButtonSelector: _StartCaptionsButtonSelector = reselect.createSelector(
+export const _startCaptionsButtonSelector: _StartCaptionsButtonSelector = reselect.createSelector(
   [getCaptionsStatus, getCurrentCaptionLanguage, getCurrentSpokenLanguage],
   (isCaptionsFeatureActive, currentCaptionLanguage, currentSpokenLanguage) => {
     return {
-      isCaptionsFeatureActive: isCaptionsFeatureActive ?? false,
+      checked: isCaptionsFeatureActive ?? false,
       currentCaptionLanguage: currentCaptionLanguage ?? 'en-us',
-      currentSpokenLanguage: currentSpokenLanguage ?? 'en-us'
+      currentSpokenLanguage: currentSpokenLanguage
     };
   }
 );
@@ -64,9 +64,9 @@ export type _ChangeSpokenLanguageButtonSelector = (
 /**
  * Selector for {@link ChangeSpokenLanguageButton} component.
  *
- * @private
+ * @internal
  */
-export const changeSpokenLanguageButtonSelector: _ChangeSpokenLanguageButtonSelector = reselect.createSelector(
+export const _changeSpokenLanguageButtonSelector: _ChangeSpokenLanguageButtonSelector = reselect.createSelector(
   [getSupportedSpokenLanguages, getCurrentSpokenLanguage],
   (supportedSpokenLanguages, currentSpokenLanguage) => {
     return {
@@ -92,9 +92,9 @@ export type _ChangeCaptionLanguageButtonSelector = (
 /**
  * Selector for {@link ChangeCaptionLanguageButton} component.
  *
- * @private
+ * @internal
  */
-export const changeCaptionLanguageButtonSelector: _ChangeCaptionLanguageButtonSelector = reselect.createSelector(
+export const _changeCaptionLanguageButtonSelector: _ChangeCaptionLanguageButtonSelector = reselect.createSelector(
   [getSupportedCaptionLanguages, getCurrentCaptionLanguage],
   (supportedCaptionLanguages, currentCaptionLanguage) => {
     return {
@@ -113,6 +113,7 @@ export type _CaptionsBannerSelector = (
   props: CallingBaseSelectorProps
 ) => {
   captions: _CaptionsInfo[];
+  isCaptionsOn: boolean;
 };
 
 /* @conditional-compile-remove(close-captions) */
@@ -121,15 +122,19 @@ export type _CaptionsBannerSelector = (
  *
  * @internal
  */
-export const _captionsBannerSelector: _CaptionsBannerSelector = reselect.createSelector([getCaptions], (captions) => {
-  const captionsInfo = captions?.map((c) => {
+export const _captionsBannerSelector: _CaptionsBannerSelector = reselect.createSelector(
+  [getCaptions, getCaptionsStatus],
+  (captions, isCaptionsFeatureActive) => {
+    const captionsInfo = captions?.map((c) => {
+      return {
+        displayName: c.speaker.displayName ?? 'Unnamed Participant',
+        captionText: c.captionText ?? '',
+        userId: c.speaker.identifier ? toFlatCommunicationIdentifier(c.speaker.identifier) : ''
+      };
+    });
     return {
-      displayName: c.speaker.displayName ?? '',
-      captionText: c.captionText ?? '',
-      userId: c.speaker.identifier ? toFlatCommunicationIdentifier(c.speaker.identifier) : ''
+      captions: captionsInfo ?? [],
+      isCaptionsOn: isCaptionsFeatureActive ?? false
     };
-  });
-  return {
-    captions: captionsInfo ?? []
-  };
-});
+  }
+);
