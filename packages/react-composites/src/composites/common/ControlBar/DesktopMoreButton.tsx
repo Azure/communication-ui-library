@@ -40,6 +40,7 @@ export interface DesktopMoreButtonProps extends ControlBarButtonProps {
   isCaptionsSupported?: boolean;
   /* @conditional-compile-remove(control-bar-button-injection) */
   callControls?: boolean | CommonCallControlOptions;
+  onCaptionsSettingsClick?: () => void;
 }
 
 /**
@@ -120,9 +121,11 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
       onClick: () => {
         startCaptionsButtonProps.checked
           ? startCaptionsButtonHandlers.onStopCaptions()
-          : startCaptionsButtonHandlers.onStartCaptions({
-              spokenLanguage: startCaptionsButtonProps.currentSpokenLanguage ?? 'en-us'
-            });
+          : startCaptionsButtonProps.currentSpokenLanguage
+          ? startCaptionsButtonHandlers.onStartCaptions({
+              spokenLanguage: startCaptionsButtonProps.currentSpokenLanguage
+            })
+          : props.onCaptionsSettingsClick && props.onCaptionsSettingsClick();
       },
       iconProps: {
         iconName: startCaptionsButtonProps.checked ? 'CaptionsOffIcon' : 'CaptionsIcon',
@@ -133,6 +136,22 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
       },
       disabled: props.disableButtonsForHoldScreen
     });
+
+    if (props.onCaptionsSettingsClick) {
+      captionsContextualMenuItems.push({
+        key: 'openCaptionsSettingKey',
+        text: localeStrings.strings.call.captionsSettingLabel,
+        onClick: props.onCaptionsSettingsClick,
+        iconProps: {
+          iconName: 'CaptionsSettingIcon',
+          styles: { root: { lineHeight: 0 } }
+        },
+        itemProps: {
+          styles: buttonFlyoutIncreasedSizeStyles
+        },
+        disabled: props.disableButtonsForHoldScreen || !startCaptionsButtonProps.checked
+      });
+    }
   }
 
   /*@conditional-compile-remove(PSTN-calls) */

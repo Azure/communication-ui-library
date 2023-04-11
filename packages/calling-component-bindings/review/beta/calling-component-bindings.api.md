@@ -123,16 +123,14 @@ export type captionsOptions = {
 };
 
 // @internal
-export type _ChangeCaptionLanguageButtonSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
-    supportedCaptionLanguages: string[];
-    currentCaptionLanguage: string;
+export type _ChangeSpokenLanguageSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
+    supportedSpokenLanguages: string[];
+    currentSpokenLanguage: string;
+    isCaptionsFeatureActive: boolean;
 };
 
 // @internal
-export type _ChangeSpokenLanguageButtonSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
-    supportedSpokenLanguages: string[];
-    currentSpokenLanguage: string;
-};
+export const _changeSpokenLanguageSelector: _ChangeSpokenLanguageSelector;
 
 // @public
 export interface CommonCallingHandlers {

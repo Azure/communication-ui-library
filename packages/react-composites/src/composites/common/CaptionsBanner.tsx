@@ -1,7 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
+/* @conditional-compile-remove(close-captions) */
 import React from 'react';
+/* @conditional-compile-remove(close-captions) */
 import { _CaptionsBanner } from '@internal/react-components';
+/* @conditional-compile-remove(close-captions) */
 import { _DrawerMenu, _DrawerMenuItemProps, _DrawerSurface } from '@internal/react-components';
 /* @conditional-compile-remove(close-captions) */
 import { Stack } from '@fluentui/react';

@@ -111,6 +111,7 @@ class ProxyTeamsCaptionsFeature implements ProxyHandler<TeamsCaptionsCallFeature
           async (...args: Parameters<TeamsCaptionsCallFeature['startCaptions']>) => {
             const ret = await target.startCaptions(...args);
             this._context.setIsCaptionActive(this._call.id, true);
+            this._context.setSelectedSpokenLanguage(this._call.id, args[0]?.spokenLanguage ?? 'en-us');
             return ret;
           },
           'Call.feature'

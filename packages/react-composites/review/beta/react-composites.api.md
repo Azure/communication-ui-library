@@ -376,6 +376,14 @@ export interface CallCompositeStrings {
     cameraLabel: string;
     cameraPermissionDenied: string;
     cameraTurnedOff: string;
+    captionsSettingCancelButtonLabel: string;
+    captionsSettingCloseModalButtonAriaLabel: string;
+    captionsSettingConfirmButtonLabel: string;
+    captionsSettingDropdownInfoText: string;
+    captionsSettingDropdownLabel: string;
+    captionsSettingLabel: string;
+    captionsSettingModalAriaLabel: string;
+    captionsSettingModalTitle: string;
     chatButtonLabel: string;
     close: string;
     complianceBannerNowOnlyRecording: string;
@@ -1209,6 +1217,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     OptionsVideoBackgroundEffect: JSX.Element;
     CaptionsIcon: JSX.Element;
     CaptionsOffIcon: JSX.Element;
+    CaptionsSettingIcon: JSX.Element;
 };
 
 // @beta

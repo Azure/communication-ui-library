@@ -360,6 +360,7 @@ export const controlsToAdd = {
   theme: { control: 'radio', options: themeChoices, defaultValue: 'Default', name: 'Theme' },
   token: { control: 'text', defaultValue: '', name: 'Valid token for user', type: { name: 'string', required: true } },
   typingUsers: { control: 'object', defaultValue: defaultTypingUsers, name: 'Typing users' },
+  isCaptionsFeatureActive: { control: 'boolean', defaultValue: true, name: 'Is captions on' },
   userId: {
     control: 'text',
     defaultValue: '',

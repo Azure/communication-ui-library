@@ -551,6 +551,14 @@ export interface CallCompositeStrings {
     cameraLabel: string;
     cameraPermissionDenied: string;
     cameraTurnedOff: string;
+    captionsSettingCancelButtonLabel: string;
+    captionsSettingCloseModalButtonAriaLabel: string;
+    captionsSettingConfirmButtonLabel: string;
+    captionsSettingDropdownInfoText: string;
+    captionsSettingDropdownLabel: string;
+    captionsSettingLabel: string;
+    captionsSettingModalAriaLabel: string;
+    captionsSettingModalTitle: string;
     chatButtonLabel: string;
     close: string;
     complianceBannerNowOnlyRecording: string;
@@ -1171,6 +1179,11 @@ export interface CameraSitePermissionsProps extends CommonSitePermissionsProps {
 // @beta
 export type CameraSitePermissionsStrings = SitePermissionsStrings;
 
+// @public
+export type CancelEditCallback = (messageId: string, metadata?: Record<string, string>, options?: {
+    attachedFilesMetadata?: FileMetadata[];
+}) => void;
+
 // @beta (undocumented)
 export interface CaptionsCallFeatureState {
     captions: CaptionsInfo[];
@@ -1200,11 +1213,6 @@ export type captionsOptions = {
 // @beta
 export type CaptionsReceivedListener = (event: {
     data: CaptionsInfo;
-}) => void;
-
-// @public
-export type CancelEditCallback = (messageId: string, metadata?: Record<string, string>, options?: {
-    attachedFilesMetadata?: FileMetadata[];
 }) => void;
 
 // @public
@@ -1975,6 +1983,7 @@ export const DEFAULT_COMPONENT_ICONS: {
     OptionsVideoBackgroundEffect: JSX.Element;
     CaptionsIcon: JSX.Element;
     CaptionsOffIcon: JSX.Element;
+    CaptionsSettingIcon: JSX.Element;
 };
 
 // @public
@@ -2084,6 +2093,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     OptionsVideoBackgroundEffect: JSX.Element;
     CaptionsIcon: JSX.Element;
     CaptionsOffIcon: JSX.Element;
+    CaptionsSettingIcon: JSX.Element;
 };
 
 // @beta
