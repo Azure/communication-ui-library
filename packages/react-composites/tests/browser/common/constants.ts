@@ -28,7 +28,7 @@ export const IDS = {
   resumeCallButton: 'hold-page-resume-call-button',
   holdButton: 'hold-button',
   holdPage: 'hold-page',
-  moreButton: 'call-with-chat-composite-more-button',
+  moreButton: 'common-call-composite-more-button',
   callPage: 'call-page',
   unsupportedEnvironmentIcon: 'unsupported-environment-icon',
   unsupportedEnvironmentLink: 'unsupported-environment-link',

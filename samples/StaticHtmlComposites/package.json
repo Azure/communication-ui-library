@@ -22,7 +22,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@azure/communication-react": "1.5.1-beta.1",
+    "@azure/communication-react": "1.5.1-beta.2",
     "@azure/communication-common": "2.2.0",
     "@azure/communication-calling": "file:../../libs/skype-spool-sdk-1.0.0.tgz",
     "@azure/communication-chat": ">=1.2.0",
