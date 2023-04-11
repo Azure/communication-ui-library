@@ -838,7 +838,9 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
         return;
       }
       const attachmentDownloadResult = await onFetchAttachments(attachment);
-      setInlineAttachments((prev) => ({ ...prev, [attachment.id]: attachmentDownloadResult.blobUrl }));
+      if (attachmentDownloadResult) {
+        setInlineAttachments((prev) => ({ ...prev, [attachment.id]: attachmentDownloadResult.blobUrl }));
+      }
     },
     [inlineAttachments, onFetchAttachments]
   );

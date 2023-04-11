@@ -77,24 +77,24 @@ const extractInlineImageFilesMetadata = (attachments: ChatAttachment[]): FileMet
   return attachments.map((attachment) => ({
     attachmentType: attachment.attachmentType,
     id: attachment.id,
-    name: attachment.name,
-    extension: attachment.contentType,
+    name: attachment.name ?? '',
+    extension: attachment.contentType ?? '',
     url: attachment.url,
     previewUrl: attachment.previewUrl
   }));
 };
 
 const extractFilesMetadata = (message: ChatMessageWithStatus): FileMetadata[] => {
-  const fileMetadata: FileMetadata[] = [];
-
-  /* @conditional-compile-remove(teams-inline-images) */
-  if (message.metadata) {
-    fileMetadata.concat(extractAttachedFilesMetadata(message.metadata || {}));
-  }
+  let fileMetadata: FileMetadata[] = [];
 
   /* @conditional-compile-remove(file-sharing) */
+  if (message.metadata) {
+    fileMetadata = fileMetadata.concat(extractAttachedFilesMetadata(message.metadata));
+  }
+
+  /* @conditional-compile-remove(teams-inline-images) */
   if (message.content?.attachments) {
-    fileMetadata.concat(extractInlineImageFilesMetadata(message.content?.attachments));
+    fileMetadata = fileMetadata.concat(extractInlineImageFilesMetadata(message.content?.attachments));
   }
 
   return fileMetadata;

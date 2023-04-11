@@ -47,10 +47,8 @@ import { useSelector } from './hooks/useSelector';
 import { FileDownloadErrorBar } from './FileDownloadErrorBar';
 /* @conditional-compile-remove(file-sharing) */
 import { _FileDownloadCards } from '@internal/react-components';
-/* @conditional-compile-remove(file-sharing) */
-import { AttachmentDownloadResult } from '@internal/react-components';
-import { ChatAttachment } from '@azure/communication-chat';
-import { string } from 'yargs';
+/* @conditional-compile-remove(teams-inline-images) */
+import { AttachmentDownloadResult, FileMetadata } from '@internal/react-components';
 
 /**
  * @private
@@ -198,8 +196,9 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     [fileSharing?.downloadHandler]
   );
 
+  /* @conditional-compile-remove(teams-inline-images) */
   const onRenderInlineAttachment = useCallback(
-    async (attachment: ChatAttachment): Promise<AttachmentDownloadResult | undefined> => {
+    async (attachment: FileMetadata): Promise<AttachmentDownloadResult | undefined> => {
       if (adapter.downloadAuthenticatedAttachment && attachment.previewUrl) {
         const blob = await adapter.downloadAuthenticatedAttachment(attachment.previewUrl);
         return {
@@ -244,6 +243,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
             onRenderMessage={onRenderMessage}
             /* @conditional-compile-remove(file-sharing) */
             onRenderFileDownloads={onRenderFileDownloads}
+            /* @conditional-compile-remove(teams-inline-images) */
             onFetchAttachments={onRenderInlineAttachment}
             numberOfChatMessagesToReload={defaultNumberOfChatMessagesToReload}
             styles={messageThreadStyles}
