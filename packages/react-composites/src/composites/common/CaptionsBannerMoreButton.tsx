@@ -40,8 +40,8 @@ export const CaptionsBannerMoreButton = (props: CaptionsBannerMoreButtonProps): 
   /* @conditional-compile-remove(close-captions) */
   const moreButtonStrings = useMemo(
     () => ({
-      label: localeStrings.strings.call.moreButtonCallingLabel,
-      tooltipOffContent: localeStrings.strings.callWithChat.moreDrawerButtonTooltip
+      label: localeStrings.strings.call.captionsBannerMoreButtonCallingLabel,
+      tooltipOffContent: localeStrings.strings.call.captionsBannerMoreButtonTooltip
     }),
     [localeStrings]
   );

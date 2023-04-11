@@ -260,7 +260,7 @@ export interface CallCompositeStrings {
    * Aria Label for dialpad Modal close button
    */
   dialpadCloseModalButtonAriaLabel: string;
-  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(close-captions) */
   /**
    * label for more button in the Calling composite
    */
@@ -473,4 +473,14 @@ export interface CallCompositeStrings {
    * arial label for captions setting modal close button
    */
   captionsSettingCloseModalButtonAriaLabel: string;
+  /* @conditional-compile-remove(close-captions) */
+  /**
+   * label for more button inside captions banner
+   */
+  captionsBannerMoreButtonCallingLabel: string;
+  /* @conditional-compile-remove(close-captions) */
+  /**
+   * arial label for more button inside captions banner
+   */
+  captionsBannerMoreButtonTooltip: string;
 }
