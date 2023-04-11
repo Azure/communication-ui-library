@@ -50,6 +50,8 @@ export interface ParticipantListStyles extends BaseCustomStyles {
 /* @conditional-compile-remove(total-participant-count) */
 /**
  * Strings for the {@link ParticipantList}.
+ *
+ * @beta
  */
 export interface ParticipantListStrings {
   overflowParticipantCount?: string;

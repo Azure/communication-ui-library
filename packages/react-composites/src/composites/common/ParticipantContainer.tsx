@@ -17,7 +17,6 @@ import {
 } from '@internal/react-components';
 import { FocusZone, Stack, Text, useTheme } from '@fluentui/react';
 import { AvatarPersona, AvatarPersonaDataCallback } from './AvatarPersona';
-import { useAdapter } from '../CallComposite/adapter/CallAdapterProvider';
 
 type ParticipantContainerProps = {
   onRenderAvatar?: OnRenderAvatarCallback;
@@ -54,9 +53,7 @@ export const ParticipantListWithHeading = (props: {
   const { onFetchAvatarPersonaData, onFetchParticipantMenuItems, title, participantListProps } = props;
   const theme = useTheme();
   /* @conditional-compile-remove(total-participant-count) */
-  const adapter = useAdapter();
-  /* @conditional-compile-remove(total-participant-count) */
-  const totalParticipantCount = adapter.getState().call?.totalParticipantCount;
+  const totalParticipantCount = participantListProps.totalParticipantCount;
   const subheadingStyleThemed = useMemo(
     () => ({
       root: {
