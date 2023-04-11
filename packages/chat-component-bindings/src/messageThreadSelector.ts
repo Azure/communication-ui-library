@@ -31,6 +31,7 @@ import { updateMessagesWithAttached } from './utils/updateMessagesWithAttached';
 
 /* @conditional-compile-remove(file-sharing) */
 import { FileMetadata } from '@internal/react-components';
+import { ChatAttachment } from '@azure/communication-chat';
 
 const memoizedAllConvertChatMessage = memoizeFnAll(
   (
@@ -69,6 +70,10 @@ const extractAttachedFilesMetadata = (metadata: Record<string, string>): FileMet
     console.error(e);
     return [];
   }
+};
+
+const extractInlineImageFilesMetadata = (attachments: ChatAttachment[]): FileMetadata[] => {
+  return attachments as FileMetadata[];
 };
 
 /* @conditional-compile-remove(data-loss-prevention) */
@@ -115,7 +120,9 @@ const convertToUiChatMessage = (
     mine: messageSenderId === userId,
     metadata: message.metadata,
     /* @conditional-compile-remove(file-sharing) */
-    attachedFilesMetadata: extractAttachedFilesMetadata(message.metadata || {})
+    attachedFilesMetadata: extractInlineImageFilesMetadata(message.content?.attachments ?? []).concat(
+      extractAttachedFilesMetadata(message.metadata || {})
+    )
   };
 };
 

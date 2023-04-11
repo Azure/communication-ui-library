@@ -258,11 +258,10 @@ export type {
   SendBoxErrorBarError,
   FileDownloadHandler,
   FileDownloadError,
-  FileMetadata,
-  AttachmentDownloadResult
+  FileMetadata
 } from '../../react-components/src';
 /* @conditional-compile-remove(teams-inline-images) */
-export type { FileMetadataAttachmentType } from '../../react-components/src';
+export type { FileMetadataAttachmentType, AttachmentDownloadResult } from '../../react-components/src';
 /* @conditional-compile-remove(PSTN-calls) */
 export type { HoldButtonProps, HoldButtonStrings, VideoTileStrings } from '../../react-components/src';
 /* @conditional-compile-remove(call-readiness) */

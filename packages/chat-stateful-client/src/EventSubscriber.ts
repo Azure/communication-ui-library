@@ -42,7 +42,7 @@ export class EventSubscriber {
     return convertChatMessage({
       id: event.id,
       version: event.version,
-      content: { message: event.message },
+      content: { message: event.message, attachments: event.attachments },
       type: this.convertEventType(event.type),
       sender: event.sender,
       senderDisplayName: event.senderDisplayName,

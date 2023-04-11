@@ -47,6 +47,10 @@ import { useSelector } from './hooks/useSelector';
 import { FileDownloadErrorBar } from './FileDownloadErrorBar';
 /* @conditional-compile-remove(file-sharing) */
 import { _FileDownloadCards } from '@internal/react-components';
+/* @conditional-compile-remove(file-sharing) */
+import { AttachmentDownloadResult } from '@internal/react-components';
+import { ChatAttachment } from '@azure/communication-chat';
+import { string } from 'yargs';
 
 /**
  * @private
@@ -194,6 +198,21 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     [fileSharing?.downloadHandler]
   );
 
+  const onRenderInlineAttachment = useCallback(
+    async (attachment: ChatAttachment): Promise<AttachmentDownloadResult> => {
+      if (adapter.downloadAuthenticatedAttachment) {
+        const blob = await adapter.downloadAuthenticatedAttachment(attachment.previewUrl ?? '');
+        return {
+          blobUrl: blob
+        };
+      }
+      return {
+        blobUrl: 'blob'
+      };
+    },
+    [adapter]
+  );
+
   const AttachFileButton = useCallback(() => {
     if (!fileSharing?.uploadHandler) {
       return null;
@@ -227,6 +246,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
             onRenderMessage={onRenderMessage}
             /* @conditional-compile-remove(file-sharing) */
             onRenderFileDownloads={onRenderFileDownloads}
+            onFetchAttachments={onRenderInlineAttachment}
             numberOfChatMessagesToReload={defaultNumberOfChatMessagesToReload}
             styles={messageThreadStyles}
           />

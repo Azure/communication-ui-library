@@ -642,7 +642,7 @@ export type MessageThreadProps = {
    * @param attachment - FileMetadata object we want to render
    * @beta
    */
-  onFetchAttachments?: (attachment: FileMetadata) => Promise<AttachmentDownloadResult>;
+  onFetchAttachments?: (attachment: FileMetadata) => Promise<AttachmentDownloadResult | undefined>;
   /**
    * Optional callback to edit a message.
    *
