@@ -41,10 +41,6 @@ import { drawerContainerStyles } from '../CallComposite/styles/CallComposite.sty
 /* @conditional-compile-remove(video-background-effects) */
 import { VideoEffectsPane } from '../common/VideoEffectsPane';
 import { CommonCallControlOptions } from '../common/types/CommonCallControlOptions';
-/* @conditional-compile-remove(close-captions) */
-import { useSelector } from '../CallComposite/hooks/useSelector';
-/* @conditional-compile-remove(close-captions) */
-import { getIsTeamsCall } from '../CallComposite/selectors/baseSelectors';
 
 /**
  * Props required for the {@link CallWithChatComposite}
@@ -341,7 +337,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
   /* @conditional-compile-remove(PSTN-calls) */
   const alternateCallerId = callAdapter.getState().alternateCallerId;
   /* @conditional-compile-remove(close-captions) */
-  const isTeamsCall = useSelector(getIsTeamsCall);
+  const isTeamsCall = callAdapter.getState().isTeamsCall;
 
   const callCompositeOptions: CallCompositeOptions = useMemo(
     () => ({

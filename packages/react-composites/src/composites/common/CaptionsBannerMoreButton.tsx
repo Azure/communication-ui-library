@@ -77,7 +77,7 @@ export const CaptionsBannerMoreButton = (props: CaptionsBannerMoreButtonProps): 
       text: localeStrings.strings.call.captionsSettingLabel,
       onClick: props.onCaptionsSettingsClick,
       iconProps: {
-        iconName: 'SettingsIcon',
+        iconName: 'CaptionsSettingIcon',
         styles: { root: { lineHeight: 0 } }
       },
       itemProps: {
