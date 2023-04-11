@@ -97,8 +97,6 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
   } = props;
   const inputBoxRef = useRef(null);
 
-  // Current @mention query to pass to the callback
-  const [mentionQuery, setMentionQuery] = useState<string | undefined>(undefined);
   // Current suggestion list, provided by the callback
   const [mentionSuggestions, setMentionSuggestions] = useState<AtMentionSuggestion[]>([]);
 
@@ -114,8 +112,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     const plainText = plainTextFromParsedTags(textValue, tags, trigger);
     console.log('plainText ', plainText);
     // Provide the plain text string to the inputTextValue
-    // setInputTextValue(parsedText)
-    //
+    setInputTextValue(plainText);
   }, [textValue, atMentionLookupOptions?.trigger]);
 
   const mergedRootStyle = mergeStyles(inputBoxWrapperStyle, styles?.root);
@@ -148,14 +145,23 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
 
   const onSuggestionSelected = useCallback(
     (suggestion: AtMentionSuggestion) => {
+      // TODO: Use the HTML value in the control
+      // FIGURE OUT WHERE TO INSERT THE NEW TAG
+      // INSERT IT INTO THE TEXT FIELD
       let queryText = inputTextValue.slice(currentTagIndex).split(' ')[0];
       const firstPart = inputTextValue.substring(0, currentTagIndex);
       const lastPart = inputTextValue.substring(currentTagIndex + queryText.length);
 
+      // TODO: make this logic work properly
       const updatedText = firstPart + htmlStringForMentionSuggestion(suggestion) + lastPart;
-      setInputTextValue(updatedText);
+      const tags = parseStringForMentions(updatedText);
+      const plainText = plainTextFromParsedTags(
+        updatedText,
+        tags,
+        props.atMentionLookupOptions?.trigger ?? defaultMentionTrigger
+      );
+      setInputTextValue(plainText);
       onMentionAdd(updatedText);
-      setMentionQuery(undefined);
       setMentionSuggestions([]);
       setCurrentTagIndex(-1);
     },
@@ -188,7 +194,6 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
           const query = newValue?.slice(lastTagIndex).split(' ')[0];
           if (!!query) {
             console.log('getting suggestions for query: ', query);
-            setMentionQuery(query.slice(triggerText.length));
             const suggestions = (await atMentionLookupOptions?.onQueryUpdated(query)) ?? [];
             setMentionSuggestions(suggestions);
           }
