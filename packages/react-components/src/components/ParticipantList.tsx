@@ -206,7 +206,7 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
     /* @conditional-compile-remove(total-participant-count) */
     strings
   } = props;
-  console.log(totalParticipantCount);
+
   const ids = useIdentifiers();
   const participantItemStrings = useLocale().strings.participantItem;
   const participantListStrings = useLocale().strings.ParticipantList;
@@ -253,6 +253,10 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
     () => merge(participantListItemStyle, props.styles?.participantItemStyles),
     [props.styles?.participantItemStyles]
   );
+
+  const overflowParticipantCountString =
+    strings?.overflowParticipantCount ?? participantListStrings?.overflowParticipantCount;
+
   return (
     <Stack data-ui-id={ids.participantList} className={mergeStyles(participantListStyle, props.styles?.root)}>
       {displayedParticipants.map((participant: ParticipantListParticipant) =>
@@ -269,15 +273,13 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
               showParticipantOverflowTooltip
             )
       )}
-      {participantListStrings?.overflowParticipantCount &&
-        totalParticipantCount &&
-        totalParticipantCount > displayedParticipants.length && (
-          <Text>
-            {_formatString(strings?.overflowParticipantCount ?? participantListStrings?.overflowParticipantCount, {
-              overflowCount: `${totalParticipantCount - displayedParticipants.length}`
-            })}
-          </Text>
-        )}
+      {overflowParticipantCountString && totalParticipantCount && totalParticipantCount > displayedParticipants.length && (
+        <Text style={{ fontWeight: 400, margin: '0.5rem' }}>
+          {_formatString(overflowParticipantCountString, {
+            overflowCount: `${totalParticipantCount - displayedParticipants.length}`
+          })}
+        </Text>
+      )}
     </Stack>
   );
 };

@@ -157,6 +157,7 @@ export interface ComponentStrings {
    */
   VerticalGallery: VerticalGalleryStrings;
   /* @conditional-compile-remove(total-participant-count) */
+  /* Strings for the participant list component */
   ParticipantList: ParticipantListStrings;
 }
 

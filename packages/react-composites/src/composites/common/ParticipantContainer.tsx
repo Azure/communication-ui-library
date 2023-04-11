@@ -17,6 +17,7 @@ import {
 } from '@internal/react-components';
 import { FocusZone, Stack, Text, useTheme } from '@fluentui/react';
 import { AvatarPersona, AvatarPersonaDataCallback } from './AvatarPersona';
+import { useAdapter } from '../CallComposite/adapter/CallAdapterProvider';
 
 type ParticipantContainerProps = {
   onRenderAvatar?: OnRenderAvatarCallback;
@@ -52,6 +53,10 @@ export const ParticipantListWithHeading = (props: {
 }): JSX.Element => {
   const { onFetchAvatarPersonaData, onFetchParticipantMenuItems, title, participantListProps } = props;
   const theme = useTheme();
+  /* @conditional-compile-remove(total-participant-count) */
+  const adapter = useAdapter();
+  /* @conditional-compile-remove(total-participant-count) */
+  const totalParticipantCount = adapter.getState().call?.totalParticipantCount;
   const subheadingStyleThemed = useMemo(
     () => ({
       root: {
@@ -66,7 +71,11 @@ export const ParticipantListWithHeading = (props: {
   return (
     <Stack className={participantListStack}>
       <Stack.Item styles={subheadingStyleThemed} aria-label={title}>
-        {title}
+        {title}{' '}
+        {
+          /* @conditional-compile-remove(total-participant-count) */ totalParticipantCount &&
+            `(${totalParticipantCount})`
+        }
       </Stack.Item>
       <FocusZone className={participantListContainerStyle} shouldFocusOnMount={true}>
         <ParticipantList

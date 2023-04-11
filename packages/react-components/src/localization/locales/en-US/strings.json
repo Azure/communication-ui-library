@@ -9,7 +9,7 @@
     "participantStateRinging": "Calling...",
     "participantStateHold": "On hold"
   },
-  "participantList": {
+  "ParticipantList": {
     "overflowParticipantCount": "+{overflowCount} more"
   },
   "typingIndicator": {
