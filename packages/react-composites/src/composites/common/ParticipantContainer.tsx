@@ -68,11 +68,7 @@ export const ParticipantListWithHeading = (props: {
   return (
     <Stack className={participantListStack}>
       <Stack.Item styles={subheadingStyleThemed} aria-label={title}>
-        {title}{' '}
-        {
-          /* @conditional-compile-remove(total-participant-count) */ totalParticipantCount &&
-            `(${totalParticipantCount})`
-        }
+        {paneTitleTrampoline(title ?? '', totalParticipantCount)}
       </Stack.Item>
       <FocusZone className={participantListContainerStyle} shouldFocusOnMount={true}>
         <ParticipantList
@@ -100,4 +96,10 @@ export const ParticipantListWithHeading = (props: {
       </FocusZone>
     </Stack>
   );
+};
+
+const paneTitleTrampoline = (paneTitle: string, totalParticipantCount?: number): string => {
+  /* @conditional-compile-remove(total-participant-count) */
+  return `${paneTitle} (${totalParticipantCount ?? 0})`;
+  return paneTitle;
 };
