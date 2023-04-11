@@ -169,6 +169,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       onMentionAdd(updatedText);
       setMentionQuery(undefined);
       setMentionSuggestions([]);
+      setCurrentTagIndex(undefined);
     },
     [atMentionLookupOptions?.trigger, onMentionAdd, textFieldRef, inputTextValue]
   );
@@ -180,8 +181,8 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     // If we are enabled for lookups,
     if (!!atMentionLookupOptions) {
       // Go see if there's a trigger character in the text, from the end of the string
-      const lastTagIndex = newValue?.lastIndexOf(atMentionLookupOptions?.trigger ?? '@') ?? -1;
-
+      const triggerText = atMentionLookupOptions?.trigger ?? defaultMentionTrigger;
+      const lastTagIndex = newValue?.lastIndexOf(triggerText) ?? -1;
       if (!!currentTagIndex && !!lastTagIndex) {
         setCurrentTagIndex(lastTagIndex);
       } else {
@@ -192,8 +193,11 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
         } else {
           if (lastTagIndex > -1) {
             // This might want to be changed to not include the lookup tag. Currently it does.
-            const query = newValue?.slice(lastTagIndex);
+            // TODO: work in mentionQuery state or remove it.
+            const query = newValue?.slice(lastTagIndex).split(' ')[0];
             if (!!query) {
+              console.log('getting suggestions for query: ', query);
+              setMentionQuery(query.slice(triggerText.length));
               const suggestions = (await atMentionLookupOptions?.onQueryUpdated(query)) ?? [];
               setMentionSuggestions(suggestions);
             }
@@ -380,7 +384,7 @@ const parseStringForMentions = (text: string, trigger: string): ParsedTag[] => {
   }
 
   const plainText = plainTextFromParsedTags(text, tags, trigger);
-  console.log(plainText);
+  // console.log(plainText);
   return tags;
 };
 
@@ -402,10 +406,10 @@ const plainTextFromParsedTags = (textBlock: string, tags: ParsedTag[], trigger: 
 
       // Have to consider nesting tags
       const nextTagStart = tags[currentTagIndex + 1]?.htmlOpenTagStartIndex ?? tag.htmlCloseTagStartIndex;
-      console.log(nextTagStart, tag.htmlOpenTagStartIndex);
+      // console.log(nextTagStart, tag.htmlOpenTagStartIndex);
       // Start of contents = end of open tag
       const tagText = textBlock.slice(tag.htmlOpenTagStartIndex + tag.openTagLength, nextTagStart);
-      console.log(tag.htmlOpenTagStartIndex, nextTagStart, tagText);
+      // console.log(tag.htmlOpenTagStartIndex, nextTagStart, tagText);
     }
     textBlockIndex++;
   }
