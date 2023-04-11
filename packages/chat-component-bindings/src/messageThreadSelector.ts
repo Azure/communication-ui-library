@@ -72,8 +72,32 @@ const extractAttachedFilesMetadata = (metadata: Record<string, string>): FileMet
   }
 };
 
+/* @conditional-compile-remove(teams-inline-images) */
 const extractInlineImageFilesMetadata = (attachments: ChatAttachment[]): FileMetadata[] => {
-  return attachments as FileMetadata[];
+  return attachments.map((attachment) => ({
+    attachmentType: attachment.attachmentType,
+    id: attachment.id,
+    name: attachment.name,
+    extension: attachment.contentType,
+    url: attachment.url,
+    previewUrl: attachment.previewUrl
+  }));
+};
+
+const extractFilesMetadata = (message: ChatMessageWithStatus): FileMetadata[] => {
+  const fileMetadata: FileMetadata[] = [];
+
+  /* @conditional-compile-remove(teams-inline-images) */
+  if (message.metadata) {
+    fileMetadata.concat(extractAttachedFilesMetadata(message.metadata || {}));
+  }
+
+  /* @conditional-compile-remove(file-sharing) */
+  if (message.content?.attachments) {
+    fileMetadata.concat(extractInlineImageFilesMetadata(message.content?.attachments));
+  }
+
+  return fileMetadata;
 };
 
 /* @conditional-compile-remove(data-loss-prevention) */
@@ -119,10 +143,8 @@ const convertToUiChatMessage = (
     deletedOn: message.deletedOn,
     mine: messageSenderId === userId,
     metadata: message.metadata,
-    /* @conditional-compile-remove(file-sharing) */
-    attachedFilesMetadata: extractInlineImageFilesMetadata(message.content?.attachments ?? []).concat(
-      extractAttachedFilesMetadata(message.metadata || {})
-    )
+    /* @conditional-compile-remove(file-sharing) @conditional-compile-remove(teams-inline-images) */
+    attachedFilesMetadata: extractFilesMetadata(message)
   };
 };
 

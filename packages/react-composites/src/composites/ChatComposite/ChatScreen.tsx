@@ -199,16 +199,14 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   );
 
   const onRenderInlineAttachment = useCallback(
-    async (attachment: ChatAttachment): Promise<AttachmentDownloadResult> => {
-      if (adapter.downloadAuthenticatedAttachment) {
-        const blob = await adapter.downloadAuthenticatedAttachment(attachment.previewUrl ?? '');
+    async (attachment: ChatAttachment): Promise<AttachmentDownloadResult | undefined> => {
+      if (adapter.downloadAuthenticatedAttachment && attachment.previewUrl) {
+        const blob = await adapter.downloadAuthenticatedAttachment(attachment.previewUrl);
         return {
           blobUrl: blob
         };
       }
-      return {
-        blobUrl: 'blob'
-      };
+      return undefined;
     },
     [adapter]
   );
