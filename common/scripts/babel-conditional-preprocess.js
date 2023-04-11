@@ -117,10 +117,6 @@ exports.default = babelHelper.declare((_api, opts) => {
 
       TSConditionalType(path) {
         HandleConditionalType(path, featureSet, stabilizedFeatureSet);
-      },
-
-      SwitchCase(path) {
-        Handle(path, featureSet, stabilizedFeatureSet);
       }
     }
   };
