@@ -150,3 +150,9 @@ export const getSupportedCaptionLanguages = (state: CallAdapterState): string[] 
 export const getSupportedSpokenLanguages = (state: CallAdapterState): string[] | undefined => {
   return state.call?.captionsFeature.supportedSpokenLanguages;
 };
+
+/* @conditional-compile-remove(close-captions) */
+/**
+ * @private
+ */
+export const getIsTeamsCall = (state: CallAdapterState): boolean => state.isTeamsCall;

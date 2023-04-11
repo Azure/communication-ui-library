@@ -39,7 +39,10 @@ type InferredCallErrorTargets =
   | 'CallAgent.feature'
   | /* @conditional-compile-remove(calling-beta-sdk) */ 'CallClient.getEnvironmentInfo'
   | /* @conditional-compile-remove(calling-beta-sdk) */ /* @conditional-compile-remove(teams-identity-support) */ 'TeamsCall.addParticipant'
-  | 'CallClient.feature';
+  | 'CallClient.feature'
+  | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.admit'
+  | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.rejectParticipant'
+  | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.admitAll';
 
 type CallObjectMethodNames<TName extends string, T> = {
   [K in keyof T & string]: `${TName}.${CallMethodName<T, K>}`;

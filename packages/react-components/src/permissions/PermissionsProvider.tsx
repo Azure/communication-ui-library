@@ -92,7 +92,7 @@ export const _usePermissions = (): _Permissions => useContext(PermissionsContext
  * @beta
  * The role of a call participant.
  */
-export type Role = 'Presenter' | 'Attendee' | 'Consumer' | 'Organizer';
+export type Role = 'Presenter' | 'Attendee' | 'Consumer' | 'Organizer' | 'Co-organizer';
 
 /**
  * @internal
