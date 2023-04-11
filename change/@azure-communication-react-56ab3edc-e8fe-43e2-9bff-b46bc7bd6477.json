@@ -1,9 +1,6 @@
 {
   "type": "prerelease",
-  "comment": {
-    "title": "",
-    "value": ""
-  },
+  "comment": "[AzureCommunicationChatAdapter.test.ts] Adding new unit test for failure conditions",
   "packageName": "@azure/communication-react",
   "email": "joshlai@microsoft.com",
   "dependentChangeType": "patch"
