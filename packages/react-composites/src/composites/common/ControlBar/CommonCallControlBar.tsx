@@ -136,6 +136,15 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
     setIsOutOfSpace(totalButtonsWidth > controlBarContainerWidth);
   }, [totalButtonsWidth, controlBarContainerWidth]);
 
+  /* @conditional-compile-remove(close-captions) */
+  const openCaptionsSettingModal = useCallback((): void => {
+    setShowCaptionsSettingModal(true);
+  }, []);
+  /* @conditional-compile-remove(close-captions) */
+  const onDismissCaptionsSetting = useCallback((): void => {
+    setShowCaptionsSettingModal(false);
+  }, []);
+
   const chatButtonStrings = useMemo(
     () => ({
       label: callWithChatStrings.chatButtonLabel,
@@ -224,14 +233,6 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
   ) : (
     <></>
   );
-  /* @conditional-compile-remove(close-captions) */
-  const openCaptionsSettingModal = (): void => {
-    setShowCaptionsSettingModal(true);
-  };
-  /* @conditional-compile-remove(close-captions) */
-  const onDismissCaptionsSetting = (): void => {
-    setShowCaptionsSettingModal(false);
-  };
 
   return (
     <div ref={controlBarSizeRef}>

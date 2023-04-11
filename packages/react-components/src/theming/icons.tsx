@@ -311,5 +311,5 @@ export const DEFAULT_COMPONENT_ICONS = {
   /* @conditional-compile-remove(close-captions) */
   CaptionsOffIcon: <ClosedCaptionOff20Regular />,
   /* @conditional-compile-remove(close-captions) */
-  SettingsIcon: <Settings20Regular />
+  CaptionsSettingIcon: <Settings20Regular />
 };
