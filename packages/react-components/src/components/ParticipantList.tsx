@@ -204,6 +204,7 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
     onRenderParticipant,
     onFetchParticipantMenuItems,
     showParticipantOverflowTooltip,
+    /* @conditional-compile-remove(total-participant-count) */
     totalParticipantCount,
     /* @conditional-compile-remove(total-participant-count) */
     strings
@@ -211,6 +212,7 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
 
   const ids = useIdentifiers();
   const participantItemStrings = useLocale().strings.participantItem;
+  /* @conditional-compile-remove(total-participant-count) */
   const participantListStrings = useLocale().strings.ParticipantList;
 
   const displayedParticipants: ParticipantListParticipant[] = useMemo(() => {
@@ -256,6 +258,7 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
     [props.styles?.participantItemStyles]
   );
 
+  /* @conditional-compile-remove(total-participant-count) */
   const overflowParticipantCountString =
     strings?.overflowParticipantCount ?? participantListStrings?.overflowParticipantCount;
 
@@ -275,13 +278,17 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
               showParticipantOverflowTooltip
             )
       )}
-      {overflowParticipantCountString && totalParticipantCount && totalParticipantCount > displayedParticipants.length && (
-        <Text style={{ fontWeight: 400, margin: '0.5rem' }}>
-          {_formatString(overflowParticipantCountString, {
-            overflowCount: `${totalParticipantCount - displayedParticipants.length}`
-          })}
-        </Text>
-      )}
+      {
+        /* @conditional-compile-remove(total-participant-count) */ overflowParticipantCountString &&
+          totalParticipantCount &&
+          totalParticipantCount > displayedParticipants.length && (
+            <Text style={{ fontWeight: 400, margin: '0.5rem' }}>
+              {_formatString(overflowParticipantCountString, {
+                overflowCount: `${totalParticipantCount - displayedParticipants.length}`
+              })}
+            </Text>
+          )
+      }
     </Stack>
   );
 };
