@@ -21,7 +21,3 @@
 /packages/chat-stateful-client/                             @Azure/acs-ui-web-chat-reviewer-1 @Azure/acs-ui-web-chat-reviewer-2
 /packages/storybook/stories/ChatComposite/                  @Azure/acs-ui-web-chat-reviewer-1 @Azure/acs-ui-web-chat-reviewer-2
 /samples/Chat/                                              @Azure/acs-ui-web-chat-reviewer-1 @Azure/acs-ui-web-chat-reviewer-2
-
-# CallWithChat
-/samples/CallWithChat/                                      @Azure/acs-ui-web-calling-reviewer-1 @Azure/acs-ui-web-calling-reviewer-2
-/packages/storybook/stories/CallWithChatComposite/          @Azure/acs-ui-web-calling-reviewer-1 @Azure/acs-ui-web-calling-reviewer-2
