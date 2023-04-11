@@ -158,45 +158,19 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
 
   const onSuggestionSelected = useCallback(
     (suggestion: AtMentionSuggestion) => {
-      // Go back to the last trigger character and insert the HTML over that range.
+      // Go back to the last trigger character and insert the HTML for the suggestion
       const lastTriggerIndex = inputTextValue.lastIndexOf(atMentionLookupOptions?.trigger || defaultMentionTrigger);
 
-      let firstPartOfText = inputTextValue.substring(0, lastTriggerIndex);
-      const trigger = atMentionLookupOptions?.trigger || '';
-      const queryString = mentionQuery || '';
-      const mention = trigger + queryString;
+      // TODO: This will ultimately need to handle the case where the editor is not at the end of the text
+      let updatedText = inputTextValue.substring(0, lastTriggerIndex);
+      updatedText += htmlStringForMentionSuggestion(suggestion);
 
-      if (mention !== '') {
-        const displayName = suggestion.displayName;
-        const updatedMention = trigger + displayName;
-        let selectionEnd = textFieldRef?.current?.selectionEnd || 0;
-        if (selectionEnd < 0) {
-          selectionEnd = 0;
-        } else if (selectionEnd > inputTextValue.length) {
-          selectionEnd = inputTextValue.length;
-        }
-        // Grab the display name from the suggestion and add it to the
-        // input text value.
-        const updatedTextBoxValue =
-          inputTextValue.substring(0, selectionEnd - mention.length) +
-          updatedMention +
-          inputTextValue.substring(selectionEnd);
-
-        // Set the pass the new value back to the caller
-        let newHTMLValue =
-          inputTextValue.substring(0, selectionEnd - mention.length) +
-          htmlStringForMentionSuggestion(suggestion) +
-          inputTextValue.substring(selectionEnd);
-
-        setInputTextValue(updatedTextBoxValue);
-        onMentionAdd(newHTMLValue);
-      }
+      setInputTextValue(updatedText);
+      onMentionAdd(updatedText);
       setMentionQuery(undefined);
-
-      //set focus back to text field
-      // textFieldRef?.current?.focus();
+      setMentionSuggestions([]);
     },
-    [atMentionLookupOptions?.trigger, mentionQuery, onMentionAdd, textFieldRef, textValue]
+    [atMentionLookupOptions?.trigger, onMentionAdd, textFieldRef, inputTextValue]
   );
 
   const handleOnChange = async (
