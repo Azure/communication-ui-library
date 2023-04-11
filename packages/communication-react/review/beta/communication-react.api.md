@@ -551,6 +551,8 @@ export interface CallCompositeStrings {
     cameraLabel: string;
     cameraPermissionDenied: string;
     cameraTurnedOff: string;
+    captionsBannerMoreButtonCallingLabel: string;
+    captionsBannerMoreButtonTooltip: string;
     captionsSettingCancelButtonLabel: string;
     captionsSettingCloseModalButtonAriaLabel: string;
     captionsSettingConfirmButtonLabel: string;
