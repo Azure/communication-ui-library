@@ -9,15 +9,12 @@ import {
   DevicesButton,
   ParticipantList,
   ScreenShareButton,
-  VideoGallery,
-  _CaptionsBanner,
-  _CaptionsSettingModal
+  VideoGallery
 } from '@internal/react-components';
 /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
 import { Dialpad } from '@internal/react-components';
 /* @conditional-compile-remove(PSTN-calls) */
 import { HoldButton } from '@internal/react-components';
-import { _StartCaptionsButton } from '@internal/react-components';
 import {
   CameraButtonSelector,
   cameraButtonSelector,

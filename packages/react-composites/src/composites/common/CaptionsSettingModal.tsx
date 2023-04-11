@@ -4,6 +4,7 @@ import React from 'react';
 import { _CaptionsSettingModal } from '@internal/react-components';
 import { useAdaptedSelector } from '../CallComposite/hooks/useAdaptedSelector';
 import { useHandlers } from '../CallComposite/hooks/useHandlers';
+import { useLocale } from '../localization';
 
 /** @private */
 export const CaptionsSettingModal = (props: {
@@ -12,6 +13,7 @@ export const CaptionsSettingModal = (props: {
 }): JSX.Element => {
   const captionsSettingModalProps = useAdaptedSelector(_CaptionsSettingModal);
   const handlers = useHandlers(_CaptionsSettingModal);
+  //get composite strings here using locale
 
   return (
     <_CaptionsSettingModal

@@ -438,4 +438,39 @@ export interface CallCompositeStrings {
    *tooltip string to be used to show captions is off
    */
   startCaptionsButtonTooltipOffContent: string;
+  /* @conditional-compile-remove(close-captions) */
+  /**
+   * captions setting modal title
+   */
+  captionsSettingModalTitle: string;
+  /* @conditional-compile-remove(close-captions) */
+  /**
+   * label for dropdown inside captions setting modal
+   */
+  captionsSettingDropdownLabel: string;
+  /* @conditional-compile-remove(close-captions) */
+  /**
+   * text under captions setting dropdown indicating what the dropdown is for
+   */
+  captionsSettingDropdownInfoText: string;
+  /* @conditional-compile-remove(close-captions) */
+  /**
+   * confirm button label in captions setting modal
+   */
+  captionsSettingConfirmButtonLabel: string;
+  /* @conditional-compile-remove(close-captions) */
+  /**
+   * cancel button label in captions setting modal
+   */
+  captionsSettingCancelButtonLabel: string;
+  /* @conditional-compile-remove(close-captions) */
+  /**
+   * arial label for captions setting modal
+   */
+  captionsSettingModalAriaLabel: string;
+  /* @conditional-compile-remove(close-captions) */
+  /**
+   * arial label for captions setting modal close button
+   */
+  captionsSettingCloseModalButtonAriaLabel: string;
 }

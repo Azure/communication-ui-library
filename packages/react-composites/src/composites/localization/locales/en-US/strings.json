@@ -93,7 +93,14 @@
     "startCaptionsButtonOnLabel": "Turn on captions",
     "startCaptionsButtonOffLabel": "Turn off captions",
     "startCaptionsButtonTooltipOnContent": "Turn off captions",
-    "startCaptionsButtonTooltipOffContent": "Turn on captions"
+    "startCaptionsButtonTooltipOffContent": "Turn on captions",
+    "captionsSettingModalTitle": "What language is being spoken?",
+    "captionsSettingDropdownLabel": "Spoken language",
+    "captionsSettingDropdownInfoText": "Language that everyone on this call is speaking.",
+    "captionsSettingConfirmButtonLabel": "Confirm",
+    "captionsSettingCancelButtonLabel": "Cancel",
+    "captionsSettingModalAriaLabel": "Captions Setting Modal",
+    "captionsSettingCloseModalButtonAriaLabel": "Close Captions Setting"
   },
   "chat": {
     "chatListHeader": "In this chat",

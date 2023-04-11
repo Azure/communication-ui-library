@@ -156,10 +156,6 @@ export interface ComponentStrings {
    * Strings for the VerticalGallery.
    */
   VerticalGallery: VerticalGalleryStrings;
-  /** Strings for Start Captions Button */
-  startCaptionsButton: _StartCaptionsButtonStrings;
-  /** Strings for Captions Setting Modal */
-  captionsSettingModal: _CaptionsSettingModalStrings;
 }
 
 /**
