@@ -39,6 +39,8 @@ import { UnsupportedBrowserVersionStrings } from '../components/UnsupportedBrows
 import { UnsupportedOperatingSystemStrings } from '../components/UnsupportedOperatingSystem';
 /* @conditional-compile-remove(vertical-gallery) */
 import { VerticalGalleryStrings } from '../components/VerticalGallery';
+/* @conditional-compile-remove(total-participant-count) */
+import { ParticipantListStrings } from '../components/ParticipantList';
 
 /**
  * Locale information for all components exported from this library.
@@ -154,6 +156,8 @@ export interface ComponentStrings {
    * Strings for the VerticalGallery.
    */
   VerticalGallery: VerticalGalleryStrings;
+  /* @conditional-compile-remove(total-participant-count) */
+  ParticipantList: ParticipantListStrings;
 }
 
 /**

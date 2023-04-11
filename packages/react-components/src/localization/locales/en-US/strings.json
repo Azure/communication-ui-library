@@ -9,6 +9,9 @@
     "participantStateRinging": "Calling...",
     "participantStateHold": "On hold"
   },
+  "participantList": {
+    "overflowParticipantCount": "+{overflowCount} more"
+  },
   "typingIndicator": {
     "singleUser": "{user} is typing ...",
     "multipleUsers": "{users} are typing ...",

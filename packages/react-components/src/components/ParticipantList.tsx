@@ -10,6 +10,8 @@ import {
   PersonaPresence,
   Stack
 } from '@fluentui/react';
+/* @conditional-compile-remove(total-participant-count) */
+import { Text } from '@fluentui/react';
 import React, { useCallback, useMemo } from 'react';
 import { useIdentifiers } from '../identifiers';
 import { useLocale } from '../localization';
@@ -23,6 +25,7 @@ import {
 } from '../types';
 import { ParticipantItem, ParticipantItemStrings, ParticipantItemStyles } from './ParticipantItem';
 import { iconStyles, participantListItemStyle, participantListStyle } from './styles/ParticipantList.styles';
+import { _formatString } from '@internal/acs-ui-common';
 
 /**
  * Styles for the {@link ParticipantList} {@link ParticipantItem}.
@@ -42,6 +45,14 @@ export interface ParticipantListItemStyles extends ParticipantItemStyles {
 export interface ParticipantListStyles extends BaseCustomStyles {
   /** Styles for the {@link ParticipantList} {@link ParticipantItem}. */
   participantItemStyles?: ParticipantListItemStyles;
+}
+
+/* @conditional-compile-remove(total-participant-count) */
+/**
+ * Strings for the {@link ParticipantList}.
+ */
+export interface ParticipantListStrings {
+  overflowParticipantCount?: string;
 }
 
 /**
@@ -85,6 +96,11 @@ export type ParticipantListProps = {
   styles?: ParticipantListStyles;
   /** prop to determine if we should show tooltip for participants or not */
   showParticipantOverflowTooltip?: boolean;
+  /** Total number of people in the call. This number can be larger than the remote participant count. */
+  totalParticipantCount?: number;
+  /* @conditional-compile-remove(total-participant-count) */
+  /** Strings for the participant list */
+  strings?: ParticipantListStrings;
 };
 
 const onRenderParticipantDefault = (
@@ -185,11 +201,15 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
     onRenderAvatar,
     onRenderParticipant,
     onFetchParticipantMenuItems,
-    showParticipantOverflowTooltip
+    showParticipantOverflowTooltip,
+    totalParticipantCount,
+    /* @conditional-compile-remove(total-participant-count) */
+    strings
   } = props;
-
+  console.log(totalParticipantCount);
   const ids = useIdentifiers();
-  const strings = useLocale().strings.participantItem;
+  const participantItemStrings = useLocale().strings.participantItem;
+  const participantListStrings = useLocale().strings.ParticipantList;
 
   const displayedParticipants: ParticipantListParticipant[] = useMemo(() => {
     return onRenderParticipant ? participants : getParticipantsForDefaultRender(participants, excludeMe, myUserId);
@@ -204,7 +224,7 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
       if (participant.userId !== myUserId && onRemoveParticipant && participantIsRemovable) {
         menuItems.push({
           key: 'remove',
-          text: strings.removeButtonLabel,
+          text: participantItemStrings.removeButtonLabel,
           onClick: () => onRemoveParticipant(participant.userId),
           itemProps: {
             styles: props.styles?.participantItemStyles?.participantSubMenuItemsStyles
@@ -225,7 +245,7 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
       onFetchParticipantMenuItems,
       onRemoveParticipant,
       props.styles?.participantItemStyles?.participantSubMenuItemsStyles,
-      strings.removeButtonLabel
+      participantItemStrings.removeButtonLabel
     ]
   );
 
@@ -240,7 +260,7 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
           ? onRenderParticipant(participant)
           : onRenderParticipantDefault(
               participant,
-              strings,
+              participantItemStrings,
               myUserId,
               onRenderAvatar,
               createParticipantMenuItems,
@@ -249,6 +269,15 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
               showParticipantOverflowTooltip
             )
       )}
+      {participantListStrings?.overflowParticipantCount &&
+        totalParticipantCount &&
+        totalParticipantCount > displayedParticipants.length && (
+          <Text>
+            {_formatString(strings?.overflowParticipantCount ?? participantListStrings?.overflowParticipantCount, {
+              overflowCount: `${totalParticipantCount - displayedParticipants.length}`
+            })}
+          </Text>
+        )}
     </Stack>
   );
 };
