@@ -54,7 +54,7 @@ export const startSelectedVideoEffect = async (adapter: CommonCallAdapter): Prom
     } else if (selectedVideoBackgroundEffect?.effectName === 'none') {
       await adapter.stopVideoBackgroundEffect();
     } else if (selectedVideoBackgroundEffect?.effectName === 'replacement') {
-      adapter.replaceVideoBackground({ backgroundImageUrl: selectedVideoBackgroundEffect.backgroundImageUrl });
+      await adapter.replaceVideoBackground({ backgroundImageUrl: selectedVideoBackgroundEffect.backgroundImageUrl });
     }
   }
 };
