@@ -5,12 +5,11 @@ import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 
 import { EXAMPLES_FOLDER_PREFIX } from '../../constants';
-import { controlsToAdd } from '../../controlsUtils';
-import { InlineImage } from './snippets/InlineImage.snippet';
+import { MessageThreadWithInlineImageExample as InlineImageComponent } from '../../MessageThread/snippets/WithInlineImageMessage.snippet';
 import { getDocs } from './TeamsInteropDocs';
 
 const InlineImageStory: (args) => JSX.Element = (args) => {
-  return <InlineImage {...args} />;
+  return <InlineImageComponent {...args} />;
 };
 
 export const InlineImage = InlineImageStory.bind({});
