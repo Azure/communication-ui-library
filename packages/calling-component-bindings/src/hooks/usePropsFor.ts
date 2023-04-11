@@ -15,7 +15,6 @@ import {
 import { Dialpad } from '@internal/react-components';
 /* @conditional-compile-remove(PSTN-calls) */
 import { HoldButton } from '@internal/react-components';
-import { _StartCaptionsButton } from '@internal/react-components';
 import {
   CameraButtonSelector,
   cameraButtonSelector,

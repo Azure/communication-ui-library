@@ -29,8 +29,11 @@ export const PreparedMoreDrawer = (props: PreparedMoreDrawerProps): JSX.Element 
       peopleButtonLabel: strings.peopleButtonLabel,
       audioDeviceMenuTitle: strings.moreDrawerAudioDeviceMenuTitle,
       microphoneMenuTitle: strings.moreDrawerMicrophoneMenuTitle,
+      /* @conditional-compile-remove(close-captions) */
       speakerMenuTitle: strings.moreDrawerSpeakerMenuTitle,
+      /* @conditional-compile-remove(close-captions) */
       captionsMenuTitle: strings.moreDrawerCaptionsMenuTitle,
+      /* @conditional-compile-remove(close-captions) */
       spokenLanguageMenuTitle: strings.moreDrawerSpokenLanguageMenuTitle
     }),
     [strings]

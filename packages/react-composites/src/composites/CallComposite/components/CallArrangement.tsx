@@ -246,9 +246,6 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   /* @conditional-compile-remove(close-captions) */
   const hasJoinedCall = useSelector(getCallStatus) === 'Connected';
 
-  const isTeamsCall = adapter.getState().isTeamsCall;
-  const hasJoinedCall = adapter.getState().call?.state === 'Connected';
-
   return (
     <div ref={containerRef} className={mergeStyles(containerDivStyles)} id={props.id}>
       <Stack verticalFill horizontalAlign="stretch" className={containerClassName} data-ui-id={props.dataUiId}>

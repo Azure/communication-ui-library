@@ -343,8 +343,6 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
   /* @conditional-compile-remove(close-captions) */
   const isTeamsCall = useSelector(getIsTeamsCall);
 
-  const isTeamsCall = callAdapter.getState().isTeamsCall;
-
   const callCompositeOptions: CallCompositeOptions = useMemo(
     () => ({
       callControls: false,

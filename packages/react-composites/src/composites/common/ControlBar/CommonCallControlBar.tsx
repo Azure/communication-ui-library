@@ -234,14 +234,6 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
     <></>
   );
 
-  const openCaptionsSettingModal = (): void => {
-    setShowCaptionsSettingModal(true);
-  };
-
-  const onDismissCaptionsSetting = (): void => {
-    setShowCaptionsSettingModal(false);
-  };
-
   return (
     <div ref={controlBarSizeRef}>
       <CallAdapterProvider adapter={props.callAdapter}>
