@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Rename horizontal gallery to overflow gallery appropriately",
-  "packageName": "@azure/communication-react",
-  "email": "miguelgamis@microsoft.com",
-  "dependentChangeType": "none"
-}

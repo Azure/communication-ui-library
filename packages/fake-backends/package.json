@@ -1,6 +1,6 @@
 {
   "name": "@internal/fake-backends",
-  "version": "1.5.1-beta.1",
+  "version": "1.5.1-beta.2",
   "description": "Fake implementations of backend services",
   "module": "dist/dist-esm/index.js",
   "main": "dist/dist-cjs/index.js",
@@ -31,7 +31,7 @@
     "@azure/communication-common": "2.2.0",
     "@azure/communication-signaling": "1.0.0-beta.13",
     "@azure/core-paging": "~1.1.3",
-    "@internal/acs-ui-common": "1.5.1-beta.1",
+    "@internal/acs-ui-common": "1.5.1-beta.2",
     "events": "~3.3.0",
     "immer": "9.0.6",
     "nanoid": "3.1.32"

@@ -36,9 +36,12 @@ export type {
   GetCallingSelector,
   CallingHandlers,
   CallingBaseSelectorProps,
-  CommonCallingHandlers,
-  captionsOptions
+  CommonCallingHandlers
 } from '../../calling-component-bindings/src';
+
+/* @conditional-compile-remove(close-captions) */
+export type { captionsOptions } from '../../calling-component-bindings/src';
+
 export type {
   ChatClientProviderProps,
   ChatThreadClientProviderProps,
@@ -78,10 +81,7 @@ export type {
   ErrorBarSelector as CallErrorBarSelector,
   ParticipantListSelector,
   MicrophoneButtonSelector,
-  ParticipantsButtonSelector,
-  _CaptionsSelector,
-  _StartCaptionsButtonSelector,
-  _ChangeSpokenLanguageSelector
+  ParticipantsButtonSelector
 } from '../../calling-component-bindings/src';
 /* @conditional-compile-remove(PSTN-calls) */
 export type { HoldButtonSelector } from '../../calling-component-bindings/src';
@@ -236,6 +236,7 @@ export type {
   TypingIndicatorStrings,
   TypingIndicatorStylesProps,
   UpdateMessageCallback,
+  CancelEditCallback,
   VideoGalleryLayout,
   VideoGalleryLocalParticipant,
   VideoGalleryParticipant,
@@ -318,14 +319,3 @@ export type {
   VerticalGalleryStrings,
   VerticalGalleryControlBarStyles
 } from '../../react-components/src';
-export { _CaptionsBanner } from '../../react-components/src';
-export type { _CaptionsBannerProps, _CaptionsInfo } from '../../react-components/src';
-export { _StartCaptionsButton } from '../../react-components/src';
-export type {
-  _StartCaptionsButtonProps,
-  _StartCaptionsButtonStrings,
-  _captionsOptions
-} from '../../react-components/src';
-
-export { _CaptionsSettingModal } from '../../react-components/src';
-export type { _CaptionsSettingModalProps, _CaptionsSettingModalStrings } from '../../react-components/src';

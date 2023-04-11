@@ -122,30 +122,8 @@ export interface CameraButtonStyles extends ControlBarButtonStyles {
     menuStyles?: Partial<CameraButtonContextualMenuStyles>;
 }
 
-// @internal
-export const _Caption: (props: _CaptionProps) => JSX.Element;
-
-// @internal
-export interface _CaptionProps extends _CaptionsInfo {
-    onRenderAvatar?: OnRenderAvatarCallback;
-}
-
-// @internal
-export const _CaptionsBanner: (props: _CaptionsBannerProps) => JSX.Element;
-
-// @internal
-export interface _CaptionsBannerProps {
-    // (undocumented)
-    captions: _CaptionsInfo[];
-    onRenderAvatar?: OnRenderAvatarCallback;
-}
-
-// @internal
-export type _CaptionsInfo = {
-    displayName: string;
-    captionText: string;
-    userId?: string;
-};
+// @public
+export type CancelEditCallback = (messageId: string) => void;
 
 // @public
 export interface ChatMessage extends MessageCommon {
@@ -161,6 +139,8 @@ export interface ChatMessage extends MessageCommon {
     deletedOn?: Date;
     // (undocumented)
     editedOn?: Date;
+    // (undocumented)
+    failureReason?: string;
     // (undocumented)
     messageType: 'chat';
     metadata?: Record<string, string>;
@@ -873,6 +853,7 @@ export type MessageProps = {
     showDate?: boolean;
     disableEditing?: boolean;
     onUpdateMessage?: UpdateMessageCallback;
+    onCancelMessageEdit?: CancelEditCallback;
     onDeleteMessage?: (messageId: string) => Promise<void>;
     onSendMessage?: (messageId: string) => Promise<void>;
 };
@@ -929,6 +910,7 @@ export type MessageThreadProps = {
     onLoadPreviousChatMessages?: (messagesToLoad: number) => Promise<boolean>;
     onRenderMessage?: (messageProps: MessageProps, messageRenderer?: MessageRenderer) => JSX.Element;
     onUpdateMessage?: UpdateMessageCallback;
+    onCancelMessageEdit?: CancelEditCallback;
     onDeleteMessage?: (messageId: string) => Promise<void>;
     onSendMessage?: (content: string) => Promise<void>;
     disableEditing?: boolean;

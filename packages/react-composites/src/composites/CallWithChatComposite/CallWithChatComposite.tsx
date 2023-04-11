@@ -336,7 +336,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
 
   /* @conditional-compile-remove(PSTN-calls) */
   const alternateCallerId = callAdapter.getState().alternateCallerId;
-
+  /* @conditional-compile-remove(close-captions) */
   const isTeamsCall = callAdapter.getState().isTeamsCall;
 
   const callCompositeOptions: CallCompositeOptions = useMemo(
@@ -412,32 +412,31 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
         </Stack>
         {showControlBar && !isMobileWithActivePane && (
           <ChatAdapterProvider adapter={chatProps.adapter}>
-            <CallAdapterProvider adapter={callAdapter}>
-              <Stack.Item styles={controlBarContainerStyles}>
-                <CommonCallControlBar
-                  callAdapter={callAdapter}
-                  chatAdapter={chatProps.adapter}
-                  chatButtonChecked={activePane === 'chat'}
-                  onChatButtonClicked={toggleChat}
-                  peopleButtonChecked={activePane === 'people'}
-                  onPeopleButtonClicked={togglePeople}
-                  onMoreButtonClicked={onMoreButtonClicked}
-                  mobileView={mobileView}
-                  disableButtonsForLobbyPage={isInLobbyOrConnecting}
-                  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
-                  disableButtonsForHoldScreen={isInLocalHold}
-                  callControls={props.callControls}
-                  containerHeight={containerHeight}
-                  containerWidth={containerWidth}
-                  /* @conditional-compile-remove(PSTN-calls) */
-                  onClickShowDialpad={alternateCallerId ? onClickShowDialpad : undefined}
-                  isCaptionsSupported={isTeamsCall && hasJoinedCall}
-                  /* @conditional-compile-remove(video-background-effects) */
-                  onShowVideoEffectsPicker={setShowVideoEffectsPane}
-                  rtl={props.rtl}
-                />
-              </Stack.Item>
-            </CallAdapterProvider>
+            <Stack.Item styles={controlBarContainerStyles}>
+              <CommonCallControlBar
+                callAdapter={callAdapter}
+                chatAdapter={chatProps.adapter}
+                chatButtonChecked={activePane === 'chat'}
+                onChatButtonClicked={toggleChat}
+                peopleButtonChecked={activePane === 'people'}
+                onPeopleButtonClicked={togglePeople}
+                onMoreButtonClicked={onMoreButtonClicked}
+                mobileView={mobileView}
+                disableButtonsForLobbyPage={isInLobbyOrConnecting}
+                /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+                disableButtonsForHoldScreen={isInLocalHold}
+                callControls={props.callControls}
+                containerHeight={containerHeight}
+                containerWidth={containerWidth}
+                /* @conditional-compile-remove(PSTN-calls) */
+                onClickShowDialpad={alternateCallerId ? onClickShowDialpad : undefined}
+                /* @conditional-compile-remove(close-captions) */
+                isCaptionsSupported={isTeamsCall && hasJoinedCall}
+                /* @conditional-compile-remove(video-background-effects) */
+                onShowVideoEffectsPicker={setShowVideoEffectsPane}
+                rtl={props.rtl}
+              />
+            </Stack.Item>
           </ChatAdapterProvider>
         )}
         {showControlBar && showDrawer && (
@@ -452,6 +451,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
                   onClickShowDialpad={alternateCallerId ? onClickShowDialpad : undefined}
                   /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
                   disableButtonsForHoldScreen={isInLocalHold}
+                  /* @conditional-compile-remove(close-captions) */
                   isCaptionsSupported={isTeamsCall && hasJoinedCall}
                 />
               </Stack>
