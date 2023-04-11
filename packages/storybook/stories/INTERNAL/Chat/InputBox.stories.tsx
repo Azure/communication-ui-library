@@ -26,7 +26,7 @@ const getDocs: () => JSX.Element = () => {
 
 const InputBoxStory = (args): JSX.Element => {
   const exampleHtmlMessage =
-    "<p>Hi <msft-at-mention userId='2' suggestionType='person'>Patricia Adams</msft-at-mention> and and<p/> and you <msft-at-mention userId='3' suggestionType='person'>Person 1</msft-at-mention>!</p>";
+    "<p>Hi <msft-at-mention userId='2' suggestionType='person'>Patricia Adams</msft-at-mention> and and <p/> and you <msft-at-mention userId='3' suggestionType='person'>Person 1</msft-at-mention>!</p>";
   // "Hi <msft-at-mention userId='2' suggestionType='person'>Patricia Adams</msft-at-mention>!";
   const sendTextFieldRef = React.useRef<ITextField>(null);
   const theme = useTheme();
