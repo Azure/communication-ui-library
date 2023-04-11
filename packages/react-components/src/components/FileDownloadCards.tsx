@@ -56,6 +56,14 @@ export interface FileMetadata {
   previewUrl?: string;
 }
 
+/* @conditional-compile-remove(teams-inline-images) */
+/**
+ * @beta
+ */
+export interface AttachmentDownloadResult {
+  blobUrl: string;
+}
+
 /**
  * Strings of _FileDownloadCards that can be overridden.
  *
