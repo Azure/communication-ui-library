@@ -656,7 +656,7 @@ export const DEFAULT_COMPONENT_ICONS: {
     OptionsVideoBackgroundEffect: JSX.Element;
     CaptionsIcon: JSX.Element;
     CaptionsOffIcon: JSX.Element;
-    SettingsIcon: JSX.Element;
+    CaptionsSettingIcon: JSX.Element;
 };
 
 // @internal

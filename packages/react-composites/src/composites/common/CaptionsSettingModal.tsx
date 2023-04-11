@@ -13,15 +13,18 @@ import { useLocale } from '../localization';
 /* @conditional-compile-remove(close-captions) */
 import { _changeSpokenLanguageSelector } from '@internal/calling-component-bindings';
 
-/* @conditional-compile-remove(close-captions) */
 /** @private */
 export const CaptionsSettingModal = (props: {
-  showCaptionsSettingModal: boolean;
-  onDismissCaptionsSetting: () => void;
+  /* @conditional-compile-remove(close-captions) */ showCaptionsSettingModal: boolean;
+  /* @conditional-compile-remove(close-captions) */ onDismissCaptionsSetting: () => void;
 }): JSX.Element => {
+  /* @conditional-compile-remove(close-captions) */
   const captionsSettingModalProps = useAdaptedSelector(_changeSpokenLanguageSelector);
+  /* @conditional-compile-remove(close-captions) */
   const handlers = useHandlers(_CaptionsSettingModal);
+  /* @conditional-compile-remove(close-captions) */
   const strings = useLocale().strings.call;
+  /* @conditional-compile-remove(close-captions) */
   const modalStrings: _CaptionsSettingModalStrings = {
     captionsSettingModalTitle: strings.captionsSettingModalTitle,
     captionsSettingDropdownLabel: strings.captionsSettingDropdownLabel,
@@ -31,7 +34,7 @@ export const CaptionsSettingModal = (props: {
     captionsSettingModalAriaLabel: strings.captionsSettingModalAriaLabel,
     captionsSettingCloseModalButtonAriaLabel: strings.captionsSettingCloseModalButtonAriaLabel
   };
-
+  /* @conditional-compile-remove(close-captions) */
   return (
     <_CaptionsSettingModal
       {...captionsSettingModalProps}
@@ -41,7 +44,5 @@ export const CaptionsSettingModal = (props: {
       onDismissCaptionsSetting={props.onDismissCaptionsSetting}
     />
   );
+  return <></>;
 };
-
-// This is a placeholder to bypass CC of "close-captions", remove when move the feature to stable
-export {};

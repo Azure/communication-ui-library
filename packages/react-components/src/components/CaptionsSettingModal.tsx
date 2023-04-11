@@ -109,7 +109,6 @@ export const _CaptionsSettingModal = (props: _CaptionsSettingModalProps): JSX.El
         <Dropdown
           label={strings?.captionsSettingDropdownLabel}
           selectedKey={selectedItem ? selectedItem.key : undefined}
-          // eslint-disable-next-line react/jsx-no-bind
           onChange={onChange}
           placeholder={currentSpokenLanguage !== '' ? currentSpokenLanguage : 'en-us'}
           options={dropdownOptions}
