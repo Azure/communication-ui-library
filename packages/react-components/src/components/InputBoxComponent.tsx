@@ -103,26 +103,16 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
   const [mentionSuggestions, setMentionSuggestions] = useState<AtMentionSuggestion[]>([]);
 
   // Index of the current trigger character in the text field
-  const [currentTagIndex, setCurrentTagIndex] = useState<number | undefined>(undefined);
+  const [currentTagIndex, setCurrentTagIndex] = useState<number>(-1);
   const [inputTextValue, setInputTextValue] = useState<string>('');
 
   // Parse the text and look for <msft-at-mention> tags.
   useEffect(() => {
+    const trigger = atMentionLookupOptions?.trigger || defaultMentionTrigger;
     // Get a plain text version to display in the input box, resetting state
-    console.log('Need to parse input text and set the html versions if needed');
-    parseStringForMentions(textValue, atMentionLookupOptions?.trigger || defaultMentionTrigger);
-    // Parse the text and look for <msft-at-mention> tags.
-    // Store the index and range of the tags.
-    // Store the details in an ordered array.
-    // [ {
-    //   tagType: string,
-    //   htmlOpenTagStartIndex: number,
-    //   openTagLength: number,
-    //   htmlCloseTagStartIndex: number, // Might not have a close tag
-    //   closeTagLength: number,        // Might not have a close tag
-    //   }
-    // ]
-    //
+    const tags = parseStringForMentions(textValue, trigger);
+    const plainText = plainTextFromParsedTags(textValue, tags, trigger);
+
     // Provide the plain text string to the inputTextValue
     // setInputTextValue(parsedText)
     //
@@ -158,18 +148,16 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
 
   const onSuggestionSelected = useCallback(
     (suggestion: AtMentionSuggestion) => {
-      // Go back to the last trigger character and insert the HTML for the suggestion
-      const lastTriggerIndex = inputTextValue.lastIndexOf(atMentionLookupOptions?.trigger || defaultMentionTrigger);
+      let queryText = inputTextValue.slice(currentTagIndex).split(' ')[0];
+      const firstPart = inputTextValue.substring(0, currentTagIndex);
+      const lastPart = inputTextValue.substring(currentTagIndex + queryText.length);
 
-      // TODO: This will ultimately need to handle the case where the editor is not at the end of the text
-      let updatedText = inputTextValue.substring(0, lastTriggerIndex);
-      updatedText += htmlStringForMentionSuggestion(suggestion);
-
+      const updatedText = firstPart + htmlStringForMentionSuggestion(suggestion) + lastPart;
       setInputTextValue(updatedText);
       onMentionAdd(updatedText);
       setMentionQuery(undefined);
       setMentionSuggestions([]);
-      setCurrentTagIndex(undefined);
+      setCurrentTagIndex(-1);
     },
     [atMentionLookupOptions?.trigger, onMentionAdd, textFieldRef, inputTextValue]
   );
@@ -181,26 +169,28 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     // If we are enabled for lookups,
     if (!!atMentionLookupOptions) {
       // Go see if there's a trigger character in the text, from the end of the string
+      // TODO: maybe this should be done based on the change of the newValue from the old
       const triggerText = atMentionLookupOptions?.trigger ?? defaultMentionTrigger;
       const lastTagIndex = newValue?.lastIndexOf(triggerText) ?? -1;
-      if (!!currentTagIndex && !!lastTagIndex) {
+      if (lastTagIndex !== -1 && lastTagIndex !== currentTagIndex) {
         setCurrentTagIndex(lastTagIndex);
+        console.log(currentTagIndex, lastTagIndex);
+      }
+
+      if (lastTagIndex === -1) {
+        setCurrentTagIndex(-1);
+        setMentionSuggestions([]);
       } else {
         // In the middle of a @mention lookup
-        if (lastTagIndex === -1) {
-          setCurrentTagIndex(undefined);
-          setMentionSuggestions([]);
-        } else {
-          if (lastTagIndex > -1) {
-            // This might want to be changed to not include the lookup tag. Currently it does.
-            // TODO: work in mentionQuery state or remove it.
-            const query = newValue?.slice(lastTagIndex).split(' ')[0];
-            if (!!query) {
-              console.log('getting suggestions for query: ', query);
-              setMentionQuery(query.slice(triggerText.length));
-              const suggestions = (await atMentionLookupOptions?.onQueryUpdated(query)) ?? [];
-              setMentionSuggestions(suggestions);
-            }
+        if (lastTagIndex > -1) {
+          // This might want to be changed to not include the lookup tag. Currently it does.
+          // TODO: work in mentionQuery state or remove it.
+          const query = newValue?.slice(lastTagIndex).split(' ')[0];
+          if (!!query) {
+            console.log('getting suggestions for query: ', query);
+            setMentionQuery(query.slice(triggerText.length));
+            const suggestions = (await atMentionLookupOptions?.onQueryUpdated(query)) ?? [];
+            setMentionSuggestions(suggestions);
           }
         }
       }
@@ -313,6 +303,7 @@ type ParsedTag = {
   openTagLength: number;
   htmlCloseTagStartIndex?: number; // Might not have a close tag
   closeTagLength?: number; // Might not have a close tag
+  content?: string; // Might not have content if close tag is missed
 };
 
 /**
@@ -326,7 +317,7 @@ const parseStringForMentions = (text: string, trigger: string): ParsedTag[] => {
   let index = 0;
   let tags: ParsedTag[] = [];
   let previousLetter = '';
-  console.log(text);
+  // console.log(text);
   let currentOpenTagIndex = -1;
   let currentTagStack: ParsedTag[] = [];
 
@@ -357,6 +348,11 @@ const parseStringForMentions = (text: string, trigger: string): ParsedTag[] => {
           if (currentTag) {
             currentTag.htmlCloseTagStartIndex = currentOpenTagIndex;
             currentTag.closeTagLength = index - currentOpenTagIndex + 1;
+            currentTag.content = text.slice(
+              currentTag.htmlOpenTagStartIndex + currentTag.openTagLength + 1,
+              currentOpenTagIndex
+            );
+            console.log(currentTag.content);
             tags.push(currentTag);
             currentTag = undefined;
           } else {
@@ -384,7 +380,7 @@ const parseStringForMentions = (text: string, trigger: string): ParsedTag[] => {
   }
 
   const plainText = plainTextFromParsedTags(text, tags, trigger);
-  // console.log(plainText);
+  // console.log('plainText: ' + plainText);
   return tags;
 };
 
@@ -394,6 +390,12 @@ const parseStringForMentions = (text: string, trigger: string): ParsedTag[] => {
  * @private
  */
 const plainTextFromParsedTags = (textBlock: string, tags: ParsedTag[], trigger: string): string => {
+  if (tags.length === 0) {
+    return textBlock;
+  }
+  // for (const tag of tags) {
+
+  // }
   let text = '';
   let textBlockIndex = 0;
   let currentTagIndex = 0;
