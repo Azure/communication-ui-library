@@ -127,7 +127,7 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
   return (
     <MoreButton
       {...props}
-      data-ui-id="common-call-composite-more-button"
+      data-ui-id="call-with-chat-composite-more-button"
       /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
       strings={moreButtonStrings}
       menuIconProps={{ hidden: true }}

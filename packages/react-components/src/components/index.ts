@@ -26,8 +26,7 @@ export type {
   MessageThreadStyles,
   JumpToNewMessageButtonProps,
   MessageRenderer,
-  UpdateMessageCallback,
-  CancelEditCallback
+  UpdateMessageCallback
 } from './MessageThread';
 
 export { StreamMedia } from './StreamMedia';

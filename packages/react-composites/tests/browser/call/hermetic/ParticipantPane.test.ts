@@ -28,7 +28,7 @@ test.describe('Participant pane tests', async () => {
     await waitForSelector(page, dataUiId(IDS.videoGallery));
 
     if (!isTestProfileDesktop(testInfo)) {
-      await pageClick(page, dataUiId('common-call-composite-more-button'));
+      await pageClick(page, dataUiId('call-with-chat-composite-more-button'));
       const drawerPeopleMenuDiv = await page.$('div[role="menu"] >> text=People');
       await drawerPeopleMenuDiv?.click();
     } else {
@@ -50,7 +50,7 @@ test.describe('Participant pane tests', async () => {
     await waitForSelector(page, dataUiId(IDS.videoGallery));
 
     if (!isTestProfileDesktop(testInfo)) {
-      await pageClick(page, dataUiId('common-call-composite-more-button'));
+      await pageClick(page, dataUiId('call-with-chat-composite-more-button'));
       const drawerPeopleMenuDiv = await page.$('div[role="menu"] >> text=People');
       await drawerPeopleMenuDiv?.click();
     } else {
@@ -72,7 +72,7 @@ test.describe('Participant pane tests', async () => {
     await waitForSelector(page, dataUiId(IDS.videoGallery));
 
     if (!isTestProfileDesktop(testInfo)) {
-      await pageClick(page, dataUiId('common-call-composite-more-button'));
+      await pageClick(page, dataUiId('call-with-chat-composite-more-button'));
       const drawerPeopleMenuDiv = await page.$('div[role="menu"] >> text=People');
       await drawerPeopleMenuDiv?.click();
     } else {
@@ -96,7 +96,7 @@ test.describe('Participant pane tests', async () => {
     await waitForSelector(page, dataUiId(IDS.videoGallery));
 
     if (!isTestProfileDesktop(testInfo)) {
-      await pageClick(page, dataUiId('common-call-composite-more-button'));
+      await pageClick(page, dataUiId('call-with-chat-composite-more-button'));
       const drawerPeopleMenuDiv = await page.$('div[role="menu"] >> text=People');
       await drawerPeopleMenuDiv?.click();
     } else {
@@ -130,7 +130,7 @@ test.describe('Participant pane tests', async () => {
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
     await waitForSelector(page, dataUiId(IDS.videoGallery));
     if (!isTestProfileDesktop(testInfo)) {
-      await pageClick(page, dataUiId('common-call-composite-more-button'));
+      await pageClick(page, dataUiId('call-with-chat-composite-more-button'));
       const drawerPeopleMenuDiv = await page.$('div[role="menu"] >> text=People');
       await drawerPeopleMenuDiv?.click();
     } else {
@@ -154,7 +154,7 @@ test.describe('Participant pane tests', async () => {
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
     await waitForSelector(page, dataUiId(IDS.videoGallery));
     if (!isTestProfileDesktop(testInfo)) {
-      await pageClick(page, dataUiId('common-call-composite-more-button'));
+      await pageClick(page, dataUiId('call-with-chat-composite-more-button'));
       const drawerPeopleMenuDiv = await page.$('div[role="menu"] >> text=People');
       await drawerPeopleMenuDiv?.click();
     } else {
@@ -181,7 +181,7 @@ test.describe('Participant pane tests', async () => {
     await waitForSelector(page, dataUiId(IDS.videoGallery));
 
     if (!isTestProfileDesktop(testInfo)) {
-      await pageClick(page, dataUiId('common-call-composite-more-button'));
+      await pageClick(page, dataUiId('call-with-chat-composite-more-button'));
       const drawerPeopleMenuDiv = await page.$('div[role="menu"] >> text=People');
       await drawerPeopleMenuDiv?.click();
     } else {

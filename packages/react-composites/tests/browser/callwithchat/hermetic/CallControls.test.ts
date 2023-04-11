@@ -48,7 +48,7 @@ test.describe('Custom call control options tests', () => {
       })
     });
 
-    await pageClick(page, dataUiId('common-call-composite-more-button'));
+    await pageClick(page, dataUiId('call-with-chat-composite-more-button'));
 
     expect(await stableScreenshot(page)).toMatchSnapshot(`call-with-chat-custom-buttons.png`);
   });

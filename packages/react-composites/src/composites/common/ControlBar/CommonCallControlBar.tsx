@@ -300,7 +300,7 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                     }
                     {props.mobileView && (
                       <MoreButton
-                        data-ui-id="common-call-composite-more-button"
+                        data-ui-id="call-with-chat-composite-more-button"
                         strings={moreButtonStrings}
                         onClick={props.onMoreButtonClicked}
                         disabled={props.disableButtonsForLobbyPage}
@@ -354,7 +354,7 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                     ariaLabel={peopleButtonStrings?.label}
                     showLabel={options.displayType !== 'compact'}
                     onClick={props.onPeopleButtonClicked}
-                    data-ui-id="common-call-composite-people-button"
+                    data-ui-id="call-with-chat-composite-people-button"
                     disabled={props.disableButtonsForLobbyPage || isDisabled(options.peopleButton)}
                     strings={peopleButtonStrings}
                     styles={commonButtonStyles}

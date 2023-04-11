@@ -13,7 +13,6 @@ import { borderAndBoxShadowStyle } from '../styles/SendBox.styles';
 import { ChatMessage } from '../../types';
 import { _FileUploadCards } from '../FileUploadCards';
 import { FileMetadata } from '../FileDownloadCards';
-import { chatMessageFailedTagStyle } from '../styles/ChatMessageComponent.styles';
 
 const MAXIMUM_LENGTH_OF_MESSAGE = 8000;
 
@@ -29,13 +28,7 @@ const onRenderSubmitIcon = (color: string): JSX.Element => {
 
 /** @private */
 export type ChatMessageComponentAsEditBoxProps = {
-  onCancel?: (
-    messageId: string,
-    metadata?: Record<string, string>,
-    options?: {
-      attachedFilesMetadata?: FileMetadata[];
-    }
-  ) => void;
+  onCancel?: () => void;
   onSubmit: (
     text: string,
     metadata?: Record<string, string>,
@@ -121,7 +114,7 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
       className={mergeStyles(
         borderAndBoxShadowStyle({
           theme,
-          hasErrorMessage: message.failureReason !== undefined,
+          hasErrorMessage: false,
           disabled: false
         })
       )}
@@ -151,7 +144,7 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
           tooltipContent={strings.editBoxCancelButton}
           onRenderIcon={onRenderThemedCancelIcon}
           onClick={() => {
-            onCancel && onCancel(message.messageId, message.metadata, { attachedFilesMetadata });
+            onCancel && onCancel();
           }}
           id={'dismissIconWrapper'}
         />
@@ -170,11 +163,6 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
           id={'submitIconWrapper'}
         />
       </InputBoxComponent>
-      {message.failureReason && (
-        <div className={mergeStyles(chatMessageFailedTagStyle(theme), { padding: '0.5rem' })}>
-          {message.failureReason}
-        </div>
-      )}
       {onRenderFileUploads()}
     </Stack>
   );

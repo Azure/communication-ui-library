@@ -61,7 +61,6 @@ export interface ChatMessage extends MessageCommon {
   senderId?: string;
   senderDisplayName?: string;
   status?: MessageStatus;
-  failureReason?: string;
   attached?: MessageAttachedStatus;
   mine?: boolean;
   clientMessageId?: string;

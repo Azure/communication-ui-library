@@ -262,7 +262,6 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                 ) : (
                   <CommonCallControlBar
                     {...props.callControlProps}
-                    callControls={props.callControlProps.options}
                     callAdapter={adapter as CallAdapter}
                     mobileView={props.mobileView}
                     disableButtonsForLobbyPage={isInLobby}

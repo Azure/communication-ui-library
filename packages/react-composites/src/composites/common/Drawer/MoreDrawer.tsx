@@ -193,7 +193,6 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
   if (drawerSelectionOptions !== false && isEnabled(drawerSelectionOptions?.peopleButton)) {
     drawerMenuItems.push({
       itemKey: 'people',
-      id: 'call-composite-drawer-people-button',
       text: props.strings.peopleButtonLabel,
       iconProps: { iconName: 'MoreDrawerPeople' },
       onItemClick: props.onPeopleButtonClicked,
