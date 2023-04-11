@@ -27,6 +27,7 @@ const getDocs: () => JSX.Element = () => {
 const InputBoxStory = (args): JSX.Element => {
   const exampleHtmlMessage =
     "<p>Hi <msft-at-mention userId='2' suggestionType='person'>Patricia Adams</msft-at-mention>!</p>";
+  // "Hi <msft-at-mention userId='2' suggestionType='person'>Patricia Adams</msft-at-mention>!";
   const sendTextFieldRef = React.useRef<ITextField>(null);
   const theme = useTheme();
   const [textValue, setTextValue] = useState<string>(exampleHtmlMessage);

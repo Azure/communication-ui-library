@@ -317,7 +317,6 @@ const parseStringForMentions = (text: string, trigger: string): ParsedTag[] => {
   let index = 0;
   let tags: ParsedTag[] = [];
   let previousLetter = '';
-  // console.log(text);
   let currentOpenTagIndex = -1;
   let currentTagStack: ParsedTag[] = [];
 
@@ -349,27 +348,29 @@ const parseStringForMentions = (text: string, trigger: string): ParsedTag[] => {
             currentTag.htmlCloseTagStartIndex = currentOpenTagIndex;
             currentTag.closeTagLength = index - currentOpenTagIndex + 1;
             currentTag.content = text.slice(
-              currentTag.htmlOpenTagStartIndex + currentTag.openTagLength + 1,
+              currentTag.htmlOpenTagStartIndex + currentTag.openTagLength,
               currentOpenTagIndex
             );
             console.log(currentTag.content);
-            tags.push(currentTag);
             currentTag = undefined;
           } else {
             console.error('Should have an existing tag to complete!');
           }
         } else {
-          // It's an open tag
+          // It's the end of an open tag
           const tagElements = tagBody.split(' ');
           const tagType = tagElements[0];
           console.log(tagElements);
 
-          let currentTag = {
+          let currentTag: ParsedTag = {
             htmlOpenTagStartIndex: currentOpenTagIndex,
             openTagLength: index - currentOpenTagIndex + 1,
             tagType: tagType
           };
           currentTagStack.push(currentTag);
+          tags.push(currentTag);
+          console.log('pushed new tag to stack: ' + currentTag.tagType);
+          console.log(currentTagStack);
         }
         currentOpenTagIndex = -1;
       }
@@ -380,7 +381,7 @@ const parseStringForMentions = (text: string, trigger: string): ParsedTag[] => {
   }
 
   const plainText = plainTextFromParsedTags(text, tags, trigger);
-  // console.log('plainText: ' + plainText);
+  console.log('plainText: ' + plainText);
   return tags;
 };
 
@@ -393,39 +394,15 @@ const plainTextFromParsedTags = (textBlock: string, tags: ParsedTag[], trigger: 
   if (tags.length === 0) {
     return textBlock;
   }
-  // for (const tag of tags) {
-
-  // }
   let text = '';
-  let textBlockIndex = 0;
-  let currentTagIndex = 0;
-
-  while (textBlockIndex < textBlock.length) {
-    if (currentTagIndex < tags.length) {
-      // Grab the tag body text up to the next tag start or current tag close
-
-      const tag = tags[currentTagIndex];
-
-      // Have to consider nesting tags
-      const nextTagStart = tags[currentTagIndex + 1]?.htmlOpenTagStartIndex ?? tag.htmlCloseTagStartIndex;
-      // console.log(nextTagStart, tag.htmlOpenTagStartIndex);
-      // Start of contents = end of open tag
-      const tagText = textBlock.slice(tag.htmlOpenTagStartIndex + tag.openTagLength, nextTagStart);
-      // console.log(tag.htmlOpenTagStartIndex, nextTagStart, tagText);
+  for (const tag of tags) {
+    console.log(tag.tagType);
+    if (tag.tagType === 'msft-at-mention') {
+      text += trigger;
     }
-    textBlockIndex++;
+    console.log('tag content: ' + tag.content);
+    text += tag.content;
   }
-
-  // for (const tag of tags) {
-  //   console.log(tag);
-  //   if (tag.tagType == 'msft-at-mention') {
-  //     text += trigger;
-  //     text += textBlock.slice(tag.htmlOpenTagStartIndex + tag.openTagLength,
-  //                             tag.htmlCloseTagStartIndex);
-  //   } else {
-  //     // Any other tag, grab the text
-  //   }
-  // }
   return text;
 };
 
