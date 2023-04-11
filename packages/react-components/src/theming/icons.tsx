@@ -40,13 +40,10 @@ import {
   WifiWarning20Filled,
   SpeakerMute16Filled,
   MicProhibited16Filled,
-  VideoProhibited16Filled,
-  ClosedCaption20Regular,
-  ClosedCaptionOff20Regular,
-  Settings20Regular
+  VideoProhibited16Filled
 } from '@fluentui/react-icons';
 /* @conditional-compile-remove(close-captions) */
-import { ClosedCaption20Regular, ClosedCaptionOff20Regular } from '@fluentui/react-icons';
+import { ClosedCaption20Regular, ClosedCaptionOff20Regular, Settings20Regular } from '@fluentui/react-icons';
 /* @conditional-compile-remove(call-readiness) */
 import { Important20Filled } from '@fluentui/react-icons';
 /* @conditional-compile-remove(video-background-effects) */
