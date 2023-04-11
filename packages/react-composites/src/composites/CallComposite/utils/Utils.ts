@@ -49,11 +49,11 @@ export const isCameraOn = (state: CallAdapterState): boolean => {
 export const startSelectedVideoEffect = async (adapter: CommonCallAdapter): Promise<void> => {
   if (adapter.getState().selectedVideoBackgroundEffect) {
     const selectedVideoBackgroundEffect = adapter.getState().selectedVideoBackgroundEffect;
-    if (selectedVideoBackgroundEffect?.effectKey === 'blur') {
+    if (selectedVideoBackgroundEffect?.effectName === 'blur') {
       await adapter.blurVideoBackground();
-    } else if (selectedVideoBackgroundEffect?.effectKey === 'none') {
+    } else if (selectedVideoBackgroundEffect?.effectName === 'none') {
       await adapter.stopVideoBackgroundEffect();
-    } else if (selectedVideoBackgroundEffect && 'backgroundImageUrl' in selectedVideoBackgroundEffect) {
+    } else if (selectedVideoBackgroundEffect?.effectName === 'replacement') {
       adapter.replaceVideoBackground({ backgroundImageUrl: selectedVideoBackgroundEffect.backgroundImageUrl });
     }
   }

@@ -1421,8 +1421,7 @@ export const useTeamsCallAdapter: (args: Partial<TeamsCallAdapterArgs>, afterCre
 
 // @beta
 export interface VideoBackgroundBlurEffect {
-    // (undocumented)
-    effectKey: 'None';
+    effectName: 'blur';
 }
 
 // @beta
@@ -1434,16 +1433,14 @@ export interface VideoBackgroundImage {
 
 // @beta
 export interface VideoBackgroundNoneEffect {
-    // (undocumented)
-    effectKey: 'None';
+    effectName: 'none';
 }
 
 // @beta
 export interface VideoBackgroundReplacementEffect {
-    // (undocumented)
     backgroundImageUrl: string;
-    // (undocumented)
     effectKey: string;
+    effectName: 'replacement';
 }
 
 // (No @packageDocumentation comment for this package)

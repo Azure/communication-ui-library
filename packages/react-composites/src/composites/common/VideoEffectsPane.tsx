@@ -82,13 +82,13 @@ export const VideoEffectsPane = (props: {
       if (effectKey === 'blur') {
         props.adapter.blurVideoBackground();
         const blurEffect: VideoBackgroundBlurEffect = {
-          effectKey
+          effectName: effectKey
         };
         props.adapter.updateSelectedVideoBackgroundEffect(blurEffect);
       } else if (effectKey === 'none') {
         props.adapter.stopVideoBackgroundEffect();
         const noneEffect: VideoBackgroundNoneEffect = {
-          effectKey
+          effectName: effectKey
         };
         props.adapter.updateSelectedVideoBackgroundEffect(noneEffect);
       } else {
@@ -98,6 +98,7 @@ export const VideoEffectsPane = (props: {
         if (backgroundImg && backgroundImg.backgroundProps) {
           props.adapter.replaceVideoBackground({ backgroundImageUrl: backgroundImg.backgroundProps.url });
           const replaceEffect: VideoBackgroundReplacementEffect = {
+            effectName: 'replacement',
             effectKey,
             backgroundImageUrl: backgroundImg.backgroundProps.url
           };
