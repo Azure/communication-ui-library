@@ -2,8 +2,9 @@
 // Licensed under the MIT license.
 
 import { CallClientState } from '@internal/calling-stateful-client';
+import { CallingBaseSelectorProps } from './baseSelectors';
+/* @conditional-compile-remove(close-captions) */
 import {
-  CallingBaseSelectorProps,
   getCaptions,
   getCaptionsStatus,
   getCurrentCaptionLanguage,
@@ -11,7 +12,9 @@ import {
   getSupportedCaptionLanguages,
   getSupportedSpokenLanguages
 } from './baseSelectors';
+/* @conditional-compile-remove(close-captions) */
 import * as reselect from 'reselect';
+/* @conditional-compile-remove(close-captions) */
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { _CaptionsInfo } from '@internal/react-components';
 
@@ -28,6 +31,7 @@ export type _StartCaptionsButtonSelector = (
   currentSpokenLanguage?: string;
 };
 
+/* @conditional-compile-remove(close-captions) */
 /**
  * Selector for {@link StartCaptionsButton} component.
  *
@@ -56,6 +60,7 @@ export type _ChangeSpokenLanguageButtonSelector = (
   currentSpokenLanguage: string;
 };
 
+/* @conditional-compile-remove(close-captions) */
 /**
  * Selector for {@link ChangeSpokenLanguageButton} component.
  *
@@ -83,6 +88,7 @@ export type _ChangeCaptionLanguageButtonSelector = (
   currentCaptionLanguage: string;
 };
 
+/* @conditional-compile-remove(close-captions) */
 /**
  * Selector for {@link ChangeCaptionLanguageButton} component.
  *
@@ -102,7 +108,7 @@ export const changeCaptionLanguageButtonSelector: _ChangeCaptionLanguageButtonSe
  * Selector type for the {@link CaptionsBanner} component.
  * @internal
  */
-export type _CaptionsSelector = (
+export type _CaptionsBannerSelector = (
   state: CallClientState,
   props: CallingBaseSelectorProps
 ) => {
@@ -110,12 +116,13 @@ export type _CaptionsSelector = (
   isCaptionsOn: boolean;
 };
 
+/* @conditional-compile-remove(close-captions) */
 /**
  * Selector for {@link CaptionsBanner} component.
  *
- * @private
+ * @internal
  */
-export const captionsSelector: _CaptionsSelector = reselect.createSelector(
+export const _captionsBannerSelector: _CaptionsBannerSelector = reselect.createSelector(
   [getCaptions, getCaptionsStatus],
   (captions, isCaptionsFeatureActive) => {
     const captionsInfo = captions?.map((c) => {

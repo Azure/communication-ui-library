@@ -91,9 +91,10 @@ function createMockCall(mockCallId: string): CallState {
     startTime: new Date(),
     endTime: undefined,
     dominantSpeakers: undefined,
+    /* @conditional-compile-remove(close-captions) */
     captionsFeature: {
       captions: [],
-      supportedSpokenLangauges: [],
+      supportedSpokenLanguages: [],
       supportedCaptionLanguages: [],
       currentCaptionLanguage: '',
       currentSpokenLanguage: '',

@@ -15,6 +15,7 @@ import { CallClientState } from '@internal/calling-stateful-client';
 import { CallParticipantListParticipant } from '@internal/react-components';
 import { CallState } from '@azure/communication-calling';
 import { CameraButton } from '@internal/react-components';
+import { _CaptionsInfo } from '@internal/react-components';
 import { Common } from '@internal/acs-ui-common';
 import { CommunicationIdentifier } from '@azure/communication-common';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
@@ -96,6 +97,28 @@ export type CameraButtonSelector = (state: CallClientState, props: CallingBaseSe
 
 // @public
 export const cameraButtonSelector: CameraButtonSelector;
+
+// @internal
+export type _CaptionsBannerSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
+    captions: _CaptionsInfo[];
+};
+
+// @beta
+export type captionsOptions = {
+    spokenLanguage: string;
+};
+
+// @internal
+export type _ChangeCaptionLanguageButtonSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
+    supportedCaptionLanguages: string[];
+    currentCaptionLanguage: string;
+};
+
+// @internal
+export type _ChangeSpokenLanguageButtonSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
+    supportedSpokenLanguages: string[];
+    currentSpokenLanguage: string;
+};
 
 // @public
 export interface CommonCallingHandlers {
@@ -207,6 +230,13 @@ export type ScreenShareButtonSelector = (state: CallClientState, props: CallingB
 
 // @public
 export const screenShareButtonSelector: ScreenShareButtonSelector;
+
+// @internal
+export type _StartCaptionsButtonSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
+    isCaptionsFeatureActive: boolean;
+    currentCaptionLanguage: string;
+    currentSpokenLanguage: string;
+};
 
 // @public
 export const useCall: () => Call | undefined;

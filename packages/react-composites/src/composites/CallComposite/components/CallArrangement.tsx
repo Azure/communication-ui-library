@@ -10,8 +10,7 @@ import {
   _useContainerWidth,
   ErrorBar,
   ErrorBarProps,
-  useTheme,
-  _CaptionsBanner
+  useTheme
 } from '@internal/react-components';
 /* @conditional-compile-remove(rooms) */
 import { _usePermissions } from '@internal/react-components';
@@ -19,6 +18,7 @@ import React, { useMemo, useRef, useState } from 'react';
 import { useCallback } from 'react';
 /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
 import { AvatarPersonaDataCallback } from '../../common/AvatarPersona';
+/* @conditional-compile-remove(close-captions) */
 import { CaptionsBanner } from '../../common/CaptionsBanner';
 import { containerDivStyles } from '../../common/ContainerRectProps';
 /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
@@ -324,7 +324,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                     )}
                   </Stack.Item>
                   {props.onRenderGalleryContent && props.onRenderGalleryContent()}
-                  <CaptionsBanner />
+                  {/* @conditional-compile-remove(close-captions) */ <CaptionsBanner />}
                 </Stack>
               </Stack.Item>
             </Stack.Item>
