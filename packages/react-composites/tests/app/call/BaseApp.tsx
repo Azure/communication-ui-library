@@ -11,7 +11,8 @@ import {
   COMPOSITE_LOCALE_EN_US,
   CustomCallControlButtonCallback,
   CustomCallControlButtonProps,
-  CustomCallControlButtonCallbackArgs
+  CustomCallControlButtonCallbackArgs,
+  CallCompositeOptions
 } from '../../../src';
 import { IDS } from '../../browser/common/constants';
 import { isMobile } from '../lib/utils';
@@ -50,6 +51,35 @@ export function BaseApp(props: { queryArgs: QueryArgs; callAdapter?: CallAdapter
     };
   }
 
+  let options: CallCompositeOptions =
+    customCallCompositeOptions !== undefined
+      ? customCallCompositeOptions
+      : queryArgs.injectCustomButtons
+      ? {
+          callControls: {
+            legacyControlBarExperience: true,
+            onFetchCustomButtonProps,
+            // Hide some buttons to keep the mobile-view control bar narrow
+            devicesButton: false,
+            endCallButton: false
+          }
+        }
+      : {
+          callControls: {
+            legacyControlBarExperience: true
+          }
+        };
+
+  if (queryArgs.newControlBarExperience) {
+    options = {
+      ...options,
+      callControls: {
+        ...(options?.callControls instanceof Object ? options?.callControls : {}),
+        legacyControlBarExperience: false
+      }
+    };
+  }
+
   return (
     <>
       {!callAdapter && 'Initializing call adapter...'}
@@ -65,25 +95,7 @@ export function BaseApp(props: { queryArgs: QueryArgs; callAdapter?: CallAdapter
                 queryArgs.injectParticipantMenuItems ? onFetchParticipantMenuItems : undefined
               }
               rtl={rtl}
-              options={
-                customCallCompositeOptions !== undefined
-                  ? customCallCompositeOptions
-                  : queryArgs.injectCustomButtons
-                  ? {
-                      callControls: {
-                        legacyControlBarExperience: true,
-                        onFetchCustomButtonProps,
-                        // Hide some buttons to keep the mobile-view control bar narrow
-                        devicesButton: false,
-                        endCallButton: false
-                      }
-                    }
-                  : {
-                      callControls: {
-                        legacyControlBarExperience: true
-                      }
-                    }
-              }
+              options={options}
               callInvitationUrl={queryArgs.callInvitationUrl}
             />
           </_IdentifierProvider>
