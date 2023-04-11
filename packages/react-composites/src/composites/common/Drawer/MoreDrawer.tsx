@@ -414,25 +414,25 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
   customDrawerButtons['overflow'].forEach((element) => {
     drawerMenuItems.push(element);
   });
-
+  /* @conditional-compile-remove(close-captions) */
   return (
     <>
-      {
-        /* @conditional-compile-remove(close-captions) */ isSpokenLanguageDrawerOpen && props.isCaptionsSupported && (
-          <DrawerMenu
-            heading={props.strings.spokenLanguageMenuTitle}
-            items={spokenLanguageDrawerItems ?? []}
-            onLightDismiss={() => {
-              changeSpokenLanguageHandlers.onSetSpokenLanguage(currentSpokenLanguage);
-              props.onLightDismiss();
-            }}
-            styles={spokenLanguageDrawerStyles}
-          />
-        )
-      }
+      {isSpokenLanguageDrawerOpen && props.isCaptionsSupported && (
+        <DrawerMenu
+          heading={props.strings.spokenLanguageMenuTitle}
+          items={spokenLanguageDrawerItems ?? []}
+          onLightDismiss={() => {
+            changeSpokenLanguageHandlers.onSetSpokenLanguage(currentSpokenLanguage);
+            props.onLightDismiss();
+          }}
+          styles={spokenLanguageDrawerStyles}
+        />
+      )}
       {!isSpokenLanguageDrawerOpen && <DrawerMenu items={drawerMenuItems} onLightDismiss={props.onLightDismiss} />}
     </>
   );
+
+  return <DrawerMenu items={drawerMenuItems} onLightDismiss={props.onLightDismiss} />;
 };
 
 const isDeviceSelected = (speaker: OptionsDevice, selectedSpeaker?: OptionsDevice): boolean =>
