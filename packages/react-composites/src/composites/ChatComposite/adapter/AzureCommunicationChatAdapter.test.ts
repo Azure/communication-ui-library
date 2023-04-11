@@ -2,7 +2,9 @@
 // Licensed under the MIT license.
 import { PagedAsyncIterableIterator } from '@azure/core-paging';
 import { ChatClient, ChatMessage } from '@azure/communication-chat';
-import { CommunicationGetTokenOptions, CommunicationTokenCredential } from '@azure/communication-common';
+/* @conditional-compile-remove(teams-inline-images) */
+import { CommunicationGetTokenOptions } from '@azure/communication-common';
+import { CommunicationTokenCredential } from '@azure/communication-common';
 import { createAzureCommunicationChatAdapter } from './AzureCommunicationChatAdapter';
 import { ChatAdapter, ChatAdapterState } from './ChatAdapter';
 import { StubChatClient, StubChatThreadClient, failingPagedAsyncIterator, pagedAsyncIterator } from './StubChatClient';
@@ -129,6 +131,7 @@ describe('Error is reflected in state and events', () => {
     expect(errorListener.errors[0].target).toBe('ChatThreadClient.sendTypingNotification');
   });
 
+  /* @conditional-compile-remove(teams-inline-images) */
   it('when downloadAuthenticatedAttachment with no access token fails', async () => {
     const threadClient = new StubChatThreadClient();
     const adapter = await createChatAdapterWithStubs(new StubChatClient(threadClient));
@@ -142,7 +145,7 @@ describe('Error is reflected in state and events', () => {
       expect(false);
     }
   });
-
+  /* @conditional-compile-remove(teams-inline-images) */
   it('when downloadAuthenticatedAttachment fails with bad respnse', async () => {
     const threadClient = new StubChatThreadClient();
     const fakeToken: CommunicationTokenCredential = {
@@ -166,6 +169,7 @@ describe('Error is reflected in state and events', () => {
   });
 });
 
+/* @conditional-compile-remove(teams-inline-images) */
 type MockAccessToken = {
   token: string;
   expiresOnTimestamp: number;

@@ -112,6 +112,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   private chatClient: StatefulChatClient;
   private chatThreadClient: ChatThreadClient;
   private context: ChatContext;
+  /* @conditional-compile-remove(teams-inline-images) */
   private credential?: CommunicationTokenCredential = undefined;
   /* @conditional-compile-remove(file-sharing) */ /* @conditional-compile-remove(teams-inline-images) */
   private fileUploadAdapter: FileUploadAdapter;
