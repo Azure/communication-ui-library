@@ -152,6 +152,10 @@ export class MockCallAdapter implements CallAdapter {
   updateBackgroundPickerImages(): void {
     throw new Error('updateBackgroundPickerImages not implemented.');
   }
+  /* @conditional-compile-remove(video-background-effects) */
+  public updateSelectedVideoBackgroundEffect(): void {
+    throw new Error('updateSelectedVideoBackgroundEffect not implemented.');
+  }
 }
 
 /**

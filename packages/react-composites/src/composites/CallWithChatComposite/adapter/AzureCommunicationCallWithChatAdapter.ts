@@ -82,7 +82,7 @@ import { AzureCommunicationCallAdapterOptions } from '../../CallComposite/adapte
 /* @conditional-compile-remove(video-background-effects) */
 import { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/communication-calling-effects';
 /* @conditional-compile-remove(video-background-effects) */
-import { VideoBackgroundImage } from '../../CallComposite';
+import { VideoBackgroundImage, SelectedVideoBackgroundEffect } from '../../CallComposite';
 
 type CallWithChatAdapterStateChangedHandler = (newState: CallWithChatAdapterState) => void;
 
@@ -445,6 +445,11 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   /* @conditional-compile-remove(video-background-effects) */
   public updateBackgroundPickerImages(backgroundImages: VideoBackgroundImage[]): void {
     return this.callAdapter.updateBackgroundPickerImages(backgroundImages);
+  }
+
+  /* @conditional-compile-remove(video-background-effects) */
+  public updateSelectedVideoBackgroundEffect(selectedVideoBackground: SelectedVideoBackgroundEffect): void {
+    return this.callAdapter.updateSelectedVideoBackgroundEffect(selectedVideoBackground);
   }
 
   on(event: 'callParticipantsJoined', listener: ParticipantsJoinedListener): void;
