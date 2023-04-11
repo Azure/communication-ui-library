@@ -65,6 +65,8 @@ import { isNarrowWidth, _useContainerWidth } from './utils/responsive';
 import getParticipantsWhoHaveReadMessage from './utils/getParticipantsWhoHaveReadMessage';
 /* @conditional-compile-remove(file-sharing) */
 import { FileDownloadHandler, FileMetadata } from './FileDownloadCards';
+/* @conditional-compile-remove(teams-inline-images) */
+import { AttachmentDownloadResult } from './FileDownloadCards';
 import { useTheme } from '../theming';
 
 const isMessageSame = (first: ChatMessage, second: ChatMessage): boolean => {
@@ -634,6 +636,13 @@ export type MessageThreadProps = {
    * @beta
    */
   onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
+  /* @conditional-compile-remove(teams-inline-images) */
+  /**
+   * Optional callback to retrieve the inline image in a message.
+   * @param attachment - FileMetadata object we want to render
+   * @beta
+   */
+  onFetchAttachments?: (attachment: FileMetadata) => Promise<AttachmentDownloadResult>;
   /**
    * Optional callback to edit a message.
    *
@@ -795,7 +804,9 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     onDeleteMessage,
     onSendMessage,
     /* @conditional-compile-remove(date-time-customization) */
-    onDisplayDateTimeString
+    onDisplayDateTimeString,
+    /* @conditional-compile-remove(teams-inline-images) */
+    onFetchAttachments
   } = props;
   const onRenderFileDownloads = onRenderFileDownloadsTrampoline(props);
 
@@ -817,6 +828,20 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
 
   // readCount and participantCount will only need to be updated on-fly when user hover on an indicator
   const [readCountForHoveredIndicator, setReadCountForHoveredIndicator] = useState<number | undefined>(undefined);
+
+  /* @conditional-compile-remove(teams-inline-images) */
+  const [inlineAttachments, setInlineAttachments] = useState<Record<string, string>>({});
+  /* @conditional-compile-remove(teams-inline-images) */
+  const onFetchInlineAttachment = useCallback(
+    async (attachment: FileMetadata): Promise<void> => {
+      if (!onFetchAttachments || attachment.id in inlineAttachments) {
+        return;
+      }
+      const attachmentDownloadResult = await onFetchAttachments(attachment);
+      setInlineAttachments((prev) => ({ ...prev, [attachment.id]: attachmentDownloadResult.blobUrl }));
+    },
+    [inlineAttachments, onFetchAttachments]
+  );
 
   const isAllChatMessagesLoadedRef = useRef(false);
   // isAllChatMessagesLoadedRef needs to be updated every time when a new adapter is set in order to display correct data
@@ -1079,6 +1104,10 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
             onActionButtonClick={onActionButtonClickMemo}
             /* @conditional-compile-remove(date-time-customization) */
             onDisplayDateTimeString={onDisplayDateTimeString}
+            /* @conditional-compile-remove(teams-inline-images) */
+            onFetchAttachments={onFetchInlineAttachment}
+            /* @conditional-compile-remove(teams-inline-images) */
+            attachmentsMap={inlineAttachments}
           />
         );
       }
@@ -1095,7 +1124,11 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
       showMessageStatus,
       onActionButtonClickMemo,
       /* @conditional-compile-remove(date-time-customization) */
-      onDisplayDateTimeString
+      onDisplayDateTimeString,
+      /* @conditional-compile-remove(teams-inline-images) */
+      onFetchInlineAttachment,
+      /* @conditional-compile-remove(teams-inline-images) */
+      inlineAttachments
     ]
   );
 

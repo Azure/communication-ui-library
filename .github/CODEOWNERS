@@ -1,8 +1,21 @@
-# Approval for at least one *code owner* is required all packages.
+# Instructions for CODEOWNERS file format:
+# https://github.com/Azure/azure-sdk/blob/main/docs/policies/opensource.md#codeowners
 
-# Lines starting with '#' are comments.
-# Each line is a file pattern followed by one or more *code owners*.
-# The last matching pattern has the most precendence.
+# These owners will be the default owners for everything in the repository unless a later match takes precedencet.
+*                                                           @Azure/acs-ui-web-calling-reviewer-1 @Azure/acs-ui-web-calling-reviewer-2 @Azure/acs-ui-web-chat-reviewer-1 @Azure/acs-ui-web-chat-reviewer-2
 
-# These *code owners* will be the default owners for everything in the repository.
-* @alkwa-msft @carocao-msft @dmceachernmsft @edwardlee-msft @jamesburnside @mgamis-msft @PorterNan @prabhjot-msft  @Azure/acs-ui-ios-reviewer-1 @Azure/acs-ui-ios-reviewer-2 @Azure/acs-ui-ios-reviewer-3
+# Orphaned paths
+/change/
+/change-beta/
+
+# Calling
+/packages/calling-component-bindings/                       @Azure/acs-ui-web-calling-reviewer-1 @Azure/acs-ui-web-calling-reviewer-2
+/packages/calling-stateful-client/                          @Azure/acs-ui-web-calling-reviewer-1 @Azure/acs-ui-web-calling-reviewer-2
+/packages/storybook/stories/CallComposite/                  @Azure/acs-ui-web-calling-reviewer-1 @Azure/acs-ui-web-calling-reviewer-2
+/samples/Calling/                                           @Azure/acs-ui-web-calling-reviewer-1 @Azure/acs-ui-web-calling-reviewer-2
+
+# Chat
+/packages/chat-component-bindings/                          @Azure/acs-ui-web-chat-reviewer-1 @Azure/acs-ui-web-chat-reviewer-2
+/packages/chat-stateful-client/                             @Azure/acs-ui-web-chat-reviewer-1 @Azure/acs-ui-web-chat-reviewer-2
+/packages/storybook/stories/ChatComposite/                  @Azure/acs-ui-web-chat-reviewer-1 @Azure/acs-ui-web-chat-reviewer-2
+/samples/Chat/                                              @Azure/acs-ui-web-chat-reviewer-1 @Azure/acs-ui-web-chat-reviewer-2
