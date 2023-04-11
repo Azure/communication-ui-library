@@ -24,8 +24,8 @@ test.describe('Overflow gallery tests', async () => {
     ).toBeTruthy();
     expect(await stableScreenshot(page)).toMatchSnapshot('overflow-gallery-with-many-participants.png');
 
-    await waitForSelector(page, dataUiId('call-with-chat-composite-people-button'));
-    await pageClick(page, dataUiId('call-with-chat-composite-people-button'));
+    await waitForSelector(page, dataUiId('common-call-composite-people-button'));
+    await pageClick(page, dataUiId('common-call-composite-people-button'));
     expect(await stableScreenshot(page)).toMatchSnapshot('overflow-gallery-with-people-pane-open.png');
     await waitForSelector(page, dataUiId('call-with-chat-composite-chat-button'));
     await pageClick(page, dataUiId('call-with-chat-composite-chat-button'));
@@ -49,8 +49,8 @@ test.describe('Overflow gallery tests', async () => {
     ).toBeTruthy();
     expect(await stableScreenshot(page)).toMatchSnapshot('overflow-gallery-with-many-participants-rtl.png');
 
-    await waitForSelector(page, dataUiId('call-with-chat-composite-people-button'));
-    await pageClick(page, dataUiId('call-with-chat-composite-people-button'));
+    await waitForSelector(page, dataUiId('common-call-composite-people-button'));
+    await pageClick(page, dataUiId('common-call-composite-people-button'));
     expect(await stableScreenshot(page)).toMatchSnapshot('overflow-gallery-with-people-pane-open-rtl.png');
     await waitForSelector(page, dataUiId('call-with-chat-composite-chat-button'));
     await pageClick(page, dataUiId('call-with-chat-composite-chat-button'));
