@@ -2,7 +2,9 @@
 // Licensed under the MIT license.
 
 import { IContextualMenuItem } from '@fluentui/react';
-import { ControlBarButtonProps, _StartCaptionsButton } from '@internal/react-components';
+import { ControlBarButtonProps } from '@internal/react-components';
+/* @conditional-compile-remove(close-captions) */
+import { _StartCaptionsButton } from '@internal/react-components';
 /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
 import { HoldButton } from '@internal/react-components';
 import React from 'react';
@@ -23,11 +25,18 @@ import {
   generateCustomCallDesktopOverflowButtons,
   onFetchCustomButtonPropsTrampoline
 } from './CustomButton';
+/* @conditional-compile-remove(close-captions) */
+import { useHandlers } from '../../CallComposite/hooks/useHandlers';
+/* @conditional-compile-remove(close-captions) */
+import { _startCaptionsButtonSelector } from '@internal/calling-component-bindings';
+/* @conditional-compile-remove(close-captions) */
+import { useAdaptedSelector } from '../../CallComposite/hooks/useAdaptedSelector';
 
 /** @private */
 export interface DesktopMoreButtonProps extends ControlBarButtonProps {
   disableButtonsForHoldScreen?: boolean;
   onClickShowDialpad?: () => void;
+  /* @conditional-compile-remove(close-captions) */
   isCaptionsSupported?: boolean;
   /* @conditional-compile-remove(control-bar-button-injection) */
   callControls?: boolean | CommonCallControlOptions;
@@ -43,6 +52,10 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
   const localeStrings = useLocale();
   /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
   const holdButtonProps = usePropsFor(HoldButton);
+  /* @conditional-compile-remove(close-captions) */
+  const startCaptionsButtonProps = useAdaptedSelector(_startCaptionsButtonSelector);
+  /* @conditional-compile-remove(close-captions) */
+  const startCaptionsButtonHandlers = useHandlers(_StartCaptionsButton);
 
   const startCaptionsButtonProps = usePropsFor(_StartCaptionsButton);
 
@@ -72,6 +85,7 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
   });
 
   // is captions feature is active
+  /* @conditional-compile-remove(close-captions) */
   if (props.isCaptionsSupported) {
     const captionsContextualMenuItems: IContextualMenuItem[] = [];
 
@@ -104,13 +118,13 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
     captionsContextualMenuItems.push({
       key: 'ToggleCaptionsKey',
       text: startCaptionsButtonProps.checked
-        ? localeStrings.component.strings.startCaptionsButton.tooltipOnContent
-        : localeStrings.component.strings.startCaptionsButton.tooltipOffContent,
+        ? localeStrings.strings.call.startCaptionsButtonTooltipOnContent
+        : localeStrings.strings.call.startCaptionsButtonTooltipOffContent,
       onClick: () => {
         startCaptionsButtonProps.checked
-          ? startCaptionsButtonProps.onStopCaptions()
+          ? startCaptionsButtonHandlers.onStopCaptions()
           : startCaptionsButtonProps.currentSpokenLanguage
-          ? startCaptionsButtonProps.onStartCaptions({
+          ? startCaptionsButtonHandlers.onStartCaptions({
               spokenLanguage: startCaptionsButtonProps.currentSpokenLanguage
             })
           : props.onCaptionsSettingsClick && props.onCaptionsSettingsClick();
@@ -202,7 +216,7 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
   return (
     <MoreButton
       {...props}
-      data-ui-id="call-with-chat-composite-more-button"
+      data-ui-id="common-call-composite-more-button"
       /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
       strings={moreButtonStrings}
       menuIconProps={{ hidden: true }}

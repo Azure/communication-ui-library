@@ -36,9 +36,12 @@ export type {
   GetCallingSelector,
   CallingHandlers,
   CallingBaseSelectorProps,
-  CommonCallingHandlers,
-  captionsOptions
+  CommonCallingHandlers
 } from '../../calling-component-bindings/src';
+
+/* @conditional-compile-remove(close-captions) */
+export type { captionsOptions } from '../../calling-component-bindings/src';
+
 export type {
   ChatClientProviderProps,
   ChatThreadClientProviderProps,
@@ -236,6 +239,7 @@ export type {
   TypingIndicatorStrings,
   TypingIndicatorStylesProps,
   UpdateMessageCallback,
+  CancelEditCallback,
   VideoGalleryLayout,
   VideoGalleryLocalParticipant,
   VideoGalleryParticipant,

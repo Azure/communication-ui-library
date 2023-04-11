@@ -53,6 +53,7 @@ export interface CommonCallControlBarProps {
   /* @conditional-compile-remove(video-background-effects) */
   onShowVideoEffectsPicker?: (showVideoEffectsOptions: boolean) => void;
   rtl?: boolean;
+  /* @conditional-compile-remove(close-captions) */
   isCaptionsSupported?: boolean;
 }
 
@@ -318,7 +319,7 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                     }
                     {props.mobileView && (
                       <MoreButton
-                        data-ui-id="call-with-chat-composite-more-button"
+                        data-ui-id="common-call-composite-more-button"
                         strings={moreButtonStrings}
                         onClick={props.onMoreButtonClicked}
                         disabled={props.disableButtonsForLobbyPage}
@@ -338,7 +339,9 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                             onClickShowDialpad={props.onClickShowDialpad}
                             /* @conditional-compile-remove(control-bar-button-injection) */
                             callControls={props.callControls}
+                            /* @conditional-compile-remove(close-captions) */
                             isCaptionsSupported={props.isCaptionsSupported}
+                            /* @conditional-compile-remove(close-captions) */
                             onCaptionsSettingsClick={openCaptionsSettingModal}
                           />
                         )
@@ -374,7 +377,7 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                     ariaLabel={peopleButtonStrings?.label}
                     showLabel={options.displayType !== 'compact'}
                     onClick={props.onPeopleButtonClicked}
-                    data-ui-id="call-with-chat-composite-people-button"
+                    data-ui-id="common-call-composite-people-button"
                     disabled={props.disableButtonsForLobbyPage || isDisabled(options.peopleButton)}
                     strings={peopleButtonStrings}
                     styles={commonButtonStyles}

@@ -89,7 +89,11 @@
     "manyParticipantsJoined": "{displayName1}, {displayName2}, {displayName3} and {numOfParticipants} other participants joined",
     "manyParticipantsLeft": "{displayName1}, {displayName2}, {displayName3} and {numOfParticipants} other participants left",
     "liveCaptionsLabel": "Live captions",
-    "captionsSettingLabel": "Caption settings"
+    "captionsSettingLabel": "Caption settings",
+    "startCaptionsButtonOnLabel": "Turn on captions",
+    "startCaptionsButtonOffLabel": "Turn off captions",
+    "startCaptionsButtonTooltipOnContent": "Turn off captions",
+    "startCaptionsButtonTooltipOffContent": "Turn on captions"
   },
   "chat": {
     "chatListHeader": "In this chat",
