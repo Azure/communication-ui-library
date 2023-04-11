@@ -19,7 +19,6 @@ import { CallParticipantListParticipant } from '@internal/react-components';
 import { CallState } from '@azure/communication-calling';
 import { CameraButton } from '@internal/react-components';
 import { _CaptionsInfo } from '@internal/react-components';
-import { _CaptionsSettingModal } from '@internal/react-components';
 import { Common } from '@internal/acs-ui-common';
 import { CommunicationIdentifier } from '@azure/communication-common';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
@@ -43,7 +42,6 @@ import { ReactElement } from 'react';
 import { RemoteParticipantState } from '@internal/calling-stateful-client';
 import { ScreenShareButton } from '@internal/react-components';
 import { StartCallOptions } from '@azure/communication-calling';
-import { _StartCaptionsButton } from '@internal/react-components';
 import { StatefulCallClient } from '@internal/calling-stateful-client';
 import { StatefulDeviceManager } from '@internal/calling-stateful-client';
 import { TeamsCall } from '@azure/communication-calling';
@@ -130,6 +128,9 @@ export type _ChangeSpokenLanguageSelector = (state: CallClientState, props: Call
     currentSpokenLanguage: string;
     isCaptionsFeatureActive: boolean;
 };
+
+// @internal
+export const _changeSpokenLanguageSelector: _ChangeSpokenLanguageSelector;
 
 // @public
 export interface CommonCallingHandlers {

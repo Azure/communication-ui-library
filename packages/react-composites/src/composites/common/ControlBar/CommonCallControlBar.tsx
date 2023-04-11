@@ -31,6 +31,7 @@ import { isDisabled } from '../../CallComposite/utils';
 import { HiddenFocusStartPoint } from '../HiddenFocusStartPoint';
 import { CallWithChatControlOptions } from '../../CallWithChatComposite';
 import { CommonCallControlOptions } from '../types/CommonCallControlOptions';
+/* @conditional-compile-remove(close-captions) */
 import { CaptionsSettingModal } from '../CaptionsSettingModal';
 
 /**
@@ -99,6 +100,7 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
   const callWithChatStrings = useCallWithChatCompositeStrings();
   const options = inferCommonCallControlOptions(props.mobileView, props.callControls);
 
+  /* @conditional-compile-remove(close-captions) */
   const [showCaptionsSettingModal, setShowCaptionsSettingModal] = useState(false);
 
   const handleResize = useCallback((): void => {
@@ -222,23 +224,27 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
   ) : (
     <></>
   );
-
+  /* @conditional-compile-remove(close-captions) */
   const openCaptionsSettingModal = (): void => {
     setShowCaptionsSettingModal(true);
   };
-
+  /* @conditional-compile-remove(close-captions) */
   const onDismissCaptionsSetting = (): void => {
     setShowCaptionsSettingModal(false);
   };
 
   return (
     <div ref={controlBarSizeRef}>
-      {showCaptionsSettingModal && (
-        <CaptionsSettingModal
-          showCaptionsSettingModal={showCaptionsSettingModal}
-          onDismissCaptionsSetting={onDismissCaptionsSetting}
-        />
-      )}
+      <CallAdapterProvider adapter={props.callAdapter}>
+        {
+          /* @conditional-compile-remove(close-captions) */ showCaptionsSettingModal && (
+            <CaptionsSettingModal
+              showCaptionsSettingModal={showCaptionsSettingModal}
+              onDismissCaptionsSetting={onDismissCaptionsSetting}
+            />
+          )
+        }
+      </CallAdapterProvider>
       <Stack
         horizontal
         reversed={!props.mobileView && !isOutOfSpace}

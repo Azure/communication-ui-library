@@ -551,7 +551,14 @@ export interface CallCompositeStrings {
     cameraLabel: string;
     cameraPermissionDenied: string;
     cameraTurnedOff: string;
+    captionsSettingCancelButtonLabel: string;
+    captionsSettingCloseModalButtonAriaLabel: string;
+    captionsSettingConfirmButtonLabel: string;
+    captionsSettingDropdownInfoText: string;
+    captionsSettingDropdownLabel: string;
     captionsSettingLabel: string;
+    captionsSettingModalAriaLabel: string;
+    captionsSettingModalTitle: string;
     chatButtonLabel: string;
     close: string;
     complianceBannerNowOnlyRecording: string;
@@ -1172,17 +1179,10 @@ export interface CameraSitePermissionsProps extends CommonSitePermissionsProps {
 // @beta
 export type CameraSitePermissionsStrings = SitePermissionsStrings;
 
-// @internal
-export const _CaptionsBanner: (props: _CaptionsBannerProps) => JSX.Element;
-
-// @internal
-export interface _CaptionsBannerProps {
-    // (undocumented)
-    captions: _CaptionsInfo[];
-    // (undocumented)
-    isCaptionsOn?: boolean;
-    onRenderAvatar?: OnRenderAvatarCallback;
-}
+// @public
+export type CancelEditCallback = (messageId: string, metadata?: Record<string, string>, options?: {
+    attachedFilesMetadata?: FileMetadata[];
+}) => void;
 
 // @beta (undocumented)
 export interface CaptionsCallFeatureState {
@@ -1210,71 +1210,9 @@ export type captionsOptions = {
     spokenLanguage: string;
 };
 
-// @internal
-export type _captionsOptions = {
-    spokenLanguage: string;
-};
-
-// @public
+// @beta
 export type CaptionsReceivedListener = (event: {
     data: CaptionsInfo;
-}) => void;
-
-// @internal
-export type _CaptionsSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
-    captions: _CaptionsInfo[];
-    isCaptionsOn: boolean;
-};
-
-// @internal
-export const _CaptionsSettingModal: (props: _CaptionsSettingModalProps) => JSX.Element;
-
-// @internal
-export interface _CaptionsSettingModalProps {
-    // (undocumented)
-    currentSpokenLanguage: string;
-    // (undocumented)
-    isCaptionsFeatureActive?: boolean;
-    // (undocumented)
-    onDismissCaptionsSetting?: () => void;
-    // (undocumented)
-    onSetSpokenLanguage: (language: string) => Promise<void>;
-    onStartCaptions: (captionsOptions?: _captionsOptions) => Promise<void>;
-    // (undocumented)
-    showModal?: boolean;
-    // (undocumented)
-    strings?: _CaptionsSettingModalStrings;
-    // (undocumented)
-    supportedSpokenLanguages: string[];
-}
-
-// @internal
-export interface _CaptionsSettingModalStrings {
-    // (undocumented)
-    captionsSettingCancelButtonLabel: string;
-    // (undocumented)
-    captionsSettingCloseModalButtonAriaLabel: string;
-    // (undocumented)
-    captionsSettingConfirmButtonLabel: string;
-    // (undocumented)
-    captionsSettingDropdownInfoText: string;
-    // (undocumented)
-    captionsSettingDropdownLabel: string;
-    // (undocumented)
-    captionsSettingModalAriaLabel: string;
-    // (undocumented)
-    captionsSettingModalTitle: string;
-}
-
-// @internal
-export type _ChangeSpokenLanguageSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
-    supportedSpokenLanguages: string[];
-    currentSpokenLanguage: string;
-    isCaptionsFeatureActive: boolean;
-};
-// @public
-export type CancelEditCallback = (messageId: string, metadata?: Record<string, string>, options?: {
-    attachedFilesMetadata?: FileMetadata[];
 }) => void;
 
 // @public
@@ -1708,7 +1646,6 @@ export interface ComponentStrings {
     CameraSitePermissionsDenied: SitePermissionsStrings;
     CameraSitePermissionsDeniedSafari: SitePermissionsStrings;
     CameraSitePermissionsRequest: SitePermissionsStrings;
-    captionsSettingModal: _CaptionsSettingModalStrings;
     devicesButton: DevicesButtonStrings;
     dialpad: DialpadStrings;
     endCallButton: EndCallButtonStrings;
@@ -1725,7 +1662,6 @@ export interface ComponentStrings {
     participantsButton: ParticipantsButtonStrings;
     screenShareButton: ScreenShareButtonStrings;
     sendBox: SendBoxStrings;
-    startCaptionsButton: _StartCaptionsButtonStrings;
     typingIndicator: TypingIndicatorStrings;
     UnsupportedBrowser: UnsupportedBrowserStrings;
     UnsupportedBrowserVersion: UnsupportedBrowserVersionStrings;
@@ -3108,7 +3044,7 @@ export interface RemoteVideoTileMenuOptions {
 }
 
 // @beta
-export type Role = 'Presenter' | 'Attendee' | 'Consumer' | 'Organizer';
+export type Role = 'Presenter' | 'Attendee' | 'Consumer' | 'Organizer' | 'Co-organizer';
 
 // @public
 export const ScreenShareButton: (props: ScreenShareButtonProps) => JSX.Element;
@@ -3205,32 +3141,6 @@ export type SitePermissionsStrings = {
 export interface SitePermissionsStyles extends BaseCustomStyles {
     primaryButton?: IButtonStyles;
     troubleshootingLink?: ILinkStyles;
-}
-
-// @internal
-export const _StartCaptionsButton: (props: _StartCaptionsButtonProps) => JSX.Element;
-
-// @internal (undocumented)
-export interface _StartCaptionsButtonProps extends ControlBarButtonProps {
-    currentSpokenLanguage?: string;
-    onStartCaptions: (captionsOptions?: _captionsOptions) => Promise<void>;
-    onStopCaptions: () => Promise<void>;
-    strings?: _StartCaptionsButtonStrings;
-}
-
-// @internal
-export type _StartCaptionsButtonSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
-    checked: boolean;
-    currentCaptionLanguage: string;
-    currentSpokenLanguage: string | undefined;
-};
-
-// @internal
-export interface _StartCaptionsButtonStrings {
-    offLabel: string;
-    onLabel: string;
-    tooltipOffContent: string;
-    tooltipOnContent: string;
 }
 
 // @public

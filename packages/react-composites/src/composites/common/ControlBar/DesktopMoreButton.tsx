@@ -57,8 +57,6 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
   /* @conditional-compile-remove(close-captions) */
   const startCaptionsButtonHandlers = useHandlers(_StartCaptionsButton);
 
-  const startCaptionsButtonProps = usePropsFor(_StartCaptionsButton);
-
   /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
   const moreButtonStrings = useMemo(
     () => ({

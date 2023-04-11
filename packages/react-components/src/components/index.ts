@@ -215,10 +215,11 @@ export type {
 } from './VideoEffects/VideoBackgroundEffectsPicker';
 
 export type { VerticalGalleryStyles, VerticalGalleryStrings, VerticalGalleryControlBarStyles } from './VerticalGallery';
-
+/* @conditional-compile-remove(close-captions) */
 export * from './CaptionsBanner';
+/* @conditional-compile-remove(close-captions) */
 export * from './Caption';
-
+/* @conditional-compile-remove(close-captions) */
 export * from './StartCaptionsButton';
-
+/* @conditional-compile-remove(close-captions) */
 export * from './CaptionsSettingModal';

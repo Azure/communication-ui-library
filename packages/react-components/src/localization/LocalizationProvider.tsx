@@ -15,9 +15,7 @@ import {
   ScreenShareButtonStrings,
   SendBoxStrings,
   TypingIndicatorStrings,
-  VideoGalleryStrings,
-  _StartCaptionsButtonStrings,
-  _CaptionsSettingModalStrings
+  VideoGalleryStrings
 } from '../components';
 /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
 import { HoldButtonStrings } from '../components';

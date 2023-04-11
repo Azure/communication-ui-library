@@ -1,7 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-
+/* @conditional-compile-remove(close-captions) */
 import { CallClientState } from '@internal/calling-stateful-client';
+/* @conditional-compile-remove(close-captions) */
 import { CallingBaseSelectorProps } from './baseSelectors';
 /* @conditional-compile-remove(close-captions) */
 import {
@@ -15,8 +16,10 @@ import {
 import * as reselect from 'reselect';
 /* @conditional-compile-remove(close-captions) */
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
+/* @conditional-compile-remove(close-captions) */
 import { _CaptionsInfo } from '@internal/react-components';
 
+/* @conditional-compile-remove(close-captions) */
 /**
  * Selector type for the {@link StartCaptionsButton} component.
  * @internal
@@ -46,7 +49,7 @@ export const _startCaptionsButtonSelector: _StartCaptionsButtonSelector = resele
     };
   }
 );
-
+/* @conditional-compile-remove(close-captions) */
 /**
  * Selector type for components for Changing spoken language
  * @internal
@@ -76,7 +79,7 @@ export const _changeSpokenLanguageSelector: _ChangeSpokenLanguageSelector = rese
     };
   }
 );
-
+/* @conditional-compile-remove(close-captions) */
 /**
  * Selector type for the {@link CaptionsBanner} component.
  * @internal
@@ -111,3 +114,6 @@ export const _captionsBannerSelector: _CaptionsBannerSelector = reselect.createS
     };
   }
 );
+
+// This is a placeholder to bypass CC of "close-captions", remove when move the feature to stable
+export {};
