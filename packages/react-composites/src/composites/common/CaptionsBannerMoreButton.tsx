@@ -1,20 +1,33 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-
+/* @conditional-compile-remove(close-captions) */
 import { IContextualMenuItem } from '@fluentui/react';
+/* @conditional-compile-remove(close-captions) */
 import { ControlBarButtonProps, _StartCaptionsButton } from '@internal/react-components';
+/* @conditional-compile-remove(close-captions) */
 import React from 'react';
+/* @conditional-compile-remove(close-captions) */
 import { useMemo } from 'react';
-import { usePropsFor } from '../CallComposite/hooks/usePropsFor';
+/* @conditional-compile-remove(close-captions) */
+import { useAdaptedSelector } from '../CallComposite/hooks/useAdaptedSelector';
+/* @conditional-compile-remove(close-captions) */
+import { useHandlers } from '../CallComposite/hooks/useHandlers';
+/* @conditional-compile-remove(close-captions) */
 import { buttonFlyoutIncreasedSizeStyles } from '../CallComposite/styles/Buttons.styles';
+/* @conditional-compile-remove(close-captions) */
 import { useLocale } from '../localization';
+/* @conditional-compile-remove(close-captions) */
 import { MoreButton } from './MoreButton';
+/* @conditional-compile-remove(close-captions) */
+import { _startCaptionsButtonSelector } from '@internal/calling-component-bindings';
 
+/* @conditional-compile-remove(close-captions) */
 /** @private */
 export interface CaptionsBannerMoreButtonProps extends ControlBarButtonProps {
   onCaptionsSettingsClick?: () => void;
 }
 
+/* @conditional-compile-remove(close-captions) */
 /**
  *
  * @private
@@ -22,7 +35,9 @@ export interface CaptionsBannerMoreButtonProps extends ControlBarButtonProps {
 export const CaptionsBannerMoreButton = (props: CaptionsBannerMoreButtonProps): JSX.Element => {
   const localeStrings = useLocale();
 
-  const startCaptionsButtonProps = usePropsFor(_StartCaptionsButton);
+  const startCaptionsButtonProps = useAdaptedSelector(_startCaptionsButtonSelector);
+
+  const startCaptionsButtonHandlers = useHandlers(_StartCaptionsButton);
 
   const moreButtonStrings = useMemo(
     () => ({
@@ -37,13 +52,13 @@ export const CaptionsBannerMoreButton = (props: CaptionsBannerMoreButtonProps): 
   moreButtonContextualMenuItems.push({
     key: 'ToggleCaptionsKey',
     text: startCaptionsButtonProps.checked
-      ? localeStrings.component.strings.startCaptionsButton.tooltipOnContent
-      : localeStrings.component.strings.startCaptionsButton.tooltipOffContent,
+      ? localeStrings.strings.call.startCaptionsButtonTooltipOnContent
+      : localeStrings.strings.call.startCaptionsButtonTooltipOffContent,
     onClick: () => {
       startCaptionsButtonProps.checked
-        ? startCaptionsButtonProps.onStopCaptions()
+        ? startCaptionsButtonHandlers.onStopCaptions()
         : startCaptionsButtonProps.currentSpokenLanguage
-        ? startCaptionsButtonProps.onStartCaptions({
+        ? startCaptionsButtonHandlers.onStartCaptions({
             spokenLanguage: startCaptionsButtonProps.currentSpokenLanguage
           })
         : props.onCaptionsSettingsClick && props.onCaptionsSettingsClick();
@@ -83,3 +98,6 @@ export const CaptionsBannerMoreButton = (props: CaptionsBannerMoreButtonProps): 
     />
   );
 };
+
+// This is a placeholder to bypass CC of "close-captions", remove when move the feature to stable
+export {};

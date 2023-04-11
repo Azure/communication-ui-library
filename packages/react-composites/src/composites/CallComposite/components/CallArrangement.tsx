@@ -53,6 +53,8 @@ import { SendDtmfDialpad } from '../../common/SendDtmfDialpad';
 import { useCallWithChatCompositeStrings } from '../../CallWithChatComposite/hooks/useCallWithChatCompositeStrings';
 /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
 import { getPage } from '../selectors/baseSelectors';
+/* @conditional-compile-remove(close-captions) */
+import { getCallStatus, getIsTeamsCall } from '../selectors/baseSelectors';
 import { drawerContainerStyles } from '../styles/CallComposite.styles';
 /* @conditional-compile-remove(video-background-effects) */
 import { VideoEffectsPane } from '../../common/VideoEffectsPane';
@@ -240,9 +242,9 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     };
   }
   /* @conditional-compile-remove(close-captions) */
-  const isTeamsCall = adapter.getState().isTeamsCall;
+  const isTeamsCall = useSelector(getIsTeamsCall);
   /* @conditional-compile-remove(close-captions) */
-  const hasJoinedCall = adapter.getState().call?.state === 'Connected';
+  const hasJoinedCall = useSelector(getCallStatus) === 'Connected';
 
   return (
     <div ref={containerRef} className={mergeStyles(containerDivStyles)} id={props.id}>

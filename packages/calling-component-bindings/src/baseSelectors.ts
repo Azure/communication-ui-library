@@ -135,7 +135,6 @@ export const getEnvironmentInfo = (
   return undefined;
 };
 
-/* @conditional-compile-remove(close-captions) */
 /** @private */
 export const getParticipantCount = (state: CallClientState, props: CallingBaseSelectorProps): number | undefined => {
   /* @conditional-compile-remove(total-participant-count) */
@@ -147,14 +146,12 @@ export const getParticipantCount = (state: CallClientState, props: CallingBaseSe
 /** @private */
 export const getCaptions = (state: CallClientState, props: CallingBaseSelectorProps): CaptionsInfo[] | undefined => {
   return state.calls[props.callId]?.captionsFeature.captions;
-  return undefined;
 };
 
 /* @conditional-compile-remove(close-captions) */
 /** @private */
 export const getCaptionsStatus = (state: CallClientState, props: CallingBaseSelectorProps): boolean | undefined => {
   return state.calls[props.callId]?.captionsFeature.isCaptionsFeatureActive;
-  return undefined;
 };
 
 /* @conditional-compile-remove(close-captions) */
@@ -164,7 +161,6 @@ export const getCurrentCaptionLanguage = (
   props: CallingBaseSelectorProps
 ): string | undefined => {
   return state.calls[props.callId]?.captionsFeature.currentCaptionLanguage;
-  return undefined;
 };
 
 /* @conditional-compile-remove(close-captions) */
@@ -174,7 +170,6 @@ export const getCurrentSpokenLanguage = (
   props: CallingBaseSelectorProps
 ): string | undefined => {
   return state.calls[props.callId]?.captionsFeature.currentSpokenLanguage;
-  return undefined;
 };
 
 /* @conditional-compile-remove(close-captions) */
@@ -184,7 +179,6 @@ export const getSupportedCaptionLanguages = (
   props: CallingBaseSelectorProps
 ): string[] | undefined => {
   return state.calls[props.callId]?.captionsFeature.supportedCaptionLanguages;
-  return undefined;
 };
 
 /* @conditional-compile-remove(close-captions) */
@@ -194,5 +188,4 @@ export const getSupportedSpokenLanguages = (
   props: CallingBaseSelectorProps
 ): string[] | undefined => {
   return state.calls[props.callId]?.captionsFeature.supportedSpokenLanguages;
-  return undefined;
 };
