@@ -1222,6 +1222,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     CaptionsIcon: JSX.Element;
     CaptionsOffIcon: JSX.Element;
     CaptionsSettingIcon: JSX.Element;
+    PersonIcon: JSX.Element;
 };
 
 // @beta

@@ -1650,7 +1650,6 @@ export interface ComponentStrings {
     CameraSitePermissionsDenied: SitePermissionsStrings;
     CameraSitePermissionsDeniedSafari: SitePermissionsStrings;
     CameraSitePermissionsRequest: SitePermissionsStrings;
-    captionsSettingModal: _CaptionsSettingModalStrings;
     devicesButton: DevicesButtonStrings;
     dialpad: DialpadStrings;
     endCallButton: EndCallButtonStrings;
@@ -1667,7 +1666,6 @@ export interface ComponentStrings {
     participantsButton: ParticipantsButtonStrings;
     screenShareButton: ScreenShareButtonStrings;
     sendBox: SendBoxStrings;
-    startCaptionsButton: _StartCaptionsButtonStrings;
     typingIndicator: TypingIndicatorStrings;
     UnsupportedBrowser: UnsupportedBrowserStrings;
     UnsupportedBrowserVersion: UnsupportedBrowserVersionStrings;
@@ -1989,8 +1987,8 @@ export const DEFAULT_COMPONENT_ICONS: {
     OptionsVideoBackgroundEffect: JSX.Element;
     CaptionsIcon: JSX.Element;
     CaptionsOffIcon: JSX.Element;
-    PersonIcon: JSX.Element;
     CaptionsSettingIcon: JSX.Element;
+    PersonIcon: JSX.Element;
 };
 
 // @public
@@ -2101,6 +2099,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     CaptionsIcon: JSX.Element;
     CaptionsOffIcon: JSX.Element;
     CaptionsSettingIcon: JSX.Element;
+    PersonIcon: JSX.Element;
 };
 
 // @beta
@@ -3148,32 +3147,6 @@ export type SitePermissionsStrings = {
 export interface SitePermissionsStyles extends BaseCustomStyles {
     primaryButton?: IButtonStyles;
     troubleshootingLink?: ILinkStyles;
-}
-
-// @internal
-export const _StartCaptionsButton: (props: _StartCaptionsButtonProps) => JSX.Element;
-
-// @internal (undocumented)
-export interface _StartCaptionsButtonProps extends ControlBarButtonProps {
-    currentSpokenLanguage?: string;
-    onStartCaptions: (captionsOptions?: _captionsOptions) => Promise<void>;
-    onStopCaptions: () => Promise<void>;
-    strings?: _StartCaptionsButtonStrings;
-}
-
-// @internal
-export type _StartCaptionsButtonSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
-    checked: boolean;
-    currentCaptionLanguage: string;
-    currentSpokenLanguage: string | undefined;
-};
-
-// @internal
-export interface _StartCaptionsButtonStrings {
-    offLabel: string;
-    onLabel: string;
-    tooltipOffContent: string;
-    tooltipOnContent: string;
 }
 
 // @public
