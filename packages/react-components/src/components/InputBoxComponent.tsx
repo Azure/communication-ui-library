@@ -31,6 +31,7 @@ import { useTheme } from '../theming';
 /* @conditional-compile-remove(at-mention) */
 import { AtMentionLookupOptions, _AtMentionFlyout, AtMentionSuggestion } from './AtMentionFlyout';
 
+const defaultMentionTrigger = '@';
 /**
  * @private
  */
@@ -109,7 +110,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
   useEffect(() => {
     // Get a plain text version to display in the input box, resetting state
     console.log('Need to parse input text and set the html versions if needed');
-    parseStringForMentions(textValue, atMentionLookupOptions?.trigger);
+    parseStringForMentions(textValue, atMentionLookupOptions?.trigger || defaultMentionTrigger);
     // Parse the text and look for <msft-at-mention> tags.
     // Store the index and range of the tags.
     // Store the details in an ordered array.
@@ -157,6 +158,10 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
 
   const onSuggestionSelected = useCallback(
     (suggestion: AtMentionSuggestion) => {
+      // Go back to the last trigger character and insert the HTML over that range.
+      const lastTriggerIndex = inputTextValue.lastIndexOf(atMentionLookupOptions?.trigger || defaultMentionTrigger);
+
+      let firstPartOfText = inputTextValue.substring(0, lastTriggerIndex);
       const trigger = atMentionLookupOptions?.trigger || '';
       const queryString = mentionQuery || '';
       const mention = trigger + queryString;
@@ -339,7 +344,7 @@ type ParsedTag = {
  *
  * @private
  */
-const parseStringForMentions = (text: string, trigger: string = '@'): ParsedTag[] => {
+const parseStringForMentions = (text: string, trigger: string): ParsedTag[] => {
   let index = 0;
   let tags: ParsedTag[] = [];
   let previousLetter = '';
