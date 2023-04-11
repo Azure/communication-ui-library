@@ -100,7 +100,9 @@
     "captionsSettingConfirmButtonLabel": "Confirm",
     "captionsSettingCancelButtonLabel": "Cancel",
     "captionsSettingModalAriaLabel": "Captions Setting Modal",
-    "captionsSettingCloseModalButtonAriaLabel": "Close Captions Setting"
+    "captionsSettingCloseModalButtonAriaLabel": "Close Captions Setting",
+    "captionsBannerMoreButtonCallingLabel": "More",
+    "captionsBannerMoreButtonTooltip": "More options"
   },
   "chat": {
     "chatListHeader": "In this chat",
