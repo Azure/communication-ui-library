@@ -270,7 +270,10 @@ export type SelectedVideoBackgroundEffect =
  * @beta
  */
 export interface VideoBackgroundNoneEffect {
-  effectKey: 'none';
+  /**
+   * Name of effect to remove video background effect
+   */
+  effectName: 'none';
 }
 
 /* @conditional-compile-remove(video-background-effects) */
@@ -280,7 +283,10 @@ export interface VideoBackgroundNoneEffect {
  * @beta
  */
 export interface VideoBackgroundBlurEffect {
-  effectKey: 'blur';
+  /**
+   * Name of effect to blur video background effect
+   */
+  effectName: 'blur';
 }
 
 /* @conditional-compile-remove(video-background-effects) */
@@ -290,7 +296,17 @@ export interface VideoBackgroundBlurEffect {
  * @beta
  */
 export interface VideoBackgroundReplacementEffect {
+  /**
+   * Name of effect to replace video background effect
+   */
+  effectName: 'replacement';
+  /**
+   * key for unique identification of the custom background
+   */
   effectKey: string;
+  /**
+   * URL of the custom background image.
+   */
   backgroundImageUrl: string;
 }
 
