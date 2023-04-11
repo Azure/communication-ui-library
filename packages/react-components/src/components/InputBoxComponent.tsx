@@ -304,6 +304,8 @@ type ParsedTag = {
   htmlCloseTagStartIndex?: number; // Might not have a close tag
   closeTagLength?: number; // Might not have a close tag
   content?: string; // Might not have content if close tag is missed
+  subTags?: ParsedTag[]; // Tags can contain other tags
+  postContent?: string; // Might have content after the sub tags
 };
 
 /**
@@ -316,14 +318,19 @@ type ParsedTag = {
 const parseStringForMentions = (text: string, trigger: string): ParsedTag[] => {
   let index = 0;
   let tags: ParsedTag[] = [];
-  let previousLetter = '';
   let currentOpenTagIndex = -1;
   let currentTagStack: ParsedTag[] = [];
 
+  // TODO:
+  // Need to work recursively to handle nested tags
+  // Look for first open tag
+  // Look for corresponding close tag in reverse
+  // Push the tag onto the stack, then recurse into the content
   while (index < text.length) {
     const letter = text[index];
     if (letter == '<') {
       if (currentOpenTagIndex === -1) {
+        console.log('Found a < at ' + index);
         // This is the start of a tag
         currentOpenTagIndex = index;
       } else {
@@ -336,31 +343,39 @@ const parseStringForMentions = (text: string, trigger: string): ParsedTag[] => {
         break;
       } else {
         // This is the end of a tag
+        console.log('Found a > at ' + index);
         const tagBody = text.slice(currentOpenTagIndex + 1, index);
         console.log('Tag body is ' + tagBody);
 
         if (tagBody[tagBody.length - 1] === '/') {
+          console.log("It's a self closing tag");
           // It's a self closing tag)
         } else if (tagBody[0] === '/') {
           // It's a close tag
+          console.log("It's a close tag");
           let currentTag = currentTagStack.pop();
           if (currentTag) {
+            // TODO: Check that the tag type matches
+            if (currentTag.tagType !== tagBody.slice(1)) {
+              console.error('Tag types do not match!');
+            }
+
             currentTag.htmlCloseTagStartIndex = currentOpenTagIndex;
             currentTag.closeTagLength = index - currentOpenTagIndex + 1;
             currentTag.content = text.slice(
               currentTag.htmlOpenTagStartIndex + currentTag.openTagLength,
               currentOpenTagIndex
             );
-            console.log(currentTag.content);
+            console.log('content is ' + currentTag.content);
             currentTag = undefined;
           } else {
             console.error('Should have an existing tag to complete!');
           }
         } else {
+          console.log("It's an open tag");
           // It's the end of an open tag
           const tagElements = tagBody.split(' ');
           const tagType = tagElements[0];
-          console.log(tagElements);
 
           let currentTag: ParsedTag = {
             htmlOpenTagStartIndex: currentOpenTagIndex,
@@ -370,18 +385,16 @@ const parseStringForMentions = (text: string, trigger: string): ParsedTag[] => {
           currentTagStack.push(currentTag);
           tags.push(currentTag);
           console.log('pushed new tag to stack: ' + currentTag.tagType);
-          console.log(currentTagStack);
         }
         currentOpenTagIndex = -1;
       }
     }
 
-    previousLetter = letter;
     index++;
   }
 
   const plainText = plainTextFromParsedTags(text, tags, trigger);
-  console.log('plainText: ' + plainText);
+  // console.log('plainText: ' + plainText);
   return tags;
 };
 
@@ -396,11 +409,11 @@ const plainTextFromParsedTags = (textBlock: string, tags: ParsedTag[], trigger: 
   }
   let text = '';
   for (const tag of tags) {
-    console.log(tag.tagType);
+    // console.log(tag.tagType);
     if (tag.tagType === 'msft-at-mention') {
       text += trigger;
     }
-    console.log('tag content: ' + tag.content);
+    // console.log('tag content: ' + tag.content);
     text += tag.content;
   }
   return text;
