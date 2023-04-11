@@ -9,9 +9,7 @@ import {
   DevicesButton,
   ParticipantList,
   ScreenShareButton,
-  VideoGallery,
-  _CaptionsBanner,
-  _CaptionsSettingModal
+  VideoGallery
 } from '@internal/react-components';
 /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
 import { Dialpad } from '@internal/react-components';
@@ -40,14 +38,6 @@ import { AreEqual } from '@internal/acs-ui-common';
 import { ParticipantsButton } from '@internal/react-components';
 import { ErrorBarSelector, errorBarSelector } from '../errorBarSelector';
 import { CommonCallingHandlers } from '../handlers/createCommonHandlers';
-import {
-  captionsSelector,
-  changeSpokenLanguageSelector,
-  startCaptionsButtonSelector,
-  _CaptionsSelector,
-  _StartCaptionsButtonSelector,
-  _ChangeSpokenLanguageSelector
-} from '../captionsSelector';
 
 /**
  * Primary hook to get all hooks necessary for a calling Component.
@@ -122,12 +112,6 @@ export type GetSelector<Component extends (props: any) => JSX.Element | undefine
   ? /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */ EmptySelector
   : AreEqual<Component, typeof HoldButton> extends true
   ? /* @conditional-compile-remove(PSTN-calls) */ HoldButtonSelector
-  : AreEqual<Component, typeof _CaptionsBanner> extends true
-  ? _CaptionsSelector
-  : AreEqual<Component, typeof _StartCaptionsButton> extends true
-  ? _StartCaptionsButtonSelector
-  : AreEqual<Component, typeof _CaptionsSettingModal> extends true
-  ? _ChangeSpokenLanguageSelector
   : undefined;
 
 /**
@@ -175,12 +159,6 @@ const findSelector = (component: (props: any) => JSX.Element | undefined): any =
       return emptySelector;
     case ErrorBar:
       return errorBarSelector;
-    case _CaptionsBanner:
-      return captionsSelector;
-    case _StartCaptionsButton:
-      return startCaptionsButtonSelector;
-    case _CaptionsSettingModal:
-      return changeSpokenLanguageSelector;
   }
   return undefined;
 };

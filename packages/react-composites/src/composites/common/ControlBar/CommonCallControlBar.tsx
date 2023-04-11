@@ -31,6 +31,7 @@ import { isDisabled } from '../../CallComposite/utils';
 import { HiddenFocusStartPoint } from '../HiddenFocusStartPoint';
 import { CallWithChatControlOptions } from '../../CallWithChatComposite';
 import { CommonCallControlOptions } from '../types/CommonCallControlOptions';
+/* @conditional-compile-remove(close-captions) */
 import { CaptionsSettingModal } from '../CaptionsSettingModal';
 
 /**
@@ -53,6 +54,7 @@ export interface CommonCallControlBarProps {
   /* @conditional-compile-remove(video-background-effects) */
   onShowVideoEffectsPicker?: (showVideoEffectsOptions: boolean) => void;
   rtl?: boolean;
+  /* @conditional-compile-remove(close-captions) */
   isCaptionsSupported?: boolean;
 }
 
@@ -98,6 +100,7 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
   const callWithChatStrings = useCallWithChatCompositeStrings();
   const options = inferCommonCallControlOptions(props.mobileView, props.callControls);
 
+  /* @conditional-compile-remove(close-captions) */
   const [showCaptionsSettingModal, setShowCaptionsSettingModal] = useState(false);
 
   const handleResize = useCallback((): void => {
@@ -132,6 +135,15 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
   useEffect(() => {
     setIsOutOfSpace(totalButtonsWidth > controlBarContainerWidth);
   }, [totalButtonsWidth, controlBarContainerWidth]);
+
+  /* @conditional-compile-remove(close-captions) */
+  const openCaptionsSettingModal = useCallback((): void => {
+    setShowCaptionsSettingModal(true);
+  }, []);
+  /* @conditional-compile-remove(close-captions) */
+  const onDismissCaptionsSetting = useCallback((): void => {
+    setShowCaptionsSettingModal(false);
+  }, []);
 
   const chatButtonStrings = useMemo(
     () => ({
@@ -232,12 +244,16 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
 
   return (
     <div ref={controlBarSizeRef}>
-      {showCaptionsSettingModal && (
-        <CaptionsSettingModal
-          showCaptionsSettingModal={showCaptionsSettingModal}
-          onDismissCaptionsSetting={onDismissCaptionsSetting}
-        />
-      )}
+      <CallAdapterProvider adapter={props.callAdapter}>
+        {
+          /* @conditional-compile-remove(close-captions) */ showCaptionsSettingModal && (
+            <CaptionsSettingModal
+              showCaptionsSettingModal={showCaptionsSettingModal}
+              onDismissCaptionsSetting={onDismissCaptionsSetting}
+            />
+          )
+        }
+      </CallAdapterProvider>
       <Stack
         horizontal
         reversed={!props.mobileView && !isOutOfSpace}
@@ -318,7 +334,7 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                     }
                     {props.mobileView && (
                       <MoreButton
-                        data-ui-id="call-with-chat-composite-more-button"
+                        data-ui-id="common-call-composite-more-button"
                         strings={moreButtonStrings}
                         onClick={props.onMoreButtonClicked}
                         disabled={props.disableButtonsForLobbyPage}
@@ -338,7 +354,9 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                             onClickShowDialpad={props.onClickShowDialpad}
                             /* @conditional-compile-remove(control-bar-button-injection) */
                             callControls={props.callControls}
+                            /* @conditional-compile-remove(close-captions) */
                             isCaptionsSupported={props.isCaptionsSupported}
+                            /* @conditional-compile-remove(close-captions) */
                             onCaptionsSettingsClick={openCaptionsSettingModal}
                           />
                         )
@@ -374,7 +392,7 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                     ariaLabel={peopleButtonStrings?.label}
                     showLabel={options.displayType !== 'compact'}
                     onClick={props.onPeopleButtonClicked}
-                    data-ui-id="call-with-chat-composite-people-button"
+                    data-ui-id="common-call-composite-people-button"
                     disabled={props.disableButtonsForLobbyPage || isDisabled(options.peopleButton)}
                     strings={peopleButtonStrings}
                     styles={commonButtonStyles}

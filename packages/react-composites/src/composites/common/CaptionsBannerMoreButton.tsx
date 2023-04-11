@@ -1,14 +1,25 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-
-import { IContextualMenuItem } from '@fluentui/react';
-import { ControlBarButtonProps, _StartCaptionsButton } from '@internal/react-components';
 import React from 'react';
+import { ControlBarButtonProps } from '@internal/react-components';
+/* @conditional-compile-remove(close-captions) */
+import { IContextualMenuItem } from '@fluentui/react';
+/* @conditional-compile-remove(close-captions) */
+import { _StartCaptionsButton } from '@internal/react-components';
+/* @conditional-compile-remove(close-captions) */
 import { useMemo } from 'react';
-import { usePropsFor } from '../CallComposite/hooks/usePropsFor';
+/* @conditional-compile-remove(close-captions) */
+import { useAdaptedSelector } from '../CallComposite/hooks/useAdaptedSelector';
+/* @conditional-compile-remove(close-captions) */
+import { useHandlers } from '../CallComposite/hooks/useHandlers';
+/* @conditional-compile-remove(close-captions) */
 import { buttonFlyoutIncreasedSizeStyles } from '../CallComposite/styles/Buttons.styles';
+/* @conditional-compile-remove(close-captions) */
 import { useLocale } from '../localization';
+/* @conditional-compile-remove(close-captions) */
 import { MoreButton } from './MoreButton';
+/* @conditional-compile-remove(close-captions) */
+import { _startCaptionsButtonSelector } from '@internal/calling-component-bindings';
 
 /** @private */
 export interface CaptionsBannerMoreButtonProps extends ControlBarButtonProps {
@@ -20,30 +31,33 @@ export interface CaptionsBannerMoreButtonProps extends ControlBarButtonProps {
  * @private
  */
 export const CaptionsBannerMoreButton = (props: CaptionsBannerMoreButtonProps): JSX.Element => {
+  /* @conditional-compile-remove(close-captions) */
   const localeStrings = useLocale();
-
-  const startCaptionsButtonProps = usePropsFor(_StartCaptionsButton);
-
+  /* @conditional-compile-remove(close-captions) */
+  const startCaptionsButtonProps = useAdaptedSelector(_startCaptionsButtonSelector);
+  /* @conditional-compile-remove(close-captions) */
+  const startCaptionsButtonHandlers = useHandlers(_StartCaptionsButton);
+  /* @conditional-compile-remove(close-captions) */
   const moreButtonStrings = useMemo(
     () => ({
-      label: localeStrings.strings.call.moreButtonCallingLabel,
-      tooltipOffContent: localeStrings.strings.callWithChat.moreDrawerButtonTooltip
+      label: localeStrings.strings.call.captionsBannerMoreButtonCallingLabel,
+      tooltipOffContent: localeStrings.strings.call.captionsBannerMoreButtonTooltip
     }),
     [localeStrings]
   );
-
+  /* @conditional-compile-remove(close-captions) */
   const moreButtonContextualMenuItems: IContextualMenuItem[] = [];
-
+  /* @conditional-compile-remove(close-captions) */
   moreButtonContextualMenuItems.push({
     key: 'ToggleCaptionsKey',
     text: startCaptionsButtonProps.checked
-      ? localeStrings.component.strings.startCaptionsButton.tooltipOnContent
-      : localeStrings.component.strings.startCaptionsButton.tooltipOffContent,
+      ? localeStrings.strings.call.startCaptionsButtonTooltipOnContent
+      : localeStrings.strings.call.startCaptionsButtonTooltipOffContent,
     onClick: () => {
       startCaptionsButtonProps.checked
-        ? startCaptionsButtonProps.onStopCaptions()
+        ? startCaptionsButtonHandlers.onStopCaptions()
         : startCaptionsButtonProps.currentSpokenLanguage
-        ? startCaptionsButtonProps.onStartCaptions({
+        ? startCaptionsButtonHandlers.onStartCaptions({
             spokenLanguage: startCaptionsButtonProps.currentSpokenLanguage
           })
         : props.onCaptionsSettingsClick && props.onCaptionsSettingsClick();
@@ -56,7 +70,7 @@ export const CaptionsBannerMoreButton = (props: CaptionsBannerMoreButtonProps): 
       styles: buttonFlyoutIncreasedSizeStyles
     }
   });
-
+  /* @conditional-compile-remove(close-captions) */
   if (props.onCaptionsSettingsClick) {
     moreButtonContextualMenuItems.push({
       key: 'openCaptionsSettingKey',
@@ -72,7 +86,7 @@ export const CaptionsBannerMoreButton = (props: CaptionsBannerMoreButtonProps): 
       disabled: !startCaptionsButtonProps.checked
     });
   }
-
+  /* @conditional-compile-remove(close-captions) */
   return (
     <MoreButton
       {...props}
@@ -82,4 +96,5 @@ export const CaptionsBannerMoreButton = (props: CaptionsBannerMoreButtonProps): 
       menuProps={{ items: moreButtonContextualMenuItems }}
     />
   );
+  return <></>;
 };

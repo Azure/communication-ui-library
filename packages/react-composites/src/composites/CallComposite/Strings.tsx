@@ -260,7 +260,7 @@ export interface CallCompositeStrings {
    * Aria Label for dialpad Modal close button
    */
   dialpadCloseModalButtonAriaLabel: string;
-  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(close-captions) */
   /**
    * label for more button in the Calling composite
    */
@@ -408,12 +408,79 @@ export interface CallCompositeStrings {
    * string to be used to announce when multiple unnamed participants have left at the same time.
    */
   manyUnnamedParticipantsLeft: string;
+  /* @conditional-compile-remove(close-captions) */
   /**
    * string to be used to open live captions contextual menu
    */
   liveCaptionsLabel: string;
+  /* @conditional-compile-remove(close-captions) */
   /**
    * label for opening captions setting modal
    */
   captionsSettingLabel: string;
+  /* @conditional-compile-remove(close-captions) */
+  /**
+   * string to be used to start captions
+   */
+  startCaptionsButtonOnLabel: string;
+  /* @conditional-compile-remove(close-captions) */
+  /**
+   * string to be used to stop captions
+   */
+  startCaptionsButtonOffLabel: string;
+  /* @conditional-compile-remove(close-captions) */
+  /**
+   * tooltip string to be used to show captions is on
+   */
+  startCaptionsButtonTooltipOnContent: string;
+  /* @conditional-compile-remove(close-captions) */
+  /**
+   *tooltip string to be used to show captions is off
+   */
+  startCaptionsButtonTooltipOffContent: string;
+  /* @conditional-compile-remove(close-captions) */
+  /**
+   * captions setting modal title
+   */
+  captionsSettingModalTitle: string;
+  /* @conditional-compile-remove(close-captions) */
+  /**
+   * label for dropdown inside captions setting modal
+   */
+  captionsSettingDropdownLabel: string;
+  /* @conditional-compile-remove(close-captions) */
+  /**
+   * text under captions setting dropdown indicating what the dropdown is for
+   */
+  captionsSettingDropdownInfoText: string;
+  /* @conditional-compile-remove(close-captions) */
+  /**
+   * confirm button label in captions setting modal
+   */
+  captionsSettingConfirmButtonLabel: string;
+  /* @conditional-compile-remove(close-captions) */
+  /**
+   * cancel button label in captions setting modal
+   */
+  captionsSettingCancelButtonLabel: string;
+  /* @conditional-compile-remove(close-captions) */
+  /**
+   * arial label for captions setting modal
+   */
+  captionsSettingModalAriaLabel: string;
+  /* @conditional-compile-remove(close-captions) */
+  /**
+   * arial label for captions setting modal close button
+   */
+  captionsSettingCloseModalButtonAriaLabel: string;
+  /* @conditional-compile-remove(close-captions) */
+  /**
+   * label for more button inside captions banner
+   */
+  captionsBannerMoreButtonCallingLabel: string;
+  /* @conditional-compile-remove(close-captions) */
+  /**
+   * arial label for more button inside captions banner
+   */
+  captionsBannerMoreButtonTooltip: string;
 }

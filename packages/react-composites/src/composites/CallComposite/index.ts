@@ -71,6 +71,8 @@ export type {
   MediaDiagnosticChangedEvent,
   NetworkDiagnosticChangedEvent,
   ParticipantsJoinedListener,
-  ParticipantsLeftListener,
-  CaptionsReceivedListener
+  ParticipantsLeftListener
 } from './adapter';
+
+/* @conditional-compile-remove(close-captions) */
+export type { CaptionsReceivedListener } from './adapter';
