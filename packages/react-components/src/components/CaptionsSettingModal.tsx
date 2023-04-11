@@ -77,19 +77,19 @@ export const _CaptionsSettingModal = (props: _CaptionsSettingModalProps): JSX.El
     text: currentSpokenLanguage !== '' ? currentSpokenLanguage : 'en-us'
   });
 
-  const onDismissTriggered = (): void => {
+  const dismiss = (): void => {
     if (onDismissCaptionsSetting) {
       onDismissCaptionsSetting();
     }
   };
 
-  const onClickConfirm = (language: string): void => {
+  const confirm = (language: string): void => {
     if (isCaptionsFeatureActive) {
       onSetSpokenLanguage(language);
     } else {
       onStartCaptions({ spokenLanguage: selectedItem.text });
     }
-    onDismissTriggered();
+    dismiss();
   };
 
   const dropdownOptions: IDropdownOption[] = supportedSpokenLanguages.map((language) => {
@@ -131,7 +131,7 @@ export const _CaptionsSettingModal = (props: _CaptionsSettingModalProps): JSX.El
         <Modal
           titleAriaId={strings?.captionsSettingModalAriaLabel}
           isOpen={showModal}
-          onDismiss={onDismissTriggered}
+          onDismiss={dismiss}
           isBlocking={true}
           styles={captionsSettingModalStyle}
         >
@@ -140,7 +140,7 @@ export const _CaptionsSettingModal = (props: _CaptionsSettingModalProps): JSX.El
             <IconButton
               iconProps={{ iconName: 'Cancel' }}
               ariaLabel={strings?.captionsSettingCloseModalButtonAriaLabel}
-              onClick={onDismissTriggered}
+              onClick={dismiss}
               style={{ color: theme.palette.black }}
             />
           </Stack>
@@ -150,12 +150,12 @@ export const _CaptionsSettingModal = (props: _CaptionsSettingModalProps): JSX.El
             <DefaultButton
               styles={buttonStyles(theme)}
               onClick={() => {
-                onClickConfirm(selectedItem.text);
+                confirm(selectedItem.text);
               }}
             >
               <span>{strings?.captionsSettingConfirmButtonLabel}</span>
             </DefaultButton>
-            <DefaultButton onClick={onDismissTriggered} styles={buttonStyles(theme)}>
+            <DefaultButton onClick={dismiss} styles={buttonStyles(theme)}>
               <span>{strings?.captionsSettingCancelButtonLabel}</span>
             </DefaultButton>
           </Stack>
