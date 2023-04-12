@@ -398,10 +398,12 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   };
   /* @conditional-compile-remove(teams-inline-images) */
   async downloadAuthenticatedAttachment(attachmentUrl: string): Promise<string> {
+    console.log('1111111111111111111111111111111111111111111111111111111111111111111111');
     if (this.chatAdapter.downloadAuthenticatedAttachment === undefined) {
+      console.log('BREAKKKKKKKKKKKK');
       return '';
     }
-
+    console.log('returnnnnnnnnnnnn');
     return await this.chatAdapter.downloadAuthenticatedAttachment(attachmentUrl);
   }
   /* @conditional-compile-remove(PSTN-calls) */

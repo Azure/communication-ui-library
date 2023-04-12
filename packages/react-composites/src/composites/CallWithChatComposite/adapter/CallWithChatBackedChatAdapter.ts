@@ -126,6 +126,15 @@ export class CallWithChatBackedChatAdapter implements ChatAdapter {
   public updateFileUploadMetadata = (id: string, metadata: FileMetadata): void => {
     this.callWithChatAdapter.updateFileUploadMetadata(id, metadata);
   };
+
+  /* @conditional-compile-remove(teams-inline-images) */
+  public async downloadAuthenticatedAttachment(attachmentUrl: string): Promise<string> {
+    if (!this.callWithChatAdapter.downloadAuthenticatedAttachment) {
+      return '';
+    }
+
+    return await this.callWithChatAdapter.downloadAuthenticatedAttachment(attachmentUrl);
+  }
 }
 
 function chatAdapterStateFromCallWithChatAdapterState(
