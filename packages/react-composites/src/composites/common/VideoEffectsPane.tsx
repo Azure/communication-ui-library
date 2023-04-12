@@ -83,29 +83,29 @@ export const VideoEffectsPane = (props: {
   const onEffectChange = useCallback(
     async (effectKey: string) => {
       if (effectKey === 'blur') {
-        props.adapter.blurVideoBackground();
         const blurEffect: VideoBackgroundBlurEffect = {
           effectName: effectKey
         };
         props.adapter.updateSelectedVideoBackgroundEffect(blurEffect);
+        await props.adapter.blurVideoBackground();
       } else if (effectKey === 'none') {
-        props.adapter.stopVideoBackgroundEffect();
         const noneEffect: VideoBackgroundNoneEffect = {
           effectName: effectKey
         };
         props.adapter.updateSelectedVideoBackgroundEffect(noneEffect);
+        await props.adapter.stopVideoBackgroundEffect();
       } else {
         const backgroundImg = selectableVideoEffects.find((effect) => {
           return effect.key === effectKey;
         });
         if (backgroundImg && backgroundImg.backgroundProps) {
-          props.adapter.replaceVideoBackground({ backgroundImageUrl: backgroundImg.backgroundProps.url });
           const replaceEffect: VideoBackgroundReplacementEffect = {
             effectName: 'replacement',
             effectKey,
             backgroundImageUrl: backgroundImg.backgroundProps.url
           };
           props.adapter.updateSelectedVideoBackgroundEffect(replaceEffect);
+          await props.adapter.replaceVideoBackground({ backgroundImageUrl: backgroundImg.backgroundProps.url });
         }
       }
     },
