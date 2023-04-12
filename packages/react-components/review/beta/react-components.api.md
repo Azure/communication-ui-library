@@ -64,6 +64,12 @@ export type AnnouncerProps = {
     ariaLive: 'off' | 'polite' | 'assertive' | undefined;
 };
 
+// @beta (undocumented)
+export interface AttachmentDownloadResult {
+    // (undocumented)
+    blobUrl: string;
+}
+
 // @public
 export interface BaseCustomStyles {
     root?: IStyle;
@@ -1287,6 +1293,7 @@ export type MessageThreadProps = {
     onLoadPreviousChatMessages?: (messagesToLoad: number) => Promise<boolean>;
     onRenderMessage?: (messageProps: MessageProps, messageRenderer?: MessageRenderer) => JSX.Element;
     onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
+    onFetchAttachments?: (attachment: FileMetadata) => Promise<AttachmentDownloadResult>;
     onUpdateMessage?: UpdateMessageCallback;
     onCancelMessageEdit?: CancelEditCallback;
     onDeleteMessage?: (messageId: string) => Promise<void>;

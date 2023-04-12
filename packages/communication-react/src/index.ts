@@ -262,7 +262,8 @@ export type {
   SendBoxErrorBarError,
   FileDownloadHandler,
   FileDownloadError,
-  FileMetadata
+  FileMetadata,
+  AttachmentDownloadResult
 } from '../../react-components/src';
 /* @conditional-compile-remove(teams-inline-images) */
 export type { FileMetadataAttachmentType } from '../../react-components/src';

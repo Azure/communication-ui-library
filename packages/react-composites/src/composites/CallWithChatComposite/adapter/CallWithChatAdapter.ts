@@ -50,7 +50,7 @@ import { CaptionsReceivedListener } from '../../CallComposite/adapter/CallAdapte
 /* @conditional-compile-remove(video-background-effects) */
 import { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/communication-calling-effects';
 /* @conditional-compile-remove(video-background-effects) */
-import { VideoBackgroundImage } from '../../CallComposite';
+import { VideoBackgroundImage, SelectedVideoBackgroundEffect } from '../../CallComposite';
 
 /**
  * Functionality for managing the current call with chat.
@@ -402,6 +402,13 @@ export interface CallWithChatAdapterManagement {
    * @beta
    */
   updateBackgroundPickerImages(backgroundImages: VideoBackgroundImage[]): void;
+  /* @conditional-compile-remove(video-background-effects) */
+  /**
+   * Update the selected video background effect
+   *
+   * @beta
+   */
+  updateSelectedVideoBackgroundEffect(selectedVideoBackground: SelectedVideoBackgroundEffect): void;
 }
 
 /**

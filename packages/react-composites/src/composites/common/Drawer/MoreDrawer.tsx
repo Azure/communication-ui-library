@@ -248,6 +248,7 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
       text: localeStrings.component.strings.holdButton.tooltipOffContent,
       onItemClick: () => {
         holdButtonProps.onToggleHold();
+        onLightDismiss();
       },
       iconProps: { iconName: 'HoldCallContextualMenuItem', styles: { root: { lineHeight: 0 } } }
     });
