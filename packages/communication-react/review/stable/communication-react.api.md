@@ -344,6 +344,8 @@ export type CallCompositeIcons = {
     ErrorBarClear?: JSX.Element;
     HorizontalGalleryLeftButton?: JSX.Element;
     HorizontalGalleryRightButton?: JSX.Element;
+    LobbyScreenConnectingToCall?: JSX.Element;
+    LobbyScreenWaitingToBeAdmitted?: JSX.Element;
     LocalDeviceSettingsCamera?: JSX.Element;
     LocalDeviceSettingsMic?: JSX.Element;
     LocalDeviceSettingsSpeaker?: JSX.Element;
@@ -715,6 +717,8 @@ export type CallWithChatCompositeIcons = {
     ErrorBarClear?: JSX.Element;
     HorizontalGalleryLeftButton?: JSX.Element;
     HorizontalGalleryRightButton?: JSX.Element;
+    LobbyScreenConnectingToCall?: JSX.Element;
+    LobbyScreenWaitingToBeAdmitted?: JSX.Element;
     LocalDeviceSettingsCamera?: JSX.Element;
     LocalDeviceSettingsMic?: JSX.Element;
     LocalDeviceSettingsSpeaker?: JSX.Element;
@@ -1484,6 +1488,8 @@ export const DEFAULT_COMPOSITE_ICONS: {
     ErrorBarClear: JSX.Element;
     HorizontalGalleryLeftButton: JSX.Element;
     HorizontalGalleryRightButton: JSX.Element;
+    LobbyScreenConnectingToCall?: JSX.Element | undefined;
+    LobbyScreenWaitingToBeAdmitted?: JSX.Element | undefined;
     LocalDeviceSettingsCamera?: JSX.Element | undefined;
     LocalDeviceSettingsMic?: JSX.Element | undefined;
     LocalDeviceSettingsSpeaker?: JSX.Element | undefined;

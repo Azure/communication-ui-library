@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import { mergeStyles, Spinner, SpinnerSize, Stack, Text } from '@fluentui/react';
+import { mergeStyles, Stack, Text } from '@fluentui/react';
 import { VideoGalleryStream, useTheme } from '@internal/react-components';
 import { moreDetailsStyle, overlayContainerStyle, titleStyle } from '../styles/LobbyTile.styles';
 import { ExpandedLocalVideoTile } from './ExpandedLocalVideoTile';
@@ -48,8 +48,15 @@ export const LobbyTile = (props: LobbyTileProps): JSX.Element => {
             aria-atomic
           >
             <Stack.Item className={mergeStyles(titleStyle(palette, isVideoReady))}>
-              <Spinner size={SpinnerSize.large} label={props.overlayProps.title}></Spinner>
+              {props.overlayProps.overlayIcon}
             </Stack.Item>
+            <Text
+              className={mergeStyles(titleStyle(palette, isVideoReady))}
+              aria-live="assertive"
+              data-ui-id="lobbyScreenTitle"
+            >
+              {props.overlayProps.title}
+            </Text>
             {props.overlayProps.moreDetails && (
               <Text className={mergeStyles(moreDetailsStyle(palette, isVideoReady))} aria-live="assertive">
                 {props.overlayProps.moreDetails}

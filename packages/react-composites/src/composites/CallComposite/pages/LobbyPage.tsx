@@ -13,6 +13,7 @@ import { disableCallControls, reduceCallControlsForMobile } from '../utils';
 import { CallCompositeStrings } from '../Strings';
 import { useLocale } from '../../localization';
 import { useLocalVideoStartTrigger } from '../components/MediaGallery';
+import { CallCompositeIcon } from '../../common/icons';
 import { isPhoneNumberIdentifier, PhoneNumberIdentifier } from '@azure/communication-common';
 import { RemoteParticipantState } from '@internal/calling-stateful-client';
 
@@ -98,12 +99,14 @@ const overlayProps = (
 
 const overlayPropsConnectingToCall = (strings: CallCompositeStrings): LobbyOverlayProps => ({
   title: strings.lobbyScreenConnectingToCallTitle,
-  moreDetails: strings.lobbyScreenConnectingToCallMoreDetails
+  moreDetails: strings.lobbyScreenConnectingToCallMoreDetails,
+  overlayIcon: <CallCompositeIcon iconName="LobbyScreenConnectingToCall" />
 });
 
 const overlayPropsWaitingToBeAdmitted = (strings: CallCompositeStrings): LobbyOverlayProps => ({
   title: strings.lobbyScreenWaitingToBeAdmittedTitle,
-  moreDetails: strings.lobbyScreenWaitingToBeAdmittedMoreDetails
+  moreDetails: strings.lobbyScreenWaitingToBeAdmittedMoreDetails,
+  overlayIcon: <CallCompositeIcon iconName="LobbyScreenWaitingToBeAdmitted" />
 });
 
 const overlayPropsOutboundCall = (

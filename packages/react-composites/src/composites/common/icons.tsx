@@ -24,11 +24,24 @@ import { PersonAdd20Regular, Dialpad20Regular, Call20Regular } from '@fluentui/r
 import { DEFAULT_COMPONENT_ICONS } from '@internal/react-components';
 import React from 'react';
 // eslint-disable-next-line no-restricted-imports
-import { FontIcon, IIconProps } from '@fluentui/react';
+import { FontIcon, IIconProps, mergeStyles, Text } from '@fluentui/react';
 /* @conditional-compile-remove(file-sharing) */
 import { Attach20Regular } from '@fluentui/react-icons';
 /* @conditional-compile-remove(video-background-effects) */
 import { VideoBackgroundEffect20Regular, VideoPerson20Filled } from '@fluentui/react-icons';
+
+const CoffeeIcon = (): JSX.Element => (
+  <Text className={mergeStyles(coffeeIconStyle)} aria-hidden={true}>
+    ☕
+  </Text>
+);
+
+const coffeeIconStyle = {
+  // Fluent wraps all icons with <i> so we must force the fontStyle back to normal.
+  fontStyle: 'normal',
+  // By default our icons are 20px x 20px (for 1rem = 16px), make this a bit bigger for lobby.
+  fontSize: '2rem'
+};
 
 /**
  * The default set of icons used by the composites directly (i.e. not via the components defined in this library).
@@ -38,6 +51,8 @@ import { VideoBackgroundEffect20Regular, VideoPerson20Filled } from '@fluentui/r
 export const COMPOSITE_ONLY_ICONS: CompositeIcons = {
   ChevronLeft: undefined,
   Link: undefined,
+  LobbyScreenConnectingToCall: <CoffeeIcon />,
+  LobbyScreenWaitingToBeAdmitted: <CoffeeIcon />,
   LocalDeviceSettingsCamera: <Video20Filled />,
   LocalDeviceSettingsMic: <Mic20Filled />,
   LocalDeviceSettingsSpeaker: <Speaker220Filled />,
@@ -149,6 +164,8 @@ export type CallCompositeIcons = {
   ErrorBarClear?: JSX.Element;
   HorizontalGalleryLeftButton?: JSX.Element;
   HorizontalGalleryRightButton?: JSX.Element;
+  LobbyScreenConnectingToCall?: JSX.Element;
+  LobbyScreenWaitingToBeAdmitted?: JSX.Element;
   LocalDeviceSettingsCamera?: JSX.Element;
   LocalDeviceSettingsMic?: JSX.Element;
   LocalDeviceSettingsSpeaker?: JSX.Element;
@@ -234,6 +251,8 @@ export type CallWithChatCompositeIcons = {
   ErrorBarClear?: JSX.Element;
   HorizontalGalleryLeftButton?: JSX.Element;
   HorizontalGalleryRightButton?: JSX.Element;
+  LobbyScreenConnectingToCall?: JSX.Element;
+  LobbyScreenWaitingToBeAdmitted?: JSX.Element;
   LocalDeviceSettingsCamera?: JSX.Element;
   LocalDeviceSettingsMic?: JSX.Element;
   LocalDeviceSettingsSpeaker?: JSX.Element;
