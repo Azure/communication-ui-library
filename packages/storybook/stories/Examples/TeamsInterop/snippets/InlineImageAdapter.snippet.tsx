@@ -17,7 +17,7 @@ interface ChatScreenProps {
   endChatHandler(isParticipantRemoved: boolean): void;
 }
 
-const ChatScreen = (props: ChatScreenProps): JSX.Element => {
+export const InlineImageCompositeExample = (props: ChatScreenProps): JSX.Element => {
   const { displayName, endpointUrl, threadId, token, userId } = props;
 
   const adapterAfterCreate = useCallback(async (adapter: ChatAdapter): Promise<ChatAdapter> => {
