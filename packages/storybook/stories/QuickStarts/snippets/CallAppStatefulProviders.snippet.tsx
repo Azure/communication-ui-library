@@ -38,10 +38,10 @@ function App(): JSX.Element {
 
   useEffect(() => {
     if (callAgent === undefined && statefulCallClient) {
-      const createUserAgent = async (): Promise<void> => {
+      const createCallAgent = async (): Promise<void> => {
         setCallAgent(await statefulCallClient.createCallAgent(tokenCredential, { displayName: displayName }));
       };
-      createUserAgent();
+      createCallAgent();
     }
   }, [callAgent, statefulCallClient, tokenCredential, displayName]);
 
