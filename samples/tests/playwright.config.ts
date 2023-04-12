@@ -36,7 +36,7 @@ const config: PlaywrightTestConfig = {
             '--mute-audio'
           ]
         },
-        // using chromium useragent from windows to avoid breaking the unsupportedBrowser page
+        // Using chromium useragent with a very high version to avoid breaking the unsupportedBrowser page
         contextOptions: {
           userAgent: 'Windows Chrome/999.0.0.0'
         }

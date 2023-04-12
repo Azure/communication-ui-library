@@ -52,6 +52,10 @@ const LOCAL_REPORTERS: ReporterDescription[] = [['list']];
 const SECOND = 1000;
 const MINUTE = 60 * SECOND;
 
+// Using chromium useragent with a very high version to avoid breaking the unsupportedBrowser page
+const DESKTOP_USER_AGENT = 'Windows Chrome/999.0.0.0';
+const ANDROID_USER_AGENT = 'Android 99 Chrome/999.0.0.0 Mobile';
+
 const config: PlaywrightTestConfig = {
   outputDir: outputDir,
   // Extend per-test timeout for local debugging so that developers can single-step through
@@ -74,7 +78,7 @@ const config: PlaywrightTestConfig = {
         viewport: DESKTOP_4_TO_3_VIEWPORT,
         launchOptions: { ...chromeLaunchOptions },
         contextOptions: {
-          userAgent: 'Windows Chrome/999.0.0.0'
+          userAgent: DESKTOP_USER_AGENT
         }
       }
     },
@@ -84,7 +88,7 @@ const config: PlaywrightTestConfig = {
         viewport: DESKTOP_16_TO_9_VIEWPORT,
         launchOptions: { ...chromeLaunchOptions },
         contextOptions: {
-          userAgent: 'Windows Chrome/999.0.0.0'
+          userAgent: DESKTOP_USER_AGENT
         }
       },
       testMatch: ['OverflowGallery.test.ts']
@@ -94,13 +98,13 @@ const config: PlaywrightTestConfig = {
       use: {
         ...devices['Nexus 5'],
         launchOptions: { ...chromeLaunchOptions },
-        userAgent: 'Android 99 Chrome/999.0.0.0 Mobile'
+        userAgent: ANDROID_USER_AGENT
       }
     },
     {
       name: 'Mobile Android Landscape',
       use: {
-        userAgent: 'Android 99 Chrome/999.0.0.0 Mobile',
+        userAgent: ANDROID_USER_AGENT,
         // Support smallest supported mobile viewport (iPhone 5/SE) ({ width: 568, height: 320 })
         viewport: { width: 568, height: 320 },
         deviceScaleFactor: 2,
