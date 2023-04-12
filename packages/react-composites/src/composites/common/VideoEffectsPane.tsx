@@ -18,6 +18,8 @@ import {
   VideoBackgroundReplacementEffect
 } from '../CallComposite';
 import { CallAdapter, CommonCallAdapter } from '../CallComposite';
+import { activeVideoBackgroundEffectSelector } from '../CallComposite/selectors/activeVideoBackgroundEffectSelector';
+import { useSelector } from '../CallComposite/hooks/useSelector';
 
 /**
  * Pane that is used to show video effects button
@@ -34,6 +36,7 @@ export const VideoEffectsPane = (props: {
   const locale = useLocale();
   /* @conditional-compile-remove(video-background-effects) */
   const strings = locale.strings.call;
+  const selectedEffect = useSelector(activeVideoBackgroundEffectSelector);
   /* @conditional-compile-remove(video-background-effects) */
   const selectableVideoEffects: _VideoEffectsItemProps[] = useMemo(() => {
     const videoEffects: _VideoEffectsItemProps[] = [
@@ -114,7 +117,9 @@ export const VideoEffectsPane = (props: {
     /* @conditional-compile-remove(video-background-effects) */
     selectableVideoEffects,
     /* @conditional-compile-remove(video-background-effects) */
-    onEffectChange
+    onEffectChange,
+    /* @conditional-compile-remove(video-background-effects) */
+    selectedEffect
   );
 };
 
@@ -122,10 +127,21 @@ const VideoEffectsPaneTrampoline = (
   showVideoEffectsOptions: boolean,
   setshowVideoEffectsOptions: (showVideoEffectsOptions: boolean) => void,
   selectableVideoEffects?: _VideoEffectsItemProps[],
-  onEffectChange?: (effectKey: string) => Promise<void>
+  onEffectChange?: (effectKey: string) => Promise<void>,
+  selectedEffect?: string
 ): JSX.Element => {
   /* @conditional-compile-remove(video-background-effects) */
   const locale = useLocale();
+  /* @conditional-compile-remove(video-background-effects) */
+  const videoEffectsPicker = useMemo(() => {
+    return (
+      <_VideoBackgroundEffectsPicker
+        options={selectableVideoEffects ?? []}
+        onChange={onEffectChange}
+        selectedEffectKey={selectedEffect}
+      ></_VideoBackgroundEffectsPicker>
+    );
+  }, [onEffectChange, selectableVideoEffects, selectedEffect]);
   /* @conditional-compile-remove(video-background-effects) */
   return (
     <Panel
@@ -136,12 +152,7 @@ const VideoEffectsPaneTrampoline = (
       closeButtonAriaLabel="Close"
       isLightDismiss={true}
     >
-      {selectableVideoEffects && (
-        <_VideoBackgroundEffectsPicker
-          options={selectableVideoEffects}
-          onChange={onEffectChange}
-        ></_VideoBackgroundEffectsPicker>
-      )}
+      {selectableVideoEffects && videoEffectsPicker}
     </Panel>
   );
   return <></>;
