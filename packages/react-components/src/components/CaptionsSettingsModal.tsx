@@ -88,18 +88,20 @@ export const _CaptionsSettingsModal = (props: _CaptionsSettingsModalProps): JSX.
     }
   };
 
-  const confirm = (language: string): void => {
+  const confirm = (languageCode: string): void => {
     if (isCaptionsFeatureActive) {
-      onSetSpokenLanguage(language);
+      onSetSpokenLanguage(languageCode);
     } else {
-      onStartCaptions({ spokenLanguage: language });
+      onStartCaptions({ spokenLanguage: languageCode });
     }
     dismiss();
   };
 
-  const dropdownOptions: IDropdownOption[] = supportedSpokenLanguages.map((language) => {
-    return { key: language, text: captionsAvailableLanguageStrings[language] ?? language };
-  });
+  const dropdownOptions: IDropdownOption[] = useMemo(() => {
+    return supportedSpokenLanguages.map((languageCode) => {
+      return { key: languageCode, text: captionsAvailableLanguageStrings[languageCode] ?? languageCode };
+    });
+  }, [supportedSpokenLanguages, captionsAvailableLanguageStrings]);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onChange = (event: React.FormEvent<HTMLDivElement>, option: IDropdownOption<any> | undefined): void => {
