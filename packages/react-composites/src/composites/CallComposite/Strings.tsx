@@ -1,6 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+/* @conditional-compile-remove(close-captions) */
+import { CaptionsAvailableLanguageStrings } from '@internal/react-components';
+
 /**
  * Strings used by the {@link CallComposite} directly.
  *
@@ -483,4 +486,9 @@ export interface CallCompositeStrings {
    * arial label for more button inside captions banner
    */
   captionsBannerMoreButtonTooltip: string;
+  /* @conditional-compile-remove(close-captions) */
+  /**
+   * list of key value pairs that pairs language code to language names
+   */
+  captionsAvailableLanguageStrings: CaptionsAvailableLanguageStrings;
 }

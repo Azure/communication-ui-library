@@ -3,9 +3,11 @@
 
 import React from 'react';
 /* @conditional-compile-remove(close-captions) */
+import { useMemo, useCallback } from 'react';
+/* @conditional-compile-remove(close-captions) */
 import { useTheme } from '@internal/react-components';
 /* @conditional-compile-remove(close-captions) */
-import { _CaptionsSettingsModal } from '@internal/react-components';
+import { _CaptionsSettingsModal, CaptionsAvailableLanguageStrings } from '@internal/react-components';
 /* @conditional-compile-remove(close-captions) */
 import { _changeSpokenLanguageSelector } from '@internal/calling-component-bindings';
 /* @conditional-compile-remove(close-captions) */
@@ -37,6 +39,7 @@ export const SpokenLanguageDrawer = (props: {
   /* @conditional-compile-remove(close-captions) */ currentSpokenLanguage: string;
   /* @conditional-compile-remove(close-captions) */ onLightDismiss: () => void;
   /* @conditional-compile-remove(close-captions) */ strings: SpokenLanguageDrawerStrings;
+  /* @conditional-compile-remove(close-captions) */ supportedLanguageStrings: CaptionsAvailableLanguageStrings;
 }): JSX.Element => {
   /* @conditional-compile-remove(close-captions) */
   const theme = useTheme();
@@ -47,15 +50,27 @@ export const SpokenLanguageDrawer = (props: {
   const changeSpokenLanguageHandlers = useHandlers(_CaptionsSettingsModal);
 
   /* @conditional-compile-remove(close-captions) */
-  const spokenLanguageDrawerItems: DrawerMenuItemProps[] | undefined =
-    changeSpokenLanguageProps?.supportedSpokenLanguages?.map((language) => ({
-      itemKey: language,
-      text: language,
-      onItemClick: () => {
-        props.setCurrentSpokenLanguage(language);
-      },
-      secondaryIconProps: props.currentSpokenLanguage === language ? { iconName: 'Accept' } : undefined
+  const onSpokenLanguageDrawerItemClick = useCallback(
+    (languageCode: string) => {
+      props.setCurrentSpokenLanguage(languageCode);
+    },
+    [props]
+  );
+
+  /* @conditional-compile-remove(close-captions) */
+  const spokenLanguageDrawerItems: DrawerMenuItemProps[] = useMemo(() => {
+    return changeSpokenLanguageProps?.supportedSpokenLanguages?.map((languageCode) => ({
+      itemKey: languageCode,
+      text: props.supportedLanguageStrings[languageCode] ?? languageCode,
+      onItemClick: () => onSpokenLanguageDrawerItemClick(languageCode),
+      secondaryIconProps: props.currentSpokenLanguage === languageCode ? { iconName: 'Accept' } : undefined
     }));
+  }, [
+    changeSpokenLanguageProps?.supportedSpokenLanguages,
+    props.currentSpokenLanguage,
+    props.supportedLanguageStrings,
+    onSpokenLanguageDrawerItemClick
+  ]);
 
   /* @conditional-compile-remove(close-captions) */
   return (

@@ -26,6 +26,8 @@ import {
 } from './styles/CaptionsSettingsModal.styles';
 import { _captionsOptions } from './StartCaptionsButton';
 import { defaultSpokenLanguage } from './utils';
+import { CaptionsAvailableLanguageStrings } from '../types';
+
 /**
  * @internal
  * strings for captions setting modal
@@ -49,6 +51,7 @@ export interface _CaptionsSettingsModalProps {
   onSetSpokenLanguage: (language: string) => Promise<void>;
   onStartCaptions: (captionsOptions?: _captionsOptions) => Promise<void>;
   currentSpokenLanguage: string;
+  captionsAvailableLanguageStrings: CaptionsAvailableLanguageStrings;
   isCaptionsFeatureActive?: boolean;
   strings?: _CaptionsSettingsModalStrings;
   showModal?: boolean;
@@ -68,7 +71,8 @@ export const _CaptionsSettingsModal = (props: _CaptionsSettingsModalProps): JSX.
     onSetSpokenLanguage,
     onDismissCaptionsSettings,
     onStartCaptions,
-    strings
+    strings,
+    captionsAvailableLanguageStrings
   } = props;
 
   const theme = useTheme();
@@ -84,21 +88,23 @@ export const _CaptionsSettingsModal = (props: _CaptionsSettingsModalProps): JSX.
     }
   };
 
-  const confirm = async (language: string): Promise<void> => {
+  const confirm = async (languageCode: string): Promise<void> => {
     if (isCaptionsFeatureActive) {
-      onSetSpokenLanguage(language);
+      onSetSpokenLanguage(languageCode);
     } else {
-      await onStartCaptions({ spokenLanguage: language });
+      await onStartCaptions({ spokenLanguage: languageCode });
       // set spoken language when start captions with a spoken language specified.
       // this is to fix the bug when a second user starts captions with a new spoken language, captions bot ignore that spoken language
-      onSetSpokenLanguage(language);
+      onSetSpokenLanguage(languageCode);
     }
     dismiss();
   };
 
-  const dropdownOptions: IDropdownOption[] = supportedSpokenLanguages.map((language) => {
-    return { key: language, text: language };
-  });
+  const dropdownOptions: IDropdownOption[] = useMemo(() => {
+    return supportedSpokenLanguages.map((languageCode) => {
+      return { key: languageCode, text: captionsAvailableLanguageStrings[languageCode] ?? languageCode };
+    });
+  }, [supportedSpokenLanguages, captionsAvailableLanguageStrings]);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onChange = (event: React.FormEvent<HTMLDivElement>, option: IDropdownOption<any> | undefined): void => {
@@ -153,7 +159,7 @@ export const _CaptionsSettingsModal = (props: _CaptionsSettingsModalProps): JSX.
             <DefaultButton
               styles={buttonStyles(theme)}
               onClick={() => {
-                confirm(selectedItem.text);
+                confirm(selectedItem.key.toString());
               }}
             >
               <span>{strings?.captionsSettingsConfirmButtonLabel}</span>
