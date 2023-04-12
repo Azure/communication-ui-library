@@ -272,16 +272,16 @@ export type _captionsOptions = {
 };
 
 // @internal
-export const _CaptionsSettingModal: (props: _CaptionsSettingModalProps) => JSX.Element;
+export const _CaptionsSettingsModal: (props: _CaptionsSettingsModalProps) => JSX.Element;
 
 // @internal
-export interface _CaptionsSettingModalProps {
+export interface _CaptionsSettingsModalProps {
     // (undocumented)
     currentSpokenLanguage: string;
     // (undocumented)
     isCaptionsFeatureActive?: boolean;
     // (undocumented)
-    onDismissCaptionsSetting?: () => void;
+    onDismissCaptionsSettings?: () => void;
     // (undocumented)
     onSetSpokenLanguage: (language: string) => Promise<void>;
     // (undocumented)
@@ -289,27 +289,27 @@ export interface _CaptionsSettingModalProps {
     // (undocumented)
     showModal?: boolean;
     // (undocumented)
-    strings?: _CaptionsSettingModalStrings;
+    strings?: _CaptionsSettingsModalStrings;
     // (undocumented)
     supportedSpokenLanguages: string[];
 }
 
 // @internal
-export interface _CaptionsSettingModalStrings {
+export interface _CaptionsSettingsModalStrings {
     // (undocumented)
-    captionsSettingCancelButtonLabel: string;
+    captionsSettingsCancelButtonLabel: string;
     // (undocumented)
-    captionsSettingCloseModalButtonAriaLabel: string;
+    captionsSettingsCloseModalButtonAriaLabel: string;
     // (undocumented)
-    captionsSettingConfirmButtonLabel: string;
+    captionsSettingsConfirmButtonLabel: string;
     // (undocumented)
-    captionsSettingDropdownInfoText: string;
+    captionsSettingsDropdownInfoText: string;
     // (undocumented)
-    captionsSettingDropdownLabel: string;
+    captionsSettingsDropdownLabel: string;
     // (undocumented)
-    captionsSettingModalAriaLabel: string;
+    captionsSettingsModalAriaLabel: string;
     // (undocumented)
-    captionsSettingModalTitle: string;
+    captionsSettingsModalTitle: string;
 }
 
 // @public
@@ -656,8 +656,8 @@ export const DEFAULT_COMPONENT_ICONS: {
     OptionsVideoBackgroundEffect: JSX.Element;
     CaptionsIcon: JSX.Element;
     CaptionsOffIcon: JSX.Element;
-    CaptionsSettingIcon: JSX.Element;
-    PersonIcon: JSX.Element;
+    CaptionsSettingsIcon: JSX.Element;
+    ChangeSpokenLanguageIcon: JSX.Element;
 };
 
 // @internal

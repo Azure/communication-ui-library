@@ -316,7 +316,7 @@ export const DEFAULT_COMPONENT_ICONS = {
   /* @conditional-compile-remove(close-captions) */
   CaptionsOffIcon: <ClosedCaptionOff20Regular />,
   /* @conditional-compile-remove(close-captions) */
-  CaptionsSettingIcon: <Settings20Regular />,
+  CaptionsSettingsIcon: <Settings20Regular />,
   /* @conditional-compile-remove(close-captions) */
-  PersonIcon: <PersonVoice20Regular />
+  ChangeSpokenLanguageIcon: <PersonVoice20Regular />
 };

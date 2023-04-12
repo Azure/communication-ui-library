@@ -378,14 +378,14 @@ export interface CallCompositeStrings {
     cameraTurnedOff: string;
     captionsBannerMoreButtonCallingLabel: string;
     captionsBannerMoreButtonTooltip: string;
-    captionsSettingCancelButtonLabel: string;
-    captionsSettingCloseModalButtonAriaLabel: string;
-    captionsSettingConfirmButtonLabel: string;
-    captionsSettingDropdownInfoText: string;
-    captionsSettingDropdownLabel: string;
-    captionsSettingLabel: string;
-    captionsSettingModalAriaLabel: string;
-    captionsSettingModalTitle: string;
+    captionsSettingsCancelButtonLabel: string;
+    captionsSettingsCloseModalButtonAriaLabel: string;
+    captionsSettingsConfirmButtonLabel: string;
+    captionsSettingsDropdownInfoText: string;
+    captionsSettingsDropdownLabel: string;
+    captionsSettingsLabel: string;
+    captionsSettingsModalAriaLabel: string;
+    captionsSettingsModalTitle: string;
     chatButtonLabel: string;
     close: string;
     complianceBannerNowOnlyRecording: string;
@@ -1221,8 +1221,8 @@ export const DEFAULT_COMPOSITE_ICONS: {
     OptionsVideoBackgroundEffect: JSX.Element;
     CaptionsIcon: JSX.Element;
     CaptionsOffIcon: JSX.Element;
-    CaptionsSettingIcon: JSX.Element;
-    PersonIcon: JSX.Element;
+    CaptionsSettingsIcon: JSX.Element;
+    ChangeSpokenLanguageIcon: JSX.Element;
 };
 
 // @beta

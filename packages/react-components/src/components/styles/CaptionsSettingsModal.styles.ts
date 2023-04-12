@@ -7,7 +7,7 @@ import { _pxToRem } from '@internal/acs-ui-common';
 /**
  * @private
  */
-export const themedCaptionsSettingModalStyle = (theme: Theme): Partial<IModalStyles> => ({
+export const themedCaptionsSettingsModalStyle = (theme: Theme): Partial<IModalStyles> => ({
   main: {
     borderRadius: theme.effects.roundedCorner6,
     padding: _pxToRem(24),
