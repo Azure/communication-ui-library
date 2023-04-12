@@ -201,9 +201,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     async (attachment: FileMetadata): Promise<AttachmentDownloadResult | undefined> => {
       if (adapter.downloadAuthenticatedAttachment && attachment.previewUrl) {
         const blob = await adapter.downloadAuthenticatedAttachment(attachment.previewUrl);
-        return {
-          blobUrl: blob
-        };
+        return blob;
       }
       return undefined;
     },

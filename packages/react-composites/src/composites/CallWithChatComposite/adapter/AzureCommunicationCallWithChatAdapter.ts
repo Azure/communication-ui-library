@@ -18,6 +18,8 @@ import {
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions, DtmfTone } from '@azure/communication-calling';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
+/* @conditional-compile-remove(teams-inline-images) */
+import { AttachmentDownloadResult } from '@internal/react-components';
 /* @conditional-compile-remove(file-sharing) */
 import { FileMetadata } from '@internal/react-components';
 import {
@@ -203,6 +205,8 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     this.updateFileUploadErrorMessage = this.updateFileUploadErrorMessage.bind(this);
     /* @conditional-compile-remove(file-sharing) */
     this.updateFileUploadMetadata = this.updateFileUploadMetadata.bind(this);
+    /* @conditional-compile-remove(teams-inline-images) */
+    this.downloadAuthenticatedAttachment = this.downloadAuthenticatedAttachment.bind(this);
     /* @conditional-compile-remove(PSTN-calls) */
     this.holdCall.bind(this);
     /* @conditional-compile-remove(PSTN-calls) */
@@ -394,6 +398,13 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   public updateFileUploadMetadata = (id: string, metadata: FileMetadata): void => {
     this.chatAdapter.updateFileUploadMetadata(id, metadata);
   };
+  /* @conditional-compile-remove(teams-inline-images) */
+  async downloadAuthenticatedAttachment(attachmentUrl: string): Promise<AttachmentDownloadResult> {
+    if (this.chatAdapter.downloadAuthenticatedAttachment === undefined) {
+      return { blobUrl: '' };
+    }
+    return await this.chatAdapter.downloadAuthenticatedAttachment(attachmentUrl);
+  }
   /* @conditional-compile-remove(PSTN-calls) */
   public async holdCall(): Promise<void> {
     return await this.callAdapter.holdCall();

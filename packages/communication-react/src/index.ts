@@ -257,9 +257,10 @@ export type {
   ActiveFileUpload,
   SendBoxErrorBarError,
   FileDownloadHandler,
-  FileDownloadError,
-  FileMetadata
+  FileDownloadError
 } from '../../react-components/src';
+/* @conditional-compile-remove(file-sharing) */ /* @conditional-compile-remove(teams-inline-images) */
+export type { FileMetadata } from '../../react-components/src';
 /* @conditional-compile-remove(teams-inline-images) */
 export type { FileMetadataAttachmentType, AttachmentDownloadResult } from '../../react-components/src';
 /* @conditional-compile-remove(PSTN-calls) */
