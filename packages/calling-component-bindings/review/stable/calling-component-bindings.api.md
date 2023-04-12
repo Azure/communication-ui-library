@@ -97,6 +97,11 @@ export type CameraButtonSelector = (state: CallClientState, props: CallingBaseSe
 // @public
 export const cameraButtonSelector: CameraButtonSelector;
 
+// @beta
+export type captionsOptions = {
+    spokenLanguage: string;
+};
+
 // @public
 export interface CommonCallingHandlers {
     // (undocumented)

@@ -73,10 +73,14 @@ export const _StartCaptionsButton = (props: _StartCaptionsButtonProps): JSX.Elem
   const { onStartCaptions, onStopCaptions, currentSpokenLanguage, strings } = props;
 
   const onRenderStartIcon = (): JSX.Element => {
+    /* @conditional-compile-remove(close-captions) */
     return <_HighContrastAwareIcon disabled={props.disabled} iconName="CaptionsIcon" />;
+    return <></>;
   };
   const onRenderOffIcon = (): JSX.Element => {
+    /* @conditional-compile-remove(close-captions) */
     return <_HighContrastAwareIcon disabled={props.disabled} iconName="CaptionsOffIcon" />;
+    return <></>;
   };
 
   const captionsOptions: _captionsOptions = {

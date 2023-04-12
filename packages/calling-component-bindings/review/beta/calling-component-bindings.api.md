@@ -18,9 +18,7 @@ import { CallClientState } from '@internal/calling-stateful-client';
 import { CallParticipantListParticipant } from '@internal/react-components';
 import { CallState } from '@azure/communication-calling';
 import { CameraButton } from '@internal/react-components';
-import { _CaptionsBanner } from '@internal/react-components';
 import { _CaptionsInfo } from '@internal/react-components';
-import { _CaptionsSettingModal } from '@internal/react-components';
 import { Common } from '@internal/acs-ui-common';
 import { CommunicationIdentifier } from '@azure/communication-common';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
@@ -44,7 +42,6 @@ import { ReactElement } from 'react';
 import { RemoteParticipantState } from '@internal/calling-stateful-client';
 import { ScreenShareButton } from '@internal/react-components';
 import { StartCallOptions } from '@azure/communication-calling';
-import { _StartCaptionsButton } from '@internal/react-components';
 import { StatefulCallClient } from '@internal/calling-stateful-client';
 import { StatefulDeviceManager } from '@internal/calling-stateful-client';
 import { TeamsCall } from '@azure/communication-calling';
@@ -111,15 +108,18 @@ export type CameraButtonSelector = (state: CallClientState, props: CallingBaseSe
 // @public
 export const cameraButtonSelector: CameraButtonSelector;
 
-// @public
-export type captionsOptions = {
-    spokenLanguage: string;
+// @internal
+export type _CaptionsBannerSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
+    captions: _CaptionsInfo[];
+    isCaptionsOn: boolean;
 };
 
 // @internal
-export type _CaptionsSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
-    captions: _CaptionsInfo[];
-    isCaptionsOn: boolean;
+export const _captionsBannerSelector: _CaptionsBannerSelector;
+
+// @beta
+export type captionsOptions = {
+    spokenLanguage: string;
 };
 
 // @internal
@@ -128,6 +128,9 @@ export type _ChangeSpokenLanguageSelector = (state: CallClientState, props: Call
     currentSpokenLanguage: string | undefined;
     isCaptionsFeatureActive: boolean;
 };
+
+// @internal
+export const _changeSpokenLanguageSelector: _ChangeSpokenLanguageSelector;
 
 // @public
 export interface CommonCallingHandlers {
@@ -222,7 +225,7 @@ export type ErrorBarSelector = (state: CallClientState, props: CallingBaseSelect
 };
 
 // @public
-export type GetCallingSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof VideoGallery> extends true ? VideoGallerySelector : AreEqual<Component, typeof DevicesButton> extends true ? DevicesButtonSelector : AreEqual<Component, typeof MicrophoneButton> extends true ? MicrophoneButtonSelector : AreEqual<Component, typeof CameraButton> extends true ? CameraButtonSelector : AreEqual<Component, typeof ScreenShareButton> extends true ? ScreenShareButtonSelector : AreEqual<Component, typeof ParticipantList> extends true ? ParticipantListSelector : AreEqual<Component, typeof ParticipantsButton> extends true ? ParticipantsButtonSelector : AreEqual<Component, typeof EndCallButton> extends true ? EmptySelector : AreEqual<Component, typeof ErrorBar> extends true ? ErrorBarSelector : AreEqual<Component, typeof Dialpad> extends true ? EmptySelector : AreEqual<Component, typeof HoldButton> extends true ? HoldButtonSelector : AreEqual<Component, typeof _CaptionsBanner> extends true ? _CaptionsSelector : AreEqual<Component, typeof _StartCaptionsButton> extends true ? _StartCaptionsButtonSelector : AreEqual<Component, typeof _CaptionsSettingModal> extends true ? _ChangeSpokenLanguageSelector : undefined;
+export type GetCallingSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof VideoGallery> extends true ? VideoGallerySelector : AreEqual<Component, typeof DevicesButton> extends true ? DevicesButtonSelector : AreEqual<Component, typeof MicrophoneButton> extends true ? MicrophoneButtonSelector : AreEqual<Component, typeof CameraButton> extends true ? CameraButtonSelector : AreEqual<Component, typeof ScreenShareButton> extends true ? ScreenShareButtonSelector : AreEqual<Component, typeof ParticipantList> extends true ? ParticipantListSelector : AreEqual<Component, typeof ParticipantsButton> extends true ? ParticipantsButtonSelector : AreEqual<Component, typeof EndCallButton> extends true ? EmptySelector : AreEqual<Component, typeof ErrorBar> extends true ? ErrorBarSelector : AreEqual<Component, typeof Dialpad> extends true ? EmptySelector : AreEqual<Component, typeof HoldButton> extends true ? HoldButtonSelector : undefined;
 
 // @public
 export const getCallingSelector: <Component extends (props: any) => JSX.Element | undefined>(component: Component) => GetCallingSelector<Component>;
@@ -284,9 +287,12 @@ export const screenShareButtonSelector: ScreenShareButtonSelector;
 // @internal
 export type _StartCaptionsButtonSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
     checked: boolean;
-    currentCaptionLanguage: string | undefined;
-    currentSpokenLanguage: string | undefined;
+    currentCaptionLanguage: string;
+    currentSpokenLanguage?: string;
 };
+
+// @internal
+export const _startCaptionsButtonSelector: _StartCaptionsButtonSelector;
 
 // @beta
 export interface TeamsCallingHandlers extends CommonCallingHandlers {
