@@ -73,11 +73,11 @@ export const CaptionsBannerMoreButton = (props: CaptionsBannerMoreButtonProps): 
   /* @conditional-compile-remove(close-captions) */
   if (props.onCaptionsSettingsClick) {
     moreButtonContextualMenuItems.push({
-      key: 'openCaptionsSettingKey',
-      text: localeStrings.strings.call.captionsSettingLabel,
+      key: 'openCaptionsSettingsKey',
+      text: localeStrings.strings.call.captionsSettingsLabel,
       onClick: props.onCaptionsSettingsClick,
       iconProps: {
-        iconName: 'SettingsIcon',
+        iconName: 'CaptionsSettingsIcon',
         styles: { root: { lineHeight: 0 } }
       },
       itemProps: {

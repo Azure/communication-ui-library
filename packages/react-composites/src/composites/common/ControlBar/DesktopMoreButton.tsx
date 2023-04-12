@@ -139,11 +139,11 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
 
     if (props.onCaptionsSettingsClick) {
       captionsContextualMenuItems.push({
-        key: 'openCaptionsSettingKey',
-        text: localeStrings.strings.call.captionsSettingLabel,
+        key: 'openCaptionsSettingsKey',
+        text: localeStrings.strings.call.captionsSettingsLabel,
         onClick: props.onCaptionsSettingsClick,
         iconProps: {
-          iconName: 'CaptionsSettingIcon',
+          iconName: 'CaptionsSettingsIcon',
           styles: { root: { lineHeight: 0 } }
         },
         itemProps: {

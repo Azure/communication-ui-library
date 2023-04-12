@@ -2,13 +2,13 @@
 // Licensed under the MIT license.
 
 import { Stack } from '@fluentui/react';
-import { _CaptionsSettingModal, _CaptionsSettingModalStrings } from '@internal/react-components';
+import { _CaptionsSettingsModal, _CaptionsSettingsModalStrings } from '@internal/react-components';
 import { Meta } from '@storybook/react/types-6-0';
 import React, { useState } from 'react';
 import { COMPONENT_FOLDER_PREFIX } from '../../../constants';
 import { controlsToAdd, hiddenControl } from '../../../controlsUtils';
 
-const CaptionsSettingModalStory = (args): JSX.Element => {
+const CaptionsSettingsModalStory = (args): JSX.Element => {
   const supportedSpokenLanguages = [
     'English',
     'Chinese',
@@ -33,7 +33,7 @@ const CaptionsSettingModalStory = (args): JSX.Element => {
   ];
   const currentSpokenLanguage = 'English';
   const [showModal, setShowModal] = useState<boolean>(true);
-  const onDismissCaptionsSetting = () => {
+  const onDismissCaptionsSettings = () => {
     setShowModal(false);
   };
   const onSetSpokenLanguage = (language) => {
@@ -48,25 +48,25 @@ const CaptionsSettingModalStory = (args): JSX.Element => {
 
   const strings = {
     startCaptionsButtonTooltipOffContent: 'Turn on captions',
-    captionsSettingModalTitle: 'What language is being spoken?',
-    captionsSettingDropdownLabel: 'Spoken language',
-    captionsSettingDropdownInfoText: 'Language that everyone on this call is speaking.',
-    captionsSettingConfirmButtonLabel: 'Confirm',
-    captionsSettingCancelButtonLabel: 'Cancel',
-    captionsSettingModalAriaLabel: 'Captions Setting Modal',
-    captionsSettingCloseModalButtonAriaLabel: 'Close Captions Setting'
+    captionsSettingsModalTitle: 'What language is being spoken?',
+    captionsSettingsDropdownLabel: 'Spoken language',
+    captionsSettingsDropdownInfoText: 'Language that everyone on this call is speaking.',
+    captionsSettingsConfirmButtonLabel: 'Confirm',
+    captionsSettingsCancelButtonLabel: 'Cancel',
+    captionsSettingsModalAriaLabel: 'Captions Setting Modal',
+    captionsSettingsCloseModalButtonAriaLabel: 'Close Captions Setting'
   };
 
   return (
     <Stack>
-      <_CaptionsSettingModal
+      <_CaptionsSettingsModal
         showModal={showModal}
         isCaptionsFeatureActive={args.isCaptionsFeatureActive}
         supportedSpokenLanguages={supportedSpokenLanguages}
         currentSpokenLanguage={currentSpokenLanguage}
         onSetSpokenLanguage={onSetSpokenLanguage}
         onStartCaptions={onStartCaptions}
-        onDismissCaptionsSetting={onDismissCaptionsSetting}
+        onDismissCaptionsSettings={onDismissCaptionsSettings}
         strings={strings}
       />{' '}
     </Stack>
@@ -75,12 +75,12 @@ const CaptionsSettingModalStory = (args): JSX.Element => {
 
 // This must be the only named export from this module, and must be named to match the storybook path suffix.
 // This ensures that storybook hoists the story instead of creating a folder with a single entry.
-export const CaptionsSettingModal = CaptionsSettingModalStory.bind({});
+export const CaptionsSettingsModal = CaptionsSettingsModalStory.bind({});
 
 export default {
-  id: `${COMPONENT_FOLDER_PREFIX}-internal-CaptionsSettingModal`,
-  title: `${COMPONENT_FOLDER_PREFIX}/Internal/CaptionsSettingModal/CaptionsSettingModal`,
-  component: _CaptionsSettingModal,
+  id: `${COMPONENT_FOLDER_PREFIX}-internal-CaptionsSettingsModal`,
+  title: `${COMPONENT_FOLDER_PREFIX}/Internal/CaptionsSettingsModal/CaptionsSettingsModal`,
+  component: _CaptionsSettingsModal,
   argTypes: {
     isCaptionsFeatureActive: controlsToAdd.isCaptionsFeatureActive,
     showModal: hiddenControl,
@@ -88,7 +88,7 @@ export default {
     currentSpokenLanguage: hiddenControl,
     strings: hiddenControl,
     onSetSpokenLanguage: hiddenControl,
-    onDismissCaptionsSetting: hiddenControl,
+    onDismissCaptionsSettings: hiddenControl,
     onStartCaptions: hiddenControl
   }
 } as Meta;

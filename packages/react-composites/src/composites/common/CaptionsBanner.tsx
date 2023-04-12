@@ -10,7 +10,7 @@ import { _DrawerMenu, _DrawerMenuItemProps, _DrawerSurface } from '@internal/rea
 /* @conditional-compile-remove(close-captions) */
 import { mergeStyles, Stack } from '@fluentui/react';
 /* @conditional-compile-remove(close-captions) */
-import { CaptionsSettingModal } from './CaptionsSettingModal';
+import { CaptionsSettingsModal } from './CaptionsSettingsModal';
 /* @conditional-compile-remove(close-captions) */
 import { CaptionsBannerMoreButton } from './CaptionsBannerMoreButton';
 /* @conditional-compile-remove(close-captions) */
@@ -20,21 +20,26 @@ import { useHandlers } from '../CallComposite/hooks/useHandlers';
 /* @conditional-compile-remove(close-captions) */
 import { _captionsBannerSelector } from '@internal/calling-component-bindings';
 
+/* @conditional-compile-remove(close-captions) */
+const mobileViewBannerWidth = '90%';
+/* @conditional-compile-remove(close-captions) */
+const desktopViewBannerWidth = '50%';
+
 /** @private */
-export const CaptionsBanner = (): JSX.Element => {
+export const CaptionsBanner = (props: { isMobile: boolean }): JSX.Element => {
   /* @conditional-compile-remove(close-captions) */
   const captionsBannerProps = useAdaptedSelector(_captionsBannerSelector);
   /* @conditional-compile-remove(close-captions) */
   const handlers = useHandlers(_CaptionsBanner);
   /* @conditional-compile-remove(close-captions) */
-  const [isCaptionsSettingOpen, setIsCaptionsSettingOpen] = useState<boolean>(false);
+  const [isCaptionsSettingsOpen, setIsCaptionsSettingsOpen] = useState<boolean>(false);
   /* @conditional-compile-remove(close-captions) */
   const onClickCaptionsSettings = (): void => {
-    setIsCaptionsSettingOpen(true);
+    setIsCaptionsSettingsOpen(true);
   };
   /* @conditional-compile-remove(close-captions) */
-  const onDismissCaptionsSetting = (): void => {
-    setIsCaptionsSettingOpen(false);
+  const onDismissCaptionsSettings = (): void => {
+    setIsCaptionsSettingsOpen(false);
   };
   /* @conditional-compile-remove(close-captions) */
   const containerClassName = mergeStyles({
@@ -50,10 +55,10 @@ export const CaptionsBanner = (): JSX.Element => {
   return (
     <>
       {
-        /* @conditional-compile-remove(close-captions) */ isCaptionsSettingOpen && (
-          <CaptionsSettingModal
-            showCaptionsSettingModal={isCaptionsSettingOpen}
-            onDismissCaptionsSetting={onDismissCaptionsSetting}
+        /* @conditional-compile-remove(close-captions) */ isCaptionsSettingsOpen && (
+          <CaptionsSettingsModal
+            showCaptionsSettingsModal={isCaptionsSettingsOpen}
+            onDismissCaptionsSettings={onDismissCaptionsSettings}
           />
         )
       }
@@ -62,13 +67,15 @@ export const CaptionsBanner = (): JSX.Element => {
           captionsBannerProps.isCaptionsOn && (
             <div className={containerClassName}>
               <Stack horizontalAlign="center">
-                <Stack.Item style={{ width: '50%' }}>
+                <Stack.Item style={{ width: props.isMobile ? mobileViewBannerWidth : desktopViewBannerWidth }}>
                   <_CaptionsBanner {...captionsBannerProps} {...handlers} />
                 </Stack.Item>
               </Stack>
-              <div className={floatingChildClassName}>
-                <CaptionsBannerMoreButton onCaptionsSettingsClick={onClickCaptionsSettings} />
-              </div>
+              {!props.isMobile && (
+                <div className={floatingChildClassName}>
+                  <CaptionsBannerMoreButton onCaptionsSettingsClick={onClickCaptionsSettings} />
+                </div>
+              )}
             </div>
           )
       }
