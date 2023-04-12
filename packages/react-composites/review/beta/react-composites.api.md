@@ -1212,6 +1212,7 @@ export type _FakeChatAdapterArgs = {
     fileUploads?: _MockFileUpload[];
     failFileDownload?: boolean;
     sendRemoteFileSharingMessage?: boolean;
+    sendRemoteInlineImageMessage?: boolean;
     frenchLocaleEnabled?: boolean;
     showParticipantPane?: boolean;
     participantsWithHiddenComposites?: ChatParticipant[];
