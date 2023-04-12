@@ -121,6 +121,11 @@ export type CallAdapterClientState = {
    * Default set of background images for background replacement effect.
    */
   videoBackgroundImages?: VideoBackgroundImage[];
+  /* @conditional-compile-remove(video-background-effects) */
+  /**
+   * State to track the selected video background effect.
+   */
+  selectedVideoBackgroundEffect?: SelectedVideoBackgroundEffect;
 };
 
 /**
@@ -245,6 +250,64 @@ export interface VideoBackgroundImage {
    * Image name to be displayed.
    */
   tooltipText?: string;
+}
+
+/* @conditional-compile-remove(video-background-effects) */
+/**
+ * Contains the attibutes of a selected video background effect
+ *
+ * @beta
+ */
+export type SelectedVideoBackgroundEffect =
+  | VideoBackgroundNoneEffect
+  | VideoBackgroundBlurEffect
+  | VideoBackgroundReplacementEffect;
+
+/* @conditional-compile-remove(video-background-effects) */
+/**
+ * Contains the attibutes to remove video background effect
+ *
+ * @beta
+ */
+export interface VideoBackgroundNoneEffect {
+  /**
+   * Name of effect to remove video background effect
+   */
+  effectName: 'none';
+}
+
+/* @conditional-compile-remove(video-background-effects) */
+/**
+ * Contains the attibutes of the blur video background effect
+ *
+ * @beta
+ */
+export interface VideoBackgroundBlurEffect {
+  /**
+   * Name of effect to blur video background effect
+   */
+  effectName: 'blur';
+}
+
+/* @conditional-compile-remove(video-background-effects) */
+/**
+ * Contains the attibutes of a selected replacement video background effect
+ *
+ * @beta
+ */
+export interface VideoBackgroundReplacementEffect {
+  /**
+   * Name of effect to replace video background effect
+   */
+  effectName: 'replacement';
+  /**
+   * key for unique identification of the custom background
+   */
+  effectKey: string;
+  /**
+   * URL of the custom background image.
+   */
+  backgroundImageUrl: string;
 }
 
 /**
@@ -405,6 +468,13 @@ export interface CallAdapterCallOperations {
    * @beta
    */
   updateBackgroundPickerImages(backgroundImages: VideoBackgroundImage[]): void;
+  /* @conditional-compile-remove(video-background-effects) */
+  /**
+   * Update the selected video background effect.
+   *
+   * @beta
+   */
+  updateSelectedVideoBackgroundEffect(selectedVideoBackground: SelectedVideoBackgroundEffect): void;
 }
 
 /**
