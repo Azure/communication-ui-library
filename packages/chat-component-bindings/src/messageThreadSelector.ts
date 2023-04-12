@@ -29,8 +29,9 @@ import { ACSKnownMessageType } from './utils/constants';
 import { DEFAULT_DATA_LOSS_PREVENTION_POLICY_URL } from './utils/constants';
 import { updateMessagesWithAttached } from './utils/updateMessagesWithAttached';
 
-/* @conditional-compile-remove(file-sharing) */
+/* @conditional-compile-remove(file-sharing) @conditional-compile-remove(teams-inline-images) */
 import { FileMetadata } from '@internal/react-components';
+/* @conditional-compile-remove(teams-inline-images) */
 import { ChatAttachment } from '@azure/communication-chat';
 
 const memoizedAllConvertChatMessage = memoizeFnAll(
@@ -84,6 +85,7 @@ const extractInlineImageFilesMetadata = (attachments: ChatAttachment[]): FileMet
   }));
 };
 
+/* @conditional-compile-remove(file-sharing) @conditional-compile-remove(teams-inline-images) */
 const extractFilesMetadata = (message: ChatMessageWithStatus): FileMetadata[] => {
   let fileMetadata: FileMetadata[] = [];
 
