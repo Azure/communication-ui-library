@@ -315,6 +315,9 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
                 startCaptionsButtonHandlers.onStartCaptions({
                   spokenLanguage: currentSpokenLanguage
                 });
+                // set spoken language when start captions with a spoken language specified.
+                // this is to fix the bug when a second user starts captions with a new spoken language, captions bot ignore that spoken language
+                startCaptionsButtonHandlers.onSetSpokenLanguage(currentSpokenLanguage);
               } else {
                 startCaptionsButtonHandlers.onStopCaptions();
               }

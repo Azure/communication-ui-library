@@ -8,8 +8,8 @@ import { _StartCaptionsButton } from '@internal/react-components';
 /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
 import { HoldButton } from '@internal/react-components';
 import React from 'react';
-/*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
-import { useMemo } from 'react';
+/*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(close-captions) */
+import { useMemo, useCallback } from 'react';
 /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
 import { usePropsFor } from '../../CallComposite/hooks/usePropsFor';
 /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
@@ -56,6 +56,15 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
   const startCaptionsButtonProps = useAdaptedSelector(_startCaptionsButtonSelector);
   /* @conditional-compile-remove(close-captions) */
   const startCaptionsButtonHandlers = useHandlers(_StartCaptionsButton);
+  /* @conditional-compile-remove(close-captions) */
+  const startCaptions = useCallback(() => {
+    startCaptionsButtonHandlers.onStartCaptions({
+      spokenLanguage: startCaptionsButtonProps.currentSpokenLanguage
+    });
+    // set spoken language when start captions with a spoken language specified.
+    // this is to fix the bug when a second user starts captions with a new spoken language, captions bot ignore that spoken language
+    startCaptionsButtonHandlers.onSetSpokenLanguage(startCaptionsButtonProps.currentSpokenLanguage);
+  }, [startCaptionsButtonHandlers, startCaptionsButtonProps.currentSpokenLanguage]);
 
   /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(close-captions) */
   const moreButtonStrings = useMemo(
@@ -122,9 +131,7 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
         startCaptionsButtonProps.checked
           ? startCaptionsButtonHandlers.onStopCaptions()
           : startCaptionsButtonProps.currentSpokenLanguage !== ''
-          ? startCaptionsButtonHandlers.onStartCaptions({
-              spokenLanguage: startCaptionsButtonProps.currentSpokenLanguage
-            })
+          ? startCaptions()
           : props.onCaptionsSettingsClick && props.onCaptionsSettingsClick();
       },
       iconProps: {
