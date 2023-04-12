@@ -262,7 +262,7 @@ export interface VideoBackgroundImage {
  *
  * @beta
  */
-export type CaptionsReceivedListener = (event: { data: CaptionsInfo }) => void;
+export type CaptionsReceivedListener = (event: { captionsInfo: CaptionsInfo }) => void;
 
 /* @conditional-compile-remove(video-background-effects) */
 /**
