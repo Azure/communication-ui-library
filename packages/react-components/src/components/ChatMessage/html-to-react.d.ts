@@ -1,29 +1,34 @@
 declare module 'html-to-react' {
   import { ParserOptions } from 'htmlparser2';
-  import { ReactElement } from 'react';
+  import React, { ReactNode } from 'react';
 
   function Html2ReactParser(options: ParserOptions): {
-    parse: (html: string) => ReactNode | ReactNode[];
+    parse: (html: string) => JSX.Element;
     parseWithInstructions: (
       html: string,
-      isValidNode: (node: ReactNode) => boolean,
+      isValidNode: (node: any) => boolean,
       processingInstructions?: ProcessingInstructionType[],
       preprocessingInstructions?: ProcessingInstructionType[]
-    ) => ReactNode | ReactNode[];
+    ) => JSX.Element;
   };
 
-  function createElement(node: ReactNode, index: number, data: any, children: ReactNode[]): ReactNode;
+  export type ProcessNodeFunctionType = (
+    node: React.DOMElement,
+    children: any,
+    index: number
+  ) => ReactNode | ReactNode[];
 
-  type ProcessingInstructionType = {
-    shouldProcessNode: (node: ReactNode) => boolean;
-    processNode: (node: ReactNode, children: ReactNode[], index: number) => ReactNode | ReactNode[];
+  export type ProcessingInstructionType = {
+    shouldProcessNode: (node: any) => boolean;
+    processNode: ProcessNodeFunctionType;
   };
+
   function ProcessingInstructions(): {
-    defaultProcessingInstructions: ProcessingInstructionType[];
+    defaultProcessingInstructions: ProcessingInstructionType;
   };
 
   function ProcessNodeDefinitions(): {
-    processDefaultNode: (node: ReactNode, children: ReactNode[], index: number) => ReactNode | ReactNode[];
+    processDefaultNode: ProcessNodeFunctionType;
   };
 
   const IsValidNodeDefinitions: {
