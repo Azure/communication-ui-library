@@ -104,13 +104,15 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
   const [currentTagIndex, setCurrentTagIndex] = useState<number>(-1);
   const [inputTextValue, setInputTextValue] = useState<string>('');
 
-  // Parse the text and look for <msft-at-mention> tags.
+  // Parse the text and get the plain text version to display in the input box
   useEffect(() => {
     const trigger = atMentionLookupOptions?.trigger || defaultMentionTrigger;
     // Get a plain text version to display in the input box, resetting state
-    const tags = parseStringForMentions(textValue);
+    const tags = parseToTags(textValue);
     const plainText = plainTextFromParsedTags(textValue, tags, trigger);
-    console.log('plainText ', plainText);
+    console.log('textValue Effect triggered');
+    console.log('textValue', textValue);
+    console.log('plainText', plainText);
     // Provide the plain text string to the inputTextValue
     setInputTextValue(plainText);
   }, [textValue, atMentionLookupOptions?.trigger]);
@@ -154,7 +156,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
 
       // TODO: make this logic work properly
       const updatedText = firstPart + htmlStringForMentionSuggestion(suggestion) + lastPart;
-      const tags = parseStringForMentions(updatedText);
+      const tags = parseToTags(updatedText);
       const plainText = plainTextFromParsedTags(
         updatedText,
         tags,
@@ -300,10 +302,12 @@ export const InputBoxButton = (props: InputBoxButtonProps): JSX.Element => {
 };
 
 /**
+ * Object representing a parsed tag
+ *
  * @private
  */
 type ParsedTag = {
-  tagType: string; // "msft-at-mention" | "html";
+  tagType: string;
   htmlOpenTagStartIndex: number;
   openTagBody: string;
   htmlCloseTagStartIndex?: number; // Might not have a close tag
@@ -315,22 +319,15 @@ type ParsedTag = {
 /**
  * Go through the text and parse out the tags
  * This should be only <msft-at-mention> tags for now...
- * We do need to remove all other HTML tags though...
+ * We do need to process all other HTML tags to text though.
  *
  * @private
  */
-const parseStringForMentions = (text: string): ParsedTag[] => {
-  const tags = firstLevelTags(text);
-  return tags;
-};
-
-const firstLevelTags = (text: string): ParsedTag[] => {
+const parseToTags = (text: string): ParsedTag[] => {
   let tags: ParsedTag[] = [];
   let parseIndex = 0;
 
   while (parseIndex < text.length) {
-    // console.log(parseIndex)
-
     let openTagIndex = text.indexOf('<', parseIndex);
     if (openTagIndex === -1) {
       break;
@@ -359,7 +356,7 @@ const firstLevelTags = (text: string): ParsedTag[] => {
       } else {
         const closeTagLength = tagToFind.length;
         const content = text.slice(openTagIndex + openTag.length + 2, closeTagIndex);
-        const subTags = firstLevelTags(content);
+        const subTags = parseToTags(content);
 
         tags.push({
           tagType: openTag.split(' ')[0].toLowerCase(),
@@ -389,10 +386,8 @@ const plainTextFromParsedTags = (textBlock: string, tags: ParsedTag[], trigger: 
 
   while (tagIndex < tags.length) {
     const tag = tags[tagIndex];
-
     // Add all the text from the last tag close to this one open
     text += textBlock.slice(previousTagEndIndex, tag.htmlOpenTagStartIndex);
-
     if (tag.tagType === 'msft-at-mention') {
       text += trigger;
     }
@@ -408,6 +403,7 @@ const plainTextFromParsedTags = (textBlock: string, tags: ParsedTag[], trigger: 
     if (!!tag.htmlCloseTagStartIndex && tag.closeTagLength) {
       previousTagEndIndex = tag.htmlCloseTagStartIndex + tag.closeTagLength;
     } else {
+      // Self-closing tag
       previousTagEndIndex = tag.htmlOpenTagStartIndex + tag.openTagBody.length + 3; // 3 for the < > and /
     }
     tagIndex++;
