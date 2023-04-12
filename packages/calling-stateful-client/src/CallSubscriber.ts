@@ -167,6 +167,7 @@ export class CallSubscriber {
     this._context.setCallState(this._callIdRef.callId, this._call.state);
 
     // subscribe to captions here so that we don't call captions when call is not initialized
+    /* @conditional-compile-remove(close-captions) */
     if (_isTeamsMeetingCall(this._call) && this._call.state === 'Connected' && !this._captionsSubscriber) {
       this._captionsSubscriber = new CaptionsSubscriber(
         this._callIdRef,
