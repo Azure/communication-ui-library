@@ -4,6 +4,7 @@
 import { ControlBarButton, ControlBarButtonProps } from './ControlBarButton';
 import React from 'react';
 import { _HighContrastAwareIcon } from './HighContrastAwareIcon';
+import { defaultSpokenLanguage } from './utils';
 
 /**
  * options bag to start captions
@@ -31,7 +32,7 @@ export interface _StartCaptionsButtonProps extends ControlBarButtonProps {
   /**
    * Spoken language set for starting captions
    */
-  currentSpokenLanguage?: string;
+  currentSpokenLanguage: string;
   /**
    * Optional strings to override in component
    */
@@ -84,7 +85,7 @@ export const _StartCaptionsButton = (props: _StartCaptionsButtonProps): JSX.Elem
   };
 
   const captionsOptions: _captionsOptions = {
-    spokenLanguage: !currentSpokenLanguage || currentSpokenLanguage === '' ? 'en-us' : currentSpokenLanguage
+    spokenLanguage: currentSpokenLanguage === '' ? defaultSpokenLanguage : currentSpokenLanguage
   };
 
   const onToggleStartCaptions = (): void => {

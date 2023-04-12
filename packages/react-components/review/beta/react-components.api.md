@@ -277,7 +277,7 @@ export const _CaptionsSettingModal: (props: _CaptionsSettingModalProps) => JSX.E
 // @internal
 export interface _CaptionsSettingModalProps {
     // (undocumented)
-    currentSpokenLanguage?: string;
+    currentSpokenLanguage: string;
     // (undocumented)
     isCaptionsFeatureActive?: boolean;
     // (undocumented)
@@ -1646,7 +1646,7 @@ export const _StartCaptionsButton: (props: _StartCaptionsButtonProps) => JSX.Ele
 
 // @internal (undocumented)
 export interface _StartCaptionsButtonProps extends ControlBarButtonProps {
-    currentSpokenLanguage?: string;
+    currentSpokenLanguage: string;
     onStartCaptions: (captionsOptions?: _captionsOptions) => Promise<void>;
     onStopCaptions: () => Promise<void>;
     strings?: _StartCaptionsButtonStrings;

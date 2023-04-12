@@ -121,7 +121,7 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
       onClick: () => {
         startCaptionsButtonProps.checked
           ? startCaptionsButtonHandlers.onStopCaptions()
-          : startCaptionsButtonProps.currentSpokenLanguage
+          : startCaptionsButtonProps.currentSpokenLanguage !== ''
           ? startCaptionsButtonHandlers.onStartCaptions({
               spokenLanguage: startCaptionsButtonProps.currentSpokenLanguage
             })

@@ -431,6 +431,9 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
     /* @conditional-compile-remove(close-captions) */
     const onStartCaptions = async (captionsOptions?: captionsOptions): Promise<void> => {
       await call?.feature(Features.TeamsCaptions).startCaptions(captionsOptions);
+      if (captionsOptions?.spokenLanguage && captionsOptions.spokenLanguage !== '') {
+        await call?.feature(Features.TeamsCaptions).setSpokenLanguage(captionsOptions.spokenLanguage);
+      }
     };
     /* @conditional-compile-remove(close-captions) */
     const onStopCaptions = async (): Promise<void> => {

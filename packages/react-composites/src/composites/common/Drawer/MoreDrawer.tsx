@@ -40,6 +40,8 @@ import { useAdaptedSelector } from '../../CallComposite/hooks/useAdaptedSelector
 import { _changeSpokenLanguageSelector, _startCaptionsButtonSelector } from '@internal/calling-component-bindings';
 /* @conditional-compile-remove(close-captions) */
 import { useHandlers } from '../../CallComposite/hooks/useHandlers';
+/* @conditional-compile-remove(close-captions) */
+import { defaultSpokenLanguage } from '../utils';
 
 /** @private */
 export interface MoreDrawerStrings {
@@ -275,8 +277,8 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
   const [isSpokenLanguageDrawerOpen, setIsSpokenLanguageDrawerOpen] = useState<boolean>(false);
   /* @conditional-compile-remove(close-captions) */
   const [currentSpokenLanguage, setCurrentSpokenLanguage] = useState<string>(
-    !startCaptionsButtonProps.currentSpokenLanguage || startCaptionsButtonProps.currentSpokenLanguage === ''
-      ? 'en-us'
+    startCaptionsButtonProps.currentSpokenLanguage === ''
+      ? defaultSpokenLanguage
       : startCaptionsButtonProps.currentSpokenLanguage
   );
   /* @conditional-compile-remove(close-captions) */

@@ -125,7 +125,7 @@ export type captionsOptions = {
 // @internal
 export type _ChangeSpokenLanguageSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
     supportedSpokenLanguages: string[];
-    currentSpokenLanguage: string | undefined;
+    currentSpokenLanguage: string;
     isCaptionsFeatureActive: boolean;
 };
 
@@ -288,7 +288,7 @@ export const screenShareButtonSelector: ScreenShareButtonSelector;
 export type _StartCaptionsButtonSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
     checked: boolean;
     currentCaptionLanguage: string;
-    currentSpokenLanguage?: string;
+    currentSpokenLanguage: string;
 };
 
 // @internal

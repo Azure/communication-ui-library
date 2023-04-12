@@ -29,8 +29,8 @@ export type _StartCaptionsButtonSelector = (
   props: CallingBaseSelectorProps
 ) => {
   checked: boolean;
-  currentCaptionLanguage: string | undefined;
-  currentSpokenLanguage: string | undefined;
+  currentCaptionLanguage: string;
+  currentSpokenLanguage: string;
 };
 
 /* @conditional-compile-remove(close-captions) */
@@ -59,7 +59,7 @@ export type _ChangeSpokenLanguageSelector = (
   props: CallingBaseSelectorProps
 ) => {
   supportedSpokenLanguages: string[];
-  currentSpokenLanguage: string | undefined;
+  currentSpokenLanguage: string;
   isCaptionsFeatureActive: boolean;
 };
 

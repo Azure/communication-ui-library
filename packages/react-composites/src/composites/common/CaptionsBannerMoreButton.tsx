@@ -56,7 +56,7 @@ export const CaptionsBannerMoreButton = (props: CaptionsBannerMoreButtonProps): 
     onClick: () => {
       startCaptionsButtonProps.checked
         ? startCaptionsButtonHandlers.onStopCaptions()
-        : startCaptionsButtonProps.currentSpokenLanguage
+        : startCaptionsButtonProps.currentSpokenLanguage !== ''
         ? startCaptionsButtonHandlers.onStartCaptions({
             spokenLanguage: startCaptionsButtonProps.currentSpokenLanguage
           })

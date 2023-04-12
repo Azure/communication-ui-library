@@ -25,6 +25,7 @@ import {
   titleContainerClassName
 } from './styles/CaptionsSettingModal.styles';
 import { _captionsOptions } from './StartCaptionsButton';
+import { defaultSpokenLanguage } from './utils';
 /**
  * @internal
  * strings for captions setting modal
@@ -47,8 +48,8 @@ export interface _CaptionsSettingModalProps {
   supportedSpokenLanguages: string[];
   onSetSpokenLanguage: (language: string) => Promise<void>;
   onStartCaptions: (captionsOptions?: _captionsOptions) => Promise<void>;
+  currentSpokenLanguage: string;
   isCaptionsFeatureActive?: boolean;
-  currentSpokenLanguage?: string;
   strings?: _CaptionsSettingModalStrings;
   showModal?: boolean;
   onDismissCaptionsSetting?: () => void;
@@ -73,8 +74,8 @@ export const _CaptionsSettingModal = (props: _CaptionsSettingModalProps): JSX.El
   const theme = useTheme();
 
   const [selectedItem, setSelectedItem] = useState<IDropdownOption>({
-    key: currentSpokenLanguage && currentSpokenLanguage !== '' ? currentSpokenLanguage : 'en-us',
-    text: currentSpokenLanguage && currentSpokenLanguage !== '' ? currentSpokenLanguage : 'en-us'
+    key: currentSpokenLanguage !== '' ? currentSpokenLanguage : defaultSpokenLanguage,
+    text: currentSpokenLanguage !== '' ? currentSpokenLanguage : defaultSpokenLanguage
   });
 
   const dismiss = (): void => {
@@ -110,7 +111,7 @@ export const _CaptionsSettingModal = (props: _CaptionsSettingModalProps): JSX.El
           label={strings?.captionsSettingDropdownLabel}
           selectedKey={selectedItem ? selectedItem.key : undefined}
           onChange={onChange}
-          placeholder={currentSpokenLanguage !== '' ? currentSpokenLanguage : 'en-us'}
+          placeholder={currentSpokenLanguage !== '' ? currentSpokenLanguage : defaultSpokenLanguage}
           options={dropdownOptions}
           styles={dropdownStyles}
         />
