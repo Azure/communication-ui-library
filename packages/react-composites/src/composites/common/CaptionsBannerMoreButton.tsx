@@ -3,6 +3,8 @@
 import React from 'react';
 import { ControlBarButtonProps } from '@internal/react-components';
 /* @conditional-compile-remove(close-captions) */
+import { useCallback } from 'react';
+/* @conditional-compile-remove(close-captions) */
 import { IContextualMenuItem } from '@fluentui/react';
 /* @conditional-compile-remove(close-captions) */
 import { _StartCaptionsButton } from '@internal/react-components';
@@ -47,6 +49,17 @@ export const CaptionsBannerMoreButton = (props: CaptionsBannerMoreButtonProps): 
   );
   /* @conditional-compile-remove(close-captions) */
   const moreButtonContextualMenuItems: IContextualMenuItem[] = [];
+
+  /* @conditional-compile-remove(close-captions) */
+  const startCaptions = useCallback(async () => {
+    await startCaptionsButtonHandlers.onStartCaptions({
+      spokenLanguage: startCaptionsButtonProps.currentSpokenLanguage
+    });
+    // set spoken language when start captions with a spoken language specified.
+    // this is to fix the bug when a second user starts captions with a new spoken language, captions bot ignore that spoken language
+    startCaptionsButtonHandlers.onSetSpokenLanguage(startCaptionsButtonProps.currentSpokenLanguage);
+  }, [startCaptionsButtonHandlers, startCaptionsButtonProps.currentSpokenLanguage]);
+
   /* @conditional-compile-remove(close-captions) */
   moreButtonContextualMenuItems.push({
     key: 'ToggleCaptionsKey',
@@ -56,10 +69,8 @@ export const CaptionsBannerMoreButton = (props: CaptionsBannerMoreButtonProps): 
     onClick: () => {
       startCaptionsButtonProps.checked
         ? startCaptionsButtonHandlers.onStopCaptions()
-        : startCaptionsButtonProps.currentSpokenLanguage
-        ? startCaptionsButtonHandlers.onStartCaptions({
-            spokenLanguage: startCaptionsButtonProps.currentSpokenLanguage
-          })
+        : startCaptionsButtonProps.currentSpokenLanguage !== ''
+        ? startCaptions()
         : props.onCaptionsSettingsClick && props.onCaptionsSettingsClick();
     },
     iconProps: {

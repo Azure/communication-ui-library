@@ -30,7 +30,7 @@ export type _StartCaptionsButtonSelector = (
 ) => {
   checked: boolean;
   currentCaptionLanguage: string;
-  currentSpokenLanguage?: string;
+  currentSpokenLanguage: string;
 };
 
 /* @conditional-compile-remove(close-captions) */
@@ -45,7 +45,7 @@ export const _startCaptionsButtonSelector: _StartCaptionsButtonSelector = resele
     return {
       checked: isCaptionsFeatureActive ?? false,
       currentCaptionLanguage: currentCaptionLanguage ?? 'en-us',
-      currentSpokenLanguage: currentSpokenLanguage
+      currentSpokenLanguage: currentSpokenLanguage ?? 'en-us'
     };
   }
 );

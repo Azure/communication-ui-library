@@ -288,7 +288,7 @@ export const screenShareButtonSelector: ScreenShareButtonSelector;
 export type _StartCaptionsButtonSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
     checked: boolean;
     currentCaptionLanguage: string;
-    currentSpokenLanguage?: string;
+    currentSpokenLanguage: string;
 };
 
 // @internal

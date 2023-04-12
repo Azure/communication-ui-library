@@ -25,6 +25,7 @@ import {
   titleContainerClassName
 } from './styles/CaptionsSettingsModal.styles';
 import { _captionsOptions } from './StartCaptionsButton';
+import { defaultSpokenLanguage } from './utils';
 /**
  * @internal
  * strings for captions setting modal
@@ -45,9 +46,9 @@ export interface _CaptionsSettingsModalStrings {
  */
 export interface _CaptionsSettingsModalProps {
   supportedSpokenLanguages: string[];
-  currentSpokenLanguage: string;
   onSetSpokenLanguage: (language: string) => Promise<void>;
   onStartCaptions: (captionsOptions?: _captionsOptions) => Promise<void>;
+  currentSpokenLanguage: string;
   isCaptionsFeatureActive?: boolean;
   strings?: _CaptionsSettingsModalStrings;
   showModal?: boolean;
@@ -73,8 +74,8 @@ export const _CaptionsSettingsModal = (props: _CaptionsSettingsModalProps): JSX.
   const theme = useTheme();
 
   const [selectedItem, setSelectedItem] = useState<IDropdownOption>({
-    key: currentSpokenLanguage !== '' ? currentSpokenLanguage : 'en-us',
-    text: currentSpokenLanguage !== '' ? currentSpokenLanguage : 'en-us'
+    key: currentSpokenLanguage !== '' ? currentSpokenLanguage : defaultSpokenLanguage,
+    text: currentSpokenLanguage !== '' ? currentSpokenLanguage : defaultSpokenLanguage
   });
 
   const dismiss = (): void => {
@@ -83,11 +84,14 @@ export const _CaptionsSettingsModal = (props: _CaptionsSettingsModalProps): JSX.
     }
   };
 
-  const confirm = (language: string): void => {
+  const confirm = async (language: string): Promise<void> => {
     if (isCaptionsFeatureActive) {
       onSetSpokenLanguage(language);
     } else {
-      onStartCaptions({ spokenLanguage: selectedItem.text });
+      await onStartCaptions({ spokenLanguage: language });
+      // set spoken language when start captions with a spoken language specified.
+      // this is to fix the bug when a second user starts captions with a new spoken language, captions bot ignore that spoken language
+      onSetSpokenLanguage(language);
     }
     dismiss();
   };
@@ -110,7 +114,7 @@ export const _CaptionsSettingsModal = (props: _CaptionsSettingsModalProps): JSX.
           label={strings?.captionsSettingsDropdownLabel}
           selectedKey={selectedItem ? selectedItem.key : undefined}
           onChange={onChange}
-          placeholder={currentSpokenLanguage !== '' ? currentSpokenLanguage : 'en-us'}
+          placeholder={currentSpokenLanguage !== '' ? currentSpokenLanguage : defaultSpokenLanguage}
           options={dropdownOptions}
           styles={dropdownStyles}
         />
