@@ -32,6 +32,7 @@ export const _Caption = (props: _CaptionProps): JSX.Element => {
     size: PersonaSize.size32,
     text: displayName,
     showOverflowTooltip: false,
+    initialsTextColor: 'white',
     styles: {
       root: {
         margin: '0.25rem'

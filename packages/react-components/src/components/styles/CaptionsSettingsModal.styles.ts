@@ -12,7 +12,8 @@ export const themedCaptionsSettingsModalStyle = (theme: Theme): Partial<IModalSt
     borderRadius: theme.effects.roundedCorner6,
     padding: _pxToRem(24),
     width: _pxToRem(440),
-    height: _pxToRem(268)
+    height: _pxToRem(268),
+    overflow: 'hidden'
   }
 });
 
