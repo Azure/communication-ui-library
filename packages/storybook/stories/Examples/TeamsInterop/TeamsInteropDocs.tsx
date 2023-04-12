@@ -5,6 +5,7 @@ import React from 'react';
 const InlineImageText = require('!!raw-loader!../../MessageThread/snippets/WithInlineImageMessage.snippet.tsx').default;
 const CallComponentText = require('!!raw-loader!./snippets/CallComponent.snippet.tsx').default;
 const ComplianceBannerText = require('!!raw-loader!./snippets/ComplianceBanner.snippet.tsx').default;
+const InlineImageAdapterText = require('!!raw-loader!./snippets/InlineImageAdapter.snippet.tsx').default;
 const LobbyComponentText = require('!!raw-loader!./snippets/Lobby.snippet.tsx').default;
 
 export const getDocs: () => JSX.Element = () => {
@@ -32,7 +33,16 @@ export const getDocs: () => JSX.Element = () => {
       <Description>
         In the Chat scenarios where Teams user sends inline image to ACS user, there are few additional setup needed.
       </Description>
-      <Heading>Enable Inline Image Support</Heading>
+      <Subheading>
+        If we are planning to integrate the Composite to your application, then you create the Chat Adapter like
+        following. Please note that inline image support is only avaliable in a Teams interoperbility chat, so we are
+        using CallWithChat compisite as an example. Assuming that our application is has a component named "ChatScreen":
+      </Subheading>
+      <Source code={InlineImageAdapterText} />
+      <Subheading>
+        If we are planning to integrate individual components to your application, then you can use the UI component
+        "MessageThread" to render message with inline images like the following:
+      </Subheading>
       <Source code={InlineImageText} />
     </>
   );
