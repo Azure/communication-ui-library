@@ -8,7 +8,8 @@ import {
 import { Stack } from '@fluentui/react';
 import React, { useCallback, useEffect, useMemo } from 'react';
 
-interface ChatScreenProps {
+interface ChatScreenPropsExample {
+  // the ACS communication token that would be used to fetch inline images
   token: string;
   userId: string;
   displayName: string;
@@ -17,7 +18,7 @@ interface ChatScreenProps {
   endChatHandler(isParticipantRemoved: boolean): void;
 }
 
-export const InlineImageCompositeExample = (props: ChatScreenProps): JSX.Element => {
+export const InlineImageCompositeExample = (props: ChatScreenPropsExample): JSX.Element => {
   const { displayName, endpointUrl, threadId, token, userId } = props;
 
   const adapterAfterCreate = useCallback(async (adapter: ChatAdapter): Promise<ChatAdapter> => {
