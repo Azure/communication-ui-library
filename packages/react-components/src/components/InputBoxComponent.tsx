@@ -175,6 +175,8 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       onMentionAdd(updatedText);
       setMentionSuggestions([]);
       setCurrentTagIndex(-1);
+      //TODO: add focus to the correct position
+      textFieldRef?.current?.focus();
     },
     [atMentionLookupOptions?.trigger, onMentionAdd, textFieldRef, inputTextValue]
   );
@@ -187,37 +189,52 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     if (!!atMentionLookupOptions) {
       // Look at the range of the change for a trigger character
       const triggerText = atMentionLookupOptions?.trigger ?? defaultMentionTrigger;
-      const selectionStart = textFieldRef?.current?.selectionStart || 0;
-      let selectionEnd = textFieldRef?.current?.selectionEnd || -1;
-      console.log('selectionStart', selectionStart);
-      console.log('selectionEnd', selectionEnd);
-      const spacePriorIndex = newValue?.lastIndexOf(' ', selectionEnd - 1);
-      const wordAtSelection = newValue?.slice(spacePriorIndex, selectionEnd);
+      // const selectionStart = textFieldRef?.current?.selectionStart || 0;
+      const selectionEnd = textFieldRef?.current?.selectionEnd || -1;
+      // console.log('selectionStart', selectionStart);
+      // console.log('selectionEnd', selectionEnd);
+      //need to check if needed
+      // const spacePriorIndex = newValue?.lastIndexOf(' ', selectionEnd - 1);
+      const triggerPriorIndex = newValue?.lastIndexOf(triggerText, selectionEnd - 1);
+      console.log('triggerPriorIndex', triggerPriorIndex);
+      // trigger is found
+      if (triggerPriorIndex !== undefined) {
+        console.log('inside triggerPriorIndex', triggerPriorIndex);
+        const wordAtSelection = newValue?.slice(triggerPriorIndex, selectionEnd);
+        // console.log('spacePriorIndex', spacePriorIndex);
+        if (wordAtSelection === triggerText) {
+          setCurrentTagIndex(selectionEnd);
+        }
+        console.log('wordAtSelection', wordAtSelection);
+        if (wordAtSelection?.indexOf(triggerText) !== -1) {
+          // Typed the trigger character
+          // We are at the start of a new tag
+          //it return the whole tag
+          // console.log('wordAtSelection', wordAtSelection);
+          // setCurrentTagIndex(selectionEnd);
+        } else {
+        }
 
-      console.log('selection', wordAtSelection);
-      if (wordAtSelection?.indexOf(triggerText) !== -1) {
-        // Typed the trigger character
-        // We are at the start of a new tag
-        setCurrentTagIndex(selectionStart);
-      } else {
-      }
-
-      if (currentTagIndex === -1) {
-        setMentionSuggestions([]);
-      } else {
-        // In the middle of a @mention lookup
-        if (currentTagIndex > -1) {
-          // This might want to be changed to not include the lookup tag. Currently it does.
-          // TODO: work in mentionQuery state or remove it.
-          const query = newValue?.slice(currentTagIndex).split(' ')[0];
-          if (!!query) {
-            console.log('getting suggestions for query: ', query);
-            const suggestions = (await atMentionLookupOptions?.onQueryUpdated(query)) ?? [];
-            setMentionSuggestions(suggestions);
+        console.log('currentTagIndex', currentTagIndex);
+        if (currentTagIndex === -1) {
+          setMentionSuggestions([]);
+        } else {
+          // In the middle of a @mention lookup
+          if (currentTagIndex > -1) {
+            // This might want to be changed to not include the lookup tag. Currently it does.
+            // TODO: work in mentionQuery state or remove it.
+            // const query = newValue?.substring(currentTagIndex, selectionEnd);
+            const query = wordAtSelection;
+            if (query !== undefined) {
+              console.log('getting suggestions for query:', query);
+              const suggestions = (await atMentionLookupOptions?.onQueryUpdated(query)) ?? [];
+              setMentionSuggestions(suggestions);
+            }
           }
         }
       }
     }
+
     // TODO: filter the call back to the parent only after setting the text with HTML where
     // appropriate.
     onChange && onChange(event, newValue);
