@@ -91,7 +91,10 @@ export const defaultChatItemMessageContainer = (overlapAvatarAndMessage: boolean
     marginRight: '0rem',
     marginLeft: `${messageAvatarGap}rem`,
     width: `calc(100% - ${AVATAR_WIDTH_REM + MESSAGE_AMOUNT_OUT_FROM_EDGE_REM + messageAvatarGap}rem)`,
-    zIndex: CHAT_MESSAGE_ZINDEX
+    zIndex: CHAT_MESSAGE_ZINDEX,
+    '& msft-at-mention': {
+      color: 'red'
+    }
   };
 };
 

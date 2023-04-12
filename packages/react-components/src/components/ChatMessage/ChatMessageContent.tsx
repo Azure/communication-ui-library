@@ -3,7 +3,7 @@
 
 import React from 'react';
 import { _formatString } from '@internal/acs-ui-common';
-import { Parser, ProcessNodeDefinitions, ProcessingInstructions } from 'html-to-react';
+import { Parser, ProcessNodeDefinitions, IsValidNodeDefinitions, ProcessingInstructionType } from 'html-to-react';
 import Linkify from 'react-linkify';
 import { ChatMessage } from '../../types/ChatMessage';
 /* @conditional-compile-remove(data-loss-prevention) */
@@ -11,7 +11,7 @@ import { BlockedMessage } from '../../types/ChatMessage';
 import { LiveMessage } from 'react-aria-live';
 import { Link } from '@fluentui/react';
 /* @conditional-compile-remove(at-mention) */
-import { AtMentionDisplayOptions } from '../AtMentionFlyout';
+import { AtMentionDisplayOptions, AtMentionSuggestion } from '../AtMentionFlyout';
 
 /* @conditional-compile-remove(data-loss-prevention) */
 import { FontIcon, Stack } from '@fluentui/react';
@@ -71,15 +71,60 @@ const MessageContentWithLiveAria = (props: MessageContentWithLiveAriaProps): JSX
 };
 
 const MessageContentAsRichTextHTML = (props: ChatMessageContentProps): JSX.Element => {
+  const htmlToReactParser = Parser(React);
   const liveAuthor = _formatString(props.strings.liveAuthorIntro, { author: `${props.message.senderDisplayName}` });
-  return (
-    <MessageContentWithLiveAria
-      message={props.message}
-      liveMessage={`${props.message.mine ? '' : liveAuthor} ${extractContent(props.message.content || '')}`}
-      ariaLabel={messageContentAriaText(props)}
-      content={processHtmlToReact(props)}
-    />
-  );
+
+  if (undefined === props.atMentionDisplayOptions?.atMentionSuggestionRenderer) {
+    return (
+      <MessageContentWithLiveAria
+        message={props.message}
+        liveMessage={`${props.message.mine ? '' : liveAuthor} ${extractContent(props.message.content || '')}`}
+        ariaLabel={messageContentAriaText(props)}
+        content={htmlToReactParser.parse(props.message.content ?? '')}
+      />
+    );
+  } else {
+    // Override the handling of the <msft-at-mention> tag in the HTML
+    const processNodeDefinitions = ProcessNodeDefinitions();
+    const processingInstructions: ProcessingInstructionType[] = [
+      {
+        shouldProcessNode: (node) => {
+          return node.name === 'msft-at-mention';
+        },
+        processNode: (node) => {
+          const atMentionSuggestionRenderer = props.atMentionDisplayOptions?.atMentionSuggestionRenderer;
+          const { userId, suggestionType, displayName } = node.attribs;
+          const suggestion: AtMentionSuggestion = {
+            userId: userId,
+            suggestionType: suggestionType,
+            displayName: displayName
+          };
+          return atMentionSuggestionRenderer ? atMentionSuggestionRenderer(suggestion) : <></>;
+        }
+      },
+      {
+        // Process everything else in the default way
+        shouldProcessNode: () => {
+          return true;
+        },
+        processNode: processNodeDefinitions.processDefaultNode
+      }
+    ];
+
+    const htmlContent = htmlToReactParser.parseWithInstructions(
+      props.message.content ?? '',
+      IsValidNodeDefinitions.alwaysValid,
+      processingInstructions
+    );
+    return (
+      <MessageContentWithLiveAria
+        message={props.message}
+        liveMessage={`${props.message.mine ? '' : liveAuthor} ${extractContent(props.message.content || '')}`}
+        ariaLabel={messageContentAriaText(props)}
+        content={htmlContent}
+      />
+    );
+  }
 };
 
 const MessageContentAsText = (props: ChatMessageContentProps): JSX.Element => {
