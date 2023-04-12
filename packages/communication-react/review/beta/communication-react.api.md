@@ -551,6 +551,7 @@ export interface CallCompositeStrings {
     cameraLabel: string;
     cameraPermissionDenied: string;
     cameraTurnedOff: string;
+    captionsAvailableLanguageStrings: _CaptionsAvailableLanguageStrings;
     captionsBannerMoreButtonCallingLabel: string;
     captionsBannerMoreButtonTooltip: string;
     captionsSettingCancelButtonLabel: string;
@@ -688,6 +689,7 @@ export type CallErrors = {
 
 // @public
 export type CallErrorTarget = 'Call.addParticipant' | 'Call.dispose' | 'Call.feature' | 'Call.hangUp' | 'Call.hold' | 'Call.mute' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.muteIncomingAudio' | 'Call.off' | 'Call.on' | 'Call.removeParticipant' | 'Call.resume' | 'Call.sendDtmf' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.startAudio' | 'Call.startScreenSharing' | 'Call.startVideo' | 'Call.stopScreenSharing' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.stopAudio' | 'Call.stopVideo' | 'Call.unmute' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.unmuteIncomingAudio' | 'CallAgent.dispose' | 'CallAgent.feature' | 'CallAgent.join' | 'CallAgent.off' | 'CallAgent.on' | 'CallAgent.startCall' | 'CallClient.createCallAgent' | 'CallClient.createTeamsCallAgent' | 'CallClient.feature' | 'CallClient.getDeviceManager' | /* @conditional-compile-remove(calling-beta-sdk) */ 'CallClient.getEnvironmentInfo' | 'DeviceManager.askDevicePermission' | 'DeviceManager.getCameras' | 'DeviceManager.getMicrophones' | 'DeviceManager.getSpeakers' | 'DeviceManager.off' | 'DeviceManager.on' | 'DeviceManager.selectMicrophone' | 'DeviceManager.selectSpeaker' | 'IncomingCall.accept' | 'IncomingCall.reject' | /* @conditional-compile-remove(calling-beta-sdk) */ /* @conditional-compile-remove(teams-identity-support) */ 'TeamsCall.addParticipant' | /* @conditional-compile-remove(video-background-effects) */ 'VideoEffectsFeature.startEffects' | /* @conditional-compile-remove(calling-beta-sdk) */ 'CallAgent.handlePushNotification' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.admit' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.rejectParticipant' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.admitAll';
+
 // @public
 export type CallIdChangedListener = (event: {
     callId: string;
@@ -1186,6 +1188,92 @@ export type CameraSitePermissionsStrings = SitePermissionsStrings;
 export type CancelEditCallback = (messageId: string, metadata?: Record<string, string>, options?: {
     attachedFilesMetadata?: FileMetadata[];
 }) => void;
+
+// @internal
+export interface _CaptionsAvailableLanguageStrings {
+    // (undocumented)
+    'ar-ae': string;
+    // (undocumented)
+    'ar-sa': string;
+    // (undocumented)
+    'cs-cz': string;
+    // (undocumented)
+    'cy-gb': string;
+    // (undocumented)
+    'da-dk': string;
+    // (undocumented)
+    'de-de': string;
+    // (undocumented)
+    'el-gr': string;
+    // (undocumented)
+    'en-au': string;
+    // (undocumented)
+    'en-ca': string;
+    // (undocumented)
+    'en-gb': string;
+    // (undocumented)
+    'en-in': string;
+    // (undocumented)
+    'en-nz': string;
+    // (undocumented)
+    'en-us': string;
+    // (undocumented)
+    'es-es': string;
+    // (undocumented)
+    'es-mx': string;
+    // (undocumented)
+    'fi-fi': string;
+    // (undocumented)
+    'fr-ca': string;
+    // (undocumented)
+    'fr-fr': string;
+    // (undocumented)
+    'he-il': string;
+    // (undocumented)
+    'hi-in': string;
+    // (undocumented)
+    'hu-hu': string;
+    // (undocumented)
+    'it-it': string;
+    // (undocumented)
+    'ja-jp': string;
+    // (undocumented)
+    'ko-kr': string;
+    // (undocumented)
+    'nb-no': string;
+    // (undocumented)
+    'nl-be': string;
+    // (undocumented)
+    'nl-nl': string;
+    // (undocumented)
+    'pl-pl': string;
+    // (undocumented)
+    'pt-br': string;
+    // (undocumented)
+    'pt-pt': string;
+    // (undocumented)
+    'ro-ro': string;
+    // (undocumented)
+    'ru-ru': string;
+    // (undocumented)
+    'sk-sk': string;
+    // (undocumented)
+    'sv-se': string;
+    // (undocumented)
+    'th-th': string;
+    // (undocumented)
+    'tr-tr': string;
+    // (undocumented)
+    'uk-ua': string;
+    // (undocumented)
+    'vi-vn': string;
+    // (undocumented)
+    'zh-cn': string;
+    // (undocumented)
+    'zh-hk': string;
+    // (undocumented)
+    'zh-tw': string;
+}
 
 // @beta (undocumented)
 export interface CaptionsCallFeatureState {

@@ -26,6 +26,8 @@ import {
 } from './styles/CaptionsSettingModal.styles';
 import { _captionsOptions } from './StartCaptionsButton';
 import { defaultSpokenLanguage } from './utils';
+import { _CaptionsAvailableLanguageStrings } from '../types';
+
 /**
  * @internal
  * strings for captions setting modal
@@ -49,6 +51,7 @@ export interface _CaptionsSettingModalProps {
   onSetSpokenLanguage: (language: string) => Promise<void>;
   onStartCaptions: (captionsOptions?: _captionsOptions) => Promise<void>;
   currentSpokenLanguage: string;
+  captionsAvailableLanguageStrings: _CaptionsAvailableLanguageStrings;
   isCaptionsFeatureActive?: boolean;
   strings?: _CaptionsSettingModalStrings;
   showModal?: boolean;
@@ -68,7 +71,8 @@ export const _CaptionsSettingModal = (props: _CaptionsSettingModalProps): JSX.El
     onSetSpokenLanguage,
     onDismissCaptionsSetting,
     onStartCaptions,
-    strings
+    strings,
+    captionsAvailableLanguageStrings
   } = props;
 
   const theme = useTheme();
@@ -88,13 +92,13 @@ export const _CaptionsSettingModal = (props: _CaptionsSettingModalProps): JSX.El
     if (isCaptionsFeatureActive) {
       onSetSpokenLanguage(language);
     } else {
-      onStartCaptions({ spokenLanguage: selectedItem.text });
+      onStartCaptions({ spokenLanguage: language });
     }
     dismiss();
   };
 
   const dropdownOptions: IDropdownOption[] = supportedSpokenLanguages.map((language) => {
-    return { key: language, text: language };
+    return { key: language, text: captionsAvailableLanguageStrings[language] };
   });
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -150,7 +154,7 @@ export const _CaptionsSettingModal = (props: _CaptionsSettingModalProps): JSX.El
             <DefaultButton
               styles={buttonStyles(theme)}
               onClick={() => {
-                confirm(selectedItem.text);
+                confirm(selectedItem.key.toString());
               }}
             >
               <span>{strings?.captionsSettingConfirmButtonLabel}</span>
