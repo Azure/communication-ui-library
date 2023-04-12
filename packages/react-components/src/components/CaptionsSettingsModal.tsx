@@ -98,7 +98,7 @@ export const _CaptionsSettingsModal = (props: _CaptionsSettingsModalProps): JSX.
   };
 
   const dropdownOptions: IDropdownOption[] = supportedSpokenLanguages.map((language) => {
-    return { key: language, text: captionsAvailableLanguageStrings[language] };
+    return { key: language, text: captionsAvailableLanguageStrings[language] ?? language };
   });
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
