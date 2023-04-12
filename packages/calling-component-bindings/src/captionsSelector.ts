@@ -74,7 +74,7 @@ export const _changeSpokenLanguageSelector: _ChangeSpokenLanguageSelector = rese
   (supportedSpokenLanguages, currentSpokenLanguage, isCaptionsFeatureActive) => {
     return {
       supportedSpokenLanguages: supportedSpokenLanguages ?? ['en-us'],
-      currentSpokenLanguage: currentSpokenLanguage,
+      currentSpokenLanguage: currentSpokenLanguage ?? 'en-us',
       isCaptionsFeatureActive: isCaptionsFeatureActive ?? false
     };
   }

@@ -110,9 +110,6 @@ const createCompositeHandlers = memoizeOne(
     /* @conditional-compile-remove(close-captions) */
     onStartCaptions: async (captionsOptions) => {
       await adapter.startCaptions(captionsOptions);
-      if (captionsOptions?.spokenLanguage && captionsOptions.spokenLanguage !== '') {
-        await adapter.setSpokenLanguage(captionsOptions.spokenLanguage);
-      }
     },
     /* @conditional-compile-remove(close-captions) */
     onStopCaptions: async () => {
