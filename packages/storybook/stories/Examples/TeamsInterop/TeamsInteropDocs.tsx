@@ -16,7 +16,8 @@ export const getDocs: () => JSX.Element = () => {
         Azure Communication Services applications can inter-operate with Microsoft Teams. There are some additional
         considerations when connecting to a Teams meeting.
       </Description>
-      <Heading>Compliance notifications for recording and transcription</Heading>
+      <Heading>Compliance Banner</Heading>
+      <Subheading>Compliance notifications for recording and transcription</Subheading>
       <Description>
         This example shows how you might notify your users when a Teams meeting is being recorded or transcribed. Here,
         a MessageBar is optionally added to the video frame:
@@ -25,14 +26,11 @@ export const getDocs: () => JSX.Element = () => {
       <Source code={ComplianceBannerText} />
       <Subheading>Use Compliance Banner</Subheading>
       <Source code={CallComponentText} />
-      <Title>Lobby Component</Title>
+      <Heading>Lobby Component</Heading>
       <Description>The Lobby component can be used for scenarios where the call is in a waiting state.</Description>
-      <Heading>Create a Lobby Component</Heading>
+      <Subheading>Create a Lobby Component</Subheading>
       <Source code={LobbyComponentText} />
-      <Title>Inline Image Support</Title>
-      <Description>
-        In the Chat scenarios where Teams user sends inline image to ACS user, there are few additional setup needed.
-      </Description>
+      <Heading>Inline Images</Heading>
       <Subheading>Use composite with Inline Image Support</Subheading>
       <Description>
         If we are planning to integrate the Composite to your application, then you create the Adapter with Azure
