@@ -18,6 +18,7 @@ import {
   defaultMockRemotePSTNParticipant,
   test
 } from './fixture';
+import { MockRemoteParticipantState } from '../../../common';
 
 test.describe('Participant pane tests', async () => {
   /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
@@ -300,5 +301,21 @@ test.describe('Participant pane tests', async () => {
     await pageClick(page, dataUiId('call-composite-participants-button'));
 
     expect(await stableScreenshot(page)).toMatchSnapshot('participant-list-connecting-participant-desktop.png');
+  });
+
+  /* @conditional-compile-remove(total-participant-count) */
+  test.only('Participant count should be shown correctly with large numbers of people', async ({ page, serverUrl }) => {
+    const participants: MockRemoteParticipantState[] = [];
+    for (let i = 0; i < 150; i++) {
+      participants.push(defaultMockRemoteParticipant(`Joni Solberg ${i}`));
+    }
+
+    const initialState = defaultMockCallAdapterState(participants);
+    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
+
+    await waitForSelector(page, dataUiId('call-composite-participants-button'));
+    await pageClick(page, dataUiId('call-composite-participants-button'));
+
+    expect(await stableScreenshot(page)).toMatchSnapshot('participant-list-large-number-of-participants.png');
   });
 });
