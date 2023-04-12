@@ -88,11 +88,14 @@ export const _CaptionsSettingsModal = (props: _CaptionsSettingsModalProps): JSX.
     }
   };
 
-  const confirm = (languageCode: string): void => {
+  const confirm = async (languageCode: string): Promise<void> => {
     if (isCaptionsFeatureActive) {
       onSetSpokenLanguage(languageCode);
     } else {
-      onStartCaptions({ spokenLanguage: languageCode });
+      await onStartCaptions({ spokenLanguage: languageCode });
+      // set spoken language when start captions with a spoken language specified.
+      // this is to fix the bug when a second user starts captions with a new spoken language, captions bot ignore that spoken language
+      onSetSpokenLanguage(languageCode);
     }
     dismiss();
   };

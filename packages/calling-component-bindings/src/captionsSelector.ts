@@ -44,8 +44,8 @@ export const _startCaptionsButtonSelector: _StartCaptionsButtonSelector = resele
   (isCaptionsFeatureActive, currentCaptionLanguage, currentSpokenLanguage) => {
     return {
       checked: isCaptionsFeatureActive ?? false,
-      currentCaptionLanguage: currentCaptionLanguage,
-      currentSpokenLanguage: currentSpokenLanguage
+      currentCaptionLanguage: currentCaptionLanguage ?? 'en-us',
+      currentSpokenLanguage: currentSpokenLanguage ?? 'en-us'
     };
   }
 );

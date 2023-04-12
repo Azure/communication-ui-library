@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { ControlBarButton, ControlBarButtonProps } from './ControlBarButton';
-import React from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { _HighContrastAwareIcon } from './HighContrastAwareIcon';
 import { defaultSpokenLanguage } from './utils';
 
@@ -26,9 +26,14 @@ export interface _StartCaptionsButtonProps extends ControlBarButtonProps {
   onStartCaptions: (captionsOptions?: _captionsOptions) => Promise<void>;
   /**
    * Utility property for using this component with communication react handlers
-   * Start captions based on captions state
+   * Stop captions based on captions state
    */
   onStopCaptions: () => Promise<void>;
+  /**
+   * Utility property for using this component with communication react handlers
+   * set captions spoken language
+   */
+  onSetSpokenLanguage: (language: string) => Promise<void>;
   /**
    * Spoken language set for starting captions
    */
@@ -71,7 +76,7 @@ export interface _StartCaptionsButtonStrings {
  * @internal
  */
 export const _StartCaptionsButton = (props: _StartCaptionsButtonProps): JSX.Element => {
-  const { onStartCaptions, onStopCaptions, currentSpokenLanguage, strings } = props;
+  const { onStartCaptions, onStopCaptions, onSetSpokenLanguage, currentSpokenLanguage, strings } = props;
 
   const onRenderStartIcon = (): JSX.Element => {
     /* @conditional-compile-remove(close-captions) */
@@ -84,17 +89,20 @@ export const _StartCaptionsButton = (props: _StartCaptionsButtonProps): JSX.Elem
     return <></>;
   };
 
-  const captionsOptions: _captionsOptions = {
-    spokenLanguage: currentSpokenLanguage === '' ? defaultSpokenLanguage : currentSpokenLanguage
-  };
+  const captionsOptions: _captionsOptions = useMemo(() => {
+    return { spokenLanguage: currentSpokenLanguage === '' ? defaultSpokenLanguage : currentSpokenLanguage };
+  }, [currentSpokenLanguage]);
 
-  const onToggleStartCaptions = (): void => {
+  const onToggleStartCaptions = useCallback(async (): Promise<void> => {
     if (props.checked) {
       onStopCaptions();
     } else {
-      onStartCaptions(captionsOptions);
+      await onStartCaptions(captionsOptions);
+      // set spoken language when start captions with a spoken language specified.
+      // this is to fix the bug when a second user starts captions with a new spoken language, captions bot ignore that spoken language
+      onSetSpokenLanguage(captionsOptions.spokenLanguage);
     }
-  };
+  }, [props.checked, onStartCaptions, onStopCaptions, onSetSpokenLanguage, captionsOptions]);
 
   return (
     <ControlBarButton

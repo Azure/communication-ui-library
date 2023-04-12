@@ -285,6 +285,20 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
       : startCaptionsButtonProps.currentSpokenLanguage
   );
   /* @conditional-compile-remove(close-captions) */
+  const onToggleChange = useCallback(async () => {
+    if (!startCaptionsButtonProps.checked) {
+      await startCaptionsButtonHandlers.onStartCaptions({
+        spokenLanguage: currentSpokenLanguage
+      });
+      // set spoken language when start captions with a spoken language specified.
+      // this is to fix the bug when a second user starts captions with a new spoken language, captions bot ignore that spoken language
+      startCaptionsButtonHandlers.onSetSpokenLanguage(currentSpokenLanguage);
+    } else {
+      startCaptionsButtonHandlers.onStopCaptions();
+    }
+  }, [startCaptionsButtonProps.checked, startCaptionsButtonHandlers, currentSpokenLanguage]);
+
+  /* @conditional-compile-remove(close-captions) */
   if (props.isCaptionsSupported) {
     const captionsDrawerItems: DrawerMenuItemProps[] = [];
 
@@ -311,15 +325,7 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
           <Toggle
             checked={startCaptionsButtonProps.checked}
             styles={themedToggleButtonStyle(theme, startCaptionsButtonProps.checked)}
-            onChange={() => {
-              if (!startCaptionsButtonProps.checked) {
-                startCaptionsButtonHandlers.onStartCaptions({
-                  spokenLanguage: currentSpokenLanguage
-                });
-              } else {
-                startCaptionsButtonHandlers.onStopCaptions();
-              }
-            }}
+            onChange={onToggleChange}
           />
         </Stack>
       )
