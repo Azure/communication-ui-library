@@ -64,7 +64,9 @@ import { useLocale } from '../localization/LocalizationProvider';
 import { isNarrowWidth, _useContainerWidth } from './utils/responsive';
 import getParticipantsWhoHaveReadMessage from './utils/getParticipantsWhoHaveReadMessage';
 /* @conditional-compile-remove(file-sharing) */
-import { FileDownloadHandler, FileMetadata } from './FileDownloadCards';
+import { FileDownloadHandler } from './FileDownloadCards';
+/* @conditional-compile-remove(file-sharing) */ /* @conditional-compile-remove(teams-inline-images) */
+import { FileMetadata } from './FileDownloadCards';
 /* @conditional-compile-remove(teams-inline-images) */
 import { AttachmentDownloadResult } from './FileDownloadCards';
 import { useTheme } from '../theming';
