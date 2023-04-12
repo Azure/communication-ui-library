@@ -1,17 +1,24 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { useTheme } from '@internal/react-components';
 import React from 'react';
+/* @conditional-compile-remove(close-captions) */
+import { useTheme } from '@internal/react-components';
+/* @conditional-compile-remove(close-captions) */
 import { _CaptionsSettingsModal } from '@internal/react-components';
+/* @conditional-compile-remove(close-captions) */
 import { _changeSpokenLanguageSelector } from '@internal/calling-component-bindings';
+/* @conditional-compile-remove(close-captions) */
 import {
   _DrawerMenu as DrawerMenu,
   _DrawerMenuItemProps as DrawerMenuItemProps,
   _DrawerMenuStyles
 } from '@internal/react-components';
+/* @conditional-compile-remove(close-captions) */
 import { useAdaptedSelector } from '../../CallComposite/hooks/useAdaptedSelector';
+/* @conditional-compile-remove(close-captions) */
 import { useHandlers } from '../../CallComposite/hooks/useHandlers';
+/* @conditional-compile-remove(close-captions) */
 import { spokenLanguageDrawerStyles } from './SpokenLanguageDrawer.styles';
 
 /** @private */
@@ -26,11 +33,12 @@ export interface SpokenLanguageDrawerStrings {
 
 /** @private */
 export const SpokenLanguageDrawer = (props: {
-  setCurrentSpokenLanguage: (language: string) => void;
-  currentSpokenLanguage: string;
-  onLightDismiss: () => void;
-  strings: SpokenLanguageDrawerStrings;
+  /* @conditional-compile-remove(close-captions) */ setCurrentSpokenLanguage: (language: string) => void;
+  /* @conditional-compile-remove(close-captions) */ currentSpokenLanguage: string;
+  /* @conditional-compile-remove(close-captions) */ onLightDismiss: () => void;
+  /* @conditional-compile-remove(close-captions) */ strings: SpokenLanguageDrawerStrings;
 }): JSX.Element => {
+  /* @conditional-compile-remove(close-captions) */
   const theme = useTheme();
 
   /* @conditional-compile-remove(close-captions) */
@@ -49,6 +57,7 @@ export const SpokenLanguageDrawer = (props: {
       secondaryIconProps: props.currentSpokenLanguage === language ? { iconName: 'Accept' } : undefined
     }));
 
+  /* @conditional-compile-remove(close-captions) */
   return (
     <DrawerMenu
       heading={props.strings.spokenLanguageMenuTitle}
@@ -60,4 +69,5 @@ export const SpokenLanguageDrawer = (props: {
       styles={spokenLanguageDrawerStyles(theme)}
     />
   );
+  return <></>;
 };
