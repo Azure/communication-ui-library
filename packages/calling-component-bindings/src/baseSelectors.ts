@@ -12,9 +12,10 @@ import {
   RemoteParticipantState,
   LocalVideoStreamState,
   CallErrors,
-  DiagnosticsCallFeatureState,
-  CaptionsInfo
+  DiagnosticsCallFeatureState
 } from '@internal/calling-stateful-client';
+/* @conditional-compile-remove(close-captions) */
+import { CaptionsInfo } from '@internal/calling-stateful-client';
 
 /**
  * Common props used to reference calling declarative client state.
@@ -141,50 +142,44 @@ export const getParticipantCount = (state: CallClientState, props: CallingBaseSe
   return undefined;
 };
 
+/* @conditional-compile-remove(close-captions) */
 /** @private */
 export const getCaptions = (state: CallClientState, props: CallingBaseSelectorProps): CaptionsInfo[] | undefined => {
   return state.calls[props.callId]?.captionsFeature.captions;
-  return undefined;
 };
 
+/* @conditional-compile-remove(close-captions) */
 /** @private */
 export const getCaptionsStatus = (state: CallClientState, props: CallingBaseSelectorProps): boolean | undefined => {
   return state.calls[props.callId]?.captionsFeature.isCaptionsFeatureActive;
-  return undefined;
 };
 
+/* @conditional-compile-remove(close-captions) */
 /** @private */
-export const getCurrentCaptionLanguage = (
-  state: CallClientState,
-  props: CallingBaseSelectorProps
-): string | undefined => {
+export const getCurrentCaptionLanguage = (state: CallClientState, props: CallingBaseSelectorProps): string => {
   return state.calls[props.callId]?.captionsFeature.currentCaptionLanguage;
-  return undefined;
 };
 
+/* @conditional-compile-remove(close-captions) */
 /** @private */
-export const getCurrentSpokenLanguage = (
-  state: CallClientState,
-  props: CallingBaseSelectorProps
-): string | undefined => {
+export const getCurrentSpokenLanguage = (state: CallClientState, props: CallingBaseSelectorProps): string => {
   return state.calls[props.callId]?.captionsFeature.currentSpokenLanguage;
-  return undefined;
 };
 
+/* @conditional-compile-remove(close-captions) */
 /** @private */
 export const getSupportedCaptionLanguages = (
   state: CallClientState,
   props: CallingBaseSelectorProps
 ): string[] | undefined => {
   return state.calls[props.callId]?.captionsFeature.supportedCaptionLanguages;
-  return undefined;
 };
 
+/* @conditional-compile-remove(close-captions) */
 /** @private */
 export const getSupportedSpokenLanguages = (
   state: CallClientState,
   props: CallingBaseSelectorProps
 ): string[] | undefined => {
-  return state.calls[props.callId]?.captionsFeature.supportedSpokenLangauges;
-  return undefined;
+  return state.calls[props.callId]?.captionsFeature.supportedSpokenLanguages;
 };

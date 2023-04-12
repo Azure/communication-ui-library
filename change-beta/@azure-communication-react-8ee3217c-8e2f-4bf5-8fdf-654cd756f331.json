@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Introduce options bag wehen creating adapter",
+  "packageName": "@azure/communication-react",
+  "email": "joshlai@microsoft.com",
+  "dependentChangeType": "patch"
+}

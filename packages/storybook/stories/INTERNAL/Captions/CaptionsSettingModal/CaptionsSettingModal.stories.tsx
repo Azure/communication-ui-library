@@ -46,6 +46,17 @@ const CaptionsSettingModalStory = (args): JSX.Element => {
     return Promise.resolve();
   };
 
+  const strings = {
+    startCaptionsButtonTooltipOffContent: 'Turn on captions',
+    captionsSettingModalTitle: 'What language is being spoken?',
+    captionsSettingDropdownLabel: 'Spoken language',
+    captionsSettingDropdownInfoText: 'Language that everyone on this call is speaking.',
+    captionsSettingConfirmButtonLabel: 'Confirm',
+    captionsSettingCancelButtonLabel: 'Cancel',
+    captionsSettingModalAriaLabel: 'Captions Setting Modal',
+    captionsSettingCloseModalButtonAriaLabel: 'Close Captions Setting'
+  };
+
   return (
     <Stack>
       <_CaptionsSettingModal
@@ -56,6 +67,7 @@ const CaptionsSettingModalStory = (args): JSX.Element => {
         onSetSpokenLanguage={onSetSpokenLanguage}
         onStartCaptions={onStartCaptions}
         onDismissCaptionsSetting={onDismissCaptionsSetting}
+        strings={strings}
       />{' '}
     </Stack>
   );

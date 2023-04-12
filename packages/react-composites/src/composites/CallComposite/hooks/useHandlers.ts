@@ -107,19 +107,22 @@ const createCompositeHandlers = memoizeOne(
     onReplaceVideoBackground: async (backgroundReplacementConfig: BackgroundReplacementConfig) => {
       return await adapter.replaceVideoBackground(backgroundReplacementConfig);
     },
-
+    /* @conditional-compile-remove(close-captions) */
     onStartCaptions: async (captionsOptions) => {
       await adapter.startCaptions(captionsOptions);
+      if (captionsOptions?.spokenLanguage && captionsOptions.spokenLanguage !== '') {
+        await adapter.setSpokenLanguage(captionsOptions.spokenLanguage);
+      }
     },
-
+    /* @conditional-compile-remove(close-captions) */
     onStopCaptions: async () => {
       await adapter.stopCaptions();
     },
-
+    /* @conditional-compile-remove(close-captions) */
     onSetSpokenLanguage: async (language) => {
       await adapter.setSpokenLanguage(language);
     },
-
+    /* @conditional-compile-remove(close-captions) */
     onSetCaptionLanguage: async (language) => {
       await adapter.setCaptionLanguage(language);
     }

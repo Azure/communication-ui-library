@@ -15,9 +15,7 @@ import {
   ScreenShareButtonStrings,
   SendBoxStrings,
   TypingIndicatorStrings,
-  VideoGalleryStrings,
-  _StartCaptionsButtonStrings,
-  _CaptionsSettingModalStrings
+  VideoGalleryStrings
 } from '../components';
 /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
 import { HoldButtonStrings } from '../components';
@@ -157,10 +155,6 @@ export interface ComponentStrings {
    * Strings for the VerticalGallery.
    */
   VerticalGallery: VerticalGalleryStrings;
-  /** Strings for Start Captions Button */
-  startCaptionsButton: _StartCaptionsButtonStrings;
-  /** Strings for Captions Setting Modal */
-  captionsSettingModal: _CaptionsSettingModalStrings;
   captionsAvailableLanguages: _CaptionsAvailableLanguageStrings;
 }
 

@@ -1,19 +1,25 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-
+/* @conditional-compile-remove(close-captions) */
 import { CallClientState } from '@internal/calling-stateful-client';
+/* @conditional-compile-remove(close-captions) */
+import { CallingBaseSelectorProps } from './baseSelectors';
+/* @conditional-compile-remove(close-captions) */
 import {
-  CallingBaseSelectorProps,
   getCaptions,
   getCaptionsStatus,
   getCurrentCaptionLanguage,
   getCurrentSpokenLanguage,
   getSupportedSpokenLanguages
 } from './baseSelectors';
+/* @conditional-compile-remove(close-captions) */
 import * as reselect from 'reselect';
+/* @conditional-compile-remove(close-captions) */
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
+/* @conditional-compile-remove(close-captions) */
 import { _CaptionsInfo } from '@internal/react-components';
 
+/* @conditional-compile-remove(close-captions) */
 /**
  * Selector type for the {@link StartCaptionsButton} component.
  * @internal
@@ -23,16 +29,17 @@ export type _StartCaptionsButtonSelector = (
   props: CallingBaseSelectorProps
 ) => {
   checked: boolean;
-  currentCaptionLanguage: string | undefined;
-  currentSpokenLanguage: string | undefined;
+  currentCaptionLanguage: string;
+  currentSpokenLanguage: string;
 };
 
+/* @conditional-compile-remove(close-captions) */
 /**
  * Selector for {@link StartCaptionsButton} component.
  *
- * @private
+ * @internal
  */
-export const startCaptionsButtonSelector: _StartCaptionsButtonSelector = reselect.createSelector(
+export const _startCaptionsButtonSelector: _StartCaptionsButtonSelector = reselect.createSelector(
   [getCaptionsStatus, getCurrentCaptionLanguage, getCurrentSpokenLanguage],
   (isCaptionsFeatureActive, currentCaptionLanguage, currentSpokenLanguage) => {
     return {
@@ -42,7 +49,7 @@ export const startCaptionsButtonSelector: _StartCaptionsButtonSelector = reselec
     };
   }
 );
-
+/* @conditional-compile-remove(close-captions) */
 /**
  * Selector type for components for Changing spoken language
  * @internal
@@ -52,16 +59,17 @@ export type _ChangeSpokenLanguageSelector = (
   props: CallingBaseSelectorProps
 ) => {
   supportedSpokenLanguages: string[];
-  currentSpokenLanguage: string | undefined;
+  currentSpokenLanguage: string;
   isCaptionsFeatureActive: boolean;
 };
 
+/* @conditional-compile-remove(close-captions) */
 /**
  * Selector for {@link ChangeSpokenLanguageButton} component.
  *
- * @private
+ * @internal
  */
-export const changeSpokenLanguageSelector: _ChangeSpokenLanguageSelector = reselect.createSelector(
+export const _changeSpokenLanguageSelector: _ChangeSpokenLanguageSelector = reselect.createSelector(
   [getSupportedSpokenLanguages, getCurrentSpokenLanguage, getCaptionsStatus],
   (supportedSpokenLanguages, currentSpokenLanguage, isCaptionsFeatureActive) => {
     return {
@@ -71,12 +79,12 @@ export const changeSpokenLanguageSelector: _ChangeSpokenLanguageSelector = resel
     };
   }
 );
-
+/* @conditional-compile-remove(close-captions) */
 /**
  * Selector type for the {@link CaptionsBanner} component.
  * @internal
  */
-export type _CaptionsSelector = (
+export type _CaptionsBannerSelector = (
   state: CallClientState,
   props: CallingBaseSelectorProps
 ) => {
@@ -84,12 +92,13 @@ export type _CaptionsSelector = (
   isCaptionsOn: boolean;
 };
 
+/* @conditional-compile-remove(close-captions) */
 /**
  * Selector for {@link CaptionsBanner} component.
  *
- * @private
+ * @internal
  */
-export const captionsSelector: _CaptionsSelector = reselect.createSelector(
+export const _captionsBannerSelector: _CaptionsBannerSelector = reselect.createSelector(
   [getCaptions, getCaptionsStatus],
   (captions, isCaptionsFeatureActive) => {
     const captionsInfo = captions?.map((c) => {
@@ -105,3 +114,6 @@ export const captionsSelector: _CaptionsSelector = reselect.createSelector(
     };
   }
 );
+
+// This is a placeholder to bypass CC of "close-captions", remove when move the feature to stable
+export {};

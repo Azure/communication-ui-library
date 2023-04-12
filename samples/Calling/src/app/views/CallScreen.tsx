@@ -124,20 +124,60 @@ const AzureCommunicationCallScreen = (props: AzureCommunicationCallScreenProps):
     throw new Error('A MicrosoftTeamsUserIdentifier must be provided for Teams Identity Call.');
   }
 
-  /* @conditional-compile-remove(rooms) */
-  const callAdapterOptions: AzureCommunicationCallAdapterOptions = useMemo(
-    () => ({
-      roleHint
-    }),
-    [roleHint]
-  );
+  /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(video-background-effects) */
+  const callAdapterOptions: AzureCommunicationCallAdapterOptions = useMemo(() => {
+    /* @conditional-compile-remove(video-background-effects) */
+    const videoBackgroundImages = [
+      {
+        key: 'ab1',
+        url: '/backgrounds/abstract1.jpg',
+        tooltipText: 'Custom Background'
+      },
+      {
+        key: 'ab2',
+        url: '/backgrounds/abstract2.jpg',
+        tooltipText: 'Custom Background'
+      },
+      {
+        key: 'ab3',
+        url: '/backgrounds/abstract3.jpg',
+        tooltipText: 'Custom Background'
+      },
+      {
+        key: 'ab4',
+        url: '/backgrounds/room1.jpg',
+        tooltipText: 'Custom Background'
+      },
+      {
+        key: 'ab5',
+        url: '/backgrounds/room2.jpg',
+        tooltipText: 'Custom Background'
+      },
+      {
+        key: 'ab6',
+        url: '/backgrounds/room3.jpg',
+        tooltipText: 'Custom Background'
+      },
+      {
+        key: 'ab7',
+        url: '/backgrounds/room4.jpg',
+        tooltipText: 'Custom Background'
+      }
+    ];
+    return {
+      /* @conditional-compile-remove(rooms) */
+      roleHint,
+      /* @conditional-compile-remove(video-background-effects) */
+      videoBackgroundImages
+    };
+  }, [/* @conditional-compile-remove(rooms) */ roleHint]);
 
   const adapter = useAzureCommunicationCallAdapter(
     {
       ...adapterArgs,
       userId,
       locator,
-      /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(unsupported-browser) */
+      /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(unsupported-browser) */ /* @conditional-compile-remove(video-background-effects) */
       options: callAdapterOptions
     },
     afterCreate

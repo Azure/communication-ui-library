@@ -1,15 +1,16 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import {
-  TeamsCaptionsHandler,
-  PropertyChangedEvent,
-  TeamsCaptionsInfo,
-  TeamsCaptionsCallFeature
-} from '@azure/communication-calling';
+/* @conditional-compile-remove(close-captions) */
+import { PropertyChangedEvent } from '@azure/communication-calling';
+/* @conditional-compile-remove(close-captions) */
 import { CallContext } from './CallContext';
+/* @conditional-compile-remove(close-captions) */
 import { CallIdRef } from './CallIdRef';
+/* @conditional-compile-remove(close-captions) */
+import { TeamsCaptionsHandler, TeamsCaptionsInfo, TeamsCaptionsCallFeature } from '@azure/communication-calling';
 
+/* @conditional-compile-remove(close-captions) */
 /**
  * @private
  */
@@ -22,11 +23,9 @@ export class CaptionsSubscriber {
     this._callIdRef = callIdRef;
     this._context = context;
     this._captions = captions;
-
     if (this._captions.isCaptionsFeatureActive) {
       this._context.setIsCaptionActive(this._callIdRef.callId, this._captions.isCaptionsFeatureActive);
     }
-
     this._context.setAvailableSpokenLanguages(this._callIdRef.callId, this._captions.supportedSpokenLanguages);
     if ('availableSubtitleLanguages' in this._captions) {
       this._context.setAvailableCaptionLanguages(this._callIdRef.callId, this._captions.supportedCaptionLanguages);
@@ -55,3 +54,6 @@ export class CaptionsSubscriber {
     this._context.setIsCaptionActive(this._callIdRef.callId, this._captions.isCaptionsFeatureActive);
   };
 }
+
+// This is a placeholder to bypass CC of "close-captions", remove when move the feature to stable
+export {};

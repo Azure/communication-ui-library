@@ -24,8 +24,8 @@ import {
   titleClassName,
   titleContainerClassName
 } from './styles/CaptionsSettingModal.styles';
-import { useLocale } from '../localization';
 import { _captionsOptions } from './StartCaptionsButton';
+import { defaultSpokenLanguage } from './utils';
 /**
  * @internal
  * strings for captions setting modal
@@ -48,8 +48,8 @@ export interface _CaptionsSettingModalProps {
   supportedSpokenLanguages: string[];
   onSetSpokenLanguage: (language: string) => Promise<void>;
   onStartCaptions: (captionsOptions?: _captionsOptions) => Promise<void>;
+  currentSpokenLanguage: string;
   isCaptionsFeatureActive?: boolean;
-  currentSpokenLanguage?: string;
   strings?: _CaptionsSettingModalStrings;
   showModal?: boolean;
   onDismissCaptionsSetting?: () => void;
@@ -67,33 +67,31 @@ export const _CaptionsSettingModal = (props: _CaptionsSettingModalProps): JSX.El
     showModal,
     onSetSpokenLanguage,
     onDismissCaptionsSetting,
-    onStartCaptions
+    onStartCaptions,
+    strings
   } = props;
 
   const theme = useTheme();
 
   const [selectedItem, setSelectedItem] = useState<IDropdownOption>({
-    key: currentSpokenLanguage && currentSpokenLanguage !== '' ? currentSpokenLanguage : 'en-us',
-    text: currentSpokenLanguage && currentSpokenLanguage !== '' ? currentSpokenLanguage : 'en-us'
+    key: currentSpokenLanguage !== '' ? currentSpokenLanguage : defaultSpokenLanguage,
+    text: currentSpokenLanguage !== '' ? currentSpokenLanguage : defaultSpokenLanguage
   });
 
-  const localeStrings = useLocale().strings.captionsSettingModal;
   const supportedLanguageStrings = useLocale().strings.captionsAvailableLanguages;
-  const strings = props.strings ?? localeStrings;
-
-  const onDismissTriggered = (): void => {
+  const dismiss = (): void => {
     if (onDismissCaptionsSetting) {
       onDismissCaptionsSetting();
     }
   };
 
-  const onClickConfirm = (language: string): void => {
+  const confirm = (language: string): void => {
     if (isCaptionsFeatureActive) {
       onSetSpokenLanguage(language);
     } else {
       onStartCaptions({ spokenLanguage: selectedItem.text });
     }
-    onDismissTriggered();
+    dismiss();
   };
 
   const dropdownOptions: IDropdownOption[] = supportedSpokenLanguages.map((language) => {
@@ -111,15 +109,14 @@ export const _CaptionsSettingModal = (props: _CaptionsSettingModalProps): JSX.El
     return (
       <Stack>
         <Dropdown
-          label={strings.captionsSettingDropdownLabel}
+          label={strings?.captionsSettingDropdownLabel}
           selectedKey={selectedItem ? selectedItem.key : undefined}
-          // eslint-disable-next-line react/jsx-no-bind
           onChange={onChange}
-          placeholder={currentSpokenLanguage !== '' ? currentSpokenLanguage : 'en-us'}
+          placeholder={currentSpokenLanguage !== '' ? currentSpokenLanguage : defaultSpokenLanguage}
           options={dropdownOptions}
           styles={dropdownStyles}
         />
-        <Text className={dropdownInfoTextStyle(theme)}>{strings.captionsSettingDropdownInfoText}</Text>
+        <Text className={dropdownInfoTextStyle(theme)}>{strings?.captionsSettingDropdownInfoText}</Text>
       </Stack>
     );
   };
@@ -133,18 +130,18 @@ export const _CaptionsSettingModal = (props: _CaptionsSettingModalProps): JSX.El
     <>
       {
         <Modal
-          titleAriaId={strings.captionsSettingModalAriaLabel}
+          titleAriaId={strings?.captionsSettingModalAriaLabel}
           isOpen={showModal}
-          onDismiss={onDismissTriggered}
+          onDismiss={dismiss}
           isBlocking={true}
           styles={captionsSettingModalStyle}
         >
           <Stack horizontal horizontalAlign="space-between" verticalAlign="center" className={titleContainerClassName}>
-            <Text className={titleClassName}>{strings.captionsSettingModalTitle}</Text>
+            <Text className={titleClassName}>{strings?.captionsSettingModalTitle}</Text>
             <IconButton
               iconProps={{ iconName: 'Cancel' }}
-              ariaLabel={strings.captionsSettingCloseModalButtonAriaLabel}
-              onClick={onDismissTriggered}
+              ariaLabel={strings?.captionsSettingCloseModalButtonAriaLabel}
+              onClick={dismiss}
               style={{ color: theme.palette.black }}
             />
           </Stack>
@@ -154,13 +151,13 @@ export const _CaptionsSettingModal = (props: _CaptionsSettingModalProps): JSX.El
             <DefaultButton
               styles={buttonStyles(theme)}
               onClick={() => {
-                onClickConfirm(selectedItem.text);
+                confirm(selectedItem.text);
               }}
             >
-              <span>{strings.captionsSettingConfirmButtonLabel}</span>
+              <span>{strings?.captionsSettingConfirmButtonLabel}</span>
             </DefaultButton>
-            <DefaultButton onClick={onDismissTriggered} styles={buttonStyles(theme)}>
-              <span>{strings.captionsSettingCancelButtonLabel}</span>
+            <DefaultButton onClick={dismiss} styles={buttonStyles(theme)}>
+              <span>{strings?.captionsSettingCancelButtonLabel}</span>
             </DefaultButton>
           </Stack>
         </Modal>

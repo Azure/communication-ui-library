@@ -323,21 +323,6 @@
     "leftNavButtonAriaLabel": "previous page",
     "rightNavButtonAriaLabel": "next page"
   },
-  "startCaptionsButton": {
-    "onLabel": "Turn on captions",
-    "offLabel": "Turn off captions",
-    "tooltipOnContent": "Turn off captions",
-    "tooltipOffContent": "Turn on captions"
-  },
-  "captionsSettingModal": {
-    "captionsSettingModalTitle": "What language is being spoken?",
-    "captionsSettingDropdownLabel": "Spoken language",
-    "captionsSettingDropdownInfoText": "Language that everyone on this call is speaking.",
-    "captionsSettingConfirmButtonLabel": "Confirm",
-    "captionsSettingCancelButtonLabel": "Cancel",
-    "captionsSettingModalAriaLabel": "Captions Setting Modal",
-    "captionsSettingCloseModalButtonAriaLabel": "Close Captions Setting"
-  },
   "captionsAvailableLanguages": {
     "ar-ae": "Arabic - U.A.E.",
     "ar-sa": "Arabic - Saudi Arabia",
