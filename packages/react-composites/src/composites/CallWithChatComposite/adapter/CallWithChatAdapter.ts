@@ -35,7 +35,9 @@ import {
 import { AddPhoneNumberOptions, DtmfTone } from '@azure/communication-calling';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 import { SendMessageOptions } from '@azure/communication-chat';
-/* @conditional-compile-remove(file-sharing) */
+/* @conditional-compile-remove(teams-inline-images) */
+import { AttachmentDownloadResult } from '@internal/react-components';
+/* @conditional-compile-remove(file-sharing) */ /* @conditional-compile-remove(teams-inline-images) */
 import { FileMetadata } from '@internal/react-components';
 /* @conditional-compile-remove(file-sharing) */
 import { FileUploadManager } from '../../ChatComposite';
@@ -308,7 +310,7 @@ export interface CallWithChatAdapterManagement {
   /** @beta */
   updateFileUploadMetadata: (id: string, metadata: FileMetadata) => void;
   /* @conditional-compile-remove(teams-inline-images) */
-  downloadAuthenticatedAttachment?: (attachmentUrl: string) => Promise<string>;
+  downloadAuthenticatedAttachment?: (attachmentUrl: string) => Promise<AttachmentDownloadResult>;
   /* @conditional-compile-remove(PSTN-calls) */
   /**
    * Puts the Call in a Localhold.

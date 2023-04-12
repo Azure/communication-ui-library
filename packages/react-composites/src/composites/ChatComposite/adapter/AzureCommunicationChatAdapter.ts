@@ -36,6 +36,9 @@ import {
   convertFileUploadsUiStateToMessageMetadata
 } from './AzureCommunicationFileUploadAdapter';
 import { useEffect, useRef, useState } from 'react';
+/* @conditional-compile-remove(teams-inline-images) */
+import { AttachmentDownloadResult } from '@internal/react-components';
+/* @conditional-compile-remove(file-sharing) */ /* @conditional-compile-remove(teams-inline-images) */
 import { FileMetadata } from '@internal/react-components';
 /* @conditional-compile-remove(file-sharing) */
 import { FileUploadManager } from '../file-sharing';
@@ -114,7 +117,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   private context: ChatContext;
   /* @conditional-compile-remove(teams-inline-images) */
   private credential?: CommunicationTokenCredential = undefined;
-  /* @conditional-compile-remove(file-sharing) */ /* @conditional-compile-remove(teams-inline-images) */
+  /* @conditional-compile-remove(file-sharing) */
   private fileUploadAdapter: FileUploadAdapter;
   private handlers: ChatHandlers;
   private emitter: EventEmitter = new EventEmitter();
@@ -324,7 +327,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   }
 
   /* @conditional-compile-remove(teams-inline-images) */
-  async downloadAuthenticatedAttachment(attachmentUrl: string): Promise<string> {
+  async downloadAuthenticatedAttachment(attachmentUrl: string): Promise<AttachmentDownloadResult> {
     return this.asyncTeeErrorToEventEmitter(async () => {
       if (this.credential === undefined) {
         const e = new Error();
@@ -355,7 +358,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
 
       const response = await fetchWithAuthentication(attachmentUrl, accessToken.token);
       const blob = await response.blob();
-      return URL.createObjectURL(blob);
+      return { blobUrl: URL.createObjectURL(blob) };
     });
   }
 
