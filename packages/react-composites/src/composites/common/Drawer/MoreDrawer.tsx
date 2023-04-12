@@ -267,11 +267,10 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
     });
   }
 
-  //Captions drawer menu
   /* @conditional-compile-remove(close-captions) */
+  //Captions drawer menu
   const supportedLanguageStrings = useLocale().strings.call.captionsAvailableLanguageStrings;
   /* @conditional-compile-remove(close-captions) */
-  // Captions drawers
   const startCaptionsButtonProps = useAdaptedSelector(_startCaptionsButtonSelector);
   /* @conditional-compile-remove(close-captions) */
   const startCaptionsButtonHandlers = useHandlers(_StartCaptionsButton);
