@@ -74,7 +74,7 @@ const config: PlaywrightTestConfig = {
         viewport: DESKTOP_4_TO_3_VIEWPORT,
         launchOptions: { ...chromeLaunchOptions },
         contextOptions: {
-          userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0'
+          userAgent: 'Windows Chrome/999.0.0.0'
         }
       }
     },
@@ -84,7 +84,7 @@ const config: PlaywrightTestConfig = {
         viewport: DESKTOP_16_TO_9_VIEWPORT,
         launchOptions: { ...chromeLaunchOptions },
         contextOptions: {
-          userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0'
+          userAgent: 'Windows Chrome/999.0.0.0'
         }
       },
       testMatch: ['OverflowGallery.test.ts']
@@ -94,16 +94,13 @@ const config: PlaywrightTestConfig = {
       use: {
         ...devices['Nexus 5'],
         launchOptions: { ...chromeLaunchOptions },
-        userAgent:
-          'Mozilla/5.0 (Linux; Android 12; SM-S901B) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Mobile Safari/537.36'
+        userAgent: 'Android 99 Chrome/999.0.0.0 Mobile'
       }
     },
     {
       name: 'Mobile Android Landscape',
       use: {
-        // Nexus 5 user agent string, taken from node_modules/.../playwright-core/.../deviceDescriptorsSource.json
-        userAgent:
-          'Mozilla/5.0 (Linux; Android 12; SM-S901B) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Mobile Safari/537.36',
+        userAgent: 'Android 99 Chrome/999.0.0.0 Mobile',
         // Support smallest supported mobile viewport (iPhone 5/SE) ({ width: 568, height: 320 })
         viewport: { width: 568, height: 320 },
         deviceScaleFactor: 2,

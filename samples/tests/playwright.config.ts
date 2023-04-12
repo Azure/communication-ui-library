@@ -38,7 +38,7 @@ const config: PlaywrightTestConfig = {
         },
         // using chromium useragent from windows to avoid breaking the unsupportedBrowser page
         contextOptions: {
-          userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0'
+          userAgent: 'Windows Chrome/999.0.0.0'
         }
       }
     }
