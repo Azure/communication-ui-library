@@ -842,7 +842,7 @@ export type CallWithChatEvent = 'callError' | 'chatError' | 'callEnded' | 'isMut
 
 // @beta
 export type CaptionsReceivedListener = (event: {
-    data: CaptionsInfo;
+    captionsInfo: CaptionsInfo;
 }) => void;
 
 // @public

@@ -82,7 +82,7 @@ export interface CommonCallingHandlers {
   /* @conditional-compile-remove(video-background-effects) */
   onReplaceVideoBackground: (backgroundReplacementConfig: BackgroundReplacementConfig) => Promise<void>;
   /* @conditional-compile-remove(close-captions) */
-  onStartCaptions: (captionsOptions?: captionsOptions) => Promise<void>;
+  onStartCaptions: (captionsOptions?: CaptionsOptions) => Promise<void>;
   /* @conditional-compile-remove(close-captions) */
   onStopCaptions: () => Promise<void>;
   /* @conditional-compile-remove(close-captions) */
@@ -96,7 +96,7 @@ export interface CommonCallingHandlers {
  *
  * @beta
  */
-export type captionsOptions = {
+export type CaptionsOptions = {
   spokenLanguage: string;
 };
 
@@ -429,7 +429,7 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       }
     };
     /* @conditional-compile-remove(close-captions) */
-    const onStartCaptions = async (captionsOptions?: captionsOptions): Promise<void> => {
+    const onStartCaptions = async (captionsOptions?: CaptionsOptions): Promise<void> => {
       await call?.feature(Features.TeamsCaptions).startCaptions(captionsOptions);
     };
     /* @conditional-compile-remove(close-captions) */

@@ -40,7 +40,7 @@ export type {
 } from '../../calling-component-bindings/src';
 
 /* @conditional-compile-remove(close-captions) */
-export type { captionsOptions } from '../../calling-component-bindings/src';
+export type { CaptionsOptions } from '../../calling-component-bindings/src';
 
 export type {
   ChatClientProviderProps,

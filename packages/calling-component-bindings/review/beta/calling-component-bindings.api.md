@@ -118,7 +118,7 @@ export type _CaptionsBannerSelector = (state: CallClientState, props: CallingBas
 export const _captionsBannerSelector: _CaptionsBannerSelector;
 
 // @beta
-export type captionsOptions = {
+export type CaptionsOptions = {
     spokenLanguage: string;
 };
 
@@ -175,7 +175,7 @@ export interface CommonCallingHandlers {
     // (undocumented)
     onStartCall: (participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[], options?: StartCallOptions) => void;
     // (undocumented)
-    onStartCaptions: (captionsOptions?: captionsOptions) => Promise<void>;
+    onStartCaptions: (captionsOptions?: CaptionsOptions) => Promise<void>;
     // (undocumented)
     onStartLocalVideo: () => Promise<void>;
     // (undocumented)
