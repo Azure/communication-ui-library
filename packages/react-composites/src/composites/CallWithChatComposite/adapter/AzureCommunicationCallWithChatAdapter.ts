@@ -18,6 +18,8 @@ import {
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions, DtmfTone } from '@azure/communication-calling';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
+/* @conditional-compile-remove(teams-inline-images) */
+import { AttachmentDownloadResult } from '@internal/react-components';
 /* @conditional-compile-remove(file-sharing) */
 import { FileMetadata } from '@internal/react-components';
 import {
@@ -397,9 +399,9 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     this.chatAdapter.updateFileUploadMetadata(id, metadata);
   };
   /* @conditional-compile-remove(teams-inline-images) */
-  async downloadAuthenticatedAttachment(attachmentUrl: string): Promise<string> {
+  async downloadAuthenticatedAttachment(attachmentUrl: string): Promise<AttachmentDownloadResult> {
     if (this.chatAdapter.downloadAuthenticatedAttachment === undefined) {
-      return '';
+      return { blobUrl: '' };
     }
     return await this.chatAdapter.downloadAuthenticatedAttachment(attachmentUrl);
   }

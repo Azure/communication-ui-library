@@ -5,6 +5,8 @@ import { CallWithChatAdapter } from './CallWithChatAdapter';
 import { ChatAdapter, ChatAdapterState } from '../../ChatComposite';
 /* @conditional-compile-remove(file-sharing) */
 import { FileUploadManager } from '../../ChatComposite';
+/* @conditional-compile-remove(teams-inline-images) */
+import { AttachmentDownloadResult } from '@internal/react-components';
 /* @conditional-compile-remove(file-sharing) */
 import { FileMetadata } from '@internal/react-components';
 import { ErrorBarStrings } from '@internal/react-components';
@@ -128,9 +130,9 @@ export class CallWithChatBackedChatAdapter implements ChatAdapter {
   };
 
   /* @conditional-compile-remove(teams-inline-images) */
-  public async downloadAuthenticatedAttachment(attachmentUrl: string): Promise<string> {
+  public async downloadAuthenticatedAttachment(attachmentUrl: string): Promise<AttachmentDownloadResult> {
     if (!this.callWithChatAdapter.downloadAuthenticatedAttachment) {
-      return '';
+      return { blobUrl: '' };
     }
 
     return await this.callWithChatAdapter.downloadAuthenticatedAttachment(attachmentUrl);
