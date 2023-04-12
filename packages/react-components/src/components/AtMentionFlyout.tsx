@@ -10,6 +10,7 @@ import {
   suggestionItemStackStyle,
   suggestionItemWrapperStyle
 } from './styles/AtMentionFlyout.style';
+/* @conditional-compile-remove(at-mention) */
 import { useIdentifiers } from '../identifiers';
 import { useLocale } from '../localization';
 
@@ -115,6 +116,7 @@ export const _AtMentionFlyout = (props: _AtMentionFlyoutProps): JSX.Element => {
   }
   const { suggestions, title = 'Suggestions', target, suggestionItemRenderer, onSuggestionSelected } = props;
   const theme = useTheme();
+  /* @conditional-compile-remove(at-mention) */
   const ids = useIdentifiers();
   const localeStrings = useLocale().strings.participantItem;
 
@@ -148,6 +150,7 @@ export const _AtMentionFlyout = (props: _AtMentionFlyoutProps): JSX.Element => {
     return (
       <div
         data-is-focusable={true}
+        /* @conditional-compile-remove(at-mention) */
         data-ui-id={ids.atMentionSuggestionItem}
         key={suggestion.userId}
         onClick={() => onSuggestionSelected && onSuggestionSelected(suggestion)}
@@ -168,7 +171,11 @@ export const _AtMentionFlyout = (props: _AtMentionFlyoutProps): JSX.Element => {
         {title} {/* TODO: Localization  */}
       </Stack.Item>
       <FocusZone className={suggestionListContainerStyle} shouldFocusOnMount={true}>
-        <Stack data-ui-id={ids.atMentionSuggestionList} className={suggestionListStyle}>
+        <Stack
+          /* @conditional-compile-remove(at-mention) */
+          data-ui-id={ids.atMentionSuggestionList}
+          className={suggestionListStyle}
+        >
           {suggestions.map((suggestion) =>
             suggestionItemRenderer
               ? suggestionItemRenderer(suggestion, onSuggestionSelected)
