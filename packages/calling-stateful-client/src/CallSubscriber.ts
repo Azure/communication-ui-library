@@ -180,6 +180,7 @@ export class CallSubscriber {
         this._context,
         this._call.feature(Features.TeamsCaptions)
       );
+      this._call.off('stateChanged', this.initCaptionSubscriber);
     }
   };
 

@@ -51,8 +51,8 @@ export const CaptionsBannerMoreButton = (props: CaptionsBannerMoreButtonProps): 
   const moreButtonContextualMenuItems: IContextualMenuItem[] = [];
 
   /* @conditional-compile-remove(close-captions) */
-  const startCaptions = useCallback(() => {
-    startCaptionsButtonHandlers.onStartCaptions({
+  const startCaptions = useCallback(async () => {
+    await startCaptionsButtonHandlers.onStartCaptions({
       spokenLanguage: startCaptionsButtonProps.currentSpokenLanguage
     });
     // set spoken language when start captions with a spoken language specified.

@@ -57,8 +57,8 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
   /* @conditional-compile-remove(close-captions) */
   const startCaptionsButtonHandlers = useHandlers(_StartCaptionsButton);
   /* @conditional-compile-remove(close-captions) */
-  const startCaptions = useCallback(() => {
-    startCaptionsButtonHandlers.onStartCaptions({
+  const startCaptions = useCallback(async () => {
+    await startCaptionsButtonHandlers.onStartCaptions({
       spokenLanguage: startCaptionsButtonProps.currentSpokenLanguage
     });
     // set spoken language when start captions with a spoken language specified.

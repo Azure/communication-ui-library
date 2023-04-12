@@ -310,9 +310,9 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
           <Toggle
             checked={startCaptionsButtonProps.checked}
             styles={themedToggleButtonStyle(theme, startCaptionsButtonProps.checked)}
-            onChange={() => {
+            onChange={async () => {
               if (!startCaptionsButtonProps.checked) {
-                startCaptionsButtonHandlers.onStartCaptions({
+                await startCaptionsButtonHandlers.onStartCaptions({
                   spokenLanguage: currentSpokenLanguage
                 });
                 // set spoken language when start captions with a spoken language specified.

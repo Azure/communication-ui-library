@@ -93,11 +93,11 @@ export const _StartCaptionsButton = (props: _StartCaptionsButtonProps): JSX.Elem
     spokenLanguage: currentSpokenLanguage === '' ? defaultSpokenLanguage : currentSpokenLanguage
   };
 
-  const onToggleStartCaptions = (): void => {
+  const onToggleStartCaptions = async (): Promise<void> => {
     if (props.checked) {
       onStopCaptions();
     } else {
-      onStartCaptions(captionsOptions);
+      await onStartCaptions(captionsOptions);
       // set spoken language when start captions with a spoken language specified.
       // this is to fix the bug when a second user starts captions with a new spoken language, captions bot ignore that spoken language
       onSetSpokenLanguage(captionsOptions.spokenLanguage);
