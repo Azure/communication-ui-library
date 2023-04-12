@@ -33,16 +33,20 @@ export const getDocs: () => JSX.Element = () => {
       <Description>
         In the Chat scenarios where Teams user sends inline image to ACS user, there are few additional setup needed.
       </Description>
-      <Subheading>
-        If we are planning to integrate the Composite to your application, then you create the Chat Adapter like
-        following. Please note that inline image support is only avaliable in a Teams interoperbility chat, so we are
-        using CallWithChat compisite as an example. Assuming that our application is has a component named "ChatScreen":
-      </Subheading>
+      <Subheading>Use composite with Inline Image Support</Subheading>
+      <Description>
+        If we are planning to integrate the Composite to your application, then you create the Adapter with Azure
+        Communication Credential which would be used to fetch preview images. Please note that inline image support is
+        only avaliable in a Teams interoperbility chat, so here we are using CallWithChat compisite as an example.
+        Assuming that our application has a component named "ChatScreen" that would be used to deliver the chat
+        experience, we can then use the following code to render the chat screen with inline image support:
+      </Description>
       <Source code={InlineImageAdapterText} />
-      <Subheading>
+      <Subheading>Use component with Inline Image Support</Subheading>
+      <Description>
         If we are planning to integrate individual components to your application, then you can use the UI component
         "MessageThread" to render message with inline images like the following:
-      </Subheading>
+      </Description>
       <Source code={InlineImageText} />
     </>
   );
