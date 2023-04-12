@@ -14,7 +14,7 @@ import { BaseCustomStyles } from '@internal/react-components';
 import { Call } from '@azure/communication-calling';
 import { CallAgent } from '@azure/communication-calling';
 import { CallState } from '@internal/calling-stateful-client';
-import { _CaptionsAvailableLanguageStrings } from '@internal/react-components';
+import { CaptionsAvailableLanguageStrings } from '@internal/react-components';
 import { CaptionsInfo } from '@internal/calling-stateful-client';
 import type { ChatMessage } from '@azure/communication-chat';
 import { ChatParticipant } from '@azure/communication-chat';
@@ -377,7 +377,7 @@ export interface CallCompositeStrings {
     cameraLabel: string;
     cameraPermissionDenied: string;
     cameraTurnedOff: string;
-    captionsAvailableLanguageStrings: _CaptionsAvailableLanguageStrings;
+    captionsAvailableLanguageStrings: CaptionsAvailableLanguageStrings;
     captionsBannerMoreButtonCallingLabel: string;
     captionsBannerMoreButtonTooltip: string;
     captionsSettingsCancelButtonLabel: string;

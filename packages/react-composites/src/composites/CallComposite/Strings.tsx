@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 /* @conditional-compile-remove(close-captions) */
-import { _CaptionsAvailableLanguageStrings } from '@internal/react-components';
+import { CaptionsAvailableLanguageStrings } from '@internal/react-components';
 
 /**
  * Strings used by the {@link CallComposite} directly.
@@ -490,5 +490,5 @@ export interface CallCompositeStrings {
   /**
    * list of key value pairs that pairs language code to language names
    */
-  captionsAvailableLanguageStrings: _CaptionsAvailableLanguageStrings;
+  captionsAvailableLanguageStrings: CaptionsAvailableLanguageStrings;
 }

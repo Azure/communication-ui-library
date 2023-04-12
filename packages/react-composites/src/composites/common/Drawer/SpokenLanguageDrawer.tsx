@@ -7,7 +7,7 @@ import { useMemo, useCallback } from 'react';
 /* @conditional-compile-remove(close-captions) */
 import { useTheme } from '@internal/react-components';
 /* @conditional-compile-remove(close-captions) */
-import { _CaptionsSettingsModal, _CaptionsAvailableLanguageStrings } from '@internal/react-components';
+import { _CaptionsSettingsModal, CaptionsAvailableLanguageStrings } from '@internal/react-components';
 /* @conditional-compile-remove(close-captions) */
 import { _changeSpokenLanguageSelector } from '@internal/calling-component-bindings';
 /* @conditional-compile-remove(close-captions) */
@@ -39,7 +39,7 @@ export const SpokenLanguageDrawer = (props: {
   /* @conditional-compile-remove(close-captions) */ currentSpokenLanguage: string;
   /* @conditional-compile-remove(close-captions) */ onLightDismiss: () => void;
   /* @conditional-compile-remove(close-captions) */ strings: SpokenLanguageDrawerStrings;
-  /* @conditional-compile-remove(close-captions) */ supportedLanguageStrings: _CaptionsAvailableLanguageStrings;
+  /* @conditional-compile-remove(close-captions) */ supportedLanguageStrings: CaptionsAvailableLanguageStrings;
 }): JSX.Element => {
   /* @conditional-compile-remove(close-captions) */
   const theme = useTheme();
@@ -49,6 +49,7 @@ export const SpokenLanguageDrawer = (props: {
   /* @conditional-compile-remove(close-captions) */
   const changeSpokenLanguageHandlers = useHandlers(_CaptionsSettingsModal);
 
+  /* @conditional-compile-remove(close-captions) */
   const onSpokenLanguageDrawerItemClick = useCallback(
     (languageCode: string) => {
       props.setCurrentSpokenLanguage(languageCode);
@@ -61,7 +62,7 @@ export const SpokenLanguageDrawer = (props: {
     return changeSpokenLanguageProps?.supportedSpokenLanguages?.map((languageCode) => ({
       itemKey: languageCode,
       text: props.supportedLanguageStrings[languageCode] ?? languageCode,
-      onItemClick: onSpokenLanguageDrawerItemClick(languageCode),
+      onItemClick: () => onSpokenLanguageDrawerItemClick(languageCode),
       secondaryIconProps: props.currentSpokenLanguage === languageCode ? { iconName: 'Accept' } : undefined
     }));
   }, [

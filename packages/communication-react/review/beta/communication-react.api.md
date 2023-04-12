@@ -551,7 +551,7 @@ export interface CallCompositeStrings {
     cameraLabel: string;
     cameraPermissionDenied: string;
     cameraTurnedOff: string;
-    captionsAvailableLanguageStrings: _CaptionsAvailableLanguageStrings;
+    captionsAvailableLanguageStrings: CaptionsAvailableLanguageStrings;
     captionsBannerMoreButtonCallingLabel: string;
     captionsBannerMoreButtonTooltip: string;
     captionsSettingsCancelButtonLabel: string;
@@ -1189,8 +1189,8 @@ export type CancelEditCallback = (messageId: string, metadata?: Record<string, s
     attachedFilesMetadata?: FileMetadata[];
 }) => void;
 
-// @internal
-export interface _CaptionsAvailableLanguageStrings {
+// @beta
+export interface CaptionsAvailableLanguageStrings {
     // (undocumented)
     'ar-ae': string;
     // (undocumented)

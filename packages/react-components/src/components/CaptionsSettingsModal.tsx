@@ -26,7 +26,7 @@ import {
 } from './styles/CaptionsSettingsModal.styles';
 import { _captionsOptions } from './StartCaptionsButton';
 import { defaultSpokenLanguage } from './utils';
-import { _CaptionsAvailableLanguageStrings } from '../types';
+import { CaptionsAvailableLanguageStrings } from '../types';
 
 /**
  * @internal
@@ -51,7 +51,7 @@ export interface _CaptionsSettingsModalProps {
   onSetSpokenLanguage: (language: string) => Promise<void>;
   onStartCaptions: (captionsOptions?: _captionsOptions) => Promise<void>;
   currentSpokenLanguage: string;
-  captionsAvailableLanguageStrings: _CaptionsAvailableLanguageStrings;
+  captionsAvailableLanguageStrings: CaptionsAvailableLanguageStrings;
   isCaptionsFeatureActive?: boolean;
   strings?: _CaptionsSettingsModalStrings;
   showModal?: boolean;

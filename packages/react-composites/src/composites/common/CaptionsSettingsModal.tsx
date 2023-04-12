@@ -6,7 +6,7 @@ import React from 'react';
 import {
   _CaptionsSettingsModal,
   _CaptionsSettingsModalStrings,
-  _CaptionsAvailableLanguageStrings
+  CaptionsAvailableLanguageStrings
 } from '@internal/react-components';
 /* @conditional-compile-remove(close-captions) */
 import { useAdaptedSelector } from '../CallComposite/hooks/useAdaptedSelector';
@@ -39,7 +39,7 @@ export const CaptionsSettingsModal = (props: {
     captionsSettingsCloseModalButtonAriaLabel: strings.captionsSettingsCloseModalButtonAriaLabel
   };
   /* @conditional-compile-remove(close-captions) */
-  const captionsAvailableLanguageStrings: _CaptionsAvailableLanguageStrings = strings.captionsAvailableLanguageStrings;
+  const captionsAvailableLanguageStrings: CaptionsAvailableLanguageStrings = strings.captionsAvailableLanguageStrings;
 
   /* @conditional-compile-remove(close-captions) */
   return (

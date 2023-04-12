@@ -51,7 +51,7 @@ export type {
 } from './types';
 
 /* @conditional-compile-remove(close-captions) */
-export type { _CaptionsAvailableLanguageStrings } from './types';
+export type { CaptionsAvailableLanguageStrings } from './types';
 
 /* @conditional-compile-remove(data-loss-prevention) */
 export type { BlockedMessage } from './types';

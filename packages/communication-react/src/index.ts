@@ -320,4 +320,4 @@ export type {
   VerticalGalleryControlBarStyles
 } from '../../react-components/src';
 /* @conditional-compile-remove(close-captions) */
-export type { _CaptionsAvailableLanguageStrings } from '../../react-components/src';
+export type { CaptionsAvailableLanguageStrings } from '../../react-components/src';

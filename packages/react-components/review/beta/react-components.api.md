@@ -247,8 +247,8 @@ export interface _CaptionProps extends _CaptionsInfo {
     onRenderAvatar?: OnRenderAvatarCallback;
 }
 
-// @internal
-export interface _CaptionsAvailableLanguageStrings {
+// @beta
+export interface CaptionsAvailableLanguageStrings {
     // (undocumented)
     'ar-ae': string;
     // (undocumented)
@@ -363,7 +363,7 @@ export const _CaptionsSettingsModal: (props: _CaptionsSettingsModalProps) => JSX
 // @internal
 export interface _CaptionsSettingsModalProps {
     // (undocumented)
-    captionsAvailableLanguageStrings: _CaptionsAvailableLanguageStrings;
+    captionsAvailableLanguageStrings: CaptionsAvailableLanguageStrings;
     // (undocumented)
     currentSpokenLanguage: string;
     // (undocumented)

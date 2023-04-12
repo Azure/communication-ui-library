@@ -2,10 +2,10 @@
 // Licensed under the MIT license.
 
 /**
- * @internal
+ * @beta
  * strings for captions setting modal
  */
-export interface _CaptionsAvailableLanguageStrings {
+export interface CaptionsAvailableLanguageStrings {
   'ar-ae': string;
   'ar-sa': string;
   'da-dk': string;
