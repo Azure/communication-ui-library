@@ -20,10 +20,10 @@ import {
   dropdownContainerClassName,
   dropdownInfoTextStyle,
   dropdownStyles,
-  themedCaptionsSettingModalStyle,
+  themedCaptionsSettingsModalStyle,
   titleClassName,
   titleContainerClassName
-} from './styles/CaptionsSettingModal.styles';
+} from './styles/CaptionsSettingsModal.styles';
 import { _captionsOptions } from './StartCaptionsButton';
 import { defaultSpokenLanguage } from './utils';
 import { _CaptionsAvailableLanguageStrings } from '../types';
@@ -32,44 +32,44 @@ import { _CaptionsAvailableLanguageStrings } from '../types';
  * @internal
  * strings for captions setting modal
  */
-export interface _CaptionsSettingModalStrings {
-  captionsSettingModalTitle: string;
-  captionsSettingDropdownLabel: string;
-  captionsSettingDropdownInfoText: string;
-  captionsSettingConfirmButtonLabel: string;
-  captionsSettingCancelButtonLabel: string;
-  captionsSettingModalAriaLabel: string;
-  captionsSettingCloseModalButtonAriaLabel: string;
+export interface _CaptionsSettingsModalStrings {
+  captionsSettingsModalTitle: string;
+  captionsSettingsDropdownLabel: string;
+  captionsSettingsDropdownInfoText: string;
+  captionsSettingsConfirmButtonLabel: string;
+  captionsSettingsCancelButtonLabel: string;
+  captionsSettingsModalAriaLabel: string;
+  captionsSettingsCloseModalButtonAriaLabel: string;
 }
 
 /**
  * @internal
- * _CaptionsSettingModal Component Props.
+ * _CaptionsSettingsModal Component Props.
  */
-export interface _CaptionsSettingModalProps {
+export interface _CaptionsSettingsModalProps {
   supportedSpokenLanguages: string[];
   onSetSpokenLanguage: (language: string) => Promise<void>;
   onStartCaptions: (captionsOptions?: _captionsOptions) => Promise<void>;
   currentSpokenLanguage: string;
   captionsAvailableLanguageStrings: _CaptionsAvailableLanguageStrings;
   isCaptionsFeatureActive?: boolean;
-  strings?: _CaptionsSettingModalStrings;
+  strings?: _CaptionsSettingsModalStrings;
   showModal?: boolean;
-  onDismissCaptionsSetting?: () => void;
+  onDismissCaptionsSettings?: () => void;
 }
 
 /**
  * @internal
  * a component for setting spoken languages
  */
-export const _CaptionsSettingModal = (props: _CaptionsSettingModalProps): JSX.Element => {
+export const _CaptionsSettingsModal = (props: _CaptionsSettingsModalProps): JSX.Element => {
   const {
     supportedSpokenLanguages,
     currentSpokenLanguage,
     isCaptionsFeatureActive,
     showModal,
     onSetSpokenLanguage,
-    onDismissCaptionsSetting,
+    onDismissCaptionsSettings,
     onStartCaptions,
     strings,
     captionsAvailableLanguageStrings
@@ -83,8 +83,8 @@ export const _CaptionsSettingModal = (props: _CaptionsSettingModalProps): JSX.El
   });
 
   const dismiss = (): void => {
-    if (onDismissCaptionsSetting) {
-      onDismissCaptionsSetting();
+    if (onDismissCaptionsSettings) {
+      onDismissCaptionsSettings();
     }
   };
 
@@ -108,24 +108,24 @@ export const _CaptionsSettingModal = (props: _CaptionsSettingModalProps): JSX.El
     }
   };
 
-  const CaptionsSettingComponent = (): JSX.Element => {
+  const CaptionsSettingsComponent = (): JSX.Element => {
     return (
       <Stack>
         <Dropdown
-          label={strings?.captionsSettingDropdownLabel}
+          label={strings?.captionsSettingsDropdownLabel}
           selectedKey={selectedItem ? selectedItem.key : undefined}
           onChange={onChange}
           placeholder={currentSpokenLanguage !== '' ? currentSpokenLanguage : defaultSpokenLanguage}
           options={dropdownOptions}
           styles={dropdownStyles}
         />
-        <Text className={dropdownInfoTextStyle(theme)}>{strings?.captionsSettingDropdownInfoText}</Text>
+        <Text className={dropdownInfoTextStyle(theme)}>{strings?.captionsSettingsDropdownInfoText}</Text>
       </Stack>
     );
   };
 
-  const captionsSettingModalStyle: Partial<IModalStyles> = useMemo(
-    () => themedCaptionsSettingModalStyle(theme),
+  const CaptionsSettingsModalStyle: Partial<IModalStyles> = useMemo(
+    () => themedCaptionsSettingsModalStyle(theme),
     [theme]
   );
 
@@ -133,23 +133,23 @@ export const _CaptionsSettingModal = (props: _CaptionsSettingModalProps): JSX.El
     <>
       {
         <Modal
-          titleAriaId={strings?.captionsSettingModalAriaLabel}
+          titleAriaId={strings?.captionsSettingsModalAriaLabel}
           isOpen={showModal}
           onDismiss={dismiss}
           isBlocking={true}
-          styles={captionsSettingModalStyle}
+          styles={CaptionsSettingsModalStyle}
         >
           <Stack horizontal horizontalAlign="space-between" verticalAlign="center" className={titleContainerClassName}>
-            <Text className={titleClassName}>{strings?.captionsSettingModalTitle}</Text>
+            <Text className={titleClassName}>{strings?.captionsSettingsModalTitle}</Text>
             <IconButton
               iconProps={{ iconName: 'Cancel' }}
-              ariaLabel={strings?.captionsSettingCloseModalButtonAriaLabel}
+              ariaLabel={strings?.captionsSettingsCloseModalButtonAriaLabel}
               onClick={dismiss}
               style={{ color: theme.palette.black }}
             />
           </Stack>
 
-          <Stack className={dropdownContainerClassName}>{CaptionsSettingComponent()}</Stack>
+          <Stack className={dropdownContainerClassName}>{CaptionsSettingsComponent()}</Stack>
           <Stack horizontal horizontalAlign="end" className={buttonsContainerClassName}>
             <DefaultButton
               styles={buttonStyles(theme)}
@@ -157,10 +157,10 @@ export const _CaptionsSettingModal = (props: _CaptionsSettingModalProps): JSX.El
                 confirm(selectedItem.key.toString());
               }}
             >
-              <span>{strings?.captionsSettingConfirmButtonLabel}</span>
+              <span>{strings?.captionsSettingsConfirmButtonLabel}</span>
             </DefaultButton>
             <DefaultButton onClick={dismiss} styles={buttonStyles(theme)}>
-              <span>{strings?.captionsSettingCancelButtonLabel}</span>
+              <span>{strings?.captionsSettingsCancelButtonLabel}</span>
             </DefaultButton>
           </Stack>
         </Modal>

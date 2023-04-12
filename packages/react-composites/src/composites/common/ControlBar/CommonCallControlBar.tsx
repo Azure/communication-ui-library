@@ -32,7 +32,7 @@ import { HiddenFocusStartPoint } from '../HiddenFocusStartPoint';
 import { CallWithChatControlOptions } from '../../CallWithChatComposite';
 import { CommonCallControlOptions } from '../types/CommonCallControlOptions';
 /* @conditional-compile-remove(close-captions) */
-import { CaptionsSettingModal } from '../CaptionsSettingModal';
+import { CaptionsSettingsModal } from '../CaptionsSettingsModal';
 
 /**
  * @private
@@ -101,7 +101,7 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
   const options = inferCommonCallControlOptions(props.mobileView, props.callControls);
 
   /* @conditional-compile-remove(close-captions) */
-  const [showCaptionsSettingModal, setShowCaptionsSettingModal] = useState(false);
+  const [showCaptionsSettingsModal, setShowCaptionsSettingsModal] = useState(false);
 
   const handleResize = useCallback((): void => {
     setControlBarButtonsWidth(controlBarContainerRef.current ? controlBarContainerRef.current.offsetWidth : 0);
@@ -137,12 +137,12 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
   }, [totalButtonsWidth, controlBarContainerWidth]);
 
   /* @conditional-compile-remove(close-captions) */
-  const openCaptionsSettingModal = useCallback((): void => {
-    setShowCaptionsSettingModal(true);
+  const openCaptionsSettingsModal = useCallback((): void => {
+    setShowCaptionsSettingsModal(true);
   }, []);
   /* @conditional-compile-remove(close-captions) */
-  const onDismissCaptionsSetting = useCallback((): void => {
-    setShowCaptionsSettingModal(false);
+  const onDismissCaptionsSettings = useCallback((): void => {
+    setShowCaptionsSettingsModal(false);
   }, []);
 
   const chatButtonStrings = useMemo(
@@ -238,10 +238,10 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
     <div ref={controlBarSizeRef}>
       <CallAdapterProvider adapter={props.callAdapter}>
         {
-          /* @conditional-compile-remove(close-captions) */ showCaptionsSettingModal && (
-            <CaptionsSettingModal
-              showCaptionsSettingModal={showCaptionsSettingModal}
-              onDismissCaptionsSetting={onDismissCaptionsSetting}
+          /* @conditional-compile-remove(close-captions) */ showCaptionsSettingsModal && (
+            <CaptionsSettingsModal
+              showCaptionsSettingsModal={showCaptionsSettingsModal}
+              onDismissCaptionsSettings={onDismissCaptionsSettings}
             />
           )
         }
@@ -349,7 +349,7 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                             /* @conditional-compile-remove(close-captions) */
                             isCaptionsSupported={props.isCaptionsSupported}
                             /* @conditional-compile-remove(close-captions) */
-                            onCaptionsSettingsClick={openCaptionsSettingModal}
+                            onCaptionsSettingsClick={openCaptionsSettingsModal}
                           />
                         )
                     }

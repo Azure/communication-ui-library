@@ -4,8 +4,8 @@
 import React from 'react';
 /* @conditional-compile-remove(close-captions) */
 import {
-  _CaptionsSettingModal,
-  _CaptionsSettingModalStrings,
+  _CaptionsSettingsModal,
+  _CaptionsSettingsModalStrings,
   _CaptionsAvailableLanguageStrings
 } from '@internal/react-components';
 /* @conditional-compile-remove(close-captions) */
@@ -18,38 +18,38 @@ import { useLocale } from '../localization';
 import { _changeSpokenLanguageSelector } from '@internal/calling-component-bindings';
 
 /** @private */
-export const CaptionsSettingModal = (props: {
-  /* @conditional-compile-remove(close-captions) */ showCaptionsSettingModal: boolean;
-  /* @conditional-compile-remove(close-captions) */ onDismissCaptionsSetting: () => void;
+export const CaptionsSettingsModal = (props: {
+  /* @conditional-compile-remove(close-captions) */ showCaptionsSettingsModal: boolean;
+  /* @conditional-compile-remove(close-captions) */ onDismissCaptionsSettings: () => void;
 }): JSX.Element => {
   /* @conditional-compile-remove(close-captions) */
-  const captionsSettingModalProps = useAdaptedSelector(_changeSpokenLanguageSelector);
+  const CaptionsSettingsModalProps = useAdaptedSelector(_changeSpokenLanguageSelector);
   /* @conditional-compile-remove(close-captions) */
-  const handlers = useHandlers(_CaptionsSettingModal);
+  const handlers = useHandlers(_CaptionsSettingsModal);
   /* @conditional-compile-remove(close-captions) */
   const strings = useLocale().strings.call;
   /* @conditional-compile-remove(close-captions) */
-  const modalStrings: _CaptionsSettingModalStrings = {
-    captionsSettingModalTitle: strings.captionsSettingModalTitle,
-    captionsSettingDropdownLabel: strings.captionsSettingDropdownLabel,
-    captionsSettingDropdownInfoText: strings.captionsSettingDropdownInfoText,
-    captionsSettingConfirmButtonLabel: strings.captionsSettingConfirmButtonLabel,
-    captionsSettingCancelButtonLabel: strings.captionsSettingCancelButtonLabel,
-    captionsSettingModalAriaLabel: strings.captionsSettingModalAriaLabel,
-    captionsSettingCloseModalButtonAriaLabel: strings.captionsSettingCloseModalButtonAriaLabel
+  const modalStrings: _CaptionsSettingsModalStrings = {
+    captionsSettingsModalTitle: strings.captionsSettingsModalTitle,
+    captionsSettingsDropdownLabel: strings.captionsSettingsDropdownLabel,
+    captionsSettingsDropdownInfoText: strings.captionsSettingsDropdownInfoText,
+    captionsSettingsConfirmButtonLabel: strings.captionsSettingsConfirmButtonLabel,
+    captionsSettingsCancelButtonLabel: strings.captionsSettingsCancelButtonLabel,
+    captionsSettingsModalAriaLabel: strings.captionsSettingsModalAriaLabel,
+    captionsSettingsCloseModalButtonAriaLabel: strings.captionsSettingsCloseModalButtonAriaLabel
   };
   /* @conditional-compile-remove(close-captions) */
   const captionsAvailableLanguageStrings: _CaptionsAvailableLanguageStrings = strings.captionsAvailableLanguageStrings;
 
   /* @conditional-compile-remove(close-captions) */
   return (
-    <_CaptionsSettingModal
-      {...captionsSettingModalProps}
+    <_CaptionsSettingsModal
+      {...CaptionsSettingsModalProps}
       {...handlers}
       strings={modalStrings}
       captionsAvailableLanguageStrings={captionsAvailableLanguageStrings}
-      showModal={props.showCaptionsSettingModal}
-      onDismissCaptionsSetting={props.onDismissCaptionsSetting}
+      showModal={props.showCaptionsSettingsModal}
+      onDismissCaptionsSettings={props.onDismissCaptionsSettings}
     />
   );
   return <></>;

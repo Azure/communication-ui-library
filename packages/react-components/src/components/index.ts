@@ -222,4 +222,4 @@ export * from './Caption';
 /* @conditional-compile-remove(close-captions) */
 export * from './StartCaptionsButton';
 /* @conditional-compile-remove(close-captions) */
-export * from './CaptionsSettingModal';
+export * from './CaptionsSettingsModal';
