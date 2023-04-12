@@ -44,8 +44,8 @@ export const _startCaptionsButtonSelector: _StartCaptionsButtonSelector = resele
   (isCaptionsFeatureActive, currentCaptionLanguage, currentSpokenLanguage) => {
     return {
       checked: isCaptionsFeatureActive ?? false,
-      currentCaptionLanguage: currentCaptionLanguage,
-      currentSpokenLanguage: currentSpokenLanguage
+      currentCaptionLanguage: currentCaptionLanguage ?? 'en-us',
+      currentSpokenLanguage: currentSpokenLanguage ?? 'en-us'
     };
   }
 );
@@ -74,7 +74,7 @@ export const _changeSpokenLanguageSelector: _ChangeSpokenLanguageSelector = rese
   (supportedSpokenLanguages, currentSpokenLanguage, isCaptionsFeatureActive) => {
     return {
       supportedSpokenLanguages: supportedSpokenLanguages ?? ['en-us'],
-      currentSpokenLanguage: currentSpokenLanguage,
+      currentSpokenLanguage: currentSpokenLanguage ?? 'en-us',
       isCaptionsFeatureActive: isCaptionsFeatureActive ?? false
     };
   }

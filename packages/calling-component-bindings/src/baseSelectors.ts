@@ -156,13 +156,19 @@ export const getCaptionsStatus = (state: CallClientState, props: CallingBaseSele
 
 /* @conditional-compile-remove(close-captions) */
 /** @private */
-export const getCurrentCaptionLanguage = (state: CallClientState, props: CallingBaseSelectorProps): string => {
+export const getCurrentCaptionLanguage = (
+  state: CallClientState,
+  props: CallingBaseSelectorProps
+): string | undefined => {
   return state.calls[props.callId]?.captionsFeature.currentCaptionLanguage;
 };
 
 /* @conditional-compile-remove(close-captions) */
 /** @private */
-export const getCurrentSpokenLanguage = (state: CallClientState, props: CallingBaseSelectorProps): string => {
+export const getCurrentSpokenLanguage = (
+  state: CallClientState,
+  props: CallingBaseSelectorProps
+): string | undefined => {
   return state.calls[props.callId]?.captionsFeature.currentSpokenLanguage;
 };
 

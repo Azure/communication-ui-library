@@ -73,6 +73,8 @@ export class CallSubscriber {
 
   private subscribe = (): void => {
     this._call.on('stateChanged', this.stateChanged);
+    /* @conditional-compile-remove(close-captions) */
+    this._call.on('stateChanged', this.initCaptionSubscriber);
     this._call.on('idChanged', this.idChanged);
     this._call.on('isScreenSharingOnChanged', this.isScreenSharingOnChanged);
     this._call.on('remoteParticipantsUpdated', this.remoteParticipantsUpdated);
@@ -109,6 +111,8 @@ export class CallSubscriber {
 
   public unsubscribe = (): void => {
     this._call.off('stateChanged', this.stateChanged);
+    /* @conditional-compile-remove(close-captions) */
+    this._call.off('stateChanged', this.initCaptionSubscriber);
     this._call.off('idChanged', this.idChanged);
     this._call.off('isScreenSharingOnChanged', this.isScreenSharingOnChanged);
     this._call.off('remoteParticipantsUpdated', this.remoteParticipantsUpdated);
@@ -165,9 +169,11 @@ export class CallSubscriber {
 
   private stateChanged = (): void => {
     this._context.setCallState(this._callIdRef.callId, this._call.state);
+  };
 
+  /* @conditional-compile-remove(close-captions) */
+  private initCaptionSubscriber = (): void => {
     // subscribe to captions here so that we don't call captions when call is not initialized
-    /* @conditional-compile-remove(close-captions) */
     if (_isTeamsMeetingCall(this._call) && this._call.state === 'Connected' && !this._captionsSubscriber) {
       this._captionsSubscriber = new CaptionsSubscriber(
         this._callIdRef,
