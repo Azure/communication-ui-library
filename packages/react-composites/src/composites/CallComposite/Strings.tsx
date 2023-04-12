@@ -417,7 +417,7 @@ export interface CallCompositeStrings {
   /**
    * label for opening captions setting modal
    */
-  captionsSettingLabel: string;
+  captionsSettingsLabel: string;
   /* @conditional-compile-remove(close-captions) */
   /**
    * string to be used to start captions
@@ -442,37 +442,37 @@ export interface CallCompositeStrings {
   /**
    * captions setting modal title
    */
-  captionsSettingModalTitle: string;
+  captionsSettingsModalTitle: string;
   /* @conditional-compile-remove(close-captions) */
   /**
    * label for dropdown inside captions setting modal
    */
-  captionsSettingDropdownLabel: string;
+  captionsSettingsDropdownLabel: string;
   /* @conditional-compile-remove(close-captions) */
   /**
    * text under captions setting dropdown indicating what the dropdown is for
    */
-  captionsSettingDropdownInfoText: string;
+  captionsSettingsDropdownInfoText: string;
   /* @conditional-compile-remove(close-captions) */
   /**
    * confirm button label in captions setting modal
    */
-  captionsSettingConfirmButtonLabel: string;
+  captionsSettingsConfirmButtonLabel: string;
   /* @conditional-compile-remove(close-captions) */
   /**
    * cancel button label in captions setting modal
    */
-  captionsSettingCancelButtonLabel: string;
+  captionsSettingsCancelButtonLabel: string;
   /* @conditional-compile-remove(close-captions) */
   /**
    * arial label for captions setting modal
    */
-  captionsSettingModalAriaLabel: string;
+  captionsSettingsModalAriaLabel: string;
   /* @conditional-compile-remove(close-captions) */
   /**
    * arial label for captions setting modal close button
    */
-  captionsSettingCloseModalButtonAriaLabel: string;
+  captionsSettingsCloseModalButtonAriaLabel: string;
   /* @conditional-compile-remove(close-captions) */
   /**
    * label for more button inside captions banner
