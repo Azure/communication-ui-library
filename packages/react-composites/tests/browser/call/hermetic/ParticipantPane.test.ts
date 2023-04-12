@@ -304,7 +304,7 @@ test.describe('Participant pane tests', async () => {
   });
 
   /* @conditional-compile-remove(total-participant-count) */
-  test.only('Participant count should be shown correctly with large numbers of people', async ({ page, serverUrl }) => {
+  test('Participant count should be shown correctly with large numbers of people', async ({ page, serverUrl }) => {
     const participants: MockRemoteParticipantState[] = [];
     for (let i = 0; i < 150; i++) {
       participants.push(defaultMockRemoteParticipant(`Joni Solberg ${i}`));
