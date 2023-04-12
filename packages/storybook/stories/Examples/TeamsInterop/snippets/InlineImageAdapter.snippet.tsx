@@ -15,7 +15,6 @@ interface ChatScreenPropsExample {
   displayName: string;
   endpointUrl: string;
   threadId: string;
-  endChatHandler(isParticipantRemoved: boolean): void;
 }
 
 export const InlineImageCompositeExample = (props: ChatScreenPropsExample): JSX.Element => {

@@ -33,7 +33,7 @@ export const getDocs: () => JSX.Element = () => {
       <Heading>Inline Images</Heading>
       <Subheading>Use composite with Inline Image Support</Subheading>
       <Description>
-        If we are planning to integrate the Composite to your application, then you create the Adapter with Azure
+        If you want to integrate the Composite to your application, then you will need to create the Adapter with Azure
         Communication Credential which would be used to fetch preview images. Please note that inline image support is
         only avaliable in a Teams interoperbility chat, so here we are using CallWithChat compisite as an example.
         Assuming that our application has a component named "ChatScreen" that would be used to deliver the chat
