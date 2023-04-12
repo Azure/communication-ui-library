@@ -5,6 +5,7 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
+const CopyPlugin = require("copy-webpack-plugin");
 
 const webpackConfig = (sampleAppDir, env, babelConfig) => {
   const config = {
@@ -61,6 +62,12 @@ const webpackConfig = (sampleAppDir, env, babelConfig) => {
       }),
       new BundleAnalyzerPlugin({
         analyzerMode: 'json',
+      }),
+      new CopyPlugin({
+        patterns: [
+          { from: path.resolve(sampleAppDir, "public/manifest.json"), to: "manifest.json" },
+          { from: path.resolve(sampleAppDir, "public/backgrounds"), to: "backgrounds" },
+        ]
       })
     ],
     devServer: {
