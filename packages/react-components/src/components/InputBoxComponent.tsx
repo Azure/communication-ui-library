@@ -147,6 +147,15 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
 
   const onSuggestionSelected = useCallback(
     (suggestion: AtMentionSuggestion) => {
+      const selectionStart = textFieldRef?.current?.selectionStart;
+      let selectionEnd = textFieldRef?.current?.selectionEnd || -1;
+      if (selectionEnd < 0) {
+        selectionEnd = 0;
+      } else if (selectionEnd > textValue.length) {
+        selectionEnd = textValue.length;
+      }
+      console.log('selectionStart', selectionStart);
+      console.log('selectionEnd', selectionEnd);
       // TODO: Use the HTML value in the control
       // FIGURE OUT WHERE TO INSERT THE NEW TAG
       // INSERT IT INTO THE TEXT FIELD
@@ -176,24 +185,31 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
   ): Promise<void> => {
     // If we are enabled for lookups,
     if (!!atMentionLookupOptions) {
-      // Go see if there's a trigger character in the text, from the end of the string
-      // TODO: maybe this should be done based on the change of the newValue from the old
+      // Look at the range of the change for a trigger character
       const triggerText = atMentionLookupOptions?.trigger ?? defaultMentionTrigger;
-      const lastTagIndex = newValue?.lastIndexOf(triggerText) ?? -1;
-      if (lastTagIndex !== -1 && lastTagIndex !== currentTagIndex) {
-        setCurrentTagIndex(lastTagIndex);
-        console.log(currentTagIndex, lastTagIndex);
+      const selectionStart = textFieldRef?.current?.selectionStart || 0;
+      let selectionEnd = textFieldRef?.current?.selectionEnd || -1;
+      console.log('selectionStart', selectionStart);
+      console.log('selectionEnd', selectionEnd);
+      const spacePriorIndex = newValue?.lastIndexOf(' ', selectionEnd - 1);
+      const wordAtSelection = newValue?.slice(spacePriorIndex, selectionEnd);
+
+      console.log('selection', wordAtSelection);
+      if (wordAtSelection?.indexOf(triggerText) !== -1) {
+        // Typed the trigger character
+        // We are at the start of a new tag
+        setCurrentTagIndex(selectionStart);
+      } else {
       }
 
-      if (lastTagIndex === -1) {
-        setCurrentTagIndex(-1);
+      if (currentTagIndex === -1) {
         setMentionSuggestions([]);
       } else {
         // In the middle of a @mention lookup
-        if (lastTagIndex > -1) {
+        if (currentTagIndex > -1) {
           // This might want to be changed to not include the lookup tag. Currently it does.
           // TODO: work in mentionQuery state or remove it.
-          const query = newValue?.slice(lastTagIndex).split(' ')[0];
+          const query = newValue?.slice(currentTagIndex).split(' ')[0];
           if (!!query) {
             console.log('getting suggestions for query: ', query);
             const suggestions = (await atMentionLookupOptions?.onQueryUpdated(query)) ?? [];
