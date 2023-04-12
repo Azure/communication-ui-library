@@ -38,7 +38,6 @@ import {
 import { useEffect, useRef, useState } from 'react';
 /* @conditional-compile-remove(teams-inline-images) */
 import { AttachmentDownloadResult } from '@internal/react-components';
-/* @conditional-compile-remove(file-sharing) */ /* @conditional-compile-remove(teams-inline-images) */
 import { FileMetadata } from '@internal/react-components';
 /* @conditional-compile-remove(file-sharing) */
 import { FileUploadManager } from '../file-sharing';
