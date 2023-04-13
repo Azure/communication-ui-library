@@ -122,7 +122,7 @@ test.describe('Captions buttons in call control', () => {
     expect(await stableScreenshot(page)).toMatchSnapshot(`caption-button-non-teams-call.png`);
   });
 
-  test.only('Captions settings renders normally', async ({ page, serverUrl }) => {
+  test('Captions settings renders normally', async ({ page, serverUrl }) => {
     const initialState = defaultMockCallAdapterState();
     if (initialState?.call) {
       initialState.isTeamsCall = true;
