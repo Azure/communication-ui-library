@@ -202,11 +202,11 @@ const sendRemoteInlineImageMessage = (
       createdOn: messageWithInlineImage.createdOn,
       version: messageWithInlineImage.version,
       type: messageWithInlineImage.type,
-      message: messageWithInlineImage.content?.message,
+      message: messageWithInlineImage.content?.message ?? '',
       attachments: messageWithInlineImage.content?.attachments,
       threadId: threadId,
-      sender: remoteParticipant.id,
-      senderDisplayName: remoteParticipant.displayName,
+      sender: getIdentifierKind(remoteParticipant.id),
+      senderDisplayName: remoteParticipant.displayName ?? '',
       recepient: localParticipant.id
     });
 };
