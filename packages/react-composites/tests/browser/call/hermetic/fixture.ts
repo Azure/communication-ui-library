@@ -75,7 +75,15 @@ export function defaultMockCallAdapterState(participants?: MockRemoteParticipant
       isMuted: false,
       isScreenSharingOn: false,
       remoteParticipants,
-      remoteParticipantsEnded: {}
+      remoteParticipantsEnded: {},
+      captionsFeature: {
+        captions: [],
+        supportedSpokenLanguages: [],
+        supportedCaptionLanguages: [],
+        currentCaptionLanguage: '',
+        currentSpokenLanguage: '',
+        isCaptionsFeatureActive: false
+      }
     },
     userId: { kind: 'communicationUser', communicationUserId: '1' },
     devices: {
