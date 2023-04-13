@@ -11,7 +11,7 @@ import { _DrawerMenuStyles } from '@internal/react-components';
 export const spokenLanguageDrawerStyles = (theme: Theme): _DrawerMenuStyles => ({
   root: {
     height: _pxToRem(300),
-    overflow: 'scroll'
+    overflow: 'auto'
   },
   drawerSurfaceStyles: {
     drawerContentContainer: {
