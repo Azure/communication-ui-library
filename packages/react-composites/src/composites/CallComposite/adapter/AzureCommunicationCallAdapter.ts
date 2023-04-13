@@ -781,6 +781,8 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     this._call?.feature(Features.TeamsCaptions).off('captionsReceived', this.captionsReceived.bind(this));
     /* @conditional-compile-remove(close-captions) */
     this._call?.feature(Features.TeamsCaptions).off('isCaptionsActiveChanged', this.captionsPropertyChanged.bind(this));
+    /* @conditional-compile-remove(close-captions) */
+    this.call?.off('stateChanged', this.subscribeToCaptionEvents.bind(this));
   }
 
   private isMyMutedChanged = (): void => {
