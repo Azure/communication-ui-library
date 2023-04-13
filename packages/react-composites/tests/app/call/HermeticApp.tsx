@@ -54,7 +54,7 @@ export function HermeticApp(props: { queryArgs: QueryArgs }): JSX.Element {
         setCallAdapter(new MockCallAdapter(queryArgs.mockCallAdapterState));
       }
     })();
-  }, [queryArgs.mockCallAdapterState]);
+  }, [queryArgs.mockCallAdapterState, queryArgs.makeMeLotsOfPeople]);
 
   return <BaseApp queryArgs={queryArgs} callAdapter={callAdapter} />;
 }
