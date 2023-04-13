@@ -187,12 +187,11 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
   ): Promise<void> => {
     // If we are enabled for lookups,
     if (!!atMentionLookupOptions) {
+      //TODO; add check for the last space and check if it isn't between mention trigger and
       // Look at the range of the change for a trigger character
       const triggerText = atMentionLookupOptions?.trigger ?? defaultMentionTrigger;
       // const selectionStart = textFieldRef?.current?.selectionStart || 0;
       const selectionEnd = textFieldRef?.current?.selectionEnd || -1;
-      // console.log('selectionStart', selectionStart);
-      // console.log('selectionEnd', selectionEnd);
       //need to check if needed
       // const spacePriorIndex = newValue?.lastIndexOf(' ', selectionEnd - 1);
       const triggerPriorIndex = newValue?.lastIndexOf(triggerText, selectionEnd - 1);
@@ -201,9 +200,14 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       if (triggerPriorIndex !== undefined) {
         console.log('inside triggerPriorIndex', triggerPriorIndex);
         const wordAtSelection = newValue?.slice(triggerPriorIndex, selectionEnd);
-        // console.log('spacePriorIndex', spacePriorIndex);
+        console.log('wordAtSelection.length', wordAtSelection?.length);
         if (wordAtSelection === triggerText) {
-          setCurrentTagIndex(selectionEnd);
+          // start of the mention
+          let tagIndex = selectionEnd - triggerText.length;
+          if (tagIndex < 0) {
+            tagIndex = 0;
+          }
+          setCurrentTagIndex(tagIndex);
         }
         console.log('wordAtSelection', wordAtSelection);
         if (wordAtSelection?.indexOf(triggerText) !== -1) {
