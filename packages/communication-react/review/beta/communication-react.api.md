@@ -134,13 +134,13 @@ export type AreTypeEqual<A, B> = A extends B ? (B extends A ? true : false) : fa
 
 // @beta
 export interface AtMentionDisplayOptions {
-    atMentionSuggestionRenderer?: (suggestion: AtMentionSuggestion) => JSX.Element;
+    onRenderAtMentionSuggestion?: (suggestion: AtMentionSuggestion) => JSX.Element;
 }
 
 // @beta
 export interface AtMentionLookupOptions {
     onQueryUpdated?: (query: string) => Promise<AtMentionSuggestion[]>;
-    suggestionItemRenderer?: (suggestion: AtMentionSuggestion, onSuggestionSelected?: (suggestion: AtMentionSuggestion) => void) => JSX.Element;
+    onRenderSuggestionItem?: (suggestion: AtMentionSuggestion, onSuggestionSelected?: (suggestion: AtMentionSuggestion) => void) => JSX.Element;
     trigger?: string;
 }
 
