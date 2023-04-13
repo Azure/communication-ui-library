@@ -64,33 +64,26 @@ const MessageContentWithLiveAria = (props: MessageContentWithLiveAriaProps): JSX
 const MessageContentAsRichTextHTML = (props: ChatMessageContentProps): JSX.Element => {
   const htmlToReactParser = Parser(React);
   const liveAuthor = _formatString(props.strings.liveAuthorIntro, { author: `${props.message.senderDisplayName}` });
+  const atMentionSuggestionRenderer = props.atMentionDisplayOptions?.atMentionSuggestionRenderer;
 
-  if (undefined === props.atMentionDisplayOptions?.atMentionSuggestionRenderer) {
-    return (
-      <MessageContentWithLiveAria
-        message={props.message}
-        liveMessage={`${props.message.mine ? '' : liveAuthor} ${extractContent(props.message.content || '')}`}
-        ariaLabel={messageContentAriaText(props)}
-        content={htmlToReactParser.parse(props.message.content ?? '')}
-      />
-    );
-  } else {
-    // Override the handling of the <msft-at-mention> tag in the HTML
+  if (!!atMentionSuggestionRenderer) {
+    // Use custom HTML processing if atMentionSuggestionRenderer is provided
+
     const processNodeDefinitions = ProcessNodeDefinitions();
     const processingInstructions: ProcessingInstructionType[] = [
       {
         shouldProcessNode: (node) => {
+          // Override the handling of the <msft-at-mention> tag in the HTML
           return node.name === 'msft-at-mention';
         },
         processNode: (node) => {
-          const atMentionSuggestionRenderer = props.atMentionDisplayOptions?.atMentionSuggestionRenderer;
           const { userId, suggestionType, displayName } = node.attribs;
           const suggestion: AtMentionSuggestion = {
             userId: userId,
             suggestionType: suggestionType,
             displayName: displayName
           };
-          return atMentionSuggestionRenderer ? atMentionSuggestionRenderer(suggestion) : <></>;
+          return atMentionSuggestionRenderer(suggestion);
         }
       },
       {
@@ -113,6 +106,15 @@ const MessageContentAsRichTextHTML = (props: ChatMessageContentProps): JSX.Eleme
         liveMessage={`${props.message.mine ? '' : liveAuthor} ${extractContent(props.message.content || '')}`}
         ariaLabel={messageContentAriaText(props)}
         content={htmlContent}
+      />
+    );
+  } else {
+    return (
+      <MessageContentWithLiveAria
+        message={props.message}
+        liveMessage={`${props.message.mine ? '' : liveAuthor} ${extractContent(props.message.content || '')}`}
+        ariaLabel={messageContentAriaText(props)}
+        content={htmlToReactParser.parse(props.message.content ?? '')}
       />
     );
   }
