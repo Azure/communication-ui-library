@@ -78,5 +78,3 @@ export class LocalVideoStreamVideoEffectsSubscriber {
     }
   };
 }
-
-export {};
