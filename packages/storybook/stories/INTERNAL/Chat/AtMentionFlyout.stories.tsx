@@ -23,8 +23,8 @@ const AtMentionFlyoutStory: (args) => JSX.Element = (args) => {
 export const AtMentionFlyout = AtMentionFlyoutStory.bind({});
 
 export default {
-  id: `${COMPONENT_FOLDER_PREFIX}-internal-atmentionflyout`,
-  title: `${COMPONENT_FOLDER_PREFIX}/Internal/AtMentionFlyout/At Mention Flyout`,
+  id: `${COMPONENT_FOLDER_PREFIX}-internal-AtMentionFlyout`,
+  title: `${COMPONENT_FOLDER_PREFIX}/Internal/Chat/AtMentionFlyout`,
   component: AtMentionFlyoutComponent,
   argTypes: {
     suggestions: controlsToAdd.atMentionSuggestions,

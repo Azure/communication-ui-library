@@ -1,4 +1,4 @@
-import { AtMentionSuggestion, FluentThemeProvider, useTheme } from '@internal/react-components';
+import { AtMentionSuggestion, FluentThemeProvider, MessageThread, useTheme } from '@internal/react-components';
 import { ITextField, Stack, mergeStyles } from '@fluentui/react';
 import { controlsToAdd, hiddenControl } from '../../controlsUtils';
 import { InputBoxComponent } from '../../../../react-components/src/components/InputBoxComponent';
@@ -7,6 +7,7 @@ import { Meta } from '@storybook/react/types-6-0';
 import React, { useState } from 'react';
 import { COMPONENT_FOLDER_PREFIX } from '../../constants';
 import { borderAndBoxShadowStyle } from '../../../../react-components/src/components/styles/SendBox.styles';
+import { GetHistoryChatMessages } from '../../MessageThread/snippets/placeholdermessages';
 
 const getDocs: () => JSX.Element = () => {
   return (
@@ -24,7 +25,7 @@ const getDocs: () => JSX.Element = () => {
   );
 };
 
-const InputBoxStory = (args): JSX.Element => {
+const InputBoxStory = (): JSX.Element => {
   const exampleHtmlMessage =
     "<p>Hi <msft-at-mention userId='2' suggestionType='person'>Patricia Adams</msft-at-mention> <span>and and </span> and you <msft-at-mention userId='3' suggestionType='person'>Person 1</msft-at-mention>!</p>";
   // "Hi <msft-at-mention userId='2' suggestionType='person'>Patricia Adams</msft-at-mention>!";
@@ -51,12 +52,14 @@ const InputBoxStory = (args): JSX.Element => {
     {
       userId: '4',
       suggestionType: 'person',
-      displayName: '2'
+      displayName: 'Your user'
     }
   ];
   return (
     <FluentThemeProvider>
+       <MessageThread userId={'4'} messages={GetHistoryChatMessages()}/>
       <div style={{ width: '31.25rem', height: '20rem' }}>
+       
         <Stack
           className={mergeStyles(
             borderAndBoxShadowStyle({
