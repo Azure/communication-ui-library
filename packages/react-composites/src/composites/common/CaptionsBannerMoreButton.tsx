@@ -85,6 +85,7 @@ export const CaptionsBannerMoreButton = (props: CaptionsBannerMoreButtonProps): 
   if (props.onCaptionsSettingsClick) {
     moreButtonContextualMenuItems.push({
       key: 'openCaptionsSettingsKey',
+      id: 'common-call-composite-captions-settings-button',
       text: localeStrings.strings.call.captionsSettingsLabel,
       onClick: props.onCaptionsSettingsClick,
       iconProps: {

@@ -106,6 +106,7 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
 
     moreButtonContextualMenuItems.push({
       key: 'liveCaptionsKey',
+      id: 'common-call-composite-captions-button',
       text: localeStrings.strings.call.liveCaptionsLabel,
       iconProps: { iconName: 'CaptionsIcon', styles: { root: { lineHeight: 0 } } },
       itemProps: {
@@ -124,6 +125,7 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
 
     captionsContextualMenuItems.push({
       key: 'ToggleCaptionsKey',
+      id: 'common-call-composite-captions-toggle-button',
       text: startCaptionsButtonProps.checked
         ? localeStrings.strings.call.startCaptionsButtonTooltipOnContent
         : localeStrings.strings.call.startCaptionsButtonTooltipOffContent,
@@ -147,6 +149,7 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
     if (props.onCaptionsSettingsClick) {
       captionsContextualMenuItems.push({
         key: 'openCaptionsSettingsKey',
+        id: 'common-call-composite-captions-settings-button',
         text: localeStrings.strings.call.captionsSettingsLabel,
         onClick: props.onCaptionsSettingsClick,
         iconProps: {
