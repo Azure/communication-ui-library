@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useMemo, useState } from 'react';
 import {
   IModalStyles,
@@ -28,6 +28,7 @@ import {
 import { _captionsOptions } from './StartCaptionsButton';
 import { defaultSpokenLanguage } from './utils';
 import { CaptionsAvailableLanguageStrings } from '../types';
+import { _preventDismissOnEvent } from '@internal/acs-ui-common';
 
 /**
  * @internal
@@ -83,13 +84,14 @@ export const _CaptionsSettingsModal = (props: _CaptionsSettingsModalProps): JSX.
     text: currentSpokenLanguage !== '' ? currentSpokenLanguage : defaultSpokenLanguage
   });
 
-  const dismiss = (): void => {
+  const onDismiss = useCallback((): void => {
     if (onDismissCaptionsSettings) {
       onDismissCaptionsSettings();
     }
-  };
+  }, [onDismissCaptionsSettings]);
 
-  const confirm = async (languageCode: string): Promise<void> => {
+  const onConfirm = useCallback(async (): Promise<void> => {
+    const languageCode = selectedItem.key.toString();
     if (isCaptionsFeatureActive) {
       onSetSpokenLanguage(languageCode);
     } else {
@@ -98,8 +100,8 @@ export const _CaptionsSettingsModal = (props: _CaptionsSettingsModalProps): JSX.
       // this is to fix the bug when a second user starts captions with a new spoken language, captions bot ignore that spoken language
       onSetSpokenLanguage(languageCode);
     }
-    dismiss();
-  };
+    onDismiss();
+  }, [onDismiss, isCaptionsFeatureActive, onSetSpokenLanguage, onStartCaptions, selectedItem.key]);
 
   const dropdownOptions: IDropdownOption[] = useMemo(() => {
     return supportedSpokenLanguages.map((languageCode) => {
@@ -107,20 +109,27 @@ export const _CaptionsSettingsModal = (props: _CaptionsSettingsModalProps): JSX.
     });
   }, [supportedSpokenLanguages, captionsAvailableLanguageStrings]);
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const onChange = (event: React.FormEvent<HTMLDivElement>, option: IDropdownOption<any> | undefined): void => {
+  const onChange = (event: React.FormEvent<HTMLDivElement>, option: IDropdownOption | undefined): void => {
     if (option) {
       setSelectedItem(option);
     }
   };
 
-  const CaptionsSettingsComponent = (): JSX.Element => {
+  const calloutProps = useMemo(
+    () => ({
+      preventDismissOnEvent: _preventDismissOnEvent
+    }),
+    []
+  );
+
+  const CaptionsSettingsComponent = useCallback((): JSX.Element => {
     return (
       <Stack>
         <Dropdown
           label={strings?.captionsSettingsDropdownLabel}
           selectedKey={selectedItem ? selectedItem.key : undefined}
           onChange={onChange}
+          calloutProps={calloutProps}
           placeholder={currentSpokenLanguage !== '' ? currentSpokenLanguage : defaultSpokenLanguage}
           options={dropdownOptions}
           styles={dropdownStyles}
@@ -128,7 +137,15 @@ export const _CaptionsSettingsModal = (props: _CaptionsSettingsModalProps): JSX.
         <Text className={dropdownInfoTextStyle(theme)}>{strings?.captionsSettingsDropdownInfoText}</Text>
       </Stack>
     );
-  };
+  }, [
+    calloutProps,
+    currentSpokenLanguage,
+    dropdownOptions,
+    selectedItem,
+    strings?.captionsSettingsDropdownInfoText,
+    strings?.captionsSettingsDropdownLabel,
+    theme
+  ]);
 
   const CaptionsSettingsModalStyle: Partial<IModalStyles> = useMemo(
     () => themedCaptionsSettingsModalStyle(theme),
@@ -141,7 +158,7 @@ export const _CaptionsSettingsModal = (props: _CaptionsSettingsModalProps): JSX.
         <Modal
           titleAriaId={strings?.captionsSettingsModalAriaLabel}
           isOpen={showModal}
-          onDismiss={dismiss}
+          onDismiss={onDismiss}
           isBlocking={true}
           styles={CaptionsSettingsModalStyle}
         >
@@ -150,22 +167,17 @@ export const _CaptionsSettingsModal = (props: _CaptionsSettingsModalProps): JSX.
             <IconButton
               iconProps={{ iconName: 'Cancel' }}
               ariaLabel={strings?.captionsSettingsCloseModalButtonAriaLabel}
-              onClick={dismiss}
+              onClick={onDismiss}
               style={{ color: theme.palette.black }}
             />
           </Stack>
 
           <Stack className={dropdownContainerClassName}>{CaptionsSettingsComponent()}</Stack>
           <Stack horizontal horizontalAlign="end" className={buttonsContainerClassName}>
-            <PrimaryButton
-              styles={buttonStyles(theme)}
-              onClick={() => {
-                confirm(selectedItem.key.toString());
-              }}
-            >
+            <PrimaryButton styles={buttonStyles(theme)} onClick={onConfirm}>
               <span>{strings?.captionsSettingsConfirmButtonLabel}</span>
             </PrimaryButton>
-            <DefaultButton onClick={dismiss} styles={buttonStyles(theme)}>
+            <DefaultButton onClick={onDismiss} styles={buttonStyles(theme)}>
               <span>{strings?.captionsSettingsCancelButtonLabel}</span>
             </DefaultButton>
           </Stack>

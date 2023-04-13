@@ -22,6 +22,8 @@ import { useLocale } from '../localization';
 import { MoreButton } from './MoreButton';
 /* @conditional-compile-remove(close-captions) */
 import { _startCaptionsButtonSelector } from '@internal/calling-component-bindings';
+/* @conditional-compile-remove(close-captions) */
+import { _preventDismissOnEvent } from '@internal/acs-ui-common';
 
 /** @private */
 export interface CaptionsBannerMoreButtonProps extends ControlBarButtonProps {
@@ -105,7 +107,12 @@ export const CaptionsBannerMoreButton = (props: CaptionsBannerMoreButtonProps): 
       data-ui-id="captions-banner-more-button"
       strings={moreButtonStrings}
       menuIconProps={{ hidden: true }}
-      menuProps={{ items: moreButtonContextualMenuItems }}
+      menuProps={{
+        items: moreButtonContextualMenuItems,
+        calloutProps: {
+          preventDismissOnEvent: _preventDismissOnEvent
+        }
+      }}
     />
   );
   return <></>;

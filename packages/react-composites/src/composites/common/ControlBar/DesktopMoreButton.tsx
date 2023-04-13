@@ -31,6 +31,8 @@ import { useHandlers } from '../../CallComposite/hooks/useHandlers';
 import { _startCaptionsButtonSelector } from '@internal/calling-component-bindings';
 /* @conditional-compile-remove(close-captions) */
 import { useAdaptedSelector } from '../../CallComposite/hooks/useAdaptedSelector';
+/* @conditional-compile-remove(close-captions) */
+import { _preventDismissOnEvent } from '@internal/acs-ui-common';
 
 /** @private */
 export interface DesktopMoreButtonProps extends ControlBarButtonProps {
@@ -115,7 +117,10 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
       disabled: props.disableButtonsForHoldScreen,
       subMenuProps: {
         id: 'captions-contextual-menu',
-        items: captionsContextualMenuItems
+        items: captionsContextualMenuItems,
+        calloutProps: {
+          preventDismissOnEvent: _preventDismissOnEvent
+        }
       },
       submenuIconProps: {
         iconName: 'HorizontalGalleryRightButton',
@@ -228,7 +233,12 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
       /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(close-captions) */
       strings={moreButtonStrings}
       menuIconProps={{ hidden: true }}
-      menuProps={{ items: moreButtonContextualMenuItems }}
+      menuProps={{
+        items: moreButtonContextualMenuItems,
+        calloutProps: {
+          preventDismissOnEvent: _preventDismissOnEvent
+        }
+      }}
     />
   );
 };
