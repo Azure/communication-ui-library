@@ -26,7 +26,7 @@ const mobileViewBannerWidth = '90%';
 const desktopViewBannerWidth = '50%';
 
 /** @private */
-export const CaptionsBanner = (props: { isMobile: boolean; disableBannerForHoldScreen?: boolean }): JSX.Element => {
+export const CaptionsBanner = (props: { isMobile: boolean; hideBanner?: boolean }): JSX.Element => {
   /* @conditional-compile-remove(close-captions) */
   const captionsBannerProps = useAdaptedSelector(_captionsBannerSelector);
   /* @conditional-compile-remove(close-captions) */
@@ -65,7 +65,7 @@ export const CaptionsBanner = (props: { isMobile: boolean; disableBannerForHoldS
       {
         /* @conditional-compile-remove(close-captions) */ captionsBannerProps.captions.length > 0 &&
           captionsBannerProps.isCaptionsOn &&
-          !props.disableBannerForHoldScreen && (
+          !props.hideBanner && (
             <div className={containerClassName}>
               <Stack horizontalAlign="center">
                 <Stack.Item style={{ width: props.isMobile ? mobileViewBannerWidth : desktopViewBannerWidth }}>

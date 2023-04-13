@@ -333,9 +333,8 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                   {
                     /* @conditional-compile-remove(close-captions) */ <CaptionsBanner
                       isMobile={props.mobileView}
-                      /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ disableBannerForHoldScreen={
-                        isInLocalHold
-                      }
+                      /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+                      hideBanner={isInLocalHold}
                     />
                   }
                 </Stack>
