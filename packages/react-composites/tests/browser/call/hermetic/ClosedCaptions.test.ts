@@ -99,7 +99,7 @@ test.describe('Closed Captions Banner tests', async () => {
   });
 });
 
-test.describe.only('Captions buttons in call control', () => {
+test.describe('Captions buttons in call control', () => {
   test('Captions buttons shows when it is teams call', async ({ page, serverUrl }) => {
     const initialState = defaultMockCallAdapterState();
     if (initialState?.call) {
