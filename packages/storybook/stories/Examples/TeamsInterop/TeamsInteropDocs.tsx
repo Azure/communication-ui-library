@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 import { Description, Heading, Subheading, Source, Title } from '@storybook/addon-docs';
 import React from 'react';
+import { SingleLineBetaBanner } from '../../BetaBanners/SingleLineBetaBanner';
 const InlineImageText = require('!!raw-loader!../../MessageThread/snippets/WithInlineImageMessage.snippet.tsx').default;
 const CallComponentText = require('!!raw-loader!./snippets/CallComponent.snippet.tsx').default;
 const ComplianceBannerText = require('!!raw-loader!./snippets/ComplianceBanner.snippet.tsx').default;
@@ -30,6 +31,7 @@ export const getDocs: () => JSX.Element = () => {
       <Subheading>Create a Lobby Component</Subheading>
       <Source code={LobbyComponentText} />
       <Heading>Inline Images</Heading>
+      <SingleLineBetaBanner />
       <Subheading>Use `CallWithChat` Composite with Inline Image Support</Subheading>
       <Description>
         Currently, the UI library only supports inline images in a Teams Interop chat sent by the Teams user. To
