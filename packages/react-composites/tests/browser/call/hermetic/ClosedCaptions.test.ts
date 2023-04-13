@@ -46,6 +46,7 @@ const captionsFeatureState = {
   isCaptionsFeatureActive: true
 };
 
+/* @conditional-compile-remove(close-captions) */
 test.describe('Closed Captions Banner tests', async () => {
   test('Show closed captions banner when enabled', async ({ page, serverUrl }) => {
     const initialState = defaultMockCallAdapterState();
@@ -99,6 +100,7 @@ test.describe('Closed Captions Banner tests', async () => {
   });
 });
 
+/* @conditional-compile-remove(close-captions) */
 test.describe('Captions buttons in call control', () => {
   test('Captions buttons shows when it is teams call', async ({ page, serverUrl }) => {
     const initialState = defaultMockCallAdapterState();
