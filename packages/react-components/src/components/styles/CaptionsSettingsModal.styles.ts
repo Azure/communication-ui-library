@@ -90,5 +90,5 @@ export const buttonStyles = (theme: Theme): IButtonStyles => {
  * @private
  */
 export const dropdownStyles: Partial<IDropdownStyles> = {
-  callout: { height: _pxToRem(300), overflow: 'scroll' }
+  callout: { height: _pxToRem(300), overflow: 'auto' }
 };
