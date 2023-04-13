@@ -12,7 +12,8 @@ export const themedCaptionsSettingsModalStyle = (theme: Theme): Partial<IModalSt
     borderRadius: theme.effects.roundedCorner6,
     padding: _pxToRem(24),
     width: _pxToRem(440),
-    height: _pxToRem(268)
+    height: _pxToRem(268),
+    overflow: 'hidden'
   }
 });
 
@@ -89,5 +90,5 @@ export const buttonStyles = (theme: Theme): IButtonStyles => {
  * @private
  */
 export const dropdownStyles: Partial<IDropdownStyles> = {
-  callout: { height: _pxToRem(300), overflow: 'scroll' }
+  callout: { height: _pxToRem(300), overflow: 'auto' }
 };
