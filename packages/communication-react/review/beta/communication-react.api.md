@@ -140,7 +140,7 @@ export interface AtMentionDisplayOptions {
 // @internal
 export interface _AtMentionFlyoutProps {
     onDismiss?: () => void;
-    onSuggestionSelected?: (suggestion: AtMentionSuggestion) => void;
+    onSuggestionSelected: (suggestion: AtMentionSuggestion) => void;
     suggestionItemRenderer?: (suggestion: AtMentionSuggestion, onSuggestionSelected?: (suggestion: AtMentionSuggestion) => void) => JSX.Element;
     suggestions: AtMentionSuggestion[];
     target?: React_2.RefObject<Element>;
@@ -149,8 +149,8 @@ export interface _AtMentionFlyoutProps {
 
 // @beta
 export interface AtMentionLookupOptions {
-    onQueryUpdated?: (query: string) => Promise<AtMentionSuggestion[]>;
-    suggestionItemRenderer?: (suggestion: AtMentionSuggestion, onSuggestionSelected?: (suggestion: AtMentionSuggestion) => void) => JSX.Element;
+    onQueryUpdated: (query: string) => Promise<AtMentionSuggestion[]>;
+    suggestionItemRenderer?: (suggestion: AtMentionSuggestion, onSuggestionSelected: (suggestion: AtMentionSuggestion) => void) => JSX.Element;
     trigger?: string;
 }
 

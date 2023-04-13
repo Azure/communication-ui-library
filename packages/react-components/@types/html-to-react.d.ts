@@ -1,6 +1,6 @@
 declare module 'html-to-react' {
   import { ParserOptions } from 'htmlparser2';
-  import React, { ReactNode } from 'react';
+  import { ReactElement } from 'react';
 
   function Html2ReactParser(options: ParserOptions): {
     parse: (html: string) => JSX.Element;
@@ -12,11 +12,7 @@ declare module 'html-to-react' {
     ) => JSX.Element;
   };
 
-  export type ProcessNodeFunctionType = (
-    node: React.DOMElement,
-    children: any,
-    index: number
-  ) => ReactNode | ReactNode[];
+  export type ProcessNodeFunctionType = (node: any, children: any, index: number) => ReactElement;
 
   export type ProcessingInstructionType = {
     shouldProcessNode: (node: any) => boolean;

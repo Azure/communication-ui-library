@@ -19,7 +19,6 @@ export const defaultMentionSuggestionRenderer = (suggestion: AtMentionSuggestion
   );
 };
 
-// TODO: move this to a common exported place.
 // Add the custom HTML tag to the JSX.IntrinsicElements interface
 declare global {
   namespace JSX {
