@@ -29,8 +29,6 @@ export interface FileUploadAdapter {
   updateFileUploadProgress: (id: string, progress: number) => void;
   updateFileUploadErrorMessage: (id: string, errorMessage: string) => void;
   updateFileUploadMetadata: (id: string, metadata: FileMetadata) => void;
-  /* @conditional-compile-remove(teams-inline-images) */
-  downloadAuthenticatedAttachment?: (attachmentUrl: string) => Promise<string>;
 }
 
 /* @conditional-compile-remove(file-sharing) */
@@ -96,12 +94,10 @@ class FileUploadContext {
  */
 export class AzureCommunicationFileUploadAdapter implements FileUploadAdapter {
   private context: FileUploadContext;
-  private getAuthToken?: () => Promise<string>;
   private fileUploads: FileUpload[] = [];
 
-  constructor(chatContext: ChatContext, getAuthToken?: () => Promise<string>) {
+  constructor(chatContext: ChatContext) {
     this.context = new FileUploadContext(chatContext);
-    this.getAuthToken = getAuthToken;
   }
 
   private findFileUpload(id: string): FileUpload | undefined {
@@ -173,23 +169,6 @@ export class AzureCommunicationFileUploadAdapter implements FileUploadAdapter {
 
   updateFileUploadMetadata(id: string, metadata: FileMetadata): void {
     this.context.updateFileUpload(id, { progress: 1, metadata });
-  }
-
-  /* @conditional-compile-remove(teams-inline-images) */
-  async downloadAuthenticatedAttachment(attachmentUrl: string): Promise<string> {
-    function fetchWithAuthentication(url: string, token: string): Promise<Response> {
-      const headers = new Headers();
-      headers.append('Authorization', `Bearer ${token}`);
-      return fetch(url, { headers });
-    }
-    if (!this.getAuthToken) {
-      return '';
-    }
-    // ToDo InlineAttachments: If GET fails might need to send failure up to contoso
-    const token = await this.getAuthToken();
-    const response = await fetchWithAuthentication(attachmentUrl ?? '', token);
-    const blob = await response.blob();
-    return URL.createObjectURL(blob);
   }
 
   private subscribeAllEvents(fileUpload: FileUpload): void {
