@@ -35,7 +35,9 @@ import {
 import { AddPhoneNumberOptions, DtmfTone } from '@azure/communication-calling';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 import { SendMessageOptions } from '@azure/communication-chat';
-/* @conditional-compile-remove(file-sharing) */
+/* @conditional-compile-remove(teams-inline-images) */
+import { AttachmentDownloadResult } from '@internal/react-components';
+/* @conditional-compile-remove(file-sharing) */ /* @conditional-compile-remove(teams-inline-images) */
 import { FileMetadata } from '@internal/react-components';
 /* @conditional-compile-remove(file-sharing) */
 import { FileUploadManager } from '../../ChatComposite';
@@ -46,7 +48,7 @@ import { CommunicationIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(video-background-effects) */
 import { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/communication-calling-effects';
 /* @conditional-compile-remove(video-background-effects) */
-import { VideoBackgroundImage } from '../../CallComposite';
+import { VideoBackgroundImage, SelectedVideoBackgroundEffect } from '../../CallComposite';
 
 /**
  * Functionality for managing the current call with chat.
@@ -308,7 +310,7 @@ export interface CallWithChatAdapterManagement {
   /** @beta */
   updateFileUploadMetadata: (id: string, metadata: FileMetadata) => void;
   /* @conditional-compile-remove(teams-inline-images) */
-  downloadAuthenticatedAttachment?: (attachmentUrl: string) => Promise<string>;
+  downloadAuthenticatedAttachment?: (attachmentUrl: string) => Promise<AttachmentDownloadResult>;
   /* @conditional-compile-remove(PSTN-calls) */
   /**
    * Puts the Call in a Localhold.
@@ -374,6 +376,13 @@ export interface CallWithChatAdapterManagement {
    * @beta
    */
   updateBackgroundPickerImages(backgroundImages: VideoBackgroundImage[]): void;
+  /* @conditional-compile-remove(video-background-effects) */
+  /**
+   * Update the selected video background effect
+   *
+   * @beta
+   */
+  updateSelectedVideoBackgroundEffect(selectedVideoBackground: SelectedVideoBackgroundEffect): void;
 }
 
 /**

@@ -151,6 +151,12 @@ export interface AtMentionSuggestion {
     userId: string;
 }
 
+// @beta (undocumented)
+export interface AttachmentDownloadResult {
+    // (undocumented)
+    blobUrl: string;
+}
+
 // @public
 export type AvatarPersonaData = {
     text?: string;
@@ -345,6 +351,8 @@ export interface CallAdapterCallOperations {
     unmute(): Promise<void>;
     // @beta
     updateBackgroundPickerImages(backgroundImages: VideoBackgroundImage[]): void;
+    // @beta
+    updateSelectedVideoBackgroundEffect(selectedVideoBackground: SelectedVideoBackgroundEffect): void;
 }
 
 // @public
@@ -361,6 +369,7 @@ export type CallAdapterClientState = {
     roleHint?: Role;
     cameraStatus?: 'On' | 'Off';
     videoBackgroundImages?: VideoBackgroundImage[];
+    selectedVideoBackgroundEffect?: SelectedVideoBackgroundEffect;
 };
 
 // @public
@@ -681,7 +690,7 @@ export type CallErrors = {
 };
 
 // @public
-export type CallErrorTarget = 'Call.addParticipant' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.dispose' | 'Call.feature' | 'Call.hangUp' | 'Call.hold' | 'Call.mute' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.muteIncomingAudio' | 'Call.off' | 'Call.on' | 'Call.removeParticipant' | 'Call.resume' | 'Call.sendDtmf' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.startAudio' | 'Call.startScreenSharing' | 'Call.startVideo' | 'Call.stopScreenSharing' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.stopAudio' | 'Call.stopVideo' | 'Call.unmute' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.unmuteIncomingAudio' | 'CallAgent.dispose' | 'CallAgent.feature' | 'CallAgent.join' | 'CallAgent.off' | 'CallAgent.on' | 'CallAgent.startCall' | 'CallClient.createCallAgent' | /* @conditional-compile-remove(calling-beta-sdk) */ /* @conditional-compile-remove(teams-identity-support) */ 'CallClient.createTeamsCallAgent' | 'CallClient.feature' | 'CallClient.getDeviceManager' | /* @conditional-compile-remove(calling-beta-sdk) */ 'CallClient.getEnvironmentInfo' | 'DeviceManager.askDevicePermission' | 'DeviceManager.getCameras' | 'DeviceManager.getMicrophones' | 'DeviceManager.getSpeakers' | 'DeviceManager.off' | 'DeviceManager.on' | 'DeviceManager.selectMicrophone' | 'DeviceManager.selectSpeaker' | 'IncomingCall.accept' | 'IncomingCall.reject' | /* @conditional-compile-remove(calling-beta-sdk) */ /* @conditional-compile-remove(teams-identity-support) */ 'TeamsCall.addParticipant' | /* @conditional-compile-remove(video-background-effects) */ 'VideoEffectsFeature.startEffects' | /* @conditional-compile-remove(calling-beta-sdk) */ 'CallAgent.handlePushNotification';
+export type CallErrorTarget = 'Call.addParticipant' | 'Call.dispose' | 'Call.feature' | 'Call.hangUp' | 'Call.hold' | 'Call.mute' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.muteIncomingAudio' | 'Call.off' | 'Call.on' | 'Call.removeParticipant' | 'Call.resume' | 'Call.sendDtmf' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.startAudio' | 'Call.startScreenSharing' | 'Call.startVideo' | 'Call.stopScreenSharing' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.stopAudio' | 'Call.stopVideo' | 'Call.unmute' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.unmuteIncomingAudio' | 'CallAgent.dispose' | 'CallAgent.feature' | 'CallAgent.join' | 'CallAgent.off' | 'CallAgent.on' | 'CallAgent.startCall' | 'CallClient.createCallAgent' | 'CallClient.createTeamsCallAgent' | 'CallClient.feature' | 'CallClient.getDeviceManager' | /* @conditional-compile-remove(calling-beta-sdk) */ 'CallClient.getEnvironmentInfo' | 'DeviceManager.askDevicePermission' | 'DeviceManager.getCameras' | 'DeviceManager.getMicrophones' | 'DeviceManager.getSpeakers' | 'DeviceManager.off' | 'DeviceManager.on' | 'DeviceManager.selectMicrophone' | 'DeviceManager.selectSpeaker' | 'IncomingCall.accept' | 'IncomingCall.reject' | /* @conditional-compile-remove(calling-beta-sdk) */ /* @conditional-compile-remove(teams-identity-support) */ 'TeamsCall.addParticipant' | /* @conditional-compile-remove(video-background-effects) */ 'VideoEffectsFeature.startEffects' | /* @conditional-compile-remove(calling-beta-sdk) */ 'CallAgent.handlePushNotification';
 
 // @public
 export type CallIdChangedListener = (event: {
@@ -788,7 +797,7 @@ export interface CallWithChatAdapterManagement {
     deleteMessage(messageId: string): Promise<void>;
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
     // (undocumented)
-    downloadAuthenticatedAttachment?: (attachmentUrl: string) => Promise<string>;
+    downloadAuthenticatedAttachment?: (attachmentUrl: string) => Promise<AttachmentDownloadResult>;
     fetchInitialData(): Promise<void>;
     // @beta
     holdCall: () => Promise<void>;
@@ -837,6 +846,8 @@ export interface CallWithChatAdapterManagement {
     // @beta (undocumented)
     updateFileUploadProgress: (id: string, progress: number) => void;
     updateMessage(messageId: string, content: string, metadata?: Record<string, string>): Promise<void>;
+    // @beta
+    updateSelectedVideoBackgroundEffect(selectedVideoBackground: SelectedVideoBackgroundEffect): void;
 }
 
 // @public
@@ -1163,7 +1174,17 @@ export interface CameraSitePermissionsProps extends CommonSitePermissionsProps {
 export type CameraSitePermissionsStrings = SitePermissionsStrings;
 
 // @public
+export type CancelEditCallback = (messageId: string, metadata?: Record<string, string>, options?: {
+    attachedFilesMetadata?: FileMetadata[];
+}) => void;
+
+// @public
 export type ChatAdapter = ChatAdapterThreadManagement & AdapterState<ChatAdapterState> & Disposable & ChatAdapterSubscribers & FileUploadAdapter;
+
+// @beta
+export type ChatAdapterOptions = {
+    credential?: CommunicationTokenCredential;
+};
 
 // @public
 export type ChatAdapterState = ChatAdapterUiState & ChatCompositeClientState;
@@ -1189,6 +1210,8 @@ export interface ChatAdapterSubscribers {
 // @public
 export interface ChatAdapterThreadManagement {
     deleteMessage(messageId: string): Promise<void>;
+    // (undocumented)
+    downloadAuthenticatedAttachment?: (attachmentUrl: string) => Promise<AttachmentDownloadResult>;
     fetchInitialData(): Promise<void>;
     loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
     removeParticipant(userId: string): Promise<void>;
@@ -1334,6 +1357,8 @@ export interface ChatMessage extends MessageCommon {
     deletedOn?: Date;
     // (undocumented)
     editedOn?: Date;
+    // (undocumented)
+    failureReason?: string;
     // (undocumented)
     messageType: 'chat';
     metadata?: Record<string, string>;
@@ -1729,7 +1754,9 @@ export const createAzureCommunicationCallWithChatAdapterFromClients: ({ callClie
 export const createAzureCommunicationChatAdapter: ({ endpoint: endpointUrl, userId, displayName, credential, threadId }: AzureCommunicationChatAdapterArgs) => Promise<ChatAdapter>;
 
 // @public
-export const createAzureCommunicationChatAdapterFromClient: (chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient) => Promise<ChatAdapter>;
+export function createAzureCommunicationChatAdapterFromClient(chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient, options?: {
+    credential?: CommunicationTokenCredential;
+}): Promise<ChatAdapter>;
 
 // @public
 export const createDefaultCallingHandlers: (callClient: StatefulCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined) => CallingHandlers;
@@ -2230,10 +2257,19 @@ export type FileDownloadHandler = (userId: string, fileMetadata: FileMetadata) =
 
 // @beta
 export interface FileMetadata {
+    // (undocumented)
+    attachmentType: FileMetadataAttachmentType;
     extension: string;
+    // (undocumented)
+    id: string;
     name: string;
+    // (undocumented)
+    previewUrl?: string;
     url: string;
 }
+
+// @beta (undocumented)
+export type FileMetadataAttachmentType = 'fileSharing' | /* @conditional-compile-remove(teams-inline-images) */ 'teamsInlineImage' | 'unknown';
 
 // @beta
 export interface FileSharingOptions {
@@ -2249,8 +2285,6 @@ export interface FileUploadAdapter {
     cancelFileUpload: (id: string) => void;
     // (undocumented)
     clearFileUploads: () => void;
-    // (undocumented)
-    downloadAuthenticatedAttachment?: (attachmentUrl: string) => Promise<string>;
     // (undocumented)
     registerActiveFileUploads: (files: File[]) => FileUploadManager[];
     // (undocumented)
@@ -2507,6 +2541,7 @@ export type MessageProps = {
     showDate?: boolean;
     disableEditing?: boolean;
     onUpdateMessage?: UpdateMessageCallback;
+    onCancelMessageEdit?: CancelEditCallback;
     onDeleteMessage?: (messageId: string) => Promise<void>;
     onSendMessage?: (messageId: string) => Promise<void>;
 };
@@ -2580,7 +2615,9 @@ export type MessageThreadProps = {
     onLoadPreviousChatMessages?: (messagesToLoad: number) => Promise<boolean>;
     onRenderMessage?: (messageProps: MessageProps, messageRenderer?: MessageRenderer) => JSX.Element;
     onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
+    onFetchAttachments?: (attachment: FileMetadata) => Promise<AttachmentDownloadResult>;
     onUpdateMessage?: UpdateMessageCallback;
+    onCancelMessageEdit?: CancelEditCallback;
     onDeleteMessage?: (messageId: string) => Promise<void>;
     onSendMessage?: (content: string) => Promise<void>;
     disableEditing?: boolean;
@@ -2987,6 +3024,9 @@ export interface ScreenShareButtonStrings {
     tooltipOnContent?: string;
 }
 
+// @beta
+export type SelectedVideoBackgroundEffect = VideoBackgroundNoneEffect | VideoBackgroundBlurEffect | VideoBackgroundReplacementEffect;
+
 // @public
 export type Selector = (state: ClientState, props: any) => any;
 
@@ -3332,10 +3372,27 @@ export interface VerticalGalleryStyles extends BaseCustomStyles {
 }
 
 // @beta
+export interface VideoBackgroundBlurEffect {
+    effectName: 'blur';
+}
+
+// @beta
 export interface VideoBackgroundImage {
     key: string;
     tooltipText?: string;
     url: string;
+}
+
+// @beta
+export interface VideoBackgroundNoneEffect {
+    effectName: 'none';
+}
+
+// @beta
+export interface VideoBackgroundReplacementEffect {
+    backgroundImageUrl: string;
+    effectKey: string;
+    effectName: 'replacement';
 }
 
 // @public

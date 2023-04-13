@@ -97,6 +97,15 @@ exports.default = babelHelper.declare((_api, opts) => {
         Handle(path, featureSet, stabilizedFeatureSet);
       },
 
+      Identifier(path) {
+        Handle(path, featureSet, stabilizedFeatureSet);
+      },
+
+      
+      SwitchCase(path) {
+        Handle(path, featureSet, stabilizedFeatureSet);
+      },
+
       TSFunctionType(path) {
         path.traverse({
           Identifier(identifier_path) {

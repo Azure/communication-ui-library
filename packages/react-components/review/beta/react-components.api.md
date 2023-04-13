@@ -96,6 +96,12 @@ export interface AtMentionSuggestion {
     userId: string;
 }
 
+// @beta (undocumented)
+export interface AttachmentDownloadResult {
+    // (undocumented)
+    blobUrl: string;
+}
+
 // @public
 export interface BaseCustomStyles {
     root?: IStyle;
@@ -266,6 +272,11 @@ export interface CameraSitePermissionsProps extends CommonSitePermissionsProps {
 // @beta
 export type CameraSitePermissionsStrings = SitePermissionsStrings;
 
+// @public
+export type CancelEditCallback = (messageId: string, metadata?: Record<string, string>, options?: {
+    attachedFilesMetadata?: FileMetadata[];
+}) => void;
+
 // @internal
 export const _Caption: (props: _CaptionProps) => JSX.Element;
 
@@ -307,6 +318,8 @@ export interface ChatMessage extends MessageCommon {
     deletedOn?: Date;
     // (undocumented)
     editedOn?: Date;
+    // (undocumented)
+    failureReason?: string;
     // (undocumented)
     messageType: 'chat';
     metadata?: Record<string, string>;
@@ -913,10 +926,19 @@ export type FileDownloadHandler = (userId: string, fileMetadata: FileMetadata) =
 
 // @beta
 export interface FileMetadata {
+    // (undocumented)
+    attachmentType: FileMetadataAttachmentType;
     extension: string;
+    // (undocumented)
+    id: string;
     name: string;
+    // (undocumented)
+    previewUrl?: string;
     url: string;
 }
+
+// @beta (undocumented)
+export type FileMetadataAttachmentType = 'fileSharing' | /* @conditional-compile-remove(teams-inline-images) */ 'teamsInlineImage' | 'unknown';
 
 // @internal
 export interface _FileUploadCardsStrings {
@@ -1107,6 +1129,7 @@ export type MessageProps = {
     showDate?: boolean;
     disableEditing?: boolean;
     onUpdateMessage?: UpdateMessageCallback;
+    onCancelMessageEdit?: CancelEditCallback;
     onDeleteMessage?: (messageId: string) => Promise<void>;
     onSendMessage?: (messageId: string) => Promise<void>;
 };
@@ -1163,7 +1186,9 @@ export type MessageThreadProps = {
     onLoadPreviousChatMessages?: (messagesToLoad: number) => Promise<boolean>;
     onRenderMessage?: (messageProps: MessageProps, messageRenderer?: MessageRenderer) => JSX.Element;
     onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
+    onFetchAttachments?: (attachment: FileMetadata) => Promise<AttachmentDownloadResult>;
     onUpdateMessage?: UpdateMessageCallback;
+    onCancelMessageEdit?: CancelEditCallback;
     onDeleteMessage?: (messageId: string) => Promise<void>;
     onSendMessage?: (content: string) => Promise<void>;
     disableEditing?: boolean;

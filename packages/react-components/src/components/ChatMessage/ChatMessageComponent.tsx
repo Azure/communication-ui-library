@@ -28,6 +28,13 @@ type ChatMessageComponentProps = {
       attachedFilesMetadata?: FileMetadata[];
     }
   ) => Promise<void>;
+  onCancelMessageEdit?: (
+    messageId: string,
+    metadata?: Record<string, string>,
+    options?: {
+      attachedFilesMetadata?: FileMetadata[];
+    }
+  ) => void;
   /**
    * Callback to delete a message. Also called before resending a message that failed to send.
    * @param messageId ID of the message to delete
@@ -40,6 +47,10 @@ type ChatMessageComponentProps = {
   onSendMessage?: (content: string) => Promise<void>;
   strings: MessageThreadStrings;
   messageStatus?: string;
+  /**
+   * Optional text to display when the message status is 'failed'.
+   */
+  failureReason?: string;
   /**
    * Whether the status indicator for each message is displayed or not.
    */
@@ -80,6 +91,17 @@ type ChatMessageComponentProps = {
    * @beta
    */
   atMentionDisplayOptions?: AtMentionDisplayOptions;
+  /* @conditional-compile-remove(teams-inline-images) */
+  /**
+   * Optional function to fetch attachments.
+   * @beta
+   */
+  onFetchAttachments?: (attachment: FileMetadata) => Promise<void>;
+  /* @conditional-compile-remove(teams-inline-images) */
+  /**
+   * Optional map of attachment ids to blob urls.
+   */
+  attachmentsMap?: Record<string, string>;
 };
 
 /**
@@ -97,7 +119,7 @@ export const ChatMessageComponent = (props: ChatMessageComponentProps): JSX.Elem
     if (onDeleteMessage && message.messageId) {
       onDeleteMessage(message.messageId);
     }
-    // when fail to send, message does not have message id, delete message using clientmessageid
+    // when fail to send, message does not have message id, delete message using clientMessageId
     else if (onDeleteMessage && message.messageType === 'chat' && clientMessageId) {
       onDeleteMessage(clientMessageId);
     }
@@ -119,7 +141,8 @@ export const ChatMessageComponent = (props: ChatMessageComponentProps): JSX.Elem
             (await props.onUpdateMessage(message.messageId, text, metadata, options));
           setIsEditing(false);
         }}
-        onCancel={() => {
+        onCancel={(messageId, metadata, options) => {
+          props.onCancelMessageEdit && props.onCancelMessageEdit(messageId, metadata, options);
           setIsEditing(false);
         }}
       />
@@ -135,6 +158,10 @@ export const ChatMessageComponent = (props: ChatMessageComponentProps): JSX.Elem
         /* @conditional-compile-remove(date-time-customization) */
         onDisplayDateTimeString={props.onDisplayDateTimeString}
         strings={props.strings}
+        /* @conditional-compile-remove(teams-inline-images) */
+        onFetchAttachments={props.onFetchAttachments}
+        /* @conditional-compile-remove(teams-inline-images) */
+        attachmentsMap={props.attachmentsMap}
       />
     );
   }

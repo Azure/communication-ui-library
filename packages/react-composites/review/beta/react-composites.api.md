@@ -7,6 +7,7 @@
 /// <reference types="react" />
 
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
+import { AttachmentDownloadResult } from '@internal/react-components';
 import { AudioDeviceInfo } from '@azure/communication-calling';
 import { BackgroundBlurConfig } from '@azure/communication-calling-effects';
 import { BackgroundReplacementConfig } from '@azure/communication-calling-effects';
@@ -200,6 +201,8 @@ export interface CallAdapterCallOperations {
     unmute(): Promise<void>;
     // @beta
     updateBackgroundPickerImages(backgroundImages: VideoBackgroundImage[]): void;
+    // @beta
+    updateSelectedVideoBackgroundEffect(selectedVideoBackground: SelectedVideoBackgroundEffect): void;
 }
 
 // @public
@@ -216,6 +219,7 @@ export type CallAdapterClientState = {
     roleHint?: Role;
     cameraStatus?: 'On' | 'Off';
     videoBackgroundImages?: VideoBackgroundImage[];
+    selectedVideoBackgroundEffect?: SelectedVideoBackgroundEffect;
 };
 
 // @public
@@ -500,7 +504,7 @@ export interface CallWithChatAdapterManagement {
     deleteMessage(messageId: string): Promise<void>;
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
     // (undocumented)
-    downloadAuthenticatedAttachment?: (attachmentUrl: string) => Promise<string>;
+    downloadAuthenticatedAttachment?: (attachmentUrl: string) => Promise<AttachmentDownloadResult>;
     fetchInitialData(): Promise<void>;
     // @beta
     holdCall: () => Promise<void>;
@@ -549,6 +553,8 @@ export interface CallWithChatAdapterManagement {
     // @beta (undocumented)
     updateFileUploadProgress: (id: string, progress: number) => void;
     updateMessage(messageId: string, content: string, metadata?: Record<string, string>): Promise<void>;
+    // @beta
+    updateSelectedVideoBackgroundEffect(selectedVideoBackground: SelectedVideoBackgroundEffect): void;
 }
 
 // @public
@@ -797,6 +803,11 @@ export type CallWithChatEvent = 'callError' | 'chatError' | 'callEnded' | 'isMut
 // @public
 export type ChatAdapter = ChatAdapterThreadManagement & AdapterState<ChatAdapterState> & Disposable & ChatAdapterSubscribers & FileUploadAdapter;
 
+// @beta
+export type ChatAdapterOptions = {
+    credential?: CommunicationTokenCredential;
+};
+
 // @public
 export type ChatAdapterState = ChatAdapterUiState & ChatCompositeClientState;
 
@@ -821,6 +832,8 @@ export interface ChatAdapterSubscribers {
 // @public
 export interface ChatAdapterThreadManagement {
     deleteMessage(messageId: string): Promise<void>;
+    // (undocumented)
+    downloadAuthenticatedAttachment?: (attachmentUrl: string) => Promise<AttachmentDownloadResult>;
     fetchInitialData(): Promise<void>;
     loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
     removeParticipant(userId: string): Promise<void>;
@@ -1015,7 +1028,9 @@ export const createAzureCommunicationCallWithChatAdapterFromClients: ({ callClie
 export const createAzureCommunicationChatAdapter: ({ endpoint: endpointUrl, userId, displayName, credential, threadId }: AzureCommunicationChatAdapterArgs) => Promise<ChatAdapter>;
 
 // @public
-export const createAzureCommunicationChatAdapterFromClient: (chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient) => Promise<ChatAdapter>;
+export function createAzureCommunicationChatAdapterFromClient(chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient, options?: {
+    credential?: CommunicationTokenCredential;
+}): Promise<ChatAdapter>;
 
 // @beta (undocumented)
 export const createTeamsCallAdapter: ({ userId, credential, locator, options }: TeamsCallAdapterArgs) => Promise<TeamsCallAdapter>;
@@ -1235,8 +1250,6 @@ export interface FileUploadAdapter {
     // (undocumented)
     clearFileUploads: () => void;
     // (undocumented)
-    downloadAuthenticatedAttachment?: (attachmentUrl: string) => Promise<string>;
-    // (undocumented)
     registerActiveFileUploads: (files: File[]) => FileUploadManager[];
     // (undocumented)
     registerCompletedFileUploads: (metadata: FileMetadata[]) => FileUploadManager[];
@@ -1362,6 +1375,9 @@ export interface RemoteVideoTileMenuOptions {
 }
 
 // @beta
+export type SelectedVideoBackgroundEffect = VideoBackgroundNoneEffect | VideoBackgroundBlurEffect | VideoBackgroundReplacementEffect;
+
+// @beta
 export type TeamsAdapterOptions = {
     onFetchProfile?: OnFetchProfileCallback;
 };
@@ -1405,10 +1421,27 @@ export function _useFakeChatAdapters(args: _FakeChatAdapterArgs): _FakeChatAdapt
 export const useTeamsCallAdapter: (args: Partial<TeamsCallAdapterArgs>, afterCreate?: ((adapter: TeamsCallAdapter) => Promise<TeamsCallAdapter>) | undefined, beforeDispose?: ((adapter: TeamsCallAdapter) => Promise<void>) | undefined) => TeamsCallAdapter | undefined;
 
 // @beta
+export interface VideoBackgroundBlurEffect {
+    effectName: 'blur';
+}
+
+// @beta
 export interface VideoBackgroundImage {
     key: string;
     tooltipText?: string;
     url: string;
+}
+
+// @beta
+export interface VideoBackgroundNoneEffect {
+    effectName: 'none';
+}
+
+// @beta
+export interface VideoBackgroundReplacementEffect {
+    backgroundImageUrl: string;
+    effectKey: string;
+    effectName: 'replacement';
 }
 
 // (No @packageDocumentation comment for this package)
