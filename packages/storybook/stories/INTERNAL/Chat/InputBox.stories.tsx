@@ -57,9 +57,8 @@ const InputBoxStory = (): JSX.Element => {
   ];
   return (
     <FluentThemeProvider>
-       <MessageThread userId={'4'} messages={GetHistoryChatMessages()}/>
+      <MessageThread userId={'4'} messages={GetHistoryChatMessages()} />
       <div style={{ width: '31.25rem', height: '20rem' }}>
-       
         <Stack
           className={mergeStyles(
             borderAndBoxShadowStyle({
