@@ -32,24 +32,30 @@ export const getDocs: () => JSX.Element = () => {
       <Source code={LobbyComponentText} />
       <Heading>Inline Images</Heading>
       <SingleLineBetaBanner />
-      <Subheading>Use `CallWithChat` Composite with Inline Image Support</Subheading>
+      <Subheading>Use CallWithChat Composite with Inline Image Support</Subheading>
       <Description>
         Currently, the UI library only supports inline images in a Teams Interop chat sent by the Teams user. To
         lerverage this feature, you can use the `CallWithChat` composite.
       </Description>
       <Description>
-        You can try out the `CallWithChat` composite in the [CallWithChatComposite Basic
+        Try out the CallWithChat composite in the [CallWithChatComposite Basic
         Example](./?path=/story/composites-call-with-chat-basicexample--basic-example).
       </Description>
-      <Subheading>Use `MessageThread` component with Inline Image Support</Subheading>
+      <Subheading>Use MessageThread component with Inline Image Support</Subheading>
       <Description>
-        The following example shows how to implement `MessageThread` to render a message with protected images and where
-        you can provide custom authentication logic for the UI library to fetch and render images.
+        `MessageThread` is deisgned to be responsive and supports inline images natively. To achieve this, you need to
+        simply pass in chat messages in HTML format with `img` tag embedded to `MessageThread` component without any
+        additional setup.
+      </Description>
+      <Description>
+        Moreover, If you need the UI library to render images that requires authentications, you can refer to the
+        following code snippet on how to render a chat message with protected inline images and where you can provide a
+        custom authentication logic for the UI library to fetch and render images.
       </Description>
       <Description>
         Noticing in the `img` tag, the `id` attribute contains the same id as defined in the array
-        `attachedFilesMetadata`. The is used by the UI library to locate the image and replace its src path to local
-        path of the blob image. In addition, the `attachmentType` of each `FileMetadata` is set to `teamsInlineImage`
+        `attachedFilesMetadata`. The is used by the UI library to locate the image and replace its `src` to local path
+        of the blob image. In addition, the `attachmentType` of each `FileMetadata` is set to `teamsInlineImage` of
         `FileMetadataAttachmentType`.
       </Description>
       <Source code={InlineImageText} />
