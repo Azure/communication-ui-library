@@ -84,7 +84,7 @@ test.describe('Closed Captions Banner tests', async () => {
     expect(await stableScreenshot(page)).toMatchSnapshot('hide-captions-banner.png');
   });
 
-  test('Captions settings triggered by caption banner correctly on desktop', async ({ page, serverUrl }) => {
+  test('Captions settings triggered by caption banner correctly on desktop', async ({ page, serverUrl }, testInfo) => {
     if (isTestProfileMobile(testInfo)) {
       test.skip();
     }
