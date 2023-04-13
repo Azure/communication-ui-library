@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "updated version of stable calling sdk to 1.11.1",
+  "packageName": "@azure/communication-react",
+  "email": "79329532+alkwa-msft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

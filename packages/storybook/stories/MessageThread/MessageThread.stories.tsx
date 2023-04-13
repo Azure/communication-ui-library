@@ -7,7 +7,9 @@ import {
   ChatMessage,
   CustomMessage,
   SystemMessage,
-  MessageRenderer
+  MessageRenderer,
+  FileMetadata,
+  AttachmentDownloadResult
 } from '@azure/communication-react';
 import { Persona, PersonaPresence, PersonaSize, PrimaryButton, Stack } from '@fluentui/react';
 import { Divider } from '@fluentui/react-northstar';
@@ -43,6 +45,7 @@ import { DefaultMessageThreadExample } from './snippets/Default.snippet';
 import { MessageThreadWithMessageStatusIndicatorExample } from './snippets/MessageStatusIndicator.snippet';
 import { MessageWithFile } from './snippets/MessageWithFile.snippet';
 import { MessageThreadWithSystemMessagesExample } from './snippets/SystemMessages.snippet';
+import { MessageThreadWithInlineImageExample } from './snippets/WithInlineImageMessage.snippet';
 import { MessageThreadWithMessageDateExample } from './snippets/WithMessageDate.snippet';
 
 const MessageThreadWithBlockedMessagesExampleText =
@@ -67,6 +70,8 @@ const MessageWithFileText = require('!!raw-loader!./snippets/MessageWithFile.sni
 const ExampleConstantsText = require('!!raw-loader!./snippets/placeholdermessages.ts').default;
 const MessageThreadWithSystemMessagesExampleText =
   require('!!raw-loader!./snippets/SystemMessages.snippet.tsx').default;
+const MessageThreadWithInlineImageExampleText =
+  require('!!raw-loader!./snippets/WithInlineImageMessage.snippet.tsx').default;
 const MessageThreadWithMessageDateExampleText = require('!!raw-loader!./snippets/WithMessageDate.snippet.tsx').default;
 
 const importStatement = `
@@ -118,6 +123,7 @@ const getDocs: () => JSX.Element = () => {
       </Canvas>
 
       <Heading>Blocked Message</Heading>
+      <SingleLineBetaBanner />
       <Description>
         The example below shows a message thread with a blocked message. If `link` is not provided, it will omit the
         hyperlink.
@@ -156,6 +162,7 @@ const getDocs: () => JSX.Element = () => {
       </Canvas>
 
       <Heading>Messages with Customized Blocked message Container</Heading>
+      <SingleLineBetaBanner />
       <Description>
         The example below shows how to render a `blocked` message with custom `warningText`, with
         `styles.blockedMessageContainer` for styling, and rendering your own JSX.Element with with `onRenderMessage` in
@@ -170,7 +177,7 @@ const getDocs: () => JSX.Element = () => {
         <MessageThreadWithMessageStatusIndicatorExample />
       </Canvas>
 
-      <Heading>Cutom Message Status Indicator</Heading>
+      <Heading>Custom Message Status Indicator</Heading>
       <Description>
         The example below shows how to render a `custom` message status indicator with `onRenderMessageStatus` in
         `MessageThread`
@@ -193,6 +200,17 @@ const getDocs: () => JSX.Element = () => {
       <Canvas mdxSource={MessageThreadWithCustomTimestampExampleText}>
         <MessageThreadWithCustomTimestampExample />
       </Canvas>
+      <Heading>Display Inline Image with Messages</Heading>
+      <SingleLineBetaBanner />
+      <Description>
+        MessageThread component provides UI for displaying inline image attachments in a message. If an image is
+        protected by header-based authentication, developers can write there own HTTP call to get the image so you can
+        provide the applicable headers. By default the `previewUrl` is displayed in the message bubble.
+      </Description>
+      <Canvas mdxSource={MessageThreadWithInlineImageExampleText}>
+        <MessageThreadWithInlineImageExample />
+      </Canvas>
+
       <Heading>Display File Attachments with Messages</Heading>
       <DetailedBetaBanner />
       <Description>
@@ -218,7 +236,7 @@ const MessageThreadStory = (args): JSX.Element => {
 
   const onSendNewMessage = (): void => {
     const existingChatMessages = chatMessages;
-    // We dont want to render the status for previous messages
+    // We don't want to render the status for previous messages
     existingChatMessages.forEach((message) => {
       if (message.messageType === 'chat') {
         message.status = 'seen';
@@ -257,6 +275,16 @@ const MessageThreadStory = (args): JSX.Element => {
     return defaultOnRender ? defaultOnRender(messageProps) : <></>;
   };
 
+  const onFetchAttachment = async (attachment: FileMetadata): Promise<AttachmentDownloadResult> => {
+    // Mocking promise
+    const delay = (): Promise<void> => new Promise((resolve) => setTimeout(resolve, 3000));
+    return await delay().then(() => {
+      return {
+        blobUrl: attachment.previewUrl ?? ''
+      };
+    });
+  };
+
   return (
     <Stack verticalFill style={MessageThreadStoryContainerStyles} tokens={{ childrenGap: '1rem' }}>
       <MessageThreadComponent
@@ -267,6 +295,7 @@ const MessageThreadStory = (args): JSX.Element => {
         disableJumpToNewMessageButton={!args.enableJumpToNewMessageButton}
         onLoadPreviousChatMessages={onLoadPreviousMessages}
         onRenderMessage={onRenderMessage}
+        onFetchAttachments={onFetchAttachment}
         onRenderAvatar={(userId?: string) => {
           return (
             <Persona
