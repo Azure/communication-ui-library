@@ -16,6 +16,7 @@ import { CommunicationIdentifier } from '@azure/communication-common';
 import { _toCommunicationIdentifier } from '@internal/acs-ui-common';
 import { StatefulCallClient, StatefulDeviceManager } from '@internal/calling-stateful-client';
 import memoizeOne from 'memoize-one';
+import { isACSCallParticipants } from '../utils/callUtils';
 import { createDefaultCommonCallingHandlers, CommonCallingHandlers } from './createCommonHandlers';
 
 /**
@@ -49,6 +50,11 @@ export const createDefaultCallingHandlers = memoizeOne(
       ...createDefaultCommonCallingHandlers(callClient, deviceManager, call),
       // FIXME: onStartCall API should use string, not the underlying SDK types.
       onStartCall: (participants: CommunicationIdentifier[], options?: StartCallOptions): Call | undefined => {
+        /* @conditional-compile-remove(teams-adhoc-call) */
+        return callAgent ? callAgent.startCall(participants, options) : undefined;
+        if (!isACSCallParticipants(participants)) {
+          throw new Error('TeamsUserIdentifier in Teams call is not supported!');
+        }
         return callAgent ? callAgent.startCall(participants, options) : undefined;
       },
       /* @conditional-compile-remove(PSTN-calls) */
