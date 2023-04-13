@@ -782,7 +782,6 @@ export interface CallWithChatCompositeStrings {
     moreDrawerButtonTooltip: string;
     moreDrawerMicrophoneMenuTitle: string;
     moreDrawerSpeakerMenuTitle: string;
-    moreDrawerSpokenLanguageMenuTitle: string;
     peopleButtonLabel: string;
     peopleButtonTooltipClose: string;
     peopleButtonTooltipOpen: string;

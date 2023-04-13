@@ -62,6 +62,7 @@ export interface CallWithChatCompositeStrings {
    * Only used with `mobileView` set to `true`.
    */
   moreDrawerCaptionsMenuTitle: string;
+  /* @conditional-compile-remove(close-captions) */
   /**
    * Title for the spoken language sub-menu in more button drawer.
    *
