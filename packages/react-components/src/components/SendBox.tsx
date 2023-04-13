@@ -186,15 +186,15 @@ export interface SendBoxProps {
   autoFocus?: 'sendBoxTextField';
   /* @conditional-compile-remove(file-sharing) */
   /**
-   * Optional callback to render uploaded files in the SendBox. The sendbox will expand
-   * veritcally to accomodate the uploaded files. File uploads will
-   * be rendered below the text area in sendbox.
+   * Optional callback to render uploaded files in the SendBox. The sendBox will expand
+   * vertically to accommodate the uploaded files. File uploads will
+   * be rendered below the text area in sendBox.
    * @beta
    */
   onRenderFileUploads?: () => JSX.Element;
   /* @conditional-compile-remove(file-sharing) */
   /**
-   * Optional array of active file uploads where each object has attibutes
+   * Optional array of active file uploads where each object has attributes
    * of a file upload like name, progress, errorMessage etc.
    * @beta
    */
@@ -235,7 +235,6 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
   const activeFileUploads = activeFileUploadsTrampoline(props);
 
   const [textValue, setTextValue] = useState('');
-  const [htmlValue, setHTMLValue] = useState<string | undefined>(undefined);
   const [textValueOverflow, setTextValueOverflow] = useState(false);
 
   const sendTextFieldRef = React.useRef<ITextField>(null);
@@ -257,14 +256,13 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
       return;
     }
 
-    const message = htmlValue || textValue;
+    const message = textValue;
     // we don't want to send empty messages including spaces, newlines, tabs
     // Message can be empty if there is a valid file upload
     if (!EMPTY_MESSAGE_REGEX.test(message) || hasFile(props)) {
       onSendMessage && onSendMessage(sanitizeText(message));
       console.log(sanitizeText(message));
       setTextValue('');
-      setHTMLValue(undefined);
     }
     sendTextFieldRef.current?.focus();
   };
@@ -280,15 +278,6 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
       setTextValueOverflow(false);
     }
     setTextValue(newValue);
-  };
-
-  const setHTMLText = (newValue?: string | undefined): void => {
-    if (newValue !== undefined && newValue.length > MAXIMUM_LENGTH_OF_MESSAGE) {
-      setTextValueOverflow(true);
-    } else {
-      setTextValueOverflow(false);
-    }
-    setHTMLValue(newValue);
   };
 
   const textTooLongMessage = textValueOverflow ? strings.textTooLong : undefined;
@@ -326,7 +315,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     [mergedSendIconStyle, onRenderIcon, textValue]
   );
 
-  // Ensure that errors are cleared when there are no files in sendbox
+  // Ensure that errors are cleared when there are no files in sendBox
   React.useEffect(() => {
     if (!activeFileUploads?.filter((upload) => !upload.error).length) {
       setFileUploadsPendingError(undefined);
@@ -385,7 +374,6 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
           inputClassName={sendBoxStyle}
           placeholderText={strings.placeholderText}
           textValue={textValue}
-          htmlValue={htmlValue}
           onChange={(_, newValue) => setText(newValue)}
           onKeyDown={(ev) => {
             const keyWasSendingMessage = ev.key === 'Enter' && (ev.shiftKey === false || !supportNewline);
@@ -399,9 +387,8 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
           styles={mergedStyles}
           supportNewline={supportNewline}
           maxLength={MAXIMUM_LENGTH_OF_MESSAGE}
-          onMentionAdd={(newTextValue, newHTMLValue) => {
+          onMentionAdd={(newTextValue) => {
             setText(newTextValue);
-            setHTMLText(newHTMLValue);
           }}
         >
           <VoiceOverButton

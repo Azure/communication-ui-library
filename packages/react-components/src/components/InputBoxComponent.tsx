@@ -70,7 +70,7 @@ type InputBoxComponentProps = {
   /* @conditional-compile-remove(at-mention) */
   atMentionLookupOptions?: AtMentionLookupOptions;
   /* @conditional-compile-remove(at-mention) */
-  onMentionAdd: (newTextValue?: string) => void;
+  onMentionAdd?: (newTextValue?: string) => void;
 };
 
 /**
@@ -172,7 +172,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
         props.atMentionLookupOptions?.trigger ?? defaultMentionTrigger
       );
       setInputTextValue(plainText);
-      onMentionAdd(updatedText);
+      onMentionAdd && onMentionAdd(updatedText);
       setMentionSuggestions([]);
       setCurrentTagIndex(-1);
       //TODO: add focus to the correct position
