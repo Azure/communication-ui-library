@@ -202,6 +202,8 @@ function callAdapterStateFromCallWithChatAdapterState(
     /* @conditional-compile-remove(unsupported-browser) */
     environmentInfo: callWithChatAdapterState.environmentInfo,
     /* @conditional-compile-remove(video-background-effects) */
-    videoBackgroundImages: callWithChatAdapterState.videoBackgroundImages
+    videoBackgroundImages: callWithChatAdapterState.videoBackgroundImages,
+    /* @conditional-compile-remove(video-background-effects) */
+    selectedVideoBackgroundEffect: callWithChatAdapterState.selectedVideoBackgroundEffect
   };
 }

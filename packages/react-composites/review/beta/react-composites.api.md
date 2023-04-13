@@ -653,6 +653,7 @@ export interface CallWithChatClientState {
     isTeamsCall: boolean;
     latestCallErrors: AdapterErrors;
     latestChatErrors: AdapterErrors;
+    selectedVideoBackgroundEffect?: SelectedVideoBackgroundEffect;
     userId: CommunicationIdentifierKind;
     videoBackgroundImages?: VideoBackgroundImage[];
 }
