@@ -38,6 +38,10 @@ export type {
   CallingBaseSelectorProps,
   CommonCallingHandlers
 } from '../../calling-component-bindings/src';
+
+/* @conditional-compile-remove(close-captions) */
+export type { CaptionsOptions } from '../../calling-component-bindings/src';
+
 export type {
   ChatClientProviderProps,
   ChatThreadClientProviderProps,
@@ -316,3 +320,5 @@ export type {
   VerticalGalleryStrings,
   VerticalGalleryControlBarStyles
 } from '../../react-components/src';
+/* @conditional-compile-remove(close-captions) */
+export type { CaptionsAvailableLanguageStrings } from '../../react-components/src';

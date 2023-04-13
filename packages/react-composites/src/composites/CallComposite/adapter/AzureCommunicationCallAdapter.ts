@@ -10,7 +10,9 @@ import {
   StatefulCallClient,
   StatefulDeviceManager,
   TeamsCall,
-  TeamsCallAgent as BetaTeamsCallAgent
+  TeamsCallAgent as BetaTeamsCallAgent,
+  _isACSCall,
+  _isTeamsCall
 } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(teams-identity-support) */
 import { _isTeamsCallAgent } from '@internal/calling-stateful-client';
@@ -30,6 +32,8 @@ import {
   VideoOptions,
   Call
 } from '@azure/communication-calling';
+/* @conditional-compile-remove(close-captions) */
+import { StartCaptionsOptions, CaptionsInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(video-background-effects) */
 import { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/communication-calling-effects';
 /* @conditional-compile-remove(teams-identity-support)) */
@@ -56,6 +60,8 @@ import {
   CallAdapterCallEndedEvent,
   CallAdapter
 } from './CallAdapter';
+/* @conditional-compile-remove(close-captions) */
+import { CaptionsReceivedListener } from './CallAdapter';
 /* @conditional-compile-remove(video-background-effects) */
 import { VideoBackgroundImage, SelectedVideoBackgroundEffect } from './CallAdapter';
 /* @conditional-compile-remove(teams-identity-support) */
@@ -365,6 +371,13 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     this.sendDtmfTone.bind(this);
     /* @conditional-compile-remove(unsupported-browser) */
     this.allowUnsupportedBrowserVersion.bind(this);
+    /* @conditional-compile-remove(close-captions) */
+    {
+      this.startCaptions.bind(this);
+      this.stopCaptions.bind(this);
+      this.setSpokenLanguage.bind(this);
+      this.setCaptionLanguage.bind(this);
+    }
     /* @conditional-compile-remove(video-background-effects) */
     this.blurVideoBackground.bind(this);
     /* @conditional-compile-remove(video-background-effects) */
@@ -683,6 +696,26 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     this.handlers.onSendDtmfTone(dtmfTone);
   }
 
+  /* @conditional-compile-remove(close-captions) */
+  public async startCaptions(startCaptionsOptions?: StartCaptionsOptions): Promise<void> {
+    this.handlers.onStartCaptions(startCaptionsOptions);
+  }
+
+  /* @conditional-compile-remove(close-captions) */
+  public async stopCaptions(): Promise<void> {
+    this.handlers.onStopCaptions();
+  }
+
+  /* @conditional-compile-remove(close-captions) */
+  public async setCaptionLanguage(language: string): Promise<void> {
+    this.handlers.onSetCaptionLanguage(language);
+  }
+
+  /* @conditional-compile-remove(close-captions) */
+  public async setSpokenLanguage(language: string): Promise<void> {
+    this.handlers.onSetSpokenLanguage(language);
+  }
+
   public getState(): CallAdapterState {
     return this.context.getState();
   }
@@ -707,6 +740,10 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   on(event: 'selectedMicrophoneChanged', listener: PropertyChangedEvent): void;
   on(event: 'selectedSpeakerChanged', listener: PropertyChangedEvent): void;
   on(event: 'error', errorHandler: (e: AdapterError) => void): void;
+  /* @conditional-compile-remove(close-captions) */
+  on(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
+  /* @conditional-compile-remove(close-captions) */
+  on(event: 'captionsPropertyChanged', listener: PropertyChangedEvent): void;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public on(event: string, listener: (e: any) => void): void {
@@ -718,6 +755,10 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     this.call?.on('isMutedChanged', this.isMyMutedChanged.bind(this));
     this.call?.on('isScreenSharingOnChanged', this.isScreenSharingOnChanged.bind(this));
     this.call?.on('idChanged', this.callIdChanged.bind(this));
+    /* @conditional-compile-remove(close-captions) */
+    this._call?.feature(Features.Captions).on('captionsReceived', this.captionsReceived.bind(this));
+    /* @conditional-compile-remove(close-captions) */
+    this._call?.feature(Features.Captions).on('isCaptionsActiveChanged', this.captionsPropertyChanged.bind(this));
   }
 
   private unsubscribeCallEvents(): void {
@@ -729,6 +770,10 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     this.call?.off('isMutedChanged', this.isMyMutedChanged.bind(this));
     this.call?.off('isScreenSharingOnChanged', this.isScreenSharingOnChanged.bind(this));
     this.call?.off('idChanged', this.callIdChanged.bind(this));
+    /* @conditional-compile-remove(close-captions) */
+    this._call?.feature(Features.Captions).off('captionsReceived', this.captionsReceived.bind(this));
+    /* @conditional-compile-remove(close-captions) */
+    this._call?.feature(Features.Captions).off('isCaptionsActiveChanged', this.captionsPropertyChanged.bind(this));
   }
 
   private isMyMutedChanged = (): void => {
@@ -770,6 +815,16 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     this.emitter.emit('isLocalScreenSharingActiveChanged', { isScreenSharingOn: this.call?.isScreenSharingOn });
   }
 
+  /* @conditional-compile-remove(close-captions) */
+  private captionsReceived(captionsInfo: CaptionsInfo): void {
+    this.emitter.emit('captionsReceived', { captionsInfo });
+  }
+
+  /* @conditional-compile-remove(close-captions) */
+  private captionsPropertyChanged(): void {
+    this.emitter.emit('captionsReceived', {});
+  }
+
   private callIdChanged(): void {
     this.call?.id && this.emitter.emit('callIdChanged', { callId: this.call.id });
   }
@@ -795,6 +850,10 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   off(event: 'selectedMicrophoneChanged', listener: PropertyChangedEvent): void;
   off(event: 'selectedSpeakerChanged', listener: PropertyChangedEvent): void;
   off(event: 'error', errorHandler: (e: AdapterError) => void): void;
+  /* @conditional-compile-remove(close-captions) */
+  off(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
+  /* @conditional-compile-remove(close-captions) */
+  off(event: 'captionsPropertyChanged', listener: PropertyChangedEvent): void;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public off(event: string, listener: (e: any) => void): void {
