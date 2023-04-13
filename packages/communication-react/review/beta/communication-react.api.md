@@ -145,6 +145,9 @@ export interface AtMentionLookupOptions {
 }
 
 // @beta
+export type AtMentionOptions = AtMentionLookupOptions & AtMentionDisplayOptions;
+
+// @beta
 export interface AtMentionSuggestion {
     displayName: string;
     suggestionType: string;
@@ -2624,8 +2627,7 @@ export type MessageThreadProps = {
     strings?: Partial<MessageThreadStrings>;
     fileDownloadHandler?: FileDownloadHandler;
     onDisplayDateTimeString?: (messageDate: Date) => string;
-    atMentionLookupOptions?: AtMentionLookupOptions;
-    atMentionDisplayOptions?: AtMentionDisplayOptions;
+    atMentionOptions?: AtMentionOptions;
 };
 
 // @public

@@ -88,6 +88,13 @@ export interface AtMentionDisplayOptions {
 }
 
 /**
+ * Options to lookup suggestions and display mentions in the at mention scenario.
+ *
+ * @beta
+ */
+export type AtMentionOptions = AtMentionLookupOptions & AtMentionDisplayOptions;
+
+/**
  * At mention suggestion's state, as reflected in the UI.
  *
  * @beta

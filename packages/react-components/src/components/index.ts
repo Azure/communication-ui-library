@@ -20,6 +20,7 @@ export type {
   _AtMentionFlyoutProps,
   AtMentionLookupOptions,
   AtMentionDisplayOptions,
+  AtMentionOptions,
   AtMentionSuggestion
 } from './AtMentionFlyout';
 /* @conditional-compile-remove(file-sharing) */

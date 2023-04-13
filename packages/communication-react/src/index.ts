@@ -148,7 +148,12 @@ export type {
 } from '../../react-components/src';
 
 /* @conditional-compile-remove(at-mention) */
-export type { AtMentionDisplayOptions, AtMentionLookupOptions, AtMentionSuggestion } from '../../react-components/src';
+export type {
+  AtMentionOptions,
+  AtMentionDisplayOptions,
+  AtMentionLookupOptions,
+  AtMentionSuggestion
+} from '../../react-components/src';
 
 export type {
   _IdentifierProviderProps,
