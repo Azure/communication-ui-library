@@ -30,6 +30,7 @@ import { isDarkThemed } from '../theming/themeUtils';
 import { useTheme } from '../theming';
 /* @conditional-compile-remove(at-mention) */
 import { AtMentionLookupOptions, _AtMentionFlyout, AtMentionSuggestion } from './AtMentionFlyout';
+import { tag } from 'type-fest/source/opaque';
 
 const defaultMentionTrigger = '@';
 /**
@@ -113,6 +114,8 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     console.log('textValue Effect triggered');
     console.log('textValue', textValue);
     console.log('plainText', plainText);
+    console.log('tags', tags);
+    console.log('textValue Effect end console log');
     // Provide the plain text string to the inputTextValue
     setInputTextValue(plainText);
   }, [textValue, atMentionLookupOptions?.trigger]);
@@ -160,12 +163,30 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       // FIGURE OUT WHERE TO INSERT THE NEW TAG
       // INSERT IT INTO THE TEXT FIELD
       let queryText = inputTextValue.slice(currentTagIndex).split(' ')[0];
-      const firstPart = inputTextValue.substring(0, currentTagIndex);
-      const lastPart = inputTextValue.substring(currentTagIndex + queryText.length);
+      const oldTags = parseToTags(textValue);
+      //TODO: add check if we are in the middle of another tag
 
+      const triggerText = atMentionLookupOptions?.trigger ?? defaultMentionTrigger;
+      let htmlIndex = mentionHTMLIndex(textValue, inputTextValue, oldTags, triggerText, currentTagIndex, queryText);
+      if (htmlIndex < 0) {
+        htmlIndex = 0;
+      } else if (htmlIndex > textValue.length) {
+        htmlIndex = textValue.length;
+      }
+
+      const firstPart = textValue.substring(0, htmlIndex);
+      const lastPart = textValue.substring(htmlIndex + queryText.length);
+
+      console.log('queryText', queryText);
+      console.log('firstPart', firstPart);
+      console.log('lastPart', lastPart);
       // TODO: make this logic work properly
       const updatedText = firstPart + htmlStringForMentionSuggestion(suggestion) + lastPart;
+
+      console.log('updatedText', updatedText);
       const tags = parseToTags(updatedText);
+      console.log('updatedText tags', tags);
+      console.log('htmlIndex', htmlIndex);
       const plainText = plainTextFromParsedTags(
         updatedText,
         tags,
@@ -190,16 +211,15 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       //TODO; add check for the last space and check if it isn't between mention trigger and
       // Look at the range of the change for a trigger character
       const triggerText = atMentionLookupOptions?.trigger ?? defaultMentionTrigger;
-      // const selectionStart = textFieldRef?.current?.selectionStart || 0;
       const selectionEnd = textFieldRef?.current?.selectionEnd || -1;
-      //need to check if needed
-      // const spacePriorIndex = newValue?.lastIndexOf(' ', selectionEnd - 1);
       const triggerPriorIndex = newValue?.lastIndexOf(triggerText, selectionEnd - 1);
       console.log('triggerPriorIndex', triggerPriorIndex);
       // trigger is found
       if (triggerPriorIndex !== undefined) {
+        const isNextSpaceSymbol = newValue?.slice(triggerPriorIndex, triggerPriorIndex + 1) == ' ';
         console.log('inside triggerPriorIndex', triggerPriorIndex);
         const wordAtSelection = newValue?.slice(triggerPriorIndex, selectionEnd);
+        console.log('wordAtSelection', wordAtSelection);
         console.log('wordAtSelection.length', wordAtSelection?.length);
         if (wordAtSelection === triggerText) {
           // start of the mention
@@ -208,14 +228,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
             tagIndex = 0;
           }
           setCurrentTagIndex(tagIndex);
-        }
-        console.log('wordAtSelection', wordAtSelection);
-        if (wordAtSelection?.indexOf(triggerText) !== -1) {
-          // Typed the trigger character
-          // We are at the start of a new tag
-          //it return the whole tag
-          // console.log('wordAtSelection', wordAtSelection);
-          // setCurrentTagIndex(selectionEnd);
+        } else if (isNextSpaceSymbol) {
         } else {
         }
 
@@ -361,15 +374,15 @@ type ParsedTag = {
  * @private
  */
 const parseToTags = (text: string): ParsedTag[] => {
-  let tags: ParsedTag[] = [];
+  const tags: ParsedTag[] = [];
   let parseIndex = 0;
 
   while (parseIndex < text.length) {
-    let openTagIndex = text.indexOf('<', parseIndex);
+    const openTagIndex = text.indexOf('<', parseIndex);
     if (openTagIndex === -1) {
       break;
     }
-    let openTagCloseIndex = text.indexOf('>', openTagIndex);
+    const openTagCloseIndex = text.indexOf('>', openTagIndex);
     const openTag = text.slice(openTagIndex + 1, openTagCloseIndex);
     const tagType = openTag.split(' ')[0];
 
@@ -386,7 +399,7 @@ const parseToTags = (text: string): ParsedTag[] => {
     } else {
       // Go find the close tag
       const tagToFind = '</' + openTag.split(' ')[0] + '>';
-      let closeTagIndex = text.indexOf(tagToFind, openTagCloseIndex);
+      const closeTagIndex = text.indexOf(tagToFind, openTagCloseIndex);
       if (closeTagIndex === -1) {
         console.error('Could not find close tag for ' + openTag);
         break;
@@ -450,6 +463,26 @@ const plainTextFromParsedTags = (textBlock: string, tags: ParsedTag[], trigger: 
     text += textBlock.slice(previousTagEndIndex);
   }
   return text;
+};
+
+const mentionHTMLIndex = (
+  htmlTextBlock: string,
+  plainTextBlock: string,
+  tags: ParsedTag[],
+  trigger: string,
+  plainStringStartIndex: number,
+  query: string // includes trigger
+): number => {
+  if (tags.length === 0) {
+    // no tags were added yet to the text
+    return plainStringStartIndex;
+  } else if (plainStringStartIndex + query.length === plainTextBlock.length) {
+    // tags will be added at the end of the current text
+    return htmlTextBlock.length - 1;
+  } else {
+    // tag will be added in the middle of the text
+    return htmlTextBlock.length - 1;
+  }
 };
 
 const htmlStringForMentionSuggestion = (suggestion: AtMentionSuggestion): string => {
