@@ -31,7 +31,6 @@ import { useHandlers } from '../../CallComposite/hooks/useHandlers';
 import { _startCaptionsButtonSelector } from '@internal/calling-component-bindings';
 /* @conditional-compile-remove(close-captions) */
 import { useAdaptedSelector } from '../../CallComposite/hooks/useAdaptedSelector';
-/* @conditional-compile-remove(close-captions) */
 import { _preventDismissOnEvent } from '@internal/acs-ui-common';
 
 /** @private */
