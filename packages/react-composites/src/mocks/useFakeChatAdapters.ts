@@ -119,9 +119,12 @@ const initializeAdapter = async (
     adapterInfo.chatThreadClient.threadId
   );
   registerChatThreadClientMethodErrors(chatThreadClient, chatThreadClientMethodErrors);
-  return await createAzureCommunicationChatAdapterFromClient(statefulChatClient, chatThreadClient, {
-    credential: fakeToken
-  });
+  return await createAzureCommunicationChatAdapterFromClient(
+    statefulChatClient,
+    chatThreadClient,
+    /* @conditional-compile-remove(teams-inline-images) */
+    { credential: fakeToken }
+  );
 };
 
 interface AdapterInfo {
