@@ -156,6 +156,6 @@ test.describe('Captions buttons in call control', () => {
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { newControlBarExperience: 'true' }));
     await pageClick(page, dataUiId('common-call-composite-more-button'));
     await pageClick(page, `[id="common-call-composite-captions-button"]`);
-    expect(await stableScreenshot(page)).toMatchSnapshot(`caption-toggle-button.png`);
+    expect(await stableScreenshot(page)).toMatchSnapshot(`caption-toggle-button-disabled.png`);
   });
 });
