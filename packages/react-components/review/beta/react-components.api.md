@@ -649,6 +649,9 @@ export const DEFAULT_COMPONENT_ICONS: {
     OptionsVideoBackgroundEffect: JSX.Element;
 };
 
+// @beta
+export const defaultMentionSuggestionRenderer: (suggestion: AtMentionSuggestion) => JSX.Element;
+
 // @internal
 export const _DevicePermissionDropdown: (props: _DevicePermissionDropdownProps) => JSX.Element;
 
