@@ -5,7 +5,6 @@ import React from 'react';
 const InlineImageText = require('!!raw-loader!../../MessageThread/snippets/WithInlineImageMessage.snippet.tsx').default;
 const CallComponentText = require('!!raw-loader!./snippets/CallComponent.snippet.tsx').default;
 const ComplianceBannerText = require('!!raw-loader!./snippets/ComplianceBanner.snippet.tsx').default;
-const InlineImageAdapterText = require('!!raw-loader!./snippets/InlineImageAdapter.snippet.tsx').default;
 const LobbyComponentText = require('!!raw-loader!./snippets/Lobby.snippet.tsx').default;
 
 export const getDocs: () => JSX.Element = () => {
@@ -31,19 +30,25 @@ export const getDocs: () => JSX.Element = () => {
       <Subheading>Create a Lobby Component</Subheading>
       <Source code={LobbyComponentText} />
       <Heading>Inline Images</Heading>
-      <Subheading>Use composite with Inline Image Support</Subheading>
+      <Subheading>Use "CallWithChat" Composite with Inline Image Support</Subheading>
       <Description>
-        If you want to integrate the Composite to your application, then you will need to create the Adapter with Azure
-        Communication Credential which would be used to fetch preview images. Please note that inline image support is
-        only avaliable in a Teams interoperbility chat, so here we are using CallWithChat compisite as an example.
-        Assuming that our application has a component named "ChatScreen" that would be used to deliver the chat
-        experience, we can then use the following code to render the chat screen with inline image support:
+        Currently, the UI library only supports inline images in a Teams Interop chat sent by the Teams user. To
+        lerverage this feature, you can use the "CallWithChat" composite.
       </Description>
-      <Source code={InlineImageAdapterText} />
-      <Subheading>Use component with Inline Image Support</Subheading>
       <Description>
-        If we are planning to integrate individual components to your application, then you can use the UI component
-        "MessageThread" to render message with inline images like the following:
+        You can try out the "CallWithChat" composite in the [CallWithChatComposite Basic
+        Example](./?path=/story/composites-call-with-chat-basicexample--basic-example).
+      </Description>
+      <Subheading>Use "MessageThread" component with Inline Image Support</Subheading>
+      <Description>
+        The following example shows how to implement "MessageThread" to render a message with protected images and where
+        you can provide custom authentication logic for the UI library to fetch and render images.
+      </Description>
+      <Description>
+        Noticing in the image tag, the ID attribute contains the same id as defined in the of "attachedFilesMetadata".
+        The is used by the UI library to locate the image and replace its src path to local path of the blob image. In
+        addition, the "attachmentType" of each "FileMetadata" is set to "teamsInlineImage" from
+        "FileMetadataAttachmentType".
       </Description>
       <Source code={InlineImageText} />
     </>
