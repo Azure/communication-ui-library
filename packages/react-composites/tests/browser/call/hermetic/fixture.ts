@@ -75,7 +75,8 @@ export function defaultMockCallAdapterState(participants?: MockRemoteParticipant
       isMuted: false,
       isScreenSharingOn: false,
       remoteParticipants,
-      remoteParticipantsEnded: {}
+      remoteParticipantsEnded: {},
+      totalParticipantCount: Object.values(remoteParticipants).length
     },
     userId: { kind: 'communicationUser', communicationUserId: '1' },
     devices: {

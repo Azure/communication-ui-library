@@ -18,7 +18,7 @@ import {
   defaultMockRemotePSTNParticipant,
   test
 } from './fixture';
-import { MockRemoteParticipantState } from '../../../common';
+import type { MockRemoteParticipantState } from '../../../common';
 
 test.describe('Participant pane tests', async () => {
   /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
@@ -304,18 +304,39 @@ test.describe('Participant pane tests', async () => {
   });
 
   /* @conditional-compile-remove(total-participant-count) */
-  test('Participant count should be shown correctly with large numbers of people', async ({ page, serverUrl }) => {
+  test('Participant count should be shown correctly with large numbers of people', async ({
+    page,
+    serverUrl
+  }, testInfo) => {
+    test.skip(!isTestProfileDesktop(testInfo));
     const participants: MockRemoteParticipantState[] = [];
-    for (let i = 0; i < 150; i++) {
-      participants.push(defaultMockRemoteParticipant(`Joni Solberg ${i}`));
-    }
 
     const initialState = defaultMockCallAdapterState(participants);
-    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
+    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { makeMeLotsOfPeople: 'true' }));
 
     await waitForSelector(page, dataUiId('call-composite-participants-button'));
     await pageClick(page, dataUiId('call-composite-participants-button'));
 
     expect(await stableScreenshot(page)).toMatchSnapshot('participant-list-large-number-of-participants.png');
+  });
+
+  /* @conditional-compile-remove(total-participant-count) */
+  test('Participant count should be shown correctly with large numbers of people mobile', async ({
+    page,
+    serverUrl
+  }, testInfo) => {
+    test.skip(isTestProfileDesktop(testInfo));
+    const participants: MockRemoteParticipantState[] = [];
+
+    const initialState = defaultMockCallAdapterState(participants);
+    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { makeMeLotsOfPeople: 'true' }));
+
+    await waitForSelector(page, dataUiId(IDS.moreButton));
+    await pageClick(page, dataUiId(IDS.moreButton));
+
+    await waitForSelector(page, dataUiId('call-composite-more-menu-people-button'));
+    await pageClick(page, dataUiId('call-composite-more-menu-people-button'));
+
+    expect(await stableScreenshot(page)).toMatchSnapshot('mobile-participant-list-large-number-of-participants.png');
   });
 });
