@@ -15,6 +15,7 @@ export { SendBox } from './SendBox';
 export { _AtMentionFlyout } from './AtMentionFlyout';
 
 export type { SendBoxProps, SendBoxStrings, SendBoxStylesProps } from './SendBox';
+
 /* @conditional-compile-remove(at-mention) */
 export type {
   _AtMentionFlyoutProps,
@@ -23,6 +24,9 @@ export type {
   AtMentionOptions,
   AtMentionSuggestion
 } from './AtMentionFlyout';
+/* @conditional-compile-remove(at-mention) */
+export { defaultMentionSuggestionRenderer } from './ChatMessage/MentionSuggestionRenderer';
+
 /* @conditional-compile-remove(file-sharing) */
 export type { ActiveFileUpload } from './SendBox';
 
