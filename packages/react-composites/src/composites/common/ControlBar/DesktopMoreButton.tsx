@@ -117,7 +117,10 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
       disabled: props.disableButtonsForHoldScreen,
       subMenuProps: {
         id: 'captions-contextual-menu',
-        items: captionsContextualMenuItems
+        items: captionsContextualMenuItems,
+        calloutProps: {
+          preventDismissOnEvent: _preventDismissOnEvent
+        }
       },
       submenuIconProps: {
         iconName: 'HorizontalGalleryRightButton',
