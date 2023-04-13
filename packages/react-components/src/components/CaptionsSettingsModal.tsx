@@ -11,7 +11,8 @@ import {
   IconButton,
   Dropdown,
   IDropdownOption,
-  DefaultButton
+  DefaultButton,
+  PrimaryButton
 } from '@fluentui/react';
 
 import {
@@ -173,9 +174,9 @@ export const _CaptionsSettingsModal = (props: _CaptionsSettingsModalProps): JSX.
 
           <Stack className={dropdownContainerClassName}>{CaptionsSettingsComponent()}</Stack>
           <Stack horizontal horizontalAlign="end" className={buttonsContainerClassName}>
-            <DefaultButton styles={buttonStyles(theme)} onClick={onConfirm}>
+            <PrimaryButton styles={buttonStyles(theme)} onClick={onConfirm}>
               <span>{strings?.captionsSettingsConfirmButtonLabel}</span>
-            </DefaultButton>
+            </PrimaryButton>
             <DefaultButton onClick={onDismiss} styles={buttonStyles(theme)}>
               <span>{strings?.captionsSettingsCancelButtonLabel}</span>
             </DefaultButton>
