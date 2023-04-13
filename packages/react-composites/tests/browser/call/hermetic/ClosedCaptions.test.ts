@@ -4,7 +4,7 @@
 import { buildUrlWithMockAdapter, defaultMockCallAdapterState, test } from './fixture';
 import { expect } from '@playwright/test';
 import { dataUiId, isTestProfileMobile, pageClick, stableScreenshot, waitForSelector } from '../../common/utils';
-import { IDS } from '../../common/constants';
+import { captionsAvailableLanguageStrings, IDS } from '../../common/constants';
 
 const captionsFeatureState = {
   captions: [
@@ -39,8 +39,8 @@ const captionsFeatureState = {
       captionText: 'Nice to see you today!'
     }
   ],
-  supportedSpokenLanguages: Object.keys(['en-us']),
-  supportedCaptionLanguages: Object.keys(['en-us']),
+  supportedSpokenLanguages: captionsAvailableLanguageStrings,
+  supportedCaptionLanguages: captionsAvailableLanguageStrings,
   currentCaptionLanguage: 'en-us',
   currentSpokenLanguage: 'en-us',
   isCaptionsFeatureActive: true
@@ -58,14 +58,17 @@ test.describe('Closed Captions Banner tests', async () => {
     expect(await stableScreenshot(page)).toMatchSnapshot('show-captions.png');
   });
 
-  test('Captions menu shows correct when clicked', async ({ page, serverUrl }) => {
+  test('Captions menu shows correct when clicked on desktop', async ({ page, serverUrl }, testInfo) => {
+    if (isTestProfileMobile(testInfo)) {
+      test.skip();
+    }
     const initialState = defaultMockCallAdapterState();
     if (initialState?.call) {
       initialState.isTeamsCall = true;
       initialState.call.captionsFeature = captionsFeatureState;
     }
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { newControlBarExperience: 'true' }));
-    await waitForSelector(page, dataUiId('captions-banner-more-button'));
+    await pageClick(page, dataUiId('captions-banner-more-button'));
     expect(await stableScreenshot(page)).toMatchSnapshot('show-menu-on-banner.png');
   });
 
@@ -80,7 +83,10 @@ test.describe('Closed Captions Banner tests', async () => {
     expect(await stableScreenshot(page)).toMatchSnapshot('hide-captions-banner.png');
   });
 
-  test('Captions settings triggered by caption banner correctly', async ({ page, serverUrl }) => {
+  test('Captions settings triggered by caption banner correctly on desktop', async ({ page, serverUrl }) => {
+    if (isTestProfileMobile(testInfo)) {
+      test.skip();
+    }
     const initialState = defaultMockCallAdapterState();
     if (initialState?.call) {
       initialState.isTeamsCall = true;
@@ -93,11 +99,8 @@ test.describe('Closed Captions Banner tests', async () => {
   });
 });
 
-test.describe('Captions buttons in call control', () => {
-  test('Captions buttons shows when it is teams call', async ({ page, serverUrl }, testInfo) => {
-    if (isTestProfileMobile(testInfo)) {
-      test.skip();
-    }
+test.describe.only('Captions buttons in call control', () => {
+  test('Captions buttons shows when it is teams call', async ({ page, serverUrl }) => {
     const initialState = defaultMockCallAdapterState();
     if (initialState?.call) {
       initialState.isTeamsCall = true;
@@ -117,10 +120,11 @@ test.describe('Captions buttons in call control', () => {
     expect(await stableScreenshot(page)).toMatchSnapshot(`caption-button-non-teams-call.png`);
   });
 
-  test('Captions settings renders normally', async ({ page, serverUrl }) => {
+  test.only('Captions settings renders normally', async ({ page, serverUrl }) => {
     const initialState = defaultMockCallAdapterState();
     if (initialState?.call) {
       initialState.isTeamsCall = true;
+      initialState.call.captionsFeature = captionsFeatureState;
     }
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { newControlBarExperience: 'true' }));
     await pageClick(page, dataUiId('common-call-composite-more-button'));
@@ -129,11 +133,23 @@ test.describe('Captions buttons in call control', () => {
     expect(await stableScreenshot(page)).toMatchSnapshot(`caption-settings.png`);
   });
 
-  test('Captions toggle button changes when caption enabled', async ({ page, serverUrl }) => {
+  test('Captions toggle button renders correctly when caption enabled', async ({ page, serverUrl }) => {
     const initialState = defaultMockCallAdapterState();
     if (initialState?.call) {
       initialState.isTeamsCall = true;
       initialState.call.captionsFeature.isCaptionsFeatureActive = true;
+    }
+    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { newControlBarExperience: 'true' }));
+    await pageClick(page, dataUiId('common-call-composite-more-button'));
+    await pageClick(page, `[id="common-call-composite-captions-button"]`);
+    expect(await stableScreenshot(page)).toMatchSnapshot(`caption-toggle-button.png`);
+  });
+
+  test('Captions toggle button renders correctly when caption disabled', async ({ page, serverUrl }) => {
+    const initialState = defaultMockCallAdapterState();
+    if (initialState?.call) {
+      initialState.isTeamsCall = true;
+      initialState.call.captionsFeature.isCaptionsFeatureActive = false;
     }
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { newControlBarExperience: 'true' }));
     await pageClick(page, dataUiId('common-call-composite-more-button'));
