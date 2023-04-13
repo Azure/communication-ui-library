@@ -305,6 +305,7 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
 
     drawerMenuItems.push({
       itemKey: 'captions',
+      id: 'common-call-composite-captions-button',
       disabled: props.disableButtonsForHoldScreen,
       text: props.strings.captionsMenuTitle,
       iconProps: { iconName: 'CaptionsIcon' },
@@ -324,6 +325,7 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
       secondaryComponent: (
         <Stack verticalFill verticalAlign="center">
           <Toggle
+            id="common-call-composite-captions-toggle-button"
             checked={startCaptionsButtonProps.checked}
             styles={themedToggleButtonStyle(theme, startCaptionsButtonProps.checked)}
             onChange={onToggleChange}
@@ -335,6 +337,7 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
     captionsDrawerItems.push({
       itemKey: 'ChangeSpokenLanguage',
       text: props.strings.spokenLanguageMenuTitle,
+      id: 'common-call-composite-captions-settings-button',
       secondaryText: supportedLanguageStrings[currentSpokenLanguage],
       iconProps: {
         iconName: 'ChangeSpokenLanguageIcon',

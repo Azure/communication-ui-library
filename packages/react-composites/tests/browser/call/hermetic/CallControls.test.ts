@@ -15,7 +15,7 @@ import { IDS } from '../../common/constants';
 import type { CallCompositeOptions } from '../../../../src';
 
 test.describe('CallControls tests', async () => {
-  test('CallControls when number of mics drops to zero', async ({ page, serverUrl }) => {
+  test.only('CallControls when number of mics drops to zero', async ({ page, serverUrl }) => {
     const initialState = defaultMockCallAdapterState();
     initialState.devices.microphones = [];
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
@@ -23,7 +23,7 @@ test.describe('CallControls tests', async () => {
     expect(await stableScreenshot(page)).toMatchSnapshot('no-mics.png');
   });
 
-  test('CallControls when number of available cameras drops to zero', async ({ page, serverUrl }) => {
+  test.only('CallControls when number of available cameras drops to zero', async ({ page, serverUrl }) => {
     const initialState = defaultMockCallAdapterState();
     initialState.devices.cameras = [];
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
@@ -33,7 +33,7 @@ test.describe('CallControls tests', async () => {
 });
 
 test.describe('Call composite custom button injection tests', () => {
-  test('injected buttons appear', async ({ page, serverUrl }) => {
+  test.only('injected buttons appear', async ({ page, serverUrl }) => {
     const initialState = defaultMockCallAdapterState([defaultMockRemoteParticipant('Paul Bridges')]);
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { injectCustomButtons: 'true' }));
     expect(await stableScreenshot(page)).toMatchSnapshot(`custom-buttons.png`);
@@ -41,7 +41,7 @@ test.describe('Call composite custom button injection tests', () => {
 });
 
 test.describe('Call composite custom call control options tests', () => {
-  test('Control bar buttons correctly show as compact with camera disabled and end call button hidden', async ({
+  test.only('Control bar buttons correctly show as compact with camera disabled and end call button hidden', async ({
     page,
     serverUrl
   }) => {
@@ -71,7 +71,7 @@ test.describe('Call composite custom call control options tests', () => {
 test.describe('New call control bar renders correctly', () => {
   // New call experience will be turned off by default from hermetic test app until it is in stable
   // Add callControls: {} as part of option to enable it (even without turn it on)
-  test('Control bar buttons correctly renders', async ({ page, serverUrl }) => {
+  test.only('Control bar buttons correctly renders', async ({ page, serverUrl }) => {
     const paul = defaultMockRemoteParticipant('Paul Bridges');
     const testOptions: CallCompositeOptions = {
       callControls: {
@@ -91,7 +91,7 @@ test.describe('New call control bar renders correctly', () => {
   });
 
   /* @conditional-compile-remove(control-bar-button-injection) */
-  test('injected buttons appear', async ({ page, serverUrl }) => {
+  test.only('injected buttons appear', async ({ page, serverUrl }) => {
     const initialState = defaultMockCallAdapterState([defaultMockRemoteParticipant('Paul Bridges')]);
     await page.goto(
       buildUrlWithMockAdapter(serverUrl, initialState, {
@@ -105,7 +105,7 @@ test.describe('New call control bar renders correctly', () => {
     expect(await stableScreenshot(page)).toMatchSnapshot(`call-control-new-experience-injected-buttons.png`);
   });
 
-  test('Control bar custom buttons render correctly', async ({ page, serverUrl }) => {
+  test.only('Control bar custom buttons render correctly', async ({ page, serverUrl }) => {
     const callState = defaultMockCallAdapterState([defaultMockRemoteParticipant('Paul Bridges')]);
     await page.goto(
       buildUrlWithMockAdapter(serverUrl, callState, {
@@ -120,7 +120,7 @@ test.describe('New call control bar renders correctly', () => {
     expect(await stableScreenshot(page)).toMatchSnapshot(`call-control-new-experience-custom-button.png`);
   });
 
-  test('Control bar people buttons behaves correctly', async ({ page, serverUrl }, testInfo) => {
+  test.only('Control bar people buttons behaves correctly', async ({ page, serverUrl }, testInfo) => {
     const callState = defaultMockCallAdapterState([defaultMockRemoteParticipant('Paul Bridges')]);
     await page.goto(
       buildUrlWithMockAdapter(serverUrl, callState, {
