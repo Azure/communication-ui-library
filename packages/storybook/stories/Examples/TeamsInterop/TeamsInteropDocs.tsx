@@ -38,7 +38,7 @@ export const getDocs: () => JSX.Element = () => {
         lerverage this feature, you can use the `CallWithChat` composite.
       </Description>
       <Description>
-        Try out the CallWithChat composite in the [CallWithChatComposite Basic
+        Try out the `CallWithChat` composite in the [CallWithChatComposite Basic
         Example](./?path=/story/composites-call-with-chat-basicexample--basic-example).
       </Description>
       <Subheading>Use MessageThread component with Inline Image Support</Subheading>
