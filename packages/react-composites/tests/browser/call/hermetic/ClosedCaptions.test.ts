@@ -5,44 +5,42 @@ import { buildUrlWithMockAdapter, defaultMockCallAdapterState, test } from './fi
 import { expect } from '@playwright/test';
 import { dataUiId, isTestProfileMobile, pageClick, stableScreenshot, waitForSelector } from '../../common/utils';
 import { IDS } from '../../common/constants';
-import { COMPOSITE_LOCALE_EN_US } from '../../../../src';
-import { CaptionsCallFeatureState } from '@internal/calling-stateful-client';
 
-const captionsFeatureState: CaptionsCallFeatureState = {
+const captionsFeatureState = {
   captions: [
     {
-      resultType: 'Final',
+      resultType: 'Final' as const,
       timestamp: new Date(0),
       speaker: {
         displayName: 'Participant 1',
-        identifier: { communicationUserId: 'communicationId1', kind: 'communicationUser' }
+        identifier: { communicationUserId: 'communicationId1', kind: 'communicationUser' as const }
       },
-      spokenLanguage: 'en-us',
+      spokenLanguage: 'en-us' as const,
       captionText: 'How are you?'
     },
     {
-      resultType: 'Final',
+      resultType: 'Final' as const,
       timestamp: new Date(10000),
       speaker: {
         displayName: 'Participant 2',
-        identifier: { communicationUserId: 'communicationId2', kind: 'communicationUser' }
+        identifier: { communicationUserId: 'communicationId2', kind: 'communicationUser' as const }
       },
       spokenLanguage: 'en-us',
       captionText: 'I am good.'
     },
     {
-      resultType: 'Final',
+      resultType: 'Final' as const,
       timestamp: new Date(10000),
       speaker: {
         displayName: 'Participant 3',
-        identifier: { communicationUserId: 'communicationId3', kind: 'communicationUser' }
+        identifier: { communicationUserId: 'communicationId3', kind: 'communicationUser' as const }
       },
       spokenLanguage: 'en-us',
       captionText: 'Nice to see you today!'
     }
   ],
-  supportedSpokenLanguages: Object.keys(COMPOSITE_LOCALE_EN_US.strings.call.captionsAvailableLanguageStrings),
-  supportedCaptionLanguages: Object.keys(COMPOSITE_LOCALE_EN_US.strings.call.captionsAvailableLanguageStrings),
+  supportedSpokenLanguages: Object.keys(['en-us']),
+  supportedCaptionLanguages: Object.keys(['en-us']),
   currentCaptionLanguage: 'en-us',
   currentSpokenLanguage: 'en-us',
   isCaptionsFeatureActive: true
