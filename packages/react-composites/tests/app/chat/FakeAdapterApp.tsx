@@ -1,7 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { ChatParticipant } from '@azure/communication-chat';
+import { ChatParticipant, ChatMessage } from '@azure/communication-chat';
+import { getIdentifierKind } from '@azure/communication-common';
 import { _createStatefulChatClientWithDeps } from '@internal/chat-stateful-client';
 import { _IdentifierProvider, FileDownloadError, FileDownloadHandler } from '@internal/react-components';
 import React, { useEffect } from 'react';
@@ -22,7 +23,6 @@ import {
 } from './CustomDataModel';
 import { FakeChatClient, Model, Thread } from '@internal/fake-backends';
 import { HiddenChatComposites } from '../lib/HiddenChatComposites';
-import { ChatMessage } from '@internal/react-components';
 
 const urlSearchParams = new URLSearchParams(window.location.search);
 const params = Object.fromEntries(urlSearchParams.entries());
@@ -169,15 +169,9 @@ const sendRemoteInlineImageMessage = (
   const thread: Thread = chatClientModel.checkedGetThread(localParticipant.id, threadId);
   const messageWithInlineImage: ChatMessage = {
     id: `${thread.messages.length}`,
+    type: 'html',
     sequenceId: `${thread.messages.length}`,
     version: '0',
-    senderDisplayName: remoteParticipant.displayName,
-    createdOn: new Date(Date.now()),
-    sender: {
-      communicationUserId: remoteParticipant.id,
-      kind: 'microsoftTeamsUser'
-    },
-    type: 'html',
     content: {
       message:
         '<p>Test</p><p><img alt="image" src="" itemscope="png" width="200" height="300" id="SomeImageId1" style="vertical-align:bottom"></p><p>&nbsp;</p>',
@@ -191,7 +185,10 @@ const sendRemoteInlineImageMessage = (
           previewUrl: 'images/inlineImageExample1.png'
         }
       ]
-    }
+    },
+    senderDisplayName: remoteParticipant.displayName,
+    createdOn: new Date(Date.now()),
+    sender: getIdentifierKind(remoteParticipant.id)
   };
 
   chatClientModel.modifyThreadForUser(localParticipant.id, threadId, (thread) => {
@@ -205,8 +202,8 @@ const sendRemoteInlineImageMessage = (
       createdOn: messageWithInlineImage.createdOn,
       version: messageWithInlineImage.version,
       type: messageWithInlineImage.type,
-      message: messageWithInlineImage.content.message,
-      attachments: messageWithInlineImage.content.attachments,
+      message: messageWithInlineImage.content?.message,
+      attachments: messageWithInlineImage.content?.attachments,
       threadId: threadId,
       sender: remoteParticipant.id,
       senderDisplayName: remoteParticipant.displayName,
