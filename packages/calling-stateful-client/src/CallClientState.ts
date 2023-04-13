@@ -13,10 +13,11 @@ import {
   LatestNetworkDiagnostics,
   MediaStreamType,
   RemoteParticipantState as RemoteParticipantStatus,
-  CaptionsResultType,
   ScalingMode,
   VideoDeviceInfo
 } from '@azure/communication-calling';
+/* @conditional-compile-remove(close-captions) */
+import { CaptionsResultType } from '@azure/communication-calling';
 /* @conditional-compile-remove(video-background-effects) */
 import { VideoEffectName } from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-identity-support) */
@@ -48,6 +49,7 @@ export interface CallAgentState {
   displayName?: string;
 }
 
+/* @conditional-compile-remove(close-captions) */
 /**
  * @beta
  */
@@ -82,15 +84,15 @@ export interface CaptionsInfo {
   spokenText?: string;
 }
 
+/* @conditional-compile-remove(close-captions) */
 /**
- *
  * @beta
  */
 export interface CaptionsCallFeatureState {
   /**
    * supported spoken languages
    */
-  supportedSpokenLangauges: string[];
+  supportedSpokenLanguages: string[];
   /**
    * array of received captions
    */
@@ -345,6 +347,7 @@ export interface CallState {
    * Proxy of {@link @azure/communication-calling#TranscriptionCallFeature}.
    */
   transcription: TranscriptionCallFeatureState;
+  /* @conditional-compile-remove(close-captions) */
   /**
    * Proxy of {@link @azure/communication-calling#TranscriptionCallFeature}.
    */
@@ -601,7 +604,7 @@ export class CallError extends Error {
  */
 export type CallErrorTarget =
   | 'Call.addParticipant'
-  | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.dispose'
+  | 'Call.dispose'
   | 'Call.feature'
   | 'Call.hangUp'
   | 'Call.hold'
@@ -627,7 +630,7 @@ export type CallErrorTarget =
   | 'CallAgent.on'
   | 'CallAgent.startCall'
   | 'CallClient.createCallAgent'
-  | /* @conditional-compile-remove(calling-beta-sdk) */ /* @conditional-compile-remove(teams-identity-support) */ 'CallClient.createTeamsCallAgent'
+  | 'CallClient.createTeamsCallAgent'
   | 'CallClient.feature'
   | 'CallClient.getDeviceManager'
   | /* @conditional-compile-remove(calling-beta-sdk) */ 'CallClient.getEnvironmentInfo'
@@ -643,7 +646,10 @@ export type CallErrorTarget =
   | 'IncomingCall.reject'
   | /* @conditional-compile-remove(calling-beta-sdk) */ /* @conditional-compile-remove(teams-identity-support) */ 'TeamsCall.addParticipant'
   | /* @conditional-compile-remove(video-background-effects) */ 'VideoEffectsFeature.startEffects'
-  | /* @conditional-compile-remove(calling-beta-sdk) */ 'CallAgent.handlePushNotification';
+  | /* @conditional-compile-remove(calling-beta-sdk) */ 'CallAgent.handlePushNotification'
+  | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.admit'
+  | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.rejectParticipant'
+  | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.admitAll';
 
 /**
  * State only proxy for {@link @azure/communication-calling#DiagnosticsCallFeature}.

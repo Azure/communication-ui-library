@@ -100,7 +100,7 @@ const openRemoveParticipantMenu = async (page: Page, testInfo: TestInfo): Promis
     await pageClick(page, dataUiId('participant-item-menu-button'));
     await waitForSelector(page, dataUiId('participant-list-remove-participant-button'));
   } else {
-    await pageClick(page, dataUiId('call-with-chat-composite-more-button'));
+    await pageClick(page, dataUiId('common-call-composite-more-button'));
     await waitForSelector(page, dataUiId('call-composite-more-menu-people-button'));
     await pageClick(page, dataUiId('call-composite-more-menu-people-button'));
     await hidePiPiP(page);
@@ -118,7 +118,7 @@ const expectNoRemoveParticipantMenuItem = async (page: Page, testInfo: TestInfo)
     const menuButton = await page.$$(dataUiId('participant-item-menu-button'));
     expect(menuButton.length).toBe(0);
   } else {
-    await pageClick(page, dataUiId('call-with-chat-composite-more-button'));
+    await pageClick(page, dataUiId('common-call-composite-more-button'));
     await waitForSelector(page, dataUiId('call-composite-more-menu-people-button'));
     await pageClick(page, dataUiId('call-composite-more-menu-people-button'));
     await hidePiPiP(page);

@@ -2,6 +2,627 @@
   "name": "@azure/communication-react",
   "entries": [
     {
+      "date": "Tue, 28 Mar 2023 16:00:31 GMT",
+      "tag": "@azure/communication-react_v1.5.1-beta.2",
+      "version": "1.5.1-beta.2",
+      "comments": {
+        "none": [
+          {
+            "author": "palatter@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "6b625ed934ae68d190571fcd315212d1d2aa65a0",
+            "comment": "Add more url parameters for chat sample"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "4c3c5aa872a6c7d1d63ef4f7910b3bbc2660aaf0",
+            "comment": "Rename horizontal gallery to overflow gallery appropriately"
+          },
+          {
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "8b9bce49c6d046911c6108ebadd0ed0b0cc6edcd",
+            "comment": "Bumped"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "849a8dcad83887de93ac8be9029c6b957df87ee3",
+            "comment": "Update repo version of @azure/communication-chat to 1.3.0"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "854f11cd92e0c498ecdc632ef7c8202dd03d2197",
+            "comment": "Refactor modal sizes in VideoGallery to use rem instead of px"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "d4b676b5797a98a11186b9176dd58ab88f8554d7",
+            "comment": "update storybook for vertical and horiztonal galleries."
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "55773657a7246a845eefb389cb58d6df10ff6a71",
+            "comment": "Revert \"[Bug Fix] local video tile css fix mobile (#2708)\""
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "c5df9e11f7fa073c554d3bf281b372bc1a07b509",
+            "comment": "Update the basic example snippet for chat composite not to include beta code."
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "2c38bb587944b1f72440607dd8acc10d71a2ca04",
+            "comment": "Add internal captions component and storybook page"
+          },
+          {
+            "author": "79475487+mgamis-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "b75f813547c93992f1cf9e4f23caad280b72c2e1",
+            "comment": "Added VideoGallery unit tests for vertical overflow gallery"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "6bc17eaa77813bdb10070b74a6bd7993d3429261",
+            "comment": "Update sample applications to provide more information on phone numbers, their formats, and what they are for."
+          },
+          {
+            "author": "alkwa@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "57029b7f17e9470792e2ca8e36f712aab216aff8",
+            "comment": "minor updates to storybook around cte documentation"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "81e8e549904b1f3d2e898c0b0927b03cbce443d4",
+            "comment": "Update codeowners"
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "3da5879042afb2c99b23ae9ffb048d037d40f76d",
+            "comment": "Update webpack to 5.76.0"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "62488527e0f60b3396877f0c479d9a3b3dd985e0",
+            "comment": "add conditional compile flag for video background effects"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "482759fd6515232ebb901c652abd91523cae3707",
+            "comment": "Allow use of fake adapters outside of the react-composites packlet"
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "44ad700b2d39fdf6f8bb593869a65f8421f37598",
+            "comment": "Console Log for invalid userId for pinned participants"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "1d9de6967800d395aa00e6ad8ebce0c3ebef2783",
+            "comment": "update Poll time limit and interval for NPM package release check."
+          },
+          {
+            "author": "palatter@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "6b625ed934ae68d190571fcd315212d1d2aa65a0",
+            "comment": "Add more url parameters for chat sample"
+          },
+          {
+            "author": "79475487+mgamis-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "88a6338eaeb654fb5e09a2c4b5fc06e40fe389ec",
+            "comment": "VideoGallery rendering options storybook doc added."
+          },
+          {
+            "author": "79475487+mgamis-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "dcb63f8c91a168faf30f134c8cd24e0500983412",
+            "comment": "Added overflow gallery tests for callWithChat composite"
+          },
+          {
+            "author": "79475487+mgamis-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "b12ae125c4cb2087596b2883567a7572c7e997af",
+            "comment": "Added pinning participants and changing rendering options features to storybook Use Cases table"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "297faeefe31bd651ae2e3dd7c73ee08bb1e89a53",
+            "comment": "Refactor helper functions for calculating children per page in responsive gallery to be util functions that can be mocked in testing."
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "0e17b020e468fac715f1f12af8d3c1dc801bdcbc",
+            "comment": "Created internal component for caption and storybook"
+          },
+          {
+            "author": "79475487+mgamis-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "2c135ab945c00323d01d68286ff8b3ee236f23c2",
+            "comment": "Documentation about adding contextual menu items to VideoTile added to storybook"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "fa0bab5e36193c49f0ba3df2346374345e10fb88",
+            "comment": "Update github actions to no longer create PRs"
+          },
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@azure/communication-react",
+            "commit": "bbf6da37a06ace2f6e2f8f58cefe5520856ae34d",
+            "comment": "Add setting file for extension"
+          },
+          {
+            "author": "109105353+jpeng-ms@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "2e9083c600ef74d6dcca26c7f679cd2c3d5c2a5a",
+            "comment": "fixed an issue where typing indicator event being sent multiple times"
+          },
+          {
+            "author": "79475487+mgamis-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "c1325fe6ad311d78de8cd88a25a470b953c75b3c",
+            "comment": "Added unit tests for ResponsiveVerticalGallery"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "ae0b9bd8fdfb834eacb492422f5c0ebfa8002582",
+            "comment": "Correct spelling error in function name."
+          },
+          {
+            "author": "79475487+mgamis-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "5ae37c13d6c8be1afde977dd9102ab1c1bae20c2",
+            "comment": "Added snapshot tests for the VerticalGallery in call composite"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "0e78f311c08e07807931375e6e21a4ee59857318",
+            "comment": "Ensure force-build-versions is run in CI"
+          },
+          {
+            "author": "alkwa@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "310d6bf41ccf474f26328441587230d533708853",
+            "comment": "reverting storybook update to the vanillajs page"
+          },
+          {
+            "author": "79475487+mgamis-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "226383d48d9392c5be6a7c5249fca2852dede4b1",
+            "comment": "Added playwright config project to test vertical gallery and horizontal gallery on Desktop"
+          }
+        ],
+        "patch": [
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "5e4689854bd10f701b18a897607e1c5204454358",
+            "comment": "disable the selectivity of a text in video gallery for long touch to function properly"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "e5158f363b84e625829353beb4f67cd9a63de48a",
+            "comment": "Update storybook custom data model calling example to wrap userId as an identifier"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "f541c78b45ac57136eac9267635f277625769ba1",
+            "comment": "Thematically change hold icon color"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "2849ab71f3c84c0aa79248d8e3fc314441ee791d",
+            "comment": "Add error string for when your remote video feed is frozen for others in the call."
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "50aad12f7f29788a7c841400ef1146c9dddbc0a8",
+            "comment": "Update Aria labels for people button to allow for voice access controls on windows."
+          },
+          {
+            "author": "77021369+jimchou-dev@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "3ee7efee88705ea416f066b3f001e1c113293672",
+            "comment": "Add Try ChatComposite page to storybook that uses fake adapters"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "6b137d202f573fb1a15b12516e046c2b6fa3b56a",
+            "comment": "Update communication-chat version from fixed version to compatible with version"
+          },
+          {
+            "author": "jinan@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "fbc4efbb2096af78959605b936a628df8442db63",
+            "comment": "Switch video seamlessly from different devices"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "e5ca64a93c8267b939f5763827a1d641c4829905",
+            "comment": "Added stream type in stream logs"
+          },
+          {
+            "author": "79475487+mgamis-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "3e675354447636f66b09aa73c4f2822ac6ad4e14",
+            "comment": "Fix VideoTile to show menu button on hover when isSpeaking prop is true"
+          },
+          {
+            "author": "107075081+Leah-Xia-Microsoft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "b2d56311b937df95dc374c41fc1643d5621ba207",
+            "comment": "Fix sending/delivered/failed message status not showing in large group"
+          },
+          {
+            "author": "joshlai@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "3b29a61c011414b9ab9ffa47d67263620887acff",
+            "comment": "Update code owners"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "297faeefe31bd651ae2e3dd7c73ee08bb1e89a53",
+            "comment": "Update overflow gallery logic to allow more video participants to render video streams if available on different pages."
+          },
+          {
+            "author": "107075081+Leah-Xia-Microsoft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "033e21696605af7b5b14a0037802afa5b185202a",
+            "comment": "Announce by Screen Reader after leaving chat"
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "237bf5feebf66886e42a420022cd0c00ccd19102",
+            "comment": "Added empty icon render for tab navigation of video tile"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "acdb07de6a953cf2db4eef7e61596d3bb1bd9c93",
+            "comment": "Split buttons now hold primary action for toggling camera and mic on touch devices."
+          },
+          {
+            "author": "77021369+jimchou-dev@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "4e60db371ca505dd3fd25e90fb0ca7d1f92d3087",
+            "comment": "Fixed richtext css for blockquote and table"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "c419fe8ecd664372cee1936c82fa2a51c2818c94",
+            "comment": "Fix CallAdapter participants joined and left events to show correct participants in event array."
+          },
+          {
+            "author": "3941071+emlynmac@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "c19f68ec028f64a8e9898876d729b52853e23cb5",
+            "comment": "Correct MessageThread API definition"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "f0690e5bc43feb826d2e81b72d6d8e84fe5abb95",
+            "comment": "Update internal dispose view logic to be under one utility function for remote and local streams."
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "6894c27e4e284a781925af6eda919d86ab2ad884",
+            "comment": "Fix dominant speaker ordering to best keep dominant speakers on the first page of overflow gallery."
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "37dde65a90d06f74ccae46b0ef4ec8145d978d9d",
+            "comment": "make sure message status in storybook is defined to avoid 'try send again' showing up"
+          },
+          {
+            "author": "joshlai@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "3b29a61c011414b9ab9ffa47d67263620887acff",
+            "comment": "Update Codeowners"
+          },
+          {
+            "author": "79475487+mgamis-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "d23df9380342cfbafebb9ff89da90d0c708575e7",
+            "comment": "Internal RemoteVideoTile should not default to having contextual menu options."
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "a45a353710397f7dd8b640e2700f9b0e6a7f9e7a",
+            "comment": "Fix: Permission Error in Chat after leaving a Teams Interop meeting"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "3e803daf5f8ecece33007d327edda702e76f5eb0",
+            "comment": "Show local video and vertical/horizontal gallery when screensharing with no participants"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "4ff85c3fa2995b52a0a42da457f346d125e9f679",
+            "comment": "Memoize Teams call adapter args for CTE storybook sample code."
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "93edc6a18c5327fe9fb8036a2c354ee4e136b35d",
+            "comment": "Updates streamUtils to handle multiple Calls from components."
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "41849aaacb7fd05f7c7b76c8a9e27c001285a991",
+            "comment": "Update stream utils to have general createView function for both remote and local."
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "8a3b63132bed494e570415f8d5f4d84a28945ddd",
+            "comment": "update the Errorbar selector to check environmentInfo for mac specific warnings."
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "e52e439160ef91c85e7469f9193ccb369964ffb6",
+            "comment": "Move logging from StreamUtils to be managed in seperate file."
+          },
+          {
+            "author": "98852890+vhuseinova-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "1038537173ac0c0f66d392bc9817a88d74360a79",
+            "comment": "Fix messages thread loading issue when an adapter is updated"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "bd3a7d8f311f9428a7c7517a3b43c26a613f18e2",
+            "comment": "Allow horizontal gallery tiles to resize to allow for better use of space."
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "b1bd76ab5e43a2762bcddce4bf1d6f94e27a3642",
+            "comment": "Add heading role and aria level for start a call config heading"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "0f1f1604a28feeb810388ffd5a7943cc6b3ec58f",
+            "comment": "Remove emoji from testing that causes failures when emojis update."
+          }
+        ],
+        "prerelease": [
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "e414bd4aa9e4cfc6d9bf1696da7d69ac21665f7e",
+            "comment": "Create styles for verticalGallery controls and position."
+          },
+          {
+            "author": "jinan@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "766f54d34460ea8f99d117f4c6f92849d10c961a",
+            "comment": "Add parameter to hint displayName from SDK"
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "153b62cd6a254a4ff90970c3c7dd0b635ca5222c",
+            "comment": "Draft API for video background effects"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "4b497995e4070a8a77afdf51ba696c220851a49c",
+            "comment": "Update beta version of @azure/communication-calling to 1.11.0-beta.1"
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "153b62cd6a254a4ff90970c3c7dd0b635ca5222c",
+            "comment": "Adapter API changes for start/stop video effects"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "d9c3dbde57bdfe2f35cd9c791a949650ba61b5a6",
+            "comment": "Add stateful handlers for background effects"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "378f1ad37d939ec4b735ef861dce65413b2e9e46",
+            "comment": "Introduce hermetic tests to verify tile size behavior and gallery behavior when resizing window."
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "0bf88edfa2654900eb528be96c355985fb9f0bf9",
+            "comment": "Update PSTN and 1:N callstate logic to not show config screen in composites when starting call."
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "4b7486a55f6052247b602fc43b906a45ce0da8b7",
+            "comment": "In the stateful call client subscribe to video effects changes and populate state when those subscriptions fire'"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "f71df62eeeb7c8cf9834a860ba319f92466c9f58",
+            "comment": "Add video background effect choice items for upcoming background picker"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "d09a0abee5f1fbc128724d9edc150c9d3dcd3f58",
+            "comment": "tee video effects errors to state"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "de6f219f78d59ec7d99754871b4134a196e84688",
+            "comment": "Add type definitions to the new StatefulCallClient state fields for the incoming VideoEffectsFeature. This includes just type definitions with implementation to follow."
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "a9de02ced6f798449b2e0a6f1e92022cc4bf4e77",
+            "comment": "Fix CallWithChat overflow buttons onClick not working, styles not being fully applied and and showLabel: false not hiding the button label."
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "01388a9dd26c296f2756129407778e84c680f4ac",
+            "comment": "Expose unparentedLocalVideoStreams in the StatefulDeviceManager"
+          },
+          {
+            "author": "jinan@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "e3051217cba6fe1d34fa9bf75e8b45bb737e279a",
+            "comment": "Update displayName code snippet for cte"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "f0457b55d8e2e1de7cde781714dd5acbfb003da8",
+            "comment": "Add support for overflow button in desktop callwithchat"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "5a5b9a1f34d2f58315ee150ad6da657a5d877592",
+            "comment": "Add Video background effects picker component"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "e5a12961f79dbd994bb02d934a8b36fa4282a1d1",
+            "comment": "Update vertical gallery styles to be responsive to the container height of the video gallery."
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "bd95b784ec79203f98bba058a1c7c160da5b0220",
+            "comment": "Introduce responsive wrapper component for VerticalGallery."
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "90d3f0b73fafec6ed799c572758c3586c9454f4e",
+            "comment": "update styles to allow tile vertical resizing"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "12bc09739a8e41d1bfdc034e3d0b77583a0fdcf0",
+            "comment": "Add announcer labels for nav buttons in vertical gallery and allow for style updates through props."
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "b61703e3a8f3673efe34d74eed548ca5e3ba1e24",
+            "comment": "Video Effects Button and Pane"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "e45164a5c4338f7ce80a5d9631afc69d5de4fc70",
+            "comment": "Introduce new base component for VerticalGalleries feature."
+          },
+          {
+            "author": "joshlai@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "d246999b75f8e1934d4e5759b824e3dfab6b7cc4",
+            "comment": "Update FileUploadAdapter to include the download of authenticated attachments"
+          },
+          {
+            "author": "79475487+mgamis-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "725ff4e00400ce90ce1a57959fe96fce2ccb60c3",
+            "comment": "Added overflowGalleryLayout prop to VideoGallery to control component for overflow participants"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "f9cdb4300001fcc057e83fc3d770c0d7121a7389",
+            "comment": "Fix PSTN id parsing and add unit test to validate E.164 format numbers."
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "0a8fde04aa3644f6b4ec0179f7fe79b9c278a3b5",
+            "comment": "Updates LocalVideo tile to be 9:16 aspect ratio to show whole feed. fixes CallWithChat flashing issue with scrollable gallery."
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "153b62cd6a254a4ff90970c3c7dd0b635ca5222c",
+            "comment": "Draft API for video background effects"
+          },
+          {
+            "author": "79475487+mgamis-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "226383d48d9392c5be6a7c5249fca2852dede4b1",
+            "comment": "VideoGallery in call composite will use a vertical overflow gallery when its aspect ratio is 16:9 or greater."
+          },
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@azure/communication-react",
+            "commit": "46c5aea236f1057dcc71cd7db7866fa2e8fca467",
+            "comment": "Add onFetchProfile to adapter"
+          },
+          {
+            "author": "jinan@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "e5fd73ffa04418097b5ee68b9feea60ecf7e1289",
+            "comment": "Set all empty/undefined displayName to unnamed"
+          }
+        ],
+        "minor": [
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "d56e313d7892db6cfd3a28032082f9d6f685601a",
+            "comment": "Update @fluentui/react-icons to 2.0.194"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 01 Feb 2023 17:56:59 GMT",
       "tag": "@azure/communication-react_v1.5.1-beta.1",
       "version": "1.5.1-beta.1",

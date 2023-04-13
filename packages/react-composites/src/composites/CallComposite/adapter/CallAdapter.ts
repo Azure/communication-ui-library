@@ -1,10 +1,15 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { CallState, CaptionsInfo, DeviceManagerState } from '@internal/calling-stateful-client';
+import { CallState, DeviceManagerState } from '@internal/calling-stateful-client';
+/* @conditional-compile-remove(close-captions) */
+import { CaptionsInfo } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(video-background-effects) */
 import { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/communication-calling-effects';
-import { StartCaptionsOptions, TeamsCall } from '@azure/communication-calling';
+/* @conditional-compile-remove(teams-identity-support) */
+import { TeamsCall } from '@azure/communication-calling';
+/* @conditional-compile-remove(close-captions) */
+import { StartCaptionsOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
 import type {
@@ -120,6 +125,11 @@ export type CallAdapterClientState = {
    * Default set of background images for background replacement effect.
    */
   videoBackgroundImages?: VideoBackgroundImage[];
+  /* @conditional-compile-remove(video-background-effects) */
+  /**
+   * State to track the selected video background effect.
+   */
+  selectedVideoBackgroundEffect?: SelectedVideoBackgroundEffect;
 };
 
 /**
@@ -246,12 +256,71 @@ export interface VideoBackgroundImage {
   tooltipText?: string;
 }
 
+/* @conditional-compile-remove(close-captions) */
 /**
  * Callback for {@link CallAdapterSubscribers} 'captionsReceived' event.
  *
- * @public
+ * @beta
  */
-export type CaptionsReceivedListener = (event: { data: CaptionsInfo }) => void;
+export type CaptionsReceivedListener = (event: { captionsInfo: CaptionsInfo }) => void;
+
+/* @conditional-compile-remove(video-background-effects) */
+/**
+ * Contains the attibutes of a selected video background effect
+ *
+ * @beta
+ */
+export type SelectedVideoBackgroundEffect =
+  | VideoBackgroundNoneEffect
+  | VideoBackgroundBlurEffect
+  | VideoBackgroundReplacementEffect;
+
+/* @conditional-compile-remove(video-background-effects) */
+/**
+ * Contains the attibutes to remove video background effect
+ *
+ * @beta
+ */
+export interface VideoBackgroundNoneEffect {
+  /**
+   * Name of effect to remove video background effect
+   */
+  effectName: 'none';
+}
+
+/* @conditional-compile-remove(video-background-effects) */
+/**
+ * Contains the attibutes of the blur video background effect
+ *
+ * @beta
+ */
+export interface VideoBackgroundBlurEffect {
+  /**
+   * Name of effect to blur video background effect
+   */
+  effectName: 'blur';
+}
+
+/* @conditional-compile-remove(video-background-effects) */
+/**
+ * Contains the attibutes of a selected replacement video background effect
+ *
+ * @beta
+ */
+export interface VideoBackgroundReplacementEffect {
+  /**
+   * Name of effect to replace video background effect
+   */
+  effectName: 'replacement';
+  /**
+   * key for unique identification of the custom background
+   */
+  effectKey: string;
+  /**
+   * URL of the custom background image.
+   */
+  backgroundImageUrl: string;
+}
 
 /**
  * Functionality for managing the current call.
@@ -381,21 +450,25 @@ export interface CallAdapterCallOperations {
    * Continues into a call when the browser version is not supported.
    */
   allowUnsupportedBrowserVersion(): void;
+  /* @conditional-compile-remove(close-captions) */
   /**
    * Function to Start captions
    * @param startCaptionsOptions - options for start captions
    */
   startCaptions(startCaptionsOptions?: StartCaptionsOptions): Promise<void>;
+  /* @conditional-compile-remove(close-captions) */
   /**
    * Function to set caption language
    * @param language - language set for caption
    */
   setCaptionLanguage(language: string): Promise<void>;
+  /* @conditional-compile-remove(close-captions) */
   /**
    * Function to set spoken language
    * @param language - spoken language
    */
   setSpokenLanguage(language: string): Promise<void>;
+  /* @conditional-compile-remove(close-captions) */
   /**
    * Funtion to stop captions
    */
@@ -431,6 +504,13 @@ export interface CallAdapterCallOperations {
    * @beta
    */
   updateBackgroundPickerImages(backgroundImages: VideoBackgroundImage[]): void;
+  /* @conditional-compile-remove(video-background-effects) */
+  /**
+   * Update the selected video background effect.
+   *
+   * @beta
+   */
+  updateSelectedVideoBackgroundEffect(selectedVideoBackground: SelectedVideoBackgroundEffect): void;
 }
 
 /**
@@ -578,11 +658,12 @@ export interface CallAdapterSubscribers {
    * Subscribe function for 'error' event.
    */
   on(event: 'error', listener: (e: AdapterError) => void): void;
+  /* @conditional-compile-remove(close-captions) */
   /**
    * Subscribe function for 'captionsReceived' event.
    */
   on(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
-
+  /* @conditional-compile-remove(close-captions) */
   /**
    * Subscribe function for 'captionsPropertyChanged' event.
    */
@@ -636,10 +717,12 @@ export interface CallAdapterSubscribers {
    * Unsubscribe function for 'error' event.
    */
   off(event: 'error', listener: (e: AdapterError) => void): void;
+  /* @conditional-compile-remove(close-captions) */
   /**
    * Unsubscribe function for 'captionsReceived' event.
    */
   off(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
+  /* @conditional-compile-remove(close-captions) */
   /**
    * Unsubscribe function for 'captionsPropertyChanged' event.
    */

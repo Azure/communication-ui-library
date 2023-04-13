@@ -64,6 +64,12 @@ export type AnnouncerProps = {
     ariaLive: 'off' | 'polite' | 'assertive' | undefined;
 };
 
+// @beta (undocumented)
+export interface AttachmentDownloadResult {
+    // (undocumented)
+    blobUrl: string;
+}
+
 // @public
 export interface BaseCustomStyles {
     root?: IStyle;
@@ -234,12 +240,103 @@ export interface CameraSitePermissionsProps extends CommonSitePermissionsProps {
 // @beta
 export type CameraSitePermissionsStrings = SitePermissionsStrings;
 
+// @public
+export type CancelEditCallback = (messageId: string, metadata?: Record<string, string>, options?: {
+    attachedFilesMetadata?: FileMetadata[];
+}) => void;
+
 // @internal
 export const _Caption: (props: _CaptionProps) => JSX.Element;
 
 // @internal
 export interface _CaptionProps extends _CaptionsInfo {
     onRenderAvatar?: OnRenderAvatarCallback;
+}
+
+// @beta
+export interface CaptionsAvailableLanguageStrings {
+    // (undocumented)
+    'ar-ae': string;
+    // (undocumented)
+    'ar-sa': string;
+    // (undocumented)
+    'cs-cz': string;
+    // (undocumented)
+    'cy-gb': string;
+    // (undocumented)
+    'da-dk': string;
+    // (undocumented)
+    'de-de': string;
+    // (undocumented)
+    'el-gr': string;
+    // (undocumented)
+    'en-au': string;
+    // (undocumented)
+    'en-ca': string;
+    // (undocumented)
+    'en-gb': string;
+    // (undocumented)
+    'en-in': string;
+    // (undocumented)
+    'en-nz': string;
+    // (undocumented)
+    'en-us': string;
+    // (undocumented)
+    'es-es': string;
+    // (undocumented)
+    'es-mx': string;
+    // (undocumented)
+    'fi-fi': string;
+    // (undocumented)
+    'fr-ca': string;
+    // (undocumented)
+    'fr-fr': string;
+    // (undocumented)
+    'he-il': string;
+    // (undocumented)
+    'hi-in': string;
+    // (undocumented)
+    'hu-hu': string;
+    // (undocumented)
+    'it-it': string;
+    // (undocumented)
+    'ja-jp': string;
+    // (undocumented)
+    'ko-kr': string;
+    // (undocumented)
+    'nb-no': string;
+    // (undocumented)
+    'nl-be': string;
+    // (undocumented)
+    'nl-nl': string;
+    // (undocumented)
+    'pl-pl': string;
+    // (undocumented)
+    'pt-br': string;
+    // (undocumented)
+    'pt-pt': string;
+    // (undocumented)
+    'ro-ro': string;
+    // (undocumented)
+    'ru-ru': string;
+    // (undocumented)
+    'sk-sk': string;
+    // (undocumented)
+    'sv-se': string;
+    // (undocumented)
+    'th-th': string;
+    // (undocumented)
+    'tr-tr': string;
+    // (undocumented)
+    'uk-ua': string;
+    // (undocumented)
+    'vi-vn': string;
+    // (undocumented)
+    'zh-cn': string;
+    // (undocumented)
+    'zh-hk': string;
+    // (undocumented)
+    'zh-tw': string;
 }
 
 // @internal
@@ -267,16 +364,18 @@ export type _captionsOptions = {
 };
 
 // @internal
-export const _CaptionsSettingModal: (props: _CaptionsSettingModalProps) => JSX.Element;
+export const _CaptionsSettingsModal: (props: _CaptionsSettingsModalProps) => JSX.Element;
 
 // @internal
-export interface _CaptionsSettingModalProps {
+export interface _CaptionsSettingsModalProps {
+    // (undocumented)
+    captionsAvailableLanguageStrings: CaptionsAvailableLanguageStrings;
     // (undocumented)
     currentSpokenLanguage: string;
     // (undocumented)
     isCaptionsFeatureActive?: boolean;
     // (undocumented)
-    onDismissCaptionsSetting?: () => void;
+    onDismissCaptionsSettings?: () => void;
     // (undocumented)
     onSetSpokenLanguage: (language: string) => Promise<void>;
     // (undocumented)
@@ -284,27 +383,27 @@ export interface _CaptionsSettingModalProps {
     // (undocumented)
     showModal?: boolean;
     // (undocumented)
-    strings?: _CaptionsSettingModalStrings;
+    strings?: _CaptionsSettingsModalStrings;
     // (undocumented)
     supportedSpokenLanguages: string[];
 }
 
 // @internal
-export interface _CaptionsSettingModalStrings {
+export interface _CaptionsSettingsModalStrings {
     // (undocumented)
-    captionsSettingCancelButtonLabel: string;
+    captionsSettingsCancelButtonLabel: string;
     // (undocumented)
-    captionsSettingCloseModalButtonAriaLabel: string;
+    captionsSettingsCloseModalButtonAriaLabel: string;
     // (undocumented)
-    captionsSettingConfirmButtonLabel: string;
+    captionsSettingsConfirmButtonLabel: string;
     // (undocumented)
-    captionsSettingDropdownInfoText: string;
+    captionsSettingsDropdownInfoText: string;
     // (undocumented)
-    captionsSettingDropdownLabel: string;
+    captionsSettingsDropdownLabel: string;
     // (undocumented)
-    captionsSettingModalAriaLabel: string;
+    captionsSettingsModalAriaLabel: string;
     // (undocumented)
-    captionsSettingModalTitle: string;
+    captionsSettingsModalTitle: string;
 }
 
 // @public
@@ -323,6 +422,8 @@ export interface ChatMessage extends MessageCommon {
     deletedOn?: Date;
     // (undocumented)
     editedOn?: Date;
+    // (undocumented)
+    failureReason?: string;
     // (undocumented)
     messageType: 'chat';
     metadata?: Record<string, string>;
@@ -651,8 +752,8 @@ export const DEFAULT_COMPONENT_ICONS: {
     OptionsVideoBackgroundEffect: JSX.Element;
     CaptionsIcon: JSX.Element;
     CaptionsOffIcon: JSX.Element;
-    SettingsIcon: JSX.Element;
-    PersonIcon: JSX.Element;
+    CaptionsSettingsIcon: JSX.Element;
+    ChangeSpokenLanguageIcon: JSX.Element;
 };
 
 // @internal
@@ -1137,6 +1238,7 @@ export type MessageProps = {
     showDate?: boolean;
     disableEditing?: boolean;
     onUpdateMessage?: UpdateMessageCallback;
+    onCancelMessageEdit?: CancelEditCallback;
     onDeleteMessage?: (messageId: string) => Promise<void>;
     onSendMessage?: (messageId: string) => Promise<void>;
 };
@@ -1193,7 +1295,9 @@ export type MessageThreadProps = {
     onLoadPreviousChatMessages?: (messagesToLoad: number) => Promise<boolean>;
     onRenderMessage?: (messageProps: MessageProps, messageRenderer?: MessageRenderer) => JSX.Element;
     onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
+    onFetchAttachments?: (attachment: FileMetadata) => Promise<AttachmentDownloadResult>;
     onUpdateMessage?: UpdateMessageCallback;
+    onCancelMessageEdit?: CancelEditCallback;
     onDeleteMessage?: (messageId: string) => Promise<void>;
     onSendMessage?: (content: string) => Promise<void>;
     disableEditing?: boolean;
@@ -1550,7 +1654,7 @@ export const _RemoteVideoTile: React_2.MemoExoticComponent<(props: {
 }) => JSX.Element>;
 
 // @beta
-export type Role = 'Presenter' | 'Attendee' | 'Consumer' | 'Organizer';
+export type Role = 'Presenter' | 'Attendee' | 'Consumer' | 'Organizer' | 'Co-organizer';
 
 // @public
 export const ScreenShareButton: (props: ScreenShareButtonProps) => JSX.Element;
@@ -1639,7 +1743,8 @@ export const _StartCaptionsButton: (props: _StartCaptionsButtonProps) => JSX.Ele
 
 // @internal (undocumented)
 export interface _StartCaptionsButtonProps extends ControlBarButtonProps {
-    currentSpokenLanguage?: string;
+    currentSpokenLanguage: string;
+    onSetSpokenLanguage: (language: string) => Promise<void>;
     onStartCaptions: (captionsOptions?: _captionsOptions) => Promise<void>;
     onStopCaptions: () => Promise<void>;
     strings?: _StartCaptionsButtonStrings;

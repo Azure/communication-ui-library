@@ -6,6 +6,7 @@ import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { CallCommon } from './BetaToStableTypes';
 import { CallContext } from './CallContext';
 import { CallIdRef } from './CallIdRef';
+/* @conditional-compile-remove(close-captions) */
 import { CaptionsSubscriber } from './CaptionsSubscriber';
 import {
   convertSdkLocalStreamToDeclarativeLocalStream,
@@ -18,6 +19,7 @@ import { ParticipantSubscriber } from './ParticipantSubscriber';
 import { RecordingSubscriber } from './RecordingSubscriber';
 import { disposeView } from './StreamUtils';
 import { TranscriptionSubscriber } from './TranscriptionSubscriber';
+/* @conditional-compile-remove(close-captions) */
 import { _isTeamsMeetingCall } from './TypeGuards';
 import { UserFacingDiagnosticsSubscriber } from './UserFacingDiagnosticsSubscriber';
 
@@ -36,6 +38,7 @@ export class CallSubscriber {
   private _participantSubscribers: Map<string, ParticipantSubscriber>;
   private _recordingSubscriber: RecordingSubscriber;
   private _transcriptionSubscriber: TranscriptionSubscriber;
+  /* @conditional-compile-remove(close-captions) */
   private _captionsSubscriber?: CaptionsSubscriber;
   /* @conditional-compile-remove(video-background-effects) */
   private _localVideoStreamVideoEffectsSubscribers: Map<string, LocalVideoStreamVideoEffectsSubscriber>;
@@ -62,13 +65,6 @@ export class CallSubscriber {
       this._context,
       this._call.feature(Features.Transcription)
     );
-    if (_isTeamsMeetingCall(this._call)) {
-      this._captionsSubscriber = new CaptionsSubscriber(
-        this._callIdRef,
-        this._context,
-        this._call.feature(Features.TeamsCaptions)
-      );
-    }
     /* @conditional-compile-remove(video-background-effects) */
     this._localVideoStreamVideoEffectsSubscribers = new Map();
 
@@ -77,6 +73,8 @@ export class CallSubscriber {
 
   private subscribe = (): void => {
     this._call.on('stateChanged', this.stateChanged);
+    /* @conditional-compile-remove(close-captions) */
+    this._call.on('stateChanged', this.initCaptionSubscriber);
     this._call.on('idChanged', this.idChanged);
     this._call.on('isScreenSharingOnChanged', this.isScreenSharingOnChanged);
     this._call.on('remoteParticipantsUpdated', this.remoteParticipantsUpdated);
@@ -113,6 +111,8 @@ export class CallSubscriber {
 
   public unsubscribe = (): void => {
     this._call.off('stateChanged', this.stateChanged);
+    /* @conditional-compile-remove(close-captions) */
+    this._call.off('stateChanged', this.initCaptionSubscriber);
     this._call.off('idChanged', this.idChanged);
     this._call.off('isScreenSharingOnChanged', this.isScreenSharingOnChanged);
     this._call.off('remoteParticipantsUpdated', this.remoteParticipantsUpdated);
@@ -145,6 +145,7 @@ export class CallSubscriber {
     this._diagnosticsSubscriber.unsubscribe();
     this._recordingSubscriber.unsubscribe();
     this._transcriptionSubscriber.unsubscribe();
+    /* @conditional-compile-remove(close-captions) */
     this._captionsSubscriber?.unsubscribe();
   };
 
@@ -168,6 +169,19 @@ export class CallSubscriber {
 
   private stateChanged = (): void => {
     this._context.setCallState(this._callIdRef.callId, this._call.state);
+  };
+
+  /* @conditional-compile-remove(close-captions) */
+  private initCaptionSubscriber = (): void => {
+    // subscribe to captions here so that we don't call captions when call is not initialized
+    if (_isTeamsMeetingCall(this._call) && this._call.state === 'Connected' && !this._captionsSubscriber) {
+      this._captionsSubscriber = new CaptionsSubscriber(
+        this._callIdRef,
+        this._context,
+        this._call.feature(Features.TeamsCaptions)
+      );
+      this._call.off('stateChanged', this.initCaptionSubscriber);
+    }
   };
 
   private idChanged = (): void => {

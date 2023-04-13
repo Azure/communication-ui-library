@@ -48,3 +48,8 @@ export const useMinMaxDragPosition = (modalLayerHostId: string, rtl?: boolean): 
 
   return { minDragPosition: minDragPosition, maxDragPosition: maxDragPosition };
 };
+
+/**
+ * @private
+ */
+export const defaultSpokenLanguage = 'en-us';
