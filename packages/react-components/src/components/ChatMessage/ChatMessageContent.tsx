@@ -62,7 +62,7 @@ const MessageContentWithLiveAria = (props: MessageContentWithLiveAriaProps): JSX
 };
 
 const MessageContentAsRichTextHTML = (props: ChatMessageContentProps): JSX.Element => {
-  const htmlToReactParser = Parser(React);
+  const htmlToReactParser = Parser();
   const liveAuthor = _formatString(props.strings.liveAuthorIntro, { author: `${props.message.senderDisplayName}` });
   const atMentionSuggestionRenderer = props.atMentionDisplayOptions?.atMentionSuggestionRenderer;
 
