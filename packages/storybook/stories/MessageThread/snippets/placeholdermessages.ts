@@ -12,12 +12,13 @@ export const GetHistoryChatMessages = (): ChatMessage[] => {
       senderId: 'user1',
       senderDisplayName: 'Kat Larsson',
       messageId: Math.random().toString(),
-      content: 'Hi everyone, I created this awesome group chat for us!',
+      content:
+        "Hi <msft-at-mention userId='none' suggestionType='everyone'>everyone</msft-at-mention>, I created this awesome group chat for us!",
       createdOn: new Date('2019-04-13T00:00:00.000+08:10'),
       mine: true,
       attached: false,
       status: 'seen' as MessageStatus,
-      contentType: 'text'
+      contentType: 'html'
     },
     {
       messageType: 'chat',
