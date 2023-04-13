@@ -207,6 +207,7 @@ const sendRemoteInlineImageMessage = (
       threadId: threadId,
       sender: getIdentifierKind(remoteParticipant.id),
       senderDisplayName: remoteParticipant.displayName ?? '',
-      recepient: localParticipant.id
+      recipient: getIdentifierKind(localParticipant.id),
+      metadata: {}
     });
 };
