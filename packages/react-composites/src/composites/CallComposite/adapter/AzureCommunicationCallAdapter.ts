@@ -33,7 +33,7 @@ import {
   Call
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(close-captions) */
-import { StartCaptionsOptions, CaptionsInfo } from '@azure/communication-calling';
+import { StartCaptionsOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(video-background-effects) */
 import { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/communication-calling-effects';
 /* @conditional-compile-remove(teams-identity-support)) */
@@ -755,10 +755,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     this.call?.on('isMutedChanged', this.isMyMutedChanged.bind(this));
     this.call?.on('isScreenSharingOnChanged', this.isScreenSharingOnChanged.bind(this));
     this.call?.on('idChanged', this.callIdChanged.bind(this));
-    /* @conditional-compile-remove(close-captions) */
-    this._call?.feature(Features.Captions).on('captionsReceived', this.captionsReceived.bind(this));
-    /* @conditional-compile-remove(close-captions) */
-    this._call?.feature(Features.Captions).on('isCaptionsActiveChanged', this.captionsPropertyChanged.bind(this));
   }
 
   private unsubscribeCallEvents(): void {
@@ -770,10 +766,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     this.call?.off('isMutedChanged', this.isMyMutedChanged.bind(this));
     this.call?.off('isScreenSharingOnChanged', this.isScreenSharingOnChanged.bind(this));
     this.call?.off('idChanged', this.callIdChanged.bind(this));
-    /* @conditional-compile-remove(close-captions) */
-    this._call?.feature(Features.Captions).off('captionsReceived', this.captionsReceived.bind(this));
-    /* @conditional-compile-remove(close-captions) */
-    this._call?.feature(Features.Captions).off('isCaptionsActiveChanged', this.captionsPropertyChanged.bind(this));
   }
 
   private isMyMutedChanged = (): void => {
@@ -813,16 +805,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
 
   private isScreenSharingOnChanged(): void {
     this.emitter.emit('isLocalScreenSharingActiveChanged', { isScreenSharingOn: this.call?.isScreenSharingOn });
-  }
-
-  /* @conditional-compile-remove(close-captions) */
-  private captionsReceived(captionsInfo: CaptionsInfo): void {
-    this.emitter.emit('captionsReceived', { captionsInfo });
-  }
-
-  /* @conditional-compile-remove(close-captions) */
-  private captionsPropertyChanged(): void {
-    this.emitter.emit('captionsReceived', {});
   }
 
   private callIdChanged(): void {
