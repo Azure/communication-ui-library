@@ -306,8 +306,8 @@ test.describe('Filesharing Message Thread', async () => {
 });
 
 /* @conditional-compile-remove(teams-inline-images) */
-test.describe.only('Inline Image Message Thread', async () => {
-  test.only('contains Inline Image in remote message', async ({ serverUrl, page }) => {
+test.describe('Inline Image Message Thread', async () => {
+  test('contains Inline Image in remote message', async ({ serverUrl, page }) => {
     await page.goto(
       buildUrlForChatAppUsingFakeAdapter(serverUrl, {
         localParticipant: TEST_PARTICIPANTS[1],
