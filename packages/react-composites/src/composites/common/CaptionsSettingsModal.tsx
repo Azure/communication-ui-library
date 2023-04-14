@@ -39,7 +39,8 @@ export const CaptionsSettingsModal = (props: {
     captionsSettingsCloseModalButtonAriaLabel: strings.captionsSettingsCloseModalButtonAriaLabel
   };
   /* @conditional-compile-remove(close-captions) */
-  const captionsAvailableLanguageStrings: CaptionsAvailableLanguageStrings = strings.captionsAvailableLanguageStrings;
+  const captionsAvailableLanguageStrings: CaptionsAvailableLanguageStrings | undefined =
+    strings.captionsAvailableLanguageStrings;
 
   /* @conditional-compile-remove(close-captions) */
   return (

@@ -391,7 +391,7 @@ export interface CallAdapterSubscribers {
     off(event: 'selectedSpeakerChanged', listener: PropertyChangedEvent): void;
     off(event: 'error', listener: (e: AdapterError) => void): void;
     off(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
-    off(event: 'captionsPropertyChanged', listener: PropertyChangedEvent): void;
+    off(event: 'captionsPropertyChanged', listener: CaptionsPropertyChangedEventListener): void;
     on(event: 'participantsJoined', listener: ParticipantsJoinedListener): void;
     on(event: 'participantsLeft', listener: ParticipantsLeftListener): void;
     on(event: 'isMutedChanged', listener: IsMutedChangedListener): void;
@@ -405,7 +405,7 @@ export interface CallAdapterSubscribers {
     on(event: 'selectedSpeakerChanged', listener: PropertyChangedEvent): void;
     on(event: 'error', listener: (e: AdapterError) => void): void;
     on(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
-    on(event: 'captionsPropertyChanged', listener: PropertyChangedEvent): void;
+    on(event: 'captionsPropertyChanged', listener: CaptionsPropertyChangedEventListener): void;
 }
 
 // @public
@@ -560,17 +560,17 @@ export interface CallCompositeStrings {
     cameraLabel: string;
     cameraPermissionDenied: string;
     cameraTurnedOff: string;
-    captionsAvailableLanguageStrings: CaptionsAvailableLanguageStrings;
-    captionsBannerMoreButtonCallingLabel: string;
-    captionsBannerMoreButtonTooltip: string;
-    captionsSettingsCancelButtonLabel: string;
-    captionsSettingsCloseModalButtonAriaLabel: string;
-    captionsSettingsConfirmButtonLabel: string;
-    captionsSettingsDropdownInfoText: string;
-    captionsSettingsDropdownLabel: string;
-    captionsSettingsLabel: string;
-    captionsSettingsModalAriaLabel: string;
-    captionsSettingsModalTitle: string;
+    captionsAvailableLanguageStrings?: CaptionsAvailableLanguageStrings;
+    captionsBannerMoreButtonCallingLabel?: string;
+    captionsBannerMoreButtonTooltip?: string;
+    captionsSettingsCancelButtonLabel?: string;
+    captionsSettingsCloseModalButtonAriaLabel?: string;
+    captionsSettingsConfirmButtonLabel?: string;
+    captionsSettingsDropdownInfoText?: string;
+    captionsSettingsDropdownLabel?: string;
+    captionsSettingsLabel?: string;
+    captionsSettingsModalAriaLabel?: string;
+    captionsSettingsModalTitle?: string;
     chatButtonLabel: string;
     close: string;
     complianceBannerNowOnlyRecording: string;
@@ -607,7 +607,7 @@ export interface CallCompositeStrings {
     learnMore: string;
     leftCallMoreDetails?: string;
     leftCallTitle: string;
-    liveCaptionsLabel: string;
+    liveCaptionsLabel?: string;
     lobbyScreenConnectingToCallMoreDetails?: string;
     lobbyScreenConnectingToCallTitle: string;
     lobbyScreenWaitingToBeAdmittedMoreDetails?: string;
@@ -653,10 +653,10 @@ export interface CallCompositeStrings {
     roomNotFoundTitle: string;
     soundLabel: string;
     startCallButtonLabel: string;
-    startCaptionsButtonOffLabel: string;
-    startCaptionsButtonOnLabel: string;
-    startCaptionsButtonTooltipOffContent: string;
-    startCaptionsButtonTooltipOnContent: string;
+    startCaptionsButtonOffLabel?: string;
+    startCaptionsButtonOnLabel?: string;
+    startCaptionsButtonTooltipOffContent?: string;
+    startCaptionsButtonTooltipOnContent?: string;
     threeParticipantJoinedNoticeString: string;
     threeParticipantLeftNoticeString: string;
     twoParticipantJoinedNoticeString: string;
@@ -893,7 +893,7 @@ export interface CallWithChatAdapterSubscriptions {
     // (undocumented)
     off(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
     // (undocumented)
-    off(event: 'captionsPropertyChanged', listener: PropertyChangedEvent): void;
+    off(event: 'captionsPropertyChanged', listener: CaptionsPropertyChangedEventListener): void;
     // (undocumented)
     off(event: 'messageReceived', listener: MessageReceivedListener): void;
     // (undocumented)
@@ -931,7 +931,7 @@ export interface CallWithChatAdapterSubscriptions {
     // (undocumented)
     on(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
     // (undocumented)
-    on(event: 'captionsPropertyChanged', listener: PropertyChangedEvent): void;
+    on(event: 'captionsPropertyChanged', listener: CaptionsPropertyChangedEventListener): void;
     // (undocumented)
     on(event: 'messageReceived', listener: MessageReceivedListener): void;
     // (undocumented)
@@ -1311,6 +1311,9 @@ export interface CaptionsInfo {
 export type CaptionsOptions = {
     spokenLanguage: string;
 };
+
+// @beta
+export type CaptionsPropertyChangedEventListener = () => void;
 
 // @beta
 export type CaptionsReceivedListener = (event: {

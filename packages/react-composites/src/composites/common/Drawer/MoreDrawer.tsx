@@ -338,7 +338,7 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
       itemKey: 'ChangeSpokenLanguage',
       text: props.strings.spokenLanguageMenuTitle,
       id: 'common-call-composite-captions-settings-button',
-      secondaryText: supportedLanguageStrings[currentSpokenLanguage],
+      secondaryText: supportedLanguageStrings ? supportedLanguageStrings[currentSpokenLanguage] : currentSpokenLanguage,
       iconProps: {
         iconName: 'ChangeSpokenLanguageIcon',
         styles: { root: { lineHeight: 0 } }

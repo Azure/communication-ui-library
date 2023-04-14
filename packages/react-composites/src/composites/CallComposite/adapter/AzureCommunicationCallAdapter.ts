@@ -61,7 +61,7 @@ import {
   CallAdapter
 } from './CallAdapter';
 /* @conditional-compile-remove(close-captions) */
-import { CaptionsReceivedListener } from './CallAdapter';
+import { CaptionsReceivedListener, CaptionsPropertyChangedEventListener } from './CallAdapter';
 /* @conditional-compile-remove(video-background-effects) */
 import { VideoBackgroundImage, SelectedVideoBackgroundEffect } from './CallAdapter';
 /* @conditional-compile-remove(teams-identity-support) */
@@ -743,7 +743,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   /* @conditional-compile-remove(close-captions) */
   on(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
   /* @conditional-compile-remove(close-captions) */
-  on(event: 'captionsPropertyChanged', listener: PropertyChangedEvent): void;
+  on(event: 'captionsPropertyChanged', listener: CaptionsPropertyChangedEventListener): void;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public on(event: string, listener: (e: any) => void): void {
@@ -862,7 +862,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   /* @conditional-compile-remove(close-captions) */
   off(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
   /* @conditional-compile-remove(close-captions) */
-  off(event: 'captionsPropertyChanged', listener: PropertyChangedEvent): void;
+  off(event: 'captionsPropertyChanged', listener: CaptionsPropertyChangedEventListener): void;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public off(event: string, listener: (e: any) => void): void {

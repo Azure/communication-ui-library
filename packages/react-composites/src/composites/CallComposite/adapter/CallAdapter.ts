@@ -264,6 +264,14 @@ export interface VideoBackgroundImage {
  */
 export type CaptionsReceivedListener = (event: { captionsInfo: CaptionsInfo }) => void;
 
+/* @conditional-compile-remove(close-captions) */
+/**
+ * Callback for {@link CallAdapterSubscribers} 'captionsPropertyChanged' event.
+ *
+ * @beta
+ */
+export type CaptionsPropertyChangedEventListener = () => void;
+
 /* @conditional-compile-remove(video-background-effects) */
 /**
  * Contains the attibutes of a selected video background effect
@@ -667,7 +675,7 @@ export interface CallAdapterSubscribers {
   /**
    * Subscribe function for 'captionsPropertyChanged' event.
    */
-  on(event: 'captionsPropertyChanged', listener: PropertyChangedEvent): void;
+  on(event: 'captionsPropertyChanged', listener: CaptionsPropertyChangedEventListener): void;
 
   /**
    * Unsubscribe function for 'participantsJoined' event.
@@ -726,7 +734,7 @@ export interface CallAdapterSubscribers {
   /**
    * Unsubscribe function for 'captionsPropertyChanged' event.
    */
-  off(event: 'captionsPropertyChanged', listener: PropertyChangedEvent): void;
+  off(event: 'captionsPropertyChanged', listener: CaptionsPropertyChangedEventListener): void;
 }
 
 // This type remains for non-breaking change reason

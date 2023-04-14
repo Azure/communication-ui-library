@@ -82,7 +82,10 @@ import { _toCommunicationIdentifier } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(rooms) */
 import { AzureCommunicationCallAdapterOptions } from '../../CallComposite/adapter/AzureCommunicationCallAdapter';
 /* @conditional-compile-remove(close-captions) */
-import { CaptionsReceivedListener } from '../../CallComposite/adapter/CallAdapter';
+import {
+  CaptionsPropertyChangedEventListener,
+  CaptionsReceivedListener
+} from '../../CallComposite/adapter/CallAdapter';
 
 /* @conditional-compile-remove(video-background-effects) */
 import { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/communication-calling-effects';
@@ -503,7 +506,7 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   /* @conditional-compile-remove(close-captions) */
   on(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
   /* @conditional-compile-remove(close-captions) */
-  on(event: 'captionsPropertyChanged', listener: PropertyChangedEvent): void;
+  on(event: 'captionsPropertyChanged', listener: CaptionsPropertyChangedEventListener): void;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   on(event: CallWithChatEvent, listener: any): void {
@@ -593,7 +596,7 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   /* @conditional-compile-remove(close-captions) */
   off(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
   /* @conditional-compile-remove(close-captions) */
-  off(event: 'captionsPropertyChanged', listener: PropertyChangedEvent): void;
+  off(event: 'captionsPropertyChanged', listener: CaptionsPropertyChangedEventListener): void;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   off(event: CallWithChatEvent, listener: any): void {

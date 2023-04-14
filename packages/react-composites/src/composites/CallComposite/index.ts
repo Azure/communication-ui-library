@@ -81,4 +81,4 @@ export type {
 } from './adapter';
 
 /* @conditional-compile-remove(close-captions) */
-export type { CaptionsReceivedListener } from './adapter';
+export type { CaptionsReceivedListener, CaptionsPropertyChangedEventListener } from './adapter';

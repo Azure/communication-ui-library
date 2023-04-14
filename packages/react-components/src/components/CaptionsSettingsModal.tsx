@@ -35,13 +35,13 @@ import { _preventDismissOnEvent } from '@internal/acs-ui-common';
  * strings for captions setting modal
  */
 export interface _CaptionsSettingsModalStrings {
-  captionsSettingsModalTitle: string;
-  captionsSettingsDropdownLabel: string;
-  captionsSettingsDropdownInfoText: string;
-  captionsSettingsConfirmButtonLabel: string;
-  captionsSettingsCancelButtonLabel: string;
-  captionsSettingsModalAriaLabel: string;
-  captionsSettingsCloseModalButtonAriaLabel: string;
+  captionsSettingsModalTitle?: string;
+  captionsSettingsDropdownLabel?: string;
+  captionsSettingsDropdownInfoText?: string;
+  captionsSettingsConfirmButtonLabel?: string;
+  captionsSettingsCancelButtonLabel?: string;
+  captionsSettingsModalAriaLabel?: string;
+  captionsSettingsCloseModalButtonAriaLabel?: string;
 }
 
 /**
@@ -53,7 +53,7 @@ export interface _CaptionsSettingsModalProps {
   onSetSpokenLanguage: (language: string) => Promise<void>;
   onStartCaptions: (captionsOptions?: _captionsOptions) => Promise<void>;
   currentSpokenLanguage: string;
-  captionsAvailableLanguageStrings: CaptionsAvailableLanguageStrings;
+  captionsAvailableLanguageStrings?: CaptionsAvailableLanguageStrings;
   isCaptionsFeatureActive?: boolean;
   strings?: _CaptionsSettingsModalStrings;
   showModal?: boolean;
@@ -105,7 +105,10 @@ export const _CaptionsSettingsModal = (props: _CaptionsSettingsModalProps): JSX.
 
   const dropdownOptions: IDropdownOption[] = useMemo(() => {
     return supportedSpokenLanguages.map((languageCode) => {
-      return { key: languageCode, text: captionsAvailableLanguageStrings[languageCode] ?? languageCode };
+      return {
+        key: languageCode,
+        text: captionsAvailableLanguageStrings ? captionsAvailableLanguageStrings[languageCode] : languageCode
+      };
     });
   }, [supportedSpokenLanguages, captionsAvailableLanguageStrings]);
 

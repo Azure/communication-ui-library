@@ -38,8 +38,8 @@ export const SpokenLanguageDrawer = (props: {
   /* @conditional-compile-remove(close-captions) */ setCurrentSpokenLanguage: (language: string) => void;
   /* @conditional-compile-remove(close-captions) */ currentSpokenLanguage: string;
   /* @conditional-compile-remove(close-captions) */ onLightDismiss: () => void;
-  /* @conditional-compile-remove(close-captions) */ strings: SpokenLanguageDrawerStrings;
-  /* @conditional-compile-remove(close-captions) */ supportedLanguageStrings: CaptionsAvailableLanguageStrings;
+  /* @conditional-compile-remove(close-captions) */ strings?: SpokenLanguageDrawerStrings;
+  /* @conditional-compile-remove(close-captions) */ supportedLanguageStrings?: CaptionsAvailableLanguageStrings;
 }): JSX.Element => {
   /* @conditional-compile-remove(close-captions) */
   const theme = useTheme();
@@ -61,7 +61,7 @@ export const SpokenLanguageDrawer = (props: {
   const spokenLanguageDrawerItems: DrawerMenuItemProps[] = useMemo(() => {
     return changeSpokenLanguageProps?.supportedSpokenLanguages?.map((languageCode) => ({
       itemKey: languageCode,
-      text: props.supportedLanguageStrings[languageCode] ?? languageCode,
+      text: props.supportedLanguageStrings ? props.supportedLanguageStrings[languageCode] : languageCode,
       onItemClick: () => onSpokenLanguageDrawerItemClick(languageCode),
       secondaryIconProps: props.currentSpokenLanguage === languageCode ? { iconName: 'Accept' } : undefined
     }));
@@ -75,7 +75,7 @@ export const SpokenLanguageDrawer = (props: {
   /* @conditional-compile-remove(close-captions) */
   return (
     <DrawerMenu
-      heading={props.strings.spokenLanguageMenuTitle}
+      heading={props.strings?.spokenLanguageMenuTitle}
       items={spokenLanguageDrawerItems ?? []}
       onLightDismiss={() => {
         changeSpokenLanguageHandlers.onSetSpokenLanguage(props.currentSpokenLanguage);
