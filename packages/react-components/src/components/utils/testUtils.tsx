@@ -30,14 +30,16 @@ export const renderWithLocalization = (
   locale: ComponentLocale
 ): {
   rerender: (node: React.ReactElement) => void;
+  container: HTMLElement;
 } => {
-  const { rerender } = render(
+  const { rerender, container } = render(
     withLiveAnnouncerContext(<LocalizationProvider locale={locale}>{node}</LocalizationProvider>)
   );
   return {
     // wrap rerender in a function that will re-wrap the node with the LocalizationProvider
     rerender: (node: React.ReactElement) =>
-      rerender(withLiveAnnouncerContext(<LocalizationProvider locale={locale}>{node}</LocalizationProvider>))
+      rerender(withLiveAnnouncerContext(<LocalizationProvider locale={locale}>{node}</LocalizationProvider>)),
+    container
   };
 };
 

@@ -8,7 +8,7 @@ import { registerIcons } from '@fluentui/react';
 import { screen } from '@testing-library/react';
 
 describe('CameraButton strings should be localizable and overridable', () => {
-  beforeEach(() => {
+  beforeAll(() => {
     registerIcons({
       icons: {
         controlbuttoncameraoff: <></>,
