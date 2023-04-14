@@ -111,11 +111,6 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     // Get a plain text version to display in the input box, resetting state
     const tags = parseToTags(textValue);
     const plainText = plainTextFromParsedTags(textValue, tags, trigger);
-    console.log('textValue Effect triggered');
-    console.log('textValue', textValue);
-    console.log('plainText', plainText);
-    console.log('tags', tags);
-    console.log('textValue Effect end console log');
     // Provide the plain text string to the inputTextValue
     setInputTextValue(plainText);
   }, [textValue, atMentionLookupOptions?.trigger]);
@@ -154,11 +149,9 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       let selectionEnd = textFieldRef?.current?.selectionEnd || -1;
       if (selectionEnd < 0) {
         selectionEnd = 0;
-      } else if (selectionEnd > textValue.length) {
-        selectionEnd = textValue.length;
+      } else if (selectionEnd > inputTextValue.length) {
+        selectionEnd = inputTextValue.length;
       }
-      console.log('selectionStart', selectionStart);
-      console.log('selectionEnd', selectionEnd);
       // TODO: Use the HTML value in the control
       // FIGURE OUT WHERE TO INSERT THE NEW TAG
       // INSERT IT INTO THE TEXT FIELD
@@ -167,7 +160,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       //TODO: add check if we are in the middle of another tag
 
       const triggerText = atMentionLookupOptions?.trigger ?? defaultMentionTrigger;
-      let htmlIndex = mentionHTMLIndex(textValue, inputTextValue, oldTags, triggerText, currentTagIndex, queryText);
+      let htmlIndex = htmlMentionIndex(textValue, oldTags, triggerText, currentTagIndex, queryText, inputTextValue);
       if (htmlIndex < 0) {
         htmlIndex = 0;
       } else if (htmlIndex > textValue.length) {
@@ -177,16 +170,10 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       const firstPart = textValue.substring(0, htmlIndex);
       const lastPart = textValue.substring(htmlIndex + queryText.length);
 
-      console.log('queryText', queryText);
-      console.log('firstPart', firstPart);
-      console.log('lastPart', lastPart);
       // TODO: make this logic work properly
       const updatedText = firstPart + htmlStringForMentionSuggestion(suggestion) + lastPart;
 
-      console.log('updatedText', updatedText);
       const tags = parseToTags(updatedText);
-      console.log('updatedText tags', tags);
-      console.log('htmlIndex', htmlIndex);
       const plainText = plainTextFromParsedTags(
         updatedText,
         tags,
@@ -206,21 +193,17 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>,
     newValue?: string | undefined
   ): Promise<void> => {
+    const selectionEnd = textFieldRef?.current?.selectionEnd || -1;
     // If we are enabled for lookups,
     if (!!atMentionLookupOptions) {
       //TODO; add check for the last space and check if it isn't between mention trigger and
       // Look at the range of the change for a trigger character
       const triggerText = atMentionLookupOptions?.trigger ?? defaultMentionTrigger;
-      const selectionEnd = textFieldRef?.current?.selectionEnd || -1;
       const triggerPriorIndex = newValue?.lastIndexOf(triggerText, selectionEnd - 1);
-      console.log('triggerPriorIndex', triggerPriorIndex);
       // trigger is found
       if (triggerPriorIndex !== undefined) {
-        const isNextSpaceSymbol = newValue?.slice(triggerPriorIndex, triggerPriorIndex + 1) == ' ';
-        console.log('inside triggerPriorIndex', triggerPriorIndex);
+        const isNextSpaceSymbol = newValue?.slice(triggerPriorIndex, triggerPriorIndex + 1) === ' ';
         const wordAtSelection = newValue?.slice(triggerPriorIndex, selectionEnd);
-        console.log('wordAtSelection', wordAtSelection);
-        console.log('wordAtSelection.length', wordAtSelection?.length);
         if (wordAtSelection === triggerText) {
           // start of the mention
           let tagIndex = selectionEnd - triggerText.length;
@@ -243,17 +226,25 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
             // const query = newValue?.substring(currentTagIndex, selectionEnd);
             const query = wordAtSelection;
             if (query !== undefined) {
-              console.log('getting suggestions for query:', query);
               const suggestions = (await atMentionLookupOptions?.onQueryUpdated(query)) ?? [];
               setMentionSuggestions(suggestions);
             }
           }
         }
+      } else {
+        // if ()
       }
     }
-
+    // let updatedValue = newValue;
+    // if (selectionEnd === inputTextValue.length) {
+    //   // add text to the end of the string
+    //   const findFirstDiff = (str1, str2) => str2[[...str1].findIndex((el, index) => el !== str2[index])];
+    //   const diff = findFirstDiff(inputTextValue, newValue);
+    //   updatedValue =
+    // }
     // TODO: filter the call back to the parent only after setting the text with HTML where
     // appropriate.
+    // TODO: should be html text!!!
     onChange && onChange(event, newValue);
   };
 
@@ -364,6 +355,8 @@ type ParsedTag = {
   closeTagLength?: number; // Might not have a close tag
   content?: string; // Might not have content
   subTags?: ParsedTag[]; // Tags can contain other tags
+  plainTextStartIndex: number;
+  plainTextEndIndex: number;
 };
 
 /**
@@ -465,23 +458,86 @@ const plainTextFromParsedTags = (textBlock: string, tags: ParsedTag[], trigger: 
   return text;
 };
 
-const mentionHTMLIndex = (
+const htmlMentionIndex = (
   htmlTextBlock: string,
-  plainTextBlock: string,
   tags: ParsedTag[],
   trigger: string,
-  plainStringStartIndex: number,
-  query: string // includes trigger
+  plainStringIndex: number,
+  query: string, // includes trigger
+  plainTextBlock?: string
 ): number => {
+  console.log('htmlTextBlock', htmlTextBlock);
+  console.log('plainStringIndex', plainStringIndex);
   if (tags.length === 0) {
-    // no tags were added yet to the text
-    return plainStringStartIndex;
-  } else if (plainStringStartIndex + query.length === plainTextBlock.length) {
+    // no tags were added yet
+    return plainStringIndex;
+  } else if (plainTextBlock !== undefined && plainStringIndex + query.length === plainTextBlock.length) {
     // tags will be added at the end of the current text
     return htmlTextBlock.length - 1;
   } else {
     // tag will be added in the middle of the text
-    return htmlTextBlock.length - 1;
+
+    let text = '';
+    let tagIndex = 0;
+    let previousTagEndIndex = 0;
+    let htmlIndex = 0;
+
+    while (tagIndex < tags.length && htmlIndex < htmlTextBlock.length) {
+      const tag = tags[tagIndex];
+      // Add all the text from the last tag close to this one open
+      const textBetweenTags = htmlTextBlock.slice(previousTagEndIndex, tag.htmlOpenTagStartIndex);
+      text += textBetweenTags;
+      if (plainStringIndex <= textBetweenTags.length) {
+        //TODO: check!
+        htmlIndex += textBetweenTags.length + plainStringIndex;
+        return htmlIndex;
+      }
+      if (tag.tagType === 'msft-at-mention') {
+        text += trigger;
+        htmlIndex += trigger.length;
+      }
+
+      // If there are sub tags, go through them and add their text
+      if (!!tag.subTags && tag.subTags.length > 0) {
+        htmlIndex += htmlMentionIndex(
+          tag.content ?? '',
+          tag.subTags ?? [],
+          trigger,
+          plainStringIndex - text.length,
+          query
+        );
+        text += plainTextFromParsedTags(tag.content ?? '', tag.subTags, trigger);
+      } else if (!!tag.content) {
+        // Otherwise just add the content
+        text += tag.content;
+        if (plainStringIndex < tag.content.length) {
+          //TODO: check!
+          htmlIndex += plainStringIndex;
+          return htmlIndex;
+        } else {
+          htmlIndex += tag.content.length;
+        }
+      }
+      // Move the indices
+      if (!!tag.htmlCloseTagStartIndex && tag.closeTagLength) {
+        previousTagEndIndex = tag.htmlCloseTagStartIndex + tag.closeTagLength;
+      } else {
+        // Self-closing tag
+        previousTagEndIndex = tag.htmlOpenTagStartIndex + tag.openTagBody.length + 3; // 3 for the < > and /
+      }
+      tagIndex++;
+    }
+    // Add the text after the last tag
+    if (previousTagEndIndex < htmlTextBlock.length) {
+      if (plainStringIndex > previousTagEndIndex) {
+        htmlIndex += htmlTextBlock.length - previousTagEndIndex + plainStringIndex;
+      }
+      text += htmlTextBlock.slice(previousTagEndIndex);
+    }
+    console.log('text', text);
+    console.log('htmlTextBlock', htmlTextBlock);
+    console.log('htmlIndex', htmlIndex);
+    return htmlIndex;
   }
 };
 
