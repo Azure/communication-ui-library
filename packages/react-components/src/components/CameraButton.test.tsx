@@ -3,10 +3,9 @@
 
 import React from 'react';
 import { CameraButton } from './CameraButton';
-import { createTestLocale } from './utils/testUtils';
+import { createTestLocale, renderWithLocalization } from './utils/testUtils';
 import { registerIcons } from '@fluentui/react';
-import { LocalizationProvider } from '../localization';
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 
 describe('CameraButton strings should be localizable and overridable', () => {
   beforeEach(() => {
@@ -22,18 +21,10 @@ describe('CameraButton strings should be localizable and overridable', () => {
     const testLocale = createTestLocale({
       cameraButton: { offLabel: Math.random().toString(), onLabel: Math.random().toString() }
     });
-    const { rerender } = render(
-      <LocalizationProvider locale={testLocale}>
-        <CameraButton showLabel={true} />
-      </LocalizationProvider>
-    );
+    const { rerender } = renderWithLocalization(<CameraButton showLabel={true} />, testLocale);
     expect(screen.getByRole('button').textContent).toBe(testLocale.strings.cameraButton.offLabel);
 
-    rerender(
-      <LocalizationProvider locale={testLocale}>
-        <CameraButton showLabel={true} checked={true} />
-      </LocalizationProvider>
-    );
+    rerender(<CameraButton showLabel={true} checked={true} />);
     expect(screen.getByRole('button').textContent).toBe(testLocale.strings.cameraButton.onLabel);
   });
 
@@ -42,18 +33,13 @@ describe('CameraButton strings should be localizable and overridable', () => {
       cameraButton: { offLabel: Math.random().toString(), onLabel: Math.random().toString() }
     });
     const cameraButtonStrings = { offLabel: Math.random().toString(), onLabel: Math.random().toString() };
-    const { rerender } = render(
-      <LocalizationProvider locale={testLocale}>
-        <CameraButton showLabel={true} strings={cameraButtonStrings} />
-      </LocalizationProvider>
+    const { rerender } = renderWithLocalization(
+      <CameraButton showLabel={true} strings={cameraButtonStrings} />,
+      testLocale
     );
     expect(screen.getByRole('button').textContent).toBe(cameraButtonStrings.offLabel);
 
-    rerender(
-      <LocalizationProvider locale={testLocale}>
-        <CameraButton showLabel={true} checked={true} strings={cameraButtonStrings} />
-      </LocalizationProvider>
-    );
+    rerender(<CameraButton showLabel={true} checked={true} strings={cameraButtonStrings} />);
     expect(screen.getByRole('button').textContent).toBe(cameraButtonStrings.onLabel);
   });
 });

@@ -7,6 +7,8 @@ import { LocalizationProvider, ComponentLocale, ComponentStrings } from '../../l
 import { COMPONENT_LOCALE_EN_US } from '../../localization/locales';
 import { PartialDeep } from 'type-fest';
 import { _PermissionsProvider, _getPermissions, _Permissions } from '../../permissions';
+import { render } from '@testing-library/react';
+import { LiveAnnouncer } from 'react-aria-live';
 
 /**
  * @private
@@ -16,6 +18,27 @@ export const mountWithLocalization = (node: React.ReactElement, locale: Componen
     wrappingComponent: LocalizationProvider,
     wrappingComponentProps: { locale }
   });
+};
+
+const withLiveAnnouncerContext = (node: React.ReactElement): React.ReactElement => (
+  <LiveAnnouncer>{node}</LiveAnnouncer>
+);
+
+/** @private */
+export const renderWithLocalization = (
+  node: React.ReactElement,
+  locale: ComponentLocale
+): {
+  rerender: (node: React.ReactElement) => void;
+} => {
+  const { rerender } = render(
+    withLiveAnnouncerContext(<LocalizationProvider locale={locale}>{node}</LocalizationProvider>)
+  );
+  return {
+    // wrap rerender in a function that will re-wrap the node with the LocalizationProvider
+    rerender: (node: React.ReactElement) =>
+      rerender(withLiveAnnouncerContext(<LocalizationProvider locale={locale}>{node}</LocalizationProvider>))
+  };
 };
 
 /**
