@@ -31,6 +31,7 @@
     "@azure/communication-react": "1.5.1-beta.2",
     "@azure/logger": "1.0.3",
     "@fluentui/react": "~8.98.3",
+    "@fluentui/react-file-type-icons": "8.8.13",
     "@fluentui/react-icons": "~2.0.194",
     "@internal/acs-ui-common": "1.5.1-beta.2",
     "@internal/chat-stateful-client": "1.5.1-beta.2",
@@ -44,8 +45,7 @@
     "react-aria-live": "^2.0.5",
     "react-dom": "16.13.1",
     "react-linkify": "^1.0.0-alpha",
-    "reselect": "~4.0.0",
-    "@fluentui/react-file-type-icons": "8.8.13"
+    "reselect": "~4.0.0"
   },
   "devDependencies": {
     "@babel/core": "~7.16.0",
