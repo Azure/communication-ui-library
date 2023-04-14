@@ -83,3 +83,43 @@ export const captionsAvailableLanguageStrings = [
   'sk-sk',
   'zh-tw'
 ];
+
+export const captionsFeatureState = {
+  captions: [
+    {
+      resultType: 'Final' as const,
+      timestamp: new Date(0),
+      speaker: {
+        displayName: 'Participant 1',
+        identifier: { communicationUserId: 'communicationId1', kind: 'communicationUser' as const }
+      },
+      spokenLanguage: 'en-us' as const,
+      captionText: 'How are you?'
+    },
+    {
+      resultType: 'Final' as const,
+      timestamp: new Date(10000),
+      speaker: {
+        displayName: 'Participant 2',
+        identifier: { communicationUserId: 'communicationId2', kind: 'communicationUser' as const }
+      },
+      spokenLanguage: 'en-us',
+      captionText: 'I am good.'
+    },
+    {
+      resultType: 'Final' as const,
+      timestamp: new Date(10000),
+      speaker: {
+        displayName: 'Participant 3',
+        identifier: { communicationUserId: 'communicationId3', kind: 'communicationUser' as const }
+      },
+      spokenLanguage: 'en-us',
+      captionText: 'Nice to see you today!'
+    }
+  ],
+  supportedSpokenLanguages: captionsAvailableLanguageStrings,
+  supportedCaptionLanguages: captionsAvailableLanguageStrings,
+  currentCaptionLanguage: 'en-us',
+  currentSpokenLanguage: 'en-us',
+  isCaptionsFeatureActive: true
+};
