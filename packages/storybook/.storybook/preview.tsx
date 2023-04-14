@@ -79,7 +79,7 @@ export const parameters = {
           "Themes",
           "Teams Interop",
           [
-            "Composite Banner",
+            "Compliance Banner",
             "Lobby",
             "Inline Image",
           ],
