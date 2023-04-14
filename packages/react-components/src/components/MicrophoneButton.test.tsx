@@ -3,12 +3,9 @@
 
 import React from 'react';
 import { MicrophoneButton } from './MicrophoneButton';
-import Enzyme from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
-import { createTestLocale, mountWithLocalization } from './utils/testUtils';
+import { createTestLocale, renderWithLocalization } from './utils/testUtils';
 import { registerIcons } from '@fluentui/react';
-
-Enzyme.configure({ adapter: new Adapter() });
+import { screen } from '@testing-library/react';
 
 describe('MicrophoneButton strings should be localizable and overridable', () => {
   beforeEach(() => {
@@ -24,10 +21,11 @@ describe('MicrophoneButton strings should be localizable and overridable', () =>
     const testLocale = createTestLocale({
       microphoneButton: { offLabel: Math.random().toString(), onLabel: Math.random().toString() }
     });
-    const component = mountWithLocalization(<MicrophoneButton showLabel={true} />, testLocale);
-    expect(component.find('button').text()).toBe(testLocale.strings.microphoneButton.offLabel);
-    component.setProps({ checked: true });
-    expect(component.find('button').text()).toBe(testLocale.strings.microphoneButton.onLabel);
+    const { rerender } = renderWithLocalization(<MicrophoneButton showLabel={true} />, testLocale);
+    expect(screen.getByRole('button').textContent).toBe(testLocale.strings.microphoneButton.offLabel);
+
+    rerender(<MicrophoneButton showLabel={true} checked={true} />);
+    expect(screen.getByRole('button').textContent).toBe(testLocale.strings.microphoneButton.onLabel);
   });
 
   test('Should override button label with `strings` prop', async () => {
@@ -35,12 +33,13 @@ describe('MicrophoneButton strings should be localizable and overridable', () =>
       microphoneButton: { offLabel: Math.random().toString(), onLabel: Math.random().toString() }
     });
     const microphoneButtonStrings = { offLabel: Math.random().toString(), onLabel: Math.random().toString() };
-    const component = mountWithLocalization(
-      <MicrophoneButton strings={microphoneButtonStrings} showLabel={true} />,
+    const { rerender } = renderWithLocalization(
+      <MicrophoneButton showLabel={true} strings={microphoneButtonStrings} />,
       testLocale
     );
-    expect(component.find('button').text()).toBe(microphoneButtonStrings.offLabel);
-    component.setProps({ checked: true });
-    expect(component.find('button').text()).toBe(microphoneButtonStrings.onLabel);
+    expect(screen.getByRole('button').textContent).toBe(microphoneButtonStrings.offLabel);
+
+    rerender(<MicrophoneButton showLabel={true} checked={true} strings={microphoneButtonStrings} />);
+    expect(screen.getByRole('button').textContent).toBe(microphoneButtonStrings.onLabel);
   });
 });
