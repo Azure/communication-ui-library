@@ -43,7 +43,7 @@ export function HermeticApp(props: { queryArgs: QueryArgs }): JSX.Element {
             ...call,
             localVideoStreams: [],
             remoteParticipants: participants,
-            totalParticipantCount: Object.values(participants).length
+            totalParticipantCount: Object.values(participants).length + 1
           }
         };
         console.log('Creating mock adapter with args', queryArgs.mockCallAdapterState);
