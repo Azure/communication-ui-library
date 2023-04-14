@@ -186,3 +186,29 @@ async function createAzureCommunicationCallAdapter(args: AzureCommunicationChatA
 | **`credential`**  | [`CommunicationTokenCredential`](https://docs.microsoft.com/en-us/javascript/api/@azure/communication-common/azurecommunicationtokencredential) |
 | **`endpoint`**    | `string`                                                                                                                                        |
 | **`threadId`**    | `string`                                                                                                                                        |
+
+### createAzureCommunicationChatAdapterFromClient
+
+```ts
+async function createAzureCommunicationChatAdapterFromClient(
+  chatClient: StatefulChatClient,
+  chatThreadClient: ChatThreadClient,
+  options?: ChatAdapterOptions
+);
+```
+
+| Property                 | Type                                                                                                                  |
+| ------------------------ | --------------------------------------------------------------------------------------------------------------------- |
+| **`chatClient`**         | [`StatefulChatClient`](https://docs.microsoft.com/en-us/javascript/api/@azure/communication-react/statefulchatclient) |
+| **`chatThreadClient`**   | [`ChatThreadClient`](https://docs.microsoft.com/en-us/javascript/api/@azure/communication-chat/chatthreadclient)      |
+| **`options`** **(Beta)** | `ChatAdapterOptions`                                                                                                  |
+
+```ts
+export type ChatAdapterOptions = {
+  credential?: CommunicationTokenCredential;
+};
+```
+
+| Property         | Type                                                                                                                                                                                                        |
+| ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **`credential`** | [`CommunicationTokenCredential`](https://docs.microsoft.com/en-us/javascript/api/@azure/communication-common/communicationtokencredential) <br />_The optional property that contains communication token._ |
