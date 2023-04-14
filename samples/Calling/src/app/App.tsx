@@ -126,7 +126,7 @@ const App = (): JSX.Element => {
             callLocator = callLocator || getOutboundParticipants(callDetails.outboundParticipants);
 
             /* @conditional-compile-remove(teams-adhoc-call) */
-            callLocator = callLocator || getOutboundParticipants(callDetails.teamsIds);
+            callLocator = callLocator || getOutboundParticipants(callDetails.outboundTeamsUsers);
 
             callLocator = callLocator || createGroupId();
 
