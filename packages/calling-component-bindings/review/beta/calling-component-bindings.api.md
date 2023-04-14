@@ -175,7 +175,7 @@ export interface CommonCallingHandlers {
     // (undocumented)
     onStartCall: (participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[], options?: StartCallOptions) => void;
     // (undocumented)
-    onStartCaptions: (captionsOptions?: CaptionsOptions) => Promise<void>;
+    onStartCaptions: (options?: CaptionsOptions) => Promise<void>;
     // (undocumented)
     onStartLocalVideo: () => Promise<void>;
     // (undocumented)

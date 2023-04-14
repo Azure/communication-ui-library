@@ -51,7 +51,7 @@ export interface _CaptionsSettingsModalStrings {
 export interface _CaptionsSettingsModalProps {
   supportedSpokenLanguages: string[];
   onSetSpokenLanguage: (language: string) => Promise<void>;
-  onStartCaptions: (captionsOptions?: _captionsOptions) => Promise<void>;
+  onStartCaptions: (options?: _captionsOptions) => Promise<void>;
   currentSpokenLanguage: string;
   captionsAvailableLanguageStrings?: CaptionsAvailableLanguageStrings;
   isCaptionsFeatureActive?: boolean;

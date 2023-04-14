@@ -328,7 +328,7 @@ export interface CallAdapterCallOperations {
     setCaptionLanguage(language: string): Promise<void>;
     setSpokenLanguage(language: string): Promise<void>;
     startCamera(options?: VideoStreamOptions): Promise<void>;
-    startCaptions(startCaptionsOptions?: StartCaptionsOptions): Promise<void>;
+    startCaptions(options?: StartCaptionsOptions): Promise<void>;
     startScreenShare(): Promise<void>;
     stopCamera(): Promise<void>;
     stopCaptions(): Promise<void>;
@@ -841,7 +841,7 @@ export interface CallWithChatAdapterManagement {
     // @beta
     startCall(participants: CommunicationIdentifier[], options?: StartCallOptions): Call | undefined;
     startCamera(options?: VideoStreamOptions): Promise<void>;
-    startCaptions(startCaptionsOptions?: StartCaptionsOptions): Promise<void>;
+    startCaptions(options?: StartCaptionsOptions): Promise<void>;
     startScreenShare(): Promise<void>;
     stopCamera(): Promise<void>;
     stopCaptions(): Promise<void>;
@@ -1642,7 +1642,7 @@ export interface CommonCallingHandlers {
     // (undocumented)
     onStartCall: (participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[], options?: StartCallOptions) => void;
     // (undocumented)
-    onStartCaptions: (captionsOptions?: CaptionsOptions) => Promise<void>;
+    onStartCaptions: (options?: CaptionsOptions) => Promise<void>;
     // (undocumented)
     onStartLocalVideo: () => Promise<void>;
     // (undocumented)

@@ -440,8 +440,8 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   }
 
   /* @conditional-compile-remove(close-captions) */
-  public async startCaptions(startCaptionsOptions?: StartCaptionsOptions): Promise<void> {
-    await this.callAdapter.startCaptions(startCaptionsOptions);
+  public async startCaptions(options?: StartCaptionsOptions): Promise<void> {
+    await this.callAdapter.startCaptions(options);
   }
 
   /* @conditional-compile-remove(close-captions) */
