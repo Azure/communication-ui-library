@@ -697,8 +697,8 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   }
 
   /* @conditional-compile-remove(close-captions) */
-  public async startCaptions(startCaptionsOptions?: StartCaptionsOptions): Promise<void> {
-    this.handlers.onStartCaptions(startCaptionsOptions);
+  public async startCaptions(options?: StartCaptionsOptions): Promise<void> {
+    this.handlers.onStartCaptions(options);
   }
 
   /* @conditional-compile-remove(close-captions) */

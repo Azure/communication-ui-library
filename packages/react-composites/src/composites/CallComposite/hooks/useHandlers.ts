@@ -108,8 +108,8 @@ const createCompositeHandlers = memoizeOne(
       return await adapter.replaceVideoBackground(backgroundReplacementConfig);
     },
     /* @conditional-compile-remove(close-captions) */
-    onStartCaptions: async (captionsOptions) => {
-      await adapter.startCaptions(captionsOptions);
+    onStartCaptions: async (options) => {
+      await adapter.startCaptions(options);
     },
     /* @conditional-compile-remove(close-captions) */
     onStopCaptions: async () => {

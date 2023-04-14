@@ -353,9 +353,9 @@ export interface CallWithChatAdapterManagement {
   /* @conditional-compile-remove(close-captions) */
   /**
    * Function to Start captions
-   * @param startCaptionsOptions - options for start captions
+   * @param options - options for start captions
    */
-  startCaptions(startCaptionsOptions?: StartCaptionsOptions): Promise<void>;
+  startCaptions(options?: StartCaptionsOptions): Promise<void>;
   /* @conditional-compile-remove(close-captions) */
   /**
    * Function to set caption language

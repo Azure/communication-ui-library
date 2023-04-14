@@ -168,8 +168,8 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
   };
 
   /* @conditional-compile-remove(close-captions) */
-  public async startCaptions(startCaptionsOptions?: StartCaptionsOptions): Promise<void> {
-    this.callWithChatAdapter.startCaptions(startCaptionsOptions);
+  public async startCaptions(options?: StartCaptionsOptions): Promise<void> {
+    this.callWithChatAdapter.startCaptions(options);
   }
 
   /* @conditional-compile-remove(close-captions) */
