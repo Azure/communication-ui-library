@@ -3,12 +3,10 @@
 
 import React from 'react';
 import { CameraButton } from './CameraButton';
-import Enzyme from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
-import { createTestLocale, mountWithLocalization } from './utils/testUtils';
+import { createTestLocale } from './utils/testUtils';
 import { registerIcons } from '@fluentui/react';
-
-Enzyme.configure({ adapter: new Adapter() });
+import { render, screen } from '@testing-library/react';
+import { LocalizationProvider } from '../localization';
 
 describe('CameraButton strings should be localizable and overridable', () => {
   beforeEach(() => {
@@ -24,10 +22,19 @@ describe('CameraButton strings should be localizable and overridable', () => {
     const testLocale = createTestLocale({
       cameraButton: { offLabel: Math.random().toString(), onLabel: Math.random().toString() }
     });
-    const component = mountWithLocalization(<CameraButton showLabel={true} />, testLocale);
-    expect(component.find('button').text()).toBe(testLocale.strings.cameraButton.offLabel);
-    component.setProps({ checked: true });
-    expect(component.find('button').text()).toBe(testLocale.strings.cameraButton.onLabel);
+    const { rerender } = render(
+      <LocalizationProvider locale={testLocale}>
+        <CameraButton showLabel={true} />
+      </LocalizationProvider>
+    );
+    expect(screen.getByRole('button').textContent).toBe(testLocale.strings.cameraButton.offLabel);
+
+    rerender(
+      <LocalizationProvider locale={testLocale}>
+        <CameraButton showLabel={true} checked={true} />
+      </LocalizationProvider>
+    );
+    expect(screen.getByRole('button').textContent).toBe(testLocale.strings.cameraButton.onLabel);
   });
 
   test('Should override button label with `strings` prop', async () => {
@@ -35,12 +42,18 @@ describe('CameraButton strings should be localizable and overridable', () => {
       cameraButton: { offLabel: Math.random().toString(), onLabel: Math.random().toString() }
     });
     const cameraButtonStrings = { offLabel: Math.random().toString(), onLabel: Math.random().toString() };
-    const component = mountWithLocalization(
-      <CameraButton showLabel={true} strings={cameraButtonStrings} />,
-      testLocale
+    const { rerender } = render(
+      <LocalizationProvider locale={testLocale}>
+        <CameraButton showLabel={true} strings={cameraButtonStrings} />
+      </LocalizationProvider>
     );
-    expect(component.find('button').text()).toBe(cameraButtonStrings.offLabel);
-    component.setProps({ checked: true });
-    expect(component.find('button').text()).toBe(cameraButtonStrings.onLabel);
+    expect(screen.getByRole('button').textContent).toBe(cameraButtonStrings.offLabel);
+
+    rerender(
+      <LocalizationProvider locale={testLocale}>
+        <CameraButton showLabel={true} checked={true} strings={cameraButtonStrings} />
+      </LocalizationProvider>
+    );
+    expect(screen.getByRole('button').textContent).toBe(cameraButtonStrings.onLabel);
   });
 });
