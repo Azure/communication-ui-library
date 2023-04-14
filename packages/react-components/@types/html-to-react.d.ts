@@ -1,8 +1,9 @@
+/// Provide type definitions for html-to-react until they are added to the package (PR in progress)
 declare module 'html-to-react' {
   import { ParserOptions } from 'htmlparser2';
   import { ReactElement } from 'react';
 
-  function Html2ReactParser(options: ParserOptions): {
+  function Html2ReactParser(options?: ParserOptions): {
     parse: (html: string) => JSX.Element;
     parseWithInstructions: (
       html: string,
