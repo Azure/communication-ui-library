@@ -139,8 +139,8 @@ export interface AtMentionDisplayOptions {
 
 // @beta
 export interface AtMentionLookupOptions {
-    onQueryUpdated?: (query: string) => Promise<AtMentionSuggestion[]>;
-    onRenderSuggestionItem?: (suggestion: AtMentionSuggestion, onSuggestionSelected?: (suggestion: AtMentionSuggestion) => void) => JSX.Element;
+    onQueryUpdated: (query: string) => Promise<AtMentionSuggestion[]>;
+    onRenderSuggestionItem?: (suggestion: AtMentionSuggestion, onSuggestionSelected: (suggestion: AtMentionSuggestion) => void) => JSX.Element;
     trigger?: string;
 }
 

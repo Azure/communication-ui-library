@@ -76,7 +76,7 @@ export const _AtMentionFlyout: (props: _AtMentionFlyoutProps) => JSX.Element;
 export interface _AtMentionFlyoutProps {
     onDismiss?: () => void;
     onRenderSuggestionItem?: (suggestion: AtMentionSuggestion, onSuggestionSelected?: (suggestion: AtMentionSuggestion) => void) => JSX.Element;
-    onSuggestionSelected?: (suggestion: AtMentionSuggestion) => void;
+    onSuggestionSelected: (suggestion: AtMentionSuggestion) => void;
     suggestions: AtMentionSuggestion[];
     target?: React_2.RefObject<Element>;
     title?: string;
@@ -84,8 +84,8 @@ export interface _AtMentionFlyoutProps {
 
 // @beta
 export interface AtMentionLookupOptions {
-    onQueryUpdated?: (query: string) => Promise<AtMentionSuggestion[]>;
-    onRenderSuggestionItem?: (suggestion: AtMentionSuggestion, onSuggestionSelected?: (suggestion: AtMentionSuggestion) => void) => JSX.Element;
+    onQueryUpdated: (query: string) => Promise<AtMentionSuggestion[]>;
+    onRenderSuggestionItem?: (suggestion: AtMentionSuggestion, onSuggestionSelected: (suggestion: AtMentionSuggestion) => void) => JSX.Element;
     trigger?: string;
 }
 
