@@ -48,10 +48,7 @@ import { CommunicationUserIdentifier, PhoneNumberIdentifier } from '@azure/commu
 /* @conditional-compile-remove(PSTN-calls) */
 import { CommunicationIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(close-captions) */
-import {
-  CaptionsReceivedListener,
-  CaptionsPropertyChangedEventListener
-} from '../../CallComposite/adapter/CallAdapter';
+import { CaptionsReceivedListener, IsCaptionsActiveChangedListener } from '../../CallComposite/adapter/CallAdapter';
 /* @conditional-compile-remove(video-background-effects) */
 import { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/communication-calling-effects';
 /* @conditional-compile-remove(video-background-effects) */
@@ -436,7 +433,7 @@ export interface CallWithChatAdapterSubscriptions {
   /* @conditional-compile-remove(close-captions) */
   on(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
   /* @conditional-compile-remove(close-captions) */
-  on(event: 'captionsPropertyChanged', listener: CaptionsPropertyChangedEventListener): void;
+  on(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
 
   off(event: 'callEnded', listener: CallEndedListener): void;
   off(event: 'isMutedChanged', listener: IsMutedChangedListener): void;
@@ -452,7 +449,7 @@ export interface CallWithChatAdapterSubscriptions {
   /* @conditional-compile-remove(close-captions) */
   off(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
   /* @conditional-compile-remove(close-captions) */
-  off(event: 'captionsPropertyChanged', listener: CaptionsPropertyChangedEventListener): void;
+  off(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
 
   // Chat subscriptions
   on(event: 'messageReceived', listener: MessageReceivedListener): void;
@@ -499,7 +496,7 @@ export type CallWithChatEvent =
   | 'callParticipantsLeft'
   | 'selectedMicrophoneChanged'
   | 'selectedSpeakerChanged'
-  | /* @conditional-compile-remove(close-captions) */ 'captionsPropertyChanged'
+  | /* @conditional-compile-remove(close-captions) */ 'isCaptionsActiveChanged'
   | /* @conditional-compile-remove(close-captions) */ 'captionsReceived'
   | 'messageReceived'
   | 'messageSent'

@@ -261,7 +261,7 @@ export interface CallAdapterSubscribers {
     off(event: 'selectedSpeakerChanged', listener: PropertyChangedEvent): void;
     off(event: 'error', listener: (e: AdapterError) => void): void;
     off(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
-    off(event: 'captionsPropertyChanged', listener: CaptionsPropertyChangedEventListener): void;
+    off(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
     on(event: 'participantsJoined', listener: ParticipantsJoinedListener): void;
     on(event: 'participantsLeft', listener: ParticipantsLeftListener): void;
     on(event: 'isMutedChanged', listener: IsMutedChangedListener): void;
@@ -275,7 +275,7 @@ export interface CallAdapterSubscribers {
     on(event: 'selectedSpeakerChanged', listener: PropertyChangedEvent): void;
     on(event: 'error', listener: (e: AdapterError) => void): void;
     on(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
-    on(event: 'captionsPropertyChanged', listener: CaptionsPropertyChangedEventListener): void;
+    on(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
 }
 
 // @public
@@ -619,7 +619,7 @@ export interface CallWithChatAdapterSubscriptions {
     // (undocumented)
     off(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
     // (undocumented)
-    off(event: 'captionsPropertyChanged', listener: CaptionsPropertyChangedEventListener): void;
+    off(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
     // (undocumented)
     off(event: 'messageReceived', listener: MessageReceivedListener): void;
     // (undocumented)
@@ -657,7 +657,7 @@ export interface CallWithChatAdapterSubscriptions {
     // (undocumented)
     on(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
     // (undocumented)
-    on(event: 'captionsPropertyChanged', listener: CaptionsPropertyChangedEventListener): void;
+    on(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
     // (undocumented)
     on(event: 'messageReceived', listener: MessageReceivedListener): void;
     // (undocumented)
@@ -839,10 +839,7 @@ export interface CallWithChatControlOptions extends CommonCallControlOptions {
 }
 
 // @public
-export type CallWithChatEvent = 'callError' | 'chatError' | 'callEnded' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'callParticipantsJoined' | 'callParticipantsLeft' | 'selectedMicrophoneChanged' | 'selectedSpeakerChanged' | /* @conditional-compile-remove(close-captions) */ 'captionsPropertyChanged' | /* @conditional-compile-remove(close-captions) */ 'captionsReceived' | 'messageReceived' | 'messageSent' | 'messageRead' | 'chatParticipantsAdded' | 'chatParticipantsRemoved';
-
-// @beta
-export type CaptionsPropertyChangedEventListener = () => void;
+export type CallWithChatEvent = 'callError' | 'chatError' | 'callEnded' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'callParticipantsJoined' | 'callParticipantsLeft' | 'selectedMicrophoneChanged' | 'selectedSpeakerChanged' | /* @conditional-compile-remove(close-captions) */ 'isCaptionsActiveChanged' | /* @conditional-compile-remove(close-captions) */ 'captionsReceived' | 'messageReceived' | 'messageSent' | 'messageRead' | 'chatParticipantsAdded' | 'chatParticipantsRemoved';
 
 // @beta
 export type CaptionsReceivedListener = (event: {
@@ -1343,6 +1340,11 @@ export interface FileUploadState {
 
 // @beta
 export type FileUploadsUiState = Record<string, FileUploadState>;
+
+// @beta
+export type IsCaptionsActiveChangedListener = (event: {
+    isActive: boolean;
+}) => void;
 
 // @public
 export type IsLocalScreenSharingActiveChangedListener = (event: {

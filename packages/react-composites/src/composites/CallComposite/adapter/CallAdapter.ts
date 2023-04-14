@@ -266,11 +266,11 @@ export type CaptionsReceivedListener = (event: { captionsInfo: CaptionsInfo }) =
 
 /* @conditional-compile-remove(close-captions) */
 /**
- * Callback for {@link CallAdapterSubscribers} 'captionsPropertyChanged' event.
+ * Callback for {@link CallAdapterSubscribers} 'isCaptionsActiveChanged' event.
  *
  * @beta
  */
-export type CaptionsPropertyChangedEventListener = () => void;
+export type IsCaptionsActiveChangedListener = (event: { isActive: boolean }) => void;
 
 /* @conditional-compile-remove(video-background-effects) */
 /**
@@ -673,9 +673,9 @@ export interface CallAdapterSubscribers {
   on(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
   /* @conditional-compile-remove(close-captions) */
   /**
-   * Subscribe function for 'captionsPropertyChanged' event.
+   * Subscribe function for 'isCaptionsActiveChanged' event.
    */
-  on(event: 'captionsPropertyChanged', listener: CaptionsPropertyChangedEventListener): void;
+  on(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
 
   /**
    * Unsubscribe function for 'participantsJoined' event.
@@ -732,9 +732,9 @@ export interface CallAdapterSubscribers {
   off(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
   /* @conditional-compile-remove(close-captions) */
   /**
-   * Unsubscribe function for 'captionsPropertyChanged' event.
+   * Unsubscribe function for 'isCaptionsActiveChanged' event.
    */
-  off(event: 'captionsPropertyChanged', listener: CaptionsPropertyChangedEventListener): void;
+  off(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
 }
 
 // This type remains for non-breaking change reason

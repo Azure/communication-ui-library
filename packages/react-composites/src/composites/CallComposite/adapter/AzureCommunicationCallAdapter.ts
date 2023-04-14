@@ -61,7 +61,7 @@ import {
   CallAdapter
 } from './CallAdapter';
 /* @conditional-compile-remove(close-captions) */
-import { CaptionsReceivedListener, CaptionsPropertyChangedEventListener } from './CallAdapter';
+import { CaptionsReceivedListener, IsCaptionsActiveChangedListener } from './CallAdapter';
 /* @conditional-compile-remove(video-background-effects) */
 import { VideoBackgroundImage, SelectedVideoBackgroundEffect } from './CallAdapter';
 /* @conditional-compile-remove(teams-identity-support) */
@@ -743,7 +743,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   /* @conditional-compile-remove(close-captions) */
   on(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
   /* @conditional-compile-remove(close-captions) */
-  on(event: 'captionsPropertyChanged', listener: CaptionsPropertyChangedEventListener): void;
+  on(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public on(event: string, listener: (e: any) => void): void {
@@ -754,7 +754,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   private subscribeToCaptionEvents(): void {
     if (this.call?.state === 'Connected') {
       this.call?.feature(Features.TeamsCaptions).on('captionsReceived', this.captionsReceived.bind(this));
-      this.call?.feature(Features.TeamsCaptions).on('isCaptionsActiveChanged', this.captionsPropertyChanged.bind(this));
+      this.call?.feature(Features.TeamsCaptions).on('isCaptionsActiveChanged', this.isCaptionsActiveChanged.bind(this));
       this.call?.off('stateChanged', this.subscribeToCaptionEvents.bind(this));
     }
   }
@@ -780,7 +780,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     /* @conditional-compile-remove(close-captions) */
     this._call?.feature(Features.TeamsCaptions).off('captionsReceived', this.captionsReceived.bind(this));
     /* @conditional-compile-remove(close-captions) */
-    this._call?.feature(Features.TeamsCaptions).off('isCaptionsActiveChanged', this.captionsPropertyChanged.bind(this));
+    this._call?.feature(Features.TeamsCaptions).off('isCaptionsActiveChanged', this.isCaptionsActiveChanged.bind(this));
     /* @conditional-compile-remove(close-captions) */
     this.call?.off('stateChanged', this.subscribeToCaptionEvents.bind(this));
   }
@@ -830,8 +830,10 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   }
 
   /* @conditional-compile-remove(close-captions) */
-  private captionsPropertyChanged(): void {
-    this.emitter.emit('captionsPropertyChanged', {});
+  private isCaptionsActiveChanged(): void {
+    this.emitter.emit('isCaptionsActiveChanged', {
+      isActive: this.call?.feature(Features.TeamsCaptions).isCaptionsFeatureActive
+    });
   }
 
   private callIdChanged(): void {
@@ -862,7 +864,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   /* @conditional-compile-remove(close-captions) */
   off(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
   /* @conditional-compile-remove(close-captions) */
-  off(event: 'captionsPropertyChanged', listener: CaptionsPropertyChangedEventListener): void;
+  off(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public off(event: string, listener: (e: any) => void): void {
