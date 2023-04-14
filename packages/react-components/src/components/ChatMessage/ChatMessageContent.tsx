@@ -16,12 +16,18 @@ import { AtMentionDisplayOptions, AtMentionSuggestion } from '../AtMentionFlyout
 /* @conditional-compile-remove(data-loss-prevention) */
 import { FontIcon, Stack } from '@fluentui/react';
 import { MessageThreadStrings } from '../MessageThread';
+/* @conditional-compile-remove(teams-inline-images) */
+import { FileMetadata } from '../FileDownloadCards';
 
 type ChatMessageContentProps = {
   message: ChatMessage;
   strings: MessageThreadStrings;
   /* @conditional-compile-remove(at-mention) */
   atMentionDisplayOptions?: AtMentionDisplayOptions;
+  /* @conditional-compile-remove(teams-inline-images) */
+  attachmentsMap?: Record<string, string>;
+  /* @conditional-compile-remove(teams-inline-images) */
+  onFetchAttachment?: (attachment: FileMetadata) => Promise<void>;
 };
 
 /* @conditional-compile-remove(data-loss-prevention) */
@@ -64,7 +70,7 @@ const MessageContentWithLiveAria = (props: MessageContentWithLiveAriaProps): JSX
 const MessageContentAsRichTextHTML = (props: ChatMessageContentProps): JSX.Element => {
   const htmlToReactParser = Parser();
   const liveAuthor = _formatString(props.strings.liveAuthorIntro, { author: `${props.message.senderDisplayName}` });
-  const atMentionSuggestionRenderer = props.atMentionDisplayOptions?.atMentionSuggestionRenderer;
+  const atMentionSuggestionRenderer = props.atMentionDisplayOptions?.onRenderAtMentionSuggestion;
 
   if (!!atMentionSuggestionRenderer) {
     // Use custom HTML processing if atMentionSuggestionRenderer is provided

@@ -10,6 +10,7 @@ import {
   suggestionItemStackStyle,
   suggestionItemWrapperStyle
 } from './styles/AtMentionFlyout.style';
+/* @conditional-compile-remove(at-mention) */
 import { useIdentifiers } from '../identifiers';
 import { useLocale } from '../localization';
 
@@ -43,7 +44,7 @@ export interface _AtMentionFlyoutProps {
   /**
    * Optional callback to render an item of the atMention suggestions list.
    */
-  suggestionItemRenderer?: (
+  onRenderSuggestionItem?: (
     suggestion: AtMentionSuggestion,
     onSuggestionSelected?: (suggestion: AtMentionSuggestion) => void
   ) => JSX.Element;
@@ -68,7 +69,7 @@ export interface AtMentionLookupOptions {
   /**
    * Optional callback to render an item of the atMention suggestions list.
    */
-  suggestionItemRenderer?: (
+  onRenderSuggestionItem?: (
     suggestion: AtMentionSuggestion,
     onSuggestionSelected: (suggestion: AtMentionSuggestion) => void
   ) => JSX.Element;
@@ -81,10 +82,17 @@ export interface AtMentionLookupOptions {
  */
 export interface AtMentionDisplayOptions {
   /**
-   * Optional callback to override render of an at mention suggestion in a message thread.
+   * Optional callback to override render of an mention in a message thread.
    */
-  atMentionSuggestionRenderer?: (suggestion: AtMentionSuggestion) => JSX.Element;
+  onRenderAtMentionSuggestion?: (suggestion: AtMentionSuggestion) => JSX.Element;
 }
+
+/**
+ * Options to lookup suggestions and display mentions in the at mention scenario.
+ *
+ * @beta
+ */
+export type AtMentionOptions = AtMentionLookupOptions & AtMentionDisplayOptions;
 
 /**
  * At mention suggestion's state, as reflected in the UI.
@@ -113,8 +121,9 @@ export const _AtMentionFlyout = (props: _AtMentionFlyoutProps): JSX.Element => {
     bottom: number;
     left: number;
   }
-  const { suggestions, title = 'Suggestions', target, suggestionItemRenderer, onSuggestionSelected } = props;
+  const { suggestions, title = 'Suggestions', target, onRenderSuggestionItem, onSuggestionSelected } = props;
   const theme = useTheme();
+  /* @conditional-compile-remove(at-mention) */
   const ids = useIdentifiers();
   const localeStrings = useLocale().strings.participantItem;
 
@@ -143,11 +152,12 @@ export const _AtMentionFlyout = (props: _AtMentionFlyoutProps): JSX.Element => {
     return <Persona {...avatarOptions} />;
   };
 
-  const defaultSuggestionItemRenderer = (suggestion: AtMentionSuggestion): JSX.Element => {
+  const defaultOnRenderSuggestionItem = (suggestion: AtMentionSuggestion): JSX.Element => {
     const isSuggestionHovered = hoveredSuggestion?.userId === suggestion.userId;
     return (
       <div
         data-is-focusable={true}
+        /* @conditional-compile-remove(at-mention) */
         data-ui-id={ids.atMentionSuggestionItem}
         key={suggestion.userId}
         onClick={() => onSuggestionSelected(suggestion)}
@@ -167,12 +177,16 @@ export const _AtMentionFlyout = (props: _AtMentionFlyoutProps): JSX.Element => {
       <Stack.Item styles={headerStyleThemed(theme)} aria-label={title}>
         {title} {/* TODO: Localization  */}
       </Stack.Item>
-      <FocusZone className={suggestionListContainerStyle} shouldFocusOnMount={false}>
-        <Stack data-ui-id={ids.atMentionSuggestionList} className={suggestionListStyle}>
+      <FocusZone className={suggestionListContainerStyle} shouldFocusOnMount={true}>
+        <Stack
+          /* @conditional-compile-remove(at-mention) */
+          data-ui-id={ids.atMentionSuggestionList}
+          className={suggestionListStyle}
+        >
           {suggestions.map((suggestion) =>
-            suggestionItemRenderer
-              ? suggestionItemRenderer(suggestion, onSuggestionSelected)
-              : defaultSuggestionItemRenderer(suggestion)
+            onRenderSuggestionItem
+              ? onRenderSuggestionItem(suggestion, onSuggestionSelected)
+              : defaultOnRenderSuggestionItem(suggestion)
           )}
         </Stack>
       </FocusZone>

@@ -21,6 +21,7 @@ export type {
   _AtMentionFlyoutProps,
   AtMentionLookupOptions,
   AtMentionDisplayOptions,
+  AtMentionOptions,
   AtMentionSuggestion
 } from './AtMentionFlyout';
 /* @conditional-compile-remove(at-mention) */
@@ -40,7 +41,8 @@ export type {
   MessageThreadStyles,
   JumpToNewMessageButtonProps,
   MessageRenderer,
-  UpdateMessageCallback
+  UpdateMessageCallback,
+  CancelEditCallback
 } from './MessageThread';
 
 export { StreamMedia } from './StreamMedia';

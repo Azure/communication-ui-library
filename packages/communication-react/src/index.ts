@@ -149,7 +149,7 @@ export type {
 
 /* @conditional-compile-remove(at-mention) */
 export type {
-  _AtMentionFlyoutProps,
+  AtMentionOptions,
   AtMentionDisplayOptions,
   AtMentionLookupOptions,
   AtMentionSuggestion
@@ -240,6 +240,7 @@ export type {
   TypingIndicatorStrings,
   TypingIndicatorStylesProps,
   UpdateMessageCallback,
+  CancelEditCallback,
   VideoGalleryLayout,
   VideoGalleryLocalParticipant,
   VideoGalleryParticipant,
@@ -265,8 +266,11 @@ export type {
   SendBoxErrorBarError,
   FileDownloadHandler,
   FileDownloadError,
-  FileMetadata
+  FileMetadata,
+  AttachmentDownloadResult
 } from '../../react-components/src';
+/* @conditional-compile-remove(teams-inline-images) */
+export type { FileMetadataAttachmentType } from '../../react-components/src';
 /* @conditional-compile-remove(PSTN-calls) */
 export type { HoldButtonProps, HoldButtonStrings, VideoTileStrings } from '../../react-components/src';
 /* @conditional-compile-remove(call-readiness) */

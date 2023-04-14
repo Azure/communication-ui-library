@@ -61,6 +61,7 @@ export interface ChatMessage extends MessageCommon {
   senderId?: string;
   senderDisplayName?: string;
   status?: MessageStatus;
+  failureReason?: string;
   attached?: MessageAttachedStatus;
   mine?: boolean;
   clientMessageId?: string;
@@ -70,7 +71,7 @@ export interface ChatMessage extends MessageCommon {
    * {@link @azure/communication-chat#ChatMessage.metadata}
    */
   metadata?: Record<string, string>;
-  /* @conditional-compile-remove(file-sharing) */
+  /* @conditional-compile-remove(file-sharing) */ /* @conditional-compile-remove(teams-inline-images) */
   /**
    * @beta
    * A list of files attached to the message.
@@ -78,6 +79,7 @@ export interface ChatMessage extends MessageCommon {
    */
   attachedFilesMetadata?: FileMetadata[];
 }
+
 /**
  * A system message notifying that a participant was added to the chat thread.
  *

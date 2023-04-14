@@ -41,6 +41,19 @@ export const GetHistoryChatMessages = (): ChatMessage[] => {
       mine: false,
       attached: false,
       contentType: 'text'
+    },
+    {
+      messageType: 'chat',
+      senderId: 'user1',
+      senderDisplayName: 'Kat Larsson',
+      messageId: Math.random().toString(),
+      content: 'OK, perfect!',
+      createdOn: new Date('2019-04-13T00:00:00.000+08:10'),
+      mine: true,
+      attached: false,
+      contentType: 'text',
+      status: 'failed' as MessageStatus,
+      failureReason: 'Edit failed, try again'
     }
   ];
 };

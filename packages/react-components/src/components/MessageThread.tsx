@@ -65,9 +65,11 @@ import { isNarrowWidth, _useContainerWidth } from './utils/responsive';
 import getParticipantsWhoHaveReadMessage from './utils/getParticipantsWhoHaveReadMessage';
 /* @conditional-compile-remove(file-sharing) */
 import { FileDownloadHandler, FileMetadata } from './FileDownloadCards';
+/* @conditional-compile-remove(teams-inline-images) */
+import { AttachmentDownloadResult } from './FileDownloadCards';
 import { useTheme } from '../theming';
 /* @conditional-compile-remove(at-mention) */
-import { AtMentionDisplayOptions, AtMentionLookupOptions } from './AtMentionFlyout';
+import { AtMentionOptions } from './AtMentionFlyout';
 
 const isMessageSame = (first: ChatMessage, second: ChatMessage): boolean => {
   return (
@@ -362,6 +364,7 @@ const memoizeAllMessages = memoizeFnAll(
     readCount?: number,
     onRenderMessage?: (message: MessageProps, defaultOnRender?: MessageRenderer) => JSX.Element,
     onUpdateMessage?: UpdateMessageCallback,
+    onCancelMessageEdit?: CancelEditCallback,
     onDeleteMessage?: (messageId: string) => Promise<void>,
     onSendMessage?: (content: string) => Promise<void>,
     disableEditing?: boolean
@@ -371,6 +374,7 @@ const memoizeAllMessages = memoizeFnAll(
       strings,
       showDate: showMessageDate,
       onUpdateMessage,
+      onCancelMessageEdit,
       onDeleteMessage,
       onSendMessage,
       disableEditing
@@ -514,6 +518,19 @@ export type UpdateMessageCallback = (
     attachedFilesMetadata?: FileMetadata[];
   }
 ) => Promise<void>;
+/**
+ * @public
+ * Callback function run when a message edit is cancelled.
+ */
+export type CancelEditCallback = (
+  messageId: string,
+  /* @conditional-compile-remove(file-sharing) */
+  metadata?: Record<string, string>,
+  /* @conditional-compile-remove(file-sharing) */
+  options?: {
+    attachedFilesMetadata?: FileMetadata[];
+  }
+) => void;
 
 /**
  * Props for {@link MessageThread}.
@@ -621,6 +638,13 @@ export type MessageThreadProps = {
    * @beta
    */
   onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
+  /* @conditional-compile-remove(teams-inline-images) */
+  /**
+   * Optional callback to retrieve the inline image in a message.
+   * @param attachment - FileMetadata object we want to render
+   * @beta
+   */
+  onFetchAttachments?: (attachment: FileMetadata) => Promise<AttachmentDownloadResult>;
   /**
    * Optional callback to edit a message.
    *
@@ -630,6 +654,12 @@ export type MessageThreadProps = {
    */
   onUpdateMessage?: UpdateMessageCallback;
 
+  /**
+   * Optional callback for when a message edit is cancelled.
+   *
+   * @param messageId - message id from chatClient
+   */
+  onCancelMessageEdit?: CancelEditCallback;
   /**
    * Optional callback to delete a message.
    *
@@ -678,16 +708,10 @@ export type MessageThreadProps = {
   onDisplayDateTimeString?: (messageDate: Date) => string;
   /* @conditional-compile-remove(at-mention) */
   /**
-   * Optional props needed to lookup suggestions in the at mention scenario.
+   * Optional props needed to lookup suggestions and display mentions in the at mention scenario.
    * @beta
    */
-  atMentionLookupOptions?: AtMentionLookupOptions;
-  /* @conditional-compile-remove(at-mention) */
-  /**
-   * Optional props needed to display suggestions in the at mention scenario.
-   * @beta
-   */
-  atMentionDisplayOptions?: AtMentionDisplayOptions;
+  atMentionOptions?: AtMentionOptions;
 };
 
 /**
@@ -732,6 +756,12 @@ export type MessageProps = {
    */
   onUpdateMessage?: UpdateMessageCallback;
 
+  /**
+   * Optional callback for when a message edit is cancelled.
+   *
+   * @param messageId - message id from chatClient
+   */
+  onCancelMessageEdit?: CancelEditCallback;
   /**
    * Optional callback to delete a message.
    *
@@ -778,10 +808,13 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     onRenderJumpToNewMessageButton,
     onRenderMessage,
     onUpdateMessage,
+    onCancelMessageEdit,
     onDeleteMessage,
     onSendMessage,
     /* @conditional-compile-remove(date-time-customization) */
-    onDisplayDateTimeString
+    onDisplayDateTimeString,
+    /* @conditional-compile-remove(teams-inline-images) */
+    onFetchAttachments
   } = props;
   const onRenderFileDownloads = onRenderFileDownloadsTrampoline(props);
 
@@ -803,6 +836,20 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
 
   // readCount and participantCount will only need to be updated on-fly when user hover on an indicator
   const [readCountForHoveredIndicator, setReadCountForHoveredIndicator] = useState<number | undefined>(undefined);
+
+  /* @conditional-compile-remove(teams-inline-images) */
+  const [inlineAttachments, setInlineAttachments] = useState<Record<string, string>>({});
+  /* @conditional-compile-remove(teams-inline-images) */
+  const onFetchInlineAttachment = useCallback(
+    async (attachment: FileMetadata): Promise<void> => {
+      if (!onFetchAttachments || attachment.id in inlineAttachments) {
+        return;
+      }
+      const attachmentDownloadResult = await onFetchAttachments(attachment);
+      setInlineAttachments((prev) => ({ ...prev, [attachment.id]: attachmentDownloadResult.blobUrl }));
+    },
+    [inlineAttachments, onFetchAttachments]
+  );
 
   const isAllChatMessagesLoadedRef = useRef(false);
   // isAllChatMessagesLoadedRef needs to be updated every time when a new adapter is set in order to display correct data
@@ -1007,7 +1054,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   }, [newMessages]);
 
   /**
-   * This needs to run after messages are rendererd so we can manipulate the scroll bar.
+   * This needs to run after messages are rendered so we can manipulate the scroll bar.
    */
   useEffect(() => {
     // If user just sent the latest message then we assume we can move user to bottom of scroll.
@@ -1065,6 +1112,10 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
             onActionButtonClick={onActionButtonClickMemo}
             /* @conditional-compile-remove(date-time-customization) */
             onDisplayDateTimeString={onDisplayDateTimeString}
+            /* @conditional-compile-remove(teams-inline-images) */
+            onFetchAttachments={onFetchInlineAttachment}
+            /* @conditional-compile-remove(teams-inline-images) */
+            attachmentsMap={inlineAttachments}
           />
         );
       }
@@ -1081,7 +1132,11 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
       showMessageStatus,
       onActionButtonClickMemo,
       /* @conditional-compile-remove(date-time-customization) */
-      onDisplayDateTimeString
+      onDisplayDateTimeString,
+      /* @conditional-compile-remove(teams-inline-images) */
+      onFetchInlineAttachment,
+      /* @conditional-compile-remove(teams-inline-images) */
+      inlineAttachments
     ]
   );
 
@@ -1175,6 +1230,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
             readCountForHoveredIndicator,
             onRenderMessage,
             onUpdateMessage,
+            onCancelMessageEdit,
             onDeleteMessage,
             onSendMessage,
             props.disableEditing
@@ -1197,6 +1253,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
       readCountForHoveredIndicator,
       onRenderMessage,
       onUpdateMessage,
+      onCancelMessageEdit,
       onDeleteMessage,
       onSendMessage,
       lastSeenChatMessage,
