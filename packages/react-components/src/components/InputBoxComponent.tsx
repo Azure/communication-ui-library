@@ -107,9 +107,13 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
   // Parse the text and get the plain text version to display in the input box
   useEffect(() => {
     const trigger = atMentionLookupOptions?.trigger || defaultMentionTrigger;
+    console.log('textValue', textValue);
+    const [tags, plainText] = parseHTMLText(textValue, trigger);
+    console.log('tags', tags);
+    console.log('plainText', plainText);
     // Get a plain text version to display in the input box, resetting state
-    const tags = parseToTags(textValue);
-    const plainText = plainTextFromParsedTags(textValue, tags, trigger);
+    // const tags = parseToTags(textValue);
+    // const plainText = plainTextFromParsedTags(textValue, tags, trigger);
     // Provide the plain text string to the inputTextValue
     setInputTextValue(plainText);
   }, [textValue, atMentionLookupOptions?.trigger]);
@@ -356,8 +360,91 @@ type ParsedTag = {
   closeTagLength?: number; // Might not have a close tag
   content?: string; // Might not have content
   subTags?: ParsedTag[]; // Tags can contain other tags
-  plainTextStartIndex: number;
-  plainTextEndIndex: number;
+};
+
+/**
+ * Object representing a parsed tag
+ *
+ * @private
+ */
+type UpdatedParsedTag = {
+  tagType: string;
+  htmlOpenTagStartIndex: number;
+  openTagBody: string;
+  htmlCloseTagStartIndex?: number; // Might not have a close tag
+  closeTagLength?: number; // Might not have a close tag
+  content?: string; // Might not have content
+  subTags?: ParsedTag[]; // Tags can contain other tags
+  plainTextStartIndex: number; //position where the open tag should begin
+  plainTextEndIndex?: number; // position where the open tag should begin. Might not have a close tag
+};
+
+const parseHTMLText = (text: string, trigger: string): [UpdatedParsedTag[], string] => {
+  const tags: UpdatedParsedTag[] = [];
+  let htmlParseIndex = 0;
+  let plaintText = '';
+
+  while (htmlParseIndex < text.length) {
+    const openTagIndex = text.indexOf('<', htmlParseIndex);
+    if (openTagIndex === -1) {
+      //no open tags found, `text` is a plain text
+      plaintText += text.slice(htmlParseIndex);
+      break;
+    }
+    // Add all the text from the last tag close to this one open
+    plaintText += text.slice(htmlParseIndex, openTagIndex);
+    const plainTextStartIndex = plaintText.length; // - 1 is not used because text.slice doesn't include openTagIndex
+
+    const openTagCloseIndex = text.indexOf('>', openTagIndex);
+    const openTag = text.slice(openTagIndex + 1, openTagCloseIndex);
+    const tagType = openTag.split(' ')[0];
+    if (tagType === 'msft-at-mention') {
+      plaintText += trigger;
+    }
+
+    if (openTag[openTag.length - 1] === '/') {
+      // Self closing tag, no corresponding close tag
+      const selfClosingBody = openTag.slice(0, openTag.length - 1);
+      const tagLength = openTagCloseIndex - openTagIndex;
+      tags.push({
+        tagType: tagType.slice(0, tagType.length - 1).toLowerCase(),
+        openTagBody: selfClosingBody,
+        htmlOpenTagStartIndex: openTagIndex,
+        plainTextStartIndex: plainTextStartIndex
+      });
+      htmlParseIndex = openTagIndex + tagLength - 1;
+    } else {
+      // Go find the close tag
+      const tagToFind = '</' + tagType + '>';
+      const closeTagIndex = text.indexOf(tagToFind, openTagCloseIndex);
+      if (closeTagIndex === -1) {
+        console.error('Could not find close tag for ' + openTag);
+        break;
+      } else {
+        // try to find sub tags and plain text value from them
+        const closeTagLength = tagToFind.length;
+        const content = text.slice(openTagIndex + openTag.length + 2, closeTagIndex);
+
+        const [subTags, contentPlainText] = parseHTMLText(content, trigger);
+        plaintText += contentPlainText;
+
+        tags.push({
+          tagType: tagType.toLowerCase(),
+          openTagBody: openTag,
+          htmlOpenTagStartIndex: openTagIndex,
+          htmlCloseTagStartIndex: closeTagIndex,
+          closeTagLength,
+          content,
+          subTags,
+          plainTextStartIndex,
+          plainTextEndIndex: plaintText.length // - 1 is not used because we should use the next index after the content value
+        });
+        htmlParseIndex = closeTagIndex + closeTagLength;
+      }
+    }
+  }
+
+  return [tags, plaintText];
 };
 
 /**
