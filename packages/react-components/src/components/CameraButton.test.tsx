@@ -5,8 +5,8 @@ import React from 'react';
 import { CameraButton } from './CameraButton';
 import { createTestLocale } from './utils/testUtils';
 import { registerIcons } from '@fluentui/react';
-import { render, screen } from '@testing-library/react';
 import { LocalizationProvider } from '../localization';
+import { render, screen } from '@testing-library/react';
 
 describe('CameraButton strings should be localizable and overridable', () => {
   beforeEach(() => {

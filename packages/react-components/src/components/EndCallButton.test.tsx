@@ -3,26 +3,29 @@
 
 import React from 'react';
 import { EndCallButton } from './EndCallButton';
-import Enzyme from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
-import { createTestLocale, mountWithLocalization } from './utils/testUtils';
-
-Enzyme.configure({ adapter: new Adapter() });
+import { createTestLocale } from './utils/testUtils';
+import { render, screen } from '@testing-library/react';
+import { LocalizationProvider } from '../localization';
 
 describe('EndCallButton strings should be localizable and overridable', () => {
   test('Should localize button label', async () => {
     const testLocale = createTestLocale({ endCallButton: { label: Math.random().toString() } });
-    const component = mountWithLocalization(<EndCallButton showLabel={true} />, testLocale);
-    expect(component.find('button').text()).toBe(testLocale.strings.endCallButton.label);
+    render(
+      <LocalizationProvider locale={testLocale}>
+        <EndCallButton showLabel={true} />
+      </LocalizationProvider>
+    );
+    expect(screen.getByRole('button').textContent).toBe(testLocale.strings.endCallButton.label);
   });
 
   test('Should override button label with `strings` prop', async () => {
     const testLocale = createTestLocale({ endCallButton: { label: Math.random().toString() } });
     const endCallButtonStrings = { label: Math.random().toString() };
-    const component = mountWithLocalization(
-      <EndCallButton showLabel={true} strings={endCallButtonStrings} />,
-      testLocale
+    render(
+      <LocalizationProvider locale={testLocale}>
+        <EndCallButton showLabel={true} strings={endCallButtonStrings} />
+      </LocalizationProvider>
     );
-    expect(component.find('button').text()).toBe(endCallButtonStrings.label);
+    expect(screen.getByRole('button').textContent).toBe(endCallButtonStrings.label);
   });
 });
