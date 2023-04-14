@@ -45,7 +45,7 @@
     "react-dom": "16.13.1",
     "react-linkify": "^1.0.0-alpha",
     "reselect": "~4.0.0",
-    "@fluentui/react-file-type-icons": "~8.5.8"
+    "@fluentui/react-file-type-icons": "8.8.13"
   },
   "devDependencies": {
     "@babel/core": "~7.16.0",
