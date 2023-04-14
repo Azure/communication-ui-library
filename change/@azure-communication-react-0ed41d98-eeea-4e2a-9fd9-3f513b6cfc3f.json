@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Fixed storybook order and typo",
+  "packageName": "@azure/communication-react",
+  "email": "109105353+jpeng-ms@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

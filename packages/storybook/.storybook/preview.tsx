@@ -73,6 +73,18 @@ export const parameters = {
           'Communication as Teams user'
         ],
         EXAMPLES_FOLDER_PREFIX,
+        [
+          "Device Settings",
+          "Local Preview",
+          "Themes",
+          "Teams Interop",
+          [
+            "Composite Banner",
+            "Lobby",
+            "Inline Image",
+          ],
+          "Incoming Call Alerts"
+        ],  
         STATEFUL_CLIENT_PREFIX,
         [
           'Overview',
