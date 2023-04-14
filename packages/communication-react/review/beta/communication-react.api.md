@@ -132,6 +132,28 @@ export type AreParamEqual<A extends (props: any) => JSX.Element | undefined, B e
 // @public
 export type AreTypeEqual<A, B> = A extends B ? (B extends A ? true : false) : false;
 
+// @beta
+export interface AtMentionDisplayOptions {
+    onRenderAtMentionSuggestion?: (suggestion: AtMentionSuggestion) => JSX.Element;
+}
+
+// @beta
+export interface AtMentionLookupOptions {
+    onQueryUpdated?: (query: string) => Promise<AtMentionSuggestion[]>;
+    onRenderSuggestionItem?: (suggestion: AtMentionSuggestion, onSuggestionSelected?: (suggestion: AtMentionSuggestion) => void) => JSX.Element;
+    trigger?: string;
+}
+
+// @beta
+export type AtMentionOptions = AtMentionLookupOptions & AtMentionDisplayOptions;
+
+// @beta
+export interface AtMentionSuggestion {
+    displayName: string;
+    suggestionType: string;
+    userId: string;
+}
+
 // @beta (undocumented)
 export interface AttachmentDownloadResult {
     // (undocumented)
@@ -2392,6 +2414,8 @@ export interface _IdentifierProviderProps {
 
 // @internal
 export interface _Identifiers {
+    atMentionSuggestionItem: string;
+    atMentionSuggestionList: string;
     horizontalGalleryVideoTile: string;
     messageContent: string;
     messageTimestamp: string;
@@ -2605,6 +2629,7 @@ export type MessageThreadProps = {
     strings?: Partial<MessageThreadStrings>;
     fileDownloadHandler?: FileDownloadHandler;
     onDisplayDateTimeString?: (messageDate: Date) => string;
+    atMentionOptions?: AtMentionOptions;
 };
 
 // @public
@@ -3031,6 +3056,8 @@ export interface SendBoxErrorBarError {
 export interface SendBoxProps {
     // @beta
     activeFileUploads?: ActiveFileUpload[];
+    // @beta
+    atMentionLookupOptions?: AtMentionLookupOptions;
     autoFocus?: 'sendBoxTextField';
     disabled?: boolean;
     // @beta
