@@ -369,7 +369,7 @@ export const _CaptionsSettingsModal: (props: _CaptionsSettingsModalProps) => JSX
 // @internal
 export interface _CaptionsSettingsModalProps {
     // (undocumented)
-    captionsAvailableLanguageStrings: CaptionsAvailableLanguageStrings;
+    captionsAvailableLanguageStrings?: CaptionsAvailableLanguageStrings;
     // (undocumented)
     currentSpokenLanguage: string;
     // (undocumented)
@@ -391,19 +391,19 @@ export interface _CaptionsSettingsModalProps {
 // @internal
 export interface _CaptionsSettingsModalStrings {
     // (undocumented)
-    captionsSettingsCancelButtonLabel: string;
+    captionsSettingsCancelButtonLabel?: string;
     // (undocumented)
-    captionsSettingsCloseModalButtonAriaLabel: string;
+    captionsSettingsCloseModalButtonAriaLabel?: string;
     // (undocumented)
-    captionsSettingsConfirmButtonLabel: string;
+    captionsSettingsConfirmButtonLabel?: string;
     // (undocumented)
-    captionsSettingsDropdownInfoText: string;
+    captionsSettingsDropdownInfoText?: string;
     // (undocumented)
-    captionsSettingsDropdownLabel: string;
+    captionsSettingsDropdownLabel?: string;
     // (undocumented)
-    captionsSettingsModalAriaLabel: string;
+    captionsSettingsModalAriaLabel?: string;
     // (undocumented)
-    captionsSettingsModalTitle: string;
+    captionsSettingsModalTitle?: string;
 }
 
 // @public

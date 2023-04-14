@@ -50,7 +50,7 @@ export type {
 } from './CallAdapter';
 
 /* @conditional-compile-remove(close-captions) */
-export type { CaptionsReceivedListener } from './CallAdapter';
+export type { CaptionsReceivedListener, IsCaptionsActiveChangedListener } from './CallAdapter';
 
 /* @conditional-compile-remove(teams-identity-support) */
 export type { TeamsCallAdapter } from './CallAdapter';

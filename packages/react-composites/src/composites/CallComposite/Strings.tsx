@@ -415,80 +415,80 @@ export interface CallCompositeStrings {
   /**
    * string to be used to open live captions contextual menu
    */
-  liveCaptionsLabel: string;
+  liveCaptionsLabel?: string;
   /* @conditional-compile-remove(close-captions) */
   /**
    * label for opening captions setting modal
    */
-  captionsSettingsLabel: string;
+  captionsSettingsLabel?: string;
   /* @conditional-compile-remove(close-captions) */
   /**
    * string to be used to start captions
    */
-  startCaptionsButtonOnLabel: string;
+  startCaptionsButtonOnLabel?: string;
   /* @conditional-compile-remove(close-captions) */
   /**
    * string to be used to stop captions
    */
-  startCaptionsButtonOffLabel: string;
+  startCaptionsButtonOffLabel?: string;
   /* @conditional-compile-remove(close-captions) */
   /**
    * tooltip string to be used to show captions is on
    */
-  startCaptionsButtonTooltipOnContent: string;
+  startCaptionsButtonTooltipOnContent?: string;
   /* @conditional-compile-remove(close-captions) */
   /**
    *tooltip string to be used to show captions is off
    */
-  startCaptionsButtonTooltipOffContent: string;
+  startCaptionsButtonTooltipOffContent?: string;
   /* @conditional-compile-remove(close-captions) */
   /**
    * captions setting modal title
    */
-  captionsSettingsModalTitle: string;
+  captionsSettingsModalTitle?: string;
   /* @conditional-compile-remove(close-captions) */
   /**
    * label for dropdown inside captions setting modal
    */
-  captionsSettingsDropdownLabel: string;
+  captionsSettingsDropdownLabel?: string;
   /* @conditional-compile-remove(close-captions) */
   /**
    * text under captions setting dropdown indicating what the dropdown is for
    */
-  captionsSettingsDropdownInfoText: string;
+  captionsSettingsDropdownInfoText?: string;
   /* @conditional-compile-remove(close-captions) */
   /**
    * confirm button label in captions setting modal
    */
-  captionsSettingsConfirmButtonLabel: string;
+  captionsSettingsConfirmButtonLabel?: string;
   /* @conditional-compile-remove(close-captions) */
   /**
    * cancel button label in captions setting modal
    */
-  captionsSettingsCancelButtonLabel: string;
+  captionsSettingsCancelButtonLabel?: string;
   /* @conditional-compile-remove(close-captions) */
   /**
    * arial label for captions setting modal
    */
-  captionsSettingsModalAriaLabel: string;
+  captionsSettingsModalAriaLabel?: string;
   /* @conditional-compile-remove(close-captions) */
   /**
    * arial label for captions setting modal close button
    */
-  captionsSettingsCloseModalButtonAriaLabel: string;
+  captionsSettingsCloseModalButtonAriaLabel?: string;
   /* @conditional-compile-remove(close-captions) */
   /**
    * label for more button inside captions banner
    */
-  captionsBannerMoreButtonCallingLabel: string;
+  captionsBannerMoreButtonCallingLabel?: string;
   /* @conditional-compile-remove(close-captions) */
   /**
    * arial label for more button inside captions banner
    */
-  captionsBannerMoreButtonTooltip: string;
+  captionsBannerMoreButtonTooltip?: string;
   /* @conditional-compile-remove(close-captions) */
   /**
    * list of key value pairs that pairs language code to language names
    */
-  captionsAvailableLanguageStrings: CaptionsAvailableLanguageStrings;
+  captionsAvailableLanguageStrings?: CaptionsAvailableLanguageStrings;
 }
