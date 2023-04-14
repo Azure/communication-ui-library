@@ -399,9 +399,9 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     this.chatAdapter.updateFileUploadMetadata(id, metadata);
   };
   /* @conditional-compile-remove(teams-inline-images) */
-  async downloadAuthenticatedAttachment(attachmentUrl: string): Promise<AttachmentDownloadResult | undefined> {
-    if (this.chatAdapter.downloadAuthenticatedAttachment === undefined) {
-      return undefined;
+  async downloadAuthenticatedAttachment(attachmentUrl: string): Promise<AttachmentDownloadResult> {
+    if (!this.chatAdapter.downloadAuthenticatedAttachment) {
+      throw new Error('downloadAuthenticatedAttachment was not implemented');
     }
     return await this.chatAdapter.downloadAuthenticatedAttachment(attachmentUrl);
   }

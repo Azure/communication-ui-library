@@ -130,11 +130,10 @@ export class CallWithChatBackedChatAdapter implements ChatAdapter {
   };
 
   /* @conditional-compile-remove(teams-inline-images) */
-  public async downloadAuthenticatedAttachment(attachmentUrl: string): Promise<AttachmentDownloadResult | undefined> {
+  public async downloadAuthenticatedAttachment(attachmentUrl: string): Promise<AttachmentDownloadResult> {
     if (!this.callWithChatAdapter.downloadAuthenticatedAttachment) {
-      return undefined;
+      throw new Error('downloadAuthenticatedAttachment was not implemented');
     }
-
     return await this.callWithChatAdapter.downloadAuthenticatedAttachment(attachmentUrl);
   }
 }

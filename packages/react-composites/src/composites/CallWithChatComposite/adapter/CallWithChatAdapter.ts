@@ -310,7 +310,7 @@ export interface CallWithChatAdapterManagement {
   /** @beta */
   updateFileUploadMetadata: (id: string, metadata: FileMetadata) => void;
   /* @conditional-compile-remove(teams-inline-images) */
-  downloadAuthenticatedAttachment?: (attachmentUrl: string) => Promise<AttachmentDownloadResult | undefined>;
+  downloadAuthenticatedAttachment?: (attachmentUrl: string) => Promise<AttachmentDownloadResult>;
   /* @conditional-compile-remove(PSTN-calls) */
   /**
    * Puts the Call in a Localhold.

@@ -110,7 +110,7 @@ export interface ChatAdapterThreadManagement {
    */
   loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
   /* @conditional-compile-remove(teams-inline-images) */
-  downloadAuthenticatedAttachment?: (attachmentUrl: string) => Promise<AttachmentDownloadResult | undefined>;
+  downloadAuthenticatedAttachment?: (attachmentUrl: string) => Promise<AttachmentDownloadResult>;
 }
 
 /**

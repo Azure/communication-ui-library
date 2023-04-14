@@ -198,8 +198,11 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
 
   /* @conditional-compile-remove(teams-inline-images) */
   const onRenderInlineAttachment = useCallback(
-    async (attachment: FileMetadata): Promise<AttachmentDownloadResult | undefined> => {
-      if (adapter.downloadAuthenticatedAttachment && attachment.previewUrl) {
+    async (attachment: FileMetadata): Promise<AttachmentDownloadResult> => {
+      if (!adapter.downloadAuthenticatedAttachment) {
+        throw new Error('downloadAuthenticatedAttachment is not implemented on the adapter');
+      }
+      if (attachment.previewUrl) {
         const blob = await adapter.downloadAuthenticatedAttachment(attachment.previewUrl);
         return blob;
       }
