@@ -5,7 +5,7 @@ import { loadCallPage, test } from './fixture';
 import { expect } from '@playwright/test';
 import { dataUiId, isTestProfileMobile, pageClick, stableScreenshot, waitForSelector } from '../../common/utils';
 import { IDS, captionsFeatureState } from '../../common/constants';
-import { defaultMockCallAdapterState, defaultMockRemoteParticipant } from 'browser/call/hermetic/fixture';
+import { defaultMockCallAdapterState, defaultMockRemoteParticipant } from '../../call/hermetic/fixture';
 
 /* @conditional-compile-remove(close-captions) */
 test.describe('Closed Captions Banner tests', async () => {
