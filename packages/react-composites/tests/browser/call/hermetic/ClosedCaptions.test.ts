@@ -4,47 +4,7 @@
 import { buildUrlWithMockAdapter, defaultMockCallAdapterState, test } from './fixture';
 import { expect } from '@playwright/test';
 import { dataUiId, isTestProfileMobile, pageClick, stableScreenshot, waitForSelector } from '../../common/utils';
-import { captionsAvailableLanguageStrings, IDS } from '../../common/constants';
-
-const captionsFeatureState = {
-  captions: [
-    {
-      resultType: 'Final' as const,
-      timestamp: new Date(0),
-      speaker: {
-        displayName: 'Participant 1',
-        identifier: { communicationUserId: 'communicationId1', kind: 'communicationUser' as const }
-      },
-      spokenLanguage: 'en-us' as const,
-      captionText: 'How are you?'
-    },
-    {
-      resultType: 'Final' as const,
-      timestamp: new Date(10000),
-      speaker: {
-        displayName: 'Participant 2',
-        identifier: { communicationUserId: 'communicationId2', kind: 'communicationUser' as const }
-      },
-      spokenLanguage: 'en-us',
-      captionText: 'I am good.'
-    },
-    {
-      resultType: 'Final' as const,
-      timestamp: new Date(10000),
-      speaker: {
-        displayName: 'Participant 3',
-        identifier: { communicationUserId: 'communicationId3', kind: 'communicationUser' as const }
-      },
-      spokenLanguage: 'en-us',
-      captionText: 'Nice to see you today!'
-    }
-  ],
-  supportedSpokenLanguages: captionsAvailableLanguageStrings,
-  supportedCaptionLanguages: captionsAvailableLanguageStrings,
-  currentCaptionLanguage: 'en-us',
-  currentSpokenLanguage: 'en-us',
-  isCaptionsFeatureActive: true
-};
+import { IDS, captionsFeatureState } from '../../common/constants';
 
 /* @conditional-compile-remove(close-captions) */
 test.describe('Closed Captions Banner tests', async () => {
