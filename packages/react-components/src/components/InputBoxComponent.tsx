@@ -203,9 +203,10 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       if (triggerPriorIndex !== undefined) {
         const isNextSpaceSymbol = newValue?.slice(triggerPriorIndex, triggerPriorIndex + 1) === ' ';
         const wordAtSelection = newValue?.slice(triggerPriorIndex, selectionEnd);
+        let tagIndex = currentTagIndex;
         if (wordAtSelection === triggerText) {
           // start of the mention
-          let tagIndex = selectionEnd - triggerText.length;
+          tagIndex = selectionEnd - triggerText.length;
           if (tagIndex < 0) {
             tagIndex = 0;
           }
@@ -215,11 +216,12 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
         }
 
         console.log('currentTagIndex', currentTagIndex);
-        if (currentTagIndex === -1) {
+        console.log('tagIndex', tagIndex);
+        if (tagIndex === -1) {
           setMentionSuggestions([]);
         } else {
           // In the middle of a @mention lookup
-          if (currentTagIndex > -1) {
+          if (tagIndex > -1) {
             // This might want to be changed to not include the lookup tag. Currently it does.
             // TODO: work in mentionQuery state or remove it.
             // const query = newValue?.substring(currentTagIndex, selectionEnd);
