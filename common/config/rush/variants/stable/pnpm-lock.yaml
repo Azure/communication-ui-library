@@ -19842,6 +19842,7 @@ packages:
       '@microsoft/api-extractor': 7.18.21
       '@rollup/plugin-json': 4.1.0_rollup@2.42.4
       '@testing-library/jest-dom': 5.16.5
+      '@testing-library/react': 12.1.5_react-dom@16.13.1+react@16.14.0
       '@testing-library/react-hooks': 3.7.0_98e0eb37a9f7280a1c5a6c886619f5b4
       '@types/jest': 26.0.24
       '@types/json-stringify-safe': 5.0.0
@@ -19905,7 +19906,7 @@ packages:
     dev: false
     name: '@rush-temp/communication-react'
     resolution:
-      integrity: sha512-kXF0OOe8DbJvJl3pfhshOP5lSVwD52yGsaWWNS69Oa97QNNgoeKWaThEGZ1H6tCjtYXIUZTdr3xAEtSdmErcUQ==
+      integrity: sha512-aM+dAO5LD9bRen4VHq1IkWkGNrM4TL4XdtldroiMvynoGlSYjvMtlFdTSzhCjQCpUbgqzMuzFQI4d0hRsAyFDg==
       tarball: file:projects/communication-react.tgz
     version: 0.0.0
   file:projects/component-examples.tgz:
@@ -20124,6 +20125,7 @@ packages:
       '@microsoft/api-extractor': 7.18.21
       '@playwright/test': 1.22.2
       '@testing-library/jest-dom': 5.16.5
+      '@testing-library/react': 12.1.5_react-dom@16.13.1+react@16.14.0
       '@testing-library/react-hooks': 3.7.0_98e0eb37a9f7280a1c5a6c886619f5b4
       '@types/copy-webpack-plugin': 6.4.3
       '@types/enzyme': 3.10.12
@@ -20211,7 +20213,7 @@ packages:
     dev: false
     name: '@rush-temp/react-composites'
     resolution:
-      integrity: sha512-it6P+vbAmDf8+1K8i37C1M5QNTW+8EIP6ZWUNyFSdBjCjZYvOmmPnVBAuuZHgNU1yl92v1Hggbnkfl85scAfEQ==
+      integrity: sha512-hvCYAJeAOK1APavdOoP0qI+IJIcSI6KeyLCN8g/wFn/B29jB59uBOi6umhy3uK40nbrblt9SnM7UXu1CBoxdNw==
       tarball: file:projects/react-composites.tgz
     version: 0.0.0
   file:projects/sample-automation-tests.tgz:
