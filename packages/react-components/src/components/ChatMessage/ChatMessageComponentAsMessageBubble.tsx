@@ -27,6 +27,8 @@ import { chatMessageActionMenuProps } from './ChatMessageActionMenu';
 import { OnRenderAvatarCallback } from '../../types';
 import { _FileDownloadCards, FileDownloadHandler } from '../FileDownloadCards';
 import { ComponentLocale, useLocale } from '../../localization';
+/* @conditional-compile-remove(at-mention) */
+import { AtMentionDisplayOptions } from '../AtMentionFlyout';
 
 type ChatMessageComponentAsMessageBubbleProps = {
   message: ChatMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage;
@@ -68,6 +70,12 @@ type ChatMessageComponentAsMessageBubbleProps = {
    * @beta
    */
   onDisplayDateTimeString?: (messageDate: Date) => string;
+  /* @conditional-compile-remove(at-mention) */
+  /**
+   * Optional props needed to display suggestions in the at mention scenario.
+   * @beta
+   */
+  atMentionDisplayOptions?: AtMentionDisplayOptions;
   /* @conditional-compile-remove(teams-inline-images) */
   /**
    * Optional function to fetch attachments.
