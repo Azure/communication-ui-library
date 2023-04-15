@@ -2,7 +2,6 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import { shallow, ShallowWrapper } from 'enzyme';
 import { LocalizationProvider, ComponentLocale, ComponentStrings } from '../../localization/LocalizationProvider';
 import { COMPONENT_LOCALE_EN_US } from '../../localization/locales';
 import { PartialDeep } from 'type-fest';
@@ -45,19 +44,9 @@ export const renderWithPermissions = (
   return {
     // wrap rerender in a function that will re-wrap the node with the Provider
     rerender: (node: React.ReactElement) =>
-      rerender(withLiveAnnouncerContext(<_PermissionsProvider permissions={permissions}>{node}</_PermissionsProvider>)),
+      rerender(<_PermissionsProvider permissions={permissions}>{node}</_PermissionsProvider>),
     container
   };
-};
-
-/**
- * @private
- */
-export const shallowWithLocalization = (node: React.ReactElement, locale: ComponentLocale): ShallowWrapper => {
-  return shallow(node, {
-    wrappingComponent: LocalizationProvider,
-    wrappingComponentProps: { locale }
-  });
 };
 
 /**
