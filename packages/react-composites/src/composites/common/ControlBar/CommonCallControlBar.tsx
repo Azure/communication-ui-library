@@ -13,6 +13,8 @@ import { ChatAdapter } from '../../ChatComposite';
 import { ChatButtonWithUnreadMessagesBadge } from '../../CallWithChatComposite/ChatButtonWithUnreadMessagesBadge';
 import { BaseCustomStyles, ControlBarButtonStyles } from '@internal/react-components';
 import { ControlBar } from '@internal/react-components';
+/* @conditional-compile-remove(rooms) */
+import { _usePermissions } from '@internal/react-components';
 import { Microphone } from '../../CallComposite/components/buttons/Microphone';
 import { Camera } from '../../CallComposite/components/buttons/Camera';
 import { ScreenShare } from '../../CallComposite/components/buttons/ScreenShare';
@@ -218,6 +220,21 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
     <></>
   );
 
+  /* @conditional-compile-remove(rooms) */
+  const rolePermissions = _usePermissions();
+
+  let screenShareButtonIsEnabled = isEnabled(options?.screenShareButton);
+  /* @conditional-compile-remove(rooms) */
+  screenShareButtonIsEnabled = rolePermissions.screenShare && screenShareButtonIsEnabled;
+
+  let microphoneButtonIsEnabled = isEnabled(options?.microphoneButton);
+  /* @conditional-compile-remove(rooms) */
+  microphoneButtonIsEnabled = rolePermissions.microphoneButton && microphoneButtonIsEnabled;
+
+  let cameraButtonIsEnabled = isEnabled(options?.cameraButton);
+  /* @conditional-compile-remove(rooms) */
+  cameraButtonIsEnabled = rolePermissions.cameraButton && cameraButtonIsEnabled;
+
   return (
     <div ref={controlBarSizeRef}>
       <Stack
@@ -249,7 +266,7 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                 */}
                 <div ref={controlBarContainerRef}>
                   <ControlBar layout="horizontal" styles={centerContainerStyles}>
-                    {isEnabled(options.microphoneButton) && (
+                    {microphoneButtonIsEnabled && (
                       <Microphone
                         displayType={options.displayType}
                         styles={commonButtonStyles}
@@ -258,7 +275,7 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                         disabled={props.disableButtonsForHoldScreen || isDisabled(options.microphoneButton)}
                       />
                     )}
-                    {isEnabled(options.cameraButton) && (
+                    {cameraButtonIsEnabled && (
                       <Camera
                         displayType={options.displayType}
                         styles={commonButtonStyles}
@@ -270,7 +287,7 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                       />
                     )}
                     {props.mobileView && isEnabled(options?.chatButton) && chatButton}
-                    {isEnabled(options.screenShareButton) && (
+                    {screenShareButtonIsEnabled && (
                       <ScreenShare
                         option={options.screenShareButton}
                         displayType={options.displayType}
