@@ -4,7 +4,9 @@
 import { initializeIcons, registerIcons } from '@fluentui/react';
 import React from 'react';
 import { VideoTile } from './VideoTile';
-import { act, fireEvent, render, screen } from '@testing-library/react';
+import { act, fireEvent, render } from '@testing-library/react';
+/* @conditional-compile-remove(pinned-participants) */
+import { screen } from '@testing-library/react';
 /* @conditional-compile-remove(pinned-participants) */
 import { VideoTileProps } from './VideoTile';
 
@@ -37,19 +39,18 @@ describe('VideoTile', () => {
     expect(mockCallback).toBeCalledTimes(1);
   });
 
+  /* @conditional-compile-remove(pinned-participants) */
   test('VideoTile does not show more button when contextualMenu is undefined', async () => {
     const { rerender, container } = render(<VideoTile />);
-    /* @conditional-compile-remove(pinned-participants) */
-    {
-      const noContextMenuVideoTileProps = {
-        displayName: 'John Doe',
-        contextualMenu: undefined
-      } as Partial<VideoTileProps>;
-      rerender(<VideoTile {...noContextMenuVideoTileProps} />);
-      act(() => {
-        fireEvent.focus(container);
-      });
-      expect(screen.queryAllByRole('button').length).toBe(0);
-    }
+
+    const noContextMenuVideoTileProps = {
+      displayName: 'John Doe',
+      contextualMenu: undefined
+    } as Partial<VideoTileProps>;
+    rerender(<VideoTile {...noContextMenuVideoTileProps} />);
+    act(() => {
+      fireEvent.focus(container);
+    });
+    expect(screen.queryAllByRole('button').length).toBe(0);
   });
 });

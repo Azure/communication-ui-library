@@ -5,16 +5,11 @@ import { registerIcons } from '@fluentui/react';
 import React from 'react';
 import { _ModalClone } from '.';
 import { VideoGalleryLocalParticipant, VideoGalleryRemoteParticipant } from '../types';
-// import { HorizontalGallery } from './HorizontalGallery';
 import { DEFAULT_MAX_REMOTE_VIDEO_STREAMS, VideoGallery } from './VideoGallery';
-// import { VideoTile } from './VideoTile';
 import { v1 as createGUID } from 'uuid';
 import * as responsive from './utils/responsive';
 import * as acs_ui_common from '@internal/acs-ui-common';
 import * as childrenCalculations from './VideoGallery/utils/OverflowGalleryUtils';
-// import { RemoteScreenShare } from './VideoGallery/RemoteScreenShare';
-/* @conditional-compile-remove(vertical-gallery) */
-// import { VerticalGallery } from './VerticalGallery';
 import { render } from '@testing-library/react';
 
 registerIcons({

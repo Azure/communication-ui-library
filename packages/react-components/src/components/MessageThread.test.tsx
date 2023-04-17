@@ -11,6 +11,7 @@ import { AttachmentDownloadResult, FileMetadata } from './FileDownloadCards';
 import { createTestLocale, renderWithLocalization } from './utils/testUtils';
 /* @conditional-compile-remove(date-time-customization) @conditional-compile-remove(data-loss-prevention) */
 import { COMPONENT_LOCALE_EN_US } from '../localization/locales';
+/* @conditional-compile-remove(date-time-customization) */
 import { screen } from '@testing-library/react';
 /* @conditional-compile-remove(teams-inline-images) */
 import { act, render } from '@testing-library/react';
