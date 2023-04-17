@@ -8,6 +8,13 @@ module.exports = {
     es6: true
   },
   extends: ['eslint:recommended', 'plugin:prettier/recommended'],
+  parserOptions: {
+    ecmaFeatures: {
+      jsx: true
+    },
+    ecmaVersion: 2020,
+    sourceType: 'module'
+  },
   plugins: ['header'],
   rules: {
     eqeqeq: 'warn',
