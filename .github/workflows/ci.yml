@@ -107,8 +107,9 @@ jobs:
       - name: Treeshaking check
         run: rush build --only @internal/check-treeshaking
       # Typescript version check
-      - name: Treeshaking check
+      - name: Typescript version compatibility check
         run: rush build --only @internal/check-typescript-regression
+      # Ensure all downstream packlet versions are consitent with the base packlet version
       - name: Ensure all package versions are consistent
         run: rush ensure-consistent-versions
       # Tests
