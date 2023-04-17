@@ -226,7 +226,8 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     onRenderIcon,
     onRenderSystemMessage,
     styles,
-    autoFocus
+    autoFocus,
+    atMentionLookupOptions
   } = props;
   const theme = useTheme();
   const localeStrings = useLocale().strings.sendBox;
@@ -387,6 +388,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
           styles={mergedStyles}
           supportNewline={supportNewline}
           maxLength={MAXIMUM_LENGTH_OF_MESSAGE}
+          atMentionLookupOptions={atMentionLookupOptions}
           onMentionAdd={(newTextValue) => {
             setText(newTextValue);
           }}
