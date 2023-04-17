@@ -158,7 +158,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       // TODO: Use the HTML value in the control
       // FIGURE OUT WHERE TO INSERT THE NEW TAG
       // INSERT IT INTO THE TEXT FIELD
-      let queryText = inputTextValue.slice(currentTagIndex).split(' ')[0];
+      let queryText = inputTextValue.substring(currentTagIndex).split(' ')[0];
       const oldTags = parseToTags(textValue);
       //TODO: add check if we are in the middle of another tag
 
@@ -194,9 +194,20 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
 
   const handleOnChange = async (
     event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>,
-    newValue?: string | undefined
+    updatedValue?: string | undefined
   ): Promise<void> => {
-    const selectionEnd = textFieldRef?.current?.selectionEnd || -1;
+    let newValue = updatedValue;
+    if (newValue === undefined) {
+      newValue = '';
+    }
+
+    const newTextLength = newValue.length;
+    let selectionEnd = textFieldRef?.current?.selectionEnd || -1;
+    if (selectionEnd < 0) {
+      selectionEnd = 0;
+    } else if (selectionEnd > newTextLength) {
+      selectionEnd = newTextLength - 1;
+    }
     // If we are enabled for lookups,
     if (!!atMentionLookupOptions) {
       //TODO; add check for the last space and check if it isn't between mention trigger and
@@ -205,18 +216,20 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       const triggerPriorIndex = newValue?.lastIndexOf(triggerText, selectionEnd - 1);
       // trigger is found
       if (triggerPriorIndex !== undefined) {
-        const isNextSpaceSymbol = newValue?.slice(triggerPriorIndex, triggerPriorIndex + 1) === ' ';
-        const wordAtSelection = newValue?.slice(triggerPriorIndex, selectionEnd);
+        const isSpaceBeforeTrigger = newValue?.substring(triggerPriorIndex - 1, triggerPriorIndex) === ' ';
+        const wordAtSelection = newValue?.substring(triggerPriorIndex, selectionEnd);
         let tagIndex = currentTagIndex;
-        if (wordAtSelection === triggerText) {
+        if (!isSpaceBeforeTrigger) {
+          //no space before the trigger <- continuation of the previous word
+          tagIndex = -1;
+          setCurrentTagIndex(tagIndex);
+        } else if (wordAtSelection === triggerText) {
           // start of the mention
           tagIndex = selectionEnd - triggerText.length;
           if (tagIndex < 0) {
             tagIndex = 0;
           }
           setCurrentTagIndex(tagIndex);
-        } else if (isNextSpaceSymbol) {
-        } else {
         }
 
         console.log('currentTagIndex', currentTagIndex);
@@ -236,10 +249,87 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
             }
           }
         }
-      } else {
-        // if ()
       }
     }
+
+    const oldTextLength = inputTextValue.length;
+    // find indexes -> find strings diff -> check where the diff is -> change
+
+    let changeStart = 0;
+    let newChangeEnd = 0;
+    let oldChangeEnd = 0;
+    const length = Math.min(newTextLength, oldTextLength);
+
+    for (let i = 0; i < length; i++) {
+      console.log(i + ': ' + newValue[i] + ' -> ' + inputTextValue[i]);
+      if (newValue[i] !== inputTextValue[i]) {
+        // the symbol with changeStart index is updated
+        changeStart = i;
+        break;
+      } else if (i === length - 1 && newValue[i] === inputTextValue[i]) {
+        // the symbol is added at the end of inputTextValue
+        changeStart = length;
+        break;
+      }
+    }
+
+    console.log('changeStart', changeStart);
+    console.log('oldTextLength', oldTextLength);
+    console.log('newTextLength', newTextLength);
+    if (oldTextLength < newTextLength) {
+      //insert or replacement
+      if (oldTextLength === changeStart) {
+        // when change was at the end of string
+        newChangeEnd = newTextLength - 1;
+        oldChangeEnd = oldTextLength;
+      }
+      for (let i = 1; i < newTextLength && oldTextLength - i > changeStart; i++) {
+        newChangeEnd = newTextLength - i - 1;
+        oldChangeEnd = oldTextLength - i - 1;
+        console.log(i + ': ' + newValue[newChangeEnd] + ' -> ' + inputTextValue[oldChangeEnd]);
+
+        if (newValue[newChangeEnd] !== inputTextValue[oldChangeEnd]) {
+          // Change is found
+          break;
+        }
+      }
+    } else if (oldTextLength > newTextLength) {
+      //deletion or replacement
+      if (newTextLength === changeStart) {
+        // when change was at the end of string
+        newChangeEnd = newTextLength;
+        oldChangeEnd = oldTextLength - 1;
+      }
+      for (let i = 1; i < oldTextLength && newTextLength - i > changeStart; i++) {
+        newChangeEnd = newTextLength - i - 1;
+        oldChangeEnd = oldTextLength - i - 1;
+        console.log(i + ': ' + newValue[newChangeEnd] + ' -> ' + inputTextValue[oldChangeEnd]);
+
+        if (newValue[newChangeEnd] !== inputTextValue[oldChangeEnd]) {
+          // Change is found
+          break;
+        }
+      }
+    } else {
+      //replacement
+      for (let i = 1; i < oldTextLength && oldTextLength - i > changeStart; i++) {
+        newChangeEnd = newTextLength - i - 1;
+        oldChangeEnd = oldTextLength - i - 1;
+
+        if (newValue[newChangeEnd] !== inputTextValue[oldChangeEnd]) {
+          // Change is found
+          break;
+        }
+      }
+    }
+    console.log('oldChangeEnd', oldChangeEnd);
+    console.log('newChangeEnd', newChangeEnd);
+    console.log(
+      'inputTextValue.substring(changeStart, oldChangeEnd)',
+      inputTextValue.substring(changeStart, oldChangeEnd + 1)
+    );
+    console.log('newValue.substring(changeStart, newChangeEnd)', newValue.substring(changeStart, newChangeEnd + 1));
+
     // let updatedValue = newValue;
     // if (selectionEnd === inputTextValue.length) {
     //   // add text to the end of the string
@@ -388,15 +478,15 @@ const parseHTMLText = (text: string, trigger: string): [UpdatedParsedTag[], stri
     const openTagIndex = text.indexOf('<', htmlParseIndex);
     if (openTagIndex === -1) {
       //no open tags found, `text` is a plain text
-      plaintText += text.slice(htmlParseIndex);
+      plaintText += text.substring(htmlParseIndex);
       break;
     }
     // Add all the text from the last tag close to this one open
-    plaintText += text.slice(htmlParseIndex, openTagIndex);
-    const plainTextStartIndex = plaintText.length; // - 1 is not used because text.slice doesn't include openTagIndex
+    plaintText += text.substring(htmlParseIndex, openTagIndex);
+    const plainTextStartIndex = plaintText.length; // - 1 is not used because text.substring doesn't include openTagIndex
 
     const openTagCloseIndex = text.indexOf('>', openTagIndex);
-    const openTag = text.slice(openTagIndex + 1, openTagCloseIndex);
+    const openTag = text.substring(openTagIndex + 1, openTagCloseIndex);
     const tagType = openTag.split(' ')[0];
     if (tagType === 'msft-at-mention') {
       plaintText += trigger;
@@ -404,10 +494,10 @@ const parseHTMLText = (text: string, trigger: string): [UpdatedParsedTag[], stri
 
     if (openTag[openTag.length - 1] === '/') {
       // Self closing tag, no corresponding close tag
-      const selfClosingBody = openTag.slice(0, openTag.length - 1);
+      const selfClosingBody = openTag.substring(0, openTag.length - 1);
       const tagLength = openTagCloseIndex - openTagIndex;
       tags.push({
-        tagType: tagType.slice(0, tagType.length - 1).toLowerCase(),
+        tagType: tagType.substring(0, tagType.length - 1).toLowerCase(),
         openTagBody: selfClosingBody,
         htmlOpenTagStartIndex: openTagIndex,
         plainTextStartIndex: plainTextStartIndex
@@ -423,7 +513,7 @@ const parseHTMLText = (text: string, trigger: string): [UpdatedParsedTag[], stri
       } else {
         // try to find sub tags and plain text value from them
         const closeTagLength = tagToFind.length;
-        const content = text.slice(openTagIndex + openTag.length + 2, closeTagIndex);
+        const content = text.substring(openTagIndex + openTag.length + 2, closeTagIndex);
 
         const [subTags, contentPlainText] = parseHTMLText(content, trigger);
         plaintText += contentPlainText;
@@ -464,15 +554,15 @@ const parseToTags = (text: string): ParsedTag[] => {
       break;
     }
     const openTagCloseIndex = text.indexOf('>', openTagIndex);
-    const openTag = text.slice(openTagIndex + 1, openTagCloseIndex);
+    const openTag = text.substring(openTagIndex + 1, openTagCloseIndex);
     const tagType = openTag.split(' ')[0];
 
     if (openTag[openTag.length - 1] === '/') {
       // Self closing tag, no corresponding close tag
-      const selfClosingBody = openTag.slice(0, openTag.length - 1);
+      const selfClosingBody = openTag.substring(0, openTag.length - 1);
       const tagLength = openTagCloseIndex - openTagIndex;
       tags.push({
-        tagType: tagType.slice(0, tagType.length - 1).toLowerCase(),
+        tagType: tagType.substring(0, tagType.length - 1).toLowerCase(),
         openTagBody: selfClosingBody,
         htmlOpenTagStartIndex: openTagIndex
       });
@@ -486,7 +576,7 @@ const parseToTags = (text: string): ParsedTag[] => {
         break;
       } else {
         const closeTagLength = tagToFind.length;
-        const content = text.slice(openTagIndex + openTag.length + 2, closeTagIndex);
+        const content = text.substring(openTagIndex + openTag.length + 2, closeTagIndex);
         const subTags = parseToTags(content);
 
         tags.push({
@@ -518,7 +608,7 @@ const plainTextFromParsedTags = (textBlock: string, tags: ParsedTag[], trigger: 
   while (tagIndex < tags.length) {
     const tag = tags[tagIndex];
     // Add all the text from the last tag close to this one open
-    text += textBlock.slice(previousTagEndIndex, tag.htmlOpenTagStartIndex);
+    text += textBlock.substring(previousTagEndIndex, tag.htmlOpenTagStartIndex);
     if (tag.tagType === 'msft-at-mention') {
       text += trigger;
     }
@@ -541,7 +631,7 @@ const plainTextFromParsedTags = (textBlock: string, tags: ParsedTag[], trigger: 
   }
   // Add the text after the last tag
   if (tagIndex < textBlock.length) {
-    text += textBlock.slice(previousTagEndIndex);
+    text += textBlock.substring(previousTagEndIndex);
   }
   return text;
 };
@@ -573,7 +663,7 @@ const htmlMentionIndex = (
     while (tagIndex < tags.length && htmlIndex < htmlTextBlock.length) {
       const tag = tags[tagIndex];
       // Add all the text from the last tag close to this one open
-      const textBetweenTags = htmlTextBlock.slice(previousTagEndIndex, tag.htmlOpenTagStartIndex);
+      const textBetweenTags = htmlTextBlock.substring(previousTagEndIndex, tag.htmlOpenTagStartIndex);
       text += textBetweenTags;
       if (plainStringIndex <= textBetweenTags.length) {
         //TODO: check!
@@ -620,7 +710,7 @@ const htmlMentionIndex = (
       if (plainStringIndex > previousTagEndIndex) {
         htmlIndex += htmlTextBlock.length - previousTagEndIndex + plainStringIndex;
       }
-      text += htmlTextBlock.slice(previousTagEndIndex);
+      text += htmlTextBlock.substring(previousTagEndIndex);
     }
     console.log('text', text);
     console.log('htmlTextBlock', htmlTextBlock);
