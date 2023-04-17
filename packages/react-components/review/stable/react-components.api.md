@@ -125,31 +125,6 @@ export interface CameraButtonStyles extends ControlBarButtonStyles {
 // @public
 export type CancelEditCallback = (messageId: string) => void;
 
-// @internal
-export const _Caption: (props: _CaptionProps) => JSX.Element;
-
-// @internal
-export interface _CaptionProps extends _CaptionsInfo {
-    onRenderAvatar?: OnRenderAvatarCallback;
-}
-
-// @internal
-export const _CaptionsBanner: (props: _CaptionsBannerProps) => JSX.Element;
-
-// @internal
-export interface _CaptionsBannerProps {
-    // (undocumented)
-    captions: _CaptionsInfo[];
-    onRenderAvatar?: OnRenderAvatarCallback;
-}
-
-// @internal
-export type _CaptionsInfo = {
-    displayName: string;
-    captionText: string;
-    userId?: string;
-};
-
 // @public
 export interface ChatMessage extends MessageCommon {
     // (undocumented)
@@ -542,6 +517,7 @@ export interface _DrawerMenuItemProps {
     itemKey: string;
     // (undocumented)
     onItemClick?: (ev?: React_2.MouseEvent<HTMLElement> | React_2.KeyboardEvent<HTMLElement>, itemKey?: string) => void;
+    secondaryComponent?: JSX.Element;
     secondaryIconProps?: IIconProps;
     secondaryText?: string;
     // (undocumented)

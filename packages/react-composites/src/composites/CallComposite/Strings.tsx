@@ -1,6 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+/* @conditional-compile-remove(close-captions) */
+import { CaptionsAvailableLanguageStrings } from '@internal/react-components';
+
 /**
  * Strings used by the {@link CallComposite} directly.
  *
@@ -260,7 +263,7 @@ export interface CallCompositeStrings {
    * Aria Label for dialpad Modal close button
    */
   dialpadCloseModalButtonAriaLabel: string;
-  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(close-captions) */
   /**
    * label for more button in the Calling composite
    */
@@ -408,4 +411,84 @@ export interface CallCompositeStrings {
    * string to be used to announce when multiple unnamed participants have left at the same time.
    */
   manyUnnamedParticipantsLeft: string;
+  /* @conditional-compile-remove(close-captions) */
+  /**
+   * string to be used to open live captions contextual menu
+   */
+  liveCaptionsLabel?: string;
+  /* @conditional-compile-remove(close-captions) */
+  /**
+   * label for opening captions setting modal
+   */
+  captionsSettingsLabel?: string;
+  /* @conditional-compile-remove(close-captions) */
+  /**
+   * string to be used to start captions
+   */
+  startCaptionsButtonOnLabel?: string;
+  /* @conditional-compile-remove(close-captions) */
+  /**
+   * string to be used to stop captions
+   */
+  startCaptionsButtonOffLabel?: string;
+  /* @conditional-compile-remove(close-captions) */
+  /**
+   * tooltip string to be used to show captions is on
+   */
+  startCaptionsButtonTooltipOnContent?: string;
+  /* @conditional-compile-remove(close-captions) */
+  /**
+   *tooltip string to be used to show captions is off
+   */
+  startCaptionsButtonTooltipOffContent?: string;
+  /* @conditional-compile-remove(close-captions) */
+  /**
+   * captions setting modal title
+   */
+  captionsSettingsModalTitle?: string;
+  /* @conditional-compile-remove(close-captions) */
+  /**
+   * label for dropdown inside captions setting modal
+   */
+  captionsSettingsDropdownLabel?: string;
+  /* @conditional-compile-remove(close-captions) */
+  /**
+   * text under captions setting dropdown indicating what the dropdown is for
+   */
+  captionsSettingsDropdownInfoText?: string;
+  /* @conditional-compile-remove(close-captions) */
+  /**
+   * confirm button label in captions setting modal
+   */
+  captionsSettingsConfirmButtonLabel?: string;
+  /* @conditional-compile-remove(close-captions) */
+  /**
+   * cancel button label in captions setting modal
+   */
+  captionsSettingsCancelButtonLabel?: string;
+  /* @conditional-compile-remove(close-captions) */
+  /**
+   * arial label for captions setting modal
+   */
+  captionsSettingsModalAriaLabel?: string;
+  /* @conditional-compile-remove(close-captions) */
+  /**
+   * arial label for captions setting modal close button
+   */
+  captionsSettingsCloseModalButtonAriaLabel?: string;
+  /* @conditional-compile-remove(close-captions) */
+  /**
+   * label for more button inside captions banner
+   */
+  captionsBannerMoreButtonCallingLabel?: string;
+  /* @conditional-compile-remove(close-captions) */
+  /**
+   * arial label for more button inside captions banner
+   */
+  captionsBannerMoreButtonTooltip?: string;
+  /* @conditional-compile-remove(close-captions) */
+  /**
+   * list of key value pairs that pairs language code to language names
+   */
+  captionsAvailableLanguageStrings?: CaptionsAvailableLanguageStrings;
 }
