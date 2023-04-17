@@ -47,6 +47,7 @@ import { MessageWithFile } from './snippets/MessageWithFile.snippet';
 import { MessageThreadWithSystemMessagesExample } from './snippets/SystemMessages.snippet';
 import { MessageThreadWithInlineImageExample } from './snippets/WithInlineImageMessage.snippet';
 import { MessageThreadWithMessageDateExample } from './snippets/WithMessageDate.snippet';
+import { MessageWithCustomMentionRenderer } from './snippets/MessageWithCustomMentionRenderer.snippet';
 
 const MessageThreadWithBlockedMessagesExampleText =
   require('!!raw-loader!./snippets/BlockedMessages.snippet.tsx').default;
@@ -67,6 +68,8 @@ const DefaultMessageThreadExampleText = require('!!raw-loader!./snippets/Default
 const MessageThreadWithMessageStatusIndicatorExampleText =
   require('!!raw-loader!./snippets/MessageStatusIndicator.snippet.tsx').default;
 const MessageWithFileText = require('!!raw-loader!./snippets/MessageWithFile.snippet.tsx').default;
+const MessageWithCustomMentionRendererText =
+  require('!!raw-loader!./snippets/MessageWithCustomMentionRenderer.snippet.tsx').default;
 const ExampleConstantsText = require('!!raw-loader!./snippets/placeholdermessages.ts').default;
 const MessageThreadWithSystemMessagesExampleText =
   require('!!raw-loader!./snippets/SystemMessages.snippet.tsx').default;
@@ -221,6 +224,17 @@ const getDocs: () => JSX.Element = () => {
       </Description>
       <Canvas mdxSource={MessageWithFileText}>
         <MessageWithFile />
+      </Canvas>
+
+      <Heading>Display Mentions of Users within Messages</Heading>
+      <SingleLineBetaBanner />
+      <Description>
+        When a user is mentioned in a message, a custom HTML tag can be used to represent the element in the
+        MessageThread. This element can be styled using the standard methods and the renderer can be overridden for
+        further customization.
+      </Description>
+      <Canvas mdxSource={MessageWithCustomMentionRendererText}>
+        <MessageWithCustomMentionRenderer />
       </Canvas>
 
       <Heading>Props</Heading>

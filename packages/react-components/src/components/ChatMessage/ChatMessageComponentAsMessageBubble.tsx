@@ -237,6 +237,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
           onFetchAttachment={props.onFetchAttachments}
           /* @conditional-compile-remove(teams-inline-images) */
           attachmentsMap={props.attachmentsMap}
+          atMentionDisplayOptions={props.atMentionDisplayOptions}
         />
         {props.onRenderFileDownloads ? props.onRenderFileDownloads(userId, message) : defaultOnRenderFileDownloads()}
       </div>
