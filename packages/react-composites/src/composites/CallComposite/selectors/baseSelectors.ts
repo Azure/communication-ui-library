@@ -13,6 +13,8 @@ import {
   LocalVideoStreamState,
   RemoteParticipantState
 } from '@internal/calling-stateful-client';
+/* @conditional-compile-remove(close-captions) */
+import { CaptionsInfo } from '@internal/calling-stateful-client';
 import { CallAdapterState, CallCompositePage } from '../adapter/CallAdapter';
 /* @conditional-compile-remove(video-background-effects) */
 import { SelectedVideoBackgroundEffect } from '../adapter/CallAdapter';
@@ -121,3 +123,45 @@ export const getEnvironmentInfo = (state: CallAdapterState): EnvironmentInfo | u
  */
 export const getSelectedVideoEffect = (state: CallAdapterState): SelectedVideoBackgroundEffect | undefined =>
   state.selectedVideoBackgroundEffect;
+
+/* @conditional-compile-remove(close-captions) */
+/** @private */
+export const getCaptions = (state: CallAdapterState): CaptionsInfo[] | undefined => {
+  return state.call?.captionsFeature.captions;
+};
+
+/* @conditional-compile-remove(close-captions) */
+/** @private */
+export const getCaptionsStatus = (state: CallAdapterState): boolean | undefined => {
+  return state.call?.captionsFeature.isCaptionsFeatureActive;
+};
+
+/* @conditional-compile-remove(close-captions) */
+/** @private */
+export const getCurrentCaptionLanguage = (state: CallAdapterState): string | undefined => {
+  return state.call?.captionsFeature.currentCaptionLanguage;
+};
+
+/* @conditional-compile-remove(close-captions) */
+/** @private */
+export const getCurrentSpokenLanguage = (state: CallAdapterState): string | undefined => {
+  return state.call?.captionsFeature.currentSpokenLanguage;
+};
+
+/* @conditional-compile-remove(close-captions) */
+/** @private */
+export const getSupportedCaptionLanguages = (state: CallAdapterState): string[] | undefined => {
+  return state.call?.captionsFeature.supportedCaptionLanguages;
+};
+
+/* @conditional-compile-remove(close-captions) */
+/** @private */
+export const getSupportedSpokenLanguages = (state: CallAdapterState): string[] | undefined => {
+  return state.call?.captionsFeature.supportedSpokenLanguages;
+};
+
+/* @conditional-compile-remove(close-captions) */
+/**
+ * @private
+ */
+export const getIsTeamsCall = (state: CallAdapterState): boolean => state.isTeamsCall;

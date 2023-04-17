@@ -16,6 +16,8 @@ export interface PreparedMoreDrawerProps {
   callControls?: boolean | CommonCallControlOptions;
   /* @conditional-compile-remove(PSTN-calls) */
   onClickShowDialpad?: () => void;
+  /* @conditional-compile-remove(close-captions) */
+  isCaptionsSupported?: boolean;
   disableButtonsForHoldScreen?: boolean;
 }
 
@@ -27,7 +29,11 @@ export const PreparedMoreDrawer = (props: PreparedMoreDrawerProps): JSX.Element 
       peopleButtonLabel: strings.peopleButtonLabel,
       audioDeviceMenuTitle: strings.moreDrawerAudioDeviceMenuTitle,
       microphoneMenuTitle: strings.moreDrawerMicrophoneMenuTitle,
-      speakerMenuTitle: strings.moreDrawerSpeakerMenuTitle
+      speakerMenuTitle: strings.moreDrawerSpeakerMenuTitle,
+      /* @conditional-compile-remove(close-captions) */
+      captionsMenuTitle: strings.moreDrawerCaptionsMenuTitle,
+      /* @conditional-compile-remove(close-captions) */
+      spokenLanguageMenuTitle: strings.moreDrawerSpokenLanguageMenuTitle
     }),
     [strings]
   );
