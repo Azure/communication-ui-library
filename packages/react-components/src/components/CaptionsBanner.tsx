@@ -83,7 +83,7 @@ export const _CaptionsBanner = (props: _CaptionsBannerProps): JSX.Element => {
             <Stack verticalAlign="start" className={captionsBannerClassName}>
               {captions.map((caption, key) => {
                 return (
-                  <div key={key} className={captionContainerClassName}>
+                  <div key={key} className={captionContainerClassName} tabIndex={0}>
                     <_Caption {...caption} onRenderAvatar={onRenderAvatar} />
                   </div>
                 );
