@@ -32,6 +32,17 @@ export const getDocs: () => JSX.Element = () => {
       <Source code={LobbyComponentText} />
       <Heading>Inline Images</Heading>
       <SingleLineBetaBanner />
+      <Description>
+        Teams inline images are images that are copied and pasted into the send box of Teams client. If the Teams user
+        chooses to either upload an image via attachment menu "Upload from this device" or drag-and-drop the image into
+        the send box, then the image will be sent as a file attachment even though it might be shown as an inline image
+        in the Teams client.
+      </Description>
+      <Description>
+        It's important to note that currently, the UI library does not support file attachments sent by the Teams user.
+        To learn more about currently supported UI library use cases, please refer to the [UI Library use
+        cases](https://learn.microsoft.com/en-us/azure/communication-services/concepts/ui-library/ui-library-use-cases?pivots=platform-web#chat-use-cases).
+      </Description>
       <Subheading>Use CallWithChat Composite with Inline Image Support</Subheading>
       <Description>
         Currently, the UI library only supports inline images in a Teams Interop chat sent by the Teams user. To
