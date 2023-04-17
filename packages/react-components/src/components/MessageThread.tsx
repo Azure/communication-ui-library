@@ -69,7 +69,7 @@ import { FileDownloadHandler, FileMetadata } from './FileDownloadCards';
 import { AttachmentDownloadResult } from './FileDownloadCards';
 import { useTheme } from '../theming';
 /* @conditional-compile-remove(at-mention) */
-import { AtMentionOptions } from './AtMentionFlyout';
+import { AtMentionDisplayOptions, AtMentionOptions } from './AtMentionFlyout';
 
 const isMessageSame = (first: ChatMessage, second: ChatMessage): boolean => {
   return (
@@ -708,7 +708,7 @@ export type MessageThreadProps = {
   onDisplayDateTimeString?: (messageDate: Date) => string;
   /* @conditional-compile-remove(at-mention) */
   /**
-   * Optional props needed to lookup suggestions and display mentions in the at mention scenario.
+   * Optional props needed to lookup a mention query and display mentions
    * @beta
    */
   atMentionOptions?: AtMentionOptions;
@@ -814,7 +814,9 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     /* @conditional-compile-remove(date-time-customization) */
     onDisplayDateTimeString,
     /* @conditional-compile-remove(teams-inline-images) */
-    onFetchAttachments
+    onFetchAttachments,
+    /* @conditional-compile-remove(at-mention) */
+    atMentionOptions
   } = props;
   const onRenderFileDownloads = onRenderFileDownloadsTrampoline(props);
 
@@ -1116,6 +1118,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
             onFetchAttachments={onFetchInlineAttachment}
             /* @conditional-compile-remove(teams-inline-images) */
             attachmentsMap={inlineAttachments}
+            atMentionDisplayOptions={atMentionOptions as AtMentionDisplayOptions}
           />
         );
       }

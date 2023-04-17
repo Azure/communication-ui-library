@@ -82,7 +82,7 @@ export interface AtMentionLookupOptions {
  */
 export interface AtMentionDisplayOptions {
   /**
-   * Optional callback to override render of an mention in a message thread.
+   * Optional callback to override render of a mention in a message thread.
    */
   onRenderAtMentionSuggestion?: (suggestion: AtMentionSuggestion) => JSX.Element;
 }
@@ -92,7 +92,7 @@ export interface AtMentionDisplayOptions {
  *
  * @beta
  */
-export type AtMentionOptions = AtMentionLookupOptions & AtMentionDisplayOptions;
+export type AtMentionOptions = AtMentionLookupOptions | AtMentionDisplayOptions;
 
 /**
  * At mention suggestion's state, as reflected in the UI.
