@@ -36,12 +36,9 @@ export const MessageWithCustomMentionRenderer: () => JSX.Element = () => {
           }
         ]}
         atMentionOptions={{
-          // displayOptions: {
           onRenderAtMentionSuggestion: (mention) => {
-            console.log(mention);
             return <button>{mention.displayName}</button>;
           }
-          // }
         }}
       />
     </FluentThemeProvider>

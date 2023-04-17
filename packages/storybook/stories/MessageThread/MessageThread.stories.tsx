@@ -81,6 +81,11 @@ const importStatement = `
 import { FluentThemeProvider, MessageThread } from '@azure/communication-react';
 `;
 
+const mentionTag = `
+<msft-at-mention userId="<id>" displayName="<display name>">
+  Displayable Content
+</msft-at-mention>
+`;
 const getDocs: () => JSX.Element = () => {
   return (
     <>
@@ -231,8 +236,9 @@ const getDocs: () => JSX.Element = () => {
       <Description>
         When a user is mentioned in a message, a custom HTML tag can be used to represent the element in the
         MessageThread. This element can be styled using the standard methods and the renderer can be overridden for
-        further customization.
+        further customization. The HTML Tag is defined:
       </Description>
+      <Source code={mentionTag} />
       <Canvas mdxSource={MessageWithCustomMentionRendererText}>
         <MessageWithCustomMentionRenderer />
       </Canvas>
