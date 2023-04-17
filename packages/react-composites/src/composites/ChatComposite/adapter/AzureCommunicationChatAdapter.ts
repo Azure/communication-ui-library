@@ -346,6 +346,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
         const headers = new Headers();
         headers.append('Authorization', `Bearer ${token}`);
         try {
+          console.log('downloadAuthenticatedAttachment make the request----------------------------------------');
           return await fetch(url, { headers });
         } catch (err) {
           const e = new Error();

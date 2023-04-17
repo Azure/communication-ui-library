@@ -1189,7 +1189,7 @@ export type MessageThreadProps = {
     onLoadPreviousChatMessages?: (messagesToLoad: number) => Promise<boolean>;
     onRenderMessage?: (messageProps: MessageProps, messageRenderer?: MessageRenderer) => JSX.Element;
     onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
-    onFetchAttachments?: (attachment: FileMetadata) => Promise<AttachmentDownloadResult | undefined>;
+    onFetchAttachments?: (attachment: FileMetadata) => Promise<AttachmentDownloadResult>;
     onUpdateMessage?: UpdateMessageCallback;
     onCancelMessageEdit?: CancelEditCallback;
     onDeleteMessage?: (messageId: string) => Promise<void>;

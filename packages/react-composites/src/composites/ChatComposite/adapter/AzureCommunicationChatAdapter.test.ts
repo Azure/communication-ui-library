@@ -136,14 +136,11 @@ describe('Error is reflected in state and events', () => {
     const threadClient = new StubChatThreadClient();
     const adapter = await createChatAdapterWithStubs(new StubChatClient(threadClient));
     const errorListener = new ErrorListener(adapter);
-    if (adapter.downloadAuthenticatedAttachment) {
-      await expect(adapter.downloadAuthenticatedAttachment('somefakeUrl')).rejects.toThrow();
-      expect(errorListener.errors.length).toBe(1);
-      expect(errorListener.errors[0].target).toBe('ChatThreadClient.getMessage');
-      expect(errorListener.errors[0].innerError.message).toBe('AccessToken is null');
-    } else {
-      expect(false);
-    }
+
+    await expect(adapter.downloadAuthenticatedAttachment('somefakeUrl')).rejects.toThrow();
+    expect(errorListener.errors.length).toBe(1);
+    expect(errorListener.errors[0].target).toBe('ChatThreadClient.getMessage');
+    expect(errorListener.errors[0].innerError.message).toBe('AccessToken is null');
   });
   /* @conditional-compile-remove(teams-inline-images) */
   it('when downloadAuthenticatedAttachment fails with bad respnse', async () => {
@@ -160,7 +157,7 @@ describe('Error is reflected in state and events', () => {
     };
     const adapter = await createChatAdapterWithStubs(new StubChatClient(threadClient), fakeToken);
     const errorListener = new ErrorListener(adapter);
-    if (adapter.downloadAuthenticatedAttachment) {
+    {
       await expect(adapter.downloadAuthenticatedAttachment('somefakeUrl')).rejects.toThrow();
       expect(errorListener.errors.length).toBe(1);
       expect(errorListener.errors[0].target).toBe('ChatThreadClient.getMessage');

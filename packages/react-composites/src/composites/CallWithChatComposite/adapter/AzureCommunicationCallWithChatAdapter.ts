@@ -400,9 +400,6 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   };
   /* @conditional-compile-remove(teams-inline-images) */
   async downloadAuthenticatedAttachment(attachmentUrl: string): Promise<AttachmentDownloadResult> {
-    if (!this.chatAdapter.downloadAuthenticatedAttachment) {
-      throw new Error('downloadAuthenticatedAttachment was not implemented');
-    }
     return await this.chatAdapter.downloadAuthenticatedAttachment(attachmentUrl);
   }
   /* @conditional-compile-remove(PSTN-calls) */
