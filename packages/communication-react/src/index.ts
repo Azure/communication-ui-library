@@ -147,6 +147,14 @@ export type {
   MicrophoneSitePermissionsProps
 } from '../../react-components/src';
 
+/* @conditional-compile-remove(at-mention) */
+export type {
+  AtMentionOptions,
+  AtMentionDisplayOptions,
+  AtMentionLookupOptions,
+  AtMentionSuggestion
+} from '../../react-components/src';
+
 export type {
   _IdentifierProviderProps,
   _Identifiers,

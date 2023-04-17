@@ -33,6 +33,7 @@
     "@azure/logger": "1.0.3",
     "@babel/preset-react": "^7.12.7",
     "@fluentui/react": "~8.98.3",
+    "@fluentui/react-hooks": "~8.6.12",
     "@fluentui/react-icons": "~2.0.194",
     "@internal/acs-ui-common": "1.5.1-beta.2",
     "@internal/calling-component-bindings": "1.5.1-beta.2",
