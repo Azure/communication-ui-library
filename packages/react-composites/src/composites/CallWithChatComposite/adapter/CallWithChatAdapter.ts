@@ -31,6 +31,8 @@ import {
   StartCallOptions,
   VideoDeviceInfo
 } from '@azure/communication-calling';
+/* @conditional-compile-remove(close-captions) */
+import { StartCaptionsOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions, DtmfTone } from '@azure/communication-calling';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
@@ -45,6 +47,8 @@ import { FileUploadManager } from '../../ChatComposite';
 import { CommunicationUserIdentifier, PhoneNumberIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(PSTN-calls) */
 import { CommunicationIdentifier } from '@azure/communication-common';
+/* @conditional-compile-remove(close-captions) */
+import { CaptionsReceivedListener, IsCaptionsActiveChangedListener } from '../../CallComposite/adapter/CallAdapter';
 /* @conditional-compile-remove(video-background-effects) */
 import { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/communication-calling-effects';
 /* @conditional-compile-remove(video-background-effects) */
@@ -346,6 +350,30 @@ export interface CallWithChatAdapterManagement {
    * Continues into a call when the browser version is not supported.
    */
   allowUnsupportedBrowserVersion(): void;
+  /* @conditional-compile-remove(close-captions) */
+  /**
+   * Function to Start captions
+   * @param options - options for start captions
+   */
+  startCaptions(options?: StartCaptionsOptions): Promise<void>;
+  /* @conditional-compile-remove(close-captions) */
+  /**
+   * Function to set caption language
+   * @param language - language set for caption
+   */
+  setCaptionLanguage(language: string): Promise<void>;
+  /* @conditional-compile-remove(close-captions) */
+  /**
+   * Function to set spoken language
+   * @param language - spoken language
+   */
+  setSpokenLanguage(language: string): Promise<void>;
+  /* @conditional-compile-remove(close-captions) */
+  /**
+   * Funtion to stop captions
+   */
+  stopCaptions(): Promise<void>;
+
   /* @conditional-compile-remove(video-background-effects) */
   /**
    * Start the blur video background effect.
@@ -402,6 +430,10 @@ export interface CallWithChatAdapterSubscriptions {
   on(event: 'selectedMicrophoneChanged', listener: PropertyChangedEvent): void;
   on(event: 'selectedSpeakerChanged', listener: PropertyChangedEvent): void;
   on(event: 'callError', listener: (e: AdapterError) => void): void;
+  /* @conditional-compile-remove(close-captions) */
+  on(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
+  /* @conditional-compile-remove(close-captions) */
+  on(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
 
   off(event: 'callEnded', listener: CallEndedListener): void;
   off(event: 'isMutedChanged', listener: IsMutedChangedListener): void;
@@ -414,6 +446,10 @@ export interface CallWithChatAdapterSubscriptions {
   off(event: 'selectedMicrophoneChanged', listener: PropertyChangedEvent): void;
   off(event: 'selectedSpeakerChanged', listener: PropertyChangedEvent): void;
   off(event: 'callError', listener: (e: AdapterError) => void): void;
+  /* @conditional-compile-remove(close-captions) */
+  off(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
+  /* @conditional-compile-remove(close-captions) */
+  off(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
 
   // Chat subscriptions
   on(event: 'messageReceived', listener: MessageReceivedListener): void;
@@ -460,6 +496,8 @@ export type CallWithChatEvent =
   | 'callParticipantsLeft'
   | 'selectedMicrophoneChanged'
   | 'selectedSpeakerChanged'
+  | /* @conditional-compile-remove(close-captions) */ 'isCaptionsActiveChanged'
+  | /* @conditional-compile-remove(close-captions) */ 'captionsReceived'
   | 'messageReceived'
   | 'messageSent'
   | 'messageRead'
