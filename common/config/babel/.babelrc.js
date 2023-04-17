@@ -30,6 +30,8 @@ process.env['COMMUNICATION_REACT_FLAVOR'] === 'stable' &&
         'data-loss-prevention',
         // Ability to upload/download files in message thread.
         'file-sharing',
+        // At mention feature
+        'at-mention',
         // feature for enabling new call control bar in CallComposite
         'new-call-control-bar',
         // 1 to N Calling feature.

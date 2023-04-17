@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "Added Inline Image Reference in Storybook",
+  "packageName": "@azure/communication-react",
+  "email": "109105353+jpeng-ms@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

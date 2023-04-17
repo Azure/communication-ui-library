@@ -37,7 +37,9 @@ export const IDS = {
   configurationScreenDevicesButton: 'call-composite-local-device-settings-options-button',
   verticalGalleryPageCounter: 'vertical-gallery-page-counter',
   verticalGalleryVideoTile: 'vertical-gallery-video-tile',
-  horizontalGalleryVideoTile: 'horizontal-gallery-video-tile'
+  horizontalGalleryVideoTile: 'horizontal-gallery-video-tile',
+  atMentionSuggestionList: 'at-mention-suggestion-list',
+  atMentionSuggestionItem: 'at-mention-suggestion-item'
 };
 
 export const captionsAvailableLanguageStrings = [

@@ -17704,6 +17704,7 @@ packages:
     resolution:
       integrity: sha512-rjUWSqnfTNrjbB9NQWfPMH/xRK1deHeGsHoVfpxJ++XeYXE0d6B1En37AHfw3jtfTU7dzMzZL2jjpe8Qb5gLIQ==
   /trim/0.0.1:
+    deprecated: Use String.prototype.trim() instead
     dev: false
     resolution:
       integrity: sha512-YzQV+TZg4AxpKxaTHK3c3D+kRDCGVEE7LemdlQZoQXn0iennk10RsIoY6ikzAqJTc9Xjl9C1/waHom/J86ziAQ==
@@ -19494,6 +19495,7 @@ packages:
       '@babel/preset-env': 7.13.10_@babel+core@7.16.12
       '@babel/preset-react': 7.18.6_@babel+core@7.16.12
       '@fluentui/react': 8.98.8_2c4352668639a1b92fb3e4efd8af0b17
+      '@fluentui/react-hooks': 8.6.19_77a551dfef9b18d75efcc1f22e8728ee
       '@fluentui/react-icons': 2.0.196_react@16.14.0
       '@testing-library/react-hooks': 3.7.0_98e0eb37a9f7280a1c5a6c886619f5b4
       '@types/jest': 26.0.24
@@ -19626,7 +19628,7 @@ packages:
     dev: false
     name: '@rush-temp/callwithchat'
     resolution:
-      integrity: sha512-/hFd6sdy3divh3I0kiGTFiJoiOSceiIK/+7JSylBNxudkib6t/obnFv3mb1hqFmcKJ9Q18S9vjFSgM0lULS6pg==
+      integrity: sha512-T1ef3Qdxl0bRzf4/NTI3F6ASa66aRc5YkJebYLzmyVkbpNSEQRluJmHr3bf/fYo2KJvxJqanbPjQWTTg3tT9eQ==
       tarball: file:projects/callwithchat.tgz
     version: 0.0.0
   file:projects/chat-component-bindings.tgz:
@@ -19883,7 +19885,7 @@ packages:
     dev: false
     name: '@rush-temp/communication-react'
     resolution:
-      integrity: sha512-dyMCOOFtimchmbckm6/vNFzePzls/+vl2mFm7XNdDqo8WtD8E77f+Z4+jCMg94tVbC5k1hFNTrcEkOnqIZLgkQ==
+      integrity: sha512-kXF0OOe8DbJvJl3pfhshOP5lSVwD52yGsaWWNS69Oa97QNNgoeKWaThEGZ1H6tCjtYXIUZTdr3xAEtSdmErcUQ==
       tarball: file:projects/communication-react.tgz
     version: 0.0.0
   file:projects/component-examples.tgz:
@@ -19933,7 +19935,7 @@ packages:
     dev: false
     name: '@rush-temp/component-examples'
     resolution:
-      integrity: sha512-ORGsg0VlYdzHIo/I+bhWBfTZ+6i8wFWfG02tposh/SIQpvJbWVcozy3BJWzEN9j1sL6QumkrVA/HKm+PAHVJNA==
+      integrity: sha512-iK2LRMTL61fk8T3W/PlbZdFbmMX7EBGViFi7uMNxDDbrXS/M1g5ImvIqTaF6WRCdFQ4ygl9BkNOh/Ls1dQ44uQ==
       tarball: file:projects/component-examples.tgz
     version: 0.0.0
   file:projects/config.tgz:
@@ -20188,7 +20190,7 @@ packages:
     dev: false
     name: '@rush-temp/react-composites'
     resolution:
-      integrity: sha512-dYFDB9Va4Il7R4NmVdYSH31i81jEqcyfr0iLnbqDbBibsQrnRr13mOREfrCyT+cq+Sdr9Zv8vc/RmO5kfYxpmg==
+      integrity: sha512-it6P+vbAmDf8+1K8i37C1M5QNTW+8EIP6ZWUNyFSdBjCjZYvOmmPnVBAuuZHgNU1yl92v1Hggbnkfl85scAfEQ==
       tarball: file:projects/react-composites.tgz
     version: 0.0.0
   file:projects/sample-automation-tests.tgz:
@@ -20212,7 +20214,7 @@ packages:
     dev: false
     name: '@rush-temp/sample-automation-tests'
     resolution:
-      integrity: sha512-Cbv4163w8zodBzDNihNrWC15DnspIj35gyRMx5j3cIROKecMlVWqt9HOLlGC6jzyVe8gbhZ1UUlyaArhACzInA==
+      integrity: sha512-S45Y4uauoQWF1bGpgO0sjsFB9F7q40nopt6MfF7ZZSlWXsaRSE7exOAyF0W+PQpw890vkDnnzJengxkrW41xrw==
       tarball: file:projects/sample-automation-tests.tgz
     version: 0.0.0
   file:projects/sample-static-html-composites.tgz:
@@ -20251,7 +20253,7 @@ packages:
     dev: false
     name: '@rush-temp/sample-static-html-composites'
     resolution:
-      integrity: sha512-PiMJacmU4frQlDMO/gJ0kraEpQ88twEKlOme/+r07QERcK5HKpJM1ihwPzB9O1HZlRP7hY0MVEqiBkGxm98RXg==
+      integrity: sha512-lSYWT3wvFDIcAkJ3KaE9RRwAVp09SlnfPyVlGTk6Di1jG36j+s3AdVp9S/X9yCZ9nuLvVe1mXX8Gh+dsiZrUIg==
       tarball: file:projects/sample-static-html-composites.tgz
     version: 0.0.0
   file:projects/server.tgz:
@@ -20405,7 +20407,7 @@ packages:
     dev: false
     name: '@rush-temp/storybook'
     resolution:
-      integrity: sha512-1QVcG045qhrjZwsTN2/FsgwXOjNrYX2XsC4IdRe6EPU2dXZ8+eg8gOYKdIft3O57w54+Ks7LJmaYgYDv9Z6DNg==
+      integrity: sha512-HNe69g7UIEDdimuGXON1zet5vVuM7COZ9rddgGz1jrnjQ/JISfqtFxnWryPbDne/KgHqDxHPr1x6mpVl3BrRuw==
       tarball: file:projects/storybook.tgz
     version: 0.0.0
 specifiers:
