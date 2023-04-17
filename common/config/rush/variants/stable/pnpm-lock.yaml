@@ -10,6 +10,7 @@ dependencies:
   '@rush-temp/chat-component-bindings': file:projects/chat-component-bindings.tgz
   '@rush-temp/chat-stateful-client': file:projects/chat-stateful-client.tgz
   '@rush-temp/check-treeshaking': file:projects/check-treeshaking.tgz
+  '@rush-temp/check-typescript-regression': file:projects/check-typescript-regression.tgz
   '@rush-temp/communication-react': file:projects/communication-react.tgz
   '@rush-temp/component-examples': file:projects/component-examples.tgz
   '@rush-temp/config': file:projects/config.tgz
@@ -17920,6 +17921,13 @@ packages:
     dev: false
     resolution:
       integrity: sha512-/aCDEGatGvZ2BIk+HmLf4ifCJFwvKFNb9/JeZPMulfgFracn9QFcAf5GO8B/mweUjSoblS5In0cWhqpfs/5PQA==
+  /typescript/3.8.3:
+    dev: false
+    engines:
+      node: '>=4.2.0'
+    hasBin: true
+    resolution:
+      integrity: sha512-MYlEfn5VrLNsgudQTVJeNaQFUAI7DkhnOjdpAp4T+ku1TfQClewlbSuTVHiA+8skNBgaf02TL/kLOvig4y3G8w==
   /typescript/4.3.5:
     dev: false
     engines:
@@ -19764,6 +19772,28 @@ packages:
       integrity: sha512-+tmmgm74zTv/sX6BjHQY6qrX15CqJpNfPgVzDxonbtlZ0Fi4eQOi31xZ8Jv/uVY1tD8z5hNkuKi6pSJi89xDOw==
       tarball: file:projects/check-treeshaking.tgz
     version: 0.0.0
+  file:projects/check-typescript-regression.tgz:
+    dependencies:
+      '@babel/cli': 7.16.8_@babel+core@7.16.12
+      '@babel/core': 7.16.12
+      cpx: 1.5.0
+      cross-env: 7.0.3
+      env-cmd: 10.1.0
+      eslint: 7.32.0
+      eslint-config-prettier: 6.15.0_eslint@7.32.0
+      eslint-plugin-header: 3.1.1_eslint@7.32.0
+      eslint-plugin-import: 2.22.1_eslint@7.32.0
+      eslint-plugin-prettier: 3.4.1_8142a4287e8e8e0691574dfac8adcedb
+      if-env: 1.0.4
+      prettier: 2.3.1
+      rimraf: 2.7.1
+      typescript: 3.8.3
+    dev: false
+    name: '@rush-temp/check-typescript-regression'
+    resolution:
+      integrity: sha512-EMAdGUdLseta0UFNIY0kZz4Cg4uix/zUsz/91nZ0ophM0/jJoPPqyK+X1jd0yNo3MF5XeNdX26V5CmpoJWkWHA==
+      tarball: file:projects/check-typescript-regression.tgz
+    version: 0.0.0
   file:projects/communication-react.tgz:
     dependencies:
       '@azure/communication-calling': 1.12.1
@@ -20387,6 +20417,7 @@ specifiers:
   '@rush-temp/chat-component-bindings': file:./projects/chat-component-bindings.tgz
   '@rush-temp/chat-stateful-client': file:./projects/chat-stateful-client.tgz
   '@rush-temp/check-treeshaking': file:./projects/check-treeshaking.tgz
+  '@rush-temp/check-typescript-regression': file:./projects/check-typescript-regression.tgz
   '@rush-temp/communication-react': file:./projects/communication-react.tgz
   '@rush-temp/component-examples': file:./projects/component-examples.tgz
   '@rush-temp/config': file:./projects/config.tgz
