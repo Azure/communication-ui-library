@@ -52,7 +52,6 @@ jobs:
         env:
           # Set the node_env to ensure Internal stories are published in chromatic builds
           NODE_ENV: development
-          NODE_OPTIONS: '--max_old_space_size=4096'
 
       - name: Format storybook URL
         id: storybook_url
