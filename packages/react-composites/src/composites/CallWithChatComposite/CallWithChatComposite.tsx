@@ -385,7 +385,6 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
               <VideoEffectsPane
                 showVideoEffectsOptions={showVideoEffectsPane}
                 setshowVideoEffectsOptions={setShowVideoEffectsPane}
-                adapter={callAdapter}
               />
             </CallAdapterProvider>
           }

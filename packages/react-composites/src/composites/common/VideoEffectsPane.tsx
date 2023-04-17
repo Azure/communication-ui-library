@@ -17,11 +17,12 @@ import {
   VideoBackgroundNoneEffect,
   VideoBackgroundReplacementEffect
 } from '../CallComposite';
-import { CallAdapter, CommonCallAdapter } from '../CallComposite';
 /* @conditional-compile-remove(video-background-effects) */
 import { activeVideoBackgroundEffectSelector } from '../CallComposite/selectors/activeVideoBackgroundEffectSelector';
 /* @conditional-compile-remove(video-background-effects) */
 import { useSelector } from '../CallComposite/hooks/useSelector';
+/* @conditional-compile-remove(video-background-effects) */
+import { useAdapter } from '../CallComposite/adapter/CallAdapterProvider';
 
 /**
  * Pane that is used to show video effects button
@@ -31,11 +32,12 @@ import { useSelector } from '../CallComposite/hooks/useSelector';
 export const VideoEffectsPane = (props: {
   showVideoEffectsOptions: boolean;
   setshowVideoEffectsOptions: (showVideoEffectsOptions: boolean) => void;
-  adapter: CallAdapter | CommonCallAdapter;
 }): JSX.Element => {
   const { showVideoEffectsOptions, setshowVideoEffectsOptions } = props;
   /* @conditional-compile-remove(video-background-effects) */
   const locale = useLocale();
+  /* @conditional-compile-remove(video-background-effects) */
+  const adapter = useAdapter();
   /* @conditional-compile-remove(video-background-effects) */
   const strings = locale.strings.call;
   /* @conditional-compile-remove(video-background-effects) */
@@ -62,7 +64,7 @@ export const VideoEffectsPane = (props: {
         }
       }
     ];
-    const videoEffectImages = props.adapter.getState().videoBackgroundImages;
+    const videoEffectImages = adapter.getState().videoBackgroundImages;
 
     if (videoEffectImages) {
       videoEffectImages.forEach((img: VideoBackgroundImage) => {
@@ -78,7 +80,7 @@ export const VideoEffectsPane = (props: {
       });
     }
     return videoEffects;
-  }, [strings, props.adapter]);
+  }, [strings, adapter]);
 
   /* @conditional-compile-remove(video-background-effects) */
   const onEffectChange = useCallback(
@@ -87,14 +89,14 @@ export const VideoEffectsPane = (props: {
         const blurEffect: VideoBackgroundBlurEffect = {
           effectName: effectKey
         };
-        props.adapter.updateSelectedVideoBackgroundEffect(blurEffect);
-        await props.adapter.blurVideoBackground();
+        adapter.updateSelectedVideoBackgroundEffect(blurEffect);
+        await adapter.blurVideoBackground();
       } else if (effectKey === 'none') {
         const noneEffect: VideoBackgroundNoneEffect = {
           effectName: effectKey
         };
-        props.adapter.updateSelectedVideoBackgroundEffect(noneEffect);
-        await props.adapter.stopVideoBackgroundEffect();
+        adapter.updateSelectedVideoBackgroundEffect(noneEffect);
+        await adapter.stopVideoBackgroundEffect();
       } else {
         const backgroundImg = selectableVideoEffects.find((effect) => {
           return effect.key === effectKey;
@@ -105,12 +107,12 @@ export const VideoEffectsPane = (props: {
             effectKey,
             backgroundImageUrl: backgroundImg.backgroundProps.url
           };
-          props.adapter.updateSelectedVideoBackgroundEffect(replaceEffect);
-          await props.adapter.replaceVideoBackground({ backgroundImageUrl: backgroundImg.backgroundProps.url });
+          adapter.updateSelectedVideoBackgroundEffect(replaceEffect);
+          await adapter.replaceVideoBackground({ backgroundImageUrl: backgroundImg.backgroundProps.url });
         }
       }
     },
-    [props.adapter, selectableVideoEffects]
+    [adapter, selectableVideoEffects]
   );
   return VideoEffectsPaneTrampoline(
     showVideoEffectsOptions,

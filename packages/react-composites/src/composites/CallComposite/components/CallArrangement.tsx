@@ -332,7 +332,6 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
             <VideoEffectsPane
               showVideoEffectsOptions={showVideoEffectsPane}
               setshowVideoEffectsOptions={setShowVideoEffectsPane}
-              adapter={adapter}
             />
           }
         </Stack>
