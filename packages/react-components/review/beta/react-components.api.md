@@ -64,6 +64,41 @@ export type AnnouncerProps = {
     ariaLive: 'off' | 'polite' | 'assertive' | undefined;
 };
 
+// @beta
+export interface AtMentionDisplayOptions {
+    onRenderAtMentionSuggestion?: (suggestion: AtMentionSuggestion) => JSX.Element;
+}
+
+// @internal
+export const _AtMentionFlyout: (props: _AtMentionFlyoutProps) => JSX.Element;
+
+// @internal
+export interface _AtMentionFlyoutProps {
+    onDismiss?: () => void;
+    onRenderSuggestionItem?: (suggestion: AtMentionSuggestion, onSuggestionSelected?: (suggestion: AtMentionSuggestion) => void) => JSX.Element;
+    onSuggestionSelected?: (suggestion: AtMentionSuggestion) => void;
+    suggestions: AtMentionSuggestion[];
+    target?: React_2.RefObject<Element>;
+    title?: string;
+}
+
+// @beta
+export interface AtMentionLookupOptions {
+    onQueryUpdated?: (query: string) => Promise<AtMentionSuggestion[]>;
+    onRenderSuggestionItem?: (suggestion: AtMentionSuggestion, onSuggestionSelected?: (suggestion: AtMentionSuggestion) => void) => JSX.Element;
+    trigger?: string;
+}
+
+// @beta
+export type AtMentionOptions = AtMentionLookupOptions & AtMentionDisplayOptions;
+
+// @beta
+export interface AtMentionSuggestion {
+    displayName: string;
+    suggestionType: string;
+    userId: string;
+}
+
 // @beta (undocumented)
 export interface AttachmentDownloadResult {
     // (undocumented)
@@ -995,6 +1030,8 @@ export interface _IdentifierProviderProps {
 
 // @internal
 export interface _Identifiers {
+    atMentionSuggestionItem: string;
+    atMentionSuggestionList: string;
     horizontalGalleryVideoTile: string;
     messageContent: string;
     messageTimestamp: string;
@@ -1161,6 +1198,7 @@ export type MessageThreadProps = {
     strings?: Partial<MessageThreadStrings>;
     fileDownloadHandler?: FileDownloadHandler;
     onDisplayDateTimeString?: (messageDate: Date) => string;
+    atMentionOptions?: AtMentionOptions;
 };
 
 // @public
@@ -1544,6 +1582,8 @@ export interface SendBoxErrorBarError {
 export interface SendBoxProps {
     // @beta
     activeFileUploads?: ActiveFileUpload[];
+    // @beta
+    atMentionLookupOptions?: AtMentionLookupOptions;
     autoFocus?: 'sendBoxTextField';
     disabled?: boolean;
     // @beta
