@@ -43,7 +43,7 @@ export const getDocs: () => JSX.Element = () => {
       </Description>
       <Subheading>Use MessageThread component with Inline Image Support</Subheading>
       <Description>
-        `MessageThread` is deisgned to be responsive and supports inline images natively. To achieve this, you need to
+        `MessageThread` is designed to be responsive and supports inline images natively. To achieve this, you need to
         simply pass in chat messages in HTML format with `img` tag embedded to `MessageThread` component without any
         additional setup.
       </Description>
