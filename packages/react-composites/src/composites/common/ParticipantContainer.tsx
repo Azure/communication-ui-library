@@ -103,6 +103,8 @@ export const ParticipantListWithHeading = (props: {
 
 const paneTitleTrampoline = (paneTitle: string, totalParticipantCount?: number): string => {
   /* @conditional-compile-remove(total-participant-count) */
-  return `${paneTitle} (${totalParticipantCount})`;
+  const participantCountString = totalParticipantCount ? `(${totalParticipantCount})` : '';
+  /* @conditional-compile-remove(total-participant-count) */
+  return `${paneTitle} ${participantCountString}`;
   return paneTitle;
 };
