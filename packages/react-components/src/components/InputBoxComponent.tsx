@@ -103,6 +103,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
   // Index of the current trigger character in the text field
   const [currentTagIndex, setCurrentTagIndex] = useState<number>(-1);
   const [inputTextValue, setInputTextValue] = useState<string>('');
+  const [tagsValue, setTagsValue] = useState<UpdatedParsedTag[]>([]);
 
   // Parse the text and get the plain text version to display in the input box
   useEffect(() => {
@@ -116,6 +117,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     // const plainText = plainTextFromParsedTags(textValue, tags, trigger);
     // Provide the plain text string to the inputTextValue
     setInputTextValue(plainText);
+    setTagsValue(tags);
   }, [textValue, atMentionLookupOptions?.trigger]);
 
   const mergedRootStyle = mergeStyles(inputBoxWrapperStyle, styles?.root);
@@ -176,12 +178,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       // TODO: make this logic work properly
       const updatedText = firstPart + htmlStringForMentionSuggestion(suggestion) + lastPart;
 
-      const tags = parseToTags(updatedText);
-      const plainText = plainTextFromParsedTags(
-        updatedText,
-        tags,
-        props.atMentionLookupOptions?.trigger ?? defaultMentionTrigger
-      );
+      const [tags, plainText] = parseHTMLText(updatedText, triggerText);
       setInputTextValue(plainText);
       onMentionAdd && onMentionAdd(updatedText);
       setMentionSuggestions([]);
@@ -251,9 +248,9 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
         }
       }
     }
-
+    //TODO: check if there are tags, otherwise just change text value without calculations
     const oldTextLength = inputTextValue.length;
-    // find indexes -> find strings diff -> check where the diff is -> change
+    // find indexes -> find strings diff -> check where the diff is -> change -> move all tags
 
     let changeStart = 0;
     let newChangeEnd = 0;
@@ -329,7 +326,17 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       inputTextValue.substring(changeStart, oldChangeEnd + 1)
     );
     console.log('newValue.substring(changeStart, newChangeEnd)', newValue.substring(changeStart, newChangeEnd + 1));
-
+    const updatedHTML = updateHTML(
+      textValue,
+      inputTextValue,
+      newValue,
+      tagsValue,
+      changeStart,
+      oldChangeEnd,
+      newValue.substring(changeStart, newChangeEnd + 1)
+    );
+    console.log('updatedHTML', updatedHTML);
+    // const updatedHTML =
     // let updatedValue = newValue;
     // if (selectionEnd === inputTextValue.length) {
     //   // add text to the end of the string
@@ -340,7 +347,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     // TODO: filter the call back to the parent only after setting the text with HTML where
     // appropriate.
     // TODO: should be html text!!!
-    onChange && onChange(event, newValue);
+    onChange && onChange(event, updatedHTML);
   };
 
   return (
@@ -469,6 +476,13 @@ type UpdatedParsedTag = {
   plainTextEndIndex?: number; // position where the open tag should begin. Might not have a close tag
 };
 
+/**
+ * Go through the text and parse out the tags and plain text
+ * This should be only <msft-at-mention> tags for now...
+ * We do need to process all other HTML tags to text though.
+ *
+ * @private
+ */
 const parseHTMLText = (text: string, trigger: string): [UpdatedParsedTag[], string] => {
   const tags: UpdatedParsedTag[] = [];
   let htmlParseIndex = 0;
@@ -535,6 +549,82 @@ const parseHTMLText = (text: string, trigger: string): [UpdatedParsedTag[], stri
   }
 
   return [tags, plaintText];
+};
+
+/**
+ * Go through the text and update it with the changed text
+ * This should be only <msft-at-mention> tags for now...
+ * We do need to process all other HTML tags to text though.
+ *
+ * @private
+ */
+const updateHTML = (
+  htmlText: string,
+  oldPlainText: string,
+  newPlainText: string,
+  tags: UpdatedParsedTag[],
+  startIndex: number,
+  oldPlainTextEndIndex: number,
+  change: string
+): string => {
+  console.log('tags', tags);
+  console.log('htmlText updateHTML', htmlText);
+  let result = htmlText;
+  if (tags.length === 0) {
+    // no tags added yet
+    return newPlainText;
+  }
+  if (startIndex < tags[0].plainTextStartIndex && oldPlainTextEndIndex < tags[0].plainTextStartIndex) {
+    // the text is before the first tag and can be just changed
+    result = htmlText.substring(0, startIndex) + change + htmlText.substring(oldPlainTextEndIndex);
+  } else if (
+    (tags[tags.length - 1].plainTextEndIndex === undefined &&
+      oldPlainTextEndIndex >= tags[tags.length - 1].plainTextStartIndex &&
+      startIndex >= tags[tags.length - 1].plainTextStartIndex) ||
+    (tags[tags.length - 1].plainTextEndIndex !== undefined &&
+      oldPlainTextEndIndex >= tags[tags.length - 1].plainTextEndIndex &&
+      startIndex >= tags[tags.length - 1].plainTextEndIndex)
+  ) {
+    const lastTag = tags[tags.length - 1];
+    // calculate a diff between the start of the last tag and the change
+    let lastTagEndIndex = 0;
+    let lastTagPlainTextEndIndex = 0;
+    if (
+      lastTag.htmlCloseTagStartIndex === undefined ||
+      lastTag.closeTagLength === undefined ||
+      lastTag.plainTextEndIndex === undefined
+    ) {
+      // no close tag
+      lastTagEndIndex = lastTag.htmlOpenTagStartIndex + lastTag.openTagBody.length;
+      lastTagPlainTextEndIndex = lastTag.plainTextStartIndex;
+    } else {
+      console.log('lastTag.htmlCloseTagStartIndex', lastTag.htmlCloseTagStartIndex);
+      console.log('lastTag.closeTagLength', lastTag.closeTagLength);
+      if (oldPlainTextEndIndex === tags[tags.length - 1].plainTextEndIndex) {
+        lastTagEndIndex = lastTag.htmlCloseTagStartIndex; //add text before the closed tag
+      } else {
+        lastTagEndIndex = lastTag.htmlCloseTagStartIndex + lastTag.closeTagLength; //add text after the closed tag
+      }
+
+      lastTagPlainTextEndIndex = lastTag.plainTextEndIndex;
+    }
+    const startDiff = startIndex - lastTagPlainTextEndIndex;
+    const endDiff = oldPlainTextEndIndex - lastTagPlainTextEndIndex;
+    console.log('startDiff', startDiff);
+    console.log('endDiff', endDiff);
+    console.log('lastTagEndIndex + startDiff', lastTagEndIndex + startDiff);
+    console.log('lastTagEndIndex + endDiff', lastTagEndIndex + endDiff);
+    console.log(
+      'htmlText.substring(0, lastTagEndIndex + startDiff)',
+      htmlText.substring(0, lastTagEndIndex + startDiff)
+    );
+    console.log('htmlText.substring(lastTagEndIndex + endDiff);', htmlText.substring(lastTagEndIndex + endDiff));
+
+    result =
+      htmlText.substring(0, lastTagEndIndex + startDiff) + change + htmlText.substring(lastTagEndIndex + endDiff);
+    console.log('result', result);
+  }
+  return result;
 };
 
 /**
