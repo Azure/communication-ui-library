@@ -83,11 +83,12 @@ const MessageContentAsRichTextHTML = (props: ChatMessageContentProps): JSX.Eleme
           return node.name === 'msft-at-mention';
         },
         processNode: (node) => {
-          const { userId, suggestionType, displayName } = node.attribs;
+          console.log('processing node', node);
+          const { userid, suggestiontype, displayname } = node.attribs;
           const suggestion: AtMentionSuggestion = {
-            userId: userId,
-            suggestionType: suggestionType,
-            displayName: displayName
+            userId: userid,
+            suggestionType: suggestiontype,
+            displayName: displayname
           };
           return atMentionSuggestionRenderer(suggestion);
         }
