@@ -8,17 +8,15 @@ import { ChatMessage } from '../types';
 import { BlockedMessage } from '../types';
 /* @conditional-compile-remove(teams-inline-images) */
 import { AttachmentDownloadResult, FileMetadata } from './FileDownloadCards';
-/* @conditional-compile-remove(teams-inline-images) */
-import { act } from 'react-dom/test-utils';
-import Enzyme from 'enzyme';
-/* @conditional-compile-remove(teams-inline-images) */
-import { mount } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
-import { mountWithLocalization, createTestLocale } from './utils/testUtils';
+import { createTestLocale, renderWithLocalization } from './utils/testUtils';
 /* @conditional-compile-remove(date-time-customization) @conditional-compile-remove(data-loss-prevention) */
 import { COMPONENT_LOCALE_EN_US } from '../localization/locales';
-
-Enzyme.configure({ adapter: new Adapter() });
+/* @conditional-compile-remove(date-time-customization) */
+import { screen } from '@testing-library/react';
+/* @conditional-compile-remove(teams-inline-images) */
+import { act, render } from '@testing-library/react';
+/* @conditional-compile-remove(data-loss-prevention) */ /* @conditional-compile-remove(teams-inline-images) */
+import { registerIcons } from '@fluentui/react';
 
 const twentyFourHoursAgo = (): Date => {
   const date = new Date();
@@ -52,7 +50,7 @@ const onDisplayDateTimeString = (messageDate: Date): string => {
 
 describe('Message date should be formatted correctly', () => {
   test('Should locale string for "Yesterday"', async () => {
-    const testLocale = createTestLocale({ messageThread: { yesterday: Math.random().toString() } });
+    const testLocale = createTestLocale({ messageThread: { yesterday: 'MOCK YESTERDAY' } });
     const sampleMessage: ChatMessage = {
       messageType: 'chat',
 
@@ -65,11 +63,11 @@ describe('Message date should be formatted correctly', () => {
       attached: false,
       contentType: 'text'
     };
-    const component = mountWithLocalization(
+    const { container } = renderWithLocalization(
       <MessageThread userId="user1" messages={[sampleMessage]} showMessageDate={true} />,
       testLocale
     );
-    expect(component.text()).toContain(testLocale.strings.messageThread.yesterday);
+    expect(container.textContent).toContain(testLocale.strings.messageThread.yesterday);
   });
 });
 
@@ -92,11 +90,11 @@ describe('Message date should be customized by onDisplayDateTimeString passed th
       attached: false,
       contentType: 'text'
     };
-    const component = mountWithLocalization(
+    renderWithLocalization(
       <MessageThread userId="user1" messages={[sampleMessage]} showMessageDate={true} />,
       testLocale
     );
-    expect(component.text()).toContain('24 hours ago');
+    expect(screen.getByText('24 hours ago')).toBeTruthy();
   });
 });
 
@@ -118,7 +116,7 @@ describe('onDisplayDateTimeString passed through messagethread should overwrite 
       attached: false,
       contentType: 'text'
     };
-    const component = mountWithLocalization(
+    renderWithLocalization(
       <MessageThread
         userId="user1"
         messages={[sampleMessage]}
@@ -127,12 +125,20 @@ describe('onDisplayDateTimeString passed through messagethread should overwrite 
       />,
       testLocale
     );
-    expect(component.text()).toContain('Yesterday');
+    expect(screen.getByText('Yesterday')).toBeTruthy();
   });
 });
 
 /* @conditional-compile-remove(data-loss-prevention) */
 describe('Message blocked should display default blocked text correctly', () => {
+  beforeAll(() => {
+    registerIcons({
+      icons: {
+        datalosspreventionprohibited: <></>
+      }
+    });
+  });
+
   test('Should locale string for default message blocked by policy"', async () => {
     const testLocale = createTestLocale({ messageThread: { yesterday: Math.random().toString() } });
     const sampleMessage: BlockedMessage = {
@@ -145,19 +151,27 @@ describe('Message blocked should display default blocked text correctly', () => 
       mine: false,
       attached: false
     };
-    const component = mountWithLocalization(
+    renderWithLocalization(
       <MessageThread userId="user1" messages={[sampleMessage]} showMessageDate={true} />,
       testLocale
     );
-    expect(component.text()).toContain(testLocale.strings.messageThread.blockedWarningText);
+    expect(screen.getByText(testLocale.strings.messageThread.blockedWarningText)).toBeTruthy();
   });
 });
 
 /* @conditional-compile-remove(teams-inline-images) */
 describe('Message should display inline image correctly', () => {
+  beforeAll(() => {
+    registerIcons({
+      icons: {
+        datalosspreventionprohibited: <></>
+      }
+    });
+  });
+
   test('Message richtext/html img src should be correct', async () => {
-    const expectedBeforeImgSrc = 'urlBeforeSrcReplacement';
-    const expectedImgSrc = 'someImgSrcUrl';
+    const expectedBeforeImgSrc = 'http://localhost/urlBeforeSrcReplacement';
+    const expectedImgSrc = 'http://localhost/someImgSrcUrl';
     const sampleMessage: ChatMessage = {
       messageType: 'chat',
       senderId: 'user3',
@@ -179,20 +193,20 @@ describe('Message should display inline image correctly', () => {
         }
       ]
     };
-    const onFetchAttachment = async (attachment: FileMetadata): Promise<AttachmentDownloadResult> => {
-      return {
-        blobUrl: attachment.previewUrl ?? ''
-      };
+    const onFetchAttachment = async (attachment: FileMetadata): Promise<AttachmentDownloadResult[]> => {
+      return [
+        {
+          blobUrl: attachment.previewUrl ?? ''
+        }
+      ];
     };
-    const component = mount(
-      <MessageThread userId="user1" messages={[sampleMessage]} onFetchAttachments={onFetchAttachment} />
-    );
-    await act(async () => {
-      expect(component.find('img').prop('src')).toEqual(expectedBeforeImgSrc);
-      await new Promise((resolve) => setTimeout(resolve, 0));
-      component.update();
 
-      expect(component.find('img').prop('src')).toEqual(expectedImgSrc);
+    render(<MessageThread userId="user1" messages={[sampleMessage]} onFetchAttachments={onFetchAttachment} />);
+    expect((screen.getByRole('img') as HTMLImageElement).src).toEqual(expectedBeforeImgSrc);
+
+    act(async () => {
+      await new Promise((resolve) => setTimeout(resolve, 0));
+      expect((screen.getByRole('img') as HTMLImageElement).src).toEqual(expectedImgSrc);
     });
   });
 });

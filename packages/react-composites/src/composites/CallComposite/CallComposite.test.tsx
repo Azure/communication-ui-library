@@ -2,13 +2,10 @@
 // Licensed under the MIT license.
 
 import { registerIcons } from '@fluentui/react';
-import Enzyme, { mount } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
 import React from 'react';
 import { MockCallAdapter } from './MockCallAdapter';
 import { CallComposite } from './CallComposite';
-
-Enzyme.configure({ adapter: new Adapter() });
+import { render } from '@testing-library/react';
 
 describe('CallComposite device permission test for different roles', () => {
   let audioDevicePermissionRequests = 0;
@@ -38,7 +35,7 @@ describe('CallComposite device permission test for different roles', () => {
 
   test('Audio and video device permission should be requested when no role is assigned', async () => {
     const adapter = new MockCallAdapter({ askDevicePermission: countDevicePermissionRequests });
-    mount(<CallComposite adapter={adapter} />);
+    render(<CallComposite adapter={adapter} />);
     expect(audioDevicePermissionRequests).toBe(1);
     expect(videoDevicePermissionRequests).toBe(1);
   });
@@ -49,7 +46,7 @@ describe('CallComposite device permission test for different roles', () => {
       askDevicePermission: countDevicePermissionRequests,
       options: { roleHint: 'Presenter' }
     });
-    mount(<CallComposite adapter={adapter} />);
+    render(<CallComposite adapter={adapter} />);
     expect(audioDevicePermissionRequests).toBe(1);
     expect(videoDevicePermissionRequests).toBe(1);
   });
@@ -60,7 +57,7 @@ describe('CallComposite device permission test for different roles', () => {
       askDevicePermission: countDevicePermissionRequests,
       options: { roleHint: 'Attendee' }
     });
-    mount(<CallComposite adapter={adapter} />);
+    render(<CallComposite adapter={adapter} />);
     expect(audioDevicePermissionRequests).toBe(1);
     expect(videoDevicePermissionRequests).toBe(1);
   });
@@ -71,7 +68,7 @@ describe('CallComposite device permission test for different roles', () => {
       askDevicePermission: countDevicePermissionRequests,
       options: { roleHint: 'Consumer' }
     });
-    mount(<CallComposite adapter={adapter} />);
+    render(<CallComposite adapter={adapter} />);
     expect(audioDevicePermissionRequests).toBe(1);
     expect(videoDevicePermissionRequests).toBe(0);
   });
@@ -105,7 +102,7 @@ describe('CallComposite device permission test for call readiness', () => {
   });
 
   test('Audio and video device permission should be requested when no devicePermission prompt is set', async () => {
-    mount(<CallComposite adapter={adapter} />);
+    render(<CallComposite adapter={adapter} />);
     expect(audioDevicePermissionRequests).toBe(1);
     expect(videoDevicePermissionRequests).toBe(1);
   });
