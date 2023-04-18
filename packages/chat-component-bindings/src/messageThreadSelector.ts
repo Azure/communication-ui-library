@@ -29,8 +29,10 @@ import { ACSKnownMessageType } from './utils/constants';
 import { DEFAULT_DATA_LOSS_PREVENTION_POLICY_URL } from './utils/constants';
 import { updateMessagesWithAttached } from './utils/updateMessagesWithAttached';
 
-/* @conditional-compile-remove(file-sharing) */
+/* @conditional-compile-remove(file-sharing) @conditional-compile-remove(teams-inline-images) */
 import { FileMetadata } from '@internal/react-components';
+/* @conditional-compile-remove(teams-inline-images) */
+import { ChatAttachment } from '@azure/communication-chat';
 
 const memoizedAllConvertChatMessage = memoizeFnAll(
   (
@@ -69,6 +71,35 @@ const extractAttachedFilesMetadata = (metadata: Record<string, string>): FileMet
     console.error(e);
     return [];
   }
+};
+
+/* @conditional-compile-remove(teams-inline-images) */
+const extractInlineImageFilesMetadata = (attachments: ChatAttachment[]): FileMetadata[] => {
+  return attachments.map((attachment) => ({
+    attachmentType: attachment.attachmentType,
+    id: attachment.id,
+    name: attachment.name ?? '',
+    extension: attachment.contentType ?? '',
+    url: attachment.url,
+    previewUrl: attachment.previewUrl
+  }));
+};
+
+/* @conditional-compile-remove(file-sharing) @conditional-compile-remove(teams-inline-images) */
+const extractFilesMetadata = (message: ChatMessageWithStatus): FileMetadata[] => {
+  let fileMetadata: FileMetadata[] = [];
+
+  /* @conditional-compile-remove(file-sharing) */
+  if (message.metadata) {
+    fileMetadata = fileMetadata.concat(extractAttachedFilesMetadata(message.metadata));
+  }
+
+  /* @conditional-compile-remove(teams-inline-images) */
+  if (message.content?.attachments) {
+    fileMetadata = fileMetadata.concat(extractInlineImageFilesMetadata(message.content?.attachments));
+  }
+
+  return fileMetadata;
 };
 
 /* @conditional-compile-remove(data-loss-prevention) */
@@ -114,8 +145,8 @@ const convertToUiChatMessage = (
     deletedOn: message.deletedOn,
     mine: messageSenderId === userId,
     metadata: message.metadata,
-    /* @conditional-compile-remove(file-sharing) */
-    attachedFilesMetadata: extractAttachedFilesMetadata(message.metadata || {})
+    /* @conditional-compile-remove(file-sharing) @conditional-compile-remove(teams-inline-images) */
+    attachedFilesMetadata: extractFilesMetadata(message)
   };
 };
 
