@@ -73,6 +73,7 @@ const MessageContentWithLiveAria = (props: MessageContentWithLiveAriaProps): JSX
 const MessageContentAsRichTextHTML = (props: ChatMessageContentProps): JSX.Element => {
   const liveAuthor = _formatString(props.strings.liveAuthorIntro, { author: `${props.message.senderDisplayName}` });
 
+  /* @conditional-compile-remove(teams-inline-images) */
   useEffect(() => {
     props.message.attachedFilesMetadata?.map((fileMetadata) => {
       if (props.onFetchAttachment && props.attachmentsMap && props.attachmentsMap[fileMetadata.id] === undefined) {
