@@ -216,3 +216,8 @@ export function chunk<T>(options: T[], itemsPerRow: number): T[][] {
   }
   return rows;
 }
+
+/**
+ * @private
+ */
+export const defaultSpokenLanguage = 'en-us';

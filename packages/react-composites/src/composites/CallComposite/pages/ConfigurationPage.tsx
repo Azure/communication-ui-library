@@ -328,7 +328,6 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
         <VideoEffectsPane
           showVideoEffectsOptions={showVideoEffectsPane}
           setshowVideoEffectsOptions={setVideoEffectsPane}
-          adapter={adapter}
         />
       }
     </Stack>
