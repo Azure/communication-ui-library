@@ -179,10 +179,12 @@ describe('Message should display inline image correctly', () => {
         }
       ]
     };
-    const onFetchAttachment = async (attachment: FileMetadata): Promise<AttachmentDownloadResult> => {
-      return {
-        blobUrl: attachment.previewUrl ?? ''
-      };
+    const onFetchAttachment = async (attachment: FileMetadata): Promise<AttachmentDownloadResult[]> => {
+      return [
+        {
+          blobUrl: attachment.previewUrl ?? ''
+        }
+      ];
     };
     const component = mount(
       <MessageThread userId="user1" messages={[sampleMessage]} onFetchAttachments={onFetchAttachment} />

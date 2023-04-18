@@ -646,7 +646,7 @@ export type MessageThreadProps = {
    * @param attachment - FileMetadata object we want to render
    * @beta
    */
-  onFetchAttachments?: (attachment: FileMetadata) => Promise<AttachmentDownloadResult>;
+  onFetchAttachments?: (attachment: FileMetadata) => Promise<AttachmentDownloadResult[]>;
   /**
    * Optional callback to edit a message.
    *
@@ -848,8 +848,8 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
         return;
       }
       const attachmentDownloadResult = await onFetchAttachments(attachment);
-      if (attachmentDownloadResult) {
-        setInlineAttachments((prev) => ({ ...prev, [attachment.id]: attachmentDownloadResult.blobUrl }));
+      if (attachmentDownloadResult[0]) {
+        setInlineAttachments((prev) => ({ ...prev, [attachment.id]: attachmentDownloadResult[0].blobUrl }));
       }
     },
     [inlineAttachments, onFetchAttachments]

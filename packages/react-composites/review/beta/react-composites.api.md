@@ -504,7 +504,9 @@ export interface CallWithChatAdapterManagement {
     deleteMessage(messageId: string): Promise<void>;
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
     // (undocumented)
-    downloadAuthenticatedAttachment: (attachmentUrl: string) => Promise<AttachmentDownloadResult>;
+    downloadAttachments: (options: {
+        attachmentUrls: string[];
+    }) => Promise<AttachmentDownloadResult[]>;
     fetchInitialData(): Promise<void>;
     // @beta
     holdCall: () => Promise<void>;
@@ -833,7 +835,9 @@ export interface ChatAdapterSubscribers {
 export interface ChatAdapterThreadManagement {
     deleteMessage(messageId: string): Promise<void>;
     // (undocumented)
-    downloadAuthenticatedAttachment: (attachmentUrl: string) => Promise<AttachmentDownloadResult>;
+    downloadAttachments: (options: {
+        attachmentUrls: string[];
+    }) => Promise<AttachmentDownloadResult[]>;
     fetchInitialData(): Promise<void>;
     loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
     removeParticipant(userId: string): Promise<void>;

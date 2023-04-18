@@ -206,7 +206,7 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     /* @conditional-compile-remove(file-sharing) */
     this.updateFileUploadMetadata = this.updateFileUploadMetadata.bind(this);
     /* @conditional-compile-remove(teams-inline-images) */
-    this.downloadAuthenticatedAttachment = this.downloadAuthenticatedAttachment.bind(this);
+    this.downloadAttachments = this.downloadAttachments.bind(this);
     /* @conditional-compile-remove(PSTN-calls) */
     this.holdCall.bind(this);
     /* @conditional-compile-remove(PSTN-calls) */
@@ -399,8 +399,8 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     this.chatAdapter.updateFileUploadMetadata(id, metadata);
   };
   /* @conditional-compile-remove(teams-inline-images) */
-  async downloadAuthenticatedAttachment(attachmentUrl: string): Promise<AttachmentDownloadResult> {
-    return await this.chatAdapter.downloadAuthenticatedAttachment(attachmentUrl);
+  async downloadAttachments(options: { attachmentUrls: string[] }): Promise<AttachmentDownloadResult[]> {
+    return await this.chatAdapter.downloadAttachments(options);
   }
   /* @conditional-compile-remove(PSTN-calls) */
   public async holdCall(): Promise<void> {

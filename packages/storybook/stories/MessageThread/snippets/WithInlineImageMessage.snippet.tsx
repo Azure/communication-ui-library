@@ -8,16 +8,18 @@ import {
 import React from 'react';
 
 export const MessageThreadWithInlineImageExample: () => JSX.Element = () => {
-  const onFetchAttachment = async (attachment: FileMetadata): Promise<AttachmentDownloadResult> => {
+  const onFetchAttachment = async (attachment: FileMetadata): Promise<AttachmentDownloadResult[]> => {
     // * Your custom function to fetch image behind authenticated blob storage/server
     // const response = await fetchImage(attachment.previewUrl ?? '', token);
     // const blob = await response.blob();
 
     // * Create a blob url as <img> src
-    return {
-      // blobUrl: URL.createObjectURL(blob);
-      blobUrl: attachment.previewUrl ?? ''
-    };
+    return [
+      {
+        // blobUrl: URL.createObjectURL(blob);
+        blobUrl: attachment.previewUrl ?? ''
+      }
+    ];
   };
 
   const messages: Message[] = [
