@@ -1,7 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React, { useEffect } from 'react';
+import React from 'react';
+/* @conditional-compile-remove(teams-inline-images) */
+import { useEffect } from 'react';
 import { _formatString } from '@internal/acs-ui-common';
 import { Parser, ProcessNodeDefinitions, ProcessingInstructions } from 'html-to-react';
 import Linkify from 'react-linkify';
