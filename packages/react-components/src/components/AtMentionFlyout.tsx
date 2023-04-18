@@ -171,10 +171,10 @@ export const _AtMentionFlyout = (props: _AtMentionFlyoutProps): JSX.Element => {
   useEffect(() => {
     const rect = target?.current?.getBoundingClientRect();
     const maxWidth = 200;
-    let finalPosition: Position = { maxWidth };
+    const finalPosition: Position = { maxWidth };
 
     // Figure out whether it will fit horizontally
-    let leftOffset = targetPositionOffset?.left ?? 0;
+    const leftOffset = targetPositionOffset?.left ?? 0;
     if (leftOffset + maxWidth > (rect?.width ?? 0)) {
       finalPosition.right = (rect?.width ?? 0) - leftOffset;
     } else {
@@ -189,6 +189,19 @@ export const _AtMentionFlyout = (props: _AtMentionFlyoutProps): JSX.Element => {
     }
     setPosition(finalPosition);
   }, [location, target, targetPositionOffset]);
+
+  const handleOnKeyDown = useCallback(
+    (e: React.KeyboardEvent<HTMLDivElement>) => {
+      switch (e.key) {
+        case 'Escape':
+          onDismiss && onDismiss();
+          break;
+        default:
+          break;
+      }
+    },
+    [onDismiss]
+  );
 
   const personaRenderer = (displayName?: string): JSX.Element => {
     const avatarOptions = {
@@ -217,6 +230,9 @@ export const _AtMentionFlyout = (props: _AtMentionFlyoutProps): JSX.Element => {
         onClick={() => onSuggestionSelected(suggestion)}
         onMouseEnter={() => setHoveredSuggestion(suggestion)}
         onMouseLeave={() => setHoveredSuggestion(undefined)}
+        onKeyDown={(e) => {
+          handleOnKeyDown(e);
+        }}
         className={suggestionItemWrapperStyle(theme)}
       >
         <Stack horizontal className={suggestionItemStackStyle(theme, isSuggestionHovered)}>
