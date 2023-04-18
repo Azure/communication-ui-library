@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { _formatString } from '@internal/acs-ui-common';
 import { Parser, ProcessNodeDefinitions, ProcessingInstructions } from 'html-to-react';
 import Linkify from 'react-linkify';
@@ -72,6 +72,15 @@ const MessageContentWithLiveAria = (props: MessageContentWithLiveAriaProps): JSX
 
 const MessageContentAsRichTextHTML = (props: ChatMessageContentProps): JSX.Element => {
   const liveAuthor = _formatString(props.strings.liveAuthorIntro, { author: `${props.message.senderDisplayName}` });
+
+  useEffect(() => {
+    props.message.attachedFilesMetadata?.map((fileMetadata) => {
+      if (props.onFetchAttachment && props.attachmentsMap && props.attachmentsMap[fileMetadata.id] === undefined) {
+        props.onFetchAttachment(fileMetadata);
+      }
+    });
+  });
+
   return (
     <MessageContentWithLiveAria
       message={props.message}
@@ -189,18 +198,8 @@ const processHtmlToReact = (props: ChatMessageContentProps): JSX.Element => {
     },
     processNode: (node, children, index): HTMLElement => {
       // logic to check id in map/list
-      const fileMetadata = props.message.attachedFilesMetadata?.find((f) => f.id === node.attribs.id);
-      // if in cache, early return
       if (props.attachmentsMap && node.attribs.id in props.attachmentsMap) {
         node.attribs = { ...node.attribs, src: props.attachmentsMap[node.attribs.id] };
-        return processNodeDefinitions.processDefaultNode(node, children, index);
-      }
-      // not yet in cache
-      if (fileMetadata && props.onFetchAttachment && props.attachmentsMap) {
-        props.onFetchAttachment(fileMetadata);
-        if (node.attribs.id in props.attachmentsMap) {
-          node.attribs = { ...node.attribs, src: props.attachmentsMap[node.attribs.id] };
-        }
       }
       return processNodeDefinitions.processDefaultNode(node, children, index);
     }
