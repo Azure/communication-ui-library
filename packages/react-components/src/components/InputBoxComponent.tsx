@@ -160,7 +160,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       // TODO: Use the HTML value in the control
       // FIGURE OUT WHERE TO INSERT THE NEW TAG
       // INSERT IT INTO THE TEXT FIELD
-      let queryText = inputTextValue.substring(currentTagIndex).split(' ')[0];
+      const queryText = inputTextValue.substring(currentTagIndex).split(' ')[0];
       const oldTags = parseToTags(textValue);
       //TODO: add check if we are in the middle of another tag
 
@@ -206,7 +206,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       selectionEnd = newTextLength - 1;
     }
     // If we are enabled for lookups,
-    if (!!atMentionLookupOptions) {
+    if (atMentionLookupOptions !== undefined) {
       //TODO; add check for the last space and check if it isn't between mention trigger and
       // Look at the range of the change for a trigger character
       const triggerText = atMentionLookupOptions?.trigger ?? defaultMentionTrigger;
@@ -216,7 +216,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
         const isSpaceBeforeTrigger = newValue?.substring(triggerPriorIndex - 1, triggerPriorIndex) === ' ';
         const wordAtSelection = newValue?.substring(triggerPriorIndex, selectionEnd);
         let tagIndex = currentTagIndex;
-        if (!isSpaceBeforeTrigger) {
+        if (!isSpaceBeforeTrigger && triggerPriorIndex !== 0) {
           //no space before the trigger <- continuation of the previous word
           tagIndex = -1;
           setCurrentTagIndex(tagIndex);
@@ -236,10 +236,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
         } else {
           // In the middle of a @mention lookup
           if (tagIndex > -1) {
-            // This might want to be changed to not include the lookup tag. Currently it does.
-            // TODO: work in mentionQuery state or remove it.
-            // const query = newValue?.substring(currentTagIndex, selectionEnd);
-            const query = wordAtSelection;
+            const query = wordAtSelection.substring(triggerText.length, wordAtSelection.length);
             if (query !== undefined) {
               const suggestions = (await atMentionLookupOptions?.onQueryUpdated(query)) ?? [];
               setMentionSuggestions(suggestions);
@@ -706,7 +703,7 @@ const plainTextFromParsedTags = (textBlock: string, tags: ParsedTag[], trigger: 
     // If there are sub tags, go through them and add their text
     if (!!tag.subTags && tag.subTags.length > 0) {
       text += plainTextFromParsedTags(tag.content ?? '', tag.subTags, trigger);
-    } else if (!!tag.content) {
+    } else if (tag.content) {
       // Otherwise just add the content
       text += tag.content;
     }
@@ -775,7 +772,7 @@ const htmlMentionIndex = (
           query
         );
         text += plainTextFromParsedTags(tag.content ?? '', tag.subTags, trigger);
-      } else if (!!tag.content) {
+      } else if (tag.content !== undefined) {
         // Otherwise just add the content
         text += tag.content;
         if (plainStringIndex < tag.content.length) {

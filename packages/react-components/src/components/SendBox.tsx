@@ -392,6 +392,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
           onMentionAdd={(newTextValue) => {
             setText(newTextValue);
           }}
+          atMentionLookupOptions={atMentionLookupOptions}
         >
           <VoiceOverButton
             onRenderIcon={onRenderSendIcon}
