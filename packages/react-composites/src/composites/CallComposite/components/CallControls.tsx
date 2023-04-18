@@ -266,6 +266,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
             /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */
             isEnabled(options?.moreButton) && moreButtonContextualMenuItems().length > 0 && (
               <MoreButton
+                data-ui-id="common-call-composite-more-button"
                 strings={moreButtonStrings}
                 menuIconProps={{ hidden: true }}
                 menuProps={{ items: moreButtonContextualMenuItems() }}

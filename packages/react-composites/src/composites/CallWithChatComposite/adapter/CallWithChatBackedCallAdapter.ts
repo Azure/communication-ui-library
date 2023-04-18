@@ -13,6 +13,8 @@ import {
   PermissionConstraints,
   StartCallOptions
 } from '@azure/communication-calling';
+/* @conditional-compile-remove(close-captions) */
+import { StartCaptionsOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions, DtmfTone } from '@azure/communication-calling';
 import { CallWithChatAdapterState } from '../state/CallWithChatAdapterState';
@@ -159,10 +161,32 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
   public allowUnsupportedBrowserVersion(): void {
     return this.callWithChatAdapter.allowUnsupportedBrowserVersion();
   }
+
   /* @conditional-compile-remove(PSTN-calls) */
   public sendDtmfTone = async (dtmfTone: DtmfTone): Promise<void> => {
     await this.callWithChatAdapter.sendDtmfTone(dtmfTone);
   };
+
+  /* @conditional-compile-remove(close-captions) */
+  public async startCaptions(options?: StartCaptionsOptions): Promise<void> {
+    this.callWithChatAdapter.startCaptions(options);
+  }
+
+  /* @conditional-compile-remove(close-captions) */
+  public async stopCaptions(): Promise<void> {
+    this.callWithChatAdapter.stopCaptions();
+  }
+
+  /* @conditional-compile-remove(close-captions) */
+  public async setCaptionLanguage(language: string): Promise<void> {
+    this.callWithChatAdapter.setCaptionLanguage(language);
+  }
+
+  /* @conditional-compile-remove(close-captions) */
+  public async setSpokenLanguage(language: string): Promise<void> {
+    this.callWithChatAdapter.setSpokenLanguage(language);
+  }
+
   /* @conditional-compile-remove(video-background-effects) */
   public async blurVideoBackground(backgroundBlurConfig?: BackgroundBlurConfig): Promise<void> {
     await this.callWithChatAdapter.blurVideoBackground(backgroundBlurConfig);
@@ -202,6 +226,8 @@ function callAdapterStateFromCallWithChatAdapterState(
     /* @conditional-compile-remove(unsupported-browser) */
     environmentInfo: callWithChatAdapterState.environmentInfo,
     /* @conditional-compile-remove(video-background-effects) */
-    videoBackgroundImages: callWithChatAdapterState.videoBackgroundImages
+    videoBackgroundImages: callWithChatAdapterState.videoBackgroundImages,
+    /* @conditional-compile-remove(video-background-effects) */
+    selectedVideoBackgroundEffect: callWithChatAdapterState.selectedVideoBackgroundEffect
   };
 }
