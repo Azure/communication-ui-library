@@ -160,7 +160,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       // TODO: Use the HTML value in the control
       // FIGURE OUT WHERE TO INSERT THE NEW TAG
       // INSERT IT INTO THE TEXT FIELD
-      let queryText = inputTextValue.substring(currentTagIndex).split(' ')[0];
+      const queryText = inputTextValue.substring(currentTagIndex).split(' ')[0];
       const oldTags = parseToTags(textValue);
       //TODO: add check if we are in the middle of another tag
 
@@ -206,7 +206,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       selectionEnd = newTextLength - 1;
     }
     // If we are enabled for lookups,
-    if (!!atMentionLookupOptions) {
+    if (atMentionLookupOptions) {
       //TODO; add check for the last space and check if it isn't between mention trigger and
       // Look at the range of the change for a trigger character
       const triggerText = atMentionLookupOptions?.trigger ?? defaultMentionTrigger;
@@ -323,9 +323,9 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     console.log('newChangeEnd', newChangeEnd);
     console.log(
       'inputTextValue.substring(changeStart, oldChangeEnd)',
-      inputTextValue.substring(changeStart, oldChangeEnd + 1)
+      inputTextValue.substring(changeStart, oldChangeEnd)
     );
-    console.log('newValue.substring(changeStart, newChangeEnd)', newValue.substring(changeStart, newChangeEnd + 1));
+    console.log('newValue.substring(changeStart, newChangeEnd)', newValue.substring(changeStart, newChangeEnd));
     const updatedHTML = updateHTML(
       textValue,
       inputTextValue,
@@ -333,7 +333,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       tagsValue,
       changeStart,
       oldChangeEnd,
-      newValue.substring(changeStart, newChangeEnd + 1)
+      newValue.substring(changeStart, newChangeEnd)
     );
     console.log('updatedHTML', updatedHTML);
     // const updatedHTML =
@@ -468,10 +468,11 @@ type UpdatedParsedTag = {
   tagType: string;
   htmlOpenTagStartIndex: number;
   openTagBody: string;
+  openTagLength: number; // helps to simplify calculation for different cases
   htmlCloseTagStartIndex?: number; // Might not have a close tag
   closeTagLength?: number; // Might not have a close tag
   content?: string; // Might not have content
-  subTags?: ParsedTag[]; // Tags can contain other tags
+  subTags?: UpdatedParsedTag[]; // Tags can contain other tags
   plainTextStartIndex: number; //position where the open tag should begin
   plainTextEndIndex?: number; // position where the open tag should begin. Might not have a close tag
 };
@@ -501,6 +502,7 @@ const parseHTMLText = (text: string, trigger: string): [UpdatedParsedTag[], stri
 
     const openTagCloseIndex = text.indexOf('>', openTagIndex);
     const openTag = text.substring(openTagIndex + 1, openTagCloseIndex);
+    console.log('openTag', openTag);
     const tagType = openTag.split(' ')[0];
     if (tagType === 'msft-at-mention') {
       plaintText += trigger;
@@ -514,12 +516,14 @@ const parseHTMLText = (text: string, trigger: string): [UpdatedParsedTag[], stri
         tagType: tagType.substring(0, tagType.length - 1).toLowerCase(),
         openTagBody: selfClosingBody,
         htmlOpenTagStartIndex: openTagIndex,
-        plainTextStartIndex: plainTextStartIndex
+        plainTextStartIndex: plainTextStartIndex,
+        openTagLength: tagLength
       });
       htmlParseIndex = openTagIndex + tagLength - 1;
     } else {
       // Go find the close tag
       const tagToFind = '</' + tagType + '>';
+      //TODO: add check how many same open tags are before tagToFind as we can get wrong close tag
       const closeTagIndex = text.indexOf(tagToFind, openTagCloseIndex);
       if (closeTagIndex === -1) {
         console.error('Could not find close tag for ' + openTag);
@@ -531,10 +535,18 @@ const parseHTMLText = (text: string, trigger: string): [UpdatedParsedTag[], stri
 
         const [subTags, contentPlainText] = parseHTMLText(content, trigger);
         plaintText += contentPlainText;
-
+        console.log('tags.push');
+        console.log('tagType', tagType);
+        console.log('html', text);
+        console.log('openTagIndex', openTagIndex);
+        console.log('openTag.length + 2', openTag.length + 2);
+        console.log('closeTagIndex', closeTagIndex);
+        console.log('closeTagLength', closeTagLength);
+        console.log('tags.push end');
         tags.push({
           tagType: tagType.toLowerCase(),
           openTagBody: openTag,
+          openTagLength: openTag.length + 2, // +2 for '<' and '>'
           htmlOpenTagStartIndex: openTagIndex,
           htmlCloseTagStartIndex: closeTagIndex,
           closeTagLength,
@@ -574,56 +586,144 @@ const updateHTML = (
     // no tags added yet
     return newPlainText;
   }
-  if (startIndex < tags[0].plainTextStartIndex && oldPlainTextEndIndex < tags[0].plainTextStartIndex) {
-    // the text is before the first tag and can be just changed
-    result = htmlText.substring(0, startIndex) + change + htmlText.substring(oldPlainTextEndIndex);
-  } else if (
-    (tags[tags.length - 1].plainTextEndIndex === undefined &&
-      oldPlainTextEndIndex >= tags[tags.length - 1].plainTextStartIndex &&
-      startIndex >= tags[tags.length - 1].plainTextStartIndex) ||
-    (tags[tags.length - 1].plainTextEndIndex !== undefined &&
-      oldPlainTextEndIndex >= tags[tags.length - 1].plainTextEndIndex &&
-      startIndex >= tags[tags.length - 1].plainTextEndIndex)
-  ) {
-    const lastTag = tags[tags.length - 1];
-    // calculate a diff between the start of the last tag and the change
-    let lastTagEndIndex = 0;
-    let lastTagPlainTextEndIndex = 0;
-    if (
-      lastTag.htmlCloseTagStartIndex === undefined ||
-      lastTag.closeTagLength === undefined ||
-      lastTag.plainTextEndIndex === undefined
+  //5 cases:
+  // before any tag - simple paste in the middle of htmlText
+  // if no end tag - add after tag
+  // after any tag - paste in the middle of htmlText but check the end tag value
+  // if between tags - past in the middle after the open tag with diff
+  /// when change remove the tag (consume) fully
+  for (let i = 0; i < tags.length; i++) {
+    const tag = tags[i];
+    if (startIndex < tag.plainTextStartIndex && oldPlainTextEndIndex < tag.plainTextStartIndex) {
+      // works
+      // before the open tag
+      //find a diff between the open tag and change position
+      const startChangeDiff = tag.plainTextStartIndex - startIndex;
+      const endChangeDiff = tag.plainTextStartIndex - oldPlainTextEndIndex;
+      result =
+        htmlText.substring(0, tag.htmlOpenTagStartIndex - startChangeDiff) +
+        change +
+        htmlText.substring(tag.htmlOpenTagStartIndex - endChangeDiff);
+
+      console.log('startIndex', startIndex);
+      console.log('oldPlainTextEndIndex', oldPlainTextEndIndex);
+      console.log('startChangeDiff', startChangeDiff);
+      console.log('endChangeDiff', endChangeDiff);
+      console.log('change', change);
+      console.log(
+        'htmlText.substring(0, tag.htmlOpenTagStartIndex - startChangeDiff)',
+        htmlText.substring(0, tag.htmlOpenTagStartIndex - startChangeDiff)
+      );
+      console.log(
+        'htmlText.substring(tag.htmlOpenTagStartIndex - endChangeDiff)',
+        htmlText.substring(tag.htmlOpenTagStartIndex - endChangeDiff)
+      );
+      break;
+    } else if (
+      tag.plainTextEndIndex !== undefined &&
+      tag.closeTagLength !== undefined &&
+      tag.htmlCloseTagStartIndex !== undefined &&
+      tag.content !== undefined &&
+      startIndex >= tag.plainTextStartIndex &&
+      oldPlainTextEndIndex < tag.plainTextEndIndex
     ) {
-      // no close tag
-      lastTagEndIndex = lastTag.htmlOpenTagStartIndex + lastTag.openTagBody.length;
-      lastTagPlainTextEndIndex = lastTag.plainTextStartIndex;
-    } else {
-      console.log('lastTag.htmlCloseTagStartIndex', lastTag.htmlCloseTagStartIndex);
-      console.log('lastTag.closeTagLength', lastTag.closeTagLength);
-      if (oldPlainTextEndIndex === tags[tags.length - 1].plainTextEndIndex) {
-        lastTagEndIndex = lastTag.htmlCloseTagStartIndex; //add text before the closed tag
+      // between open and close tags
+      // trigger length
+      const startChangeDiff = startIndex - tag.plainTextStartIndex;
+      const endChangeDiff = oldPlainTextEndIndex - tag.plainTextStartIndex;
+      if (tag.subTags === undefined || tag.subTags.length === 0) {
+        // no subtags
+        console.log('no subtags');
+        console.log('htmlText', htmlText);
+        console.log('tag.htmlOpenTagStartIndex', tag.htmlOpenTagStartIndex);
+        console.log('tag.openTagLength', tag.openTagLength);
+        console.log('startChangeDiff', startChangeDiff);
+        console.log('startIndex', startIndex);
+        console.log('endChangeDiff', endChangeDiff);
+        console.log('tag.plainTextStartIndex', tag.plainTextStartIndex);
+        console.log(
+          'htmlText.substring(0, tag.htmlOpenTagStartIndex + tag.openTagLength + startChangeDiff)',
+          htmlText.substring(0, tag.htmlOpenTagStartIndex + tag.openTagLength + startChangeDiff)
+        );
+        console.log(
+          'htmlText.substring(tag.htmlOpenTagStartIndex + tag.openTagLength + endChangeDiff)',
+          htmlText.substring(tag.htmlOpenTagStartIndex + tag.openTagLength + endChangeDiff)
+        );
+        console.log('no subtags end');
+        // -1 is lost
+        result =
+          htmlText.substring(0, tag.htmlOpenTagStartIndex + tag.openTagLength + startChangeDiff) +
+          change +
+          htmlText.substring(tag.htmlOpenTagStartIndex + tag.openTagLength + endChangeDiff);
+        break;
       } else {
-        lastTagEndIndex = lastTag.htmlCloseTagStartIndex + lastTag.closeTagLength; //add text after the closed tag
+        //works
+        // with subtags
+        //TODO: add logic here
+        //before the tag content
+        const stringBefore = htmlText.substring(0, tag.htmlOpenTagStartIndex + tag.openTagLength);
+        console.log('stringBefore', stringBefore);
+        console.log('tag.openTagBody.length', tag.openTagLength);
+        //after the tag content
+        const stringAfter = htmlText.substring(tag.htmlCloseTagStartIndex);
+        console.log('stringAfter', stringAfter);
+        const content = updateHTML(
+          tag.content,
+          oldPlainText.substring(tag.plainTextStartIndex, tag.plainTextEndIndex),
+          newPlainText.substring(
+            tag.plainTextStartIndex,
+            tag.plainTextEndIndex + (newPlainText.length - oldPlainText.length)
+          ),
+          tag.subTags,
+          startIndex - tag.plainTextStartIndex,
+          oldPlainTextEndIndex - tag.plainTextStartIndex,
+          change
+        );
+        result = stringBefore + content + stringAfter;
+        break;
       }
+    } else if (
+      (tag.plainTextEndIndex === undefined && startIndex >= tag.plainTextStartIndex) ||
+      (tag.plainTextEndIndex !== undefined &&
+        tag.closeTagLength !== undefined &&
+        tag.htmlCloseTagStartIndex !== undefined &&
+        startIndex >= tag.plainTextEndIndex)
+    ) {
+      //works
+      // after close tag or after the open tag if no close tag available
+      if (i === tags.length - 1) {
+        // the last or the only tag
+        let htmlTagEndIndex = 0;
+        let plainTextTagEndIndex = 0;
+        if (
+          tag.plainTextEndIndex !== undefined &&
+          tag.closeTagLength !== undefined &&
+          tag.htmlCloseTagStartIndex !== undefined
+        ) {
+          //the close tag exists
+          htmlTagEndIndex = tag.htmlCloseTagStartIndex + tag.closeTagLength;
+          plainTextTagEndIndex = tag.plainTextEndIndex;
+        } else {
+          // no close tag
+          htmlTagEndIndex = tag.htmlOpenTagStartIndex + tag.openTagLength;
+          plainTextTagEndIndex = tag.plainTextStartIndex;
+        }
+        const startChangeDiff = startIndex - plainTextTagEndIndex;
+        const endChangeDiff = oldPlainTextEndIndex - plainTextTagEndIndex;
 
-      lastTagPlainTextEndIndex = lastTag.plainTextEndIndex;
+        result =
+          htmlText.substring(0, htmlTagEndIndex + startChangeDiff) +
+          change +
+          htmlText.substring(htmlTagEndIndex + endChangeDiff);
+        break;
+      } else {
+        // there is the next tag, the change should be handled in the check for open tag for the next tag
+        console.log('continue', tag);
+        continue;
+      }
     }
-    const startDiff = startIndex - lastTagPlainTextEndIndex;
-    const endDiff = oldPlainTextEndIndex - lastTagPlainTextEndIndex;
-    console.log('startDiff', startDiff);
-    console.log('endDiff', endDiff);
-    console.log('lastTagEndIndex + startDiff', lastTagEndIndex + startDiff);
-    console.log('lastTagEndIndex + endDiff', lastTagEndIndex + endDiff);
-    console.log(
-      'htmlText.substring(0, lastTagEndIndex + startDiff)',
-      htmlText.substring(0, lastTagEndIndex + startDiff)
-    );
-    console.log('htmlText.substring(lastTagEndIndex + endDiff);', htmlText.substring(lastTagEndIndex + endDiff));
-
-    result =
-      htmlText.substring(0, lastTagEndIndex + startDiff) + change + htmlText.substring(lastTagEndIndex + endDiff);
-    console.log('result', result);
   }
+
   return result;
 };
 
@@ -706,7 +806,7 @@ const plainTextFromParsedTags = (textBlock: string, tags: ParsedTag[], trigger: 
     // If there are sub tags, go through them and add their text
     if (!!tag.subTags && tag.subTags.length > 0) {
       text += plainTextFromParsedTags(tag.content ?? '', tag.subTags, trigger);
-    } else if (!!tag.content) {
+    } else if (tag.content) {
       // Otherwise just add the content
       text += tag.content;
     }
@@ -775,7 +875,7 @@ const htmlMentionIndex = (
           query
         );
         text += plainTextFromParsedTags(tag.content ?? '', tag.subTags, trigger);
-      } else if (!!tag.content) {
+      } else if (tag.content) {
         // Otherwise just add the content
         text += tag.content;
         if (plainStringIndex < tag.content.length) {
