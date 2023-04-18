@@ -25,7 +25,7 @@ import {
   inputBoxNewLineSpaceAffordance,
   inputButtonTooltipStyle
 } from './styles/InputBoxComponent.style';
-
+import { Caret } from 'textarea-caret-ts';
 import { isDarkThemed } from '../theming/themeUtils';
 import { useTheme } from '../theming';
 /* @conditional-compile-remove(at-mention) */
@@ -95,7 +95,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     atMentionLookupOptions,
     onMentionAdd
   } = props;
-  const inputBoxRef = useRef(null);
+  const inputBoxRef = useRef<HTMLDivElement>(null);
 
   // Current suggestion list, provided by the callback
   const [mentionSuggestions, setMentionSuggestions] = useState<AtMentionSuggestion[]>([]);
@@ -104,6 +104,9 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
   const [currentTagIndex, setCurrentTagIndex] = useState<number>(-1);
   const [inputTextValue, setInputTextValue] = useState<string>('');
   const [tagsValue, setTagsValue] = useState<UpdatedParsedTag[]>([]);
+
+  // Caret position in the text field
+  const [caretPosition, setCaretPosition] = useState<Caret.Position | undefined>(undefined);
 
   // Parse the text and get the plain text version to display in the input box
   useEffect(() => {
@@ -227,6 +230,10 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       const triggerText = atMentionLookupOptions?.trigger ?? defaultMentionTrigger;
       const triggerPriorIndex = newValue?.lastIndexOf(triggerText, selectionEnd - 1);
       // trigger is found
+
+      // Update the caret position, if not doing a lookup
+      setCaretPosition(Caret.getRelativePosition(event.currentTarget));
+
       if (triggerPriorIndex !== undefined) {
         const isSpaceBeforeTrigger = newValue?.substring(triggerPriorIndex - 1, triggerPriorIndex) === ' ';
         const wordAtSelection = newValue?.substring(triggerPriorIndex, selectionEnd);
@@ -364,17 +371,18 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
 
   return (
     <Stack className={mergedRootStyle}>
-      {mentionSuggestions.length > 0 && (
-        <_AtMentionFlyout
-          suggestions={mentionSuggestions}
-          target={inputBoxRef}
-          onSuggestionSelected={onSuggestionSelected}
-          onDismiss={() => {
-            updateMentionSuggestions([]);
-          }}
-        />
-      )}
       <div className={mergedTextContainerStyle}>
+        {mentionSuggestions.length > 0 && (
+          <_AtMentionFlyout
+            suggestions={mentionSuggestions}
+            target={inputBoxRef}
+            targetPositionOffset={caretPosition}
+            onSuggestionSelected={onSuggestionSelected}
+            onDismiss={() => {
+              updateMentionSuggestions([]);
+            }}
+          />
+        )}
         <TextField
           autoFocus={props.autoFocus === 'sendBoxTextField'}
           data-ui-id={dataUiId}
