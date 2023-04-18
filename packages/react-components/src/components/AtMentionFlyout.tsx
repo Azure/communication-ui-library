@@ -30,9 +30,14 @@ export interface _AtMentionFlyoutProps {
    */
   title?: string;
   /**
-   * Optional RefObject used as a reference to position AtMentionFlyout.
+   * Element to anchor the flyout to.
    */
-  target?: React.RefObject<Element>;
+  target: React.RefObject<Element>;
+  /**
+   * Where to display the suggestions relative to the target.
+   * @defaultValue `above`
+   */
+  location?: 'above' | 'below';
   /**
    * Callback called when a mention suggestion is selected.
    */
@@ -119,26 +124,38 @@ export const _AtMentionFlyout = (props: _AtMentionFlyoutProps): JSX.Element => {
     top?: number;
     bottom?: number;
   }
-  /* TODO: Localization of the default */
-  const { suggestions, title = 'Suggestions', target, onRenderSuggestionItem, onSuggestionSelected } = props;
+
+  const {
+    suggestions,
+    title = 'Suggestions' /* TODO: Localization of the default */,
+    target,
+    onRenderSuggestionItem,
+    onSuggestionSelected,
+    location
+  } = props;
+
   const theme = useTheme();
   const ids = useIdentifiers();
-
   const [position, setPosition] = useState<Position>({ x: 0 });
 
   // Determine popover position
   useEffect(() => {
     const rect = target?.current?.getBoundingClientRect();
-    console.log(rect);
-
-    // Show below:
-    let finalPosition: Position = { x: rect?.x ?? 0, top: rect?.height, bottom: undefined };
-    // Show above:
-    finalPosition = { x: rect?.x ?? 0, top: undefined, bottom: rect?.height };
-
-    console.log(finalPosition);
+    // Show above by default
+    let finalPosition: Position = {
+      x: rect?.x ?? 0,
+      top: undefined,
+      bottom: 72
+    };
+    if (location === 'below') {
+      finalPosition = {
+        x: rect?.x ?? 0,
+        top: rect?.height,
+        bottom: undefined
+      };
+    }
     setPosition(finalPosition);
-  }, [target]);
+  }, [location, target]);
 
   return (
     <Stack
