@@ -69,7 +69,11 @@ export const GridLayout = (props: GridLayoutProps): JSX.Element => {
   const cssGridStyles = useMemo(() => createGridStyles(numberOfChildren, gridProps), [numberOfChildren, gridProps]);
 
   return (
-    <div ref={containerRef} className={mergeStyles(gridLayoutStyle, cssGridStyles, styles?.root)}>
+    <div
+      ref={containerRef}
+      className={mergeStyles(gridLayoutStyle, cssGridStyles, styles?.root)}
+      data-ui-id="grid-layout"
+    >
       {children}
     </div>
   );

@@ -4904,6 +4904,21 @@ packages:
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
     resolution:
       integrity: sha512-rHn/n12WM8BaXtZ3IApNZCiS+C4Oc5+Lkl4MoctX8V7QSml0SxZBB5hsJ/AiWkgbRxjQpa/L/Nt7/Qw0FjTH/A==
+  /@testing-library/dom/8.20.0:
+    dependencies:
+      '@babel/code-frame': 7.18.6
+      '@babel/runtime': 7.21.0
+      '@types/aria-query': 5.0.1
+      aria-query: 5.1.3
+      chalk: 4.1.2
+      dom-accessibility-api: 0.5.16
+      lz-string: 1.5.0
+      pretty-format: 27.5.1
+    dev: false
+    engines:
+      node: '>=12'
+    resolution:
+      integrity: sha512-d9ULIT+a4EXLX3UU8FBjauG9NnsZHkHztXoIcTsOKoOw030fyjheN9svkTULjJxtYag9DZz5Jz5qkWZDPxTFwA==
   /@testing-library/jest-dom/5.16.5:
     dependencies:
       '@adobe/css-tools': 4.2.0
@@ -4934,6 +4949,21 @@ packages:
       react-test-renderer: '>=16.9.0'
     resolution:
       integrity: sha512-TwfbY6BWtWIHitjT05sbllyLIProcysC0dF0q1bbDa7OHLC6A6rJOYJwZ13hzfz3O4RtOuInmprBozJRyyo7/g==
+  /@testing-library/react/12.1.5_react-dom@16.13.1+react@16.14.0:
+    dependencies:
+      '@babel/runtime': 7.21.0
+      '@testing-library/dom': 8.20.0
+      '@types/react-dom': 16.9.18
+      react: 16.14.0
+      react-dom: 16.13.1_react@16.14.0
+    dev: false
+    engines:
+      node: '>=12'
+    peerDependencies:
+      react: <18.0.0
+      react-dom: <18.0.0
+    resolution:
+      integrity: sha512-OfTXCJUFgjd/digLUuPxa0+/3ZxsQmE7ub9kcbW/wi96Bh3o/p5vrETcBGfP17NWPGqeYYl5LTRpwyGoMC4ysg==
   /@tootallnate/once/1.1.2:
     dev: false
     engines:
@@ -4950,6 +4980,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-ebDJ9b0e702Yr7pWgB0jzm+CX4Srzz8RcXtLJDJB+BSccqMa36uyH/zUsSYao5+BD1ytv3k3rPYCq4mAE1hsXA==
+  /@types/aria-query/5.0.1:
+    dev: false
+    resolution:
+      integrity: sha512-XTIieEY+gvJ39ChLcB4If5zHtPxt3Syj5rgZR+e1ctpmK8NjPf0zFqsz4JpLJT0xla9GFDKjy8Cpu331nrmE1Q==
   /@types/babel__core/7.20.0:
     dependencies:
       '@babel/parser': 7.21.3
@@ -6162,6 +6196,12 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-zbB9rCJAT1rbjiVDb2hqKFHNYLxgtk8NURxZ3IZwD3F6NtxbXZQCnnSi1Lkx+IDohdPlFp222wVALIheZJQSEg==
+  /ansi-styles/5.2.0:
+    dev: false
+    engines:
+      node: '>=10'
+    resolution:
+      integrity: sha512-Cxwpt2SfTzTtXcfOlzGEee8O+c+MmUgGrNiBcXnuWxuFJHe6a5Hz7qwhwe5OgaSYI0IJvkLqWX1ASG+cJOkEiA==
   /ansi-to-html/0.6.15:
     dependencies:
       entities: 2.2.0
@@ -13209,6 +13249,11 @@ packages:
       node: '>=10'
     resolution:
       integrity: sha512-Jo6dJ04CmSjuznwJSS3pUeWmd/H0ffTlkXXgwZi+eq1UCmqQwCh+eLsYOYCwY991i2Fah4h1BEMCx4qThGbsiA==
+  /lz-string/1.5.0:
+    dev: false
+    hasBin: true
+    resolution:
+      integrity: sha512-h5bgJWpxJNswbU7qCrV0tIKQCaS3blPDrqKWx+QxzuzL1zGUzij9XCWLrSLsJPu5t+eWA/ycetzYAO5IOMcWAQ==
   /magic-string/0.25.9:
     dependencies:
       sourcemap-codec: 1.4.8
@@ -15057,6 +15102,16 @@ packages:
       node: '>= 10'
     resolution:
       integrity: sha512-7AeGuCYNGmycyQbCqd/3PWH4eOoX/OiCa0uphp57NVTeAGdJGaAliecxwBDHYQCIvrW7aDBZCYeNTP/WX69mkg==
+  /pretty-format/27.5.1:
+    dependencies:
+      ansi-regex: 5.0.1
+      ansi-styles: 5.2.0
+      react-is: 17.0.2
+    dev: false
+    engines:
+      node: ^10.13.0 || ^12.13.0 || ^14.15.0 || >=15.0.0
+    resolution:
+      integrity: sha512-Qb1gy5OrP5+zDf2Bvnzdl3jsTf1qXVMazbvCoKhtKqVs4/YK4ozX4gKQJJVyNe+cajNPn0KoC0MC3FUmaHWEmQ==
   /pretty-format/3.8.0:
     dev: false
     resolution:
@@ -19822,6 +19877,7 @@ packages:
       '@microsoft/api-extractor': 7.18.21
       '@rollup/plugin-json': 4.1.0_rollup@2.42.4
       '@testing-library/jest-dom': 5.16.5
+      '@testing-library/react': 12.1.5_react-dom@16.13.1+react@16.14.0
       '@testing-library/react-hooks': 3.7.0_98e0eb37a9f7280a1c5a6c886619f5b4
       '@types/jest': 26.0.24
       '@types/json-stringify-safe': 5.0.0
@@ -19885,7 +19941,7 @@ packages:
     dev: false
     name: '@rush-temp/communication-react'
     resolution:
-      integrity: sha512-V7P5JOMI/rDoIwr5TS+/tYZPGEN2dPfGqmRLbVBQRD8XSSO4/Lk1tZsMdQMw8+RX5auhIDP6rvwyuNLyjaG6Sw==
+      integrity: sha512-K3Sq2+Zpn13l5sxnQ+NwQESICSBz+Y4+Dus7xjKCGR5tMqVpj2+xL8UPKUlF+OsX/UCRKTgjIZH42lINjAc+bw==
       tarball: file:projects/communication-react.tgz
     version: 0.0.0
   file:projects/component-examples.tgz:
@@ -20012,6 +20068,7 @@ packages:
       '@microsoft/api-extractor': 7.18.21
       '@rollup/plugin-json': 4.1.0_rollup@2.42.4
       '@testing-library/jest-dom': 5.16.5
+      '@testing-library/react': 12.1.5_react-dom@16.13.1+react@16.14.0
       '@testing-library/react-hooks': 3.7.0_98e0eb37a9f7280a1c5a6c886619f5b4
       '@types/enzyme': 3.10.12
       '@types/jest': 26.0.24
@@ -20079,7 +20136,7 @@ packages:
     dev: false
     name: '@rush-temp/react-components'
     resolution:
-      integrity: sha512-4M2LU2Fk0G4WkbyYJ5pJ7EuaWW0giN/y6jkctgC+IKrHcirVjGalUsEhORV3GI1gTLkaWnZHsrp6A8MjIfRreg==
+      integrity: sha512-wkNJlanIkBS30j6drlAu1oqp5V/WYKUuu07+3Zk7M178BjoFSM9fJE8qQ4V6tmnpN2/X3RxiCmQPar6ucSJmfA==
       tarball: file:projects/react-components.tgz
     version: 0.0.0
   file:projects/react-composites.tgz:
@@ -20103,6 +20160,7 @@ packages:
       '@microsoft/api-extractor': 7.18.21
       '@playwright/test': 1.22.2
       '@testing-library/jest-dom': 5.16.5
+      '@testing-library/react': 12.1.5_react-dom@16.13.1+react@16.14.0
       '@testing-library/react-hooks': 3.7.0_98e0eb37a9f7280a1c5a6c886619f5b4
       '@types/copy-webpack-plugin': 6.4.3
       '@types/enzyme': 3.10.12
@@ -20190,7 +20248,7 @@ packages:
     dev: false
     name: '@rush-temp/react-composites'
     resolution:
-      integrity: sha512-fC7OdnHR11NhqFw862h18+O/W9ffnnQ2ymcsu8jYuLAB5klC9p0rAC8JKKjB7/X/R+HiY25qamK/0yWXkG8HNA==
+      integrity: sha512-fPbNA1qDcAyhLrzs2yqD5KCBZAEqOKg2trzCKdk6oUGix6mca8mUS7A3JuQ0GszV6e0mwCDvnbNId/58xYuEhQ==
       tarball: file:projects/react-composites.tgz
     version: 0.0.0
   file:projects/sample-automation-tests.tgz:

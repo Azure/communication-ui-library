@@ -3,28 +3,28 @@
 
 import { registerIcons } from '@fluentui/react';
 import * as acs_ui_common from '@internal/acs-ui-common';
-import Enzyme, { mount, ReactWrapper } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
 import React from 'react';
 import { v1 as createGUID } from 'uuid';
 import { VideoGalleryRemoteParticipant } from '../types';
-import { ResponsiveVerticalGallery, ResponsiveVerticalGalleryProps } from './ResponsiveVerticalGallery';
+import { ResponsiveVerticalGallery } from './ResponsiveVerticalGallery';
 import * as responsive from './utils/responsive';
 import { LARGE_HORIZONTAL_GALLERY_TILE_STYLE } from './VideoGallery/styles/VideoGalleryResponsiveHorizontalGallery.styles';
 import { verticalGalleryContainerStyle } from './VideoGallery/styles/VideoGalleryResponsiveVerticalGallery.styles';
 import { HORIZONTAL_GALLERY_GAP } from './styles/HorizontalGallery.styles';
 import { VideoTile } from './VideoTile';
-
-Enzyme.configure({ adapter: new Adapter() });
-registerIcons({
-  icons: {
-    verticalgalleryleftbutton: <></>,
-    verticalgalleryrightbutton: <></>,
-    contact: <></>
-  }
-});
+import { render } from '@testing-library/react';
 
 describe('ResponsiveVerticalGallery tests', () => {
+  beforeAll(() => {
+    registerIcons({
+      icons: {
+        verticalgalleryleftbutton: <></>,
+        verticalgalleryrightbutton: <></>,
+        contact: <></>
+      }
+    });
+  });
+
   test('should render 3 video tiles if container height of ResponsiveVerticalGallery is 500', () => {
     mockResponsiveVerticalGalleryContainerHeight(500);
     const remoteParticipants = Array.from({ length: 10 }, () =>
@@ -33,8 +33,8 @@ describe('ResponsiveVerticalGallery tests', () => {
       })
     );
 
-    const root = mountResponsiveVerticalGallery({ remoteParticipants });
-    expect(root.find(VideoTile).length).toBe(4);
+    const root = renderResponsiveVerticalGallery({ remoteParticipants });
+    expect(root.querySelectorAll('[data-ui-id="video-tile"]').length).toBe(4);
   });
 
   test('should render 8 video tile if container height of ResponsiveVerticalGallery is 1000', () => {
@@ -45,8 +45,8 @@ describe('ResponsiveVerticalGallery tests', () => {
       })
     );
 
-    const root = mountResponsiveVerticalGallery({ remoteParticipants });
-    expect(root.find(VideoTile).length).toBe(10);
+    const root = renderResponsiveVerticalGallery({ remoteParticipants });
+    expect(root.querySelectorAll('[data-ui-id="video-tile"]').length).toBe(10);
   });
 
   test('should render 1 video tile if container height of ResponsiveVerticalGallery is 0', () => {
@@ -57,8 +57,8 @@ describe('ResponsiveVerticalGallery tests', () => {
       })
     );
 
-    const root = mountResponsiveVerticalGallery({ remoteParticipants });
-    expect(root.find(VideoTile).length).toBe(1);
+    const root = renderResponsiveVerticalGallery({ remoteParticipants });
+    expect(root.querySelectorAll('[data-ui-id="video-tile"]').length).toBe(1);
   });
 
   test('should render 4 video tiles if container height of ResponsiveVerticalGallery is 500 and prop isShort is true', () => {
@@ -69,8 +69,8 @@ describe('ResponsiveVerticalGallery tests', () => {
       })
     );
 
-    const root = mountResponsiveVerticalGallery({ remoteParticipants, isShort: true });
-    expect(root.find(VideoTile).length).toBe(4);
+    const root = renderResponsiveVerticalGallery({ remoteParticipants, isShort: true });
+    expect(root.querySelectorAll('[data-ui-id="video-tile"]').length).toBe(4);
   });
 
   test('should render 10 video tile if container height of ResponsiveVerticalGallery is 1000 and prop isShort is true', () => {
@@ -81,8 +81,8 @@ describe('ResponsiveVerticalGallery tests', () => {
       })
     );
 
-    const root = mountResponsiveVerticalGallery({ remoteParticipants, isShort: true });
-    expect(root.find(VideoTile).length).toBe(10);
+    const root = renderResponsiveVerticalGallery({ remoteParticipants, isShort: true });
+    expect(root.querySelectorAll('[data-ui-id="video-tile"]').length).toBe(10);
   });
 
   test('should render 1 video tile if container height of ResponsiveVerticalGallery is 0 and prop isShort is true', () => {
@@ -93,18 +93,18 @@ describe('ResponsiveVerticalGallery tests', () => {
       })
     );
 
-    const root = mountResponsiveVerticalGallery({ remoteParticipants, isShort: true });
-    expect(root.find(VideoTile).length).toBe(1);
+    const root = renderResponsiveVerticalGallery({ remoteParticipants, isShort: true });
+    expect(root.querySelectorAll('[data-ui-id="video-tile"]').length).toBe(1);
   });
 });
 
-const mountResponsiveVerticalGallery = (attrs: {
+const renderResponsiveVerticalGallery = (attrs: {
   remoteParticipants: VideoGalleryRemoteParticipant[];
   isShort?: boolean;
-}): ReactWrapper<ResponsiveVerticalGalleryProps> => {
+}): HTMLElement => {
   const { remoteParticipants, isShort } = attrs;
   const tiles = remoteParticipants.map((p) => <VideoTile key={p.userId}></VideoTile>);
-  return mount(
+  const { container } = render(
     <ResponsiveVerticalGallery
       containerStyles={verticalGalleryContainerStyle(true, false, !!isShort)}
       verticalGalleryStyles={{ children: LARGE_HORIZONTAL_GALLERY_TILE_STYLE }}
@@ -114,6 +114,7 @@ const mountResponsiveVerticalGallery = (attrs: {
       {tiles}
     </ResponsiveVerticalGallery>
   );
+  return container as HTMLElement;
 };
 
 const createRemoteParticipant = (attrs?: Partial<VideoGalleryRemoteParticipant>): VideoGalleryRemoteParticipant => {
