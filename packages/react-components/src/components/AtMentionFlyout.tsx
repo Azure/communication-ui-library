@@ -170,7 +170,7 @@ export const _AtMentionFlyout = (props: _AtMentionFlyoutProps): JSX.Element => {
   // Determine popover position
   useEffect(() => {
     const rect = target?.current?.getBoundingClientRect();
-    const maxWidth = 300;
+    const maxWidth = 200;
     let finalPosition: Position = { maxWidth };
 
     // Figure out whether it will fit horizontally
@@ -180,7 +180,7 @@ export const _AtMentionFlyout = (props: _AtMentionFlyoutProps): JSX.Element => {
     } else {
       finalPosition.left = leftOffset;
     }
-    console.log(rect);
+
     if (location === 'below') {
       finalPosition.top = (rect?.height ?? 0) + (targetPositionOffset?.top ?? 0);
     } else {
