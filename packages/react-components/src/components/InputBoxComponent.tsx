@@ -349,14 +349,14 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
 
   return (
     <Stack className={mergedRootStyle}>
-      {mentionSuggestions.length > 0 && (
-        <_AtMentionFlyout
-          suggestions={mentionSuggestions}
-          target={inputBoxRef}
-          onSuggestionSelected={onSuggestionSelected}
-        />
-      )}
       <div className={mergedTextContainerStyle}>
+        {mentionSuggestions.length > 0 && (
+          <_AtMentionFlyout
+            suggestions={mentionSuggestions}
+            target={inputBoxRef}
+            onSuggestionSelected={onSuggestionSelected}
+          />
+        )}
         <TextField
           autoFocus={props.autoFocus === 'sendBoxTextField'}
           data-ui-id={dataUiId}

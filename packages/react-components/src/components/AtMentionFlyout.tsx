@@ -145,7 +145,7 @@ export const _AtMentionFlyout = (props: _AtMentionFlyoutProps): JSX.Element => {
     let finalPosition: Position = {
       x: rect?.x ?? 0,
       top: undefined,
-      bottom: 72
+      bottom: rect?.height
     };
     if (location === 'below') {
       finalPosition = {

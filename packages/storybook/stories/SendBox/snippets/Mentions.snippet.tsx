@@ -30,7 +30,7 @@ const trigger = '@';
 export const MentionsExample: () => JSX.Element = () => (
   <FluentThemeProvider>
     <div style={{ width: '31.25rem', height: '20rem' }}>
-      <div style={{ width: '31.25rem', height: '17rem' }} />
+      {/* <div style={{ width: '31.25rem', height: '17rem' }} /> Spacer for layout */}
       <SendBox
         onSendMessage={async () => {
           return;
@@ -41,10 +41,8 @@ export const MentionsExample: () => JSX.Element = () => (
         atMentionLookupOptions={{
           trigger,
           onQueryUpdated: async (query: string) => {
-            // Trigger is at the start currently, so remove it.
-            const filterText = query.slice(trigger.length);
             const filtered = suggestions.filter((suggestion) => {
-              return suggestion.displayName.toLocaleLowerCase().startsWith(filterText.toLocaleLowerCase());
+              return suggestion.displayName.toLocaleLowerCase().startsWith(query.toLocaleLowerCase());
             });
             return Promise.resolve(filtered);
           }
