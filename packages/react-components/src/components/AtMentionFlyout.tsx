@@ -142,6 +142,7 @@ export const _AtMentionFlyout = (props: _AtMentionFlyoutProps): JSX.Element => {
   const theme = useTheme();
   const ids = useIdentifiers();
   const [position, setPosition] = useState<Position>({ x: 0 });
+  const [hoveredSuggestion, setHoveredSuggestion] = useState<AtMentionSuggestion | undefined>(undefined);
 
   // Determine popover position
   useEffect(() => {
@@ -158,6 +159,44 @@ export const _AtMentionFlyout = (props: _AtMentionFlyoutProps): JSX.Element => {
     }
     setPosition(finalPosition);
   }, [location, target, targetPositionOffset]);
+
+  const personaRenderer = (displayName?: string): JSX.Element => {
+    const localeStrings = useLocale().strings.participantItem;
+
+    const avatarOptions = {
+      text: displayName?.trim() || localeStrings.displayNamePlaceholder,
+      size: PersonaSize.size24,
+      initialsColor: theme.palette.neutralLight,
+      initialsTextColor: theme.palette.neutralSecondary,
+      showOverflowTooltip: false,
+      showUnknownPersonaCoin: !displayName?.trim() || displayName === localeStrings.displayNamePlaceholder
+    };
+
+    return <Persona {...avatarOptions} />;
+  };
+
+  const defaultOnRenderSuggestionItem = (
+    suggestion: AtMentionSuggestion,
+    onSuggestionSelected: (suggestion: AtMentionSuggestion) => void
+  ): JSX.Element => {
+    const isSuggestionHovered = hoveredSuggestion?.userId === suggestion.userId;
+
+    return (
+      <div
+        data-is-focusable={true}
+        data-ui-id={ids.atMentionSuggestionItem}
+        key={suggestion.userId}
+        onClick={() => onSuggestionSelected(suggestion)}
+        onMouseEnter={() => setHoveredSuggestion(suggestion)}
+        onMouseLeave={() => setHoveredSuggestion(undefined)}
+        className={suggestionItemWrapperStyle(theme)}
+      >
+        <Stack horizontal className={suggestionItemStackStyle(theme, isSuggestionHovered)}>
+          {personaRenderer(suggestion.displayName)}
+        </Stack>
+      </div>
+    );
+  };
 
   return (
     <Stack
@@ -186,47 +225,5 @@ export const _AtMentionFlyout = (props: _AtMentionFlyoutProps): JSX.Element => {
         </Stack>
       </FocusZone>
     </Stack>
-  );
-};
-
-const personaRenderer = (displayName?: string): JSX.Element => {
-  const theme = useTheme();
-  const localeStrings = useLocale().strings.participantItem;
-
-  const avatarOptions = {
-    text: displayName?.trim() || localeStrings.displayNamePlaceholder,
-    size: PersonaSize.size24,
-    initialsColor: theme.palette.neutralLight,
-    initialsTextColor: theme.palette.neutralSecondary,
-    showOverflowTooltip: false,
-    showUnknownPersonaCoin: !displayName?.trim() || displayName === localeStrings.displayNamePlaceholder
-  };
-
-  return <Persona {...avatarOptions} />;
-};
-
-const defaultOnRenderSuggestionItem = (
-  suggestion: AtMentionSuggestion,
-  onSuggestionSelected: (suggestion: AtMentionSuggestion) => void
-): JSX.Element => {
-  const theme = useTheme();
-  const ids = useIdentifiers();
-  const [hoveredSuggestion, setHoveredSuggestion] = useState<AtMentionSuggestion | undefined>(undefined);
-  const isSuggestionHovered = hoveredSuggestion?.userId === suggestion.userId;
-
-  return (
-    <div
-      data-is-focusable={true}
-      data-ui-id={ids.atMentionSuggestionItem}
-      key={suggestion.userId}
-      onClick={() => onSuggestionSelected(suggestion)}
-      onMouseEnter={() => setHoveredSuggestion(suggestion)}
-      onMouseLeave={() => setHoveredSuggestion(undefined)}
-      className={suggestionItemWrapperStyle(theme)}
-    >
-      <Stack horizontal className={suggestionItemStackStyle(theme, isSuggestionHovered)}>
-        {personaRenderer(suggestion.displayName)}
-      </Stack>
-    </div>
   );
 };
