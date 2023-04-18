@@ -24,6 +24,7 @@ export type _CaptionsInfo = {
  */
 export interface _CaptionsBannerProps {
   captions: _CaptionsInfo[];
+  isCaptionsOn?: boolean;
   /**
    * Optional callback to override render of the avatar.
    *
@@ -37,7 +38,7 @@ export interface _CaptionsBannerProps {
  * A component for displaying a CaptionsBanner with user icon, displayName and captions text.
  */
 export const _CaptionsBanner = (props: _CaptionsBannerProps): JSX.Element => {
-  const { captions, onRenderAvatar } = props;
+  const { captions, isCaptionsOn, onRenderAvatar } = props;
   const captionsScrollDivRef = useRef<HTMLElement>(null);
   const [isAtBottomOfScroll, setIsAtBottomOfScroll] = useState<boolean>(true);
 
@@ -75,18 +76,22 @@ export const _CaptionsBanner = (props: _CaptionsBannerProps): JSX.Element => {
   }, [captions, isAtBottomOfScroll]);
 
   return (
-    <div data-is-focusable={true}>
-      <Ref innerRef={captionsScrollDivRef}>
-        <Stack verticalAlign="start" className={captionsBannerClassName}>
-          {captions.map((caption, key) => {
-            return (
-              <div key={key} className={captionContainerClassName}>
-                <_Caption {...caption} onRenderAvatar={onRenderAvatar} />
-              </div>
-            );
-          })}
-        </Stack>
-      </Ref>
-    </div>
+    <>
+      {isCaptionsOn && (
+        <div data-is-focusable={true}>
+          <Ref innerRef={captionsScrollDivRef}>
+            <Stack verticalAlign="start" className={captionsBannerClassName}>
+              {captions.map((caption, key) => {
+                return (
+                  <div key={key} className={captionContainerClassName} tabIndex={0}>
+                    <_Caption {...caption} onRenderAvatar={onRenderAvatar} />
+                  </div>
+                );
+              })}
+            </Stack>
+          </Ref>
+        </div>
+      )}
+    </>
   );
 };
