@@ -25,7 +25,7 @@ import {
   inputBoxNewLineSpaceAffordance,
   inputButtonTooltipStyle
 } from './styles/InputBoxComponent.style';
-
+import { Caret } from 'textarea-caret-ts';
 import { isDarkThemed } from '../theming/themeUtils';
 import { useTheme } from '../theming';
 /* @conditional-compile-remove(at-mention) */
@@ -95,7 +95,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     atMentionLookupOptions,
     onMentionAdd
   } = props;
-  const inputBoxRef = useRef(null);
+  const inputBoxRef = useRef<HTMLDivElement>(null);
 
   // Current suggestion list, provided by the callback
   const [mentionSuggestions, setMentionSuggestions] = useState<AtMentionSuggestion[]>([]);
@@ -104,6 +104,9 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
   const [currentTagIndex, setCurrentTagIndex] = useState<number>(-1);
   const [inputTextValue, setInputTextValue] = useState<string>('');
   const [tagsValue, setTagsValue] = useState<UpdatedParsedTag[]>([]);
+
+  // Caret position in the text field
+  const [caretPosition, setCaretPosition] = useState<Caret.Position | undefined>(undefined);
 
   // Parse the text and get the plain text version to display in the input box
   useEffect(() => {
@@ -148,6 +151,15 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     [onEnterKeyDown, onKeyDown, supportNewline]
   );
 
+  const updateMentionSuggestions = useCallback(
+    (suggestions: AtMentionSuggestion[]) => {
+      setMentionSuggestions(suggestions);
+      //TODO: add focus to the correct position
+      textFieldRef?.current?.focus();
+    },
+    [textFieldRef]
+  );
+
   const onSuggestionSelected = useCallback(
     (suggestion: AtMentionSuggestion) => {
       const selectionStart = textFieldRef?.current?.selectionStart;
@@ -181,12 +193,18 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       const [tags, plainText] = parseHTMLText(updatedText, triggerText);
       setInputTextValue(plainText);
       onMentionAdd && onMentionAdd(updatedText);
-      setMentionSuggestions([]);
+      updateMentionSuggestions([]);
       setCurrentTagIndex(-1);
-      //TODO: add focus to the correct position
-      textFieldRef?.current?.focus();
     },
-    [atMentionLookupOptions?.trigger, onMentionAdd, textFieldRef, inputTextValue]
+    [
+      textFieldRef,
+      inputTextValue,
+      currentTagIndex,
+      textValue,
+      atMentionLookupOptions?.trigger,
+      onMentionAdd,
+      updateMentionSuggestions
+    ]
   );
 
   const handleOnChange = async (
@@ -206,17 +224,21 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       selectionEnd = newTextLength - 1;
     }
     // If we are enabled for lookups,
-    if (atMentionLookupOptions) {
+    if (atMentionLookupOptions !== undefined) {
       //TODO; add check for the last space and check if it isn't between mention trigger and
       // Look at the range of the change for a trigger character
       const triggerText = atMentionLookupOptions?.trigger ?? defaultMentionTrigger;
       const triggerPriorIndex = newValue?.lastIndexOf(triggerText, selectionEnd - 1);
       // trigger is found
+
+      // Update the caret position, if not doing a lookup
+      setCaretPosition(Caret.getRelativePosition(event.currentTarget));
+
       if (triggerPriorIndex !== undefined) {
         const isSpaceBeforeTrigger = newValue?.substring(triggerPriorIndex - 1, triggerPriorIndex) === ' ';
         const wordAtSelection = newValue?.substring(triggerPriorIndex, selectionEnd);
         let tagIndex = currentTagIndex;
-        if (!isSpaceBeforeTrigger) {
+        if (!isSpaceBeforeTrigger && triggerPriorIndex !== 0) {
           //no space before the trigger <- continuation of the previous word
           tagIndex = -1;
           setCurrentTagIndex(tagIndex);
@@ -232,17 +254,14 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
         console.log('currentTagIndex', currentTagIndex);
         console.log('tagIndex', tagIndex);
         if (tagIndex === -1) {
-          setMentionSuggestions([]);
+          updateMentionSuggestions([]);
         } else {
           // In the middle of a @mention lookup
           if (tagIndex > -1) {
-            // This might want to be changed to not include the lookup tag. Currently it does.
-            // TODO: work in mentionQuery state or remove it.
-            // const query = newValue?.substring(currentTagIndex, selectionEnd);
-            const query = wordAtSelection;
+            const query = wordAtSelection.substring(triggerText.length, wordAtSelection.length);
             if (query !== undefined) {
               const suggestions = (await atMentionLookupOptions?.onQueryUpdated(query)) ?? [];
-              setMentionSuggestions(suggestions);
+              updateMentionSuggestions(suggestions);
             }
           }
         }
@@ -352,14 +371,18 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
 
   return (
     <Stack className={mergedRootStyle}>
-      {mentionSuggestions.length > 0 && (
-        <_AtMentionFlyout
-          suggestions={mentionSuggestions}
-          target={inputBoxRef}
-          onSuggestionSelected={onSuggestionSelected}
-        />
-      )}
       <div className={mergedTextContainerStyle}>
+        {mentionSuggestions.length > 0 && (
+          <_AtMentionFlyout
+            suggestions={mentionSuggestions}
+            target={inputBoxRef}
+            targetPositionOffset={caretPosition}
+            onSuggestionSelected={onSuggestionSelected}
+            onDismiss={() => {
+              updateMentionSuggestions([]);
+            }}
+          />
+        )}
         <TextField
           autoFocus={props.autoFocus === 'sendBoxTextField'}
           data-ui-id={dataUiId}
@@ -875,7 +898,7 @@ const htmlMentionIndex = (
           query
         );
         text += plainTextFromParsedTags(tag.content ?? '', tag.subTags, trigger);
-      } else if (tag.content) {
+      } else if (tag.content !== undefined) {
         // Otherwise just add the content
         text += tag.content;
         if (plainStringIndex < tag.content.length) {

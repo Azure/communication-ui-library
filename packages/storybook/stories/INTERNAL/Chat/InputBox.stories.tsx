@@ -1,12 +1,14 @@
-import { AtMentionSuggestion, FluentThemeProvider, MessageThread, useTheme } from '@internal/react-components';
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
 import { ITextField, Stack, mergeStyles } from '@fluentui/react';
-import { controlsToAdd, hiddenControl } from '../../controlsUtils';
-import { InputBoxComponent } from '../../../../react-components/src/components/InputBoxComponent';
+import { AtMentionSuggestion, FluentThemeProvider, MessageThread, useTheme } from '@internal/react-components';
 import { Title, Description, Props, Heading, Canvas } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React, { useState } from 'react';
-import { COMPONENT_FOLDER_PREFIX } from '../../constants';
+import { InputBoxComponent } from '../../../../react-components/src/components/InputBoxComponent';
 import { borderAndBoxShadowStyle } from '../../../../react-components/src/components/styles/SendBox.styles';
+import { COMPONENT_FOLDER_PREFIX } from '../../constants';
+import { controlsToAdd, hiddenControl } from '../../controlsUtils';
 import { GetHistoryChatMessages } from '../../MessageThread/snippets/placeholdermessages';
 
 const getDocs: () => JSX.Element = () => {
@@ -80,10 +82,8 @@ const InputBoxStory = (): JSX.Element => {
             atMentionLookupOptions={{
               trigger,
               onQueryUpdated: async (query: string) => {
-                // Trigger is at the start currently, so remove it.
-                const filterText = query.slice(trigger.length);
                 const filtered = suggestions.filter((suggestion) => {
-                  return suggestion.displayName.toLocaleLowerCase().startsWith(filterText.toLocaleLowerCase());
+                  return suggestion.displayName.toLocaleLowerCase().startsWith(query.toLocaleLowerCase());
                 });
                 return Promise.resolve(filtered);
               }
