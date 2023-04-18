@@ -22,6 +22,8 @@ import { _FileUploadCards } from './FileUploadCards';
 /* @conditional-compile-remove(file-sharing) */
 import { fileUploadCardsStyles } from './styles/SendBox.styles';
 import { SendBoxErrorBarError } from './SendBoxErrorBar';
+/* @conditional-compile-remove(at-mention) */
+import { AtMentionLookupOptions } from './AtMentionFlyout';
 
 const EMPTY_MESSAGE_REGEX = /^\s*$/;
 const MAXIMUM_LENGTH_OF_MESSAGE = 8000;
@@ -139,6 +141,13 @@ export interface SendBoxProps {
    * Optional callback called when message is sent
    */
   onSendMessage?: (content: string) => Promise<void>;
+  /* @conditional-compile-remove(at-mention) */
+  /**
+   * Optional props needed to lookup suggestions in the at mention scenario.
+   * @beta
+   */
+  atMentionLookupOptions?: AtMentionLookupOptions;
+
   /**
    * Optional callback called when user is typing
    */

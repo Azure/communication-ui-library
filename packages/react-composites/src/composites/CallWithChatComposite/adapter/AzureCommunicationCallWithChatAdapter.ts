@@ -15,6 +15,8 @@ import {
   StartCallOptions,
   VideoDeviceInfo
 } from '@azure/communication-calling';
+/* @conditional-compile-remove(close-captions) */
+import { StartCaptionsOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions, DtmfTone } from '@azure/communication-calling';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
@@ -81,6 +83,9 @@ import { useEffect, useRef, useState } from 'react';
 import { _toCommunicationIdentifier } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(rooms) */
 import { AzureCommunicationCallAdapterOptions } from '../../CallComposite/adapter/AzureCommunicationCallAdapter';
+/* @conditional-compile-remove(close-captions) */
+import { IsCaptionsActiveChangedListener, CaptionsReceivedListener } from '../../CallComposite/adapter/CallAdapter';
+
 /* @conditional-compile-remove(video-background-effects) */
 import { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/communication-calling-effects';
 /* @conditional-compile-remove(video-background-effects) */
@@ -206,7 +211,7 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     /* @conditional-compile-remove(file-sharing) */
     this.updateFileUploadMetadata = this.updateFileUploadMetadata.bind(this);
     /* @conditional-compile-remove(teams-inline-images) */
-    this.downloadAuthenticatedAttachment = this.downloadAuthenticatedAttachment.bind(this);
+    this.downloadAttachments = this.downloadAttachments.bind(this);
     /* @conditional-compile-remove(PSTN-calls) */
     this.holdCall.bind(this);
     /* @conditional-compile-remove(PSTN-calls) */
@@ -217,6 +222,12 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     this.sendDtmfTone.bind(this);
     /* @conditional-compile-remove(unsupported-browser) */
     this.allowUnsupportedBrowserVersion.bind(this);
+    /* @conditional-compile-remove(close-captions) */ {
+      this.startCaptions.bind(this);
+      this.stopCaptions.bind(this);
+      this.setSpokenLanguage.bind(this);
+      this.setCaptionLanguage.bind(this);
+    }
     /* @conditional-compile-remove(video-background-effects) */
     this.blurVideoBackground.bind(this);
     /* @conditional-compile-remove(video-background-effects) */
@@ -399,11 +410,8 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     this.chatAdapter.updateFileUploadMetadata(id, metadata);
   };
   /* @conditional-compile-remove(teams-inline-images) */
-  async downloadAuthenticatedAttachment(attachmentUrl: string): Promise<AttachmentDownloadResult> {
-    if (this.chatAdapter.downloadAuthenticatedAttachment === undefined) {
-      return { blobUrl: '' };
-    }
-    return await this.chatAdapter.downloadAuthenticatedAttachment(attachmentUrl);
+  async downloadAttachments(options: { attachmentUrls: string[] }): Promise<AttachmentDownloadResult[]> {
+    return await this.chatAdapter.downloadAttachments(options);
   }
   /* @conditional-compile-remove(PSTN-calls) */
   public async holdCall(): Promise<void> {
@@ -437,6 +445,26 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   /* @conditional-compile-remove(unsupported-browser) */
   public allowUnsupportedBrowserVersion(): void {
     return this.callAdapter.allowUnsupportedBrowserVersion();
+  }
+
+  /* @conditional-compile-remove(close-captions) */
+  public async startCaptions(options?: StartCaptionsOptions): Promise<void> {
+    await this.callAdapter.startCaptions(options);
+  }
+
+  /* @conditional-compile-remove(close-captions) */
+  public async stopCaptions(): Promise<void> {
+    await this.callAdapter.stopCaptions();
+  }
+
+  /* @conditional-compile-remove(close-captions) */
+  public async setCaptionLanguage(language: string): Promise<void> {
+    await this.callAdapter.setCaptionLanguage(language);
+  }
+
+  /* @conditional-compile-remove(close-captions) */
+  public async setSpokenLanguage(language: string): Promise<void> {
+    await this.callAdapter.setSpokenLanguage(language);
   }
 
   /* @conditional-compile-remove(video-background-effects) */
@@ -480,6 +508,10 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   on(event: 'selectedMicrophoneChanged', listener: PropertyChangedEvent): void;
   on(event: 'selectedSpeakerChanged', listener: PropertyChangedEvent): void;
   on(event: 'chatError', listener: (e: AdapterError) => void): void;
+  /* @conditional-compile-remove(close-captions) */
+  on(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
+  /* @conditional-compile-remove(close-captions) */
+  on(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   on(event: CallWithChatEvent, listener: any): void {
@@ -514,6 +546,14 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
       case 'selectedSpeakerChanged':
         this.callAdapter.on('selectedSpeakerChanged', listener);
         break;
+      /* @conditional-compile-remove(close-captions) */
+      case 'captionsReceived':
+        this.callAdapter.on('captionsReceived', listener);
+        break;
+      /* @conditional-compile-remove(close-captions) */
+      case 'isCaptionsActiveChanged':
+        this.callAdapter.on('isCaptionsActiveChanged', listener);
+        break;
       case 'messageReceived':
         this.chatAdapter.on('messageReceived', listener);
         break;
@@ -535,6 +575,7 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
       case 'chatError':
         this.chatAdapter.on('error', listener);
         break;
+
       default:
         throw `Unknown AzureCommunicationCallWithChatAdapter Event: ${event}`;
     }
@@ -557,10 +598,14 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   off(event: 'chatParticipantsAdded', listener: ParticipantsAddedListener): void;
   off(event: 'chatParticipantsRemoved', listener: ParticipantsRemovedListener): void;
   off(event: 'chatError', listener: (e: AdapterError) => void): void;
+  /* @conditional-compile-remove(close-captions) */
+  off(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
+  /* @conditional-compile-remove(close-captions) */
+  off(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   off(event: CallWithChatEvent, listener: any): void {
-    switch (event) {
+    switch (event as unknown) {
       case 'callParticipantsJoined':
         this.callAdapter.off('participantsJoined', listener);
         break;
@@ -590,6 +635,14 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
         break;
       case 'selectedSpeakerChanged':
         this.callAdapter.off('selectedSpeakerChanged', listener);
+        break;
+      /* @conditional-compile-remove(close-captions) */
+      case 'captionsReceived':
+        this.callAdapter.off('captionsReceived', listener);
+        break;
+      /* @conditional-compile-remove(close-captions) */
+      case 'isCaptionsActiveChanged':
+        this.callAdapter.off('isCaptionsActiveChanged', listener);
         break;
       case 'messageReceived':
         this.chatAdapter.off('messageReceived', listener);

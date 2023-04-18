@@ -38,6 +38,10 @@ export type {
   CallingBaseSelectorProps,
   CommonCallingHandlers
 } from '../../calling-component-bindings/src';
+
+/* @conditional-compile-remove(close-captions) */
+export type { CaptionsOptions } from '../../calling-component-bindings/src';
+
 export type {
   ChatClientProviderProps,
   ChatThreadClientProviderProps,
@@ -145,6 +149,14 @@ export type {
   SitePermissionsStyles,
   MicrophoneSitePermissionsStrings,
   MicrophoneSitePermissionsProps
+} from '../../react-components/src';
+
+/* @conditional-compile-remove(at-mention) */
+export type {
+  AtMentionOptions,
+  AtMentionDisplayOptions,
+  AtMentionLookupOptions,
+  AtMentionSuggestion
 } from '../../react-components/src';
 
 export type {
@@ -316,3 +328,5 @@ export type {
   VerticalGalleryStrings,
   VerticalGalleryControlBarStyles
 } from '../../react-components/src';
+/* @conditional-compile-remove(close-captions) */
+export type { CaptionsAvailableLanguageStrings } from '../../react-components/src';

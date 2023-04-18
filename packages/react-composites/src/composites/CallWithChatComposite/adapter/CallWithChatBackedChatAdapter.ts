@@ -130,12 +130,8 @@ export class CallWithChatBackedChatAdapter implements ChatAdapter {
   };
 
   /* @conditional-compile-remove(teams-inline-images) */
-  public async downloadAuthenticatedAttachment(attachmentUrl: string): Promise<AttachmentDownloadResult> {
-    if (!this.callWithChatAdapter.downloadAuthenticatedAttachment) {
-      return { blobUrl: '' };
-    }
-
-    return await this.callWithChatAdapter.downloadAuthenticatedAttachment(attachmentUrl);
+  public async downloadAttachments(options: { attachmentUrls: string[] }): Promise<AttachmentDownloadResult[]> {
+    return await this.callWithChatAdapter.downloadAttachments(options);
   }
 }
 

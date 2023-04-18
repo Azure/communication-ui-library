@@ -70,6 +70,8 @@ import { FileMetadata } from './FileDownloadCards';
 /* @conditional-compile-remove(teams-inline-images) */
 import { AttachmentDownloadResult } from './FileDownloadCards';
 import { useTheme } from '../theming';
+/* @conditional-compile-remove(at-mention) */
+import { AtMentionOptions } from './AtMentionFlyout';
 
 const isMessageSame = (first: ChatMessage, second: ChatMessage): boolean => {
   return (
@@ -644,7 +646,7 @@ export type MessageThreadProps = {
    * @param attachment - FileMetadata object we want to render
    * @beta
    */
-  onFetchAttachments?: (attachment: FileMetadata) => Promise<AttachmentDownloadResult | undefined>;
+  onFetchAttachments?: (attachment: FileMetadata) => Promise<AttachmentDownloadResult[]>;
   /**
    * Optional callback to edit a message.
    *
@@ -706,6 +708,12 @@ export type MessageThreadProps = {
    * @beta
    */
   onDisplayDateTimeString?: (messageDate: Date) => string;
+  /* @conditional-compile-remove(at-mention) */
+  /**
+   * Optional props needed to lookup suggestions and display mentions in the at mention scenario.
+   * @beta
+   */
+  atMentionOptions?: AtMentionOptions;
 };
 
 /**
@@ -840,8 +848,8 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
         return;
       }
       const attachmentDownloadResult = await onFetchAttachments(attachment);
-      if (attachmentDownloadResult) {
-        setInlineAttachments((prev) => ({ ...prev, [attachment.id]: attachmentDownloadResult.blobUrl }));
+      if (attachmentDownloadResult[0]) {
+        setInlineAttachments((prev) => ({ ...prev, [attachment.id]: attachmentDownloadResult[0].blobUrl }));
       }
     },
     [inlineAttachments, onFetchAttachments]

@@ -9,11 +9,10 @@ import { LocalizationProvider } from '../../localization/LocalizationProvider';
 import { CallAdapterProvider } from '../adapter/CallAdapterProvider';
 import { MockCallAdapter } from '../MockCallAdapter';
 import { useParticipantChangedAnnouncement } from './MediaGalleryUtils';
-import Enzyme, { ReactWrapper, mount } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
 import { act } from 'react-dom/test-utils';
 import { initializeIcons } from '@fluentui/react';
 import { CommunicationUserKind } from '@azure/communication-common';
+import { render } from '@testing-library/react';
 
 function RootWrapper(props: { adapter: MockCallAdapter }): JSX.Element {
   const { adapter } = props;
@@ -39,22 +38,19 @@ function HookWrapper(): JSX.Element {
   return <div id="announcedString">{JSON.stringify(announcements.map((v) => `|${v}|`))}</div>;
 }
 
-function mountWithParticipants(participants?: RemoteParticipantState[]): {
-  root: ReactWrapper;
+function renderWithParticipants(participants?: RemoteParticipantState[]): {
+  container: HTMLElement;
   adapter: MockCallAdapter;
 } {
   const adapter = new MockCallAdapter({});
-  let root;
-  act(() => {
-    root = mount(<RootWrapper adapter={adapter} />);
-  });
+  const { container } = render(<RootWrapper adapter={adapter} />);
   if (participants) {
-    setParticipants(root, adapter, participants);
+    setParticipants(adapter, participants);
   }
-  return { root, adapter };
+  return { container, adapter };
 }
 
-function setParticipants(root: ReactWrapper, adapter: MockCallAdapter, participants: RemoteParticipantState[]): void {
+function setParticipants(adapter: MockCallAdapter, participants: RemoteParticipantState[]): void {
   const call: CallState | undefined = adapter.state.call
     ? {
         ...adapter.state.call,
@@ -91,136 +87,136 @@ function participantWithoutName(userId: string): RemoteParticipantState {
   };
 }
 
-function expectAnnounced(root: ReactWrapper, value: string): void {
-  const announcement = root.find('#announcedString');
-  expect(announcement.html().toString()).toContain(`|${value}|`);
+function expectAnnounced(root: Element, value: string): void {
+  const announcement = root.querySelector('#announcedString');
+  expect(announcement?.innerHTML).toContain(`|${value}|`);
 }
 
-function expectNotAnnounced(root: ReactWrapper, value: string): void {
-  const announcement = root.find('#announcedString');
-  expect(announcement.html().toString()).not.toContain(`|${value}|`);
+function expectNotAnnounced(root: Element, value: string): void {
+  const announcement = root.querySelector('#announcedString');
+  expect(announcement).toBeTruthy();
+  expect(announcement?.innerHTML).not.toContain(`|${value}|`);
 }
 
 describe.only('useParticipantChangedAnnouncement', () => {
   beforeAll(() => {
-    Enzyme.configure({ adapter: new Adapter() });
     initializeIcons();
   });
 
   test('when 1 participant joined', () => {
-    const { root, adapter } = mountWithParticipants();
-    setParticipants(root, adapter, [participantWithName('donald')]);
-    expectAnnounced(root, 'donald joined');
-    expectNotAnnounced(root, 'donald left');
+    const { container, adapter } = renderWithParticipants();
+    setParticipants(adapter, [participantWithName('donald')]);
+    expectAnnounced(container, 'donald joined');
+    expectNotAnnounced(container, 'donald left');
   });
 
   test('when 1 participant leaves', () => {
-    const { root, adapter } = mountWithParticipants([participantWithName('donald')]);
-    setParticipants(root, adapter, []);
-    expectAnnounced(root, 'donald left');
+    const { container, adapter } = renderWithParticipants([participantWithName('donald')]);
+    setParticipants(adapter, []);
+    expectAnnounced(container, 'donald left');
   });
 
   // We don't currently handle the case when participants join and lave _at the exact same time_.
   // This is a very unlikely case as even a few milliseconds difference between participants
   // joinging / leaving will lead to two separate events rather than a single one.
   test.skip('when 1 participant joins and another leaves', () => {
-    const { root, adapter } = mountWithParticipants([participantWithName('donald')]);
-    setParticipants(root, adapter, [participantWithName('prathmesh')]);
-    expectAnnounced(root, 'donald left');
-    expectAnnounced(root, 'prathmesh joined');
-    expectNotAnnounced(root, 'prathmesh left');
+    const { container, adapter } = renderWithParticipants([participantWithName('donald')]);
+    setParticipants(adapter, [participantWithName('prathmesh')]);
+    expectAnnounced(container, 'donald left');
+    expectAnnounced(container, 'prathmesh joined');
+    expectNotAnnounced(container, 'prathmesh left');
   });
 
   test('when 2 participants joined', () => {
     const donald = participantWithName('donald');
-    const { root, adapter } = mountWithParticipants([donald]);
-    setParticipants(root, adapter, [donald, participantWithName('prathmesh'), participantWithName('zeta')]);
-    expectAnnounced(root, 'prathmesh and zeta have joined');
-    expectNotAnnounced(root, 'donald left');
-    expectNotAnnounced(root, 'prathmesh and zeta have left');
+    const { container, adapter } = renderWithParticipants([donald]);
+    setParticipants(adapter, [donald, participantWithName('prathmesh'), participantWithName('zeta')]);
+    expectAnnounced(container, 'prathmesh and zeta have joined');
+    expectNotAnnounced(container, 'donald left');
+    expectNotAnnounced(container, 'prathmesh and zeta have left');
   });
 
   test('when 2 participants left', () => {
     const donald = participantWithName('donald');
-    const { root, adapter } = mountWithParticipants([
+    const { container, adapter } = renderWithParticipants([
       donald,
       participantWithName('prathmesh'),
       participantWithName('zeta')
     ]);
-    setParticipants(root, adapter, [donald]);
-    expectAnnounced(root, 'prathmesh and zeta have left');
-    expectNotAnnounced(root, 'prathmesh and zeta have joined');
-    expectNotAnnounced(root, 'donald left');
+    setParticipants(adapter, [donald]);
+    expectAnnounced(container, 'prathmesh and zeta have left');
+    expectNotAnnounced(container, 'prathmesh and zeta have joined');
+    expectNotAnnounced(container, 'donald left');
   });
 
   test('when 3 participants joined', () => {
-    const { root, adapter } = mountWithParticipants([]);
-    setParticipants(root, adapter, [
+    const { container, adapter } = renderWithParticipants([]);
+    setParticipants(adapter, [
       participantWithName('donald'),
       participantWithName('prathmesh'),
       participantWithName('zeta')
     ]);
-    expectAnnounced(root, 'donald, prathmesh and zeta have joined');
-    expectNotAnnounced(root, 'donald, prathmesh and zeta have left');
+    expectAnnounced(container, 'donald, prathmesh and zeta have joined');
+    expectNotAnnounced(container, 'donald, prathmesh and zeta have left');
   });
 
   test('when 3 participant left', () => {
     const donald = participantWithName('donald');
     const prathmesh = participantWithName('prathmesh');
-    const { root, adapter } = mountWithParticipants([donald]);
-    setParticipants(root, adapter, [donald, prathmesh]);
-    setParticipants(root, adapter, [donald, prathmesh, participantWithName('zeta')]);
-    setParticipants(root, adapter, []);
-    expectAnnounced(root, 'donald, prathmesh and zeta have left');
-    expectNotAnnounced(root, 'prathmesh left');
-    expectNotAnnounced(root, 'donald left');
-    expectNotAnnounced(root, 'zeta left');
-    expectNotAnnounced(root, 'donald, prathmesh and zeta have joined');
+    const { container, adapter } = renderWithParticipants([donald]);
+    setParticipants(adapter, [donald, prathmesh]);
+    setParticipants(adapter, [donald, prathmesh, participantWithName('zeta')]);
+    setParticipants(adapter, []);
+    expectAnnounced(container, 'donald, prathmesh and zeta have left');
+    expectNotAnnounced(container, 'prathmesh left');
+    expectNotAnnounced(container, 'donald left');
+    expectNotAnnounced(container, 'zeta left');
+    expectNotAnnounced(container, 'donald, prathmesh and zeta have joined');
   });
 
   test('when 4 participants joined', () => {
-    const { root, adapter } = mountWithParticipants([]);
-    setParticipants(root, adapter, [
+    const { container, adapter } = renderWithParticipants([]);
+    setParticipants(adapter, [
       participantWithName('donald'),
       participantWithName('prathmesh'),
       participantWithName('zeta'),
       participantWithName('armadillo')
     ]);
-    expectAnnounced(root, 'donald, prathmesh, zeta and 1 other participants joined');
+    expectAnnounced(container, 'donald, prathmesh, zeta and 1 other participants joined');
   });
 
   test('when 4 participants left', () => {
     const straggler = participantWithName('straggler');
-    const { root, adapter } = mountWithParticipants([
+    const { container, adapter } = renderWithParticipants([
       participantWithName('donald'),
       straggler,
       participantWithName('prathmesh'),
       participantWithName('zeta'),
       participantWithName('armadillo')
     ]);
-    setParticipants(root, adapter, [straggler]);
-    expectAnnounced(root, 'donald, prathmesh, zeta and 1 other participants left');
+    setParticipants(adapter, [straggler]);
+    expectAnnounced(container, 'donald, prathmesh, zeta and 1 other participants left');
   });
 
   test('when 1 unnamed participant joined', () => {
-    const { root, adapter } = mountWithParticipants();
-    setParticipants(root, adapter, [participantWithoutName('some-id')]);
-    expectAnnounced(root, 'unnamed participant joined');
-    expectNotAnnounced(root, 'unnamed participant left');
-    expectNotAnnounced(root, 'some-id joined');
+    const { container, adapter } = renderWithParticipants();
+    setParticipants(adapter, [participantWithoutName('some-id')]);
+    expectAnnounced(container, 'unnamed participant joined');
+    expectNotAnnounced(container, 'unnamed participant left');
+    expectNotAnnounced(container, 'some-id joined');
   });
 
   test('when 1 unnamed participant left', () => {
-    const { root, adapter } = mountWithParticipants([participantWithoutName('some-id')]);
-    setParticipants(root, adapter, []);
-    expectAnnounced(root, 'unnamed participant left');
-    expectNotAnnounced(root, 'some-id left');
+    const { container, adapter } = renderWithParticipants([participantWithoutName('some-id')]);
+    setParticipants(adapter, []);
+    expectAnnounced(container, 'unnamed participant left');
+    expectNotAnnounced(container, 'some-id left');
   });
 
   test('when more than one unnamed participant joined', () => {
     const donald = participantWithName('donald');
-    const { root, adapter } = mountWithParticipants([donald]);
-    setParticipants(root, adapter, [
+    const { container, adapter } = renderWithParticipants([donald]);
+    setParticipants(adapter, [
       donald,
       participantWithoutName('some-id'),
       participantWithoutName('some-id1'),
@@ -228,14 +224,14 @@ describe.only('useParticipantChangedAnnouncement', () => {
       participantWithoutName('some-id3'),
       participantWithoutName('some-id4')
     ]);
-    expectAnnounced(root, 'unnamed participant and 4 other participants joined');
-    expectNotAnnounced(root, 'unnamed participant and 4 other participants left');
-    expectNotAnnounced(root, 'some-id has joined');
+    expectAnnounced(container, 'unnamed participant and 4 other participants joined');
+    expectNotAnnounced(container, 'unnamed participant and 4 other participants left');
+    expectNotAnnounced(container, 'some-id has joined');
   });
 
   test('when more than one unnamed participant left', () => {
     const donald = participantWithName('donald');
-    const { root, adapter } = mountWithParticipants([
+    const { container, adapter } = renderWithParticipants([
       donald,
       participantWithoutName('some-id'),
       participantWithoutName('some-id1'),
@@ -243,14 +239,14 @@ describe.only('useParticipantChangedAnnouncement', () => {
       participantWithoutName('some-id3'),
       participantWithoutName('some-id4')
     ]);
-    setParticipants(root, adapter, [donald]);
-    expectAnnounced(root, 'unnamed participant and 4 other participants left');
-    expectNotAnnounced(root, 'some-id has left');
+    setParticipants(adapter, [donald]);
+    expectAnnounced(container, 'unnamed participant and 4 other participants left');
+    expectNotAnnounced(container, 'some-id has left');
   });
 
   test('when more than one participant joined with unnamed participants', () => {
-    const { root, adapter } = mountWithParticipants([]);
-    setParticipants(root, adapter, [
+    const { container, adapter } = renderWithParticipants([]);
+    setParticipants(adapter, [
       participantWithName('donald'),
       participantWithoutName('some-id'),
       participantWithoutName('some-id1'),
@@ -260,12 +256,12 @@ describe.only('useParticipantChangedAnnouncement', () => {
       participantWithoutName('some-id3'),
       participantWithoutName('some-id4')
     ]);
-    expectAnnounced(root, 'donald, prathmesh, armadillo and 5 other participants joined');
-    expectNotAnnounced(root, 'some-id has joined');
+    expectAnnounced(container, 'donald, prathmesh, armadillo and 5 other participants joined');
+    expectNotAnnounced(container, 'some-id has joined');
   });
 
   test('when more than one participant left with unnamed participants', () => {
-    const { root, adapter } = mountWithParticipants([
+    const { container, adapter } = renderWithParticipants([
       participantWithName('donald'),
       participantWithoutName('some-id'),
       participantWithoutName('some-id1'),
@@ -275,9 +271,9 @@ describe.only('useParticipantChangedAnnouncement', () => {
       participantWithoutName('some-id3'),
       participantWithoutName('some-id4')
     ]);
-    setParticipants(root, adapter, []);
-    expectAnnounced(root, 'donald, prathmesh, armadillo and 5 other participants left');
-    expectNotAnnounced(root, 'some-id has left');
+    setParticipants(adapter, []);
+    expectAnnounced(container, 'donald, prathmesh, armadillo and 5 other participants left');
+    expectNotAnnounced(container, 'some-id has left');
   });
 
   test('when 1 participant joined and then mutes their mic', () => {
@@ -288,11 +284,11 @@ describe.only('useParticipantChangedAnnouncement', () => {
     const speakingDonald = participantWithName('donald');
     speakingDonald.isSpeaking = true;
 
-    const { root, adapter } = mountWithParticipants();
-    setParticipants(root, adapter, [donald]);
-    setParticipants(root, adapter, [mutedDonald]);
-    setParticipants(root, adapter, [speakingDonald]);
-    expectAnnounced(root, 'donald joined');
-    expectNotAnnounced(root, 'donald left');
+    const { container, adapter } = renderWithParticipants();
+    setParticipants(adapter, [donald]);
+    setParticipants(adapter, [mutedDonald]);
+    setParticipants(adapter, [speakingDonald]);
+    expectAnnounced(container, 'donald joined');
+    expectNotAnnounced(container, 'donald left');
   });
 });

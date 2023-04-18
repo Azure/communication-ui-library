@@ -42,6 +42,13 @@ import {
   MicProhibited16Filled,
   VideoProhibited16Filled
 } from '@fluentui/react-icons';
+/* @conditional-compile-remove(close-captions) */
+import {
+  ClosedCaption20Regular,
+  ClosedCaptionOff20Regular,
+  Settings20Regular,
+  PersonVoice20Regular
+} from '@fluentui/react-icons';
 /* @conditional-compile-remove(call-readiness) */
 import { Important20Filled } from '@fluentui/react-icons';
 /* @conditional-compile-remove(video-background-effects) */
@@ -303,5 +310,13 @@ export const DEFAULT_COMPONENT_ICONS = {
   /* @conditional-compile-remove(vertical-gallery) */
   VerticalGalleryRightButton: <ChevronRight20Regular />,
   /* @conditional-compile-remove(video-background-effects) */
-  OptionsVideoBackgroundEffect: <VideoBackgroundEffect20Regular />
+  OptionsVideoBackgroundEffect: <VideoBackgroundEffect20Regular />,
+  /* @conditional-compile-remove(close-captions) */
+  CaptionsIcon: <ClosedCaption20Regular />,
+  /* @conditional-compile-remove(close-captions) */
+  CaptionsOffIcon: <ClosedCaptionOff20Regular />,
+  /* @conditional-compile-remove(close-captions) */
+  CaptionsSettingsIcon: <Settings20Regular />,
+  /* @conditional-compile-remove(close-captions) */
+  ChangeSpokenLanguageIcon: <PersonVoice20Regular />
 };
