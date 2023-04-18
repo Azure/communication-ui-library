@@ -124,9 +124,11 @@ export interface AtMentionSuggestion {
  */
 export const _AtMentionFlyout = (props: _AtMentionFlyoutProps): JSX.Element => {
   interface Position {
-    x: number;
+    left?: number;
+    right?: number;
     top?: number;
     bottom?: number;
+    maxWidth?: number;
   }
 
   const {
@@ -145,7 +147,7 @@ export const _AtMentionFlyout = (props: _AtMentionFlyoutProps): JSX.Element => {
   const localeStrings = useLocale().strings.participantItem;
   const flyoutRef = useRef() as React.MutableRefObject<HTMLDivElement>;
 
-  const [position, setPosition] = useState<Position>({ x: 0 });
+  const [position, setPosition] = useState<Position>({ left: 0 });
   const [hoveredSuggestion, setHoveredSuggestion] = useState<AtMentionSuggestion | undefined>(undefined);
 
   const dismissFlyoutWhenClickingOutside = useCallback(
@@ -168,10 +170,17 @@ export const _AtMentionFlyout = (props: _AtMentionFlyoutProps): JSX.Element => {
   // Determine popover position
   useEffect(() => {
     const rect = target?.current?.getBoundingClientRect();
-    // Show above by default
-    const finalPosition: Position = {
-      x: targetPositionOffset?.left ?? 0
-    };
+    const maxWidth = 300;
+    let finalPosition: Position = { maxWidth };
+
+    // Figure out whether it will fit horizontally
+    let leftOffset = targetPositionOffset?.left ?? 0;
+    if (leftOffset + maxWidth > (rect?.width ?? 0)) {
+      finalPosition.right = (rect?.width ?? 0) - leftOffset;
+    } else {
+      finalPosition.left = leftOffset;
+    }
+    console.log(rect);
     if (location === 'below') {
       finalPosition.top = (rect?.height ?? 0) + (targetPositionOffset?.top ?? 0);
     } else {
@@ -182,8 +191,6 @@ export const _AtMentionFlyout = (props: _AtMentionFlyoutProps): JSX.Element => {
   }, [location, target, targetPositionOffset]);
 
   const personaRenderer = (displayName?: string): JSX.Element => {
-    const localeStrings = useLocale().strings.participantItem;
-
     const avatarOptions = {
       text: displayName?.trim() || localeStrings.displayNamePlaceholder,
       size: PersonaSize.size24,
@@ -222,13 +229,17 @@ export const _AtMentionFlyout = (props: _AtMentionFlyoutProps): JSX.Element => {
   return (
     <div ref={flyoutRef}>
       <Stack
-        className={mergeStyles(mentionFlyoutContainerStyle(theme), {
-          left: position.x,
-          top: position.top,
-          bottom: position.bottom,
-          maxHeight: 212,
-          position: 'absolute'
-        })}
+        className={mergeStyles(
+          {
+            maxHeight: 212,
+            maxWidth: position.maxWidth
+          },
+          mentionFlyoutContainerStyle(theme),
+          {
+            ...position,
+            position: 'absolute'
+          }
+        )}
       >
         <Stack.Item styles={headerStyleThemed(theme)} aria-label={title}>
           {title}
