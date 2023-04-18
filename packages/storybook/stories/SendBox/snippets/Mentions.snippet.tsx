@@ -29,7 +29,8 @@ const trigger = '@';
 
 export const MentionsExample: () => JSX.Element = () => (
   <FluentThemeProvider>
-    <div style={{ width: '31.25rem' }}>
+    <div style={{ width: '31.25rem', height: '20rem' }}>
+      <div style={{ width: '31.25rem', height: '17rem' }} />
       <SendBox
         onSendMessage={async () => {
           return;
