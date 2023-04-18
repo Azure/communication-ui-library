@@ -225,16 +225,14 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     }
     // If we are enabled for lookups,
     if (atMentionLookupOptions !== undefined) {
-      //TODO; add check for the last space and check if it isn't between mention trigger and
       // Look at the range of the change for a trigger character
       const triggerText = atMentionLookupOptions?.trigger ?? defaultMentionTrigger;
       const triggerPriorIndex = newValue?.lastIndexOf(triggerText, selectionEnd - 1);
-      // trigger is found
-
       // Update the caret position, if not doing a lookup
       setCaretPosition(Caret.getRelativePosition(event.currentTarget));
 
       if (triggerPriorIndex !== undefined) {
+        // trigger is found
         const isSpaceBeforeTrigger = newValue?.substring(triggerPriorIndex - 1, triggerPriorIndex) === ' ';
         const wordAtSelection = newValue?.substring(triggerPriorIndex, selectionEnd);
         let tagIndex = currentTagIndex;
@@ -341,17 +339,6 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       newValue.substring(changeStart, newChangeEnd)
     );
     console.log('updatedHTML', updatedHTML);
-    // const updatedHTML =
-    // let updatedValue = newValue;
-    // if (selectionEnd === inputTextValue.length) {
-    //   // add text to the end of the string
-    //   const findFirstDiff = (str1, str2) => str2[[...str1].findIndex((el, index) => el !== str2[index])];
-    //   const diff = findFirstDiff(inputTextValue, newValue);
-    //   updatedValue =
-    // }
-    // TODO: filter the call back to the parent only after setting the text with HTML where
-    // appropriate.
-    // TODO: should be html text!!!
     onChange && onChange(event, updatedHTML);
   };
 
@@ -592,6 +579,8 @@ const updateHTML = (
   // after any tag - paste in the middle of htmlText but check the end tag value
   // if between tags - past in the middle after the open tag with diff
   /// when change remove the tag (consume) fully
+
+  // TODO: to check when on the edge of the tags in plain text
   for (let i = 0; i < tags.length; i++) {
     const tag = tags[i];
     if (startIndex < tag.plainTextStartIndex && oldPlainTextEndIndex < tag.plainTextStartIndex) {
@@ -638,9 +627,9 @@ const updateHTML = (
         console.log('no subtags end');
         // -1 is lost
         result =
-          htmlText.substring(0, tag.htmlOpenTagStartIndex + tag.openTagLength + startChangeDiff) +
+          htmlText.substring(0, tag.htmlOpenTagStartIndex + tag.openTagLength + startChangeDiff - 1) +
           change +
-          htmlText.substring(tag.htmlOpenTagStartIndex + tag.openTagLength + endChangeDiff);
+          htmlText.substring(tag.htmlOpenTagStartIndex + tag.openTagLength + endChangeDiff - 1);
         break;
       } else {
         //works
