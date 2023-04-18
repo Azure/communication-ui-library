@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { FocusZone, Persona, PersonaSize, Stack, useTheme } from '@fluentui/react';
 import {
   atMentionFlyoutContainer,
@@ -121,14 +121,32 @@ export const _AtMentionFlyout = (props: _AtMentionFlyoutProps): JSX.Element => {
     bottom: number;
     left: number;
   }
-  const { suggestions, title = 'Suggestions', target, onRenderSuggestionItem, onSuggestionSelected } = props;
+  const { suggestions, title = 'Suggestions', target, onRenderSuggestionItem, onSuggestionSelected, onDismiss } = props;
   const theme = useTheme();
   /* @conditional-compile-remove(at-mention) */
   const ids = useIdentifiers();
   const localeStrings = useLocale().strings.participantItem;
+  const flyoutRef = useRef() as React.MutableRefObject<HTMLDivElement>;
 
   const [position, setPosition] = useState<Position>({ top: 0, right: 0, bottom: 0, left: 0 });
   const [hoveredSuggestion, setHoveredSuggestion] = useState<AtMentionSuggestion | undefined>(undefined);
+
+  const dismissFlyoutWhenClickingOutside = useCallback(
+    (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      if (flyoutRef.current && !flyoutRef.current.contains(target)) {
+        onDismiss && onDismiss();
+      }
+    },
+    [onDismiss]
+  );
+
+  useEffect(() => {
+    window && window.addEventListener('click', dismissFlyoutWhenClickingOutside);
+    return () => {
+      window && window.removeEventListener('click', dismissFlyoutWhenClickingOutside);
+    };
+  }, [dismissFlyoutWhenClickingOutside]);
 
   // Temporary implementation for AtMentionFlyout's position.
   useEffect(() => {
@@ -173,23 +191,25 @@ export const _AtMentionFlyout = (props: _AtMentionFlyoutProps): JSX.Element => {
   };
 
   return (
-    <Stack className={atMentionFlyoutContainer(theme, position.left, position.top)}>
-      <Stack.Item styles={headerStyleThemed(theme)} aria-label={title}>
-        {title} {/* TODO: Localization  */}
-      </Stack.Item>
-      <FocusZone className={suggestionListContainerStyle} shouldFocusOnMount={true}>
-        <Stack
-          /* @conditional-compile-remove(at-mention) */
-          data-ui-id={ids.atMentionSuggestionList}
-          className={suggestionListStyle}
-        >
-          {suggestions.map((suggestion) =>
-            onRenderSuggestionItem
-              ? onRenderSuggestionItem(suggestion, onSuggestionSelected)
-              : defaultOnRenderSuggestionItem(suggestion)
-          )}
-        </Stack>
-      </FocusZone>
-    </Stack>
+    <div ref={flyoutRef}>
+      <Stack className={atMentionFlyoutContainer(theme, position.left, position.top)}>
+        <Stack.Item styles={headerStyleThemed(theme)} aria-label={title}>
+          {title} {/* TODO: Localization  */}
+        </Stack.Item>
+        <FocusZone className={suggestionListContainerStyle}>
+          <Stack
+            /* @conditional-compile-remove(at-mention) */
+            data-ui-id={ids.atMentionSuggestionList}
+            className={suggestionListStyle}
+          >
+            {suggestions.map((suggestion) =>
+              onRenderSuggestionItem
+                ? onRenderSuggestionItem(suggestion, onSuggestionSelected)
+                : defaultOnRenderSuggestionItem(suggestion)
+            )}
+          </Stack>
+        </FocusZone>
+      </Stack>
+    </div>
   );
 };

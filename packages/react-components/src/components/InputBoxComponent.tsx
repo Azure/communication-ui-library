@@ -148,6 +148,15 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     [onEnterKeyDown, onKeyDown, supportNewline]
   );
 
+  const updateMentionSuggestions = useCallback(
+    (suggestions: AtMentionSuggestion[]) => {
+      setMentionSuggestions(suggestions);
+      //TODO: add focus to the correct position
+      textFieldRef?.current?.focus();
+    },
+    [textFieldRef]
+  );
+
   const onSuggestionSelected = useCallback(
     (suggestion: AtMentionSuggestion) => {
       const selectionStart = textFieldRef?.current?.selectionStart;
@@ -181,12 +190,18 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       const [tags, plainText] = parseHTMLText(updatedText, triggerText);
       setInputTextValue(plainText);
       onMentionAdd && onMentionAdd(updatedText);
-      setMentionSuggestions([]);
+      updateMentionSuggestions([]);
       setCurrentTagIndex(-1);
-      //TODO: add focus to the correct position
-      textFieldRef?.current?.focus();
     },
-    [atMentionLookupOptions?.trigger, onMentionAdd, textFieldRef, inputTextValue]
+    [
+      textFieldRef,
+      inputTextValue,
+      currentTagIndex,
+      textValue,
+      atMentionLookupOptions?.trigger,
+      onMentionAdd,
+      updateMentionSuggestions
+    ]
   );
 
   const handleOnChange = async (
@@ -232,14 +247,14 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
         console.log('currentTagIndex', currentTagIndex);
         console.log('tagIndex', tagIndex);
         if (tagIndex === -1) {
-          setMentionSuggestions([]);
+          updateMentionSuggestions([]);
         } else {
           // In the middle of a @mention lookup
           if (tagIndex > -1) {
             const query = wordAtSelection.substring(triggerText.length, wordAtSelection.length);
             if (query !== undefined) {
               const suggestions = (await atMentionLookupOptions?.onQueryUpdated(query)) ?? [];
-              setMentionSuggestions(suggestions);
+              updateMentionSuggestions(suggestions);
             }
           }
         }
@@ -354,6 +369,9 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
           suggestions={mentionSuggestions}
           target={inputBoxRef}
           onSuggestionSelected={onSuggestionSelected}
+          onDismiss={() => {
+            updateMentionSuggestions([]);
+          }}
         />
       )}
       <div className={mergedTextContainerStyle}>
