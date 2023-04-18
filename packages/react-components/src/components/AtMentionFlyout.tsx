@@ -34,6 +34,10 @@ export interface _AtMentionFlyoutProps {
    */
   target: React.RefObject<Element>;
   /**
+   * When rendering the flyout, where to position it relative to the target.
+   */
+  targetPositionOffset?: { top: number; left: number };
+  /**
    * Where to display the suggestions relative to the target.
    * @defaultValue `above`
    */
@@ -129,6 +133,7 @@ export const _AtMentionFlyout = (props: _AtMentionFlyoutProps): JSX.Element => {
     suggestions,
     title = 'Suggestions' /* TODO: Localization of the default */,
     target,
+    targetPositionOffset,
     onRenderSuggestionItem,
     onSuggestionSelected,
     location
@@ -143,23 +148,21 @@ export const _AtMentionFlyout = (props: _AtMentionFlyoutProps): JSX.Element => {
     const rect = target?.current?.getBoundingClientRect();
     // Show above by default
     let finalPosition: Position = {
-      x: rect?.x ?? 0,
-      top: undefined,
-      bottom: rect?.height
+      x: targetPositionOffset?.left ?? 0
     };
     if (location === 'below') {
-      finalPosition = {
-        x: rect?.x ?? 0,
-        top: rect?.height,
-        bottom: undefined
-      };
+      finalPosition.top = (rect?.height ?? 0) + (targetPositionOffset?.top ?? 0);
+    } else {
+      // (location === 'above')
+      finalPosition.bottom = (rect?.height ?? 0) + (targetPositionOffset?.top ?? 0);
     }
     setPosition(finalPosition);
-  }, [location, target]);
+  }, [location, target, targetPositionOffset]);
 
   return (
     <Stack
       className={mergeStyles(mentionFlyoutContainerStyle(theme), {
+        left: position.x,
         top: position.top,
         bottom: position.bottom,
         maxHeight: 212,
