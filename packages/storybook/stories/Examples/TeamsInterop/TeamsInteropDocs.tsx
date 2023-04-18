@@ -33,13 +33,13 @@ export const getDocs: () => JSX.Element = () => {
       <Heading>Inline Images</Heading>
       <SingleLineBetaBanner />
       <Description>
-        Teams inline images are images that are copied and pasted into the send box of Teams client. If the Teams user
-        chooses to either upload an image via attachment menu "Upload from this device" or drag-and-drop the image into
-        the send box, then the image will be sent as a file attachment even though it might be shown as an inline image
-        in the Teams client.
+        Inline images are images that are copied and pasted directly into the send box of Teams client. For images that
+        were uploaded via "Upload from this device" menu or via drag-and-drop (such as dragging images directly to the
+        send box) in the Teams, they are not supported at this moment. To copy an image, the Teams user can either use
+        their operating system's context menu to copy the image file then paste it into the send box of their Teams
+        client, or use keyboard shortcuts instead.
       </Description>
       <Description>
-        It's important to note that currently, the UI library does not support file attachments sent by the Teams user.
         To learn more about currently supported UI library use cases, please refer to the [UI Library use
         cases](https://learn.microsoft.com/en-us/azure/communication-services/concepts/ui-library/ui-library-use-cases?pivots=platform-web#chat-use-cases).
       </Description>
