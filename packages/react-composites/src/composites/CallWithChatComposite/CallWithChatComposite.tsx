@@ -383,11 +383,12 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
           </Stack.Item>
           {
             /* @conditional-compile-remove(video-background-effects) */
-            <VideoEffectsPane
-              showVideoEffectsOptions={showVideoEffectsPane}
-              setshowVideoEffectsOptions={setShowVideoEffectsPane}
-              adapter={callAdapter}
-            />
+            <CallAdapterProvider adapter={callAdapter}>
+              <VideoEffectsPane
+                showVideoEffectsOptions={showVideoEffectsPane}
+                setshowVideoEffectsOptions={setShowVideoEffectsPane}
+              />
+            </CallAdapterProvider>
           }
           {chatProps.adapter && callAdapter && hasJoinedCall && (
             <CallWithChatPane
