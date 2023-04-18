@@ -353,7 +353,12 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
   }, [activeFileUploads, props, localeStrings]);
 
   return (
-    <Stack className={mergeStyles(sendBoxWrapperStyles)}>
+    <Stack
+      className={mergeStyles(
+        sendBoxWrapperStyles,
+        { overflow: 'visible' } // This is needed for the mention popup to be visible
+      )}
+    >
       <SendBoxErrors {...sendBoxErrorsProps} />
       <Stack
         className={mergeStyles(
@@ -392,7 +397,6 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
           onMentionAdd={(newTextValue) => {
             setText(newTextValue);
           }}
-          atMentionLookupOptions={atMentionLookupOptions}
         >
           <VoiceOverButton
             onRenderIcon={onRenderSendIcon}

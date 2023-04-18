@@ -12,15 +12,11 @@ export const CHAT_CONTAINER_ZINDEX = 1;
 /**
  * @private
  */
-export const atMentionFlyoutContainer = (theme: Theme, left: number, top: number): string =>
+export const mentionFlyoutContainerStyle = (theme: Theme): string =>
   mergeStyles({
-    width: '10rem',
-    height: '13.25rem',
-    position: 'absolute',
-    left: left,
-    top: top,
     boxShadow: theme.effects.elevation16,
     background: theme.semanticColors.bodyBackground,
+    overflow: 'visible',
     // zIndex to set the atMentionFlyout above the chat container
     zIndex: CHAT_CONTAINER_ZINDEX + 1
   });
@@ -42,7 +38,7 @@ export const headerStyleThemed = (theme: Theme): IStackStyles => {
  */
 export const suggestionListContainerStyle = mergeStyles({
   height: '100%',
-  overflowY: 'auto',
+  overflowY: 'visible',
   overflowX: 'hidden'
 });
 
@@ -50,7 +46,8 @@ export const suggestionListContainerStyle = mergeStyles({
  * @private
  */
 export const suggestionListStyle = mergeStyles({
-  padding: '0.25rem 0rem 0'
+  padding: '0.25rem 0rem 0',
+  overflow: 'visible'
 });
 
 /**
