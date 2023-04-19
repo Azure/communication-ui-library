@@ -188,7 +188,7 @@ export const _AtMentionFlyout = (props: _AtMentionFlyoutProps): JSX.Element => {
       finalPosition.top = (rect?.height ?? 0) + (targetPositionOffset?.top ?? 0);
     } else {
       // (location === 'above')
-      finalPosition.bottom = (rect?.height ?? 0) + (targetPositionOffset?.top ?? 0);
+      finalPosition.bottom = (rect?.height ?? 0) - (targetPositionOffset?.top ?? 0);
     }
     setPosition(finalPosition);
   }, [location, target, targetPositionOffset]);
