@@ -82,7 +82,7 @@ const MessageContentAsRichTextHTML = (props: ChatMessageContentProps): JSX.Eleme
         props.onFetchAttachment(fileMetadata);
       }
     });
-  });
+  }, [props]);
 
   return (
     <MessageContentWithLiveAria
