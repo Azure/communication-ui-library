@@ -265,82 +265,29 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
         }
       }
     }
-    //TODO: check if there are tags, otherwise just change text value without calculations
-    const oldTextLength = inputTextValue.length;
-    // find indexes -> find strings diff -> check where the diff is -> change -> move all tags
-
-    let changeStart = 0;
-    let newChangeEnd = 0;
-    let oldChangeEnd = 0;
-    const length = Math.min(newTextLength, oldTextLength);
-
-    for (let i = 0; i < length; i++) {
-      if (newValue[i] !== inputTextValue[i]) {
-        // the symbol with changeStart index is updated
-        changeStart = i;
-        break;
-      } else if (i === length - 1 && newValue[i] === inputTextValue[i]) {
-        // the symbol is added at the end of inputTextValue
-        changeStart = length;
-        break;
-      }
-    }
-    if (oldTextLength < newTextLength) {
-      //insert or replacement
-      if (oldTextLength === changeStart) {
-        // when change was at the end of string
-        newChangeEnd = newTextLength - 1;
-        oldChangeEnd = oldTextLength;
-      }
-      for (let i = 1; i < newTextLength && oldTextLength - i > changeStart; i++) {
-        newChangeEnd = newTextLength - i - 1;
-        oldChangeEnd = oldTextLength - i - 1;
-
-        if (newValue[newChangeEnd] !== inputTextValue[oldChangeEnd]) {
-          // Change is found
-          break;
-        }
-      }
-    } else if (oldTextLength > newTextLength) {
-      //deletion or replacement
-      if (newTextLength === changeStart) {
-        // when change was at the end of string
-        newChangeEnd = newTextLength;
-        oldChangeEnd = oldTextLength - 1;
-      }
-      for (let i = 1; i < oldTextLength && newTextLength - i > changeStart; i++) {
-        newChangeEnd = newTextLength - i - 1;
-        oldChangeEnd = oldTextLength - i - 1;
-
-        if (newValue[newChangeEnd] !== inputTextValue[oldChangeEnd]) {
-          // Change is found
-          break;
-        }
-      }
+    let result = '';
+    if (tagsValue.length === 0) {
+      // no tags in the string, textValue is a sting and
+      result = newValue;
     } else {
-      //replacement
-      for (let i = 1; i < oldTextLength && oldTextLength - i > changeStart; i++) {
-        newChangeEnd = newTextLength - i - 1;
-        oldChangeEnd = oldTextLength - i - 1;
+      // there are tags in the value, textValue is html string
+      const { changeStart, newChangeEnd, oldChangeEnd } = findStringsDiffIndexes(inputTextValue, newValue);
 
-        if (newValue[newChangeEnd] !== inputTextValue[oldChangeEnd]) {
-          // Change is found
-          break;
-        }
-      }
+      // add mention
+      result = updateHTML(
+        textValue,
+        inputTextValue,
+        newValue,
+        tagsValue,
+        changeStart,
+        oldChangeEnd,
+        newValue.substring(changeStart, newChangeEnd),
+        triggerText
+      );
+      console.log('updatedHTML', result);
     }
-    const updatedHTML = updateHTML(
-      textValue,
-      inputTextValue,
-      newValue,
-      tagsValue,
-      changeStart,
-      oldChangeEnd,
-      newValue.substring(changeStart, newChangeEnd),
-      triggerText
-    );
-    console.log('updatedHTML', updatedHTML);
-    onChange && onChange(event, updatedHTML);
+
+    onChange && onChange(event, result);
   };
 
   return (
@@ -867,6 +814,81 @@ const htmlMentionIndex = (
     console.log('htmlIndex', htmlIndex);
     return htmlIndex;
   }
+};
+
+/**
+ * Given the oldText and newText, find the start index, old end index and new end index for the changes
+ *
+ * @private
+ */
+const findStringsDiffIndexes = (
+  oldText: string,
+  newText: string
+): { changeStart: number; oldChangeEnd: number; newChangeEnd: number } => {
+  const newTextLength = newText.length;
+  const oldTextLength = oldText.length;
+
+  let changeStart = 0;
+  let newChangeEnd = 0;
+  let oldChangeEnd = 0;
+  const length = Math.min(newTextLength, oldTextLength);
+
+  for (let i = 0; i < length; i++) {
+    if (newText[i] !== oldText[i]) {
+      // the symbol with changeStart index is updated
+      changeStart = i;
+      break;
+    } else if (i === length - 1 && newText[i] === oldText[i]) {
+      // the symbol is added at the end of inputTextValue
+      changeStart = length;
+      break;
+    }
+  }
+  if (oldTextLength < newTextLength) {
+    //insert or replacement
+    if (oldTextLength === changeStart) {
+      // when change was at the end of string
+      newChangeEnd = newTextLength - 1;
+      oldChangeEnd = oldTextLength;
+    }
+    for (let i = 1; i < newTextLength && oldTextLength - i > changeStart; i++) {
+      newChangeEnd = newTextLength - i - 1;
+      oldChangeEnd = oldTextLength - i - 1;
+
+      if (newText[newChangeEnd] !== oldText[oldChangeEnd]) {
+        // Change is found
+        break;
+      }
+    }
+  } else if (oldTextLength > newTextLength) {
+    //deletion or replacement
+    if (newTextLength === changeStart) {
+      // when change was at the end of string
+      newChangeEnd = newTextLength;
+      oldChangeEnd = oldTextLength - 1;
+    }
+    for (let i = 1; i < oldTextLength && newTextLength - i > changeStart; i++) {
+      newChangeEnd = newTextLength - i - 1;
+      oldChangeEnd = oldTextLength - i - 1;
+
+      if (newText[newChangeEnd] !== oldText[oldChangeEnd]) {
+        // Change is found
+        break;
+      }
+    }
+  } else {
+    //replacement
+    for (let i = 1; i < oldTextLength && oldTextLength - i > changeStart; i++) {
+      newChangeEnd = newTextLength - i - 1;
+      oldChangeEnd = oldTextLength - i - 1;
+
+      if (newText[newChangeEnd] !== oldText[oldChangeEnd]) {
+        // Change is found
+        break;
+      }
+    }
+  }
+  return { changeStart, oldChangeEnd, newChangeEnd };
 };
 
 const htmlStringForMentionSuggestion = (suggestion: AtMentionSuggestion): string => {
