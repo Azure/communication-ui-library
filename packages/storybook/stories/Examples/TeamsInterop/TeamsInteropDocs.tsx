@@ -40,7 +40,9 @@ export const getDocs: () => JSX.Element = () => {
         client, or use keyboard shortcuts instead.
       </Description>
       <Description>
-        To learn more about currently supported UI library use cases, please refer to the [UI Library use
+        Moreover, certain GIFs might not be supported by the UI library at this time, the user might be recieving a
+        static image instead and this is a known issue. To learn more about currently supported UI library use cases,
+        please refer to the [UI Library use
         cases](https://learn.microsoft.com/en-us/azure/communication-services/concepts/ui-library/ui-library-use-cases?pivots=platform-web#chat-use-cases).
       </Description>
       <Subheading>Use CallWithChat Composite with Inline Image Support</Subheading>
