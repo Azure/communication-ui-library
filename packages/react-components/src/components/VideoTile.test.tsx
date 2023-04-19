@@ -2,15 +2,13 @@
 // Licensed under the MIT license.
 
 import { initializeIcons, registerIcons } from '@fluentui/react';
-/* @conditional-compile-remove(pinned-participants) */
-import { IconButton } from '@fluentui/react';
-import Enzyme, { mount } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
 import React from 'react';
 import { VideoTile } from './VideoTile';
-import { act } from 'react-dom/test-utils';
-
-Enzyme.configure({ adapter: new Adapter() });
+import { act, fireEvent, render } from '@testing-library/react';
+/* @conditional-compile-remove(pinned-participants) */
+import { screen } from '@testing-library/react';
+/* @conditional-compile-remove(pinned-participants) */
+import { VideoTileProps } from './VideoTile';
 
 describe('VideoTile', () => {
   beforeAll(() => {
@@ -26,22 +24,33 @@ describe('VideoTile', () => {
     const mockCallback = jest.fn();
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const videoTileProps = { onLongTouch: mockCallback } as any;
-    const wrapper = mount(<VideoTile {...videoTileProps} />);
+    const { container } = render(<VideoTile {...videoTileProps} />);
+    const videoTile = container.querySelector('[data-ui-id="video-tile"]') as HTMLElement;
+    expect(videoTile).toBeTruthy();
+
+    jest.useFakeTimers();
     await act(async () => {
-      wrapper.simulate('touchstart');
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      wrapper.simulate('touchend');
+      fireEvent.touchStart(videoTile);
+      jest.runAllTimers();
+      fireEvent.touchEnd(videoTile);
     });
+
     /* @conditional-compile-remove(pinned-participants) */
     expect(mockCallback).toBeCalledTimes(1);
   });
 
+  /* @conditional-compile-remove(pinned-participants) */
   test('VideoTile does not show more button when contextualMenu is undefined', async () => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const videoTileProps = { displayName: 'John Doe', contextualMenu: undefined } as any;
-    const wrapper = mount(<VideoTile />);
-    wrapper.setProps(videoTileProps);
-    /* @conditional-compile-remove(pinned-participants) */
-    expect(wrapper.find(IconButton).length).toBe(0);
+    const { rerender, container } = render(<VideoTile />);
+
+    const noContextMenuVideoTileProps = {
+      displayName: 'John Doe',
+      contextualMenu: undefined
+    } as Partial<VideoTileProps>;
+    rerender(<VideoTile {...noContextMenuVideoTileProps} />);
+    act(() => {
+      fireEvent.focus(container);
+    });
+    expect(screen.queryAllByRole('button').length).toBe(0);
   });
 });

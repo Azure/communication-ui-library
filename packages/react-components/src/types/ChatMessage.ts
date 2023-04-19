@@ -3,7 +3,7 @@
 
 import { MessageStatus } from '@internal/acs-ui-common';
 import { CommunicationParticipant } from './CommunicationParticipant';
-/* @conditional-compile-remove(file-sharing) */
+/* @conditional-compile-remove(file-sharing) */ /* @conditional-compile-remove(teams-inline-images) */
 import { FileMetadata } from '../components/FileDownloadCards';
 
 /**

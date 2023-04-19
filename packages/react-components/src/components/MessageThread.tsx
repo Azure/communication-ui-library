@@ -64,8 +64,14 @@ import { useLocale } from '../localization/LocalizationProvider';
 import { isNarrowWidth, _useContainerWidth } from './utils/responsive';
 import getParticipantsWhoHaveReadMessage from './utils/getParticipantsWhoHaveReadMessage';
 /* @conditional-compile-remove(file-sharing) */
-import { FileDownloadHandler, FileMetadata } from './FileDownloadCards';
+import { FileDownloadHandler } from './FileDownloadCards';
+/* @conditional-compile-remove(file-sharing) */ /* @conditional-compile-remove(teams-inline-images) */
+import { FileMetadata } from './FileDownloadCards';
+/* @conditional-compile-remove(teams-inline-images) */
+import { AttachmentDownloadResult } from './FileDownloadCards';
 import { useTheme } from '../theming';
+/* @conditional-compile-remove(at-mention) */
+import { AtMentionOptions } from './AtMentionFlyout';
 
 const isMessageSame = (first: ChatMessage, second: ChatMessage): boolean => {
   return (
@@ -634,6 +640,13 @@ export type MessageThreadProps = {
    * @beta
    */
   onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
+  /* @conditional-compile-remove(teams-inline-images) */
+  /**
+   * Optional callback to retrieve the inline image in a message.
+   * @param attachment - FileMetadata object we want to render
+   * @beta
+   */
+  onFetchAttachments?: (attachment: FileMetadata) => Promise<AttachmentDownloadResult[]>;
   /**
    * Optional callback to edit a message.
    *
@@ -695,6 +708,12 @@ export type MessageThreadProps = {
    * @beta
    */
   onDisplayDateTimeString?: (messageDate: Date) => string;
+  /* @conditional-compile-remove(at-mention) */
+  /**
+   * Optional props needed to lookup suggestions and display mentions in the at mention scenario.
+   * @beta
+   */
+  atMentionOptions?: AtMentionOptions;
 };
 
 /**
@@ -795,7 +814,9 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     onDeleteMessage,
     onSendMessage,
     /* @conditional-compile-remove(date-time-customization) */
-    onDisplayDateTimeString
+    onDisplayDateTimeString,
+    /* @conditional-compile-remove(teams-inline-images) */
+    onFetchAttachments
   } = props;
   const onRenderFileDownloads = onRenderFileDownloadsTrampoline(props);
 
@@ -817,6 +838,22 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
 
   // readCount and participantCount will only need to be updated on-fly when user hover on an indicator
   const [readCountForHoveredIndicator, setReadCountForHoveredIndicator] = useState<number | undefined>(undefined);
+
+  /* @conditional-compile-remove(teams-inline-images) */
+  const [inlineAttachments, setInlineAttachments] = useState<Record<string, string>>({});
+  /* @conditional-compile-remove(teams-inline-images) */
+  const onFetchInlineAttachment = useCallback(
+    async (attachment: FileMetadata): Promise<void> => {
+      if (!onFetchAttachments || attachment.id in inlineAttachments) {
+        return;
+      }
+      const attachmentDownloadResult = await onFetchAttachments(attachment);
+      if (attachmentDownloadResult[0]) {
+        setInlineAttachments((prev) => ({ ...prev, [attachment.id]: attachmentDownloadResult[0].blobUrl }));
+      }
+    },
+    [inlineAttachments, onFetchAttachments]
+  );
 
   const isAllChatMessagesLoadedRef = useRef(false);
   // isAllChatMessagesLoadedRef needs to be updated every time when a new adapter is set in order to display correct data
@@ -1079,6 +1116,10 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
             onActionButtonClick={onActionButtonClickMemo}
             /* @conditional-compile-remove(date-time-customization) */
             onDisplayDateTimeString={onDisplayDateTimeString}
+            /* @conditional-compile-remove(teams-inline-images) */
+            onFetchAttachments={onFetchInlineAttachment}
+            /* @conditional-compile-remove(teams-inline-images) */
+            attachmentsMap={inlineAttachments}
           />
         );
       }
@@ -1095,7 +1136,11 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
       showMessageStatus,
       onActionButtonClickMemo,
       /* @conditional-compile-remove(date-time-customization) */
-      onDisplayDateTimeString
+      onDisplayDateTimeString,
+      /* @conditional-compile-remove(teams-inline-images) */
+      onFetchInlineAttachment,
+      /* @conditional-compile-remove(teams-inline-images) */
+      inlineAttachments
     ]
   );
 

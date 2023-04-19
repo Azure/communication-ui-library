@@ -3,20 +3,31 @@
 
 import React from 'react';
 import { _formatString } from '@internal/acs-ui-common';
-import { Parser } from 'html-to-react';
+import { Parser, ProcessNodeDefinitions, ProcessingInstructions } from 'html-to-react';
 import Linkify from 'react-linkify';
 import { ChatMessage } from '../../types/ChatMessage';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessage } from '../../types/ChatMessage';
 import { LiveMessage } from 'react-aria-live';
 import { Link } from '@fluentui/react';
+/* @conditional-compile-remove(at-mention) */
+import { AtMentionDisplayOptions } from '../AtMentionFlyout';
+
 /* @conditional-compile-remove(data-loss-prevention) */
 import { FontIcon, Stack } from '@fluentui/react';
 import { MessageThreadStrings } from '../MessageThread';
+/* @conditional-compile-remove(teams-inline-images) */
+import { FileMetadata } from '../FileDownloadCards';
 
 type ChatMessageContentProps = {
   message: ChatMessage;
   strings: MessageThreadStrings;
+  /* @conditional-compile-remove(at-mention) */
+  atMentionDisplayOptions?: AtMentionDisplayOptions;
+  /* @conditional-compile-remove(teams-inline-images) */
+  attachmentsMap?: Record<string, string>;
+  /* @conditional-compile-remove(teams-inline-images) */
+  onFetchAttachment?: (attachment: FileMetadata) => Promise<void>;
 };
 
 /* @conditional-compile-remove(data-loss-prevention) */
@@ -31,6 +42,9 @@ type MessageContentWithLiveAriaProps = {
   ariaLabel?: string;
   content: JSX.Element;
 };
+
+const processNodeDefinitions: ProcessNodeDefinitions = new ProcessNodeDefinitions(React);
+const isValidNode = (): boolean => true;
 
 /** @private */
 export const ChatMessageContent = (props: ChatMessageContentProps): JSX.Element => {
@@ -57,14 +71,13 @@ const MessageContentWithLiveAria = (props: MessageContentWithLiveAriaProps): JSX
 };
 
 const MessageContentAsRichTextHTML = (props: ChatMessageContentProps): JSX.Element => {
-  const htmlToReactParser = new Parser();
   const liveAuthor = _formatString(props.strings.liveAuthorIntro, { author: `${props.message.senderDisplayName}` });
   return (
     <MessageContentWithLiveAria
       message={props.message}
       liveMessage={`${props.message.mine ? '' : liveAuthor} ${extractContent(props.message.content || '')}`}
       ariaLabel={messageContentAriaText(props)}
-      content={htmlToReactParser.parse(props.message.content)}
+      content={processHtmlToReact(props)}
     />
   );
 };
@@ -151,4 +164,64 @@ const messageContentAriaText = (props: ChatMessageContentProps): string | undefi
           message: props.message.content
         })
     : undefined;
+};
+
+type NodeProcessInstruction = {
+  shouldProcessNode: unknown;
+  processNode: unknown;
+};
+
+const processHtmlToReact = (props: ChatMessageContentProps): JSX.Element => {
+  const htmlToReactParser = new Parser();
+
+  /* @conditional-compile-remove(teams-inline-images) */
+  const processInlineImage: NodeProcessInstruction = {
+    // Custom <img> processing
+    shouldProcessNode: (node): boolean => {
+      // Process img node with id in attachments list
+      return (
+        node.name &&
+        node.name === 'img' &&
+        node.attribs &&
+        node.attribs.id &&
+        props.message.attachedFilesMetadata?.find((f) => f.id === node.attribs.id)
+      );
+    },
+    processNode: (node, children, index): HTMLElement => {
+      // logic to check id in map/list
+      const fileMetadata = props.message.attachedFilesMetadata?.find((f) => f.id === node.attribs.id);
+      // if in cache, early return
+      if (props.attachmentsMap && node.attribs.id in props.attachmentsMap) {
+        node.attribs = { ...node.attribs, src: props.attachmentsMap[node.attribs.id] };
+        return processNodeDefinitions.processDefaultNode(node, children, index);
+      }
+      // not yet in cache
+      if (fileMetadata && props.onFetchAttachment && props.attachmentsMap) {
+        props.onFetchAttachment(fileMetadata);
+        if (node.attribs.id in props.attachmentsMap) {
+          node.attribs = { ...node.attribs, src: props.attachmentsMap[node.attribs.id] };
+        }
+      }
+      return processNodeDefinitions.processDefaultNode(node, children, index);
+    }
+  };
+
+  const addProcessingStep = (): NodeProcessInstruction[] => {
+    const steps: NodeProcessInstruction[] = [];
+    /* @conditional-compile-remove(teams-inline-images) */
+    steps.push(processInlineImage);
+    return steps;
+  };
+
+  const processingInstructions: ProcessingInstructions = [
+    ...addProcessingStep(),
+    {
+      shouldProcessNode: (): boolean => {
+        return true;
+      },
+      processNode: processNodeDefinitions.processDefaultNode
+    }
+  ];
+
+  return htmlToReactParser.parseWithInstructions(props.message.content, isValidNode, processingInstructions);
 };

@@ -11,6 +11,8 @@ import { ChatMessage, OnRenderAvatarCallback } from '../../types';
 import { BlockedMessage } from '../../types';
 import { ChatMessageComponentAsMessageBubble } from './ChatMessageComponentAsMessageBubble';
 import { FileDownloadHandler, FileMetadata } from '../FileDownloadCards';
+/* @conditional-compile-remove(at-mention) */
+import { AtMentionDisplayOptions } from '../AtMentionFlyout';
 
 type ChatMessageComponentProps = {
   message: ChatMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage;
@@ -83,6 +85,23 @@ type ChatMessageComponentProps = {
    * @beta
    */
   onDisplayDateTimeString?: (messageDate: Date) => string;
+  /* @conditional-compile-remove(at-mention) */
+  /**
+   * Optional props needed to display suggestions in the at mention scenario.
+   * @beta
+   */
+  atMentionDisplayOptions?: AtMentionDisplayOptions;
+  /* @conditional-compile-remove(teams-inline-images) */
+  /**
+   * Optional function to fetch attachments.
+   * @beta
+   */
+  onFetchAttachments?: (attachment: FileMetadata) => Promise<void>;
+  /* @conditional-compile-remove(teams-inline-images) */
+  /**
+   * Optional map of attachment ids to blob urls.
+   */
+  attachmentsMap?: Record<string, string>;
 };
 
 /**
@@ -139,6 +158,10 @@ export const ChatMessageComponent = (props: ChatMessageComponentProps): JSX.Elem
         /* @conditional-compile-remove(date-time-customization) */
         onDisplayDateTimeString={props.onDisplayDateTimeString}
         strings={props.strings}
+        /* @conditional-compile-remove(teams-inline-images) */
+        onFetchAttachments={props.onFetchAttachments}
+        /* @conditional-compile-remove(teams-inline-images) */
+        attachmentsMap={props.attachmentsMap}
       />
     );
   }

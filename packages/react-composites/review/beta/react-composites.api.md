@@ -7,6 +7,7 @@
 /// <reference types="react" />
 
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
+import { AttachmentDownloadResult } from '@internal/react-components';
 import { AudioDeviceInfo } from '@azure/communication-calling';
 import { BackgroundBlurConfig } from '@azure/communication-calling-effects';
 import { BackgroundReplacementConfig } from '@azure/communication-calling-effects';
@@ -14,6 +15,8 @@ import { BaseCustomStyles } from '@internal/react-components';
 import { Call } from '@azure/communication-calling';
 import { CallAgent } from '@azure/communication-calling';
 import { CallState } from '@internal/calling-stateful-client';
+import { CaptionsAvailableLanguageStrings } from '@internal/react-components';
+import { CaptionsInfo } from '@internal/calling-stateful-client';
 import type { ChatMessage } from '@azure/communication-chat';
 import { ChatParticipant } from '@azure/communication-chat';
 import { ChatThreadClient } from '@azure/communication-chat';
@@ -50,6 +53,7 @@ import { Role } from '@internal/react-components';
 import { RoomCallLocator } from '@azure/communication-calling';
 import { SendMessageOptions } from '@azure/communication-chat';
 import { StartCallOptions } from '@azure/communication-calling';
+import { StartCaptionsOptions } from '@azure/communication-calling';
 import { StatefulCallClient } from '@internal/calling-stateful-client';
 import { StatefulChatClient } from '@internal/chat-stateful-client';
 import { TeamsCall } from '@azure/communication-calling';
@@ -191,15 +195,21 @@ export interface CallAdapterCallOperations {
     resumeCall(): Promise<void>;
     // @beta
     sendDtmfTone(dtmfTone: DtmfTone): Promise<void>;
+    setCaptionLanguage(language: string): Promise<void>;
+    setSpokenLanguage(language: string): Promise<void>;
     startCamera(options?: VideoStreamOptions): Promise<void>;
+    startCaptions(options?: StartCaptionsOptions): Promise<void>;
     startScreenShare(): Promise<void>;
     stopCamera(): Promise<void>;
+    stopCaptions(): Promise<void>;
     stopScreenShare(): Promise<void>;
     // @beta
     stopVideoBackgroundEffect(): Promise<void>;
     unmute(): Promise<void>;
     // @beta
     updateBackgroundPickerImages(backgroundImages: VideoBackgroundImage[]): void;
+    // @beta
+    updateSelectedVideoBackgroundEffect(selectedVideoBackground: SelectedVideoBackgroundEffect): void;
 }
 
 // @public
@@ -216,6 +226,7 @@ export type CallAdapterClientState = {
     roleHint?: Role;
     cameraStatus?: 'On' | 'Off';
     videoBackgroundImages?: VideoBackgroundImage[];
+    selectedVideoBackgroundEffect?: SelectedVideoBackgroundEffect;
 };
 
 // @public
@@ -249,6 +260,8 @@ export interface CallAdapterSubscribers {
     off(event: 'selectedMicrophoneChanged', listener: PropertyChangedEvent): void;
     off(event: 'selectedSpeakerChanged', listener: PropertyChangedEvent): void;
     off(event: 'error', listener: (e: AdapterError) => void): void;
+    off(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
+    off(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
     on(event: 'participantsJoined', listener: ParticipantsJoinedListener): void;
     on(event: 'participantsLeft', listener: ParticipantsLeftListener): void;
     on(event: 'isMutedChanged', listener: IsMutedChangedListener): void;
@@ -261,6 +274,8 @@ export interface CallAdapterSubscribers {
     on(event: 'selectedMicrophoneChanged', listener: PropertyChangedEvent): void;
     on(event: 'selectedSpeakerChanged', listener: PropertyChangedEvent): void;
     on(event: 'error', listener: (e: AdapterError) => void): void;
+    on(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
+    on(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
 }
 
 // @public
@@ -366,6 +381,17 @@ export interface CallCompositeStrings {
     cameraLabel: string;
     cameraPermissionDenied: string;
     cameraTurnedOff: string;
+    captionsAvailableLanguageStrings?: CaptionsAvailableLanguageStrings;
+    captionsBannerMoreButtonCallingLabel?: string;
+    captionsBannerMoreButtonTooltip?: string;
+    captionsSettingsCancelButtonLabel?: string;
+    captionsSettingsCloseModalButtonAriaLabel?: string;
+    captionsSettingsConfirmButtonLabel?: string;
+    captionsSettingsDropdownInfoText?: string;
+    captionsSettingsDropdownLabel?: string;
+    captionsSettingsLabel?: string;
+    captionsSettingsModalAriaLabel?: string;
+    captionsSettingsModalTitle?: string;
     chatButtonLabel: string;
     close: string;
     complianceBannerNowOnlyRecording: string;
@@ -402,6 +428,7 @@ export interface CallCompositeStrings {
     learnMore: string;
     leftCallMoreDetails?: string;
     leftCallTitle: string;
+    liveCaptionsLabel?: string;
     lobbyScreenConnectingToCallMoreDetails?: string;
     lobbyScreenConnectingToCallTitle: string;
     lobbyScreenWaitingToBeAdmittedMoreDetails?: string;
@@ -447,6 +474,10 @@ export interface CallCompositeStrings {
     roomNotFoundTitle: string;
     soundLabel: string;
     startCallButtonLabel: string;
+    startCaptionsButtonOffLabel?: string;
+    startCaptionsButtonOnLabel?: string;
+    startCaptionsButtonTooltipOffContent?: string;
+    startCaptionsButtonTooltipOnContent?: string;
     threeParticipantJoinedNoticeString: string;
     threeParticipantLeftNoticeString: string;
     twoParticipantJoinedNoticeString: string;
@@ -500,7 +531,9 @@ export interface CallWithChatAdapterManagement {
     deleteMessage(messageId: string): Promise<void>;
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
     // (undocumented)
-    downloadAuthenticatedAttachment?: (attachmentUrl: string) => Promise<string>;
+    downloadAttachments: (options: {
+        attachmentUrls: string[];
+    }) => Promise<AttachmentDownloadResult[]>;
     fetchInitialData(): Promise<void>;
     // @beta
     holdCall: () => Promise<void>;
@@ -528,14 +561,18 @@ export interface CallWithChatAdapterManagement {
     sendReadReceipt(chatMessageId: string): Promise<void>;
     sendTypingIndicator(): Promise<void>;
     setCamera(sourceInfo: VideoDeviceInfo, options?: VideoStreamOptions): Promise<void>;
+    setCaptionLanguage(language: string): Promise<void>;
     setMicrophone(sourceInfo: AudioDeviceInfo): Promise<void>;
     setSpeaker(sourceInfo: AudioDeviceInfo): Promise<void>;
+    setSpokenLanguage(language: string): Promise<void>;
     startCall(participants: string[], options?: StartCallOptions): Call | undefined;
     // @beta
     startCall(participants: CommunicationIdentifier[], options?: StartCallOptions): Call | undefined;
     startCamera(options?: VideoStreamOptions): Promise<void>;
+    startCaptions(options?: StartCaptionsOptions): Promise<void>;
     startScreenShare(): Promise<void>;
     stopCamera(): Promise<void>;
+    stopCaptions(): Promise<void>;
     stopScreenShare(): Promise<void>;
     // @beta
     stopVideoBackgroundEffect(): Promise<void>;
@@ -549,6 +586,8 @@ export interface CallWithChatAdapterManagement {
     // @beta (undocumented)
     updateFileUploadProgress: (id: string, progress: number) => void;
     updateMessage(messageId: string, content: string, metadata?: Record<string, string>): Promise<void>;
+    // @beta
+    updateSelectedVideoBackgroundEffect(selectedVideoBackground: SelectedVideoBackgroundEffect): void;
 }
 
 // @public
@@ -579,6 +618,10 @@ export interface CallWithChatAdapterSubscriptions {
     off(event: 'selectedSpeakerChanged', listener: PropertyChangedEvent): void;
     // (undocumented)
     off(event: 'callError', listener: (e: AdapterError) => void): void;
+    // (undocumented)
+    off(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
+    // (undocumented)
+    off(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
     // (undocumented)
     off(event: 'messageReceived', listener: MessageReceivedListener): void;
     // (undocumented)
@@ -614,6 +657,10 @@ export interface CallWithChatAdapterSubscriptions {
     // (undocumented)
     on(event: 'callError', listener: (e: AdapterError) => void): void;
     // (undocumented)
+    on(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
+    // (undocumented)
+    on(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
+    // (undocumented)
     on(event: 'messageReceived', listener: MessageReceivedListener): void;
     // (undocumented)
     on(event: 'messageSent', listener: MessageSentListener): void;
@@ -648,6 +695,7 @@ export interface CallWithChatClientState {
     isTeamsCall: boolean;
     latestCallErrors: AdapterErrors;
     latestChatErrors: AdapterErrors;
+    selectedVideoBackgroundEffect?: SelectedVideoBackgroundEffect;
     userId: CommunicationIdentifierKind;
     videoBackgroundImages?: VideoBackgroundImage[];
 }
@@ -768,8 +816,10 @@ export interface CallWithChatCompositeStrings {
     moreDrawerAudioDeviceMenuTitle?: string;
     moreDrawerButtonLabel: string;
     moreDrawerButtonTooltip: string;
+    moreDrawerCaptionsMenuTitle: string;
     moreDrawerMicrophoneMenuTitle: string;
     moreDrawerSpeakerMenuTitle: string;
+    moreDrawerSpokenLanguageMenuTitle: string;
     openDialpadButtonLabel: string;
     openDtmfDialpadLabel: string;
     peopleButtonLabel: string;
@@ -792,7 +842,12 @@ export interface CallWithChatControlOptions extends CommonCallControlOptions {
 }
 
 // @public
-export type CallWithChatEvent = 'callError' | 'chatError' | 'callEnded' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'callParticipantsJoined' | 'callParticipantsLeft' | 'selectedMicrophoneChanged' | 'selectedSpeakerChanged' | 'messageReceived' | 'messageSent' | 'messageRead' | 'chatParticipantsAdded' | 'chatParticipantsRemoved';
+export type CallWithChatEvent = 'callError' | 'chatError' | 'callEnded' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'callParticipantsJoined' | 'callParticipantsLeft' | 'selectedMicrophoneChanged' | 'selectedSpeakerChanged' | /* @conditional-compile-remove(close-captions) */ 'isCaptionsActiveChanged' | /* @conditional-compile-remove(close-captions) */ 'captionsReceived' | 'messageReceived' | 'messageSent' | 'messageRead' | 'chatParticipantsAdded' | 'chatParticipantsRemoved';
+
+// @beta
+export type CaptionsReceivedListener = (event: {
+    captionsInfo: CaptionsInfo;
+}) => void;
 
 // @public
 export type ChatAdapter = ChatAdapterThreadManagement & AdapterState<ChatAdapterState> & Disposable & ChatAdapterSubscribers & FileUploadAdapter;
@@ -826,6 +881,10 @@ export interface ChatAdapterSubscribers {
 // @public
 export interface ChatAdapterThreadManagement {
     deleteMessage(messageId: string): Promise<void>;
+    // (undocumented)
+    downloadAttachments: (options: {
+        attachmentUrls: string[];
+    }) => Promise<AttachmentDownloadResult[]>;
     fetchInitialData(): Promise<void>;
     loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
     removeParticipant(userId: string): Promise<void>;
@@ -1175,6 +1234,10 @@ export const DEFAULT_COMPOSITE_ICONS: {
     VerticalGalleryLeftButton: JSX.Element;
     VerticalGalleryRightButton: JSX.Element;
     OptionsVideoBackgroundEffect: JSX.Element;
+    CaptionsIcon: JSX.Element;
+    CaptionsOffIcon: JSX.Element;
+    CaptionsSettingsIcon: JSX.Element;
+    ChangeSpokenLanguageIcon: JSX.Element;
 };
 
 // @beta
@@ -1207,6 +1270,7 @@ export type _FakeChatAdapterArgs = {
     fileUploads?: _MockFileUpload[];
     failFileDownload?: boolean;
     sendRemoteFileSharingMessage?: boolean;
+    sendRemoteInlineImageMessage?: boolean;
     frenchLocaleEnabled?: boolean;
     showParticipantPane?: boolean;
     participantsWithHiddenComposites?: ChatParticipant[];
@@ -1241,8 +1305,6 @@ export interface FileUploadAdapter {
     cancelFileUpload: (id: string) => void;
     // (undocumented)
     clearFileUploads: () => void;
-    // (undocumented)
-    downloadAuthenticatedAttachment?: (attachmentUrl: string) => Promise<string>;
     // (undocumented)
     registerActiveFileUploads: (files: File[]) => FileUploadManager[];
     // (undocumented)
@@ -1284,6 +1346,11 @@ export interface FileUploadState {
 
 // @beta
 export type FileUploadsUiState = Record<string, FileUploadState>;
+
+// @beta
+export type IsCaptionsActiveChangedListener = (event: {
+    isActive: boolean;
+}) => void;
 
 // @public
 export type IsLocalScreenSharingActiveChangedListener = (event: {
@@ -1369,6 +1436,9 @@ export interface RemoteVideoTileMenuOptions {
 }
 
 // @beta
+export type SelectedVideoBackgroundEffect = VideoBackgroundNoneEffect | VideoBackgroundBlurEffect | VideoBackgroundReplacementEffect;
+
+// @beta
 export type TeamsAdapterOptions = {
     onFetchProfile?: OnFetchProfileCallback;
 };
@@ -1412,10 +1482,27 @@ export function _useFakeChatAdapters(args: _FakeChatAdapterArgs): _FakeChatAdapt
 export const useTeamsCallAdapter: (args: Partial<TeamsCallAdapterArgs>, afterCreate?: ((adapter: TeamsCallAdapter) => Promise<TeamsCallAdapter>) | undefined, beforeDispose?: ((adapter: TeamsCallAdapter) => Promise<void>) | undefined) => TeamsCallAdapter | undefined;
 
 // @beta
+export interface VideoBackgroundBlurEffect {
+    effectName: 'blur';
+}
+
+// @beta
 export interface VideoBackgroundImage {
     key: string;
     tooltipText?: string;
     url: string;
+}
+
+// @beta
+export interface VideoBackgroundNoneEffect {
+    effectName: 'none';
+}
+
+// @beta
+export interface VideoBackgroundReplacementEffect {
+    backgroundImageUrl: string;
+    effectKey: string;
+    effectName: 'replacement';
 }
 
 // (No @packageDocumentation comment for this package)

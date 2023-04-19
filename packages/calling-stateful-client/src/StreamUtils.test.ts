@@ -90,7 +90,16 @@ function createMockCall(mockCallId: string): CallState {
     screenShareRemoteParticipant: undefined,
     startTime: new Date(),
     endTime: undefined,
-    dominantSpeakers: undefined
+    dominantSpeakers: undefined,
+    /* @conditional-compile-remove(close-captions) */
+    captionsFeature: {
+      captions: [],
+      supportedSpokenLanguages: [],
+      supportedCaptionLanguages: [],
+      currentCaptionLanguage: '',
+      currentSpokenLanguage: '',
+      isCaptionsFeatureActive: false
+    }
   };
   return call;
 }

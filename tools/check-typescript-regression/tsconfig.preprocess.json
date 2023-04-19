@@ -1,0 +1,13 @@
+{
+  "extends": "../../common/config/tsc/tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": "./preprocess-dist",
+    "outDir": "./dist/dist-esm",
+    "paths": {
+      "@azure/communication-react": ["../../packages/communication-react/src"]
+    }
+  },
+  "typeRoots": ["./node_modules/@types"],
+  "include": ["preprocess-dist/communication-react/src/**/*"],
+  "exclude": ["dist", "node_modules"]
+}
