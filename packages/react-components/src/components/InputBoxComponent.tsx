@@ -162,37 +162,36 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
 
   const onSuggestionSelected = useCallback(
     (suggestion: AtMentionSuggestion) => {
-      const selectionStart = textFieldRef?.current?.selectionStart;
       let selectionEnd = textFieldRef?.current?.selectionEnd || -1;
       if (selectionEnd < 0) {
         selectionEnd = 0;
       } else if (selectionEnd > inputTextValue.length) {
         selectionEnd = inputTextValue.length;
       }
-      // TODO: Use the HTML value in the control
-      // FIGURE OUT WHERE TO INSERT THE NEW TAG
-      // INSERT IT INTO THE TEXT FIELD
-      const queryText = inputTextValue.substring(currentTagIndex).split(' ')[0];
-      const oldTags = parseToTags(textValue);
-      //TODO: add check if we are in the middle of another tag
 
+      const oldPlainText = inputTextValue;
+      const mention = htmlStringForMentionSuggestion(suggestion);
+      // update plain text with the mention html text
+      const newPlainText =
+        inputTextValue.substring(0, currentTagIndex) + mention + inputTextValue.substring(selectionEnd);
       const triggerText = atMentionLookupOptions?.trigger ?? defaultMentionTrigger;
-      let htmlIndex = htmlMentionIndex(textValue, oldTags, triggerText, currentTagIndex, queryText, inputTextValue);
-      if (htmlIndex < 0) {
-        htmlIndex = 0;
-      } else if (htmlIndex > textValue.length) {
-        htmlIndex = textValue.length;
-      }
+      // update html text with updated plain text
+      const updatedHTML = updateHTML(
+        textValue,
+        oldPlainText,
+        newPlainText,
+        tagsValue,
+        currentTagIndex,
+        selectionEnd,
+        mention,
+        triggerText
+      );
 
-      const firstPart = textValue.substring(0, htmlIndex);
-      const lastPart = textValue.substring(htmlIndex + queryText.length);
-
-      // TODO: make this logic work properly
-      const updatedText = firstPart + htmlStringForMentionSuggestion(suggestion) + lastPart;
-
-      const [tags, plainText] = parseHTMLText(updatedText, triggerText);
+      const [tags, plainText] = parseHTMLText(updatedHTML, triggerText);
+      // This change moves focus to the end of the input field when plainText != the text that in the input field
       setInputTextValue(plainText);
-      onMentionAdd && onMentionAdd(updatedText);
+      setTagsValue(tags);
+      onMentionAdd && onMentionAdd(updatedHTML);
       updateMentionSuggestions([]);
       setCurrentTagIndex(-1);
     },
@@ -200,8 +199,9 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       textFieldRef,
       inputTextValue,
       currentTagIndex,
-      textValue,
       atMentionLookupOptions?.trigger,
+      textValue,
+      tagsValue,
       onMentionAdd,
       updateMentionSuggestions
     ]
@@ -604,8 +604,6 @@ const parseHTMLText = (text: string, trigger: string): [UpdatedParsedTag[], stri
 
 /**
  * Go through the text and update it with the changed text
- * This should be only <msft-at-mention> tags for now...
- * We do need to process all other HTML tags to text though.
  *
  * @private
  */
@@ -651,7 +649,6 @@ const updateHTML = (
       oldPlainTextEndIndex <= tag.plainTextEndIndex
     ) {
       // between open and close tags
-      // trigger length
       const startChangeDiff = startIndex - tag.plainTextStartIndex;
       const endChangeDiff = oldPlainTextEndIndex - tag.plainTextStartIndex;
       if (tag.subTags === undefined || tag.subTags.length === 0) {
@@ -736,7 +733,6 @@ const updateHTML = (
 
   return result;
 };
-
 /**
  * Go through the text and parse out the tags
  * This should be only <msft-at-mention> tags for now...
@@ -836,6 +832,11 @@ const plainTextFromParsedTags = (textBlock: string, tags: ParsedTag[], trigger: 
   return text;
 };
 
+/**
+ * Go through the text and find the mention index
+ *
+ * @private
+ */
 const htmlMentionIndex = (
   htmlTextBlock: string,
   tags: ParsedTag[],
