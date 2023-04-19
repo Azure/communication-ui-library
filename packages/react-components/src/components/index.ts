@@ -21,7 +21,7 @@ export type {
   _AtMentionFlyoutProps,
   AtMentionLookupOptions,
   AtMentionDisplayOptions,
-  AtMentionOptions,
+  MentionOptions,
   AtMentionSuggestion
 } from './AtMentionFlyout';
 /* @conditional-compile-remove(at-mention) */

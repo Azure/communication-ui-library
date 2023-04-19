@@ -12,7 +12,7 @@ import { BlockedMessage } from '../../types';
 import { ChatMessageComponentAsMessageBubble } from './ChatMessageComponentAsMessageBubble';
 import { FileDownloadHandler, FileMetadata } from '../FileDownloadCards';
 /* @conditional-compile-remove(at-mention) */
-import { AtMentionLookupOptions, AtMentionOptions } from '../AtMentionFlyout';
+import { AtMentionLookupOptions, MentionOptions } from '../AtMentionFlyout';
 
 type ChatMessageComponentProps = {
   message: ChatMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage;
@@ -90,7 +90,7 @@ type ChatMessageComponentProps = {
    * Optional props needed to lookup suggestions and display mentions in the mention scenario.
    * @beta
    */
-  atMentionOptions?: AtMentionOptions;
+  atMentionOptions?: MentionOptions;
   /* @conditional-compile-remove(teams-inline-images) */
   /**
    * Optional function to fetch attachments.
@@ -146,7 +146,7 @@ export const ChatMessageComponent = (props: ChatMessageComponentProps): JSX.Elem
           setIsEditing(false);
         }}
         /* @conditional-compile-remove(at-mention) */
-        atMentionLookupOptions={props.atMentionOptions as AtMentionLookupOptions}
+        atMentionLookupOptions={props.atMentionOptions?.lookupOptions}
       />
     );
   } else {

@@ -69,7 +69,7 @@ import { FileDownloadHandler, FileMetadata } from './FileDownloadCards';
 import { AttachmentDownloadResult } from './FileDownloadCards';
 import { useTheme } from '../theming';
 /* @conditional-compile-remove(at-mention) */
-import { AtMentionDisplayOptions, AtMentionOptions } from './AtMentionFlyout';
+import { MentionOptions } from './AtMentionFlyout';
 
 const isMessageSame = (first: ChatMessage, second: ChatMessage): boolean => {
   return (
@@ -711,7 +711,7 @@ export type MessageThreadProps = {
    * Optional props needed to lookup a mention query and display mentions
    * @beta
    */
-  atMentionOptions?: AtMentionOptions;
+  atMentionOptions?: MentionOptions;
 };
 
 /**

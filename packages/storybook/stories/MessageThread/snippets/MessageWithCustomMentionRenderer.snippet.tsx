@@ -36,8 +36,25 @@ export const MessageWithCustomMentionRenderer: () => JSX.Element = () => {
           }
         ]}
         atMentionOptions={{
-          onRenderAtMentionSuggestion: (mention) => {
-            return <button>{mention.displayName}</button>;
+          displayOptions: {
+            onRenderAtMentionSuggestion: (mention) => {
+              return <button>{mention.displayName}</button>;
+            }
+          },
+          lookupOptions: {
+            onQueryUpdated: async (query) => {
+              return Promise.resolve(
+                [
+                  {
+                    userId: user1Id,
+                    suggestionType: 'user',
+                    displayName: 'Kat Larsson'
+                  }
+                ].filter((suggestion) =>
+                  suggestion.displayName.toLocaleLowerCase().startsWith(query.toLocaleLowerCase())
+                )
+              );
+            }
           }
         }}
       />

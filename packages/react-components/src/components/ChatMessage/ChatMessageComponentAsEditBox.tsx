@@ -51,7 +51,7 @@ export type ChatMessageComponentAsEditBoxProps = {
    * Setting to false will mean they are on a new line inside the editable chat message.
    */
   inlineEditButtons: boolean;
-  atMentionLookupOptions: AtMentionLookupOptions;
+  atMentionLookupOptions?: AtMentionLookupOptions;
 };
 
 type MessageState = 'OK' | 'too short' | 'too long';
