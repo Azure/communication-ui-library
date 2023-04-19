@@ -575,9 +575,10 @@ const updateHTML = (
     // no tags added yet
     return newPlainText;
   }
-  //5 cases:
-  ///TODO: when change remove the tag (consume) fully
+  // TODO: when change removes the tag (consume) fully
+  // TODO: when change removes the tag partially
   // TODO: to check when on the edge of the tags in plain text
+  // TODO: when mention has another mention inside
   for (let i = 0; i < tags.length; i++) {
     const tag = tags[i];
     if (startIndex < tag.plainTextStartIndex && oldPlainTextEndIndex < tag.plainTextStartIndex) {
@@ -596,7 +597,7 @@ const updateHTML = (
       tag.htmlCloseTagStartIndex !== undefined &&
       tag.content !== undefined &&
       startIndex >= tag.plainTextStartIndex &&
-      oldPlainTextEndIndex < tag.plainTextEndIndex
+      oldPlainTextEndIndex <= tag.plainTextEndIndex
     ) {
       // between open and close tags
       // trigger length
@@ -644,11 +645,11 @@ const updateHTML = (
         break;
       }
     } else if (
-      (tag.plainTextEndIndex === undefined && startIndex >= tag.plainTextStartIndex) ||
+      (tag.plainTextEndIndex === undefined && startIndex > tag.plainTextStartIndex) ||
       (tag.plainTextEndIndex !== undefined &&
         tag.closeTagLength !== undefined &&
         tag.htmlCloseTagStartIndex !== undefined &&
-        startIndex >= tag.plainTextEndIndex)
+        startIndex > tag.plainTextEndIndex)
     ) {
       // after close tag or after the open tag if no close tag available
       if (i === tags.length - 1) {
