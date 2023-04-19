@@ -54,12 +54,13 @@ export const CaptionsBannerMoreButton = (props: CaptionsBannerMoreButtonProps): 
 
   /* @conditional-compile-remove(close-captions) */
   const startCaptions = useCallback(async () => {
-    await startCaptionsButtonHandlers.onStartCaptions({
-      spokenLanguage: startCaptionsButtonProps.currentSpokenLanguage
-    });
     // set spoken language when start captions with a spoken language specified.
     // this is to fix the bug when a second user starts captions with a new spoken language, captions bot ignore that spoken language
-    startCaptionsButtonHandlers.onSetSpokenLanguage(startCaptionsButtonProps.currentSpokenLanguage);
+    Promise.resolve(
+      startCaptionsButtonHandlers.onStartCaptions({
+        spokenLanguage: startCaptionsButtonProps.currentSpokenLanguage
+      })
+    ).then(() => startCaptionsButtonHandlers.onSetSpokenLanguage(startCaptionsButtonProps.currentSpokenLanguage));
   }, [startCaptionsButtonHandlers, startCaptionsButtonProps.currentSpokenLanguage]);
 
   /* @conditional-compile-remove(close-captions) */

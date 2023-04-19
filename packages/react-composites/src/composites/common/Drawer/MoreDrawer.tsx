@@ -288,12 +288,13 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
   /* @conditional-compile-remove(close-captions) */
   const onToggleChange = useCallback(async () => {
     if (!startCaptionsButtonProps.checked) {
-      await startCaptionsButtonHandlers.onStartCaptions({
-        spokenLanguage: currentSpokenLanguage
-      });
       // set spoken language when start captions with a spoken language specified.
       // this is to fix the bug when a second user starts captions with a new spoken language, captions bot ignore that spoken language
-      startCaptionsButtonHandlers.onSetSpokenLanguage(currentSpokenLanguage);
+      Promise.resolve(
+        startCaptionsButtonHandlers.onStartCaptions({
+          spokenLanguage: currentSpokenLanguage
+        })
+      ).then(() => startCaptionsButtonHandlers.onSetSpokenLanguage(currentSpokenLanguage));
     } else {
       startCaptionsButtonHandlers.onStopCaptions();
     }
