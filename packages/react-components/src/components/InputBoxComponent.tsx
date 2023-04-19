@@ -163,7 +163,6 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
   const onSuggestionSelected = useCallback(
     (suggestion: AtMentionSuggestion) => {
       let selectionEnd = textFieldRef?.current?.selectionEnd || -1;
-      selectionEnd -= 1;
       if (selectionEnd < 0) {
         selectionEnd = 0;
       } else if (selectionEnd > inputTextValue.length) {
@@ -189,7 +188,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       );
 
       const [tags, plainText] = parseHTMLText(updatedHTML, triggerText);
-      // This change moves focus to the end of the input field
+      // This change moves focus to the end of the input field when plainText != the text that in the input field
       setInputTextValue(plainText);
       setTagsValue(tags);
       onMentionAdd && onMentionAdd(updatedHTML);
