@@ -484,24 +484,26 @@ type UpdatedParsedTag = {
 const parseHTMLText = (text: string, trigger: string): [UpdatedParsedTag[], string] => {
   const tags: UpdatedParsedTag[] = [];
   let htmlParseIndex = 0;
-  let plaintText = '';
+  let plainText = '';
 
   while (htmlParseIndex < text.length) {
-    const openTagIndex = text.indexOf('<', htmlParseIndex);
+    const openTagIndex = text.indexOf('<', htmlParseIndex); // Find next open tag, if it is a tag...
     if (openTagIndex === -1) {
-      //no open tags found, `text` is a plain text
-      plaintText += text.substring(htmlParseIndex);
+      // No more open tags found, add the rest of the text as plain text
+      plainText += text.substring(htmlParseIndex);
       break;
     }
-    // Add all the text from the last tag close to this one open
-    plaintText += text.substring(htmlParseIndex, openTagIndex);
-    const plainTextStartIndex = plaintText.length; // - 1 is not used because text.substring doesn't include openTagIndex
 
+    // Add all the text from the last tag close to this one open
+    plainText += text.substring(htmlParseIndex, openTagIndex);
+    const plainTextStartIndex = plainText.length; // - 1 is not used because text.substring doesn't include openTagIndex
+
+    // Parse the open tag
     const openTagCloseIndex = text.indexOf('>', openTagIndex);
     const openTag = text.substring(openTagIndex + 1, openTagCloseIndex);
     const tagType = openTag.split(' ')[0];
     if (tagType === 'msft-at-mention') {
-      plaintText += trigger;
+      plainText += trigger;
     }
 
     if (openTag[openTag.length - 1] === '/') {
@@ -517,38 +519,87 @@ const parseHTMLText = (text: string, trigger: string): [UpdatedParsedTag[], stri
       });
       htmlParseIndex = openTagIndex + tagLength - 1;
     } else {
-      // Go find the close tag
-      const tagToFind = '</' + tagType + '>';
-      //TODO: add check how many same open tags are before tagToFind as we can get wrong close tag
-      const closeTagIndex = text.indexOf(tagToFind, openTagCloseIndex);
-      if (closeTagIndex === -1) {
+      // Find the corresponding close tag
+      const closeTagToFind = '</' + tagType + '>';
+      console.log('looking for close tag:', closeTagToFind);
+
+      // TODO: move while loop here, include the current tag
+      const nextOpenTagIndex = text.indexOf('<', openTagCloseIndex);
+      let nextCloseTagIndex = text.indexOf(closeTagToFind, openTagCloseIndex);
+
+      if (nextCloseTagIndex === -1) {
         console.error('Could not find close tag for ' + openTag);
+        // TODO: handle invalid HTML better
         break;
       } else {
+        if (nextOpenTagIndex < nextCloseTagIndex) {
+          // Grab the inner open tag content
+          let innerOpenTagCloseIndex = text.indexOf('>', nextOpenTagIndex);
+          let innerOpenTag = text.substring(nextOpenTagIndex + 1, innerOpenTagCloseIndex);
+          let innerTagType = innerOpenTag.split(' ')[0];
+          let tagStack = [innerTagType];
+          console.log('found nested tag', innerTagType);
+
+          // We have nested tags, so process the inner tags first
+          let innerTagOpenIndex = innerOpenTagCloseIndex; // Start at the end of the open tag
+          while (tagStack.length > 0) {
+            console.log('LOOP: tagStack:', tagStack);
+            const closeTagToFind = '</' + tagStack[tagStack.length - 1] + '>';
+            console.log('looking for close tag:', closeTagToFind);
+
+            const nextInnerCloseTagIndex = text.indexOf(closeTagToFind, innerTagOpenIndex + 1);
+            const nextInnerOpenTagIndex = text.indexOf('<', innerTagOpenIndex + 1);
+            console.log('nextInnerCloseTagIndex:', nextInnerCloseTagIndex);
+            console.log('nextInnerOpenTagIndex:', nextInnerOpenTagIndex);
+
+            // Grab the next open tag content
+            innerOpenTagCloseIndex = text.indexOf('>', nextInnerOpenTagIndex);
+            innerOpenTag = text.substring(nextInnerOpenTagIndex + 1, innerOpenTagCloseIndex);
+            innerTagType = innerOpenTag.split(' ')[0];
+
+            if (nextInnerOpenTagIndex < nextInnerCloseTagIndex) {
+              console.log('found another layer of nested tags:', innerOpenTag);
+              // Another level of nesting
+              tagStack.push(innerTagType);
+              innerTagOpenIndex = nextInnerOpenTagIndex + innerOpenTag.length;
+            } else {
+              console.log('found close tag for', tagStack[tagStack.length - 1]);
+              // Corresponding close tag for top of the stack found
+              tagStack.pop();
+              innerTagOpenIndex = nextInnerCloseTagIndex + 1;
+            }
+            nextCloseTagIndex = nextInnerCloseTagIndex;
+          }
+          console.log('OUT OF LOOP');
+
+          // Find the corresponding close tag
+          nextCloseTagIndex = text.indexOf(closeTagToFind, nextCloseTagIndex + tagType.length);
+        }
         // try to find sub tags and plain text value from them
-        const closeTagLength = tagToFind.length;
-        const content = text.substring(openTagIndex + openTag.length + 2, closeTagIndex);
+        const closeTagLength = closeTagToFind.length;
+        const content = text.substring(openTagIndex + openTag.length + 2, nextCloseTagIndex);
+        console.log('Tag contents:', content);
 
         const [subTags, contentPlainText] = parseHTMLText(content, trigger);
-        plaintText += contentPlainText;
+        plainText += contentPlainText;
         tags.push({
           tagType: tagType.toLowerCase(),
           openTagBody: openTag,
           openTagLength: openTag.length + 2, // +2 for '<' and '>'
           htmlOpenTagStartIndex: openTagIndex,
-          htmlCloseTagStartIndex: closeTagIndex,
+          htmlCloseTagStartIndex: nextCloseTagIndex,
           closeTagLength,
           content,
           subTags,
           plainTextStartIndex,
-          plainTextEndIndex: plaintText.length // - 1 is not used because we should use the next index after the content value
+          plainTextEndIndex: plainText.length // - 1 is not used because we should use the next index after the content value
         });
-        htmlParseIndex = closeTagIndex + closeTagLength;
+        htmlParseIndex = nextCloseTagIndex + closeTagLength;
       }
     }
   }
 
-  return [tags, plaintText];
+  return [tags, plainText];
 };
 
 /**
