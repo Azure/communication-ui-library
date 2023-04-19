@@ -115,10 +115,6 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     const [tags, plainText] = parseHTMLText(textValue, trigger);
     console.log('tags', tags);
     console.log('plainText', plainText);
-    // Get a plain text version to display in the input box, resetting state
-    // const tags = parseToTags(textValue);
-    // const plainText = plainTextFromParsedTags(textValue, tags, trigger);
-    // Provide the plain text string to the inputTextValue
     setInputTextValue(plainText);
     setTagsValue(tags);
   }, [textValue, atMentionLookupOptions?.trigger]);
@@ -267,10 +263,10 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     }
     let result = '';
     if (tagsValue.length === 0) {
-      // no tags in the string, textValue is a sting and
+      // no tags in the string, textValue is a sting
       result = newValue;
     } else {
-      // there are tags in the value, textValue is html string
+      // there are tags in the text value, textValue is html string
       const { changeStart, newChangeEnd, oldChangeEnd } = findStringsDiffIndexes(inputTextValue, newValue);
 
       // add mention
@@ -777,94 +773,6 @@ const plainTextFromParsedTags = (textBlock: string, tags: ParsedTag[], trigger: 
     text += textBlock.substring(previousTagEndIndex);
   }
   return text;
-};
-
-/**
- * Go through the text and find the mention index
- *
- * @private
- */
-const htmlMentionIndex = (
-  htmlTextBlock: string,
-  tags: ParsedTag[],
-  trigger: string,
-  plainStringIndex: number,
-  query: string, // includes trigger
-  plainTextBlock?: string
-): number => {
-  console.log('htmlTextBlock', htmlTextBlock);
-  console.log('plainStringIndex', plainStringIndex);
-  if (tags.length === 0) {
-    // no tags were added yet
-    return plainStringIndex;
-  } else if (plainTextBlock !== undefined && plainStringIndex + query.length === plainTextBlock.length) {
-    // tags will be added at the end of the current text
-    return htmlTextBlock.length - 1;
-  } else {
-    // tag will be added in the middle of the text
-
-    let text = '';
-    let tagIndex = 0;
-    let previousTagEndIndex = 0;
-    let htmlIndex = 0;
-
-    while (tagIndex < tags.length && htmlIndex < htmlTextBlock.length) {
-      const tag = tags[tagIndex];
-      // Add all the text from the last tag close to this one open
-      const textBetweenTags = htmlTextBlock.substring(previousTagEndIndex, tag.htmlOpenTagStartIndex);
-      text += textBetweenTags;
-      if (plainStringIndex <= textBetweenTags.length) {
-        //TODO: check!
-        htmlIndex += textBetweenTags.length + plainStringIndex;
-        return htmlIndex;
-      }
-      if (tag.tagType === 'msft-at-mention') {
-        text += trigger;
-        htmlIndex += trigger.length;
-      }
-
-      // If there are sub tags, go through them and add their text
-      if (!!tag.subTags && tag.subTags.length > 0) {
-        htmlIndex += htmlMentionIndex(
-          tag.content ?? '',
-          tag.subTags ?? [],
-          trigger,
-          plainStringIndex - text.length,
-          query
-        );
-        text += plainTextFromParsedTags(tag.content ?? '', tag.subTags, trigger);
-      } else if (tag.content !== undefined) {
-        // Otherwise just add the content
-        text += tag.content;
-        if (plainStringIndex < tag.content.length) {
-          //TODO: check!
-          htmlIndex += plainStringIndex;
-          return htmlIndex;
-        } else {
-          htmlIndex += tag.content.length;
-        }
-      }
-      // Move the indices
-      if (!!tag.htmlCloseTagStartIndex && tag.closeTagLength) {
-        previousTagEndIndex = tag.htmlCloseTagStartIndex + tag.closeTagLength;
-      } else {
-        // Self-closing tag
-        previousTagEndIndex = tag.htmlOpenTagStartIndex + tag.openTagBody.length + 3; // 3 for the < > and /
-      }
-      tagIndex++;
-    }
-    // Add the text after the last tag
-    if (previousTagEndIndex < htmlTextBlock.length) {
-      if (plainStringIndex > previousTagEndIndex) {
-        htmlIndex += htmlTextBlock.length - previousTagEndIndex + plainStringIndex;
-      }
-      text += htmlTextBlock.substring(previousTagEndIndex);
-    }
-    console.log('text', text);
-    console.log('htmlTextBlock', htmlTextBlock);
-    console.log('htmlIndex', htmlIndex);
-    return htmlIndex;
-  }
 };
 
 /**
