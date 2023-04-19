@@ -1118,7 +1118,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
             onFetchAttachments={onFetchInlineAttachment}
             /* @conditional-compile-remove(teams-inline-images) */
             attachmentsMap={inlineAttachments}
-            atMentionDisplayOptions={atMentionOptions as AtMentionDisplayOptions}
+            atMentionOptions={atMentionOptions}
           />
         );
       }

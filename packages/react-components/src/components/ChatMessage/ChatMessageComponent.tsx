@@ -12,7 +12,7 @@ import { BlockedMessage } from '../../types';
 import { ChatMessageComponentAsMessageBubble } from './ChatMessageComponentAsMessageBubble';
 import { FileDownloadHandler, FileMetadata } from '../FileDownloadCards';
 /* @conditional-compile-remove(at-mention) */
-import { AtMentionDisplayOptions } from '../AtMentionFlyout';
+import { AtMentionLookupOptions, AtMentionOptions } from '../AtMentionFlyout';
 
 type ChatMessageComponentProps = {
   message: ChatMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage;
@@ -87,10 +87,10 @@ type ChatMessageComponentProps = {
   onDisplayDateTimeString?: (messageDate: Date) => string;
   /* @conditional-compile-remove(at-mention) */
   /**
-   * Optional props needed to display suggestions in the at mention scenario.
+   * Optional props needed to lookup suggestions and display mentions in the mention scenario.
    * @beta
    */
-  atMentionDisplayOptions?: AtMentionDisplayOptions;
+  atMentionOptions?: AtMentionOptions;
   /* @conditional-compile-remove(teams-inline-images) */
   /**
    * Optional function to fetch attachments.
@@ -145,6 +145,8 @@ export const ChatMessageComponent = (props: ChatMessageComponentProps): JSX.Elem
           props.onCancelMessageEdit && props.onCancelMessageEdit(messageId, metadata, options);
           setIsEditing(false);
         }}
+        /* @conditional-compile-remove(at-mention) */
+        atMentionLookupOptions={props.atMentionOptions as AtMentionLookupOptions}
       />
     );
   } else {
