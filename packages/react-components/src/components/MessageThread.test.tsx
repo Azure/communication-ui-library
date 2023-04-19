@@ -192,7 +192,7 @@ describe('Message should display inline image correctly', () => {
           name: imgId1,
           attachmentType: 'teamsInlineImage',
           extension: 'png',
-          url: expectedImgSrc2,
+          url: expectedImgSrc1,
           previewUrl: expectedImgSrc1
         },
         {
