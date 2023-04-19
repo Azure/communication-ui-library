@@ -14,6 +14,7 @@ import { ChatMessage } from '../../types';
 import { _FileUploadCards } from '../FileUploadCards';
 import { FileMetadata } from '../FileDownloadCards';
 import { chatMessageFailedTagStyle } from '../styles/ChatMessageComponent.styles';
+import { AtMentionLookupOptions } from '../AtMentionFlyout';
 
 const MAXIMUM_LENGTH_OF_MESSAGE = 8000;
 
@@ -50,6 +51,7 @@ export type ChatMessageComponentAsEditBoxProps = {
    * Setting to false will mean they are on a new line inside the editable chat message.
    */
   inlineEditButtons: boolean;
+  atMentionLookupOptions: AtMentionLookupOptions;
 };
 
 type MessageState = 'OK' | 'too short' | 'too long';
@@ -58,7 +60,7 @@ type MessageState = 'OK' | 'too short' | 'too long';
  * @private
  */
 export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditBoxProps): JSX.Element => {
-  const { onCancel, onSubmit, strings, message } = props;
+  const { onCancel, onSubmit, strings, message, atMentionLookupOptions } = props;
   const [textValue, setTextValue] = useState<string>(message.content || '');
 
   const [attachedFilesMetadata, setAttachedFilesMetadata] = React.useState(getMessageAttachedFilesMetadata(message));
@@ -144,6 +146,7 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
         maxLength={MAXIMUM_LENGTH_OF_MESSAGE}
         errorMessage={textTooLongMessage}
         styles={editBoxStyles}
+        atMentionLookupOptions={atMentionLookupOptions}
       >
         <InputBoxButton
           className={editingButtonStyle}
