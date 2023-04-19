@@ -101,7 +101,10 @@ export interface AtMentionDisplayOptions {
  *
  * @beta
  */
-export type AtMentionOptions = AtMentionLookupOptions | AtMentionDisplayOptions;
+export type MentionOptions = {
+  lookupOptions?: AtMentionLookupOptions;
+  displayOptions?: AtMentionDisplayOptions;
+};
 
 /**
  * At mention suggestion's state, as reflected in the UI.
