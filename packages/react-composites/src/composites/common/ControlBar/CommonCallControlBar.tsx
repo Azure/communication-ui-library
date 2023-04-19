@@ -479,7 +479,11 @@ const getDesktopScreenShareButtonStyles = (theme: ITheme): ControlBarButtonStyle
     border: 'none',
     background: theme.palette.themePrimary,
     color: theme.palette.white,
-    '* > svg': { fill: theme.palette.white }
+    '* > svg': { fill: theme.palette.white },
+    '@media (forced-colors: active)': {
+      border: '1px solid',
+      borderColor: theme.palette.black
+    }
   };
   const overrides: ControlBarButtonStyles = {
     rootChecked: overrideStyles,
