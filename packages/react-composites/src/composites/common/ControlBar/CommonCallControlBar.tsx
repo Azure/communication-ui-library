@@ -497,6 +497,19 @@ const getDesktopEndCallButtonStyles = (theme: ITheme): ControlBarButtonStyles =>
     root: {
       // Suppress border around the dark-red button.
       border: 'none'
+    },
+    rootFocused: {
+      '@media (forced-colors: active)': {
+        background: 'highlight',
+        border: '1px solid'
+      }
+    },
+    icon: {
+      '@media (forced-colors: active)': {
+        ':focused': {
+          color: theme.palette.white
+        }
+      }
     }
   };
   return concatStyleSets(getDesktopCommonButtonStyles(theme), overrides);
