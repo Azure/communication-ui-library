@@ -88,8 +88,9 @@ const InputBoxStory = (): JSX.Element => {
                 return Promise.resolve(filtered);
               }
             }}
-            onMentionAdd={(suggestion) => {
-              console.log(suggestion);
+            onMentionAdd={(newTextValue) => {
+              const newValue = newTextValue ?? '';
+              setTextValue(newValue);
             }}
             maxLength={0}
           />

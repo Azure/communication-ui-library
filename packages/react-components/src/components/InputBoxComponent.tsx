@@ -70,7 +70,7 @@ type InputBoxComponentProps = {
   /* @conditional-compile-remove(at-mention) */
   atMentionLookupOptions?: AtMentionLookupOptions;
   /* @conditional-compile-remove(at-mention) */
-  onMentionAdd?: (newTextValue?: string) => void;
+  onMentionAdd?: (newTextValue?: string) => void; // textValue should be updated in it
 };
 
 /**
@@ -182,14 +182,10 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
         mention,
         triggerText
       );
-
-      const [tags, plainText] = parseHTMLText(updatedHTML, triggerText);
       // This change moves focus to the end of the input field when plainText != the text that in the input field
-      setInputTextValue(plainText);
-      setTagsValue(tags);
-      onMentionAdd && onMentionAdd(updatedHTML);
       updateMentionSuggestions([]);
       setCurrentTagIndex(-1);
+      onMentionAdd && onMentionAdd(updatedHTML);
     },
     [
       textFieldRef,
@@ -279,7 +275,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
         newValue.substring(changeStart, newChangeEnd),
         triggerText
       );
-      console.log('updatedHTML', result);
+      console.log('!!! updatedHTML', result);
     }
 
     onChange && onChange(event, result);
@@ -568,8 +564,6 @@ const updateHTML = (
   }
   // TODO: when change removes the tag (consume) fully
   // TODO: when change removes the tag partially
-  // TODO: to check when on the edge of the tags in plain text
-  // TODO: when mention has another mention inside
   for (let i = 0; i < tags.length; i++) {
     const tag = tags[i];
     if (startIndex < tag.plainTextStartIndex && oldPlainTextEndIndex < tag.plainTextStartIndex) {
