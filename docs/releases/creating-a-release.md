@@ -87,7 +87,7 @@ graph LR
   prerelease -.-o|Create Pull Request| main
 ```
 
-After running the action, you must disable the beta checks on the CI if this is a stable release, or the stable checks if this is a beta relase. This is to ensure that any cherry pick PR's going into release dont run against the wrong build flavor in CI causing failures. Editing the [CI workflow](../../.github/workflows/ci.yml): Modify the output `JSON` string to remove the `beta` flavor for `stable` releases / `stable` flavor for `beta` releases.
+After running the action, the beta checks on the CI should be automatically disabled if this is a stable release. Inversely, the stable checks should be automatically disabled if this is a beta relase. This is to ensure that any cherry pick PR's going into release dont run against the wrong build flavor in CI causing failures. If the wrong build flavor checks were not automatically disabled, edit the [CI workflow](../../.github/workflows/ci.yml): Modify the output `JSON` string to remove the `beta` flavor for `stable` releases / `stable` flavor for `beta` releases.
 
 ## Step 2: Prepare for release
 
