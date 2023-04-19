@@ -267,9 +267,8 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       result = newValue;
     } else {
       // there are tags in the text value, textValue is html string
-      const { changeStart, newChangeEnd, oldChangeEnd } = findStringsDiffIndexes(inputTextValue, newValue);
-
-      // add mention
+      const { changeStart, oldChangeEnd, newChangeEnd } = findStringsDiffIndexes(inputTextValue, newValue);
+      // get updated html string
       result = updateHTML(
         textValue,
         inputTextValue,
@@ -807,32 +806,36 @@ const findStringsDiffIndexes = (
     //insert or replacement
     if (oldTextLength === changeStart) {
       // when change was at the end of string
-      newChangeEnd = newTextLength - 1;
+      // Change is found
+      newChangeEnd = newTextLength;
       oldChangeEnd = oldTextLength;
-    }
-    for (let i = 1; i < newTextLength && oldTextLength - i > changeStart; i++) {
-      newChangeEnd = newTextLength - i - 1;
-      oldChangeEnd = oldTextLength - i - 1;
+    } else {
+      for (let i = 1; i < newTextLength && oldTextLength - i > changeStart; i++) {
+        newChangeEnd = newTextLength - i - 1;
+        oldChangeEnd = oldTextLength - i - 1;
 
-      if (newText[newChangeEnd] !== oldText[oldChangeEnd]) {
-        // Change is found
-        break;
+        if (newText[newChangeEnd] !== oldText[oldChangeEnd]) {
+          // Change is found
+          break;
+        }
       }
     }
   } else if (oldTextLength > newTextLength) {
     //deletion or replacement
     if (newTextLength === changeStart) {
       // when change was at the end of string
+      // Change is found
       newChangeEnd = newTextLength;
-      oldChangeEnd = oldTextLength - 1;
-    }
-    for (let i = 1; i < oldTextLength && newTextLength - i > changeStart; i++) {
-      newChangeEnd = newTextLength - i - 1;
-      oldChangeEnd = oldTextLength - i - 1;
+      oldChangeEnd = oldTextLength;
+    } else {
+      for (let i = 1; i < oldTextLength && newTextLength - i > changeStart; i++) {
+        newChangeEnd = newTextLength - i - 1;
+        oldChangeEnd = oldTextLength - i - 1;
 
-      if (newText[newChangeEnd] !== oldText[oldChangeEnd]) {
-        // Change is found
-        break;
+        if (newText[newChangeEnd] !== oldText[oldChangeEnd]) {
+          // Change is found
+          break;
+        }
       }
     }
   } else {
