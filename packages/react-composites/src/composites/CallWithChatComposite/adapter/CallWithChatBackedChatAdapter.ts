@@ -5,6 +5,8 @@ import { CallWithChatAdapter } from './CallWithChatAdapter';
 import { ChatAdapter, ChatAdapterState } from '../../ChatComposite';
 /* @conditional-compile-remove(file-sharing) */
 import { FileUploadManager } from '../../ChatComposite';
+/* @conditional-compile-remove(teams-inline-images) */
+import { AttachmentDownloadResult } from '@internal/react-components';
 /* @conditional-compile-remove(file-sharing) */
 import { FileMetadata } from '@internal/react-components';
 import { ErrorBarStrings } from '@internal/react-components';
@@ -126,6 +128,11 @@ export class CallWithChatBackedChatAdapter implements ChatAdapter {
   public updateFileUploadMetadata = (id: string, metadata: FileMetadata): void => {
     this.callWithChatAdapter.updateFileUploadMetadata(id, metadata);
   };
+
+  /* @conditional-compile-remove(teams-inline-images) */
+  public async downloadAttachments(options: { attachmentUrls: string[] }): Promise<AttachmentDownloadResult[]> {
+    return await this.callWithChatAdapter.downloadAttachments(options);
+  }
 }
 
 function chatAdapterStateFromCallWithChatAdapterState(

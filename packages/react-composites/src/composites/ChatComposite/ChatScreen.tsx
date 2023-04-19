@@ -47,6 +47,8 @@ import { useSelector } from './hooks/useSelector';
 import { FileDownloadErrorBar } from './FileDownloadErrorBar';
 /* @conditional-compile-remove(file-sharing) */
 import { _FileDownloadCards } from '@internal/react-components';
+/* @conditional-compile-remove(teams-inline-images) */
+import { AttachmentDownloadResult, FileMetadata } from '@internal/react-components';
 
 /**
  * @private
@@ -194,6 +196,18 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     [fileSharing?.downloadHandler]
   );
 
+  /* @conditional-compile-remove(teams-inline-images) */
+  const onRenderInlineAttachment = useCallback(
+    async (attachment: FileMetadata): Promise<AttachmentDownloadResult[]> => {
+      if (attachment.previewUrl) {
+        const blob = await adapter.downloadAttachments({ attachmentUrls: [attachment.previewUrl] });
+        return blob;
+      }
+      return [{ blobUrl: '' }];
+    },
+    [adapter]
+  );
+
   const AttachFileButton = useCallback(() => {
     if (!fileSharing?.uploadHandler) {
       return null;
@@ -227,6 +241,8 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
             onRenderMessage={onRenderMessage}
             /* @conditional-compile-remove(file-sharing) */
             onRenderFileDownloads={onRenderFileDownloads}
+            /* @conditional-compile-remove(teams-inline-images) */
+            onFetchAttachments={onRenderInlineAttachment}
             numberOfChatMessagesToReload={defaultNumberOfChatMessagesToReload}
             styles={messageThreadStyles}
           />

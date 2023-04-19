@@ -23,7 +23,7 @@
     "@azure/communication-common": "2.2.0",
     "@azure/communication-identity": "~1.1.0",
     "@azure/communication-react": "1.5.1-beta.2",
-    "@fluentui/react-file-type-icons": "~8.5.8",
+    "@fluentui/react-file-type-icons": "8.8.13",
     "@fluentui/react-hooks": "~8.6.12",
     "@fluentui/react-icons": "~2.0.194",
     "@fluentui/react-northstar": "0.61.0",
