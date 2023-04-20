@@ -13,7 +13,12 @@ This could entail doing any or all of the following:
 * Breaking a changelog entry into multiple separate entries
   * If a PR went in that fixed two distinctly different tasks, the entry should be broken into two separate entries that both link back to the same PR.
 * Fixing the purpose of a changelog entry if the meaning was unclear.
-* Fixing up spelling and grammar
+* Fix spelling mistakes. Change log entries should be in present tense, capitalized, and should not end with periods.
+
+For beta releases:
+* Create a heading for each new feature in the release. Summarize each feature into 2-4 sentences in point form.
+* Create a heading for of the following sections: Features, Bug Fixes, and Improvements. Group each changelog into each section.
+Refer to the latest [beta release notes](../../packages/communication-react/CHANGELOG.beta.md) to see an example.
 
 Ideally most of these are handled at PR time when the PR is reviewed. This reduces the work for whoever is creating the new release.
 
