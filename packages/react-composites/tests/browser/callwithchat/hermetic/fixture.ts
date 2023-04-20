@@ -5,7 +5,13 @@ import { Page, test as base } from '@playwright/test';
 import path from 'path';
 import { createTestServer } from '../../common/server';
 import { loadNewPageWithPermissionsForCalls } from '../../common/fixtureHelpers';
-import { dataUiId, encodeQueryData, waitForPageFontsLoaded, waitForSelector } from '../../common/utils';
+import {
+  dataUiId,
+  encodeQueryData,
+  jsonDateReplacer,
+  waitForPageFontsLoaded,
+  waitForSelector
+} from '../../common/utils';
 import type { MockCallAdapterState, MockRemoteParticipantState } from '../../../common';
 import type { ChatParticipant } from '@azure/communication-chat';
 import type { _FakeChatAdapterArgs } from '../../../../src';
@@ -38,7 +44,7 @@ export const buildUrlForApp = (
   qArgs?: { [key: string]: string }
 ): string => {
   return `${serverUrl}?${encodeQueryData({
-    mockCallAdapterState: JSON.stringify(mockCallAdapterState),
+    mockCallAdapterState: JSON.stringify(mockCallAdapterState, jsonDateReplacer),
     fakeChatAdapterArgs: JSON.stringify(fakeChatAdapterArgs),
     ...qArgs
   })}`;

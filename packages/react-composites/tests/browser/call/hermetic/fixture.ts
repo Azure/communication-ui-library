@@ -6,7 +6,7 @@ import { Page, test as base } from '@playwright/test';
 import path from 'path';
 import { createTestServer } from '../../common/server';
 import { loadNewPageWithPermissionsForCalls } from '../../common/fixtureHelpers';
-import { encodeQueryData } from '../../common/utils';
+import { encodeQueryData, jsonDateReplacer } from '../../common/utils';
 import type {
   MockCallAdapterState,
   MockRemoteParticipantState,
@@ -32,7 +32,7 @@ export const buildUrlWithMockAdapter = (
   qArgs?: { [key: string]: string }
 ): string => {
   return `${serverUrl}?${encodeQueryData({
-    mockCallAdapterState: JSON.stringify(mockCallAdapterState),
+    mockCallAdapterState: JSON.stringify(mockCallAdapterState, jsonDateReplacer),
     ...qArgs
   })}`;
 };
