@@ -90,7 +90,7 @@ export const captionsFeatureState = {
   captions: [
     {
       resultType: 'Final' as const,
-      id: '100000',
+      timestamp: new Date(0),
       speaker: {
         displayName: 'Participant 1',
         identifier: { communicationUserId: 'communicationId1', kind: 'communicationUser' as const }
@@ -100,7 +100,7 @@ export const captionsFeatureState = {
     },
     {
       resultType: 'Final' as const,
-      id: '100001',
+      timestamp: new Date(10000),
       speaker: {
         displayName: 'Participant 2',
         identifier: { communicationUserId: 'communicationId2', kind: 'communicationUser' as const }
@@ -110,7 +110,7 @@ export const captionsFeatureState = {
     },
     {
       resultType: 'Final' as const,
-      id: '100002',
+      timestamp: new Date(10001),
       speaker: {
         displayName: 'Participant 3',
         identifier: { communicationUserId: 'communicationId3', kind: 'communicationUser' as const }
