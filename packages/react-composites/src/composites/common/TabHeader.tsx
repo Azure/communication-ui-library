@@ -3,9 +3,6 @@
 import { concatStyleSets, DefaultButton, Stack } from '@fluentui/react';
 import { useTheme } from '@internal/react-components';
 import React, { useMemo } from 'react';
-/* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
-import { CallCompositeStrings } from '../CallComposite';
-import { CallWithChatCompositeStrings } from '../CallWithChatComposite';
 import { CallWithChatCompositeIcon } from '../common/icons';
 import {
   mobilePaneBackButtonStyles,
@@ -13,30 +10,31 @@ import {
   mobilePaneControlBarStyle,
   mobilePaneHiddenIconStyles
 } from './styles/Pane.styles';
+import { useLocale } from '../localization';
+import { CommonCallControlOptions } from './types/CommonCallControlOptions';
 
 /**
  * Props for {@link TabHeader} component
  */
-type TabHeaderProps = {
+type PeopleAndChatHeaderProps = {
   onClose: () => void;
   // If set, show a button to open chat tab.
   onChatButtonClicked?: () => void;
   // If set, show a button to open people tab.
   onPeopleButtonClicked?: () => void;
   activeTab: TabHeaderTab;
-  strings:
-    | CallWithChatCompositeStrings
-    | /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */ CallCompositeStrings;
   disableChatButton?: boolean;
   disablePeopleButton?: boolean;
 };
 
 /**
+ * Legacy header to be removed when we make a breaking change.
  * @private
  */
-export const TabHeader = (props: TabHeaderProps): JSX.Element => {
-  const { onClose, onChatButtonClicked, onPeopleButtonClicked, activeTab, strings } = props;
+export const PeopleAndChatHeader = (props: PeopleAndChatHeaderProps): JSX.Element => {
+  const { onClose, onChatButtonClicked, onPeopleButtonClicked, activeTab } = props;
   const theme = useTheme();
+  const strings = useLocale().strings;
   const haveMultipleTabs = onChatButtonClicked && onPeopleButtonClicked;
   const mobilePaneButtonStylesThemed = useMemo(() => {
     return concatStyleSets(
@@ -63,8 +61,10 @@ export const TabHeader = (props: TabHeaderProps): JSX.Element => {
   return (
     <Stack horizontal grow styles={mobilePaneControlBarStyle}>
       <DefaultButton
-        ariaLabel={strings.returnToCallButtonAriaLabel}
-        ariaDescription={strings.returnToCallButtonAriaDescription}
+        ariaLabel={strings.call.returnToCallButtonAriaLabel ?? strings.callWithChat.returnToCallButtonAriaLabel}
+        ariaDescription={
+          strings.call.returnToCallButtonAriaDescription ?? strings.callWithChat.returnToCallButtonAriaDescription
+        }
         onClick={onClose}
         styles={mobilePaneBackButtonStyles}
         onRenderIcon={() => <CallWithChatCompositeIcon iconName="ChevronLeft" />}
@@ -79,7 +79,7 @@ export const TabHeader = (props: TabHeaderProps): JSX.Element => {
             role={'tab'}
             disabled={props.disableChatButton}
           >
-            {strings.chatButtonLabel}
+            {strings.callWithChat.chatButtonLabel}
           </DefaultButton>
         )}
       </Stack.Item>
@@ -92,7 +92,7 @@ export const TabHeader = (props: TabHeaderProps): JSX.Element => {
             role={'tab'}
             disabled={props.disablePeopleButton}
           >
-            {strings.peopleButtonLabel}
+            {strings.call.peopleButtonLabel ?? strings.callWithChat.peopleButtonLabel}
           </DefaultButton>
         )}
       </Stack.Item>
@@ -109,3 +109,14 @@ export const TabHeader = (props: TabHeaderProps): JSX.Element => {
  * Type used to define which tab is active in {@link TabHeader}
  */
 export type TabHeaderTab = 'chat' | 'people';
+
+/* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
+const shouldShowPeopleTabHeaderButton = (callControls?: boolean | CommonCallControlOptions): boolean => {
+  if (callControls === undefined || callControls === true) {
+    return true;
+  }
+  if (callControls === false) {
+    return false;
+  }
+  return callControls.participantsButton !== false;
+};

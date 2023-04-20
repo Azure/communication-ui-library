@@ -11,7 +11,7 @@ import {
 } from '@internal/react-components';
 /* @conditional-compile-remove(rooms) */
 import { _usePermissions } from '@internal/react-components';
-import React, { useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { CallWithChatCompositeStrings } from '../CallWithChatComposite';
 import { usePropsFor } from '../CallComposite/hooks/usePropsFor';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
@@ -26,25 +26,50 @@ import { AddPeopleButton } from './AddPeopleButton';
 import { PhoneNumberIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
+import { useAdapter } from '../CallComposite/adapter/CallAdapterProvider';
+import { useLocale } from '../localization';
 
 /**
  * @private
  */
 export const PeoplePaneContent = (props: {
-  active: boolean;
   inviteLink?: string;
-  onRemoveParticipant: (participantId: string) => void;
-  /* @conditional-compile-remove(PSTN-calls) */
-  onAddParticipant: (participant: PhoneNumberIdentifier, options?: AddPhoneNumberOptions) => void;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
-  strings: CallWithChatCompositeStrings | /* @conditional-compile-remove(one-to-n-calling) */ CallCompositeStrings;
   setDrawerMenuItems: (_DrawerMenuItemProps) => void;
   mobileView?: boolean;
-  /* @conditional-compile-remove(PSTN-calls) */
-  alternateCallerId?: string;
 }): JSX.Element => {
-  const { inviteLink, onFetchParticipantMenuItems, setDrawerMenuItems, strings, onRemoveParticipant } = props;
+  const { inviteLink, onFetchParticipantMenuItems, setDrawerMenuItems } = props;
+  const adapter = useAdapter();
+  const localeStrings = useLocale();
+
+  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+  const getStrings = () => {
+    /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
+    return localeStrings.strings.call;
+
+    return localeStrings.strings.callWithChat;
+  };
+  const strings = getStrings();
+
+  const removeParticipantFromCall = useCallback(
+    async (participantId: string): Promise<void> => {
+      await adapter.removeParticipant(participantId);
+    },
+    [adapter]
+  );
+
+  /* @conditional-compile-remove(PSTN-calls) */
+  const addParticipantToCall = useCallback(
+    async (participant: PhoneNumberIdentifier, options?: AddPhoneNumberOptions): Promise<void> => {
+      await adapter.addParticipant(participant, options);
+    },
+    [adapter]
+  );
+
+  /* @conditional-compile-remove(PSTN-calls) */
+  const alternateCallerId = adapter.getState().alternateCallerId;
+
   const participantListDefaultProps = usePropsFor(ParticipantList);
   const removeButtonAllowed = hasRemoveParticipantsPermissionTrampoline();
   const setDrawerMenuItemsForParticipant: (participant?: ParticipantListParticipant) => void = useMemo(() => {
@@ -79,7 +104,8 @@ export const PeoplePaneContent = (props: {
   ]);
 
   const participantListProps: ParticipantListProps = useMemo(() => {
-    const onRemoveAParticipant = async (participantId: string): Promise<void> => onRemoveParticipant(participantId);
+    const onRemoveAParticipant = async (participantId: string): Promise<void> =>
+      removeParticipantFromCall(participantId);
     return {
       ...participantListDefaultProps,
       // Passing undefined callback for mobile to avoid context menus for participants in ParticipantList are clicked
@@ -87,7 +113,7 @@ export const PeoplePaneContent = (props: {
       // We want the drawer menu items to appear when participants in ParticipantList are clicked
       onParticipantClick: props.mobileView ? setDrawerMenuItemsForParticipant : undefined
     };
-  }, [participantListDefaultProps, props.mobileView, setDrawerMenuItemsForParticipant, onRemoveParticipant]);
+  }, [participantListDefaultProps, props.mobileView, setDrawerMenuItemsForParticipant, removeParticipantFromCall]);
 
   const participantList = (
     <ParticipantListWithHeading
@@ -95,7 +121,7 @@ export const PeoplePaneContent = (props: {
       participantListProps={participantListProps}
       onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
       onFetchParticipantMenuItems={props.mobileView ? undefined : props.onFetchParticipantMenuItems}
-      title={props.strings.peoplePaneSubTitle}
+      title={strings.peoplePaneSubTitle}
     />
   );
 
@@ -106,18 +132,16 @@ export const PeoplePaneContent = (props: {
           {participantList}
         </Stack.Item>
 
-        {props.active && (
-          <AddPeopleButton
-            inviteLink={inviteLink}
-            mobileView={props.mobileView}
-            participantList={participantList}
-            strings={strings}
-            /* @conditional-compile-remove(PSTN-calls) */
-            onAddParticipant={props.onAddParticipant}
-            /* @conditional-compile-remove(PSTN-calls) */
-            alternateCallerId={props.alternateCallerId}
-          />
-        )}
+        <AddPeopleButton
+          inviteLink={inviteLink}
+          mobileView={props.mobileView}
+          participantList={participantList}
+          strings={strings}
+          /* @conditional-compile-remove(PSTN-calls) */
+          onAddParticipant={addParticipantToCall}
+          /* @conditional-compile-remove(PSTN-calls) */
+          alternateCallerId={alternateCallerId}
+        />
       </Stack>
     );
   }
@@ -129,9 +153,9 @@ export const PeoplePaneContent = (props: {
       participantList={participantList}
       strings={strings}
       /* @conditional-compile-remove(PSTN-calls) */
-      onAddParticipant={props.onAddParticipant}
+      onAddParticipant={addParticipantToCall}
       /* @conditional-compile-remove(PSTN-calls) */
-      alternateCallerId={props.alternateCallerId}
+      alternateCallerId={alternateCallerId}
     />
   );
 };
