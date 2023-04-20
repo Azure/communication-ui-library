@@ -3,14 +3,22 @@
 
 import React from 'react';
 import { MessageStatusIndicator } from './MessageStatusIndicator';
-import Enzyme from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
-import { mountWithLocalization, createTestLocale } from './utils/testUtils';
-import { TooltipHost } from '@fluentui/react';
-
-Enzyme.configure({ adapter: new Adapter() });
+import { createTestLocale, renderWithLocalization } from './utils/testUtils';
+import { screen } from '@testing-library/react';
+import { registerIcons } from '@fluentui/react';
 
 describe('MessageStatusIndicator strings should be localizable and overridable', () => {
+  beforeEach(() => {
+    registerIcons({
+      icons: {
+        messagesending: <></>,
+        messagedelivered: <></>,
+        messageseen: <></>,
+        messagefailed: <></>
+      }
+    });
+  });
+
   test('Should localize tooltip text', async () => {
     const testLocale = createTestLocale({
       messageStatusIndicator: {
@@ -21,20 +29,17 @@ describe('MessageStatusIndicator strings should be localizable and overridable',
         failedToSendTooltipText: Math.random().toString()
       }
     });
-    const component = mountWithLocalization(<MessageStatusIndicator status="sending" />, testLocale);
-    expect(component.find(TooltipHost).props().content).toBe(
-      testLocale.strings.messageStatusIndicator.sendingTooltipText
-    );
-    component.setProps({ status: 'delivered' });
-    expect(component.find(TooltipHost).props().content).toBe(
-      testLocale.strings.messageStatusIndicator.deliveredTooltipText
-    );
-    component.setProps({ status: 'seen' });
-    expect(component.find(TooltipHost).props().content).toBe(testLocale.strings.messageStatusIndicator.seenTooltipText);
-    component.setProps({ status: 'failed' });
-    expect(component.find(TooltipHost).props().content).toBe(
-      testLocale.strings.messageStatusIndicator.failedToSendTooltipText
-    );
+    const { rerender } = renderWithLocalization(<MessageStatusIndicator status="sending" />, testLocale);
+    expect(screen.getByText(testLocale.strings.messageStatusIndicator.sendingTooltipText)).toBeTruthy();
+
+    rerender(<MessageStatusIndicator status="delivered" />);
+    expect(screen.getByText(testLocale.strings.messageStatusIndicator.deliveredTooltipText)).toBeTruthy();
+
+    rerender(<MessageStatusIndicator status="seen" />);
+    expect(screen.getByText(testLocale.strings.messageStatusIndicator.seenTooltipText)).toBeTruthy();
+
+    rerender(<MessageStatusIndicator status="failed" />);
+    expect(screen.getByText(testLocale.strings.messageStatusIndicator.failedToSendTooltipText)).toBeTruthy();
   });
   test('Should localize tooltip text', async () => {
     const testLocale = createTestLocale({
@@ -53,16 +58,19 @@ describe('MessageStatusIndicator strings should be localizable and overridable',
       sendingTooltipText: Math.random().toString(),
       failedToSendTooltipText: Math.random().toString()
     };
-    const component = mountWithLocalization(
+    const { rerender } = renderWithLocalization(
       <MessageStatusIndicator status="sending" strings={messageStatusIndicatorStrings} />,
       testLocale
     );
-    expect(component.find(TooltipHost).props().content).toBe(messageStatusIndicatorStrings.sendingTooltipText);
-    component.setProps({ status: 'delivered' });
-    expect(component.find(TooltipHost).props().content).toBe(messageStatusIndicatorStrings.deliveredTooltipText);
-    component.setProps({ status: 'seen' });
-    expect(component.find(TooltipHost).props().content).toBe(messageStatusIndicatorStrings.seenTooltipText);
-    component.setProps({ status: 'failed' });
-    expect(component.find(TooltipHost).props().content).toBe(messageStatusIndicatorStrings.failedToSendTooltipText);
+    expect(screen.getByText(messageStatusIndicatorStrings.sendingTooltipText)).toBeTruthy();
+
+    rerender(<MessageStatusIndicator status="delivered" strings={messageStatusIndicatorStrings} />);
+    expect(screen.getByText(messageStatusIndicatorStrings.deliveredTooltipText)).toBeTruthy();
+
+    rerender(<MessageStatusIndicator status="seen" strings={messageStatusIndicatorStrings} />);
+    expect(screen.getByText(messageStatusIndicatorStrings.seenTooltipText)).toBeTruthy();
+
+    rerender(<MessageStatusIndicator status="failed" strings={messageStatusIndicatorStrings} />);
+    expect(screen.getByText(messageStatusIndicatorStrings.failedToSendTooltipText)).toBeTruthy();
   });
 });

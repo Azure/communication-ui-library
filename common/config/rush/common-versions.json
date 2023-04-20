@@ -24,7 +24,7 @@
      * instead of the latest version.
      */
     // "some-library": "1.2.3"
-    "@azure/communication-calling": "1.12.0-beta.2",
+    "@azure/communication-calling": "1.13.0-beta.4",
     "@azure/communication-chat": "1.3.2-beta.1"
   },
 
@@ -53,8 +53,15 @@
    * This design avoids unnecessary churn in this file.
    */
   "allowedAlternativeVersions": {
-    "@azure/communication-calling": ["1.12.0-beta.2"],
+    "@azure/communication-calling": ["1.13.0-beta.4"],
     "@azure/communication-chat": ["1.3.2-beta.1"],
+    "typescript": [
+      // All projects should use this version by default
+      "4.3.5",
+
+      // Typescript check project's dependency -- this is our minimum supported typescript version of our npm package.
+      "3.8.3"
+    ],
     "webpack": [
       // All projects should use this version by default
       "5.38.1",
