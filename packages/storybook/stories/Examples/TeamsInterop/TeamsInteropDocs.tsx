@@ -36,13 +36,13 @@ export const getDocs: () => JSX.Element = () => {
         Inline images are images that are copied and pasted directly into the send box of Teams client. For images that
         were uploaded via "Upload from this device" menu or via drag-and-drop (such as dragging images directly to the
         send box) in Teams, they are not supported at this time. To copy an image, the Teams user can either use
-        their operating system's context menu to copy the image file then paste it into the send box of their Teams
-        client, or use keyboard shortcuts instead.
+        operating system's context menu to copy the image file then paste it into the send box of their Teams client, or
+        use keyboard shortcuts instead.
       </Description>
       <Description>
-        Certain GIF encodings may not be supported by the UI library at this time, the user might receive a
-        static image instead and this is a known issue. To learn more about currently supported UI library use cases,
-        please refer to the [UI Library use
+        Certain GIF encodings may not be supported by the UI library at this time, the user might receive a static image
+        instead and this is a known issue. To learn more about currently supported UI library use cases, please refer to
+        the [UI Library use
         cases](https://learn.microsoft.com/en-us/azure/communication-services/concepts/ui-library/ui-library-use-cases?pivots=platform-web#chat-use-cases).
       </Description>
       <Subheading>Use CallWithChat Composite with Inline Image Support</Subheading>
