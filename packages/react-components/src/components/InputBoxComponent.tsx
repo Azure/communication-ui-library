@@ -571,14 +571,51 @@ const updateHTML = (
     // no tags added yet
     return newPlainText;
   }
-  // TODO: when change removes the tag (consume) fully
+  if (startIndex === 0 && oldPlainTextEndIndex === oldPlainText.length - 1) {
+    // the whole text is changed
+    return newPlainText;
+  }
   // TODO: when change removes the tag partially
+  // TODO: when change removes a couple of tags partially
   for (let i = 0; i < tags.length; i++) {
     const tag = tags[i];
     console.log('updateHTML tag.type', tag.tagType);
     console.log('updateHTML tag.plainTextStartIndex', tag.plainTextStartIndex);
     console.log('updateHTML tag.plainTextEndIndex', tag.plainTextEndIndex);
-    if (startIndex < tag.plainTextStartIndex && oldPlainTextEndIndex < tag.plainTextStartIndex) {
+    if (
+      startIndex === tag.plainTextStartIndex &&
+      ((tag.plainTextEndIndex !== undefined &&
+        tag.closeTagLength !== undefined &&
+        tag.htmlCloseTagStartIndex !== undefined &&
+        tag.content !== undefined &&
+        tag.plainTextEndIndex === oldPlainTextEndIndex) ||
+        (tag.plainTextEndIndex === undefined &&
+          tag.closeTagLength === undefined &&
+          tag.htmlCloseTagStartIndex === undefined &&
+          tag.content === undefined &&
+          tag.plainTextStartIndex === oldPlainTextEndIndex))
+    ) {
+      // the tag is fully deleted
+      console.log('updateHTML the tag is fully deleted');
+      // before the tag content
+      const stringBefore = htmlText.substring(0, tag.htmlOpenTagStartIndex);
+      // after the tag content
+      const stringAfter = htmlText.substring(
+        tag.htmlCloseTagStartIndex + tag.closeTagLength || tag.htmlOpenTagStartIndex + tag.openTagLength
+      );
+      result = stringBefore + change + stringAfter;
+      break;
+      // } else if (
+      //   startIndex < tag.plainTextStartIndex &&
+      //   tag.plainTextEndIndex !== undefined &&
+      //   tag.closeTagLength !== undefined &&
+      //   tag.htmlCloseTagStartIndex !== undefined &&
+      //   tag.content !== undefined &&
+      //   tag.plainTextEndIndex > oldPlainTextEndIndex
+      // ) {
+      // const beforeTagStr;
+      //change is partially before and partially in the tag
+    } else if (startIndex < tag.plainTextStartIndex && oldPlainTextEndIndex < tag.plainTextStartIndex) {
       //before the open tag
       //find a diff between the open tag and change position
       const startChangeDiff = tag.plainTextStartIndex - startIndex;
@@ -803,8 +840,8 @@ const findStringsDiffIndexes = (
   const oldTextLength = oldText.length;
   console.log('updateHTML - selectionEnd', selectionEnd);
   let changeStart = 0;
-  let newChangeEnd = 0;
-  let oldChangeEnd = 0;
+  let newChangeEnd = newTextLength;
+  let oldChangeEnd = oldTextLength;
   const length = Math.min(newTextLength, oldTextLength, selectionEnd);
 
   for (let i = 0; i < length; i++) {
@@ -847,7 +884,8 @@ const findStringsDiffIndexes = (
       for (let i = 1; i < oldTextLength && newTextLength - i > changeStart; i++) {
         newChangeEnd = newTextLength - i - 1;
         oldChangeEnd = oldTextLength - i - 1;
-
+        console.log('updateHTML newChangeEnd', newChangeEnd, newText[newChangeEnd]);
+        console.log('updateHTML oldText', oldChangeEnd, oldText[newChangeEnd]);
         if (newText[newChangeEnd] !== oldText[oldChangeEnd]) {
           // Change is found
           break;
