@@ -3,6 +3,7 @@
 
 import { mergeStyles } from '@fluentui/react';
 import { _pxToRem } from '@internal/acs-ui-common';
+import { scrollbarStyles } from './Common.style';
 
 /**
  * @private
@@ -44,7 +45,8 @@ export const captionContainerClassName = mergeStyles({
 export const captionsBannerClassName = mergeStyles({
   height: _pxToRem(100),
   overflowY: 'auto',
-  overflowX: 'hidden'
+  overflowX: 'hidden',
+  ...scrollbarStyles
 });
 
 /**
