@@ -947,14 +947,15 @@ type ReformedTag = {
   content?: string; // All content between the open and close tags
   closeTagIdx?: number; // Start of the close tag relative to the parent content
   subTags?: ReformedTag[]; // Any child tags
-  plainTextStartIndex?: number; // Position where the open tag should begin in plain text
-  plainTextEndIndex?: number; // Position where the close tag should end in plain text
+  plainTextBeginIndex?: number; // Absolute index of the open tag start should be in plain text
+  plainTextEndIndex?: number; // Absolute index of the close tag start should be in plain text
 };
 
+type HtmlTagType = 'open' | 'close' | 'self-closing';
 type HtmlTag = {
   content: string;
   startIdx: number;
-  type: 'open' | 'close' | 'self-closing';
+  type: HtmlTagType;
 };
 
 /**
@@ -984,9 +985,10 @@ const reformedTagParser = (text: string, trigger: string): [ReformedTag[], strin
     }
 
     if (foundHtmlTag.type === 'open') {
-      console.log('Found open tag: ' + foundHtmlTag.content);
-
       const nextOpenTag = parseOpenTag(foundHtmlTag.content, foundHtmlTag.startIdx);
+      // Add the plain text between the last tag and this one found
+      plainTextRepresentation += text.substring(parseIndex, foundHtmlTag.startIdx);
+      nextOpenTag.plainTextBeginIndex = plainTextRepresentation.length;
       tagParseStack.push(nextOpenTag);
     }
 
@@ -998,30 +1000,40 @@ const reformedTagParser = (text: string, trigger: string): [ReformedTag[], strin
       if (currentOpenTag && currentOpenTag.tagType === closeTagType) {
         console.log('closing tag: ' + currentOpenTag.tagType + '');
 
-        currentOpenTag.closeTagIdx = foundHtmlTag.startIdx;
+        // Tag startIdx is absolute to the text. This is updated later to be relative to the parent tag
         currentOpenTag.content = text.substring(
           currentOpenTag.openTagIdx + currentOpenTag.openTagBody.length,
-          currentOpenTag.closeTagIdx
+          foundHtmlTag.startIdx
         );
 
-        // TODO: add other parameters to the data structure
+        // The closeTagIdx can be relative from the start
+        currentOpenTag.closeTagIdx =
+          currentOpenTag.openTagIdx + currentOpenTag.openTagBody.length + currentOpenTag.content.length;
+
+        // Add the plain text pieces for the sub tags
         if (currentOpenTag.tagType === 'msft-mention') {
           plainTextRepresentation += trigger;
-          plainTextRepresentation += currentOpenTag.content;
         }
 
-        // Add as sub-tag to the parent stack tag, if there is one
-        const parentTag = tagParseStack[tagParseStack.length - 1];
-        if (parentTag) {
-          // TODO: Update the startIdx to be relative to the parent content
-          if (!parentTag.subTags) {
-            parentTag.subTags = [currentOpenTag];
-          } else {
-            parentTag.subTags.push(currentOpenTag);
-          }
+        if (!currentOpenTag.subTags) {
+          plainTextRepresentation += currentOpenTag.content;
         } else {
-          tags.push(currentOpenTag);
+          // Add text after the last tag
+          const lastSubTag = currentOpenTag.subTags[currentOpenTag.subTags.length - 1];
+          const trailingCharactersLength =
+            currentOpenTag.closeTagIdx! - lastSubTag.closeTagIdx! - lastSubTag.tagType.length - 3;
+
+          if (trailingCharactersLength > 0) {
+            const trailingText = currentOpenTag.content.substring(
+              currentOpenTag.content.length - trailingCharactersLength
+            );
+            console.log('trailingText', trailingText);
+            plainTextRepresentation += trailingText;
+          }
         }
+
+        currentOpenTag.plainTextEndIndex = plainTextRepresentation.length;
+        addTag(currentOpenTag, tagParseStack, tags);
       } else {
         console.error(
           'Unexpected close tag found. Got ' +
@@ -1034,7 +1046,15 @@ const reformedTagParser = (text: string, trigger: string): [ReformedTag[], strin
     }
 
     if (foundHtmlTag.type === 'self-closing') {
-      // TODO:
+      console.log('Found self-closing tag: ' + foundHtmlTag.content);
+
+      const selfClosingTag = parseOpenTag(foundHtmlTag.content, foundHtmlTag.startIdx);
+      selfClosingTag.closeTagIdx = foundHtmlTag.startIdx; // Set them to the same value
+      selfClosingTag.content = '';
+      selfClosingTag.plainTextBeginIndex = plainTextRepresentation.length;
+      selfClosingTag.plainTextEndIndex = plainTextRepresentation.length;
+
+      addTag(selfClosingTag, tagParseStack, tags);
     }
 
     // Update parsing index; move past the end of the close tag
@@ -1067,10 +1087,34 @@ const findNextHtmlTag = (text: string, startIndex: number): HtmlTag | undefined 
     return undefined;
   }
   const tag = text.substring(tagStartIndex, tagEndIndex + 1);
-
+  let type: HtmlTagType = 'open';
+  if (tag[1] === '/') {
+    type = 'close';
+  } else if (tag[tag.length - 2] === '/') {
+    type = 'self-closing';
+  }
   return {
     content: tag,
     startIdx: tagStartIndex,
-    type: tag[1] === '/' ? 'close' : 'open'
+    type
   };
+};
+
+const addTag = (tag: ReformedTag, parseStack: ReformedTag[], tags: ReformedTag[]): void => {
+  // Add as sub-tag to the parent stack tag, if there is one
+  const parentTag = parseStack[parseStack.length - 1];
+  if (parentTag) {
+    // Relative start is the parent start index + the size of the parent open tag
+    const parentContentStartIdx = parentTag.openTagIdx + parentTag.openTagBody.length;
+    const relativeIdx = tag.openTagIdx - parentContentStartIdx;
+    tag.openTagIdx = relativeIdx;
+
+    if (!parentTag.subTags) {
+      parentTag.subTags = [tag];
+    } else {
+      parentTag.subTags.push(tag);
+    }
+  } else {
+    tags.push(tag);
+  }
 };
