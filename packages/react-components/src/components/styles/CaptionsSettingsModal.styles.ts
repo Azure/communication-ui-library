@@ -3,6 +3,7 @@
 
 import { IButtonStyles, IDropdownStyles, IModalStyles, mergeStyles, Theme } from '@fluentui/react';
 import { _pxToRem } from '@internal/acs-ui-common';
+import { scrollbarApplyToAllStyles, scrollbarStyles } from './Common.style';
 
 /**
  * @private
@@ -90,5 +91,9 @@ export const buttonStyles = (theme: Theme): IButtonStyles => {
  * @private
  */
 export const dropdownStyles: Partial<IDropdownStyles> = {
-  callout: { height: _pxToRem(300), overflow: 'auto' }
+  callout: {
+    height: _pxToRem(300),
+    overflow: 'auto',
+    ...scrollbarStyles
+  }
 };
