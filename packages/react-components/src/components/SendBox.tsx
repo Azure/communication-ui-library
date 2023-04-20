@@ -22,8 +22,8 @@ import { _FileUploadCards } from './FileUploadCards';
 /* @conditional-compile-remove(file-sharing) */
 import { fileUploadCardsStyles } from './styles/SendBox.styles';
 import { SendBoxErrorBarError } from './SendBoxErrorBar';
-/* @conditional-compile-remove(at-mention) */
-import { AtMentionLookupOptions } from './AtMentionFlyout';
+/* @conditional-compile-remove(mention) */
+import { MentionLookupOptions } from './MentionFlyout';
 
 const EMPTY_MESSAGE_REGEX = /^\s*$/;
 const MAXIMUM_LENGTH_OF_MESSAGE = 8000;
@@ -141,12 +141,12 @@ export interface SendBoxProps {
    * Optional callback called when message is sent
    */
   onSendMessage?: (content: string) => Promise<void>;
-  /* @conditional-compile-remove(at-mention) */
+  /* @conditional-compile-remove(mention) */
   /**
-   * Optional props needed to lookup suggestions in the at mention scenario.
+   * Optional props needed to lookup suggestions in the mention scenario.
    * @beta
    */
-  atMentionLookupOptions?: AtMentionLookupOptions;
+  mentionLookupOptions?: MentionLookupOptions;
 
   /**
    * Optional callback called when user is typing
@@ -227,7 +227,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     onRenderSystemMessage,
     styles,
     autoFocus,
-    atMentionLookupOptions
+    mentionLookupOptions
   } = props;
   const theme = useTheme();
   const localeStrings = useLocale().strings.sendBox;
@@ -393,7 +393,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
           styles={mergedStyles}
           supportNewline={supportNewline}
           maxLength={MAXIMUM_LENGTH_OF_MESSAGE}
-          atMentionLookupOptions={atMentionLookupOptions}
+          mentionLookupOptions={mentionLookupOptions}
           onMentionAdd={(newTextValue) => {
             setText(newTextValue);
           }}

@@ -28,8 +28,8 @@ import {
 import { Caret } from 'textarea-caret-ts';
 import { isDarkThemed } from '../theming/themeUtils';
 import { useTheme } from '../theming';
-/* @conditional-compile-remove(at-mention) */
-import { AtMentionLookupOptions, _AtMentionFlyout, AtMentionSuggestion } from './AtMentionFlyout';
+/* @conditional-compile-remove(mention) */
+import { MentionLookupOptions, _MentionFlyout, MentionSuggestion } from './MentionFlyout';
 import { debounce } from 'lodash';
 
 const defaultMentionTrigger = '@';
@@ -68,9 +68,9 @@ type InputBoxComponentProps = {
   disabled?: boolean;
   styles?: InputBoxStylesProps;
   autoFocus?: 'sendBoxTextField';
-  /* @conditional-compile-remove(at-mention) */
-  atMentionLookupOptions?: AtMentionLookupOptions;
-  /* @conditional-compile-remove(at-mention) */
+  /* @conditional-compile-remove(mention) */
+  mentionLookupOptions?: MentionLookupOptions;
+  /* @conditional-compile-remove(mention) */
   onMentionAdd?: (newTextValue?: string) => void; // textValue should be updated in it
 };
 
@@ -93,13 +93,13 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     errorMessage,
     disabled,
     children,
-    atMentionLookupOptions,
+    mentionLookupOptions,
     onMentionAdd
   } = props;
   const inputBoxRef = useRef<HTMLDivElement>(null);
 
   // Current suggestion list, provided by the callback
-  const [mentionSuggestions, setMentionSuggestions] = useState<AtMentionSuggestion[]>([]);
+  const [mentionSuggestions, setMentionSuggestions] = useState<MentionSuggestion[]>([]);
 
   // Index of the current trigger character in the text field
   const [currentTagIndex, setCurrentTagIndex] = useState<number>(-1);
@@ -111,7 +111,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
 
   // Parse the text and get the plain text version to display in the input box
   useEffect(() => {
-    const trigger = atMentionLookupOptions?.trigger || defaultMentionTrigger;
+    const trigger = mentionLookupOptions?.trigger || defaultMentionTrigger;
     console.log('textValue', textValue);
     const [tags, plainText] = parseHTMLText(textValue, trigger);
     reformedTagParser(textValue, trigger);
@@ -119,7 +119,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     console.log('plainText', plainText);
     setInputTextValue(plainText);
     setTagsValue(tags);
-  }, [textValue, atMentionLookupOptions?.trigger]);
+  }, [textValue, mentionLookupOptions?.trigger]);
 
   const mergedRootStyle = mergeStyles(inputBoxWrapperStyle, styles?.root);
   const mergedTextFiledStyle = mergeStyles(
@@ -150,7 +150,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
   );
 
   const updateMentionSuggestions = useCallback(
-    (suggestions: AtMentionSuggestion[]) => {
+    (suggestions: MentionSuggestion[]) => {
       setMentionSuggestions(suggestions);
       //TODO: add focus to the correct position
       textFieldRef?.current?.focus();
@@ -159,7 +159,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
   );
 
   const onSuggestionSelected = useCallback(
-    (suggestion: AtMentionSuggestion) => {
+    (suggestion: MentionSuggestion) => {
       let selectionEnd = textFieldRef?.current?.selectionEnd || -1;
       if (selectionEnd < 0) {
         selectionEnd = 0;
@@ -172,7 +172,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       // update plain text with the mention html text
       const newPlainText =
         inputTextValue.substring(0, currentTagIndex) + mention + inputTextValue.substring(selectionEnd);
-      const triggerText = atMentionLookupOptions?.trigger ?? defaultMentionTrigger;
+      const triggerText = mentionLookupOptions?.trigger ?? defaultMentionTrigger;
       // update html text with updated plain text
       const updatedHTML = updateHTML(
         textValue,
@@ -193,7 +193,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       textFieldRef,
       inputTextValue,
       currentTagIndex,
-      atMentionLookupOptions?.trigger,
+      mentionLookupOptions?.trigger,
       textValue,
       tagsValue,
       onMentionAdd,
@@ -203,7 +203,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
 
   const debouncedQueryUpdate = useRef(
     debounce(async (query: string) => {
-      const suggestions = (await atMentionLookupOptions?.onQueryUpdated(query)) ?? [];
+      const suggestions = (await mentionLookupOptions?.onQueryUpdated(query)) ?? [];
       updateMentionSuggestions(suggestions);
     }, 500)
   ).current;
@@ -222,7 +222,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     if (newValue === undefined) {
       newValue = '';
     }
-    const triggerText = atMentionLookupOptions?.trigger ?? defaultMentionTrigger;
+    const triggerText = mentionLookupOptions?.trigger ?? defaultMentionTrigger;
 
     const newTextLength = newValue.length;
     let selectionEnd = textFieldRef?.current?.selectionEnd || -1;
@@ -232,7 +232,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       selectionEnd = newTextLength - 1;
     }
     // If we are enabled for lookups,
-    if (atMentionLookupOptions !== undefined) {
+    if (mentionLookupOptions !== undefined) {
       // Look at the range of the change for a trigger character
       const triggerPriorIndex = newValue?.lastIndexOf(triggerText, selectionEnd - 1);
       // Update the caret position, if not doing a lookup
@@ -303,7 +303,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     <Stack className={mergedRootStyle}>
       <div className={mergedTextContainerStyle}>
         {mentionSuggestions.length > 0 && (
-          <_AtMentionFlyout
+          <_MentionFlyout
             suggestions={mentionSuggestions}
             target={inputBoxRef}
             targetPositionOffset={caretPosition}
@@ -432,7 +432,7 @@ type UpdatedParsedTag = {
 
 /**
  * Go through the text and parse out the tags and plain text
- * This should be only <msft-at-mention> tags for now...
+ * This should be only <msft-mention> tags for now...
  * We do need to process all other HTML tags to text though.
  *
  * @private
@@ -460,8 +460,8 @@ const parseHTMLText = (text: string, trigger: string): [UpdatedParsedTag[], stri
     plainText += text.substring(htmlParseIndex, openTagIndex);
     const plainTextStartIndex = plainText.length; // - 1 is not used because text.substring doesn't include openTagIndex
 
-    if (tagType === 'msft-at-mention') {
-      isHtml = true; // Only support <msft-at-mention> tags for now
+    if (tagType === 'msft-mention') {
+      isHtml = true; // Only support <msft-mention> tags for now
       plainText += trigger;
     }
 
@@ -657,16 +657,16 @@ const updateHTML = (
       const endChangeDiff = oldPlainTextEndIndex - tag.plainTextStartIndex;
       if (tag.subTags === undefined || tag.subTags.length === 0) {
         // no subtags
-        if (tag.tagType === 'msft-at-mention') {
+        if (tag.tagType === 'msft-mention') {
           // startChangeDiff and endChangeDiff includes trigger length that shouldn't be included in htmlText.substring
-          console.log('updateHTML msft-at-mention');
+          console.log('updateHTML msft-mention');
           console.log('updateHTML tag.type', tag.tagType);
           console.log('updateHTML tag.htmlOpenTagStartIndex', tag.htmlOpenTagStartIndex);
           console.log('updateHTML tag.openTagLength', tag.openTagLength);
           console.log('updateHTML startChangeDiff', startChangeDiff);
           console.log('updateHTML mentionTrigger.length', mentionTrigger.length);
           console.log('updateHTML startChangeDiff', endChangeDiff);
-          console.log('updateHTML msft-at-mention end');
+          console.log('updateHTML msft-mention end');
           result =
             htmlText.substring(
               0,
@@ -748,7 +748,7 @@ const updateHTML = (
 };
 /**
  * Go through the text and parse out the tags
- * This should be only <msft-at-mention> tags for now...
+ * This should be only <msft-mention> tags for now...
  * We do need to process all other HTML tags to text though.
  *
  * @private
@@ -818,7 +818,7 @@ const plainTextFromParsedTags = (textBlock: string, tags: ParsedTag[], trigger: 
     const tag = tags[tagIndex];
     // Add all the text from the last tag close to this one open
     text += textBlock.substring(previousTagEndIndex, tag.htmlOpenTagStartIndex);
-    if (tag.tagType === 'msft-at-mention') {
+    if (tag.tagType === 'msft-mention') {
       text += trigger;
     }
 
@@ -932,18 +932,16 @@ const findStringsDiffIndexes = (
   return { changeStart, oldChangeEnd, newChangeEnd };
 };
 
-const htmlStringForMentionSuggestion = (suggestion: AtMentionSuggestion): string => {
+const htmlStringForMentionSuggestion = (suggestion: MentionSuggestion): string => {
   const userIdHTML = ' userId ="' + suggestion.userId + '"';
   const displayName = suggestion.displayName || '';
   const displayNameHTML = ' displayName ="' + displayName + '"';
   const suggestionTypeHTML = ' suggestionType ="' + suggestion.suggestionType + '"';
-  return (
-    '<msft-at-mention' + userIdHTML + displayNameHTML + suggestionTypeHTML + '>' + displayName + '</msft-at-mention>'
-  );
+  return '<msft-mention' + userIdHTML + displayNameHTML + suggestionTypeHTML + '>' + displayName + '</msft-mention>';
 };
 
 type ReformedTag = {
-  tagType: string; // The type of tag (e.g. msft-at-mention)
+  tagType: string; // The type of tag (e.g. msft-mention)
   openTagIdx: number; // Start of the tag relative to the parent content
   openTagBody: string; // Complete open tag body
   content?: string; // All content between the open and close tags
@@ -994,7 +992,7 @@ const reformedTagParser = (text: string, trigger: string): [ReformedTag[], strin
 
     if (foundHtmlTag.type === 'close') {
       console.log('Found close tag: ' + foundHtmlTag.content);
-      let currentOpenTag = tagParseStack.pop();
+      const currentOpenTag = tagParseStack.pop();
       const closeTagType = foundHtmlTag.content.substring(2, foundHtmlTag.content.length - 1).toLowerCase();
 
       if (currentOpenTag && currentOpenTag.tagType === closeTagType) {
@@ -1007,7 +1005,7 @@ const reformedTagParser = (text: string, trigger: string): [ReformedTag[], strin
         );
 
         // TODO: add other parameters to the data structure
-        if (currentOpenTag.tagType === 'msft-at-mention') {
+        if (currentOpenTag.tagType === 'msft-mention') {
           plainTextRepresentation += trigger;
           plainTextRepresentation += currentOpenTag.content;
         }

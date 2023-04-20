@@ -5,7 +5,7 @@ import { IStackStyles, mergeStyles, Theme } from '@fluentui/react';
 
 /**
  * @private
- * z-index to ensure that chat container has lower z-index than at mention flyout
+ * z-index to ensure that chat container has lower z-index than mention flyout
  */
 export const CHAT_CONTAINER_ZINDEX = 1;
 
@@ -17,7 +17,7 @@ export const mentionFlyoutContainerStyle = (theme: Theme): string =>
     boxShadow: theme.effects.elevation16,
     background: theme.semanticColors.bodyBackground,
     overflow: 'visible',
-    // zIndex to set the atMentionFlyout above the chat container
+    // zIndex to set the mentionFlyout above the chat container
     zIndex: CHAT_CONTAINER_ZINDEX + 1
   });
 /**

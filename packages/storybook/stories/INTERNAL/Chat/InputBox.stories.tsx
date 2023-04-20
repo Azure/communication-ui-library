@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 import { ITextField, Stack, mergeStyles } from '@fluentui/react';
-import { AtMentionSuggestion, FluentThemeProvider, MessageThread, useTheme } from '@internal/react-components';
+import { MentionSuggestion, FluentThemeProvider, MessageThread, useTheme } from '@internal/react-components';
 import { Title, Description, Props, Heading, Canvas } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React, { useState } from 'react';
@@ -29,13 +29,13 @@ const getDocs: () => JSX.Element = () => {
 
 const InputBoxStory = (): JSX.Element => {
   const exampleHtmlMessage =
-    "<p>Hi<p>Paragraph</p><msft-at-mention userId='2' suggestionType='person'>Patricia Adams</msft-at-mention> <span>and <it><em>and</em></it> </span> and you <msft-at-mention userId='3' suggestionType='person'>Person 1</msft-at-mention>!</p>";
-  // "Hi <msft-at-mention userId='2' suggestionType='person'>Patricia Adams</msft-at-mention>!";
+    "<p>Hi<p>Paragraph</p><msft-mention userId='2' suggestionType='person'>Patricia Adams</msft-mention> <span>and <it><em>and</em></it> </span> and you <msft-mention userId='3' suggestionType='person'>Person 1</msft-mention>!</p>";
+  // "Hi <msft-mention userId='2' suggestionType='person'>Patricia Adams</msft-mention>!";
   const sendTextFieldRef = React.useRef<ITextField>(null);
   const theme = useTheme();
   const [textValue, setTextValue] = useState<string>(exampleHtmlMessage);
   const trigger = '@';
-  const suggestions: AtMentionSuggestion[] = [
+  const suggestions: MentionSuggestion[] = [
     {
       userId: '1',
       suggestionType: 'person',
@@ -79,7 +79,7 @@ const InputBoxStory = (): JSX.Element => {
             onChange={(event, newValue) => {
               setTextValue(newValue ?? '');
             }}
-            atMentionLookupOptions={{
+            mentionLookupOptions={{
               trigger,
               onQueryUpdated: async (query: string) => {
                 const filtered = suggestions.filter((suggestion) => {

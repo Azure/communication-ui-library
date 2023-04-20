@@ -51,10 +51,10 @@ export interface _Identifiers {
   /* @conditional-compile-remove(vertical-gallery) */
   /** `data-ui-id` value for `VerticalGallery` Component's page counter */
   verticalGalleryPageCounter: string;
-  /** `data-ui-id` value for `AtMentionFlyout` Component's suggestion list */
-  atMentionSuggestionList: string;
-  /** `data-ui-id` value for `AtMentionFlyout` Component's suggestion list item */
-  atMentionSuggestionItem: string;
+  /** `data-ui-id` value for `MentionFlyout` Component's suggestion list */
+  mentionSuggestionList: string;
+  /** `data-ui-id` value for `MentionFlyout` Component's suggestion list item */
+  mentionSuggestionItem: string;
 }
 
 const defaultIdentifiers: _Identifiers = {
@@ -76,8 +76,8 @@ const defaultIdentifiers: _Identifiers = {
   horizontalGalleryVideoTile: 'horizontal-gallery-video-tile',
   /* @conditional-compile-remove(vertical-gallery) */
   verticalGalleryPageCounter: 'vertical-gallery-page-counter',
-  atMentionSuggestionList: 'at-mention-suggestion-list',
-  atMentionSuggestionItem: 'at-mention-suggestion-item'
+  mentionSuggestionList: 'mention-suggestion-list',
+  mentionSuggestionItem: 'mention-suggestion-item'
 };
 
 /**

@@ -9,23 +9,23 @@ import {
   suggestionListContainerStyle,
   suggestionItemStackStyle,
   suggestionItemWrapperStyle
-} from './styles/AtMentionFlyout.style';
-/* @conditional-compile-remove(at-mention) */
+} from './styles/MentionFlyout.style';
+/* @conditional-compile-remove(mention) */
 import { useIdentifiers } from '../identifiers';
 import { useLocale } from '../localization';
 
 /**
- * Props for {@link _AtMentionFlyout}.
+ * Props for {@link _MentionFlyout}.
  *
  * @internal
  */
-export interface _AtMentionFlyoutProps {
+export interface _MentionFlyoutProps {
   /**
-   * Array of at mention suggestions used to populate the suggestion list
+   * Array of mention suggestions used to populate the suggestion list
    */
-  suggestions: AtMentionSuggestion[];
+  suggestions: MentionSuggestion[];
   /**
-   * Optional string used as at mention flyout's title.
+   * Optional string used as mention flyout's title.
    * @defaultValue `Suggestions`
    */
   title?: string;
@@ -45,26 +45,26 @@ export interface _AtMentionFlyoutProps {
   /**
    * Callback called when a mention suggestion is selected.
    */
-  onSuggestionSelected: (suggestion: AtMentionSuggestion) => void;
+  onSuggestionSelected: (suggestion: MentionSuggestion) => void;
   /**
    * Callback to invoke when the flyout is dismissed
    */
   onDismiss?: () => void;
   /**
-   * Optional callback to render an item of the atMention suggestions list.
+   * Optional callback to render an item of the mention suggestions list.
    */
   onRenderSuggestionItem?: (
-    suggestion: AtMentionSuggestion,
-    onSuggestionSelected?: (suggestion: AtMentionSuggestion) => void
+    suggestion: MentionSuggestion,
+    onSuggestionSelected?: (suggestion: MentionSuggestion) => void
   ) => JSX.Element;
 }
 
 /**
- * Options to lookup suggestions in the at mention scenario.
+ * Options to lookup suggestions in the mention scenario.
  *
  * @beta
  */
-export interface AtMentionLookupOptions {
+export interface MentionLookupOptions {
   /**
    * Optional string to set trigger keyword for mention a specific participant.
    *
@@ -72,38 +72,38 @@ export interface AtMentionLookupOptions {
    */
   trigger?: string;
   /**
-   * Optional callback to fetch a list of at mention suggestions base on the query.
+   * Optional callback to fetch a list of mention suggestions base on the query.
    */
-  onQueryUpdated: (query: string) => Promise<AtMentionSuggestion[]>;
+  onQueryUpdated: (query: string) => Promise<MentionSuggestion[]>;
   /**
-   * Optional callback to render an item of the atMention suggestions list.
+   * Optional callback to render an item of the mention suggestions list.
    */
   onRenderSuggestionItem?: (
-    suggestion: AtMentionSuggestion,
-    onSuggestionSelected: (suggestion: AtMentionSuggestion) => void
+    suggestion: MentionSuggestion,
+    onSuggestionSelected: (suggestion: MentionSuggestion) => void
   ) => JSX.Element;
 }
 
 /**
- * Options to display suggestions in the at mention scenario.
+ * Options to display suggestions in the mention scenario.
  *
  * @beta
  */
-export interface AtMentionDisplayOptions {
+export interface MentionDisplayOptions {
   /**
    * Optional callback to override render of a mention in a message thread.
    */
-  onRenderAtMentionSuggestion?: (suggestion: AtMentionSuggestion) => JSX.Element;
+  onRenderMentionSuggestion?: (suggestion: MentionSuggestion) => JSX.Element;
 }
 
 /**
- * Options to lookup suggestions and display mentions in the at mention scenario.
+ * Options to lookup suggestions and display mentions in the mention scenario.
  *
  * @beta
  */
 export type MentionOptions = {
-  lookupOptions?: AtMentionLookupOptions;
-  displayOptions?: AtMentionDisplayOptions;
+  lookupOptions?: MentionLookupOptions;
+  displayOptions?: MentionDisplayOptions;
 };
 
 /**
@@ -111,10 +111,10 @@ export type MentionOptions = {
  *
  * @beta
  */
-export interface AtMentionSuggestion {
+export interface MentionSuggestion {
   /** User ID of a mentioned participant or 'everyone' for an @everyone suggestion */
   userId: string;
-  /** Type of an at mention suggestion */
+  /** Type of an mention suggestion */
   suggestionType: string;
   /** Display name of a mentioned participant */
   displayName: string;
@@ -125,7 +125,7 @@ export interface AtMentionSuggestion {
  *
  * @internal
  */
-export const _AtMentionFlyout = (props: _AtMentionFlyoutProps): JSX.Element => {
+export const _MentionFlyout = (props: _MentionFlyoutProps): JSX.Element => {
   interface Position {
     left?: number;
     right?: number;
@@ -151,7 +151,7 @@ export const _AtMentionFlyout = (props: _AtMentionFlyoutProps): JSX.Element => {
   const flyoutRef = useRef() as React.MutableRefObject<HTMLDivElement>;
 
   const [position, setPosition] = useState<Position>({ left: 0 });
-  const [hoveredSuggestion, setHoveredSuggestion] = useState<AtMentionSuggestion | undefined>(undefined);
+  const [hoveredSuggestion, setHoveredSuggestion] = useState<MentionSuggestion | undefined>(undefined);
 
   const dismissFlyoutWhenClickingOutside = useCallback(
     (e: MouseEvent) => {
@@ -220,15 +220,15 @@ export const _AtMentionFlyout = (props: _AtMentionFlyoutProps): JSX.Element => {
   };
 
   const defaultOnRenderSuggestionItem = (
-    suggestion: AtMentionSuggestion,
-    onSuggestionSelected: (suggestion: AtMentionSuggestion) => void
+    suggestion: MentionSuggestion,
+    onSuggestionSelected: (suggestion: MentionSuggestion) => void
   ): JSX.Element => {
     const isSuggestionHovered = hoveredSuggestion?.userId === suggestion.userId;
 
     return (
       <div
         data-is-focusable={true}
-        data-ui-id={ids.atMentionSuggestionItem}
+        data-ui-id={ids.mentionSuggestionItem}
         key={suggestion.userId}
         onClick={() => onSuggestionSelected(suggestion)}
         onMouseEnter={() => setHoveredSuggestion(suggestion)}
@@ -265,8 +265,8 @@ export const _AtMentionFlyout = (props: _AtMentionFlyoutProps): JSX.Element => {
         </Stack.Item>
         <FocusZone className={suggestionListContainerStyle}>
           <Stack
-            /* @conditional-compile-remove(at-mention) */
-            data-ui-id={ids.atMentionSuggestionList}
+            /* @conditional-compile-remove(mention) */
+            data-ui-id={ids.mentionSuggestionList}
             className={suggestionListStyle}
           >
             {suggestions.map((suggestion) =>

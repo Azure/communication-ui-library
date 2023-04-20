@@ -7,15 +7,15 @@ import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 import { DetailedBetaBanner } from '../BetaBanners/DetailedBetaBanner';
 
+import { SingleLineBetaBanner } from '../BetaBanners/SingleLineBetaBanner';
 import { COMPONENT_FOLDER_PREFIX } from '../constants';
 import { controlsToAdd, hiddenControl } from '../controlsUtils';
 import { CustomIconExample } from './snippets/CustomIcon.snippet';
 import { CustomStylingExample } from './snippets/CustomStyling.snippet';
 import { FileUploadsExample } from './snippets/FileUploads.snippet';
+import { MentionsExample } from './snippets/Mentions.snippet';
 import { SendBoxExample } from './snippets/SendBox.snippet';
 import { SendBoxWithSystemMessageExample } from './snippets/SendBoxWithSystemMessage.snippet';
-import { SingleLineBetaBanner } from '../BetaBanners/SingleLineBetaBanner';
-import { MentionsExample } from './snippets/Mentions.snippet';
 
 const CustomIconExampleText = require('!!raw-loader!./snippets/CustomIcon.snippet.tsx').default;
 const CustomStylingExampleText = require('!!raw-loader!./snippets/CustomStyling.snippet.tsx').default;
@@ -84,7 +84,7 @@ const getDocs: () => JSX.Element = () => {
       <SingleLineBetaBanner />
       <Description>
         The SendBox component supports mentioning users in the chat. To enable this feature, set the
-        `atMentionLookupOptions` property to an object and implement the required functionality.
+        `mentionLookupOptions` property to an object and implement the required functionality.
       </Description>
 
       <Canvas mdxSource={MentionsExampleText}>

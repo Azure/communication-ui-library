@@ -16,7 +16,7 @@ export const MessageWithCustomMentionRenderer: () => JSX.Element = () => {
             senderId: user1Id,
             senderDisplayName: 'Kat Larsson',
             messageId: Math.random().toString(),
-            content: `Hey <msft-at-mention userId="${user2Id}" displayName="Robert Tolbert">Robert Tolbert</msft-at-mention>, can you help me with my internet connection?`,
+            content: `Hey <msft-mention userId="${user2Id}" displayName="Robert Tolbert">Robert Tolbert</msft-mention>, can you help me with my internet connection?`,
             createdOn: new Date('2019-04-13T00:00:00.000+08:10'),
             mine: false,
             attached: false,
@@ -35,9 +35,9 @@ export const MessageWithCustomMentionRenderer: () => JSX.Element = () => {
             contentType: 'text'
           }
         ]}
-        atMentionOptions={{
+        mentionOptions={{
           displayOptions: {
-            onRenderAtMentionSuggestion: (mention) => {
+            onRenderMentionSuggestion: (mention) => {
               return <button>{mention.displayName}</button>;
             }
           },

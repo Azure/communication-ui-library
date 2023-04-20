@@ -43,11 +43,11 @@ import { MessageThreadWithCustomMessageStatusIndicatorExample } from './snippets
 import { MessageThreadWithCustomTimestampExample } from './snippets/CustomTimestamp.snippet';
 import { DefaultMessageThreadExample } from './snippets/Default.snippet';
 import { MessageThreadWithMessageStatusIndicatorExample } from './snippets/MessageStatusIndicator.snippet';
+import { MessageWithCustomMentionRenderer } from './snippets/MessageWithCustomMentionRenderer.snippet';
 import { MessageWithFile } from './snippets/MessageWithFile.snippet';
 import { MessageThreadWithSystemMessagesExample } from './snippets/SystemMessages.snippet';
 import { MessageThreadWithInlineImageExample } from './snippets/WithInlineImageMessage.snippet';
 import { MessageThreadWithMessageDateExample } from './snippets/WithMessageDate.snippet';
-import { MessageWithCustomMentionRenderer } from './snippets/MessageWithCustomMentionRenderer.snippet';
 
 const MessageThreadWithBlockedMessagesExampleText =
   require('!!raw-loader!./snippets/BlockedMessages.snippet.tsx').default;
@@ -82,9 +82,9 @@ import { FluentThemeProvider, MessageThread } from '@azure/communication-react';
 `;
 
 const mentionTag = `
-<msft-at-mention userId="<id>" displayName="<display name>">
+<msft-mention userId="<id>" displayName="<display name>">
   Displayable Content
-</msft-at-mention>
+</msft-mention>
 `;
 const getDocs: () => JSX.Element = () => {
   return (
