@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "Added details on how uploaded images are not supported",
+  "packageName": "@azure/communication-react",
+  "email": "109105353+jpeng-ms@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
