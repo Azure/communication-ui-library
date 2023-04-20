@@ -3,7 +3,7 @@
 
 import { IButtonStyles, IDropdownStyles, IModalStyles, mergeStyles, Theme } from '@fluentui/react';
 import { _pxToRem } from '@internal/acs-ui-common';
-import { scrollbarApplyToAllStyles, scrollbarStyles } from './Common.style';
+import { scrollbarStyles } from './Common.style';
 
 /**
  * @private
