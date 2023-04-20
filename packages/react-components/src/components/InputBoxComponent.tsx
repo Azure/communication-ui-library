@@ -207,6 +207,13 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     ]
   );
 
+  const debouncedQueryUpdate = useRef(
+    debounce(async (query: string) => {
+      const suggestions = (await atMentionLookupOptions?.onQueryUpdated(query)) ?? [];
+      updateMentionSuggestions(suggestions);
+    }, 500)
+  ).current;
+
   const handleOnChange = async (
     event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>,
     updatedValue?: string | undefined
@@ -258,8 +265,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
           if (tagIndex > -1) {
             const query = wordAtSelection.substring(triggerText.length, wordAtSelection.length);
             if (query !== undefined) {
-              const suggestions = (await atMentionLookupOptions?.onQueryUpdated(query)) ?? [];
-              updateMentionSuggestions(suggestions);
+              debouncedQueryUpdate(query);
             }
           }
         }
