@@ -70,7 +70,7 @@ type InputBoxComponentProps = {
   /* @conditional-compile-remove(at-mention) */
   atMentionLookupOptions?: AtMentionLookupOptions;
   /* @conditional-compile-remove(at-mention) */
-  onMentionAdd?: (newTextValue?: string) => void;
+  onMentionAdd?: (newTextValue?: string) => void; // textValue should be updated in it
 };
 
 /**
@@ -115,10 +115,6 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     const [tags, plainText] = parseHTMLText(textValue, trigger);
     console.log('tags', tags);
     console.log('plainText', plainText);
-    // Get a plain text version to display in the input box, resetting state
-    // const tags = parseToTags(textValue);
-    // const plainText = plainTextFromParsedTags(textValue, tags, trigger);
-    // Provide the plain text string to the inputTextValue
     setInputTextValue(plainText);
     setTagsValue(tags);
   }, [textValue, atMentionLookupOptions?.trigger]);
@@ -186,14 +182,10 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
         mention,
         triggerText
       );
-
-      const [tags, plainText] = parseHTMLText(updatedHTML, triggerText);
       // This change moves focus to the end of the input field when plainText != the text that in the input field
-      setInputTextValue(plainText);
-      setTagsValue(tags);
-      onMentionAdd && onMentionAdd(updatedHTML);
       updateMentionSuggestions([]);
       setCurrentTagIndex(-1);
+      onMentionAdd && onMentionAdd(updatedHTML);
     },
     [
       textFieldRef,
@@ -271,82 +263,32 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
         }
       }
     }
-    //TODO: check if there are tags, otherwise just change text value without calculations
-    const oldTextLength = inputTextValue.length;
-    // find indexes -> find strings diff -> check where the diff is -> change -> move all tags
-
-    let changeStart = 0;
-    let newChangeEnd = 0;
-    let oldChangeEnd = 0;
-    const length = Math.min(newTextLength, oldTextLength);
-
-    for (let i = 0; i < length; i++) {
-      if (newValue[i] !== inputTextValue[i]) {
-        // the symbol with changeStart index is updated
-        changeStart = i;
-        break;
-      } else if (i === length - 1 && newValue[i] === inputTextValue[i]) {
-        // the symbol is added at the end of inputTextValue
-        changeStart = length;
-        break;
-      }
-    }
-    if (oldTextLength < newTextLength) {
-      //insert or replacement
-      if (oldTextLength === changeStart) {
-        // when change was at the end of string
-        newChangeEnd = newTextLength - 1;
-        oldChangeEnd = oldTextLength;
-      }
-      for (let i = 1; i < newTextLength && oldTextLength - i > changeStart; i++) {
-        newChangeEnd = newTextLength - i - 1;
-        oldChangeEnd = oldTextLength - i - 1;
-
-        if (newValue[newChangeEnd] !== inputTextValue[oldChangeEnd]) {
-          // Change is found
-          break;
-        }
-      }
-    } else if (oldTextLength > newTextLength) {
-      //deletion or replacement
-      if (newTextLength === changeStart) {
-        // when change was at the end of string
-        newChangeEnd = newTextLength;
-        oldChangeEnd = oldTextLength - 1;
-      }
-      for (let i = 1; i < oldTextLength && newTextLength - i > changeStart; i++) {
-        newChangeEnd = newTextLength - i - 1;
-        oldChangeEnd = oldTextLength - i - 1;
-
-        if (newValue[newChangeEnd] !== inputTextValue[oldChangeEnd]) {
-          // Change is found
-          break;
-        }
-      }
+    let result = '';
+    if (tagsValue.length === 0) {
+      // no tags in the string, textValue is a sting
+      result = newValue;
     } else {
-      //replacement
-      for (let i = 1; i < oldTextLength && oldTextLength - i > changeStart; i++) {
-        newChangeEnd = newTextLength - i - 1;
-        oldChangeEnd = oldTextLength - i - 1;
-
-        if (newValue[newChangeEnd] !== inputTextValue[oldChangeEnd]) {
-          // Change is found
-          break;
-        }
-      }
+      // there are tags in the text value, textValue is html string
+      const { changeStart, oldChangeEnd, newChangeEnd } = findStringsDiffIndexes(
+        inputTextValue,
+        newValue,
+        selectionEnd
+      );
+      // get updated html string
+      result = updateHTML(
+        textValue,
+        inputTextValue,
+        newValue,
+        tagsValue,
+        changeStart,
+        oldChangeEnd,
+        newValue.substring(changeStart, newChangeEnd),
+        triggerText
+      );
+      console.log('!!! updatedHTML', result);
     }
-    const updatedHTML = updateHTML(
-      textValue,
-      inputTextValue,
-      newValue,
-      tagsValue,
-      changeStart,
-      oldChangeEnd,
-      newValue.substring(changeStart, newChangeEnd),
-      triggerText
-    );
-    console.log('updatedHTML', updatedHTML);
-    onChange && onChange(event, updatedHTML);
+
+    onChange && onChange(event, result);
   };
 
   return (
@@ -490,24 +432,26 @@ type UpdatedParsedTag = {
 const parseHTMLText = (text: string, trigger: string): [UpdatedParsedTag[], string] => {
   const tags: UpdatedParsedTag[] = [];
   let htmlParseIndex = 0;
-  let plaintText = '';
+  let plainText = '';
 
   while (htmlParseIndex < text.length) {
-    const openTagIndex = text.indexOf('<', htmlParseIndex);
+    const openTagIndex = text.indexOf('<', htmlParseIndex); // Find next open tag, if it is a tag...
     if (openTagIndex === -1) {
-      //no open tags found, `text` is a plain text
-      plaintText += text.substring(htmlParseIndex);
+      // No more open tags found, add the rest of the text as plain text
+      plainText += text.substring(htmlParseIndex);
       break;
     }
-    // Add all the text from the last tag close to this one open
-    plaintText += text.substring(htmlParseIndex, openTagIndex);
-    const plainTextStartIndex = plaintText.length; // - 1 is not used because text.substring doesn't include openTagIndex
 
+    // Add all the text from the last tag close to this one open
+    plainText += text.substring(htmlParseIndex, openTagIndex);
+    const plainTextStartIndex = plainText.length; // - 1 is not used because text.substring doesn't include openTagIndex
+
+    // Parse the open tag
     const openTagCloseIndex = text.indexOf('>', openTagIndex);
     const openTag = text.substring(openTagIndex + 1, openTagCloseIndex);
     const tagType = openTag.split(' ')[0];
     if (tagType === 'msft-at-mention') {
-      plaintText += trigger;
+      plainText += trigger;
     }
 
     if (openTag[openTag.length - 1] === '/') {
@@ -523,38 +467,87 @@ const parseHTMLText = (text: string, trigger: string): [UpdatedParsedTag[], stri
       });
       htmlParseIndex = openTagIndex + tagLength - 1;
     } else {
-      // Go find the close tag
-      const tagToFind = '</' + tagType + '>';
-      //TODO: add check how many same open tags are before tagToFind as we can get wrong close tag
-      const closeTagIndex = text.indexOf(tagToFind, openTagCloseIndex);
-      if (closeTagIndex === -1) {
+      // Find the corresponding close tag
+      const closeTagToFind = '</' + tagType + '>';
+      console.log('looking for close tag:', closeTagToFind);
+
+      // TODO: move while loop here, include the current tag
+      const nextOpenTagIndex = text.indexOf('<', openTagCloseIndex);
+      let nextCloseTagIndex = text.indexOf(closeTagToFind, openTagCloseIndex);
+
+      if (nextCloseTagIndex === -1) {
         console.error('Could not find close tag for ' + openTag);
+        // TODO: handle invalid HTML better
         break;
       } else {
+        if (nextOpenTagIndex < nextCloseTagIndex) {
+          // Grab the inner open tag content
+          let innerOpenTagCloseIndex = text.indexOf('>', nextOpenTagIndex);
+          let innerOpenTag = text.substring(nextOpenTagIndex + 1, innerOpenTagCloseIndex);
+          let innerTagType = innerOpenTag.split(' ')[0];
+          let tagStack = [innerTagType];
+          console.log('found nested tag', innerTagType);
+
+          // We have nested tags, so process the inner tags first
+          let innerTagOpenIndex = innerOpenTagCloseIndex; // Start at the end of the open tag
+          while (tagStack.length > 0) {
+            console.log('LOOP: tagStack:', tagStack);
+            const closeTagToFind = '</' + tagStack[tagStack.length - 1] + '>';
+            console.log('looking for close tag:', closeTagToFind);
+
+            const nextInnerCloseTagIndex = text.indexOf(closeTagToFind, innerTagOpenIndex + 1);
+            const nextInnerOpenTagIndex = text.indexOf('<', innerTagOpenIndex + 1);
+            console.log('nextInnerCloseTagIndex:', nextInnerCloseTagIndex);
+            console.log('nextInnerOpenTagIndex:', nextInnerOpenTagIndex);
+
+            // Grab the next open tag content
+            innerOpenTagCloseIndex = text.indexOf('>', nextInnerOpenTagIndex);
+            innerOpenTag = text.substring(nextInnerOpenTagIndex + 1, innerOpenTagCloseIndex);
+            innerTagType = innerOpenTag.split(' ')[0];
+
+            if (nextInnerOpenTagIndex < nextInnerCloseTagIndex) {
+              console.log('found another layer of nested tags:', innerOpenTag);
+              // Another level of nesting
+              tagStack.push(innerTagType);
+              innerTagOpenIndex = nextInnerOpenTagIndex + innerOpenTag.length;
+            } else {
+              console.log('found close tag for', tagStack[tagStack.length - 1]);
+              // Corresponding close tag for top of the stack found
+              tagStack.pop();
+              innerTagOpenIndex = nextInnerCloseTagIndex + 1;
+            }
+            nextCloseTagIndex = nextInnerCloseTagIndex;
+          }
+          console.log('OUT OF LOOP');
+
+          // Find the corresponding close tag
+          nextCloseTagIndex = text.indexOf(closeTagToFind, nextCloseTagIndex + tagType.length);
+        }
         // try to find sub tags and plain text value from them
-        const closeTagLength = tagToFind.length;
-        const content = text.substring(openTagIndex + openTag.length + 2, closeTagIndex);
+        const closeTagLength = closeTagToFind.length;
+        const content = text.substring(openTagIndex + openTag.length + 2, nextCloseTagIndex);
+        console.log('Tag contents:', content);
 
         const [subTags, contentPlainText] = parseHTMLText(content, trigger);
-        plaintText += contentPlainText;
+        plainText += contentPlainText;
         tags.push({
           tagType: tagType.toLowerCase(),
           openTagBody: openTag,
           openTagLength: openTag.length + 2, // +2 for '<' and '>'
           htmlOpenTagStartIndex: openTagIndex,
-          htmlCloseTagStartIndex: closeTagIndex,
+          htmlCloseTagStartIndex: nextCloseTagIndex,
           closeTagLength,
           content,
           subTags,
           plainTextStartIndex,
-          plainTextEndIndex: plaintText.length // - 1 is not used because we should use the next index after the content value
+          plainTextEndIndex: plainText.length // - 1 is not used because we should use the next index after the content value
         });
-        htmlParseIndex = closeTagIndex + closeTagLength;
+        htmlParseIndex = nextCloseTagIndex + closeTagLength;
       }
     }
   }
 
-  return [tags, plaintText];
+  return [tags, plainText];
 };
 
 /**
@@ -572,20 +565,63 @@ const updateHTML = (
   change: string,
   mentionTrigger: string
 ): string => {
-  console.log('tags', tags);
-  console.log('htmlText updateHTML', htmlText);
+  console.log('updateHTML tags', tags);
+  console.log('updateHTML htmlText', htmlText);
+  console.log('updateHTML change "', change, '"');
+  console.log('updateHTML oldPlainText', oldPlainText);
+  console.log('updateHTML newPlainText', newPlainText);
+  console.log('updateHTML startIndex', startIndex);
+  console.log('updateHTML oldPlainTextEndIndex', oldPlainTextEndIndex);
   let result = htmlText;
   if (tags.length === 0) {
     // no tags added yet
     return newPlainText;
   }
-  // TODO: when change removes the tag (consume) fully
+  if (startIndex === 0 && oldPlainTextEndIndex === oldPlainText.length - 1) {
+    // the whole text is changed
+    return newPlainText;
+  }
   // TODO: when change removes the tag partially
-  // TODO: to check when on the edge of the tags in plain text
-  // TODO: when mention has another mention inside
+  // TODO: when change removes a couple of tags partially
   for (let i = 0; i < tags.length; i++) {
     const tag = tags[i];
-    if (startIndex < tag.plainTextStartIndex && oldPlainTextEndIndex < tag.plainTextStartIndex) {
+    console.log('updateHTML tag.type', tag.tagType);
+    console.log('updateHTML tag.plainTextStartIndex', tag.plainTextStartIndex);
+    console.log('updateHTML tag.plainTextEndIndex', tag.plainTextEndIndex);
+    if (
+      startIndex === tag.plainTextStartIndex &&
+      ((tag.plainTextEndIndex !== undefined &&
+        tag.closeTagLength !== undefined &&
+        tag.htmlCloseTagStartIndex !== undefined &&
+        tag.content !== undefined &&
+        tag.plainTextEndIndex === oldPlainTextEndIndex) ||
+        (tag.plainTextEndIndex === undefined &&
+          tag.closeTagLength === undefined &&
+          tag.htmlCloseTagStartIndex === undefined &&
+          tag.content === undefined &&
+          tag.plainTextStartIndex === oldPlainTextEndIndex))
+    ) {
+      // the tag is fully deleted
+      console.log('updateHTML the tag is fully deleted');
+      // before the tag content
+      const stringBefore = htmlText.substring(0, tag.htmlOpenTagStartIndex);
+      // after the tag content
+      const stringAfter = htmlText.substring(
+        tag.htmlCloseTagStartIndex + tag.closeTagLength || tag.htmlOpenTagStartIndex + tag.openTagLength
+      );
+      result = stringBefore + change + stringAfter;
+      break;
+      // } else if (
+      //   startIndex < tag.plainTextStartIndex &&
+      //   tag.plainTextEndIndex !== undefined &&
+      //   tag.closeTagLength !== undefined &&
+      //   tag.htmlCloseTagStartIndex !== undefined &&
+      //   tag.content !== undefined &&
+      //   tag.plainTextEndIndex > oldPlainTextEndIndex
+      // ) {
+      // const beforeTagStr;
+      //change is partially before and partially in the tag
+    } else if (startIndex < tag.plainTextStartIndex && oldPlainTextEndIndex < tag.plainTextStartIndex) {
       //before the open tag
       //find a diff between the open tag and change position
       const startChangeDiff = tag.plainTextStartIndex - startIndex;
@@ -610,6 +646,14 @@ const updateHTML = (
         // no subtags
         if (tag.tagType === 'msft-at-mention') {
           // startChangeDiff and endChangeDiff includes trigger length that shouldn't be included in htmlText.substring
+          console.log('updateHTML msft-at-mention');
+          console.log('updateHTML tag.type', tag.tagType);
+          console.log('updateHTML tag.htmlOpenTagStartIndex', tag.htmlOpenTagStartIndex);
+          console.log('updateHTML tag.openTagLength', tag.openTagLength);
+          console.log('updateHTML startChangeDiff', startChangeDiff);
+          console.log('updateHTML mentionTrigger.length', mentionTrigger.length);
+          console.log('updateHTML startChangeDiff', endChangeDiff);
+          console.log('updateHTML msft-at-mention end');
           result =
             htmlText.substring(
               0,
@@ -686,6 +730,7 @@ const updateHTML = (
     }
   }
 
+  console.log('updateHTML result "', result, '"');
   return result;
 };
 /**
@@ -788,91 +833,90 @@ const plainTextFromParsedTags = (textBlock: string, tags: ParsedTag[], trigger: 
 };
 
 /**
- * Go through the text and find the mention index
+ * Given the oldText and newText, find the start index, old end index and new end index for the changes
  *
  * @private
  */
-const htmlMentionIndex = (
-  htmlTextBlock: string,
-  tags: ParsedTag[],
-  trigger: string,
-  plainStringIndex: number,
-  query: string, // includes trigger
-  plainTextBlock?: string
-): number => {
-  console.log('htmlTextBlock', htmlTextBlock);
-  console.log('plainStringIndex', plainStringIndex);
-  if (tags.length === 0) {
-    // no tags were added yet
-    return plainStringIndex;
-  } else if (plainTextBlock !== undefined && plainStringIndex + query.length === plainTextBlock.length) {
-    // tags will be added at the end of the current text
-    return htmlTextBlock.length - 1;
-  } else {
-    // tag will be added in the middle of the text
+const findStringsDiffIndexes = (
+  oldText: string,
+  newText: string,
+  selectionEnd: number // should be a valid position in the input field
+): { changeStart: number; oldChangeEnd: number; newChangeEnd: number } => {
+  const newTextLength = newText.length;
+  const oldTextLength = oldText.length;
+  console.log('updateHTML - selectionEnd', selectionEnd);
+  let changeStart = 0;
+  let newChangeEnd = newTextLength;
+  let oldChangeEnd = oldTextLength;
+  const length = Math.min(newTextLength, oldTextLength, selectionEnd);
 
-    let text = '';
-    let tagIndex = 0;
-    let previousTagEndIndex = 0;
-    let htmlIndex = 0;
+  for (let i = 0; i < length; i++) {
+    if (newText[i] !== oldText[i]) {
+      // the symbol with changeStart index is updated
+      changeStart = i;
+      break;
+    } else if (i === length - 1 && newText[i] === oldText[i]) {
+      // the symbol is added at the end of inputTextValue
+      changeStart = length;
+      break;
+    }
+  }
+  if (oldTextLength < newTextLength) {
+    //insert or replacement
+    if (oldTextLength === changeStart) {
+      // when change was at the end of string
+      // Change is found
+      newChangeEnd = newTextLength;
+      oldChangeEnd = oldTextLength;
+    } else {
+      for (let i = 1; i < newTextLength && oldTextLength - i > changeStart; i++) {
+        newChangeEnd = newTextLength - i - 1;
+        oldChangeEnd = oldTextLength - i - 1;
 
-    while (tagIndex < tags.length && htmlIndex < htmlTextBlock.length) {
-      const tag = tags[tagIndex];
-      // Add all the text from the last tag close to this one open
-      const textBetweenTags = htmlTextBlock.substring(previousTagEndIndex, tag.htmlOpenTagStartIndex);
-      text += textBetweenTags;
-      if (plainStringIndex <= textBetweenTags.length) {
-        //TODO: check!
-        htmlIndex += textBetweenTags.length + plainStringIndex;
-        return htmlIndex;
-      }
-      if (tag.tagType === 'msft-at-mention') {
-        text += trigger;
-        htmlIndex += trigger.length;
-      }
-
-      // If there are sub tags, go through them and add their text
-      if (!!tag.subTags && tag.subTags.length > 0) {
-        htmlIndex += htmlMentionIndex(
-          tag.content ?? '',
-          tag.subTags ?? [],
-          trigger,
-          plainStringIndex - text.length,
-          query
-        );
-        text += plainTextFromParsedTags(tag.content ?? '', tag.subTags, trigger);
-      } else if (tag.content !== undefined) {
-        // Otherwise just add the content
-        text += tag.content;
-        if (plainStringIndex < tag.content.length) {
-          //TODO: check!
-          htmlIndex += plainStringIndex;
-          return htmlIndex;
-        } else {
-          htmlIndex += tag.content.length;
+        if (newText[newChangeEnd] !== oldText[oldChangeEnd]) {
+          // Change is found
+          break;
         }
       }
-      // Move the indices
-      if (!!tag.htmlCloseTagStartIndex && tag.closeTagLength) {
-        previousTagEndIndex = tag.htmlCloseTagStartIndex + tag.closeTagLength;
-      } else {
-        // Self-closing tag
-        previousTagEndIndex = tag.htmlOpenTagStartIndex + tag.openTagBody.length + 3; // 3 for the < > and /
-      }
-      tagIndex++;
     }
-    // Add the text after the last tag
-    if (previousTagEndIndex < htmlTextBlock.length) {
-      if (plainStringIndex > previousTagEndIndex) {
-        htmlIndex += htmlTextBlock.length - previousTagEndIndex + plainStringIndex;
+  } else if (oldTextLength > newTextLength) {
+    //deletion or replacement
+    if (newTextLength === changeStart) {
+      // when change was at the end of string
+      // Change is found
+      newChangeEnd = newTextLength;
+      oldChangeEnd = oldTextLength;
+    } else {
+      for (let i = 1; i < oldTextLength && newTextLength - i > changeStart; i++) {
+        newChangeEnd = newTextLength - i - 1;
+        oldChangeEnd = oldTextLength - i - 1;
+        console.log('updateHTML newChangeEnd', newChangeEnd, newText[newChangeEnd]);
+        console.log('updateHTML oldText', oldChangeEnd, oldText[newChangeEnd]);
+        if (newText[newChangeEnd] !== oldText[oldChangeEnd]) {
+          // Change is found
+          break;
+        }
       }
-      text += htmlTextBlock.substring(previousTagEndIndex);
     }
-    console.log('text', text);
-    console.log('htmlTextBlock', htmlTextBlock);
-    console.log('htmlIndex', htmlIndex);
-    return htmlIndex;
+  } else {
+    //replacement
+    for (let i = 1; i < oldTextLength && oldTextLength - i > changeStart; i++) {
+      newChangeEnd = newTextLength - i - 1;
+      oldChangeEnd = oldTextLength - i - 1;
+
+      if (newText[newChangeEnd] !== oldText[oldChangeEnd]) {
+        // Change is found
+        break;
+      }
+    }
   }
+  console.log('updateHTML - oldText', oldText);
+  console.log('updateHTML - newText', newText);
+
+  console.log('updateHTML - changeStart', changeStart);
+  console.log('updateHTML - oldChangeEnd', oldChangeEnd);
+  console.log('updateHTML - newChangeEnd', newChangeEnd);
+  return { changeStart, oldChangeEnd, newChangeEnd };
 };
 
 const htmlStringForMentionSuggestion = (suggestion: AtMentionSuggestion): string => {

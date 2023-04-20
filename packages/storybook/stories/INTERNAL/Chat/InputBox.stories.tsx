@@ -29,7 +29,7 @@ const getDocs: () => JSX.Element = () => {
 
 const InputBoxStory = (): JSX.Element => {
   const exampleHtmlMessage =
-    "<p>Hi <msft-at-mention userId='2' suggestionType='person'>Patricia Adams</msft-at-mention> <span>and and </span> and you <msft-at-mention userId='3' suggestionType='person'>Person 1</msft-at-mention>!</p>";
+    "<p>Hi<p>Paragraph</p><msft-at-mention userId='2' suggestionType='person'>Patricia Adams</msft-at-mention> <span>and <it><em>and</em></it> </span> and you <msft-at-mention userId='3' suggestionType='person'>Person 1</msft-at-mention>!</p>";
   // "Hi <msft-at-mention userId='2' suggestionType='person'>Patricia Adams</msft-at-mention>!";
   const sendTextFieldRef = React.useRef<ITextField>(null);
   const theme = useTheme();
@@ -88,8 +88,9 @@ const InputBoxStory = (): JSX.Element => {
                 return Promise.resolve(filtered);
               }
             }}
-            onMentionAdd={(suggestion) => {
-              console.log(suggestion);
+            onMentionAdd={(newTextValue) => {
+              const newValue = newTextValue ?? '';
+              setTextValue(newValue);
             }}
             maxLength={0}
           />
