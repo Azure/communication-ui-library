@@ -206,6 +206,12 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     }, 500)
   ).current;
 
+  React.useEffect(() => {
+    return () => {
+      debouncedQueryUpdate.cancel();
+    };
+  }, [debouncedQueryUpdate]);
+
   const handleOnChange = async (
     event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>,
     updatedValue?: string | undefined
@@ -485,7 +491,7 @@ const parseHTMLText = (text: string, trigger: string): [UpdatedParsedTag[], stri
           let innerOpenTagCloseIndex = text.indexOf('>', nextOpenTagIndex);
           let innerOpenTag = text.substring(nextOpenTagIndex + 1, innerOpenTagCloseIndex);
           let innerTagType = innerOpenTag.split(' ')[0];
-          let tagStack = [innerTagType];
+          const tagStack = [innerTagType];
           console.log('found nested tag', innerTagType);
 
           // We have nested tags, so process the inner tags first
