@@ -1065,11 +1065,13 @@ const reformedTagParser = (text: string, trigger: string): [ReformedTag[], strin
 };
 
 const parseOpenTag = (tag: string, startIdx: number): ReformedTag => {
+  let tagType = tag
+    .substring(1, tag.length - 1)
+    .split(' ')[0]
+    .toLowerCase()
+    .replace('/', '');
   return {
-    tagType: tag
-      .substring(1, tag.length - 1)
-      .split(' ')[0]
-      .toLowerCase(),
+    tagType,
     openTagIdx: startIdx,
     openTagBody: tag
   };
