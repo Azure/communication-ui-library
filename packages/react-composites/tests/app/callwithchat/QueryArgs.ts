@@ -58,10 +58,19 @@ export function parseQueryArgs(): QueryArgs {
     userId: params.userId ?? '',
 
     fakeChatAdapterArgs: params.fakeChatAdapterArgs ? JSON.parse(params.fakeChatAdapterArgs) : undefined,
-    mockCallAdapterState: params.mockCallAdapterState ? JSON.parse(params.mockCallAdapterState) : undefined,
+    mockCallAdapterState: params.mockCallAdapterState
+      ? JSON.parse(params.mockCallAdapterState, jsonDateConverter)
+      : undefined,
 
     customCompositeOptions: params.customCompositeOptions ? JSON.parse(params.customCompositeOptions) : undefined,
     injectCustomButtons: params.injectCustomButtons === 'true',
     rtl: Boolean(params.rtl)
   };
 }
+
+const jsonDateConverter = (key: unknown, value: unknown): unknown => {
+  if (key === 'timestamp' && typeof value === 'number') {
+    return new Date(value);
+  }
+  return value;
+};
