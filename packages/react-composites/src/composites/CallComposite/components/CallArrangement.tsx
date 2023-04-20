@@ -38,8 +38,6 @@ import {
   galleryParentContainerStyles,
   bannerNotificationStyles
 } from '../styles/CallPage.styles';
-/* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
-import { CommonCallControlOptions } from '../../common/types/CommonCallControlOptions';
 import { MutedNotification, MutedNotificationProps } from './MutedNotification';
 import { CallAdapter } from '../adapter';
 import { useSelector } from '../hooks/useSelector';
@@ -329,10 +327,6 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                 </Stack>
               </Stack.Item>
             </Stack.Item>
-            {
-              /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
-              // <SidePaneContent />
-            }
             <NewSidePane mobileView={props.mobileView} />
             {props.mobileView && (
               <ModalLocalAndRemotePIP

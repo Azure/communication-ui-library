@@ -4,8 +4,6 @@ import React from 'react';
 /* @conditional-compile-remove(video-background-effects) */
 import { useCallback, useMemo } from 'react';
 /* @conditional-compile-remove(video-background-effects) */
-// import { Panel } from '@fluentui/react';
-/* @conditional-compile-remove(video-background-effects) */
 import { useLocale } from '../localization';
 import { _VideoEffectsItemProps } from '@internal/react-components';
 /* @conditional-compile-remove(video-background-effects) */
@@ -23,7 +21,7 @@ import { activeVideoBackgroundEffectSelector } from '../CallComposite/selectors/
 import { useSelector } from '../CallComposite/hooks/useSelector';
 /* @conditional-compile-remove(video-background-effects) */
 import { useAdapter } from '../CallComposite/adapter/CallAdapterProvider';
-import { Stack, Text } from '@fluentui/react';
+import { Stack } from '@fluentui/react';
 
 /**
  * Pane that is used to show video effects button

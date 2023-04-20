@@ -326,20 +326,7 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
             </Stack>
           </Stack>
         </Stack>
-        {/* <Stack
-          verticalFill
-          horizontalAlign="center"
-          styles={{
-            root: {
-              position: 'absolute',
-              right: 0,
-              top: 0,
-              width: '21.5rem'
-            }
-          }}
-        > */}
         <NewSidePane mobileView={props.mobileView} />
-        {/* </Stack> */}
       </Stack>
     </Stack>
   );

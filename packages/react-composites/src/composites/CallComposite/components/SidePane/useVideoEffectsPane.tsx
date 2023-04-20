@@ -24,7 +24,7 @@ export const useVideoEffectsPane = (
     return (
       <SidePaneHeader
         onClose={closePane}
-        headingText={locale.strings.call.effects ?? 'Video Effects'} // TODO: localize
+        headingText={locale.strings.call.effects ?? 'Effects'}
         dismissSidePaneButtonAriaLabel={
           locale.strings.call.dismissSidePaneButtonLabel ??
           locale.strings.callWithChat.dismissSidePaneButtonLabel ??
