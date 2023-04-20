@@ -388,6 +388,7 @@ export interface _CaptionsBannerProps {
 
 // @internal
 export type _CaptionsInfo = {
+    timestamp: Date;
     displayName: string;
     captionText: string;
     userId?: string;

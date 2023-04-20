@@ -110,7 +110,7 @@ export const captionsFeatureState = {
     },
     {
       resultType: 'Final' as const,
-      timestamp: new Date(10000),
+      timestamp: new Date(20000),
       speaker: {
         displayName: 'Participant 3',
         identifier: { communicationUserId: 'communicationId3', kind: 'communicationUser' as const }
