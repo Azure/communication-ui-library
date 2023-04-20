@@ -114,6 +114,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     const trigger = atMentionLookupOptions?.trigger || defaultMentionTrigger;
     console.log('textValue', textValue);
     const [tags, plainText] = parseHTMLText(textValue, trigger);
+    reformedTagParser(textValue, trigger);
     console.log('tags', tags);
     console.log('plainText', plainText);
     setInputTextValue(plainText);
@@ -436,10 +437,11 @@ type UpdatedParsedTag = {
  *
  * @private
  */
-const parseHTMLText = (text: string, trigger: string): [UpdatedParsedTag[], string] => {
+const parseHTMLText = (text: string, trigger: string): [UpdatedParsedTag[], string, boolean] => {
   const tags: UpdatedParsedTag[] = [];
   let htmlParseIndex = 0;
   let plainText = '';
+  let isHtml = false;
 
   while (htmlParseIndex < text.length) {
     const openTagIndex = text.indexOf('<', htmlParseIndex); // Find next open tag, if it is a tag...
@@ -449,15 +451,17 @@ const parseHTMLText = (text: string, trigger: string): [UpdatedParsedTag[], stri
       break;
     }
 
-    // Add all the text from the last tag close to this one open
-    plainText += text.substring(htmlParseIndex, openTagIndex);
-    const plainTextStartIndex = plainText.length; // - 1 is not used because text.substring doesn't include openTagIndex
-
     // Parse the open tag
     const openTagCloseIndex = text.indexOf('>', openTagIndex);
     const openTag = text.substring(openTagIndex + 1, openTagCloseIndex);
     const tagType = openTag.split(' ')[0];
+
+    // Add all the text from the last tag close to this one open
+    plainText += text.substring(htmlParseIndex, openTagIndex);
+    const plainTextStartIndex = plainText.length; // - 1 is not used because text.substring doesn't include openTagIndex
+
     if (tagType === 'msft-at-mention') {
+      isHtml = true; // Only support <msft-at-mention> tags for now
       plainText += trigger;
     }
 
@@ -478,13 +482,14 @@ const parseHTMLText = (text: string, trigger: string): [UpdatedParsedTag[], stri
       const closeTagToFind = '</' + tagType + '>';
       console.log('looking for close tag:', closeTagToFind);
 
-      // TODO: move while loop here, include the current tag
+      // TODO: move while loop here, include the current tag?
       const nextOpenTagIndex = text.indexOf('<', openTagCloseIndex);
       let nextCloseTagIndex = text.indexOf(closeTagToFind, openTagCloseIndex);
 
       if (nextCloseTagIndex === -1) {
         console.error('Could not find close tag for ' + openTag);
         // TODO: handle invalid HTML better
+        isHtml = false;
         break;
       } else {
         if (nextOpenTagIndex < nextCloseTagIndex) {
@@ -496,14 +501,15 @@ const parseHTMLText = (text: string, trigger: string): [UpdatedParsedTag[], stri
           console.log('found nested tag', innerTagType);
 
           // We have nested tags, so process the inner tags first
-          let innerTagOpenIndex = innerOpenTagCloseIndex; // Start at the end of the open tag
+          let searchStartIndex = innerOpenTagCloseIndex; // Start at the end of the open tag
           while (tagStack.length > 0) {
             console.log('LOOP: tagStack:', tagStack);
+            console.log('LOOP: searchStartIndex:', searchStartIndex);
             const closeTagToFind = '</' + tagStack[tagStack.length - 1] + '>';
             console.log('looking for close tag:', closeTagToFind);
 
-            const nextInnerCloseTagIndex = text.indexOf(closeTagToFind, innerTagOpenIndex + 1);
-            const nextInnerOpenTagIndex = text.indexOf('<', innerTagOpenIndex + 1);
+            const nextInnerCloseTagIndex = text.indexOf(closeTagToFind, searchStartIndex + 1);
+            const nextInnerOpenTagIndex = text.indexOf('<', searchStartIndex + 1);
             console.log('nextInnerCloseTagIndex:', nextInnerCloseTagIndex);
             console.log('nextInnerOpenTagIndex:', nextInnerOpenTagIndex);
 
@@ -516,12 +522,12 @@ const parseHTMLText = (text: string, trigger: string): [UpdatedParsedTag[], stri
               console.log('found another layer of nested tags:', innerOpenTag);
               // Another level of nesting
               tagStack.push(innerTagType);
-              innerTagOpenIndex = nextInnerOpenTagIndex + innerOpenTag.length;
+              searchStartIndex = nextInnerOpenTagIndex + innerOpenTag.length;
             } else {
               console.log('found close tag for', tagStack[tagStack.length - 1]);
               // Corresponding close tag for top of the stack found
               tagStack.pop();
-              innerTagOpenIndex = nextInnerCloseTagIndex + 1;
+              searchStartIndex = nextInnerCloseTagIndex + 1;
             }
             nextCloseTagIndex = nextInnerCloseTagIndex;
           }
@@ -554,7 +560,7 @@ const parseHTMLText = (text: string, trigger: string): [UpdatedParsedTag[], stri
     }
   }
 
-  return [tags, plainText];
+  return [tags, plainText, isHtml];
 };
 
 /**
@@ -934,4 +940,139 @@ const htmlStringForMentionSuggestion = (suggestion: AtMentionSuggestion): string
   return (
     '<msft-at-mention' + userIdHTML + displayNameHTML + suggestionTypeHTML + '>' + displayName + '</msft-at-mention>'
   );
+};
+
+type ReformedTag = {
+  tagType: string; // The type of tag (e.g. msft-at-mention)
+  openTagIdx: number; // Start of the tag relative to the parent content
+  openTagBody: string; // Complete open tag body
+  content?: string; // All content between the open and close tags
+  closeTagIdx?: number; // Start of the close tag relative to the parent content
+  subTags?: ReformedTag[]; // Any child tags
+  plainTextStartIndex?: number; // Position where the open tag should begin in plain text
+  plainTextEndIndex?: number; // Position where the close tag should end in plain text
+};
+
+type HtmlTag = {
+  content: string;
+  startIdx: number;
+  type: 'open' | 'close' | 'self-closing';
+};
+
+/**
+ * Parse the text and return the tags and the plain text in one go
+ * @param text
+ * @param trigger
+ * @returns
+ */
+const reformedTagParser = (text: string, trigger: string): [ReformedTag[], string] => {
+  const tags: ReformedTag[] = [];
+  const tagParseStack: ReformedTag[] = [];
+  let plainTextRepresentation = '';
+  let parseIndex = 0;
+
+  while (parseIndex < text.length) {
+    console.log('Parsing at index ' + parseIndex + ' of ' + text.length);
+    const foundHtmlTag = findNextHtmlTag(text, parseIndex);
+
+    if (!foundHtmlTag) {
+      if (parseIndex !== 0) {
+        // Add the remaining text to the plain text representation
+        plainTextRepresentation += text.substring(parseIndex);
+      } else {
+        plainTextRepresentation = text;
+      }
+      break;
+    }
+
+    if (foundHtmlTag.type === 'open') {
+      console.log('Found open tag: ' + foundHtmlTag.content);
+
+      const nextOpenTag = parseOpenTag(foundHtmlTag.content, foundHtmlTag.startIdx);
+      tagParseStack.push(nextOpenTag);
+    }
+
+    if (foundHtmlTag.type === 'close') {
+      console.log('Found close tag: ' + foundHtmlTag.content);
+      let currentOpenTag = tagParseStack.pop();
+      const closeTagType = foundHtmlTag.content.substring(2, foundHtmlTag.content.length - 1).toLowerCase();
+
+      if (currentOpenTag && currentOpenTag.tagType === closeTagType) {
+        console.log('closing tag: ' + currentOpenTag.tagType + '');
+
+        currentOpenTag.closeTagIdx = foundHtmlTag.startIdx;
+        currentOpenTag.content = text.substring(
+          currentOpenTag.openTagIdx + currentOpenTag.openTagBody.length,
+          currentOpenTag.closeTagIdx
+        );
+
+        // TODO: add other parameters to the data structure
+        if (currentOpenTag.tagType === 'msft-at-mention') {
+          plainTextRepresentation += trigger;
+          plainTextRepresentation += currentOpenTag.content;
+        }
+
+        // Add as sub-tag to the parent stack tag, if there is one
+        const parentTag = tagParseStack[tagParseStack.length - 1];
+        if (parentTag) {
+          // TODO: Update the startIdx to be relative to the parent content
+          if (!parentTag.subTags) {
+            parentTag.subTags = [currentOpenTag];
+          } else {
+            parentTag.subTags.push(currentOpenTag);
+          }
+        } else {
+          tags.push(currentOpenTag);
+        }
+      } else {
+        console.error(
+          'Unexpected close tag found. Got ' +
+            closeTagType +
+            ' but expected ' +
+            tagParseStack[tagParseStack.length - 1]?.tagType +
+            ''
+        );
+      }
+    }
+
+    if (foundHtmlTag.type === 'self-closing') {
+      // TODO:
+    }
+
+    // Update parsing index; move past the end of the close tag
+    parseIndex = foundHtmlTag.startIdx + foundHtmlTag.content.length;
+  } // While parseIndex < text.length loop
+
+  return [tags, plainTextRepresentation];
+};
+
+const parseOpenTag = (tag: string, startIdx: number): ReformedTag => {
+  return {
+    tagType: tag
+      .substring(1, tag.length - 1)
+      .split(' ')[0]
+      .toLowerCase(),
+    openTagIdx: startIdx,
+    openTagBody: tag
+  };
+};
+
+const findNextHtmlTag = (text: string, startIndex: number): HtmlTag | undefined => {
+  const tagStartIndex = text.indexOf('<', startIndex);
+  if (tagStartIndex === -1) {
+    // No more tags
+    return undefined;
+  }
+  const tagEndIndex = text.indexOf('>', tagStartIndex);
+  if (tagEndIndex === -1) {
+    // No close tag
+    return undefined;
+  }
+  const tag = text.substring(tagStartIndex, tagEndIndex + 1);
+
+  return {
+    content: tag,
+    startIdx: tagStartIndex,
+    type: tag[1] === '/' ? 'close' : 'open'
+  };
 };
