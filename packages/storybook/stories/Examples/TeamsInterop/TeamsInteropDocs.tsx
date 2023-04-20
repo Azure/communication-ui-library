@@ -35,7 +35,7 @@ export const getDocs: () => JSX.Element = () => {
       <Description>
         Inline images are images that are copied and pasted directly into the send box of Teams client. For images that
         were uploaded via "Upload from this device" menu or via drag-and-drop (such as dragging images directly to the
-        send box) in the Teams, they are not supported at this moment. To copy an image, the Teams user can either use
+        send box) in Teams, they are not supported at this time. To copy an image, the Teams user can either use
         their operating system's context menu to copy the image file then paste it into the send box of their Teams
         client, or use keyboard shortcuts instead.
       </Description>
