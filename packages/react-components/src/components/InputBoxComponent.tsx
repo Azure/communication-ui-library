@@ -30,6 +30,7 @@ import { isDarkThemed } from '../theming/themeUtils';
 import { useTheme } from '../theming';
 /* @conditional-compile-remove(at-mention) */
 import { AtMentionLookupOptions, _AtMentionFlyout, AtMentionSuggestion } from './AtMentionFlyout';
+import { debounce } from 'lodash';
 
 const defaultMentionTrigger = '@';
 /**
