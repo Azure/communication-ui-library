@@ -997,6 +997,7 @@ export interface ErrorBarStrings {
     dismissButtonAriaLabel?: string;
     failedToJoinCallGeneric?: string;
     failedToJoinCallInvalidMeetingLink?: string;
+    invalidbackgroundImageUrl?: string;
     muteGeneric: string;
     sendMessageGeneric: string;
     sendMessageNotInChatThread: string;
@@ -1006,6 +1007,7 @@ export interface ErrorBarStrings {
     stopScreenShareGeneric: string;
     stopVideoGeneric: string;
     unableToReachChatService: string;
+    unableToStartVideoEffect?: string;
     unmuteGeneric: string;
     userNotInChatThread: string;
 }
