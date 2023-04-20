@@ -74,11 +74,16 @@ export const _AtMentionFlyout: (props: _AtMentionFlyoutProps) => JSX.Element;
 
 // @internal
 export interface _AtMentionFlyoutProps {
+    location?: 'above' | 'below';
     onDismiss?: () => void;
     onRenderSuggestionItem?: (suggestion: AtMentionSuggestion, onSuggestionSelected?: (suggestion: AtMentionSuggestion) => void) => JSX.Element;
     onSuggestionSelected: (suggestion: AtMentionSuggestion) => void;
     suggestions: AtMentionSuggestion[];
-    target?: React_2.RefObject<Element>;
+    target: React_2.RefObject<Element>;
+    targetPositionOffset?: {
+        top: number;
+        left: number;
+    };
     title?: string;
 }
 
@@ -88,9 +93,6 @@ export interface AtMentionLookupOptions {
     onRenderSuggestionItem?: (suggestion: AtMentionSuggestion, onSuggestionSelected: (suggestion: AtMentionSuggestion) => void) => JSX.Element;
     trigger?: string;
 }
-
-// @beta
-export type AtMentionOptions = AtMentionLookupOptions & AtMentionDisplayOptions;
 
 // @beta
 export interface AtMentionSuggestion {
@@ -1110,6 +1112,12 @@ export const _LocalVideoTile: React_2.MemoExoticComponent<(props: {
     personaMinSize?: number | undefined;
 }) => JSX.Element>;
 
+// @beta
+export type MentionOptions = {
+    lookupOptions?: AtMentionLookupOptions;
+    displayOptions?: AtMentionDisplayOptions;
+};
+
 // @public
 export type Message = ChatMessage | SystemMessage | CustomMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage;
 
@@ -1201,7 +1209,7 @@ export type MessageThreadProps = {
     strings?: Partial<MessageThreadStrings>;
     fileDownloadHandler?: FileDownloadHandler;
     onDisplayDateTimeString?: (messageDate: Date) => string;
-    atMentionOptions?: AtMentionOptions;
+    atMentionOptions?: MentionOptions;
 };
 
 // @public
