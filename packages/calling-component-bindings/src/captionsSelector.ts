@@ -103,6 +103,7 @@ export const _captionsBannerSelector: _CaptionsBannerSelector = reselect.createS
   (captions, isCaptionsFeatureActive) => {
     const captionsInfo = captions?.map((c) => {
       return {
+        timestamp: c.timestamp,
         displayName: c.speaker.displayName ?? 'Unnamed Participant',
         captionText: c.captionText ?? '',
         userId: c.speaker.identifier ? toFlatCommunicationIdentifier(c.speaker.identifier) : ''
