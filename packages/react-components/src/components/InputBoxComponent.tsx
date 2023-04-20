@@ -263,7 +263,11 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       result = newValue;
     } else {
       // there are tags in the text value, textValue is html string
-      const { changeStart, oldChangeEnd, newChangeEnd } = findStringsDiffIndexes(inputTextValue, newValue);
+      const { changeStart, oldChangeEnd, newChangeEnd } = findStringsDiffIndexes(
+        inputTextValue,
+        newValue,
+        selectionEnd
+      );
       // get updated html string
       result = updateHTML(
         textValue,
@@ -555,8 +559,13 @@ const updateHTML = (
   change: string,
   mentionTrigger: string
 ): string => {
-  console.log('tags', tags);
-  console.log('htmlText updateHTML', htmlText);
+  console.log('updateHTML tags', tags);
+  console.log('updateHTML htmlText', htmlText);
+  console.log('updateHTML change "', change, '"');
+  console.log('updateHTML oldPlainText', oldPlainText);
+  console.log('updateHTML newPlainText', newPlainText);
+  console.log('updateHTML startIndex', startIndex);
+  console.log('updateHTML oldPlainTextEndIndex', oldPlainTextEndIndex);
   let result = htmlText;
   if (tags.length === 0) {
     // no tags added yet
@@ -566,6 +575,9 @@ const updateHTML = (
   // TODO: when change removes the tag partially
   for (let i = 0; i < tags.length; i++) {
     const tag = tags[i];
+    console.log('updateHTML tag.type', tag.tagType);
+    console.log('updateHTML tag.plainTextStartIndex', tag.plainTextStartIndex);
+    console.log('updateHTML tag.plainTextEndIndex', tag.plainTextEndIndex);
     if (startIndex < tag.plainTextStartIndex && oldPlainTextEndIndex < tag.plainTextStartIndex) {
       //before the open tag
       //find a diff between the open tag and change position
@@ -591,6 +603,14 @@ const updateHTML = (
         // no subtags
         if (tag.tagType === 'msft-at-mention') {
           // startChangeDiff and endChangeDiff includes trigger length that shouldn't be included in htmlText.substring
+          console.log('updateHTML msft-at-mention');
+          console.log('updateHTML tag.type', tag.tagType);
+          console.log('updateHTML tag.htmlOpenTagStartIndex', tag.htmlOpenTagStartIndex);
+          console.log('updateHTML tag.openTagLength', tag.openTagLength);
+          console.log('updateHTML startChangeDiff', startChangeDiff);
+          console.log('updateHTML mentionTrigger.length', mentionTrigger.length);
+          console.log('updateHTML startChangeDiff', endChangeDiff);
+          console.log('updateHTML msft-at-mention end');
           result =
             htmlText.substring(
               0,
@@ -667,6 +687,7 @@ const updateHTML = (
     }
   }
 
+  console.log('updateHTML result "', result, '"');
   return result;
 };
 /**
@@ -775,15 +796,16 @@ const plainTextFromParsedTags = (textBlock: string, tags: ParsedTag[], trigger: 
  */
 const findStringsDiffIndexes = (
   oldText: string,
-  newText: string
+  newText: string,
+  selectionEnd: number // should be a valid position in the input field
 ): { changeStart: number; oldChangeEnd: number; newChangeEnd: number } => {
   const newTextLength = newText.length;
   const oldTextLength = oldText.length;
-
+  console.log('updateHTML - selectionEnd', selectionEnd);
   let changeStart = 0;
   let newChangeEnd = 0;
   let oldChangeEnd = 0;
-  const length = Math.min(newTextLength, oldTextLength);
+  const length = Math.min(newTextLength, oldTextLength, selectionEnd);
 
   for (let i = 0; i < length; i++) {
     if (newText[i] !== oldText[i]) {
@@ -844,6 +866,12 @@ const findStringsDiffIndexes = (
       }
     }
   }
+  console.log('updateHTML - oldText', oldText);
+  console.log('updateHTML - newText', newText);
+
+  console.log('updateHTML - changeStart', changeStart);
+  console.log('updateHTML - oldChangeEnd', oldChangeEnd);
+  console.log('updateHTML - newChangeEnd', newChangeEnd);
   return { changeStart, oldChangeEnd, newChangeEnd };
 };
 
