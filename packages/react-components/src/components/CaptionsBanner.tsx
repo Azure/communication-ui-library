@@ -84,7 +84,11 @@ export const _CaptionsBanner = (props: _CaptionsBannerProps): JSX.Element => {
             <Stack verticalAlign="start" className={captionsBannerClassName}>
               {captions.map((caption) => {
                 return (
-                  <div key={caption.timestamp.getTime()} className={captionContainerClassName} tabIndex={0}>
+                  <div
+                    key={caption.timestamp.getTime() + caption.displayName + caption?.userId}
+                    className={captionContainerClassName}
+                    tabIndex={0}
+                  >
                     <_Caption {...caption} onRenderAvatar={onRenderAvatar} />
                   </div>
                 );
