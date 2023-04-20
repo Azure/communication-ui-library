@@ -14,7 +14,7 @@ import { COMPONENT_LOCALE_EN_US } from '../localization/locales';
 /* @conditional-compile-remove(date-time-customization) */
 import { screen } from '@testing-library/react';
 /* @conditional-compile-remove(teams-inline-images) */
-import { act, render } from '@testing-library/react';
+import { render, waitFor } from '@testing-library/react';
 /* @conditional-compile-remove(data-loss-prevention) */ /* @conditional-compile-remove(teams-inline-images) */
 import { registerIcons } from '@fluentui/react';
 
@@ -170,12 +170,16 @@ describe('Message should display inline image correctly', () => {
   });
 
   test('Message richtext/html img src should be correct', async () => {
-    const expectedBeforeImgSrc = 'http://localhost/urlBeforeSrcReplacement';
-    const expectedImgSrc = 'http://localhost/someImgSrcUrl';
+    const imgId1 = 'SomeImageId1';
+    const imgId2 = 'SomeImageId2';
+    const expectedImgSrc1 = 'http://localhost/someImgSrcUrl1';
+    const expectedImgSrc2 = 'http://localhost/someImgSrcUrl2';
+    const expectedOnFetchAttachmentCount = 2;
+    let onFetchAttachmentCount = 0;
     const sampleMessage: ChatMessage = {
       messageType: 'chat',
       senderId: 'user3',
-      content: `<p>Test</p><p><img alt="image" src="${expectedBeforeImgSrc}" itemscope="png" width="166.5625" height="250" id="SomeImageId1" style="vertical-align:bottom"></p><p>&nbsp;</p>`,
+      content: `<p>Test</p><p><img alt="image" src="" itemscope="png" width="166.5625" height="250" id="${imgId1}" style="vertical-align:bottom"></p><p><img alt="image" src="" itemscope="png" width="166.5625" height="250" id="${imgId2}" style="vertical-align:bottom"></p><p>&nbsp;</p>`,
       senderDisplayName: 'Miguel Garcia',
       messageId: Math.random().toString(),
       createdOn: new Date('2019-04-13T00:00:00.000+08:09'),
@@ -184,16 +188,25 @@ describe('Message should display inline image correctly', () => {
       contentType: 'html',
       attachedFilesMetadata: [
         {
-          id: 'SomeImageId1',
-          name: 'SomeImageId1',
+          id: imgId1,
+          name: imgId1,
           attachmentType: 'teamsInlineImage',
           extension: 'png',
-          url: 'images/inlineImageExample1.png',
-          previewUrl: expectedImgSrc
+          url: expectedImgSrc1,
+          previewUrl: expectedImgSrc1
+        },
+        {
+          id: imgId2,
+          name: imgId2,
+          attachmentType: 'teamsInlineImage',
+          extension: 'png',
+          url: expectedImgSrc2,
+          previewUrl: expectedImgSrc2
         }
       ]
     };
     const onFetchAttachment = async (attachment: FileMetadata): Promise<AttachmentDownloadResult[]> => {
+      onFetchAttachmentCount++;
       return [
         {
           blobUrl: attachment.previewUrl ?? ''
@@ -201,12 +214,14 @@ describe('Message should display inline image correctly', () => {
       ];
     };
 
-    render(<MessageThread userId="user1" messages={[sampleMessage]} onFetchAttachments={onFetchAttachment} />);
-    expect((screen.getByRole('img') as HTMLImageElement).src).toEqual(expectedBeforeImgSrc);
+    const { container } = render(
+      <MessageThread userId="user1" messages={[sampleMessage]} onFetchAttachments={onFetchAttachment} />
+    );
 
-    act(async () => {
-      await new Promise((resolve) => setTimeout(resolve, 0));
-      expect((screen.getByRole('img') as HTMLImageElement).src).toEqual(expectedImgSrc);
+    await waitFor(async () => {
+      expect(container.querySelector(`#${imgId1}`)?.getAttribute('src')).toEqual(expectedImgSrc1);
+      expect(container.querySelector(`#${imgId2}`)?.getAttribute('src')).toEqual(expectedImgSrc2);
+      expect(onFetchAttachmentCount).toEqual(expectedOnFetchAttachmentCount);
     });
   });
 });
