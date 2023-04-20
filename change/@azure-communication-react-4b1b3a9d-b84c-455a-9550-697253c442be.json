@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Stabilize the scrolling behavior",
+  "packageName": "@azure/communication-react",
+  "email": "jiangnanhello@live.com",
+  "dependentChangeType": "patch"
+}
