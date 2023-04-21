@@ -62,6 +62,7 @@ import { useSidePaneContext } from './SidePane/SidePaneProvider';
 import { ModalLocalAndRemotePIP } from '../../common/ModalLocalAndRemotePIP';
 import { getPipStyles } from '../../common/styles/ModalLocalAndRemotePIP.styles';
 import { useMinMaxDragPosition } from '../../common/utils';
+import { MobileChatSidePaneTabHeaderProps } from '../../common/TabHeader';
 
 /**
  * @private
@@ -79,6 +80,7 @@ export interface CallArrangementProps {
   modalLayerHostId: string;
   /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
+  mobileChatTabHeader?: MobileChatSidePaneTabHeaderProps;
 }
 
 /**
@@ -117,15 +119,16 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
       disablePeopleButton:
         typeof props.callControlProps.options !== 'boolean' &&
         isDisabled(props.callControlProps.options?.participantsButton),
-      onChatButtonClicked: undefined, // TODO
-      disableChatButton: undefined // TODO
+      onChatButtonClicked: props.mobileChatTabHeader?.onClick,
+      disableChatButton: props.mobileChatTabHeader?.disabled
     }),
     [
       props.callControlProps.callInvitationURL,
       props.callControlProps?.onFetchParticipantMenuItems,
       props.callControlProps.options,
       props.onFetchAvatarPersonaData,
-      props.mobileView
+      props.mobileView,
+      props.mobileChatTabHeader
     ]
   );
   const { isPeoplePaneOpen, openPeoplePane, closePeoplePane } = usePeoplePane(peoplePaneProps);
@@ -137,8 +140,8 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     }
   }, [closePeoplePane, isPeoplePaneOpen, openPeoplePane]);
 
-  const { activeSidePaneId } = useSidePaneContext();
-  const isSidePaneOpen = !!activeSidePaneId;
+  const { activeSidePaneId, overrideSidePane } = useSidePaneContext();
+  const isSidePaneOpen = !!activeSidePaneId || !!overrideSidePane;
 
   /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   const isMobileWithActivePane = props.mobileView && isSidePaneOpen;

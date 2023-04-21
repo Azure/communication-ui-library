@@ -13,6 +13,12 @@ import {
 import { useLocale } from '../localization';
 import { CommonCallControlOptions } from './types/CommonCallControlOptions';
 
+/** @private */
+export interface MobileChatSidePaneTabHeaderProps {
+  onClick: () => void;
+  disabled: boolean;
+}
+
 /**
  * Props for {@link TabHeader} component
  */

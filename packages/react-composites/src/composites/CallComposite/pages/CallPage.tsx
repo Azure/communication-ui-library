@@ -21,6 +21,7 @@ import { mediaGallerySelector } from '../selectors/mediaGallerySelector';
 import { mutedNotificationSelector } from '../selectors/mutedNotificationSelector';
 import { networkReconnectTileSelector } from '../selectors/networkReconnectTileSelector';
 import { reduceCallControlsForMobile } from '../utils';
+import { MobileChatSidePaneTabHeaderProps } from '../../common/TabHeader';
 
 /**
  * @private
@@ -33,6 +34,7 @@ export interface CallPageProps {
   onRenderAvatar?: OnRenderAvatarCallback;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
+  mobileChatTabHeader?: MobileChatSidePaneTabHeaderProps;
   options?: CallCompositeOptions;
 }
 
@@ -104,6 +106,7 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
           <></>
         )
       }
+      mobileChatTabHeader={props.mobileChatTabHeader}
       dataUiId={'call-page'}
     />
   );

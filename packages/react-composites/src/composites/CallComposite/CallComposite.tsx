@@ -34,7 +34,8 @@ import { HoldPage } from './pages/HoldPage';
 /* @conditional-compile-remove(unsupported-browser) */
 import { UnsupportedBrowserPage } from './pages/UnsupportedBrowser';
 import { PermissionConstraints } from '@azure/communication-calling';
-import { SidePaneProvider } from './components/SidePane/SidePaneProvider';
+import { InjectedSidePaneProps, SidePaneProvider, useSidePaneContext } from './components/SidePane/SidePaneProvider';
+import { MobileChatSidePaneTabHeaderProps } from '../common/TabHeader';
 
 /**
  * Props for {@link CallComposite}.
@@ -192,13 +193,37 @@ type MainScreenProps = {
   options?: CallCompositeOptions;
   /* @conditional-compile-remove(rooms) */
   roleHint?: Role;
-  onSidePaneDismiss?: () => void;
-  onRenderSidePaneContent?: () => JSX.Element;
+  overrideSidePane?: InjectedSidePaneProps;
+  onSidePaneIdChange?: (sidePaneId: string | undefined) => void;
+  mobileChatTabHeader?: MobileChatSidePaneTabHeaderProps;
 };
 
 const MainScreen = (props: MainScreenProps): JSX.Element => {
   const { callInvitationUrl, onRenderAvatar, onFetchAvatarPersonaData, onFetchParticipantMenuItems } = props;
   const page = useSelector(getPage);
+
+  const { activeSidePaneId, setOverrideSidePane, setActiveSidePaneId, setHeaderRenderer, setContentRenderer } =
+    useSidePaneContext();
+  useEffect(() => {
+    setOverrideSidePane(props.overrideSidePane);
+    if (props.overrideSidePane && activeSidePaneId) {
+      setActiveSidePaneId(undefined);
+      setHeaderRenderer(undefined);
+      setContentRenderer(undefined);
+    }
+  }, [
+    activeSidePaneId,
+    props.overrideSidePane,
+    setActiveSidePaneId,
+    setContentRenderer,
+    setHeaderRenderer,
+    setOverrideSidePane
+  ]);
+
+  const onSidePaneIdChange = props.onSidePaneIdChange;
+  useEffect(() => {
+    onSidePaneIdChange?.(activeSidePaneId);
+  }, [activeSidePaneId, onSidePaneIdChange]);
 
   const adapter = useAdapter();
   const locale = useLocale();
@@ -310,6 +335,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
           modalLayerHostId={props.modalLayerHostId}
           options={props.options}
+          mobileChatTabHeader={props.mobileChatTabHeader}
         />
       );
       break;
@@ -366,10 +392,15 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
  */
 export const CallComposite = (props: CallCompositeProps): JSX.Element => <CallCompositeInner {...props} />;
 
-/** @private */
+/**
+ * @private
+ */
 export interface InternalCallCompositeProps {
-  onSidePaneDismiss?: () => void;
-  onRenderSidePaneContent?: () => JSX.Element;
+  overrideSidePane?: InjectedSidePaneProps;
+  onSidePaneIdChange?: (sidePaneId: string | undefined) => void;
+
+  // legacy property to avoid breaking change
+  mobileChatTabHeader?: MobileChatSidePaneTabHeaderProps;
 }
 
 /** @private */
@@ -422,6 +453,9 @@ export const CallCompositeInner = (props: CallCompositeProps & InternalCallCompo
               options={options}
               /* @conditional-compile-remove(rooms) */
               roleHint={roleHint}
+              onSidePaneIdChange={props.onSidePaneIdChange}
+              overrideSidePane={props.overrideSidePane}
+              mobileChatTabHeader={props.mobileChatTabHeader}
             />
             {
               // This layer host is for ModalLocalAndRemotePIP in SidePane. This LayerHost cannot be inside the SidePane

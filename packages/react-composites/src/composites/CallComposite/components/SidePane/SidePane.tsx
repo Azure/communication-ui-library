@@ -19,23 +19,28 @@ export interface SidePaneProps {
 /** @private */
 export const NewSidePane = (props: SidePaneProps): JSX.Element => {
   const paneStyles = props.mobileView ? availableSpaceStyles : sidePaneStyles;
-  const { headerRenderer, contentRenderer, activeSidePaneId } = useSidePaneContext();
+  const { headerRenderer, contentRenderer, activeSidePaneId, overrideSidePane } = useSidePaneContext();
 
-  const isClosed = !activeSidePaneId;
+  const isClosed = !activeSidePaneId && !overrideSidePane;
   if (isClosed) {
-    return <></>;
+    return <EmptyElement />;
   }
+
+  const Header = overrideSidePane?.headerRenderer ?? headerRenderer ?? EmptyElement;
+  const Content = overrideSidePane?.contentRenderer ?? contentRenderer ?? EmptyElement;
 
   return (
     <Stack verticalFill grow styles={paneStyles} data-ui-id="SidePane" tokens={props.mobileView ? {} : sidePaneTokens}>
-      {headerRenderer?.() ?? <></>}
+      <Header />
       <Stack.Item verticalFill grow styles={paneBodyContainer}>
         <Stack horizontal styles={scrollableContainer}>
           <Stack.Item verticalFill styles={scrollableContainerContents}>
-            {contentRenderer?.() ?? <></>}
+            <Content />
           </Stack.Item>
         </Stack>
       </Stack.Item>
     </Stack>
   );
 };
+
+const EmptyElement = (): JSX.Element => <></>;

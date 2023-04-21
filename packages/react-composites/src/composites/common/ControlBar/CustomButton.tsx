@@ -49,22 +49,27 @@ const generateCustomControlBarButtons = (
   customButtons
     ? customButtons
         .filter((buttonProps) => buttonProps.placement === placement)
-        .map((buttonProps, i) => (internalProps) => (
-          <ControlBarButton
-            ariaDescription={buttonProps.ariaDescription ?? internalProps.ariaDescription}
-            ariaLabel={buttonProps.ariaLabel ?? internalProps.ariaLabel}
-            disabled={buttonProps.disabled ?? internalProps.disabled}
-            id={buttonProps.id ?? internalProps.id}
-            key={buttonProps.key ?? `${buttonProps.placement}_${i}`}
-            onClick={buttonProps.onItemClick ?? internalProps.onClick}
-            onRenderIcon={() => (
-              <Icon iconName={buttonProps.iconName ?? internalProps.iconProps?.iconName ?? 'ControlButtonOptions'} />
-            )}
-            showLabel={buttonProps.showLabel ?? internalProps.showLabel}
-            text={buttonProps.text ?? internalProps.text}
-            styles={mergeStyleSets(internalProps.styles, buttonProps.styles)}
-          />
-        ))
+        .map((buttonProps, i) => (internalProps) => {
+          if (buttonProps['onRenderButton']) {
+            return buttonProps['onRenderButton'](internalProps);
+          }
+          return (
+            <ControlBarButton
+              ariaDescription={buttonProps.ariaDescription ?? internalProps.ariaDescription}
+              ariaLabel={buttonProps.ariaLabel ?? internalProps.ariaLabel}
+              disabled={buttonProps.disabled ?? internalProps.disabled}
+              id={buttonProps.id ?? internalProps.id}
+              key={buttonProps.key ?? `${buttonProps.placement}_${i}`}
+              onClick={buttonProps.onItemClick ?? internalProps.onClick}
+              onRenderIcon={() => (
+                <Icon iconName={buttonProps.iconName ?? internalProps.iconProps?.iconName ?? 'ControlButtonOptions'} />
+              )}
+              showLabel={buttonProps.showLabel ?? internalProps.showLabel}
+              text={buttonProps.text ?? internalProps.text}
+              styles={mergeStyleSets(internalProps.styles, buttonProps.styles)}
+            />
+          );
+        })
     : [];
 
 /** @private */

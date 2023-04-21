@@ -3,6 +3,15 @@
 
 import React, { createContext, useCallback, useContext, useEffect, useMemo } from 'react';
 
+/** @private */
+export type InjectedSidePaneProps =
+  | undefined
+  | {
+      headerRenderer?: () => JSX.Element;
+      contentRenderer?: () => JSX.Element;
+      sidePaneId: string;
+    };
+
 interface SidePaneProps {
   /** Side pane header */
   setHeaderRenderer: React.Dispatch<React.SetStateAction<(() => JSX.Element) | undefined>>;
@@ -13,6 +22,9 @@ interface SidePaneProps {
   /** tracking open state of the side pane */
   setActiveSidePaneId: React.Dispatch<React.SetStateAction<string | undefined>>;
   activeSidePaneId: string | undefined;
+  /** Support injecting content into the side pane from extrnal sources (e.g. CallWithChatComposite's Chat) */
+  setOverrideSidePane: React.Dispatch<React.SetStateAction<InjectedSidePaneProps>>;
+  overrideSidePane: InjectedSidePaneProps;
 }
 
 const defaultSidePaneProps: SidePaneProps = {
@@ -20,7 +32,10 @@ const defaultSidePaneProps: SidePaneProps = {
   setContentRenderer: () => () => <></>,
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   setActiveSidePaneId: () => {},
-  activeSidePaneId: undefined
+  activeSidePaneId: undefined,
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  setOverrideSidePane: () => {},
+  overrideSidePane: undefined
 };
 
 /**
@@ -48,6 +63,7 @@ export const SidePaneProvider = (props: SidePaneProviderProps): JSX.Element => {
   const [headerRenderer, setHeaderRenderer] = React.useState<(() => JSX.Element) | undefined>();
   const [contentRenderer, setContentRenderer] = React.useState<(() => JSX.Element) | undefined>();
   const [activeSidePaneId, setActiveSidePaneId] = React.useState<string>();
+  const [overrideSidePane, setOverrideSidePane] = React.useState<InjectedSidePaneProps>();
 
   const providerProps = useMemo(
     () => ({
@@ -56,9 +72,11 @@ export const SidePaneProvider = (props: SidePaneProviderProps): JSX.Element => {
       contentRenderer,
       setContentRenderer,
       activeSidePaneId,
-      setActiveSidePaneId
+      setActiveSidePaneId,
+      overrideSidePane,
+      setOverrideSidePane
     }),
-    [headerRenderer, contentRenderer, activeSidePaneId]
+    [headerRenderer, contentRenderer, activeSidePaneId, overrideSidePane]
   );
 
   return <SidePaneContext.Provider value={providerProps}>{props.children}</SidePaneContext.Provider>;
@@ -76,8 +94,9 @@ export const useOpenSidePane = (
   isOpen: boolean;
   openPane: () => void;
 } => {
-  const { setHeaderRenderer, setContentRenderer, setActiveSidePaneId, activeSidePaneId } = useSidePaneContext();
-  const isOpen = activeSidePaneId === sidePaneId;
+  const { setHeaderRenderer, setContentRenderer, setActiveSidePaneId, activeSidePaneId, overrideSidePane } =
+    useSidePaneContext();
+  const isOpen = activeSidePaneId === sidePaneId && !overrideSidePane;
 
   const updateRenderers = useCallback((): void => {
     setHeaderRenderer(() => onRenderHeader);

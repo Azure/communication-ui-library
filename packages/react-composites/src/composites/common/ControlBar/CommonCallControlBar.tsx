@@ -10,7 +10,6 @@ import { controlBarContainerStyles } from '../../CallComposite/styles/CallContro
 import { callControlsContainerStyles } from '../../CallComposite/styles/CallPage.styles';
 import { useCallWithChatCompositeStrings } from '../../CallWithChatComposite/hooks/useCallWithChatCompositeStrings';
 import { ChatAdapter } from '../../ChatComposite';
-import { ChatButtonWithUnreadMessagesBadge } from '../../CallWithChatComposite/ChatButtonWithUnreadMessagesBadge';
 import { BaseCustomStyles, ControlBarButtonStyles } from '@internal/react-components';
 import { ControlBar } from '@internal/react-components';
 import { Microphone } from '../../CallComposite/components/buttons/Microphone';
@@ -144,15 +143,6 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
   const onDismissCaptionsSettings = useCallback((): void => {
     setShowCaptionsSettingsModal(false);
   }, []);
-
-  const chatButtonStrings = useMemo(
-    () => ({
-      label: callWithChatStrings.chatButtonLabel,
-      tooltipOffContent: callWithChatStrings.chatButtonTooltipOpen,
-      tooltipOnContent: callWithChatStrings.chatButtonTooltipClose
-    }),
-    [callWithChatStrings]
-  );
   const peopleButtonStrings = useMemo(
     () => ({
       label: callWithChatStrings.peopleButtonLabel,
@@ -218,22 +208,6 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
     return <></>;
   }
 
-  const chatButton = props.chatAdapter ? (
-    <ChatButtonWithUnreadMessagesBadge
-      chatAdapter={props.chatAdapter}
-      checked={props.chatButtonChecked}
-      showLabel={options.displayType !== 'compact'}
-      isChatPaneVisible={props.chatButtonChecked ?? false}
-      onClick={props.onChatButtonClicked}
-      disabled={props.disableButtonsForLobbyPage || isDisabled(options.chatButton)}
-      strings={chatButtonStrings}
-      styles={commonButtonStyles}
-      newMessageLabel={callWithChatStrings.chatButtonNewMessageNotificationLabel}
-    />
-  ) : (
-    <></>
-  );
-
   return (
     <div ref={controlBarSizeRef}>
       <CallAdapterProvider adapter={props.callAdapter}>
@@ -295,7 +269,6 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                         onShowVideoEffectsPicker={props.onShowVideoEffectsPicker}
                       />
                     )}
-                    {props.mobileView && isEnabled(options?.chatButton) && chatButton}
                     {isEnabled(options.screenShareButton) && (
                       <ScreenShare
                         option={options.screenShareButton}
@@ -364,6 +337,18 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
           <Stack.Item>
             <div ref={sidepaneControlsRef}>
               <Stack horizontal className={!props.mobileView ? mergeStyles(desktopButtonContainerStyle) : undefined}>
+                {isEnabled(options?.peopleButton) && (
+                  <PeopleButton
+                    checked={props.peopleButtonChecked}
+                    ariaLabel={peopleButtonStrings?.label}
+                    showLabel={options.displayType !== 'compact'}
+                    onClick={props.onPeopleButtonClicked}
+                    data-ui-id="common-call-composite-people-button"
+                    disabled={props.disableButtonsForLobbyPage || isDisabled(options.peopleButton)}
+                    strings={peopleButtonStrings}
+                    styles={commonButtonStyles}
+                  />
+                )}
                 {
                   /* @conditional-compile-remove(control-bar-button-injection) */
                   customButtons['secondary']
@@ -378,19 +363,6 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                       );
                     })
                 }
-                {isEnabled(options?.peopleButton) && (
-                  <PeopleButton
-                    checked={props.peopleButtonChecked}
-                    ariaLabel={peopleButtonStrings?.label}
-                    showLabel={options.displayType !== 'compact'}
-                    onClick={props.onPeopleButtonClicked}
-                    data-ui-id="common-call-composite-people-button"
-                    disabled={props.disableButtonsForLobbyPage || isDisabled(options.peopleButton)}
-                    strings={peopleButtonStrings}
-                    styles={commonButtonStyles}
-                  />
-                )}
-                {isEnabled(options?.chatButton) && chatButton}
               </Stack>
             </div>
           </Stack.Item>
@@ -427,7 +399,8 @@ const wrapperDesktopRtlStyles: IStyle = {
   transform: 'translate(-50%, 0)'
 };
 
-const getDesktopCommonButtonStyles = (theme: ITheme): ControlBarButtonStyles => ({
+/** @private */
+export const getDesktopCommonButtonStyles = (theme: ITheme): ControlBarButtonStyles => ({
   root: {
     border: `solid 1px ${theme.palette.neutralQuaternaryAlt}`,
     borderRadius: theme.effects.roundedCorner4,
