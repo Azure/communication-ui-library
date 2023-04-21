@@ -897,7 +897,6 @@ const reformedTagParser = (text: string, trigger: string): [ReformedTag[], strin
         tagParseStack.push(nextTag);
       } else {
         console.log('Found self-closing tag: ' + foundHtmlTag.content);
-        nextTag.closeTagIdx = foundHtmlTag.startIdx; // Set them to the same value
         nextTag.content = '';
         nextTag.plainTextBeginIndex = plainTextRepresentation.length;
         nextTag.plainTextEndIndex = plainTextRepresentation.length;
@@ -918,10 +917,6 @@ const reformedTagParser = (text: string, trigger: string): [ReformedTag[], strin
           currentOpenTag.openTagIdx + currentOpenTag.openTagBody.length,
           foundHtmlTag.startIdx
         );
-
-        // The closeTagIdx can be relative from the start
-        currentOpenTag.closeTagIdx =
-          currentOpenTag.openTagIdx + currentOpenTag.openTagBody.length + currentOpenTag.content.length;
 
         // Insert the plain text pieces for the sub tags
         if (currentOpenTag.tagType === 'msft-mention') {
@@ -1013,6 +1008,9 @@ const addTag = (tag: ReformedTag, parseStack: ReformedTag[], tags: ReformedTag[]
     const parentContentStartIdx = parentTag.openTagIdx + parentTag.openTagBody.length;
     const relativeIdx = tag.openTagIdx - parentContentStartIdx;
     tag.openTagIdx = relativeIdx;
+    if (!tag.closeTagIdx) {
+      tag.closeTagIdx = relativeIdx + tag.openTagBody.length + (tag.content ?? []).length;
+    }
 
     if (!parentTag.subTags) {
       parentTag.subTags = [tag];
