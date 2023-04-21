@@ -1,7 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React, { useState, ReactNode, FormEvent, useCallback, useEffect, useRef } from 'react';
+import React, { useState, ReactNode, FormEvent, useCallback, useRef } from 'react';
+/* @conditional-compile-remove(mention) */
+import { useEffect } from 'react';
+
 import {
   Stack,
   TextField,
@@ -25,13 +28,15 @@ import {
   inputBoxNewLineSpaceAffordance,
   inputButtonTooltipStyle
 } from './styles/InputBoxComponent.style';
+/* @conditional-compile-remove(mention) */
 import { Caret } from 'textarea-caret-ts';
 import { isDarkThemed } from '../theming/themeUtils';
 import { useTheme } from '../theming';
 /* @conditional-compile-remove(mention) */
 import { MentionLookupOptions, _MentionFlyout, MentionSuggestion } from './MentionFlyout';
+/* @conditional-compile-remove(mention) */
 import { debounce } from 'lodash';
-
+/* @conditional-compile-remove(mention) */
 const defaultMentionTrigger = '@';
 /**
  * @private
@@ -93,22 +98,30 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     errorMessage,
     disabled,
     children,
+    /* @conditional-compile-remove(mention) */
     mentionLookupOptions,
+    /* @conditional-compile-remove(mention) */
     onMentionAdd
   } = props;
   const inputBoxRef = useRef<HTMLDivElement>(null);
 
+  /* @conditional-compile-remove(mention) */
   // Current suggestion list, provided by the callback
   const [mentionSuggestions, setMentionSuggestions] = useState<MentionSuggestion[]>([]);
 
+  /* @conditional-compile-remove(mention) */
   // Index of the current trigger character in the text field
   const [currentTagIndex, setCurrentTagIndex] = useState<number>(-1);
+  /* @conditional-compile-remove(mention) */
   const [inputTextValue, setInputTextValue] = useState<string>('');
+  /* @conditional-compile-remove(mention) */
   const [tagsValue, setTagsValue] = useState<UpdatedParsedTag[]>([]);
 
+  /* @conditional-compile-remove(mention) */
   // Caret position in the text field
   const [caretPosition, setCaretPosition] = useState<Caret.Position | undefined>(undefined);
 
+  /* @conditional-compile-remove(mention) */
   // Parse the text and get the plain text version to display in the input box
   useEffect(() => {
     const trigger = mentionLookupOptions?.trigger || defaultMentionTrigger;
@@ -149,6 +162,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     [onEnterKeyDown, onKeyDown, supportNewline]
   );
 
+  /* @conditional-compile-remove(mention) */
   const updateMentionSuggestions = useCallback(
     (suggestions: MentionSuggestion[]) => {
       setMentionSuggestions(suggestions);
@@ -158,6 +172,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     [textFieldRef]
   );
 
+  /* @conditional-compile-remove(mention) */
   const onSuggestionSelected = useCallback(
     (suggestion: MentionSuggestion) => {
       let selectionEnd = textFieldRef?.current?.selectionEnd || -1;
@@ -201,6 +216,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     ]
   );
 
+  /* @conditional-compile-remove(mention) */
   const debouncedQueryUpdate = useRef(
     debounce(async (query: string) => {
       const suggestions = (await mentionLookupOptions?.onQueryUpdated(query)) ?? [];
@@ -208,12 +224,14 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     }, 500)
   ).current;
 
-  React.useEffect(() => {
+  /* @conditional-compile-remove(mention) */
+  useEffect(() => {
     return () => {
       debouncedQueryUpdate.cancel();
     };
   }, [debouncedQueryUpdate]);
 
+  /* @conditional-compile-remove(mention) */
   const handleOnChange = async (
     event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>,
     updatedValue?: string | undefined
@@ -299,20 +317,28 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     onChange && onChange(event, result);
   };
 
+  const getInputFieldTextValue = (): string => {
+    /* @conditional-compile-remove(mention) */
+    return inputTextValue;
+    return textValue;
+  };
+
   return (
     <Stack className={mergedRootStyle}>
       <div className={mergedTextContainerStyle}>
-        {mentionSuggestions.length > 0 && (
-          <_MentionFlyout
-            suggestions={mentionSuggestions}
-            target={inputBoxRef}
-            targetPositionOffset={caretPosition}
-            onSuggestionSelected={onSuggestionSelected}
-            onDismiss={() => {
-              updateMentionSuggestions([]);
-            }}
-          />
-        )}
+        {
+          /* @conditional-compile-remove(mention) */ mentionSuggestions.length > 0 && (
+            <_MentionFlyout
+              suggestions={mentionSuggestions}
+              target={inputBoxRef}
+              targetPositionOffset={caretPosition}
+              onSuggestionSelected={onSuggestionSelected}
+              onDismiss={() => {
+                updateMentionSuggestions([]);
+              }}
+            />
+          )
+        }
         <TextField
           autoFocus={props.autoFocus === 'sendBoxTextField'}
           data-ui-id={dataUiId}
@@ -324,10 +350,13 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
           id={id}
           inputClassName={mergedTextFiledStyle}
           placeholder={placeholderText}
-          value={inputTextValue}
+          value={getInputFieldTextValue()}
           onChange={(e, newValue) => {
+            /* @conditional-compile-remove(mention) */
             setInputTextValue(newValue ?? '');
+            /* @conditional-compile-remove(mention) */
             handleOnChange(e, newValue);
+            onChange(e, newValue);
           }}
           autoComplete="off"
           onKeyDown={onTextFieldKeyDown}
@@ -563,6 +592,7 @@ const parseHTMLText = (text: string, trigger: string): [UpdatedParsedTag[], stri
   return [tags, plainText, isHtml];
 };
 
+/* @conditional-compile-remove(mention) */
 /**
  * Go through the text and update it with the changed text
  *
@@ -845,6 +875,7 @@ const plainTextFromParsedTags = (textBlock: string, tags: ParsedTag[], trigger: 
   return text;
 };
 
+/* @conditional-compile-remove(mention) */
 /**
  * Given the oldText and newText, find the start index, old end index and new end index for the changes
  *
@@ -932,6 +963,7 @@ const findStringsDiffIndexes = (
   return { changeStart, oldChangeEnd, newChangeEnd };
 };
 
+/* @conditional-compile-remove(mention) */
 const htmlStringForMentionSuggestion = (suggestion: MentionSuggestion): string => {
   const userIdHTML = ' userId ="' + suggestion.userId + '"';
   const displayName = suggestion.displayName || '';
@@ -940,6 +972,7 @@ const htmlStringForMentionSuggestion = (suggestion: MentionSuggestion): string =
   return '<msft-mention' + userIdHTML + displayNameHTML + suggestionTypeHTML + '>' + displayName + '</msft-mention>';
 };
 
+/* @conditional-compile-remove(mention) */
 type ReformedTag = {
   tagType: string; // The type of tag (e.g. msft-mention)
   openTagIdx: number; // Start of the tag relative to the parent content
@@ -951,13 +984,16 @@ type ReformedTag = {
   plainTextEndIndex?: number; // Absolute index of the close tag start should be in plain text
 };
 
+/* @conditional-compile-remove(mention) */
 type HtmlTagType = 'open' | 'close' | 'self-closing';
+/* @conditional-compile-remove(mention) */
 type HtmlTag = {
   content: string;
   startIdx: number;
   type: HtmlTagType;
 };
 
+/* @conditional-compile-remove(mention) */
 /**
  * Parse the text and return the tags and the plain text in one go
  * @param text
@@ -1064,8 +1100,9 @@ const reformedTagParser = (text: string, trigger: string): [ReformedTag[], strin
   return [tags, plainTextRepresentation];
 };
 
+/* @conditional-compile-remove(mention) */
 const parseOpenTag = (tag: string, startIdx: number): ReformedTag => {
-  let tagType = tag
+  const tagType = tag
     .substring(1, tag.length - 1)
     .split(' ')[0]
     .toLowerCase()
@@ -1077,6 +1114,7 @@ const parseOpenTag = (tag: string, startIdx: number): ReformedTag => {
   };
 };
 
+/* @conditional-compile-remove(mention) */
 const findNextHtmlTag = (text: string, startIndex: number): HtmlTag | undefined => {
   const tagStartIndex = text.indexOf('<', startIndex);
   if (tagStartIndex === -1) {
@@ -1102,6 +1140,7 @@ const findNextHtmlTag = (text: string, startIndex: number): HtmlTag | undefined 
   };
 };
 
+/* @conditional-compile-remove(mention) */
 const addTag = (tag: ReformedTag, parseStack: ReformedTag[], tags: ReformedTag[]): void => {
   // Add as sub-tag to the parent stack tag, if there is one
   const parentTag = parseStack[parseStack.length - 1];

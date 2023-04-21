@@ -227,6 +227,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     onRenderSystemMessage,
     styles,
     autoFocus,
+    /* @conditional-compile-remove(mention) */
     mentionLookupOptions
   } = props;
   const theme = useTheme();
@@ -393,7 +394,9 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
           styles={mergedStyles}
           supportNewline={supportNewline}
           maxLength={MAXIMUM_LENGTH_OF_MESSAGE}
+          /* @conditional-compile-remove(mention) */
           mentionLookupOptions={mentionLookupOptions}
+          /* @conditional-compile-remove(mention) */
           onMentionAdd={(newTextValue) => {
             setText(newTextValue);
           }}

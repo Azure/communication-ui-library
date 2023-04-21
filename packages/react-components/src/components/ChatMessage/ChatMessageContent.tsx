@@ -3,7 +3,10 @@
 
 import React from 'react';
 import { _formatString } from '@internal/acs-ui-common';
-import { Parser, ProcessNodeDefinitions, IsValidNodeDefinitions, ProcessingInstructionType } from 'html-to-react';
+import { Parser } from 'html-to-react';
+/* @conditional-compile-remove(mention) */
+import { ProcessNodeDefinitions, IsValidNodeDefinitions, ProcessingInstructionType } from 'html-to-react';
+
 import Linkify from 'react-linkify';
 import { ChatMessage } from '../../types/ChatMessage';
 /* @conditional-compile-remove(data-loss-prevention) */
@@ -70,8 +73,9 @@ const MessageContentWithLiveAria = (props: MessageContentWithLiveAriaProps): JSX
 const MessageContentAsRichTextHTML = (props: ChatMessageContentProps): JSX.Element => {
   const htmlToReactParser = Parser();
   const liveAuthor = _formatString(props.strings.liveAuthorIntro, { author: `${props.message.senderDisplayName}` });
+  /* @conditional-compile-remove(mention) */
   const mentionSuggestionRenderer = props.mentionDisplayOptions?.onRenderMentionSuggestion;
-
+  /* @conditional-compile-remove(mention) */
   if (mentionSuggestionRenderer) {
     // Use custom HTML processing if mentionSuggestionRenderer is provided
 
@@ -125,6 +129,14 @@ const MessageContentAsRichTextHTML = (props: ChatMessageContentProps): JSX.Eleme
       />
     );
   }
+  return (
+    <MessageContentWithLiveAria
+      message={props.message}
+      liveMessage={`${props.message.mine ? '' : liveAuthor} ${extractContent(props.message.content || '')}`}
+      ariaLabel={messageContentAriaText(props)}
+      content={htmlToReactParser.parse(props.message.content ?? '')}
+    />
+  );
 };
 
 const MessageContentAsText = (props: ChatMessageContentProps): JSX.Element => {

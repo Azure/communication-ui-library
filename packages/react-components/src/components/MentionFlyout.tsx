@@ -146,6 +146,7 @@ export const _MentionFlyout = (props: _MentionFlyoutProps): JSX.Element => {
   } = props;
 
   const theme = useTheme();
+  /* @conditional-compile-remove(mention) */
   const ids = useIdentifiers();
   const localeStrings = useLocale().strings.participantItem;
   const flyoutRef = useRef() as React.MutableRefObject<HTMLDivElement>;
@@ -228,6 +229,7 @@ export const _MentionFlyout = (props: _MentionFlyoutProps): JSX.Element => {
     return (
       <div
         data-is-focusable={true}
+        /* @conditional-compile-remove(mention) */
         data-ui-id={ids.mentionSuggestionItem}
         key={suggestion.userId}
         onClick={() => onSuggestionSelected(suggestion)}
