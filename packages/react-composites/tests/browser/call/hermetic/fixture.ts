@@ -76,7 +76,7 @@ export function defaultMockCallAdapterState(participants?: MockRemoteParticipant
       isScreenSharingOn: false,
       remoteParticipants,
       remoteParticipantsEnded: {},
-      totalParticipantCount: Object.values(remoteParticipants).length + 1
+      totalParticipantCount: Object.values(remoteParticipants).length + 1,
       captionsFeature: {
         captions: [],
         supportedSpokenLanguages: [],
