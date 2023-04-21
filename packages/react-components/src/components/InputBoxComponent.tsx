@@ -33,7 +33,7 @@ import { Caret } from 'textarea-caret-ts';
 import { isDarkThemed } from '../theming/themeUtils';
 import { useTheme } from '../theming';
 /* @conditional-compile-remove(mention) */
-import { MentionLookupOptions, _MentionFlyout, MentionSuggestion } from './MentionFlyout';
+import { MentionLookupOptions, _MentionFlyout, Mention } from './MentionFlyout';
 /* @conditional-compile-remove(mention) */
 import { debounce } from 'lodash';
 /* @conditional-compile-remove(mention) */
@@ -107,7 +107,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
 
   /* @conditional-compile-remove(mention) */
   // Current suggestion list, provided by the callback
-  const [mentionSuggestions, setMentionSuggestions] = useState<MentionSuggestion[]>([]);
+  const [mentionSuggestions, setMentionSuggestions] = useState<Mention[]>([]);
 
   /* @conditional-compile-remove(mention) */
   // Index of the current trigger character in the text field
@@ -164,7 +164,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
 
   /* @conditional-compile-remove(mention) */
   const updateMentionSuggestions = useCallback(
-    (suggestions: MentionSuggestion[]) => {
+    (suggestions: Mention[]) => {
       setMentionSuggestions(suggestions);
       //TODO: add focus to the correct position
       textFieldRef?.current?.focus();
@@ -174,7 +174,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
 
   /* @conditional-compile-remove(mention) */
   const onSuggestionSelected = useCallback(
-    (suggestion: MentionSuggestion) => {
+    (suggestion: Mention) => {
       let selectionEnd = textFieldRef?.current?.selectionEnd || -1;
       if (selectionEnd < 0) {
         selectionEnd = 0;
@@ -964,12 +964,11 @@ const findStringsDiffIndexes = (
 };
 
 /* @conditional-compile-remove(mention) */
-const htmlStringForMentionSuggestion = (suggestion: MentionSuggestion): string => {
-  const userIdHTML = ' userId ="' + suggestion.userId + '"';
-  const displayName = suggestion.displayName || '';
-  const displayNameHTML = ' displayName ="' + displayName + '"';
-  const suggestionTypeHTML = ' suggestionType ="' + suggestion.suggestionType + '"';
-  return '<msft-mention' + userIdHTML + displayNameHTML + suggestionTypeHTML + '>' + displayName + '</msft-mention>';
+const htmlStringForMentionSuggestion = (suggestion: Mention): string => {
+  const idHTML = ' id ="' + suggestion.id + '"';
+  const displayText = suggestion.displayText || '';
+  const displayTextHTML = ' displayText ="' + displayText + '"';
+  return '<msft-mention' + idHTML + displayTextHTML + '>' + displayText + '</msft-mention>';
 };
 
 /* @conditional-compile-remove(mention) */

@@ -2498,14 +2498,21 @@ export interface MediaDiagnosticsState {
 }
 
 // @beta
+export interface Mention {
+    displayText: string;
+    icon?: JSX.Element;
+    id: string;
+}
+
+// @beta
 export interface MentionDisplayOptions {
-    onRenderMentionSuggestion?: (suggestion: MentionSuggestion) => JSX.Element;
+    onRenderMention?: (mention: Mention) => JSX.Element;
 }
 
 // @beta
 export interface MentionLookupOptions {
-    onQueryUpdated: (query: string) => Promise<MentionSuggestion[]>;
-    onRenderSuggestionItem?: (suggestion: MentionSuggestion, onSuggestionSelected: (suggestion: MentionSuggestion) => void) => JSX.Element;
+    onQueryUpdated: (query: string) => Promise<Mention[]>;
+    onRenderSuggestionItem?: (suggestion: Mention, onSuggestionSelected: (suggestion: Mention) => void) => JSX.Element;
     trigger?: string;
 }
 
@@ -2514,13 +2521,6 @@ export type MentionOptions = {
     lookupOptions?: MentionLookupOptions;
     displayOptions?: MentionDisplayOptions;
 };
-
-// @beta
-export interface MentionSuggestion {
-    displayName: string;
-    suggestionType: string;
-    userId: string;
-}
 
 // @public
 export type Message = ChatMessage | SystemMessage | CustomMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage;

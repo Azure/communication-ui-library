@@ -1738,8 +1738,6 @@ export interface _IdentifierProviderProps {
 // @internal
 export interface _Identifiers {
     horizontalGalleryVideoTile: string;
-    mentionSuggestionItem: string;
-    mentionSuggestionList: string;
     messageContent: string;
     messageTimestamp: string;
     overflowGalleryLeftNavButton: string;

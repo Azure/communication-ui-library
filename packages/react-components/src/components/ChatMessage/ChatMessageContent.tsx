@@ -14,7 +14,7 @@ import { BlockedMessage } from '../../types/ChatMessage';
 import { LiveMessage } from 'react-aria-live';
 import { Link } from '@fluentui/react';
 /* @conditional-compile-remove(mention) */
-import { MentionDisplayOptions, MentionSuggestion } from '../MentionFlyout';
+import { MentionDisplayOptions, Mention } from '../MentionFlyout';
 
 /* @conditional-compile-remove(data-loss-prevention) */
 import { FontIcon, Stack } from '@fluentui/react';
@@ -74,7 +74,7 @@ const MessageContentAsRichTextHTML = (props: ChatMessageContentProps): JSX.Eleme
   const htmlToReactParser = Parser();
   const liveAuthor = _formatString(props.strings.liveAuthorIntro, { author: `${props.message.senderDisplayName}` });
   /* @conditional-compile-remove(mention) */
-  const mentionSuggestionRenderer = props.mentionDisplayOptions?.onRenderMentionSuggestion;
+  const mentionSuggestionRenderer = props.mentionDisplayOptions?.onRenderMention;
   /* @conditional-compile-remove(mention) */
   if (mentionSuggestionRenderer) {
     // Use custom HTML processing if mentionSuggestionRenderer is provided
@@ -88,11 +88,10 @@ const MessageContentAsRichTextHTML = (props: ChatMessageContentProps): JSX.Eleme
         },
         processNode: (node) => {
           console.log('processing node', node);
-          const { userid, suggestiontype, displayname } = node.attribs;
-          const suggestion: MentionSuggestion = {
-            userId: userid,
-            suggestionType: suggestiontype,
-            displayName: displayname
+          const { userid, displayname } = node.attribs;
+          const suggestion: Mention = {
+            id: userid,
+            displayText: displayname
           };
           return mentionSuggestionRenderer(suggestion);
         }

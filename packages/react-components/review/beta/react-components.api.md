@@ -615,7 +615,7 @@ export const DEFAULT_COMPONENT_ICONS: {
 };
 
 // @beta
-export const defaultMentionSuggestionRenderer: (suggestion: MentionSuggestion) => JSX.Element;
+export const defaultMentionSuggestionRenderer: (suggestion: Mention) => JSX.Element;
 
 // @internal
 export const _DevicePermissionDropdown: (props: _DevicePermissionDropdownProps) => JSX.Element;
@@ -1076,8 +1076,15 @@ export const _LocalVideoTile: React_2.MemoExoticComponent<(props: {
 }) => JSX.Element>;
 
 // @beta
+export interface Mention {
+    displayText: string;
+    icon?: JSX.Element;
+    id: string;
+}
+
+// @beta
 export interface MentionDisplayOptions {
-    onRenderMentionSuggestion?: (suggestion: MentionSuggestion) => JSX.Element;
+    onRenderMention?: (mention: Mention) => JSX.Element;
 }
 
 // @internal
@@ -1087,9 +1094,9 @@ export const _MentionFlyout: (props: _MentionFlyoutProps) => JSX.Element;
 export interface _MentionFlyoutProps {
     location?: 'above' | 'below';
     onDismiss?: () => void;
-    onRenderSuggestionItem?: (suggestion: MentionSuggestion, onSuggestionSelected?: (suggestion: MentionSuggestion) => void) => JSX.Element;
-    onSuggestionSelected: (suggestion: MentionSuggestion) => void;
-    suggestions: MentionSuggestion[];
+    onRenderSuggestionItem?: (suggestion: Mention, onSuggestionSelected: (suggestion: Mention) => void) => JSX.Element;
+    onSuggestionSelected: (suggestion: Mention) => void;
+    suggestions: Mention[];
     target: React_2.RefObject<Element>;
     targetPositionOffset?: {
         top: number;
@@ -1100,8 +1107,8 @@ export interface _MentionFlyoutProps {
 
 // @beta
 export interface MentionLookupOptions {
-    onQueryUpdated: (query: string) => Promise<MentionSuggestion[]>;
-    onRenderSuggestionItem?: (suggestion: MentionSuggestion, onSuggestionSelected: (suggestion: MentionSuggestion) => void) => JSX.Element;
+    onQueryUpdated: (query: string) => Promise<Mention[]>;
+    onRenderSuggestionItem?: (suggestion: Mention, onSuggestionSelected: (suggestion: Mention) => void) => JSX.Element;
     trigger?: string;
 }
 
@@ -1110,13 +1117,6 @@ export type MentionOptions = {
     lookupOptions?: MentionLookupOptions;
     displayOptions?: MentionDisplayOptions;
 };
-
-// @beta
-export interface MentionSuggestion {
-    displayName: string;
-    suggestionType: string;
-    userId: string;
-}
 
 // @public
 export type Message = ChatMessage | SystemMessage | CustomMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage;

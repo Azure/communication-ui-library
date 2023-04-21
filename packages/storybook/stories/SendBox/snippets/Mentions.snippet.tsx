@@ -1,27 +1,23 @@
 import { SendBox, FluentThemeProvider } from '@azure/communication-react';
 import React from 'react';
-import { MentionSuggestion } from '../../../../communication-react/dist/communication-react';
+import { Mention } from '../../../../communication-react/dist/communication-react';
 
-const suggestions: MentionSuggestion[] = [
+const suggestions: Mention[] = [
   {
-    userId: '1',
-    suggestionType: 'person',
-    displayName: ''
+    id: '1',
+    displayText: ''
   },
   {
-    userId: '2',
-    suggestionType: 'person',
-    displayName: 'Patricia Adams'
+    id: '2',
+    displayText: 'Patricia Adams'
   },
   {
-    userId: '3',
-    suggestionType: 'person',
-    displayName: '1'
+    id: '3',
+    displayText: '1'
   },
   {
-    userId: '4',
-    suggestionType: 'person',
-    displayName: 'Your user'
+    id: '4',
+    displayText: 'Your user'
   }
 ];
 const trigger = '@';
@@ -41,7 +37,7 @@ export const MentionsExample: () => JSX.Element = () => (
           trigger,
           onQueryUpdated: async (query: string) => {
             const filtered = suggestions.filter((suggestion) => {
-              return suggestion.displayName.toLocaleLowerCase().startsWith(query.toLocaleLowerCase());
+              return suggestion.displayText.toLocaleLowerCase().startsWith(query.toLocaleLowerCase());
             });
             return Promise.resolve(filtered);
           }

@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 import React from 'react';
-import { MentionSuggestion } from '../MentionFlyout';
+import { Mention } from '../MentionFlyout';
 
 /**
  * Provides the default implementation for rendering an Mention
@@ -9,14 +9,10 @@ import { MentionSuggestion } from '../MentionFlyout';
  *
  * @beta
  */
-export const defaultMentionSuggestionRenderer = (suggestion: MentionSuggestion): JSX.Element => {
+export const defaultMentionSuggestionRenderer = (suggestion: Mention): JSX.Element => {
   return (
-    <msft-mention
-      userId={suggestion.userId}
-      suggestionType={suggestion.suggestionType}
-      displayName={suggestion.displayName}
-    >
-      {suggestion.displayName}
+    <msft-mention id={suggestion.id} displayText={suggestion.displayText}>
+      {suggestion.displayText}
     </msft-mention>
   );
 };
@@ -26,9 +22,8 @@ declare global {
   namespace JSX {
     interface IntrinsicElements {
       'msft-mention': React.HTMLAttributes<'msft-mention'> & {
-        userId?: string;
-        suggestionType?: string;
-        displayName?: string;
+        id?: string;
+        displayText?: string;
       };
     }
   }

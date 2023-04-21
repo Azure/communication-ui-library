@@ -22,7 +22,7 @@ export type {
   MentionLookupOptions,
   MentionDisplayOptions,
   MentionOptions,
-  MentionSuggestion
+  Mention
 } from './MentionFlyout';
 /* @conditional-compile-remove(mention) */
 export { defaultMentionSuggestionRenderer } from './ChatMessage/MentionSuggestionRenderer';

@@ -81,13 +81,13 @@ const defaultRemoteParticipants = [
 ];
 
 const defaultMentionSuggestions = [
-  { userId: '1', suggestionType: 'person', displayName: 'Harry Hopkins' },
-  { userId: '2', suggestionType: 'person', displayName: 'Charles Macdonald' },
-  { userId: '3', suggestionType: 'person', displayName: 'Hayden Thomson' },
-  { userId: '4', suggestionType: 'person', displayName: 'Marc Cox' },
-  { userId: '5', suggestionType: 'person', displayName: 'Stevie Knox' },
-  { userId: '6', suggestionType: 'person', displayName: 'Rebecca Huff' },
-  { userId: 'everyone', suggestionType: 'everyone', displayName: 'Everyone' }
+  { id: '1', displayText: 'Harry Hopkins' },
+  { id: '2', displayText: 'Charles Macdonald' },
+  { id: '3', displayText: 'Hayden Thomson' },
+  { id: '4', displayText: 'Marc Cox' },
+  { id: '5', displayText: 'Stevie Knox' },
+  { id: '6', displayText: 'Rebecca Huff' },
+  { id: 'everyone', displayText: 'Everyone' }
 ];
 
 const defaultTypingUsers = [
@@ -406,7 +406,7 @@ export const controlsToAdd = {
   mentionSuggestions: {
     control: 'object',
     defaultValue: defaultMentionSuggestions,
-    name: 'At Mention Suggestions'
+    name: 'Mention Suggestions'
   },
   title: { control: 'text', defaultValue: 'Suggestions', name: 'Title' }
 };
