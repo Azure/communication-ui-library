@@ -634,9 +634,9 @@ export const dragToRight = async (page: Page, selector: string): Promise<void> =
   );
 };
 
-export const jsonDateReplacer = (key: unknown, value: unknown): unknown => {
-  if (key === 'timestamp' && value instanceof Date) {
-    return value.getTime();
+export const jsonDateDeserializer = (key: unknown, value: unknown): unknown => {
+  if (key === 'timestamp' && typeof value === 'string') {
+    return new Date(value);
   }
   return value;
 };
