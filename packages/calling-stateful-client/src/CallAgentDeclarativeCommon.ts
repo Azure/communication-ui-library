@@ -76,6 +76,9 @@ export abstract class ProxyCallAgentCommon {
   protected abstract callDeclaratify(call: CallCommon, context: CallContext): DeclarativeCallCommon;
 
   protected callsUpdated = (event: { added: CallCommon[]; removed: CallCommon[] }): void => {
+    console.log('DEBUG added: ', event.added.map((c) => c.id).join(', '));
+    console.log('DEBUG');
+    console.log('DEBUG removed: ', event.removed.map((c) => c.id).join(', '));
     const addedStatefulCall: DeclarativeCallCommon[] = [];
     for (const call of event.added) {
       const statefulCall = this.addCall(call);
@@ -99,6 +102,7 @@ export abstract class ProxyCallAgentCommon {
         removedStatefulCall.push(this.callDeclaratify(call, this._context));
       }
     }
+    console.log('DEBUG callsUpdated:', this._context.getState());
 
     for (const externalCallsUpdatedListener of this._externalCallsUpdatedListeners) {
       externalCallsUpdatedListener({ added: addedStatefulCall, removed: removedStatefulCall });
@@ -132,7 +136,9 @@ export abstract class ProxyCallAgentCommon {
 
     // For API extentions we need to have the call in the state when we are subscribing as we may want to update the
     // state during the subscription process in the subscriber so we add the call to state before subscribing.
+    console.log('DEBUG before setCall: ', this._context.getState());
     this._context.setCall(convertSdkCallToDeclarativeCall(call));
+    console.log('DEBUG after setCall: ', this._context.getState());
     this._callSubscribers.set(call, new CallSubscriber(call, this._context, this._internalContext));
     return this.getOrCreateDeclarativeCall(call);
   };

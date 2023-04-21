@@ -100,8 +100,8 @@ type TeamsCallScreenProps = CallScreenProps & {
 /* @conditional-compile-remove(teams-identity-support) */
 const TeamsCallScreen = (props: TeamsCallScreenProps): JSX.Element => {
   const { afterCreate, callLocator: locator, userId, ...adapterArgs } = props;
-  if (!('meetingLink' in locator)) {
-    throw new Error('A teams meeting locator must be provided for Teams Identity Call.');
+  if (!('meetingLink' in locator) && !('participantIds' in locator)) {
+    throw new Error('A teams meeting locator or participantIds locator must be provided for Teams Identity Call.');
   }
 
   if (!('microsoftTeamsUserId' in userId)) {

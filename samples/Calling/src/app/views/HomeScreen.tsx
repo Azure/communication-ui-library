@@ -165,7 +165,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
       /* @conditional-compile-remove(teams-adhoc-call) */ (teamsAdhocChosen && outboundTeamsUsers) ||
       /* @conditional-compile-remove(one-to-n-calling) */ (outboundParticipants && acsCallChosen) ||
       /* @conditional-compile-remove(teams-identity-support) */ (teamsIdentityChosen &&
-        callLocator &&
+        (callLocator || outboundTeamsUsers) &&
         teamsToken &&
         teamsId));
 
@@ -212,6 +212,21 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                 onChange={(_, newValue) => newValue && setCallLocator({ meetingLink: newValue })}
               />
             )}
+            {
+              /* @conditional-compile-remove(teams-identity-support) */ chosenCallOption.key === 'TeamsIdentity' && (
+                <Stack>
+                  <TextField
+                    className={outboundTextField}
+                    label={"Teams user ID's"}
+                    placeholder={"Comma seperated Teams user ID's"}
+                    onChange={(_, newValue) => setOutboundTeamsUsers(newValue)}
+                    onRenderLabel={(props?: ITextFieldProps) => (
+                      <TeamsUserIdsTextFieldLabel id={outboundTeamsUsersTextFieldLabelId} {...props} />
+                    )}
+                  />
+                </Stack>
+              )
+            }
             {
               /* @conditional-compile-remove(teams-identity-support) */ chosenCallOption.key === 'TeamsIdentity' && (
                 <Stack>

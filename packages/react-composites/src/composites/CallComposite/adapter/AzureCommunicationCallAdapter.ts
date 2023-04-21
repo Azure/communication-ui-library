@@ -311,6 +311,13 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
       // https://github.com/Azure/communication-ui-library/pull/1820
       if (this.call?.id) {
         this.context.setCurrentCallId(this.call.id);
+        const cAgent = callAgent as CallAgent;
+        console.log('DEBUG cAgent: ', cAgent);
+        const newCall = cAgent.calls.find((call) => (call as Call).state === 'Connected');
+        console.log('DEBUG newCall: ', newCall);
+        if (newCall) {
+          this.processNewCall(newCall);
+        }
       }
       this.context.updateClientState(clientState);
     };
@@ -991,7 +998,7 @@ export type TeamsAdapterOptions = {
 export type TeamsCallAdapterArgs = {
   userId: MicrosoftTeamsUserIdentifier;
   credential: CommunicationTokenCredential;
-  locator: TeamsMeetingLinkLocator;
+  locator: TeamsMeetingLinkLocator | CallParticipantsLocator;
   /**
    * Optional parameters for the {@link TeamsCallAdapter} created
    */
