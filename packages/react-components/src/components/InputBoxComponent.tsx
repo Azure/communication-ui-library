@@ -581,20 +581,33 @@ const updateHTML = (
   // ex: change is before and partially in tag => change will be added before the tag and outdated text in the tag will be removed
   // ex: change is after and partially in tag => change will be added after the tag and outdated text in the tag will be removed
   let processedChange = change;
+  // end tag plain text index of the last processed tag
+  let lastProcessedPlainTextTagEndIndex = 0;
 
   for (let i = 0; i < tags.length; i++) {
     const tag = tags[i];
     console.log('updateHTML tag.type', tag.tagType);
     console.log('updateHTML tag.plainTextStartIndex', tag.plainTextStartIndex);
     console.log('updateHTML tag.plainTextEndIndex', tag.plainTextEndIndex);
+    console.log('updateHTML startIndex', startIndex);
+    console.log('updateHTML oldPlainTextEndIndex', oldPlainTextEndIndex);
 
     //change start is before the open tag
     if (startIndex < tag.plainTextStartIndex) {
       console.log('updateHTML 0 result', result);
-      const startChangeDiff = tag.plainTextStartIndex - startIndex;
+      console.log('updateHTML !!!!!! 0 lastProcessedPlainTextTagEndIndex', lastProcessedPlainTextTagEndIndex);
+      // Math.max(lastProcessedPlainTextTagEndIndex, startIndex) is used as startIndex may not be in [[previous tag].plainTextEndIndex - tag.plainTextStartIndex] range
+      const startChangeDiff = tag.plainTextStartIndex - Math.max(lastProcessedPlainTextTagEndIndex, startIndex);
+      console.log('updateHTML 0 tag.type', tag.tagType);
+      console.log('updateHTML 0 lastProcessedHTMLIndex', lastProcessedHTMLIndex);
+      console.log(
+        'updateHTML 0 tag.htmlOpenTagStartIndex - startChangeDiff',
+        tag.htmlOpenTagStartIndex - startChangeDiff
+      );
       result +=
         htmlText.substring(lastProcessedHTMLIndex, tag.htmlOpenTagStartIndex - startChangeDiff) + processedChange;
       console.log('updateHTML 0 result after update', result);
+      console.log('updateHTML 0 tag.type', tag.tagType);
       if (oldPlainTextEndIndex <= tag.plainTextStartIndex) {
         //the whole change is before tag start
         const endChangeDiff = tag.plainTextStartIndex - oldPlainTextEndIndex;
@@ -717,6 +730,10 @@ const updateHTML = (
           );
           console.log('updateHTML htmlCloseTagStartIndex', htmlCloseTagStartIndex);
           console.log('updateHTML htmlText[htmlCloseTagStartIndex]', htmlText[htmlCloseTagStartIndex]);
+          console.log(
+            'updateHTML CloseTag',
+            htmlText.substring(htmlCloseTagStartIndex, htmlCloseTagStartIndex + closeTagLength)
+          );
           lastProcessedHTMLIndex = htmlCloseTagStartIndex;
 
           const content = updateHTML(
@@ -827,15 +844,17 @@ const updateHTML = (
           break;
         }
       }
+      lastProcessedPlainTextTagEndIndex = plainTextEndIndex;
     }
     if (i === tags.length - 1 && oldPlainTextEndIndex >= plainTextEndIndex) {
       console.log('updateHTML 2 oldPlainTextEndIndex', oldPlainTextEndIndex);
       console.log('updateHTML 2 plainTextEndIndex', plainTextEndIndex);
+      console.log('updateHTML 2 startIndex', startIndex);
       console.log('updateHTML 2 oldPlainText', oldPlainText);
       console.log('updateHTML 2 oldPlainText.length', oldPlainText.length);
       //the last tag should handle the end of the change if needed
       const endChangeDiff = oldPlainTextEndIndex - plainTextEndIndex;
-      if (startIndex > plainTextEndIndex) {
+      if (startIndex >= plainTextEndIndex) {
         const startChangeDiff = startIndex - plainTextEndIndex;
         result +=
           htmlText.substring(lastProcessedHTMLIndex, htmlCloseTagStartIndex + closeTagLength + startChangeDiff) +
@@ -844,7 +863,9 @@ const updateHTML = (
         result += processedChange;
       }
       processedChange = '';
+      console.log('updateHTML 2 lastProcessedHTMLIndex befor', lastProcessedHTMLIndex);
       lastProcessedHTMLIndex = htmlCloseTagStartIndex + closeTagLength + endChangeDiff;
+      console.log('updateHTML 2 lastProcessedHTMLIndex', lastProcessedHTMLIndex);
       // the change is handled; exit
       // break is not required here as this is the last element but added for consistency
       break;
