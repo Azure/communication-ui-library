@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "String translation for beta release",
+  "comment": "String translation for beta release 1.5.1-beta.3",
   "packageName": "@azure/communication-react",
   "email": "carolinecao@microsoft.com",
   "dependentChangeType": "patch"
