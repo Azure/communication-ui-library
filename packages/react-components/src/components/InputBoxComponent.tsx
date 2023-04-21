@@ -1013,7 +1013,11 @@ const addTag = (tag: ReformedTag, parseStack: ReformedTag[], tags: ReformedTag[]
   }
 
   if (!tag.closeTagIdx) {
-    tag.closeTagIdx = tag.openTagIdx + tag.openTagBody.length + (tag.content ?? []).length;
+    if (tag.openTagBody[tag.openTagBody.length - 2] === '/') {
+      tag.closeTagIdx = tag.openTagIdx;
+    } else {
+      tag.closeTagIdx = tag.openTagIdx + tag.openTagBody.length + (tag.content ?? []).length;
+    }
   }
 
   if (parentTag) {
