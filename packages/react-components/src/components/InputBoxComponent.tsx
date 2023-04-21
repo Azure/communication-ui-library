@@ -879,16 +879,18 @@ type HtmlTag = {
 
 /**
  * Parse the text and return the tags and the plain text in one go
- * @param text
- * @param trigger
- * @returns
+ * @param text - The text to parse for HTML tags
+ * @param trigger The trigger to show for the msft-mention tag in plain text
+ *
+ * @returns An array of tags and the plain text representation
  */
 const reformedTagParser = (text: string, trigger: string): [ReformedTag[], string] => {
-  const tags: ReformedTag[] = [];
-  const tagParseStack: ReformedTag[] = [];
-  let plainTextRepresentation = '';
-  let parseIndex = 0;
+  const tags: ReformedTag[] = []; // Tags passed back to the caller
+  const tagParseStack: ReformedTag[] = []; // Local stack to use while parsing
 
+  let plainTextRepresentation = '';
+
+  let parseIndex = 0;
   while (parseIndex < text.length) {
     console.log('Parsing at index ' + parseIndex + ' of ' + text.length);
     const foundHtmlTag = findNextHtmlTag(text, parseIndex);
@@ -1015,34 +1017,37 @@ const addTag = (tag: ReformedTag, parseStack: ReformedTag[], tags: ReformedTag[]
   // Add as sub-tag to the parent stack tag, if there is one
   const parentTag = parseStack[parseStack.length - 1];
 
-  if (!!parentTag) {
-    const parentContentStartIdx = parentTag.openTagIdx + parentTag.openTagBody.length;
-    // Relative start is the parent start index + the size of the parent open tag
-    const relativeIdx = tag.openTagIdx - parentContentStartIdx;
-    tag.openTagIdx = relativeIdx;
-  } else {
-    // Look at the length of the previous tag added to get the offset.
+  if (!parentTag) {
+    // Look at the previous tag added to get the offset.
     const prevTag = tags[tags.length - 1];
     if (!!prevTag && prevTag.closeTagIdx) {
       tag.openTagIdx = prevTag.closeTagIdx + prevTag.tagType.length + 3;
-    }
+    } // Else case not needed, as the first tag relative is the same as the absolute
+  } else {
+    // Adjust the open tag index to be relative to the parent tag
+    const parentContentStartIdx = parentTag.openTagIdx + parentTag.openTagBody.length;
+    const relativeIdx = tag.openTagIdx - parentContentStartIdx;
+    tag.openTagIdx = relativeIdx;
   }
 
   if (!tag.closeTagIdx) {
+    // If the tag is self-closing, the close tag is the same as the open tag
     if (tag.openTagBody[tag.openTagBody.length - 2] === '/') {
       tag.closeTagIdx = tag.openTagIdx;
     } else {
+      // Otherwise, the close tag index is the open tag index + the open tag body + the content length
       tag.closeTagIdx = tag.openTagIdx + tag.openTagBody.length + (tag.content ?? []).length;
     }
   }
 
-  if (parentTag) {
+  // Put the tag where it belongs
+  if (!parentTag) {
+    tags.push(tag);
+  } else {
     if (!parentTag.subTags) {
       parentTag.subTags = [tag];
     } else {
       parentTag.subTags.push(tag);
     }
-  } else {
-    tags.push(tag);
   }
 };
