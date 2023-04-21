@@ -59,7 +59,7 @@ export function parseQueryArgs(): QueryArgs {
     userId: params.userId ?? '',
 
     fakeChatAdapterArgs: params.fakeChatAdapterArgs ? JSON.parse(params.fakeChatAdapterArgs) : undefined,
-    mockCallAdapterState: params.MockCallAdapterState
+    mockCallAdapterState: params.mockCallAdapterState
       ? JSON.parse(params.mockCallAdapterState, jsonDateDeserializer) // json date deserializer is needed because Date objects are serialized as strings by JSON.stringify
       : undefined,
 
