@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add scrollbar style to captions",
+  "packageName": "@azure/communication-react",
+  "email": "jiangnanhello@live.com",
+  "dependentChangeType": "patch"
+}
