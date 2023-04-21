@@ -7,7 +7,8 @@ import { IStyle } from '@fluentui/react';
 export const controlBarContainerStyles: IStyle = {
   paddingTop: '0.25rem',
   paddingBottom: '0.25rem',
-
+  minHeight: '4.5rem', // need to enforce min height otherwise when side bar buttons removed it will collapse the control bar.
+  width: '100%',
   // @TODO: this should be exposed through a custom CallComposite Theme API that extends the fluent theme with semantic values
   boxShadow: `
     0px 6.400000095367432px 14.399999618530273px 0px #00000021;
