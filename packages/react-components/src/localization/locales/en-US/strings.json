@@ -171,8 +171,7 @@
     "failedToJoinCallInvalidMeetingLink": "Unable to join Meeting. Invalid Link.",
     "startScreenSharingGeneric": "There was an issue starting screen share.",
     "cameraFrozenForRemoteParticipants": "Users in the call are having issues seeing your video. Please check your devices and network.",
-    "unableToStartVideoEffect": "Unable to apply video effect.",
-    "invalidbackgroundImageUrl": "Invalid image URL, unable to apply effect."
+    "unableToStartVideoEffect": "Unable to apply video effect."
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "You are sharing your screen",

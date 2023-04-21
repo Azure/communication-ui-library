@@ -158,26 +158,12 @@ export const errorBarSelector: ErrorBarSelector = createSelector(
 
     appendActiveErrorIfDefined(activeErrorMessages, latestErrors, 'Call.unmute', 'unmuteGeneric');
     /* @conditional-compile-remove(video-background-effects) */
-    if (latestErrors['VideoEffectsFeature.startEffects']) {
-      if (
-        latestErrors['VideoEffectsFeature.startEffects']?.message ===
-        'VideoEffectsFeature.startEffects: Error starting effects - Error fetching effect provider - Error fetching image from URL - Error: URL is not an image'
-      ) {
-        appendActiveErrorIfDefined(
-          activeErrorMessages,
-          latestErrors,
-          'VideoEffectsFeature.startEffects',
-          'invalidbackgroundImageUrl'
-        );
-      } else {
-        appendActiveErrorIfDefined(
-          activeErrorMessages,
-          latestErrors,
-          'VideoEffectsFeature.startEffects',
-          'unableToStartVideoEffect'
-        );
-      }
-    }
+    appendActiveErrorIfDefined(
+      activeErrorMessages,
+      latestErrors,
+      'VideoEffectsFeature.startEffects',
+      'unableToStartVideoEffect'
+    );
 
     if (latestErrors['CallAgent.join']?.message === 'CallAgent.join: Invalid meeting link') {
       appendActiveErrorIfDefined(

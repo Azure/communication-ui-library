@@ -222,11 +222,6 @@ export interface ErrorBarStrings {
    * Unable to start effect
    */
   unableToStartVideoEffect?: string;
-  /* @conditional-compile-remove(video-background-effects) */
-  /**
-   * Invalid image link, unable to apply video replacement effect
-   */
-  invalidbackgroundImageUrl?: string;
 }
 
 /**
