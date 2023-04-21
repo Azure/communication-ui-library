@@ -363,7 +363,8 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
         {!props.mobileView &&
           (isEnabled(options.peopleButton) ||
             isEnabled(options.chatButton) ||
-            customButtons['secondary'] !== undefined) && (
+            /* @conditional-compile-remove(control-bar-button-injection) */ customButtons['secondary'] !==
+              undefined) && (
             <Stack.Item>
               <div ref={sidepaneControlsRef}>
                 <Stack horizontal className={!props.mobileView ? mergeStyles(desktopButtonContainerStyle) : undefined}>
