@@ -563,17 +563,24 @@ const updateHTML = (
             mentionTagLength = mentionTrigger.length;
           }
           const startChangeDiff = startIndex - tag.plainTextBeginIndex - mentionTagLength;
-          const endChangeDiff = plainTextEndIndex - oldPlainTextEndIndex - mentionTagLength;
+          //TODO: check if endChangeDiff is correct
+          const endChangeDiff = oldPlainTextEndIndex - tag.plainTextBeginIndex - mentionTagLength;
           console.log('updateHTML startChangeDiff', startChangeDiff);
+          console.log('updateHTML endChangeDiff', endChangeDiff);
           console.log('updateHTML tag.openTagIdx', tag.openTagIdx);
+          console.log('updateHTML tag.openTagIdx', closeTagIdx);
           console.log('updateHTML lastProcessedHTMLIndex before update', lastProcessedHTMLIndex);
+          console.log(
+            'updateHTML tag.openTagIdx + tag.openTagBody.length + startChangeDiff',
+            tag.openTagIdx + tag.openTagBody.length + startChangeDiff
+          );
           result +=
             htmlText.substring(lastProcessedHTMLIndex, tag.openTagIdx + tag.openTagBody.length + startChangeDiff) +
             processedChange;
 
           console.log('updateHTML result', result);
           processedChange = '';
-          lastProcessedHTMLIndex = closeTagIdx - endChangeDiff;
+          lastProcessedHTMLIndex = tag.openTagIdx + tag.openTagBody.length + endChangeDiff;
           console.log('updateHTML htmlText[lastProcessedHTMLIndex]', htmlText[lastProcessedHTMLIndex]);
           console.log('updateHTML lastProcessedHTMLIndex', lastProcessedHTMLIndex);
           console.log('updateHTML htmlText', htmlText);
@@ -654,6 +661,7 @@ const updateHTML = (
         if (tag.tagType === 'msft-mention') {
           mentionTagLength = mentionTrigger.length;
         }
+        //TODO: check if endChangeDiff is correct
         const endChangeDiff = plainTextEndIndex - oldPlainTextEndIndex - mentionTagLength;
         lastProcessedHTMLIndex = closeTagIdx - endChangeDiff;
         // the change is handled; exit
@@ -707,6 +715,7 @@ const updateHTML = (
       console.log('updateHTML 2 oldPlainText', oldPlainText);
       console.log('updateHTML 2 oldPlainText.length', oldPlainText.length);
       //the last tag should handle the end of the change if needed
+      //TODO: check if endChangeDiff is correct
       const endChangeDiff = oldPlainTextEndIndex - plainTextEndIndex;
       if (startIndex >= plainTextEndIndex) {
         const startChangeDiff = startIndex - plainTextEndIndex;
