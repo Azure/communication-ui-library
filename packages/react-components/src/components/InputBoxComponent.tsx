@@ -703,9 +703,9 @@ const updateHTML = (
         } else {
           // no subtags
           // startChangeDiff and endChangeDiff includes trigger length that shouldn't be included in htmlText.substring because html strings doesn't have the trigger
-          // mentionTagLength will be set only for 'msft-at-mention', otherwise should be 0
+          // mentionTagLength will be set only for 'msft-mention', otherwise should be 0
           let mentionTagLength = 0;
-          if (tag.tagType === 'msft-at-mention') {
+          if (tag.tagType === 'msft-mention') {
             mentionTagLength = mentionTrigger.length;
           }
           const startChangeDiff = startIndex - tag.plainTextStartIndex - mentionTagLength;
@@ -733,9 +733,9 @@ const updateHTML = (
         console.log('updateHTML 1.3 result', result);
         //the change started in the tag but finishes somewhere further
         // startChangeDiff includes trigger length that shouldn't be included in htmlText.substring because html strings doesn't have the trigger
-        // mentionTagLength will be set only for 'msft-at-mention', otherwise should be 0
+        // mentionTagLength will be set only for 'msft-mention', otherwise should be 0
         let mentionTagLength = 0;
-        if (tag.tagType === 'msft-at-mention') {
+        if (tag.tagType === 'msft-mention') {
           mentionTagLength = mentionTrigger.length;
         }
         const startChangeDiff = startIndex - tag.plainTextStartIndex - mentionTagLength;
@@ -806,9 +806,9 @@ const updateHTML = (
         // the change  starts before the tag and ends in a tag
         result += htmlText.substring(lastProcessedHTMLIndex, tag.htmlOpenTagStartIndex + tag.openTagLength);
         // endChangeDiff includes trigger length that shouldn't be included in htmlText.substring because html strings doesn't have the trigger
-        // mentionTagLength will be set only for 'msft-at-mention', otherwise should be 0
+        // mentionTagLength will be set only for 'msft-mention', otherwise should be 0
         let mentionTagLength = 0;
-        if (tag.tagType === 'msft-at-mention') {
+        if (tag.tagType === 'msft-mention') {
           mentionTagLength = mentionTrigger.length;
         }
         const endChangeDiff = plainTextEndIndex - oldPlainTextEndIndex - mentionTagLength;
@@ -846,9 +846,9 @@ const updateHTML = (
         } else {
           // no subtags
           // startChangeDiff includes trigger length that shouldn't be included in htmlText.substring because html strings doesn't have the trigger
-          // mentionTagLength will be set only for 'msft-at-mention', otherwise should be 0
+          // mentionTagLength will be set only for 'msft-mention', otherwise should be 0
           let mentionTagLength = 0;
-          if (tag.tagType === 'msft-at-mention') {
+          if (tag.tagType === 'msft-mention') {
             mentionTagLength = mentionTrigger.length;
           }
           const startChangeDiff = startIndex - tag.plainTextStartIndex - mentionTagLength;
