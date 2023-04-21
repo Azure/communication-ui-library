@@ -11,7 +11,8 @@ test.describe('Error bar tests', async () => {
     const initialState = defaultMockCallAdapterState();
     initialState.latestErrors = {
       'Call.startVideo': {
-        timestamp: new Date(10000),
+        // Add 24 hours to current time to ensure the error is not dismissed by default
+        timestamp: new Date(Date.now() + 3600 * 1000 * 24),
         name: 'Failure to start video',
         message: 'Could not start video',
         target: 'Call.startVideo',
@@ -28,14 +29,14 @@ test.describe('Error bar tests', async () => {
     const initialState = defaultMockCallAdapterState();
     initialState.latestErrors = {
       'Call.unmute': {
-        timestamp: new Date(20000),
+        timestamp: new Date(Date.now() + 3600 * 1000 * 24),
         name: 'Failure to unmute',
         message: 'Could not unmute',
         target: 'Call.unmute',
         innerError: new Error('Inner error of failure to unmute')
       },
       'Call.stopVideo': {
-        timestamp: new Date(30000),
+        timestamp: new Date(Date.now() + 3600 * 1000 * 25),
         name: 'Failure to stop video',
         message: 'Could not stop video',
         target: 'Call.stopVideo',
