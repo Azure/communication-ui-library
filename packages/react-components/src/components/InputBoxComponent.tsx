@@ -310,7 +310,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
         newValue.substring(changeStart, newChangeEnd),
         triggerText
       );
-      console.log('updatedHTML updatedHTML', result);
+      console.log('updateHTML updatedHTML', result);
     }
 
     onChange && onChange(event, result);
@@ -355,6 +355,8 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
             setInputTextValue(newValue ?? '');
             /* @conditional-compile-remove(mention) */
             handleOnChange(e, newValue);
+            /* @conditional-compile-remove(mention) */
+            return;
             onChange(e, newValue);
           }}
           autoComplete="off"
