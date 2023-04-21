@@ -5,19 +5,19 @@ import { IStackStyles, mergeStyles, Theme } from '@fluentui/react';
 
 /**
  * @private
- * z-index to ensure that chat container has lower z-index than mention flyout
+ * z-index to ensure that chat container has lower z-index than mention popover
  */
 export const CHAT_CONTAINER_ZINDEX = 1;
 
 /**
  * @private
  */
-export const mentionFlyoutContainerStyle = (theme: Theme): string =>
+export const mentionPopoverContainerStyle = (theme: Theme): string =>
   mergeStyles({
     boxShadow: theme.effects.elevation16,
     background: theme.semanticColors.bodyBackground,
     overflow: 'visible',
-    // zIndex to set the mentionFlyout above the chat container
+    // zIndex to set the mentionPopover above the chat container
     zIndex: CHAT_CONTAINER_ZINDEX + 1
   });
 /**

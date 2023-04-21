@@ -12,18 +12,18 @@ export type { GridLayoutProps, GridLayoutStyles } from './GridLayout';
 
 export { SendBox } from './SendBox';
 /* @conditional-compile-remove(mention) */
-export { _MentionFlyout } from './MentionFlyout';
+export { _MentionPopover } from './MentionPopover';
 
 export type { SendBoxProps, SendBoxStrings, SendBoxStylesProps } from './SendBox';
 
 /* @conditional-compile-remove(mention) */
 export type {
-  _MentionFlyoutProps,
+  _MentionPopoverProps,
   MentionLookupOptions,
   MentionDisplayOptions,
   MentionOptions,
   Mention
-} from './MentionFlyout';
+} from './MentionPopover';
 /* @conditional-compile-remove(mention) */
 export { defaultMentionSuggestionRenderer } from './ChatMessage/MentionSuggestionRenderer';
 

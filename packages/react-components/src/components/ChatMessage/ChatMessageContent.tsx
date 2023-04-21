@@ -14,7 +14,7 @@ import { BlockedMessage } from '../../types/ChatMessage';
 import { LiveMessage } from 'react-aria-live';
 import { Link } from '@fluentui/react';
 /* @conditional-compile-remove(mention) */
-import { MentionDisplayOptions, Mention } from '../MentionFlyout';
+import { MentionDisplayOptions, Mention } from '../MentionPopover';
 
 /* @conditional-compile-remove(data-loss-prevention) */
 import { FontIcon, Stack } from '@fluentui/react';

@@ -33,7 +33,7 @@ import { Caret } from 'textarea-caret-ts';
 import { isDarkThemed } from '../theming/themeUtils';
 import { useTheme } from '../theming';
 /* @conditional-compile-remove(mention) */
-import { MentionLookupOptions, _MentionFlyout, Mention } from './MentionFlyout';
+import { MentionLookupOptions, _MentionPopover, Mention } from './MentionPopover';
 /* @conditional-compile-remove(mention) */
 import { debounce } from 'lodash';
 /* @conditional-compile-remove(mention) */
@@ -327,7 +327,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       <div className={mergedTextContainerStyle}>
         {
           /* @conditional-compile-remove(mention) */ mentionSuggestions.length > 0 && (
-            <_MentionFlyout
+            <_MentionPopover
               suggestions={mentionSuggestions}
               target={inputBoxRef}
               targetPositionOffset={caretPosition}

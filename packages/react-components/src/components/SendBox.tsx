@@ -23,7 +23,7 @@ import { _FileUploadCards } from './FileUploadCards';
 import { fileUploadCardsStyles } from './styles/SendBox.styles';
 import { SendBoxErrorBarError } from './SendBoxErrorBar';
 /* @conditional-compile-remove(mention) */
-import { MentionLookupOptions } from './MentionFlyout';
+import { MentionLookupOptions } from './MentionPopover';
 
 const EMPTY_MESSAGE_REGEX = /^\s*$/;
 const MAXIMUM_LENGTH_OF_MESSAGE = 8000;

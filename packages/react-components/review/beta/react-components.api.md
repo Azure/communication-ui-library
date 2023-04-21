@@ -1087,24 +1087,6 @@ export interface MentionDisplayOptions {
     onRenderMention?: (mention: Mention) => JSX.Element;
 }
 
-// @internal
-export const _MentionFlyout: (props: _MentionFlyoutProps) => JSX.Element;
-
-// @internal
-export interface _MentionFlyoutProps {
-    location?: 'above' | 'below';
-    onDismiss?: () => void;
-    onRenderSuggestionItem?: (suggestion: Mention, onSuggestionSelected: (suggestion: Mention) => void) => JSX.Element;
-    onSuggestionSelected: (suggestion: Mention) => void;
-    suggestions: Mention[];
-    target: React_2.RefObject<Element>;
-    targetPositionOffset?: {
-        top: number;
-        left: number;
-    };
-    title?: string;
-}
-
 // @beta
 export interface MentionLookupOptions {
     onQueryUpdated: (query: string) => Promise<Mention[]>;
@@ -1117,6 +1099,24 @@ export type MentionOptions = {
     lookupOptions?: MentionLookupOptions;
     displayOptions?: MentionDisplayOptions;
 };
+
+// @internal
+export const _MentionPopover: (props: _MentionPopoverProps) => JSX.Element;
+
+// @internal
+export interface _MentionPopoverProps {
+    location?: 'above' | 'below';
+    onDismiss?: () => void;
+    onRenderSuggestionItem?: (suggestion: Mention, onSuggestionSelected: (suggestion: Mention) => void) => JSX.Element;
+    onSuggestionSelected: (suggestion: Mention) => void;
+    suggestions: Mention[];
+    target: React_2.RefObject<Element>;
+    targetPositionOffset?: {
+        top: number;
+        left: number;
+    };
+    title?: string;
+}
 
 // @public
 export type Message = ChatMessage | SystemMessage | CustomMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage;

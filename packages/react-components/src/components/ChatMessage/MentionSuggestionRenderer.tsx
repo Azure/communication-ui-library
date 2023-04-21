@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 import React from 'react';
-import { Mention } from '../MentionFlyout';
+import { Mention } from '../MentionPopover';
 
 /**
  * Provides the default implementation for rendering an Mention

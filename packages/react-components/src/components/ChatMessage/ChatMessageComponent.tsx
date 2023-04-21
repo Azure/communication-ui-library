@@ -12,7 +12,7 @@ import { BlockedMessage } from '../../types';
 import { ChatMessageComponentAsMessageBubble } from './ChatMessageComponentAsMessageBubble';
 import { FileDownloadHandler, FileMetadata } from '../FileDownloadCards';
 /* @conditional-compile-remove(mention) */
-import { MentionOptions } from '../MentionFlyout';
+import { MentionOptions } from '../MentionPopover';
 
 type ChatMessageComponentProps = {
   message: ChatMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage;

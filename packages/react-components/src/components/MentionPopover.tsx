@@ -3,38 +3,38 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { FocusZone, Persona, PersonaSize, Stack, mergeStyles, useTheme } from '@fluentui/react';
 import {
-  mentionFlyoutContainerStyle,
+  mentionPopoverContainerStyle,
   headerStyleThemed,
   suggestionListStyle,
   suggestionListContainerStyle,
   suggestionItemStackStyle,
   suggestionItemWrapperStyle
-} from './styles/MentionFlyout.style';
+} from './styles/MentionPopover.style';
 /* @conditional-compile-remove(mention) */
 import { useIdentifiers } from '../identifiers';
 import { useLocale } from '../localization';
 
 /**
- * Props for {@link _MentionFlyout}.
+ * Props for {@link _MentionPopover}.
  *
  * @internal
  */
-export interface _MentionFlyoutProps {
+export interface _MentionPopoverProps {
   /**
    * Array of mention suggestions used to populate the suggestion list
    */
   suggestions: Mention[];
   /**
-   * Optional string used as mention flyout's title.
+   * Optional string used as mention popover's title.
    * @defaultValue `Suggestions`
    */
   title?: string;
   /**
-   * Element to anchor the flyout to.
+   * Element to anchor the popover to.
    */
   target: React.RefObject<Element>;
   /**
-   * When rendering the flyout, where to position it relative to the target.
+   * When rendering the popover, where to position it relative to the target.
    */
   targetPositionOffset?: { top: number; left: number };
   /**
@@ -47,7 +47,7 @@ export interface _MentionFlyoutProps {
    */
   onSuggestionSelected: (suggestion: Mention) => void;
   /**
-   * Callback to invoke when the flyout is dismissed
+   * Callback to invoke when the popover is dismissed
    */
   onDismiss?: () => void;
   /**
@@ -119,7 +119,7 @@ export interface Mention {
  *
  * @internal
  */
-export const _MentionFlyout = (props: _MentionFlyoutProps): JSX.Element => {
+export const _MentionPopover = (props: _MentionPopoverProps): JSX.Element => {
   interface Position {
     left?: number;
     right?: number;
@@ -143,15 +143,15 @@ export const _MentionFlyout = (props: _MentionFlyoutProps): JSX.Element => {
   /* @conditional-compile-remove(mention) */
   const ids = useIdentifiers();
   const localeStrings = useLocale().strings.participantItem;
-  const flyoutRef = useRef() as React.MutableRefObject<HTMLDivElement>;
+  const popoverRef = useRef() as React.MutableRefObject<HTMLDivElement>;
 
   const [position, setPosition] = useState<Position>({ left: 0 });
   const [hoveredSuggestion, setHoveredSuggestion] = useState<Mention | undefined>(undefined);
 
-  const dismissFlyoutWhenClickingOutside = useCallback(
+  const dismissPopoverWhenClickingOutside = useCallback(
     (e: MouseEvent) => {
       const target = e.target as HTMLElement;
-      if (flyoutRef.current && !flyoutRef.current.contains(target)) {
+      if (popoverRef.current && !popoverRef.current.contains(target)) {
         onDismiss && onDismiss();
       }
     },
@@ -159,11 +159,11 @@ export const _MentionFlyout = (props: _MentionFlyoutProps): JSX.Element => {
   );
 
   useEffect(() => {
-    window && window.addEventListener('click', dismissFlyoutWhenClickingOutside);
+    window && window.addEventListener('click', dismissPopoverWhenClickingOutside);
     return () => {
-      window && window.removeEventListener('click', dismissFlyoutWhenClickingOutside);
+      window && window.removeEventListener('click', dismissPopoverWhenClickingOutside);
     };
-  }, [dismissFlyoutWhenClickingOutside]);
+  }, [dismissPopoverWhenClickingOutside]);
 
   // Determine popover position
   useEffect(() => {
@@ -242,14 +242,14 @@ export const _MentionFlyout = (props: _MentionFlyoutProps): JSX.Element => {
   };
 
   return (
-    <div ref={flyoutRef}>
+    <div ref={popoverRef}>
       <Stack
         className={mergeStyles(
           {
             maxHeight: 212,
             maxWidth: position.maxWidth
           },
-          mentionFlyoutContainerStyle(theme),
+          mentionPopoverContainerStyle(theme),
           {
             ...position,
             position: 'absolute'

@@ -15,7 +15,7 @@ import { _FileUploadCards } from '../FileUploadCards';
 import { FileMetadata } from '../FileDownloadCards';
 import { chatMessageFailedTagStyle } from '../styles/ChatMessageComponent.styles';
 /* @conditional-compile-remove(mention) */
-import { MentionLookupOptions } from '../MentionFlyout';
+import { MentionLookupOptions } from '../MentionPopover';
 
 const MAXIMUM_LENGTH_OF_MESSAGE = 8000;
 

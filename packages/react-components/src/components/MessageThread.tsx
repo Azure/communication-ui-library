@@ -69,7 +69,7 @@ import { FileDownloadHandler, FileMetadata } from './FileDownloadCards';
 import { AttachmentDownloadResult } from './FileDownloadCards';
 import { useTheme } from '../theming';
 /* @conditional-compile-remove(mention) */
-import { MentionOptions } from './MentionFlyout';
+import { MentionOptions } from './MentionPopover';
 
 const isMessageSame = (first: ChatMessage, second: ChatMessage): boolean => {
   return (

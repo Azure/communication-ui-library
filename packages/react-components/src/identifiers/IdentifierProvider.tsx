@@ -52,10 +52,10 @@ export interface _Identifiers {
   /** `data-ui-id` value for `VerticalGallery` Component's page counter */
   verticalGalleryPageCounter: string;
   /* @conditional-compile-remove(mention) */
-  /** `data-ui-id` value for `MentionFlyout` Component's suggestion list */
+  /** `data-ui-id` value for `MentionPopover` Component's suggestion list */
   mentionSuggestionList: string;
   /* @conditional-compile-remove(mention) */
-  /** `data-ui-id` value for `MentionFlyout` Component's suggestion list item */
+  /** `data-ui-id` value for `MentionPopover` Component's suggestion list item */
   mentionSuggestionItem: string;
 }
 
