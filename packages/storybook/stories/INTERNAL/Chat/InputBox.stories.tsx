@@ -29,7 +29,7 @@ const getDocs: () => JSX.Element = () => {
 
 const InputBoxStory = (): JSX.Element => {
   const exampleHtmlMessage =
-    "<p>Hi<p>Paragraph</p><msft-mention id='2'>Patricia <self-closing/> Adams</msft-mention> <span>and <it><em>and</em></it> </span> and you <msft-mention id='3'>Person 1</msft-mention>!</p>";
+    "<p>Hi<p>Paragraph</p><msft-mention id='2'>Patricia <self-closing/> Adams</msft-mention> <span>and <it><em>and</em></it> </span> and you <msft-mention id='3'>Person 1</msft-mention>!</p><p>Test</p>";
   const sendTextFieldRef = React.useRef<ITextField>(null);
   const theme = useTheme();
   const [textValue, setTextValue] = useState<string>(exampleHtmlMessage);

@@ -998,15 +998,25 @@ const findNextHtmlTag = (text: string, startIndex: number): HtmlTag | undefined 
 const addTag = (tag: ReformedTag, parseStack: ReformedTag[], tags: ReformedTag[]): void => {
   // Add as sub-tag to the parent stack tag, if there is one
   const parentTag = parseStack[parseStack.length - 1];
-  if (parentTag) {
-    // Relative start is the parent start index + the size of the parent open tag
+
+  if (!!parentTag) {
     const parentContentStartIdx = parentTag.openTagIdx + parentTag.openTagBody.length;
+    // Relative start is the parent start index + the size of the parent open tag
     const relativeIdx = tag.openTagIdx - parentContentStartIdx;
     tag.openTagIdx = relativeIdx;
-    if (!tag.closeTagIdx) {
-      tag.closeTagIdx = relativeIdx + tag.openTagBody.length + (tag.content ?? []).length;
+  } else {
+    // Look at the length of the previous tag added to get the offset.
+    const prevTag = tags[tags.length - 1];
+    if (!!prevTag && prevTag.closeTagIdx) {
+      tag.openTagIdx = prevTag.closeTagIdx + prevTag.tagType.length + 3;
     }
+  }
 
+  if (!tag.closeTagIdx) {
+    tag.closeTagIdx = tag.openTagIdx + tag.openTagBody.length + (tag.content ?? []).length;
+  }
+
+  if (parentTag) {
     if (!parentTag.subTags) {
       parentTag.subTags = [tag];
     } else {
