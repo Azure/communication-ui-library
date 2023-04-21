@@ -23,7 +23,7 @@ export function HermeticApp(props: { queryArgs: QueryArgs }): JSX.Element {
   const [callAdapter, setCallAdapter] = useState<CallAdapter | undefined>(undefined);
 
   useEffect(() => {
-    (async (): Promise<void> => {
+    ((): void => {
       if (queryArgs.makeMeLotsOfPeople && queryArgs.mockCallAdapterState?.call) {
         const participants: { [keys: string]: MockRemoteParticipantState } = {};
         const call = queryArgs.mockCallAdapterState.call;
