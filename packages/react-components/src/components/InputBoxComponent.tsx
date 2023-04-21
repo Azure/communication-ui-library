@@ -931,15 +931,10 @@ const reformedTagParser = (text: string, trigger: string): [ReformedTag[], strin
         } else if (currentOpenTag.subTags.length > 0) {
           // Add text after the last tag
           const lastSubTag = currentOpenTag.subTags[currentOpenTag.subTags.length - 1];
-          const trailingCharactersLength =
-            currentOpenTag.closeTagIdx! - lastSubTag.closeTagIdx! - lastSubTag.tagType.length - 3;
-
-          if (trailingCharactersLength > 0) {
-            const trailingText = currentOpenTag.content.substring(
-              currentOpenTag.content.length - trailingCharactersLength
-            );
-            plainTextRepresentation += trailingText;
-          }
+          const startOfRemainingText =
+            (lastSubTag.closeTagIdx ?? lastSubTag.openTagIdx) + lastSubTag.tagType.length + 3;
+          const trailingText = currentOpenTag.content.substring(startOfRemainingText);
+          plainTextRepresentation += trailingText;
         }
 
         currentOpenTag.plainTextEndIndex = plainTextRepresentation.length;
