@@ -479,7 +479,11 @@ const getDesktopScreenShareButtonStyles = (theme: ITheme): ControlBarButtonStyle
     border: 'none',
     background: theme.palette.themePrimary,
     color: theme.palette.white,
-    '* > svg': { fill: theme.palette.white }
+    '* > svg': { fill: theme.palette.white },
+    '@media (forced-colors: active)': {
+      border: '1px solid',
+      borderColor: theme.palette.black
+    }
   };
   const overrides: ControlBarButtonStyles = {
     rootChecked: overrideStyles,
@@ -493,6 +497,19 @@ const getDesktopEndCallButtonStyles = (theme: ITheme): ControlBarButtonStyles =>
     root: {
       // Suppress border around the dark-red button.
       border: 'none'
+    },
+    rootFocused: {
+      '@media (forced-colors: active)': {
+        background: 'highlight',
+        border: '1px solid'
+      }
+    },
+    icon: {
+      '@media (forced-colors: active)': {
+        ':focused': {
+          color: theme.palette.white
+        }
+      }
     }
   };
   return concatStyleSets(getDesktopCommonButtonStyles(theme), overrides);
