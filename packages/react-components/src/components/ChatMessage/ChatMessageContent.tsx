@@ -10,8 +10,8 @@ import { ChatMessage } from '../../types/ChatMessage';
 import { BlockedMessage } from '../../types/ChatMessage';
 import { LiveMessage } from 'react-aria-live';
 import { Link } from '@fluentui/react';
-/* @conditional-compile-remove(at-mention) */
-import { AtMentionDisplayOptions, AtMentionSuggestion } from '../AtMentionFlyout';
+/* @conditional-compile-remove(mention) */
+import { MentionDisplayOptions, MentionSuggestion } from '../MentionFlyout';
 
 /* @conditional-compile-remove(data-loss-prevention) */
 import { FontIcon, Stack } from '@fluentui/react';
@@ -22,8 +22,8 @@ import { FileMetadata } from '../FileDownloadCards';
 type ChatMessageContentProps = {
   message: ChatMessage;
   strings: MessageThreadStrings;
-  /* @conditional-compile-remove(at-mention) */
-  atMentionDisplayOptions?: AtMentionDisplayOptions;
+  /* @conditional-compile-remove(mention) */
+  mentionDisplayOptions?: MentionDisplayOptions;
   /* @conditional-compile-remove(teams-inline-images) */
   attachmentsMap?: Record<string, string>;
   /* @conditional-compile-remove(teams-inline-images) */
@@ -70,27 +70,27 @@ const MessageContentWithLiveAria = (props: MessageContentWithLiveAriaProps): JSX
 const MessageContentAsRichTextHTML = (props: ChatMessageContentProps): JSX.Element => {
   const htmlToReactParser = Parser();
   const liveAuthor = _formatString(props.strings.liveAuthorIntro, { author: `${props.message.senderDisplayName}` });
-  const atMentionSuggestionRenderer = props.atMentionDisplayOptions?.onRenderAtMentionSuggestion;
+  const mentionSuggestionRenderer = props.mentionDisplayOptions?.onRenderMentionSuggestion;
 
-  if (!!atMentionSuggestionRenderer) {
-    // Use custom HTML processing if atMentionSuggestionRenderer is provided
+  if (mentionSuggestionRenderer) {
+    // Use custom HTML processing if mentionSuggestionRenderer is provided
 
     const processNodeDefinitions = ProcessNodeDefinitions();
     const processingInstructions: ProcessingInstructionType[] = [
       {
         shouldProcessNode: (node) => {
-          // Override the handling of the <msft-at-mention> tag in the HTML
-          return node.name === 'msft-at-mention';
+          // Override the handling of the <msft-mention> tag in the HTML
+          return node.name === 'msft-mention';
         },
         processNode: (node) => {
           console.log('processing node', node);
           const { userid, suggestiontype, displayname } = node.attribs;
-          const suggestion: AtMentionSuggestion = {
+          const suggestion: MentionSuggestion = {
             userId: userid,
             suggestionType: suggestiontype,
             displayName: displayname
           };
-          return atMentionSuggestionRenderer(suggestion);
+          return mentionSuggestionRenderer(suggestion);
         }
       },
       {

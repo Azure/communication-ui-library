@@ -68,8 +68,8 @@ import { FileDownloadHandler, FileMetadata } from './FileDownloadCards';
 /* @conditional-compile-remove(teams-inline-images) */
 import { AttachmentDownloadResult } from './FileDownloadCards';
 import { useTheme } from '../theming';
-/* @conditional-compile-remove(at-mention) */
-import { MentionOptions } from './AtMentionFlyout';
+/* @conditional-compile-remove(mention) */
+import { MentionOptions } from './MentionFlyout';
 
 const isMessageSame = (first: ChatMessage, second: ChatMessage): boolean => {
   return (
@@ -706,12 +706,12 @@ export type MessageThreadProps = {
    * @beta
    */
   onDisplayDateTimeString?: (messageDate: Date) => string;
-  /* @conditional-compile-remove(at-mention) */
+  /* @conditional-compile-remove(mention) */
   /**
    * Optional props needed to lookup a mention query and display mentions
    * @beta
    */
-  atMentionOptions?: MentionOptions;
+  mentionOptions?: MentionOptions;
 };
 
 /**
@@ -815,8 +815,8 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     onDisplayDateTimeString,
     /* @conditional-compile-remove(teams-inline-images) */
     onFetchAttachments,
-    /* @conditional-compile-remove(at-mention) */
-    atMentionOptions
+    /* @conditional-compile-remove(mention) */
+    mentionOptions
   } = props;
   const onRenderFileDownloads = onRenderFileDownloadsTrampoline(props);
 
@@ -1118,7 +1118,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
             onFetchAttachments={onFetchInlineAttachment}
             /* @conditional-compile-remove(teams-inline-images) */
             attachmentsMap={inlineAttachments}
-            atMentionOptions={atMentionOptions}
+            mentionOptions={mentionOptions}
           />
         );
       }

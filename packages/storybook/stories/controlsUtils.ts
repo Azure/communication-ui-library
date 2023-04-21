@@ -80,7 +80,7 @@ const defaultRemoteParticipants = [
   { name: 'Michonne', status: 'Idle', isMuted: false, isScreenSharing: false }
 ];
 
-const defaultAtMentionSuggestions = [
+const defaultMentionSuggestions = [
   { userId: '1', suggestionType: 'person', displayName: 'Harry Hopkins' },
   { userId: '2', suggestionType: 'person', displayName: 'Charles Macdonald' },
   { userId: '3', suggestionType: 'person', displayName: 'Hayden Thomson' },
@@ -403,9 +403,9 @@ export const controlsToAdd = {
     },
     name: 'Control Bar Customizations'
   },
-  atMentionSuggestions: {
+  mentionSuggestions: {
     control: 'object',
-    defaultValue: defaultAtMentionSuggestions,
+    defaultValue: defaultMentionSuggestions,
     name: 'At Mention Suggestions'
   },
   title: { control: 'text', defaultValue: 'Suggestions', name: 'Title' }

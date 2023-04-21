@@ -1,9 +1,8 @@
 import { SendBox, FluentThemeProvider } from '@azure/communication-react';
-import { AtMentionSuggestion } from '../../../../communication-react/dist/communication-react';
-
 import React from 'react';
+import { MentionSuggestion } from '../../../../communication-react/dist/communication-react';
 
-const suggestions: AtMentionSuggestion[] = [
+const suggestions: MentionSuggestion[] = [
   {
     userId: '1',
     suggestionType: 'person',
@@ -38,7 +37,7 @@ export const MentionsExample: () => JSX.Element = () => (
         onTyping={async () => {
           return;
         }}
-        atMentionLookupOptions={{
+        mentionLookupOptions={{
           trigger,
           onQueryUpdated: async (query: string) => {
             const filtered = suggestions.filter((suggestion) => {
