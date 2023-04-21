@@ -360,41 +360,44 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
             </Stack>
           </CallAdapterProvider>
         </Stack.Item>
-        {!props.mobileView && (isEnabled(options.peopleButton) || isEnabled(options.chatButton)) && (
-          <Stack.Item>
-            <div ref={sidepaneControlsRef}>
-              <Stack horizontal className={!props.mobileView ? mergeStyles(desktopButtonContainerStyle) : undefined}>
-                {
-                  /* @conditional-compile-remove(control-bar-button-injection) */
-                  customButtons['secondary']
-                    ?.slice(0, CUSTOM_BUTTON_OPTIONS.MAX_SECONDARY_DESKTOP_CUSTOM_BUTTONS)
-                    .map((CustomButton, i) => {
-                      return (
-                        <CustomButton
-                          key={`secondary-custom-button-${i}`}
-                          styles={commonButtonStyles}
-                          showLabel={options.displayType !== 'compact'}
-                        />
-                      );
-                    })
-                }
-                {isEnabled(options?.peopleButton) && (
-                  <PeopleButton
-                    checked={props.peopleButtonChecked}
-                    ariaLabel={peopleButtonStrings?.label}
-                    showLabel={options.displayType !== 'compact'}
-                    onClick={props.onPeopleButtonClicked}
-                    data-ui-id="common-call-composite-people-button"
-                    disabled={props.disableButtonsForLobbyPage || isDisabled(options.peopleButton)}
-                    strings={peopleButtonStrings}
-                    styles={commonButtonStyles}
-                  />
-                )}
-                {isEnabled(options?.chatButton) && chatButton}
-              </Stack>
-            </div>
-          </Stack.Item>
-        )}
+        {!props.mobileView &&
+          (isEnabled(options.peopleButton) ||
+            isEnabled(options.chatButton) ||
+            customButtons['secondary'] !== undefined) && (
+            <Stack.Item>
+              <div ref={sidepaneControlsRef}>
+                <Stack horizontal className={!props.mobileView ? mergeStyles(desktopButtonContainerStyle) : undefined}>
+                  {
+                    /* @conditional-compile-remove(control-bar-button-injection) */
+                    customButtons['secondary']
+                      ?.slice(0, CUSTOM_BUTTON_OPTIONS.MAX_SECONDARY_DESKTOP_CUSTOM_BUTTONS)
+                      .map((CustomButton, i) => {
+                        return (
+                          <CustomButton
+                            key={`secondary-custom-button-${i}`}
+                            styles={commonButtonStyles}
+                            showLabel={options.displayType !== 'compact'}
+                          />
+                        );
+                      })
+                  }
+                  {isEnabled(options?.peopleButton) && (
+                    <PeopleButton
+                      checked={props.peopleButtonChecked}
+                      ariaLabel={peopleButtonStrings?.label}
+                      showLabel={options.displayType !== 'compact'}
+                      onClick={props.onPeopleButtonClicked}
+                      data-ui-id="common-call-composite-people-button"
+                      disabled={props.disableButtonsForLobbyPage || isDisabled(options.peopleButton)}
+                      strings={peopleButtonStrings}
+                      styles={commonButtonStyles}
+                    />
+                  )}
+                  {isEnabled(options?.chatButton) && chatButton}
+                </Stack>
+              </div>
+            </Stack.Item>
+          )}
       </Stack>
     </div>
   );
