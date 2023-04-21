@@ -360,7 +360,7 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
             </Stack>
           </CallAdapterProvider>
         </Stack.Item>
-        {!props.mobileView && (options.peopleButton || options.chatButton) && (
+        {!props.mobileView && (isEnabled(options.peopleButton) || isEnabled(options.chatButton)) && (
           <Stack.Item>
             <div ref={sidepaneControlsRef}>
               <Stack horizontal className={!props.mobileView ? mergeStyles(desktopButtonContainerStyle) : undefined}>
