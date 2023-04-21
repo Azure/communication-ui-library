@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Fixed bug where keyboard user is trapped inside captions banner if new captions keep rolling in ",
+  "packageName": "@azure/communication-react",
+  "email": "carolinecao@microsoft.com",
+  "dependentChangeType": "patch"
+}
