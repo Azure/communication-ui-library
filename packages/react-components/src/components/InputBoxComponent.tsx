@@ -563,17 +563,24 @@ const updateHTML = (
             mentionTagLength = mentionTrigger.length;
           }
           const startChangeDiff = startIndex - tag.plainTextBeginIndex - mentionTagLength;
-          const endChangeDiff = plainTextEndIndex - oldPlainTextEndIndex - mentionTagLength;
+          //TODO: check if endChangeDiff is correct
+          const endChangeDiff = oldPlainTextEndIndex - tag.plainTextBeginIndex - mentionTagLength;
           console.log('updateHTML startChangeDiff', startChangeDiff);
+          console.log('updateHTML endChangeDiff', endChangeDiff);
           console.log('updateHTML tag.openTagIdx', tag.openTagIdx);
+          console.log('updateHTML tag.openTagIdx', closeTagIdx);
           console.log('updateHTML lastProcessedHTMLIndex before update', lastProcessedHTMLIndex);
+          console.log(
+            'updateHTML tag.openTagIdx + tag.openTagBody.length + startChangeDiff',
+            tag.openTagIdx + tag.openTagBody.length + startChangeDiff
+          );
           result +=
             htmlText.substring(lastProcessedHTMLIndex, tag.openTagIdx + tag.openTagBody.length + startChangeDiff) +
             processedChange;
 
           console.log('updateHTML result', result);
           processedChange = '';
-          lastProcessedHTMLIndex = closeTagIdx - endChangeDiff;
+          lastProcessedHTMLIndex = tag.openTagIdx + tag.openTagBody.length + endChangeDiff;
           console.log('updateHTML htmlText[lastProcessedHTMLIndex]', htmlText[lastProcessedHTMLIndex]);
           console.log('updateHTML lastProcessedHTMLIndex', lastProcessedHTMLIndex);
           console.log('updateHTML htmlText', htmlText);
@@ -654,6 +661,7 @@ const updateHTML = (
         if (tag.tagType === 'msft-mention') {
           mentionTagLength = mentionTrigger.length;
         }
+        //TODO: check if endChangeDiff is correct
         const endChangeDiff = plainTextEndIndex - oldPlainTextEndIndex - mentionTagLength;
         lastProcessedHTMLIndex = closeTagIdx - endChangeDiff;
         // the change is handled; exit
@@ -707,6 +715,7 @@ const updateHTML = (
       console.log('updateHTML 2 oldPlainText', oldPlainText);
       console.log('updateHTML 2 oldPlainText.length', oldPlainText.length);
       //the last tag should handle the end of the change if needed
+      //TODO: check if endChangeDiff is correct
       const endChangeDiff = oldPlainTextEndIndex - plainTextEndIndex;
       if (startIndex >= plainTextEndIndex) {
         const startChangeDiff = startIndex - plainTextEndIndex;
@@ -878,12 +887,22 @@ const reformedTagParser = (text: string, trigger: string): [ReformedTag[], strin
       break;
     }
 
-    if (foundHtmlTag.type === 'open') {
-      const nextOpenTag = parseOpenTag(foundHtmlTag.content, foundHtmlTag.startIdx);
+    if (foundHtmlTag.type === 'open' || foundHtmlTag.type === 'self-closing') {
+      const nextTag = parseOpenTag(foundHtmlTag.content, foundHtmlTag.startIdx);
       // Add the plain text between the last tag and this one found
       plainTextRepresentation += text.substring(parseIndex, foundHtmlTag.startIdx);
-      nextOpenTag.plainTextBeginIndex = plainTextRepresentation.length;
-      tagParseStack.push(nextOpenTag);
+      nextTag.plainTextBeginIndex = plainTextRepresentation.length;
+
+      if (foundHtmlTag.type === 'open') {
+        tagParseStack.push(nextTag);
+      } else {
+        console.log('Found self-closing tag: ' + foundHtmlTag.content);
+        nextTag.closeTagIdx = foundHtmlTag.startIdx; // Set them to the same value
+        nextTag.content = '';
+        nextTag.plainTextBeginIndex = plainTextRepresentation.length;
+        nextTag.plainTextEndIndex = plainTextRepresentation.length;
+        addTag(nextTag, tagParseStack, tags);
+      }
     }
 
     if (foundHtmlTag.type === 'close') {
@@ -904,14 +923,17 @@ const reformedTagParser = (text: string, trigger: string): [ReformedTag[], strin
         currentOpenTag.closeTagIdx =
           currentOpenTag.openTagIdx + currentOpenTag.openTagBody.length + currentOpenTag.content.length;
 
-        // Add the plain text pieces for the sub tags
+        // Insert the plain text pieces for the sub tags
         if (currentOpenTag.tagType === 'msft-mention') {
-          plainTextRepresentation += trigger;
+          plainTextRepresentation =
+            plainTextRepresentation.slice(0, currentOpenTag.plainTextBeginIndex) +
+            trigger +
+            plainTextRepresentation.slice(currentOpenTag.plainTextBeginIndex);
         }
 
         if (!currentOpenTag.subTags) {
           plainTextRepresentation += currentOpenTag.content;
-        } else {
+        } else if (currentOpenTag.subTags.length > 0) {
           // Add text after the last tag
           const lastSubTag = currentOpenTag.subTags[currentOpenTag.subTags.length - 1];
           const trailingCharactersLength =
@@ -921,7 +943,6 @@ const reformedTagParser = (text: string, trigger: string): [ReformedTag[], strin
             const trailingText = currentOpenTag.content.substring(
               currentOpenTag.content.length - trailingCharactersLength
             );
-            console.log('trailingText', trailingText);
             plainTextRepresentation += trailingText;
           }
         }
@@ -937,18 +958,6 @@ const reformedTagParser = (text: string, trigger: string): [ReformedTag[], strin
             ''
         );
       }
-    }
-
-    if (foundHtmlTag.type === 'self-closing') {
-      console.log('Found self-closing tag: ' + foundHtmlTag.content);
-
-      const selfClosingTag = parseOpenTag(foundHtmlTag.content, foundHtmlTag.startIdx);
-      selfClosingTag.closeTagIdx = foundHtmlTag.startIdx; // Set them to the same value
-      selfClosingTag.content = '';
-      selfClosingTag.plainTextBeginIndex = plainTextRepresentation.length;
-      selfClosingTag.plainTextEndIndex = plainTextRepresentation.length;
-
-      addTag(selfClosingTag, tagParseStack, tags);
     }
 
     // Update parsing index; move past the end of the close tag
