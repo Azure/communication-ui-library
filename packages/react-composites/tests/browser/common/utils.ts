@@ -633,10 +633,3 @@ export const dragToRight = async (page: Page, selector: string): Promise<void> =
       })
   );
 };
-
-export const jsonDateDeserializer = (key: unknown, value: unknown): unknown => {
-  if (key === 'timestamp' && typeof value === 'string') {
-    return new Date(value);
-  }
-  return value;
-};

@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { jsonDateDeserializer } from 'browser/common/utils';
+import { jsonDateDeserializer } from '../lib/utils';
 import type { CallWithChatCompositeOptions, _FakeChatAdapterArgs } from '../../../src';
 import type { MockCallAdapterState } from '../../common';
 

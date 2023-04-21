@@ -4,7 +4,7 @@
 import { Role } from '@internal/react-components';
 import { CallCompositeOptions } from '../../../src';
 import { MockCallAdapterState } from '../../common';
-import { jsonDateDeserializer } from 'browser/common/utils';
+import { jsonDateDeserializer } from '../lib/utils';
 
 export interface QueryArgs {
   // Defined only for hermetic tests.
