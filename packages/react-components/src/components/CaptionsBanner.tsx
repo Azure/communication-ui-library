@@ -5,7 +5,11 @@ import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { _FileUploadCardsStrings } from './FileUploadCards';
 import { Ref } from '@fluentui/react-northstar';
 import { _Caption } from './Caption';
-import { captionContainerClassName, captionsBannerClassName } from './styles/Captions.style';
+import {
+  captionContainerClassName,
+  captionsBannerClassName,
+  captionsContainerClassName
+} from './styles/Captions.style';
 import { OnRenderAvatarCallback } from '../types';
 
 /**
@@ -78,7 +82,7 @@ export const _CaptionsBanner = (props: _CaptionsBannerProps): JSX.Element => {
   return (
     <>
       {isCaptionsOn && (
-        <FocusZone as="ul">
+        <FocusZone as="ul" className={captionsContainerClassName}>
           <Ref innerRef={captionsScrollDivRef}>
             <Stack verticalAlign="start" className={captionsBannerClassName}>
               {captions.map((caption, key) => {
