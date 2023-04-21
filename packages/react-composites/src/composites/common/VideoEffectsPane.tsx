@@ -4,7 +4,7 @@ import React from 'react';
 /* @conditional-compile-remove(video-background-effects) */
 import { useCallback, useMemo } from 'react';
 /* @conditional-compile-remove(video-background-effects) */
-import { Panel } from '@fluentui/react';
+import { Panel, mergeStyles } from '@fluentui/react';
 /* @conditional-compile-remove(video-background-effects) */
 import { useLocale } from '../localization';
 import { _VideoEffectsItemProps } from '@internal/react-components';
@@ -135,6 +135,11 @@ const VideoEffectsPaneTrampoline = (
   /* @conditional-compile-remove(video-background-effects) */
   const selectedEffect = useSelector(activeVideoBackgroundEffectSelector);
   /* @conditional-compile-remove(video-background-effects) */
+  const headerStyles = {
+    zIndex: 0
+  };
+
+  /* @conditional-compile-remove(video-background-effects) */
   return (
     <Panel
       headerText={locale.strings.call.effects}
@@ -143,6 +148,7 @@ const VideoEffectsPaneTrampoline = (
       hasCloseButton={true}
       closeButtonAriaLabel="Close"
       isLightDismiss={true}
+      className={mergeStyles(headerStyles)}
     >
       {selectableVideoEffects && (
         <_VideoBackgroundEffectsPicker
