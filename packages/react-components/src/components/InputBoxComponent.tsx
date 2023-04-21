@@ -125,10 +125,10 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
   // Parse the text and get the plain text version to display in the input box
   useEffect(() => {
     const trigger = mentionLookupOptions?.trigger || defaultMentionTrigger;
-    console.log('updateHTML textValue <- html', textValue);
+    console.log('textValue <- html', textValue);
     const [tags, plainText] = reformedTagParser(textValue, trigger);
-    console.log('updateHTML tags', tags);
-    console.log('updateHTML plainText', plainText);
+    console.log('tags', tags);
+    console.log('plainText', plainText);
     setInputTextValue(plainText);
     setTagsValue(tags);
   }, [textValue, mentionLookupOptions?.trigger]);
@@ -273,8 +273,6 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
           setCurrentTagIndex(tagIndex);
         }
 
-        console.log('currentTagIndex', currentTagIndex);
-        console.log('tagIndex', tagIndex);
         if (tagIndex === -1) {
           updateMentionSuggestions([]);
         } else {
@@ -310,7 +308,6 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
         newValue.substring(changeStart, newChangeEnd),
         triggerText
       );
-      console.log('updateHTML updatedHTML', result);
     }
 
     onChange && onChange(event, result);
@@ -442,13 +439,6 @@ const updateHTML = (
   change: string,
   mentionTrigger: string
 ): string => {
-  console.log('updateHTML tags', tags);
-  console.log('updateHTML htmlText', htmlText);
-  console.log('updateHTML change "', change, '"');
-  console.log('updateHTML oldPlainText', oldPlainText);
-  console.log('updateHTML newPlainText', newPlainText);
-  console.log('updateHTML startIndex', startIndex);
-  console.log('updateHTML oldPlainTextEndIndex', oldPlainTextEndIndex);
   let result = '';
   if (tags.length === 0) {
     // no tags added yet
@@ -478,27 +468,17 @@ const updateHTML = (
     if (tag.tagType === 'msft-mention') {
       mentionTagLength = mentionTrigger.length;
     }
-    console.log('updateHTML tag.type', tag.tagType);
-    console.log('updateHTML tag.plainTextBeginIndex', tag.plainTextBeginIndex);
-    console.log('updateHTML tag.plainTextEndIndex', tag.plainTextEndIndex);
-    console.log('updateHTML startIndex', startIndex);
-    console.log('updateHTML oldPlainTextEndIndex', oldPlainTextEndIndex);
 
     //change start is before the open tag
     if (startIndex < tag.plainTextBeginIndex) {
-      console.log('updateHTML 0 result', result);
       // Math.max(lastProcessedPlainTextTagEndIndex, startIndex) is used as startIndex may not be in [[previous tag].plainTextEndIndex - tag.plainTextBeginIndex] range
       const startChangeDiff = tag.plainTextBeginIndex - Math.max(lastProcessedPlainTextTagEndIndex, startIndex);
-      console.log('updateHTML 0 tag.type', tag.tagType);
-      console.log('updateHTML 0 lastProcessedHTMLIndex', lastProcessedHTMLIndex);
-      console.log('updateHTML 0 startChangeDiff', startChangeDiff);
-      console.log('updateHTML 0 tag.openTagIdx', tag.openTagIdx);
+
       result += htmlText.substring(lastProcessedHTMLIndex, tag.openTagIdx - startChangeDiff) + processedChange;
       console.log('updateHTML 0 result after update', result);
       if (oldPlainTextEndIndex <= tag.plainTextBeginIndex) {
         //the whole change is before tag start
         const endChangeDiff = tag.plainTextBeginIndex - oldPlainTextEndIndex;
-        console.log('updateHTML 0.1 endChangeDiff', endChangeDiff);
         lastProcessedHTMLIndex = tag.openTagIdx - endChangeDiff;
         processedChange = '';
         // the change is handled; exit
@@ -564,26 +544,12 @@ const updateHTML = (
           const startChangeDiff = startIndex - tag.plainTextBeginIndex - mentionTagLength;
           //TODO: check if endChangeDiff is correct
           const endChangeDiff = oldPlainTextEndIndex - tag.plainTextBeginIndex - mentionTagLength;
-          console.log('updateHTML startChangeDiff', startChangeDiff);
-          console.log('updateHTML endChangeDiff', endChangeDiff);
-          console.log('updateHTML tag.openTagIdx', tag.openTagIdx);
-          console.log('updateHTML tag.openTagIdx', closeTagIdx);
-          console.log('updateHTML lastProcessedHTMLIndex before update', lastProcessedHTMLIndex);
-          console.log(
-            'updateHTML tag.openTagIdx + tag.openTagBody.length + startChangeDiff',
-            tag.openTagIdx + tag.openTagBody.length + startChangeDiff
-          );
           result +=
             htmlText.substring(lastProcessedHTMLIndex, tag.openTagIdx + tag.openTagBody.length + startChangeDiff) +
             processedChange;
 
-          console.log('updateHTML result', result);
           processedChange = '';
           lastProcessedHTMLIndex = tag.openTagIdx + tag.openTagBody.length + endChangeDiff;
-          console.log('updateHTML htmlText[lastProcessedHTMLIndex]', htmlText[lastProcessedHTMLIndex]);
-          console.log('updateHTML lastProcessedHTMLIndex', lastProcessedHTMLIndex);
-          console.log('updateHTML htmlText', htmlText);
-          console.log('updateHTML htmlText.length', htmlText.length);
           // the change is handled; exit
           break;
         }
@@ -596,9 +562,6 @@ const updateHTML = (
 
           // before the tag content
           const stringBefore = htmlText.substring(lastProcessedHTMLIndex, tag.openTagIdx + tag.openTagBody.length);
-          console.log('updateHTML closeTagIdx', closeTagIdx);
-          console.log('updateHTML htmlText[closeTagIdx]', htmlText[closeTagIdx]);
-          console.log('updateHTML CloseTag', htmlText.substring(closeTagIdx, closeTagIdx + closeTagLength));
           lastProcessedHTMLIndex = closeTagIdx;
 
           const content = updateHTML(
@@ -619,7 +582,6 @@ const updateHTML = (
             lastProcessedHTMLIndex,
             tag.openTagIdx + tag.openTagBody.length + startChangeDiff
           );
-          console.log('updateHTML no subtags result', result);
           lastProcessedHTMLIndex = closeTagIdx;
           //proceed with the next calculations
         }
@@ -635,12 +597,7 @@ const updateHTML = (
         console.log('updateHTML 1.5 result', result);
         // the change starts in the tag and finishes after it
         // tag should be removed, no matter if there are subtags
-        console.log('updateHTML  result', result);
         result += htmlText.substring(lastProcessedHTMLIndex, tag.openTagIdx);
-        console.log('updateHTML result after update', result);
-        console.log('updateHTML result after tag.openTagIdx', tag.openTagIdx);
-        console.log('updateHTML result after closeTagIdx', closeTagIdx);
-        console.log('updateHTML result after closeTagLength', closeTagLength);
         // processedChange shouldn't be updated as it will be added after the tag
         lastProcessedHTMLIndex = closeTagIdx + closeTagLength;
         //proceed with the next calculations
@@ -712,11 +669,7 @@ const updateHTML = (
       lastProcessedPlainTextTagEndIndex = plainTextEndIndex;
     }
     if (i === tags.length - 1 && oldPlainTextEndIndex >= plainTextEndIndex) {
-      console.log('updateHTML 2 oldPlainTextEndIndex', oldPlainTextEndIndex);
-      console.log('updateHTML 2 plainTextEndIndex', plainTextEndIndex);
-      console.log('updateHTML 2 startIndex', startIndex);
-      console.log('updateHTML 2 oldPlainText', oldPlainText);
-      console.log('updateHTML 2 oldPlainText.length', oldPlainText.length);
+      console.log('updateHTML 2 result', result);
       //the last tag should handle the end of the change if needed
       //TODO: check if endChangeDiff is correct
       const endChangeDiff = oldPlainTextEndIndex - plainTextEndIndex;
@@ -728,9 +681,7 @@ const updateHTML = (
         result += processedChange;
       }
       processedChange = '';
-      console.log('updateHTML 2 lastProcessedHTMLIndex befor', lastProcessedHTMLIndex);
       lastProcessedHTMLIndex = closeTagIdx + closeTagLength + endChangeDiff;
-      console.log('updateHTML 2 lastProcessedHTMLIndex', lastProcessedHTMLIndex);
       // the change is handled; exit
       // break is not required here as this is the last element but added for consistency
       break;
@@ -738,13 +689,6 @@ const updateHTML = (
   }
 
   if (lastProcessedHTMLIndex < htmlText.length) {
-    console.log('updateHTML lastProcessedHTMLIndex < htmlText.length - 1 result', result);
-    console.log('updateHTML lastProcessedHTMLIndex < htmlText.length - 1 htmlText.length', htmlText.length);
-    console.log('updateHTML lastProcessedHTMLIndex < htmlText.length - 1 htmlText', htmlText);
-    console.log(
-      'updateHTML lastProcessedHTMLIndex < htmlText.length - 1 lastProcessedHTMLIndex',
-      lastProcessedHTMLIndex
-    );
     result += htmlText.substring(lastProcessedHTMLIndex);
   }
 
@@ -755,6 +699,10 @@ const updateHTML = (
 /**
  * Given the oldText and newText, find the start index, old end index and new end index for the changes
  *
+ * @param oldText - the old text
+ * @param newText - the new text
+ * @param selectionEnd - the end of the selection
+ * @returns change start index, old end index and new end index. The old and new end indexes are exclusive.
  * @private
  */
 const findStringsDiffIndexes = (
@@ -764,7 +712,6 @@ const findStringsDiffIndexes = (
 ): { changeStart: number; oldChangeEnd: number; newChangeEnd: number } => {
   const newTextLength = newText.length;
   const oldTextLength = oldText.length;
-  console.log('updateHTML - selectionEnd', selectionEnd);
   let changeStart = 0;
   let newChangeEnd = newTextLength;
   let oldChangeEnd = oldTextLength;
@@ -789,7 +736,7 @@ const findStringsDiffIndexes = (
       newChangeEnd = newTextLength;
       oldChangeEnd = oldTextLength;
     } else {
-      for (let i = 1; i < newTextLength && oldTextLength - i > changeStart; i++) {
+      for (let i = 1; i < newTextLength && oldTextLength - i >= changeStart; i++) {
         newChangeEnd = newTextLength - i - 1;
         oldChangeEnd = oldTextLength - i - 1;
 
@@ -807,11 +754,9 @@ const findStringsDiffIndexes = (
       newChangeEnd = newTextLength;
       oldChangeEnd = oldTextLength;
     } else {
-      for (let i = 1; i < oldTextLength && newTextLength - i > changeStart; i++) {
+      for (let i = 1; i < oldTextLength && newTextLength - i >= changeStart; i++) {
         newChangeEnd = newTextLength - i - 1;
         oldChangeEnd = oldTextLength - i - 1;
-        console.log('updateHTML newChangeEnd', newChangeEnd, newText[newChangeEnd]);
-        console.log('updateHTML oldText', oldChangeEnd, oldText[newChangeEnd]);
         if (newText[newChangeEnd] !== oldText[oldChangeEnd]) {
           // Change is found
           break;
@@ -820,7 +765,7 @@ const findStringsDiffIndexes = (
     }
   } else {
     //replacement
-    for (let i = 1; i < oldTextLength && oldTextLength - i > changeStart; i++) {
+    for (let i = 1; i < oldTextLength && oldTextLength - i >= changeStart; i++) {
       newChangeEnd = newTextLength - i - 1;
       oldChangeEnd = oldTextLength - i - 1;
 
@@ -830,12 +775,9 @@ const findStringsDiffIndexes = (
       }
     }
   }
-  console.log('updateHTML - oldText', oldText);
-  console.log('updateHTML - newText', newText);
-
-  console.log('updateHTML - changeStart', changeStart);
-  console.log('updateHTML - oldChangeEnd', oldChangeEnd);
-  console.log('updateHTML - newChangeEnd', newChangeEnd);
+  // make indexes exclusive
+  newChangeEnd += 1;
+  oldChangeEnd += 1;
   return { changeStart, oldChangeEnd, newChangeEnd };
 };
 
