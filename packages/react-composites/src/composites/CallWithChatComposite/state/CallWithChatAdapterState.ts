@@ -6,7 +6,7 @@ import { CallState, DeviceManagerState } from '@internal/calling-stateful-client
 import { ChatThreadClientState } from '@internal/chat-stateful-client';
 import { CallAdapter, CallAdapterState, CallCompositePage } from '../../CallComposite';
 /* @conditional-compile-remove(video-background-effects) */
-import { VideoBackgroundImage } from '../../CallComposite';
+import { VideoBackgroundImage, SelectedVideoBackgroundEffect } from '../../CallComposite';
 import { ChatAdapter, ChatAdapterState } from '../../ChatComposite';
 /* @conditional-compile-remove(file-sharing) */
 import { FileUploadsUiState } from '../../ChatComposite';
@@ -83,6 +83,9 @@ export interface CallWithChatClientState {
   /* @conditional-compile-remove(video-background-effects) */
   /** Default set of background images for background replacement effect */
   videoBackgroundImages?: VideoBackgroundImage[];
+  /* @conditional-compile-remove(video-background-effects) */
+  /** State to track the selected video background effect */
+  selectedVideoBackgroundEffect?: SelectedVideoBackgroundEffect;
 }
 
 /**
@@ -121,7 +124,9 @@ export function callWithChatAdapterStateFromBackingStates(
     /* @conditional-compile-remove(unsupported-browser) */
     environmentInfo: callAdapterState.environmentInfo,
     /* @conditional-compile-remove(video-background-effects) */
-    videoBackgroundImages: callAdapterState.videoBackgroundImages
+    videoBackgroundImages: callAdapterState.videoBackgroundImages,
+    /* @conditional-compile-remove(video-background-effects) */
+    selectedVideoBackgroundEffect: callAdapterState.selectedVideoBackgroundEffect
   };
 }
 
@@ -159,6 +164,8 @@ export function mergeCallAdapterStateIntoCallWithChatAdapterState(
     isTeamsCall: callAdapterState.isTeamsCall,
     latestCallErrors: callAdapterState.latestErrors,
     /* @conditional-compile-remove(video-background-effects) */
-    videoBackgroundImages: callAdapterState.videoBackgroundImages
+    videoBackgroundImages: callAdapterState.videoBackgroundImages,
+    /* @conditional-compile-remove(video-background-effects) */
+    selectedVideoBackgroundEffect: callAdapterState.selectedVideoBackgroundEffect
   };
 }

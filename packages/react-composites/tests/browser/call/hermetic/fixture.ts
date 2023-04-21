@@ -77,6 +77,14 @@ export function defaultMockCallAdapterState(participants?: MockRemoteParticipant
       remoteParticipants,
       remoteParticipantsEnded: {},
       totalParticipantCount: Object.values(remoteParticipants).length + 1
+      captionsFeature: {
+        captions: [],
+        supportedSpokenLanguages: [],
+        supportedCaptionLanguages: [],
+        currentCaptionLanguage: '',
+        currentSpokenLanguage: '',
+        isCaptionsFeatureActive: false
+      }
     },
     userId: { kind: 'communicationUser', communicationUserId: '1' },
     devices: {

@@ -1,17 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import { act, render } from '@testing-library/react';
 import { Cancellable, useCancellableTask } from './useCancellableTask';
 import React, { useEffect, useRef, useState } from 'react';
-import { act } from 'react-dom/test-utils';
-import Enzyme, { mount } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
 
 describe('cancellable task', () => {
-  beforeAll(() => {
-    Enzyme.configure({ adapter: new Adapter() });
-  });
-
   it('completes triggered action if not cancelled', async () => {
     const marker = new Marker();
 
@@ -27,9 +21,7 @@ describe('cancellable task', () => {
       return <h1>Hello World</h1>;
     }
 
-    act(() => {
-      mount(<Component />);
-    });
+    render(<Component />);
     await expect(marker.waitForSet(1000)).resolves.toBeTruthy();
   });
 
@@ -52,9 +44,7 @@ describe('cancellable task', () => {
       return <h1>Hello World</h1>;
     }
 
-    act(() => {
-      mount(<Component />);
-    });
+    render(<Component />);
     await expect(marker.waitForSet(1000)).resolves.toBeTruthy();
   });
 
@@ -79,9 +69,7 @@ describe('cancellable task', () => {
       return <h1>Hello World</h1>;
     }
 
-    act(() => {
-      mount(<Component />);
-    });
+    render(<Component />);
     await expect(marker.waitForSet(1000)).resolves.toBeTruthy();
   });
 
@@ -110,9 +98,7 @@ describe('cancellable task', () => {
       return showComponent ? <Component /> : <h1>Bye bye!</h1>;
     }
 
-    act(() => {
-      mount(<Wrapper />);
-    });
+    render(<Wrapper />);
     await expect(marker.waitForSet(1000)).resolves.toBeTruthy();
   });
 
@@ -140,7 +126,7 @@ describe('cancellable task', () => {
     }
 
     await act(async () => {
-      mount(<Component />);
+      render(<Component />);
       // Wait within the `act` block so second render pass can complete.
       await marker.waitForSet(1000);
     });

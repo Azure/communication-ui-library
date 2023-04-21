@@ -40,6 +40,27 @@ export const cameraOffLabelStyle = mergeStyles({
  */
 export const localPreviewTileStyle = {
   root: {
-    borderRadius: '.25rem'
+    borderRadius: '.25rem',
+    '@media (forced-colors: active)': {
+      borderColor: '#FFFFFF',
+      border: '1px solid'
+    }
+  }
+};
+
+/**
+ * @private
+ */
+export const localPreviewButtonStyle = {
+  root: {
+    '@media (forced-colors: active)': {
+      ':focus': {
+        border: '1px solid !important' // we need bang important to override fluents colours
+      },
+      ':focus::after': {
+        border: 'unset !important', // we need bang important to override fluents colours
+        outline: 'unset !important'
+      }
+    }
   }
 };
