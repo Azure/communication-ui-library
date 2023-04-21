@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "String translation for beta release",
+  "packageName": "@azure/communication-react",
+  "email": "carolinecao@microsoft.com",
+  "dependentChangeType": "patch"
+}
