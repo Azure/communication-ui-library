@@ -519,6 +519,7 @@ const updateHTML = (
         break;
       } else if (startIndex >= tag.plainTextBeginIndex && oldPlainTextEndIndex < plainTextEndIndex) {
         // the change is between tag
+        // TODO: should be updated with editing for the mention tag as there shouldn't be possibility to add something in begginging
         console.log('updateHTML 1.2 result', result);
         if (tag.subTags !== undefined && tag.subTags.length !== 0 && tag.content) {
           // with subtags
@@ -542,7 +543,6 @@ const updateHTML = (
         } else {
           // no subtags
           const startChangeDiff = startIndex - tag.plainTextBeginIndex - mentionTagLength;
-          //TODO: check if endChangeDiff is correct
           const endChangeDiff = oldPlainTextEndIndex - tag.plainTextBeginIndex - mentionTagLength;
           result +=
             htmlText.substring(lastProcessedHTMLIndex, tag.openTagIdx + tag.openTagBody.length + startChangeDiff) +
@@ -604,7 +604,6 @@ const updateHTML = (
       } else if (startIndex < tag.plainTextBeginIndex && oldPlainTextEndIndex < plainTextEndIndex) {
         console.log('updateHTML 1.6 result', result);
         // the change  starts before the tag and ends in a tag
-
         if (tag.subTags !== undefined && tag.subTags.length !== 0 && tag.content !== undefined) {
           // with subtags
 
@@ -628,8 +627,10 @@ const updateHTML = (
           result +=
             htmlText.substring(lastProcessedHTMLIndex, tag.openTagIdx + tag.openTagBody.length) + processedChange;
           processedChange = '';
+          const endChangeDiff = plainTextEndIndex - oldPlainTextEndIndex;
+          // as change may be before the end of the tag, we need to add the rest of the tag
+          lastProcessedHTMLIndex = closeTagIdx - endChangeDiff;
         }
-        lastProcessedHTMLIndex = closeTagIdx;
         // the change is handled; exit
         break;
       } else if (startIndex > tag.plainTextBeginIndex && oldPlainTextEndIndex === plainTextEndIndex) {
@@ -671,14 +672,13 @@ const updateHTML = (
     if (i === tags.length - 1 && oldPlainTextEndIndex >= plainTextEndIndex) {
       console.log('updateHTML 2 result', result);
       //the last tag should handle the end of the change if needed
-      //TODO: check if endChangeDiff is correct
       const endChangeDiff = oldPlainTextEndIndex - plainTextEndIndex;
       if (startIndex >= plainTextEndIndex) {
         const startChangeDiff = startIndex - plainTextEndIndex;
         result +=
           htmlText.substring(lastProcessedHTMLIndex, closeTagIdx + closeTagLength + startChangeDiff) + processedChange;
       } else {
-        result += processedChange;
+        result += htmlText.substring(lastProcessedHTMLIndex, closeTagIdx + closeTagLength) + processedChange;
       }
       processedChange = '';
       lastProcessedHTMLIndex = closeTagIdx + closeTagLength + endChangeDiff;
