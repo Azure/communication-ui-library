@@ -115,7 +115,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
   /* @conditional-compile-remove(mention) */
   const [inputTextValue, setInputTextValue] = useState<string>('');
   /* @conditional-compile-remove(mention) */
-  const [tagsValue, setTagsValue] = useState<UpdatedParsedTag[]>([]);
+  const [tagsValue, setTagsValue] = useState<ReformedTag[]>([]);
 
   /* @conditional-compile-remove(mention) */
   // Caret position in the text field
@@ -126,8 +126,8 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
   useEffect(() => {
     const trigger = mentionLookupOptions?.trigger || defaultMentionTrigger;
     console.log('textValue', textValue);
-    const [tags, plainText] = parseHTMLText(textValue, trigger);
-    reformedTagParser(textValue, trigger);
+    // const [tags, plainText] = parseHTMLText(textValue, trigger);
+    const [tags, plainText] = reformedTagParser(textValue, trigger);
     console.log('tags', tags);
     console.log('plainText', plainText);
     setInputTextValue(plainText);
@@ -311,7 +311,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
         newValue.substring(changeStart, newChangeEnd),
         triggerText
       );
-      console.log('!!! updatedHTML', result);
+      console.log('updatedHTML updatedHTML', result);
     }
 
     onChange && onChange(event, result);
@@ -602,7 +602,7 @@ const updateHTML = (
   htmlText: string,
   oldPlainText: string,
   newPlainText: string,
-  tags: UpdatedParsedTag[],
+  tags: ReformedTag[],
   startIndex: number,
   oldPlainTextEndIndex: number,
   change: string,
@@ -635,96 +635,86 @@ const updateHTML = (
 
   for (let i = 0; i < tags.length; i++) {
     const tag = tags[i];
+    if (tag.plainTextBeginIndex === undefined) {
+      continue;
+    }
     console.log('updateHTML tag.type', tag.tagType);
-    console.log('updateHTML tag.plainTextStartIndex', tag.plainTextStartIndex);
+    console.log('updateHTML tag.plainTextBeginIndex', tag.plainTextBeginIndex);
     console.log('updateHTML tag.plainTextEndIndex', tag.plainTextEndIndex);
     console.log('updateHTML startIndex', startIndex);
     console.log('updateHTML oldPlainTextEndIndex', oldPlainTextEndIndex);
 
     //change start is before the open tag
-    if (startIndex < tag.plainTextStartIndex) {
+    if (startIndex < tag.plainTextBeginIndex) {
       console.log('updateHTML 0 result', result);
       console.log('updateHTML !!!!!! 0 lastProcessedPlainTextTagEndIndex', lastProcessedPlainTextTagEndIndex);
-      // Math.max(lastProcessedPlainTextTagEndIndex, startIndex) is used as startIndex may not be in [[previous tag].plainTextEndIndex - tag.plainTextStartIndex] range
-      const startChangeDiff = tag.plainTextStartIndex - Math.max(lastProcessedPlainTextTagEndIndex, startIndex);
+      // Math.max(lastProcessedPlainTextTagEndIndex, startIndex) is used as startIndex may not be in [[previous tag].plainTextEndIndex - tag.plainTextBeginIndex] range
+      const startChangeDiff = tag.plainTextBeginIndex - Math.max(lastProcessedPlainTextTagEndIndex, startIndex);
       console.log('updateHTML 0 tag.type', tag.tagType);
       console.log('updateHTML 0 lastProcessedHTMLIndex', lastProcessedHTMLIndex);
-      console.log(
-        'updateHTML 0 tag.htmlOpenTagStartIndex - startChangeDiff',
-        tag.htmlOpenTagStartIndex - startChangeDiff
-      );
-      result +=
-        htmlText.substring(lastProcessedHTMLIndex, tag.htmlOpenTagStartIndex - startChangeDiff) + processedChange;
+      console.log('updateHTML 0 tag.openTagIdx - startChangeDiff', tag.openTagIdx - startChangeDiff);
+      result += htmlText.substring(lastProcessedHTMLIndex, tag.openTagIdx - startChangeDiff) + processedChange;
       console.log('updateHTML 0 result after update', result);
       console.log('updateHTML 0 tag.type', tag.tagType);
-      if (oldPlainTextEndIndex <= tag.plainTextStartIndex) {
+      if (oldPlainTextEndIndex <= tag.plainTextBeginIndex) {
         //the whole change is before tag start
-        const endChangeDiff = tag.plainTextStartIndex - oldPlainTextEndIndex;
+        const endChangeDiff = tag.plainTextBeginIndex - oldPlainTextEndIndex;
         console.log('updateHTML 0.1 endChangeDiff', endChangeDiff);
-        lastProcessedHTMLIndex = tag.htmlOpenTagStartIndex - endChangeDiff;
+        lastProcessedHTMLIndex = tag.openTagIdx - endChangeDiff;
         processedChange = '';
         // the change is handled; exit
         break;
       } else {
         // change continues in the tag
-        lastProcessedHTMLIndex = tag.htmlOpenTagStartIndex;
+        lastProcessedHTMLIndex = tag.openTagIdx;
         processedChange = '';
         // proceed to the next check
       }
     }
     let plainTextEndIndex = 0;
-    let htmlCloseTagStartIndex = 0;
+    let closeTagIdx = 0;
     let closeTagLength = 0;
-    if (
-      tag.plainTextEndIndex !== undefined &&
-      tag.closeTagLength !== undefined &&
-      tag.htmlCloseTagStartIndex !== undefined
-    ) {
+    if (tag.plainTextEndIndex !== undefined && tag.closeTagIdx !== undefined) {
       // close tag exists
       plainTextEndIndex = tag.plainTextEndIndex;
-      htmlCloseTagStartIndex = tag.htmlCloseTagStartIndex;
-      closeTagLength = tag.closeTagLength;
+      closeTagIdx = tag.closeTagIdx;
+      // tag.tagType.length + </>
+      closeTagLength = tag.tagType.length + 3;
     } else {
       //no close tag
-      plainTextEndIndex = tag.plainTextStartIndex;
-      htmlCloseTagStartIndex = tag.htmlOpenTagStartIndex + tag.openTagLength;
+      plainTextEndIndex = tag.plainTextBeginIndex;
+      closeTagIdx = tag.openTagIdx + tag.openTagBody.length;
       closeTagLength = 0;
     }
 
     if (startIndex <= plainTextEndIndex) {
       // change started before the end tag
-      if (startIndex <= tag.plainTextStartIndex && oldPlainTextEndIndex === plainTextEndIndex) {
+      if (startIndex <= tag.plainTextBeginIndex && oldPlainTextEndIndex === plainTextEndIndex) {
         console.log('updateHTML 1.1 result', result);
         // the change is a tag or starts before the tag
         // tag should be removed, no matter if there are subtags
-        result += htmlText.substring(lastProcessedHTMLIndex, tag.htmlOpenTagStartIndex) + processedChange;
+        result += htmlText.substring(lastProcessedHTMLIndex, tag.openTagIdx) + processedChange;
         processedChange = '';
-        lastProcessedHTMLIndex = htmlCloseTagStartIndex + closeTagLength;
+        lastProcessedHTMLIndex = closeTagIdx + closeTagLength;
         // the change is handled; exit
         break;
-      } else if (startIndex >= tag.plainTextStartIndex && oldPlainTextEndIndex < plainTextEndIndex) {
+      } else if (startIndex >= tag.plainTextBeginIndex && oldPlainTextEndIndex < plainTextEndIndex) {
         // the change is between tag
         console.log('updateHTML 1.2 result', result);
         if (tag.subTags !== undefined && tag.subTags.length !== 0 && tag.content) {
           // with subtags
 
           // before the tag content
-          const stringBefore = htmlText.substring(
-            lastProcessedHTMLIndex,
-            tag.htmlOpenTagStartIndex + tag.openTagLength
-          );
-          lastProcessedHTMLIndex = htmlCloseTagStartIndex;
+          const stringBefore = htmlText.substring(lastProcessedHTMLIndex, tag.openTagIdx + tag.openTagBody.length);
+          lastProcessedHTMLIndex = closeTagIdx;
 
           const content = updateHTML(
             tag.content,
-            oldPlainText.substring(tag.plainTextStartIndex, plainTextEndIndex),
-            newPlainText.substring(
-              tag.plainTextStartIndex,
-              plainTextEndIndex + (newPlainText.length - oldPlainText.length)
-            ),
+            oldPlainText,
+            newPlainText,
             tag.subTags,
-            startIndex - tag.plainTextStartIndex,
-            oldPlainTextEndIndex - tag.plainTextStartIndex,
+            startIndex,
+            oldPlainTextEndIndex,
             processedChange,
             mentionTrigger
           );
@@ -738,20 +728,18 @@ const updateHTML = (
           if (tag.tagType === 'msft-mention') {
             mentionTagLength = mentionTrigger.length;
           }
-          const startChangeDiff = startIndex - tag.plainTextStartIndex - mentionTagLength;
+          const startChangeDiff = startIndex - tag.plainTextBeginIndex - mentionTagLength;
           const endChangeDiff = plainTextEndIndex - oldPlainTextEndIndex - mentionTagLength;
           console.log('updateHTML startChangeDiff', startChangeDiff);
-          console.log('updateHTML tag.htmlOpenTagStartIndex', tag.htmlOpenTagStartIndex);
+          console.log('updateHTML tag.openTagIdx', tag.openTagIdx);
           console.log('updateHTML lastProcessedHTMLIndex before update', lastProcessedHTMLIndex);
           result +=
-            htmlText.substring(
-              lastProcessedHTMLIndex,
-              tag.htmlOpenTagStartIndex + tag.openTagLength + startChangeDiff
-            ) + processedChange;
+            htmlText.substring(lastProcessedHTMLIndex, tag.openTagIdx + tag.openTagBody.length + startChangeDiff) +
+            processedChange;
 
           console.log('updateHTML result', result);
           processedChange = '';
-          lastProcessedHTMLIndex = htmlCloseTagStartIndex - endChangeDiff;
+          lastProcessedHTMLIndex = closeTagIdx - endChangeDiff;
           console.log('updateHTML htmlText[lastProcessedHTMLIndex]', htmlText[lastProcessedHTMLIndex]);
           console.log('updateHTML lastProcessedHTMLIndex', lastProcessedHTMLIndex);
           console.log('updateHTML htmlText', htmlText);
@@ -759,7 +747,7 @@ const updateHTML = (
           // the change is handled; exit
           break;
         }
-      } else if (startIndex > tag.plainTextStartIndex && oldPlainTextEndIndex > plainTextEndIndex) {
+      } else if (startIndex > tag.plainTextBeginIndex && oldPlainTextEndIndex > plainTextEndIndex) {
         console.log('updateHTML 1.3 result', result);
         //the change started in the tag but finishes somewhere further
         // startChangeDiff includes trigger length that shouldn't be included in htmlText.substring because html strings doesn't have the trigger
@@ -768,33 +756,24 @@ const updateHTML = (
         if (tag.tagType === 'msft-mention') {
           mentionTagLength = mentionTrigger.length;
         }
-        const startChangeDiff = startIndex - tag.plainTextStartIndex - mentionTagLength;
+        const startChangeDiff = startIndex - tag.plainTextBeginIndex - mentionTagLength;
         if (tag.subTags !== undefined && tag.subTags.length !== 0 && tag.content !== undefined) {
           // with subtags
 
           // before the tag content
-          const stringBefore = htmlText.substring(
-            lastProcessedHTMLIndex,
-            tag.htmlOpenTagStartIndex + tag.openTagLength
-          );
-          console.log('updateHTML htmlCloseTagStartIndex', htmlCloseTagStartIndex);
-          console.log('updateHTML htmlText[htmlCloseTagStartIndex]', htmlText[htmlCloseTagStartIndex]);
-          console.log(
-            'updateHTML CloseTag',
-            htmlText.substring(htmlCloseTagStartIndex, htmlCloseTagStartIndex + closeTagLength)
-          );
-          lastProcessedHTMLIndex = htmlCloseTagStartIndex;
+          const stringBefore = htmlText.substring(lastProcessedHTMLIndex, tag.openTagIdx + tag.openTagBody.length);
+          console.log('updateHTML closeTagIdx', closeTagIdx);
+          console.log('updateHTML htmlText[closeTagIdx]', htmlText[closeTagIdx]);
+          console.log('updateHTML CloseTag', htmlText.substring(closeTagIdx, closeTagIdx + closeTagLength));
+          lastProcessedHTMLIndex = closeTagIdx;
 
           const content = updateHTML(
             tag.content,
-            oldPlainText.substring(tag.plainTextStartIndex, plainTextEndIndex),
-            newPlainText.substring(
-              tag.plainTextStartIndex,
-              plainTextEndIndex + (newPlainText.length - oldPlainText.length)
-            ),
+            oldPlainText,
+            newPlainText,
             tag.subTags,
-            startIndex - tag.plainTextStartIndex,
-            oldPlainTextEndIndex - tag.plainTextStartIndex,
+            startIndex,
+            oldPlainTextEndIndex,
             processedChange,
             mentionTrigger
           );
@@ -804,37 +783,37 @@ const updateHTML = (
           // no subtags
           result += htmlText.substring(
             lastProcessedHTMLIndex,
-            tag.htmlOpenTagStartIndex + tag.openTagLength + startChangeDiff
+            tag.openTagIdx + tag.openTagBody.length + startChangeDiff
           );
           console.log('updateHTML no subtags result', result);
-          lastProcessedHTMLIndex = htmlCloseTagStartIndex;
+          lastProcessedHTMLIndex = closeTagIdx;
           //proceed with the next calculations
         }
-      } else if (startIndex < tag.plainTextStartIndex && oldPlainTextEndIndex > plainTextEndIndex) {
+      } else if (startIndex < tag.plainTextBeginIndex && oldPlainTextEndIndex > plainTextEndIndex) {
         console.log('updateHTML 1.4 result', result);
         // the change starts before  the tag and finishes after it
 
         // tag should be removed, no matter if there are subtags
-        // no need to save anything between lastProcessedHTMLIndex and htmlCloseTagStartIndex + closeTagLength
-        lastProcessedHTMLIndex = htmlCloseTagStartIndex + closeTagLength;
+        // no need to save anything between lastProcessedHTMLIndex and closeTagIdx + closeTagLength
+        lastProcessedHTMLIndex = closeTagIdx + closeTagLength;
         //proceed with the next calculations
-      } else if (startIndex === tag.plainTextStartIndex && oldPlainTextEndIndex > plainTextEndIndex) {
+      } else if (startIndex === tag.plainTextBeginIndex && oldPlainTextEndIndex > plainTextEndIndex) {
         console.log('updateHTML 1.5 result', result);
         // the change starts in the tag and finishes after it
         // tag should be removed, no matter if there are subtags
         console.log('updateHTML  result', result);
-        result += htmlText.substring(lastProcessedHTMLIndex, tag.htmlOpenTagStartIndex);
+        result += htmlText.substring(lastProcessedHTMLIndex, tag.openTagIdx);
         console.log('updateHTML result after update', result);
-        console.log('updateHTML result after tag.htmlOpenTagStartIndex', tag.htmlOpenTagStartIndex);
-        console.log('updateHTML result after htmlCloseTagStartIndex', htmlCloseTagStartIndex);
+        console.log('updateHTML result after tag.openTagIdx', tag.openTagIdx);
+        console.log('updateHTML result after closeTagIdx', closeTagIdx);
         console.log('updateHTML result after closeTagLength', closeTagLength);
         // processedChange shouldn't be updated as it will be added after the tag
-        lastProcessedHTMLIndex = htmlCloseTagStartIndex + closeTagLength;
+        lastProcessedHTMLIndex = closeTagIdx + closeTagLength;
         //proceed with the next calculations
-      } else if (startIndex < tag.plainTextStartIndex && oldPlainTextEndIndex < plainTextEndIndex) {
+      } else if (startIndex < tag.plainTextBeginIndex && oldPlainTextEndIndex < plainTextEndIndex) {
         console.log('updateHTML 1.6 result', result);
         // the change  starts before the tag and ends in a tag
-        result += htmlText.substring(lastProcessedHTMLIndex, tag.htmlOpenTagStartIndex + tag.openTagLength);
+        result += htmlText.substring(lastProcessedHTMLIndex, tag.openTagIdx + tag.openTagBody.length);
         // endChangeDiff includes trigger length that shouldn't be included in htmlText.substring because html strings doesn't have the trigger
         // mentionTagLength will be set only for 'msft-mention', otherwise should be 0
         let mentionTagLength = 0;
@@ -842,32 +821,26 @@ const updateHTML = (
           mentionTagLength = mentionTrigger.length;
         }
         const endChangeDiff = plainTextEndIndex - oldPlainTextEndIndex - mentionTagLength;
-        lastProcessedHTMLIndex = htmlCloseTagStartIndex - endChangeDiff;
+        lastProcessedHTMLIndex = closeTagIdx - endChangeDiff;
         // the change is handled; exit
         break;
-      } else if (startIndex > tag.plainTextStartIndex && oldPlainTextEndIndex === plainTextEndIndex) {
+      } else if (startIndex > tag.plainTextBeginIndex && oldPlainTextEndIndex === plainTextEndIndex) {
         console.log('updateHTML 1.7 result', result);
         // the change  starts in the tag and ends at the end of a tag
         if (tag.subTags !== undefined && tag.subTags.length !== 0 && tag.content !== undefined) {
           // with subtags
 
           // before the tag content
-          const stringBefore = htmlText.substring(
-            lastProcessedHTMLIndex,
-            tag.htmlOpenTagStartIndex + tag.openTagLength
-          );
-          lastProcessedHTMLIndex = htmlCloseTagStartIndex;
+          const stringBefore = htmlText.substring(lastProcessedHTMLIndex, tag.openTagIdx + tag.openTagBody.length);
+          lastProcessedHTMLIndex = closeTagIdx;
 
           const content = updateHTML(
             tag.content,
-            oldPlainText.substring(tag.plainTextStartIndex, plainTextEndIndex),
-            newPlainText.substring(
-              tag.plainTextStartIndex,
-              plainTextEndIndex + (newPlainText.length - oldPlainText.length)
-            ),
+            oldPlainText,
+            newPlainText,
             tag.subTags,
-            startIndex - tag.plainTextStartIndex,
-            oldPlainTextEndIndex - tag.plainTextStartIndex,
+            startIndex,
+            oldPlainTextEndIndex,
             processedChange,
             mentionTrigger
           );
@@ -881,14 +854,12 @@ const updateHTML = (
           if (tag.tagType === 'msft-mention') {
             mentionTagLength = mentionTrigger.length;
           }
-          const startChangeDiff = startIndex - tag.plainTextStartIndex - mentionTagLength;
+          const startChangeDiff = startIndex - tag.plainTextBeginIndex - mentionTagLength;
           result +=
-            htmlText.substring(
-              lastProcessedHTMLIndex,
-              tag.htmlOpenTagStartIndex + tag.openTagLength + startChangeDiff
-            ) + processedChange;
+            htmlText.substring(lastProcessedHTMLIndex, tag.openTagIdx + tag.openTagBody.length + startChangeDiff) +
+            processedChange;
           processedChange = '';
-          lastProcessedHTMLIndex = htmlCloseTagStartIndex;
+          lastProcessedHTMLIndex = closeTagIdx;
           // the change is handled; exit
           break;
         }
@@ -906,14 +877,13 @@ const updateHTML = (
       if (startIndex >= plainTextEndIndex) {
         const startChangeDiff = startIndex - plainTextEndIndex;
         result +=
-          htmlText.substring(lastProcessedHTMLIndex, htmlCloseTagStartIndex + closeTagLength + startChangeDiff) +
-          processedChange;
+          htmlText.substring(lastProcessedHTMLIndex, closeTagIdx + closeTagLength + startChangeDiff) + processedChange;
       } else {
         result += processedChange;
       }
       processedChange = '';
       console.log('updateHTML 2 lastProcessedHTMLIndex befor', lastProcessedHTMLIndex);
-      lastProcessedHTMLIndex = htmlCloseTagStartIndex + closeTagLength + endChangeDiff;
+      lastProcessedHTMLIndex = closeTagIdx + closeTagLength + endChangeDiff;
       console.log('updateHTML 2 lastProcessedHTMLIndex', lastProcessedHTMLIndex);
       // the change is handled; exit
       // break is not required here as this is the last element but added for consistency
