@@ -16,7 +16,7 @@ export const MessageWithCustomMentionRenderer: () => JSX.Element = () => {
             senderId: user1Id,
             senderDisplayName: 'Kat Larsson',
             messageId: Math.random().toString(),
-            content: `Hey <msft-mention userId="${user2Id}" displayName="Robert Tolbert">Robert Tolbert</msft-mention>, can you help me with my internet connection?`,
+            content: `Hey <msft-mention id="${user2Id}" displayText="Robert Tolbert">Robert Tolbert</msft-mention>, can you help me with my internet connection?`,
             createdOn: new Date('2019-04-13T00:00:00.000+08:10'),
             mine: false,
             attached: false,
@@ -37,8 +37,8 @@ export const MessageWithCustomMentionRenderer: () => JSX.Element = () => {
         ]}
         mentionOptions={{
           displayOptions: {
-            onRenderMentionSuggestion: (mention) => {
-              return <button>{mention.displayName}</button>;
+            onRenderMention: (mention) => {
+              return <button>{mention.displayText}</button>;
             }
           },
           lookupOptions: {
@@ -46,12 +46,11 @@ export const MessageWithCustomMentionRenderer: () => JSX.Element = () => {
               return Promise.resolve(
                 [
                   {
-                    userId: user1Id,
-                    suggestionType: 'user',
-                    displayName: 'Kat Larsson'
+                    id: user1Id,
+                    displayText: 'Kat Larsson'
                   }
                 ].filter((suggestion) =>
-                  suggestion.displayName.toLocaleLowerCase().startsWith(query.toLocaleLowerCase())
+                  suggestion.displayText.toLocaleLowerCase().startsWith(query.toLocaleLowerCase())
                 )
               );
             }

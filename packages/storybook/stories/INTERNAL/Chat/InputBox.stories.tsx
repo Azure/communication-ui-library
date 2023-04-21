@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 import { ITextField, Stack, mergeStyles } from '@fluentui/react';
-import { MentionSuggestion, FluentThemeProvider, MessageThread, useTheme } from '@internal/react-components';
+import { Mention, FluentThemeProvider, MessageThread, useTheme } from '@internal/react-components';
 import { Title, Description, Props, Heading, Canvas } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React, { useState } from 'react';
@@ -29,31 +29,27 @@ const getDocs: () => JSX.Element = () => {
 
 const InputBoxStory = (): JSX.Element => {
   const exampleHtmlMessage =
-    "<p>Hi<p>Paragraph</p><msft-mention userId='2' suggestionType='person'>Patricia <self-closing/> Adams</msft-mention> <span>and <it><em>and</em></it> </span> and you <msft-mention userId='3' suggestionType='person'>Person 1</msft-mention>!</p>";
+    "<p>Hi<p>Paragraph</p><msft-mention id='2'>Patricia <self-closing/> Adams</msft-mention> <span>and <it><em>and</em></it> </span> and you <msft-mention id='3'>Person 1</msft-mention>!</p>";
   const sendTextFieldRef = React.useRef<ITextField>(null);
   const theme = useTheme();
   const [textValue, setTextValue] = useState<string>(exampleHtmlMessage);
   const trigger = '@';
-  const suggestions: MentionSuggestion[] = [
+  const suggestions: Mention[] = [
     {
-      userId: '1',
-      suggestionType: 'person',
-      displayName: ''
+      id: '1',
+      displayText: ''
     },
     {
-      userId: '2',
-      suggestionType: 'person',
-      displayName: 'Patricia Adams'
+      id: '2',
+      displayText: 'Patricia Adams'
     },
     {
-      userId: '3',
-      suggestionType: 'person',
-      displayName: '1'
+      id: '3',
+      displayText: '1'
     },
     {
-      userId: '4',
-      suggestionType: 'person',
-      displayName: 'Your user'
+      id: '4',
+      displayText: 'Your user'
     }
   ];
   return (
@@ -82,7 +78,7 @@ const InputBoxStory = (): JSX.Element => {
               trigger,
               onQueryUpdated: async (query: string) => {
                 const filtered = suggestions.filter((suggestion) => {
-                  return suggestion.displayName.toLocaleLowerCase().startsWith(query.toLocaleLowerCase());
+                  return suggestion.displayText.toLocaleLowerCase().startsWith(query.toLocaleLowerCase());
                 });
                 return Promise.resolve(filtered);
               }

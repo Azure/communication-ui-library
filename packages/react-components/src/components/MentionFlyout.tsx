@@ -23,7 +23,7 @@ export interface _MentionFlyoutProps {
   /**
    * Array of mention suggestions used to populate the suggestion list
    */
-  suggestions: MentionSuggestion[];
+  suggestions: Mention[];
   /**
    * Optional string used as mention flyout's title.
    * @defaultValue `Suggestions`
@@ -45,7 +45,7 @@ export interface _MentionFlyoutProps {
   /**
    * Callback called when a mention suggestion is selected.
    */
-  onSuggestionSelected: (suggestion: MentionSuggestion) => void;
+  onSuggestionSelected: (suggestion: Mention) => void;
   /**
    * Callback to invoke when the flyout is dismissed
    */
@@ -53,10 +53,7 @@ export interface _MentionFlyoutProps {
   /**
    * Optional callback to render an item of the mention suggestions list.
    */
-  onRenderSuggestionItem?: (
-    suggestion: MentionSuggestion,
-    onSuggestionSelected?: (suggestion: MentionSuggestion) => void
-  ) => JSX.Element;
+  onRenderSuggestionItem?: (suggestion: Mention, onSuggestionSelected: (suggestion: Mention) => void) => JSX.Element;
 }
 
 /**
@@ -74,14 +71,11 @@ export interface MentionLookupOptions {
   /**
    * Optional callback to fetch a list of mention suggestions base on the query.
    */
-  onQueryUpdated: (query: string) => Promise<MentionSuggestion[]>;
+  onQueryUpdated: (query: string) => Promise<Mention[]>;
   /**
    * Optional callback to render an item of the mention suggestions list.
    */
-  onRenderSuggestionItem?: (
-    suggestion: MentionSuggestion,
-    onSuggestionSelected: (suggestion: MentionSuggestion) => void
-  ) => JSX.Element;
+  onRenderSuggestionItem?: (suggestion: Mention, onSuggestionSelected: (suggestion: Mention) => void) => JSX.Element;
 }
 
 /**
@@ -93,7 +87,7 @@ export interface MentionDisplayOptions {
   /**
    * Optional callback to override render of a mention in a message thread.
    */
-  onRenderMentionSuggestion?: (suggestion: MentionSuggestion) => JSX.Element;
+  onRenderMention?: (mention: Mention) => JSX.Element;
 }
 
 /**
@@ -107,17 +101,17 @@ export type MentionOptions = {
 };
 
 /**
- * At mention suggestion's state, as reflected in the UI.
+ * Mention's state, as reflected in the UI.
  *
  * @beta
  */
-export interface MentionSuggestion {
-  /** User ID of a mentioned participant or 'everyone' for an @everyone suggestion */
-  userId: string;
-  /** Type of an mention suggestion */
-  suggestionType: string;
-  /** Display name of a mentioned participant */
-  displayName: string;
+export interface Mention {
+  /** ID of a mention */
+  id: string;
+  /** Display text of a mention */
+  displayText: string;
+  /** Optional React element to render an item icon of a mention suggestion */
+  icon?: JSX.Element;
 }
 
 /**
@@ -146,12 +140,13 @@ export const _MentionFlyout = (props: _MentionFlyoutProps): JSX.Element => {
   } = props;
 
   const theme = useTheme();
+  /* @conditional-compile-remove(mention) */
   const ids = useIdentifiers();
   const localeStrings = useLocale().strings.participantItem;
   const flyoutRef = useRef() as React.MutableRefObject<HTMLDivElement>;
 
   const [position, setPosition] = useState<Position>({ left: 0 });
-  const [hoveredSuggestion, setHoveredSuggestion] = useState<MentionSuggestion | undefined>(undefined);
+  const [hoveredSuggestion, setHoveredSuggestion] = useState<Mention | undefined>(undefined);
 
   const dismissFlyoutWhenClickingOutside = useCallback(
     (e: MouseEvent) => {
@@ -220,16 +215,17 @@ export const _MentionFlyout = (props: _MentionFlyoutProps): JSX.Element => {
   };
 
   const defaultOnRenderSuggestionItem = (
-    suggestion: MentionSuggestion,
-    onSuggestionSelected: (suggestion: MentionSuggestion) => void
+    suggestion: Mention,
+    onSuggestionSelected: (suggestion: Mention) => void
   ): JSX.Element => {
-    const isSuggestionHovered = hoveredSuggestion?.userId === suggestion.userId;
+    const isSuggestionHovered = hoveredSuggestion?.id === suggestion.id;
 
     return (
       <div
         data-is-focusable={true}
+        /* @conditional-compile-remove(mention) */
         data-ui-id={ids.mentionSuggestionItem}
-        key={suggestion.userId}
+        key={suggestion.id}
         onClick={() => onSuggestionSelected(suggestion)}
         onMouseEnter={() => setHoveredSuggestion(suggestion)}
         onMouseLeave={() => setHoveredSuggestion(undefined)}
@@ -239,7 +235,7 @@ export const _MentionFlyout = (props: _MentionFlyoutProps): JSX.Element => {
         className={suggestionItemWrapperStyle(theme)}
       >
         <Stack horizontal className={suggestionItemStackStyle(theme, isSuggestionHovered)}>
-          {personaRenderer(suggestion.displayName)}
+          {personaRenderer(suggestion.displayText)}
         </Stack>
       </div>
     );

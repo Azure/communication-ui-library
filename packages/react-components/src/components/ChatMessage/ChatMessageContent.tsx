@@ -3,7 +3,10 @@
 
 import React from 'react';
 import { _formatString } from '@internal/acs-ui-common';
-import { Parser, ProcessNodeDefinitions, IsValidNodeDefinitions, ProcessingInstructionType } from 'html-to-react';
+import { Parser } from 'html-to-react';
+/* @conditional-compile-remove(mention) */
+import { ProcessNodeDefinitions, IsValidNodeDefinitions, ProcessingInstructionType } from 'html-to-react';
+
 import Linkify from 'react-linkify';
 import { ChatMessage } from '../../types/ChatMessage';
 /* @conditional-compile-remove(data-loss-prevention) */
@@ -11,7 +14,7 @@ import { BlockedMessage } from '../../types/ChatMessage';
 import { LiveMessage } from 'react-aria-live';
 import { Link } from '@fluentui/react';
 /* @conditional-compile-remove(mention) */
-import { MentionDisplayOptions, MentionSuggestion } from '../MentionFlyout';
+import { MentionDisplayOptions, Mention } from '../MentionFlyout';
 
 /* @conditional-compile-remove(data-loss-prevention) */
 import { FontIcon, Stack } from '@fluentui/react';
@@ -70,8 +73,9 @@ const MessageContentWithLiveAria = (props: MessageContentWithLiveAriaProps): JSX
 const MessageContentAsRichTextHTML = (props: ChatMessageContentProps): JSX.Element => {
   const htmlToReactParser = Parser();
   const liveAuthor = _formatString(props.strings.liveAuthorIntro, { author: `${props.message.senderDisplayName}` });
-  const mentionSuggestionRenderer = props.mentionDisplayOptions?.onRenderMentionSuggestion;
-
+  /* @conditional-compile-remove(mention) */
+  const mentionSuggestionRenderer = props.mentionDisplayOptions?.onRenderMention;
+  /* @conditional-compile-remove(mention) */
   if (mentionSuggestionRenderer) {
     // Use custom HTML processing if mentionSuggestionRenderer is provided
 
@@ -84,11 +88,10 @@ const MessageContentAsRichTextHTML = (props: ChatMessageContentProps): JSX.Eleme
         },
         processNode: (node) => {
           console.log('processing node', node);
-          const { userid, suggestiontype, displayname } = node.attribs;
-          const suggestion: MentionSuggestion = {
-            userId: userid,
-            suggestionType: suggestiontype,
-            displayName: displayname
+          const { userid, displayname } = node.attribs;
+          const suggestion: Mention = {
+            id: userid,
+            displayText: displayname
           };
           return mentionSuggestionRenderer(suggestion);
         }
@@ -125,6 +128,14 @@ const MessageContentAsRichTextHTML = (props: ChatMessageContentProps): JSX.Eleme
       />
     );
   }
+  return (
+    <MessageContentWithLiveAria
+      message={props.message}
+      liveMessage={`${props.message.mine ? '' : liveAuthor} ${extractContent(props.message.content || '')}`}
+      ariaLabel={messageContentAriaText(props)}
+      content={htmlToReactParser.parse(props.message.content ?? '')}
+    />
+  );
 };
 
 const MessageContentAsText = (props: ChatMessageContentProps): JSX.Element => {
