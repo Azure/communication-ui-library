@@ -259,7 +259,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
   );
 
   const showChatButton = checkShowChatButton(props.callControls);
-  const chatButtonDisabled = showChatButton && checkChatButtonIsDisabled(props.callControls) && hasJoinedCall;
+  const chatButtonDisabled = showChatButton && (checkChatButtonIsDisabled(props.callControls) || !hasJoinedCall);
   const chatTabHeaderProps = useMemo(
     () =>
       mobileView && showChatButton
