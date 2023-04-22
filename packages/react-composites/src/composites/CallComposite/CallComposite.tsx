@@ -3,7 +3,7 @@
 
 import { _isInCall } from '@internal/calling-component-bindings';
 import { OnRenderAvatarCallback, ParticipantMenuItemsCallback } from '@internal/react-components';
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { BaseProvider, BaseCompositeProps } from '../common/BaseComposite';
 import { CallCompositeIcons } from '../common/icons';
@@ -202,23 +202,20 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
   const { callInvitationUrl, onRenderAvatar, onFetchAvatarPersonaData, onFetchParticipantMenuItems } = props;
   const page = useSelector(getPage);
 
+  const overridePropsRef = useRef<InjectedSidePaneProps>(props.overrideSidePane);
   const { activeSidePaneId, setOverrideSidePane, setActiveSidePaneId, setHeaderRenderer, setContentRenderer } =
     useSidePaneContext();
   useEffect(() => {
     setOverrideSidePane(props.overrideSidePane);
-    if (props.overrideSidePane && activeSidePaneId) {
+    // When the injected side pane is opened, clear the previous side pane active state.
+    // this ensures when the injected side pane is "closed", the previous side pane is not "re-opened".
+    if (overridePropsRef.current === undefined && props.overrideSidePane) {
       setActiveSidePaneId(undefined);
       setHeaderRenderer(undefined);
       setContentRenderer(undefined);
     }
-  }, [
-    activeSidePaneId,
-    props.overrideSidePane,
-    setActiveSidePaneId,
-    setContentRenderer,
-    setHeaderRenderer,
-    setOverrideSidePane
-  ]);
+    overridePropsRef.current = props.overrideSidePane;
+  }, [props.overrideSidePane, setActiveSidePaneId, setContentRenderer, setHeaderRenderer, setOverrideSidePane]);
 
   const onSidePaneIdChange = props.onSidePaneIdChange;
   useEffect(() => {

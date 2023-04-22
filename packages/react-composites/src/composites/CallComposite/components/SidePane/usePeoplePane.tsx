@@ -8,7 +8,6 @@ import { PeoplePaneContent } from '../../../common/PeoplePaneContent';
 import { useLocale } from '../../../localization';
 import { ParticipantMenuItemsCallback, _DrawerMenuItemProps } from '@internal/react-components';
 import { AvatarPersonaDataCallback } from '../../../common/AvatarPersona';
-import { PeopleAndChatHeader } from '../../../common/TabHeader';
 
 /** @private */
 export const usePeoplePane = (props: {
@@ -17,45 +16,18 @@ export const usePeoplePane = (props: {
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
   mobileView?: boolean;
-
-  // legacy arguments to be removed in breaking change
-  disablePeopleButton: boolean;
-  disableChatButton?: boolean;
-  onChatButtonClicked?: () => void;
-  onPeopleButtonClicked?: () => void;
 }): {
   openPeoplePane: () => void;
   closePeoplePane: () => void;
   isPeoplePaneOpen: boolean;
 } => {
-  const {
-    inviteLink,
-    onFetchAvatarPersonaData,
-    onFetchParticipantMenuItems,
-    setDrawerMenuItems,
-    mobileView,
-    disablePeopleButton,
-    disableChatButton,
-    onChatButtonClicked
-  } = props;
+  const { inviteLink, onFetchAvatarPersonaData, onFetchParticipantMenuItems, setDrawerMenuItems, mobileView } = props;
   const { closePane } = useCloseSidePane();
 
   const localeStrings = useLocale();
 
-  const onRenderHeader = useCallback(() => {
-    return mobileView ? (
-      <PeopleAndChatHeader
-        onClose={closePane}
-        activeTab={'people'}
-        // legacy arguments to be removed in breaking change:
-        disablePeopleButton={disablePeopleButton}
-        disableChatButton={disableChatButton}
-        onPeopleButtonClicked={() => {
-          /* do nothing as people pane is open */
-        }}
-        onChatButtonClicked={onChatButtonClicked}
-      />
-    ) : (
+  const onRenderHeader = useCallback(
+    () => (
       <SidePaneHeader
         onClose={closePane}
         headingText={localeStrings.strings.call.peoplePaneTitle ?? localeStrings.strings.callWithChat.peoplePaneTitle}
@@ -66,18 +38,16 @@ export const usePeoplePane = (props: {
         }
         mobileView={mobileView ?? false}
       />
-    );
-  }, [
-    mobileView,
-    closePane,
-    disablePeopleButton,
-    disableChatButton,
-    onChatButtonClicked,
-    localeStrings.strings.call.peoplePaneTitle,
-    localeStrings.strings.call.dismissSidePaneButtonLabel,
-    localeStrings.strings.callWithChat.peoplePaneTitle,
-    localeStrings.strings.callWithChat.dismissSidePaneButtonLabel
-  ]);
+    ),
+    [
+      mobileView,
+      closePane,
+      localeStrings.strings.call.peoplePaneTitle,
+      localeStrings.strings.call.dismissSidePaneButtonLabel,
+      localeStrings.strings.callWithChat.peoplePaneTitle,
+      localeStrings.strings.callWithChat.dismissSidePaneButtonLabel
+    ]
+  );
 
   const onRenderContent = useCallback((): JSX.Element => {
     return (

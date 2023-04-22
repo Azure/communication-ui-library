@@ -53,7 +53,7 @@ import { getPage } from '../selectors/baseSelectors';
 /* @conditional-compile-remove(close-captions) */
 import { getCallStatus, getIsTeamsCall } from '../selectors/baseSelectors';
 import { drawerContainerStyles } from '../styles/CallComposite.styles';
-import { NewSidePane } from './SidePane/SidePane';
+import { SidePane } from './SidePane/SidePane';
 import { usePeoplePane } from './SidePane/usePeoplePane';
 /* @conditional-compile-remove(video-background-effects) */
 import { useVideoEffectsPane } from './SidePane/useVideoEffectsPane';
@@ -114,21 +114,12 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
       setDrawerMenuItems,
       inviteLink: props.callControlProps.callInvitationURL,
       onFetchAvatarPersonaData: props.onFetchAvatarPersonaData,
-      onFetchParticipantMenuItems: props.callControlProps?.onFetchParticipantMenuItems,
-      mobileView: props.mobileView,
-      disablePeopleButton:
-        typeof props.callControlProps.options !== 'boolean' &&
-        isDisabled(props.callControlProps.options?.participantsButton),
-      onChatButtonClicked: props.mobileChatTabHeader?.onClick,
-      disableChatButton: props.mobileChatTabHeader?.disabled
+      onFetchParticipantMenuItems: props.callControlProps?.onFetchParticipantMenuItems
     }),
     [
       props.callControlProps.callInvitationURL,
       props.callControlProps?.onFetchParticipantMenuItems,
-      props.callControlProps.options,
-      props.onFetchAvatarPersonaData,
-      props.mobileView,
-      props.mobileChatTabHeader
+      props.onFetchAvatarPersonaData
     ]
   );
   const { isPeoplePaneOpen, openPeoplePane, closePeoplePane } = usePeoplePane(peoplePaneProps);
@@ -330,7 +321,16 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                 </Stack>
               </Stack.Item>
             </Stack.Item>
-            <NewSidePane mobileView={props.mobileView} />
+            <SidePane
+              mobileView={props.mobileView}
+              onPeopleButtonClicked={togglePeoplePane}
+              disablePeopleButton={
+                typeof props.callControlProps.options !== 'boolean' &&
+                isDisabled(props.callControlProps.options?.participantsButton)
+              }
+              onChatButtonClicked={props.mobileChatTabHeader?.onClick}
+              disableChatButton={props.mobileChatTabHeader?.disabled}
+            />
             {props.mobileView && (
               <ModalLocalAndRemotePIP
                 modalLayerHostId={props.modalLayerHostId}

@@ -50,7 +50,7 @@ import { getDevicePermissionState } from '../utils';
 import { CallReadinessModal, CallReadinessModalFallBack } from '../components/CallReadinessModal';
 /* @conditional-compile-remove(video-background-effects) */
 import { useVideoEffectsPane } from '../components/SidePane/useVideoEffectsPane';
-import { NewSidePane } from '../components/SidePane/SidePane';
+import { SidePane } from '../components/SidePane/SidePane';
 
 /**
  * @private
@@ -326,7 +326,7 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
             </Stack>
           </Stack>
         </Stack>
-        <NewSidePane mobileView={props.mobileView} />
+        <SidePane mobileView={props.mobileView} />
       </Stack>
     </Stack>
   );

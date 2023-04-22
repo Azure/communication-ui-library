@@ -264,11 +264,11 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
     () =>
       mobileView && showChatButton
         ? {
-            onClick: openChat,
+            onClick: toggleChat,
             disabled: chatButtonDisabled
           }
         : undefined,
-    [chatButtonDisabled, mobileView, openChat, showChatButton]
+    [chatButtonDisabled, mobileView, toggleChat, showChatButton]
   );
 
   const customChatButton: CustomCallControlButtonCallback = useCallback(
@@ -373,7 +373,8 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
   );
   const onSidePaneIdChange = useCallback(
     (sidePaneId) => {
-      if (sidePaneId !== 'chat') {
+      // If the pane is switched to something other than chat, removing rendering chat.
+      if (sidePaneId && sidePaneId !== 'chat') {
         closeChat();
       }
     },
