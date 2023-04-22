@@ -18,7 +18,7 @@ import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { ParticipantListWithHeading } from '../common/ParticipantContainer';
 import { peoplePaneContainerTokens } from '../common/styles/ParticipantContainer.styles';
 import { participantListContainerStyles, peoplePaneContainerStyle } from './styles/PeoplePaneContent.styles';
-import { convertContextualMenuItemToDrawerMenuItem } from '../CallWithChatComposite/ConvertContextualMenuItemToDrawerMenuItem';
+import { convertContextualMenuItemToDrawerMenuItem } from './ConvertContextualMenuItemToDrawerMenuItem';
 /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
 import { CallCompositeStrings } from '../CallComposite';
 import { AddPeopleButton } from './AddPeopleButton';

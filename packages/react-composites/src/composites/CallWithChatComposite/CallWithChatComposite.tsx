@@ -31,7 +31,7 @@ import { CallCompositeInner, CallCompositeOptions } from '../CallComposite/CallC
 /* @conditional-compile-remove(call-readiness) */
 import { DeviceCheckOptions } from '../CallComposite/CallComposite';
 import { CommonCallControlOptions } from '../common/types/CommonCallControlOptions';
-import { ChatButtonWithUnreadMessagesBadge } from './ChatButtonWithUnreadMessagesBadge';
+import { ChatButtonWithUnreadMessagesBadge } from './ChatButton/ChatButtonWithUnreadMessagesBadge';
 import { getDesktopCommonButtonStyles } from '../common/ControlBar/CommonCallControlBar';
 import { InjectedSidePaneProps } from '../CallComposite/components/SidePane/SidePaneProvider';
 import { isDisabled } from '../CallComposite/utils';
