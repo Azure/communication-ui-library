@@ -11,6 +11,7 @@ import {
 import { availableSpaceStyles, sidePaneStyles, sidePaneTokens } from '../../../common/styles/Pane.styles';
 import { useCloseSidePane, useSidePaneContext } from './SidePaneProvider';
 import { PeopleAndChatHeader } from '../../../common/TabHeader';
+import { hiddenStyles } from '../../../common/styles/Pane.styles';
 
 /** @private */
 export interface SidePaneProps {
@@ -25,12 +26,20 @@ export interface SidePaneProps {
 
 /** @private */
 export const SidePane = (props: SidePaneProps): JSX.Element => {
-  const paneStyles = props.mobileView ? availableSpaceStyles : sidePaneStyles;
   const { headerRenderer, contentRenderer, activeSidePaneId, overrideSidePane } = useSidePaneContext();
+  const renderingHiddenOverrideContent = overrideSidePane?.hidden && overrideSidePane?.contentRenderer;
+  const renderingOnlyHiddenContent = renderingHiddenOverrideContent && !activeSidePaneId;
 
-  let Header = overrideSidePane?.headerRenderer ?? headerRenderer ?? EmptyElement;
-  const Content = overrideSidePane?.contentRenderer ?? contentRenderer ?? EmptyElement;
+  const paneStyles = renderingOnlyHiddenContent
+    ? hiddenStyles
+    : props.mobileView
+    ? availableSpaceStyles
+    : sidePaneStyles;
 
+  let Header =
+    (overrideSidePane?.headerRenderer && !overrideSidePane?.hidden
+      ? overrideSidePane?.headerRenderer
+      : headerRenderer) ?? EmptyElement;
   /**
    * Legacy code to support old behavior of showing chat and people tab headers on mobile side pane.
    * To be removed in breaking change.
@@ -51,8 +60,10 @@ export const SidePane = (props: SidePaneProps): JSX.Element => {
     );
   }
 
-  const isClosed = !activeSidePaneId && !overrideSidePane;
-  if (isClosed) {
+  const ContentRender = !overrideSidePane?.contentRenderer || overrideSidePane?.hidden ? contentRenderer : undefined;
+  const OverrideContentRender = overrideSidePane?.contentRenderer;
+
+  if (!ContentRender && !OverrideContentRender) {
     return <EmptyElement />;
   }
 
@@ -61,9 +72,16 @@ export const SidePane = (props: SidePaneProps): JSX.Element => {
       <Header />
       <Stack.Item verticalFill grow styles={paneBodyContainer}>
         <Stack horizontal styles={scrollableContainer}>
-          <Stack.Item verticalFill styles={scrollableContainerContents}>
-            <Content />
-          </Stack.Item>
+          {ContentRender && (
+            <Stack.Item verticalFill styles={scrollableContainerContents}>
+              <ContentRender />
+            </Stack.Item>
+          )}
+          {OverrideContentRender && (
+            <Stack.Item verticalFill styles={overrideSidePane?.hidden ? hiddenStyles : scrollableContainerContents}>
+              <OverrideContentRender />
+            </Stack.Item>
+          )}
         </Stack>
       </Stack.Item>
     </Stack>

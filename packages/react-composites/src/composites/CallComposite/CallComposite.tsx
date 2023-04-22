@@ -198,6 +198,10 @@ type MainScreenProps = {
   mobileChatTabHeader?: MobileChatSidePaneTabHeaderProps;
 };
 
+const isShowing = (overrideSidePane?: InjectedSidePaneProps): boolean => {
+  return !!overrideSidePane && overrideSidePane.hidden !== true;
+};
+
 const MainScreen = (props: MainScreenProps): JSX.Element => {
   const { callInvitationUrl, onRenderAvatar, onFetchAvatarPersonaData, onFetchParticipantMenuItems } = props;
   const page = useSelector(getPage);
@@ -209,7 +213,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
     setOverrideSidePane(props.overrideSidePane);
     // When the injected side pane is opened, clear the previous side pane active state.
     // this ensures when the injected side pane is "closed", the previous side pane is not "re-opened".
-    if (overridePropsRef.current === undefined && props.overrideSidePane) {
+    if (!isShowing(overridePropsRef.current) && isShowing(props.overrideSidePane)) {
       setActiveSidePaneId(undefined);
       setHeaderRenderer(undefined);
       setContentRenderer(undefined);

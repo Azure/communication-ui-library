@@ -350,8 +350,8 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
     [chatProps, props.fileSharing, props.onFetchAvatarPersonaData, theme]
   );
 
-  const overrideSidePaneProps: InjectedSidePaneProps = useMemo(
-    () => ({
+  const overrideSidePaneProps: InjectedSidePaneProps = useMemo(() => {
+    return {
       contentRenderer: onRenderChatContent,
       headerRenderer: () => (
         <SidePaneHeader
@@ -361,16 +361,17 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
           mobileView={mobileView}
         />
       ),
-      sidePaneId: 'chat'
-    }),
-    [
-      callWithChatStrings.chatPaneTitle,
-      callWithChatStrings.dismissSidePaneButtonLabel,
-      closeChat,
-      mobileView,
-      onRenderChatContent
-    ]
-  );
+      sidePaneId: 'chat',
+      hidden: !isChatOpen
+    };
+  }, [
+    callWithChatStrings.chatPaneTitle,
+    callWithChatStrings.dismissSidePaneButtonLabel,
+    closeChat,
+    mobileView,
+    onRenderChatContent,
+    isChatOpen
+  ]);
   const onSidePaneIdChange = useCallback(
     (sidePaneId) => {
       // If the pane is switched to something other than chat, removing rendering chat.
@@ -397,7 +398,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
               options={callCompositeOptions}
               adapter={callAdapter}
               fluentTheme={fluentTheme}
-              overrideSidePane={isChatOpen ? overrideSidePaneProps : undefined}
+              overrideSidePane={overrideSidePaneProps}
               onSidePaneIdChange={onSidePaneIdChange}
               mobileChatTabHeader={chatTabHeaderProps}
             />

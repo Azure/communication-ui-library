@@ -10,6 +10,9 @@ export type InjectedSidePaneProps =
       headerRenderer?: () => JSX.Element;
       contentRenderer?: () => JSX.Element;
       sidePaneId: string;
+      // Useful to ensure the side pane renders the content of the override even if the side pane is closed.
+      // This avoids remounting the content when the side pane is opened again.
+      hidden?: boolean;
     };
 
 interface SidePaneProps {
@@ -96,7 +99,7 @@ export const useOpenSidePane = (
 } => {
   const { setHeaderRenderer, setContentRenderer, setActiveSidePaneId, activeSidePaneId, overrideSidePane } =
     useSidePaneContext();
-  const isOpen = activeSidePaneId === sidePaneId && !overrideSidePane;
+  const isOpen = activeSidePaneId === sidePaneId && (!overrideSidePane || !!overrideSidePane.hidden);
 
   const updateRenderers = useCallback((): void => {
     setHeaderRenderer(() => onRenderHeader);
