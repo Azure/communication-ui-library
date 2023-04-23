@@ -1,0 +1,9 @@
+{
+  "image": "mcr.microsoft.com/devcontainers/universal:2",
+  "customizations": {
+    "vscode": {
+      "extensions": ["ms-azuretools.vscode-azureappservice", "nan-jiang.before-after-diff-checker"]
+    }
+  },
+  "postCreateCommand": "bash -i -c 'nvm install 16.19.0 && nvm use 16.19.0' && npm install @microsoft/rush -g && rush update"
+}
