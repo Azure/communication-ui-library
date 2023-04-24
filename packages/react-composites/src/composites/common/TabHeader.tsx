@@ -39,7 +39,7 @@ type PeopleAndChatHeaderProps = {
 export const PeopleAndChatHeader = (props: PeopleAndChatHeaderProps): JSX.Element => {
   const { onClose, onChatButtonClicked, onPeopleButtonClicked, activeTab } = props;
   const theme = useTheme();
-  const strings = localeTrampoline(useLocale()).strings;
+  const strings = localeTrampoline(useLocale());
   const haveMultipleTabs = onChatButtonClicked && onPeopleButtonClicked;
   const mobilePaneButtonStylesThemed = useMemo(() => {
     return concatStyleSets(
@@ -66,10 +66,8 @@ export const PeopleAndChatHeader = (props: PeopleAndChatHeaderProps): JSX.Elemen
   return (
     <Stack horizontal grow styles={mobilePaneControlBarStyle}>
       <DefaultButton
-        ariaLabel={strings.call.returnToCallButtonAriaLabel ?? strings.callWithChat.returnToCallButtonAriaLabel}
-        ariaDescription={
-          strings.call.returnToCallButtonAriaDescription ?? strings.callWithChat.returnToCallButtonAriaDescription
-        }
+        ariaLabel={strings.returnToCallButtonAriaLabel}
+        ariaDescription={strings.returnToCallButtonAriaDescription}
         onClick={onClose}
         styles={mobilePaneBackButtonStyles}
         onRenderIcon={() => <CallWithChatCompositeIcon iconName="ChevronLeft" />}
@@ -84,7 +82,7 @@ export const PeopleAndChatHeader = (props: PeopleAndChatHeaderProps): JSX.Elemen
             role={'tab'}
             disabled={props.disableChatButton}
           >
-            {strings.callWithChat.chatButtonLabel}
+            {strings.chatButtonLabel}
           </DefaultButton>
         )}
       </Stack.Item>
@@ -97,7 +95,7 @@ export const PeopleAndChatHeader = (props: PeopleAndChatHeaderProps): JSX.Elemen
             role={'tab'}
             disabled={props.disablePeopleButton}
           >
-            {strings.call.peopleButtonLabel ?? strings.callWithChat.peopleButtonLabel}
+            {strings.peopleButtonLabel ?? strings.peopleButtonLabel}
           </DefaultButton>
         )}
       </Stack.Item>

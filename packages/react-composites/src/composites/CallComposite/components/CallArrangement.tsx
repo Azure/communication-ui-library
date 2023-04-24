@@ -23,7 +23,6 @@ import { AvatarPersonaDataCallback } from '../../common/AvatarPersona';
 /* @conditional-compile-remove(close-captions) */
 import { CaptionsBanner } from '../../common/CaptionsBanner';
 import { containerDivStyles } from '../../common/ContainerRectProps';
-/* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
 import { compositeMinWidthRem } from '../../common/styles/Composite.styles';
 import { useAdapter } from '../adapter/CallAdapterProvider';
 import { CallControls, CallControlsProps } from '../components/CallControls';
@@ -63,6 +62,7 @@ import { ModalLocalAndRemotePIP } from '../../common/ModalLocalAndRemotePIP';
 import { getPipStyles } from '../../common/styles/ModalLocalAndRemotePIP.styles';
 import { useMinMaxDragPosition } from '../../common/utils';
 import { MobileChatSidePaneTabHeaderProps } from '../../common/TabHeader';
+import { CommonCallControlOptions } from '../../common/types/CommonCallControlOptions';
 
 /**
  * @private
@@ -137,10 +137,8 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   const { activeSidePaneId, overrideSidePane } = useSidePaneContext();
   const isSidePaneOpen = !!activeSidePaneId || (overrideSidePane && !overrideSidePane.hidden);
 
-  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   const isMobileWithActivePane = props.mobileView && isSidePaneOpen;
 
-  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   const callCompositeContainerCSS = useMemo(() => {
     return {
       display: isMobileWithActivePane ? 'none' : 'flex',
@@ -195,14 +193,6 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   };
 
   const drawerContainerStylesValue = useMemo(() => drawerContainerStyles(10), []);
-
-  // To be removed once feature is out of beta, replace with callCompositeContainerCSS
-  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-  const callCompositeContainerFlex = () => {
-    /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
-    return callCompositeContainerCSS;
-    return { display: 'flex', width: '100%', height: '100%' };
-  };
 
   /* @conditional-compile-remove(rooms) */
   const rolePermissions = _usePermissions();
@@ -297,7 +287,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
             )
           }
           <Stack horizontal grow>
-            <Stack.Item style={callCompositeContainerFlex()}>
+            <Stack.Item style={callCompositeContainerCSS}>
               <Stack.Item styles={callGalleryStyles} grow>
                 <Stack verticalFill styles={mediaGalleryContainerStyles}>
                   <Stack.Item styles={notificationsContainerStyles}>
@@ -326,7 +316,11 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
             </Stack.Item>
             <SidePane
               mobileView={props.mobileView}
-              onPeopleButtonClicked={togglePeoplePane}
+              onPeopleButtonClicked={
+                props.mobileView && !shouldShowPeopleTabHeaderButton(props.callControlProps.options)
+                  ? undefined
+                  : togglePeoplePane
+              }
               disablePeopleButton={
                 typeof props.callControlProps.options !== 'boolean' &&
                 isDisabled(props.callControlProps.options?.participantsButton)
@@ -359,4 +353,14 @@ const isLegacyCallControlEnabled = (options?: boolean | CallControlOptions): boo
   /* @conditional-compile-remove(new-call-control-bar) */
   return !!options && options !== true && (options as _CallControlOptions)?.legacyControlBarExperience !== true;
   return !!options && options !== true && (options as _CallControlOptions)?.legacyControlBarExperience !== false;
+};
+
+const shouldShowPeopleTabHeaderButton = (callControls?: boolean | CommonCallControlOptions): boolean => {
+  if (callControls === undefined || callControls === true) {
+    return true;
+  }
+  if (callControls === false) {
+    return false;
+  }
+  return callControls.participantsButton !== false && callControls.peopleButton !== false;
 };
