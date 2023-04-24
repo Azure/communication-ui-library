@@ -120,7 +120,9 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
   /* @conditional-compile-remove(mention) */
   // Caret position in the text field
   const [caretPosition, setCaretPosition] = useState<Caret.Position | undefined>(undefined);
-
+  /* @conditional-compile-remove(mention) */
+  // Index of where the caret is in the text field
+  const [caretIndex, setCaretIndex] = useState<number | null>(null);
   /* @conditional-compile-remove(mention) */
   // Parse the text and get the plain text version to display in the input box
   useEffect(() => {
@@ -131,6 +133,10 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     console.log('plainText', plainText);
     setInputTextValue(plainText);
     setTagsValue(tags);
+    if (caretIndex !== null && !!textFieldRef?.current) {
+      textFieldRef.current.setSelectionEnd(caretIndex);
+      console.log('useEffect set caret index to ', caretIndex);
+    }
   }, [textValue, mentionLookupOptions?.trigger]);
 
   const mergedRootStyle = mergeStyles(inputBoxWrapperStyle, styles?.root);
@@ -152,6 +158,9 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       if (ev.nativeEvent.isComposing || ev.nativeEvent.keyCode === 229 || ev.nativeEvent.which === 229) {
         return;
       }
+      if (!!ev.currentTarget.selectionEnd) {
+        setCaretIndex(ev.currentTarget.selectionEnd);
+      }
       if (ev.key === 'Enter' && (ev.shiftKey === false || !supportNewline)) {
         ev.preventDefault();
         onEnterKeyDown && onEnterKeyDown();
@@ -165,8 +174,11 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
   const updateMentionSuggestions = useCallback(
     (suggestions: Mention[]) => {
       setMentionSuggestions(suggestions);
-      //TODO: add focus to the correct position
       textFieldRef?.current?.focus();
+      if (!!caretIndex) {
+        console.log('updateMentionSuggestions set caret index to ', caretIndex);
+        textFieldRef?.current?.setSelectionEnd(caretIndex);
+      }
     },
     [textFieldRef]
   );
@@ -183,9 +195,15 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       console.log('selectionStart', textFieldRef?.current?.selectionStart);
       console.log('selectionEnd', selectionEnd);
 
+      // Update the text field with the mention
+      insertMention({
+        mention: suggestion,
+        insertIndex: selectionEnd,
+        currentPlainText: inputTextValue
+      });
       const oldPlainText = inputTextValue;
       const mention = htmlStringForMentionSuggestion(suggestion);
-      console.log('mention', mention);
+
       // update plain text with the mention html text
       const newPlainText =
         inputTextValue.substring(0, currentTriggerStartIndex) + mention + inputTextValue.substring(selectionEnd);
@@ -201,10 +219,14 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
         mention,
         triggerText
       );
-      // This change moves focus to the end of the input field when plainText != the text that in the input field
-      updateMentionSuggestions([]);
+
+      console.log('OnSuggestionSelected set caret index to ', selectionEnd + suggestion.displayText.length + 1, '');
+      setCaretIndex(selectionEnd + suggestion.displayText.length + 1);
       setCurrentTriggerStartIndex(-1);
       onMentionAdd && onMentionAdd(updatedHTML);
+      // This change moves focus to the end of the input field when plainText != the text that in the input field
+      updateMentionSuggestions([]);
+      setInputTextValue(newPlainText);
     },
     [
       textFieldRef,
@@ -241,6 +263,10 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     let newValue = updatedValue;
     if (newValue === undefined) {
       newValue = '';
+    }
+    if (!!event.currentTarget.selectionEnd) {
+      console.log('handleOnChange set caret index to ', event.currentTarget.selectionEnd);
+      setCaretIndex(event.currentTarget.selectionEnd);
     }
     const triggerText = mentionLookupOptions?.trigger ?? defaultMentionTrigger;
 
@@ -360,6 +386,12 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
             return;
             onChange(e, newValue);
           }}
+          onMouseUp={(e) => {
+            if (!!e.currentTarget.selectionEnd) {
+              console.log('onMouseUp set caret index to ', e.currentTarget.selectionEnd);
+              setCaretIndex(e.currentTarget.selectionEnd);
+            }
+          }}
           autoComplete="off"
           onKeyDown={onTextFieldKeyDown}
           styles={mergedTextFieldStyle}
@@ -428,6 +460,23 @@ export const InputBoxButton = (props: InputBoxButtonProps): JSX.Element => {
   );
 };
 
+// Insert a mention into the text, updating the HTML and plain text versions
+const insertMention = ({
+  mention,
+  insertIndex,
+  currentPlainText
+}: {
+  mention: Mention;
+  insertIndex: number;
+  currentPlainText: string;
+}): string => {
+  // User selected a mention, insert it into the text
+  const mentionText = htmlStringForMentionSuggestion(mention);
+  // TODO: Simplify
+  //return updateHTML(<params>)
+  return mentionText;
+};
+
 /**
  * Go through the text and update it with the changed text
  *
@@ -466,7 +515,8 @@ const updateHTML = (
     if (tag.plainTextBeginIndex === undefined) {
       continue;
     }
-    // all plain text indexes includes trigger length fro the mention that shouldn't be included in htmlText.substring because html strings doesn't include the trigger
+    // all plain text indexes includes trigger length for the mention that shouldn't be included in
+    // htmlText.substring because html strings don't include the trigger
     // mentionTagLength will be set only for 'msft-mention', otherwise should be 0
     let mentionTagLength = 0;
     if (tag.tagType === 'msft-mention') {
@@ -902,11 +952,11 @@ const textToTagParser = (text: string, trigger: string): [TagData[], string] => 
         addTag(currentOpenTag, tagParseStack, tags);
       } else {
         console.error(
-          'Unexpected close tag found. Got ' +
+          'Unexpected close tag found. Got "' +
             closeTagType +
-            ' but expected ' +
+            '" but expected "' +
             tagParseStack[tagParseStack.length - 1]?.tagType +
-            ''
+            '"'
         );
       }
     }
