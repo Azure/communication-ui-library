@@ -10,11 +10,11 @@ Mon, 24 Apr 2023 15:39:35 GMT
 [Compare changes](https://github.com/azure/communication-ui-library/compare/1.5.1-beta.2...1.5.1-beta.3)
 
 ### Closed Captions - Public Preview
-The Web UI calling and chat composite now supports closed captions in teams interop and teams CTE scenarios.
+The Web UI Calling and CallWithChat composite now supports Closed Captions in Teams Interop and Teams CTE scenarios.
 
 This feature includes:
 - Ability to enable, and show/hide closed captions in a call 
-- Choose or change the captions spoken language when captions is enabled 
+- Choose or change the captions spoken language
 - Ability to scroll through past 50 dialogues after captions has been enabled 
 
 
@@ -29,15 +29,6 @@ This feature includes:
   - Add new message type BlockedMessage ([PR #2821](https://github.com/azure/communication-ui-library/pull/2821) by 77021369+jimchou-dev@users.noreply.github.com)
   - Implement inline image attachment for chat UI component ([PR #2894](https://github.com/azure/communication-ui-library/pull/2894) by 77021369+jimchou-dev@users.noreply.github.com)
   - Enable Teams adhoc call for startCall handler ([PR #2914](https://github.com/azure/communication-ui-library/pull/2914) by 79475487+mgamis-msft@users.noreply.github.com)
-  - Adapter API changes to add preset backgrounds to adapter and update selected video background effect ([PR #2865](https://github.com/azure/communication-ui-library/pull/2865)) ([PR #2895](https://github.com/azure/communication-ui-library/pull/2895) by 97124699+prabhjot-msft@users.noreply.github.com)
-  - Support background effects in config screen ([PR #2849](https://github.com/azure/communication-ui-library/pull/2849) by 97124699+prabhjot-msft@users.noreply.github.com)
-  - Start/stop selected video effect when camera is off ([PR #2895](https://github.com/azure/communication-ui-library/pull/2895) by 97124699+prabhjot-msft@users.noreply.github.com)
-  - Add errors for video effects ([PR #2962](https://github.com/azure/communication-ui-library/pull/2962) by 97124699+prabhjot-msft@users.noreply.github.com)
-  - Add Video Effects Pane to Call Composite ([PR #2883](https://github.com/azure/communication-ui-library/pull/2883) by 97124699+prabhjot-msft@users.noreply.github.com)
-  - Selector for selected video effect ([PR #2933](https://github.com/azure/communication-ui-library/pull/2933) by 97124699+prabhjot-msft@users.noreply.github.com)
-  - Remove effects options from camera button in case handler is not passed ([PR #2872](https://github.com/azure/communication-ui-library/pull/2872) by 97124699+prabhjot-msft@users.noreply.github.com)
-  - Add Blur and remove effects to VideoEffectsPane ([PR #2858](https://github.com/azure/communication-ui-library/pull/2858) by 97124699+prabhjot-msft@users.noreply.github.com)
-  - Add custom background in Call and CallWithChat Composite smaples ([PR #2896](https://github.com/azure/communication-ui-library/pull/2896) by 97124699+prabhjot-msft@users.noreply.github.com)
   - Captions feature changes ([PR #2846](https://github.com/azure/communication-ui-library/pull/2846)) ([PR #2960](https://github.com/azure/communication-ui-library/pull/2960) by carolinecao@microsoft.com)
 
 
