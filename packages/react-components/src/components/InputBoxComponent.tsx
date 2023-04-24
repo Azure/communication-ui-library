@@ -328,6 +328,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
               suggestions={mentionSuggestions}
               target={inputBoxRef}
               targetPositionOffset={caretPosition}
+              onRenderSuggestionItem={mentionLookupOptions?.onRenderSuggestionItem}
               onSuggestionSelected={onSuggestionSelected}
               onDismiss={() => {
                 updateMentionSuggestions([]);

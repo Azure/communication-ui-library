@@ -4505,7 +4505,7 @@ packages:
       '@babel/preset-env': 7.13.10_@babel+core@7.16.12
       '@babel/types': 7.21.3
       '@mdx-js/mdx': 1.6.22
-      '@types/lodash': 4.14.191
+      '@types/lodash': 4.14.194
       js-string-escape: 1.0.1
       loader-utils: 2.0.4
       lodash: 4.17.21
@@ -5179,10 +5179,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-dRLjCWHYg4oaA77cxO64oO+7JwCwnIzkZPdrrC71jQmQtlhM556pwKo5bUzqvZndkVbeFLIIi+9TC40JNF5hNQ==
-  /@types/lodash/4.14.191:
+  /@types/lodash/4.14.194:
     dev: false
     resolution:
-      integrity: sha512-BdZ5BCCvho3EIXw6wUCXHe7rS53AIDPLE+JzwgT+OsJk53oBfbSmZZ7CX4VaRoN78N+TJpFi9QPlfIVNmJYWxQ==
+      integrity: sha512-r22s9tAS7imvBt2lyHC9B8AGwWnXaYb1tY09oyLkXDs4vArpYJzw09nj8MLx5VfciBPGIb+ZwG0ssYnEPJxn/g==
   /@types/mdast/3.0.10:
     dependencies:
       '@types/unist': 2.0.6
@@ -20021,6 +20021,7 @@ packages:
       '@types/enzyme': 3.10.12
       '@types/jest': 26.0.24
       '@types/json-stringify-safe': 5.0.0
+      '@types/lodash': 4.14.194
       '@types/node': 14.18.38
       '@types/react': 16.14.35
       '@types/react-aria-live': 2.0.2
@@ -20086,7 +20087,7 @@ packages:
     dev: false
     name: '@rush-temp/react-components'
     resolution:
-      integrity: sha512-Yxmy0mHzkaE2Yh6bnIIBfeKFy+WIzDiDsd7fMNQHT63nIoMIHRFmTkyCakgQ1Lpe7VMsOmPYulHsJuzg6+IRsg==
+      integrity: sha512-4TK7ihngOYgEMdEcQHeEvcUkCIUGBjwbn77IaBwv62OCSGVULiEvgc2DSwvObcJcYqq0RNQViSvPCw0iE7HocQ==
       tarball: file:projects/react-components.tgz
     version: 0.0.0
   file:projects/react-composites.tgz:
