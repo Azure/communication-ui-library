@@ -445,7 +445,7 @@ const updateHTML = (
     // no tags added yet
     return newPlainText;
   }
-  if (startIndex === 0 && oldPlainTextEndIndex === oldPlainText.length - 1) {
+  if (startIndex === 0 && oldPlainTextEndIndex === oldPlainText.length) {
     // the whole text is changed
     return newPlainText;
   }
@@ -746,6 +746,9 @@ const findStringsDiffIndexes = (
           break;
         }
       }
+      // make indexes exclusive
+      newChangeEnd += 1;
+      oldChangeEnd += 1;
     }
   } else if (oldTextLength > newTextLength) {
     //deletion or replacement
@@ -763,6 +766,9 @@ const findStringsDiffIndexes = (
           break;
         }
       }
+      // make indexes exclusive
+      newChangeEnd += 1;
+      oldChangeEnd += 1;
     }
   } else {
     //replacement
@@ -775,10 +781,10 @@ const findStringsDiffIndexes = (
         break;
       }
     }
+    // make indexes exclusive
+    newChangeEnd += 1;
+    oldChangeEnd += 1;
   }
-  // make indexes exclusive
-  newChangeEnd += 1;
-  oldChangeEnd += 1;
   return { changeStart, oldChangeEnd, newChangeEnd };
 };
 
