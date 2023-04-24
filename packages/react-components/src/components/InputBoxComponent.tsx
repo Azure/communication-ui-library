@@ -784,9 +784,13 @@ const findStringsDiffIndexes = (
         break;
       }
     }
-    // make indexes exclusive
-    newChangeEnd += 1;
-    oldChangeEnd += 1;
+    // make indexes exclusive if they aren't equal to the length of the string
+    if (newChangeEnd !== newText.length) {
+      newChangeEnd += 1;
+    }
+    if (oldChangeEnd !== oldText.length) {
+      oldChangeEnd += 1;
+    }
   }
   return { changeStart, oldChangeEnd, newChangeEnd };
 };
