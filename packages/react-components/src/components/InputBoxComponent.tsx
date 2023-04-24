@@ -61,7 +61,7 @@ type InputBoxComponentProps = {
   'data-ui-id'?: string;
   id?: string;
   textValue: string; // This could be plain text or HTML.
-  onChange: (event: FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string | undefined) => void;
+  onChange: (event: FormEvent<HTMLInputElement | HTMLTextAreaElement> | null, newValue?: string | undefined) => void;
   textFieldRef?: React.RefObject<ITextField>;
   inputClassName?: string;
   placeholderText?: string;
@@ -75,8 +75,6 @@ type InputBoxComponentProps = {
   autoFocus?: 'sendBoxTextField';
   /* @conditional-compile-remove(mention) */
   mentionLookupOptions?: MentionLookupOptions;
-  /* @conditional-compile-remove(mention) */
-  onMentionAdd?: (newTextValue?: string) => void; // textValue should be updated in it
 };
 
 /**
@@ -99,9 +97,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     disabled,
     children,
     /* @conditional-compile-remove(mention) */
-    mentionLookupOptions,
-    /* @conditional-compile-remove(mention) */
-    onMentionAdd
+    mentionLookupOptions
   } = props;
   const inputBoxRef = useRef<HTMLDivElement>(null);
 
@@ -215,9 +211,9 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       // Move the caret in the text field to the end of the mention plain text
       setCaretIndex(selectionEnd + suggestion.displayText.length);
       setCurrentTriggerStartIndex(-1);
-      onMentionAdd && onMentionAdd(updatedHTML);
       updateMentionSuggestions([]);
       setInputTextValue(newPlainText);
+      onChange && onChange(null, updatedHTML);
     },
     [
       textFieldRef,
@@ -226,7 +222,6 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       mentionLookupOptions?.trigger,
       textValue,
       tagsValue,
-      onMentionAdd,
       updateMentionSuggestions
     ]
   );
