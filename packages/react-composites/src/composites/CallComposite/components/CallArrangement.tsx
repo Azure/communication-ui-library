@@ -351,7 +351,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
 
 const isLegacyCallControlEnabled = (options?: boolean | CallControlOptions): boolean => {
   /* @conditional-compile-remove(new-call-control-bar) */
-  return !!options && options !== true && (options as _CallControlOptions)?.legacyControlBarExperience !== true;
+  return !!options && options !== true && (options as _CallControlOptions)?.legacyControlBarExperience === true;
   return !!options && options !== true && (options as _CallControlOptions)?.legacyControlBarExperience !== false;
 };
 

@@ -369,7 +369,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
 
   const overrideSidePaneProps: InjectedSidePaneProps = useMemo(() => {
     return {
-      contentRenderer: onRenderChatContent,
+      contentRenderer: hasJoinedCall ? onRenderChatContent : undefined,
       headerRenderer: () => (
         <SidePaneHeader
           headingText={callWithChatStrings.chatPaneTitle}
@@ -382,6 +382,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
       hidden: !isChatOpen
     };
   }, [
+    hasJoinedCall,
     callWithChatStrings.chatPaneTitle,
     callWithChatStrings.dismissSidePaneButtonLabel,
     closeChat,
