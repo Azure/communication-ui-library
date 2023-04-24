@@ -127,7 +127,12 @@ export const PeoplePaneContent = (props: {
 
   if (props.mobileView) {
     return (
-      <Stack verticalFill styles={peoplePaneContainerStyle} tokens={peoplePaneContainerTokens}>
+      <Stack
+        verticalFill
+        styles={peoplePaneContainerStyle}
+        tokens={peoplePaneContainerTokens}
+        data-ui-id="people-pane-content"
+      >
         <Stack.Item grow styles={participantListContainerStyles}>
           {participantList}
         </Stack.Item>
