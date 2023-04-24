@@ -7,8 +7,6 @@ import { CommonCallAdapter } from '../adapter/CallAdapter';
 import { _isInCall, _isPreviewOn, _isInLobbyOrConnecting } from '@internal/calling-component-bindings';
 import { CallControlOptions } from '../types/CallControlOptions';
 import { CallState, RemoteParticipantState } from '@internal/calling-stateful-client';
-/* @conditional-compile-remove(close-captions) */
-import { CallCommon, _isACSCall, _isTeamsCall } from '@internal/calling-stateful-client';
 import {
   CommunicationIdentifier,
   isCommunicationUserIdentifier,
@@ -449,15 +447,4 @@ export const createParticipantModifier = (
         : undefined
     };
   };
-};
-
-/* @conditional-compile-remove(close-captions) */
-/**
- * @private
- * Determine whether a call is:
- * A TeamsCall
- * or a ACS Call joining the teams meeting
- */
-export const _isTeamsMeetingCall = (call: CallCommon): boolean => {
-  return _isTeamsCall(call) || (_isACSCall(call) && !call.info.groupId && !call.info.roomId); // there should be a better way to determine if a call is joining a teams meeting ideally should be a meetingID in the info object
 };
