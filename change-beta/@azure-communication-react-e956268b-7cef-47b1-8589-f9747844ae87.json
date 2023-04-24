@@ -1,7 +1,0 @@
-{
-  "type": "minor",
-  "comment": "Edit message error handling UI in ChatThread component",
-  "packageName": "@azure/communication-react",
-  "email": "3941071+emlynmac@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
