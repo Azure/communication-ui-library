@@ -68,7 +68,7 @@ import { VideoBackgroundImage, SelectedVideoBackgroundEffect } from './CallAdapt
 import { TeamsCallAdapter } from './CallAdapter';
 import { getCallCompositePage, IsCallEndedPage, isCameraOn, isValidIdentifier } from '../utils';
 /* @conditional-compile-remove(close-captions) */
-import { _isTeamsMeetingCall } from '../utils';
+import { _isTeamsMeetingCall } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(video-background-effects) */
 import { startSelectedVideoEffect } from '../utils';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
