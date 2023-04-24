@@ -124,11 +124,12 @@ const VideoEffectsPaneTrampoline = (
 ): JSX.Element => {
   /* @conditional-compile-remove(video-background-effects) */
   const selectedEffect = useSelector(activeVideoBackgroundEffectSelector);
+
   /* @conditional-compile-remove(video-background-effects) */
   return (
     <Stack horizontalAlign="center">
       <_VideoBackgroundEffectsPicker
-        label="Background" // TODO: localize
+        label="Background" // TODO [jaburnsi]: localize
         styles={backgroundPickerStyles}
         options={selectableVideoEffects ?? []}
         onChange={onEffectChange}
