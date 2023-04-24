@@ -3,7 +3,7 @@
 
 import React, { useCallback, useState, useMemo, useEffect, useRef } from 'react';
 import { mergeStyles, PartialTheme, Stack, Theme } from '@fluentui/react';
-import { CallCompositePage, CustomCallControlButtonCallbackArgs } from '../CallComposite';
+import { CallCompositePage } from '../CallComposite';
 import { CallState } from '@azure/communication-calling';
 import { callCompositeContainerStyles, compositeOuterContainerStyles } from './styles/CallWithChatCompositeStyles';
 import { CallWithChatAdapter } from './adapter/CallWithChatAdapter';
@@ -25,18 +25,22 @@ import { useId } from '@fluentui/react-hooks';
 /* @conditional-compile-remove(file-sharing) */
 import { FileSharingOptions } from '../ChatComposite';
 import { containerDivStyles } from '../common/ContainerRectProps';
-/* @conditional-compile-remove(PSTN-calls) */
 import { useCallWithChatCompositeStrings } from './hooks/useCallWithChatCompositeStrings';
 import { CallCompositeInner, CallCompositeOptions } from '../CallComposite/CallComposite';
 /* @conditional-compile-remove(call-readiness) */
 import { DeviceCheckOptions } from '../CallComposite/CallComposite';
-import { CommonCallControlOptions } from '../common/types/CommonCallControlOptions';
+import {
+  CommonCallControlOptions,
+  CustomCallControlButtonCallbackArgs,
+  _CommonCallControlOptions
+} from '../common/types/CommonCallControlOptions';
 import { ChatButtonWithUnreadMessagesBadge } from './ChatButton/ChatButtonWithUnreadMessagesBadge';
 import { getDesktopCommonButtonStyles } from '../common/ControlBar/CommonCallControlBar';
 import { InjectedSidePaneProps } from '../CallComposite/components/SidePane/SidePaneProvider';
 import { isDisabled } from '../CallComposite/utils';
 import { CustomCallControlButtonCallback } from '../common/ControlBar/CustomButton';
 import { SidePaneHeader } from '../common/SidePaneHeader';
+import { _CallControlOptions } from '../CallComposite/types/CallControlOptions';
 
 /**
  * Props required for the {@link CallWithChatComposite}
@@ -300,14 +304,22 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
     ]
   );
 
+  const injectedCustomButtonsTrampoline = useMemo(() => {
+    /* @conditional-compile-remove(control-bar-button-injection) */
+    return [...(typeof props.callControls === 'object' ? props.callControls?.onFetchCustomButtonProps ?? [] : [])];
+    return [];
+  }, [props.callControls]);
+
   const callCompositeOptions: CallCompositeOptions = useMemo(
     () => ({
       callControls: {
         onFetchCustomButtonProps: [
           ...(showChatButton ? [customChatButton] : []),
-          ...(typeof props.callControls === 'object' ? props.callControls?.onFetchCustomButtonProps ?? [] : [])
-        ]
-      },
+          /* @conditional-compile-remove(control-bar-button-injection) */
+          ...injectedCustomButtonsTrampoline
+        ],
+        legacyControlBarExperience: false
+      } as _CallControlOptions,
       /* @conditional-compile-remove(call-readiness) */
       deviceChecks: props.deviceChecks,
       /* @conditional-compile-remove(call-readiness) */
@@ -320,7 +332,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
     [
       showChatButton,
       customChatButton,
-      props.callControls,
+      injectedCustomButtonsTrampoline,
       /* @conditional-compile-remove(call-readiness) */
       props.deviceChecks,
       /* @conditional-compile-remove(unsupported-browser) */
@@ -347,7 +359,12 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
         onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
       />
     ),
-    [chatProps, props.fileSharing, props.onFetchAvatarPersonaData, theme]
+    [
+      chatProps,
+      /* @conditional-compile-remove(file-sharing) */ props.fileSharing,
+      props.onFetchAvatarPersonaData,
+      theme
+    ]
   );
 
   const overrideSidePaneProps: InjectedSidePaneProps = useMemo(() => {

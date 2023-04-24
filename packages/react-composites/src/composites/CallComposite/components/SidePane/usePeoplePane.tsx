@@ -5,7 +5,7 @@ import React, { useCallback } from 'react';
 import { useCloseSidePane, useOpenSidePane } from './SidePaneProvider';
 import { SidePaneHeader } from '../../../common/SidePaneHeader';
 import { PeoplePaneContent } from '../../../common/PeoplePaneContent';
-import { useLocale } from '../../../localization';
+import { CompositeLocale, useLocale } from '../../../localization';
 import { ParticipantMenuItemsCallback, _DrawerMenuItemProps } from '@internal/react-components';
 import { AvatarPersonaDataCallback } from '../../../common/AvatarPersona';
 
@@ -24,29 +24,18 @@ export const usePeoplePane = (props: {
   const { inviteLink, onFetchAvatarPersonaData, onFetchParticipantMenuItems, setDrawerMenuItems, mobileView } = props;
   const { closePane } = useCloseSidePane();
 
-  const localeStrings = useLocale();
+  const localeStrings = localeTrampoline(useLocale());
 
   const onRenderHeader = useCallback(
     () => (
       <SidePaneHeader
         onClose={closePane}
-        headingText={localeStrings.strings.call.peoplePaneTitle ?? localeStrings.strings.callWithChat.peoplePaneTitle}
-        dismissSidePaneButtonAriaLabel={
-          localeStrings.strings.call.dismissSidePaneButtonLabel ??
-          localeStrings.strings.callWithChat.dismissSidePaneButtonLabel ??
-          ''
-        }
+        headingText={localeStrings.peoplePaneTitle}
+        dismissSidePaneButtonAriaLabel={localeStrings.dismissSidePaneButtonLabel}
         mobileView={mobileView ?? false}
       />
     ),
-    [
-      mobileView,
-      closePane,
-      localeStrings.strings.call.peoplePaneTitle,
-      localeStrings.strings.call.dismissSidePaneButtonLabel,
-      localeStrings.strings.callWithChat.peoplePaneTitle,
-      localeStrings.strings.callWithChat.dismissSidePaneButtonLabel
-    ]
+    [mobileView, closePane, localeStrings]
   );
 
   const onRenderContent = useCallback((): JSX.Element => {
@@ -64,4 +53,12 @@ export const usePeoplePane = (props: {
   const { isOpen, openPane } = useOpenSidePane('people', onRenderHeader, onRenderContent);
 
   return { openPeoplePane: openPane, closePeoplePane: closePane, isPeoplePaneOpen: isOpen };
+};
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const localeTrampoline = (locale: CompositeLocale): any => {
+  /* @conditional-compile-remove(new-call-control-bar) */
+  return locale.strings.call;
+
+  return locale.strings.callWithChat;
 };

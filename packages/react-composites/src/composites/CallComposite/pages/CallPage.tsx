@@ -28,7 +28,6 @@ import { MobileChatSidePaneTabHeaderProps } from '../../common/TabHeader';
  */
 export interface CallPageProps {
   mobileView: boolean;
-  /* @conditional-compile-remove(one-to-n-calling) */
   modalLayerHostId: string;
   callInvitationURL?: string;
   onRenderAvatar?: OnRenderAvatarCallback;
@@ -84,8 +83,7 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
       /* @conditional-compile-remove(one-to-n-calling) */
       onFetchAvatarPersonaData={onFetchAvatarPersonaData}
       mobileView={mobileView}
-      /* @conditional-compile-remove(one-to-n-calling) */
-      modalLayerHostId={props.modalLayerHostId}
+      modalLayerHostId={drawerMenuHostId}
       onRenderGalleryContent={() =>
         _isInCall(callStatus) ? (
           isNetworkHealthy(networkReconnectTileProps.networkReconnectValue) ? (

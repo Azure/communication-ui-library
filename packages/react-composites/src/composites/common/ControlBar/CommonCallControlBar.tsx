@@ -18,7 +18,6 @@ import { ScreenShare } from '../../CallComposite/components/buttons/ScreenShare'
 import { EndCall } from '../../CallComposite/components/buttons/EndCall';
 import { MoreButton } from '../MoreButton';
 import { ContainerRectProps } from '../ContainerRectProps';
-/* @conditional-compile-remove(control-bar-button-injection) */
 import {
   CUSTOM_BUTTON_OPTIONS,
   generateCustomCallControlBarButton,
@@ -193,7 +192,6 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
     [props.mobileView, isOutOfSpace]
   );
 
-  /* @conditional-compile-remove(control-bar-button-injection) */
   const customButtons = useMemo(
     () =>
       generateCustomCallControlBarButton(
@@ -278,25 +276,22 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                         disabled={props.disableButtonsForHoldScreen || isDisabled(options.screenShareButton)}
                       />
                     )}
-                    {
-                      /* @conditional-compile-remove(control-bar-button-injection) */
-                      customButtons['primary']
-                        ?.slice(
-                          0,
-                          props.mobileView
-                            ? CUSTOM_BUTTON_OPTIONS.MAX_PRIMARY_MOBILE_CUSTOM_BUTTONS
-                            : CUSTOM_BUTTON_OPTIONS.MAX_PRIMARY_DESKTOP_CUSTOM_BUTTONS
-                        )
-                        .map((CustomButton, i) => {
-                          return (
-                            <CustomButton
-                              key={`primary-custom-button-${i}`}
-                              styles={commonButtonStyles}
-                              showLabel={options.displayType !== 'compact'}
-                            />
-                          );
-                        })
-                    }
+                    {customButtons['primary']
+                      ?.slice(
+                        0,
+                        props.mobileView
+                          ? CUSTOM_BUTTON_OPTIONS.MAX_PRIMARY_MOBILE_CUSTOM_BUTTONS
+                          : CUSTOM_BUTTON_OPTIONS.MAX_PRIMARY_DESKTOP_CUSTOM_BUTTONS
+                      )
+                      .map((CustomButton, i) => {
+                        return (
+                          <CustomButton
+                            key={`primary-custom-button-${i}`}
+                            styles={commonButtonStyles}
+                            showLabel={options.displayType !== 'compact'}
+                          />
+                        );
+                      })}
                     {props.mobileView && (
                       <MoreButton
                         data-ui-id="common-call-composite-more-button"
@@ -349,20 +344,17 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                     styles={commonButtonStyles}
                   />
                 )}
-                {
-                  /* @conditional-compile-remove(control-bar-button-injection) */
-                  customButtons['secondary']
-                    ?.slice(0, CUSTOM_BUTTON_OPTIONS.MAX_SECONDARY_DESKTOP_CUSTOM_BUTTONS)
-                    .map((CustomButton, i) => {
-                      return (
-                        <CustomButton
-                          key={`secondary-custom-button-${i}`}
-                          styles={commonButtonStyles}
-                          showLabel={options.displayType !== 'compact'}
-                        />
-                      );
-                    })
-                }
+                {customButtons['secondary']
+                  ?.slice(0, CUSTOM_BUTTON_OPTIONS.MAX_SECONDARY_DESKTOP_CUSTOM_BUTTONS)
+                  .map((CustomButton, i) => {
+                    return (
+                      <CustomButton
+                        key={`secondary-custom-button-${i}`}
+                        styles={commonButtonStyles}
+                        showLabel={options.displayType !== 'compact'}
+                      />
+                    );
+                  })}
               </Stack>
             </div>
           </Stack.Item>

@@ -21,6 +21,7 @@ import { activeVideoBackgroundEffectSelector } from '../CallComposite/selectors/
 import { useSelector } from '../CallComposite/hooks/useSelector';
 /* @conditional-compile-remove(video-background-effects) */
 import { useAdapter } from '../CallComposite/adapter/CallAdapterProvider';
+/* @conditional-compile-remove(video-background-effects) */
 import { Stack } from '@fluentui/react';
 
 /**
@@ -138,6 +139,7 @@ const VideoEffectsPaneTrampoline = (
   return <></>;
 };
 
+/* @conditional-compile-remove(video-background-effects) */
 const backgroundPickerStyles = {
   label: {
     fontSize: '0.75rem',

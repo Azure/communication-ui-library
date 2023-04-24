@@ -17,8 +17,9 @@ import { getCallingSelector } from '@internal/calling-component-bindings';
 import { Stack } from '@fluentui/react';
 /* @conditional-compile-remove(video-background-effects) */
 import { DefaultButton } from '@fluentui/react';
+import { fillWidth } from '../styles/CallConfiguration.styles';
 /* @conditional-compile-remove(video-background-effects) */
-import { effectsButtonStyles, fillWidth } from '../styles/CallConfiguration.styles';
+import { effectsButtonStyles } from '../styles/CallConfiguration.styles';
 /* @conditional-compile-remove(video-background-effects) */
 import { useTheme } from '@fluentui/react';
 import { LocalPreview } from '../components/LocalPreview';

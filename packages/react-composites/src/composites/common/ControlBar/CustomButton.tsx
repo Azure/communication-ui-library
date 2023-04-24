@@ -5,9 +5,12 @@
 import { Icon, IContextualMenuItem, mergeStyleSets } from '@fluentui/react';
 import { ControlBarButton, _DrawerMenuItemProps } from '@internal/react-components';
 import React from 'react';
-import { CustomCallControlButtonCallbackArgs, CustomControlButtonProps } from '../types/CommonCallControlOptions';
+import {
+  _CommonCallControlOptions,
+  CustomCallControlButtonCallbackArgs,
+  CustomControlButtonProps
+} from '../types/CommonCallControlOptions';
 import { CallControlDisplayType } from '../types/CommonCallControlOptions';
-/* @conditional-compile-remove(control-bar-button-injection) */
 import { CommonCallControlOptions } from '../types/CommonCallControlOptions';
 
 /**
@@ -194,12 +197,11 @@ export interface CustomCallControlButtonProps extends CustomControlButtonProps {
   iconName?: string;
 }
 
-/* @conditional-compile-remove(control-bar-button-injection) */
 /** @private */
 export const onFetchCustomButtonPropsTrampoline = (
   options?: CommonCallControlOptions
 ): CustomCallControlButtonCallback[] | undefined => {
   let response: CustomCallControlButtonCallback[] | undefined = undefined;
-  response = options?.onFetchCustomButtonProps;
+  response = (options as _CommonCallControlOptions)?.onFetchCustomButtonProps;
   return response;
 };

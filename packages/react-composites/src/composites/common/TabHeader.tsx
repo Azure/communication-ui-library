@@ -10,8 +10,7 @@ import {
   mobilePaneControlBarStyle,
   mobilePaneHiddenIconStyles
 } from './styles/Pane.styles';
-import { useLocale } from '../localization';
-import { CommonCallControlOptions } from './types/CommonCallControlOptions';
+import { CompositeLocale, useLocale } from '../localization';
 
 /** @private */
 export interface MobileChatSidePaneTabHeaderProps {
@@ -40,7 +39,7 @@ type PeopleAndChatHeaderProps = {
 export const PeopleAndChatHeader = (props: PeopleAndChatHeaderProps): JSX.Element => {
   const { onClose, onChatButtonClicked, onPeopleButtonClicked, activeTab } = props;
   const theme = useTheme();
-  const strings = useLocale().strings;
+  const strings = localeTrampoline(useLocale()).strings;
   const haveMultipleTabs = onChatButtonClicked && onPeopleButtonClicked;
   const mobilePaneButtonStylesThemed = useMemo(() => {
     return concatStyleSets(
@@ -116,13 +115,10 @@ export const PeopleAndChatHeader = (props: PeopleAndChatHeaderProps): JSX.Elemen
  */
 export type TabHeaderTab = 'chat' | 'people';
 
-/* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
-const shouldShowPeopleTabHeaderButton = (callControls?: boolean | CommonCallControlOptions): boolean => {
-  if (callControls === undefined || callControls === true) {
-    return true;
-  }
-  if (callControls === false) {
-    return false;
-  }
-  return callControls.participantsButton !== false;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const localeTrampoline = (locale: CompositeLocale): any => {
+  /* @conditional-compile-remove(new-call-control-bar) */
+  return locale.strings.call;
+
+  return locale.strings.callWithChat;
 };

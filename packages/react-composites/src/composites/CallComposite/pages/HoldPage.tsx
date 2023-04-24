@@ -16,7 +16,6 @@ import { disableCallControls, reduceCallControlsForMobile } from '../utils';
 export interface HoldPageProps {
   mobileView: boolean;
   options?: CallCompositeOptions;
-  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
   modalLayerHostId: string;
 }
 
@@ -51,7 +50,6 @@ export const HoldPage = (props: HoldPageProps): JSX.Element => {
         increaseFlyoutItemSize: props.mobileView
       }}
       mobileView={props.mobileView}
-      /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
       modalLayerHostId={props.modalLayerHostId}
       onRenderGalleryContent={() => <HoldPane />}
       dataUiId={'hold-page'}

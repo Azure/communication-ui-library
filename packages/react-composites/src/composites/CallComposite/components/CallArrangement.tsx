@@ -42,7 +42,7 @@ import { MutedNotification, MutedNotificationProps } from './MutedNotification';
 import { CallAdapter } from '../adapter';
 import { useSelector } from '../hooks/useSelector';
 import { callStatusSelector } from '../selectors/callStatusSelector';
-import { CallControlOptions } from '../types/CallControlOptions';
+import { _CallControlOptions, CallControlOptions } from '../types/CallControlOptions';
 import { PreparedMoreDrawer } from '../../common/Drawer/PreparedMoreDrawer';
 /* @conditional-compile-remove(PSTN-calls) */
 import { SendDtmfDialpad } from '../../common/SendDtmfDialpad';
@@ -76,7 +76,6 @@ export interface CallArrangementProps {
   onRenderGalleryContent: () => JSX.Element;
   dataUiId: string;
   mobileView: boolean;
-  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   modalLayerHostId: string;
   /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
@@ -113,6 +112,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     () => ({
       setDrawerMenuItems,
       inviteLink: props.callControlProps.callInvitationURL,
+      /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
       onFetchAvatarPersonaData: props.onFetchAvatarPersonaData,
       onFetchParticipantMenuItems: props.callControlProps?.onFetchParticipantMenuItems,
       mobileView: props.mobileView
@@ -120,6 +120,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     [
       props.callControlProps.callInvitationURL,
       props.callControlProps?.onFetchParticipantMenuItems,
+      /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
       props.onFetchAvatarPersonaData,
       props.mobileView
     ]
@@ -356,6 +357,6 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
 
 const isLegacyCallControlEnabled = (options?: boolean | CallControlOptions): boolean => {
   /* @conditional-compile-remove(new-call-control-bar) */
-  return !!options && options !== true && !!options?.legacyControlBarExperience;
-  return true;
+  return !!options && options !== true && (options as _CallControlOptions)?.legacyControlBarExperience !== true;
+  return !!options && options !== true && (options as _CallControlOptions)?.legacyControlBarExperience !== false;
 };

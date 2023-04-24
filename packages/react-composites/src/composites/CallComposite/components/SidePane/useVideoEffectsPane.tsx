@@ -4,6 +4,7 @@
 import React, { useCallback } from 'react';
 import { useCloseSidePane, useOpenSidePane } from './SidePaneProvider';
 import { SidePaneHeader } from '../../../common/SidePaneHeader';
+/* @conditional-compile-remove(video-background-effects) */
 import { useLocale } from '../../../localization';
 import { VideoEffectsPaneContent } from '../../../common/VideoEffectsPane';
 
@@ -18,13 +19,16 @@ export const useVideoEffectsPane = (
 } => {
   const { closePane } = useCloseSidePane();
 
+  /* @conditional-compile-remove(video-background-effects) */
   const locale = useLocale();
 
   const onRenderHeader = useCallback(() => {
     return (
       <SidePaneHeader
         onClose={closePane}
+        /* @conditional-compile-remove(video-background-effects) */
         headingText={locale.strings.call.effects ?? 'Effects'}
+        /* @conditional-compile-remove(video-background-effects) */
         dismissSidePaneButtonAriaLabel={
           locale.strings.call.dismissSidePaneButtonLabel ??
           locale.strings.callWithChat.dismissSidePaneButtonLabel ??
@@ -33,7 +37,7 @@ export const useVideoEffectsPane = (
         mobileView={mobileView}
       />
     );
-  }, [closePane, locale.strings, mobileView]);
+  }, [closePane, /* @conditional-compile-remove(video-background-effects) */ locale.strings, mobileView]);
 
   const onRenderContent = useCallback((): JSX.Element => {
     return <VideoEffectsPaneContent />;

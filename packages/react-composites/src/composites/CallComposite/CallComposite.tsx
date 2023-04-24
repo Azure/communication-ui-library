@@ -27,7 +27,6 @@ import { _PermissionsProvider, Role, _getPermissions } from '@internal/react-com
 import { LayerHost, mergeStyles } from '@fluentui/react';
 /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
 import { modalLayerHostStyle } from '../common/styles/ModalLocalAndRemotePIP.styles';
-/* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
 import { useId } from '@fluentui/react-hooks';
 /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */
 import { HoldPage } from './pages/HoldPage';
@@ -184,7 +183,6 @@ export type CallCompositeOptions = {
 
 type MainScreenProps = {
   mobileView: boolean;
-  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) @conditional-compile-remove(call-readiness) */
   modalLayerHostId: string;
   onRenderAvatar?: OnRenderAvatarCallback;
   callInvitationUrl?: string;
@@ -317,12 +315,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
       break;
     case 'lobby':
       pageElement = (
-        <LobbyPage
-          mobileView={props.mobileView}
-          /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
-          modalLayerHostId={props.modalLayerHostId}
-          options={props.options}
-        />
+        <LobbyPage mobileView={props.mobileView} modalLayerHostId={props.modalLayerHostId} options={props.options} />
       );
       break;
     case 'call':
@@ -333,7 +326,6 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           onFetchAvatarPersonaData={onFetchAvatarPersonaData}
           onFetchParticipantMenuItems={onFetchParticipantMenuItems}
           mobileView={props.mobileView}
-          /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
           modalLayerHostId={props.modalLayerHostId}
           options={props.options}
           mobileChatTabHeader={props.mobileChatTabHeader}
@@ -432,7 +424,6 @@ export const CallCompositeInner = (props: CallCompositeProps & InternalCallCompo
 
   const mobileView = formFactor === 'mobile';
 
-  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   const modalLayerHostId = useId('modalLayerhost');
 
   const mainScreenContainerClassName = useMemo(() => {
@@ -449,7 +440,6 @@ export const CallCompositeInner = (props: CallCompositeProps & InternalCallCompo
               onFetchAvatarPersonaData={onFetchAvatarPersonaData}
               onFetchParticipantMenuItems={onFetchParticipantMenuItems}
               mobileView={mobileView}
-              /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) @conditional-compile-remove(call-readiness) */
               modalLayerHostId={modalLayerHostId}
               options={options}
               /* @conditional-compile-remove(rooms) */

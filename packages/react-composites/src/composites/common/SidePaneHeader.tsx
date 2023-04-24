@@ -16,8 +16,8 @@ import { CallWithChatCompositeIcon } from './icons';
  * @private
  */
 export const SidePaneHeader = (props: {
-  headingText: string;
-  dismissSidePaneButtonAriaLabel: string;
+  headingText?: string;
+  dismissSidePaneButtonAriaLabel?: string;
   dismissSidePaneButtonAriaDescription?: string;
   onClose: () => void;
   mobileView: boolean;
@@ -51,8 +51,8 @@ export const SidePaneHeader = (props: {
 };
 
 const SidePaneMobileHeader = (props: {
-  headingText: string;
-  dismissSidePaneButtonAriaLabel: string;
+  headingText?: string;
+  dismissSidePaneButtonAriaLabel?: string;
   dismissSidePaneButtonAriaDescription?: string;
   onClose: () => void;
 }): JSX.Element => {
