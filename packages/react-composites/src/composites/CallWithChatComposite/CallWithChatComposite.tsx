@@ -398,6 +398,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
               options={callCompositeOptions}
               adapter={callAdapter}
               fluentTheme={fluentTheme}
+              callInvitationUrl={props.joinInvitationURL}
               overrideSidePane={overrideSidePaneProps}
               onSidePaneIdChange={onSidePaneIdChange}
               mobileChatTabHeader={chatTabHeaderProps}

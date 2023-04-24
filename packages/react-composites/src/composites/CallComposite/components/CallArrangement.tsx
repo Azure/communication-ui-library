@@ -114,12 +114,14 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
       setDrawerMenuItems,
       inviteLink: props.callControlProps.callInvitationURL,
       onFetchAvatarPersonaData: props.onFetchAvatarPersonaData,
-      onFetchParticipantMenuItems: props.callControlProps?.onFetchParticipantMenuItems
+      onFetchParticipantMenuItems: props.callControlProps?.onFetchParticipantMenuItems,
+      mobileView: props.mobileView
     }),
     [
       props.callControlProps.callInvitationURL,
       props.callControlProps?.onFetchParticipantMenuItems,
-      props.onFetchAvatarPersonaData
+      props.onFetchAvatarPersonaData,
+      props.mobileView
     ]
   );
   const { isPeoplePaneOpen, openPeoplePane, closePeoplePane } = usePeoplePane(peoplePaneProps);

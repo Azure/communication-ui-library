@@ -44,18 +44,19 @@ export const SidePane = (props: SidePaneProps): JSX.Element => {
    * Legacy code to support old behavior of showing chat and people tab headers on mobile side pane.
    * To be removed in breaking change.
    */
+  const overrideSidePaneId = overrideSidePane?.hidden ? undefined : overrideSidePane?.sidePaneId;
   const { closePane } = useCloseSidePane();
-  if (props.mobileView && (overrideSidePane?.sidePaneId === 'chat' || activeSidePaneId === 'people')) {
+  if (props.mobileView && (overrideSidePaneId === 'chat' || activeSidePaneId === 'people')) {
     // use legacy header
     Header = () => (
       <PeopleAndChatHeader
-        onClose={overrideSidePane?.sidePaneId === 'chat' ? props.onChatButtonClicked ?? noop : closePane}
+        onClose={overrideSidePaneId === 'chat' ? props.onChatButtonClicked ?? noop : closePane}
         activeTab={activeSidePaneId === 'people' ? 'people' : 'chat'}
         // legacy arguments to be removed in breaking change:
         disablePeopleButton={props.disablePeopleButton}
         disableChatButton={props.disableChatButton}
         onPeopleButtonClicked={activeSidePaneId === 'people' ? noop : props.onPeopleButtonClicked}
-        onChatButtonClicked={overrideSidePane?.sidePaneId === 'chat' ? noop : props.onChatButtonClicked}
+        onChatButtonClicked={overrideSidePaneId === 'chat' ? noop : props.onChatButtonClicked}
       />
     );
   }
