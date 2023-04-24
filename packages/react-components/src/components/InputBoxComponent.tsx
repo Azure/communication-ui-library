@@ -133,10 +133,6 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     console.log('plainText', plainText);
     setInputTextValue(plainText);
     setTagsValue(tags);
-    if (caretIndex !== null && !!textFieldRef?.current) {
-      textFieldRef.current.setSelectionEnd(caretIndex);
-      console.log('useEffect set caret index to ', caretIndex);
-    }
   }, [textValue, mentionLookupOptions?.trigger]);
 
   const mergedRootStyle = mergeStyles(inputBoxWrapperStyle, styles?.root);
@@ -157,9 +153,6 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       // Uses KeyCode 229 and which code 229 to determine if the press of the enter key is from a composition session or not (Safari only)
       if (ev.nativeEvent.isComposing || ev.nativeEvent.keyCode === 229 || ev.nativeEvent.which === 229) {
         return;
-      }
-      if (!!ev.currentTarget.selectionEnd) {
-        setCaretIndex(ev.currentTarget.selectionEnd);
       }
       if (ev.key === 'Enter' && (ev.shiftKey === false || !supportNewline)) {
         ev.preventDefault();
@@ -219,12 +212,10 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
         mention,
         triggerText
       );
-
-      console.log('OnSuggestionSelected set caret index to ', selectionEnd + suggestion.displayText.length + 1, '');
-      setCaretIndex(selectionEnd + suggestion.displayText.length + 1);
+      // Move the caret in the text field to the end of the mention plain text
+      setCaretIndex(selectionEnd + suggestion.displayText.length);
       setCurrentTriggerStartIndex(-1);
       onMentionAdd && onMentionAdd(updatedHTML);
-      // This change moves focus to the end of the input field when plainText != the text that in the input field
       updateMentionSuggestions([]);
       setInputTextValue(newPlainText);
     },
@@ -263,10 +254,6 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     let newValue = updatedValue;
     if (newValue === undefined) {
       newValue = '';
-    }
-    if (!!event.currentTarget.selectionEnd) {
-      console.log('handleOnChange set caret index to ', event.currentTarget.selectionEnd);
-      setCaretIndex(event.currentTarget.selectionEnd);
     }
     const triggerText = mentionLookupOptions?.trigger ?? defaultMentionTrigger;
 
@@ -386,10 +373,12 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
             return;
             onChange(e, newValue);
           }}
-          onMouseUp={(e) => {
-            if (!!e.currentTarget.selectionEnd) {
-              console.log('onMouseUp set caret index to ', e.currentTarget.selectionEnd);
-              setCaretIndex(e.currentTarget.selectionEnd);
+          onSelect={(e) => {
+            console.log('onSelect', e.currentTarget.selectionEnd);
+            if (caretIndex !== null) {
+              console.log('onSelect set caret location to ', caretIndex);
+              e.currentTarget.setSelectionRange(caretIndex, caretIndex);
+              setCaretIndex(null);
             }
           }}
           autoComplete="off"
