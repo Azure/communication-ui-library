@@ -92,7 +92,7 @@ You can customize the layout of these components and add any other custom compon
 
 ## Calling UI Components
 
-For Calling, we'll use the [`GridLayout`](./?path=/story/ui-components-gridlayout--grid-layout-component) and [`ControlBar`](./?path=/story/ui-components-controlbar--control-bar) components.
+For Calling, we'll use the [`GridLayout`](./?path=/story/ui-components-gridlayout--grid-layout) and [`ControlBar`](./?path=/story/ui-components-controlbar--control-bar) components.
 To start, in the `src` folder, create a new file called `CallingComponents.tsx`.
 Here we'll initialize a function component that will hold our base components to then import in `app.tsx`.
 You can add extra layout and styling around the components.
@@ -101,13 +101,13 @@ You can add extra layout and styling around the components.
 
 <Source code={CallingComponentsText} />
 
-For this example we added a single `Video Tile` to the grid, but additional can be added.
+For this example, we added one [`VideoTile`](./?path=/story/ui-components-videotile--video-tile) to the grid, but more can be added.
 
 ## Chat UI Components
 
-For Chat, we will use the [`MessageThread`](./?path=/docs/ui-components-chatthread--chat-thread-component) and [`SendBox`](./?path=/docs/ui-components-sendbox--send-box-story-book-component) components.
+For Chat, we will use the [`MessageThread`](./?path=/story/ui-components-messagethread--message-thread) and [`SendBox`](./?path=/story/ui-components-sendbox--send-box) components.
 To start, in the `src` folder, create a new file called `ChatComponents.tsx`.
-Here we'll initialize a function component that will hold our base components to then import in `app.tsx`.
+Here we'll initialize a function component that will hold our base components to then import in `App.tsx`.
 
 `ChatComponents.tsx`
 
@@ -115,7 +115,7 @@ Here we'll initialize a function component that will hold our base components to
 
 ## Add Calling and Chat Components
 
-Back in the `app.tsx` file, we will now add the components to the `FluentThemeProvider` like shown below.
+Back in the `App.tsx` file, we will now add the components to the `FluentThemeProvider` like shown below.
 
 `App.tsx`
 
@@ -146,10 +146,10 @@ Learn more about [cleaning up resources](https://docs.microsoft.com/azure/commun
 
 ## Next Steps
 
-[Try UI Library Stateful Client](./?path=/story/quickstarts-statefulclient--page)
+[Try UI Library Stateful Call Client](./?path=/story/quickstarts-statefulcallclient--page)
 
 For more information, see the following resources:
 
-- [UI Library Use Cases](./?path=/story/use-cases--page)
+- [UI Library Use Cases](./?path=/story/usecases--page)
 - [UI Library Styling](./?path=/story/styling--page)
 - [UI Library Theming](./?path=/story/theming--page)
