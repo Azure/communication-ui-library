@@ -41,3 +41,87 @@ export const IDS = {
   atMentionSuggestionList: 'at-mention-suggestion-list',
   atMentionSuggestionItem: 'at-mention-suggestion-item'
 };
+
+export const captionsAvailableLanguageStrings = [
+  'ar-ae',
+  'ar-sa',
+  'da-dk',
+  'de-de',
+  'en-au',
+  'en-ca',
+  'en-gb',
+  'en-in',
+  'en-nz',
+  'en-us',
+  'es-es',
+  'es-mx',
+  'fi-fi',
+  'fr-ca',
+  'fr-fr',
+  'hi-in',
+  'it-it',
+  'ja-jp',
+  'ko-kr',
+  'nb-no',
+  'nl-be',
+  'nl-nl',
+  'pl-pl',
+  'pt-br',
+  'ru-ru',
+  'sv-se',
+  'zh-cn',
+  'zh-hk',
+  'cs-cz',
+  'pt-pt',
+  'tr-tr',
+  'vi-vn',
+  'th-th',
+  'he-il',
+  'cy-gb',
+  'uk-ua',
+  'el-gr',
+  'hu-hu',
+  'ro-ro',
+  'sk-sk',
+  'zh-tw'
+];
+
+export const captionsFeatureState = {
+  captions: [
+    {
+      resultType: 'Final' as const,
+      timestamp: new Date(0),
+      speaker: {
+        displayName: 'Participant 1',
+        identifier: { communicationUserId: 'communicationId1', kind: 'communicationUser' as const }
+      },
+      spokenLanguage: 'en-us' as const,
+      captionText: 'How are you?'
+    },
+    {
+      resultType: 'Final' as const,
+      timestamp: new Date(10000),
+      speaker: {
+        displayName: 'Participant 2',
+        identifier: { communicationUserId: 'communicationId2', kind: 'communicationUser' as const }
+      },
+      spokenLanguage: 'en-us',
+      captionText: 'I am good.'
+    },
+    {
+      resultType: 'Final' as const,
+      timestamp: new Date(10000),
+      speaker: {
+        displayName: 'Participant 3',
+        identifier: { communicationUserId: 'communicationId3', kind: 'communicationUser' as const }
+      },
+      spokenLanguage: 'en-us',
+      captionText: 'Nice to see you today!'
+    }
+  ],
+  supportedSpokenLanguages: captionsAvailableLanguageStrings,
+  supportedCaptionLanguages: captionsAvailableLanguageStrings,
+  currentCaptionLanguage: 'en-us',
+  currentSpokenLanguage: 'en-us',
+  isCaptionsFeatureActive: true
+};

@@ -119,7 +119,12 @@ const initializeAdapter = async (
     adapterInfo.chatThreadClient.threadId
   );
   registerChatThreadClientMethodErrors(chatThreadClient, chatThreadClientMethodErrors);
-  return await createAzureCommunicationChatAdapterFromClient(statefulChatClient, chatThreadClient);
+  return await createAzureCommunicationChatAdapterFromClient(
+    statefulChatClient,
+    chatThreadClient,
+    /* @conditional-compile-remove(teams-inline-images) */
+    { credential: fakeToken }
+  );
 };
 
 interface AdapterInfo {
@@ -129,9 +134,18 @@ interface AdapterInfo {
   chatThreadClient: ChatThreadClient;
 }
 
+type MockAccessToken = {
+  token: string;
+  expiresOnTimestamp: number;
+};
+
 const fakeToken: CommunicationTokenCredential = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-empty-function
-  getToken(): any {},
+  getToken: (): Promise<MockAccessToken> => {
+    return new Promise<MockAccessToken>((resolve) => {
+      resolve({ token: 'anyToken', expiresOnTimestamp: Date.now() });
+    });
+  },
   // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-empty-function
   dispose(): any {}
 };

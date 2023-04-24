@@ -44,7 +44,7 @@ const CaptionsBannerStory = (): JSX.Element => {
     <Stack verticalFill tokens={{ childrenGap: '5rem' }} style={containerStyles} verticalAlign="space-between">
       <Stack style={{ border: 'solid grey 0.1rem' }} horizontalAlign="center">
         <Stack.Item style={{ width: '60%' }}>
-          <_CaptionsBanner captions={captions} />
+          <_CaptionsBanner captions={captions} isCaptionsOn />
         </Stack.Item>
       </Stack>
 
@@ -68,6 +68,7 @@ export default {
   component: _CaptionsBanner,
   argTypes: {
     captions: hiddenControl,
-    onRenderAvatar: hiddenControl
+    onRenderAvatar: hiddenControl,
+    isCaptionsOn: hiddenControl
   }
 } as Meta;
