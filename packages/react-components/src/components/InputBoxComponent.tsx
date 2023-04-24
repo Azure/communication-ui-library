@@ -451,8 +451,8 @@ const updateHTML = (
   let lastProcessedHTMLIndex = 0;
   // the value can be updated with empty string when the change covers more than 1 place (tag + before or after the tag)
   // in this case change won't be added as part of the tag
-  // ex: change is before and partially in tag => change will be added before the tag and outdated text in the tag will be removed
-  // ex: change is after and partially in tag => change will be added after the tag and outdated text in the tag will be removed
+  // e.g.: change is before and partially in tag => change will be added before the tag and outdated text in the tag will be removed
+  // e.g.: change is after and partially in tag => change will be added after the tag and outdated text in the tag will be removed
   let processedChange = change;
   // end tag plain text index of the last processed tag
   let lastProcessedPlainTextTagEndIndex = 0;
