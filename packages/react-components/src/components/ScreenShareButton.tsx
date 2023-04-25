@@ -82,12 +82,20 @@ const screenshareButtonStyles = (theme: Theme): IButtonStyles => ({
   rootChecked: {
     background: theme.palette.themePrimary,
     color: DefaultPalette.white,
-    ':focus::after': { outlineColor: `${DefaultPalette.white} !important` } // added !important to avoid override by FluentUI button styles
+    ':focus::after': { outlineColor: `${DefaultPalette.white} !important` }, // added !important to avoid override by FluentUI button styles
+    '@media (forced-colors: active)': {
+      border: '1px solid',
+      borderColor: theme.palette.black
+    }
   },
   rootCheckedHovered: {
     background: theme.palette.themePrimary,
     color: DefaultPalette.white,
-    ':focus::after': { outlineColor: `${DefaultPalette.white} !important` } // added !important to avoid override by FluentUI button styles
+    ':focus::after': { outlineColor: `${DefaultPalette.white} !important` }, // added !important to avoid override by FluentUI button styles
+    '@media (forced-colors: active)': {
+      border: '1px solid',
+      borderColor: theme.palette.black
+    }
   },
   labelChecked: { color: DefaultPalette.white }
 });

@@ -50,12 +50,16 @@ export const dismissError = (dismissedErrors: DismissedError[], toDismiss: Activ
     }
   }
 
+  const toDismissTimestamp = toDismiss.timestamp ?? now;
+
   // Record that this error was dismissed for the first time right now.
   return [
     ...dismissedErrors,
     {
       type: toDismiss.type,
-      dismissedAt: now,
+      // the error time could be sometimes later than the button click time, which cause the dismiss not working
+      // so we set the dismiss time to the later one
+      dismissedAt: now > toDismissTimestamp ? now : toDismissTimestamp,
       activeSince: toDismiss.timestamp
     }
   ];
