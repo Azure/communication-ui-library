@@ -381,6 +381,19 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
           <Stack.Item>
             <div ref={sidepaneControlsRef}>
               <Stack horizontal className={!props.mobileView ? mergeStyles(desktopButtonContainerStyle) : undefined}>
+                {isEnabled(options?.peopleButton) && (
+                  <PeopleButton
+                    checked={props.peopleButtonChecked}
+                    ariaLabel={peopleButtonStrings?.label}
+                    showLabel={options.displayType !== 'compact'}
+                    onClick={props.onPeopleButtonClicked}
+                    data-ui-id="common-call-composite-people-button"
+                    disabled={props.disableButtonsForLobbyPage || isDisabled(options.peopleButton)}
+                    strings={peopleButtonStrings}
+                    styles={commonButtonStyles}
+                  />
+                )}
+                {isEnabled(options?.chatButton) && chatButton}
                 {
                   /* @conditional-compile-remove(control-bar-button-injection) */
                   customButtons['secondary']
@@ -395,19 +408,6 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                       );
                     })
                 }
-                {isEnabled(options?.peopleButton) && (
-                  <PeopleButton
-                    checked={props.peopleButtonChecked}
-                    ariaLabel={peopleButtonStrings?.label}
-                    showLabel={options.displayType !== 'compact'}
-                    onClick={props.onPeopleButtonClicked}
-                    data-ui-id="common-call-composite-people-button"
-                    disabled={props.disableButtonsForLobbyPage || isDisabled(options.peopleButton)}
-                    strings={peopleButtonStrings}
-                    styles={commonButtonStyles}
-                  />
-                )}
-                {isEnabled(options?.chatButton) && chatButton}
               </Stack>
             </div>
           </Stack.Item>
