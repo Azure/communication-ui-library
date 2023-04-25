@@ -4,6 +4,7 @@
 import { Role } from '@internal/react-components';
 import { CallCompositeOptions } from '../../../src';
 import { MockCallAdapterState } from '../../common';
+import { jsonDateDeserializer } from '../lib/utils';
 
 export interface QueryArgs {
   // Defined only for hermetic tests.
@@ -34,7 +35,9 @@ export function parseQueryArgs(): QueryArgs {
   const params = Object.fromEntries(urlSearchParams.entries());
 
   return {
-    mockCallAdapterState: params.mockCallAdapterState ? JSON.parse(params.mockCallAdapterState) : undefined,
+    mockCallAdapterState: params.mockCallAdapterState
+      ? JSON.parse(params.mockCallAdapterState, jsonDateDeserializer) // json date deserializer is needed because Date objects are serialized as strings by JSON.stringify
+      : undefined,
     useFrLocale: Boolean(params.useFrLocale),
     showCallDescription: Boolean(params.showCallDescription),
     injectParticipantMenuItems: Boolean(params.injectParticipantMenuItems),

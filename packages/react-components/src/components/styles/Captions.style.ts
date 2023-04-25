@@ -44,7 +44,7 @@ export const captionsContainerClassName = mergeStyles({
 export const captionContainerClassName = mergeStyles({
   marginTop: _pxToRem(6),
   marginBottom: _pxToRem(6),
-  overflowAnchor: 'none'
+  overflowAnchor: 'auto'
 });
 
 /**
