@@ -208,6 +208,9 @@ export const _isTeamsCall: (call: CallCommon) => call is TeamsCall_2;
 // @internal (undocumented)
 export const _isTeamsCallAgent: (callAgent: CallAgentCommon) => callAgent is TeamsCallAgent_2;
 
+// @internal
+export const _isTeamsMeetingCall: (call: CallCommon) => boolean;
+
 // @public
 export interface LocalVideoStreamState {
     mediaStreamType: MediaStreamType;

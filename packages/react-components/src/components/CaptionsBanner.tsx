@@ -17,6 +17,7 @@ import { OnRenderAvatarCallback } from '../types';
  * information required for each line of caption
  */
 export type _CaptionsInfo = {
+  id: string;
   displayName: string;
   captionText: string;
   userId?: string;
@@ -85,9 +86,9 @@ export const _CaptionsBanner = (props: _CaptionsBannerProps): JSX.Element => {
         <FocusZone as="ul" className={captionsContainerClassName}>
           <Ref innerRef={captionsScrollDivRef}>
             <Stack verticalAlign="start" className={captionsBannerClassName}>
-              {captions.map((caption, key) => {
+              {captions.map((caption) => {
                 return (
-                  <div key={key} className={captionContainerClassName} data-is-focusable={true}>
+                  <div key={caption.id} className={captionContainerClassName} data-is-focusable={true}>
                     <_Caption {...caption} onRenderAvatar={onRenderAvatar} />
                   </div>
                 );
