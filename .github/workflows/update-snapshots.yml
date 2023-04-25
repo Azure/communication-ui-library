@@ -51,7 +51,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Use Node.js v14.x
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
           node-version: '14.x'
       - id: get-matrix
@@ -84,11 +84,11 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config user.name "github-actions[bot]"
       - name: Use Node.js v14.x
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
           node-version: '14.x'
       - name: Restore node_modules from cache
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
@@ -112,7 +112,7 @@ jobs:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
       - name: Upload test results on failure
         if: ${{ always() && steps.updatesnapshots.outcome == 'failure' }}
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: snapshots
           path: samples/tests/test-results
@@ -136,7 +136,7 @@ jobs:
           git format-patch -1 --output=component-examples.patch
       - name: Upload snapshot updates, if any
         if: ${{ steps.changescheck.outputs.hasChanged == 'true' }}
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: component-examples.patch
           path: component-examples.patch
@@ -168,11 +168,11 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config user.name "github-actions[bot]"
       - name: Use Node.js v14.x
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
           node-version: '14.x'
       - name: Restore node_modules from cache
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
@@ -196,7 +196,7 @@ jobs:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
       - name: Upload snapshot diff
         if: ${{ always() && steps.updatesnapshots.outcome == 'failure' }}
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: snapshots
           path: samples/tests/test-results
@@ -257,11 +257,11 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config user.name "github-actions[bot]"
       - name: Use Node.js v14.x
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
           node-version: '14.x'
       - name: Restore node_modules from cache
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
@@ -287,7 +287,7 @@ jobs:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
       - name: Upload snapshot diff
         if: ${{ always() && steps.update-call-snapshots.outcome == 'failure' }}
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: snapshots
           path: packages/react-composites/test-results
@@ -347,11 +347,11 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config user.name "github-actions[bot]"
       - name: Use Node.js v14.x
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
           node-version: '14.x'
       - name: Restore node_modules from cache
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
@@ -377,7 +377,7 @@ jobs:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
       - name: Upload snapshot diff
         if: ${{ always() && steps.update-chat-snapshots.outcome == 'failure' }}
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: snapshots
           path: packages/react-composites/test-results
@@ -437,11 +437,11 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config user.name "github-actions[bot]"
       - name: Use Node.js v14.x
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
           node-version: '14.x'
       - name: Restore node_modules from cache
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
@@ -467,7 +467,7 @@ jobs:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
       - name: Upload snapshot diff
         if: ${{ always() && steps.update-call-with-chat-snapshots.outcome == 'failure' }}
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: snapshots
           path: packages/react-composites/test-results
