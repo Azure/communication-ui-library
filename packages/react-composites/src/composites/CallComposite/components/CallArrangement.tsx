@@ -38,6 +38,9 @@ import {
   DRAWER_Z_INDEX
 } from '../styles/CallPage.styles';
 /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
+import { CONTROL_BAR_Z_INDEX } from '../styles/CallPage.styles';
+
+/* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
 import { CommonCallControlOptions } from '../../common/types/CommonCallControlOptions';
 /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
 import { CallPane } from './CallPane';
@@ -253,7 +256,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
           {props.callControlProps?.options !== false &&
             /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
             !isMobileWithActivePane && (
-              <Stack.Item>
+              <Stack.Item className={mergeStyles({ zIndex: CONTROL_BAR_Z_INDEX })}>
                 {isLegacyCallControlEnabled(props.callControlProps?.options) ? (
                   <CallControls
                     {...props.callControlProps}
