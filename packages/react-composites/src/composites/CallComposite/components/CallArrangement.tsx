@@ -247,6 +247,8 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                     callAdapter={adapter as CallAdapter}
                     mobileView={props.mobileView}
                     disableButtonsForLobbyPage={isInLobby}
+                    /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+                    disableButtonsForHoldScreen={isInLocalHold}
                     peopleButtonChecked={isPeoplePaneOpen}
                     onPeopleButtonClicked={togglePeoplePane}
                     onMoreButtonClicked={onMoreButtonClicked}

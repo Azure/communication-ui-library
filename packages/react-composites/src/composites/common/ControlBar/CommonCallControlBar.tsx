@@ -9,7 +9,6 @@ import { concatStyleSets, IStyle, ITheme, mergeStyles, mergeStyleSets, Stack, us
 import { controlBarContainerStyles } from '../../CallComposite/styles/CallControls.styles';
 import { callControlsContainerStyles } from '../../CallComposite/styles/CallPage.styles';
 import { useCallWithChatCompositeStrings } from '../../CallWithChatComposite/hooks/useCallWithChatCompositeStrings';
-import { ChatAdapter } from '../../ChatComposite';
 import { BaseCustomStyles, ControlBarButtonStyles } from '@internal/react-components';
 import { ControlBar } from '@internal/react-components';
 /* @conditional-compile-remove(rooms) */
@@ -39,21 +38,17 @@ import { CaptionsSettingsModal } from '../CaptionsSettingsModal';
  */
 export interface CommonCallControlBarProps {
   callAdapter: CallAdapter;
-  chatButtonChecked?: boolean;
   peopleButtonChecked: boolean;
-  onChatButtonClicked?: () => void;
   onPeopleButtonClicked: () => void;
   onMoreButtonClicked?: () => void;
   mobileView: boolean;
   disableButtonsForLobbyPage: boolean;
   callControls?: boolean | CommonCallControlOptions | CallWithChatControlOptions;
-  chatAdapter?: ChatAdapter;
   disableButtonsForHoldScreen?: boolean;
   /* @conditional-compile-remove(PSTN-calls) */
   onClickShowDialpad?: () => void;
   /* @conditional-compile-remove(video-background-effects) */
   onShowVideoEffectsPicker?: (showVideoEffectsOptions: boolean) => void;
-  rtl?: boolean;
   /* @conditional-compile-remove(close-captions) */
   isCaptionsSupported?: boolean;
 }
@@ -85,6 +80,7 @@ const inferCommonCallControlOptions = (
  */
 export const CommonCallControlBar = (props: CommonCallControlBarProps & ContainerRectProps): JSX.Element => {
   const theme = useTheme();
+  const rtl = theme.rtl;
 
   const controlBarContainerRef = useRef<HTMLHeadingElement>(null);
   const sidepaneControlsRef = useRef<HTMLHeadingElement>(null);
@@ -184,8 +180,8 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
 
   const controlBarWrapperDesktopStyles: IStyle = useMemo(
     // only center control bar buttons based on parent container if there are enough space on the screen and not mobile
-    () => (!props.mobileView && !isOutOfSpace ? (props.rtl ? wrapperDesktopRtlStyles : wrapperDesktopStyles) : {}),
-    [props.mobileView, props.rtl, isOutOfSpace]
+    () => (!props.mobileView && !isOutOfSpace ? (rtl ? wrapperDesktopRtlStyles : wrapperDesktopStyles) : {}),
+    [props.mobileView, rtl, isOutOfSpace]
   );
 
   // only center control bar buttons based on parent container if there are enough space on the screen and not mobile
