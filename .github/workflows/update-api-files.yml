@@ -19,7 +19,7 @@ jobs:
           - flavor: 'stable'
     steps:
       # Checkout repo
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
           # Use a machine account when checking out. This is to workaround the issue were GitHub

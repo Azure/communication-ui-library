@@ -23,7 +23,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       # Check-out repo
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       # Check if any changes have been pushed to main since last release
       - name: Check latest commit age
@@ -61,7 +61,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       # Check-out repo
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
 

@@ -17,7 +17,7 @@ jobs:
     outputs:
       met: ${{ steps.label.outputs.found || steps.workflow_dispatch.outputs.found }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
           # Use a machine account when checking out. This is to workaround the issue where GitHub
@@ -47,7 +47,7 @@ jobs:
     outputs:
       matrix: ${{ steps.get-matrix.outputs.matrix }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
       - name: Use Node.js v14.x
@@ -65,7 +65,7 @@ jobs:
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
           # Use a machine account when checking out. This is to workaround the issue where GitHub
@@ -75,7 +75,7 @@ jobs:
           token: ${{ secrets.MACHINE_ACCOUNT_PAT }}
       - name: Checkout branch if on a PR
         if: ${{ github.event_name != 'workflow_dispatch' }}
-        # On the `pull_request` event, actions/checkout@v2 leaves the local checkout in a detached head state.
+        # On the `pull_request` event, actions/checkout@v3 leaves the local checkout in a detached head state.
         # Explicitly checkout the target branch so we can push later.
         run: git checkout ${{ github.event.pull_request.head.ref }}
       - name: Setup bot git information
@@ -149,7 +149,7 @@ jobs:
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
           # Use a machine account when checking out. This is to workaround the issue where GitHub
@@ -159,7 +159,7 @@ jobs:
           token: ${{ secrets.MACHINE_ACCOUNT_PAT }}
       - name: Checkout branch if on a PR
         if: ${{ github.event_name != 'workflow_dispatch' }}
-        # On the `pull_request` event, actions/checkout@v2 leaves the local checkout in a detached head state.
+        # On the `pull_request` event, actions/checkout@v3 leaves the local checkout in a detached head state.
         # Explicitly checkout the target branch so we can push later.
         run: git checkout ${{ github.event.pull_request.head.ref }}
       - name: Setup bot git information
@@ -238,7 +238,7 @@ jobs:
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
           # Use a machine account when checking out. This is to workaround the issue where GitHub
@@ -248,7 +248,7 @@ jobs:
           token: ${{ secrets.MACHINE_ACCOUNT_PAT }}
       - name: Checkout branch if on a PR
         if: ${{ github.event_name != 'workflow_dispatch' }}
-        # On the `pull_request` event, actions/checkout@v2 leaves the local checkout in a detached head state.
+        # On the `pull_request` event, actions/checkout@v3 leaves the local checkout in a detached head state.
         # Explicitly checkout the target branch so we can push later.
         run: git checkout ${{ github.event.pull_request.head.ref }}
       - name: Setup bot git information
@@ -328,7 +328,7 @@ jobs:
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
           # Use a machine account when checking out. This is to workaround the issue where GitHub
@@ -338,7 +338,7 @@ jobs:
           token: ${{ secrets.MACHINE_ACCOUNT_PAT }}
       - name: Checkout branch if on a PR
         if: ${{ github.event_name != 'workflow_dispatch' }}
-        # On the `pull_request` event, actions/checkout@v2 leaves the local checkout in a detached head state.
+        # On the `pull_request` event, actions/checkout@v3 leaves the local checkout in a detached head state.
         # Explicitly checkout the target branch so we can push later.
         run: git checkout ${{ github.event.pull_request.head.ref }}
       - name: Setup bot git information
@@ -418,7 +418,7 @@ jobs:
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
           # Use a machine account when checking out. This is to workaround the issue where GitHub
@@ -428,7 +428,7 @@ jobs:
           token: ${{ secrets.MACHINE_ACCOUNT_PAT }}
       - name: Checkout branch if on a PR
         if: ${{ github.event_name != 'workflow_dispatch' }}
-        # On the `pull_request` event, actions/checkout@v2 leaves the local checkout in a detached head state.
+        # On the `pull_request` event, actions/checkout@v3 leaves the local checkout in a detached head state.
         # Explicitly checkout the target branch so we can push later.
         run: git checkout ${{ github.event.pull_request.head.ref }}
       - name: Setup bot git information
@@ -506,7 +506,7 @@ jobs:
     name: Push all updated snapshots to branch
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
           # Use a machine account when checking out. This is to workaround the issue where GitHub
