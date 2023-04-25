@@ -29,7 +29,6 @@ import { CallControls, CallControlsProps } from '../components/CallControls';
 import { CommonCallControlBar } from '../../common/ControlBar/CommonCallControlBar';
 import {
   callArrangementContainerStyles,
-  callControlsContainerStyles,
   notificationsContainerStyles,
   containerStyleDesktop,
   containerStyleMobile,
