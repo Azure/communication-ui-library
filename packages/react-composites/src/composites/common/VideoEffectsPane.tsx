@@ -4,7 +4,7 @@ import React from 'react';
 /* @conditional-compile-remove(video-background-effects) */
 import { useCallback, useMemo } from 'react';
 /* @conditional-compile-remove(video-background-effects) */
-import { Panel, mergeStyles } from '@fluentui/react';
+import { MessageBar, MessageBarType, Panel, mergeStyles } from '@fluentui/react';
 /* @conditional-compile-remove(video-background-effects) */
 import { useLocale } from '../localization';
 import { _VideoEffectsItemProps } from '@internal/react-components';
@@ -23,6 +23,8 @@ import { activeVideoBackgroundEffectSelector } from '../CallComposite/selectors/
 import { useSelector } from '../CallComposite/hooks/useSelector';
 /* @conditional-compile-remove(video-background-effects) */
 import { useAdapter } from '../CallComposite/adapter/CallAdapterProvider';
+/* @conditional-compile-remove(video-background-effects) */
+import { localVideoSelector } from '../CallComposite/selectors/localVideoStreamSelector';
 
 /**
  * Pane that is used to show video effects button
@@ -135,6 +137,9 @@ const VideoEffectsPaneTrampoline = (
   /* @conditional-compile-remove(video-background-effects) */
   const selectedEffect = useSelector(activeVideoBackgroundEffectSelector);
   /* @conditional-compile-remove(video-background-effects) */
+  const isCameraOn = useSelector(localVideoSelector).isAvailable;
+  const showWarning = !isCameraOn && selectedEffect !== 'none';
+  /* @conditional-compile-remove(video-background-effects) */
   const headerStyles = {
     zIndex: 0
   };
@@ -150,6 +155,11 @@ const VideoEffectsPaneTrampoline = (
       isLightDismiss={true}
       className={mergeStyles(headerStyles)}
     >
+      {showWarning && (
+        <MessageBar messageBarType={MessageBarType.warning}>
+          {locale.strings.call.cameraOffBackgroundEffectWarningText}
+        </MessageBar>
+      )}
       {selectableVideoEffects && (
         <_VideoBackgroundEffectsPicker
           options={selectableVideoEffects}
