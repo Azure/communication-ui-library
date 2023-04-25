@@ -225,43 +225,41 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     <div ref={containerRef} className={mergeStyles(containerDivStyles)} id={props.id}>
       <Stack verticalFill horizontalAlign="stretch" className={containerClassName} data-ui-id={props.dataUiId}>
         <Stack grow styles={callArrangementContainerStyles}>
-          {props.callControlProps?.options !== false &&
-            /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
-            !isMobileWithActivePane && (
-              <Stack.Item className={mergeStyles({ zIndex: CONTROL_BAR_Z_INDEX })}>
-                {isLegacyCallControlEnabled(props.callControlProps?.options) ? (
-                  <CallControls
-                    {...props.callControlProps}
-                    containerWidth={containerWidth}
-                    containerHeight={containerHeight}
-                    isMobile={props.mobileView}
-                    /* @conditional-compile-remove(one-to-n-calling) */
-                    peopleButtonChecked={isPeoplePaneOpen}
-                    /* @conditional-compile-remove(one-to-n-calling) */
-                    onPeopleButtonClicked={togglePeoplePane}
-                  />
-                ) : (
-                  <CommonCallControlBar
-                    {...props.callControlProps}
-                    callControls={props.callControlProps.options}
-                    callAdapter={adapter as CallAdapter}
-                    mobileView={props.mobileView}
-                    disableButtonsForLobbyPage={isInLobby}
-                    /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
-                    disableButtonsForHoldScreen={isInLocalHold}
-                    peopleButtonChecked={isPeoplePaneOpen}
-                    onPeopleButtonClicked={togglePeoplePane}
-                    onMoreButtonClicked={onMoreButtonClicked}
-                    /* @conditional-compile-remove(close-captions) */
-                    isCaptionsSupported={isTeamsCall && hasJoinedCall}
-                    /* @conditional-compile-remove(video-background-effects) */
-                    onShowVideoEffectsPicker={toggleVideoEffectsPane}
-                    /* @conditional-compile-remove(PSTN-calls) */
-                    onClickShowDialpad={alternateCallerId ? onClickShowDialpad : undefined}
-                  />
-                )}
-              </Stack.Item>
-            )}
+          {props.callControlProps?.options !== false && !isMobileWithActivePane && (
+            <Stack.Item className={mergeStyles({ zIndex: CONTROL_BAR_Z_INDEX })}>
+              {isLegacyCallControlEnabled(props.callControlProps?.options) ? (
+                <CallControls
+                  {...props.callControlProps}
+                  containerWidth={containerWidth}
+                  containerHeight={containerHeight}
+                  isMobile={props.mobileView}
+                  /* @conditional-compile-remove(one-to-n-calling) */
+                  peopleButtonChecked={isPeoplePaneOpen}
+                  /* @conditional-compile-remove(one-to-n-calling) */
+                  onPeopleButtonClicked={togglePeoplePane}
+                />
+              ) : (
+                <CommonCallControlBar
+                  {...props.callControlProps}
+                  callControls={props.callControlProps.options}
+                  callAdapter={adapter as CallAdapter}
+                  mobileView={props.mobileView}
+                  disableButtonsForLobbyPage={isInLobby}
+                  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+                  disableButtonsForHoldScreen={isInLocalHold}
+                  peopleButtonChecked={isPeoplePaneOpen}
+                  onPeopleButtonClicked={togglePeoplePane}
+                  onMoreButtonClicked={onMoreButtonClicked}
+                  /* @conditional-compile-remove(close-captions) */
+                  isCaptionsSupported={isTeamsCall && hasJoinedCall}
+                  /* @conditional-compile-remove(video-background-effects) */
+                  onShowVideoEffectsPicker={toggleVideoEffectsPane}
+                  /* @conditional-compile-remove(PSTN-calls) */
+                  onClickShowDialpad={alternateCallerId ? onClickShowDialpad : undefined}
+                />
+              )}
+            </Stack.Item>
+          )}
           {props.callControlProps?.options !== false && showDrawer && (
             <Stack styles={drawerContainerStylesValue}>
               <PreparedMoreDrawer
@@ -357,7 +355,11 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
 const isLegacyCallControlEnabled = (options?: boolean | CallControlOptions): boolean => {
   /* @conditional-compile-remove(new-call-control-bar) */
   return !!options && options !== true && (options as _CallControlOptions)?.legacyControlBarExperience === true;
-  return !!options && options !== true && (options as _CallControlOptions)?.legacyControlBarExperience !== false;
+
+  // In stable builds, we default to legacy until new-call-control-bar feature is stablized.
+  return (
+    options === undefined || options === true || (options as _CallControlOptions)?.legacyControlBarExperience !== false
+  );
 };
 
 const shouldShowPeopleTabHeaderButton = (callControls?: boolean | CommonCallControlOptions): boolean => {
