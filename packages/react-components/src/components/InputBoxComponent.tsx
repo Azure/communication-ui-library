@@ -116,6 +116,10 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
   const [inputTextValue, setInputTextValue] = useState<string>('');
   /* @conditional-compile-remove(mention) */
   const [tagsValue, setTagsValue] = useState<TagData[]>([]);
+  /* @conditional-compile-remove(mention) */
+  const [selectionStartValue, setSelectionStartValue] = useState<number | null>(null);
+  /* @conditional-compile-remove(mention) */
+  const [selectionEndValue, setSelectionEndValue] = useState<number | null>(null);
 
   /* @conditional-compile-remove(mention) */
   // Caret position in the text field
@@ -173,7 +177,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
         textFieldRef?.current?.setSelectionEnd(caretIndex);
       }
     },
-    [textFieldRef]
+    [caretIndex, textFieldRef]
   );
 
   /* @conditional-compile-remove(mention) */
@@ -374,12 +378,101 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
             onChange(e, newValue);
           }}
           onSelect={(e) => {
-            console.log('onSelect', e.currentTarget.selectionEnd);
+            console.log('updateHTML onSelect selectionEnd', e.currentTarget.selectionEnd);
+            console.log('updateHTML selectionStart', e.currentTarget.selectionStart);
             if (caretIndex !== null) {
               console.log('onSelect set caret location to ', caretIndex);
               e.currentTarget.setSelectionRange(caretIndex, caretIndex);
               setCaretIndex(null);
             }
+            //TODO: add onClick event handler to set same as set onBlur
+            // TODO: onchange triggers onSelect call, need to handle it
+            //TODO: need to check to navigate before/after space correctly in tag
+            /* @conditional-compile-remove(mention) */
+            if (
+              e.currentTarget.selectionStart === e.currentTarget.selectionEnd &&
+              e.currentTarget.selectionStart !== null &&
+              e.currentTarget.selectionStart !== -1
+            ) {
+              // need to handle only when selectionStart === selectionEnd, range selection is handled by onMouseMove
+              console.log('updateHTML onSelect e.currentTarget.selectionStart === e.currentTarget.selectionEnd');
+              const mentionTag = findMentionTagForSelection(tagsValue, e.currentTarget.selectionStart);
+              if (mentionTag !== undefined && mentionTag.plainTextBeginIndex !== undefined) {
+                let spaceIndex = 0;
+                console.log(
+                  'updateHTML onSelect e.currentTarget.selectionStart === e.currentTarget.selectionEnd selectionStartValue',
+                  selectionStartValue
+                );
+                if (selectionStartValue === null) {
+                  console.log('updateHTML !!');
+                  e.currentTarget.setSelectionRange(
+                    mentionTag.plainTextBeginIndex,
+                    mentionTag.plainTextEndIndex ?? mentionTag.plainTextBeginIndex
+                  );
+                } else {
+                  if (e.currentTarget.selectionStart <= selectionStartValue) {
+                    spaceIndex = inputTextValue.lastIndexOf(' ', e.currentTarget.selectionStart ?? 0);
+                    console.log(
+                      'updateHTML e.currentTarget.selectionStart <= selectionStartValue spaceIndex',
+                      spaceIndex
+                    );
+                    if (spaceIndex === -1) {
+                      // no space before the selectionStart
+                      spaceIndex = mentionTag.plainTextBeginIndex;
+                    }
+                  } else {
+                    spaceIndex = inputTextValue.indexOf(' ', e.currentTarget.selectionStart ?? 0);
+                    console.log(
+                      'updateHTML e.currentTarget.selectionStart > selectionStartValue spaceIndex',
+                      spaceIndex,
+                      inputTextValue.length
+                    );
+                    if (spaceIndex === -1) {
+                      // no space after the selectionStart
+                      spaceIndex = mentionTag.plainTextEndIndex ?? mentionTag.plainTextBeginIndex;
+                    }
+                  }
+                  //need to check direction to understand if lastIndex or indexof fun should be used
+
+                  if (spaceIndex < mentionTag.plainTextBeginIndex) {
+                    spaceIndex = mentionTag.plainTextBeginIndex;
+                  } else {
+                    if (mentionTag.plainTextEndIndex !== undefined && spaceIndex >= mentionTag.plainTextEndIndex) {
+                      console.log(
+                        'spaceIndex > mentionTag.plainTextEndIndex',
+                        spaceIndex,
+                        mentionTag.plainTextEndIndex,
+                        inputTextValue[mentionTag.plainTextEndIndex]
+                      );
+                      spaceIndex = mentionTag.plainTextEndIndex;
+                    } else if (
+                      mentionTag.plainTextEndIndex === undefined &&
+                      spaceIndex >= mentionTag.plainTextBeginIndex
+                    ) {
+                      spaceIndex = mentionTag.plainTextBeginIndex;
+                    }
+                  }
+                  e.currentTarget.setSelectionRange(spaceIndex, spaceIndex);
+                }
+              }
+            }
+
+            /* @conditional-compile-remove(mention) */
+            setSelectionEndValue(e.currentTarget.selectionEnd);
+            /* @conditional-compile-remove(mention) */
+            setSelectionStartValue(e.currentTarget.selectionStart);
+          }}
+          // onMouseMove={(e) => {
+          /* @conditional-compile-remove(mention) */
+          // it updates the selectionStart! check if selectionStart and selectionEnd are updated
+          // console.log('updateHTML onMouseMove selectionStart', e.currentTarget.selectionStart);
+          // console.log('updateHTML onMouseMove selectionEnd', e.currentTarget.selectionEnd);
+          // }}
+          onBlur={() => {
+            /* @conditional-compile-remove(mention) */
+            setSelectionEndValue(null);
+            /* @conditional-compile-remove(mention) */
+            setSelectionStartValue(null);
           }}
           autoComplete="off"
           onKeyDown={onTextFieldKeyDown}
@@ -464,6 +557,43 @@ const insertMention = ({
   // TODO: Simplify
   //return updateHTML(<params>)
   return mentionText;
+};
+
+/**
+ * Find mention tag if selection is inside of it
+ *
+ * @private
+ */
+const findMentionTagForSelection = (tags: TagData[], selection: number): TagData | undefined => {
+  let mentionTag: TagData | undefined = undefined;
+  for (let i = 0; i < tags.length; i++) {
+    const tag = tags[i];
+    let plainTextEndIndex = 0;
+    if (tag.plainTextEndIndex !== undefined && tag.closeTagIdx !== undefined) {
+      // close tag exists
+      plainTextEndIndex = tag.plainTextEndIndex;
+    } else if (tag.plainTextBeginIndex !== undefined) {
+      //no close tag
+      plainTextEndIndex = tag.plainTextBeginIndex;
+    }
+    if (tag.subTags !== undefined && tag.subTags.length !== 0) {
+      const selectedTag = findMentionTagForSelection(tag.subTags, selection);
+      if (selectedTag !== undefined) {
+        mentionTag = selectedTag;
+        break;
+      }
+    } else if (
+      tag.tagType === 'msft-mention' &&
+      tag.plainTextBeginIndex !== undefined &&
+      tag.plainTextBeginIndex < selection &&
+      selection < plainTextEndIndex
+    ) {
+      console.log('updateHTML selection', selection);
+      mentionTag = tag;
+      break;
+    }
+  }
+  return mentionTag;
 };
 
 /**
