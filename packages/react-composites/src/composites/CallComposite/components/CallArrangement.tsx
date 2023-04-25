@@ -35,10 +35,9 @@ import {
   mediaGalleryContainerStyles,
   galleryParentContainerStyles,
   bannerNotificationStyles,
+  CONTROL_BAR_Z_INDEX,
   DRAWER_Z_INDEX
 } from '../styles/CallPage.styles';
-/* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
-import { CONTROL_BAR_Z_INDEX } from '../styles/CallPage.styles';
 
 /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
 import { CommonCallControlOptions } from '../../common/types/CommonCallControlOptions';
