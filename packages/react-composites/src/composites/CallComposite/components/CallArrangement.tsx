@@ -254,6 +254,8 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                     isCaptionsSupported={isTeamsCall && hasJoinedCall}
                     /* @conditional-compile-remove(video-background-effects) */
                     onShowVideoEffectsPicker={toggleVideoEffectsPane}
+                    /* @conditional-compile-remove(PSTN-calls) */
+                    onClickShowDialpad={alternateCallerId ? onClickShowDialpad : undefined}
                   />
                 )}
               </Stack.Item>
