@@ -37,6 +37,7 @@ import { SendDtmfDialpad } from '../../common/SendDtmfDialpad';
 /* @conditional-compile-remove(PSTN-calls) */
 import { useAdapter } from '../adapter/CallAdapterProvider';
 import { isDisabled } from '../utils';
+import { callControlsContainerStyles } from '../styles/CallPage.styles';
 
 /**
  * @private
@@ -198,7 +199,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
   cameraButtonIsEnabled = rolePermissions.cameraButton && cameraButtonIsEnabled;
 
   return (
-    <Stack horizontalAlign="center">
+    <Stack horizontalAlign="center" className={callControlsContainerStyles}>
       {
         /* @conditional-compile-remove(PSTN-calls) */
         <SendDtmfDialpad

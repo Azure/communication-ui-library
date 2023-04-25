@@ -34,7 +34,9 @@ import {
   containerStyleMobile,
   mediaGalleryContainerStyles,
   galleryParentContainerStyles,
-  bannerNotificationStyles
+  bannerNotificationStyles,
+  CONTROL_BAR_Z_INDEX,
+  DRAWER_Z_INDEX
 } from '../styles/CallPage.styles';
 import { MutedNotification, MutedNotificationProps } from './MutedNotification';
 import { CallAdapter } from '../adapter';
@@ -191,7 +193,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     setShowDtmfDialpad(true);
   };
 
-  const drawerContainerStylesValue = useMemo(() => drawerContainerStyles(10), []);
+  const drawerContainerStylesValue = useMemo(() => drawerContainerStyles(DRAWER_Z_INDEX), []);
 
   /* @conditional-compile-remove(rooms) */
   const rolePermissions = _usePermissions();
@@ -226,7 +228,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
           {props.callControlProps?.options !== false &&
             /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
             !isMobileWithActivePane && (
-              <Stack.Item>
+              <Stack.Item className={mergeStyles({ zIndex: CONTROL_BAR_Z_INDEX })}>
                 {isLegacyCallControlEnabled(props.callControlProps?.options) ? (
                   <CallControls
                     {...props.callControlProps}
