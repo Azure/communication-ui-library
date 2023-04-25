@@ -1,6 +1,6 @@
 {
   "name": "@internal/northstar-wrapper",
-  "version": "0.1.0",
+  "version": "1.5.1-beta.2",
   "private": "true",
   "description": "Package to wrap the Fluent NorthStar UI library, for short-term React 18 compatibility",
   "scripts": {
