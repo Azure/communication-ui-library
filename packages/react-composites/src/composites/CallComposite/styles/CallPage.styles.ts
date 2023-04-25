@@ -10,6 +10,9 @@ const CONTROL_BAR_Z_INDEX = VIDEO_GALLERY_Z_INDEX + 1;
 // The notification container should be in the highest z-band to ensure it shows on top of all other content.
 const NOTIFICATION_CONTAINER_Z_INDEX = Math.max(CONTROL_BAR_Z_INDEX, VIDEO_GALLERY_Z_INDEX) + 1;
 
+/** @private */
+export const DRAWER_Z_INDEX = NOTIFICATION_CONTAINER_Z_INDEX + 1;
+
 /**
  * @private
  */

@@ -14,7 +14,7 @@ import {
 } from '@internal/react-components';
 /* @conditional-compile-remove(rooms) */
 import { _usePermissions } from '@internal/react-components';
-import React, { useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useCallback } from 'react';
 /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
 import { AvatarPersonaDataCallback } from '../../common/AvatarPersona';
@@ -34,7 +34,8 @@ import {
   containerStyleMobile,
   mediaGalleryContainerStyles,
   galleryParentContainerStyles,
-  bannerNotificationStyles
+  bannerNotificationStyles,
+  DRAWER_Z_INDEX
 } from '../styles/CallPage.styles';
 /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
 import { CommonCallControlOptions } from '../../common/types/CommonCallControlOptions';
@@ -175,7 +176,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     setShowDtmfDialpad(true);
   };
 
-  const drawerContainerStylesValue = useMemo(() => drawerContainerStyles(10), []);
+  const drawerContainerStylesValue = useMemo(() => drawerContainerStyles(DRAWER_Z_INDEX), []);
 
   // To be removed once feature is out of beta, replace with callCompositeContainerCSS
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
