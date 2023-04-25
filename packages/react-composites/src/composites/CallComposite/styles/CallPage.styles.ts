@@ -6,9 +6,13 @@ import { controlBarContainerStyles } from './CallControls.styles';
 
 const VIDEO_GALLERY_Z_INDEX = 1;
 // The control bar must be in a higher z-band than the video gallery so the drop shadow appears on top of the video gallery
-const CONTROL_BAR_Z_INDEX = VIDEO_GALLERY_Z_INDEX + 1;
+/** @private */
+export const CONTROL_BAR_Z_INDEX = VIDEO_GALLERY_Z_INDEX + 1;
 // The notification container should be in the highest z-band to ensure it shows on top of all other content.
 const NOTIFICATION_CONTAINER_Z_INDEX = Math.max(CONTROL_BAR_Z_INDEX, VIDEO_GALLERY_Z_INDEX) + 1;
+
+/** @private */
+export const DRAWER_Z_INDEX = NOTIFICATION_CONTAINER_Z_INDEX + 1;
 
 /**
  * @private
