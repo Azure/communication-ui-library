@@ -38,7 +38,7 @@ export const getDocs: () => JSX.Element = () => {
       <Description>- Upload an image as a file via the "Upload from this device" button.</Description>
       <Description>
         Azure Communication Services currently support only option one for copying and pasting the image. Users can
-        achieve it keyboard shortcuts or the operating system's context menu options for copy and paste.
+        achieve it by using keyboard shortcuts or the operating system's context menu options for copy and paste.
       </Description>
       <Description>
         Certain GIF encodings may not be supported by the UI library at this time, the user might receive a static image
