@@ -29,7 +29,6 @@ import { CommonCallControlBar } from '../../common/ControlBar/CommonCallControlB
 import { useSidePaneState } from '../hooks/useSidePaneState';
 import {
   callArrangementContainerStyles,
-  callControlsContainerStyles,
   notificationsContainerStyles,
   containerStyleDesktop,
   containerStyleMobile,
@@ -253,7 +252,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
           {props.callControlProps?.options !== false &&
             /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
             !isMobileWithActivePane && (
-              <Stack.Item className={callControlsContainerStyles}>
+              <Stack.Item>
                 {isLegacyCallControlEnabled(props.callControlProps?.options) ? (
                   <CallControls
                     {...props.callControlProps}
