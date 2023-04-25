@@ -2,8 +2,8 @@ import { FluentThemeProvider, MessageStatus, MessageThread } from '@azure/commun
 import React from 'react';
 
 export const MessageWithCustomMentionRenderer: () => JSX.Element = () => {
-  const user1Id = Math.random().toString();
-  const user2Id = Math.random().toString();
+  const user1Id = 'user1';
+  const user2Id = 'user2';
 
   return (
     <FluentThemeProvider>
