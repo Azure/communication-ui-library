@@ -32,12 +32,13 @@ export const getDocs: () => JSX.Element = () => {
       <Source code={LobbyComponentText} />
       <Heading>Inline Images</Heading>
       <SingleLineBetaBanner />
+      <Description>Microsoft Teams allows users to share images by:</Description>
+      <Description>- Copying & paste into the box at the bottom of the chat.</Description>
+      <Description>- Drag & drop into the chat area.</Description>
+      <Description>- Upload an image as a file via the "Upload from this device" button.</Description>
       <Description>
-        Inline images are images that are copied and pasted directly into the send box of Teams client. For images that
-        were uploaded via "Upload from this device" menu or via drag-and-drop (such as dragging images directly to the
-        send box) in Teams, they are not supported at this time. To copy an image, the Teams user can either use
-        operating system's context menu to copy the image file then paste it into the send box of their Teams client, or
-        use keyboard shortcuts instead.
+        Azure Communication Services currently support only option one for copying and pasting the image. Users can
+        achieve it keyboard shortcuts or the operating system's context menu options for copy and paste.
       </Description>
       <Description>
         Certain GIF encodings may not be supported by the UI library at this time, the user might receive a static image
