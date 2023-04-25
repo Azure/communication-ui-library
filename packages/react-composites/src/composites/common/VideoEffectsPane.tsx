@@ -138,6 +138,7 @@ const VideoEffectsPaneTrampoline = (
   const selectedEffect = useSelector(activeVideoBackgroundEffectSelector);
   /* @conditional-compile-remove(video-background-effects) */
   const isCameraOn = useSelector(localVideoSelector).isAvailable;
+  /* @conditional-compile-remove(video-background-effects) */
   const showWarning = !isCameraOn && selectedEffect !== 'none';
   /* @conditional-compile-remove(video-background-effects) */
   const headerStyles = {
