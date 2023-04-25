@@ -184,12 +184,6 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       console.log('selectionStart', textFieldRef?.current?.selectionStart);
       console.log('selectionEnd', selectionEnd);
 
-      // Update the text field with the mention
-      insertMention({
-        mention: suggestion,
-        insertIndex: selectionEnd,
-        currentPlainText: inputTextValue
-      });
       const oldPlainText = inputTextValue;
       const mention = htmlStringForMentionSuggestion(suggestion);
 
@@ -368,10 +362,9 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
             return;
             onChange(e, newValue);
           }}
+          /* @conditional-compile-remove(mention) */
           onSelect={(e) => {
-            console.log('onSelect', e.currentTarget.selectionEnd);
             if (caretIndex !== null) {
-              console.log('onSelect set caret location to ', caretIndex);
               e.currentTarget.setSelectionRange(caretIndex, caretIndex);
               setCaretIndex(null);
             }
@@ -444,23 +437,7 @@ export const InputBoxButton = (props: InputBoxButtonProps): JSX.Element => {
   );
 };
 
-// Insert a mention into the text, updating the HTML and plain text versions
-const insertMention = ({
-  mention,
-  insertIndex,
-  currentPlainText
-}: {
-  mention: Mention;
-  insertIndex: number;
-  currentPlainText: string;
-}): string => {
-  // User selected a mention, insert it into the text
-  const mentionText = htmlStringForMentionSuggestion(mention);
-  // TODO: Simplify
-  //return updateHTML(<params>)
-  return mentionText;
-};
-
+/* @conditional-compile-remove(mention) */
 /**
  * Go through the text and update it with the changed text
  *
@@ -734,6 +711,7 @@ const updateHTML = (
   return result;
 };
 
+/* @conditional-compile-remove(mention) */
 /**
  * Given the oldText and newText, find the start index, old end index and new end index for the changes
  *
@@ -829,6 +807,7 @@ const findStringsDiffIndexes = (
   return { changeStart, oldChangeEnd, newChangeEnd };
 };
 
+/* @conditional-compile-remove(mention) */
 const htmlStringForMentionSuggestion = (suggestion: Mention): string => {
   const idHTML = ' id ="' + suggestion.id + '"';
   const displayText = suggestion.displayText || '';
@@ -836,6 +815,7 @@ const htmlStringForMentionSuggestion = (suggestion: Mention): string => {
   return '<msft-mention' + idHTML + displayTextHTML + '>' + displayText + '</msft-mention>';
 };
 
+/* @conditional-compile-remove(mention) */
 type TagData = {
   tagType: string; // The type of tag (e.g. msft-mention)
   openTagIdx: number; // Start of the tag relative to the parent content
@@ -847,13 +827,16 @@ type TagData = {
   plainTextEndIndex?: number; // Absolute index of the close tag start should be in plain text
 };
 
+/* @conditional-compile-remove(mention) */
 type HtmlTagType = 'open' | 'close' | 'self-closing';
+/* @conditional-compile-remove(mention) */
 type HtmlTag = {
   content: string;
   startIdx: number;
   type: HtmlTagType;
 };
 
+/* @conditional-compile-remove(mention) */
 /**
  * Parse the text and return the tags and the plain text in one go
  * @param text - The text to parse for HTML tags
@@ -952,6 +935,7 @@ const textToTagParser = (text: string, trigger: string): [TagData[], string] => 
   return [tags, plainTextRepresentation];
 };
 
+/* @conditional-compile-remove(mention) */
 const parseOpenTag = (tag: string, startIdx: number): TagData => {
   const tagType = tag
     .substring(1, tag.length - 1)
@@ -965,6 +949,7 @@ const parseOpenTag = (tag: string, startIdx: number): TagData => {
   };
 };
 
+/* @conditional-compile-remove(mention) */
 const findNextHtmlTag = (text: string, startIndex: number): HtmlTag | undefined => {
   const tagStartIndex = text.indexOf('<', startIndex);
   if (tagStartIndex === -1) {
@@ -990,6 +975,7 @@ const findNextHtmlTag = (text: string, startIndex: number): HtmlTag | undefined 
   };
 };
 
+/* @conditional-compile-remove(mention) */
 const addTag = (tag: TagData, parseStack: TagData[], tags: TagData[]): void => {
   // Add as sub-tag to the parent stack tag, if there is one
   const parentTag = parseStack[parseStack.length - 1];
