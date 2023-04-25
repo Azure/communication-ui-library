@@ -114,6 +114,11 @@
       "reviewCategory": "tools"
     },
     {
+      "packageName": "@internal/check-typescript-regression",
+      "projectFolder": "tools/check-typescript-regression",
+      "reviewCategory": "tools"
+    },
+    {
       "packageName": "@internal/fake-backends",
       "projectFolder": "packages/fake-backends",
       "reviewCategory": "tools"

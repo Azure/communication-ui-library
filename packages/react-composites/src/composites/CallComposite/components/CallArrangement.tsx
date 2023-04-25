@@ -18,6 +18,8 @@ import React, { useMemo, useRef, useState } from 'react';
 import { useCallback } from 'react';
 /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
 import { AvatarPersonaDataCallback } from '../../common/AvatarPersona';
+/* @conditional-compile-remove(close-captions) */
+import { CaptionsBanner } from '../../common/CaptionsBanner';
 import { containerDivStyles } from '../../common/ContainerRectProps';
 /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
 import { compositeMinWidthRem } from '../../common/styles/Composite.styles';
@@ -27,14 +29,16 @@ import { CommonCallControlBar } from '../../common/ControlBar/CommonCallControlB
 import { useSidePaneState } from '../hooks/useSidePaneState';
 import {
   callArrangementContainerStyles,
-  callControlsContainerStyles,
   notificationsContainerStyles,
   containerStyleDesktop,
   containerStyleMobile,
   mediaGalleryContainerStyles,
   galleryParentContainerStyles,
-  bannerNotificationStyles
+  bannerNotificationStyles,
+  CONTROL_BAR_Z_INDEX,
+  DRAWER_Z_INDEX
 } from '../styles/CallPage.styles';
+
 /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
 import { CommonCallControlOptions } from '../../common/types/CommonCallControlOptions';
 /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
@@ -51,6 +55,8 @@ import { SendDtmfDialpad } from '../../common/SendDtmfDialpad';
 import { useCallWithChatCompositeStrings } from '../../CallWithChatComposite/hooks/useCallWithChatCompositeStrings';
 /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
 import { getPage } from '../selectors/baseSelectors';
+/* @conditional-compile-remove(close-captions) */
+import { getCallStatus, getIsTeamsCall } from '../selectors/baseSelectors';
 import { drawerContainerStyles } from '../styles/CallComposite.styles';
 /* @conditional-compile-remove(video-background-effects) */
 import { VideoEffectsPane } from '../../common/VideoEffectsPane';
@@ -172,7 +178,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     setShowDtmfDialpad(true);
   };
 
-  const drawerContainerStylesValue = useMemo(() => drawerContainerStyles(10), []);
+  const drawerContainerStylesValue = useMemo(() => drawerContainerStyles(DRAWER_Z_INDEX), []);
 
   // To be removed once feature is out of beta, replace with callCompositeContainerCSS
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
@@ -237,6 +243,10 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
       )
     };
   }
+  /* @conditional-compile-remove(close-captions) */
+  const isTeamsCall = useSelector(getIsTeamsCall);
+  /* @conditional-compile-remove(close-captions) */
+  const hasJoinedCall = useSelector(getCallStatus) === 'Connected';
 
   return (
     <div ref={containerRef} className={mergeStyles(containerDivStyles)} id={props.id}>
@@ -245,7 +255,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
           {props.callControlProps?.options !== false &&
             /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
             !isMobileWithActivePane && (
-              <Stack.Item className={callControlsContainerStyles}>
+              <Stack.Item className={mergeStyles({ zIndex: CONTROL_BAR_Z_INDEX })}>
                 {isLegacyCallControlEnabled(props.callControlProps?.options) ? (
                   <CallControls
                     {...props.callControlProps}
@@ -267,13 +277,14 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                     peopleButtonChecked={activePane === 'people'}
                     onPeopleButtonClicked={togglePeoplePane}
                     onMoreButtonClicked={onMoreButtonClicked}
+                    /* @conditional-compile-remove(close-captions) */
+                    isCaptionsSupported={isTeamsCall && hasJoinedCall}
                     /* @conditional-compile-remove(video-background-effects) */
                     onShowVideoEffectsPicker={setShowVideoEffectsPane}
                   />
                 )}
               </Stack.Item>
             )}
-
           {props.callControlProps?.options !== false && showDrawer && (
             <Stack styles={drawerContainerStylesValue}>
               <PreparedMoreDrawer
@@ -284,6 +295,8 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                 onClickShowDialpad={alternateCallerId ? onClickShowDialpad : undefined}
                 /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
                 disableButtonsForHoldScreen={isInLocalHold}
+                /* @conditional-compile-remove(close-captions) */
+                isCaptionsSupported={isTeamsCall && hasJoinedCall}
               />
             </Stack>
           )}
@@ -319,6 +332,13 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                     )}
                   </Stack.Item>
                   {props.onRenderGalleryContent && props.onRenderGalleryContent()}
+                  {
+                    /* @conditional-compile-remove(close-captions) */
+                    true &&
+                      /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ !isInLocalHold && (
+                        <CaptionsBanner isMobile={props.mobileView} />
+                      )
+                  }
                 </Stack>
               </Stack.Item>
             </Stack.Item>
@@ -332,7 +352,6 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
             <VideoEffectsPane
               showVideoEffectsOptions={showVideoEffectsPane}
               setshowVideoEffectsOptions={setShowVideoEffectsPane}
-              adapter={adapter}
             />
           }
         </Stack>

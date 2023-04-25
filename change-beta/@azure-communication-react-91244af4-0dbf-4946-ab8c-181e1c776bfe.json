@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Fix bug where captions is subscribed to on ACS call",
+  "packageName": "@azure/communication-react",
+  "email": "carolinecao@microsoft.com",
+  "dependentChangeType": "patch"
+}

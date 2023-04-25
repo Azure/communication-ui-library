@@ -79,6 +79,7 @@ export const FloatingLocalVideo = (props: FloatingLocalVideoProps): JSX.Element 
       layerProps={layerProps}
       maxDragPosition={modalMaxDragPosition}
       minDragPosition={modalMinDragPosition}
+      data-ui-id="floating-local-video-host"
     >
       {localVideoComponent}
     </_ModalClone>

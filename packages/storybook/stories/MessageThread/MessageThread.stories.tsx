@@ -275,13 +275,15 @@ const MessageThreadStory = (args): JSX.Element => {
     return defaultOnRender ? defaultOnRender(messageProps) : <></>;
   };
 
-  const onFetchAttachment = async (attachment: FileMetadata): Promise<AttachmentDownloadResult> => {
+  const onFetchAttachment = async (attachment: FileMetadata): Promise<AttachmentDownloadResult[]> => {
     // Mocking promise
     const delay = (): Promise<void> => new Promise((resolve) => setTimeout(resolve, 3000));
     return await delay().then(() => {
-      return {
-        blobUrl: attachment.previewUrl ?? ''
-      };
+      return [
+        {
+          blobUrl: attachment.previewUrl ?? ''
+        }
+      ];
     });
   };
 

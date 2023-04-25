@@ -4,7 +4,13 @@ import { IPersona, Persona, Stack, PersonaSize, Text } from '@fluentui/react';
 import React from 'react';
 import { _FileUploadCardsStrings } from './FileUploadCards';
 import { OnRenderAvatarCallback } from '../types';
-import { captionClassName, displayNameClassName, iconClassName } from './styles/Captions.style';
+import {
+  captionClassName,
+  captionsContentContainerClassName,
+  displayNameClassName,
+  displayNameContainerClassName,
+  iconClassName
+} from './styles/Captions.style';
 import { _CaptionsInfo } from './CaptionsBanner';
 
 /**
@@ -32,6 +38,7 @@ export const _Caption = (props: _CaptionProps): JSX.Element => {
     size: PersonaSize.size32,
     text: displayName,
     showOverflowTooltip: false,
+    initialsTextColor: 'white',
     styles: {
       root: {
         margin: '0.25rem'
@@ -45,8 +52,8 @@ export const _Caption = (props: _CaptionProps): JSX.Element => {
     <Stack horizontal verticalAlign="start" horizontalAlign="start">
       <Stack.Item className={iconClassName}>{userIcon}</Stack.Item>
 
-      <Stack verticalAlign="start">
-        <Stack.Item>
+      <Stack verticalAlign="start" className={captionsContentContainerClassName}>
+        <Stack.Item className={displayNameContainerClassName}>
           <Text className={displayNameClassName}>{displayName}</Text>
         </Stack.Item>
         <Stack.Item>

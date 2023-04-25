@@ -1,8 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-
 import { PagedAsyncIterableIterator } from '@azure/core-paging';
 import { ChatClient, ChatMessage } from '@azure/communication-chat';
+/* @conditional-compile-remove(teams-inline-images) */
+import { CommunicationGetTokenOptions } from '@azure/communication-common';
 import { CommunicationTokenCredential } from '@azure/communication-common';
 import { createAzureCommunicationChatAdapter } from './AzureCommunicationChatAdapter';
 import { ChatAdapter, ChatAdapterState } from './ChatAdapter';
@@ -129,29 +130,75 @@ describe('Error is reflected in state and events', () => {
     expect(errorListener.errors.length).toBe(1);
     expect(errorListener.errors[0].target).toBe('ChatThreadClient.sendTypingNotification');
   });
+
+  /* @conditional-compile-remove(teams-inline-images) */
+  it('when downloadAttachments with no access token fails', async () => {
+    const threadClient = new StubChatThreadClient();
+    const adapter = await createChatAdapterWithStubs(new StubChatClient(threadClient));
+    const errorListener = new ErrorListener(adapter);
+
+    await expect(adapter.downloadAttachments({ attachmentUrls: ['somefakeUrl'] })).rejects.toThrow();
+    expect(errorListener.errors.length).toBe(1);
+    expect(errorListener.errors[0].target).toBe('ChatThreadClient.getMessage');
+    expect(errorListener.errors[0].innerError.message).toBe('AccessToken is null');
+  });
+  /* @conditional-compile-remove(teams-inline-images) */
+  it('when downloadAttachments fails with bad respnse', async () => {
+    const threadClient = new StubChatThreadClient();
+    const fakeToken: CommunicationTokenCredential = {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      getToken: (options?: CommunicationGetTokenOptions): Promise<MockAccessToken> => {
+        return new Promise<MockAccessToken>((resolve) => {
+          resolve({ token: 'anyToken', expiresOnTimestamp: Date.now() });
+        });
+      },
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-empty-function
+      dispose(): any {}
+    };
+    const adapter = await createChatAdapterWithStubs(new StubChatClient(threadClient), fakeToken);
+    const errorListener = new ErrorListener(adapter);
+    {
+      await expect(adapter.downloadAttachments({ attachmentUrls: ['somefakeUrl'] })).rejects.toThrow();
+      expect(errorListener.errors.length).toBe(1);
+      expect(errorListener.errors[0].target).toBe('ChatThreadClient.getMessage');
+      expect(errorListener.errors[0].innerError.message).toBe('fetch is not defined');
+    }
+  });
 });
 
-const createChatAdapterWithStubs = async (chatClient: StubChatClient): Promise<ChatAdapter> => {
+/* @conditional-compile-remove(teams-inline-images) */
+type MockAccessToken = {
+  token: string;
+  expiresOnTimestamp: number;
+};
+
+const createChatAdapterWithStubs = async (
+  chatClient: StubChatClient,
+  fakeToken?: CommunicationTokenCredential
+): Promise<ChatAdapter> => {
   // ChatClient constructor must return a ChatClient. StubChatClient only implements the
   // public interface of ChatClient. So we are forced to lose some type information here.
   ChatClientMock.mockImplementation((): ChatClient => {
     return chatClient as unknown as ChatClient;
   });
 
-  // This stub credential is ignored by the stub ChatClient.
-  const stubCredential: CommunicationTokenCredential = {
-    getToken: () => {
-      throw new Error('Unimplemented in stub');
-    },
-    dispose: () => {
-      // Nothing to dispose in the stub.
-    }
-  };
+  let token: CommunicationTokenCredential;
+  if (fakeToken) {
+    token = fakeToken;
+  } else {
+    // This stub credential is ignored by the stub ChatClient.
+    token = {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-empty-function
+      getToken(): any {},
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-empty-function
+      dispose(): any {}
+    };
+  }
   return await createAzureCommunicationChatAdapter({
     endpoint: 'stubEndpointUrl',
     userId: { communicationUserId: 'stubUserId' },
     displayName: 'stubDisplayName',
-    credential: stubCredential,
+    credential: token,
     threadId: 'stubThreadId'
   });
 };
