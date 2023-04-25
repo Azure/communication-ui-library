@@ -17,7 +17,12 @@
     "lint:quiet": "rushx lint -- --quiet"
   },
   "dependencies": {
-    
+    "@fluentui/react-northstar": "0.61.0",
+    "@types/react": "^16.9.49",
+    "@types/react-dom": "^16.9.8",
+    "react": "~16.14.0",
+    "react-dom": "16.13.1",
+    "scheduler": "^0.20.0"
   },
   "devDependencies": {
     "eslint": "^7.7.0",
