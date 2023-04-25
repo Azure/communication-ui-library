@@ -18,6 +18,7 @@
   },
   "dependencies": {
     "@fluentui/react-northstar": "0.61.0",
+    "@fluentui/react": "~8.98.3",
     "@types/react": "^16.9.49",
     "@types/react-dom": "^16.9.8",
     "react": "~16.14.0",
