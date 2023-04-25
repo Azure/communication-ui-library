@@ -1,11 +1,15 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import { Stack } from '@fluentui/react';
+import { Stack, FocusZone } from '@fluentui/react';
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { _FileUploadCardsStrings } from './FileUploadCards';
 import { Ref } from '@fluentui/react-northstar';
 import { _Caption } from './Caption';
-import { captionContainerClassName, captionsBannerClassName } from './styles/Captions.style';
+import {
+  captionContainerClassName,
+  captionsBannerClassName,
+  captionsContainerClassName
+} from './styles/Captions.style';
 import { OnRenderAvatarCallback } from '../types';
 
 /**
@@ -79,19 +83,19 @@ export const _CaptionsBanner = (props: _CaptionsBannerProps): JSX.Element => {
   return (
     <>
       {isCaptionsOn && (
-        <div data-is-focusable={true}>
+        <FocusZone as="ul" className={captionsContainerClassName}>
           <Ref innerRef={captionsScrollDivRef}>
             <Stack verticalAlign="start" className={captionsBannerClassName}>
               {captions.map((caption) => {
                 return (
-                  <div key={caption.id} className={captionContainerClassName} tabIndex={0}>
+                  <div key={caption.id} className={captionContainerClassName} data-is-focusable={true}>
                     <_Caption {...caption} onRenderAvatar={onRenderAvatar} />
                   </div>
                 );
               })}
             </Stack>
           </Ref>
-        </div>
+        </FocusZone>
       )}
     </>
   );

@@ -33,6 +33,14 @@ export const captionClassName = mergeStyles({
 /**
  * @private
  */
+export const captionsContainerClassName = mergeStyles({
+  margin: 0,
+  padding: 0
+});
+
+/**
+ * @private
+ */
 export const captionContainerClassName = mergeStyles({
   marginTop: _pxToRem(6),
   marginBottom: _pxToRem(6),
