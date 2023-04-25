@@ -39,3 +39,14 @@ export const _isTeamsCallAgent = (callAgent: CallAgentCommon): callAgent is Team
   return callAgent.kind === 'TeamsCallAgent';
   return false;
 };
+
+/* @conditional-compile-remove(close-captions) */
+/**
+ * @internal
+ * Determine whether a call is:
+ * A TeamsCall
+ * or a ACS Call joining the teams meeting
+ */
+export const _isTeamsMeetingCall = (call: CallCommon): boolean => {
+  return _isTeamsCall(call) || (_isACSCall(call) && !call.info.groupId && !call.info.roomId); // there should be a better way to determine if a call is joining a teams meeting ideally should be a meetingID in the info object
+};

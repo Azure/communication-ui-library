@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Fix High Contrast issues with the screenshare button and end call button.",
+  "packageName": "@azure/communication-react",
+  "email": "94866715+dmceachernmsft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

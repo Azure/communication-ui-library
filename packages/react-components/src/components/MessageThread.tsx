@@ -64,7 +64,9 @@ import { useLocale } from '../localization/LocalizationProvider';
 import { isNarrowWidth, _useContainerWidth } from './utils/responsive';
 import getParticipantsWhoHaveReadMessage from './utils/getParticipantsWhoHaveReadMessage';
 /* @conditional-compile-remove(file-sharing) */
-import { FileDownloadHandler, FileMetadata } from './FileDownloadCards';
+import { FileDownloadHandler } from './FileDownloadCards';
+/* @conditional-compile-remove(file-sharing) */ /* @conditional-compile-remove(teams-inline-images) */
+import { FileMetadata } from './FileDownloadCards';
 /* @conditional-compile-remove(teams-inline-images) */
 import { AttachmentDownloadResult } from './FileDownloadCards';
 import { useTheme } from '../theming';
@@ -644,7 +646,7 @@ export type MessageThreadProps = {
    * @param attachment - FileMetadata object we want to render
    * @beta
    */
-  onFetchAttachments?: (attachment: FileMetadata) => Promise<AttachmentDownloadResult>;
+  onFetchAttachments?: (attachment: FileMetadata) => Promise<AttachmentDownloadResult[]>;
   /**
    * Optional callback to edit a message.
    *
@@ -847,8 +849,11 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
       if (!onFetchAttachments || attachment.id in inlineAttachments) {
         return;
       }
+      setInlineAttachments((prev) => ({ ...prev, [attachment.id]: '' }));
       const attachmentDownloadResult = await onFetchAttachments(attachment);
-      setInlineAttachments((prev) => ({ ...prev, [attachment.id]: attachmentDownloadResult.blobUrl }));
+      if (attachmentDownloadResult[0]) {
+        setInlineAttachments((prev) => ({ ...prev, [attachment.id]: attachmentDownloadResult[0].blobUrl }));
+      }
     },
     [inlineAttachments, onFetchAttachments]
   );

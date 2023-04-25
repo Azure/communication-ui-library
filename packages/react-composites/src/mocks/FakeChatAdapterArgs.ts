@@ -53,6 +53,10 @@ export type _FakeChatAdapterArgs = {
    */
   sendRemoteFileSharingMessage?: boolean;
   /**
+   * Determines if the first remote participant will send a fixed message with a inline image.
+   */
+  sendRemoteInlineImageMessage?: boolean;
+  /**
    * Determines if chat composite will be localized in French (France).
    */
   frenchLocaleEnabled?: boolean;

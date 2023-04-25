@@ -2,6 +2,8 @@
 // Licensed under the MIT license.
 
 import React from 'react';
+/* @conditional-compile-remove(teams-inline-images) */
+import { useEffect } from 'react';
 import { _formatString } from '@internal/acs-ui-common';
 import { Parser } from 'html-to-react';
 /* @conditional-compile-remove(mention) */
@@ -73,6 +75,16 @@ const MessageContentWithLiveAria = (props: MessageContentWithLiveAriaProps): JSX
 const MessageContentAsRichTextHTML = (props: ChatMessageContentProps): JSX.Element => {
   const htmlToReactParser = Parser();
   const liveAuthor = _formatString(props.strings.liveAuthorIntro, { author: `${props.message.senderDisplayName}` });
+
+  /* @conditional-compile-remove(teams-inline-images) */
+  useEffect(() => {
+    props.message.attachedFilesMetadata?.map((fileMetadata) => {
+      if (props.onFetchAttachment && props.attachmentsMap && props.attachmentsMap[fileMetadata.id] === undefined) {
+        props.onFetchAttachment(fileMetadata);
+      }
+    });
+  }, [props]);
+
   /* @conditional-compile-remove(mention) */
   const mentionSuggestionRenderer = props.mentionDisplayOptions?.onRenderMention;
   /* @conditional-compile-remove(mention) */
