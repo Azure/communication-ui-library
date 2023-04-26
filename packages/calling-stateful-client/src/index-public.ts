@@ -28,7 +28,5 @@ export type { CreateViewResult } from './StreamUtils';
 export type { DeclarativeCallAgent, IncomingCallManagement } from './CallAgentDeclarative';
 /* @conditional-compile-remove(one-to-n-calling) */
 export type { DeclarativeIncomingCall } from './IncomingCallDeclarative';
-/* @conditional-compile-remove(video-background-effects) */
-export type { LocalVideoStreamVideoEffectsState } from './CallClientState';
 /* @conditional-compile-remove(close-captions) */
 export type { CaptionsCallFeatureState, CaptionsInfo } from './CallClientState';

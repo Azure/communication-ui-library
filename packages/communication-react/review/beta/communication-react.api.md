@@ -8,8 +8,6 @@
 
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { AudioDeviceInfo } from '@azure/communication-calling';
-import { BackgroundBlurConfig } from '@azure/communication-calling-effects';
-import { BackgroundReplacementConfig } from '@azure/communication-calling-effects';
 import { Call } from '@azure/communication-calling';
 import { CallAgent } from '@azure/communication-calling';
 import { CallClient } from '@azure/communication-calling';
@@ -56,7 +54,6 @@ import { IStyleFunctionOrObject } from '@fluentui/react';
 import { ITextFieldStyles } from '@fluentui/react';
 import { LatestMediaDiagnostics } from '@azure/communication-calling';
 import { LatestNetworkDiagnostics } from '@azure/communication-calling';
-import { LocalVideoStream } from '@azure/communication-calling';
 import type { MediaDiagnosticChangedEventArgs } from '@azure/communication-calling';
 import { MediaStreamType } from '@azure/communication-calling';
 import { MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
@@ -87,7 +84,6 @@ import { TypingIndicatorReceivedEvent } from '@azure/communication-chat';
 import { UnknownIdentifier } from '@azure/communication-common';
 import { UnknownIdentifierKind } from '@azure/communication-common';
 import { VideoDeviceInfo } from '@azure/communication-calling';
-import { VideoEffectName } from '@azure/communication-calling';
 import { VideoStreamRenderer } from '@azure/communication-calling';
 import { VideoStreamRendererView } from '@azure/communication-calling';
 
@@ -188,7 +184,6 @@ export type AzureCommunicationCallAdapterArgs = {
 // @beta
 export type AzureCommunicationCallAdapterOptions = {
     roleHint?: Role;
-    videoBackgroundImages?: VideoBackgroundImage[];
 };
 
 // @public
@@ -330,8 +325,6 @@ export interface CallAdapterCallOperations {
     // (undocumented)
     addParticipant(participant: CommunicationUserIdentifier): Promise<void>;
     allowUnsupportedBrowserVersion(): void;
-    // @beta
-    blurVideoBackground(backgroundBlurConfig?: BackgroundBlurConfig): Promise<void>;
     createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void | CreateVideoStreamViewResult>;
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
     // @beta
@@ -341,8 +334,6 @@ export interface CallAdapterCallOperations {
     removeParticipant(userId: string): Promise<void>;
     // @beta
     removeParticipant(participant: CommunicationIdentifier): Promise<void>;
-    // @beta
-    replaceVideoBackground(backgroundReplacementConfig: BackgroundReplacementConfig): Promise<void>;
     // @beta
     resumeCall(): Promise<void>;
     // @beta
@@ -355,13 +346,7 @@ export interface CallAdapterCallOperations {
     stopCamera(): Promise<void>;
     stopCaptions(): Promise<void>;
     stopScreenShare(): Promise<void>;
-    // @beta
-    stopVideoBackgroundEffect(): Promise<void>;
     unmute(): Promise<void>;
-    // @beta
-    updateBackgroundPickerImages(backgroundImages: VideoBackgroundImage[]): void;
-    // @beta
-    updateSelectedVideoBackgroundEffect(selectedVideoBackground: SelectedVideoBackgroundEffect): void;
 }
 
 // @public
@@ -377,8 +362,6 @@ export type CallAdapterClientState = {
     environmentInfo?: EnvironmentInfo;
     roleHint?: Role;
     cameraStatus?: 'On' | 'Off';
-    videoBackgroundImages?: VideoBackgroundImage[];
-    selectedVideoBackgroundEffect?: SelectedVideoBackgroundEffect;
 };
 
 // @public
@@ -546,8 +529,6 @@ export type CallCompositeIcons = {
     PeoplePaneOpenDialpad?: JSX.Element;
     DialpadStartCall?: JSX.Element;
     NoticePageInvalidRoom?: JSX.Element;
-    BlurVideoBackground?: JSX.Element;
-    RemoveVideoBackgroundEffect?: JSX.Element;
 };
 
 // @public
@@ -577,8 +558,6 @@ export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcon
 
 // @public
 export interface CallCompositeStrings {
-    blurBackgroundEffectButtonLabel?: string;
-    blurBackgroundTooltip?: string;
     cameraLabel: string;
     cameraPermissionDenied: string;
     cameraTurnedOff: string;
@@ -620,7 +599,6 @@ export interface CallCompositeStrings {
     dialpadStartCallButtonLabel: string;
     dismissSidePaneButtonLabel?: string;
     dtmfDialpadPlaceholderText: string;
-    effects?: string;
     failedToJoinCallDueToNoNetworkMoreDetails?: string;
     failedToJoinCallDueToNoNetworkTitle: string;
     failedToJoinTeamsMeetingReasonAccessDeniedMoreDetails?: string;
@@ -660,8 +638,6 @@ export interface CallCompositeStrings {
     peoplePaneTitle: string;
     privacyPolicy: string;
     rejoinCallButtonLabel: string;
-    removeBackgroundEffectButtonLabel?: string;
-    removeBackgroundTooltip?: string;
     removedFromCallMoreDetails?: string;
     removedFromCallTitle: string;
     removeMenuLabel: string;
@@ -719,7 +695,7 @@ export type CallErrors = {
 };
 
 // @public
-export type CallErrorTarget = 'Call.addParticipant' | 'Call.dispose' | 'Call.feature' | 'Call.hangUp' | 'Call.hold' | 'Call.mute' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.muteIncomingAudio' | 'Call.off' | 'Call.on' | 'Call.removeParticipant' | 'Call.resume' | 'Call.sendDtmf' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.startAudio' | 'Call.startScreenSharing' | 'Call.startVideo' | 'Call.stopScreenSharing' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.stopAudio' | 'Call.stopVideo' | 'Call.unmute' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.unmuteIncomingAudio' | 'CallAgent.dispose' | 'CallAgent.feature' | 'CallAgent.join' | 'CallAgent.off' | 'CallAgent.on' | 'CallAgent.startCall' | 'CallClient.createCallAgent' | 'CallClient.createTeamsCallAgent' | 'CallClient.feature' | 'CallClient.getDeviceManager' | /* @conditional-compile-remove(calling-beta-sdk) */ 'CallClient.getEnvironmentInfo' | 'DeviceManager.askDevicePermission' | 'DeviceManager.getCameras' | 'DeviceManager.getMicrophones' | 'DeviceManager.getSpeakers' | 'DeviceManager.off' | 'DeviceManager.on' | 'DeviceManager.selectMicrophone' | 'DeviceManager.selectSpeaker' | 'IncomingCall.accept' | 'IncomingCall.reject' | /* @conditional-compile-remove(calling-beta-sdk) */ /* @conditional-compile-remove(teams-identity-support) */ 'TeamsCall.addParticipant' | /* @conditional-compile-remove(video-background-effects) */ 'VideoEffectsFeature.startEffects' | /* @conditional-compile-remove(calling-beta-sdk) */ 'CallAgent.handlePushNotification' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.admit' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.rejectParticipant' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.admitAll';
+export type CallErrorTarget = 'Call.addParticipant' | 'Call.dispose' | 'Call.feature' | 'Call.hangUp' | 'Call.hold' | 'Call.mute' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.muteIncomingAudio' | 'Call.off' | 'Call.on' | 'Call.removeParticipant' | 'Call.resume' | 'Call.sendDtmf' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.startAudio' | 'Call.startScreenSharing' | 'Call.startVideo' | 'Call.stopScreenSharing' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.stopAudio' | 'Call.stopVideo' | 'Call.unmute' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.unmuteIncomingAudio' | 'CallAgent.dispose' | 'CallAgent.feature' | 'CallAgent.join' | 'CallAgent.off' | 'CallAgent.on' | 'CallAgent.startCall' | 'CallClient.createCallAgent' | 'CallClient.createTeamsCallAgent' | 'CallClient.feature' | 'CallClient.getDeviceManager' | /* @conditional-compile-remove(calling-beta-sdk) */ 'CallClient.getEnvironmentInfo' | 'DeviceManager.askDevicePermission' | 'DeviceManager.getCameras' | 'DeviceManager.getMicrophones' | 'DeviceManager.getSpeakers' | 'DeviceManager.off' | 'DeviceManager.on' | 'DeviceManager.selectMicrophone' | 'DeviceManager.selectSpeaker' | 'IncomingCall.accept' | 'IncomingCall.reject' | /* @conditional-compile-remove(calling-beta-sdk) */ /* @conditional-compile-remove(teams-identity-support) */ 'TeamsCall.addParticipant' | /* @conditional-compile-remove(calling-beta-sdk) */ 'CallAgent.handlePushNotification' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.admit' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.rejectParticipant' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.admitAll';
 
 // @public
 export type CallIdChangedListener = (event: {
@@ -817,8 +793,6 @@ export interface CallWithChatAdapterManagement {
     addParticipant(participant: CommunicationUserIdentifier): Promise<void>;
     allowUnsupportedBrowserVersion(): void;
     askDevicePermission(constrain: PermissionConstraints): Promise<void>;
-    // @beta
-    blurVideoBackground(backgroundBlurConfig?: BackgroundBlurConfig): Promise<void>;
     // @beta (undocumented)
     cancelFileUpload: (id: string) => void;
     // @beta (undocumented)
@@ -848,8 +822,6 @@ export interface CallWithChatAdapterManagement {
     // @beta
     removeParticipant(participant: CommunicationIdentifier): Promise<void>;
     // @beta
-    replaceVideoBackground(backgroundReplacementConfig: BackgroundReplacementConfig): Promise<void>;
-    // @beta
     resumeCall: () => Promise<void>;
     // @beta
     sendDtmfTone: (dtmfTone: DtmfTone_2) => Promise<void>;
@@ -870,11 +842,7 @@ export interface CallWithChatAdapterManagement {
     stopCamera(): Promise<void>;
     stopCaptions(): Promise<void>;
     stopScreenShare(): Promise<void>;
-    // @beta
-    stopVideoBackgroundEffect(): Promise<void>;
     unmute(): Promise<void>;
-    // @beta
-    updateBackgroundPickerImages(backgroundImages: VideoBackgroundImage[]): void;
     // @beta (undocumented)
     updateFileUploadErrorMessage: (id: string, errorMessage: string) => void;
     // @beta (undocumented)
@@ -882,8 +850,6 @@ export interface CallWithChatAdapterManagement {
     // @beta (undocumented)
     updateFileUploadProgress: (id: string, progress: number) => void;
     updateMessage(messageId: string, content: string, metadata?: Record<string, string>): Promise<void>;
-    // @beta
-    updateSelectedVideoBackgroundEffect(selectedVideoBackground: SelectedVideoBackgroundEffect): void;
 }
 
 // @public
@@ -991,9 +957,7 @@ export interface CallWithChatClientState {
     isTeamsCall: boolean;
     latestCallErrors: AdapterErrors;
     latestChatErrors: AdapterErrors;
-    selectedVideoBackgroundEffect?: SelectedVideoBackgroundEffect;
     userId: CommunicationIdentifierKind;
-    videoBackgroundImages?: VideoBackgroundImage[];
 }
 
 // @public
@@ -1168,7 +1132,6 @@ export interface CameraButtonProps extends ControlBarButtonProps {
     enableDeviceSelectionMenu?: boolean;
     localVideoViewOptions?: VideoStreamOptions;
     onSelectCamera?: (device: OptionsDevice) => Promise<void>;
-    onShowVideoEffectsPicker?: (showVideoEffectsOptions: boolean) => void;
     onToggleCamera?: (options?: VideoStreamOptions) => Promise<void>;
     selectedCamera?: OptionsDevice;
     strings?: Partial<CameraButtonStrings>;
@@ -1635,8 +1598,6 @@ export interface CommonCallingHandlers {
     // (undocumented)
     onAddParticipant(participant: PhoneNumberIdentifier, options: AddPhoneNumberOptions): Promise<void>;
     // (undocumented)
-    onBlurVideoBackground: (backgroundBlurConfig?: BackgroundBlurConfig) => Promise<void>;
-    // (undocumented)
     onCreateLocalStreamView: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
     // (undocumented)
     onCreateRemoteStreamView: (userId: string, options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
@@ -1650,10 +1611,6 @@ export interface CommonCallingHandlers {
     onRemoveParticipant(userId: string): Promise<void>;
     // (undocumented)
     onRemoveParticipant(participant: CommunicationIdentifier): Promise<void>;
-    // (undocumented)
-    onRemoveVideoBackgroundEffects: () => Promise<void>;
-    // (undocumented)
-    onReplaceVideoBackground: (backgroundReplacementConfig: BackgroundReplacementConfig) => Promise<void>;
     // (undocumented)
     onSelectCamera: (device: VideoDeviceInfo, options?: VideoStreamOptions) => Promise<void>;
     // (undocumented)
@@ -1913,7 +1870,7 @@ export interface ControlBarProps {
 }
 
 // @public
-export const createAzureCommunicationCallAdapter: ({ userId, displayName, credential, locator, alternateCallerId, options }: AzureCommunicationCallAdapterArgs) => Promise<CallAdapter>;
+export const createAzureCommunicationCallAdapter: ({ userId, displayName, credential, locator, alternateCallerId }: AzureCommunicationCallAdapterArgs) => Promise<CallAdapter>;
 
 // @public
 export const createAzureCommunicationCallAdapterFromClient: (callClient: StatefulCallClient, callAgent: CallAgent, locator: CallAdapterLocator, options?: AzureCommunicationCallAdapterOptions) => Promise<CallAdapter>;
@@ -2111,7 +2068,6 @@ export const DEFAULT_COMPONENT_ICONS: {
     SplitButtonPrimaryActionMicMuted: JSX.Element;
     VerticalGalleryLeftButton: JSX.Element;
     VerticalGalleryRightButton: JSX.Element;
-    OptionsVideoBackgroundEffect: JSX.Element;
     CaptionsIcon: JSX.Element;
     CaptionsOffIcon: JSX.Element;
     CaptionsSettingsIcon: JSX.Element;
@@ -2180,8 +2136,6 @@ export const DEFAULT_COMPOSITE_ICONS: {
     PeoplePaneOpenDialpad?: JSX.Element | undefined;
     DialpadStartCall?: JSX.Element | undefined;
     NoticePageInvalidRoom?: JSX.Element | undefined;
-    BlurVideoBackground?: JSX.Element | undefined;
-    RemoveVideoBackgroundEffect?: JSX.Element | undefined;
     ChevronLeft?: JSX.Element | undefined;
     ControlBarChatButtonActive?: JSX.Element | undefined;
     ControlBarChatButtonInactive?: JSX.Element | undefined;
@@ -2222,7 +2176,6 @@ export const DEFAULT_COMPOSITE_ICONS: {
     SplitButtonPrimaryActionMicMuted: JSX.Element;
     VerticalGalleryLeftButton: JSX.Element;
     VerticalGalleryRightButton: JSX.Element;
-    OptionsVideoBackgroundEffect: JSX.Element;
     CaptionsIcon: JSX.Element;
     CaptionsOffIcon: JSX.Element;
     CaptionsSettingsIcon: JSX.Element;
@@ -2422,7 +2375,6 @@ export interface ErrorBarStrings {
     stopScreenShareGeneric: string;
     stopVideoGeneric: string;
     unableToReachChatService: string;
-    unableToStartVideoEffect?: string;
     unmuteGeneric: string;
     userNotInChatThread: string;
 }
@@ -2682,15 +2634,7 @@ export interface LocalVideoCameraCycleButtonProps {
 export interface LocalVideoStreamState {
     mediaStreamType: MediaStreamType;
     source: VideoDeviceInfo;
-    // @beta
-    videoEffects?: LocalVideoStreamVideoEffectsState;
     view?: VideoStreamRendererViewState;
-}
-
-// @beta
-export interface LocalVideoStreamVideoEffectsState {
-    effectName?: VideoEffectName;
-    isActive: boolean;
 }
 
 // @public
@@ -3211,9 +3155,6 @@ export interface ScreenShareButtonStrings {
     tooltipOnContent?: string;
 }
 
-// @beta
-export type SelectedVideoBackgroundEffect = VideoBackgroundNoneEffect | VideoBackgroundBlurEffect | VideoBackgroundReplacementEffect;
-
 // @public
 export type Selector = (state: ClientState, props: any) => any;
 
@@ -3334,8 +3275,6 @@ export type StatefulChatClientOptions = {
 
 // @public
 export interface StatefulDeviceManager extends DeviceManager {
-    // @beta
-    getUnparentedVideoStreams: () => LocalVideoStream[];
     selectCamera: (VideoDeviceInfo: any) => void;
 }
 
@@ -3556,30 +3495,6 @@ export interface VerticalGalleryStrings {
 export interface VerticalGalleryStyles extends BaseCustomStyles {
     children?: IStyle;
     controlBar?: VerticalGalleryControlBarStyles;
-}
-
-// @beta
-export interface VideoBackgroundBlurEffect {
-    effectName: 'blur';
-}
-
-// @beta
-export interface VideoBackgroundImage {
-    key: string;
-    tooltipText?: string;
-    url: string;
-}
-
-// @beta
-export interface VideoBackgroundNoneEffect {
-    effectName: 'none';
-}
-
-// @beta
-export interface VideoBackgroundReplacementEffect {
-    backgroundImageUrl: string;
-    effectKey: string;
-    effectName: 'replacement';
 }
 
 // @public

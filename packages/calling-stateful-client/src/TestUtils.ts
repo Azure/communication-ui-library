@@ -20,8 +20,6 @@ import {
   CallFeature
 } from '@azure/communication-calling';
 import { CollectionUpdatedEvent, RecordingInfo } from '@azure/communication-calling';
-/* @conditional-compile-remove(video-background-effects) */
-import { VideoEffectsFeature } from '@azure/communication-calling';
 import { CommunicationTokenCredential } from '@azure/communication-common';
 import { AccessToken } from '@azure/core-auth';
 
@@ -270,15 +268,6 @@ export function createMockIncomingCall(mockCallId: string): MockIncomingCall {
   return addMockEmitter(mockIncomingCall);
 }
 
-/* @conditional-compile-remove(video-background-effects) */
-const createMockVideoEffectsAPI = (): VideoEffectsFeature =>
-  addMockEmitter({
-    name: 'MockVideoEffect',
-    startEffects: () => Promise.resolve(),
-    stopEffects: () => Promise.resolve(),
-    dispose: () => Promise.resolve()
-  });
-
 /** @private */
 export const createMockLocalVideoStream = (): LocalVideoStream =>
   ({
@@ -288,9 +277,7 @@ export const createMockLocalVideoStream = (): LocalVideoStream =>
       deviceType: 'Unknown'
     },
     mediaStreamType: 'Video',
-    switchSource: Promise.resolve,
-    /* @conditional-compile-remove(video-background-effects) */
-    feature: () => createMockVideoEffectsAPI()
+    switchSource: Promise.resolve
   } as unknown as LocalVideoStream);
 
 /**

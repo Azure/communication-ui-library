@@ -9,8 +9,6 @@
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { AttachmentDownloadResult } from '@internal/react-components';
 import { AudioDeviceInfo } from '@azure/communication-calling';
-import { BackgroundBlurConfig } from '@azure/communication-calling-effects';
-import { BackgroundReplacementConfig } from '@azure/communication-calling-effects';
 import { BaseCustomStyles } from '@internal/react-components';
 import { Call } from '@azure/communication-calling';
 import { CallAgent } from '@azure/communication-calling';
@@ -108,7 +106,6 @@ export type AzureCommunicationCallAdapterArgs = {
 // @beta
 export type AzureCommunicationCallAdapterOptions = {
     roleHint?: Role;
-    videoBackgroundImages?: VideoBackgroundImage[];
 };
 
 // @public
@@ -178,8 +175,6 @@ export interface CallAdapterCallOperations {
     // (undocumented)
     addParticipant(participant: CommunicationUserIdentifier): Promise<void>;
     allowUnsupportedBrowserVersion(): void;
-    // @beta
-    blurVideoBackground(backgroundBlurConfig?: BackgroundBlurConfig): Promise<void>;
     createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void | CreateVideoStreamViewResult>;
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
     // @beta
@@ -189,8 +184,6 @@ export interface CallAdapterCallOperations {
     removeParticipant(userId: string): Promise<void>;
     // @beta
     removeParticipant(participant: CommunicationIdentifier): Promise<void>;
-    // @beta
-    replaceVideoBackground(backgroundReplacementConfig: BackgroundReplacementConfig): Promise<void>;
     // @beta
     resumeCall(): Promise<void>;
     // @beta
@@ -203,13 +196,7 @@ export interface CallAdapterCallOperations {
     stopCamera(): Promise<void>;
     stopCaptions(): Promise<void>;
     stopScreenShare(): Promise<void>;
-    // @beta
-    stopVideoBackgroundEffect(): Promise<void>;
     unmute(): Promise<void>;
-    // @beta
-    updateBackgroundPickerImages(backgroundImages: VideoBackgroundImage[]): void;
-    // @beta
-    updateSelectedVideoBackgroundEffect(selectedVideoBackground: SelectedVideoBackgroundEffect): void;
 }
 
 // @public
@@ -225,8 +212,6 @@ export type CallAdapterClientState = {
     environmentInfo?: EnvironmentInfo;
     roleHint?: Role;
     cameraStatus?: 'On' | 'Off';
-    videoBackgroundImages?: VideoBackgroundImage[];
-    selectedVideoBackgroundEffect?: SelectedVideoBackgroundEffect;
 };
 
 // @public
@@ -345,8 +330,6 @@ export type CallCompositeIcons = {
     PeoplePaneOpenDialpad?: JSX.Element;
     DialpadStartCall?: JSX.Element;
     NoticePageInvalidRoom?: JSX.Element;
-    BlurVideoBackground?: JSX.Element;
-    RemoveVideoBackgroundEffect?: JSX.Element;
 };
 
 // @public
@@ -376,8 +359,6 @@ export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcon
 
 // @public
 export interface CallCompositeStrings {
-    blurBackgroundEffectButtonLabel?: string;
-    blurBackgroundTooltip?: string;
     cameraLabel: string;
     cameraPermissionDenied: string;
     cameraTurnedOff: string;
@@ -419,7 +400,6 @@ export interface CallCompositeStrings {
     dialpadStartCallButtonLabel: string;
     dismissSidePaneButtonLabel?: string;
     dtmfDialpadPlaceholderText: string;
-    effects?: string;
     failedToJoinCallDueToNoNetworkMoreDetails?: string;
     failedToJoinCallDueToNoNetworkTitle: string;
     failedToJoinTeamsMeetingReasonAccessDeniedMoreDetails?: string;
@@ -459,8 +439,6 @@ export interface CallCompositeStrings {
     peoplePaneTitle: string;
     privacyPolicy: string;
     rejoinCallButtonLabel: string;
-    removeBackgroundEffectButtonLabel?: string;
-    removeBackgroundTooltip?: string;
     removedFromCallMoreDetails?: string;
     removedFromCallTitle: string;
     removeMenuLabel: string;
@@ -521,8 +499,6 @@ export interface CallWithChatAdapterManagement {
     addParticipant(participant: CommunicationUserIdentifier): Promise<void>;
     allowUnsupportedBrowserVersion(): void;
     askDevicePermission(constrain: PermissionConstraints): Promise<void>;
-    // @beta
-    blurVideoBackground(backgroundBlurConfig?: BackgroundBlurConfig): Promise<void>;
     // @beta (undocumented)
     cancelFileUpload: (id: string) => void;
     // @beta (undocumented)
@@ -552,8 +528,6 @@ export interface CallWithChatAdapterManagement {
     // @beta
     removeParticipant(participant: CommunicationIdentifier): Promise<void>;
     // @beta
-    replaceVideoBackground(backgroundReplacementConfig: BackgroundReplacementConfig): Promise<void>;
-    // @beta
     resumeCall: () => Promise<void>;
     // @beta
     sendDtmfTone: (dtmfTone: DtmfTone) => Promise<void>;
@@ -574,11 +548,7 @@ export interface CallWithChatAdapterManagement {
     stopCamera(): Promise<void>;
     stopCaptions(): Promise<void>;
     stopScreenShare(): Promise<void>;
-    // @beta
-    stopVideoBackgroundEffect(): Promise<void>;
     unmute(): Promise<void>;
-    // @beta
-    updateBackgroundPickerImages(backgroundImages: VideoBackgroundImage[]): void;
     // @beta (undocumented)
     updateFileUploadErrorMessage: (id: string, errorMessage: string) => void;
     // @beta (undocumented)
@@ -586,8 +556,6 @@ export interface CallWithChatAdapterManagement {
     // @beta (undocumented)
     updateFileUploadProgress: (id: string, progress: number) => void;
     updateMessage(messageId: string, content: string, metadata?: Record<string, string>): Promise<void>;
-    // @beta
-    updateSelectedVideoBackgroundEffect(selectedVideoBackground: SelectedVideoBackgroundEffect): void;
 }
 
 // @public
@@ -695,9 +663,7 @@ export interface CallWithChatClientState {
     isTeamsCall: boolean;
     latestCallErrors: AdapterErrors;
     latestChatErrors: AdapterErrors;
-    selectedVideoBackgroundEffect?: SelectedVideoBackgroundEffect;
     userId: CommunicationIdentifierKind;
-    videoBackgroundImages?: VideoBackgroundImage[];
 }
 
 // @public
@@ -1061,7 +1027,7 @@ export interface CompositeStrings {
 }
 
 // @public
-export const createAzureCommunicationCallAdapter: ({ userId, displayName, credential, locator, alternateCallerId, options }: AzureCommunicationCallAdapterArgs) => Promise<CallAdapter>;
+export const createAzureCommunicationCallAdapter: ({ userId, displayName, credential, locator, alternateCallerId }: AzureCommunicationCallAdapterArgs) => Promise<CallAdapter>;
 
 // @public
 export const createAzureCommunicationCallAdapterFromClient: (callClient: StatefulCallClient, callAgent: CallAgent, locator: CallAdapterLocator, options?: AzureCommunicationCallAdapterOptions) => Promise<CallAdapter>;
@@ -1191,8 +1157,6 @@ export const DEFAULT_COMPOSITE_ICONS: {
     PeoplePaneOpenDialpad?: JSX.Element | undefined;
     DialpadStartCall?: JSX.Element | undefined;
     NoticePageInvalidRoom?: JSX.Element | undefined;
-    BlurVideoBackground?: JSX.Element | undefined;
-    RemoveVideoBackgroundEffect?: JSX.Element | undefined;
     ChevronLeft?: JSX.Element | undefined;
     ControlBarChatButtonActive?: JSX.Element | undefined;
     ControlBarChatButtonInactive?: JSX.Element | undefined;
@@ -1233,7 +1197,6 @@ export const DEFAULT_COMPOSITE_ICONS: {
     SplitButtonPrimaryActionMicMuted: JSX.Element;
     VerticalGalleryLeftButton: JSX.Element;
     VerticalGalleryRightButton: JSX.Element;
-    OptionsVideoBackgroundEffect: JSX.Element;
     CaptionsIcon: JSX.Element;
     CaptionsOffIcon: JSX.Element;
     CaptionsSettingsIcon: JSX.Element;
@@ -1436,9 +1399,6 @@ export interface RemoteVideoTileMenuOptions {
 }
 
 // @beta
-export type SelectedVideoBackgroundEffect = VideoBackgroundNoneEffect | VideoBackgroundBlurEffect | VideoBackgroundReplacementEffect;
-
-// @beta
 export type TeamsAdapterOptions = {
     onFetchProfile?: OnFetchProfileCallback;
 };
@@ -1480,30 +1440,6 @@ export function _useFakeChatAdapters(args: _FakeChatAdapterArgs): _FakeChatAdapt
 
 // @beta
 export const useTeamsCallAdapter: (args: Partial<TeamsCallAdapterArgs>, afterCreate?: ((adapter: TeamsCallAdapter) => Promise<TeamsCallAdapter>) | undefined, beforeDispose?: ((adapter: TeamsCallAdapter) => Promise<void>) | undefined) => TeamsCallAdapter | undefined;
-
-// @beta
-export interface VideoBackgroundBlurEffect {
-    effectName: 'blur';
-}
-
-// @beta
-export interface VideoBackgroundImage {
-    key: string;
-    tooltipText?: string;
-    url: string;
-}
-
-// @beta
-export interface VideoBackgroundNoneEffect {
-    effectName: 'none';
-}
-
-// @beta
-export interface VideoBackgroundReplacementEffect {
-    backgroundImageUrl: string;
-    effectKey: string;
-    effectName: 'replacement';
-}
 
 // (No @packageDocumentation comment for this package)
 

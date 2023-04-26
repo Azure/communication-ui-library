@@ -22,14 +22,7 @@ import { disposeAllLocalPreviewViews, _isInCall, _isInLobbyOrConnecting, _isPrev
 import { CommunicationUserIdentifier, PhoneNumberIdentifier, UnknownIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(PSTN-calls) */
 import { CommunicationIdentifier } from '@azure/communication-common';
-/* @conditional-compile-remove(video-background-effects) */
-import {
-  BackgroundBlurConfig,
-  BackgroundBlurEffect,
-  BackgroundReplacementConfig,
-  BackgroundReplacementEffect
-} from '@azure/communication-calling-effects';
-/* @conditional-compile-remove(video-background-effects) */
+/* @conditional-compile-remove(close-captions) */
 import { Features } from '@azure/communication-calling';
 
 /**
@@ -75,12 +68,6 @@ export interface CommonCallingHandlers {
     participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[],
     options?: StartCallOptions
   ) => void;
-  /* @conditional-compile-remove(video-background-effects) */
-  onRemoveVideoBackgroundEffects: () => Promise<void>;
-  /* @conditional-compile-remove(video-background-effects) */
-  onBlurVideoBackground: (backgroundBlurConfig?: BackgroundBlurConfig) => Promise<void>;
-  /* @conditional-compile-remove(video-background-effects) */
-  onReplaceVideoBackground: (backgroundReplacementConfig: BackgroundReplacementConfig) => Promise<void>;
   /* @conditional-compile-remove(close-captions) */
   onStartCaptions: (options?: CaptionsOptions) => Promise<void>;
   /* @conditional-compile-remove(close-captions) */
@@ -395,39 +382,6 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       }
     };
 
-    /* @conditional-compile-remove(video-background-effects) */
-    const onRemoveVideoBackgroundEffects = async (): Promise<void> => {
-      const stream =
-        call?.localVideoStreams.find((stream) => stream.mediaStreamType === 'Video') ||
-        deviceManager?.getUnparentedVideoStreams().find((stream) => stream.mediaStreamType === 'Video');
-      if (stream) {
-        return stream.feature(Features.VideoEffects).stopEffects();
-      }
-    };
-
-    /* @conditional-compile-remove(video-background-effects) */
-    const onBlurVideoBackground = async (backgroundBlurConfig?: BackgroundBlurConfig): Promise<void> => {
-      const stream =
-        call?.localVideoStreams.find((stream) => stream.mediaStreamType === 'Video') ||
-        deviceManager?.getUnparentedVideoStreams().find((stream) => stream.mediaStreamType === 'Video');
-      if (stream) {
-        return stream.feature(Features.VideoEffects).startEffects(new BackgroundBlurEffect(backgroundBlurConfig));
-      }
-    };
-
-    /* @conditional-compile-remove(video-background-effects) */
-    const onReplaceVideoBackground = async (
-      backgroundReplacementConfig: BackgroundReplacementConfig
-    ): Promise<void> => {
-      const stream =
-        call?.localVideoStreams.find((stream) => stream.mediaStreamType === 'Video') ||
-        deviceManager?.getUnparentedVideoStreams().find((stream) => stream.mediaStreamType === 'Video');
-      if (stream) {
-        return stream
-          .feature(Features.VideoEffects)
-          .startEffects(new BackgroundReplacementEffect(backgroundReplacementConfig));
-      }
-    };
     /* @conditional-compile-remove(close-captions) */
     const onStartCaptions = async (options?: CaptionsOptions): Promise<void> => {
       await call?.feature(Features.TeamsCaptions).startCaptions(options);
@@ -469,12 +423,6 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */ onSendDtmfTone,
       /* @conditional-compile-remove(call-readiness) */
       askDevicePermission,
-      /* @conditional-compile-remove(video-background-effects) */
-      onRemoveVideoBackgroundEffects,
-      /* @conditional-compile-remove(video-background-effects) */
-      onBlurVideoBackground,
-      /* @conditional-compile-remove(video-background-effects) */
-      onReplaceVideoBackground,
       /* @conditional-compile-remove(close-captions) */
       onStartCaptions,
       /* @conditional-compile-remove(close-captions) */

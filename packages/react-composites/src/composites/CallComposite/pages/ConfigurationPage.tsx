@@ -15,12 +15,6 @@ import { DevicesButton, ErrorBar } from '@internal/react-components';
 import { _usePermissions, _Permissions } from '@internal/react-components';
 import { getCallingSelector } from '@internal/calling-component-bindings';
 import { Stack } from '@fluentui/react';
-/* @conditional-compile-remove(video-background-effects) */
-import { DefaultButton } from '@fluentui/react';
-/* @conditional-compile-remove(video-background-effects) */
-import { effectsButtonStyles } from '../styles/CallConfiguration.styles';
-/* @conditional-compile-remove(video-background-effects) */
-import { useTheme } from '@fluentui/react';
 import { LocalPreview } from '../components/LocalPreview';
 import {
   callDetailsStyleDesktop,
@@ -48,8 +42,6 @@ import { ConfigurationPageErrorBar } from '../components/ConfigurationPageErrorB
 import { getDevicePermissionState } from '../utils';
 /* @conditional-compile-remove(call-readiness) */
 import { CallReadinessModal, CallReadinessModalFallBack } from '../components/CallReadinessModal';
-/* @conditional-compile-remove(video-background-effects) */
-import { VideoEffectsPane } from '../../common/VideoEffectsPane';
 
 /**
  * @private
@@ -83,8 +75,6 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
     /* @conditional-compile-remove(call-readiness) */ onNetworkingTroubleShootingClick
   } = props;
 
-  /* @conditional-compile-remove(video-background-effects) */
-  const [showVideoEffectsPane, setVideoEffectsPane] = useState(false);
   const options = useAdaptedSelector(getCallingSelector(DevicesButton));
   const localDeviceSettingsHandlers = useHandlers(LocalDeviceSettings);
   const { video: cameraPermissionGranted, audio: microphonePermissionGranted } = useSelector(devicePermissionSelector);
@@ -98,8 +88,6 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
 
   let errorBarProps = usePropsFor(ErrorBar);
   const adapter = useAdapter();
-  /* @conditional-compile-remove(video-background-effects) */
-  const theme = useTheme();
   const deviceState = adapter.getState().devices;
   /* @conditional-compile-remove(unsupported-browser) */
   const environmentInfo = adapter.getState().environmentInfo;
@@ -282,18 +270,6 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
                 {title}
                 {callDescription}
               </Stack.Item>
-              {
-                /* @conditional-compile-remove(video-background-effects) */
-                <DefaultButton
-                  iconProps={{ iconName: 'OptionsVideoBackgroundEffect' }}
-                  styles={effectsButtonStyles(theme)}
-                  onClick={() => {
-                    setVideoEffectsPane(!showVideoEffectsPane);
-                  }}
-                >
-                  {locale.strings.call.effects}
-                </DefaultButton>
-              }
               <LocalDeviceSettings
                 {...options}
                 {...localDeviceSettingsHandlers}
@@ -323,13 +299,6 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
           </Stack>
         </Stack>
       </Stack>
-      {
-        /* @conditional-compile-remove(video-background-effects) */
-        <VideoEffectsPane
-          showVideoEffectsOptions={showVideoEffectsPane}
-          setshowVideoEffectsOptions={setVideoEffectsPane}
-        />
-      }
     </Stack>
   );
 };
