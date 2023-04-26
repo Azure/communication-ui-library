@@ -18,6 +18,7 @@ export const defaultMentionSuggestionRenderer = (suggestion: Mention): JSX.Eleme
 };
 
 // Add the custom HTML tag to the JSX.IntrinsicElements interface
+// eslint-disable-next-line @typescript-eslint/no-namespace
 declare global {
   namespace JSX {
     interface IntrinsicElements {

@@ -61,7 +61,7 @@ type InputBoxComponentProps = {
   'data-ui-id'?: string;
   id?: string;
   textValue: string; // This could be plain text or HTML.
-  onChange: (event: FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string | undefined) => void;
+  onChange: (event: FormEvent<HTMLInputElement | HTMLTextAreaElement> | null, newValue?: string | undefined) => void;
   textFieldRef?: React.RefObject<ITextField>;
   inputClassName?: string;
   placeholderText?: string;
@@ -75,8 +75,6 @@ type InputBoxComponentProps = {
   autoFocus?: 'sendBoxTextField';
   /* @conditional-compile-remove(mention) */
   mentionLookupOptions?: MentionLookupOptions;
-  /* @conditional-compile-remove(mention) */
-  onMentionAdd?: (newTextValue?: string) => void; // textValue should be updated in it
 };
 
 /**
@@ -99,9 +97,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     disabled,
     children,
     /* @conditional-compile-remove(mention) */
-    mentionLookupOptions,
-    /* @conditional-compile-remove(mention) */
-    onMentionAdd
+    mentionLookupOptions
   } = props;
   const inputBoxRef = useRef<HTMLDivElement>(null);
 
@@ -172,12 +168,12 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     (suggestions: Mention[]) => {
       setMentionSuggestions(suggestions);
       textFieldRef?.current?.focus();
-      if (!!caretIndex) {
+      if (caretIndex) {
         console.log('updateMentionSuggestions set caret index to ', caretIndex);
         textFieldRef?.current?.setSelectionEnd(caretIndex);
       }
     },
-    [caretIndex, textFieldRef]
+    [textFieldRef, caretIndex]
   );
 
   /* @conditional-compile-remove(mention) */
@@ -192,12 +188,6 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       console.log('selectionStart', textFieldRef?.current?.selectionStart);
       console.log('selectionEnd', selectionEnd);
 
-      // Update the text field with the mention
-      insertMention({
-        mention: suggestion,
-        insertIndex: selectionEnd,
-        currentPlainText: inputTextValue
-      });
       const oldPlainText = inputTextValue;
       const mention = htmlStringForMentionSuggestion(suggestion);
 
@@ -219,18 +209,18 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       // Move the caret in the text field to the end of the mention plain text
       setCaretIndex(selectionEnd + suggestion.displayText.length);
       setCurrentTriggerStartIndex(-1);
-      onMentionAdd && onMentionAdd(updatedHTML);
       updateMentionSuggestions([]);
       setInputTextValue(newPlainText);
+      onChange && onChange(null, updatedHTML);
     },
     [
       textFieldRef,
       inputTextValue,
       currentTriggerStartIndex,
       mentionLookupOptions?.trigger,
+      onChange,
       textValue,
       tagsValue,
-      onMentionAdd,
       updateMentionSuggestions
     ]
   );
@@ -377,11 +367,11 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
             return;
             onChange(e, newValue);
           }}
+          /* @conditional-compile-remove(mention) */
           onSelect={(e) => {
             console.log('updateHTML onSelect selectionEnd', e.currentTarget.selectionEnd);
             console.log('updateHTML selectionStart', e.currentTarget.selectionStart);
             if (caretIndex !== null) {
-              console.log('onSelect set caret location to ', caretIndex);
               e.currentTarget.setSelectionRange(caretIndex, caretIndex);
               setCaretIndex(null);
             }
@@ -541,60 +531,6 @@ export const InputBoxButton = (props: InputBoxButtonProps): JSX.Element => {
       />
     </TooltipHost>
   );
-};
-
-// Insert a mention into the text, updating the HTML and plain text versions
-const insertMention = ({
-  mention,
-  insertIndex,
-  currentPlainText
-}: {
-  mention: Mention;
-  insertIndex: number;
-  currentPlainText: string;
-}): string => {
-  // User selected a mention, insert it into the text
-  const mentionText = htmlStringForMentionSuggestion(mention);
-  // TODO: Simplify
-  //return updateHTML(<params>)
-  return mentionText;
-};
-
-/**
- * Find mention tag if selection is inside of it
- *
- * @private
- */
-const findMentionTagForSelection = (tags: TagData[], selection: number): TagData | undefined => {
-  let mentionTag: TagData | undefined = undefined;
-  for (let i = 0; i < tags.length; i++) {
-    const tag = tags[i];
-    let plainTextEndIndex = 0;
-    if (tag.plainTextEndIndex !== undefined && tag.closeTagIdx !== undefined) {
-      // close tag exists
-      plainTextEndIndex = tag.plainTextEndIndex;
-    } else if (tag.plainTextBeginIndex !== undefined) {
-      //no close tag
-      plainTextEndIndex = tag.plainTextBeginIndex;
-    }
-    if (tag.subTags !== undefined && tag.subTags.length !== 0) {
-      const selectedTag = findMentionTagForSelection(tag.subTags, selection);
-      if (selectedTag !== undefined) {
-        mentionTag = selectedTag;
-        break;
-      }
-    } else if (
-      tag.tagType === 'msft-mention' &&
-      tag.plainTextBeginIndex !== undefined &&
-      tag.plainTextBeginIndex < selection &&
-      selection < plainTextEndIndex
-    ) {
-      console.log('updateHTML selection', selection);
-      mentionTag = tag;
-      break;
-    }
-  }
-  return mentionTag;
 };
 
 /**
@@ -870,6 +806,7 @@ const updateHTML = (
   return result;
 };
 
+/* @conditional-compile-remove(mention) */
 /**
  * Given the oldText and newText, find the start index, old end index and new end index for the changes
  *
@@ -965,6 +902,7 @@ const findStringsDiffIndexes = (
   return { changeStart, oldChangeEnd, newChangeEnd };
 };
 
+/* @conditional-compile-remove(mention) */
 const htmlStringForMentionSuggestion = (suggestion: Mention): string => {
   const idHTML = ' id ="' + suggestion.id + '"';
   const displayText = suggestion.displayText || '';
@@ -972,6 +910,7 @@ const htmlStringForMentionSuggestion = (suggestion: Mention): string => {
   return '<msft-mention' + idHTML + displayTextHTML + '>' + displayText + '</msft-mention>';
 };
 
+/* @conditional-compile-remove(mention) */
 type TagData = {
   tagType: string; // The type of tag (e.g. msft-mention)
   openTagIdx: number; // Start of the tag relative to the parent content
@@ -983,13 +922,16 @@ type TagData = {
   plainTextEndIndex?: number; // Absolute index of the close tag start should be in plain text
 };
 
+/* @conditional-compile-remove(mention) */
 type HtmlTagType = 'open' | 'close' | 'self-closing';
+/* @conditional-compile-remove(mention) */
 type HtmlTag = {
   content: string;
   startIdx: number;
   type: HtmlTagType;
 };
 
+/* @conditional-compile-remove(mention) */
 /**
  * Parse the text and return the tags and the plain text in one go
  * @param text - The text to parse for HTML tags
@@ -1088,6 +1030,7 @@ const textToTagParser = (text: string, trigger: string): [TagData[], string] => 
   return [tags, plainTextRepresentation];
 };
 
+/* @conditional-compile-remove(mention) */
 const parseOpenTag = (tag: string, startIdx: number): TagData => {
   const tagType = tag
     .substring(1, tag.length - 1)
@@ -1101,6 +1044,7 @@ const parseOpenTag = (tag: string, startIdx: number): TagData => {
   };
 };
 
+/* @conditional-compile-remove(mention) */
 const findNextHtmlTag = (text: string, startIndex: number): HtmlTag | undefined => {
   const tagStartIndex = text.indexOf('<', startIndex);
   if (tagStartIndex === -1) {
@@ -1126,6 +1070,7 @@ const findNextHtmlTag = (text: string, startIndex: number): HtmlTag | undefined 
   };
 };
 
+/* @conditional-compile-remove(mention) */
 const addTag = (tag: TagData, parseStack: TagData[], tags: TagData[]): void => {
   // Add as sub-tag to the parent stack tag, if there is one
   const parentTag = parseStack[parseStack.length - 1];

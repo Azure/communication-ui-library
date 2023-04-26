@@ -3,23 +3,29 @@
 
 import React from 'react';
 import { SendBox } from './SendBox';
-import Enzyme from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
-import { mountWithLocalization, createTestLocale } from './utils/testUtils';
-import { TextField } from '@fluentui/react';
-
-Enzyme.configure({ adapter: new Adapter() });
+import { renderWithLocalization, createTestLocale } from './utils/testUtils';
+import { screen } from '@testing-library/react';
+import { registerIcons } from '@fluentui/react';
 
 describe('SendBox strings should be localizable and overridable', () => {
+  beforeAll(() => {
+    registerIcons({
+      icons: {
+        sendboxsend: <></>
+      }
+    });
+  });
   test('Should localize placeholder text', async () => {
     const testLocale = createTestLocale({ sendBox: { placeholderText: Math.random().toString() } });
-    const component = mountWithLocalization(<SendBox />, testLocale);
-    expect(component.find(TextField).props().placeholder).toBe(testLocale.strings.sendBox.placeholderText);
+    renderWithLocalization(<SendBox />, testLocale);
+    expect((screen.getByRole('textbox') as HTMLTextAreaElement).placeholder).toBe(
+      testLocale.strings.sendBox.placeholderText
+    );
   });
   test('Should override button label with `strings` prop', async () => {
     const testLocale = createTestLocale({ sendBox: { placeholderText: Math.random().toString() } });
     const sendBoxStrings = { placeholderText: Math.random().toString() };
-    const component = mountWithLocalization(<SendBox strings={sendBoxStrings} />, testLocale);
-    expect(component.find(TextField).props().placeholder).toBe(sendBoxStrings.placeholderText);
+    renderWithLocalization(<SendBox strings={sendBoxStrings} />, testLocale);
+    expect((screen.getByRole('textbox') as HTMLTextAreaElement).placeholder).toBe(sendBoxStrings.placeholderText);
   });
 });

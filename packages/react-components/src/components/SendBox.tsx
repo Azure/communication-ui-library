@@ -396,10 +396,6 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
           maxLength={MAXIMUM_LENGTH_OF_MESSAGE}
           /* @conditional-compile-remove(mention) */
           mentionLookupOptions={mentionLookupOptions}
-          /* @conditional-compile-remove(mention) */
-          onMentionAdd={(newTextValue) => {
-            setText(newTextValue);
-          }}
         >
           <VoiceOverButton
             onRenderIcon={onRenderSendIcon}

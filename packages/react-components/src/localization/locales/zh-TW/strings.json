@@ -6,7 +6,6 @@
     "sharingIconLabel": "分享",
     "mutedIconLabel": "已靜音",
     "displayNamePlaceholder": "未命名的參與者",
-    "participantStateConnecting": "撥號中...",
     "participantStateRinging": "撥號中...",
     "participantStateHold": "電話保留"
   },
@@ -54,7 +53,10 @@
     "onSplitButtonAriaLabel": "關閉相機和相機選項",
     "offSplitButtonAriaLabel": "開啟相機和相機選項",
     "cameraActionTurnedOnAnnouncement": "您的相機已開啟",
-    "cameraActionTurnedOffAnnouncement": "您的相機已關閉"
+    "cameraActionTurnedOffAnnouncement": "您的相機已關閉",
+    "onSplitButtonPrimaryActionCamera": "關閉攝影機",
+    "offSplitButtonPrimaryActionCamera": "開啟相機",
+    "cameraPrimaryActionSplitButtonTitle": "使用相機"
   },
   "microphoneButton": {
     "onLabel": "靜音",
@@ -70,7 +72,10 @@
     "onSplitButtonAriaLabel": "將麥克風和音訊選項設為靜音",
     "offSplitButtonAriaLabel": "將麥克風和音訊選項取消靜音",
     "microphoneActionTurnedOnAnnouncement": "您的麥克風已開啟",
-    "microphoneActionTurnedOffAnnouncement": "您的麥克風已關閉"
+    "microphoneActionTurnedOffAnnouncement": "您的麥克風已關閉",
+    "offSplitButtonMicrophonePrimaryAction": "取消麥克風靜音",
+    "onSplitButtonMicrophonePrimaryAction": "將麥克風設為靜音",
+    "micPrimaryActionSplitButtonTitle": "使用麥克風"
   },
   "devicesButton": {
     "label": "裝置",
@@ -90,7 +95,8 @@
     "menuHeader": "在此通話中",
     "participantsListButtonLabel": "{numParticipants} 人員",
     "muteAllButtonLabel": "將所有人設為靜音",
-    "copyInviteLinkButtonLabel": "複製邀請連結"
+    "copyInviteLinkButtonLabel": "複製邀請連結",
+    "copyInviteLinkActionedAriaLabel": "已複製邀請連結"
   },
   "screenShareButton": {
     "onLabel": "停止簡報",
@@ -126,7 +132,9 @@
     "editBoxSubmitButton": "提交",
     "messageReadCount": "讀取者為 {messageReadByCount} / {remoteParticipantsCount}",
     "actionMenuMoreOptions": "更多選項",
-    "downloadFile": "下載檔案"
+    "downloadFile": "下載檔案",
+    "blockedWarningText": "由於組織原則，已刪除此訊息。",
+    "blockedWarningLinkText": "詳細資料"
   },
   "errorBar": {
     "unableToReachChatService": "您處於離線狀態",
@@ -146,11 +154,13 @@
     "callNoSpeakerFound": "找不到喇叭或耳機。請連接音訊裝置以聆聽通話。",
     "callNoMicrophoneFound": "找不到麥克風。請連接音訊輸入裝置。",
     "callMicrophoneAccessDenied": "無法存取麥克風。按一下網址列中的鎖定以授與此網頁的許可權。",
+    "callMicrophoneAccessDeniedSafari": "無法存取麥克風。重新整理頁面以允許許可權，或檢查此瀏覽器的設定，並確認已啟用此網站的許可權。",
     "callMicrophoneMutedBySystem": "系統已將您設為靜音。",
     "callMicrophoneUnmutedBySystem": "您的麥克風已復原，系統已取消您的靜音。",
     "callMacOsMicrophoneAccessDenied": "無法存取麥克風。請在您的 MacOS 隱私權設定中授與麥克風權限。",
     "callLocalVideoFreeze": "網路頻寬不佳。通話中的其他人可能會暫停您的視訊。",
     "callCameraAccessDenied": "無法存取相機。按一下網址列中的鎖定以授與此網頁的許可權。",
+    "callCameraAccessDeniedSafari": "無法存取相機。重新整理頁面以允許許可權，或檢查此瀏覽器的設定，並確認已啟用此網站的許可權。",
     "callCameraAlreadyInUse": "無法存取相機。其他應用程式可能已在使用它。",
     "callVideoStoppedBySystem": "您的影片已遭系統停止。",
     "callVideoRecoveredBySystem": "您的影片已繼續。",
@@ -158,7 +168,9 @@
     "callMacOsScreenShareAccessDenied": "MacOS 正在封鎖螢幕畫面分享。更新您的隱私權設定，以允許此瀏覽器錄製您的螢幕。",
     "dismissButtonAriaLabel": "關閉",
     "failedToJoinCallGeneric": "無法加入通話。",
-    "failedToJoinCallInvalidMeetingLink": "無法加入會議。連結無效。"
+    "failedToJoinCallInvalidMeetingLink": "無法加入會議。連結無效。",
+    "startScreenSharingGeneric": "啟動畫面分享時發生問題。",
+    "cameraFrozenForRemoteParticipants": "通話中的使用者在觀看您的視訊時發生問題。請檢查您的裝置和網路。"
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "您現在正在分享螢幕畫面。",
@@ -167,7 +179,16 @@
     "localVideoCameraSwitcherLabel": "切換相機",
     "localVideoMovementLabel": "可移動的本機影片磚",
     "localVideoSelectedDescription": "已選取 {cameraName}",
-    "displayNamePlaceholder": "未命名的參與者"
+    "displayNamePlaceholder": "未命名的參與者",
+    "fitRemoteParticipantToFrame": "調整成畫面大小",
+    "fillRemoteParticipantFrame": "填滿畫面",
+    "pinParticipantForMe": "為我釘選",
+    "pinParticipantForMeLimitReached": "釘選 (已達到限制)",
+    "unpinParticipantForMe": "取消釘選",
+    "pinParticipantMenuItemAriaLabel": "釘選 {participantName}",
+    "unpinParticipantMenuItemAriaLabel": "取消釘選 {participantName}",
+    "pinnedParticipantAnnouncementAriaLabel": "已釘選 {participantName}",
+    "unpinnedParticipantAnnouncementAriaLabel": "已取消釘選 {participantName}"
   },
   "dialpad": {
     "placeholderText": "輸入電話號碼",
@@ -180,20 +201,102 @@
     "tooltipOffContent": "保留通話"
   },
   "videoTile": {
-    "participantStateConnecting": "撥號中...",
     "participantStateRinging": "撥號中...",
     "participantStateHold": "電話保留"
   },
-  "SitePermissions": {
+  "CameraAndMicrophoneSitePermissionsRequest": {
     "primaryText": "允許 {appName} 使用您的相機和麥克風",
     "secondaryText": "這樣參與者才能看到您並聽到您的聲音。",
     "linkText": "需要協助嗎? 取得疑難排解說明",
-    "primaryButtonText": "允許存取"
+    "primaryButtonText": "在沒有相機和麥克風的情況下繼續",
+    "ariaLabel": "允許相機和麥克風存取"
+  },
+  "CameraSitePermissionsRequest": {
+    "primaryText": "允許 {appName} 使用您的相機",
+    "secondaryText": "這樣參與者才能看到您。",
+    "linkText": "需要協助嗎? 取得疑難排解說明",
+    "primaryButtonText": "繼續但不使用相機",
+    "ariaLabel": "允許存取相機"
+  },
+  "MicrophoneSitePermissionsRequest": {
+    "primaryText": "允許 {appName} 使用您的麥克風",
+    "secondaryText": "這樣參與者才能聽到您的聲音。",
+    "linkText": "需要協助嗎? 取得疑難排解說明",
+    "primaryButtonText": "在沒有麥克風的情況下繼續",
+    "ariaLabel": "允許麥克風存取"
+  },
+  "CameraAndMicrophoneSitePermissionsCheck": {
+    "primaryText": "正在檢查相機和麥克風存取",
+    "secondaryText": "如果系統提示，則允許存取。這樣參與者才能看到您並聽到您的聲音。",
+    "linkText": "需要協助嗎? 取得疑難排解說明",
+    "primaryButtonText": "在沒有相機和麥克風的情況下繼續",
+    "ariaLabel": "正在檢查相機和麥克風存取。如果系統提示，則允許存取。"
+  },
+  "CameraSitePermissionsCheck": {
+    "primaryText": "正在檢查相機存取",
+    "secondaryText": "如果系統提示，則允許存取。這樣參與者才能看到您。",
+    "linkText": "需要協助嗎? 取得疑難排解說明",
+    "primaryButtonText": "在沒有相機的情況下繼續",
+    "ariaLabel": "正在檢查相機存取。如果系統提示，則允許存取。"
+  },
+  "MicrophoneSitePermissionsCheck": {
+    "primaryText": "正在檢查麥克風存取",
+    "secondaryText": "如果系統提示，則允許存取。這樣參與者才能聽到您的聲音。",
+    "linkText": "需要協助嗎? 取得疑難排解說明",
+    "primaryButtonText": "在沒有麥克風的情況下繼續",
+    "ariaLabel": "正在檢查麥克風存取。如果系統提示，則允許存取。"
+  },
+  "CameraAndMicrophoneSitePermissionsDenied": {
+    "primaryText": "無法存取攝影機和麥克風",
+    "secondaryText": "按一下網址列中的鎖定圖示，以授與此網頁的麥克風許可權。可能需要重新整理頁面。",
+    "primaryButtonText": "在沒有相機和麥克風的情況下繼續",
+    "linkText": "需要協助嗎? 取得疑難排解說明"
+  },
+  "CameraAndMicrophoneSitePermissionsDeniedSafari": {
+    "primaryText": "無法存取攝影機和麥克風",
+    "secondaryText": "重新整理頁面以允許許可權，或檢查此瀏覽器的設定，並確認已啟用此網站的權限。",
+    "primaryButtonText": "在沒有相機和麥克風的情況下繼續",
+    "linkText": "需要協助嗎? 取得疑難排解說明"
+  },
+  "CameraSitePermissionsDenied": {
+    "primaryText": "無法存取相機",
+    "secondaryText": "按一下網址列中的鎖定圖示，以授與此網頁的相機許可權。可能需要重新整理頁面。",
+    "primaryButtonText": "在沒有相機的情況下繼續",
+    "linkText": "需要協助嗎? 取得疑難排解說明"
+  },
+  "MicrophoneSitePermissionsDenied": {
+    "primaryText": "無法存取麥克風",
+    "secondaryText": "按一下網址列中的鎖定圖示，以授與此網頁的麥克風許可權。可能需要重新整理頁面。",
+    "primaryButtonText": "在沒有麥克風的情況下繼續",
+    "linkText": "需要協助嗎? 取得疑難排解說明"
+  },
+  "CameraSitePermissionsDeniedSafari": {
+    "primaryText": "無法存取攝影機",
+    "secondaryText": "重新整理頁面以允許許可權，或檢查此瀏覽器的設定，並確認已啟用此網站的權限。",
+    "primaryButtonText": "在沒有相機的情況下繼續",
+    "linkText": "需要協助嗎? 取得疑難排解說明"
+  },
+  "MicrophoneSitePermissionsDeniedSafari": {
+    "primaryText": "無法存取麥克風",
+    "secondaryText": "重新整理頁面以允許許可權，或檢查此瀏覽器的設定，並確認已啟用此網站的權限。",
+    "primaryButtonText": "繼續但不使用麥克風",
+    "linkText": "需要協助嗎? 取得疑難排解說明"
   },
   "UnsupportedBrowser": {
     "primaryText": "不支援瀏覽器",
     "secondaryText": "請使用相容的瀏覽器加入此通話。",
-    "moreHelpLink": "更多協助資訊"
+    "moreHelpLinkText": "查看相容性需求"
+  },
+  "UnsupportedBrowserVersion": {
+    "primaryText": "需要更新瀏覽器",
+    "secondaryText": "為確保通話品質最佳，請更新瀏覽器，然後再次嘗試加入通話。",
+    "moreHelpLinkText": "查看相容性需求",
+    "continueAnywayButtonText": "不更新即開始通話"
+  },
+  "UnsupportedOperatingSystem": {
+    "primaryText": "不支援作業系統",
+    "secondaryText": "請使用具有相容作業系統的裝置加入此通話。",
+    "moreHelpLinkText": "查看相容性需求"
   },
   "BrowserPermissionDenied": {
     "primaryText": "無法使用您的相機或麥克風",
@@ -215,5 +318,9 @@
     "step2DigitText": "2",
     "step3DigitText": "3",
     "step4DigitText": "4"
+  },
+  "VerticalGallery": {
+    "leftNavButtonAriaLabel": "上一頁",
+    "rightNavButtonAriaLabel": "下一頁"
   }
 }
