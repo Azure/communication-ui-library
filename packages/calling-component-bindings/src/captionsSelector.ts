@@ -127,6 +127,7 @@ export const _captionsBannerSelector: _CaptionsBannerSelector = reselect.createS
   }
 );
 
+/* @conditional-compile-remove(close-captions) */
 const captionsComparator = (captionsA: CaptionsInfo, captionsB: CaptionsInfo): number => {
   return (
     captionsA.timestamp.getTime() - captionsB.timestamp.getTime() ||
@@ -134,6 +135,7 @@ const captionsComparator = (captionsA: CaptionsInfo, captionsB: CaptionsInfo): n
   );
 };
 
+/* @conditional-compile-remove(close-captions) */
 const getCaptionsSpeakerIdentifier = (captions: CaptionsInfo): string => {
   return captions.speaker.identifier ? toFlatCommunicationIdentifier(captions.speaker.identifier) : '';
 };
