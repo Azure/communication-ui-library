@@ -6,7 +6,7 @@
 
 /// <reference types="react" />
 
-import { ComponentSlotStyle } from '@fluentui/react-northstar';
+import { ComponentSlotStyle } from '@internal/northstar-wrapper';
 import { IButtonProps } from '@fluentui/react';
 import { IButtonStyles } from '@fluentui/react';
 import { IContextualMenuItem } from '@fluentui/react';

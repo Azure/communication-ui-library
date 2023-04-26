@@ -20053,6 +20053,7 @@ packages:
     dependencies:
       '@fluentui/react': 8.98.8_be457b8870bd20e1d840272f6132c06f
       '@fluentui/react-northstar': 0.61.0_65b6015a24ea6da5ed2beb851eab6eca
+      '@microsoft/api-extractor': 7.18.21
       '@types/react': 16.14.34
       '@types/react-dom': 16.9.17
       eslint: 7.32.0
@@ -20066,10 +20067,12 @@ packages:
       rimraf: 2.7.1
       scheduler: 0.20.2
       typescript: 3.8.3
+      webpack: 5.76.0_webpack-cli@4.10.0
+      webpack-cli: 4.10.0_webpack@5.76.0
     dev: false
     name: '@rush-temp/northstar-wrapper'
     resolution:
-      integrity: sha512-Rmm3J2R2zmWHsOamvLy8PYxvEGcKJ657Wu+5mVnJbFU3gd0TD0QWdyGGhAoT31uFiFRd3nadMDAuKNukNgy1PA==
+      integrity: sha512-3CMYaHnyg0mut9H6BvJT2kd5DcUe6mwFuEeLxPvudFMnp482Y46/uaMbMAdZvUKy4yNnJsUcniqwgOaOFk8Pbg==
       tarball: file:projects/northstar-wrapper.tgz
     version: 0.0.0
   file:projects/react-components.tgz:
@@ -20155,7 +20158,7 @@ packages:
     dev: false
     name: '@rush-temp/react-components'
     resolution:
-      integrity: sha512-8D7ZbOgOrP0qHz+sJPQYggj8C2+pD6iRha1T95uE16kH4hQ8k6W3Oicljdv6/Pgay4FjFtfA1aUsTq8IFQ1mWw==
+      integrity: sha512-dO/S71JZcnWJqojhHDhsJ1UJWy7dB2V1DEQ/BggFBa+LDdaWGO2CeJB5JOT8PRtxZpnvnsQW7MlyYVbzv5//+Q==
       tarball: file:projects/react-components.tgz
     version: 0.0.0
   file:projects/react-composites.tgz:

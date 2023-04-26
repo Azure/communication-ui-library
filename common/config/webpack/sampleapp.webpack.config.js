@@ -22,7 +22,8 @@ const webpackConfig = (sampleAppDir, env, babelConfig) => {
         '@internal/chat-component-bindings': path.resolve(sampleAppDir, '../../packages/chat-component-bindings/src'),
         '@internal/calling-stateful-client': path.resolve(sampleAppDir, '../../packages/calling-stateful-client/src'),
         '@internal/calling-component-bindings': path.resolve(sampleAppDir, '../../packages/calling-component-bindings/src'),
-        '@internal/acs-ui-common': path.resolve(sampleAppDir, '../../packages/acs-ui-common/src')
+        '@internal/acs-ui-common': path.resolve(sampleAppDir, '../../packages/acs-ui-common/src'),
+        '@internal/northstar-wrapper': path.resolve(sampleAppDir, '../../packages/northstar-wrapper/src')
       }
     },
     output: {

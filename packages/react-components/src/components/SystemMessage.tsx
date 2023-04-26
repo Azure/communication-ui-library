@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { IStyle, FontIcon, mergeStyles, Stack, Text } from '@fluentui/react';
-import { ComponentSlotStyle } from '@fluentui/react-northstar';
+import { ComponentSlotStyle } from '@internal/northstar-wrapper';
 import React from 'react';
 import { systemMessageIconStyle } from './styles/SystemMessage.styles';
 

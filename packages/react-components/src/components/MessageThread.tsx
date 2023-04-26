@@ -6,10 +6,10 @@ import {
   Chat,
   ChatItemProps,
   Flex,
-  Ref,
   ShorthandValue,
-  mergeStyles as mergeNorthstarThemes
-} from '@fluentui/react-northstar';
+  mergeStyles as mergeNorthstarThemes,
+  Ref
+} from '@internal/northstar-wrapper';
 import {
   DownIconStyle,
   newMessageButtonContainerStyle,
@@ -39,7 +39,7 @@ import {
   IPersona,
   Theme
 } from '@fluentui/react';
-import { ComponentSlotStyle } from '@fluentui/react-northstar';
+import { ComponentSlotStyle } from '@internal/northstar-wrapper';
 import { LiveAnnouncer } from 'react-aria-live';
 import { delay } from './utils/delay';
 import {

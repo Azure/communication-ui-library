@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { IStyle, mergeStyles } from '@fluentui/react';
-import { Chat, Text, ComponentSlotStyle } from '@fluentui/react-northstar';
+import { Chat, Text, ComponentSlotStyle } from '@internal/northstar-wrapper';
 import { _formatString } from '@internal/acs-ui-common';
 import React, { useCallback, useRef, useState } from 'react';
 import {
