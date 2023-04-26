@@ -1,6 +1,5 @@
-import { SendBox, FluentThemeProvider } from '@azure/communication-react';
+import { Mention, SendBox, FluentThemeProvider } from '@azure/communication-react';
 import React from 'react';
-import { Mention } from '../../../../communication-react/dist/communication-react';
 
 const suggestions: Mention[] = [
   {
