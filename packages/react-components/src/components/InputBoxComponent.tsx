@@ -388,6 +388,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
             //TODO: add onClick event handler to set same as set onBlur
             // TODO: onchange triggers onSelect call, need to handle it
             //TODO: need to check to navigate before/after space correctly in tag
+            // TODO update changing text when in mention, it hsouldn't be a part of mention
             /* @conditional-compile-remove(mention) */
             if (
               e.currentTarget.selectionStart === e.currentTarget.selectionEnd &&
