@@ -95,7 +95,7 @@ export const PeopleAndChatHeader = (props: PeopleAndChatHeaderProps): JSX.Elemen
             role={'tab'}
             disabled={props.disablePeopleButton}
           >
-            {strings.peopleButtonLabel ?? strings.peopleButtonLabel}
+            {strings.peopleButtonLabel}
           </DefaultButton>
         )}
       </Stack.Item>
