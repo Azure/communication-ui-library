@@ -31,7 +31,6 @@
     "@fluentui/react-file-type-icons": "8.8.13",
     "@fluentui/react-hooks": "~8.6.12",
     "@fluentui/react-icons": "~2.0.194",
-    "@fluentui/react-northstar": "0.61.0",
     "@fluentui/react-window-provider": "~2.2.3",
     "@fluentui/react": "~8.98.3",
     "copy-to-clipboard": "~3.3.1",
