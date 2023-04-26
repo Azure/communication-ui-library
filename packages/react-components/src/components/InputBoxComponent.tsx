@@ -534,6 +534,43 @@ export const InputBoxButton = (props: InputBoxButtonProps): JSX.Element => {
 };
 
 /**
+ * Find mention tag if selection is inside of it
+ *
+ * @private
+ */
+const findMentionTagForSelection = (tags: TagData[], selection: number): TagData | undefined => {
+  let mentionTag: TagData | undefined = undefined;
+  for (let i = 0; i < tags.length; i++) {
+    const tag = tags[i];
+    let plainTextEndIndex = 0;
+    if (tag.plainTextEndIndex !== undefined && tag.closeTagIdx !== undefined) {
+      // close tag exists
+      plainTextEndIndex = tag.plainTextEndIndex;
+    } else if (tag.plainTextBeginIndex !== undefined) {
+      //no close tag
+      plainTextEndIndex = tag.plainTextBeginIndex;
+    }
+    if (tag.subTags !== undefined && tag.subTags.length !== 0) {
+      const selectedTag = findMentionTagForSelection(tag.subTags, selection);
+      if (selectedTag !== undefined) {
+        mentionTag = selectedTag;
+        break;
+      }
+    } else if (
+      tag.tagType === 'msft-mention' &&
+      tag.plainTextBeginIndex !== undefined &&
+      tag.plainTextBeginIndex < selection &&
+      selection < plainTextEndIndex
+    ) {
+      console.log('updateHTML selection', selection);
+      mentionTag = tag;
+      break;
+    }
+  }
+  return mentionTag;
+};
+
+/**
  * Go through the text and update it with the changed text
  *
  * @private
