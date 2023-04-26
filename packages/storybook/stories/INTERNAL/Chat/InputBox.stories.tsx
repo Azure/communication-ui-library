@@ -67,7 +67,6 @@ const InputBoxStory = (): JSX.Element => {
         >
           <InputBoxComponent
             textFieldRef={sendTextFieldRef}
-            children={undefined}
             inlineChildren={true}
             textValue={textValue}
             placeholderText="Type a message..."

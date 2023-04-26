@@ -20,10 +20,10 @@ import { SendBoxWithSystemMessageExample } from './snippets/SendBoxWithSystemMes
 const CustomIconExampleText = require('!!raw-loader!./snippets/CustomIcon.snippet.tsx').default;
 const CustomStylingExampleText = require('!!raw-loader!./snippets/CustomStyling.snippet.tsx').default;
 const FileUploadsExampleText = require('!!raw-loader!./snippets/FileUploads.snippet.tsx').default;
+const MentionsExampleText = require('!!raw-loader!./snippets/Mentions.snippet.tsx').default;
 const SendBoxExampleText = require('!!raw-loader!./snippets/SendBox.snippet.tsx').default;
 const SendBoxWithSystemMessageExampleText =
   require('!!raw-loader!./snippets/SendBoxWithSystemMessage.snippet.tsx').default;
-const MentionsExampleText = require('!!raw-loader!./snippets/Mentions.snippet.tsx').default;
 
 const importStatement = `import { SendBox } from '@azure/communication-react';`;
 
