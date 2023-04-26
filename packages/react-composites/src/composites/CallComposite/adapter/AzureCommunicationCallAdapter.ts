@@ -67,6 +67,8 @@ import { VideoBackgroundImage, SelectedVideoBackgroundEffect } from './CallAdapt
 /* @conditional-compile-remove(teams-identity-support) */
 import { TeamsCallAdapter } from './CallAdapter';
 import { getCallCompositePage, IsCallEndedPage, isCameraOn, isValidIdentifier } from '../utils';
+/* @conditional-compile-remove(close-captions) */
+import { _isTeamsMeetingCall } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(video-background-effects) */
 import { startSelectedVideoEffect } from '../utils';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
@@ -293,6 +295,16 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     this.locator = locator;
     this.deviceManager = deviceManager;
     const isTeamsMeeting = 'meetingLink' in this.locator;
+
+    /* @conditional-compile-remove(rooms) */
+    const isRoomsCall = 'roomId' in this.locator;
+    /* @conditional-compile-remove(rooms) */
+    // to prevent showing components that depend on role such as local video tile, camera button, etc. in a rooms call
+    // we set the default roleHint as 'Consumer' when roleHint is undefined since it has the lowest level of permissions
+    if (isRoomsCall && options?.roleHint === undefined) {
+      options = { ...options, roleHint: 'Consumer' };
+    }
+
     this.context = new CallContext(callClient.getState(), isTeamsMeeting, options);
 
     this.context.onCallEnded((endCallData) => this.emitter.emit('callEnded', endCallData));
@@ -752,7 +764,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
 
   /* @conditional-compile-remove(close-captions) */
   private subscribeToCaptionEvents(): void {
-    if (this.call?.state === 'Connected') {
+    if (this.call && this.call.state === 'Connected' && _isTeamsMeetingCall(this.call)) {
       this.call?.feature(Features.TeamsCaptions).on('captionsReceived', this.captionsReceived.bind(this));
       this.call?.feature(Features.TeamsCaptions).on('isCaptionsActiveChanged', this.isCaptionsActiveChanged.bind(this));
       this.call?.off('stateChanged', this.subscribeToCaptionEvents.bind(this));
