@@ -15,6 +15,7 @@ dependencies:
   '@rush-temp/component-examples': file:projects/component-examples.tgz
   '@rush-temp/config': file:projects/config.tgz
   '@rush-temp/fake-backends': file:projects/fake-backends.tgz
+  '@rush-temp/northstar-wrapper': file:projects/northstar-wrapper.tgz
   '@rush-temp/react-components': file:projects/react-components.tgz
   '@rush-temp/react-composites': file:projects/react-composites.tgz
   '@rush-temp/sample-automation-tests': file:projects/sample-automation-tests.tgz
@@ -2364,7 +2365,7 @@ packages:
   /@jest/console/26.6.2:
     dependencies:
       '@jest/types': 26.6.2
-      '@types/node': 14.18.43
+      '@types/node': 18.16.1
       chalk: 4.1.2
       jest-message-util: 26.6.2
       jest-util: 26.6.2
@@ -2381,7 +2382,7 @@ packages:
       '@jest/test-result': 26.6.2
       '@jest/transform': 26.6.2
       '@jest/types': 26.6.2
-      '@types/node': 14.18.43
+      '@types/node': 18.16.1
       ansi-escapes: 4.3.2
       chalk: 4.1.2
       exit: 0.1.2
@@ -2416,7 +2417,7 @@ packages:
       '@jest/test-result': 26.6.2
       '@jest/transform': 26.6.2
       '@jest/types': 26.6.2
-      '@types/node': 14.18.43
+      '@types/node': 18.16.1
       ansi-escapes: 4.3.2
       chalk: 4.1.2
       exit: 0.1.2
@@ -2450,7 +2451,7 @@ packages:
     dependencies:
       '@jest/fake-timers': 26.6.2
       '@jest/types': 26.6.2
-      '@types/node': 14.18.43
+      '@types/node': 18.16.1
       jest-mock: 26.6.2
     dev: false
     engines:
@@ -2461,7 +2462,7 @@ packages:
     dependencies:
       '@jest/types': 26.6.2
       '@sinonjs/fake-timers': 6.0.1
-      '@types/node': 14.18.43
+      '@types/node': 18.16.1
       jest-message-util: 26.6.2
       jest-mock: 26.6.2
       jest-util: 26.6.2
@@ -5060,7 +5061,7 @@ packages:
       integrity: sha512-zeOWb0JGBoVmlQoznvqXbE0tEC/HONsnoUNH19Hc96NFsTAwTXbTqb8FMYkru1F/iqp7a18Ws3nWJvtA1sHD1A==
   /@types/connect-history-api-fallback/1.3.5:
     dependencies:
-      '@types/express-serve-static-core': 4.17.33
+      '@types/express-serve-static-core': 4.17.34
       '@types/node': 14.18.43
     dev: false
     resolution:
@@ -5119,18 +5120,19 @@ packages:
     dev: false
     resolution:
       integrity: sha512-LG4opVs2ANWZ1TJoKc937iMmNstM/d0ae1vNbnBvBhqCSezgVUOzcLCqbI5elV8Vy6WKwKjaqR+zO9VKirBBCA==
-  /@types/express-serve-static-core/4.17.33:
+  /@types/express-serve-static-core/4.17.34:
     dependencies:
       '@types/node': 14.18.43
       '@types/qs': 6.9.7
       '@types/range-parser': 1.2.4
+      '@types/send': 0.17.1
     dev: false
     resolution:
-      integrity: sha512-TPBqmR/HRYI3eC2E5hmiivIzv+bidAfXofM+sbonAGvyDhySGw9/PQZFt2BLOrjUUR++4eJVpx6KnLQK1Fk9tA==
+      integrity: sha512-fvr49XlCGoUj2Pp730AItckfjat4WNb0lb3kfrLWffd+RLeoGAMsq7UOy04PAPtoL01uKwcp6u8nhzpgpDYr3w==
   /@types/express/4.17.17:
     dependencies:
       '@types/body-parser': 1.19.2
-      '@types/express-serve-static-core': 4.17.33
+      '@types/express-serve-static-core': 4.17.34
       '@types/qs': 6.9.7
       '@types/serve-static': 1.15.1
     dev: false
@@ -5152,7 +5154,7 @@ packages:
       integrity: sha512-IO+MJPVhoqz+28h1qLAcBEH2+xHMK6MTyHJc7MTnnYb6wsoLR29POVGJ7LycmVXIqyy/4/2ShP5sUwTXuOwb/w==
   /@types/graceful-fs/4.1.6:
     dependencies:
-      '@types/node': 14.18.43
+      '@types/node': 18.16.1
     dev: false
     resolution:
       integrity: sha512-Sig0SNORX9fdW+bQuTEovKj3uHcUL6LQKbCrrqb1X7J6/ReAbhCXRAhc+SMejhLELFj2QcyuxmUooZ4bt5ReSw==
@@ -5369,6 +5371,13 @@ packages:
     dev: false
     resolution:
       integrity: sha512-5cJ8CB4yAx7BH1oMvdU0Jh9lrEXyPkar6F9G/ERswkCuvP4KQZfZkSjcMbAICCpQTN4OuZn8tz0HiKv9TGZgrQ==
+  /@types/send/0.17.1:
+    dependencies:
+      '@types/mime': 1.3.2
+      '@types/node': 14.18.43
+    dev: false
+    resolution:
+      integrity: sha512-Cwo8LE/0rnvX7kIIa3QHCkcuF21c05Ayb0ZfxPiv0W8VRiZiNW/WuRupHKpqqGVGf7SUA44QSOUKaEd9lIrd/Q==
   /@types/serve-index/1.9.1:
     dependencies:
       '@types/express': 4.17.17
@@ -12194,7 +12203,7 @@ packages:
       '@jest/environment': 26.6.2
       '@jest/fake-timers': 26.6.2
       '@jest/types': 26.6.2
-      '@types/node': 14.18.43
+      '@types/node': 18.16.1
       jest-mock: 26.6.2
       jest-util: 26.6.2
       jsdom: 16.7.0
@@ -12208,7 +12217,7 @@ packages:
       '@jest/environment': 26.6.2
       '@jest/fake-timers': 26.6.2
       '@jest/types': 26.6.2
-      '@types/node': 14.18.43
+      '@types/node': 18.16.1
       jest-mock: 26.6.2
       jest-util: 26.6.2
     dev: false
@@ -12233,7 +12242,7 @@ packages:
     dependencies:
       '@jest/types': 26.6.2
       '@types/graceful-fs': 4.1.6
-      '@types/node': 14.18.43
+      '@types/node': 18.16.1
       anymatch: 3.1.3
       fb-watchman: 2.0.2
       graceful-fs: 4.2.11
@@ -12258,7 +12267,7 @@ packages:
       '@jest/source-map': 26.6.2
       '@jest/test-result': 26.6.2
       '@jest/types': 26.6.2
-      '@types/node': 14.18.43
+      '@types/node': 18.16.1
       chalk: 4.1.2
       co: 4.6.0
       expect: 26.6.2
@@ -12283,7 +12292,7 @@ packages:
       '@jest/source-map': 26.6.2
       '@jest/test-result': 26.6.2
       '@jest/types': 26.6.2
-      '@types/node': 14.18.43
+      '@types/node': 18.16.1
       chalk: 4.1.2
       co: 4.6.0
       expect: 26.6.2
@@ -12353,7 +12362,7 @@ packages:
   /jest-mock/26.6.2:
     dependencies:
       '@jest/types': 26.6.2
-      '@types/node': 14.18.43
+      '@types/node': 18.16.1
     dev: false
     engines:
       node: '>= 10.14.2'
@@ -12409,7 +12418,7 @@ packages:
       '@jest/environment': 26.6.2
       '@jest/test-result': 26.6.2
       '@jest/types': 26.6.2
-      '@types/node': 14.18.43
+      '@types/node': 18.16.1
       chalk: 4.1.2
       emittery: 0.7.2
       exit: 0.1.2
@@ -12436,7 +12445,7 @@ packages:
       '@jest/environment': 26.6.2
       '@jest/test-result': 26.6.2
       '@jest/types': 26.6.2
-      '@types/node': 14.18.43
+      '@types/node': 18.16.1
       chalk: 4.1.2
       emittery: 0.7.2
       exit: 0.1.2
@@ -12533,7 +12542,7 @@ packages:
       integrity: sha512-lrzyR3N8sacTAMeonbqpnSka1dHNux2uk0qqDXVkMv2c/A3wYnvQ4EXuI013Y6+gSKSCxdaczvf4HF0mVXHRdw==
   /jest-serializer/26.6.2:
     dependencies:
-      '@types/node': 14.18.43
+      '@types/node': 18.16.1
       graceful-fs: 4.2.11
     dev: false
     engines:
@@ -12602,7 +12611,7 @@ packages:
     dependencies:
       '@jest/test-result': 26.6.2
       '@jest/types': 26.6.2
-      '@types/node': 14.18.43
+      '@types/node': 18.16.1
       ansi-escapes: 4.3.2
       chalk: 4.1.2
       jest-util: 26.6.2
@@ -12614,7 +12623,7 @@ packages:
       integrity: sha512-WKJob0P/Em2csiVthsI68p6aGKTIcsfjH9Gsx1f0A3Italz43e3ho0geSAVsmj09RWOELP1AZ/DXyJgOgDKxXQ==
   /jest-worker/26.6.2:
     dependencies:
-      '@types/node': 14.18.43
+      '@types/node': 18.16.1
       merge-stream: 2.0.0
       supports-color: 7.2.0
     dev: false
@@ -19887,6 +19896,29 @@ packages:
       integrity: sha512-PjwTlqnh0/p70t2fZJUdKcpWm1Oqc8PH2l9DMIbReazD7MmqlXmBhdp3RIUCwUfrJtndT9VL80Jpv7Hze4QYXg==
       tarball: file:projects/fake-backends.tgz
     version: 0.0.0
+  file:projects/northstar-wrapper.tgz:
+    dependencies:
+      '@fluentui/react': 8.98.8_7b943638ee548db545d8ff56f8d01963
+      '@fluentui/react-northstar': 0.61.0_7f6c0046bdc2511eed5e84523f7080b0
+      '@types/react': 16.14.40
+      '@types/react-dom': 16.9.19
+      eslint: 7.32.0
+      eslint-config-prettier: 6.15.0_eslint@7.32.0
+      eslint-plugin-header: 3.1.1_eslint@7.32.0
+      eslint-plugin-import: 2.22.1_eslint@7.32.0
+      eslint-plugin-prettier: 3.4.1_8142a4287e8e8e0691574dfac8adcedb
+      prettier: 2.3.1
+      react: 16.14.0
+      react-dom: 16.13.1_react@16.14.0
+      rimraf: 2.7.1
+      scheduler: 0.20.2
+      typescript: 3.8.3
+    dev: false
+    name: '@rush-temp/northstar-wrapper'
+    resolution:
+      integrity: sha512-Rmm3J2R2zmWHsOamvLy8PYxvEGcKJ657Wu+5mVnJbFU3gd0TD0QWdyGGhAoT31uFiFRd3nadMDAuKNukNgy1PA==
+      tarball: file:projects/northstar-wrapper.tgz
+    version: 0.0.0
   file:projects/react-components.tgz:
     dependencies:
       '@babel/cli': 7.16.8_@babel+core@7.16.12
@@ -19970,7 +20002,7 @@ packages:
     dev: false
     name: '@rush-temp/react-components'
     resolution:
-      integrity: sha512-LapL/LO5bAqDjrCoV5HCv3p7suZ8uDx+8jTvYH4dhTUuTGSY7WAYr7e65cEIfspRHS0UgeA961AAcxDVHn3TIQ==
+      integrity: sha512-ACt1kj2RBo5XSW3Jj2y56/aEr4lPMQBO6k4eDTmDPmH/VOUoyVFjiGdtvoyrtqg0aS0w+TIl7UnccC3wgpgAgg==
       tarball: file:projects/react-components.tgz
     version: 0.0.0
   file:projects/react-composites.tgz:
@@ -20316,6 +20348,7 @@ specifiers:
   '@rush-temp/component-examples': file:./projects/component-examples.tgz
   '@rush-temp/config': file:./projects/config.tgz
   '@rush-temp/fake-backends': file:./projects/fake-backends.tgz
+  '@rush-temp/northstar-wrapper': file:./projects/northstar-wrapper.tgz
   '@rush-temp/react-components': file:./projects/react-components.tgz
   '@rush-temp/react-composites': file:./projects/react-composites.tgz
   '@rush-temp/sample-automation-tests': file:./projects/sample-automation-tests.tgz
