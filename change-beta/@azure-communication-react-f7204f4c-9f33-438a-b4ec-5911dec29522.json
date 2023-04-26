@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Revert \"[Chat][Feature] Preliminary implementation of _AtMentionFlyout component (#2879)\"",
+  "packageName": "@azure/communication-react",
+  "email": "jiangnanhello@live.com",
+  "dependentChangeType": "patch"
+}
