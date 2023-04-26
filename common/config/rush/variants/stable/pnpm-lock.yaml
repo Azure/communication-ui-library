@@ -15,6 +15,7 @@ dependencies:
   '@rush-temp/component-examples': file:projects/component-examples.tgz
   '@rush-temp/config': file:projects/config.tgz
   '@rush-temp/fake-backends': file:projects/fake-backends.tgz
+  '@rush-temp/northstar-wrapper': file:projects/northstar-wrapper.tgz
   '@rush-temp/react-components': file:projects/react-components.tgz
   '@rush-temp/react-composites': file:projects/react-composites.tgz
   '@rush-temp/sample-automation-tests': file:projects/sample-automation-tests.tgz
@@ -1894,13 +1895,6 @@ packages:
     dev: false
     resolution:
       integrity: sha512-XqPS7l3YoMwxdNlaYF6S2Mp0K3FmVIOIy2K3YkMc+eRxu9wFK6emr2Q/3rBhtG5u/On37NExRT7/5CTLnoi9gw==
-  /@fluentui/dom-utilities/2.2.4:
-    dependencies:
-      '@fluentui/set-version': 8.2.6
-      tslib: 2.4.1
-    dev: false
-    resolution:
-      integrity: sha512-X4fN5zbvAETw9LE8bw9x5otKcpS3A3cB9wn/BookbTD4hkBESx06SzmX/WdabFq7qqbDqbURiQMpmdGUUlLsqw==
   /@fluentui/dom-utilities/2.2.6:
     dependencies:
       '@fluentui/set-version': 8.2.6
@@ -1912,7 +1906,7 @@ packages:
     dependencies:
       '@fluentui/set-version': 8.2.6
       '@fluentui/style-utilities': 8.9.6_20d09e348401b0c6dd91fc14ba93384f
-      '@fluentui/utilities': 8.13.5_20d09e348401b0c6dd91fc14ba93384f
+      '@fluentui/utilities': 8.13.9_20d09e348401b0c6dd91fc14ba93384f
       tslib: 2.4.1
     dev: false
     peerDependencies:
@@ -1922,10 +1916,10 @@ packages:
       integrity: sha512-6yGZcc/fIeT/HDPjnn003TNuC/EUoiZTiyZQyPSSQl5PeOzkmNOqG8nq/l8s+qXHs4uZC/FH081vxPxSwA2qWA==
   /@fluentui/foundation-legacy/8.2.26_20d09e348401b0c6dd91fc14ba93384f:
     dependencies:
-      '@fluentui/merge-styles': 8.5.5
+      '@fluentui/merge-styles': 8.5.7
       '@fluentui/set-version': 8.2.6
       '@fluentui/style-utilities': 8.9.6_20d09e348401b0c6dd91fc14ba93384f
-      '@fluentui/utilities': 8.13.5_20d09e348401b0c6dd91fc14ba93384f
+      '@fluentui/utilities': 8.13.9_20d09e348401b0c6dd91fc14ba93384f
       '@types/react': 16.14.34
       react: 16.14.0
       tslib: 2.4.1
@@ -1941,13 +1935,6 @@ packages:
     dev: false
     resolution:
       integrity: sha512-nx0bQ9B5QtUym9a21ig5eHPt2T6EWaqrleFb37d6ImikP6xVXUHrWQJFuVS1CSg0n63KOPsmh1QvAUfxfmyLhw==
-  /@fluentui/merge-styles/8.5.5:
-    dependencies:
-      '@fluentui/set-version': 8.2.6
-      tslib: 2.4.1
-    dev: false
-    resolution:
-      integrity: sha512-+cyN28iRAn8BWlZkMSEWzXpsJJiy3wWFxdJx5UnvU3iLK1slwog94inJak/BmnQKk3dFXK9vVPtDp2s3l+2/hg==
   /@fluentui/merge-styles/8.5.7:
     dependencies:
       '@fluentui/set-version': 8.2.6
@@ -2033,10 +2020,10 @@ packages:
   /@fluentui/react-focus/8.8.12_20d09e348401b0c6dd91fc14ba93384f:
     dependencies:
       '@fluentui/keyboard-key': 0.4.4
-      '@fluentui/merge-styles': 8.5.5
+      '@fluentui/merge-styles': 8.5.7
       '@fluentui/set-version': 8.2.6
       '@fluentui/style-utilities': 8.9.6_20d09e348401b0c6dd91fc14ba93384f
-      '@fluentui/utilities': 8.13.5_20d09e348401b0c6dd91fc14ba93384f
+      '@fluentui/utilities': 8.13.9_20d09e348401b0c6dd91fc14ba93384f
       '@types/react': 16.14.34
       react: 16.14.0
       tslib: 2.4.1
@@ -2049,8 +2036,8 @@ packages:
   /@fluentui/react-hooks/8.6.15_20d09e348401b0c6dd91fc14ba93384f:
     dependencies:
       '@fluentui/react-window-provider': 2.2.5_20d09e348401b0c6dd91fc14ba93384f
-      '@fluentui/set-version': 8.2.4
-      '@fluentui/utilities': 8.13.5_20d09e348401b0c6dd91fc14ba93384f
+      '@fluentui/set-version': 8.2.6
+      '@fluentui/utilities': 8.13.9_20d09e348401b0c6dd91fc14ba93384f
       '@types/react': 16.14.34
       react: 16.14.0
       tslib: 2.4.1
@@ -2193,15 +2180,15 @@ packages:
       '@fluentui/date-time-utilities': 8.5.4
       '@fluentui/font-icons-mdl2': 8.5.6_20d09e348401b0c6dd91fc14ba93384f
       '@fluentui/foundation-legacy': 8.2.26_20d09e348401b0c6dd91fc14ba93384f
-      '@fluentui/merge-styles': 8.5.5
+      '@fluentui/merge-styles': 8.5.7
       '@fluentui/react-focus': 8.8.12_20d09e348401b0c6dd91fc14ba93384f
       '@fluentui/react-hooks': 8.6.15_20d09e348401b0c6dd91fc14ba93384f
       '@fluentui/react-portal-compat-context': 9.0.4_20d09e348401b0c6dd91fc14ba93384f
       '@fluentui/react-window-provider': 2.2.5_20d09e348401b0c6dd91fc14ba93384f
-      '@fluentui/set-version': 8.2.4
-      '@fluentui/style-utilities': 8.8.5_20d09e348401b0c6dd91fc14ba93384f
-      '@fluentui/theme': 2.6.21_20d09e348401b0c6dd91fc14ba93384f
-      '@fluentui/utilities': 8.13.5_20d09e348401b0c6dd91fc14ba93384f
+      '@fluentui/set-version': 8.2.6
+      '@fluentui/style-utilities': 8.9.6_20d09e348401b0c6dd91fc14ba93384f
+      '@fluentui/theme': 2.6.25_20d09e348401b0c6dd91fc14ba93384f
+      '@fluentui/utilities': 8.13.9_20d09e348401b0c6dd91fc14ba93384f
       '@microsoft/load-themed-styles': 1.10.295
       '@types/react': 16.14.34
       '@types/react-dom': 16.9.17
@@ -2227,12 +2214,6 @@ packages:
       react: '*'
     resolution:
       integrity: sha512-7ua5xD9N6gEq47FZWREeeVzKaYbsthVHC2PiKwsae65GMmyBS35AA7Fxx2AGJmI2j9z7JkMd+qMEjQ2I+poe7w==
-  /@fluentui/set-version/8.2.4:
-    dependencies:
-      tslib: 2.4.1
-    dev: false
-    resolution:
-      integrity: sha512-v12VUrpThYcJESFrnu3LdL7/s957hoSCJ3t8C014Hp2IOmk3dnZRZJymf1k/RAOXztS4w9dF2Zhs8uP31qwcZw==
   /@fluentui/set-version/8.2.6:
     dependencies:
       tslib: 2.4.1
@@ -2245,20 +2226,6 @@ packages:
     dev: false
     resolution:
       integrity: sha512-4oa1apOI0LyMh3BlUAyxA2gc1AezjDqHKVLnoBbwVIQSI1OpA1WCGMuhnfeC4AfV/SzFsDtDPJ5cc+lZPnxSRA==
-  /@fluentui/style-utilities/8.8.5_20d09e348401b0c6dd91fc14ba93384f:
-    dependencies:
-      '@fluentui/merge-styles': 8.5.5
-      '@fluentui/set-version': 8.2.6
-      '@fluentui/theme': 2.6.21_20d09e348401b0c6dd91fc14ba93384f
-      '@fluentui/utilities': 8.13.5_20d09e348401b0c6dd91fc14ba93384f
-      '@microsoft/load-themed-styles': 1.10.295
-      tslib: 2.4.1
-    dev: false
-    peerDependencies:
-      '@types/react': '*'
-      react: '*'
-    resolution:
-      integrity: sha512-qUi+1a2v0nWo3LB4c13Qf81qQH1yO9YHAgfbRNLqs4w7Oie7NDBDkq7UgRmLErpSVEafvlcCZeCSKW5pvSxz5w==
   /@fluentui/style-utilities/8.9.6_20d09e348401b0c6dd91fc14ba93384f:
     dependencies:
       '@fluentui/merge-styles': 8.5.7
@@ -2295,20 +2262,6 @@ packages:
       react-dom: '*'
     resolution:
       integrity: sha512-Lr7560zsXe+FAPhB0EOqhhVi9IxvuhkY9GnPsEW87tsPC9KOP6g/Atw2CpJ+31eYNsqWiNAt8eOLEOT9cU9Jrw==
-  /@fluentui/theme/2.6.21_20d09e348401b0c6dd91fc14ba93384f:
-    dependencies:
-      '@fluentui/merge-styles': 8.5.5
-      '@fluentui/set-version': 8.2.6
-      '@fluentui/utilities': 8.13.5_20d09e348401b0c6dd91fc14ba93384f
-      '@types/react': 16.14.34
-      react: 16.14.0
-      tslib: 2.4.1
-    dev: false
-    peerDependencies:
-      '@types/react': '>=16.8.0 <19.0.0'
-      react: '>=16.8.0 <19.0.0'
-    resolution:
-      integrity: sha512-jqPOo375pt1bQ4WuzP2GP5gfgeBK/PDHUf4+DxDTZ9y0TXp8KxV4jCp5Rq2rnVYlXi51JQ2Y+snFtMDcMTyfRQ==
   /@fluentui/theme/2.6.25_20d09e348401b0c6dd91fc14ba93384f:
     dependencies:
       '@fluentui/merge-styles': 8.5.7
@@ -2323,20 +2276,6 @@ packages:
       react: '>=16.8.0 <19.0.0'
     resolution:
       integrity: sha512-slp+Tk+FEDj6HtZNWzckEMPLZMYfe2bECz4hLj/aq2ok51f2ztVTM8rjjmiJjOAidcTirF/gdYVbayc/5MOKag==
-  /@fluentui/utilities/8.13.5_20d09e348401b0c6dd91fc14ba93384f:
-    dependencies:
-      '@fluentui/dom-utilities': 2.2.4
-      '@fluentui/merge-styles': 8.5.5
-      '@fluentui/set-version': 8.2.6
-      '@types/react': 16.14.34
-      react: 16.14.0
-      tslib: 2.4.1
-    dev: false
-    peerDependencies:
-      '@types/react': '>=16.8.0 <19.0.0'
-      react: '>=16.8.0 <19.0.0'
-    resolution:
-      integrity: sha512-YusKxwTEQmsJidEWxn8blf5ehBmBDMZDrOjQkSX4piCvi/57MfigQZ57L3Bdic8kDKsabVtS1IVMHLZzGy4zcQ==
   /@fluentui/utilities/8.13.9_20d09e348401b0c6dd91fc14ba93384f:
     dependencies:
       '@fluentui/dom-utilities': 2.2.6
@@ -10570,7 +10509,7 @@ packages:
     dependencies:
       bindings: 1.5.0
       nan: 2.17.0
-    deprecated: fsevents 1 will break on node v14+ and could be using insecure binaries. Upgrade to fsevents 2.
+    deprecated: The v1 package contains DANGEROUS / INSECURE binaries. Upgrade to safe fsevents v2
     dev: false
     engines:
       node: '>= 4.0'
@@ -20110,6 +20049,29 @@ packages:
       integrity: sha512-PjwTlqnh0/p70t2fZJUdKcpWm1Oqc8PH2l9DMIbReazD7MmqlXmBhdp3RIUCwUfrJtndT9VL80Jpv7Hze4QYXg==
       tarball: file:projects/fake-backends.tgz
     version: 0.0.0
+  file:projects/northstar-wrapper.tgz:
+    dependencies:
+      '@fluentui/react': 8.98.8_be457b8870bd20e1d840272f6132c06f
+      '@fluentui/react-northstar': 0.61.0_65b6015a24ea6da5ed2beb851eab6eca
+      '@types/react': 16.14.34
+      '@types/react-dom': 16.9.17
+      eslint: 7.32.0
+      eslint-config-prettier: 6.15.0_eslint@7.32.0
+      eslint-plugin-header: 3.1.1_eslint@7.32.0
+      eslint-plugin-import: 2.22.1_eslint@7.32.0
+      eslint-plugin-prettier: 3.4.1_8142a4287e8e8e0691574dfac8adcedb
+      prettier: 2.3.1
+      react: 16.14.0
+      react-dom: 16.13.1_react@16.14.0
+      rimraf: 2.7.1
+      scheduler: 0.20.2
+      typescript: 3.8.3
+    dev: false
+    name: '@rush-temp/northstar-wrapper'
+    resolution:
+      integrity: sha512-Rmm3J2R2zmWHsOamvLy8PYxvEGcKJ657Wu+5mVnJbFU3gd0TD0QWdyGGhAoT31uFiFRd3nadMDAuKNukNgy1PA==
+      tarball: file:projects/northstar-wrapper.tgz
+    version: 0.0.0
   file:projects/react-components.tgz:
     dependencies:
       '@babel/cli': 7.16.8_@babel+core@7.16.12
@@ -20193,7 +20155,7 @@ packages:
     dev: false
     name: '@rush-temp/react-components'
     resolution:
-      integrity: sha512-dXkezZM7hJ1MlDkIWnqnfCizqhkzn+1IptM48NcONVhMTe3qupHwOdubvhMI7socjVzC/jpdPh2aB9eyzwfHjA==
+      integrity: sha512-8D7ZbOgOrP0qHz+sJPQYggj8C2+pD6iRha1T95uE16kH4hQ8k6W3Oicljdv6/Pgay4FjFtfA1aUsTq8IFQ1mWw==
       tarball: file:projects/react-components.tgz
     version: 0.0.0
   file:projects/react-composites.tgz:
@@ -20542,6 +20504,7 @@ specifiers:
   '@rush-temp/component-examples': file:./projects/component-examples.tgz
   '@rush-temp/config': file:./projects/config.tgz
   '@rush-temp/fake-backends': file:./projects/fake-backends.tgz
+  '@rush-temp/northstar-wrapper': file:./projects/northstar-wrapper.tgz
   '@rush-temp/react-components': file:./projects/react-components.tgz
   '@rush-temp/react-composites': file:./projects/react-composites.tgz
   '@rush-temp/sample-automation-tests': file:./projects/sample-automation-tests.tgz
