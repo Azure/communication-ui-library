@@ -67,6 +67,8 @@ import { VideoBackgroundImage, SelectedVideoBackgroundEffect } from './CallAdapt
 /* @conditional-compile-remove(teams-identity-support) */
 import { TeamsCallAdapter } from './CallAdapter';
 import { getCallCompositePage, IsCallEndedPage, isCameraOn, isValidIdentifier } from '../utils';
+/* @conditional-compile-remove(close-captions) */
+import { _isTeamsMeetingCall } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(video-background-effects) */
 import { startSelectedVideoEffect } from '../utils';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
@@ -752,7 +754,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
 
   /* @conditional-compile-remove(close-captions) */
   private subscribeToCaptionEvents(): void {
-    if (this.call?.state === 'Connected') {
+    if (this.call && this.call.state === 'Connected' && _isTeamsMeetingCall(this.call)) {
       this.call?.feature(Features.TeamsCaptions).on('captionsReceived', this.captionsReceived.bind(this));
       this.call?.feature(Features.TeamsCaptions).on('isCaptionsActiveChanged', this.isCaptionsActiveChanged.bind(this));
       this.call?.off('stateChanged', this.subscribeToCaptionEvents.bind(this));
