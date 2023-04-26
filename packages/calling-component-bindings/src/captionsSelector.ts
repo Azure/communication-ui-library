@@ -107,8 +107,7 @@ export const _captionsBannerSelector: _CaptionsBannerSelector = reselect.createS
     const captionsToRender = captions?.filter((captions) => captions.resultType === 'Final');
     const firstPartialCaptions = captions
       ?.filter((captions) => captions.resultType === 'Partial')
-      .sort(captionsComparator)
-      .at(0);
+      .sort(captionsComparator)[0];
 
     firstPartialCaptions && captionsToRender?.push(firstPartialCaptions);
 
