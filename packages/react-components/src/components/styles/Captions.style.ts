@@ -3,6 +3,7 @@
 
 import { mergeStyles } from '@fluentui/react';
 import { _pxToRem } from '@internal/acs-ui-common';
+import { scrollbarStyles } from './Common.style';
 
 /**
  * @private
@@ -32,10 +33,18 @@ export const captionClassName = mergeStyles({
 /**
  * @private
  */
+export const captionsContainerClassName = mergeStyles({
+  margin: 0,
+  padding: 0
+});
+
+/**
+ * @private
+ */
 export const captionContainerClassName = mergeStyles({
   marginTop: _pxToRem(6),
   marginBottom: _pxToRem(6),
-  overflowAnchor: 'none'
+  overflowAnchor: 'auto'
 });
 
 /**
@@ -44,7 +53,8 @@ export const captionContainerClassName = mergeStyles({
 export const captionsBannerClassName = mergeStyles({
   height: _pxToRem(100),
   overflowY: 'auto',
-  overflowX: 'hidden'
+  overflowX: 'hidden',
+  ...scrollbarStyles
 });
 
 /**

@@ -113,10 +113,12 @@ export const _captionsBannerSelector: _CaptionsBannerSelector = reselect.createS
     firstPartialCaptions && captionsToRender?.push(firstPartialCaptions);
 
     const captionsInfo = captionsToRender?.map((c) => {
+      const userId = getCaptionsSpeakerIdentifier(c);
       return {
+        id: c.timestamp.getTime() + userId + c.speaker.displayName,
         displayName: c.speaker.displayName ?? 'Unnamed Participant',
         captionText: c.captionText ?? '',
-        userId: getCaptionsSpeakerIdentifier(c)
+        userId
       };
     });
     return {

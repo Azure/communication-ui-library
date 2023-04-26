@@ -157,6 +157,13 @@ export const errorBarSelector: ErrorBarSelector = createSelector(
     }
 
     appendActiveErrorIfDefined(activeErrorMessages, latestErrors, 'Call.unmute', 'unmuteGeneric');
+    /* @conditional-compile-remove(video-background-effects) */
+    appendActiveErrorIfDefined(
+      activeErrorMessages,
+      latestErrors,
+      'VideoEffectsFeature.startEffects',
+      'unableToStartVideoEffect'
+    );
 
     if (latestErrors['CallAgent.join']?.message === 'CallAgent.join: Invalid meeting link') {
       appendActiveErrorIfDefined(

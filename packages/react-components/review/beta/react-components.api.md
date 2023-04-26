@@ -388,6 +388,7 @@ export interface _CaptionsBannerProps {
 
 // @internal
 export type _CaptionsInfo = {
+    id: string;
     displayName: string;
     captionText: string;
     userId?: string;
@@ -1006,6 +1007,7 @@ export interface ErrorBarStrings {
     stopScreenShareGeneric: string;
     stopVideoGeneric: string;
     unableToReachChatService: string;
+    unableToStartVideoEffect?: string;
     unmuteGeneric: string;
     userNotInChatThread: string;
 }
