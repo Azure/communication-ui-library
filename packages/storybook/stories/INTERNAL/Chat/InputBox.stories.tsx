@@ -82,12 +82,8 @@ const InputBoxStory = (): JSX.Element => {
                 return Promise.resolve(filtered);
               }
             }}
-            onMentionAdd={(newTextValue) => {
-              const newValue = newTextValue ?? '';
-              setTextValue(newValue);
-            }}
             maxLength={0}
-          />
+          ></InputBoxComponent>
         </Stack>
       </div>
     </FluentThemeProvider>
