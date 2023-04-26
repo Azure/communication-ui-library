@@ -164,12 +164,12 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     (suggestions: Mention[]) => {
       setMentionSuggestions(suggestions);
       textFieldRef?.current?.focus();
-      if (!!caretIndex) {
+      if (caretIndex) {
         console.log('updateMentionSuggestions set caret index to ', caretIndex);
         textFieldRef?.current?.setSelectionEnd(caretIndex);
       }
     },
-    [textFieldRef]
+    [textFieldRef, caretIndex]
   );
 
   /* @conditional-compile-remove(mention) */
@@ -214,6 +214,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       inputTextValue,
       currentTriggerStartIndex,
       mentionLookupOptions?.trigger,
+      onChange,
       textValue,
       tagsValue,
       updateMentionSuggestions
