@@ -4,8 +4,6 @@
 import { CallState, DeviceManagerState } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(close-captions) */
 import { CaptionsInfo } from '@internal/calling-stateful-client';
-/* @conditional-compile-remove(video-background-effects) */
-import { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/communication-calling-effects';
 /* @conditional-compile-remove(teams-identity-support) */
 import { TeamsCall } from '@azure/communication-calling';
 /* @conditional-compile-remove(close-captions) */
@@ -120,16 +118,6 @@ export type CallAdapterClientState = {
    * control bar with the CallComposite.
    */
   cameraStatus?: 'On' | 'Off';
-  /* @conditional-compile-remove(video-background-effects) */
-  /**
-   * Default set of background images for background replacement effect.
-   */
-  videoBackgroundImages?: VideoBackgroundImage[];
-  /* @conditional-compile-remove(video-background-effects) */
-  /**
-   * State to track the selected video background effect.
-   */
-  selectedVideoBackgroundEffect?: SelectedVideoBackgroundEffect;
 };
 
 /**
@@ -235,27 +223,6 @@ export type DiagnosticChangedEventListner = (
   event: MediaDiagnosticChangedEvent | NetworkDiagnosticChangedEvent
 ) => void;
 
-/* @conditional-compile-remove(video-background-effects) */
-/**
- * Contains the attibutes of a background image like url, name etc.
- *
- * @beta
- */
-export interface VideoBackgroundImage {
-  /**
-   * key for unique identification of the custom background
-   */
-  key: string;
-  /**
-   * URL of the uploaded background image.
-   */
-  url: string;
-  /**
-   * Image name to be displayed.
-   */
-  tooltipText?: string;
-}
-
 /* @conditional-compile-remove(close-captions) */
 /**
  * Callback for {@link CallAdapterSubscribers} 'captionsReceived' event.
@@ -271,64 +238,6 @@ export type CaptionsReceivedListener = (event: { captionsInfo: CaptionsInfo }) =
  * @beta
  */
 export type IsCaptionsActiveChangedListener = (event: { isActive: boolean }) => void;
-
-/* @conditional-compile-remove(video-background-effects) */
-/**
- * Contains the attibutes of a selected video background effect
- *
- * @beta
- */
-export type SelectedVideoBackgroundEffect =
-  | VideoBackgroundNoneEffect
-  | VideoBackgroundBlurEffect
-  | VideoBackgroundReplacementEffect;
-
-/* @conditional-compile-remove(video-background-effects) */
-/**
- * Contains the attibutes to remove video background effect
- *
- * @beta
- */
-export interface VideoBackgroundNoneEffect {
-  /**
-   * Name of effect to remove video background effect
-   */
-  effectName: 'none';
-}
-
-/* @conditional-compile-remove(video-background-effects) */
-/**
- * Contains the attibutes of the blur video background effect
- *
- * @beta
- */
-export interface VideoBackgroundBlurEffect {
-  /**
-   * Name of effect to blur video background effect
-   */
-  effectName: 'blur';
-}
-
-/* @conditional-compile-remove(video-background-effects) */
-/**
- * Contains the attibutes of a selected replacement video background effect
- *
- * @beta
- */
-export interface VideoBackgroundReplacementEffect {
-  /**
-   * Name of effect to replace video background effect
-   */
-  effectName: 'replacement';
-  /**
-   * key for unique identification of the custom background
-   */
-  effectKey: string;
-  /**
-   * URL of the custom background image.
-   */
-  backgroundImageUrl: string;
-}
 
 /**
  * Functionality for managing the current call.
@@ -481,44 +390,6 @@ export interface CallAdapterCallOperations {
    * Funtion to stop captions
    */
   stopCaptions(): Promise<void>;
-
-  /* @conditional-compile-remove(video-background-effects) */
-  /**
-   * Start the blur video background effect.
-   *
-   * @beta
-   */
-  blurVideoBackground(backgroundBlurConfig?: BackgroundBlurConfig): Promise<void>;
-  /* @conditional-compile-remove(video-background-effects) */
-  /**
-   * Start the video background replacement effect.
-   *
-   * @beta
-   */
-  replaceVideoBackground(backgroundReplacementConfig: BackgroundReplacementConfig): Promise<void>;
-  /* @conditional-compile-remove(video-background-effects) */
-  /**
-   * Stop the video background effect.
-   *
-   * @beta
-   */
-  stopVideoBackgroundEffect(): Promise<void>;
-  /* @conditional-compile-remove(video-background-effects) */
-  /**
-   * Override the background picker images for background replacement effect.
-   *
-   * @param backgroundImages - Array of custom background images.
-   *
-   * @beta
-   */
-  updateBackgroundPickerImages(backgroundImages: VideoBackgroundImage[]): void;
-  /* @conditional-compile-remove(video-background-effects) */
-  /**
-   * Update the selected video background effect.
-   *
-   * @beta
-   */
-  updateSelectedVideoBackgroundEffect(selectedVideoBackground: SelectedVideoBackgroundEffect): void;
 }
 
 /**

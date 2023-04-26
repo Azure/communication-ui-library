@@ -41,8 +41,6 @@ import {
 import { CaptionsInfo } from './CallClientState';
 import { callingStatefulLogger } from './Logger';
 import { CallIdHistory } from './CallIdHistory';
-/* @conditional-compile-remove(video-background-effects) */
-import { LocalVideoStreamVideoEffectsState } from './CallClientState';
 /* @conditional-compile-remove(close-captions) */
 import { convertFromSDKToCaptionInfoState } from './Converter';
 
@@ -270,25 +268,6 @@ export class CallContext {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
         call.localVideoStreams = streams;
-      }
-    });
-  }
-
-  /* @conditional-compile-remove(video-background-effects) */
-  public setCallLocalVideoStreamVideoEffects(
-    callId: string,
-    videoEffects: Partial<LocalVideoStreamVideoEffectsState>
-  ): void {
-    this.modifyState((draft: CallClientState) => {
-      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
-      if (call) {
-        const stream = call.localVideoStreams?.find((i) => i.mediaStreamType === 'Video');
-        if (stream) {
-          stream.videoEffects = {
-            isActive: videoEffects.isActive ?? stream.videoEffects?.isActive ?? false,
-            effectName: videoEffects.effectName ?? stream.videoEffects?.effectName
-          };
-        }
       }
     });
   }
@@ -677,26 +656,6 @@ export class CallContext {
       );
       if (foundIndex !== -1) {
         draft.deviceManager.unparentedViews.splice(foundIndex, 1);
-      }
-    });
-  }
-
-  /* @conditional-compile-remove(video-background-effects) */
-  public setDeviceManagerUnparentedViewVideoEffects(
-    localVideoStream: LocalVideoStreamState,
-    videoEffects: LocalVideoStreamVideoEffectsState
-  ): void {
-    this.modifyState((draft: CallClientState) => {
-      const foundIndex = draft.deviceManager.unparentedViews.findIndex(
-        (stream) =>
-          stream.source.id === localVideoStream.source.id && stream.mediaStreamType === localVideoStream.mediaStreamType
-      );
-      if (foundIndex !== -1) {
-        const draftStream = draft.deviceManager.unparentedViews[foundIndex];
-        draftStream.videoEffects = {
-          isActive: videoEffects.isActive ?? draftStream.videoEffects?.isActive ?? false,
-          effectName: videoEffects.effectName ?? draftStream.videoEffects?.effectName
-        };
       }
     });
   }

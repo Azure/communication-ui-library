@@ -38,8 +38,6 @@ import { CallCompositeOptions } from '../CallComposite/CallComposite';
 /* @conditional-compile-remove(call-readiness) */
 import { DeviceCheckOptions } from '../CallComposite/CallComposite';
 import { drawerContainerStyles } from '../CallComposite/styles/CallComposite.styles';
-/* @conditional-compile-remove(video-background-effects) */
-import { VideoEffectsPane } from '../common/VideoEffectsPane';
 import { CommonCallControlOptions } from '../common/types/CommonCallControlOptions';
 
 /**
@@ -185,16 +183,7 @@ type CallWithChatScreenProps = {
 const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
   const { callWithChatAdapter, fluentTheme, formFactor = 'desktop' } = props;
   const mobileView = formFactor === 'mobile';
-  /* @conditional-compile-remove(video-background-effects) */
-  const [showVideoEffectsPane, setVideoEffectsPane] = useState(false);
 
-  /* @conditional-compile-remove(video-background-effects) */
-  const setShowVideoEffectsPane = useCallback(
-    (showVideoEffectsOptions: boolean): void => {
-      setVideoEffectsPane(showVideoEffectsOptions);
-    },
-    [setVideoEffectsPane]
-  );
   if (!callWithChatAdapter) {
     throw new Error('CallWithChatAdapter is undefined');
   }
@@ -381,15 +370,6 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
               fluentTheme={fluentTheme}
             />
           </Stack.Item>
-          {
-            /* @conditional-compile-remove(video-background-effects) */
-            <CallAdapterProvider adapter={callAdapter}>
-              <VideoEffectsPane
-                showVideoEffectsOptions={showVideoEffectsPane}
-                setshowVideoEffectsOptions={setShowVideoEffectsPane}
-              />
-            </CallAdapterProvider>
-          }
           {chatProps.adapter && callAdapter && hasJoinedCall && (
             <CallWithChatPane
               chatCompositeProps={chatProps}
@@ -433,8 +413,6 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
                 onClickShowDialpad={alternateCallerId ? onClickShowDialpad : undefined}
                 /* @conditional-compile-remove(close-captions) */
                 isCaptionsSupported={isTeamsCall && hasJoinedCall}
-                /* @conditional-compile-remove(video-background-effects) */
-                onShowVideoEffectsPicker={setShowVideoEffectsPane}
                 rtl={props.rtl}
               />
             </Stack.Item>

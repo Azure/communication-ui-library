@@ -17,8 +17,6 @@ import { useSwitchableFluentTheme } from '../theming/SwitchableFluentThemeProvid
 import { createAutoRefreshingCredential } from '../utils/credential';
 import { WEB_APP_TITLE } from '../utils/constants';
 import { useIsMobile } from '../utils/useIsMobile';
-/* @conditional-compile-remove(video-background-effects) */
-import { AzureCommunicationCallAdapterOptions } from '@azure/communication-react';
 
 export interface CallScreenProps {
   token: string;
@@ -38,48 +36,6 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     locator,
     /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId
   } = props;
-
-  /* @conditional-compile-remove(video-background-effects) */
-  const callAdapterOptions: AzureCommunicationCallAdapterOptions = useMemo(() => {
-    const videoBackgroundImages = [
-      {
-        key: 'ab1',
-        url: '/backgrounds/abstract1.jpg',
-        tooltipText: 'Custom Background'
-      },
-      {
-        key: 'ab2',
-        url: '/backgrounds/abstract2.jpg',
-        tooltipText: 'Custom Background'
-      },
-      {
-        key: 'ab3',
-        url: '/backgrounds/abstract3.jpg',
-        tooltipText: 'Custom Background'
-      },
-      {
-        key: 'ab4',
-        url: '/backgrounds/room1.jpg',
-        tooltipText: 'Custom Background'
-      },
-      {
-        key: 'ab5',
-        url: '/backgrounds/room2.jpg',
-        tooltipText: 'Custom Background'
-      },
-      {
-        key: 'ab6',
-        url: '/backgrounds/room3.jpg',
-        tooltipText: 'Custom Background'
-      },
-      {
-        key: 'ab7',
-        url: '/backgrounds/room4.jpg',
-        tooltipText: 'Custom Background'
-      }
-    ];
-    return { videoBackgroundImages: videoBackgroundImages };
-  }, []);
 
   // Disables pull down to refresh. Prevents accidental page refresh when scrolling through chat messages
   // Another alternative: set body style touch-action to 'none'. Achieves same result.
@@ -132,8 +88,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
       credential,
       endpoint,
       locator,
-      /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
-      /* @conditional-compile-remove(video-background-effects) */ callAdapterOptions
+      /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId
     },
     afterAdapterCreate
   );

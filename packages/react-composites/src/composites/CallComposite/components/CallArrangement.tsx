@@ -56,8 +56,6 @@ import { getPage } from '../selectors/baseSelectors';
 /* @conditional-compile-remove(close-captions) */
 import { getCallStatus, getIsTeamsCall } from '../selectors/baseSelectors';
 import { drawerContainerStyles } from '../styles/CallComposite.styles';
-/* @conditional-compile-remove(video-background-effects) */
-import { VideoEffectsPane } from '../../common/VideoEffectsPane';
 
 /**
  * @private
@@ -134,17 +132,6 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
       placeholderText: callWithChatStrings.dtmfDialpadPlaceholderText
     }),
     [callWithChatStrings]
-  );
-
-  /* @conditional-compile-remove(video-background-effects) */
-  const [showVideoEffectsPane, setVideoEffectsPane] = useState(false);
-
-  /* @conditional-compile-remove(video-background-effects) */
-  const setShowVideoEffectsPane = useCallback(
-    (showVideoEffectsOptions: boolean): void => {
-      setVideoEffectsPane(showVideoEffectsOptions);
-    },
-    [setVideoEffectsPane]
   );
 
   const [showDrawer, setShowDrawer] = useState(false);
@@ -277,8 +264,6 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                     onMoreButtonClicked={onMoreButtonClicked}
                     /* @conditional-compile-remove(close-captions) */
                     isCaptionsSupported={isTeamsCall && hasJoinedCall}
-                    /* @conditional-compile-remove(video-background-effects) */
-                    onShowVideoEffectsPicker={setShowVideoEffectsPane}
                   />
                 )}
               </Stack.Item>
@@ -345,13 +330,6 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
               callPaneContent()
             }
           </Stack>
-          {
-            /* @conditional-compile-remove(video-background-effects) */
-            <VideoEffectsPane
-              showVideoEffectsOptions={showVideoEffectsPane}
-              setshowVideoEffectsOptions={setShowVideoEffectsPane}
-            />
-          }
         </Stack>
       </Stack>
     </div>

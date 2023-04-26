@@ -49,10 +49,6 @@ import { CommunicationUserIdentifier, PhoneNumberIdentifier } from '@azure/commu
 import { CommunicationIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(close-captions) */
 import { CaptionsReceivedListener, IsCaptionsActiveChangedListener } from '../../CallComposite/adapter/CallAdapter';
-/* @conditional-compile-remove(video-background-effects) */
-import { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/communication-calling-effects';
-/* @conditional-compile-remove(video-background-effects) */
-import { VideoBackgroundImage, SelectedVideoBackgroundEffect } from '../../CallComposite';
 
 /**
  * Functionality for managing the current call with chat.
@@ -373,44 +369,6 @@ export interface CallWithChatAdapterManagement {
    * Funtion to stop captions
    */
   stopCaptions(): Promise<void>;
-
-  /* @conditional-compile-remove(video-background-effects) */
-  /**
-   * Start the blur video background effect.
-   *
-   * @beta
-   */
-  blurVideoBackground(backgroundBlurConfig?: BackgroundBlurConfig): Promise<void>;
-  /* @conditional-compile-remove(video-background-effects) */
-  /**
-   * Start the video background replacement effect.
-   *
-   * @beta
-   */
-  replaceVideoBackground(backgroundReplacementConfig: BackgroundReplacementConfig): Promise<void>;
-  /* @conditional-compile-remove(video-background-effects) */
-  /**
-   * Stop the video background effect.
-   *
-   * @beta
-   */
-  stopVideoBackgroundEffect(): Promise<void>;
-  /* @conditional-compile-remove(video-background-effects) */
-  /**
-   * Override the background picker images for background replacement effect.
-   *
-   * @param backgroundImages - Array of custom background images.
-   *
-   * @beta
-   */
-  updateBackgroundPickerImages(backgroundImages: VideoBackgroundImage[]): void;
-  /* @conditional-compile-remove(video-background-effects) */
-  /**
-   * Update the selected video background effect
-   *
-   * @beta
-   */
-  updateSelectedVideoBackgroundEffect(selectedVideoBackground: SelectedVideoBackgroundEffect): void;
 }
 
 /**
