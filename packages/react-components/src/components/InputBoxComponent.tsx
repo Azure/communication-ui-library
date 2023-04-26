@@ -28,8 +28,6 @@ import {
 
 import { isDarkThemed } from '../theming/themeUtils';
 import { useTheme } from '../theming';
-/* @conditional-compile-remove(at-mention) */
-import { AtMentionLookupOptions } from './AtMentionFlyout';
 
 /**
  * @private
@@ -66,8 +64,6 @@ type InputBoxComponentProps = {
   disabled?: boolean;
   styles?: InputBoxStylesProps;
   autoFocus?: 'sendBoxTextField';
-  /* @conditional-compile-remove(at-mention) */
-  atMentionLookupOptions?: AtMentionLookupOptions;
 };
 
 /**
