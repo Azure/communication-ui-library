@@ -15,8 +15,7 @@ module.exports = {
   },
   externals: {
     react: 'react',
-    'react-dom': 'reactDOM',
-    'react-router': 'ReactRouter'
+    'react-dom': 'react-dom'
   },
   experiments: {
     outputModule: true
