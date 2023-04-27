@@ -1,12 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 import React, { useEffect, useRef, useState, useCallback } from 'react';
-import { FocusZone, Persona, PersonaSize, Stack, mergeStyles, useTheme } from '@fluentui/react';
+import { Persona, PersonaSize, Stack, mergeStyles, useTheme } from '@fluentui/react';
 import {
   mentionPopoverContainerStyle,
   headerStyleThemed,
   suggestionListStyle,
-  suggestionListContainerStyle,
   suggestionItemStackStyle,
   suggestionItemWrapperStyle
 } from './styles/MentionPopover.style';
@@ -24,6 +23,10 @@ export interface _MentionPopoverProps {
    * Array of mention suggestions used to populate the suggestion list
    */
   suggestions: Mention[];
+  /**
+   * Index of the currently focused suggestion, if any
+   */
+  activeSuggestionIndex?: number;
   /**
    * Optional string used as mention popover's title.
    * @defaultValue `Suggestions`
@@ -53,7 +56,11 @@ export interface _MentionPopoverProps {
   /**
    * Optional callback to render an item of the mention suggestions list.
    */
-  onRenderSuggestionItem?: (suggestion: Mention, onSuggestionSelected: (suggestion: Mention) => void) => JSX.Element;
+  onRenderSuggestionItem?: (
+    suggestion: Mention,
+    onSuggestionSelected: (suggestion: Mention) => void,
+    isFocused: boolean
+  ) => JSX.Element;
 }
 
 /**
@@ -130,6 +137,7 @@ export const _MentionPopover = (props: _MentionPopoverProps): JSX.Element => {
 
   const {
     suggestions,
+    activeSuggestionIndex: suggestionFocusIndex,
     title = 'Suggestions' /* TODO: Localization of the default */,
     target,
     targetPositionOffset,
@@ -216,9 +224,10 @@ export const _MentionPopover = (props: _MentionPopoverProps): JSX.Element => {
 
   const defaultOnRenderSuggestionItem = (
     suggestion: Mention,
-    onSuggestionSelected: (suggestion: Mention) => void
+    onSuggestionSelected: (suggestion: Mention) => void,
+    focused: boolean
   ): JSX.Element => {
-    const isSuggestionHovered = hoveredSuggestion?.id === suggestion.id;
+    const isSuggestionHovered = focused || hoveredSuggestion?.id === suggestion.id;
 
     return (
       <div
@@ -259,19 +268,18 @@ export const _MentionPopover = (props: _MentionPopoverProps): JSX.Element => {
         <Stack.Item styles={headerStyleThemed(theme)} aria-label={title}>
           {title}
         </Stack.Item>
-        <FocusZone className={suggestionListContainerStyle}>
-          <Stack
-            /* @conditional-compile-remove(mention) */
-            data-ui-id={ids.mentionSuggestionList}
-            className={suggestionListStyle}
-          >
-            {suggestions.map((suggestion) =>
-              onRenderSuggestionItem
-                ? onRenderSuggestionItem(suggestion, onSuggestionSelected)
-                : defaultOnRenderSuggestionItem(suggestion, onSuggestionSelected)
-            )}
-          </Stack>
-        </FocusZone>
+        <Stack
+          /* @conditional-compile-remove(mention) */
+          data-ui-id={ids.mentionSuggestionList}
+          className={suggestionListStyle}
+        >
+          {suggestions.map((suggestion, index) => {
+            const focused = index === suggestionFocusIndex;
+            return onRenderSuggestionItem
+              ? onRenderSuggestionItem(suggestion, onSuggestionSelected, focused)
+              : defaultOnRenderSuggestionItem(suggestion, onSuggestionSelected, focused);
+          })}
+        </Stack>
       </Stack>
     </div>
   );

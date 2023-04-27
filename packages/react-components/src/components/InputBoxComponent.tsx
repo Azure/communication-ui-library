@@ -104,6 +104,9 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
   /* @conditional-compile-remove(mention) */
   // Current suggestion list, provided by the callback
   const [mentionSuggestions, setMentionSuggestions] = useState<Mention[]>([]);
+  /* @conditional-compile-remove(mention) */
+  // Current suggestion list, provided by the callback
+  const [activeSuggestionIndex, setActiveSuggestionIndex] = useState<number | undefined>(undefined);
 
   /* @conditional-compile-remove(mention) */
   // Index of the current trigger character in the text field
@@ -155,13 +158,45 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       if (ev.nativeEvent.isComposing || ev.nativeEvent.keyCode === 229 || ev.nativeEvent.which === 229) {
         return;
       }
+      if (ev.key === 'ArrowUp') {
+        ev.preventDefault();
+        /* @conditional-compile-remove(mention) */
+        if (mentionSuggestions.length > 0) {
+          const newSuggestionFocusIndex =
+            activeSuggestionIndex === undefined
+              ? mentionSuggestions.length - 1
+              : Math.max(activeSuggestionIndex - 1, 0);
+          setActiveSuggestionIndex(newSuggestionFocusIndex);
+        }
+      } else if (ev.key === 'ArrowDown') {
+        ev.preventDefault();
+        /* @conditional-compile-remove(mention) */
+        if (mentionSuggestions.length > 0) {
+          const newSuggestionFocusIndex =
+            activeSuggestionIndex === undefined
+              ? 0
+              : Math.min(activeSuggestionIndex + 1, mentionSuggestions.length - 1);
+          setActiveSuggestionIndex(newSuggestionFocusIndex);
+        }
+      }
       if (ev.key === 'Enter' && (ev.shiftKey === false || !supportNewline)) {
         ev.preventDefault();
-        onEnterKeyDown && onEnterKeyDown();
+
+        // If we are looking up a mention, select the focused suggestion
+        /* @conditional-compile-remove(mention) */
+        if (mentionSuggestions.length > 0 && activeSuggestionIndex !== undefined) {
+          const selectedMention = mentionSuggestions[activeSuggestionIndex];
+          if (selectedMention) {
+            onSuggestionSelected(selectedMention);
+            return;
+          }
+        } else {
+          onEnterKeyDown && onEnterKeyDown();
+        }
       }
       onKeyDown && onKeyDown(ev);
     },
-    [onEnterKeyDown, onKeyDown, supportNewline]
+    [onEnterKeyDown, onKeyDown, supportNewline, mentionSuggestions, activeSuggestionIndex]
   );
 
   /* @conditional-compile-remove(mention) */
@@ -170,7 +205,6 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       setMentionSuggestions(suggestions);
       textFieldRef?.current?.focus();
       if (caretIndex) {
-        console.log('updateMentionSuggestions set caret index to ', caretIndex);
         textFieldRef?.current?.setSelectionEnd(caretIndex);
       }
     },
@@ -186,9 +220,6 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       } else if (selectionEnd > inputTextValue.length) {
         selectionEnd = inputTextValue.length;
       }
-      console.log('selectionStart', textFieldRef?.current?.selectionStart);
-      console.log('selectionEnd', selectionEnd);
-
       const oldPlainText = inputTextValue;
       const mention = htmlStringForMentionSuggestion(suggestion);
 
@@ -211,6 +242,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       setCaretIndex(selectionEnd + suggestion.displayText.length);
       setCurrentTriggerStartIndex(-1);
       updateMentionSuggestions([]);
+      setActiveSuggestionIndex(undefined);
       setInputTextValue(newPlainText);
       onChange && onChange(null, updatedHTML);
     },
@@ -230,6 +262,11 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
   const debouncedQueryUpdate = useRef(
     debounce(async (query: string) => {
       const suggestions = (await mentionLookupOptions?.onQueryUpdated(query)) ?? [];
+      if (suggestions.length === 0) {
+        setActiveSuggestionIndex(undefined);
+      } else if (activeSuggestionIndex === undefined) {
+        setActiveSuggestionIndex(0);
+      }
       updateMentionSuggestions(suggestions);
     }, 500)
   ).current;
@@ -407,6 +444,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
           /* @conditional-compile-remove(mention) */ mentionSuggestions.length > 0 && (
             <_MentionPopover
               suggestions={mentionSuggestions}
+              activeSuggestionIndex={activeSuggestionIndex}
               target={inputBoxRef}
               targetPositionOffset={caretPosition}
               onRenderSuggestionItem={mentionLookupOptions?.onRenderSuggestionItem}
