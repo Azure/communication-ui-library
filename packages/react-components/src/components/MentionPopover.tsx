@@ -59,7 +59,7 @@ export interface _MentionPopoverProps {
   onRenderSuggestionItem?: (
     suggestion: Mention,
     onSuggestionSelected: (suggestion: Mention) => void,
-    isFocused: boolean
+    isActive: boolean
   ) => JSX.Element;
 }
 
@@ -137,7 +137,7 @@ export const _MentionPopover = (props: _MentionPopoverProps): JSX.Element => {
 
   const {
     suggestions,
-    activeSuggestionIndex: suggestionFocusIndex,
+    activeSuggestionIndex,
     title = 'Suggestions' /* TODO: Localization of the default */,
     target,
     targetPositionOffset,
@@ -155,6 +155,7 @@ export const _MentionPopover = (props: _MentionPopoverProps): JSX.Element => {
 
   const [position, setPosition] = useState<Position>({ left: 0 });
   const [hoveredSuggestion, setHoveredSuggestion] = useState<Mention | undefined>(undefined);
+  const [changedSelection, setChangedSelection] = useState<boolean | undefined>(undefined); // Selection UI as per teams
 
   const dismissPopoverWhenClickingOutside = useCallback(
     (e: MouseEvent) => {
@@ -165,6 +166,14 @@ export const _MentionPopover = (props: _MentionPopoverProps): JSX.Element => {
     },
     [onDismiss]
   );
+
+  useEffect(() => {
+    if (changedSelection === undefined) {
+      setChangedSelection(false);
+    } else if (changedSelection === false) {
+      setChangedSelection(true);
+    }
+  }, [activeSuggestionIndex]);
 
   useEffect(() => {
     window && window.addEventListener('click', dismissPopoverWhenClickingOutside);
@@ -225,10 +234,8 @@ export const _MentionPopover = (props: _MentionPopoverProps): JSX.Element => {
   const defaultOnRenderSuggestionItem = (
     suggestion: Mention,
     onSuggestionSelected: (suggestion: Mention) => void,
-    focused: boolean
+    active: boolean
   ): JSX.Element => {
-    const isSuggestionHovered = focused || hoveredSuggestion?.id === suggestion.id;
-
     return (
       <div
         data-is-focusable={true}
@@ -243,7 +250,14 @@ export const _MentionPopover = (props: _MentionPopoverProps): JSX.Element => {
         }}
         className={suggestionItemWrapperStyle(theme)}
       >
-        <Stack horizontal className={suggestionItemStackStyle(theme, isSuggestionHovered)}>
+        <Stack
+          horizontal
+          className={suggestionItemStackStyle(
+            theme,
+            hoveredSuggestion?.id === suggestion.id,
+            (changedSelection ?? false) && active
+          )}
+        >
           {personaRenderer(suggestion.displayText)}
         </Stack>
       </div>
@@ -274,10 +288,10 @@ export const _MentionPopover = (props: _MentionPopoverProps): JSX.Element => {
           className={suggestionListStyle}
         >
           {suggestions.map((suggestion, index) => {
-            const focused = index === suggestionFocusIndex;
+            const active = index === activeSuggestionIndex;
             return onRenderSuggestionItem
-              ? onRenderSuggestionItem(suggestion, onSuggestionSelected, focused)
-              : defaultOnRenderSuggestionItem(suggestion, onSuggestionSelected, focused);
+              ? onRenderSuggestionItem(suggestion, onSuggestionSelected, active)
+              : defaultOnRenderSuggestionItem(suggestion, onSuggestionSelected, active);
           })}
         </Stack>
       </Stack>
