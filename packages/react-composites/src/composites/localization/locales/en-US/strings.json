@@ -24,6 +24,7 @@
     "defaultPlaceHolder": "Select an option",
     "dismissSidePaneButtonLabel": "Close",
     "effects": "Effects",
+    "unableToStartVideoEffect": "Unable to apply video effect.",
     "blurBackgroundEffectButtonLabel": "Blur",
     "blurBackgroundTooltip": "Blur Background",
     "removeBackgroundEffectButtonLabel": "None",
