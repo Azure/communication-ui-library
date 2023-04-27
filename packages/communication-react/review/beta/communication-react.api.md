@@ -209,6 +209,7 @@ export type AzureCommunicationCallWithChatAdapterFromClientArgs = {
     callClient: StatefulCallClient;
     chatClient: StatefulChatClient;
     chatThreadClient: ChatThreadClient;
+    options?: AzureCommunicationChatAdapterOptions;
 };
 
 // @public
@@ -218,6 +219,11 @@ export type AzureCommunicationChatAdapterArgs = {
     displayName: string;
     credential: CommunicationTokenCredential;
     threadId: string;
+};
+
+// @beta
+export type AzureCommunicationChatAdapterOptions = {
+    credential?: CommunicationTokenCredential;
 };
 
 // @public
@@ -1344,11 +1350,6 @@ export type CaptionsReceivedListener = (event: {
 // @public
 export type ChatAdapter = ChatAdapterThreadManagement & AdapterState<ChatAdapterState> & Disposable & ChatAdapterSubscribers & FileUploadAdapter;
 
-// @beta
-export type ChatAdapterOptions = {
-    credential?: CommunicationTokenCredential;
-};
-
 // @public
 export type ChatAdapterState = ChatAdapterUiState & ChatCompositeClientState;
 
@@ -1921,7 +1922,7 @@ export const createAzureCommunicationCallAdapterFromClient: (callClient: Statefu
 export const createAzureCommunicationCallWithChatAdapter: ({ userId, displayName, credential, endpoint, locator, alternateCallerId, callAdapterOptions }: AzureCommunicationCallWithChatAdapterArgs) => Promise<CallWithChatAdapter>;
 
 // @public
-export const createAzureCommunicationCallWithChatAdapterFromClients: ({ callClient, callAgent, callLocator, chatClient, chatThreadClient }: AzureCommunicationCallWithChatAdapterFromClientArgs) => Promise<CallWithChatAdapter>;
+export function createAzureCommunicationCallWithChatAdapterFromClients(callClient: StatefulCallClient, callAgent: CallAgent, callLocator: CallAdapterLocator | TeamsMeetingLinkLocator, chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient, options?: AzureCommunicationChatAdapterOptions): Promise<CallWithChatAdapter>;
 
 // @public
 export const createAzureCommunicationChatAdapter: ({ endpoint: endpointUrl, userId, displayName, credential, threadId }: AzureCommunicationChatAdapterArgs) => Promise<ChatAdapter>;
