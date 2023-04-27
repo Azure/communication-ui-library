@@ -55,7 +55,7 @@ import {
   mergeChatAdapterStateIntoCallWithChatAdapterState
 } from '../state/CallWithChatAdapterState';
 import {
-  ChatAdapterOptions,
+  AzureCommunicationChatAdapterOptions,
   createAzureCommunicationChatAdapter,
   createAzureCommunicationChatAdapterFromClient
 } from '../../ChatComposite/adapter/AzureCommunicationChatAdapter';
@@ -838,7 +838,7 @@ export const useAzureCommunicationCallWithChatAdapter = (
  * Configuration options to include when creating CallWithChatAdapter.
  * @beta
  */
-export type CallWithChatOptions = ChatAdapterOptions;
+export type CallWithChatOptions = AzureCommunicationChatAdapterOptions;
 
 /**
  * Arguments for {@link createAzureCommunicationCallWithChatAdapterFromClient}
@@ -852,7 +852,7 @@ export type AzureCommunicationCallWithChatAdapterFromClientArgs = {
   chatClient: StatefulChatClient;
   chatThreadClient: ChatThreadClient;
   /* @conditional-compile-remove(teams-inline-images) */
-  options?: CallWithChatOptions;
+  options?: AzureCommunicationChatAdapterOptions;
 };
 
 /**
@@ -870,7 +870,7 @@ export async function createAzureCommunicationCallWithChatAdapterFromClients(
   chatClient: StatefulChatClient,
   chatThreadClient: ChatThreadClient,
   /* @conditional-compile-remove(teams-inline-images) */
-  options?: CallWithChatOptions
+  options?: AzureCommunicationChatAdapterOptions
 ): Promise<CallWithChatAdapter> {
   const createCallAdapterPromise = createAzureCommunicationCallAdapterFromClient(callClient, callAgent, callLocator);
   const createChatAdapterPromise = createAzureCommunicationChatAdapterFromClient(
