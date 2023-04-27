@@ -533,20 +533,20 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
               // console.log('updateHTML onSelect selectionDirection', e.currentTarget.selectionDirection);
             }
           }}
-          onMouseMove={(e) => {
-            console.log('!!!!not equal onMouseMove');
-            // for handling mouse actions
-            /* @conditional-compile-remove(mention) */
-            // console.log('updateHTML onMouseMove selectionStart', e.currentTarget.selectionStart);
-            // console.log('updateHTML onMouseMove selectionEnd', e.currentTarget.selectionEnd);
-            // console.log('updateHTML onMouseMove selectionDirection', e.currentTarget.selectionDirection);
-            // if (e.currentTarget.selectionStart !== e.currentTarget.selectionEnd) {
-            //   console.log('updateHTML onMouseMove e.currentTarget.selectionStart !== e.currentTarget.selectionEnd');
-            // } else {
-            //   console.log('updateHTML onMouseMove e.currentTarget.selectionStart === e.currentTarget.selectionEnd');
-            // }
-            updateSelectionIndexesWithMentionIfNeeded(e);
-          }}
+          // onMouseMove={(e) => {
+          //   console.log('!!!!not equal onMouseMove');
+          // for handling mouse actions
+          /* @conditional-compile-remove(mention) */
+          // console.log('updateHTML onMouseMove selectionStart', e.currentTarget.selectionStart);
+          // console.log('updateHTML onMouseMove selectionEnd', e.currentTarget.selectionEnd);
+          // console.log('updateHTML onMouseMove selectionDirection', e.currentTarget.selectionDirection);
+          // if (e.currentTarget.selectionStart !== e.currentTarget.selectionEnd) {
+          //   console.log('updateHTML onMouseMove e.currentTarget.selectionStart !== e.currentTarget.selectionEnd');
+          // } else {
+          //   console.log('updateHTML onMouseMove e.currentTarget.selectionStart === e.currentTarget.selectionEnd');
+          // }
+          // updateSelectionIndexesWithMentionIfNeeded(e);
+          // }}
           autoComplete="off"
           onKeyDown={onTextFieldKeyDown}
           styles={mergedTextFieldStyle}
