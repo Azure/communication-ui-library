@@ -5,18 +5,20 @@ import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 import {
   toFlatCommunicationIdentifier,
-  useAzureCommunicationCallWithChatAdapter,
   CallAndChatLocator,
   CallWithChatAdapterState,
   CallWithChatComposite,
-  CallWithChatAdapter
+  CallWithChatAdapter,
+  createStatefulCallClient,
+  createAzureCommunicationCallWithChatAdapterFromClients
 } from '@azure/communication-react';
 import { Spinner } from '@fluentui/react';
-import React, { useCallback, useEffect, useMemo, useRef } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useSwitchableFluentTheme } from '../theming/SwitchableFluentThemeProvider';
 import { createAutoRefreshingCredential } from '../utils/credential';
 import { WEB_APP_TITLE } from '../utils/constants';
 import { useIsMobile } from '../utils/useIsMobile';
+import { createStatefulChatClient } from '@azure/communication-react';
 
 export interface CallScreenProps {
   token: string;
@@ -81,17 +83,41 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     [callIdRef]
   );
 
-  const adapter = useAzureCommunicationCallWithChatAdapter(
-    {
-      userId,
-      displayName,
-      credential,
-      endpoint,
-      locator,
-      /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId
-    },
-    afterAdapterCreate
-  );
+  const getChatThreadFromTeamsLink = (teamsMeetingLink: string): string => {
+    // Get the threadId from the url - this also contains the call locator ID that will be removed in the threadId.split
+    let threadId = teamsMeetingLink.replace('https://teams.microsoft.com/l/meetup-join/', '');
+    // Unescape characters that applications like Outlook encode when creating joinable links
+    threadId = decodeURIComponent(threadId);
+    // Extract just the chat guid from the link, stripping away the call locator ID
+    threadId = threadId.split(/^(.*?@thread\.v2)/gm)[1];
+    return threadId;
+  };
+
+  const [adapter, setAdapter] = useState<CallWithChatAdapter | undefined>(undefined);
+
+  useEffect(() => {
+    (async () => {
+      if (adapter === undefined) {
+        const chatClient = createStatefulChatClient({ credential, displayName, endpoint, userId });
+        const chatThreadClient = chatClient.getChatThreadClient(
+          'meetingLink' in locator ? getChatThreadFromTeamsLink(locator.meetingLink) : ''
+        );
+        await chatClient.startRealtimeNotifications();
+        const callClient = createStatefulCallClient({ userId });
+        const callAgent = await callClient.createCallAgent(credential, { displayName });
+
+        const newAdapter = await createAzureCommunicationCallWithChatAdapterFromClients(
+          callClient,
+          callAgent,
+          'meetingLink' in locator ? locator : (locator as never),
+          chatClient,
+          chatThreadClient,
+          { credential }
+        );
+        setAdapter(await afterAdapterCreate(newAdapter));
+      }
+    })();
+  }, [adapter, afterAdapterCreate, credential, displayName, endpoint, locator, userId]);
 
   // Dispose of the adapter in the window's before unload event.
   // This ensures the service knows the user intentionally left the call if the user
