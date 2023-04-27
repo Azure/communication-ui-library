@@ -67,7 +67,6 @@ const InputBoxStory = (): JSX.Element => {
         >
           <InputBoxComponent
             textFieldRef={sendTextFieldRef}
-            children={undefined}
             inlineChildren={true}
             textValue={textValue}
             placeholderText="Type a message..."
@@ -83,12 +82,8 @@ const InputBoxStory = (): JSX.Element => {
                 return Promise.resolve(filtered);
               }
             }}
-            onMentionAdd={(newTextValue) => {
-              const newValue = newTextValue ?? '';
-              setTextValue(newValue);
-            }}
             maxLength={0}
-          />
+          ></InputBoxComponent>
         </Stack>
       </div>
     </FluentThemeProvider>

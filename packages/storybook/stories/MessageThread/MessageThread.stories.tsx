@@ -67,9 +67,9 @@ const MessageThreadWithCustomTimestampExampleText =
 const DefaultMessageThreadExampleText = require('!!raw-loader!./snippets/Default.snippet.tsx').default;
 const MessageThreadWithMessageStatusIndicatorExampleText =
   require('!!raw-loader!./snippets/MessageStatusIndicator.snippet.tsx').default;
-const MessageWithFileText = require('!!raw-loader!./snippets/MessageWithFile.snippet.tsx').default;
 const MessageWithCustomMentionRendererText =
   require('!!raw-loader!./snippets/MessageWithCustomMentionRenderer.snippet.tsx').default;
+const MessageWithFileText = require('!!raw-loader!./snippets/MessageWithFile.snippet.tsx').default;
 const ExampleConstantsText = require('!!raw-loader!./snippets/placeholdermessages.ts').default;
 const MessageThreadWithSystemMessagesExampleText =
   require('!!raw-loader!./snippets/SystemMessages.snippet.tsx').default;
