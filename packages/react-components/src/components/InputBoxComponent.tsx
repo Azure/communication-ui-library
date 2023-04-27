@@ -365,18 +365,21 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
   const updateSelectionIndexesWithMentionIfNeeded = (
     event: FormEvent<HTMLInputElement | HTMLTextAreaElement>
   ): void => {
+    console.log('not equal start');
     let updatedStartIndex = event.currentTarget.selectionStart;
     let updatedEndIndex = event.currentTarget.selectionEnd;
+    // console.log('updateHTML updateSelectionIndexesWithMentionIfNeeded before updatedStartIndex', updatedStartIndex);
+    // console.log('updateHTML updateSelectionIndexesWithMentionIfNeeded before updatedEndIndex', updatedEndIndex);
     if (
       event.currentTarget.selectionStart === event.currentTarget.selectionEnd &&
       event.currentTarget.selectionStart !== null &&
-      event.currentTarget.selectionStart !== -1 &&
-      event.currentTarget.selectionDirection !== null
+      event.currentTarget.selectionStart !== -1
     ) {
+      console.log('updateHTML selectionStart === selectionEnd');
       const mentionTag = findMentionTagForSelection(tagsValue, event.currentTarget.selectionStart);
       if (mentionTag !== undefined && mentionTag.plainTextBeginIndex !== undefined) {
-        // TODO: need a better way for this, probably onMouseClick event
         if (selectionStartValue === null) {
+          console.log('updateHTML mentionTag === null');
           updatedStartIndex = mentionTag.plainTextBeginIndex;
           updatedEndIndex = mentionTag.plainTextEndIndex ?? mentionTag.plainTextBeginIndex;
         } else {
@@ -391,15 +394,22 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
           updatedEndIndex = newSelectionIndex;
         }
       }
-    } else if (
-      event.currentTarget.selectionStart !== event.currentTarget.selectionEnd &&
-      event.currentTarget.selectionDirection !== null
-    ) {
+    } else if (event.currentTarget.selectionStart !== event.currentTarget.selectionEnd) {
+      console.log('not equal');
       // Both e.currentTarget.selectionStart !== selectionStartValue and e.currentTarget.selectionEnd !== selectionEndValue can be true when a user selects a text by double click
       if (event.currentTarget.selectionStart !== null && event.currentTarget.selectionStart !== selectionStartValue) {
+        console.log(
+          'not equal updatedStartIndex',
+          event.currentTarget.selectionStart,
+          event.currentTarget.selectionEnd,
+          updatedStartIndex,
+          updatedEndIndex
+        );
         // the selection start is changed
         const mentionTag = findMentionTagForSelection(tagsValue, event.currentTarget.selectionStart);
         if (mentionTag !== undefined && mentionTag.plainTextBeginIndex !== undefined) {
+          console.log('not equal in mention selectionStartValue', selectionStartValue);
+          //here it takes -1 when it shouldn't
           updatedStartIndex = findNewSelectionIndexForMention(
             mentionTag,
             inputTextValue,
@@ -410,8 +420,10 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       }
       if (event.currentTarget.selectionEnd !== null && event.currentTarget.selectionEnd !== selectionEndValue) {
         // the selection end is changed
+        console.log('not equal updatedEndIndex');
         const mentionTag = findMentionTagForSelection(tagsValue, event.currentTarget.selectionEnd);
         if (mentionTag !== undefined && mentionTag.plainTextBeginIndex !== undefined) {
+          console.log('not equal in mention selectionEndValue', selectionEndValue);
           updatedEndIndex = findNewSelectionIndexForMention(
             mentionTag,
             inputTextValue,
@@ -421,14 +433,17 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
         }
       }
     }
+    console.log('not equal updatedStartIndex', updatedStartIndex);
+    console.log('not equal updatedEndIndex', updatedEndIndex);
     // e.currentTarget.selectionDirection should be set to handle shift + arrow keys
     if (event.currentTarget.selectionDirection === null) {
       event.currentTarget.setSelectionRange(updatedStartIndex, updatedEndIndex);
     } else {
       event.currentTarget.setSelectionRange(updatedStartIndex, updatedEndIndex, event.currentTarget.selectionDirection);
     }
-    setSelectionEndValue(event.currentTarget.selectionEnd);
-    setSelectionStartValue(event.currentTarget.selectionStart);
+    setSelectionStartValue(updatedStartIndex);
+    setSelectionEndValue(updatedEndIndex);
+    console.log('not equal finish');
   };
 
   const getInputFieldTextValue = (): string => {
@@ -485,26 +500,53 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
               setCaretIndex(null);
               return;
             }
-            //TODO: add onClick event handler to set same as set onBlur
-            // TODO: onchange triggers onSelect call, need to handle it
-            //TODO: need to check to navigate before/after space correctly in tag
-            // TODO update changing text when in mention, it hsouldn't be a part of mention
-            ///TODO: add selection handle for shift + arrows
-            /* @conditional-compile-remove(mention) */
-            updateSelectionIndexesWithMentionIfNeeded(e);
+            console.log('!!!!not equal onSelect');
+            if (
+              e.currentTarget.selectionStart === e.currentTarget.selectionEnd &&
+              (selectionStartValue === null || //selection wasn't set yet
+                selectionEndValue === null || //selection wasn't set yet
+                (e.currentTarget.selectionStart !== null && // position was changed by mouse click
+                  (selectionStartValue !== e.currentTarget.selectionStart + 1 ||
+                    selectionStartValue !== e.currentTarget.selectionStart - 1)) ||
+                (e.currentTarget.selectionEnd !== null && // position was changed by mouse click
+                  (selectionEndValue !== e.currentTarget.selectionEnd + 1 ||
+                    selectionEndValue !== e.currentTarget.selectionEnd - 1)))
+            ) {
+              console.log('!!!!not equal onClick');
+              if (e.currentTarget.selectionStart !== null) {
+                const mentionTag = findMentionTagForSelection(tagsValue, e.currentTarget.selectionStart);
+                if (mentionTag !== undefined && mentionTag.plainTextBeginIndex !== undefined) {
+                  e.currentTarget.setSelectionRange(
+                    mentionTag.plainTextBeginIndex,
+                    mentionTag.plainTextEndIndex ?? mentionTag.plainTextBeginIndex
+                  );
+                }
+              }
+            } else {
+              //TODO: add onClick event handler to set same as set onBlur
+              // TODO: onchange triggers onSelect call, need to handle it
+              //TODO: need to check to navigate before/after space correctly in tag
+              // TODO update changing text when in mention, it hsouldn't be a part of mention
+              ///TODO: add selection handle for shift + arrows
+              /* @conditional-compile-remove(mention) */
+              updateSelectionIndexesWithMentionIfNeeded(e);
+              // console.log('updateHTML onSelect selectionDirection', e.currentTarget.selectionDirection);
+            }
           }}
           // onMouseMove={(e) => {
+          //   console.log('!!!!not equal onMouseMove');
+          // for handling mouse actions
           /* @conditional-compile-remove(mention) */
-          // it updates the selectionStart! check if selectionStart and selectionEnd are updated
           // console.log('updateHTML onMouseMove selectionStart', e.currentTarget.selectionStart);
           // console.log('updateHTML onMouseMove selectionEnd', e.currentTarget.selectionEnd);
+          // console.log('updateHTML onMouseMove selectionDirection', e.currentTarget.selectionDirection);
+          // if (e.currentTarget.selectionStart !== e.currentTarget.selectionEnd) {
+          //   console.log('updateHTML onMouseMove e.currentTarget.selectionStart !== e.currentTarget.selectionEnd');
+          // } else {
+          //   console.log('updateHTML onMouseMove e.currentTarget.selectionStart === e.currentTarget.selectionEnd');
+          // }
+          // updateSelectionIndexesWithMentionIfNeeded(e);
           // }}
-          onBlur={() => {
-            /* @conditional-compile-remove(mention) */
-            setSelectionEndValue(null);
-            /* @conditional-compile-remove(mention) */
-            setSelectionStartValue(null);
-          }}
           autoComplete="off"
           onKeyDown={onTextFieldKeyDown}
           styles={mergedTextFieldStyle}
@@ -632,6 +674,7 @@ const findNewSelectionIndexForMention = (
   let spaceIndex = 0;
   if (selection <= previousSelection) {
     // the cursor is moved to the left
+    console.log('not equal selection <= previousSelection', selection, previousSelection);
     spaceIndex = textValue.lastIndexOf(' ', selection ?? 0);
     // console.log('updateHTML selection <= previousSelection spaceIndex', spaceIndex);
     if (spaceIndex === -1) {
@@ -639,7 +682,9 @@ const findNewSelectionIndexForMention = (
       spaceIndex = tag.plainTextBeginIndex;
     }
   } else {
+    //if (selection > previousSelection) {
     // the cursor is moved to the right
+    console.log('not equal selection > previousSelection', selection, previousSelection);
     spaceIndex = textValue.indexOf(' ', selection ?? 0);
     // console.log('updateHTML selection > previousSelection spaceIndex', spaceIndex, textValue.length);
     if (spaceIndex === -1) {
