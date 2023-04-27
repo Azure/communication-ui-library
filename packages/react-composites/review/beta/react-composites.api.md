@@ -126,9 +126,7 @@ export type AzureCommunicationCallWithChatAdapterFromClientArgs = {
     callClient: StatefulCallClient;
     chatClient: StatefulChatClient;
     chatThreadClient: ChatThreadClient;
-    options?: {
-        credential?: CommunicationTokenCredential;
-    };
+    options?: CallWithChatOptions;
 };
 
 // @public
@@ -814,6 +812,9 @@ export interface CallWithChatControlOptions extends CommonCallControlOptions {
 export type CallWithChatEvent = 'callError' | 'chatError' | 'callEnded' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'callParticipantsJoined' | 'callParticipantsLeft' | 'selectedMicrophoneChanged' | 'selectedSpeakerChanged' | /* @conditional-compile-remove(close-captions) */ 'isCaptionsActiveChanged' | /* @conditional-compile-remove(close-captions) */ 'captionsReceived' | 'messageReceived' | 'messageSent' | 'messageRead' | 'chatParticipantsAdded' | 'chatParticipantsRemoved';
 
 // @beta
+export type CallWithChatOptions = ChatAdapterOptions;
+
+// @beta
 export type CaptionsReceivedListener = (event: {
     captionsInfo: CaptionsInfo;
 }) => void;
@@ -1042,9 +1043,7 @@ export const createAzureCommunicationCallWithChatAdapter: ({ userId, displayName
 export const _createAzureCommunicationCallWithChatAdapterFromAdapters: (callAdapter: CallAdapter, chatAdapter: ChatAdapter) => CallWithChatAdapter;
 
 // @public
-export function createAzureCommunicationCallWithChatAdapterFromClients(callClient: StatefulCallClient, callAgent: CallAgent, callLocator: CallAdapterLocator | TeamsMeetingLinkLocator, chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient, options?: {
-    credential?: CommunicationTokenCredential;
-}): Promise<CallWithChatAdapter>;
+export function createAzureCommunicationCallWithChatAdapterFromClients(callClient: StatefulCallClient, callAgent: CallAgent, callLocator: CallAdapterLocator | TeamsMeetingLinkLocator, chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient, options?: CallWithChatOptions): Promise<CallWithChatAdapter>;
 
 // @public
 export const createAzureCommunicationChatAdapter: ({ endpoint: endpointUrl, userId, displayName, credential, threadId }: AzureCommunicationChatAdapterArgs) => Promise<ChatAdapter>;

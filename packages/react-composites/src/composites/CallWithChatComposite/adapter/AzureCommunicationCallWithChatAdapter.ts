@@ -55,6 +55,7 @@ import {
   mergeChatAdapterStateIntoCallWithChatAdapterState
 } from '../state/CallWithChatAdapterState';
 import {
+  ChatAdapterOptions,
   createAzureCommunicationChatAdapter,
   createAzureCommunicationChatAdapterFromClient
 } from '../../ChatComposite/adapter/AzureCommunicationChatAdapter';
@@ -832,6 +833,13 @@ export const useAzureCommunicationCallWithChatAdapter = (
   return adapter;
 };
 
+/* @conditional-compile-remove(teams-inline-images) */
+/**
+ * Configuration options to include when creating CallWithChatAdapter.
+ * @beta
+ */
+export type CallWithChatOptions = ChatAdapterOptions;
+
 /**
  * Arguments for {@link createAzureCommunicationCallWithChatAdapterFromClient}
  *
@@ -844,9 +852,7 @@ export type AzureCommunicationCallWithChatAdapterFromClientArgs = {
   chatClient: StatefulChatClient;
   chatThreadClient: ChatThreadClient;
   /* @conditional-compile-remove(teams-inline-images) */
-  options?: {
-    credential?: CommunicationTokenCredential;
-  };
+  options?: CallWithChatOptions;
 };
 
 /**
@@ -864,22 +870,14 @@ export async function createAzureCommunicationCallWithChatAdapterFromClients(
   chatClient: StatefulChatClient,
   chatThreadClient: ChatThreadClient,
   /* @conditional-compile-remove(teams-inline-images) */
-  options?: {
-    credential?: CommunicationTokenCredential;
-  }
+  options?: CallWithChatOptions
 ): Promise<CallWithChatAdapter> {
   const createCallAdapterPromise = createAzureCommunicationCallAdapterFromClient(callClient, callAgent, callLocator);
-  /* @conditional-compile-remove(teams-inline-images) */
-  let chatOptions;
-  /* @conditional-compile-remove(teams-inline-images) */
-  if (options && options.credential) {
-    chatOptions = { credential: options.credential };
-  }
   const createChatAdapterPromise = createAzureCommunicationChatAdapterFromClient(
     chatClient,
     chatThreadClient,
     /* @conditional-compile-remove(teams-inline-images) */
-    chatOptions
+    options
   );
   const [callAdapter, chatAdapter] = await Promise.all([createCallAdapterPromise, createChatAdapterPromise]);
   return new AzureCommunicationCallWithChatAdapter(callAdapter, chatAdapter);
