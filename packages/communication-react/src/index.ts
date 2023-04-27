@@ -171,6 +171,7 @@ export type {
   CameraButtonStyles,
   ChatMessage,
   CommunicationParticipant,
+  ComponentSlotStyle,
   ComponentLocale,
   ComponentStrings,
   ContentSystemMessage,

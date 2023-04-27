@@ -6,7 +6,6 @@
 
 /// <reference types="react" />
 
-import { ComponentSlotStyle } from '@internal/northstar-wrapper';
 import { IButtonProps } from '@fluentui/react';
 import { IButtonStyles } from '@fluentui/react';
 import { IContextualMenuItem } from '@fluentui/react';
@@ -584,6 +583,9 @@ export interface ComponentLocale {
     onDisplayDateTimeString?: (messageDate: Date) => string;
     strings: ComponentStrings;
 }
+
+// @public (undocumented)
+export type ComponentSlotStyle = any;
 
 // @public
 export interface ComponentStrings {

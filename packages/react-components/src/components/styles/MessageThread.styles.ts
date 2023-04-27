@@ -2,9 +2,9 @@
 // Licensed under the MIT license.
 
 import { IButtonStyles, mergeStyles, Theme } from '@fluentui/react';
-import { ComponentSlotStyle } from '@internal/northstar-wrapper';
 import { CSSProperties } from 'react';
 import { MESSAGE_STATUS_INDICATOR_SIZE_REM } from './MessageStatusIndicator.styles';
+import { ComponentSlotStyle } from '../../types';
 
 // Minimum chat bubble width. This matches the minimum chat bubble width from FluentUI
 // that can contain a message and a timestamp.

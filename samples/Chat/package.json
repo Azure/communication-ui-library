@@ -9,6 +9,7 @@
     "package": "copyfiles -E -u 3 \"../Server/dist/**/*\" dist",
     "start": "concurrently \"cd ../Server && rushx start:dev\" \"rushx start:app\"",
     "start:app": "rushx _by-flavor \"webpack-cli serve --mode=development --env development\"",
+    "start:prod": "node dist/server.js",
     "test": "echo skip",
     "preprocess": "cpx \"./src/**\" ./preprocessed && babel ./src --out-dir ../preprocessed --extensions \".ts,.tsx\" --keep-file-extension --config-file ./.babelrc.js --relative",
     "preprocess:stable-flavor": "rushx _stable-flavor \"rushx preprocess && rushx lint:fix && rushx prettier\"",

@@ -39,7 +39,6 @@ import {
   IPersona,
   Theme
 } from '@fluentui/react';
-import { ComponentSlotStyle } from '@internal/northstar-wrapper';
 import { LiveAnnouncer } from 'react-aria-live';
 import { delay } from './utils/delay';
 import {
@@ -52,7 +51,8 @@ import {
   ParticipantAddedSystemMessage,
   ParticipantRemovedSystemMessage,
   Message,
-  ReadReceiptsBySenderId
+  ReadReceiptsBySenderId,
+  ComponentSlotStyle
 } from '../types';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessage } from '../types';

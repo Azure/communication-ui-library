@@ -4,7 +4,6 @@
 import {
   Chat,
   ChatItemProps,
-  ComponentSlotStyle,
   Flex,
   MenuProps,
   Provider,
@@ -17,4 +16,4 @@ import {
 } from '@fluentui/react-northstar';
 
 export { Chat, Flex, Provider, Ref, Text, mergeStyles, mergeThemes, teamsTheme };
-export type { ChatItemProps, ComponentSlotStyle, MenuProps, ShorthandValue };
+export type { ChatItemProps, MenuProps, ShorthandValue };
