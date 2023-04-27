@@ -522,15 +522,7 @@ export type UpdateMessageCallback = (
  * @public
  * Callback function run when a message edit is cancelled.
  */
-export type CancelEditCallback = (
-  messageId: string,
-  /* @conditional-compile-remove(file-sharing) */
-  metadata?: Record<string, string>,
-  /* @conditional-compile-remove(file-sharing) */
-  options?: {
-    attachedFilesMetadata?: FileMetadata[];
-  }
-) => void;
+export type CancelEditCallback = (messageId: string) => void;
 
 /**
  * Props for {@link MessageThread}.

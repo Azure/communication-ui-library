@@ -1162,9 +1162,7 @@ export interface CameraSitePermissionsProps extends CommonSitePermissionsProps {
 export type CameraSitePermissionsStrings = SitePermissionsStrings;
 
 // @public
-export type CancelEditCallback = (messageId: string, metadata?: Record<string, string>, options?: {
-    attachedFilesMetadata?: FileMetadata[];
-}) => void;
+export type CancelEditCallback = (messageId: string) => void;
 
 // @beta
 export interface CaptionsAvailableLanguageStrings {
