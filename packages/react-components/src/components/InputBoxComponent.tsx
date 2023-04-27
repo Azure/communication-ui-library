@@ -129,6 +129,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     console.log('plainText', plainText);
     setInputTextValue(plainText);
     setTagsValue(tags);
+    updateMentionSuggestions([]);
   }, [textValue, mentionLookupOptions?.trigger]);
 
   const mergedRootStyle = mergeStyles(inputBoxWrapperStyle, styles?.root);
