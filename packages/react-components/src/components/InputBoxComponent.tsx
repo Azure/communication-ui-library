@@ -324,6 +324,76 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     onChange && onChange(event, result);
   };
 
+  /* @conditional-compile-remove(mention) */
+  const updateSelectionIndexesWithMentionIfNeeded = (
+    event: FormEvent<HTMLInputElement | HTMLTextAreaElement>
+  ): void => {
+    let updatedStartIndex = event.currentTarget.selectionStart;
+    let updatedEndIndex = event.currentTarget.selectionEnd;
+    if (
+      event.currentTarget.selectionStart === event.currentTarget.selectionEnd &&
+      event.currentTarget.selectionStart !== null &&
+      event.currentTarget.selectionStart !== -1 &&
+      event.currentTarget.selectionDirection !== null
+    ) {
+      const mentionTag = findMentionTagForSelection(tagsValue, event.currentTarget.selectionStart);
+      if (mentionTag !== undefined && mentionTag.plainTextBeginIndex !== undefined) {
+        // TODO: need a better way for this, probably onMouseClick event
+        if (selectionStartValue === null) {
+          updatedStartIndex = mentionTag.plainTextBeginIndex;
+          updatedEndIndex = mentionTag.plainTextEndIndex ?? mentionTag.plainTextBeginIndex;
+        } else {
+          const newSelectionIndex = findNewSelectionIndexForMention(
+            mentionTag,
+            inputTextValue,
+            event.currentTarget.selectionStart,
+            selectionStartValue
+          );
+
+          updatedStartIndex = newSelectionIndex;
+          updatedEndIndex = newSelectionIndex;
+        }
+      }
+    } else if (
+      event.currentTarget.selectionStart !== event.currentTarget.selectionEnd &&
+      event.currentTarget.selectionDirection !== null
+    ) {
+      // Both e.currentTarget.selectionStart !== selectionStartValue and e.currentTarget.selectionEnd !== selectionEndValue can be true when a user selects a text by double click
+      if (event.currentTarget.selectionStart !== null && event.currentTarget.selectionStart !== selectionStartValue) {
+        // the selection start is changed
+        const mentionTag = findMentionTagForSelection(tagsValue, event.currentTarget.selectionStart);
+        if (mentionTag !== undefined && mentionTag.plainTextBeginIndex !== undefined) {
+          updatedStartIndex = findNewSelectionIndexForMention(
+            mentionTag,
+            inputTextValue,
+            event.currentTarget.selectionStart,
+            selectionStartValue ?? -1
+          );
+        }
+      }
+      if (event.currentTarget.selectionEnd !== null && event.currentTarget.selectionEnd !== selectionEndValue) {
+        // the selection end is changed
+        const mentionTag = findMentionTagForSelection(tagsValue, event.currentTarget.selectionEnd);
+        if (mentionTag !== undefined && mentionTag.plainTextBeginIndex !== undefined) {
+          updatedEndIndex = findNewSelectionIndexForMention(
+            mentionTag,
+            inputTextValue,
+            event.currentTarget.selectionEnd,
+            selectionEndValue ?? -1
+          );
+        }
+      }
+    }
+    // e.currentTarget.selectionDirection should be set to handle shift + arrow keys
+    if (event.currentTarget.selectionDirection === null) {
+      event.currentTarget.setSelectionRange(updatedStartIndex, updatedEndIndex);
+    } else {
+      event.currentTarget.setSelectionRange(updatedStartIndex, updatedEndIndex, event.currentTarget.selectionDirection);
+    }
+    setSelectionEndValue(event.currentTarget.selectionEnd);
+    setSelectionStartValue(event.currentTarget.selectionStart);
+  };
+
   const getInputFieldTextValue = (): string => {
     /* @conditional-compile-remove(mention) */
     return inputTextValue;
@@ -383,74 +453,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
             // TODO update changing text when in mention, it hsouldn't be a part of mention
             ///TODO: add selection handle for shift + arrows
             /* @conditional-compile-remove(mention) */
-            if (
-              e.currentTarget.selectionStart === e.currentTarget.selectionEnd &&
-              e.currentTarget.selectionStart !== null &&
-              e.currentTarget.selectionStart !== -1 &&
-              e.currentTarget.selectionDirection !== null
-            ) {
-              const mentionTag = findMentionTagForSelection(tagsValue, e.currentTarget.selectionStart);
-              if (mentionTag !== undefined && mentionTag.plainTextBeginIndex !== undefined) {
-                // TODO: need a better way for this, probably onMouseClick event
-                if (selectionStartValue === null) {
-                  // console.log('updateHTML !!');
-                  e.currentTarget.setSelectionRange(
-                    mentionTag.plainTextBeginIndex,
-                    mentionTag.plainTextEndIndex ?? mentionTag.plainTextBeginIndex
-                  );
-                } else {
-                  const newSelectionIndex = findNewSelectionIndexForMention(
-                    mentionTag,
-                    inputTextValue,
-                    e.currentTarget.selectionStart,
-                    selectionStartValue
-                  );
-                  e.currentTarget.setSelectionRange(
-                    newSelectionIndex,
-                    newSelectionIndex,
-                    e.currentTarget.selectionDirection
-                  );
-                }
-              }
-            } else if (
-              e.currentTarget.selectionStart !== e.currentTarget.selectionEnd &&
-              e.currentTarget.selectionDirection !== null
-            ) {
-              let updatedStartIndex = e.currentTarget.selectionStart;
-              let updatedEndIndex = e.currentTarget.selectionEnd;
-              // Both e.currentTarget.selectionStart !== selectionStartValue and e.currentTarget.selectionEnd !== selectionEndValue can be true when a user selects a text by double click
-              if (e.currentTarget.selectionStart !== null && e.currentTarget.selectionStart !== selectionStartValue) {
-                // the selection start is changed
-                const mentionTag = findMentionTagForSelection(tagsValue, e.currentTarget.selectionStart);
-                if (mentionTag !== undefined && mentionTag.plainTextBeginIndex !== undefined) {
-                  updatedStartIndex = findNewSelectionIndexForMention(
-                    mentionTag,
-                    inputTextValue,
-                    e.currentTarget.selectionStart,
-                    selectionStartValue ?? -1
-                  );
-                }
-              }
-              if (e.currentTarget.selectionEnd !== null && e.currentTarget.selectionEnd !== selectionEndValue) {
-                // the selection end is changed
-                const mentionTag = findMentionTagForSelection(tagsValue, e.currentTarget.selectionEnd);
-                if (mentionTag !== undefined && mentionTag.plainTextBeginIndex !== undefined) {
-                  updatedEndIndex = findNewSelectionIndexForMention(
-                    mentionTag,
-                    inputTextValue,
-                    e.currentTarget.selectionEnd,
-                    selectionEndValue ?? -1
-                  );
-                }
-              }
-              // e.currentTarget.selectionDirection should be set to handle shift + arrow keys
-              e.currentTarget.setSelectionRange(updatedStartIndex, updatedEndIndex, e.currentTarget.selectionDirection);
-            }
-
-            /* @conditional-compile-remove(mention) */
-            setSelectionEndValue(e.currentTarget.selectionEnd);
-            /* @conditional-compile-remove(mention) */
-            setSelectionStartValue(e.currentTarget.selectionStart);
+            updateSelectionIndexesWithMentionIfNeeded(e);
           }}
           // onMouseMove={(e) => {
           /* @conditional-compile-remove(mention) */
