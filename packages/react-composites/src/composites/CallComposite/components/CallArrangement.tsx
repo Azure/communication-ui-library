@@ -29,14 +29,16 @@ import { CommonCallControlBar } from '../../common/ControlBar/CommonCallControlB
 import { useSidePaneState } from '../hooks/useSidePaneState';
 import {
   callArrangementContainerStyles,
-  callControlsContainerStyles,
   notificationsContainerStyles,
   containerStyleDesktop,
   containerStyleMobile,
   mediaGalleryContainerStyles,
   galleryParentContainerStyles,
-  bannerNotificationStyles
+  bannerNotificationStyles,
+  CONTROL_BAR_Z_INDEX,
+  DRAWER_Z_INDEX
 } from '../styles/CallPage.styles';
+
 /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
 import { CommonCallControlOptions } from '../../common/types/CommonCallControlOptions';
 /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
@@ -176,7 +178,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     setShowDtmfDialpad(true);
   };
 
-  const drawerContainerStylesValue = useMemo(() => drawerContainerStyles(10), []);
+  const drawerContainerStylesValue = useMemo(() => drawerContainerStyles(DRAWER_Z_INDEX), []);
 
   // To be removed once feature is out of beta, replace with callCompositeContainerCSS
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
@@ -253,7 +255,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
           {props.callControlProps?.options !== false &&
             /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
             !isMobileWithActivePane && (
-              <Stack.Item className={callControlsContainerStyles}>
+              <Stack.Item className={mergeStyles({ zIndex: CONTROL_BAR_Z_INDEX })}>
                 {isLegacyCallControlEnabled(props.callControlProps?.options) ? (
                   <CallControls
                     {...props.callControlProps}
