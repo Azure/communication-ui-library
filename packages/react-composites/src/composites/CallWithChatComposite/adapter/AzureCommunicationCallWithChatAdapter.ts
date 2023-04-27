@@ -833,13 +833,6 @@ export const useAzureCommunicationCallWithChatAdapter = (
   return adapter;
 };
 
-/* @conditional-compile-remove(teams-inline-images) */
-/**
- * Configuration options to include when creating CallWithChatAdapter.
- * @beta
- */
-export type CallWithChatOptions = AzureCommunicationChatAdapterOptions;
-
 /**
  * Arguments for {@link createAzureCommunicationCallWithChatAdapterFromClient}
  *

@@ -15,8 +15,6 @@ export type {
   AzureCommunicationCallWithChatAdapterFromClientArgs,
   CallAndChatLocator
 } from './adapter/AzureCommunicationCallWithChatAdapter';
-/* @conditional-compile-remove(teams-inline-images) */
-export type { CallWithChatOptions } from './adapter/AzureCommunicationCallWithChatAdapter';
 export {
   createAzureCommunicationCallWithChatAdapter,
   createAzureCommunicationCallWithChatAdapterFromClients,
