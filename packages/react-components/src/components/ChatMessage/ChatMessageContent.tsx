@@ -120,11 +120,7 @@ const MessageContentAsText = (props: ChatMessageContentProps): JSX.Element => {
 export const BlockedMessageContent = (props: BlockedMessageContentProps): JSX.Element => {
   const Icon: JSX.Element = <FontIcon iconName={'DataLossPreventionProhibited'} />;
   const blockedMessage =
-    props.message.warningText === false
-      ? ''
-      : props.message.warningText === '' || props.message.warningText === undefined
-      ? props.strings.blockedWarningText
-      : props.message.warningText;
+    props.message.warningText === undefined ? props.strings.blockedWarningText : props.message.warningText;
   const blockedMessageLink = props.message.link;
   const blockedMessageLinkText = blockedMessageLink
     ? props.message.linkText ?? props.strings.blockedWarningLinkText
