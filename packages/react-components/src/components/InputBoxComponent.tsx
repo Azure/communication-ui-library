@@ -162,21 +162,21 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
         ev.preventDefault();
         /* @conditional-compile-remove(mention) */
         if (mentionSuggestions.length > 0) {
-          const newSuggestionFocusIndex =
+          const newActiveIndex =
             activeSuggestionIndex === undefined
               ? mentionSuggestions.length - 1
               : Math.max(activeSuggestionIndex - 1, 0);
-          setActiveSuggestionIndex(newSuggestionFocusIndex);
+          setActiveSuggestionIndex(newActiveIndex);
         }
       } else if (ev.key === 'ArrowDown') {
         ev.preventDefault();
         /* @conditional-compile-remove(mention) */
         if (mentionSuggestions.length > 0) {
-          const newSuggestionFocusIndex =
+          const newActiveIndex =
             activeSuggestionIndex === undefined
               ? 0
               : Math.min(activeSuggestionIndex + 1, mentionSuggestions.length - 1);
-          setActiveSuggestionIndex(newSuggestionFocusIndex);
+          setActiveSuggestionIndex(newActiveIndex);
         }
       }
       if (ev.key === 'Enter' && (ev.shiftKey === false || !supportNewline)) {
