@@ -843,6 +843,10 @@ export type AzureCommunicationCallWithChatAdapterFromClientArgs = {
   callClient: StatefulCallClient;
   chatClient: StatefulChatClient;
   chatThreadClient: ChatThreadClient;
+  /* @conditional-compile-remove(teams-inline-images) */
+  options?: {
+    credential?: CommunicationTokenCredential;
+  };
 };
 
 /**
@@ -853,19 +857,33 @@ export type AzureCommunicationCallWithChatAdapterFromClientArgs = {
  *
  * @public
  */
-export const createAzureCommunicationCallWithChatAdapterFromClients = async ({
-  callClient,
-  callAgent,
-  callLocator,
-  chatClient,
-  chatThreadClient
-}: AzureCommunicationCallWithChatAdapterFromClientArgs): Promise<CallWithChatAdapter> => {
+export async function createAzureCommunicationCallWithChatAdapterFromClients(
+  callClient: StatefulCallClient,
+  callAgent: CallAgent,
+  callLocator: CallAdapterLocator | TeamsMeetingLinkLocator,
+  chatClient: StatefulChatClient,
+  chatThreadClient: ChatThreadClient,
+  /* @conditional-compile-remove(teams-inline-images) */
+  options?: {
+    credential?: CommunicationTokenCredential;
+  }
+): Promise<CallWithChatAdapter> {
   const createCallAdapterPromise = createAzureCommunicationCallAdapterFromClient(callClient, callAgent, callLocator);
-
-  const createChatAdapterPromise = createAzureCommunicationChatAdapterFromClient(chatClient, chatThreadClient);
+  /* @conditional-compile-remove(teams-inline-images) */
+  let chatOptions;
+  /* @conditional-compile-remove(teams-inline-images) */
+  if (options && options.credential) {
+    chatOptions = { credential: options.credential };
+  }
+  const createChatAdapterPromise = createAzureCommunicationChatAdapterFromClient(
+    chatClient,
+    chatThreadClient,
+    /* @conditional-compile-remove(teams-inline-images) */
+    chatOptions
+  );
   const [callAdapter, chatAdapter] = await Promise.all([createCallAdapterPromise, createChatAdapterPromise]);
   return new AzureCommunicationCallWithChatAdapter(callAdapter, chatAdapter);
-};
+}
 
 /**
  * Create a {@link CallWithChatAdapter} from the underlying adapters.
