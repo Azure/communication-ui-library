@@ -370,82 +370,80 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
           /* @conditional-compile-remove(mention) */
           onSelect={(e) => {
             console.log('updateHTML onSelect selectionEnd', e.currentTarget.selectionEnd);
-            console.log('updateHTML selectionStart', e.currentTarget.selectionStart);
+            console.log('updateHTML onSelect selectionStart', e.currentTarget.selectionStart);
             if (caretIndex !== null) {
               e.currentTarget.setSelectionRange(caretIndex, caretIndex);
               setCaretIndex(null);
+              return;
             }
             //TODO: add onClick event handler to set same as set onBlur
             // TODO: onchange triggers onSelect call, need to handle it
             //TODO: need to check to navigate before/after space correctly in tag
             // TODO update changing text when in mention, it hsouldn't be a part of mention
+            ///TODO: add selection handle for shift + arrows
             /* @conditional-compile-remove(mention) */
             if (
               e.currentTarget.selectionStart === e.currentTarget.selectionEnd &&
               e.currentTarget.selectionStart !== null &&
-              e.currentTarget.selectionStart !== -1
+              e.currentTarget.selectionStart !== -1 &&
+              e.currentTarget.selectionDirection !== null
             ) {
-              // need to handle only when selectionStart === selectionEnd, range selection is handled by onMouseMove
-              console.log('updateHTML onSelect e.currentTarget.selectionStart === e.currentTarget.selectionEnd');
               const mentionTag = findMentionTagForSelection(tagsValue, e.currentTarget.selectionStart);
               if (mentionTag !== undefined && mentionTag.plainTextBeginIndex !== undefined) {
-                let spaceIndex = 0;
-                console.log(
-                  'updateHTML onSelect e.currentTarget.selectionStart === e.currentTarget.selectionEnd selectionStartValue',
-                  selectionStartValue
-                );
+                // TODO: need a better way for this, probably onMouseClick event
                 if (selectionStartValue === null) {
-                  console.log('updateHTML !!');
+                  // console.log('updateHTML !!');
                   e.currentTarget.setSelectionRange(
                     mentionTag.plainTextBeginIndex,
                     mentionTag.plainTextEndIndex ?? mentionTag.plainTextBeginIndex
                   );
                 } else {
-                  if (e.currentTarget.selectionStart <= selectionStartValue) {
-                    spaceIndex = inputTextValue.lastIndexOf(' ', e.currentTarget.selectionStart ?? 0);
-                    console.log(
-                      'updateHTML e.currentTarget.selectionStart <= selectionStartValue spaceIndex',
-                      spaceIndex
-                    );
-                    if (spaceIndex === -1) {
-                      // no space before the selectionStart
-                      spaceIndex = mentionTag.plainTextBeginIndex;
-                    }
-                  } else {
-                    spaceIndex = inputTextValue.indexOf(' ', e.currentTarget.selectionStart ?? 0);
-                    console.log(
-                      'updateHTML e.currentTarget.selectionStart > selectionStartValue spaceIndex',
-                      spaceIndex,
-                      inputTextValue.length
-                    );
-                    if (spaceIndex === -1) {
-                      // no space after the selectionStart
-                      spaceIndex = mentionTag.plainTextEndIndex ?? mentionTag.plainTextBeginIndex;
-                    }
-                  }
-                  //need to check direction to understand if lastIndex or indexof fun should be used
-
-                  if (spaceIndex < mentionTag.plainTextBeginIndex) {
-                    spaceIndex = mentionTag.plainTextBeginIndex;
-                  } else {
-                    if (mentionTag.plainTextEndIndex !== undefined && spaceIndex >= mentionTag.plainTextEndIndex) {
-                      console.log(
-                        'spaceIndex > mentionTag.plainTextEndIndex',
-                        spaceIndex,
-                        mentionTag.plainTextEndIndex,
-                        inputTextValue[mentionTag.plainTextEndIndex]
-                      );
-                      spaceIndex = mentionTag.plainTextEndIndex;
-                    } else if (
-                      mentionTag.plainTextEndIndex === undefined &&
-                      spaceIndex >= mentionTag.plainTextBeginIndex
-                    ) {
-                      spaceIndex = mentionTag.plainTextBeginIndex;
-                    }
-                  }
-                  e.currentTarget.setSelectionRange(spaceIndex, spaceIndex);
+                  const newSelectionIndex = findNewSelectionIndexForMention(
+                    mentionTag,
+                    inputTextValue,
+                    e.currentTarget.selectionStart,
+                    selectionStartValue
+                  );
+                  e.currentTarget.setSelectionRange(
+                    newSelectionIndex,
+                    newSelectionIndex,
+                    e.currentTarget.selectionDirection
+                  );
                 }
               }
+            } else if (
+              e.currentTarget.selectionStart !== e.currentTarget.selectionEnd &&
+              e.currentTarget.selectionDirection !== null
+            ) {
+              let updatedStartIndex = e.currentTarget.selectionStart;
+              let updatedEndIndex = e.currentTarget.selectionEnd;
+              // Both e.currentTarget.selectionStart !== selectionStartValue and e.currentTarget.selectionEnd !== selectionEndValue can be true when a user selects a text by double click
+              if (e.currentTarget.selectionStart !== null && e.currentTarget.selectionStart !== selectionStartValue) {
+                // the selection start is changed
+                const mentionTag = findMentionTagForSelection(tagsValue, e.currentTarget.selectionStart);
+                if (mentionTag !== undefined && mentionTag.plainTextBeginIndex !== undefined) {
+                  updatedStartIndex = findNewSelectionIndexForMention(
+                    mentionTag,
+                    inputTextValue,
+                    e.currentTarget.selectionStart,
+                    selectionStartValue ?? -1
+                  );
+                }
+              }
+              if (e.currentTarget.selectionEnd !== null && e.currentTarget.selectionEnd !== selectionEndValue) {
+                // the selection end is changed
+                const mentionTag = findMentionTagForSelection(tagsValue, e.currentTarget.selectionEnd);
+                if (mentionTag !== undefined && mentionTag.plainTextBeginIndex !== undefined) {
+                  updatedEndIndex = findNewSelectionIndexForMention(
+                    mentionTag,
+                    inputTextValue,
+                    e.currentTarget.selectionEnd,
+                    selectionEndValue ?? -1
+                  );
+                }
+              }
+              // e.currentTarget.selectionDirection should be set to handle shift + arrow keys
+              e.currentTarget.setSelectionRange(updatedStartIndex, updatedEndIndex, e.currentTarget.selectionDirection);
             }
 
             /* @conditional-compile-remove(mention) */
@@ -568,6 +566,58 @@ const findMentionTagForSelection = (tags: TagData[], selection: number): TagData
     }
   }
   return mentionTag;
+};
+
+/**
+ * Go through tags and find a new the selection index if it is inside of a mention tag
+ *
+ * @private
+ */
+const findNewSelectionIndexForMention = (
+  tag: TagData,
+  textValue: string,
+  selection: number,
+  previousSelection: number
+): number => {
+  if (
+    tag.plainTextBeginIndex === undefined ||
+    tag.tagType !== 'msft-mention' ||
+    // selection === previousSelection ||
+    tag.plainTextEndIndex === undefined
+  ) {
+    return selection;
+  }
+  let spaceIndex = 0;
+  if (selection <= previousSelection) {
+    // the cursor is moved to the left
+    spaceIndex = textValue.lastIndexOf(' ', selection ?? 0);
+    // console.log('updateHTML selection <= previousSelection spaceIndex', spaceIndex);
+    if (spaceIndex === -1) {
+      // no space before the selection
+      spaceIndex = tag.plainTextBeginIndex;
+    }
+  } else {
+    // the cursor is moved to the right
+    spaceIndex = textValue.indexOf(' ', selection ?? 0);
+    // console.log('updateHTML selection > previousSelection spaceIndex', spaceIndex, textValue.length);
+    if (spaceIndex === -1) {
+      // no space after the selection
+      spaceIndex = tag.plainTextEndIndex ?? tag.plainTextBeginIndex;
+    }
+  }
+
+  if (spaceIndex < tag.plainTextBeginIndex) {
+    spaceIndex = tag.plainTextBeginIndex;
+  } else if (spaceIndex > tag.plainTextEndIndex) {
+    // console.log(
+    //   'spaceIndex > tag.plainTextEndIndex',
+    //   spaceIndex,
+    //   tag.plainTextEndIndex,
+    //   textValue[tag.plainTextEndIndex]
+    // );
+    spaceIndex = tag.plainTextEndIndex;
+  }
+  return spaceIndex;
 };
 
 /**
