@@ -131,7 +131,7 @@ export interface BlockedMessage extends MessageCommon {
     // (undocumented)
     status?: MessageStatus;
     // (undocumented)
-    warningText?: string | false;
+    warningText?: string;
 }
 
 // @beta
