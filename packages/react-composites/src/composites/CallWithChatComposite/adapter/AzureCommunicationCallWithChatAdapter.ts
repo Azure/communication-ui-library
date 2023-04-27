@@ -55,6 +55,7 @@ import {
   mergeChatAdapterStateIntoCallWithChatAdapterState
 } from '../state/CallWithChatAdapterState';
 import {
+  AzureCommunicationChatAdapterOptions,
   createAzureCommunicationChatAdapter,
   createAzureCommunicationChatAdapterFromClient
 } from '../../ChatComposite/adapter/AzureCommunicationChatAdapter';
@@ -843,6 +844,8 @@ export type AzureCommunicationCallWithChatAdapterFromClientArgs = {
   callClient: StatefulCallClient;
   chatClient: StatefulChatClient;
   chatThreadClient: ChatThreadClient;
+  /* @conditional-compile-remove(teams-inline-images) */
+  options?: AzureCommunicationChatAdapterOptions;
 };
 
 /**
@@ -853,19 +856,25 @@ export type AzureCommunicationCallWithChatAdapterFromClientArgs = {
  *
  * @public
  */
-export const createAzureCommunicationCallWithChatAdapterFromClients = async ({
-  callClient,
-  callAgent,
-  callLocator,
-  chatClient,
-  chatThreadClient
-}: AzureCommunicationCallWithChatAdapterFromClientArgs): Promise<CallWithChatAdapter> => {
+export async function createAzureCommunicationCallWithChatAdapterFromClients(
+  callClient: StatefulCallClient,
+  callAgent: CallAgent,
+  callLocator: CallAdapterLocator | TeamsMeetingLinkLocator,
+  chatClient: StatefulChatClient,
+  chatThreadClient: ChatThreadClient,
+  /* @conditional-compile-remove(teams-inline-images) */
+  options?: AzureCommunicationChatAdapterOptions
+): Promise<CallWithChatAdapter> {
   const createCallAdapterPromise = createAzureCommunicationCallAdapterFromClient(callClient, callAgent, callLocator);
-
-  const createChatAdapterPromise = createAzureCommunicationChatAdapterFromClient(chatClient, chatThreadClient);
+  const createChatAdapterPromise = createAzureCommunicationChatAdapterFromClient(
+    chatClient,
+    chatThreadClient,
+    /* @conditional-compile-remove(teams-inline-images) */
+    options
+  );
   const [callAdapter, chatAdapter] = await Promise.all([createCallAdapterPromise, createChatAdapterPromise]);
   return new AzureCommunicationCallWithChatAdapter(callAdapter, chatAdapter);
-};
+}
 
 /**
  * Create a {@link CallWithChatAdapter} from the underlying adapters.
