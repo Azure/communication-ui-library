@@ -1248,9 +1248,10 @@ export const _MentionPopover: (props: _MentionPopoverProps) => JSX.Element;
 
 // @internal
 export interface _MentionPopoverProps {
+    activeSuggestionIndex?: number;
     location?: 'above' | 'below';
     onDismiss?: () => void;
-    onRenderSuggestionItem?: (suggestion: Mention, onSuggestionSelected: (suggestion: Mention) => void) => JSX.Element;
+    onRenderSuggestionItem?: (suggestion: Mention, onSuggestionSelected: (suggestion: Mention) => void, isActive: boolean) => JSX.Element;
     onSuggestionSelected: (suggestion: Mention) => void;
     suggestions: Mention[];
     target: React_2.RefObject<Element>;

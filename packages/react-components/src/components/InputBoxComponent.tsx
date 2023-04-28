@@ -539,6 +539,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
             } else {
               updateSelectionIndexesWithMentionIfNeeded(e);
             }
+            /* @conditional-compile-remove(mention) */
             setShouldHandleOnMouseDownDuringSelect(false);
           }}
           // onMouseMove={(e) => {
@@ -565,10 +566,12 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
             // onClick has wrong range as it's called after onSelect
             // onMouseDown doesn't have correct selectionRange yet
             // so we need to handle onMouseDown to prevent onSelect default behavior
+            /* @conditional-compile-remove(mention) */
             setShouldHandleOnMouseDownDuringSelect(true);
           }}
           onTouchStart={() => {
             // see onMouseDown for more details
+            /* @conditional-compile-remove(mention) */
             setShouldHandleOnMouseDownDuringSelect(true);
           }}
           autoComplete="off"
