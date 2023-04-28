@@ -128,6 +128,19 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
   /* @conditional-compile-remove(mention) */
   // Index of where the caret is in the text field
   const [caretIndex, setCaretIndex] = useState<number | null>(null);
+
+  /* @conditional-compile-remove(mention) */
+  const updateMentionSuggestions = useCallback(
+    (suggestions: Mention[]) => {
+      setMentionSuggestions(suggestions);
+      textFieldRef?.current?.focus();
+      if (caretIndex) {
+        textFieldRef?.current?.setSelectionEnd(caretIndex);
+      }
+    },
+    [textFieldRef, caretIndex]
+  );
+
   /* @conditional-compile-remove(mention) */
   // Parse the text and get the plain text version to display in the input box
   useEffect(() => {
@@ -139,7 +152,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     setInputTextValue(plainText);
     setTagsValue(tags);
     updateMentionSuggestions([]);
-  }, [textValue, mentionLookupOptions?.trigger]);
+  }, [textValue, mentionLookupOptions?.trigger, updateMentionSuggestions]);
 
   const mergedRootStyle = mergeStyles(inputBoxWrapperStyle, styles?.root);
   const mergedTextFiledStyle = mergeStyles(
@@ -153,6 +166,54 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     fieldGroup: styles?.textField,
     errorMessage: styles?.systemMessage
   });
+
+  /* @conditional-compile-remove(mention) */
+  const onSuggestionSelected = useCallback(
+    (suggestion: Mention) => {
+      let selectionEnd = textFieldRef?.current?.selectionEnd || -1;
+      if (selectionEnd < 0) {
+        selectionEnd = 0;
+      } else if (selectionEnd > inputTextValue.length) {
+        selectionEnd = inputTextValue.length;
+      }
+      const oldPlainText = inputTextValue;
+      const mention = htmlStringForMentionSuggestion(suggestion);
+
+      // update plain text with the mention html text
+      const newPlainText =
+        inputTextValue.substring(0, currentTriggerStartIndex) + mention + inputTextValue.substring(selectionEnd);
+      const triggerText = mentionLookupOptions?.trigger ?? defaultMentionTrigger;
+      // update html text with updated plain text
+      const updatedHTML = updateHTML(
+        textValue,
+        oldPlainText,
+        newPlainText,
+        tagsValue,
+        currentTriggerStartIndex,
+        selectionEnd,
+        mention,
+        triggerText
+      );
+      // Move the caret in the text field to the end of the mention plain text
+      setCaretIndex(selectionEnd + suggestion.displayText.length);
+      setCurrentTriggerStartIndex(-1);
+      updateMentionSuggestions([]);
+      setActiveSuggestionIndex(undefined);
+      setInputTextValue(newPlainText);
+      onChange && onChange(null, updatedHTML);
+    },
+    [
+      textFieldRef,
+      inputTextValue,
+      currentTriggerStartIndex,
+      mentionLookupOptions?.trigger,
+      onChange,
+      textValue,
+      tagsValue,
+      /* @conditional-compile-remove(mention) */
+      updateMentionSuggestions
+    ]
+  );
 
   const onTextFieldKeyDown = useCallback(
     (ev: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -198,65 +259,16 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       }
       onKeyDown && onKeyDown(ev);
     },
-    [onEnterKeyDown, onKeyDown, supportNewline, mentionSuggestions, activeSuggestionIndex]
-  );
-
-  /* @conditional-compile-remove(mention) */
-  const updateMentionSuggestions = useCallback(
-    (suggestions: Mention[]) => {
-      setMentionSuggestions(suggestions);
-      textFieldRef?.current?.focus();
-      if (caretIndex) {
-        textFieldRef?.current?.setSelectionEnd(caretIndex);
-      }
-    },
-    [textFieldRef, caretIndex]
-  );
-
-  /* @conditional-compile-remove(mention) */
-  const onSuggestionSelected = useCallback(
-    (suggestion: Mention) => {
-      let selectionEnd = textFieldRef?.current?.selectionEnd || -1;
-      if (selectionEnd < 0) {
-        selectionEnd = 0;
-      } else if (selectionEnd > inputTextValue.length) {
-        selectionEnd = inputTextValue.length;
-      }
-      const oldPlainText = inputTextValue;
-      const mention = htmlStringForMentionSuggestion(suggestion);
-
-      // update plain text with the mention html text
-      const newPlainText =
-        inputTextValue.substring(0, currentTriggerStartIndex) + mention + inputTextValue.substring(selectionEnd);
-      const triggerText = mentionLookupOptions?.trigger ?? defaultMentionTrigger;
-      // update html text with updated plain text
-      const updatedHTML = updateHTML(
-        textValue,
-        oldPlainText,
-        newPlainText,
-        tagsValue,
-        currentTriggerStartIndex,
-        selectionEnd,
-        mention,
-        triggerText
-      );
-      // Move the caret in the text field to the end of the mention plain text
-      setCaretIndex(selectionEnd + suggestion.displayText.length);
-      setCurrentTriggerStartIndex(-1);
-      updateMentionSuggestions([]);
-      setActiveSuggestionIndex(undefined);
-      setInputTextValue(newPlainText);
-      onChange && onChange(null, updatedHTML);
-    },
     [
-      textFieldRef,
-      inputTextValue,
-      currentTriggerStartIndex,
-      mentionLookupOptions?.trigger,
-      onChange,
-      textValue,
-      tagsValue,
-      updateMentionSuggestions
+      onEnterKeyDown,
+      onKeyDown,
+      supportNewline,
+      /* @conditional-compile-remove(mention) */
+      mentionSuggestions,
+      /* @conditional-compile-remove(mention) */
+      activeSuggestionIndex,
+      /* @conditional-compile-remove(mention) */
+      onSuggestionSelected
     ]
   );
 
@@ -627,6 +639,7 @@ export const InputBoxButton = (props: InputBoxButtonProps): JSX.Element => {
   );
 };
 
+/* @conditional-compile-remove(mention) */
 /**
  * Find mention tag if selection is inside of it
  *
@@ -664,6 +677,7 @@ const findMentionTagForSelection = (tags: TagData[], selection: number): TagData
   return mentionTag;
 };
 
+/* @conditional-compile-remove(mention) */
 /**
  * Go through tags and find a new the selection index if it is inside of a mention tag
  *
@@ -719,6 +733,7 @@ const findNewSelectionIndexForMention = (
   return spaceIndex;
 };
 
+/* @conditional-compile-remove(mention) */
 /**
  * Go through the text and update it with the changed text
  *

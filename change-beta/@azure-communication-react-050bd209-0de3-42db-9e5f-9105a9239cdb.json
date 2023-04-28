@@ -1,6 +1,6 @@
 {
   "type": "minor",
-  "comment": "Updated Chat SDK and Signaling to the latest version",
+  "comment": "updated the documentation of inline image",
   "packageName": "@azure/communication-react",
   "email": "109105353+jpeng-ms@users.noreply.github.com",
   "dependentChangeType": "patch"
