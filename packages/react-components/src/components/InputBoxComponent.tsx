@@ -738,6 +738,96 @@ const findNewSelectionIndexForMention = (
 
 /* @conditional-compile-remove(mention) */
 /**
+ * Handle mention tag edit and by word deleting
+ *
+ * @private
+ */
+const handleMentionTagUpdate = (
+  htmlText: string,
+  oldPlainText: string,
+  lastProcessedHTMLIndex: number,
+  processedChange: string,
+  change: string,
+  tag: TagData,
+  closeTagIdx: number,
+  closeTagLength: number,
+  plainTextEndIndex: number,
+  startIndex: number,
+  oldPlainTextEndIndex: number,
+  mentionTagLength: number
+): [resultValue: string, updatedChange: string, htmlIndex: number] => {
+  if (tag.tagType !== 'msft-mention' || tag.plainTextBeginIndex === undefined) {
+    //TODO: update
+    return ['', processedChange, lastProcessedHTMLIndex];
+  }
+  let result = '';
+  if (change !== '') {
+    // mention tag should be deleted when user tries to edit it
+    // TODO: handle selectionRange after updating with mention tag!
+    result += htmlText.substring(lastProcessedHTMLIndex, tag.openTagIdx) + processedChange;
+    processedChange = '';
+    lastProcessedHTMLIndex = closeTagIdx + closeTagLength;
+  } else {
+    let rangeStart: number;
+    let rangeEnd: number;
+    // check if space symbol is handled in case if string looks like ' <tag> '
+    let isSpaceLengthHandled = false;
+    // this is a deletion case
+    if (change.substring(0, 1) === ' ') {
+      //the first character is ' '
+      rangeStart = startIndex;
+      isSpaceLengthHandled = true;
+    } else {
+      rangeStart = oldPlainText.lastIndexOf(' ', startIndex);
+      if (rangeStart !== -1 && rangeStart !== undefined && rangeStart > tag.plainTextBeginIndex) {
+        isSpaceLengthHandled = true;
+      }
+    }
+    if (change.substring(change.length - 2, change.length - 1) === ' ') {
+      //the last character is ' '
+      rangeEnd = oldPlainTextEndIndex;
+    } else {
+      // +1 to include the space
+      rangeEnd = oldPlainText.indexOf(' ', oldPlainTextEndIndex);
+      if (!isSpaceLengthHandled) {
+        rangeEnd += 1;
+        isSpaceLengthHandled = true;
+      }
+    }
+
+    if (rangeStart === -1 || rangeStart === undefined || rangeStart < tag.plainTextBeginIndex) {
+      rangeStart = tag.plainTextBeginIndex;
+    }
+    if (rangeEnd === -1 || rangeEnd === undefined || rangeEnd > plainTextEndIndex) {
+      rangeEnd = plainTextEndIndex;
+    }
+
+    if (rangeStart === tag.plainTextBeginIndex && rangeEnd === plainTextEndIndex) {
+      // the whole tag should be removed
+      result += htmlText.substring(lastProcessedHTMLIndex, tag.openTagIdx) + processedChange;
+      processedChange = '';
+      lastProcessedHTMLIndex = closeTagIdx + closeTagLength;
+    } else {
+      // only part of the tag should be removed
+      let startChangeDiff = 0;
+      let endChangeDiff = 0;
+      // need to check only rangeStart > tag.plainTextBeginIndex as when rangeStart === tag.plainTextBeginIndex startChangeDiff = 0
+      if (rangeStart > tag.plainTextBeginIndex) {
+        startChangeDiff = rangeStart - tag.plainTextBeginIndex - mentionTagLength;
+      }
+      endChangeDiff = rangeEnd - tag.plainTextBeginIndex - mentionTagLength;
+      result +=
+        htmlText.substring(lastProcessedHTMLIndex, tag.openTagIdx + tag.openTagBody.length + startChangeDiff) +
+        processedChange;
+      processedChange = '';
+      lastProcessedHTMLIndex = tag.openTagIdx + tag.openTagBody.length + endChangeDiff;
+    }
+  }
+  return [result, processedChange, lastProcessedHTMLIndex];
+};
+
+/* @conditional-compile-remove(mention) */
+/**
  * Go through the text and update it with the changed text
  *
  * @private
@@ -839,70 +929,24 @@ const updateHTML = (
         // TODO: should be updated with editing for the mention tag as there shouldn't be possibility to add something in beginning or at the end
         console.log('updateHTML 1.2 result', result);
         if (isMentionTag) {
-          if (change !== '') {
-            // mention tag should be deleted when user tries to edit it
-            // TODO: handle selectionRange after updating with mention tag!
-            result += htmlText.substring(lastProcessedHTMLIndex, tag.openTagIdx) + processedChange;
-            processedChange = '';
-            lastProcessedHTMLIndex = closeTagIdx + closeTagLength;
-            // the change is handled; exit
-            break;
-          } else {
-            let rangeStart: number;
-            let rangeEnd: number;
-            // check if space symbol is handled in case if string looks like ' <tag> '
-            let isSpaceLengthHandled = false;
-            // this is a deletion case
-            if (change.substring(0, 1) === ' ') {
-              //the first character is ' '
-              rangeStart = startIndex;
-              isSpaceLengthHandled = true;
-            } else {
-              rangeStart = oldPlainText.lastIndexOf(' ', startIndex);
-              if (rangeStart !== -1 && rangeStart !== undefined && rangeStart > tag.plainTextBeginIndex) {
-                isSpaceLengthHandled = true;
-              }
-            }
-            if (change.substring(change.length - 2, change.length - 1) === ' ') {
-              //the last character is ' '
-              rangeEnd = oldPlainTextEndIndex;
-            } else {
-              // +1 to include the space
-              rangeEnd = oldPlainText.indexOf(' ', oldPlainTextEndIndex);
-              if (!isSpaceLengthHandled) {
-                rangeEnd += 1;
-                isSpaceLengthHandled = true;
-              }
-            }
-
-            if (rangeStart === -1 || rangeStart === undefined || rangeStart < tag.plainTextBeginIndex) {
-              rangeStart = tag.plainTextBeginIndex;
-            }
-            if (rangeEnd === -1 || rangeEnd === undefined || rangeEnd > plainTextEndIndex) {
-              rangeEnd = plainTextEndIndex;
-            }
-
-            if (rangeStart === tag.plainTextBeginIndex && rangeEnd === plainTextEndIndex) {
-              // the whole tag should be removed
-              result += htmlText.substring(lastProcessedHTMLIndex, tag.openTagIdx) + processedChange;
-              processedChange = '';
-              lastProcessedHTMLIndex = closeTagIdx + closeTagLength;
-            } else {
-              // only part of the tag should be removed
-              let startChangeDiff = 0;
-              let endChangeDiff = 0;
-              // need to check only rangeStart > tag.plainTextBeginIndex as when rangeStart === tag.plainTextBeginIndex startChangeDiff = 0
-              if (rangeStart > tag.plainTextBeginIndex) {
-                startChangeDiff = rangeStart - tag.plainTextBeginIndex - mentionTagLength;
-              }
-              endChangeDiff = rangeEnd - tag.plainTextBeginIndex - mentionTagLength;
-              result +=
-                htmlText.substring(lastProcessedHTMLIndex, tag.openTagIdx + tag.openTagBody.length + startChangeDiff) +
-                processedChange;
-              processedChange = '';
-              lastProcessedHTMLIndex = tag.openTagIdx + tag.openTagBody.length + endChangeDiff;
-            }
-          }
+          const [resultValue, updatedChange, htmlIndex] = handleMentionTagUpdate(
+            htmlText,
+            oldPlainText,
+            lastProcessedHTMLIndex,
+            processedChange,
+            change,
+            tag,
+            closeTagIdx,
+            closeTagLength,
+            plainTextEndIndex,
+            startIndex,
+            oldPlainTextEndIndex,
+            mentionTagLength
+          );
+          result += resultValue;
+          processedChange = updatedChange;
+          lastProcessedHTMLIndex = htmlIndex;
+          // the change is handled; exit
           break;
         } else if (tag.subTags !== undefined && tag.subTags.length !== 0 && tag.content) {
           // with subtags
