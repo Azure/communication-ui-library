@@ -58,7 +58,9 @@ process.env['COMMUNICATION_REACT_FLAVOR'] === 'stable' &&
         // feature for blurred background and replace background effects
         'video-background-effects',
         // feature for vertical gallery layouts in VideoGallery
-        'vertical-gallery'
+        'vertical-gallery',
+        // Feature for updates needed for Click to Call (C2C) scenarios
+        'click-to-call'
       ],
       // A list of stabilized features.
       // These features can be listed in the conditional compilation directives without

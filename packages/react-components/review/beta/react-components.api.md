@@ -1250,6 +1250,9 @@ export const _LocalVideoTile: React_2.MemoExoticComponent<(props: {
     personaMinSize?: number | undefined;
 }) => JSX.Element>;
 
+// @beta
+export type LocalVideoTileMode = 'mobile' | 'desktop' | 'hidden' | 'responsive';
+
 // @public
 export type Message = ChatMessage | SystemMessage | CustomMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage;
 
@@ -2053,6 +2056,7 @@ export interface VideoGalleryProps {
     layout?: VideoGalleryLayout;
     localParticipant: VideoGalleryLocalParticipant;
     localVideoCameraCycleButtonProps?: LocalVideoCameraCycleButtonProps;
+    localVideoTileMode?: LocalVideoTileMode;
     localVideoViewOptions?: VideoStreamOptions;
     maxRemoteVideoStreams?: number;
     onCreateLocalStreamView?: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;

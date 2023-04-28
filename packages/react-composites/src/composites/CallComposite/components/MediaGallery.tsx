@@ -131,6 +131,7 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
         remoteVideoTileMenuOptions={remoteVideoTileMenuOptions}
         /* @conditional-compile-remove(vertical-gallery) */
         overflowGalleryPosition={overflowGalleryPosition}
+        localVideoTileMode={'hidden'}
       />
     );
   }, [

@@ -27,6 +27,7 @@ import { innerLayoutStyle, layerHostStyle, rootLayoutStyle } from './styles/Floa
 import { videoGalleryLayoutGap } from './styles/Layout.styles';
 import { useOrganizedParticipants } from './utils/videoGalleryLayoutUtils';
 import { OverflowGallery } from './OverflowGallery';
+import { LocalVideoTileMode } from '../VideoGallery';
 
 /**
  * Props for {@link FloatingLocalVideoLayout}.
@@ -42,6 +43,11 @@ export interface FloatingLocalVideoLayoutProps extends LayoutProps {
    * Height of parent element
    */
   parentHeight?: number;
+  /* @conditional-compile-remove(click-to-call) */
+  /**
+   * Local video tile mode
+   */
+  localVideoTileMode?: LocalVideoTileMode;
 }
 
 /**
@@ -63,7 +69,8 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
     parentWidth,
     parentHeight,
     /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryPosition = 'HorizontalBottom',
-    pinnedParticipantUserIds = []
+    pinnedParticipantUserIds = [],
+    /* @conditional-compile-remove(click-to-call) */ localVideoTileMode
   } = props;
 
   const theme = useTheme();
@@ -127,12 +134,13 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
   const layerHostId = useId('layerhost');
 
   const localVideoSizeRem = useMemo(() => {
-    if (isNarrow) {
+    console.log(localVideoTileMode);
+    if (isNarrow && /*@conditional-compile-remove(click-to-call) */ !(localVideoTileMode === 'desktop')) {
       return SMALL_FLOATING_MODAL_SIZE_REM;
     }
     /* @conditional-compile-remove(vertical-gallery) */
     if (overflowGalleryTiles.length > 0 && overflowGalleryPosition === 'VerticalRight') {
-      return isNarrow
+      return isNarrow && /*@conditional-compile-remove(click-to-call) */ !(localVideoTileMode === 'desktop')
         ? SMALL_FLOATING_MODAL_SIZE_REM
         : isShort
         ? SHORT_VERTICAL_GALLERY_FLOATING_MODAL_SIZE_REM

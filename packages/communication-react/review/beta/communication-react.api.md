@@ -3606,6 +3606,7 @@ export interface VideoGalleryProps {
     layout?: VideoGalleryLayout;
     localParticipant: VideoGalleryLocalParticipant;
     localVideoCameraCycleButtonProps?: LocalVideoCameraCycleButtonProps;
+    localVideoTileMode?: LocalVideoTileMode;
     localVideoViewOptions?: VideoStreamOptions;
     maxRemoteVideoStreams?: number;
     onCreateLocalStreamView?: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
