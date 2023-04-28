@@ -39,7 +39,6 @@ import {
   IPersona,
   Theme
 } from '@fluentui/react';
-import { ComponentSlotStyle } from '@fluentui/react-northstar';
 import { LiveAnnouncer } from 'react-aria-live';
 import { delay } from './utils/delay';
 import {
@@ -72,6 +71,7 @@ import { AttachmentDownloadResult } from './FileDownloadCards';
 import { useTheme } from '../theming';
 /* @conditional-compile-remove(at-mention) */
 import { AtMentionOptions } from './AtMentionFlyout';
+import { ComponentSlotStyle } from '../types/ComponentSlotStyle';
 
 const isMessageSame = (first: ChatMessage, second: ChatMessage): boolean => {
   return (
