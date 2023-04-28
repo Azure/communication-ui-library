@@ -85,67 +85,75 @@ const MessageContentAsRichTextHTML = (props: ChatMessageContentProps): JSX.Eleme
     });
   }, [props]);
 
-  /* @conditional-compile-remove(mention) */
-  const mentionSuggestionRenderer = props.mentionDisplayOptions?.onRenderMention;
-  /* @conditional-compile-remove(mention) */
-  if (mentionSuggestionRenderer) {
-    // Use custom HTML processing if mentionSuggestionRenderer is provided
+  const mentionSuggestionRenderer =
+    /* @conditional-compile-remove(mention) */ props.mentionDisplayOptions?.onRenderMention ?? undefined;
 
-    const processNodeDefinitions = ProcessNodeDefinitions();
-    const processingInstructions: ProcessingInstructionType[] = [
-      {
-        shouldProcessNode: (node) => {
-          // Override the handling of the <msft-mention> tag in the HTML
+  const processNodeDefinitions = ProcessNodeDefinitions();
+  const processingInstructions: ProcessingInstructionType[] = [
+    // Mention render override if needed
+    {
+      shouldProcessNode: (node) => {
+        if (mentionSuggestionRenderer) {
+          // Override the handling of the <msft-mention> tag in the HTML if there's a custom renderer
           return node.name === 'msft-mention';
-        },
-        processNode: (node) => {
-          console.log('processing node', node);
-          const { userid, displayname } = node.attribs;
-          const suggestion: Mention = {
-            id: userid,
-            displayText: displayname
-          };
+        }
+        return false;
+      },
+      processNode: (node) => {
+        const { userid, displayname } = node.attribs;
+        const suggestion: Mention = {
+          id: userid,
+          displayText: displayname
+        };
+        /* @conditional-compile-remove(mention) */
+        if (mentionSuggestionRenderer) {
           return mentionSuggestionRenderer(suggestion);
         }
-      },
-      {
-        // Process everything else in the default way
-        shouldProcessNode: () => {
-          return true;
-        },
-        processNode: processNodeDefinitions.processDefaultNode
+        return processNodeDefinitions.processDefaultNode;
       }
-    ];
+    },
+    // Inline image fetching as needed
+    {
+      shouldProcessNode: (node): boolean => {
+        // Process img node with id in attachments list
+        /* @conditional-compile-remove(teams-inline-images) */
+        return (
+          node.name &&
+          node.name === 'img' &&
+          node.attribs &&
+          node.attribs.id &&
+          props.message.attachedFilesMetadata?.find((f) => f.id === node.attribs.id)
+        );
+        return false;
+      },
+      processNode: (node, children, index): HTMLElement => {
+        // logic to check id in map/list
+        if (props.attachmentsMap && node.attribs.id in props.attachmentsMap) {
+          node.attribs = { ...node.attribs, src: props.attachmentsMap[node.attribs.id] };
+        }
+        return processNodeDefinitions.processDefaultNode(node, children, index);
+      }
+    },
+    {
+      // Process everything else in the default way
+      shouldProcessNode: () => {
+        return true;
+      },
+      processNode: processNodeDefinitions.processDefaultNode
+    }
+  ];
 
-    const htmlContent = htmlToReactParser.parseWithInstructions(
-      props.message.content ?? '',
-      IsValidNodeDefinitions.alwaysValid,
-      processingInstructions
-    );
-    return (
-      <MessageContentWithLiveAria
-        message={props.message}
-        liveMessage={`${props.message.mine ? '' : liveAuthor} ${extractContent(props.message.content || '')}`}
-        ariaLabel={messageContentAriaText(props)}
-        content={htmlContent}
-      />
-    );
-  } else {
-    return (
-      <MessageContentWithLiveAria
-        message={props.message}
-        liveMessage={`${props.message.mine ? '' : liveAuthor} ${extractContent(props.message.content || '')}`}
-        ariaLabel={messageContentAriaText(props)}
-        content={htmlToReactParser.parse(props.message.content ?? '')}
-      />
-    );
-  }
+  const htmlContent = htmlToReactParser.parseWithInstructions(
+    props.message.content ?? '',
+    IsValidNodeDefinitions.alwaysValid,
+    processingInstructions
+  );
   return (
     <MessageContentWithLiveAria
       message={props.message}
       liveMessage={`${props.message.mine ? '' : liveAuthor} ${extractContent(props.message.content || '')}`}
       ariaLabel={messageContentAriaText(props)}
-      content={htmlToReactParser.parse(props.message.content ?? '')}
+      content={htmlContent}
     />
   );
 };
