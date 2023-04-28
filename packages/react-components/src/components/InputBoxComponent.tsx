@@ -126,6 +126,19 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
   /* @conditional-compile-remove(mention) */
   // Index of where the caret is in the text field
   const [caretIndex, setCaretIndex] = useState<number | null>(null);
+
+  /* @conditional-compile-remove(mention) */
+  const updateMentionSuggestions = useCallback(
+    (suggestions: Mention[]) => {
+      setMentionSuggestions(suggestions);
+      textFieldRef?.current?.focus();
+      if (caretIndex) {
+        textFieldRef?.current?.setSelectionEnd(caretIndex);
+      }
+    },
+    [textFieldRef, caretIndex]
+  );
+
   /* @conditional-compile-remove(mention) */
   // Parse the text and get the plain text version to display in the input box
   useEffect(() => {
@@ -137,7 +150,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     setInputTextValue(plainText);
     setTagsValue(tags);
     updateMentionSuggestions([]);
-  }, [textValue, mentionLookupOptions?.trigger]);
+  }, [textValue, mentionLookupOptions?.trigger, updateMentionSuggestions]);
 
   const mergedRootStyle = mergeStyles(inputBoxWrapperStyle, styles?.root);
   const mergedTextFiledStyle = mergeStyles(
@@ -151,65 +164,6 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     fieldGroup: styles?.textField,
     errorMessage: styles?.systemMessage
   });
-
-  const onTextFieldKeyDown = useCallback(
-    (ev: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-      // Uses KeyCode 229 and which code 229 to determine if the press of the enter key is from a composition session or not (Safari only)
-      if (ev.nativeEvent.isComposing || ev.nativeEvent.keyCode === 229 || ev.nativeEvent.which === 229) {
-        return;
-      }
-      if (ev.key === 'ArrowUp') {
-        ev.preventDefault();
-        /* @conditional-compile-remove(mention) */
-        if (mentionSuggestions.length > 0) {
-          const newActiveIndex =
-            activeSuggestionIndex === undefined
-              ? mentionSuggestions.length - 1
-              : Math.max(activeSuggestionIndex - 1, 0);
-          setActiveSuggestionIndex(newActiveIndex);
-        }
-      } else if (ev.key === 'ArrowDown') {
-        ev.preventDefault();
-        /* @conditional-compile-remove(mention) */
-        if (mentionSuggestions.length > 0) {
-          const newActiveIndex =
-            activeSuggestionIndex === undefined
-              ? 0
-              : Math.min(activeSuggestionIndex + 1, mentionSuggestions.length - 1);
-          setActiveSuggestionIndex(newActiveIndex);
-        }
-      }
-      if (ev.key === 'Enter' && (ev.shiftKey === false || !supportNewline)) {
-        ev.preventDefault();
-
-        // If we are looking up a mention, select the focused suggestion
-        /* @conditional-compile-remove(mention) */
-        if (mentionSuggestions.length > 0 && activeSuggestionIndex !== undefined) {
-          const selectedMention = mentionSuggestions[activeSuggestionIndex];
-          if (selectedMention) {
-            onSuggestionSelected(selectedMention);
-            return;
-          }
-        } else {
-          onEnterKeyDown && onEnterKeyDown();
-        }
-      }
-      onKeyDown && onKeyDown(ev);
-    },
-    [onEnterKeyDown, onKeyDown, supportNewline, mentionSuggestions, activeSuggestionIndex]
-  );
-
-  /* @conditional-compile-remove(mention) */
-  const updateMentionSuggestions = useCallback(
-    (suggestions: Mention[]) => {
-      setMentionSuggestions(suggestions);
-      textFieldRef?.current?.focus();
-      if (caretIndex) {
-        textFieldRef?.current?.setSelectionEnd(caretIndex);
-      }
-    },
-    [textFieldRef, caretIndex]
-  );
 
   /* @conditional-compile-remove(mention) */
   const onSuggestionSelected = useCallback(
@@ -256,6 +210,53 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       tagsValue,
       updateMentionSuggestions
     ]
+  );
+
+  const onTextFieldKeyDown = useCallback(
+    (ev: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      // Uses KeyCode 229 and which code 229 to determine if the press of the enter key is from a composition session or not (Safari only)
+      if (ev.nativeEvent.isComposing || ev.nativeEvent.keyCode === 229 || ev.nativeEvent.which === 229) {
+        return;
+      }
+      if (ev.key === 'ArrowUp') {
+        ev.preventDefault();
+        /* @conditional-compile-remove(mention) */
+        if (mentionSuggestions.length > 0) {
+          const newActiveIndex =
+            activeSuggestionIndex === undefined
+              ? mentionSuggestions.length - 1
+              : Math.max(activeSuggestionIndex - 1, 0);
+          setActiveSuggestionIndex(newActiveIndex);
+        }
+      } else if (ev.key === 'ArrowDown') {
+        ev.preventDefault();
+        /* @conditional-compile-remove(mention) */
+        if (mentionSuggestions.length > 0) {
+          const newActiveIndex =
+            activeSuggestionIndex === undefined
+              ? 0
+              : Math.min(activeSuggestionIndex + 1, mentionSuggestions.length - 1);
+          setActiveSuggestionIndex(newActiveIndex);
+        }
+      }
+      if (ev.key === 'Enter' && (ev.shiftKey === false || !supportNewline)) {
+        ev.preventDefault();
+
+        // If we are looking up a mention, select the focused suggestion
+        /* @conditional-compile-remove(mention) */
+        if (mentionSuggestions.length > 0 && activeSuggestionIndex !== undefined) {
+          const selectedMention = mentionSuggestions[activeSuggestionIndex];
+          if (selectedMention) {
+            onSuggestionSelected(selectedMention);
+            return;
+          }
+        } else {
+          onEnterKeyDown && onEnterKeyDown();
+        }
+      }
+      onKeyDown && onKeyDown(ev);
+    },
+    [onEnterKeyDown, onKeyDown, supportNewline, mentionSuggestions, activeSuggestionIndex, onSuggestionSelected]
   );
 
   /* @conditional-compile-remove(mention) */

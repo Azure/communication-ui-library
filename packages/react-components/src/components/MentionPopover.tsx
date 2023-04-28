@@ -173,7 +173,7 @@ export const _MentionPopover = (props: _MentionPopoverProps): JSX.Element => {
     } else if (changedSelection === false) {
       setChangedSelection(true);
     }
-  }, [activeSuggestionIndex]);
+  }, [activeSuggestionIndex, changedSelection]);
 
   useEffect(() => {
     window && window.addEventListener('click', dismissPopoverWhenClickingOutside);
