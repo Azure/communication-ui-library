@@ -208,6 +208,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       onChange,
       textValue,
       tagsValue,
+      /* @conditional-compile-remove(mention) */
       updateMentionSuggestions
     ]
   );
@@ -256,7 +257,17 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       }
       onKeyDown && onKeyDown(ev);
     },
-    [onEnterKeyDown, onKeyDown, supportNewline, mentionSuggestions, activeSuggestionIndex, onSuggestionSelected]
+    [
+      onEnterKeyDown,
+      onKeyDown,
+      supportNewline,
+      /* @conditional-compile-remove(mention) */
+      mentionSuggestions,
+      /* @conditional-compile-remove(mention) */
+      activeSuggestionIndex,
+      /* @conditional-compile-remove(mention) */
+      onSuggestionSelected
+    ]
   );
 
   /* @conditional-compile-remove(mention) */
@@ -616,6 +627,7 @@ export const InputBoxButton = (props: InputBoxButtonProps): JSX.Element => {
   );
 };
 
+/* @conditional-compile-remove(mention) */
 /**
  * Find mention tag if selection is inside of it
  *
@@ -653,6 +665,7 @@ const findMentionTagForSelection = (tags: TagData[], selection: number): TagData
   return mentionTag;
 };
 
+/* @conditional-compile-remove(mention) */
 /**
  * Go through tags and find a new the selection index if it is inside of a mention tag
  *
@@ -708,6 +721,7 @@ const findNewSelectionIndexForMention = (
   return spaceIndex;
 };
 
+/* @conditional-compile-remove(mention) */
 /**
  * Go through the text and update it with the changed text
  *
