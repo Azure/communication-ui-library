@@ -1204,9 +1204,6 @@ export interface ComponentLocale {
 // @public
 export type ComponentProps<Component extends (props: any) => JSX.Element> = ChatReturnProps<Component> extends never ? CallingReturnProps<Component> extends never ? undefined : CallingReturnProps<Component> : ChatReturnProps<Component>;
 
-// @public (undocumented)
-export type ComponentSlotStyle = any;
-
 // @public
 export type ComponentSlotStyle = Omit<IRawStyle, 'animation'>;
 

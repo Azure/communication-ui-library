@@ -254,9 +254,6 @@ export interface ComponentLocale {
     strings: ComponentStrings;
 }
 
-// @public (undocumented)
-export type ComponentSlotStyle = any;
-
 // @public
 export type ComponentSlotStyle = Omit<IRawStyle, 'animation'>;
 

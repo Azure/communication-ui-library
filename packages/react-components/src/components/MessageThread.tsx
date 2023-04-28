@@ -72,7 +72,6 @@ import { AttachmentDownloadResult } from './FileDownloadCards';
 import { useTheme } from '../theming';
 /* @conditional-compile-remove(at-mention) */
 import { AtMentionOptions } from './AtMentionFlyout';
-import { ComponentSlotStyle } from '../types/ComponentSlotStyle';
 
 const isMessageSame = (first: ChatMessage, second: ChatMessage): boolean => {
   return (
