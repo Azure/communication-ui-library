@@ -776,8 +776,10 @@ const updateHTML = (
     // htmlText.substring because html strings don't include the trigger
     // mentionTagLength will be set only for 'msft-mention', otherwise should be 0
     let mentionTagLength = 0;
+    let isMentionTag = false;
     if (tag.tagType === 'msft-mention') {
       mentionTagLength = mentionTrigger.length;
+      isMentionTag = true;
     }
 
     //change start is before the open tag
@@ -789,6 +791,7 @@ const updateHTML = (
       console.log('updateHTML 0 result after update', result);
       if (oldPlainTextEndIndex <= tag.plainTextBeginIndex) {
         //the whole change is before tag start
+        // oldPlainTextEndIndex already includes mentionTag length
         const endChangeDiff = tag.plainTextBeginIndex - oldPlainTextEndIndex;
         lastProcessedHTMLIndex = tag.openTagIdx - endChangeDiff;
         processedChange = '';
@@ -830,9 +833,75 @@ const updateHTML = (
         break;
       } else if (startIndex >= tag.plainTextBeginIndex && oldPlainTextEndIndex < plainTextEndIndex) {
         // the change is between tag
-        // TODO: should be updated with editing for the mention tag as there shouldn't be possibility to add something in begginging
+        // TODO: should be updated with editing for the mention tag as there shouldn't be possibility to add something in beginning or at the end
         console.log('updateHTML 1.2 result', result);
-        if (tag.subTags !== undefined && tag.subTags.length !== 0 && tag.content) {
+        if (isMentionTag) {
+          if (change !== '') {
+            // mention tag should be deleted when user tries to edit it
+            // TODO: handle selectionRange after updating with mention tag!
+            result += htmlText.substring(lastProcessedHTMLIndex, tag.openTagIdx) + processedChange;
+            processedChange = '';
+            lastProcessedHTMLIndex = closeTagIdx + closeTagLength;
+            // the change is handled; exit
+            break;
+          } else {
+            let rangeStart: number;
+            let rangeEnd: number;
+            // check if space symbol is handled in case if string looks like ' <tag> '
+            let isSpaceLengthHandled = false;
+            // this is a deletion case
+            if (change.substring(0, 1) === ' ') {
+              //the first character is ' '
+              rangeStart = startIndex;
+              isSpaceLengthHandled = true;
+            } else {
+              rangeStart = oldPlainText.lastIndexOf(' ', startIndex);
+              if (rangeStart !== -1 && rangeStart !== undefined && rangeStart > tag.plainTextBeginIndex) {
+                isSpaceLengthHandled = true;
+              }
+            }
+            if (change.substring(change.length - 2, change.length - 1) === ' ') {
+              //the last character is ' '
+              rangeEnd = oldPlainTextEndIndex;
+            } else {
+              // +1 to include the space
+              rangeEnd = oldPlainText.indexOf(' ', oldPlainTextEndIndex);
+              if (!isSpaceLengthHandled) {
+                rangeEnd += 1;
+                isSpaceLengthHandled = true;
+              }
+            }
+
+            if (rangeStart === -1 || rangeStart === undefined || rangeStart < tag.plainTextBeginIndex) {
+              rangeStart = tag.plainTextBeginIndex;
+            }
+            if (rangeEnd === -1 || rangeEnd === undefined || rangeEnd > plainTextEndIndex) {
+              rangeEnd = plainTextEndIndex;
+            }
+
+            if (rangeStart === tag.plainTextBeginIndex && rangeEnd === plainTextEndIndex) {
+              // the whole tag should be removed
+              result += htmlText.substring(lastProcessedHTMLIndex, tag.openTagIdx) + processedChange;
+              processedChange = '';
+              lastProcessedHTMLIndex = closeTagIdx + closeTagLength;
+            } else {
+              // only part of the tag should be removed
+              let startChangeDiff = 0;
+              let endChangeDiff = 0;
+              // need to check only rangeStart > tag.plainTextBeginIndex as when rangeStart === tag.plainTextBeginIndex startChangeDiff = 0
+              if (rangeStart > tag.plainTextBeginIndex) {
+                startChangeDiff = rangeStart - tag.plainTextBeginIndex - mentionTagLength;
+              }
+              endChangeDiff = rangeEnd - tag.plainTextBeginIndex - mentionTagLength;
+              result +=
+                htmlText.substring(lastProcessedHTMLIndex, tag.openTagIdx + tag.openTagBody.length + startChangeDiff) +
+                processedChange;
+              processedChange = '';
+              lastProcessedHTMLIndex = tag.openTagIdx + tag.openTagBody.length + endChangeDiff;
+            }
+          }
+          break;
+        } else if (tag.subTags !== undefined && tag.subTags.length !== 0 && tag.content) {
           // with subtags
 
           // before the tag content
@@ -866,6 +935,7 @@ const updateHTML = (
         }
       } else if (startIndex > tag.plainTextBeginIndex && oldPlainTextEndIndex > plainTextEndIndex) {
         console.log('updateHTML 1.3 result', result);
+        //TODO: here should be check for the mention tag
         //the change started in the tag but finishes somewhere further
         const startChangeDiff = startIndex - tag.plainTextBeginIndex - mentionTagLength;
         if (tag.subTags !== undefined && tag.subTags.length !== 0 && tag.content !== undefined) {
@@ -915,6 +985,7 @@ const updateHTML = (
       } else if (startIndex < tag.plainTextBeginIndex && oldPlainTextEndIndex < plainTextEndIndex) {
         console.log('updateHTML 1.6 result', result);
         // the change  starts before the tag and ends in a tag
+        //TODO: here should be check for the mention tag
         if (tag.subTags !== undefined && tag.subTags.length !== 0 && tag.content !== undefined) {
           // with subtags
 
@@ -938,6 +1009,7 @@ const updateHTML = (
           result +=
             htmlText.substring(lastProcessedHTMLIndex, tag.openTagIdx + tag.openTagBody.length) + processedChange;
           processedChange = '';
+          // oldPlainTextEndIndex already includes mentionTag length
           const endChangeDiff = plainTextEndIndex - oldPlainTextEndIndex;
           // as change may be before the end of the tag, we need to add the rest of the tag
           lastProcessedHTMLIndex = closeTagIdx - endChangeDiff;
@@ -947,6 +1019,7 @@ const updateHTML = (
       } else if (startIndex > tag.plainTextBeginIndex && oldPlainTextEndIndex === plainTextEndIndex) {
         console.log('updateHTML 1.7 result', result);
         // the change  starts in the tag and ends at the end of a tag
+        //TODO: here should be check for the mention tag
         if (tag.subTags !== undefined && tag.subTags.length !== 0 && tag.content !== undefined) {
           // with subtags
 
@@ -983,6 +1056,7 @@ const updateHTML = (
     if (i === tags.length - 1 && oldPlainTextEndIndex >= plainTextEndIndex) {
       console.log('updateHTML 2 result', result);
       //the last tag should handle the end of the change if needed
+      // oldPlainTextEndIndex already includes mentionTag length
       const endChangeDiff = oldPlainTextEndIndex - plainTextEndIndex;
       if (startIndex >= plainTextEndIndex) {
         const startChangeDiff = startIndex - plainTextEndIndex;
