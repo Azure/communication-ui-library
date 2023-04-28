@@ -12,6 +12,7 @@ import { ChatMessageComponentAsMessageBubble } from './ChatMessageComponentAsMes
 import { FileDownloadHandler, FileMetadata } from '../FileDownloadCards';
 /* @conditional-compile-remove(at-mention) */
 import { AtMentionDisplayOptions } from '../AtMentionFlyout';
+import { ComponentSlotStyle } from '../../types/ComponentSlotStyle';
 
 type ChatMessageComponentProps = {
   message: ChatMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage;

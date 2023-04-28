@@ -173,6 +173,7 @@ export type {
   CommunicationParticipant,
   ComponentSlotStyle,
   ComponentLocale,
+  ComponentSlotStyle,
   ComponentStrings,
   ContentSystemMessage,
   ControlBarButtonProps,

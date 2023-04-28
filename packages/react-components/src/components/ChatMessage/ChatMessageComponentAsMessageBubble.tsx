@@ -29,6 +29,7 @@ import { _FileDownloadCards, FileDownloadHandler } from '../FileDownloadCards';
 import { ComponentLocale, useLocale } from '../../localization';
 /* @conditional-compile-remove(at-mention) */
 import { AtMentionDisplayOptions } from '../AtMentionFlyout';
+import { ComponentSlotStyle } from '../../types/ComponentSlotStyle';
 
 type ChatMessageComponentAsMessageBubbleProps = {
   message: ChatMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage;
