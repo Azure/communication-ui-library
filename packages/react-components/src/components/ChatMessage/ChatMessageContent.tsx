@@ -6,7 +6,6 @@ import React from 'react';
 import { useEffect } from 'react';
 import { _formatString } from '@internal/acs-ui-common';
 import { Parser } from 'html-to-react';
-/* @conditional-compile-remove(mention) */
 import { ProcessNodeDefinitions, IsValidNodeDefinitions, ProcessingInstructionType } from 'html-to-react';
 
 import Linkify from 'react-linkify';
@@ -85,29 +84,27 @@ const MessageContentAsRichTextHTML = (props: ChatMessageContentProps): JSX.Eleme
     });
   }, [props]);
 
-  const mentionSuggestionRenderer =
-    /* @conditional-compile-remove(mention) */ props.mentionDisplayOptions?.onRenderMention ?? undefined;
-
   const processNodeDefinitions = ProcessNodeDefinitions();
   const processingInstructions: ProcessingInstructionType[] = [
     // Mention render override if needed
     {
       shouldProcessNode: (node) => {
-        if (mentionSuggestionRenderer) {
+        /* @conditional-compile-remove(mention) */
+        if (props.mentionDisplayOptions?.onRenderMention) {
           // Override the handling of the <msft-mention> tag in the HTML if there's a custom renderer
           return node.name === 'msft-mention';
         }
         return false;
       },
       processNode: (node) => {
-        const { userid, displayname } = node.attribs;
-        const suggestion: Mention = {
-          id: userid,
-          displayText: displayname
-        };
         /* @conditional-compile-remove(mention) */
-        if (mentionSuggestionRenderer) {
-          return mentionSuggestionRenderer(suggestion);
+        if (props.mentionDisplayOptions?.onRenderMention) {
+          const { userid, displayname } = node.attribs;
+          const suggestion: Mention = {
+            id: userid,
+            displayText: displayname
+          };
+          return props.mentionDisplayOptions.onRenderMention(suggestion);
         }
         return processNodeDefinitions.processDefaultNode;
       }
@@ -128,6 +125,7 @@ const MessageContentAsRichTextHTML = (props: ChatMessageContentProps): JSX.Eleme
       },
       processNode: (node, children, index): HTMLElement => {
         // logic to check id in map/list
+        /* @conditional-compile-remove(teams-inline-images) */
         if (props.attachmentsMap && node.attribs.id in props.attachmentsMap) {
           node.attribs = { ...node.attribs, src: props.attachmentsMap[node.attribs.id] };
         }
