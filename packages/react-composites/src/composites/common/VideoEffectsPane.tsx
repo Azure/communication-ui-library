@@ -4,6 +4,8 @@ import React from 'react';
 /* @conditional-compile-remove(video-background-effects) */
 import { useCallback, useMemo } from 'react';
 /* @conditional-compile-remove(video-background-effects) */
+import { MessageBar, MessageBarType, Stack } from '@fluentui/react';
+/* @conditional-compile-remove(video-background-effects) */
 import { useLocale } from '../localization';
 import { _VideoEffectsItemProps } from '@internal/react-components';
 /* @conditional-compile-remove(video-background-effects) */
@@ -22,7 +24,7 @@ import { useSelector } from '../CallComposite/hooks/useSelector';
 /* @conditional-compile-remove(video-background-effects) */
 import { useAdapter } from '../CallComposite/adapter/CallAdapterProvider';
 /* @conditional-compile-remove(video-background-effects) */
-import { Stack } from '@fluentui/react';
+import { localVideoSelector } from '../CallComposite/selectors/localVideoStreamSelector';
 
 /**
  * Pane that is used to show video effects button
@@ -124,10 +126,21 @@ const VideoEffectsPaneTrampoline = (
 ): JSX.Element => {
   /* @conditional-compile-remove(video-background-effects) */
   const selectedEffect = useSelector(activeVideoBackgroundEffectSelector);
+  /* @conditional-compile-remove(video-background-effects) */
+  const isCameraOn = useSelector(localVideoSelector).isAvailable;
+  /* @conditional-compile-remove(video-background-effects) */
+  const showWarning = !isCameraOn && selectedEffect !== 'none';
+  /* @conditional-compile-remove(video-background-effects) */
+  const locale = useLocale();
 
   /* @conditional-compile-remove(video-background-effects) */
   return (
     <Stack horizontalAlign="center">
+      {showWarning && (
+        <MessageBar messageBarType={MessageBarType.warning}>
+          {locale.strings.call.cameraOffBackgroundEffectWarningText}
+        </MessageBar>
+      )}
       <_VideoBackgroundEffectsPicker
         label="Background" // TODO [jaburnsi]: localize
         styles={backgroundPickerStyles}
