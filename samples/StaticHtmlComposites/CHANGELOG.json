@@ -2,6 +2,21 @@
   "name": "sample-static-html-composites",
   "entries": [
     {
+      "date": "Fri, 28 Apr 2023 23:16:11 GMT",
+      "tag": "sample-static-html-composites_v1.0.0",
+      "version": "1.0.0",
+      "comments": {
+        "undefined": [
+          {
+            "author": "beachball",
+            "package": "sample-static-html-composites",
+            "comment": "Bump @azure/communication-react to v1.5.1-beta.4",
+            "commit": "1884352e23d9913abe77200d33e0699166fc1498"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 24 Apr 2023 15:39:40 GMT",
       "tag": "sample-static-html-composites_v1.0.0",
       "version": "1.0.0",

@@ -2,6 +2,53 @@
   "name": "@azure/communication-react",
   "entries": [
     {
+      "date": "Fri, 28 Apr 2023 23:16:11 GMT",
+      "tag": "@azure/communication-react_v1.5.1-beta.4",
+      "version": "1.5.1-beta.4",
+      "comments": {
+        "none": [
+          {
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "5ebc7c05bc801577b43366c7d04bf92a440a9eeb",
+            "comment": "Bumped"
+          },
+          {
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "810937843fd0b95bf6ff562321a45c98b1472158",
+            "comment": "Create"
+          }
+        ],
+        "prerelease": [
+          {
+            "author": "joshlai@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "91ed8bcb2ddf81263b0fb3e1aadcd535eb76d034",
+            "comment": "[ChatMessageContent] Updating the warning text to be string | undefined"
+          },
+          {
+            "author": "joshlai@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "f5a3bd3322380aab059d41af4df753206c41be94",
+            "comment": "[MessageThread] Remove extra arguments on CancelEditCallback"
+          },
+          {
+            "author": "joshlai@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "250f8b2206489f1cbb44ba69b038f061ef18beb3",
+            "comment": "[AzureCommunicationCallWithChatAdapter] Creating call with chat adapter from state now take an options bag"
+          },
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@azure/communication-react",
+            "commit": "63361154b6beb8e861a6fcd84f52ff30908b72c3",
+            "comment": "Revert \"[Chat][Feature] Preliminary implementation of _AtMentionFlyout component (#2879)\""
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 24 Apr 2023 15:39:35 GMT",
       "tag": "@azure/communication-react_v1.5.1-beta.3",
       "version": "1.5.1-beta.3",
