@@ -9,13 +9,8 @@ This log was last generated on Fri, 28 Apr 2023 23:16:11 GMT and should not be m
 Fri, 28 Apr 2023 23:16:11 GMT 
 [Compare changes](https://github.com/azure/communication-ui-library/compare/@azure/communication-react_v1.5.1-beta.3...@azure/communication-react_v1.5.1-beta.4)
 
-### Changes
-
-- `@azure/communication-react`
-  - [ChatMessageContent] Updating the warning text to be string | undefined ([PR #2994](https://github.com/azure/communication-ui-library/pull/2994) by joshlai@microsoft.com)
-  - [MessageThread] Remove extra arguments on CancelEditCallback ([PR #2990](https://github.com/azure/communication-ui-library/pull/2990) by joshlai@microsoft.com)
-  - [AzureCommunicationCallWithChatAdapter] Creating call with chat adapter from state now take an options bag ([PR #2992](https://github.com/azure/communication-ui-library/pull/2992) by joshlai@microsoft.com)
-  - Revert "[Chat][Feature] Preliminary implementation of _AtMentionFlyout component (#2879)" ([PR #2987](https://github.com/azure/communication-ui-library/pull/2987) by jiangnanhello@live.com)
+### Bug fixes
+  - Revert a breaking change for createAzureCommunicationCallWithChatAdapterFromClients
 
 ## [1.5.1-beta.3](https://github.com/azure/communication-ui-library/tree/1.5.1-beta.3)
 
