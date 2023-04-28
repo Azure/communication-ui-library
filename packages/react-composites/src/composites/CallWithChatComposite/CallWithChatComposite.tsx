@@ -304,18 +304,18 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
     ]
   );
 
-  const callControlOptions = useMemo(
+  const callControlOptionsFromProps = useMemo(
     () => ({
       ...(typeof props.callControls === 'object' ? props.callControls : {})
     }),
     [props.callControls]
   );
 
-  const injectedCustomButtonsTrampoline = useMemo(() => {
+  const injectedCustomButtonsFromProps = useMemo(() => {
     /* @conditional-compile-remove(control-bar-button-injection) */
-    return [...(typeof props.callControls === 'object' ? props.callControls?.onFetchCustomButtonProps ?? [] : [])];
+    return [...(callControlOptionsFromProps.onFetchCustomButtonProps ?? [])];
     return [];
-  }, [props.callControls]);
+  }, [callControlOptionsFromProps]);
 
   const callCompositeOptions: CallCompositeOptions = useMemo(
     () => ({
@@ -323,11 +323,11 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
         props.callControls === false
           ? false
           : ({
-              ...callControlOptions,
+              ...callControlOptionsFromProps,
               onFetchCustomButtonProps: [
                 ...(showChatButton ? [customChatButton] : []),
                 /* @conditional-compile-remove(control-bar-button-injection) */
-                ...injectedCustomButtonsTrampoline
+                ...injectedCustomButtonsFromProps
               ],
               legacyControlBarExperience: false
             } as _CallControlOptions),
@@ -342,10 +342,10 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
     }),
     [
       props.callControls,
-      callControlOptions,
+      callControlOptionsFromProps,
       showChatButton,
       customChatButton,
-      injectedCustomButtonsTrampoline,
+      injectedCustomButtonsFromProps,
       /* @conditional-compile-remove(call-readiness) */
       props.deviceChecks,
       /* @conditional-compile-remove(unsupported-browser) */
