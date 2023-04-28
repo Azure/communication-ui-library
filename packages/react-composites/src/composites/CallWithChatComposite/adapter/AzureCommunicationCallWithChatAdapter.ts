@@ -55,10 +55,11 @@ import {
   mergeChatAdapterStateIntoCallWithChatAdapterState
 } from '../state/CallWithChatAdapterState';
 import {
-  AzureCommunicationChatAdapterOptions,
   createAzureCommunicationChatAdapter,
   createAzureCommunicationChatAdapterFromClient
 } from '../../ChatComposite/adapter/AzureCommunicationChatAdapter';
+/* @conditional-compile-remove(teams-inline-images) */
+import { AzureCommunicationChatAdapterOptions } from '../../ChatComposite/adapter/AzureCommunicationChatAdapter';
 import { EventEmitter } from 'events';
 import { CommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(PSTN-calls) */
