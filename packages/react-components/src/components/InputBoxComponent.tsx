@@ -359,6 +359,8 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
         newValue,
         selectionEnd
       );
+      console.log('inputTextValue', inputTextValue);
+      console.log('newValue', newValue);
       // get updated html string
       result = updateHTML(
         textValue,
@@ -556,11 +558,11 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
           //   console.log('updateHTML onMouseMove e.currentTarget.selectionStart === e.currentTarget.selectionEnd');
           // }
           // updateSelectionIndexesWithMentionIfNeeded(e);
-          //   e.currentTarget.setSelectionRange(
-          //     e.currentTarget.selectionStart,
-          //     e.currentTarget.selectionEnd,
-          //     e.currentTarget.selectionDirection ?? 'none'
-          //   );
+          // e.currentTarget.setSelectionRange(
+          //   e.currentTarget.selectionStart,
+          //   e.currentTarget.selectionEnd,
+          //   e.currentTarget.selectionDirection ?? 'none'
+          // );
           // }}
           // onTouchMove={(e) => {
           //   //should be handled in the same way as mousemove
@@ -748,14 +750,16 @@ const handleMentionTagUpdate = (
   plainTextEndIndex: number,
   startIndex: number,
   oldPlainTextEndIndex: number,
-  mentionTagLength: number
+  mentionTagLength: number,
+  shouldDeleteIfChangeEmpty: boolean
 ): [resultValue: string, updatedChange: string, htmlIndex: number] => {
   if (tag.tagType !== 'msft-mention' || tag.plainTextBeginIndex === undefined) {
     //TODO: update
     return ['', processedChange, lastProcessedHTMLIndex];
   }
   let result = '';
-  if (change !== '') {
+  console.log('change"', change, "'", change.length);
+  if (change !== '' && shouldDeleteIfChangeEmpty) {
     // mention tag should be deleted when user tries to edit it
     // TODO: handle selectionRange after updating with mention tag!
     result += htmlText.substring(lastProcessedHTMLIndex, tag.openTagIdx) + processedChange;
@@ -935,7 +939,8 @@ const updateHTML = (
             plainTextEndIndex,
             startIndex,
             oldPlainTextEndIndex,
-            mentionTagLength
+            mentionTagLength,
+            true
           );
           result += resultValue;
           processedChange = updatedChange;
@@ -979,7 +984,25 @@ const updateHTML = (
         //TODO: here should be check for the mention tag
         //the change started in the tag but finishes somewhere further
         const startChangeDiff = startIndex - tag.plainTextBeginIndex - mentionTagLength;
-        if (tag.subTags !== undefined && tag.subTags.length !== 0 && tag.content !== undefined) {
+        if (isMentionTag) {
+          const [resultValue, , htmlIndex] = handleMentionTagUpdate(
+            htmlText,
+            oldPlainText,
+            lastProcessedHTMLIndex,
+            '', // the part of mention should be just deleted without updating to processedChange
+            change,
+            tag,
+            closeTagIdx,
+            closeTagLength,
+            plainTextEndIndex,
+            startIndex,
+            oldPlainTextEndIndex,
+            mentionTagLength,
+            false // think about better approach, possible with indexes for 1.2
+          );
+          result += resultValue;
+          lastProcessedHTMLIndex = htmlIndex;
+        } else if (tag.subTags !== undefined && tag.subTags.length !== 0 && tag.content !== undefined) {
           // with subtags
 
           // before the tag content
