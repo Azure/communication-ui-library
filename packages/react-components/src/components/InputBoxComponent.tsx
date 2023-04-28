@@ -423,7 +423,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
         const mentionTag = findMentionTagForSelection(tagsValue, event.currentTarget.selectionStart);
         if (mentionTag !== undefined && mentionTag.plainTextBeginIndex !== undefined) {
           // console.log('not equal in mention selectionStartValue', selectionStartValue);
-          //TODO: here it takes -1 when it shouldn't
+          //TODO: here it takes -1 when it shouldn't, update selectionstart and end with mouse move and or touch move
           updatedStartIndex = findNewSelectionIndexForMention(
             mentionTag,
             inputTextValue,
@@ -437,7 +437,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
         // console.log('not equal updatedEndIndex');
         const mentionTag = findMentionTagForSelection(tagsValue, event.currentTarget.selectionEnd);
         if (mentionTag !== undefined && mentionTag.plainTextBeginIndex !== undefined) {
-          // console.log('not equal in mention selectionEndValue', selectionEndValue);
+          //TODO: here it takes -1 when it shouldn't, update selectionstart and end with mouse move and or touch move
           updatedEndIndex = findNewSelectionIndexForMention(
             mentionTag,
             inputTextValue,
@@ -556,6 +556,11 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
           //   console.log('updateHTML onMouseMove e.currentTarget.selectionStart === e.currentTarget.selectionEnd');
           // }
           // updateSelectionIndexesWithMentionIfNeeded(e);
+          //   e.currentTarget.setSelectionRange(
+          //     e.currentTarget.selectionStart,
+          //     e.currentTarget.selectionEnd,
+          //     e.currentTarget.selectionDirection ?? 'none'
+          //   );
           // }}
           // onTouchMove={(e) => {
           //   //should be handled in the same way as mousemove
@@ -695,7 +700,7 @@ const findNewSelectionIndexForMention = (
   if (
     tag.plainTextBeginIndex === undefined ||
     tag.tagType !== 'msft-mention' ||
-    // selection === previousSelection ||
+    selection === previousSelection ||
     tag.plainTextEndIndex === undefined
   ) {
     return selection;
@@ -703,19 +708,14 @@ const findNewSelectionIndexForMention = (
   let spaceIndex = 0;
   if (selection <= previousSelection) {
     // the cursor is moved to the left
-    // console.log('not equal selection <= previousSelection', selection, previousSelection);
     spaceIndex = textValue.lastIndexOf(' ', selection ?? 0);
-    // console.log('updateHTML selection <= previousSelection spaceIndex', spaceIndex);
     if (spaceIndex === -1) {
       // no space before the selection
       spaceIndex = tag.plainTextBeginIndex;
     }
   } else {
-    //if (selection > previousSelection) {
     // the cursor is moved to the right
-    // console.log('not equal selection > previousSelection', selection, previousSelection);
     spaceIndex = textValue.indexOf(' ', selection ?? 0);
-    // console.log('updateHTML selection > previousSelection spaceIndex', spaceIndex, textValue.length);
     if (spaceIndex === -1) {
       // no space after the selection
       spaceIndex = tag.plainTextEndIndex ?? tag.plainTextBeginIndex;
@@ -725,12 +725,6 @@ const findNewSelectionIndexForMention = (
   if (spaceIndex < tag.plainTextBeginIndex) {
     spaceIndex = tag.plainTextBeginIndex;
   } else if (spaceIndex > tag.plainTextEndIndex) {
-    // console.log(
-    //   'spaceIndex > tag.plainTextEndIndex',
-    //   spaceIndex,
-    //   tag.plainTextEndIndex,
-    //   textValue[tag.plainTextEndIndex]
-    // );
     spaceIndex = tag.plainTextEndIndex;
   }
   return spaceIndex;
