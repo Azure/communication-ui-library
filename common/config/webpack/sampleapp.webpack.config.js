@@ -23,7 +23,7 @@ const webpackConfig = (sampleAppDir, env, babelConfig) => {
         '@internal/calling-stateful-client': path.resolve(sampleAppDir, '../../packages/calling-stateful-client/src'),
         '@internal/calling-component-bindings': path.resolve(sampleAppDir, '../../packages/calling-component-bindings/src'),
         '@internal/acs-ui-common': path.resolve(sampleAppDir, '../../packages/acs-ui-common/src'),
-        '@internal/northstar-wrapper': path.resolve(sampleAppDir, '../../packages/northstar-wrapper/src')
+        '@internal/northstar-wrapper': path.resolve(sampleAppDir, '../../packages/northstar-wrapper/dist/dist-esm')
       }
     },
     output: {
