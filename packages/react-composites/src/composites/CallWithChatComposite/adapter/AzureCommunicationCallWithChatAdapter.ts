@@ -856,15 +856,15 @@ export type AzureCommunicationCallWithChatAdapterFromClientArgs = {
  *
  * @public
  */
-export async function createAzureCommunicationCallWithChatAdapterFromClients(
-  callClient: StatefulCallClient,
-  callAgent: CallAgent,
-  callLocator: CallAdapterLocator | TeamsMeetingLinkLocator,
-  chatClient: StatefulChatClient,
-  chatThreadClient: ChatThreadClient,
+export const createAzureCommunicationCallWithChatAdapterFromClients = async ({
+  callClient,
+  callAgent,
+  callLocator,
+  chatClient,
+  chatThreadClient,
   /* @conditional-compile-remove(teams-inline-images) */
-  options?: AzureCommunicationChatAdapterOptions
-): Promise<CallWithChatAdapter> {
+  options
+}: AzureCommunicationCallWithChatAdapterFromClientArgs): Promise<CallWithChatAdapter> => {
   const createCallAdapterPromise = createAzureCommunicationCallAdapterFromClient(callClient, callAgent, callLocator);
   const createChatAdapterPromise = createAzureCommunicationChatAdapterFromClient(
     chatClient,
@@ -874,7 +874,7 @@ export async function createAzureCommunicationCallWithChatAdapterFromClients(
   );
   const [callAdapter, chatAdapter] = await Promise.all([createCallAdapterPromise, createChatAdapterPromise]);
   return new AzureCommunicationCallWithChatAdapter(callAdapter, chatAdapter);
-}
+};
 
 /**
  * Create a {@link CallWithChatAdapter} from the underlying adapters.
