@@ -1075,7 +1075,7 @@ export const createAzureCommunicationCallWithChatAdapter: ({ userId, displayName
 export const _createAzureCommunicationCallWithChatAdapterFromAdapters: (callAdapter: CallAdapter, chatAdapter: ChatAdapter) => CallWithChatAdapter;
 
 // @public
-export function createAzureCommunicationCallWithChatAdapterFromClients(callClient: StatefulCallClient, callAgent: CallAgent, callLocator: CallAdapterLocator | TeamsMeetingLinkLocator, chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient, options?: AzureCommunicationChatAdapterOptions): Promise<CallWithChatAdapter>;
+export const createAzureCommunicationCallWithChatAdapterFromClients: ({ callClient, callAgent, callLocator, chatClient, chatThreadClient, options }: AzureCommunicationCallWithChatAdapterFromClientArgs) => Promise<CallWithChatAdapter>;
 
 // @public
 export const createAzureCommunicationChatAdapter: ({ endpoint: endpointUrl, userId, displayName, credential, threadId }: AzureCommunicationChatAdapterArgs) => Promise<ChatAdapter>;
