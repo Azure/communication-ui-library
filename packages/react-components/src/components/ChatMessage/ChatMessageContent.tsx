@@ -66,7 +66,7 @@ export const ChatMessageContent = (props: ChatMessageContentProps): JSX.Element 
 const MessageContentWithLiveAria = (props: MessageContentWithLiveAriaProps): JSX.Element => {
   return (
     <div data-ui-status={props.message.status} role="text" aria-label={props.ariaLabel}>
-      <LiveMessage message={props.liveMessage} aria-live="polite" />
+      <LiveMessage message={props.liveMessage} ariaLive="polite" />
       {props.content}
     </div>
   );

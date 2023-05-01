@@ -123,7 +123,7 @@ export const MessageStatusIndicator = (props: MessageStatusIndicatorProps): JSX.
           calloutProps={{ ...calloutProps }}
           styles={hostStyles}
         >
-          {strings.sendingAriaLabel && <LiveMessage message={strings.sendingAriaLabel} aria-live="polite" />}
+          {strings.sendingAriaLabel && <LiveMessage message={strings.sendingAriaLabel} ariaLive="polite" />}
 
           <Icon
             role="status"
@@ -166,7 +166,7 @@ export const MessageStatusIndicator = (props: MessageStatusIndicatorProps): JSX.
             }
           }}
         >
-          {strings.seenAriaLabel && <LiveMessage message={strings.seenAriaLabel} aria-live="polite" />}
+          {strings.seenAriaLabel && <LiveMessage message={strings.seenAriaLabel} ariaLive="polite" />}
 
           <Icon
             data-ui-id="chat-composite-message-status-icon"
@@ -185,7 +185,7 @@ export const MessageStatusIndicator = (props: MessageStatusIndicatorProps): JSX.
           data-ui-id="chat-composite-message-tooltip"
           styles={hostStyles}
         >
-          {strings.deliveredAriaLabel && <LiveMessage message={strings.deliveredAriaLabel} aria-live="polite" />}
+          {strings.deliveredAriaLabel && <LiveMessage message={strings.deliveredAriaLabel} ariaLive="polite" />}
           <Icon
             role="status"
             data-ui-id="chat-composite-message-status-icon"
