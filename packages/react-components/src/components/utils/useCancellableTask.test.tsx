@@ -125,13 +125,14 @@ describe('cancellable task', () => {
       return <h1>Hello World</h1>;
     }
 
+    let result = false;
     await act(async () => {
       render(<Component />);
       // Wait within the `act` block so second render pass can complete.
-      await marker.waitForSet(1000);
+      result = await marker.waitForSet(1000);
     });
-    // We already waited in the `act` block above, so check quickly.
-    await expect(marker.waitForSet(1)).resolves.toBeTruthy();
+
+    await expect(result).resolves.toBeTruthy();
   });
 });
 

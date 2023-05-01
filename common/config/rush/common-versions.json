@@ -71,14 +71,6 @@
 
       // Typescript check project's dependency -- this is our minimum supported typescript version of our npm package.
       "3.8.3"
-    ],
-    "webpack": [
-      // All projects should use this version by default
-      "5.38.1",
-
-      // Check-treeshaking project does not work with webpack5
-      // More information: https://github.com/webpack/webpack/issues/2090#issuecomment-634301000
-      "^4.44.0"
     ]
   }
 }
