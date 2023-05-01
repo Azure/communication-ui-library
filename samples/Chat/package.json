@@ -38,11 +38,9 @@
     "@internal/chat-component-bindings": "1.5.1-beta.3",
     "@internal/react-components": "1.5.1-beta.3",
     "@internal/react-composites": "1.5.1-beta.3",
-    "@types/react-aria-live": "^2.0.0",
     "@types/react-linkify": "^1.0.0",
     "json-stringify-safe": "^5.0.1",
     "react": "~16.14.0",
-    "react-aria-live": "^2.0.5",
     "react-dom": "16.13.1",
     "react-linkify": "^1.0.0-alpha",
     "reselect": "~4.0.0"
