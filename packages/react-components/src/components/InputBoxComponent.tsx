@@ -916,10 +916,18 @@ const updateHTML = (
         break;
       } else if (startIndex >= tag.plainTextBeginIndex && oldPlainTextEndIndex < plainTextEndIndex) {
         // the change is between tag
-        // TODO: should be updated with editing for the mention tag as there shouldn't be possibility to add something in beginning or at the end
         console.log('updateHTML 1.2 result', result);
         if (isMentionTag) {
-          if (change !== '') {
+          if (
+            change !== '' &&
+            oldPlainTextEndIndex === tag.plainTextBeginIndex &&
+            startIndex === tag.plainTextBeginIndex
+          ) {
+            // non empty change at the beginning of the mention tag to be added before the mention tag
+            result += htmlText.substring(lastProcessedHTMLIndex, tag.openTagIdx) + processedChange;
+            processedChange = '';
+            lastProcessedHTMLIndex = tag.openTagIdx;
+          } else if (change !== '') {
             // mention tag should be deleted when user tries to edit it
             // TODO: handle selectionRange after updating with mention tag!
             result += htmlText.substring(lastProcessedHTMLIndex, tag.openTagIdx) + processedChange;
@@ -1097,7 +1105,12 @@ const updateHTML = (
         console.log('updateHTML 1.7 result', result);
         // the change  starts in the tag and ends at the end of a tag
         if (isMentionTag) {
-          if (change !== '') {
+          if (change !== '' && startIndex === plainTextEndIndex) {
+            // non empty change at the end of the mention tag to be added after the mention tag
+            result += htmlText.substring(lastProcessedHTMLIndex, closeTagIdx + closeTagLength) + processedChange;
+            processedChange = '';
+            lastProcessedHTMLIndex = closeTagIdx + closeTagLength;
+          } else if (change !== '') {
             // mention tag should be deleted when user tries to edit it
             // TODO: handle selectionRange after updating with mention tag!
             result += htmlText.substring(lastProcessedHTMLIndex, tag.openTagIdx) + processedChange;
