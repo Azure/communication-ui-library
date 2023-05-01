@@ -389,6 +389,8 @@ jobs:
           rush switch-flavor:stable
           node ./common/scripts/force-build-flavor.mjs stable
           rush update:stable
+      - name: Build deps
+        run: rush build -t @internal/northstar-wrapper
       - name: Build
         run: rush build -o calling
       - name: Tests
@@ -430,6 +432,8 @@ jobs:
           rush switch-flavor:stable
           node ./common/scripts/force-build-flavor.mjs stable
           rush update:stable
+      - name: Build deps
+        run: rush build -t @internal/northstar-wrapper
       - name: Build
         run: rush build -o chat
       - name: Tests
@@ -471,6 +475,8 @@ jobs:
           rush switch-flavor:stable
           node ./common/scripts/force-build-flavor.mjs stable
           rush update:stable
+      - name: Build deps
+        run: rush build -t @internal/northstar-wrapper
       - name: Build
         run: rush build -o callwithchat
       - name: Tests
