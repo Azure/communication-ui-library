@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import React, { useState } from 'react';
+import React from 'react';
+/* @conditional-compile-remove(video-background-effects) */
+import { useState } from 'react';
 /* @conditional-compile-remove(video-background-effects) */
 import { useCallback, useMemo } from 'react';
 /* @conditional-compile-remove(video-background-effects) */
