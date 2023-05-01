@@ -4,8 +4,6 @@
 
 ```ts
 
-/// <reference types="react" />
-
 import { IButtonProps } from '@fluentui/react';
 import { IButtonStyles } from '@fluentui/react';
 import { IContextualMenuItem } from '@fluentui/react';

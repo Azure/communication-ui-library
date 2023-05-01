@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 import React from 'react';
-import { renderHook } from '@testing-library/react-hooks';
 import { _PermissionsProvider, _getPermissions, _Permissions, _usePermissions } from './PermissionsProvider';
+import { renderHook } from '@testing-library/react';
 
 const mockPresenterPermissions: _Permissions = {
   role: 'Presenter',
