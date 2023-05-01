@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 /* @conditional-compile-remove(video-background-effects) */
 import { useCallback, useMemo } from 'react';
 /* @conditional-compile-remove(video-background-effects) */
@@ -149,17 +149,7 @@ const VideoEffectsPaneTrampoline = (
   /* @conditional-compile-remove(video-background-effects) */
   const latestEffectError = useSelector(videoBackgroundErrorsSelector);
   /* @conditional-compile-remove(video-background-effects) */
-  let showError = false;
-  /* @conditional-compile-remove(video-background-effects) */
-  if (latestEffectError) {
-    if (dismissedError) {
-      showError = latestEffectError?.timestamp > dismissedError.dismissedAt;
-    } else {
-      showError = true;
-    }
-  }
-  /* @conditional-compile-remove(video-background-effects) */
-  useEffect(() => setDismissedError(dismissedError), [dismissedError]);
+  const showError = latestEffectError && (!dismissedError || latestEffectError.timestamp > dismissedError.dismissedAt);
   /* @conditional-compile-remove(video-background-effects) */
   const locale = useLocale();
   /* @conditional-compile-remove(video-background-effects) */
