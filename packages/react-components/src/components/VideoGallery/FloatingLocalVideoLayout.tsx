@@ -27,6 +27,7 @@ import { innerLayoutStyle, layerHostStyle, rootLayoutStyle } from './styles/Floa
 import { videoGalleryLayoutGap } from './styles/Layout.styles';
 import { useOrganizedParticipants } from './utils/videoGalleryLayoutUtils';
 import { OverflowGallery } from './OverflowGallery';
+/* @conditional-compile-remove(click-to-call) */
 import { LocalVideoTileMode } from '../VideoGallery';
 
 /**
@@ -134,7 +135,6 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
   const layerHostId = useId('layerhost');
 
   const localVideoSizeRem = useMemo(() => {
-    console.log(localVideoTileMode);
     if (isNarrow && /*@conditional-compile-remove(click-to-call) */ !(localVideoTileMode === 'desktop')) {
       return SMALL_FLOATING_MODAL_SIZE_REM;
     }

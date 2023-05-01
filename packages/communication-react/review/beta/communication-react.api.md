@@ -2693,6 +2693,9 @@ export interface LocalVideoStreamVideoEffectsState {
     isActive: boolean;
 }
 
+// @beta
+export type LocalVideoTileMode = 'mobile' | 'desktop' | 'hidden' | 'responsive';
+
 // @public
 export type MediaDiagnosticChangedEvent = MediaDiagnosticChangedEventArgs & {
     type: 'media';

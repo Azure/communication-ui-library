@@ -289,6 +289,8 @@ export type {
 export type { VideoTileContextualMenuProps, VideoTileDrawerMenuProps } from '../../react-components/src';
 /* @conditional-compile-remove(vertical-gallery) */
 export type { OverflowGalleryPosition } from '../../react-components/src';
+/* @conditional-compile-remove(click-to-call) */
+export type { LocalVideoTileMode } from '../../react-components/src';
 export * from '../../react-components/src/localization/locales';
 export * from '../../react-components/src/theming';
 export * from '../../calling-stateful-client/src/index-public';
