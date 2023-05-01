@@ -431,7 +431,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     strings.localVideoSelectedDescription,
     styles?.localVideo,
     theme.effects.roundedCorner4,
-    /* @conditional-compile-remove(rooms) */ permissions.cameraButton
+    /* @conditional-compile-remove(rooms) */ permissions.cameraButton,
+    /* @conditional-compile-remove(click-to-call) */ localVideoTileMode
   ]);
 
   /* @conditional-compile-remove(pinned-participants) */
@@ -586,7 +587,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       onRenderRemoteVideoTile,
       defaultOnRenderVideoTile,
       /* @conditional-compile-remove(pinned-participants) */ pinnedParticipants,
-      /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryPosition
+      /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryPosition,
+      /* @conditional-compile-remove(click-to-call) */ localVideoTileMode
     ]
   );
 
