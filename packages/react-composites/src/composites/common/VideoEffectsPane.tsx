@@ -36,6 +36,7 @@ interface DismissedError {
   dismissedAt: Date;
   activeSince?: Date;
 }
+import { localVideoSelector } from '../CallComposite/selectors/localVideoStreamSelector';
 
 /**
  * Pane that is used to show video effects button
@@ -164,6 +165,10 @@ const VideoEffectsPaneTrampoline = (
   /* @conditional-compile-remove(video-background-effects) */
   const selectedEffect = useSelector(activeVideoBackgroundEffectSelector);
   /* @conditional-compile-remove(video-background-effects) */
+  const isCameraOn = useSelector(localVideoSelector).isAvailable;
+  /* @conditional-compile-remove(video-background-effects) */
+  const showWarning = !isCameraOn && selectedEffect !== 'none';
+  /* @conditional-compile-remove(video-background-effects) */
   const headerStyles = {
     zIndex: 0
   };
@@ -184,7 +189,12 @@ const VideoEffectsPaneTrampoline = (
           messageBarType={MessageBarType.error}
           onDismiss={() => setDismissedError(dismissError(latestEffectError))}
         >
-          {locale.strings.call.unableToStartVideoEffect}{' '}
+          {locale.strings.call.unableToStartVideoEffect}
+        </MessageBar>
+      )}
+      {showWarning && (
+        <MessageBar messageBarType={MessageBarType.warning}>
+          {locale.strings.call.cameraOffBackgroundEffectWarningText}
         </MessageBar>
       )}
       {selectableVideoEffects && (

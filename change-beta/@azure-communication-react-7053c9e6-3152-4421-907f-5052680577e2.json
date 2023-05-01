@@ -1,6 +1,6 @@
 {
   "type": "none",
-  "comment": "Add tool to perform typescript regression checks as part of CI and update documented typescript version",
+  "comment": "Update gh actions to use actions that do not run on node 12",
   "packageName": "@azure/communication-react",
   "email": "2684369+JamesBurnside@users.noreply.github.com",
   "dependentChangeType": "none"
