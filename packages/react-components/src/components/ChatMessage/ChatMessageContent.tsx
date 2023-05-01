@@ -10,7 +10,6 @@ import Linkify from 'react-linkify';
 import { ChatMessage } from '../../types/ChatMessage';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessage } from '../../types/ChatMessage';
-import { LiveMessage } from 'react-aria-live';
 import { Link } from '@fluentui/react';
 /* @conditional-compile-remove(at-mention) */
 import { AtMentionDisplayOptions } from '../AtMentionFlyout';
@@ -20,6 +19,7 @@ import { FontIcon, Stack } from '@fluentui/react';
 import { MessageThreadStrings } from '../MessageThread';
 /* @conditional-compile-remove(teams-inline-images) */
 import { FileMetadata } from '../FileDownloadCards';
+import LiveMessage from '../Announcer/LiveMessage';
 
 type ChatMessageContentProps = {
   message: ChatMessage;

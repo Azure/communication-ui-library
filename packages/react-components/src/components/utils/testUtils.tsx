@@ -7,7 +7,7 @@ import { COMPONENT_LOCALE_EN_US } from '../../localization/locales';
 import { PartialDeep } from 'type-fest';
 import { _PermissionsProvider, _getPermissions, _Permissions } from '../../permissions';
 import { render } from '@testing-library/react';
-import { LiveAnnouncer } from 'react-aria-live';
+import LiveAnnouncer from '../Announcer/LiveAnnouncer';
 
 const withLiveAnnouncerContext = (node: React.ReactElement): React.ReactElement => (
   <LiveAnnouncer>{node}</LiveAnnouncer>

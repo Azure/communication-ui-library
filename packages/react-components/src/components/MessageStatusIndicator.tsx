@@ -4,7 +4,6 @@
 import { ICalloutContentStyles, Icon, ITooltipHostStyles, mergeStyles, TooltipHost } from '@fluentui/react';
 import { MessageStatus, _formatString } from '@internal/acs-ui-common';
 import React, { useState } from 'react';
-import { LiveMessage } from 'react-aria-live';
 import { useLocale } from '../localization';
 import { useTheme } from '../theming';
 import { isDarkThemed } from '../theming/themeUtils';
@@ -13,6 +12,7 @@ import {
   MessageStatusIndicatorErrorIconStyle,
   MessageStatusIndicatorIconStyle
 } from './styles/MessageStatusIndicator.styles';
+import LiveMessage from './Announcer/LiveMessage';
 
 /**
  * Strings of {@link MessageStatusIndicator} that can be overridden.
@@ -100,7 +100,7 @@ export const MessageStatusIndicator = (props: MessageStatusIndicatorProps): JSX.
         >
           {strings.failedToSendAriaLabel && (
             // live message is used here and in the following tooltips so that aria labels are announced on mobile
-            <LiveMessage message={strings.failedToSendAriaLabel} aria-live="polite" />
+            <LiveMessage message={strings.failedToSendAriaLabel} ariaLive="polite" />
           )}
           <Icon
             role="status"
