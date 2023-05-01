@@ -29,7 +29,8 @@ import { useAdapter } from '../CallComposite/adapter/CallAdapterProvider';
 import { videoBackgroundErrorsSelector } from '../CallComposite/selectors/videoBackgroundErrorsSelector';
 /* @conditional-compile-remove(video-background-effects) */
 import { AdapterError } from './adapters';
-
+/* @conditional-compile-remove(video-background-effects) */
+import { localVideoSelector } from '../CallComposite/selectors/localVideoStreamSelector';
 /* @conditional-compile-remove(video-background-effects) */
 /**
  * @private
@@ -38,7 +39,6 @@ interface DismissedError {
   dismissedAt: Date;
   activeSince?: Date;
 }
-import { localVideoSelector } from '../CallComposite/selectors/localVideoStreamSelector';
 
 /**
  * Pane that is used to show video effects button
