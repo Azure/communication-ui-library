@@ -324,6 +324,11 @@ export interface CallCompositeStrings {
   effects?: string;
   /* @conditional-compile-remove(video-background-effects) */
   /**
+   * Error message for video effect failure
+   */
+  unableToStartVideoEffect?: string;
+  /* @conditional-compile-remove(video-background-effects) */
+  /**
    * Label for the blur video background effect item
    */
   blurBackgroundEffectButtonLabel?: string;
