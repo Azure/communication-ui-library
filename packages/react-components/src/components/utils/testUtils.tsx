@@ -14,6 +14,21 @@ const withLiveAnnouncerContext = (node: React.ReactElement): React.ReactElement 
 );
 
 /** @private */
+export const renderWithLiveAnnouncer = (
+  node: React.ReactElement
+): {
+  rerender: (node: React.ReactElement) => void;
+  container: HTMLElement;
+} => {
+  const { rerender, container } = render(withLiveAnnouncerContext(node));
+  return {
+    // wrap rerender in a function that will re-wrap the node with the LiveAnnouncerProvider
+    rerender: (node: React.ReactElement) => rerender(withLiveAnnouncerContext(node)),
+    container
+  };
+};
+
+/** @private */
 export const renderWithLocalization = (
   node: React.ReactElement,
   locale: ComponentLocale
@@ -21,13 +36,13 @@ export const renderWithLocalization = (
   rerender: (node: React.ReactElement) => void;
   container: HTMLElement;
 } => {
-  const { rerender, container } = render(
-    withLiveAnnouncerContext(<LocalizationProvider locale={locale}>{node}</LocalizationProvider>)
+  const { rerender, container } = renderWithLiveAnnouncer(
+    <LocalizationProvider locale={locale}>{node}</LocalizationProvider>
   );
   return {
     // wrap rerender in a function that will re-wrap the node with the LocalizationProvider
     rerender: (node: React.ReactElement) =>
-      rerender(withLiveAnnouncerContext(<LocalizationProvider locale={locale}>{node}</LocalizationProvider>)),
+      rerender(<LocalizationProvider locale={locale}>{node}</LocalizationProvider>),
     container
   };
 };
