@@ -980,7 +980,6 @@ const updateHTML = (
         }
       } else if (startIndex > tag.plainTextBeginIndex && oldPlainTextEndIndex > plainTextEndIndex) {
         console.log('updateHTML 1.3 result', result);
-        //TODO: here should be check for the mention tag
         //the change started in the tag but finishes somewhere further
         const startChangeDiff = startIndex - tag.plainTextBeginIndex - mentionTagLength;
         if (isMentionTag) {
@@ -1047,8 +1046,24 @@ const updateHTML = (
       } else if (startIndex < tag.plainTextBeginIndex && oldPlainTextEndIndex < plainTextEndIndex) {
         console.log('updateHTML 1.6 result', result);
         // the change  starts before the tag and ends in a tag
-        //TODO: here should be check for the mention tag
-        if (tag.subTags !== undefined && tag.subTags.length !== 0 && tag.content !== undefined) {
+        if (isMentionTag) {
+          const [resultValue, , htmlIndex] = handleMentionTagUpdate(
+            htmlText,
+            oldPlainText,
+            lastProcessedHTMLIndex,
+            '', // the part of mention should be just deleted without updating to processedChange
+            change,
+            tag,
+            closeTagIdx,
+            closeTagLength,
+            plainTextEndIndex,
+            startIndex,
+            oldPlainTextEndIndex,
+            mentionTagLength
+          );
+          result += resultValue;
+          lastProcessedHTMLIndex = htmlIndex;
+        } else if (tag.subTags !== undefined && tag.subTags.length !== 0 && tag.content !== undefined) {
           // with subtags
 
           // before the tag content
@@ -1081,8 +1096,35 @@ const updateHTML = (
       } else if (startIndex > tag.plainTextBeginIndex && oldPlainTextEndIndex === plainTextEndIndex) {
         console.log('updateHTML 1.7 result', result);
         // the change  starts in the tag and ends at the end of a tag
-        //TODO: here should be check for the mention tag
-        if (tag.subTags !== undefined && tag.subTags.length !== 0 && tag.content !== undefined) {
+        if (isMentionTag) {
+          if (change !== '') {
+            // mention tag should be deleted when user tries to edit it
+            // TODO: handle selectionRange after updating with mention tag!
+            result += htmlText.substring(lastProcessedHTMLIndex, tag.openTagIdx) + processedChange;
+            processedChange = '';
+            lastProcessedHTMLIndex = closeTagIdx + closeTagLength;
+          } else {
+            const [resultValue, updatedChange, htmlIndex] = handleMentionTagUpdate(
+              htmlText,
+              oldPlainText,
+              lastProcessedHTMLIndex,
+              processedChange,
+              change,
+              tag,
+              closeTagIdx,
+              closeTagLength,
+              plainTextEndIndex,
+              startIndex,
+              oldPlainTextEndIndex,
+              mentionTagLength
+            );
+            result += resultValue;
+            processedChange = updatedChange;
+            lastProcessedHTMLIndex = htmlIndex;
+          }
+          // the change is handled; exit
+          break;
+        } else if (tag.subTags !== undefined && tag.subTags.length !== 0 && tag.content !== undefined) {
           // with subtags
 
           // before the tag content
@@ -1117,7 +1159,7 @@ const updateHTML = (
     }
     if (i === tags.length - 1 && oldPlainTextEndIndex >= plainTextEndIndex) {
       console.log('updateHTML 2 result', result);
-      //the last tag should handle the end of the change if needed
+      // the last tag should handle the end of the change if needed
       // oldPlainTextEndIndex already includes mentionTag length
       const endChangeDiff = oldPlainTextEndIndex - plainTextEndIndex;
       if (startIndex >= plainTextEndIndex) {
