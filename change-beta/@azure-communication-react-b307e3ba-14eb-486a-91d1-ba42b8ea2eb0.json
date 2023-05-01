@@ -1,6 +1,6 @@
 {
-  "type": "patch",
-  "comment": "Update `@fluentui/react-file-type-icons` to v8.8.13",
+  "type": "minor",
+  "comment": "Remove public API usage of ComponentSlotStyle and redefine type internally",
   "packageName": "@azure/communication-react",
   "email": "2684369+JamesBurnside@users.noreply.github.com",
   "dependentChangeType": "patch"
