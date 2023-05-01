@@ -1,6 +1,6 @@
 {
   "type": "none",
-  "comment": "update webpack to copy backgrounds in prod builds",
+  "comment": "Fix publish stroybook action - update checkout fetch depth",
   "packageName": "@azure/communication-react",
   "email": "2684369+JamesBurnside@users.noreply.github.com",
   "dependentChangeType": "none"
