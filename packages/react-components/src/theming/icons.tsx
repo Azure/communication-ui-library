@@ -206,6 +206,16 @@ const DataLossPreventionProhibited16Regular = (): JSX.Element => {
   return <Prohibited16Regular />;
 };
 
+const HorizontalGalleryLeftButton = (): JSX.Element => {
+  const rtl = useTheme().rtl;
+  return rtl ? <ChevronRight20Regular /> : <ChevronLeft20Regular />;
+};
+
+const HorizontalGalleryRightButton = (): JSX.Element => {
+  const rtl = useTheme().rtl;
+  return rtl ? <ChevronLeft20Regular /> : <ChevronRight20Regular />;
+};
+
 /**
  * The default set of icons that are available to use in the UI components.
  *
@@ -248,8 +258,8 @@ export const DEFAULT_COMPONENT_ICONS = {
   ErrorBarClear: <Dismiss16Regular />,
   ErrorBarCallVideoRecoveredBySystem: <Video16Filled />,
   ErrorBarCallVideoStoppedBySystem: <VideoProhibited16Filled />,
-  HorizontalGalleryLeftButton: <ChevronLeft20Regular />,
-  HorizontalGalleryRightButton: <ChevronRight20Regular />,
+  HorizontalGalleryLeftButton: <HorizontalGalleryLeftButton />,
+  HorizontalGalleryRightButton: <HorizontalGalleryRightButton />,
   MessageDelivered: <CheckmarkCircle16Regular />,
   MessageEdit: <Edit20Regular />,
   MessageFailed: <ErrorCircle16Regular />,
