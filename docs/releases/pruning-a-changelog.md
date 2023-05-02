@@ -11,10 +11,10 @@ This means going through the auto generated changelog and fixing it up for custo
 3. Create a subheading for each the following sections: Features, Bug Fixes, and Improvements. The changelog entries will be grouped in these sections.
 4. Go through each changelog entry and do the following:
 
-* Remove changelog entry if it pertains to changes STRICTLY to storybook, tests, refactoring, or internal code because it is not relevant information for customers using our UI library. Ensure the removal is correct by checking the PR link.
+* Remove changelog entry if it pertains to changes STRICTLY to storybook, tests, refactoring, or internal code. This entry will not be relevant information for customers using our UI library. Ensure the removal is correct by checking the PR link.
 * Couple entries that are for the same feature.
   * Often we create multiple, small PRs for the one feature, if this is the case each changelog entry should be merged into a single changelog entry and all PRs should be linked.
-* Break changelog entry into multiple separate entries if a PR went in that fixed two or more distinctly different tasks. The entry should be broken into separate entries that both link back to the same PR.
+* Break changelog entry into multiple separate entries if a PR went in that fixed two or more distinctly different tasks. The entry should be broken into separate entries that link back to the same PR.
 * Fix the purpose of a changelog entry if the meaning is unclear and any spelling mistakes.
 * Edit changelog entry to be in present tense, capitalized, and to NOT end with periods.
 * Move the changelog entry into one of three sections created earlier.
