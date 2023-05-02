@@ -6,19 +6,18 @@ Beachball creates an automated changelog. While this is awesome it creates a goo
 
 This means going through the auto generated changelog and fixing it up for customers to be able to read.
 
-This could entail doing any or all of the following:
+Before the changelog entries, create a heading for each new feature in the release and summarize each feature into 2-4 sentences in point form.
+Then create a heading for each the following sections: Features, Bug Fixes, and Improvements where the changelog entries will be grouped. Refer to the latest [beta release notes](../../packages/communication-react/CHANGELOG.beta.md) to see an example.
 
-* Coupling entries that are for the same feature
-  * Often we create multiple, small PRs for the one feature, if this is the case each changelog entry should be merged into a single changelog entry and all PRs should be linked.
-* Breaking a changelog entry into multiple separate entries
-  * If a PR went in that fixed two distinctly different tasks, the entry should be broken into two separate entries that both link back to the same PR.
-* Fixing the purpose of a changelog entry if the meaning was unclear.
-* Fix spelling mistakes. Change log entries should be in present tense, capitalized, and should not end with periods.
+Go through each changelog entry and do the following:
 
-For beta releases:
-* Create a heading for each new feature in the release. Summarize each feature into 2-4 sentences in point form.
-* Create a heading for of the following sections: Features, Bug Fixes, and Improvements. Group each changelog into each section.
-Refer to the latest [beta release notes](../../packages/communication-react/CHANGELOG.beta.md) to see an example.
+* Remove changelog entry if it pertains to changes STRICTLY to storybook, tests, refactoring, or internal code because it is not relevant information for customers using our UI library. Ensure the removal is correct by checking the PR link
+* Couple entries that are for the same feature
+  * Often we create multiple, small PRs for the one feature, if this is the case each changelog entry should be merged into a single changelog entry and all PRs should be linked
+* Break changelog entry into multiple separate entries if a PR went in that fixed two or more distinctly different tasks. The entry should be broken into two separate entries that both link back to the same PR
+* Fix the purpose of a changelog entry if the meaning is unclear and any spelling mistakes
+* Edit changelog entry to be in present tense, capitalized, and to not end with periods
+* Move the changelog entry into one of three sections created earlier
 
 Ideally most of these are handled at PR time when the PR is reviewed. This reduces the work for whoever is creating the new release.
 
