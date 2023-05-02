@@ -81,7 +81,6 @@ import { Warning20Filled } from '@fluentui/react-icons';
 import { _pxToRem } from '@internal/acs-ui-common';
 
 import React from 'react';
-/* @conditional-compile-remove(unsupported-browser) */
 import { useTheme } from './FluentThemeProvider';
 /* @conditional-compile-remove(call-readiness) */
 import { sitePermissionIconBackgroundStyle, scaledIconStyles } from './icons.styles';
