@@ -766,7 +766,6 @@ const handleMentionTagUpdate = (
     return ['', processedChange, lastProcessedHTMLIndex];
   }
   let result = '';
-  console.log('change"', change, "'", change.length);
   let rangeStart: number;
   let rangeEnd: number;
   // check if space symbol is handled in case if string looks like ' <tag> '
@@ -810,7 +809,7 @@ const handleMentionTagUpdate = (
     // only part of the tag should be removed
     let startChangeDiff = 0;
     let endChangeDiff = 0;
-    // need to check only rangeStart > tag.plainTextBeginIndex as when rangeStart === tag.plainTextBeginIndex startChangeDiff = 0
+    // need to check only rangeStart > tag.plainTextBeginIndex as when rangeStart === tag.plainTextBeginIndex startChangeDiff = 0 and mentionTagLength shouldn't be subtracted
     if (rangeStart > tag.plainTextBeginIndex) {
       startChangeDiff = rangeStart - tag.plainTextBeginIndex - mentionTagLength;
     }
@@ -857,6 +856,8 @@ const updateHTML = (
   let processedChange = change;
   // end tag plain text index of the last processed tag
   let lastProcessedPlainTextTagEndIndex = 0;
+  // as some tags/text can be removed fully, selectionEnd should be updated correctly
+  let changeNewEndIndex = startIndex + change.length;
 
   for (let i = 0; i < tags.length; i++) {
     const tag = tags[i];
@@ -874,7 +875,7 @@ const updateHTML = (
     }
 
     //change start is before the open tag
-    if (startIndex < tag.plainTextBeginIndex) {
+    if (startIndex <= tag.plainTextBeginIndex) {
       // Math.max(lastProcessedPlainTextTagEndIndex, startIndex) is used as startIndex may not be in [[previous tag].plainTextEndIndex - tag.plainTextBeginIndex] range
       const startChangeDiff = tag.plainTextBeginIndex - Math.max(lastProcessedPlainTextTagEndIndex, startIndex);
 
@@ -923,24 +924,24 @@ const updateHTML = (
         // the change is handled; exit
         break;
       } else if (startIndex >= tag.plainTextBeginIndex && oldPlainTextEndIndex < plainTextEndIndex) {
-        // the change is between tag
+        // edge case: the change is between tag
         console.log('updateHTML 1.2 result', result);
+        // if (oldPlainTextEndIndex === tag.plainTextBeginIndex && startIndex === tag.plainTextBeginIndex) {
+        //   // the change is before the tag
+        //   result += htmlText.substring(lastProcessedHTMLIndex, tag.openTagIdx) + processedChange;
+        //   processedChange = '';
+        //   lastProcessedHTMLIndex = tag.openTagIdx;
+        //   // the change is handled; exit
+        //   break;
+        // } else
         if (isMentionTag) {
-          if (
-            change !== '' &&
-            oldPlainTextEndIndex === tag.plainTextBeginIndex &&
-            startIndex === tag.plainTextBeginIndex
-          ) {
-            // non empty change at the beginning of the mention tag to be added before the mention tag
-            result += htmlText.substring(lastProcessedHTMLIndex, tag.openTagIdx) + processedChange;
-            processedChange = '';
-            lastProcessedHTMLIndex = tag.openTagIdx;
-          } else if (change !== '') {
+          if (change !== '') {
             // mention tag should be deleted when user tries to edit it
             // TODO: handle selectionRange after updating with mention tag!
             result += htmlText.substring(lastProcessedHTMLIndex, tag.openTagIdx) + processedChange;
             processedChange = '';
             lastProcessedHTMLIndex = closeTagIdx + closeTagLength;
+            changeNewEndIndex = tag.plainTextBeginIndex + processedChange.length;
           } else {
             const [resultValue, updatedChange, htmlIndex] = handleMentionTagUpdate(
               htmlText,
@@ -1003,7 +1004,7 @@ const updateHTML = (
             htmlText,
             oldPlainText,
             lastProcessedHTMLIndex,
-            '', // the part of mention should be just deleted without processedChange update
+            oldPlainText.substring(startIndex, startIndex + 1) !== ' ' && change === '' ? ' ' : '', // if substring !== ' ' && change is empty -> the change should be " " and not empty string but " " wasn't included in change; otherwise the part of mention should be just deleted without processedChange update
             change,
             tag,
             closeTagIdx,
@@ -1015,6 +1016,7 @@ const updateHTML = (
           );
           result += resultValue;
           lastProcessedHTMLIndex = htmlIndex;
+          //proceed with the next calculations
         } else if (tag.subTags !== undefined && tag.subTags.length !== 0 && tag.content !== undefined) {
           // with subtags
 
@@ -1118,6 +1120,7 @@ const updateHTML = (
             result += htmlText.substring(lastProcessedHTMLIndex, closeTagIdx + closeTagLength) + processedChange;
             processedChange = '';
             lastProcessedHTMLIndex = closeTagIdx + closeTagLength;
+            changeNewEndIndex = plainTextEndIndex + processedChange.length;
           } else if (change !== '') {
             // mention tag should be deleted when user tries to edit it
             // TODO: handle selectionRange after updating with mention tag!
