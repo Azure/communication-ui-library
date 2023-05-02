@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "[AzureCommunicationCallWithChatAdapter] Creating call with chat adapter from state now take an options bag",
+  "packageName": "@azure/communication-react",
+  "email": "joshlai@microsoft.com",
+  "dependentChangeType": "patch"
+}
