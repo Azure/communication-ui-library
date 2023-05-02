@@ -99,10 +99,10 @@ const MessageContentAsRichTextHTML = (props: ChatMessageContentProps): JSX.Eleme
       processNode: (node) => {
         /* @conditional-compile-remove(mention) */
         if (props.mentionDisplayOptions?.onRenderMention) {
-          const { userid, displayname } = node.attribs;
+          const { id, displaytext } = node.attribs;
           const suggestion: Mention = {
-            id: userid,
-            displayText: displayname
+            id: id,
+            displayText: displaytext
           };
           return props.mentionDisplayOptions.onRenderMention(suggestion);
         }

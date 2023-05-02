@@ -152,7 +152,13 @@ export type {
 } from '../../react-components/src';
 
 /* @conditional-compile-remove(mention) */
-export type { MentionOptions, MentionDisplayOptions, MentionLookupOptions, Mention } from '../../react-components/src';
+export type {
+  MentionOptions,
+  MentionDisplayOptions,
+  MentionLookupOptions,
+  Mention,
+  defaultMentionSuggestionRenderer
+} from '../../react-components/src';
 
 export type {
   _IdentifierProviderProps,
