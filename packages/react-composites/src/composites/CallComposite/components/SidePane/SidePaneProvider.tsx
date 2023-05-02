@@ -4,16 +4,25 @@
 import React, { createContext, useCallback, useContext, useEffect, useMemo } from 'react';
 
 /** @private */
-export type InjectedSidePaneProps =
-  | undefined
-  | {
-      headerRenderer?: () => JSX.Element;
-      contentRenderer?: () => JSX.Element;
-      sidePaneId: string;
-      // Useful to ensure the side pane renders the content of the override even if the side pane is closed.
-      // This avoids remounting the content when the side pane is opened again.
-      hidden?: boolean;
-    };
+export type InjectedSidePaneProps = {
+  headerRenderer?: () => JSX.Element;
+  contentRenderer?: () => JSX.Element;
+  /** An id for identifying the side pane in events like onSidePaneIdChanged */
+  sidePaneId: string;
+  /**
+   * Whether the side pane showing the override content is displayed
+   * @default false
+   */
+  isActive: boolean;
+  /**
+   * Useful to ensure the side pane renders the content of the override even if the side pane is closed.
+   * This avoids remounting the content when the side pane is opened again.
+   * This typically improves performance of opening the side pane, but may impact the overall performance of the app.
+   *
+   * @default false
+   */
+  persistRenderingWhenClosed?: boolean;
+};
 
 interface SidePaneProps {
   /** Side pane header */
@@ -26,8 +35,8 @@ interface SidePaneProps {
   setActiveSidePaneId: React.Dispatch<React.SetStateAction<string | undefined>>;
   activeSidePaneId: string | undefined;
   /** Support injecting content into the side pane from extrnal sources (e.g. CallWithChatComposite's Chat) */
-  setOverrideSidePane: React.Dispatch<React.SetStateAction<InjectedSidePaneProps>>;
-  overrideSidePane: InjectedSidePaneProps;
+  setOverrideSidePane: React.Dispatch<React.SetStateAction<InjectedSidePaneProps | undefined>>;
+  overrideSidePane?: InjectedSidePaneProps;
 }
 
 const defaultSidePaneProps: SidePaneProps = {
@@ -99,7 +108,8 @@ export const useOpenSidePane = (
 } => {
   const { setHeaderRenderer, setContentRenderer, setActiveSidePaneId, activeSidePaneId, overrideSidePane } =
     useSidePaneContext();
-  const isOpen = activeSidePaneId === sidePaneId && (!overrideSidePane || !!overrideSidePane.hidden);
+
+  const isOpen = activeSidePaneId === sidePaneId && !overrideSidePane?.isActive;
 
   const updateRenderers = useCallback((): void => {
     setHeaderRenderer(() => onRenderHeader);

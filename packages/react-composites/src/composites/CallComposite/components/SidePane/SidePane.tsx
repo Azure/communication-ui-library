@@ -27,7 +27,8 @@ export interface SidePaneProps {
 /** @private */
 export const SidePane = (props: SidePaneProps): JSX.Element => {
   const { headerRenderer, contentRenderer, activeSidePaneId, overrideSidePane } = useSidePaneContext();
-  const renderingHiddenOverrideContent = overrideSidePane?.hidden && overrideSidePane?.contentRenderer;
+  const renderingHiddenOverrideContent =
+    overrideSidePane?.persistRenderingWhenClosed && overrideSidePane.contentRenderer;
   const renderingOnlyHiddenContent = renderingHiddenOverrideContent && !activeSidePaneId;
 
   const paneStyles = renderingOnlyHiddenContent
@@ -36,15 +37,12 @@ export const SidePane = (props: SidePaneProps): JSX.Element => {
     ? availableSpaceStyles
     : sidePaneStyles;
 
-  let Header =
-    (overrideSidePane?.headerRenderer && !overrideSidePane?.hidden
-      ? overrideSidePane?.headerRenderer
-      : headerRenderer) ?? EmptyElement;
+  let Header = (overrideSidePane?.isActive ? overrideSidePane.headerRenderer : headerRenderer) ?? EmptyElement;
   /**
    * Legacy code to support old behavior of showing chat and people tab headers on mobile side pane.
    * To be removed in breaking change.
    */
-  const overrideSidePaneId = overrideSidePane?.hidden ? undefined : overrideSidePane?.sidePaneId;
+  const overrideSidePaneId = overrideSidePane?.isActive ? overrideSidePane.sidePaneId : undefined;
   const { closePane } = useCloseSidePane();
   if (props.mobileView && (overrideSidePaneId === 'chat' || activeSidePaneId === 'people')) {
     // use legacy header
@@ -61,8 +59,11 @@ export const SidePane = (props: SidePaneProps): JSX.Element => {
     );
   }
 
-  const ContentRender = !overrideSidePane?.contentRenderer || overrideSidePane?.hidden ? contentRenderer : undefined;
-  const OverrideContentRender = overrideSidePane?.contentRenderer;
+  const ContentRender = overrideSidePane?.isActive ? undefined : contentRenderer;
+  const OverrideContentRender =
+    overrideSidePane?.isActive || overrideSidePane?.persistRenderingWhenClosed
+      ? overrideSidePane.contentRenderer
+      : undefined;
 
   if (!ContentRender && !OverrideContentRender) {
     return <EmptyElement />;
@@ -79,7 +80,14 @@ export const SidePane = (props: SidePaneProps): JSX.Element => {
             </Stack.Item>
           )}
           {OverrideContentRender && (
-            <Stack.Item verticalFill styles={overrideSidePane?.hidden ? hiddenStyles : scrollableContainerContents}>
+            <Stack.Item
+              verticalFill
+              styles={
+                !overrideSidePane?.isActive && overrideSidePane?.persistRenderingWhenClosed
+                  ? hiddenStyles
+                  : scrollableContainerContents
+              }
+            >
               <OverrideContentRender />
             </Stack.Item>
           )}

@@ -197,14 +197,14 @@ type MainScreenProps = {
 };
 
 const isShowing = (overrideSidePane?: InjectedSidePaneProps): boolean => {
-  return !!overrideSidePane && overrideSidePane.hidden !== true;
+  return !!overrideSidePane?.isActive;
 };
 
 const MainScreen = (props: MainScreenProps): JSX.Element => {
   const { callInvitationUrl, onRenderAvatar, onFetchAvatarPersonaData, onFetchParticipantMenuItems } = props;
   const page = useSelector(getPage);
 
-  const overridePropsRef = useRef<InjectedSidePaneProps>(props.overrideSidePane);
+  const overridePropsRef = useRef<InjectedSidePaneProps | undefined>(props.overrideSidePane);
   const { activeSidePaneId, setOverrideSidePane, setActiveSidePaneId, setHeaderRenderer, setContentRenderer } =
     useSidePaneContext();
   useEffect(() => {

@@ -392,7 +392,8 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
         />
       ),
       sidePaneId: 'chat',
-      hidden: !isChatOpen
+      isActive: isChatOpen,
+      persistRenderingWhenClosed: true
     };
   }, [
     hasJoinedCall,

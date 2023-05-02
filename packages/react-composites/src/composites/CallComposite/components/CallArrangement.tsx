@@ -136,7 +136,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   }, [closePeoplePane, isPeoplePaneOpen, openPeoplePane]);
 
   const { activeSidePaneId, overrideSidePane } = useSidePaneContext();
-  const isSidePaneOpen = !!activeSidePaneId || (overrideSidePane && !overrideSidePane.hidden);
+  const isSidePaneOpen = !!(activeSidePaneId || overrideSidePane?.isActive);
 
   const isMobileWithActivePane = props.mobileView && isSidePaneOpen;
 
