@@ -379,6 +379,7 @@ export interface CallCompositeStrings {
     blurBackgroundEffectButtonLabel?: string;
     blurBackgroundTooltip?: string;
     cameraLabel: string;
+    cameraOffBackgroundEffectWarningText?: string;
     cameraPermissionDenied: string;
     cameraTurnedOff: string;
     captionsAvailableLanguageStrings?: CaptionsAvailableLanguageStrings;
@@ -482,6 +483,7 @@ export interface CallCompositeStrings {
     threeParticipantLeftNoticeString: string;
     twoParticipantJoinedNoticeString: string;
     twoParticipantLeftNoticeString: string;
+    unableToStartVideoEffect?: string;
     unnamedParticipantString: string;
 }
 

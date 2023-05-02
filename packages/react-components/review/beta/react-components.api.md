@@ -6,7 +6,6 @@
 
 /// <reference types="react" />
 
-import { ComponentSlotStyle } from '@fluentui/react-northstar';
 import { IButtonProps } from '@fluentui/react';
 import { IButtonStyles } from '@fluentui/react';
 import { IContextualMenuItem } from '@fluentui/react';
@@ -21,6 +20,7 @@ import { IMessageBarProps } from '@fluentui/react';
 import { IModalProps } from '@fluentui/react';
 import { IPersonaStyleProps } from '@fluentui/react';
 import { IPersonaStyles } from '@fluentui/react';
+import { IRawStyle } from '@fluentui/react';
 import { IRenderFunction } from '@fluentui/react';
 import { IStyle } from '@fluentui/react';
 import { IStyleFunctionOrObject } from '@fluentui/react';
@@ -388,6 +388,7 @@ export interface _CaptionsBannerProps {
 
 // @internal
 export type _CaptionsInfo = {
+    id: string;
     displayName: string;
     captionText: string;
     userId?: string;
@@ -583,6 +584,9 @@ export interface ComponentLocale {
     onDisplayDateTimeString?: (messageDate: Date) => string;
     strings: ComponentStrings;
 }
+
+// @public
+export type ComponentSlotStyle = Omit<IRawStyle, 'animation'>;
 
 // @public
 export interface ComponentStrings {
@@ -1006,6 +1010,7 @@ export interface ErrorBarStrings {
     stopScreenShareGeneric: string;
     stopVideoGeneric: string;
     unableToReachChatService: string;
+    unableToStartVideoEffect?: string;
     unmuteGeneric: string;
     userNotInChatThread: string;
 }
