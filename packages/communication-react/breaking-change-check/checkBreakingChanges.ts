@@ -5,6 +5,6 @@ import { CheckBreakingChanges, ExcludeList } from './CompareChanges';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export type BreakingChangeTest = CheckBreakingChanges<
-  Omit<typeof import('../dist/communication-react'), ExcludeList>,
-  typeof import('./snapshots/communication-react')
+  Omit<typeof import('./snapshots/communication-react'), ExcludeList>,
+  typeof import('../dist/communication-react')
 >;
