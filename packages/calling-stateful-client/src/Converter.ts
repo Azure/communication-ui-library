@@ -5,7 +5,8 @@ import {
   RemoteParticipant as SdkRemoteParticipant,
   RemoteVideoStream as SdkRemoteVideoStream,
   LocalVideoStream as SdkLocalVideoStream,
-  VideoStreamRendererView
+  VideoStreamRendererView,
+  Features
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(close-captions) */
 import { TeamsCaptionsInfo } from '@azure/communication-calling';
@@ -33,11 +34,12 @@ import { CallCommon, IncomingCallCommon } from './BetaToStableTypes';
 export function convertSdkLocalStreamToDeclarativeLocalStream(
   stream: SdkLocalVideoStream
 ): DeclarativeLocalVideoStream {
+  console.log(stream.feature(Features.VideoEffects).activeEffects);
   return {
     source: stream.source,
     mediaStreamType: stream.mediaStreamType,
-    view: undefined
-    // TODO [video-background-effects]: Add video effects state when it is added to the SDK
+    view: undefined,
+    videoEffects: stream.feature(Features.VideoEffects).activeEffects
   };
 }
 

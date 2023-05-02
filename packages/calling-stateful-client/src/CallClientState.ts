@@ -166,7 +166,7 @@ export interface LocalVideoStreamState {
    * Stores the state of the video effects.
    * @beta
    */
-  videoEffects?: LocalVideoStreamVideoEffectsState;
+  videoEffects?: VideoEffectName[];
 }
 
 /* @conditional-compile-remove(video-background-effects) */
