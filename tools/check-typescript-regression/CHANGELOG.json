@@ -1,0 +1,20 @@
+{
+  "name": "@internal/check-typescript-regression",
+  "entries": [
+    {
+      "date": "Mon, 24 Apr 2023 15:39:40 GMT",
+      "tag": "@internal/check-typescript-regression_v0.1.0",
+      "version": "0.1.0",
+      "comments": {
+        "undefined": [
+          {
+            "author": "beachball",
+            "package": "@internal/check-typescript-regression",
+            "comment": "Bump @azure/communication-react to v1.5.1-beta.3",
+            "commit": "0c6463eadb465ca4b61abf49bf10acb16ab38109"
+          }
+        ]
+      }
+    }
+  ]
+}
