@@ -11,7 +11,18 @@ export { GridLayout } from './GridLayout';
 export type { GridLayoutProps, GridLayoutStyles } from './GridLayout';
 
 export { SendBox } from './SendBox';
+/* @conditional-compile-remove(at-mention) */
+export { _AtMentionFlyout } from './AtMentionFlyout';
+
 export type { SendBoxProps, SendBoxStrings, SendBoxStylesProps } from './SendBox';
+/* @conditional-compile-remove(at-mention) */
+export type {
+  _AtMentionFlyoutProps,
+  AtMentionLookupOptions,
+  AtMentionDisplayOptions,
+  AtMentionOptions,
+  AtMentionSuggestion
+} from './AtMentionFlyout';
 /* @conditional-compile-remove(file-sharing) */
 export type { ActiveFileUpload } from './SendBox';
 
@@ -215,6 +226,11 @@ export type {
 } from './VideoEffects/VideoBackgroundEffectsPicker';
 
 export type { VerticalGalleryStyles, VerticalGalleryStrings, VerticalGalleryControlBarStyles } from './VerticalGallery';
-
+/* @conditional-compile-remove(close-captions) */
 export * from './CaptionsBanner';
+/* @conditional-compile-remove(close-captions) */
 export * from './Caption';
+/* @conditional-compile-remove(close-captions) */
+export * from './StartCaptionsButton';
+/* @conditional-compile-remove(close-captions) */
+export * from './CaptionsSettingsModal';

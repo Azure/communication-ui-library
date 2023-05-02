@@ -2,28 +2,19 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import Enzyme, { mount } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
-/* @conditional-compile-remove(rooms) */
-import { mountWithPermissions } from './utils/testUtils';
 import { ParticipantList } from './ParticipantList';
+import { registerIcons } from '@fluentui/react';
+import { render } from '@testing-library/react';
 /* @conditional-compile-remove(rooms) */
-import { ParticipantItem } from './ParticipantItem';
-/* @conditional-compile-remove(rooms) */
-import { IContextualMenuItem } from '@fluentui/react';
+import { renderWithPermissions } from './utils/testUtils';
 /* @conditional-compile-remove(rooms) */
 import { _getPermissions } from '../permissions';
-import { registerIcons } from '@fluentui/react';
 
-Enzyme.configure({ adapter: new Adapter() });
-
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-const dummyOnRemoveParticipantCallback = () => {
-  console.log('Removing participant');
-};
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type, @typescript-eslint/no-empty-function
+const dummyOnRemoveParticipantCallback = () => {};
 
 describe('ParticipantList tests for different roles', () => {
-  beforeEach(() => {
+  beforeAll(() => {
     registerIcons({
       icons: {
         participantitemoptions: <></>
@@ -31,7 +22,7 @@ describe('ParticipantList tests for different roles', () => {
     });
   });
   test('ParticipantList should have remove item', async () => {
-    mount(
+    render(
       <ParticipantList
         participants={[{ displayName: 'User1', userId: '1', isRemovable: true }]}
         onRemoveParticipant={dummyOnRemoveParticipantCallback}
@@ -40,55 +31,52 @@ describe('ParticipantList tests for different roles', () => {
   });
   /* @conditional-compile-remove(rooms) */
   test('ParticipantList should have enabled remove menu item for Presenter role', async () => {
-    const wrapper = mountWithPermissions(
+    const { container } = renderWithPermissions(
       <ParticipantList
         participants={[{ displayName: 'User1', userId: '1', isRemovable: true }]}
         onRemoveParticipant={dummyOnRemoveParticipantCallback}
       />,
       _getPermissions('Presenter')
     );
-    const menuItems = wrapper.find(ParticipantItem).first().prop('menuItems');
-    const removeMenuItem = getRemoveMenuItem(menuItems);
-    expect(removeMenuItem.disabled).toBeUndefined();
+
+    const removeMenuItem = getRemoveParticipantButton(container);
+    expect(removeMenuItem).toBeTruthy();
+    expect(removeMenuItem.disabled).toBe(false);
   });
 
   /* @conditional-compile-remove(rooms) */
   test('ParticipantList should have disabled remove menu item for Attendee role', async () => {
-    const wrapper = mountWithPermissions(
+    const { container } = renderWithPermissions(
       <ParticipantList
         participants={[{ displayName: 'User1', userId: '1', isRemovable: true }]}
         onRemoveParticipant={dummyOnRemoveParticipantCallback}
       />,
       _getPermissions('Attendee')
     );
-    const menuItems = wrapper.find(ParticipantItem).first().prop('menuItems');
-    expect(menuItems?.length).toBe(0);
+
+    const removeMenuItem = getRemoveParticipantButton(container);
+    expect(removeMenuItem).toBeFalsy();
   });
 
   /* @conditional-compile-remove(rooms) */
   test('ParticipantList should have disabled remove menu item for Consumer role', async () => {
-    const wrapper = mountWithPermissions(
+    const { container } = renderWithPermissions(
       <ParticipantList
         participants={[{ displayName: 'User1', userId: '1', isRemovable: true }]}
         onRemoveParticipant={dummyOnRemoveParticipantCallback}
       />,
       _getPermissions('Consumer')
     );
-    const menuItems = wrapper.find(ParticipantItem).first().prop('menuItems');
-    expect(menuItems?.length).toBe(0);
+
+    const removeMenuItem = getRemoveParticipantButton(container);
+    expect(removeMenuItem).toBeFalsy();
   });
 });
 
 /* @conditional-compile-remove(rooms) */
-const getRemoveMenuItem = (menuItems): IContextualMenuItem => {
-  if (!menuItems) {
-    fail('No menu items found');
-  }
-  const removeMenuItems = menuItems.filter((m) => m.key === 'remove');
-  if (!removeMenuItems) {
-    fail('Remove menu item not found');
-  } else if (removeMenuItems.length > 1) {
-    fail('More than one remove menu item not found');
-  }
-  return removeMenuItems[0];
+const getRemoveParticipantButton = (container: HTMLElement): HTMLButtonElement => {
+  // RTL renders everything in a div on the body element. Fluent however renders flyouts
+  // directly on the body element. So we need to get the parent of the container.
+  const body = container.parentElement;
+  return body?.querySelector('button[data-ui-id="participant-list-remove-participant-button"]') as HTMLButtonElement;
 };

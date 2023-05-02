@@ -1,0 +1,11 @@
+{
+  "extends": "../../common/config/tsc/tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./dist/dist-esm",
+    "baseUrl": "./src",
+    "paths": {}
+  },
+  "typeRoots": ["./node_modules/@types"],
+  "include": ["src/**/*"],
+  "exclude": ["dist", "node_modules"]
+}

@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Show Video Effects errors in side pane",
+  "packageName": "@azure/communication-react",
+  "email": "97124699+prabhjot-msft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

@@ -3,11 +3,8 @@
 
 import React from 'react';
 import { TypingIndicator } from './TypingIndicator';
-import Enzyme from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
-import { mountWithLocalization, createTestLocale } from './utils/testUtils';
-
-Enzyme.configure({ adapter: new Adapter() });
+import { renderWithLocalization, createTestLocale } from './utils/testUtils';
+import { screen } from '@testing-library/react';
 
 const testLocale = createTestLocale({
   typingIndicator: {
@@ -20,18 +17,15 @@ const testLocale = createTestLocale({
 
 describe('TypingIndicator should format string correctly', () => {
   test('One user case', async () => {
-    const component = mountWithLocalization(
-      <TypingIndicator typingUsers={[{ userId: 'user1', displayName: 'Claire' }]} />,
-      testLocale
-    );
+    renderWithLocalization(<TypingIndicator typingUsers={[{ userId: 'user1', displayName: 'Claire' }]} />, testLocale);
 
     const expectedString = 'Claire is typing';
-    expect(component.text()).toBe(expectedString);
-    expect(component.html().includes(`aria-label="${expectedString}"`)).toBe(true);
+    expect(screen.getByRole('status').textContent).toBe(expectedString);
+    expect(screen.getByRole('status').getAttribute('aria-label')).toBe(expectedString);
   });
 
   test('Two users case', async () => {
-    const component = mountWithLocalization(
+    renderWithLocalization(
       <TypingIndicator
         typingUsers={[
           { userId: 'user1', displayName: 'Claire' },
@@ -42,12 +36,12 @@ describe('TypingIndicator should format string correctly', () => {
     );
 
     const expectedString = 'Claire, Christopher are typing';
-    expect(component.text()).toBe(expectedString);
-    expect(component.html().includes(`aria-label="${expectedString}"`)).toBe(true);
+    expect(screen.getByRole('status').textContent).toBe(expectedString);
+    expect(screen.getByRole('status').getAttribute('aria-label')).toBe(expectedString);
   });
 
   test('Two users with abbreviation case', async () => {
-    const component = mountWithLocalization(
+    renderWithLocalization(
       <TypingIndicator
         typingUsers={[
           { userId: 'user1', displayName: 'Claire Romanov' },
@@ -58,12 +52,12 @@ describe('TypingIndicator should format string correctly', () => {
     );
 
     const expectedString = 'Claire Romanov and 1 other are typing';
-    expect(component.text()).toBe(expectedString);
-    expect(component.html().includes(`aria-label="${expectedString}"`)).toBe(true);
+    expect(screen.getByRole('status').textContent).toBe(expectedString);
+    expect(screen.getByRole('status').getAttribute('aria-label')).toBe(expectedString);
   });
 
   test('Three users with abbreviation case', async () => {
-    const component = mountWithLocalization(
+    renderWithLocalization(
       <TypingIndicator
         typingUsers={[
           { userId: 'user1', displayName: 'Claire Romanov' },
@@ -75,7 +69,7 @@ describe('TypingIndicator should format string correctly', () => {
     );
 
     const expectedString = 'Claire Romanov and 2 others are typing';
-    expect(component.text()).toBe(expectedString);
-    expect(component.html().includes(`aria-label="${expectedString}"`)).toBe(true);
+    expect(screen.getByRole('status').textContent).toBe(expectedString);
+    expect(screen.getByRole('status').getAttribute('aria-label')).toBe(expectedString);
   });
 });

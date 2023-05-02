@@ -23,6 +23,7 @@ import { localPreviewSelector } from '../selectors/localPreviewSelector';
 import { buttonFlyoutIncreasedSizeStyles } from '../styles/Buttons.styles';
 import {
   cameraOffLabelStyle,
+  localPreviewButtonStyle,
   localPreviewContainerStyleDesktop,
   localPreviewContainerStyleMobile,
   localPreviewTileStyle
@@ -113,12 +114,14 @@ export const LocalPreview = (props: LocalPreviewProps): JSX.Element => {
             onToggleMicrophone={onToggleMic}
             disabled={!microphonePermissionGranted || !hasMicrophones}
             showLabel={true}
+            styles={localPreviewButtonStyle}
           />
           <CameraButton
             data-ui-id="call-composite-local-device-settings-camera-button"
             {...cameraButtonProps}
             showLabel={true}
             disabled={!cameraPermissionGranted || !hasCameras}
+            styles={localPreviewButtonStyle}
           />
           {props.showDevicesButton && (
             <DevicesButton

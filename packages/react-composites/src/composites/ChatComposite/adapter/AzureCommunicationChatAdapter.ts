@@ -185,7 +185,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     /* @conditional-compile-remove(file-sharing) */
     this.updateFileUploadMetadata = this.updateFileUploadMetadata.bind(this);
     /* @conditional-compile-remove(teams-inline-images) */
-    this.downloadAuthenticatedAttachment = this.downloadAuthenticatedAttachment.bind(this);
+    this.downloadAttachments = this.downloadAttachments.bind(this);
   }
 
   dispose(): void {
@@ -326,7 +326,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   }
 
   /* @conditional-compile-remove(teams-inline-images) */
-  async downloadAuthenticatedAttachment(attachmentUrl: string): Promise<AttachmentDownloadResult> {
+  async downloadAttachments(options: { attachmentUrls: string[] }): Promise<AttachmentDownloadResult[]> {
     return this.asyncTeeErrorToEventEmitter(async () => {
       if (this.credential === undefined) {
         const e = new Error();
@@ -342,23 +342,30 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
         throw e;
       }
 
-      async function fetchWithAuthentication(url: string, token: string): Promise<Response> {
-        const headers = new Headers();
-        headers.append('Authorization', `Bearer ${token}`);
-        try {
-          return await fetch(url, { headers });
-        } catch (err) {
-          const e = new Error();
-          e['target'] = 'ChatThreadClient.getMessage';
-          e['innerError'] = err;
-          throw e;
-        }
-      }
-
-      const response = await fetchWithAuthentication(attachmentUrl, accessToken.token);
-      const blob = await response.blob();
-      return { blobUrl: URL.createObjectURL(blob) };
+      return this.downloadAuthenticatedFile(accessToken.token, options);
     });
+  }
+  /* @conditional-compile-remove(teams-inline-images) */
+  private async downloadAuthenticatedFile(
+    accessToken: string,
+    options: { attachmentUrls: string[] }
+  ): Promise<AttachmentDownloadResult[]> {
+    async function fetchWithAuthentication(url: string, token: string): Promise<Response> {
+      const headers = new Headers();
+      headers.append('Authorization', `Bearer ${token}`);
+      try {
+        return await fetch(url, { headers });
+      } catch (err) {
+        const e = new Error();
+        e['target'] = 'ChatThreadClient.getMessage';
+        e['innerError'] = err;
+        throw e;
+      }
+    }
+    const attachmentUrl = options.attachmentUrls[0];
+    const response = await fetchWithAuthentication(attachmentUrl, accessToken);
+    const blob = await response.blob();
+    return [{ blobUrl: URL.createObjectURL(blob) }];
   }
 
   private messageReceivedListener(event: ChatMessageReceivedEvent): void {
@@ -474,7 +481,7 @@ const convertEventType = (type: string): ChatMessageType => {
  * Configuration options to include when creating AzureCommunicationChatAdapter.
  * @beta
  */
-export type ChatAdapterOptions = {
+export type AzureCommunicationChatAdapterOptions = {
   credential?: CommunicationTokenCredential;
 };
 

@@ -2,6 +2,8 @@
 // Licensed under the MIT license.
 
 import React from 'react';
+/* @conditional-compile-remove(teams-inline-images) */
+import { useEffect } from 'react';
 import { _formatString } from '@internal/acs-ui-common';
 import { Parser, ProcessNodeDefinitions, ProcessingInstructions } from 'html-to-react';
 import Linkify from 'react-linkify';
@@ -10,6 +12,9 @@ import { ChatMessage } from '../../types/ChatMessage';
 import { BlockedMessage } from '../../types/ChatMessage';
 import { LiveMessage } from 'react-aria-live';
 import { Link } from '@fluentui/react';
+/* @conditional-compile-remove(at-mention) */
+import { AtMentionDisplayOptions } from '../AtMentionFlyout';
+
 /* @conditional-compile-remove(data-loss-prevention) */
 import { FontIcon, Stack } from '@fluentui/react';
 import { MessageThreadStrings } from '../MessageThread';
@@ -19,6 +24,8 @@ import { FileMetadata } from '../FileDownloadCards';
 type ChatMessageContentProps = {
   message: ChatMessage;
   strings: MessageThreadStrings;
+  /* @conditional-compile-remove(at-mention) */
+  atMentionDisplayOptions?: AtMentionDisplayOptions;
   /* @conditional-compile-remove(teams-inline-images) */
   attachmentsMap?: Record<string, string>;
   /* @conditional-compile-remove(teams-inline-images) */
@@ -67,6 +74,16 @@ const MessageContentWithLiveAria = (props: MessageContentWithLiveAriaProps): JSX
 
 const MessageContentAsRichTextHTML = (props: ChatMessageContentProps): JSX.Element => {
   const liveAuthor = _formatString(props.strings.liveAuthorIntro, { author: `${props.message.senderDisplayName}` });
+
+  /* @conditional-compile-remove(teams-inline-images) */
+  useEffect(() => {
+    props.message.attachedFilesMetadata?.map((fileMetadata) => {
+      if (props.onFetchAttachment && props.attachmentsMap && props.attachmentsMap[fileMetadata.id] === undefined) {
+        props.onFetchAttachment(fileMetadata);
+      }
+    });
+  }, [props]);
+
   return (
     <MessageContentWithLiveAria
       message={props.message}
@@ -108,11 +125,7 @@ const MessageContentAsText = (props: ChatMessageContentProps): JSX.Element => {
 export const BlockedMessageContent = (props: BlockedMessageContentProps): JSX.Element => {
   const Icon: JSX.Element = <FontIcon iconName={'DataLossPreventionProhibited'} />;
   const blockedMessage =
-    props.message.warningText === false
-      ? ''
-      : props.message.warningText === '' || props.message.warningText === undefined
-      ? props.strings.blockedWarningText
-      : props.message.warningText;
+    props.message.warningText === undefined ? props.strings.blockedWarningText : props.message.warningText;
   const blockedMessageLink = props.message.link;
   const blockedMessageLinkText = blockedMessageLink
     ? props.message.linkText ?? props.strings.blockedWarningLinkText
@@ -184,18 +197,8 @@ const processHtmlToReact = (props: ChatMessageContentProps): JSX.Element => {
     },
     processNode: (node, children, index): HTMLElement => {
       // logic to check id in map/list
-      const fileMetadata = props.message.attachedFilesMetadata?.find((f) => f.id === node.attribs.id);
-      // if in cache, early return
       if (props.attachmentsMap && node.attribs.id in props.attachmentsMap) {
         node.attribs = { ...node.attribs, src: props.attachmentsMap[node.attribs.id] };
-        return processNodeDefinitions.processDefaultNode(node, children, index);
-      }
-      // not yet in cache
-      if (fileMetadata && props.onFetchAttachment && props.attachmentsMap) {
-        props.onFetchAttachment(fileMetadata);
-        if (node.attribs.id in props.attachmentsMap) {
-          node.attribs = { ...node.attribs, src: props.attachmentsMap[node.attribs.id] };
-        }
       }
       return processNodeDefinitions.processDefaultNode(node, children, index);
     }
