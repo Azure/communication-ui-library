@@ -2,9 +2,9 @@
 // Licensed under the MIT license.
 
 import { IStyle, FontIcon, mergeStyles, Stack, Text } from '@fluentui/react';
-import { ComponentSlotStyle } from '@fluentui/react-northstar';
 import React from 'react';
 import { systemMessageIconStyle } from './styles/SystemMessage.styles';
+import { ComponentSlotStyle } from '../types/ComponentSlotStyle';
 
 /**
  * Todo: We need to add more types of system messages that we support.

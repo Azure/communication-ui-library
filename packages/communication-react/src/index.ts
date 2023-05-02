@@ -174,6 +174,7 @@ export type {
   ChatMessage,
   CommunicationParticipant,
   ComponentLocale,
+  ComponentSlotStyle,
   ComponentStrings,
   ContentSystemMessage,
   ControlBarButtonProps,
