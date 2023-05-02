@@ -489,6 +489,7 @@ export interface CallCompositeStrings {
     threeParticipantLeftNoticeString: string;
     twoParticipantJoinedNoticeString: string;
     twoParticipantLeftNoticeString: string;
+    unableToStartVideoEffect?: string;
     unnamedParticipantString: string;
 }
 
