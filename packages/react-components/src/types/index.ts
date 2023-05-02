@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 
 export * from './ChatMessage';
+export * from './ComponentSlotStyle';
 export * from './CustomStylesProps';
 export * from './VideoGalleryParticipant';
 export * from './CommunicationParticipant';
