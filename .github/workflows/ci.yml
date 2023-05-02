@@ -171,7 +171,7 @@ jobs:
           mkdir -p breaking-change-check/snapshots/
           cp dist/communication-react.d.ts breaking-change-check/snapshots/
       - name: Checkout current branch
-        run: git checkout ${{ github.event.inputs.branch }}
+        run: git checkout ${{ github.event.pull_request.head.ref }}
       # Builds
       - name: Build current api file
         run: rush build -t @azure/communication-react
