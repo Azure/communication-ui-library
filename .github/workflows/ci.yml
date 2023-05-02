@@ -167,7 +167,9 @@ jobs:
         run: rush build -t @azure/communication-react
       - name: Copy api file
         working-directory: packages/communication-react/
-        run: cp ./dist/communication-react.d.ts ./breaking-change-check/snapshots/
+        run: |
+          mkdir -p breaking-change-check/snapshots/
+          cp dist/communication-react.d.ts breaking-change-check/snapshots/
       - name: Checkout current branch
         run: git checkout ${{ github.event.inputs.branch }}
       # Builds
