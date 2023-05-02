@@ -3607,6 +3607,8 @@ export type VideoGalleryParticipant = {
 
 // @public
 export interface VideoGalleryProps {
+    // (undocumented)
+    breakingChangeParameter: boolean;
     dominantSpeakers?: string[];
     layout?: VideoGalleryLayout;
     localParticipant: VideoGalleryLocalParticipant;
