@@ -528,10 +528,18 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
               // handle mention click
               const mentionTag = findMentionTagForSelection(tagsValue, e.currentTarget.selectionStart);
               if (mentionTag !== undefined && mentionTag.plainTextBeginIndex !== undefined) {
-                e.currentTarget.setSelectionRange(
-                  mentionTag.plainTextBeginIndex,
-                  mentionTag.plainTextEndIndex ?? mentionTag.plainTextBeginIndex
-                );
+                if (e.currentTarget.selectionDirection === null) {
+                  e.currentTarget.setSelectionRange(
+                    mentionTag.plainTextBeginIndex,
+                    mentionTag.plainTextEndIndex ?? mentionTag.plainTextBeginIndex
+                  );
+                } else {
+                  e.currentTarget.setSelectionRange(
+                    mentionTag.plainTextBeginIndex,
+                    mentionTag.plainTextEndIndex ?? mentionTag.plainTextBeginIndex,
+                    e.currentTarget.selectionDirection
+                  );
+                }
                 setSelectionStartValue(mentionTag.plainTextBeginIndex);
                 setSelectionEndValue(mentionTag.plainTextEndIndex ?? mentionTag.plainTextBeginIndex);
               } else {
@@ -995,7 +1003,7 @@ const updateHTML = (
             htmlText,
             oldPlainText,
             lastProcessedHTMLIndex,
-            '', // the part of mention should be just deleted without updating to processedChange
+            '', // the part of mention should be just deleted without processedChange update
             change,
             tag,
             closeTagIdx,
@@ -1021,7 +1029,7 @@ const updateHTML = (
             tag.subTags,
             startIndex - mentionTagLength,
             oldPlainTextEndIndex - mentionTagLength,
-            processedChange,
+            '', // the part of the tag should be just deleted without processedChange update and change will be added after this tag
             mentionTrigger
           );
           result += stringBefore + content;
@@ -1059,7 +1067,7 @@ const updateHTML = (
             htmlText,
             oldPlainText,
             lastProcessedHTMLIndex,
-            '', // the part of mention should be just deleted without updating to processedChange
+            '', // the part of mention should be just deleted without processedChange update
             change,
             tag,
             closeTagIdx,
@@ -1085,7 +1093,7 @@ const updateHTML = (
             tag.subTags,
             startIndex - mentionTagLength,
             oldPlainTextEndIndex - mentionTagLength,
-            processedChange,
+            processedChange, // processedChange should equal '' and the part of the tag should be deleted as the change was handled before this tag
             mentionTrigger
           );
           result += stringBefore + content;
