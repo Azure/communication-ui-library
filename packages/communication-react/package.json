@@ -77,10 +77,13 @@
     "lint:fix": "rushx lint -- --fix",
     "lint:quiet": "rushx lint -- --quiet",
     "postpack": "copyfiles -E \"./*.tgz\" release",
+    "check-breaking-change": "tsc breaking-change-check/checkBreakingChanges.ts --allowSyntheticDefaultImports --strict --noEmit",
+    "copy-api-snapshot": "cpx \"./dist/communication-react.d.ts\" \"./breaking-change-check/snapshots/\"",
     "_api-extractor:by-flavor": "if-env COMMUNICATION_REACT_FLAVOR=stable && api-extractor run -c api-extractor.stable.json --local || (if-env COMMUNICATION_REACT_FLAVOR=beta && api-extractor run --local)",
     "_build:by-flavor": "rushx clean && rushx build:esm && rushx build:cjs && rushx _api-extractor:by-flavor",
     "_current-flavor": "echo You are running under COMMUNICATION_REACT_FLAVOR: && env-cmd -f ../../common/config/env/.env node -p process.env.COMMUNICATION_REACT_FLAVOR",
     "_by-flavor": "rushx _current-flavor && env-cmd -f ../../common/config/env/.env --use-shell"
+
   },
   "devDependencies": {
     "@azure/communication-calling": "1.13.0-beta.4 || >=1.12.1",
