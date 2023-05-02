@@ -168,8 +168,7 @@ jobs:
       - name: Build base api file
         run: rush build -t @azure/communication-react
       - name: Copy api file
-        with:
-          path: packages/communication-react/
+        working-directory: packages/communication-react/
         run: rushx copy-api-snapshot
       - name: Checkout current branch
         run: git checkout ${{ github.event.inputs.branch }}
@@ -177,8 +176,7 @@ jobs:
       - name: Build current api file
         run: rush build -t @azure/communication-react
       - name: Check breaking changes
-        with:
-          path: packages/communication-react/
+        working-directory: packages/communication-react/
         id: breaking-changes
         run: rushx check-breaking-change
       - name: Check result of breaking change check
