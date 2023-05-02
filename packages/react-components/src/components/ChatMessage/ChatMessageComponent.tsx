@@ -164,6 +164,7 @@ export const ChatMessageComponent = (props: ChatMessageComponentProps): JSX.Elem
         onFetchAttachments={props.onFetchAttachments}
         /* @conditional-compile-remove(teams-inline-images) */
         attachmentsMap={props.attachmentsMap}
+        mentionDisplayOptions={props.mentionOptions?.displayOptions}
       />
     );
   }
