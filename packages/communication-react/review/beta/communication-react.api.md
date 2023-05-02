@@ -1761,6 +1761,7 @@ export interface ComponentStrings {
     endCallButton: EndCallButtonStrings;
     errorBar: ErrorBarStrings;
     holdButton: HoldButtonStrings;
+    mentionPopover: MentionPopoverStrings;
     messageStatusIndicator: MessageStatusIndicatorStrings;
     messageThread: MessageThreadStrings;
     microphoneButton: MicrophoneButtonStrings;
@@ -2710,6 +2711,11 @@ export type MentionOptions = {
     lookupOptions?: MentionLookupOptions;
     displayOptions?: MentionDisplayOptions;
 };
+
+// @beta
+export interface MentionPopoverStrings {
+    mentionPopoverHeader: string;
+}
 
 // @public
 export type Message = ChatMessage | SystemMessage | CustomMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage;

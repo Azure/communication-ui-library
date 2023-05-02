@@ -22,7 +22,8 @@ export type {
   MentionLookupOptions,
   MentionDisplayOptions,
   MentionOptions,
-  Mention
+  Mention,
+  MentionPopoverStrings
 } from './MentionPopover';
 /* @conditional-compile-remove(mention) */
 export { defaultMentionSuggestionRenderer } from './ChatMessage/MentionSuggestionRenderer';
