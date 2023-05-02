@@ -164,7 +164,7 @@ jobs:
         run: echo "Failed to switch to stable flavor, please make sure you run 'rush update:stable' if dependencies were updated." && exit 1
       # Checkout the branch to be merged into in PR
       - name: Checkout base branch
-        run: git checkout ${{ github.event.pull_request.head.ref }}
+        run: git checkout ${{ github.event.pull_request.base.ref }}
       - name: Build base api file
         run: rush build -t @azure/communication-react
       - name: Copy api file
@@ -180,8 +180,8 @@ jobs:
         id: breaking-changes
         run: rushx check-breaking-change
       - name: Check result of breaking change check
-        if: ${{ always() && steps.switch-flavor.outcome == 'failure' }}
-        run: echo "Breaking changes detected, make sure if that is expected change, then add 'breaking-changes'  label to PR." && exit 1
+        if: ${{ always() && steps.breaking-changes.outcome == 'failure' }}
+        run: echo "Breaking changes detected, make sure if that is expected change, then add 'breaking-changes' label to PR." && exit 1
 
   call_composite_automation_test:
     needs: get_matrix
