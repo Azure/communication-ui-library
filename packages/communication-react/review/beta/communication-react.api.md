@@ -2209,6 +2209,9 @@ export const DEFAULT_COMPOSITE_ICONS: {
 };
 
 // @beta
+export const defaultMentionSuggestionRenderer: (suggestion: Mention) => JSX.Element;
+
+// @beta
 export interface DeviceCheckOptions {
     camera: 'required' | 'optional' | 'doNotPrompt';
     microphone: 'required' | 'optional' | 'doNotPrompt';
