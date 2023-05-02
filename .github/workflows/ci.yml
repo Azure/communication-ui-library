@@ -67,8 +67,6 @@ jobs:
         if: ${{ matrix.flavor == 'stable' }}
         run: |
           rush switch-flavor:stable
-          node ./common/scripts/force-build-flavor.mjs stable
-          rush update:stable
       - name: Check result of flavor switch
         if: ${{ always() && steps.switch-flavor.outcome == 'failure' }}
         run: echo "Failed to switch to stable flavor, please make sure you run 'rush update:stable' if dependencies were updated." && exit 1
