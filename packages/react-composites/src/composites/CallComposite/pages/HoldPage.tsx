@@ -9,6 +9,8 @@ import { CallArrangement } from '../components/CallArrangement';
 import { HoldPane } from '../components/HoldPane';
 import { usePropsFor } from '../hooks/usePropsFor';
 import { disableCallControls, reduceCallControlsForMobile } from '../utils';
+import { MobileChatSidePaneTabHeaderProps } from '../../common/TabHeader';
+import { SidePaneRenderer } from '../components/SidePane/SidePaneProvider';
 
 /**
  * @beta
@@ -17,6 +19,8 @@ export interface HoldPageProps {
   mobileView: boolean;
   options?: CallCompositeOptions;
   modalLayerHostId: string;
+  updateSidePaneRenderer: (renderer: SidePaneRenderer | undefined) => void;
+  mobileChatTabHeader?: MobileChatSidePaneTabHeaderProps;
 }
 
 /**
@@ -53,6 +57,8 @@ export const HoldPage = (props: HoldPageProps): JSX.Element => {
       modalLayerHostId={props.modalLayerHostId}
       onRenderGalleryContent={() => <HoldPane />}
       dataUiId={'hold-page'}
+      updateSidePaneRenderer={props.updateSidePaneRenderer}
+      mobileChatTabHeader={props.mobileChatTabHeader}
     />
   );
 };

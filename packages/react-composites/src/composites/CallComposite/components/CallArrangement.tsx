@@ -58,7 +58,7 @@ import { usePeoplePane } from './SidePane/usePeoplePane';
 /* @conditional-compile-remove(video-background-effects) */
 import { useVideoEffectsPane } from './SidePane/useVideoEffectsPane';
 import { isDisabled } from '../utils';
-import { useSidePaneContext } from './SidePane/SidePaneProvider';
+import { SidePaneRenderer, useIsSidePaneOpen } from './SidePane/SidePaneProvider';
 import { ModalLocalAndRemotePIP } from '../../common/ModalLocalAndRemotePIP';
 import { getPipStyles } from '../../common/styles/ModalLocalAndRemotePIP.styles';
 import { useMinMaxDragPosition } from '../../common/utils';
@@ -80,6 +80,7 @@ export interface CallArrangementProps {
   modalLayerHostId: string;
   /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
+  updateSidePaneRenderer: (renderer: SidePaneRenderer | undefined) => void;
   mobileChatTabHeader?: MobileChatSidePaneTabHeaderProps;
 }
 
@@ -111,6 +112,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   const [drawerMenuItems, setDrawerMenuItems] = useState<_DrawerMenuItemProps[]>([]);
   const peoplePaneProps = useMemo(
     () => ({
+      updateSidePaneRenderer: props.updateSidePaneRenderer,
       setDrawerMenuItems,
       inviteLink: props.callControlProps.callInvitationURL,
       /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
@@ -119,6 +121,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
       mobileView: props.mobileView
     }),
     [
+      props.updateSidePaneRenderer,
       props.callControlProps.callInvitationURL,
       props.callControlProps?.onFetchParticipantMenuItems,
       /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
@@ -135,8 +138,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     }
   }, [closePeoplePane, isPeoplePaneOpen, openPeoplePane]);
 
-  const { activeSidePaneId, overrideSidePane } = useSidePaneContext();
-  const isSidePaneOpen = !!(activeSidePaneId || overrideSidePane?.isActive);
+  const isSidePaneOpen = useIsSidePaneOpen();
 
   const isMobileWithActivePane = props.mobileView && isSidePaneOpen;
 
@@ -163,7 +165,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   );
 
   /* @conditional-compile-remove(video-background-effects) */
-  const { toggleVideoEffectsPane } = useVideoEffectsPane(props.mobileView);
+  const { openVideoEffectsPane } = useVideoEffectsPane(props.updateSidePaneRenderer, props.mobileView);
 
   const [showDrawer, setShowDrawer] = useState(false);
   const onMoreButtonClicked = useCallback(() => {
@@ -253,7 +255,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                   /* @conditional-compile-remove(close-captions) */
                   isCaptionsSupported={isTeamsCall && hasJoinedCall}
                   /* @conditional-compile-remove(video-background-effects) */
-                  onShowVideoEffectsPicker={toggleVideoEffectsPane}
+                  onShowVideoEffectsPicker={openVideoEffectsPane}
                   /* @conditional-compile-remove(PSTN-calls) */
                   onClickShowDialpad={alternateCallerId ? onClickShowDialpad : undefined}
                 />
@@ -319,6 +321,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
             </Stack.Item>
             <SidePane
               mobileView={props.mobileView}
+              updateSidePaneRenderer={props.updateSidePaneRenderer}
               onPeopleButtonClicked={
                 props.mobileView && !shouldShowPeopleTabHeaderButton(props.callControlProps.options)
                   ? undefined

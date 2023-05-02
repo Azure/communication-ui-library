@@ -380,30 +380,41 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
     ]
   );
 
-  const overrideSidePaneProps: InjectedSidePaneProps = useMemo(() => {
-    return {
-      contentRenderer: hasJoinedCall ? onRenderChatContent : undefined,
-      headerRenderer: () => (
-        <SidePaneHeader
-          headingText={callWithChatStrings.chatPaneTitle}
-          onClose={closeChat}
-          dismissSidePaneButtonAriaLabel={callWithChatStrings.dismissSidePaneButtonLabel ?? ''}
-          mobileView={mobileView}
-        />
-      ),
-      sidePaneId: 'chat',
+  const sidePaneHeaderRenderer = useCallback(
+    () => (
+      <SidePaneHeader
+        headingText={callWithChatStrings.chatPaneTitle}
+        onClose={closeChat}
+        dismissSidePaneButtonAriaLabel={callWithChatStrings.dismissSidePaneButtonLabel ?? ''}
+        mobileView={mobileView}
+      />
+    ),
+    [callWithChatStrings.chatPaneTitle, callWithChatStrings.dismissSidePaneButtonLabel, closeChat, mobileView]
+  );
+
+  const sidePaneContentRenderer = useMemo(
+    () => (hasJoinedCall ? onRenderChatContent : undefined),
+    [hasJoinedCall, onRenderChatContent]
+  );
+
+  const sidePaneRenderer = useMemo(
+    () => ({
+      contentRenderer: sidePaneContentRenderer,
+      headerRenderer: sidePaneHeaderRenderer,
+      id: 'chat'
+    }),
+    [sidePaneContentRenderer, sidePaneHeaderRenderer]
+  );
+
+  const overrideSidePaneProps: InjectedSidePaneProps = useMemo(
+    () => ({
+      renderer: sidePaneRenderer,
       isActive: isChatOpen,
       persistRenderingWhenClosed: true
-    };
-  }, [
-    hasJoinedCall,
-    callWithChatStrings.chatPaneTitle,
-    callWithChatStrings.dismissSidePaneButtonLabel,
-    closeChat,
-    mobileView,
-    onRenderChatContent,
-    isChatOpen
-  ]);
+    }),
+    [isChatOpen, sidePaneRenderer]
+  );
+
   const onSidePaneIdChange = useCallback(
     (sidePaneId) => {
       // If the pane is switched to something other than chat, removing rendering chat.

@@ -16,6 +16,8 @@ import { useLocalVideoStartTrigger } from '../components/MediaGallery';
 import { CallCompositeIcon } from '../../common/icons';
 import { isPhoneNumberIdentifier, PhoneNumberIdentifier } from '@azure/communication-common';
 import { RemoteParticipantState } from '@internal/calling-stateful-client';
+import { MobileChatSidePaneTabHeaderProps } from '../../common/TabHeader';
+import { SidePaneRenderer } from '../components/SidePane/SidePaneProvider';
 
 /**
  * @private
@@ -24,6 +26,8 @@ export interface LobbyPageProps {
   mobileView: boolean;
   modalLayerHostId: string;
   options?: CallCompositeOptions;
+  mobileChatTabHeader: MobileChatSidePaneTabHeaderProps | undefined;
+  updateSidePaneRenderer: (renderer: SidePaneRenderer | undefined) => void;
 }
 
 /**
@@ -63,6 +67,8 @@ export const LobbyPage = (props: LobbyPageProps): JSX.Element => {
         <LobbyTile {...lobbyProps} overlayProps={overlayProps(strings, inLobby, Object.values(participants))} />
       )}
       dataUiId={'lobby-page'}
+      updateSidePaneRenderer={props.updateSidePaneRenderer}
+      mobileChatTabHeader={props.mobileChatTabHeader}
     />
   );
 };

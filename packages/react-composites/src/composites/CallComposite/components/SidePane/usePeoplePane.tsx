@@ -1,16 +1,19 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React, { useCallback } from 'react';
-import { useCloseSidePane, useOpenSidePane } from './SidePaneProvider';
+import React, { useCallback, useEffect, useMemo } from 'react';
+import { SidePaneRenderer, useIsParticularSidePaneOpen } from './SidePaneProvider';
 import { SidePaneHeader } from '../../../common/SidePaneHeader';
 import { PeoplePaneContent } from '../../../common/PeoplePaneContent';
 import { CompositeLocale, useLocale } from '../../../localization';
 import { ParticipantMenuItemsCallback, _DrawerMenuItemProps } from '@internal/react-components';
 import { AvatarPersonaDataCallback } from '../../../common/AvatarPersona';
 
+const PEOPLE_SIDE_PANE_ID = 'people';
+
 /** @private */
 export const usePeoplePane = (props: {
+  updateSidePaneRenderer: (renderer: SidePaneRenderer | undefined) => void;
   setDrawerMenuItems: (items: _DrawerMenuItemProps[]) => void;
   inviteLink?: string;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
@@ -21,8 +24,18 @@ export const usePeoplePane = (props: {
   closePeoplePane: () => void;
   isPeoplePaneOpen: boolean;
 } => {
-  const { inviteLink, onFetchAvatarPersonaData, onFetchParticipantMenuItems, setDrawerMenuItems, mobileView } = props;
-  const { closePane } = useCloseSidePane();
+  const {
+    updateSidePaneRenderer,
+    inviteLink,
+    onFetchAvatarPersonaData,
+    onFetchParticipantMenuItems,
+    setDrawerMenuItems,
+    mobileView
+  } = props;
+
+  const closePane = useCallback(() => {
+    updateSidePaneRenderer(undefined);
+  }, [updateSidePaneRenderer]);
 
   const localeStrings = localeTrampoline(useLocale());
 
@@ -50,7 +63,27 @@ export const usePeoplePane = (props: {
     );
   }, [inviteLink, mobileView, onFetchAvatarPersonaData, onFetchParticipantMenuItems, setDrawerMenuItems]);
 
-  const { isOpen, openPane } = useOpenSidePane('people', onRenderHeader, onRenderContent);
+  const sidePaneRenderer: SidePaneRenderer = useMemo(
+    () => ({
+      headerRenderer: onRenderHeader,
+      contentRenderer: onRenderContent,
+      id: PEOPLE_SIDE_PANE_ID
+    }),
+    [onRenderContent, onRenderHeader]
+  );
+
+  const openPane = useCallback(() => {
+    updateSidePaneRenderer(sidePaneRenderer);
+  }, [sidePaneRenderer, updateSidePaneRenderer]);
+
+  const isOpen = useIsParticularSidePaneOpen(PEOPLE_SIDE_PANE_ID);
+
+  // Update pane renderer if it is open and the openPane dep changes
+  useEffect(() => {
+    if (isOpen) {
+      openPane();
+    }
+  }, [isOpen, openPane]);
 
   return { openPeoplePane: openPane, closePeoplePane: closePane, isPeoplePaneOpen: isOpen };
 };

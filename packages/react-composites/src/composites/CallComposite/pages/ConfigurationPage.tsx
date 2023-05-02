@@ -52,6 +52,7 @@ import { CallReadinessModal, CallReadinessModalFallBack } from '../components/Ca
 /* @conditional-compile-remove(video-background-effects) */
 import { useVideoEffectsPane } from '../components/SidePane/useVideoEffectsPane';
 import { SidePane } from '../components/SidePane/SidePane';
+import { SidePaneRenderer } from '../components/SidePane/SidePaneProvider';
 
 /**
  * @private
@@ -59,6 +60,7 @@ import { SidePane } from '../components/SidePane/SidePane';
 export interface ConfigurationPageProps {
   mobileView: boolean;
   startCallHandler(): void;
+  updateSidePaneRenderer: (renderer: SidePaneRenderer | undefined) => void;
   /* @conditional-compile-remove(call-readiness) */
   modalLayerHostId: string;
   /* @conditional-compile-remove(call-readiness) */
@@ -204,7 +206,7 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
   const forceShowingCheckPermissions = !minimumFallbackTimerElapsed;
 
   /* @conditional-compile-remove(video-background-effects) */
-  const { toggleVideoEffectsPane } = useVideoEffectsPane(mobileView);
+  const { toggleVideoEffectsPane } = useVideoEffectsPane(props.updateSidePaneRenderer, mobileView);
 
   return (
     <Stack className={mobileView ? configurationContainerStyleMobile : configurationContainerStyleDesktop}>
@@ -325,7 +327,7 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
             </Stack>
           </Stack>
         </Stack>
-        <SidePane mobileView={props.mobileView} />
+        <SidePane mobileView={props.mobileView} updateSidePaneRenderer={props.updateSidePaneRenderer} />
       </Stack>
     </Stack>
   );

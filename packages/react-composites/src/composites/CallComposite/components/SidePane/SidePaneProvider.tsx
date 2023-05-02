@@ -1,17 +1,23 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React, { createContext, useCallback, useContext, useEffect, useMemo } from 'react';
+import React, { createContext, useContext } from 'react';
+
+/** @private */
+export interface SidePaneRenderer {
+  /** Side pane header content to render */
+  headerRenderer?: () => JSX.Element;
+  /** Side pane body content to render */
+  contentRenderer?: () => JSX.Element;
+  /** An id for identifying the side pane in events like `onSidePaneIdChanged` */
+  id: string;
+}
 
 /** @private */
 export type InjectedSidePaneProps = {
-  headerRenderer?: () => JSX.Element;
-  contentRenderer?: () => JSX.Element;
-  /** An id for identifying the side pane in events like onSidePaneIdChanged */
-  sidePaneId: string;
+  renderer: SidePaneRenderer;
   /**
    * Whether the side pane showing the override content is displayed
-   * @default false
    */
   isActive: boolean;
   /**
@@ -24,45 +30,24 @@ export type InjectedSidePaneProps = {
   persistRenderingWhenClosed?: boolean;
 };
 
-interface SidePaneProps {
-  /** Side pane header */
-  setHeaderRenderer: React.Dispatch<React.SetStateAction<(() => JSX.Element) | undefined>>;
-  headerRenderer?: () => JSX.Element;
-  /** Side pane content */
-  setContentRenderer: React.Dispatch<React.SetStateAction<(() => JSX.Element) | undefined>>;
-  contentRenderer?: () => JSX.Element;
-  /** tracking open state of the side pane */
-  setActiveSidePaneId: React.Dispatch<React.SetStateAction<string | undefined>>;
-  activeSidePaneId: string | undefined;
-  /** Support injecting content into the side pane from extrnal sources (e.g. CallWithChatComposite's Chat) */
-  setOverrideSidePane: React.Dispatch<React.SetStateAction<InjectedSidePaneProps | undefined>>;
+interface SidePaneContextProps {
+  sidePaneRenderer?: SidePaneRenderer;
   overrideSidePane?: InjectedSidePaneProps;
 }
-
-const defaultSidePaneProps: SidePaneProps = {
-  setHeaderRenderer: () => () => <></>,
-  setContentRenderer: () => () => <></>,
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  setActiveSidePaneId: () => {},
-  activeSidePaneId: undefined,
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  setOverrideSidePane: () => {},
-  overrideSidePane: undefined
-};
 
 /**
  * Context for side pane interaction
  *
  * @private
  */
-export const SidePaneContext = createContext<SidePaneProps>(defaultSidePaneProps);
+export const SidePaneContext = createContext<SidePaneContextProps>({});
 
 /**
  * Props to LocalizationProvider
  *
  * @private
  */
-export type SidePaneProviderProps = {
+export type SidePaneProviderProps = SidePaneContextProps & {
   children: React.ReactNode;
 };
 
@@ -72,75 +57,21 @@ export type SidePaneProviderProps = {
  * @private
  */
 export const SidePaneProvider = (props: SidePaneProviderProps): JSX.Element => {
-  const [headerRenderer, setHeaderRenderer] = React.useState<(() => JSX.Element) | undefined>();
-  const [contentRenderer, setContentRenderer] = React.useState<(() => JSX.Element) | undefined>();
-  const [activeSidePaneId, setActiveSidePaneId] = React.useState<string>();
-  const [overrideSidePane, setOverrideSidePane] = React.useState<InjectedSidePaneProps>();
-
-  const providerProps = useMemo(
-    () => ({
-      headerRenderer,
-      setHeaderRenderer,
-      contentRenderer,
-      setContentRenderer,
-      activeSidePaneId,
-      setActiveSidePaneId,
-      overrideSidePane,
-      setOverrideSidePane
-    }),
-    [headerRenderer, contentRenderer, activeSidePaneId, overrideSidePane]
-  );
-
-  return <SidePaneContext.Provider value={providerProps}>{props.children}</SidePaneContext.Provider>;
+  return <SidePaneContext.Provider value={props}>{props.children}</SidePaneContext.Provider>;
 };
 
 /** @private */
-export const useSidePaneContext = (): SidePaneProps => useContext(SidePaneContext);
+export const useSidePaneContext = (): SidePaneContextProps => useContext(SidePaneContext);
 
 /** @private */
-export const useOpenSidePane = (
-  sidePaneId: string,
-  onRenderHeader: () => JSX.Element,
-  onRenderContent: () => JSX.Element
-): {
-  isOpen: boolean;
-  openPane: () => void;
-} => {
-  const { setHeaderRenderer, setContentRenderer, setActiveSidePaneId, activeSidePaneId, overrideSidePane } =
-    useSidePaneContext();
-
-  const isOpen = activeSidePaneId === sidePaneId && !overrideSidePane?.isActive;
-
-  const updateRenderers = useCallback((): void => {
-    setHeaderRenderer(() => onRenderHeader);
-    setContentRenderer(() => onRenderContent);
-  }, [onRenderContent, setHeaderRenderer, setContentRenderer, onRenderHeader]);
-
-  const openPane = useCallback((): void => {
-    updateRenderers();
-    setActiveSidePaneId(() => sidePaneId);
-  }, [setActiveSidePaneId, sidePaneId, updateRenderers]);
-
-  useEffect(() => {
-    if (isOpen) {
-      updateRenderers();
-    }
-  }, [isOpen, updateRenderers]);
-
-  return { isOpen, openPane };
+export const useIsSidePaneOpen = (): boolean => {
+  const { sidePaneRenderer, overrideSidePane } = useSidePaneContext();
+  return !!(sidePaneRenderer || overrideSidePane?.isActive);
 };
 
 /** @private */
-export const useCloseSidePane = (): {
-  closePane: () => void;
-} => {
-  const { setActiveSidePaneId, setHeaderRenderer, setContentRenderer } = useSidePaneContext();
-
-  const closePane = useCallback((): void => {
-    setActiveSidePaneId(undefined);
-    setHeaderRenderer(undefined);
-    setContentRenderer(undefined);
-  }, [setContentRenderer, setHeaderRenderer, setActiveSidePaneId]);
-
-  return { closePane };
+export const useIsParticularSidePaneOpen = (sidePaneId: string): boolean => {
+  const isSidePaneOpen = useIsSidePaneOpen();
+  const { sidePaneRenderer } = useSidePaneContext();
+  return isSidePaneOpen && sidePaneRenderer?.id === sidePaneId;
 };

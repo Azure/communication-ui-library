@@ -33,8 +33,8 @@ import { HoldPage } from './pages/HoldPage';
 /* @conditional-compile-remove(unsupported-browser) */
 import { UnsupportedBrowserPage } from './pages/UnsupportedBrowser';
 import { PermissionConstraints } from '@azure/communication-calling';
-import { InjectedSidePaneProps, SidePaneProvider, useSidePaneContext } from './components/SidePane/SidePaneProvider';
 import { MobileChatSidePaneTabHeaderProps } from '../common/TabHeader';
+import { InjectedSidePaneProps, SidePaneProvider, SidePaneRenderer } from './components/SidePane/SidePaneProvider';
 
 /**
  * Props for {@link CallComposite}.
@@ -204,25 +204,24 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
   const { callInvitationUrl, onRenderAvatar, onFetchAvatarPersonaData, onFetchParticipantMenuItems } = props;
   const page = useSelector(getPage);
 
+  const [sidePaneRenderer, setSidePaneRenderer] = React.useState<SidePaneRenderer | undefined>();
+  const [injectedSidePaneProps, setInjectedSidePaneProps] = React.useState<InjectedSidePaneProps>();
+
   const overridePropsRef = useRef<InjectedSidePaneProps | undefined>(props.overrideSidePane);
-  const { activeSidePaneId, setOverrideSidePane, setActiveSidePaneId, setHeaderRenderer, setContentRenderer } =
-    useSidePaneContext();
   useEffect(() => {
-    setOverrideSidePane(props.overrideSidePane);
+    setInjectedSidePaneProps(props.overrideSidePane);
     // When the injected side pane is opened, clear the previous side pane active state.
     // this ensures when the injected side pane is "closed", the previous side pane is not "re-opened".
     if (!isShowing(overridePropsRef.current) && isShowing(props.overrideSidePane)) {
-      setActiveSidePaneId(undefined);
-      setHeaderRenderer(undefined);
-      setContentRenderer(undefined);
+      setSidePaneRenderer(undefined);
     }
     overridePropsRef.current = props.overrideSidePane;
-  }, [props.overrideSidePane, setActiveSidePaneId, setContentRenderer, setHeaderRenderer, setOverrideSidePane]);
+  }, [props.overrideSidePane]);
 
   const onSidePaneIdChange = props.onSidePaneIdChange;
   useEffect(() => {
-    onSidePaneIdChange?.(activeSidePaneId);
-  }, [activeSidePaneId, onSidePaneIdChange]);
+    onSidePaneIdChange?.(sidePaneRenderer?.id);
+  }, [sidePaneRenderer?.id, onSidePaneIdChange]);
 
   const adapter = useAdapter();
   const locale = useLocale();
@@ -262,6 +261,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           startCallHandler={(): void => {
             adapter.joinCall();
           }}
+          updateSidePaneRenderer={setSidePaneRenderer}
           /* @conditional-compile-remove(call-readiness) */
           modalLayerHostId={props.modalLayerHostId}
           /* @conditional-compile-remove(call-readiness) */
@@ -315,7 +315,13 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
       break;
     case 'lobby':
       pageElement = (
-        <LobbyPage mobileView={props.mobileView} modalLayerHostId={props.modalLayerHostId} options={props.options} />
+        <LobbyPage
+          mobileView={props.mobileView}
+          modalLayerHostId={props.modalLayerHostId}
+          options={props.options}
+          updateSidePaneRenderer={setSidePaneRenderer}
+          mobileChatTabHeader={props.mobileChatTabHeader}
+        />
       );
       break;
     case 'call':
@@ -328,6 +334,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           mobileView={props.mobileView}
           modalLayerHostId={props.modalLayerHostId}
           options={props.options}
+          updateSidePaneRenderer={setSidePaneRenderer}
           mobileChatTabHeader={props.mobileChatTabHeader}
         />
       );
@@ -336,7 +343,15 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
     case 'hold':
       pageElement = (
         <>
-          {<HoldPage mobileView={props.mobileView} modalLayerHostId={props.modalLayerHostId} options={props.options} />}
+          {
+            <HoldPage
+              mobileView={props.mobileView}
+              modalLayerHostId={props.modalLayerHostId}
+              options={props.options}
+              updateSidePaneRenderer={setSidePaneRenderer}
+              mobileChatTabHeader={props.mobileChatTabHeader}
+            />
+          }
         </>
       );
       break;
@@ -371,7 +386,11 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
   /* @conditional-compile-remove(rooms) */
   retElement = <_PermissionsProvider permissions={permissions}>{pageElement}</_PermissionsProvider>;
 
-  return retElement;
+  return (
+    <SidePaneProvider sidePaneRenderer={sidePaneRenderer} overrideSidePane={injectedSidePaneProps}>
+      {retElement}
+    </SidePaneProvider>
+  );
 };
 
 /**
@@ -434,33 +453,31 @@ export const CallCompositeInner = (props: CallCompositeProps & InternalCallCompo
     <div className={mainScreenContainerClassName}>
       <BaseProvider {...props}>
         <CallAdapterProvider adapter={adapter}>
-          <SidePaneProvider>
-            <MainScreen
-              callInvitationUrl={callInvitationUrl}
-              onFetchAvatarPersonaData={onFetchAvatarPersonaData}
-              onFetchParticipantMenuItems={onFetchParticipantMenuItems}
-              mobileView={mobileView}
-              modalLayerHostId={modalLayerHostId}
-              options={options}
-              /* @conditional-compile-remove(rooms) */
-              roleHint={roleHint}
-              onSidePaneIdChange={props.onSidePaneIdChange}
-              overrideSidePane={props.overrideSidePane}
-              mobileChatTabHeader={props.mobileChatTabHeader}
-            />
-            {
-              // This layer host is for ModalLocalAndRemotePIP in SidePane. This LayerHost cannot be inside the SidePane
-              // because when the SidePane is hidden, ie. style property display is 'none', it takes up no space. This causes problems when dragging
-              // the Modal because the draggable bounds thinks it has no space and will always return to its initial position after dragging.
-              // Additionally, this layer host cannot be in the Call Arrangement as it needs to be rendered before useMinMaxDragPosition() in
-              // common/utils useRef is called.
-              // Warning: this is fragile and works because the call arrangement page is only rendered after the call has connected and thus this
-              // LayerHost will be guaranteed to have rendered (and subsequently mounted in the DOM). This ensures the DOM element will be available
-              // before the call to `document.getElementById(modalLayerHostId)` is made.
-              /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) @conditional-compile-remove(call-readiness) */
-              <LayerHost id={modalLayerHostId} className={mergeStyles(modalLayerHostStyle)} />
-            }
-          </SidePaneProvider>
+          <MainScreen
+            callInvitationUrl={callInvitationUrl}
+            onFetchAvatarPersonaData={onFetchAvatarPersonaData}
+            onFetchParticipantMenuItems={onFetchParticipantMenuItems}
+            mobileView={mobileView}
+            modalLayerHostId={modalLayerHostId}
+            options={options}
+            /* @conditional-compile-remove(rooms) */
+            roleHint={roleHint}
+            onSidePaneIdChange={props.onSidePaneIdChange}
+            overrideSidePane={props.overrideSidePane}
+            mobileChatTabHeader={props.mobileChatTabHeader}
+          />
+          {
+            // This layer host is for ModalLocalAndRemotePIP in SidePane. This LayerHost cannot be inside the SidePane
+            // because when the SidePane is hidden, ie. style property display is 'none', it takes up no space. This causes problems when dragging
+            // the Modal because the draggable bounds thinks it has no space and will always return to its initial position after dragging.
+            // Additionally, this layer host cannot be in the Call Arrangement as it needs to be rendered before useMinMaxDragPosition() in
+            // common/utils useRef is called.
+            // Warning: this is fragile and works because the call arrangement page is only rendered after the call has connected and thus this
+            // LayerHost will be guaranteed to have rendered (and subsequently mounted in the DOM). This ensures the DOM element will be available
+            // before the call to `document.getElementById(modalLayerHostId)` is made.
+            /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) @conditional-compile-remove(call-readiness) */
+            <LayerHost id={modalLayerHostId} className={mergeStyles(modalLayerHostStyle)} />
+          }
         </CallAdapterProvider>
       </BaseProvider>
     </div>

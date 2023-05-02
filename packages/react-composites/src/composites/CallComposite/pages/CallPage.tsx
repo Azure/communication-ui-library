@@ -22,6 +22,7 @@ import { mutedNotificationSelector } from '../selectors/mutedNotificationSelecto
 import { networkReconnectTileSelector } from '../selectors/networkReconnectTileSelector';
 import { reduceCallControlsForMobile } from '../utils';
 import { MobileChatSidePaneTabHeaderProps } from '../../common/TabHeader';
+import { SidePaneRenderer } from '../components/SidePane/SidePaneProvider';
 
 /**
  * @private
@@ -33,6 +34,7 @@ export interface CallPageProps {
   onRenderAvatar?: OnRenderAvatarCallback;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
+  updateSidePaneRenderer: (renderer: SidePaneRenderer | undefined) => void;
   mobileChatTabHeader?: MobileChatSidePaneTabHeaderProps;
   options?: CallCompositeOptions;
 }
@@ -104,6 +106,7 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
           <></>
         )
       }
+      updateSidePaneRenderer={props.updateSidePaneRenderer}
       mobileChatTabHeader={props.mobileChatTabHeader}
       dataUiId={'call-page'}
     />
