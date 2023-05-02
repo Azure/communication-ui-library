@@ -2699,7 +2699,7 @@ export interface LocalVideoStreamVideoEffectsState {
 }
 
 // @beta
-export type LocalVideoTileMode = 'mobile' | 'desktop' | 'hidden' | 'responsive';
+export type LocalVideoTileSize = '9:16' | '16:9' | 'hidden' | 'matchStream';
 
 // @public
 export type MediaDiagnosticChangedEvent = MediaDiagnosticChangedEventArgs & {
@@ -3614,7 +3614,7 @@ export interface VideoGalleryProps {
     layout?: VideoGalleryLayout;
     localParticipant: VideoGalleryLocalParticipant;
     localVideoCameraCycleButtonProps?: LocalVideoCameraCycleButtonProps;
-    localVideoTileMode?: LocalVideoTileMode;
+    localVideoTileSize?: LocalVideoTileSize;
     localVideoViewOptions?: VideoStreamOptions;
     maxRemoteVideoStreams?: number;
     onCreateLocalStreamView?: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;

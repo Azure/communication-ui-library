@@ -157,7 +157,7 @@ export type OverflowGalleryPosition = 'HorizontalBottom' | 'VerticalRight';
  *
  * @beta
  */
-export type LocalVideoTileMode = 'mobile' | 'desktop' | 'hidden' | 'responsive';
+export type LocalVideoTileSize = '9:16' | '16:9' | 'hidden' | 'matchStream';
 
 /**
  * Props for {@link VideoGallery}.
@@ -253,12 +253,12 @@ export interface VideoGalleryProps {
   overflowGalleryPosition?: OverflowGalleryPosition;
   /* @conditional-compile-remove(click-to-call) */
   /**
-   * Determines the mode of local video tile in the video gallery.
-   * @remarks 'mobile' will be responsive to the screen orientation and will change between 9:16 (portrait) and
+   * Determines the aspect ratio of local video tile in the video gallery.
+   * @remarks 'matchStream' will be responsive to the screen orientation and will change between 9:16 (portrait) and
    * 16:9 (landscape) aspect ratios.
-   * @defaultValue 'responsive'
+   * @defaultValue 'matchStream'
    */
-  localVideoTileMode?: LocalVideoTileMode;
+  localVideoTileSize?: LocalVideoTileSize;
 }
 
 /* @conditional-compile-remove(pinned-participants) */
@@ -327,7 +327,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     /* @conditional-compile-remove(vertical-gallery) */
     overflowGalleryPosition = 'HorizontalBottom',
     /* @conditional-compile-remove(click-to-call) */
-    localVideoTileMode = 'responsive'
+    localVideoTileSize = 'matchStream'
   } = props;
 
   const ids = useIdentifiers();
@@ -373,7 +373,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
    */
   const localVideoTile = useMemo((): JSX.Element /* @conditional-compile-remove(rooms) */ | undefined => {
     /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(click-to-call) */
-    if (!permissions.cameraButton || localVideoTileMode === 'hidden') {
+    if (!permissions.cameraButton || localVideoTileSize === 'hidden') {
       return undefined;
     }
     if (onRenderLocalVideoTile) {
@@ -432,7 +432,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     styles?.localVideo,
     theme.effects.roundedCorner4,
     /* @conditional-compile-remove(rooms) */ permissions.cameraButton,
-    /* @conditional-compile-remove(click-to-call) */ localVideoTileMode
+    /* @conditional-compile-remove(click-to-call) */ localVideoTileSize
   ]);
 
   /* @conditional-compile-remove(pinned-participants) */
@@ -572,7 +572,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       parentHeight: containerHeight,
       /* @conditional-compile-remove(pinned-participants) */ pinnedParticipantUserIds: pinnedParticipants,
       /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryPosition,
-      /* @conditional-compile-remove(click-to-call) */ localVideoTileMode
+      /* @conditional-compile-remove(click-to-call) */ localVideoTileSize
     }),
     [
       remoteParticipants,
@@ -588,7 +588,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       defaultOnRenderVideoTile,
       /* @conditional-compile-remove(pinned-participants) */ pinnedParticipants,
       /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryPosition,
-      /* @conditional-compile-remove(click-to-call) */ localVideoTileMode
+      /* @conditional-compile-remove(click-to-call) */ localVideoTileSize
     ]
   );
 

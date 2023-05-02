@@ -28,7 +28,7 @@ import { videoGalleryLayoutGap } from './styles/Layout.styles';
 import { useOrganizedParticipants } from './utils/videoGalleryLayoutUtils';
 import { OverflowGallery } from './OverflowGallery';
 /* @conditional-compile-remove(click-to-call) */
-import { LocalVideoTileMode } from '../VideoGallery';
+import { LocalVideoTileSize } from '../VideoGallery';
 
 /**
  * Props for {@link FloatingLocalVideoLayout}.
@@ -48,7 +48,7 @@ export interface FloatingLocalVideoLayoutProps extends LayoutProps {
   /**
    * Local video tile mode
    */
-  localVideoTileMode?: LocalVideoTileMode;
+  localVideoTileSize?: LocalVideoTileSize;
 }
 
 /**
@@ -71,7 +71,7 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
     parentHeight,
     /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryPosition = 'HorizontalBottom',
     pinnedParticipantUserIds = [],
-    /* @conditional-compile-remove(click-to-call) */ localVideoTileMode
+    /* @conditional-compile-remove(click-to-call) */ localVideoTileSize
   } = props;
 
   const theme = useTheme();
@@ -135,12 +135,12 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
   const layerHostId = useId('layerhost');
 
   const localVideoSizeRem = useMemo(() => {
-    if (isNarrow && /*@conditional-compile-remove(click-to-call) */ !(localVideoTileMode === 'desktop')) {
+    if (isNarrow && /*@conditional-compile-remove(click-to-call) */ !(localVideoTileSize === '16:9')) {
       return SMALL_FLOATING_MODAL_SIZE_REM;
     }
     /* @conditional-compile-remove(vertical-gallery) */
     if (overflowGalleryTiles.length > 0 && overflowGalleryPosition === 'VerticalRight') {
-      return isNarrow && /*@conditional-compile-remove(click-to-call) */ !(localVideoTileMode === 'desktop')
+      return isNarrow && /*@conditional-compile-remove(click-to-call) */ !(localVideoTileSize === '16:9')
         ? SMALL_FLOATING_MODAL_SIZE_REM
         : isShort
         ? SHORT_VERTICAL_GALLERY_FLOATING_MODAL_SIZE_REM
@@ -152,7 +152,7 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
     isNarrow,
     /* @conditional-compile-remove(vertical-gallery) */ isShort,
     /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryPosition,
-    /* @conditional-compile-remove(click-to-call) */ localVideoTileMode
+    /* @conditional-compile-remove(click-to-call) */ localVideoTileSize
   ]);
 
   const wrappedLocalVideoComponent =
