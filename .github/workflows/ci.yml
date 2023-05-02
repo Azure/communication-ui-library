@@ -157,8 +157,6 @@ jobs:
         if: ${{ matrix.flavor == 'stable' }}
         run: |
           rush switch-flavor:stable
-          node ./common/scripts/force-build-flavor.mjs stable
-          rush update:stable
       - name: Check result of flavor switch
         if: ${{ always() && steps.switch-flavor.outcome == 'failure' }}
         run: echo "Failed to switch to stable flavor, please make sure you run 'rush update:stable' if dependencies were updated." && exit 1
@@ -169,9 +167,11 @@ jobs:
         run: rush build -t @azure/communication-react
       - name: Copy api file
         working-directory: packages/communication-react/
-        run: rushx copy-api-snapshot
+        run: |
+          mkdir -p breaking-change-check/snapshots/
+          cp dist/communication-react.d.ts breaking-change-check/snapshots/
       - name: Checkout current branch
-        run: git checkout ${{ github.event.inputs.branch }}
+        run: git checkout ${{ github.event.pull_request.head.ref }}
       # Builds
       - name: Build current api file
         run: rush build -t @azure/communication-react
