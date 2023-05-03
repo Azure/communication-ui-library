@@ -1,0 +1,96 @@
+name: Breaking Change Check
+
+on:
+  # Postsubmit CI on main.
+  push:
+    branches: [main]
+  # Presubmit CI on PRs to all branches.
+  pull_request:
+    types: [labeled]
+  # Allows you to run this workflow manually from the Actions tab.
+  workflow_dispatch:
+
+# cancel workflow when a newer version of the workflow is triggered on the same github ref
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # get matrix for ci-jobs
+  get_matrix:
+    name: Set CI flavors
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.get-matrix.outputs.matrix }}
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      # Ensure node version is great enough
+      - name: Use Node.js v14.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: '14.x'
+      - id: get-matrix
+        run: echo "matrix=$(node ./common/scripts/workflow-read-matrix.mjs)" >> $GITHUB_OUTPUT
+
+  check_breaking_changes:
+    needs: get_matrix
+    name: Check Breaking Changes
+    if: ${{ github.event_name == 'pull_request' && !contains(github.event.pull_request.labels.*.name, 'breaking-change') }}
+    runs-on: ubuntu-latest
+    strategy:
+      matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      # Ensure node version is great enough
+      - name: Use Node.js v14.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: '14.x'
+      # Try get node_modules from cache
+      - name: Restore node_modules from cache
+        uses: actions/cache@v3
+        with:
+          path: common/temp/pnpm-store
+          key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
+      # Install dependencies
+      - name: Install rush
+        run: npm install -g @microsoft/rush@5.47.0
+      - name: Install dependencies
+        run: rush install
+      # Switch flavor if necessary
+      - name: Switch flavor for stable build
+        id: switch-flavor
+        if: ${{ matrix.flavor == 'stable' }}
+        run: |
+          rush switch-flavor:stable
+      - name: Check result of flavor switch
+        if: ${{ always() && steps.switch-flavor.outcome == 'failure' }}
+        run: echo "Failed to switch to stable flavor, please make sure you run 'rush update:stable' if dependencies were updated." && exit 1
+      # Checkout the branch to be merged into in PR
+      - name: Checkout base branch
+        run: git checkout ${{ github.event.pull_request.base.ref }}
+      - name: Build base api file
+        run: rush build -t @azure/communication-react
+      - name: Copy api file
+        working-directory: packages/communication-react/
+        run: |
+          mkdir -p breaking-change-check/snapshots/
+          cp dist/communication-react.d.ts breaking-change-check/snapshots/
+      - name: Checkout current branch
+        run: git checkout ${{ github.event.pull_request.head.ref }}
+      # Builds
+      - name: Build current api file
+        run: rush build -t @azure/communication-react
+      - name: Check breaking changes
+        working-directory: packages/communication-react/
+        id: breaking-changes
+        run: rushx check-breaking-change
+      - name: Check result of breaking change check
+        if: ${{ always() && steps.breaking-changes.outcome == 'failure' }}
+        run: echo "Breaking changes detected, make sure if that is expected change, then add 'breaking-change' label to PR." && exit 1
