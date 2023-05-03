@@ -15,7 +15,6 @@ import { _usePermissions } from '@internal/react-components';
 import React, { useMemo } from 'react';
 import { CallControlOptions } from '../types/CallControlOptions';
 import { Camera } from './buttons/Camera';
-/* @conditional-compile-remove(control-bar-button-injection) */
 import { generateCustomControlBarButtons, onFetchCustomButtonPropsTrampoline } from './buttons/Custom';
 import { Devices } from './buttons/Devices';
 import { EndCall } from './buttons/EndCall';
@@ -106,7 +105,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
   /* @conditional-compile-remove(PSTN-calls) */
   const alternateCallerId = useAdapter().getState().alternateCallerId;
 
-  /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */
+  /* @conditional-compile-remove(new-call-control-bar) */
   const moreButtonContextualMenuItems = (): IContextualMenuItem[] => {
     const items: IContextualMenuItem[] = [];
 
@@ -128,6 +127,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
       });
     }
 
+    /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */
     if (!isRoomsCallTrampoline()) {
       items.push({
         key: 'holdButtonKey',
@@ -168,7 +168,6 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
 
   const theme = useTheme();
 
-  /* @conditional-compile-remove(control-bar-button-injection) */
   const customButtons = useMemo(
     () => generateCustomControlBarButtons(onFetchCustomButtonPropsTrampoline(options), options?.displayType),
     [options]
@@ -275,7 +274,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
               />
             )
           }
-          {/* @conditional-compile-remove(control-bar-button-injection) */ customButtons['primary']}
+          {customButtons['primary']}
           {isEnabled(options?.endCallButton) && <EndCall displayType={options?.displayType} />}
         </ControlBar>
       </Stack.Item>

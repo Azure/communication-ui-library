@@ -35,7 +35,7 @@ test.describe('Participant pane tests', async () => {
       await pageClick(page, dataUiId('call-composite-participants-button'));
     }
 
-    await waitForSelector(page, dataUiId('call-composite-people-pane'));
+    await waitForSelector(page, dataUiId('people-pane-content'));
     expect(await stableScreenshot(page)).toMatchSnapshot('call-screen-with-people-pane.png');
   });
 
@@ -57,7 +57,7 @@ test.describe('Participant pane tests', async () => {
       await pageClick(page, dataUiId('call-composite-participants-button'));
     }
 
-    await waitForSelector(page, dataUiId('call-composite-people-pane'));
+    await waitForSelector(page, dataUiId('people-pane-content'));
 
     expect(await stableScreenshot(page)).toMatchSnapshot(`ACS-group-call-screen-with-no-add-people-button.png`);
   });
@@ -79,7 +79,7 @@ test.describe('Participant pane tests', async () => {
       await pageClick(page, dataUiId('call-composite-participants-button'));
     }
 
-    await waitForSelector(page, dataUiId('call-composite-people-pane'));
+    await waitForSelector(page, dataUiId('people-pane-content'));
 
     await pageClick(page, dataUiId('call-add-people-button'));
 
@@ -103,7 +103,7 @@ test.describe('Participant pane tests', async () => {
       await pageClick(page, dataUiId('call-composite-participants-button'));
     }
 
-    await waitForSelector(page, dataUiId('call-composite-people-pane'));
+    await waitForSelector(page, dataUiId('people-pane-content'));
 
     await pageClick(page, dataUiId('call-add-people-button'));
 
@@ -136,7 +136,7 @@ test.describe('Participant pane tests', async () => {
     } else {
       await pageClick(page, dataUiId('call-composite-participants-button'));
     }
-    await waitForSelector(page, dataUiId('call-composite-people-pane'));
+    await waitForSelector(page, dataUiId('people-pane-content'));
     await hidePiPiP(page);
     expect(await stableScreenshot(page)).toMatchSnapshot('PSTN-participant-pane-connecting-participant.png');
   });
@@ -160,7 +160,7 @@ test.describe('Participant pane tests', async () => {
     } else {
       await pageClick(page, dataUiId('call-composite-participants-button'));
     }
-    await waitForSelector(page, dataUiId('call-composite-people-pane'));
+    await waitForSelector(page, dataUiId('people-pane-content'));
     await hidePiPiP(page);
     const participantStringId = dataUiId('participant-item-state-string');
     await page.evaluate((participantStringId) => {
@@ -188,7 +188,7 @@ test.describe('Participant pane tests', async () => {
       await pageClick(page, dataUiId('call-composite-participants-button'));
     }
 
-    await waitForSelector(page, dataUiId('call-composite-people-pane'));
+    await waitForSelector(page, dataUiId('people-pane-content'));
     expect(await stableScreenshot(page)).toMatchSnapshot('participant-with-no-name-unknown-icon.png');
   });
 
