@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { IStyle, mergeStyles } from '@fluentui/react';
-import { Chat, Text } from '@fluentui/react-northstar';
+import { Chat, Text } from '@internal/northstar-wrapper';
 import { _formatString } from '@internal/acs-ui-common';
 import React, { useCallback, useRef, useState } from 'react';
 import {
@@ -24,12 +24,11 @@ import { BlockedMessageContent } from './ChatMessageContent';
 import { BlockedMessage } from '../../types/ChatMessage';
 import { MessageThreadStrings } from '../MessageThread';
 import { chatMessageActionMenuProps } from './ChatMessageActionMenu';
-import { OnRenderAvatarCallback } from '../../types';
+import { ComponentSlotStyle, OnRenderAvatarCallback } from '../../types';
 import { _FileDownloadCards, FileDownloadHandler } from '../FileDownloadCards';
 import { ComponentLocale, useLocale } from '../../localization';
 /* @conditional-compile-remove(at-mention) */
 import { AtMentionDisplayOptions } from '../AtMentionFlyout';
-import { ComponentSlotStyle } from '../../types/ComponentSlotStyle';
 
 type ChatMessageComponentAsMessageBubbleProps = {
   message: ChatMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage;

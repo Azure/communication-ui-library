@@ -5546,6 +5546,25 @@ packages:
       typescript: '*'
     resolution:
       integrity: sha512-zeQjOoES5JFjTnAhI5QY7ZviczMzDptls15GFsI6jyUOq0kOf9+WonkhtlIhh0RgHRnqj5gdNxW5j1EvAyYg6Q==
+  /@typescript-eslint/parser/4.33.0_eslint@7.32.0+typescript@3.8.3:
+    dependencies:
+      '@typescript-eslint/scope-manager': 4.33.0
+      '@typescript-eslint/types': 4.33.0
+      '@typescript-eslint/typescript-estree': 4.33.0_typescript@3.8.3
+      debug: 4.3.4
+      eslint: 7.32.0
+      typescript: 3.8.3
+    dev: false
+    engines:
+      node: ^10.12.0 || >=12.0.0
+    peerDependencies:
+      eslint: ^5.0.0 || ^6.0.0 || ^7.0.0
+      typescript: '*'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+    resolution:
+      integrity: sha512-ZohdsbXadjGBSK0/r+d87X0SBmKzOq4/S5nzK6SBgJspFo9/CUDJ7hjayuze+JK7CZQLDMroqytp7pOcFKTxZA==
   /@typescript-eslint/parser/4.33.0_eslint@7.32.0+typescript@4.3.5:
     dependencies:
       '@typescript-eslint/scope-manager': 4.33.0
@@ -5580,6 +5599,26 @@ packages:
       node: ^8.10.0 || ^10.13.0 || >=11.10.1
     resolution:
       integrity: sha512-zKp7CjQzLQImXEpLt2BUw1tvOMPfNoTAfb8l51evhYbOEEzdWyQNmHWWGPR6hwKJDAi+1VXSBmnhL9kyVTTOuQ==
+  /@typescript-eslint/typescript-estree/4.33.0_typescript@3.8.3:
+    dependencies:
+      '@typescript-eslint/types': 4.33.0
+      '@typescript-eslint/visitor-keys': 4.33.0
+      debug: 4.3.4
+      globby: 11.1.0
+      is-glob: 4.0.3
+      semver: 7.3.8
+      tsutils: 3.21.0_typescript@3.8.3
+      typescript: 3.8.3
+    dev: false
+    engines:
+      node: ^10.12.0 || >=12.0.0
+    peerDependencies:
+      typescript: '*'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+    resolution:
+      integrity: sha512-rkWRY1MPFzjwnEVHsxGemDzqqddw2QbTJlICPD9p9I9LfsO8fdmfQPOX3uKfUaGRDFJbfrtm/sXhVXN4E+bzCA==
   /@typescript-eslint/typescript-estree/4.33.0_typescript@4.3.5:
     dependencies:
       '@typescript-eslint/types': 4.33.0
@@ -17900,6 +17939,17 @@ packages:
     dev: false
     resolution:
       integrity: sha512-336iVw3rtn2BUK7ORdIAHTyxHGRIHVReokCR3XjbckJMK7ms8FysBfhLR8IXnAgy7T0PTPNBWKiH514FOW/WSg==
+  /tsutils/3.21.0_typescript@3.8.3:
+    dependencies:
+      tslib: 1.14.1
+      typescript: 3.8.3
+    dev: false
+    engines:
+      node: '>= 6'
+    peerDependencies:
+      typescript: '>=2.8.0 || >= 3.2.0-dev || >= 3.3.0-dev || >= 3.4.0-dev || >= 3.5.0-dev || >= 3.6.0-dev || >= 3.6.0-beta || >= 3.7.0-dev || >= 3.7.0-beta'
+    resolution:
+      integrity: sha512-mHKK3iUXL+3UF6xL5k0PEhKRUBKPBCv/+RkEOpjRWxxx27KKRBmmA60A9pgOUvMi8GKhRMPEmjBRPzs2W7O1OA==
   /tsutils/3.21.0_typescript@4.3.5:
     dependencies:
       tslib: 1.14.1
@@ -19854,13 +19904,15 @@ packages:
       eslint-plugin-import: 2.22.1_eslint@7.32.0
       eslint-plugin-prettier: 3.4.1_8142a4287e8e8e0691574dfac8adcedb
       prettier: 2.3.1
+      react: 16.14.0
+      react-dom: 16.13.1_react@16.14.0
       rimraf: 2.7.1
       webpack: 5.76.0_webpack-cli@4.10.0
       webpack-cli: 4.10.0_webpack@5.76.0
     dev: false
     name: '@rush-temp/check-treeshaking'
     resolution:
-      integrity: sha512-+tmmgm74zTv/sX6BjHQY6qrX15CqJpNfPgVzDxonbtlZ0Fi4eQOi31xZ8Jv/uVY1tD8z5hNkuKi6pSJi89xDOw==
+      integrity: sha512-pvwsE6rYBFvi4Lx+HZeYV83tNC8q2PJ8IAIaF47nqk9bQVMXX01+Ek+dK325+JE8EdE8xy/znmR2pn97QUIDzg==
       tarball: file:projects/check-treeshaking.tgz
     version: 0.0.0
   file:projects/check-typescript-regression.tgz:
@@ -19966,7 +20018,7 @@ packages:
     dev: false
     name: '@rush-temp/communication-react'
     resolution:
-      integrity: sha512-8sLTN2ZHqYz/xsOPvx+CvPwl1rZvsC4zZ6K/kOilLgcmYzUpRJqwhKsdI+WdPwyLwkkgLuqF50f/YIctVJVLbA==
+      integrity: sha512-3wMrcI/gef43d6FQsj4KVzjF49P01BIijEDyiI8nTXRV+1HloyMJvF69mIc8fOU8iFpQef5AK4eZLc2Y9sFH0Q==
       tarball: file:projects/communication-react.tgz
     version: 0.0.0
   file:projects/component-examples.tgz:
@@ -20082,8 +20134,10 @@ packages:
     dependencies:
       '@fluentui/react': 8.98.8_2c4352668639a1b92fb3e4efd8af0b17
       '@fluentui/react-northstar': 0.61.0_9683f055d32ed45c7e18303642d3475b
+      '@microsoft/api-extractor': 7.18.21
       '@types/react': 16.14.35
       '@types/react-dom': 16.9.18
+      '@typescript-eslint/parser': 4.33.0_eslint@7.32.0+typescript@3.8.3
       eslint: 7.32.0
       eslint-config-prettier: 6.15.0_eslint@7.32.0
       eslint-plugin-header: 3.1.1_eslint@7.32.0
@@ -20095,10 +20149,12 @@ packages:
       rimraf: 2.7.1
       scheduler: 0.20.2
       typescript: 3.8.3
+      webpack: 5.76.0_webpack-cli@4.10.0
+      webpack-cli: 4.10.0_webpack@5.76.0
     dev: false
     name: '@rush-temp/northstar-wrapper'
     resolution:
-      integrity: sha512-Rmm3J2R2zmWHsOamvLy8PYxvEGcKJ657Wu+5mVnJbFU3gd0TD0QWdyGGhAoT31uFiFRd3nadMDAuKNukNgy1PA==
+      integrity: sha512-JltRYNUIUEaY1IpOXfWUvLfpioWZaYRTrteKd1J32VcRyeDBLU2EQbWPSQZTRRqUTuKWDwMUD/qpZYV2S70vOA==
       tarball: file:projects/northstar-wrapper.tgz
     version: 0.0.0
   file:projects/react-components.tgz:
@@ -20184,7 +20240,7 @@ packages:
     dev: false
     name: '@rush-temp/react-components'
     resolution:
-      integrity: sha512-jK1S5ilWo1ZsNT/W1krw15v9UtQuh3gn+OSqwjeQt9f1gCp8phqd2c6F/ang4G1SXNMJjxpJUWX1Bnjb4GTbyQ==
+      integrity: sha512-dO/S71JZcnWJqojhHDhsJ1UJWy7dB2V1DEQ/BggFBa+LDdaWGO2CeJB5JOT8PRtxZpnvnsQW7MlyYVbzv5//+Q==
       tarball: file:projects/react-components.tgz
     version: 0.0.0
   file:projects/react-composites.tgz:
