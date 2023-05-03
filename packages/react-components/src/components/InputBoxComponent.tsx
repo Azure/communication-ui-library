@@ -4,6 +4,8 @@
 import React, { useState, ReactNode, FormEvent, useCallback, useRef } from 'react';
 /* @conditional-compile-remove(mention) */
 import { useEffect } from 'react';
+/* @conditional-compile-remove(mention) */
+import { ComponentStrings, useLocale } from '../localization';
 
 import {
   Stack,
@@ -128,6 +130,8 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
   /* @conditional-compile-remove(mention) */
   // Index of where the caret is in the text field
   const [caretIndex, setCaretIndex] = useState<number | null>(null);
+  /* @conditional-compile-remove(mention) */
+  const localeStrings = useLocale().strings;
 
   /* @conditional-compile-remove(mention) */
   const updateMentionSuggestions = useCallback(
@@ -177,7 +181,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
         selectionEnd = inputTextValue.length;
       }
       const oldPlainText = inputTextValue;
-      const mention = htmlStringForMentionSuggestion(suggestion);
+      const mention = htmlStringForMentionSuggestion(suggestion, localeStrings);
 
       // update plain text with the mention html text
       const newPlainText =
@@ -194,8 +198,9 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
         mention,
         triggerText
       );
+      const displayName = getDisplayNameForMentionSuggestion(suggestion, localeStrings);
       // Move the caret in the text field to the end of the mention plain text
-      setCaretIndex(selectionEnd + suggestion.displayText.length);
+      setCaretIndex(selectionEnd + displayName.length);
       setCurrentTriggerStartIndex(-1);
       updateMentionSuggestions([]);
       setActiveSuggestionIndex(undefined);
@@ -211,7 +216,9 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       textValue,
       tagsValue,
       /* @conditional-compile-remove(mention) */
-      updateMentionSuggestions
+      updateMentionSuggestions,
+      /* @conditional-compile-remove(mention) */
+      localeStrings
     ]
   );
 
@@ -758,16 +765,19 @@ const handleMentionTagUpdate = (
     isSpaceLengthHandled = true;
   }
   rangeEnd = oldPlainText.indexOf(' ', oldPlainTextEndIndex);
-  if (!isSpaceLengthHandled) {
+  if (rangeEnd === -1 || rangeEnd === undefined) {
+    // check if space symbol is not found
+    rangeEnd = plainTextEndIndex;
+  } else if (!isSpaceLengthHandled) {
     // +1 to include the space symbol
     rangeEnd += 1;
-    isSpaceLengthHandled = true;
   }
+  isSpaceLengthHandled = true;
 
   if (rangeStart === -1 || rangeStart === undefined || rangeStart < tag.plainTextBeginIndex) {
     rangeStart = tag.plainTextBeginIndex;
   }
-  if (rangeEnd === -1 || rangeEnd === undefined || rangeEnd > plainTextEndIndex) {
+  if (rangeEnd > plainTextEndIndex) {
     rangeEnd = plainTextEndIndex;
   }
 
@@ -1273,11 +1283,17 @@ const findStringsDiffIndexes = (
 };
 
 /* @conditional-compile-remove(mention) */
-const htmlStringForMentionSuggestion = (suggestion: Mention): string => {
+const htmlStringForMentionSuggestion = (suggestion: Mention, localeStrings: ComponentStrings): string => {
   const idHTML = ' id ="' + suggestion.id + '"';
-  const displayText = suggestion.displayText || '';
-  const displayTextHTML = ' displayText ="' + displayText + '"';
+  const displayTextHTML = ' displayText ="' + suggestion.displayText + '"';
+  const displayText = getDisplayNameForMentionSuggestion(suggestion, localeStrings);
   return '<msft-mention' + idHTML + displayTextHTML + '>' + displayText + '</msft-mention>';
+};
+
+/* @conditional-compile-remove(mention) */
+const getDisplayNameForMentionSuggestion = (suggestion: Mention, localeStrings: ComponentStrings): string => {
+  const displayNamePlaceholder = localeStrings.participantItem.displayNamePlaceholder;
+  return suggestion.displayText !== '' ? suggestion.displayText : displayNamePlaceholder ?? '';
 };
 
 /* @conditional-compile-remove(mention) */
