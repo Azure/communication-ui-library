@@ -4,7 +4,7 @@
 import { loadCallPage, test } from './fixture';
 import { expect } from '@playwright/test';
 import { dataUiId, isTestProfileMobile, pageClick, stableScreenshot, waitForSelector } from '../../common/utils';
-import { IDS, captionsFeatureState } from '../../common/constants';
+import { IDS, captionsFeatureState, captionsFeatureStateArabic } from '../../common/constants';
 import { defaultMockCallAdapterState, defaultMockRemoteParticipant } from '../../call/hermetic/fixture';
 
 /* @conditional-compile-remove(close-captions) */
@@ -18,6 +18,17 @@ test.describe('Closed Captions Banner tests', async () => {
     await loadCallPage(page, serverUrl, initialState);
     await waitForSelector(page, dataUiId(IDS.videoGallery));
     expect(await stableScreenshot(page)).toMatchSnapshot('show-captions.png');
+  });
+
+  test('Show RTL languages from right to left', async ({ page, serverUrl }) => {
+    const initialState = defaultMockCallAdapterState([defaultMockRemoteParticipant('Paul Bridges')]);
+    if (initialState?.call) {
+      initialState.isTeamsCall = true;
+      initialState.call.captionsFeature = captionsFeatureStateArabic;
+    }
+    await loadCallPage(page, serverUrl, initialState);
+    await waitForSelector(page, dataUiId(IDS.videoGallery));
+    expect(await stableScreenshot(page)).toMatchSnapshot('show-captions-RTL.png');
   });
 
   test('Captions menu shows correct when clicked on desktop', async ({ page, serverUrl }, testInfo) => {
