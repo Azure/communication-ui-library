@@ -13,6 +13,7 @@ export const buttonStyle = mergeStyles({
   height: '1.0625rem',
   border: 'none',
   minWidth: '0',
+  backgroundColor: 'transparent',
   '&:hover': {
     backgroundColor: 'transparent'
   }
