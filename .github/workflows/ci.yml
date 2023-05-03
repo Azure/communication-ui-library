@@ -126,7 +126,7 @@ jobs:
   check_breaking_changes:
     needs: get_matrix
     name: Check Breaking Changes
-    if: ${{ github.event_name == 'pull_request' && !contains(github.event.pull_request.labels.*.name, 'breaking_changes') }}
+    if: ${{ github.event_name == 'pull_request' && !contains(github.event.pull_request.labels.*.name, 'breaking-change') }}
     runs-on: ubuntu-latest
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
@@ -181,7 +181,7 @@ jobs:
         run: rushx check-breaking-change
       - name: Check result of breaking change check
         if: ${{ always() && steps.breaking-changes.outcome == 'failure' }}
-        run: echo "Breaking changes detected, make sure if that is expected change, then add 'breaking-changes' label to PR." && exit 1
+        run: echo "Breaking changes detected, make sure if that is expected change, then add 'breaking-change' label to PR." && exit 1
 
   call_composite_automation_test:
     needs: get_matrix
