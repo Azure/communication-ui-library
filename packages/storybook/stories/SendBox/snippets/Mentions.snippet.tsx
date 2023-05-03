@@ -17,6 +17,10 @@ const suggestions: Mention[] = [
   {
     id: '4',
     displayText: 'Your user'
+  },
+  {
+    id: 'everyone',
+    displayText: 'Everyone'
   }
 ];
 const trigger = '@';
