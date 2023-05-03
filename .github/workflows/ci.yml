@@ -27,10 +27,10 @@ jobs:
         with:
           fetch-depth: 0
       # Ensure node version is great enough
-      - name: Use Node.js v14.x
+      - name: Use Node.js v16.x
         uses: actions/setup-node@v3
         with:
-          node-version: '14.x'
+          node-version: '16.x'
       - id: get-matrix
         run: echo "matrix=$(node ./common/scripts/workflow-read-matrix.mjs)" >> $GITHUB_OUTPUT
 
@@ -46,10 +46,10 @@ jobs:
         with:
           fetch-depth: 0
       # Ensure node version is great enough
-      - name: Use Node.js v14.x
+      - name: Use Node.js v16.x
         uses: actions/setup-node@v3
         with:
-          node-version: '14.x'
+          node-version: '16.x'
       # Try get node_modules from cache
       - name: Restore node_modules from cache
         uses: actions/cache@v3
@@ -133,10 +133,10 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: Use Node.js v14.x
+      - name: Use Node.js v16.x
         uses: actions/setup-node@v3
         with:
-          node-version: '14.x'
+          node-version: '16.x'
       - name: Restore node_modules from cache
         uses: actions/cache@v3
         with:
@@ -203,10 +203,10 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: Use Node.js v14.x
+      - name: Use Node.js v16.x
         uses: actions/setup-node@v3
         with:
-          node-version: '14.x'
+          node-version: '16.x'
       - name: Restore node_modules from cache
         uses: actions/cache@v3
         with:
@@ -273,10 +273,10 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: Use Node.js v14.x
+      - name: Use Node.js v16.x
         uses: actions/setup-node@v3
         with:
-          node-version: '14.x'
+          node-version: '16.x'
       - name: Restore node_modules from cache
         uses: actions/cache@v3
         with:
@@ -340,10 +340,10 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: Use Node.js v14.x
+      - name: Use Node.js v16.x
         uses: actions/setup-node@v3
         with:
-          node-version: '14.x'
+          node-version: '16.x'
       - name: Restore node_modules from cache
         uses: actions/cache@v3
         with:
@@ -369,10 +369,10 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: Use Node.js v14.x
+      - name: Use Node.js v16.x
         uses: actions/setup-node@v3
         with:
-          node-version: '14.x'
+          node-version: '16.x'
       - name: Restore node_modules from cache
         uses: actions/cache@v3
         with:
@@ -410,10 +410,10 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: Use Node.js v14.x
+      - name: Use Node.js v16.x
         uses: actions/setup-node@v3
         with:
-          node-version: '14.x'
+          node-version: '16.x'
       - name: Restore node_modules from cache
         uses: actions/cache@v3
         with:
@@ -451,10 +451,10 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: Use Node.js v14.x
+      - name: Use Node.js v16.x
         uses: actions/setup-node@v3
         with:
-          node-version: '14.x'
+          node-version: '16.x'
       - name: Restore node_modules from cache
         uses: actions/cache@v3
         with:
@@ -492,10 +492,10 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: Use Node.js v14.x
+      - name: Use Node.js v16.x
         uses: actions/setup-node@v3
         with:
-          node-version: '14.x'
+          node-version: '16.x'
       - name: Install rush
         run: npm install -g @microsoft/rush@5.47.0
       - name: Install dependencies
@@ -545,10 +545,10 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: Use Node.js v14.x
+      - name: Use Node.js v16.x
         uses: actions/setup-node@v3
         with:
-          node-version: '14.x'
+          node-version: '16.x'
       - name: Install rush
         run: npm install -g @microsoft/rush@5.47.0
       - name: Install dependencies
@@ -611,10 +611,10 @@ jobs:
         with:
           path: current
           name: ${{ matrix.app }}-report
-      - name: Use Node.js v14.x
+      - name: Use Node.js v16.x
         uses: actions/setup-node@v3
         with:
-          node-version: '14.x'
+          node-version: '16.x'
       - name: Calculate size change
         id: bundles
         run: |

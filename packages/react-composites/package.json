@@ -98,7 +98,7 @@
     "@types/express": "^4.17.8",
     "@types/jest": "~26.0.22",
     "@types/json-stringify-safe": "^5.0.0",
-    "@types/node": "^14.14.10",
+    "@types/node": "^16.19.0",
     "@types/puppeteer": "~5.4.3",
     "@types/react-aria-live": "^2.0.0",
     "@types/react-dom": "^16.9.8",
