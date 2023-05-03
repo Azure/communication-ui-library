@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Fix horizontal gallery button icon directions in rtl mode",
+  "packageName": "@azure/communication-react",
+  "email": "2684369+JamesBurnside@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
