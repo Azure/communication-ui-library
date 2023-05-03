@@ -324,7 +324,6 @@ const MessageThreadStory = (args): JSX.Element => {
         onLoadPreviousChatMessages={onLoadPreviousMessages}
         onRenderMessage={onRenderMessage}
         onFetchAttachments={onFetchAttachment}
-        mentionOptions={args.mentionOptions}
         onRenderAvatar={(userId?: string) => {
           return (
             <Persona
@@ -364,7 +363,6 @@ export default {
     showMessageDate: controlsToAdd.showMessageDate,
     showMessageStatus: controlsToAdd.showMessageStatus,
     enableJumpToNewMessageButton: controlsToAdd.enableJumpToNewMessageButton,
-    mentionOptions: controlsToAdd.mentionOptions,
     // Hiding auto-generated controls
     styles: hiddenControl,
     strings: hiddenControl,
