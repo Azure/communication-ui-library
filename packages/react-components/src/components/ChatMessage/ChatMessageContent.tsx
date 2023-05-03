@@ -5,8 +5,7 @@ import React from 'react';
 /* @conditional-compile-remove(teams-inline-images) */
 import { useEffect } from 'react';
 import { _formatString } from '@internal/acs-ui-common';
-import { Parser } from 'html-to-react';
-import { ProcessNodeDefinitions, IsValidNodeDefinitions, ProcessingInstructionType } from 'html-to-react';
+import { Parser, ProcessNodeDefinitions, IsValidNodeDefinitions, ProcessingInstructionType } from 'html-to-react';
 
 import Linkify from 'react-linkify';
 import { ChatMessage } from '../../types/ChatMessage';
