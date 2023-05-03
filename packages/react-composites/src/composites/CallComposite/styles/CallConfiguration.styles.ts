@@ -154,3 +154,8 @@ export const effectsButtonStyles = (theme: Theme): IButtonStyles => {
     }
   };
 };
+
+/** @private */
+export const fillWidth = mergeStyles({
+  width: '100%'
+});

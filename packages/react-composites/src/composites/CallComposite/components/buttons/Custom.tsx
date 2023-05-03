@@ -9,8 +9,7 @@ import {
   CustomCallControlButtonCallback,
   CustomCallControlButtonPlacement
 } from '../../../common/ControlBar/CustomButton';
-import { CallControlDisplayType } from '../../../common/types/CommonCallControlOptions';
-/* @conditional-compile-remove(control-bar-button-injection) */
+import { CallControlDisplayType, _CommonCallControlOptions } from '../../../common/types/CommonCallControlOptions';
 import { CallControlOptions } from '../../types/CallControlOptions';
 
 /** @private */
@@ -58,12 +57,11 @@ export const generateCustomControlBarButtons = (
   return response;
 };
 
-/* @conditional-compile-remove(control-bar-button-injection) */
 /** @private */
 export const onFetchCustomButtonPropsTrampoline = (
   options?: CallControlOptions
 ): CustomCallControlButtonCallback[] | undefined => {
   let response: CustomCallControlButtonCallback[] | undefined = undefined;
-  response = options?.onFetchCustomButtonProps;
+  response = (options as _CommonCallControlOptions)?.onFetchCustomButtonProps;
   return response;
 };
