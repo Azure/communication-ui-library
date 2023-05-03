@@ -35,7 +35,7 @@
     "@babel/core": "~7.16.0",
     "@playwright/test": "~1.22.2",
     "@types/copy-webpack-plugin": "^6.4.0",
-    "@types/node": "^16.19.0",
+    "@types/node": "^16.11.7",
     "@types/node-static": "~0.7.7",
     "babel-loader": "8.1.0",
     "concurrently": "^5.3.0",
