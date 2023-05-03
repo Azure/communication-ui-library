@@ -49,9 +49,6 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
       // add top-level error handling logic here (e.g. reporting telemetry).
       console.log('Adapter error event:', e);
     });
-    adapter.on('captionsReceived', (e) => {
-      console.log(e);
-    });
     adapter.onStateChange((state: CallAdapterState) => {
       const pageTitle = convertPageStateToString(state);
       document.title = `${pageTitle} - ${WEB_APP_TITLE}`;
