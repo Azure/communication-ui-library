@@ -2,6 +2,453 @@
   "name": "@azure/communication-react",
   "entries": [
     {
+      "date": "Mon, 24 Apr 2023 15:39:35 GMT",
+      "tag": "@azure/communication-react_v1.5.1-beta.3",
+      "version": "1.5.1-beta.3",
+      "comments": {
+        "none": [
+          {
+            "author": "79475487+mgamis-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "c8bfc196d2a6556defd5ee8687bc758200b43896",
+            "comment": "Remove instruction of merging release branch to main in creating-a-release doc"
+          },
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@azure/communication-react",
+            "commit": "6ad3d84f519e71a3706b982669b9bd09be66fd21",
+            "comment": "Add switch case support for cc"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "5cae388f3bd54c64cbc999696f42fc474fa0dc31",
+            "comment": "update webpack to copy backgrounds in prod builds"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "23680c84c20851a9c7e5fde9d3b40f62a77fc968",
+            "comment": "Fix usePropsFor hook storybook snippet"
+          },
+          {
+            "author": "79475487+mgamis-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "784fd9271278493752eaa24b62de983ad583d383",
+            "comment": "Sync release notes with release branch"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "a0c332dcd774b47461bbe9491771a62813e7887c",
+            "comment": "Update to Calling 1.12.0-beta.2 for beta dependency."
+          },
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@azure/communication-react",
+            "commit": "5f6a21b728f4ca89736d522e78dfb83aca1a38e3",
+            "comment": "Closed caption hermetic tests in callwithchat"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "469d4af5dc687a6914dc4adde7bafaa11af6d480",
+            "comment": "Add tool to perform typescript regression checks as part of CI and update documented typescript version"
+          },
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@azure/communication-react",
+            "commit": "5e6930887200b1ba4d76c6c1bfebc697a19b96a9",
+            "comment": "Add CC to auto add `export {}`"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "29ee519b0498b318a993b2148b1a8f24f1c09d95",
+            "comment": "Update storybook adapter doc for captions adapter changes"
+          },
+          {
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "784fd9271278493752eaa24b62de983ad583d383",
+            "comment": "Bumped"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "4688ec6425cf8d6d725172bf54df9804639a6a05",
+            "comment": "Fix import statements on camera button and screenshare button pages."
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "510a5b81756fa6761cdc3e18b13f0e4c3a65831e",
+            "comment": "Unblock PR failures by updating user agent used in e2e tests"
+          },
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@azure/communication-react",
+            "commit": "5f6a21b728f4ca89736d522e78dfb83aca1a38e3",
+            "comment": "Hermetic tests for closed caption feature"
+          },
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@azure/communication-react",
+            "commit": "75b38ecdfb7219edf528cedf42c1d8079d29d5a8",
+            "comment": "Update test for new call composite control"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "318e0a9e8d1f504d7970c9c414a2134809c6a892",
+            "comment": "migrate enzyme tests to react-testing-library tests"
+          },
+          {
+            "author": "79475487+mgamis-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "4f35307bccc73768841343b67d6604c69c7ba242",
+            "comment": "Revert bug fix \"Video gallery show local tile and horizontal/vertical gallery when screensharing with no participant (#2822)\""
+          },
+          {
+            "author": "98852890+vhuseinova-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "5ee425006842b54237eefe1341ca509bf323abb9",
+            "comment": "Updated CODEOWNERS"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "7d6294c74fefb527fec0cc93c6e3f0ff2d868665",
+            "comment": "Fixed captionsBannerProps naming to adhere to internal type naming convention, improved styling and internal storybook"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "f83f20cedf0cf3291f911d0678ba3b5c6bb9c688",
+            "comment": "Update caption component UI and make sure captions banner auto scroll only happens when user is scrolled to bottom"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "1ce18b55096505f27860c611d457ccdf7b3d2f4e",
+            "comment": "Unblock PR failures by updating user agent used in e2e tests"
+          },
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@azure/communication-react",
+            "commit": "d7f7affa26a25ae3a883af558d052d5ba2b686fc",
+            "comment": "Update cc plugin for array and classMethod params"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "cb0388b607cd6051c92064020f8ed6bf40a85202",
+            "comment": "Storybook update to talk about CRA template."
+          },
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@azure/communication-react",
+            "commit": "5f6a21b728f4ca89736d522e78dfb83aca1a38e3",
+            "comment": "Use proxy for features"
+          }
+        ],
+        "prerelease": [
+          {
+            "author": "77021369+jimchou-dev@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "a935fd050c4eb9868e97cd3c91fadf61fb95b7dd",
+            "comment": "Added mapping for inline image e2e support"
+          },
+          {
+            "author": "77021369+jimchou-dev@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "99fc5b96a33da7aa206fd3944434b324ed56aff4",
+            "comment": "Implement inline image attachment for chat UI component"
+          },
+          {
+            "author": "79475487+mgamis-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "912ffd0f774d4c3e11cfe36d576299deac71d0b1",
+            "comment": "Teams adhoc call enabled for startCall handler"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "5f6a21b728f4ca89736d522e78dfb83aca1a38e3",
+            "comment": "Fixed join call error bug and bug when participants can not receive latest spoken language"
+          },
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@azure/communication-react",
+            "commit": "034f3ad70caf2d874dc152419e0df88ebf59d5c7",
+            "comment": "Add scrollbar style to captions"
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "580d09b632e653ad0e99a52f53c4d72f44e2b9ec",
+            "comment": "Adapter API changes to add preset backgrounds to adapter"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "778cbf256b4aa38f77d7e89d4f03d0a950888dfd",
+            "comment": "Update video gallery storybook page for better context of layouts and galleries. update API for better naming"
+          },
+          {
+            "author": "107075081+Leah-Xia-Microsoft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "188eff4d057bb3e871d9f6f55ae1495b07ddfc5d",
+            "comment": "Add AtMentionFlyout component with preliminary positioning and internal storybook page"
+          },
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@azure/communication-react",
+            "commit": "95dc2395247ed9009b9a5c5fec316d9dbcf10d0d",
+            "comment": "Use common control in call"
+          },
+          {
+            "author": "79475487+mgamis-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "4c817a14605db72fb8cc0f1fa82bd4b34b670265",
+            "comment": "Rename blurred background callback arguments"
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "ac578fae0c6e4458323687235ae551f43614b9a8",
+            "comment": "Remove effects options from camera button in case handler is not passed"
+          },
+          {
+            "author": "77021369+jimchou-dev@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "591b2c0f80ebc31aa08a86fcf4b506115b22108e",
+            "comment": "Fix multiple fetch inline image requests"
+          },
+          {
+            "author": "joshlai@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "e075d787050297788204acebcc26fc31d90e5116",
+            "comment": "Introduce options bag wehen creating adapter"
+          },
+          {
+            "author": "77021369+jimchou-dev@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "5d3cef231b4210829d2da7574f0c80865041baf3",
+            "comment": "Added inline image e2e test"
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "442a0f6cf25b48b590e3b639d223e07a16e8175f",
+            "comment": "added adapter method to update selected video background effect"
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "f64656e8eaf4404135ed714eeecc3fe0a1be2c0e",
+            "comment": "Support background effects in config screen"
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "442a0f6cf25b48b590e3b639d223e07a16e8175f",
+            "comment": "start/stop selected video effect when camera is off"
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "fbcff316ef6c1da36b6b2d1b2dc6f8434a5056f4",
+            "comment": "Add errors for video effects"
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "53d6e76e904244c83a387ba2ebeab2dc9f7ddc22",
+            "comment": "Add Video Effects Pane to Call Composite"
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "15d070df65e071f3487bf821bacbbea13ad69233",
+            "comment": "Selector for selected video effect"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "8d254461ecdfe42272bf79be0047ca9ed092e64a",
+            "comment": "String translation for beta release 1.5.1-beta.3"
+          },
+          {
+            "author": "joshlai@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "5cd0bfe2f22dd371f5ade4f60287edf9f8d904a1",
+            "comment": "[Storybook] Introduce new button for message thread with inline images mock"
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "ac578fae0c6e4458323687235ae551f43614b9a8",
+            "comment": "Remove effects options from camera button in case handler is not passed"
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "fa194baa9ef4e1c5fb8e4c39fb8a0f3838bdacb4",
+            "comment": "Add Blur and remove effects to VideoEffectsPane"
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "0ccee3236816484de871bb8deba1a2dcb689eb5d",
+            "comment": "Add custom background in Call and CallWithChat Composite smaples"
+          }
+        ],
+        "patch": [
+          {
+            "author": "109105353+jpeng-ms@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "1504efafbe0524c6f914fe47de16b597a6b25ac8",
+            "comment": "Fixed storybook order and typo"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "ed6ab79f49bafe8f5b720ccadbbca4efd12090b8",
+            "comment": "Fix High Contrast issues with the screenshare button and end call button."
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "f6f519b350367d06dfff99ef8d7da8a4ee3a21f1",
+            "comment": "Prevent overflow of VideoGallery when side pane is open"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "86588ccd35dce96a963e69585a9c3ac49ff508cc",
+            "comment": "Update forced colours on configuration screen to allow better high contrast experience for user."
+          },
+          {
+            "author": "77021369+jimchou-dev@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "19d8dca55c292d36e59a5d57daa83febdb3fcefe",
+            "comment": "Update error message for unsupported chat thread types"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "8adcefc4797934a616c89745266e7172496a4e25",
+            "comment": "Set min height to control bar to fix issue where control bar contrainer would collapse when side pane buttons are disabled in Composites"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "e60445a0d6fe71e0c304fca26ece2f1c646ed90f",
+            "comment": "Update `@fluentui/react-file-type-icons` to v8.8.13"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "de465a3d4ee02ba5c0f0255e6edcc497bbb72019",
+            "comment": "Update @azure/communication-calling stable version to 1.12.1"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "0ba164cac920b50c33fa2e2f2498c5b97256e019",
+            "comment": "Center more button in video tile"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "b8872176d1ed32e0430e9c2e87294ef0b3041bd6",
+            "comment": "Call control buttons should stay centered with regard to viewport width"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "cddd48e72733105cebbb8706b3784433920f051c",
+            "comment": "Fixed bug when panel is open, error bar is overlayed on top"
+          },
+          {
+            "author": "79475487+mgamis-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "af84819becd7537b7628e497b5fceb2f851c8744",
+            "comment": "Fix side pane overlapping with composite when window is narrow"
+          },
+          {
+            "author": "79475487+mgamis-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "eedbff81fde8d179b03fa6cce7e4fc2dfbff8beb",
+            "comment": "Prevent overflow of call composite in call with chat composite when side pane is open"
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "85ed753cf589932af7d8d3fd0d95929e8a2fb399",
+            "comment": "Replace Coffee Icon with Spinner"
+          },
+          {
+            "author": "79329532+alkwa-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "668ca9b8e1f6d6e944db640015142de1ce2d1bd4",
+            "comment": "updated version of stable calling sdk to 1.11.1"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "3c0359494c72a2f59c6641865d41ca98319615a9",
+            "comment": "Fixed bug where keyboard user is trapped inside captions banner if new captions keep rolling in "
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "3c491844500700d0f84907db08f7d014139ee4e3",
+            "comment": "Fix hold button behavior to dismiss drawer after call is placed on hold."
+          }
+        ],
+        "minor": [
+          {
+            "author": "109105353+jpeng-ms@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "f6c7e75a05d25fdf7325c41d9ee85f999a22f710",
+            "comment": "Added Inline Image Reference in Storybook"
+          },
+          {
+            "author": "109105353+jpeng-ms@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "962d4c30b9313d9ab00bed9bd44f2cf67868cbee",
+            "comment": "Added details on how uploaded images are not supported"
+          },
+          {
+            "author": "3941071+emlynmac@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "543a1ee983ec10c5b4dd661ee778b02867f1dcea",
+            "comment": "Edit message error handling UI in ChatThread component"
+          },
+          {
+            "author": "109105353+jpeng-ms@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "not available",
+            "comment": "Updated Chat SDK and Signaling to the latest version"
+          },
+          {
+            "author": "3941071+emlynmac@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "543a1ee983ec10c5b4dd661ee778b02867f1dcea",
+            "comment": "Edit message error handling UI in ChatThread component"
+          },
+          {
+            "author": "77021369+jimchou-dev@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "94186cf1e38c88e86a0d2000b368ce106ae534f4",
+            "comment": "Added new message type BlockedMessage"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 28 Mar 2023 16:00:31 GMT",
       "tag": "@azure/communication-react_v1.5.1-beta.2",
       "version": "1.5.1-beta.2",
