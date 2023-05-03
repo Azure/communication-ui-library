@@ -204,7 +204,6 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       setCurrentTriggerStartIndex(-1);
       updateMentionSuggestions([]);
       setActiveSuggestionIndex(undefined);
-      setInputTextValue(newPlainText);
       onChange && onChange(null, updatedHTML);
     },
     [
