@@ -20,7 +20,7 @@ type OmitState<T extends Object> = Omit<T, 'onStateChange' | 'offStateChange' | 
 // Composite breaking change start
 // For composite adapter, we defined adding new required functions is not a breaking change,
 // This will still compare if the type has being changed
-// or a property is accidentally removed
+// or a property is accidentally removed.
 
 type CompositePropsTestFunction<CompositeProps extends { adapter: any }> = (
   props: Omit<CompositeProps, 'adapter'>,
