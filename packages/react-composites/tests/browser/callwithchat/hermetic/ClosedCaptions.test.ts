@@ -73,7 +73,7 @@ test.describe('Closed Captions Banner tests', async () => {
     await loadCallPage(page, serverUrl, initialState);
 
     await pageClick(page, dataUiId('call-with-chat-composite-chat-button'));
-    await waitForSelector(page, dataUiId('call-with-chat-composite-chat-pane'));
+    await waitForSelector(page, dataUiId('sendbox-textfield'));
     expect(await stableScreenshot(page)).toMatchSnapshot('captions-with-chat-pane.png');
   });
 
