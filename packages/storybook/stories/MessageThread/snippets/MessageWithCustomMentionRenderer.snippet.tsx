@@ -48,6 +48,10 @@ export const MessageWithCustomMentionRenderer: () => JSX.Element = () => {
                   {
                     id: user1Id,
                     displayText: 'Kat Larsson'
+                  },
+                  {
+                    id: 'everyone',
+                    displayText: 'Everyone'
                   }
                 ].filter((suggestion) =>
                   suggestion.displayText.toLocaleLowerCase().startsWith(query.toLocaleLowerCase())
