@@ -14,7 +14,7 @@ import { BaseCustomStyles } from '../types';
 import { useTheme } from '../theming';
 import { useLocale } from '../localization';
 import { useIdentifiers } from '../identifiers';
-import { InputBoxComponent } from './InputBoxComponent';
+import { InputBoxButton, InputBoxComponent } from './InputBoxComponent';
 import { VoiceOverButton } from './VoiceOverButton';
 import { SendBoxErrors } from './SendBoxErrors';
 /* @conditional-compile-remove(file-sharing) */
@@ -389,7 +389,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
           supportNewline={supportNewline}
           maxLength={MAXIMUM_LENGTH_OF_MESSAGE}
         >
-          <VoiceOverButton
+          <InputBoxButton
             onRenderIcon={onRenderSendIcon}
             onClick={(e) => {
               if (!textValueOverflow) {

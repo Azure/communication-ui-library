@@ -140,12 +140,13 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
           styles={mergedTextFieldStyle}
           disabled={disabled}
           errorMessage={errorMessage}
+          onRenderSuffix={() => children}
         />
         <Stack
           horizontal
           className={mergeStyles(props.inlineChildren ? inlineButtonsContainerStyle : newLineButtonsContainerStyle)}
         >
-          {children}
+          {/* {children} */}
         </Stack>
       </div>
     </Stack>
