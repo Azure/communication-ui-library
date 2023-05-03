@@ -1445,13 +1445,7 @@ const addTag = (tag: TagData, parseStack: TagData[], tags: TagData[]): void => {
   // Add as sub-tag to the parent stack tag, if there is one
   const parentTag = parseStack[parseStack.length - 1];
 
-  if (!parentTag) {
-    // Look at the previous tag added to get the offset.
-    const prevTag = tags[tags.length - 1];
-    if (!!prevTag && prevTag.closeTagIdx) {
-      tag.openTagIdx = prevTag.closeTagIdx + prevTag.tagType.length + 3;
-    } // Else case not needed, as the first tag relative is the same as the absolute
-  } else {
+  if (parentTag) {
     // Adjust the open tag index to be relative to the parent tag
     const parentContentStartIdx = parentTag.openTagIdx + parentTag.openTagBody.length;
     const relativeIdx = tag.openTagIdx - parentContentStartIdx;
