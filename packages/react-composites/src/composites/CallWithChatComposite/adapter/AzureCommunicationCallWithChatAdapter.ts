@@ -58,6 +58,8 @@ import {
   createAzureCommunicationChatAdapter,
   createAzureCommunicationChatAdapterFromClient
 } from '../../ChatComposite/adapter/AzureCommunicationChatAdapter';
+/* @conditional-compile-remove(teams-inline-images) */
+import { AzureCommunicationChatAdapterOptions } from '../../ChatComposite/adapter/AzureCommunicationChatAdapter';
 import { EventEmitter } from 'events';
 import { CommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(PSTN-calls) */
@@ -880,6 +882,8 @@ export type AzureCommunicationCallWithChatAdapterFromClientArgs = {
   callClient: StatefulCallClient;
   chatClient: StatefulChatClient;
   chatThreadClient: ChatThreadClient;
+  /* @conditional-compile-remove(teams-inline-images) */
+  options?: AzureCommunicationChatAdapterOptions;
 };
 
 /**
@@ -895,11 +899,17 @@ export const createAzureCommunicationCallWithChatAdapterFromClients = async ({
   callAgent,
   callLocator,
   chatClient,
-  chatThreadClient
+  chatThreadClient,
+  /* @conditional-compile-remove(teams-inline-images) */
+  options
 }: AzureCommunicationCallWithChatAdapterFromClientArgs): Promise<CallWithChatAdapter> => {
   const createCallAdapterPromise = createAzureCommunicationCallAdapterFromClient(callClient, callAgent, callLocator);
-
-  const createChatAdapterPromise = createAzureCommunicationChatAdapterFromClient(chatClient, chatThreadClient);
+  const createChatAdapterPromise = createAzureCommunicationChatAdapterFromClient(
+    chatClient,
+    chatThreadClient,
+    /* @conditional-compile-remove(teams-inline-images) */
+    options
+  );
   const [callAdapter, chatAdapter] = await Promise.all([createCallAdapterPromise, createChatAdapterPromise]);
   return new AzureCommunicationCallWithChatAdapter(callAdapter, chatAdapter);
 };

@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "[ChatMessageContent] Updating the warning text to be string | undefined",
+  "packageName": "@azure/communication-react",
+  "email": "joshlai@microsoft.com",
+  "dependentChangeType": "patch"
+}

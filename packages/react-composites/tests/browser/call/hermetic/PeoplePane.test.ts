@@ -99,7 +99,7 @@ test.describe('Participant list side pane tests', () => {
       buildUrlWithMockAdapter(serverUrl, participantListInitialState(), { callInvitationUrl: 'testUrl' })
     );
     await pageClick(page, dataUiId('call-composite-participants-button'));
-    await waitForSelector(page, dataUiId('call-composite-people-pane'));
+    await waitForSelector(page, dataUiId('people-pane-content'));
     expect(await stableScreenshot(page)).toMatchSnapshot(`video-gallery-page-participants-flyout.png`);
   });
 
@@ -132,7 +132,7 @@ test.describe('Participant list side pane tests', () => {
       )
     );
     await pageClick(page, dataUiId('call-composite-participants-button'));
-    await waitForSelector(page, dataUiId('call-composite-people-pane'));
+    await waitForSelector(page, dataUiId('people-pane-content'));
     expect(await stableScreenshot(page)).toMatchSnapshot(`video-gallery-page-participants-no-displayname.png`);
   });
 
@@ -149,7 +149,7 @@ test.describe('Participant list side pane tests', () => {
       })
     );
     await pageClick(page, dataUiId('call-composite-participants-button'));
-    await waitForSelector(page, dataUiId('call-composite-people-pane'));
+    await waitForSelector(page, dataUiId('people-pane-content'));
     expect(await stableScreenshot(page)).toMatchSnapshot(`video-gallery-page-participants-flyout-custom-ellipses.png`);
   });
 
@@ -185,7 +185,7 @@ test.describe('Participant list full screen pane with drawer tests', () => {
     const drawerPeopleMenuDiv = await page.$('div[role="menu"] >> text=People');
     await drawerPeopleMenuDiv?.click();
 
-    await waitForSelector(page, dataUiId('call-composite-people-pane'));
+    await waitForSelector(page, dataUiId('people-pane-content'));
     await waitForPiPiPToHaveLoaded(page, { skipVideoCheck: true });
 
     expect(await stableScreenshot(page)).toMatchSnapshot(`video-gallery-page-participants-flyout.png`);
@@ -207,7 +207,7 @@ test.describe('Participant list full screen pane with drawer tests', () => {
     const drawerPeopleMenuDiv = await page.$('div[role="menu"] >> text=People');
     await drawerPeopleMenuDiv?.click();
 
-    await waitForSelector(page, dataUiId('call-composite-people-pane'));
+    await waitForSelector(page, dataUiId('people-pane-content'));
     await waitForPiPiPToHaveLoaded(page, { skipVideoCheck: true });
 
     expect(await stableScreenshot(page)).toMatchSnapshot(`video-gallery-page-participants-flyout-custom-ellipses.png`);

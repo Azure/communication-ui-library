@@ -7,10 +7,10 @@ import { _formatString } from '@internal/acs-ui-common';
 import { ControlBarButtonProps } from '@internal/react-components';
 import React, { useCallback, useMemo, useState } from 'react';
 import { useEffect } from 'react';
-import { ChatAdapter } from '../ChatComposite';
-import { CallWithChatCompositeIcon } from '../common/icons';
+import { ChatAdapter } from '../../ChatComposite';
+import { CallWithChatCompositeIcon } from '../../common/icons';
 import { ChatButton } from './ChatButton';
-import { useCallWithChatCompositeStrings } from './hooks/useCallWithChatCompositeStrings';
+import { useCallWithChatCompositeStrings } from '../hooks/useCallWithChatCompositeStrings';
 import { NotificationIcon } from './NotificationIcon';
 
 /**
