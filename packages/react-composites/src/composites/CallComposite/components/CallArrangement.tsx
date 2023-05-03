@@ -58,7 +58,7 @@ import { usePeoplePane } from './SidePane/usePeoplePane';
 /* @conditional-compile-remove(video-background-effects) */
 import { useVideoEffectsPane } from './SidePane/useVideoEffectsPane';
 import { isDisabled } from '../utils';
-import { SidePaneRenderer, useIsSidePaneOpen } from './SidePane/SidePaneProvider';
+import { SidePaneRenderer, useIsParticularSidePaneOpen, useIsSidePaneOpen } from './SidePane/SidePaneProvider';
 import { ModalLocalAndRemotePIP } from '../../common/ModalLocalAndRemotePIP';
 import { getPipStyles } from '../../common/styles/ModalLocalAndRemotePIP.styles';
 import { useMinMaxDragPosition } from '../../common/utils';
@@ -216,6 +216,15 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
       )
     };
   }
+
+  /* @conditional-compile-remove(video-background-effects) */
+  if (useIsParticularSidePaneOpen('videoeffects') && props.errorBarProps) {
+    errorBarProps = {
+      ...props.errorBarProps,
+      activeErrorMessages: props.errorBarProps.activeErrorMessages.filter((e) => e.type !== 'unableToStartVideoEffect')
+    };
+  }
+
   /* @conditional-compile-remove(close-captions) */
   const isTeamsCall = useSelector(getIsTeamsCall);
   /* @conditional-compile-remove(close-captions) */
