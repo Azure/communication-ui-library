@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Fix bug where captions rtl languages are not right aligned ",
+  "packageName": "@azure/communication-react",
+  "email": "carolinecao@microsoft.com",
+  "dependentChangeType": "patch"
+}
