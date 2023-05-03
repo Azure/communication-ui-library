@@ -7,4 +7,10 @@ export type ExcludeList =
   | 'getCallingSelector'
   | 'getChatSelector'
   | 'GetChatSelector'
-  | 'usePropsFor';
+  | 'usePropsFor'
+  | 'useAzureCommunicationCallWithChatAdapter'
+  | 'CallWithChatComposite'
+  | 'useAzureCommunicationCallAdapter'
+  | 'CallComposite'
+  | 'useAzureCommunicationChatAdapter'
+  | 'ChatComposite';
