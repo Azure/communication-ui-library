@@ -205,12 +205,12 @@ const DataLossPreventionProhibited16Regular = (): JSX.Element => {
   return <Prohibited16Regular />;
 };
 
-const HorizontalGalleryLeftButton = (): JSX.Element => {
+const GalleryLeftButton = (): JSX.Element => {
   const rtl = useTheme().rtl;
   return rtl ? <ChevronRight20Regular /> : <ChevronLeft20Regular />;
 };
 
-const HorizontalGalleryRightButton = (): JSX.Element => {
+const GalleryRightButton = (): JSX.Element => {
   const rtl = useTheme().rtl;
   return rtl ? <ChevronLeft20Regular /> : <ChevronRight20Regular />;
 };
@@ -257,8 +257,8 @@ export const DEFAULT_COMPONENT_ICONS = {
   ErrorBarClear: <Dismiss16Regular />,
   ErrorBarCallVideoRecoveredBySystem: <Video16Filled />,
   ErrorBarCallVideoStoppedBySystem: <VideoProhibited16Filled />,
-  HorizontalGalleryLeftButton: <HorizontalGalleryLeftButton />,
-  HorizontalGalleryRightButton: <HorizontalGalleryRightButton />,
+  HorizontalGalleryLeftButton: <GalleryLeftButton />,
+  HorizontalGalleryRightButton: <GalleryRightButton />,
   MessageDelivered: <CheckmarkCircle16Regular />,
   MessageEdit: <Edit20Regular />,
   MessageFailed: <ErrorCircle16Regular />,
@@ -315,9 +315,9 @@ export const DEFAULT_COMPONENT_ICONS = {
   SplitButtonPrimaryActionMicUnmuted: <Mic20Filled />,
   SplitButtonPrimaryActionMicMuted: <MicOff20Filled />,
   /* @conditional-compile-remove(vertical-gallery) */
-  VerticalGalleryLeftButton: <ChevronLeft20Regular />,
+  VerticalGalleryLeftButton: <GalleryLeftButton />,
   /* @conditional-compile-remove(vertical-gallery) */
-  VerticalGalleryRightButton: <ChevronRight20Regular />,
+  VerticalGalleryRightButton: <GalleryRightButton />,
   /* @conditional-compile-remove(video-background-effects) */
   OptionsVideoBackgroundEffect: <VideoBackgroundEffect20Regular />,
   /* @conditional-compile-remove(close-captions) */
