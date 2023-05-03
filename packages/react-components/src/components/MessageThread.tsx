@@ -39,7 +39,6 @@ import {
   IPersona,
   Theme
 } from '@fluentui/react';
-import { ComponentSlotStyle } from '@fluentui/react-northstar';
 import { LiveAnnouncer } from 'react-aria-live';
 import { delay } from './utils/delay';
 import {
@@ -72,6 +71,7 @@ import { AttachmentDownloadResult } from './FileDownloadCards';
 import { useTheme } from '../theming';
 /* @conditional-compile-remove(mention) */
 import { MentionOptions } from './MentionPopover';
+import { ComponentSlotStyle } from '../types';
 
 const isMessageSame = (first: ChatMessage, second: ChatMessage): boolean => {
   return (
@@ -524,15 +524,7 @@ export type UpdateMessageCallback = (
  * @public
  * Callback function run when a message edit is cancelled.
  */
-export type CancelEditCallback = (
-  messageId: string,
-  /* @conditional-compile-remove(file-sharing) */
-  metadata?: Record<string, string>,
-  /* @conditional-compile-remove(file-sharing) */
-  options?: {
-    attachedFilesMetadata?: FileMetadata[];
-  }
-) => void;
+export type CancelEditCallback = (messageId: string) => void;
 
 /**
  * Props for {@link MessageThread}.

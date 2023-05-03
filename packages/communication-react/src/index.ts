@@ -157,6 +157,7 @@ export type {
   MentionDisplayOptions,
   MentionLookupOptions,
   Mention,
+  MentionPopoverStrings,
   defaultMentionSuggestionRenderer
 } from '../../react-components/src';
 
@@ -173,6 +174,7 @@ export type {
   ChatMessage,
   CommunicationParticipant,
   ComponentLocale,
+  ComponentSlotStyle,
   ComponentStrings,
   ContentSystemMessage,
   ControlBarButtonProps,

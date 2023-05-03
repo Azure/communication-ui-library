@@ -122,6 +122,18 @@ export interface Mention {
 }
 
 /**
+ * Strings of {@link _MentionPopover} that can be overridden.
+ *
+ * @beta
+ */
+export interface MentionPopoverStrings {
+  /**
+   * Header text for MentionPopover
+   */
+  mentionPopoverHeader: string;
+}
+
+/**
  * Component to render a pop-up of mention suggestions.
  *
  * @internal
@@ -138,7 +150,7 @@ export const _MentionPopover = (props: _MentionPopoverProps): JSX.Element => {
   const {
     suggestions,
     activeSuggestionIndex,
-    title = 'Suggestions' /* TODO: Localization of the default */,
+    title,
     target,
     targetPositionOffset,
     onRenderSuggestionItem,
@@ -150,7 +162,7 @@ export const _MentionPopover = (props: _MentionPopoverProps): JSX.Element => {
   const theme = useTheme();
   /* @conditional-compile-remove(mention) */
   const ids = useIdentifiers();
-  const localeStrings = useLocale().strings.participantItem;
+  const localeStrings = useLocale().strings;
   const popoverRef = useRef() as React.MutableRefObject<HTMLDivElement>;
 
   const [position, setPosition] = useState<Position>({ left: 0 });
@@ -219,13 +231,14 @@ export const _MentionPopover = (props: _MentionPopoverProps): JSX.Element => {
   );
 
   const personaRenderer = (displayName?: string): JSX.Element => {
+    const displayNamePlaceholder = localeStrings.participantItem.displayNamePlaceholder;
     const avatarOptions = {
-      text: displayName?.trim() || localeStrings.displayNamePlaceholder,
+      text: displayName?.trim() || displayNamePlaceholder,
       size: PersonaSize.size24,
       initialsColor: theme.palette.neutralLight,
       initialsTextColor: theme.palette.neutralSecondary,
       showOverflowTooltip: false,
-      showUnknownPersonaCoin: !displayName?.trim() || displayName === localeStrings.displayNamePlaceholder
+      showUnknownPersonaCoin: !displayName?.trim() || displayName === displayNamePlaceholder
     };
 
     return <Persona {...avatarOptions} />;
@@ -264,6 +277,15 @@ export const _MentionPopover = (props: _MentionPopoverProps): JSX.Element => {
     );
   };
 
+  const getHeaderTitle = (): string => {
+    if (title) {
+      return title;
+    }
+    /* @conditional-compile-remove(mention) */
+    return localeStrings.mentionPopover.mentionPopoverHeader;
+    return '';
+  };
+
   return (
     <div ref={popoverRef}>
       <Stack
@@ -280,7 +302,7 @@ export const _MentionPopover = (props: _MentionPopoverProps): JSX.Element => {
         )}
       >
         <Stack.Item styles={headerStyleThemed(theme)} aria-label={title}>
-          {title}
+          {getHeaderTitle()}
         </Stack.Item>
         <Stack
           /* @conditional-compile-remove(mention) */

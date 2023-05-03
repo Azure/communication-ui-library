@@ -35,7 +35,7 @@ test.describe('CallWithChat Composite CallWithChat Page Tests', () => {
 
     // Send a message from local participant.
     await pageClick(page, dataUiId('call-with-chat-composite-chat-button'));
-    await waitForSelector(page, dataUiId('call-with-chat-composite-chat-pane'));
+    await waitForSelector(page, dataUiId('sendbox-textfield'));
     await sendMessage(page, 'Call with Chat composite is awesome!');
 
     await temporarilyShowHiddenChatComposite(page, chatRemoteParticipant);

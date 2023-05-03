@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { ComponentSlotStyle } from '@fluentui/react-northstar';
 import { _formatString } from '@internal/acs-ui-common';
 import React, { useCallback, useState } from 'react';
 import { ChatMessageComponentAsEditBox } from './ChatMessageComponentAsEditBox';
@@ -13,6 +12,7 @@ import { ChatMessageComponentAsMessageBubble } from './ChatMessageComponentAsMes
 import { FileDownloadHandler, FileMetadata } from '../FileDownloadCards';
 /* @conditional-compile-remove(mention) */
 import { MentionOptions } from '../MentionPopover';
+import { ComponentSlotStyle } from '../../types/ComponentSlotStyle';
 
 type ChatMessageComponentProps = {
   message: ChatMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage;
@@ -28,13 +28,7 @@ type ChatMessageComponentProps = {
       attachedFilesMetadata?: FileMetadata[];
     }
   ) => Promise<void>;
-  onCancelMessageEdit?: (
-    messageId: string,
-    metadata?: Record<string, string>,
-    options?: {
-      attachedFilesMetadata?: FileMetadata[];
-    }
-  ) => void;
+  onCancelMessageEdit?: (messageId: string) => void;
   /**
    * Callback to delete a message. Also called before resending a message that failed to send.
    * @param messageId ID of the message to delete
@@ -141,8 +135,8 @@ export const ChatMessageComponent = (props: ChatMessageComponentProps): JSX.Elem
             (await props.onUpdateMessage(message.messageId, text, metadata, options));
           setIsEditing(false);
         }}
-        onCancel={(messageId, metadata, options) => {
-          props.onCancelMessageEdit && props.onCancelMessageEdit(messageId, metadata, options);
+        onCancel={(messageId) => {
+          props.onCancelMessageEdit && props.onCancelMessageEdit(messageId);
           setIsEditing(false);
         }}
         /* @conditional-compile-remove(mention) */

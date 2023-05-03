@@ -3,9 +3,6 @@
 import { concatStyleSets, DefaultButton, Stack } from '@fluentui/react';
 import { useTheme } from '@internal/react-components';
 import React, { useMemo } from 'react';
-/* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
-import { CallCompositeStrings } from '../CallComposite';
-import { CallWithChatCompositeStrings } from '../CallWithChatComposite';
 import { CallWithChatCompositeIcon } from '../common/icons';
 import {
   mobilePaneBackButtonStyles,
@@ -13,30 +10,36 @@ import {
   mobilePaneControlBarStyle,
   mobilePaneHiddenIconStyles
 } from './styles/Pane.styles';
+import { CompositeLocale, useLocale } from '../localization';
+
+/** @private */
+export interface MobileChatSidePaneTabHeaderProps {
+  onClick: () => void;
+  disabled: boolean;
+}
 
 /**
  * Props for {@link TabHeader} component
  */
-type TabHeaderProps = {
+type PeopleAndChatHeaderProps = {
   onClose: () => void;
   // If set, show a button to open chat tab.
   onChatButtonClicked?: () => void;
   // If set, show a button to open people tab.
   onPeopleButtonClicked?: () => void;
   activeTab: TabHeaderTab;
-  strings:
-    | CallWithChatCompositeStrings
-    | /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */ CallCompositeStrings;
   disableChatButton?: boolean;
   disablePeopleButton?: boolean;
 };
 
 /**
+ * Legacy header to be removed when we make a breaking change.
  * @private
  */
-export const TabHeader = (props: TabHeaderProps): JSX.Element => {
-  const { onClose, onChatButtonClicked, onPeopleButtonClicked, activeTab, strings } = props;
+export const PeopleAndChatHeader = (props: PeopleAndChatHeaderProps): JSX.Element => {
+  const { onClose, onChatButtonClicked, onPeopleButtonClicked, activeTab } = props;
   const theme = useTheme();
+  const strings = localeTrampoline(useLocale());
   const haveMultipleTabs = onChatButtonClicked && onPeopleButtonClicked;
   const mobilePaneButtonStylesThemed = useMemo(() => {
     return concatStyleSets(
@@ -109,3 +112,11 @@ export const TabHeader = (props: TabHeaderProps): JSX.Element => {
  * Type used to define which tab is active in {@link TabHeader}
  */
 export type TabHeaderTab = 'chat' | 'people';
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const localeTrampoline = (locale: CompositeLocale): any => {
+  /* @conditional-compile-remove(new-call-control-bar) */
+  return locale.strings.call;
+
+  return locale.strings.callWithChat;
+};

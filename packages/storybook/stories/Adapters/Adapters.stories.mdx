@@ -197,7 +197,7 @@ async function createAzureCommunicationCallAdapter(args: AzureCommunicationChatA
 async function createAzureCommunicationChatAdapterFromClient(
   chatClient: StatefulChatClient,
   chatThreadClient: ChatThreadClient,
-  options?: ChatAdapterOptions
+  options?: AzureCommunicationChatAdapterOptions
 );
 ```
 
@@ -205,10 +205,10 @@ async function createAzureCommunicationChatAdapterFromClient(
 | ------------------------ | --------------------------------------------------------------------------------------------------------------------- |
 | **`chatClient`**         | [`StatefulChatClient`](https://docs.microsoft.com/en-us/javascript/api/@azure/communication-react/statefulchatclient) |
 | **`chatThreadClient`**   | [`ChatThreadClient`](https://docs.microsoft.com/en-us/javascript/api/@azure/communication-chat/chatthreadclient)      |
-| **`options`** **(Beta)** | `ChatAdapterOptions`                                                                                                  |
+| **`options`** **(Beta)** | `AzureCommunicationChatAdapterOptions`                                                                                |
 
 ```ts
-export type ChatAdapterOptions = {
+export type AzureCommunicationChatAdapterOptions = {
   credential?: CommunicationTokenCredential;
 };
 ```

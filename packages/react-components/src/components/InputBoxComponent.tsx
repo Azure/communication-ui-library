@@ -253,9 +253,9 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
             onSuggestionSelected(selectedMention);
             return;
           }
-        } else {
-          onEnterKeyDown && onEnterKeyDown();
         }
+
+        onEnterKeyDown && onEnterKeyDown();
       }
       onKeyDown && onKeyDown(ev);
     },

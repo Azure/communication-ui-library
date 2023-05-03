@@ -5,8 +5,7 @@ import React from 'react';
 /* @conditional-compile-remove(teams-inline-images) */
 import { useEffect } from 'react';
 import { _formatString } from '@internal/acs-ui-common';
-import { Parser } from 'html-to-react';
-import { ProcessNodeDefinitions, IsValidNodeDefinitions, ProcessingInstructionType } from 'html-to-react';
+import { Parser, ProcessNodeDefinitions, IsValidNodeDefinitions, ProcessingInstructionType } from 'html-to-react';
 
 import Linkify from 'react-linkify';
 import { ChatMessage } from '../../types/ChatMessage';
@@ -187,11 +186,7 @@ const MessageContentAsText = (props: ChatMessageContentProps): JSX.Element => {
 export const BlockedMessageContent = (props: BlockedMessageContentProps): JSX.Element => {
   const Icon: JSX.Element = <FontIcon iconName={'DataLossPreventionProhibited'} />;
   const blockedMessage =
-    props.message.warningText === false
-      ? ''
-      : props.message.warningText === '' || props.message.warningText === undefined
-      ? props.strings.blockedWarningText
-      : props.message.warningText;
+    props.message.warningText === undefined ? props.strings.blockedWarningText : props.message.warningText;
   const blockedMessageLink = props.message.link;
   const blockedMessageLinkText = blockedMessageLink
     ? props.message.linkText ?? props.strings.blockedWarningLinkText
