@@ -2,8 +2,6 @@
 // Licensed under the MIT license.
 import React from 'react';
 /* @conditional-compile-remove(video-background-effects) */
-import { useState } from 'react';
-/* @conditional-compile-remove(video-background-effects) */
 import { useCallback, useMemo } from 'react';
 /* @conditional-compile-remove(video-background-effects) */
 import { MessageBar, MessageBarType, Stack } from '@fluentui/react';
@@ -31,21 +29,16 @@ import { videoBackgroundErrorsSelector } from '../CallComposite/selectors/videoB
 import { AdapterError } from './adapters';
 /* @conditional-compile-remove(video-background-effects) */
 import { localVideoSelector } from '../CallComposite/selectors/localVideoStreamSelector';
-/* @conditional-compile-remove(video-background-effects) */
-/**
- * @private
- */
-interface DismissedError {
-  dismissedAt: Date;
-  activeSince?: Date;
-}
 
 /**
  * Pane that is used to show video effects button
  * @private
  */
 /** @beta */
-export const VideoEffectsPaneContent = (): JSX.Element => {
+export const VideoEffectsPaneContent = (props: {
+  onDismissError: (error: AdapterError) => void;
+  showError?: boolean;
+}): JSX.Element => {
   /* @conditional-compile-remove(video-background-effects) */
   const locale = useLocale();
   /* @conditional-compile-remove(video-background-effects) */
@@ -127,23 +120,25 @@ export const VideoEffectsPaneContent = (): JSX.Element => {
     [adapter, selectableVideoEffects]
   );
   return VideoEffectsPaneTrampoline(
+    props.onDismissError,
     /* @conditional-compile-remove(video-background-effects) */
     selectableVideoEffects,
     /* @conditional-compile-remove(video-background-effects) */
-    onEffectChange
+    onEffectChange,
+    props.showError
   );
 };
 
 const VideoEffectsPaneTrampoline = (
+  onDismissError: (error: AdapterError) => void,
   selectableVideoEffects?: _VideoEffectsItemProps[],
-  onEffectChange?: (effectKey: string) => Promise<void>
+  onEffectChange?: (effectKey: string) => Promise<void>,
+  showError?: boolean
 ): JSX.Element => {
-  /* @conditional-compile-remove(video-background-effects) */
-  const [dismissedError, setDismissedError] = useState<DismissedError>();
   /* @conditional-compile-remove(video-background-effects) */
   const latestEffectError = useSelector(videoBackgroundErrorsSelector);
   /* @conditional-compile-remove(video-background-effects) */
-  const showError = latestEffectError && (!dismissedError || latestEffectError.timestamp > dismissedError.dismissedAt);
+  const showVideoEffectError = latestEffectError && showError;
   /* @conditional-compile-remove(video-background-effects) */
   const selectedEffect = useSelector(activeVideoBackgroundEffectSelector);
   /* @conditional-compile-remove(video-background-effects) */
@@ -156,11 +151,8 @@ const VideoEffectsPaneTrampoline = (
   /* @conditional-compile-remove(video-background-effects) */
   return (
     <Stack horizontalAlign="center">
-      {showError && latestEffectError && (
-        <MessageBar
-          messageBarType={MessageBarType.error}
-          onDismiss={() => setDismissedError(dismissError(latestEffectError))}
-        >
+      {showVideoEffectError && latestEffectError && (
+        <MessageBar messageBarType={MessageBarType.error} onDismiss={() => onDismissError(latestEffectError)}>
           {locale.strings.call.unableToStartVideoEffect}
         </MessageBar>
       )}
@@ -188,16 +180,4 @@ const backgroundPickerStyles = {
     lineHeight: '0.5rem',
     fontWeight: '400'
   }
-};
-
-/* @conditional-compile-remove(video-background-effects) */
-const dismissError = (toDismiss: AdapterError): DismissedError => {
-  const now = new Date(Date.now());
-  const toDismissTimestamp = toDismiss.timestamp ?? now;
-
-  // Record that this error was dismissed for the first time right now.
-  return {
-    dismissedAt: now > toDismissTimestamp ? now : toDismissTimestamp,
-    activeSince: toDismiss.timestamp
-  };
 };

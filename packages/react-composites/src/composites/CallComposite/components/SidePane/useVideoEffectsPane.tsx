@@ -7,13 +7,16 @@ import { SidePaneHeader } from '../../../common/SidePaneHeader';
 /* @conditional-compile-remove(video-background-effects) */
 import { useLocale } from '../../../localization';
 import { VideoEffectsPaneContent } from '../../../common/VideoEffectsPane';
+import { AdapterError } from '../../../common/adapters';
 
 const VIDEO_EFFECTS_SIDE_PANE_ID = 'videoeffects';
 
 /** @private */
 export const useVideoEffectsPane = (
   updateSidePaneRenderer: (renderer: SidePaneRenderer | undefined) => void,
-  mobileView: boolean
+  mobileView: boolean,
+  onDismissVideoEffectError: (error: AdapterError) => void,
+  showVideoEffectError?: boolean
 ): {
   openVideoEffectsPane: () => void;
   closeVideoEffectsPane: () => void;
@@ -45,8 +48,8 @@ export const useVideoEffectsPane = (
   }, [closePane, /* @conditional-compile-remove(video-background-effects) */ locale.strings, mobileView]);
 
   const onRenderContent = useCallback((): JSX.Element => {
-    return <VideoEffectsPaneContent />;
-  }, []);
+    return <VideoEffectsPaneContent onDismissError={onDismissVideoEffectError} showError={showVideoEffectError} />;
+  }, [onDismissVideoEffectError, showVideoEffectError]);
 
   const sidePaneRenderer: SidePaneRenderer = useMemo(
     () => ({
