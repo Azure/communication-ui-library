@@ -38,7 +38,7 @@ packages:
       integrity: sha512-TrRLIoSQVzfAJX9H1JeFjzAoDGcoK1IYX1UImfceTZpsyYfWr09Ss1aHW1y5TrrR3iq6RZLBwJ3E24uwPhwahw==
   /@azure/communication-calling-effects/1.0.0-beta.2:
     dependencies:
-      '@azure/logger': 1.0.3
+      '@azure/logger': 1.0.4
       events: 3.3.0
     dev: false
     resolution:
