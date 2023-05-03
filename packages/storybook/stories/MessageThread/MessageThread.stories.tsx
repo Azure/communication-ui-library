@@ -31,7 +31,8 @@ import {
   GenerateMockSystemMessage,
   GenerateMockCustomMessage,
   GetAvatarUrlByUserId,
-  GenerateMockNewChatMessageWithInlineImage
+  GenerateMockNewChatMessageWithInlineImage,
+  GenerateMockNewChatMessageWithMention
 } from './placeholdermessages';
 import { MessageThreadWithBlockedMessagesExample } from './snippets/BlockedMessages.snippet';
 import { MessageThreadWithCustomAvatarExample } from './snippets/CustomAvatar.snippet';
@@ -82,7 +83,7 @@ import { FluentThemeProvider, MessageThread } from '@azure/communication-react';
 `;
 
 const mentionTag = `
-<msft-mention userId="<id>" displayName="<display name>">
+<msft-mention id="<id>" displayText="<display text>">
   Displayable Content
 </msft-mention>
 `;
@@ -272,6 +273,11 @@ const MessageThreadStory = (args): JSX.Element => {
   const onSendNewMessageWithInlineImage = (): void => {
     setChatMessages([...chatMessages, GenerateMockNewChatMessageWithInlineImage()]);
   };
+
+  const onSendNewMessageWithMention = (): void => {
+    setChatMessages([...chatMessages, GenerateMockNewChatMessageWithMention()]);
+  };
+
   const onLoadPreviousMessages = async (): Promise<boolean> => {
     return new Promise((resolve) => {
       setChatMessages([...GenerateMockHistoryChatMessages(), ...chatMessages]);
@@ -339,6 +345,7 @@ const MessageThreadStory = (args): JSX.Element => {
         <PrimaryButton text="Send new message with inline image" onClick={onSendNewMessageWithInlineImage} />
         <PrimaryButton text="Send new system message" onClick={onSendNewSystemMessage} />
         <PrimaryButton text="Send new custom message" onClick={onSendCustomMessage} />
+        <PrimaryButton text="Send new message with mention" onClick={onSendNewMessageWithMention} />
       </Stack>
     </Stack>
   );
