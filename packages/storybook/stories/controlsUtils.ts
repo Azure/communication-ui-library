@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { ErrorType } from '@azure/communication-react';
+import { ErrorType, Mention } from '@azure/communication-react';
 import { PartialTheme } from '@fluentui/react';
 import { DefaultTheme, DarkTheme, TeamsTheme, WordTheme } from '@fluentui/theme-samples';
 import {
@@ -100,6 +100,14 @@ const defaultTypingUsers = [
     displayName: 'User2'
   }
 ];
+
+const defaultControlsMentionOptions = {
+  lookupOptions: {
+    onQueryUpdated: (): Mention[] => {
+      return defaultMentionSuggestions;
+    }
+  }
+};
 
 const errorOptions: ErrorType[] = [
   'unableToReachChatService',
@@ -251,6 +259,7 @@ export const controlsToAdd = {
   disabled: { control: 'boolean', defaultValue: false, name: 'Disable component' },
   displayName: { control: 'text', defaultValue: 'John Smith', name: 'Display Name' },
   enableJumpToNewMessageButton: { control: 'boolean', defaultValue: true, name: 'Enable Jump To New Message' },
+  mentionOptions: { control: 'object', defaultValue: defaultControlsMentionOptions, name: 'Mention Options' },
   endpointUrl: {
     control: 'text',
     defaultValue: '',
