@@ -23,9 +23,6 @@ import { activeVideoBackgroundEffectSelector } from '../CallComposite/selectors/
 import { useSelector } from '../CallComposite/hooks/useSelector';
 /* @conditional-compile-remove(video-background-effects) */
 import { useAdapter } from '../CallComposite/adapter/CallAdapterProvider';
-/* @conditional-compile-remove(video-background-effects) */
-import { videoBackgroundErrorsSelector } from '../CallComposite/selectors/videoBackgroundErrorsSelector';
-/* @conditional-compile-remove(video-background-effects) */
 import { AdapterError } from './adapters';
 /* @conditional-compile-remove(video-background-effects) */
 import { localVideoSelector } from '../CallComposite/selectors/localVideoStreamSelector';
@@ -37,7 +34,7 @@ import { localVideoSelector } from '../CallComposite/selectors/localVideoStreamS
 /** @beta */
 export const VideoEffectsPaneContent = (props: {
   onDismissError: (error: AdapterError) => void;
-  showError?: boolean;
+  activeVideoEffectError: () => AdapterError | undefined;
 }): JSX.Element => {
   /* @conditional-compile-remove(video-background-effects) */
   const locale = useLocale();
@@ -125,7 +122,7 @@ export const VideoEffectsPaneContent = (props: {
     selectableVideoEffects,
     /* @conditional-compile-remove(video-background-effects) */
     onEffectChange,
-    props.showError
+    props.activeVideoEffectError
   );
 };
 
@@ -133,12 +130,10 @@ const VideoEffectsPaneTrampoline = (
   onDismissError: (error: AdapterError) => void,
   selectableVideoEffects?: _VideoEffectsItemProps[],
   onEffectChange?: (effectKey: string) => Promise<void>,
-  showError?: boolean
+  activeVideoEffectError?: () => AdapterError | undefined
 ): JSX.Element => {
   /* @conditional-compile-remove(video-background-effects) */
-  const latestEffectError = useSelector(videoBackgroundErrorsSelector);
-  /* @conditional-compile-remove(video-background-effects) */
-  const showVideoEffectError = latestEffectError && showError;
+  const videoEffectError = activeVideoEffectError && activeVideoEffectError();
   /* @conditional-compile-remove(video-background-effects) */
   const selectedEffect = useSelector(activeVideoBackgroundEffectSelector);
   /* @conditional-compile-remove(video-background-effects) */
@@ -151,8 +146,8 @@ const VideoEffectsPaneTrampoline = (
   /* @conditional-compile-remove(video-background-effects) */
   return (
     <Stack horizontalAlign="center">
-      {showVideoEffectError && latestEffectError && (
-        <MessageBar messageBarType={MessageBarType.error} onDismiss={() => onDismissError(latestEffectError)}>
+      {videoEffectError && (
+        <MessageBar messageBarType={MessageBarType.error} onDismiss={() => onDismissError(videoEffectError)}>
           {locale.strings.call.unableToStartVideoEffect}
         </MessageBar>
       )}

@@ -57,7 +57,6 @@ import { SidePane } from './SidePane/SidePane';
 import { usePeoplePane } from './SidePane/usePeoplePane';
 /* @conditional-compile-remove(video-background-effects) */
 import { useVideoEffectsPane } from './SidePane/useVideoEffectsPane';
-import { DismissedError, dismissVideoEffectsError } from '../utils';
 import { isDisabled } from '../utils';
 import { SidePaneRenderer, useIsSidePaneOpen } from './SidePane/SidePaneProvider';
 /* @conditional-compile-remove(video-background-effects) */
@@ -67,8 +66,6 @@ import { getPipStyles } from '../../common/styles/ModalLocalAndRemotePIP.styles'
 import { useMinMaxDragPosition } from '../../common/utils';
 import { MobileChatSidePaneTabHeaderProps } from '../../common/TabHeader';
 import { CommonCallControlOptions } from '../../common/types/CommonCallControlOptions';
-import { AdapterError } from '../../common/adapters';
-import { videoBackgroundErrorsSelector } from '../selectors/videoBackgroundErrorsSelector';
 
 /**
  * @private
@@ -170,25 +167,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   );
 
   /* @conditional-compile-remove(video-background-effects) */
-  const [dismissedVideoEffectsError, setDismissedVideoEffectsError] = useState<DismissedError>();
-  /* @conditional-compile-remove(video-background-effects) */
-  const onDismissVideoEffectError = useCallback((error: AdapterError) => {
-    setDismissedVideoEffectsError(dismissVideoEffectsError(error));
-  }, []);
-  /* @conditional-compile-remove(video-background-effects) */
-  const latestVideoEffectError = useSelector(videoBackgroundErrorsSelector);
-  /* @conditional-compile-remove(video-background-effects) */
-  const showVideoEffectError =
-    latestVideoEffectError &&
-    (!dismissedVideoEffectsError || latestVideoEffectError.timestamp > dismissedVideoEffectsError.dismissedAt);
-
-  /* @conditional-compile-remove(video-background-effects) */
-  const { openVideoEffectsPane } = useVideoEffectsPane(
-    props.updateSidePaneRenderer,
-    props.mobileView,
-    onDismissVideoEffectError,
-    showVideoEffectError
-  );
+  const { openVideoEffectsPane } = useVideoEffectsPane(props.updateSidePaneRenderer, props.mobileView);
   const [showDrawer, setShowDrawer] = useState(false);
   const onMoreButtonClicked = useCallback(() => {
     setShowDrawer(true);

@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React, { useCallback } from 'react';
+import React from 'react';
 /* @conditional-compile-remove(call-readiness) */
 import { useState } from 'react';
 import { useAdaptedSelector } from '../hooks/useAdaptedSelector';
@@ -46,7 +46,7 @@ import { useAdapter } from '../adapter/CallAdapterProvider';
 import { DeviceCheckOptions } from '../CallComposite';
 import { ConfigurationPageErrorBar } from '../components/ConfigurationPageErrorBar';
 /* @conditional-compile-remove(call-readiness) */
-import { DismissedError, dismissVideoEffectsError, getDevicePermissionState } from '../utils';
+import { getDevicePermissionState } from '../utils';
 /* @conditional-compile-remove(call-readiness) */
 import { CallReadinessModal, CallReadinessModalFallBack } from '../components/CallReadinessModal';
 /* @conditional-compile-remove(video-background-effects) */
@@ -55,8 +55,6 @@ import { SidePane } from '../components/SidePane/SidePane';
 import { SidePaneRenderer } from '../components/SidePane/SidePaneProvider';
 /* @conditional-compile-remove(video-background-effects) */
 import { useIsParticularSidePaneOpen } from '../components/SidePane/SidePaneProvider';
-import { AdapterError } from '../../common/adapters';
-import { videoBackgroundErrorsSelector } from '../selectors/videoBackgroundErrorsSelector';
 
 /**
  * @private
@@ -218,25 +216,7 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
   const forceShowingCheckPermissions = !minimumFallbackTimerElapsed;
 
   /* @conditional-compile-remove(video-background-effects) */
-  const [dismissedVideoEffectsError, setDismissedVideoEffectsError] = useState<DismissedError>();
-  /* @conditional-compile-remove(video-background-effects) */
-  const onDismissVideoEffectError = useCallback((error: AdapterError) => {
-    setDismissedVideoEffectsError(dismissVideoEffectsError(error));
-  }, []);
-  /* @conditional-compile-remove(video-background-effects) */
-  const latestVideoEffectError = useSelector(videoBackgroundErrorsSelector);
-  /* @conditional-compile-remove(video-background-effects) */
-  const showVideoEffectError =
-    latestVideoEffectError &&
-    (!dismissedVideoEffectsError || latestVideoEffectError.timestamp > dismissedVideoEffectsError.dismissedAt);
-
-  /* @conditional-compile-remove(video-background-effects) */
-  const { toggleVideoEffectsPane } = useVideoEffectsPane(
-    props.updateSidePaneRenderer,
-    mobileView,
-    onDismissVideoEffectError,
-    showVideoEffectError
-  );
+  const { toggleVideoEffectsPane } = useVideoEffectsPane(props.updateSidePaneRenderer, mobileView);
 
   return (
     <Stack className={mobileView ? configurationContainerStyleMobile : configurationContainerStyleDesktop}>
