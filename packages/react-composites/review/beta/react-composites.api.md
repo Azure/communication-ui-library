@@ -491,6 +491,7 @@ export interface CallCompositeStrings {
     twoParticipantLeftNoticeString: string;
     unableToStartVideoEffect?: string;
     unnamedParticipantString: string;
+    videoEffectsPaneBackgroundSelectionTitle: string;
     videoEffectsPaneTitle: string;
 }
 

@@ -170,7 +170,7 @@ const VideoEffectsPaneTrampoline = (
         </MessageBar>
       )}
       <_VideoBackgroundEffectsPicker
-        label={locale.strings.call.videoEffectsPaneTitle}
+        label={locale.strings.call.videoEffectsPaneBackgroundSelectionTitle}
         styles={backgroundPickerStyles}
         options={selectableVideoEffects ?? []}
         onChange={onEffectChange}
