@@ -83,7 +83,7 @@
     "_by-flavor": "rushx _current-flavor && env-cmd -f ../../common/config/env/.env --use-shell"
   },
   "devDependencies": {
-    "@azure/communication-calling": "1.13.1-beta.1",
+    "@azure/communication-calling": "1.13.1-beta.1 || >=1.12.1",
     "@azure/communication-calling-effects": "1.0.0-beta.2",
     "@azure/communication-chat": "1.3.2-beta.1 || >=1.2.0",
     "@azure/core-auth": "1.3.2",
